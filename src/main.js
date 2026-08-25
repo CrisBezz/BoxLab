@@ -2,10 +2,11 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EditableMesh } from './mesh.js';
 import { subdivide } from './subdivision.js';
+import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.3.2';
+const VERSION='0.4';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -32,6 +33,7 @@ const grid=new THREE.GridHelper(12,24,0x3c424d,0x262b33);grid.position.y=-1.55;s
 let mesh=EditableMesh.cube(2);
 let selectionMode='face', toolMode='move', selection=null;
 let subdEnabled=false, subdLevel=1, showCage=true;
+const mirrorAxes={x:false,y:false,z:false};
 const history=new History(60);
 const root=new THREE.Group();scene.add(root);
 
@@ -42,6 +44,7 @@ const vertexMaterial=new THREE.MeshBasicMaterial({color:0xe7ebf2});
 const selectedVertexMaterial=new THREE.MeshBasicMaterial({color:0xff615f});
 const edgeMaterial=new THREE.LineBasicMaterial({color:0x707988,transparent:true,opacity:.95});
 const selectedEdgeMaterial=new THREE.LineBasicMaterial({color:0xff615f});
+const mirrorEdgeMaterial=new THREE.LineBasicMaterial({color:0x8791a2,transparent:true,opacity:.32});
 
 const raycaster=new THREE.Raycaster();
 raycaster.params.Line.threshold=.09;
@@ -60,15 +63,29 @@ function clearGroup(group){
   }
 }
 
+function modifiedMesh(){ return applyMirror(mesh,mirrorAxes); }
+
 function renderMesh(){
   clearGroup(root);
-  const displayMesh=subdEnabled?subdivide(mesh,subdLevel):mesh;
+  const mirrored=modifiedMesh();
+  const displayMesh=subdEnabled?subdivide(mirrored,subdLevel):mirrored;
   const body=new THREE.Mesh(displayMesh.triangulatedGeometry(),subdEnabled?subdMaterial:baseMaterial);
   body.userData.kind='body';root.add(body);
-  if(!subdEnabled||showCage) addCage();
+  if(!subdEnabled||showCage){
+    if(mirrorAxes.x||mirrorAxes.y||mirrorAxes.z) addMirrorCage(mirrored);
+    addCage();
+  }
   if(selection) addSelectionHighlight();
   updateStatus(displayMesh);
   updateActionAvailability();
+}
+
+function addMirrorCage(mirrored){
+  mirrored.edges().forEach(e=>{
+    const geometry=new THREE.BufferGeometry().setFromPoints([mirrored.vertices[e.a],mirrored.vertices[e.b]]);
+    const line=new THREE.Line(geometry,mirrorEdgeMaterial);
+    line.userData.kind='mirror-edge';root.add(line);
+  });
 }
 
 function addCage(){
@@ -106,7 +123,9 @@ function addSelectionHighlight(){
 }
 
 function updateStatus(displayMesh=mesh){
-  document.querySelector('#meshStats').textContent=`${displayMesh.vertices.length} verts • ${displayMesh.faces.length} faces`;
+  const activeMirror=['X','Y','Z'].filter(axis=>mirrorAxes[axis.toLowerCase()]);
+  const mirrorText=activeMirror.length?` • Mirror ${activeMirror.join('')}`:'';
+  document.querySelector('#meshStats').textContent=`${displayMesh.vertices.length} verts • ${displayMesh.faces.length} faces${mirrorText}`;
   document.querySelector('#selectionStatus').textContent=selection?`${cap(selectionMode)} ${selection.index+1} selected • ${cap(toolMode)}`:`${cap(selectionMode)} mode • nothing selected`;
 }
 
@@ -229,14 +248,19 @@ document.querySelector('#extrudeBtn').addEventListener('click',()=>withFaceEdit(
 document.querySelector('#insetBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.insetFace(selection.index,.2);}));
 document.querySelector('#deleteFaceBtn').addEventListener('click',()=>withFaceEdit(()=>{mesh.deleteFace(selection.index);selection=null;}));
 document.querySelector('#loopCutBtn').addEventListener('click',()=>{if(!selection||selection.type!=='edge'||!mesh.edges()[selection.index])return;const before=mesh.clone();const result=mesh.loopCut(selection.index,.5);if(!result)return;history.push(before);selection=null;renderMesh();});
+
+document.querySelectorAll('[data-mirror-axis]').forEach(input=>input.addEventListener('change',()=>{
+  mirrorAxes[input.dataset.mirrorAxis]=input.checked;
+  renderMesh();
+}));
 document.querySelector('#subdToggle').addEventListener('change',e=>{subdEnabled=e.target.checked;renderMesh();});
 document.querySelector('#cageToggle').addEventListener('change',e=>{showCage=e.target.checked;renderMesh();});
 document.querySelector('#subdLevel').addEventListener('input',e=>{subdLevel=Number(e.target.value);document.querySelector('#subdLevelOut').textContent=String(subdLevel);renderMesh();});
 document.querySelector('#undoBtn').addEventListener('click',doUndo);
 document.querySelector('#redoBtn').addEventListener('click',doRedo);
 document.querySelector('#resetBtn').addEventListener('click',()=>{history.push(mesh);mesh=EditableMesh.cube(2);selection=null;renderMesh();});
-document.querySelector('#exportBaseBtn').addEventListener('click',()=>downloadOBJ(mesh,`BoxLab-v${VERSION}-base.obj`));
-document.querySelector('#exportSubdBtn').addEventListener('click',()=>downloadOBJ(subdivide(mesh,subdLevel),`BoxLab-v${VERSION}-subd${subdLevel}.obj`));
+document.querySelector('#exportBaseBtn').addEventListener('click',()=>downloadOBJ(modifiedMesh(),`BoxLab-v${VERSION}-base.obj`));
+document.querySelector('#exportSubdBtn').addEventListener('click',()=>downloadOBJ(subdivide(modifiedMesh(),subdLevel),`BoxLab-v${VERSION}-subd${subdLevel}.obj`));
 
 window.addEventListener('resize',resize);
 function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
