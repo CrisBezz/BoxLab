@@ -16,12 +16,14 @@ export class EditableMesh {
 
   clone(){ return new EditableMesh(this.vertices,this.faces); }
 
+  edgeKey(a,b){ return a<b?`${a}:${b}`:`${b}:${a}`; }
+
   edges(){
     const map=new Map();
     this.faces.forEach((face,faceIndex)=>{
       for(let i=0;i<face.length;i++){
         const a=face[i], b=face[(i+1)%face.length];
-        const key=a<b?`${a}:${b}`:`${b}:${a}`;
+        const key=this.edgeKey(a,b);
         if(!map.has(key)) map.set(key,{a:Math.min(a,b),b:Math.max(a,b),faces:[]});
         map.get(key).faces.push(faceIndex);
       }
@@ -110,6 +112,93 @@ export class EditableMesh {
     if(faceIndex<0 || faceIndex>=this.faces.length) return false;
     this.faces.splice(faceIndex,1);
     return true;
+  }
+
+  loopCut(edgeIndex,t=0.5){
+    const allEdges=this.edges();
+    const seed=allEdges[edgeIndex];
+    if(!seed) return null;
+
+    const amount=THREE.MathUtils.clamp(t,0.05,0.95);
+    const edgeByKey=new Map(allEdges.map(e=>[this.edgeKey(e.a,e.b),e]));
+    const cutKeys=new Set([this.edgeKey(seed.a,seed.b)]);
+    const queue=[this.edgeKey(seed.a,seed.b)];
+
+    while(queue.length){
+      const currentKey=queue.shift();
+      const current=edgeByKey.get(currentKey);
+      if(!current) continue;
+
+      for(const faceIndex of current.faces){
+        const face=this.faces[faceIndex];
+        if(!face || face.length!==4) continue;
+
+        let edgeSlot=-1;
+        for(let i=0;i<4;i++){
+          if(this.edgeKey(face[i],face[(i+1)%4])===currentKey){ edgeSlot=i; break; }
+        }
+        if(edgeSlot<0) continue;
+
+        const oppositeSlot=(edgeSlot+2)%4;
+        const oppositeKey=this.edgeKey(face[oppositeSlot],face[(oppositeSlot+1)%4]);
+        if(!cutKeys.has(oppositeKey)){
+          cutKeys.add(oppositeKey);
+          queue.push(oppositeKey);
+        }
+      }
+    }
+
+    const splitFaces=[];
+    this.faces.forEach((face,faceIndex)=>{
+      if(face.length!==4) return;
+      const slots=[];
+      for(let i=0;i<4;i++){
+        if(cutKeys.has(this.edgeKey(face[i],face[(i+1)%4]))) slots.push(i);
+      }
+      if(slots.length===2 && ((slots[0]+2)%4===slots[1] || (slots[1]+2)%4===slots[0])){
+        splitFaces.push({faceIndex,slots});
+      }
+    });
+
+    if(!splitFaces.length) return null;
+
+    const midpointIndex=new Map();
+    for(const key of cutKeys){
+      const edge=edgeByKey.get(key);
+      if(!edge) continue;
+      const v=this.vertices[edge.a].clone().lerp(this.vertices[edge.b],amount);
+      midpointIndex.set(key,this.vertices.length);
+      this.vertices.push(v);
+    }
+
+    const replacements=new Map();
+    for(const {faceIndex,slots} of splitFaces){
+      const f=this.faces[faceIndex];
+      const [a,b,c,d]=f;
+
+      if(slots.includes(0) && slots.includes(2)){
+        const m0=midpointIndex.get(this.edgeKey(a,b));
+        const m2=midpointIndex.get(this.edgeKey(c,d));
+        replacements.set(faceIndex,[[a,m0,m2,d],[m0,b,c,m2]]);
+      }else if(slots.includes(1) && slots.includes(3)){
+        const m1=midpointIndex.get(this.edgeKey(b,c));
+        const m3=midpointIndex.get(this.edgeKey(d,a));
+        replacements.set(faceIndex,[[a,b,m1,m3],[m3,m1,c,d]]);
+      }
+    }
+
+    const nextFaces=[];
+    this.faces.forEach((face,faceIndex)=>{
+      const split=replacements.get(faceIndex);
+      if(split) nextFaces.push(...split);
+      else nextFaces.push(face);
+    });
+    this.faces=nextFaces;
+
+    return {
+      cutEdges:cutKeys.size,
+      splitFaces:splitFaces.length
+    };
   }
 
   triangulatedGeometry(){
