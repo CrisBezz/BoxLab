@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.5';
+const VERSION='0.5.2';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -25,10 +25,15 @@ controls.target.set(0,0,0);
 controls.touches.ONE=THREE.TOUCH.ROTATE;
 controls.touches.TWO=THREE.TOUCH.DOLLY_PAN;
 controls.screenSpacePanning=true;
+controls.minAzimuthAngle=-Infinity;
+controls.maxAzimuthAngle=Infinity;
+controls.minPolarAngle=0.001;
+controls.maxPolarAngle=Math.PI-0.001;
 
 scene.add(new THREE.HemisphereLight(0xffffff,0x2a2f3a,2));
 const key=new THREE.DirectionalLight(0xffffff,2.5);key.position.set(4,7,5);scene.add(key);
 const grid=new THREE.GridHelper(12,24,0x3c424d,0x262b33);grid.position.y=-1.55;scene.add(grid);
+const originAxes=new THREE.AxesHelper(0.8);originAxes.renderOrder=20;scene.add(originAxes);
 
 let mesh=EditableMesh.cube(2);
 let selectionMode='face',toolMode='move',selection=null;
@@ -51,6 +56,7 @@ const raycaster=new THREE.Raycaster();
 raycaster.params.Line.threshold=.09;
 const pointer=new THREE.Vector2();
 let drag=null;
+const EDIT_DRAG_THRESHOLD=8;
 
 const gesture={active:false,maxTouches:0,startedAt:0,starts:new Map(),moved:false};
 const TAP_MAX_MS=320,TAP_MAX_MOVE=12;
@@ -150,6 +156,7 @@ function syncCreaseControl(){
 }
 
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+const sameSelection=(a,b)=>!!a&&!!b&&a.type===b.type&&a.index===b.index;
 
 function resize(){const w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(h,1);camera.updateProjectionMatrix();}
 function setPointer(event){const rect=canvas.getBoundingClientRect();pointer.x=((event.clientX-rect.left)/rect.width)*2-1;pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;}
@@ -176,18 +183,23 @@ canvas.addEventListener('pointerdown',event=>{
   if(event.pointerType==='mouse'&&event.button!==0)return;
   const hit=pick(event);
   if(!hit){selection=null;renderMesh();return;}
+  const alreadySelected=sameSelection(selection,hit);
   selection=hit;renderMesh();
-  if(event.isPrimary){
-    const center=componentCenter(selection),plane=screenPlaneAt(center),start=rayPlanePoint(event,plane);
-    drag={pointerId:event.pointerId,selection:{...selection},start,last:start?.clone(),plane,startMesh:mesh.clone(),startX:event.clientX,startY:event.clientY,changed:false};
-    canvas.setPointerCapture(event.pointerId);controls.enabled=false;
-  }
+  if(!alreadySelected||!event.isPrimary)return;
+  const center=componentCenter(selection),plane=screenPlaneAt(center),start=rayPlanePoint(event,plane);
+  drag={pointerId:event.pointerId,selection:{...selection},start,last:start?.clone(),plane,startMesh:mesh.clone(),startX:event.clientX,startY:event.clientY,changed:false,armed:false};
+  canvas.setPointerCapture(event.pointerId);
 });
 
 canvas.addEventListener('pointermove',event=>{
   if(!drag||drag.pointerId!==event.pointerId)return;
+  const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;
+  if(!drag.armed){
+    if(Math.hypot(dx,dy)<EDIT_DRAG_THRESHOLD)return;
+    drag.armed=true;
+    controls.enabled=false;
+  }
   const now=rayPlanePoint(event,drag.plane);if(!now||!drag.last||!drag.start)return;
-  const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;if(Math.hypot(dx,dy)<3)return;
   beginDragChange();mesh=drag.startMesh.clone();const total=now.clone().sub(drag.start);
   if(toolMode==='move')mesh.moveComponent(drag.selection,total);
   else if(toolMode==='scale'){const factor=THREE.MathUtils.clamp(Math.exp((dx-dy)*.006),.1,5);mesh.scaleComponent(drag.selection,factor);}
