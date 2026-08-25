@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.7.1';
+const VERSION='0.8';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -38,6 +38,7 @@ const originAxes=new THREE.AxesHelper(0.9);originAxes.material.depthTest=false;o
 let mesh=EditableMesh.cube(2);
 let selectionMode='face',toolMode='move',selection=null;
 let subdEnabled=false,subdLevel=1,showCage=true;
+let activeLoopSlides=[];
 let activeLoopSlide=null;
 let selectedEdgeCutT=.5;
 const mirrorAxes={x:false,y:false,z:false};
@@ -76,9 +77,20 @@ function modifiedBaseMesh(){return applyMirror(mesh,mirrorAxes);}
 function modifiedSubdMesh(){return applyMirror(subdivide(mesh,subdLevel),mirrorAxes);}
 
 function clearLoopSlide(){
+  activeLoopSlides=[];
   activeLoopSlide=null;
   const input=document.querySelector('#loopSlide');
   if(input) input.disabled=true;
+}
+
+function setActiveLoopGroup(group){
+  activeLoopSlide=group||null;
+  const input=document.querySelector('#loopSlide');
+  if(!input)return;
+  if(!activeLoopSlide?.length){input.disabled=true;return;}
+  const pct=Math.round((activeLoopSlide[0].position??.5)*100);
+  input.value=String(pct);input.disabled=false;
+  document.querySelector('#loopSlideOut').textContent=`${pct}%`;
 }
 
 function renderMesh(){
@@ -106,14 +118,17 @@ function addMirrorCage(mirrored){
 }
 
 function addCage(){
-  const loopVertices=activeLoopSlide?new Set(activeLoopSlide.map(item=>item.vertex)):null;
+  const loopGroupByVertex=new Map();
+  activeLoopSlides.forEach((group,groupIndex)=>group.forEach(item=>loopGroupByVertex.set(item.vertex,groupIndex)));
   mesh.edges().forEach((e,index)=>{
     const geometry=new THREE.BufferGeometry().setFromPoints([mesh.vertices[e.a],mesh.vertices[e.b]]);
-    const isActiveLoop=!!loopVertices&&loopVertices.has(e.a)&&loopVertices.has(e.b);
+    const ga=loopGroupByVertex.get(e.a),gb=loopGroupByVertex.get(e.b);
+    const activeGroup=ga!==undefined&&ga===gb?ga:null;
+    const isActiveLoop=activeGroup!==null;
     const mat=isActiveLoop?activeLoopMaterial:(selection?.type==='edge'&&selection.index===index?selectedEdgeMaterial:(mesh.edgeCrease(index)>0?creaseEdgeMaterial:edgeMaterial));
     const line=new THREE.Line(geometry,mat);
     if(isActiveLoop)line.renderOrder=25;
-    line.userData={kind:'edge',index,loopSlideEdge:isActiveLoop};
+    line.userData={kind:'edge',index,loopSlideGroup:activeGroup};
     root.add(line);
   });
   mesh.vertices.forEach((v,index)=>{
@@ -147,7 +162,7 @@ function updateStatus(displayMesh=mesh){
   const activeMirror=['X','Y','Z'].filter(axis=>mirrorAxes[axis.toLowerCase()]);
   const mirrorText=activeMirror.length?` • Mirror ${activeMirror.join('')}`:'';
   const creaseText=mesh.creases.size?` • ${mesh.creases.size} crease${mesh.creases.size===1?'':'s'}`:'';
-  const slideText=activeLoopSlide?' • Loop Slide active':'';
+  const slideText=activeLoopSlides.length?` • ${activeLoopSlides.length} active loop${activeLoopSlides.length===1?'':'s'}`:'';
   document.querySelector('#meshStats').textContent=`${displayMesh.vertices.length} verts • ${displayMesh.faces.length} faces${mirrorText}${creaseText}${slideText}`;
   document.querySelector('#selectionStatus').textContent=selection?`${cap(selectionMode)} ${selection.index+1} selected • ${cap(toolMode)}`:`${cap(selectionMode)} mode • nothing selected`;
 }
@@ -167,8 +182,10 @@ function updateActionAvailability(){
 function syncLoopCutControl(){
   const button=document.querySelector('#loopCutBtn');
   if(!button)return;
+  const count=Number(document.querySelector('#loopCutCount')?.value||1);
   const pct=Math.round(selectedEdgeCutT*100);
-  button.textContent=selection?.type==='edge'?`Loop Cut ${pct}%`:'Loop Cut';
+  if(selection?.type!=='edge')button.textContent=count===1?'Loop Cut':`Add ${count} Loop Cuts`;
+  else button.textContent=count===1?`Loop Cut ${pct}%`:`Add ${count} Loop Cuts`;
 }
 
 function syncCreaseControl(){
@@ -193,16 +210,18 @@ function edgeTapFraction(edgeIndex,event){
   return THREE.MathUtils.clamp(p.sub(a).dot(ab)/lenSq,.05,.95);
 }
 function pickLoopSlide(event){
-  if(!activeLoopSlide)return null;
+  if(!activeLoopSlides.length)return null;
   setPointer(event);raycaster.setFromCamera(pointer,camera);
-  const hits=raycaster.intersectObjects(root.children.filter(o=>o.userData.loopSlideEdge),false);
+  const hits=raycaster.intersectObjects(root.children.filter(o=>Number.isInteger(o.userData.loopSlideGroup)),false);
   if(!hits.length)return null;
-  const edge=mesh.edges()[hits[0].object.userData.index];
-  if(!edge)return null;
-  const candidates=activeLoopSlide.filter(item=>item.vertex===edge.a||item.vertex===edge.b);
+  const line=hits[0].object,groupIndex=line.userData.loopSlideGroup,group=activeLoopSlides[groupIndex];
+  const edge=mesh.edges()[line.userData.index];
+  if(!group||!edge)return null;
+  const candidates=group.filter(item=>item.vertex===edge.a||item.vertex===edge.b);
   if(!candidates.length)return null;
   const p=new THREE.Vector2(event.clientX,event.clientY);
-  return candidates.sort((u,v)=>worldToScreen(mesh.vertices[u.vertex]).distanceToSquared(p)-worldToScreen(mesh.vertices[v.vertex]).distanceToSquared(p))[0];
+  const item=candidates.sort((u,v)=>worldToScreen(mesh.vertices[u.vertex]).distanceToSquared(p)-worldToScreen(mesh.vertices[v.vertex]).distanceToSquared(p))[0];
+  return {item,group,groupIndex};
 }
 function componentCenter(sel){const ids=mesh.componentVertexIndices(sel),c=new THREE.Vector3();ids.forEach(i=>c.add(mesh.vertices[i]));if(ids.length)c.multiplyScalar(1/ids.length);return c;}
 function screenPlaneAt(point){const normal=new THREE.Vector3();camera.getWorldDirection(normal);return new THREE.Plane().setFromNormalAndCoplanarPoint(normal,point);}
@@ -224,20 +243,22 @@ canvas.addEventListener('touchcancel',()=>{gesture.active=false;gesture.maxTouch
 
 canvas.addEventListener('pointerdown',event=>{
   if(event.pointerType==='mouse'&&event.button!==0)return;
-  const loopItem=pickLoopSlide(event);
-  if(loopItem&&event.isPrimary){
-    const a=worldToScreen(new THREE.Vector3(...loopItem.start));
-    const b=worldToScreen(new THREE.Vector3(...loopItem.end));
+  const loopHit=pickLoopSlide(event);
+  if(loopHit&&event.isPrimary){
+    const {item,group}=loopHit;
+    setActiveLoopGroup(group);
+    const a=worldToScreen(new THREE.Vector3(...item.start));
+    const b=worldToScreen(new THREE.Vector3(...item.end));
     let rail=b.clone().sub(a);
     if(rail.lengthSq()<25){
       let best=null,bestLen=0;
-      for(const item of activeLoopSlide){
-        const ra=worldToScreen(new THREE.Vector3(...item.start)),rb=worldToScreen(new THREE.Vector3(...item.end)),candidate=rb.sub(ra),len=candidate.lengthSq();
+      for(const candidateItem of group){
+        const ra=worldToScreen(new THREE.Vector3(...candidateItem.start)),rb=worldToScreen(new THREE.Vector3(...candidateItem.end)),candidate=rb.sub(ra),len=candidate.lengthSq();
         if(len>bestLen){bestLen=len;best=candidate;}
       }
       if(best)rail=best;
     }
-    drag={kind:'loopSlide',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPct:Number(document.querySelector('#loopSlide').value)/100,rail,armed:false};
+    drag={kind:'loopSlide',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPct:Number(document.querySelector('#loopSlide').value)/100,rail,group,armed:false};
     controls.enabled=false;
     canvas.setPointerCapture(event.pointerId);
     return;
@@ -267,9 +288,8 @@ canvas.addEventListener('pointermove',event=>{
     if(lenSq<1)return;
     const delta=new THREE.Vector2(dx,dy).dot(drag.rail)/lenSq;
     const amount=THREE.MathUtils.clamp(drag.startPct+delta,.05,.95);
-    if(mesh.loopSlide(activeLoopSlide,amount)){
-      const pct=Math.round(amount*100),slide=document.querySelector('#loopSlide');
-      slide.value=String(pct);document.querySelector('#loopSlideOut').textContent=`${pct}%`;
+    if(mesh.loopSlide(drag.group,amount)){
+      setActiveLoopGroup(drag.group);
       renderMesh();
     }
     return;
@@ -297,17 +317,18 @@ function withFaceEdit(action){if(!selection||selection.type!=='face'||!mesh.face
 document.querySelector('#extrudeBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.extrudeFace(selection.index,.25);}));
 document.querySelector('#insetBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.insetFace(selection.index,.2);}));
 document.querySelector('#deleteFaceBtn').addEventListener('click',()=>withFaceEdit(()=>{mesh.deleteFace(selection.index);selection=null;}));
+document.querySelector('#loopCutCount').addEventListener('input',e=>{document.querySelector('#loopCutCountOut').textContent=String(e.target.value);syncLoopCutControl();});
 document.querySelector('#loopCutBtn').addEventListener('click',()=>{
   if(!selection||selection.type!=='edge'||!mesh.edges()[selection.index])return;
-  const cutT=selectedEdgeCutT;
-  const before=mesh.clone(),result=mesh.loopCut(selection.index,cutT);
+  const count=Number(document.querySelector('#loopCutCount').value||1);
+  const before=mesh.clone();
+  const result=count===1?mesh.loopCut(selection.index,selectedEdgeCutT):mesh.loopCuts(selection.index,count);
   if(!result)return;
   history.push(before);
-  activeLoopSlide=result.slideData;
+  activeLoopSlides=result.slideGroups||[result.slideData];
+  const initialGroup=activeLoopSlides[Math.floor((activeLoopSlides.length-1)/2)]||null;
+  setActiveLoopGroup(initialGroup);
   selection=null;
-  const pct=Math.round(cutT*100),slide=document.querySelector('#loopSlide');
-  slide.value=String(pct);slide.disabled=false;
-  document.querySelector('#loopSlideOut').textContent=`${pct}%`;
   renderMesh();
 });
 document.querySelector('#loopSlide').addEventListener('input',e=>{
