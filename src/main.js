@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.5.2';
+const VERSION='0.5.3';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -188,6 +188,7 @@ canvas.addEventListener('pointerdown',event=>{
   if(!alreadySelected||!event.isPrimary)return;
   const center=componentCenter(selection),plane=screenPlaneAt(center),start=rayPlanePoint(event,plane);
   drag={pointerId:event.pointerId,selection:{...selection},start,last:start?.clone(),plane,startMesh:mesh.clone(),startX:event.clientX,startY:event.clientY,changed:false,armed:false};
+  controls.enabled=false;
   canvas.setPointerCapture(event.pointerId);
 });
 
@@ -197,7 +198,6 @@ canvas.addEventListener('pointermove',event=>{
   if(!drag.armed){
     if(Math.hypot(dx,dy)<EDIT_DRAG_THRESHOLD)return;
     drag.armed=true;
-    controls.enabled=false;
   }
   const now=rayPlanePoint(event,drag.plane);if(!now||!drag.last||!drag.start)return;
   beginDragChange();mesh=drag.startMesh.clone();const total=now.clone().sub(drag.start);
