@@ -5,6 +5,7 @@ import { subdivide } from './subdivision.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
+const VERSION='0.2';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -36,7 +37,7 @@ const root=new THREE.Group();scene.add(root);
 
 const baseMaterial=new THREE.MeshStandardMaterial({color:0xaeb8c8,roughness:.62,metalness:.02,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const subdMaterial=new THREE.MeshStandardMaterial({color:0xc8d1de,roughness:.58,metalness:.02,side:THREE.DoubleSide});
-const selectedMaterial=new THREE.MeshBasicMaterial({color:0xff615f,transparent:true,opacity:.68,side:THREE.DoubleSide});
+const selectedMaterial=new THREE.MeshBasicMaterial({color:0xff615f,transparent:true,opacity:.78,side:THREE.DoubleSide,depthTest:true});
 const vertexMaterial=new THREE.MeshBasicMaterial({color:0xe7ebf2});
 const selectedVertexMaterial=new THREE.MeshBasicMaterial({color:0xff615f});
 const edgeMaterial=new THREE.LineBasicMaterial({color:0x707988,transparent:true,opacity:.95});
@@ -51,6 +52,7 @@ function clearGroup(group){
   while(group.children.length){
     const child=group.children.pop();
     if(child.geometry) child.geometry.dispose();
+    if(child.material?.userData?.disposable) child.material.dispose();
   }
 }
 
@@ -62,6 +64,7 @@ function renderMesh(){
   if(!subdEnabled||showCage) addCage();
   if(selection) addSelectionHighlight();
   updateStatus(displayMesh);
+  updateActionAvailability();
 }
 
 function addCage(){
@@ -72,7 +75,7 @@ function addCage(){
   });
 
   mesh.vertices.forEach((v,index)=>{
-    const geometry=new THREE.SphereGeometry(.055,12,8);
+    const geometry=new THREE.SphereGeometry(selection?.type==='vertex'&&selection.index===index?.075:.055,12,8);
     const mat=selection?.type==='vertex'&&selection.index===index?selectedVertexMaterial:vertexMaterial;
     const dot=new THREE.Mesh(geometry,mat);dot.position.copy(v);dot.userData={kind:'vertex',index};root.add(dot);
   });
@@ -85,7 +88,8 @@ function addFacePickers(){
     const positions=[];
     for(let i=1;i<face.length-1;i++) [face[0],face[i],face[i+1]].forEach(vi=>{const v=mesh.vertices[vi];positions.push(v.x,v.y,v.z);});
     const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
-    const picker=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide}));
+    const material=new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide});material.userData.disposable=true;
+    const picker=new THREE.Mesh(geometry,material);
     picker.userData={kind:'face',index:faceIndex};root.add(picker);
   });
 }
@@ -103,6 +107,14 @@ function updateStatus(displayMesh=mesh){
   document.querySelector('#meshStats').textContent=`${displayMesh.vertices.length} verts • ${displayMesh.faces.length} faces`;
   document.querySelector('#selectionStatus').textContent=selection?`${cap(selectionMode)} ${selection.index+1} selected • ${cap(toolMode)}`:`${cap(selectionMode)} mode • nothing selected`;
 }
+
+function updateActionAvailability(){
+  const faceSelected=selection?.type==='face' && !!mesh.faces[selection.index];
+  document.querySelector('#extrudeBtn').disabled=!faceSelected;
+  document.querySelector('#insetBtn').disabled=!faceSelected;
+  document.querySelector('#deleteFaceBtn').disabled=!faceSelected;
+}
+
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
 
 function resize(){
@@ -123,35 +135,50 @@ function componentCenter(sel){
 function screenPlaneAt(point){const normal=new THREE.Vector3();camera.getWorldDirection(normal);return new THREE.Plane().setFromNormalAndCoplanarPoint(normal,point);}
 function rayPlanePoint(event,plane){setPointer(event);raycaster.setFromCamera(pointer,camera);const out=new THREE.Vector3();return raycaster.ray.intersectPlane(plane,out)?out:null;}
 
+function beginDragChange(){
+  if(!drag || drag.changed) return;
+  history.push(drag.startMesh);
+  drag.changed=true;
+}
+
 canvas.addEventListener('pointerdown',event=>{
   if(event.pointerType==='mouse'&&event.button!==0)return;
   const hit=pick(event);
   if(!hit){selection=null;renderMesh();return;}
   selection=hit;renderMesh();
   if(event.isPrimary){
-    history.push(mesh);
     const center=componentCenter(selection),plane=screenPlaneAt(center),start=rayPlanePoint(event,plane);
-    drag={pointerId:event.pointerId,selection:{...selection},start,last:start?.clone(),plane,startMesh:mesh.clone()};
+    drag={pointerId:event.pointerId,selection:{...selection},start,last:start?.clone(),plane,startMesh:mesh.clone(),startX:event.clientX,startY:event.clientY,changed:false};
     canvas.setPointerCapture(event.pointerId);controls.enabled=false;
   }
 });
 
 canvas.addEventListener('pointermove',event=>{
   if(!drag||drag.pointerId!==event.pointerId)return;
-  const now=rayPlanePoint(event,drag.plane);if(!now||!drag.last)return;
+  const now=rayPlanePoint(event,drag.plane);if(!now||!drag.last||!drag.start)return;
+  const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;
+  if(Math.hypot(dx,dy)<3)return;
+
+  beginDragChange();
   mesh=drag.startMesh.clone();
   const total=now.clone().sub(drag.start);
-  if(toolMode==='move') mesh.moveComponent(drag.selection,total);
-  else if(toolMode==='scale'){
-    const signed=(total.x+total.y)>=0?1:-1;
-    const factor=THREE.MathUtils.clamp(1+total.length()*signed*.65,.1,5);
+
+  if(toolMode==='move'){
+    mesh.moveComponent(drag.selection,total);
+  }else if(toolMode==='scale'){
+    const factor=THREE.MathUtils.clamp(Math.exp((dx-dy)*.006),.1,5);
     mesh.scaleComponent(drag.selection,factor);
   }else if(toolMode==='extrude'&&drag.selection.type==='face'){
     const normal=drag.startMesh.faceNormal(drag.selection.index);
-    const signed=total.dot(normal);
-    const distance=Math.abs(signed)<.01?total.y:signed;
-    mesh=drag.startMesh.clone();selection=mesh.extrudeFace(drag.selection.index,distance);
+    const cameraRight=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,0);
+    const cameraUp=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,1);
+    const screenMotion=cameraRight.multiplyScalar(dx).add(cameraUp.multiplyScalar(-dy));
+    const facing=Math.max(.2,Math.abs(normal.dot(new THREE.Vector3().subVectors(camera.position,componentCenter(drag.selection)).normalize())));
+    const sign=(dx-dy)>=0?1:-1;
+    const distance=sign*Math.hypot(dx,dy)*.006/facing;
+    selection=mesh.extrudeFace(drag.selection.index,distance);
   }
+
   drag.last=now;renderMesh();
 });
 
@@ -165,15 +192,24 @@ document.querySelectorAll('#toolModes button').forEach(btn=>btn.addEventListener
   document.querySelectorAll('#toolModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toolMode=btn.dataset.tool;updateStatus();
 }));
 
-document.querySelector('#extrudeBtn').addEventListener('click',()=>{if(!selection||selection.type!=='face')return;history.push(mesh);selection=mesh.extrudeFace(selection.index,.25);renderMesh();});
+function withFaceEdit(action){
+  if(!selection||selection.type!=='face'||!mesh.faces[selection.index])return;
+  history.push(mesh);
+  action();
+  renderMesh();
+}
+
+document.querySelector('#extrudeBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.extrudeFace(selection.index,.25);}));
+document.querySelector('#insetBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.insetFace(selection.index,.2);}));
+document.querySelector('#deleteFaceBtn').addEventListener('click',()=>withFaceEdit(()=>{mesh.deleteFace(selection.index);selection=null;}));
 document.querySelector('#subdToggle').addEventListener('change',e=>{subdEnabled=e.target.checked;renderMesh();});
 document.querySelector('#cageToggle').addEventListener('change',e=>{showCage=e.target.checked;renderMesh();});
 document.querySelector('#subdLevel').addEventListener('input',e=>{subdLevel=Number(e.target.value);document.querySelector('#subdLevelOut').textContent=String(subdLevel);renderMesh();});
 document.querySelector('#undoBtn').addEventListener('click',()=>{const previous=history.undo(mesh);if(!previous)return;mesh=previous;selection=null;renderMesh();});
 document.querySelector('#redoBtn').addEventListener('click',()=>{const next=history.redo(mesh);if(!next)return;mesh=next;selection=null;renderMesh();});
 document.querySelector('#resetBtn').addEventListener('click',()=>{history.push(mesh);mesh=EditableMesh.cube(2);selection=null;renderMesh();});
-document.querySelector('#exportBaseBtn').addEventListener('click',()=>downloadOBJ(mesh,'BoxLab-v0.1-base.obj'));
-document.querySelector('#exportSubdBtn').addEventListener('click',()=>downloadOBJ(subdivide(mesh,subdLevel),`BoxLab-v0.1-subd${subdLevel}.obj`));
+document.querySelector('#exportBaseBtn').addEventListener('click',()=>downloadOBJ(mesh,`BoxLab-v${VERSION}-base.obj`));
+document.querySelector('#exportSubdBtn').addEventListener('click',()=>downloadOBJ(subdivide(mesh,subdLevel),`BoxLab-v${VERSION}-subd${subdLevel}.obj`));
 
 window.addEventListener('resize',resize);
 function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);}
