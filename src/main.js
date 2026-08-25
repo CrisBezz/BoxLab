@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.6.2';
+const VERSION='0.7';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -39,6 +39,7 @@ let mesh=EditableMesh.cube(2);
 let selectionMode='face',toolMode='move',selection=null;
 let subdEnabled=false,subdLevel=1,showCage=true;
 let activeLoopSlide=null;
+let selectedEdgeCutT=.5;
 const mirrorAxes={x:false,y:false,z:false};
 const history=new History(60);
 const root=new THREE.Group();scene.add(root);
@@ -92,6 +93,7 @@ function renderMesh(){
   if(selection)addSelectionHighlight();
   updateStatus(displayMesh);
   updateActionAvailability();
+  syncLoopCutControl();
   syncCreaseControl();
 }
 
@@ -159,6 +161,13 @@ function updateActionAvailability(){
   document.querySelector('#clearCreaseBtn').disabled=!edgeSelected||mesh.edgeCrease(selection?.index)<0.001;
 }
 
+function syncLoopCutControl(){
+  const button=document.querySelector('#loopCutBtn');
+  if(!button)return;
+  const pct=Math.round(selectedEdgeCutT*100);
+  button.textContent=selection?.type==='edge'?`Loop Cut ${pct}%`:'Loop Cut';
+}
+
 function syncCreaseControl(){
   if(selection?.type!=='edge')return;
   const current=mesh.edgeCrease(selection.index);
@@ -173,6 +182,13 @@ const sameSelection=(a,b)=>!!a&&!!b&&a.type===b.type&&a.index===b.index;
 function resize(){const w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(h,1);camera.updateProjectionMatrix();}
 function setPointer(event){const rect=canvas.getBoundingClientRect();pointer.x=((event.clientX-rect.left)/rect.width)*2-1;pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;}
 function pick(event){setPointer(event);raycaster.setFromCamera(pointer,camera);const kind=selectionMode==='vertex'?'vertex':selectionMode==='edge'?'edge':'face';const hits=raycaster.intersectObjects(root.children.filter(o=>o.userData.kind===kind),false);return hits.length?{type:selectionMode,index:hits[0].object.userData.index}:null;}
+function edgeTapFraction(edgeIndex,event){
+  const edge=mesh.edges()[edgeIndex];if(!edge)return .5;
+  const a=worldToScreen(mesh.vertices[edge.a]),b=worldToScreen(mesh.vertices[edge.b]);
+  const ab=b.clone().sub(a),lenSq=ab.lengthSq();if(lenSq<1)return .5;
+  const p=new THREE.Vector2(event.clientX,event.clientY);
+  return THREE.MathUtils.clamp(p.sub(a).dot(ab)/lenSq,.05,.95);
+}
 function pickLoopSlide(event){
   if(!activeLoopSlide)return null;
   setPointer(event);raycaster.setFromCamera(pointer,camera);
@@ -192,8 +208,8 @@ function worldToScreen(v){const p=v.clone().project(camera),rect=canvas.getBound
 function projectedFaceNormal2D(sourceMesh,faceIndex){const center=sourceMesh.faceCenter(faceIndex),normal=sourceMesh.faceNormal(faceIndex),scale=Math.max(.25,camera.position.distanceTo(center)*.08),a=worldToScreen(center),b=worldToScreen(center.clone().addScaledVector(normal,scale)),dir=b.sub(a);return dir.lengthSq()>1e-6?dir.normalize():new THREE.Vector2(0,-1);}
 
 function beginDragChange(){if(!drag||drag.changed)return;clearLoopSlide();history.push(drag.startMesh);drag.changed=true;}
-function doUndo(){const previous=history.undo(mesh);if(!previous)return false;mesh=previous;selection=null;clearLoopSlide();renderMesh();return true;}
-function doRedo(){const next=history.redo(mesh);if(!next)return false;mesh=next;selection=null;clearLoopSlide();renderMesh();return true;}
+function doUndo(){const previous=history.undo(mesh);if(!previous)return false;mesh=previous;selection=null;selectedEdgeCutT=.5;clearLoopSlide();renderMesh();return true;}
+function doRedo(){const next=history.redo(mesh);if(!next)return false;mesh=next;selection=null;selectedEdgeCutT=.5;clearLoopSlide();renderMesh();return true;}
 
 function beginGesture(event){if(!gesture.active){gesture.active=true;gesture.maxTouches=event.touches.length;gesture.startedAt=performance.now();gesture.starts.clear();gesture.moved=false;}gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);for(const touch of event.touches)if(!gesture.starts.has(touch.identifier))gesture.starts.set(touch.identifier,{x:touch.clientX,y:touch.clientY});}
 function trackGesture(event){if(!gesture.active)return;gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);for(const touch of event.touches){const start=gesture.starts.get(touch.identifier);if(start&&Math.hypot(touch.clientX-start.x,touch.clientY-start.y)>TAP_MAX_MOVE){gesture.moved=true;break;}}}
@@ -224,9 +240,11 @@ canvas.addEventListener('pointerdown',event=>{
     return;
   }
   const hit=pick(event);
-  if(!hit){selection=null;renderMesh();return;}
+  if(!hit){selection=null;selectedEdgeCutT=.5;renderMesh();return;}
   const alreadySelected=sameSelection(selection,hit);
-  selection=hit;renderMesh();
+  selection=hit;
+  if(hit.type==='edge')selectedEdgeCutT=edgeTapFraction(hit.index,event);else selectedEdgeCutT=.5;
+  renderMesh();
   if(!alreadySelected||!event.isPrimary)return;
   const center=componentCenter(selection),plane=screenPlaneAt(center),start=rayPlanePoint(event,plane);
   drag={kind:'component',pointerId:event.pointerId,selection:{...selection},start,last:start?.clone(),plane,startMesh:mesh.clone(),startX:event.clientX,startY:event.clientY,changed:false,armed:false};
@@ -269,7 +287,7 @@ canvas.addEventListener('pointermove',event=>{
 function endDrag(event){if(!drag||drag.pointerId!==event.pointerId)return;drag=null;controls.enabled=true;}
 canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercancel',endDrag);
 
-document.querySelectorAll('#selectionModes button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#selectionModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectionMode=btn.dataset.mode;selection=null;renderMesh();}));
+document.querySelectorAll('#selectionModes button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#selectionModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectionMode=btn.dataset.mode;selection=null;selectedEdgeCutT=.5;renderMesh();}));
 document.querySelectorAll('#toolModes button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#toolModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toolMode=btn.dataset.tool;updateStatus();}));
 
 function withFaceEdit(action){if(!selection||selection.type!=='face'||!mesh.faces[selection.index])return;clearLoopSlide();history.push(mesh);action();renderMesh();}
@@ -278,14 +296,15 @@ document.querySelector('#insetBtn').addEventListener('click',()=>withFaceEdit(()
 document.querySelector('#deleteFaceBtn').addEventListener('click',()=>withFaceEdit(()=>{mesh.deleteFace(selection.index);selection=null;}));
 document.querySelector('#loopCutBtn').addEventListener('click',()=>{
   if(!selection||selection.type!=='edge'||!mesh.edges()[selection.index])return;
-  const before=mesh.clone(),result=mesh.loopCut(selection.index,.5);
+  const cutT=selectedEdgeCutT;
+  const before=mesh.clone(),result=mesh.loopCut(selection.index,cutT);
   if(!result)return;
   history.push(before);
   activeLoopSlide=result.slideData;
   selection=null;
-  const slide=document.querySelector('#loopSlide');
-  slide.value='50';slide.disabled=false;
-  document.querySelector('#loopSlideOut').textContent='50%';
+  const pct=Math.round(cutT*100),slide=document.querySelector('#loopSlide');
+  slide.value=String(pct);slide.disabled=false;
+  document.querySelector('#loopSlideOut').textContent=`${pct}%`;
   renderMesh();
 });
 document.querySelector('#loopSlide').addEventListener('input',e=>{
@@ -305,7 +324,7 @@ document.querySelector('#cageToggle').addEventListener('change',e=>{showCage=e.t
 document.querySelector('#subdLevel').addEventListener('input',e=>{subdLevel=Number(e.target.value);document.querySelector('#subdLevelOut').textContent=String(subdLevel);renderMesh();});
 document.querySelector('#undoBtn').addEventListener('click',doUndo);
 document.querySelector('#redoBtn').addEventListener('click',doRedo);
-document.querySelector('#resetBtn').addEventListener('click',()=>{clearLoopSlide();history.push(mesh);mesh=EditableMesh.cube(2);selection=null;renderMesh();});
+document.querySelector('#resetBtn').addEventListener('click',()=>{clearLoopSlide();history.push(mesh);mesh=EditableMesh.cube(2);selection=null;selectedEdgeCutT=.5;renderMesh();});
 document.querySelector('#exportBaseBtn').addEventListener('click',()=>downloadOBJ(modifiedBaseMesh(),`BoxLab-v${VERSION}-base.obj`));
 document.querySelector('#exportSubdBtn').addEventListener('click',()=>downloadOBJ(modifiedSubdMesh(),`BoxLab-v${VERSION}-subd${subdLevel}.obj`));
 
