@@ -5,7 +5,7 @@ import { subdivide } from './subdivision.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.3.1';
+const VERSION='0.3.2';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -48,13 +48,7 @@ raycaster.params.Line.threshold=.09;
 const pointer=new THREE.Vector2();
 let drag=null;
 
-const gesture={
-  active:false,
-  maxTouches:0,
-  startedAt:0,
-  starts:new Map(),
-  moved:false
-};
+const gesture={active:false,maxTouches:0,startedAt:0,starts:new Map(),moved:false};
 const TAP_MAX_MS=320;
 const TAP_MAX_MOVE=12;
 
@@ -83,14 +77,12 @@ function addCage(){
     const line=new THREE.Line(geometry,selection?.type==='edge'&&selection.index===index?selectedEdgeMaterial:edgeMaterial);
     line.userData={kind:'edge',index};root.add(line);
   });
-
   mesh.vertices.forEach((v,index)=>{
     const selected=selection?.type==='vertex'&&selection.index===index;
     const geometry=new THREE.SphereGeometry(selected ? 0.0375 : 0.0275,12,8);
     const mat=selected?selectedVertexMaterial:vertexMaterial;
     const dot=new THREE.Mesh(geometry,mat);dot.position.copy(v);dot.userData={kind:'vertex',index};root.add(dot);
   });
-
   if(selectionMode==='face') addFacePickers();
 }
 
@@ -100,8 +92,7 @@ function addFacePickers(){
     for(let i=1;i<face.length-1;i++) [face[0],face[i],face[i+1]].forEach(vi=>{const v=mesh.vertices[vi];positions.push(v.x,v.y,v.z);});
     const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
     const material=new THREE.MeshBasicMaterial({visible:false,side:THREE.DoubleSide});material.userData.disposable=true;
-    const picker=new THREE.Mesh(geometry,material);
-    picker.userData={kind:'face',index:faceIndex};root.add(picker);
+    const picker=new THREE.Mesh(geometry,material);picker.userData={kind:'face',index:faceIndex};root.add(picker);
   });
 }
 
@@ -147,77 +138,46 @@ function componentCenter(sel){
 }
 function screenPlaneAt(point){const normal=new THREE.Vector3();camera.getWorldDirection(normal);return new THREE.Plane().setFromNormalAndCoplanarPoint(normal,point);}
 function rayPlanePoint(event,plane){setPointer(event);raycaster.setFromCamera(pointer,camera);const out=new THREE.Vector3();return raycaster.ray.intersectPlane(plane,out)?out:null;}
-
-function beginDragChange(){
-  if(!drag || drag.changed) return;
-  history.push(drag.startMesh);
-  drag.changed=true;
+function worldToScreen(v){
+  const p=v.clone().project(camera);
+  const rect=canvas.getBoundingClientRect();
+  return new THREE.Vector2((p.x*.5+.5)*rect.width,(-p.y*.5+.5)*rect.height);
+}
+function projectedFaceNormal2D(sourceMesh,faceIndex){
+  const center=sourceMesh.faceCenter(faceIndex);
+  const normal=sourceMesh.faceNormal(faceIndex);
+  const scale=Math.max(.25,camera.position.distanceTo(center)*.08);
+  const a=worldToScreen(center);
+  const b=worldToScreen(center.clone().addScaledVector(normal,scale));
+  const dir=b.sub(a);
+  return dir.lengthSq()>1e-6?dir.normalize():new THREE.Vector2(0,-1);
 }
 
-function doUndo(){
-  const previous=history.undo(mesh);
-  if(!previous)return false;
-  mesh=previous;selection=null;renderMesh();return true;
-}
-
-function doRedo(){
-  const next=history.redo(mesh);
-  if(!next)return false;
-  mesh=next;selection=null;renderMesh();return true;
-}
+function beginDragChange(){if(!drag || drag.changed) return;history.push(drag.startMesh);drag.changed=true;}
+function doUndo(){const previous=history.undo(mesh);if(!previous)return false;mesh=previous;selection=null;renderMesh();return true;}
+function doRedo(){const next=history.redo(mesh);if(!next)return false;mesh=next;selection=null;renderMesh();return true;}
 
 function beginGesture(event){
-  if(!gesture.active){
-    gesture.active=true;
-    gesture.maxTouches=event.touches.length;
-    gesture.startedAt=performance.now();
-    gesture.starts.clear();
-    gesture.moved=false;
-  }
+  if(!gesture.active){gesture.active=true;gesture.maxTouches=event.touches.length;gesture.startedAt=performance.now();gesture.starts.clear();gesture.moved=false;}
   gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);
-  for(const touch of event.touches){
-    if(!gesture.starts.has(touch.identifier)){
-      gesture.starts.set(touch.identifier,{x:touch.clientX,y:touch.clientY});
-    }
-  }
+  for(const touch of event.touches){if(!gesture.starts.has(touch.identifier))gesture.starts.set(touch.identifier,{x:touch.clientX,y:touch.clientY});}
 }
-
 function trackGesture(event){
-  if(!gesture.active)return;
-  gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);
-  for(const touch of event.touches){
-    const start=gesture.starts.get(touch.identifier);
-    if(!start)continue;
-    if(Math.hypot(touch.clientX-start.x,touch.clientY-start.y)>TAP_MAX_MOVE){
-      gesture.moved=true;
-      break;
-    }
-  }
+  if(!gesture.active)return;gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);
+  for(const touch of event.touches){const start=gesture.starts.get(touch.identifier);if(!start)continue;if(Math.hypot(touch.clientX-start.x,touch.clientY-start.y)>TAP_MAX_MOVE){gesture.moved=true;break;}}
 }
-
 function endGesture(event){
   if(!gesture.active || event.touches.length!==0)return;
   const elapsed=performance.now()-gesture.startedAt;
   const isTap=!gesture.moved && elapsed<=TAP_MAX_MS;
   const fingers=gesture.maxTouches;
-  gesture.active=false;
-  gesture.maxTouches=0;
-  gesture.starts.clear();
-  gesture.moved=false;
-  if(!isTap)return;
-  if(fingers===2)doUndo();
-  else if(fingers===3)doRedo();
+  gesture.active=false;gesture.maxTouches=0;gesture.starts.clear();gesture.moved=false;
+  if(!isTap)return;if(fingers===2)doUndo();else if(fingers===3)doRedo();
 }
-
 canvas.addEventListener('touchstart',beginGesture,{passive:true});
 canvas.addEventListener('touchmove',trackGesture,{passive:true});
 canvas.addEventListener('touchend',endGesture,{passive:true});
-canvas.addEventListener('touchcancel',()=>{
-  gesture.active=false;
-  gesture.maxTouches=0;
-  gesture.starts.clear();
-  gesture.moved=false;
-},{passive:true});
+canvas.addEventListener('touchcancel',()=>{gesture.active=false;gesture.maxTouches=0;gesture.starts.clear();gesture.moved=false;},{passive:true});
 
 canvas.addEventListener('pointerdown',event=>{
   if(event.pointerType==='mouse'&&event.button!==0)return;
@@ -236,58 +196,39 @@ canvas.addEventListener('pointermove',event=>{
   const now=rayPlanePoint(event,drag.plane);if(!now||!drag.last||!drag.start)return;
   const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;
   if(Math.hypot(dx,dy)<3)return;
-
   beginDragChange();
   mesh=drag.startMesh.clone();
   const total=now.clone().sub(drag.start);
-
   if(toolMode==='move'){
     mesh.moveComponent(drag.selection,total);
   }else if(toolMode==='scale'){
     const factor=THREE.MathUtils.clamp(Math.exp((dx-dy)*.006),.1,5);
     mesh.scaleComponent(drag.selection,factor);
   }else if(toolMode==='extrude'&&drag.selection.type==='face'){
-    const normal=drag.startMesh.faceNormal(drag.selection.index);
-    const facing=Math.max(.2,Math.abs(normal.dot(new THREE.Vector3().subVectors(camera.position,componentCenter(drag.selection)).normalize())));
-    const sign=(dx-dy)>=0?1:-1;
-    const distance=sign*Math.hypot(dx,dy)*.006/facing;
-    selection=mesh.extrudeFace(drag.selection.index,distance);
+    const faceIndex=drag.selection.index;
+    const normal=drag.startMesh.faceNormal(faceIndex);
+    const center=drag.startMesh.faceCenter(faceIndex);
+    const facing=Math.max(.2,Math.abs(normal.dot(new THREE.Vector3().subVectors(camera.position,center).normalize())));
+    const outward2D=projectedFaceNormal2D(drag.startMesh,faceIndex);
+    const drag2D=new THREE.Vector2(dx,dy);
+    const signedPixels=drag2D.dot(outward2D);
+    const distance=signedPixels*.006/facing;
+    selection=mesh.extrudeFace(faceIndex,distance);
   }
-
   drag.last=now;renderMesh();
 });
 
 function endDrag(event){if(!drag||drag.pointerId!==event.pointerId)return;drag=null;controls.enabled=true;}
 canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercancel',endDrag);
 
-document.querySelectorAll('#selectionModes button').forEach(btn=>btn.addEventListener('click',()=>{
-  document.querySelectorAll('#selectionModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectionMode=btn.dataset.mode;selection=null;renderMesh();
-}));
-document.querySelectorAll('#toolModes button').forEach(btn=>btn.addEventListener('click',()=>{
-  document.querySelectorAll('#toolModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toolMode=btn.dataset.tool;updateStatus();
-}));
+document.querySelectorAll('#selectionModes button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#selectionModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectionMode=btn.dataset.mode;selection=null;renderMesh();}));
+document.querySelectorAll('#toolModes button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#toolModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toolMode=btn.dataset.tool;updateStatus();}));
 
-function withFaceEdit(action){
-  if(!selection||selection.type!=='face'||!mesh.faces[selection.index])return;
-  history.push(mesh);
-  action();
-  renderMesh();
-}
-
+function withFaceEdit(action){if(!selection||selection.type!=='face'||!mesh.faces[selection.index])return;history.push(mesh);action();renderMesh();}
 document.querySelector('#extrudeBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.extrudeFace(selection.index,.25);}));
 document.querySelector('#insetBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.insetFace(selection.index,.2);}));
 document.querySelector('#deleteFaceBtn').addEventListener('click',()=>withFaceEdit(()=>{mesh.deleteFace(selection.index);selection=null;}));
-
-document.querySelector('#loopCutBtn').addEventListener('click',()=>{
-  if(!selection||selection.type!=='edge'||!mesh.edges()[selection.index])return;
-  const before=mesh.clone();
-  const result=mesh.loopCut(selection.index,.5);
-  if(!result)return;
-  history.push(before);
-  selection=null;
-  renderMesh();
-});
-
+document.querySelector('#loopCutBtn').addEventListener('click',()=>{if(!selection||selection.type!=='edge'||!mesh.edges()[selection.index])return;const before=mesh.clone();const result=mesh.loopCut(selection.index,.5);if(!result)return;history.push(before);selection=null;renderMesh();});
 document.querySelector('#subdToggle').addEventListener('change',e=>{subdEnabled=e.target.checked;renderMesh();});
 document.querySelector('#cageToggle').addEventListener('change',e=>{showCage=e.target.checked;renderMesh();});
 document.querySelector('#subdLevel').addEventListener('input',e=>{subdLevel=Number(e.target.value);document.querySelector('#subdLevelOut').textContent=String(subdLevel);renderMesh();});
