@@ -134,23 +134,39 @@ export class EditableMesh {
     if(!seed) return null;
     const amount=THREE.MathUtils.clamp(t,0.05,0.95);
     const edgeByKey=new Map(allEdges.map(e=>[this.edgeKey(e.a,e.b),e]));
-    const cutKeys=new Set([this.edgeKey(seed.a,seed.b)]);
-    const queue=[this.edgeKey(seed.a,seed.b)];
+    const seedKey=this.edgeKey(seed.a,seed.b);
+    const cutKeys=new Set([seedKey]);
+    const directed=new Map([[seedKey,{a:seed.a,b:seed.b}]]);
+    const queue=[seedKey];
+
     while(queue.length){
       const currentKey=queue.shift();
       const current=edgeByKey.get(currentKey);
-      if(!current) continue;
+      const currentDir=directed.get(currentKey);
+      if(!current||!currentDir) continue;
+
       for(const faceIndex of current.faces){
         const face=this.faces[faceIndex];
         if(!face || face.length!==4) continue;
         let edgeSlot=-1;
         for(let i=0;i<4;i++) if(this.edgeKey(face[i],face[(i+1)%4])===currentKey){edgeSlot=i;break;}
         if(edgeSlot<0) continue;
+
+        const faceA=face[edgeSlot],faceB=face[(edgeSlot+1)%4];
+        const currentForward=currentDir.a===faceA&&currentDir.b===faceB;
         const oppositeSlot=(edgeSlot+2)%4;
-        const oppositeKey=this.edgeKey(face[oppositeSlot],face[(oppositeSlot+1)%4]);
-        if(!cutKeys.has(oppositeKey)){cutKeys.add(oppositeKey);queue.push(oppositeKey);}
+        const oppositeA=face[oppositeSlot],oppositeB=face[(oppositeSlot+1)%4];
+        const oppositeKey=this.edgeKey(oppositeA,oppositeB);
+        const nextDir=currentForward?{a:oppositeB,b:oppositeA}:{a:oppositeA,b:oppositeB};
+
+        if(!cutKeys.has(oppositeKey)){
+          cutKeys.add(oppositeKey);
+          directed.set(oppositeKey,nextDir);
+          queue.push(oppositeKey);
+        }
       }
     }
+
     const splitFaces=[];
     this.faces.forEach((face,faceIndex)=>{
       if(face.length!==4) return;
@@ -159,12 +175,19 @@ export class EditableMesh {
       if(slots.length===2 && ((slots[0]+2)%4===slots[1] || (slots[1]+2)%4===slots[0])) splitFaces.push({faceIndex,slots});
     });
     if(!splitFaces.length) return null;
+
     const midpointIndex=new Map();
+    const slideData=[];
     for(const key of cutKeys){
-      const edge=edgeByKey.get(key); if(!edge) continue;
-      const v=this.vertices[edge.a].clone().lerp(this.vertices[edge.b],amount);
-      midpointIndex.set(key,this.vertices.length); this.vertices.push(v);
+      const dir=directed.get(key);
+      if(!dir) continue;
+      const v=this.vertices[dir.a].clone().lerp(this.vertices[dir.b],amount);
+      const vertex=this.vertices.length;
+      midpointIndex.set(key,vertex);
+      this.vertices.push(v);
+      slideData.push({vertex,a:dir.a,b:dir.b});
     }
+
     const replacements=new Map();
     for(const {faceIndex,slots} of splitFaces){
       const [a,b,c,d]=this.faces[faceIndex];
@@ -179,7 +202,19 @@ export class EditableMesh {
     const nextFaces=[];
     this.faces.forEach((face,faceIndex)=>{const split=replacements.get(faceIndex);if(split)nextFaces.push(...split);else nextFaces.push(face);});
     this.faces=nextFaces;
-    return {cutEdges:cutKeys.size,splitFaces:splitFaces.length};
+    return {cutEdges:cutKeys.size,splitFaces:splitFaces.length,slideData,position:amount};
+  }
+
+  loopSlide(slideData,t=0.5){
+    if(!Array.isArray(slideData)||!slideData.length) return false;
+    const amount=THREE.MathUtils.clamp(t,0.05,0.95);
+    for(const item of slideData){
+      if(!item||!this.vertices[item.vertex]||!this.vertices[item.a]||!this.vertices[item.b]) return false;
+    }
+    for(const {vertex,a,b} of slideData){
+      this.vertices[vertex].copy(this.vertices[a]).lerp(this.vertices[b],amount);
+    }
+    return true;
   }
 
   triangulatedGeometry(){
