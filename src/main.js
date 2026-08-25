@@ -33,7 +33,7 @@ controls.maxPolarAngle=Math.PI-0.001;
 scene.add(new THREE.HemisphereLight(0xffffff,0x2a2f3a,2));
 const key=new THREE.DirectionalLight(0xffffff,2.5);key.position.set(4,7,5);scene.add(key);
 const grid=new THREE.GridHelper(12,24,0x3c424d,0x262b33);grid.position.y=-1.55;scene.add(grid);
-const originAxes=new THREE.AxesHelper(0.8);originAxes.renderOrder=20;scene.add(originAxes);
+const originAxes=new THREE.AxesHelper(0.9);originAxes.material.depthTest=false;originAxes.renderOrder=20;scene.add(originAxes);
 
 let mesh=EditableMesh.cube(2);
 let selectionMode='face',toolMode='move',selection=null;
