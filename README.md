@@ -1,32 +1,35 @@
-# BoxLab v0.3.1
+# BoxLab v0.4
 
 Box modelling with minimal UI on iPad.
 
 A small Pencil/touch-first box and subdivision modeller intended to create clean base meshes for export into Nomad Sculpt.
 
-## v0.3.1 changes
+## v0.4 changes
 
-- Vertex display markers are 50% smaller than v0.3
-- Selected vertex marker is also 50% smaller
-- Two-finger tap = Undo
-- Three-finger tap = Redo
-- Multi-touch tap gestures only trigger after a short, low-movement tap
-- Two-finger pan and pinch zoom remain assigned to the existing OrbitControls camera interaction
+- Non-destructive Mirror modifier
+- Independent Mirror X / Mirror Y / Mirror Z toggles
+- Mirrors around the global origin
+- Coincident mirrored vertices and faces are deduplicated
+- Source cage remains the editable/selectable geometry
+- Mirrored result is shown with a lighter ghost cage when cage display is enabled
+- Catmull-Clark subdivision is evaluated after the Mirror modifier
+- Base OBJ export includes the active mirrored result
+- SubD OBJ export includes Mirror + SubD
+- Mirror implementation is isolated in `src/mirror.js`
 
-## Existing v0.3 modelling scope
+## Existing modelling scope
 
 - Starts from a cube
 - Vertex / Edge / Face selection
 - Move selected component
 - Scale selected component
-- Face extrusion
+- Face extrusion with projected outward drag direction
 - Face inset with quad side ring
 - Delete face / create open boundary
 - Centered Loop Cut from a selected edge
 - Loop Cut follows connected quad strips through opposite edges
-- Loop Cut stops where topology is no longer quad-compatible
-- Loop Cut creates one continuous supporting ring where the topology allows it
-- Undo / Redo records geometry edits as single history steps
+- Two-finger tap = Undo
+- Three-finger tap = Redo
 - Catmull-Clark subdivision preview, levels 1–2
 - Cage overlay
 - Reset cube
@@ -38,7 +41,8 @@ A small Pencil/touch-first box and subdivision modeller intended to create clean
 
 The project is intentionally modular.
 
-- `src/mesh.js` — editable polygon mesh data + modelling operations, including Loop Cut
+- `src/mesh.js` — editable polygon mesh data + modelling operations
+- `src/mirror.js` — non-destructive X/Y/Z mirror modifier and deduplication
 - `src/subdivision.js` — Catmull-Clark subdivision
 - `src/export.js` — OBJ export
 - `src/history.js` — snapshot undo/redo
@@ -49,10 +53,10 @@ Do not move experimental geometry code into the viewport module. New modelling o
 ## Version preservation
 
 - `main` is the live GitHub Pages build.
-- v0.1 remains recoverable from Git history.
-- v0.2 remains recoverable from Git history and the `boxlab-v0.2` development branch.
-- v0.3 remains recoverable from Git history and the `boxlab-v0.3` development branch.
-- v0.3.1 was developed on `boxlab-v0.3.1` before promotion to `main`.
+- v0.1, v0.2 and v0.3 remain recoverable from Git history and their development branches.
+- v0.3.1 remains recoverable from `boxlab-v0.3.1`.
+- v0.3.2 remains recoverable from `boxlab-v0.3.2`.
+- v0.4 is developed on `boxlab-v0.4` before promotion to `main`.
 
 ## GitHub Pages
 
@@ -62,4 +66,4 @@ Pages URL: `https://crisbezz.github.io/BoxLab/`
 
 ## Next candidates
 
-Mirror, bevel/crease, loop-slide positioning, bridge/weld, multi-object support and GLB export.
+Bevel/crease, loop-slide positioning, bridge/weld, multi-object support and GLB export.
