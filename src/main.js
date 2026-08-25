@@ -5,7 +5,7 @@ import { subdivide } from './subdivision.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.3';
+const VERSION='0.3.1';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -48,6 +48,16 @@ raycaster.params.Line.threshold=.09;
 const pointer=new THREE.Vector2();
 let drag=null;
 
+const gesture={
+  active:false,
+  maxTouches:0,
+  startedAt:0,
+  starts:new Map(),
+  moved:false
+};
+const TAP_MAX_MS=320;
+const TAP_MAX_MOVE=12;
+
 function clearGroup(group){
   while(group.children.length){
     const child=group.children.pop();
@@ -76,7 +86,7 @@ function addCage(){
 
   mesh.vertices.forEach((v,index)=>{
     const selected=selection?.type==='vertex'&&selection.index===index;
-    const geometry=new THREE.SphereGeometry(selected ? 0.075 : 0.055,12,8);
+    const geometry=new THREE.SphereGeometry(selected ? 0.0375 : 0.0275,12,8);
     const mat=selected?selectedVertexMaterial:vertexMaterial;
     const dot=new THREE.Mesh(geometry,mat);dot.position.copy(v);dot.userData={kind:'vertex',index};root.add(dot);
   });
@@ -143,6 +153,71 @@ function beginDragChange(){
   history.push(drag.startMesh);
   drag.changed=true;
 }
+
+function doUndo(){
+  const previous=history.undo(mesh);
+  if(!previous)return false;
+  mesh=previous;selection=null;renderMesh();return true;
+}
+
+function doRedo(){
+  const next=history.redo(mesh);
+  if(!next)return false;
+  mesh=next;selection=null;renderMesh();return true;
+}
+
+function beginGesture(event){
+  if(!gesture.active){
+    gesture.active=true;
+    gesture.maxTouches=event.touches.length;
+    gesture.startedAt=performance.now();
+    gesture.starts.clear();
+    gesture.moved=false;
+  }
+  gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);
+  for(const touch of event.touches){
+    if(!gesture.starts.has(touch.identifier)){
+      gesture.starts.set(touch.identifier,{x:touch.clientX,y:touch.clientY});
+    }
+  }
+}
+
+function trackGesture(event){
+  if(!gesture.active)return;
+  gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);
+  for(const touch of event.touches){
+    const start=gesture.starts.get(touch.identifier);
+    if(!start)continue;
+    if(Math.hypot(touch.clientX-start.x,touch.clientY-start.y)>TAP_MAX_MOVE){
+      gesture.moved=true;
+      break;
+    }
+  }
+}
+
+function endGesture(event){
+  if(!gesture.active || event.touches.length!==0)return;
+  const elapsed=performance.now()-gesture.startedAt;
+  const isTap=!gesture.moved && elapsed<=TAP_MAX_MS;
+  const fingers=gesture.maxTouches;
+  gesture.active=false;
+  gesture.maxTouches=0;
+  gesture.starts.clear();
+  gesture.moved=false;
+  if(!isTap)return;
+  if(fingers===2)doUndo();
+  else if(fingers===3)doRedo();
+}
+
+canvas.addEventListener('touchstart',beginGesture,{passive:true});
+canvas.addEventListener('touchmove',trackGesture,{passive:true});
+canvas.addEventListener('touchend',endGesture,{passive:true});
+canvas.addEventListener('touchcancel',()=>{
+  gesture.active=false;
+  gesture.maxTouches=0;
+  gesture.starts.clear();
+  gesture.moved=false;
+},{passive:true});
 
 canvas.addEventListener('pointerdown',event=>{
   if(event.pointerType==='mouse'&&event.button!==0)return;
@@ -216,8 +291,8 @@ document.querySelector('#loopCutBtn').addEventListener('click',()=>{
 document.querySelector('#subdToggle').addEventListener('change',e=>{subdEnabled=e.target.checked;renderMesh();});
 document.querySelector('#cageToggle').addEventListener('change',e=>{showCage=e.target.checked;renderMesh();});
 document.querySelector('#subdLevel').addEventListener('input',e=>{subdLevel=Number(e.target.value);document.querySelector('#subdLevelOut').textContent=String(subdLevel);renderMesh();});
-document.querySelector('#undoBtn').addEventListener('click',()=>{const previous=history.undo(mesh);if(!previous)return;mesh=previous;selection=null;renderMesh();});
-document.querySelector('#redoBtn').addEventListener('click',()=>{const next=history.redo(mesh);if(!next)return;mesh=next;selection=null;renderMesh();});
+document.querySelector('#undoBtn').addEventListener('click',doUndo);
+document.querySelector('#redoBtn').addEventListener('click',doRedo);
 document.querySelector('#resetBtn').addEventListener('click',()=>{history.push(mesh);mesh=EditableMesh.cube(2);selection=null;renderMesh();});
 document.querySelector('#exportBaseBtn').addEventListener('click',()=>downloadOBJ(mesh,`BoxLab-v${VERSION}-base.obj`));
 document.querySelector('#exportSubdBtn').addEventListener('click',()=>downloadOBJ(subdivide(mesh,subdLevel),`BoxLab-v${VERSION}-subd${subdLevel}.obj`));
