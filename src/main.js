@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.6.1';
+const VERSION='0.6.2';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -103,10 +103,13 @@ function addMirrorCage(mirrored){
 }
 
 function addCage(){
+  const loopVertices=activeLoopSlide?new Set(activeLoopSlide.map(item=>item.vertex)):null;
   mesh.edges().forEach((e,index)=>{
     const geometry=new THREE.BufferGeometry().setFromPoints([mesh.vertices[e.a],mesh.vertices[e.b]]);
     const mat=selection?.type==='edge'&&selection.index===index?selectedEdgeMaterial:(mesh.edgeCrease(index)>0?creaseEdgeMaterial:edgeMaterial);
-    const line=new THREE.Line(geometry,mat);line.userData={kind:'edge',index};root.add(line);
+    const line=new THREE.Line(geometry,mat);
+    line.userData={kind:'edge',index,loopSlideEdge:!!loopVertices&&loopVertices.has(e.a)&&loopVertices.has(e.b)};
+    root.add(line);
   });
   mesh.vertices.forEach((v,index)=>{
     const selected=selection?.type==='vertex'&&selection.index===index;
@@ -170,10 +173,22 @@ const sameSelection=(a,b)=>!!a&&!!b&&a.type===b.type&&a.index===b.index;
 function resize(){const w=wrap.clientWidth,h=wrap.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/Math.max(h,1);camera.updateProjectionMatrix();}
 function setPointer(event){const rect=canvas.getBoundingClientRect();pointer.x=((event.clientX-rect.left)/rect.width)*2-1;pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;}
 function pick(event){setPointer(event);raycaster.setFromCamera(pointer,camera);const kind=selectionMode==='vertex'?'vertex':selectionMode==='edge'?'edge':'face';const hits=raycaster.intersectObjects(root.children.filter(o=>o.userData.kind===kind),false);return hits.length?{type:selectionMode,index:hits[0].object.userData.index}:null;}
+function pickLoopSlide(event){
+  if(!activeLoopSlide)return null;
+  setPointer(event);raycaster.setFromCamera(pointer,camera);
+  const hits=raycaster.intersectObjects(root.children.filter(o=>o.userData.loopSlideEdge),false);
+  if(!hits.length)return null;
+  const edge=mesh.edges()[hits[0].object.userData.index];
+  if(!edge)return null;
+  const candidates=activeLoopSlide.filter(item=>item.vertex===edge.a||item.vertex===edge.b);
+  if(!candidates.length)return null;
+  const p=new THREE.Vector2(event.clientX,event.clientY);
+  return candidates.sort((u,v)=>worldToScreen(mesh.vertices[u.vertex]).distanceToSquared(p)-worldToScreen(mesh.vertices[v.vertex]).distanceToSquared(p))[0];
+}
 function componentCenter(sel){const ids=mesh.componentVertexIndices(sel),c=new THREE.Vector3();ids.forEach(i=>c.add(mesh.vertices[i]));if(ids.length)c.multiplyScalar(1/ids.length);return c;}
 function screenPlaneAt(point){const normal=new THREE.Vector3();camera.getWorldDirection(normal);return new THREE.Plane().setFromNormalAndCoplanarPoint(normal,point);}
 function rayPlanePoint(event,plane){setPointer(event);raycaster.setFromCamera(pointer,camera);const out=new THREE.Vector3();return raycaster.ray.intersectPlane(plane,out)?out:null;}
-function worldToScreen(v){const p=v.clone().project(camera),rect=canvas.getBoundingClientRect();return new THREE.Vector2((p.x*.5+.5)*rect.width,(-p.y*.5+.5)*rect.height);}
+function worldToScreen(v){const p=v.clone().project(camera),rect=canvas.getBoundingClientRect();return new THREE.Vector2(rect.left+(p.x*.5+.5)*rect.width,rect.top+(-p.y*.5+.5)*rect.height);}
 function projectedFaceNormal2D(sourceMesh,faceIndex){const center=sourceMesh.faceCenter(faceIndex),normal=sourceMesh.faceNormal(faceIndex),scale=Math.max(.25,camera.position.distanceTo(center)*.08),a=worldToScreen(center),b=worldToScreen(center.clone().addScaledVector(normal,scale)),dir=b.sub(a);return dir.lengthSq()>1e-6?dir.normalize():new THREE.Vector2(0,-1);}
 
 function beginDragChange(){if(!drag||drag.changed)return;clearLoopSlide();history.push(drag.startMesh);drag.changed=true;}
@@ -190,13 +205,31 @@ canvas.addEventListener('touchcancel',()=>{gesture.active=false;gesture.maxTouch
 
 canvas.addEventListener('pointerdown',event=>{
   if(event.pointerType==='mouse'&&event.button!==0)return;
+  const loopItem=pickLoopSlide(event);
+  if(loopItem&&event.isPrimary){
+    const a=worldToScreen(new THREE.Vector3(...loopItem.start));
+    const b=worldToScreen(new THREE.Vector3(...loopItem.end));
+    let rail=b.clone().sub(a);
+    if(rail.lengthSq()<25){
+      let best=null,bestLen=0;
+      for(const item of activeLoopSlide){
+        const ra=worldToScreen(new THREE.Vector3(...item.start)),rb=worldToScreen(new THREE.Vector3(...item.end)),candidate=rb.sub(ra),len=candidate.lengthSq();
+        if(len>bestLen){bestLen=len;best=candidate;}
+      }
+      if(best)rail=best;
+    }
+    drag={kind:'loopSlide',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPct:Number(document.querySelector('#loopSlide').value)/100,rail,armed:false};
+    controls.enabled=false;
+    canvas.setPointerCapture(event.pointerId);
+    return;
+  }
   const hit=pick(event);
   if(!hit){selection=null;renderMesh();return;}
   const alreadySelected=sameSelection(selection,hit);
   selection=hit;renderMesh();
   if(!alreadySelected||!event.isPrimary)return;
   const center=componentCenter(selection),plane=screenPlaneAt(center),start=rayPlanePoint(event,plane);
-  drag={pointerId:event.pointerId,selection:{...selection},start,last:start?.clone(),plane,startMesh:mesh.clone(),startX:event.clientX,startY:event.clientY,changed:false,armed:false};
+  drag={kind:'component',pointerId:event.pointerId,selection:{...selection},start,last:start?.clone(),plane,startMesh:mesh.clone(),startX:event.clientX,startY:event.clientY,changed:false,armed:false};
   controls.enabled=false;
   canvas.setPointerCapture(event.pointerId);
 });
@@ -207,6 +240,18 @@ canvas.addEventListener('pointermove',event=>{
   if(!drag.armed){
     if(Math.hypot(dx,dy)<EDIT_DRAG_THRESHOLD)return;
     drag.armed=true;
+  }
+  if(drag.kind==='loopSlide'){
+    const lenSq=drag.rail.lengthSq();
+    if(lenSq<1)return;
+    const delta=new THREE.Vector2(dx,dy).dot(drag.rail)/lenSq;
+    const amount=THREE.MathUtils.clamp(drag.startPct+delta,.05,.95);
+    if(mesh.loopSlide(activeLoopSlide,amount)){
+      const pct=Math.round(amount*100),slide=document.querySelector('#loopSlide');
+      slide.value=String(pct);document.querySelector('#loopSlideOut').textContent=`${pct}%`;
+      renderMesh();
+    }
+    return;
   }
   const now=rayPlanePoint(event,drag.plane);if(!now||!drag.last||!drag.start)return;
   beginDragChange();mesh=drag.startMesh.clone();const total=now.clone().sub(drag.start);
