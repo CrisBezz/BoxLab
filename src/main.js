@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.5.3';
+const VERSION='0.6';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -38,6 +38,7 @@ const originAxes=new THREE.AxesHelper(0.9);originAxes.material.depthTest=false;o
 let mesh=EditableMesh.cube(2);
 let selectionMode='face',toolMode='move',selection=null;
 let subdEnabled=false,subdLevel=1,showCage=true;
+let activeLoopSlide=null;
 const mirrorAxes={x:false,y:false,z:false};
 const history=new History(60);
 const root=new THREE.Group();scene.add(root);
@@ -71,6 +72,12 @@ function clearGroup(group){
 
 function modifiedBaseMesh(){return applyMirror(mesh,mirrorAxes);}
 function modifiedSubdMesh(){return applyMirror(subdivide(mesh,subdLevel),mirrorAxes);}
+
+function clearLoopSlide(){
+  activeLoopSlide=null;
+  const input=document.querySelector('#loopSlide');
+  if(input) input.disabled=true;
+}
 
 function renderMesh(){
   clearGroup(root);
@@ -132,7 +139,8 @@ function updateStatus(displayMesh=mesh){
   const activeMirror=['X','Y','Z'].filter(axis=>mirrorAxes[axis.toLowerCase()]);
   const mirrorText=activeMirror.length?` • Mirror ${activeMirror.join('')}`:'';
   const creaseText=mesh.creases.size?` • ${mesh.creases.size} crease${mesh.creases.size===1?'':'s'}`:'';
-  document.querySelector('#meshStats').textContent=`${displayMesh.vertices.length} verts • ${displayMesh.faces.length} faces${mirrorText}${creaseText}`;
+  const slideText=activeLoopSlide?' • Loop Slide active':'';
+  document.querySelector('#meshStats').textContent=`${displayMesh.vertices.length} verts • ${displayMesh.faces.length} faces${mirrorText}${creaseText}${slideText}`;
   document.querySelector('#selectionStatus').textContent=selection?`${cap(selectionMode)} ${selection.index+1} selected • ${cap(toolMode)}`:`${cap(selectionMode)} mode • nothing selected`;
 }
 
@@ -143,6 +151,7 @@ function updateActionAvailability(){
   document.querySelector('#insetBtn').disabled=!faceSelected;
   document.querySelector('#deleteFaceBtn').disabled=!faceSelected;
   document.querySelector('#loopCutBtn').disabled=!edgeSelected;
+  document.querySelector('#loopSlide').disabled=!activeLoopSlide;
   document.querySelector('#applyCreaseBtn').disabled=!edgeSelected;
   document.querySelector('#clearCreaseBtn').disabled=!edgeSelected||mesh.edgeCrease(selection?.index)<0.001;
 }
@@ -167,9 +176,9 @@ function rayPlanePoint(event,plane){setPointer(event);raycaster.setFromCamera(po
 function worldToScreen(v){const p=v.clone().project(camera),rect=canvas.getBoundingClientRect();return new THREE.Vector2((p.x*.5+.5)*rect.width,(-p.y*.5+.5)*rect.height);}
 function projectedFaceNormal2D(sourceMesh,faceIndex){const center=sourceMesh.faceCenter(faceIndex),normal=sourceMesh.faceNormal(faceIndex),scale=Math.max(.25,camera.position.distanceTo(center)*.08),a=worldToScreen(center),b=worldToScreen(center.clone().addScaledVector(normal,scale)),dir=b.sub(a);return dir.lengthSq()>1e-6?dir.normalize():new THREE.Vector2(0,-1);}
 
-function beginDragChange(){if(!drag||drag.changed)return;history.push(drag.startMesh);drag.changed=true;}
-function doUndo(){const previous=history.undo(mesh);if(!previous)return false;mesh=previous;selection=null;renderMesh();return true;}
-function doRedo(){const next=history.redo(mesh);if(!next)return false;mesh=next;selection=null;renderMesh();return true;}
+function beginDragChange(){if(!drag||drag.changed)return;clearLoopSlide();history.push(drag.startMesh);drag.changed=true;}
+function doUndo(){const previous=history.undo(mesh);if(!previous)return false;mesh=previous;selection=null;clearLoopSlide();renderMesh();return true;}
+function doRedo(){const next=history.redo(mesh);if(!next)return false;mesh=next;selection=null;clearLoopSlide();renderMesh();return true;}
 
 function beginGesture(event){if(!gesture.active){gesture.active=true;gesture.maxTouches=event.touches.length;gesture.startedAt=performance.now();gesture.starts.clear();gesture.moved=false;}gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);for(const touch of event.touches)if(!gesture.starts.has(touch.identifier))gesture.starts.set(touch.identifier,{x:touch.clientX,y:touch.clientY});}
 function trackGesture(event){if(!gesture.active)return;gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);for(const touch of event.touches){const start=gesture.starts.get(touch.identifier);if(start&&Math.hypot(touch.clientX-start.x,touch.clientY-start.y)>TAP_MAX_MOVE){gesture.moved=true;break;}}}
@@ -218,15 +227,32 @@ canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercan
 document.querySelectorAll('#selectionModes button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#selectionModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');selectionMode=btn.dataset.mode;selection=null;renderMesh();}));
 document.querySelectorAll('#toolModes button').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('#toolModes button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');toolMode=btn.dataset.tool;updateStatus();}));
 
-function withFaceEdit(action){if(!selection||selection.type!=='face'||!mesh.faces[selection.index])return;history.push(mesh);action();renderMesh();}
+function withFaceEdit(action){if(!selection||selection.type!=='face'||!mesh.faces[selection.index])return;clearLoopSlide();history.push(mesh);action();renderMesh();}
 document.querySelector('#extrudeBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.extrudeFace(selection.index,.25);}));
 document.querySelector('#insetBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.insetFace(selection.index,.2);}));
 document.querySelector('#deleteFaceBtn').addEventListener('click',()=>withFaceEdit(()=>{mesh.deleteFace(selection.index);selection=null;}));
-document.querySelector('#loopCutBtn').addEventListener('click',()=>{if(!selection||selection.type!=='edge'||!mesh.edges()[selection.index])return;const before=mesh.clone(),result=mesh.loopCut(selection.index,.5);if(!result)return;history.push(before);selection=null;renderMesh();});
+document.querySelector('#loopCutBtn').addEventListener('click',()=>{
+  if(!selection||selection.type!=='edge'||!mesh.edges()[selection.index])return;
+  const before=mesh.clone(),result=mesh.loopCut(selection.index,.5);
+  if(!result)return;
+  history.push(before);
+  activeLoopSlide=result.slideData;
+  selection=null;
+  const slide=document.querySelector('#loopSlide');
+  slide.value='50';slide.disabled=false;
+  document.querySelector('#loopSlideOut').textContent='50%';
+  renderMesh();
+});
+document.querySelector('#loopSlide').addEventListener('input',e=>{
+  const pct=Number(e.target.value);
+  document.querySelector('#loopSlideOut').textContent=`${pct}%`;
+  if(!activeLoopSlide)return;
+  if(mesh.loopSlide(activeLoopSlide,pct/100))renderMesh();
+});
 
 document.querySelector('#creaseStrength').addEventListener('input',e=>{document.querySelector('#creaseStrengthOut').textContent=`${e.target.value}%`;});
-document.querySelector('#applyCreaseBtn').addEventListener('click',()=>{if(selection?.type!=='edge')return;history.push(mesh);mesh.setEdgeCrease(selection.index,Number(document.querySelector('#creaseStrength').value)/100);renderMesh();});
-document.querySelector('#clearCreaseBtn').addEventListener('click',()=>{if(selection?.type!=='edge')return;history.push(mesh);mesh.setEdgeCrease(selection.index,0);renderMesh();});
+document.querySelector('#applyCreaseBtn').addEventListener('click',()=>{if(selection?.type!=='edge')return;clearLoopSlide();history.push(mesh);mesh.setEdgeCrease(selection.index,Number(document.querySelector('#creaseStrength').value)/100);renderMesh();});
+document.querySelector('#clearCreaseBtn').addEventListener('click',()=>{if(selection?.type!=='edge')return;clearLoopSlide();history.push(mesh);mesh.setEdgeCrease(selection.index,0);renderMesh();});
 
 document.querySelectorAll('[data-mirror-axis]').forEach(input=>input.addEventListener('change',()=>{mirrorAxes[input.dataset.mirrorAxis]=input.checked;renderMesh();}));
 document.querySelector('#subdToggle').addEventListener('change',e=>{subdEnabled=e.target.checked;renderMesh();});
@@ -234,7 +260,7 @@ document.querySelector('#cageToggle').addEventListener('change',e=>{showCage=e.t
 document.querySelector('#subdLevel').addEventListener('input',e=>{subdLevel=Number(e.target.value);document.querySelector('#subdLevelOut').textContent=String(subdLevel);renderMesh();});
 document.querySelector('#undoBtn').addEventListener('click',doUndo);
 document.querySelector('#redoBtn').addEventListener('click',doRedo);
-document.querySelector('#resetBtn').addEventListener('click',()=>{history.push(mesh);mesh=EditableMesh.cube(2);selection=null;renderMesh();});
+document.querySelector('#resetBtn').addEventListener('click',()=>{clearLoopSlide();history.push(mesh);mesh=EditableMesh.cube(2);selection=null;renderMesh();});
 document.querySelector('#exportBaseBtn').addEventListener('click',()=>downloadOBJ(modifiedBaseMesh(),`BoxLab-v${VERSION}-base.obj`));
 document.querySelector('#exportSubdBtn').addEventListener('click',()=>downloadOBJ(modifiedSubdMesh(),`BoxLab-v${VERSION}-subd${subdLevel}.obj`));
 
