@@ -171,7 +171,7 @@ export class EditableMesh {
     this.faces.forEach((face,faceIndex)=>{
       if(face.length!==4) return;
       const slots=[];
-      for(let i=0;i<4;i++) if(cutKeys.has(this.edgeKey(face[i],face[(i+1)%4]))) slots.push(i);
+      for(let i=0;i<4;i++) if(cutKeys.has(this.edgeKey(face[i],face[(i+1)%face.length]))) slots.push(i);
       if(slots.length===2 && ((slots[0]+2)%4===slots[1] || (slots[1]+2)%4===slots[0])) splitFaces.push({faceIndex,slots});
     });
     if(!splitFaces.length) return null;
@@ -181,11 +181,13 @@ export class EditableMesh {
     for(const key of cutKeys){
       const dir=directed.get(key);
       if(!dir) continue;
-      const v=this.vertices[dir.a].clone().lerp(this.vertices[dir.b],amount);
+      const start=this.vertices[dir.a].clone();
+      const end=this.vertices[dir.b].clone();
+      const v=start.clone().lerp(end,amount);
       const vertex=this.vertices.length;
       midpointIndex.set(key,vertex);
       this.vertices.push(v);
-      slideData.push({vertex,a:dir.a,b:dir.b});
+      slideData.push({vertex,start:start.toArray(),end:end.toArray()});
     }
 
     const replacements=new Map();
@@ -209,10 +211,10 @@ export class EditableMesh {
     if(!Array.isArray(slideData)||!slideData.length) return false;
     const amount=THREE.MathUtils.clamp(t,0.05,0.95);
     for(const item of slideData){
-      if(!item||!this.vertices[item.vertex]||!this.vertices[item.a]||!this.vertices[item.b]) return false;
+      if(!item||!this.vertices[item.vertex]||!Array.isArray(item.start)||!Array.isArray(item.end)) return false;
     }
-    for(const {vertex,a,b} of slideData){
-      this.vertices[vertex].copy(this.vertices[a]).lerp(this.vertices[b],amount);
+    for(const {vertex,start,end} of slideData){
+      this.vertices[vertex].copy(new THREE.Vector3(...start)).lerp(new THREE.Vector3(...end),amount);
     }
     return true;
   }
