@@ -32,7 +32,6 @@ const grid=new THREE.GridHelper(12,24,0x3c424d,0x262b33);grid.position.y=-1.55;s
 let mesh=EditableMesh.cube(2);
 let selectionMode='face', toolMode='move', selection=null;
 let subdEnabled=false, subdLevel=1, showCage=true;
-let loopCutPosition=.5;
 const history=new History(60);
 const root=new THREE.Group();scene.add(root);
 
@@ -204,15 +203,10 @@ document.querySelector('#extrudeBtn').addEventListener('click',()=>withFaceEdit(
 document.querySelector('#insetBtn').addEventListener('click',()=>withFaceEdit(()=>{selection=mesh.insetFace(selection.index,.2);}));
 document.querySelector('#deleteFaceBtn').addEventListener('click',()=>withFaceEdit(()=>{mesh.deleteFace(selection.index);selection=null;}));
 
-document.querySelector('#loopCutPosition').addEventListener('input',e=>{
-  loopCutPosition=Number(e.target.value)/100;
-  document.querySelector('#loopCutPositionOut').textContent=`${e.target.value}%`;
-});
-
 document.querySelector('#loopCutBtn').addEventListener('click',()=>{
   if(!selection||selection.type!=='edge'||!mesh.edges()[selection.index])return;
   const before=mesh.clone();
-  const result=mesh.loopCut(selection.index,loopCutPosition);
+  const result=mesh.loopCut(selection.index,.5);
   if(!result)return;
   history.push(before);
   selection=null;
