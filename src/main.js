@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.7';
+const VERSION='0.7.1';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -51,6 +51,7 @@ const vertexMaterial=new THREE.MeshBasicMaterial({color:0xe7ebf2});
 const selectedVertexMaterial=new THREE.MeshBasicMaterial({color:0xff615f});
 const edgeMaterial=new THREE.LineBasicMaterial({color:0x707988,transparent:true,opacity:.95});
 const selectedEdgeMaterial=new THREE.LineBasicMaterial({color:0xff615f});
+const activeLoopMaterial=new THREE.LineBasicMaterial({color:0x62d8ff,transparent:true,opacity:1,depthTest:false});
 const creaseEdgeMaterial=new THREE.LineBasicMaterial({color:0xffb65c,transparent:true,opacity:1});
 const mirrorEdgeMaterial=new THREE.LineBasicMaterial({color:0x8791a2,transparent:true,opacity:.32});
 
@@ -108,9 +109,11 @@ function addCage(){
   const loopVertices=activeLoopSlide?new Set(activeLoopSlide.map(item=>item.vertex)):null;
   mesh.edges().forEach((e,index)=>{
     const geometry=new THREE.BufferGeometry().setFromPoints([mesh.vertices[e.a],mesh.vertices[e.b]]);
-    const mat=selection?.type==='edge'&&selection.index===index?selectedEdgeMaterial:(mesh.edgeCrease(index)>0?creaseEdgeMaterial:edgeMaterial);
+    const isActiveLoop=!!loopVertices&&loopVertices.has(e.a)&&loopVertices.has(e.b);
+    const mat=isActiveLoop?activeLoopMaterial:(selection?.type==='edge'&&selection.index===index?selectedEdgeMaterial:(mesh.edgeCrease(index)>0?creaseEdgeMaterial:edgeMaterial));
     const line=new THREE.Line(geometry,mat);
-    line.userData={kind:'edge',index,loopSlideEdge:!!loopVertices&&loopVertices.has(e.a)&&loopVertices.has(e.b)};
+    if(isActiveLoop)line.renderOrder=25;
+    line.userData={kind:'edge',index,loopSlideEdge:isActiveLoop};
     root.add(line);
   });
   mesh.vertices.forEach((v,index)=>{
