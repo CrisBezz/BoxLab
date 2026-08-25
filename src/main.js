@@ -76,7 +76,7 @@ function addCage(){
 
   mesh.vertices.forEach((v,index)=>{
     const selected=selection?.type==='vertex'&&selection.index===index;
-    const geometry=new THREE.SphereGeometry(selected?.075:.055,12,8);
+    const geometry=new THREE.SphereGeometry(selected ? 0.075 : 0.055,12,8);
     const mat=selected?selectedVertexMaterial:vertexMaterial;
     const dot=new THREE.Mesh(geometry,mat);dot.position.copy(v);dot.userData={kind:'vertex',index};root.add(dot);
   });
