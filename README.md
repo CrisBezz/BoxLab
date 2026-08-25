@@ -1,10 +1,19 @@
-# BoxLab v0.3
+# BoxLab v0.3.1
 
 Box modelling with minimal UI on iPad.
 
 A small Pencil/touch-first box and subdivision modeller intended to create clean base meshes for export into Nomad Sculpt.
 
-## v0.3 scope
+## v0.3.1 changes
+
+- Vertex display markers are 50% smaller than v0.3
+- Selected vertex marker is also 50% smaller
+- Two-finger tap = Undo
+- Three-finger tap = Redo
+- Multi-touch tap gestures only trigger after a short, low-movement tap
+- Two-finger pan and pinch zoom remain assigned to the existing OrbitControls camera interaction
+
+## Existing v0.3 modelling scope
 
 - Starts from a cube
 - Vertex / Edge / Face selection
@@ -17,7 +26,7 @@ A small Pencil/touch-first box and subdivision modeller intended to create clean
 - Loop Cut follows connected quad strips through opposite edges
 - Loop Cut stops where topology is no longer quad-compatible
 - Loop Cut creates one continuous supporting ring where the topology allows it
-- Undo / Redo records the Loop Cut as one geometry edit
+- Undo / Redo records geometry edits as single history steps
 - Catmull-Clark subdivision preview, levels 1–2
 - Cage overlay
 - Reset cube
@@ -42,7 +51,8 @@ Do not move experimental geometry code into the viewport module. New modelling o
 - `main` is the live GitHub Pages build.
 - v0.1 remains recoverable from Git history.
 - v0.2 remains recoverable from Git history and the `boxlab-v0.2` development branch.
-- v0.3 was developed on `boxlab-v0.3` before merge to `main`.
+- v0.3 remains recoverable from Git history and the `boxlab-v0.3` development branch.
+- v0.3.1 was developed on `boxlab-v0.3.1` before promotion to `main`.
 
 ## GitHub Pages
 
