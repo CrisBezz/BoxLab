@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.8.3';
+const VERSION='0.8.3.2';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -42,6 +42,7 @@ let activeLoopSlides=[];
 let activeLoopSlide=null;
 let selectedEdgeCutT=.5;
 let loopCutToolActive=false;
+let selectionModeBeforeLoopCut=null;
 const mirrorAxes={x:false,y:false,z:false};
 const history=new History(60);
 const root=new THREE.Group();scene.add(root);
@@ -106,13 +107,22 @@ function setActiveLoopGroup(group){
   document.querySelector('#loopSlideOut').textContent=`${pct}%`;
 }
 
+function syncSelectionModeButtons(){
+  document.querySelectorAll('#selectionModes button').forEach(b=>b.classList.toggle('active',!loopCutToolActive&&b.dataset.mode===selectionMode));
+}
+
 function setLoopCutTool(active){
-  loopCutToolActive=!!active;
-  if(loopCutToolActive){
-    selectionMode='edge';
+  const next=!!active;
+  if(next&&!loopCutToolActive){
+    selectionModeBeforeLoopCut=selectionMode;
     selection=null;
-    document.querySelectorAll('#selectionModes button').forEach(b=>b.classList.toggle('active',b.dataset.mode==='edge'));
   }
+  loopCutToolActive=next;
+  if(!loopCutToolActive&&selectionModeBeforeLoopCut){
+    selectionMode=selectionModeBeforeLoopCut;
+    selectionModeBeforeLoopCut=null;
+  }
+  syncSelectionModeButtons();
   syncLoopCutControl();
   updateStatus();
 }
@@ -217,9 +227,9 @@ function updateStatus(displayMesh=mesh){
   const mirrorText=activeMirror.length?` • Mirror ${activeMirror.join('')}`:'';
   const creaseText=mesh.creases.size?` • ${mesh.creases.size} crease${mesh.creases.size===1?'':'s'}`:'';
   const slideText=activeLoopSlides.length?` • ${activeLoopSlides.length} active loop${activeLoopSlides.length===1?'':'s'}`:'';
-  const toolText=loopCutToolActive?' • Loop Cut armed':'';
+  const toolText=loopCutToolActive?' • Loop Cut':'';
   document.querySelector('#meshStats').textContent=`${displayMesh.vertices.length} verts • ${displayMesh.faces.length} faces${mirrorText}${creaseText}${slideText}${toolText}`;
-  document.querySelector('#selectionStatus').textContent=selection?`${cap(selectionMode)} ${selection.index+1} selected • ${cap(toolMode)}`:`${cap(selectionMode)} mode • nothing selected`;
+  document.querySelector('#selectionStatus').textContent=loopCutToolActive?'Loop Cut selected':(selection?`${cap(selectionMode)} ${selection.index+1} selected • ${cap(toolMode)}`:`${cap(selectionMode)} mode • nothing selected`);
 }
 
 function updateActionAvailability(){
@@ -239,7 +249,7 @@ function syncLoopCutControl(){
   if(!button)return;
   const count=Number(document.querySelector('#loopCutCount')?.value||1);
   button.classList.toggle('active',loopCutToolActive);
-  button.textContent=loopCutToolActive?'Loop Cut • Armed':(count===1?'Loop Cut':`Loop Cut ×${count}`);
+  button.textContent=count===1?'Loop Cut':`Loop Cut ×${count}`;
 }
 
 function syncCreaseControl(){
@@ -320,9 +330,8 @@ canvas.addEventListener('pointerdown',event=>{
     selection=null;
     const rail=worldToScreen(before.vertices[seedEdge.b]).sub(worldToScreen(before.vertices[seedEdge.a]));
     const startPct=target?.[0]?.position??cutT;
-    loopCutToolActive=false;
+    setLoopCutTool(false);
     renderMesh();
-    syncLoopCutControl();
     drag={kind:'loopSlide',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPct,rail,group:target,armed:false};
     controls.enabled=false;
     canvas.setPointerCapture(event.pointerId);
