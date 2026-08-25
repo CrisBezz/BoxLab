@@ -75,8 +75,9 @@ function addCage(){
   });
 
   mesh.vertices.forEach((v,index)=>{
-    const geometry=new THREE.SphereGeometry(selection?.type==='vertex'&&selection.index===index?.075:.055,12,8);
-    const mat=selection?.type==='vertex'&&selection.index===index?selectedVertexMaterial:vertexMaterial;
+    const selected=selection?.type==='vertex'&&selection.index===index;
+    const geometry=new THREE.SphereGeometry(selected?.075:.055,12,8);
+    const mat=selected?selectedVertexMaterial:vertexMaterial;
     const dot=new THREE.Mesh(geometry,mat);dot.position.copy(v);dot.userData={kind:'vertex',index};root.add(dot);
   });
 
@@ -170,9 +171,6 @@ canvas.addEventListener('pointermove',event=>{
     mesh.scaleComponent(drag.selection,factor);
   }else if(toolMode==='extrude'&&drag.selection.type==='face'){
     const normal=drag.startMesh.faceNormal(drag.selection.index);
-    const cameraRight=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,0);
-    const cameraUp=new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld,1);
-    const screenMotion=cameraRight.multiplyScalar(dx).add(cameraUp.multiplyScalar(-dy));
     const facing=Math.max(.2,Math.abs(normal.dot(new THREE.Vector3().subVectors(camera.position,componentCenter(drag.selection)).normalize())));
     const sign=(dx-dy)>=0?1:-1;
     const distance=sign*Math.hypot(dx,dy)*.006/facing;
