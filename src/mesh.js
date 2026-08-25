@@ -128,11 +128,10 @@ export class EditableMesh {
     return true;
   }
 
-  loopCut(edgeIndex,t=0.5){
+  loopRing(edgeIndex){
     const allEdges=this.edges();
     const seed=allEdges[edgeIndex];
     if(!seed) return null;
-    const amount=THREE.MathUtils.clamp(t,0.05,0.95);
     const edgeByKey=new Map(allEdges.map(e=>[this.edgeKey(e.a,e.b),e]));
     const seedKey=this.edgeKey(seed.a,seed.b);
     const cutKeys=new Set([seedKey]);
@@ -174,8 +173,14 @@ export class EditableMesh {
       for(let i=0;i<4;i++) if(cutKeys.has(this.edgeKey(face[i],face[(i+1)%face.length]))) slots.push(i);
       if(slots.length===2 && ((slots[0]+2)%4===slots[1] || (slots[1]+2)%4===slots[0])) splitFaces.push({faceIndex,slots});
     });
-    if(!splitFaces.length) return null;
+    return splitFaces.length?{cutKeys,directed,splitFaces}:null;
+  }
 
+  loopCut(edgeIndex,t=0.5){
+    const ring=this.loopRing(edgeIndex);
+    if(!ring) return null;
+    const amount=THREE.MathUtils.clamp(t,0.05,0.95);
+    const {cutKeys,directed,splitFaces}=ring;
     const midpointIndex=new Map();
     const slideData=[];
     for(const key of cutKeys){
@@ -187,7 +192,7 @@ export class EditableMesh {
       const vertex=this.vertices.length;
       midpointIndex.set(key,vertex);
       this.vertices.push(v);
-      slideData.push({vertex,start:start.toArray(),end:end.toArray()});
+      slideData.push({vertex,start:start.toArray(),end:end.toArray(),position:amount});
     }
 
     const replacements=new Map();
@@ -204,7 +209,59 @@ export class EditableMesh {
     const nextFaces=[];
     this.faces.forEach((face,faceIndex)=>{const split=replacements.get(faceIndex);if(split)nextFaces.push(...split);else nextFaces.push(face);});
     this.faces=nextFaces;
-    return {cutEdges:cutKeys.size,splitFaces:splitFaces.length,slideData,position:amount};
+    return {cutEdges:cutKeys.size,splitFaces:splitFaces.length,slideData,slideGroups:[slideData],position:amount};
+  }
+
+  loopCuts(edgeIndex,count=2){
+    const cuts=THREE.MathUtils.clamp(Math.round(Number(count)||2),2,8);
+    const ring=this.loopRing(edgeIndex);
+    if(!ring) return null;
+    const {cutKeys,directed,splitFaces}=ring;
+    const fractions=Array.from({length:cuts},(_,i)=>(i+1)/(cuts+1));
+    const cutVertices=new Map();
+    const slideGroups=fractions.map(()=>[]);
+
+    for(const key of cutKeys){
+      const dir=directed.get(key);
+      if(!dir) continue;
+      const start=this.vertices[dir.a].clone();
+      const end=this.vertices[dir.b].clone();
+      const indices=[];
+      fractions.forEach((amount,groupIndex)=>{
+        const vertex=this.vertices.length;
+        this.vertices.push(start.clone().lerp(end,amount));
+        indices.push(vertex);
+        slideGroups[groupIndex].push({vertex,start:start.toArray(),end:end.toArray(),position:amount});
+      });
+      cutVertices.set(key,indices);
+    }
+
+    const orientedCuts=(from,to)=>{
+      const key=this.edgeKey(from,to),items=cutVertices.get(key)||[],dir=directed.get(key);
+      if(!dir)return [];
+      return dir.a===from&&dir.b===to?[...items]:[...items].reverse();
+    };
+
+    const replacements=new Map();
+    for(const {faceIndex,slots} of splitFaces){
+      const [a,b,c,d]=this.faces[faceIndex];
+      const strips=[];
+      if(slots.includes(0)&&slots.includes(2)){
+        const left=[a,...orientedCuts(a,b),b];
+        const right=[d,...orientedCuts(d,c),c];
+        for(let i=0;i<left.length-1;i++)strips.push([left[i],left[i+1],right[i+1],right[i]]);
+      }else if(slots.includes(1)&&slots.includes(3)){
+        const left=[b,...orientedCuts(b,c),c];
+        const right=[a,...orientedCuts(a,d),d];
+        for(let i=0;i<left.length-1;i++)strips.push([right[i],left[i],left[i+1],right[i+1]]);
+      }
+      if(strips.length)replacements.set(faceIndex,strips);
+    }
+
+    const nextFaces=[];
+    this.faces.forEach((face,faceIndex)=>{const split=replacements.get(faceIndex);if(split)nextFaces.push(...split);else nextFaces.push(face);});
+    this.faces=nextFaces;
+    return {cutCount:cuts,cutEdges:cutKeys.size,splitFaces:splitFaces.length,slideGroups,positions:fractions};
   }
 
   loopSlide(slideData,t=0.5){
@@ -213,8 +270,10 @@ export class EditableMesh {
     for(const item of slideData){
       if(!item||!this.vertices[item.vertex]||!Array.isArray(item.start)||!Array.isArray(item.end)) return false;
     }
-    for(const {vertex,start,end} of slideData){
+    for(const item of slideData){
+      const {vertex,start,end}=item;
       this.vertices[vertex].copy(new THREE.Vector3(...start)).lerp(new THREE.Vector3(...end),amount);
+      item.position=amount;
     }
     return true;
   }
