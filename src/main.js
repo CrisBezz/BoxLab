@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js';
 import { downloadOBJ } from './export.js';
 import { History } from './history.js';
 
-const VERSION='0.8';
+const VERSION='0.8.1';
 const canvas=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
@@ -52,6 +52,7 @@ const vertexMaterial=new THREE.MeshBasicMaterial({color:0xe7ebf2});
 const selectedVertexMaterial=new THREE.MeshBasicMaterial({color:0xff615f});
 const edgeMaterial=new THREE.LineBasicMaterial({color:0x707988,transparent:true,opacity:.95});
 const selectedEdgeMaterial=new THREE.LineBasicMaterial({color:0xff615f});
+const selectedEdgeOverlayMaterial=new THREE.MeshBasicMaterial({color:0xff3b38,depthTest:false});
 const activeLoopMaterial=new THREE.LineBasicMaterial({color:0x62d8ff,transparent:true,opacity:1,depthTest:false});
 const creaseEdgeMaterial=new THREE.LineBasicMaterial({color:0xffb65c,transparent:true,opacity:1});
 const mirrorEdgeMaterial=new THREE.LineBasicMaterial({color:0x8791a2,transparent:true,opacity:.32});
@@ -117,6 +118,20 @@ function addMirrorCage(mirrored){
   });
 }
 
+function addSelectedEdgeOverlay(a,b){
+  const start=mesh.vertices[a],end=mesh.vertices[b];
+  if(!start||!end)return;
+  const delta=new THREE.Vector3().subVectors(end,start),length=delta.length();
+  if(length<1e-6)return;
+  const geometry=new THREE.CylinderGeometry(.022,.022,length,10,1,false);
+  const overlay=new THREE.Mesh(geometry,selectedEdgeOverlayMaterial);
+  overlay.position.copy(start).add(end).multiplyScalar(.5);
+  overlay.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),delta.normalize());
+  overlay.renderOrder=30;
+  overlay.userData.kind='edge-selection-overlay';
+  root.add(overlay);
+}
+
 function addCage(){
   const loopGroupByVertex=new Map();
   activeLoopSlides.forEach((group,groupIndex)=>group.forEach(item=>loopGroupByVertex.set(item.vertex,groupIndex)));
@@ -125,11 +140,13 @@ function addCage(){
     const ga=loopGroupByVertex.get(e.a),gb=loopGroupByVertex.get(e.b);
     const activeGroup=ga!==undefined&&ga===gb?ga:null;
     const isActiveLoop=activeGroup!==null;
-    const mat=isActiveLoop?activeLoopMaterial:(selection?.type==='edge'&&selection.index===index?selectedEdgeMaterial:(mesh.edgeCrease(index)>0?creaseEdgeMaterial:edgeMaterial));
+    const isSelectedEdge=selection?.type==='edge'&&selection.index===index;
+    const mat=isActiveLoop?activeLoopMaterial:(isSelectedEdge?selectedEdgeMaterial:(mesh.edgeCrease(index)>0?creaseEdgeMaterial:edgeMaterial));
     const line=new THREE.Line(geometry,mat);
     if(isActiveLoop)line.renderOrder=25;
     line.userData={kind:'edge',index,loopSlideGroup:activeGroup};
     root.add(line);
+    if(isSelectedEdge&&!isActiveLoop)addSelectedEdgeOverlay(e.a,e.b);
   });
   mesh.vertices.forEach((v,index)=>{
     const selected=selection?.type==='vertex'&&selection.index===index;
