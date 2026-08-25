@@ -30,7 +30,9 @@ export class EditableMesh {
   }
 
   faceCenter(faceIndex){
-    const face=this.faces[faceIndex], c=new THREE.Vector3();
+    const face=this.faces[faceIndex];
+    if(!face) return new THREE.Vector3();
+    const c=new THREE.Vector3();
     face.forEach(i=>c.add(this.vertices[i]));
     return c.multiplyScalar(1/face.length);
   }
@@ -49,11 +51,13 @@ export class EditableMesh {
       const e=this.edges()[selection.index];
       return e?[e.a,e.b]:[];
     }
-    if(selection.type==='face') return [...this.faces[selection.index]];
+    if(selection.type==='face') return this.faces[selection.index]?[...this.faces[selection.index]]:[];
     return [];
   }
 
-  moveComponent(selection,delta){ this.componentVertexIndices(selection).forEach(i=>this.vertices[i].add(delta)); }
+  moveComponent(selection,delta){
+    this.componentVertexIndices(selection).forEach(i=>this.vertices[i].add(delta));
+  }
 
   scaleComponent(selection,factor){
     const indices=this.componentVertexIndices(selection);
@@ -80,6 +84,32 @@ export class EditableMesh {
       this.faces.push([a,b,nb,na]);
     }
     return {type:'face',index:faceIndex};
+  }
+
+  insetFace(faceIndex,amount=0.2){
+    const face=this.faces[faceIndex];
+    if(!face || face.length<3) return null;
+    const center=this.faceCenter(faceIndex);
+    const t=THREE.MathUtils.clamp(amount,0.01,0.95);
+    const inner=face.map(oldIndex=>{
+      const v=this.vertices[oldIndex].clone().lerp(center,t);
+      this.vertices.push(v);
+      return this.vertices.length-1;
+    });
+    const outer=[...face];
+    this.faces[faceIndex]=inner;
+    for(let i=0;i<outer.length;i++){
+      const a=outer[i], b=outer[(i+1)%outer.length];
+      const ib=inner[(i+1)%inner.length], ia=inner[i];
+      this.faces.push([a,b,ib,ia]);
+    }
+    return {type:'face',index:faceIndex};
+  }
+
+  deleteFace(faceIndex){
+    if(faceIndex<0 || faceIndex>=this.faces.length) return false;
+    this.faces.splice(faceIndex,1);
+    return true;
   }
 
   triangulatedGeometry(){
