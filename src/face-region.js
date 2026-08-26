@@ -6,7 +6,6 @@ export function installFaceRegion(EditableMesh) {
   EditableMesh.prototype.faceRegionInfo = function (faceIndices) {
     const ids = [...new Set(faceIndices || [])].filter(i => Number.isInteger(i) && this.faces[i]);
     if (ids.length < 2) return null;
-    const selected = new Set(ids);
     const edgeOwners = new Map();
     for (const faceIndex of ids) {
       const face = this.faces[faceIndex];
@@ -59,7 +58,7 @@ export function installFaceRegion(EditableMesh) {
     if (loop.length !== boundaryAdj.size) return null;
 
     const regionVertices = [...new Set(ids.flatMap(i => this.faces[i]))];
-    return { faceIndices: ids, boundaryLoop: loop, regionVertices, selected };
+    return { faceIndices: ids, boundaryLoop: loop, regionVertices };
   };
 
   EditableMesh.prototype.insetFaceRegion = function (faceIndices, amount = 0.2) {
@@ -95,7 +94,6 @@ export function installFaceRegion(EditableMesh) {
 
   EditableMesh.prototype.__faceRegionInstalled = true;
 
-  const state = globalThis.__boxlabBridgeState;
   const insetButton = document.querySelector('#insetBtn');
   const canvas = document.querySelector('#viewport');
   const status = document.querySelector('#selectionStatus');
@@ -125,7 +123,7 @@ export function installFaceRegion(EditableMesh) {
     if (!mesh || !info) { armed = false; insetButton?.classList.remove('active'); return; }
     event.preventDefault();
     event.stopImmediatePropagation();
-    drag = { pointerId:event.pointerId, startX:event.clientX, startY:event.clientY, before:mesh.clone(), mesh, faces:[...faces], changed:false, amount:0 };
+    drag = { pointerId:event.pointerId, startX:event.clientX, startY:event.clientY, before:mesh.clone(), mesh, faces:[...faces], changed:false };
     canvas.setPointerCapture?.(event.pointerId);
   }, true);
 
@@ -147,7 +145,6 @@ export function installFaceRegion(EditableMesh) {
     drag.mesh.looseVertices = new Set(drag.before.looseVertices || []);
     const result = drag.mesh.insetFaceRegion(drag.faces, amount);
     if (!result) return;
-    drag.amount = amount;
     render();
     if (status) status.textContent = `Inset Region • ${drag.faces.length} faces • ${Math.round(amount * 100)}%`;
   }, true);
