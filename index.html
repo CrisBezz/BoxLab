@@ -4,19 +4,20 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#111318" />
-  <title>BoxLab v0.10.12</title>
-  <link rel="stylesheet" href="./styles.css?v=0.10.12" />
+  <title>BoxLab v0.11</title>
+  <link rel="stylesheet" href="./styles.css?v=0.11" />
   <script type="importmap">
   {
     "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js",
       "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.179.1/examples/jsm/",
-      "./src/mesh.js": "./src/mesh.js?v=0.10.12",
-      "./src/subdivision.js": "./src/subdivision.js?v=0.10.12",
-      "./src/mirror.js": "./src/mirror.js?v=0.10.12",
-      "./src/export.js": "./src/export.js?v=0.10.12",
-      "./src/history.js": "./src/history.js?v=0.10.12",
-      "./src/loose-topology.js": "./src/loose-topology.js?v=0.10.12"
+      "./src/mesh.js": "./src/mesh.js?v=0.11",
+      "./src/subdivision.js": "./src/subdivision.js?v=0.11",
+      "./src/mirror.js": "./src/mirror.js?v=0.11",
+      "./src/export.js": "./src/export.js?v=0.11",
+      "./src/history.js": "./src/history.js?v=0.11",
+      "./src/loose-topology.js": "./src/loose-topology.js?v=0.11",
+      "./src/bridge-topology.js": "./src/bridge-topology.js?v=0.11"
     }
   }
   </script>
@@ -24,7 +25,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.10.12</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.11</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -37,7 +38,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">Add Vertex: Vertex mode → Add Vertex → tap the viewport. The new loose vertex is selected and ready to Move or connect with Add Edge.</div>
+      <div class="hint">Bridge: select two equal-count open boundary loops in Edge mode, or select two equal-count faces and Bridge Faces to delete the caps and create a quad bridge.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -75,6 +76,7 @@
           <label class="range-row"><span>Crease</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5" /><output id="creaseStrengthOut">100%</output></label>
           <button id="applyCreaseBtn">Apply Crease</button>
           <button id="clearCreaseBtn">Clear Crease</button>
+          <button id="bridgeEdgesBtn" disabled>Bridge Edge Loops</button>
           <button id="fillFaceBtn">Fill Face</button>
           <button id="deleteEdgeBtn" class="danger">Delete Edge</button>
         </div>
@@ -83,6 +85,7 @@
           <div class="panel-title context-title">Face</div>
           <button id="extrudeBtn">Extrude</button>
           <button id="insetBtn">Inset</button>
+          <button id="bridgeFacesBtn" disabled>Bridge Faces</button>
           <button id="deleteFaceBtn" class="danger">Delete Face</button>
         </div>
       </section>
@@ -105,8 +108,9 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.10.12"></script>
-  <script type="module" src="./src/main.js?v=0.10.12"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.10.12"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.11"></script>
+  <script type="module" src="./src/main.js?v=0.11"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.11"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.11"></script>
 </body>
 </html>
