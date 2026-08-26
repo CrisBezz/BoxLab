@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#111318" />
-  <title>BoxLab v0.10.3</title>
-  <link rel="stylesheet" href="./styles.css?v=0.10.3" />
+  <title>BoxLab v0.10.4</title>
+  <link rel="stylesheet" href="./styles.css?v=0.10.4" />
   <script type="importmap">
   {
     "imports": {
@@ -18,7 +18,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.10.3</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.10.4</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -31,7 +31,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">Fill Face: Multi Select exactly 3 or 4 boundary edges forming one closed loop, then Fill Face. Invalid/open/internal edge sets are rejected.</div>
+      <div class="hint">Weld: Multi Select exactly 2 vertices, then Weld Vertices. They merge at the midpoint in one Undo step. Fill Face remains available for 3–4 edge boundary loops.</div>
       <section class="floating-panel left-panel">
         <div class="panel-title">Selection</div>
         <label class="toggle-row"><input id="multiSelectToggle" type="checkbox" /><span>Multi Select</span></label>
@@ -45,6 +45,7 @@
         <label class="toggle-row"><input id="axisSnapToggle" type="checkbox" /><span>Axis Snap</span></label>
         <label class="toggle-row"><input id="inferenceSnapToggle" type="checkbox" disabled /><span>Inference Snap</span></label>
         <div class="panel-title">Vertex</div>
+        <button id="weldVertexBtn">Weld Vertices</button>
         <button id="deleteVertexBtn" class="danger">Delete Vertex</button>
         <div class="panel-title edge-title">Edge</div>
         <label class="range-row"><span>Cuts</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
@@ -78,6 +79,6 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/main.js?v=0.10.3"></script>
+  <script type="module" src="./src/main.js?v=0.10.4"></script>
 </body>
 </html>
