@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-const state = globalThis.__boxlabBridgeState;
 const baseAdd = THREE.Group.prototype.add;
 
 if (!THREE.Group.prototype.__boxlabFacePickRepairInstalled) {
@@ -13,7 +12,7 @@ if (!THREE.Group.prototype.__boxlabFacePickRepairInstalled) {
         const directFaceTool = document.querySelector('#extrudeBtn')?.classList.contains('active') || document.querySelector('#insetBtn')?.classList.contains('active');
         if (!faceMode && !directFaceTool) return;
         if (group.children.some(child => child?.userData?.kind === 'face')) return;
-        const mesh = state?.mesh;
+        const mesh = globalThis.__boxlabBridgeState?.mesh;
         if (!mesh?.faces?.length) return;
         mesh.faces.forEach((face, index) => {
           if (!Array.isArray(face) || face.length < 3) return;
