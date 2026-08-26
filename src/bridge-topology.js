@@ -61,6 +61,11 @@ export function installBridgeTopology(EditableMesh) {
     return 0;
   };
 
+  const directlyConnected = (mesh, loopA, loopB, ignoredFaces = new Set()) => {
+    const a = new Set(loopA), b = new Set(loopB);
+    return mesh.faces.some((face, index) => !ignoredFaces.has(index) && face?.some(v => a.has(v)) && face.some(v => b.has(v)));
+  };
+
   const cycleFromEdges = edges => {
     if (!edges?.length) return null;
     const adjacency = new Map();
@@ -126,6 +131,7 @@ export function installBridgeTopology(EditableMesh) {
     const loops = components.map(cycleFromEdges);
     if (loops.some(loop => !loop || loop.length < 3) || loops[0].length !== loops[1].length) return null;
     if (loops[0].some(v => loops[1].includes(v))) return null;
+    if (directlyConnected(this, loops[0], loops[1])) return null;
     return { loops, count: loops[0].length };
   };
 
@@ -135,6 +141,7 @@ export function installBridgeTopology(EditableMesh) {
     const faces = ids.map(index => this.faces[index]);
     if (faces.some(face => !face || face.length < 3) || faces[0].length !== faces[1].length) return null;
     if (faces[0].some(v => faces[1].includes(v))) return null;
+    if (directlyConnected(this, faces[0], faces[1], new Set(ids))) return null;
     return { faceIndices: ids, loops: faces.map(face => [...face]), count: faces[0].length };
   };
 
