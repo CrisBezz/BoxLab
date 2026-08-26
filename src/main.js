@@ -1,12 +1,12 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { EditableMesh } from './mesh.js?v=0.11.3.1';
-import { subdivide } from './subdivision.js?v=0.11.3.1';
-import { applyMirror } from './mirror.js?v=0.11.3.1';
-import { downloadOBJ } from './export.js?v=0.11.3.1';
-import { History } from './history.js?v=0.11.3.1';
+import { EditableMesh } from './mesh.js?v=0.12';
+import { subdivide } from './subdivision.js?v=0.12';
+import { applyMirror } from './mirror.js?v=0.12';
+import { downloadOBJ } from './export.js?v=0.12';
+import { History } from './history.js?v=0.12';
 
-const VERSION='0.11.3.1';
+const VERSION='0.12';
 const canvas=document.querySelector('#viewport'),wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x111318);
@@ -66,7 +66,7 @@ function pickKind(event,kind){setPointer(event);raycaster.setFromCamera(pointer,
 function pick(event){if(selectionMode==='object'){setPointer(event);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(root.children.filter(o=>o.userData.kind==='body'),false);return hits.length?{type:'object',index:0}:null;}return pickKind(event,selectionMode);}
 function edgeTapFraction(edgeIndex,event){const e=mesh.edges()[edgeIndex];if(!e)return.5;const a=worldToScreen(mesh.vertices[e.a]),b=worldToScreen(mesh.vertices[e.b]),ab=b.clone().sub(a),lenSq=ab.lengthSq();if(lenSq<1)return.5;return THREE.MathUtils.clamp(new THREE.Vector2(event.clientX,event.clientY).sub(a).dot(ab)/lenSq,.05,.95);}
 function pickLoopSlide(event){if(!activeLoopSlides.length)return null;setPointer(event);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(root.children.filter(o=>Number.isInteger(o.userData.loopSlideGroup)),false);if(!hits.length)return null;const line=hits[0].object,gi=line.userData.loopSlideGroup,group=activeLoopSlides[gi],edge=mesh.edges()[line.userData.index];if(!group||!edge)return null;const candidates=group.filter(i=>i.vertex===edge.a||i.vertex===edge.b);if(!candidates.length)return null;const p=new THREE.Vector2(event.clientX,event.clientY),item=candidates.sort((u,v)=>worldToScreen(mesh.vertices[u.vertex]).distanceToSquared(p)-worldToScreen(mesh.vertices[v.vertex]).distanceToSquared(p))[0];return{item,group};}
-function componentVertexIndicesOn(sourceMesh,sel){if(!sel)return[];if(sel.type==='object')return sourceMesh.vertices.map((_,i)=>i);const out=new Set(),indices=sel.indices?.length?sel.indices:[sel.index],edges=sel.type==='edge'?sourceMesh.edges():null;for(const idx of indices){if(sel.type==='vertex')out.add(idx);else if(sel.type==='edge'){const e=edges[idx];if(e){out.add(e.a);out.add(e.b);}}else if(sel.type==='face'){(sourceMesh.faces[idx]||[]).forEach(i=>out.add(i));}}return[...out];}
+function componentVertexIndicesOn(sourceMesh,sel){if(!sel)return[];if(sel.type==='object')return sourceMesh.vertices.map((_,i)=>i);const out=new Set(),indices=sel.type==='object'?[]:sel.indices?.length?sel.indices:[sel.index],edges=sel.type==='edge'?sourceMesh.edges():null;for(const idx of indices){if(sel.type==='vertex')out.add(idx);else if(sel.type==='edge'){const e=edges[idx];if(e){out.add(e.a);out.add(e.b);}}else if(sel.type==='face'){(sourceMesh.faces[idx]||[]).forEach(i=>out.add(i));}}return[...out];}
 function componentCenterOn(sourceMesh,sel){const ids=componentVertexIndicesOn(sourceMesh,sel),c=new THREE.Vector3();ids.forEach(i=>c.add(sourceMesh.vertices[i]));if(ids.length)c.multiplyScalar(1/ids.length);return c;}function componentCenter(sel){return componentCenterOn(mesh,sel);}
 function moveSelection(sel,delta){componentVertexIndicesOn(mesh,sel).forEach(i=>mesh.vertices[i].add(delta));}
 function scaleSelection(sel,factor){const ids=componentVertexIndicesOn(mesh,sel),c=componentCenter(sel);ids.forEach(i=>mesh.vertices[i].sub(c).multiplyScalar(factor).add(c));}
