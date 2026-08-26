@@ -7,20 +7,20 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.11.3.1</title>
-  <link rel="stylesheet" href="./styles.css?v=0.11.3.1" />
+  <title>BoxLab v0.12</title>
+  <link rel="stylesheet" href="./styles.css?v=0.12" />
   <script type="importmap">
   {
     "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js",
       "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.179.1/examples/jsm/",
-      "./src/mesh.js": "./src/mesh.js?v=0.11.3.1",
-      "./src/subdivision.js": "./src/subdivision.js?v=0.11.3.1",
-      "./src/mirror.js": "./src/mirror.js?v=0.11.3.1",
-      "./src/export.js": "./src/export.js?v=0.11.3.1",
-      "./src/history.js": "./src/history.js?v=0.11.3.1",
-      "./src/loose-topology.js": "./src/loose-topology.js?v=0.11.3.1",
-      "./src/bridge-topology.js": "./src/bridge-topology.js?v=0.11.3.1"
+      "./src/mesh.js": "./src/mesh.js?v=0.12",
+      "./src/subdivision.js": "./src/subdivision.js?v=0.12",
+      "./src/mirror.js": "./src/mirror.js?v=0.12",
+      "./src/export.js": "./src/export.js?v=0.12",
+      "./src/history.js": "./src/history.js?v=0.12",
+      "./src/loose-topology.js": "./src/loose-topology.js?v=0.12",
+      "./src/bridge-topology.js": "./src/bridge-topology.js?v=0.12"
     }
   }
   </script>
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.11.3.1</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.12</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -41,7 +41,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">v0.11.3.1 • Multi Select: tap to add components, then press-drag any selected vertex / edge / face to Move the whole group. Scale works the same when Scale is active.</div>
+      <div class="hint">v0.12 • Dissolve Edge. Select one internal edge shared by two faces → Dissolve Edge merges the faces while preserving the outer boundary.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -83,6 +83,7 @@
           <button id="clearCreaseBtn">Clear Crease</button>
           <button id="bridgeEdgesBtn" disabled>Bridge Edge Loops</button>
           <button id="fillFaceBtn">Fill Face</button>
+          <button id="dissolveEdgeBtn" disabled>Dissolve Edge</button>
           <button id="deleteEdgeBtn" class="danger">Delete Edge</button>
         </div>
 
@@ -113,11 +114,12 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.11.3.1"></script>
-  <script type="module" src="./src/main.js?v=0.11.3.1"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.11.3.1"></script>
-  <script type="module" src="./src/bridge-ui.js?v=0.11.3.1"></script>
-  <script type="module" src="./src/select-loop.js?v=0.11.3.1"></script>
-  <script type="module" src="./src/boundary-tools.js?v=0.11.3.1"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.12"></script>
+  <script type="module" src="./src/main.js?v=0.12"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.12"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.12"></script>
+  <script type="module" src="./src/select-loop.js?v=0.12"></script>
+  <script type="module" src="./src/boundary-tools.js?v=0.12"></script>
+  <script type="module" src="./src/dissolve-ui.js?v=0.12"></script>
 </body>
 </html>
