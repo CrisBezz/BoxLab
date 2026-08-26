@@ -27,9 +27,6 @@ function continuationEdge(mesh, incomingIndex, vertex, visited) {
   const incomingFaces = new Set(realFaces(mesh, incoming));
   const opposite = candidates.filter(index => realFaces(mesh, edges[index]).every(face => !incomingFaces.has(face)));
   if (opposite.length === 1) return opposite[0];
-
-  // Loose/open chains can have no face information. Continue only when the
-  // topology itself leaves one unambiguous route; otherwise stop at the pole.
   return null;
 }
 
