@@ -14,7 +14,7 @@ if (addEdgeBtn && selectionStatus) {
         }
         selectionStatus.textContent = 'Add Edge created • new edge selected';
       } else {
-        selectionStatus.textContent = 'Add Edge not created • select 2 non-adjacent vertices on the same face';
+        selectionStatus.textContent = 'Add Edge not created • select 2 vertices that are not already connected';
       }
     }, 0);
   });
