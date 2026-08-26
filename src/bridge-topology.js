@@ -1,5 +1,53 @@
+import * as THREE from 'three';
+
 export function installBridgeTopology(EditableMesh) {
   if (EditableMesh.prototype.__bridgeTopologyInstalled) return;
+
+  const state = globalThis.__boxlabBridgeState ||= { mesh: null, selectedEdges: [], selectedFaces: [], facePickers: new Map(), lastEdge: null, notifyTimer: null };
+  const baseEdges = EditableMesh.prototype.edges;
+  EditableMesh.prototype.edges = function () {
+    state.mesh = this;
+    return baseEdges.call(this);
+  };
+
+  const geometrySignature = geometry => {
+    const attr = geometry?.getAttribute?.('position');
+    if (!attr?.array) return null;
+    return Array.from(attr.array, value => Math.round(value * 100000)).join(',');
+  };
+
+  if (!THREE.Group.prototype.__boxlabBridgeObserverInstalled) {
+    const baseAdd = THREE.Group.prototype.add;
+    THREE.Group.prototype.add = function (...objects) {
+      for (const object of objects) {
+        const kind = object?.userData?.kind;
+        if (kind === 'body') {
+          state.selectedEdges = [];
+          state.selectedFaces = [];
+          state.facePickers = new Map();
+          state.lastEdge = null;
+        } else if (kind === 'edge') {
+          state.lastEdge = object.userData.index;
+        } else if (kind === 'edge-selection-overlay' && Number.isInteger(state.lastEdge)) {
+          if (!state.selectedEdges.includes(state.lastEdge)) state.selectedEdges.push(state.lastEdge);
+        } else if (kind === 'face') {
+          const signature = geometrySignature(object.geometry);
+          if (signature) state.facePickers.set(signature, object.userData.index);
+        } else if (object?.renderOrder === 5 && !kind) {
+          const signature = geometrySignature(object.geometry);
+          const index = signature ? state.facePickers.get(signature) : null;
+          if (Number.isInteger(index) && !state.selectedFaces.includes(index)) state.selectedFaces.push(index);
+        }
+      }
+      const result = baseAdd.apply(this, objects);
+      if (typeof window !== 'undefined') {
+        clearTimeout(state.notifyTimer);
+        state.notifyTimer = setTimeout(() => window.dispatchEvent(new Event('boxlab-bridge-state')), 0);
+      }
+      return result;
+    };
+    THREE.Group.prototype.__boxlabBridgeObserverInstalled = true;
+  }
 
   const realFaceIndices = (mesh, edge) => (edge?.faces || []).filter(fi => Number.isInteger(fi) && fi >= 0 && fi < mesh.faces.length && Array.isArray(mesh.faces[fi]));
 
