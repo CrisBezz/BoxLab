@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#111318" />
-  <title>BoxLab v0.10.5</title>
-  <link rel="stylesheet" href="./styles.css?v=0.10.5" />
+  <title>BoxLab v0.10.6</title>
+  <link rel="stylesheet" href="./styles.css?v=0.10.6" />
   <script type="importmap">
   {
     "imports": {
@@ -18,7 +18,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.10.5</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.10.6</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -31,37 +31,55 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">Connect Vertices: Multi Select exactly 2 non-adjacent vertices on the same face, then Add Edge. BoxLab splits that face into two faces in one Undo step.</div>
+      <div class="hint">Context tools follow Object / Vertex / Edge / Face. Connect Vertices splits the shared face between exactly two non-adjacent selected vertices.</div>
       <section class="floating-panel left-panel">
-        <div class="panel-title">Selection</div>
-        <label class="toggle-row"><input id="multiSelectToggle" type="checkbox" /><span>Multi Select</span></label>
-        <button id="selectAllBtn">Select All</button>
-        <button id="deselectAllBtn">Deselect All</button>
-        <div class="panel-title">Transform</div>
+        <div id="componentSelectionTools">
+          <div class="panel-title">Selection</div>
+          <label class="toggle-row"><input id="multiSelectToggle" type="checkbox" /><span>Multi Select</span></label>
+          <button id="selectAllBtn">Select All</button>
+          <button id="deselectAllBtn">Deselect All</button>
+        </div>
+
+        <div class="panel-title transform-title">Transform</div>
         <div class="segmented vertical" id="toolModes">
           <button data-tool="move" class="active">Move</button>
           <button data-tool="scale">Scale</button>
         </div>
         <label class="toggle-row"><input id="axisSnapToggle" type="checkbox" /><span>Axis Snap</span></label>
         <label class="toggle-row"><input id="inferenceSnapToggle" type="checkbox" disabled /><span>Inference Snap</span></label>
-        <div class="panel-title">Vertex</div>
-        <button id="connectVertexBtn">Add Edge</button>
-        <button id="weldVertexBtn">Weld Vertices</button>
-        <button id="deleteVertexBtn" class="danger">Delete Vertex</button>
-        <div class="panel-title edge-title">Edge</div>
-        <label class="range-row"><span>Cuts</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
-        <button id="loopCutBtn">Loop Cut</button>
-        <label class="range-row"><span>Slide</span><input id="loopSlide" type="range" min="5" max="95" value="50" step="1" disabled /><output id="loopSlideOut">50%</output></label>
-        <label class="range-row"><span>Crease</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5" /><output id="creaseStrengthOut">100%</output></label>
-        <button id="applyCreaseBtn">Apply Crease</button>
-        <button id="clearCreaseBtn">Clear Crease</button>
-        <button id="fillFaceBtn">Fill Face</button>
-        <button id="deleteEdgeBtn" class="danger">Delete Edge</button>
-        <div class="panel-title face-title">Face</div>
-        <button id="extrudeBtn">Extrude</button>
-        <button id="insetBtn">Inset</button>
-        <button id="deleteFaceBtn" class="danger">Delete Face</button>
+
+        <div class="mode-tools" data-mode-tools="object">
+          <div class="panel-title context-title">Object</div>
+          <div class="panel-note">Move or Scale the whole source cage. Mirror alignment remains in the right panel.</div>
+        </div>
+
+        <div class="mode-tools" data-mode-tools="vertex">
+          <div class="panel-title context-title">Vertex</div>
+          <button id="connectVertexBtn">Add Edge</button>
+          <button id="weldVertexBtn">Weld Vertices</button>
+          <button id="deleteVertexBtn" class="danger">Delete Vertex</button>
+        </div>
+
+        <div class="mode-tools" data-mode-tools="edge">
+          <div class="panel-title context-title">Edge</div>
+          <label class="range-row"><span>Cuts</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
+          <button id="loopCutBtn">Loop Cut</button>
+          <label class="range-row"><span>Slide</span><input id="loopSlide" type="range" min="5" max="95" value="50" step="1" disabled /><output id="loopSlideOut">50%</output></label>
+          <label class="range-row"><span>Crease</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5" /><output id="creaseStrengthOut">100%</output></label>
+          <button id="applyCreaseBtn">Apply Crease</button>
+          <button id="clearCreaseBtn">Clear Crease</button>
+          <button id="fillFaceBtn">Fill Face</button>
+          <button id="deleteEdgeBtn" class="danger">Delete Edge</button>
+        </div>
+
+        <div class="mode-tools" data-mode-tools="face">
+          <div class="panel-title context-title">Face</div>
+          <button id="extrudeBtn">Extrude</button>
+          <button id="insetBtn">Inset</button>
+          <button id="deleteFaceBtn" class="danger">Delete Face</button>
+        </div>
       </section>
+
       <section class="floating-panel right-panel">
         <div class="panel-title">Mirror</div>
         <label class="toggle-row"><input data-mirror-axis="x" type="checkbox" /><span>Mirror X</span></label>
@@ -80,6 +98,6 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/main.js?v=0.10.5"></script>
+  <script type="module" src="./src/main.js?v=0.10.6"></script>
 </body>
 </html>
