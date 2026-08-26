@@ -9,16 +9,56 @@ let activeSlide = null;
 
 function currentMesh() { return state?.mesh || null; }
 function edgeKey(mesh, edge) { return mesh.edgeKey(edge.a, edge.b); }
+function realFaces(mesh, edge) { return (edge?.faces || []).filter(fi => Number.isInteger(fi) && fi >= 0 && fi < mesh.faces.length && Array.isArray(mesh.faces[fi])); }
 
-function ringInfo() {
+function incidentEdgeIndices(mesh, vertex) {
+  const edges = mesh.edges(), out = [];
+  for (let i = 0; i < edges.length; i++) if (edges[i]?.a === vertex || edges[i]?.b === vertex) out.push(i);
+  return out;
+}
+
+function continuationEdge(mesh, incomingIndex, vertex, visited) {
+  const edges = mesh.edges(), incoming = edges[incomingIndex];
+  if (!incoming) return null;
+  const candidates = incidentEdgeIndices(mesh, vertex).filter(index => index !== incomingIndex && !visited.has(index));
+  if (!candidates.length) return null;
+  if (candidates.length === 1) return candidates[0];
+
+  const incomingFaces = new Set(realFaces(mesh, incoming));
+  const opposite = candidates.filter(index => realFaces(mesh, edges[index]).every(face => !incomingFaces.has(face)));
+  if (opposite.length === 1) return opposite[0];
+
+  // Loose/open chains can have no face information. Continue only when the
+  // topology itself leaves one unambiguous route; otherwise stop at the pole.
+  return null;
+}
+
+function traceDirection(mesh, seedIndex, startVertex, visited) {
+  const edges = mesh.edges(), out = [];
+  let incomingIndex = seedIndex, vertex = startVertex;
+  for (let guard = 0; guard < edges.length + 1; guard++) {
+    const nextIndex = continuationEdge(mesh, incomingIndex, vertex, visited);
+    if (nextIndex === null) break;
+    const edge = edges[nextIndex];
+    if (!edge) break;
+    visited.add(nextIndex);
+    out.push(nextIndex);
+    vertex = edge.a === vertex ? edge.b : edge.a;
+    incomingIndex = nextIndex;
+  }
+  return out;
+}
+
+function loopInfo() {
   const mesh = currentMesh();
   const ids = state?.selectedEdges || [];
   if (!mesh || ids.length !== 1) return null;
-  const ring = mesh.loopRing?.(ids[0]);
-  if (!ring?.cutKeys?.size) return null;
-  const edges = mesh.edges();
-  const indices = [];
-  for (let i = 0; i < edges.length; i++) if (ring.cutKeys.has(edgeKey(mesh, edges[i]))) indices.push(i);
+  const seedIndex = ids[0], seed = mesh.edges()[seedIndex];
+  if (!seed) return null;
+  const visited = new Set([seedIndex]);
+  const fromA = traceDirection(mesh, seedIndex, seed.a, visited);
+  const fromB = traceDirection(mesh, seedIndex, seed.b, visited);
+  const indices = [...fromA.reverse(), seedIndex, ...fromB];
   return indices.length > 1 ? { mesh, indices } : null;
 }
 
@@ -137,7 +177,7 @@ function reconstructSlide(mesh, edgeIndices) {
   const average = positions.reduce((sum, value) => sum + value, 0) / positions.length;
   if (positions.some(value => Math.abs(value - average) > 0.08)) return { selectable: true, slideData: null, reason: 'Loop selected • slide unavailable because loop spacing is uneven' };
   slideData.forEach(item => item.position = average);
-  return { selectable: true, slideData, position: average, reason: `Loop selected • ${edgeIndices.length} edges • Slide ready` };
+  return { selectable: true, slideData, position: average, reason: `Loop selected • ${edgeIndices.length} linked edges • Slide ready` };
 }
 
 function forceRender() {
@@ -147,13 +187,13 @@ function forceRender() {
 }
 
 function sync() {
-  const info = ringInfo();
+  const info = loopInfo();
   if (button) button.disabled = !info;
   if (activeSlide && slider) slider.disabled = !activeSlide.slideData;
 }
 
 button?.addEventListener('click', () => {
-  const info = ringInfo();
+  const info = loopInfo();
   if (!info) return;
   const { mesh, indices } = info;
   const selected = selectEdgeIndices(mesh, indices);
@@ -165,7 +205,7 @@ button?.addEventListener('click', () => {
     slider.disabled = false;
     if (sliderOut) sliderOut.textContent = `${pct}%`;
   }
-  if (status) status.textContent = selected ? (rebuilt?.reason || `Loop selected • ${indices.length} edges`) : 'Select Loop partially selected • tap another edge and retry';
+  if (status) status.textContent = selected ? (rebuilt?.reason || `Loop selected • ${indices.length} linked edges`) : 'Select Loop partially selected • tap another edge and retry';
   sync();
 });
 
