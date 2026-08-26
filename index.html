@@ -4,18 +4,18 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#111318" />
-  <title>BoxLab v0.10.8</title>
-  <link rel="stylesheet" href="./styles.css?v=0.10.8" />
+  <title>BoxLab v0.10.9</title>
+  <link rel="stylesheet" href="./styles.css?v=0.10.9" />
   <script type="importmap">
   {
     "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js",
       "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.179.1/examples/jsm/",
-      "./src/mesh.js": "./src/mesh.js?v=0.10.8",
-      "./src/subdivision.js": "./src/subdivision.js?v=0.10.8",
-      "./src/mirror.js": "./src/mirror.js?v=0.10.8",
-      "./src/export.js": "./src/export.js?v=0.10.8",
-      "./src/history.js": "./src/history.js?v=0.10.8"
+      "./src/mesh.js": "./src/mesh.js?v=0.10.9",
+      "./src/subdivision.js": "./src/subdivision.js?v=0.10.9",
+      "./src/mirror.js": "./src/mirror.js?v=0.10.9",
+      "./src/export.js": "./src/export.js?v=0.10.9",
+      "./src/history.js": "./src/history.js?v=0.10.9"
     }
   }
   </script>
@@ -23,7 +23,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.10.8</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.10.9</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -36,7 +36,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">Context tools follow Object / Vertex / Edge / Face. Add Edge connects exactly two selected non-adjacent vertices when they share a face.</div>
+      <div class="hint">Add Edge: select exactly 2 non-adjacent vertices on the same face. BoxLab reports whether the edge was created.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -103,6 +103,7 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/main.js?v=0.10.8"></script>
+  <script type="module" src="./src/main.js?v=0.10.9"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.10.9"></script>
 </body>
 </html>
