@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
   <meta name="theme-color" content="#111318" />
-  <title>BoxLab v0.10</title>
+  <title>BoxLab v0.10.1</title>
   <link rel="stylesheet" href="./styles.css" />
   <script type="importmap">
   {
@@ -18,7 +18,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.10</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.10.1</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -31,7 +31,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">Multi Select ON builds a selection by tapping components. Turn it OFF to Move or Scale the whole selected group. Select All acts on the current Vertex / Edge / Face mode.</div>
+      <div class="hint">Delete Vertex / Edge are destructive hole-making tools. Multi Select can delete groups. Dissolve and Fill will remain separate topology-repair tools.</div>
       <section class="floating-panel left-panel">
         <div class="panel-title">Selection</div>
         <label class="toggle-row"><input id="multiSelectToggle" type="checkbox" /><span>Multi Select</span></label>
@@ -44,6 +44,8 @@
         </div>
         <label class="toggle-row"><input id="axisSnapToggle" type="checkbox" /><span>Axis Snap</span></label>
         <label class="toggle-row"><input id="inferenceSnapToggle" type="checkbox" disabled /><span>Inference Snap</span></label>
+        <div class="panel-title">Vertex</div>
+        <button id="deleteVertexBtn" class="danger">Delete Vertex</button>
         <div class="panel-title edge-title">Edge</div>
         <label class="range-row"><span>Cuts</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
         <button id="loopCutBtn">Loop Cut</button>
@@ -51,6 +53,7 @@
         <label class="range-row"><span>Crease</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5" /><output id="creaseStrengthOut">100%</output></label>
         <button id="applyCreaseBtn">Apply Crease</button>
         <button id="clearCreaseBtn">Clear Crease</button>
+        <button id="deleteEdgeBtn" class="danger">Delete Edge</button>
         <div class="panel-title face-title">Face</div>
         <button id="extrudeBtn">Extrude</button>
         <button id="insetBtn">Inset</button>
@@ -74,6 +77,6 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/main.js?v=0.10"></script>
+  <script type="module" src="./src/main.js?v=0.10.1"></script>
 </body>
 </html>
