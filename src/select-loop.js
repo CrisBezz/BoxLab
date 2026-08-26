@@ -46,9 +46,13 @@ function traceDirection(mesh, seedIndex, startVertex, visited) {
   return out;
 }
 
+function selectedEdgeIds() {
+  return [...new Set(state?.selectedEdges || [])];
+}
+
 function loopInfo() {
   const mesh = currentMesh();
-  const ids = state?.selectedEdges || [];
+  const ids = selectedEdgeIds();
   if (!mesh || ids.length !== 1) return null;
   const seedIndex = ids[0], seed = mesh.edges()[seedIndex];
   if (!seed) return null;
@@ -56,7 +60,7 @@ function loopInfo() {
   const fromA = traceDirection(mesh, seedIndex, seed.a, visited);
   const fromB = traceDirection(mesh, seedIndex, seed.b, visited);
   const indices = [...fromA.reverse(), seedIndex, ...fromB];
-  return indices.length > 1 ? { mesh, indices } : null;
+  return { mesh, indices };
 }
 
 function edgeScreenPoint(mesh, edgeIndex, fraction = 0.5) {
@@ -184,15 +188,23 @@ function forceRender() {
 }
 
 function sync() {
-  const info = loopInfo();
-  if (button) button.disabled = !info;
+  const oneEdgeSelected = selectedEdgeIds().length === 1;
+  if (button) button.disabled = !oneEdgeSelected;
   if (activeSlide && slider) slider.disabled = !activeSlide.slideData;
 }
 
 button?.addEventListener('click', () => {
   const info = loopInfo();
-  if (!info) return;
+  if (!info) {
+    if (status) status.textContent = 'Select Loop • select exactly one edge first';
+    sync();
+    return;
+  }
   const { mesh, indices } = info;
+  if (indices.length < 2) {
+    if (status) status.textContent = 'Select Loop • no unambiguous linked continuation from this edge';
+    return;
+  }
   const selected = selectEdgeIndices(mesh, indices);
   const rebuilt = reconstructSlide(mesh, indices);
   activeSlide = rebuilt?.slideData ? { mesh, slideData: rebuilt.slideData, historyPushed: false } : null;
