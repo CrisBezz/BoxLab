@@ -3,12 +3,21 @@ import * as THREE from 'three';
 export function installBridgeTopology(EditableMesh) {
   if (EditableMesh.prototype.__bridgeTopologyInstalled) return;
 
-  const state = globalThis.__boxlabBridgeState ||= { mesh: null, selectedEdges: [], selectedFaces: [], facePickers: new Map(), lastEdge: null, notifyTimer: null };
+  const state = globalThis.__boxlabBridgeState ||= { mesh: null, camera: null, edgeObjects: new Map(), selectedEdges: [], selectedFaces: [], facePickers: new Map(), lastEdge: null, notifyTimer: null };
   const baseEdges = EditableMesh.prototype.edges;
   EditableMesh.prototype.edges = function () {
     state.mesh = this;
     return baseEdges.call(this);
   };
+
+  if (!THREE.PerspectiveCamera.prototype.__boxlabCameraObserverInstalled) {
+    const baseUpdateProjectionMatrix = THREE.PerspectiveCamera.prototype.updateProjectionMatrix;
+    THREE.PerspectiveCamera.prototype.updateProjectionMatrix = function (...args) {
+      state.camera = this;
+      return baseUpdateProjectionMatrix.apply(this, args);
+    };
+    THREE.PerspectiveCamera.prototype.__boxlabCameraObserverInstalled = true;
+  }
 
   const geometrySignature = geometry => {
     const attr = geometry?.getAttribute?.('position');
@@ -25,9 +34,11 @@ export function installBridgeTopology(EditableMesh) {
           state.selectedEdges = [];
           state.selectedFaces = [];
           state.facePickers = new Map();
+          state.edgeObjects = new Map();
           state.lastEdge = null;
         } else if (kind === 'edge') {
           state.lastEdge = object.userData.index;
+          state.edgeObjects.set(object.userData.index, object);
         } else if (kind === 'edge-selection-overlay' && Number.isInteger(state.lastEdge)) {
           if (!state.selectedEdges.includes(state.lastEdge)) state.selectedEdges.push(state.lastEdge);
         } else if (kind === 'face') {
