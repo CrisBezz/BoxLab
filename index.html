@@ -7,20 +7,20 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.11.1</title>
-  <link rel="stylesheet" href="./styles.css?v=0.11.1" />
+  <title>BoxLab v0.11.2</title>
+  <link rel="stylesheet" href="./styles.css?v=0.11.2" />
   <script type="importmap">
   {
     "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js",
       "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.179.1/examples/jsm/",
-      "./src/mesh.js": "./src/mesh.js?v=0.11.1",
-      "./src/subdivision.js": "./src/subdivision.js?v=0.11.1",
-      "./src/mirror.js": "./src/mirror.js?v=0.11.1",
-      "./src/export.js": "./src/export.js?v=0.11.1",
-      "./src/history.js": "./src/history.js?v=0.11.1",
-      "./src/loose-topology.js": "./src/loose-topology.js?v=0.11.1",
-      "./src/bridge-topology.js": "./src/bridge-topology.js?v=0.11.1"
+      "./src/mesh.js": "./src/mesh.js?v=0.11.2",
+      "./src/subdivision.js": "./src/subdivision.js?v=0.11.2",
+      "./src/mirror.js": "./src/mirror.js?v=0.11.2",
+      "./src/export.js": "./src/export.js?v=0.11.2",
+      "./src/history.js": "./src/history.js?v=0.11.2",
+      "./src/loose-topology.js": "./src/loose-topology.js?v=0.11.2",
+      "./src/bridge-topology.js": "./src/bridge-topology.js?v=0.11.2"
     }
   }
   </script>
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.11.1</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.11.2</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -41,7 +41,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">v0.11.1 • Bridge + Select Loop. Select one edge → Select Loop to trace its quad loop; regular loops can then be slid again with the Slide control.</div>
+      <div class="hint">v0.11.2 • Smart Boundary Tools. Select one boundary edge → Select Boundary. Three sides of a quad → Fill Face + Edge completes and fills it in one Undo.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -74,6 +74,7 @@
         <div class="mode-tools" data-mode-tools="edge">
           <div class="panel-title context-title">Edge</div>
           <button id="selectLoopBtn" disabled>Select Loop</button>
+          <button id="selectBoundaryBtn" disabled>Select Boundary</button>
           <label class="range-row"><span>Cuts</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
           <button id="loopCutBtn">Loop Cut</button>
           <label class="range-row"><span>Slide</span><input id="loopSlide" type="range" min="5" max="95" value="50" step="1" disabled /><output id="loopSlideOut">50%</output></label>
@@ -112,10 +113,11 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.11.1"></script>
-  <script type="module" src="./src/main.js?v=0.11.1"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.11.1"></script>
-  <script type="module" src="./src/bridge-ui.js?v=0.11.1"></script>
-  <script type="module" src="./src/select-loop.js?v=0.11.1"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.11.2"></script>
+  <script type="module" src="./src/main.js?v=0.11.2"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.11.2"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.11.2"></script>
+  <script type="module" src="./src/select-loop.js?v=0.11.2"></script>
+  <script type="module" src="./src/boundary-tools.js?v=0.11.2"></script>
 </body>
 </html>
