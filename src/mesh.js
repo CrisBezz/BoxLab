@@ -122,6 +122,39 @@ export class EditableMesh {
     return {type:'face',index:faceIndex};
   }
 
+  connectVertices(a,b){
+    if(!Number.isInteger(a)||!Number.isInteger(b)||a===b||!this.vertices[a]||!this.vertices[b]) return {ok:false,reason:'Select two valid vertices'};
+    const key=this.edgeKey(a,b);
+    if(this.edges().some(edge=>this.edgeKey(edge.a,edge.b)===key)) return {ok:false,reason:'Vertices already have an edge'};
+
+    for(let faceIndex=0;faceIndex<this.faces.length;faceIndex++){
+      const face=this.faces[faceIndex];
+      if(!face||face.length<4) continue;
+      const ia=face.indexOf(a), ib=face.indexOf(b);
+      if(ia<0||ib<0) continue;
+      const n=face.length;
+      if(face[(ia+1)%n]===b||face[(ia-1+n)%n]===b) return {ok:false,reason:'Vertices already have an edge'};
+
+      const walk=(start,end)=>{
+        const path=[];
+        let i=start;
+        for(let guard=0;guard<=n;guard++){
+          path.push(face[i]);
+          if(i===end) return path;
+          i=(i+1)%n;
+        }
+        return null;
+      };
+      const path1=walk(ia,ib), path2=walk(ib,ia);
+      if(!path1||!path2||path1.length<3||path2.length<3) continue;
+      if(new Set(path1).size!==path1.length||new Set(path2).size!==path2.length) continue;
+
+      this.faces.splice(faceIndex,1,[...path1],[...path2]);
+      return {ok:true,edgeKey:key,faceIndex};
+    }
+    return {ok:false,reason:'Vertices need one shared face'};
+  }
+
   deleteFace(faceIndex){
     if(faceIndex<0 || faceIndex>=this.faces.length) return false;
     this.faces.splice(faceIndex,1);
