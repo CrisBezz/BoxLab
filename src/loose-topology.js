@@ -34,14 +34,39 @@ export function installLooseTopology(EditableMesh) {
 
   EditableMesh.prototype.edges = function () {
     ensure(this);
+
+    // Remove virtual negative-index neighbour faces from earlier edge() calls.
+    if (Array.isArray(this.__looseVirtualFaceKeys)) {
+      for (const key of this.__looseVirtualFaceKeys) delete this.faces[key];
+    }
+    this.__looseVirtualFaceKeys = [];
+
     const faceEdges = baseEdges.call(this);
     const known = new Set(faceEdges.map(edge => this.edgeKey(edge.a, edge.b)));
+
+    // Once a loose edge becomes part of a real face, the face owns it.
+    for (const key of [...this.looseEdges]) {
+      if (known.has(key)) this.looseEdges.delete(key);
+    }
+
+    const usedByFace = new Set(this.faces.flat());
+    for (const vertex of [...this.looseVertices]) {
+      if (usedByFace.has(vertex)) this.looseVertices.delete(vertex);
+    }
+
     const loose = [];
+    let virtualFaceIndex = -1;
     for (const key of this.looseEdges) {
-      if (known.has(key)) continue;
       const edge = edgeFromKey(key);
       if (!edge || !this.vertices[edge.a] || !this.vertices[edge.b] || edge.a === edge.b) continue;
-      loose.push({ ...edge, faces: [], loose: true });
+
+      // The existing Fill Face tool recognises boundary edges by one incident
+      // face. Give each loose edge a virtual neighbour at a negative array key.
+      // Negative keys do not affect faces.length, iteration, rendering or SubD.
+      const neighbourIndex = virtualFaceIndex--;
+      this.faces[neighbourIndex] = [edge.b, edge.a];
+      this.__looseVirtualFaceKeys.push(String(neighbourIndex));
+      loose.push({ ...edge, faces: [neighbourIndex], loose: true });
     }
     return [...faceEdges, ...loose];
   };
