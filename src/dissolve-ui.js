@@ -5,16 +5,23 @@ const canvas = document.querySelector('#viewport');
 const multiToggle = document.querySelector('#multiSelectToggle');
 
 function currentMesh() { return state?.mesh || null; }
-function selectedEdge() {
-  const ids = state?.selectedEdges || [];
-  return ids.length === 1 ? ids[0] : null;
-}
-function dissolveInfo() {
-  const mesh = currentMesh(), edgeIndex = selectedEdge();
-  return mesh && Number.isInteger(edgeIndex) ? mesh.dissolveEdgeInfo?.(edgeIndex) : null;
+function selectedEdges() { return [...new Set(state?.selectedEdges || [])]; }
+function dissolveMode() {
+  const mesh = currentMesh(), ids = selectedEdges();
+  if (!mesh || !ids.length) return null;
+  if (ids.length === 1) {
+    const info = mesh.dissolveEdgeInfo?.(ids[0]);
+    return info ? { type: 'edge', mesh, ids, info } : null;
+  }
+  const info = mesh.dissolveLoopInfo?.(ids);
+  return info ? { type: 'loop', mesh, ids, info } : null;
 }
 function sync() {
-  if (button) button.disabled = !dissolveInfo();
+  const mode = dissolveMode();
+  if (button) {
+    button.disabled = !mode;
+    button.textContent = mode?.type === 'loop' ? 'Dissolve Loop' : 'Dissolve Edge';
+  }
 }
 function faceScreenPoint(mesh, faceIndex) {
   const camera = state?.camera;
@@ -35,10 +42,33 @@ function selectMergedFace(mesh, faceIndex) {
 }
 
 button?.addEventListener('click', () => {
-  const mesh = currentMesh(), edgeIndex = selectedEdge(), info = dissolveInfo(), history = globalThis.__boxlabHistory;
-  if (!mesh || !Number.isInteger(edgeIndex) || !info || !history) return;
+  const mode = dissolveMode(), history = globalThis.__boxlabHistory;
+  if (!mode || !history) return;
+  const { mesh, ids, type } = mode;
   const before = mesh.clone();
-  const result = mesh.dissolveEdge(edgeIndex);
+
+  if (type === 'loop') {
+    const result = mesh.dissolveLoop(ids);
+    if (!result) {
+      if (status) status.textContent = 'Dissolve Loop failed • invalid or changed topology';
+      sync();
+      return;
+    }
+    history.push(before);
+    if (multiToggle?.checked) {
+      multiToggle.checked = false;
+      multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
+    }
+    document.querySelector('#deselectAllBtn')?.click();
+    document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true }));
+    setTimeout(() => {
+      if (status) status.textContent = `Dissolve Loop • removed ${result.removedEdges} edges + ${result.removedVertices} vertices`;
+      sync();
+    }, 20);
+    return;
+  }
+
+  const result = mesh.dissolveEdge(ids[0]);
   if (!result) {
     if (status) status.textContent = 'Dissolve Edge failed • invalid topology';
     sync();
