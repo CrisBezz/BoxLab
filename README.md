@@ -65,3 +65,7 @@ Pages URL: `https://crisbezz.github.io/BoxLab/`
 ## Next candidates
 
 Loop-slide positioning, bridge/weld, multi-object support, GLB export and a true geometry bevel tool.
+
+## Future development
+
+- Auto Close / Make Watertight: detect open boundaries and repair/close an object into a watertight mesh where topology can be resolved safely.
