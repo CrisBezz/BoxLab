@@ -12,3 +12,5 @@ installBridgeTopology(EditableMesh);
 installBevelTopology(EditableMesh);
 installFaceTransform();
 installFaceRegion(EditableMesh);
+
+import './loop-offset.js?v=0.17';
