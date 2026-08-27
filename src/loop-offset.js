@@ -71,6 +71,7 @@ const output = document.querySelector('#offsetLoopSpacingOut');
 const status = document.querySelector('#selectionStatus');
 const canvas = document.querySelector('#viewport');
 const multiToggle = document.querySelector('#multiSelectToggle');
+let pendingHighlight = null;
 
 function info() {
   const mesh = state?.mesh;
@@ -79,19 +80,26 @@ function info() {
 function sync() {
   if (button) button.disabled = !info();
 }
-function edgeScreenPoint(mesh, edgeIndex) {
+function forceRender() {
+  const cage = document.querySelector('#cageToggle');
+  if (cage) cage.dispatchEvent(new Event('change', { bubbles:true }));
+}
+function edgeScreenPoint(mesh, edgeIndex, fraction = 0.5) {
   const camera = state?.camera, edge = mesh.edges()[edgeIndex];
   if (!camera || !canvas || !edge) return null;
-  const point = mesh.vertices[edge.a].clone().lerp(mesh.vertices[edge.b], 0.5).project(camera);
+  const point = mesh.vertices[edge.a].clone().lerp(mesh.vertices[edge.b], fraction).project(camera);
   const rect = canvas.getBoundingClientRect();
   return { x:rect.left + (point.x * 0.5 + 0.5) * rect.width, y:rect.top + (-point.y * 0.5 + 0.5) * rect.height };
 }
 function tapEdge(mesh, edgeIndex) {
-  const p = edgeScreenPoint(mesh, edgeIndex);
-  if (!p) return false;
-  canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:1, clientX:p.x, clientY:p.y }));
-  canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:0, clientX:p.x, clientY:p.y }));
-  return (state?.selectedEdges || []).includes(edgeIndex);
+  for (const fraction of [0.5, 0.38, 0.62]) {
+    const p = edgeScreenPoint(mesh, edgeIndex, fraction);
+    if (!p) continue;
+    canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:1, clientX:p.x, clientY:p.y }));
+    canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:0, clientX:p.x, clientY:p.y }));
+    if ((state?.selectedEdges || []).includes(edgeIndex)) return true;
+  }
+  return false;
 }
 function selectCreatedLoops(mesh, indices) {
   document.querySelector('#deselectAllBtn')?.click();
@@ -99,13 +107,34 @@ function selectCreatedLoops(mesh, indices) {
     multiToggle.checked = true;
     multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
   }
-  let selected = 0;
-  for (const index of [...new Set(indices)]) if (tapEdge(mesh, index)) selected++;
+  for (const index of [...new Set(indices)]) tapEdge(mesh, index);
   if (multiToggle) {
     multiToggle.checked = false;
     multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
   }
-  return selected;
+}
+function highlightEdges(indices, hex) {
+  let count = 0;
+  for (const index of indices) {
+    const line = state?.edgeObjects?.get(index);
+    if (!line?.material?.clone) continue;
+    const material = line.material.clone();
+    material.color?.setHex?.(hex);
+    material.depthTest = false;
+    line.material = material;
+    line.renderOrder = 36;
+    count++;
+  }
+  return count;
+}
+function applyPendingHighlight() {
+  if (!pendingHighlight) return;
+  const { leftEdges, rightEdges, originalEdges, spacing } = pendingHighlight;
+  const visible = highlightEdges([...leftEdges, ...rightEdges], 0x62d8ff) + highlightEdges(originalEdges, 0xffe14a);
+  if (visible) {
+    if (status) status.textContent = `Support loops created • 3 rings highlighted • ${Math.round(spacing * 100)}% spacing`;
+    pendingHighlight = null;
+  }
 }
 slider?.addEventListener('input', () => {
   if (output) output.textContent = `${slider.value}%`;
@@ -118,10 +147,15 @@ button?.addEventListener('click', () => {
   const result = mesh.offsetEdgeLoop(state.selectedEdges, spacing);
   if (!result) return;
   history.push(before);
-  const supportEdges = [...result.leftEdges, ...result.rightEdges];
-  const selected = selectCreatedLoops(mesh, supportEdges);
-  if (status) status.textContent = `Support loops created • ${result.leftEdges.length} + ${result.rightEdges.length} edges • ${Math.round(result.spacing * 100)}% spacing${selected === supportEdges.length ? ' • selected' : ''}`;
+  pendingHighlight = result;
+  forceRender();
+  requestAnimationFrame(() => {
+    selectCreatedLoops(mesh, [...result.leftEdges, ...result.rightEdges]);
+    forceRender();
+    requestAnimationFrame(applyPendingHighlight);
+  });
+  if (status) status.textContent = `Support loops created • ${result.leftEdges.length + result.rightEdges.length} support edges • ${Math.round(result.spacing * 100)}% spacing`;
   sync();
 });
-window.addEventListener('boxlab-bridge-state', sync);
+window.addEventListener('boxlab-bridge-state', () => { sync(); applyPendingHighlight(); });
 sync();
