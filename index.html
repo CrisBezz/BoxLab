@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.18.3</title>
-  <link rel="stylesheet" href="./styles.css?v=0.18.3" />
+  <title>BoxLab v0.18.4</title>
+  <link rel="stylesheet" href="./styles.css?v=0.18.4" />
   <script type="importmap">
   {
     "imports": {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.18.3</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.18.4</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -41,7 +41,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">v0.18.3 • Bevel now follows the selected edge set: one edge, multiple independent edges, or a closed loop. Connected open corner-chains remain protected until the shared-corner solver is added.</div>
+      <div class="hint">v0.18.4 • Tap a selected edge to remove it from the selection. Dragging a selected edge still starts the existing Move/Scale transform.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -116,20 +116,21 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.18.3"></script>
-  <script type="module" src="./src/pencil-orbit-gate.js?v=0.18.3"></script>
-  <script type="module" src="./src/main.js?v=0.18.3"></script>
-  <script type="module" src="./src/loop-cut-commit.js?v=0.18.3"></script>
-  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.18.3"></script>
-  <script type="module" src="./src/component-slide.js?v=0.18.3"></script>
-  <script type="module" src="./src/dissolve-bootstrap.js?v=0.18.3"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.18.3"></script>
-  <script type="module" src="./src/bridge-ui.js?v=0.18.3"></script>
-  <script type="module" src="./src/select-loop.js?v=0.18.3"></script>
-  <script type="module" src="./src/directed-loop.js?v=0.18.3"></script>
-  <script type="module" src="./src/edge-paint-select.js?v=0.18.3"></script>
-  <script type="module" src="./src/boundary-tools.js?v=0.18.3"></script>
-  <script type="module" src="./src/dissolve-ui.js?v=0.18.3"></script>
-  <script type="module" src="./src/bevel-ui.js?v=0.18.3"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.18.4"></script>
+  <script type="module" src="./src/pencil-orbit-gate.js?v=0.18.4"></script>
+  <script type="module" src="./src/main.js?v=0.18.4"></script>
+  <script type="module" src="./src/loop-cut-commit.js?v=0.18.4"></script>
+  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.18.4"></script>
+  <script type="module" src="./src/component-slide.js?v=0.18.4"></script>
+  <script type="module" src="./src/dissolve-bootstrap.js?v=0.18.4"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.18.4"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.18.4"></script>
+  <script type="module" src="./src/select-loop.js?v=0.18.4"></script>
+  <script type="module" src="./src/directed-loop.js?v=0.18.4"></script>
+  <script type="module" src="./src/edge-paint-select.js?v=0.18.4"></script>
+  <script type="module" src="./src/edge-toggle-repair.js?v=0.18.4"></script>
+  <script type="module" src="./src/boundary-tools.js?v=0.18.4"></script>
+  <script type="module" src="./src/dissolve-ui.js?v=0.18.4"></script>
+  <script type="module" src="./src/bevel-ui.js?v=0.18.4"></script>
 </body>
 </html>
