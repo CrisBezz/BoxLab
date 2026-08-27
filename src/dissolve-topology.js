@@ -70,14 +70,10 @@ export function installDissolveTopology(EditableMesh) {
     const occ1 = edgeOccurrence(face1, a, b);
     if (!occ0 || !occ1) return null;
 
-    // Preserve face0 winding. If its shared edge runs b->a, swap labels so
-    // the perimeter path always begins at b and walks around to a.
     if (!occ0.forward) [a, b] = [b, a];
     const path0 = pathForward(face0, b, a);
     if (!path0 || path0.length < 3) return null;
 
-    // The neighbouring face should traverse the shared edge in the opposite
-    // direction. Reverse its loop when source winding is inconsistent.
     let neighbour = [...face1];
     const neighbourOcc = edgeOccurrence(neighbour, b, a);
     if (!neighbourOcc?.forward) neighbour.reverse();
@@ -121,12 +117,17 @@ export function installDissolveTopology(EditableMesh) {
 
       const quad = info.merged.filter(vertex => vertex !== edge.a && vertex !== edge.b);
       if (quad.length !== 4 || new Set(quad).size !== 4 || quad.some(vertex => loopVertices.has(vertex))) return null;
-      replacements.push({ edgeIndex, faceIndices: [...info.faceIndices], face: quad });
+      replacements.push({ face: quad });
     }
 
-    // A regular removable loop has two unique neighbouring quads per edge.
-    // Reject face-perimeter selections and poles where a face touches the loop twice.
     if (faceUse.size !== loop.edgeOrder.length * 2 || [...faceUse.values()].some(count => count !== 1)) return null;
+
+    const removedFaces = new Set(faceUse.keys());
+    for (const vertex of loopVertices) {
+      for (let fi = 0; fi < this.faces.length; fi++) {
+        if (this.faces[fi]?.includes(vertex) && !removedFaces.has(fi)) return null;
+      }
+    }
 
     const replacementKeys = new Set();
     for (const { face } of replacements) {
@@ -163,7 +164,6 @@ export function installDissolveTopology(EditableMesh) {
     });
     this.vertices = vertices;
     this.faces = this.faces.map(face => face.map(index => indexMap.get(index)));
-    if (this.faces.some(face => face.some(index => !Number.isInteger(index)))) return null;
 
     const creases = new Map();
     for (const [key, value] of this.creases) {
