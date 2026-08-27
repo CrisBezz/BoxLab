@@ -3,60 +3,34 @@ import * as THREE from 'three';
 const canvas = document.querySelector('#viewport');
 const status = document.querySelector('#selectionStatus');
 const rotateButton = document.querySelector('#toolModes button[data-tool="rotate"]');
-const raycaster = new THREE.Raycaster();
-raycaster.params.Line.threshold = 0.09;
-const pointer = new THREE.Vector2();
-const SELECTED_HEX = 0xff615f;
 const DRAG_THRESHOLD = 8;
 
-let bodyObject = null;
-let selectedVertexObjects = new Map();
-let selectedFaceObjects = [];
 let gesture = null;
+let selectedVertexIndices = new Set();
 
 function state() { return globalThis.__boxlabBridgeState; }
 function rotateActive() { return !!rotateButton?.classList.contains('active'); }
 function currentMode() { return document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
 
-if (!THREE.Group.prototype.__boxlabRotateObserverInstalled) {
+if (!THREE.Group.prototype.__boxlabRotateSelectionObserverInstalled) {
   const baseAdd = THREE.Group.prototype.add;
   THREE.Group.prototype.add = function (...objects) {
     for (const object of objects) {
-      const kind = object?.userData?.kind;
-      if (kind === 'body') {
-        bodyObject = object;
-        selectedVertexObjects = new Map();
-        selectedFaceObjects = [];
-      } else if (kind === 'vertex') {
+      if (object?.userData?.kind === 'body') selectedVertexIndices = new Set();
+      if (object?.userData?.kind === 'vertex' && Number.isInteger(object.userData.index)) {
         const hex = object?.material?.color?.getHex?.();
-        if (hex === SELECTED_HEX && Number.isInteger(object.userData.index)) selectedVertexObjects.set(object.userData.index, object);
-      } else if (!kind && object?.renderOrder === 5) {
-        selectedFaceObjects.push(object);
+        if (hex === 0xff615f) selectedVertexIndices.add(object.userData.index);
       }
     }
     return baseAdd.apply(this, objects);
   };
-  THREE.Group.prototype.__boxlabRotateObserverInstalled = true;
+  THREE.Group.prototype.__boxlabRotateSelectionObserverInstalled = true;
 }
 
-function setPointer(event) {
-  const rect = canvas.getBoundingClientRect();
-  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-  pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-}
-
-function hitObjects(event, objects) {
-  const camera = state()?.camera;
-  if (!camera || !objects?.length) return false;
-  setPointer(event);
-  raycaster.setFromCamera(pointer, camera);
-  return raycaster.intersectObjects(objects.filter(Boolean), false).length > 0;
-}
-
-function selectedVertexIndices(mode, mesh) {
+function selectionVertices(mode, mesh) {
   if (!mesh) return [];
-  if (mode === 'object') return mesh.vertices.map((_, index) => index);
-  if (mode === 'vertex') return [...selectedVertexObjects.keys()];
+  if (mode === 'object') return mesh.vertices.map((_, i) => i);
+  if (mode === 'vertex') return [...selectedVertexIndices];
   if (mode === 'edge') {
     const out = new Set();
     for (const index of state()?.selectedEdges || []) {
@@ -67,28 +41,36 @@ function selectedVertexIndices(mode, mesh) {
   }
   if (mode === 'face') {
     const out = new Set();
-    for (const index of state()?.selectedFaces || []) for (const vertex of mesh.faces[index] || []) out.add(vertex);
+    for (const index of state()?.selectedFaces || []) {
+      for (const vertex of mesh.faces[index] || []) out.add(vertex);
+    }
     return [...out];
   }
   return [];
 }
 
-function hitSelected(event, mode) {
-  if (mode === 'object') return hitObjects(event, bodyObject ? [bodyObject] : []);
-  if (mode === 'vertex') return hitObjects(event, [...selectedVertexObjects.values()]);
-  if (mode === 'edge') {
-    const edgeObjects = state()?.edgeObjects;
-    const objects = (state()?.selectedEdges || []).map(index => edgeObjects?.get(index)).filter(Boolean);
-    return hitObjects(event, objects);
-  }
-  if (mode === 'face') return hitObjects(event, selectedFaceObjects);
-  return false;
+function pencilHitsMesh(event, mesh, camera) {
+  if (!mesh || !camera || !mesh.faces?.length) return false;
+  const rect = canvas.getBoundingClientRect();
+  if (!rect.width || !rect.height) return false;
+  const pointer = new THREE.Vector2(
+    ((event.clientX - rect.left) / rect.width) * 2 - 1,
+    -((event.clientY - rect.top) / rect.height) * 2 + 1
+  );
+  const raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(pointer, camera);
+  const geometry = mesh.triangulatedGeometry();
+  const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide });
+  const picker = new THREE.Mesh(geometry, material);
+  const hit = raycaster.intersectObject(picker, false).length > 0;
+  geometry.dispose();
+  material.dispose();
+  return hit;
 }
 
-function screenPoint(world) {
-  const camera = state()?.camera;
-  if (!camera || !world) return null;
-  const p = world.clone().project(camera), rect = canvas.getBoundingClientRect();
+function screenPoint(world, camera) {
+  const p = world.clone().project(camera);
+  const rect = canvas.getBoundingClientRect();
   return new THREE.Vector2(
     rect.left + (p.x * 0.5 + 0.5) * rect.width,
     rect.top + (-p.y * 0.5 + 0.5) * rect.height
@@ -100,49 +82,60 @@ function forceRender() {
 }
 
 canvas?.addEventListener('pointerdown', event => {
-  if (!event.isPrimary || !rotateActive()) return;
-  if (event.pointerType === 'touch') return;
+  if (!event.isPrimary || !rotateActive() || event.pointerType === 'touch') return;
   const mesh = state()?.mesh, camera = state()?.camera, mode = currentMode();
-  if (!mesh || !camera || !hitSelected(event, mode)) return;
-  const indices = selectedVertexIndices(mode, mesh);
-  if (!indices.length) return;
+  const indices = selectionVertices(mode, mesh);
+  if (!mesh || !camera || !indices.length || !pencilHitsMesh(event, mesh, camera)) return;
 
   const center = new THREE.Vector3();
   indices.forEach(index => center.add(mesh.vertices[index]));
   center.multiplyScalar(1 / indices.length);
-  const centerScreen = screenPoint(center);
-  if (!centerScreen) return;
+  const centerScreen = screenPoint(center, camera);
   const startVector = new THREE.Vector2(event.clientX, event.clientY).sub(centerScreen);
   const axis = new THREE.Vector3();
   camera.getWorldDirection(axis).normalize();
 
   gesture = {
-    pointerId:event.pointerId,
+    pointerId: event.pointerId,
     mode,
+    mesh,
     indices,
     center,
     centerScreen,
     startVector,
-    startX:event.clientX,
-    startY:event.clientY,
+    startX: event.clientX,
+    startY: event.clientY,
     axis,
-    original:new Map(indices.map(index => [index, mesh.vertices[index].clone()])),
-    moved:false
+    original: new Map(indices.map(index => [index, mesh.vertices[index].clone()])),
+    before: mesh.clone(),
+    moved: false,
+    historyPushed: false
   };
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  canvas.setPointerCapture?.(event.pointerId);
 }, true);
 
 canvas?.addEventListener('pointermove', event => {
-  if (!gesture || gesture.pointerId !== event.pointerId || !rotateActive()) return;
-  const distance = Math.hypot(event.clientX - gesture.startX, event.clientY - gesture.startY);
-  if (distance < DRAG_THRESHOLD && !gesture.moved) return;
-  gesture.moved = true;
+  if (!gesture || gesture.pointerId !== event.pointerId) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
 
-  const mesh = state()?.mesh;
-  if (!mesh) return;
+  const distance = Math.hypot(event.clientX - gesture.startX, event.clientY - gesture.startY);
+  if (!gesture.moved && distance < DRAG_THRESHOLD) return;
+  if (!gesture.moved) {
+    gesture.moved = true;
+    if (!gesture.historyPushed && globalThis.__boxlabHistory) {
+      globalThis.__boxlabHistory.push(gesture.before);
+      gesture.historyPushed = true;
+    }
+  }
+
   const currentVector = new THREE.Vector2(event.clientX, event.clientY).sub(gesture.centerScreen);
   let angle;
   if (gesture.startVector.length() > 18 && currentVector.length() > 18) {
-    const a = gesture.startVector.clone().normalize(), b = currentVector.clone().normalize();
+    const a = gesture.startVector.clone().normalize();
+    const b = currentVector.clone().normalize();
     angle = -Math.atan2(a.x * b.y - a.y * b.x, THREE.MathUtils.clamp(a.dot(b), -1, 1));
   } else {
     angle = (event.clientX - gesture.startX) * 0.012;
@@ -150,22 +143,24 @@ canvas?.addEventListener('pointermove', event => {
 
   const q = new THREE.Quaternion().setFromAxisAngle(gesture.axis, angle);
   for (const index of gesture.indices) {
-    const original = gesture.original.get(index), vertex = mesh.vertices[index];
-    if (!original || !vertex) continue;
-    vertex.copy(original).sub(gesture.center).applyQuaternion(q).add(gesture.center);
+    const original = gesture.original.get(index);
+    const vertex = gesture.mesh.vertices[index];
+    if (original && vertex) vertex.copy(original).sub(gesture.center).applyQuaternion(q).add(gesture.center);
   }
   forceRender();
-  if (status) status.textContent = `Rotate ${gesture.mode} • ${(THREE.MathUtils.radToDeg(angle)).toFixed(1)}°`;
-});
+  if (status) status.textContent = `Rotate ${gesture.mode} • ${THREE.MathUtils.radToDeg(angle).toFixed(1)}°`;
+}, true);
 
-function end(event) {
+function finish(event) {
   if (!gesture || gesture.pointerId !== event.pointerId) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
   const moved = gesture.moved;
   gesture = null;
   if (moved && status) status.textContent = 'Rotate committed';
 }
-canvas?.addEventListener('pointerup', end);
-canvas?.addEventListener('pointercancel', end);
+canvas?.addEventListener('pointerup', finish, true);
+canvas?.addEventListener('pointercancel', finish, true);
 
 rotateButton?.addEventListener('click', () => {
   forceRender();
