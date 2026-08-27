@@ -3,8 +3,6 @@ import * as THREE from 'three';
 const canvas = document.querySelector('#viewport');
 const addVertexBtn = document.querySelector('#addVertexBtn');
 const status = document.querySelector('#selectionStatus');
-const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2();
 const SNAP_PX = 18;
 let drag = null;
 
@@ -33,7 +31,7 @@ function nearestEdge(clientX, clientY) {
     if (lenSq < 1e-6) return;
     const t = THREE.MathUtils.clamp(p.clone().sub(a).dot(ab) / lenSq, 0, 1);
     const q = a.clone().addScaledVector(ab, t), distance = q.distanceTo(p);
-    if (distance <= SNAP_PX && (!best || distance < best.distance)) best = { index, edge, t, a, b, distance };
+    if (distance <= SNAP_PX && (!best || distance < best.distance)) best = { index, edge, t, distance };
   });
   return best;
 }
@@ -67,7 +65,7 @@ function splitEdge(m, edgeIndex, t) {
     m.looseEdges.delete(oldKey);
     m.looseEdges.add(m.edgeKey(a, vertex));
     m.looseEdges.add(m.edgeKey(vertex, b));
-    if (m.looseVertices instanceof Set) m.looseVertices.delete(vertex);
+    if (m.looseVertices instanceof Set) m.looseVertices.add(vertex);
   }
 
   if (m.creases instanceof Map) {
