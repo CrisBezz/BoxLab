@@ -83,7 +83,7 @@ button?.addEventListener('click', () => {
   const before = mesh.clone();
   const result = mesh.generalBevelSelection(valid.ids, width, segments);
   if (!result) {
-    if (status) status.textContent = 'Bevel unavailable • selection topology changed';
+    if (status) status.textContent = mesh.__lastBevelError || 'Bevel unavailable • selection topology changed';
     sync();
     return;
   }
