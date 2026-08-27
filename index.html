@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.18.5</title>
-  <link rel="stylesheet" href="./styles.css?v=0.18.5" />
+  <title>BoxLab v0.19</title>
+  <link rel="stylesheet" href="./styles.css?v=0.19" />
   <script type="importmap">
   {
     "imports": {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.18.5</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.19</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -41,7 +41,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">v0.18.5 • Select Loop is strict on regular quad topology and will not partially wander through poles/ngons. Bevel/Chamfer rolls back if it would open a previously closed mesh.</div>
+      <div class="hint">v0.19 • Rotate: select an object/component, choose Rotate, then Pencil-drag in an arc around the selection centre. Finger navigation remains unchanged.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -53,12 +53,13 @@
         <div class="segmented vertical" id="toolModes">
           <button data-tool="move" class="active">Move</button>
           <button data-tool="scale">Scale</button>
+          <button data-tool="rotate">Rotate</button>
         </div>
         <label class="toggle-row"><input id="axisSnapToggle" type="checkbox" /><span>Axis Snap</span></label>
         <label class="toggle-row"><input id="inferenceSnapToggle" type="checkbox" disabled /><span>Inference Snap</span></label>
         <div class="mode-tools" data-mode-tools="object">
           <div class="panel-title context-title">Object</div>
-          <div class="panel-note">Move or Scale the whole source cage. Mirror alignment remains in the right panel.</div>
+          <div class="panel-note">Move, Scale or Rotate the whole source cage. Mirror alignment remains in the right panel.</div>
         </div>
         <div class="mode-tools" data-mode-tools="vertex">
           <div class="panel-title context-title">Vertex</div>
@@ -116,22 +117,23 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.18.5"></script>
-  <script type="module" src="./src/pencil-orbit-gate.js?v=0.18.5"></script>
-  <script type="module" src="./src/main.js?v=0.18.5"></script>
-  <script type="module" src="./src/loop-cut-commit.js?v=0.18.5"></script>
-  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.18.5"></script>
-  <script type="module" src="./src/component-slide.js?v=0.18.5"></script>
-  <script type="module" src="./src/dissolve-bootstrap.js?v=0.18.5"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.18.5"></script>
-  <script type="module" src="./src/bridge-ui.js?v=0.18.5"></script>
-  <script type="module" src="./src/select-loop.js?v=0.18.5"></script>
-  <script type="module" src="./src/directed-loop.js?v=0.18.5"></script>
-  <script type="module" src="./src/strict-select-loop.js?v=0.18.5"></script>
-  <script type="module" src="./src/edge-paint-select.js?v=0.18.5"></script>
-  <script type="module" src="./src/edge-toggle-repair.js?v=0.18.5"></script>
-  <script type="module" src="./src/boundary-tools.js?v=0.18.5"></script>
-  <script type="module" src="./src/dissolve-ui.js?v=0.18.5"></script>
-  <script type="module" src="./src/bevel-ui.js?v=0.18.5"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.19"></script>
+  <script type="module" src="./src/pencil-orbit-gate.js?v=0.19"></script>
+  <script type="module" src="./src/main.js?v=0.19"></script>
+  <script type="module" src="./src/rotate-transform.js?v=0.19"></script>
+  <script type="module" src="./src/loop-cut-commit.js?v=0.19"></script>
+  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.19"></script>
+  <script type="module" src="./src/component-slide.js?v=0.19"></script>
+  <script type="module" src="./src/dissolve-bootstrap.js?v=0.19"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.19"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.19"></script>
+  <script type="module" src="./src/select-loop.js?v=0.19"></script>
+  <script type="module" src="./src/directed-loop.js?v=0.19"></script>
+  <script type="module" src="./src/strict-select-loop.js?v=0.19"></script>
+  <script type="module" src="./src/edge-paint-select.js?v=0.19"></script>
+  <script type="module" src="./src/edge-toggle-repair.js?v=0.19"></script>
+  <script type="module" src="./src/boundary-tools.js?v=0.19"></script>
+  <script type="module" src="./src/dissolve-ui.js?v=0.19"></script>
+  <script type="module" src="./src/bevel-ui.js?v=0.19"></script>
 </body>
 </html>
