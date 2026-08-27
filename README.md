@@ -69,3 +69,5 @@ Loop-slide positioning, bridge/weld, multi-object support, GLB export and a true
 ## Future development
 
 - Auto Close / Make Watertight: detect open boundaries and repair/close an object into a watertight mesh where topology can be resolved safely.
+- Direct Pencil Bevel / Chamfer Width: select one or more bevel-capable edges and Pencil-drag directly on the selection to control bevel width live; Pencil lift commits the result. Segments remain independently adjustable.
+- Connected Edge-Chain Bevel Corner Solver: continuous bevel/chamfer across touching selected edges using a shared miter/corner patch instead of overlapping sequential bevels.
