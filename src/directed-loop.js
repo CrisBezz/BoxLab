@@ -116,11 +116,12 @@ function chooseContinuation(mesh, incomingIndex, vertex, visited, guideFaces, pl
   return null;
 }
 
-function traceFromEnd(mesh, incomingIndex, startVertex, visited, guideFaces, planeNormal) {
+function traceFromEnd(mesh, incomingIndex, startVertex, targetVertex, visited, guideFaces, planeNormal) {
   const out = [];
   let incoming = incomingIndex;
   let vertex = startVertex;
   for (let guard = 0; guard < mesh.edges().length + 1; guard++) {
+    if (vertex === targetVertex) return { indices: out, closed: true, endVertex: vertex };
     const nextIndex = chooseContinuation(mesh, incoming, vertex, visited, guideFaces, planeNormal);
     if (nextIndex === null) break;
     const edge = mesh.edges()[nextIndex];
@@ -129,8 +130,9 @@ function traceFromEnd(mesh, incomingIndex, startVertex, visited, guideFaces, pla
     out.push(nextIndex);
     vertex = edge.a === vertex ? edge.b : edge.a;
     incoming = nextIndex;
+    if (vertex === targetVertex) return { indices: out, closed: true, endVertex: vertex };
   }
-  return out;
+  return { indices: out, closed: false, endVertex: vertex };
 }
 
 function directedInfo() {
@@ -151,10 +153,15 @@ function directedInfo() {
   const startVertex = seed.vertexOrder[0];
   const endVertex = seed.vertexOrder[seed.vertexOrder.length - 1];
 
-  const before = traceFromEnd(mesh, firstEdge, startVertex, visited, guideFaces, planeNormal);
-  const after = traceFromEnd(mesh, lastEdge, endVertex, visited, guideFaces, planeNormal);
-  const indices = [...before.reverse(), ...seed.edgeOrder, ...after];
-  return { mesh, indices, seedCount: ids.length, guideFaceCount: guideFaces.size };
+  const before = traceFromEnd(mesh, firstEdge, startVertex, endVertex, visited, guideFaces, planeNormal);
+  if (before.closed) {
+    const indices = [...before.indices.reverse(), ...seed.edgeOrder];
+    return { mesh, indices, seedCount: ids.length, guideFaceCount: guideFaces.size, closedByContinuation: true };
+  }
+
+  const after = traceFromEnd(mesh, lastEdge, endVertex, before.endVertex, visited, guideFaces, planeNormal);
+  const indices = [...before.indices.reverse(), ...seed.edgeOrder, ...after.indices];
+  return { mesh, indices, seedCount: ids.length, guideFaceCount: guideFaces.size, closedByContinuation: after.closed };
 }
 
 function edgeScreenPoint(mesh, edgeIndex, fraction = 0.5) {
@@ -233,7 +240,7 @@ button?.addEventListener('click', event => {
   const ok = extendSelection(info.mesh, info.indices);
   if (status) {
     status.textContent = ok
-      ? `Directed Loop • ${info.seedCount}-edge seed → ${info.indices.length} edges selected`
+      ? `Directed Loop • ${info.seedCount}-edge seed → ${info.indices.length} edges selected${info.closedByContinuation ? ' • closed' : ''}`
       : 'Directed Loop • partial continuation selected';
   }
   sync();
