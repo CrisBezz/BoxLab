@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.15</title>
-  <link rel="stylesheet" href="./styles.css?v=0.15" />
+  <title>BoxLab v0.15.1</title>
+  <link rel="stylesheet" href="./styles.css?v=0.15.1" />
   <script type="importmap">
   {
     "imports": {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.15</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.15.1</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -41,7 +41,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">v0.15 • Dissolve Loop. Select a clean closed quad loop → Dissolve Loop removes the ring and restores the surrounding quad strip in one Undo.</div>
+      <div class="hint">v0.15.1 • Dissolve Loop is now a dedicated Edge tool. Select a clean closed loop; the button enables when BoxLab recognises it as safely removable.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -86,6 +86,7 @@
           <button id="clearCreaseBtn">Clear Crease</button>
           <button id="bridgeEdgesBtn" disabled>Bridge Edge Loops</button>
           <button id="fillFaceBtn">Fill Face</button>
+          <button id="dissolveLoopBtn" disabled>Dissolve Loop</button>
           <button id="dissolveEdgeBtn" disabled>Dissolve Edge</button>
           <button id="deleteEdgeBtn" class="danger">Delete Edge</button>
         </div>
@@ -117,16 +118,16 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.15"></script>
-  <script type="module" src="./src/main.js?v=0.15"></script>
-  <script type="module" src="./src/dissolve-bootstrap.js?v=0.15"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.15"></script>
-  <script type="module" src="./src/bridge-ui.js?v=0.15"></script>
-  <script type="module" src="./src/select-loop.js?v=0.15"></script>
-  <script type="module" src="./src/directed-loop.js?v=0.15"></script>
-  <script type="module" src="./src/edge-paint-select.js?v=0.15"></script>
-  <script type="module" src="./src/boundary-tools.js?v=0.15"></script>
-  <script type="module" src="./src/dissolve-ui.js?v=0.15"></script>
-  <script type="module" src="./src/bevel-ui.js?v=0.15"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.15.1"></script>
+  <script type="module" src="./src/main.js?v=0.15.1"></script>
+  <script type="module" src="./src/dissolve-bootstrap.js?v=0.15.1"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.15.1"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.15.1"></script>
+  <script type="module" src="./src/select-loop.js?v=0.15.1"></script>
+  <script type="module" src="./src/directed-loop.js?v=0.15.1"></script>
+  <script type="module" src="./src/edge-paint-select.js?v=0.15.1"></script>
+  <script type="module" src="./src/boundary-tools.js?v=0.15.1"></script>
+  <script type="module" src="./src/dissolve-ui.js?v=0.15.1"></script>
+  <script type="module" src="./src/bevel-ui.js?v=0.15.1"></script>
 </body>
 </html>
