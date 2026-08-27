@@ -8,61 +8,36 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
     if (!Array.isArray(face) || face.length < 3) return null;
     const ia = face.indexOf(a), ib = face.indexOf(b), n = face.length;
     if (ia < 0 || ib < 0) return null;
-    if (face[(ia + 1) % n] === b) {
-      return { faceIndex, direction: 1, otherA: face[(ia - 1 + n) % n], otherB: face[(ib + 1) % n] };
-    }
-    if (face[(ib + 1) % n] === a) {
-      return { faceIndex, direction: -1, otherA: face[(ia + 1) % n], otherB: face[(ib - 1 + n) % n] };
-    }
+    if (face[(ia + 1) % n] === b) return { faceIndex, direction:1, otherA:face[(ia - 1 + n) % n], otherB:face[(ib + 1) % n] };
+    if (face[(ib + 1) % n] === a) return { faceIndex, direction:-1, otherA:face[(ia + 1) % n], otherB:face[(ib - 1 + n) % n] };
     return null;
   };
 
   const replaceSelectedEdge = (face, a, b, newA, newB) => {
-    const out = [...face];
-    const ia = out.indexOf(a), ib = out.indexOf(b), n = out.length;
+    const out = [...face], ia = out.indexOf(a), ib = out.indexOf(b), n = out.length;
     if (ia < 0 || ib < 0) return null;
-    if (out[(ia + 1) % n] === b || out[(ib + 1) % n] === a) {
-      out[ia] = newA;
-      out[ib] = newB;
-      return out;
-    }
-    return null;
+    if (out[(ia + 1) % n] !== b && out[(ib + 1) % n] !== a) return null;
+    out[ia] = newA; out[ib] = newB;
+    return out;
   };
 
   const insertOnEdge = (face, u, v, inserted) => {
-    const out = [];
-    let found = false;
+    const out = []; let found = false;
     for (let i = 0; i < face.length; i++) {
       const a = face[i], b = face[(i + 1) % face.length];
       out.push(a);
-      if ((a === u && b === v) || (a === v && b === u)) {
-        out.push(inserted);
-        found = true;
-      }
+      if ((a === u && b === v) || (a === v && b === u)) { out.push(inserted); found = true; }
     }
-    return found ? out : face;
+    return found ? out : [...face];
   };
 
-  const directedEdge = (face, a, b) => {
-    for (let i = 0; i < face.length; i++) {
-      if (face[i] === a && face[(i + 1) % face.length] === b) return 1;
-      if (face[i] === b && face[(i + 1) % face.length] === a) return -1;
-    }
-    return 0;
-  };
+  const removeVertex = (face, vertex) => face.includes(vertex) ? face.filter(v => v !== vertex) : [...face];
 
-  const windingPenalty = (candidate, faces) => {
-    let penalty = 0;
-    for (let i = 0; i < candidate.length; i++) {
-      const a = candidate[i], b = candidate[(i + 1) % candidate.length];
-      for (const face of faces) if (directedEdge(face, a, b) === 1) penalty++;
-    }
-    return penalty;
-  };
-
-  const bestWinding = (vertices, faces) => {
-    const forward = [...vertices], reverse = [...vertices].reverse();
-    return windingPenalty(reverse, faces) < windingPenalty(forward, faces) ? reverse : forward;
+  const quadraticPoint = (start, control, end, t) => {
+    const u = 1 - t;
+    return start.clone().multiplyScalar(u * u)
+      .add(control.clone().multiplyScalar(2 * u * t))
+      .add(end.clone().multiplyScalar(t * t));
   };
 
   EditableMesh.prototype.generalBevelEdgeInfo = function(edgeIndices) {
@@ -74,18 +49,23 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
     if (faces.length !== 2) return null;
     const a = edge.a, b = edge.b;
     const sides = faces.map(fi => sideInfo(this, fi, a, b));
-    if (sides.some(side => !side)) return null;
-    if (sides[0].direction === sides[1].direction) return null;
-    for (const side of sides) {
-      if (!Number.isInteger(side.otherA) || !Number.isInteger(side.otherB)) return null;
-      if (side.otherA === b || side.otherB === a) return null;
-    }
+    if (sides.some(side => !side) || sides[0].direction === sides[1].direction) return null;
+
     const splitKeys = [
       this.edgeKey(a, sides[0].otherA), this.edgeKey(b, sides[0].otherB),
       this.edgeKey(a, sides[1].otherA), this.edgeKey(b, sides[1].otherB)
     ];
-    if (new Set(splitKeys).size !== splitKeys.length) return null;
-    return { edgeIndex, edge, a, b, sides, splitKeys };
+    if (new Set(splitKeys).size !== 4) return null;
+
+    const sideFaceSet = new Set(faces);
+    const aCaps = this.faces.map((face, i) => ({face,i})).filter(({face,i}) => !sideFaceSet.has(i) && face?.includes(a));
+    const bCaps = this.faces.map((face, i) => ({face,i})).filter(({face,i}) => !sideFaceSet.has(i) && face?.includes(b));
+    if (aCaps.length !== 1 || bCaps.length !== 1) return null;
+    const aCap = aCaps[0], bCap = bCaps[0];
+    if (!aCap.face.includes(sides[0].otherA) || !aCap.face.includes(sides[1].otherA)) return null;
+    if (!bCap.face.includes(sides[0].otherB) || !bCap.face.includes(sides[1].otherB)) return null;
+
+    return { edgeIndex, edge, a, b, sides, splitKeys, aCapIndex:aCap.i, bCapIndex:bCap.i };
   };
 
   EditableMesh.prototype.generalBevelEdge = function(edgeIndices, width = 0.2, segments = 1) {
@@ -93,7 +73,7 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
     if (!info) return null;
     const amount = Math.max(0.02, Math.min(0.45, Number(width) || 0.2));
     const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
-    const { a, b, sides } = info;
+    const { a, b, sides, aCapIndex, bCapIndex } = info;
     const originalFaces = this.faces.map(face => [...face]);
     const originalCreases = new Map(this.creases);
 
@@ -113,18 +93,18 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
       } else if (level === cuts) {
         aRings.push(boundary[1].ai); bRings.push(boundary[1].bi);
       } else {
-        this.vertices.push(this.vertices[boundary[0].ai].clone().lerp(this.vertices[boundary[1].ai], t));
+        this.vertices.push(quadraticPoint(this.vertices[boundary[0].ai], this.vertices[a], this.vertices[boundary[1].ai], t));
         aRings.push(this.vertices.length - 1);
-        this.vertices.push(this.vertices[boundary[0].bi].clone().lerp(this.vertices[boundary[1].bi], t));
+        this.vertices.push(quadraticPoint(this.vertices[boundary[0].bi], this.vertices[b], this.vertices[boundary[1].bi], t));
         bRings.push(this.vertices.length - 1);
       }
     }
 
     const splitSpecs = [
-      { u:a, v:boundary[0].otherA, inserted:boundary[0].ai, generatingFace:boundary[0].faceIndex },
-      { u:b, v:boundary[0].otherB, inserted:boundary[0].bi, generatingFace:boundary[0].faceIndex },
-      { u:a, v:boundary[1].otherA, inserted:boundary[1].ai, generatingFace:boundary[1].faceIndex },
-      { u:b, v:boundary[1].otherB, inserted:boundary[1].bi, generatingFace:boundary[1].faceIndex }
+      { u:a, v:boundary[0].otherA, inserted:boundary[0].ai },
+      { u:b, v:boundary[0].otherB, inserted:boundary[0].bi },
+      { u:a, v:boundary[1].otherA, inserted:boundary[1].ai },
+      { u:b, v:boundary[1].otherB, inserted:boundary[1].bi }
     ];
 
     const nextFaces = originalFaces.map((face, faceIndex) => {
@@ -132,23 +112,21 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
       if (faceIndex === boundary[1].faceIndex) return replaceSelectedEdge(face, a, b, boundary[1].ai, boundary[1].bi);
       let out = [...face];
       for (const spec of splitSpecs) out = insertOnEdge(out, spec.u, spec.v, spec.inserted);
+      if (faceIndex === aCapIndex) out = removeVertex(out, a);
+      if (faceIndex === bCapIndex) out = removeVertex(out, b);
       return out;
     });
     if (nextFaces.some(face => !Array.isArray(face) || face.length < 3)) return null;
     this.faces = nextFaces;
 
     const bevelFaces = [];
-    const side0Direction = boundary[0].direction;
     for (let level = 0; level < cuts; level++) {
-      bevelFaces.push(side0Direction > 0
+      bevelFaces.push(boundary[0].direction > 0
         ? [bRings[level], aRings[level], aRings[level + 1], bRings[level + 1]]
         : [aRings[level], bRings[level], bRings[level + 1], aRings[level + 1]]);
     }
+    const bevelFaceStart = this.faces.length;
     this.faces.push(...bevelFaces);
-
-    const aCap = bestWinding([a, ...aRings], this.faces);
-    const bCap = bestWinding([b, ...bRings], this.faces);
-    this.faces.push(aCap, bCap);
 
     this.creases = new Map(originalCreases);
     this.creases.delete(this.edgeKey(a, b));
@@ -160,11 +138,33 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
       this.creases.set(this.edgeKey(spec.inserted, spec.v), strength);
     }
 
+    const used = new Set(this.faces.flat());
+    if (this.looseEdges instanceof Set) for (const key of this.looseEdges) {
+      const [u,v] = String(key).split(':').map(Number); if (Number.isInteger(u)) used.add(u); if (Number.isInteger(v)) used.add(v);
+    }
+    if (this.looseVertices instanceof Set) for (const v of this.looseVertices) used.add(v);
+
+    const indexMap = new Map(), compact = [];
+    this.vertices.forEach((vertex, index) => {
+      if (!used.has(index)) return;
+      indexMap.set(index, compact.length); compact.push(vertex.clone());
+    });
+    this.faces = this.faces.map(face => face.map(index => indexMap.get(index)));
+    const nextCreases = new Map();
+    for (const [key, value] of this.creases) {
+      const [u,v] = String(key).split(':').map(Number), nu = indexMap.get(u), nv = indexMap.get(v);
+      if (Number.isInteger(nu) && Number.isInteger(nv) && nu !== nv) nextCreases.set(this.edgeKey(nu,nv), value);
+    }
+    this.creases = nextCreases;
+    this.vertices = compact;
+    this.remapLooseTopology?.(indexMap);
+
+    const mappedARings = aRings.map(v => indexMap.get(v)), mappedBRings = bRings.map(v => indexMap.get(v));
     const allEdges = this.edges();
     const edgeIndexByKey = new Map(allEdges.map((edge, index) => [this.edgeKey(edge.a, edge.b), index]));
     const ringEdgeIndices = [];
     for (let level = 0; level <= cuts; level++) {
-      const edgeIndex = edgeIndexByKey.get(this.edgeKey(aRings[level], bRings[level]));
+      const edgeIndex = edgeIndexByKey.get(this.edgeKey(mappedARings[level], mappedBRings[level]));
       if (Number.isInteger(edgeIndex)) ringEdgeIndices.push([edgeIndex]);
     }
 
@@ -172,9 +172,10 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
       sourceEdgeIndex: info.edgeIndex,
       segments: cuts,
       width: amount,
+      profile: cuts === 1 ? 'chamfer' : 'rounded',
       ringEdgeIndices,
       boundaryEdgeIndices: [ringEdgeIndices[0]?.[0], ringEdgeIndices[ringEdgeIndices.length - 1]?.[0]].filter(Number.isInteger),
-      faceIndices: Array.from({ length: bevelFaces.length + 2 }, (_, i) => this.faces.length - bevelFaces.length - 2 + i)
+      faceIndices: Array.from({ length: bevelFaces.length }, (_, i) => bevelFaceStart + i)
     };
   };
 
