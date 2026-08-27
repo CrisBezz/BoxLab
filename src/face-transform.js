@@ -9,8 +9,7 @@ export function installFaceTransform() {
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
   const WORLD_AXES = { x:new THREE.Vector3(1,0,0), y:new THREE.Vector3(0,1,0), z:new THREE.Vector3(0,0,1) };
-  const INFERENCE_SNAP_PX = 10;
-  const PLANE_EPSILON = 1e-5;
+  const INFERENCE_SNAP_PX = 18;
   let drag = null;
 
   function state() { return globalThis.__boxlabBridgeState; }
@@ -102,12 +101,31 @@ export function installFaceTransform() {
   }
 
   function inferenceTargets(mesh, selectedVertexIds, selectedFaceIds, axis) {
-    const selectedSet = new Set(selectedVertexIds), selectedFacesSet = new Set(selectedFaceIds), targets = [];
-    mesh.vertices.forEach((v, i) => { if (!selectedSet.has(i)) targets.push({ value:v[axis], type:'vertex' }); });
+    const selectedSet = new Set(selectedVertexIds), selectedFaceSet = new Set(selectedFaceIds), targets = [];
+    const add = (value, type) => {
+      if (!Number.isFinite(value)) return;
+      if (!targets.some(t => t.type === type && Math.abs(t.value - value) < 1e-8)) targets.push({ value, type });
+    };
+
+    mesh.vertices.forEach((v, i) => {
+      if (!selectedSet.has(i)) add(v[axis], 'vertex');
+    });
+
+    for (const edge of mesh.edges()) {
+      if (!edge || (selectedSet.has(edge.a) && selectedSet.has(edge.b))) continue;
+      const a = mesh.vertices[edge.a], b = mesh.vertices[edge.b];
+      if (a && b) add((a[axis] + b[axis]) * 0.5, 'edge');
+    }
+
     mesh.faces.forEach((face, fi) => {
-      if (selectedFacesSet.has(fi) || face.some(i => selectedSet.has(i))) return;
-      const values = face.map(i => mesh.vertices[i][axis]), min = Math.min(...values), max = Math.max(...values);
-      if (max - min <= PLANE_EPSILON) targets.push({ value:(min + max) * .5, type:'face' });
+      if (!Array.isArray(face) || !face.length || selectedFaceSet.has(fi)) return;
+      let sum = 0, count = 0;
+      for (const vi of face) {
+        const v = mesh.vertices[vi];
+        if (!v) continue;
+        sum += v[axis]; count++;
+      }
+      if (count) add(sum / count, 'face');
     });
     return targets;
   }
@@ -115,11 +133,13 @@ export function installFaceTransform() {
   function inferAxisSnap(mesh, selectedVertexIds, selectedFaceIds, center, axis, raw, pixelsPerUnit) {
     const start = center[axis], candidate = start + raw, threshold = INFERENCE_SNAP_PX / Math.max(pixelsPerUnit, 1);
     let best = null;
+    const rank = { vertex:0, edge:1, face:2 };
     for (const target of inferenceTargets(mesh, selectedVertexIds, selectedFaceIds, axis)) {
       const distance = Math.abs(target.value - candidate);
-      if (distance <= threshold && (!best || distance < best.distance || (Math.abs(distance - best.distance) < 1e-8 && target.type === 'face'))) best = { ...target, distance };
+      if (distance > threshold) continue;
+      if (!best || distance < best.distance - 1e-8 || (Math.abs(distance - best.distance) < 1e-8 && rank[target.type] < rank[best.type])) best = { ...target, distance };
     }
-    return best ? { delta:best.value - start, type:best.type } : null;
+    return best ? { delta:best.value - start, type:best.type, value:best.value } : null;
   }
 
   function restore(target, source) {
