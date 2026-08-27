@@ -4,6 +4,7 @@ import { installBridgeTopology } from './bridge-topology.js';
 import { installBevelTopology } from './bevel-topology.js?v=0.18';
 import { installGeneralEdgeBevelTopology } from './general-edge-bevel-topology.js?v=0.18.2';
 import { installBevelSelection } from './bevel-selection.js?v=0.18.3';
+import { installBevelWatertightGuard } from './bevel-watertight-guard.js?v=0.18.5';
 import { installFaceTransform } from './face-transform.js?v=0.12';
 import { installFaceRegion } from './face-region.js?v=0.13';
 import './selection-transform-state.js?v=0.12';
@@ -14,6 +15,7 @@ installBridgeTopology(EditableMesh);
 installBevelTopology(EditableMesh);
 installGeneralEdgeBevelTopology(EditableMesh);
 installBevelSelection(EditableMesh);
+installBevelWatertightGuard(EditableMesh);
 installFaceTransform();
 installFaceRegion(EditableMesh);
 
