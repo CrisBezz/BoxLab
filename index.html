@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.15.4</title>
-  <link rel="stylesheet" href="./styles.css?v=0.15.4" />
+  <title>BoxLab v0.16</title>
+  <link rel="stylesheet" href="./styles.css?v=0.16" />
   <script type="importmap">
   {
     "imports": {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.15.4</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.16</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -41,7 +41,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">v0.15.4 • Add Vertex snaps to a nearby edge and slides along it until Pencil lift. Free-space Add Vertex remains unchanged.</div>
+      <div class="hint">v0.16 • Vertex Slide and Edge Slide use direct Pencil drag while keeping topology connected. Pencil on geometry remains modelling-only; free-space Pencil orbit remains available.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -66,6 +66,7 @@
         <div class="mode-tools" data-mode-tools="vertex">
           <div class="panel-title context-title">Vertex</div>
           <button id="addVertexBtn">Add Vertex</button>
+          <button id="vertexSlideBtn" disabled>Vertex Slide</button>
           <button id="connectVertexBtn">Add Edge</button>
           <button id="weldVertexBtn">Weld Vertices</button>
           <button id="deleteVertexBtn" class="danger">Delete Vertex</button>
@@ -75,6 +76,7 @@
           <div class="panel-title context-title">Edge</div>
           <button id="selectLoopBtn" disabled>Select Loop</button>
           <button id="selectBoundaryBtn" disabled>Select Boundary</button>
+          <button id="edgeSlideBtn" disabled>Edge Slide</button>
           <label class="range-row"><span>Cuts</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
           <button id="loopCutBtn">Loop Cut</button>
           <label class="range-row"><span>Slide</span><input id="loopSlide" type="range" min="5" max="95" value="50" step="1" disabled /><output id="loopSlideOut">50%</output></label>
@@ -118,18 +120,19 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.15.4"></script>
-  <script type="module" src="./src/pencil-orbit-gate.js?v=0.15.4"></script>
-  <script type="module" src="./src/main.js?v=0.15.4"></script>
-  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.15.4"></script>
-  <script type="module" src="./src/dissolve-bootstrap.js?v=0.15.4"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.15.4"></script>
-  <script type="module" src="./src/bridge-ui.js?v=0.15.4"></script>
-  <script type="module" src="./src/select-loop.js?v=0.15.4"></script>
-  <script type="module" src="./src/directed-loop.js?v=0.15.4"></script>
-  <script type="module" src="./src/edge-paint-select.js?v=0.15.4"></script>
-  <script type="module" src="./src/boundary-tools.js?v=0.15.4"></script>
-  <script type="module" src="./src/dissolve-ui.js?v=0.15.4"></script>
-  <script type="module" src="./src/bevel-ui.js?v=0.15.4"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.16"></script>
+  <script type="module" src="./src/pencil-orbit-gate.js?v=0.16"></script>
+  <script type="module" src="./src/main.js?v=0.16"></script>
+  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.16"></script>
+  <script type="module" src="./src/component-slide.js?v=0.16"></script>
+  <script type="module" src="./src/dissolve-bootstrap.js?v=0.16"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.16"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.16"></script>
+  <script type="module" src="./src/select-loop.js?v=0.16"></script>
+  <script type="module" src="./src/directed-loop.js?v=0.16"></script>
+  <script type="module" src="./src/edge-paint-select.js?v=0.16"></script>
+  <script type="module" src="./src/boundary-tools.js?v=0.16"></script>
+  <script type="module" src="./src/dissolve-ui.js?v=0.16"></script>
+  <script type="module" src="./src/bevel-ui.js?v=0.16"></script>
 </body>
 </html>
