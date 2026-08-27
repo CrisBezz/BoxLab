@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.16.1</title>
-  <link rel="stylesheet" href="./styles.css?v=0.16.1" />
+  <title>BoxLab v0.17</title>
+  <link rel="stylesheet" href="./styles.css?v=0.17" />
   <script type="importmap">
   {
     "imports": {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.16.1</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.17</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -41,7 +41,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">v0.16.1 • Loop Cut is yellow only while live sliding. Pencil lift commits the cut and hands the new ring off as a normal selected edge loop.</div>
+      <div class="hint">v0.17 • Offset Loop creates two support loops around a selected closed quad loop while preserving the original loop.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -49,7 +49,6 @@
           <button id="selectAllBtn">Select All</button>
           <button id="deselectAllBtn">Deselect All</button>
         </div>
-
         <div class="panel-title transform-title">Transform</div>
         <div class="segmented vertical" id="toolModes">
           <button data-tool="move" class="active">Move</button>
@@ -57,12 +56,10 @@
         </div>
         <label class="toggle-row"><input id="axisSnapToggle" type="checkbox" /><span>Axis Snap</span></label>
         <label class="toggle-row"><input id="inferenceSnapToggle" type="checkbox" disabled /><span>Inference Snap</span></label>
-
         <div class="mode-tools" data-mode-tools="object">
           <div class="panel-title context-title">Object</div>
           <div class="panel-note">Move or Scale the whole source cage. Mirror alignment remains in the right panel.</div>
         </div>
-
         <div class="mode-tools" data-mode-tools="vertex">
           <div class="panel-title context-title">Vertex</div>
           <button id="addVertexBtn">Add Vertex</button>
@@ -71,7 +68,6 @@
           <button id="weldVertexBtn">Weld Vertices</button>
           <button id="deleteVertexBtn" class="danger">Delete Vertex</button>
         </div>
-
         <div class="mode-tools" data-mode-tools="edge">
           <div class="panel-title context-title">Edge</div>
           <button id="selectLoopBtn" disabled>Select Loop</button>
@@ -80,6 +76,8 @@
           <label class="range-row"><span>Cuts</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
           <button id="loopCutBtn">Loop Cut</button>
           <label class="range-row"><span>Slide</span><input id="loopSlide" type="range" min="5" max="95" value="50" step="1" disabled /><output id="loopSlideOut">50%</output></label>
+          <label class="range-row"><span>Support Loop Spacing</span><input id="offsetLoopSpacing" type="range" min="2" max="45" value="20" step="1" /><output id="offsetLoopSpacingOut">20%</output></label>
+          <button id="offsetLoopBtn" disabled>Offset Loop</button>
           <label class="range-row"><span>Bevel Width</span><input id="bevelWidth" type="range" min="2" max="45" value="20" step="1" /><output id="bevelWidthOut">20%</output></label>
           <label class="range-row"><span>Segments</span><input id="bevelSegments" type="range" min="1" max="4" value="1" step="1" /><output id="bevelSegmentsOut">1</output></label>
           <button id="bevelBtn" disabled>Chamfer Loop</button>
@@ -92,7 +90,6 @@
           <button id="dissolveEdgeBtn" disabled>Dissolve Edge</button>
           <button id="deleteEdgeBtn" class="danger">Delete Edge</button>
         </div>
-
         <div class="mode-tools" data-mode-tools="face">
           <div class="panel-title context-title">Face</div>
           <button id="extrudeBtn">Extrude</button>
@@ -101,7 +98,6 @@
           <button id="deleteFaceBtn" class="danger">Delete Face</button>
         </div>
       </section>
-
       <section class="floating-panel right-panel">
         <div class="panel-title">Mirror</div>
         <label class="toggle-row"><input data-mirror-axis="x" type="checkbox" /><span>Mirror X</span></label>
@@ -120,20 +116,20 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.16.1"></script>
-  <script type="module" src="./src/pencil-orbit-gate.js?v=0.16.1"></script>
-  <script type="module" src="./src/main.js?v=0.16.1"></script>
-  <script type="module" src="./src/loop-cut-commit.js?v=0.16.1"></script>
-  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.16.1"></script>
-  <script type="module" src="./src/component-slide.js?v=0.16.1"></script>
-  <script type="module" src="./src/dissolve-bootstrap.js?v=0.16.1"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.16.1"></script>
-  <script type="module" src="./src/bridge-ui.js?v=0.16.1"></script>
-  <script type="module" src="./src/select-loop.js?v=0.16.1"></script>
-  <script type="module" src="./src/directed-loop.js?v=0.16.1"></script>
-  <script type="module" src="./src/edge-paint-select.js?v=0.16.1"></script>
-  <script type="module" src="./src/boundary-tools.js?v=0.16.1"></script>
-  <script type="module" src="./src/dissolve-ui.js?v=0.16.1"></script>
-  <script type="module" src="./src/bevel-ui.js?v=0.16.1"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.17"></script>
+  <script type="module" src="./src/pencil-orbit-gate.js?v=0.17"></script>
+  <script type="module" src="./src/main.js?v=0.17"></script>
+  <script type="module" src="./src/loop-cut-commit.js?v=0.17"></script>
+  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.17"></script>
+  <script type="module" src="./src/component-slide.js?v=0.17"></script>
+  <script type="module" src="./src/dissolve-bootstrap.js?v=0.17"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.17"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.17"></script>
+  <script type="module" src="./src/select-loop.js?v=0.17"></script>
+  <script type="module" src="./src/directed-loop.js?v=0.17"></script>
+  <script type="module" src="./src/edge-paint-select.js?v=0.17"></script>
+  <script type="module" src="./src/boundary-tools.js?v=0.17"></script>
+  <script type="module" src="./src/dissolve-ui.js?v=0.17"></script>
+  <script type="module" src="./src/bevel-ui.js?v=0.17"></script>
 </body>
 </html>
