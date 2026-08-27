@@ -325,6 +325,7 @@ function installRenderObserver() {
   const baseAdd = THREE.Group.prototype.add;
   THREE.Group.prototype.add = function (...items) {
     const body = items.find(item => item?.userData?.kind === 'body');
+    const activeSource = body ? state()?.mesh : null;
     if (body) {
       activeRoot = this;
       activeBody = body;
@@ -355,6 +356,7 @@ function installRenderObserver() {
           console.warn('BoxLab inactive object render skipped', error);
         }
       }
+      activeSource?.edges?.();
       queueOutliner();
     }
     return result;
