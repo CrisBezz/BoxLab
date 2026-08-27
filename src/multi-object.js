@@ -173,6 +173,7 @@ function renderOutliner() {
     lock.addEventListener('click', event => {
       event.stopPropagation();
       object.locked = !object.locked;
+      if (object.id === activeId && object.locked) document.querySelector('#toolModes button[data-tool="move"]')?.click();
       updateLockUI();
       renderOutliner();
     });
@@ -227,8 +228,8 @@ function activateObject(id, forceLocked = false) {
   return true;
 }
 
-function uniqueName(base) {
-  const names = new Set(objects.map(object => object.name));
+function uniqueName(base, excludeId = null) {
+  const names = new Set(objects.filter(object => object.id !== excludeId).map(object => object.name));
   if (!names.has(base)) return base;
   let i = 2;
   while (names.has(`${base} ${i}`)) i++;
@@ -266,7 +267,7 @@ function renameActive() {
   if (value === null) return;
   const clean = value.trim();
   if (!clean) return;
-  object.name = uniqueName(clean === object.name ? clean : clean);
+  object.name = uniqueName(clean, object.id);
   renderOutliner();
 }
 
@@ -298,9 +299,10 @@ function hitObject(event, object) {
 function installViewportActivation() {
   canvas?.addEventListener('pointerdown', event => {
     if (event.pointerType === 'touch' || !event.isPrimary) return;
-    if (currentMode() === 'object' && inactiveBodies.length) {
+    const camera = state()?.camera;
+    if (currentMode() === 'object' && inactiveBodies.length && camera) {
       setPointer(event);
-      raycaster.setFromCamera(pointer, state()?.camera);
+      raycaster.setFromCamera(pointer, camera);
       const hit = raycaster.intersectObjects(inactiveBodies.filter(body => body.visible), false)[0];
       if (hit) {
         event.preventDefault();
