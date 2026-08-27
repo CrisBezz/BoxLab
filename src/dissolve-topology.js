@@ -23,6 +23,39 @@ export function installDissolveTopology(EditableMesh) {
     return null;
   }
 
+  function orderedClosedLoop(mesh, edgeIndices) {
+    const ids = [...new Set(edgeIndices || [])];
+    if (ids.length < 3) return null;
+    const edges = mesh.edges();
+    const adjacency = new Map();
+    for (const index of ids) {
+      const edge = edges[index];
+      if (!edge || edge.loose) return null;
+      if (!adjacency.has(edge.a)) adjacency.set(edge.a, []);
+      if (!adjacency.has(edge.b)) adjacency.set(edge.b, []);
+      adjacency.get(edge.a).push(index);
+      adjacency.get(edge.b).push(index);
+    }
+    if (adjacency.size !== ids.length || [...adjacency.values()].some(list => list.length !== 2)) return null;
+    const startVertex = adjacency.keys().next().value;
+    const edgeOrder = [];
+    const vertexOrder = [startVertex];
+    const visited = new Set();
+    let vertex = startVertex, previousEdge = null;
+    for (let guard = 0; guard < ids.length; guard++) {
+      const nextEdge = adjacency.get(vertex).find(index => index !== previousEdge && !visited.has(index));
+      if (nextEdge === undefined) return null;
+      const edge = edges[nextEdge];
+      visited.add(nextEdge);
+      edgeOrder.push(nextEdge);
+      vertex = edge.a === vertex ? edge.b : edge.a;
+      if (vertex !== startVertex) vertexOrder.push(vertex);
+      previousEdge = nextEdge;
+    }
+    if (visited.size !== ids.length || vertex !== startVertex || vertexOrder.length !== ids.length) return null;
+    return { edgeOrder, vertexOrder };
+  }
+
   EditableMesh.prototype.dissolveEdgeInfo = function (edgeIndex) {
     const edge = this.edges()[edgeIndex];
     if (!edge) return null;
@@ -68,6 +101,85 @@ export function installDissolveTopology(EditableMesh) {
     this.looseEdges?.delete?.(info.edgeKey);
     this.edges();
     return { faceIndex: keep, face: [...info.merged], dissolvedEdgeKey: info.edgeKey };
+  };
+
+  EditableMesh.prototype.dissolveLoopInfo = function (edgeIndices) {
+    const loop = orderedClosedLoop(this, edgeIndices);
+    if (!loop) return null;
+    const loopVertices = new Set(loop.vertexOrder);
+    const faceUse = new Map();
+    const replacements = [];
+    const selectedKeys = new Set();
+
+    for (const edgeIndex of loop.edgeOrder) {
+      const edge = this.edges()[edgeIndex];
+      const info = this.dissolveEdgeInfo(edgeIndex);
+      if (!edge || !info) return null;
+      if (info.faceIndices.some(fi => this.faces[fi]?.length !== 4)) return null;
+      for (const fi of info.faceIndices) faceUse.set(fi, (faceUse.get(fi) || 0) + 1);
+      selectedKeys.add(this.edgeKey(edge.a, edge.b));
+
+      const quad = info.merged.filter(vertex => vertex !== edge.a && vertex !== edge.b);
+      if (quad.length !== 4 || new Set(quad).size !== 4 || quad.some(vertex => loopVertices.has(vertex))) return null;
+      replacements.push({ edgeIndex, faceIndices: [...info.faceIndices], face: quad });
+    }
+
+    // A regular removable loop has two unique neighbouring quads per edge.
+    // Reject face-perimeter selections and poles where a face touches the loop twice.
+    if (faceUse.size !== loop.edgeOrder.length * 2 || [...faceUse.values()].some(count => count !== 1)) return null;
+
+    const replacementKeys = new Set();
+    for (const { face } of replacements) {
+      const key = [...face].sort((a, b) => a - b).join(':');
+      if (replacementKeys.has(key)) return null;
+      replacementKeys.add(key);
+    }
+
+    return {
+      edgeIndices: [...loop.edgeOrder],
+      vertexIndices: [...loop.vertexOrder],
+      faceIndices: [...faceUse.keys()],
+      replacements: replacements.map(item => [...item.face]),
+      selectedKeys
+    };
+  };
+
+  EditableMesh.prototype.dissolveLoop = function (edgeIndices) {
+    const info = this.dissolveLoopInfo(edgeIndices);
+    if (!info) return null;
+
+    const removedFaces = new Set(info.faceIndices);
+    const keptFaces = this.faces.filter((_, index) => !removedFaces.has(index)).map(face => [...face]);
+    keptFaces.push(...info.replacements.map(face => [...face]));
+    this.faces = keptFaces;
+
+    const removedVertices = new Set(info.vertexIndices);
+    const indexMap = new Map();
+    const vertices = [];
+    this.vertices.forEach((vertex, oldIndex) => {
+      if (removedVertices.has(oldIndex)) return;
+      indexMap.set(oldIndex, vertices.length);
+      vertices.push(vertex.clone());
+    });
+    this.vertices = vertices;
+    this.faces = this.faces.map(face => face.map(index => indexMap.get(index)));
+    if (this.faces.some(face => face.some(index => !Number.isInteger(index)))) return null;
+
+    const creases = new Map();
+    for (const [key, value] of this.creases) {
+      const [a, b] = key.split(':').map(Number);
+      if (!indexMap.has(a) || !indexMap.has(b) || info.selectedKeys.has(key)) continue;
+      creases.set(this.edgeKey(indexMap.get(a), indexMap.get(b)), value);
+    }
+    this.creases = creases;
+    this.remapLooseTopology?.(indexMap);
+    this.edges();
+
+    return {
+      removedEdges: info.edgeIndices.length,
+      removedVertices: info.vertexIndices.length,
+      faceCount: this.faces.length
+    };
   };
 
   EditableMesh.prototype.__dissolveTopologyInstalled = true;
