@@ -192,13 +192,28 @@ export function installBevelTopology(EditableMesh) {
     this.creases = nextCreases;
     this.vertices = vertices;
     this.remapLooseTopology?.(indexMap);
-    this.edges();
+
+    const allEdges = this.edges();
+    const edgeIndexByKey = new Map(allEdges.map((edge, index) => [this.edgeKey(edge.a, edge.b), index]));
+    const ringEdgeIndices = Array.from({ length: cuts + 1 }, () => []);
+    for (let level = 0; level <= cuts; level++) {
+      for (let i = 0; i < info.orderedVertices.length; i++) {
+        const a = info.orderedVertices[i], b = info.orderedVertices[(i + 1) % info.orderedVertices.length];
+        const oldA = ringByVertex.get(a)?.[level], oldB = ringByVertex.get(b)?.[level];
+        const newA = indexMap.get(oldA), newB = indexMap.get(oldB);
+        if (!Number.isInteger(newA) || !Number.isInteger(newB)) continue;
+        const edgeIndex = edgeIndexByKey.get(this.edgeKey(newA, newB));
+        if (Number.isInteger(edgeIndex)) ringEdgeIndices[level].push(edgeIndex);
+      }
+    }
 
     return {
       faceIndices: Array.from({ length: bevelFaces.length }, (_, i) => bevelFaceStart + i),
       edgeCount: info.edgeIndices.length,
       segments: cuts,
-      width: amount
+      width: amount,
+      ringEdgeIndices,
+      boundaryEdgeIndices: [...(ringEdgeIndices[0] || []), ...(ringEdgeIndices[ringEdgeIndices.length - 1] || [])]
     };
   };
 
