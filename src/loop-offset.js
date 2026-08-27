@@ -69,6 +69,8 @@ const button = document.querySelector('#offsetLoopBtn');
 const slider = document.querySelector('#offsetLoopSpacing');
 const output = document.querySelector('#offsetLoopSpacingOut');
 const status = document.querySelector('#selectionStatus');
+const canvas = document.querySelector('#viewport');
+const multiToggle = document.querySelector('#multiSelectToggle');
 
 function info() {
   const mesh = state?.mesh;
@@ -76,6 +78,34 @@ function info() {
 }
 function sync() {
   if (button) button.disabled = !info();
+}
+function edgeScreenPoint(mesh, edgeIndex) {
+  const camera = state?.camera, edge = mesh.edges()[edgeIndex];
+  if (!camera || !canvas || !edge) return null;
+  const point = mesh.vertices[edge.a].clone().lerp(mesh.vertices[edge.b], 0.5).project(camera);
+  const rect = canvas.getBoundingClientRect();
+  return { x:rect.left + (point.x * 0.5 + 0.5) * rect.width, y:rect.top + (-point.y * 0.5 + 0.5) * rect.height };
+}
+function tapEdge(mesh, edgeIndex) {
+  const p = edgeScreenPoint(mesh, edgeIndex);
+  if (!p) return false;
+  canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:1, clientX:p.x, clientY:p.y }));
+  canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:0, clientX:p.x, clientY:p.y }));
+  return (state?.selectedEdges || []).includes(edgeIndex);
+}
+function selectCreatedLoops(mesh, indices) {
+  document.querySelector('#deselectAllBtn')?.click();
+  if (multiToggle) {
+    multiToggle.checked = true;
+    multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
+  }
+  let selected = 0;
+  for (const index of [...new Set(indices)]) if (tapEdge(mesh, index)) selected++;
+  if (multiToggle) {
+    multiToggle.checked = false;
+    multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
+  }
+  return selected;
 }
 slider?.addEventListener('input', () => {
   if (output) output.textContent = `${slider.value}%`;
@@ -88,8 +118,9 @@ button?.addEventListener('click', () => {
   const result = mesh.offsetEdgeLoop(state.selectedEdges, spacing);
   if (!result) return;
   history.push(before);
-  document.querySelector('#deselectAllBtn')?.click();
-  if (status) status.textContent = `Support loops created • ${Math.round(result.spacing * 100)}% spacing`;
+  const supportEdges = [...result.leftEdges, ...result.rightEdges];
+  const selected = selectCreatedLoops(mesh, supportEdges);
+  if (status) status.textContent = `Support loops created • ${result.leftEdges.length} + ${result.rightEdges.length} edges • ${Math.round(result.spacing * 100)}% spacing${selected === supportEdges.length ? ' • selected' : ''}`;
   sync();
 });
 window.addEventListener('boxlab-bridge-state', sync);
