@@ -136,7 +136,7 @@ canvas?.addEventListener('pointermove', event => {
   if (gesture.startVector.length() > 18 && currentVector.length() > 18) {
     const a = gesture.startVector.clone().normalize();
     const b = currentVector.clone().normalize();
-    angle = -Math.atan2(a.x * b.y - a.y * b.x, THREE.MathUtils.clamp(a.dot(b), -1, 1));
+    angle = Math.atan2(a.x * b.y - a.y * b.x, THREE.MathUtils.clamp(a.dot(b), -1, 1));
   } else {
     angle = (event.clientX - gesture.startX) * 0.012;
   }
