@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.19.3</title>
-  <link rel="stylesheet" href="./styles.css?v=0.19.3" />
+  <title>BoxLab v0.20</title>
+  <link rel="stylesheet" href="./styles.css?v=0.20" />
   <script type="importmap">
   {
     "imports": {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.19.3</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.20</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -41,7 +41,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">v0.19.3 • Rotate now follows the Pencil arc in the same on-screen direction for intuitive direct manipulation.</div>
+      <div class="hint">v0.20 • Outliner + multi-object foundation. One active mesh is editable; other visible objects remain in the scene.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -59,7 +59,7 @@
         <label class="toggle-row"><input id="inferenceSnapToggle" type="checkbox" disabled /><span>Inference Snap</span></label>
         <div class="mode-tools" data-mode-tools="object">
           <div class="panel-title context-title">Object</div>
-          <div class="panel-note">Move, Scale or Rotate the whole source cage. Mirror alignment remains in the right panel.</div>
+          <div class="panel-note">Move, Scale or Rotate the active object. Use the Outliner to switch the active editable mesh.</div>
         </div>
         <div class="mode-tools" data-mode-tools="vertex">
           <div class="panel-title context-title">Vertex</div>
@@ -100,6 +100,16 @@
         </div>
       </section>
       <section class="floating-panel right-panel">
+        <div class="panel-title">Objects</div>
+        <div id="outlinerMode" class="outliner-mode">Loading objects…</div>
+        <div id="outlinerList" class="outliner-list"></div>
+        <div class="outliner-actions">
+          <button id="outlinerAddBtn">+ Cube</button>
+          <button id="outlinerDuplicateBtn">Duplicate</button>
+          <button id="outlinerRenameBtn">Rename</button>
+          <button id="outlinerDeleteBtn" class="danger">Delete</button>
+        </div>
+        <hr />
         <div class="panel-title">Mirror</div>
         <label class="toggle-row"><input data-mirror-axis="x" type="checkbox" /><span>Mirror X</span></label>
         <label class="toggle-row"><input data-mirror-axis="y" type="checkbox" /><span>Mirror Y</span></label>
@@ -117,23 +127,24 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.19.3"></script>
-  <script type="module" src="./src/pencil-orbit-gate.js?v=0.19.3"></script>
-  <script type="module" src="./src/main.js?v=0.19.3"></script>
-  <script type="module" src="./src/rotate-transform.js?v=0.19.3"></script>
-  <script type="module" src="./src/loop-cut-commit.js?v=0.19.3"></script>
-  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.19.3"></script>
-  <script type="module" src="./src/component-slide.js?v=0.19.3"></script>
-  <script type="module" src="./src/dissolve-bootstrap.js?v=0.19.3"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.19.3"></script>
-  <script type="module" src="./src/bridge-ui.js?v=0.19.3"></script>
-  <script type="module" src="./src/select-loop.js?v=0.19.3"></script>
-  <script type="module" src="./src/directed-loop.js?v=0.19.3"></script>
-  <script type="module" src="./src/strict-select-loop.js?v=0.19.3"></script>
-  <script type="module" src="./src/edge-paint-select.js?v=0.19.3"></script>
-  <script type="module" src="./src/edge-toggle-repair.js?v=0.19.3"></script>
-  <script type="module" src="./src/boundary-tools.js?v=0.19.3"></script>
-  <script type="module" src="./src/dissolve-ui.js?v=0.19.3"></script>
-  <script type="module" src="./src/bevel-ui.js?v=0.19.3"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.20"></script>
+  <script type="module" src="./src/pencil-orbit-gate.js?v=0.20"></script>
+  <script type="module" src="./src/main.js?v=0.20"></script>
+  <script type="module" src="./src/rotate-transform.js?v=0.20"></script>
+  <script type="module" src="./src/loop-cut-commit.js?v=0.20"></script>
+  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.20"></script>
+  <script type="module" src="./src/component-slide.js?v=0.20"></script>
+  <script type="module" src="./src/dissolve-bootstrap.js?v=0.20"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.20"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.20"></script>
+  <script type="module" src="./src/select-loop.js?v=0.20"></script>
+  <script type="module" src="./src/directed-loop.js?v=0.20"></script>
+  <script type="module" src="./src/strict-select-loop.js?v=0.20"></script>
+  <script type="module" src="./src/edge-paint-select.js?v=0.20"></script>
+  <script type="module" src="./src/edge-toggle-repair.js?v=0.20"></script>
+  <script type="module" src="./src/boundary-tools.js?v=0.20"></script>
+  <script type="module" src="./src/dissolve-ui.js?v=0.20"></script>
+  <script type="module" src="./src/bevel-ui.js?v=0.20"></script>
+  <script type="module" src="./src/multi-object.js?v=0.20"></script>
 </body>
 </html>
