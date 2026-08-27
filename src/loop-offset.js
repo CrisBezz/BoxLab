@@ -64,7 +64,6 @@ function installLoopOffsetTopology() {
 
 installLoopOffsetTopology();
 
-const state = globalThis.__boxlabBridgeState;
 const button = document.querySelector('#offsetLoopBtn');
 const slider = document.querySelector('#offsetLoopSpacing');
 const output = document.querySelector('#offsetLoopSpacingOut');
@@ -73,8 +72,9 @@ const canvas = document.querySelector('#viewport');
 const multiToggle = document.querySelector('#multiSelectToggle');
 let pendingHighlight = null;
 
+function liveState() { return globalThis.__boxlabBridgeState || null; }
 function info() {
-  const mesh = state?.mesh;
+  const state = liveState(), mesh = state?.mesh;
   return mesh?.offsetEdgeLoopInfo?.(state?.selectedEdges || []) || null;
 }
 function sync() {
@@ -85,7 +85,7 @@ function forceRender() {
   if (cage) cage.dispatchEvent(new Event('change', { bubbles:true }));
 }
 function edgeScreenPoint(mesh, edgeIndex, fraction = 0.5) {
-  const camera = state?.camera, edge = mesh.edges()[edgeIndex];
+  const state = liveState(), camera = state?.camera, edge = mesh.edges()[edgeIndex];
   if (!camera || !canvas || !edge) return null;
   const point = mesh.vertices[edge.a].clone().lerp(mesh.vertices[edge.b], fraction).project(camera);
   const rect = canvas.getBoundingClientRect();
@@ -97,7 +97,7 @@ function tapEdge(mesh, edgeIndex) {
     if (!p) continue;
     canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:1, clientX:p.x, clientY:p.y }));
     canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:0, clientX:p.x, clientY:p.y }));
-    if ((state?.selectedEdges || []).includes(edgeIndex)) return true;
+    if ((liveState()?.selectedEdges || []).includes(edgeIndex)) return true;
   }
   return false;
 }
@@ -114,6 +114,7 @@ function selectCreatedLoops(mesh, indices) {
   }
 }
 function highlightEdges(indices, hex) {
+  const state = liveState();
   let count = 0;
   for (const index of indices) {
     const line = state?.edgeObjects?.get(index);
@@ -140,7 +141,7 @@ slider?.addEventListener('input', () => {
   if (output) output.textContent = `${slider.value}%`;
 });
 button?.addEventListener('click', () => {
-  const mesh = state?.mesh, current = info(), history = globalThis.__boxlabHistory;
+  const state = liveState(), mesh = state?.mesh, current = info(), history = globalThis.__boxlabHistory;
   if (!mesh || !current || !history) return;
   const before = mesh.clone();
   const spacing = Number(slider?.value || 20) / 100;
