@@ -14,6 +14,7 @@ const status = document.querySelector('#selectionStatus');
 const app = document.querySelector('#app');
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
+const OBJECT_HIT_EPSILON = 1e-5;
 
 let objects = [];
 let activeId = null;
@@ -206,6 +207,10 @@ function clearComponentSelection() {
   document.querySelector('#selectionModes button.active')?.click();
 }
 
+function enterObjectMode() {
+  document.querySelector('#selectionModes button[data-mode="object"]')?.click();
+}
+
 function activateObject(id, forceLocked = false) {
   const target = objects.find(object => object.id === id);
   if (!target || target.id === activeId) { renderOutliner(); return !!target; }
@@ -248,8 +253,13 @@ function addObject(mesh, name = 'Cube', options = {}) {
     history: { undo:[], redo:[] }
   };
   objects.push(object);
-  if (!object.locked) activateObject(object.id);
-  else { forceRender(); renderOutliner(); }
+  if (!object.locked) {
+    activateObject(object.id);
+    if (options.enterObjectMode !== false) enterObjectMode();
+  } else {
+    forceRender();
+    renderOutliner();
+  }
   return object;
 }
 
@@ -257,7 +267,7 @@ function duplicateActive() {
   const source = activeObject();
   if (!source) return;
   saveActive();
-  addObject(source.mesh, `${source.name} copy`, { settings:source.settings });
+  addObject(source.mesh, `${source.name} copy`, { settings:source.settings, enterObjectMode:true });
 }
 
 function renameActive() {
@@ -303,11 +313,13 @@ function installViewportActivation() {
     if (currentMode() === 'object' && inactiveBodies.length && camera) {
       setPointer(event);
       raycaster.setFromCamera(pointer, camera);
-      const hit = raycaster.intersectObjects(inactiveBodies.filter(body => body.visible), false)[0];
-      if (hit) {
+      const activeHit = activeBody?.visible ? raycaster.intersectObject(activeBody, false)[0] : null;
+      const inactiveHit = raycaster.intersectObjects(inactiveBodies.filter(body => body.visible), false)[0];
+      const inactiveIsCloser = inactiveHit && (!activeHit || inactiveHit.distance < activeHit.distance - OBJECT_HIT_EPSILON);
+      if (inactiveIsCloser) {
         event.preventDefault();
         event.stopImmediatePropagation();
-        activateObject(Number(hit.object.userData.objectId));
+        activateObject(Number(inactiveHit.object.userData.objectId));
         return;
       }
     }
@@ -365,7 +377,7 @@ function installRenderObserver() {
 }
 
 function installUI() {
-  addButton?.addEventListener('click', () => addObject(EditableMesh.cube(2), 'Cube'));
+  addButton?.addEventListener('click', () => addObject(EditableMesh.cube(2), 'Cube', { enterObjectMode:true }));
   duplicateButton?.addEventListener('click', duplicateActive);
   renameButton?.addEventListener('click', renameActive);
   deleteButton?.addEventListener('click', deleteActive);
