@@ -7,6 +7,15 @@ const multiToggle = document.querySelector('#multiSelectToggle');
 
 function currentMesh() { return state?.mesh || null; }
 function selectedEdges() { return [...new Set(state?.selectedEdges || [])]; }
+function activeLoopEdges() {
+  const edgeObjects = state?.edgeObjects;
+  if (!(edgeObjects instanceof Map)) return [];
+  return [...edgeObjects.entries()]
+    .filter(([, object]) => object?.renderOrder === 27)
+    .map(([index]) => index)
+    .filter(Number.isInteger)
+    .sort((a, b) => a - b);
+}
 function edgeInfo() {
   const mesh = currentMesh(), ids = selectedEdges();
   if (!mesh || ids.length !== 1) return null;
@@ -14,14 +23,29 @@ function edgeInfo() {
   return info ? { mesh, edgeIndex: ids[0], info } : null;
 }
 function loopInfo() {
-  const mesh = currentMesh(), ids = selectedEdges();
-  if (!mesh || ids.length < 3) return null;
-  const info = mesh.dissolveLoopInfo?.(ids);
-  return info ? { mesh, ids, info } : null;
+  const mesh = currentMesh();
+  if (!mesh) return null;
+
+  const selected = selectedEdges();
+  if (selected.length >= 3) {
+    const info = mesh.dissolveLoopInfo?.(selected);
+    if (info) return { mesh, ids: selected, info, source: 'selection' };
+  }
+
+  const active = activeLoopEdges();
+  if (active.length >= 3) {
+    const info = mesh.dissolveLoopInfo?.(active);
+    if (info) return { mesh, ids: active, info, source: 'active' };
+  }
+  return null;
 }
 function sync() {
   if (edgeButton) edgeButton.disabled = !edgeInfo();
-  if (loopButton) loopButton.disabled = !loopInfo();
+  if (loopButton) {
+    const mode = loopInfo();
+    loopButton.disabled = !mode;
+    loopButton.textContent = mode?.source === 'active' ? 'Dissolve Active Loop' : 'Dissolve Loop';
+  }
 }
 function faceScreenPoint(mesh, faceIndex) {
   const camera = state?.camera;
@@ -60,9 +84,11 @@ loopButton?.addEventListener('click', () => {
   history.push(before);
   clearMultiSelectionAfterTopologyChange();
   document.querySelector('#deselectAllBtn')?.click();
+  const slide = document.querySelector('#loopSlide');
+  if (slide) slide.disabled = true;
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true }));
   setTimeout(() => {
-    if (status) status.textContent = `Dissolve Loop • removed ${result.removedEdges} edges + ${result.removedVertices} vertices`;
+    if (status) status.textContent = `${mode.source === 'active' ? 'Dissolve Active Loop' : 'Dissolve Loop'} • removed ${result.removedEdges} edges + ${result.removedVertices} vertices`;
     sync();
   }, 20);
 });
