@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.18</title>
-  <link rel="stylesheet" href="./styles.css?v=0.18" />
+  <title>BoxLab v0.18.1</title>
+  <link rel="stylesheet" href="./styles.css?v=0.18.1" />
   <script type="importmap">
   {
     "imports": {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.18</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.18.1</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -41,7 +41,7 @@
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
-      <div class="hint">v0.18 • Chamfer uses 1 segment; Bevel uses 2–4 segments. Generated bevel rings are highlighted after creation.</div>
+      <div class="hint">v0.18.1 • Select one internal edge and Bevel Edge. Segments 1 = flat chamfer; 2–4 = progressively rounded bevel.</div>
       <section class="floating-panel left-panel">
         <div id="componentSelectionTools">
           <div class="panel-title">Selection</div>
@@ -79,8 +79,8 @@
           <label class="range-row"><span>Support Loop Spacing</span><input id="offsetLoopSpacing" type="range" min="2" max="45" value="20" step="1" /><output id="offsetLoopSpacingOut">20%</output></label>
           <button id="offsetLoopBtn" disabled>Offset Loop</button>
           <label class="range-row"><span>Bevel Width</span><input id="bevelWidth" type="range" min="2" max="45" value="20" step="1" /><output id="bevelWidthOut">20%</output></label>
-          <label class="range-row"><span>Segments</span><input id="bevelSegments" type="range" min="1" max="4" value="1" step="1" /><output id="bevelSegmentsOut">1</output></label>
-          <button id="bevelBtn" disabled>Chamfer Loop</button>
+          <label class="range-row"><span>Segments (1 = Chamfer)</span><input id="bevelSegments" type="range" min="1" max="4" value="1" step="1" /><output id="bevelSegmentsOut">1 • Chamfer</output></label>
+          <button id="bevelBtn" disabled>Bevel Edge</button>
           <label class="range-row"><span>Crease</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5" /><output id="creaseStrengthOut">100%</output></label>
           <button id="applyCreaseBtn">Apply Crease</button>
           <button id="clearCreaseBtn">Clear Crease</button>
@@ -116,20 +116,20 @@
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
-  <script type="module" src="./src/loose-bootstrap.js?v=0.18"></script>
-  <script type="module" src="./src/pencil-orbit-gate.js?v=0.18"></script>
-  <script type="module" src="./src/main.js?v=0.18"></script>
-  <script type="module" src="./src/loop-cut-commit.js?v=0.18"></script>
-  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.18"></script>
-  <script type="module" src="./src/component-slide.js?v=0.18"></script>
-  <script type="module" src="./src/dissolve-bootstrap.js?v=0.18"></script>
-  <script type="module" src="./src/add-edge-ui.js?v=0.18"></script>
-  <script type="module" src="./src/bridge-ui.js?v=0.18"></script>
-  <script type="module" src="./src/select-loop.js?v=0.18"></script>
-  <script type="module" src="./src/directed-loop.js?v=0.18"></script>
-  <script type="module" src="./src/edge-paint-select.js?v=0.18"></script>
-  <script type="module" src="./src/boundary-tools.js?v=0.18"></script>
-  <script type="module" src="./src/dissolve-ui.js?v=0.18"></script>
-  <script type="module" src="./src/bevel-ui.js?v=0.18"></script>
+  <script type="module" src="./src/loose-bootstrap.js?v=0.18.1"></script>
+  <script type="module" src="./src/pencil-orbit-gate.js?v=0.18.1"></script>
+  <script type="module" src="./src/main.js?v=0.18.1"></script>
+  <script type="module" src="./src/loop-cut-commit.js?v=0.18.1"></script>
+  <script type="module" src="./src/add-vertex-edge-snap.js?v=0.18.1"></script>
+  <script type="module" src="./src/component-slide.js?v=0.18.1"></script>
+  <script type="module" src="./src/dissolve-bootstrap.js?v=0.18.1"></script>
+  <script type="module" src="./src/add-edge-ui.js?v=0.18.1"></script>
+  <script type="module" src="./src/bridge-ui.js?v=0.18.1"></script>
+  <script type="module" src="./src/select-loop.js?v=0.18.1"></script>
+  <script type="module" src="./src/directed-loop.js?v=0.18.1"></script>
+  <script type="module" src="./src/edge-paint-select.js?v=0.18.1"></script>
+  <script type="module" src="./src/boundary-tools.js?v=0.18.1"></script>
+  <script type="module" src="./src/dissolve-ui.js?v=0.18.1"></script>
+  <script type="module" src="./src/bevel-ui.js?v=0.18.1"></script>
 </body>
 </html>
