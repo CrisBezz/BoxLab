@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { EditableMesh } from './mesh.js?v=0.21.0';
+import { EditableMesh } from './mesh.js?v=0.21.2';
+
+const IMPORT_TARGET_SIZE = 2;
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -42,10 +44,24 @@ function importedMeshes(root) {
   return meshes;
 }
 
+function fitMeshesToBoxLabScale(meshes) {
+  const bounds = new THREE.Box3();
+  meshes.forEach(entry => entry.mesh.vertices.forEach(vertex => bounds.expandByPoint(vertex)));
+  if (bounds.isEmpty()) return 1;
+  const size = bounds.getSize(new THREE.Vector3());
+  const largestDimension = Math.max(size.x, size.y, size.z);
+  if (!Number.isFinite(largestDimension) || largestDimension < 1e-9) return 1;
+  const scale = IMPORT_TARGET_SIZE / largestDimension;
+  const center = bounds.getCenter(new THREE.Vector3());
+  meshes.forEach(entry => entry.mesh.vertices.forEach(vertex => vertex.sub(center).multiplyScalar(scale)));
+  return scale;
+}
+
 function addImported(meshes, baseName) {
   const manager = globalThis.__boxlabObjectManager;
   if (!manager) throw new Error('The Outliner is still loading. Please try Import again.');
   const isReference = importKind === 'reference';
+  fitMeshesToBoxLabScale(meshes);
   const options = {
     kind: isReference ? 'reference' : 'editable',
     locked: isReference,

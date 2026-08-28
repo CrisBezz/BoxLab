@@ -6,7 +6,7 @@ import { applyMirror } from './mirror.js?v=0.12';
 import { downloadOBJ } from './export.js?v=0.12';
 import { History } from './history.js?v=0.12';
 
-const VERSION='0.21.1';
+const VERSION='0.21.2';
 const canvas=document.querySelector('#viewport'),wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x111318);
