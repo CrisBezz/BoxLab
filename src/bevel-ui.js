@@ -33,7 +33,7 @@ function syncLabel() {
 
 function sync() {
   const valid = info();
-  if (button) button.disabled = !valid;
+  if (button) button.disabled = false;
   syncLabel();
 }
 
