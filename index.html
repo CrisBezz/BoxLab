@@ -7,7 +7,7 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.24.1</title>
+  <title>BoxLab v0.24.2</title>
   <link rel="stylesheet" href="./styles.css?v=0.23.0" />
   <script type="importmap">
   {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.24.1</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.24.2</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -86,7 +86,7 @@
           <button id="offsetLoopBtn" disabled>Offset Loop</button>
           <label class="range-row"><span>Bevel Width</span><input id="bevelWidth" type="range" min="2" max="45" value="20" step="1" /><output id="bevelWidthOut">20%</output></label>
           <label class="range-row"><span>Segments (1 = Chamfer)</span><input id="bevelSegments" type="range" min="1" max="4" value="1" step="1" /><output id="bevelSegmentsOut">1 • Chamfer</output></label>
-          <button id="bevelBtn" disabled>Bevel Edge</button>
+          <button id="bevelBtn">Bevel Edge</button>
           <label class="range-row"><span>Crease</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5" /><output id="creaseStrengthOut">100%</output></label>
           <button id="applyCreaseBtn">Apply Crease</button>
           <button id="clearCreaseBtn">Clear Crease</button>
@@ -158,7 +158,7 @@
   <script type="module" src="./src/boundary-tools.js?v=0.21.3"></script>
   <script type="module" src="./src/dissolve-ui.js?v=0.21.3"></script>
   <script type="module" src="./src/bevel-ui.js?v=0.24.1"></script>
-  <script type="module" src="./src/direct-bevel.js?v=0.24.1"></script>
+  <script type="module" src="./src/direct-bevel.js?v=0.24.2"></script>
   <script type="module" src="./src/multi-object.js?v=0.21.3"></script>
   <script type="module" src="./src/import-mesh.js?v=0.21.3"></script>
 </body>
