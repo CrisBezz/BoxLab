@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.26.0</title>
-  <link rel="stylesheet" href="./styles.css?v=0.26.0" />
+  <title>BoxLab v0.27.0</title>
+  <link rel="stylesheet" href="./styles.css?v=0.27.0" />
   <script type="importmap">
   {
     "imports": {
@@ -28,23 +28,24 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.26.0</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.27.0</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
-        <button data-mode="object">Object</button>
-        <button data-mode="vertex">Vertex</button>
-        <button data-mode="edge">Edge</button>
-        <button data-mode="face" class="active">Face</button>
+        <button data-mode="vertex" title="Vertex mode"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.4" /></svg><span>Vertex</span></button>
+        <button data-mode="edge" title="Edge mode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 17 19 7" /></svg><span>Edge</span></button>
+        <button data-mode="face" class="active" title="Face mode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 9 10-4 4 8-10 5z" /></svg><span>Face</span></button>
+        <button data-mode="object" title="Object mode"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 7 4v10l-7 4-7-4V7zM5 7l7 4 7-4M12 11v10" /></svg><span>Object</span></button>
       </div>
       <div class="top-actions">
-        <button id="undoBtn">Undo</button><button id="redoBtn">Redo</button><button id="resetBtn">Reset</button>
+        <button id="undoBtn">Undo</button><button id="redoBtn">Redo</button>
       </div>
     </header>
     <main id="viewportWrap">
       <canvas id="viewport"></canvas>
       <div class="hint">v0.22.0 • Multi Select + Pencil-drag paints vertices, edges or faces. Choose Visible Only or X-Ray / Through.</div>
-      <section class="floating-panel left-panel">
-        <div id="componentSelectionTools">
-          <div class="panel-title">Selection</div>
+      <section class="floating-panel left-panel tool-drawer" aria-label="BoxLab tools">
+        <details class="drawer-section" id="selectionDrawer">
+          <summary>Selection</summary>
+          <div class="drawer-content" id="componentSelectionTools">
           <label class="toggle-row"><input id="multiSelectToggle" type="checkbox" /><span>Multi Select</span></label>
           <div class="segmented" id="paintSelectDepth" aria-label="Paint selection depth" style="margin-top:6px">
             <button type="button" data-paint-depth="visible" class="active" style="width:auto;flex:1;margin:0;min-height:34px;padding:6px 5px;font-size:11px">Visible Only</button>
@@ -55,15 +56,22 @@
           <div class="outliner-actions"><button id="selectLoopBtn" disabled>Select Loop</button><button id="selectBoundaryBtn" disabled>Select Boundary</button></div>
           <div class="outliner-actions"><button id="growSelectionBtn">Grow</button><button id="shrinkSelectionBtn">Shrink</button><button id="connectedSelectionBtn">Connected</button><button id="angleSelectionBtn">Angle Select</button><button id="normalSelectionBtn">Normal Select</button></div>
           <label class="range-row"><span>Angle</span><input id="angleSelectThreshold" type="range" min="5" max="180" value="30" step="5" /><output id="angleSelectThresholdOut">30°</output></label>
-        </div>
-        <div class="panel-title transform-title">Transform</div>
-        <div class="segmented vertical" id="toolModes">
-          <button data-tool="move" class="active">Move</button>
-          <button data-tool="scale">Scale</button>
-          <button data-tool="rotate">Rotate</button>
-        </div>
-        <label class="toggle-row"><input id="axisSnapToggle" type="checkbox" /><span>Axis Snap</span></label>
-        <label class="toggle-row"><input id="inferenceSnapToggle" type="checkbox" disabled /><span>Inference Snap</span></label>
+          </div>
+        </details>
+        <details class="drawer-section" id="transformDrawer">
+          <summary>Transform</summary>
+          <div class="drawer-content">
+            <div class="segmented" id="toolModes">
+              <button data-tool="move" class="active">Move</button>
+              <button data-tool="scale">Scale</button>
+              <button data-tool="rotate">Rotate</button>
+            </div>
+            <div class="drawer-toggles"><label class="toggle-row"><input id="axisSnapToggle" type="checkbox" /><span>Axis Snap</span></label><label class="toggle-row"><input id="inferenceSnapToggle" type="checkbox" disabled /><span>Inference Snap</span></label></div>
+          </div>
+        </details>
+        <details class="drawer-section" id="editDrawer" open>
+          <summary>Active Tools</summary>
+          <div class="drawer-content">
         <div class="mode-tools" data-mode-tools="object">
           <div class="panel-title context-title">Object</div>
           <div class="panel-note">Move, Scale or Rotate the active object. Use the Outliner to switch the active editable mesh.</div>
@@ -105,9 +113,11 @@
           <button id="bridgeFacesBtn" disabled>Bridge Faces</button>
           <button id="deleteFaceBtn" class="danger">Delete Face</button>
         </div>
-      </section>
-      <section class="floating-panel right-panel">
-        <div class="panel-title">Objects</div>
+          </div>
+        </details>
+        <details class="drawer-section" id="objectsDrawer">
+          <summary>Objects</summary>
+          <div class="drawer-content">
         <div id="outlinerMode" class="outliner-mode">Loading objects…</div>
         <div id="outlinerList" class="outliner-list"></div>
         <div class="outliner-actions">
@@ -116,34 +126,45 @@
           <button id="outlinerRenameBtn">Rename</button>
           <button id="outlinerDeleteBtn" class="danger">Delete</button>
         </div>
-        <div class="panel-title context-title">Import</div>
+          </div>
+        </details>
+        <details class="drawer-section" id="fileDrawer">
+          <summary>File</summary>
+          <div class="drawer-content">
+        <div class="drawer-subtitle">Import</div>
         <div class="segmented import-kind" id="importKind" aria-label="Import type">
           <button type="button" data-import-kind="editable" class="active">Editable</button>
           <button type="button" data-import-kind="reference">Reference</button>
         </div>
         <button id="importMeshBtn">Import OBJ / GLB / GLTF</button>
         <input id="importMeshInput" type="file" accept=".obj,.glb,.gltf,model/obj,model/gltf-binary,model/gltf+json" hidden />
-        <hr />
-        <div class="panel-title">Mirror</div>
+        <div class="drawer-subtitle">Export</div>
+        <div class="outliner-actions"><button id="exportBaseBtn">Base OBJ</button><button id="exportSubdBtn">SubD OBJ</button></div>
+        <button id="resetBtn" class="danger">Reset All Objects</button>
+          </div>
+        </details>
+        <details class="drawer-section" id="modifiersDrawer">
+          <summary>Modifiers</summary>
+          <div class="drawer-content">
+        <div class="drawer-subtitle">Mirror</div>
         <label class="toggle-row"><input data-mirror-axis="x" type="checkbox" /><span>Mirror X</span></label>
         <label class="toggle-row"><input data-mirror-axis="y" type="checkbox" /><span>Mirror Y</span></label>
         <label class="toggle-row"><input data-mirror-axis="z" type="checkbox" /><span>Mirror Z</span></label>
         <button id="alignMirrorBtn" disabled>Align Object to Mirror</button>
-        <hr />
-        <div class="panel-title">Subdivision</div>
+        <div class="drawer-subtitle">Subdivision</div>
         <label class="toggle-row"><input id="subdToggle" type="checkbox" /><span>SubD Preview</span></label>
         <label class="toggle-row"><input id="cageToggle" type="checkbox" checked /><span>Show Cage</span></label>
         <label class="range-row"><span>Level</span><input id="subdLevel" type="range" min="1" max="3" value="1" step="1" /><output id="subdLevelOut">1</output></label>
-        <hr />
-        <button id="exportBaseBtn">Export Base OBJ</button>
-        <button id="exportSubdBtn">Export SubD OBJ</button>
+          </div>
+        </details>
       </section>
       <footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer>
     </main>
   </div>
+  <div id="portraitNotice" role="status"><div class="portrait-cube" aria-hidden="true"></div><strong>Rotate iPad to landscape</strong><span>BoxLab is designed for a wide modelling workspace.</span></div>
   <script type="module" src="./src/loose-bootstrap.js?v=0.22.0"></script>
   <script type="module" src="./src/pencil-orbit-gate.js?v=0.21.3"></script>
-  <script type="module" src="./src/main.js?v=0.26.0"></script>
+  <script type="module" src="./src/main.js?v=0.27.0"></script>
   <script type="module" src="./src/rotate-transform.js?v=0.25.0"></script>
   <script type="module" src="./src/loop-cut-commit.js?v=0.25.0"></script>
   <script type="module" src="./src/add-vertex-edge-snap.js?v=0.21.3"></script>
@@ -165,5 +186,6 @@
   <script type="module" src="./src/multi-object.js?v=0.21.3"></script>
   <script type="module" src="./src/extract-faces.js?v=0.26.0"></script>
   <script type="module" src="./src/import-mesh.js?v=0.21.3"></script>
+  <script type="module" src="./src/drawer-ui.js?v=0.27.0"></script>
 </body>
 </html>
