@@ -118,7 +118,9 @@ canvas?.addEventListener('pointerdown', event => {
   globalThis.__boxlabHistory?.push(before);
   const newIndex = indexForKey(mesh, result.edgeKey);
   first = null;
+  armed = false;
+  button.classList.remove('active');
   bridge()?.set?.('edge', newIndex >= 0 ? [newIndex] : []);
   render();
-  if (status) status.textContent = 'Face Split committed • tap two more boundary edges to split another ngon';
+  if (status) status.textContent = 'Face Split committed • Edge mode ready';
 }, true);
