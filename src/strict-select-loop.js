@@ -6,7 +6,7 @@ let synthetic = false;
 
 function state() { return globalThis.__boxlabBridgeState; }
 function mesh() { return state()?.mesh || null; }
-function selectedEdges() { return [...new Set(state()?.selectedEdges || [])]; }
+function selectedEdges() { const bridge = globalThis.__boxlabSelectionBridge; return bridge?.mode?.() === 'edge' ? [...new Set(bridge.indices?.() || [])] : [...new Set(state()?.selectedEdges || [])]; }
 function realFaces(m, edge) {
   return (edge?.faces || []).filter(fi => Number.isInteger(fi) && fi >= 0 && fi < m.faces.length && Array.isArray(m.faces[fi]));
 }

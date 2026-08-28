@@ -5,7 +5,7 @@ const canvas = document.querySelector('#viewport');
 const status = document.querySelector('#selectionStatus');
 
 function currentMesh() { return state?.mesh || null; }
-function selectedEdgeIds() { return [...new Set(state?.selectedEdges || [])]; }
+function selectedEdgeIds() { const bridge = globalThis.__boxlabSelectionBridge; return bridge?.mode?.() === 'edge' ? [...new Set(bridge.indices?.() || [])] : [...new Set(state?.selectedEdges || [])]; }
 function realFaces(mesh, edge) {
   return (edge?.faces || []).filter(fi => Number.isInteger(fi) && fi >= 0 && fi < mesh.faces.length && Array.isArray(mesh.faces[fi]));
 }

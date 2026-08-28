@@ -47,6 +47,8 @@ function traceDirection(mesh, seedIndex, startVertex, visited) {
 }
 
 function selectedEdgeIds() {
+  const bridge = globalThis.__boxlabSelectionBridge;
+  if (bridge?.mode?.() === 'edge') return [...new Set(bridge.indices?.() || [])];
   return [...new Set(state?.selectedEdges || [])];
 }
 
