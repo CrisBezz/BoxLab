@@ -293,6 +293,31 @@ function deleteActive() {
   activateObject(replacement.id, true);
 }
 
+function resetAll() {
+  const live = state()?.mesh;
+  if (!live) return false;
+  const settings = { mirror:{ x:false, y:false, z:false }, subd:false, subdLevel:1, cage:true };
+  replaceMeshInPlace(live, EditableMesh.cube(2));
+  history()?.clear?.();
+  soloId = null;
+  const initial = {
+    id: nextId++,
+    name:'Cube',
+    mesh:live.clone(),
+    visible:true,
+    locked:false,
+    kind:'editable',
+    settings:cloneSettings(settings),
+    history:{ undo:[], redo:[] }
+  };
+  objects = [initial];
+  activeId = initial.id;
+  restoreSettings(initial.settings);
+  forceRender();
+  renderOutliner();
+  return true;
+}
+
 function setPointer(event) {
   const rect = canvas.getBoundingClientRect();
   pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -414,6 +439,7 @@ function initialize() {
   globalThis.__boxlabObjectManager = {
     addMesh(mesh, name = 'Object', options = {}) { return addObject(mesh, name, options); },
     activate(id) { return activateObject(id); },
+    resetAll,
     saveActive,
     get activeId() { return activeId; },
     get objects() { saveActive(); return objects; },
