@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.22.0</title>
-  <link rel="stylesheet" href="./styles.css?v=0.22.0" />
+  <title>BoxLab v0.23.0</title>
+  <link rel="stylesheet" href="./styles.css?v=0.23.0" />
   <script type="importmap">
   {
     "imports": {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.22.0</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.23.0</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -52,6 +52,8 @@
           </div>
           <button id="selectAllBtn">Select All</button>
           <button id="deselectAllBtn">Deselect All</button>
+          <div class="outliner-actions"><button id="growSelectionBtn">Grow</button><button id="shrinkSelectionBtn">Shrink</button><button id="connectedSelectionBtn">Connected</button><button id="angleSelectionBtn">Angle Select</button></div>
+          <label class="range-row"><span>Angle</span><input id="angleSelectThreshold" type="range" min="5" max="180" value="30" step="5" /><output id="angleSelectThresholdOut">30°</output></label>
         </div>
         <div class="panel-title transform-title">Transform</div>
         <div class="segmented vertical" id="toolModes">
@@ -140,7 +142,7 @@
   </div>
   <script type="module" src="./src/loose-bootstrap.js?v=0.22.0"></script>
   <script type="module" src="./src/pencil-orbit-gate.js?v=0.21.3"></script>
-  <script type="module" src="./src/main.js?v=0.22.0"></script>
+  <script type="module" src="./src/main.js?v=0.23.0"></script>
   <script type="module" src="./src/rotate-transform.js?v=0.21.3"></script>
   <script type="module" src="./src/loop-cut-commit.js?v=0.21.3"></script>
   <script type="module" src="./src/add-vertex-edge-snap.js?v=0.21.3"></script>
@@ -152,6 +154,7 @@
   <script type="module" src="./src/directed-loop.js?v=0.21.3"></script>
   <script type="module" src="./src/strict-select-loop.js?v=0.21.3"></script>
   <script type="module" src="./src/edge-paint-select.js?v=0.22.0"></script>
+  <script type="module" src="./src/advanced-selection.js?v=0.23.0"></script>
   <script type="module" src="./src/edge-toggle-repair.js?v=0.21.3"></script>
   <script type="module" src="./src/boundary-tools.js?v=0.21.3"></script>
   <script type="module" src="./src/dissolve-ui.js?v=0.21.3"></script>
