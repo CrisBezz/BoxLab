@@ -1,21 +1,24 @@
 import * as THREE from 'three';
 
-const state = globalThis.__boxlabBridgeState;
 const canvas = document.querySelector('#viewport');
 const multiToggle = document.querySelector('#multiSelectToggle');
-const status = document.querySelector('#selectionStatus');
+const depthButtons = [...document.querySelectorAll('#paintSelectDepth [data-paint-depth]')];
 const raycaster = new THREE.Raycaster();
 raycaster.params.Line.threshold = 0.09;
 const pointer = new THREE.Vector2();
 let paint = null;
-let synthetic = false;
+let paintDepth = 'visible';
 
-function edgeMode() {
-  return document.querySelector('#selectionModes button[data-mode="edge"]')?.classList.contains('active');
-}
+function state() { return globalThis.__boxlabBridgeState; }
+function selection() { return globalThis.__boxlabSelectionBridge; }
+function mode() { return selection()?.mode?.(); }
 
-function selectedEdges() {
-  return [...new Set(state?.selectedEdges || [])];
+function objectsFor(type) {
+  const s = state();
+  if (type === 'vertex') return [...(s?.vertexObjects?.values?.() || [])];
+  if (type === 'edge') return [...(s?.edgeObjects?.values?.() || [])];
+  if (type === 'face') return [...(s?.faceObjects?.values?.() || [])];
+  return [];
 }
 
 function setPointer(event) {
@@ -24,62 +27,45 @@ function setPointer(event) {
   pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 }
 
-function hitEdge(event) {
-  const camera = state?.camera;
-  const objects = [...(state?.edgeObjects?.values?.() || [])].filter(Boolean);
-  if (!camera || !objects.length) return null;
+function hitIndices(event, type) {
+  const camera = state()?.camera;
+  const objects = objectsFor(type).filter(Boolean);
+  if (!camera || !objects.length) return [];
   setPointer(event);
   raycaster.setFromCamera(pointer, camera);
-  const hit = raycaster.intersectObjects(objects, false)[0];
-  return Number.isInteger(hit?.object?.userData?.index) ? hit.object.userData.index : null;
+  const hits = raycaster.intersectObjects(objects, false);
+  const indices = [...new Set(hits.map(hit => hit.object?.userData?.index).filter(Number.isInteger))];
+  return paintDepth === 'through' ? indices : indices.slice(0, 1);
 }
 
-function syntheticTap(x, y) {
-  synthetic = true;
-  try {
-    canvas.dispatchEvent(new PointerEvent('pointerdown', {
-      bubbles: true, cancelable: true, pointerId: 96, pointerType: 'mouse',
-      isPrimary: true, button: 0, buttons: 1, clientX: x, clientY: y
-    }));
-    canvas.dispatchEvent(new PointerEvent('pointerup', {
-      bubbles: true, cancelable: true, pointerId: 96, pointerType: 'mouse',
-      isPrimary: true, button: 0, buttons: 0, clientX: x, clientY: y
-    }));
-  } finally {
-    synthetic = false;
-  }
+function addHits(event, type) {
+  const bridge = selection();
+  hitIndices(event, type).forEach(index => bridge?.add?.(type, index));
 }
 
-function updateStatus() {
-  if (status) status.textContent = `Paint Select • ${selectedEdges().length} edge${selectedEdges().length === 1 ? '' : 's'} selected`;
-}
+depthButtons.forEach(button => button.addEventListener('click', () => {
+  paintDepth = button.dataset.paintDepth;
+  depthButtons.forEach(item => item.classList.toggle('active', item === button));
+}));
 
 canvas?.addEventListener('pointerdown', event => {
-  if (synthetic) return;
-  if (!event.isPrimary || !edgeMode() || !multiToggle?.checked) return;
-  if (event.pointerType === 'mouse' && event.pointerId >= 90) return;
-
-  const edgeIndex = hitEdge(event);
-  if (!Number.isInteger(edgeIndex) || selectedEdges().includes(edgeIndex)) return;
-
+  const type = mode();
+  const bridge = selection();
+  if (!event.isPrimary || !multiToggle?.checked || !['vertex', 'edge', 'face'].includes(type)) return;
+  const first = hitIndices(event, type)[0];
+  if (!Number.isInteger(first) || bridge?.has?.(type, first)) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  paint = { pointerId: event.pointerId, lastEdge: edgeIndex };
+  paint = { pointerId:event.pointerId, type };
   canvas.setPointerCapture?.(event.pointerId);
-  syntheticTap(event.clientX, event.clientY);
-  updateStatus();
+  addHits(event, type);
 }, true);
 
 canvas?.addEventListener('pointermove', event => {
   if (!paint || paint.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-
-  const edgeIndex = hitEdge(event);
-  if (!Number.isInteger(edgeIndex) || edgeIndex === paint.lastEdge || selectedEdges().includes(edgeIndex)) return;
-  paint.lastEdge = edgeIndex;
-  syntheticTap(event.clientX, event.clientY);
-  updateStatus();
+  addHits(event, paint.type);
 }, true);
 
 function endPaint(event) {
@@ -87,7 +73,6 @@ function endPaint(event) {
   event.preventDefault();
   event.stopImmediatePropagation();
   paint = null;
-  updateStatus();
 }
 
 canvas?.addEventListener('pointerup', endPaint, true);

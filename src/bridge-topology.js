@@ -3,7 +3,7 @@ import * as THREE from 'three';
 export function installBridgeTopology(EditableMesh) {
   if (EditableMesh.prototype.__bridgeTopologyInstalled) return;
 
-  const state = globalThis.__boxlabBridgeState ||= { mesh: null, camera: null, edgeObjects: new Map(), selectedEdges: [], selectedFaces: [], facePickers: new Map(), lastEdge: null, notifyTimer: null };
+  const state = globalThis.__boxlabBridgeState ||= { mesh: null, camera: null, edgeObjects: new Map(), vertexObjects: new Map(), faceObjects: new Map(), selectedEdges: [], selectedVertices: [], selectedFaces: [], facePickers: new Map(), lastEdge: null, notifyTimer: null };
   const baseEdges = EditableMesh.prototype.edges;
   EditableMesh.prototype.edges = function () {
     state.mesh = this;
@@ -32,18 +32,24 @@ export function installBridgeTopology(EditableMesh) {
         const kind = object?.userData?.kind;
         if (kind === 'body') {
           state.selectedEdges = [];
+          state.selectedVertices = [];
           state.selectedFaces = [];
           state.facePickers = new Map();
           state.edgeObjects = new Map();
+          state.vertexObjects = new Map();
+          state.faceObjects = new Map();
           state.lastEdge = null;
         } else if (kind === 'edge') {
           state.lastEdge = object.userData.index;
           state.edgeObjects.set(object.userData.index, object);
+        } else if (kind === 'vertex') {
+          state.vertexObjects.set(object.userData.index, object);
+          if (object.userData.selected) state.selectedVertices.push(object.userData.index);
         } else if (kind === 'edge-selection-overlay' && Number.isInteger(state.lastEdge)) {
           if (!state.selectedEdges.includes(state.lastEdge)) state.selectedEdges.push(state.lastEdge);
         } else if (kind === 'face') {
           const signature = geometrySignature(object.geometry);
-          if (signature) state.facePickers.set(signature, object.userData.index);
+          if (signature) { state.facePickers.set(signature, object.userData.index); state.faceObjects.set(object.userData.index, object); }
         } else if (object?.renderOrder === 5 && !kind) {
           const signature = geometrySignature(object.geometry);
           const index = signature ? state.facePickers.get(signature) : null;

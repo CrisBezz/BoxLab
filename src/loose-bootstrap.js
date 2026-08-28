@@ -1,6 +1,6 @@
 import { EditableMesh } from './mesh.js';
 import { installLooseTopology } from './loose-topology.js';
-import { installBridgeTopology } from './bridge-topology.js';
+import { installBridgeTopology } from './bridge-topology.js?v=0.22.0';
 import { installBevelTopology } from './bevel-topology.js?v=0.18';
 import { installGeneralEdgeBevelTopology } from './general-edge-bevel-topology.js?v=0.18.2';
 import { installBevelSelection } from './bevel-selection.js?v=0.18.3';
