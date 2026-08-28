@@ -41,9 +41,6 @@ function commitLoop(keys) {
   if (!keys.length) return;
   committing = true;
 
-  // Leave the Loop Cut tool before rebuilding normal selection.
-  if (loopCutBtn?.classList.contains('active')) loopCutBtn.click();
-
   // BoxLab's own Undo/Redo path clears the private active Loop Slide session
   // while restoring the exact finished cut as the current mesh.
   document.querySelector('#undoBtn')?.click();

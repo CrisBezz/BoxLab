@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.24.3</title>
-  <link rel="stylesheet" href="./styles.css?v=0.23.0" />
+  <title>BoxLab v0.25.0</title>
+  <link rel="stylesheet" href="./styles.css?v=0.25.0" />
   <script type="importmap">
   {
     "imports": {
@@ -28,7 +28,7 @@
 <body>
   <div id="app">
     <header class="topbar">
-      <div class="brand"><strong>BoxLab</strong><span>v0.24.3</span></div>
+      <div class="brand"><strong>BoxLab</strong><span>v0.25.0</span></div>
       <div class="segmented" id="selectionModes" aria-label="Selection mode">
         <button data-mode="object">Object</button>
         <button data-mode="vertex">Vertex</button>
@@ -81,6 +81,7 @@
           <button id="edgeSlideBtn" disabled>Edge Slide</button>
           <label class="range-row"><span>Cuts</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
           <button id="loopCutBtn">Loop Cut</button>
+          <button id="faceSplitBtn">Face Split</button>
           <label class="range-row"><span>Slide</span><input id="loopSlide" type="range" min="5" max="95" value="50" step="1" disabled /><output id="loopSlideOut">50%</output></label>
           <label class="range-row"><span>Support Loop Spacing</span><input id="offsetLoopSpacing" type="range" min="2" max="45" value="20" step="1" /><output id="offsetLoopSpacingOut">20%</output></label>
           <button id="offsetLoopBtn" disabled>Offset Loop</button>
@@ -141,9 +142,9 @@
   </div>
   <script type="module" src="./src/loose-bootstrap.js?v=0.22.0"></script>
   <script type="module" src="./src/pencil-orbit-gate.js?v=0.21.3"></script>
-  <script type="module" src="./src/main.js?v=0.23.1"></script>
-  <script type="module" src="./src/rotate-transform.js?v=0.21.3"></script>
-  <script type="module" src="./src/loop-cut-commit.js?v=0.21.3"></script>
+  <script type="module" src="./src/main.js?v=0.25.0"></script>
+  <script type="module" src="./src/rotate-transform.js?v=0.25.0"></script>
+  <script type="module" src="./src/loop-cut-commit.js?v=0.25.0"></script>
   <script type="module" src="./src/add-vertex-edge-snap.js?v=0.21.3"></script>
   <script type="module" src="./src/component-slide.js?v=0.21.3"></script>
   <script type="module" src="./src/dissolve-bootstrap.js?v=0.21.3"></script>
@@ -159,6 +160,7 @@
   <script type="module" src="./src/dissolve-ui.js?v=0.21.3"></script>
   <script type="module" src="./src/bevel-ui.js?v=0.24.1"></script>
   <script type="module" src="./src/direct-bevel.js?v=0.24.3"></script>
+  <script type="module" src="./src/face-split.js?v=0.25.0"></script>
   <script type="module" src="./src/multi-object.js?v=0.21.3"></script>
   <script type="module" src="./src/import-mesh.js?v=0.21.3"></script>
 </body>
