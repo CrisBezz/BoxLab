@@ -143,7 +143,7 @@ function renderOutliner() {
   if (!list) return;
   const mode = currentMode();
   const active = activeObject();
-  if (modeLabel) modeLabel.textContent = active ? `${mode === 'object' ? 'Object Mode' : `Edit • ${cap(mode)}`} • ${active.name}${active.locked ? ' • Locked' : ''}` : 'No active object';
+  if (modeLabel) modeLabel.textContent = active ? `${mode === 'object' ? 'Object Mode' : `Edit • ${cap(mode)}`} • ${active.name}${active.kind === 'reference' ? ' • Reference' : ''}${active.locked ? ' • Locked' : ''}` : 'No active object';
   list.replaceChildren();
   for (const object of objects) {
     const row = document.createElement('div');
@@ -152,7 +152,7 @@ function renderOutliner() {
 
     const name = document.createElement('button');
     name.className = 'outliner-name';
-    name.textContent = object.name;
+    name.textContent = object.kind === 'reference' ? `${object.name} • Ref` : object.name;
     name.title = object.locked ? 'Locked object — unlock to edit' : 'Make active object';
     name.addEventListener('click', () => activateObject(object.id));
 
@@ -249,6 +249,7 @@ function addObject(mesh, name = 'Cube', options = {}) {
     mesh: mesh.clone(),
     visible: options.visible !== false,
     locked: !!options.locked,
+    kind: options.kind === 'reference' ? 'reference' : 'editable',
     settings: cloneSettings(options.settings || captureSettings()),
     history: { undo:[], redo:[] }
   };
@@ -418,6 +419,7 @@ function initialize() {
     get objects() { saveActive(); return objects; },
     get soloId() { return soloId; }
   };
+  window.dispatchEvent(new Event('boxlab-object-manager-ready'));
   renderOutliner();
   forceRender();
   return true;
