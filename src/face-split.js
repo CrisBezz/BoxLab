@@ -9,6 +9,12 @@ ray.params.Line.threshold = .09;
 let armed = false;
 let first = null;
 
+function disarm() {
+  armed = false;
+  first = null;
+  button?.classList.remove('active');
+}
+
 function state() { return globalThis.__boxlabBridgeState; }
 function bridge() { return globalThis.__boxlabSelectionBridge; }
 function render() { document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true })); }
@@ -76,6 +82,13 @@ button?.addEventListener('click', event => {
   if (status) status.textContent = armed ? 'Face Split • tap the first boundary edge of an ngon' : 'Edge mode • Face Split off';
 }, true);
 
+// Face Split is persistent for repeated cuts, but any deliberate UI tool/mode
+// choice takes priority and returns normal Pencil interaction immediately.
+document.addEventListener('click', event => {
+  if (!armed || !event.isTrusted || event.target?.closest?.('#faceSplitBtn')) return;
+  if (event.target?.closest?.('button')) disarm();
+}, true);
+
 canvas?.addEventListener('pointerdown', event => {
   if (!armed || !event.isPrimary) return;
   const s = state(), mesh = s?.mesh, index = hitEdge(event);
@@ -118,9 +131,7 @@ canvas?.addEventListener('pointerdown', event => {
   globalThis.__boxlabHistory?.push(before);
   const newIndex = indexForKey(mesh, result.edgeKey);
   first = null;
-  armed = false;
-  button.classList.remove('active');
   bridge()?.set?.('edge', newIndex >= 0 ? [newIndex] : []);
   render();
-  if (status) status.textContent = 'Face Split committed • Edge mode ready';
+  if (status) status.textContent = 'Face Split committed • tap two more boundary edges to split another ngon';
 }, true);
