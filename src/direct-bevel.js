@@ -4,7 +4,7 @@ const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('
 function state(){return globalThis.__boxlabBridgeState}function bridge(){return globalThis.__boxlabSelectionBridge}function hit(e){const s=state(),r=canvas.getBoundingClientRect();if(!s?.camera)return null;pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(pointer,s.camera);const h=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(h?.object?.userData?.index)?h.object.userData.index:null}
 function disarm(){armed=false;drag=null;button?.classList.remove('active');}
 function selectedEdgeIds(){const b=bridge();return b?.mode?.()==='edge'?[...(b.indices?.()||[])]:[];}
-function syncVersion(){document.title='BoxLab v0.30.3';const el=document.querySelector('#appVersion');if(el)el.textContent='v0.30.3';}
+function syncVersion(){document.title='BoxLab v0.30.4';const el=document.querySelector('#appVersion');if(el)el.textContent='v0.30.4';}
 syncVersion();
 button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();armed=!armed;if(armed&&bridge()?.mode?.()!=='edge')document.querySelector('#selectionModes button[data-mode="edge"]')?.click();button.classList.toggle('active',armed);const count=selectedEdgeIds().length,useMulti=!!multiToggle?.checked&&count>1;document.querySelector('#selectionStatus').textContent=armed?(useMulti?`Bevel ${count} edges • drag any selected edge`:'Bevel Edge • drag an edge'):'Edge mode • nothing selected'},true);
 document.addEventListener('click',e=>{if(!armed||!e.isTrusted||e.target?.closest?.('#bevelBtn'))return;if(e.target?.closest?.('button'))disarm();},true);
