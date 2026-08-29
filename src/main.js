@@ -6,21 +6,21 @@ import { applyMirror } from './mirror.js?v=0.12';
 import { downloadOBJ } from './export.js?v=0.12';
 import { History } from './history.js?v=0.12';
 
-const VERSION='0.27.7';
+const VERSION='0.28.0';
 const canvas=document.querySelector('#viewport'),wrap=document.querySelector('#viewportWrap');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));renderer.outputColorSpace=THREE.SRGBColorSpace;
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x111318);
 const camera=new THREE.PerspectiveCamera(42,1,.01,100);camera.position.set(4.2,3.1,4.6);
 const controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.dampingFactor=.08;controls.target.set(0,0,0);controls.touches.ONE=THREE.TOUCH.ROTATE;controls.touches.TWO=THREE.TOUCH.DOLLY_PAN;controls.screenSpacePanning=true;controls.minAzimuthAngle=-Infinity;controls.maxAzimuthAngle=Infinity;controls.minPolarAngle=.001;controls.maxPolarAngle=Math.PI-.001;
-scene.add(new THREE.HemisphereLight(0xffffff,0x2a2f3a,2));const key=new THREE.DirectionalLight(0xffffff,2.5);key.position.set(4,7,5);scene.add(key);const grid=new THREE.GridHelper(12,24,0x3c424d,0x262b33);grid.position.y=-1.55;scene.add(grid);const originAxes=new THREE.AxesHelper(.9);originAxes.material.depthTest=false;originAxes.renderOrder=20;scene.add(originAxes);
+scene.add(new THREE.HemisphereLight(0xeaf2ff,0x1d2430,1.2));const key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(4,7,5);scene.add(key);const grid=new THREE.GridHelper(12,24,0x3c424d,0x262b33);grid.position.y=-1.55;scene.add(grid);const originAxes=new THREE.AxesHelper(.9);originAxes.material.depthTest=false;originAxes.renderOrder=20;scene.add(originAxes);
 
 let mesh=EditableMesh.cube(2),selectionMode='face',toolMode='move',selection=null,multiSelectEnabled=false;
 let subdEnabled=false,subdLevel=1,showCage=true,activeLoopSlides=[],activeLoopSlide=null,selectedEdgeCutT=.5,directTool=null,axisSnapEnabled=false,inferenceSnapEnabled=false;
 const mirrorAxes={x:false,y:false,z:false},history=new History(60),root=new THREE.Group();scene.add(root);
-const baseMaterial=new THREE.MeshStandardMaterial({color:0xaeb8c8,roughness:.62,metalness:.02,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
-const subdMaterial=new THREE.MeshStandardMaterial({color:0xc8d1de,roughness:.58,metalness:.02,side:THREE.DoubleSide});
+const baseMaterial=new THREE.MeshStandardMaterial({color:0x9daabd,roughness:.78,metalness:0,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+const subdMaterial=new THREE.MeshStandardMaterial({color:0xbac5d4,roughness:.72,metalness:0,side:THREE.DoubleSide});
 const selectedMaterial=new THREE.MeshBasicMaterial({color:0xff615f,transparent:true,opacity:.78,side:THREE.DoubleSide,depthTest:true});
-const vertexMaterial=new THREE.MeshBasicMaterial({color:0xe7ebf2}),selectedVertexMaterial=new THREE.MeshBasicMaterial({color:0xff615f}),edgeMaterial=new THREE.LineBasicMaterial({color:0x707988,transparent:true,opacity:.95});
+const vertexMaterial=new THREE.MeshBasicMaterial({color:0xf2f5fa}),selectedVertexMaterial=new THREE.MeshBasicMaterial({color:0xff615f}),edgeMaterial=new THREE.LineBasicMaterial({color:0xd5deeb,transparent:true,opacity:.9});
 const axisLineMaterials={x:new THREE.LineBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.LineBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.LineBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.LineBasicMaterial({color:0xffffff,depthTest:false})};
 const axisOverlayMaterials={x:new THREE.MeshBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.MeshBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.MeshBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false})};
 const activeLoopMaterial=new THREE.LineBasicMaterial({color:0x62d8ff,transparent:true,opacity:1,depthTest:false}),currentLoopMaterial=new THREE.LineBasicMaterial({color:0xffe14a,transparent:true,opacity:1,depthTest:false}),creaseEdgeMaterial=new THREE.LineBasicMaterial({color:0xffb65c,transparent:true,opacity:1}),mirrorEdgeMaterial=new THREE.LineBasicMaterial({color:0x8791a2,transparent:true,opacity:.32});

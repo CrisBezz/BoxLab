@@ -131,12 +131,21 @@ export function installBevelTopology(EditableMesh) {
     const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
     const loopSet = new Set(info.orderedVertices);
     const ringByVertex = new Map();
+    const railLengths = info.orderedVertices.flatMap(vertex => {
+      const pair = info.orientedRails.get(vertex), point = this.vertices[vertex];
+      return pair && point ? [point.distanceTo(this.vertices[pair[0]]), point.distanceTo(this.vertices[pair[1]])] : [];
+    });
+    const shortestRail = Math.min(...railLengths);
+    if (!Number.isFinite(shortestRail) || shortestRail < 1e-6) return null;
+    const distance = shortestRail * amount;
 
     for (const vertex of info.orderedVertices) {
       const point = this.vertices[vertex], pair = info.orientedRails.get(vertex);
       if (!point || !pair) return null;
-      const left = point.clone().lerp(this.vertices[pair[0]], amount);
-      const right = point.clone().lerp(this.vertices[pair[1]], amount);
+      const leftLength = point.distanceTo(this.vertices[pair[0]]), rightLength = point.distanceTo(this.vertices[pair[1]]);
+      if (leftLength < 1e-6 || rightLength < 1e-6) return null;
+      const left = point.clone().lerp(this.vertices[pair[0]], distance / leftLength);
+      const right = point.clone().lerp(this.vertices[pair[1]], distance / rightLength);
       const rings = [];
       for (let j = 0; j <= cuts; j++) {
         const t = j / cuts;
@@ -212,6 +221,7 @@ export function installBevelTopology(EditableMesh) {
       edgeCount: info.edgeIndices.length,
       segments: cuts,
       width: amount,
+      distance,
       ringEdgeIndices,
       boundaryEdgeIndices: [...(ringEdgeIndices[0] || []), ...(ringEdgeIndices[ringEdgeIndices.length - 1] || [])]
     };

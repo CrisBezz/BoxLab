@@ -1,8 +1,8 @@
 import { EditableMesh } from './mesh.js';
 import { installLooseTopology } from './loose-topology.js';
 import { installBridgeTopology } from './bridge-topology.js?v=0.22.0';
-import { installBevelTopology } from './bevel-topology.js?v=0.18';
-import { installGeneralEdgeBevelTopology } from './general-edge-bevel-topology.js?v=0.18.2';
+import { installBevelTopology } from './bevel-topology.js?v=0.28.0';
+import { installGeneralEdgeBevelTopology } from './general-edge-bevel-topology.js?v=0.28.0';
 import { installBevelSelection } from './bevel-selection.js?v=0.18.3';
 import { installBevelWatertightGuard } from './bevel-watertight-guard.js?v=0.18.5';
 import { installFaceTransform } from './face-transform.js?v=0.12';

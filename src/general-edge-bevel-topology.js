@@ -76,10 +76,21 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
     const { a, b, sides, aCapIndex, bCapIndex } = info;
     const originalFaces = this.faces.map(face => [...face]);
     const originalCreases = new Map(this.creases);
+    const railLengths = sides.flatMap(side => [
+      this.vertices[a].distanceTo(this.vertices[side.otherA]),
+      this.vertices[b].distanceTo(this.vertices[side.otherB])
+    ]);
+    const shortestRail = Math.min(...railLengths);
+    if (!Number.isFinite(shortestRail) || shortestRail < 1e-6) return null;
+    // The UI range remains a safe fraction of the shortest rail, but every
+    // adjoining rail is offset by the resulting identical world-space distance.
+    const distance = shortestRail * amount;
 
     const boundary = sides.map(side => {
-      const aPoint = this.vertices[a].clone().lerp(this.vertices[side.otherA], amount);
-      const bPoint = this.vertices[b].clone().lerp(this.vertices[side.otherB], amount);
+      const aRail = this.vertices[a].distanceTo(this.vertices[side.otherA]);
+      const bRail = this.vertices[b].distanceTo(this.vertices[side.otherB]);
+      const aPoint = this.vertices[a].clone().lerp(this.vertices[side.otherA], distance / aRail);
+      const bPoint = this.vertices[b].clone().lerp(this.vertices[side.otherB], distance / bRail);
       this.vertices.push(aPoint); const ai = this.vertices.length - 1;
       this.vertices.push(bPoint); const bi = this.vertices.length - 1;
       return { ...side, ai, bi };
@@ -172,6 +183,7 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
       sourceEdgeIndex: info.edgeIndex,
       segments: cuts,
       width: amount,
+      distance,
       profile: cuts === 1 ? 'chamfer' : 'rounded',
       ringEdgeIndices,
       boundaryEdgeIndices: [ringEdgeIndices[0]?.[0], ringEdgeIndices[ringEdgeIndices.length - 1]?.[0]].filter(Number.isInteger),
