@@ -1,0 +1,133 @@
+import * as THREE from 'three';
+
+const canvas = document.querySelector('#viewport');
+const extrudeButton = document.querySelector('#extrudeBtn');
+const insetButton = document.querySelector('#insetBtn');
+const status = document.querySelector('#selectionStatus');
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
+let armed = null;
+let drag = null;
+
+function state(){ return globalThis.__boxlabBridgeState; }
+function bridge(){ return globalThis.__boxlabSelectionBridge; }
+function mesh(){ return state()?.mesh || null; }
+function faces(){
+  const b=bridge();
+  return b?.mode?.()==='face' ? [...new Set(b.indices?.()||[])] : [];
+}
+function info(){
+  const m=mesh(), ids=faces();
+  return m && ids.length>1 ? m.faceRegionsInfo?.(ids) : null;
+}
+function render(){ document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})); }
+function restore(target,source){
+  target.vertices=source.vertices.map(v=>v.clone());
+  target.faces=source.faces.map(f=>[...f]);
+  target.creases=new Map(source.creases);
+  target.looseEdges=new Set(source.looseEdges||[]);
+  target.looseVertices=new Set(source.looseVertices||[]);
+}
+function syncButtons(){
+  extrudeButton?.classList.toggle('active',armed==='extrude');
+  insetButton?.classList.toggle('active',armed==='inset');
+}
+function arm(tool){
+  armed=armed===tool?null:tool;
+  syncButtons();
+  const i=info();
+  if(status&&i) status.textContent=armed
+    ? `${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • drag to ${armed==='extrude'?'Extrude':'Inset'}`
+    : `${i.faceIndices.length} faces selected`;
+}
+function screenPoint(point,camera){
+  const p=point.clone().project(camera),r=canvas.getBoundingClientRect();
+  return {x:r.left+(p.x*.5+.5)*r.width,y:r.top+(-p.y*.5+.5)*r.height};
+}
+function centerOf(m,vertices){
+  const c=m.vertices[vertices[0]].clone().set(0,0,0);
+  vertices.forEach(i=>c.add(m.vertices[i]));
+  return c.multiplyScalar(1/vertices.length);
+}
+function projectedNormal(m,region,camera){
+  const n=region?.normal||m.faceRegionNormal?.(region?.faceIndices||[]);
+  if(!region||!n||!camera) return {x:0,y:-1};
+  const c=centerOf(m,region.regionVertices),a=screenPoint(c,camera),b=screenPoint(c.clone().add(n),camera);
+  const x=b.x-a.x,y=b.y-a.y,l=Math.hypot(x,y);
+  return l>1e-4?{x:x/l,y:y/l}:{x:0,y:-1};
+}
+function setPointer(event){
+  const r=canvas.getBoundingClientRect();
+  pointer.set((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1));
+}
+function hitSelectedFace(event,m,ids,camera){
+  setPointer(event); raycaster.setFromCamera(pointer,camera);
+  const pickers=[];
+  for(const faceIndex of ids){
+    const f=m.faces[faceIndex]; if(!Array.isArray(f)||f.length<3) continue;
+    const positions=[];
+    for(let i=1;i<f.length-1;i++) for(const vi of [f[0],f[i],f[i+1]]){
+      const v=m.vertices[vi]; if(v) positions.push(v.x,v.y,v.z);
+    }
+    if(!positions.length) continue;
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+    const mat=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
+    const picker=new THREE.Mesh(g,mat); picker.userData.faceIndex=faceIndex; pickers.push(picker);
+  }
+  const hit=raycaster.intersectObjects(pickers,false)[0];
+  const faceIndex=Number.isInteger(hit?.object?.userData?.faceIndex)?hit.object.userData.faceIndex:null;
+  pickers.forEach(p=>{p.geometry.dispose();p.material.dispose();});
+  return faceIndex;
+}
+
+document.addEventListener('click',event=>{
+  const target=event.target?.closest?.('#extrudeBtn,#insetBtn');
+  if(!target||!info()) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  arm(target.id==='extrudeBtn'?'extrude':'inset');
+},true);
+
+document.addEventListener('pointerdown',event=>{
+  if(!armed||event.target!==canvas||!event.isPrimary) return;
+  const m=mesh(),ids=faces(),group=m?.faceRegionsInfo?.(ids),camera=state()?.camera;
+  if(!m||!group||!camera){armed=null;syncButtons();return;}
+  const hit=hitSelectedFace(event,m,ids,camera); if(!Number.isInteger(hit)) return;
+  const region=group.regions.find(r=>r.faceIndices.includes(hit))||group.regions[0];
+  event.preventDefault();event.stopImmediatePropagation();
+  drag={id:event.pointerId,x:event.clientX,y:event.clientY,tool:armed,m,before:m.clone(),faces:[...ids],normal:projectedNormal(m,region,camera),changed:false,preview:false};
+  canvas.setPointerCapture?.(event.pointerId);
+},true);
+
+document.addEventListener('pointermove',event=>{
+  if(!drag||drag.id!==event.pointerId) return;
+  event.preventDefault();event.stopImmediatePropagation();
+  const dx=event.clientX-drag.x,dy=event.clientY-drag.y;
+  if(!drag.changed&&Math.hypot(dx,dy)<8) return;
+  if(!drag.changed){globalThis.__boxlabHistory?.push(drag.before);drag.changed=true;}
+  restore(drag.m,drag.before);
+  if(drag.tool==='extrude'){
+    const distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;
+    const result=drag.m.extrudeFaceRegions?.(drag.faces,distance);drag.preview=!!result;
+    if(result&&status)status.textContent=`Extrude • ${drag.faces.length} faces • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${distance>=0?'+':''}${distance.toFixed(2)}`;
+  }else{
+    const amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));
+    const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;
+    if(result&&status)status.textContent=`Inset • ${drag.faces.length} faces • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${Math.round(amount*100)}%`;
+  }
+  render();
+},true);
+
+function finish(event){
+  if(!drag||drag.id!==event.pointerId) return;
+  event.preventDefault();event.stopImmediatePropagation();
+  const done=event.type==='pointerup'&&drag.changed&&drag.preview;
+  const m=drag.m,ids=[...drag.faces],tool=drag.tool,before=drag.before;
+  drag=null;
+  if(!done) restore(m,before); else bridge()?.set?.('face',ids);
+  const i=info();
+  if(!i){armed=null;syncButtons();}
+  else if(status) status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • ${tool==='extrude'?'Extrude':'Inset'} ready`;
+  render();
+}
+document.addEventListener('pointerup',finish,true);
+document.addEventListener('pointercancel',finish,true);
