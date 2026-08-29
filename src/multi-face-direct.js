@@ -3,6 +3,7 @@ import * as THREE from 'three';
 const canvas = document.querySelector('#viewport');
 const extrudeButton = document.querySelector('#extrudeBtn');
 const insetButton = document.querySelector('#insetBtn');
+const transformButtons=[...document.querySelectorAll('#toolModes button')];
 const status = document.querySelector('#selectionStatus');
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
@@ -31,15 +32,10 @@ function restore(target,source){
 function syncButtons(){
   extrudeButton?.classList.toggle('active',armed==='extrude');
   insetButton?.classList.toggle('active',armed==='inset');
+  if(armed) transformButtons.forEach(button=>button.classList.remove('active'));
 }
-function setArmed(tool){
-  armed=tool;
-  syncButtons();
-}
-function toggleArmed(tool){
-  armed=armed===tool?null:tool;
-  syncButtons();
-}
+function setArmed(tool){ armed=tool; syncButtons(); }
+function toggleArmed(tool){ armed=armed===tool?null:tool; syncButtons(); }
 function updateStatus(){
   const i=info();
   if(!status||!i||!armed) return;
@@ -85,15 +81,19 @@ function hitSelectedFace(event,m,ids,camera){
   return faceIndex;
 }
 
+// Keep persistent multi-face direct state in lock-step with the visible tool state.
 document.addEventListener('click',event=>{
+  const transform=event.target?.closest?.('#toolModes button');
+  if(transform){
+    if(armed){ armed=null; syncButtons(); }
+    return; // legacy transform handler remains free to activate the chosen transform
+  }
+
   const target=event.target?.closest?.('#extrudeBtn,#insetBtn');
   if(!target) return;
   const tool=target.id==='extrudeBtn'?'extrude':'inset';
   const group=info();
 
-  // Always mirror the direct-tool armed state, even before a multi-face
-  // selection exists. This lets an already-armed Extrude/Inset seamlessly
-  // take over as soon as the live selection grows to 2+ faces.
   if(group){
     event.preventDefault(); event.stopImmediatePropagation();
     toggleArmed(tool);
@@ -101,11 +101,10 @@ document.addEventListener('click',event=>{
     return;
   }
 
-  // Preserve legacy single-face direct behaviour, but remember the tool.
-  setArmed(tool);
+  // Single-face path stays with main.js, but mirror its true toggle state.
+  setArmed(armed===tool?null:tool);
 },true);
 
-// Reassert our visual armed state after legacy renders and selection changes.
 window.addEventListener('boxlab-bridge-state',()=>{
   if(!armed) return;
   queueMicrotask(()=>{syncButtons();updateStatus();});
@@ -114,7 +113,7 @@ window.addEventListener('boxlab-bridge-state',()=>{
 document.addEventListener('pointerdown',event=>{
   if(!armed||event.target!==canvas||!event.isPrimary) return;
   const ids=faces();
-  if(ids.length<2) return; // single-face path stays legacy
+  if(ids.length<2) return;
   const m=mesh(),group=m?.faceRegionsInfo?.(ids),camera=state()?.camera;
   if(!m||!group||!camera) return;
   const hit=hitSelectedFace(event,m,ids,camera); if(!Number.isInteger(hit)) return;
@@ -150,11 +149,9 @@ function finish(event){
   const m=drag.m,ids=[...drag.faces],tool=drag.tool,before=drag.before;
   drag=null;
   if(!done) restore(m,before); else bridge()?.set?.('face',ids);
-  // Keep the tool armed after completion so the user can continue selecting
-  // and applying the same direct operation without pressing the button again.
   syncButtons();
   const i=info();
-  if(i&&status) status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • ${tool==='extrude'?'Extrude':'Inset'} ready`;
+  if(i&&status&&armed) status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • ${tool==='extrude'?'Extrude':'Inset'} ready`;
   render();
 }
 document.addEventListener('pointerup',finish,true);
