@@ -66,9 +66,7 @@ export function installBevelSelection(EditableMesh) {
       return result;
     }
     if (info.mode === 'connected') {
-      const result = this.multiChamferSelection?.(info.ids, width);
-      if (result) result.requestedSegments = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
-      return result;
+      return this.multiChamferSelection?.(info.ids, width, segments) || null;
     }
 
     const before = {
