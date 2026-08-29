@@ -64,15 +64,70 @@ export function installFaceRegion(EditableMesh) {
   };
 
   EditableMesh.prototype.faceRegionNormal = function (faceIndices) {
-    const info = this.faceRegionInfo(faceIndices);
+    const ids = [...new Set(faceIndices || [])].filter(i => Number.isInteger(i) && this.faces[i]);
+    if (!ids.length) return null;
+    if (ids.length === 1) return this.faceNormal(ids[0]).clone();
+    const info = this.faceRegionInfo(ids);
     if (!info) return null;
     const normal = this.faceNormal(info.faceIndices[0]).clone().set(0, 0, 0);
     for (const faceIndex of info.faceIndices) normal.add(this.faceNormal(faceIndex));
     return normal.lengthSq() > 1e-10 ? normal.normalize() : this.faceNormal(info.faceIndices[0]).clone();
   };
 
+  EditableMesh.prototype.faceRegionsInfo = function (faceIndices) {
+    const ids = [...new Set(faceIndices || [])].filter(i => Number.isInteger(i) && Array.isArray(this.faces[i]) && this.faces[i].length >= 3);
+    if (!ids.length) return null;
+    const selected = new Set(ids), edgeOwners = new Map();
+    for (const faceIndex of ids) {
+      const face = this.faces[faceIndex];
+      for (let i = 0; i < face.length; i++) {
+        const key = edgeKey(this, face[i], face[(i + 1) % face.length]);
+        if (!edgeOwners.has(key)) edgeOwners.set(key, []);
+        edgeOwners.get(key).push(faceIndex);
+      }
+    }
+    const adjacency = new Map(ids.map(i => [i, new Set()]));
+    for (const owners of edgeOwners.values()) {
+      const inside = [...new Set(owners.filter(i => selected.has(i)))];
+      for (let a = 0; a < inside.length; a++) for (let b = a + 1; b < inside.length; b++) {
+        adjacency.get(inside[a])?.add(inside[b]);
+        adjacency.get(inside[b])?.add(inside[a]);
+      }
+    }
+    const unvisited = new Set(ids), regions = [];
+    while (unvisited.size) {
+      const seed = unvisited.values().next().value, queue = [seed], component = [];
+      unvisited.delete(seed);
+      while (queue.length) {
+        const current = queue.shift(); component.push(current);
+        for (const next of adjacency.get(current) || []) if (unvisited.delete(next)) queue.push(next);
+      }
+      if (component.length === 1) {
+        const faceIndex = component[0], face = this.faces[faceIndex];
+        regions.push({
+          faceIndices:[faceIndex],
+          boundaryLoop:[...face],
+          regionVertices:[...new Set(face)],
+          normal:this.faceNormal(faceIndex).clone()
+        });
+      } else {
+        const info = this.faceRegionInfo(component);
+        if (!info) return null;
+        const normal = this.faceRegionNormal(component);
+        if (!normal) return null;
+        regions.push({ ...info, normal });
+      }
+    }
+    return { faceIndices:ids, regions, regionCount:regions.length };
+  };
+
   EditableMesh.prototype.extrudeFaceRegion = function (faceIndices, distance = 0.25) {
-    const info = this.faceRegionInfo(faceIndices);
+    const ids = [...new Set(faceIndices || [])].filter(i => Number.isInteger(i) && this.faces[i]);
+    let info;
+    if (ids.length === 1) {
+      const faceIndex = ids[0], face = this.faces[faceIndex];
+      info = { faceIndices:[faceIndex], boundaryLoop:[...face], regionVertices:[...new Set(face)] };
+    } else info = this.faceRegionInfo(ids);
     if (!info) return null;
     const normal = this.faceRegionNormal(info.faceIndices);
     if (!normal) return null;
@@ -96,7 +151,12 @@ export function installFaceRegion(EditableMesh) {
   };
 
   EditableMesh.prototype.insetFaceRegion = function (faceIndices, amount = 0.2) {
-    const info = this.faceRegionInfo(faceIndices);
+    const ids = [...new Set(faceIndices || [])].filter(i => Number.isInteger(i) && this.faces[i]);
+    let info;
+    if (ids.length === 1) {
+      const faceIndex = ids[0], face = this.faces[faceIndex];
+      info = { faceIndices:[faceIndex], boundaryLoop:[...face], regionVertices:[...new Set(face)] };
+    } else info = this.faceRegionInfo(ids);
     if (!info) return null;
     const t = Math.max(0.01, Math.min(0.95, Number(amount) || 0.2));
     const center = info.regionVertices.reduce((sum, index) => sum.add(this.vertices[index]), this.vertices[info.regionVertices[0]].clone().set(0,0,0)).multiplyScalar(1 / info.regionVertices.length);
@@ -120,6 +180,30 @@ export function installFaceRegion(EditableMesh) {
     };
   };
 
+  EditableMesh.prototype.extrudeFaceRegions = function (faceIndices, distance = 0.25) {
+    const group = this.faceRegionsInfo(faceIndices);
+    if (!group) return null;
+    const results = [];
+    for (const region of group.regions) {
+      const result = this.extrudeFaceRegion(region.faceIndices, distance);
+      if (!result) return null;
+      results.push(result);
+    }
+    return { faceIndices:[...group.faceIndices], regions:results, regionCount:results.length, distance };
+  };
+
+  EditableMesh.prototype.insetFaceRegions = function (faceIndices, amount = 0.2) {
+    const group = this.faceRegionsInfo(faceIndices);
+    if (!group) return null;
+    const results = [];
+    for (const region of group.regions) {
+      const result = this.insetFaceRegion(region.faceIndices, amount);
+      if (!result) return null;
+      results.push(result);
+    }
+    return { faceIndices:[...group.faceIndices], regions:results, regionCount:results.length, amount };
+  };
+
   EditableMesh.prototype.__faceRegionInstalled = true;
 
   const extrudeButton = document.querySelector('#extrudeBtn');
@@ -133,9 +217,9 @@ export function installFaceRegion(EditableMesh) {
   function state() { return globalThis.__boxlabBridgeState; }
   function selectedFaces() { return [...new Set(state()?.selectedFaces || [])]; }
   function currentMesh() { return state()?.mesh || null; }
-  function regionInfo() {
+  function regionsInfo() {
     const mesh = currentMesh(), faces = selectedFaces();
-    return mesh && faces.length > 1 ? mesh.faceRegionInfo?.(faces) : null;
+    return mesh && faces.length > 1 ? mesh.faceRegionsInfo?.(faces) : null;
   }
   function render() { document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true })); }
   function restore(target, source) {
@@ -154,10 +238,10 @@ export function installFaceRegion(EditableMesh) {
     const p = point.clone().project(camera), r = canvas.getBoundingClientRect();
     return { x:r.left+(p.x*.5+.5)*r.width, y:r.top+(-p.y*.5+.5)*r.height };
   }
-  function projectedNormal(mesh, faces, camera) {
-    const info = mesh.faceRegionInfo(faces), normal = mesh.faceRegionNormal(faces);
-    if (!info || !normal || !camera) return { x:0, y:-1 };
-    const center = centerOf(mesh, info.regionVertices), a = worldToScreen(center, camera), b = worldToScreen(center.clone().add(normal), camera);
+  function projectedNormalForRegion(mesh, region, camera) {
+    const normal = region?.normal || mesh.faceRegionNormal(region?.faceIndices || []);
+    if (!region || !normal || !camera) return { x:0, y:-1 };
+    const center = centerOf(mesh, region.regionVertices), a = worldToScreen(center, camera), b = worldToScreen(center.clone().add(normal), camera);
     const x = b.x-a.x, y = b.y-a.y, length = Math.hypot(x,y);
     return length > 1e-4 ? { x:x/length, y:y/length } : { x:0, y:-1 };
   }
@@ -165,8 +249,8 @@ export function installFaceRegion(EditableMesh) {
     const rect = canvas.getBoundingClientRect();
     pointer.set((event.clientX - rect.left) / rect.width * 2 - 1, -((event.clientY - rect.top) / rect.height * 2 - 1));
   }
-  function regionHit(event, mesh, faces, camera) {
-    if (!mesh || !camera || !faces.length) return false;
+  function selectedFaceHit(event, mesh, faces, camera) {
+    if (!mesh || !camera || !faces.length) return null;
     setPointer(event);
     raycaster.setFromCamera(pointer, camera);
     const pickers = [];
@@ -185,41 +269,45 @@ export function installFaceRegion(EditableMesh) {
       geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
       const material = new THREE.MeshBasicMaterial({ side:THREE.DoubleSide });
       const picker = new THREE.Mesh(geometry, material);
+      picker.userData.faceIndex = faceIndex;
       pickers.push(picker);
     }
-    const hit = raycaster.intersectObjects(pickers, false).length > 0;
+    const hit = raycaster.intersectObjects(pickers, false)[0];
+    const faceIndex = Number.isInteger(hit?.object?.userData?.faceIndex) ? hit.object.userData.faceIndex : null;
     pickers.forEach(picker => { picker.geometry.dispose(); picker.material.dispose(); });
-    return hit;
+    return faceIndex;
   }
   function setArmed(tool) {
     armedTool = armedTool === tool ? null : tool;
     extrudeButton?.classList.toggle('active', armedTool === 'extrude');
     insetButton?.classList.toggle('active', armedTool === 'inset');
-    const info = regionInfo();
+    const info = regionsInfo();
     if (status && info) status.textContent = armedTool
-      ? `Face region • ${info.faceIndices.length} faces • drag region to ${armedTool === 'extrude' ? 'Extrude' : 'Inset'}`
+      ? `${info.faceIndices.length} faces • ${info.regionCount} region${info.regionCount===1?'':'s'} • drag to ${armedTool === 'extrude' ? 'Extrude' : 'Inset'}`
       : `${info.faceIndices.length} faces selected`;
   }
 
   extrudeButton?.addEventListener('click', event => {
-    if (!regionInfo()) return;
+    if (!regionsInfo()) return;
     event.preventDefault(); event.stopImmediatePropagation(); setArmed('extrude');
   }, true);
   insetButton?.addEventListener('click', event => {
-    if (!regionInfo()) return;
+    if (!regionsInfo()) return;
     event.preventDefault(); event.stopImmediatePropagation(); setArmed('inset');
   }, true);
 
   canvas?.addEventListener('pointerdown', event => {
     if (!armedTool || !event.isPrimary) return;
-    const mesh = currentMesh(), faces = selectedFaces(), info = mesh?.faceRegionInfo?.(faces), camera = state()?.camera;
+    const mesh = currentMesh(), faces = selectedFaces(), info = mesh?.faceRegionsInfo?.(faces), camera = state()?.camera;
     if (!mesh || !info || !camera) { setArmed(null); return; }
-    if (!regionHit(event, mesh, faces, camera)) return;
+    const hitFace = selectedFaceHit(event, mesh, faces, camera);
+    if (!Number.isInteger(hitFace)) return;
+    const hitRegion = info.regions.find(region => region.faceIndices.includes(hitFace)) || info.regions[0];
     event.preventDefault(); event.stopImmediatePropagation();
     drag = {
       pointerId:event.pointerId, startX:event.clientX, startY:event.clientY,
       before:mesh.clone(), mesh, faces:[...faces], tool:armedTool,
-      normal2D:projectedNormal(mesh, faces, camera), changed:false, preview:false
+      info, normal2D:projectedNormalForRegion(mesh, hitRegion, camera), changed:false, preview:false
     };
     canvas.setPointerCapture?.(event.pointerId);
   }, true);
@@ -233,16 +321,16 @@ export function installFaceRegion(EditableMesh) {
     restore(drag.mesh, drag.before);
     if (drag.tool === 'extrude') {
       const distance = (dx * drag.normal2D.x + dy * drag.normal2D.y) * 0.006;
-      const result = drag.mesh.extrudeFaceRegion(drag.faces, distance);
+      const result = drag.mesh.extrudeFaceRegions(drag.faces, distance);
       drag.preview = !!result;
       if (!result) return;
-      if (status) status.textContent = `Extrude Region • ${drag.faces.length} faces • ${distance >= 0 ? '+' : ''}${distance.toFixed(2)}`;
+      if (status) status.textContent = `Extrude • ${drag.faces.length} faces • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${distance >= 0 ? '+' : ''}${distance.toFixed(2)}`;
     } else {
       const amount = Math.max(0.01, Math.min(0.95, (dx - dy) * 0.004));
-      const result = drag.mesh.insetFaceRegion(drag.faces, amount);
+      const result = drag.mesh.insetFaceRegions(drag.faces, amount);
       drag.preview = !!result;
       if (!result) return;
-      if (status) status.textContent = `Inset Region • ${drag.faces.length} faces • ${Math.round(amount * 100)}%`;
+      if (status) status.textContent = `Inset • ${drag.faces.length} faces • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${Math.round(amount * 100)}%`;
     }
     render();
   }, true);
@@ -255,13 +343,13 @@ export function installFaceRegion(EditableMesh) {
     const faces = [...drag.faces], tool = drag.tool;
     drag = null;
     if (completed) globalThis.__boxlabSelectionBridge?.set?.('face', faces);
-    const info = regionInfo();
+    const info = regionsInfo();
     if (!info) {
       armedTool = null;
       extrudeButton?.classList.remove('active');
       insetButton?.classList.remove('active');
     } else if (status) {
-      status.textContent = `${info.faceIndices.length} faces • ${tool === 'extrude' ? 'Extrude' : 'Inset'} ready • drag region again`;
+      status.textContent = `${info.faceIndices.length} faces • ${info.regionCount} region${info.regionCount===1?'':'s'} • ${tool === 'extrude' ? 'Extrude' : 'Inset'} ready`;
     }
     render();
   };
