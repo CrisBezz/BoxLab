@@ -3,7 +3,7 @@ import { installLooseTopology } from './loose-topology.js';
 import { installBridgeTopology } from './bridge-topology.js?v=0.22.0';
 import { installBevelTopology } from './bevel-topology.js?v=0.28.3';
 import { installGeneralEdgeBevelTopology } from './general-edge-bevel-topology.js?v=0.28.3';
-import { installBevelSelection } from './bevel-selection.js?v=0.28.5';
+import { installBevelSelection } from './bevel-selection.js?v=0.28.5.1';
 import { installBevelWatertightGuard } from './bevel-watertight-guard.js?v=0.18.5';
 import { installVertexBevelTopology } from './vertex-bevel-topology.js?v=0.28.3';
 import { installFaceTransform } from './face-transform.js?v=0.12';
