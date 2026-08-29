@@ -215,7 +215,11 @@ export function installFaceRegion(EditableMesh) {
   let armedTool = null, drag = null;
 
   function state() { return globalThis.__boxlabBridgeState; }
-  function selectedFaces() { return [...new Set(state()?.selectedFaces || [])]; }
+  function selectionBridge() { return globalThis.__boxlabSelectionBridge; }
+  function selectedFaces() {
+    const bridge = selectionBridge();
+    return bridge?.mode?.() === 'face' ? [...new Set(bridge.indices?.() || [])] : [];
+  }
   function currentMesh() { return state()?.mesh || null; }
   function regionsInfo() {
     const mesh = currentMesh(), faces = selectedFaces();
@@ -342,7 +346,7 @@ export function installFaceRegion(EditableMesh) {
     if (!completed) restore(drag.mesh, drag.before);
     const faces = [...drag.faces], tool = drag.tool;
     drag = null;
-    if (completed) globalThis.__boxlabSelectionBridge?.set?.('face', faces);
+    if (completed) selectionBridge()?.set?.('face', faces);
     const info = regionsInfo();
     if (!info) {
       armedTool = null;
