@@ -12,7 +12,7 @@ import { installPerimeterBevelRouting } from './perimeter-bevel-routing.js?v=0.2
 import { installBevelWatertightGuard } from './bevel-watertight-guard.js?v=0.18.5';
 import { installVertexBevelTopology } from './vertex-bevel-topology.js?v=0.28.3';
 import { installFaceTransform } from './face-transform.js?v=0.12';
-import { installFaceRegion } from './face-region.js?v=0.13';
+import { installFaceRegion } from './face-region.js?v=0.29.0';
 import './selection-transform-state.js?v=0.12';
 import './face-pick-repair.js?v=0.12';
 
