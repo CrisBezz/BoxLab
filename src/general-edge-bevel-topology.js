@@ -33,6 +33,18 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
 
   const removeVertex = (face, vertex) => face.includes(vertex) ? face.filter(v => v !== vertex) : [...face];
 
+  const insertPathBetween = (face, start, end, middle) => {
+    if (!middle?.length) return [...face];
+    const out = [];
+    for (let i = 0; i < face.length; i++) {
+      const a = face[i], b = face[(i + 1) % face.length];
+      out.push(a);
+      if (a === start && b === end) out.push(...middle);
+      else if (a === end && b === start) out.push(...[...middle].reverse());
+    }
+    return out;
+  };
+
   const quadraticPoint = (start, control, end, t) => {
     const u = 1 - t;
     return start.clone().multiplyScalar(u * u)
@@ -82,8 +94,6 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
     ]);
     const shortestRail = Math.min(...railLengths);
     if (!Number.isFinite(shortestRail) || shortestRail < 1e-6) return null;
-    // The UI range remains a safe fraction of the shortest rail, but every
-    // adjoining rail is offset by the resulting identical world-space distance.
     const distance = shortestRail * amount;
 
     const boundary = sides.map(side => {
@@ -123,8 +133,14 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
       if (faceIndex === boundary[1].faceIndex) return replaceSelectedEdge(face, a, b, boundary[1].ai, boundary[1].bi);
       let out = [...face];
       for (const spec of splitSpecs) out = insertOnEdge(out, spec.u, spec.v, spec.inserted);
-      if (faceIndex === aCapIndex) out = removeVertex(out, a);
-      if (faceIndex === bCapIndex) out = removeVertex(out, b);
+      if (faceIndex === aCapIndex) {
+        out = removeVertex(out, a);
+        out = insertPathBetween(out, boundary[0].ai, boundary[1].ai, aRings.slice(1, -1));
+      }
+      if (faceIndex === bCapIndex) {
+        out = removeVertex(out, b);
+        out = insertPathBetween(out, boundary[0].bi, boundary[1].bi, bRings.slice(1, -1));
+      }
       return out;
     });
     if (nextFaces.some(face => !Array.isArray(face) || face.length < 3)) return null;
