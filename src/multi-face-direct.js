@@ -32,13 +32,18 @@ function syncButtons(){
   extrudeButton?.classList.toggle('active',armed==='extrude');
   insetButton?.classList.toggle('active',armed==='inset');
 }
-function arm(tool){
+function setArmed(tool){
+  armed=tool;
+  syncButtons();
+}
+function toggleArmed(tool){
   armed=armed===tool?null:tool;
   syncButtons();
+}
+function updateStatus(){
   const i=info();
-  if(status&&i) status.textContent=armed
-    ? `${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • drag to ${armed==='extrude'?'Extrude':'Inset'}`
-    : `${i.faceIndices.length} faces selected`;
+  if(!status||!i||!armed) return;
+  status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • drag to ${armed==='extrude'?'Extrude':'Inset'}`;
 }
 function screenPoint(point,camera){
   const p=point.clone().project(camera),r=canvas.getBoundingClientRect();
@@ -82,15 +87,36 @@ function hitSelectedFace(event,m,ids,camera){
 
 document.addEventListener('click',event=>{
   const target=event.target?.closest?.('#extrudeBtn,#insetBtn');
-  if(!target||!info()) return;
-  event.preventDefault(); event.stopImmediatePropagation();
-  arm(target.id==='extrudeBtn'?'extrude':'inset');
+  if(!target) return;
+  const tool=target.id==='extrudeBtn'?'extrude':'inset';
+  const group=info();
+
+  // Always mirror the direct-tool armed state, even before a multi-face
+  // selection exists. This lets an already-armed Extrude/Inset seamlessly
+  // take over as soon as the live selection grows to 2+ faces.
+  if(group){
+    event.preventDefault(); event.stopImmediatePropagation();
+    toggleArmed(tool);
+    updateStatus();
+    return;
+  }
+
+  // Preserve legacy single-face direct behaviour, but remember the tool.
+  setArmed(tool);
 },true);
+
+// Reassert our visual armed state after legacy renders and selection changes.
+window.addEventListener('boxlab-bridge-state',()=>{
+  if(!armed) return;
+  queueMicrotask(()=>{syncButtons();updateStatus();});
+});
 
 document.addEventListener('pointerdown',event=>{
   if(!armed||event.target!==canvas||!event.isPrimary) return;
-  const m=mesh(),ids=faces(),group=m?.faceRegionsInfo?.(ids),camera=state()?.camera;
-  if(!m||!group||!camera){armed=null;syncButtons();return;}
+  const ids=faces();
+  if(ids.length<2) return; // single-face path stays legacy
+  const m=mesh(),group=m?.faceRegionsInfo?.(ids),camera=state()?.camera;
+  if(!m||!group||!camera) return;
   const hit=hitSelectedFace(event,m,ids,camera); if(!Number.isInteger(hit)) return;
   const region=group.regions.find(r=>r.faceIndices.includes(hit))||group.regions[0];
   event.preventDefault();event.stopImmediatePropagation();
@@ -124,9 +150,11 @@ function finish(event){
   const m=drag.m,ids=[...drag.faces],tool=drag.tool,before=drag.before;
   drag=null;
   if(!done) restore(m,before); else bridge()?.set?.('face',ids);
+  // Keep the tool armed after completion so the user can continue selecting
+  // and applying the same direct operation without pressing the button again.
+  syncButtons();
   const i=info();
-  if(!i){armed=null;syncButtons();}
-  else if(status) status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • ${tool==='extrude'?'Extrude':'Inset'} ready`;
+  if(i&&status) status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • ${tool==='extrude'?'Extrude':'Inset'} ready`;
   render();
 }
 document.addEventListener('pointerup',finish,true);
