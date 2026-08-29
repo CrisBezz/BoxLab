@@ -1,15 +1,13 @@
 const button = document.querySelector('#selectLoopBtn');
-const multiToggle = document.querySelector('#multiSelectToggle');
-const canvas = document.querySelector('#viewport');
 const status = document.querySelector('#selectionStatus');
-let synthetic = false;
 
 function state() { return globalThis.__boxlabBridgeState; }
+function bridge() { return globalThis.__boxlabSelectionBridge; }
 function mesh() { return state()?.mesh || null; }
 function selectedEdges() {
-  const bridge = globalThis.__boxlabSelectionBridge;
-  return bridge?.mode?.() === 'edge'
-    ? [...new Set(bridge.indices?.() || [])]
+  const b = bridge();
+  return b?.mode?.() === 'edge'
+    ? [...new Set(b.indices?.() || [])]
     : [...new Set(state()?.selectedEdges || [])];
 }
 function realFaces(m, edge) {
@@ -58,8 +56,7 @@ function geometricContinuation(m, incomingIndex, vertex, visited) {
     const direction = nextPoint.clone().sub(center);
     if (direction.lengthSq() < 1e-12) continue;
     direction.normalize();
-    const score = travel.dot(direction);
-    scored.push({ index, score });
+    scored.push({ index, score: travel.dot(direction) });
   }
   scored.sort((a,b) => b.score - a.score);
   if (!scored.length) return null;
@@ -106,46 +103,15 @@ function traceLoop(m, seedIndex) {
   const indices = [...fromA.reverse(), seedIndex, ...fromB];
   return isClosedCycle(m, indices) ? indices : null;
 }
-function edgePoint(m, index, fraction = 0.5) {
-  const camera = state()?.camera, edge = m.edges()[index];
-  if (!camera || !edge) return null;
-  const a = m.vertices[edge.a], b = m.vertices[edge.b];
-  if (!a || !b) return null;
-  const p = a.clone().lerp(b, fraction).project(camera), rect = canvas.getBoundingClientRect();
-  return { x: rect.left + (p.x * 0.5 + 0.5) * rect.width, y: rect.top + (-p.y * 0.5 + 0.5) * rect.height };
-}
-function tapEdge(m, index) {
-  if (selectedEdges().includes(index)) return true;
-  for (const fraction of [0.5, 0.38, 0.62]) {
-    const p = edgePoint(m, index, fraction);
-    if (!p) continue;
-    synthetic = true;
-    try {
-      canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles:true, cancelable:true, pointerId:93, pointerType:'mouse', isPrimary:true, button:0, buttons:1, clientX:p.x, clientY:p.y }));
-      canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles:true, cancelable:true, pointerId:93, pointerType:'mouse', isPrimary:true, button:0, buttons:0, clientX:p.x, clientY:p.y }));
-    } finally { synthetic = false; }
-    if (selectedEdges().includes(index)) return true;
-  }
-  return false;
-}
-function selectIndices(m, indices) {
-  document.querySelector('#deselectAllBtn')?.click();
-  const wasMulti = !!multiToggle?.checked;
-  if (multiToggle && !wasMulti) {
-    multiToggle.checked = true;
-    multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
-  }
-  let ok = true;
-  for (const index of indices) if (!tapEdge(m, index)) ok = false;
-  if (multiToggle && !wasMulti) {
-    multiToggle.checked = false;
-    multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
-  }
-  return ok;
+function selectIndices(indices) {
+  const b = bridge();
+  if (!b?.set) return false;
+  b.set('edge', [...new Set(indices)]);
+  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true }));
+  return true;
 }
 
 button?.addEventListener('click', event => {
-  if (synthetic) return;
   const m = mesh(), seeds = selectedEdges();
   if (!m || !seeds.length) return;
   event.preventDefault();
@@ -166,7 +132,7 @@ button?.addEventListener('click', event => {
     return;
   }
   const merged = [...new Set(loops.flat())];
-  const ok = selectIndices(m, merged);
+  const ok = selectIndices(merged);
   if (status) {
     const loopWord = loops.length === 1 ? 'loop' : 'loops';
     const rejectedText = rejected ? ` • ${rejected} seed${rejected===1?'':'s'} rejected` : '';
