@@ -9,11 +9,11 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-  <title>BoxLab v0.27.6</title>
-  <link rel="stylesheet" href="./styles.css?v=0.27.6" />
-  <link rel="manifest" href="./manifest.webmanifest?v=0.27.6" />
-  <link rel="icon" href="./icon.svg?v=0.27.6" type="image/svg+xml" />
-  <link rel="apple-touch-icon" href="./icon.svg?v=0.27.6" />
+  <title>BoxLab v0.27.7</title>
+  <link rel="stylesheet" href="./styles.css?v=0.27.7" />
+  <link rel="manifest" href="./manifest.webmanifest?v=0.27.7" />
+  <link rel="icon" href="./icon.svg?v=0.27.7" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="./icon.svg?v=0.27.7" />
   <script type="importmap">
   {
     "imports": {
@@ -99,18 +99,15 @@
         </div>
         <div class="mode-tools" data-mode-tools="edge">
           <div class="panel-title context-title">Edge</div>
+          <div class="outliner-actions edge-primary-actions"><button id="loopCutBtn">Loop</button><button id="faceSplitBtn">Split</button><button id="bevelBtn">Bevel</button><button id="applyCreaseBtn">Crease</button></div>
+          <label class="range-row edge-option loop-cut-option"><span>Loops</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
+          <div class="edge-option bevel-option"><label class="range-row"><span>Width</span><input id="bevelWidth" type="range" min="2" max="45" value="20" step="1" /><output id="bevelWidthOut">20%</output></label><label class="range-row"><span>Segments</span><input id="bevelSegments" type="range" min="1" max="4" value="1" step="1" /><output id="bevelSegmentsOut">1 • Chamfer</output></label></div>
+          <div class="edge-option crease-options"><label class="range-row"><span>Strength</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5" /><output id="creaseStrengthOut">100%</output></label><button id="clearCreaseBtn">Clear Crease</button></div>
           <div class="edge-section-label">Move</div>
           <button id="edgeSlideBtn" disabled>Edge Slide</button>
           <label class="range-row edge-option loop-slide-option"><span>Loop Slide</span><input id="loopSlide" type="range" min="5" max="95" value="50" step="1" disabled /><output id="loopSlideOut">50%</output></label>
-          <div class="edge-section-label">Cut</div>
-          <div class="outliner-actions"><button id="loopCutBtn">Loop Cut</button><button id="faceSplitBtn">Face Split</button></div>
-          <label class="range-row edge-option loop-cut-option"><span>Cuts</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1" /><output id="loopCutCountOut">1</output></label>
           <button id="offsetLoopBtn" disabled>Offset Loop</button>
           <label class="range-row edge-option offset-option"><span>Support Spacing</span><input id="offsetLoopSpacing" type="range" min="2" max="45" value="20" step="1" /><output id="offsetLoopSpacingOut">20%</output></label>
-          <div class="edge-section-label">Shape</div>
-          <div class="outliner-actions"><button id="bevelBtn">Bevel</button><button id="applyCreaseBtn">Crease</button></div>
-          <div class="edge-option bevel-option"><label class="range-row"><span>Width</span><input id="bevelWidth" type="range" min="2" max="45" value="20" step="1" /><output id="bevelWidthOut">20%</output></label><label class="range-row"><span>Segments</span><input id="bevelSegments" type="range" min="1" max="4" value="1" step="1" /><output id="bevelSegmentsOut">1 • Chamfer</output></label></div>
-          <div class="edge-option crease-options"><label class="range-row"><span>Strength</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5" /><output id="creaseStrengthOut">100%</output></label><button id="clearCreaseBtn">Clear Crease</button></div>
           <div class="edge-section-label">Topology</div>
           <div class="outliner-actions"><button id="bridgeEdgesBtn" disabled>Bridge</button><button id="fillFaceBtn">Fill</button></div>
           <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="dissolveLoopBtn" disabled>Dissolve Loop</button><button id="dissolveEdgeBtn" disabled>Dissolve Edge</button><button id="deleteEdgeBtn" class="danger">Delete</button></div>
@@ -156,7 +153,7 @@
   <div id="portraitNotice" role="status"><div class="portrait-cube" aria-hidden="true"></div><strong>Rotate iPad to landscape</strong><span>BoxLab is designed for a wide modelling workspace.</span></div>
   <script type="module" src="./src/loose-bootstrap.js?v=0.22.0"></script>
   <script type="module" src="./src/pencil-orbit-gate.js?v=0.21.3"></script>
-  <script type="module" src="./src/main.js?v=0.27.6"></script>
+  <script type="module" src="./src/main.js?v=0.27.7"></script>
   <script type="module" src="./src/rotate-transform.js?v=0.25.0"></script>
   <script type="module" src="./src/loop-cut-commit.js?v=0.25.0"></script>
   <script type="module" src="./src/add-vertex-edge-snap.js?v=0.21.3"></script>
@@ -172,8 +169,8 @@
   <script type="module" src="./src/edge-toggle-repair.js?v=0.21.3"></script>
   <script type="module" src="./src/boundary-tools.js?v=0.21.3"></script>
   <script type="module" src="./src/dissolve-ui.js?v=0.21.3"></script>
-  <script type="module" src="./src/bevel-ui.js?v=0.24.1"></script>
-  <script type="module" src="./src/direct-bevel.js?v=0.24.3"></script>
+  <script type="module" src="./src/bevel-ui.js?v=0.27.7"></script>
+  <script type="module" src="./src/direct-bevel.js?v=0.27.7"></script>
   <script type="module" src="./src/face-split.js?v=0.25.1"></script>
   <script type="module" src="./src/multi-object.js?v=0.21.3"></script>
   <script type="module" src="./src/extract-faces.js?v=0.26.0"></script>

@@ -16,12 +16,7 @@ function info() {
   return mesh?.generalBevelSelectionInfo?.(selectedEdges()) || null;
 }
 
-function selectionLabel(valid) {
-  if (!valid) return 'Bevel Edge';
-  if (valid.mode === 'loop') return 'Bevel Loop';
-  if (valid.mode === 'separate') return `Bevel ${valid.count} Edges`;
-  return 'Bevel Edge';
-}
+function selectionLabel() { return 'Bevel'; }
 
 function syncLabel() {
   const segments = Math.max(1, Number(segmentsInput?.value || 1));
