@@ -13,7 +13,7 @@ import { installBevelWatertightGuard } from './bevel-watertight-guard.js?v=0.18.
 import { installVertexBevelTopology } from './vertex-bevel-topology.js?v=0.28.3';
 import { installMultiVertexBevelTopology } from './multi-vertex-bevel-topology.js?v=0.30.0';
 import { installFaceTransform } from './face-transform.js?v=0.12';
-import { installFaceRegion } from './face-region.js?v=0.29.0';
+import { installFaceRegion } from './face-region.js?v=0.30.2';
 import './selection-transform-state.js?v=0.12';
 import './face-pick-repair.js?v=0.12';
 
