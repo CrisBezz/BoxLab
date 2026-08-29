@@ -2,36 +2,6 @@ export function installBevelSelection(EditableMesh) {
   if (EditableMesh.prototype.__bevelSelectionInstalled) return;
 
   const manifoldEdge = (mesh, edge) => edge && !edge.loose && (edge.faces || []).filter(fi => Number.isInteger(fi) && fi >= 0 && fi < mesh.faces.length).length === 2;
-  const pointKey = point => `${point.x.toFixed(7)},${point.y.toFixed(7)},${point.z.toFixed(7)}`;
-  const edgeSignature = (mesh, edge) => {
-    const a = pointKey(mesh.vertices[edge.a]), b = pointKey(mesh.vertices[edge.b]);
-    return a < b ? `${a}|${b}` : `${b}|${a}`;
-  };
-  const railLengthsForInfo = (mesh, info) => info?.sides?.flatMap(side => [
-    mesh.vertices[info.a]?.distanceTo(mesh.vertices[side.otherA]),
-    mesh.vertices[info.b]?.distanceTo(mesh.vertices[side.otherB])
-  ]).filter(Number.isFinite) || [];
-  const pointOnSegment = (point, start, end, tolerance = 1e-5) => {
-    const axis = end.clone().sub(start), lenSq = axis.lengthSq();
-    if (lenSq < 1e-12) return false;
-    const t = point.clone().sub(start).dot(axis) / lenSq;
-    if (t < -tolerance || t > 1 + tolerance) return false;
-    const closest = start.clone().addScaledVector(axis, t);
-    const scale = Math.max(1, Math.sqrt(lenSq));
-    return closest.distanceTo(point) <= tolerance * scale;
-  };
-  const findRemainingEdge = (mesh, original) => {
-    let best = null;
-    mesh.edges().forEach((edge, index) => {
-      if (!manifoldEdge(mesh, edge)) return;
-      const a = mesh.vertices[edge.a], b = mesh.vertices[edge.b];
-      if (!a || !b) return;
-      if (!pointOnSegment(a, original.a, original.b) || !pointOnSegment(b, original.a, original.b)) return;
-      const length = a.distanceTo(b);
-      if (!best || length > best.length) best = { index, length };
-    });
-    return best?.index ?? -1;
-  };
 
   EditableMesh.prototype.generalBevelSelectionInfo = function(edgeIndices) {
     const ids = [...new Set(edgeIndices || [])].filter(Number.isInteger);
@@ -53,6 +23,7 @@ export function installBevelSelection(EditableMesh) {
       adjacency.get(edge.a).push(ids[i]);
       adjacency.get(edge.b).push(ids[i]);
     }
+    if ([...adjacency.values()].some(list => list.length > 2)) return null;
 
     const first = ids[0], seen = new Set([first]), queue = [first];
     while (queue.length) {
@@ -66,16 +37,20 @@ export function installBevelSelection(EditableMesh) {
 
     if (seen.size === ids.length && [...adjacency.values()].every(list => list.length === 2)) {
       const loop = this.bevelEdgeLoopInfo?.(ids);
-      if (loop) return { mode:'loop', ids, count:ids.length, loop };
+      return loop ? { mode:'loop', ids, count:ids.length, loop } : null;
     }
 
-    const singles = [];
-    for (const id of ids) {
-      const single = this.generalBevelEdgeInfo?.([id]);
-      if (!single) return null;
-      singles.push(single);
-    }
-    return { mode:'set', ids, count:ids.length, singles };
+    const sharedVertex = [...adjacency.values()].some(list => list.length > 1);
+    if (sharedVertex) return null;
+
+    for (const id of ids) if (!this.generalBevelEdgeInfo?.([id])) return null;
+    return { mode:'separate', ids, count:ids.length };
+  };
+
+  const pointKey = point => `${point.x.toFixed(7)},${point.y.toFixed(7)},${point.z.toFixed(7)}`;
+  const edgeSignature = (mesh, edge) => {
+    const a = pointKey(mesh.vertices[edge.a]), b = pointKey(mesh.vertices[edge.b]);
+    return a < b ? `${a}|${b}` : `${b}|${a}`;
   };
 
   EditableMesh.prototype.generalBevelSelection = function(edgeIndices, width = 0.2, segments = 1) {
@@ -88,8 +63,6 @@ export function installBevelSelection(EditableMesh) {
       return result;
     }
 
-    const amount = Math.max(0.02, Math.min(0.49, Number(width) || 0.2));
-    const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
     const before = {
       vertices: this.vertices.map(v => v.clone()),
       faces: this.faces.map(f => [...f]),
@@ -97,17 +70,7 @@ export function installBevelSelection(EditableMesh) {
       looseEdges: this.looseEdges instanceof Set ? new Set(this.looseEdges) : null,
       looseVertices: this.looseVertices instanceof Set ? new Set(this.looseVertices) : null
     };
-    const originalEdges = this.edges();
-    const originals = info.ids.map(id => ({
-      id,
-      a: this.vertices[originalEdges[id].a].clone(),
-      b: this.vertices[originalEdges[id].b].clone(),
-      midpoint: this.vertices[originalEdges[id].a].clone().add(this.vertices[originalEdges[id].b]).multiplyScalar(.5)
-    }));
-    const originalRailLengths = info.singles.flatMap(single => railLengthsForInfo(this, single));
-    const shortestOriginalRail = Math.min(...originalRailLengths);
-    if (!Number.isFinite(shortestOriginalRail) || shortestOriginalRail < 1e-6) return null;
-    const targetDistance = shortestOriginalRail * amount;
+    const signatures = info.ids.map(id => edgeSignature(this, this.edges()[id]));
     const railSignatures = [];
 
     const restore = () => {
@@ -119,36 +82,12 @@ export function installBevelSelection(EditableMesh) {
       this.edges();
     };
 
-    // Process the most connected selections first so shared corners are resolved
-    // while their original neighbourhood is still easiest to identify.
-    const selectedDegree = new Map();
-    for (const edge of originalEdges.filter((_, index) => info.ids.includes(index))) {
-      selectedDegree.set(edge.a, (selectedDegree.get(edge.a) || 0) + 1);
-      selectedDegree.set(edge.b, (selectedDegree.get(edge.b) || 0) + 1);
-    }
-    originals.sort((u, v) => {
-      const eu = originalEdges[u.id], ev = originalEdges[v.id];
-      const du = Math.max(selectedDegree.get(eu.a) || 0, selectedDegree.get(eu.b) || 0);
-      const dv = Math.max(selectedDegree.get(ev.a) || 0, selectedDegree.get(ev.b) || 0);
-      return dv - du;
-    });
-
-    for (const original of originals) {
-      const index = findRemainingEdge(this, original);
-      if (index < 0) { restore(); this.__lastBevelError = 'Multi-bevel stopped • selected edge could not be remapped'; return null; }
-      const currentInfo = this.generalBevelEdgeInfo?.([index]);
-      if (!currentInfo) { restore(); this.__lastBevelError = 'Multi-bevel stopped • shared corner became invalid'; return null; }
-      const currentRails = railLengthsForInfo(this, currentInfo);
-      const shortestCurrentRail = Math.min(...currentRails);
-      if (!Number.isFinite(shortestCurrentRail) || shortestCurrentRail < 1e-6) { restore(); return null; }
-      const localAmount = targetDistance / shortestCurrentRail;
-      if (localAmount >= 0.495) {
-        restore();
-        this.__lastBevelError = 'Multi-bevel limit reached • reduce width for this corner';
-        return null;
-      }
-      const result = this.generalBevelEdge?.([index], Math.max(0.0001, localAmount), cuts);
-      if (!result) { restore(); this.__lastBevelError = 'Multi-bevel unavailable • corner topology changed'; return null; }
+    for (const signature of signatures) {
+      const edgesNow = this.edges();
+      const index = edgesNow.findIndex(edge => edgeSignature(this, edge) === signature);
+      if (index < 0) { restore(); return null; }
+      const result = this.generalBevelEdge?.([index], width, segments);
+      if (!result) { restore(); return null; }
       for (const ring of result.ringEdgeIndices || []) {
         for (const edgeIndex of ring) {
           const edge = this.edges()[edgeIndex];
@@ -163,13 +102,11 @@ export function installBevelSelection(EditableMesh) {
       return index >= 0 ? [index] : [];
     }).filter(ring => ring.length);
 
-    this.__lastBevelError = '';
     return {
-      selectionMode:'set',
+      selectionMode:'separate',
       sourceEdgeCount: info.count,
-      segments: cuts,
-      width: amount,
-      distance: targetDistance,
+      segments: Math.max(1, Math.min(4, Math.round(Number(segments) || 1))),
+      width: Math.max(0.02, Math.min(0.49, Number(width) || 0.2)),
       ringEdgeIndices,
       boundaryEdgeIndices: ringEdgeIndices.flat()
     };
