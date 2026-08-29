@@ -71,7 +71,7 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
   EditableMesh.prototype.generalBevelEdge = function(edgeIndices, width = 0.2, segments = 1) {
     const info = this.generalBevelEdgeInfo(edgeIndices);
     if (!info) return null;
-    const amount = Math.max(0.02, Math.min(0.45, Number(width) || 0.2));
+    const amount = Math.max(0.02, Math.min(0.49, Number(width) || 0.2));
     const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
     const { a, b, sides, aCapIndex, bCapIndex } = info;
     const originalFaces = this.faces.map(face => [...face]);

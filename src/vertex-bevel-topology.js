@@ -33,7 +33,7 @@ export function installVertexBevelTopology(EditableMesh) {
     }
     if (ordered.length !== neighbours.length) return null;
 
-    const amount = Math.max(0.02, Math.min(0.45, Number(width) || 0.2));
+    const amount = Math.max(0.02, Math.min(0.49, Number(width) || 0.2));
     const source = this.vertices[vertexIndex], railLengths = neighbours.map(vertex => source.distanceTo(this.vertices[vertex]));
     const shortestRail = Math.min(...railLengths);
     if (!Number.isFinite(shortestRail) || shortestRail < 1e-6) return null;

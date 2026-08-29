@@ -73,7 +73,7 @@ segmentsInput?.addEventListener('input', syncLabel);
 button?.addEventListener('click', () => {
   const mesh = currentMesh(), valid = info(), history = globalThis.__boxlabHistory;
   if (!mesh || !valid || !history) return;
-  const width = Math.max(2, Math.min(45, Number(widthInput?.value || 20))) / 100;
+  const width = Math.max(2, Math.min(49, Number(widthInput?.value || 20))) / 100;
   const segments = Math.max(1, Math.min(4, Math.round(Number(segmentsInput?.value || 1))));
   const before = mesh.clone();
   const result = mesh.generalBevelSelection(valid.ids, width, segments);

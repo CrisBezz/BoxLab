@@ -106,7 +106,7 @@ export function installBevelSelection(EditableMesh) {
       selectionMode:'separate',
       sourceEdgeCount: info.count,
       segments: Math.max(1, Math.min(4, Math.round(Number(segments) || 1))),
-      width: Math.max(0.02, Math.min(0.45, Number(width) || 0.2)),
+      width: Math.max(0.02, Math.min(0.49, Number(width) || 0.2)),
       ringEdgeIndices,
       boundaryEdgeIndices: ringEdgeIndices.flat()
     };
