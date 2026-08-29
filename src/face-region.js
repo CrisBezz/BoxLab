@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 export function installFaceRegion(EditableMesh) {
   if (EditableMesh.prototype.__faceRegionInstalled) return;
 
@@ -124,6 +126,8 @@ export function installFaceRegion(EditableMesh) {
   const insetButton = document.querySelector('#insetBtn');
   const canvas = document.querySelector('#viewport');
   const status = document.querySelector('#selectionStatus');
+  const raycaster = new THREE.Raycaster();
+  const pointer = new THREE.Vector2();
   let armedTool = null, drag = null;
 
   function state() { return globalThis.__boxlabBridgeState; }
@@ -157,12 +161,44 @@ export function installFaceRegion(EditableMesh) {
     const x = b.x-a.x, y = b.y-a.y, length = Math.hypot(x,y);
     return length > 1e-4 ? { x:x/length, y:y/length } : { x:0, y:-1 };
   }
+  function setPointer(event) {
+    const rect = canvas.getBoundingClientRect();
+    pointer.set((event.clientX - rect.left) / rect.width * 2 - 1, -((event.clientY - rect.top) / rect.height * 2 - 1));
+  }
+  function regionHit(event, mesh, faces, camera) {
+    if (!mesh || !camera || !faces.length) return false;
+    setPointer(event);
+    raycaster.setFromCamera(pointer, camera);
+    const pickers = [];
+    for (const faceIndex of faces) {
+      const face = mesh.faces[faceIndex];
+      if (!Array.isArray(face) || face.length < 3) continue;
+      const positions = [];
+      for (let i = 1; i < face.length - 1; i++) {
+        [face[0], face[i], face[i + 1]].forEach(vertexIndex => {
+          const v = mesh.vertices[vertexIndex];
+          if (v) positions.push(v.x, v.y, v.z);
+        });
+      }
+      if (!positions.length) continue;
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+      const material = new THREE.MeshBasicMaterial({ side:THREE.DoubleSide });
+      const picker = new THREE.Mesh(geometry, material);
+      pickers.push(picker);
+    }
+    const hit = raycaster.intersectObjects(pickers, false).length > 0;
+    pickers.forEach(picker => { picker.geometry.dispose(); picker.material.dispose(); });
+    return hit;
+  }
   function setArmed(tool) {
     armedTool = armedTool === tool ? null : tool;
     extrudeButton?.classList.toggle('active', armedTool === 'extrude');
     insetButton?.classList.toggle('active', armedTool === 'inset');
     const info = regionInfo();
-    if (status && info) status.textContent = armedTool ? `Face region • ${info.faceIndices.length} faces • drag to ${armedTool === 'extrude' ? 'Extrude' : 'Inset'}` : `${info.faceIndices.length} faces selected`;
+    if (status && info) status.textContent = armedTool
+      ? `Face region • ${info.faceIndices.length} faces • drag region to ${armedTool === 'extrude' ? 'Extrude' : 'Inset'}`
+      : `${info.faceIndices.length} faces selected`;
   }
 
   extrudeButton?.addEventListener('click', event => {
@@ -176,13 +212,14 @@ export function installFaceRegion(EditableMesh) {
 
   canvas?.addEventListener('pointerdown', event => {
     if (!armedTool || !event.isPrimary) return;
-    const mesh = currentMesh(), faces = selectedFaces(), info = mesh?.faceRegionInfo?.(faces);
-    if (!mesh || !info) { setArmed(null); return; }
+    const mesh = currentMesh(), faces = selectedFaces(), info = mesh?.faceRegionInfo?.(faces), camera = state()?.camera;
+    if (!mesh || !info || !camera) { setArmed(null); return; }
+    if (!regionHit(event, mesh, faces, camera)) return;
     event.preventDefault(); event.stopImmediatePropagation();
     drag = {
       pointerId:event.pointerId, startX:event.clientX, startY:event.clientY,
       before:mesh.clone(), mesh, faces:[...faces], tool:armedTool,
-      normal2D:projectedNormal(mesh, faces, state()?.camera), changed:false
+      normal2D:projectedNormal(mesh, faces, camera), changed:false, preview:false
     };
     canvas.setPointerCapture?.(event.pointerId);
   }, true);
@@ -197,11 +234,13 @@ export function installFaceRegion(EditableMesh) {
     if (drag.tool === 'extrude') {
       const distance = (dx * drag.normal2D.x + dy * drag.normal2D.y) * 0.006;
       const result = drag.mesh.extrudeFaceRegion(drag.faces, distance);
+      drag.preview = !!result;
       if (!result) return;
       if (status) status.textContent = `Extrude Region • ${drag.faces.length} faces • ${distance >= 0 ? '+' : ''}${distance.toFixed(2)}`;
     } else {
       const amount = Math.max(0.01, Math.min(0.95, (dx - dy) * 0.004));
       const result = drag.mesh.insetFaceRegion(drag.faces, amount);
+      drag.preview = !!result;
       if (!result) return;
       if (status) status.textContent = `Inset Region • ${drag.faces.length} faces • ${Math.round(amount * 100)}%`;
     }
@@ -211,10 +250,19 @@ export function installFaceRegion(EditableMesh) {
   const end = event => {
     if (!drag || drag.pointerId !== event.pointerId) return;
     event.preventDefault(); event.stopImmediatePropagation();
+    const completed = drag.changed && drag.preview && event.type === 'pointerup';
+    if (!completed) restore(drag.mesh, drag.before);
+    const faces = [...drag.faces], tool = drag.tool;
     drag = null;
-    armedTool = null;
-    extrudeButton?.classList.remove('active');
-    insetButton?.classList.remove('active');
+    if (completed) globalThis.__boxlabSelectionBridge?.set?.('face', faces);
+    const info = regionInfo();
+    if (!info) {
+      armedTool = null;
+      extrudeButton?.classList.remove('active');
+      insetButton?.classList.remove('active');
+    } else if (status) {
+      status.textContent = `${info.faceIndices.length} faces • ${tool === 'extrude' ? 'Extrude' : 'Inset'} ready • drag region again`;
+    }
     render();
   };
   canvas?.addEventListener('pointerup', end, true);
