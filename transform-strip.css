@@ -1,6 +1,14 @@
 .always-transform{margin:0 0 8px;padding:4px;border:1px solid rgba(255,255,255,.12);border-radius:11px;background:rgba(255,255,255,.025)}
 .always-transform #toolModes{gap:3px!important}
-.always-transform #toolModes button{min-height:30px!important;padding:4px 6px!important;font-size:12px!important;border-radius:7px!important}
+.always-transform #toolModes button,
+#transformPrecision button{min-height:30px!important;padding:4px 6px!important;font-size:12px!important;border-radius:7px!important}
+#transformPrecision{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;margin-top:4px}
+#transformPrecision button.active{background:#eef1f5!important;color:#171a20!important;font-weight:600!important}
+#transformPrecision #transformSnapBtn{grid-column:1 / span 2}
+#transformPrecision #transformValue{grid-column:1 / -1;min-width:0;width:100%;box-sizing:border-box;min-height:30px;border-radius:7px}
+#transformPrecision #transformValue.with-snap{grid-column:3 / -1}
+#transformPrecision #transformSnapBtn[hidden]{display:none!important}
+.selection-edge-actions{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
 #app.boxlab-active-locked #transformStrip{pointer-events:none;opacity:.36}
 #app:not(:has(#selectionModes [data-mode="face"].active)) #angleSelectionBtn,
 #app:not(:has(#selectionModes [data-mode="face"].active)) #normalSelectionBtn{display:none!important}
