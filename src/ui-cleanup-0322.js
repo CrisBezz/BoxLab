@@ -28,7 +28,10 @@ function syncDirectVsTransform(){
   document.querySelector('#transformStrip')?.classList.toggle('direct-tool-active',direct);
 }
 
-for(const button of [extrude,inset]) button?.addEventListener('click',()=>queueMicrotask(syncDirectVsTransform),true);
+for(const button of [extrude,inset]) if(button){
+  button.addEventListener('click',()=>queueMicrotask(syncDirectVsTransform),true);
+  new MutationObserver(()=>queueMicrotask(syncDirectVsTransform)).observe(button,{attributes:true,attributeFilter:['class']});
+}
 for(const button of transformButtons) button.addEventListener('click',()=>{
   for(const direct of [extrude,inset]) if(direct?.classList.contains('active')) direct.click();
   queueMicrotask(syncDirectVsTransform);
