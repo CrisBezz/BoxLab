@@ -99,6 +99,45 @@ export function installDissolveTopology(EditableMesh) {
     return { faceIndex: keep, face: [...info.merged], dissolvedEdgeKey: info.edgeKey };
   };
 
+  EditableMesh.prototype.dissolveEdgesInfo = function (edgeIndices) {
+    const ids = [...new Set(edgeIndices || [])].filter(Number.isInteger);
+    if (!ids.length) return null;
+    const edges = this.edges();
+    const keys = [];
+    for (const index of ids) {
+      const edge = edges[index];
+      if (!edge || !this.dissolveEdgeInfo(index)) return null;
+      keys.push(this.edgeKey(edge.a, edge.b));
+    }
+    return { edgeIndices: ids, edgeKeys: [...new Set(keys)] };
+  };
+
+  EditableMesh.prototype.dissolveEdges = function (edgeIndices) {
+    const info = this.dissolveEdgesInfo(edgeIndices);
+    if (!info) return null;
+    const before = this.clone();
+    if (this.looseEdges instanceof Set) before.looseEdges = new Set(this.looseEdges);
+    if (this.looseVertices instanceof Set) before.looseVertices = new Set(this.looseVertices);
+    const restore = () => {
+      this.vertices = before.vertices.map(v => v.clone());
+      this.faces = before.faces.map(f => [...f]);
+      this.creases = new Map(before.creases);
+      if (before.looseEdges instanceof Set) this.looseEdges = new Set(before.looseEdges);
+      if (before.looseVertices instanceof Set) this.looseVertices = new Set(before.looseVertices);
+      this.edges();
+    };
+    let dissolved = 0;
+    for (const key of info.edgeKeys) {
+      const edges = this.edges();
+      const index = edges.findIndex(edge => this.edgeKey(edge.a, edge.b) === key);
+      if (index < 0) { restore(); return null; }
+      const result = this.dissolveEdge(index);
+      if (!result) { restore(); return null; }
+      dissolved++;
+    }
+    return { dissolvedEdges: dissolved, faceCount: this.faces.length };
+  };
+
   EditableMesh.prototype.dissolveLoopInfo = function (edgeIndices) {
     const loop = orderedClosedLoop(this, edgeIndices);
     if (!loop) return null;
