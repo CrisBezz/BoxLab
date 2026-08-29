@@ -1,3 +1,4 @@
+import './auto-multi-transfer.js?v=0.28.10';
 import * as THREE from 'three';
 const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('#viewport'),width=document.querySelector('#bevelWidth'),out=document.querySelector('#bevelWidthOut'),multiToggle=document.querySelector('#multiSelectToggle'),ray=new THREE.Raycaster(),pointer=new THREE.Vector2();ray.params.Line.threshold=.09;let armed=false,drag=null;
 function state(){return globalThis.__boxlabBridgeState}function bridge(){return globalThis.__boxlabSelectionBridge}function hit(e){const s=state(),r=canvas.getBoundingClientRect();if(!s?.camera)return null;pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(pointer,s.camera);const h=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(h?.object?.userData?.index)?h.object.userData.index:null}
