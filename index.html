@@ -11,6 +11,7 @@
   <meta http-equiv="Expires" content="0" />
   <title>BoxLab v0.30.5</title>
   <link rel="stylesheet" href="./styles.css?v=0.30.5" />
+  <link rel="stylesheet" href="./transform-strip.css?v=0.30.5" />
   <link rel="manifest" href="./manifest.webmanifest?v=0.28.3" />
   <link rel="icon" href="./icon.svg?v=0.28.3" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="./icon.svg?v=0.28.3" />
@@ -71,9 +72,7 @@
             <div class="selection-context"><div class="selection-edge-actions"><button id="selectLoopBtn" disabled title="Select Loop">Loop</button><button id="selectBoundaryBtn" disabled title="Select Boundary">Bound</button></div><div class="selection-grow-actions"><button id="growSelectionBtn" title="Grow Selection">+</button><button id="shrinkSelectionBtn" title="Shrink Selection">−</button><button id="connectedSelectionBtn" title="Select Connected">Conn</button><button id="angleSelectionBtn" title="Angle Select">∠</button><button id="normalSelectionBtn" title="Normal Select">⟂</button></div><label class="selection-angle"><span>∠</span><input id="angleSelectThreshold" type="range" min="5" max="180" value="30" step="5" /><output id="angleSelectThresholdOut">30°</output></label></div>
           </div>
         </section>
-        <div class="always-transform" id="transformStrip">
-          <div class="segmented" id="toolModes"><button data-tool="move" class="active">Move</button><button data-tool="scale">Scale</button><button data-tool="rotate">Rotate</button></div>
-        </div>
+        <div class="always-transform" id="transformStrip"><div class="segmented" id="toolModes"><button data-tool="move" class="active">Move</button><button data-tool="scale">Scale</button><button data-tool="rotate">Rotate</button></div></div>
         <details class="drawer-section" id="editDrawer" open>
           <summary>Active Tools</summary>
           <div class="drawer-content">
