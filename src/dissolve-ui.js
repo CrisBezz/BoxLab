@@ -2,11 +2,14 @@ const state = globalThis.__boxlabBridgeState;
 const edgeButton = document.querySelector('#dissolveEdgeBtn');
 const loopButton = document.querySelector('#dissolveLoopBtn');
 const status = document.querySelector('#selectionStatus');
-const canvas = document.querySelector('#viewport');
 const multiToggle = document.querySelector('#multiSelectToggle');
 
+function bridge(){ return globalThis.__boxlabSelectionBridge; }
 function currentMesh() { return state?.mesh || null; }
-function selectedEdges() { return [...new Set(state?.selectedEdges || [])]; }
+function selectedEdges() {
+  const b=bridge();
+  return b?.mode?.()==='edge' ? [...new Set(b.indices?.()||[])] : [...new Set(state?.selectedEdges || [])];
+}
 function activeLoopEdges() {
   const edgeObjects = state?.edgeObjects;
   if (!(edgeObjects instanceof Map)) return [];
@@ -18,9 +21,9 @@ function activeLoopEdges() {
 }
 function edgeInfo() {
   const mesh = currentMesh(), ids = selectedEdges();
-  if (!mesh || ids.length !== 1) return null;
-  const info = mesh.dissolveEdgeInfo?.(ids[0]);
-  return info ? { mesh, edgeIndex: ids[0], info } : null;
+  if (!mesh || !ids.length) return null;
+  const info = mesh.dissolveEdgesInfo?.(ids);
+  return info ? { mesh, ids, info } : null;
 }
 function loopInfo() {
   const mesh = currentMesh();
@@ -40,35 +43,29 @@ function loopInfo() {
   return null;
 }
 function sync() {
-  if (edgeButton) edgeButton.disabled = !edgeInfo();
+  if (edgeButton) {
+    const mode=edgeInfo();
+    edgeButton.disabled = !mode;
+    edgeButton.textContent = mode?.ids?.length > 1 ? `Dissolve ${mode.ids.length} Edges` : 'Dissolve Edge';
+  }
   if (loopButton) {
     const mode = loopInfo();
     loopButton.disabled = !mode;
     loopButton.textContent = mode?.source === 'active' ? 'Dissolve Active Loop' : 'Dissolve Loop';
   }
 }
-function faceScreenPoint(mesh, faceIndex) {
-  const camera = state?.camera;
-  const face = mesh.faces[faceIndex];
-  if (!camera || !canvas || !face?.length) return null;
-  const center = face.reduce((sum, vi) => sum.add(mesh.vertices[vi]), mesh.vertices[face[0]].clone().set(0,0,0)).multiplyScalar(1 / face.length).project(camera);
-  const rect = canvas.getBoundingClientRect();
-  return { x: rect.left + (center.x * 0.5 + 0.5) * rect.width, y: rect.top + (-center.y * 0.5 + 0.5) * rect.height };
-}
-function selectMergedFace(mesh, faceIndex) {
-  document.querySelector('#selectionModes button[data-mode="face"]')?.click();
-  const point = faceScreenPoint(mesh, faceIndex);
-  if (!point) return;
-  setTimeout(() => {
-    canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles:true, cancelable:true, pointerId:97, pointerType:'mouse', isPrimary:true, button:0, buttons:1, clientX:point.x, clientY:point.y }));
-    canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles:true, cancelable:true, pointerId:97, pointerType:'mouse', isPrimary:true, button:0, buttons:0, clientX:point.x, clientY:point.y }));
-  }, 0);
-}
 function clearMultiSelectionAfterTopologyChange() {
   if (multiToggle?.checked) {
     multiToggle.checked = false;
     multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
   }
+}
+function forceRender(){ document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})); }
+function stayEdgeMode(){
+  const button=document.querySelector('#selectionModes button[data-mode="edge"]');
+  if(!button?.classList.contains('active')) button?.click();
+  bridge()?.set?.('edge',[]);
+  forceRender();
 }
 
 loopButton?.addEventListener('click', () => {
@@ -83,12 +80,11 @@ loopButton?.addEventListener('click', () => {
   }
   history.push(before);
   clearMultiSelectionAfterTopologyChange();
-  document.querySelector('#deselectAllBtn')?.click();
   const slide = document.querySelector('#loopSlide');
   if (slide) slide.disabled = true;
-  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true }));
+  stayEdgeMode();
   setTimeout(() => {
-    if (status) status.textContent = `${mode.source === 'active' ? 'Dissolve Active Loop' : 'Dissolve Loop'} • removed ${result.removedEdges} edges + ${result.removedVertices} vertices`;
+    if (status) status.textContent = `${mode.source === 'active' ? 'Dissolve Active Loop' : 'Dissolve Loop'} • removed ${result.removedEdges} edges + ${result.removedVertices} vertices • Edge mode`;
     sync();
   }, 20);
 });
@@ -97,18 +93,17 @@ edgeButton?.addEventListener('click', () => {
   const mode = edgeInfo(), history = globalThis.__boxlabHistory;
   if (!mode || !history) return;
   const before = mode.mesh.clone();
-  const result = mode.mesh.dissolveEdge(mode.edgeIndex);
+  const result = mode.mesh.dissolveEdges(mode.ids);
   if (!result) {
-    if (status) status.textContent = 'Dissolve Edge failed • invalid topology';
+    if (status) status.textContent = mode.ids.length>1 ? 'Multi Dissolve failed • selected edges cannot all be dissolved together' : 'Dissolve Edge failed • invalid topology';
     sync();
     return;
   }
   history.push(before);
   clearMultiSelectionAfterTopologyChange();
-  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true }));
-  selectMergedFace(mode.mesh, result.faceIndex);
+  stayEdgeMode();
   setTimeout(() => {
-    if (status) status.textContent = `Dissolve Edge • merged into ${result.face.length}-sided face`;
+    if (status) status.textContent = `${result.dissolvedEdges>1?'Multi Dissolve':'Dissolve Edge'} • removed ${result.dissolvedEdges} edge${result.dissolvedEdges===1?'':'s'} • Edge mode`;
     sync();
   }, 20);
 });
