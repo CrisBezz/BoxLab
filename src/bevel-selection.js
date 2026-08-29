@@ -23,7 +23,6 @@ export function installBevelSelection(EditableMesh) {
       adjacency.get(edge.a).push(ids[i]);
       adjacency.get(edge.b).push(ids[i]);
     }
-    if ([...adjacency.values()].some(list => list.length > 2)) return null;
 
     const first = ids[0], seen = new Set([first]), queue = [first];
     while (queue.length) {
@@ -35,13 +34,17 @@ export function installBevelSelection(EditableMesh) {
       }
     }
 
-    if (seen.size === ids.length && [...adjacency.values()].every(list => list.length === 2)) {
+    const degreeAtMostTwo = [...adjacency.values()].every(list => list.length <= 2);
+    if (degreeAtMostTwo && seen.size === ids.length && [...adjacency.values()].every(list => list.length === 2)) {
       const loop = this.bevelEdgeLoopInfo?.(ids);
-      return loop ? { mode:'loop', ids, count:ids.length, loop } : null;
+      if (loop) return { mode:'loop', ids, count:ids.length, loop };
     }
 
     const sharedVertex = [...adjacency.values()].some(list => list.length > 1);
-    if (sharedVertex) return null;
+    if (sharedVertex) {
+      const connected = this.multiChamferSelectionInfo?.(ids);
+      return connected ? { ...connected, mode:'connected', ids, count:ids.length } : null;
+    }
 
     for (const id of ids) if (!this.generalBevelEdgeInfo?.([id])) return null;
     return { mode:'separate', ids, count:ids.length };
@@ -60,6 +63,11 @@ export function installBevelSelection(EditableMesh) {
     if (info.mode === 'loop') {
       const result = this.bevelEdgeLoop?.(info.ids, width, segments);
       if (result) result.selectionMode = 'loop';
+      return result;
+    }
+    if (info.mode === 'connected') {
+      const result = this.multiChamferSelection?.(info.ids, width);
+      if (result) result.requestedSegments = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
       return result;
     }
 
