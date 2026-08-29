@@ -9,8 +9,7 @@ let gesture=null,constraint='free',angleSnap=true;
 
 const precision=document.createElement('div');
 precision.id='transformPrecision';
-precision.style.cssText='display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:5px';
-precision.innerHTML='<button type="button" data-constraint="free">Free</button><button type="button" data-constraint="x">X</button><button type="button" data-constraint="y">Y</button><button type="button" data-constraint="z">Z</button><button type="button" data-constraint="auto">Auto</button><button type="button" id="transformSnapBtn" style="grid-column:1 / span 2">15°</button><input id="transformValue" inputmode="decimal" placeholder="Value" aria-label="Transform numeric value" style="grid-column:3 / -1;min-width:0;width:100%;box-sizing:border-box" />';
+precision.innerHTML='<button type="button" data-constraint="free">Free</button><button type="button" data-constraint="x">X</button><button type="button" data-constraint="y">Y</button><button type="button" data-constraint="z">Z</button><button type="button" data-constraint="auto">Auto</button><button type="button" id="transformSnapBtn">15°</button><input id="transformValue" inputmode="decimal" placeholder="Value" aria-label="Transform numeric value" />';
 strip?.append(precision);
 const valueInput=precision.querySelector('#transformValue'),snapButton=precision.querySelector('#transformSnapBtn');
 
@@ -23,7 +22,11 @@ function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event
 function axisVector(axis){return new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);}
 function explicitAxis(){return ['x','y','z'].includes(constraint)?constraint:null;}
 function constraintLabel(){return constraint==='free'?'Free':constraint==='auto'?'Auto':constraint.toUpperCase();}
-function syncPrecision(){precision.querySelectorAll('[data-constraint]').forEach(b=>{const on=b.dataset.constraint===constraint;b.classList.toggle('active',on);b.style.background=on?'#ff615f':'';b.style.color=on?'#fff':'';b.style.fontWeight=on?'700':'';});if(snapButton){snapButton.classList.toggle('active',angleSnap);snapButton.style.display=tool()==='rotate'?'block':'none';snapButton.style.background=angleSnap&&tool()==='rotate'?'#ff615f':'';snapButton.style.color=angleSnap&&tool()==='rotate'?'#fff':'';}if(valueInput){valueInput.placeholder=tool()==='move'?'Distance':tool()==='scale'?'Scale':'Degrees';valueInput.style.gridColumn=tool()==='rotate'?'3 / -1':'1 / -1';}}
+function syncPrecision(){
+  precision.querySelectorAll('[data-constraint]').forEach(b=>b.classList.toggle('active',b.dataset.constraint===constraint));
+  if(snapButton){snapButton.classList.toggle('active',angleSnap);snapButton.hidden=tool()!=='rotate';}
+  if(valueInput){valueInput.placeholder=tool()==='move'?'Distance':tool()==='scale'?'Scale':'Degrees';valueInput.classList.toggle('with-snap',tool()==='rotate');}
+}
 function selectionVertices(mesh,m,ids){if(!mesh)return[];if(m==='object')return mesh.vertices.map((_,i)=>i);const out=new Set();if(m==='vertex')ids.forEach(i=>{if(mesh.vertices[i])out.add(i);});else if(m==='edge'){const edges=mesh.edges();ids.forEach(i=>{const e=edges[i];if(e){out.add(e.a);out.add(e.b);}});}else if(m==='face')ids.forEach(i=>(mesh.faces[i]||[]).forEach(v=>out.add(v)));return [...out];}
 function center(mesh,indices){const c=new THREE.Vector3();indices.forEach(i=>c.add(mesh.vertices[i]));return indices.length?c.multiplyScalar(1/indices.length):c;}
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
