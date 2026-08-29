@@ -9,6 +9,23 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
     if (face[(ib + 1) % n] === a) return -1;
     return 0;
   };
+  const quadraticPoint = (start, control, end, t) => {
+    const u = 1 - t;
+    return start.clone().multiplyScalar(u * u)
+      .add(control.clone().multiplyScalar(2 * u * t))
+      .add(end.clone().multiplyScalar(t * t));
+  };
+  const insertChainOnEdge = (face, a, b, chain) => {
+    if (!Array.isArray(face) || chain.length < 3) return [...face];
+    const out = [];
+    for (let i = 0; i < face.length; i++) {
+      const u = face[i], v = face[(i + 1) % face.length];
+      out.push(u);
+      if (u === a && v === b) out.push(...chain.slice(1, -1));
+      else if (u === b && v === a) out.push(...chain.slice(1, -1).reverse());
+    }
+    return out;
+  };
 
   EditableMesh.prototype.multiChamferSelectionInfo = function(edgeIndices) {
     const ids = [...new Set(edgeIndices || [])].filter(Number.isInteger);
@@ -26,11 +43,12 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
     return { mode:'connected', ids, count:ids.length, affected:[...affected] };
   };
 
-  EditableMesh.prototype.multiChamferSelection = function(edgeIndices, width = 0.2) {
+  EditableMesh.prototype.multiChamferSelection = function(edgeIndices, width = 0.2, segments = 1) {
     const info = this.multiChamferSelectionInfo(edgeIndices);
     if (!info) return null;
 
     const amount = Math.max(0.02, Math.min(0.49, Number(width) || 0.2));
+    const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
     const originalVertices = this.vertices.map(v => v.clone());
     const originalFaces = this.faces.map(face => [...face]);
     const originalCreases = new Map(this.creases);
@@ -120,8 +138,25 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
     }
     this.faces = rebuilt;
 
-    const bevelFaceStart = this.faces.length;
-    const boundaryPairs = [];
+    const profileCache = new Map();
+    const endpointProfiles = new Map();
+    const profileChain = (vertex, p0, p1) => {
+      const lo = Math.min(p0, p1), hi = Math.max(p0, p1), key = `${vertex}:${lo}:${hi}:${cuts}`;
+      if (profileCache.has(key)) {
+        const cached = profileCache.get(key);
+        return cached[0] === p0 ? [...cached] : [...cached].reverse();
+      }
+      const chain = [p0];
+      for (let j = 1; j < cuts; j++) {
+        this.vertices.push(quadraticPoint(this.vertices[p0], originalVertices[vertex], this.vertices[p1], j / cuts));
+        chain.push(this.vertices.length - 1);
+      }
+      chain.push(p1);
+      profileCache.set(key, p0 === lo ? [...chain] : [...chain].reverse());
+      return chain;
+    };
+
+    const edgeProfiles = [];
     for (const id of info.ids) {
       const edge = allEdges[id], faces = realFaces({ faces: originalFaces }, edge);
       if (faces.length !== 2) return null;
@@ -131,10 +166,39 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
       const a0 = sideReplacement.get(`${f0}:${edge.a}`), b0 = sideReplacement.get(`${f0}:${edge.b}`);
       const a1 = sideReplacement.get(`${f1}:${edge.a}`), b1 = sideReplacement.get(`${f1}:${edge.b}`);
       if (![a0,b0,a1,b1].every(Number.isInteger)) return null;
-      const face = d0 > 0 ? [b0,a0,a1,b1] : [a0,b0,b1,a1];
-      if (new Set(face).size < 3) return null;
-      this.faces.push(face);
-      boundaryPairs.push([a0,b0],[a1,b1]);
+      const chainA = profileChain(edge.a, a0, a1), chainB = profileChain(edge.b, b0, b1);
+      edgeProfiles.push({ edge, d0, chainA, chainB });
+      if (!endpointProfiles.has(edge.a)) endpointProfiles.set(edge.a, []);
+      if (!endpointProfiles.has(edge.b)) endpointProfiles.set(edge.b, []);
+      endpointProfiles.get(edge.a).push(chainA);
+      endpointProfiles.get(edge.b).push(chainB);
+    }
+
+    if (cuts > 1) {
+      for (const v of info.affected) {
+        const meta = affectedInfo.get(v), chains = endpointProfiles.get(v) || [];
+        if (meta?.selectedCount !== 1 || chains.length !== 1) continue;
+        const chain = chains[0], first = chain[0], last = chain[chain.length - 1];
+        const capIndex = this.faces.findIndex(face => {
+          const ia = face.indexOf(first), ib = face.indexOf(last), n = face.length;
+          return ia >= 0 && ib >= 0 && (face[(ia + 1) % n] === last || face[(ib + 1) % n] === first);
+        });
+        if (capIndex < 0) return null;
+        this.faces[capIndex] = insertChainOnEdge(this.faces[capIndex], first, last, chain);
+      }
+    }
+
+    const bevelFaceStart = this.faces.length;
+    const ringPairs = Array.from({ length: cuts + 1 }, () => []);
+    for (const { d0, chainA, chainB } of edgeProfiles) {
+      for (let j = 0; j <= cuts; j++) ringPairs[j].push([chainA[j], chainB[j]]);
+      for (let j = 0; j < cuts; j++) {
+        const face = d0 > 0
+          ? [chainB[j], chainA[j], chainA[j + 1], chainB[j + 1]]
+          : [chainA[j], chainB[j], chainB[j + 1], chainA[j + 1]];
+        if (new Set(face).size < 3) return null;
+        this.faces.push(face);
+      }
     }
 
     const faceNormal = faceIndex => {
@@ -148,9 +212,10 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
     for (const v of info.affected) {
       const meta = affectedInfo.get(v);
       if (meta?.selectedCount !== 3) continue;
+      const raw = (endpointProfiles.get(v) || []).flat();
+      const points = [...new Set(raw)];
+      if (points.length < 3) return null;
       const incidentFaces = [...new Set(meta.incident.flatMap(edge => realFaces({ faces: originalFaces }, edge)))];
-      const points = incidentFaces.map(fi => facePointMap.get(`${v}:${fi}`)).filter(Number.isInteger);
-      if (points.length !== incidentFaces.length || points.length < 3) return null;
       const avgN = originalVertices[v].clone().set(0,0,0);
       for (const fi of incidentFaces) { const n = faceNormal(fi); if (n) avgN.add(n); }
       if (avgN.lengthSq() < 1e-12) return null;
@@ -169,7 +234,15 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
           .cross(this.vertices[ordered[2]].clone().sub(this.vertices[ordered[0]]));
         if (n.dot(avgN) < 0) ordered.reverse();
       }
-      this.faces.push(ordered);
+      if (cuts === 1) this.faces.push(ordered);
+      else {
+        this.vertices.push(center);
+        const ci = this.vertices.length - 1;
+        for (let i = 0; i < ordered.length; i++) {
+          const a = ordered[i], b = ordered[(i + 1) % ordered.length];
+          this.faces.push([a, b, ci]);
+        }
+      }
     }
 
     const nextCreases = new Map();
@@ -201,15 +274,15 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
 
     const finalEdges = this.edges();
     const edgeIndexByKey = new Map(finalEdges.map((edge, index) => [this.edgeKey(edge.a, edge.b), index]));
-    const ringEdgeIndices = boundaryPairs.map(([u,v]) => {
+    const ringEdgeIndices = ringPairs.map(level => level.map(([u,v]) => {
       const nu = indexMap.get(u), nv = indexMap.get(v);
-      const idx = Number.isInteger(nu) && Number.isInteger(nv) ? edgeIndexByKey.get(this.edgeKey(nu,nv)) : null;
-      return Number.isInteger(idx) ? [idx] : [];
-    }).filter(ring => ring.length);
+      return Number.isInteger(nu) && Number.isInteger(nv) ? edgeIndexByKey.get(this.edgeKey(nu,nv)) : null;
+    }).filter(Number.isInteger));
 
     return {
-      selectionMode:'connected', sourceEdgeCount:info.count, segments:1, width:amount, distance,
-      profile:'chamfer', ringEdgeIndices, boundaryEdgeIndices:ringEdgeIndices.flat(),
+      selectionMode:'connected', sourceEdgeCount:info.count, segments:cuts, width:amount, distance,
+      profile:cuts === 1 ? 'chamfer' : 'rounded', ringEdgeIndices,
+      boundaryEdgeIndices:[...(ringEdgeIndices[0] || []), ...(ringEdgeIndices[ringEdgeIndices.length - 1] || [])],
       faceIndices:Array.from({length:this.faces.length - bevelFaceStart},(_,i)=>bevelFaceStart+i)
     };
   };
