@@ -2,3 +2,5 @@
 .always-transform #toolModes{gap:3px!important}
 .always-transform #toolModes button{min-height:30px!important;padding:4px 6px!important;font-size:12px!important;border-radius:7px!important}
 #app.boxlab-active-locked #transformStrip{pointer-events:none;opacity:.36}
+#app:not(:has(#selectionModes [data-mode="face"].active)) #angleSelectionBtn,
+#app:not(:has(#selectionModes [data-mode="face"].active)) #normalSelectionBtn{display:none!important}
