@@ -6,6 +6,8 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const nativeAddEventListener = canvas.addEventListener.bind(canvas);
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
+  const navigationSnapshots = new Map();
+  const NAV_RESTORE_PX = 4;
 
   function pencilHitsEditableMesh(event) {
     if (event.pointerType !== 'pen') return false;
@@ -28,6 +30,35 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     material.dispose();
     return hit;
   }
+
+  function selectionBridge() {
+    return globalThis.__boxlabSelectionBridge;
+  }
+
+  function snapshotSelection(event) {
+    const bridge = selectionBridge();
+    const type = bridge?.mode?.();
+    const indices = [...(bridge?.indices?.() || [])];
+    if (!type || !indices.length) return;
+    navigationSnapshots.set(event.pointerId, { type, indices, x: event.clientX, y: event.clientY, restored: false });
+  }
+
+  function restoreSelectionForNavigation(event) {
+    const snap = navigationSnapshots.get(event.pointerId);
+    if (!snap || snap.restored) return;
+    if (Math.hypot(event.clientX - snap.x, event.clientY - snap.y) < NAV_RESTORE_PX) return;
+    const bridge = selectionBridge();
+    if (bridge?.mode?.() !== snap.type) return;
+    const current = bridge.indices?.() || [];
+    if (!current.length) bridge.set?.(snap.type, snap.indices);
+    snap.restored = true;
+  }
+
+  nativeAddEventListener('pointerdown', snapshotSelection, { capture: true, passive: true });
+  nativeAddEventListener('pointermove', restoreSelectionForNavigation, { capture: true, passive: true });
+  const clearNavigationSnapshot = event => navigationSnapshots.delete(event.pointerId);
+  nativeAddEventListener('pointerup', clearNavigationSnapshot, { capture: true, passive: true });
+  nativeAddEventListener('pointercancel', clearNavigationSnapshot, { capture: true, passive: true });
 
   canvas.addEventListener = function (type, listener, options) {
     const name = typeof listener === 'function' ? listener.name || '' : '';
