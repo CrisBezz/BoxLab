@@ -7,22 +7,27 @@ let armed=false, drag=null;
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function selectedVertexIds(){const b=bridge();return b?.mode?.()==='vertex'?[...(b.indices?.()||[])]:[];}
-function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
+function syncButton(){button?.classList.toggle('active',armed);}
+function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));queueMicrotask(syncButton);}
 function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices);mesh.edges?.();}
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
 function hitVertex(event){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const p=new THREE.Vector2(event.clientX,event.clientY);let best=null;mesh.vertices.forEach((v,index)=>{const q=screenPoint(v,camera),d=q.distanceTo(p);if(d<=PICK_PX&&(!best||d<best.distance))best={index,distance:d};});return best?.index??null;}
-function disarm(){armed=false;drag=null;button?.classList.remove('active');}
+function disarm(){armed=false;drag=null;syncButton();}
+function updateStatus(){const count=selectedVertexIds().length,useMulti=!!multiToggle?.checked&&count>1;if(status)status.textContent=armed?(useMulti?`Bevel ${count} vertices • drag any selected vertex`:'Bevel Vertex • drag a vertex'):'Vertex mode';}
 
-button?.addEventListener('click',event=>{
-  event.preventDefault();event.stopImmediatePropagation();
-  armed=!armed;
-  if(armed&&bridge()?.mode?.()!=='vertex')document.querySelector('#selectionModes button[data-mode="vertex"]')?.click();
-  button.classList.toggle('active',armed);
-  const count=selectedVertexIds().length,useMulti=!!multiToggle?.checked&&count>1;
-  if(status)status.textContent=armed?(useMulti?`Bevel ${count} vertices • drag any selected vertex`:'Bevel Vertex • drag a vertex'):'Vertex mode';
+// Capture at document level so the legacy main.js button handler never gets a
+// chance to clear Multi or the selected vertices before this direct tool arms.
+document.addEventListener('click',event=>{
+  const bevelButton=event.target?.closest?.('#vertexBevelBtn');
+  if(bevelButton){
+    event.preventDefault();event.stopImmediatePropagation();
+    if(bridge()?.mode?.()!=='vertex')document.querySelector('#selectionModes button[data-mode="vertex"]')?.click();
+    armed=!armed;syncButton();updateStatus();
+    return;
+  }
+  if(!armed||!event.isTrusted)return;
+  if(event.target?.closest?.('button'))disarm();
 },true);
-
-document.addEventListener('click',event=>{if(!armed||!event.isTrusted||event.target?.closest?.('#vertexBevelBtn'))return;if(event.target?.closest?.('button'))disarm();},true);
 
 canvas?.addEventListener('pointerdown',event=>{
   if(!armed||!event.isPrimary)return;
@@ -53,7 +58,6 @@ function end(event){
   const current=drag;drag=null;
   if(current.preview&&event.type==='pointerup')globalThis.__boxlabHistory?.push(current.before);else restore(current.mesh,current.before);
   bridge()?.set?.('vertex',[]);
-  if(status)status.textContent=armed?'Bevel Vertex • drag a vertex':'Vertex mode';
-  render();
+  updateStatus();render();
 }
 canvas?.addEventListener('pointerup',end,true);canvas?.addEventListener('pointercancel',end,true);
