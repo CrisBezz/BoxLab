@@ -24,22 +24,16 @@ if(edgePrimary) edgePrimary.style.gridTemplateColumns=`repeat(${Math.max(1,edgeP
 
 function syncDirectVsTransform(){
   const direct=!!document.querySelector('#extrudeBtn.active,#insetBtn.active');
-  if(direct) transformButtons.forEach(button=>button.classList.remove('active'));
   document.querySelector('#transformStrip')?.classList.toggle('direct-tool-active',direct);
 }
-
 for(const button of [extrude,inset]) if(button){
   button.addEventListener('click',()=>queueMicrotask(syncDirectVsTransform),true);
   new MutationObserver(()=>queueMicrotask(syncDirectVsTransform)).observe(button,{attributes:true,attributeFilter:['class']});
 }
-for(const button of transformButtons) button.addEventListener('click',()=>{
-  for(const direct of [extrude,inset]) if(direct?.classList.contains('active')) direct.click();
-  queueMicrotask(syncDirectVsTransform);
-},true);
+for(const button of transformButtons) button.addEventListener('click',()=>queueMicrotask(syncDirectVsTransform),true);
 
 const style=document.createElement('style');
 style.textContent=`
-#transformStrip.direct-tool-active #transformPrecision{opacity:.42}
 .boxlab-modifier-crease-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .boxlab-modifier-crease-actions button{margin:0!important}
 #modifiersDrawer .boxlab-crease-title{margin-top:10px}
