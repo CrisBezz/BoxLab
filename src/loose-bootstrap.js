@@ -11,6 +11,7 @@ import { installBevelSelection } from './bevel-selection.js?v=0.28.9';
 import { installPerimeterBevelRouting } from './perimeter-bevel-routing.js?v=0.28.12';
 import { installBevelWatertightGuard } from './bevel-watertight-guard.js?v=0.18.5';
 import { installVertexBevelTopology } from './vertex-bevel-topology.js?v=0.28.3';
+import { installMultiVertexBevelTopology } from './multi-vertex-bevel-topology.js?v=0.30.0';
 import { installFaceTransform } from './face-transform.js?v=0.12';
 import { installFaceRegion } from './face-region.js?v=0.29.0';
 import './selection-transform-state.js?v=0.12';
@@ -28,6 +29,7 @@ installBevelSelection(EditableMesh);
 installPerimeterBevelRouting(EditableMesh);
 installBevelWatertightGuard(EditableMesh);
 installVertexBevelTopology(EditableMesh);
+installMultiVertexBevelTopology(EditableMesh);
 installFaceTransform();
 installFaceRegion(EditableMesh);
 
