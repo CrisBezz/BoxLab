@@ -35,9 +35,19 @@ export function installBevelSelection(EditableMesh) {
     }
 
     const degreeAtMostTwo = [...adjacency.values()].every(list => list.length <= 2);
-    if (degreeAtMostTwo && seen.size === ids.length && [...adjacency.values()].every(list => list.length === 2)) {
+    const closedCycle = degreeAtMostTwo && seen.size === ids.length && [...adjacency.values()].every(list => list.length === 2);
+    if (closedCycle) {
+      // A closed 3-valence perimeter (for example a cube face) is a connected
+      // multi-edge corner set, not a quad-strip loop. Prefer the set-based
+      // engine whenever it validates so routing is independent of edge order.
+      const connected = this.multiChamferSelectionInfo?.(ids);
+      if (connected) return { ...connected, mode:'connected', ids, count:ids.length };
+
+      // True edge rings (normally vertices with two non-selected rails) use the
+      // dedicated loop engine.
       const loop = this.bevelEdgeLoopInfo?.(ids);
       if (loop) return { mode:'loop', ids, count:ids.length, loop };
+      return null;
     }
 
     const sharedVertex = [...adjacency.values()].some(list => list.length > 1);
