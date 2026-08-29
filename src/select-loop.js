@@ -190,18 +190,14 @@ function forceRender() {
 }
 
 function sync() {
-  const oneEdgeSelected = selectedEdgeIds().length === 1;
-  if (button) button.disabled = !oneEdgeSelected;
+  const edgeSelected = selectedEdgeIds().length >= 1;
+  if (button) button.disabled = !edgeSelected;
   if (activeSlide && slider) slider.disabled = !activeSlide.slideData;
 }
 
 button?.addEventListener('click', () => {
   const info = loopInfo();
-  if (!info) {
-    if (status) status.textContent = 'Select Loop • select exactly one edge first';
-    sync();
-    return;
-  }
+  if (!info) return;
   const { mesh, indices } = info;
   if (indices.length < 2) {
     if (status) status.textContent = 'Select Loop • no unambiguous linked continuation from this edge';
