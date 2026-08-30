@@ -12,7 +12,6 @@ function installLoopOffsetTopology() {
     if (!info) return null;
     const amount = Math.max(0.02, Math.min(0.45, Number(spacing) || 0.2));
     const leftByVertex = new Map(), rightByVertex = new Map();
-
     const rails = [];
     for (const vertex of info.orderedVertices) {
       const point = this.vertices[vertex], pair = info.orientedRails.get(vertex);
@@ -28,7 +27,6 @@ function installLoopOffsetTopology() {
     const shortestRail = Math.min(...rails);
     if (!Number.isFinite(shortestRail) || shortestRail < 1e-6) return null;
     const distance = shortestRail * amount;
-
     for (const vertex of info.orderedVertices) {
       const point = this.vertices[vertex], pair = info.orientedRails.get(vertex);
       if (!point || !pair) return null;
@@ -40,13 +38,11 @@ function installLoopOffsetTopology() {
       this.vertices.push(left); leftByVertex.set(vertex, this.vertices.length - 1);
       this.vertices.push(right); rightByVertex.set(vertex, this.vertices.length - 1);
     }
-
     const loopSet = new Set(info.orderedVertices);
     for (const [faceIndex, side] of info.faceSide) {
       const map = side === 0 ? leftByVertex : rightByVertex;
       this.faces[faceIndex] = this.faces[faceIndex].map(v => loopSet.has(v) ? map.get(v) : v);
     }
-
     const newFaces = [];
     for (const edge of info.edgesInOrder) {
       const la = leftByVertex.get(edge.a), lb = leftByVertex.get(edge.b);
@@ -62,7 +58,6 @@ function installLoopOffsetTopology() {
     }
     this.faces.push(...newFaces);
     this.edges();
-
     const edgeIndexByKey = new Map(this.edges().map((e, i) => [this.edgeKey(e.a, e.b), i]));
     const leftEdges = [], rightEdges = [], originalEdges = [];
     for (let i = 0; i < info.orderedVertices.length; i++) {
@@ -74,7 +69,6 @@ function installLoopOffsetTopology() {
       if (Number.isInteger(ri)) rightEdges.push(ri);
       if (Number.isInteger(oi)) originalEdges.push(oi);
     }
-
     return { spacing: amount, distance, shortestRail, leftEdges, rightEdges, originalEdges, faceCount: newFaces.length };
   };
 
@@ -89,7 +83,7 @@ const output = document.querySelector('#offsetLoopSpacingOut');
 const status = document.querySelector('#selectionStatus');
 const canvas = document.querySelector('#viewport');
 const multiToggle = document.querySelector('#multiSelectToggle');
-const START_PX = 7;
+const START_PX = 5;
 let armed = false;
 let drag = null;
 let pendingHighlight = null;
@@ -101,15 +95,12 @@ function info(edgeIds = selectedEdges()) {
   return mesh?.offsetEdgeLoopInfo?.(edgeIds) || null;
 }
 function sync() {
-  if (button) {
-    button.disabled = !info();
-    button.classList.toggle('active', armed && !button.disabled);
-  }
-  if (armed && button?.disabled) armed = false;
+  if (!button) return;
+  button.disabled = !info();
+  button.classList.toggle('active', armed && !button.disabled);
+  if (armed && button.disabled) armed = false;
 }
-function forceRender() {
-  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true }));
-}
+function forceRender() { document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true })); }
 function restore(target, source) {
   target.vertices = source.vertices.map(v => v.clone());
   target.faces = source.faces.map(f => [...f]);
@@ -126,16 +117,17 @@ function screenPoint(point) {
 function pointerHitsSelectedEdge(event, mesh, edgeIds) {
   const px = event.clientX, py = event.clientY;
   let best = null;
+  const edges = mesh.edges();
   for (const index of edgeIds) {
-    const edge = mesh.edges()[index];
+    const edge = edges[index];
     if (!edge) continue;
     const a = screenPoint(mesh.vertices[edge.a]), b = screenPoint(mesh.vertices[edge.b]);
     if (!a || !b) continue;
-    const abx = b.x-a.x, aby = b.y-a.y, len2 = abx*abx+aby*aby;
+    const abx=b.x-a.x, aby=b.y-a.y, len2=abx*abx+aby*aby;
     if (len2 < 1) continue;
-    const t = Math.max(0, Math.min(1, ((px-a.x)*abx+(py-a.y)*aby)/len2));
+    const t=Math.max(0,Math.min(1,((px-a.x)*abx+(py-a.y)*aby)/len2));
     const qx=a.x+abx*t, qy=a.y+aby*t, d=Math.hypot(px-qx,py-qy);
-    if (d <= 20 && (!best || d < best.d)) best={index,d,a,b};
+    if (d <= 34 && (!best || d < best.d)) best={index,d,a,b};
   }
   return best;
 }
@@ -143,122 +135,97 @@ function edgeNormal(hit) {
   const dx=hit.b.x-hit.a.x, dy=hit.b.y-hit.a.y, len=Math.hypot(dx,dy)||1;
   return { x:-dy/len, y:dx/len };
 }
-function edgeScreenPoint(mesh, edgeIndex, fraction = 0.5) {
-  const edge = mesh.edges()[edgeIndex];
+function edgeScreenPoint(mesh, edgeIndex, fraction=.5) {
+  const edge=mesh.edges()[edgeIndex];
   if (!edge) return null;
-  const point = mesh.vertices[edge.a].clone().lerp(mesh.vertices[edge.b], fraction);
-  return screenPoint(point);
+  return screenPoint(mesh.vertices[edge.a].clone().lerp(mesh.vertices[edge.b],fraction));
 }
 function tapEdge(mesh, edgeIndex) {
-  for (const fraction of [0.5, 0.38, 0.62]) {
-    const p = edgeScreenPoint(mesh, edgeIndex, fraction);
+  for (const fraction of [.5,.38,.62]) {
+    const p=edgeScreenPoint(mesh,edgeIndex,fraction);
     if (!p) continue;
-    canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:1, clientX:p.x, clientY:p.y }));
-    canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles:true, cancelable:true, pointerId:96, pointerType:'mouse', isPrimary:true, button:0, buttons:0, clientX:p.x, clientY:p.y }));
-    if ((liveState()?.selectedEdges || []).includes(edgeIndex)) return true;
+    canvas.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerId:96,pointerType:'mouse',isPrimary:true,button:0,buttons:1,clientX:p.x,clientY:p.y}));
+    canvas.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,cancelable:true,pointerId:96,pointerType:'mouse',isPrimary:true,button:0,buttons:0,clientX:p.x,clientY:p.y}));
+    if ((liveState()?.selectedEdges||[]).includes(edgeIndex)) return true;
   }
   return false;
 }
 function selectCreatedLoops(mesh, indices) {
   document.querySelector('#deselectAllBtn')?.click();
-  if (multiToggle) {
-    multiToggle.checked = true;
-    multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
-  }
-  for (const index of [...new Set(indices)]) tapEdge(mesh, index);
-  if (multiToggle) {
-    multiToggle.checked = false;
-    multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
-  }
+  if (multiToggle) { multiToggle.checked=true; multiToggle.dispatchEvent(new Event('change',{bubbles:true})); }
+  for (const index of [...new Set(indices)]) tapEdge(mesh,index);
+  if (multiToggle) { multiToggle.checked=false; multiToggle.dispatchEvent(new Event('change',{bubbles:true})); }
 }
 function highlightEdges(indices, hex) {
-  const state = liveState();
-  let count = 0;
+  const state=liveState(); let count=0;
   for (const index of indices) {
-    const line = state?.edgeObjects?.get(index);
+    const line=state?.edgeObjects?.get(index);
     if (!line?.material?.clone) continue;
-    const material = line.material.clone();
-    material.color?.setHex?.(hex);
-    material.depthTest = false;
-    line.material = material;
-    line.renderOrder = 36;
-    count++;
+    const material=line.material.clone();
+    material.color?.setHex?.(hex); material.depthTest=false; line.material=material; line.renderOrder=36; count++;
   }
   return count;
 }
 function applyPendingHighlight() {
   if (!pendingHighlight) return;
-  const { leftEdges, rightEdges, originalEdges, spacing, distance } = pendingHighlight;
-  const visible = highlightEdges([...leftEdges, ...rightEdges], 0x62d8ff) + highlightEdges(originalEdges, 0xffe14a);
+  const {leftEdges,rightEdges,originalEdges,spacing,distance}=pendingHighlight;
+  const visible=highlightEdges([...leftEdges,...rightEdges],0x62d8ff)+highlightEdges(originalEdges,0xffe14a);
   if (visible) {
-    if (status) status.textContent = `Offset Loop committed • uniform ${distance.toFixed(3)} • ${Math.round(spacing*100)}%`;
-    pendingHighlight = null;
+    if (status) status.textContent=`Offset Loop committed • uniform ${distance.toFixed(3)} • ${Math.round(spacing*100)}%`;
+    pendingHighlight=null;
   }
 }
 
-slider?.addEventListener('input', () => {
-  if (output) output.textContent = `${slider.value}%`;
-});
-button?.addEventListener('click', event => {
+slider?.addEventListener('input',()=>{ if(output) output.textContent=`${slider.value}%`; });
+button?.addEventListener('click',event=>{
   event.preventDefault();
-  armed = !armed;
+  armed=!armed;
   sync();
-  if (status) status.textContent = armed ? 'Offset Loop • drag any selected loop edge' : 'Offset Loop off';
+  if(status) status.textContent=armed?'Offset Loop • drag any selected loop edge':'Offset Loop off';
 });
+document.addEventListener('click',event=>{
+  if(!armed||event.target?.closest?.('#offsetLoopBtn')) return;
+  if(event.target?.closest?.('button')) { armed=false; sync(); }
+},true);
 
-document.addEventListener('click', event => {
-  if (!armed || event.target?.closest?.('#offsetLoopBtn')) return;
-  const other = event.target?.closest?.('button');
-  if (!other) return;
-  armed = false;
-  sync();
-}, true);
-
-canvas?.addEventListener('pointerdown', event => {
-  if (!armed || !event.isPrimary) return;
-  const state=liveState(), mesh=state?.mesh, edgeIds=selectedEdges(), current=info(edgeIds);
-  if (!mesh || !current || !edgeIds.length) return;
+canvas?.addEventListener('pointerdown',event=>{
+  if(!armed||!event.isPrimary) return;
+  const state=liveState(), mesh=state?.mesh, edgeIds=selectedEdges();
+  if(!mesh||!edgeIds.length) return;
+  const frozenInfo=mesh.offsetEdgeLoopInfo?.(edgeIds);
+  if(!frozenInfo) return;
   const hit=pointerHitsSelectedEdge(event,mesh,edgeIds);
-  if (!hit) return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  drag={
-    id:event.pointerId, mesh, before:mesh.clone(), edgeIds:[...edgeIds],
-    startX:event.clientX, startY:event.clientY, normal:edgeNormal(hit),
-    changed:false, preview:null
-  };
+  if(!hit) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  drag={id:event.pointerId,mesh,before:mesh.clone(),edgeIds:[...edgeIds],startX:event.clientX,startY:event.clientY,normal:edgeNormal(hit),changed:false,preview:null};
   canvas.setPointerCapture?.(event.pointerId);
-}, true);
+},true);
 
-canvas?.addEventListener('pointermove', event => {
-  if (!drag || drag.id!==event.pointerId) return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  const dx=event.clientX-drag.startX, dy=event.clientY-drag.startY;
+canvas?.addEventListener('pointermove',event=>{
+  if(!drag||drag.id!==event.pointerId) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;
   const across=Math.abs(dx*drag.normal.x+dy*drag.normal.y);
-  if (!drag.changed && across < START_PX) return;
+  if(!drag.changed&&across<START_PX) return;
   drag.changed=true;
-  const amount=Math.max(.02,Math.min(.45,.02+across*.00215));
+  const amount=Math.max(.02,Math.min(.45,across/160));
   restore(drag.mesh,drag.before);
   const result=drag.mesh.offsetEdgeLoop(drag.edgeIds,amount);
   drag.preview=result;
-  if (!result) return;
-  if (slider) slider.value=String(Math.round(result.spacing*100));
-  if (output) output.textContent=`${Math.round(result.spacing*100)}%`;
-  if (status) status.textContent=`Offset Loop • ${Math.round(result.spacing*100)}% • ${result.distance.toFixed(3)}`;
+  if(!result){ if(status) status.textContent='Offset Loop • invalid preview'; return; }
+  if(slider) slider.value=String(Math.round(result.spacing*100));
+  if(output) output.textContent=`${Math.round(result.spacing*100)}%`;
+  if(status) status.textContent=`Offset Loop • ${Math.round(result.spacing*100)}% • ${result.distance.toFixed(3)}`;
   forceRender();
-}, true);
+},true);
 
-function finish(event) {
-  if (!drag || drag.id!==event.pointerId) return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  const current=drag;
-  drag=null;
-  if (event.type==='pointercancel' || !current.changed || !current.preview) {
-    restore(current.mesh,current.before);
-    forceRender();
-    if (status) status.textContent='Offset Loop • drag any selected loop edge';
+function finish(event){
+  if(!drag||drag.id!==event.pointerId) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  const current=drag; drag=null;
+  if(event.type==='pointercancel'||!current.changed||!current.preview){
+    restore(current.mesh,current.before); forceRender();
+    if(status) status.textContent='Offset Loop • drag any selected loop edge';
     return;
   }
   globalThis.__boxlabHistory?.push(current.before);
@@ -269,10 +236,9 @@ function finish(event) {
     forceRender();
     requestAnimationFrame(applyPendingHighlight);
   });
-  armed=false;
-  sync();
+  armed=false; sync();
 }
-canvas?.addEventListener('pointerup', finish, true);
-canvas?.addEventListener('pointercancel', finish, true);
-window.addEventListener('boxlab-bridge-state', () => { sync(); applyPendingHighlight(); });
+canvas?.addEventListener('pointerup',finish,true);
+canvas?.addEventListener('pointercancel',finish,true);
+window.addEventListener('boxlab-bridge-state',()=>{sync();applyPendingHighlight();});
 sync();
