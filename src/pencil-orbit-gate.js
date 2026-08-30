@@ -19,7 +19,10 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     return event.pointerType === 'pen' && event.pressure > 0;
   }
 
-  for (const type of ['pointerdown','pointermove','pointerup','pointercancel','pointerover','pointerenter','pointerout','pointerleave']) {
+  // Important: Pencil pointerup normally reports pressure=0 on iPad. Never
+  // swallow pointerup/pointercancel as "hover" or OrbitControls will retain
+  // the pen pointer and subsequent finger gestures will be locked out.
+  for (const type of ['pointerdown','pointermove','pointerover','pointerenter','pointerout','pointerleave']) {
     nativeAddEventListener(type, event => {
       if (!isPenHover(event)) return;
       event.preventDefault?.();
@@ -85,8 +88,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     try { canvas.releasePointerCapture?.(event.pointerId); } catch {}
   }
 
-  nativeAddEventListener('pointerup', endPenNavigation, { capture: true, passive: true });
-  nativeAddEventListener('pointercancel', endPenNavigation, { capture: true, passive: true });
+  // These release events must remain visible to OrbitControls.
+  nativeAddEventListener('pointerup', endPenNavigation, { capture: false, passive: true });
+  nativeAddEventListener('pointercancel', endPenNavigation, { capture: false, passive: true });
 
   canvas.addEventListener = function (type, listener, options) {
     const name = typeof listener === 'function' ? listener.name || '' : '';
@@ -95,7 +99,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
     const wrapped = function (event) {
       if (event.pointerType !== 'pen') return listener.call(this, event);
-      if (isPenHover(event)) return;
+      if ((type !== 'pointerup' && type !== 'pointercancel') && isPenHover(event)) return;
       if (type === 'pointerdown') {
         if (pencilHitsEditableMesh(event)) return;
         penOrbitPointers.add(event.pointerId);
