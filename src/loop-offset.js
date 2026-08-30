@@ -1,4 +1,5 @@
 import { EditableMesh } from './mesh.js';
+import * as THREE from 'three';
 
 function installLoopOffsetTopology() {
   if (EditableMesh.prototype.__loopOffsetInstalled) return;
@@ -83,13 +84,19 @@ const output = document.querySelector('#offsetLoopSpacingOut');
 const status = document.querySelector('#selectionStatus');
 const canvas = document.querySelector('#viewport');
 const multiToggle = document.querySelector('#multiSelectToggle');
-const START_PX = 5;
+const START_PX = 7;
+const raycaster = new THREE.Raycaster();
+const pointer = new THREE.Vector2();
 let armed = false;
 let drag = null;
 let pendingHighlight = null;
 
 function liveState() { return globalThis.__boxlabBridgeState || null; }
-function selectedEdges() { return [...new Set(liveState()?.selectedEdges || [])]; }
+function selectedEdges() {
+  const bridge = globalThis.__boxlabSelectionBridge;
+  if (bridge?.mode?.() === 'edge') return [...new Set(bridge.indices?.() || [])];
+  return [...new Set(liveState()?.selectedEdges || [])];
+}
 function info(edgeIds = selectedEdges()) {
   const mesh = liveState()?.mesh;
   return mesh?.offsetEdgeLoopInfo?.(edgeIds) || null;
@@ -112,28 +119,45 @@ function screenPoint(point) {
   const camera = liveState()?.camera;
   if (!camera || !canvas || !point) return null;
   const p = point.clone().project(camera), rect = canvas.getBoundingClientRect();
-  return { x:rect.left + (p.x * .5 + .5) * rect.width, y:rect.top + (-p.y * .5 + .5) * rect.height };
+  return new THREE.Vector2(rect.left + (p.x * .5 + .5) * rect.width, rect.top + (-p.y * .5 + .5) * rect.height);
 }
-function pointerHitsSelectedEdge(event, mesh, edgeIds) {
-  const px = event.clientX, py = event.clientY;
-  let best = null;
-  const edges = mesh.edges();
-  for (const index of edgeIds) {
-    const edge = edges[index];
-    if (!edge) continue;
-    const a = screenPoint(mesh.vertices[edge.a]), b = screenPoint(mesh.vertices[edge.b]);
-    if (!a || !b) continue;
-    const abx=b.x-a.x, aby=b.y-a.y, len2=abx*abx+aby*aby;
-    if (len2 < 1) continue;
-    const t=Math.max(0,Math.min(1,((px-a.x)*abx+(py-a.y)*aby)/len2));
-    const qx=a.x+abx*t, qy=a.y+aby*t, d=Math.hypot(px-qx,py-qy);
-    if (d <= 34 && (!best || d < best.d)) best={index,d,a,b};
+function pointerHitsEdge(event, index) {
+  const object = liveState()?.edgeObjects?.get?.(index);
+  const camera = liveState()?.camera;
+  if (!object || !camera || !canvas) return false;
+  const rect = canvas.getBoundingClientRect();
+  pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+  pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+  raycaster.params.Line.threshold = .12;
+  raycaster.setFromCamera(pointer, camera);
+  return raycaster.intersectObject(object, false).length > 0;
+}
+function hitSelectedEdge(event, ids) {
+  for (const id of ids) if (pointerHitsEdge(event, id)) return id;
+  return null;
+}
+function seedRail(mesh, edgeIndex, loopInfo, before) {
+  const edge = before.edges()[edgeIndex];
+  if (!edge) return null;
+  const pa = screenPoint(before.vertices[edge.a]), pb = screenPoint(before.vertices[edge.b]);
+  if (!pa || !pb) return null;
+  const candidates = [];
+  for (const vertex of [edge.a, edge.b]) {
+    const pair = loopInfo.orientedRails.get(vertex);
+    if (!pair) continue;
+    const start = screenPoint(before.vertices[vertex]);
+    if (!start) continue;
+    for (const target of pair) {
+      const end = screenPoint(before.vertices[target]);
+      if (!end) continue;
+      const rail = end.clone().sub(start);
+      if (rail.length() > 2) candidates.push(rail);
+    }
   }
+  if (!candidates.length) return null;
+  let best = candidates[0];
+  for (const candidate of candidates) if (candidate.lengthSq() > best.lengthSq()) best = candidate;
   return best;
-}
-function edgeNormal(hit) {
-  const dx=hit.b.x-hit.a.x, dy=hit.b.y-hit.a.y, len=Math.hypot(dx,dy)||1;
-  return { x:-dy/len, y:dx/len };
 }
 function edgeScreenPoint(mesh, edgeIndex, fraction=.5) {
   const edge=mesh.edges()[edgeIndex];
@@ -181,7 +205,7 @@ button?.addEventListener('click',event=>{
   event.preventDefault();
   armed=!armed;
   sync();
-  if(status) status.textContent=armed?'Offset Loop • drag any selected loop edge':'Offset Loop off';
+  if(status) status.textContent=armed?'Offset Loop • Pencil-drag a selected loop edge':'Offset Loop off';
 });
 document.addEventListener('click',event=>{
   if(!armed||event.target?.closest?.('#offsetLoopBtn')) return;
@@ -192,23 +216,23 @@ canvas?.addEventListener('pointerdown',event=>{
   if(!armed||!event.isPrimary) return;
   const state=liveState(), mesh=state?.mesh, edgeIds=selectedEdges();
   if(!mesh||!edgeIds.length) return;
-  const frozenInfo=mesh.offsetEdgeLoopInfo?.(edgeIds);
-  if(!frozenInfo) return;
-  const hit=pointerHitsSelectedEdge(event,mesh,edgeIds);
-  if(!hit) return;
+  const loopInfo=mesh.offsetEdgeLoopInfo?.(edgeIds), seedEdge=hitSelectedEdge(event,edgeIds);
+  if(!loopInfo||!Number.isInteger(seedEdge)) return;
+  const before=mesh.clone(), rail=seedRail(mesh,seedEdge,loopInfo,before);
+  if(!rail||rail.lengthSq()<4) return;
   event.preventDefault(); event.stopImmediatePropagation();
-  drag={id:event.pointerId,mesh,before:mesh.clone(),edgeIds:[...edgeIds],startX:event.clientX,startY:event.clientY,normal:edgeNormal(hit),changed:false,preview:null};
+  drag={pointerId:event.pointerId,mesh,before,edgeIds:[...edgeIds],seedEdge,rail,startX:event.clientX,startY:event.clientY,changed:false,preview:null};
   canvas.setPointerCapture?.(event.pointerId);
 },true);
 
 canvas?.addEventListener('pointermove',event=>{
-  if(!drag||drag.id!==event.pointerId) return;
+  if(!drag||drag.pointerId!==event.pointerId) return;
   event.preventDefault(); event.stopImmediatePropagation();
   const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;
-  const across=Math.abs(dx*drag.normal.x+dy*drag.normal.y);
-  if(!drag.changed&&across<START_PX) return;
+  if(!drag.changed&&Math.hypot(dx,dy)<START_PX) return;
   drag.changed=true;
-  const amount=Math.max(.02,Math.min(.45,across/160));
+  const motion=new THREE.Vector2(dx,dy);
+  const amount=THREE.MathUtils.clamp(Math.abs(motion.dot(drag.rail.clone().normalize()))/Math.max(drag.rail.length(),1),.02,.45);
   restore(drag.mesh,drag.before);
   const result=drag.mesh.offsetEdgeLoop(drag.edgeIds,amount);
   drag.preview=result;
@@ -220,12 +244,12 @@ canvas?.addEventListener('pointermove',event=>{
 },true);
 
 function finish(event){
-  if(!drag||drag.id!==event.pointerId) return;
+  if(!drag||drag.pointerId!==event.pointerId) return;
   event.preventDefault(); event.stopImmediatePropagation();
   const current=drag; drag=null;
   if(event.type==='pointercancel'||!current.changed||!current.preview){
     restore(current.mesh,current.before); forceRender();
-    if(status) status.textContent='Offset Loop • drag any selected loop edge';
+    if(status) status.textContent='Offset Loop • Pencil-drag a selected loop edge';
     return;
   }
   globalThis.__boxlabHistory?.push(current.before);
