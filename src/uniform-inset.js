@@ -59,7 +59,7 @@ EditableMesh.prototype.insetFaceRegion=function(faceIndices,amount=.2){
   if(ids.length===1){const faceIndex=ids[0],face=this.faces[faceIndex];info={faceIndices:[faceIndex],boundaryLoop:[...face],regionVertices:[...new Set(face)]};}
   else info=this.faceRegionInfo?.(ids);
   if(!info||info.boundaryLoop.length<3)return null;
-  const normal=this.faceRegionNormal?.(info.faceIndices);if(!normal||normal.lengthSq()<1e-10)return null;
+  const normal=this.faceRegionNormal?.(info.faceIndices)||this.faceNormal(info.faceIndices[0]);if(!normal||normal.lengthSq()<1e-10)return null;
   const t=THREE.MathUtils.clamp(Number(amount)||.2,.01,.95),{u,v}=basisFor(normal),origin=this.vertices[info.boundaryLoop[0]].clone();
   const to2=p=>new THREE.Vector2(p.clone().sub(origin).dot(u),p.clone().sub(origin).dot(v));
   const boundary2=info.boundaryLoop.map(i=>to2(this.vertices[i]));
@@ -88,4 +88,12 @@ EditableMesh.prototype.insetFaceRegions=function(faceIndices,amount=.2){
   const group=this.faceRegionsInfo?.(faceIndices);if(!group)return null;const results=[];
   for(const region of group.regions){const result=this.insetFaceRegion(region.faceIndices,amount);if(!result)return null;results.push(result);}
   return {faceIndices:[...group.faceIndices],regions:results,regionCount:results.length,amount,mode:'uniform-offset'};
+};
+
+// Replace the legacy centre-lerp single-face inset with the same true edge-offset
+// operation used by region inset. Preserve main.js' expected return shape.
+EditableMesh.prototype.insetFace=function(faceIndex,amount=.2){
+  if(!Number.isInteger(faceIndex)||!this.faces[faceIndex])return null;
+  const result=this.insetFaceRegion([faceIndex],amount);
+  return result?{type:'face',index:faceIndex,mode:result.mode,distance:result.distance,amount:result.amount}:null;
 };
