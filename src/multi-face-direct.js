@@ -10,6 +10,7 @@ const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 let armed = null;
 let drag = null;
+let pendingSelection = null;
 
 function state(){ return globalThis.__boxlabBridgeState; }
 function bridge(){ return globalThis.__boxlabSelectionBridge; }
@@ -18,8 +19,8 @@ function faces(){
   const b=bridge();
   return b?.mode?.()==='face' ? [...new Set(b.indices?.()||[])] : [];
 }
-function info(){
-  const m=mesh(), ids=faces();
+function info(ids=faces()){
+  const m=mesh();
   return m && ids.length>1 ? m.faceRegionsInfo?.(ids) : null;
 }
 function render(){ document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})); }
@@ -86,9 +87,19 @@ function hitSelectedFace(event,m,ids,camera){
   return faceIndex;
 }
 
+// Selection comes first. Capture it before legacy direct-tool button handlers can
+// clear it when Extrude/Inset is pressed.
+document.addEventListener('pointerdown',event=>{
+  const target=event.target?.closest?.('#extrudeBtn,#insetBtn');
+  if(!target) return;
+  const ids=faces();
+  pendingSelection=ids.length ? {tool:target.id==='extrudeBtn'?'extrude':'inset',ids:[...ids]} : null;
+},true);
+
 document.addEventListener('click',event=>{
   const transform=event.target?.closest?.('#toolModes button');
   if(transform){
+    pendingSelection=null;
     if(armed){ armed=null; syncButtons(); }
     return;
   }
@@ -96,11 +107,14 @@ document.addEventListener('click',event=>{
   const target=event.target?.closest?.('#extrudeBtn,#insetBtn');
   if(!target) return;
   const tool=target.id==='extrudeBtn'?'extrude':'inset';
-  const group=info();
+  const captured=pendingSelection?.tool===tool ? [...pendingSelection.ids] : faces();
+  pendingSelection=null;
+  const group=info(captured);
   disarmTransforms();
 
   if(group){
     event.preventDefault(); event.stopImmediatePropagation();
+    bridge()?.set?.('face',captured);
     toggleArmed(tool);
     updateStatus();
     return;
