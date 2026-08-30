@@ -16,8 +16,8 @@ function nearestVertexAt(x,y){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!
 function selected(){return [...new Set(bridge()?.indices?.()||[])];}
 function applyPick(index){const current=selected(),has=current.includes(index),multi=!!multiToggle?.checked;let next;if(multi)next=has?current.filter(i=>i!==index):[...current,index];else next=has?[]:[index];bridge()?.set?.('vertex',next);if(status)status.textContent=next.length?`Vertex mode • ${next.length} selected`:'Vertex mode • nothing selected';}
 
-// Pencil assist is deliberately contact-only. iPad Pencil hover reports pointer events
-// before touching the glass; pressure===0 must never arm selection or interfere with orbit.
+// A vertex tap owns the complete Pencil gesture. Consume pointerdown before
+// OrbitControls or the older tap-toggle layer can arm navigation/deselection.
 document.addEventListener('pointerdown',event=>{
   if(event.target!==canvas||!event.isPrimary||mode()!=='vertex'||directToolActive())return;
   if(event.pointerType==='touch')return;
@@ -25,15 +25,23 @@ document.addEventListener('pointerdown',event=>{
   const hit=nearestVertexAt(event.clientX,event.clientY);
   if(!hit)return;
   press={id:event.pointerId,x:event.clientX,y:event.clientY,index:hit.i};
+  event.preventDefault();
+  event.stopImmediatePropagation();
+},true);
+
+document.addEventListener('pointermove',event=>{
+  if(!press||press.id!==event.pointerId)return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
 },true);
 
 document.addEventListener('pointerup',event=>{
   if(!press||press.id!==event.pointerId)return;
   const p=press;press=null;
-  if(event.target!==canvas||mode()!=='vertex'||directToolActive())return;
-  if(Math.hypot(event.clientX-p.x,event.clientY-p.y)>TAP_MOVE_PX)return;
   event.preventDefault();
   event.stopImmediatePropagation();
+  if(event.target!==canvas||mode()!=='vertex'||directToolActive())return;
+  if(Math.hypot(event.clientX-p.x,event.clientY-p.y)>TAP_MOVE_PX)return;
   applyPick(p.index);
 },true);
 
