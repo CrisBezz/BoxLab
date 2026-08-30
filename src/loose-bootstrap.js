@@ -33,4 +33,4 @@ installMultiVertexBevelTopology(EditableMesh);
 installFaceTransform();
 installFaceRegion(EditableMesh);
 
-import('./loop-offset.js?v=0.17.3');
+import('./loop-offset.js?v=0.32.16');
