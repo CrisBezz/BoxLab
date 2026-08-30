@@ -11,6 +11,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
   function pencilHitsEditableMesh(event) {
     if (event.pointerType !== 'pen') return false;
+    // iPad Pencil hover must never enter OrbitControls. Hover reports pen pointer
+    // events with zero pressure before the Pencil touches the glass.
+    if (!(event.pressure > 0)) return true;
     const state = globalThis.__boxlabBridgeState;
     const mesh = state?.mesh;
     const camera = state?.camera;
@@ -36,6 +39,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   }
 
   function snapshotSelection(event) {
+    if (event.pointerType === 'pen' && !(event.pressure > 0)) return;
     const bridge = selectionBridge();
     const type = bridge?.mode?.();
     const indices = [...(bridge?.indices?.() || [])];
@@ -44,6 +48,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   }
 
   function restoreSelectionForNavigation(event) {
+    if (event.pointerType === 'pen' && !(event.pressure > 0)) return;
     const snap = navigationSnapshots.get(event.pointerId);
     if (!snap || snap.restored) return;
     if (Math.hypot(event.clientX - snap.x, event.clientY - snap.y) < NAV_RESTORE_PX) return;
