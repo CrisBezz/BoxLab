@@ -3,7 +3,15 @@
 .always-transform #toolModes button,
 #transformPrecision button{min-height:30px!important;padding:4px 6px!important;font-size:12px!important;border-radius:7px!important}
 #transformPrecision{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;margin-top:4px}
-#transformPrecision button.active{background:#eef1f5!important;color:#171a20!important;font-weight:600!important}
+#transformPrecision button[data-constraint="x"]{background:rgba(220,72,72,.16);border-color:rgba(235,90,90,.42);color:#ffb1b1}
+#transformPrecision button[data-constraint="y"]{background:rgba(66,180,92,.16);border-color:rgba(82,205,108,.42);color:#aef0ba}
+#transformPrecision button[data-constraint="z"]{background:rgba(66,118,220,.18);border-color:rgba(86,140,240,.46);color:#b2caff}
+#transformPrecision button[data-constraint="x"].active{background:rgba(220,72,72,.72)!important;color:white!important}
+#transformPrecision button[data-constraint="y"].active{background:rgba(66,180,92,.72)!important;color:white!important}
+#transformPrecision button[data-constraint="z"].active{background:rgba(66,118,220,.76)!important;color:white!important}
+#transformPrecision button.active{font-weight:600!important}
+#transformPrecision button[data-constraint="free"].active,
+#transformPrecision button[data-constraint="auto"].active{background:#eef1f5!important;color:#171a20!important}
 #transformPrecision #transformSnapBtn{grid-column:1 / span 2}
 #transformPrecision #transformValue{grid-column:1 / -1;min-width:0;width:100%;box-sizing:border-box;min-height:30px;border-radius:7px}
 #transformPrecision #transformValue.with-snap{grid-column:3 / -1}
