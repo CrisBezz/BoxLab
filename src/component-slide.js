@@ -4,6 +4,7 @@ const canvas = document.querySelector('#viewport');
 const status = document.querySelector('#selectionStatus');
 const history = () => globalThis.__boxlabHistory;
 const bridgeState = () => globalThis.__boxlabBridgeState;
+const bridge = () => globalThis.__boxlabSelectionBridge;
 const vertexButton = document.querySelector('#vertexSlideBtn');
 const edgeButton = document.querySelector('#edgeSlideBtn');
 const SLIDE_START_PX = 7;
@@ -41,9 +42,12 @@ if (!THREE.Group.prototype.__boxlabComponentSlideObserverInstalled) {
   THREE.Group.prototype.__boxlabComponentSlideObserverInstalled = true;
 }
 
-function selectedEdges() { return unique(bridgeState()?.selectedEdges || []); }
+function selectedEdges() {
+  const b = bridge();
+  if (b?.mode?.() === 'edge') return unique(b.indices?.() || []);
+  return unique(bridgeState()?.selectedEdges || []);
+}
 function selectedVertex() { const ids = unique(selectedVertices); return ids.length === 1 ? ids[0] : null; }
-function selectedEdge() { const ids = selectedEdges(); return ids.length === 1 ? ids[0] : null; }
 function activeMode(mode) { return document.querySelector(`#selectionModes button[data-mode="${mode}"]`)?.classList.contains('active'); }
 
 function incidentNeighbours(mesh, vertex) {
@@ -80,21 +84,31 @@ function edgeSideTargets(mesh, edgeIndex) {
     if (aTarget === bTarget || !mesh.vertices[aTarget] || !mesh.vertices[bTarget]) return null;
     sides.push({ faceIndex:fi, aTarget, bTarget });
   }
-  return { edge, sides };
+  return { edgeIndex, edge, sides };
+}
+
+function selectedEdgeInfos(mesh, ids = selectedEdges()) {
+  if (!mesh || !ids.length) return null;
+  const infos = ids.map(i => edgeSideTargets(mesh, i));
+  return infos.every(Boolean) ? infos : null;
 }
 
 function setTool(tool) {
   activeTool = activeTool === tool ? null : tool;
   vertexButton?.classList.toggle('active', activeTool === 'vertex');
   edgeButton?.classList.toggle('active', activeTool === 'edge');
-  if (status) status.textContent = activeTool ? `${tool === 'vertex' ? 'Vertex' : 'Edge'} Slide • Pencil-drag the selected component` : 'Slide tool off';
+  if (status) {
+    const count = tool === 'edge' ? selectedEdges().length : 1;
+    status.textContent = activeTool ? `${tool === 'vertex' ? 'Vertex' : count > 1 ? `Multi Edge (${count})` : 'Edge'} Slide • Pencil-drag the selected component${count > 1 ? 's' : ''}` : 'Slide tool off';
+  }
 }
 vertexButton?.addEventListener('click', () => setTool('vertex'));
 edgeButton?.addEventListener('click', () => setTool('edge'));
 
 function syncButtons() {
   if (vertexButton) vertexButton.disabled = !activeMode('vertex') || selectedVertex() === null;
-  if (edgeButton) edgeButton.disabled = !activeMode('edge') || !edgeSideTargets(currentMesh(), selectedEdge());
+  const mesh = currentMesh(), ids = selectedEdges();
+  if (edgeButton) edgeButton.disabled = !activeMode('edge') || !selectedEdgeInfos(mesh, ids);
   if (activeTool === 'vertex' && vertexButton?.disabled) setTool('vertex');
   if (activeTool === 'edge' && edgeButton?.disabled) setTool('edge');
 }
@@ -116,6 +130,92 @@ function pointerHitsEdge(event, index) {
   raycaster.setFromCamera(pointer, cam);
   return raycaster.intersectObject(object, false).length > 0;
 }
+function hitSelectedEdge(event, ids) {
+  for (const id of ids) if (pointerHitsEdge(event, id)) return id;
+  return null;
+}
+
+function sideTarget(info, side, vertex) {
+  if (vertex === info.edge.a) return side.aTarget;
+  if (vertex === info.edge.b) return side.bTarget;
+  return null;
+}
+function sideRail(info, side, before) {
+  const a0 = screenPoint(before.vertices[info.edge.a]), b0 = screenPoint(before.vertices[info.edge.b]);
+  const at = screenPoint(before.vertices[side.aTarget]), bt = screenPoint(before.vertices[side.bTarget]);
+  if (!a0 || !b0 || !at || !bt) return null;
+  return at.clone().add(bt).multiplyScalar(.5).sub(a0.clone().add(b0).multiplyScalar(.5));
+}
+function bestSideForMotion(info, motion, before) {
+  let best = null;
+  for (let i = 0; i < info.sides.length; i++) {
+    const rail = sideRail(info, info.sides[i], before);
+    if (!rail || rail.length() < 2) continue;
+    const score = motion.dot(rail.clone().normalize());
+    if (!best || score > best.score) best = { sideIndex:i, side:info.sides[i], rail, score };
+  }
+  return best;
+}
+
+function solveEdgeSlide(drag, dx, dy) {
+  const motion = new THREE.Vector2(dx, dy);
+  if (motion.lengthSq() < 1) return null;
+  motion.normalize();
+  const byIndex = new Map(drag.infos.map(info => [info.edgeIndex, info]));
+  const assignments = new Map();
+  const vertexTargets = new Map();
+  const remaining = new Set(drag.ids);
+  let seedRail = null;
+
+  const assign = (info, sideIndex) => {
+    const side = info.sides[sideIndex];
+    if (!side) return false;
+    for (const vertex of [info.edge.a, info.edge.b]) {
+      const target = sideTarget(info, side, vertex);
+      const prior = vertexTargets.get(vertex);
+      if (prior !== undefined && prior !== target) return false;
+    }
+    assignments.set(info.edgeIndex, sideIndex);
+    vertexTargets.set(info.edge.a, side.aTarget);
+    vertexTargets.set(info.edge.b, side.bTarget);
+    remaining.delete(info.edgeIndex);
+    return true;
+  };
+
+  const growComponent = rootIndex => {
+    const root = byIndex.get(rootIndex);
+    if (!root) return false;
+    const preferred = bestSideForMotion(root, motion, drag.before);
+    if (!preferred || !assign(root, preferred.sideIndex)) return false;
+    if (rootIndex === drag.seedEdge) seedRail = preferred.rail;
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const edgeIndex of [...remaining]) {
+        const info = byIndex.get(edgeIndex);
+        const shared = [info.edge.a, info.edge.b].filter(v => vertexTargets.has(v));
+        if (!shared.length) continue;
+        const candidates = info.sides.map((side, sideIndex) => ({ side, sideIndex })).filter(candidate => shared.every(v => sideTarget(info, candidate.side, v) === vertexTargets.get(v)));
+        if (candidates.length !== 1 || !assign(info, candidates[0].sideIndex)) return false;
+        changed = true;
+      }
+    }
+    return true;
+  };
+
+  if (!growComponent(drag.seedEdge)) return null;
+  while (remaining.size) {
+    const root = remaining.values().next().value;
+    if (!growComponent(root)) return null;
+  }
+
+  if (!seedRail) {
+    const seed = byIndex.get(drag.seedEdge), sideIndex = assignments.get(drag.seedEdge);
+    seedRail = seed && Number.isInteger(sideIndex) ? sideRail(seed, seed.sides[sideIndex], drag.before) : null;
+  }
+  if (!seedRail || seedRail.lengthSq() < 4) return null;
+  return { assignments, vertexTargets, rail:seedRail };
+}
 
 canvas?.addEventListener('pointerdown', event => {
   if (!activeTool || !event.isPrimary) return;
@@ -129,10 +229,10 @@ canvas?.addEventListener('pointerdown', event => {
     event.preventDefault(); event.stopImmediatePropagation();
     drag = { kind:'vertex', pointerId:event.pointerId, mesh, before:mesh.clone(), vertex, neighbours, start:mesh.vertices[vertex].clone(), startX:event.clientX, startY:event.clientY, target:null, changed:false };
   } else {
-    const edgeIndex = selectedEdge(), info = edgeSideTargets(mesh, edgeIndex);
-    if (!info || !pointerHitsEdge(event, edgeIndex)) return;
+    const ids = selectedEdges(), infos = selectedEdgeInfos(mesh, ids), seedEdge = hitSelectedEdge(event, ids);
+    if (!infos || !Number.isInteger(seedEdge)) return;
     event.preventDefault(); event.stopImmediatePropagation();
-    drag = { kind:'edge', pointerId:event.pointerId, mesh, before:mesh.clone(), edgeIndex, edge:info.edge, sides:info.sides, startA:mesh.vertices[info.edge.a].clone(), startB:mesh.vertices[info.edge.b].clone(), startX:event.clientX, startY:event.clientY, side:null, changed:false };
+    drag = { kind:'edge', pointerId:event.pointerId, mesh, before:mesh.clone(), ids:[...ids], infos, seedEdge, startX:event.clientX, startY:event.clientY, solution:null, changed:false };
   }
   canvas.setPointerCapture?.(event.pointerId);
 }, true);
@@ -152,24 +252,6 @@ function chooseVertexTarget(drag, dx, dy) {
   }
   return best;
 }
-function chooseEdgeSide(drag, dx, dy) {
-  const motion = new THREE.Vector2(dx,dy);
-  if (motion.lengthSq() < 1) return null;
-  motion.normalize();
-  const a0 = screenPoint(drag.startA), b0 = screenPoint(drag.startB);
-  if (!a0 || !b0) return null;
-  const mid0 = a0.clone().add(b0).multiplyScalar(.5);
-  let best = null;
-  for (const side of drag.sides) {
-    const at = screenPoint(drag.before.vertices[side.aTarget]), bt = screenPoint(drag.before.vertices[side.bTarget]);
-    if (!at || !bt) continue;
-    const rail = at.clone().add(bt).multiplyScalar(.5).sub(mid0), len = rail.length();
-    if (len < 2) continue;
-    const score = motion.dot(rail.clone().normalize());
-    if (!best || score > best.score) best = { ...side, rail, score };
-  }
-  return best;
-}
 
 canvas?.addEventListener('pointermove', event => {
   if (!drag || drag.pointerId !== event.pointerId) return;
@@ -185,12 +267,15 @@ canvas?.addEventListener('pointermove', event => {
     drag.mesh.vertices[drag.vertex].copy(drag.start).lerp(drag.before.vertices[drag.target.index], t);
     if (status) status.textContent = `Vertex Slide • ${Math.round(t*100)}%`;
   } else {
-    if (!drag.side) drag.side = chooseEdgeSide(drag, dx, dy);
-    if (!drag.side) return;
-    const rail = drag.side.rail, t = THREE.MathUtils.clamp(new THREE.Vector2(dx,dy).dot(rail) / Math.max(rail.lengthSq(),1), 0, .98);
-    drag.mesh.vertices[drag.edge.a].copy(drag.startA).lerp(drag.before.vertices[drag.side.aTarget], t);
-    drag.mesh.vertices[drag.edge.b].copy(drag.startB).lerp(drag.before.vertices[drag.side.bTarget], t);
-    if (status) status.textContent = `Edge Slide • ${Math.round(t*100)}%`;
+    if (!drag.solution) drag.solution = solveEdgeSlide(drag, dx, dy);
+    if (!drag.solution) {
+      if (status) status.textContent = 'Edge Slide • selected edges do not form a compatible slide set';
+      return;
+    }
+    const rail = drag.solution.rail;
+    const t = THREE.MathUtils.clamp(new THREE.Vector2(dx,dy).dot(rail) / Math.max(rail.lengthSq(),1), 0, .98);
+    for (const [vertex, target] of drag.solution.vertexTargets) drag.mesh.vertices[vertex].copy(drag.before.vertices[vertex]).lerp(drag.before.vertices[target], t);
+    if (status) status.textContent = `${drag.ids.length > 1 ? 'Multi Edge' : 'Edge'} Slide • ${drag.ids.length} edge${drag.ids.length === 1 ? '' : 's'} • ${Math.round(t*100)}%`;
   }
   render();
 }, true);
@@ -198,10 +283,13 @@ canvas?.addEventListener('pointermove', event => {
 function finish(event) {
   if (!drag || drag.pointerId !== event.pointerId) return;
   event.preventDefault(); event.stopImmediatePropagation();
-  const kind = drag.kind, changed = drag.changed;
+  const kind = drag.kind, changed = drag.changed, count = kind === 'edge' ? drag.ids.length : 1;
   drag = null;
   render();
-  setTimeout(() => { if (status) status.textContent = changed ? `${kind === 'vertex' ? 'Vertex' : 'Edge'} Slide committed` : `${kind === 'vertex' ? 'Vertex' : 'Edge'} Slide cancelled`; syncButtons(); }, 0);
+  setTimeout(() => {
+    if (status) status.textContent = changed ? `${kind === 'vertex' ? 'Vertex' : count > 1 ? `Multi Edge (${count})` : 'Edge'} Slide committed` : `${kind === 'vertex' ? 'Vertex' : 'Edge'} Slide cancelled`;
+    syncButtons();
+  }, 0);
 }
 canvas?.addEventListener('pointerup', finish, true);
 canvas?.addEventListener('pointercancel', finish, true);
