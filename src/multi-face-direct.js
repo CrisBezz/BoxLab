@@ -30,10 +30,14 @@ function restore(target,source){
   target.looseEdges=new Set(source.looseEdges||[]);
   target.looseVertices=new Set(source.looseVertices||[]);
 }
+function disarmTransforms(){
+  globalThis.__boxlabTransformArming?.disarm?.();
+  transformButtons.forEach(button=>button.classList.remove('active'));
+}
 function syncButtons(){
   extrudeButton?.classList.toggle('active',armed==='extrude');
   insetButton?.classList.toggle('active',armed==='inset');
-  if(armed) transformButtons.forEach(button=>button.classList.remove('active'));
+  if(armed) disarmTransforms();
 }
 function setArmed(tool){ armed=tool; syncButtons(); }
 function toggleArmed(tool){ armed=armed===tool?null:tool; syncButtons(); }
@@ -93,6 +97,7 @@ document.addEventListener('click',event=>{
   if(!target) return;
   const tool=target.id==='extrudeBtn'?'extrude':'inset';
   const group=info();
+  disarmTransforms();
 
   if(group){
     event.preventDefault(); event.stopImmediatePropagation();
