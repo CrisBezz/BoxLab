@@ -10,7 +10,7 @@ const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('
 function state(){return globalThis.__boxlabBridgeState}function bridge(){return globalThis.__boxlabSelectionBridge}function hit(e){const s=state(),r=canvas.getBoundingClientRect();if(!s?.camera)return null;pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(pointer,s.camera);const h=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(h?.object?.userData?.index)?h.object.userData.index:null}
 function disarm(){armed=false;drag=null;button?.classList.remove('active');}
 function selectedEdgeIds(){const b=bridge();return b?.mode?.()==='edge'?[...(b.indices?.()||[])]:[];}
-function syncVersion(){document.title='BoxLab v0.33.9';const el=document.querySelector('#appVersion');if(el)el.textContent='v0.33.9';}
+function syncVersion(){document.title='BoxLab v0.34.0';const el=document.querySelector('#appVersion');if(el)el.textContent='v0.34.0';}
 function installFrameAll(){
   if(document.querySelector('#frameAllBtn'))return;
   const host=document.querySelector('.top-actions');
