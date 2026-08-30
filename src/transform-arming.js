@@ -49,6 +49,18 @@ for(const button of constraintButtons){
   new MutationObserver(()=>queueMicrotask(enforce)).observe(button,{attributes:true,attributeFilter:['class']});
 }
 
+const edgeToolSelector=[
+  '#loopCutBtn','#faceSplitBtn','#bevelBtn','#applyCreaseBtn','#clearCreaseBtn',
+  '#edgeSlideBtn','#offsetLoopBtn','#bridgeEdgesBtn','#fillFaceBtn',
+  '#dissolveLoopBtn','#dissolveEdgeBtn','#deleteEdgeBtn','#addEdgeBtn'
+].join(',');
+
+document.addEventListener('click',event=>{
+  const button=event.target?.closest?.(edgeToolSelector);
+  if(!button||button.disabled)return;
+  disarm();
+},true);
+
 globalThis.__boxlabTransformArming={
   tool:()=>armedTool,
   constraint:()=>armedConstraint,
