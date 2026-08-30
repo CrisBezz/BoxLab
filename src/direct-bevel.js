@@ -1,8 +1,8 @@
 import './auto-multi-transfer.js?v=0.28.10';
 import './ui-cleanup-0322.js?v=0.32.6';
-import './bridge-ui.js?v=0.32.2';
+import './bridge-ui.js?v=0.32.22';
 import './dissolve-bootstrap.js?v=0.32.4';
-import './dissolve-ui.js?v=0.32.4';
+import './dissolve-ui.js?v=0.32.22';
 import './transform-arming.js?v=0.32.14';
 import './component-tap-toggle.js?v=0.32.21';
 import * as THREE from 'three';
@@ -10,7 +10,7 @@ const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('
 function state(){return globalThis.__boxlabBridgeState}function bridge(){return globalThis.__boxlabSelectionBridge}function hit(e){const s=state(),r=canvas.getBoundingClientRect();if(!s?.camera)return null;pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(pointer,s.camera);const h=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(h?.object?.userData?.index)?h.object.userData.index:null}
 function disarm(){armed=false;drag=null;button?.classList.remove('active');}
 function selectedEdgeIds(){const b=bridge();return b?.mode?.()==='edge'?[...(b.indices?.()||[])]:[];}
-function syncVersion(){document.title='BoxLab v0.32.21';const el=document.querySelector('#appVersion');if(el)el.textContent='v0.32.21';}
+function syncVersion(){document.title='BoxLab v0.32.22';const el=document.querySelector('#appVersion');if(el)el.textContent='v0.32.22';}
 syncVersion();
 button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();armed=!armed;if(armed&&bridge()?.mode?.()!=='edge')document.querySelector('#selectionModes button[data-mode="edge"]')?.click();button.classList.toggle('active',armed);const count=selectedEdgeIds().length,useMulti=!!multiToggle?.checked&&count>1;document.querySelector('#selectionStatus').textContent=armed?(useMulti?`Bevel ${count} edges • drag any selected edge`:'Bevel Edge • drag an edge'):'Edge mode • nothing selected'},true);
 document.addEventListener('click',e=>{if(!armed||!e.isTrusted||e.target?.closest?.('#bevelBtn'))return;if(e.target?.closest?.('button'))disarm();},true);
