@@ -49,7 +49,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   }
 
   function snapshotSelection(event) {
-    if (isPenHover(event)) return;
+    if (event.pointerType !== 'pen' || isPenHover(event)) return;
     const bridge = selectionBridge();
     const type = bridge?.mode?.();
     const indices = [...(bridge?.indices?.() || [])];
@@ -58,7 +58,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   }
 
   function restoreSelectionForNavigation(event) {
-    if (isPenHover(event)) return;
+    if (event.pointerType !== 'pen' || isPenHover(event)) return;
     const snap = navigationSnapshots.get(event.pointerId);
     if (!snap || snap.restored) return;
     if (Math.hypot(event.clientX - snap.x, event.clientY - snap.y) < NAV_RESTORE_PX) return;
@@ -71,7 +71,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
   nativeAddEventListener('pointerdown', snapshotSelection, { capture: true, passive: true });
   nativeAddEventListener('pointermove', restoreSelectionForNavigation, { capture: true, passive: true });
-  const clearNavigationSnapshot = event => navigationSnapshots.delete(event.pointerId);
+  const clearNavigationSnapshot = event => {
+    if (event.pointerType === 'pen') navigationSnapshots.delete(event.pointerId);
+  };
   nativeAddEventListener('pointerup', clearNavigationSnapshot, { capture: true, passive: true });
   nativeAddEventListener('pointercancel', clearNavigationSnapshot, { capture: true, passive: true });
 
@@ -81,6 +83,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     if (!orbitPointer) return nativeAddEventListener(type, listener, options);
 
     const wrapped = function (event) {
+      if (event.pointerType !== 'pen') return listener.call(this, event);
       if (isPenHover(event)) return;
       if (type === 'pointerdown' && pencilHitsEditableMesh(event)) return;
       return listener.call(this, event);
