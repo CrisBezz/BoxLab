@@ -8,9 +8,15 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const pointer = new THREE.Vector2();
   const navigationSnapshots = new Map();
   const NAV_RESTORE_PX = 4;
+  const orbitListeners = new Map();
+  const penOrbitPointers = new Set();
 
   function isPenHover(event) {
     return event.pointerType === 'pen' && !(event.pressure > 0);
+  }
+
+  function isPenContact(event) {
+    return event.pointerType === 'pen' && event.pressure > 0;
   }
 
   for (const type of ['pointerdown','pointermove','pointerup','pointercancel','pointerover','pointerenter','pointerout','pointerleave']) {
@@ -71,11 +77,16 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
   nativeAddEventListener('pointerdown', snapshotSelection, { capture: true, passive: true });
   nativeAddEventListener('pointermove', restoreSelectionForNavigation, { capture: true, passive: true });
-  const clearNavigationSnapshot = event => {
-    if (event.pointerType === 'pen') navigationSnapshots.delete(event.pointerId);
-  };
-  nativeAddEventListener('pointerup', clearNavigationSnapshot, { capture: true, passive: true });
-  nativeAddEventListener('pointercancel', clearNavigationSnapshot, { capture: true, passive: true });
+
+  function endPenNavigation(event) {
+    if (event.pointerType !== 'pen') return;
+    navigationSnapshots.delete(event.pointerId);
+    penOrbitPointers.delete(event.pointerId);
+    try { canvas.releasePointerCapture?.(event.pointerId); } catch {}
+  }
+
+  nativeAddEventListener('pointerup', endPenNavigation, { capture: true, passive: true });
+  nativeAddEventListener('pointercancel', endPenNavigation, { capture: true, passive: true });
 
   canvas.addEventListener = function (type, listener, options) {
     const name = typeof listener === 'function' ? listener.name || '' : '';
@@ -85,9 +96,17 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     const wrapped = function (event) {
       if (event.pointerType !== 'pen') return listener.call(this, event);
       if (isPenHover(event)) return;
-      if (type === 'pointerdown' && pencilHitsEditableMesh(event)) return;
-      return listener.call(this, event);
+      if (type === 'pointerdown') {
+        if (pencilHitsEditableMesh(event)) return;
+        penOrbitPointers.add(event.pointerId);
+      }
+      const result = listener.call(this, event);
+      if ((type === 'pointerup' || type === 'pointercancel') && penOrbitPointers.has(event.pointerId)) {
+        endPenNavigation(event);
+      }
+      return result;
     };
+    orbitListeners.set(listener, wrapped);
     return nativeAddEventListener(type, wrapped, options);
   };
 
