@@ -9,11 +9,23 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const navigationSnapshots = new Map();
   const NAV_RESTORE_PX = 4;
 
+  function isPenHover(event) {
+    return event.pointerType === 'pen' && !(event.pressure > 0);
+  }
+
+  // Hard-stop every zero-pressure Pencil event before OrbitControls or any
+  // later canvas listener can treat hover as an active drag/navigation gesture.
+  for (const type of ['pointerdown','pointermove','pointerup','pointercancel','pointerover','pointerenter','pointerout','pointerleave']) {
+    nativeAddEventListener(type, event => {
+      if (!isPenHover(event)) return;
+      event.preventDefault?.();
+      event.stopImmediatePropagation?.();
+    }, { capture: true, passive: false });
+  }
+
   function pencilHitsEditableMesh(event) {
     if (event.pointerType !== 'pen') return false;
-    // iPad Pencil hover must never enter OrbitControls. Hover reports pen pointer
-    // events with zero pressure before the Pencil touches the glass.
-    if (!(event.pressure > 0)) return true;
+    if (isPenHover(event)) return true;
     const state = globalThis.__boxlabBridgeState;
     const mesh = state?.mesh;
     const camera = state?.camera;
@@ -39,7 +51,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   }
 
   function snapshotSelection(event) {
-    if (event.pointerType === 'pen' && !(event.pressure > 0)) return;
+    if (isPenHover(event)) return;
     const bridge = selectionBridge();
     const type = bridge?.mode?.();
     const indices = [...(bridge?.indices?.() || [])];
@@ -48,7 +60,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   }
 
   function restoreSelectionForNavigation(event) {
-    if (event.pointerType === 'pen' && !(event.pressure > 0)) return;
+    if (isPenHover(event)) return;
     const snap = navigationSnapshots.get(event.pointerId);
     if (!snap || snap.restored) return;
     if (Math.hypot(event.clientX - snap.x, event.clientY - snap.y) < NAV_RESTORE_PX) return;
@@ -67,11 +79,12 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
   canvas.addEventListener = function (type, listener, options) {
     const name = typeof listener === 'function' ? listener.name || '' : '';
-    const orbitPointerDown = type === 'pointerdown' && /onPointerDown/i.test(name);
-    if (!orbitPointerDown) return nativeAddEventListener(type, listener, options);
+    const orbitPointer = /^pointer/.test(type) && /onPointer/i.test(name);
+    if (!orbitPointer) return nativeAddEventListener(type, listener, options);
 
     const wrapped = function (event) {
-      if (pencilHitsEditableMesh(event)) return;
+      if (isPenHover(event)) return;
+      if (type === 'pointerdown' && pencilHitsEditableMesh(event)) return;
       return listener.call(this, event);
     };
     return nativeAddEventListener(type, wrapped, options);
