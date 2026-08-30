@@ -1,3 +1,4 @@
+import './uniform-inset.js?v=0.32.11';
 import * as THREE from 'three';
 
 const canvas = document.querySelector('#viewport');
@@ -39,7 +40,7 @@ function toggleArmed(tool){ armed=armed===tool?null:tool; syncButtons(); }
 function updateStatus(){
   const i=info();
   if(!status||!i||!armed) return;
-  status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • drag to ${armed==='extrude'?'Extrude':'Inset'}`;
+  status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • drag to ${armed==='extrude'?'Extrude':'Uniform Inset'}`;
 }
 function screenPoint(point,camera){
   const p=point.clone().project(camera),r=canvas.getBoundingClientRect();
@@ -81,12 +82,11 @@ function hitSelectedFace(event,m,ids,camera){
   return faceIndex;
 }
 
-// Keep persistent multi-face direct state in lock-step with the visible tool state.
 document.addEventListener('click',event=>{
   const transform=event.target?.closest?.('#toolModes button');
   if(transform){
     if(armed){ armed=null; syncButtons(); }
-    return; // legacy transform handler remains free to activate the chosen transform
+    return;
   }
 
   const target=event.target?.closest?.('#extrudeBtn,#insetBtn');
@@ -101,7 +101,6 @@ document.addEventListener('click',event=>{
     return;
   }
 
-  // Single-face path stays with main.js, but mirror its true toggle state.
   setArmed(armed===tool?null:tool);
 },true);
 
@@ -137,7 +136,11 @@ document.addEventListener('pointermove',event=>{
   }else{
     const amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));
     const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;
-    if(result&&status)status.textContent=`Inset • ${drag.faces.length} faces • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${Math.round(amount*100)}%`;
+    if(result&&status){
+      const distances=(result.regions||[]).map(r=>r.distance).filter(Number.isFinite);
+      const d=distances.length?Math.min(...distances):0;
+      status.textContent=`Uniform Inset • ${drag.faces.length} faces • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${d.toFixed(3)}`;
+    }
   }
   render();
 },true);
@@ -151,7 +154,7 @@ function finish(event){
   if(!done) restore(m,before); else bridge()?.set?.('face',ids);
   syncButtons();
   const i=info();
-  if(i&&status&&armed) status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • ${tool==='extrude'?'Extrude':'Inset'} ready`;
+  if(i&&status&&armed) status.textContent=`${i.faceIndices.length} faces • ${i.regionCount} region${i.regionCount===1?'':'s'} • ${tool==='extrude'?'Extrude':'Uniform Inset'} ready`;
   render();
 }
 document.addEventListener('pointerup',finish,true);
