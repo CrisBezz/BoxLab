@@ -13,11 +13,33 @@ function installLoopOffsetTopology() {
     const amount = Math.max(0.02, Math.min(0.45, Number(spacing) || 0.2));
     const leftByVertex = new Map(), rightByVertex = new Map();
 
+    // Use one world-space support distance for the whole loop. The legacy
+    // implementation lerped every rail by the same percentage, which made
+    // support spacing visibly uneven on stretched/skewed quad strips.
+    const rails = [];
     for (const vertex of info.orderedVertices) {
       const point = this.vertices[vertex], pair = info.orientedRails.get(vertex);
       if (!point || !pair) return null;
-      const left = point.clone().lerp(this.vertices[pair[0]], amount);
-      const right = point.clone().lerp(this.vertices[pair[1]], amount);
+      for (const target of pair) {
+        const targetPoint = this.vertices[target];
+        if (!targetPoint) return null;
+        const length = point.distanceTo(targetPoint);
+        if (!Number.isFinite(length) || length < 1e-6) return null;
+        rails.push(length);
+      }
+    }
+    const shortestRail = Math.min(...rails);
+    if (!Number.isFinite(shortestRail) || shortestRail < 1e-6) return null;
+    const distance = shortestRail * amount;
+
+    for (const vertex of info.orderedVertices) {
+      const point = this.vertices[vertex], pair = info.orientedRails.get(vertex);
+      if (!point || !pair) return null;
+      const leftTarget = this.vertices[pair[0]], rightTarget = this.vertices[pair[1]];
+      const leftLength = point.distanceTo(leftTarget), rightLength = point.distanceTo(rightTarget);
+      if (leftLength < 1e-6 || rightLength < 1e-6) return null;
+      const left = point.clone().lerp(leftTarget, distance / leftLength);
+      const right = point.clone().lerp(rightTarget, distance / rightLength);
       this.vertices.push(left); leftByVertex.set(vertex, this.vertices.length - 1);
       this.vertices.push(right); rightByVertex.set(vertex, this.vertices.length - 1);
     }
@@ -56,7 +78,7 @@ function installLoopOffsetTopology() {
       if (Number.isInteger(oi)) originalEdges.push(oi);
     }
 
-    return { spacing: amount, leftEdges, rightEdges, originalEdges, faceCount: newFaces.length };
+    return { spacing: amount, distance, shortestRail, leftEdges, rightEdges, originalEdges, faceCount: newFaces.length };
   };
 
   EditableMesh.prototype.__loopOffsetInstalled = true;
@@ -130,10 +152,10 @@ function highlightEdges(indices, hex) {
 }
 function applyPendingHighlight() {
   if (!pendingHighlight) return;
-  const { leftEdges, rightEdges, originalEdges, spacing } = pendingHighlight;
+  const { leftEdges, rightEdges, originalEdges, spacing, distance } = pendingHighlight;
   const visible = highlightEdges([...leftEdges, ...rightEdges], 0x62d8ff) + highlightEdges(originalEdges, 0xffe14a);
   if (visible) {
-    if (status) status.textContent = `Support loops created • 3 rings highlighted • ${Math.round(spacing * 100)}% spacing`;
+    if (status) status.textContent = `Support loops created • uniform spacing ${distance.toFixed(3)} • ${Math.round(spacing * 100)}% limit`;
     pendingHighlight = null;
   }
 }
@@ -155,7 +177,7 @@ button?.addEventListener('click', () => {
     forceRender();
     requestAnimationFrame(applyPendingHighlight);
   });
-  if (status) status.textContent = `Support loops created • ${result.leftEdges.length + result.rightEdges.length} support edges • ${Math.round(result.spacing * 100)}% spacing`;
+  if (status) status.textContent = `Support loops created • ${result.leftEdges.length + result.rightEdges.length} support edges • uniform ${result.distance.toFixed(3)}`;
   sync();
 });
 window.addEventListener('boxlab-bridge-state', () => { sync(); applyPendingHighlight(); });
