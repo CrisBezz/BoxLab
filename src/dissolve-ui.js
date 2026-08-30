@@ -2,7 +2,6 @@ const state = globalThis.__boxlabBridgeState;
 const edgeButton = document.querySelector('#dissolveEdgeBtn');
 const loopButton = document.querySelector('#dissolveLoopBtn');
 const status = document.querySelector('#selectionStatus');
-const multiToggle = document.querySelector('#multiSelectToggle');
 
 function bridge(){ return globalThis.__boxlabSelectionBridge; }
 function currentMesh() { return state?.mesh || null; }
@@ -54,12 +53,6 @@ function sync() {
     loopButton.textContent = mode?.source === 'active' ? 'Dissolve Active Loop' : 'Dissolve Loop';
   }
 }
-function clearMultiSelectionAfterTopologyChange() {
-  if (multiToggle?.checked) {
-    multiToggle.checked = false;
-    multiToggle.dispatchEvent(new Event('change', { bubbles:true }));
-  }
-}
 function forceRender(){ document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})); }
 function stayEdgeMode(){
   const button=document.querySelector('#selectionModes button[data-mode="edge"]');
@@ -79,7 +72,6 @@ loopButton?.addEventListener('click', () => {
     return;
   }
   history.push(before);
-  clearMultiSelectionAfterTopologyChange();
   const slide = document.querySelector('#loopSlide');
   if (slide) slide.disabled = true;
   stayEdgeMode();
@@ -100,7 +92,6 @@ edgeButton?.addEventListener('click', () => {
     return;
   }
   history.push(before);
-  clearMultiSelectionAfterTopologyChange();
   stayEdgeMode();
   setTimeout(() => {
     if (status) status.textContent = `${result.dissolvedEdges>1?'Multi Dissolve':'Dissolve Edge'} • removed ${result.dissolvedEdges} edge${result.dissolvedEdges===1?'':'s'} • Edge mode`;
