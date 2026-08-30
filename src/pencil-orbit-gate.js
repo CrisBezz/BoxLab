@@ -13,8 +13,6 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     return event.pointerType === 'pen' && !(event.pressure > 0);
   }
 
-  // Only suppress Apple Pencil hover. Touch must pass through untouched so
-  // one-finger orbit, two-finger pan and pinch zoom remain native OrbitControls input.
   for (const type of ['pointerdown','pointermove','pointerup','pointercancel','pointerover','pointerenter','pointerout','pointerleave']) {
     nativeAddEventListener(type, event => {
       if (!isPenHover(event)) return;
@@ -51,7 +49,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   }
 
   function snapshotSelection(event) {
-    if (event.pointerType !== 'pen' || isPenHover(event)) return;
+    if (isPenHover(event)) return;
     const bridge = selectionBridge();
     const type = bridge?.mode?.();
     const indices = [...(bridge?.indices?.() || [])];
@@ -60,7 +58,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   }
 
   function restoreSelectionForNavigation(event) {
-    if (event.pointerType !== 'pen' || isPenHover(event)) return;
+    if (isPenHover(event)) return;
     const snap = navigationSnapshots.get(event.pointerId);
     if (!snap || snap.restored) return;
     if (Math.hypot(event.clientX - snap.x, event.clientY - snap.y) < NAV_RESTORE_PX) return;
@@ -73,9 +71,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
   nativeAddEventListener('pointerdown', snapshotSelection, { capture: true, passive: true });
   nativeAddEventListener('pointermove', restoreSelectionForNavigation, { capture: true, passive: true });
-  const clearNavigationSnapshot = event => {
-    if (event.pointerType === 'pen') navigationSnapshots.delete(event.pointerId);
-  };
+  const clearNavigationSnapshot = event => navigationSnapshots.delete(event.pointerId);
   nativeAddEventListener('pointerup', clearNavigationSnapshot, { capture: true, passive: true });
   nativeAddEventListener('pointercancel', clearNavigationSnapshot, { capture: true, passive: true });
 
@@ -85,8 +81,6 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     if (!orbitPointer) return nativeAddEventListener(type, listener, options);
 
     const wrapped = function (event) {
-      // Touch and mouse always pass through unchanged.
-      if (event.pointerType !== 'pen') return listener.call(this, event);
       if (isPenHover(event)) return;
       if (type === 'pointerdown' && pencilHitsEditableMesh(event)) return;
       return listener.call(this, event);
