@@ -13,9 +13,6 @@ function installLoopOffsetTopology() {
     const amount = Math.max(0.02, Math.min(0.45, Number(spacing) || 0.2));
     const leftByVertex = new Map(), rightByVertex = new Map();
 
-    // Use one world-space support distance for the whole loop. The legacy
-    // implementation lerped every rail by the same percentage, which made
-    // support spacing visibly uneven on stretched/skewed quad strips.
     const rails = [];
     for (const vertex of info.orderedVertices) {
       const point = this.vertices[vertex], pair = info.orientedRails.get(vertex);
@@ -92,26 +89,65 @@ const output = document.querySelector('#offsetLoopSpacingOut');
 const status = document.querySelector('#selectionStatus');
 const canvas = document.querySelector('#viewport');
 const multiToggle = document.querySelector('#multiSelectToggle');
+const START_PX = 7;
+let armed = false;
+let drag = null;
 let pendingHighlight = null;
 
 function liveState() { return globalThis.__boxlabBridgeState || null; }
-function info() {
-  const state = liveState(), mesh = state?.mesh;
-  return mesh?.offsetEdgeLoopInfo?.(state?.selectedEdges || []) || null;
+function selectedEdges() { return [...new Set(liveState()?.selectedEdges || [])]; }
+function info(edgeIds = selectedEdges()) {
+  const mesh = liveState()?.mesh;
+  return mesh?.offsetEdgeLoopInfo?.(edgeIds) || null;
 }
 function sync() {
-  if (button) button.disabled = !info();
+  if (button) {
+    button.disabled = !info();
+    button.classList.toggle('active', armed && !button.disabled);
+  }
+  if (armed && button?.disabled) armed = false;
 }
 function forceRender() {
-  const cage = document.querySelector('#cageToggle');
-  if (cage) cage.dispatchEvent(new Event('change', { bubbles:true }));
+  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true }));
+}
+function restore(target, source) {
+  target.vertices = source.vertices.map(v => v.clone());
+  target.faces = source.faces.map(f => [...f]);
+  target.creases = new Map(source.creases);
+  target.looseEdges = new Set(source.looseEdges || []);
+  target.looseVertices = new Set(source.looseVertices || []);
+}
+function screenPoint(point) {
+  const camera = liveState()?.camera;
+  if (!camera || !canvas || !point) return null;
+  const p = point.clone().project(camera), rect = canvas.getBoundingClientRect();
+  return { x:rect.left + (p.x * .5 + .5) * rect.width, y:rect.top + (-p.y * .5 + .5) * rect.height };
+}
+function pointerHitsSelectedEdge(event, mesh, edgeIds) {
+  const px = event.clientX, py = event.clientY;
+  let best = null;
+  for (const index of edgeIds) {
+    const edge = mesh.edges()[index];
+    if (!edge) continue;
+    const a = screenPoint(mesh.vertices[edge.a]), b = screenPoint(mesh.vertices[edge.b]);
+    if (!a || !b) continue;
+    const abx = b.x-a.x, aby = b.y-a.y, len2 = abx*abx+aby*aby;
+    if (len2 < 1) continue;
+    const t = Math.max(0, Math.min(1, ((px-a.x)*abx+(py-a.y)*aby)/len2));
+    const qx=a.x+abx*t, qy=a.y+aby*t, d=Math.hypot(px-qx,py-qy);
+    if (d <= 20 && (!best || d < best.d)) best={index,d,a,b};
+  }
+  return best;
+}
+function edgeNormal(hit) {
+  const dx=hit.b.x-hit.a.x, dy=hit.b.y-hit.a.y, len=Math.hypot(dx,dy)||1;
+  return { x:-dy/len, y:dx/len };
 }
 function edgeScreenPoint(mesh, edgeIndex, fraction = 0.5) {
-  const state = liveState(), camera = state?.camera, edge = mesh.edges()[edgeIndex];
-  if (!camera || !canvas || !edge) return null;
-  const point = mesh.vertices[edge.a].clone().lerp(mesh.vertices[edge.b], fraction).project(camera);
-  const rect = canvas.getBoundingClientRect();
-  return { x:rect.left + (point.x * 0.5 + 0.5) * rect.width, y:rect.top + (-point.y * 0.5 + 0.5) * rect.height };
+  const edge = mesh.edges()[edgeIndex];
+  if (!edge) return null;
+  const point = mesh.vertices[edge.a].clone().lerp(mesh.vertices[edge.b], fraction);
+  return screenPoint(point);
 }
 function tapEdge(mesh, edgeIndex) {
   for (const fraction of [0.5, 0.38, 0.62]) {
@@ -155,30 +191,88 @@ function applyPendingHighlight() {
   const { leftEdges, rightEdges, originalEdges, spacing, distance } = pendingHighlight;
   const visible = highlightEdges([...leftEdges, ...rightEdges], 0x62d8ff) + highlightEdges(originalEdges, 0xffe14a);
   if (visible) {
-    if (status) status.textContent = `Support loops created • uniform spacing ${distance.toFixed(3)} • ${Math.round(spacing * 100)}% limit`;
+    if (status) status.textContent = `Offset Loop committed • uniform ${distance.toFixed(3)} • ${Math.round(spacing*100)}%`;
     pendingHighlight = null;
   }
 }
+
 slider?.addEventListener('input', () => {
   if (output) output.textContent = `${slider.value}%`;
 });
-button?.addEventListener('click', () => {
-  const state = liveState(), mesh = state?.mesh, current = info(), history = globalThis.__boxlabHistory;
-  if (!mesh || !current || !history) return;
-  const before = mesh.clone();
-  const spacing = Number(slider?.value || 20) / 100;
-  const result = mesh.offsetEdgeLoop(state.selectedEdges, spacing);
+button?.addEventListener('click', event => {
+  event.preventDefault();
+  armed = !armed;
+  sync();
+  if (status) status.textContent = armed ? 'Offset Loop • drag any selected loop edge' : 'Offset Loop off';
+});
+
+document.addEventListener('click', event => {
+  if (!armed || event.target?.closest?.('#offsetLoopBtn')) return;
+  const other = event.target?.closest?.('button');
+  if (!other) return;
+  armed = false;
+  sync();
+}, true);
+
+canvas?.addEventListener('pointerdown', event => {
+  if (!armed || !event.isPrimary) return;
+  const state=liveState(), mesh=state?.mesh, edgeIds=selectedEdges(), current=info(edgeIds);
+  if (!mesh || !current || !edgeIds.length) return;
+  const hit=pointerHitsSelectedEdge(event,mesh,edgeIds);
+  if (!hit) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  drag={
+    id:event.pointerId, mesh, before:mesh.clone(), edgeIds:[...edgeIds],
+    startX:event.clientX, startY:event.clientY, normal:edgeNormal(hit),
+    changed:false, preview:null
+  };
+  canvas.setPointerCapture?.(event.pointerId);
+}, true);
+
+canvas?.addEventListener('pointermove', event => {
+  if (!drag || drag.id!==event.pointerId) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  const dx=event.clientX-drag.startX, dy=event.clientY-drag.startY;
+  const across=Math.abs(dx*drag.normal.x+dy*drag.normal.y);
+  if (!drag.changed && across < START_PX) return;
+  drag.changed=true;
+  const amount=Math.max(.02,Math.min(.45,.02+across*.00215));
+  restore(drag.mesh,drag.before);
+  const result=drag.mesh.offsetEdgeLoop(drag.edgeIds,amount);
+  drag.preview=result;
   if (!result) return;
-  history.push(before);
-  pendingHighlight = result;
+  if (slider) slider.value=String(Math.round(result.spacing*100));
+  if (output) output.textContent=`${Math.round(result.spacing*100)}%`;
+  if (status) status.textContent=`Offset Loop • ${Math.round(result.spacing*100)}% • ${result.distance.toFixed(3)}`;
   forceRender();
-  requestAnimationFrame(() => {
-    selectCreatedLoops(mesh, [...result.leftEdges, ...result.rightEdges]);
+}, true);
+
+function finish(event) {
+  if (!drag || drag.id!==event.pointerId) return;
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  const current=drag;
+  drag=null;
+  if (event.type==='pointercancel' || !current.changed || !current.preview) {
+    restore(current.mesh,current.before);
+    forceRender();
+    if (status) status.textContent='Offset Loop • drag any selected loop edge';
+    return;
+  }
+  globalThis.__boxlabHistory?.push(current.before);
+  pendingHighlight=current.preview;
+  forceRender();
+  requestAnimationFrame(()=>{
+    selectCreatedLoops(current.mesh,[...current.preview.leftEdges,...current.preview.rightEdges]);
     forceRender();
     requestAnimationFrame(applyPendingHighlight);
   });
-  if (status) status.textContent = `Support loops created • ${result.leftEdges.length + result.rightEdges.length} support edges • uniform ${result.distance.toFixed(3)}`;
+  armed=false;
   sync();
-});
+}
+canvas?.addEventListener('pointerup', finish, true);
+canvas?.addEventListener('pointercancel', finish, true);
 window.addEventListener('boxlab-bridge-state', () => { sync(); applyPendingHighlight(); });
 sync();
