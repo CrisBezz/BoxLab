@@ -10,8 +10,43 @@ const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('
 function state(){return globalThis.__boxlabBridgeState}function bridge(){return globalThis.__boxlabSelectionBridge}function hit(e){const s=state(),r=canvas.getBoundingClientRect();if(!s?.camera)return null;pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(pointer,s.camera);const h=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(h?.object?.userData?.index)?h.object.userData.index:null}
 function disarm(){armed=false;drag=null;button?.classList.remove('active');}
 function selectedEdgeIds(){const b=bridge();return b?.mode?.()==='edge'?[...(b.indices?.()||[])]:[];}
-function syncVersion(){document.title='BoxLab v0.33.8';const el=document.querySelector('#appVersion');if(el)el.textContent='v0.33.8';}
-syncVersion();
+function syncVersion(){document.title='BoxLab v0.33.9';const el=document.querySelector('#appVersion');if(el)el.textContent='v0.33.9';}
+function installFrameAll(){
+  if(document.querySelector('#frameAllBtn'))return;
+  const host=document.querySelector('.top-actions');
+  if(!host)return;
+  const b=document.createElement('button');
+  b.id='frameAllBtn';
+  b.type='button';
+  b.textContent='Frame All';
+  b.title='Fit the whole model in view';
+  host.prepend(b);
+  b.addEventListener('click',()=>{
+    const s=state(),camera=s?.camera,mesh=s?.mesh;
+    if(!camera||!mesh?.vertices?.length)return;
+    const box=new THREE.Box3();
+    mesh.vertices.forEach(v=>box.expandByPoint(v));
+    if(box.isEmpty())return;
+    const center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),radius=Math.max(size.length()*.5,.25);
+    const controls=s?.controls||globalThis.__boxlabControls;
+    const oldTarget=controls?.target?.clone?.()||center;
+    let dir=camera.position.clone().sub(oldTarget);
+    if(dir.lengthSq()<1e-8)dir.set(1,.75,1);
+    dir.normalize();
+    const halfY=THREE.MathUtils.degToRad(camera.fov)*.5;
+    const halfX=Math.atan(Math.tan(halfY)*Math.max(camera.aspect,.01));
+    const limiting=Math.max(.1,Math.min(halfY,halfX));
+    const distance=Math.max(radius/Math.sin(limiting)*1.18,.75);
+    camera.position.copy(center).addScaledVector(dir,distance);
+    camera.near=Math.max(.001,distance-radius*2.5);
+    camera.far=Math.max(100,distance+radius*6);
+    camera.updateProjectionMatrix();
+    if(controls?.target){controls.target.copy(center);controls.update?.();}
+    else camera.lookAt(center);
+    document.querySelector('#selectionStatus').textContent='View framed to whole model';
+  });
+}
+syncVersion();installFrameAll();
 button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();armed=!armed;if(armed&&bridge()?.mode?.()!=='edge')document.querySelector('#selectionModes button[data-mode="edge"]')?.click();button.classList.toggle('active',armed);const count=selectedEdgeIds().length,useMulti=!!multiToggle?.checked&&count>1;document.querySelector('#selectionStatus').textContent=armed?(useMulti?`Bevel ${count} edges • drag any selected edge`:'Bevel Edge • drag an edge'):'Edge mode • nothing selected'},true);
 document.addEventListener('click',e=>{if(!armed||!e.isTrusted||e.target?.closest?.('#bevelBtn'))return;if(e.target?.closest?.('button'))disarm();},true);
 function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices)}function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}))}
