@@ -30,7 +30,7 @@ function setConstraint(constraint){
     enforce();
     return;
   }
-  armedConstraint=constraint;
+  armedConstraint=constraint||'free';
   enforce();
 }
 
@@ -41,11 +41,11 @@ function disarm(){
 }
 
 for(const button of toolButtons){
-  button.addEventListener('click',()=>queueMicrotask(()=>setTool(button.dataset.tool)),false);
+  button.addEventListener('click',()=>setTool(button.dataset.tool),false);
   new MutationObserver(()=>queueMicrotask(enforce)).observe(button,{attributes:true,attributeFilter:['class']});
 }
 for(const button of constraintButtons){
-  button.addEventListener('click',()=>queueMicrotask(()=>setConstraint(button.dataset.constraint)),false);
+  button.addEventListener('click',()=>setConstraint(button.dataset.constraint),false);
   new MutationObserver(()=>queueMicrotask(enforce)).observe(button,{attributes:true,attributeFilter:['class']});
 }
 
@@ -55,7 +55,7 @@ globalThis.__boxlabTransformArming={
   active:()=>!!armedTool,
   disarm,
   setTool:tool=>{armedTool=tool||null;armedConstraint=armedTool?'free':null;enforce();},
-  setConstraint:constraint=>{if(armedTool){armedConstraint=constraint||'free';enforce();}}
+  setConstraint
 };
 
 queueMicrotask(disarm);
