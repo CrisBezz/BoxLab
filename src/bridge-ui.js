@@ -16,9 +16,14 @@ function faceInfo(){ const mesh=currentMesh(); return mesh?.bridgeFaceSelectionI
 function sync(){ if(edgeButton)edgeButton.disabled=!edgeInfo(); if(faceButton)faceButton.disabled=!faceInfo(); }
 function finishBridge(result,before){
   const history=globalThis.__boxlabHistory;if(!result||!history)return false;history.push(before);
-  if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
+  const created=[...new Set(result.faceIndices||[])].filter(Number.isInteger);
+  if(created.length>1&&multiToggle&&!multiToggle.checked){multiToggle.checked=true;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
   document.querySelector('#selectionModes button[data-mode="face"]')?.click();
-  setTimeout(()=>{if(status)status.textContent=`Bridge created • ${result.faceIndices.length} quads`;sync();},0);return true;
+  setTimeout(()=>{
+    if(created.length)selectionBridge()?.set?.('face',created);
+    if(status)status.textContent=`Bridge created • ${created.length} quad${created.length===1?'':'s'} • created faces selected`;
+    sync();
+  },0);return true;
 }
 edgeButton?.addEventListener('click',event=>{
   const mesh=currentMesh(),ids=selected('edge'),info=mesh?.bridgeEdgeSelectionInfo?.(ids);if(!mesh||!info||!globalThis.__boxlabHistory)return;
