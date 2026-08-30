@@ -49,14 +49,16 @@ for(const button of constraintButtons){
   new MutationObserver(()=>queueMicrotask(enforce)).observe(button,{attributes:true,attributeFilter:['class']});
 }
 
-const edgeToolSelector=[
+const directToolSelector=[
   '#loopCutBtn','#faceSplitBtn','#bevelBtn','#applyCreaseBtn','#clearCreaseBtn',
   '#edgeSlideBtn','#offsetLoopBtn','#bridgeEdgesBtn','#fillFaceBtn',
-  '#dissolveLoopBtn','#dissolveEdgeBtn','#deleteEdgeBtn','#addEdgeBtn'
+  '#dissolveLoopBtn','#dissolveEdgeBtn','#deleteEdgeBtn','#addEdgeBtn',
+  '#addVertexBtn','#vertexSlideBtn','#vertexBevelBtn','#connectVertexBtn',
+  '#weldVertexBtn','#deleteVertexBtn'
 ].join(',');
 
 document.addEventListener('click',event=>{
-  const button=event.target?.closest?.(edgeToolSelector);
+  const button=event.target?.closest?.(directToolSelector);
   if(!button||button.disabled)return;
   disarm();
 },true);
