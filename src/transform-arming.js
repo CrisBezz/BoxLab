@@ -14,8 +14,13 @@ function enforce(){
 }
 
 function setTool(tool){
-  armedTool=armedTool===tool?null:tool;
-  if(!armedTool)armedConstraint=null;
+  if(armedTool===tool){
+    armedTool=null;
+    armedConstraint=null;
+  }else{
+    armedTool=tool;
+    armedConstraint='free';
+  }
   enforce();
 }
 
@@ -25,7 +30,13 @@ function setConstraint(constraint){
     enforce();
     return;
   }
-  armedConstraint=armedConstraint===constraint?null:constraint;
+  armedConstraint=constraint;
+  enforce();
+}
+
+function disarm(){
+  armedTool=null;
+  armedConstraint=null;
   enforce();
 }
 
@@ -38,13 +49,13 @@ for(const button of constraintButtons){
   new MutationObserver(()=>queueMicrotask(enforce)).observe(button,{attributes:true,attributeFilter:['class']});
 }
 
-// Expose the explicit transform state for other interaction modules.
 globalThis.__boxlabTransformArming={
   tool:()=>armedTool,
   constraint:()=>armedConstraint,
   active:()=>!!armedTool,
-  disarm:()=>{armedTool=null;armedConstraint=null;enforce();}
+  disarm,
+  setTool:tool=>{armedTool=tool||null;armedConstraint=armedTool?'free':null;enforce();},
+  setConstraint:constraint=>{if(armedTool){armedConstraint=constraint||'free';enforce();}}
 };
 
-// Main.js starts with Move active; clear that startup state after all modules settle.
-queueMicrotask(()=>{armedTool=null;armedConstraint=null;enforce();});
+queueMicrotask(disarm);
