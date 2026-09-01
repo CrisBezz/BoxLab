@@ -66,7 +66,7 @@ function probeWebGL2(){
 
 async function loadPackage(){
   if(packagePromise)return packagePromise;
-  packagePromise=import('https://esm.sh/three-gpu-pathtracer@0.0.23?external=three');
+  packagePromise=import('https://esm.sh/three-gpu-pathtracer@0.0.23?external=three&deps=three-mesh-bvh@0.7.8,xatlas-web@0.1.0');
   return packagePromise;
 }
 
