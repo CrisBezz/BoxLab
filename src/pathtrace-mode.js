@@ -20,6 +20,8 @@ let failed=false;
 let firstSampleDone=false;
 let diagnosticStage='D0';
 
+function state(){return globalThis.__boxlabBridgeState;}
+
 function installRendererBridge(){
   if(THREE.WebGLRenderer.prototype.__boxlabPathTraceBridgeInstalled)return;
   const baseRender=THREE.WebGLRenderer.prototype.render;
@@ -66,11 +68,7 @@ function fail(stage,text,error){
 function probeWebGL2(){
   const probe=document.createElement('canvas');
   let gl=null;
-  try{
-    gl=probe.getContext('webgl2',{alpha:false,antialias:false,powerPreference:'high-performance'});
-  }catch(error){
-    return{ok:false,error};
-  }
+  try{gl=probe.getContext('webgl2',{alpha:false,antialias:false,powerPreference:'high-performance'});}catch(error){return{ok:false,error};}
   if(!gl)return{ok:false,error:new Error('canvas.getContext("webgl2") returned null')};
   const debug=gl.getExtension('WEBGL_debug_renderer_info');
   const renderer=debug?gl.getParameter(debug.UNMASKED_RENDERER_WEBGL):gl.getParameter(gl.RENDERER);
@@ -102,9 +100,7 @@ function bodyObjects(){
   return out;
 }
 
-function matrixSignature(matrix){
-  return matrix.elements.map(value=>Math.round(value*10000)/10000).join(',');
-}
+function matrixSignature(matrix){return matrix.elements.map(value=>Math.round(value*10000)/10000).join(',');}
 function bodySignature(){return bodyObjects().map(object=>`${object.geometry.uuid}:${matrixSignature(object.matrixWorld)}`).join('|');}
 function cameraSignature(camera){return camera?`${matrixSignature(camera.matrixWorld)}|${matrixSignature(camera.projectionMatrix)}`:'';}
 function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xc5cbd3,roughness:.48,metalness:.02,side:THREE.DoubleSide});}
@@ -139,38 +135,42 @@ function disposeTraceScene(){
 }
 function resizeTrace(){if(traceRenderer&&wrap)traceRenderer.setSize(Math.max(1,wrap.clientWidth),Math.max(1,wrap.clientHeight),false);}
 
+function nextFrame(){return new Promise(resolve=>requestAnimationFrame(()=>resolve()));}
+async function captureMainRenderer(){
+  mainCamera=mainCamera||state()?.camera||globalThis.__boxlabPathTraceBridge?.camera||null;
+  mainScene=mainScene||globalThis.__boxlabPathTraceBridge?.scene||null;
+  if(mainCamera&&mainScene)return true;
+  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  await nextFrame();
+  await nextFrame();
+  mainCamera=mainCamera||state()?.camera||globalThis.__boxlabPathTraceBridge?.camera||null;
+  mainScene=mainScene||globalThis.__boxlabPathTraceBridge?.scene||null;
+  return !!(mainCamera&&mainScene);
+}
+
 async function ensureTracer(){
   if(pathTracer||failed)return !!pathTracer;
   ensureOverlay();
-  message('D1','starting diagnostics');
-  if(!mainCamera||!mainScene){return fail('D1','main BoxLab renderer bridge not ready',new Error('No captured scene/camera yet'));}
+  message('D1','capturing BoxLab viewport');
+  if(!await captureMainRenderer())return fail('D1','main BoxLab renderer bridge not ready',new Error(`camera=${!!mainCamera} scene=${!!mainScene}`));
+  message('D1','BoxLab viewport captured','Proceeding to WebGL2 probe…');
 
   const probe=probeWebGL2();
   if(!probe.ok)return fail('D2','WebGL2 unavailable',probe.error);
   message('D3','WebGL2 OK',`GPU: ${probe.renderer||'unknown'}\nVendor: ${probe.vendor||'unknown'}\nEXT_color_buffer_float: ${probe.colorFloat?'YES':'NO'} • OES_texture_float_linear: ${probe.floatLinear?'YES':'NO'}\nMAX_TEXTURE_SIZE: ${probe.maxTexture} • MAX_DRAW_BUFFERS: ${probe.maxDrawBuffers}`);
 
   let module;
-  try{
-    module=await loadPackage();
-    if(!module?.WebGLPathTracer)throw new Error('WebGLPathTracer export missing');
-    message('D4','path tracer package loaded');
-  }catch(error){return fail('D4','package import failed',error);}
+  try{module=await loadPackage();if(!module?.WebGLPathTracer)throw new Error('WebGLPathTracer export missing');message('D4','path tracer package loaded');}
+  catch(error){return fail('D4','package import failed',error);}
 
   try{
     traceRenderer=new THREE.WebGLRenderer({canvas:traceCanvas,antialias:false,alpha:false,powerPreference:'high-performance'});
-    traceRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.35));
-    traceRenderer.outputColorSpace=THREE.SRGBColorSpace;
-    traceRenderer.toneMapping=THREE.ACESFilmicToneMapping;
-    traceRenderer.toneMappingExposure=1.05;
-    resizeTrace();
-    message('D5','Three.js WebGL renderer created');
+    traceRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.35));traceRenderer.outputColorSpace=THREE.SRGBColorSpace;traceRenderer.toneMapping=THREE.ACESFilmicToneMapping;traceRenderer.toneMappingExposure=1.05;resizeTrace();message('D5','Three.js WebGL renderer created');
   }catch(error){return fail('D5','Three.js renderer creation failed',error);}
 
   try{
     pathTracer=new module.WebGLPathTracer(traceRenderer);
-    pathTracer.bounces=3;pathTracer.renderScale=.62;pathTracer.tiles.set(2,2);pathTracer.dynamicLowRes=true;pathTracer.lowResScale=.22;pathTracer.renderDelay=0;pathTracer.fadeDuration=120;pathTracer.minSamples=1;
-    message('D6','path tracer constructed');
-    return true;
+    pathTracer.bounces=3;pathTracer.renderScale=.62;pathTracer.tiles.set(2,2);pathTracer.dynamicLowRes=true;pathTracer.lowResScale=.22;pathTracer.renderDelay=0;pathTracer.fadeDuration=120;pathTracer.minSamples=1;message('D6','path tracer constructed');return true;
   }catch(error){return fail('D6','path tracer constructor failed',error);}
 }
 
@@ -178,14 +178,10 @@ async function rebuildTraceScene(force=false){
   if(!active||failed)return false;
   if(!await ensureTracer())return false;
   const signature=bodySignature();if(!force&&signature===lastBodySignature)return true;
-  const built=buildTraceScene();
-  if(!built.count){message('D7','no visible BoxLab body');return false;}
+  const built=buildTraceScene();if(!built.count){message('D7','no visible BoxLab body');return false;}
   disposeTraceScene();traceScene=built.scene;lastBodySignature=signature;lastCameraSignature=cameraSignature(mainCamera);firstSampleDone=false;
-  try{
-    pathTracer.setScene(traceScene,mainCamera);pathTracer.reset();
-    message('D7',`scene uploaded • ${built.count} object${built.count===1?'':'s'}`,'Waiting for first sample…');
-    return true;
-  }catch(error){return fail('D7','scene upload / shader setup failed',error);}
+  try{pathTracer.setScene(traceScene,mainCamera);pathTracer.reset();message('D7',`scene uploaded • ${built.count} object${built.count===1?'':'s'}`,'Waiting for first sample…');return true;}
+  catch(error){return fail('D7','scene upload / shader setup failed',error);}
 }
 
 function setVisible(show){ensureOverlay();if(traceCanvas)traceCanvas.style.display=show?'block':'none';if(hud)hud.style.display=show?'block':'none';}
