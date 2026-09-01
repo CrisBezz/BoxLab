@@ -1,40 +1,24 @@
 import * as THREE from 'three';
 
-const viewport=document.querySelector('#viewport');
 const wrap=document.querySelector('#viewportWrap');
 const status=document.querySelector('#selectionStatus');
 
 let active=false;
-let mainScene=null;
-let mainCamera=null;
 let traceCanvas=null;
 let traceRenderer=null;
 let pathTracer=null;
 let traceScene=null;
 let packagePromise=null;
-let lastBodySignature='';
+let lastMeshSignature='';
 let lastCameraSignature='';
 let lastHudUpdate=0;
 let hud=null;
 let failed=false;
 let firstSampleDone=false;
-let diagnosticStage='D0';
 
 function state(){return globalThis.__boxlabBridgeState;}
-
-function installRendererBridge(){
-  if(THREE.WebGLRenderer.prototype.__boxlabPathTraceBridgeInstalled)return;
-  const baseRender=THREE.WebGLRenderer.prototype.render;
-  THREE.WebGLRenderer.prototype.render=function(scene,camera){
-    if(this.domElement===viewport&&scene?.isScene&&camera?.isCamera){
-      mainScene=scene;
-      mainCamera=camera;
-      globalThis.__boxlabPathTraceBridge={renderer:this,scene,camera};
-    }
-    return baseRender.call(this,scene,camera);
-  };
-  THREE.WebGLRenderer.prototype.__boxlabPathTraceBridgeInstalled=true;
-}
+function currentMesh(){return state()?.mesh||null;}
+function currentCamera(){return state()?.camera||null;}
 
 function ensureOverlay(){
   if(traceCanvas)return;
@@ -45,12 +29,10 @@ function ensureOverlay(){
   hud=document.createElement('div');
   hud.id='boxlabPathTraceHud';
   hud.style.cssText='position:absolute;right:14px;bottom:34px;z-index:3;pointer-events:none;max-width:min(76vw,520px);padding:8px 10px;border-radius:7px;background:rgba(12,14,18,.88);color:#eef3f8;font:600 11px/1.35 system-ui,-apple-system,sans-serif;letter-spacing:.01em;display:none;white-space:pre-line;backdrop-filter:blur(8px);';
-  hud.textContent='Path Trace';
   wrap?.append(hud);
 }
 
 function message(stage,text,detail=''){
-  diagnosticStage=stage;
   const full=`${stage} • ${text}${detail?`\n${detail}`:''}`;
   if(hud){hud.style.display='block';hud.textContent=full;}
   if(status)status.textContent=`Path Trace ${stage} • ${text}`;
@@ -77,8 +59,7 @@ function probeWebGL2(){
   const maxDrawBuffers=gl.getParameter(gl.MAX_DRAW_BUFFERS);
   const colorFloat=!!gl.getExtension('EXT_color_buffer_float');
   const floatLinear=!!gl.getExtension('OES_texture_float_linear');
-  const timer=!!gl.getExtension('EXT_disjoint_timer_query_webgl2');
-  const info={ok:true,renderer,vendor,maxTexture,maxDrawBuffers,colorFloat,floatLinear,timer};
+  const info={ok:true,renderer,vendor,maxTexture,maxDrawBuffers,colorFloat,floatLinear};
   try{gl.getExtension('WEBGL_lose_context')?.loseContext?.();}catch{}
   return info;
 }
@@ -89,71 +70,72 @@ async function loadPackage(){
   return packagePromise;
 }
 
-function bodyObjects(){
-  if(!mainScene)return[];
-  const out=[];
-  mainScene.traverse(object=>{
-    if(!object?.isMesh||!object.visible||!object.geometry)return;
-    const kind=object.userData?.kind;
-    if(kind==='body'||kind==='boxlab-inactive-body')out.push(object);
-  });
-  return out;
+function meshSignature(mesh){
+  if(!mesh)return'';
+  let sum=0;
+  for(let i=0;i<mesh.vertices.length;i++){
+    const v=mesh.vertices[i];
+    sum+=(i+1)*(v.x*1.13+v.y*1.71+v.z*2.03);
+  }
+  return `${mesh.vertices.length}:${mesh.faces.length}:${sum.toFixed(5)}:${mesh.faces.map(f=>f.join('.')).join('|')}`;
 }
 
 function matrixSignature(matrix){return matrix.elements.map(value=>Math.round(value*10000)/10000).join(',');}
-function bodySignature(){return bodyObjects().map(object=>`${object.geometry.uuid}:${matrixSignature(object.matrixWorld)}`).join('|');}
 function cameraSignature(camera){return camera?`${matrixSignature(camera.matrixWorld)}|${matrixSignature(camera.projectionMatrix)}`:'';}
 function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xc5cbd3,roughness:.48,metalness:.02,side:THREE.DoubleSide});}
 
 function buildTraceScene(){
-  const scene=new THREE.Scene();scene.background=new THREE.Color(0x16191f);
-  const box=new THREE.Box3();let count=0;
-  for(const source of bodyObjects()){
-    source.updateWorldMatrix(true,false);
-    const geometry=source.geometry.clone();geometry.applyMatrix4(source.matrixWorld);
-    if(!geometry.getAttribute('normal'))geometry.computeVertexNormals();
-    geometry.computeBoundingBox();if(geometry.boundingBox)box.union(geometry.boundingBox);
-    const mesh=new THREE.Mesh(geometry,studioMaterial());mesh.userData.boxlabPathTraceBody=true;scene.add(mesh);count++;
-  }
-  if(!count||box.isEmpty())return{scene,count,box};
-  const center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),extent=Math.max(size.x,size.y,size.z,.25),floorSize=Math.max(extent*8,8);
+  const source=currentMesh();
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x16191f);
+  if(!source)return{scene,count:0,box:new THREE.Box3()};
+
+  const geometry=source.triangulatedGeometry();
+  if(!geometry.getAttribute('normal'))geometry.computeVertexNormals();
+  geometry.computeBoundingBox();
+  const box=geometry.boundingBox?.clone()||new THREE.Box3();
+  const body=new THREE.Mesh(geometry,studioMaterial());
+  body.userData.boxlabPathTraceBody=true;
+  scene.add(body);
+  if(box.isEmpty())return{scene,count:1,box};
+
+  const center=box.getCenter(new THREE.Vector3());
+  const size=box.getSize(new THREE.Vector3());
+  const extent=Math.max(size.x,size.y,size.z,.25);
+  const floorSize=Math.max(extent*8,8);
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(floorSize,floorSize),new THREE.MeshStandardMaterial({color:0x3d4148,roughness:.82,metalness:0,side:THREE.DoubleSide}));
-  floor.rotation.x=-Math.PI/2;floor.position.set(center.x,box.min.y-Math.max(extent*.012,.004),center.z);scene.add(floor);
-  const key=new THREE.RectAreaLight(0xffffff,Math.max(8,extent*5),extent*3.2,extent*3.2);key.position.set(center.x+extent*2.2,center.y+extent*2.8,center.z+extent*2.4);key.lookAt(center);scene.add(key);
-  const fill=new THREE.RectAreaLight(0xaecbff,Math.max(4,extent*2.4),extent*2.4,extent*2.4);fill.position.set(center.x-extent*2.0,center.y+extent*1.3,center.z+extent*1.2);fill.lookAt(center);scene.add(fill);
-  const rim=new THREE.RectAreaLight(0xffe3c2,Math.max(3,extent*1.8),extent*2.0,extent*2.0);rim.position.set(center.x,center.y+extent*2.0,center.z-extent*2.8);rim.lookAt(center);scene.add(rim);
-  return{scene,count,box};
+  floor.rotation.x=-Math.PI/2;
+  floor.position.set(center.x,box.min.y-Math.max(extent*.012,.004),center.z);
+  floor.userData.boxlabPathTraceBody=true;
+  scene.add(floor);
+
+  const key=new THREE.RectAreaLight(0xffffff,Math.max(8,extent*5),extent*3.2,extent*3.2);
+  key.position.set(center.x+extent*2.2,center.y+extent*2.8,center.z+extent*2.4);key.lookAt(center);scene.add(key);
+  const fill=new THREE.RectAreaLight(0xaecbff,Math.max(4,extent*2.4),extent*2.4,extent*2.4);
+  fill.position.set(center.x-extent*2.0,center.y+extent*1.3,center.z+extent*1.2);fill.lookAt(center);scene.add(fill);
+  const rim=new THREE.RectAreaLight(0xffe3c2,Math.max(3,extent*1.8),extent*2.0,extent*2.0);
+  rim.position.set(center.x,center.y+extent*2.0,center.z-extent*2.8);rim.lookAt(center);scene.add(rim);
+  return{scene,count:1,box};
 }
 
 function disposeTraceScene(){
   if(!traceScene)return;
   traceScene.traverse(object=>{
     if(object?.geometry&&object.userData?.boxlabPathTraceBody)object.geometry.dispose?.();
-    if(object?.material){if(Array.isArray(object.material))object.material.forEach(material=>material.dispose?.());else object.material.dispose?.();}
+    if(object?.material){if(Array.isArray(object.material))object.material.forEach(m=>m.dispose?.());else object.material.dispose?.();}
   });
   traceScene=null;
 }
-function resizeTrace(){if(traceRenderer&&wrap)traceRenderer.setSize(Math.max(1,wrap.clientWidth),Math.max(1,wrap.clientHeight),false);}
 
-function nextFrame(){return new Promise(resolve=>requestAnimationFrame(()=>resolve()));}
-async function captureMainRenderer(){
-  mainCamera=mainCamera||state()?.camera||globalThis.__boxlabPathTraceBridge?.camera||null;
-  mainScene=mainScene||globalThis.__boxlabPathTraceBridge?.scene||null;
-  if(mainCamera&&mainScene)return true;
-  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
-  await nextFrame();
-  await nextFrame();
-  mainCamera=mainCamera||state()?.camera||globalThis.__boxlabPathTraceBridge?.camera||null;
-  mainScene=mainScene||globalThis.__boxlabPathTraceBridge?.scene||null;
-  return !!(mainCamera&&mainScene);
-}
+function resizeTrace(){if(traceRenderer&&wrap)traceRenderer.setSize(Math.max(1,wrap.clientWidth),Math.max(1,wrap.clientHeight),false);}
 
 async function ensureTracer(){
   if(pathTracer||failed)return !!pathTracer;
   ensureOverlay();
-  message('D1','capturing BoxLab viewport');
-  if(!await captureMainRenderer())return fail('D1','main BoxLab renderer bridge not ready',new Error(`camera=${!!mainCamera} scene=${!!mainScene}`));
-  message('D1','BoxLab viewport captured','Proceeding to WebGL2 probe…');
+  const s=state(),camera=currentCamera(),mesh=currentMesh();
+  message('D1','checking BoxLab state',`camera=${!!camera} • mesh=${!!mesh}`);
+  if(!camera||!mesh)return fail('D1','BoxLab state unavailable',new Error(`camera=${!!camera} mesh=${!!mesh}`));
+  message('D1','BoxLab state OK','Proceeding to WebGL2 probe…');
 
   const probe=probeWebGL2();
   if(!probe.ok)return fail('D2','WebGL2 unavailable',probe.error);
@@ -165,23 +147,48 @@ async function ensureTracer(){
 
   try{
     traceRenderer=new THREE.WebGLRenderer({canvas:traceCanvas,antialias:false,alpha:false,powerPreference:'high-performance'});
-    traceRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.35));traceRenderer.outputColorSpace=THREE.SRGBColorSpace;traceRenderer.toneMapping=THREE.ACESFilmicToneMapping;traceRenderer.toneMappingExposure=1.05;resizeTrace();message('D5','Three.js WebGL renderer created');
+    traceRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.35));
+    traceRenderer.outputColorSpace=THREE.SRGBColorSpace;
+    traceRenderer.toneMapping=THREE.ACESFilmicToneMapping;
+    traceRenderer.toneMappingExposure=1.05;
+    resizeTrace();
+    message('D5','Three.js WebGL renderer created');
   }catch(error){return fail('D5','Three.js renderer creation failed',error);}
 
   try{
     pathTracer=new module.WebGLPathTracer(traceRenderer);
-    pathTracer.bounces=3;pathTracer.renderScale=.62;pathTracer.tiles.set(2,2);pathTracer.dynamicLowRes=true;pathTracer.lowResScale=.22;pathTracer.renderDelay=0;pathTracer.fadeDuration=120;pathTracer.minSamples=1;message('D6','path tracer constructed');return true;
+    pathTracer.bounces=3;
+    pathTracer.renderScale=.62;
+    pathTracer.tiles.set(2,2);
+    pathTracer.dynamicLowRes=true;
+    pathTracer.lowResScale=.22;
+    pathTracer.renderDelay=0;
+    pathTracer.fadeDuration=120;
+    pathTracer.minSamples=1;
+    message('D6','path tracer constructed');
+    return true;
   }catch(error){return fail('D6','path tracer constructor failed',error);}
 }
 
 async function rebuildTraceScene(force=false){
   if(!active||failed)return false;
   if(!await ensureTracer())return false;
-  const signature=bodySignature();if(!force&&signature===lastBodySignature)return true;
-  const built=buildTraceScene();if(!built.count){message('D7','no visible BoxLab body');return false;}
-  disposeTraceScene();traceScene=built.scene;lastBodySignature=signature;lastCameraSignature=cameraSignature(mainCamera);firstSampleDone=false;
-  try{pathTracer.setScene(traceScene,mainCamera);pathTracer.reset();message('D7',`scene uploaded • ${built.count} object${built.count===1?'':'s'}`,'Waiting for first sample…');return true;}
-  catch(error){return fail('D7','scene upload / shader setup failed',error);}
+  const mesh=currentMesh(),signature=meshSignature(mesh);
+  if(!force&&signature===lastMeshSignature)return true;
+  const built=buildTraceScene();
+  if(!built.count)return fail('D7','no BoxLab mesh available',new Error('Editable mesh missing'));
+  disposeTraceScene();
+  traceScene=built.scene;
+  lastMeshSignature=signature;
+  const camera=currentCamera();
+  lastCameraSignature=cameraSignature(camera);
+  firstSampleDone=false;
+  try{
+    pathTracer.setScene(traceScene,camera);
+    pathTracer.reset();
+    message('D7','scene uploaded • active mesh','Waiting for first sample…');
+    return true;
+  }catch(error){return fail('D7','scene upload / shader setup failed',error);}
 }
 
 function setVisible(show){ensureOverlay();if(traceCanvas)traceCanvas.style.display=show?'block':'none';if(hud)hud.style.display=show?'block':'none';}
@@ -190,9 +197,12 @@ function deactivate(){active=false;setVisible(false);}
 
 function animate(time){
   requestAnimationFrame(animate);
-  if(!active||!pathTracer||!mainCamera||!traceScene||failed)return;
-  const bodies=bodySignature();if(bodies!==lastBodySignature){rebuildTraceScene(true);return;}
-  const cameraNow=cameraSignature(mainCamera);if(cameraNow!==lastCameraSignature){lastCameraSignature=cameraNow;pathTracer.updateCamera();pathTracer.reset();firstSampleDone=false;}
+  const camera=currentCamera(),mesh=currentMesh();
+  if(!active||!pathTracer||!camera||!mesh||!traceScene||failed)return;
+  const sig=meshSignature(mesh);
+  if(sig!==lastMeshSignature){rebuildTraceScene(true);return;}
+  const cameraNow=cameraSignature(camera);
+  if(cameraNow!==lastCameraSignature){lastCameraSignature=cameraNow;pathTracer.updateCamera();pathTracer.reset();firstSampleDone=false;}
   try{
     pathTracer.renderSample();
     if(!firstSampleDone){firstSampleDone=true;message('D8','FIRST SAMPLE OK','Path tracing is supported on this browser / GPU.');}
@@ -202,4 +212,5 @@ function animate(time){
 
 window.addEventListener('resize',()=>{resizeTrace();if(active)pathTracer?.reset?.();});
 document.addEventListener('boxlab-render-mode-change',event=>{if(event.detail?.mode==='pathtrace')activate();else deactivate();});
-installRendererBridge();ensureOverlay();requestAnimationFrame(animate);
+ensureOverlay();
+requestAnimationFrame(animate);
