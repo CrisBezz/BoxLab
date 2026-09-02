@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 const status=document.querySelector('#selectionStatus');
-let mode='solid';
+let mode='studio';
 let lastBody=null;
 let studioRig=null;
 let studioFloor=null;
@@ -189,7 +189,7 @@ function installUI(){
   const wrap=document.createElement('div');
   wrap.id='renderModes';
   wrap.className='render-modes';
-  wrap.innerHTML='<button type="button" data-render="solid" class="active">Solid</button><button type="button" data-render="studio">Studio</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="wire">Wire + Solid</button><button type="button" data-render="xray">X-Ray</button>';
+  wrap.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="wire">Wire + Solid</button><button type="button" data-render="xray">X-Ray</button>';
   host.append(wrap);
   wrap.addEventListener('click',event=>{
     const button=event.target.closest('button[data-render]');

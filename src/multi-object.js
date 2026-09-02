@@ -79,7 +79,7 @@ function restoreSettings(settings) {
     subd.dispatchEvent(new Event('change', { bubbles:true }));
   }
   const level = document.querySelector('#subdLevel');
-  const nextLevel = String(Math.max(1, Math.min(3, Number(settings.subdLevel || 1))));
+  const nextLevel = String(Math.max(1, Math.min(4, Number(settings.subdLevel || 1))));
   if (level && level.value !== nextLevel) {
     level.value = nextLevel;
     level.dispatchEvent(new Event('input', { bubbles:true }));
@@ -125,7 +125,7 @@ function shouldShow(object) {
 
 function displayMeshFor(object) {
   let display = object.mesh;
-  if (object.settings?.subd) display = subdivide(display, Math.max(1, Math.min(3, object.settings.subdLevel || 1)));
+  if (object.settings?.subd) display = subdivide(display, Math.max(1, Math.min(4, object.settings.subdLevel || 1)));
   return applyMirror(display, object.settings?.mirror || { x:false, y:false, z:false });
 }
 
