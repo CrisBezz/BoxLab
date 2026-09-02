@@ -390,10 +390,12 @@ function installRenderObserver() {
           inactive.renderOrder = -1;
           inactiveBodies.push(inactive);
           baseAdd.call(this, inactive);
+          globalThis.__boxlabRenderModes?.apply?.(inactive);
         } catch (error) {
           console.warn('BoxLab inactive object render skipped', error);
         }
       }
+      globalThis.__boxlabRenderModes?.refreshStudio?.();
       activeSource?.edges?.();
       queueOutliner();
     }

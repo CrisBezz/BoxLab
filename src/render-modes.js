@@ -6,6 +6,7 @@ let lastBody=null;
 let studioRig=null;
 let studioFloor=null;
 let originalBackground=null;
+let studioRefreshQueued=false;
 
 function bridge(){return globalThis.__boxlabBridgeState||null;}
 
@@ -25,6 +26,18 @@ const studioMaterial=new THREE.MeshStandardMaterial({
   metalness:.03,
   emissive:0x05080d,
   emissiveIntensity:.08,
+  side:THREE.DoubleSide,
+  polygonOffset:true,
+  polygonOffsetFactor:1,
+  polygonOffsetUnits:1
+});
+
+const studioInactiveMaterial=new THREE.MeshStandardMaterial({
+  color:0x98a6b8,
+  roughness:.52,
+  metalness:.02,
+  emissive:0x03060a,
+  emissiveIntensity:.06,
   side:THREE.DoubleSide,
   polygonOffset:true,
   polygonOffsetFactor:1,
@@ -115,7 +128,25 @@ function ensureStudioRig(){
   studioRig.visible=false;scene.add(studioRig);
 }
 
-function syncStudio(body){
+function refreshStudio(){
+  if(mode!=='studio'||studioRefreshQueued)return;
+  studioRefreshQueued=true;
+  requestAnimationFrame(()=>{
+    studioRefreshQueued=false;
+    const state=bridge(),scene=state?.scene;
+    if(!scene||!studioFloor)return;
+    const bounds=new THREE.Box3();let hasVisibleBody=false;
+    scene.traverse(object=>{
+      const kind=object?.userData?.kind;
+      if(!object?.isMesh||!object.visible||(kind!=='body'&&kind!=='boxlab-inactive-body'))return;
+      bounds.expandByObject(object);hasVisibleBody=true;
+      object.castShadow=true;object.receiveShadow=true;
+    });
+    if(hasVisibleBody&&!bounds.isEmpty())studioFloor.position.y=bounds.min.y-.025;
+  });
+}
+
+function syncStudio(){
   const state=bridge(),scene=state?.scene,renderer=state?.renderer;
   if(!scene||!renderer)return;
   ensureStudioRig();
@@ -125,21 +156,20 @@ function syncStudio(body){
   if(state.baseHemisphere)state.baseHemisphere.intensity=enabled?.52:1.2;
   if(state.key)state.key.intensity=enabled?1.35:3.2;
   scene.background.copy(enabled?new THREE.Color(0x131924):originalBackground||new THREE.Color(0x111318));
-  if(!enabled||!studioFloor)return;
-  const box=new THREE.Box3().setFromObject(body);
-  if(!box.isEmpty())studioFloor.position.y=box.min.y-.025;
-  body.castShadow=true;body.receiveShadow=true;
+  if(enabled)refreshStudio();
 }
 
 function applyMode(body){
-  if(!body?.isMesh||body.userData?.kind!=='body')return;
-  lastBody=body;
+  const kind=body?.userData?.kind;
+  if(!body?.isMesh||(kind!=='body'&&kind!=='boxlab-inactive-body'))return;
+  const inactive=kind==='boxlab-inactive-body';
+  if(!inactive)lastBody=body;
   clearRenderChildren(body);
   if(!body.userData.boxlabOriginalMaterial)body.userData.boxlabOriginalMaterial=body.material;
   const original=body.userData.boxlabOriginalMaterial;
-  syncStudio(body);
+  syncStudio();
 
-  if(mode==='studio')body.material=studioMaterial;
+  if(mode==='studio')body.material=inactive?studioInactiveMaterial:studioMaterial;
   else if(mode==='clay')body.material=clayMaterial;
   else if(mode==='matcap')body.material=matcapMaterial;
   else if(mode==='xray'){
@@ -151,8 +181,21 @@ function applyMode(body){
   }
 }
 
+Object.assign(globalThis.__boxlabRenderModes ||= {},{apply:applyMode,refreshStudio});
+
 function rebuild(){
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+}
+
+function applyToSceneBodies(){
+  const scene=bridge()?.scene;
+  if(!scene)return false;
+  let found=false;
+  scene.traverse(object=>{
+    const kind=object?.userData?.kind;
+    if(kind==='body'||kind==='boxlab-inactive-body'){applyMode(object);found=true;}
+  });
+  return found;
 }
 
 function modeLabel(){
@@ -165,7 +208,7 @@ function modeLabel(){
 function setMode(next){
   mode=next;
   document.querySelectorAll('#renderModes button[data-render]').forEach(button=>button.classList.toggle('active',button.dataset.render===mode));
-  if(lastBody?.parent)applyMode(lastBody);else rebuild();
+  if(!applyToSceneBodies())rebuild();
   document.dispatchEvent(new CustomEvent('boxlab-render-mode-change',{detail:{mode}}));
   if(status)status.textContent=`View • ${modeLabel()}`;
 }
