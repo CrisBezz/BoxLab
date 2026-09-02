@@ -86,19 +86,10 @@ function cameraSignature(camera){return camera?`${matrixSignature(camera.matrixW
 function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xc5cbd3,roughness:.48,metalness:.02,emissive:0x27313e,emissiveIntensity:.72,side:THREE.DoubleSide});}
 
 function frameTraceCamera(box){
-  const source=currentCamera(),center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),orbitTarget=state()?.controls?.target;
-  const radius=Math.max(size.length()*.5,.25);
-  const camera=new THREE.PerspectiveCamera(source?.fov||42,source?.aspect||1,Math.max(.001,radius*.001),Math.max(100,radius*30));
-  const direction=source?.position?.clone?.().sub(orbitTarget||center);
-  if(!direction||direction.lengthSq()<1e-8)direction?.set?.(1,.75,1);
-  direction.normalize();
-  const halfY=THREE.MathUtils.degToRad(camera.fov)*.5;
-  const halfX=Math.atan(Math.tan(halfY)*Math.max(camera.aspect,.01));
-  const liveDistance=source?.position?.distanceTo?.(orbitTarget||center)||0;
-  const fitDistance=radius/Math.sin(Math.max(.1,Math.min(halfY,halfX)))*1.12;
-  const distance=Math.max(liveDistance,fitDistance,.75);
-  camera.position.copy(center).addScaledVector(direction,distance);
-  camera.lookAt(center);camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
+  const source=currentCamera();
+  source.updateMatrixWorld(true);
+  const camera=source.clone();
+  camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
   return camera;
 }
 
@@ -239,11 +230,11 @@ function animate(time){
   if(!active||!pathTracer||!camera||!mesh||!traceScene||failed)return;
   const sig=meshSignature(mesh);
   if(sig!==lastMeshSignature){rebuildTraceScene(true);return;}
-  // OrbitControls continues to settle its source-camera matrix after a tap.
-  // The trace camera is deliberately framed from the mesh, so do not restart
-  // the expensive scene upload every animation frame while that damping runs.
   const cameraNow=cameraSignature(camera);
-  if(cameraNow!==lastCameraSignature)lastCameraSignature=cameraNow;
+  if(cameraNow!==lastCameraSignature){
+    traceCamera.copy(camera);traceCamera.updateProjectionMatrix();traceCamera.updateMatrixWorld(true);
+    lastCameraSignature=cameraNow;pathTracer.updateCamera();firstSampleDone=false;
+  }
   try{
     pathTracer.renderSample();
     if(!firstSampleDone){firstSampleDone=true;message('D8','FIRST SAMPLE OK','Path tracing is supported on this browser / GPU.');}
