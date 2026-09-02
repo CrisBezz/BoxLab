@@ -86,15 +86,17 @@ function cameraSignature(camera){return camera?`${matrixSignature(camera.matrixW
 function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xc5cbd3,roughness:.48,metalness:.02,emissive:0x27313e,emissiveIntensity:.72,side:THREE.DoubleSide});}
 
 function frameTraceCamera(box){
-  const source=currentCamera(),center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3());
+  const source=currentCamera(),center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3()),orbitTarget=state()?.controls?.target;
   const radius=Math.max(size.length()*.5,.25);
   const camera=new THREE.PerspectiveCamera(source?.fov||42,source?.aspect||1,Math.max(.001,radius*.001),Math.max(100,radius*30));
-  const direction=source?.position?.clone?.().sub(center);
+  const direction=source?.position?.clone?.().sub(orbitTarget||center);
   if(!direction||direction.lengthSq()<1e-8)direction?.set?.(1,.75,1);
   direction.normalize();
   const halfY=THREE.MathUtils.degToRad(camera.fov)*.5;
   const halfX=Math.atan(Math.tan(halfY)*Math.max(camera.aspect,.01));
-  const distance=Math.max(radius/Math.sin(Math.max(.1,Math.min(halfY,halfX)))*1.28,.75);
+  const liveDistance=source?.position?.distanceTo?.(orbitTarget||center)||0;
+  const fitDistance=radius/Math.sin(Math.max(.1,Math.min(halfY,halfX)))*1.12;
+  const distance=Math.max(liveDistance,fitDistance,.75);
   camera.position.copy(center).addScaledVector(direction,distance);
   camera.lookAt(center);camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
   return camera;

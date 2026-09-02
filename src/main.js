@@ -12,6 +12,7 @@ const renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixe
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x111318);
 const camera=new THREE.PerspectiveCamera(42,1,.01,100);camera.position.set(4.2,3.1,4.6);
 const controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.dampingFactor=.08;controls.target.set(0,0,0);controls.touches.ONE=THREE.TOUCH.ROTATE;controls.touches.TWO=THREE.TOUCH.DOLLY_PAN;controls.screenSpacePanning=true;controls.minAzimuthAngle=-Infinity;controls.maxAzimuthAngle=Infinity;controls.minPolarAngle=.001;controls.maxPolarAngle=Math.PI-.001;
+Object.assign(globalThis.__boxlabBridgeState ||= {},{camera,controls});
 scene.add(new THREE.HemisphereLight(0xeaf2ff,0x1d2430,1.2));const key=new THREE.DirectionalLight(0xffffff,3.2);key.position.set(4,7,5);scene.add(key);const grid=new THREE.GridHelper(12,24,0x3c424d,0x262b33);grid.position.y=-1.55;scene.add(grid);const originAxes=new THREE.AxesHelper(.9);originAxes.material.depthTest=false;originAxes.renderOrder=20;scene.add(originAxes);
 
 let mesh=EditableMesh.cube(2),selectionMode='face',toolMode='move',selection=null,multiSelectEnabled=false;
