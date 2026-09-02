@@ -10,6 +10,7 @@ const DRAG_THRESHOLD = 8;
 
 let controls = null;
 let pivotControls = null;
+let groupControls = null;
 let pivotMode = 'median';
 let marker = null;
 let gesture = null;
@@ -17,6 +18,7 @@ let multiGesture = null;
 let moveWatch = null;
 let raf = 0;
 let selectionApi = null;
+let groupObserver = null;
 
 function manager(){ return globalThis.__boxlabObjectManager; }
 function objectSelection(){ return globalThis.__boxlabObjectSelection; }
@@ -28,13 +30,34 @@ function activeObject(){
   const m = manager();
   return m?.objects?.find(object => object.id === m.activeId) || null;
 }
+function baseSelectionIds(){
+  return new Set(actualSelection()?.ids || []);
+}
+function groupMembers(groupId){
+  if(groupId == null) return [];
+  return (manager()?.objects || []).filter(object => object.groupId === groupId);
+}
+function expandedSelectionIds(){
+  const ids = baseSelectionIds();
+  const objects = manager()?.objects || [];
+  for(const object of objects){
+    if(!ids.has(object.id) || object.groupId == null) continue;
+    for(const member of objects) if(member.groupId === object.groupId) ids.add(member.id);
+  }
+  return ids;
+}
+function groupedExpansionActive(){
+  const base = baseSelectionIds();
+  const expanded = expandedSelectionIds();
+  return expanded.size > base.size && expanded.size > 1;
+}
 function isSingleObjectTransform(){
-  const s = actualSelection();
-  return mode() === 'object' && !(s?.multi && (s?.ids?.size || 0) > 1);
+  return mode() === 'object' && expandedSelectionIds().size <= 1;
 }
 function isMultiPivotTransform(){
-  const s = actualSelection();
-  return mode() === 'object' && !!s?.multi && (s?.ids?.size || 0) > 1 && ['scale','rotate'].includes(tool());
+  if(mode() !== 'object' || expandedSelectionIds().size <= 1) return false;
+  const t = tool();
+  return t === 'scale' || t === 'rotate' || (t === 'move' && groupedExpansionActive());
 }
 function meshBounds(mesh){
   const box = new THREE.Box3();
@@ -75,6 +98,80 @@ function setPivotMode(next){
   const drawer = document.querySelector('#objectsDrawer');
   if(drawer) drawer.open = true;
 }
+function allocateGroupId(){
+  let max = 0;
+  for(const object of manager()?.objects || []){
+    if(Number.isInteger(object.groupId)) max = Math.max(max, object.groupId);
+  }
+  return max + 1;
+}
+function cleanupGroups(){
+  const counts = new Map();
+  for(const object of manager()?.objects || []){
+    if(object.groupId == null) continue;
+    counts.set(object.groupId, (counts.get(object.groupId) || 0) + 1);
+  }
+  for(const object of manager()?.objects || []){
+    if(object.groupId != null && (counts.get(object.groupId) || 0) < 2) delete object.groupId;
+  }
+}
+function groupSelected(){
+  const ids = baseSelectionIds();
+  if(ids.size < 2){
+    if(status) status.textContent = 'Select at least two objects to group';
+    return;
+  }
+  const id = allocateGroupId();
+  for(const object of manager()?.objects || []) if(ids.has(object.id)) object.groupId = id;
+  cleanupGroups();
+  decorateGroups();
+  updateGroupControls();
+  if(status) status.textContent = `${ids.size} objects grouped • G${id}`;
+  const drawer = document.querySelector('#objectsDrawer'); if(drawer) drawer.open = true;
+}
+function ungroupSelected(){
+  const ids = baseSelectionIds();
+  const groups = new Set();
+  for(const object of manager()?.objects || []) if(ids.has(object.id) && object.groupId != null) groups.add(object.groupId);
+  if(!groups.size){
+    if(status) status.textContent = 'Selected objects are not grouped';
+    return;
+  }
+  for(const object of manager()?.objects || []) if(groups.has(object.groupId)) delete object.groupId;
+  decorateGroups();
+  updateGroupControls();
+  if(status) status.textContent = `${groups.size} group${groups.size === 1 ? '' : 's'} ungrouped`;
+  const drawer = document.querySelector('#objectsDrawer'); if(drawer) drawer.open = true;
+}
+function decorateGroups(){
+  cleanupGroups();
+  const objects = manager()?.objects || [];
+  outlinerList?.querySelectorAll('.outliner-row').forEach(row => {
+    const id = Number(row.dataset.objectId);
+    const object = objects.find(item => item.id === id);
+    let tag = row.querySelector('.boxlab-group-tag');
+    if(object?.groupId == null){
+      tag?.remove();
+      return;
+    }
+    if(!tag){
+      tag = document.createElement('span');
+      tag.className = 'boxlab-group-tag';
+      row.append(tag);
+    }
+    tag.textContent = `G${object.groupId}`;
+    tag.title = `Group ${object.groupId}`;
+  });
+}
+function updateGroupControls(){
+  if(!groupControls) return;
+  const ids = baseSelectionIds();
+  const selected = (manager()?.objects || []).filter(object => ids.has(object.id));
+  const groupButton = groupControls.querySelector('[data-group-action="group"]');
+  const ungroupButton = groupControls.querySelector('[data-group-action="ungroup"]');
+  if(groupButton) groupButton.disabled = ids.size < 2;
+  if(ungroupButton) ungroupButton.disabled = !selected.some(object => object.groupId != null);
+}
 function buildControls(){
   if(!objectsDrawer || controls) return;
   controls = document.createElement('div');
@@ -83,14 +180,20 @@ function buildControls(){
   pivotControls = document.createElement('div');
   pivotControls.id = 'objectPivotTools';
   pivotControls.innerHTML = '<span>Pivot</span><button type="button" data-pivot="median">Median</button><button type="button" data-pivot="active">Active</button><button type="button" data-pivot="individual">Individual</button><button type="button" data-pivot="world">World</button>';
+  groupControls = document.createElement('div');
+  groupControls.id = 'objectGroupTools';
+  groupControls.innerHTML = '<span>Group</span><button type="button" data-group-action="group">Group</button><button type="button" data-group-action="ungroup">Ungroup</button>';
   const style = document.createElement('style');
   style.textContent = `
 #objectOriginTools{display:grid;grid-template-columns:auto repeat(3,1fr);gap:6px;align-items:center;margin:8px 0 2px}
-#objectOriginTools>span,#objectPivotTools>span{font-size:11px;opacity:.72;padding-right:2px}
+#objectOriginTools>span,#objectPivotTools>span,#objectGroupTools>span{font-size:11px;opacity:.72;padding-right:2px}
 #objectOriginTools button{min-width:0;padding-left:7px;padding-right:7px}
 #objectPivotTools{display:grid;grid-template-columns:auto repeat(4,minmax(0,1fr));gap:6px;align-items:center;margin:6px 0 2px}
 #objectPivotTools button{min-width:0;padding-left:5px;padding-right:5px;font-size:11px}
 #objectPivotTools button.active{outline:1px solid currentColor;background:rgba(255,255,255,.09)}
+#objectGroupTools{display:grid;grid-template-columns:auto 1fr 1fr;gap:6px;align-items:center;margin:6px 0 4px}
+#objectGroupTools button{min-width:0;padding-left:7px;padding-right:7px}
+.boxlab-group-tag{font-size:10px;line-height:1;padding:3px 5px;border:1px solid currentColor;border-radius:8px;opacity:.72;margin-left:5px;pointer-events:none}
 #boxlabOriginMarker{position:fixed;pointer-events:none;width:15px;height:15px;border:2px solid #ffd84d;border-radius:50%;box-shadow:0 0 0 1px #1118;transform:translate(-50%,-50%);z-index:9000}
 #boxlabOriginMarker:before,#boxlabOriginMarker:after{content:'';position:absolute;background:#ffd84d;left:50%;top:50%;transform:translate(-50%,-50%)}
 #boxlabOriginMarker:before{width:21px;height:1px}#boxlabOriginMarker:after{width:1px;height:21px}
@@ -98,6 +201,7 @@ function buildControls(){
   document.head.append(style);
   objectsDrawer.insertBefore(controls, outlinerList || objectsDrawer.firstChild);
   objectsDrawer.insertBefore(pivotControls, outlinerList || objectsDrawer.firstChild);
+  objectsDrawer.insertBefore(groupControls, outlinerList || objectsDrawer.firstChild);
   controls.addEventListener('click', event => {
     const button = event.target.closest('button[data-origin]');
     if(!button) return;
@@ -113,7 +217,21 @@ function buildControls(){
     event.stopPropagation();
     setPivotMode(button.dataset.pivot);
   });
+  groupControls.addEventListener('click', event => {
+    const button = event.target.closest('button[data-group-action]');
+    if(!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if(button.dataset.groupAction === 'group') groupSelected(); else ungroupSelected();
+  });
+  objectsDrawer.addEventListener('click', () => queueMicrotask(updateGroupControls), true);
   setPivotMode(pivotMode);
+  updateGroupControls();
+  decorateGroups();
+  if(!groupObserver && outlinerList){
+    groupObserver = new MutationObserver(() => queueMicrotask(decorateGroups));
+    groupObserver.observe(outlinerList,{childList:true});
+  }
 }
 function ensureMarker(){
   if(marker) return marker;
@@ -251,12 +369,13 @@ function numericTransform(event){
 }
 
 function buildMultiTargets(){
-  const m=manager(), s=actualSelection(), live=state()?.mesh;
-  if(!m || !s || !live) return {targets:[],locked:0};
+  const m=manager(), live=state()?.mesh;
+  if(!m || !live) return {targets:[],locked:0};
   m.saveActive?.();
+  const ids=expandedSelectionIds();
   let locked=0; const targets=[];
   for(const object of m.objects){
-    if(!s.ids.has(object.id)) continue;
+    if(!ids.has(object.id)) continue;
     if(object.locked){ locked++; continue; }
     const mesh=object.id===m.activeId?live:object.mesh;
     if(!mesh?.vertices?.length) continue;
@@ -298,8 +417,13 @@ function startMultiPivotGesture(event){
   const normal=camera.getWorldDirection(new THREE.Vector3()).normalize(), plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,interactionCenter), start=planePoint(event,plane,camera);
   if(!start)return;
   const c=constraint(), axis=['x','y','z'].includes(c)?c:null, centerScreen=screenPoint(interactionCenter,camera);
-  multiGesture={id:event.pointerId,t:tool(),camera,targets,locked,center,interactionCenter,centerScreen,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),axis,auto:c==='auto',axes:screenAxes(interactionCenter,camera),changed:false};
+  multiGesture={id:event.pointerId,t:tool(),camera,targets,locked,center,interactionCenter,centerScreen,start,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),plane,axis,auto:c==='auto',axes:screenAxes(interactionCenter,camera),changed:false};
   event.preventDefault(); event.stopImmediatePropagation(); canvas.setPointerCapture?.(event.pointerId);
+}
+function multiAxisMoveAmount(g,event){
+  const d=new THREE.Vector2(event.clientX-g.startX,event.clientY-g.startY);
+  const rail=g.axes[g.axis], l=rail?.lengthSq?.() || 0;
+  return l>1 ? d.dot(rail)/l : 0;
 }
 function moveMultiPivotGesture(event){
   const g=multiGesture; if(!g || g.id!==event.pointerId)return;
@@ -313,7 +437,19 @@ function moveMultiPivotGesture(event){
     if(g.auto||axisSnapToggle?.checked)g.axis=chooseAxis(d,g.axes);
   }
   restoreMulti(g.targets);
-  if(g.t==='scale'){
+  if(g.t==='move'){
+    let delta;
+    if(g.axis) delta=axisVector(g.axis).multiplyScalar(multiAxisMoveAmount(g,event));
+    else {
+      const now=planePoint(event,g.plane,g.camera); if(!now)return;
+      delta=now.sub(g.start);
+    }
+    for(const target of g.targets){
+      for(const v of target.mesh.vertices)v.add(delta);
+      setOrigin(target.originalOrigin.clone().add(delta),target.object);
+    }
+    if(status)status.textContent=`Move • ${g.targets.length} grouped objects • ${g.axis?g.axis.toUpperCase():'Free'}`;
+  }else if(g.t==='scale'){
     const factor=THREE.MathUtils.clamp(Math.exp((dx-dy)*.006),.05,20);
     for(const target of g.targets){
       const pivot=pivotMode==='individual'?target.originalOrigin:g.center;
@@ -350,7 +486,13 @@ function numericMultiPivot(event){
   const center=multiPivotPoint(targets), c=constraint(), axis=['x','y','z'].includes(c)?c:null, t=tool();
   event.preventDefault(); event.stopImmediatePropagation();
   const active=targets.find(target=>target.object.id===manager()?.activeId); if(active)globalThis.__boxlabHistory?.push?.(active.mesh.clone());
-  if(t==='scale'){
+  if(t==='move'){
+    const delta=axis?axisVector(axis).multiplyScalar(n):new THREE.Vector3(n,0,0);
+    for(const target of targets){
+      for(const v of target.mesh.vertices)v.add(delta);
+      setOrigin(target.originalOrigin.clone().add(delta),target.object);
+    }
+  }else if(t==='scale'){
     for(const target of targets){
       const pivot=pivotMode==='individual'?target.originalOrigin:center;
       for(const v of target.mesh.vertices){ const p=v.sub(pivot); if(axis)p[axis]*=n;else p.multiplyScalar(n); v.add(pivot); }
@@ -373,8 +515,13 @@ function wrapLegacyMultiSelection(){
   selectionApi=globalThis.__boxlabObjectSelection;
   const base=selectionApi;
   globalThis.__boxlabObjectSelection={
-    get ids(){ return base.ids; },
-    get multi(){ return ['scale','rotate'].includes(tool()) ? false : base.multi; },
+    get ids(){ return expandedSelectionIds(); },
+    get multi(){
+      const t=tool();
+      if(t==='scale'||t==='rotate') return false;
+      if(t==='move'&&groupedExpansionActive()) return false;
+      return base.multi;
+    },
     select(ids=[]){ return base.select?.(ids); },
     clear(){ return base.clear?.(); }
   };
@@ -391,9 +538,11 @@ function initialize(){
     set(object,v){ setOrigin(v,object); },
     preset:presetOrigin,
     get pivotMode(){ return pivotMode; },
-    setPivot:setPivotMode
+    setPivot:setPivotMode,
+    expandedSelectionIds,
+    groupMembers
   };
-  const version=document.querySelector('#appVersion'); if(version)version.textContent='v0.36.3.4'; document.title='BoxLab v0.36.3.4';
+  const version=document.querySelector('#appVersion'); if(version)version.textContent='v0.36.4.0'; document.title='BoxLab v0.36.4.0';
   return true;
 }
 
