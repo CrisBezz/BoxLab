@@ -23,3 +23,5 @@ drawers.forEach(drawer => drawer.addEventListener('toggle', () => {
   if (!drawer.open) return;
   for (const other of drawers) if (other !== drawer && other.dataset.keepOpen !== 'true') other.open = false;
 }));
+
+import('./object-management.js?v=0.36.0.0').catch(error => console.warn('BoxLab object management failed to load', error));
