@@ -9,6 +9,8 @@ let traceRenderer=null;
 let pathTracer=null;
 let traceScene=null;
 let traceCamera=null;
+let traceFocus=null;
+let traceDistance=0;
 let packagePromise=null;
 let lastMeshSignature='';
 let lastCameraSignature='';
@@ -86,11 +88,23 @@ function cameraSignature(camera){return camera?`${matrixSignature(camera.matrixW
 function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xc5cbd3,roughness:.48,metalness:.02,emissive:0x27313e,emissiveIntensity:.72,side:THREE.DoubleSide});}
 
 function frameTraceCamera(box){
-  const source=currentCamera();
+  const source=currentCamera(),center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3());
+  const radius=Math.max(size.length()*.5,.25),camera=new THREE.PerspectiveCamera(source?.fov||42,source?.aspect||1,Math.max(.001,radius*.001),Math.max(100,radius*30));
   source.updateMatrixWorld(true);
-  const camera=source.clone();
-  camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
+  const viewDirection=new THREE.Vector3();source.getWorldDirection(viewDirection).normalize();
+  const halfY=THREE.MathUtils.degToRad(camera.fov)*.5,halfX=Math.atan(Math.tan(halfY)*Math.max(camera.aspect,.01));
+  traceFocus=center.clone();traceDistance=Math.max(radius/Math.sin(Math.max(.1,Math.min(halfY,halfX)))*1.28,.75);
+  camera.position.copy(traceFocus).addScaledVector(viewDirection,-traceDistance);
+  camera.up.copy(source.up);camera.lookAt(traceFocus);camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
   return camera;
+}
+
+function syncTraceOrbit(source){
+  if(!traceCamera||!traceFocus||!source)return;
+  source.updateMatrixWorld(true);
+  const viewDirection=new THREE.Vector3();source.getWorldDirection(viewDirection).normalize();
+  traceCamera.position.copy(traceFocus).addScaledVector(viewDirection,-traceDistance);
+  traceCamera.up.copy(source.up);traceCamera.lookAt(traceFocus);traceCamera.updateMatrixWorld(true);
 }
 
 function buildTraceScene(){
@@ -232,7 +246,7 @@ function animate(time){
   if(sig!==lastMeshSignature){rebuildTraceScene(true);return;}
   const cameraNow=cameraSignature(camera);
   if(cameraNow!==lastCameraSignature){
-    traceCamera.copy(camera);traceCamera.updateProjectionMatrix();traceCamera.updateMatrixWorld(true);
+    syncTraceOrbit(camera);
     lastCameraSignature=cameraNow;pathTracer.updateCamera();firstSampleDone=false;
   }
   try{
