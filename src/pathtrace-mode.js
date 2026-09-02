@@ -109,12 +109,22 @@ function buildTraceScene(){
   floor.userData.boxlabPathTraceBody=true;
   scene.add(floor);
 
-  const key=new THREE.RectAreaLight(0xffffff,Math.max(8,extent*5),extent*3.2,extent*3.2);
-  key.position.set(center.x+extent*2.2,center.y+extent*2.8,center.z+extent*2.4);key.lookAt(center);scene.add(key);
-  const fill=new THREE.RectAreaLight(0xaecbff,Math.max(4,extent*2.4),extent*2.4,extent*2.4);
-  fill.position.set(center.x-extent*2.0,center.y+extent*1.3,center.z+extent*1.2);fill.lookAt(center);scene.add(fill);
-  const rim=new THREE.RectAreaLight(0xffe3c2,Math.max(3,extent*1.8),extent*2.0,extent*2.0);
-  rim.position.set(center.x,center.y+extent*2.0,center.z-extent*2.8);rim.lookAt(center);scene.add(rim);
+  // Keep the soft area lights, but add scale-aware direct lights as a robust
+  // illumination path on Safari. The original diagnostic values were valid
+  // objects yet too dim to expose the model in the accumulated result.
+  const keyPanel=new THREE.RectAreaLight(0xffffff,55,extent*3.2,extent*3.2);
+  keyPanel.position.set(center.x+extent*2.2,center.y+extent*2.8,center.z+extent*2.4);keyPanel.lookAt(center);scene.add(keyPanel);
+  const fillPanel=new THREE.RectAreaLight(0xb8d4ff,28,extent*2.4,extent*2.4);
+  fillPanel.position.set(center.x-extent*2.0,center.y+extent*1.3,center.z+extent*1.2);fillPanel.lookAt(center);scene.add(fillPanel);
+
+  const key=new THREE.DirectionalLight(0xfff4df,3.2);
+  key.position.set(center.x+extent*2.4,center.y+extent*3.2,center.z+extent*2.6);
+  key.target.position.copy(center);scene.add(key,key.target);
+  const fill=new THREE.PointLight(0xaecbff,Math.max(90,extent*extent*90),0,2);
+  fill.position.set(center.x-extent*2.0,center.y+extent*1.7,center.z+extent*1.7);scene.add(fill);
+  const rim=new THREE.PointLight(0xffd4aa,Math.max(60,extent*extent*60),0,2);
+  rim.position.set(center.x+extent*.3,center.y+extent*2.2,center.z-extent*2.2);scene.add(rim);
+  scene.updateMatrixWorld(true);
   return{scene,count:1,box};
 }
 
@@ -150,7 +160,7 @@ async function ensureTracer(){
     traceRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.35));
     traceRenderer.outputColorSpace=THREE.SRGBColorSpace;
     traceRenderer.toneMapping=THREE.ACESFilmicToneMapping;
-    traceRenderer.toneMappingExposure=1.05;
+    traceRenderer.toneMappingExposure=1.2;
     resizeTrace();
     message('D5','Three.js WebGL renderer created');
   }catch(error){return fail('D5','Three.js renderer creation failed',error);}
