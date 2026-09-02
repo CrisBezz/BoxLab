@@ -9,6 +9,8 @@ let traceRenderer=null;
 let pathTracer=null;
 let traceScene=null;
 let traceCamera=null;
+let traceFocus=null;
+let traceDistance=0;
 let packagePromise=null;
 let lastMeshSignature='';
 let lastCameraSignature='';
@@ -85,11 +87,24 @@ function matrixSignature(matrix){return matrix.elements.map(value=>Math.round(va
 function cameraSignature(camera){return camera?`${matrixSignature(camera.matrixWorld)}|${matrixSignature(camera.projectionMatrix)}`:'';}
 function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xc5cbd3,roughness:.48,metalness:.02,emissive:0x27313e,emissiveIntensity:.72,side:THREE.DoubleSide});}
 
-function frameTraceCamera(){
-  const source=currentCamera();source.updateMatrixWorld(true);
-  const camera=new THREE.PerspectiveCamera(source.fov,source.aspect,source.near,source.far);
-  camera.position.set(0,0,0);camera.quaternion.identity();camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
+function frameTraceCamera(box){
+  const source=currentCamera(),center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3());
+  const radius=Math.max(size.length()*.5,.25),camera=new THREE.PerspectiveCamera(source?.fov||42,source?.aspect||1,Math.max(.001,radius*.001),Math.max(100,radius*30));
+  source.updateMatrixWorld(true);
+  const viewDirection=new THREE.Vector3();source.getWorldDirection(viewDirection).normalize();
+  const halfY=THREE.MathUtils.degToRad(camera.fov)*.5,halfX=Math.atan(Math.tan(halfY)*Math.max(camera.aspect,.01));
+  traceFocus=center.clone();traceDistance=Math.max(radius/Math.sin(Math.max(.1,Math.min(halfY,halfX)))*1.28,.75);
+  camera.position.copy(traceFocus).addScaledVector(viewDirection,-traceDistance);
+  camera.up.copy(source.up);camera.lookAt(traceFocus);camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
   return camera;
+}
+
+function syncTraceOrbit(source){
+  if(!traceCamera||!traceFocus||!source)return;
+  source.updateMatrixWorld(true);
+  const viewDirection=new THREE.Vector3();source.getWorldDirection(viewDirection).normalize();
+  traceCamera.position.copy(traceFocus).addScaledVector(viewDirection,-traceDistance);
+  traceCamera.up.copy(source.up);traceCamera.lookAt(traceFocus);traceCamera.updateMatrixWorld(true);
 }
 
 function buildTraceScene(){
@@ -208,15 +223,13 @@ async function rebuildTraceScene(force=false){
   traceScene=built.scene;
   lastMeshSignature=signature;
   const sourceCamera=currentCamera();
-  sourceCamera.updateMatrixWorld(true);
-  traceScene.applyMatrix4(sourceCamera.matrixWorldInverse);
-  traceCamera=frameTraceCamera();
+  traceCamera=frameTraceCamera(built.box);
   lastCameraSignature=cameraSignature(sourceCamera);
   firstSampleDone=false;
   try{
     pathTracer.setScene(traceScene,traceCamera);
     pathTracer.reset();
-    message('D7','scene uploaded • live camera match','Waiting for first sample…');
+    message('D7','scene uploaded • framed active mesh','Waiting for first sample…');
     return true;
   }catch(error){return fail('D7','scene upload / shader setup failed',error);}
 }
@@ -232,7 +245,10 @@ function animate(time){
   const sig=meshSignature(mesh);
   if(sig!==lastMeshSignature){rebuildTraceScene(true);return;}
   const cameraNow=cameraSignature(camera);
-  if(cameraNow!==lastCameraSignature)lastCameraSignature=cameraNow;
+  if(cameraNow!==lastCameraSignature){
+    syncTraceOrbit(camera);
+    lastCameraSignature=cameraNow;pathTracer.updateCamera();firstSampleDone=false;
+  }
   try{
     pathTracer.renderSample();
     if(!firstSampleDone){firstSampleDone=true;message('D8','FIRST SAMPLE OK','Path tracing is supported on this browser / GPU.');}
@@ -241,7 +257,6 @@ function animate(time){
 }
 
 window.addEventListener('resize',()=>{resizeTrace();if(active)pathTracer?.reset?.();});
-document.querySelector('#viewport')?.addEventListener('pointerup',()=>{if(active)requestAnimationFrame(()=>rebuildTraceScene(true));});
 document.addEventListener('boxlab-render-mode-change',event=>{if(event.detail?.mode==='pathtrace')activate();else deactivate();});
 ensureOverlay();
 requestAnimationFrame(animate);
