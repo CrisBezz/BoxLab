@@ -1,14 +1,30 @@
 import * as THREE from 'three';
-import './pathtrace-mode.js?v=0.35.8.18';
 
 const status=document.querySelector('#selectionStatus');
 let mode='solid';
 let lastBody=null;
+let studioRig=null;
+let studioFloor=null;
+let originalBackground=null;
+
+function bridge(){return globalThis.__boxlabBridgeState||null;}
 
 const clayMaterial=new THREE.MeshStandardMaterial({
   color:0xc8c1b5,
   roughness:.92,
   metalness:0,
+  side:THREE.DoubleSide,
+  polygonOffset:true,
+  polygonOffsetFactor:1,
+  polygonOffsetUnits:1
+});
+
+const studioMaterial=new THREE.MeshStandardMaterial({
+  color:0xaeb9c7,
+  roughness:.48,
+  metalness:.03,
+  emissive:0x05080d,
+  emissiveIntensity:.08,
   side:THREE.DoubleSide,
   polygonOffset:true,
   polygonOffsetFactor:1,
@@ -85,14 +101,46 @@ function addWire(body,material){
   body.add(overlay);
 }
 
+function ensureStudioRig(){
+  const state=bridge(),scene=state?.scene;
+  if(!scene||studioRig)return;
+  originalBackground=scene.background?.clone?.()||new THREE.Color(0x111318);
+  studioRig=new THREE.Group();studioRig.name='BoxLab Studio Realtime';
+  const floorMaterial=new THREE.MeshStandardMaterial({color:0x252b35,roughness:.9,metalness:0});
+  studioFloor=new THREE.Mesh(new THREE.PlaneGeometry(48,48),floorMaterial);
+  studioFloor.rotation.x=-Math.PI/2;studioFloor.receiveShadow=true;studioRig.add(studioFloor);
+  const key=new THREE.DirectionalLight(0xfff5e7,2.15);key.position.set(5.5,8,4.5);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-10;key.shadow.camera.right=10;key.shadow.camera.top=10;key.shadow.camera.bottom=-10;studioRig.add(key);
+  const fill=new THREE.DirectionalLight(0x9fc5ff,.7);fill.position.set(-5,3,2);studioRig.add(fill);
+  const rim=new THREE.DirectionalLight(0xdbe7ff,.45);rim.position.set(1,5,-6);studioRig.add(rim);
+  studioRig.visible=false;scene.add(studioRig);
+}
+
+function syncStudio(body){
+  const state=bridge(),scene=state?.scene,renderer=state?.renderer;
+  if(!scene||!renderer)return;
+  ensureStudioRig();
+  const enabled=mode==='studio';
+  if(studioRig)studioRig.visible=enabled;
+  renderer.shadowMap.enabled=enabled;
+  if(state.baseHemisphere)state.baseHemisphere.intensity=enabled?.52:1.2;
+  if(state.key)state.key.intensity=enabled?1.35:3.2;
+  scene.background.copy(enabled?new THREE.Color(0x131924):originalBackground||new THREE.Color(0x111318));
+  if(!enabled||!studioFloor)return;
+  const box=new THREE.Box3().setFromObject(body);
+  if(!box.isEmpty())studioFloor.position.y=box.min.y-.025;
+  body.castShadow=true;body.receiveShadow=true;
+}
+
 function applyMode(body){
   if(!body?.isMesh||body.userData?.kind!=='body')return;
   lastBody=body;
   clearRenderChildren(body);
   if(!body.userData.boxlabOriginalMaterial)body.userData.boxlabOriginalMaterial=body.material;
   const original=body.userData.boxlabOriginalMaterial;
+  syncStudio(body);
 
-  if(mode==='clay')body.material=clayMaterial;
+  if(mode==='studio')body.material=studioMaterial;
+  else if(mode==='clay')body.material=clayMaterial;
   else if(mode==='matcap')body.material=matcapMaterial;
   else if(mode==='xray'){
     body.material=xrayMaterial;
@@ -110,7 +158,7 @@ function rebuild(){
 function modeLabel(){
   if(mode==='wire')return'Wire + Solid';
   if(mode==='matcap')return'MatCap';
-  if(mode==='pathtrace')return'Path Trace';
+  if(mode==='studio')return'Studio';
   return mode[0].toUpperCase()+mode.slice(1);
 }
 
@@ -121,13 +169,6 @@ function setMode(next){
   document.dispatchEvent(new CustomEvent('boxlab-render-mode-change',{detail:{mode}}));
   if(status)status.textContent=`View • ${modeLabel()}`;
 }
-
-// Path Trace is an optional renderer. If its diagnostic run fails, restore the
-// normal display mode rather than leaving an incomplete overlay active over
-// modelling tools.
-document.addEventListener('boxlab-pathtrace-failed',()=>{
-  if(mode==='pathtrace')setMode('solid');
-});
 
 const baseAdd=THREE.Group.prototype.add;
 if(!THREE.Group.prototype.__boxlabRenderModesInstalled){
@@ -148,7 +189,7 @@ function installUI(){
   const wrap=document.createElement('div');
   wrap.id='renderModes';
   wrap.className='render-modes';
-  wrap.innerHTML='<button type="button" data-render="solid" class="active">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="wire">Wire + Solid</button><button type="button" data-render="xray">X-Ray</button><button type="button" data-render="pathtrace">Path Trace</button>';
+  wrap.innerHTML='<button type="button" data-render="solid" class="active">Solid</button><button type="button" data-render="studio">Studio</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="wire">Wire + Solid</button><button type="button" data-render="xray">X-Ray</button>';
   host.append(wrap);
   wrap.addEventListener('click',event=>{
     const button=event.target.closest('button[data-render]');
@@ -162,7 +203,7 @@ function installUI(){
 #renderModes{display:flex;gap:4px;align-items:center;flex:0 0 auto;margin-left:4px;padding-left:8px;border-left:1px solid rgba(255,255,255,.1)}
 #renderModes button{white-space:nowrap;min-height:34px;padding:5px 8px;font-size:11px}
 #renderModes button.active{background:#f2f5fa;color:#111318;border-color:#f2f5fa}
-#renderModes button[data-render="pathtrace"]{font-weight:700}
+#renderModes button[data-render="studio"]{font-weight:700}
 @media(max-width:1100px){#renderModes button{padding:5px 7px}#renderModes{max-width:48vw;overflow-x:auto;scrollbar-width:none}#renderModes::-webkit-scrollbar{display:none}}
 `;
   document.head.append(style);
