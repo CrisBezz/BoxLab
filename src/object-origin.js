@@ -9,6 +9,8 @@ const axisSnapToggle = document.querySelector('#axisSnapToggle');
 const DRAG_THRESHOLD = 8;
 
 let controls = null;
+let pivotControls = null;
+let pivotMode = 'median';
 let marker = null;
 let gesture = null;
 let moveWatch = null;
@@ -58,22 +60,37 @@ function presetOrigin(kind){
   setOrigin(c, object);
   if(status) status.textContent = `Origin • ${kind === 'bottom' ? 'Bottom' : kind === 'world' ? 'World' : 'Center'}`;
 }
+function setPivotMode(next){
+  if(!['median','active','individual','world'].includes(next)) return;
+  pivotMode = next;
+  pivotControls?.querySelectorAll('button[data-pivot]').forEach(button => button.classList.toggle('active', button.dataset.pivot === next));
+  if(status) status.textContent = `Multi Pivot • ${next === 'individual' ? 'Individual' : next[0].toUpperCase() + next.slice(1)}`;
+  const drawer = document.querySelector('#objectsDrawer');
+  if(drawer) drawer.open = true;
+}
 function buildControls(){
   if(!objectsDrawer || controls) return;
   controls = document.createElement('div');
   controls.id = 'objectOriginTools';
   controls.innerHTML = '<span>Origin</span><button type="button" data-origin="center">Center</button><button type="button" data-origin="bottom">Bottom</button><button type="button" data-origin="world">World</button>';
+  pivotControls = document.createElement('div');
+  pivotControls.id = 'objectPivotTools';
+  pivotControls.innerHTML = '<span>Pivot</span><button type="button" data-pivot="median">Median</button><button type="button" data-pivot="active">Active</button><button type="button" data-pivot="individual">Individual</button><button type="button" data-pivot="world">World</button>';
   const style = document.createElement('style');
   style.textContent = `
 #objectOriginTools{display:grid;grid-template-columns:auto repeat(3,1fr);gap:6px;align-items:center;margin:8px 0 2px}
-#objectOriginTools>span{font-size:11px;opacity:.72;padding-right:2px}
+#objectOriginTools>span,#objectPivotTools>span{font-size:11px;opacity:.72;padding-right:2px}
 #objectOriginTools button{min-width:0;padding-left:7px;padding-right:7px}
+#objectPivotTools{display:grid;grid-template-columns:auto repeat(4,minmax(0,1fr));gap:6px;align-items:center;margin:6px 0 2px}
+#objectPivotTools button{min-width:0;padding-left:5px;padding-right:5px;font-size:11px}
+#objectPivotTools button.active{outline:1px solid currentColor;background:rgba(255,255,255,.09)}
 #boxlabOriginMarker{position:fixed;pointer-events:none;width:15px;height:15px;border:2px solid #ffd84d;border-radius:50%;box-shadow:0 0 0 1px #1118;transform:translate(-50%,-50%);z-index:9000}
 #boxlabOriginMarker:before,#boxlabOriginMarker:after{content:'';position:absolute;background:#ffd84d;left:50%;top:50%;transform:translate(-50%,-50%)}
 #boxlabOriginMarker:before{width:21px;height:1px}#boxlabOriginMarker:after{width:1px;height:21px}
 `;
   document.head.append(style);
   objectsDrawer.insertBefore(controls, outlinerList || objectsDrawer.firstChild);
+  objectsDrawer.insertBefore(pivotControls, outlinerList || objectsDrawer.firstChild);
   controls.addEventListener('click', event => {
     const button = event.target.closest('button[data-origin]');
     if(!button) return;
@@ -82,6 +99,14 @@ function buildControls(){
     presetOrigin(button.dataset.origin);
     document.querySelector('#objectsDrawer').open = true;
   });
+  pivotControls.addEventListener('click', event => {
+    const button = event.target.closest('button[data-pivot]');
+    if(!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    setPivotMode(button.dataset.pivot);
+  });
+  setPivotMode(pivotMode);
 }
 function ensureMarker(){
   if(marker) return marker;
@@ -227,9 +252,11 @@ function initialize(){
   globalThis.__boxlabObjectOrigins={
     originFor(object,mesh){ return ensureOrigin(object,mesh); },
     set(object,v){ setOrigin(v,object); },
-    preset:presetOrigin
+    preset:presetOrigin,
+    get pivotMode(){ return pivotMode; },
+    setPivot:setPivotMode
   };
-  const version=document.querySelector('#appVersion'); if(version)version.textContent='v0.36.3.0'; document.title='BoxLab v0.36.3.0';
+  const version=document.querySelector('#appVersion'); if(version)version.textContent='v0.36.3.2'; document.title='BoxLab v0.36.3.2';
   return true;
 }
 
