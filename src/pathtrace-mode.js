@@ -19,6 +19,7 @@ let lastHudUpdate=0;
 let hud=null;
 let failed=false;
 let firstSampleDone=false;
+let activationId=0;
 
 function state(){return globalThis.__boxlabBridgeState;}
 function currentMesh(){return state()?.mesh||null;}
@@ -48,6 +49,9 @@ function fail(stage,text,error){
   const detail=error?.message||String(error||'Unknown error');
   message(stage,text,detail);
   console.error(`[BoxLab Path Trace ${stage}]`,error);
+  // A diagnostic/render failure must never leave a second renderer alive over
+  // the editor. Return to the normal display mode immediately.
+  if(active)document.dispatchEvent(new CustomEvent('boxlab-pathtrace-failed'));
   return false;
 }
 
@@ -246,9 +250,10 @@ async function ensureTracer(){
   }catch(error){return fail('D6','path tracer constructor failed',error);}
 }
 
-async function rebuildTraceScene(force=false){
-  if(!active||failed)return false;
+async function rebuildTraceScene(force=false,runId=activationId){
+  if(!active||failed||runId!==activationId)return false;
   if(!await ensureTracer())return false;
+  if(!active||failed||runId!==activationId)return false;
   const mesh=currentMesh(),signature=meshSignature(mesh);
   if(!force&&signature===lastMeshSignature)return true;
   const built=buildTraceScene();
@@ -270,8 +275,23 @@ async function rebuildTraceScene(force=false){
 }
 
 function setVisible(show){ensureOverlay();if(traceCanvas)traceCanvas.style.display=show?'block':'none';if(hud)hud.style.display=show?'block':'none';}
-async function activate(){failed=false;active=true;setVisible(true);message('D0','preparing diagnostic run');await rebuildTraceScene(true);}
-function deactivate(){active=false;clearTraceOrbit();setVisible(false);}
+function teardownTracer(){
+  clearTraceOrbit();
+  disposeTraceScene();
+  try{pathTracer?.dispose?.();}catch{}
+  pathTracer=null;
+  try{traceRenderer?.dispose?.();traceRenderer?.forceContextLoss?.();}catch{}
+  traceRenderer=null;traceCamera=null;traceFocus=null;traceDistance=0;
+  lastMeshSignature='';lastCameraSignature='';firstSampleDone=false;
+}
+async function activate(){
+  teardownTracer();
+  failed=false;active=true;
+  const runId=++activationId;
+  setVisible(true);message('D0','preparing diagnostic run');
+  await rebuildTraceScene(true,runId);
+}
+function deactivate(){active=false;activationId++;teardownTracer();setVisible(false);}
 
 function animate(time){
   requestAnimationFrame(animate);

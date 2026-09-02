@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import './pathtrace-mode.js?v=0.35.8.17';
+import './pathtrace-mode.js?v=0.35.8.18';
 
 const status=document.querySelector('#selectionStatus');
 let mode='solid';
@@ -121,6 +121,13 @@ function setMode(next){
   document.dispatchEvent(new CustomEvent('boxlab-render-mode-change',{detail:{mode}}));
   if(status)status.textContent=`View • ${modeLabel()}`;
 }
+
+// Path Trace is an optional renderer. If its diagnostic run fails, restore the
+// normal display mode rather than leaving an incomplete overlay active over
+// modelling tools.
+document.addEventListener('boxlab-pathtrace-failed',()=>{
+  if(mode==='pathtrace')setMode('solid');
+});
 
 const baseAdd=THREE.Group.prototype.add;
 if(!THREE.Group.prototype.__boxlabRenderModesInstalled){
