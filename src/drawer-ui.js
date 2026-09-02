@@ -12,9 +12,6 @@ document.querySelectorAll('#selectionModes button').forEach(button => button.add
 }));
 
 document.querySelectorAll('#toolModes button, .mode-tools button').forEach(button => button.addEventListener('click', () => {
-  // Some controls (notably Crease) are moved into Modifiers by the compact
-  // drawer layout. Respect the control's current drawer rather than the
-  // drawer it belonged to when this listener was installed.
   openDrawer(button.closest('.drawer-section') || editDrawer);
 }));
 document.querySelectorAll('#outlinerList button, #outlinerAddBtn, #outlinerDuplicateBtn, #outlinerRenameBtn, #outlinerDeleteBtn').forEach(button => button.addEventListener('click', () => openDrawer(objectDrawer)));
@@ -37,25 +34,18 @@ function installGroupUiPolish() {
 `;
     document.head.append(style);
   }
-
   const group = document.querySelector('#objectGroupTools [data-group-action="group"]');
   const ungroup = document.querySelector('#objectGroupTools [data-group-action="ungroup"]');
-  if (group) {
-    group.textContent = 'Group Selection';
-    group.title = 'Group selected objects';
-  }
-  if (ungroup) {
-    ungroup.textContent = 'Ungroup';
-    ungroup.title = 'Ungroup the selected group';
-  }
+  if (group) { group.textContent = 'Group Selection'; group.title = 'Group selected objects'; }
+  if (ungroup) { ungroup.textContent = 'Ungroup'; ungroup.title = 'Ungroup the selected group'; }
 }
 
-import('./object-management.js?v=0.36.0.0').catch(error => console.warn('BoxLab object management failed to load', error));
+import('./object-management.js?v=0.36.6.0').catch(error => console.warn('BoxLab object management failed to load', error));
 import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxLab object drawer retain failed to load', error));
 import('./studio-scene-fix.js?v=0.36.2.0').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.5.1';
-  document.title = 'BoxLab v0.36.5.1';
+  if (version) version.textContent = 'v0.36.6.0';
+  document.title = 'BoxLab v0.36.6.0';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
