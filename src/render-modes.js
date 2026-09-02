@@ -5,6 +5,8 @@ let mode='studio';
 let lastBody=null;
 let studioRig=null;
 let studioFloor=null;
+let studioKey=null;
+let studioKeyTarget=null;
 let originalBackground=null;
 let studioRefreshQueued=false;
 
@@ -120,9 +122,20 @@ function ensureStudioRig(){
   originalBackground=scene.background?.clone?.()||new THREE.Color(0x111318);
   studioRig=new THREE.Group();studioRig.name='BoxLab Studio Realtime';
   const floorMaterial=new THREE.MeshStandardMaterial({color:0x252b35,roughness:.9,metalness:0});
-  studioFloor=new THREE.Mesh(new THREE.PlaneGeometry(48,48),floorMaterial);
-  studioFloor.rotation.x=-Math.PI/2;studioFloor.receiveShadow=true;studioRig.add(studioFloor);
-  const key=new THREE.DirectionalLight(0xfff5e7,2.15);key.position.set(5.5,8,4.5);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-10;key.shadow.camera.right=10;key.shadow.camera.top=10;key.shadow.camera.bottom=-10;key.shadow.normalBias=.045;key.shadow.bias=-.0001;studioRig.add(key);
+  studioFloor=new THREE.Mesh(new THREE.PlaneGeometry(1,1),floorMaterial);
+  studioFloor.rotation.x=-Math.PI/2;studioFloor.receiveShadow=true;studioFloor.userData.boxlabStudioFloor=true;studioRig.add(studioFloor);
+  studioKey=new THREE.DirectionalLight(0xfff5e7,2.15);
+  studioKey.position.set(5.5,8,4.5);
+  studioKey.castShadow=true;
+  studioKey.shadow.mapSize.set(1024,1024);
+  studioKey.shadow.normalBias=.075;
+  studioKey.shadow.bias=-.00015;
+  studioKey.shadow.camera.near=.1;
+  studioKey.shadow.camera.far=100;
+  studioKeyTarget=new THREE.Object3D();
+  studioKey.target=studioKeyTarget;
+  studioRig.add(studioKeyTarget);
+  studioRig.add(studioKey);
   const fill=new THREE.DirectionalLight(0x9fc5ff,.7);fill.position.set(-5,3,2);studioRig.add(fill);
   const rim=new THREE.DirectionalLight(0xdbe7ff,.45);rim.position.set(1,5,-6);studioRig.add(rim);
   studioRig.visible=false;scene.add(studioRig);
@@ -134,7 +147,7 @@ function refreshStudio(){
   requestAnimationFrame(()=>{
     studioRefreshQueued=false;
     const state=bridge(),scene=state?.scene;
-    if(!scene||!studioFloor)return;
+    if(!scene||!studioFloor||!studioKey)return;
     const bounds=new THREE.Box3();let hasVisibleBody=false;
     scene.traverse(object=>{
       const kind=object?.userData?.kind;
@@ -142,7 +155,36 @@ function refreshStudio(){
       bounds.expandByObject(object);hasVisibleBody=true;
       object.castShadow=true;object.receiveShadow=true;
     });
-    if(hasVisibleBody&&!bounds.isEmpty())studioFloor.position.y=bounds.min.y-.025;
+    if(!hasVisibleBody||bounds.isEmpty())return;
+
+    const center=bounds.getCenter(new THREE.Vector3());
+    const size=bounds.getSize(new THREE.Vector3());
+    const span=Math.max(size.x,size.z,1);
+    const height=Math.max(size.y,1);
+    const radius=Math.max(span,height)*.5;
+    const floorSize=Math.max(span*2.8,24);
+
+    studioFloor.position.set(center.x,bounds.min.y-.025,center.z);
+    studioFloor.scale.set(floorSize,floorSize,1);
+
+    studioKeyTarget.position.copy(center);
+    const lightDistance=Math.max(radius*3.5,12);
+    studioKey.position.set(
+      center.x+lightDistance*.55,
+      center.y+lightDistance*.8,
+      center.z+lightDistance*.45
+    );
+
+    const shadowHalf=Math.max(radius*1.45,6);
+    const camera=studioKey.shadow.camera;
+    camera.left=-shadowHalf;
+    camera.right=shadowHalf;
+    camera.top=shadowHalf;
+    camera.bottom=-shadowHalf;
+    camera.near=.1;
+    camera.far=Math.max(lightDistance*3,40);
+    camera.updateProjectionMatrix();
+    studioKey.shadow.needsUpdate=true;
   });
 }
 
@@ -153,6 +195,10 @@ function syncStudio(){
   const enabled=mode==='studio';
   if(studioRig)studioRig.visible=enabled;
   renderer.shadowMap.enabled=enabled;
+  if(enabled){
+    renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+    renderer.shadowMap.autoUpdate=true;
+  }
   if(state.baseHemisphere)state.baseHemisphere.intensity=enabled?.52:1.2;
   if(state.key)state.key.intensity=enabled?1.35:3.2;
   scene.background.copy(enabled?new THREE.Color(0x131924):originalBackground||new THREE.Color(0x111318));
@@ -254,3 +300,7 @@ function installUI(){
 
 installUI();
 queueMicrotask(rebuild);
+
+const version=document.querySelector('#appVersion');
+if(version)version.textContent='v0.36.2.0';
+document.title='BoxLab v0.36.2.0';
