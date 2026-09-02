@@ -237,8 +237,11 @@ function animate(time){
   if(!active||!pathTracer||!camera||!mesh||!traceScene||failed)return;
   const sig=meshSignature(mesh);
   if(sig!==lastMeshSignature){rebuildTraceScene(true);return;}
+  // OrbitControls continues to settle its source-camera matrix after a tap.
+  // The trace camera is deliberately framed from the mesh, so do not restart
+  // the expensive scene upload every animation frame while that damping runs.
   const cameraNow=cameraSignature(camera);
-  if(cameraNow!==lastCameraSignature){rebuildTraceScene(true);return;}
+  if(cameraNow!==lastCameraSignature)lastCameraSignature=cameraNow;
   try{
     pathTracer.renderSample();
     if(!firstSampleDone){firstSampleDone=true;message('D8','FIRST SAMPLE OK','Path tracing is supported on this browser / GPU.');}
