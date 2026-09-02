@@ -86,7 +86,7 @@ function meshSignature(mesh){
 
 function matrixSignature(matrix){return matrix.elements.map(value=>Math.round(value*10000)/10000).join(',');}
 function cameraSignature(camera){return camera?`${matrixSignature(camera.matrixWorld)}|${matrixSignature(camera.projectionMatrix)}`:'';}
-function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xc5cbd3,roughness:.48,metalness:.02,emissive:0x27313e,emissiveIntensity:.72,side:THREE.DoubleSide});}
+function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xb8c0ca,roughness:.54,metalness:.02,emissive:0x111820,emissiveIntensity:.12,side:THREE.DoubleSide});}
 
 function frameTraceCamera(box){
   const source=currentCamera(),center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3());
@@ -94,7 +94,13 @@ function frameTraceCamera(box){
   source.updateMatrixWorld(true);
   const viewDirection=new THREE.Vector3();source.getWorldDirection(viewDirection).normalize();
   const halfY=THREE.MathUtils.degToRad(camera.fov)*.5,halfX=Math.atan(Math.tan(halfY)*Math.max(camera.aspect,.01));
-  traceFocus=center.clone();traceDistance=Math.max(radius/Math.sin(Math.max(.1,Math.min(halfY,halfX)))*1.28,.75);
+  traceFocus=center.clone();
+  const fittedDistance=Math.max(radius/Math.sin(Math.max(.1,Math.min(halfY,halfX)))*1.28,.75);
+  // Preserve the working mesh framing, but never bring the trace camera
+  // closer than the editor camera's own orbit distance. This makes the two
+  // views share the same perspective rather than giving Path Trace a close-up.
+  const editorFocus=state()?.controls?.target||new THREE.Vector3();
+  traceDistance=Math.max(fittedDistance,source.position.distanceTo(editorFocus));
   camera.position.copy(traceFocus).addScaledVector(viewDirection,-traceDistance);
   camera.up.copy(source.up);camera.lookAt(traceFocus);camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
   return camera;
@@ -166,36 +172,28 @@ function buildTraceScene(){
   const size=box.getSize(new THREE.Vector3());
   const extent=Math.max(size.x,size.y,size.z,.25);
   const floorSize=Math.max(extent*8,8);
-  const floor=new THREE.Mesh(new THREE.PlaneGeometry(floorSize,floorSize),new THREE.MeshStandardMaterial({color:0x3d4148,roughness:.82,metalness:0,emissive:0x090b10,emissiveIntensity:.35,side:THREE.DoubleSide}));
+  const floor=new THREE.Mesh(new THREE.PlaneGeometry(floorSize,floorSize),new THREE.MeshStandardMaterial({color:0x2e333a,roughness:.88,metalness:0,emissive:0x05070a,emissiveIntensity:.05,side:THREE.DoubleSide}));
   floor.rotation.x=-Math.PI/2;
   floor.position.set(center.x,box.min.y-Math.max(extent*.012,.004),center.z);
   floor.userData.boxlabPathTraceBody=true;
   scene.add(floor);
 
-  // Keep the soft area lights, but add scale-aware direct lights as a robust
-  // illumination path on Safari. The original diagnostic values were valid
-  // objects yet too dim to expose the model in the accumulated result.
-  const keyPanel=new THREE.RectAreaLight(0xffffff,55,extent*3.2,extent*3.2);
+  // Real Three light objects keep the studio out of the visible scene. The
+  // previous emissive light-card fallback solved the Safari darkness probe,
+  // but it also appeared as bright floating planes in the final render.
+  const keyPanel=new THREE.RectAreaLight(0xffffff,12,extent*3.2,extent*3.2);
   keyPanel.position.set(center.x+extent*2.2,center.y+extent*2.8,center.z+extent*2.4);keyPanel.lookAt(center);scene.add(keyPanel);
-  const fillPanel=new THREE.RectAreaLight(0xb8d4ff,28,extent*2.4,extent*2.4);
+  const fillPanel=new THREE.RectAreaLight(0xb8d4ff,5,extent*2.4,extent*2.4);
   fillPanel.position.set(center.x-extent*2.0,center.y+extent*1.3,center.z+extent*1.2);fillPanel.lookAt(center);scene.add(fillPanel);
 
-  const key=new THREE.DirectionalLight(0xfff4df,3.2);
+  const key=new THREE.DirectionalLight(0xfff4df,1.4);
   key.position.set(center.x+extent*2.4,center.y+extent*3.2,center.z+extent*2.6);
   key.target.position.copy(center);scene.add(key,key.target);
-  const fill=new THREE.PointLight(0xaecbff,Math.max(90,extent*extent*90),0,2);
+  const fill=new THREE.PointLight(0xaecbff,Math.max(24,extent*extent*24),0,2);
   fill.position.set(center.x-extent*2.0,center.y+extent*1.7,center.z+extent*1.7);scene.add(fill);
-  const rim=new THREE.PointLight(0xffd4aa,Math.max(60,extent*extent*60),0,2);
+  const rim=new THREE.PointLight(0xffd4aa,Math.max(14,extent*extent*14),0,2);
   rim.position.set(center.x+extent*.3,center.y+extent*2.2,center.z-extent*2.2);scene.add(rim);
 
-  // Emissive panels are geometry rather than Three light objects. They make
-  // the studio visible even if this browser build does not carry its direct
-  // light list across the path-tracer scene conversion.
-  const panelMaterial=new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xffffff,emissiveIntensity:8,roughness:1,metalness:0,side:THREE.DoubleSide});
-  const ceiling=new THREE.Mesh(new THREE.PlaneGeometry(extent*4.2,extent*3.4),panelMaterial);
-  ceiling.rotation.x=Math.PI/2;ceiling.position.set(center.x,center.y+extent*3.4,center.z+extent*.4);ceiling.userData.boxlabPathTraceBody=true;scene.add(ceiling);
-  const softbox=new THREE.Mesh(new THREE.PlaneGeometry(extent*2.4,extent*2.4),panelMaterial.clone());
-  softbox.position.set(center.x-extent*2.1,center.y+extent*1.8,center.z+extent*1.9);softbox.lookAt(center);softbox.userData.boxlabPathTraceBody=true;scene.add(softbox);
   scene.updateMatrixWorld(true);
   return{scene,count:1,box};
 }
@@ -232,7 +230,7 @@ async function ensureTracer(){
     traceRenderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.35));
     traceRenderer.outputColorSpace=THREE.SRGBColorSpace;
     traceRenderer.toneMapping=THREE.ACESFilmicToneMapping;
-    traceRenderer.toneMappingExposure=1.2;
+    traceRenderer.toneMappingExposure=.85;
     resizeTrace();
     message('D5','Three.js WebGL renderer created');
   }catch(error){return fail('D5','Three.js renderer creation failed',error);}
