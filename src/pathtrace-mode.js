@@ -89,20 +89,16 @@ function cameraSignature(camera){return camera?`${matrixSignature(camera.matrixW
 function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xb8c0ca,roughness:.54,metalness:.02,emissive:0x111820,emissiveIntensity:.12,side:THREE.DoubleSide});}
 
 function frameTraceCamera(box){
-  const source=currentCamera(),center=box.getCenter(new THREE.Vector3()),size=box.getSize(new THREE.Vector3());
-  const radius=Math.max(size.length()*.5,.25),camera=new THREE.PerspectiveCamera(source?.fov||42,source?.aspect||1,Math.max(.001,radius*.001),Math.max(100,radius*30));
+  const source=currentCamera();
+  if(!source)return new THREE.PerspectiveCamera(42,1,.01,100);
   source.updateMatrixWorld(true);
-  const viewDirection=new THREE.Vector3();source.getWorldDirection(viewDirection).normalize();
-  const halfY=THREE.MathUtils.degToRad(camera.fov)*.5,halfX=Math.atan(Math.tan(halfY)*Math.max(camera.aspect,.01));
-  traceFocus=center.clone();
-  const fittedDistance=Math.max(radius/Math.sin(Math.max(.1,Math.min(halfY,halfX)))*1.28,.75);
-  // Preserve the working mesh framing, but never bring the trace camera
-  // closer than the editor camera's own orbit distance. This makes the two
-  // views share the same perspective rather than giving Path Trace a close-up.
-  const editorFocus=state()?.controls?.target||new THREE.Vector3();
-  traceDistance=Math.max(fittedDistance,source.position.distanceTo(editorFocus));
-  camera.position.copy(traceFocus).addScaledVector(viewDirection,-traceDistance);
-  camera.up.copy(source.up);camera.lookAt(traceFocus);camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
+  // The editable and traced meshes share world coordinates. Cloning the live
+  // editor camera therefore gives Path Trace the exact same FOV, aspect,
+  // zoom, position, orientation and lens shift — not an approximation.
+  const camera=source.clone();
+  traceFocus=(state()?.controls?.target||box.getCenter(new THREE.Vector3())).clone();
+  traceDistance=camera.position.distanceTo(traceFocus);
+  camera.updateProjectionMatrix();camera.updateMatrixWorld(true);
   return camera;
 }
 
