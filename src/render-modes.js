@@ -109,7 +109,7 @@ function ensureStudioRig(){
   const floorMaterial=new THREE.MeshStandardMaterial({color:0x252b35,roughness:.9,metalness:0});
   studioFloor=new THREE.Mesh(new THREE.PlaneGeometry(48,48),floorMaterial);
   studioFloor.rotation.x=-Math.PI/2;studioFloor.receiveShadow=true;studioRig.add(studioFloor);
-  const key=new THREE.DirectionalLight(0xfff5e7,2.15);key.position.set(5.5,8,4.5);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-10;key.shadow.camera.right=10;key.shadow.camera.top=10;key.shadow.camera.bottom=-10;studioRig.add(key);
+  const key=new THREE.DirectionalLight(0xfff5e7,2.15);key.position.set(5.5,8,4.5);key.castShadow=true;key.shadow.mapSize.set(1024,1024);key.shadow.camera.left=-10;key.shadow.camera.right=10;key.shadow.camera.top=10;key.shadow.camera.bottom=-10;key.shadow.normalBias=.045;key.shadow.bias=-.0001;studioRig.add(key);
   const fill=new THREE.DirectionalLight(0x9fc5ff,.7);fill.position.set(-5,3,2);studioRig.add(fill);
   const rim=new THREE.DirectionalLight(0xdbe7ff,.45);rim.position.set(1,5,-6);studioRig.add(rim);
   studioRig.visible=false;scene.add(studioRig);
