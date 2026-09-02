@@ -63,16 +63,17 @@ style.textContent=`
 #commandBar #selectionModes button{min-width:46px;min-height:36px;padding:5px 9px;justify-content:center}
 #commandBar #selectionModes svg{width:19px;height:19px;flex:0 0 auto}
 #commandBar #selectionModes .mode-label{font-size:12px}
-#commandBar #viewModes{margin-left:auto;display:flex;gap:4px;align-items:center;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
-#commandBar #viewModes::-webkit-scrollbar{display:none}
-#commandBar #viewModes button{white-space:nowrap;min-height:34px;padding:5px 8px;font-size:11px}
+#commandBar #viewModes{margin-left:auto}
 @media(max-width:900px){
   #commandBar{padding-left:8px;padding-right:8px;gap:6px}
   #commandBar #selectionModes button{min-width:40px;padding:5px 7px}
   #commandBar #selectionModes .mode-label{display:none}
-  #commandBar #viewModes button{padding:5px 7px}
 }
 `;
 document.head.append(style);
 
 if(viewportWrap)viewportWrap.dataset.commandBar='active';
+
+const version=document.querySelector('#appVersion');
+if(version)version.textContent='v0.36.5.0';
+document.title='BoxLab v0.36.5.0';
