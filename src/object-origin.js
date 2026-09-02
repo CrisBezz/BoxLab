@@ -13,11 +13,14 @@ let pivotControls = null;
 let pivotMode = 'median';
 let marker = null;
 let gesture = null;
+let multiGesture = null;
 let moveWatch = null;
 let raf = 0;
+let selectionApi = null;
 
 function manager(){ return globalThis.__boxlabObjectManager; }
 function objectSelection(){ return globalThis.__boxlabObjectSelection; }
+function actualSelection(){ return selectionApi || globalThis.__boxlabObjectSelection; }
 function state(){ return globalThis.__boxlabBridgeState; }
 function mode(){ return document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
 function tool(){ return document.querySelector('#toolModes button.active')?.dataset?.tool || null; }
@@ -26,8 +29,12 @@ function activeObject(){
   return m?.objects?.find(object => object.id === m.activeId) || null;
 }
 function isSingleObjectTransform(){
-  const s = objectSelection();
+  const s = actualSelection();
   return mode() === 'object' && !(s?.multi && (s?.ids?.size || 0) > 1);
+}
+function isMultiPivotTransform(){
+  const s = actualSelection();
+  return mode() === 'object' && !!s?.multi && (s?.ids?.size || 0) > 1 && ['scale','rotate'].includes(tool());
 }
 function meshBounds(mesh){
   const box = new THREE.Box3();
@@ -127,8 +134,7 @@ function updateMarker(){
 function markerLoop(){ updateMarker(); raf = requestAnimationFrame(markerLoop); }
 function axisVector(axis){ return new THREE.Vector3(axis==='x'?1:0, axis==='y'?1:0, axis==='z'?1:0); }
 function constraint(){
-  const c = globalThis.__boxlabTransformArming?.constraint?.() || document.querySelector('#transformPrecision [data-constraint].active')?.dataset?.constraint || 'free';
-  return c;
+  return globalThis.__boxlabTransformArming?.constraint?.() || document.querySelector('#transformPrecision [data-constraint].active')?.dataset?.constraint || 'free';
 }
 function screenPoint(v,camera){
   const p=v.clone().project(camera),r=canvas.getBoundingClientRect();
@@ -244,8 +250,139 @@ function numericTransform(event){
   if(status) status.textContent=`${t[0].toUpperCase()+t.slice(1)} • object origin • ${axis?axis.toUpperCase():'Free'} • ${n}${t==='rotate'?'°':''}`;
 }
 
+function buildMultiTargets(){
+  const m=manager(), s=actualSelection(), live=state()?.mesh;
+  if(!m || !s || !live) return {targets:[],locked:0};
+  m.saveActive?.();
+  let locked=0; const targets=[];
+  for(const object of m.objects){
+    if(!s.ids.has(object.id)) continue;
+    if(object.locked){ locked++; continue; }
+    const mesh=object.id===m.activeId?live:object.mesh;
+    if(!mesh?.vertices?.length) continue;
+    const origin=ensureOrigin(object,mesh);
+    targets.push({object,mesh,origin,originalOrigin:origin.clone(),original:mesh.vertices.map(v=>v.clone())});
+  }
+  return {targets,locked};
+}
+function averageOrigins(targets){
+  const c=new THREE.Vector3();
+  for(const target of targets)c.add(target.originalOrigin);
+  return targets.length?c.multiplyScalar(1/targets.length):c;
+}
+function multiPivotPoint(targets){
+  if(pivotMode==='world') return new THREE.Vector3();
+  if(pivotMode==='active'){
+    const active=targets.find(target=>target.object.id===manager()?.activeId);
+    if(active)return active.originalOrigin.clone();
+  }
+  return averageOrigins(targets);
+}
+function restoreMulti(targets){
+  for(const target of targets){
+    target.original.forEach((v,i)=>target.mesh.vertices[i]?.copy(v));
+    setOrigin(target.originalOrigin,target.object);
+  }
+}
+function scaleOrigin(point,pivot,factor,axis){
+  const p=point.clone().sub(pivot);
+  if(axis)p[axis]*=factor;else p.multiplyScalar(factor);
+  return p.add(pivot);
+}
+function startMultiPivotGesture(event){
+  if(!isMultiPivotTransform() || event.target!==canvas || event.pointerType==='touch' || !event.isPrimary)return;
+  const camera=state()?.camera; if(!camera)return;
+  const {targets,locked}=buildMultiTargets();
+  if(targets.length<2){ if(locked&&status)status.textContent='Multi Transform needs at least two unlocked selected objects'; return; }
+  const center=multiPivotPoint(targets), interactionCenter=pivotMode==='individual'?averageOrigins(targets):center;
+  const normal=camera.getWorldDirection(new THREE.Vector3()).normalize(), plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,interactionCenter), start=planePoint(event,plane,camera);
+  if(!start)return;
+  const c=constraint(), axis=['x','y','z'].includes(c)?c:null, centerScreen=screenPoint(interactionCenter,camera);
+  multiGesture={id:event.pointerId,t:tool(),camera,targets,locked,center,interactionCenter,centerScreen,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),axis,auto:c==='auto',axes:screenAxes(interactionCenter,camera),changed:false};
+  event.preventDefault(); event.stopImmediatePropagation(); canvas.setPointerCapture?.(event.pointerId);
+}
+function moveMultiPivotGesture(event){
+  const g=multiGesture; if(!g || g.id!==event.pointerId)return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);
+  if(!g.changed&&d.length()<DRAG_THRESHOLD)return;
+  if(!g.changed){
+    g.changed=true;
+    const active=g.targets.find(target=>target.object.id===manager()?.activeId);
+    if(active)globalThis.__boxlabHistory?.push?.(active.mesh.clone());
+    if(g.auto||axisSnapToggle?.checked)g.axis=chooseAxis(d,g.axes);
+  }
+  restoreMulti(g.targets);
+  if(g.t==='scale'){
+    const factor=THREE.MathUtils.clamp(Math.exp((dx-dy)*.006),.05,20);
+    for(const target of g.targets){
+      const pivot=pivotMode==='individual'?target.originalOrigin:g.center;
+      for(const v of target.mesh.vertices){ const p=v.sub(pivot); if(g.axis)p[g.axis]*=factor;else p.multiplyScalar(factor); v.add(pivot); }
+      setOrigin(pivotMode==='individual'?target.originalOrigin:scaleOrigin(target.originalOrigin,g.center,factor,g.axis),target.object);
+    }
+    if(status)status.textContent=`Scale • ${g.targets.length} objects • ${pivotMode==='individual'?'Individual':pivotMode[0].toUpperCase()+pivotMode.slice(1)} • ${g.axis?g.axis.toUpperCase():'Uniform'} • ${factor.toFixed(2)}×`;
+  }else{
+    const p=new THREE.Vector2(event.clientX,event.clientY).sub(g.centerScreen); if(p.lengthSq()<4||g.startVector.lengthSq()<4)return;
+    let angle=Math.atan2(g.startVector.x*p.y-g.startVector.y*p.x,g.startVector.dot(p));
+    const snapOn=document.querySelector('#transformSnapBtn')?.classList.contains('active')??true;
+    if(snapOn)angle=THREE.MathUtils.degToRad(Math.round(THREE.MathUtils.radToDeg(angle)/15)*15);
+    const av=g.axis?axisVector(g.axis):g.camera.getWorldDirection(new THREE.Vector3()).normalize(), q=new THREE.Quaternion().setFromAxisAngle(av,angle);
+    for(const target of g.targets){
+      const pivot=pivotMode==='individual'?target.originalOrigin:g.center;
+      for(const v of target.mesh.vertices)v.sub(pivot).applyQuaternion(q).add(pivot);
+      const nextOrigin=pivotMode==='individual'?target.originalOrigin:target.originalOrigin.clone().sub(g.center).applyQuaternion(q).add(g.center);
+      setOrigin(nextOrigin,target.object);
+    }
+    if(status)status.textContent=`Rotate • ${g.targets.length} objects • ${pivotMode==='individual'?'Individual':pivotMode[0].toUpperCase()+pivotMode.slice(1)} • ${g.axis?g.axis.toUpperCase():'View'} • ${Math.round(THREE.MathUtils.radToDeg(angle))}°`;
+  }
+  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+}
+function endMultiPivotGesture(event){
+  const g=multiGesture; if(!g || g.id!==event.pointerId)return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  if(event.type==='pointercancel'&&g.changed){ restoreMulti(g.targets); document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})); }
+  manager()?.saveActive?.(); multiGesture=null;
+}
+function numericMultiPivot(event){
+  if(event.key!=='Enter'||event.target!==valueInput||!isMultiPivotTransform())return;
+  const n=Number(valueInput.value); if(!Number.isFinite(n)||!valueInput.value.trim())return;
+  const {targets}=buildMultiTargets(); if(targets.length<2)return;
+  const center=multiPivotPoint(targets), c=constraint(), axis=['x','y','z'].includes(c)?c:null, t=tool();
+  event.preventDefault(); event.stopImmediatePropagation();
+  const active=targets.find(target=>target.object.id===manager()?.activeId); if(active)globalThis.__boxlabHistory?.push?.(active.mesh.clone());
+  if(t==='scale'){
+    for(const target of targets){
+      const pivot=pivotMode==='individual'?target.originalOrigin:center;
+      for(const v of target.mesh.vertices){ const p=v.sub(pivot); if(axis)p[axis]*=n;else p.multiplyScalar(n); v.add(pivot); }
+      setOrigin(pivotMode==='individual'?target.originalOrigin:scaleOrigin(target.originalOrigin,center,n,axis),target.object);
+    }
+  }else{
+    let degrees=n; const snapOn=document.querySelector('#transformSnapBtn')?.classList.contains('active')??true; if(snapOn)degrees=Math.round(degrees/15)*15;
+    const av=axis?axisVector(axis):new THREE.Vector3(0,1,0), q=new THREE.Quaternion().setFromAxisAngle(av,THREE.MathUtils.degToRad(degrees));
+    for(const target of targets){
+      const pivot=pivotMode==='individual'?target.originalOrigin:center;
+      for(const v of target.mesh.vertices)v.sub(pivot).applyQuaternion(q).add(pivot);
+      const nextOrigin=pivotMode==='individual'?target.originalOrigin:target.originalOrigin.clone().sub(center).applyQuaternion(q).add(center);
+      setOrigin(nextOrigin,target.object);
+    }
+  }
+  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})); manager()?.saveActive?.(); valueInput.value='';
+}
+function wrapLegacyMultiSelection(){
+  if(selectionApi || !globalThis.__boxlabObjectSelection)return;
+  selectionApi=globalThis.__boxlabObjectSelection;
+  const base=selectionApi;
+  globalThis.__boxlabObjectSelection={
+    get ids(){ return base.ids; },
+    get multi(){ return ['scale','rotate'].includes(tool()) ? false : base.multi; },
+    select(ids=[]){ return base.select?.(ids); },
+    clear(){ return base.clear?.(); }
+  };
+}
+
 function initialize(){
   if(!manager() || !objectsDrawer) return false;
+  wrapLegacyMultiSelection();
   buildControls();
   ensureOrigin();
   if(!raf) markerLoop();
@@ -256,7 +393,7 @@ function initialize(){
     get pivotMode(){ return pivotMode; },
     setPivot:setPivotMode
   };
-  const version=document.querySelector('#appVersion'); if(version)version.textContent='v0.36.3.2'; document.title='BoxLab v0.36.3.2';
+  const version=document.querySelector('#appVersion'); if(version)version.textContent='v0.36.3.4'; document.title='BoxLab v0.36.3.4';
   return true;
 }
 
@@ -268,5 +405,10 @@ window.addEventListener('pointermove',movePivotGesture,true);
 window.addEventListener('pointerup',endPivotGesture,true);
 window.addEventListener('pointercancel',endPivotGesture,true);
 window.addEventListener('keydown',numericTransform,true);
+window.addEventListener('pointerdown',startMultiPivotGesture,true);
+window.addEventListener('pointermove',moveMultiPivotGesture,true);
+window.addEventListener('pointerup',endMultiPivotGesture,true);
+window.addEventListener('pointercancel',endMultiPivotGesture,true);
+window.addEventListener('keydown',numericMultiPivot,true);
 
 if(!initialize()) window.addEventListener('boxlab-object-manager-ready',initialize,{once:true});
