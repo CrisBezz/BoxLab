@@ -27,4 +27,4 @@ drawers.forEach(drawer => drawer.addEventListener('toggle', () => {
 import('./object-management.js?v=0.36.0.0').catch(error => console.warn('BoxLab object management failed to load', error));
 import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxLab object drawer retain failed to load', error));
 import('./studio-scene-fix.js?v=0.36.2.0').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
-import('./object-origin.js?v=0.36.4.0').catch(error => console.warn('BoxLab object origin failed to load', error));
+import('./object-origin.js?v=0.36.4.0-recovery1').catch(error => console.warn('BoxLab object origin failed to load', error));
