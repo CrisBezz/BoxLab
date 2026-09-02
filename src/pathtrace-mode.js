@@ -11,6 +11,7 @@ let traceScene=null;
 let traceCamera=null;
 let traceFocus=null;
 let traceDistance=0;
+let traceOrbit=null;
 let packagePromise=null;
 let lastMeshSignature='';
 let lastCameraSignature='';
@@ -105,6 +106,45 @@ function syncTraceOrbit(source){
   const viewDirection=new THREE.Vector3();source.getWorldDirection(viewDirection).normalize();
   traceCamera.position.copy(traceFocus).addScaledVector(viewDirection,-traceDistance);
   traceCamera.up.copy(source.up);traceCamera.lookAt(traceFocus);traceCamera.updateMatrixWorld(true);
+}
+
+function clearTraceOrbit(){
+  if(traceOrbit?.controls)traceOrbit.controls.removeEventListener('change',onTraceOrbitChange);
+  traceOrbit=null;
+}
+
+function onTraceOrbitChange(){
+  if(!active||!pathTracer||!traceCamera||!traceFocus||!traceOrbit)return;
+  const {controls,baseTheta,basePhi,baseDistance,controlTheta,controlPhi}=traceOrbit;
+  const orbit=new THREE.Spherical(
+    baseDistance,
+    THREE.MathUtils.clamp(basePhi+(controls.getPolarAngle()-controlPhi),.001,Math.PI-.001),
+    baseTheta+(controls.getAzimuthalAngle()-controlTheta),
+  );
+  traceCamera.position.setFromSpherical(orbit).add(traceFocus);
+  traceCamera.up.copy(currentCamera()?.up||traceCamera.up);
+  traceCamera.lookAt(traceFocus);
+  traceCamera.updateMatrixWorld(true);
+  lastCameraSignature=cameraSignature(currentCamera());
+  pathTracer.updateCamera();
+  firstSampleDone=false;
+}
+
+function bindTraceOrbit(){
+  clearTraceOrbit();
+  const controls=state()?.controls;
+  if(!controls||!traceCamera||!traceFocus)return;
+  const offset=traceCamera.position.clone().sub(traceFocus);
+  const orbit=new THREE.Spherical().setFromVector3(offset);
+  traceOrbit={
+    controls,
+    baseTheta:orbit.theta,
+    basePhi:orbit.phi,
+    baseDistance:orbit.radius,
+    controlTheta:controls.getAzimuthalAngle(),
+    controlPhi:controls.getPolarAngle(),
+  };
+  controls.addEventListener('change',onTraceOrbitChange);
 }
 
 function buildTraceScene(){
@@ -229,6 +269,7 @@ async function rebuildTraceScene(force=false){
   try{
     pathTracer.setScene(traceScene,traceCamera);
     pathTracer.reset();
+    bindTraceOrbit();
     message('D7','scene uploaded • framed active mesh','Waiting for first sample…');
     return true;
   }catch(error){return fail('D7','scene upload / shader setup failed',error);}
@@ -236,7 +277,7 @@ async function rebuildTraceScene(force=false){
 
 function setVisible(show){ensureOverlay();if(traceCanvas)traceCanvas.style.display=show?'block':'none';if(hud)hud.style.display=show?'block':'none';}
 async function activate(){failed=false;active=true;setVisible(true);message('D0','preparing diagnostic run');await rebuildTraceScene(true);}
-function deactivate(){active=false;setVisible(false);}
+function deactivate(){active=false;clearTraceOrbit();setVisible(false);}
 
 function animate(time){
   requestAnimationFrame(animate);
@@ -246,7 +287,10 @@ function animate(time){
   if(sig!==lastMeshSignature){rebuildTraceScene(true);return;}
   const cameraNow=cameraSignature(camera);
   if(cameraNow!==lastCameraSignature){
-    syncTraceOrbit(camera);
+    // OrbitControls emits its own change event and updates the trace camera
+    // relative to the proven visible D8 framing. This fallback keeps program-
+    // matic camera changes (such as view presets) working as well.
+    if(!traceOrbit)syncTraceOrbit(camera);
     lastCameraSignature=cameraNow;pathTracer.updateCamera();firstSampleDone=false;
   }
   try{
