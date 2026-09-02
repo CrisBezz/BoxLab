@@ -11,7 +11,12 @@ document.querySelectorAll('#selectionModes button').forEach(button => button.add
   openDrawer(button.dataset.mode === 'object' ? objectDrawer : editDrawer);
 }));
 
-document.querySelectorAll('#toolModes button, .mode-tools button').forEach(button => button.addEventListener('click', () => openDrawer(editDrawer)));
+document.querySelectorAll('#toolModes button, .mode-tools button').forEach(button => button.addEventListener('click', () => {
+  // Some controls (notably Crease) are moved into Modifiers by the compact
+  // drawer layout. Respect the control's current drawer rather than the
+  // drawer it belonged to when this listener was installed.
+  openDrawer(button.closest('.drawer-section') || editDrawer);
+}));
 document.querySelectorAll('#outlinerList button, #outlinerAddBtn, #outlinerDuplicateBtn, #outlinerRenameBtn, #outlinerDeleteBtn').forEach(button => button.addEventListener('click', () => openDrawer(objectDrawer)));
 
 drawers.forEach(drawer => drawer.addEventListener('toggle', () => {
