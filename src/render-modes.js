@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import './pathtrace-mode.js?v=0.35.8.4';
+import './pathtrace-mode.js?v=0.35.8.5';
 
 const status=document.querySelector('#selectionStatus');
 let mode='solid';
