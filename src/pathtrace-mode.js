@@ -82,7 +82,7 @@ function meshSignature(mesh){
 
 function matrixSignature(matrix){return matrix.elements.map(value=>Math.round(value*10000)/10000).join(',');}
 function cameraSignature(camera){return camera?`${matrixSignature(camera.matrixWorld)}|${matrixSignature(camera.projectionMatrix)}`:'';}
-function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xc5cbd3,roughness:.48,metalness:.02,side:THREE.DoubleSide});}
+function studioMaterial(){return new THREE.MeshStandardMaterial({color:0xc5cbd3,roughness:.48,metalness:.02,emissive:0x27313e,emissiveIntensity:.72,side:THREE.DoubleSide});}
 
 function buildTraceScene(){
   const source=currentMesh();
@@ -103,7 +103,7 @@ function buildTraceScene(){
   const size=box.getSize(new THREE.Vector3());
   const extent=Math.max(size.x,size.y,size.z,.25);
   const floorSize=Math.max(extent*8,8);
-  const floor=new THREE.Mesh(new THREE.PlaneGeometry(floorSize,floorSize),new THREE.MeshStandardMaterial({color:0x3d4148,roughness:.82,metalness:0,side:THREE.DoubleSide}));
+  const floor=new THREE.Mesh(new THREE.PlaneGeometry(floorSize,floorSize),new THREE.MeshStandardMaterial({color:0x3d4148,roughness:.82,metalness:0,emissive:0x090b10,emissiveIntensity:.35,side:THREE.DoubleSide}));
   floor.rotation.x=-Math.PI/2;
   floor.position.set(center.x,box.min.y-Math.max(extent*.012,.004),center.z);
   floor.userData.boxlabPathTraceBody=true;
@@ -124,6 +124,15 @@ function buildTraceScene(){
   fill.position.set(center.x-extent*2.0,center.y+extent*1.7,center.z+extent*1.7);scene.add(fill);
   const rim=new THREE.PointLight(0xffd4aa,Math.max(60,extent*extent*60),0,2);
   rim.position.set(center.x+extent*.3,center.y+extent*2.2,center.z-extent*2.2);scene.add(rim);
+
+  // Emissive panels are geometry rather than Three light objects. They make
+  // the studio visible even if this browser build does not carry its direct
+  // light list across the path-tracer scene conversion.
+  const panelMaterial=new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xffffff,emissiveIntensity:8,roughness:1,metalness:0,side:THREE.DoubleSide});
+  const ceiling=new THREE.Mesh(new THREE.PlaneGeometry(extent*4.2,extent*3.4),panelMaterial);
+  ceiling.rotation.x=Math.PI/2;ceiling.position.set(center.x,center.y+extent*3.4,center.z+extent*.4);ceiling.userData.boxlabPathTraceBody=true;scene.add(ceiling);
+  const softbox=new THREE.Mesh(new THREE.PlaneGeometry(extent*2.4,extent*2.4),panelMaterial.clone());
+  softbox.position.set(center.x-extent*2.1,center.y+extent*1.8,center.z+extent*1.9);softbox.lookAt(center);softbox.userData.boxlabPathTraceBody=true;scene.add(softbox);
   scene.updateMatrixWorld(true);
   return{scene,count:1,box};
 }
