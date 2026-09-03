@@ -3,13 +3,16 @@ import * as THREE from 'three';
 const canvas = document.querySelector('#viewport');
 const addVertexBtn = document.querySelector('#addVertexBtn');
 const status = document.querySelector('#selectionStatus');
+const geometryToggle = document.querySelector('#inferenceSnapToggle');
 const SNAP_PX = 18;
+const MIDPOINT_PX = 11;
 let drag = null;
 
 function state() { return globalThis.__boxlabBridgeState; }
 function mesh() { return state()?.mesh || null; }
 function camera() { return state()?.camera || null; }
 function addVertexActive() { return !!addVertexBtn?.classList.contains('active'); }
+function geometryOn() { return geometryToggle?.checked !== false; }
 function render() { document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true })); }
 
 function screenPoint(v) {
@@ -29,9 +32,12 @@ function nearestEdge(clientX, clientY) {
     if (!a || !b) return;
     const ab = b.clone().sub(a), lenSq = ab.lengthSq();
     if (lenSq < 1e-6) return;
-    const t = THREE.MathUtils.clamp(p.clone().sub(a).dot(ab) / lenSq, 0, 1);
+    let t = THREE.MathUtils.clamp(p.clone().sub(a).dot(ab) / lenSq, 0, 1);
+    const midpoint = a.clone().lerp(b, .5), midpointDistance = midpoint.distanceTo(p);
+    const midpointSnap = geometryOn() && midpointDistance <= MIDPOINT_PX;
+    if (midpointSnap) t = .5;
     const q = a.clone().addScaledVector(ab, t), distance = q.distanceTo(p);
-    if (distance <= SNAP_PX && (!best || distance < best.distance)) best = { index, edge, t, distance };
+    if (distance <= SNAP_PX && (!best || distance < best.distance)) best = { index, edge, t, distance, snapType:midpointSnap?'Midpoint':'Edge' };
   });
   return best;
 }
@@ -85,10 +91,15 @@ function updateDragPosition(event) {
   if (!a || !b) return;
   const p = new THREE.Vector2(event.clientX, event.clientY), ab = b.clone().sub(a), lenSq = ab.lengthSq();
   if (lenSq < 1e-6) return;
-  const t = THREE.MathUtils.clamp(p.clone().sub(a).dot(ab) / lenSq, .001, .999);
+  let t = THREE.MathUtils.clamp(p.clone().sub(a).dot(ab) / lenSq, .001, .999), snapType='Edge';
+  if(geometryOn()){
+    const midpoint=a.clone().lerp(b,.5);
+    if(midpoint.distanceTo(p)<=MIDPOINT_PX){t=.5;snapType='Midpoint';}
+  }
   m.vertices[drag.vertex].copy(va).lerp(vb, t);
   drag.t = t;
-  if (status) status.textContent = `Add Vertex • snapped to edge • ${Math.round(t * 100)}%`;
+  drag.snapType=snapType;
+  if (status) status.textContent = `Add Vertex • ${snapType} snap • ${Math.round(t * 100)}%`;
   render();
 }
 
@@ -104,7 +115,7 @@ function selectNewVertex(vertex) {
 }
 
 canvas?.addEventListener('pointerdown', event => {
-  if (!event.isPrimary || !addVertexActive()) return;
+  if (!event.isPrimary || !addVertexActive() || !geometryOn()) return;
   const snap = nearestEdge(event.clientX, event.clientY);
   if (!snap) return;
   const m = mesh(), history = globalThis.__boxlabHistory;
@@ -116,9 +127,9 @@ canvas?.addEventListener('pointerdown', event => {
   const result = splitEdge(m, snap.index, THREE.MathUtils.clamp(snap.t, .001, .999));
   if (!result) return;
   history.push(before);
-  drag = { pointerId:event.pointerId, mesh:m, ...result, t:snap.t };
+  drag = { pointerId:event.pointerId, mesh:m, ...result, t:snap.t, snapType:snap.snapType };
   canvas.setPointerCapture?.(event.pointerId);
-  if (status) status.textContent = `Add Vertex • snapped to edge • ${Math.round(snap.t * 100)}%`;
+  if (status) status.textContent = `Add Vertex • ${snap.snapType} snap • ${Math.round(snap.t * 100)}%`;
   render();
 }, true);
 
@@ -133,12 +144,12 @@ function finish(event) {
   if (!drag || drag.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  const vertex = drag.vertex;
+  const vertex = drag.vertex, snapType=drag.snapType;
   drag = null;
   addVertexBtn?.click();
   render();
   selectNewVertex(vertex);
-  setTimeout(() => { if (status) status.textContent = 'Add Vertex • edge split committed • new vertex selected'; }, 20);
+  setTimeout(() => { if (status) status.textContent = `Add Vertex • ${snapType} committed • new vertex selected`; }, 20);
 }
 canvas?.addEventListener('pointerup', finish, true);
 canvas?.addEventListener('pointercancel', finish, true);
