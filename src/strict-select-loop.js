@@ -61,8 +61,8 @@ function geometricContinuation(m, incomingIndex, vertex, visited) {
   scored.sort((a,b) => b.score - a.score);
   if (!scored.length) return null;
   const best = scored[0], second = scored[1];
-  if (best.score < 0.35) return null;
-  if (second && best.score - second.score < 0.16) return null;
+  if (best.score < 0.2) return null;
+  if (second && best.score - second.score < 0.1) return null;
   return best.index;
 }
 function continuation(m, incomingIndex, vertex, visited) {
@@ -94,6 +94,13 @@ function isClosedCycle(m, indices) {
   }
   return degree.size === indices.length && [...degree.values()].every(value => value === 2);
 }
+function isIrregularEdge(m,index){
+  const edge=m.edges()[index];
+  if(!edge)return false;
+  if(edge.loose===true)return true;
+  const faces=realFaces(m,edge);
+  return faces.length!==2||faces.some(fi=>m.faces[fi]?.length!==4);
+}
 function traceLoop(m, seedIndex) {
   const seed = m.edges()[seedIndex];
   if (!seed) return null;
@@ -101,7 +108,15 @@ function traceLoop(m, seedIndex) {
   const fromA = trace(m, seedIndex, seed.a, visited);
   const fromB = trace(m, seedIndex, seed.b, visited);
   const indices = [...fromA.reverse(), seedIndex, ...fromB];
-  return isClosedCycle(m, indices) ? indices : null;
+  const closed=isClosedCycle(m,indices);
+  if(closed)return {indices,closed:true};
+
+  // Rebuilt topology from Join / Build Edge / Fill may form a useful continuous
+  // edge chain without satisfying the classic closed quad-loop definition.
+  // Only allow this fallback when the traced path contains irregular topology;
+  // conventional all-quad loops still retain the old strict behaviour.
+  if(indices.length>1&&indices.some(index=>isIrregularEdge(m,index)))return {indices,closed:false};
+  return null;
 }
 function selectIndices(indices) {
   const b = bridge();
@@ -114,30 +129,32 @@ function selectIndices(indices) {
 button?.addEventListener('click', event => {
   const m = mesh(), seeds = selectedEdges();
   if (!m || !seeds.length) return;
+  // Two or more connected seed edges are owned by directed-loop.js, which runs
+  // earlier in capture phase and uses the seed direction to resolve branches.
+  if(seeds.length>=2)return;
   event.preventDefault();
   event.stopImmediatePropagation();
 
-  const loops = [], seenLoops = new Set();
+  const paths = [], seenPaths = new Set();
   let rejected = 0;
   for (const seed of seeds) {
-    const indices = traceLoop(m, seed);
-    if (!indices) { rejected++; continue; }
-    const key = [...indices].sort((a,b) => a-b).join(',');
-    if (seenLoops.has(key)) continue;
-    seenLoops.add(key);
-    loops.push(indices);
+    const result = traceLoop(m, seed);
+    if (!result) { rejected++; continue; }
+    const key = [...result.indices].sort((a,b) => a-b).join(',');
+    if (seenPaths.has(key)) continue;
+    seenPaths.add(key);
+    paths.push(result);
   }
-  if (!loops.length) {
-    if (status) status.textContent = 'Select Loop • no unambiguous closed loop from selected edge seed(s)';
+  if (!paths.length) {
+    if (status) status.textContent = 'Select Loop • no unambiguous continuation from selected edge seed';
     return;
   }
-  const merged = [...new Set(loops.flat())];
+  const merged = [...new Set(paths.flatMap(path=>path.indices))];
   const ok = selectIndices(merged);
   if (status) {
-    const loopWord = loops.length === 1 ? 'loop' : 'loops';
-    const rejectedText = rejected ? ` • ${rejected} seed${rejected===1?'':'s'} rejected` : '';
+    const closed=paths.every(path=>path.closed);
     status.textContent = ok
-      ? `Select Loop • ${loops.length} ${loopWord} • ${merged.length} edges${rejectedText}`
+      ? `Select Loop • ${merged.length} edges${closed?' • closed':' • open rebuilt chain'}`
       : 'Select Loop • selection handoff failed';
   }
 }, true);
