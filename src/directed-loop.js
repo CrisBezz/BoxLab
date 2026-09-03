@@ -9,6 +9,9 @@ function selectedEdgeIds() { const bridge = globalThis.__boxlabSelectionBridge; 
 function realFaces(mesh, edge) {
   return (edge?.faces || []).filter(fi => Number.isInteger(fi) && fi >= 0 && fi < mesh.faces.length && Array.isArray(mesh.faces[fi]));
 }
+function isBoundaryLike(mesh, edge) {
+  return !!edge && (edge.loose === true || realFaces(mesh, edge).length <= 1);
+}
 
 function orderedSeed(mesh, ids) {
   const edges = mesh.edges();
@@ -93,6 +96,16 @@ function chooseContinuation(mesh, incomingIndex, vertex, visited, guideFaces, pl
   let candidates = incidentEdgeIndices(mesh, vertex).filter(index => index !== incomingIndex && !visited.has(index));
   if (!candidates.length) return null;
   if (candidates.length === 1) return candidates[0];
+
+  // A Join-created edge has no real adjacent face until Fill consumes it. Treat
+  // it as part of the open perimeter: continue through other loose/boundary
+  // edges before considering interior edges. This also improves ordinary hole
+  // boundary tracing where several face-owned edges meet at one vertex.
+  if (isBoundaryLike(mesh, incoming)) {
+    const boundaryCandidates = candidates.filter(index => isBoundaryLike(mesh, edges[index]));
+    if (boundaryCandidates.length === 1) return boundaryCandidates[0];
+    if (boundaryCandidates.length > 1) candidates = boundaryCandidates;
+  }
 
   if (guideFaces?.size) {
     const guided = candidates.filter(index => realFaces(mesh, edges[index]).some(face => guideFaces.has(face)));
