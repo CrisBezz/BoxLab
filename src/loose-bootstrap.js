@@ -1,4 +1,5 @@
 import { EditableMesh } from './mesh.js';
+import { EditableMesh as LiveEditableMesh } from './mesh.js?v=0.12';
 import { installLooseTopology } from './loose-topology.js';
 import { installBridgeTopology } from './bridge-topology.js?v=0.22.0';
 import { installBevelTopology } from './bevel-topology.js?v=0.28.3';
@@ -18,6 +19,10 @@ import './selection-transform-state.js?v=0.12';
 import './face-pick-repair.js?v=0.12';
 
 installLooseTopology(EditableMesh);
+// main.js imports mesh.js?v=0.12, which is a distinct ES-module identity in some browsers.
+// Install only loose-edge support onto that live modelling class so Join can create
+// an edge between vertices that do not already share a face, and Fill can consume it.
+installLooseTopology(LiveEditableMesh);
 installBridgeTopology(EditableMesh);
 installBevelTopology(EditableMesh);
 installRoundedLoopBevel(EditableMesh);
