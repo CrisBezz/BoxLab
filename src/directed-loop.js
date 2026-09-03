@@ -88,6 +88,32 @@ function incidentEdgeIndices(mesh, vertex) {
   return out;
 }
 
+function straightestContinuation(mesh, incomingIndex, vertex, candidates) {
+  const edges = mesh.edges(), incoming = edges[incomingIndex], pivot = mesh.vertices[vertex];
+  if (!incoming || !pivot || !candidates.length) return null;
+  const previousVertex = incoming.a === vertex ? incoming.b : incoming.a;
+  const previous = mesh.vertices[previousVertex];
+  if (!previous) return null;
+  const travel = pivot.clone().sub(previous);
+  if (travel.lengthSq() < 1e-12) return null;
+  travel.normalize();
+  const scored = candidates.map(index => {
+    const edge = edges[index];
+    const otherVertex = edge?.a === vertex ? edge.b : edge?.b === vertex ? edge.a : null;
+    const other = Number.isInteger(otherVertex) ? mesh.vertices[otherVertex] : null;
+    if (!other) return { index, score:-Infinity };
+    const outgoing = other.clone().sub(pivot);
+    if (outgoing.lengthSq() < 1e-12) return { index, score:-Infinity };
+    return { index, score:travel.dot(outgoing.normalize()) };
+  }).sort((a,b)=>b.score-a.score);
+  if (!scored.length || !Number.isFinite(scored[0].score)) return null;
+  // Require a meaningful directional winner. This prevents the fallback from
+  // making arbitrary turns at symmetric junctions while still allowing built,
+  // joined and open-boundary chains to continue through a clear path.
+  if (scored.length > 1 && scored[0].score - scored[1].score < 0.08) return null;
+  return scored[0].index;
+}
+
 function chooseContinuation(mesh, incomingIndex, vertex, visited, guideFaces, planeNormal) {
   const edges = mesh.edges();
   const incoming = edges[incomingIndex];
@@ -97,10 +123,9 @@ function chooseContinuation(mesh, incomingIndex, vertex, visited, guideFaces, pl
   if (!candidates.length) return null;
   if (candidates.length === 1) return candidates[0];
 
-  // A Join-created edge has no real adjacent face until Fill consumes it. Treat
-  // it as part of the open perimeter: continue through other loose/boundary
-  // edges before considering interior edges. This also improves ordinary hole
-  // boundary tracing where several face-owned edges meet at one vertex.
+  // A Join/Build Edge-created edge may have little or no conventional face
+  // context. Keep boundary-like continuations together before considering
+  // interior topology.
   if (isBoundaryLike(mesh, incoming)) {
     const boundaryCandidates = candidates.filter(index => isBoundaryLike(mesh, edges[index]));
     if (boundaryCandidates.length === 1) return boundaryCandidates[0];
@@ -126,7 +151,11 @@ function chooseContinuation(mesh, incomingIndex, vertex, visited, guideFaces, pl
   const incomingFaces = new Set(realFaces(mesh, incoming));
   const opposite = candidates.filter(index => realFaces(mesh, edges[index]).every(face => !incomingFaces.has(face)));
   if (opposite.length === 1) return opposite[0];
-  return null;
+
+  // Final geometric fallback for manually built/repaired topology: if face rules
+  // cannot decide, continue along the edge whose direction most closely carries
+  // on the incoming path. Ordinary quad-loop rules above still take precedence.
+  return straightestContinuation(mesh, incomingIndex, vertex, candidates);
 }
 
 function traceFromEnd(mesh, incomingIndex, startVertex, targetVertex, visited, guideFaces, planeNormal) {
