@@ -103,7 +103,3 @@ const outliner=document.querySelector('#outlinerList');
 if(outliner)new MutationObserver(scheduleStudioUpdate).observe(outliner,{childList:true});
 
 queueMicrotask(scheduleStudioUpdate);
-
-const version=document.querySelector('#appVersion');
-if(version)version.textContent='v0.36.2.0';
-document.title='BoxLab v0.36.2.0';
