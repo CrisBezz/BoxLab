@@ -97,8 +97,12 @@ function finishUI(){bridgeButton.textContent='Bridge';bridgeButton.classList.rem
 function confirmPreview(event){
   if(!session)return;event?.preventDefault?.();event?.stopImmediatePropagation?.();
   globalThis.__boxlabHistory?.push?.(session.before);
-  const count=session.previewFaceIndices.length;session=null;finishUI();render();
-  if(status)status.textContent=`Bridge created • ${count} quads`;
+  const count=session.previewFaceIndices.length;session=null;finishUI();
+  selection()?.set?.('face',[]);
+  document.querySelector('#deselectAllBtn')?.click();
+  render();
+  queueMicrotask(()=>selection()?.set?.('face',[]));
+  if(status)status.textContent=`Bridge created • ${count} quads • selection cleared`;
 }
 function cancelPreview(event){
   if(!session)return;event?.preventDefault?.();event?.stopImmediatePropagation?.();
