@@ -63,9 +63,12 @@ function disarmBuildEdge(){
 }
 function armBuildEdge(){
   buildArmed=true; buildDrag=null; clearBuildPreview();
+  // Toggle any active face-direct tool off through its own handler so its hidden
+  // armed state cannot reappear when the user later returns to Face mode.
+  document.querySelector('#extrudeBtn.active,#insetBtn.active')?.click();
   globalThis.__boxlabTransformArming?.disarm?.();
-  document.querySelectorAll('#toolModes button,#extrudeBtn,#insetBtn,#knifeBtn').forEach(button=>button.classList.remove('active'));
   document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'build-edge'}}));
+  document.querySelectorAll('#toolModes button,#knifeBtn').forEach(button=>button.classList.remove('active'));
   if(currentMode()!=='vertex')document.querySelector('#selectionModes button[data-mode="vertex"]')?.click();
   selectionBridge()?.set?.('vertex',[]);
   buildEdgeBtn?.classList.add('active');
