@@ -46,6 +46,6 @@ import('./studio-scene-fix.js?v=0.36.2.0').catch(error => console.warn('BoxLab S
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.7.0';
-  document.title = 'BoxLab v0.36.7.0';
+  if (version) version.textContent = 'v0.36.7.1';
+  document.title = 'BoxLab v0.36.7.1';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
