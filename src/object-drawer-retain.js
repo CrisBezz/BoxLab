@@ -40,3 +40,7 @@ if (outliner) {
     if (currentMode() === 'object' && objectDrawer?.open) restoreObjectsDrawer();
   }).observe(outliner, { childList:true });
 }
+
+const version = document.querySelector('#appVersion');
+if (version) version.textContent = 'v0.36.1.4';
+document.title = 'BoxLab v0.36.1.4';
