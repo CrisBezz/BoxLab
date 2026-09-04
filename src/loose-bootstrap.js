@@ -1,7 +1,7 @@
 import { EditableMesh } from './mesh.js';
 import { EditableMesh as LiveEditableMesh } from './mesh.js?v=0.12';
 import { installLooseTopology } from './loose-topology.js';
-import { installBridgeTopology } from './bridge-topology.js?v=0.22.0';
+import { installBridgeTopology } from './bridge-topology.js?v=0.36.11.1';
 import { installBevelTopology } from './bevel-topology.js?v=0.28.3';
 import { installRoundedLoopBevel } from './rounded-loop-bevel.js?v=0.28.8';
 import { installGeneralEdgeBevelTopology } from './general-edge-bevel-topology.js?v=0.28.7';
