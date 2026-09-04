@@ -83,6 +83,25 @@ export function installBridgeTopology(EditableMesh) {
     return mesh.faces.some((face, index) => !ignoredFaces.has(index) && face?.some(v => a.has(v)) && face.some(v => b.has(v)));
   };
 
+  const loopsFullyConnected = (mesh, loopA, loopB) => {
+    if (!Array.isArray(loopA) || !Array.isArray(loopB) || loopA.length !== loopB.length || loopA.length < 3) return false;
+    const aSet = new Set(loopA), bSet = new Set(loopB);
+    const connectors = mesh.faces.filter(face => Array.isArray(face) && face.some(v => aSet.has(v)) && face.some(v => bSet.has(v)));
+    if (!connectors.length) return false;
+    const edgeOwnedByConnector = (loop, otherSet) => loop.every((a, i) => {
+      const b = loop[(i + 1) % loop.length];
+      return connectors.some(face => {
+        let owns = false;
+        for (let j = 0; j < face.length; j++) {
+          const x = face[j], y = face[(j + 1) % face.length];
+          if ((x === a && y === b) || (x === b && y === a)) { owns = true; break; }
+        }
+        return owns && face.some(v => otherSet.has(v));
+      });
+    });
+    return edgeOwnedByConnector(loopA, bSet) && edgeOwnedByConnector(loopB, aSet);
+  };
+
   const cycleFromEdges = edges => {
     if (!edges?.length) return null;
     const adjacency = new Map();
@@ -200,6 +219,15 @@ export function installBridgeTopology(EditableMesh) {
   };
 
   EditableMesh.prototype.bridgeLoops = function (loopA, loopB) {
+    if (loopsFullyConnected(this, loopA, loopB)) {
+      if (this.looseEdges instanceof Set) {
+        for (const loop of [loopA, loopB]) {
+          for (let i = 0; i < loop.length; i++) this.looseEdges.delete(this.edgeKey(loop[i], loop[(i + 1) % loop.length]));
+        }
+      }
+      this.edges();
+      return { faceIndices: [], plan: null, alreadyConnected: true };
+    }
     const plan = this.bestBridgePlan(loopA, loopB);
     if (!plan) return null;
     const start = this.faces.length;
