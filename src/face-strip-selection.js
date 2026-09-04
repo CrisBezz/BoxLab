@@ -6,16 +6,17 @@ const extrudeButton = document.querySelector('#extrudeBtn');
 const insetButton = document.querySelector('#insetBtn');
 const knifeButton = document.querySelector('#knifeBtn');
 const canvas = document.querySelector('#viewport');
-const app = document.querySelector('#app');
+let faceOperationActive = false;
 
-// Direct face tools stay armed after a modelling action, so "button.active" cannot
-// mean "operation in progress". Suppress the shared Loop/Ring controls only for the
-// actual pointer gesture and restore them immediately when that gesture ends.
-if (!document.querySelector('#boxlabFaceStripToolSuppress')) {
+// In Face mode keep the Loop/Ring row structurally stable. Direct face tools can
+// temporarily change selection during preview, so hiding/showing this row causes a
+// visible flash. Keep it present and only disable the actions during the live gesture.
+if (!document.querySelector('#boxlabFaceStripStable')) {
   const style = document.createElement('style');
-  style.id = 'boxlabFaceStripToolSuppress';
+  style.id = 'boxlabFaceStripStable';
   style.textContent = `
-#app.boxlab-face-operation-active .selection-edge-actions{display:none!important}
+#app:has(#selectionModes [data-mode="face"].active) .selection-edge-actions{display:flex!important}
+#app:has(#selectionModes [data-mode="face"].active) #selectBoundaryBtn{display:none!important}
 `;
   document.head.append(style);
 }
@@ -26,9 +27,6 @@ function mesh(){ return state()?.mesh || null; }
 function mode(){ return bridge()?.mode?.() || null; }
 function faceToolArmed(){
   return !!(extrudeButton?.classList.contains('active') || insetButton?.classList.contains('active') || knifeButton?.classList.contains('active'));
-}
-function setFaceOperationActive(active){
-  app?.classList.toggle('boxlab-face-operation-active', !!active);
 }
 function selectedFaces(){
   return mode() === 'face' ? [...new Set(bridge()?.indices?.() || [])] : [];
@@ -95,16 +93,15 @@ function traceStrip(m, seedFace, pairOffset){
   return indices.length > 1 ? indices : null;
 }
 function applyFaceStrips(kind){
-  if (app?.classList.contains('boxlab-face-operation-active')) return true;
+  if (faceOperationActive) return true;
   const m = mesh(), seeds = selectedFaces();
   if (!m || !seeds.length) return false;
   const pairOffset = kind === 'ring' ? 1 : 0;
   const merged = new Set();
-  let accepted = 0, rejected = 0;
+  let rejected = 0;
   for (const seed of seeds) {
     const strip = traceStrip(m, seed, pairOffset);
     if (!strip) { rejected++; continue; }
-    accepted++;
     strip.forEach(index => merged.add(index));
   }
   if (!merged.size) {
@@ -120,23 +117,30 @@ function applyFaceStrips(kind){
 function faceModeActive(){ return mode() === 'face'; }
 function sync(){
   if (!faceModeActive()) return;
-  const enabled = selectedFaces().length > 0;
+  const enabled = !faceOperationActive && selectedFaces().length > 0;
   if (loopButton) loopButton.disabled = !enabled;
   if (ringButton) ringButton.disabled = !enabled;
 }
 function syncSoon(){ setTimeout(sync,0); }
+function setFaceOperationActive(active){
+  faceOperationActive = !!active;
+  if (faceOperationActive) {
+    if (loopButton) loopButton.disabled = true;
+    if (ringButton) ringButton.disabled = true;
+  } else syncSoon();
+}
 
 // Startup should be neutral: Geometry Snap is opt-in rather than silently active.
 if (geometrySnap) geometrySnap.checked = false;
 
 loopButton?.addEventListener('click', event => {
-  if (!faceModeActive() || app?.classList.contains('boxlab-face-operation-active')) return;
+  if (!faceModeActive() || faceOperationActive) return;
   event.preventDefault();
   event.stopImmediatePropagation();
   applyFaceStrips('loop');
 }, true);
 ringButton?.addEventListener('click', event => {
-  if (!faceModeActive() || app?.classList.contains('boxlab-face-operation-active')) return;
+  if (!faceModeActive() || faceOperationActive) return;
   event.preventDefault();
   event.stopImmediatePropagation();
   applyFaceStrips('ring');
@@ -148,13 +152,12 @@ canvas?.addEventListener('pointerdown', event => {
 }, true);
 function finishFaceOperation(event){
   if (event && event.isPrimary === false) return;
-  if (!app?.classList.contains('boxlab-face-operation-active')) return;
+  if (!faceOperationActive) return;
   setFaceOperationActive(false);
-  syncSoon();
 }
 canvas?.addEventListener('pointerup', finishFaceOperation, true);
 canvas?.addEventListener('pointercancel', finishFaceOperation, true);
-window.addEventListener('blur', () => { setFaceOperationActive(false); syncSoon(); });
+window.addEventListener('blur', () => setFaceOperationActive(false));
 
 document.querySelectorAll('#selectionModes button').forEach(button => button.addEventListener('click', () => { setFaceOperationActive(false); syncSoon(); }));
 document.addEventListener('pointerup', syncSoon, true);
