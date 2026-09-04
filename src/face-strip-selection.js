@@ -2,11 +2,31 @@ const loopButton = document.querySelector('#selectLoopBtn');
 const ringButton = document.querySelector('#selectRingBtn');
 const status = document.querySelector('#selectionStatus');
 const geometrySnap = document.querySelector('#inferenceSnapToggle');
+const extrudeButton = document.querySelector('#extrudeBtn');
+const insetButton = document.querySelector('#insetBtn');
+const knifeButton = document.querySelector('#knifeBtn');
+
+// Direct face tools can temporarily alter component-selection state while previewing.
+// Keep Loop/Ring visually suppressed for the whole armed tool lifetime so those
+// temporary states never flash the shared selection controls into view.
+if (!document.querySelector('#boxlabFaceStripToolSuppress')) {
+  const style = document.createElement('style');
+  style.id = 'boxlabFaceStripToolSuppress';
+  style.textContent = `
+#app:has(#extrudeBtn.active) .selection-edge-actions,
+#app:has(#insetBtn.active) .selection-edge-actions,
+#app:has(#knifeBtn.active) .selection-edge-actions{display:none!important}
+`;
+  document.head.append(style);
+}
 
 function bridge(){ return globalThis.__boxlabSelectionBridge; }
 function state(){ return globalThis.__boxlabBridgeState; }
 function mesh(){ return state()?.mesh || null; }
 function mode(){ return bridge()?.mode?.() || null; }
+function faceToolActive(){
+  return !!(extrudeButton?.classList.contains('active') || insetButton?.classList.contains('active') || knifeButton?.classList.contains('active'));
+}
 function selectedFaces(){
   return mode() === 'face' ? [...new Set(bridge()?.indices?.() || [])] : [];
 }
@@ -72,6 +92,7 @@ function traceStrip(m, seedFace, pairOffset){
   return indices.length > 1 ? indices : null;
 }
 function applyFaceStrips(kind){
+  if (faceToolActive()) return true;
   const m = mesh(), seeds = selectedFaces();
   if (!m || !seeds.length) return false;
   const pairOffset = kind === 'ring' ? 1 : 0;
@@ -95,6 +116,7 @@ function applyFaceStrips(kind){
 }
 function faceModeActive(){ return mode() === 'face'; }
 function sync(){
+  if (faceToolActive()) return;
   if (!faceModeActive()) return;
   const enabled = selectedFaces().length > 0;
   if (loopButton) loopButton.disabled = !enabled;
@@ -106,13 +128,13 @@ function syncSoon(){ setTimeout(sync,0); }
 if (geometrySnap) geometrySnap.checked = false;
 
 loopButton?.addEventListener('click', event => {
-  if (!faceModeActive()) return;
+  if (!faceModeActive() || faceToolActive()) return;
   event.preventDefault();
   event.stopImmediatePropagation();
   applyFaceStrips('loop');
 }, true);
 ringButton?.addEventListener('click', event => {
-  if (!faceModeActive()) return;
+  if (!faceModeActive() || faceToolActive()) return;
   event.preventDefault();
   event.stopImmediatePropagation();
   applyFaceStrips('ring');
