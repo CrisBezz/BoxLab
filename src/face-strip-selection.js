@@ -5,17 +5,17 @@ const geometrySnap = document.querySelector('#inferenceSnapToggle');
 const extrudeButton = document.querySelector('#extrudeBtn');
 const insetButton = document.querySelector('#insetBtn');
 const knifeButton = document.querySelector('#knifeBtn');
+const canvas = document.querySelector('#viewport');
+const app = document.querySelector('#app');
 
-// Direct face tools can temporarily alter component-selection state while previewing.
-// Keep Loop/Ring visually suppressed for the whole armed tool lifetime so those
-// temporary states never flash the shared selection controls into view.
+// Direct face tools stay armed after a modelling action, so "button.active" cannot
+// mean "operation in progress". Suppress the shared Loop/Ring controls only for the
+// actual pointer gesture and restore them immediately when that gesture ends.
 if (!document.querySelector('#boxlabFaceStripToolSuppress')) {
   const style = document.createElement('style');
   style.id = 'boxlabFaceStripToolSuppress';
   style.textContent = `
-#app:has(#extrudeBtn.active) .selection-edge-actions,
-#app:has(#insetBtn.active) .selection-edge-actions,
-#app:has(#knifeBtn.active) .selection-edge-actions{display:none!important}
+#app.boxlab-face-operation-active .selection-edge-actions{display:none!important}
 `;
   document.head.append(style);
 }
@@ -24,8 +24,11 @@ function bridge(){ return globalThis.__boxlabSelectionBridge; }
 function state(){ return globalThis.__boxlabBridgeState; }
 function mesh(){ return state()?.mesh || null; }
 function mode(){ return bridge()?.mode?.() || null; }
-function faceToolActive(){
+function faceToolArmed(){
   return !!(extrudeButton?.classList.contains('active') || insetButton?.classList.contains('active') || knifeButton?.classList.contains('active'));
+}
+function setFaceOperationActive(active){
+  app?.classList.toggle('boxlab-face-operation-active', !!active);
 }
 function selectedFaces(){
   return mode() === 'face' ? [...new Set(bridge()?.indices?.() || [])] : [];
@@ -92,7 +95,7 @@ function traceStrip(m, seedFace, pairOffset){
   return indices.length > 1 ? indices : null;
 }
 function applyFaceStrips(kind){
-  if (faceToolActive()) return true;
+  if (app?.classList.contains('boxlab-face-operation-active')) return true;
   const m = mesh(), seeds = selectedFaces();
   if (!m || !seeds.length) return false;
   const pairOffset = kind === 'ring' ? 1 : 0;
@@ -116,7 +119,6 @@ function applyFaceStrips(kind){
 }
 function faceModeActive(){ return mode() === 'face'; }
 function sync(){
-  if (faceToolActive()) return;
   if (!faceModeActive()) return;
   const enabled = selectedFaces().length > 0;
   if (loopButton) loopButton.disabled = !enabled;
@@ -128,19 +130,33 @@ function syncSoon(){ setTimeout(sync,0); }
 if (geometrySnap) geometrySnap.checked = false;
 
 loopButton?.addEventListener('click', event => {
-  if (!faceModeActive() || faceToolActive()) return;
+  if (!faceModeActive() || app?.classList.contains('boxlab-face-operation-active')) return;
   event.preventDefault();
   event.stopImmediatePropagation();
   applyFaceStrips('loop');
 }, true);
 ringButton?.addEventListener('click', event => {
-  if (!faceModeActive() || faceToolActive()) return;
+  if (!faceModeActive() || app?.classList.contains('boxlab-face-operation-active')) return;
   event.preventDefault();
   event.stopImmediatePropagation();
   applyFaceStrips('ring');
 }, true);
 
-document.querySelectorAll('#selectionModes button').forEach(button => button.addEventListener('click', syncSoon));
+canvas?.addEventListener('pointerdown', event => {
+  if (!event.isPrimary || !faceModeActive() || !faceToolArmed()) return;
+  setFaceOperationActive(true);
+}, true);
+function finishFaceOperation(event){
+  if (event && event.isPrimary === false) return;
+  if (!app?.classList.contains('boxlab-face-operation-active')) return;
+  setFaceOperationActive(false);
+  syncSoon();
+}
+canvas?.addEventListener('pointerup', finishFaceOperation, true);
+canvas?.addEventListener('pointercancel', finishFaceOperation, true);
+window.addEventListener('blur', () => { setFaceOperationActive(false); syncSoon(); });
+
+document.querySelectorAll('#selectionModes button').forEach(button => button.addEventListener('click', () => { setFaceOperationActive(false); syncSoon(); }));
 document.addEventListener('pointerup', syncSoon, true);
 document.addEventListener('click', event => {
   if (event.target !== loopButton && event.target !== ringButton) syncSoon();
