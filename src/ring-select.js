@@ -1,4 +1,5 @@
 const button=document.querySelector('#selectRingBtn');
+const loopButton=document.querySelector('#selectLoopBtn');
 const status=document.querySelector('#selectionStatus');
 
 function state(){return globalThis.__boxlabBridgeState;}
@@ -44,7 +45,17 @@ function traceRing(m,seedIndex){
   return result.length>1?result:null;
 }
 function select(indices){const b=bridge();if(!b?.set)return false;b.set('edge',[...new Set(indices)]);document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));return true;}
-function sync(){if(!button)return;button.disabled=bridge()?.mode?.()!=='edge'||selectedEdges().length===0;}
+function sync(){
+  const b=bridge();if(!button||!b)return;
+  const mode=b.mode?.();
+  if(mode==='face'){
+    const enabled=(b.indices?.()||[]).length>0;
+    button.disabled=!enabled;
+    if(loopButton)loopButton.disabled=!enabled;
+    return;
+  }
+  if(mode==='edge')button.disabled=selectedEdges().length===0;
+}
 
 button?.addEventListener('click',event=>{
   const m=mesh(),seeds=selectedEdges();if(!m||!seeds.length)return;
