@@ -185,4 +185,4 @@ globalThis.__boxlabTopology={
   restoreMeshState
 };
 
-window.dispatchEvent(new CustomEvent('boxlab-topology-foundation-ready',{detail:globalThis.__boxlabTopology}));
+globalThis.window?.dispatchEvent(new CustomEvent('boxlab-topology-foundation-ready',{detail:globalThis.__boxlabTopology}));

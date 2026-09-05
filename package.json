@@ -1,0 +1,7 @@
+{
+  "name": "boxlab",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test tests/through.test.mjs" },
+  "devDependencies": { "three": "0.179.1" }
+}
