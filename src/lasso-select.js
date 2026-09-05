@@ -6,6 +6,8 @@ const dock=document.querySelector('#componentSelectionTools .selection-dock');
 const multiToggle=document.querySelector('#multiSelectToggle');
 const raycaster=new THREE.Raycaster();
 const ndc=new THREE.Vector2();
+const touchNavSnapshots=new Map();
+const NAV_RESTORE_PX=4;
 let armed=false,gesture=null,overlay=null,polyline=null;
 
 function state(){return globalThis.__boxlabBridgeState;}
@@ -32,14 +34,22 @@ function applySelection(poly){const type=mode();if(type==='object'){const ids=ob
 function ensureOverlay(){if(overlay)return;overlay=document.createElementNS('http://www.w3.org/2000/svg','svg');overlay.id='boxlabLassoOverlay';overlay.style.cssText='position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9998;overflow:visible';polyline=document.createElementNS('http://www.w3.org/2000/svg','polyline');polyline.setAttribute('fill','rgba(255,255,255,.06)');polyline.setAttribute('stroke','rgba(255,255,255,.95)');polyline.setAttribute('stroke-width','2');polyline.setAttribute('stroke-linejoin','round');polyline.setAttribute('stroke-linecap','round');overlay.appendChild(polyline);document.body.appendChild(overlay);}
 function draw(points){ensureOverlay();polyline.setAttribute('points',points.map(p=>`${p.x},${p.y}`).join(' '));}
 function clearDraw(){polyline?.setAttribute('points','');}
-function setArmed(next){armed=!!next;button?.classList.toggle('active',armed);clearDraw();gesture=null;if(status)status.textContent=armed?`Lasso • Pencil draw around ${mode()} • finger orbits • ${depth()}`:`${mode().charAt(0).toUpperCase()+mode().slice(1)} mode`;}
+function setArmed(next){armed=!!next;button?.classList.toggle('active',armed);clearDraw();gesture=null;touchNavSnapshots.clear();globalThis.__boxlabLasso={armed};if(status)status.textContent=armed?`Lasso • Pencil draw around ${mode()} • finger orbits • ${depth()}`:`${mode().charAt(0).toUpperCase()+mode().slice(1)} mode`;}
+function captureTouchNavigation(event){if(!armed||event.pointerType!=='touch')return;const b=bridge(),type=b?.mode?.(),indices=[...(b?.indices?.()||[])];if(!type||!indices.length)return;touchNavSnapshots.set(event.pointerId,{type,indices,x:event.clientX,y:event.clientY,restored:false});}
+function restoreTouchNavigation(event){if(!armed||event.pointerType!=='touch')return;const snap=touchNavSnapshots.get(event.pointerId);if(!snap||snap.restored)return;if(Math.hypot(event.clientX-snap.x,event.clientY-snap.y)<NAV_RESTORE_PX)return;const b=bridge();if(b?.mode?.()!==snap.type)return;const current=b.indices?.()||[];if(!current.length)b.set?.(snap.type,snap.indices);snap.restored=true;}
+function endTouchNavigation(event){if(event.pointerType==='touch')touchNavSnapshots.delete(event.pointerId);}
 
 const button=document.createElement('button');button.id='lassoSelectBtn';button.type='button';button.textContent='Lasso';button.title='Pencil/mouse draws lasso; finger remains navigation';dock?.appendChild(button);button.addEventListener('click',()=>setArmed(!armed));
 for(const b of document.querySelectorAll('#toolModes button,#extrudeBtn,#insetBtn,#knifeBtn,#loopCutBtn,#faceSplitBtn,#bevelBtn,#buildEdgeBtn,#vertexBevelBtn'))b.addEventListener('click',()=>{if(armed)setArmed(false);});
 for(const b of document.querySelectorAll('#selectionModes button,#paintSelectDepth [data-paint-depth]'))b.addEventListener('click',()=>{if(armed)queueMicrotask(()=>{if(status)status.textContent=`Lasso • Pencil draw around ${mode()} • finger orbits • ${depth()}`;});});
 
+canvas?.addEventListener('pointerdown',captureTouchNavigation,true);
+canvas?.addEventListener('pointermove',restoreTouchNavigation,true);
+canvas?.addEventListener('pointerup',endTouchNavigation,true);
+canvas?.addEventListener('pointercancel',endTouchNavigation,true);
 canvas?.addEventListener('pointerdown',event=>{if(!armed||!event.isPrimary||event.button>0||event.pointerType==='touch')return;event.preventDefault();event.stopImmediatePropagation();gesture={id:event.pointerId,points:[{x:event.clientX,y:event.clientY}],start:{x:event.clientX,y:event.clientY}};canvas.setPointerCapture?.(event.pointerId);draw(gesture.points);},true);
 canvas?.addEventListener('pointermove',event=>{if(!gesture||gesture.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const last=gesture.points.at(-1),p={x:event.clientX,y:event.clientY};if(Math.hypot(p.x-last.x,p.y-last.y)<4)return;gesture.points.push(p);draw([...gesture.points,gesture.points[0]]);},true);
 function finish(event,cancel=false){if(!gesture||gesture.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const g=gesture;gesture=null;clearDraw();if(cancel||g.points.length<3||Math.hypot(event.clientX-g.start.x,event.clientY-g.start.y)<10)return;applySelection(g.points);render();}
 canvas?.addEventListener('pointerup',event=>finish(event,false),true);
 canvas?.addEventListener('pointercancel',event=>finish(event,true),true);
+globalThis.__boxlabLasso={armed};
