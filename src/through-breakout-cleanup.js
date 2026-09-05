@@ -39,7 +39,8 @@ function triangulateConcaveFaces(mesh) {
   for (let fi = 0; fi < mesh.faces.length; fi++) {
     const face = mesh.faces[fi];
     if (!Array.isArray(face) || face.length < 4) continue;
-    const n = faceNormal(mesh, face); if (!n) continue;
+    const n = faceNormal(mesh, face);
+    if (!n) continue;
     const { u, v } = basis(n), origin = mesh.vertices[face[0]];
     const contour = face.map(id => {
       const p = mesh.vertices[id].clone().sub(origin);
@@ -74,7 +75,8 @@ function cleanupAfterThrough() {
   queueMicrotask(() => { cleaning = false; });
 }
 
-const statusNode = document.querySelector('#selectionStatus');
-if (statusNode) {
-  new MutationObserver(cleanupAfterThrough).observe(statusNode, { childList: true, characterData: true, subtree: true });
-}
+// Capture pointerup on window before multi-face-direct stops propagation at document.
+// Run cleanup on the next task, after the Through commit has replaced the live mesh.
+window.addEventListener('pointerup', () => {
+  setTimeout(cleanupAfterThrough, 0);
+}, true);
