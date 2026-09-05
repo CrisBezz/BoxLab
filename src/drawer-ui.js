@@ -54,11 +54,11 @@ import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxL
 import('./studio-scene-fix.js?v=0.36.8.1').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
 import('./extrude-through-viability.js?v=0.36.11.2').catch(error => console.warn('BoxLab Extrude Through viability guard failed to load', error));
 import('./through-breakout-cleanup.js?v=0.36.14.8').catch(error => console.warn('BoxLab Through breakout cleanup failed to load', error));
-import('./extrude-corner-through.js?v=0.36.14.14').catch(error => console.warn('BoxLab corner Through handler failed to load', error));
+import('./extrude-region-through.js?v=0.36.14.15').then(() => import('./extrude-corner-through.js?v=0.36.14.14')).catch(error => console.warn('BoxLab region/corner Through handlers failed to load', error));
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.14.14';
-  document.title = 'BoxLab v0.36.14.14';
+  if (version) version.textContent = 'v0.36.14.15';
+  document.title = 'BoxLab v0.36.14.15';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
