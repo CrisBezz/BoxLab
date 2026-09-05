@@ -1,6 +1,9 @@
-// BoxLab v0.36.18.2 — cross-object geometry snap.
-// Move snapping is source-anchor based: the point picked on the active object
-// snaps to geometry on another visible object. Other objects remain read-only.
+// BoxLab v0.36.18.3 — cross-object geometry snap.
+// Object and edit-mode Move use a picked source point on the active object and
+// snap it to vertex / edge / face geometry on another visible object.
+// Other objects remain read-only. While this gesture is active, the older
+// same-object inference pass is temporarily suppressed so it cannot compete
+// with cross-object snapping or draw its legacy yellow reference marker.
 
 import * as THREE from 'three';
 
@@ -21,6 +24,7 @@ function mode(){return bridge()?.mode?.()||document.querySelector('#selectionMod
 function moveArmed(){return document.querySelector('#toolModes button.active')?.dataset?.tool==='move';}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
+
 function selectedVertices(mesh,m,ids){
   if(!mesh)return[];
   if(m==='object')return mesh.vertices.map((_,i)=>i);
@@ -34,6 +38,7 @@ function selectedVertices(mesh,m,ids){
 }
 function centerOf(mesh,ids){const c=new THREE.Vector3();ids.forEach(i=>c.add(mesh.vertices[i]));return ids.length?c.multiplyScalar(1/ids.length):c;}
 function evaluatedMesh(object){return globalThis.__boxlabObjectGeometry?.evaluatedMesh?.(object.id)||object.mesh;}
+
 function captureReferences(){
   const m=manager();
   if(!m)return[];
@@ -47,6 +52,7 @@ function captureReferences(){
   }
   return refs;
 }
+
 function nearestVertex(mesh,p,camera,allowed=null,limit=SOURCE_VERTEX_PX){
   let best=null;
   mesh.vertices.forEach((v,i)=>{
@@ -84,6 +90,7 @@ function faceHit(mesh,event,camera,allowedFaces=null){
   });
   return best;
 }
+
 function sourceAnchor(mesh,m,ids,event,camera){
   const p=new THREE.Vector2(event.clientX,event.clientY);
   if(m==='object')return nearestVertex(mesh,p,camera)||nearestEdge(mesh,p,camera)||faceHit(mesh,event,camera);
@@ -98,6 +105,7 @@ function sourceAnchor(mesh,m,ids,event,camera){
   if(m==='face')return faceHit(mesh,event,camera,new Set(ids));
   return null;
 }
+
 function targetUnderPointer(g){
   const p=new THREE.Vector2(g.x,g.y),camera=g.camera;
   let bestV=null;
@@ -129,28 +137,52 @@ function targetUnderPointer(g){
   }
   return bestF;
 }
+
 function explicitAxis(){
   const c=globalThis.__boxlabTransformArming?.constraint?.()||document.querySelector('#transformPrecision [data-constraint].active')?.dataset?.constraint||'free';
   return ['x','y','z'].includes(c)?c:null;
 }
+
+// The old transform inference operates only on the active object's topology and
+// displays its own yellow marker. During a cross-object gesture it can fight the
+// external reference solver, so make Geometry appear OFF only for the current
+// event dispatch, then restore the user's toggle before our rAF snap runs.
+function suppressLegacyInferenceForEvent(){
+  if(!gesture||!geometryToggle||!gesture.geometryWasOn)return;
+  geometryToggle.checked=false;
+  queueMicrotask(()=>{
+    if(geometryToggle&&gesture?.geometryWasOn)geometryToggle.checked=true;
+  });
+}
+function restoreGeometryToggle(){
+  if(geometryToggle&&gesture?.geometryWasOn)geometryToggle.checked=true;
+}
+
 function applySnap(){
   raf=0;
   const g=gesture,s=state(),mesh=s?.mesh;
-  if(!g||!mesh||!geometryToggle?.checked||!moveArmed())return;
+  if(!g||!mesh||!g.geometryWasOn||!moveArmed())return;
   const m=mode(),ids=[...new Set(bridge()?.indices?.()||[])];
   if(m!==g.mode)return;
   const verts=selectedVertices(mesh,m,ids);
   if(!verts.length)return;
   const target=targetUnderPointer(g);
-  if(!target)return;
+  if(!target){
+    if(status)status.textContent=`Move • ${g.mode} • no external reference`;
+    return;
+  }
   const currentCenter=centerOf(mesh,verts),source=currentCenter.clone().add(g.sourceOffset),delta=target.point.clone().sub(source),axis=explicitAxis();
   if(axis){const amount=delta[axis];delta.set(0,0,0);delta[axis]=amount;}
-  if(delta.lengthSq()<1e-16)return;
+  if(delta.lengthSq()<1e-16){
+    if(status)status.textContent=`Move • ${g.sourceKind} snapped to ${target.name} ${target.kind}${axis?` • ${axis.toUpperCase()}`:''}`;
+    return;
+  }
   verts.forEach(i=>mesh.vertices[i].add(delta));
   render();
   if(status)status.textContent=`Move • ${g.sourceKind} → ${target.name} ${target.kind}${axis?` • ${axis.toUpperCase()}`:''}`;
 }
 function schedule(){if(!raf)raf=requestAnimationFrame(applySnap);}
+
 function begin(event){
   if(event.target!==canvas||!event.isPrimary||event.pointerType==='touch'||event.button>0)return;
   if(!geometryToggle?.checked||!moveArmed())return;
@@ -163,17 +195,37 @@ function begin(event){
   const refs=captureReferences();
   if(!refs.length)return;
   const startCenter=centerOf(mesh,verts);
-  gesture={id:event.pointerId,mode:m,camera,refs,x:event.clientX,y:event.clientY,sourceKind:source.kind,sourceOffset:source.point.clone().sub(startCenter)};
-  if(status)status.textContent=`Move • snap source ${source.kind} • drag to another object`;
+  gesture={id:event.pointerId,mode:m,camera,refs,x:event.clientX,y:event.clientY,sourceKind:source.kind,sourceOffset:source.point.clone().sub(startCenter),geometryWasOn:true};
+  if(status)status.textContent=m==='object'
+    ?`Move • object snap source ${source.kind} • drag to another object`
+    :`Move • edit ${m} • drag to reference another object`;
 }
-function move(event){if(!gesture||gesture.id!==event.pointerId)return;gesture.x=event.clientX;gesture.y=event.clientY;schedule();}
-function end(event){if(!gesture||gesture.id!==event.pointerId)return;gesture.x=event.clientX;gesture.y=event.clientY;schedule();const id=gesture.id;requestAnimationFrame(()=>{if(gesture?.id===id)gesture=null;});}
-function cancel(event){if(gesture?.id===event.pointerId)gesture=null;}
+function move(event){
+  if(!gesture||gesture.id!==event.pointerId)return;
+  gesture.x=event.clientX;gesture.y=event.clientY;
+  suppressLegacyInferenceForEvent();
+  schedule();
+}
+function end(event){
+  if(!gesture||gesture.id!==event.pointerId)return;
+  gesture.x=event.clientX;gesture.y=event.clientY;
+  suppressLegacyInferenceForEvent();
+  schedule();
+  const g=gesture;
+  requestAnimationFrame(()=>{
+    if(gesture===g){restoreGeometryToggle();gesture=null;}
+  });
+}
+function cancel(event){
+  if(gesture?.id!==event.pointerId)return;
+  restoreGeometryToggle();
+  gesture=null;
+}
 
 window.addEventListener('pointerdown',begin,true);
 window.addEventListener('pointermove',move,true);
 window.addEventListener('pointerup',end,true);
 window.addEventListener('pointercancel',cancel,true);
-window.addEventListener('blur',()=>{gesture=null;});
+window.addEventListener('blur',()=>{restoreGeometryToggle();gesture=null;});
 
-globalThis.__boxlabCrossObjectSnap={version:'0.36.18.2'};
+globalThis.__boxlabCrossObjectSnap={version:'0.36.18.3'};
