@@ -59,24 +59,34 @@ function triangulateConcaveFaces(mesh) {
   return true;
 }
 
-let cleaning = false;
-function cleanupAfterThrough() {
-  if (cleaning) return;
-  const status = document.querySelector('#selectionStatus');
-  const text = status?.textContent || '';
-  if (!text.includes('Extrude Through • side breakout created') || text.includes('cap rebuilt')) return;
-  const mesh = globalThis.__boxlabBridgeState?.mesh;
-  if (!mesh) return;
-  cleaning = true;
-  if (triangulateConcaveFaces(mesh)) {
-    status.textContent = text.replace('side breakout created', 'side breakout created • cap rebuilt');
-    document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles: true }));
-  }
-  queueMicrotask(() => { cleaning = false; });
+let pendingSideBreakout = false;
+
+function installBridgeCommitHook() {
+  const activeMesh = globalThis.__boxlabBridgeState?.mesh;
+  const proto = activeMesh ? Object.getPrototypeOf(activeMesh) : null;
+  if (!proto || proto.__boxlabThroughBreakoutHook) return !!proto;
+  const originalBridgeLoops = proto.bridgeLoops;
+  if (typeof originalBridgeLoops !== 'function') return false;
+
+  Object.defineProperty(proto, '__boxlabThroughBreakoutHook', { value: true, configurable: true });
+  proto.bridgeLoops = function (...args) {
+    const result = originalBridgeLoops.apply(this, args);
+    if (pendingSideBreakout && result) {
+      pendingSideBreakout = false;
+      triangulateConcaveFaces(this);
+    }
+    return result;
+  };
+  return true;
 }
 
-// Capture pointerup on window before multi-face-direct stops propagation at document.
-// Run cleanup on the next task, after the Through commit has replaced the live mesh.
+installBridgeCommitHook();
+window.addEventListener('boxlab-bridge-state', installBridgeCommitHook);
+
+// This capture listener runs before multi-face-direct handles the same pointerup on document.
+// During a recognised side breakout the drag status is already THROUGH SIDE READY, so the
+// following bridgeLoops call is marked for synchronous triangulation before the clone returns.
 window.addEventListener('pointerup', () => {
-  setTimeout(cleanupAfterThrough, 0);
+  const text = document.querySelector('#selectionStatus')?.textContent || '';
+  pendingSideBreakout = text.includes('THROUGH SIDE READY');
 }, true);
