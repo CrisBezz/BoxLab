@@ -1,15 +1,16 @@
-// BoxLab v0.36.18.1 — cross-object geometry snap.
-// Other visible objects are captured as read-only reference meshes at Move start.
-// The actual snap is applied after the existing transform handler has updated the
-// active mesh, so no temporary topology is injected into the editable object.
+// BoxLab v0.36.18.2 — cross-object geometry snap.
+// Move snapping is source-anchor based: the point picked on the active object
+// snaps to geometry on another visible object. Other objects remain read-only.
 
 import * as THREE from 'three';
 
 const canvas=document.querySelector('#viewport');
 const geometryToggle=document.querySelector('#inferenceSnapToggle');
 const status=document.querySelector('#selectionStatus');
-const VERTEX_PX=22;
-const EDGE_PX=18;
+const SOURCE_VERTEX_PX=30;
+const SOURCE_EDGE_PX=22;
+const TARGET_VERTEX_PX=24;
+const TARGET_EDGE_PX=20;
 let gesture=null;
 let raf=0;
 
@@ -46,12 +47,63 @@ function captureReferences(){
   }
   return refs;
 }
+function nearestVertex(mesh,p,camera,allowed=null,limit=SOURCE_VERTEX_PX){
+  let best=null;
+  mesh.vertices.forEach((v,i)=>{
+    if(allowed&&!allowed.has(i))return;
+    const d=screenPoint(v,camera).distanceTo(p);
+    if(d<=limit&&(!best||d<best.d))best={kind:'Vertex',point:v.clone(),index:i,d};
+  });
+  return best;
+}
+function nearestEdge(mesh,p,camera,allowedEdges=null,limit=SOURCE_EDGE_PX){
+  let best=null;
+  const edges=mesh.edges();
+  edges.forEach((e,i)=>{
+    if(allowedEdges&&!allowedEdges.has(i))return;
+    const a=screenPoint(mesh.vertices[e.a],camera),b=screenPoint(mesh.vertices[e.b],camera),ab=b.clone().sub(a),l=ab.lengthSq();
+    if(l<1)return;
+    const t=THREE.MathUtils.clamp(p.clone().sub(a).dot(ab)/l,0,1),q=a.clone().addScaledVector(ab,t),d=p.distanceTo(q);
+    if(d<=limit&&(!best||d<best.d))best={kind:'Edge',point:mesh.vertices[e.a].clone().lerp(mesh.vertices[e.b],t),index:i,t,d};
+  });
+  return best;
+}
+function faceHit(mesh,event,camera,allowedFaces=null){
+  const r=canvas.getBoundingClientRect(),ndc=new THREE.Vector2((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1)),ray=new THREE.Raycaster();
+  ray.setFromCamera(ndc,camera);
+  let best=null;
+  mesh.faces.forEach((f,fi)=>{
+    if(allowedFaces&&!allowedFaces.has(fi))return;
+    const pos=[];
+    for(let i=1;i<f.length-1;i++)for(const vi of[f[0],f[i],f[i+1]]){const v=mesh.vertices[vi];pos.push(v.x,v.y,v.z);}
+    if(!pos.length)return;
+    const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+    const mat=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),obj=new THREE.Mesh(geo,mat),hit=ray.intersectObject(obj,false)[0];
+    geo.dispose();mat.dispose();
+    if(hit&&(!best||hit.distance<best.distance))best={kind:'Face',point:hit.point.clone(),index:fi,distance:hit.distance};
+  });
+  return best;
+}
+function sourceAnchor(mesh,m,ids,event,camera){
+  const p=new THREE.Vector2(event.clientX,event.clientY);
+  if(m==='object')return nearestVertex(mesh,p,camera)||nearestEdge(mesh,p,camera)||faceHit(mesh,event,camera);
+  if(m==='vertex'){
+    const allowed=new Set(ids);
+    return nearestVertex(mesh,p,camera,allowed,40)||((ids.length&&mesh.vertices[ids[0]])?{kind:'Vertex',point:mesh.vertices[ids[0]].clone(),index:ids[0]}:null);
+  }
+  if(m==='edge'){
+    const allowed=new Set(ids);
+    return nearestEdge(mesh,p,camera,allowed,36)||null;
+  }
+  if(m==='face')return faceHit(mesh,event,camera,new Set(ids));
+  return null;
+}
 function targetUnderPointer(g){
   const p=new THREE.Vector2(g.x,g.y),camera=g.camera;
   let bestV=null;
   for(const ref of g.refs)ref.mesh.vertices.forEach((v,i)=>{
     const d=screenPoint(v,camera).distanceTo(p);
-    if(d<=VERTEX_PX&&(!bestV||d<bestV.d))bestV={kind:'Vertex',name:ref.name,point:v.clone(),d,index:i};
+    if(d<=TARGET_VERTEX_PX&&(!bestV||d<bestV.d))bestV={kind:'Vertex',name:ref.name,point:v.clone(),d,index:i};
   });
   if(bestV)return bestV;
 
@@ -62,7 +114,7 @@ function targetUnderPointer(g){
       const a=screenPoint(ref.mesh.vertices[e.a],camera),b=screenPoint(ref.mesh.vertices[e.b],camera),ab=b.clone().sub(a),l=ab.lengthSq();
       if(l<1)return;
       const t=THREE.MathUtils.clamp(p.clone().sub(a).dot(ab)/l,0,1),q=a.clone().addScaledVector(ab,t),d=p.distanceTo(q);
-      if(d<=EDGE_PX&&(!bestE||d<bestE.d))bestE={kind:'Edge',name:ref.name,point:ref.mesh.vertices[e.a].clone().lerp(ref.mesh.vertices[e.b],t),d,index:i};
+      if(d<=TARGET_EDGE_PX&&(!bestE||d<bestE.d))bestE={kind:'Edge',name:ref.name,point:ref.mesh.vertices[e.a].clone().lerp(ref.mesh.vertices[e.b],t),d,index:i};
     });
   }
   if(bestE)return bestE;
@@ -91,12 +143,12 @@ function applySnap(){
   if(!verts.length)return;
   const target=targetUnderPointer(g);
   if(!target)return;
-  const c=centerOf(mesh,verts),delta=target.point.clone().sub(c),axis=explicitAxis();
+  const currentCenter=centerOf(mesh,verts),source=currentCenter.clone().add(g.sourceOffset),delta=target.point.clone().sub(source),axis=explicitAxis();
   if(axis){const amount=delta[axis];delta.set(0,0,0);delta[axis]=amount;}
   if(delta.lengthSq()<1e-16)return;
   verts.forEach(i=>mesh.vertices[i].add(delta));
   render();
-  if(status)status.textContent=`Move • Cross-object snap • ${target.name} ${target.kind}${axis?` • ${axis.toUpperCase()}`:''}`;
+  if(status)status.textContent=`Move • ${g.sourceKind} → ${target.name} ${target.kind}${axis?` • ${axis.toUpperCase()}`:''}`;
 }
 function schedule(){if(!raf)raf=requestAnimationFrame(applySnap);}
 function begin(event){
@@ -106,9 +158,13 @@ function begin(event){
   if(!mesh||!camera||!['vertex','edge','face','object'].includes(m))return;
   const verts=selectedVertices(mesh,m,ids);
   if(!verts.length)return;
+  const source=sourceAnchor(mesh,m,ids,event,camera);
+  if(!source)return;
   const refs=captureReferences();
   if(!refs.length)return;
-  gesture={id:event.pointerId,mode:m,camera,refs,x:event.clientX,y:event.clientY};
+  const startCenter=centerOf(mesh,verts);
+  gesture={id:event.pointerId,mode:m,camera,refs,x:event.clientX,y:event.clientY,sourceKind:source.kind,sourceOffset:source.point.clone().sub(startCenter)};
+  if(status)status.textContent=`Move • snap source ${source.kind} • drag to another object`;
 }
 function move(event){if(!gesture||gesture.id!==event.pointerId)return;gesture.x=event.clientX;gesture.y=event.clientY;schedule();}
 function end(event){if(!gesture||gesture.id!==event.pointerId)return;gesture.x=event.clientX;gesture.y=event.clientY;schedule();const id=gesture.id;requestAnimationFrame(()=>{if(gesture?.id===id)gesture=null;});}
@@ -120,4 +176,4 @@ window.addEventListener('pointerup',end,true);
 window.addEventListener('pointercancel',cancel,true);
 window.addEventListener('blur',()=>{gesture=null;});
 
-globalThis.__boxlabCrossObjectSnap={version:'0.36.18.1'};
+globalThis.__boxlabCrossObjectSnap={version:'0.36.18.2'};
