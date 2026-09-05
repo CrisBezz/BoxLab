@@ -54,10 +54,11 @@ import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxL
 import('./studio-scene-fix.js?v=0.36.8.1').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
 import('./extrude-through-viability.js?v=0.36.11.2').catch(error => console.warn('BoxLab Extrude Through viability guard failed to load', error));
 import('./through-breakout-cleanup.js?v=0.36.14.8').catch(error => console.warn('BoxLab Through breakout cleanup failed to load', error));
+import('./through-mismatched-target.js?v=0.36.14.9').catch(error => console.warn('BoxLab mismatched Through target support failed to load', error));
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.14.8';
-  document.title = 'BoxLab v0.36.14.8';
+  if (version) version.textContent = 'v0.36.14.9';
+  document.title = 'BoxLab v0.36.14.9';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
