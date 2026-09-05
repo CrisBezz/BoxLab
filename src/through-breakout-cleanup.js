@@ -58,15 +58,19 @@ function triangulateConcaveFaces(mesh) {
   return true;
 }
 
+let cleaning = false;
 function cleanupAfterThrough() {
+  if (cleaning) return;
   const status = document.querySelector('#selectionStatus');
   if (!status?.textContent?.includes('Extrude Through • side breakout created')) return;
   const mesh = globalThis.__boxlabBridgeState?.mesh;
   if (!mesh) return;
+  cleaning = true;
   if (triangulateConcaveFaces(mesh)) {
-    document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles: true }));
     status.textContent = status.textContent.replace('side breakout created', 'side breakout created • cap rebuilt');
+    document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles: true }));
   }
+  queueMicrotask(() => { cleaning = false; });
 }
 
-document.addEventListener('pointerup', () => queueMicrotask(cleanupAfterThrough), true);
+window.addEventListener('boxlab-bridge-state', cleanupAfterThrough);
