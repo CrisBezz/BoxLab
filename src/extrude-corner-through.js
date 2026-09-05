@@ -3,7 +3,7 @@ import * as THREE from 'three';
 const canvas=document.querySelector('#viewport');
 const extrudeButton=document.querySelector('#extrudeBtn');
 const status=document.querySelector('#selectionStatus');
-let probe=null, takeover=null, internalCancel=false;
+let probe=null,takeover=null,internalCancel=false;
 
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
@@ -41,8 +41,7 @@ function cornerPlan(m,sourceFaceIndex){
     for(let cornerSourceSlot=0;cornerSourceSlot<ns;cornerSourceSlot++)for(let cornerTargetSlot=0;cornerTargetSlot<nt;cornerTargetSlot++){
       if(projected[cornerSourceSlot].distanceTo(m.vertices[target[cornerTargetSlot]])>tol*2.5)continue;
       const prevSourceSlot=(cornerSourceSlot-1+ns)%ns,nextSourceSlot=(cornerSourceSlot+1)%ns,prevTargetEdge=(cornerTargetSlot-1+nt)%nt,nextTargetEdge=cornerTargetSlot;
-      const pairings=[[prevTargetEdge,nextTargetEdge],[nextTargetEdge,prevTargetEdge]];
-      for(const [prevEdge,nextEdge] of pairings){
+      for(const [prevEdge,nextEdge] of[[prevTargetEdge,nextTargetEdge],[nextTargetEdge,prevTargetEdge]]){
         const prevInfo=pointSegInfo(projected[prevSourceSlot],m.vertices[target[prevEdge]],m.vertices[target[(prevEdge+1)%nt]],tol*2),nextInfo=pointSegInfo(projected[nextSourceSlot],m.vertices[target[nextEdge]],m.vertices[target[(nextEdge+1)%nt]],tol*2);
         if(!prevInfo||!nextInfo||prevInfo.t<=1e-4||prevInfo.t>=1-1e-4||nextInfo.t<=1e-4||nextInfo.t>=1-1e-4)continue;
         let interior=true;for(let slot=0;slot<ns;slot++){if(slot===cornerSourceSlot||slot===prevSourceSlot||slot===nextSourceSlot)continue;if(minPolygonEdgeDistance(inner2[slot],outer2)<=tol*2.5){interior=false;break;}}
@@ -63,9 +62,10 @@ function cyclePath(loop,startId,endId,forward=true){const start=loop.indexOf(sta
 function cyclePathAvoiding(loop,startId,endId,avoidIds){const avoid=new Set(avoidIds||[]),paths=[cyclePath(loop,startId,endId,true),cyclePath(loop,startId,endId,false)].filter(Boolean);return paths.find(path=>path.slice(1,-1).every(id=>!avoid.has(id)))||null;}
 function faceNormalFromLoop(m,loop){if(loop.length<3)return new THREE.Vector3();const a=m.vertices[loop[0]];for(let i=1;i<loop.length-1;i++){const n=new THREE.Vector3().crossVectors(m.vertices[loop[i]].clone().sub(a),m.vertices[loop[i+1]].clone().sub(a));if(n.lengthSq()>1e-12)return n.normalize();}return new THREE.Vector3();}
 function orientLike(m,loop,normal){return faceNormalFromLoop(m,loop).dot(normal)<0?[...loop].reverse():loop;}
+function triangulatePlanarLoop(m,loop,normal){if(loop.length===3)return[orientLike(m,[...loop],normal)];const {u,v}=faceBasis(normal),origin=m.vertices[loop[0]],contour=loop.map(id=>{const p=m.vertices[id].clone().sub(origin);return new THREE.Vector2(p.dot(u),p.dot(v));});const tris=THREE.ShapeUtils.triangulateShape(contour,[]);if(!tris?.length)return null;return tris.map(t=>orientLike(m,t.map(i=>loop[i]),normal));}
 
 function buildCorner(before,plan){
-  const trial=before.clone(),source=[...(trial.faces[plan.sourceFaceIndex]||[])],target=[...(trial.faces[plan.targetFaceIndex]||[])];if(source.length<4||target.length<4||typeof trial.bridgeLoops!=='function')return null;
+  const trial=before.clone(),source=[...(trial.faces[plan.sourceFaceIndex]||[])],target=[...(trial.faces[plan.targetFaceIndex]||[])];if(source.length<4||target.length<4)return null;
   const prevSide=[...(trial.faces[plan.prevSideFaceIndex]||[])],nextSide=[...(trial.faces[plan.nextSideFaceIndex]||[])];if(prevSide.length<3||nextSide.length<3)return null;
   const targetNormal=trial.faceNormal(plan.targetFaceIndex).clone(),prevSideNormal=trial.faceNormal(plan.prevSideFaceIndex).clone(),nextSideNormal=trial.faceNormal(plan.nextSideFaceIndex).clone();
   const prevA=target[plan.prevTargetEdge],prevB=target[(plan.prevTargetEdge+1)%target.length],nextA=target[plan.nextTargetEdge],nextB=target[(plan.nextTargetEdge+1)%target.length];
@@ -76,11 +76,11 @@ function buildCorner(before,plan){
   const targetLoop=[...trial.faces[plan.targetFaceIndex]],targetOuter=cyclePathAvoiding(targetLoop,prevTarget,nextTarget,[targetCorner]),openingInner=cyclePathAvoiding(opening,nextTarget,prevTarget,[targetCorner]);if(!targetOuter||!openingInner)return null;
   let targetRemainder=[...targetOuter,...openingInner.slice(1,-1)];
   const prevLoop=[...trial.faces[plan.prevSideFaceIndex]],nextLoop=[...trial.faces[plan.nextSideFaceIndex]],prevRemainder=cyclePathAvoiding(prevLoop,prevTarget,sourcePrev,[targetCorner,sourceCorner]),nextRemainder=cyclePathAvoiding(nextLoop,nextTarget,sourceNext,[targetCorner,sourceCorner]);if(!prevRemainder||!nextRemainder||targetRemainder.length<3)return null;
-  targetRemainder=orientLike(trial,targetRemainder,targetNormal);const sidePrev=orientLike(trial,prevRemainder,prevSideNormal),sideNext=orientLike(trial,nextRemainder,nextSideNormal);
+  targetRemainder=orientLike(trial,targetRemainder,targetNormal);const sidePrev=orientLike(trial,prevRemainder,prevSideNormal),sideNext=orientLike(trial,nextRemainder,nextSideNormal),targetPieces=triangulatePlanarLoop(trial,targetRemainder,targetNormal);if(!targetPieces)return null;
+  const skipped=new Set([key(sourcePrev,sourceCorner),key(sourceCorner,sourceNext)]),tunnelFaces=[];
+  for(let i=0;i<source.length;i++){const j=(i+1)%source.length,a=source[i],b=source[j];if(skipped.has(key(a,b)))continue;const q=[a,b,opening[j],opening[i]];if(new Set(q).size!==4)return null;tunnelFaces.push(q);}
   for(const index of[plan.sourceFaceIndex,plan.targetFaceIndex,plan.prevSideFaceIndex,plan.nextSideFaceIndex].sort((a,b)=>b-a))trial.faces.splice(index,1);
-  trial.faces.push(targetRemainder,sidePrev,sideNext);
-  const tunnel=trial.bridgeLoops(source,opening);if(!tunnel)return null;
-  const outerPairs=[[sourcePrev,sourceCorner],[sourceCorner,sourceNext]],remove=(tunnel.faceIndices||[]).filter(fi=>{const face=trial.faces[fi];return face&&outerPairs.some(([a,b])=>face.includes(a)&&face.includes(b));}).sort((a,b)=>b-a);for(const fi of remove)trial.faces.splice(fi,1);
+  trial.faces.push(...targetPieces,sidePrev,sideNext,...tunnelFaces);
   trial.edges();return trial;
 }
 
