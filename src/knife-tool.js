@@ -50,6 +50,7 @@ function disarmOtherTools(){globalThis.__boxlabTransformArming?.disarm?.();docum
 
 button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();armed=!armed;drag=null;clearPreview();if(armed){disableMulti();disarmOtherTools();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();clearFaceSelection();}button.classList.toggle('active',armed);if(status)status.textContent=armed?`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`:'Face mode • Knife off';},true);
 document.addEventListener('click',e=>{if(!armed||!e.isTrusted||e.target?.closest?.('#knifeBtn'))return;const otherTool=e.target?.closest?.('#extrudeBtn,#insetBtn,#toolModes button,#vertexBevelBtn,#bevelBtn,#edgeSlideBtn,#offsetLoopBtn,#loopCutBtn,#faceSplitBtn,#extractFacesBtn,#bridgeFacesBtn,#deleteFaceBtn');if(otherTool)disarm();},true);
+document.querySelector('#selectionModes')?.addEventListener('click',e=>{if(!armed)return;const mode=e.target?.closest?.('button[data-mode]')?.dataset?.mode;if(mode&&mode!=='face')disarm();},true);
 document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool&&event.detail.tool!=='knife')disarm();},true);
 
 document.querySelector('#inferenceSnapToggle')?.addEventListener('change',()=>{if(armed&&status)status.textContent=`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`;});
