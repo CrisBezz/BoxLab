@@ -53,12 +53,12 @@ import('./object-management.js?v=0.36.9.0').catch(error => console.warn('BoxLab 
 import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxLab object drawer retain failed to load', error));
 import('./studio-scene-fix.js?v=0.36.8.1').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
 import('./lasso-select.js?v=0.36.17.3').catch(error => console.warn('BoxLab Lasso Select failed to load', error));
-import('./cross-object-snap.js?v=0.36.18.2').catch(error => console.warn('BoxLab cross-object snap failed to load', error));
+import('./cross-object-snap.js?v=0.36.18.3').catch(error => console.warn('BoxLab cross-object snap failed to load', error));
 // Through is owned by multi-face-direct and through-kernel. Legacy handlers retired.
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.18.2';
-  document.title = 'BoxLab v0.36.18.2';
+  if (version) version.textContent = 'v0.36.18.3';
+  document.title = 'BoxLab v0.36.18.3';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
