@@ -62,15 +62,19 @@ let cleaning = false;
 function cleanupAfterThrough() {
   if (cleaning) return;
   const status = document.querySelector('#selectionStatus');
-  if (!status?.textContent?.includes('Extrude Through • side breakout created')) return;
+  const text = status?.textContent || '';
+  if (!text.includes('Extrude Through • side breakout created') || text.includes('cap rebuilt')) return;
   const mesh = globalThis.__boxlabBridgeState?.mesh;
   if (!mesh) return;
   cleaning = true;
   if (triangulateConcaveFaces(mesh)) {
-    status.textContent = status.textContent.replace('side breakout created', 'side breakout created • cap rebuilt');
+    status.textContent = text.replace('side breakout created', 'side breakout created • cap rebuilt');
     document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles: true }));
   }
   queueMicrotask(() => { cleaning = false; });
 }
 
-window.addEventListener('boxlab-bridge-state', cleanupAfterThrough);
+const statusNode = document.querySelector('#selectionStatus');
+if (statusNode) {
+  new MutationObserver(cleanupAfterThrough).observe(statusNode, { childList: true, characterData: true, subtree: true });
+}
