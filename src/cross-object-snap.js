@@ -1,9 +1,8 @@
-// BoxLab v0.36.18.3 — cross-object geometry snap.
-// Object and edit-mode Move use a picked source point on the active object and
-// snap it to vertex / edge / face geometry on another visible object.
-// Other objects remain read-only. While this gesture is active, the older
-// same-object inference pass is temporarily suppressed so it cannot compete
-// with cross-object snapping or draw its legacy yellow reference marker.
+// BoxLab v0.36.18.5 — unified geometry snap.
+// Move snapping uses a picked source point on the active object and can infer to
+// unselected geometry on that same object or to geometry on any other visible
+// object. Reference geometry is read-only. The legacy yellow marker pass is
+// suppressed during these gestures so only one snap solver is active.
 
 import * as THREE from 'three';
 
@@ -39,7 +38,7 @@ function selectedVertices(mesh,m,ids){
 function centerOf(mesh,ids){const c=new THREE.Vector3();ids.forEach(i=>c.add(mesh.vertices[i]));return ids.length?c.multiplyScalar(1/ids.length):c;}
 function evaluatedMesh(object){return globalThis.__boxlabObjectGeometry?.evaluatedMesh?.(object.id)||object.mesh;}
 
-function captureReferences(){
+function captureExternalReferences(){
   const m=manager();
   if(!m)return[];
   const activeId=m.activeId,soloId=m.soloId,objects=[...(m.objects||[])],refs=[];
@@ -48,7 +47,7 @@ function captureReferences(){
     if(soloId&&object.id!==soloId)continue;
     const source=evaluatedMesh(object);
     if(!source?.vertices?.length||!source?.faces?.length)continue;
-    refs.push({id:object.id,name:object.name||`Object ${object.id}`,mesh:source.clone()});
+    refs.push({id:object.id,name:object.name||`Object ${object.id}`,mesh:source.clone(),self:false,excludedVertices:new Set()});
   }
   return refs;
 }
@@ -98,10 +97,7 @@ function sourceAnchor(mesh,m,ids,event,camera){
     const allowed=new Set(ids);
     return nearestVertex(mesh,p,camera,allowed,40)||((ids.length&&mesh.vertices[ids[0]])?{kind:'Vertex',point:mesh.vertices[ids[0]].clone(),index:ids[0]}:null);
   }
-  if(m==='edge'){
-    const allowed=new Set(ids);
-    return nearestEdge(mesh,p,camera,allowed,36)||null;
-  }
+  if(m==='edge')return nearestEdge(mesh,p,camera,new Set(ids),36)||null;
   if(m==='face')return faceHit(mesh,event,camera,new Set(ids));
   return null;
 }
@@ -110,8 +106,9 @@ function targetUnderPointer(g){
   const p=new THREE.Vector2(g.x,g.y),camera=g.camera;
   let bestV=null;
   for(const ref of g.refs)ref.mesh.vertices.forEach((v,i)=>{
+    if(ref.self&&ref.excludedVertices.has(i))return;
     const d=screenPoint(v,camera).distanceTo(p);
-    if(d<=TARGET_VERTEX_PX&&(!bestV||d<bestV.d))bestV={kind:'Vertex',name:ref.name,point:v.clone(),d,index:i};
+    if(d<=TARGET_VERTEX_PX&&(!bestV||d<bestV.d))bestV={kind:'Vertex',name:ref.name,point:v.clone(),d,index:i,self:ref.self};
   });
   if(bestV)return bestV;
 
@@ -119,10 +116,11 @@ function targetUnderPointer(g){
   for(const ref of g.refs){
     const edges=ref.mesh.edges();
     edges.forEach((e,i)=>{
+      if(ref.self&&ref.excludedVertices.has(e.a)&&ref.excludedVertices.has(e.b))return;
       const a=screenPoint(ref.mesh.vertices[e.a],camera),b=screenPoint(ref.mesh.vertices[e.b],camera),ab=b.clone().sub(a),l=ab.lengthSq();
       if(l<1)return;
       const t=THREE.MathUtils.clamp(p.clone().sub(a).dot(ab)/l,0,1),q=a.clone().addScaledVector(ab,t),d=p.distanceTo(q);
-      if(d<=TARGET_EDGE_PX&&(!bestE||d<bestE.d))bestE={kind:'Edge',name:ref.name,point:ref.mesh.vertices[e.a].clone().lerp(ref.mesh.vertices[e.b],t),d,index:i};
+      if(d<=TARGET_EDGE_PX&&(!bestE||d<bestE.d))bestE={kind:'Edge',name:ref.name,point:ref.mesh.vertices[e.a].clone().lerp(ref.mesh.vertices[e.b],t),d,index:i,self:ref.self};
     });
   }
   if(bestE)return bestE;
@@ -131,9 +129,16 @@ function targetUnderPointer(g){
   ray.setFromCamera(ndc,camera);
   let bestF=null;
   for(const ref of g.refs){
-    const geo=ref.mesh.triangulatedGeometry(),mat=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),obj=new THREE.Mesh(geo,mat),hit=ray.intersectObject(obj,false)[0];
-    geo.dispose();mat.dispose();
-    if(hit&&(!bestF||hit.distance<bestF.distance))bestF={kind:'Face',name:ref.name,point:hit.point.clone(),distance:hit.distance};
+    ref.mesh.faces.forEach((f,fi)=>{
+      if(ref.self&&f.some(i=>ref.excludedVertices.has(i)))return;
+      const pos=[];
+      for(let i=1;i<f.length-1;i++)for(const vi of[f[0],f[i],f[i+1]]){const v=ref.mesh.vertices[vi];pos.push(v.x,v.y,v.z);}
+      if(!pos.length)return;
+      const geo=new THREE.BufferGeometry();geo.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+      const mat=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),obj=new THREE.Mesh(geo,mat),hit=ray.intersectObject(obj,false)[0];
+      geo.dispose();mat.dispose();
+      if(hit&&(!bestF||hit.distance<bestF.distance))bestF={kind:'Face',name:ref.name,point:hit.point.clone(),distance:hit.distance,self:ref.self,index:fi};
+    });
   }
   return bestF;
 }
@@ -143,10 +148,6 @@ function explicitAxis(){
   return ['x','y','z'].includes(c)?c:null;
 }
 
-// The old transform inference operates only on the active object's topology and
-// displays its own yellow marker. During a cross-object gesture it can fight the
-// external reference solver, so make Geometry appear OFF only for the current
-// event dispatch, then restore the user's toggle before our rAF snap runs.
 function suppressLegacyInferenceForEvent(){
   if(!gesture||!geometryToggle||!gesture.geometryWasOn)return;
   geometryToggle.checked=false;
@@ -154,9 +155,7 @@ function suppressLegacyInferenceForEvent(){
     if(geometryToggle&&gesture?.geometryWasOn)geometryToggle.checked=true;
   });
 }
-function restoreGeometryToggle(){
-  if(geometryToggle&&gesture?.geometryWasOn)geometryToggle.checked=true;
-}
+function restoreGeometryToggle(){if(geometryToggle&&gesture?.geometryWasOn)geometryToggle.checked=true;}
 
 function applySnap(){
   raf=0;
@@ -168,17 +167,15 @@ function applySnap(){
   if(!verts.length)return;
   const target=targetUnderPointer(g);
   if(!target){
-    if(status)status.textContent=`Move • ${g.mode} • no external reference`;
+    if(status)status.textContent=`Move • ${g.mode} • no geometry reference`;
     return;
   }
   const currentCenter=centerOf(mesh,verts),source=currentCenter.clone().add(g.sourceOffset),delta=target.point.clone().sub(source),axis=explicitAxis();
   if(axis){const amount=delta[axis];delta.set(0,0,0);delta[axis]=amount;}
-  if(delta.lengthSq()<1e-16){
-    if(status)status.textContent=`Move • ${g.sourceKind} snapped to ${target.name} ${target.kind}${axis?` • ${axis.toUpperCase()}`:''}`;
-    return;
+  if(delta.lengthSq()>=1e-16){
+    verts.forEach(i=>mesh.vertices[i].add(delta));
+    render();
   }
-  verts.forEach(i=>mesh.vertices[i].add(delta));
-  render();
   if(status)status.textContent=`Move • ${g.sourceKind} → ${target.name} ${target.kind}${axis?` • ${axis.toUpperCase()}`:''}`;
 }
 function schedule(){if(!raf)raf=requestAnimationFrame(applySnap);}
@@ -192,13 +189,14 @@ function begin(event){
   if(!verts.length)return;
   const source=sourceAnchor(mesh,m,ids,event,camera);
   if(!source)return;
-  const refs=captureReferences();
-  if(!refs.length)return;
   const startCenter=centerOf(mesh,verts);
+  const excluded=new Set(verts);
+  const selfRef={id:'active',name:'Current object',mesh:mesh.clone(),self:true,excludedVertices:excluded};
+  const refs=[selfRef,...captureExternalReferences()];
   gesture={id:event.pointerId,mode:m,camera,refs,x:event.clientX,y:event.clientY,sourceKind:source.kind,sourceOffset:source.point.clone().sub(startCenter),geometryWasOn:true};
   if(status)status.textContent=m==='object'
-    ?`Move • object snap source ${source.kind} • drag to another object`
-    :`Move • edit ${m} • drag to reference another object`;
+    ?`Move • object snap source ${source.kind}`
+    :`Move • edit ${m} • infer to current or other object geometry`;
 }
 function move(event){
   if(!gesture||gesture.id!==event.pointerId)return;
@@ -212,9 +210,7 @@ function end(event){
   suppressLegacyInferenceForEvent();
   schedule();
   const g=gesture;
-  requestAnimationFrame(()=>{
-    if(gesture===g){restoreGeometryToggle();gesture=null;}
-  });
+  requestAnimationFrame(()=>{if(gesture===g){restoreGeometryToggle();gesture=null;}});
 }
 function cancel(event){
   if(gesture?.id!==event.pointerId)return;
@@ -228,4 +224,4 @@ window.addEventListener('pointerup',end,true);
 window.addEventListener('pointercancel',cancel,true);
 window.addEventListener('blur',()=>{restoreGeometryToggle();gesture=null;});
 
-globalThis.__boxlabCrossObjectSnap={version:'0.36.18.3'};
+globalThis.__boxlabCrossObjectSnap={version:'0.36.18.5'};
