@@ -26,11 +26,61 @@ function state(){ return globalThis.__boxlabBridgeState; }
 function bridge(){ return globalThis.__boxlabSelectionBridge; }
 function mesh(){ return state()?.mesh || null; }
 function faces(){const b=bridge();return b?.mode?.()==='face'?[...new Set(b.indices?.()||[])]:[];}
-function info(ids=faces()){const m=mesh();return m&&ids.length?m.faceRegionsInfo?.(ids):null;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function restore(target,source){target.vertices=source.vertices.map(v=>v.clone());target.faces=source.faces.map(f=>[...f]);target.creases=new Map(source.creases);target.looseEdges=new Set(source.looseEdges||[]);target.looseVertices=new Set(source.looseVertices||[]);}
 function disarmTransforms(){globalThis.__boxlabTransformArming?.disarm?.();transformButtons.forEach(button=>button.classList.remove('active'));}
 function syncButtons(){const extrudeOn=armed==='extrude',insetOn=armed==='inset';extrudeButton?.classList.toggle('boxlab-direct-stable',extrudeOn);insetButton?.classList.toggle('boxlab-direct-stable',insetOn);extrudeButton?.classList.toggle('active',extrudeOn);insetButton?.classList.toggle('active',insetOn);}
+function key(a,b){return a<b?`${a}:${b}`:`${b}:${a}`;}
+function selectionComponentsInfo(m,faceIndices){
+  const ids=[...new Set(faceIndices||[])].filter(i=>Number.isInteger(i)&&Array.isArray(m?.faces?.[i])&&m.faces[i].length>=3);
+  if(!m||!ids.length)return null;
+  const selected=new Set(ids),edgeOwners=new Map(),adjacency=new Map(ids.map(i=>[i,new Set()]));
+  for(const fi of ids){
+    const face=m.faces[fi];
+    for(let i=0;i<face.length;i++){
+      const a=face[i],b=face[(i+1)%face.length],k=key(a,b);
+      if(!edgeOwners.has(k))edgeOwners.set(k,[]);
+      edgeOwners.get(k).push({faceIndex:fi,a,b});
+    }
+  }
+  for(const owners of edgeOwners.values()){
+    const inside=owners.filter(o=>selected.has(o.faceIndex));
+    for(let a=0;a<inside.length;a++)for(let b=a+1;b<inside.length;b++){
+      adjacency.get(inside[a].faceIndex)?.add(inside[b].faceIndex);
+      adjacency.get(inside[b].faceIndex)?.add(inside[a].faceIndex);
+    }
+  }
+  const unvisited=new Set(ids),regions=[];
+  while(unvisited.size){
+    const seed=unvisited.values().next().value,queue=[seed],component=[];
+    unvisited.delete(seed);
+    while(queue.length){const current=queue.shift();component.push(current);for(const next of adjacency.get(current)||[])if(unvisited.delete(next))queue.push(next);}
+    const componentSet=new Set(component),componentEdges=new Map(),regionVertices=new Set(),normal=new THREE.Vector3();
+    for(const fi of component){
+      const face=m.faces[fi];
+      normal.add(m.faceNormal(fi));
+      face.forEach(v=>regionVertices.add(v));
+      for(let i=0;i<face.length;i++){
+        const a=face[i],b=face[(i+1)%face.length],k=key(a,b);
+        if(!componentEdges.has(k))componentEdges.set(k,[]);
+        componentEdges.get(k).push({faceIndex:fi,a,b});
+      }
+    }
+    const boundaryEdges=[];
+    for(const owners of componentEdges.values()){
+      const inside=owners.filter(o=>componentSet.has(o.faceIndex));
+      if(inside.length===1)boundaryEdges.push(inside[0]);
+      else if(inside.length>2)return null;
+    }
+    if(normal.lengthSq()<1e-10)normal.copy(m.faceNormal(component[0]));else normal.normalize();
+    regions.push({faceIndices:component,regionVertices:[...regionVertices],boundaryEdges,normal});
+  }
+  return{faceIndices:ids,regions,regionCount:regions.length};
+}
+function info(ids=faces()){
+  const m=mesh();if(!m||!ids.length)return null;
+  return m.faceRegionsInfo?.(ids)||selectionComponentsInfo(m,ids);
+}
 function updateStatus(){const i=info();if(!status)return;if(!armed){status.textContent='Face mode • tool off';return;}if(!i){status.textContent=`${armed==='extrude'?'Extrude':'Inset'} • select face or faces`;return;}status.textContent=`${i.faceIndices.length} face${i.faceIndices.length===1?'':'s'} • ${i.regionCount} region${i.regionCount===1?'':'s'} • drag to ${armed==='extrude'?'Extrude':'Uniform Inset'}`;}
 function screenPoint(point,camera){const p=point.clone().project(camera),r=canvas.getBoundingClientRect();return{x:r.left+(p.x*.5+.5)*r.width,y:r.top+(-p.y*.5+.5)*r.height};}
 function centerOf(m,vertices){const c=m.vertices[vertices[0]].clone().set(0,0,0);vertices.forEach(i=>c.add(m.vertices[i]));return c.multiplyScalar(1/vertices.length);}
@@ -53,12 +103,35 @@ function findThroughPlan(m,sourceFaceIndex,distance){const source=m.faces[source
 function faceSharesSourceVertex(face,sourceSet){return face?.some?.(v=>sourceSet.has(v));}
 function firstShellHit(m,sourceFaceIndex,distance){const source=m.faces[sourceFaceIndex];if(!source||source.length<3||!Number.isFinite(distance)||Math.abs(distance)<1e-6)return null;const normal=m.faceNormal(sourceFaceIndex)?.clone().normalize();if(!normal)return null;const direction=normal.multiplyScalar(Math.sign(distance)),maxDistance=Math.abs(distance),sourceSet=new Set(source);let scale=Infinity;for(let i=0;i<source.length;i++)scale=Math.min(scale,m.vertices[source[i]].distanceTo(m.vertices[source[(i+1)%source.length]]));const eps=Math.max(1e-6,(Number.isFinite(scale)?scale:1)*1e-5),samples=[];for(let i=0;i<source.length;i++){const a=m.vertices[source[i]],b=m.vertices[source[(i+1)%source.length]];samples.push(a.clone(),a.clone().lerp(b,.5));}samples.push(centerOf(m,source));let best=null;for(let fi=0;fi<m.faces.length;fi++){if(fi===sourceFaceIndex)continue;const face=m.faces[fi];if(!Array.isArray(face)||face.length<3||faceSharesSourceVertex(face,sourceSet))continue;const a=m.vertices[face[0]];if(!a)continue;for(let i=1;i<face.length-1;i++){const b=m.vertices[face[i]],c=m.vertices[face[i+1]];if(!b||!c)continue;for(const sample of samples){const origin=sample.clone().addScaledVector(direction,eps),ray=new THREE.Ray(origin,direction),hit=new THREE.Vector3();if(!ray.intersectTriangle(a,b,c,false,hit)&&!ray.intersectTriangle(a,c,b,false,hit))continue;const t=hit.clone().sub(sample).dot(direction);if(t<=eps||t>maxDistance+eps)continue;if(!best||t<best.distance)best={faceIndex:fi,distance:t};}}}return best;}
 function buildThroughOnClone(before,plan){const trial=before.clone(),sourceLoop=[...(trial.faces[plan.sourceFaceIndex]||[])],targetLoop=[...(trial.faces[plan.targetFaceIndex]||[])];if(sourceLoop.length<3||sourceLoop.length!==targetLoop.length||typeof trial.bridgeLoops!=='function')return null;let innerLoop;if(plan.useTargetLoop)innerLoop=[...targetLoop];else{innerLoop=plan.projected.map(point=>{trial.vertices.push(point.clone());return trial.vertices.length-1;});}for(const index of[plan.sourceFaceIndex,plan.targetFaceIndex].sort((a,b)=>b-a))trial.faces.splice(index,1);let ring=null;if(!plan.useTargetLoop){ring=trial.bridgeLoops(targetLoop,innerLoop);if(!ring)return null;}const tunnel=trial.bridgeLoops(sourceLoop,innerLoop);if(!tunnel)return null;trial.edges();return{mesh:trial,ring,tunnel};}
+function extrudeConnectedFaceSelection(m,faceIndices,distance){
+  const group=selectionComponentsInfo(m,faceIndices);if(!group)return null;
+  const results=[];
+  for(const region of group.regions){
+    if(!region.boundaryEdges.length)return null;
+    const incident=new Map(region.regionVertices.map(v=>[v,[]]));
+    for(const fi of region.faceIndices){const n=m.faceNormal(fi).clone().normalize();for(const v of m.faces[fi])incident.get(v)?.push(n);}
+    const replacement=new Map();
+    for(const vertex of region.regionVertices){
+      const normals=incident.get(vertex)||[],sum=new THREE.Vector3();normals.forEach(n=>sum.add(n));
+      let dir=sum.lengthSq()>1e-10?sum.normalize():normals[0]?.clone();if(!dir) return null;
+      const dots=normals.map(n=>dir.dot(n)).filter(v=>v>1e-4),denom=dots.length?dots.reduce((a,b)=>a+b,0)/dots.length:1;
+      const move=dir.multiplyScalar(distance/Math.max(.15,denom));
+      m.vertices.push(m.vertices[vertex].clone().add(move));replacement.set(vertex,m.vertices.length-1);
+    }
+    for(const fi of region.faceIndices)m.faces[fi]=m.faces[fi].map(v=>replacement.get(v));
+    const sideStart=m.faces.length;
+    for(const edge of region.boundaryEdges)m.faces.push([edge.a,edge.b,replacement.get(edge.b),replacement.get(edge.a)]);
+    results.push({faceIndices:[...region.faceIndices],sideFaceIndices:Array.from({length:region.boundaryEdges.length},(_,i)=>sideStart+i),distance,mode:'connected-miter'});
+  }
+  m.edges();
+  return{faceIndices:[...group.faceIndices],regions:results,regionCount:results.length,distance,mode:'connected-miter'};
+}
 
 document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool==='knife'){armed=null;drag=null;pendingSelection=null;clearRefVisual();syncButtons();}},true);
 document.addEventListener('pointerdown',event=>{const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;const ids=faces();pendingSelection=ids.length?{tool:target.id==='extrudeBtn'?'extrude':'inset',ids:[...ids]}:null;},true);
 document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;armed=null;clearRefVisual();syncButtons();updateStatus();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();},true);
 window.addEventListener('boxlab-bridge-state',()=>{if(!armed)return;queueMicrotask(()=>{syncButtons();updateStatus();});});
-document.addEventListener('pointerdown',event=>{if(!armed||event.target!==canvas||!event.isPrimary)return;const ids=faces();if(!ids.length)return;const m=mesh(),group=m?.faceRegionsInfo?.(ids),camera=state()?.camera;if(!m||!group||!camera)return;const hit=hitSelectedFace(event,m,ids,camera);if(!Number.isInteger(hit))return;const region=group.regions.find(r=>r.faceIndices.includes(hit))||group.regions[0],worldNormal=(region?.normal||m.faceRegionNormal?.(region?.faceIndices||[]))?.clone?.().normalize?.(),regionCenter=centerOf(m,region.regionVertices);event.preventDefault();event.stopImmediatePropagation();drag={id:event.pointerId,x:event.clientX,y:event.clientY,tool:armed,m,before:m.clone(),faces:[...ids],normal:projectedNormal(m,region,camera),worldNormal,regionCenter,camera,changed:false,preview:false,snap:null,throughPlan:null,blocked:false,shellHit:null};canvas.setPointerCapture?.(event.pointerId);},true);
-document.addEventListener('pointermove',event=>{if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){globalThis.__boxlabHistory?.push(drag.before);drag.changed=true;}restore(drag.m,drag.before);if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?referenceUnderPointer(event,drag):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}drag.throughPlan=drag.faces.length===1?findThroughPlan(drag.before,drag.faces[0],distance):null;drag.shellHit=drag.faces.length===1?firstShellHit(drag.before,drag.faces[0],distance):null;drag.blocked=!!(drag.shellHit&&(!drag.throughPlan||drag.shellHit.distance+1e-5<Math.abs(drag.throughPlan.distance)));if(drag.blocked){drag.preview=false;drag.throughPlan=null;clearRefVisual();drag.snap=null;if(status)status.textContent=`Extrude • BLOCKED — shell intersection needs topology rebuild • ${drag.shellHit.distance.toFixed(2)}`;}else{if(drag.throughPlan){distance=drag.throughPlan.distance;clearRefVisual();drag.snap=null;}const result=drag.m.extrudeFaceRegions?.(drag.faces,distance);drag.preview=!!result;if(result&&status)status.textContent=drag.throughPlan?`Extrude • THROUGH → opposite face • ${Math.abs(distance).toFixed(2)}`:`Extrude • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${distance>=0?'+':''}${distance.toFixed(2)}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}else{drag.throughPlan=null;drag.blocked=false;drag.shellHit=null;let amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));const ref=referenceUnderPointer(event,drag),inferred=ref?insetReference(drag,ref):null;if(ref&&inferred){amount=inferred.amount;showRefVisual(ref,inferred.boundaryPoint,drag.camera);drag.snap={...ref,insetDistance:inferred.distance};}else{clearRefVisual();drag.snap=null;}const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;if(result&&status){const distances=(result.regions||[]).map(r=>r.distance).filter(Number.isFinite),d=distances.length?Math.min(...distances):0;status.textContent=`Uniform Inset • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${d.toFixed(3)}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}render();syncButtons();},true);
+document.addEventListener('pointerdown',event=>{if(!armed||event.target!==canvas||!event.isPrimary)return;const ids=faces();if(!ids.length)return;const m=mesh(),group=armed==='extrude'?selectionComponentsInfo(m,ids):m?.faceRegionsInfo?.(ids),camera=state()?.camera;if(!m||!group||!camera)return;const hit=hitSelectedFace(event,m,ids,camera);if(!Number.isInteger(hit))return;const region=group.regions.find(r=>r.faceIndices.includes(hit))||group.regions[0],hitFace=m.faces[hit],worldNormal=(armed==='extrude'?m.faceNormal(hit):region?.normal||m.faceRegionNormal?.(region?.faceIndices||[]))?.clone?.().normalize?.(),controlRegion=armed==='extrude'?{normal:worldNormal,regionVertices:[...hitFace]}:region,regionCenter=centerOf(m,controlRegion.regionVertices);event.preventDefault();event.stopImmediatePropagation();drag={id:event.pointerId,x:event.clientX,y:event.clientY,tool:armed,m,before:m.clone(),faces:[...ids],normal:projectedNormal(m,controlRegion,camera),worldNormal,regionCenter,camera,changed:false,preview:false,snap:null,throughPlan:null,blocked:false,shellHit:null};canvas.setPointerCapture?.(event.pointerId);},true);
+document.addEventListener('pointermove',event=>{if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){globalThis.__boxlabHistory?.push(drag.before);drag.changed=true;}restore(drag.m,drag.before);if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?referenceUnderPointer(event,drag):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}drag.throughPlan=drag.faces.length===1?findThroughPlan(drag.before,drag.faces[0],distance):null;drag.shellHit=drag.faces.length===1?firstShellHit(drag.before,drag.faces[0],distance):null;drag.blocked=!!(drag.shellHit&&(!drag.throughPlan||drag.shellHit.distance+1e-5<Math.abs(drag.throughPlan.distance)));if(drag.blocked){drag.preview=false;drag.throughPlan=null;clearRefVisual();drag.snap=null;if(status)status.textContent=`Extrude • BLOCKED — shell intersection needs topology rebuild • ${drag.shellHit.distance.toFixed(2)}`;}else{if(drag.throughPlan){distance=drag.throughPlan.distance;clearRefVisual();drag.snap=null;}const result=extrudeConnectedFaceSelection(drag.m,drag.faces,distance);drag.preview=!!result;if(result&&status)status.textContent=drag.throughPlan?`Extrude • THROUGH → opposite face • ${Math.abs(distance).toFixed(2)}`:`Extrude • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${distance>=0?'+':''}${distance.toFixed(2)}${result.mode==='connected-miter'&&drag.faces.length>1?' • Connected band':''}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}else{drag.throughPlan=null;drag.blocked=false;drag.shellHit=null;let amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));const ref=referenceUnderPointer(event,drag),inferred=ref?insetReference(drag,ref):null;if(ref&&inferred){amount=inferred.amount;showRefVisual(ref,inferred.boundaryPoint,drag.camera);drag.snap={...ref,insetDistance:inferred.distance};}else{clearRefVisual();drag.snap=null;}const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;if(result&&status){const distances=(result.regions||[]).map(r=>r.distance).filter(Number.isFinite),d=distances.length?Math.min(...distances):0;status.textContent=`Uniform Inset • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${d.toFixed(3)}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}render();syncButtons();},true);
 function finish(event){if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();clearRefVisual();const blocked=!!drag.blocked,done=event.type==='pointerup'&&drag.changed&&drag.preview&&!blocked,m=drag.m,ids=[...drag.faces],tool=drag.tool,before=drag.before,snap=drag.snap,throughPlan=drag.throughPlan,shellHit=drag.shellHit;drag=null;let throughDone=false;if(blocked){restore(m,before);if(status)status.textContent=`Extrude • BLOCKED — shell intersection needs topology rebuild${shellHit?` • ${shellHit.distance.toFixed(2)}`:''}`;}else if(!done)restore(m,before);else if(tool==='extrude'&&throughPlan){const built=buildThroughOnClone(before,throughPlan);if(built){restore(m,built.mesh);bridge()?.set?.('face',[]);throughDone=true;if(status)status.textContent=`Extrude Through • tunnel created • ${before.faces[throughPlan.sourceFaceIndex]?.length||0}-edge opening`;}else{restore(m,before);if(status)status.textContent='Extrude Through • clean topology could not be built';}}else bridge()?.set?.('face',ids);syncButtons();if(!throughDone&&!blocked){const i=info();if(i&&status&&armed)status.textContent=`${i.faceIndices.length} face${i.faceIndices.length===1?'':'s'} • ${tool==='extrude'?'Extrude':'Uniform Inset'} ready${snap?` • reference ${snap.type}`:''}`;}render();syncButtons();}
 document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);
