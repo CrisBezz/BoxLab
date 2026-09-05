@@ -19,8 +19,18 @@ function basis(normal) {
   return { u, v };
 }
 
+function contour2(mesh, face) {
+  const n = faceNormal(mesh, face);
+  if (!n) return null;
+  const { u, v } = basis(n), origin = mesh.vertices[face[0]];
+  return face.map(id => {
+    const p = mesh.vertices[id].clone().sub(origin);
+    return new THREE.Vector2(p.dot(u), p.dot(v));
+  });
+}
+
 function isConcave(points) {
-  if (points.length < 4) return false;
+  if (!points || points.length < 4) return false;
   let sign = 0;
   for (let i = 0; i < points.length; i++) {
     const a = points[i], b = points[(i + 1) % points.length], c = points[(i + 2) % points.length];
@@ -34,46 +44,40 @@ function isConcave(points) {
   return false;
 }
 
-function triangulateConcaveFaces(mesh) {
-  const replacements = [];
-  for (let fi = 0; fi < mesh.faces.length; fi++) {
-    const face = mesh.faces[fi];
-    if (!Array.isArray(face) || face.length < 4) continue;
-    const n = faceNormal(mesh, face);
-    if (!n) continue;
-    const { u, v } = basis(n), origin = mesh.vertices[face[0]];
-    const contour = face.map(id => {
-      const p = mesh.vertices[id].clone().sub(origin);
-      return new THREE.Vector2(p.dot(u), p.dot(v));
-    });
-    if (!isConcave(contour)) continue;
-    const tris = THREE.ShapeUtils.triangulateShape(contour, []);
-    if (!tris?.length) continue;
-    replacements.push({ fi, triangles: tris.map(t => t.map(i => face[i])) });
-  }
-  if (!replacements.length) return false;
-  for (const { fi, triangles } of replacements.sort((a, b) => b.fi - a.fi)) {
-    mesh.faces.splice(fi, 1, ...triangles);
-  }
-  mesh.edges?.();
-  return true;
+function triangulateFace(mesh, face) {
+  const contour = contour2(mesh, face);
+  if (!isConcave(contour)) return null;
+  const tris = THREE.ShapeUtils.triangulateShape(contour, []);
+  return tris?.length ? tris.map(t => t.map(i => face[i])) : null;
 }
 
-let pendingSideBreakout = false;
+function breakoutTail(mesh) {
+  const n = mesh?.faces?.length || 0;
+  if (n < 2) return null;
+  const a = mesh.faces[n - 2], b = mesh.faces[n - 1];
+  if (!Array.isArray(a) || !Array.isArray(b) || a.length < 5 || b.length < 5) return null;
+  const ta = triangulateFace(mesh, a), tb = triangulateFace(mesh, b);
+  if (!ta || !tb) return null;
+  return { start: n - 2, triangles: [...ta, ...tb] };
+}
 
 function installBridgeCommitHook() {
   const activeMesh = globalThis.__boxlabBridgeState?.mesh;
   const proto = activeMesh ? Object.getPrototypeOf(activeMesh) : null;
-  if (!proto || proto.__boxlabThroughBreakoutHook) return !!proto;
+  if (!proto || proto.__boxlabThroughBreakoutHookV2) return !!proto;
   const originalBridgeLoops = proto.bridgeLoops;
   if (typeof originalBridgeLoops !== 'function') return false;
 
-  Object.defineProperty(proto, '__boxlabThroughBreakoutHook', { value: true, configurable: true });
+  Object.defineProperty(proto, '__boxlabThroughBreakoutHookV2', { value: true, configurable: true });
   proto.bridgeLoops = function (...args) {
+    // In buildCrossBoundaryOnClone the target + side remainders are pushed as the final
+    // two faces immediately before bridgeLoops(sourceLoop, shellLoop). Detect that exact
+    // structural signature instead of relying on pointer/status timing.
+    const tail = breakoutTail(this);
     const result = originalBridgeLoops.apply(this, args);
-    if (pendingSideBreakout && result) {
-      pendingSideBreakout = false;
-      triangulateConcaveFaces(this);
+    if (result && tail) {
+      this.faces.splice(tail.start, 2, ...tail.triangles);
+      this.edges?.();
     }
     return result;
   };
@@ -82,11 +86,4 @@ function installBridgeCommitHook() {
 
 installBridgeCommitHook();
 window.addEventListener('boxlab-bridge-state', installBridgeCommitHook);
-
-// This capture listener runs before multi-face-direct handles the same pointerup on document.
-// During a recognised side breakout the drag status is already THROUGH SIDE READY, so the
-// following bridgeLoops call is marked for synchronous triangulation before the clone returns.
-window.addEventListener('pointerup', () => {
-  const text = document.querySelector('#selectionStatus')?.textContent || '';
-  pendingSideBreakout = text.includes('THROUGH SIDE READY');
-}, true);
+document.addEventListener('boxlab-bridge-state', installBridgeCommitHook);
