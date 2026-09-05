@@ -39,7 +39,7 @@ function installGroupUiPolish() {
 #objectGroupTools button[disabled]{display:none!important}
 .boxlab-group-tag{font-size:9px!important;line-height:1!important;padding:2px 4px!important;border:0!important;border-radius:5px!important;opacity:.45!important;margin-left:3px!important;background:rgba(255,255,255,.06)!important;letter-spacing:-.2px!important;pointer-events:none}
 `;
-    document.head.append(style);
+    document.head.appendChild(style);
   }
   const group = document.querySelector('#objectGroupTools [data-group-action="group"]');
   const ungroup = document.querySelector('#objectGroupTools [data-group-action="ungroup"]');
@@ -57,6 +57,6 @@ import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.14.0';
-  document.title = 'BoxLab v0.36.14.0';
+  if (version) version.textContent = 'v0.36.14.1';
+  document.title = 'BoxLab v0.36.14.1';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
