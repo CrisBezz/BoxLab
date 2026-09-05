@@ -47,10 +47,13 @@ function disarm(){armed=false;drag=null;clearPreview();button?.classList.remove(
 function disableMulti(){const multi=document.querySelector('#multiSelectToggle');if(multi?.checked){multi.checked=false;multi.dispatchEvent(new Event('change',{bubbles:true}));}}
 function clearFaceSelection(){if(bridge()?.mode?.()==='face')bridge()?.set?.('face',[]);}
 function disarmOtherTools(){globalThis.__boxlabTransformArming?.disarm?.();document.querySelectorAll('#toolModes button,#extrudeBtn,#insetBtn').forEach(b=>b.classList.remove('active'));document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'knife'}}));}
+function modeFromTarget(target){return target?.closest?.('#selectionModes button[data-mode]')?.dataset?.mode||null;}
 
 button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();armed=!armed;drag=null;clearPreview();if(armed){disableMulti();disarmOtherTools();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();clearFaceSelection();}button.classList.toggle('active',armed);if(status)status.textContent=armed?`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`:'Face mode • Knife off';},true);
 document.addEventListener('click',e=>{if(!armed||!e.isTrusted||e.target?.closest?.('#knifeBtn'))return;const otherTool=e.target?.closest?.('#extrudeBtn,#insetBtn,#toolModes button,#vertexBevelBtn,#bevelBtn,#edgeSlideBtn,#offsetLoopBtn,#loopCutBtn,#faceSplitBtn,#extractFacesBtn,#bridgeFacesBtn,#deleteFaceBtn');if(otherTool)disarm();},true);
-document.querySelector('#selectionModes')?.addEventListener('click',e=>{if(!armed)return;const mode=e.target?.closest?.('button[data-mode]')?.dataset?.mode;if(mode&&mode!=='face')disarm();},true);
+window.addEventListener('pointerdown',e=>{if(!armed)return;const mode=modeFromTarget(e.target);if(mode&&mode!=='face')disarm();},true);
+document.querySelector('#selectionModes')?.addEventListener('click',e=>{if(!armed)return;const mode=modeFromTarget(e.target);if(mode&&mode!=='face')disarm();},true);
+window.addEventListener('boxlab-bridge-state',()=>{if(armed&&bridge()?.mode?.()!=='face')disarm();});
 document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool&&event.detail.tool!=='knife')disarm();},true);
 
 document.querySelector('#inferenceSnapToggle')?.addEventListener('change',()=>{if(armed&&status)status.textContent=`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`;});
