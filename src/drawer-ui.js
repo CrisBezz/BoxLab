@@ -58,6 +58,6 @@ import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.14.8';
-  document.title = 'BoxLab v0.36.14.8';
+  if (version) version.textContent = 'v0.36.14.10';
+  document.title = 'BoxLab v0.36.14.10';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
