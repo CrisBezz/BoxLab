@@ -56,8 +56,9 @@ import('./lasso-select.js?v=0.36.17.3').catch(error => console.warn('BoxLab Lass
 import('./cross-object-snap.js?v=0.36.18.6').catch(error => console.warn('BoxLab cross-object snap failed to load', error));
 import('./object-mode-retain.js?v=0.36.18.4').catch(error => console.warn('BoxLab object mode retain failed to load', error));
 import('./transform-state-fix.js?v=0.36.18.5').catch(error => console.warn('BoxLab transform state fix failed to load', error));
-import('./instance-foundation.js?v=0.36.19.5').catch(error => console.warn('BoxLab instance foundation failed to load', error));
-import('./instance-face-tool-guard.js?v=0.36.19.6').catch(error => console.warn('BoxLab linked face guard failed to load', error));
+import('./instance-face-guard.js?v=0.36.19.6')
+  .then(() => import('./instance-foundation.js?v=0.36.19.6'))
+  .catch(error => console.warn('BoxLab instance foundation failed to load', error));
 // Through is owned by multi-face-direct and through-kernel. Legacy handlers retired.
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
