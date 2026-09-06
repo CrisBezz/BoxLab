@@ -123,12 +123,6 @@ function finish(event){
       else {restore(d.m,d.before);bridge()?.set?.('face',d.faces);if(status)status.textContent=`Extrude Through • rollback • ${built.reason}`;}
     }else{globalThis.__boxlabHistory?.push(d.before);bridge()?.set?.('face',d.faces);updateStatus();}
   }else{restore(d.m,d.before);bridge()?.set?.('face',d.faces);if(d.blocked&&status)status.textContent=`Extrude Through • rollback • ${d.failureReason||'unsupported shell contact'}`;}
-  // Linked instances must receive the completed topology transaction, never
-  // the transient drag preview.  This fires after the face tool has either
-  // committed its extrusion/inset or restored its pre-drag mesh.
-  if(event.type==='pointerup'&&d.changed&&d.preview&&!d.blocked){
-    window.dispatchEvent(new CustomEvent('boxlab-face-edit-committed'));
-  }
   render();syncButtons();
 }
 document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);

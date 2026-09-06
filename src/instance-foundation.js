@@ -40,14 +40,6 @@ function commitSharedEdit(){const m=manager(),live=state()?.mesh,o=activeObject(
 function refresh(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function syncAfterGesture(releaseMode){if(releaseMode==='object')capturePlacement();else if(commitSharedEdit())requestAnimationFrame(refresh);decorate();updateButtons();}
 function queueGestureSync(releaseMode){if(syncQueued)return;syncQueued=true;setTimeout(()=>{syncQueued=false;syncAfterGesture(releaseMode);},0);}
-function commitFaceEdit(){
-  // Direct face tools replace the active mesh only when their gesture ends.
-  // Commit that final mesh synchronously so topology (new cap + side faces)
-  // is shared before any later selection or movement gesture can run.
-  if(mode()==='object')return;
-  if(commitSharedEdit())refresh();
-  decorate();updateButtons();
-}
 
 function linkedDuplicate(){const m=manager(),src=activeObject();if(!m||!src)return;m.saveActive?.();if(mode()==='object')capturePlacement();const source=ensureSource(src);if(!source)return;const copy=m.addMesh(src.mesh.clone(),`${src.name} linked`,{settings:src.settings,visible:src.visible!==false,locked:false,kind:src.kind,enterObjectMode:true});if(!copy)return;copy.sourceId=src.sourceId;setMatrix(copy,matrixFor(src));copy.mesh=src.mesh.clone();if(src.origin)copy.origin={...src.origin};requestAnimationFrame(()=>{decorate();updateButtons();});if(status)status.textContent=`Linked instance created • ${linkedCount(src.sourceId)} share geometry`;}
 function makeUnique(){const o=activeObject();if(!o)return;if(mode()==='object')capturePlacement();const source=ensureSource(o);if(!source||linkedCount(o.sourceId)<2){if(status)status.textContent='Object is already unique';return;}o.sourceId=newSource(source.mesh);decorate();updateButtons();if(status)status.textContent=`${o.name} made unique`;}
@@ -55,13 +47,7 @@ function installUI(){if(!drawer||document.querySelector('#instanceFoundationTool
 function updateButtons(){const o=activeObject();if(linkedButton)linkedButton.disabled=!o||o.kind==='reference';if(uniqueButton)uniqueButton.disabled=!o||!o.sourceId||linkedCount(o.sourceId)<2;}
 function decorate(){const m=manager();if(!list||!m)return;for(const row of list.querySelectorAll('.outliner-row')){const id=Number(row.dataset.objectId),o=m.objects.find(x=>x.id===id),name=row.querySelector('.outliner-name');if(!o||!name)continue;const count=o.sourceId?linkedCount(o.sourceId):1,base=o.kind==='reference'?`${o.name} • Ref`:o.name;name.textContent=count>1?`${base} • Link ×${count}`:base;}}
 function initialize(){if(!manager()||!state()?.mesh)return false;ensureAll();installUI();decorate();updateButtons();globalThis.__boxlabObjectGeometry={version:'0.36.19.3',evaluatedMesh(id){const o=objects().find(x=>x.id===id);return o?evaluatedMesh(o):null;},sourceId(id){return objects().find(x=>x.id===id)?.sourceId||null;},linkedIds(id){const o=objects().find(x=>x.id===id);return o?objects().filter(x=>x.sourceId===o.sourceId).map(x=>x.id):[];}};
-  // main.js changes its selection mode in its own click handler.  Because that
-  // handler is registered before this module, checking mode() from a click
-  // listener is already too late: a moved linked instance is still recorded as
-  // identity and the following face edit is mistaken for world-space geometry.
-  // Capture while the mode button is pressed, before that click changes mode.
-  selectionModes?.addEventListener('pointerdown',event=>{const next=event.target.closest('button[data-mode]')?.dataset?.mode;if(mode()==='object'&&next&&next!=='object')capturePlacement();},true);
-  window.addEventListener('boxlab-face-edit-committed',commitFaceEdit);
+  selectionModes?.addEventListener('click',event=>{const next=event.target.closest('button[data-mode]')?.dataset?.mode;if(mode()==='object'&&next&&next!=='object')capturePlacement();},true);
   window.addEventListener('pointerup',()=>{if(mode()!=='object')queueGestureSync(mode());},true);
   window.addEventListener('pointercancel',()=>{syncQueued=false;},true);
   list?.addEventListener('click',()=>requestAnimationFrame(()=>{ensureAll();decorate();updateButtons();}),true);
