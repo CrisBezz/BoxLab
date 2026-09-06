@@ -31,6 +31,8 @@ function samePlane(m,fi,normal,point,tol){const face=m.faces[fi];if(!Array.isArr
 function facesOnPlane(m,normal,point,tol){return m.faces.map((_,fi)=>samePlane(m,fi,normal,point,tol)?fi:-1).filter(fi=>fi>=0);}
 function coplanarFaces(m,seedFi,tol){const plane=facePlane(m,seedFi);return plane?facesOnPlane(m,plane.normal,plane.point,tol):[];}
 function polygonsOnPlaneOverlap(m,faceIndices,poly3,normal,planePoint,tol){const {u,v}=faceBasis(normal),to2=p=>new THREE.Vector2(p.clone().sub(planePoint).dot(u),p.clone().sub(planePoint).dot(v)),poly2=poly3.map(to2);return faceIndices.some(fi=>{const f=m.faces[fi];return Array.isArray(f)&&f.length>=3&&polygonsOverlap2D(poly2,f.map(id=>to2(m.vertices[id])),tol);});}
+function convexIntersectionArea(poly,clip){if(poly.length<3||clip.length<3)return 0;let c=clip.map(p=>p.clone());if(polygonArea(c)<0)c.reverse();let inside=poly.map(p=>p.clone());for(let i=0;i<c.length;i++){inside=splitByLine(inside,c[i],c[(i+1)%c.length],true);if(inside.length<3)return 0;}return Math.abs(polygonArea(inside));}
+function polygonsAreaOverlapOnPlane(m,faceIndices,poly3,normal,planePoint,tol){const {u,v}=faceBasis(normal),to2=p=>new THREE.Vector2(p.clone().sub(planePoint).dot(u),p.clone().sub(planePoint).dot(v)),clip=poly3.map(to2);let threshold=Math.max(tol*tol*4,1e-10);for(const fi of faceIndices){const f=m.faces[fi];if(!Array.isArray(f)||f.length<3)continue;const face2=f.map(id=>to2(m.vertices[id])),tris=THREE.ShapeUtils.triangulateShape(face2,[]);let area=0;for(const tri of tris){area+=convexIntersectionArea(tri.map(i=>face2[i]),clip);if(area>threshold)return true;}}return false;}
 function regionPlan(m,sourceFaceIndex){
   const source=m.faces[sourceFaceIndex];if(!Array.isArray(source)||source.length<3)return null;
   const sourceNormal=m.faceNormal(sourceFaceIndex)?.clone().normalize();if(!sourceNormal)return null;
@@ -51,7 +53,7 @@ function regionPlan(m,sourceFaceIndex){
       if(edgeDir.lengthSq()<1e-12)continue;
       const sideNormal=new THREE.Vector3().crossVectors(edgeDir,sourceNormal).normalize(),sidePoint=va,quad=[va.clone(),vb.clone(),projected[j].clone(),projected[i].clone()];
       const planeFaces=facesOnPlane(m,sideNormal,sidePoint,tol*2.5).filter(x=>x!==sourceFaceIndex&&!targetFaces.includes(x));
-      const hitFaces=planeFaces.filter(sideFi=>polygonsOnPlaneOverlap(m,[sideFi],quad,sideNormal,sidePoint,tol*2));
+      const hitFaces=planeFaces.filter(sideFi=>polygonsAreaOverlapOnPlane(m,[sideFi],quad,sideNormal,sidePoint,tol*2));
       if(hitFaces.length)exteriorEdges.push({slot:i,faces:hitFaces});
     }
     const candidate={sourceFaceIndex,distance:t,projected,targetFaces,targetNormal,tol,exteriorEdges};
