@@ -1,4 +1,4 @@
-// Through v0.36.16.0: geometric prism subtraction. No UI or mesh prototype hooks.
+// Through v0.36.16.1: geometric prism subtraction with validated sequential-void support. No UI or mesh prototype hooks.
 import * as THREE from 'three';
 import './topology-foundation.js?v=0.36.16.0';
 const V = THREE.Vector3;
@@ -32,8 +32,6 @@ export function validateThrough(m,eps=1e-7) {
   const base=topology().validateTopology(m,{allowBoundary:false});if(!base.ok)return {ok:false,reason:'invalid-edge-or-face-topology',details:base};
   for(const [k,owners] of edgeUses(m))if(owners.length!==2||owners[0].a!==owners[1].b)return{ok:false,reason:'inconsistent-edge-winding',edge:k};
   for(const f of m.faces){if(new Set(f).size!==f.length||f.some(id=>!m.vertices[id]||![m.vertices[id].x,m.vertices[id].y,m.vertices[id].z].every(Number.isFinite)))return{ok:false,reason:'invalid-face-vertices'};if(areaVector(f.map(id=>m.vertices[id])).length()<=eps*eps)return{ok:false,reason:'zero-area-face'};}
-  // A closed edge manifold can still contain a bow-tie vertex. Its incident
-  // face fan must be one connected cycle.
   const uses=edgeUses(m),incident=new Map();
   m.faces.forEach((f,fi)=>f.forEach(v=>{if(!incident.has(v))incident.set(v,new Set());incident.get(v).add(fi);}));
   for(const [v,faces] of incident){const adjacency=new Map([...faces].map(fi=>[fi,[]]));for(const owners of uses.values()){if(owners[0].a!==v&&owners[0].b!==v)continue;const [a,b]=owners;adjacency.get(a.fi).push(b.fi);adjacency.get(b.fi).push(a.fi);}const seen=new Set(),stack=[faces.values().next().value];while(stack.length){const fi=stack.pop();if(seen.has(fi))continue;seen.add(fi);stack.push(...adjacency.get(fi).filter(x=>!seen.has(x)));}if(seen.size!==faces.size)return{ok:false,reason:'nonmanifold-vertex-fan',vertex:v};}
@@ -54,18 +52,17 @@ function context(m,fi) {
     if(areaVector(p).dot(dir)>eps*eps&&Math.max(...depths)>eps)hits.push({min:Math.max(eps,Math.min(...depths)),max:Math.max(...depths)});
   }
   if(!hits.length)fail('no-exit-shell');
-  hits.sort((a,b)=>a.min-b.min);const first=hits[0].min,depth=hits[0].max;
-  // A stepped/nonparallel exit may require separate depths; reject instead of crossing a second shell.
-  if(hits.some(h=>h.min>depth+eps*8))fail('multiple-exit-depths');
+  hits.sort((a,b)=>a.min-b.min);
+  const first=hits[0].min;
+  // Sequential Through is allowed to span an existing void. Use the farthest
+  // shell hit as the final cut depth; buildThrough still validates the complete
+  // closed manifold transaction before anything is committed to the live mesh.
   const endDepth=Math.max(...hits.map(h=>h.max));
   return {source,n,dir,sides,start,eps,ts:ts.map(t=>t.p),first,depth:endDepth,fi};
 }
 export function planThrough(m,fi) {try {const c=context(m,fi);return {ok:true,sourceFaceIndex:fi,distance:-c.depth,firstDistance:-c.first};}catch(e){return{ok:false,reason:e.message};}}
-// Split every incident face together before replacing shell fragments. Generated seam
-// vertices are then inserted in *all* output edges, including tunnel wall edges.
 function assemble(before,polys,eps) {
   const m=Object.create(Object.getPrototypeOf(before));Object.assign(m,topology().cloneMeshState(before));
-  // Prevent EditableMesh.edges()'s UI observer from publishing the private trial mesh.
   m.edges=()=>[];
   function vertex(p){let id=m.vertices.findIndex(q=>q.distanceTo(p)<=eps);if(id>=0)return id;
     for(const owners of edgeUses(m).values()){const {a,b}=owners[0],ab=m.vertices[b].clone().sub(m.vertices[a]),t=p.clone().sub(m.vertices[a]).dot(ab)/ab.lengthSq();if(t>0&&t<1&&m.vertices[a].clone().addScaledVector(ab,t).distanceTo(p)<=eps){const r=topology().canonicalEdgeSplit(m,a,b,p,{tolerance:eps});if(!r.ok)fail(r.reason);return r.vertex;}}
@@ -74,8 +71,6 @@ function assemble(before,polys,eps) {
   const faces=polys.map(p=>p.map(vertex));m.faces=faces;
   const used=[...new Set(faces.flat())];
   m.faces=faces.map(f=>f.flatMap((a,i)=>{const b=f[(i+1)%f.length],ab=m.vertices[b].clone().sub(m.vertices[a]),l2=ab.lengthSq();if(l2<=eps*eps)fail('collapsed-output-edge');const entries=[];for(const id of used){if(id===a||id===b)continue;const t=m.vertices[id].clone().sub(m.vertices[a]).dot(ab)/l2;if(t>eps/Math.sqrt(l2)&&t<1-eps/Math.sqrt(l2)&&m.vertices[a].clone().addScaledVector(ab,t).distanceTo(m.vertices[id])<=eps)entries.push({id,t});}entries.sort((x,y)=>x.t-y.t);return[a,...entries.map(e=>e.id)];}));
-  // EditableMesh.faceNormal uses its first three vertices. Canonical seam
-  // subdivisions can make that triple collinear; rotate, never reverse winding.
   m.faces=m.faces.map(f=>{for(let i=0;i<f.length;i++){const a=m.vertices[f[i]],b=m.vertices[f[(i+1)%f.length]],c=m.vertices[f[(i+2)%f.length]];if(new V().crossVectors(b.clone().sub(a),c.clone().sub(a)).length()>eps*eps)return [...f.slice(i),...f.slice(0,i)];}fail('zero-area-output-face');});
   const keys=new Set(edgeUses(m).keys());m.creases=new Map([...m.creases].filter(([k])=>keys.has(k)));
   return m;
@@ -94,13 +89,11 @@ export function buildThrough(before,plan) {
     const trial=assemble(before,polys,eps),validation=validateThrough(trial,eps);if(!validation.ok)return{ok:false,reason:validation.reason,validation};
     const boundaries=topology().extractBoundaryLoops(trial);if(!boundaries.ok||boundaries.loops.length)return{ok:false,reason:'unintended-opening'};
     if(!trial.faces.length)return{ok:false,reason:'entire-solid-removal'};
-    // Transaction operates only on the private trial; live mesh is never modified here.
     const transaction=topology().topologyTransaction(trial,()=>({ok:true}),{validation:{allowBoundary:false}});
     if(!transaction.ok)return transaction;
     delete trial.edges;return{ok:true,mesh:trial,validation};
   } catch(e) {return{ok:false,reason:e.message};}
 }
-// Contact guard for unsupported input. Geometry only; no incident-face exclusions.
 export function firstThroughContact(m,fi,maxDistance){
   try{const p=m.faces[fi].map(id=>m.vertices[id]),n=areaVector(p).normalize(),dir=n.clone().negate(),eps=1e-6;
     const sides=p.map((a,i)=>plane(new V().crossVectors(p[(i+1)%p.length].clone().sub(a),n).normalize(),a));let best=null;
