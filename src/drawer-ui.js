@@ -49,6 +49,7 @@ function installGroupUiPolish() {
 
 syncDrawerToMode();
 
+import('./build-freshness.js?v=0.36.19.2.1').catch(error => console.warn('BoxLab freshness guard failed to load', error));
 import('./object-management.js?v=0.36.9.0').catch(error => console.warn('BoxLab object management failed to load', error));
 import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxLab object drawer retain failed to load', error));
 import('./studio-scene-fix.js?v=0.36.8.1').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
@@ -62,6 +63,6 @@ import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.19.2';
-  document.title = 'BoxLab v0.36.19.2';
+  if (version) version.textContent = 'v0.36.19.2.1';
+  document.title = 'BoxLab v0.36.19.2.1';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
