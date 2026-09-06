@@ -1,7 +1,7 @@
-// BoxLab v0.36.19.3 — linked instance editing foundation.
+// BoxLab v0.36.19.6 — linked instance editing foundation.
 // World-space object meshes remain authoritative for placement. Placement is
 // captured explicitly when leaving Object mode; component commits are observed
-// from window capture so direct tools can finish before linked source sync runs.
+// only after their owning modelling gesture has finished.
 
 import * as THREE from 'three';
 
@@ -41,9 +41,6 @@ function refresh(){document.querySelector('#cageToggle')?.dispatchEvent(new Even
 function syncAfterGesture(releaseMode){if(releaseMode==='object')capturePlacement();else if(commitSharedEdit())requestAnimationFrame(refresh);decorate();updateButtons();}
 function queueGestureSync(releaseMode){if(syncQueued)return;syncQueued=true;setTimeout(()=>{syncQueued=false;syncAfterGesture(releaseMode);},0);}
 function commitFaceEdit(){
-  // Direct face tools replace the active mesh only when their gesture ends.
-  // Commit that final mesh synchronously so topology (new cap + side faces)
-  // is shared before any later selection or movement gesture can run.
   if(mode()==='object')return;
   if(commitSharedEdit())refresh();
   decorate();updateButtons();
@@ -54,15 +51,11 @@ function makeUnique(){const o=activeObject();if(!o)return;if(mode()==='object')c
 function installUI(){if(!drawer||document.querySelector('#instanceFoundationTools'))return;const row=document.createElement('div');row.id='instanceFoundationTools';row.className='outliner-actions';row.style.gridTemplateColumns='1fr 1fr';linkedButton=document.createElement('button');linkedButton.type='button';linkedButton.textContent='Linked Duplicate';linkedButton.title='Create a linked instance sharing source geometry';uniqueButton=document.createElement('button');uniqueButton.type='button';uniqueButton.textContent='Make Unique';uniqueButton.title='Detach this instance from shared source geometry';row.append(linkedButton,uniqueButton);const standard=document.querySelector('#outlinerAddBtn')?.parentElement;standard?.before(row)??drawer.append(row);linkedButton.addEventListener('click',linkedDuplicate);uniqueButton.addEventListener('click',makeUnique);}
 function updateButtons(){const o=activeObject();if(linkedButton)linkedButton.disabled=!o||o.kind==='reference';if(uniqueButton)uniqueButton.disabled=!o||!o.sourceId||linkedCount(o.sourceId)<2;}
 function decorate(){const m=manager();if(!list||!m)return;for(const row of list.querySelectorAll('.outliner-row')){const id=Number(row.dataset.objectId),o=m.objects.find(x=>x.id===id),name=row.querySelector('.outliner-name');if(!o||!name)continue;const count=o.sourceId?linkedCount(o.sourceId):1,base=o.kind==='reference'?`${o.name} • Ref`:o.name;name.textContent=count>1?`${base} • Link ×${count}`:base;}}
-function initialize(){if(!manager()||!state()?.mesh)return false;ensureAll();installUI();decorate();updateButtons();globalThis.__boxlabObjectGeometry={version:'0.36.19.3',evaluatedMesh(id){const o=objects().find(x=>x.id===id);return o?evaluatedMesh(o):null;},sourceId(id){return objects().find(x=>x.id===id)?.sourceId||null;},linkedIds(id){const o=objects().find(x=>x.id===id);return o?objects().filter(x=>x.sourceId===o.sourceId).map(x=>x.id):[];}};
-  // main.js changes its selection mode in its own click handler.  Because that
-  // handler is registered before this module, checking mode() from a click
-  // listener is already too late: a moved linked instance is still recorded as
-  // identity and the following face edit is mistaken for world-space geometry.
-  // Capture while the mode button is pressed, before that click changes mode.
+function initialize(){if(!manager()||!state()?.mesh)return false;ensureAll();installUI();decorate();updateButtons();globalThis.__boxlabObjectGeometry={version:'0.36.19.6',evaluatedMesh(id){const o=objects().find(x=>x.id===id);return o?evaluatedMesh(o):null;},sourceId(id){return objects().find(x=>x.id===id)?.sourceId||null;},linkedIds(id){const o=objects().find(x=>x.id===id);return o?objects().filter(x=>x.sourceId===o.sourceId).map(x=>x.id):[];}};
   selectionModes?.addEventListener('pointerdown',event=>{const next=event.target.closest('button[data-mode]')?.dataset?.mode;if(mode()==='object'&&next&&next!=='object')capturePlacement();},true);
   window.addEventListener('boxlab-face-edit-committed',commitFaceEdit);
-  window.addEventListener('pointerup',()=>{if(mode()!=='object')queueGestureSync(mode());},true);
+  window.addEventListener('boxlab-instance-face-fallback-commit',commitFaceEdit);
+  window.addEventListener('pointerup',()=>{const m=mode();if(m==='object')return;if(m==='face'&&globalThis.__boxlabFaceToolGuard?.active?.())return;queueGestureSync(m);},true);
   window.addEventListener('pointercancel',()=>{syncQueued=false;},true);
   list?.addEventListener('click',()=>requestAnimationFrame(()=>{ensureAll();decorate();updateButtons();}),true);
   window.addEventListener('boxlab-bridge-state',()=>requestAnimationFrame(()=>{ensureAll();decorate();updateButtons();}));
