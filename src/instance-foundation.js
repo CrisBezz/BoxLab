@@ -1,13 +1,14 @@
-// BoxLab v0.36.19.2 — linked instance editing foundation.
-// Existing BoxLab object meshes remain authoritative world-space geometry.
-// Instance placement is captured only after Object-mode transforms; component
-// edits update shared source geometry only after the edit gesture commits.
+// BoxLab v0.36.19.3 — linked instance editing foundation.
+// World-space object meshes remain authoritative for placement. Placement is
+// captured explicitly when leaving Object mode; direct modelling tools signal
+// their completed commits so linked source geometry updates after the modeller.
 
 import * as THREE from 'three';
 
 const drawer=document.querySelector('#objectsDrawer .drawer-content');
 const list=document.querySelector('#outlinerList');
 const status=document.querySelector('#selectionStatus');
+const selectionModes=document.querySelector('#selectionModes');
 const EPS=1e-7;
 let nextSourceId=1;
 let linkedButton=null,uniqueButton=null;
@@ -35,12 +36,7 @@ function centroid(mesh){const c=new THREE.Vector3();for(const v of mesh.vertices
 function derivePlacement(local,world){if(!local||!world||local.vertices.length!==world.vertices.length)return null;const ids=basisIndices(local);if(ids){const m=frameMatrix(world,ids).multiply(frameMatrix(local,ids).invert());let max=0;for(let i=0;i<local.vertices.length;i++)max=Math.max(max,local.vertices[i].clone().applyMatrix4(m).distanceToSquared(world.vertices[i]));if(max<1e-8)return m;}const d=centroid(world).sub(centroid(local));return new THREE.Matrix4().makeTranslation(d.x,d.y,d.z);}
 
 function capturePlacement(){const live=state()?.mesh,o=activeObject();if(!live||!o)return false;const source=ensureSource(o);if(!source||live.vertices.length!==source.mesh.vertices.length)return false;const placement=derivePlacement(source.mesh,live);if(!placement)return false;setMatrix(o,placement);o.mesh=live.clone();return true;}
-function commitSharedEdit(){const m=manager(),live=state()?.mesh,o=activeObject();if(!m||!live||!o)return false;const source=ensureSource(o);if(!source)return false;let inverse;try{inverse=matrixFor(o).invert();}catch{return false;}const local=transformMesh(live,inverse);if(meshNear(local,source.mesh)){o.mesh=live.clone();return false;}source.mesh=local.clone();source.revision++;
-  for(const peer of m.objects){if(peer.sourceId!==o.sourceId)continue;peer.mesh=transformMesh(source.mesh,matrixFor(peer));}
-  // Keep the active live mesh exactly as the modeller committed it.
-  o.mesh=live.clone();
-  return true;
-}
+function commitSharedEdit(){const m=manager(),live=state()?.mesh,o=activeObject();if(!m||!live||!o)return false;const source=ensureSource(o);if(!source)return false;const inverse=matrixFor(o).invert(),local=transformMesh(live,inverse);if(meshNear(local,source.mesh)){o.mesh=live.clone();return false;}source.mesh=local.clone();source.revision++;for(const peer of m.objects){if(peer.sourceId!==o.sourceId)continue;peer.mesh=transformMesh(source.mesh,matrixFor(peer));}o.mesh=live.clone();return true;}
 function refresh(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function syncAfterGesture(releaseMode){if(releaseMode==='object')capturePlacement();else if(commitSharedEdit())requestAnimationFrame(refresh);decorate();updateButtons();}
 function queueGestureSync(releaseMode){if(syncQueued)return;syncQueued=true;setTimeout(()=>{syncQueued=false;syncAfterGesture(releaseMode);},0);}
@@ -50,8 +46,14 @@ function makeUnique(){const o=activeObject();if(!o)return;if(mode()==='object')c
 function installUI(){if(!drawer||document.querySelector('#instanceFoundationTools'))return;const row=document.createElement('div');row.id='instanceFoundationTools';row.className='outliner-actions';row.style.gridTemplateColumns='1fr 1fr';linkedButton=document.createElement('button');linkedButton.type='button';linkedButton.textContent='Linked Duplicate';linkedButton.title='Create a linked instance sharing source geometry';uniqueButton=document.createElement('button');uniqueButton.type='button';uniqueButton.textContent='Make Unique';uniqueButton.title='Detach this instance from shared source geometry';row.append(linkedButton,uniqueButton);const standard=document.querySelector('#outlinerAddBtn')?.parentElement;standard?.before(row)??drawer.append(row);linkedButton.addEventListener('click',linkedDuplicate);uniqueButton.addEventListener('click',makeUnique);}
 function updateButtons(){const o=activeObject();if(linkedButton)linkedButton.disabled=!o||o.kind==='reference';if(uniqueButton)uniqueButton.disabled=!o||!o.sourceId||linkedCount(o.sourceId)<2;}
 function decorate(){const m=manager();if(!list||!m)return;for(const row of list.querySelectorAll('.outliner-row')){const id=Number(row.dataset.objectId),o=m.objects.find(x=>x.id===id),name=row.querySelector('.outliner-name');if(!o||!name)continue;const count=o.sourceId?linkedCount(o.sourceId):1,base=o.kind==='reference'?`${o.name} • Ref`:o.name;name.textContent=count>1?`${base} • Link ×${count}`:base;}}
-function initialize(){if(!manager()||!state()?.mesh)return false;ensureAll();installUI();decorate();updateButtons();globalThis.__boxlabObjectGeometry={version:'0.36.19.2',evaluatedMesh(id){const o=objects().find(x=>x.id===id);return o?evaluatedMesh(o):null;},sourceId(id){return objects().find(x=>x.id===id)?.sourceId||null;},linkedIds(id){const o=objects().find(x=>x.id===id);return o?objects().filter(x=>x.sourceId===o.sourceId).map(x=>x.id):[];}};
-  window.addEventListener('pointerup',()=>queueGestureSync(mode()),false);
+function initialize(){if(!manager()||!state()?.mesh)return false;ensureAll();installUI();decorate();updateButtons();globalThis.__boxlabObjectGeometry={version:'0.36.19.3',evaluatedMesh(id){const o=objects().find(x=>x.id===id);return o?evaluatedMesh(o):null;},sourceId(id){return objects().find(x=>x.id===id)?.sourceId||null;},linkedIds(id){const o=objects().find(x=>x.id===id);return o?objects().filter(x=>x.sourceId===o.sourceId).map(x=>x.id):[];}};
+  // The protected transform handlers stop pointer propagation. Capture the
+  // authoritative placement at the deterministic Object -> Edit transition.
+  selectionModes?.addEventListener('click',event=>{const next=event.target.closest('button[data-mode]')?.dataset?.mode;if(mode()==='object'&&next&&next!=='object')capturePlacement();},true);
+  // Direct Extrude/Inset/Through explicitly announce a committed mesh.
+  window.addEventListener('boxlab-geometry-commit',()=>queueGestureSync(mode()));
+  // Retain generic support for component transforms that allow pointerup through.
+  window.addEventListener('pointerup',()=>{if(mode()!=='object')queueGestureSync(mode());},false);
   window.addEventListener('pointercancel',()=>{syncQueued=false;},false);
   list?.addEventListener('click',()=>requestAnimationFrame(()=>{ensureAll();decorate();updateButtons();}),true);
   window.addEventListener('boxlab-bridge-state',()=>requestAnimationFrame(()=>{ensureAll();decorate();updateButtons();}));
