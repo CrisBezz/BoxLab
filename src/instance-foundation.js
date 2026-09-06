@@ -1,7 +1,7 @@
 // BoxLab v0.36.19.3 — linked instance editing foundation.
 // World-space object meshes remain authoritative for placement. Placement is
-// captured explicitly when leaving Object mode; direct modelling tools signal
-// their completed commits so linked source geometry updates after the modeller.
+// captured explicitly when leaving Object mode; component commits are observed
+// from window capture so direct tools can finish before linked source sync runs.
 
 import * as THREE from 'three';
 
@@ -47,14 +47,13 @@ function installUI(){if(!drawer||document.querySelector('#instanceFoundationTool
 function updateButtons(){const o=activeObject();if(linkedButton)linkedButton.disabled=!o||o.kind==='reference';if(uniqueButton)uniqueButton.disabled=!o||!o.sourceId||linkedCount(o.sourceId)<2;}
 function decorate(){const m=manager();if(!list||!m)return;for(const row of list.querySelectorAll('.outliner-row')){const id=Number(row.dataset.objectId),o=m.objects.find(x=>x.id===id),name=row.querySelector('.outliner-name');if(!o||!name)continue;const count=o.sourceId?linkedCount(o.sourceId):1,base=o.kind==='reference'?`${o.name} • Ref`:o.name;name.textContent=count>1?`${base} • Link ×${count}`:base;}}
 function initialize(){if(!manager()||!state()?.mesh)return false;ensureAll();installUI();decorate();updateButtons();globalThis.__boxlabObjectGeometry={version:'0.36.19.3',evaluatedMesh(id){const o=objects().find(x=>x.id===id);return o?evaluatedMesh(o):null;},sourceId(id){return objects().find(x=>x.id===id)?.sourceId||null;},linkedIds(id){const o=objects().find(x=>x.id===id);return o?objects().filter(x=>x.sourceId===o.sourceId).map(x=>x.id):[];}};
-  // The protected transform handlers stop pointer propagation. Capture the
-  // authoritative placement at the deterministic Object -> Edit transition.
+  // Object transform handlers can stop pointer propagation. The switch into an
+  // edit mode is the deterministic moment to capture the instance placement.
   selectionModes?.addEventListener('click',event=>{const next=event.target.closest('button[data-mode]')?.dataset?.mode;if(mode()==='object'&&next&&next!=='object')capturePlacement();},true);
-  // Direct Extrude/Inset/Through explicitly announce a committed mesh.
-  window.addEventListener('boxlab-geometry-commit',()=>queueGestureSync(mode()));
-  // Retain generic support for component transforms that allow pointerup through.
-  window.addEventListener('pointerup',()=>{if(mode()!=='object')queueGestureSync(mode());},false);
-  window.addEventListener('pointercancel',()=>{syncQueued=false;},false);
+  // Direct modelling tools stop at document capture. Window capture sees the
+  // release first, then the timeout runs only after their final mesh commit.
+  window.addEventListener('pointerup',()=>{if(mode()!=='object')queueGestureSync(mode());},true);
+  window.addEventListener('pointercancel',()=>{syncQueued=false;},true);
   list?.addEventListener('click',()=>requestAnimationFrame(()=>{ensureAll();decorate();updateButtons();}),true);
   window.addEventListener('boxlab-bridge-state',()=>requestAnimationFrame(()=>{ensureAll();decorate();updateButtons();}));
   window.dispatchEvent(new Event('boxlab-instance-foundation-ready'));return true;}
