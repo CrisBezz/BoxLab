@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.5 — unified geometry snap.
+// BoxLab v0.36.18.6 — unified geometry snap with visual preview + stable release commit.
 // Move snapping uses a picked source point on the active object and can infer to
 // unselected geometry on that same object or to geometry on any other visible
 // object. Reference geometry is read-only. The legacy yellow marker pass is
@@ -14,7 +14,8 @@ const SOURCE_EDGE_PX=22;
 const TARGET_VERTEX_PX=24;
 const TARGET_EDGE_PX=20;
 let gesture=null;
-let raf=0;
+let snapQueued=false;
+let sourceMarker=null,targetMarker=null,guideLine=null,targetLabel=null;
 
 function state(){return globalThis.__boxlabBridgeState;}
 function manager(){return globalThis.__boxlabObjectManager;}
@@ -148,6 +149,31 @@ function explicitAxis(){
   return ['x','y','z'].includes(c)?c:null;
 }
 
+function ensureVisuals(){
+  if(sourceMarker)return;
+  sourceMarker=document.createElement('div');
+  sourceMarker.style.cssText='position:fixed;pointer-events:none;width:14px;height:14px;border:2px solid #fff;border-radius:50%;background:transparent;box-shadow:0 0 0 2px #0008;z-index:10020;transform:translate(-50%,-50%)';
+  targetMarker=document.createElement('div');
+  targetMarker.style.cssText='position:fixed;pointer-events:none;width:12px;height:12px;border:2px solid #fff;background:#ffe14a;box-shadow:0 0 0 2px #0008;z-index:10021;transform:translate(-50%,-50%) rotate(45deg)';
+  guideLine=document.createElement('div');
+  guideLine.style.cssText='position:fixed;pointer-events:none;height:2px;background:#ffe14a;transform-origin:0 50%;z-index:10019;box-shadow:0 0 3px #0008';
+  targetLabel=document.createElement('div');
+  targetLabel.style.cssText='position:fixed;pointer-events:none;padding:2px 5px;border-radius:4px;background:#111d;color:#fff;font:10px/1.2 -apple-system,BlinkMacSystemFont,sans-serif;z-index:10022;white-space:nowrap';
+  document.body.append(sourceMarker,targetMarker,guideLine,targetLabel);
+}
+function hideVisuals(){
+  for(const el of[sourceMarker,targetMarker,guideLine,targetLabel])if(el)el.style.display='none';
+}
+function showVisuals(g,target){
+  ensureVisuals();
+  if(!target){hideVisuals();return;}
+  const a=screenPoint(g.sourceStart,g.camera),b=screenPoint(target.point,g.camera),dx=b.x-a.x,dy=b.y-a.y;
+  sourceMarker.style.display='block';sourceMarker.style.left=`${a.x}px`;sourceMarker.style.top=`${a.y}px`;
+  targetMarker.style.display='block';targetMarker.style.left=`${b.x}px`;targetMarker.style.top=`${b.y}px`;
+  guideLine.style.display='block';guideLine.style.left=`${a.x}px`;guideLine.style.top=`${a.y}px`;guideLine.style.width=`${Math.hypot(dx,dy)}px`;guideLine.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
+  targetLabel.style.display='block';targetLabel.style.left=`${b.x+10}px`;targetLabel.style.top=`${b.y-18}px`;targetLabel.textContent=`${g.sourceKind} → ${target.self?'Current object':target.name} ${target.kind}`;
+}
+
 function suppressLegacyInferenceForEvent(){
   if(!gesture||!geometryToggle||!gesture.geometryWasOn)return;
   geometryToggle.checked=false;
@@ -157,28 +183,41 @@ function suppressLegacyInferenceForEvent(){
 }
 function restoreGeometryToggle(){if(geometryToggle&&gesture?.geometryWasOn)geometryToggle.checked=true;}
 
-function applySnap(){
-  raf=0;
+function applySnap(finalCommit=false){
+  snapQueued=false;
   const g=gesture,s=state(),mesh=s?.mesh;
   if(!g||!mesh||!g.geometryWasOn||!moveArmed())return;
   const m=mode(),ids=[...new Set(bridge()?.indices?.()||[])];
   if(m!==g.mode)return;
   const verts=selectedVertices(mesh,m,ids);
   if(!verts.length)return;
-  const target=targetUnderPointer(g);
+  const liveTarget=targetUnderPointer(g);
+  if(liveTarget)g.lastTarget=liveTarget;
+  const target=finalCommit?(g.lastTarget||liveTarget):liveTarget;
   if(!target){
+    hideVisuals();
     if(status)status.textContent=`Move • ${g.mode} • no geometry reference`;
     return;
   }
+  showVisuals(g,target);
   const currentCenter=centerOf(mesh,verts),source=currentCenter.clone().add(g.sourceOffset),delta=target.point.clone().sub(source),axis=explicitAxis();
   if(axis){const amount=delta[axis];delta.set(0,0,0);delta[axis]=amount;}
   if(delta.lengthSq()>=1e-16){
     verts.forEach(i=>mesh.vertices[i].add(delta));
     render();
   }
-  if(status)status.textContent=`Move • ${g.sourceKind} → ${target.name} ${target.kind}${axis?` • ${axis.toUpperCase()}`:''}`;
+  manager()?.saveActive?.();
+  if(status)status.textContent=`Move • ${g.sourceKind} → ${target.self?'Current object':target.name} ${target.kind}${axis?` • ${axis.toUpperCase()}`:''}${finalCommit?' • snapped':''}`;
 }
-function schedule(){if(!raf)raf=requestAnimationFrame(applySnap);}
+function schedule(finalCommit=false){
+  if(finalCommit){
+    queueMicrotask(()=>applySnap(true));
+    return;
+  }
+  if(snapQueued)return;
+  snapQueued=true;
+  queueMicrotask(()=>applySnap(false));
+}
 
 function begin(event){
   if(event.target!==canvas||!event.isPrimary||event.pointerType==='touch'||event.button>0)return;
@@ -193,7 +232,8 @@ function begin(event){
   const excluded=new Set(verts);
   const selfRef={id:'active',name:'Current object',mesh:mesh.clone(),self:true,excludedVertices:excluded};
   const refs=[selfRef,...captureExternalReferences()];
-  gesture={id:event.pointerId,mode:m,camera,refs,x:event.clientX,y:event.clientY,sourceKind:source.kind,sourceOffset:source.point.clone().sub(startCenter),geometryWasOn:true};
+  gesture={id:event.pointerId,mode:m,camera,refs,x:event.clientX,y:event.clientY,sourceKind:source.kind,sourceStart:source.point.clone(),sourceOffset:source.point.clone().sub(startCenter),geometryWasOn:true,lastTarget:null};
+  hideVisuals();
   if(status)status.textContent=m==='object'
     ?`Move • object snap source ${source.kind}`
     :`Move • edit ${m} • infer to current or other object geometry`;
@@ -202,26 +242,30 @@ function move(event){
   if(!gesture||gesture.id!==event.pointerId)return;
   gesture.x=event.clientX;gesture.y=event.clientY;
   suppressLegacyInferenceForEvent();
-  schedule();
+  schedule(false);
 }
 function end(event){
   if(!gesture||gesture.id!==event.pointerId)return;
   gesture.x=event.clientX;gesture.y=event.clientY;
   suppressLegacyInferenceForEvent();
-  schedule();
   const g=gesture;
-  requestAnimationFrame(()=>{if(gesture===g){restoreGeometryToggle();gesture=null;}});
+  schedule(true);
+  queueMicrotask(()=>queueMicrotask(()=>{
+    if(gesture===g){restoreGeometryToggle();hideVisuals();gesture=null;}
+  }));
 }
 function cancel(event){
   if(gesture?.id!==event.pointerId)return;
   restoreGeometryToggle();
+  hideVisuals();
   gesture=null;
+  snapQueued=false;
 }
 
 window.addEventListener('pointerdown',begin,true);
 window.addEventListener('pointermove',move,true);
 window.addEventListener('pointerup',end,true);
 window.addEventListener('pointercancel',cancel,true);
-window.addEventListener('blur',()=>{restoreGeometryToggle();gesture=null;});
+window.addEventListener('blur',()=>{restoreGeometryToggle();hideVisuals();gesture=null;snapQueued=false;});
 
-globalThis.__boxlabCrossObjectSnap={version:'0.36.18.5'};
+globalThis.__boxlabCrossObjectSnap={version:'0.36.18.6'};
