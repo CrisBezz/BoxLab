@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.22 — Vertex Slide polish.
+// BoxLab v0.36.18.23 — Vertex Slide polish.
 // Owns Vertex Slide only. Edge Slide remains in component-slide.js unchanged.
 
 const canvas=document.querySelector('#viewport');
@@ -38,23 +38,22 @@ function nearVertex(event,m,v){const p=screenPoint(m.vertices[v]);return !!p&&p.
 function compatible(m,ids){if(!m||!ids.length)return false;if(ids.length===1)return neighbours(m,ids[0]).length>0;return ids.every(v=>neighbours(m,v).length===2);}
 function sync(){const m=mesh(),ids=selected(),ok=compatible(m,ids);button.disabled=!ok;if(!ok&&armed){armed=false;button.classList.remove('active');}readout.textContent=!ids.length?'Vertex Slide • select vertex/vertices':ids.length>1&&!ok?'Multi Vertex Slide needs two connected rails per vertex':'Vertex Slide • drag along connected edges';}
 
-// Stable deterministic positive direction for exact signed entry on two-rail vertices.
-function positiveTarget(m,v,pair){
-  const a=m.vertices[pair[0]],b=m.vertices[pair[1]];
-  if(!a||!b)return null;
-  if(Math.abs(a.x-b.x)>1e-9)return a.x>b.x?pair[0]:pair[1];
-  if(Math.abs(a.y-b.y)>1e-9)return a.y>b.y?pair[0]:pair[1];
-  if(Math.abs(a.z-b.z)>1e-9)return a.z>b.z?pair[0]:pair[1];
-  return pair[0];
+function stableDirectionKey(point){return [point.x,point.y,point.z];}
+function comparePoints(a,b){const A=stableDirectionKey(a),B=stableDirectionKey(b);for(let i=0;i<3;i++){if(Math.abs(A[i]-B[i])>1e-9)return A[i]-B[i];}return 0;}
+function signedTarget(m,v,sign){
+  const ns=neighbours(m,v);if(!ns.length)return null;
+  const ordered=[...ns].sort((ia,ib)=>comparePoints(m.vertices[ia],m.vertices[ib]));
+  return sign>=0?ordered[ordered.length-1]:ordered[0];
 }
 function exactTargets(m,ids,sign){
   const targets=new Map();
+  if(ids.length===1){
+    const v=ids[0],target=signedTarget(m,v,sign);if(!Number.isInteger(target))return null;targets.set(v,target);return targets;
+  }
   for(const v of ids){
-    const ns=neighbours(m,v);
-    if(ns.length!==2)return null;
-    const pos=positiveTarget(m,v,ns),target=sign>=0?pos:ns.find(n=>n!==pos);
-    if(!Number.isInteger(target))return null;
-    targets.set(v,target);
+    const ns=neighbours(m,v);if(ns.length!==2)return null;
+    const ordered=[...ns].sort((ia,ib)=>comparePoints(m.vertices[ia],m.vertices[ib]));
+    targets.set(v,sign>=0?ordered[1]:ordered[0]);
   }
   return targets;
 }
@@ -64,14 +63,14 @@ function applyExact(){
   if(!Number.isFinite(raw)||input.value.trim()===''){readout.textContent='Enter a signed slide percentage';return;}
   if(Math.abs(raw)<1e-6){readout.textContent='Enter a non-zero slide percentage';return;}
   const pct=Math.max(-98,Math.min(98,raw)),targets=exactTargets(m,ids,Math.sign(pct));
-  if(!targets){readout.textContent='Exact signed Slide needs two connected rails per vertex';return;}
+  if(!targets){readout.textContent=ids.length>1?'Multi exact Slide needs two connected rails per vertex':'Vertex has no connected slide edge';return;}
   const before=m.clone(),t=Math.abs(pct)/100;globalThis.__boxlabHistory?.push(before);
   for(const [v,target] of targets)m.vertices[v].copy(before.vertices[v]).lerp(before.vertices[target],t);
   render();bridge()?.set?.('vertex',ids);
   const text=`${ids.length>1?`Multi Vertex (${ids.length})`:'Vertex'} Slide • ${pct>0?'+':''}${pct.toFixed(1)}%`;
   readout.textContent=text;if(status)status.textContent=text;
 }
-apply.addEventListener('click',applyExact);
+apply.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();applyExact();});
 input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();applyExact();input.blur();}});
 
 // Capture the button before the legacy component-slide bubble handler so only
@@ -127,4 +126,4 @@ window.addEventListener('boxlab-bridge-state',sync);
 document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMicrotask(()=>{armed=false;button.classList.remove('active');sync();}));
 setTimeout(sync,0);
 
-globalThis.__boxlabVertexSlidePolish={version:'0.36.18.22',apply:value=>{input.value=String(value);applyExact();}};
+globalThis.__boxlabVertexSlidePolish={version:'0.36.18.23',apply:value=>{input.value=String(value);applyExact();}};
