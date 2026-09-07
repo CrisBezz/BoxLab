@@ -69,12 +69,11 @@ import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.w
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
 import('./vertex-slide-polish.js?v=0.36.18.23').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
 import('./dissolve-selection-polish.js?v=0.36.18.28').catch(error => console.warn('BoxLab Dissolve selection polish failed to load', error));
-import('./history-selection-polish.js?v=0.36.18.29').catch(error => console.warn('BoxLab history selection polish failed to load', error));
 // Normal Through remains owned by multi-face-direct + through-kernel; fallback only wakes when kernel planning fails.
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.18.29';
-  document.title = 'BoxLab v0.36.18.29';
+  if (version) version.textContent = 'v0.36.18.30';
+  document.title = 'BoxLab v0.36.18.30';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
