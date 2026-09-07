@@ -67,11 +67,12 @@ import('./precision-offset-loop.js?v=0.36.18.18').catch(error => console.warn('B
 import('./selection-workflow-polish.js?v=0.36.18.19').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
+import('./vertex-slide-polish.js?v=0.36.18.22').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
 // Normal Through remains owned by multi-face-direct + through-kernel; fallback only wakes when kernel planning fails.
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.18.21';
-  document.title = 'BoxLab v0.36.18.21';
+  if (version) version.textContent = 'v0.36.18.22';
+  document.title = 'BoxLab v0.36.18.22';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
