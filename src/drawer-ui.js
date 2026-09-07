@@ -21,7 +21,7 @@ document.querySelectorAll('#selectionModes button').forEach(button => button.add
 document.querySelectorAll('#toolModes button, .mode-tools button').forEach(button => button.addEventListener('click', () => {
   openDrawer(button.closest('.drawer-section') || editDrawer);
 }));
-document.querySelectorAll('#outlinerList button, #outlinerAddBtn, #outlinerDuplicateBtn, #outlinerRenameBtn, #outlinerDeleteBtn').forEach(button => button.addEventListener('click', () => openDrawer(objectDrawer)));
+document.querySelectorAll('#outlinerList button, #outlinerAddBtn, #outlinerRenameBtn, #outlinerDeleteBtn').forEach(button => button.addEventListener('click', () => openDrawer(objectDrawer)));
 
 drawers.forEach(drawer => drawer.addEventListener('toggle', () => {
   if (!drawer.open) return;
@@ -64,7 +64,7 @@ import('./precision-bevel.js?v=0.36.18.27').catch(error => console.warn('BoxLab 
 import('./precision-edge-slide.js?v=0.36.18.16').catch(error => console.warn('BoxLab precision Edge Slide failed to load', error));
 import('./loop-offset.js?v=0.36.18.17').catch(error => console.warn('BoxLab Offset Loop failed to load', error));
 import('./precision-offset-loop.js?v=0.36.18.18').catch(error => console.warn('BoxLab precision Offset Loop failed to load', error));
-import('./selection-workflow-polish.js?v=0.36.18.19').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
+import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
 import('./vertex-slide-polish.js?v=0.36.18.23').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
@@ -74,6 +74,6 @@ import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.18.30';
-  document.title = 'BoxLab v0.36.18.30';
+  if (version) version.textContent = 'v0.36.18.31';
+  document.title = 'BoxLab v0.36.18.31';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
