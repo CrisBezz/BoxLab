@@ -66,6 +66,7 @@ import('./loop-offset.js?v=0.36.18.17').catch(error => console.warn('BoxLab Offs
 import('./precision-offset-loop.js?v=0.36.18.18').catch(error => console.warn('BoxLab precision Offset Loop failed to load', error));
 import('./edge-context-ui.js?v=0.36.18.35').catch(error => console.warn('BoxLab contextual Edge controls failed to load', error));
 import('./collapse-edge.js?v=0.36.18.36').catch(error => console.warn('BoxLab Collapse Edge failed to load', error));
+import('./vertex-merge.js?v=0.36.18.37').catch(error => console.warn('BoxLab Vertex Merge failed to load', error));
 import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
@@ -77,6 +78,6 @@ import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.18.36';
-  document.title = 'BoxLab v0.36.18.36';
+  if (version) version.textContent = 'v0.36.18.37';
+  document.title = 'BoxLab v0.36.18.37';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
