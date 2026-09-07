@@ -1,10 +1,10 @@
-// BoxLab v0.36.18.19 — selection workflow polish.
-// Adds multi-seed Loop Select and consistent context/status feedback without changing selection kernels.
+// BoxLab v0.36.18.31 — selection workflow polish.
+// Keeps multi-seed Loop Select and selection feedback, but no longer owns the
+// enabled/disabled state of Loop / Ring / Boundary. Their native tool modules
+// remain the single owners of those controls, avoiding transient Face-tool UI flashes.
 
 const status=document.querySelector('#selectionStatus');
 const loopButton=document.querySelector('#selectLoopBtn');
-const ringButton=document.querySelector('#selectRingBtn');
-const boundaryButton=document.querySelector('#selectBoundaryBtn');
 const growButton=document.querySelector('#growSelectionBtn');
 const shrinkButton=document.querySelector('#shrinkSelectionBtn');
 const connectedButton=document.querySelector('#connectedSelectionBtn');
@@ -41,8 +41,8 @@ function traceLoop(m,seedIndex){
 }
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 
-// Multi-seed Loop Select. Single-seed clicks are deliberately left to the existing
-// select-loop.js owner so its Loop Slide setup remains unchanged.
+// Multi-seed Loop Select. Single-seed clicks remain owned by select-loop.js so
+// Loop Slide setup and native Loop button behaviour are unchanged.
 loopButton?.addEventListener('click',event=>{
   if(mode()!=='edge')return;
   const seeds=ids();if(seeds.length<=1)return;
@@ -80,20 +80,13 @@ function sync(){
   if(connectedButton)connectedButton.disabled=!has||currentMode==='object';
   if(angleButton)angleButton.disabled=!has||currentMode!=='face';
   if(normalButton)normalButton.disabled=!has||currentMode!=='face';
-  // Loop/Ring are edge-context tools here. Existing modules can still further restrict them.
-  if(currentMode!=='edge'){
-    if(loopButton)loopButton.disabled=true;
-    if(ringButton)ringButton.disabled=true;
-    if(boundaryButton)boundaryButton.disabled=true;
-  }else{
-    if(loopButton)loopButton.disabled=!has;
-    if(ringButton)ringButton.disabled=!has;
-  }
 }
 
+// Do not sync on every modelling pointer-up. Face/Extrude/Inset gestures generate
+// their own pointer lifecycle and native Loop/Ring owners must not be repainted by
+// this adjunct during those gestures.
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
-document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 window.addEventListener('boxlab-bridge-state',sync);
 setTimeout(sync,0);
 
-globalThis.__boxlabSelectionWorkflowPolish={version:'0.36.18.19'};
+globalThis.__boxlabSelectionWorkflowPolish={version:'0.36.18.31'};
