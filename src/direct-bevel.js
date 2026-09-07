@@ -49,6 +49,26 @@ installFrameAll();
 button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();armed=!armed;if(armed&&bridge()?.mode?.()!=='edge')document.querySelector('#selectionModes button[data-mode="edge"]')?.click();button.classList.toggle('active',armed);const count=selectedEdgeIds().length,useMulti=!!multiToggle?.checked&&count>1;document.querySelector('#selectionStatus').textContent=armed?(useMulti?`Bevel ${count} edges • drag any selected edge`:'Bevel Edge • drag an edge'):'Edge mode • nothing selected'},true);
 document.addEventListener('click',e=>{if(!armed||!e.isTrusted||e.target?.closest?.('#bevelBtn'))return;if(e.target?.closest?.('button'))disarm();},true);
 function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices)}function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}))}
+function bevelSegments(){return Math.max(1,Number(document.querySelector('#bevelSegments')?.value||1));}
 canvas?.addEventListener('pointerdown',e=>{if(!armed||!e.isPrimary)return;const i=hit(e),mesh=state()?.mesh;if(!Number.isInteger(i)||!mesh)return;e.preventDefault();e.stopImmediatePropagation();const existing=selectedEdgeIds(),useMulti=!!multiToggle?.checked&&existing.length>1&&existing.includes(i),ids=useMulti?existing:[i];if(!useMulti)bridge()?.set?.('edge',[i]);const valid=mesh.generalBevelSelectionInfo?.(ids);if(!valid){document.querySelector('#selectionStatus').textContent=ids.length>1?(mesh.__lastBevelError||'Selected edges cannot be bevelled together'):(mesh.__lastBevelError||'This edge cannot be bevelled');return;}drag={id:e.pointerId,x:e.clientX,width:Number(width.value||20),mesh,before:mesh.clone(),ids:[...valid.ids],mode:valid.mode,preview:false};canvas.setPointerCapture?.(e.pointerId)},true);
-canvas?.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const value=Math.max(2,Math.min(49,drag.width+(e.clientX-drag.x)*.25)),amount=Math.round(value);width.value=String(amount);out.textContent=`${amount}%`;restore(drag.mesh,drag.before);drag.preview=!!drag.mesh.generalBevelSelection?.(drag.ids,amount/100,Math.max(1,Number(document.querySelector('#bevelSegments')?.value||1)));if(!drag.preview&&drag.mesh.__lastBevelError)document.querySelector('#selectionStatus').textContent=drag.mesh.__lastBevelError;render()},true);
+canvas?.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const value=Math.max(2,Math.min(49,drag.width+(e.clientX-drag.x)*.25)),amount=Math.round(value);width.value=String(amount);out.textContent=`${amount}%`;restore(drag.mesh,drag.before);drag.preview=!!drag.mesh.generalBevelSelection?.(drag.ids,amount/100,bevelSegments());if(!drag.preview&&drag.mesh.__lastBevelError)document.querySelector('#selectionStatus').textContent=drag.mesh.__lastBevelError;render()},true);
 canvas?.addEventListener('pointerup',e=>{if(!drag||drag.id!==e.pointerId)return;const current=drag;drag=null;if(current.preview)globalThis.__boxlabHistory?.push(current.before);else restore(current.mesh,current.before);bridge()?.set?.('edge',[]);render()},true);
+
+// v0.36.18.32 — exact Edge Bevel is owned by this same controller rather than
+// duplicating bevel execution in precision-bevel.js.
+function applyExact(value,selectionOverride=null){
+  const mesh=state()?.mesh,raw=Number(value),ids=[...new Set(selectionOverride||selectedEdgeIds())].filter(Number.isInteger);
+  if(!mesh||!ids.length)return{ok:false,reason:'Select edge(s) first'};
+  if(!Number.isFinite(raw))return{ok:false,reason:'Enter a bevel percentage'};
+  const valid=mesh.generalBevelSelectionInfo?.(ids);
+  if(!valid)return{ok:false,reason:mesh.__lastBevelError||'Selection cannot be bevelled'};
+  const amount=Math.round(Math.max(2,Math.min(49,raw))),before=mesh.clone();
+  const result=mesh.generalBevelSelection?.([...valid.ids],amount/100,bevelSegments());
+  if(!result){restore(mesh,before);render();return{ok:false,reason:mesh.__lastBevelError||'Bevel failed'};}
+  globalThis.__boxlabHistory?.push(before);
+  if(width)width.value=String(amount);if(out)out.textContent=`${amount}%`;
+  bridge()?.set?.('edge',[]);render();
+  const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Bevel committed • ${valid.ids.length} edge${valid.ids.length===1?'':'s'} • ${amount}%`;
+  return{ok:true,ids:[...valid.ids],percent:amount,segments:bevelSegments()};
+}
+globalThis.__boxlabDirectBevel={version:'0.36.18.32',applyExact};
