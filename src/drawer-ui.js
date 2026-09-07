@@ -62,11 +62,12 @@ import('./sequential-through-fallback.js?v=0.36.18.12').catch(error => console.w
 import('./precision-transform.js?v=0.36.18.14').catch(error => console.warn('BoxLab precision transform failed to load', error));
 import('./precision-bevel.js?v=0.36.18.15').catch(error => console.warn('BoxLab precision bevel failed to load', error));
 import('./precision-edge-slide.js?v=0.36.18.16').catch(error => console.warn('BoxLab precision Edge Slide failed to load', error));
+import('./loop-offset.js?v=0.36.18.17').catch(error => console.warn('BoxLab Offset Loop failed to load', error));
 // Normal Through remains owned by multi-face-direct + through-kernel; fallback only wakes when kernel planning fails.
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.18.16';
-  document.title = 'BoxLab v0.36.18.16';
+  if (version) version.textContent = 'v0.36.18.17';
+  document.title = 'BoxLab v0.36.18.17';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
