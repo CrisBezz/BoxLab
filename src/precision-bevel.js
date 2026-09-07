@@ -1,5 +1,6 @@
-// BoxLab v0.36.18.15 — precision Bevel.
-// Adds exact percentage entry for the existing edge/vertex bevel kernels.
+// BoxLab v0.36.18.27 — precision Bevel.
+// Exact Apply now snapshots the component selection at pointer-down so it uses
+// the same frozen multi-selection semantics as the working drag bevel path.
 // Does not alter bevel topology or drag ownership.
 
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
@@ -12,6 +13,7 @@ const vertexWidth=document.querySelector('#vertexBevelWidth');
 const vertexOut=document.querySelector('#vertexBevelWidthOut');
 const segments=document.querySelector('#bevelSegments');
 const status=document.querySelector('#selectionStatus');
+let pendingEdgeSelection=null,pendingVertexSelection=null;
 
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function state(){return globalThis.__boxlabBridgeState;}
@@ -36,8 +38,8 @@ const vertexUi=makeRow(vertexTools,'precisionVertexBevelRow','Exact %');
 
 function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices);mesh.edges?.();}
 
-function applyEdge(){
-  const mesh=state()?.mesh,ids=selected('edge'),raw=Number(edgeUi?.input.value);
+function applyEdge(selectionOverride=null){
+  const mesh=state()?.mesh,ids=[...new Set(selectionOverride||selected('edge'))],raw=Number(edgeUi?.input.value);
   if(!mesh||!ids.length){if(edgeUi)edgeUi.readout.textContent='Select edge(s) first';return;}
   if(!Number.isFinite(raw)){if(edgeUi)edgeUi.readout.textContent='Enter a bevel percentage';return;}
   const valid=mesh.generalBevelSelectionInfo?.(ids);
@@ -48,12 +50,12 @@ function applyEdge(){
   globalThis.__boxlabHistory?.push(before);
   if(edgeWidth)edgeWidth.value=String(Math.round(pct));if(edgeOut)edgeOut.textContent=`${pct.toFixed(1)}%`;
   clearSelection('edge');render();
-  if(edgeUi)edgeUi.readout.textContent=`Edge Bevel exact • ${pct.toFixed(1)}% • ${seg} segment${seg===1?'':'s'}`;
-  if(status)status.textContent=`Bevel committed • ${pct.toFixed(1)}%`;
+  if(edgeUi)edgeUi.readout.textContent=`Edge Bevel exact • ${valid.ids.length} edge${valid.ids.length===1?'':'s'} • ${pct.toFixed(1)}% • ${seg} segment${seg===1?'':'s'}`;
+  if(status)status.textContent=`Bevel committed • ${valid.ids.length} edge${valid.ids.length===1?'':'s'} • ${pct.toFixed(1)}%`;
 }
 
-function applyVertex(){
-  const mesh=state()?.mesh,ids=selected('vertex'),raw=Number(vertexUi?.input.value);
+function applyVertex(selectionOverride=null){
+  const mesh=state()?.mesh,ids=[...new Set(selectionOverride||selected('vertex'))],raw=Number(vertexUi?.input.value);
   if(!mesh||!ids.length){if(vertexUi)vertexUi.readout.textContent='Select vertex/vertices first';return;}
   if(!Number.isFinite(raw)){if(vertexUi)vertexUi.readout.textContent='Enter a bevel percentage';return;}
   const valid=mesh.multiVertexBevelInfo?.(ids);
@@ -67,12 +69,18 @@ function applyVertex(){
   if(status)status.textContent=`Vertex Bevel committed • ${pct.toFixed(1)}%`;
 }
 
-edgeUi?.apply.addEventListener('click',applyEdge);vertexUi?.apply.addEventListener('click',applyVertex);
+// Freeze the selection before any generic button-click handlers can disarm tools
+// or otherwise alter UI state. This mirrors direct-bevel's pointer-down capture.
+document.addEventListener('pointerdown',event=>{
+  if(event.target?.closest?.('#precisionEdgeBevelRow button'))pendingEdgeSelection=selected('edge');
+  if(event.target?.closest?.('#precisionVertexBevelRow button'))pendingVertexSelection=selected('vertex');
+},true);
+
+edgeUi?.apply.addEventListener('click',()=>{const ids=pendingEdgeSelection;pendingEdgeSelection=null;applyEdge(ids);});
+vertexUi?.apply.addEventListener('click',()=>{const ids=pendingVertexSelection;pendingVertexSelection=null;applyVertex(ids);});
 edgeUi?.input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();applyEdge();edgeUi.input.blur();}});
 vertexUi?.input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();applyVertex();vertexUi.input.blur();}});
 
-// Existing direct bevel tools update their native sliders during drag. Mirror those
-// values into a precision readout without intercepting the modelling gesture.
 window.addEventListener('pointermove',()=>{
   queueMicrotask(()=>{
     if(edgeButton?.classList.contains('active')&&edgeUi&&edgeWidth)edgeUi.readout.textContent=`Live Edge Bevel • ${Number(edgeWidth.value||0).toFixed(1)}%`;
@@ -86,4 +94,4 @@ vertexButton?.addEventListener('click',()=>queueMicrotask(()=>{if(vertexUi)verte
 if(edgeUi)edgeUi.readout.textContent='Edge Bevel • drag normally or enter Exact %';
 if(vertexUi)vertexUi.readout.textContent='Vertex Bevel • drag normally or enter Exact %';
 
-globalThis.__boxlabPrecisionBevel={version:'0.36.18.15',edge:value=>{if(edgeUi){edgeUi.input.value=String(value);applyEdge();}},vertex:value=>{if(vertexUi){vertexUi.input.value=String(value);applyVertex();}}};
+globalThis.__boxlabPrecisionBevel={version:'0.36.18.27',edge:value=>{if(edgeUi){edgeUi.input.value=String(value);applyEdge();}},vertex:value=>{if(vertexUi){vertexUi.input.value=String(value);applyVertex();}}};
