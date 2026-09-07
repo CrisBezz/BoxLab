@@ -21,7 +21,7 @@ document.querySelectorAll('#selectionModes button').forEach(button => button.add
 document.querySelectorAll('#toolModes button, .mode-tools button').forEach(button => button.addEventListener('click', () => {
   openDrawer(button.closest('.drawer-section') || editDrawer);
 }));
-document.querySelectorAll('#outlinerList button, #outlinerAddBtn, #outlinerRenameBtn, #outlinerDeleteBtn').forEach(button => button.addEventListener('click', () => openDrawer(objectDrawer)));
+document.querySelectorAll('#outlinerList button, #outlinerAddBtn, #outlinerDuplicateBtn, #outlinerRenameBtn, #outlinerDeleteBtn').forEach(button => button.addEventListener('click', () => openDrawer(objectDrawer)));
 
 drawers.forEach(drawer => drawer.addEventListener('toggle', () => {
   if (!drawer.open) return;
