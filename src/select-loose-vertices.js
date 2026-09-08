@@ -1,6 +1,7 @@
-// BoxLab v0.36.18.50 — non-destructive Vertex topology inspection.
-// Selects vertices that are not referenced by any face and are not endpoints
-// of any edge. Geometry and history are untouched.
+// BoxLab v0.36.18.51 — non-destructive Vertex topology inspection.
+// A loose vertex is any vertex that is not referenced by a face. This includes
+// isolated vertices and endpoints of intentional loose/wire edges. Geometry and
+// history are untouched.
 
 const status=document.querySelector('#selectionStatus');
 const vertexTools=document.querySelector('[data-mode-tools="vertex"]');
@@ -23,14 +24,15 @@ if(anchor?.parentElement)anchor.parentElement.insertBefore(host,anchor.nextSibli
 
 function inspect(m){
   if(!m)return{indices:[],count:0};
-  const used=new Set();
-  for(const face of m.faces||[])if(Array.isArray(face))for(const v of face)if(Number.isInteger(v))used.add(v);
-  for(const edge of m.edges?.()||[]){
-    if(Number.isInteger(edge?.a))used.add(edge.a);
-    if(Number.isInteger(edge?.b))used.add(edge.b);
+  const faceUsed=new Set();
+  for(const face of m.faces||[]){
+    if(!Array.isArray(face))continue;
+    for(const v of face)if(Number.isInteger(v))faceUsed.add(v);
   }
   const indices=[];
-  for(let i=0;i<(m.vertices?.length||0);i++)if(m.vertices[i]&&!used.has(i))indices.push(i);
+  for(let i=0;i<(m.vertices?.length||0);i++){
+    if(m.vertices[i]&&!faceUsed.has(i))indices.push(i);
+  }
   return{indices,count:indices.length};
 }
 
@@ -47,7 +49,7 @@ function apply(){
     bridge()?.set?.('vertex',info.indices);
     render();
     if(status)status.textContent=info.count
-      ?`Loose Vertices • ${info.count} vertex${info.count===1?'':'es'} selected`
+      ?`Loose Vertices • ${info.count} vertex${info.count===1?'':'es'} selected • zero face use`
       :'Topology check • 0 loose vertices';
   });
 }
@@ -56,7 +58,7 @@ function sync(){
   const m=mesh();button.disabled=!m;
   if(!m){button.title='No editable mesh';return;}
   const info=inspect(m);
-  button.title=info.count?`Select ${info.count} loose vertex${info.count===1?'':'es'}`:'No loose vertices found';
+  button.title=info.count?`Select ${info.count} vertex${info.count===1?'':'es'} used by zero faces`:'No loose vertices found';
 }
 
 button.addEventListener('click',apply);
@@ -64,4 +66,4 @@ window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 setTimeout(sync,0);
 
-globalThis.__boxlabSelectLooseVertices={version:'0.36.18.50',inspect,apply};
+globalThis.__boxlabSelectLooseVertices={version:'0.36.18.51',inspect,apply};
