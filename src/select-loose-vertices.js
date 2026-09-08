@@ -1,7 +1,6 @@
-// BoxLab v0.36.18.53 — non-destructive Vertex topology inspection.
-// Read a freshly saved snapshot of the active object's live mesh from the object
-// manager, then select explicit loose vertices plus zero-real-face orphans.
-// Geometry/history are untouched.
+// BoxLab v0.36.18.54 — diagnostic-only Vertex topology inspection.
+// Reports exactly which vertex indices exist, which are referenced by faces,
+// and which are classified as loose candidates. Geometry/history are untouched.
 
 const status=document.querySelector('#selectionStatus');
 const vertexTools=document.querySelector('[data-mode-tools="vertex"]');
@@ -20,6 +19,7 @@ function mesh(){
   return state()?.mesh||null;
 }
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
+function list(values){return values.length?values.join(','):'—';}
 
 const host=document.createElement('div');
 host.className='outliner-actions';
@@ -32,31 +32,41 @@ const anchor=cleanButton?.parentElement;
 if(anchor?.parentElement)anchor.parentElement.insertBefore(host,anchor.nextSibling);else vertexTools?.appendChild(host);
 
 function inspect(m){
-  if(!m)return{indices:[],explicit:0,orphan:0,count:0,vertices:0,faces:0};
-  const loose=new Set();
-  for(const v of m.looseVertices||[]){
-    if(Number.isInteger(v)&&m.vertices?.[v])loose.add(v);
-  }
-  const faceUsed=new Set();
+  if(!m)return{indices:[],all:[],faceUsed:[],explicit:[],orphan:[],count:0,vertices:0,faces:0};
+
+  const all=[];
+  for(let i=0;i<(m.vertices?.length||0);i++)if(m.vertices[i])all.push(i);
+
+  const faceUsedSet=new Set();
   let realFaces=0;
   for(let fi=0;fi<(m.faces?.length||0);fi++){
     const face=m.faces[fi];
     if(!Array.isArray(face)||face.length<3)continue;
     realFaces++;
-    for(const v of face)if(Number.isInteger(v))faceUsed.add(v);
+    for(const v of face)if(Number.isInteger(v)&&m.vertices?.[v])faceUsedSet.add(v);
   }
-  let orphan=0;
-  for(let i=0;i<(m.vertices?.length||0);i++){
-    if(!m.vertices[i]||faceUsed.has(i)||loose.has(i))continue;
-    loose.add(i);orphan++;
+
+  const explicitSet=new Set();
+  for(const v of m.looseVertices||[]){
+    if(Number.isInteger(v)&&m.vertices?.[v])explicitSet.add(v);
   }
-  const indices=[...loose].sort((a,b)=>a-b);
-  return{indices,explicit:indices.length-orphan,orphan,count:indices.length,vertices:m.vertices?.length||0,faces:realFaces};
+
+  const orphan=[];
+  for(const i of all){
+    if(!faceUsedSet.has(i)&&!explicitSet.has(i))orphan.push(i);
+  }
+
+  const looseSet=new Set([...explicitSet,...orphan]);
+  const indices=[...looseSet].sort((a,b)=>a-b);
+  const faceUsed=[...faceUsedSet].sort((a,b)=>a-b);
+  const explicit=[...explicitSet].sort((a,b)=>a-b);
+
+  return{indices,all,faceUsed,explicit,orphan,count:indices.length,vertices:all.length,faces:realFaces};
 }
 
 function apply(){
   const m=mesh();
-  if(!m){if(status)status.textContent='Loose Vertices • no active mesh';return;}
+  if(!m){if(status)status.textContent='LooseDiag • no active mesh';return;}
   const info=inspect(m);
   const vertexMode=document.querySelector('#selectionModes button[data-mode="vertex"]');
   if(vertexMode&&!vertexMode.classList.contains('active'))vertexMode.click();
@@ -67,9 +77,17 @@ function apply(){
     }
     const ok=!!bridge()?.set?.('vertex',info.indices);
     render();
-    if(status)status.textContent=info.count
-      ?`Loose Vertices • ${info.count} selected • mesh ${info.vertices} verts / ${info.faces} faces • ${info.explicit} explicit • ${info.orphan} orphan`
-      :`Loose Vertices • 0 found • mesh ${info.vertices} verts / ${info.faces} faces${ok?'':' • selection handoff failed'}`;
+    const message=`LooseDiag • All:[${list(info.all)}] • Face:[${list(info.faceUsed)}] • Loose:[${list(info.indices)}]${ok?'':' • handoff failed'}`;
+    if(status)status.textContent=message;
+    console.info('BoxLab LooseDiag 18.54',{
+      all:info.all,
+      faceUsed:info.faceUsed,
+      explicitLoose:info.explicit,
+      orphanLoose:info.orphan,
+      loose:info.indices,
+      vertices:info.vertices,
+      faces:info.faces
+    });
   });
 }
 
@@ -77,7 +95,7 @@ function sync(){
   const m=mesh();button.disabled=!m;
   if(!m){button.title='No editable mesh';return;}
   const info=inspect(m);
-  button.title=info.count?`Select ${info.count} loose/orphan vertex${info.count===1?'':'es'}`:`0 loose vertices in ${info.vertices}-vertex mesh`;
+  button.title=`All [${list(info.all)}] • Face [${list(info.faceUsed)}] • Loose [${list(info.indices)}]`;
 }
 
 button.addEventListener('click',apply);
@@ -85,4 +103,4 @@ window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 setTimeout(sync,0);
 
-globalThis.__boxlabSelectLooseVertices={version:'0.36.18.53',inspect,apply};
+globalThis.__boxlabSelectLooseVertices={version:'0.36.18.54',inspect,apply};
