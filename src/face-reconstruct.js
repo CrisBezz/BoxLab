@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.43 — conservative Face Reconstruction.
+// BoxLab v0.36.18.75 — conservative Face Reconstruction, UI placement polish.
 // Creates one face only when selected vertices already form one clean planar
 // closed boundary loop in the existing mesh. No guessing from selection order.
 
@@ -14,14 +14,31 @@ function mesh(){return state()?.mesh||null;}
 function selectedVertices(){const b=bridge();return b?.mode?.()==='vertex'?[...new Set(b.indices?.()||[])].filter(Number.isInteger):[];}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 
-const host=document.createElement('div');
-host.className='outliner-actions';
-host.style.gridTemplateColumns='1fr';
 const button=document.createElement('button');
 button.id='createFaceFromVerticesBtn';button.type='button';button.textContent='Create Face';button.disabled=true;
-host.appendChild(button);
-const anchor=document.querySelector('#cleanVerticesBtn')?.parentElement;
-if(anchor?.parentElement)anchor.parentElement.insertBefore(host,anchor.nextSibling);else vertexTools?.append(host);
+
+function place(){
+  const bevel=document.querySelector('#vertexBevelBtn');
+  const add=document.querySelector('#addVertexBtn');
+  const build=document.querySelector('#buildEdgeBtn');
+  const slide=document.querySelector('#vertexSlideBtn');
+  const row=bevel?.parentElement;
+  if(row&&add&&build&&slide){
+    row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+    for(const item of [bevel,add,build,slide,button]){
+      item.style.minWidth='0';
+      row.appendChild(item);
+    }
+    return true;
+  }
+  if(!button.isConnected&&vertexTools){
+    const host=document.createElement('div');
+    host.className='outliner-actions';host.style.gridTemplateColumns='1fr';
+    host.appendChild(button);vertexTools.appendChild(host);
+  }
+  return false;
+}
+place();
 
 function faceSignature(face){
   const variants=[];const add=list=>{for(let i=0;i<list.length;i++)variants.push([...list.slice(i),...list.slice(0,i)].join(','));};
@@ -94,7 +111,7 @@ function apply(){
   const faceMode=document.querySelector('#selectionModes button[data-mode="face"]');if(faceMode&&!faceMode.classList.contains('active'))faceMode.click();
   queueMicrotask(()=>{bridge()?.set?.('face',[faceIndex]);render();if(status)status.textContent=`Create Face • ${info.order.length}-vertex face created • result selected`;});
 }
-function sync(){const info=createInfo(mesh(),selectedVertices());button.disabled=!info?.ok;button.title=info?.ok?'Create one face from this closed planar vertex boundary':(info?.reason||'Select a closed planar boundary');}
+function sync(){place();const info=createInfo(mesh(),selectedVertices());button.disabled=!info?.ok;button.title=info?.ok?'Create one face from this closed planar vertex boundary':(info?.reason||'Select a closed planar boundary');}
 button.addEventListener('click',apply);window.addEventListener('boxlab-bridge-state',sync);document.addEventListener('pointerup',()=>queueMicrotask(sync),true);setTimeout(sync,0);
 
-globalThis.__boxlabFaceReconstruct={version:'0.36.18.43',info:createInfo,apply};
+globalThis.__boxlabFaceReconstruct={version:'0.36.18.75',info:createInfo,apply};
