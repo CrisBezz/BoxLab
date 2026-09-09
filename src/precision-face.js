@@ -21,6 +21,9 @@ readout.style.cssText='font-size:10px;opacity:.72;margin:3px 0 1px;min-height:12
 readout.textContent='Drag normally, or enter an exact model-unit value';
 faceTools.append(readout);
 
+const raycaster=new THREE.Raycaster();
+const pointer=new THREE.Vector2();
+
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
@@ -33,7 +36,7 @@ function minBoundaryEdge(m,ids){const info=m?.faceRegionsInfo?.(ids);let min=Inf
 function dispatchGesture(start,end){const id=9876,base={bubbles:true,cancelable:true,composed:true,pointerId:id,pointerType:'pen',isPrimary:true,button:0,buttons:1,pressure:.5,clientX:start.x,clientY:start.y};canvas.dispatchEvent(new PointerEvent('pointerdown',base));canvas.dispatchEvent(new PointerEvent('pointermove',{...base,clientX:end.x,clientY:end.y}));canvas.dispatchEvent(new PointerEvent('pointerup',{...base,buttons:0,pressure:0,clientX:end.x,clientY:end.y}));}
 function commitOperation(tool,value,source='drag'){
   const number=Number(value);if((tool!=='extrude'&&tool!=='inset')||!Number.isFinite(number))return null;
-  const saved={tool,value:number,source,version:'0.36.18.84'};
+  const saved={tool,value:number,source,version:'0.36.18.85'};
   globalThis.__boxlabLastFaceOperation=saved;
   input.value=number.toFixed(3);
   readout.textContent=`Last ${tool==='extrude'?'Extrude':'Inset'} • ${number>=0?'+':''}${number.toFixed(3)}`;
@@ -71,9 +74,31 @@ function applyFor(tool,value){
 apply.addEventListener('click',applyExact);
 input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();applyExact();input.blur();}});
 
-// A navigation gesture must never become a Face-tool value. We no longer infer
-// extrusion distance from viewport pointer movement. The only repeatable candidate
-// comes from the stable Face controller's own status while a real pointer gesture is live.
+function setPointer(clientX,clientY){
+  const r=canvas.getBoundingClientRect();
+  pointer.set((clientX-r.left)/r.width*2-1,-((clientY-r.top)/r.height*2-1));
+}
+function hitsSelectedFace(clientX,clientY){
+  const m=mesh(),camera=state()?.camera,ids=faces();
+  if(!m||!camera||!ids.length)return false;
+  setPointer(clientX,clientY);raycaster.setFromCamera(pointer,camera);
+  const pickers=[];
+  for(const fi of ids){
+    const face=m.faces?.[fi];if(!Array.isArray(face)||face.length<3)continue;
+    const positions=[];
+    for(let i=1;i<face.length-1;i++)for(const vi of[face[0],face[i],face[i+1]]){const v=m.vertices?.[vi];if(v)positions.push(v.x,v.y,v.z);}
+    if(!positions.length)continue;
+    const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+    const material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
+    pickers.push(new THREE.Mesh(geometry,material));
+  }
+  const hit=pickers.length?raycaster.intersectObjects(pickers,false)[0]:null;
+  pickers.forEach(p=>{p.geometry.dispose();p.material.dispose();});
+  return !!hit;
+}
+
+// Capture the real Face gesture before multi-face-direct owns document capture.
+// Crucially, empty-space orbit/pan never starts a precision capture.
 let gestureActive=false;
 let gesturePointer=null;
 let gestureCandidate=null;
@@ -89,19 +114,21 @@ function canonicalCandidate(text){
   return null;
 }
 
-canvas.addEventListener('pointerdown',event=>{
-  if(event.pointerId===9876||!activeTool())return;
+window.addEventListener('pointerdown',event=>{
+  if(event.pointerId===9876||event.target!==canvas||!event.isPrimary)return;
+  const tool=activeTool();if(!tool)return;
+  if(!hitsSelectedFace(event.clientX,event.clientY))return;
   gestureActive=true;gesturePointer=event.pointerId;gestureCandidate=null;gestureRepeatable=true;
 },true);
 
-document.addEventListener('pointerup',event=>{
+// Window capture runs before multi-face-direct's document pointerup handler.
+window.addEventListener('pointerup',event=>{
   if(!gestureActive||event.pointerId!==gesturePointer||event.pointerId===9876)return;
   const saved=gestureRepeatable?gestureCandidate:null;
   gestureActive=false;gesturePointer=null;gestureCandidate=null;gestureRepeatable=true;
-  if(saved)setTimeout(()=>commitOperation(saved.tool,saved.value,'drag'),0);
+  if(saved)commitOperation(saved.tool,saved.value,'drag');
 },true);
-
-document.addEventListener('pointercancel',event=>{
+window.addEventListener('pointercancel',event=>{
   if(event.pointerId!==gesturePointer)return;
   gestureActive=false;gesturePointer=null;gestureCandidate=null;gestureRepeatable=true;
 },true);
@@ -123,4 +150,4 @@ new MutationObserver(()=>{
   const tool=activeTool();if(tool&&!gestureActive)readout.textContent=`${tool==='extrude'?'Extrude':'Inset'} armed • enter exact model-unit value or drag`;
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.84',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
+window.__boxlabPrecisionFace={version:'0.36.18.85',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
