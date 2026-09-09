@@ -43,13 +43,40 @@ function applyExact(){const tool=activeTool(),m=mesh(),ids=faces(),camera=state(
 apply.addEventListener('click',applyExact);
 input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();applyExact();input.blur();}});
 
+let dragReadback=null;
+let dragStarted=false;
+function rememberLive(tool,value){
+  if(!dragStarted||!Number.isFinite(value))return;
+  dragReadback={tool,value};
+}
+function commitReadback(){
+  if(!dragStarted){dragReadback=null;return;}
+  const saved=dragReadback;
+  dragStarted=false;dragReadback=null;
+  if(!saved||activeTool()!==saved.tool)return;
+  input.value=Number(saved.value).toFixed(3);
+  readout.textContent=`Last ${saved.tool==='extrude'?'Extrude':'Inset'} • ${Number(saved.value).toFixed(3)}`;
+  globalThis.__boxlabLastFaceOperation={tool:saved.tool,value:Number(saved.value),source:'drag',version:'0.36.18.74'};
+  document.dispatchEvent(new CustomEvent('boxlab-face-value-committed',{detail:{...globalThis.__boxlabLastFaceOperation}}));
+}
+canvas.addEventListener('pointerdown',()=>{
+  if(!activeTool())return;
+  dragStarted=true;dragReadback=null;
+},true);
+document.addEventListener('pointerup',event=>{
+  if(!dragStarted)return;
+  if(event.target!==canvas&&event.pointerId!==9876){dragStarted=false;dragReadback=null;return;}
+  setTimeout(commitReadback,0);
+},true);
+document.addEventListener('pointercancel',()=>{dragStarted=false;dragReadback=null;},true);
+
 new MutationObserver(()=>{
   const text=status.textContent||'';
   let match=text.match(/(?:Extrude|THROUGH READY).*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(match){readout.textContent=`Live Extrude • ${Number(match[1]).toFixed(3)}`;return;}
+  if(match){const value=Number(match[1]);rememberLive('extrude',value);readout.textContent=`Live Extrude • ${value.toFixed(3)}`;return;}
   match=text.match(/Uniform Inset.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(match){readout.textContent=`Live Inset • ${Number(match[1]).toFixed(3)}`;return;}
-  const tool=activeTool();if(tool)readout.textContent=`${tool==='extrude'?'Extrude':'Inset'} armed • enter exact model-unit value or drag`;
+  if(match){const value=Number(match[1]);rememberLive('inset',value);readout.textContent=`Live Inset • ${value.toFixed(3)}`;return;}
+  const tool=activeTool();if(tool&&!dragStarted)readout.textContent=`${tool==='extrude'?'Extrude':'Inset'} armed • enter exact model-unit value or drag`;
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.8',apply:value=>{input.value=String(value);applyExact();}};
+window.__boxlabPrecisionFace={version:'0.36.18.74',apply:value=>{input.value=String(value);applyExact();},last:()=>globalThis.__boxlabLastFaceOperation||null};
