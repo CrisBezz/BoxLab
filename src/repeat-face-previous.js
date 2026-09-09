@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.79 — direct one-click Repeat Previous for Face Extrude / Inset.
+// BoxLab v0.36.18.80 — direct one-click Repeat Previous with explicit armed UI state.
 // Repeat ray-picks the tapped Face itself, then reuses the existing precision/direct
 // Face path. No geometry kernel is duplicated and no normal selection handoff is required.
 
@@ -30,25 +30,17 @@ function lastOperation(){
 function shortLabel(op){return op?`${op.tool==='extrude'?'Extrude':'Inset'} ${op.value.toFixed(3)}`:'';}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 
-if(!document.querySelector('#boxlabRepeatFaceStyle')){
-  const style=document.createElement('style');
-  style.id='boxlabRepeatFaceStyle';
-  style.textContent='#repeatFacePreviousBtn.boxlab-repeat-armed{background:#f2f5fa!important;color:#111318!important;border-color:#f2f5fa!important;box-shadow:0 0 0 1px rgba(255,255,255,.2) inset!important;}';
-  document.head.appendChild(style);
-}
-
 const host=document.createElement('div');
 host.id='repeatFacePreviousRow';
 host.className='outliner-actions';
 host.style.cssText='grid-template-columns:1fr;margin:4px 0 2px';
 const button=document.createElement('button');
-button.id='repeatFacePreviousBtn';button.type='button';button.textContent='Repeat Previous';button.disabled=true;
+button.id='repeatFacePreviousBtn';button.type='button';button.textContent='Repeat Previous';button.disabled=true;button.setAttribute('aria-pressed','false');
 host.appendChild(button);
 
 function place(){
   const row=document.querySelector('#precisionFaceRow');
   if(row?.parentElement){
-    // Repeat belongs immediately under the precision Value / Apply row.
     if(host.parentElement!==row.parentElement||row.nextElementSibling!==host)row.insertAdjacentElement('afterend',host);
     return true;
   }
@@ -61,13 +53,30 @@ let armedOperation=null;
 let touch=null;
 let applying=false;
 
+function paintButton(){
+  button.setAttribute('aria-pressed',armed?'true':'false');
+  button.dataset.repeatArmed=armed?'true':'false';
+  if(armed){
+    button.style.setProperty('background','#f2f5fa','important');
+    button.style.setProperty('color','#111318','important');
+    button.style.setProperty('border-color','#f2f5fa','important');
+    button.style.setProperty('box-shadow','0 0 0 2px rgba(255,255,255,.28) inset','important');
+    button.style.setProperty('font-weight','700','important');
+  }else{
+    button.style.removeProperty('background');
+    button.style.removeProperty('color');
+    button.style.removeProperty('border-color');
+    button.style.removeProperty('box-shadow');
+    button.style.removeProperty('font-weight');
+  }
+}
+
 function syncButton(){
   place();
   const op=armed&&armedOperation?armedOperation:lastOperation();
   button.disabled=!op||!precision()?.apply;
-  button.classList.toggle('boxlab-repeat-armed',armed);
-  button.classList.toggle('active',armed);
-  button.textContent=op?(armed?`Repeat ON • ${shortLabel(op)}`:`Repeat ${shortLabel(op)}`):'Repeat Previous';
+  paintButton();
+  button.textContent=op?(armed?`REPEAT ON • ${shortLabel(op)}`:`Repeat ${shortLabel(op)}`):'Repeat Previous';
   button.title=op
     ?(armed?`${shortLabel(op)} armed — tap any Face to repeat`:`Repeat ${shortLabel(op)} with one Face tap`)
     :'Complete a normal Extrude or Inset first';
@@ -177,8 +186,6 @@ canvas?.addEventListener('pointerup',event=>{
   if(attempt.moved)return;
   const faceIndex=pickFace(event.clientX,event.clientY);
   if(!Number.isInteger(faceIndex)){if(status)status.textContent=`Repeat Previous • ${shortLabel(armedOperation)} armed • tap a Face`;return;}
-  // Do not wait for BoxLab's ordinary Face selection path. The tapped Face is
-  // the repeat target directly.
   event.preventDefault();
   event.stopImmediatePropagation();
   replayFace(faceIndex);
@@ -187,7 +194,6 @@ canvas?.addEventListener('pointercancel',event=>{if(touch?.id===event.pointerId)
 
 document.addEventListener('boxlab-face-value-committed',event=>{
   if(!armed){syncButton();return;}
-  // Synthetic repeat applies must not replace the value that is currently armed.
   if(!applying&&event.detail&&(event.detail.tool==='extrude'||event.detail.tool==='inset')&&Math.abs(Number(event.detail.value))>1e-9)armedOperation={tool:event.detail.tool,value:Number(event.detail.value)};
   syncButton();
 });
@@ -197,4 +203,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 [0,40,120,300,700].forEach(delay=>setTimeout(syncButton,delay));
 
-globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.79',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
+globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.80',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
