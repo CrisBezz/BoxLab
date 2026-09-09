@@ -1,3 +1,5 @@
+import './duplicate-faces.js?v=0.36.18.89';
+
 // BoxLab v0.36.18.88 — Face workflow layout polish.
 // UI-only: re-homes existing Face selection helper rows beneath Precision/Repeat.
 // Tool ownership, handlers, geometry and diagnostics remain untouched.
