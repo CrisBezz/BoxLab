@@ -33,10 +33,10 @@ function minBoundaryEdge(m,ids){const info=m?.faceRegionsInfo?.(ids);let min=Inf
 function dispatchGesture(start,end){const id=9876,base={bubbles:true,cancelable:true,composed:true,pointerId:id,pointerType:'pen',isPrimary:true,button:0,buttons:1,pressure:.5,clientX:start.x,clientY:start.y};canvas.dispatchEvent(new PointerEvent('pointerdown',base));canvas.dispatchEvent(new PointerEvent('pointermove',{...base,clientX:end.x,clientY:end.y}));canvas.dispatchEvent(new PointerEvent('pointerup',{...base,buttons:0,pressure:0,clientX:end.x,clientY:end.y}));}
 function commitOperation(tool,value,source='drag'){
   const number=Number(value);if((tool!=='extrude'&&tool!=='inset')||!Number.isFinite(number))return null;
-  const saved={tool,value:number,source,version:'0.36.18.81'};
+  const saved={tool,value:number,source,version:'0.36.18.83'};
   globalThis.__boxlabLastFaceOperation=saved;
   input.value=number.toFixed(3);
-  readout.textContent=`Last ${tool==='extrude'?'Extrude':'Inset'} • ${number.toFixed(3)}`;
+  readout.textContent=`Last ${tool==='extrude'?'Extrude':'Inset'} • ${number>=0?'+':''}${number.toFixed(3)}`;
   document.dispatchEvent(new CustomEvent('boxlab-face-value-committed',{detail:{...saved}}));
   return saved;
 }
@@ -71,21 +71,30 @@ let dragReadback=null;
 let dragStarted=false;
 let dragMeasure=null;
 let dragRepeatable=true;
+let canonicalExtrude=null;
 function rememberLive(tool,value){
   if(!dragStarted||!dragRepeatable||!Number.isFinite(value))return;
   dragReadback={tool,value};
 }
+function canonicalExtrudeFromStatus(text){
+  let match=text.match(/^Extrude\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
+  if(match){const value=Math.abs(Number(match[1]));return Number.isFinite(value)?value:null;}
+  match=text.match(/^Extrude In\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
+  if(match){const value=-Math.abs(Number(match[1]));return Number.isFinite(value)?value:null;}
+  return null;
+}
 function commitReadback(){
-  if(!dragStarted){dragReadback=null;dragMeasure=null;return;}
-  const saved=dragRepeatable?dragReadback:null;
-  dragStarted=false;dragReadback=null;dragMeasure=null;dragRepeatable=true;
+  if(!dragStarted){dragReadback=null;dragMeasure=null;canonicalExtrude=null;return;}
+  let saved=dragRepeatable?dragReadback:null;
+  if(saved?.tool==='extrude'&&Number.isFinite(canonicalExtrude))saved={tool:'extrude',value:canonicalExtrude};
+  dragStarted=false;dragReadback=null;dragMeasure=null;dragRepeatable=true;canonicalExtrude=null;
   if(!saved)return;
   commitOperation(saved.tool,saved.value,'drag');
 }
 canvas.addEventListener('pointerdown',event=>{
   if(event.pointerId===9876)return;
   const tool=activeTool();if(!tool)return;
-  dragStarted=true;dragReadback=null;dragRepeatable=true;
+  dragStarted=true;dragReadback=null;dragRepeatable=true;canonicalExtrude=null;
   const m=mesh(),ids=faces(),camera=state()?.camera;
   dragMeasure={tool,x:event.clientX,y:event.clientY,normal:tool==='extrude'&&m&&ids.length&&camera?faceNormalScreen(m,ids[0],camera):null};
 },true);
@@ -95,26 +104,31 @@ canvas.addEventListener('pointermove',event=>{
   if(Math.hypot(dx,dy)<8)return;
   const value=(dx*dragMeasure.normal.x+dy*dragMeasure.normal.y)*.006;
   rememberLive('extrude',value);
-  readout.textContent=`Live Extrude • ${value.toFixed(3)}`;
 },true);
 document.addEventListener('pointerup',event=>{
   if(!dragStarted||event.pointerId===9876)return;
   setTimeout(commitReadback,0);
 },true);
-document.addEventListener('pointercancel',event=>{if(event.pointerId!==9876){dragStarted=false;dragReadback=null;dragMeasure=null;dragRepeatable=true;}},true);
+document.addEventListener('pointercancel',event=>{if(event.pointerId!==9876){dragStarted=false;dragReadback=null;dragMeasure=null;dragRepeatable=true;canonicalExtrude=null;}},true);
 
 new MutationObserver(()=>{
   const text=status.textContent||'';
   if(/THROUGH READY|Extrude Through|BLOCKED|rollback/i.test(text)){
-    if(dragStarted){dragRepeatable=false;dragReadback=null;}
+    if(dragStarted){dragRepeatable=false;dragReadback=null;canonicalExtrude=null;}
+    return;
+  }
+  if(dragStarted&&dragMeasure?.tool==='extrude'){
+    const canonical=canonicalExtrudeFromStatus(text);
+    if(Number.isFinite(canonical)){
+      canonicalExtrude=canonical;
+      rememberLive('extrude',canonical);
+      readout.textContent=`Live Extrude • ${canonical>=0?'+':''}${canonical.toFixed(3)}`;
+    }
     return;
   }
   let match=text.match(/Uniform Inset.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
   if(match){const value=Number(match[1]);rememberLive('inset',value);readout.textContent=`Live Inset • ${value.toFixed(3)}`;return;}
-  if(dragStarted&&dragMeasure?.tool==='extrude')return;
-  match=text.match(/Extrude.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(match){const value=Number(match[1]);rememberLive('extrude',value);readout.textContent=`Live Extrude • ${value.toFixed(3)}`;return;}
   const tool=activeTool();if(tool&&!dragStarted)readout.textContent=`${tool==='extrude'?'Extrude':'Inset'} armed • enter exact model-unit value or drag`;
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.81',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
+window.__boxlabPrecisionFace={version:'0.36.18.83',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
