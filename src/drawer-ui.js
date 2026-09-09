@@ -72,6 +72,7 @@ import('./face-reconstruct.js?v=0.36.18.43').catch(error => console.warn('BoxLab
 import('./join-coplanar.js?v=0.36.18.38').catch(error => console.warn('BoxLab Join Coplanar failed to load', error));
 import('./clean-vertices.js?v=0.36.18.39').catch(error => console.warn('BoxLab Clean Vertices failed to load', error));
 import('./select-loose-vertices.js?v=0.36.18.56').catch(error => console.warn('BoxLab Select Loose Vertices failed to load', error));
+import('./safe-loose-vertex-delete.js?v=0.36.18.71').catch(error => console.warn('BoxLab safe loose Vertex Delete failed to load', error));
 import('./edge-topology-layout.js?v=0.36.18.40').catch(error => console.warn('BoxLab Edge topology layout failed to load', error));
 import('./select-non-manifold.js?v=0.36.18.44').catch(error => console.warn('BoxLab Select Non-Manifold failed to load', error));
 import('./select-loose-edges.js?v=0.36.18.57').catch(error => console.warn('BoxLab Select Loose Edges failed to load', error));
@@ -104,6 +105,6 @@ import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.18.70';
-  document.title = 'BoxLab v0.36.18.70';
+  if (version) version.textContent = 'v0.36.18.71';
+  document.title = 'BoxLab v0.36.18.71';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
