@@ -69,10 +69,17 @@ function sync(){
   button.title=count?`Duplicate ${count} selected Face${count===1?'':'s'} into a new object`:'Select one or more Faces to duplicate';
 }
 
+function stampVersion(){
+  const version=document.querySelector('#appVersion');
+  if(version)version.textContent='v0.36.18.89';
+  document.title='BoxLab v0.36.18.89';
+}
+
 button.addEventListener('click',duplicateFaces);
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
+[0,80,300,900].forEach(delay=>setTimeout(stampVersion,delay));
 
 globalThis.__boxlabDuplicateFaces={version:'0.36.18.89',duplicate:duplicateFaces};
