@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.82 — Repeat Previous owns Face taps before the normal drag controller.
+// BoxLab v0.36.18.83 — Repeat Previous owns Face taps before the normal drag controller.
 // A real Repeat tap is captured at window/pointerdown, before multi-face-direct can
 // start an Extrude/Inset drag. Replay still reuses the existing precision Face path.
 
@@ -24,7 +24,7 @@ function lastOperation(){
   if(match){const value=Number(match[2]);if(Number.isFinite(value)&&Math.abs(value)>1e-9)return{tool:match[1].toLowerCase(),value};}
   return null;
 }
-function shortLabel(op){return op?`${op.tool==='extrude'?'Extrude':'Inset'} ${op.value.toFixed(3)}`:'';}
+function shortLabel(op){return op?`${op.tool==='extrude'?'Extrude':'Inset'} ${op.value>=0?'+':''}${op.value.toFixed(3)}`:'';}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 
 const host=document.createElement('div');
@@ -48,6 +48,7 @@ function place(){
 let armed=false;
 let armedOperation=null;
 let applying=false;
+let paintTimers=[];
 
 function paintButton(){
   button.setAttribute('aria-pressed',armed?'true':'false');
@@ -70,13 +71,23 @@ function syncButton(){
   button.title=op?(armed?`${shortLabel(op)} armed — each Face tap repeats it`:`Arm one-click repeat of ${shortLabel(op)}`):'Complete a normal Extrude or Inset first';
   paintButton();
 }
-function forcePaint(){
-  syncButton();
-  void button.offsetWidth;
-  requestAnimationFrame(()=>{if(armed)syncButton();});
+function forcePaintBurst(){
+  paintTimers.forEach(clearTimeout);paintTimers=[];
+  const repaint=()=>{
+    syncButton();
+    void host.offsetHeight;
+    if(armed){
+      host.style.setProperty('transform','translateZ(0)');
+      button.style.setProperty('transform','translateZ(0)');
+    }else{
+      host.style.removeProperty('transform');button.style.removeProperty('transform');
+    }
+  };
+  repaint();
+  [0,16,40,90,180].forEach(delay=>paintTimers.push(setTimeout(repaint,delay)));
 }
 function disarm(message){
-  armed=false;armedOperation=null;forcePaint();
+  armed=false;armedOperation=null;forcePaintBurst();
   if(message&&status)status.textContent=message;
 }
 function arm(){
@@ -86,7 +97,8 @@ function arm(){
   const mode=faceMode();if(mode&&!mode.classList.contains('active'))mode.click();
   if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
   armed=true;armedOperation={...op};
-  forcePaint();
+  button.blur?.();
+  forcePaintBurst();
   if(status)status.textContent=`Repeat Previous • ${shortLabel(op)} armed • tap Faces to repeat`;
 }
 button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();arm();});
@@ -136,7 +148,7 @@ function replayFace(faceIndex){
     ok=api.applyFor(op.tool,op.value)!==false;
     if(status)status.textContent=ok?`Repeat Previous • ${shortLabel(op)} applied • tap another Face`:`Repeat Previous • ${shortLabel(op)} could not be applied to this Face`;
   }finally{
-    setTimeout(()=>{applying=false;armedOperation=op;forcePaint();},0);
+    setTimeout(()=>{applying=false;armedOperation=op;forcePaintBurst();},0);
   }
   return ok;
 }
@@ -155,7 +167,7 @@ window.addEventListener('pointerdown',event=>{
 document.addEventListener('boxlab-face-value-committed',event=>{
   if(!armed){syncButton();return;}
   if(!applying&&event.detail&&(event.detail.tool==='extrude'||event.detail.tool==='inset')&&Math.abs(Number(event.detail.value))>1e-9)armedOperation={tool:event.detail.tool,value:Number(event.detail.value)};
-  forcePaint();
+  forcePaintBurst();
 });
 window.addEventListener('boxlab-bridge-state',()=>{
   if(armed&&bridge()?.mode?.()!=='face'){disarm();return;}
@@ -163,4 +175,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 [0,40,120,300,700].forEach(delay=>setTimeout(syncButton,delay));
 
-globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.82',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
+globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.83',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
