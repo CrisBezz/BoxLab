@@ -1,14 +1,12 @@
-// BoxLab v0.36.18.80 — direct one-click Repeat Previous with explicit armed UI state.
-// Repeat ray-picks the tapped Face itself, then reuses the existing precision/direct
-// Face path. No geometry kernel is duplicated and no normal selection handoff is required.
+// BoxLab v0.36.18.81 — independent one-click Repeat Previous for Face Extrude / Inset.
+// Repeat owns its armed state independently. It ray-picks a Face, then temporarily
+// invokes the existing precision/direct Face path for that one replay only.
 
 import * as THREE from 'three';
 
 const canvas=document.querySelector('#viewport');
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 const status=document.querySelector('#selectionStatus');
-const extrudeButton=document.querySelector('#extrudeBtn');
-const insetButton=document.querySelector('#insetBtn');
 const multiToggle=document.querySelector('#multiSelectToggle');
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
@@ -18,7 +16,6 @@ function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
 function precision(){return globalThis.__boxlabPrecisionFace;}
 function faceMode(){return document.querySelector('#selectionModes button[data-mode="face"]');}
-function toolActive(button){return !!(button?.classList.contains('boxlab-direct-stable')||button?.classList.contains('active'));}
 function lastOperation(){
   const direct=globalThis.__boxlabLastFaceOperation||precision()?.last?.();
   if(direct&&(direct.tool==='extrude'||direct.tool==='inset')&&Number.isFinite(Number(direct.value))&&Math.abs(Number(direct.value))>1e-9)return{tool:direct.tool,value:Number(direct.value)};
@@ -57,112 +54,80 @@ function paintButton(){
   button.setAttribute('aria-pressed',armed?'true':'false');
   button.dataset.repeatArmed=armed?'true':'false';
   if(armed){
-    button.style.setProperty('background','#f2f5fa','important');
-    button.style.setProperty('color','#111318','important');
-    button.style.setProperty('border-color','#f2f5fa','important');
-    button.style.setProperty('box-shadow','0 0 0 2px rgba(255,255,255,.28) inset','important');
-    button.style.setProperty('font-weight','700','important');
-  }else{
-    button.style.removeProperty('background');
-    button.style.removeProperty('color');
-    button.style.removeProperty('border-color');
-    button.style.removeProperty('box-shadow');
-    button.style.removeProperty('font-weight');
-  }
+    button.style.cssText='background:#f2f5fa!important;color:#111318!important;border-color:#f2f5fa!important;box-shadow:0 0 0 2px rgba(255,255,255,.28) inset!important;font-weight:700!important;';
+  }else button.removeAttribute('style');
 }
-
 function syncButton(){
   place();
   const op=armed&&armedOperation?armedOperation:lastOperation();
-  button.disabled=!op||!precision()?.apply;
+  button.disabled=!op||!precision()?.applyFor;
   paintButton();
   button.textContent=op?(armed?`REPEAT ON • ${shortLabel(op)}`:`Repeat ${shortLabel(op)}`):'Repeat Previous';
   button.title=op
-    ?(armed?`${shortLabel(op)} armed — tap any Face to repeat`:`Repeat ${shortLabel(op)} with one Face tap`)
+    ?(armed?`${shortLabel(op)} armed — each Face tap repeats it`:`Arm one-click repeat of ${shortLabel(op)}`)
     :'Complete a normal Extrude or Inset first';
 }
-
 function disarm(message){
   armed=false;armedOperation=null;touch=null;
   syncButton();
   if(message&&status)status.textContent=message;
 }
-
-function armMatchingTool(op){
-  const target=op.tool==='extrude'?extrudeButton:insetButton;
-  const other=op.tool==='extrude'?insetButton:extrudeButton;
-  if(toolActive(other)||!toolActive(target))target?.click?.();
-  return toolActive(target);
-}
-
 function arm(){
   const op=lastOperation();
-  if(!op||!precision()?.apply){syncButton();return;}
+  if(!op||!precision()?.applyFor){syncButton();return;}
   if(armed){disarm('Repeat Previous • off');return;}
   const mode=faceMode();if(mode&&!mode.classList.contains('active'))mode.click();
   if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
   armed=true;armedOperation={...op};
-  armMatchingTool(armedOperation);
   syncButton();
   if(status)status.textContent=`Repeat Previous • ${shortLabel(op)} armed • tap Faces to repeat`;
 }
 button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();arm();});
 
-// Explicitly choosing another modelling or selection tool exits Repeat.
+// A real user choice of another tool exits Repeat. Programmatic precision replay
+// uses click(), not pointerdown, so it cannot cancel this independent state.
 document.addEventListener('pointerdown',event=>{
-  if(!armed||event.target===button)return;
+  if(!armed)return;
   const target=event.target?.closest?.('button');
-  if(target&&(target.closest('#selectionModes')||target.closest('[data-mode-tools="face"]')||target.closest('#toolModes'))&&target!==button)disarm();
+  if(!target||target===button)return;
+  if(target.closest('#selectionModes')||target.closest('[data-mode-tools="face"]')||target.closest('#toolModes'))disarm();
 },true);
 
 function setPointer(clientX,clientY){
   const r=canvas.getBoundingClientRect();
   pointer.set((clientX-r.left)/r.width*2-1,-((clientY-r.top)/r.height*2-1));
 }
-
 function pickFace(clientX,clientY){
   const m=mesh(),camera=state()?.camera;
   if(!m||!camera)return null;
-  setPointer(clientX,clientY);
-  raycaster.setFromCamera(pointer,camera);
+  setPointer(clientX,clientY);raycaster.setFromCamera(pointer,camera);
   let best=null;
   for(let fi=0;fi<(m.faces||[]).length;fi++){
-    const face=m.faces[fi];
-    if(!Array.isArray(face)||face.length<3)continue;
+    const face=m.faces[fi];if(!Array.isArray(face)||face.length<3)continue;
     const positions=[];
     for(let i=1;i<face.length-1;i++){
-      for(const vi of[face[0],face[i],face[i+1]]){
-        const v=m.vertices?.[vi];if(!v){positions.length=0;break;}
-        positions.push(v.x,v.y,v.z);
-      }
-      if(!positions.length)break;
+      for(const vi of[face[0],face[i],face[i+1]]){const v=m.vertices?.[vi];if(!v){positions.length=0;break;}positions.push(v.x,v.y,v.z);}if(!positions.length)break;
     }
     if(!positions.length)continue;
-    const geometry=new THREE.BufferGeometry();
-    geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+    const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
     const material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
-    const picker=new THREE.Mesh(geometry,material);
-    const hit=raycaster.intersectObject(picker,false)[0];
+    const picker=new THREE.Mesh(geometry,material);const hit=raycaster.intersectObject(picker,false)[0];
     geometry.dispose();material.dispose();
     if(hit&&(!best||hit.distance<best.distance))best={faceIndex:fi,distance:hit.distance};
   }
   return best?.faceIndex??null;
 }
-
 function replayFace(faceIndex){
   if(!armed||applying||!armedOperation||!Number.isInteger(faceIndex))return false;
-  const m=mesh();
-  if(!Array.isArray(m?.faces?.[faceIndex]))return false;
+  const m=mesh();if(!Array.isArray(m?.faces?.[faceIndex]))return false;
   const op={...armedOperation};
-  if(!armMatchingTool(op))return false;
   if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
-  bridge()?.set?.('face',[faceIndex]);
-  render();
-  const api=precision();if(!api?.apply)return false;
+  bridge()?.set?.('face',[faceIndex]);render();
+  const api=precision();if(!api?.applyFor)return false;
   applying=true;
   let ok=false;
   try{
-    ok=api.apply(op.value)!==false;
+    ok=api.applyFor(op.tool,op.value)!==false;
     if(status)status.textContent=ok
       ?`Repeat Previous • ${shortLabel(op)} applied • tap another Face`
       :`Repeat Previous • ${shortLabel(op)} could not be applied to this Face`;
@@ -182,13 +147,10 @@ canvas?.addEventListener('pointermove',event=>{
 },true);
 canvas?.addEventListener('pointerup',event=>{
   if(!armed||applying||!touch||touch.id!==event.pointerId||event.pointerId===9876)return;
-  const attempt=touch;touch=null;
-  if(attempt.moved)return;
+  const attempt=touch;touch=null;if(attempt.moved)return;
   const faceIndex=pickFace(event.clientX,event.clientY);
   if(!Number.isInteger(faceIndex)){if(status)status.textContent=`Repeat Previous • ${shortLabel(armedOperation)} armed • tap a Face`;return;}
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  replayFace(faceIndex);
+  event.preventDefault();event.stopImmediatePropagation();replayFace(faceIndex);
 },true);
 canvas?.addEventListener('pointercancel',event=>{if(touch?.id===event.pointerId)touch=null;},true);
 
@@ -203,4 +165,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 [0,40,120,300,700].forEach(delay=>setTimeout(syncButton,delay));
 
-globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.80',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
+globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.81',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
