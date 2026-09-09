@@ -33,7 +33,7 @@ function minBoundaryEdge(m,ids){const info=m?.faceRegionsInfo?.(ids);let min=Inf
 function dispatchGesture(start,end){const id=9876,base={bubbles:true,cancelable:true,composed:true,pointerId:id,pointerType:'pen',isPrimary:true,button:0,buttons:1,pressure:.5,clientX:start.x,clientY:start.y};canvas.dispatchEvent(new PointerEvent('pointerdown',base));canvas.dispatchEvent(new PointerEvent('pointermove',{...base,clientX:end.x,clientY:end.y}));canvas.dispatchEvent(new PointerEvent('pointerup',{...base,buttons:0,pressure:0,clientX:end.x,clientY:end.y}));}
 function commitOperation(tool,value,source='drag'){
   const number=Number(value);if((tool!=='extrude'&&tool!=='inset')||!Number.isFinite(number))return null;
-  const saved={tool,value:number,source,version:'0.36.18.78'};
+  const saved={tool,value:number,source,version:'0.36.18.81'};
   globalThis.__boxlabLastFaceOperation=saved;
   input.value=number.toFixed(3);
   readout.textContent=`Last ${tool==='extrude'?'Extrude':'Inset'} • ${number.toFixed(3)}`;
@@ -49,6 +49,20 @@ function applyExact(){const tool=activeTool(),m=mesh(),ids=faces(),camera=state(
   dispatchGesture(start,{x:start.x+dx,y:start.y+dy});
   commitOperation(tool,value,'exact');
   return true;
+}
+function applyFor(tool,value){
+  if(tool!=='extrude'&&tool!=='inset')return false;
+  const target=tool==='extrude'?extrudeButton:insetButton;
+  const other=tool==='extrude'?insetButton:extrudeButton;
+  if(activeTool()!==tool){
+    if(activeTool()&&other)other.click();
+    if(activeTool()!==tool)target?.click?.();
+  }
+  if(activeTool()!==tool)return false;
+  input.value=String(value);
+  const ok=applyExact();
+  if(activeTool()===tool)target?.click?.();
+  return ok;
 }
 apply.addEventListener('click',applyExact);
 input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();applyExact();input.blur();}});
@@ -103,4 +117,4 @@ new MutationObserver(()=>{
   const tool=activeTool();if(tool&&!dragStarted)readout.textContent=`${tool==='extrude'?'Extrude':'Inset'} armed • enter exact model-unit value or drag`;
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.78',apply:value=>{input.value=String(value);return applyExact();},last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
+window.__boxlabPrecisionFace={version:'0.36.18.81',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
