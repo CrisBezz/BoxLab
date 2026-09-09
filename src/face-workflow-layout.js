@@ -1,8 +1,8 @@
 import './duplicate-faces.js?v=0.36.18.89';
+import './flip-faces.js?v=0.36.18.90';
 
-// BoxLab v0.36.18.88 — Face workflow layout polish.
-// UI-only: re-homes existing Face selection helper rows beneath Precision/Repeat.
-// Tool ownership, handlers, geometry and diagnostics remain untouched.
+// BoxLab v0.36.18.90 — Face workflow layout polish + Face repair tool loading.
+// UI-only layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 
@@ -65,4 +65,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.88',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.90',sync};
