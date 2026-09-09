@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.70 — explicit multi-Face coplanar join.
+// BoxLab v0.36.18.75 — explicit multi-Face coplanar join, UI placement polish.
 // Joins one edge-connected, coplanar Face selection into a single polygon by
 // rebuilding only the selected region boundary. No automatic vertex cleanup.
 
@@ -18,16 +18,22 @@ function edgeKey(a,b){return a<b?`${a}:${b}`:`${b}:${a}`;}
 const button=document.createElement('button');
 button.id='joinSelectedCoplanarFacesBtn';
 button.type='button';
-button.textContent='Join Coplanar Faces';
+button.textContent='Join Coplanar';
 button.disabled=true;
 button.style.width='100%';
 button.style.minWidth='0';
 
 function place(){
-  const row=document.querySelector('#coplanarRegionRow');
-  if(row){
-    row.style.gridTemplateColumns='repeat(2,minmax(0,1fr))';
-    if(button.parentElement!==row)row.appendChild(button);
+  const extrude=document.querySelector('#extrudeBtn');
+  const inset=document.querySelector('#insetBtn');
+  const knife=document.querySelector('#knifeBtn');
+  const row=extrude?.parentElement;
+  if(row&&inset&&knife){
+    row.style.gridTemplateColumns='repeat(4,minmax(0,1fr))';
+    for(const item of [extrude,inset,knife,button]){
+      item.style.minWidth='0';
+      row.appendChild(item);
+    }
     return true;
   }
   return false;
@@ -183,7 +189,7 @@ function apply(){
   const info=plan(m,ids);
   if(!info.ok){if(status)status.textContent=`Join Coplanar Faces • ${info.reason}`;sync();return;}
 
-  history.push(m.clone()); // safe selection history records the source Face region.
+  history.push(m.clone());
   const selected=new Set(info.faceIndices);
   const insertAt=info.faceIndices[0];
   const faces=[];
@@ -232,4 +238,4 @@ setTimeout(()=>{
   faceTools?.appendChild(host);
 },900);
 
-globalThis.__boxlabJoinSelectedCoplanarFaces={version:'0.36.18.70',plan,apply};
+globalThis.__boxlabJoinSelectedCoplanarFaces={version:'0.36.18.75',plan,apply};
