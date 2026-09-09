@@ -1,12 +1,11 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.38 — explicit conservative Join Coplanar.
+// BoxLab v0.36.18.75 — explicit conservative Join Coplanar, UI placement polish.
 // Uses the existing stable dissolveEdge kernel only after verifying that the
 // selected shared edge separates exactly two genuinely coplanar, uncreased faces.
 
 const status=document.querySelector('#selectionStatus');
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
-const collapseButton=document.querySelector('#collapseEdgeBtn');
 const multiToggle=document.querySelector('#multiSelectToggle');
 
 function state(){return globalThis.__boxlabBridgeState;}
@@ -21,11 +20,20 @@ button.type='button';
 button.textContent='Join Coplanar';
 button.disabled=true;
 
-const topologyRow=collapseButton?.parentElement;
-if(topologyRow){
-  topologyRow.style.gridTemplateColumns='repeat(5,1fr)';
-  topologyRow.insertBefore(button,collapseButton.nextSibling);
-}else edgeTools?.append(button);
+function place(){
+  const bridgeButton=document.querySelector('#bridgeEdgesBtn');
+  const fillButton=document.querySelector('#fillFaceBtn');
+  const row=bridgeButton?.parentElement;
+  if(row&&fillButton){
+    row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+    bridgeButton.style.minWidth='0';fillButton.style.minWidth='0';button.style.minWidth='0';
+    if(button.parentElement!==row)row.appendChild(button);
+    return true;
+  }
+  if(!button.isConnected&&edgeTools)edgeTools.append(button);
+  return false;
+}
+place();
 
 function scaleTolerance(m,faceIndices){
   const box=new THREE.Box3();
@@ -70,14 +78,13 @@ function applyJoin(){
   if(!info.ok){if(status)status.textContent=`Join Coplanar • ${info.reason}`;sync();return;}
 
   const before=m.clone();
-  history.push(before); // selection-aware history keeps the original shared edge.
+  history.push(before);
   const result=m.dissolveEdge(ids[0]);
   if(!result){
     if(status)status.textContent='Join Coplanar • merge failed';
     return;
   }
 
-  // Avoid selection-conversion carry-over from the now-removed edge.
   bridge()?.set?.('edge',[]);
   if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
   const faceMode=document.querySelector('#selectionModes button[data-mode="face"]');
@@ -90,6 +97,7 @@ function applyJoin(){
 }
 
 function sync(){
+  place();
   const m=mesh(),ids=selectedEdges();
   const info=m&&ids.length===1?joinInfo(m,ids[0]):null;
   button.disabled=!info?.ok;
@@ -102,4 +110,4 @@ document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 setTimeout(sync,0);
 
-globalThis.__boxlabJoinCoplanar={version:'0.36.18.38',info:joinInfo,apply:applyJoin};
+globalThis.__boxlabJoinCoplanar={version:'0.36.18.75',info:joinInfo,apply:applyJoin};
