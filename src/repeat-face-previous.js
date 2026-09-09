@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.81 — independent one-click Repeat Previous for Face Extrude / Inset.
-// Repeat owns its armed state independently. It ray-picks a Face, then temporarily
-// invokes the existing precision/direct Face path for that one replay only.
+// BoxLab v0.36.18.82 — Repeat Previous owns Face taps before the normal drag controller.
+// A real Repeat tap is captured at window/pointerdown, before multi-face-direct can
+// start an Extrude/Inset drag. Replay still reuses the existing precision Face path.
 
 import * as THREE from 'three';
 
@@ -47,29 +47,36 @@ function place(){
 
 let armed=false;
 let armedOperation=null;
-let touch=null;
 let applying=false;
 
 function paintButton(){
   button.setAttribute('aria-pressed',armed?'true':'false');
   button.dataset.repeatArmed=armed?'true':'false';
   if(armed){
-    button.style.cssText='background:#f2f5fa!important;color:#111318!important;border-color:#f2f5fa!important;box-shadow:0 0 0 2px rgba(255,255,255,.28) inset!important;font-weight:700!important;';
-  }else button.removeAttribute('style');
+    button.style.setProperty('background','#f2f5fa','important');
+    button.style.setProperty('color','#111318','important');
+    button.style.setProperty('border-color','#f2f5fa','important');
+    button.style.setProperty('box-shadow','0 0 0 2px rgba(255,255,255,.28) inset','important');
+    button.style.setProperty('font-weight','700','important');
+  }else{
+    button.style.removeProperty('background');button.style.removeProperty('color');button.style.removeProperty('border-color');button.style.removeProperty('box-shadow');button.style.removeProperty('font-weight');
+  }
 }
 function syncButton(){
   place();
   const op=armed&&armedOperation?armedOperation:lastOperation();
   button.disabled=!op||!precision()?.applyFor;
-  paintButton();
   button.textContent=op?(armed?`REPEAT ON • ${shortLabel(op)}`:`Repeat ${shortLabel(op)}`):'Repeat Previous';
-  button.title=op
-    ?(armed?`${shortLabel(op)} armed — each Face tap repeats it`:`Arm one-click repeat of ${shortLabel(op)}`)
-    :'Complete a normal Extrude or Inset first';
+  button.title=op?(armed?`${shortLabel(op)} armed — each Face tap repeats it`:`Arm one-click repeat of ${shortLabel(op)}`):'Complete a normal Extrude or Inset first';
+  paintButton();
+}
+function forcePaint(){
+  syncButton();
+  void button.offsetWidth;
+  requestAnimationFrame(()=>{if(armed)syncButton();});
 }
 function disarm(message){
-  armed=false;armedOperation=null;touch=null;
-  syncButton();
+  armed=false;armedOperation=null;forcePaint();
   if(message&&status)status.textContent=message;
 }
 function arm(){
@@ -79,13 +86,13 @@ function arm(){
   const mode=faceMode();if(mode&&!mode.classList.contains('active'))mode.click();
   if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
   armed=true;armedOperation={...op};
-  syncButton();
+  forcePaint();
   if(status)status.textContent=`Repeat Previous • ${shortLabel(op)} armed • tap Faces to repeat`;
 }
 button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();arm();});
 
-// A real user choice of another tool exits Repeat. Programmatic precision replay
-// uses click(), not pointerdown, so it cannot cancel this independent state.
+// Choosing another explicit tool exits Repeat. Programmatic replay uses click(), not
+// pointerdown, so this only reacts to a real user tool choice.
 document.addEventListener('pointerdown',event=>{
   if(!armed)return;
   const target=event.target?.closest?.('button');
@@ -98,8 +105,7 @@ function setPointer(clientX,clientY){
   pointer.set((clientX-r.left)/r.width*2-1,-((clientY-r.top)/r.height*2-1));
 }
 function pickFace(clientX,clientY){
-  const m=mesh(),camera=state()?.camera;
-  if(!m||!camera)return null;
+  const m=mesh(),camera=state()?.camera;if(!m||!camera)return null;
   setPointer(clientX,clientY);raycaster.setFromCamera(pointer,camera);
   let best=null;
   for(let fi=0;fi<(m.faces||[]).length;fi++){
@@ -128,36 +134,28 @@ function replayFace(faceIndex){
   let ok=false;
   try{
     ok=api.applyFor(op.tool,op.value)!==false;
-    if(status)status.textContent=ok
-      ?`Repeat Previous • ${shortLabel(op)} applied • tap another Face`
-      :`Repeat Previous • ${shortLabel(op)} could not be applied to this Face`;
+    if(status)status.textContent=ok?`Repeat Previous • ${shortLabel(op)} applied • tap another Face`:`Repeat Previous • ${shortLabel(op)} could not be applied to this Face`;
   }finally{
-    setTimeout(()=>{applying=false;armedOperation=op;syncButton();},0);
+    setTimeout(()=>{applying=false;armedOperation=op;forcePaint();},0);
   }
   return ok;
 }
 
-canvas?.addEventListener('pointerdown',event=>{
-  if(!armed||applying||!event.isPrimary||event.pointerId===9876)return;
-  touch={id:event.pointerId,x:event.clientX,y:event.clientY,moved:false};
-},true);
-canvas?.addEventListener('pointermove',event=>{
-  if(!touch||touch.id!==event.pointerId)return;
-  if(Math.hypot(event.clientX-touch.x,event.clientY-touch.y)>7)touch.moved=true;
-},true);
-canvas?.addEventListener('pointerup',event=>{
-  if(!armed||applying||!touch||touch.id!==event.pointerId||event.pointerId===9876)return;
-  const attempt=touch;touch=null;if(attempt.moved)return;
+// IMPORTANT: window capture runs before document capture, so the normal Face drag
+// controller never sees a repeat tap. This is the event boundary that 18.76–81 missed.
+window.addEventListener('pointerdown',event=>{
+  if(!armed||applying||!event.isPrimary||event.pointerId===9876||event.target!==canvas)return;
   const faceIndex=pickFace(event.clientX,event.clientY);
-  if(!Number.isInteger(faceIndex)){if(status)status.textContent=`Repeat Previous • ${shortLabel(armedOperation)} armed • tap a Face`;return;}
-  event.preventDefault();event.stopImmediatePropagation();replayFace(faceIndex);
+  if(!Number.isInteger(faceIndex))return; // empty-space navigation remains available
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  setTimeout(()=>replayFace(faceIndex),0);
 },true);
-canvas?.addEventListener('pointercancel',event=>{if(touch?.id===event.pointerId)touch=null;},true);
 
 document.addEventListener('boxlab-face-value-committed',event=>{
   if(!armed){syncButton();return;}
   if(!applying&&event.detail&&(event.detail.tool==='extrude'||event.detail.tool==='inset')&&Math.abs(Number(event.detail.value))>1e-9)armedOperation={tool:event.detail.tool,value:Number(event.detail.value)};
-  syncButton();
+  forcePaint();
 });
 window.addEventListener('boxlab-bridge-state',()=>{
   if(armed&&bridge()?.mode?.()!=='face'){disarm();return;}
@@ -165,4 +163,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 [0,40,120,300,700].forEach(delay=>setTimeout(syncButton,delay));
 
-globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.81',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
+globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.82',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
