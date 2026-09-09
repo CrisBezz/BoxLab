@@ -33,20 +33,24 @@ function minBoundaryEdge(m,ids){const info=m?.faceRegionsInfo?.(ids);let min=Inf
 function dispatchGesture(start,end){const id=9876,base={bubbles:true,cancelable:true,composed:true,pointerId:id,pointerType:'pen',isPrimary:true,button:0,buttons:1,pressure:.5,clientX:start.x,clientY:start.y};canvas.dispatchEvent(new PointerEvent('pointerdown',base));canvas.dispatchEvent(new PointerEvent('pointermove',{...base,clientX:end.x,clientY:end.y}));canvas.dispatchEvent(new PointerEvent('pointerup',{...base,buttons:0,pressure:0,clientX:end.x,clientY:end.y}));}
 function commitOperation(tool,value,source='drag'){
   const number=Number(value);if((tool!=='extrude'&&tool!=='inset')||!Number.isFinite(number))return null;
-  const saved={tool,value:number,source,version:'0.36.18.83'};
+  const saved={tool,value:number,source,version:'0.36.18.84'};
   globalThis.__boxlabLastFaceOperation=saved;
   input.value=number.toFixed(3);
   readout.textContent=`Last ${tool==='extrude'?'Extrude':'Inset'} • ${number>=0?'+':''}${number.toFixed(3)}`;
   document.dispatchEvent(new CustomEvent('boxlab-face-value-committed',{detail:{...saved}}));
   return saved;
 }
+
+let suppressStatusCapture=false;
 function applyExact(){const tool=activeTool(),m=mesh(),ids=faces(),camera=state()?.camera,value=Number(input.value);if(!tool||!m||!ids.length||!camera||!Number.isFinite(value)){readout.textContent='Arm Extrude or Inset, select face(s), then enter a value';return false;}const fi=ids[0],c=centerOfFace(m,fi);if(!c)return false;const start=screenPoint(c,camera);let dx=0,dy=0;
   if(tool==='extrude'){
     const n=faceNormalScreen(m,fi,camera),pixels=value/.006;dx=n.x*pixels;dy=n.y*pixels;
   }else{
     const minEdge=minBoundaryEdge(m,ids);if(!minEdge||minEdge<=1e-8){readout.textContent='Inset exact value unavailable for this selection';return false;}const amount=THREE.MathUtils.clamp(Math.abs(value)/(minEdge*.5),.01,.95),pixels=amount/.004;dx=pixels*.5;dy=-pixels*.5;
   }
-  dispatchGesture(start,{x:start.x+dx,y:start.y+dy});
+  suppressStatusCapture=true;
+  try{dispatchGesture(start,{x:start.x+dx,y:start.y+dy});}
+  finally{queueMicrotask(()=>{suppressStatusCapture=false;});}
   commitOperation(tool,value,'exact');
   return true;
 }
@@ -67,68 +71,56 @@ function applyFor(tool,value){
 apply.addEventListener('click',applyExact);
 input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();applyExact();input.blur();}});
 
-let dragReadback=null;
-let dragStarted=false;
-let dragMeasure=null;
-let dragRepeatable=true;
-let canonicalExtrude=null;
-function rememberLive(tool,value){
-  if(!dragStarted||!dragRepeatable||!Number.isFinite(value))return;
-  dragReadback={tool,value};
-}
-function canonicalExtrudeFromStatus(text){
+// A navigation gesture must never become a Face-tool value. We no longer infer
+// extrusion distance from viewport pointer movement. The only repeatable candidate
+// comes from the stable Face controller's own status while a real pointer gesture is live.
+let gestureActive=false;
+let gesturePointer=null;
+let gestureCandidate=null;
+let gestureRepeatable=true;
+
+function canonicalCandidate(text){
   let match=text.match(/^Extrude\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(match){const value=Math.abs(Number(match[1]));return Number.isFinite(value)?value:null;}
+  if(match){const value=Math.abs(Number(match[1]));return Number.isFinite(value)?{tool:'extrude',value}:null;}
   match=text.match(/^Extrude In\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(match){const value=-Math.abs(Number(match[1]));return Number.isFinite(value)?value:null;}
+  if(match){const value=-Math.abs(Number(match[1]));return Number.isFinite(value)?{tool:'extrude',value}:null;}
+  match=text.match(/^Uniform Inset\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
+  if(match){const value=Number(match[1]);return Number.isFinite(value)?{tool:'inset',value}:null;}
   return null;
 }
-function commitReadback(){
-  if(!dragStarted){dragReadback=null;dragMeasure=null;canonicalExtrude=null;return;}
-  let saved=dragRepeatable?dragReadback:null;
-  if(saved?.tool==='extrude'&&Number.isFinite(canonicalExtrude))saved={tool:'extrude',value:canonicalExtrude};
-  dragStarted=false;dragReadback=null;dragMeasure=null;dragRepeatable=true;canonicalExtrude=null;
-  if(!saved)return;
-  commitOperation(saved.tool,saved.value,'drag');
-}
+
 canvas.addEventListener('pointerdown',event=>{
-  if(event.pointerId===9876)return;
-  const tool=activeTool();if(!tool)return;
-  dragStarted=true;dragReadback=null;dragRepeatable=true;canonicalExtrude=null;
-  const m=mesh(),ids=faces(),camera=state()?.camera;
-  dragMeasure={tool,x:event.clientX,y:event.clientY,normal:tool==='extrude'&&m&&ids.length&&camera?faceNormalScreen(m,ids[0],camera):null};
+  if(event.pointerId===9876||!activeTool())return;
+  gestureActive=true;gesturePointer=event.pointerId;gestureCandidate=null;gestureRepeatable=true;
 },true);
-canvas.addEventListener('pointermove',event=>{
-  if(!dragStarted||event.pointerId===9876||dragMeasure?.tool!=='extrude'||!dragMeasure.normal)return;
-  const dx=event.clientX-dragMeasure.x,dy=event.clientY-dragMeasure.y;
-  if(Math.hypot(dx,dy)<8)return;
-  const value=(dx*dragMeasure.normal.x+dy*dragMeasure.normal.y)*.006;
-  rememberLive('extrude',value);
-},true);
+
 document.addEventListener('pointerup',event=>{
-  if(!dragStarted||event.pointerId===9876)return;
-  setTimeout(commitReadback,0);
+  if(!gestureActive||event.pointerId!==gesturePointer||event.pointerId===9876)return;
+  const saved=gestureRepeatable?gestureCandidate:null;
+  gestureActive=false;gesturePointer=null;gestureCandidate=null;gestureRepeatable=true;
+  if(saved)setTimeout(()=>commitOperation(saved.tool,saved.value,'drag'),0);
 },true);
-document.addEventListener('pointercancel',event=>{if(event.pointerId!==9876){dragStarted=false;dragReadback=null;dragMeasure=null;dragRepeatable=true;canonicalExtrude=null;}},true);
+
+document.addEventListener('pointercancel',event=>{
+  if(event.pointerId!==gesturePointer)return;
+  gestureActive=false;gesturePointer=null;gestureCandidate=null;gestureRepeatable=true;
+},true);
 
 new MutationObserver(()=>{
   const text=status.textContent||'';
-  if(/THROUGH READY|Extrude Through|BLOCKED|rollback/i.test(text)){
-    if(dragStarted){dragRepeatable=false;dragReadback=null;canonicalExtrude=null;}
-    return;
+  if(suppressStatusCapture)return;
+  if(gestureActive&&/THROUGH READY|Extrude Through|BLOCKED|rollback/i.test(text)){
+    gestureRepeatable=false;gestureCandidate=null;return;
   }
-  if(dragStarted&&dragMeasure?.tool==='extrude'){
-    const canonical=canonicalExtrudeFromStatus(text);
-    if(Number.isFinite(canonical)){
-      canonicalExtrude=canonical;
-      rememberLive('extrude',canonical);
-      readout.textContent=`Live Extrude • ${canonical>=0?'+':''}${canonical.toFixed(3)}`;
+  if(gestureActive&&gestureRepeatable){
+    const candidate=canonicalCandidate(text);
+    if(candidate){
+      gestureCandidate=candidate;
+      readout.textContent=`Live ${candidate.tool==='extrude'?'Extrude':'Inset'} • ${candidate.value>=0?'+':''}${candidate.value.toFixed(3)}`;
+      return;
     }
-    return;
   }
-  let match=text.match(/Uniform Inset.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(match){const value=Number(match[1]);rememberLive('inset',value);readout.textContent=`Live Inset • ${value.toFixed(3)}`;return;}
-  const tool=activeTool();if(tool&&!dragStarted)readout.textContent=`${tool==='extrude'?'Extrude':'Inset'} armed • enter exact model-unit value or drag`;
+  const tool=activeTool();if(tool&&!gestureActive)readout.textContent=`${tool==='extrude'?'Extrude':'Inset'} armed • enter exact model-unit value or drag`;
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.83',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
+window.__boxlabPrecisionFace={version:'0.36.18.84',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
