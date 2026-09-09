@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.83 — Repeat Previous owns Face taps before the normal drag controller.
-// A real Repeat tap is captured at window/pointerdown, before multi-face-direct can
-// start an Extrude/Inset drag. Replay still reuses the existing precision Face path.
+// BoxLab v0.36.18.84 — one-click Repeat Previous with immediate pointer arming.
+// Repeat owns Face taps before the normal drag controller and replays only the
+// frozen value committed by precision-face from a real Face operation.
 
 import * as THREE from 'three';
 
@@ -19,9 +19,6 @@ function faceMode(){return document.querySelector('#selectionModes button[data-m
 function lastOperation(){
   const direct=globalThis.__boxlabLastFaceOperation||precision()?.last?.();
   if(direct&&(direct.tool==='extrude'||direct.tool==='inset')&&Number.isFinite(Number(direct.value))&&Math.abs(Number(direct.value))>1e-9)return{tool:direct.tool,value:Number(direct.value)};
-  const readout=document.querySelector('#precisionFaceReadout')?.textContent||'';
-  const match=readout.match(/Last\s+(Extrude|Inset)\s*•\s*([+-]?\d+(?:\.\d+)?)/i);
-  if(match){const value=Number(match[2]);if(Number.isFinite(value)&&Math.abs(value)>1e-9)return{tool:match[1].toLowerCase(),value};}
   return null;
 }
 function shortLabel(op){return op?`${op.tool==='extrude'?'Extrude':'Inset'} ${op.value>=0?'+':''}${op.value.toFixed(3)}`:'';}
@@ -30,10 +27,13 @@ function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event
 const host=document.createElement('div');
 host.id='repeatFacePreviousRow';
 host.className='outliner-actions';
-host.style.cssText='grid-template-columns:1fr;margin:4px 0 2px';
+host.style.cssText='display:grid;grid-template-columns:1fr;margin:4px 0 2px;gap:3px';
 const button=document.createElement('button');
 button.id='repeatFacePreviousBtn';button.type='button';button.textContent='Repeat Previous';button.disabled=true;button.setAttribute('aria-pressed','false');
-host.appendChild(button);
+const indicator=document.createElement('div');
+indicator.id='repeatFacePreviousState';
+indicator.style.cssText='display:none;text-align:center;font-size:9px;font-weight:700;letter-spacing:.25px;padding:2px 4px;border-radius:5px;background:rgba(242,245,250,.12);color:#f2f5fa';
+host.append(button,indicator);
 
 function place(){
   const row=document.querySelector('#precisionFaceRow');
@@ -62,6 +62,8 @@ function paintButton(){
   }else{
     button.style.removeProperty('background');button.style.removeProperty('color');button.style.removeProperty('border-color');button.style.removeProperty('box-shadow');button.style.removeProperty('font-weight');
   }
+  indicator.style.display=armed?'block':'none';
+  indicator.textContent=armed&&armedOperation?`REPEAT ACTIVE • ${shortLabel(armedOperation)}`:'';
 }
 function syncButton(){
   place();
@@ -73,16 +75,7 @@ function syncButton(){
 }
 function forcePaintBurst(){
   paintTimers.forEach(clearTimeout);paintTimers=[];
-  const repaint=()=>{
-    syncButton();
-    void host.offsetHeight;
-    if(armed){
-      host.style.setProperty('transform','translateZ(0)');
-      button.style.setProperty('transform','translateZ(0)');
-    }else{
-      host.style.removeProperty('transform');button.style.removeProperty('transform');
-    }
-  };
+  const repaint=()=>{syncButton();void host.offsetHeight;};
   repaint();
   [0,16,40,90,180].forEach(delay=>paintTimers.push(setTimeout(repaint,delay)));
 }
@@ -97,11 +90,17 @@ function arm(){
   const mode=faceMode();if(mode&&!mode.classList.contains('active'))mode.click();
   if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
   armed=true;armedOperation={...op};
-  button.blur?.();
   forcePaintBurst();
   if(status)status.textContent=`Repeat Previous • ${shortLabel(op)} armed • tap Faces to repeat`;
 }
-button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();arm();});
+
+// iPad/Safari can defer click/focus painting. Arm on the physical pointerdown itself
+// so Repeat is active before the finger/Pencil leaves the button.
+button.addEventListener('pointerdown',event=>{
+  if(button.disabled)return;
+  event.preventDefault();event.stopPropagation();arm();
+});
+button.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();});
 
 // Choosing another explicit tool exits Repeat. Programmatic replay uses click(), not
 // pointerdown, so this only reacts to a real user tool choice.
@@ -153,14 +152,13 @@ function replayFace(faceIndex){
   return ok;
 }
 
-// IMPORTANT: window capture runs before document capture, so the normal Face drag
-// controller never sees a repeat tap. This is the event boundary that 18.76–81 missed.
+// window capture runs before document capture, so the normal Face drag controller
+// never sees a Repeat tap. Empty-space touches still pass through for navigation.
 window.addEventListener('pointerdown',event=>{
   if(!armed||applying||!event.isPrimary||event.pointerId===9876||event.target!==canvas)return;
   const faceIndex=pickFace(event.clientX,event.clientY);
-  if(!Number.isInteger(faceIndex))return; // empty-space navigation remains available
-  event.preventDefault();
-  event.stopImmediatePropagation();
+  if(!Number.isInteger(faceIndex))return;
+  event.preventDefault();event.stopImmediatePropagation();
   setTimeout(()=>replayFace(faceIndex),0);
 },true);
 
@@ -175,4 +173,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 [0,40,120,300,700].forEach(delay=>setTimeout(syncButton,delay));
 
-globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.83',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
+globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.84',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
