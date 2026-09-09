@@ -36,7 +36,7 @@ function minBoundaryEdge(m,ids){const info=m?.faceRegionsInfo?.(ids);let min=Inf
 function dispatchGesture(start,end){const id=9876,base={bubbles:true,cancelable:true,composed:true,pointerId:id,pointerType:'pen',isPrimary:true,button:0,buttons:1,pressure:.5,clientX:start.x,clientY:start.y};canvas.dispatchEvent(new PointerEvent('pointerdown',base));canvas.dispatchEvent(new PointerEvent('pointermove',{...base,clientX:end.x,clientY:end.y}));canvas.dispatchEvent(new PointerEvent('pointerup',{...base,buttons:0,pressure:0,clientX:end.x,clientY:end.y}));}
 function commitOperation(tool,value,source='drag'){
   const number=Number(value);if((tool!=='extrude'&&tool!=='inset')||!Number.isFinite(number))return null;
-  const saved={tool,value:number,source,version:'0.36.18.85'};
+  const saved={tool,value:number,source,version:'0.36.18.86'};
   globalThis.__boxlabLastFaceOperation=saved;
   input.value=number.toFixed(3);
   readout.textContent=`Last ${tool==='extrude'?'Extrude':'Inset'} • ${number>=0?'+':''}${number.toFixed(3)}`;
@@ -78,9 +78,9 @@ function setPointer(clientX,clientY){
   const r=canvas.getBoundingClientRect();
   pointer.set((clientX-r.left)/r.width*2-1,-((clientY-r.top)/r.height*2-1));
 }
-function hitsSelectedFace(clientX,clientY){
+function pickSelectedFace(clientX,clientY){
   const m=mesh(),camera=state()?.camera,ids=faces();
-  if(!m||!camera||!ids.length)return false;
+  if(!m||!camera||!ids.length)return null;
   setPointer(clientX,clientY);raycaster.setFromCamera(pointer,camera);
   const pickers=[];
   for(const fi of ids){
@@ -90,64 +90,79 @@ function hitsSelectedFace(clientX,clientY){
     if(!positions.length)continue;
     const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
     const material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
-    pickers.push(new THREE.Mesh(geometry,material));
+    const picker=new THREE.Mesh(geometry,material);picker.userData.faceIndex=fi;pickers.push(picker);
   }
   const hit=pickers.length?raycaster.intersectObjects(pickers,false)[0]:null;
+  const faceIndex=Number.isInteger(hit?.object?.userData?.faceIndex)?hit.object.userData.faceIndex:null;
   pickers.forEach(p=>{p.geometry.dispose();p.material.dispose();});
-  return !!hit;
+  return faceIndex;
 }
 
-// Capture the real Face gesture before multi-face-direct owns document capture.
-// Crucially, empty-space orbit/pan never starts a precision capture.
-let gestureActive=false;
-let gesturePointer=null;
-let gestureCandidate=null;
-let gestureRepeatable=true;
-
-function canonicalCandidate(text){
-  let match=text.match(/^Extrude\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(match){const value=Math.abs(Number(match[1]));return Number.isFinite(value)?{tool:'extrude',value}:null;}
-  match=text.match(/^Extrude In\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(match){const value=-Math.abs(Number(match[1]));return Number.isFinite(value)?{tool:'extrude',value}:null;}
-  match=text.match(/^Uniform Inset\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(match){const value=Number(match[1]);return Number.isFinite(value)?{tool:'inset',value}:null;}
-  return null;
+// 18.86: Extrude readback is geometry-based. A viewport gesture can only become
+// repeatable if it starts on the selected Face, and the stored value is measured
+// from committed mesh movement along that Face's original normal. Orbit cannot fake it.
+let gesture=null;
+function parseInsetCandidate(text){
+  const match=text.match(/^Uniform Inset\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
+  if(!match)return null;
+  const value=Number(match[1]);
+  return Number.isFinite(value)?value:null;
+}
+function finishGesture(g){
+  if(!g?.repeatable)return;
+  if(g.tool==='extrude'){
+    const m=mesh(),end=centerOfFace(m,g.faceIndex);
+    if(!m||!end||!g.startCenter||!g.startNormal)return;
+    const value=end.clone().sub(g.startCenter).dot(g.startNormal);
+    if(Number.isFinite(value)&&Math.abs(value)>1e-6)commitOperation('extrude',value,'geometry');
+    return;
+  }
+  if(g.tool==='inset'&&Number.isFinite(g.insetValue))commitOperation('inset',g.insetValue,'drag');
 }
 
 window.addEventListener('pointerdown',event=>{
   if(event.pointerId===9876||event.target!==canvas||!event.isPrimary)return;
   const tool=activeTool();if(!tool)return;
-  if(!hitsSelectedFace(event.clientX,event.clientY))return;
-  gestureActive=true;gesturePointer=event.pointerId;gestureCandidate=null;gestureRepeatable=true;
+  const fi=pickSelectedFace(event.clientX,event.clientY);if(!Number.isInteger(fi))return;
+  const m=mesh();if(!m)return;
+  gesture={pointerId:event.pointerId,tool,faceIndex:fi,repeatable:true,insetValue:null,startCenter:null,startNormal:null};
+  if(tool==='extrude'){
+    gesture.startCenter=centerOfFace(m,fi)?.clone?.()||null;
+    gesture.startNormal=m.faceNormal?.(fi)?.clone?.().normalize?.()||null;
+    if(!gesture.startCenter||!gesture.startNormal)gesture=null;
+  }
 },true);
 
-// Window capture runs before multi-face-direct's document pointerup handler.
 window.addEventListener('pointerup',event=>{
-  if(!gestureActive||event.pointerId!==gesturePointer||event.pointerId===9876)return;
-  const saved=gestureRepeatable?gestureCandidate:null;
-  gestureActive=false;gesturePointer=null;gestureCandidate=null;gestureRepeatable=true;
-  if(saved)commitOperation(saved.tool,saved.value,'drag');
+  if(!gesture||event.pointerId!==gesture.pointerId||event.pointerId===9876)return;
+  const done=gesture;gesture=null;
+  // multi-face-direct commits at document pointerup, after window capture.
+  setTimeout(()=>finishGesture(done),0);
 },true);
-window.addEventListener('pointercancel',event=>{
-  if(event.pointerId!==gesturePointer)return;
-  gestureActive=false;gesturePointer=null;gestureCandidate=null;gestureRepeatable=true;
-},true);
+window.addEventListener('pointercancel',event=>{if(gesture&&event.pointerId===gesture.pointerId)gesture=null;},true);
 
 new MutationObserver(()=>{
   const text=status.textContent||'';
   if(suppressStatusCapture)return;
-  if(gestureActive&&/THROUGH READY|Extrude Through|BLOCKED|rollback/i.test(text)){
-    gestureRepeatable=false;gestureCandidate=null;return;
+  if(gesture&&/THROUGH READY|Extrude Through|BLOCKED|rollback/i.test(text)){
+    gesture.repeatable=false;gesture.insetValue=null;return;
   }
-  if(gestureActive&&gestureRepeatable){
-    const candidate=canonicalCandidate(text);
-    if(candidate){
-      gestureCandidate=candidate;
-      readout.textContent=`Live ${candidate.tool==='extrude'?'Extrude':'Inset'} • ${candidate.value>=0?'+':''}${candidate.value.toFixed(3)}`;
-      return;
+  if(gesture?.tool==='extrude'&&gesture.repeatable){
+    const m=mesh(),current=centerOfFace(m,gesture.faceIndex);
+    if(current&&gesture.startCenter&&gesture.startNormal){
+      const value=current.clone().sub(gesture.startCenter).dot(gesture.startNormal);
+      if(Number.isFinite(value)&&Math.abs(value)>1e-6)readout.textContent=`Live Extrude • ${value>=0?'+':''}${value.toFixed(3)}`;
     }
+    return;
   }
-  const tool=activeTool();if(tool&&!gestureActive)readout.textContent=`${tool==='extrude'?'Extrude':'Inset'} armed • enter exact model-unit value or drag`;
+  if(gesture?.tool==='inset'&&gesture.repeatable){
+    const value=parseInsetCandidate(text);
+    if(Number.isFinite(value)){gesture.insetValue=value;readout.textContent=`Live Inset • ${value.toFixed(3)}`;return;}
+  }
+  // Preserve the last committed value while a Face tool remains armed.
+  if(!globalThis.__boxlabLastFaceOperation){
+    const tool=activeTool();if(tool&&!gesture)readout.textContent=`${tool==='extrude'?'Extrude':'Inset'} armed • enter exact model-unit value or drag`;
+  }
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.85',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
+window.__boxlabPrecisionFace={version:'0.36.18.86',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
