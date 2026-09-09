@@ -90,6 +90,7 @@ import('./select-inconsistent-winding.js?v=0.36.18.64').catch(error => console.w
 import('./select-self-intersecting-faces.js?v=0.36.18.65').catch(error => console.warn('BoxLab Select Self-Intersecting Faces failed to load', error));
 import('./select-concave-faces.js?v=0.36.18.66').catch(error => console.warn('BoxLab Select Concave Faces failed to load', error));
 import('./select-convex-faces.js?v=0.36.18.67').catch(error => console.warn('BoxLab Select Convex Faces failed to load', error));
+import('./select-flat-faces.js?v=0.36.18.68').catch(error => console.warn('BoxLab Select Flat Faces failed to load', error));
 import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
@@ -101,6 +102,6 @@ import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.18.67';
-  document.title = 'BoxLab v0.36.18.67';
+  if (version) version.textContent = 'v0.36.18.68';
+  document.title = 'BoxLab v0.36.18.68';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
