@@ -36,7 +36,7 @@ function minBoundaryEdge(m,ids){const info=m?.faceRegionsInfo?.(ids);let min=Inf
 function dispatchGesture(start,end){const id=9876,base={bubbles:true,cancelable:true,composed:true,pointerId:id,pointerType:'pen',isPrimary:true,button:0,buttons:1,pressure:.5,clientX:start.x,clientY:start.y};canvas.dispatchEvent(new PointerEvent('pointerdown',base));canvas.dispatchEvent(new PointerEvent('pointermove',{...base,clientX:end.x,clientY:end.y}));canvas.dispatchEvent(new PointerEvent('pointerup',{...base,buttons:0,pressure:0,clientX:end.x,clientY:end.y}));}
 function commitOperation(tool,value,source='drag'){
   const number=Number(value);if((tool!=='extrude'&&tool!=='inset')||!Number.isFinite(number))return null;
-  const saved={tool,value:number,source,version:'0.36.18.86'};
+  const saved={tool,value:number,source,version:'0.36.18.87'};
   globalThis.__boxlabLastFaceOperation=saved;
   input.value=number.toFixed(3);
   readout.textContent=`Last ${tool==='extrude'?'Extrude':'Inset'} • ${number>=0?'+':''}${number.toFixed(3)}`;
@@ -98,38 +98,81 @@ function pickSelectedFace(clientX,clientY){
   return faceIndex;
 }
 
-// 18.86: Extrude readback is geometry-based. A viewport gesture can only become
-// repeatable if it starts on the selected Face, and the stored value is measured
-// from committed mesh movement along that Face's original normal. Orbit cannot fake it.
-let gesture=null;
-function parseInsetCandidate(text){
-  const match=text.match(/^Uniform Inset\s*•.*?([+-]?\d+(?:\.\d+)?)(?!.*\d)/i);
-  if(!match)return null;
-  const value=Number(match[1]);
-  return Number.isFinite(value)?value:null;
+function snapshotInset(m,ids){
+  const info=m?.faceRegionsInfo?.(ids);if(!info?.regions?.length)return null;
+  const faceLoops=new Map();
+  for(const fi of info.faceIndices||ids){const f=m.faces?.[fi];if(Array.isArray(f))faceLoops.set(fi,[...f]);}
+  const vertices=new Map();
+  const regions=[];
+  for(const region of info.regions){
+    const loop=[...(region.boundaryLoop||[])];if(loop.length<3)continue;
+    const normal=(region.normal?.clone?.()||m.faceRegionNormal?.(region.faceIndices||[])?.clone?.()||m.faceNormal?.(region.faceIndices?.[0])?.clone?.())?.normalize?.();
+    if(!normal)continue;
+    for(const vi of loop){const v=m.vertices?.[vi];if(v&&!vertices.has(vi))vertices.set(vi,v.clone());}
+    regions.push({boundaryLoop:loop,normal});
+  }
+  return regions.length?{faceLoops,vertices,regions}:null;
 }
+function median(values){const a=values.filter(Number.isFinite).sort((x,y)=>x-y);if(!a.length)return null;const mid=Math.floor(a.length/2);return a.length%2?a[mid]:(a[mid-1]+a[mid])*.5;}
+function measureInset(m,snapshot){
+  if(!m||!snapshot)return null;
+  const replacement=new Map();
+  for(const [fi,oldFace] of snapshot.faceLoops){
+    const current=m.faces?.[fi];if(!Array.isArray(current)||current.length!==oldFace.length)continue;
+    for(let i=0;i<oldFace.length;i++)replacement.set(oldFace[i],current[i]);
+  }
+  const distances=[];
+  for(const region of snapshot.regions){
+    const loop=region.boundaryLoop,n=region.normal;
+    for(let i=0;i<loop.length;i++){
+      const aId=loop[i],bId=loop[(i+1)%loop.length],naId=replacement.get(aId),nbId=replacement.get(bId);
+      const a=snapshot.vertices.get(aId),b=snapshot.vertices.get(bId),na=m.vertices?.[naId],nb=m.vertices?.[nbId];
+      if(!a||!b||!na||!nb)continue;
+      const edge=b.clone().sub(a);if(edge.lengthSq()<1e-12)continue;edge.normalize();
+      const inward=new THREE.Vector3().crossVectors(n,edge);if(inward.lengthSq()<1e-12)continue;inward.normalize();
+      const da=Math.abs(na.clone().sub(a).dot(inward));
+      const db=Math.abs(nb.clone().sub(b).dot(inward));
+      if(Number.isFinite(da))distances.push(da);
+      if(Number.isFinite(db))distances.push(db);
+    }
+  }
+  const value=median(distances);
+  return Number.isFinite(value)&&value>1e-7?value:null;
+}
+
+// 18.87: both Extrude and Inset readback are geometry-based. A viewport gesture can
+// only become repeatable if it starts on the selected Face. Extrude measures centroid
+// travel along the original normal; Inset measures the committed boundary-edge offset.
+let gesture=null;
 function finishGesture(g){
   if(!g?.repeatable)return;
+  const m=mesh();if(!m)return;
   if(g.tool==='extrude'){
-    const m=mesh(),end=centerOfFace(m,g.faceIndex);
-    if(!m||!end||!g.startCenter||!g.startNormal)return;
+    const end=centerOfFace(m,g.faceIndex);
+    if(!end||!g.startCenter||!g.startNormal)return;
     const value=end.clone().sub(g.startCenter).dot(g.startNormal);
     if(Number.isFinite(value)&&Math.abs(value)>1e-6)commitOperation('extrude',value,'geometry');
     return;
   }
-  if(g.tool==='inset'&&Number.isFinite(g.insetValue))commitOperation('inset',g.insetValue,'drag');
+  if(g.tool==='inset'){
+    const value=measureInset(m,g.insetSnapshot);
+    if(Number.isFinite(value))commitOperation('inset',value,'geometry');
+  }
 }
 
 window.addEventListener('pointerdown',event=>{
   if(event.pointerId===9876||event.target!==canvas||!event.isPrimary)return;
   const tool=activeTool();if(!tool)return;
   const fi=pickSelectedFace(event.clientX,event.clientY);if(!Number.isInteger(fi))return;
-  const m=mesh();if(!m)return;
-  gesture={pointerId:event.pointerId,tool,faceIndex:fi,repeatable:true,insetValue:null,startCenter:null,startNormal:null};
+  const m=mesh(),ids=faces();if(!m||!ids.length)return;
+  gesture={pointerId:event.pointerId,tool,faceIndex:fi,repeatable:true,startCenter:null,startNormal:null,insetSnapshot:null};
   if(tool==='extrude'){
     gesture.startCenter=centerOfFace(m,fi)?.clone?.()||null;
     gesture.startNormal=m.faceNormal?.(fi)?.clone?.().normalize?.()||null;
     if(!gesture.startCenter||!gesture.startNormal)gesture=null;
+  }else{
+    gesture.insetSnapshot=snapshotInset(m,ids);
+    if(!gesture.insetSnapshot)gesture=null;
   }
 },true);
 
@@ -145,7 +188,7 @@ new MutationObserver(()=>{
   const text=status.textContent||'';
   if(suppressStatusCapture)return;
   if(gesture&&/THROUGH READY|Extrude Through|BLOCKED|rollback/i.test(text)){
-    gesture.repeatable=false;gesture.insetValue=null;return;
+    gesture.repeatable=false;return;
   }
   if(gesture?.tool==='extrude'&&gesture.repeatable){
     const m=mesh(),current=centerOfFace(m,gesture.faceIndex);
@@ -156,8 +199,8 @@ new MutationObserver(()=>{
     return;
   }
   if(gesture?.tool==='inset'&&gesture.repeatable){
-    const value=parseInsetCandidate(text);
-    if(Number.isFinite(value)){gesture.insetValue=value;readout.textContent=`Live Inset • ${value.toFixed(3)}`;return;}
+    const value=measureInset(mesh(),gesture.insetSnapshot);
+    if(Number.isFinite(value)){readout.textContent=`Live Inset • ${value.toFixed(3)}`;return;}
   }
   // Preserve the last committed value while a Face tool remains armed.
   if(!globalThis.__boxlabLastFaceOperation){
@@ -165,4 +208,4 @@ new MutationObserver(()=>{
   }
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.86',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
+window.__boxlabPrecisionFace={version:'0.36.18.87',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
