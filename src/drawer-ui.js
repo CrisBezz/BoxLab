@@ -58,6 +58,7 @@ import('./object-mode-retain.js?v=0.36.18.4').catch(error => console.warn('BoxLa
 import('./transform-state-fix.js?v=0.36.18.5').catch(error => console.warn('BoxLab transform state fix failed to load', error));
 import('./persistent-face-tool-select.js?v=0.36.18.7').catch(error => console.warn('BoxLab persistent face tool selection failed to load', error));
 import('./precision-face.js?v=0.36.18.74').catch(error => console.warn('BoxLab Face precision failed to load', error));
+import('./repeat-face-previous.js?v=0.36.18.76').catch(error => console.warn('BoxLab Repeat Previous Face failed to load', error));
 import('./sequential-through-fallback.js?v=0.36.18.12').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
 import('./precision-transform.js?v=0.36.18.14').catch(error => console.warn('BoxLab precision transform failed to load', error));
 import('./precision-bevel.js?v=0.36.18.32').catch(error => console.warn('BoxLab precision bevel failed to load', error));
@@ -107,6 +108,6 @@ import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
   const version = document.querySelector('#appVersion');
-  if (version) version.textContent = 'v0.36.18.75';
-  document.title = 'BoxLab v0.36.18.75';
+  if (version) version.textContent = 'v0.36.18.76';
+  document.title = 'BoxLab v0.36.18.76';
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
