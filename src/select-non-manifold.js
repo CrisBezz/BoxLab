@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.44 — non-destructive topology inspection.
+// BoxLab v0.36.18.75 — non-destructive topology inspection, grouped Edge selection UI.
 // Selects every edge that is not used by exactly two real faces: open boundary,
 // loose/wire, and over-used (>2 face) edges. Geometry and history are untouched.
 
@@ -14,10 +14,11 @@ function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event
 function realFaces(m,edge){return (edge?.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&fi<m.faces.length&&Array.isArray(m.faces[fi]));}
 
 const host=document.createElement('div');
+host.id='edgeInspectionRow';
 host.className='outliner-actions';
-host.style.gridTemplateColumns='1fr';
+host.style.gridTemplateColumns='repeat(2,minmax(0,1fr))';
 const button=document.createElement('button');
-button.id='selectNonManifoldBtn';button.type='button';button.textContent='Select Non-Manifold';
+button.id='selectNonManifoldBtn';button.type='button';button.textContent='Select Non-Manifold';button.style.minWidth='0';
 host.appendChild(button);
 const topologyRow=deleteEdgeButton?.parentElement;
 if(topologyRow?.parentElement)topologyRow.parentElement.insertBefore(host,topologyRow.nextSibling);else edgeTools?.appendChild(host);
@@ -69,4 +70,4 @@ window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 setTimeout(sync,0);
 
-globalThis.__boxlabSelectNonManifold={version:'0.36.18.44',inspect,apply};
+globalThis.__boxlabSelectNonManifold={version:'0.36.18.75',inspect,apply};
