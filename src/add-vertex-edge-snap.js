@@ -115,7 +115,9 @@ function selectNewVertex(vertex) {
 }
 
 canvas?.addEventListener('pointerdown', event => {
-  if (!event.isPrimary || !addVertexActive() || !geometryOn()) return;
+  // Restore the pre-v0.36.10 activation rule: Add Vertex edge splitting works
+  // whether Geometry Snap is on or off. Geometry Snap only controls midpoint snap.
+  if (!event.isPrimary || !addVertexActive()) return;
   const snap = nearestEdge(event.clientX, event.clientY);
   if (!snap) return;
   const m = mesh(), history = globalThis.__boxlabHistory;
