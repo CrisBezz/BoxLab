@@ -1,6 +1,7 @@
-// BoxLab v0.36.18.97 — batch midpoint Edge subdivision.
+// BoxLab v0.36.18.98 — recursive batch midpoint Edge subdivision.
 // Splits one or more selected Edges at 50%, preserving adjacent Face loops,
 // crease values and loose-edge topology. One History entry for the whole batch.
+// Result stays in Edge mode with both child Edges selected for immediate repeat.
 
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const status=document.querySelector('#selectionStatus');
@@ -78,7 +79,7 @@ function splitByKey(m,edgeKey){
       m.creases.set(key(m,vertex,b),crease);
     }
   }
-  return vertex;
+  return {vertex,childKeys:[key(m,a,vertex),key(m,vertex,b)]};
 }
 
 function plan(m,ids){
@@ -108,29 +109,45 @@ function apply(){
   const info=plan(m,ids);
   if(!info.ok){if(status)status.textContent=`Subdivide Edges • ${info.reason}`;sync();return false;}
 
-  const before=m.clone(),created=[];
+  const before=m.clone(),childKeys=[];
   for(const k of info.keys){
-    const vertex=splitByKey(m,k);
-    if(!Number.isInteger(vertex)){
+    const result=splitByKey(m,k);
+    if(!result){
       restore(m,before);render();
       if(status)status.textContent='Subdivide Edges • rollback • topology changed unexpectedly';
       sync();return false;
     }
-    created.push(vertex);
+    childKeys.push(...result.childKeys);
   }
 
   history.push(before);
-  m.edges?.();
-  bridge()?.set?.('edge',[]);
-  if(multiToggle){
-    const wanted=created.length>1;
-    if(multiToggle.checked!==wanted){multiToggle.checked=wanted;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
+  const rebuilt=m.edges?.()||[];
+  const wanted=new Set(childKeys);
+  const resultEdges=[];
+  rebuilt.forEach((e,index)=>{if(wanted.has(key(m,e.a,e.b)))resultEdges.push(index);});
+  if(resultEdges.length!==childKeys.length){
+    restore(m,before);render();
+    if(status)status.textContent='Subdivide Edges • rollback • child Edges could not be resolved';
+    sync();return false;
   }
-  document.querySelector('#selectionModes button[data-mode="vertex"]')?.click();
+
+  // Rebuild the visible cage before publishing the new Edge selection so the
+  // next Pencil/touch selection cannot reference pre-subdivision Edge indices.
+  bridge()?.set?.('edge',[]);
+  render();
+
+  if(multiToggle){
+    const wantedMulti=resultEdges.length>1;
+    if(multiToggle.checked!==wantedMulti){multiToggle.checked=wantedMulti;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
+  }
+  const edgeMode=document.querySelector('#selectionModes button[data-mode="edge"]');
+  if(edgeMode&&!edgeMode.classList.contains('active'))edgeMode.click();
+
   queueMicrotask(()=>{
-    bridge()?.set?.('vertex',created);
+    bridge()?.set?.('edge',resultEdges);
     render();
-    if(status)status.textContent=`Subdivide Edges • ${info.count} edge${info.count===1?'':'s'} split at midpoint • ${created.length} new vert${created.length===1?'ex':'ices'} selected`;
+    if(status)status.textContent=`Subdivide Edges • ${info.count} edge${info.count===1?'':'s'} split at midpoint • ${resultEdges.length} child Edges selected • repeat ready`;
+    sync();
   });
   return true;
 }
@@ -142,17 +159,10 @@ function sync(){
   button.title=!ids.length?'Select one or more Edges to subdivide':info?.ok?`Split ${info.count} selected Edge${info.count===1?'':'s'} at 50%`:(info?.reason||'Selected Edges cannot be subdivided');
 }
 
-function stampVersion(){
-  const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.97';
-  document.title='BoxLab v0.36.18.97';
-}
-
 button.addEventListener('click',apply);
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
-[120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSubdivideEdges={version:'0.36.18.97',plan,apply};
+globalThis.__boxlabSubdivideEdges={version:'0.36.18.98',plan,apply};
