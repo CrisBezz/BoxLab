@@ -5,19 +5,28 @@
 const BUILD='v0.36.18.100';
 const version=document.querySelector('#appVersion');
 
-if(version){
-  version.textContent=BUILD;
-  version.dataset.boxlabBuild=BUILD;
-  if(!document.querySelector('#boxlabBuildVersionStyle')){
-    const style=document.createElement('style');
-    style.id='boxlabBuildVersionStyle';
-    style.textContent=`
+function stamp(){
+  if(version){
+    version.textContent=BUILD;
+    version.dataset.boxlabBuild=BUILD;
+  }
+  document.title=`BoxLab ${BUILD}`;
+}
+
+if(version&&!document.querySelector('#boxlabBuildVersionStyle')){
+  const style=document.createElement('style');
+  style.id='boxlabBuildVersionStyle';
+  style.textContent=`
 #appVersion[data-boxlab-build]{font-size:0!important}
 #appVersion[data-boxlab-build]::after{content:attr(data-boxlab-build);font-size:10px}
 `;
-    document.head.appendChild(style);
-  }
+  document.head.appendChild(style);
 }
 
-document.title=`BoxLab ${BUILD}`;
+stamp();
+// Historical feature modules still have delayed title stamps up to 1600ms.
+// Reassert once after that legacy window; visible appVersion never flickers because
+// the central data attribute is what is rendered.
+setTimeout(stamp,1800);
+
 globalThis.__boxlabBuildVersion=BUILD;
