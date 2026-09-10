@@ -84,6 +84,10 @@ function splitEdge(m, edgeIndex, t) {
   return { vertex, a, b };
 }
 
+// Shared topology kernel for tools that need the exact same proven edge split
+// used by Add Vertex. Exposing it does not alter Add Vertex interaction behaviour.
+globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.103', splitEdge };
+
 function updateDragPosition(event) {
   if (!drag) return;
   const m = drag.mesh, va = m.vertices[drag.a], vb = m.vertices[drag.b];
