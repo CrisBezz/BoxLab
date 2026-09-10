@@ -1,9 +1,10 @@
-// BoxLab v0.36.18.101 — rendered-geometry driven batch midpoint Edge subdivision.
+// BoxLab v0.36.18.102 — rendered-geometry driven batch midpoint Edge subdivision.
 // Selected Edge identity is resolved from the currently rendered cage endpoints,
 // not from potentially stale Edge indices after topology rebuilds.
 // Splits one or more selected Edges at 50%, preserving adjacent Face loops,
 // crease values and loose-edge topology. One History entry for the whole batch.
-// Result stays in Edge mode with both child Edges selected for immediate repeat.
+// Result stays in Edge mode, but generated child selections are cleared so the
+// next manual Edge selection always starts from the rebuilt cage cleanly.
 
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const status=document.querySelector('#selectionStatus');
@@ -81,7 +82,7 @@ function splitByKey(m,edgeKey){
       m.creases.set(key(m,vertex,b),crease);
     }
   }
-  return {vertex,childKeys:[key(m,a,vertex),key(m,vertex,b)]};
+  return true;
 }
 
 function meshTolerance(m){
@@ -125,12 +126,8 @@ function selectedKeys(m){
   const edges=m?.edges?.()||[];
   const keys=[];
   for(const i of ids){
-    // Prefer the actual line currently rendered/selected in the cage. This
-    // survives Edge-array reordering after topology edits.
     let k=renderedEdgeKey(m,i);
     if(!k){
-      // Initial-load fallback only: before edge-object-bridge has published the
-      // cage, use the live index. Once rendered geometry exists it is authoritative.
       const e=edges[i];
       if(e&&m.vertices?.[e.a]&&m.vertices?.[e.b])k=key(m,e.a,e.b);
     }
@@ -161,25 +158,13 @@ function applyKeys(keys){
   const info=planKeys(m,keys);
   if(!info.ok){if(status)status.textContent=`Subdivide Edges • ${info.reason}`;sync();return false;}
 
-  const before=m.clone(),childKeys=[];
+  const before=m.clone();
   for(const k of info.keys){
-    const result=splitByKey(m,k);
-    if(!result){
+    if(!splitByKey(m,k)){
       restore(m,before);render();
       if(status)status.textContent='Subdivide Edges • rollback • topology changed unexpectedly';
       sync();return false;
     }
-    childKeys.push(...result.childKeys);
-  }
-
-  const rebuilt=m.edges?.()||[];
-  const wanted=new Set(childKeys);
-  const resultEdges=[];
-  rebuilt.forEach((e,index)=>{if(wanted.has(key(m,e.a,e.b)))resultEdges.push(index);});
-  if(resultEdges.length!==wanted.size){
-    restore(m,before);render();
-    if(status)status.textContent='Subdivide Edges • rollback • child Edges could not be resolved';
-    sync();return false;
   }
 
   history.push(before);
@@ -187,8 +172,11 @@ function applyKeys(keys){
   const edgeMode=document.querySelector('#selectionModes button[data-mode="edge"]');
   if(edgeMode&&!edgeMode.classList.contains('active'))edgeMode.click();
 
-  bridge()?.set?.('edge',resultEdges);
-  if(status)status.textContent=`Subdivide Edges • ${info.count} edge${info.count===1?'':'s'} split at midpoint • ${resultEdges.length} child Edges selected • repeat ready`;
+  // Do not carry generated child-edge indices into the next manual selection.
+  // After topology changes, always return to a clean Edge selection state.
+  bridge()?.set?.('edge',[]);
+  render();
+  if(status)status.textContent=`Subdivide Edges • ${info.count} edge${info.count===1?'':'s'} split at midpoint • select next Edge${info.count===1?'':'s'}`;
   queueMicrotask(sync);
   return true;
 }
@@ -232,4 +220,4 @@ document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabSubdivideEdges={version:'0.36.18.101',plan:(m,ids)=>planKeys(m,(m?.edges?.()||[]).filter((_,i)=>ids.includes(i)).map(e=>key(m,e.a,e.b))),apply};
+globalThis.__boxlabSubdivideEdges={version:'0.36.18.102',plan:(m,ids)=>planKeys(m,(m?.edges?.()||[]).filter((_,i)=>ids.includes(i)).map(e=>key(m,e.a,e.b))),apply};
