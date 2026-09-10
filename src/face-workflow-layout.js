@@ -5,8 +5,9 @@ import './poke-faces.js?v=0.36.18.92';
 import './make-planar.js?v=0.36.18.93';
 import './orient-faces.js?v=0.36.18.94';
 import './orient-shell-outward.js?v=0.36.18.95';
+import './rotate-edge.js?v=0.36.18.96';
 
-// BoxLab v0.36.18.95 — Face workflow layout polish + Face repair/tool loading.
+// BoxLab v0.36.18.96 — Face workflow layout polish + modelling/repair tool loading.
 // UI-only layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -70,4 +71,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.95',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.96',sync};
