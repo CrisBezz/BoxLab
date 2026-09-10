@@ -7,6 +7,7 @@ const geometryToggle = document.querySelector('#inferenceSnapToggle');
 const SNAP_PX = 18;
 const MIDPOINT_PX = 11;
 let drag = null;
+let navigationPointer = null;
 
 function state() { return globalThis.__boxlabBridgeState; }
 function mesh() { return state()?.mesh || null; }
@@ -84,7 +85,7 @@ function splitEdge(m, edgeIndex, t) {
   return { vertex, a, b };
 }
 
-globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.107', splitEdge };
+globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.108', splitEdge };
 
 function updateDragPosition(event) {
   if (!drag) return;
@@ -105,19 +106,18 @@ function updateDragPosition(event) {
   render();
 }
 
-// BoxLab v0.36.18.107 — Add Vertex has one viewport owner.
-// While Add is armed, consume every primary viewport pointerdown here. A hit on an
-// edge splits that edge; a miss does nothing. Never fall through to main.js's legacy
-// loose-vertex Add branch. Geometry Snap controls midpoint snapping only.
+// BoxLab v0.36.18.108 — edge hits belong to Add Vertex; misses belong to navigation.
+// On a miss, temporarily disarm Add so main.js cannot create a loose vertex, but let
+// the pointer event continue untouched so OrbitControls receives the normal gesture.
+// Re-arm Add after that navigation gesture ends.
 window.addEventListener('pointerdown', event => {
   if (event.target !== canvas || !event.isPrimary || !addVertexActive()) return;
 
-  event.preventDefault();
-  event.stopImmediatePropagation();
-
   const snap = nearestEdge(event.clientX, event.clientY);
   if (!snap) {
-    if (status) status.textContent = 'Add Vertex • aim at an Edge';
+    navigationPointer = event.pointerId;
+    addVertexBtn?.click();
+    if (status) status.textContent = 'Add Vertex • navigation • release to resume Add';
     return;
   }
 
@@ -127,6 +127,8 @@ window.addEventListener('pointerdown', event => {
     return;
   }
 
+  event.preventDefault();
+  event.stopImmediatePropagation();
   const before = m.clone();
   const result = splitEdge(m, snap.index, THREE.MathUtils.clamp(snap.t, .001, .999));
   if (!result) {
@@ -147,7 +149,18 @@ window.addEventListener('pointermove', event => {
   updateDragPosition(event);
 }, true);
 
+function rearmAfterNavigation(event) {
+  if (navigationPointer !== event.pointerId) return false;
+  navigationPointer = null;
+  setTimeout(() => {
+    if (!addVertexActive()) addVertexBtn?.click();
+    if (status) status.textContent = 'Add Vertex • ready';
+  }, 0);
+  return true;
+}
+
 function finish(event) {
+  if (rearmAfterNavigation(event)) return;
   if (!drag || drag.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
