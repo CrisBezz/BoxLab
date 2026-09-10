@@ -84,9 +84,7 @@ function splitEdge(m, edgeIndex, t) {
   return { vertex, a, b };
 }
 
-// Shared topology kernel for tools that need the exact same proven edge split
-// used by Add Vertex. Exposing it does not alter Add Vertex interaction behaviour.
-globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.103', splitEdge };
+globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.105', splitEdge };
 
 function updateDragPosition(event) {
   if (!drag) return;
@@ -105,17 +103,6 @@ function updateDragPosition(event) {
   drag.snapType=snapType;
   if (status) status.textContent = `Add Vertex • ${snapType} snap • ${Math.round(t * 100)}%`;
   render();
-}
-
-function selectNewVertex(vertex) {
-  const m = mesh(), cam = camera();
-  if (!m?.vertices?.[vertex] || !cam || !canvas) return;
-  const p = screenPoint(m.vertices[vertex]);
-  if (!p) return;
-  setTimeout(() => {
-    canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles:true, cancelable:true, pointerId:94, pointerType:'mouse', isPrimary:true, button:0, buttons:1, clientX:p.x, clientY:p.y }));
-    canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles:true, cancelable:true, pointerId:94, pointerType:'mouse', isPrimary:true, button:0, buttons:0, clientX:p.x, clientY:p.y }));
-  }, 0);
 }
 
 canvas?.addEventListener('pointerdown', event => {
@@ -148,12 +135,12 @@ function finish(event) {
   if (!drag || drag.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  const vertex = drag.vertex, snapType=drag.snapType;
+  const snapType=drag.snapType;
   drag = null;
-  addVertexBtn?.click();
   render();
-  selectNewVertex(vertex);
-  setTimeout(() => { if (status) status.textContent = `Add Vertex • ${snapType} committed • new vertex selected`; }, 20);
+  // Keep Add Vertex armed. Do not synthesize a viewport tap to select the new vertex.
+  // The next Pencil/click can immediately split another edge using the rebuilt cage.
+  setTimeout(() => { if (status) status.textContent = `Add Vertex • ${snapType} committed • still armed`; }, 20);
 }
 canvas?.addEventListener('pointerup', finish, true);
 canvas?.addEventListener('pointercancel', finish, true);
