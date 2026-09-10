@@ -6,9 +6,9 @@ import './make-planar.js?v=0.36.18.93';
 import './orient-faces.js?v=0.36.18.94';
 import './orient-shell-outward.js?v=0.36.18.95';
 import './rotate-edge.js?v=0.36.18.96';
-import './select-sharp-edges.js?v=0.36.18.112';
+import './select-sharp-edges.js?v=0.36.18.113';
 
-// BoxLab v0.36.18.112 — Face workflow layout polish + modelling/repair tool loading.
+// BoxLab v0.36.18.113 — Face workflow layout polish + modelling/repair tool loading.
 // UI-only layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -58,10 +58,7 @@ function sync(){
     islands.style.setProperty('margin','0');
     if(islands.parentElement!==group)group.appendChild(islands);
     islands.querySelectorAll('button').forEach(button=>{
-      button.style.minWidth='0';
-      button.style.width='100%';
-      button.style.fontSize='10px';
-      button.style.padding='5px 4px';
+      button.style.minWidth='0';button.style.width='100%';button.style.fontSize='10px';button.style.padding='5px 4px';
     });
   }
 
@@ -72,4 +69,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.112',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.113',sync};
