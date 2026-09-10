@@ -1,5 +1,4 @@
-import './build-version.js?v=0.36.18.104';
-import './live-mesh-bridge.js?v=0.36.18.104';
+import './build-version.js?v=0.36.18.103';
 import './duplicate-faces.js?v=0.36.18.89';
 import './flip-faces.js?v=0.36.18.90';
 import './triangulate-faces.js?v=0.36.18.91';
@@ -10,7 +9,7 @@ import './orient-shell-outward.js?v=0.36.18.95';
 import './rotate-edge.js?v=0.36.18.96';
 import './subdivide-edges.js?v=0.36.18.103';
 
-// BoxLab v0.36.18.104 — Face workflow layout polish + modelling/repair tool loading.
+// BoxLab v0.36.18.103 — Face workflow layout polish + modelling/repair tool loading.
 // UI-only layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -74,4 +73,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.104',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.103',sync};
