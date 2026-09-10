@@ -1,4 +1,4 @@
-import './build-version.js?v=0.36.18.101';
+import './build-version.js?v=0.36.18.102';
 import './duplicate-faces.js?v=0.36.18.89';
 import './flip-faces.js?v=0.36.18.90';
 import './triangulate-faces.js?v=0.36.18.91';
@@ -7,9 +7,9 @@ import './make-planar.js?v=0.36.18.93';
 import './orient-faces.js?v=0.36.18.94';
 import './orient-shell-outward.js?v=0.36.18.95';
 import './rotate-edge.js?v=0.36.18.96';
-import './subdivide-edges.js?v=0.36.18.101';
+import './subdivide-edges.js?v=0.36.18.102';
 
-// BoxLab v0.36.18.101 — Face workflow layout polish + modelling/repair tool loading.
+// BoxLab v0.36.18.102 — Face workflow layout polish + modelling/repair tool loading.
 // UI-only layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -73,4 +73,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.101',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.102',sync};
