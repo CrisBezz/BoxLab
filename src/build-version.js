@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.107 — single visible build-version owner.
+// BoxLab v0.36.18.108 — single visible build-version owner.
 // Older feature modules may still contain historical version stamp timers; hide their
 // mutable text and render one stable version label from this owner instead.
 
-const BUILD='v0.36.18.107';
+const BUILD='v0.36.18.108';
 const version=document.querySelector('#appVersion');
 
 function stamp(){
