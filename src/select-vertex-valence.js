@@ -87,6 +87,12 @@ function sync(){
   valence5Button.title=m?`Select vertices with 5 or more incident edges • ${info.v5plus.length} found`:'No editable mesh';
 }
 
+function stampVersion(){
+  const version=document.querySelector('#appVersion');
+  if(version)version.textContent='v0.36.18.116';
+  document.title='BoxLab v0.36.18.116';
+}
+
 valence3Button.addEventListener('click',()=>apply('v3'));
 valence4Button.addEventListener('click',()=>apply('v4'));
 valence5Button.addEventListener('click',()=>apply('v5plus'));
@@ -94,5 +100,6 @@ window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
+[120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
 globalThis.__boxlabSelectVertexValence={version:'0.36.18.116',inspect,apply};
