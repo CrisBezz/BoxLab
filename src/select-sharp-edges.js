@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.111 — non-destructive Sharp / Smooth Edge selection.
-// Classifies regular shared edges by the existing Selection angle threshold.
-// Geometry/history are untouched.
+// BoxLab v0.36.18.112 — non-destructive Edge classification selection.
+// Classifies regular shared edges by face angle, plus all editable edges by
+// stored crease weight. Geometry/history/crease data are untouched.
 
 const status=document.querySelector('#selectionStatus');
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
@@ -15,40 +15,55 @@ function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event
 function degreesBetween(a,b){return a.angleTo(b)*180/Math.PI;}
 function limit(){return Number(threshold?.value||30);}
 
-const row=document.createElement('div');
-row.id='sharpEdgeSelectionRow';
-row.className='outliner-actions';
-row.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin-top:4px';
+const group=document.createElement('div');
+group.id='edgeClassificationSelectionGroup';
+group.style.cssText='margin-top:4px';
 
-const sharpButton=document.createElement('button');
-sharpButton.id='selectSharpEdgesBtn';
-sharpButton.type='button';
-sharpButton.textContent='Sharp Edges';
-sharpButton.disabled=true;
-sharpButton.style.cssText='width:100%;min-width:0';
+const angleRow=document.createElement('div');
+angleRow.id='sharpEdgeSelectionRow';
+angleRow.className='outliner-actions';
+angleRow.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:0 0 4px';
 
-const smoothButton=document.createElement('button');
-smoothButton.id='selectSmoothEdgesBtn';
-smoothButton.type='button';
-smoothButton.textContent='Smooth Edges';
-smoothButton.disabled=true;
-smoothButton.style.cssText='width:100%;min-width:0';
+const creaseRow=document.createElement('div');
+creaseRow.id='creaseEdgeSelectionRow';
+creaseRow.className='outliner-actions';
+creaseRow.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:0';
 
-row.append(sharpButton,smoothButton);
+function makeButton(id,label){
+  const button=document.createElement('button');
+  button.id=id;
+  button.type='button';
+  button.textContent=label;
+  button.disabled=true;
+  button.style.cssText='width:100%;min-width:0';
+  return button;
+}
+
+const sharpButton=makeButton('selectSharpEdgesBtn','Sharp Edges');
+const smoothButton=makeButton('selectSmoothEdgesBtn','Smooth Edges');
+const creasedButton=makeButton('selectCreasedEdgesBtn','Creased');
+const uncreasedButton=makeButton('selectUncreasedEdgesBtn','Uncreased');
+
+angleRow.append(sharpButton,smoothButton);
+creaseRow.append(creasedButton,uncreasedButton);
+group.append(angleRow,creaseRow);
 
 function place(){
-  if(row.isConnected)return true;
+  if(group.isConnected)return true;
   const topologyLabel=[...edgeTools?.querySelectorAll?.('.edge-section-label')||[]].find(el=>el.textContent?.trim()==='Topology');
-  if(topologyLabel?.parentElement){topologyLabel.insertAdjacentElement('beforebegin',row);return true;}
-  if(edgeTools){edgeTools.appendChild(row);return true;}
+  if(topologyLabel?.parentElement){topologyLabel.insertAdjacentElement('beforebegin',group);return true;}
+  if(edgeTools){edgeTools.appendChild(group);return true;}
   return false;
 }
 
 function inspect(m){
-  if(!m)return{sharp:[],smooth:[],threshold:limit()};
-  const cut=limit(),sharp=[],smooth=[];
+  if(!m)return{sharp:[],smooth:[],creased:[],uncreased:[],threshold:limit()};
+  const cut=limit(),sharp=[],smooth=[],creased=[],uncreased=[];
   const edges=m.edges?.()||[];
   edges.forEach((edge,index)=>{
+    const crease=Number(m.edgeCrease?.(index)||0);
+    if(crease>.001)creased.push(index);else uncreased.push(index);
+
     const owners=(edge?.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&fi<m.faces.length&&Array.isArray(m.faces[fi]));
     if(owners.length!==2)return;
     const n0=m.faceNormal(owners[0]),n1=m.faceNormal(owners[1]);
@@ -57,12 +72,32 @@ function inspect(m){
     if(angle+1e-7>=cut)sharp.push(index);
     else smooth.push(index);
   });
-  return{sharp,smooth,threshold:cut};
+  return{sharp,smooth,creased,uncreased,threshold:cut};
+}
+
+function selectionFor(info,kind){
+  if(kind==='smooth')return info.smooth;
+  if(kind==='creased')return info.creased;
+  if(kind==='uncreased')return info.uncreased;
+  return info.sharp;
+}
+
+function labelFor(kind){
+  if(kind==='smooth')return'Smooth Edges';
+  if(kind==='creased')return'Creased';
+  if(kind==='uncreased')return'Uncreased';
+  return'Sharp Edges';
+}
+
+function ruleFor(info,kind){
+  if(kind==='smooth')return`< ${info.threshold}°`;
+  if(kind==='sharp')return`≥ ${info.threshold}°`;
+  return kind==='creased'?'crease > 0':'crease = 0';
 }
 
 function apply(kind='sharp'){
   const m=mesh();if(!m)return;
-  const info=inspect(m),indices=kind==='smooth'?info.smooth:info.sharp;
+  const info=inspect(m),indices=selectionFor(info,kind);
   const edgeMode=document.querySelector('#selectionModes button[data-mode="edge"]');
   if(edgeMode&&!edgeMode.classList.contains('active'))edgeMode.click();
   queueMicrotask(()=>{
@@ -73,11 +108,10 @@ function apply(kind='sharp'){
     bridge()?.set?.('edge',indices);
     render();
     if(status){
-      const label=kind==='smooth'?'Smooth Edges':'Sharp Edges';
-      const rule=kind==='smooth'?`< ${info.threshold}°`:`≥ ${info.threshold}°`;
+      const label=labelFor(kind),rule=ruleFor(info,kind);
       status.textContent=indices.length
         ?`${label} • ${indices.length} edge${indices.length===1?'':'s'} selected • ${rule}`
-        :`${label} • 0 edges at ${rule}`;
+        :`${label} • 0 edges • ${rule}`;
     }
   });
 }
@@ -85,24 +119,23 @@ function apply(kind='sharp'){
 function sync(){
   place();
   const m=mesh(),info=m?inspect(m):null;
-  sharpButton.disabled=!m;
-  smoothButton.disabled=!m;
-  sharpButton.title=m
-    ?`Select shared edges with face angle ≥ ${info.threshold}°${info.sharp.length?` • ${info.sharp.length} found`:''}`
-    :'No editable mesh';
-  smoothButton.title=m
-    ?`Select shared edges with face angle < ${info.threshold}°${info.smooth.length?` • ${info.smooth.length} found`:''}`
-    :'No editable mesh';
+  [sharpButton,smoothButton,creasedButton,uncreasedButton].forEach(button=>button.disabled=!m);
+  sharpButton.title=m?`Select shared edges with face angle ≥ ${info.threshold}°${info.sharp.length?` • ${info.sharp.length} found`:''}`:'No editable mesh';
+  smoothButton.title=m?`Select shared edges with face angle < ${info.threshold}°${info.smooth.length?` • ${info.smooth.length} found`:''}`:'No editable mesh';
+  creasedButton.title=m?`Select edges with stored crease weight > 0${info.creased.length?` • ${info.creased.length} found`:''}`:'No editable mesh';
+  uncreasedButton.title=m?`Select edges with no crease weight${info.uncreased.length?` • ${info.uncreased.length} found`:''}`:'No editable mesh';
 }
 
 function stampVersion(){
   const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.111';
-  document.title='BoxLab v0.36.18.111';
+  if(version)version.textContent='v0.36.18.112';
+  document.title='BoxLab v0.36.18.112';
 }
 
 sharpButton.addEventListener('click',()=>apply('sharp'));
 smoothButton.addEventListener('click',()=>apply('smooth'));
+creasedButton.addEventListener('click',()=>apply('creased'));
+uncreasedButton.addEventListener('click',()=>apply('uncreased'));
 threshold?.addEventListener('input',()=>{if(thresholdOut)thresholdOut.textContent=`${threshold.value}°`;queueMicrotask(sync);});
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
@@ -110,4 +143,4 @@ document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListene
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 [120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSelectSharpEdges={version:'0.36.18.111',inspect,apply};
+globalThis.__boxlabSelectSharpEdges={version:'0.36.18.112',inspect,apply};
