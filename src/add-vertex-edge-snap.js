@@ -84,7 +84,7 @@ function splitEdge(m, edgeIndex, t) {
   return { vertex, a, b };
 }
 
-globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.105', splitEdge };
+globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.106', splitEdge };
 
 function updateDragPosition(event) {
   if (!drag) return;
@@ -105,8 +105,11 @@ function updateDragPosition(event) {
   render();
 }
 
-canvas?.addEventListener('pointerdown', event => {
-  if (!event.isPrimary || !addVertexActive() || !geometryOn()) return;
+// Earliest owner for Add-on-edge. main.js also has a legacy loose-vertex Add branch;
+// when the pointer is actually over an edge, consume the gesture here first so only
+// this edge-split path runs. Geometry Snap changes midpoint snapping only.
+window.addEventListener('pointerdown', event => {
+  if (event.target !== canvas || !event.isPrimary || !addVertexActive()) return;
   const snap = nearestEdge(event.clientX, event.clientY);
   if (!snap) return;
   const m = mesh(), history = globalThis.__boxlabHistory;
@@ -124,7 +127,7 @@ canvas?.addEventListener('pointerdown', event => {
   render();
 }, true);
 
-canvas?.addEventListener('pointermove', event => {
+window.addEventListener('pointermove', event => {
   if (!drag || drag.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
@@ -138,9 +141,7 @@ function finish(event) {
   const snapType=drag.snapType;
   drag = null;
   render();
-  // Keep Add Vertex armed. Do not synthesize a viewport tap to select the new vertex.
-  // The next Pencil/click can immediately split another edge using the rebuilt cage.
   setTimeout(() => { if (status) status.textContent = `Add Vertex • ${snapType} committed • still armed`; }, 20);
 }
-canvas?.addEventListener('pointerup', finish, true);
-canvas?.addEventListener('pointercancel', finish, true);
+window.addEventListener('pointerup', finish, true);
+window.addEventListener('pointercancel', finish, true);
