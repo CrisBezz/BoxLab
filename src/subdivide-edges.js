@@ -1,12 +1,12 @@
-// BoxLab v0.36.18.100 — recursive batch midpoint Edge subdivision.
+// BoxLab v0.36.18.101 — rendered-geometry driven batch midpoint Edge subdivision.
+// Selected Edge identity is resolved from the currently rendered cage endpoints,
+// not from potentially stale Edge indices after topology rebuilds.
 // Splits one or more selected Edges at 50%, preserving adjacent Face loops,
 // crease values and loose-edge topology. One History entry for the whole batch.
 // Result stays in Edge mode with both child Edges selected for immediate repeat.
-// Subdivide never forces Multi on and consumes its own touch pointer sequence.
 
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const status=document.querySelector('#selectionStatus');
-const multiToggle=document.querySelector('#multiSelectToggle');
 const canvas=document.querySelector('#viewport');
 
 function state(){return globalThis.__boxlabBridgeState;}
@@ -84,14 +84,57 @@ function splitByKey(m,edgeKey){
   return {vertex,childKeys:[key(m,a,vertex),key(m,vertex,b)]};
 }
 
+function meshTolerance(m){
+  if(!m?.vertices?.length)return 1e-7;
+  let minX=Infinity,minY=Infinity,minZ=Infinity,maxX=-Infinity,maxY=-Infinity,maxZ=-Infinity;
+  for(const v of m.vertices){
+    if(!v)continue;
+    minX=Math.min(minX,v.x);minY=Math.min(minY,v.y);minZ=Math.min(minZ,v.z);
+    maxX=Math.max(maxX,v.x);maxY=Math.max(maxY,v.y);maxZ=Math.max(maxZ,v.z);
+  }
+  if(!Number.isFinite(minX))return 1e-7;
+  const dx=maxX-minX,dy=maxY-minY,dz=maxZ-minZ;
+  return Math.max(1e-7,Math.hypot(dx,dy,dz)*1e-6);
+}
+
+function nearestVertex(m,x,y,z,tolerance){
+  let best=-1,bestSq=tolerance*tolerance;
+  for(let i=0;i<(m.vertices||[]).length;i++){
+    const v=m.vertices[i];if(!v)continue;
+    const dx=v.x-x,dy=v.y-y,dz=v.z-z,d=dx*dx+dy*dy+dz*dz;
+    if(d<=bestSq){best=i;bestSq=d;}
+  }
+  return best;
+}
+
+function renderedEdgeKey(m,index){
+  const line=state()?.edgeObjects?.get?.(index);
+  const attr=line?.geometry?.getAttribute?.('position');
+  if(!attr||attr.count<2)return null;
+  const tolerance=meshTolerance(m);
+  const last=attr.count-1;
+  const a=nearestVertex(m,attr.getX(0),attr.getY(0),attr.getZ(0),tolerance);
+  const b=nearestVertex(m,attr.getX(last),attr.getY(last),attr.getZ(last),tolerance);
+  if(a<0||b<0||a===b)return null;
+  const k=key(m,a,b);
+  return (m.edges?.()||[]).some(e=>key(m,e.a,e.b)===k)?k:null;
+}
+
 function selectedKeys(m){
+  const ids=selectedEdges();
   const edges=m?.edges?.()||[];
   const keys=[];
-  for(const i of selectedEdges()){
-    const e=edges[i];
-    if(!e||!m.vertices?.[e.a]||!m.vertices?.[e.b])continue;
-    const k=key(m,e.a,e.b);
-    if(!keys.includes(k))keys.push(k);
+  for(const i of ids){
+    // Prefer the actual line currently rendered/selected in the cage. This
+    // survives Edge-array reordering after topology edits.
+    let k=renderedEdgeKey(m,i);
+    if(!k){
+      // Initial-load fallback only: before edge-object-bridge has published the
+      // cage, use the live index. Once rendered geometry exists it is authoritative.
+      const e=edges[i];
+      if(e&&m.vertices?.[e.a]&&m.vertices?.[e.b])k=key(m,e.a,e.b);
+    }
+    if(k&&!keys.includes(k))keys.push(k);
   }
   return keys;
 }
@@ -141,18 +184,9 @@ function applyKeys(keys){
 
   history.push(before);
 
-  // Multi selection is a user interaction mode, not a requirement for the
-  // bridge to hold several selected Edges. Never force it on here.
-  if(multiToggle?.checked){
-    multiToggle.checked=false;
-    multiToggle.dispatchEvent(new Event('change',{bubbles:true}));
-  }
-
   const edgeMode=document.querySelector('#selectionModes button[data-mode="edge"]');
   if(edgeMode&&!edgeMode.classList.contains('active'))edgeMode.click();
 
-  // Replace the selection directly after topology rebuild. No synthetic canvas
-  // taps are used, so no toggle/add-selection behavior can leak into repeat.
   bridge()?.set?.('edge',resultEdges);
   if(status)status.textContent=`Subdivide Edges • ${info.count} edge${info.count===1?'':'s'} split at midpoint • ${resultEdges.length} child Edges selected • repeat ready`;
   queueMicrotask(sync);
@@ -191,9 +225,6 @@ button.addEventListener('pointercancel',event=>{
 },true);
 button.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();},true);
 
-// BoxLab commits ordinary component selection on viewport pointerdown. This
-// listener is installed after main.js, so by the time it runs the live Edge
-// selection is already updated. Re-arm from that actual selection immediately.
 canvas?.addEventListener('pointerdown',()=>queueMicrotask(sync));
 canvas?.addEventListener('pointerup',()=>setTimeout(sync,0));
 window.addEventListener('boxlab-bridge-state',sync);
@@ -201,4 +232,4 @@ document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabSubdivideEdges={version:'0.36.18.100',plan:(m,ids)=>planKeys(m,(m?.edges?.()||[]).filter((_,i)=>ids.includes(i)).map(e=>key(m,e.a,e.b))),apply};
+globalThis.__boxlabSubdivideEdges={version:'0.36.18.101',plan:(m,ids)=>planKeys(m,(m?.edges?.()||[]).filter((_,i)=>ids.includes(i)).map(e=>key(m,e.a,e.b))),apply};
