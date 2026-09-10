@@ -84,7 +84,7 @@ function splitEdge(m, edgeIndex, t) {
   return { vertex, a, b };
 }
 
-globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.106', splitEdge };
+globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.107', splitEdge };
 
 function updateDragPosition(event) {
   if (!drag) return;
@@ -105,21 +105,34 @@ function updateDragPosition(event) {
   render();
 }
 
-// Earliest owner for Add-on-edge. main.js also has a legacy loose-vertex Add branch;
-// when the pointer is actually over an edge, consume the gesture here first so only
-// this edge-split path runs. Geometry Snap changes midpoint snapping only.
+// BoxLab v0.36.18.107 — Add Vertex has one viewport owner.
+// While Add is armed, consume every primary viewport pointerdown here. A hit on an
+// edge splits that edge; a miss does nothing. Never fall through to main.js's legacy
+// loose-vertex Add branch. Geometry Snap controls midpoint snapping only.
 window.addEventListener('pointerdown', event => {
   if (event.target !== canvas || !event.isPrimary || !addVertexActive()) return;
-  const snap = nearestEdge(event.clientX, event.clientY);
-  if (!snap) return;
-  const m = mesh(), history = globalThis.__boxlabHistory;
-  if (!m || !history) return;
 
   event.preventDefault();
   event.stopImmediatePropagation();
+
+  const snap = nearestEdge(event.clientX, event.clientY);
+  if (!snap) {
+    if (status) status.textContent = 'Add Vertex • aim at an Edge';
+    return;
+  }
+
+  const m = mesh(), history = globalThis.__boxlabHistory;
+  if (!m || !history) {
+    if (status) status.textContent = 'Add Vertex • unavailable';
+    return;
+  }
+
   const before = m.clone();
   const result = splitEdge(m, snap.index, THREE.MathUtils.clamp(snap.t, .001, .999));
-  if (!result) return;
+  if (!result) {
+    if (status) status.textContent = 'Add Vertex • edge split failed';
+    return;
+  }
   history.push(before);
   drag = { pointerId:event.pointerId, mesh:m, ...result, t:snap.t, snapType:snap.snapType };
   canvas.setPointerCapture?.(event.pointerId);
