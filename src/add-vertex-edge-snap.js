@@ -7,7 +7,6 @@ const geometryToggle = document.querySelector('#inferenceSnapToggle');
 const SNAP_PX = 18;
 const MIDPOINT_PX = 11;
 let drag = null;
-let navigationPointer = null;
 
 function state() { return globalThis.__boxlabBridgeState; }
 function mesh() { return state()?.mesh || null; }
@@ -85,8 +84,6 @@ function splitEdge(m, edgeIndex, t) {
   return { vertex, a, b };
 }
 
-globalThis.__boxlabEdgeSplitKernel = { version:'0.36.18.108', splitEdge };
-
 function updateDragPosition(event) {
   if (!drag) return;
   const m = drag.mesh, va = m.vertices[drag.a], vb = m.vertices[drag.b];
@@ -106,35 +103,29 @@ function updateDragPosition(event) {
   render();
 }
 
-// BoxLab v0.36.18.108 — edge hits belong to Add Vertex; misses belong to navigation.
-// On a miss, temporarily disarm Add so main.js cannot create a loose vertex, but let
-// the pointer event continue untouched so OrbitControls receives the normal gesture.
-// Re-arm Add after that navigation gesture ends.
-window.addEventListener('pointerdown', event => {
-  if (event.target !== canvas || !event.isPrimary || !addVertexActive()) return;
+function selectNewVertex(vertex) {
+  const m = mesh(), cam = camera();
+  if (!m?.vertices?.[vertex] || !cam || !canvas) return;
+  const p = screenPoint(m.vertices[vertex]);
+  if (!p) return;
+  setTimeout(() => {
+    canvas.dispatchEvent(new PointerEvent('pointerdown', { bubbles:true, cancelable:true, pointerId:94, pointerType:'mouse', isPrimary:true, button:0, buttons:1, clientX:p.x, clientY:p.y }));
+    canvas.dispatchEvent(new PointerEvent('pointerup', { bubbles:true, cancelable:true, pointerId:94, pointerType:'mouse', isPrimary:true, button:0, buttons:0, clientX:p.x, clientY:p.y }));
+  }, 0);
+}
 
+canvas?.addEventListener('pointerdown', event => {
+  if (!event.isPrimary || !addVertexActive() || !geometryOn()) return;
   const snap = nearestEdge(event.clientX, event.clientY);
-  if (!snap) {
-    navigationPointer = event.pointerId;
-    addVertexBtn?.click();
-    if (status) status.textContent = 'Add Vertex • navigation • release to resume Add';
-    return;
-  }
-
+  if (!snap) return;
   const m = mesh(), history = globalThis.__boxlabHistory;
-  if (!m || !history) {
-    if (status) status.textContent = 'Add Vertex • unavailable';
-    return;
-  }
+  if (!m || !history) return;
 
   event.preventDefault();
   event.stopImmediatePropagation();
   const before = m.clone();
   const result = splitEdge(m, snap.index, THREE.MathUtils.clamp(snap.t, .001, .999));
-  if (!result) {
-    if (status) status.textContent = 'Add Vertex • edge split failed';
-    return;
-  }
+  if (!result) return;
   history.push(before);
   drag = { pointerId:event.pointerId, mesh:m, ...result, t:snap.t, snapType:snap.snapType };
   canvas.setPointerCapture?.(event.pointerId);
@@ -142,32 +133,23 @@ window.addEventListener('pointerdown', event => {
   render();
 }, true);
 
-window.addEventListener('pointermove', event => {
+canvas?.addEventListener('pointermove', event => {
   if (!drag || drag.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
   updateDragPosition(event);
 }, true);
 
-function rearmAfterNavigation(event) {
-  if (navigationPointer !== event.pointerId) return false;
-  navigationPointer = null;
-  setTimeout(() => {
-    if (!addVertexActive()) addVertexBtn?.click();
-    if (status) status.textContent = 'Add Vertex • ready';
-  }, 0);
-  return true;
-}
-
 function finish(event) {
-  if (rearmAfterNavigation(event)) return;
   if (!drag || drag.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
-  const snapType=drag.snapType;
+  const vertex = drag.vertex, snapType=drag.snapType;
   drag = null;
+  addVertexBtn?.click();
   render();
-  setTimeout(() => { if (status) status.textContent = `Add Vertex • ${snapType} committed • still armed`; }, 20);
+  selectNewVertex(vertex);
+  setTimeout(() => { if (status) status.textContent = `Add Vertex • ${snapType} committed • new vertex selected`; }, 20);
 }
-window.addEventListener('pointerup', finish, true);
-window.addEventListener('pointercancel', finish, true);
+canvas?.addEventListener('pointerup', finish, true);
+canvas?.addEventListener('pointercancel', finish, true);
