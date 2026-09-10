@@ -1,6 +1,7 @@
-// BoxLab v0.36.18.112 — non-destructive Edge classification selection.
-// Classifies regular shared edges by face angle, plus all editable edges by
-// stored crease weight. Geometry/history/crease data are untouched.
+// BoxLab v0.36.18.113 — non-destructive Edge classification selection.
+// Classifies shared edges by face angle, all editable edges by stored crease
+// weight, and manifold interior edges by face ownership. Geometry/history/
+// crease data are untouched.
 
 const status=document.querySelector('#selectionStatus');
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
@@ -27,7 +28,12 @@ angleRow.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:0 0
 const creaseRow=document.createElement('div');
 creaseRow.id='creaseEdgeSelectionRow';
 creaseRow.className='outliner-actions';
-creaseRow.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:0';
+creaseRow.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:0 0 4px';
+
+const topologyRow=document.createElement('div');
+topologyRow.id='interiorEdgeSelectionRow';
+topologyRow.className='outliner-actions';
+topologyRow.style.cssText='grid-template-columns:1fr;margin:0';
 
 function makeButton(id,label){
   const button=document.createElement('button');
@@ -43,10 +49,12 @@ const sharpButton=makeButton('selectSharpEdgesBtn','Sharp Edges');
 const smoothButton=makeButton('selectSmoothEdgesBtn','Smooth Edges');
 const creasedButton=makeButton('selectCreasedEdgesBtn','Creased');
 const uncreasedButton=makeButton('selectUncreasedEdgesBtn','Uncreased');
+const interiorButton=makeButton('selectInteriorEdgesBtn','Interior Edges');
 
 angleRow.append(sharpButton,smoothButton);
 creaseRow.append(creasedButton,uncreasedButton);
-group.append(angleRow,creaseRow);
+topologyRow.append(interiorButton);
+group.append(angleRow,creaseRow,topologyRow);
 
 function place(){
   if(group.isConnected)return true;
@@ -57,28 +65,31 @@ function place(){
 }
 
 function inspect(m){
-  if(!m)return{sharp:[],smooth:[],creased:[],uncreased:[],threshold:limit()};
-  const cut=limit(),sharp=[],smooth=[],creased=[],uncreased=[];
+  if(!m)return{sharp:[],smooth:[],creased:[],uncreased:[],interior:[],threshold:limit()};
+  const cut=limit(),sharp=[],smooth=[],creased=[],uncreased=[],interior=[];
   const edges=m.edges?.()||[];
   edges.forEach((edge,index)=>{
     const crease=Number(m.edgeCrease?.(index)||0);
     if(crease>.001)creased.push(index);else uncreased.push(index);
 
     const owners=(edge?.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&fi<m.faces.length&&Array.isArray(m.faces[fi]));
+    if(owners.length===2)interior.push(index);
     if(owners.length!==2)return;
+
     const n0=m.faceNormal(owners[0]),n1=m.faceNormal(owners[1]);
     if(!n0||!n1||!Number.isFinite(n0.x)||!Number.isFinite(n1.x))return;
     const angle=degreesBetween(n0,n1);
     if(angle+1e-7>=cut)sharp.push(index);
     else smooth.push(index);
   });
-  return{sharp,smooth,creased,uncreased,threshold:cut};
+  return{sharp,smooth,creased,uncreased,interior,threshold:cut};
 }
 
 function selectionFor(info,kind){
   if(kind==='smooth')return info.smooth;
   if(kind==='creased')return info.creased;
   if(kind==='uncreased')return info.uncreased;
+  if(kind==='interior')return info.interior;
   return info.sharp;
 }
 
@@ -86,13 +97,16 @@ function labelFor(kind){
   if(kind==='smooth')return'Smooth Edges';
   if(kind==='creased')return'Creased';
   if(kind==='uncreased')return'Uncreased';
+  if(kind==='interior')return'Interior Edges';
   return'Sharp Edges';
 }
 
 function ruleFor(info,kind){
   if(kind==='smooth')return`< ${info.threshold}°`;
   if(kind==='sharp')return`≥ ${info.threshold}°`;
-  return kind==='creased'?'crease > 0':'crease = 0';
+  if(kind==='creased')return'crease > 0';
+  if(kind==='uncreased')return'crease = 0';
+  return'2 adjacent faces';
 }
 
 function apply(kind='sharp'){
@@ -119,23 +133,25 @@ function apply(kind='sharp'){
 function sync(){
   place();
   const m=mesh(),info=m?inspect(m):null;
-  [sharpButton,smoothButton,creasedButton,uncreasedButton].forEach(button=>button.disabled=!m);
+  [sharpButton,smoothButton,creasedButton,uncreasedButton,interiorButton].forEach(button=>button.disabled=!m);
   sharpButton.title=m?`Select shared edges with face angle ≥ ${info.threshold}°${info.sharp.length?` • ${info.sharp.length} found`:''}`:'No editable mesh';
   smoothButton.title=m?`Select shared edges with face angle < ${info.threshold}°${info.smooth.length?` • ${info.smooth.length} found`:''}`:'No editable mesh';
   creasedButton.title=m?`Select edges with stored crease weight > 0${info.creased.length?` • ${info.creased.length} found`:''}`:'No editable mesh';
   uncreasedButton.title=m?`Select edges with no crease weight${info.uncreased.length?` • ${info.uncreased.length} found`:''}`:'No editable mesh';
+  interiorButton.title=m?`Select manifold interior edges with exactly 2 adjacent faces${info.interior.length?` • ${info.interior.length} found`:''}`:'No editable mesh';
 }
 
 function stampVersion(){
   const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.112';
-  document.title='BoxLab v0.36.18.112';
+  if(version)version.textContent='v0.36.18.113';
+  document.title='BoxLab v0.36.18.113';
 }
 
 sharpButton.addEventListener('click',()=>apply('sharp'));
 smoothButton.addEventListener('click',()=>apply('smooth'));
 creasedButton.addEventListener('click',()=>apply('creased'));
 uncreasedButton.addEventListener('click',()=>apply('uncreased'));
+interiorButton.addEventListener('click',()=>apply('interior'));
 threshold?.addEventListener('input',()=>{if(thresholdOut)thresholdOut.textContent=`${threshold.value}°`;queueMicrotask(sync);});
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
@@ -143,4 +159,4 @@ document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListene
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 [120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSelectSharpEdges={version:'0.36.18.112',inspect,apply};
+globalThis.__boxlabSelectSharpEdges={version:'0.36.18.113',inspect,apply};
