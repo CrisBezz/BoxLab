@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.99 — recursive batch midpoint Edge subdivision.
+// BoxLab v0.36.18.100 — recursive batch midpoint Edge subdivision.
 // Splits one or more selected Edges at 50%, preserving adjacent Face loops,
 // crease values and loose-edge topology. One History entry for the whole batch.
 // Result stays in Edge mode with both child Edges selected for immediate repeat.
@@ -7,6 +7,7 @@
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const status=document.querySelector('#selectionStatus');
 const multiToggle=document.querySelector('#multiSelectToggle');
+const canvas=document.querySelector('#viewport');
 
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
@@ -190,9 +191,14 @@ button.addEventListener('pointercancel',event=>{
 },true);
 button.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();},true);
 
+// BoxLab commits ordinary component selection on viewport pointerdown. This
+// listener is installed after main.js, so by the time it runs the live Edge
+// selection is already updated. Re-arm from that actual selection immediately.
+canvas?.addEventListener('pointerdown',()=>queueMicrotask(sync));
+canvas?.addEventListener('pointerup',()=>setTimeout(sync,0));
 window.addEventListener('boxlab-bridge-state',sync);
-document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
+document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabSubdivideEdges={version:'0.36.18.99',plan:(m,ids)=>planKeys(m,(m?.edges?.()||[]).filter((_,i)=>ids.includes(i)).map(e=>key(m,e.a,e.b))),apply};
+globalThis.__boxlabSubdivideEdges={version:'0.36.18.100',plan:(m,ids)=>planKeys(m,(m?.edges?.()||[]).filter((_,i)=>ids.includes(i)).map(e=>key(m,e.a,e.b))),apply};
