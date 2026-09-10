@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.113 — non-destructive Edge classification selection.
+// BoxLab v0.36.18.114 — non-destructive Edge classification selection.
 // Classifies shared edges by face angle, all editable edges by stored crease
 // weight, and manifold interior edges by face ownership. Geometry/history/
 // crease data are untouched.
@@ -143,8 +143,8 @@ function sync(){
 
 function stampVersion(){
   const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.113';
-  document.title='BoxLab v0.36.18.113';
+  if(version)version.textContent='v0.36.18.114';
+  document.title='BoxLab v0.36.18.114';
 }
 
 sharpButton.addEventListener('click',()=>apply('sharp'));
@@ -159,4 +159,4 @@ document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListene
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 [120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSelectSharpEdges={version:'0.36.18.113',inspect,apply};
+globalThis.__boxlabSelectSharpEdges={version:'0.36.18.114',inspect,apply};
