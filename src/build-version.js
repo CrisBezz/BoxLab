@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.100 — single visible build-version owner.
+// BoxLab v0.36.18.101 — single visible build-version owner.
 // Older feature modules may still contain historical version stamp timers; hide their
 // mutable text and render one stable version label from this owner instead.
 
-const BUILD='v0.36.18.100';
+const BUILD='v0.36.18.101';
 const version=document.querySelector('#appVersion');
 
 function stamp(){
@@ -24,9 +24,6 @@ if(version&&!document.querySelector('#boxlabBuildVersionStyle')){
 }
 
 stamp();
-// Historical feature modules still have delayed title stamps up to 1600ms.
-// Reassert once after that legacy window; visible appVersion never flickers because
-// the central data attribute is what is rendered.
 setTimeout(stamp,1800);
 
 globalThis.__boxlabBuildVersion=BUILD;
