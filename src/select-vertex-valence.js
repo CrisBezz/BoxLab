@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.130 — non-destructive Vertex valence / SubD inspection.
+// BoxLab v0.36.18.131 — non-destructive Vertex valence / SubD inspection.
 // Selects vertices by incident-edge count, interior manifold extraordinary
 // vertices (SubD poles: valence != 4), regular open-manifold boundary corners
 // (valence 2), remaining irregular boundary vertices, and regular SubD vertices.
@@ -166,8 +166,8 @@ function sync(){
 
 function stampVersion(){
   const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.130';
-  document.title='BoxLab v0.36.18.130';
+  if(version)version.textContent='v0.36.18.131';
+  document.title='BoxLab v0.36.18.131';
 }
 
 valence3Button.addEventListener('click',()=>apply('v3'));
@@ -183,4 +183,4 @@ document.querySelectorAll('#selectionModes button').forEach(button=>button.addEv
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 [120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSelectVertexValence={version:'0.36.18.130',inspect,apply};
+globalThis.__boxlabSelectVertexValence={version:'0.36.18.131',inspect,apply};
