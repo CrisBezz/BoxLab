@@ -1,7 +1,7 @@
-// BoxLab v0.36.18.119 — non-destructive Vertex valence / pole selection.
+// BoxLab v0.36.18.120 — non-destructive Vertex valence / pole selection.
 // Selects vertices by incident-edge count, interior manifold extraordinary
-// vertices (SubD poles: valence != 4), and open-manifold boundary vertices
-// whose valence differs from 3. Geometry/history are untouched.
+// vertices (SubD poles: valence != 4), regular open-manifold boundary corners
+// (valence 2), and remaining irregular boundary vertices. Geometry/history untouched.
 
 const vertexTools=document.querySelector('[data-mode-tools="vertex"]');
 const status=document.querySelector('#selectionStatus');
@@ -24,7 +24,7 @@ row.style.cssText='grid-template-columns:repeat(3,minmax(0,1fr));margin:0 0 4px'
 const poleRow=document.createElement('div');
 poleRow.id='vertexPoleSelectionRow';
 poleRow.className='outliner-actions';
-poleRow.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:0';
+poleRow.style.cssText='grid-template-columns:repeat(3,minmax(0,1fr));margin:0';
 
 function makeButton(id,label){
   const button=document.createElement('button');
@@ -40,9 +40,10 @@ const valence3Button=makeButton('selectValence3VerticesBtn','3-Valence');
 const valence4Button=makeButton('selectValence4VerticesBtn','4-Valence');
 const valence5Button=makeButton('selectValence5PlusVerticesBtn','5+ Valence');
 const poleButton=makeButton('selectSubdPoleVerticesBtn','SubD Poles');
+const boundaryCornerButton=makeButton('selectBoundaryCornerVerticesBtn','Boundary Corners');
 const boundaryIrregularButton=makeButton('selectBoundaryIrregularVerticesBtn','Boundary Irregular');
 row.append(valence3Button,valence4Button,valence5Button);
-poleRow.append(poleButton,boundaryIrregularButton);
+poleRow.append(poleButton,boundaryCornerButton,boundaryIrregularButton);
 group.append(row,poleRow);
 
 function place(){
@@ -80,13 +81,13 @@ function disconnectedFaceFan(m,vertexIndex,edges){
 }
 
 function inspect(m){
-  if(!m)return{v3:[],v4:[],v5plus:[],poles:[],boundaryIrregular:[]};
+  if(!m)return{v3:[],v4:[],v5plus:[],poles:[],boundaryCorners:[],boundaryIrregular:[]};
   const incident=Array.from({length:m.vertices.length},()=>[]);
   (m.edges?.()||[]).forEach(edge=>{
     if(Number.isInteger(edge?.a)&&edge.a>=0&&edge.a<incident.length)incident[edge.a].push(edge);
     if(Number.isInteger(edge?.b)&&edge.b>=0&&edge.b<incident.length)incident[edge.b].push(edge);
   });
-  const v3=[],v4=[],v5plus=[],poles=[],boundaryIrregular=[];
+  const v3=[],v4=[],v5plus=[],poles=[],boundaryCorners=[],boundaryIrregular=[];
   incident.forEach((edges,index)=>{
     const count=edges.length;
     if(count===3)v3.push(index);
@@ -105,18 +106,21 @@ function inspect(m){
       return;
     }
 
-    // A regular open-manifold boundary vertex has exactly two boundary edges.
-    // Flag only that well-formed boundary case when valence differs from 3;
-    // malformed/non-manifold boundary fans belong in the dedicated diagnostics.
-    if(boundaryEdges===2&&count!==3)boundaryIrregular.push(index);
+    // A well-formed open-manifold boundary vertex has exactly two boundary edges.
+    // In a regular quad patch valence 3 is the ordinary boundary run and valence 2
+    // is a boundary corner. Keep those corners separate from genuinely irregular cases.
+    if(boundaryEdges===2){
+      if(count===2)boundaryCorners.push(index);
+      else if(count!==3)boundaryIrregular.push(index);
+    }
   });
-  return{v3,v4,v5plus,poles,boundaryIrregular};
+  return{v3,v4,v5plus,poles,boundaryCorners,boundaryIrregular};
 }
 
 function apply(kind){
   const m=mesh();if(!m)return;
   const info=inspect(m);
-  const indices=kind==='v4'?info.v4:kind==='v5plus'?info.v5plus:kind==='poles'?info.poles:kind==='boundaryIrregular'?info.boundaryIrregular:info.v3;
+  const indices=kind==='v4'?info.v4:kind==='v5plus'?info.v5plus:kind==='poles'?info.poles:kind==='boundaryCorners'?info.boundaryCorners:kind==='boundaryIrregular'?info.boundaryIrregular:info.v3;
   const vertexMode=document.querySelector('#selectionModes button[data-mode="vertex"]');
   if(vertexMode&&!vertexMode.classList.contains('active'))vertexMode.click();
   queueMicrotask(()=>{
@@ -127,7 +131,7 @@ function apply(kind){
     bridge()?.set?.('vertex',indices);
     render();
     if(status){
-      const label=kind==='v4'?'4-Valence':kind==='v5plus'?'5+ Valence':kind==='poles'?'SubD Poles':kind==='boundaryIrregular'?'Boundary Irregular':'3-Valence';
+      const label=kind==='v4'?'4-Valence':kind==='v5plus'?'5+ Valence':kind==='poles'?'SubD Poles':kind==='boundaryCorners'?'Boundary Corners':kind==='boundaryIrregular'?'Boundary Irregular':'3-Valence';
       status.textContent=indices.length
         ?`${label} • ${indices.length} vert${indices.length===1?'':'s'} selected`
         :`${label} • 0 verts`;
@@ -138,24 +142,26 @@ function apply(kind){
 function sync(){
   place();
   const m=mesh(),info=m?inspect(m):null;
-  [valence3Button,valence4Button,valence5Button,poleButton,boundaryIrregularButton].forEach(button=>button.disabled=!m);
+  [valence3Button,valence4Button,valence5Button,poleButton,boundaryCornerButton,boundaryIrregularButton].forEach(button=>button.disabled=!m);
   valence3Button.title=m?`Select vertices with exactly 3 incident edges • ${info.v3.length} found`:'No editable mesh';
   valence4Button.title=m?`Select vertices with exactly 4 incident edges • ${info.v4.length} found`:'No editable mesh';
   valence5Button.title=m?`Select vertices with 5 or more incident edges • ${info.v5plus.length} found`:'No editable mesh';
   poleButton.title=m?`Select interior manifold SubD poles (valence != 4) • ${info.poles.length} found`:'No editable mesh';
-  boundaryIrregularButton.title=m?`Select open-manifold boundary vertices with valence != 3 • ${info.boundaryIrregular.length} found`:'No editable mesh';
+  boundaryCornerButton.title=m?`Select regular open-manifold boundary corners (valence 2) • ${info.boundaryCorners.length} found`:'No editable mesh';
+  boundaryIrregularButton.title=m?`Select other open-manifold boundary vertices with valence other than 3 • ${info.boundaryIrregular.length} found`:'No editable mesh';
 }
 
 function stampVersion(){
   const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.119';
-  document.title='BoxLab v0.36.18.119';
+  if(version)version.textContent='v0.36.18.120';
+  document.title='BoxLab v0.36.18.120';
 }
 
 valence3Button.addEventListener('click',()=>apply('v3'));
 valence4Button.addEventListener('click',()=>apply('v4'));
 valence5Button.addEventListener('click',()=>apply('v5plus'));
 poleButton.addEventListener('click',()=>apply('poles'));
+boundaryCornerButton.addEventListener('click',()=>apply('boundaryCorners'));
 boundaryIrregularButton.addEventListener('click',()=>apply('boundaryIrregular'));
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
@@ -163,4 +169,4 @@ document.querySelectorAll('#selectionModes button').forEach(button=>button.addEv
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 [120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSelectVertexValence={version:'0.36.18.119',inspect,apply};
+globalThis.__boxlabSelectVertexValence={version:'0.36.18.120',inspect,apply};
