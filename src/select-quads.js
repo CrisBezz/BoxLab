@@ -1,8 +1,9 @@
-// BoxLab v0.36.18.124 — non-destructive Quad / Quad Patch / Quad Transition Face selection.
+// BoxLab v0.36.18.127 — non-destructive Quad / topology-transition Face selection.
 // Selects every valid 4-sided face, quads whose shared neighbours are all quads,
-// and quads that sit directly beside at least one non-quad neighbour.
+// quads that sit directly beside at least one non-quad neighbour, and isolated
+// non-quad faces whose shared neighbours are all quads.
 // Boundary edges are allowed; missing/non-manifold ownership is excluded from
-// Patch/Transition classification. Geometry/history are untouched.
+// Patch/Transition/Isolated classification. Geometry/history are untouched.
 
 const status=document.querySelector('#selectionStatus');
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -35,6 +36,11 @@ patchHost.id='quadPatchFaceSelectionHost';
 patchHost.className='outliner-actions';
 patchHost.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:4px 0 0';
 
+const isolatedHost=document.createElement('div');
+isolatedHost.id='isolatedNonQuadFaceSelectionHost';
+isolatedHost.className='outliner-actions';
+isolatedHost.style.cssText='grid-template-columns:1fr;margin:4px 0 0';
+
 function makePatchButton(id,label){
   const button=document.createElement('button');
   button.id=id;
@@ -47,7 +53,9 @@ function makePatchButton(id,label){
 
 const patchButton=makePatchButton('selectQuadPatchFacesBtn','Quad Patch');
 const transitionButton=makePatchButton('selectQuadTransitionFacesBtn','Quad Transition');
+const isolatedNonQuadButton=makePatchButton('selectIsolatedNonQuadFacesBtn','Isolated Non-Quad');
 patchHost.append(patchButton,transitionButton);
+isolatedHost.append(isolatedNonQuadButton);
 
 function place(){
   const row=document.querySelector('#faceInspectionRow');
@@ -60,6 +68,9 @@ function place(){
     if(patchHost.parentElement!==row.parentElement||patchHost.previousElementSibling!==row){
       row.insertAdjacentElement('afterend',patchHost);
     }
+    if(isolatedHost.parentElement!==row.parentElement||isolatedHost.previousElementSibling!==patchHost){
+      patchHost.insertAdjacentElement('afterend',isolatedHost);
+    }
     return true;
   }
   if(host.isConnected)return true;
@@ -68,9 +79,10 @@ function place(){
   if(anchor?.parentElement){
     anchor.insertAdjacentElement('afterend',host);
     host.insertAdjacentElement('afterend',patchHost);
+    patchHost.insertAdjacentElement('afterend',isolatedHost);
     return true;
   }
-  if(faceTools){faceTools.append(host,patchHost);return true;}
+  if(faceTools){faceTools.append(host,patchHost,isolatedHost);return true;}
   return false;
 }
 
@@ -91,25 +103,48 @@ function classifyQuadFace(m,faceIndex,face,edgeMap){
   return{valid:true,patch:!touchesNonQuad,transition:touchesNonQuad};
 }
 
+function isIsolatedNonQuadFace(m,faceIndex,face,edgeMap){
+  if(!Array.isArray(face)||face.length===4||face.length<3)return false;
+  let sharedNeighbourCount=0;
+  for(let i=0;i<face.length;i++){
+    const a=face[i],b=face[(i+1)%face.length];
+    const edge=edgeMap.get(edgeKey(a,b));
+    if(!edge)return false;
+    const owners=validOwners(m,edge);
+    if(!owners.includes(faceIndex)||owners.length<1||owners.length>2)return false;
+    if(owners.length===2){
+      sharedNeighbourCount++;
+      const other=owners[0]===faceIndex?owners[1]:owners[0];
+      if(!Array.isArray(m.faces[other])||m.faces[other].length!==4)return false;
+    }
+  }
+  return sharedNeighbourCount>0;
+}
+
 function inspect(m){
-  if(!m)return{indices:[],patch:[],transition:[],total:0,patchTotal:0,transitionTotal:0,faces:0};
-  const indices=[],patch=[],transition=[];
+  if(!m)return{indices:[],patch:[],transition:[],isolatedNonQuad:[],total:0,patchTotal:0,transitionTotal:0,isolatedNonQuadTotal:0,faces:0};
+  const indices=[],patch=[],transition=[],isolatedNonQuad=[];
   const edgeMap=new Map();
   (m.edges?.()||[]).forEach(edge=>{
     if(Number.isInteger(edge?.a)&&Number.isInteger(edge?.b))edgeMap.set(edgeKey(edge.a,edge.b),edge);
   });
   m.faces.forEach((face,index)=>{
-    if(!Array.isArray(face)||face.length!==4)return;
-    indices.push(index);
-    const classified=classifyQuadFace(m,index,face,edgeMap);
-    if(classified.patch)patch.push(index);
-    else if(classified.transition)transition.push(index);
+    if(!Array.isArray(face))return;
+    if(face.length===4){
+      indices.push(index);
+      const classified=classifyQuadFace(m,index,face,edgeMap);
+      if(classified.patch)patch.push(index);
+      else if(classified.transition)transition.push(index);
+      return;
+    }
+    if(isIsolatedNonQuadFace(m,index,face,edgeMap))isolatedNonQuad.push(index);
   });
   return{
-    indices,patch,transition,
+    indices,patch,transition,isolatedNonQuad,
     total:indices.length,
     patchTotal:patch.length,
     transitionTotal:transition.length,
+    isolatedNonQuadTotal:isolatedNonQuad.length,
     faces:m.faces.length
   };
 }
@@ -148,16 +183,24 @@ function applyTransition(){
   setSelection(info.transition,'Quad Transition • touches a non-quad neighbour','Quad Transition • 0 faces');
 }
 
+function applyIsolatedNonQuad(){
+  const m=mesh();if(!m)return;
+  const info=inspect(m);
+  setSelection(info.isolatedNonQuad,'Isolated Non-Quad • shared neighbours are all quads','Isolated Non-Quad • 0 faces');
+}
+
 function sync(){
   place();
   const m=mesh();
   button.disabled=!m;
   patchButton.disabled=!m;
   transitionButton.disabled=!m;
+  isolatedNonQuadButton.disabled=!m;
   if(!m){
     button.title='No editable mesh';
     patchButton.title='No editable mesh';
     transitionButton.title='No editable mesh';
+    isolatedNonQuadButton.title='No editable mesh';
     return;
   }
   const info=inspect(m);
@@ -170,14 +213,18 @@ function sync(){
   transitionButton.title=info.transitionTotal
     ?`Select ${info.transitionTotal} quad transition face${info.transitionTotal===1?'':'s'} • touches at least 1 non-quad neighbour`
     :'No quad transition faces';
+  isolatedNonQuadButton.title=info.isolatedNonQuadTotal
+    ?`Select ${info.isolatedNonQuadTotal} isolated non-quad face${info.isolatedNonQuadTotal===1?'':'s'} • every shared neighbour is a quad`
+    :'No isolated non-quad faces';
 }
 
 button.addEventListener('click',apply);
 patchButton.addEventListener('click',applyPatch);
 transitionButton.addEventListener('click',applyTransition);
+isolatedNonQuadButton.addEventListener('click',applyIsolatedNonQuad);
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700,1000].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabSelectQuads={version:'0.36.18.124',inspect,apply,applyPatch,applyTransition,sync};
+globalThis.__boxlabSelectQuads={version:'0.36.18.127',inspect,apply,applyPatch,applyTransition,applyIsolatedNonQuad,sync};
