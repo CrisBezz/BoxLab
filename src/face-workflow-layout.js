@@ -12,8 +12,8 @@ import './select-tri-pairs.js?v=0.36.18.133';
 import './select-cleanable-verts.js?v=0.36.18.134';
 import './select-vertex-classification.js?v=0.36.18.115';
 import './select-vertex-valence.js?v=0.36.18.134';
-import './select-mergeable-verts.js?v=0.36.18.135';
-import './select-intersecting-faces.js?v=0.36.18.136';
+import './select-mergeable-verts.js?v=0.36.18.137';
+import './select-intersecting-faces.js?v=0.36.18.137';
 import './select-quads.js?v=0.36.18.128';
 import './mesh-health-summary.js?v=0.36.18.137';
 
