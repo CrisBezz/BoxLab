@@ -1,9 +1,10 @@
-// BoxLab v0.36.18.140 — Face Repair drawer diagnose→repair linkage.
-// Keeps existing repair handlers untouched, but adds a contextual Cleanup action
-// driven by the Cleanable Verts inspector so Inspect/Mesh Health can feed Repair.
+// BoxLab v0.36.18.141 — Face Repair startup stabilization + diagnose→repair linkage.
+// Existing repair handlers remain untouched. Legacy repair modules finish their
+// own placement passes first; Repair then performs one final containment pass.
 
-const VERSION='0.36.18.140';
+const VERSION='0.36.18.141';
 const faceTools=document.querySelector('[data-mode-tools="face"]');
+let settled=false;
 
 function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
@@ -100,7 +101,6 @@ function syncCleanup(button){
   const inspect=globalThis.__boxlabSelectCleanableVerts?.inspect;
   let count=0;
   try{count=m&&inspect?Number(inspect(m)?.count)||0:0;}catch{count=0;}
-
   const plan=globalThis.__boxlabCleanVertices?.plan?.(m);
   const available=!!plan;
   button.disabled=!available;
@@ -134,9 +134,12 @@ function sync(){
   return true;
 }
 
-window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
-document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
-[0,60,160,360,800,1300,1900].forEach(delay=>setTimeout(sync,delay));
+function requestSync(){if(settled)queueMicrotask(sync);}
+
+ensureDrawer();
+setTimeout(()=>{sync();settled=true;},1850);
+window.addEventListener('boxlab-bridge-state',requestSync);
+document.addEventListener('pointerup',()=>{if(settled)setTimeout(sync,0);},true);
+document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',requestSync));
 
 globalThis.__boxlabFaceRepairDrawer={version:VERSION,sync};
