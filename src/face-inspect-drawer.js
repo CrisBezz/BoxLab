@@ -1,10 +1,10 @@
-// BoxLab v0.36.18.138 — Face Inspect drawer containment.
-// UI-only: collects existing Face selection/diagnostic helpers into one
-// default-collapsed Inspect drawer. Existing detector and selection handlers
-// remain untouched; modelling and repair controls are deliberately excluded.
+// BoxLab v0.36.18.141 — Face Inspect drawer startup stabilization.
+// UI-only: waits for legacy diagnostic placement passes to finish, then performs
+// one containment pass. After startup, normal state-change sync remains active.
 
-const VERSION='0.36.18.138';
+const VERSION='0.36.18.141';
 const faceTools=document.querySelector('[data-mode-tools="face"]');
+let settled=false;
 
 function ensureDrawer(){
   if(!faceTools)return null;
@@ -74,9 +74,7 @@ function sync(){
   const rows=[...body.querySelectorAll('.outliner-actions')];
   rows.forEach(row=>{
     row.style.setProperty('margin-top',row.style.marginTop||'4px');
-    row.querySelectorAll('button').forEach(button=>{
-      button.style.setProperty('min-width','0');
-    });
+    row.querySelectorAll('button').forEach(button=>button.style.setProperty('min-width','0'));
   });
 
   const count=body.querySelectorAll('button[id^="select"]').length;
@@ -85,16 +83,12 @@ function sync(){
   return true;
 }
 
-function stampVersion(){
-  const version=document.querySelector('#appVersion');
-  if(version)version.textContent=`v${VERSION}`;
-  document.title=`BoxLab v${VERSION}`;
-}
+function requestSync(){if(settled)queueMicrotask(sync);}
 
-window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
-document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
-[0,50,140,320,700,1100,1700].forEach(delay=>setTimeout(sync,delay));
-[250,900,1800].forEach(delay=>setTimeout(stampVersion,delay));
+ensureDrawer();
+setTimeout(()=>{sync();settled=true;},1750);
+window.addEventListener('boxlab-bridge-state',requestSync);
+document.addEventListener('pointerup',()=>{if(settled)setTimeout(sync,0);},true);
+document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',requestSync));
 
 globalThis.__boxlabFaceInspectDrawer={version:VERSION,sync};
