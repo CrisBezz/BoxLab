@@ -1,7 +1,7 @@
 // BoxLab v0.36.18.135 — non-destructive Merge by Distance inspection.
 // Selects nearby regular-mesh vertex clusters only when the existing
 // Merge by Distance planner confirms that cluster is safe to weld.
-// Geometry/history are untouched.
+// Geometry/history are untouched. Release version display is owned by the current release layer.
 
 const vertexTools=document.querySelector('[data-mode-tools="vertex"]');
 const status=document.querySelector('#selectionStatus');
@@ -85,12 +85,6 @@ function apply(){
   });
 }
 
-function stampVersion(){
-  const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.135';
-  document.title='BoxLab v0.36.18.135';
-}
-
 function sync(){
   place();
   const m=mesh(),plan=planner(),tol=tolerance();
@@ -104,6 +98,5 @@ window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
-[120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
 globalThis.__boxlabSelectMergeableVerts={version:'0.36.18.135',inspect,apply,sync};
