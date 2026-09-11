@@ -15,8 +15,9 @@ import './select-vertex-valence.js?v=0.36.18.134';
 import './select-mergeable-verts.js?v=0.36.18.135';
 import './select-intersecting-faces.js?v=0.36.18.136';
 import './select-quads.js?v=0.36.18.128';
+import './mesh-health-summary.js?v=0.36.18.137';
 
-// BoxLab v0.36.18.136 — Face workflow layout polish + modelling/repair tool loading.
+// BoxLab v0.36.18.137 — Face workflow layout polish + modelling/repair tool loading.
 // UI-only layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -77,4 +78,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.136',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.137',sync};
