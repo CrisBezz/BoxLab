@@ -1,7 +1,8 @@
-// BoxLab v0.36.18.123 — non-destructive Quad / Quad Patch Face selection.
-// Selects every valid 4-sided face, plus quads whose shared neighbours are all
-// quads. Boundary edges are allowed; non-manifold ownership is excluded.
-// Geometry/history are untouched.
+// BoxLab v0.36.18.124 — non-destructive Quad / Quad Patch / Quad Transition Face selection.
+// Selects every valid 4-sided face, quads whose shared neighbours are all quads,
+// and quads that sit directly beside at least one non-quad neighbour.
+// Boundary edges are allowed; missing/non-manifold ownership is excluded from
+// Patch/Transition classification. Geometry/history are untouched.
 
 const status=document.querySelector('#selectionStatus');
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -32,15 +33,21 @@ host.appendChild(button);
 const patchHost=document.createElement('div');
 patchHost.id='quadPatchFaceSelectionHost';
 patchHost.className='outliner-actions';
-patchHost.style.cssText='grid-template-columns:1fr;margin:4px 0 0';
+patchHost.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:4px 0 0';
 
-const patchButton=document.createElement('button');
-patchButton.id='selectQuadPatchFacesBtn';
-patchButton.type='button';
-patchButton.textContent='Quad Patch';
-patchButton.disabled=true;
-patchButton.style.cssText='width:100%;min-width:0;padding:5px 4px;font-size:10px';
-patchHost.appendChild(patchButton);
+function makePatchButton(id,label){
+  const button=document.createElement('button');
+  button.id=id;
+  button.type='button';
+  button.textContent=label;
+  button.disabled=true;
+  button.style.cssText='width:100%;min-width:0;padding:5px 4px;font-size:10px';
+  return button;
+}
+
+const patchButton=makePatchButton('selectQuadPatchFacesBtn','Quad Patch');
+const transitionButton=makePatchButton('selectQuadTransitionFacesBtn','Quad Transition');
+patchHost.append(patchButton,transitionButton);
 
 function place(){
   const row=document.querySelector('#faceInspectionRow');
@@ -67,25 +74,26 @@ function place(){
   return false;
 }
 
-function isQuadPatchFace(m,faceIndex,face,edgeMap){
-  if(!Array.isArray(face)||face.length!==4)return false;
+function classifyQuadFace(m,faceIndex,face,edgeMap){
+  if(!Array.isArray(face)||face.length!==4)return{valid:false,patch:false,transition:false};
+  let touchesNonQuad=false;
   for(let i=0;i<face.length;i++){
     const a=face[i],b=face[(i+1)%face.length];
     const edge=edgeMap.get(edgeKey(a,b));
-    if(!edge)return false;
+    if(!edge)return{valid:false,patch:false,transition:false};
     const owners=validOwners(m,edge);
-    if(!owners.includes(faceIndex)||owners.length<1||owners.length>2)return false;
+    if(!owners.includes(faceIndex)||owners.length<1||owners.length>2)return{valid:false,patch:false,transition:false};
     if(owners.length===2){
       const other=owners[0]===faceIndex?owners[1]:owners[0];
-      if(!Array.isArray(m.faces[other])||m.faces[other].length!==4)return false;
+      if(!Array.isArray(m.faces[other])||m.faces[other].length!==4)touchesNonQuad=true;
     }
   }
-  return true;
+  return{valid:true,patch:!touchesNonQuad,transition:touchesNonQuad};
 }
 
 function inspect(m){
-  if(!m)return{indices:[],patch:[],total:0,patchTotal:0,faces:0};
-  const indices=[],patch=[];
+  if(!m)return{indices:[],patch:[],transition:[],total:0,patchTotal:0,transitionTotal:0,faces:0};
+  const indices=[],patch=[],transition=[];
   const edgeMap=new Map();
   (m.edges?.()||[]).forEach(edge=>{
     if(Number.isInteger(edge?.a)&&Number.isInteger(edge?.b))edgeMap.set(edgeKey(edge.a,edge.b),edge);
@@ -93,9 +101,17 @@ function inspect(m){
   m.faces.forEach((face,index)=>{
     if(!Array.isArray(face)||face.length!==4)return;
     indices.push(index);
-    if(isQuadPatchFace(m,index,face,edgeMap))patch.push(index);
+    const classified=classifyQuadFace(m,index,face,edgeMap);
+    if(classified.patch)patch.push(index);
+    else if(classified.transition)transition.push(index);
   });
-  return{indices,patch,total:indices.length,patchTotal:patch.length,faces:m.faces.length};
+  return{
+    indices,patch,transition,
+    total:indices.length,
+    patchTotal:patch.length,
+    transitionTotal:transition.length,
+    faces:m.faces.length
+  };
 }
 
 function setSelection(indices,label,zeroText){
@@ -126,12 +142,24 @@ function applyPatch(){
   setSelection(info.patch,'Quad Patch • all shared neighbours are quads','Quad Patch • 0 faces');
 }
 
+function applyTransition(){
+  const m=mesh();if(!m)return;
+  const info=inspect(m);
+  setSelection(info.transition,'Quad Transition • touches a non-quad neighbour','Quad Transition • 0 faces');
+}
+
 function sync(){
   place();
   const m=mesh();
   button.disabled=!m;
   patchButton.disabled=!m;
-  if(!m){button.title='No editable mesh';patchButton.title='No editable mesh';return;}
+  transitionButton.disabled=!m;
+  if(!m){
+    button.title='No editable mesh';
+    patchButton.title='No editable mesh';
+    transitionButton.title='No editable mesh';
+    return;
+  }
   const info=inspect(m);
   button.title=info.total
     ?`Select ${info.total} quad face${info.total===1?'':'s'}`
@@ -139,13 +167,17 @@ function sync(){
   patchButton.title=info.patchTotal
     ?`Select ${info.patchTotal} quad patch face${info.patchTotal===1?'':'s'} • boundary allowed, shared neighbours all quads`
     :'No quad patch faces';
+  transitionButton.title=info.transitionTotal
+    ?`Select ${info.transitionTotal} quad transition face${info.transitionTotal===1?'':'s'} • touches at least 1 non-quad neighbour`
+    :'No quad transition faces';
 }
 
 button.addEventListener('click',apply);
 patchButton.addEventListener('click',applyPatch);
+transitionButton.addEventListener('click',applyTransition);
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700,1000].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabSelectQuads={version:'0.36.18.123',inspect,apply,applyPatch,sync};
+globalThis.__boxlabSelectQuads={version:'0.36.18.124',inspect,apply,applyPatch,applyTransition,sync};
