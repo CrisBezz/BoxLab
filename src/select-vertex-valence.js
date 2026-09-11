@@ -117,6 +117,9 @@ function inspect(m){
       return;
     }
 
+    // A well-formed open-manifold boundary vertex has exactly two boundary edges.
+    // In a regular quad patch valence 3 is the ordinary boundary run and valence 2
+    // is a boundary corner. Both are included in the positive SubD Regular set.
     if(boundaryEdges===2){
       if(count===2){boundaryCorners.push(index);regular.push(index);}
       else if(count===3)regular.push(index);
@@ -141,7 +144,9 @@ function apply(kind){
     render();
     if(status){
       const label=kind==='v4'?'4-Valence':kind==='v5plus'?'5+ Valence':kind==='poles'?'SubD Poles':kind==='boundaryCorners'?'Boundary Corners':kind==='boundaryIrregular'?'Boundary Irregular':kind==='regular'?'SubD Regular':'3-Valence';
-      status.textContent=indices.length?`${label} • ${indices.length} vert${indices.length===1?'':'s'} selected`:`${label} • 0 verts`;
+      status.textContent=indices.length
+        ?`${label} • ${indices.length} vert${indices.length===1?'':'s'} selected`
+        :`${label} • 0 verts`;
     }
   });
 }
