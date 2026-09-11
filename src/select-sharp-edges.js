@@ -1,6 +1,7 @@
-// BoxLab v0.36.18.122 — non-destructive Edge classification selection.
+// BoxLab v0.36.18.125 — non-destructive Edge classification selection.
 // Classifies shared edges by face angle, all editable edges by stored crease
-// weight, manifold interior edges by face ownership, and quad-flow quality.
+// weight, manifold interior edges by face ownership, quad-flow quality, and
+// exact quad-to-non-quad transition interfaces.
 // Geometry/history/crease data are untouched.
 
 const status=document.querySelector('#selectionStatus');
@@ -33,7 +34,12 @@ creaseRow.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:0 
 const topologyRow=document.createElement('div');
 topologyRow.id='interiorEdgeSelectionRow';
 topologyRow.className='outliner-actions';
-topologyRow.style.cssText='grid-template-columns:repeat(3,minmax(0,1fr));margin:0';
+topologyRow.style.cssText='grid-template-columns:repeat(3,minmax(0,1fr));margin:0 0 4px';
+
+const transitionRow=document.createElement('div');
+transitionRow.id='quadTransitionEdgeSelectionRow';
+transitionRow.className='outliner-actions';
+transitionRow.style.cssText='grid-template-columns:1fr;margin:0';
 
 function makeButton(id,label){
   const button=document.createElement('button');
@@ -52,11 +58,13 @@ const uncreasedButton=makeButton('selectUncreasedEdgesBtn','Uncreased');
 const interiorButton=makeButton('selectInteriorEdgesBtn','Interior');
 const quadFlowButton=makeButton('selectQuadFlowEdgesBtn','Quad Flow');
 const nonQuadAdjacentButton=makeButton('selectNonQuadAdjacentEdgesBtn','Non-Quad Adj');
+const quadTransitionButton=makeButton('selectQuadTransitionEdgesBtn','Quad Transition');
 
 angleRow.append(sharpButton,smoothButton);
 creaseRow.append(creasedButton,uncreasedButton);
 topologyRow.append(interiorButton,quadFlowButton,nonQuadAdjacentButton);
-group.append(angleRow,creaseRow,topologyRow);
+transitionRow.append(quadTransitionButton);
+group.append(angleRow,creaseRow,topologyRow,transitionRow);
 
 function place(){
   if(group.isConnected)return true;
@@ -67,8 +75,8 @@ function place(){
 }
 
 function inspect(m){
-  if(!m)return{sharp:[],smooth:[],creased:[],uncreased:[],interior:[],quadFlow:[],nonQuadAdjacent:[],threshold:limit()};
-  const cut=limit(),sharp=[],smooth=[],creased=[],uncreased=[],interior=[],quadFlow=[],nonQuadAdjacent=[];
+  if(!m)return{sharp:[],smooth:[],creased:[],uncreased:[],interior:[],quadFlow:[],nonQuadAdjacent:[],quadTransition:[],threshold:limit()};
+  const cut=limit(),sharp=[],smooth=[],creased=[],uncreased=[],interior=[],quadFlow=[],nonQuadAdjacent=[],quadTransition=[];
   const edges=m.edges?.()||[];
   edges.forEach((edge,index)=>{
     const crease=Number(m.edgeCrease?.(index)||0);
@@ -77,8 +85,12 @@ function inspect(m){
     const owners=(edge?.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&fi<m.faces.length&&Array.isArray(m.faces[fi]));
     if(owners.length===2){
       interior.push(index);
-      const bothQuads=owners.every(fi=>m.faces[fi].length===4);
-      if(bothQuads)quadFlow.push(index);else nonQuadAdjacent.push(index);
+      const quadCount=owners.reduce((count,fi)=>count+(m.faces[fi].length===4?1:0),0);
+      if(quadCount===2)quadFlow.push(index);
+      else{
+        nonQuadAdjacent.push(index);
+        if(quadCount===1)quadTransition.push(index);
+      }
     }
     if(owners.length!==2)return;
 
@@ -88,7 +100,7 @@ function inspect(m){
     if(angle+1e-7>=cut)sharp.push(index);
     else smooth.push(index);
   });
-  return{sharp,smooth,creased,uncreased,interior,quadFlow,nonQuadAdjacent,threshold:cut};
+  return{sharp,smooth,creased,uncreased,interior,quadFlow,nonQuadAdjacent,quadTransition,threshold:cut};
 }
 
 function selectionFor(info,kind){
@@ -98,6 +110,7 @@ function selectionFor(info,kind){
   if(kind==='interior')return info.interior;
   if(kind==='quadFlow')return info.quadFlow;
   if(kind==='nonQuadAdjacent')return info.nonQuadAdjacent;
+  if(kind==='quadTransition')return info.quadTransition;
   return info.sharp;
 }
 
@@ -108,6 +121,7 @@ function labelFor(kind){
   if(kind==='interior')return'Interior Edges';
   if(kind==='quadFlow')return'Quad Flow';
   if(kind==='nonQuadAdjacent')return'Non-Quad Adjacent';
+  if(kind==='quadTransition')return'Quad Transition';
   return'Sharp Edges';
 }
 
@@ -118,6 +132,7 @@ function ruleFor(info,kind){
   if(kind==='uncreased')return'crease = 0';
   if(kind==='quadFlow')return'2 adjacent quad faces';
   if(kind==='nonQuadAdjacent')return'at least 1 adjacent non-quad';
+  if(kind==='quadTransition')return'1 quad + 1 non-quad face';
   return'2 adjacent faces';
 }
 
@@ -145,7 +160,7 @@ function apply(kind='sharp'){
 function sync(){
   place();
   const m=mesh(),info=m?inspect(m):null;
-  [sharpButton,smoothButton,creasedButton,uncreasedButton,interiorButton,quadFlowButton,nonQuadAdjacentButton].forEach(button=>button.disabled=!m);
+  [sharpButton,smoothButton,creasedButton,uncreasedButton,interiorButton,quadFlowButton,nonQuadAdjacentButton,quadTransitionButton].forEach(button=>button.disabled=!m);
   sharpButton.title=m?`Select shared edges with face angle ≥ ${info.threshold}°${info.sharp.length?` • ${info.sharp.length} found`:''}`:'No editable mesh';
   smoothButton.title=m?`Select shared edges with face angle < ${info.threshold}°${info.smooth.length?` • ${info.smooth.length} found`:''}`:'No editable mesh';
   creasedButton.title=m?`Select edges with stored crease weight > 0${info.creased.length?` • ${info.creased.length} found`:''}`:'No editable mesh';
@@ -153,12 +168,13 @@ function sync(){
   interiorButton.title=m?`Select manifold interior edges with exactly 2 adjacent faces${info.interior.length?` • ${info.interior.length} found`:''}`:'No editable mesh';
   quadFlowButton.title=m?`Select manifold interior edges shared by 2 quad faces${info.quadFlow.length?` • ${info.quadFlow.length} found`:''}`:'No editable mesh';
   nonQuadAdjacentButton.title=m?`Select manifold interior edges touching at least 1 non-quad face${info.nonQuadAdjacent.length?` • ${info.nonQuadAdjacent.length} found`:''}`:'No editable mesh';
+  quadTransitionButton.title=m?`Select exact quad-to-non-quad interface edges${info.quadTransition.length?` • ${info.quadTransition.length} found`:''}`:'No editable mesh';
 }
 
 function stampVersion(){
   const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.122';
-  document.title='BoxLab v0.36.18.122';
+  if(version)version.textContent='v0.36.18.125';
+  document.title='BoxLab v0.36.18.125';
 }
 
 sharpButton.addEventListener('click',()=>apply('sharp'));
@@ -168,6 +184,7 @@ uncreasedButton.addEventListener('click',()=>apply('uncreased'));
 interiorButton.addEventListener('click',()=>apply('interior'));
 quadFlowButton.addEventListener('click',()=>apply('quadFlow'));
 nonQuadAdjacentButton.addEventListener('click',()=>apply('nonQuadAdjacent'));
+quadTransitionButton.addEventListener('click',()=>apply('quadTransition'));
 threshold?.addEventListener('input',()=>{if(thresholdOut)thresholdOut.textContent=`${threshold.value}°`;queueMicrotask(sync);});
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
@@ -175,4 +192,4 @@ document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListene
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 [120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSelectSharpEdges={version:'0.36.18.122',inspect,apply};
+globalThis.__boxlabSelectSharpEdges={version:'0.36.18.125',inspect,apply};
