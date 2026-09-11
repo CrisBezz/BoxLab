@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.117 — non-destructive Vertex valence / pole selection.
+// BoxLab v0.36.18.118 — non-destructive Vertex valence / pole selection.
 // Selects vertices by incident-edge count and interior manifold extraordinary
 // vertices (SubD poles: valence != 4). Geometry/history are untouched.
 
@@ -131,8 +131,8 @@ function sync(){
 
 function stampVersion(){
   const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.117';
-  document.title='BoxLab v0.36.18.117';
+  if(version)version.textContent='v0.36.18.118';
+  document.title='BoxLab v0.36.18.118';
 }
 
 valence3Button.addEventListener('click',()=>apply('v3'));
@@ -145,4 +145,4 @@ document.querySelectorAll('#selectionModes button').forEach(button=>button.addEv
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 [120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSelectVertexValence={version:'0.36.18.117',inspect,apply};
+globalThis.__boxlabSelectVertexValence={version:'0.36.18.118',inspect,apply};
