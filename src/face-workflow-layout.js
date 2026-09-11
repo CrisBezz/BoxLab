@@ -8,10 +8,10 @@ import './orient-shell-outward.js?v=0.36.18.95';
 import './rotate-edge.js?v=0.36.18.96';
 import './select-sharp-edges.js?v=0.36.18.122';
 import './select-vertex-classification.js?v=0.36.18.115';
-import './select-vertex-valence.js?v=0.36.18.123';
-import './select-quads.js?v=0.36.18.123';
+import './select-vertex-valence.js?v=0.36.18.124';
+import './select-quads.js?v=0.36.18.124';
 
-// BoxLab v0.36.18.123 — Face workflow layout polish + modelling/repair tool loading.
+// BoxLab v0.36.18.124 — Face workflow layout polish + modelling/repair tool loading.
 // UI-only layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -72,4 +72,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.123',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.124',sync};
