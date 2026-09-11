@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.132 — non-destructive Vertex valence / SubD inspection.
+// BoxLab v0.36.18.133 — non-destructive Vertex valence / SubD inspection.
 // Selects vertices by incident-edge count, interior manifold extraordinary
 // vertices (SubD poles: valence != 4), regular open-manifold boundary corners
 // (valence 2), remaining irregular boundary vertices, and regular SubD vertices.
@@ -117,9 +117,6 @@ function inspect(m){
       return;
     }
 
-    // A well-formed open-manifold boundary vertex has exactly two boundary edges.
-    // In a regular quad patch valence 3 is the ordinary boundary run and valence 2
-    // is a boundary corner. Both are included in the positive SubD Regular set.
     if(boundaryEdges===2){
       if(count===2){boundaryCorners.push(index);regular.push(index);}
       else if(count===3)regular.push(index);
@@ -144,9 +141,7 @@ function apply(kind){
     render();
     if(status){
       const label=kind==='v4'?'4-Valence':kind==='v5plus'?'5+ Valence':kind==='poles'?'SubD Poles':kind==='boundaryCorners'?'Boundary Corners':kind==='boundaryIrregular'?'Boundary Irregular':kind==='regular'?'SubD Regular':'3-Valence';
-      status.textContent=indices.length
-        ?`${label} • ${indices.length} vert${indices.length===1?'':'s'} selected`
-        :`${label} • 0 verts`;
+      status.textContent=indices.length?`${label} • ${indices.length} vert${indices.length===1?'':'s'} selected`:`${label} • 0 verts`;
     }
   });
 }
@@ -166,8 +161,8 @@ function sync(){
 
 function stampVersion(){
   const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.132';
-  document.title='BoxLab v0.36.18.132';
+  if(version)version.textContent='v0.36.18.133';
+  document.title='BoxLab v0.36.18.133';
 }
 
 valence3Button.addEventListener('click',()=>apply('v3'));
@@ -183,4 +178,4 @@ document.querySelectorAll('#selectionModes button').forEach(button=>button.addEv
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 [120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSelectVertexValence={version:'0.36.18.132',inspect,apply};
+globalThis.__boxlabSelectVertexValence={version:'0.36.18.133',inspect,apply};
