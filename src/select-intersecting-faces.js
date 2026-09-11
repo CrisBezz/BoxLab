@@ -4,6 +4,7 @@ import * as THREE from 'three';
 // Finds separate, non-adjacent polygon faces whose triangulated surfaces cross
 // or overlap. Faces sharing a mesh vertex are excluded so ordinary connected
 // topology is not reported as an intersection. Geometry/history are untouched.
+// Release version display is owned by the current release layer.
 
 const status=document.querySelector('#selectionStatus');
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -200,10 +201,5 @@ button.addEventListener('click',apply);
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 [0,40,120,300,700,1000].forEach(delay=>setTimeout(sync,delay));
-
-setTimeout(()=>{
-  const appVersion=document.querySelector('#appVersion');
-  if(appVersion)appVersion.textContent='v0.36.18.136';
-},1200);
 
 globalThis.__boxlabSelectIntersectingFaces={version:'0.36.18.136',inspect,apply,sync};
