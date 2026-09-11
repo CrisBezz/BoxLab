@@ -16,11 +16,11 @@ import './select-mergeable-verts.js?v=0.36.18.137';
 import './select-intersecting-faces.js?v=0.36.18.137';
 import './select-quads.js?v=0.36.18.128';
 import './mesh-health-summary.js?v=0.36.18.137';
-import './face-inspect-drawer.js?v=0.36.18.138';
-import './face-repair-drawer.js?v=0.36.18.140';
-import './release-version.js?v=0.36.18.140';
+import './face-inspect-drawer.js?v=0.36.18.141';
+import './face-repair-drawer.js?v=0.36.18.141';
+import './release-version.js?v=0.36.18.141';
 
-// BoxLab v0.36.18.140 — Face workflow layout polish + modelling/repair tool loading.
+// BoxLab v0.36.18.141 — Face workflow layout polish + modelling/repair tool loading.
 // UI-only layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -77,8 +77,8 @@ function sync(){
   return !!(coplanar||islands);
 }
 
-[0,40,120,300,700,1000].forEach(delay=>setTimeout(sync,delay));
+[0,120,500,1000].forEach(delay=>setTimeout(sync,delay));
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.140',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.141',sync};
