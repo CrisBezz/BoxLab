@@ -1,9 +1,10 @@
-// BoxLab v0.36.18.127 — non-destructive Quad / topology-transition Face selection.
+// BoxLab v0.36.18.128 — non-destructive Quad / topology-transition Face selection.
 // Selects every valid 4-sided face, quads whose shared neighbours are all quads,
-// quads that sit directly beside at least one non-quad neighbour, and isolated
-// non-quad faces whose shared neighbours are all quads.
+// quads that sit directly beside at least one non-quad neighbour, isolated
+// non-quad faces whose shared neighbours are all quads, and clustered non-quad
+// faces that touch at least one other non-quad face.
 // Boundary edges are allowed; missing/non-manifold ownership is excluded from
-// Patch/Transition/Isolated classification. Geometry/history are untouched.
+// Patch/Transition/Isolated/Cluster classification. Geometry/history are untouched.
 
 const status=document.querySelector('#selectionStatus');
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -39,7 +40,7 @@ patchHost.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:4p
 const isolatedHost=document.createElement('div');
 isolatedHost.id='isolatedNonQuadFaceSelectionHost';
 isolatedHost.className='outliner-actions';
-isolatedHost.style.cssText='grid-template-columns:1fr;margin:4px 0 0';
+isolatedHost.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:4px 0 0';
 
 function makePatchButton(id,label){
   const button=document.createElement('button');
@@ -54,8 +55,9 @@ function makePatchButton(id,label){
 const patchButton=makePatchButton('selectQuadPatchFacesBtn','Quad Patch');
 const transitionButton=makePatchButton('selectQuadTransitionFacesBtn','Quad Transition');
 const isolatedNonQuadButton=makePatchButton('selectIsolatedNonQuadFacesBtn','Isolated Non-Quad');
+const clusteredNonQuadButton=makePatchButton('selectClusteredNonQuadFacesBtn','Non-Quad Cluster');
 patchHost.append(patchButton,transitionButton);
-isolatedHost.append(isolatedNonQuadButton);
+isolatedHost.append(isolatedNonQuadButton,clusteredNonQuadButton);
 
 function place(){
   const row=document.querySelector('#faceInspectionRow');
@@ -103,27 +105,28 @@ function classifyQuadFace(m,faceIndex,face,edgeMap){
   return{valid:true,patch:!touchesNonQuad,transition:touchesNonQuad};
 }
 
-function isIsolatedNonQuadFace(m,faceIndex,face,edgeMap){
-  if(!Array.isArray(face)||face.length===4||face.length<3)return false;
-  let sharedNeighbourCount=0;
+function classifyNonQuadFace(m,faceIndex,face,edgeMap){
+  if(!Array.isArray(face)||face.length===4||face.length<3)return{valid:false,isolated:false,clustered:false};
+  let sharedNeighbourCount=0,touchesNonQuad=false;
   for(let i=0;i<face.length;i++){
     const a=face[i],b=face[(i+1)%face.length];
     const edge=edgeMap.get(edgeKey(a,b));
-    if(!edge)return false;
+    if(!edge)return{valid:false,isolated:false,clustered:false};
     const owners=validOwners(m,edge);
-    if(!owners.includes(faceIndex)||owners.length<1||owners.length>2)return false;
+    if(!owners.includes(faceIndex)||owners.length<1||owners.length>2)return{valid:false,isolated:false,clustered:false};
     if(owners.length===2){
       sharedNeighbourCount++;
       const other=owners[0]===faceIndex?owners[1]:owners[0];
-      if(!Array.isArray(m.faces[other])||m.faces[other].length!==4)return false;
+      if(!Array.isArray(m.faces[other])||m.faces[other].length!==4)touchesNonQuad=true;
     }
   }
-  return sharedNeighbourCount>0;
+  if(!sharedNeighbourCount)return{valid:false,isolated:false,clustered:false};
+  return{valid:true,isolated:!touchesNonQuad,clustered:touchesNonQuad};
 }
 
 function inspect(m){
-  if(!m)return{indices:[],patch:[],transition:[],isolatedNonQuad:[],total:0,patchTotal:0,transitionTotal:0,isolatedNonQuadTotal:0,faces:0};
-  const indices=[],patch=[],transition=[],isolatedNonQuad=[];
+  if(!m)return{indices:[],patch:[],transition:[],isolatedNonQuad:[],clusteredNonQuad:[],total:0,patchTotal:0,transitionTotal:0,isolatedNonQuadTotal:0,clusteredNonQuadTotal:0,faces:0};
+  const indices=[],patch=[],transition=[],isolatedNonQuad=[],clusteredNonQuad=[];
   const edgeMap=new Map();
   (m.edges?.()||[]).forEach(edge=>{
     if(Number.isInteger(edge?.a)&&Number.isInteger(edge?.b))edgeMap.set(edgeKey(edge.a,edge.b),edge);
@@ -137,14 +140,17 @@ function inspect(m){
       else if(classified.transition)transition.push(index);
       return;
     }
-    if(isIsolatedNonQuadFace(m,index,face,edgeMap))isolatedNonQuad.push(index);
+    const classified=classifyNonQuadFace(m,index,face,edgeMap);
+    if(classified.isolated)isolatedNonQuad.push(index);
+    else if(classified.clustered)clusteredNonQuad.push(index);
   });
   return{
-    indices,patch,transition,isolatedNonQuad,
+    indices,patch,transition,isolatedNonQuad,clusteredNonQuad,
     total:indices.length,
     patchTotal:patch.length,
     transitionTotal:transition.length,
     isolatedNonQuadTotal:isolatedNonQuad.length,
+    clusteredNonQuadTotal:clusteredNonQuad.length,
     faces:m.faces.length
   };
 }
@@ -189,6 +195,12 @@ function applyIsolatedNonQuad(){
   setSelection(info.isolatedNonQuad,'Isolated Non-Quad • shared neighbours are all quads','Isolated Non-Quad • 0 faces');
 }
 
+function applyClusteredNonQuad(){
+  const m=mesh();if(!m)return;
+  const info=inspect(m);
+  setSelection(info.clusteredNonQuad,'Non-Quad Cluster • touches another non-quad','Non-Quad Cluster • 0 faces');
+}
+
 function sync(){
   place();
   const m=mesh();
@@ -196,11 +208,13 @@ function sync(){
   patchButton.disabled=!m;
   transitionButton.disabled=!m;
   isolatedNonQuadButton.disabled=!m;
+  clusteredNonQuadButton.disabled=!m;
   if(!m){
     button.title='No editable mesh';
     patchButton.title='No editable mesh';
     transitionButton.title='No editable mesh';
     isolatedNonQuadButton.title='No editable mesh';
+    clusteredNonQuadButton.title='No editable mesh';
     return;
   }
   const info=inspect(m);
@@ -216,15 +230,19 @@ function sync(){
   isolatedNonQuadButton.title=info.isolatedNonQuadTotal
     ?`Select ${info.isolatedNonQuadTotal} isolated non-quad face${info.isolatedNonQuadTotal===1?'':'s'} • every shared neighbour is a quad`
     :'No isolated non-quad faces';
+  clusteredNonQuadButton.title=info.clusteredNonQuadTotal
+    ?`Select ${info.clusteredNonQuadTotal} clustered non-quad face${info.clusteredNonQuadTotal===1?'':'s'} • touches at least 1 non-quad neighbour`
+    :'No clustered non-quad faces';
 }
 
 button.addEventListener('click',apply);
 patchButton.addEventListener('click',applyPatch);
 transitionButton.addEventListener('click',applyTransition);
 isolatedNonQuadButton.addEventListener('click',applyIsolatedNonQuad);
+clusteredNonQuadButton.addEventListener('click',applyClusteredNonQuad);
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700,1000].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabSelectQuads={version:'0.36.18.127',inspect,apply,applyPatch,applyTransition,applyIsolatedNonQuad,sync};
+globalThis.__boxlabSelectQuads={version:'0.36.18.128',inspect,apply,applyPatch,applyTransition,applyIsolatedNonQuad,applyClusteredNonQuad,sync};
