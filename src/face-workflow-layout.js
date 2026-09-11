@@ -17,6 +17,7 @@ import './select-intersecting-faces.js?v=0.36.18.137';
 import './select-quads.js?v=0.36.18.128';
 import './mesh-health-summary.js?v=0.36.18.137';
 import './face-inspect-drawer.js?v=0.36.18.138';
+import './release-version.js?v=0.36.18.138';
 
 // BoxLab v0.36.18.138 — Face workflow layout polish + modelling/repair tool loading.
 // UI-only layout behavior remains unchanged; modelling tools own their own handlers.
