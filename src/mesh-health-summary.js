@@ -101,18 +101,11 @@ function renderSummary(info){
   return true;
 }
 
-function stampVersion(){
-  const version=document.querySelector('#appVersion');
-  if(version)version.textContent=`v${VERSION}`;
-  document.title=`BoxLab v${VERSION}`;
-}
-
 function sync(){const info=inspect(mesh());renderSummary(info);return info;}
 
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 [0,60,160,360,800,1200].forEach(delay=>setTimeout(sync,delay));
-[0,250,900,1800,2600].forEach(delay=>setTimeout(stampVersion,delay));
 
 globalThis.__boxlabMeshHealth={version:VERSION,inspect,sync,metrics:METRICS.map(({id,label,kind,globalName})=>({id,label,kind,globalName}))};
