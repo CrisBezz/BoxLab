@@ -1,6 +1,9 @@
-// BoxLab v0.36.18.130 — non-destructive boundary-structure inspection.
+import * as THREE from 'three';
+
+// BoxLab v0.36.18.131 — non-destructive boundary-structure inspection.
 // Classifies face-backed boundary edges (exactly one real adjacent face) into
-// simple closed loops, simple open chains, and malformed/branched components.
+// simple closed loops, simple open chains, malformed/branched components, and
+// refines valid closed loops into planar vs warped hole candidates.
 // Loose edges are deliberately excluded. Geometry/history are untouched.
 
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
@@ -21,6 +24,10 @@ const primaryRow=document.createElement('div');
 primaryRow.className='outliner-actions';
 primaryRow.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:0 0 4px';
 
+const holeRow=document.createElement('div');
+holeRow.className='outliner-actions';
+holeRow.style.cssText='grid-template-columns:repeat(2,minmax(0,1fr));margin:0 0 4px';
+
 const malformedRow=document.createElement('div');
 malformedRow.className='outliner-actions';
 malformedRow.style.cssText='grid-template-columns:1fr;margin:0';
@@ -37,10 +44,13 @@ function makeButton(id,label){
 
 const closedButton=makeButton('selectClosedBoundaryLoopsBtn','Closed Loops');
 const openButton=makeButton('selectOpenBoundaryChainsBtn','Open Chains');
+const planarHoleButton=makeButton('selectPlanarHoleLoopsBtn','Planar Holes');
+const warpedHoleButton=makeButton('selectWarpedHoleLoopsBtn','Warped Holes');
 const malformedButton=makeButton('selectMalformedBoundaryBtn','Malformed Boundary');
 primaryRow.append(closedButton,openButton);
+holeRow.append(planarHoleButton,warpedHoleButton);
 malformedRow.append(malformedButton);
-group.append(primaryRow,malformedRow);
+group.append(primaryRow,holeRow,malformedRow);
 
 function place(){
   if(group.isConnected)return true;
@@ -53,8 +63,31 @@ function place(){
   return true;
 }
 
+function componentPlanarity(m,component,edges){
+  const vertices=[...new Set(component.flatMap(index=>{
+    const edge=edges[index];
+    return edge?[edge.a,edge.b]:[];
+  }))].filter(index=>m.vertices?.[index]);
+  if(vertices.length<3)return null;
+  const pts=vertices.map(index=>m.vertices[index]);
+  let a=null,b=null,c=null;
+  outer:for(let i=0;i<pts.length-2;i++)for(let j=i+1;j<pts.length-1;j++)for(let k=j+1;k<pts.length;k++){
+    const ab=pts[j].clone().sub(pts[i]);
+    const ac=pts[k].clone().sub(pts[i]);
+    if(ab.cross(ac).lengthSq()>1e-20){a=pts[i];b=pts[j];c=pts[k];break outer;}
+  }
+  if(!a||!b||!c)return null;
+  const normal=b.clone().sub(a).cross(c.clone().sub(a)).normalize();
+  const box=new THREE.Box3();
+  pts.forEach(point=>box.expandByPoint(point));
+  const tolerance=Math.max(1e-7,box.getSize(new THREE.Vector3()).length()*1e-6);
+  let maxDeviation=0;
+  pts.forEach(point=>{maxDeviation=Math.max(maxDeviation,Math.abs(point.clone().sub(a).dot(normal)));});
+  return{planar:maxDeviation<=tolerance,maxDeviation,tolerance};
+}
+
 function inspect(m){
-  if(!m)return{closed:[],open:[],malformed:[],junctionVertices:[],closedComponents:0,openComponents:0,malformedComponents:0};
+  if(!m)return{closed:[],open:[],planarHoles:[],warpedHoles:[],malformed:[],junctionVertices:[],closedComponents:0,openComponents:0,planarHoleComponents:0,warpedHoleComponents:0,malformedComponents:0};
   const edges=m.edges?.()||[];
   const boundary=[];
   edges.forEach((edge,index)=>{
@@ -70,8 +103,8 @@ function inspect(m){
   });
 
   const boundarySet=new Set(boundary.map(item=>item.index));
-  const seen=new Set(),closed=[],open=[],malformed=[],junctionVertices=[];
-  let closedComponents=0,openComponents=0,malformedComponents=0;
+  const seen=new Set(),closed=[],open=[],planarHoles=[],warpedHoles=[],malformed=[],junctionVertices=[];
+  let closedComponents=0,openComponents=0,planarHoleComponents=0,warpedHoleComponents=0,malformedComponents=0;
 
   for(const seed of boundarySet){
     if(seen.has(seed))continue;
@@ -99,7 +132,12 @@ function inspect(m){
     const allTwo=degrees.length>=3&&degrees.every(value=>value===2);
     const simpleOpen=endCount===2&&degrees.every(value=>value===1||value===2);
 
-    if(allTwo){closed.push(...component);closedComponents++;}
+    if(allTwo){
+      closed.push(...component);closedComponents++;
+      const plane=componentPlanarity(m,component,edges);
+      if(plane?.planar){planarHoles.push(...component);planarHoleComponents++;}
+      else if(plane){warpedHoles.push(...component);warpedHoleComponents++;}
+    }
     else if(simpleOpen){open.push(...component);openComponents++;}
     else{
       malformed.push(...component);malformedComponents++;
@@ -110,16 +148,18 @@ function inspect(m){
   return{
     closed:[...new Set(closed)].sort((a,b)=>a-b),
     open:[...new Set(open)].sort((a,b)=>a-b),
+    planarHoles:[...new Set(planarHoles)].sort((a,b)=>a-b),
+    warpedHoles:[...new Set(warpedHoles)].sort((a,b)=>a-b),
     malformed:[...new Set(malformed)].sort((a,b)=>a-b),
     junctionVertices:[...new Set(junctionVertices)].sort((a,b)=>a-b),
-    closedComponents,openComponents,malformedComponents
+    closedComponents,openComponents,planarHoleComponents,warpedHoleComponents,malformedComponents
   };
 }
 
 function apply(kind){
   const m=mesh();if(!m)return;
   const info=inspect(m);
-  const indices=kind==='open'?info.open:kind==='malformed'?info.malformed:info.closed;
+  const indices=kind==='open'?info.open:kind==='planarHoles'?info.planarHoles:kind==='warpedHoles'?info.warpedHoles:kind==='malformed'?info.malformed:info.closed;
   const edgeMode=document.querySelector('#selectionModes button[data-mode="edge"]');
   if(edgeMode&&!edgeMode.classList.contains('active'))edgeMode.click();
   queueMicrotask(()=>{
@@ -130,8 +170,8 @@ function apply(kind){
     bridge()?.set?.('edge',indices);
     render();
     if(status){
-      const componentCount=kind==='open'?info.openComponents:kind==='malformed'?info.malformedComponents:info.closedComponents;
-      const label=kind==='open'?'Open Boundary Chains':kind==='malformed'?'Malformed Boundary':'Closed Boundary Loops';
+      const componentCount=kind==='open'?info.openComponents:kind==='planarHoles'?info.planarHoleComponents:kind==='warpedHoles'?info.warpedHoleComponents:kind==='malformed'?info.malformedComponents:info.closedComponents;
+      const label=kind==='open'?'Open Boundary Chains':kind==='planarHoles'?'Planar Hole Loops':kind==='warpedHoles'?'Warped Hole Loops':kind==='malformed'?'Malformed Boundary':'Closed Boundary Loops';
       const extra=kind==='malformed'&&info.junctionVertices.length?` • ${info.junctionVertices.length} junction vert${info.junctionVertices.length===1?'':'s'}`:'';
       status.textContent=indices.length
         ?`${label} • ${componentCount} component${componentCount===1?'':'s'} • ${indices.length} edges selected${extra}`
@@ -143,14 +183,18 @@ function apply(kind){
 function sync(){
   place();
   const m=mesh(),info=m?inspect(m):null;
-  closedButton.disabled=!m;
-  openButton.disabled=!m;
-  malformedButton.disabled=!m;
+  [closedButton,openButton,planarHoleButton,warpedHoleButton,malformedButton].forEach(button=>button.disabled=!m);
   closedButton.title=m
     ?`Select face-backed closed boundary loops • ${info.closedComponents} loop${info.closedComponents===1?'':'s'} • ${info.closed.length} edges`
     :'No editable mesh';
   openButton.title=m
     ?`Select face-backed open boundary chains • ${info.openComponents} chain${info.openComponents===1?'':'s'} • ${info.open.length} edges`
+    :'No editable mesh';
+  planarHoleButton.title=m
+    ?`Select planar closed boundary loops suitable for direct hole filling • ${info.planarHoleComponents} loop${info.planarHoleComponents===1?'':'s'} • ${info.planarHoles.length} edges`
+    :'No editable mesh';
+  warpedHoleButton.title=m
+    ?`Select non-planar closed boundary loops that need a triangulate/project strategy • ${info.warpedHoleComponents} loop${info.warpedHoleComponents===1?'':'s'} • ${info.warpedHoles.length} edges`
     :'No editable mesh';
   malformedButton.title=m
     ?`Select branched or malformed face-backed boundary components • ${info.malformedComponents} component${info.malformedComponents===1?'':'s'} • ${info.malformed.length} edges • ${info.junctionVertices.length} junction verts`
@@ -159,10 +203,12 @@ function sync(){
 
 closedButton.addEventListener('click',()=>apply('closed'));
 openButton.addEventListener('click',()=>apply('open'));
+planarHoleButton.addEventListener('click',()=>apply('planarHoles'));
+warpedHoleButton.addEventListener('click',()=>apply('warpedHoles'));
 malformedButton.addEventListener('click',()=>apply('malformed'));
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabSelectBoundaryStructure={version:'0.36.18.130',inspect,apply,sync};
+globalThis.__boxlabSelectBoundaryStructure={version:'0.36.18.131',inspect,apply,sync};
