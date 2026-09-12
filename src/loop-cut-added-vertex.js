@@ -1,107 +1,162 @@
-// BoxLab v0.36.18.158 — promote a safe Add-on-edge vertex into a real loop cut.
-// Detection is based on the immediate face-boundary neighbours of the added
-// vertex, not total mesh valence, so existing surrounding cuts do not block it.
+// BoxLab v0.36.18.159 — logical-quad Loop Cut through Add-on-edge verts.
+// A quad with one collinear Add vertex is represented in storage as a 5-gon.
+// For Loop Cut traversal only, treat that face as its original logical quad.
+// If the logical ring crosses an edge that already contains an Add vertex,
+// reuse that vertex as the cut point and propagate the loop through the strip.
 
 import { EditableMesh as LiveEditableMesh } from './mesh.js?v=0.12';
 
 const baseLoopCut=LiveEditableMesh.prototype.loopCut;
-const EPS=1e-7;
+const EPS=1e-6;
+const MATCH_EPS=2e-3;
 
-function key(mesh,a,b){return mesh.edgeKey(a,b);}
-function collinearBetween(a,v,b){
-  if(!a||!v||!b)return false;
-  const av=v.clone().sub(a),vb=b.clone().sub(v),ab=b.clone().sub(a);
+function edgeKey(mesh,a,b){return mesh.edgeKey(a,b);}
+function betweenFraction(a,v,b){
+  const ab=b.clone().sub(a),den=ab.lengthSq();
+  if(den<1e-14)return null;
+  const t=v.clone().sub(a).dot(ab)/den;
+  const projected=a.clone().lerp(b,t);
   const scale=Math.max(ab.length(),1);
-  if(av.lengthSq()<1e-14||vb.lengthSq()<1e-14)return false;
-  return av.clone().cross(vb).length()<=EPS*scale*scale&&av.dot(vb)>=-EPS;
+  if(t<=EPS||t>=1-EPS||projected.distanceTo(v)>EPS*scale)return null;
+  return t;
 }
-function fraction(a,v,b){const ab=b.clone().sub(a),den=ab.lengthSq();if(den<1e-14)return null;return Math.max(.001,Math.min(.999,v.clone().sub(a).dot(ab)/den));}
-function localPair(face,vertex){
-  const i=face.indexOf(vertex);if(i<0||face.length<3)return null;
-  return [face[(i-1+face.length)%face.length],face[(i+1)%face.length]];
+function faceLogicalInfo(mesh,face){
+  if(!Array.isArray(face))return null;
+  if(face.length===4)return{face:[...face],split:null};
+  if(face.length!==5)return null;
+  const candidates=[];
+  for(let i=0;i<5;i++){
+    const prev=face[(i+4)%5],vertex=face[i],next=face[(i+1)%5];
+    const t=betweenFraction(mesh.vertices[prev],mesh.vertices[vertex],mesh.vertices[next]);
+    if(t!==null)candidates.push({slot:i,vertex,a:prev,b:next,t});
+  }
+  if(candidates.length!==1)return null;
+  const split=candidates[0],logical=face.filter((_,i)=>i!==split.slot);
+  if(logical.length!==4||new Set(logical).size!==4)return null;
+  return{face:logical,split};
 }
-function samePair(pair,a,b){return pair&&((pair[0]===a&&pair[1]===b)||(pair[0]===b&&pair[1]===a));}
-
-function promotionCandidate(mesh,edgeIndex){
-  const seed=mesh.edges()[edgeIndex];
-  if(!seed||seed.loose)return null;
-  for(const vertex of [seed.a,seed.b]){
-    const touched=[];
-    for(let fi=0;fi<mesh.faces.length;fi++){
-      const face=mesh.faces[fi];if(!Array.isArray(face)||!face.includes(vertex))continue;
-      const pair=localPair(face,vertex);if(pair)touched.push({fi,face,pair});
+function logicalTopology(mesh){
+  const logicalFaces=[],splitsByKey=new Map();
+  let hasVirtual=false;
+  for(const face of mesh.faces){
+    const info=faceLogicalInfo(mesh,face);
+    if(!info){logicalFaces.push([...face]);continue;}
+    logicalFaces.push(info.face);
+    if(info.split){
+      hasVirtual=true;
+      const key=edgeKey(mesh,info.split.a,info.split.b);
+      const prior=splitsByKey.get(key);
+      if(!prior)splitsByKey.set(key,info.split);
+      else if(prior.vertex!==info.split.vertex)splitsByKey.set(key,null);
     }
-    if(!touched.length||touched.length>2)continue;
-    const [a,b]=touched[0].pair;
-    if(!Number.isInteger(a)||!Number.isInteger(b)||a===b)continue;
-    if(touched.some(item=>item.face.length!==5||!samePair(item.pair,a,b)))continue;
-    if(touched.some(item=>new Set(item.face.filter(i=>i!==vertex)).size!==4))continue;
-    if(!collinearBetween(mesh.vertices[a],mesh.vertices[vertex],mesh.vertices[b]))continue;
-    const other=seed.a===vertex?seed.b:seed.a;
-    if(other!==a&&other!==b)continue;
-    const t=fraction(mesh.vertices[a],mesh.vertices[vertex],mesh.vertices[b]);
-    if(t===null)continue;
-    return{vertex,a,b,t,faces:touched.map(item=>item.fi)};
+  }
+  return{logicalFaces,splitsByKey,hasVirtual};
+}
+function buildEdges(mesh,faces){
+  const map=new Map();
+  faces.forEach((face,faceIndex)=>{
+    for(let i=0;i<face.length;i++){
+      const a=face[i],b=face[(i+1)%face.length],key=edgeKey(mesh,a,b);
+      if(!map.has(key))map.set(key,{a:Math.min(a,b),b:Math.max(a,b),faces:[]});
+      map.get(key).faces.push(faceIndex);
+    }
+  });
+  return map;
+}
+function logicalSeedKey(mesh,seed,splitsByKey,edgeMap){
+  const direct=edgeKey(mesh,seed.a,seed.b);
+  if(edgeMap.has(direct))return direct;
+  for(const [key,split] of splitsByKey){
+    if(!split)continue;
+    const touches=(seed.a===split.vertex&&(seed.b===split.a||seed.b===split.b))||(seed.b===split.vertex&&(seed.a===split.a||seed.a===split.b));
+    if(touches&&edgeMap.has(key))return key;
   }
   return null;
 }
-
-function restore(mesh,backup){
-  mesh.vertices=backup.vertices.map(v=>v.clone());
-  mesh.faces=backup.faces.map(face=>[...face]);
-  mesh.creases=new Map(backup.creases||[]);
-  if(backup.looseEdges instanceof Set)mesh.looseEdges=new Set(backup.looseEdges);
-  if(backup.looseVertices instanceof Set)mesh.looseVertices=new Set(backup.looseVertices);
-  mesh.edges?.();
+function logicalRing(mesh,edgeIndex,topology){
+  const seed=mesh.edges()[edgeIndex];
+  if(!seed)return null;
+  const {logicalFaces,splitsByKey}=topology,edgeMap=buildEdges(mesh,logicalFaces),seedKey=logicalSeedKey(mesh,seed,splitsByKey,edgeMap);
+  if(!seedKey)return null;
+  const logicalSeed=edgeMap.get(seedKey);
+  const cutKeys=new Set([seedKey]),directed=new Map([[seedKey,{a:logicalSeed.a,b:logicalSeed.b}]]),queue=[seedKey];
+  while(queue.length){
+    const currentKey=queue.shift(),current=edgeMap.get(currentKey),currentDir=directed.get(currentKey);
+    if(!current||!currentDir)continue;
+    for(const faceIndex of current.faces){
+      const face=logicalFaces[faceIndex];
+      if(!face||face.length!==4)continue;
+      let slot=-1;
+      for(let i=0;i<4;i++)if(edgeKey(mesh,face[i],face[(i+1)%4])===currentKey){slot=i;break;}
+      if(slot<0)continue;
+      const faceA=face[slot],faceB=face[(slot+1)%4],forward=currentDir.a===faceA&&currentDir.b===faceB;
+      const oppositeSlot=(slot+2)%4,oa=face[oppositeSlot],ob=face[(oppositeSlot+1)%4],oppositeKey=edgeKey(mesh,oa,ob);
+      const nextDir=forward?{a:ob,b:oa}:{a:oa,b:ob};
+      if(!cutKeys.has(oppositeKey)){cutKeys.add(oppositeKey);directed.set(oppositeKey,nextDir);queue.push(oppositeKey);}
+    }
+  }
+  const splitFaces=[];
+  logicalFaces.forEach((face,faceIndex)=>{
+    if(face.length!==4)return;
+    const slots=[];
+    for(let i=0;i<4;i++)if(cutKeys.has(edgeKey(mesh,face[i],face[(i+1)%4])))slots.push(i);
+    if(slots.length===2&&((slots[0]+2)%4===slots[1]||(slots[1]+2)%4===slots[0]))splitFaces.push({faceIndex,slots});
+  });
+  return splitFaces.length?{cutKeys,directed,splitFaces,logicalFaces,splitsByKey}:null;
 }
-
-function removePromotedVertex(mesh,info){
-  const {vertex,a,b}=info;
-  const oldCrease=Math.max(mesh.creases?.get?.(key(mesh,a,vertex))||0,mesh.creases?.get?.(key(mesh,vertex,b))||0);
-  for(let fi=0;fi<mesh.faces.length;fi++){
-    const face=mesh.faces[fi];
-    if(Array.isArray(face)&&face.includes(vertex))mesh.faces[fi]=face.filter(i=>i!==vertex);
+function existingAmount(mesh,ring){
+  const amounts=[];
+  for(const key of ring.cutKeys){
+    const split=ring.splitsByKey.get(key);if(!split)continue;
+    const dir=ring.directed.get(key);if(!dir)continue;
+    const t=betweenFraction(mesh.vertices[dir.a],mesh.vertices[split.vertex],mesh.vertices[dir.b]);
+    if(t!==null)amounts.push(t);
   }
-  const remap=i=>i<vertex?i:i>vertex?i-1:null;
-  const nextCreases=new Map();
-  for(const [edgeKey,value] of mesh.creases||[]){
-    const [x,y]=String(edgeKey).split(':').map(Number);if(x===vertex||y===vertex)continue;
-    const nx=remap(x),ny=remap(y);if(Number.isInteger(nx)&&Number.isInteger(ny)&&nx!==ny)nextCreases.set(key(mesh,nx,ny),value);
-  }
-  const nextLooseEdges=new Set();
-  for(const edgeKey of mesh.looseEdges||[]){
-    const [x,y]=String(edgeKey).split(':').map(Number);if(x===vertex||y===vertex)continue;
-    const nx=remap(x),ny=remap(y);if(Number.isInteger(nx)&&Number.isInteger(ny)&&nx!==ny)nextLooseEdges.add(key(mesh,nx,ny));
-  }
-  const nextLooseVertices=new Set();
-  for(const old of mesh.looseVertices||[]){const next=remap(old);if(Number.isInteger(next))nextLooseVertices.add(next);}
-  mesh.vertices.splice(vertex,1);
-  mesh.faces=mesh.faces.map(face=>face.map(remap));
-  mesh.creases=nextCreases;
-  if(mesh.looseEdges instanceof Set)mesh.looseEdges=nextLooseEdges;
-  if(mesh.looseVertices instanceof Set)mesh.looseVertices=nextLooseVertices;
-  const na=remap(a),nb=remap(b);
-  if(!Number.isInteger(na)||!Number.isInteger(nb))return null;
-  if(oldCrease>0)mesh.creases.set(key(mesh,na,nb),oldCrease);
-  mesh.edges?.();
-  return{a:na,b:nb};
+  if(!amounts.length)return null;
+  const first=amounts[0];
+  if(amounts.some(t=>Math.abs(t-first)>MATCH_EPS))return false;
+  return first;
 }
 
 LiveEditableMesh.prototype.loopCut=function(edgeIndex,t=.5){
-  const candidate=promotionCandidate(this,edgeIndex);
-  if(!candidate)return baseLoopCut.call(this,edgeIndex,t);
-  const backup=this.clone();
-  const logical=removePromotedVertex(this,candidate);
-  if(!logical){restore(this,backup);return baseLoopCut.call(this,edgeIndex,t);}
-  const logicalKey=key(this,logical.a,logical.b);
-  const restoredIndex=this.edges().findIndex(edge=>key(this,edge.a,edge.b)===logicalKey);
-  if(restoredIndex<0){restore(this,backup);return null;}
-  const result=baseLoopCut.call(this,restoredIndex,candidate.t);
-  if(!result){restore(this,backup);return null;}
-  result.promotedAddedVertex=true;
-  result.promotedPosition=candidate.t;
-  return result;
+  const topology=logicalTopology(this);
+  if(!topology.hasVirtual)return baseLoopCut.call(this,edgeIndex,t);
+  const ring=logicalRing(this,edgeIndex,topology);
+  if(!ring)return baseLoopCut.call(this,edgeIndex,t);
+  const existing=existingAmount(this,ring);
+  if(existing===false)return baseLoopCut.call(this,edgeIndex,t);
+  const amount=Math.max(.05,Math.min(.95,existing??t));
+  const midpointIndex=new Map(),slideData=[];
+  for(const key of ring.cutKeys){
+    const dir=ring.directed.get(key);if(!dir)continue;
+    const split=ring.splitsByKey.get(key);
+    let vertex=null;
+    if(split){
+      const et=betweenFraction(this.vertices[dir.a],this.vertices[split.vertex],this.vertices[dir.b]);
+      if(et!==null&&Math.abs(et-amount)<=MATCH_EPS)vertex=split.vertex;
+    }
+    const start=this.vertices[dir.a].clone(),end=this.vertices[dir.b].clone();
+    if(!Number.isInteger(vertex)){vertex=this.vertices.length;this.vertices.push(start.clone().lerp(end,amount));}
+    midpointIndex.set(key,vertex);
+    slideData.push({vertex,start:start.toArray(),end:end.toArray(),position:amount});
+  }
+  const replacements=new Map();
+  for(const {faceIndex,slots} of ring.splitFaces){
+    const [a,b,c,d]=ring.logicalFaces[faceIndex];
+    if(slots.includes(0)&&slots.includes(2)){
+      const m0=midpointIndex.get(edgeKey(this,a,b)),m2=midpointIndex.get(edgeKey(this,c,d));
+      if(Number.isInteger(m0)&&Number.isInteger(m2))replacements.set(faceIndex,[[a,m0,m2,d],[m0,b,c,m2]]);
+    }else if(slots.includes(1)&&slots.includes(3)){
+      const m1=midpointIndex.get(edgeKey(this,b,c)),m3=midpointIndex.get(edgeKey(this,d,a));
+      if(Number.isInteger(m1)&&Number.isInteger(m3))replacements.set(faceIndex,[[a,b,m1,m3],[m3,m1,c,d]]);
+    }
+  }
+  if(!replacements.size)return baseLoopCut.call(this,edgeIndex,t);
+  const nextFaces=[];
+  this.faces.forEach((face,faceIndex)=>{const split=replacements.get(faceIndex);if(split)nextFaces.push(...split);else nextFaces.push(face);});
+  this.faces=nextFaces;
+  return{cutEdges:ring.cutKeys.size,splitFaces:ring.splitFaces.length,slideData,slideGroups:[slideData],position:amount,promotedAddedVertex:true};
 };
 
-LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.158';
-globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.158',promotionCandidate};
+LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.159';
+globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.159'};
