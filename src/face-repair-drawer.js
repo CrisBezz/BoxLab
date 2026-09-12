@@ -1,10 +1,13 @@
-// BoxLab v0.36.18.142 — Face Repair diagnose→repair linkage expansion.
+// BoxLab v0.36.18.145 — Face Repair diagnose→repair linkage + startup reveal.
 // Existing repair handlers remain untouched. Cleanable Verts feeds Clean Vertices,
 // and Mergeable Verts feeds the existing safe Merge by Distance operation.
 // The expensive Mergeable Verts scan runs only while Repair is open.
+// Face tools stay visually hidden during legacy startup placement, then reveal once settled.
 
-const VERSION='0.36.18.142';
+const VERSION='0.36.18.145';
 const faceTools=document.querySelector('[data-mode-tools="face"]');
+const priorVisibility=faceTools?.style.visibility||'';
+if(faceTools)faceTools.style.visibility='hidden';
 let settled=false;
 
 function state(){return globalThis.__boxlabBridgeState;}
@@ -188,11 +191,28 @@ function sync(){
   return true;
 }
 
+function revealFaceTools(){
+  if(!faceTools)return;
+  faceTools.style.opacity='0';
+  faceTools.style.visibility=priorVisibility;
+  requestAnimationFrame(()=>{
+    faceTools.style.transition='opacity 90ms ease';
+    faceTools.style.opacity='1';
+    setTimeout(()=>{
+      faceTools.style.transition='';
+      faceTools.style.opacity='';
+    },130);
+  });
+}
+
 function requestSync(){if(settled)queueMicrotask(sync);}
 
 const drawer=ensureDrawer();
 drawer?.addEventListener('toggle',()=>{if(settled&&drawer.open)queueMicrotask(sync);});
-setTimeout(()=>{sync();settled=true;},1850);
+setTimeout(()=>{
+  try{sync();}
+  finally{settled=true;revealFaceTools();}
+},1850);
 window.addEventListener('boxlab-bridge-state',()=>{if(settled&&drawer?.open)queueMicrotask(sync);});
 document.addEventListener('pointerup',()=>{if(settled&&drawer?.open)setTimeout(sync,0);},true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',requestSync));
