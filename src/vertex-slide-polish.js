@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.23 — Vertex Slide polish.
-// Owns Vertex Slide only. Edge Slide remains in component-slide.js unchanged.
+// BoxLab v0.36.18.155 — Vertex Slide fresh-topology eligibility fix.
+// Vertex rails are derived directly from face loops + loose edges so freshly
+// inserted Add vertices are immediately recognised without relying on edges().
 
 const canvas=document.querySelector('#viewport');
 const button=document.querySelector('#vertexSlideBtn');
@@ -32,11 +33,30 @@ function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
 function selected(){const b=bridge();return b?.mode?.()==='vertex'?[...new Set(b.indices?.()||[])]:[];}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
-function neighbours(m,v){const out=[];for(const e of m.edges()){if(e.a===v)out.push(e.b);else if(e.b===v)out.push(e.a);}return [...new Set(out)].filter(i=>m.vertices[i]);}
+function neighbours(m,v){
+  const out=new Set();
+  for(const face of m?.faces||[]){
+    if(!Array.isArray(face)||face.length<2)continue;
+    for(let i=0;i<face.length;i++){
+      if(face[i]!==v)continue;
+      const prev=face[(i-1+face.length)%face.length],next=face[(i+1)%face.length];
+      if(Number.isInteger(prev)&&m.vertices?.[prev])out.add(prev);
+      if(Number.isInteger(next)&&m.vertices?.[next])out.add(next);
+    }
+  }
+  if(m?.looseEdges instanceof Set){
+    for(const key of m.looseEdges){
+      const [a,b]=String(key).split(':').map(Number);
+      if(a===v&&Number.isInteger(b)&&m.vertices?.[b])out.add(b);
+      else if(b===v&&Number.isInteger(a)&&m.vertices?.[a])out.add(a);
+    }
+  }
+  return [...out];
+}
 function screenPoint(v){const cam=state()?.camera;if(!cam||!v)return null;const p=v.clone().project(cam),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
 function nearVertex(event,m,v){const p=screenPoint(m.vertices[v]);return !!p&&p.distanceTo(new THREE.Vector2(event.clientX,event.clientY))<=PICK_PX;}
 function compatible(m,ids){if(!m||!ids.length)return false;if(ids.length===1)return neighbours(m,ids[0]).length>0;return ids.every(v=>neighbours(m,v).length===2);}
-function sync(){const m=mesh(),ids=selected(),ok=compatible(m,ids);button.disabled=!ok;if(!ok&&armed){armed=false;button.classList.remove('active');}readout.textContent=!ids.length?'Vertex Slide • select vertex/vertices':ids.length>1&&!ok?'Multi Vertex Slide needs two connected rails per vertex':'Vertex Slide • drag along connected edges';}
+function sync(){const m=mesh(),ids=selected(),ok=compatible(m,ids);button.disabled=!ok;if(!ok&&armed){armed=false;button.classList.remove('active');}readout.textContent=!ids.length?'Vertex Slide • select vertex/vertices':ids.length>1&&!ok?'Multi Vertex Slide needs two connected rails per vertex':ids.length===1&&!ok?'Vertex Slide • selected vertex has no connected rail':'Vertex Slide • drag along connected edges';}
 
 function stableDirectionKey(point){return [point.x,point.y,point.z];}
 function comparePoints(a,b){const A=stableDirectionKey(a),B=stableDirectionKey(b);for(let i=0;i<3;i++){if(Math.abs(A[i]-B[i])>1e-9)return A[i]-B[i];}return 0;}
@@ -123,7 +143,8 @@ function finish(event){if(!drag||drag.pointerId!==event.pointerId)return;event.p
 canvas.addEventListener('pointerup',finish,true);canvas.addEventListener('pointercancel',finish,true);
 
 window.addEventListener('boxlab-bridge-state',sync);
+document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMicrotask(()=>{armed=false;button.classList.remove('active');sync();}));
 setTimeout(sync,0);
 
-globalThis.__boxlabVertexSlidePolish={version:'0.36.18.23',apply:value=>{input.value=String(value);applyExact();}};
+globalThis.__boxlabVertexSlidePolish={version:'0.36.18.155',apply:value=>{input.value=String(value);applyExact();}};
