@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.151 — Lasso/Add Vertex mutual exclusion.
-// Arming Lasso now terminates an active Add Vertex placement session first.
+// BoxLab v0.36.18.152 — Vertex Lasso uses live rendered cage markers.
+// This keeps newly added loose vertices selectable even when a bridge mesh snapshot
+// has not yet caught up. Edge / Face / Object Lasso behavior is unchanged.
 
-const VERSION='0.36.18.151';
+const VERSION='0.36.18.152';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const dock=document.querySelector('#componentSelectionTools .selection-dock');
@@ -29,7 +30,8 @@ function visibleWorldPoint(world,p){const camera=state()?.camera,bodies=activeBo
 function representativeWorld(type,index,m){if(type==='vertex')return m.vertices[index]?.clone()||null;if(type==='edge'){const e=m.edges()[index];return e?m.vertices[e.a].clone().lerp(m.vertices[e.b],.5):null;}if(type==='face'){const f=m.faces[index];if(!f?.length)return null;const c=new THREE.Vector3();f.forEach(id=>c.add(m.vertices[id]));return c.multiplyScalar(1/f.length);}return null;}
 function representative(type,index,m){const p=representativeWorld(type,index,m);return p&&screenPoint(p);}
 function componentHits(type,index,m,poly){if(type==='vertex'){const p=screenPoint(m.vertices[index]);return !!(p&&pointInPoly(p,poly));}if(type==='edge'){const p=representative(type,index,m);return !!(p&&pointInPoly(p,poly));}if(type==='face'){const p=representative(type,index,m);return !!(p&&pointInPoly(p,poly));}return false;}
-function componentSelection(poly,type){const m=state()?.mesh;if(!m)return[];const count=type==='vertex'?m.vertices.length:type==='edge'?m.edges().length:type==='face'?m.faces.length:0,out=[];for(let i=0;i<count;i++){if(!componentHits(type,i,m,poly))continue;if(depth()==='visible'&&type!=='vertex'){const world=representativeWorld(type,i,m),p=world&&screenPoint(world);if(!world||!p||!visibleWorldPoint(world,p))continue;}out.push(i);}return out;}
+function renderedVertexSelection(poly){const scene=state()?.scene,camera=state()?.camera;if(!scene||!camera)return[];const out=new Set(),world=new THREE.Vector3();scene.traverse?.(object=>{if(!object?.visible||object.userData?.kind!=='vertex'||!Number.isInteger(object.userData.index))return;object.getWorldPosition(world);const p=screenPoint(world);if(!p||p.z<-1||p.z>1||!pointInPoly(p,poly))return;out.add(object.userData.index);});return [...out].sort((a,b)=>a-b);}
+function componentSelection(poly,type){if(type==='vertex')return renderedVertexSelection(poly);const m=state()?.mesh;if(!m)return[];const count=type==='edge'?m.edges().length:type==='face'?m.faces.length:0,out=[];for(let i=0;i<count;i++){if(!componentHits(type,i,m,poly))continue;if(depth()==='visible'){const world=representativeWorld(type,i,m),p=world&&screenPoint(world);if(!world||!p||!visibleWorldPoint(world,p))continue;}out.push(i);}return out;}
 function objectCenter(object){const m=object.id===manager()?.activeId?state()?.mesh:object.mesh;if(!m?.vertices?.length)return null;return new THREE.Box3().setFromPoints(m.vertices).getCenter(new THREE.Vector3());}
 function renderedBodies(){const out=[];state()?.scene?.traverse?.(o=>{if(o?.visible&&(o.userData?.kind==='body'||o.userData?.kind==='boxlab-inactive-body'))out.push(o);});return out;}
 function visibleObject(id,p){const bodies=renderedBodies(),camera=state()?.camera;if(!bodies.length||!camera)return true;setRayAt(p);const hit=raycaster.intersectObjects(bodies,false)[0];if(!hit)return false;const hitId=Number.isInteger(hit.object?.userData?.objectId)?hit.object.userData.objectId:manager()?.activeId;return hitId===id;}
