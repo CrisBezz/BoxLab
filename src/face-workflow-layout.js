@@ -17,10 +17,10 @@ import './select-intersecting-faces.js?v=0.36.18.137';
 import './select-quads.js?v=0.36.18.128';
 import './mesh-health-summary.js?v=0.36.18.144';
 import './face-inspect-drawer.js?v=0.36.18.141';
-import './face-repair-drawer.js?v=0.36.18.142';
-import './release-version.js?v=0.36.18.144';
+import './face-repair-drawer.js?v=0.36.18.145';
+import './release-version.js?v=0.36.18.145';
 
-// BoxLab v0.36.18.144 — Face workflow layout polish + on-demand Mesh Health.
+// BoxLab v0.36.18.145 — Face workflow layout polish + startup reveal.
 // UI-only layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -81,4 +81,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.144',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.145',sync};
