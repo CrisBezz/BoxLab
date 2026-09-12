@@ -1,9 +1,6 @@
-// BoxLab v0.36.18.157 — promote a safe Add-on-edge vertex into a real loop cut.
-// A single vertex inserted into a manifold quad edge turns the adjacent quads
-// into 5-gons. When Loop Cut is started from either segment touching that
-// collinear extra vertex, reconstruct the original logical edge and run the
-// existing Loop Cut at the exact stored vertex fraction. Arbitrary n-gons and
-// non-collinear topology are left untouched.
+// BoxLab v0.36.18.158 — promote a safe Add-on-edge vertex into a real loop cut.
+// Detection is based on the immediate face-boundary neighbours of the added
+// vertex, not total mesh valence, so existing surrounding cuts do not block it.
 
 import { EditableMesh as LiveEditableMesh } from './mesh.js?v=0.12';
 
@@ -11,8 +8,6 @@ const baseLoopCut=LiveEditableMesh.prototype.loopCut;
 const EPS=1e-7;
 
 function key(mesh,a,b){return mesh.edgeKey(a,b);}
-function realFaces(mesh,vertex){const out=[];for(let fi=0;fi<mesh.faces.length;fi++){const face=mesh.faces[fi];if(Array.isArray(face)&&face.includes(vertex))out.push(fi);}return out;}
-function incidentNeighbours(mesh,vertex){const out=new Set();for(const edge of mesh.edges()){if(edge.a===vertex)out.add(edge.b);else if(edge.b===vertex)out.add(edge.a);}return [...out].filter(i=>mesh.vertices[i]);}
 function collinearBetween(a,v,b){
   if(!a||!v||!b)return false;
   const av=v.clone().sub(a),vb=b.clone().sub(v),ab=b.clone().sub(a);
@@ -21,24 +16,32 @@ function collinearBetween(a,v,b){
   return av.clone().cross(vb).length()<=EPS*scale*scale&&av.dot(vb)>=-EPS;
 }
 function fraction(a,v,b){const ab=b.clone().sub(a),den=ab.lengthSq();if(den<1e-14)return null;return Math.max(.001,Math.min(.999,v.clone().sub(a).dot(ab)/den));}
+function localPair(face,vertex){
+  const i=face.indexOf(vertex);if(i<0||face.length<3)return null;
+  return [face[(i-1+face.length)%face.length],face[(i+1)%face.length]];
+}
+function samePair(pair,a,b){return pair&&((pair[0]===a&&pair[1]===b)||(pair[0]===b&&pair[1]===a));}
 
 function promotionCandidate(mesh,edgeIndex){
-  const edges=mesh.edges(),seed=edges[edgeIndex];
+  const seed=mesh.edges()[edgeIndex];
   if(!seed||seed.loose)return null;
   for(const vertex of [seed.a,seed.b]){
-    const neighbours=incidentNeighbours(mesh,vertex);
-    if(neighbours.length!==2)continue;
-    const [a,b]=neighbours;
+    const touched=[];
+    for(let fi=0;fi<mesh.faces.length;fi++){
+      const face=mesh.faces[fi];if(!Array.isArray(face)||!face.includes(vertex))continue;
+      const pair=localPair(face,vertex);if(pair)touched.push({fi,face,pair});
+    }
+    if(!touched.length||touched.length>2)continue;
+    const [a,b]=touched[0].pair;
+    if(!Number.isInteger(a)||!Number.isInteger(b)||a===b)continue;
+    if(touched.some(item=>item.face.length!==5||!samePair(item.pair,a,b)))continue;
+    if(touched.some(item=>new Set(item.face.filter(i=>i!==vertex)).size!==4))continue;
     if(!collinearBetween(mesh.vertices[a],mesh.vertices[vertex],mesh.vertices[b]))continue;
-    const faces=realFaces(mesh,vertex);
-    if(!faces.length)continue;
-    if(faces.some(fi=>mesh.faces[fi]?.length!==5))continue;
-    if(faces.some(fi=>new Set(mesh.faces[fi].filter(i=>i!==vertex)).size!==4))continue;
     const other=seed.a===vertex?seed.b:seed.a;
     if(other!==a&&other!==b)continue;
     const t=fraction(mesh.vertices[a],mesh.vertices[vertex],mesh.vertices[b]);
     if(t===null)continue;
-    return{vertex,a,b,t,faces};
+    return{vertex,a,b,t,faces:touched.map(item=>item.fi)};
   }
   return null;
 }
@@ -62,17 +65,13 @@ function removePromotedVertex(mesh,info){
   const remap=i=>i<vertex?i:i>vertex?i-1:null;
   const nextCreases=new Map();
   for(const [edgeKey,value] of mesh.creases||[]){
-    const [x,y]=String(edgeKey).split(':').map(Number);
-    if(x===vertex||y===vertex)continue;
-    const nx=remap(x),ny=remap(y);
-    if(Number.isInteger(nx)&&Number.isInteger(ny)&&nx!==ny)nextCreases.set(key(mesh,nx,ny),value);
+    const [x,y]=String(edgeKey).split(':').map(Number);if(x===vertex||y===vertex)continue;
+    const nx=remap(x),ny=remap(y);if(Number.isInteger(nx)&&Number.isInteger(ny)&&nx!==ny)nextCreases.set(key(mesh,nx,ny),value);
   }
   const nextLooseEdges=new Set();
   for(const edgeKey of mesh.looseEdges||[]){
-    const [x,y]=String(edgeKey).split(':').map(Number);
-    if(x===vertex||y===vertex)continue;
-    const nx=remap(x),ny=remap(y);
-    if(Number.isInteger(nx)&&Number.isInteger(ny)&&nx!==ny)nextLooseEdges.add(key(mesh,nx,ny));
+    const [x,y]=String(edgeKey).split(':').map(Number);if(x===vertex||y===vertex)continue;
+    const nx=remap(x),ny=remap(y);if(Number.isInteger(nx)&&Number.isInteger(ny)&&nx!==ny)nextLooseEdges.add(key(mesh,nx,ny));
   }
   const nextLooseVertices=new Set();
   for(const old of mesh.looseVertices||[]){const next=remap(old);if(Number.isInteger(next))nextLooseVertices.add(next);}
@@ -104,5 +103,5 @@ LiveEditableMesh.prototype.loopCut=function(edgeIndex,t=.5){
   return result;
 };
 
-LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.157';
-globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.157'};
+LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.158';
+globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.158',promotionCandidate};
