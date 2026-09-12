@@ -1,30 +1,44 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.149.1 — persistent Add Vertex session hotfix.
-// While Add is armed, placement and selection are deliberately separated:
-// repeated canvas gestures remain Add operations; normal vertex selection is
-// restored only after the Add session ends.
+// BoxLab v0.36.18.150 — Add Vertex tap/orbit session rebuild.
+// The core private addVertex direct tool is immediately disarmed after the user
+// presses Add. This module then owns placement only: taps add vertices, drags
+// away from edges remain normal OrbitControls navigation, and drags that begin
+// directly on an edge insert/slide a vertex along that edge.
 
-const VERSION='0.36.18.149.1';
+const VERSION='0.36.18.150';
 const canvas=document.querySelector('#viewport');
 const addVertexBtn=document.querySelector('#addVertexBtn');
 const status=document.querySelector('#selectionStatus');
 const geometryToggle=document.querySelector('#inferenceSnapToggle');
-const multiToggle=document.querySelector('#multiSelectToggle');
+const vertexModeBtn=document.querySelector('#selectionModes button[data-mode="vertex"]');
 const EDGE_HIT_PX=24;
 const MIDPOINT_PX=11;
-let drag=null;
+const TAP_MOVE_PX=10;
+const TAP_MAX_MS=360;
 let sessionActive=false;
+let internalCoreDisarm=false;
+let edgeDrag=null;
+let tapCandidate=null;
 let lastVertex=null;
+const activePointers=new Set();
 
 function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
 function camera(){return state()?.camera||null;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
+function history(){return globalThis.__boxlabHistory;}
 function geometryOn(){return geometryToggle?.checked!==false;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function isActive(){return sessionActive;}
-function ownsCanvasEvent(event){return event.target===canvas&&event.isPrimary&&sessionActive;}
+
+function ensureStyle(){
+  if(document.querySelector('#boxlabAddVertexSessionStyle'))return;
+  const style=document.createElement('style');
+  style.id='boxlabAddVertexSessionStyle';
+  style.textContent='#addVertexBtn.boxlab-add-session{background:#f2f5fa!important;color:#111318!important;border-color:#f2f5fa!important;}';
+  document.head.append(style);
+}
 
 function screenPoint(v){
   const cam=camera();
@@ -121,9 +135,73 @@ function addLooseVertex(m,position){
   return vertex;
 }
 
+function clearSelection(){
+  const b=bridge();
+  if(typeof b?.set==='function'){
+    try{b.set('vertex',[]);return;}catch{}
+  }
+  document.querySelector('#deselectAllBtn')?.click();
+}
+
+function selectLastVertex(){
+  if(!Number.isInteger(lastVertex))return false;
+  const b=bridge();
+  if(typeof b?.set!=='function')return false;
+  return b.set('vertex',[lastVertex])!==false;
+}
+
+function disarmCoreAdd(){
+  internalCoreDisarm=true;
+  vertexModeBtn?.click();
+  internalCoreDisarm=false;
+}
+
+function startSession(){
+  if(sessionActive)return;
+  ensureStyle();
+  sessionActive=true;
+  lastVertex=null;
+  clearSelection();
+  disarmCoreAdd();
+  addVertexBtn?.classList.add('boxlab-add-session');
+  if(status)status.textContent='Add Vertex • tap to add • drag to orbit • drag edge to slide';
+}
+
+function stopSession(selectLast=true){
+  if(!sessionActive)return;
+  sessionActive=false;
+  tapCandidate=null;
+  edgeDrag=null;
+  activePointers.clear();
+  addVertexBtn?.classList.remove('boxlab-add-session');
+  if(selectLast)selectLastVertex();
+  lastVertex=null;
+  render();
+}
+
+// main.js receives the click first and briefly arms its private Add tool. We then
+// convert that into our persistent session and immediately return the core to
+// ordinary Vertex mode so navigation and generic core input remain available.
+addVertexBtn?.addEventListener('click',()=>queueMicrotask(()=>{
+  if(sessionActive){
+    disarmCoreAdd();
+    stopSession(true);
+    return;
+  }
+  if(addVertexBtn.classList.contains('active'))startSession();
+}));
+
+document.querySelectorAll('#selectionModes button,#toolModes button,.mode-tools button').forEach(button=>{
+  if(button===addVertexBtn)return;
+  button.addEventListener('click',()=>{
+    if(internalCoreDisarm)return;
+    if(sessionActive)stopSession(true);
+  });
+});
+
 function updateEdgeDrag(event){
-  if(drag?.kind!=='edge')return;
-  const m=drag.mesh,va=m.vertices[drag.a],vb=m.vertices[drag.b];
+  if(!edgeDrag||edgeDrag.pointerId!==event.pointerId)return;
+  const m=edgeDrag.mesh,va=m.vertices[edgeDrag.a],vb=m.vertices[edgeDrag.b];
   const a=screenPoint(va),b=screenPoint(vb);
   if(!a||!b)return;
   const p=new THREE.Vector2(event.clientX,event.clientY),ab=b.clone().sub(a),lenSq=ab.lengthSq();
@@ -133,95 +211,101 @@ function updateEdgeDrag(event){
     const midpoint=a.clone().lerp(b,.5);
     if(midpoint.distanceTo(p)<=MIDPOINT_PX){t=.5;snapType='Midpoint';}
   }
-  m.vertices[drag.vertex].copy(va).lerp(vb,t);
-  drag.t=t;
-  drag.snapType=snapType;
+  m.vertices[edgeDrag.vertex].copy(va).lerp(vb,t);
+  edgeDrag.t=t;
+  edgeDrag.snapType=snapType;
   if(status)status.textContent=`Add Vertex • ${snapType} snap • ${Math.round(t*100)}%`;
   render();
 }
 
-function selectLastVertex(){
-  if(!Number.isInteger(lastVertex))return false;
-  if(multiToggle?.checked){
-    multiToggle.checked=false;
-    multiToggle.dispatchEvent(new Event('change',{bubbles:true}));
-  }
-  const b=bridge();
-  if(typeof b?.set!=='function')return false;
-  return b.set('vertex',[lastVertex])!==false;
-}
-
-function syncSessionFromButton(){
-  const next=!!addVertexBtn?.classList.contains('active');
-  if(sessionActive&&!next){
-    sessionActive=false;
-    drag=null;
-    selectLastVertex();
-    render();
-    lastVertex=null;
-    return;
-  }
-  sessionActive=next;
-  if(sessionActive&&status)status.textContent='Add Vertex • placement mode';
-}
-
-addVertexBtn?.addEventListener('click',()=>queueMicrotask(syncSessionFromButton));
-document.querySelectorAll('#selectionModes button,#toolModes button,.mode-tools button').forEach(button=>{
-  if(button===addVertexBtn)return;
-  button.addEventListener('click',()=>queueMicrotask(syncSessionFromButton));
-});
-queueMicrotask(syncSessionFromButton);
-
-function begin(event){
-  if(!ownsCanvasEvent(event))return;
+document.addEventListener('pointerdown',event=>{
+  if(event.target!==canvas)return;
+  activePointers.add(event.pointerId);
+  if(tapCandidate&&activePointers.size>1)tapCandidate.multi=true;
+  if(!sessionActive||!event.isPrimary)return;
+  if(event.pointerType==='pen'&&!(event.pressure>0))return;
   if(event.pointerType==='mouse'&&event.button!==0)return;
-  const m=mesh(),history=globalThis.__boxlabHistory;
-  if(!m||!history)return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  const before=m.clone();
+
+  // Prevent stale component selection from converting a navigation drag into a
+  // vertex move, but do not consume the event: OrbitControls must still see it.
+  clearSelection();
+
+  const m=mesh(),h=history();
+  if(!m||!h)return;
   const snap=nearestEdge(event.clientX,event.clientY);
   if(snap){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const before=m.clone();
     const result=splitEdge(m,snap.index,THREE.MathUtils.clamp(snap.t,.001,.999));
     if(!result)return;
-    history.push(before);
-    drag={kind:'edge',pointerId:event.pointerId,mesh:m,...result,t:snap.t,snapType:snap.snapType};
+    h.push(before);
+    edgeDrag={pointerId:event.pointerId,mesh:m,...result,t:snap.t,snapType:snap.snapType};
+    tapCandidate=null;
     canvas.setPointerCapture?.(event.pointerId);
+    lastVertex=result.vertex;
     if(status)status.textContent=`Add Vertex • ${snap.snapType} snap • ${Math.round(snap.t*100)}%`;
     render();
     return;
   }
-  const point=freeSpacePoint(event,m);
-  if(!point)return;
-  const vertex=addLooseVertex(m,point);
-  if(!Number.isInteger(vertex))return;
-  history.push(before);
-  drag={kind:'free',pointerId:event.pointerId,mesh:m,vertex,snapType:'Free'};
-  canvas.setPointerCapture?.(event.pointerId);
-  if(status)status.textContent='Add Vertex • free-space vertex';
-  render();
-}
 
-document.addEventListener('pointerdown',begin,true);
-document.addEventListener('pointermove',event=>{
-  if(!drag||drag.pointerId!==event.pointerId)return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  if(drag.kind==='edge')updateEdgeDrag(event);
+  tapCandidate={
+    pointerId:event.pointerId,
+    startX:event.clientX,
+    startY:event.clientY,
+    startedAt:performance.now(),
+    multi:activePointers.size>1,
+    moved:false
+  };
 },true);
 
-function finish(event){
-  if(!drag||drag.pointerId!==event.pointerId)return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  const vertex=drag.vertex,snapType=drag.snapType||'Free';
-  drag=null;
-  canvas.releasePointerCapture?.(event.pointerId);
+document.addEventListener('pointermove',event=>{
+  if(edgeDrag&&edgeDrag.pointerId===event.pointerId){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    updateEdgeDrag(event);
+    return;
+  }
+  if(!tapCandidate||tapCandidate.pointerId!==event.pointerId)return;
+  if(Math.hypot(event.clientX-tapCandidate.startX,event.clientY-tapCandidate.startY)>TAP_MOVE_PX)tapCandidate.moved=true;
+},true);
+
+function finishPointer(event){
+  activePointers.delete(event.pointerId);
+  if(edgeDrag&&edgeDrag.pointerId===event.pointerId){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const snapType=edgeDrag.snapType||'Edge';
+    lastVertex=edgeDrag.vertex;
+    edgeDrag=null;
+    try{canvas.releasePointerCapture?.(event.pointerId);}catch{}
+    clearSelection();
+    render();
+    if(status)status.textContent=`Add Vertex • ${snapType} committed • continue placing`;
+    return;
+  }
+  if(!tapCandidate||tapCandidate.pointerId!==event.pointerId)return;
+  const candidate=tapCandidate;
+  tapCandidate=null;
+  if(!sessionActive||candidate.multi||candidate.moved||performance.now()-candidate.startedAt>TAP_MAX_MS)return;
+  const m=mesh(),h=history();
+  if(!m||!h)return;
+  const point=freeSpacePoint(event,m);
+  if(!point)return;
+  const before=m.clone();
+  const vertex=addLooseVertex(m,point);
+  if(!Number.isInteger(vertex))return;
+  h.push(before);
   lastVertex=vertex;
+  clearSelection();
   render();
-  if(status)status.textContent=`Add Vertex • ${snapType} committed • continue placing`;
+  if(status)status.textContent='Add Vertex • Free committed • continue placing';
 }
-document.addEventListener('pointerup',finish,true);
-document.addEventListener('pointercancel',finish,true);
+document.addEventListener('pointerup',finishPointer,true);
+document.addEventListener('pointercancel',event=>{
+  activePointers.delete(event.pointerId);
+  if(edgeDrag?.pointerId===event.pointerId){edgeDrag=null;try{canvas.releasePointerCapture?.(event.pointerId);}catch{}}
+  if(tapCandidate?.pointerId===event.pointerId)tapCandidate=null;
+},true);
 
 globalThis.__boxlabAddVertex={version:VERSION,isActive,sessionActive:()=>sessionActive,nearestEdge,splitEdge,freeSpacePoint};
