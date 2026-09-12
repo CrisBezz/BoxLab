@@ -1,13 +1,15 @@
-// BoxLab v0.36.18.141 — Face Repair startup stabilization + diagnose→repair linkage.
-// Existing repair handlers remain untouched. Legacy repair modules finish their
-// own placement passes first; Repair then performs one final containment pass.
+// BoxLab v0.36.18.142 — Face Repair diagnose→repair linkage expansion.
+// Existing repair handlers remain untouched. Cleanable Verts feeds Clean Vertices,
+// and Mergeable Verts feeds the existing safe Merge by Distance operation.
+// The expensive Mergeable Verts scan runs only while Repair is open.
 
-const VERSION='0.36.18.141';
+const VERSION='0.36.18.142';
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 let settled=false;
 
 function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
+function bridge(){return globalThis.__boxlabSelectionBridge;}
 
 function ensureDrawer(){
   if(!faceTools)return null;
@@ -112,16 +114,68 @@ function syncCleanup(button){
     :'No safe redundant vertices found';
 }
 
+function ensureMergeButton(row){
+  if(!row)return null;
+  let button=document.querySelector('#repairMergeByDistanceBtn');
+  if(!button){
+    button=document.createElement('button');
+    button.id='repairMergeByDistanceBtn';
+    button.type='button';
+    button.textContent='Merge by Distance';
+    button.disabled=true;
+    button.style.cssText='width:100%;min-width:0';
+    button.addEventListener('click',()=>{
+      const m=mesh(),inspect=globalThis.__boxlabSelectMergeableVerts?.inspect;
+      let info=null;
+      try{info=m&&inspect?inspect(m):null;}catch{info=null;}
+      if(!info?.indices?.length)return;
+      const vertexMode=document.querySelector('#selectionModes button[data-mode="vertex"]');
+      if(vertexMode&&!vertexMode.classList.contains('active'))vertexMode.click();
+      queueMicrotask(()=>{
+        const multi=document.querySelector('#multiSelectToggle');
+        const wanted=info.indices.length>1;
+        if(multi&&multi.checked!==wanted){multi.checked=wanted;multi.dispatchEvent(new Event('change',{bubbles:true}));}
+        bridge()?.set?.('vertex',info.indices);
+        setTimeout(()=>globalThis.__boxlabMergeByDistance?.apply?.(),0);
+      });
+    });
+  }
+  if(button.parentElement!==row)row.appendChild(button);
+  return button;
+}
+
+function syncMerge(button,details){
+  if(!button)return;
+  if(!details?.open){
+    button.disabled=true;
+    button.textContent='Merge by Distance';
+    button.title='Open Repair to scan for safely mergeable vertex clusters';
+    return;
+  }
+  const m=mesh(),inspect=globalThis.__boxlabSelectMergeableVerts?.inspect;
+  let info=null;
+  try{info=m&&inspect?inspect(m):null;}catch{info=null;}
+  const clusters=info?.clusters?.length||0;
+  const verts=info?.indices?.length||0;
+  button.disabled=!clusters;
+  button.textContent=clusters?`Merge by Distance • ${clusters}`:'Merge by Distance';
+  button.title=clusters
+    ?`Merge ${clusters} safe nearby cluster${clusters===1?'':'s'} • ${verts} vert${verts===1?'':'s'} at the current Merge Dist`
+    :'No safe mergeable vertex clusters found at the current Merge Dist';
+}
+
 function sync(){
   const details=ensureDrawer();
   if(!details)return false;
 
-  const cleanup=category('faceRepairCleanup','CLEANUP',1);
+  const cleanup=category('faceRepairCleanup','CLEANUP',2);
   const planar=category('faceRepairPlanar','PLANAR');
   const normals=category('faceRepairNormals','NORMALS');
 
   const cleanButton=ensureCleanVerticesButton(cleanup);
+  const mergeButton=ensureMergeButton(cleanup);
   syncCleanup(cleanButton);
+  syncMerge(mergeButton,details);
 
   moveButton(document.querySelector('#joinSelectedCoplanarFacesBtn'),planar);
   moveWholeRow(document.querySelector('#makePlanarRow'),planar);
@@ -136,10 +190,12 @@ function sync(){
 
 function requestSync(){if(settled)queueMicrotask(sync);}
 
-ensureDrawer();
+const drawer=ensureDrawer();
+drawer?.addEventListener('toggle',()=>{if(settled&&drawer.open)queueMicrotask(sync);});
 setTimeout(()=>{sync();settled=true;},1850);
-window.addEventListener('boxlab-bridge-state',requestSync);
-document.addEventListener('pointerup',()=>{if(settled)setTimeout(sync,0);},true);
+window.addEventListener('boxlab-bridge-state',()=>{if(settled&&drawer?.open)queueMicrotask(sync);});
+document.addEventListener('pointerup',()=>{if(settled&&drawer?.open)setTimeout(sync,0);},true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',requestSync));
+document.querySelector('#mergeByDistanceValue')?.addEventListener('input',()=>{if(settled&&drawer?.open)queueMicrotask(sync);});
 
 globalThis.__boxlabFaceRepairDrawer={version:VERSION,sync};
