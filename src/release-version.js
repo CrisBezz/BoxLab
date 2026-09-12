@@ -8,6 +8,11 @@ function stamp(){
   if(document.title!==title)document.title=title;
 }
 stamp();
+if(label){
+  const observer=new MutationObserver(stamp);
+  observer.observe(label,{childList:true,characterData:true,subtree:true});
+  globalThis.__boxlabReleaseVersionObserver=observer;
+}
 window.addEventListener('pageshow',stamp);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)stamp();});
 globalThis.__boxlabReleaseVersion={version:VERSION,stamp};
