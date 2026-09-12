@@ -1,10 +1,10 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.151 — Add Vertex/Lasso mutual exclusion.
-// 18.150 tap/orbit placement behavior is preserved. Starting Add now disarms
+// BoxLab v0.36.18.164 — Add Vertex preserves the live bridge mesh across history snapshots.
+// 18.150 tap/orbit placement behavior is preserved. Starting Add disarms
 // Lasso first, and Lasso can explicitly stop the Add session without selecting.
 
-const VERSION='0.36.18.151';
+const VERSION='0.36.18.164';
 const canvas=document.querySelector('#viewport');
 const addVertexBtn=document.querySelector('#addVertexBtn');
 const status=document.querySelector('#selectionStatus');
@@ -29,6 +29,11 @@ function history(){return globalThis.__boxlabHistory;}
 function geometryOn(){return geometryToggle?.checked!==false;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function isActive(){return sessionActive;}
+function pushSnapshotPreservingLive(h,before,live){
+  h.push(before);
+  const s=state();
+  if(s&&live)s.mesh=live;
+}
 
 function ensureStyle(){
   if(document.querySelector('#boxlabAddVertexSessionStyle'))return;
@@ -231,7 +236,7 @@ document.addEventListener('pointerdown',event=>{
     const before=m.clone();
     const result=splitEdge(m,snap.index,THREE.MathUtils.clamp(snap.t,.001,.999));
     if(!result)return;
-    h.push(before);
+    pushSnapshotPreservingLive(h,before,m);
     edgeDrag={pointerId:event.pointerId,mesh:m,...result,t:snap.t,snapType:snap.snapType};
     tapCandidate=null;
     canvas.setPointerCapture?.(event.pointerId);
@@ -279,7 +284,7 @@ function finishPointer(event){
   const before=m.clone();
   const vertex=addLooseVertex(m,point);
   if(!Number.isInteger(vertex))return;
-  h.push(before);
+  pushSnapshotPreservingLive(h,before,m);
   lastVertex=vertex;
   clearSelection();
   render();
