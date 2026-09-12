@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.148 — unified Add Vertex interaction controller.
-// Edge recognition is always active while Add Vertex is armed; Geometry snap
-// only controls midpoint snapping. Add stays armed after each commit so repeated
-// vertex placement works until the user explicitly exits the tool.
+// BoxLab v0.36.18.149 — persistent Add Vertex ownership fix.
+// While Add Vertex is armed it owns canvas gestures at document-capture level,
+// before normal vertex-pick assistance can consume a tap. Direct selection uses
+// the BoxLab selection bridge only; no synthetic pointer events are generated.
 
-const VERSION='0.36.18.148';
+const VERSION='0.36.18.149';
 const canvas=document.querySelector('#viewport');
 const addVertexBtn=document.querySelector('#addVertexBtn');
 const status=document.querySelector('#selectionStatus');
@@ -22,6 +22,7 @@ function bridge(){return globalThis.__boxlabSelectionBridge;}
 function addVertexActive(){return !!addVertexBtn?.classList.contains('active');}
 function geometryOn(){return geometryToggle?.checked!==false;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
+function ownsCanvasEvent(event){return event.target===canvas&&event.isPrimary&&addVertexActive();}
 
 function screenPoint(v){
   const cam=camera();
@@ -144,31 +145,18 @@ function updateEdgeDrag(event){
   render();
 }
 
-function fallbackSelect(vertex){
-  const m=mesh();
-  if(!m?.vertices?.[vertex]||!canvas)return false;
-  const p=screenPoint(m.vertices[vertex]);
-  if(!p)return false;
-  canvas.dispatchEvent(new PointerEvent('pointerdown',{bubbles:true,cancelable:true,pointerId:94,pointerType:'mouse',isPrimary:true,button:0,buttons:1,clientX:p.x,clientY:p.y}));
-  canvas.dispatchEvent(new PointerEvent('pointerup',{bubbles:true,cancelable:true,pointerId:94,pointerType:'mouse',isPrimary:true,button:0,buttons:0,clientX:p.x,clientY:p.y}));
-  return true;
-}
-
 function selectVertex(vertex){
   if(multiToggle?.checked){
     multiToggle.checked=false;
     multiToggle.dispatchEvent(new Event('change',{bubbles:true}));
   }
   const b=bridge();
-  if(typeof b?.set==='function'){
-    const result=b.set('vertex',[vertex]);
-    if(result!==false)return true;
-  }
-  return fallbackSelect(vertex);
+  if(typeof b?.set!=='function')return false;
+  return b.set('vertex',[vertex])!==false;
 }
 
-canvas?.addEventListener('pointerdown',event=>{
-  if(!event.isPrimary||!addVertexActive())return;
+function begin(event){
+  if(!ownsCanvasEvent(event))return;
   if(event.pointerType==='mouse'&&event.button!==0)return;
   const m=mesh(),history=globalThis.__boxlabHistory;
   if(!m||!history)return;
@@ -177,8 +165,6 @@ canvas?.addEventListener('pointerdown',event=>{
   event.stopImmediatePropagation();
 
   const before=m.clone();
-  // Existing edges are always valid Add Vertex targets. Geometry snapping only
-  // affects midpoint attraction; it must never disable edge insertion itself.
   const snap=nearestEdge(event.clientX,event.clientY);
   if(snap){
     const result=splitEdge(m,snap.index,THREE.MathUtils.clamp(snap.t,.001,.999));
@@ -200,9 +186,10 @@ canvas?.addEventListener('pointerdown',event=>{
   canvas.setPointerCapture?.(event.pointerId);
   if(status)status.textContent='Add Vertex • free-space vertex';
   render();
-},true);
+}
 
-canvas?.addEventListener('pointermove',event=>{
+document.addEventListener('pointerdown',begin,true);
+document.addEventListener('pointermove',event=>{
   if(!drag||drag.pointerId!==event.pointerId)return;
   event.preventDefault();
   event.stopImmediatePropagation();
@@ -223,7 +210,7 @@ function finish(event){
     if(status)status.textContent=`Add Vertex • ${snapType} committed • tool remains active`;
   });
 }
-canvas?.addEventListener('pointerup',finish,true);
-canvas?.addEventListener('pointercancel',finish,true);
+document.addEventListener('pointerup',finish,true);
+document.addEventListener('pointercancel',finish,true);
 
-globalThis.__boxlabAddVertex={version:VERSION,nearestEdge,splitEdge,freeSpacePoint};
+globalThis.__boxlabAddVertex={version:VERSION,isActive:addVertexActive,nearestEdge,splitEdge,freeSpacePoint};
