@@ -1,7 +1,7 @@
-// BoxLab v0.36.18.170 — passive beta runtime guard.
+// BoxLab v0.36.18.171 — passive beta runtime guard.
 // Diagnostic only: never changes geometry, selection, tool state, or UI.
 
-const VERSION='0.36.18.170';
+const VERSION='0.36.18.171';
 
 function protectedTransformLoaderOk(){
   return [...document.scripts].some(script=>{
@@ -21,6 +21,7 @@ function run(){
     addVertex:typeof globalThis.__boxlabAddVertex?.isActive==='function',
     vertexSlide:typeof globalThis.__boxlabVertexSlidePolish?.isArmed==='function',
     addedVertexLoop:!!globalThis.__boxlabAddedVertexLoopPromotion,
+    loopCutFeedback:globalThis.__boxlabLoopCutFeedback?.version===VERSION,
     protectedMultiTransform:protectedTransformLoaderOk()
   };
   const failures=Object.entries(checks).filter(([,ok])=>!ok).map(([name])=>name);
@@ -32,5 +33,5 @@ function run(){
 }
 
 globalThis.__boxlabBetaRuntimeGuard={version:VERSION,last:null,run};
-setTimeout(run,1200);
-window.addEventListener('pageshow',()=>setTimeout(run,250));
+setTimeout(run,1400);
+window.addEventListener('pageshow',()=>setTimeout(run,350));
