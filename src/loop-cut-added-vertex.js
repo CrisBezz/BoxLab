@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.159 — logical-quad Loop Cut through Add-on-edge verts.
+// BoxLab v0.36.18.160 — logical-quad Loop Cut preserves all existing Add verts.
 // A quad with one collinear Add vertex is represented in storage as a 5-gon.
 // For Loop Cut traversal only, treat that face as its original logical quad.
-// If the logical ring crosses an edge that already contains an Add vertex,
-// reuse that vertex as the cut point and propagate the loop through the strip.
+// Existing Add vertices are reused where they coincide with the cut and are
+// reinserted into rebuilt face boundaries elsewhere so Loop never cleans them up.
 
 import { EditableMesh as LiveEditableMesh } from './mesh.js?v=0.12';
 
@@ -36,10 +36,11 @@ function faceLogicalInfo(mesh,face){
   return{face:logical,split};
 }
 function logicalTopology(mesh){
-  const logicalFaces=[],splitsByKey=new Map();
+  const logicalFaces=[],faceInfos=[],splitsByKey=new Map();
   let hasVirtual=false;
   for(const face of mesh.faces){
     const info=faceLogicalInfo(mesh,face);
+    faceInfos.push(info);
     if(!info){logicalFaces.push([...face]);continue;}
     logicalFaces.push(info.face);
     if(info.split){
@@ -50,7 +51,7 @@ function logicalTopology(mesh){
       else if(prior.vertex!==info.split.vertex)splitsByKey.set(key,null);
     }
   }
-  return{logicalFaces,splitsByKey,hasVirtual};
+  return{logicalFaces,faceInfos,splitsByKey,hasVirtual};
 }
 function buildEdges(mesh,faces){
   const map=new Map();
@@ -102,7 +103,7 @@ function logicalRing(mesh,edgeIndex,topology){
     for(let i=0;i<4;i++)if(cutKeys.has(edgeKey(mesh,face[i],face[(i+1)%4])))slots.push(i);
     if(slots.length===2&&((slots[0]+2)%4===slots[1]||(slots[1]+2)%4===slots[0]))splitFaces.push({faceIndex,slots});
   });
-  return splitFaces.length?{cutKeys,directed,splitFaces,logicalFaces,splitsByKey}:null;
+  return splitFaces.length?{cutKeys,directed,splitFaces,logicalFaces,faceInfos,splitsByKey}:null;
 }
 function existingAmount(mesh,ring){
   const amounts=[];
@@ -116,6 +117,22 @@ function existingAmount(mesh,ring){
   const first=amounts[0];
   if(amounts.some(t=>Math.abs(t-first)>MATCH_EPS))return false;
   return first;
+}
+function preserveSplitVertexInGeneratedFaces(mesh,generated,info){
+  const split=info?.split;
+  if(!split)return generated;
+  if(generated.some(face=>face.includes(split.vertex)))return generated;
+  const out=generated.map(face=>[...face]);
+  for(const face of out){
+    for(let i=0;i<face.length;i++){
+      const x=face[i],y=face[(i+1)%face.length];
+      if((x===split.a&&y===split.b)||(x===split.b&&y===split.a)){
+        face.splice(i+1,0,split.vertex);
+        return out;
+      }
+    }
+  }
+  return out;
 }
 
 LiveEditableMesh.prototype.loopCut=function(edgeIndex,t=.5){
@@ -143,20 +160,22 @@ LiveEditableMesh.prototype.loopCut=function(edgeIndex,t=.5){
   const replacements=new Map();
   for(const {faceIndex,slots} of ring.splitFaces){
     const [a,b,c,d]=ring.logicalFaces[faceIndex];
+    let generated=null;
     if(slots.includes(0)&&slots.includes(2)){
       const m0=midpointIndex.get(edgeKey(this,a,b)),m2=midpointIndex.get(edgeKey(this,c,d));
-      if(Number.isInteger(m0)&&Number.isInteger(m2))replacements.set(faceIndex,[[a,m0,m2,d],[m0,b,c,m2]]);
+      if(Number.isInteger(m0)&&Number.isInteger(m2))generated=[[a,m0,m2,d],[m0,b,c,m2]];
     }else if(slots.includes(1)&&slots.includes(3)){
       const m1=midpointIndex.get(edgeKey(this,b,c)),m3=midpointIndex.get(edgeKey(this,d,a));
-      if(Number.isInteger(m1)&&Number.isInteger(m3))replacements.set(faceIndex,[[a,b,m1,m3],[m3,m1,c,d]]);
+      if(Number.isInteger(m1)&&Number.isInteger(m3))generated=[[a,b,m1,m3],[m3,m1,c,d]];
     }
+    if(generated)replacements.set(faceIndex,preserveSplitVertexInGeneratedFaces(this,generated,ring.faceInfos[faceIndex]));
   }
   if(!replacements.size)return baseLoopCut.call(this,edgeIndex,t);
   const nextFaces=[];
   this.faces.forEach((face,faceIndex)=>{const split=replacements.get(faceIndex);if(split)nextFaces.push(...split);else nextFaces.push(face);});
   this.faces=nextFaces;
-  return{cutEdges:ring.cutKeys.size,splitFaces:ring.splitFaces.length,slideData,slideGroups:[slideData],position:amount,promotedAddedVertex:true};
+  return{cutEdges:ring.cutKeys.size,splitFaces:ring.splitFaces.length,slideData,slideGroups:[slideData],position:amount,promotedAddedVertex:true,preservedAddedVertices:true};
 };
 
-LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.159';
-globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.159'};
+LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.160';
+globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.160'};
