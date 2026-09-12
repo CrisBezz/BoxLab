@@ -1,11 +1,63 @@
-// BoxLab v0.36.18.143 — Vertex/Edge Inspect + Repair containment.
-// UI-only: groups existing diagnostic selectors under default-collapsed Inspect
-// drawers and existing deterministic corrective controls under Repair.
-// Existing tool handlers, topology logic, selection and History are untouched.
+// BoxLab v0.36.18.143 — Vertex/Edge Mesh Health + Inspect + Repair containment.
+// UI-only: normal modelling/topology tools stay first, followed by Mesh Health,
+// Inspect and Repair. Existing handlers, topology logic, selection and History
+// are untouched.
 
 const VERSION='0.36.18.143';
 
 function modeTools(mode){return document.querySelector(`[data-mode-tools="${mode}"]`);}
+
+function ensureHealth(mode){
+  const host=modeTools(mode);if(!host)return null;
+  const id=`${mode}MeshHealthSummary`;
+  let details=document.querySelector(`#${id}`);if(details)return details;
+  details=document.createElement('details');
+  details.id=id;details.open=false;
+  details.style.cssText='margin:6px 0 4px;border:1px solid rgba(255,255,255,.08);border-radius:5px;background:rgba(255,255,255,.025)';
+  const summary=document.createElement('summary');
+  summary.id=`${id}Label`;
+  summary.textContent='MESH HEALTH';
+  summary.style.cssText='cursor:pointer;list-style:none;padding:6px 7px;font-size:10px;letter-spacing:.3px;user-select:none';
+  const body=document.createElement('div');
+  body.id=`${id}Body`;
+  body.style.cssText='padding:0 7px 7px;font-size:10px;line-height:1.45;opacity:.88';
+  details.append(summary,body);
+  host.appendChild(details);
+  details.addEventListener('toggle',()=>{if(details.open)syncHealth(mode,true);});
+  return details;
+}
+
+function healthRow(text,muted=false){
+  const div=document.createElement('div');div.textContent=text;if(muted)div.style.opacity='.62';return div;
+}
+
+function renderHealth(mode,info){
+  const details=ensureHealth(mode);if(!details)return false;
+  const label=details.querySelector(`#${mode}MeshHealthSummaryLabel`);
+  const body=details.querySelector(`#${mode}MeshHealthSummaryBody`);
+  if(!label||!body)return false;
+  body.replaceChildren();
+  if(!info?.available){label.textContent='MESH HEALTH';body.appendChild(healthRow('No editable mesh',true));return true;}
+  const issueText=info.issueCount===1?'1 issue':`${info.issueCount} issues`;
+  const warningText=info.warningCount===1?'1 warning':`${info.warningCount} warnings`;
+  if(info.issueCount)label.textContent=`MESH HEALTH • ${issueText}`;
+  else if(info.warningCount)label.textContent=`MESH HEALTH • ${warningText}`;
+  else label.textContent='MESH HEALTH • CLEAN';
+  if(!info.totalFindings){body.appendChild(healthRow('✓ No recognised mesh-health issues',true));return true;}
+  info.issues?.forEach(item=>body.appendChild(healthRow(`⚠ ${item.count} ${item.label}`)));
+  info.warnings?.forEach(item=>body.appendChild(healthRow(`• ${item.count} ${item.label}`,true)));
+  return true;
+}
+
+function syncHealth(mode,force=false){
+  const details=ensureHealth(mode);if(!details)return false;
+  if(!force&&!details.open)return false;
+  const inspect=globalThis.__boxlabMeshHealth?.inspect;
+  if(!inspect)return renderHealth(mode,{available:false});
+  let info=null;
+  try{info=inspect();}catch(error){console.warn(`[${mode} Mesh Health] inspect failed`,error);}
+  return renderHealth(mode,info||{available:false});
+}
 
 function ensureDrawer(mode,type){
   const host=modeTools(mode);if(!host)return null;
@@ -21,16 +73,7 @@ function ensureDrawer(mode,type){
   const body=document.createElement('div');
   body.id=`${id}Body`;body.style.cssText='padding:0 6px 6px';
   details.append(summary,body);
-
-  // Match Face mode: normal modelling/topology controls stay first.
-  // Inspect is appended after all real tools; Repair sits immediately after Inspect.
-  if(type==='Inspect'){
-    host.appendChild(details);
-  }else{
-    const inspect=document.querySelector(`#${mode}InspectDrawer`);
-    if(inspect?.parentElement===host)inspect.insertAdjacentElement('afterend',details);
-    else host.appendChild(details);
-  }
+  host.appendChild(details);
   return details;
 }
 
@@ -111,16 +154,22 @@ function syncEdgeRepair(){
 }
 
 function sync(){
+  for(const mode of ['vertex','edge'])ensureHealth(mode);
   moveDiagnostics('vertex');
   moveDiagnostics('edge');
   moveVertexRepairs();
   syncEdgeRepair();
 
-  // Reassert Face-style ordering after any moved diagnostic/repair rows.
+  // Face-style order: real tools first, then Mesh Health, Inspect, Repair.
   for(const mode of ['vertex','edge']){
-    const host=modeTools(mode),inspect=document.querySelector(`#${mode}InspectDrawer`),repair=document.querySelector(`#${mode}RepairDrawer`);
+    const host=modeTools(mode);
+    const health=document.querySelector(`#${mode}MeshHealthSummary`);
+    const inspect=document.querySelector(`#${mode}InspectDrawer`);
+    const repair=document.querySelector(`#${mode}RepairDrawer`);
+    if(host&&health)host.appendChild(health);
     if(host&&inspect)host.appendChild(inspect);
     if(host&&repair)host.appendChild(repair);
+    if(health?.open)syncHealth(mode,true);
   }
 }
 
@@ -129,4 +178,4 @@ setTimeout(sync,1900);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 
-globalThis.__boxlabComponentInspectRepairDrawers={version:VERSION,sync};
+globalThis.__boxlabComponentInspectRepairDrawers={version:VERSION,sync,syncHealth};
