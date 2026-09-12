@@ -1,6 +1,6 @@
 // BoxLab release version owner.
 // Feature modules must not control the visible app release number.
-const VERSION='0.36.18.146';
+const VERSION='0.36.18.147';
 const label=document.querySelector('#appVersion');
 function stamp(){
   if(label&&label.textContent!==`v${VERSION}`)label.textContent=`v${VERSION}`;
