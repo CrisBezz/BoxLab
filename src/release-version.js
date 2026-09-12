@@ -1,6 +1,6 @@
 // BoxLab release version owner.
 // This is the sole runtime owner of the visible app release number and document title.
-const VERSION='0.36.18.153';
+const VERSION='0.36.18.154';
 const label=document.querySelector('#appVersion');
 function stamp(){
   if(label&&label.textContent!==`v${VERSION}`)label.textContent=`v${VERSION}`;
@@ -8,10 +8,6 @@ function stamp(){
   if(document.title!==title)document.title=title;
 }
 stamp();
-if(label){
-  const observer=new MutationObserver(stamp);
-  observer.observe(label,{childList:true,characterData:true,subtree:true});
-  globalThis.__boxlabReleaseVersionObserver=observer;
-}
-[0,50,150,400,900,1800,3000].forEach(delay=>setTimeout(stamp,delay));
+window.addEventListener('pageshow',stamp);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)stamp();});
 globalThis.__boxlabReleaseVersion={version:VERSION,stamp};
