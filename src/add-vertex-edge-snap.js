@@ -1,16 +1,17 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.146 — unified Add Vertex interaction controller.
-// Owns both free-space loose-vertex placement and real edge splitting in capture
-// phase so main.js no longer races a separate Add Vertex path on iPad.
+// BoxLab v0.36.18.147 — unified Add Vertex interaction controller.
+// Edge recognition is always active while Add Vertex is armed; Geometry snap
+// only controls midpoint snapping. This keeps real edge insertion dependable
+// on touch/Pencil even when inference snapping is disabled.
 
-const VERSION='0.36.18.146';
+const VERSION='0.36.18.147';
 const canvas=document.querySelector('#viewport');
 const addVertexBtn=document.querySelector('#addVertexBtn');
 const status=document.querySelector('#selectionStatus');
 const geometryToggle=document.querySelector('#inferenceSnapToggle');
 const multiToggle=document.querySelector('#multiSelectToggle');
-const SNAP_PX=18;
+const EDGE_HIT_PX=24;
 const MIDPOINT_PX=11;
 let drag=null;
 
@@ -44,7 +45,7 @@ function nearestEdge(clientX,clientY){
     const midpointSnap=geometryOn()&&midpointDistance<=MIDPOINT_PX;
     if(midpointSnap)t=.5;
     const q=a.clone().addScaledVector(ab,t),distance=q.distanceTo(p);
-    if(distance<=SNAP_PX&&(!best||distance<best.distance))best={index,edge,t,distance,snapType:midpointSnap?'Midpoint':'Edge'};
+    if(distance<=EDGE_HIT_PX&&(!best||distance<best.distance))best={index,edge,t,distance,snapType:midpointSnap?'Midpoint':'Edge'};
   });
   return best;
 }
@@ -172,13 +173,13 @@ canvas?.addEventListener('pointerdown',event=>{
   const m=mesh(),history=globalThis.__boxlabHistory;
   if(!m||!history)return;
 
-  // From this point Add Vertex owns the interaction. Do not allow main.js to
-  // run its separate legacy free-space branch on the same pointer event.
   event.preventDefault();
   event.stopImmediatePropagation();
 
   const before=m.clone();
-  const snap=geometryOn()?nearestEdge(event.clientX,event.clientY):null;
+  // Existing edges are always valid Add Vertex targets. Geometry snapping only
+  // affects midpoint attraction; it must never disable edge insertion itself.
+  const snap=nearestEdge(event.clientX,event.clientY);
   if(snap){
     const result=splitEdge(m,snap.index,THREE.MathUtils.clamp(snap.t,.001,.999));
     if(!result)return;
@@ -216,8 +217,6 @@ function finish(event){
   drag=null;
   canvas.releasePointerCapture?.(event.pointerId);
 
-  // Add Vertex is deliberately one-shot: commit, disarm, then hand selection
-  // directly to the normal selection bridge instead of synthesising a tap.
   if(addVertexActive())addVertexBtn?.click();
   queueMicrotask(()=>{
     selectVertex(vertex);
