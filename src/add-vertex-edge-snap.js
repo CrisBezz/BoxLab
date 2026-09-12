@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.149 — persistent Add Vertex ownership fix.
-// While Add Vertex is armed it owns canvas gestures at document-capture level,
-// before normal vertex-pick assistance can consume a tap. Direct selection uses
-// the BoxLab selection bridge only; no synthetic pointer events are generated.
+// BoxLab v0.36.18.149.1 — persistent Add Vertex session hotfix.
+// While Add is armed, placement and selection are deliberately separated:
+// repeated canvas gestures remain Add operations; normal vertex selection is
+// restored only after the Add session ends.
 
-const VERSION='0.36.18.149';
+const VERSION='0.36.18.149.1';
 const canvas=document.querySelector('#viewport');
 const addVertexBtn=document.querySelector('#addVertexBtn');
 const status=document.querySelector('#selectionStatus');
@@ -14,15 +14,17 @@ const multiToggle=document.querySelector('#multiSelectToggle');
 const EDGE_HIT_PX=24;
 const MIDPOINT_PX=11;
 let drag=null;
+let sessionActive=false;
+let lastVertex=null;
 
 function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
 function camera(){return state()?.camera||null;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
-function addVertexActive(){return !!addVertexBtn?.classList.contains('active');}
 function geometryOn(){return geometryToggle?.checked!==false;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
-function ownsCanvasEvent(event){return event.target===canvas&&event.isPrimary&&addVertexActive();}
+function isActive(){return sessionActive;}
+function ownsCanvasEvent(event){return event.target===canvas&&event.isPrimary&&sessionActive;}
 
 function screenPoint(v){
   const cam=camera();
@@ -57,17 +59,13 @@ function freeSpacePoint(event,m){
   const center=new THREE.Vector3();
   for(const v of m.vertices||[])center.add(v);
   if(m.vertices?.length)center.multiplyScalar(1/m.vertices.length);
-
   const normal=new THREE.Vector3();
   cam.getWorldDirection(normal);
   if(normal.lengthSq()<1e-12)return null;
   const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal.normalize(),center);
   const rect=canvas.getBoundingClientRect();
   if(rect.width<=0||rect.height<=0)return null;
-  const ndc=new THREE.Vector2(
-    ((event.clientX-rect.left)/rect.width)*2-1,
-    -((event.clientY-rect.top)/rect.height)*2+1
-  );
+  const ndc=new THREE.Vector2(((event.clientX-rect.left)/rect.width)*2-1,-((event.clientY-rect.top)/rect.height)*2+1);
   const raycaster=new THREE.Raycaster();
   raycaster.setFromCamera(ndc,cam);
   const point=new THREE.Vector3();
@@ -95,17 +93,14 @@ function splitEdge(m,edgeIndex,t){
   const crease=m.creases?.get(oldKey)||0;
   const vertex=m.vertices.length;
   m.vertices.push(position);
-
   const realFaces=(edge.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&fi<m.faces.length&&Array.isArray(m.faces[fi]));
   for(const fi of realFaces)m.faces[fi]=splitFaceEdge(m.faces[fi],a,b,vertex);
-
   if(edge.loose&&m.looseEdges instanceof Set){
     m.looseEdges.delete(oldKey);
     m.looseEdges.add(m.edgeKey(a,vertex));
     m.looseEdges.add(m.edgeKey(vertex,b));
     if(m.looseVertices instanceof Set)m.looseVertices.add(vertex);
   }
-
   if(m.creases instanceof Map){
     m.creases.delete(oldKey);
     if(crease>0){
@@ -145,25 +140,45 @@ function updateEdgeDrag(event){
   render();
 }
 
-function selectVertex(vertex){
+function selectLastVertex(){
+  if(!Number.isInteger(lastVertex))return false;
   if(multiToggle?.checked){
     multiToggle.checked=false;
     multiToggle.dispatchEvent(new Event('change',{bubbles:true}));
   }
   const b=bridge();
   if(typeof b?.set!=='function')return false;
-  return b.set('vertex',[vertex])!==false;
+  return b.set('vertex',[lastVertex])!==false;
 }
+
+function syncSessionFromButton(){
+  const next=!!addVertexBtn?.classList.contains('active');
+  if(sessionActive&&!next){
+    sessionActive=false;
+    drag=null;
+    selectLastVertex();
+    render();
+    lastVertex=null;
+    return;
+  }
+  sessionActive=next;
+  if(sessionActive&&status)status.textContent='Add Vertex • placement mode';
+}
+
+addVertexBtn?.addEventListener('click',()=>queueMicrotask(syncSessionFromButton));
+document.querySelectorAll('#selectionModes button,#toolModes button,.mode-tools button').forEach(button=>{
+  if(button===addVertexBtn)return;
+  button.addEventListener('click',()=>queueMicrotask(syncSessionFromButton));
+});
+queueMicrotask(syncSessionFromButton);
 
 function begin(event){
   if(!ownsCanvasEvent(event))return;
   if(event.pointerType==='mouse'&&event.button!==0)return;
   const m=mesh(),history=globalThis.__boxlabHistory;
   if(!m||!history)return;
-
   event.preventDefault();
   event.stopImmediatePropagation();
-
   const before=m.clone();
   const snap=nearestEdge(event.clientX,event.clientY);
   if(snap){
@@ -176,7 +191,6 @@ function begin(event){
     render();
     return;
   }
-
   const point=freeSpacePoint(event,m);
   if(!point)return;
   const vertex=addLooseVertex(m,point);
@@ -203,14 +217,11 @@ function finish(event){
   const vertex=drag.vertex,snapType=drag.snapType||'Free';
   drag=null;
   canvas.releasePointerCapture?.(event.pointerId);
-
-  queueMicrotask(()=>{
-    selectVertex(vertex);
-    render();
-    if(status)status.textContent=`Add Vertex • ${snapType} committed • tool remains active`;
-  });
+  lastVertex=vertex;
+  render();
+  if(status)status.textContent=`Add Vertex • ${snapType} committed • continue placing`;
 }
 document.addEventListener('pointerup',finish,true);
 document.addEventListener('pointercancel',finish,true);
 
-globalThis.__boxlabAddVertex={version:VERSION,isActive:addVertexActive,nearestEdge,splitEdge,freeSpacePoint};
+globalThis.__boxlabAddVertex={version:VERSION,isActive,sessionActive:()=>sessionActive,nearestEdge,splitEdge,freeSpacePoint};
