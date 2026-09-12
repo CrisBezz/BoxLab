@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.161 — Vertex Slide owns the gesture before transform capture.
-// Single Vertex Slide uses the full straight rail between its two collinear
-// neighbours. Window-capture ownership prevents Move/Scale/Rotate and legacy
-// component-slide handlers from stealing the selected-vertex drag first.
+// BoxLab v0.36.18.162 — Vertex Slide eligibility follows the rendered cage.
+// A selected visible vertex is slideable when the rendered cage shows a valid
+// rail through it. This keeps selection, eligibility and drag ownership on the
+// same authoritative visual topology, including freshly Added edge vertices.
 
 const canvas=document.querySelector('#viewport');
 const button=document.querySelector('#vertexSlideBtn');
@@ -28,12 +28,44 @@ readout.textContent='Vertex Slide • drag along connected edges';
 row.insertAdjacentElement('afterend',readout);
 
 let armed=false,drag=null;
-const START_PX=7,COLLINEAR_EPS=1e-6;
+const START_PX=7,COLLINEAR_EPS=1e-6,RENDER_MATCH_EPS=1e-4;
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
 function selected(){const b=bridge();return b?.mode?.()==='vertex'?[...new Set(b.indices?.()||[])]:[];}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
+function renderedMarkers(){const out=new Map();state()?.scene?.traverse?.(o=>{if(o?.visible&&o.userData?.kind==='vertex'&&Number.isInteger(o.userData.index))out.set(o.userData.index,o);});return out;}
+function worldPosition(object){const p=new THREE.Vector3();object?.getWorldPosition?.(p);return p;}
+function edgeWorldEndpoints(object){const attr=object?.geometry?.getAttribute?.('position');if(!attr||attr.count<2)return null;const a=new THREE.Vector3().fromBufferAttribute(attr,0),b=new THREE.Vector3().fromBufferAttribute(attr,attr.count-1);object.localToWorld(a);object.localToWorld(b);return[a,b];}
+function renderedRail(v){
+  const s=state(),marker=renderedMarkers().get(v),edges=s?.edgeObjects;
+  if(!marker||!(edges instanceof Map))return null;
+  const p=worldPosition(marker),markers=renderedMarkers(),neighbours=[];
+  for(const object of edges.values()){
+    const ends=edgeWorldEndpoints(object);if(!ends)continue;
+    let other=null;
+    if(ends[0].distanceTo(p)<=RENDER_MATCH_EPS)other=ends[1];
+    else if(ends[1].distanceTo(p)<=RENDER_MATCH_EPS)other=ends[0];
+    if(!other)continue;
+    let best=null;
+    for(const [index,m] of markers){
+      if(index===v)continue;
+      const q=worldPosition(m),d=q.distanceTo(other);
+      if(d<=RENDER_MATCH_EPS&&(!best||d<best.d))best={index,point:q,d};
+    }
+    if(best&&!neighbours.some(n=>n.index===best.index))neighbours.push(best);
+  }
+  if(neighbours.length<2)return neighbours.length===1?{a:v,b:neighbours[0].index,oneSided:true}:null;
+  let best=null;
+  for(let i=0;i<neighbours.length;i++)for(let j=i+1;j<neighbours.length;j++){
+    const A=neighbours[i].point,B=neighbours[j].point,av=p.clone().sub(A),vb=B.clone().sub(p),ab=B.clone().sub(A),scale=Math.max(ab.length(),1);
+    if(av.lengthSq()<1e-14||vb.lengthSq()<1e-14)continue;
+    const cross=av.clone().cross(vb).length()/(scale*scale),forward=av.dot(vb)>=-1e-8;
+    if(!forward||cross>COLLINEAR_EPS)continue;
+    const score=ab.lengthSq();if(!best||score>best.score)best={a:neighbours[i].index,b:neighbours[j].index,score};
+  }
+  return best;
+}
 function neighbours(m,v){
   const out=new Set();
   for(const face of m?.faces||[]){
@@ -55,6 +87,7 @@ function neighbours(m,v){
   return [...out];
 }
 function collinearRail(m,v){
+  const rendered=renderedRail(v);if(rendered&&!rendered.oneSided&&m?.vertices?.[rendered.a]&&m.vertices[rendered.b])return rendered;
   const ns=neighbours(m,v);if(ns.length<2)return null;
   const p=m.vertices[v];let best=null;
   for(let i=0;i<ns.length;i++)for(let j=i+1;j<ns.length;j++){
@@ -68,21 +101,13 @@ function collinearRail(m,v){
   return best;
 }
 function screenPoint(v){const cam=state()?.camera;if(!cam||!v)return null;const p=v.clone().project(cam),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
-function selectedRenderedMarkerHit(event,ids){
-  const pick=globalThis.__boxlabVertexPickAssist?.nearestVertexAt?.(event.clientX,event.clientY);
-  return Number.isInteger(pick?.i)&&ids.includes(pick.i)?pick.i:null;
-}
-function compatible(m,ids){if(!m||!ids.length)return false;if(ids.length===1)return !!collinearRail(m,ids[0])||neighbours(m,ids[0]).length===1;return ids.every(v=>neighbours(m,v).length===2);}
-function sync(){
-  const m=mesh(),ids=selected(),ok=compatible(m,ids);
-  button.disabled=armed?false:!ok;
-  button.classList.toggle('active',armed);
-  readout.textContent=!ids.length?'Vertex Slide • select vertex/vertices':ids.length>1&&!ok?'Multi Vertex Slide needs two connected rails per vertex':ids.length===1&&!ok?'Vertex Slide • selected vertex has no connected rail':'Vertex Slide • drag along connected edges';
-}
-function stableDirectionKey(point){return [point.x,point.y,point.z];}
+function selectedRenderedMarkerHit(event,ids){const pick=globalThis.__boxlabVertexPickAssist?.nearestVertexAt?.(event.clientX,event.clientY);return Number.isInteger(pick?.i)&&ids.includes(pick.i)?pick.i:null;}
+function compatible(m,ids){if(!m||!ids.length)return false;if(ids.length===1){const rail=renderedRail(ids[0]);return !!rail||!!collinearRail(m,ids[0])||neighbours(m,ids[0]).length===1;}return ids.every(v=>neighbours(m,v).length===2);}
+function sync(){const m=mesh(),ids=selected(),ok=compatible(m,ids);button.disabled=armed?false:!ok;button.classList.toggle('active',armed);readout.textContent=!ids.length?'Vertex Slide • select vertex/vertices':ids.length>1&&!ok?'Multi Vertex Slide needs two connected rails per vertex':ids.length===1&&!ok?'Vertex Slide • selected vertex has no connected rail':'Vertex Slide • drag along connected edges';}
+function stableDirectionKey(point){return[point.x,point.y,point.z];}
 function comparePoints(a,b){const A=stableDirectionKey(a),B=stableDirectionKey(b);for(let i=0;i<3;i++){if(Math.abs(A[i]-B[i])>1e-9)return A[i]-B[i];}return 0;}
 function signedTarget(m,v,sign){const ns=neighbours(m,v);if(!ns.length)return null;const ordered=[...ns].sort((ia,ib)=>comparePoints(m.vertices[ia],m.vertices[ib]));return sign>=0?ordered[ordered.length-1]:ordered[0];}
-function exactTargets(m,ids,sign){const targets=new Map();if(ids.length===1){const v=ids[0],target=signedTarget(m,v,sign);if(!Number.isInteger(target))return null;targets.set(v,target);return targets;}for(const v of ids){const ns=neighbours(m,v);if(ns.length!==2)return null;const ordered=[...ns].sort((ia,ib)=>comparePoints(m.vertices[ia],m.vertices[ib]));targets.set(v,sign>=0?ordered[1]:ordered[0]);}return targets;}
+function exactTargets(m,ids,sign){const targets=new Map();if(ids.length===1){const rail=collinearRail(m,ids[0]);if(rail&&!rail.oneSided){targets.set(ids[0],sign>=0?rail.b:rail.a);return targets;}const target=signedTarget(m,ids[0],sign);if(!Number.isInteger(target))return null;targets.set(ids[0],target);return targets;}for(const v of ids){const ns=neighbours(m,v);if(ns.length!==2)return null;const ordered=[...ns].sort((ia,ib)=>comparePoints(m.vertices[ia],m.vertices[ib]));targets.set(v,sign>=0?ordered[1]:ordered[0]);}return targets;}
 function applyExact(){const m=mesh(),ids=selected(),raw=Number(input.value);if(!m||!ids.length){readout.textContent='Select vertex/vertices first';return;}if(!Number.isFinite(raw)||input.value.trim()===''){readout.textContent='Enter a signed slide percentage';return;}if(Math.abs(raw)<1e-6){readout.textContent='Enter a non-zero slide percentage';return;}const pct=Math.max(-98,Math.min(98,raw)),targets=exactTargets(m,ids,Math.sign(pct));if(!targets){readout.textContent=ids.length>1?'Multi exact Slide needs two connected rails per vertex':'Vertex has no connected slide edge';return;}const before=m.clone(),t=Math.abs(pct)/100;globalThis.__boxlabHistory?.push(before);for(const [v,target] of targets)m.vertices[v].copy(before.vertices[v]).lerp(before.vertices[target],t);render();bridge()?.set?.('vertex',ids);const text=`${ids.length>1?`Multi Vertex (${ids.length})`:'Vertex'} Slide • ${pct>0?'+':''}${pct.toFixed(1)}%`;readout.textContent=text;if(status)status.textContent=text;}
 apply.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();applyExact();});
 input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();applyExact();input.blur();}});
@@ -104,7 +129,7 @@ window.addEventListener('pointermove',event=>{
   event.preventDefault();event.stopImmediatePropagation();
   const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;if(!drag.changed&&Math.hypot(dx,dy)<START_PX)return;
   if(!drag.changed){globalThis.__boxlabHistory?.push(drag.before);drag.changed=true;}
-  if(drag.ids.length===1&&drag.straight){
+  if(drag.ids.length===1&&drag.straight&&!drag.straight.oneSided){
     const {a,b}=drag.straight,A=screenPoint(drag.before.vertices[a]),B=screenPoint(drag.before.vertices[b]);if(!A||!B)return;
     const AB=B.clone().sub(A),den=AB.lengthSq();if(den<1)return;
     const P=new THREE.Vector2(event.clientX,event.clientY),t=THREE.MathUtils.clamp(P.clone().sub(A).dot(AB)/den,.001,.999);
@@ -124,4 +149,4 @@ document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMicrotask(()=>{armed=false;button.classList.remove('active');sync();}));
 setTimeout(sync,0);
 
-globalThis.__boxlabVertexSlidePolish={version:'0.36.18.161',isArmed:()=>armed,apply:value=>{input.value=String(value);applyExact();}};
+globalThis.__boxlabVertexSlidePolish={version:'0.36.18.162',isArmed:()=>armed,apply:value=>{input.value=String(value);applyExact();}};
