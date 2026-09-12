@@ -97,15 +97,15 @@ import('./select-coplanar-region.js?v=0.36.18.69').catch(error => console.warn('
 import('./join-selected-coplanar-faces.js?v=0.36.18.75').catch(error => console.warn('BoxLab Join Selected Coplanar Faces failed to load', error));
 import('./select-face-islands.js?v=0.36.18.72').catch(error => console.warn('BoxLab Select Face Islands failed to load', error));
 import('./select-connected-shell.js?v=0.36.18.73').catch(error => console.warn('BoxLab Select Connected Shell failed to load', error));
-import('./face-workflow-layout.js?v=0.36.18.160').catch(error => console.warn('BoxLab Face workflow layout failed to load', error));
+import('./face-workflow-layout.js?v=0.36.18.161').catch(error => console.warn('BoxLab Face workflow layout failed to load', error));
 import('./component-inspect-repair-drawers.js?v=0.36.18.143').catch(error => console.warn('BoxLab component Inspect/Repair drawers failed to load', error));
 import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
-import('./vertex-slide-polish.js?v=0.36.18.160').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
+import('./vertex-slide-polish.js?v=0.36.18.161').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
 import('./dissolve-selection-polish.js?v=0.36.18.28').catch(error => console.warn('BoxLab Dissolve selection polish failed to load', error));
 import('./selection-history-safe.js?v=0.36.18.34').catch(error => console.warn('BoxLab selection-aware history failed to load', error));
-import('./loop-cut-added-vertex.js?v=0.36.18.160').catch(error => console.warn('BoxLab Add-vertex Loop promotion failed to load', error));
+import('./loop-cut-added-vertex.js?v=0.36.18.161').catch(error => console.warn('BoxLab Add-vertex Loop promotion failed to load', error));
 // Normal Through remains owned by multi-face-direct + through-kernel; fallback only wakes when kernel planning fails.
 import('./object-origin.js?v=0.36.4.0-recovery1').then(() => {
   installGroupUiPolish();
