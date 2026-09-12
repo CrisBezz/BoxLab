@@ -18,9 +18,9 @@ import './select-quads.js?v=0.36.18.128';
 import './mesh-health-summary.js?v=0.36.18.144';
 import './face-inspect-drawer.js?v=0.36.18.141';
 import './face-repair-drawer.js?v=0.36.18.145';
-import './release-version.js?v=0.36.18.162';
+import './release-version.js?v=0.36.18.163';
 
-// BoxLab v0.36.18.162 — rendered-rail Vertex Slide + single/multi logical Loop Cut.
+// BoxLab v0.36.18.163 — release refresh bootstrap; modelling behavior remains 18.162.
 // UI layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -81,4 +81,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.162',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.163',sync};
