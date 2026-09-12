@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.158 — single Vertex Slide uses the full straight rail.
-// A single slideable vertex is projected onto the screen-space segment joining
-// its two collinear rail endpoints, then placed by world-space interpolation
-// between those endpoints. This prevents Add-on-edge verts drifting off-edge.
+// BoxLab v0.36.18.159 — polished Vertex Slide owns gestures before legacy canvas handlers.
+// Single Vertex Slide uses the full straight rail between its two collinear
+// neighbours. Pointer gestures are captured at document level so the older
+// component-slide Vertex handler cannot intercept the drag first.
 
 const canvas=document.querySelector('#viewport');
 const button=document.querySelector('#vertexSlideBtn');
@@ -84,8 +84,8 @@ button.addEventListener('click',event=>{if(button.disabled)return;event.preventD
 
 function chooseMultiTargets(d,dx,dy){const motion=new THREE.Vector2(dx,dy);if(motion.lengthSq()<1)return null;motion.normalize();const targets=new Map();let seedRail=null;for(const v of d.ids){let best=null;const origin=screenPoint(d.before.vertices[v]);if(!origin)return null;for(const n of d.neighbourMap.get(v)||[]){const p=screenPoint(d.before.vertices[n]);if(!p)continue;const rail=p.clone().sub(origin),len=rail.length();if(len<2)continue;const score=motion.dot(rail.clone().normalize());if(!best||score>best.score)best={target:n,rail,score};}if(!best)return null;targets.set(v,best.target);if(v===d.seed)seedRail=best.rail;}return seedRail?{targets,rail:seedRail}:null;}
 
-canvas.addEventListener('pointerdown',event=>{
-  if(!armed||!event.isPrimary)return;
+document.addEventListener('pointerdown',event=>{
+  if(event.target!==canvas||!armed||!event.isPrimary)return;
   const m=mesh(),ids=selected();if(!compatible(m,ids))return;
   const seed=ids.find(v=>nearVertex(event,m,v));if(!Number.isInteger(seed))return;
   event.preventDefault();event.stopImmediatePropagation();
@@ -95,7 +95,7 @@ canvas.addEventListener('pointerdown',event=>{
   canvas.setPointerCapture?.(event.pointerId);
 },true);
 
-canvas.addEventListener('pointermove',event=>{
+document.addEventListener('pointermove',event=>{
   if(!drag||drag.pointerId!==event.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();
   const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;if(!drag.changed&&Math.hypot(dx,dy)<START_PX)return;
@@ -114,11 +114,11 @@ canvas.addEventListener('pointermove',event=>{
   render();const text=`${drag.ids.length>1?`Multi Vertex (${drag.ids.length})`:'Vertex'} Slide • ${Math.round(t*100)}%`;readout.textContent=text;if(status)status.textContent=text;
 },true);
 function finish(event){if(!drag||drag.pointerId!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const d=drag;drag=null;render();bridge()?.set?.('vertex',d.ids);if(status)status.textContent=d.changed?`${d.ids.length>1?`Multi Vertex (${d.ids.length})`:'Vertex'} Slide committed`:'Vertex Slide cancelled';sync();}
-canvas.addEventListener('pointerup',finish,true);canvas.addEventListener('pointercancel',finish,true);
+document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);
 
 window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMicrotask(()=>{armed=false;button.classList.remove('active');sync();}));
 setTimeout(sync,0);
 
-globalThis.__boxlabVertexSlidePolish={version:'0.36.18.158',apply:value=>{input.value=String(value);applyExact();}};
+globalThis.__boxlabVertexSlidePolish={version:'0.36.18.159',apply:value=>{input.value=String(value);applyExact();}};
