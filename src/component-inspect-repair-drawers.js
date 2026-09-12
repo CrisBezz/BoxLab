@@ -1,9 +1,9 @@
-// BoxLab v0.36.18.142 — Vertex/Edge Inspect + Repair containment.
+// BoxLab v0.36.18.143 — Vertex/Edge Inspect + Repair containment.
 // UI-only: groups existing diagnostic selectors under default-collapsed Inspect
 // drawers and existing deterministic corrective controls under Repair.
 // Existing tool handlers, topology logic, selection and History are untouched.
 
-const VERSION='0.36.18.142';
+const VERSION='0.36.18.143';
 
 function modeTools(mode){return document.querySelector(`[data-mode-tools="${mode}"]`);}
 
@@ -21,15 +21,15 @@ function ensureDrawer(mode,type){
   const body=document.createElement('div');
   body.id=`${id}Body`;body.style.cssText='padding:0 6px 6px';
   details.append(summary,body);
-  const panelTitle=host.querySelector('.panel-title');
+
+  // Match Face mode: normal modelling/topology controls stay first.
+  // Inspect is appended after all real tools; Repair sits immediately after Inspect.
   if(type==='Inspect'){
-    if(panelTitle?.parentElement===host)panelTitle.insertAdjacentElement('afterend',details);
-    else host.prepend(details);
+    host.appendChild(details);
   }else{
     const inspect=document.querySelector(`#${mode}InspectDrawer`);
     if(inspect?.parentElement===host)inspect.insertAdjacentElement('afterend',details);
-    else if(panelTitle?.parentElement===host)panelTitle.insertAdjacentElement('afterend',details);
-    else host.prepend(details);
+    else host.appendChild(details);
   }
   return details;
 }
@@ -115,6 +115,13 @@ function sync(){
   moveDiagnostics('edge');
   moveVertexRepairs();
   syncEdgeRepair();
+
+  // Reassert Face-style ordering after any moved diagnostic/repair rows.
+  for(const mode of ['vertex','edge']){
+    const host=modeTools(mode),inspect=document.querySelector(`#${mode}InspectDrawer`),repair=document.querySelector(`#${mode}RepairDrawer`);
+    if(host&&inspect)host.appendChild(inspect);
+    if(host&&repair)host.appendChild(repair);
+  }
 }
 
 // Let legacy feature modules finish their own startup placement, then contain once.
