@@ -1,5 +1,9 @@
 import * as THREE from 'three';
 
+// BoxLab v0.36.18.151 — Lasso/Add Vertex mutual exclusion.
+// Arming Lasso now terminates an active Add Vertex placement session first.
+
+const VERSION='0.36.18.151';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const dock=document.querySelector('#componentSelectionTools .selection-dock');
@@ -34,7 +38,13 @@ function applySelection(poly){const type=mode();if(type==='object'){const ids=ob
 function ensureOverlay(){if(overlay)return;overlay=document.createElementNS('http://www.w3.org/2000/svg','svg');overlay.id='boxlabLassoOverlay';overlay.style.cssText='position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9998;overflow:visible';polyline=document.createElementNS('http://www.w3.org/2000/svg','polyline');polyline.setAttribute('fill','rgba(255,255,255,.06)');polyline.setAttribute('stroke','rgba(255,255,255,.95)');polyline.setAttribute('stroke-width','2');polyline.setAttribute('stroke-linejoin','round');polyline.setAttribute('stroke-linecap','round');overlay.appendChild(polyline);document.body.appendChild(overlay);}
 function draw(points){ensureOverlay();polyline.setAttribute('points',points.map(p=>`${p.x},${p.y}`).join(' '));}
 function clearDraw(){polyline?.setAttribute('points','');}
-function setArmed(next){armed=!!next;button?.classList.toggle('active',armed);clearDraw();gesture=null;touchNavSnapshots.clear();globalThis.__boxlabLasso={armed};if(status)status.textContent=armed?`Lasso • Pencil draw around ${mode()} • finger orbits • ${depth()}`:`${mode().charAt(0).toUpperCase()+mode().slice(1)} mode`;}
+function publish(){globalThis.__boxlabLasso={version:VERSION,armed,isArmed:()=>armed,setArmed};}
+function setArmed(next){
+  next=!!next;
+  if(next&&globalThis.__boxlabAddVertex?.sessionActive?.())globalThis.__boxlabAddVertex.stop?.(false);
+  armed=next;button?.classList.toggle('active',armed);clearDraw();gesture=null;touchNavSnapshots.clear();publish();
+  if(status)status.textContent=armed?`Lasso • Pencil draw around ${mode()} • finger orbits • ${depth()}`:`${mode().charAt(0).toUpperCase()+mode().slice(1)} mode`;
+}
 function captureTouchNavigation(event){if(!armed||event.pointerType!=='touch')return;const b=bridge(),type=b?.mode?.(),indices=[...(b?.indices?.()||[])];if(!type||!indices.length)return;touchNavSnapshots.set(event.pointerId,{type,indices,x:event.clientX,y:event.clientY,restored:false});}
 function restoreTouchNavigation(event){if(!armed||event.pointerType!=='touch')return;const snap=touchNavSnapshots.get(event.pointerId);if(!snap||snap.restored)return;if(Math.hypot(event.clientX-snap.x,event.clientY-snap.y)<NAV_RESTORE_PX)return;const b=bridge();if(b?.mode?.()!==snap.type)return;const current=b.indices?.()||[];if(!current.length)b.set?.(snap.type,snap.indices);snap.restored=true;}
 function endTouchNavigation(event){if(event.pointerType==='touch')touchNavSnapshots.delete(event.pointerId);}
@@ -52,4 +62,4 @@ canvas?.addEventListener('pointermove',event=>{if(!gesture||gesture.id!==event.p
 function finish(event,cancel=false){if(!gesture||gesture.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const g=gesture;gesture=null;clearDraw();if(cancel||g.points.length<3||Math.hypot(event.clientX-g.start.x,event.clientY-g.start.y)<10)return;applySelection(g.points);render();}
 canvas?.addEventListener('pointerup',event=>finish(event,false),true);
 canvas?.addEventListener('pointercancel',event=>finish(event,true),true);
-globalThis.__boxlabLasso={armed};
+publish();
