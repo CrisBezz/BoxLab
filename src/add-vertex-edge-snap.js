@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.147 — unified Add Vertex interaction controller.
+// BoxLab v0.36.18.148 — unified Add Vertex interaction controller.
 // Edge recognition is always active while Add Vertex is armed; Geometry snap
-// only controls midpoint snapping. This keeps real edge insertion dependable
-// on touch/Pencil even when inference snapping is disabled.
+// only controls midpoint snapping. Add stays armed after each commit so repeated
+// vertex placement works until the user explicitly exits the tool.
 
-const VERSION='0.36.18.147';
+const VERSION='0.36.18.148';
 const canvas=document.querySelector('#viewport');
 const addVertexBtn=document.querySelector('#addVertexBtn');
 const status=document.querySelector('#selectionStatus');
@@ -217,11 +217,10 @@ function finish(event){
   drag=null;
   canvas.releasePointerCapture?.(event.pointerId);
 
-  if(addVertexActive())addVertexBtn?.click();
   queueMicrotask(()=>{
     selectVertex(vertex);
     render();
-    if(status)status.textContent=`Add Vertex • ${snapType} committed • new vertex selected`;
+    if(status)status.textContent=`Add Vertex • ${snapType} committed • tool remains active`;
   });
 }
 canvas?.addEventListener('pointerup',finish,true);
