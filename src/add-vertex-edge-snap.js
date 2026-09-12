@@ -1,12 +1,10 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.150 — Add Vertex tap/orbit session rebuild.
-// The core private addVertex direct tool is immediately disarmed after the user
-// presses Add. This module then owns placement only: taps add vertices, drags
-// away from edges remain normal OrbitControls navigation, and drags that begin
-// directly on an edge insert/slide a vertex along that edge.
+// BoxLab v0.36.18.151 — Add Vertex/Lasso mutual exclusion.
+// 18.150 tap/orbit placement behavior is preserved. Starting Add now disarms
+// Lasso first, and Lasso can explicitly stop the Add session without selecting.
 
-const VERSION='0.36.18.150';
+const VERSION='0.36.18.151';
 const canvas=document.querySelector('#viewport');
 const addVertexBtn=document.querySelector('#addVertexBtn');
 const status=document.querySelector('#selectionStatus');
@@ -158,6 +156,7 @@ function disarmCoreAdd(){
 
 function startSession(){
   if(sessionActive)return;
+  if(globalThis.__boxlabLasso?.isArmed?.())globalThis.__boxlabLasso.setArmed?.(false);
   ensureStyle();
   sessionActive=true;
   lastVertex=null;
@@ -179,9 +178,6 @@ function stopSession(selectLast=true){
   render();
 }
 
-// main.js receives the click first and briefly arms its private Add tool. We then
-// convert that into our persistent session and immediately return the core to
-// ordinary Vertex mode so navigation and generic core input remain available.
 addVertexBtn?.addEventListener('click',()=>queueMicrotask(()=>{
   if(sessionActive){
     disarmCoreAdd();
@@ -225,11 +221,7 @@ document.addEventListener('pointerdown',event=>{
   if(!sessionActive||!event.isPrimary)return;
   if(event.pointerType==='pen'&&!(event.pressure>0))return;
   if(event.pointerType==='mouse'&&event.button!==0)return;
-
-  // Prevent stale component selection from converting a navigation drag into a
-  // vertex move, but do not consume the event: OrbitControls must still see it.
   clearSelection();
-
   const m=mesh(),h=history();
   if(!m||!h)return;
   const snap=nearestEdge(event.clientX,event.clientY);
@@ -248,15 +240,7 @@ document.addEventListener('pointerdown',event=>{
     render();
     return;
   }
-
-  tapCandidate={
-    pointerId:event.pointerId,
-    startX:event.clientX,
-    startY:event.clientY,
-    startedAt:performance.now(),
-    multi:activePointers.size>1,
-    moved:false
-  };
+  tapCandidate={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startedAt:performance.now(),multi:activePointers.size>1,moved:false};
 },true);
 
 document.addEventListener('pointermove',event=>{
@@ -308,4 +292,4 @@ document.addEventListener('pointercancel',event=>{
   if(tapCandidate?.pointerId===event.pointerId)tapCandidate=null;
 },true);
 
-globalThis.__boxlabAddVertex={version:VERSION,isActive,sessionActive:()=>sessionActive,nearestEdge,splitEdge,freeSpacePoint};
+globalThis.__boxlabAddVertex={version:VERSION,isActive,sessionActive:()=>sessionActive,stop:stopSession,nearestEdge,splitEdge,freeSpacePoint};
