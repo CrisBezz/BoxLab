@@ -18,9 +18,9 @@ import './select-quads.js?v=0.36.18.128';
 import './mesh-health-summary.js?v=0.36.18.144';
 import './face-inspect-drawer.js?v=0.36.18.141';
 import './face-repair-drawer.js?v=0.36.18.145';
-import './release-version.js?v=0.36.18.160';
+import './release-version.js?v=0.36.18.161';
 
-// BoxLab v0.36.18.160 — sticky Vertex Slide + Loop preserves Add verts.
+// BoxLab v0.36.18.161 — window-owned Vertex Slide + restored logical Loop Cut.
 // UI layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -81,4 +81,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.160',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.161',sync};
