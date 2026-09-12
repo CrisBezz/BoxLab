@@ -1,10 +1,9 @@
-// BoxLab v0.36.18.137 — Mesh Health summary foundation.
+// BoxLab v0.36.18.144 — Mesh Health on-demand performance pass.
 // Reuses existing non-destructive diagnostic inspectors to build one compact,
-// default-collapsed health summary. This module does not select or alter mesh
-// topology/history. It deliberately separates definite repair issues from
-// modelling-quality warnings so intentional topology is not reported as broken.
+// default-collapsed health summary. Full diagnostics run when Mesh Health is
+// opened and refresh only while it remains open after relevant state changes.
 
-const VERSION='0.36.18.137';
+const VERSION='0.36.18.144';
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 
 function state(){return globalThis.__boxlabBridgeState;}
@@ -72,6 +71,7 @@ function ensureUI(){
   if(helperGroup?.parentElement===faceTools)helperGroup.insertAdjacentElement('beforebegin',details);
   else if(precision?.parentElement===faceTools)precision.insertAdjacentElement('afterend',details);
   else faceTools.appendChild(details);
+  details.addEventListener('toggle',()=>{if(details.open)sync(true);});
   return details;
 }
 
@@ -101,11 +101,15 @@ function renderSummary(info){
   return true;
 }
 
-function sync(){const info=inspect(mesh());renderSummary(info);return info;}
+function sync(force=false){
+  const details=ensureUI();if(!details)return false;
+  if(!force&&!details.open)return null;
+  const info=inspect(mesh());renderSummary(info);return info;
+}
 
-window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
-document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
-[0,60,160,360,800,1200].forEach(delay=>setTimeout(sync,delay));
+ensureUI();
+window.addEventListener('boxlab-bridge-state',()=>{const details=document.querySelector('#meshHealthSummary');if(details?.open)queueMicrotask(()=>sync(true));});
+document.addEventListener('pointerup',()=>{const details=document.querySelector('#meshHealthSummary');if(details?.open)setTimeout(()=>sync(true),0);},true);
+document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{const details=document.querySelector('#meshHealthSummary');if(details?.open)queueMicrotask(()=>sync(true));}));
 
 globalThis.__boxlabMeshHealth={version:VERSION,inspect,sync,metrics:METRICS.map(({id,label,kind,globalName})=>({id,label,kind,globalName}))};
