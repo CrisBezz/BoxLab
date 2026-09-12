@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.134 — non-destructive Vertex valence / SubD inspection.
+// BoxLab v0.36.18.155 hotfix — non-destructive Vertex valence / SubD inspection.
 // Selects vertices by incident-edge count, interior manifold extraordinary
 // vertices (SubD poles: valence != 4), regular open-manifold boundary corners
 // (valence 2), remaining irregular boundary vertices, and regular SubD vertices.
-// Geometry/history are untouched.
+// Geometry/history are untouched. This module never owns the app release label.
 
 const vertexTools=document.querySelector('[data-mode-tools="vertex"]');
 const status=document.querySelector('#selectionStatus');
@@ -117,9 +117,6 @@ function inspect(m){
       return;
     }
 
-    // A well-formed open-manifold boundary vertex has exactly two boundary edges.
-    // In a regular quad patch valence 3 is the ordinary boundary run and valence 2
-    // is a boundary corner. Both are included in the positive SubD Regular set.
     if(boundaryEdges===2){
       if(count===2){boundaryCorners.push(index);regular.push(index);}
       else if(count===3)regular.push(index);
@@ -164,12 +161,6 @@ function sync(){
   regularButton.title=m?`Select regular manifold SubD vertices: interior valence 4, boundary valence 3, corners valence 2 • ${info.regular.length} found`:'No editable mesh';
 }
 
-function stampVersion(){
-  const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.134';
-  document.title='BoxLab v0.36.18.134';
-}
-
 valence3Button.addEventListener('click',()=>apply('v3'));
 valence4Button.addEventListener('click',()=>apply('v4'));
 valence5Button.addEventListener('click',()=>apply('v5plus'));
@@ -181,6 +172,5 @@ window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
-[120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabSelectVertexValence={version:'0.36.18.134',inspect,apply};
+globalThis.__boxlabSelectVertexValence={version:'0.36.18.155-hotfix1',inspect,apply};
