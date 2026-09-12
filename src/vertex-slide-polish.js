@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.159 — polished Vertex Slide owns gestures before legacy canvas handlers.
+// BoxLab v0.36.18.160 — polished Vertex Slide stays armed after explicit activation.
 // Single Vertex Slide uses the full straight rail between its two collinear
 // neighbours. Pointer gestures are captured at document level so the older
 // component-slide Vertex handler cannot intercept the drag first.
@@ -70,7 +70,15 @@ function collinearRail(m,v){
 function screenPoint(v){const cam=state()?.camera;if(!cam||!v)return null;const p=v.clone().project(cam),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
 function nearVertex(event,m,v){const p=screenPoint(m.vertices[v]);return !!p&&p.distanceTo(new THREE.Vector2(event.clientX,event.clientY))<=PICK_PX;}
 function compatible(m,ids){if(!m||!ids.length)return false;if(ids.length===1)return !!collinearRail(m,ids[0])||neighbours(m,ids[0]).length===1;return ids.every(v=>neighbours(m,v).length===2);}
-function sync(){const m=mesh(),ids=selected(),ok=compatible(m,ids);button.disabled=!ok;if(!ok&&armed){armed=false;button.classList.remove('active');}readout.textContent=!ids.length?'Vertex Slide • select vertex/vertices':ids.length>1&&!ok?'Multi Vertex Slide needs two connected rails per vertex':ids.length===1&&!ok?'Vertex Slide • selected vertex has no connected rail':'Vertex Slide • drag along connected edges';}
+function sync(){
+  const m=mesh(),ids=selected(),ok=compatible(m,ids);
+  // Once the user explicitly arms Slide, transient helper/bridge resyncs must
+  // not immediately cancel it. Eligibility only controls whether Slide can be
+  // armed in the first place; explicit mode/tool changes own disarming.
+  button.disabled=armed?false:!ok;
+  button.classList.toggle('active',armed);
+  readout.textContent=!ids.length?'Vertex Slide • select vertex/vertices':ids.length>1&&!ok?'Multi Vertex Slide needs two connected rails per vertex':ids.length===1&&!ok?'Vertex Slide • selected vertex has no connected rail':'Vertex Slide • drag along connected edges';
+}
 
 function stableDirectionKey(point){return [point.x,point.y,point.z];}
 function comparePoints(a,b){const A=stableDirectionKey(a),B=stableDirectionKey(b);for(let i=0;i<3;i++){if(Math.abs(A[i]-B[i])>1e-9)return A[i]-B[i];}return 0;}
@@ -80,7 +88,7 @@ function applyExact(){const m=mesh(),ids=selected(),raw=Number(input.value);if(!
 apply.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();applyExact();});
 input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();applyExact();input.blur();}});
 
-button.addEventListener('click',event=>{if(button.disabled)return;event.preventDefault();event.stopImmediatePropagation();armed=!armed;button.classList.toggle('active',armed);if(status)status.textContent=armed?`${selected().length>1?`Multi Vertex (${selected().length})`:'Vertex'} Slide • Pencil-drag selected vertex`:'Vertex Slide off';},true);
+button.addEventListener('click',event=>{if(button.disabled&&!armed)return;event.preventDefault();event.stopImmediatePropagation();armed=!armed;button.disabled=false;button.classList.toggle('active',armed);if(status)status.textContent=armed?`${selected().length>1?`Multi Vertex (${selected().length})`:'Vertex'} Slide • Pencil-drag selected vertex`:'Vertex Slide off';if(!armed)sync();},true);
 
 function chooseMultiTargets(d,dx,dy){const motion=new THREE.Vector2(dx,dy);if(motion.lengthSq()<1)return null;motion.normalize();const targets=new Map();let seedRail=null;for(const v of d.ids){let best=null;const origin=screenPoint(d.before.vertices[v]);if(!origin)return null;for(const n of d.neighbourMap.get(v)||[]){const p=screenPoint(d.before.vertices[n]);if(!p)continue;const rail=p.clone().sub(origin),len=rail.length();if(len<2)continue;const score=motion.dot(rail.clone().normalize());if(!best||score>best.score)best={target:n,rail,score};}if(!best)return null;targets.set(v,best.target);if(v===d.seed)seedRail=best.rail;}return seedRail?{targets,rail:seedRail}:null;}
 
@@ -121,4 +129,4 @@ document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMicrotask(()=>{armed=false;button.classList.remove('active');sync();}));
 setTimeout(sync,0);
 
-globalThis.__boxlabVertexSlidePolish={version:'0.36.18.159',apply:value=>{input.value=String(value);applyExact();}};
+globalThis.__boxlabVertexSlidePolish={version:'0.36.18.160',isArmed:()=>armed,apply:value=>{input.value=String(value);applyExact();}};
