@@ -1,9 +1,8 @@
-// BoxLab v0.36.18.144 — Mesh Health on-demand performance pass.
-// Reuses existing non-destructive diagnostic inspectors to build one compact,
-// default-collapsed health summary. Full diagnostics run when Mesh Health is
-// opened and refresh only while it remains open after relevant state changes.
+// BoxLab v0.36.18.172 — Mesh Health passive topology summary.
+// Reuses existing non-destructive diagnostic inspectors and adds a lightweight
+// topology snapshot without changing geometry, selection, tools or History.
 
-const VERSION='0.36.18.144';
+const VERSION='0.36.18.172';
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 
 function state(){return globalThis.__boxlabBridgeState;}
@@ -33,8 +32,28 @@ const METRICS=[
   metric('subdPoles','SubD poles','warning','__boxlabSelectVertexValence',info=>info?.subdPoleTotal??info?.polesTotal??info?.subdPoles?.length)
 ];
 
+function topology(m){
+  const vertices=Array.isArray(m?.vertices)?m.vertices.length:0;
+  const faces=Array.isArray(m?.faces)?m.faces.length:0;
+  const edgeUse=new Map();
+  if(Array.isArray(m?.faces)){
+    for(const face of m.faces){
+      if(!Array.isArray(face)||face.length<2)continue;
+      for(let i=0;i<face.length;i++){
+        const a=face[i],b=face[(i+1)%face.length];
+        if(!Number.isInteger(a)||!Number.isInteger(b)||a===b)continue;
+        const lo=Math.min(a,b),hi=Math.max(a,b),key=`${lo}:${hi}`;
+        edgeUse.set(key,(edgeUse.get(key)||0)+1);
+      }
+    }
+  }
+  let boundaryEdges=0;
+  for(const count of edgeUse.values())if(count===1)boundaryEdges++;
+  return{vertices,edges:edgeUse.size,faces,boundaryEdges};
+}
+
 function inspect(m=mesh()){
-  if(!m)return{version:VERSION,available:false,issues:[],warnings:[],issueCount:0,warningCount:0,totalFindings:0};
+  if(!m)return{version:VERSION,available:false,topology:null,issues:[],warnings:[],issueCount:0,warningCount:0,totalFindings:0};
   const cache=new Map(),issues=[],warnings=[];
   for(const spec of METRICS){
     let info=cache.get(spec.globalName);
@@ -47,7 +66,7 @@ function inspect(m=mesh()){
   }
   const issueCount=issues.reduce((sum,item)=>sum+item.count,0);
   const warningCount=warnings.reduce((sum,item)=>sum+item.count,0);
-  return{version:VERSION,available:true,issues,warnings,issueCount,warningCount,totalFindings:issueCount+warningCount};
+  return{version:VERSION,available:true,topology:topology(m),issues,warnings,issueCount,warningCount,totalFindings:issueCount+warningCount};
 }
 
 function ensureUI(){
@@ -82,6 +101,12 @@ function row(text,muted=false){
   return div;
 }
 
+function appendTopology(body,info){
+  const t=info?.topology;if(!t)return;
+  body.appendChild(row(`${t.vertices} verts • ${t.edges} edges • ${t.faces} faces`,true));
+  body.appendChild(row(`${t.boundaryEdges} boundary edges`,true));
+}
+
 function renderSummary(info){
   const details=ensureUI();if(!details)return false;
   const label=details.querySelector('#meshHealthSummaryLabel');
@@ -94,10 +119,10 @@ function renderSummary(info){
   if(info.issueCount)label.textContent=`MESH HEALTH • ${issueText}`;
   else if(info.warningCount)label.textContent=`MESH HEALTH • ${warningText}`;
   else label.textContent='MESH HEALTH • CLEAN';
+  appendTopology(body,info);
   if(!info.totalFindings){body.appendChild(row('✓ No recognised mesh-health issues',true));return true;}
   info.issues.forEach(item=>body.appendChild(row(`⚠ ${item.count} ${item.label}`)));
   info.warnings.forEach(item=>body.appendChild(row(`• ${item.count} ${item.label}`,true)));
-  if(info.issues.length&&info.warnings.length)body.insertBefore(row('Issues',true),body.firstChild);
   return true;
 }
 
