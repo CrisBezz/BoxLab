@@ -28,12 +28,13 @@ function makeMatcapTexture(){
 }
 
 const matcapMaterial=new THREE.MeshMatcapMaterial({color:0xffffff,matcap:makeMatcapTexture(),side:THREE.FrontSide});
-const xrayMaterial=new THREE.MeshStandardMaterial({color:0xaebfd2,roughness:.72,metalness:0,transparent:true,opacity:.22,depthWrite:false,side:THREE.DoubleSide});
+const xrayMaterial=new THREE.MeshStandardMaterial({color:0x9eb4cc,roughness:.78,metalness:0,transparent:true,opacity:.14,depthWrite:false,side:THREE.DoubleSide});
 const wireMaterial=new THREE.MeshBasicMaterial({color:0x20252d,wireframe:true,transparent:true,opacity:.72,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
-const xrayWireMaterial=new THREE.MeshBasicMaterial({color:0xdce7f3,wireframe:true,transparent:true,opacity:.55,depthTest:false,depthWrite:false});
+const xrayHiddenWireMaterial=new THREE.MeshBasicMaterial({color:0xaec3d9,wireframe:true,transparent:true,opacity:.22,depthTest:false,depthWrite:false});
+const xrayVisibleWireMaterial=new THREE.MeshBasicMaterial({color:0xf1f6fb,wireframe:true,transparent:true,opacity:.88,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
 
 function clearRenderChildren(body){[...body.children].forEach(child=>{if(child?.userData?.boxlabRenderOverlay){body.remove(child);child.material?.dispose?.();}});}
-function addWire(body,material){const overlay=new THREE.Mesh(body.geometry,material.clone());overlay.userData.boxlabRenderOverlay=true;overlay.renderOrder=12;body.add(overlay);}
+function addWire(body,material,order=12){const overlay=new THREE.Mesh(body.geometry,material.clone());overlay.userData.boxlabRenderOverlay=true;overlay.renderOrder=order;body.add(overlay);}
 function addBackface(body){const overlay=new THREE.Mesh(body.geometry,backfaceMaterial.clone());overlay.userData.boxlabRenderOverlay=true;overlay.userData.boxlabBackfaceCue=true;overlay.renderOrder=1;body.add(overlay);}
 function frontOnly(material){
   if(!material?.clone)return material;
@@ -92,7 +93,7 @@ function applyMode(body){
   if(mode==='studio'){body.material=inactive?studioInactiveMaterial:studioMaterial;addBackface(body);}
   else if(mode==='clay'){body.material=clayMaterial;addBackface(body);}
   else if(mode==='matcap'){body.material=matcapMaterial;addBackface(body);}
-  else if(mode==='xray'){body.material=xrayMaterial;addWire(body,xrayWireMaterial);}
+  else if(mode==='xray'){body.material=xrayMaterial;addWire(body,xrayHiddenWireMaterial,10);addWire(body,xrayVisibleWireMaterial,13);}
   else{body.material=frontOnly(original);addBackface(body);if(mode==='wire')addWire(body,wireMaterial);}
 }
 
