@@ -20,11 +20,11 @@ import './face-inspect-drawer.js?v=0.36.18.141';
 import './face-repair-drawer.js?v=0.36.18.145';
 import './diagnostic-drawer-state.js?v=0.36.18.176';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.177';
-import './beta-runtime-guard.js?v=0.36.18.177';
-import './loop-cut-feedback.js?v=0.36.18.177';
+import './release-version.js?v=0.36.18.178';
+import './beta-runtime-guard.js?v=0.36.18.178';
+import './loop-cut-feedback.js?v=0.36.18.178';
 
-// BoxLab v0.36.18.177 — back-face orientation cue release wiring.
+// BoxLab v0.36.18.178 — Viewport control interaction repair.
 // UI layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -85,4 +85,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.177',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.178',sync};
