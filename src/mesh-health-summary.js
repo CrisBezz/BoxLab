@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.172 — Mesh Health passive topology summary.
-// Reuses existing non-destructive diagnostic inspectors and adds a lightweight
-// topology snapshot without changing geometry, selection, tools or History.
+// BoxLab v0.36.18.173 — Mesh Health guided Inspect handoff.
+// Non-destructive: recognised findings can open the relevant Inspect drawer and
+// invoke the existing diagnostic selector. Geometry and History are untouched.
 
-const VERSION='0.36.18.172';
+const VERSION='0.36.18.173';
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 
 function state(){return globalThis.__boxlabBridgeState;}
@@ -13,23 +13,23 @@ function run(globalName,m){
   catch(error){console.warn(`[Mesh Health] ${globalName} inspect failed`,error);return null;}
 }
 
-function metric(id,label,kind,globalName,extract){return{id,label,kind,globalName,extract};}
+function metric(id,label,kind,mode,globalName,extract,actionable=true){return{id,label,kind,mode,globalName,extract,actionable};}
 
 const METRICS=[
-  metric('degenerateFaces','Degenerate faces','issue','__boxlabSelectDegenerateFaces',info=>info?.count),
-  metric('duplicateFaces','Duplicate faces','issue','__boxlabSelectDuplicateFaces',info=>info?.count),
-  metric('winding','Inconsistent winding','issue','__boxlabSelectInconsistentWinding',info=>info?.count),
-  metric('selfCrossing','Self-crossing faces','issue','__boxlabSelectSelfIntersectingFaces',info=>info?.count),
-  metric('faceIntersections','Face intersections','issue','__boxlabSelectIntersectingFaces',info=>info?.count),
-  metric('nonManifold','Non-manifold edges','issue','__boxlabSelectNonManifold',info=>info?.count??info?.total),
-  metric('looseVertices','Loose vertices','issue','__boxlabSelectLooseVertices',info=>info?.count??info?.total),
-  metric('looseEdges','Loose edges','issue','__boxlabSelectLooseEdges',info=>info?.count??info?.total),
-  metric('cleanableVerts','Cleanable verts','issue','__boxlabSelectCleanableVerts',info=>info?.count??info?.total),
-  metric('mergeableVerts','Mergeable verts','issue','__boxlabSelectMergeableVerts',info=>info?.count??info?.total),
-  metric('nonPlanar','Non-planar faces','warning','__boxlabSelectNonPlanar',info=>info?.count??info?.total),
-  metric('isolatedNonQuad','Isolated non-quads','warning','__boxlabSelectQuads',info=>info?.isolatedNonQuadTotal),
-  metric('clusteredNonQuad','Non-quad clusters','warning','__boxlabSelectQuads',info=>info?.clusteredNonQuadTotal),
-  metric('subdPoles','SubD poles','warning','__boxlabSelectVertexValence',info=>info?.subdPoleTotal??info?.polesTotal??info?.subdPoles?.length)
+  metric('degenerateFaces','Degenerate faces','issue','face','__boxlabSelectDegenerateFaces',info=>info?.count),
+  metric('duplicateFaces','Duplicate faces','issue','face','__boxlabSelectDuplicateFaces',info=>info?.count),
+  metric('winding','Inconsistent winding','issue','face','__boxlabSelectInconsistentWinding',info=>info?.count),
+  metric('selfCrossing','Self-crossing faces','issue','face','__boxlabSelectSelfIntersectingFaces',info=>info?.count),
+  metric('faceIntersections','Face intersections','issue','face','__boxlabSelectIntersectingFaces',info=>info?.count),
+  metric('nonManifold','Non-manifold edges','issue','edge','__boxlabSelectNonManifold',info=>info?.count??info?.total),
+  metric('looseVertices','Loose vertices','issue','vertex','__boxlabSelectLooseVertices',info=>info?.count??info?.total),
+  metric('looseEdges','Loose edges','issue','edge','__boxlabSelectLooseEdges',info=>info?.count??info?.total),
+  metric('cleanableVerts','Cleanable verts','issue','vertex','__boxlabSelectCleanableVerts',info=>info?.count??info?.total),
+  metric('mergeableVerts','Mergeable verts','issue','vertex','__boxlabSelectMergeableVerts',info=>info?.count??info?.total),
+  metric('nonPlanar','Non-planar faces','warning','face','__boxlabSelectNonPlanar',info=>info?.count??info?.total),
+  metric('isolatedNonQuad','Isolated non-quads','warning','face','__boxlabSelectQuads',info=>info?.isolatedNonQuadTotal,false),
+  metric('clusteredNonQuad','Non-quad clusters','warning','face','__boxlabSelectQuads',info=>info?.clusteredNonQuadTotal,false),
+  metric('subdPoles','SubD poles','warning','vertex','__boxlabSelectVertexValence',info=>info?.subdPoleTotal??info?.polesTotal??info?.subdPoles?.length,false)
 ];
 
 function topology(m){
@@ -61,12 +61,27 @@ function inspect(m=mesh()){
     if(!info)continue;
     const count=finiteCount(spec.extract(info));
     if(!count)continue;
-    const finding={id:spec.id,label:spec.label,count,kind:spec.kind,source:spec.globalName};
+    const finding={id:spec.id,label:spec.label,count,kind:spec.kind,mode:spec.mode,source:spec.globalName,actionable:spec.actionable};
     (spec.kind==='issue'?issues:warnings).push(finding);
   }
   const issueCount=issues.reduce((sum,item)=>sum+item.count,0);
   const warningCount=warnings.reduce((sum,item)=>sum+item.count,0);
   return{version:VERSION,available:true,topology:topology(m),issues,warnings,issueCount,warningCount,totalFindings:issueCount+warningCount};
+}
+
+function inspectDrawer(mode){return document.querySelector(mode==='face'?'#faceInspectDrawer':`#${mode}InspectDrawer`);}
+function inspectFinding(id){
+  const spec=METRICS.find(item=>item.id===id);
+  if(!spec?.actionable)return false;
+  const api=globalThis[spec.globalName];
+  if(typeof api?.apply!=='function')return false;
+  const modeButton=document.querySelector(`#selectionModes button[data-mode="${spec.mode}"]`);
+  if(modeButton&&!modeButton.classList.contains('active'))modeButton.click();
+  setTimeout(()=>{
+    const drawer=inspectDrawer(spec.mode);if(drawer)drawer.open=true;
+    try{api.apply();}catch(error){console.warn(`[Mesh Health] ${spec.id} Inspect handoff failed`,error);}
+  },0);
+  return true;
 }
 
 function ensureUI(){
@@ -95,10 +110,17 @@ function ensureUI(){
 }
 
 function row(text,muted=false){
-  const div=document.createElement('div');
-  div.textContent=text;
-  if(muted)div.style.opacity='.62';
-  return div;
+  const div=document.createElement('div');div.textContent=text;if(muted)div.style.opacity='.62';return div;
+}
+function findingRow(item,muted=false){
+  if(!item?.actionable)return row(`${item?.kind==='issue'?'⚠':'•'} ${item?.count||0} ${item?.label||''}`,muted);
+  const button=document.createElement('button');
+  button.type='button';button.textContent=`${item.kind==='issue'?'⚠':'•'} ${item.count} ${item.label} ›`;
+  button.title=`Select ${item.label.toLowerCase()} in Inspect`;
+  button.style.cssText='display:block;width:100%;border:0;background:transparent;color:inherit;font:inherit;text-align:left;padding:1px 0;cursor:pointer';
+  if(muted)button.style.opacity='.72';
+  button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();inspectFinding(item.id);});
+  return button;
 }
 
 function appendTopology(body,info){
@@ -121,8 +143,8 @@ function renderSummary(info){
   else label.textContent='MESH HEALTH • CLEAN';
   appendTopology(body,info);
   if(!info.totalFindings){body.appendChild(row('✓ No recognised mesh-health issues',true));return true;}
-  info.issues.forEach(item=>body.appendChild(row(`⚠ ${item.count} ${item.label}`)));
-  info.warnings.forEach(item=>body.appendChild(row(`• ${item.count} ${item.label}`,true)));
+  info.issues.forEach(item=>body.appendChild(findingRow(item)));
+  info.warnings.forEach(item=>body.appendChild(findingRow(item,true)));
   return true;
 }
 
@@ -137,4 +159,4 @@ window.addEventListener('boxlab-bridge-state',()=>{const details=document.queryS
 document.addEventListener('pointerup',()=>{const details=document.querySelector('#meshHealthSummary');if(details?.open)setTimeout(()=>sync(true),0);},true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{const details=document.querySelector('#meshHealthSummary');if(details?.open)queueMicrotask(()=>sync(true));}));
 
-globalThis.__boxlabMeshHealth={version:VERSION,inspect,sync,metrics:METRICS.map(({id,label,kind,globalName})=>({id,label,kind,globalName}))};
+globalThis.__boxlabMeshHealth={version:VERSION,inspect,sync,inspectFinding,metrics:METRICS.map(({id,label,kind,mode,globalName,actionable})=>({id,label,kind,mode,globalName,actionable}))};
