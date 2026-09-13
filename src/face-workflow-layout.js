@@ -22,18 +22,18 @@ import './diagnostic-drawer-state.js?v=0.36.18.176';
 import './clean-view.js?v=0.36.18.179';
 import './cavity-view.js?v=0.36.18.186';
 import './silhouette-view.js?v=0.36.18.186';
-import './studio-polish.js?v=0.36.18.192';
+import './studio-polish.js?v=0.36.18.197';
 import './ground-polish.js?v=0.36.18.188';
 import './studio-atmosphere.js?v=0.36.18.189';
 import './backdrop-presets.js?v=0.36.18.190';
 import './studio-light-angle.js?v=0.36.18.196';
 import './cage-intensity.js?v=0.36.18.191';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.196';
+import './release-version.js?v=0.36.18.197';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 
-// BoxLab v0.36.18.196 — Studio key-light intensity control release hop.
+// BoxLab v0.36.18.197 — preserve Studio light controls during orbit refresh.
 // Visual-only display work; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -55,4 +55,4 @@ function sync(){
   return !!(coplanar||islands);
 }
 [0,120,500,1000].forEach(delay=>setTimeout(sync,delay));window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.196',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.197',sync};
