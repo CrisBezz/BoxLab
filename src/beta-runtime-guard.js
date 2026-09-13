@@ -1,7 +1,7 @@
-// BoxLab v0.36.18.178 — passive runtime guard.
+// BoxLab v0.36.18.179 — passive runtime guard.
 // Diagnostic only: never changes geometry, selection, tool state, or UI.
 
-const VERSION='0.36.18.178';
+const VERSION='0.36.18.179';
 
 function protectedTransformLoaderOk(){
   return [...document.scripts].some(script=>{
