@@ -50,7 +50,7 @@ syncDrawerToMode();
 
 import('./object-management.js?v=0.36.9.0').catch(error => console.warn('BoxLab object management failed to load', error));
 import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxLab object drawer retain failed to load', error));
-import('./studio-scene-fix.js?v=0.36.8.1').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
+import('./studio-scene-fix.js?v=0.36.18.197').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
 import('./lasso-select.js?v=0.36.18.152').catch(error => console.warn('BoxLab Lasso Select failed to load', error));
 import('./cross-object-snap.js?v=0.36.18.6').catch(error => console.warn('BoxLab cross-object snap failed to load', error));
 import('./object-mode-retain.js?v=0.36.18.4').catch(error => console.warn('BoxLab object mode retain failed to load', error));
@@ -96,7 +96,7 @@ import('./select-coplanar-region.js?v=0.36.18.69').catch(error => console.warn('
 import('./join-selected-coplanar-faces.js?v=0.36.18.75').catch(error => console.warn('BoxLab Join Selected Coplanar Faces failed to load', error));
 import('./select-face-islands.js?v=0.36.18.72').catch(error => console.warn('BoxLab Select Face Islands failed to load', error));
 import('./select-connected-shell.js?v=0.36.18.73').catch(error => console.warn('BoxLab Select Connected Shell failed to load', error));
-import('./face-workflow-layout.js?v=0.36.18.196').catch(error => console.warn('BoxLab Face workflow layout failed to load', error));
+import('./face-workflow-layout.js?v=0.36.18.197').catch(error => console.warn('BoxLab Face workflow layout failed to load', error));
 import('./component-inspect-repair-drawers.js?v=0.36.18.175').catch(error => console.warn('BoxLab component Inspect/Repair drawers failed to load', error));
 import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
