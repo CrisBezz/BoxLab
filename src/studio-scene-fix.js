@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+// BoxLab v0.36.18.197 — preserve user Studio light position during scene refresh.
 let queued=false;
 
 function state(){return globalThis.__boxlabBridgeState||null;}
@@ -46,7 +47,6 @@ function updateStudioScene(){
   const radius=Math.max(span,height)*.5;
   const floorSize=Math.max(span*2.8,24);
 
-  // The legacy Studio floor is 48 x 48. Newer Studio uses a 1 x 1 floor.
   const floorWidth=floor.geometry?.parameters?.width||48;
   const scale=floorSize/floorWidth;
   floor.position.set(center.x,bounds.min.y-.025,center.z);
@@ -62,11 +62,20 @@ function updateStudioScene(){
   target.position.copy(center);
 
   const lightDistance=Math.max(radius*3.5,12);
+  const controls=globalThis.__boxlabStudioLightAngle;
+  const lightAngle=controls?.radians||0;
+  const elevation=controls?.elevationRadians??(52*Math.PI/180);
+  const horizontal=Math.cos(elevation),vertical=Math.sin(elevation);
+  const baseLength=Math.hypot(.55,.45),baseX=.55/baseLength,baseZ=.45/baseLength;
+  const cos=Math.cos(lightAngle),sin=Math.sin(lightAngle);
+  const lightX=(baseX*cos-baseZ*sin)*horizontal;
+  const lightZ=(baseX*sin+baseZ*cos)*horizontal;
   key.position.set(
-    center.x+lightDistance*.55,
-    center.y+lightDistance*.8,
-    center.z+lightDistance*.45
+    center.x+lightDistance*lightX,
+    center.y+lightDistance*vertical,
+    center.z+lightDistance*lightZ
   );
+  key.intensity=2.35*(controls?.intensityScale??1);
   key.shadow.normalBias=.075;
   key.shadow.bias=-.00015;
   key.shadow.mapSize.set(1024,1024);
@@ -93,7 +102,6 @@ function scheduleStudioUpdate(){
   requestAnimationFrame(updateStudioScene);
 }
 
-// Object mesh rebuilds are driven through cageToggle throughout BoxLab.
 document.querySelector('#cageToggle')?.addEventListener('change',scheduleStudioUpdate);
 document.addEventListener('boxlab-render-mode-change',scheduleStudioUpdate);
 window.addEventListener('boxlab-object-manager-ready',scheduleStudioUpdate);
@@ -103,3 +111,5 @@ const outliner=document.querySelector('#outlinerList');
 if(outliner)new MutationObserver(scheduleStudioUpdate).observe(outliner,{childList:true});
 
 queueMicrotask(scheduleStudioUpdate);
+
+globalThis.__boxlabStudioSceneFix={version:'0.36.18.197',updateStudioScene,scheduleStudioUpdate};
