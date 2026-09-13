@@ -83,9 +83,11 @@ function refreshStudio(){
     studioKeyTarget.position.copy(center);
     const lightDistance=Math.max(radius*3.5,12);
     const lightAngle=globalThis.__boxlabStudioLightAngle?.radians||0;
-    const baseX=.55,baseZ=.45,cos=Math.cos(lightAngle),sin=Math.sin(lightAngle);
-    const lightX=baseX*cos-baseZ*sin,lightZ=baseX*sin+baseZ*cos;
-    studioKey.position.set(center.x+lightDistance*lightX,center.y+lightDistance*.8,center.z+lightDistance*lightZ);
+    const elevation=globalThis.__boxlabStudioLightAngle?.elevationRadians??(52*Math.PI/180);
+    const horizontal=Math.cos(elevation),vertical=Math.sin(elevation);
+    const baseLength=Math.hypot(.55,.45),baseX=.55/baseLength,baseZ=.45/baseLength,cos=Math.cos(lightAngle),sin=Math.sin(lightAngle);
+    const lightX=(baseX*cos-baseZ*sin)*horizontal,lightZ=(baseX*sin+baseZ*cos)*horizontal;
+    studioKey.position.set(center.x+lightDistance*lightX,center.y+lightDistance*vertical,center.z+lightDistance*lightZ);
     const shadowHalf=Math.max(radius*1.45,6),camera=studioKey.shadow.camera;
     camera.left=-shadowHalf;camera.right=shadowHalf;camera.top=shadowHalf;camera.bottom=-shadowHalf;camera.near=.1;camera.far=Math.max(lightDistance*3,40);camera.updateProjectionMatrix();studioKey.shadow.needsUpdate=true;
   });
