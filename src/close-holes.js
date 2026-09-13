@@ -70,8 +70,7 @@ function orientAgainstNeighbour(m,cycle){
   }
   return [...cycle];
 }
-function snapshot(m){return{vertices:m.vertices.map(v=>v.clone?v.clone():{...v}),faces:m.faces.map(f=>[...f]),creases:new Map(m.creases?[...m.creases]:[])};}
-function restore(m,before){m.vertices=before.vertices.map(v=>v.clone?v.clone():{...v});m.faces=before.faces.map(f=>[...f]);m.creases=new Map(before.creases);}
+function restore(m,before){m.vertices=before.vertices.map(v=>v.clone?v.clone():{...v});m.faces=before.faces.map(f=>[...f]);m.creases=new Map(before.creases?[...before.creases]:[]);}
 function forceRender(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 
 function closeHoles(m=mesh()){
@@ -79,7 +78,7 @@ function closeHoles(m=mesh()){
   const boundary=extractBoundaryLoops(m);
   if(!boundary.loops.length)return{ok:false,reason:boundary.boundaryEdges?'No simple closed boundary loops':'Mesh has no holes',...boundary};
   const gate=globalThis.__boxlabTopologyGate;
-  const before=snapshot(m),beforeGate=gate?.validate?.(m)||null;
+  const before=m.clone(),beforeGate=gate?.validate?.(m)||null;
   const added=[];
   for(const loop of boundary.loops){
     if(loop.vertices.length<3)continue;
@@ -87,9 +86,10 @@ function closeHoles(m=mesh()){
     m.faces.push(cycle);added.push({faceIndex:m.faces.length-1,size:cycle.length,kind:cycle.length===4?'quad':cycle.length===3?'triangle':'ngon'});
   }
   const after=gate?.validate?.(m)||null;
-  const invalid=after&&(!after.valid||after.boundaryEdges>Math.max(0,(beforeGate?.boundaryEdges??boundary.boundaryEdges)-boundary.loops.reduce((sum,loop)=>sum+loop.edges.length,0)));
+  const expectedBoundary=Math.max(0,(beforeGate?.boundaryEdges??boundary.boundaryEdges)-boundary.loops.reduce((sum,loop)=>sum+loop.edges.length,0));
+  const invalid=after&&(!after.valid||after.boundaryEdges>expectedBoundary);
   if(invalid){restore(m,before);forceRender();gate?.sync?.();return{ok:false,reason:'Validation failed — repair rolled back',boundary,before:beforeGate,after};}
-  globalThis.__boxlabHistory?.push?.({clone:()=>({vertices:before.vertices.map(v=>v.clone?v.clone():{...v}),faces:before.faces.map(f=>[...f]),creases:new Map(before.creases)})});
+  globalThis.__boxlabHistory?.push?.(before);
   forceRender();gate?.sync?.();
   return{ok:true,closed:added.length,added,boundary,before:beforeGate,after};
 }
