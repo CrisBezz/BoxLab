@@ -88,6 +88,7 @@ function refreshStudio(){
     const baseLength=Math.hypot(.55,.45),baseX=.55/baseLength,baseZ=.45/baseLength,cos=Math.cos(lightAngle),sin=Math.sin(lightAngle);
     const lightX=(baseX*cos-baseZ*sin)*horizontal,lightZ=(baseX*sin+baseZ*cos)*horizontal;
     studioKey.position.set(center.x+lightDistance*lightX,center.y+lightDistance*vertical,center.z+lightDistance*lightZ);
+    studioKey.intensity=2.15*(globalThis.__boxlabStudioLightAngle?.intensityScale??1);
     const shadowHalf=Math.max(radius*1.45,6),camera=studioKey.shadow.camera;
     camera.left=-shadowHalf;camera.right=shadowHalf;camera.top=shadowHalf;camera.bottom=-shadowHalf;camera.near=.1;camera.far=Math.max(lightDistance*3,40);camera.updateProjectionMatrix();studioKey.shadow.needsUpdate=true;
   });
