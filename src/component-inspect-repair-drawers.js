@@ -1,9 +1,8 @@
-// BoxLab v0.36.18.172 — Vertex/Edge Mesh Health + Inspect + Repair containment.
+// BoxLab v0.36.18.173 — Vertex/Edge Mesh Health + Inspect + Repair containment.
 // UI-only: normal modelling/topology tools stay first, followed by Mesh Health,
-// Inspect and Repair. Existing handlers, topology logic, selection and History
-// are untouched.
+// Inspect and Repair. Mesh Health findings can hand off to existing Inspect selectors.
 
-const VERSION='0.36.18.172';
+const VERSION='0.36.18.173';
 
 function modeTools(mode){return document.querySelector(`[data-mode-tools="${mode}"]`);}
 
@@ -30,6 +29,17 @@ function ensureHealth(mode){
 function healthRow(text,muted=false){
   const div=document.createElement('div');div.textContent=text;if(muted)div.style.opacity='.62';return div;
 }
+function healthFindingRow(item,muted=false){
+  const inspectFinding=globalThis.__boxlabMeshHealth?.inspectFinding;
+  if(!item?.actionable||typeof inspectFinding!=='function')return healthRow(`${item?.kind==='issue'?'⚠':'•'} ${item?.count||0} ${item?.label||''}`,muted);
+  const button=document.createElement('button');
+  button.type='button';button.textContent=`${item.kind==='issue'?'⚠':'•'} ${item.count} ${item.label} ›`;
+  button.title=`Select ${item.label.toLowerCase()} in Inspect`;
+  button.style.cssText='display:block;width:100%;border:0;background:transparent;color:inherit;font:inherit;text-align:left;padding:1px 0;cursor:pointer';
+  if(muted)button.style.opacity='.72';
+  button.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();inspectFinding(item.id);});
+  return button;
+}
 
 function appendTopology(body,info){
   const t=info?.topology;if(!t)return;
@@ -51,8 +61,8 @@ function renderHealth(mode,info){
   else label.textContent='MESH HEALTH • CLEAN';
   appendTopology(body,info);
   if(!info.totalFindings){body.appendChild(healthRow('✓ No recognised mesh-health issues',true));return true;}
-  info.issues?.forEach(item=>body.appendChild(healthRow(`⚠ ${item.count} ${item.label}`)));
-  info.warnings?.forEach(item=>body.appendChild(healthRow(`• ${item.count} ${item.label}`,true)));
+  info.issues?.forEach(item=>body.appendChild(healthFindingRow(item)));
+  info.warnings?.forEach(item=>body.appendChild(healthFindingRow(item,true)));
   return true;
 }
 
