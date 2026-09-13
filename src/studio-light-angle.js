@@ -1,14 +1,18 @@
-// BoxLab v0.36.18.195 — Studio light angle + elevation controls.
-// Visual only: positions the existing Studio key light around the model.
-const VERSION='0.36.18.195';
+// BoxLab v0.36.18.196 — Studio light angle + elevation + intensity controls.
+// Visual only: positions and scales the existing Studio key light.
+const VERSION='0.36.18.196';
 const ANGLE_KEY='boxlab-studio-light-angle';
 const ELEVATION_KEY='boxlab-studio-light-elevation';
+const INTENSITY_KEY='boxlab-studio-light-intensity';
 let angle=Number(localStorage.getItem(ANGLE_KEY));
 if(!Number.isFinite(angle))angle=0;
 angle=Math.max(-180,Math.min(180,angle));
 let elevation=Number(localStorage.getItem(ELEVATION_KEY));
 if(!Number.isFinite(elevation))elevation=52;
 elevation=Math.max(15,Math.min(80,elevation));
+let intensity=Number(localStorage.getItem(INTENSITY_KEY));
+if(!Number.isFinite(intensity))intensity=100;
+intensity=Math.max(25,Math.min(200,intensity));
 
 function refresh(){globalThis.__boxlabRenderModes?.refreshStudio?.();}
 function syncUI(){
@@ -16,10 +20,14 @@ function syncUI(){
   const angleOutput=document.querySelector('#studioLightAngleOut');
   const elevationSlider=document.querySelector('#studioLightElevation');
   const elevationOutput=document.querySelector('#studioLightElevationOut');
+  const intensitySlider=document.querySelector('#studioLightIntensity');
+  const intensityOutput=document.querySelector('#studioLightIntensityOut');
   if(angleSlider&&Number(angleSlider.value)!==angle)angleSlider.value=String(angle);
   if(angleOutput)angleOutput.textContent=`${Math.round(angle)}°`;
   if(elevationSlider&&Number(elevationSlider.value)!==elevation)elevationSlider.value=String(elevation);
   if(elevationOutput)elevationOutput.textContent=`${Math.round(elevation)}°`;
+  if(intensitySlider&&Number(intensitySlider.value)!==intensity)intensitySlider.value=String(intensity);
+  if(intensityOutput)intensityOutput.textContent=`${Math.round(intensity)}%`;
 }
 function setAngle(next,{silent=false}={}){
   angle=Math.max(-180,Math.min(180,Number(next)||0));
@@ -42,10 +50,21 @@ function setElevation(next,{silent=false}={}){
     if(status)status.textContent=`Studio Light Elevation • ${Math.round(elevation)}°`;
   }
 }
+function setIntensity(next,{silent=false}={}){
+  const parsed=Number(next);
+  intensity=Math.max(25,Math.min(200,Number.isFinite(parsed)?parsed:100));
+  localStorage.setItem(INTENSITY_KEY,String(intensity));
+  syncUI();refresh();
+  if(!silent){
+    document.dispatchEvent(new CustomEvent('boxlab-studio-light-intensity-change',{detail:{intensity}}));
+    const status=document.querySelector('#selectionStatus');
+    if(status)status.textContent=`Studio Key Light • ${Math.round(intensity)}%`;
+  }
+}
 function ensureUI(){
   const section=document.querySelector('#viewportDisplaySection');
   if(!section)return false;
-  if(document.querySelector('#studioLightAngle')&&document.querySelector('#studioLightElevation')){syncUI();return true;}
+  if(document.querySelector('#studioLightAngle')&&document.querySelector('#studioLightElevation')&&document.querySelector('#studioLightIntensity')){syncUI();return true;}
   let label=document.querySelector('#studioLightLabel');
   if(!label){
     label=document.createElement('div');label.id='studioLightLabel';label.className='viewport-menu-label';label.textContent='Studio Light';label.style.marginTop='9px';section.append(label);
@@ -68,6 +87,15 @@ function ensureUI(){
     slider.addEventListener('input',()=>setElevation(slider.value));
     slider.addEventListener('change',()=>setElevation(slider.value));
   }
+  let intensityRow=document.querySelector('#studioLightIntensityRow');
+  if(!intensityRow){
+    intensityRow=document.createElement('label');intensityRow.className='range-row';intensityRow.id='studioLightIntensityRow';
+    intensityRow.innerHTML='<span>Intensity</span><input id="studioLightIntensity" type="range" min="25" max="200" value="100" step="5"/><output id="studioLightIntensityOut">100%</output>';
+    section.append(intensityRow);
+    const slider=intensityRow.querySelector('#studioLightIntensity');
+    slider.addEventListener('input',()=>setIntensity(slider.value));
+    slider.addEventListener('change',()=>setIntensity(slider.value));
+  }
   syncUI();refresh();return true;
 }
 
@@ -84,5 +112,7 @@ globalThis.__boxlabStudioLightAngle={
   get radians(){return angle*Math.PI/180;},
   get elevation(){return elevation;},
   get elevationRadians(){return elevation*Math.PI/180;},
-  setAngle,setElevation,refresh
+  get intensity(){return intensity;},
+  get intensityScale(){return intensity/100;},
+  setAngle,setElevation,setIntensity,refresh
 };
