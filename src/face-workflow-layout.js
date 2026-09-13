@@ -22,26 +22,24 @@ import './diagnostic-drawer-state.js?v=0.36.18.176';
 import './clean-view.js?v=0.36.18.179';
 import './cavity-view.js?v=0.36.18.186';
 import './silhouette-view.js?v=0.36.18.186';
-import './studio-polish.js?v=0.36.18.197';
+import './studio-polish.js?v=0.36.18.198';
 import './ground-polish.js?v=0.36.18.188';
 import './studio-atmosphere.js?v=0.36.18.189';
 import './backdrop-presets.js?v=0.36.18.190';
-import './studio-light-angle.js?v=0.36.18.196';
+import './studio-light-angle.js?v=0.36.18.198';
 import './cage-intensity.js?v=0.36.18.191';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.197';
+import './release-version.js?v=0.36.18.198';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 
-// BoxLab v0.36.18.197 — preserve Studio light controls during orbit refresh.
+// BoxLab v0.36.18.198 — Studio fill-light intensity control.
 // Visual-only display work; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
-
 function ensureGroup(){
   if(!faceTools)return null;
-  let group=document.querySelector('#faceSelectionHelpersGroup');
-  if(group)return group;
+  let group=document.querySelector('#faceSelectionHelpersGroup');if(group)return group;
   group=document.createElement('div');group.id='faceSelectionHelpersGroup';group.style.cssText='margin:6px 0 4px';
   const label=document.createElement('div');label.textContent='SELECTION HELPERS';label.style.cssText='font-size:9px;line-height:1.1;letter-spacing:.35px;opacity:.55;margin:0 0 4px 1px';group.appendChild(label);
   const readout=document.querySelector('#precisionFaceReadout');const repeat=document.querySelector('#repeatFacePreviousRow');
@@ -55,4 +53,4 @@ function sync(){
   return !!(coplanar||islands);
 }
 [0,120,500,1000].forEach(delay=>setTimeout(sync,delay));window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.197',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.198',sync};
