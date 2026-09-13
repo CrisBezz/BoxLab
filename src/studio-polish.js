@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.198 — preserve user Studio key/fill controls during polish refresh.
+// BoxLab v0.36.18.199 — preserve user Studio key/fill/rim controls during polish refresh.
 // Visual only: improves background, lighting and contact grounding without
 // changing geometry, selection, tools or History.
-const VERSION='0.36.18.198';
+const VERSION='0.36.18.199';
 let contact=null;
 let queued=false;
 
@@ -37,9 +37,10 @@ function apply(){
   const controller=globalThis.__boxlabStudioLightAngle;
   const keyScale=controller?.intensityScale??1;
   const fillScale=controller?.fillIntensityScale??1;
+  const rimScale=controller?.rimIntensityScale??1;
   if(key){key.intensity=2.35*keyScale;key.color.set(0xfff1df);}
   if(fill){fill.intensity=.82*fillScale;fill.color.set(0xa9caff);}
-  if(rim){rim.intensity=.58;rim.color.set(0xe3ecff);}
+  if(rim){rim.intensity=.58*rimScale;rim.color.set(0xe3ecff);}
   const bounds=new THREE.Box3();let found=false;
   scene.traverse(object=>{const kind=object?.userData?.kind;if(!object?.isMesh||!object.visible||(kind!=='body'&&kind!=='boxlab-inactive-body'))return;bounds.expandByObject(object);found=true;});
   if(!found||bounds.isEmpty())return true;
