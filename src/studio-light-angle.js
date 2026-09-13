@@ -18,7 +18,7 @@ let fillIntensity=Number(localStorage.getItem(FILL_INTENSITY_KEY));
 if(!Number.isFinite(fillIntensity))fillIntensity=100;
 fillIntensity=Math.max(25,Math.min(200,fillIntensity));
 
-function refresh(){globalThis.__boxlabRenderModes?.refreshStudio?.();}
+function refresh(){globalThis.__boxlabRenderModes?.refreshStudio?.();globalThis.__boxlabStudioPolish?.schedule?.();}
 function syncUI(){
   const angleSlider=document.querySelector('#studioLightAngle');
   const angleOutput=document.querySelector('#studioLightAngleOut');
@@ -41,110 +41,30 @@ function setAngle(next,{silent=false}={}){
   angle=Math.max(-180,Math.min(180,Number(next)||0));
   localStorage.setItem(ANGLE_KEY,String(angle));
   syncUI();refresh();
-  if(!silent){
-    document.dispatchEvent(new CustomEvent('boxlab-studio-light-angle-change',{detail:{angle}}));
-    const status=document.querySelector('#selectionStatus');
-    if(status)status.textContent=`Studio Light Angle • ${Math.round(angle)}°`;
-  }
+  if(!silent){document.dispatchEvent(new CustomEvent('boxlab-studio-light-angle-change',{detail:{angle}}));const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Studio Light Angle • ${Math.round(angle)}°`;}
 }
 function setElevation(next,{silent=false}={}){
-  const parsed=Number(next);
-  elevation=Math.max(15,Math.min(80,Number.isFinite(parsed)?parsed:52));
-  localStorage.setItem(ELEVATION_KEY,String(elevation));
-  syncUI();refresh();
-  if(!silent){
-    document.dispatchEvent(new CustomEvent('boxlab-studio-light-elevation-change',{detail:{elevation}}));
-    const status=document.querySelector('#selectionStatus');
-    if(status)status.textContent=`Studio Light Elevation • ${Math.round(elevation)}°`;
-  }
+  const parsed=Number(next);elevation=Math.max(15,Math.min(80,Number.isFinite(parsed)?parsed:52));localStorage.setItem(ELEVATION_KEY,String(elevation));syncUI();refresh();
+  if(!silent){document.dispatchEvent(new CustomEvent('boxlab-studio-light-elevation-change',{detail:{elevation}}));const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Studio Light Elevation • ${Math.round(elevation)}°`;}
 }
 function setIntensity(next,{silent=false}={}){
-  const parsed=Number(next);
-  intensity=Math.max(25,Math.min(200,Number.isFinite(parsed)?parsed:100));
-  localStorage.setItem(INTENSITY_KEY,String(intensity));
-  syncUI();refresh();
-  if(!silent){
-    document.dispatchEvent(new CustomEvent('boxlab-studio-light-intensity-change',{detail:{intensity}}));
-    const status=document.querySelector('#selectionStatus');
-    if(status)status.textContent=`Studio Key Light • ${Math.round(intensity)}%`;
-  }
+  const parsed=Number(next);intensity=Math.max(25,Math.min(200,Number.isFinite(parsed)?parsed:100));localStorage.setItem(INTENSITY_KEY,String(intensity));syncUI();refresh();
+  if(!silent){document.dispatchEvent(new CustomEvent('boxlab-studio-light-intensity-change',{detail:{intensity}}));const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Studio Key Light • ${Math.round(intensity)}%`;}
 }
 function setFillIntensity(next,{silent=false}={}){
-  const parsed=Number(next);
-  fillIntensity=Math.max(25,Math.min(200,Number.isFinite(parsed)?parsed:100));
-  localStorage.setItem(FILL_INTENSITY_KEY,String(fillIntensity));
-  syncUI();refresh();
-  if(!silent){
-    document.dispatchEvent(new CustomEvent('boxlab-studio-fill-light-intensity-change',{detail:{fillIntensity}}));
-    const status=document.querySelector('#selectionStatus');
-    if(status)status.textContent=`Studio Fill Light • ${Math.round(fillIntensity)}%`;
-  }
+  const parsed=Number(next);fillIntensity=Math.max(25,Math.min(200,Number.isFinite(parsed)?parsed:100));localStorage.setItem(FILL_INTENSITY_KEY,String(fillIntensity));syncUI();refresh();
+  if(!silent){document.dispatchEvent(new CustomEvent('boxlab-studio-fill-light-intensity-change',{detail:{fillIntensity}}));const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Studio Fill Light • ${Math.round(fillIntensity)}%`;}
 }
 function ensureUI(){
-  const section=document.querySelector('#viewportDisplaySection');
-  if(!section)return false;
+  const section=document.querySelector('#viewportDisplaySection');if(!section)return false;
   if(document.querySelector('#studioLightAngle')&&document.querySelector('#studioLightElevation')&&document.querySelector('#studioLightIntensity')&&document.querySelector('#studioFillLightIntensity')){syncUI();return true;}
-  let label=document.querySelector('#studioLightLabel');
-  if(!label){
-    label=document.createElement('div');label.id='studioLightLabel';label.className='viewport-menu-label';label.textContent='Studio Light';label.style.marginTop='9px';section.append(label);
-  }
-  let angleRow=document.querySelector('#studioLightAngleRow');
-  if(!angleRow){
-    angleRow=document.createElement('label');angleRow.className='range-row';angleRow.id='studioLightAngleRow';
-    angleRow.innerHTML='<span>Angle</span><input id="studioLightAngle" type="range" min="-180" max="180" value="0" step="5"/><output id="studioLightAngleOut">0°</output>';
-    section.append(angleRow);
-    const slider=angleRow.querySelector('#studioLightAngle');
-    slider.addEventListener('input',()=>setAngle(slider.value));
-    slider.addEventListener('change',()=>setAngle(slider.value));
-  }
-  let elevationRow=document.querySelector('#studioLightElevationRow');
-  if(!elevationRow){
-    elevationRow=document.createElement('label');elevationRow.className='range-row';elevationRow.id='studioLightElevationRow';
-    elevationRow.innerHTML='<span>Elevation</span><input id="studioLightElevation" type="range" min="15" max="80" value="52" step="1"/><output id="studioLightElevationOut">52°</output>';
-    section.append(elevationRow);
-    const slider=elevationRow.querySelector('#studioLightElevation');
-    slider.addEventListener('input',()=>setElevation(slider.value));
-    slider.addEventListener('change',()=>setElevation(slider.value));
-  }
-  let intensityRow=document.querySelector('#studioLightIntensityRow');
-  if(!intensityRow){
-    intensityRow=document.createElement('label');intensityRow.className='range-row';intensityRow.id='studioLightIntensityRow';
-    intensityRow.innerHTML='<span>Key</span><input id="studioLightIntensity" type="range" min="25" max="200" value="100" step="5"/><output id="studioLightIntensityOut">100%</output>';
-    section.append(intensityRow);
-    const slider=intensityRow.querySelector('#studioLightIntensity');
-    slider.addEventListener('input',()=>setIntensity(slider.value));
-    slider.addEventListener('change',()=>setIntensity(slider.value));
-  }else{
-    const rowLabel=intensityRow.querySelector('span');if(rowLabel)rowLabel.textContent='Key';
-  }
-  let fillRow=document.querySelector('#studioFillLightIntensityRow');
-  if(!fillRow){
-    fillRow=document.createElement('label');fillRow.className='range-row';fillRow.id='studioFillLightIntensityRow';
-    fillRow.innerHTML='<span>Fill</span><input id="studioFillLightIntensity" type="range" min="25" max="200" value="100" step="5"/><output id="studioFillLightIntensityOut">100%</output>';
-    section.append(fillRow);
-    const slider=fillRow.querySelector('#studioFillLightIntensity');
-    slider.addEventListener('input',()=>setFillIntensity(slider.value));
-    slider.addEventListener('change',()=>setFillIntensity(slider.value));
-  }
+  let label=document.querySelector('#studioLightLabel');if(!label){label=document.createElement('div');label.id='studioLightLabel';label.className='viewport-menu-label';label.textContent='Studio Light';label.style.marginTop='9px';section.append(label);}
+  let angleRow=document.querySelector('#studioLightAngleRow');if(!angleRow){angleRow=document.createElement('label');angleRow.className='range-row';angleRow.id='studioLightAngleRow';angleRow.innerHTML='<span>Angle</span><input id="studioLightAngle" type="range" min="-180" max="180" value="0" step="5"/><output id="studioLightAngleOut">0°</output>';section.append(angleRow);const slider=angleRow.querySelector('#studioLightAngle');slider.addEventListener('input',()=>setAngle(slider.value));slider.addEventListener('change',()=>setAngle(slider.value));}
+  let elevationRow=document.querySelector('#studioLightElevationRow');if(!elevationRow){elevationRow=document.createElement('label');elevationRow.className='range-row';elevationRow.id='studioLightElevationRow';elevationRow.innerHTML='<span>Elevation</span><input id="studioLightElevation" type="range" min="15" max="80" value="52" step="1"/><output id="studioLightElevationOut">52°</output>';section.append(elevationRow);const slider=elevationRow.querySelector('#studioLightElevation');slider.addEventListener('input',()=>setElevation(slider.value));slider.addEventListener('change',()=>setElevation(slider.value));}
+  let intensityRow=document.querySelector('#studioLightIntensityRow');if(!intensityRow){intensityRow=document.createElement('label');intensityRow.className='range-row';intensityRow.id='studioLightIntensityRow';intensityRow.innerHTML='<span>Key</span><input id="studioLightIntensity" type="range" min="25" max="200" value="100" step="5"/><output id="studioLightIntensityOut">100%</output>';section.append(intensityRow);const slider=intensityRow.querySelector('#studioLightIntensity');slider.addEventListener('input',()=>setIntensity(slider.value));slider.addEventListener('change',()=>setIntensity(slider.value));}else{const rowLabel=intensityRow.querySelector('span');if(rowLabel)rowLabel.textContent='Key';}
+  let fillRow=document.querySelector('#studioFillLightIntensityRow');if(!fillRow){fillRow=document.createElement('label');fillRow.className='range-row';fillRow.id='studioFillLightIntensityRow';fillRow.innerHTML='<span>Fill</span><input id="studioFillLightIntensity" type="range" min="25" max="200" value="100" step="5"/><output id="studioFillLightIntensityOut">100%</output>';section.append(fillRow);const slider=fillRow.querySelector('#studioFillLightIntensity');slider.addEventListener('input',()=>setFillIntensity(slider.value));slider.addEventListener('change',()=>setFillIntensity(slider.value));}
   syncUI();refresh();return true;
 }
-
-if(!ensureUI()){
-  let attempts=0;
-  const timer=setInterval(()=>{attempts++;if(ensureUI()||attempts>=50)clearInterval(timer);},100);
-}
-window.addEventListener('boxlab-bridge-state',refresh);
-document.addEventListener('boxlab-render-mode-change',refresh);
-
-globalThis.__boxlabStudioLightAngle={
-  version:VERSION,
-  get angle(){return angle;},
-  get radians(){return angle*Math.PI/180;},
-  get elevation(){return elevation;},
-  get elevationRadians(){return elevation*Math.PI/180;},
-  get intensity(){return intensity;},
-  get intensityScale(){return intensity/100;},
-  get fillIntensity(){return fillIntensity;},
-  get fillIntensityScale(){return fillIntensity/100;},
-  setAngle,setElevation,setIntensity,setFillIntensity,refresh
-};
+if(!ensureUI()){let attempts=0;const timer=setInterval(()=>{attempts++;if(ensureUI()||attempts>=50)clearInterval(timer);},100);}
+window.addEventListener('boxlab-bridge-state',refresh);document.addEventListener('boxlab-render-mode-change',refresh);
+globalThis.__boxlabStudioLightAngle={version:VERSION,get angle(){return angle;},get radians(){return angle*Math.PI/180;},get elevation(){return elevation;},get elevationRadians(){return elevation*Math.PI/180;},get intensity(){return intensity;},get intensityScale(){return intensity/100;},get fillIntensity(){return fillIntensity;},get fillIntensityScale(){return fillIntensity/100;},setAngle,setElevation,setIntensity,setFillIntensity,refresh};
