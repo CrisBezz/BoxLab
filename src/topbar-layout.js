@@ -57,7 +57,7 @@ style.textContent=`
 :root{--boxlab-topbar-h:max(60px,calc(48px + env(safe-area-inset-top)));--boxlab-commandbar-h:48px}
 .topbar{height:var(--boxlab-topbar-h)!important}
 .brand{order:1}.top-file-menu{order:0}.top-actions{order:2}
-#commandBar{position:absolute;z-index:9;top:var(--boxlab-topbar-h);left:0;right:0;height:var(--boxlab-commandbar-h);display:flex;align-items:center;gap:10px;padding:5px 16px;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(13,15,19,.95);backdrop-filter:blur(18px)}
+#commandBar{position:absolute;z-index:100;top:var(--boxlab-topbar-h);left:0;right:0;height:var(--boxlab-commandbar-h);display:flex;align-items:center;gap:10px;padding:5px 16px;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(13,15,19,.95);backdrop-filter:blur(18px);overflow:visible}
 #viewportWrap{top:calc(var(--boxlab-topbar-h) + var(--boxlab-commandbar-h))!important}
 #commandBar #selectionModes{flex:0 0 auto;display:flex;align-items:center;padding:3px;gap:3px}
 #commandBar #selectionModes button{min-width:46px;min-height:36px;padding:5px 9px;justify-content:center}
@@ -74,6 +74,4 @@ document.head.append(style);
 
 if(viewportWrap)viewportWrap.dataset.commandBar='active';
 
-const version=document.querySelector('#appVersion');
-if(version)version.textContent='v0.36.5.0';
-document.title='BoxLab v0.36.5.0';
+// Visible release identity is owned by release-version.js.
