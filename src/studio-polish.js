@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.187 — Studio presentation polish.
+// BoxLab v0.36.18.192 — Studio backdrop ownership fix.
 // Visual only: improves background, lighting and contact grounding without
 // changing geometry, selection, tools or History.
-const VERSION='0.36.18.187';
+const VERSION='0.36.18.192';
 let contact=null;
 let queued=false;
 
@@ -44,7 +44,8 @@ function apply(){
   const rig=scene.getObjectByName('BoxLab Studio Realtime');
   if(!rig)return false;
 
-  scene.background?.set?.(0x0f151f);
+  const backdropColour=globalThis.__boxlabBackdropPresets?.colour ?? 0x0f151f;
+  scene.background?.set?.(backdropColour);
   const floor=rig.children.find(child=>child?.userData?.boxlabStudioFloor);
   if(floor?.material){floor.material.color?.set?.(0x202833);floor.material.roughness=.96;floor.material.metalness=0;floor.material.needsUpdate=true;}
 
