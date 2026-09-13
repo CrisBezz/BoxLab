@@ -21,11 +21,11 @@ import './face-repair-drawer.js?v=0.36.18.145';
 import './diagnostic-drawer-state.js?v=0.36.18.176';
 import './clean-view.js?v=0.36.18.179';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.180';
-import './beta-runtime-guard.js?v=0.36.18.180';
-import './loop-cut-feedback.js?v=0.36.18.180';
+import './release-version.js?v=0.36.18.181';
+import './beta-runtime-guard.js?v=0.36.18.181';
+import './loop-cut-feedback.js?v=0.36.18.181';
 
-// BoxLab v0.36.18.180 — X-Ray depth readability refinement.
+// BoxLab v0.36.18.181 — shaded Wire view refinement.
 // Visual-only display work; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -86,4 +86,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.180',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.181',sync};
