@@ -28,8 +28,10 @@ function makeMatcapTexture(){
 }
 
 const matcapMaterial=new THREE.MeshMatcapMaterial({color:0xffffff,matcap:makeMatcapTexture(),side:THREE.FrontSide});
+const wireSurfaceMaterial=new THREE.MeshStandardMaterial({color:0x667383,roughness:.84,metalness:.01,emissive:0x05080b,emissiveIntensity:.05,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+const wireInactiveSurfaceMaterial=new THREE.MeshStandardMaterial({color:0x566171,roughness:.88,metalness:0,emissive:0x030508,emissiveIntensity:.04,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+const wireMaterial=new THREE.MeshBasicMaterial({color:0xe5edf6,wireframe:true,transparent:true,opacity:.82,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
 const xrayMaterial=new THREE.MeshStandardMaterial({color:0x9eb4cc,roughness:.78,metalness:0,transparent:true,opacity:.14,depthWrite:false,side:THREE.DoubleSide});
-const wireMaterial=new THREE.MeshBasicMaterial({color:0x20252d,wireframe:true,transparent:true,opacity:.72,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
 const xrayHiddenWireMaterial=new THREE.MeshBasicMaterial({color:0xaec3d9,wireframe:true,transparent:true,opacity:.22,depthTest:false,depthWrite:false});
 const xrayVisibleWireMaterial=new THREE.MeshBasicMaterial({color:0xf1f6fb,wireframe:true,transparent:true,opacity:.88,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
 
@@ -93,8 +95,9 @@ function applyMode(body){
   if(mode==='studio'){body.material=inactive?studioInactiveMaterial:studioMaterial;addBackface(body);}
   else if(mode==='clay'){body.material=clayMaterial;addBackface(body);}
   else if(mode==='matcap'){body.material=matcapMaterial;addBackface(body);}
+  else if(mode==='wire'){body.material=inactive?wireInactiveSurfaceMaterial:wireSurfaceMaterial;addBackface(body);addWire(body,wireMaterial,13);}
   else if(mode==='xray'){body.material=xrayMaterial;addWire(body,xrayHiddenWireMaterial,10);addWire(body,xrayVisibleWireMaterial,13);}
-  else{body.material=frontOnly(original);addBackface(body);if(mode==='wire')addWire(body,wireMaterial);}
+  else{body.material=frontOnly(original);addBackface(body);}
 }
 
 Object.assign(globalThis.__boxlabRenderModes ||= {},{apply:applyMode,refreshStudio});
