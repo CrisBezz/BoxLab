@@ -15,15 +15,15 @@ import './select-vertex-valence.js?v=0.36.18.134';
 import './select-mergeable-verts.js?v=0.36.18.137';
 import './select-intersecting-faces.js?v=0.36.18.137';
 import './select-quads.js?v=0.36.18.128';
-import './mesh-health-summary.js?v=0.36.18.144';
+import './mesh-health-summary.js?v=0.36.18.172';
 import './face-inspect-drawer.js?v=0.36.18.141';
 import './face-repair-drawer.js?v=0.36.18.145';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.171';
-import './beta-runtime-guard.js?v=0.36.18.171';
-import './loop-cut-feedback.js?v=0.36.18.171';
+import './release-version.js?v=0.36.18.172';
+import './beta-runtime-guard.js?v=0.36.18.172';
+import './loop-cut-feedback.js?v=0.36.18.172';
 
-// BoxLab v0.36.18.171 — Beta Candidate 2 Loop Cut feedback hardening.
+// BoxLab v0.36.18.172 — Mesh Health passive topology summary.
 // UI layout behavior remains unchanged; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -84,4 +84,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.171',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.172',sync};
