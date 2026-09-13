@@ -6,6 +6,7 @@ const VERSION='0.36.18.179';
 const HIDDEN_KINDS=new Set(['edge','vertex','mirror-edge','edge-selection-overlay']);
 let enabled=false;
 let raf=0;
+let lastTouchToggle=0;
 
 function state(){return globalThis.__boxlabBridgeState||null;}
 function status(){return document.querySelector('#selectionStatus');}
@@ -59,11 +60,15 @@ function ensureUI(){
     panel.appendChild(section);
     const button=section.querySelector('#cleanViewBtn');
     button?.addEventListener('click',event=>{
-      event.preventDefault();event.stopPropagation();toggle();
+      event.preventDefault();event.stopPropagation();
+      if(performance.now()-lastTouchToggle<500)return;
+      toggle();
     });
     button?.addEventListener('pointerup',event=>{
       if(event.pointerType==='mouse')return;
-      event.preventDefault();event.stopPropagation();toggle();
+      event.preventDefault();event.stopPropagation();
+      lastTouchToggle=performance.now();
+      toggle();
     });
   }
   syncButton();
