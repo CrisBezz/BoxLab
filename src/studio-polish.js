@@ -1,9 +1,9 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.192 — Studio backdrop ownership fix.
+// BoxLab v0.36.18.197 — preserve user Studio light controls during polish refresh.
 // Visual only: improves background, lighting and contact grounding without
 // changing geometry, selection, tools or History.
-const VERSION='0.36.18.192';
+const VERSION='0.36.18.197';
 let contact=null;
 let queued=false;
 
@@ -53,7 +53,8 @@ function apply(){
   const key=lights.find(light=>light.castShadow)||lights[0];
   const fill=lights.find(light=>light!==key&&light.position.x<0);
   const rim=lights.find(light=>light!==key&&light!==fill);
-  if(key){key.intensity=2.35;key.color.set(0xfff1df);}
+  const keyScale=globalThis.__boxlabStudioLightAngle?.intensityScale??1;
+  if(key){key.intensity=2.35*keyScale;key.color.set(0xfff1df);}
   if(fill){fill.intensity=.82;fill.color.set(0xa9caff);}
   if(rim){rim.intensity=.58;rim.color.set(0xe3ecff);}
 
