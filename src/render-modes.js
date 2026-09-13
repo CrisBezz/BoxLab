@@ -94,7 +94,10 @@ function syncStudio(){
   if(enabled){renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.shadowMap.autoUpdate=true;}
   if(state.baseHemisphere)state.baseHemisphere.intensity=enabled?.52:1.2;
   if(state.key)state.key.intensity=enabled?1.35:3.2;
-  scene.background.copy(enabled?new THREE.Color(0x131924):originalBackground||new THREE.Color(0x111318));
+  if(enabled){
+    const backdrop=globalThis.__boxlabBackdropPresets?.colour;
+    scene.background.copy(new THREE.Color(Number.isFinite(backdrop)?backdrop:0x131924));
+  }else scene.background.copy(originalBackground||new THREE.Color(0x111318));
   if(enabled)refreshStudio();
 }
 
