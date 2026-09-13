@@ -20,12 +20,13 @@ import './face-inspect-drawer.js?v=0.36.18.141';
 import './face-repair-drawer.js?v=0.36.18.145';
 import './diagnostic-drawer-state.js?v=0.36.18.176';
 import './clean-view.js?v=0.36.18.179';
+import './cavity-view.js?v=0.36.18.184';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.183';
-import './beta-runtime-guard.js?v=0.36.18.183';
-import './loop-cut-feedback.js?v=0.36.18.183';
+import './release-version.js?v=0.36.18.184';
+import './beta-runtime-guard.js?v=0.36.18.184';
+import './loop-cut-feedback.js?v=0.36.18.184';
 
-// BoxLab v0.36.18.183 — Normals viewport diagnostic.
+// BoxLab v0.36.18.184 — Cavity viewport diagnostic.
 // Visual-only display work; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -86,4 +87,4 @@ function sync(){
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.183',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.184',sync};
