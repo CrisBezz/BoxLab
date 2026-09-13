@@ -19,15 +19,24 @@ const studioInactiveMaterial=new THREE.MeshStandardMaterial({color:0x98a6b8,roug
 const backfaceMaterial=new THREE.MeshStandardMaterial({color:0xf2a766,roughness:.78,metalness:0,side:THREE.BackSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 
 function makeMatcapTexture(){
-  const canvas=document.createElement('canvas');canvas.width=128;canvas.height=128;
+  const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
   const ctx=canvas.getContext('2d');
-  const gradient=ctx.createRadialGradient(44,36,6,64,64,82);
-  gradient.addColorStop(0,'#ffffff');gradient.addColorStop(.28,'#dfe5ec');gradient.addColorStop(.62,'#8e99a8');gradient.addColorStop(1,'#252a31');
-  ctx.fillStyle=gradient;ctx.fillRect(0,0,128,128);
+  const base=ctx.createRadialGradient(104,86,12,132,136,170);
+  base.addColorStop(0,'#ffffff');base.addColorStop(.16,'#f5f7fa');base.addColorStop(.42,'#cbd3dc');base.addColorStop(.7,'#74808e');base.addColorStop(1,'#20262e');
+  ctx.fillStyle=base;ctx.fillRect(0,0,256,256);
+  const key=ctx.createRadialGradient(78,66,2,82,70,74);
+  key.addColorStop(0,'rgba(255,255,255,.95)');key.addColorStop(.28,'rgba(255,255,255,.42)');key.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle=key;ctx.fillRect(0,0,256,256);
+  const fill=ctx.createRadialGradient(178,160,4,174,158,110);
+  fill.addColorStop(0,'rgba(176,194,214,.22)');fill.addColorStop(1,'rgba(80,96,116,0)');
+  ctx.fillStyle=fill;ctx.fillRect(0,0,256,256);
+  const rim=ctx.createRadialGradient(128,128,92,128,128,180);
+  rim.addColorStop(0,'rgba(12,16,22,0)');rim.addColorStop(.55,'rgba(12,16,22,.08)');rim.addColorStop(1,'rgba(4,7,11,.55)');
+  ctx.fillStyle=rim;ctx.fillRect(0,0,256,256);
   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;texture.needsUpdate=true;return texture;
 }
 
-const matcapMaterial=new THREE.MeshMatcapMaterial({color:0xffffff,matcap:makeMatcapTexture(),side:THREE.FrontSide});
+const matcapMaterial=new THREE.MeshMatcapMaterial({color:0xf8fafc,matcap:makeMatcapTexture(),side:THREE.FrontSide});
 const wireSurfaceMaterial=new THREE.MeshStandardMaterial({color:0x667383,roughness:.84,metalness:.01,emissive:0x05080b,emissiveIntensity:.05,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const wireInactiveSurfaceMaterial=new THREE.MeshStandardMaterial({color:0x566171,roughness:.88,metalness:0,emissive:0x030508,emissiveIntensity:.04,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const wireMaterial=new THREE.MeshBasicMaterial({color:0xe5edf6,wireframe:true,transparent:true,opacity:.82,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
