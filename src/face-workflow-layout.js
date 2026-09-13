@@ -23,12 +23,13 @@ import './clean-view.js?v=0.36.18.179';
 import './cavity-view.js?v=0.36.18.186';
 import './silhouette-view.js?v=0.36.18.186';
 import './studio-polish.js?v=0.36.18.187';
+import './ground-polish.js?v=0.36.18.188';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.187';
-import './beta-runtime-guard.js?v=0.36.18.187';
-import './loop-cut-feedback.js?v=0.36.18.187';
+import './release-version.js?v=0.36.18.188';
+import './beta-runtime-guard.js?v=0.36.18.188';
+import './loop-cut-feedback.js?v=0.36.18.188';
 
-// BoxLab v0.36.18.187 — Studio presentation polish.
+// BoxLab v0.36.18.188 — viewport ground/grid presentation polish.
 // Visual-only display work; modelling tools own their own handlers.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
@@ -50,4 +51,4 @@ function sync(){
   return !!(coplanar||islands);
 }
 [0,120,500,1000].forEach(delay=>setTimeout(sync,delay));window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.187',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.188',sync};
