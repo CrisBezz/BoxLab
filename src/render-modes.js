@@ -9,12 +9,14 @@ let studioKey=null;
 let studioKeyTarget=null;
 let originalBackground=null;
 let studioRefreshQueued=false;
+const frontMaterialCache=new WeakMap();
 
 function bridge(){return globalThis.__boxlabBridgeState||null;}
 
-const clayMaterial=new THREE.MeshStandardMaterial({color:0xc8c1b5,roughness:.92,metalness:0,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
-const studioMaterial=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.48,metalness:.03,emissive:0x05080d,emissiveIntensity:.08,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
-const studioInactiveMaterial=new THREE.MeshStandardMaterial({color:0x98a6b8,roughness:.52,metalness:.02,emissive:0x03060a,emissiveIntensity:.06,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+const clayMaterial=new THREE.MeshStandardMaterial({color:0xc8c1b5,roughness:.92,metalness:0,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+const studioMaterial=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.48,metalness:.03,emissive:0x05080d,emissiveIntensity:.08,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+const studioInactiveMaterial=new THREE.MeshStandardMaterial({color:0x98a6b8,roughness:.52,metalness:.02,emissive:0x03060a,emissiveIntensity:.06,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+const backfaceMaterial=new THREE.MeshStandardMaterial({color:0xf2a766,roughness:.78,metalness:0,side:THREE.BackSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 
 function makeMatcapTexture(){
   const canvas=document.createElement('canvas');canvas.width=128;canvas.height=128;
@@ -25,13 +27,20 @@ function makeMatcapTexture(){
   const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;texture.needsUpdate=true;return texture;
 }
 
-const matcapMaterial=new THREE.MeshMatcapMaterial({color:0xffffff,matcap:makeMatcapTexture(),side:THREE.DoubleSide});
+const matcapMaterial=new THREE.MeshMatcapMaterial({color:0xffffff,matcap:makeMatcapTexture(),side:THREE.FrontSide});
 const xrayMaterial=new THREE.MeshStandardMaterial({color:0xaebfd2,roughness:.72,metalness:0,transparent:true,opacity:.22,depthWrite:false,side:THREE.DoubleSide});
 const wireMaterial=new THREE.MeshBasicMaterial({color:0x20252d,wireframe:true,transparent:true,opacity:.72,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
 const xrayWireMaterial=new THREE.MeshBasicMaterial({color:0xdce7f3,wireframe:true,transparent:true,opacity:.55,depthTest:false,depthWrite:false});
 
 function clearRenderChildren(body){[...body.children].forEach(child=>{if(child?.userData?.boxlabRenderOverlay){body.remove(child);child.material?.dispose?.();}});}
 function addWire(body,material){const overlay=new THREE.Mesh(body.geometry,material.clone());overlay.userData.boxlabRenderOverlay=true;overlay.renderOrder=12;body.add(overlay);}
+function addBackface(body){const overlay=new THREE.Mesh(body.geometry,backfaceMaterial.clone());overlay.userData.boxlabRenderOverlay=true;overlay.userData.boxlabBackfaceCue=true;overlay.renderOrder=1;body.add(overlay);}
+function frontOnly(material){
+  if(!material?.clone)return material;
+  let front=frontMaterialCache.get(material);
+  if(!front){front=material.clone();front.side=THREE.FrontSide;front.needsUpdate=true;frontMaterialCache.set(material,front);}
+  return front;
+}
 
 function ensureStudioRig(){
   const state=bridge(),scene=state?.scene;if(!scene||studioRig)return;
@@ -80,11 +89,11 @@ function applyMode(body){
   const inactive=kind==='boxlab-inactive-body';if(!inactive)lastBody=body;clearRenderChildren(body);
   if(!body.userData.boxlabOriginalMaterial)body.userData.boxlabOriginalMaterial=body.material;
   const original=body.userData.boxlabOriginalMaterial;syncStudio();
-  if(mode==='studio')body.material=inactive?studioInactiveMaterial:studioMaterial;
-  else if(mode==='clay')body.material=clayMaterial;
-  else if(mode==='matcap')body.material=matcapMaterial;
+  if(mode==='studio'){body.material=inactive?studioInactiveMaterial:studioMaterial;addBackface(body);}
+  else if(mode==='clay'){body.material=clayMaterial;addBackface(body);}
+  else if(mode==='matcap'){body.material=matcapMaterial;addBackface(body);}
   else if(mode==='xray'){body.material=xrayMaterial;addWire(body,xrayWireMaterial);}
-  else{body.material=original;if(mode==='wire')addWire(body,wireMaterial);}
+  else{body.material=frontOnly(original);addBackface(body);if(mode==='wire')addWire(body,wireMaterial);}
 }
 
 Object.assign(globalThis.__boxlabRenderModes ||= {},{apply:applyMode,refreshStudio});
@@ -115,6 +124,4 @@ function installUI(){
 if(!installUI())queueMicrotask(installUI);
 queueMicrotask(rebuild);
 
-const version=document.querySelector('#appVersion');
-if(version)version.textContent='v0.36.5.0';
-document.title='BoxLab v0.36.5.0';
+// Visible release identity is owned by release-version.js.
