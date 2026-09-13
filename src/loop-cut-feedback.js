@@ -1,9 +1,9 @@
 import { EditableMesh } from './mesh.js?v=0.12';
 
-// BoxLab v0.36.18.173 — Loop Cut availability feedback.
+// BoxLab v0.36.18.174 — Loop Cut availability feedback.
 // Diagnostic/UI only: preserves the final installed Loop Cut implementation and
 // reports when that implementation legitimately has no continuous quad path.
-const VERSION='0.36.18.173';
+const VERSION='0.36.18.174';
 const MESSAGE='Loop Cut unavailable • no continuous quad path from this edge';
 let installed=false;
 
@@ -14,8 +14,6 @@ function showUnavailable(){
 
 function install(){
   if(installed)return true;
-  // Wait for the Added-vertex compatibility wrapper so feedback wraps the
-  // actual final Loop implementation rather than being replaced by it later.
   if(!globalThis.__boxlabAddedVertexLoopPromotion)return false;
   const proto=EditableMesh.prototype;
   if(proto.__boxlabLoopCutFeedback===VERSION){installed=true;return true;}
