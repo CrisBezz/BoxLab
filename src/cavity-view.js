@@ -1,16 +1,18 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.184 — Cavity viewport diagnostic.
+// BoxLab v0.36.18.186 — Cavity viewport diagnostic.
 // Visual only: screen-space normal variation emphasizes bevels, creases and
 // surface changes without modifying mesh geometry, selection or History.
-const VERSION='0.36.18.184';
+const VERSION='0.36.18.186';
 let active=false;
-let raf=0;
 
 function bridge(){return globalThis.__boxlabBridgeState||null;}
 
 const cavityMaterial=new THREE.ShaderMaterial({
   side:THREE.FrontSide,
+  polygonOffset:true,
+  polygonOffsetFactor:1,
+  polygonOffsetUnits:1,
   vertexShader:`
     varying vec3 vNormalView;
     void main(){
@@ -57,21 +59,9 @@ function apply(){
   return found;
 }
 
-function maintain(){
-  if(!active){raf=0;return;}
-  apply();
-  raf=requestAnimationFrame(maintain);
-}
-
 function setActive(next){
   active=!!next;
-  if(active){
-    apply();
-    if(!raf)raf=requestAnimationFrame(maintain);
-  }else if(raf){
-    cancelAnimationFrame(raf);
-    raf=0;
-  }
+  if(active)apply();
 }
 
 function ensureButton(){
