@@ -33,16 +33,16 @@ function ensureUI(){
   topActions?.prepend(wrap);
   const style=document.createElement('style');
   style.textContent=`
-#viewModes{position:relative;flex:0 0 auto}
-#viewModes>summary{list-style:none;display:flex;align-items:center;gap:7px;min-height:34px;padding:5px 10px;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:rgba(255,255,255,.045);font-size:12px;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap}
+#viewModes{position:relative;z-index:120;flex:0 0 auto}
+#viewModes>summary{list-style:none;display:flex;align-items:center;gap:7px;min-height:34px;padding:5px 10px;border:1px solid rgba(255,255,255,.14);border-radius:8px;background:rgba(255,255,255,.045);font-size:12px;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap;touch-action:manipulation}
 #viewModes>summary::-webkit-details-marker{display:none}
 #viewModes[open]>summary{background:rgba(255,255,255,.1)}
 .viewport-menu-icon{font-size:15px;line-height:1;opacity:.9}.viewport-menu-caret{font-size:10px;opacity:.65}
-.viewport-menu-panel{position:absolute;right:0;top:calc(100% + 7px);width:min(360px,82vw);padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(17,19,24,.98);box-shadow:0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(18px);z-index:80}
+.viewport-menu-panel{position:absolute;right:0;top:calc(100% + 7px);z-index:200;width:min(360px,82vw);padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(17,19,24,.98);box-shadow:0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(18px);pointer-events:auto;touch-action:manipulation}
 .viewport-menu-section+.viewport-menu-section{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.09)}
 .viewport-menu-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;opacity:.55;margin:0 2px 6px}
 .viewport-view-grid,.viewport-render-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
-.viewport-view-grid button,.viewport-render-grid button{min-width:0;min-height:34px;padding:5px 7px;font-size:11px;white-space:nowrap}
+.viewport-view-grid button,.viewport-render-grid button{min-width:0;min-height:34px;padding:5px 7px;font-size:11px;white-space:nowrap;touch-action:manipulation}
 .viewport-view-grid button.active,.viewport-render-grid button.active{background:#f2f5fa;color:#111318;border-color:#f2f5fa}
 @media(max-width:900px){#viewModes>summary{padding:5px 8px}.viewport-menu-panel{right:-4px;width:min(340px,88vw)}}
 `;
@@ -87,7 +87,7 @@ function setView(view){
   const s=state(),camera=s?.camera,mesh=s?.mesh;
   if(!camera||!mesh?.vertices?.length)return;
   const controls=s.controls||globalThis.__boxlabControls;
-  const box=modelBounds(mesh); if(!box)return;
+  const box=modelBounds(mesh);if(!box)return;
   const center=controls?.target?.clone?.()||box.getCenter(new THREE.Vector3());
   const distance=fitDistance(camera,box);
   const dir=directionFor(view);
@@ -102,13 +102,27 @@ function setView(view){
   if(status)status.textContent=`View • ${view==='axon'?'3D Axon':view[0].toUpperCase()+view.slice(1)}`;
 }
 
+function activateButton(button){
+  if(!button)return false;
+  if(button.dataset.view){setView(button.dataset.view);return true;}
+  if(button.dataset.render){button.click();return true;}
+  return false;
+}
+
 const ui=ensureUI();
-ui?.addEventListener('click',e=>{
-  const b=e.target.closest('button[data-view]');
-  if(!b)return;
-  e.preventDefault();
-  e.stopPropagation();
-  setView(b.dataset.view);
+ui?.addEventListener('click',event=>{
+  const button=event.target.closest('button[data-view]');
+  if(!button)return;
+  event.preventDefault();event.stopPropagation();setView(button.dataset.view);
+});
+
+// iPadOS can suppress the synthesized click after touch/Pencil interaction inside
+// an absolutely positioned details panel. Activate Viewport buttons on pointerup too.
+ui?.addEventListener('pointerup',event=>{
+  if(event.pointerType==='mouse')return;
+  const button=event.target.closest('button[data-view],button[data-render]');
+  if(!button)return;
+  event.preventDefault();event.stopPropagation();activateButton(button);
 });
 
 document.addEventListener('pointerdown',event=>{
@@ -117,6 +131,4 @@ document.addEventListener('pointerdown',event=>{
   ui.open=false;
 },true);
 
-const version=document.querySelector('#appVersion');
-if(version)version.textContent='v0.36.5.0';
-document.title='BoxLab v0.36.5.0';
+// Visible release identity is owned by release-version.js.
