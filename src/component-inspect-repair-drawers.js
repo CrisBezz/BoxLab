@@ -1,9 +1,9 @@
-// BoxLab v0.36.18.143 — Vertex/Edge Mesh Health + Inspect + Repair containment.
+// BoxLab v0.36.18.172 — Vertex/Edge Mesh Health + Inspect + Repair containment.
 // UI-only: normal modelling/topology tools stay first, followed by Mesh Health,
 // Inspect and Repair. Existing handlers, topology logic, selection and History
 // are untouched.
 
-const VERSION='0.36.18.143';
+const VERSION='0.36.18.172';
 
 function modeTools(mode){return document.querySelector(`[data-mode-tools="${mode}"]`);}
 
@@ -31,6 +31,12 @@ function healthRow(text,muted=false){
   const div=document.createElement('div');div.textContent=text;if(muted)div.style.opacity='.62';return div;
 }
 
+function appendTopology(body,info){
+  const t=info?.topology;if(!t)return;
+  body.appendChild(healthRow(`${t.vertices} verts • ${t.edges} edges • ${t.faces} faces`,true));
+  body.appendChild(healthRow(`${t.boundaryEdges} boundary edges`,true));
+}
+
 function renderHealth(mode,info){
   const details=ensureHealth(mode);if(!details)return false;
   const label=details.querySelector(`#${mode}MeshHealthSummaryLabel`);
@@ -43,6 +49,7 @@ function renderHealth(mode,info){
   if(info.issueCount)label.textContent=`MESH HEALTH • ${issueText}`;
   else if(info.warningCount)label.textContent=`MESH HEALTH • ${warningText}`;
   else label.textContent='MESH HEALTH • CLEAN';
+  appendTopology(body,info);
   if(!info.totalFindings){body.appendChild(healthRow('✓ No recognised mesh-health issues',true));return true;}
   info.issues?.forEach(item=>body.appendChild(healthRow(`⚠ ${item.count} ${item.label}`)));
   info.warnings?.forEach(item=>body.appendChild(healthRow(`• ${item.count} ${item.label}`,true)));
