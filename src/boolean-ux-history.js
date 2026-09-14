@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.222 — immediate Object-mode selection colours + Boolean A/B UX/history.
+// BoxLab v0.36.18.223 — immediate Object-mode selection colours + full Studio redraw.
 // Boolean geometry remains owned by boolean-prototype.js v0.36.18.217 and boolean-bsp.js v0.36.18.217.
 import * as THREE from 'three';
 
-const VERSION='0.36.18.222';
+const VERSION='0.36.18.223';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 const outliner=document.querySelector('#outlinerList');
@@ -159,8 +159,9 @@ function applyBodyTint(body,color){
 function requestViewportRender(){
   const state=globalThis.__boxlabBridgeState;
   const controls=state?.controls||state?.orbitControls;
-  if(controls?.dispatchEvent){controls.dispatchEvent({type:'change'});return;}
-  requestAnimationFrame(()=>document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})));
+  controls?.dispatchEvent?.({type:'change'});
+  const fullRefresh=()=>document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  requestAnimationFrame(()=>{fullRefresh();requestAnimationFrame(fullRefresh);});
 }
 function syncSelectionColours(){
   restoreViewportMaterials();
