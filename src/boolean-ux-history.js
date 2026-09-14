@@ -1,11 +1,14 @@
-// BoxLab v0.36.18.219 — Boolean operand colour clarity + Swap drawer preservation.
+// BoxLab v0.36.18.220 — viewport operand colours + robust Swap drawer guard.
 // Geometry remains owned by boolean-prototype.js v0.36.18.217 and boolean-bsp.js v0.36.18.217.
-const VERSION='0.36.18.219';
+import * as THREE from 'three';
+
+const VERSION='0.36.18.220';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 const outliner=document.querySelector('#outlinerList');
 const editDrawer=document.querySelector('#editDrawer');
-let pending=null,historyInstalled=false,restoring=false;
+const COLOR_A=0xf3b34a,COLOR_B=0x5da9ff;
+let pending=null,historyInstalled=false,restoring=false,drawerGuardUntil=0;
 const booleanUndo=[],booleanRedo=[];
 
 function manager(){return globalThis.__boxlabObjectManager||null;}
@@ -106,6 +109,16 @@ function installStyle(){
 #booleanPrototype217 [data-boolean217="difference"] .bool-b-label{color:var(--bool-b);font-weight:800}
 `;
 }
+
+function holdEditDrawerOpen(duration=750){
+  drawerGuardUntil=Math.max(drawerGuardUntil,performance.now()+duration);
+  const enforce=()=>{if(editDrawer&&performance.now()<drawerGuardUntil&&!editDrawer.open)editDrawer.open=true;};
+  enforce();[0,30,90,180,350,650].forEach(delay=>setTimeout(enforce,delay));
+}
+editDrawer?.addEventListener('toggle',()=>{
+  if(performance.now()<drawerGuardUntil&&!editDrawer.open)queueMicrotask(()=>{if(performance.now()<drawerGuardUntil)editDrawer.open=true;});
+});
+
 function ensureOperandUI(){
   installStyle();const group=document.querySelector('#booleanPrototype217');if(!group)return null;
   let panel=document.querySelector('#booleanOperand218');if(panel)return panel;
@@ -116,11 +129,10 @@ function ensureOperandUI(){
   swap.addEventListener('click',event=>{
     event.preventDefault();event.stopPropagation();
     const e=operands();if(!e.ok)return;
-    const drawerWasOpen=!!editDrawer?.open;
+    holdEditDrawerOpen(900);
     manager()?.activate?.(e.b.id);
-    if(editDrawer)editDrawer.open=drawerWasOpen;
     setStatus(`Boolean operands swapped • A ${e.b.name} • B ${e.a.name}`);
-    setTimeout(()=>{if(editDrawer)editDrawer.open=drawerWasOpen;syncUI();},0);
+    [0,40,120,300,650].forEach(delay=>setTimeout(()=>{holdEditDrawerOpen(250);syncUI();},delay));
   });
   panel.append(a,b,swap);
   const label=group.firstElementChild;label?.after(panel);
@@ -132,8 +144,43 @@ function markOutliner(e){
   const ar=outliner?.querySelector(`.outliner-row[data-object-id="${e.a.id}"]`),br=outliner?.querySelector(`.outliner-row[data-object-id="${e.b.id}"]`);
   ar?.classList.add('boolean-operand-a');br?.classList.add('boolean-operand-b');
 }
+
+function overlayGroup(){
+  const scene=globalThis.__boxlabBridgeState?.scene;if(!scene)return null;
+  let group=scene.getObjectByName('boxlabBooleanOperandOverlay220');
+  if(!group){group=new THREE.Group();group.name='boxlabBooleanOperandOverlay220';group.renderOrder=60;scene.add(group);}
+  return group;
+}
+function clearViewportOverlays(){
+  const group=overlayGroup();if(!group)return;
+  while(group.children.length){const child=group.children.pop();child.geometry?.dispose?.();child.material?.dispose?.();}
+}
+function findOperandBodies(e){
+  const scene=globalThis.__boxlabBridgeState?.scene;if(!scene||!e.ok)return{};
+  let aBody=null,bBody=null;
+  scene.traverse(object=>{
+    if(object.name==='boxlabBooleanOperandOverlay220'||object.parent?.name==='boxlabBooleanOperandOverlay220')return;
+    if(!aBody&&object.userData?.kind==='body'&&object.visible)aBody=object;
+    if(!bBody&&object.userData?.kind==='boxlab-inactive-body'&&Number(object.userData?.objectId)===e.b.id&&object.visible)bBody=object;
+  });
+  return{aBody,bBody};
+}
+function addViewportTint(target,color,opacity,label){
+  const group=overlayGroup();if(!group||!target?.geometry)return;
+  target.updateWorldMatrix?.(true,false);
+  const geometry=target.geometry.clone();
+  const material=new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthTest:true,depthWrite:false,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-2});
+  const tint=new THREE.Mesh(geometry,material);tint.name=`Boolean operand ${label}`;tint.userData={kind:'boolean-operand-tint',operand:label};tint.matrixAutoUpdate=false;tint.matrix.copy(target.matrixWorld);tint.renderOrder=55;group.add(tint);
+}
+function syncViewportColours(e){
+  clearViewportOverlays();if(!e.ok)return;
+  const {aBody,bBody}=findOperandBodies(e);
+  if(aBody)addViewportTint(aBody,COLOR_A,.20,'A');
+  if(bBody)addViewportTint(bBody,COLOR_B,.19,'B');
+}
+
 function syncUI(){
-  const panel=ensureOperandUI(),e=operands();markOutliner(e);if(!panel)return;
+  const panel=ensureOperandUI(),e=operands();markOutliner(e);syncViewportColours(e);if(!panel)return;
   const a=panel.querySelector('.bool-a'),b=panel.querySelector('.bool-b'),swap=panel.querySelector('#booleanSwapAB218');
   if(e.ok){
     a.innerHTML=`<strong>A · ${escapeHtml(e.a.name)}</strong><span>Active / Base</span>`;
