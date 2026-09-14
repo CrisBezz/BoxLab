@@ -13,7 +13,7 @@ import './select-cleanable-verts.js?v=0.36.18.134';
 import './select-vertex-classification.js?v=0.36.18.115';
 import './select-vertex-valence.js?v=0.36.18.134';
 import './select-mergeable-verts.js?v=0.36.18.137';
-import './select-intersecting-faces.js?v=0.36.18.137';
+import './select-intersecting-faces.js?v=0.36.18.209';
 import './select-quads.js?v=0.36.18.128';
 import './mesh-health-summary.js?v=0.36.18.175';
 import './topology-validity-gate.js?v=0.36.18.200';
@@ -33,12 +33,12 @@ import './backdrop-presets.js?v=0.36.18.190';
 import './studio-light-angle.js?v=0.36.18.199';
 import './cage-intensity.js?v=0.36.18.191';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.208';
+import './release-version.js?v=0.36.18.209';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 
-// BoxLab v0.36.18.208 — canonical intersection-segment insertion.
-// The topology kernel now owns edge insertion + face fragmentation as one validated transaction.
+// BoxLab v0.36.18.209 — Boolean face-pair intersection geometry foundation.
+// Face Intersections now consumes the same segment maths intended for two-object Boolean cutting.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 function ensureGroup(){
@@ -57,4 +57,4 @@ function sync(){
   return !!(coplanar||islands);
 }
 [0,120,500,1000].forEach(delay=>setTimeout(sync,delay));window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.208',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.209',sync};
