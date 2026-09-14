@@ -33,12 +33,12 @@ import './backdrop-presets.js?v=0.36.18.190';
 import './studio-light-angle.js?v=0.36.18.199';
 import './cage-intensity.js?v=0.36.18.191';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.207';
+import './release-version.js?v=0.36.18.208';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 
-// BoxLab v0.36.18.207 — canonical face-fragmentation topology kernel.
-// Face Split now commits edge insertion + polygon split through the shared Boolean-foundation path.
+// BoxLab v0.36.18.208 — canonical intersection-segment insertion.
+// The topology kernel now owns edge insertion + face fragmentation as one validated transaction.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 function ensureGroup(){
@@ -57,4 +57,4 @@ function sync(){
   return !!(coplanar||islands);
 }
 [0,120,500,1000].forEach(delay=>setTimeout(sync,delay));window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.207',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.208',sync};

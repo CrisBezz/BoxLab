@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.207 — canonical topology mutation kernel.
-// Shared edge insertion + polygon face fragmentation for modelling tools and future Boolean operations.
+// BoxLab v0.36.18.208 — canonical topology mutation kernel.
+// Shared edge insertion + polygon fragmentation + transactional face-boundary segment insertion.
 import * as THREE from 'three';
 
-const VERSION='0.36.18.207';
+const VERSION='0.36.18.208';
 const MIN_T=1e-5;
 
 function edgeKey(mesh,a,b){return mesh?.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
@@ -121,5 +121,45 @@ function restoreMesh(mesh,snapshot){
   return true;
 }
 
-export {VERSION,edgeKey,edgeOccurrences,inspectEdge,splitEdge,splitEdgeByIndex,splitEdgeByKey,inspectFaceSplit,splitFace,restoreMesh};
-globalThis.__boxlabTopologyKernel={version:VERSION,edgeKey,edgeOccurrences,inspectEdge,splitEdge,splitEdgeByIndex,splitEdgeByKey,inspectFaceSplit,splitFace,restoreMesh};
+function boundaryRef(mesh,faceIndex,ref){
+  const face=mesh?.faces?.[faceIndex];
+  if(!Array.isArray(face)||face.length<3)return{ok:false,reason:'Target face not found'};
+  if(Number.isInteger(ref?.vertex)){
+    if(!face.includes(ref.vertex))return{ok:false,reason:'Boundary vertex is not on the target face'};
+    return{ok:true,type:'vertex',vertex:ref.vertex};
+  }
+  if(typeof ref?.edgeKey!=='string')return{ok:false,reason:'Boundary point needs a vertex or edge key'};
+  const parts=ref.edgeKey.split(':').map(Number);
+  if(parts.length!==2||parts.some(value=>!Number.isInteger(value)))return{ok:false,reason:'Invalid boundary edge key'};
+  const edge=inspectEdge(mesh,parts[0],parts[1],{allowBoundary:true});
+  if(!edge.ok)return edge;
+  if(!edge.faces.includes(faceIndex))return{ok:false,reason:'Boundary edge is not on the target face'};
+  return{ok:true,type:'edge',edgeKey:edge.key,t:THREE.MathUtils.clamp(Number(ref.t)||.5,MIN_T,1-MIN_T)};
+}
+
+function insertFaceSegment(mesh,faceIndex,start,end,{validator=null}={}){
+  if(!mesh?.clone)return{ok:false,reason:'Editable mesh snapshot unavailable'};
+  const snapshot=mesh.clone();
+  const a=boundaryRef(mesh,faceIndex,start),b=boundaryRef(mesh,faceIndex,end);
+  if(!a.ok||!b.ok)return{ok:false,reason:!a.ok?a.reason:b.reason};
+  if(a.type==='vertex'&&b.type==='vertex'&&a.vertex===b.vertex)return{ok:false,reason:'Segment endpoints are identical'};
+  if(a.type==='edge'&&b.type==='edge'&&a.edgeKey===b.edgeKey)return{ok:false,reason:'Segment endpoints cannot lie on the same edge'};
+  const resolve=ref=>ref.type==='vertex'?{ok:true,vertex:ref.vertex}:splitEdgeByKey(mesh,ref.edgeKey,ref.t,{allowBoundary:true});
+  const ar=resolve(a);
+  const br=ar.ok?resolve(b):ar;
+  const faceResult=ar.ok&&br.ok?splitFace(mesh,ar.vertex,br.vertex,{faceIndex}):null;
+  let validation=null;
+  if(faceResult?.ok&&typeof validator==='function'){
+    try{validation=validator(mesh);}catch(error){validation={valid:false,error};}
+  }
+  const invalid=!ar.ok||!br.ok||!faceResult?.ok||validation===false||validation?.valid===false;
+  if(invalid){
+    restoreMesh(mesh,snapshot);
+    const reason=!ar.ok?ar.reason:!br.ok?br.reason:!faceResult?.ok?faceResult?.reason:'Topology validation failed';
+    return{ok:false,reason,rolledBack:true,validation};
+  }
+  return{ok:true,faceIndex,vertices:[ar.vertex,br.vertex],edgeKey:faceResult.edgeKey,faceIndices:faceResult.faceIndices,edgeSplits:[a.type==='edge'?ar:null,b.type==='edge'?br:null].filter(Boolean),validation};
+}
+
+export {VERSION,edgeKey,edgeOccurrences,inspectEdge,splitEdge,splitEdgeByIndex,splitEdgeByKey,inspectFaceSplit,splitFace,restoreMesh,boundaryRef,insertFaceSegment};
+globalThis.__boxlabTopologyKernel={version:VERSION,edgeKey,edgeOccurrences,inspectEdge,splitEdge,splitEdgeByIndex,splitEdgeByKey,inspectFaceSplit,splitFace,restoreMesh,boundaryRef,insertFaceSegment};
