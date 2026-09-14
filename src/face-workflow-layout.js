@@ -33,12 +33,12 @@ import './backdrop-presets.js?v=0.36.18.190';
 import './studio-light-angle.js?v=0.36.18.199';
 import './cage-intensity.js?v=0.36.18.191';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.203';
+import './release-version.js?v=0.36.18.204';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 
-// BoxLab v0.36.18.203 — quad-preferred planar n-gon rebuild.
-// Convex planar even-sided n-gons can now be transactionally split into quads.
+// BoxLab v0.36.18.204 — editable import topology weld.
+// Imported editable triangle soup is welded back to shared topology before cleanup tools use it.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 function ensureGroup(){
@@ -57,4 +57,4 @@ function sync(){
   return !!(coplanar||islands);
 }
 [0,120,500,1000].forEach(delay=>setTimeout(sync,delay));window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.203',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.204',sync};
