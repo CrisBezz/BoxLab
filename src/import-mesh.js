@@ -4,6 +4,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { EditableMesh } from './mesh.js?v=0.21.2';
 
 const IMPORT_TARGET_SIZE = 2;
+const EDITABLE_WELD_TOLERANCE = 1e-6;
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -57,11 +58,54 @@ function fitMeshesToBoxLabScale(meshes) {
   return scale;
 }
 
+function weldEditableMesh(mesh, tolerance=EDITABLE_WELD_TOLERANCE) {
+  if (!mesh?.vertices?.length || !mesh?.faces?.length) return { mesh, welded:0, removedFaces:0 };
+  const inverse = 1 / tolerance;
+  const buckets = new Map();
+  const vertices = [];
+  const remap = new Array(mesh.vertices.length);
+  let welded = 0;
+
+  mesh.vertices.forEach((vertex, oldIndex) => {
+    const key = `${Math.round(vertex.x*inverse)}:${Math.round(vertex.y*inverse)}:${Math.round(vertex.z*inverse)}`;
+    let newIndex = buckets.get(key);
+    if (newIndex === undefined) {
+      newIndex = vertices.length;
+      buckets.set(key, newIndex);
+      vertices.push(vertex.clone());
+    } else welded++;
+    remap[oldIndex] = newIndex;
+  });
+
+  const faces = [];
+  let removedFaces = 0;
+  for (const face of mesh.faces) {
+    const mapped = face.map(index => remap[index]);
+    const cleaned = mapped.filter((index, i) => i === 0 || index !== mapped[i-1]);
+    if (cleaned.length > 1 && cleaned[0] === cleaned[cleaned.length-1]) cleaned.pop();
+    if (new Set(cleaned).size < 3) { removedFaces++; continue; }
+    faces.push(cleaned);
+  }
+
+  return { mesh:new EditableMesh(vertices, faces, mesh.creases), welded, removedFaces };
+}
+
 function addImported(meshes, baseName) {
   const manager = globalThis.__boxlabObjectManager;
   if (!manager) throw new Error('The Outliner is still loading. Please try Import again.');
   const isReference = importKind === 'reference';
   fitMeshesToBoxLabScale(meshes);
+
+  let weldedTotal = 0, removedTotal = 0;
+  if (!isReference) {
+    meshes = meshes.map(entry => {
+      const result = weldEditableMesh(entry.mesh);
+      weldedTotal += result.welded;
+      removedTotal += result.removedFaces;
+      return { ...entry, mesh:result.mesh };
+    });
+  }
+
   const options = {
     kind: isReference ? 'reference' : 'editable',
     locked: isReference,
@@ -69,7 +113,8 @@ function addImported(meshes, baseName) {
     settings: { mirror:{ x:false, y:false, z:false }, subd:false, subdLevel:1, cage:true }
   };
   meshes.forEach((entry, index) => manager.addMesh(entry.mesh, meshes.length === 1 ? baseName : `${baseName} • ${entry.name || index + 1}`, options));
-  setStatus(`${meshes.length} imported ${meshes.length === 1 ? 'mesh' : 'meshes'} • ${isReference ? 'locked reference' : 'editable'}`);
+  if (isReference) setStatus(`${meshes.length} imported ${meshes.length === 1 ? 'mesh' : 'meshes'} • locked reference`);
+  else setStatus(`${meshes.length} imported ${meshes.length === 1 ? 'mesh' : 'meshes'} • editable • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
 }
 
 function loadOBJ(file) {
@@ -126,3 +171,5 @@ input?.addEventListener('change', () => {
 });
 
 if (!globalThis.__boxlabObjectManager) window.addEventListener('boxlab-object-manager-ready', () => {}, { once:true });
+
+globalThis.__boxlabImportMesh={version:'0.36.18.204',weldEditableMesh};
