@@ -1,9 +1,10 @@
-// BoxLab v0.36.18.218 — Boolean operand clarity + scene-level Undo/Redo.
+// BoxLab v0.36.18.219 — Boolean operand colour clarity + Swap drawer preservation.
 // Geometry remains owned by boolean-prototype.js v0.36.18.217 and boolean-bsp.js v0.36.18.217.
-const VERSION='0.36.18.218';
+const VERSION='0.36.18.219';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 const outliner=document.querySelector('#outlinerList');
+const editDrawer=document.querySelector('#editDrawer');
 let pending=null,historyInstalled=false,restoring=false;
 const booleanUndo=[],booleanRedo=[];
 
@@ -45,7 +46,6 @@ function installHistoryBridge(){
   h.push=function(mesh){if(!restoring&&booleanRedo.length)booleanRedo.length=0;return basePush(mesh);};
   h.undo=function(current){
     const tx=booleanUndo[booleanUndo.length-1];
-    // Ordinary edits made after the Boolean must unwind first. A freshly-created Boolean result has an empty mesh undo stack.
     if(tx&&!this.undoStack?.length&&currentSignature()===tx.afterSig){
       booleanUndo.pop();booleanRedo.push(tx);restoreScene(tx.before);
       setStatus(`Undo ${tx.label} • restored A + B`);
@@ -76,7 +76,6 @@ function beginBoolean(event){
 function finalizeBoolean(){
   const p=pending;pending=null;if(!p)return;
   const after=captureScene();if(!after)return;
-  // A successful Boolean hides two operands, creates one new editable object and makes that result active.
   if((after.objects?.length||0)!==p.beforeCount+1||after.activeId===p.before.activeId)return;
   const labels={difference:'Cut',intersection:'Intersect',union:'Union'},label=labels[p.operation]||'Boolean';
   const tx={before:p.before,after,beforeSig:p.beforeSig,afterSig:sceneSignature(after),label};
@@ -84,18 +83,28 @@ function finalizeBoolean(){
 }
 
 function installStyle(){
-  if(document.querySelector('#boxlabBooleanOperandStyle218'))return;
-  const s=document.createElement('style');s.id='boxlabBooleanOperandStyle218';s.textContent=`
+  let s=document.querySelector('#boxlabBooleanOperandStyle218');
+  if(!s){s=document.createElement('style');s.id='boxlabBooleanOperandStyle218';document.head.appendChild(s);}
+  s.textContent=`
+:root{--bool-a:#f3b34a;--bool-b:#5da9ff}
 #booleanOperand218{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;gap:4px;align-items:stretch;margin:5px 0 6px}
-#booleanOperand218 .bool-op{min-width:0;border:1px solid rgba(255,255,255,.11);border-radius:7px;padding:5px 6px;background:rgba(255,255,255,.035);font-size:9px;line-height:1.25;overflow:hidden}
+#booleanOperand218 .bool-op{min-width:0;border:1px solid rgba(255,255,255,.11);border-radius:7px;padding:5px 6px;font-size:9px;line-height:1.25;overflow:hidden}
+#booleanOperand218 .bool-a{background:color-mix(in srgb,var(--bool-a) 12%,transparent);border-color:color-mix(in srgb,var(--bool-a) 52%,transparent)}
+#booleanOperand218 .bool-b{background:color-mix(in srgb,var(--bool-b) 11%,transparent);border-color:color-mix(in srgb,var(--bool-b) 50%,transparent)}
+#booleanOperand218 .bool-a strong{color:var(--bool-a)}
+#booleanOperand218 .bool-b strong{color:var(--bool-b)}
 #booleanOperand218 .bool-op strong{display:block;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-#booleanOperand218 .bool-op span{opacity:.58;white-space:nowrap}
+#booleanOperand218 .bool-op span{opacity:.64;white-space:nowrap}
 #booleanOperand218 button{min-width:42px;padding:4px 5px;font-size:10px}
-.outliner-row.boolean-operand-a .outliner-name::before,.outliner-row.boolean-operand-b .outliner-name::before{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:4px;margin-right:5px;font-size:9px;font-weight:800;vertical-align:1px}
-.outliner-row.boolean-operand-a .outliner-name::before{content:'A';background:rgba(255,190,70,.22);outline:1px solid rgba(255,190,70,.65)}
-.outliner-row.boolean-operand-b .outliner-name::before{content:'B';background:rgba(90,170,255,.18);outline:1px solid rgba(90,170,255,.58)}
+.outliner-row.boolean-operand-a{box-shadow:inset 3px 0 0 var(--bool-a)!important}
+.outliner-row.boolean-operand-b{box-shadow:inset 3px 0 0 var(--bool-b)!important}
+.outliner-row.boolean-operand-a .outliner-name::before,.outliner-row.boolean-operand-b .outliner-name::before{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:4px;margin-right:5px;font-size:9px;font-weight:800;vertical-align:1px;color:#111}
+.outliner-row.boolean-operand-a .outliner-name::before{content:'A';background:var(--bool-a);outline:1px solid color-mix(in srgb,var(--bool-a) 70%,white)}
+.outliner-row.boolean-operand-b .outliner-name::before{content:'B';background:var(--bool-b);outline:1px solid color-mix(in srgb,var(--bool-b) 70%,white)}
+#booleanPrototype217 [data-boolean217="difference"]{background:linear-gradient(90deg,color-mix(in srgb,var(--bool-a) 20%,transparent) 0 46%,rgba(255,255,255,.035) 46% 54%,color-mix(in srgb,var(--bool-b) 20%,transparent) 54% 100%);border-color:rgba(255,255,255,.18)}
+#booleanPrototype217 [data-boolean217="difference"] .bool-a-label{color:var(--bool-a);font-weight:800}
+#booleanPrototype217 [data-boolean217="difference"] .bool-b-label{color:var(--bool-b);font-weight:800}
 `;
-  document.head.appendChild(s);
 }
 function ensureOperandUI(){
   installStyle();const group=document.querySelector('#booleanPrototype217');if(!group)return null;
@@ -104,7 +113,15 @@ function ensureOperandUI(){
   const a=document.createElement('div');a.className='bool-op bool-a';
   const b=document.createElement('div');b.className='bool-op bool-b';
   const swap=document.createElement('button');swap.type='button';swap.id='booleanSwapAB218';swap.textContent='Swap';swap.title='Swap A / B Boolean operands';
-  swap.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();const e=operands();if(!e.ok)return;manager()?.activate?.(e.b.id);setStatus(`Boolean operands swapped • A ${e.b.name} • B ${e.a.name}`);setTimeout(syncUI,0);});
+  swap.addEventListener('click',event=>{
+    event.preventDefault();event.stopPropagation();
+    const e=operands();if(!e.ok)return;
+    const drawerWasOpen=!!editDrawer?.open;
+    manager()?.activate?.(e.b.id);
+    if(editDrawer)editDrawer.open=drawerWasOpen;
+    setStatus(`Boolean operands swapped • A ${e.b.name} • B ${e.a.name}`);
+    setTimeout(()=>{if(editDrawer)editDrawer.open=drawerWasOpen;syncUI();},0);
+  });
   panel.append(a,b,swap);
   const label=group.firstElementChild;label?.after(panel);
   return panel;
@@ -127,11 +144,11 @@ function syncUI(){
     b.innerHTML='<strong>B · Select second</strong><span>Other / Cutter</span>';
     if(swap)swap.disabled=true;
   }
-  const cut=document.querySelector('#booleanPrototype217 [data-boolean217="difference"]');if(cut)cut.textContent='Cut A−B';
+  const cut=document.querySelector('#booleanPrototype217 [data-boolean217="difference"]');
+  if(cut)cut.innerHTML='<span class="bool-a-label">A</span> − <span class="bool-b-label">B</span> · Cut';
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-// Loaded before boolean-prototype.js so this capture handler records the scene before its Boolean click handler runs.
 document.addEventListener('click',beginBoolean,true);
 window.addEventListener('boxlab-object-manager-ready',()=>{installHistoryBridge();setTimeout(syncUI,0);});
 window.addEventListener('boxlab-bridge-state',()=>setTimeout(syncUI,0));
