@@ -1,15 +1,16 @@
-// BoxLab v0.36.18.220 — viewport operand colours + robust Swap drawer guard.
+// BoxLab v0.36.18.221 — safe viewport operand colours + native drawer keep-open.
 // Geometry remains owned by boolean-prototype.js v0.36.18.217 and boolean-bsp.js v0.36.18.217.
 import * as THREE from 'three';
 
-const VERSION='0.36.18.220';
+const VERSION='0.36.18.221';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 const outliner=document.querySelector('#outlinerList');
 const editDrawer=document.querySelector('#editDrawer');
 const COLOR_A=0xf3b34a,COLOR_B=0x5da9ff;
-let pending=null,historyInstalled=false,restoring=false,drawerGuardUntil=0;
+let pending=null,historyInstalled=false,restoring=false;
 const booleanUndo=[],booleanRedo=[];
+let tintedBodies=[];
 
 function manager(){return globalThis.__boxlabObjectManager||null;}
 function selection(){return globalThis.__boxlabObjectSelection||null;}
@@ -110,14 +111,11 @@ function installStyle(){
 `;
 }
 
-function holdEditDrawerOpen(duration=750){
-  drawerGuardUntil=Math.max(drawerGuardUntil,performance.now()+duration);
-  const enforce=()=>{if(editDrawer&&performance.now()<drawerGuardUntil&&!editDrawer.open)editDrawer.open=true;};
-  enforce();[0,30,90,180,350,650].forEach(delay=>setTimeout(enforce,delay));
+function keepBooleanToolsVisible(enabled){
+  if(!editDrawer)return;
+  if(enabled){editDrawer.dataset.keepOpen='true';editDrawer.open=true;}
+  else delete editDrawer.dataset.keepOpen;
 }
-editDrawer?.addEventListener('toggle',()=>{
-  if(performance.now()<drawerGuardUntil&&!editDrawer.open)queueMicrotask(()=>{if(performance.now()<drawerGuardUntil)editDrawer.open=true;});
-});
 
 function ensureOperandUI(){
   installStyle();const group=document.querySelector('#booleanPrototype217');if(!group)return null;
@@ -129,10 +127,11 @@ function ensureOperandUI(){
   swap.addEventListener('click',event=>{
     event.preventDefault();event.stopPropagation();
     const e=operands();if(!e.ok)return;
-    holdEditDrawerOpen(900);
+    keepBooleanToolsVisible(true);
     manager()?.activate?.(e.b.id);
+    keepBooleanToolsVisible(true);
     setStatus(`Boolean operands swapped • A ${e.b.name} • B ${e.a.name}`);
-    [0,40,120,300,650].forEach(delay=>setTimeout(()=>{holdEditDrawerOpen(250);syncUI();},delay));
+    [0,40,120,300].forEach(delay=>setTimeout(()=>{keepBooleanToolsVisible(true);syncUI();},delay));
   });
   panel.append(a,b,swap);
   const label=group.firstElementChild;label?.after(panel);
@@ -145,42 +144,44 @@ function markOutliner(e){
   ar?.classList.add('boolean-operand-a');br?.classList.add('boolean-operand-b');
 }
 
-function overlayGroup(){
-  const scene=globalThis.__boxlabBridgeState?.scene;if(!scene)return null;
-  let group=scene.getObjectByName('boxlabBooleanOperandOverlay220');
-  if(!group){group=new THREE.Group();group.name='boxlabBooleanOperandOverlay220';group.renderOrder=60;scene.add(group);}
-  return group;
-}
-function clearViewportOverlays(){
-  const group=overlayGroup();if(!group)return;
-  while(group.children.length){const child=group.children.pop();child.geometry?.dispose?.();child.material?.dispose?.();}
+function restoreViewportMaterials(){
+  for(const entry of tintedBodies){
+    if(entry.body&&entry.body.material===entry.tint)entry.body.material=entry.original;
+    const list=Array.isArray(entry.tint)?entry.tint:[entry.tint];for(const mat of list)mat?.dispose?.();
+  }
+  tintedBodies=[];
 }
 function findOperandBodies(e){
   const scene=globalThis.__boxlabBridgeState?.scene;if(!scene||!e.ok)return{};
   let aBody=null,bBody=null;
   scene.traverse(object=>{
-    if(object.name==='boxlabBooleanOperandOverlay220'||object.parent?.name==='boxlabBooleanOperandOverlay220')return;
     if(!aBody&&object.userData?.kind==='body'&&object.visible)aBody=object;
     if(!bBody&&object.userData?.kind==='boxlab-inactive-body'&&Number(object.userData?.objectId)===e.b.id&&object.visible)bBody=object;
   });
   return{aBody,bBody};
 }
-function addViewportTint(target,color,opacity,label){
-  const group=overlayGroup();if(!group||!target?.geometry)return;
-  target.updateWorldMatrix?.(true,false);
-  const geometry=target.geometry.clone();
-  const material=new THREE.MeshBasicMaterial({color,transparent:true,opacity,depthTest:true,depthWrite:false,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-2});
-  const tint=new THREE.Mesh(geometry,material);tint.name=`Boolean operand ${label}`;tint.userData={kind:'boolean-operand-tint',operand:label};tint.matrixAutoUpdate=false;tint.matrix.copy(target.matrixWorld);tint.renderOrder=55;group.add(tint);
+function tintedMaterial(material,color,amount=.42){
+  if(Array.isArray(material))return material.map(mat=>tintedMaterial(mat,color,amount));
+  if(!material?.clone)return material;
+  const clone=material.clone();clone.userData={...(clone.userData||{}),booleanOperandTint:true};
+  if(clone.color?.isColor)clone.color.lerp(new THREE.Color(color),amount);
+  if(clone.emissive?.isColor){clone.emissive.lerp(new THREE.Color(color),.10);clone.emissiveIntensity=Math.max(Number(clone.emissiveIntensity||0),.08);}
+  return clone;
+}
+function applyBodyTint(body,color){
+  if(!body?.material)return;
+  const original=body.material,tint=tintedMaterial(original,color);
+  if(tint===original)return;
+  body.material=tint;tintedBodies.push({body,original,tint});
 }
 function syncViewportColours(e){
-  clearViewportOverlays();if(!e.ok)return;
+  restoreViewportMaterials();if(!e.ok)return;
   const {aBody,bBody}=findOperandBodies(e);
-  if(aBody)addViewportTint(aBody,COLOR_A,.20,'A');
-  if(bBody)addViewportTint(bBody,COLOR_B,.19,'B');
+  applyBodyTint(aBody,COLOR_A);applyBodyTint(bBody,COLOR_B);
 }
 
 function syncUI(){
-  const panel=ensureOperandUI(),e=operands();markOutliner(e);syncViewportColours(e);if(!panel)return;
+  const panel=ensureOperandUI(),e=operands();keepBooleanToolsVisible(e.ok);markOutliner(e);syncViewportColours(e);if(!panel)return;
   const a=panel.querySelector('.bool-a'),b=panel.querySelector('.bool-b'),swap=panel.querySelector('#booleanSwapAB218');
   if(e.ok){
     a.innerHTML=`<strong>A · ${escapeHtml(e.a.name)}</strong><span>Active / Base</span>`;
