@@ -44,7 +44,7 @@ class BPlane{
 class BPolygon{
   constructor(vertices,eps){this.vertices=vertices;this.eps=eps;this.plane=BPlane.fromPoints(vertices[0].pos,vertices[1].pos,vertices[2].pos,eps);this.valid=!!this.plane;}
   clone(){return new BPolygon(this.vertices.map(v=>v.clone()),this.eps);}
-  flip(){this.vertices.reverse().forEach(()=>{});this.plane?.flip();}
+  flip(){this.vertices.reverse();this.plane?.flip();}
 }
 class BNode{
   constructor(polygons=[],eps=1e-8){this.eps=eps;this.plane=null;this.front=null;this.back=null;this.polygons=[];if(polygons.length)this.build(polygons);}
@@ -114,7 +114,7 @@ function assemble(polygons,eps){
 function booleanBSP(meshA,meshB,operation='union'){
   const op=String(operation).toLowerCase();if(!['union','difference','intersection'].includes(op))return{ok:false,reason:'Unknown Boolean operation'};
   const ta=topologyInfo(meshA),tb=topologyInfo(meshB);if(!ta.closed||!tb.closed)return{ok:false,reason:'Both Boolean operands must be closed manifold meshes'};
-  const eps=epsilonForMeshes(meshA,meshB),pa=outwardPolygons(meshA,eps),pb=outwardPolygons(meshB,eps);
+  const rawEps=epsilonForMeshes(meshA,meshB),eps=Math.max(rawEps*32,1e-7),pa=outwardPolygons(meshA,eps),pb=outwardPolygons(meshB,eps);
   if(!pa.length||!pb.length)return{ok:false,reason:'Boolean operand has no valid polygons'};
   let polygons;try{polygons=operate(pa,pb,op,eps);}catch(error){return{ok:false,reason:`Boolean BSP failed • ${error?.message||error}`};}
   if(!polygons.length){if(op==='intersection')return{ok:false,empty:true,reason:'Boolean result is empty'};return{ok:false,reason:'Boolean result produced no polygons'};}
