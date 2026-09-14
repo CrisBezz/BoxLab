@@ -33,12 +33,12 @@ import './backdrop-presets.js?v=0.36.18.190';
 import './studio-light-angle.js?v=0.36.18.199';
 import './cage-intensity.js?v=0.36.18.191';
 import './live-mesh-bridge.js?v=0.36.18.169';
-import './release-version.js?v=0.36.18.205';
+import './release-version.js?v=0.36.18.206';
 import './beta-runtime-guard.js?v=0.36.18.193';
 import './loop-cut-feedback.js?v=0.36.18.193';
 
-// BoxLab v0.36.18.205 — topology round-trip hardening.
-// Editable OBJ import preserves polygon faces; Quad Cleanup uses stricter winding/geometry checks.
+// BoxLab v0.36.18.206 — canonical edge-split topology kernel foundation.
+// Face Split now consumes the same edge mutation primitive future Boolean intersection insertion will use.
 
 const faceTools=document.querySelector('[data-mode-tools="face"]');
 function ensureGroup(){
@@ -57,4 +57,4 @@ function sync(){
   return !!(coplanar||islands);
 }
 [0,120,500,1000].forEach(delay=>setTimeout(sync,delay));window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
-globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.205',sync};
+globalThis.__boxlabFaceWorkflowLayout={version:'0.36.18.206',sync};
