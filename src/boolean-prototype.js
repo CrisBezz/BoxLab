@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.211 — first user-facing Boolean prototype.
-// Conservative convex solid Boolean: polygon-plane partition -> weld -> topology validate -> new editable object.
+// BoxLab v0.36.18.212 — conforming convex Boolean prototype.
+// Fixes Union / Cut T-junctions by splitting every face fragment by every target plane before classification.
 import * as THREE from 'three';
 import { EditableMesh } from './mesh.js';
 import { meshIntersections, epsilonForMeshes } from './boolean-intersections.js?v=0.36.18.209';
 import { topologyInfo } from './boolean-classify.js?v=0.36.18.210';
 
-const VERSION='0.36.18.211';
+const VERSION='0.36.18.212';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 
@@ -24,10 +24,11 @@ function newell(points){
   return n;
 }
 function meshCenter(mesh){return centroid(mesh.vertices||[]);}
-function cleanPolygon(points,eps){
+function cleanPolygon(points,eps,{collinear=true}={}){
   const out=[];const epsSq=eps*eps;
   for(const p of points){if(!out.length||out[out.length-1].distanceToSquared(p)>epsSq)out.push(p.clone());}
   if(out.length>1&&out[0].distanceToSquared(out[out.length-1])<=epsSq)out.pop();
+  if(!collinear)return out;
   let changed=true;
   while(changed&&out.length>3){
     changed=false;
@@ -48,7 +49,7 @@ function buildConvexPlanes(mesh,eps){
     const normal=newell(points);if(normal.lengthSq()<=eps*eps)return{ok:false,reason:'Degenerate face in Boolean input'};normal.normalize();
     const fc=centroid(points);if(normal.dot(center.clone().sub(fc))>0)normal.negate();
     const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,points[0]);
-    for(const v of mesh.vertices)if(plane.distanceToPoint(v)>eps*24)return{ok:false,reason:'v0.36.18.211 Boolean prototype currently supports convex solids only'};
+    for(const v of mesh.vertices)if(plane.distanceToPoint(v)>eps*24)return{ok:false,reason:'v0.36.18.212 Boolean prototype currently supports convex solids only'};
     planes.push({plane,faceIndex});
   }
   return{ok:true,planes};
@@ -62,21 +63,48 @@ function splitPolygon(points,plane,eps){
     if(sa<=0)back.push(a.clone());
     if(sa*sb<0){const t=da/(da-db),p=a.clone().lerp(b,THREE.MathUtils.clamp(t,0,1));front.push(p.clone());back.push(p.clone());}
   }
-  return{front:cleanPolygon(front,eps*4),back:cleanPolygon(back,eps*4)};
+  // Do not remove collinear cut vertices here: later planes may terminate on them.
+  return{front:cleanPolygon(front,eps*4,{collinear:false}),back:cleanPolygon(back,eps*4,{collinear:false})};
+}
+function polygonKey(poly,eps){
+  const q=Math.max(eps*32,1e-9);
+  return poly.map(p=>`${Math.round(p.x/q)},${Math.round(p.y/q)},${Math.round(p.z/q)}`).sort().join('|');
+}
+function dedupePolygons(polys,eps){
+  const seen=new Set(),out=[];
+  for(const poly of polys){if(poly.length<3)continue;const key=polygonKey(poly,eps);if(seen.has(key))continue;seen.add(key);out.push(poly);}
+  return out;
 }
 function partitionPolygon(points,planes,eps){
-  let pending=[cleanPolygon(points,eps*4)];const outside=[];
+  // 212: conforming arrangement. Every fragment is split by every plane.
+  // Only after the full plane arrangement is built do we classify fragments.
+  let fragments=[cleanPolygon(points,eps*4,{collinear:false})];
   for(const {plane} of planes){
     const next=[];
-    for(const poly of pending){
+    for(const poly of fragments){
       if(poly.length<3)continue;
-      const split=splitPolygon(poly,plane,eps);
-      if(split.front.length>=3)outside.push(split.front);
-      if(split.back.length>=3)next.push(split.back);
+      const distances=poly.map(p=>plane.distanceToPoint(p));
+      const hasFront=distances.some(d=>d>eps),hasBack=distances.some(d=>d<-eps);
+      if(hasFront&&hasBack){
+        const split=splitPolygon(poly,plane,eps);
+        if(split.front.length>=3)next.push(split.front);
+        if(split.back.length>=3)next.push(split.back);
+      }else{
+        // Entire fragment is on one side (or coplanar): carry it once.
+        next.push(poly);
+      }
     }
-    pending=next;if(!pending.length)break;
+    fragments=dedupePolygons(next,eps);
+    if(!fragments.length)break;
   }
-  return{inside:pending.filter(p=>p.length>=3),outside};
+  const inside=[],outside=[];
+  for(const poly of fragments){
+    if(poly.length<3)continue;
+    const c=centroid(poly);
+    const isInside=planes.every(({plane})=>plane.distanceToPoint(c)<=eps*8);
+    (isInside?inside:outside).push(poly);
+  }
+  return{inside,outside};
 }
 function fragmentMesh(source,targetPlanes,eps){
   const inside=[],outside=[];
@@ -85,7 +113,7 @@ function fragmentMesh(source,targetPlanes,eps){
     const parts=partitionPolygon(points,targetPlanes,eps);
     inside.push(...parts.inside);outside.push(...parts.outside);
   }
-  return{inside,outside};
+  return{inside:dedupePolygons(inside,eps),outside:dedupePolygons(outside,eps)};
 }
 function polygonAreaNormal(poly){return newell(poly);}
 function assemble(polygons,eps){
@@ -95,7 +123,8 @@ function assemble(polygons,eps){
     vertices.push(p.clone());return vertices.length-1;
   }
   for(const raw of polygons){
-    const poly=cleanPolygon(raw,tol*.25);if(poly.length<3)continue;
+    // Keep collinear Boolean seam vertices so neighbouring fragments share identical edge segmentation.
+    const poly=cleanPolygon(raw,tol*.25,{collinear:false});if(poly.length<3)continue;
     if(polygonAreaNormal(poly).lengthSq()<=tolSq*tolSq)continue;
     const face=[];for(const p of poly){const idx=indexFor(p);if(face[face.length-1]!==idx)face.push(idx);}
     if(face.length>2&&face[0]===face[face.length-1])face.pop();
@@ -119,11 +148,12 @@ function buildResult(a,b,operation){
   return{ok:true,mesh,gate,topology,intersections,fragmentCounts:{aInside:fa.inside.length,aOutside:fa.outside.length,bInside:fb.inside.length,bOutside:fb.outside.length}};
 }
 function ensureUI(){
-  if(!objectTools)return null;let group=document.querySelector('#booleanPrototype211');if(group)return group;
-  group=document.createElement('div');group.id='booleanPrototype211';group.style.cssText='margin:7px 0 3px';
+  if(!objectTools)return null;let group=document.querySelector('#booleanPrototype212');if(group)return group;
+  document.querySelector('#booleanPrototype211')?.remove();
+  group=document.createElement('div');group.id='booleanPrototype212';group.style.cssText='margin:7px 0 3px';
   const label=document.createElement('div');label.textContent='BOOLEAN • CONVEX PROTOTYPE';label.style.cssText='font-size:9px;letter-spacing:.35px;opacity:.55;margin:0 0 4px 1px';
   const row=document.createElement('div');row.className='outliner-actions';row.style.cssText='grid-template-columns:repeat(3,minmax(0,1fr));gap:4px';
-  for(const [op,text] of [['union','Union'],['difference','Cut'],['intersection','Intersect']]){const b=document.createElement('button');b.type='button';b.dataset.boolean211=op;b.textContent=text;b.style.cssText='min-width:0;padding:5px 3px;font-size:10px';row.appendChild(b);}
+  for(const [op,text] of [['union','Union'],['difference','Cut'],['intersection','Intersect']]){const b=document.createElement('button');b.type='button';b.dataset.boolean212=op;b.textContent=text;b.style.cssText='min-width:0;padding:5px 3px;font-size:10px';row.appendChild(b);}
   group.append(label,row);objectTools.appendChild(group);return group;
 }
 function eligibility(){
@@ -138,7 +168,7 @@ function eligibility(){
 }
 function sync(){
   const group=ensureUI();if(!group)return false;const e=eligibility();
-  group.querySelectorAll('[data-boolean211]').forEach(button=>{button.disabled=!e.ok;button.title=e.ok?(button.dataset.boolean211==='difference'?`Cut ${e.other.name} from active ${e.active.name}`:`${button.textContent}: ${e.active.name} + ${e.other.name}`):e.reason;});return e;
+  group.querySelectorAll('[data-boolean212]').forEach(button=>{button.disabled=!e.ok;button.title=e.ok?(button.dataset.boolean212==='difference'?`Cut ${e.other.name} from active ${e.active.name}`:`${button.textContent}: ${e.active.name} + ${e.other.name}`):e.reason;});return e;
 }
 function apply(operation){
   const e=eligibility();if(!e.ok){setStatus(`Boolean • ${e.reason}`);return;}
@@ -156,7 +186,7 @@ function apply(operation){
 }
 
 ensureUI();
-document.addEventListener('click',event=>{const button=event.target?.closest?.('[data-boolean211]');if(!button)return;event.preventDefault();event.stopImmediatePropagation();apply(button.dataset.boolean211);},true);
+document.addEventListener('click',event=>{const button=event.target?.closest?.('[data-boolean212]');if(!button)return;event.preventDefault();event.stopImmediatePropagation();apply(button.dataset.boolean212);},true);
 window.addEventListener('boxlab-object-manager-ready',()=>setTimeout(sync,0));
 window.addEventListener('boxlab-bridge-state',()=>setTimeout(sync,0));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
