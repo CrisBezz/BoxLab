@@ -20,10 +20,8 @@ function installStyle(){
 function reorder(t){
   if(!t)return;
   const buttons=[...t.querySelectorAll(':scope > button')];
-  const byText=text=>buttons.find(b=>b.textContent.trim()===text);
-  for(const text of ['Multi','All','Clear','Hide','Show','Lock','Unlock']){
-    const b=byText(text);if(b&&b.parentElement===t)t.appendChild(b);
-  }
+  const take=(...texts)=>buttons.find(b=>texts.includes(b.textContent.trim()));
+  for(const button of [take('Multi'),take('All','None'),take('Clear'),take('Hide','Show'),take('Lock','Unlock')])if(button&&button.parentElement===t)t.appendChild(button);
   const count=t.querySelector('.object-management-count');if(count)t.appendChild(count);
 }
 function sync(){
@@ -42,6 +40,7 @@ schedule();
 window.addEventListener('boxlab-object-manager-ready',schedule);
 window.addEventListener('boxlab-bridge-state',()=>setTimeout(sync,0));
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
-new MutationObserver(()=>queueMicrotask(sync)).observe(document.body,{childList:true,subtree:true});
+const objectsDrawerContent=document.querySelector('#objectsDrawer .drawer-content');
+if(objectsDrawerContent)new MutationObserver(()=>queueMicrotask(sync)).observe(objectsDrawerContent,{childList:true});
 
 globalThis.__boxlabObjectSelectionLayout={version:VERSION,sync};
