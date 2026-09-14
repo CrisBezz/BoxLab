@@ -1,11 +1,13 @@
-// BoxLab v0.36.18.215 — restore proven conforming convex Boolean path after 214 BSP regression.
-// Keeps 213 Object-selection layout; isolates the general BSP engine for later bench testing.
+// BoxLab v0.36.18.216 — stable-first hybrid Boolean dispatcher.
+// Proven 215 convex path remains default; sequential BSP is used only after an explicit convex-only refusal.
 import * as THREE from 'three';
 import { EditableMesh } from './mesh.js';
 import { meshIntersections, epsilonForMeshes } from './boolean-intersections.js?v=0.36.18.209';
 import { topologyInfo } from './boolean-classify.js?v=0.36.18.210';
+import { booleanBSP } from './boolean-bsp.js?v=0.36.18.214';
 
-const VERSION='0.36.18.215';
+const VERSION='0.36.18.216';
+const CONVEX_ONLY='Current Boolean supports convex solids only';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 
@@ -49,7 +51,7 @@ function buildConvexPlanes(mesh,eps){
     const normal=newell(points);if(normal.lengthSq()<=eps*eps)return{ok:false,reason:'Degenerate face in Boolean input'};normal.normalize();
     const fc=centroid(points);if(normal.dot(center.clone().sub(fc))>0)normal.negate();
     const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,points[0]);
-    for(const v of mesh.vertices)if(plane.distanceToPoint(v)>eps*24)return{ok:false,reason:'Current Boolean supports convex solids only'};
+    for(const v of mesh.vertices)if(plane.distanceToPoint(v)>eps*24)return{ok:false,reason:CONVEX_ONLY};
     planes.push({plane,faceIndex});
   }
   return{ok:true,planes};
@@ -123,7 +125,7 @@ function assemble(polygons,eps){
   }
   return new EditableMesh(vertices,faces);
 }
-function buildResult(a,b,operation){
+function buildStableResult(a,b,operation){
   const eps=epsilonForMeshes(a,b),pa=buildConvexPlanes(a,eps),pb=buildConvexPlanes(b,eps);
   if(!pa.ok||!pb.ok)return{ok:false,reason:!pa.ok?pa.reason:pb.reason};
   const intersections=meshIntersections(a,b);
@@ -135,16 +137,23 @@ function buildResult(a,b,operation){
   if(!polygons.length)return{ok:false,reason:'Boolean result is empty'};
   const mesh=assemble(polygons,eps),gate=globalThis.__boxlabTopologyGate?.validate?.(mesh)||null,topology=topologyInfo(mesh);
   if(!topology.closed||gate&&!gate.booleanReady)return{ok:false,reason:`Prototype result failed topology validation${gate?` • ${gate.boundaryEdges} boundary / ${gate.nonManifoldEdges} non-manifold edges`:''}`,gate,topology};
-  return{ok:true,mesh,gate,topology,intersections,fragmentCounts:{aInside:fa.inside.length,aOutside:fa.outside.length,bInside:fb.inside.length,bOutside:fb.outside.length}};
+  return{ok:true,mesh,gate,topology,intersections,engine:'stable',fragmentCounts:{aInside:fa.inside.length,aOutside:fa.outside.length,bInside:fb.inside.length,bOutside:fb.outside.length}};
+}
+function buildResult(a,b,operation){
+  const stable=buildStableResult(a,b,operation);
+  if(stable.ok||stable.reason!==CONVEX_ONLY)return stable;
+  const sequential=booleanBSP(a,b,operation);
+  if(sequential.ok)return{...sequential,engine:'sequential'};
+  return{...sequential,engine:'sequential',reason:`Sequential Boolean refused • ${sequential.reason||'general solver failed'}`};
 }
 function ensureUI(){
   if(!objectTools)return null;
-  document.querySelector('#booleanPrototype211')?.remove();document.querySelector('#booleanPrototype212')?.remove();document.querySelector('#booleanPrototype214')?.remove();
-  let group=document.querySelector('#booleanPrototype215');if(group)return group;
-  group=document.createElement('div');group.id='booleanPrototype215';group.style.cssText='margin:7px 0 3px';
-  const label=document.createElement('div');label.textContent='BOOLEAN • STABLE';label.style.cssText='font-size:9px;letter-spacing:.35px;opacity:.55;margin:0 0 4px 1px';
+  document.querySelector('#booleanPrototype211')?.remove();document.querySelector('#booleanPrototype212')?.remove();document.querySelector('#booleanPrototype214')?.remove();document.querySelector('#booleanPrototype215')?.remove();
+  let group=document.querySelector('#booleanPrototype216');if(group)return group;
+  group=document.createElement('div');group.id='booleanPrototype216';group.style.cssText='margin:7px 0 3px';
+  const label=document.createElement('div');label.textContent='BOOLEAN • STABLE + SEQUENTIAL';label.style.cssText='font-size:9px;letter-spacing:.35px;opacity:.55;margin:0 0 4px 1px';
   const row=document.createElement('div');row.className='outliner-actions';row.style.cssText='grid-template-columns:repeat(3,minmax(0,1fr));gap:4px';
-  for(const [op,text] of [['union','Union'],['difference','Cut'],['intersection','Intersect']]){const b=document.createElement('button');b.type='button';b.dataset.boolean215=op;b.textContent=text;b.style.cssText='min-width:0;padding:5px 3px;font-size:10px';row.appendChild(b);}
+  for(const [op,text] of [['union','Union'],['difference','Cut'],['intersection','Intersect']]){const b=document.createElement('button');b.type='button';b.dataset.boolean216=op;b.textContent=text;b.style.cssText='min-width:0;padding:5px 3px;font-size:10px';row.appendChild(b);}
   group.append(label,row);objectTools.appendChild(group);return group;
 }
 function eligibility(){
@@ -159,7 +168,7 @@ function eligibility(){
 }
 function sync(){
   const group=ensureUI();if(!group)return false;const e=eligibility();
-  group.querySelectorAll('[data-boolean215]').forEach(button=>{button.disabled=!e.ok;button.title=e.ok?(button.dataset.boolean215==='difference'?`Cut ${e.other.name} from active ${e.active.name}`:`${button.textContent}: ${e.active.name} + ${e.other.name}`):e.reason;});return e;
+  group.querySelectorAll('[data-boolean216]').forEach(button=>{button.disabled=!e.ok;button.title=e.ok?(button.dataset.boolean216==='difference'?`Cut ${e.other.name} from active ${e.active.name}`:`${button.textContent}: ${e.active.name} + ${e.other.name}`):e.reason;});return e;
 }
 function apply(operation){
   const e=eligibility();if(!e.ok){setStatus(`Boolean • ${e.reason}`);return;}
@@ -173,14 +182,14 @@ function apply(operation){
   if(!created){e.active.visible=true;e.other.visible=true;setStatus(`Boolean ${label} failed • result object could not be created`);return;}
   selection()?.select?.([created.id]);
   globalThis.__boxlabTopologyGate?.sync?.();
-  setStatus(`${label} created • ${result.mesh.vertices.length} verts • ${result.mesh.faces.length} faces • originals hidden`);
+  setStatus(`${label} created • ${result.mesh.vertices.length} verts • ${result.mesh.faces.length} faces • ${result.engine==='sequential'?'sequential solver':'stable solver'} • originals hidden`);
 }
 
 ensureUI();
-document.addEventListener('click',event=>{const button=event.target?.closest?.('[data-boolean215]');if(!button)return;event.preventDefault();event.stopImmediatePropagation();apply(button.dataset.boolean215);},true);
+document.addEventListener('click',event=>{const button=event.target?.closest?.('[data-boolean216]');if(!button)return;event.preventDefault();event.stopImmediatePropagation();apply(button.dataset.boolean216);},true);
 window.addEventListener('boxlab-object-manager-ready',()=>setTimeout(sync,0));
 window.addEventListener('boxlab-bridge-state',()=>setTimeout(sync,0));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 [0,100,400,900].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabBooleanPrototype={version:VERSION,buildResult,apply,sync};
+globalThis.__boxlabBooleanPrototype={version:VERSION,buildStableResult,buildResult,apply,sync};
