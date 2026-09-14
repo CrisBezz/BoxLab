@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {splitEdgeByIndex,splitEdgeByKey} from './topology-kernel.js?v=0.36.18.206';
+import {splitEdgeByIndex,splitEdgeByKey,splitFace,restoreMesh} from './topology-kernel.js?v=0.36.18.207';
 
 const canvas=document.querySelector('#viewport');
 const button=document.querySelector('#faceSplitBtn');
@@ -30,16 +30,19 @@ canvas?.addEventListener('pointerdown',event=>{
   const firstIndex=indexForKey(mesh,first.key),firstEdge=mesh.edges()[firstIndex];
   if(!firstEdge||first.key===edgeKey(mesh,edge))return;
   const shared=(firstEdge.faces||[]).filter(fi=>(edge.faces||[]).includes(fi)&&Array.isArray(mesh.faces[fi])&&mesh.faces[fi].length>=4&&faceHasNonAdjacentEdges(mesh.faces[fi],firstEdge,edge));
-  if(!shared.length){first=null;bridge()?.set?.('edge',[index]);if(status)status.textContent='Face Split needs two non-adjacent edges on the same ngon • choose the first edge again';return;}
+  if(shared.length!==1){first=null;bridge()?.set?.('edge',[index]);if(status)status.textContent=shared.length?'Face Split is ambiguous across multiple faces • choose different edges':'Face Split needs two non-adjacent edges on the same ngon • choose the first edge again';return;}
 
-  const before=mesh.clone(),secondKey=edgeKey(mesh,edge);
+  const before=mesh.clone(),beforeGate=globalThis.__boxlabTopologyGate?.validate?.(mesh)||null,secondKey=edgeKey(mesh,edge),targetFace=shared[0];
   const aResult=splitEdgeByIndex(mesh,firstIndex,.5,{allowBoundary:true});
   const bResult=aResult.ok?splitEdgeByKey(mesh,secondKey,.5,{allowBoundary:true}):aResult;
-  const result=aResult.ok&&bResult.ok?mesh.connectVertices(aResult.vertex,bResult.vertex):null;
-  if(!result?.ok){mesh.vertices=before.vertices.map(v=>v.clone());mesh.faces=before.faces.map(face=>[...face]);mesh.creases=new Map(before.creases);first=null;render();if(status)status.textContent=`Face Split could not make a clean cut${!aResult.ok?` • ${aResult.reason}`:!bResult.ok?` • ${bResult.reason}`:''}`;return;}
+  const faceResult=aResult.ok&&bResult.ok?splitFace(mesh,aResult.vertex,bResult.vertex,{faceIndex:targetFace}):null;
+  const afterGate=faceResult?.ok?(globalThis.__boxlabTopologyGate?.validate?.(mesh)||null):null;
+  const failed=!aResult.ok||!bResult.ok||!faceResult?.ok||(afterGate&&!afterGate.valid);
+  if(failed){restoreMesh(mesh,before);first=null;render();globalThis.__boxlabTopologyGate?.sync?.();const reason=!aResult.ok?aResult.reason:!bResult.ok?bResult.reason:!faceResult?.ok?faceResult?.reason:'Topology validation failed';if(status)status.textContent=`Face Split rolled back • ${reason}`;return;}
+
   globalThis.__boxlabHistory?.push(before);
-  const newIndex=indexForKey(mesh,result.edgeKey);first=null;bridge()?.set?.('edge',newIndex>=0?[newIndex]:[]);render();
-  if(status)status.textContent='Face Split committed • canonical edge split preserved incident faces/creases';
+  const newIndex=indexForKey(mesh,faceResult.edgeKey);first=null;bridge()?.set?.('edge',newIndex>=0?[newIndex]:[]);render();globalThis.__boxlabTopologyGate?.sync?.();
+  if(status)status.textContent=`Face Split committed • canonical edge + face kernel${beforeGate&&!beforeGate.valid?' • source mesh had pre-existing issues':''}`;
 },true);
 
-globalThis.__boxlabFaceSplit={version:'0.36.18.206',kernel:'0.36.18.206'};
+globalThis.__boxlabFaceSplit={version:'0.36.18.207',kernel:'0.36.18.207'};

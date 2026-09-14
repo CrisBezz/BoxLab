@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.206 — canonical topology mutation kernel.
-// One authoritative edge split for modelling tools and future Boolean intersection insertion.
+// BoxLab v0.36.18.207 — canonical topology mutation kernel.
+// Shared edge insertion + polygon face fragmentation for modelling tools and future Boolean operations.
 import * as THREE from 'three';
 
-const VERSION='0.36.18.206';
+const VERSION='0.36.18.207';
 const MIN_T=1e-5;
 
 function edgeKey(mesh,a,b){return mesh?.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
@@ -14,7 +14,7 @@ function edgeOccurrences(mesh,a,b){
     if(!Array.isArray(face)||face.length<3)return;
     for(let i=0;i<face.length;i++){
       const x=face[i],y=face[(i+1)%face.length];
-      if((x===a&&y===b)||(x===b&&y===a)) occurrences.push({faceIndex,slot:i,forward:x===a&&y===b});
+      if((x===a&&y===b)||(x===b&&y===a))occurrences.push({faceIndex,slot:i,forward:x===a&&y===b});
     }
   });
   return occurrences;
@@ -41,35 +41,22 @@ function splitEdge(mesh,a,b,t=.5,options={}){
   const amount=THREE.MathUtils.clamp(Number(t)||.5,MIN_T,1-MIN_T);
   const point=mesh.vertices[a].clone().lerp(mesh.vertices[b],amount);
   if(!Number.isFinite(point.x)||!Number.isFinite(point.y)||!Number.isFinite(point.z))return{ok:false,reason:'Invalid split position'};
-
-  // Pre-build every incident face before mutating the mesh so failure is atomic.
   const replacements=[];
   for(const occurrence of check.occurrences){
     const face=mesh.faces[occurrence.faceIndex];
     if(!Array.isArray(face)||face.length<3)return{ok:false,reason:'Invalid incident face'};
-    const out=[...face];
-    replacements.push({faceIndex:occurrence.faceIndex,slot:occurrence.slot,face:out});
+    replacements.push({faceIndex:occurrence.faceIndex,slot:occurrence.slot,face:[...face]});
   }
-
   const vertex=mesh.vertices.length;
   replacements.forEach(item=>item.face.splice(item.slot+1,0,vertex));
   mesh.vertices.push(point);
   replacements.forEach(item=>{mesh.faces[item.faceIndex]=item.face;});
-
   const crease=mesh.creases instanceof Map?(mesh.creases.get(check.key)||0):0;
   if(mesh.creases instanceof Map){
     mesh.creases.delete(check.key);
-    if(crease>0){
-      mesh.creases.set(edgeKey(mesh,a,vertex),crease);
-      mesh.creases.set(edgeKey(mesh,vertex,b),crease);
-    }
+    if(crease>0){mesh.creases.set(edgeKey(mesh,a,vertex),crease);mesh.creases.set(edgeKey(mesh,vertex,b),crease);}
   }
-
-  return{
-    ok:true,vertex,position:amount,oldEdgeKey:check.key,
-    edgeKeys:[edgeKey(mesh,a,vertex),edgeKey(mesh,vertex,b)],
-    incidentFaces:[...check.faces],boundary:check.boundary,manifold:check.manifold,crease
-  };
+  return{ok:true,vertex,position:amount,oldEdgeKey:check.key,edgeKeys:[edgeKey(mesh,a,vertex),edgeKey(mesh,vertex,b)],incidentFaces:[...check.faces],boundary:check.boundary,manifold:check.manifold,crease};
 }
 
 function splitEdgeByIndex(mesh,edgeIndex,t=.5,options={}){
@@ -85,5 +72,54 @@ function splitEdgeByKey(mesh,key,t=.5,options={}){
   return splitEdge(mesh,parts[0],parts[1],t,options);
 }
 
-export {VERSION,edgeKey,edgeOccurrences,inspectEdge,splitEdge,splitEdgeByIndex,splitEdgeByKey};
-globalThis.__boxlabTopologyKernel={version:VERSION,edgeKey,edgeOccurrences,inspectEdge,splitEdge,splitEdgeByIndex,splitEdgeByKey};
+function walkFace(face,start,end){
+  const path=[];let i=start;
+  for(let guard=0;guard<=face.length;guard++){
+    path.push(face[i]);
+    if(i===end)return path;
+    i=(i+1)%face.length;
+  }
+  return null;
+}
+
+function inspectFaceSplit(mesh,a,b,{faceIndex=null}={}){
+  if(!mesh?.vertices||!mesh?.faces)return{ok:false,reason:'No editable mesh'};
+  if(!Number.isInteger(a)||!Number.isInteger(b)||a===b||!mesh.vertices[a]||!mesh.vertices[b])return{ok:false,reason:'Invalid split vertices'};
+  if(edgeOccurrences(mesh,a,b).length)return{ok:false,reason:'Vertices already share an edge'};
+  const candidates=[];
+  mesh.faces.forEach((face,index)=>{
+    if(faceIndex!==null&&index!==faceIndex)return;
+    if(!Array.isArray(face)||face.length<4)return;
+    const ia=face.indexOf(a),ib=face.indexOf(b);
+    if(ia<0||ib<0)return;
+    const n=face.length;
+    if(face[(ia+1)%n]===b||face[(ia-1+n)%n]===b)return;
+    const pathA=walkFace(face,ia,ib),pathB=walkFace(face,ib,ia);
+    if(!pathA||!pathB||pathA.length<3||pathB.length<3)return;
+    if(new Set(pathA).size!==pathA.length||new Set(pathB).size!==pathB.length)return;
+    candidates.push({faceIndex:index,pathA,pathB});
+  });
+  if(!candidates.length)return{ok:false,reason:'Vertices do not define a clean split on one polygon face'};
+  if(candidates.length>1)return{ok:false,reason:'Split is ambiguous across multiple faces'};
+  const candidate=candidates[0];
+  return{ok:true,a,b,faceIndex:candidate.faceIndex,pathA:candidate.pathA,pathB:candidate.pathB,newEdgeKey:edgeKey(mesh,a,b)};
+}
+
+function splitFace(mesh,a,b,options={}){
+  const check=inspectFaceSplit(mesh,a,b,options);
+  if(!check.ok)return check;
+  const replacementA=[...check.pathA],replacementB=[...check.pathB];
+  mesh.faces.splice(check.faceIndex,1,replacementA,replacementB);
+  return{ok:true,faceIndex:check.faceIndex,faceIndices:[check.faceIndex,check.faceIndex+1],faces:[replacementA,replacementB],edgeKey:check.newEdgeKey};
+}
+
+function restoreMesh(mesh,snapshot){
+  if(!mesh||!snapshot)return false;
+  mesh.vertices=snapshot.vertices.map(v=>v.clone());
+  mesh.faces=snapshot.faces.map(face=>[...face]);
+  mesh.creases=new Map(snapshot.creases||[]);
+  return true;
+}
+
+export {VERSION,edgeKey,edgeOccurrences,inspectEdge,splitEdge,splitEdgeByIndex,splitEdgeByKey,inspectFaceSplit,splitFace,restoreMesh};
+globalThis.__boxlabTopologyKernel={version:VERSION,edgeKey,edgeOccurrences,inspectEdge,splitEdge,splitEdgeByIndex,splitEdgeByKey,inspectFaceSplit,splitFace,restoreMesh};
