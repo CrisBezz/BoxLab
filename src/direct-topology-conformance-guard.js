@@ -1,10 +1,8 @@
-// BoxLab v0.36.18.237 — closed-shell guard for direct Inset / Extrude commits.
-// Runs outside the proven Through kernel: repair boundary T-junctions or roll back cleanly.
+// BoxLab v0.36.18.238 — closed-shell guard for direct Inset / Extrude commits.
+// 238 direct-commit integrity now owns the capture-phase final-state check.
 import {gateClosedEdit,topologySummary} from './topology-seam-conformance.js?v=0.36.18.236';
-import './sequential-through-integrity.js?v=0.36.18.237';
-import './scene-transaction-history.js?v=0.36.18.237';
 
-const VERSION='0.36.18.237';
+const VERSION='0.36.18.238';
 const canvas=document.querySelector('#viewport');
 const extrudeButton=document.querySelector('#extrudeBtn');
 const insetButton=document.querySelector('#insetBtn');
