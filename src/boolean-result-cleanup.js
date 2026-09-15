@@ -1,10 +1,10 @@
-// BoxLab v0.36.18.230 — conservative planar-region + collinear-boundary post-Boolean cleanup.
+// BoxLab v0.36.18.231 — conservative planar-region + collinear-boundary + orphan-vertex post-Boolean cleanup.
 // The proven Boolean solver remains untouched. This module only decorates the next
 // Boolean result passed to ObjectManager.addMesh, validates it, and falls back to
 // the original result whenever cleanup is not demonstrably safe.
-const VERSION='0.36.18.230';
+const VERSION='0.36.18.231';
 let pending=false,installed=false;
-let last={applied:false,merges:0,collinearRemoved:0,facesReduced:0,reason:'Not run'};
+let last={applied:false,merges:0,collinearRemoved:0,orphanRemoved:0,facesReduced:0,reason:'Not run'};
 
 function edgeKey(a,b){return a<b?`${a}:${b}`:`${b}:${a}`;}
 function sub(a,b){return{x:a.x-b.x,y:a.y-b.y,z:a.z-b.z};}
@@ -153,27 +153,50 @@ function collinearCleanup(mesh,maxRemovals=1000){
   while(removed<maxRemovals&&removeCollinearOne(mesh))removed++;
   return removed;
 }
+function compactUnusedVertices(mesh){
+  if(!Array.isArray(mesh?.vertices)||!Array.isArray(mesh?.faces))return 0;
+  const usedSet=new Set();
+  for(const face of mesh.faces)for(const index of face)usedSet.add(index);
+  if(usedSet.size===mesh.vertices.length)return 0;
+  const used=[...usedSet].sort((a,b)=>a-b);
+  if(!used.length)return 0;
+  const remap=new Map(used.map((oldIndex,newIndex)=>[oldIndex,newIndex]));
+  const nextVertices=used.map(index=>mesh.vertices[index]?.clone?.()||mesh.vertices[index]);
+  const nextFaces=mesh.faces.map(face=>face.map(index=>remap.get(index)));
+  const nextCreases=new Map();
+  if(mesh.creases instanceof Map){
+    for(const [key,strength] of mesh.creases){
+      const [aText,bText]=String(key).split(':'),a=Number(aText),b=Number(bText);
+      if(!remap.has(a)||!remap.has(b))continue;
+      nextCreases.set(edgeKey(remap.get(a),remap.get(b)),strength);
+    }
+  }
+  const removed=mesh.vertices.length-nextVertices.length;
+  mesh.vertices=nextVertices;mesh.faces=nextFaces;
+  if(mesh.creases instanceof Map)mesh.creases=nextCreases;
+  return removed;
+}
 function clean(mesh){
   const gate=globalThis.__boxlabTopologyGate;
-  if(!mesh?.clone||!gate?.validate)return{mesh,applied:false,merges:0,collinearRemoved:0,facesReduced:0,reason:'Topology validation unavailable'};
+  if(!mesh?.clone||!gate?.validate)return{mesh,applied:false,merges:0,collinearRemoved:0,orphanRemoved:0,facesReduced:0,reason:'Topology validation unavailable'};
   const before=gate.validate(mesh);
-  if(!before?.valid||!before?.booleanReady)return{mesh,applied:false,merges:0,collinearRemoved:0,facesReduced:0,reason:'Original Boolean result not cleanup-safe',before};
+  if(!before?.valid||!before?.booleanReady)return{mesh,applied:false,merges:0,collinearRemoved:0,orphanRemoved:0,facesReduced:0,reason:'Original Boolean result not cleanup-safe',before};
   const candidate=mesh.clone(),beforeFaces=candidate.faces.length;
-  const merges=planarCleanup(candidate),collinearRemoved=collinearCleanup(candidate);
-  if(!merges&&!collinearRemoved)return{mesh,applied:false,merges:0,collinearRemoved:0,facesReduced:0,reason:'No safe planar or collinear cleanup',before};
+  const merges=planarCleanup(candidate),collinearRemoved=collinearCleanup(candidate),orphanRemoved=compactUnusedVertices(candidate);
+  if(!merges&&!collinearRemoved&&!orphanRemoved)return{mesh,applied:false,merges:0,collinearRemoved:0,orphanRemoved:0,facesReduced:0,reason:'No safe planar, collinear or orphan cleanup',before};
   candidate.edges?.();
   const after=gate.validate(candidate),facesReduced=beforeFaces-candidate.faces.length;
   const worsened=!after?.valid||!after?.booleanReady||
     Number(after.boundaryEdges||0)>Number(before.boundaryEdges||0)||
     Number(after.nonManifoldEdges||0)>Number(before.nonManifoldEdges||0)||
     (merges>0&&facesReduced<=0);
-  if(worsened)return{mesh,applied:false,merges:0,collinearRemoved:0,facesReduced:0,reason:'Cleanup validation refused — original retained',before,after};
-  return{mesh:candidate,applied:true,merges,collinearRemoved,facesReduced,reason:'Safe planar-region and collinear-boundary cleanup applied',before,after};
+  if(worsened)return{mesh,applied:false,merges:0,collinearRemoved:0,orphanRemoved:0,facesReduced:0,reason:'Cleanup validation refused — original retained',before,after};
+  return{mesh:candidate,applied:true,merges,collinearRemoved,orphanRemoved,facesReduced,reason:'Safe planar, collinear and orphan-vertex cleanup applied',before,after};
 }
 function manager(){return globalThis.__boxlabObjectManager||null;}
 function install(){
   const m=manager();if(!m?.addMesh)return false;
-  if(m.__boxlabBooleanCleanup230){installed=true;return true;}
+  if(m.__boxlabBooleanCleanup231){installed=true;return true;}
   const baseAdd=m.addMesh.bind(m);
   m.addMesh=function(mesh,name='Object',options={}){
     let next=mesh;
@@ -184,7 +207,7 @@ function install(){
     }
     return baseAdd(next,name,options);
   };
-  m.__boxlabBooleanCleanup230=true;installed=true;return true;
+  m.__boxlabBooleanCleanup231=true;installed=true;return true;
 }
 
 document.addEventListener('click',event=>{
