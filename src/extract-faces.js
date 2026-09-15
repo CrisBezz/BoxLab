@@ -52,6 +52,9 @@ function extractFaces() {
   const extracted = compactMesh(mesh, extractedFaces);
   if (!extracted.faces.length) return;
 
+  // Extract is a scene transaction: source edit + new object must undo/redo together.
+  const sceneCheckpoint = !!globalThis.__boxlabObjectHistory?.checkpoint?.();
+
   // Keeping a non-empty source avoids leaving the Outliner with an unusable
   // blank object when every face happens to be selected.
   if (remainingFaces.length) {
@@ -62,7 +65,7 @@ function extractFaces() {
     mesh.creases = remaining.creases;
     mesh.looseEdges = new Set(remaining.looseEdges || []);
     mesh.looseVertices = new Set(remaining.looseVertices || []);
-    globalThis.__boxlabHistory?.push(before);
+    if (!sceneCheckpoint) globalThis.__boxlabHistory?.push(before);
   }
 
   const object = manager?.addMesh?.(extracted, 'Extracted Faces', { enterObjectMode:true });
@@ -71,7 +74,7 @@ function extractFaces() {
     return;
   }
   render();
-  if (status) status.textContent = remainingFaces.length ? `${object.name} created • source faces removed` : `${object.name} created • source kept intact`;
+  if (status) status.textContent = remainingFaces.length ? `${object.name} created • source faces removed • Undo restores scene` : `${object.name} created • source kept intact • Undo restores scene`;
 }
 
 button?.addEventListener('click', extractFaces);
