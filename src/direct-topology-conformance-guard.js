@@ -1,6 +1,9 @@
 // BoxLab v0.36.18.238 — closed-shell guard for direct Inset / Extrude commits.
 // 238 direct-commit integrity now owns the capture-phase final-state check.
 import {gateClosedEdit,topologySummary} from './topology-seam-conformance.js?v=0.36.18.236';
+import './direct-commit-integrity-238.js?v=0.36.18.238';
+import './extract-scene-history-238.js?v=0.36.18.238';
+import './scene-obj-export-238.js?v=0.36.18.238';
 
 const VERSION='0.36.18.238';
 const canvas=document.querySelector('#viewport');
