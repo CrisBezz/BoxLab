@@ -1,119 +1,136 @@
-// BoxLab v0.36.18.227 — conservative post-Boolean topology cleanup.
+// BoxLab v0.36.18.228 — conservative planar-region post-Boolean cleanup.
 // The proven Boolean solver remains untouched. This module only decorates the next
 // Boolean result passed to ObjectManager.addMesh, validates it, and falls back to
 // the original result whenever cleanup is not demonstrably safe.
-const VERSION='0.36.18.227';
+const VERSION='0.36.18.228';
 let pending=false,installed=false;
-let last={applied:false,quads:0,trianglesRemoved:0,reason:'Not run'};
+let last={applied:false,merges:0,facesReduced:0,reason:'Not run'};
 
 function edgeKey(a,b){return a<b?`${a}:${b}`:`${b}:${a}`;}
-function directed(face,a,b){
-  for(let i=0;i<face.length;i++){
-    const x=face[i],y=face[(i+1)%face.length];
-    if(x===a&&y===b)return 1;
-    if(x===b&&y===a)return -1;
-  }
-  return 0;
-}
 function sub(a,b){return{x:a.x-b.x,y:a.y-b.y,z:a.z-b.z};}
 function cross(a,b){return{x:a.y*b.z-a.z*b.y,y:a.z*b.x-a.x*b.z,z:a.x*b.y-a.y*b.x};}
 function dot(a,b){return a.x*b.x+a.y*b.y+a.z*b.z;}
-function normalOf(mesh,face){
-  if(!mesh||!face||face.length<3)return null;
-  const a=mesh.vertices?.[face[0]],b=mesh.vertices?.[face[1]],c=mesh.vertices?.[face[2]];
-  if(!a||!b||!c)return null;
-  const n=cross(sub(b,a),sub(c,a)),length=Math.hypot(n.x,n.y,n.z);
-  return length>1e-12?{x:n.x/length,y:n.y/length,z:n.z/length}:null;
-}
-function mergedCycle(mesh,faceA,faceB){
-  const shared=[...new Set(faceA.filter(v=>faceB.includes(v)))];
-  if(shared.length!==2)return null;
-  const [s0,s1]=shared,d0=directed(faceA,s0,s1),d1=directed(faceB,s0,s1);
-  if(!d0||!d1||d0===d1)return null;
-  const sharedKey=edgeKey(s0,s1),boundary=[];
-  for(const face of [faceA,faceB])for(let i=0;i<3;i++){
-    const a=face[i],b=face[(i+1)%3];
-    if(edgeKey(a,b)!==sharedKey)boundary.push([a,b]);
+function length(v){return Math.hypot(v.x,v.y,v.z);}
+function newell(mesh,face){
+  if(!mesh||!Array.isArray(face)||face.length<3)return null;
+  let x=0,y=0,z=0;
+  for(let i=0;i<face.length;i++){
+    const a=mesh.vertices?.[face[i]],b=mesh.vertices?.[face[(i+1)%face.length]];
+    if(!a||!b)return null;
+    x+=(a.y-b.y)*(a.z+b.z);y+=(a.z-b.z)*(a.x+b.x);z+=(a.x-b.x)*(a.y+b.y);
   }
-  if(boundary.length!==4)return null;
-  const cycle=[boundary[0][0]],used=new Set();let current=cycle[0];
-  for(let step=0;step<4;step++){
-    let pick=-1;
-    for(let i=0;i<boundary.length;i++)if(!used.has(i)&&boundary[i][0]===current){pick=i;break;}
-    if(pick<0)return null;
-    used.add(pick);current=boundary[pick][1];if(step<3)cycle.push(current);
-  }
-  if(current!==cycle[0]||new Set(cycle).size!==4)return null;
-  return cycle;
+  const l=Math.hypot(x,y,z);return l>1e-12?{x:x/l,y:y/l,z:z/l}:null;
 }
-function validQuadGeometry(mesh,cycle,nRef){
-  if(!cycle||cycle.length!==4)return false;
-  const points=cycle.map(i=>mesh.vertices?.[i]);if(points.some(p=>!p))return false;
-  let sign=0;
-  for(let i=0;i<4;i++){
-    const a=points[i],b=points[(i+1)%4],c=points[(i+2)%4];
-    const s=dot(cross(sub(b,a),sub(c,b)),nRef);
-    if(Math.abs(s)<1e-10)return false;
-    const now=Math.sign(s);if(!sign)sign=now;else if(now!==sign)return false;
-  }
-  return true;
+function scaleOf(mesh){
+  if(!mesh?.vertices?.length)return 1;
+  let minX=Infinity,minY=Infinity,minZ=Infinity,maxX=-Infinity,maxY=-Infinity,maxZ=-Infinity;
+  for(const p of mesh.vertices){minX=Math.min(minX,p.x);minY=Math.min(minY,p.y);minZ=Math.min(minZ,p.z);maxX=Math.max(maxX,p.x);maxY=Math.max(maxY,p.y);maxZ=Math.max(maxZ,p.z);}
+  return Math.max(1,Math.hypot(maxX-minX,maxY-minY,maxZ-minZ));
 }
-function safePairs(mesh){
-  const edgeFaces=new Map();
-  for(let fi=0;fi<(mesh.faces?.length||0);fi++){
-    const face=mesh.faces[fi];if(!Array.isArray(face)||face.length<3)continue;
-    for(let i=0;i<face.length;i++){
-      const key=edgeKey(face[i],face[(i+1)%face.length]);
-      if(!edgeFaces.has(key))edgeFaces.set(key,[]);
-      edgeFaces.get(key).push(fi);
+function directedSharedEdge(faceA,faceB){
+  const shared=[];
+  for(let i=0;i<faceA.length;i++){
+    const a=faceA[i],b=faceA[(i+1)%faceA.length],key=edgeKey(a,b);
+    for(let j=0;j<faceB.length;j++){
+      const c=faceB[j],d=faceB[(j+1)%faceB.length];
+      if(edgeKey(c,d)===key)shared.push({a,b,c,d,key});
     }
   }
-  const used=new Set(),pairs=[];
-  for(const indices of edgeFaces.values()){
-    if(indices.length!==2)continue;
-    const [a,b]=indices;if(used.has(a)||used.has(b))continue;
-    const faceA=mesh.faces[a],faceB=mesh.faces[b];
-    if(faceA?.length!==3||faceB?.length!==3)continue;
-    const nA=normalOf(mesh,faceA),nB=normalOf(mesh,faceB);
-    if(!nA||!nB||dot(nA,nB)<0.999999)continue;
-    const cycle=mergedCycle(mesh,faceA,faceB);
-    if(!cycle||!validQuadGeometry(mesh,cycle,nA))continue;
-    const nQ=normalOf(mesh,[cycle[0],cycle[1],cycle[2]]);
-    if(!nQ||dot(nQ,nA)<0.999999)continue;
-    pairs.push({a,b,cycle});used.add(a);used.add(b);
+  if(shared.length!==1)return null;
+  const s=shared[0];
+  return s.a===s.d&&s.b===s.c?s:null;
+}
+function mergedCycle(faceA,faceB,shared){
+  const edges=[];
+  for(const face of [faceA,faceB])for(let i=0;i<face.length;i++){
+    const a=face[i],b=face[(i+1)%face.length];
+    if(edgeKey(a,b)!==shared.key)edges.push([a,b]);
   }
-  return pairs;
+  if(edges.length<3)return null;
+  const outgoing=new Map(),incoming=new Map();
+  for(let i=0;i<edges.length;i++){
+    const [a,b]=edges[i];
+    if(outgoing.has(a)||incoming.has(b))return null;
+    outgoing.set(a,{b,i});incoming.set(b,{a,i});
+  }
+  const start=edges[0][0],cycle=[start],used=new Set();let current=start;
+  for(let step=0;step<edges.length;step++){
+    const next=outgoing.get(current);if(!next||used.has(next.i))return null;
+    used.add(next.i);current=next.b;
+    if(step<edges.length-1)cycle.push(current);
+  }
+  if(current!==start||used.size!==edges.length||new Set(cycle).size!==cycle.length)return null;
+  return cycle;
+}
+function coplanarAndConvex(mesh,cycle,nRef,eps){
+  if(!cycle||cycle.length<3)return false;
+  const pts=cycle.map(i=>mesh.vertices?.[i]);if(pts.some(p=>!p))return false;
+  const origin=pts[0];
+  for(const p of pts)if(Math.abs(dot(sub(p,origin),nRef))>eps)return false;
+  let sign=0,turns=0;
+  for(let i=0;i<pts.length;i++){
+    const a=pts[i],b=pts[(i+1)%pts.length],c=pts[(i+2)%pts.length];
+    const s=dot(cross(sub(b,a),sub(c,b)),nRef);
+    if(Math.abs(s)<=eps*eps)continue;
+    const now=Math.sign(s);turns++;
+    if(!sign)sign=now;else if(now!==sign)return false;
+  }
+  if(turns<3)return false;
+  const n=newell(mesh,cycle);return !!n&&dot(n,nRef)>0.999999;
+}
+function edgeFaces(mesh){
+  const map=new Map();
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const face=mesh.faces[fi];
+    for(let i=0;i<face.length;i++){
+      const key=edgeKey(face[i],face[(i+1)%face.length]);
+      if(!map.has(key))map.set(key,[]);map.get(key).push(fi);
+    }
+  }
+  return map;
+}
+function mergeOne(mesh){
+  const eps=scaleOf(mesh)*1e-8,uses=edgeFaces(mesh);
+  for(const indices of uses.values()){
+    if(indices.length!==2)continue;
+    const [a,b]=indices,faceA=mesh.faces[a],faceB=mesh.faces[b];
+    const nA=newell(mesh,faceA),nB=newell(mesh,faceB);
+    if(!nA||!nB||dot(nA,nB)<0.999999)continue;
+    const shared=directedSharedEdge(faceA,faceB);if(!shared)continue;
+    const cycle=mergedCycle(faceA,faceB,shared);if(!cycle||!coplanarAndConvex(mesh,cycle,nA,eps))continue;
+    const keep=Math.min(a,b),drop=Math.max(a,b),next=[];
+    for(let i=0;i<mesh.faces.length;i++){
+      if(i===drop)continue;
+      next.push(i===keep?[...cycle]:[...mesh.faces[i]]);
+    }
+    mesh.faces=next;return true;
+  }
+  return false;
+}
+function planarCleanup(mesh,maxMerges=1000){
+  let merges=0;
+  while(merges<maxMerges&&mergeOne(mesh))merges++;
+  return merges;
 }
 function clean(mesh){
   const gate=globalThis.__boxlabTopologyGate;
-  if(!mesh?.clone||!gate?.validate)return{mesh,applied:false,quads:0,trianglesRemoved:0,reason:'Topology validation unavailable'};
+  if(!mesh?.clone||!gate?.validate)return{mesh,applied:false,merges:0,facesReduced:0,reason:'Topology validation unavailable'};
   const before=gate.validate(mesh);
-  if(!before?.valid||!before?.booleanReady)return{mesh,applied:false,quads:0,trianglesRemoved:0,reason:'Original Boolean result not cleanup-safe',before};
-  const candidate=mesh.clone(),pairs=safePairs(candidate);
-  if(!pairs.length)return{mesh,applied:false,quads:0,trianglesRemoved:0,reason:'No safe coplanar triangle pairs',before};
-  const replacement=new Map(),remove=new Set();
-  for(const pair of pairs){
-    const keep=Math.min(pair.a,pair.b),drop=Math.max(pair.a,pair.b);
-    replacement.set(keep,[...pair.cycle]);remove.add(drop);
-  }
-  const faces=[];
-  for(let i=0;i<candidate.faces.length;i++){
-    if(remove.has(i))continue;
-    faces.push(replacement.has(i)?replacement.get(i):[...candidate.faces[i]]);
-  }
-  candidate.faces=faces;
+  if(!before?.valid||!before?.booleanReady)return{mesh,applied:false,merges:0,facesReduced:0,reason:'Original Boolean result not cleanup-safe',before};
+  const candidate=mesh.clone(),beforeFaces=candidate.faces.length,merges=planarCleanup(candidate);
+  if(!merges)return{mesh,applied:false,merges:0,facesReduced:0,reason:'No safe planar merges',before};
   candidate.edges?.();
-  const after=gate.validate(candidate);
+  const after=gate.validate(candidate),facesReduced=beforeFaces-candidate.faces.length;
   const worsened=!after?.valid||!after?.booleanReady||
     Number(after.boundaryEdges||0)>Number(before.boundaryEdges||0)||
-    Number(after.nonManifoldEdges||0)>Number(before.nonManifoldEdges||0);
-  if(worsened)return{mesh,applied:false,quads:0,trianglesRemoved:0,reason:'Cleanup validation refused — original retained',before,after};
-  return{mesh:candidate,applied:true,quads:pairs.length,trianglesRemoved:pairs.length*2,reason:'Safe quad cleanup applied',before,after};
+    Number(after.nonManifoldEdges||0)>Number(before.nonManifoldEdges||0)||facesReduced<=0;
+  if(worsened)return{mesh,applied:false,merges:0,facesReduced:0,reason:'Cleanup validation refused — original retained',before,after};
+  return{mesh:candidate,applied:true,merges,facesReduced,reason:'Safe planar-region cleanup applied',before,after};
 }
 function manager(){return globalThis.__boxlabObjectManager||null;}
 function install(){
   const m=manager();if(!m?.addMesh)return false;
-  if(m.__boxlabBooleanCleanup227){installed=true;return true;}
+  if(m.__boxlabBooleanCleanup228){installed=true;return true;}
   const baseAdd=m.addMesh.bind(m);
   m.addMesh=function(mesh,name='Object',options={}){
     let next=mesh;
@@ -124,7 +141,7 @@ function install(){
     }
     return baseAdd(next,name,options);
   };
-  m.__boxlabBooleanCleanup227=true;installed=true;return true;
+  m.__boxlabBooleanCleanup228=true;installed=true;return true;
 }
 
 document.addEventListener('click',event=>{
