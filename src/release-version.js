@@ -1,5 +1,6 @@
 // BoxLab release version owner.
 // This is the sole runtime owner of the visible app release number and document title.
+// Build 0.36.18.234 deployment stamp.
 const VERSION='0.36.18.234';
 const label=document.querySelector('#appVersion');
 globalThis.__boxlabReleaseVersionObserver?.disconnect?.();
