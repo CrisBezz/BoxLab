@@ -15,6 +15,7 @@ const app = document.querySelector('#app');
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 const OBJECT_HIT_EPSILON = 1e-5;
+const TOUCH_TAP_MOVE_PX = 10;
 
 let objects = [];
 let activeId = null;
@@ -25,6 +26,7 @@ let activeBody = null;
 let activeRoot = null;
 let initialized = false;
 let renderQueued = false;
+let touchTap = null;
 
 function state() { return globalThis.__boxlabBridgeState; }
 function history() { return globalThis.__boxlabHistory; }
@@ -332,39 +334,80 @@ function hitObject(event, object) {
   return raycaster.intersectObject(object, false).length > 0;
 }
 
-function installViewportActivation() {
-  canvas?.addEventListener('pointerdown', event => {
-    if (event.pointerType === 'touch' || !event.isPrimary) return;
-    const camera = state()?.camera;
-    if (currentMode() === 'object' && inactiveBodies.length && camera) {
-      setPointer(event);
-      raycaster.setFromCamera(pointer, camera);
-      const activeHit = activeBody?.visible ? raycaster.intersectObject(activeBody, false)[0] : null;
-      const inactiveHit = raycaster.intersectObjects(inactiveBodies.filter(body => body.visible), false)[0];
-      const inactiveIsCloser = inactiveHit && (!activeHit || inactiveHit.distance < activeHit.distance - OBJECT_HIT_EPSILON);
-      if (inactiveIsCloser) {
+function handleViewportActivation(event, stopEvent = true) {
+  const camera = state()?.camera;
+  if (currentMode() === 'object' && inactiveBodies.length && camera) {
+    setPointer(event);
+    raycaster.setFromCamera(pointer, camera);
+    const activeHit = activeBody?.visible ? raycaster.intersectObject(activeBody, false)[0] : null;
+    const inactiveHit = raycaster.intersectObjects(inactiveBodies.filter(body => body.visible), false)[0];
+    const inactiveIsCloser = inactiveHit && (!activeHit || inactiveHit.distance < activeHit.distance - OBJECT_HIT_EPSILON);
+    if (inactiveIsCloser) {
+      if (stopEvent) {
         event.preventDefault();
         event.stopImmediatePropagation();
-        const id = Number(inactiveHit.object.userData.objectId);
-        const objectSelection = globalThis.__boxlabObjectSelection;
-        if (objectSelection?.multi) {
-          const ids = objectSelection.ids;
-          ids.has(id) ? ids.delete(id) : ids.add(id);
-          objectSelection.select([...ids]);
-          const object = objects.find(item => item.id === id);
-          if (status) status.textContent = `${object?.name || 'Object'} ${ids.has(id) ? 'added to' : 'removed from'} Multi selection`;
-        } else {
-          activateObject(id);
-        }
-        return;
       }
+      const id = Number(inactiveHit.object.userData.objectId);
+      const objectSelection = globalThis.__boxlabObjectSelection;
+      if (objectSelection?.multi) {
+        const ids = objectSelection.ids;
+        ids.has(id) ? ids.delete(id) : ids.add(id);
+        objectSelection.select([...ids]);
+        const object = objects.find(item => item.id === id);
+        if (status) status.textContent = `${object?.name || 'Object'} ${ids.has(id) ? 'added to' : 'removed from'} Multi selection`;
+      } else {
+        activateObject(id);
+      }
+      return true;
     }
-    const active = activeObject();
-    if (active?.locked && activeBody && hitObject(event, activeBody)) {
+  }
+  const active = activeObject();
+  if (active?.locked && activeBody && hitObject(event, activeBody)) {
+    if (stopEvent) {
       event.preventDefault();
       event.stopImmediatePropagation();
-      if (status) status.textContent = `${active.name} is locked • unlock it in the Outliner to edit`;
     }
+    if (status) status.textContent = `${active.name} is locked • unlock it in the Outliner to edit`;
+    return true;
+  }
+  return false;
+}
+
+function installViewportActivation() {
+  canvas?.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'touch') {
+      if (!event.isPrimary) {
+        if (touchTap) touchTap.cancelled = true;
+        return;
+      }
+      touchTap = {
+        pointerId:event.pointerId,
+        x:event.clientX,
+        y:event.clientY,
+        cancelled:false,
+        objectMode:currentMode() === 'object'
+      };
+      return;
+    }
+    if (!event.isPrimary) return;
+    handleViewportActivation(event, true);
+  }, true);
+
+  canvas?.addEventListener('pointermove', event => {
+    if (event.pointerType !== 'touch' || !touchTap || event.pointerId !== touchTap.pointerId) return;
+    const dx=event.clientX-touchTap.x,dy=event.clientY-touchTap.y;
+    if (dx*dx+dy*dy > TOUCH_TAP_MOVE_PX*TOUCH_TAP_MOVE_PX) touchTap.cancelled=true;
+  }, true);
+
+  canvas?.addEventListener('pointerup', event => {
+    if (event.pointerType !== 'touch' || !touchTap || event.pointerId !== touchTap.pointerId) return;
+    const candidate=touchTap;touchTap=null;
+    if (candidate.cancelled || !candidate.objectMode || currentMode() !== 'object') return;
+    handleViewportActivation(event, false);
+  }, true);
+
+  canvas?.addEventListener('pointercancel', event => {
+    if (event.pointerType === 'touch' && touchTap && event.pointerId === touchTap.pointerId) touchTap=null;
   }, true);
 }
 
