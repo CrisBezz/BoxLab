@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.235 — reusable boundary T-junction seam conformance.
+// BoxLab v0.36.18.236 — reusable boundary T-junction seam conformance.
 // Repairs mismatched face-boundary segmentation without moving vertices.
-const VERSION='0.36.18.235';
+const VERSION='0.36.18.236';
 
 function edgeKey(a,b){return a<b?`${a}:${b}`:`${b}:${a}`;}
 function cloneMesh(mesh){
