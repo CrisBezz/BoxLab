@@ -30,10 +30,10 @@ export function makeCylinder(radius = 1, height = 2, segments = 12) {
   const top = ringVertices(vertices, height/2, radius, segments);
   for (let i = 0; i < segments; i++) {
     const n = (i + 1) % segments;
-    faces.push([bottom[i], bottom[n], top[n], top[i]]);
+    faces.push([bottom[i], top[i], top[n], bottom[n]]);
   }
-  faces.push([...bottom].reverse());
-  faces.push([...top]);
+  faces.push([...bottom]);
+  faces.push([...top].reverse());
   return new EditableMesh(vertices, faces);
 }
 
@@ -45,9 +45,9 @@ export function makeCone(radius = 1, height = 2, segments = 12) {
   const apex = vertices.length - 1;
   for (let i = 0; i < segments; i++) {
     const n = (i + 1) % segments;
-    faces.push([bottom[i], bottom[n], apex]);
+    faces.push([bottom[i], apex, bottom[n]]);
   }
-  faces.push([...bottom].reverse());
+  faces.push([...bottom]);
   return new EditableMesh(vertices, faces);
 }
 
@@ -95,7 +95,7 @@ export function makeTorus(majorRadius = 0.72, minorRadius = 0.28, majorSegments 
     }
   }
   for (let i = 0; i < majorSegments; i++) for (let j = 0; j < minorSegments; j++) {
-    faces.push([index(i,j), index(i+1,j), index(i+1,j+1), index(i,j+1)]);
+    faces.push([index(i,j), index(i,j+1), index(i+1,j+1), index(i+1,j)]);
   }
   return new EditableMesh(vertices, faces);
 }
