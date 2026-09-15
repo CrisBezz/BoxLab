@@ -14,7 +14,7 @@ function safeName(value,index){const clean=String(value||`Object ${index+1}`).tr
 function sceneObjects(){const m=manager();m?.saveActive?.();return(m?.objects||[]).filter(object=>object?.kind!=='reference'&&object?.mesh);}
 function resolvedMesh(object,subd=false){
   let mesh=object.mesh?.clone?object.mesh.clone():object.mesh;if(!mesh)return null;
-  if(subd&&object.settings?.subd)mesh=subdivide(mesh,Math.max(1,Math.min(4,Number(object.settings.subdLevel||1))));
+  if(subd)mesh=subdivide(mesh,Math.max(1,Math.min(4,Number(object.settings?.subdLevel||1))));
   return applyMirror(mesh,object.settings?.mirror||{x:false,y:false,z:false});
 }
 function sceneToOBJ(objects,subd=false){
