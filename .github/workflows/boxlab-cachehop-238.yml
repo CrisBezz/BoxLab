@@ -1,0 +1,32 @@
+name: BoxLab 238 shell cache hop
+on:
+  push:
+    paths:
+      - '.github/workflows/boxlab-cachehop-238.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch 238 shell
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+          s=s.replace('<title>BoxLab v0.36.18.237</title>','<title>BoxLab v0.36.18.238</title>')
+          s=s.replace('<span id="appVersion">v0.36.18.237</span>','<span id="appVersion">v0.36.18.238</span>')
+          s=s.replace('./src/direct-topology-conformance-guard.js?v=0.36.18.237','./src/direct-topology-conformance-guard.js?v=0.36.18.238')
+          s=s.replace('./src/release-version.js?v=0.36.18.237','./src/release-version.js?v=0.36.18.238')
+          p.write_text(s)
+          PY
+      - name: Commit shell hop
+        run: |
+          git config user.name 'Bezzo'
+          git config user.email '115067958+CrisBezz@users.noreply.github.com'
+          git add index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'BoxLab 0.36.18.238 shell cache hop [skip ci]'
+          git push
