@@ -5,5 +5,5 @@ import './direct-commit-integrity-239.js?v=0.36.18.239';
 import './extract-scene-history-238.js?v=0.36.18.238';
 import './scene-obj-export-238.js?v=0.36.18.238';
 
-const VERSION='0.36.18.239';
+const VERSION='0.36.18.240';
 globalThis.__boxlabDirectTopologyConformanceGuard={version:VERSION,topologySummary,loaderOnly:true};
