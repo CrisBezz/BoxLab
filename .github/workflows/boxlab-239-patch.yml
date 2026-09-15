@@ -1,0 +1,101 @@
+name: BoxLab 239 topology patch
+on:
+  push:
+    paths:
+      - '.github/workflows/boxlab-239-patch.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch Through global seam conformance and direct commit
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # Through kernel: add a private boundary T-junction conformance pass to the
+          # assembled trial before strict validation. No vertex movement; only insert
+          # already-existing seam vertices into unsplit neighbouring face edges.
+          p=Path('src/through-kernel.js')
+          s=p.read_text()
+          s=s.replace('// Through v0.36.16.0: geometric prism subtraction. No UI or mesh prototype hooks.',
+                      '// Through v0.36.18.239: geometric prism subtraction with global output seam conformance.')
+          marker='export function buildThrough(before,plan) {'
+          helper=r'''function conformOutputBoundarySeams(m,eps,maxSplits=4096) {
+  const tolerance=Math.max(eps*8,1e-10);
+  let splits=0;
+  const pointOnSegment=(p,a,b)=>{const ab=b.clone().sub(a),l2=ab.lengthSq();if(l2<=tolerance*tolerance)return null;const t=p.clone().sub(a).dot(ab)/l2,margin=Math.min(.25,Math.max(1e-8,tolerance/Math.sqrt(l2)));if(t<=margin||t>=1-margin)return null;const q=a.clone().addScaledVector(ab,t);return q.distanceTo(p)<=tolerance?{t}:null;};
+  while(splits<maxSplits){
+    const uses=edgeUses(m),boundary=[];
+    for(const [key,owners] of uses)if(owners.length===1)boundary.push({key,...owners[0]});
+    if(!boundary.length)break;
+    const boundaryVertices=new Set();for(const e of boundary){boundaryVertices.add(e.a);boundaryVertices.add(e.b);}
+    let chosen=null;
+    for(const e of boundary){const a=m.vertices[e.a],b=m.vertices[e.b];if(!a||!b)continue;for(const vertex of boundaryVertices){if(vertex===e.a||vertex===e.b)continue;const p=m.vertices[vertex];if(!p||m.faces[e.fi]?.includes(vertex))continue;const hit=pointOnSegment(p,a,b);if(hit){chosen={...e,vertex};break;}}if(chosen)break;}
+    if(!chosen)break;
+    const face=m.faces[chosen.fi],i=face.findIndex((a,j)=>topology().edgeKey(a,face[(j+1)%face.length])===chosen.key);if(i<0)break;
+    const a=face[i],b=face[(i+1)%face.length];face.splice(i+1,0,chosen.vertex);
+    if(m.creases instanceof Map){const old=topology().edgeKey(a,b),w=m.creases.get(old);if(w!==undefined){m.creases.delete(old);m.creases.set(topology().edgeKey(a,chosen.vertex),w);m.creases.set(topology().edgeKey(chosen.vertex,b),w);}}
+    splits++;
+  }
+  // Keep EditableMesh.faceNormal safe when a seam insertion makes the first triple collinear.
+  m.faces=m.faces.map(f=>{for(let i=0;i<f.length;i++){const a=m.vertices[f[i]],b=m.vertices[f[(i+1)%f.length]],c=m.vertices[f[(i+2)%f.length]];if(new V().crossVectors(b.clone().sub(a),c.clone().sub(a)).length()>eps*eps)return [...f.slice(i),...f.slice(0,i)];}fail('zero-area-output-face');});
+  const uses=edgeUses(m),boundaryEdges=[...uses.values()].filter(owners=>owners.length===1).length,nonManifoldEdges=[...uses.values()].filter(owners=>owners.length>2).length;
+  return {mesh:m,splits,boundaryEdges,nonManifoldEdges,tolerance};
+}
+'''
+          if helper not in s:
+              s=s.replace(marker,helper+marker)
+          old='const trial=assemble(before,polys,eps),validation=validateThrough(trial,eps);if(!validation.ok)return{ok:false,reason:validation.reason,validation};'
+          new='let trial=assemble(before,polys,eps);const seam=conformOutputBoundarySeams(trial,eps);trial=seam.mesh;const validation=validateThrough(trial,eps);if(!validation.ok)return{ok:false,reason:validation.reason,validation,seam};'
+          if old not in s:
+              raise SystemExit('through validation marker not found')
+          s=s.replace(old,new)
+          s=s.replace('delete trial.edges;return{ok:true,mesh:trial,validation};','delete trial.edges;return{ok:true,mesh:trial,validation,seam};')
+          p.write_text(s)
+
+          # Direct owner: synchronously gate the ordinary Extrude commit too. This is
+          # the path that can occur when a tunnel-into-tunnel gesture is not classified
+          # as throughPlan at pointer release.
+          p=Path('src/multi-face-direct.js')
+          s=p.read_text()
+          s=s.replace("import {gateClosedEdit} from './topology-seam-conformance.js?v=0.36.18.236';",
+                      "import {gateClosedEdit} from './topology-seam-conformance.js?v=0.36.18.239';")
+          old="""    }else{globalThis.__boxlabHistory?.push(d.before);bridge()?.set?.('face',d.faces);updateStatus();}
+"""
+          new="""    }else if(d.tool==='extrude'){
+      const gated=gateClosedEdit(d.before,d.m);
+      if(gated.ok){
+        globalThis.__boxlabHistory?.push(d.before);
+        if(gated.repaired)restore(d.m,gated.mesh);
+        bridge()?.set?.('face',d.faces);
+        if(gated.repaired&&status)status.textContent=`Extrude • global seam conformance • ${gated.splits} split${gated.splits===1?'':'s'} • CLOSED`;else updateStatus();
+      }else{
+        restore(d.m,d.before);bridge()?.set?.('face',d.faces);if(status)status.textContent='Extrude • rollback • open topology refused';
+      }
+    }else{globalThis.__boxlabHistory?.push(d.before);bridge()?.set?.('face',d.faces);updateStatus();}
+"""
+          if old not in s:
+              raise SystemExit('direct commit marker not found')
+          s=s.replace(old,new)
+          p.write_text(s)
+
+          # Release/cache hop.
+          p=Path('src/release-version.js');s=p.read_text().replace("const VERSION='0.36.18.238';","const VERSION='0.36.18.239';");p.write_text(s)
+          Path('version.json').write_text('{"version":"0.36.18.239"}\n')
+          p=Path('index.html');s=p.read_text()
+          s=s.replace('BoxLab v0.36.18.238','BoxLab v0.36.18.239')
+          s=s.replace('./src/multi-face-direct.js?v=0.36.18.236','./src/multi-face-direct.js?v=0.36.18.239')
+          s=s.replace('./src/direct-topology-conformance-guard.js?v=0.36.18.238','./src/direct-topology-conformance-guard.js?v=0.36.18.239')
+          s=s.replace('./src/release-version.js?v=0.36.18.238','./src/release-version.js?v=0.36.18.239')
+          p.write_text(s)
+          PY
+      - name: Commit 239
+        run: |
+          git config user.name 'Bezzo'
+          git config user.email '115067958+CrisBezz@users.noreply.github.com'
+          git add src/through-kernel.js src/multi-face-direct.js src/release-version.js version.json index.html
+          git commit -m 'BoxLab 0.36.18.239 Through global seam conformance'
+          git push
