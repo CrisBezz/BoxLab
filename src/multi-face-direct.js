@@ -1,4 +1,5 @@
 import {planThrough,buildThrough,firstThroughContact} from './through-kernel.js?v=0.36.16.0';
+import {gateClosedEdit} from './topology-seam-conformance.js?v=0.36.18.236';
 import './uniform-inset.js?v=0.32.11';
 import * as THREE from 'three';
 
@@ -119,8 +120,15 @@ function finish(event){
   if(event.type==='pointerup'&&d.changed&&d.preview&&!d.blocked){
     if(d.tool==='extrude'&&d.throughPlan){
       const built=buildThrough(d.before,d.throughPlan);
-      if(built.ok){globalThis.__boxlabHistory?.push(d.before);restore(d.m,built.mesh);bridge()?.set?.('face',[]);if(status)status.textContent='Extrude Through • validated prism cut';}
-      else {restore(d.m,d.before);bridge()?.set?.('face',d.faces);if(status)status.textContent=`Extrude Through • rollback • ${built.reason}`;}
+      if(built.ok){
+        const gated=gateClosedEdit(d.before,built.mesh);
+        if(gated.ok){
+          globalThis.__boxlabHistory?.push(d.before);restore(d.m,gated.mesh);bridge()?.set?.('face',[]);
+          if(status)status.textContent=gated.repaired?`Extrude Through • seam conformance • ${gated.splits} split${gated.splits===1?'':'s'} • CLOSED`:'Extrude Through • validated prism cut • CLOSED';
+        }else{
+          restore(d.m,d.before);bridge()?.set?.('face',d.faces);if(status)status.textContent='Extrude Through • rollback • open topology refused';
+        }
+      }else {restore(d.m,d.before);bridge()?.set?.('face',d.faces);if(status)status.textContent=`Extrude Through • rollback • ${built.reason}`;}
     }else{globalThis.__boxlabHistory?.push(d.before);bridge()?.set?.('face',d.faces);updateStatus();}
   }else{restore(d.m,d.before);bridge()?.set?.('face',d.faces);if(d.blocked&&status)status.textContent=`Extrude Through • rollback • ${d.failureReason||'unsupported shell contact'}`;}
   render();syncButtons();
