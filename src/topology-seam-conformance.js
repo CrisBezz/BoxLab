@@ -45,15 +45,15 @@ export function topologySummary(mesh){
   };
 }
 function meshScale(mesh){
-  if(!mesh?.vertices?.length)return 1;
+  if(!mesh?.vertices?.length)return 1e-12;
   let minX=Infinity,minY=Infinity,minZ=Infinity,maxX=-Infinity,maxY=-Infinity,maxZ=-Infinity;
   for(const p of mesh.vertices){
     if(!p||![p.x,p.y,p.z].every(Number.isFinite))continue;
     minX=Math.min(minX,p.x);minY=Math.min(minY,p.y);minZ=Math.min(minZ,p.z);
     maxX=Math.max(maxX,p.x);maxY=Math.max(maxY,p.y);maxZ=Math.max(maxZ,p.z);
   }
-  if(!Number.isFinite(minX))return 1;
-  return Math.max(1,Math.hypot(maxX-minX,maxY-minY,maxZ-minZ));
+  if(!Number.isFinite(minX))return 1e-12;
+  return Math.max(1e-12,Math.hypot(maxX-minX,maxY-minY,maxZ-minZ));
 }
 function pointOnOpenSegment(point,a,b,tolerance){
   const abx=b.x-a.x,aby=b.y-a.y,abz=b.z-a.z;
