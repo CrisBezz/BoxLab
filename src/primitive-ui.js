@@ -1,4 +1,4 @@
-import { makePrimitive } from './primitive-factory.js?v=0.30.4';
+import { makePrimitive } from './primitive-factory.js?v=0.36.18.226';
 
 const addButton = document.querySelector('#outlinerAddBtn');
 const status = document.querySelector('#selectionStatus');
