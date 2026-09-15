@@ -345,7 +345,17 @@ function installViewportActivation() {
       if (inactiveIsCloser) {
         event.preventDefault();
         event.stopImmediatePropagation();
-        activateObject(Number(inactiveHit.object.userData.objectId));
+        const id = Number(inactiveHit.object.userData.objectId);
+        const objectSelection = globalThis.__boxlabObjectSelection;
+        if (objectSelection?.multi) {
+          const ids = objectSelection.ids;
+          ids.has(id) ? ids.delete(id) : ids.add(id);
+          objectSelection.select([...ids]);
+          const object = objects.find(item => item.id === id);
+          if (status) status.textContent = `${object?.name || 'Object'} ${ids.has(id) ? 'added to' : 'removed from'} Multi selection`;
+        } else {
+          activateObject(id);
+        }
         return;
       }
     }
