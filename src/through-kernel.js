@@ -1,4 +1,4 @@
-// Through v0.36.16.0: geometric prism subtraction. No UI or mesh prototype hooks.
+// Through v0.36.18.242: cavity-aware ordered Through targets. No UI or mesh prototype hooks.
 import * as THREE from 'three';
 import './topology-foundation.js?v=0.36.16.0';
 const V = THREE.Vector3;
@@ -54,13 +54,19 @@ function context(m,fi) {
     if(areaVector(p).dot(dir)>eps*eps&&Math.max(...depths)>eps)hits.push({min:Math.max(eps,Math.min(...depths)),max:Math.max(...depths)});
   }
   if(!hits.length)fail('no-exit-shell');
-  hits.sort((a,b)=>a.min-b.min);const first=hits[0].min;
-  // v241: existing tunnels can legitimately create several shell crossings along the same inward prism.
-  // Promote the gesture to Through and use the farthest valid exit depth.
-  const endDepth=Math.max(...hits.map(h=>h.max));
-  return {source,n,dir,sides,start,eps,ts:ts.map(t=>t.p),first,depth:endDepth,fi,multiExit:hits.length>1};
+  hits.sort((a,b)=>a.min-b.min);
+  // v242: keep each distinct SOLID->VOID exit band as an ordered Through target.
+  // Triangles belonging to the same physical shell are merged by overlapping depth range.
+  const targets=[];
+  for(const h of hits){
+    const last=targets.at(-1);
+    if(last&&h.min<=last.depth+eps*8){last.first=Math.min(last.first,h.min);last.depth=Math.max(last.depth,h.max);}
+    else targets.push({first:h.min,depth:h.max});
+  }
+  const first=targets[0].first,endDepth=targets.at(-1).depth;
+  return {source,n,dir,sides,start,eps,ts:ts.map(t=>t.p),first,depth:endDepth,targets,fi,multiExit:targets.length>1};
 }
-export function planThrough(m,fi) {try {const c=context(m,fi);return {ok:true,sourceFaceIndex:fi,distance:-c.depth,firstDistance:-c.first};}catch(e){return{ok:false,reason:e.message};}}
+export function planThrough(m,fi) {try {const c=context(m,fi);return {ok:true,sourceFaceIndex:fi,distance:-c.depth,firstDistance:-c.first,targets:c.targets.map(t=>({...t}))};}catch(e){return{ok:false,reason:e.message};}}
 // Split every incident face together before replacing shell fragments. Generated seam
 // vertices are then inserted in *all* output edges, including tunnel wall edges.
 function assemble(before,polys,eps) {
@@ -82,7 +88,7 @@ function assemble(before,polys,eps) {
 }
 export function buildThrough(before,plan) {
   try {
-    const c=context(before,plan.sourceFaceIndex),{source,dir,n,sides,start,eps,ts,depth}=c;
+    const c=context(before,plan.sourceFaceIndex),{source,dir,n,sides,start,eps,ts}=c,depth=Number.isFinite(plan?.targetDepth)?Math.min(c.depth,Math.max(c.first,plan.targetDepth)):c.depth;
     const end=plane(dir,source[0].clone().addScaledVector(dir,depth+eps*32)),planes=[...sides,start,end],polys=[];
     for(let fi=0;fi<before.faces.length;fi++) {if(fi===c.fi)continue;const p=before.faces[fi].map(id=>before.vertices[id]),tris=triangles(p,eps),pieces=tris.map(t=>subtract(t,planes,eps));if(pieces.every(r=>!r.inside.length))polys.push(p);else for(const r of pieces)polys.push(...r.outside);}
     const shellPlanes=ts.map(t=>plane(areaVector(t).normalize(),t[0]));

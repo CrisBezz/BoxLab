@@ -1,5 +1,5 @@
-import {planThrough,buildThrough,firstThroughContact} from './through-kernel.js?v=0.36.18.241';
-import {gateClosedEdit} from './topology-seam-conformance.js?v=0.36.18.241';
+import {planThrough,buildThrough,firstThroughContact} from './through-kernel.js?v=0.36.18.242';
+import {gateClosedEdit} from './topology-seam-conformance.js?v=0.36.18.242';
 import './uniform-inset.js?v=0.32.11';
 import * as THREE from 'three';
 
@@ -99,9 +99,14 @@ function insetReference(d,ref){const m=d.before,group=m.faceRegionsInfo?.(d.face
 function classifySingleFaceContact(m,sourceFaceIndex,distance,prepared){
   if(distance>=0)return{mode:'extrude',throughPlan:null,shellHit:null};
   const p=prepared||planThrough(m,sourceFaceIndex);
-  if(p.ok&&distance<=p.distance+1e-6)return{mode:'through',throughPlan:p,shellHit:null};
-  if(p.ok&&distance<=p.firstDistance+1e-6)return{mode:'blocked',throughPlan:null,shellHit:{distance:-p.firstDistance},reason:'partial-exit-sweep'};
-  if(p.ok)return{mode:'extrude',throughPlan:null,shellHit:null};
+  if(p.ok){
+    const travel=-distance,targets=(p.targets?.length?p.targets:[{first:-p.firstDistance,depth:-p.distance}]).slice().sort((a,b)=>a.depth-b.depth);
+    const reached=targets.filter(t=>travel>=t.depth-1e-6);
+    if(reached.length){const target=reached.at(-1);return{mode:'through',throughPlan:{...p,targetDepth:target.depth,distance:-target.depth,firstDistance:-target.first},shellHit:null};}
+    const partial=targets.find(t=>travel>=t.first-1e-6&&travel<t.depth-1e-6);
+    if(partial)return{mode:'blocked',throughPlan:null,shellHit:{distance:partial.first},reason:'partial-exit-sweep'};
+    return{mode:'extrude',throughPlan:null,shellHit:null};
+  }
   const hit=firstThroughContact(m,sourceFaceIndex,-distance);
   return hit?{mode:'blocked',throughPlan:null,shellHit:hit,reason:p.reason}:{mode:'extrude',throughPlan:null,shellHit:null};
 }
