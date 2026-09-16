@@ -57,6 +57,22 @@ const directToolSelector=[
   '#weldVertexBtn','#deleteVertexBtn'
 ].join(',');
 
+// Component transforms are mode-scoped. Never allow a Face/Edge/Vertex
+// transform to leak into Object mode (or vice versa), even if another UI
+// module has already changed the visible active classes.
+document.querySelector('#selectionModes')?.addEventListener('click',event=>{
+  const button=event.target?.closest?.('button[data-mode]');
+  if(!button||button.disabled)return;
+  disarm();
+},true);
+
+// Duplicate must begin neutral. This prevents the newly-created object from
+// inheriting a stale component Scale/Move/Rotate state from the source mesh.
+document.querySelector('#outlinerDuplicateBtn')?.addEventListener('click',event=>{
+  if(event.currentTarget?.disabled)return;
+  disarm();
+},true);
+
 document.addEventListener('click',event=>{
   const button=event.target?.closest?.(directToolSelector);
   if(!button||button.disabled)return;
