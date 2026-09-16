@@ -40,10 +40,15 @@ function disarm(){
   enforce();
 }
 
-function armMove(){
-  armedTool='move';
-  armedConstraint='free';
-  enforce();
+function activateRealMove(){
+  const moveButton=toolButtons.find(button=>button.dataset.tool==='move');
+  if(!moveButton||moveButton.disabled)return false;
+  // main.js owns the real transform `toolMode`; only its normal button handler
+  // changes that engine state. Start disarmed so our own button listener arms
+  // Move rather than toggling an already-armed cosmetic state back off.
+  disarm();
+  moveButton.click();
+  return true;
 }
 
 for(const button of toolButtons){
@@ -72,18 +77,18 @@ document.querySelector('#selectionModes')?.addEventListener('click',event=>{
   disarm();
 },true);
 
-// Duplicate is intercepted by different object controllers (single and Multi),
-// some of which stop propagation on the button itself. Listen at document
-// capture so every Duplicate starts by clearing the stale component transform.
-// Re-arm Move in a microtask only after the duplicate/activation transaction
-// and its Object-mode clicks have completed, otherwise those clicks disarm it.
+// Duplicate can be intercepted by either the single-object or Multi controller.
+// Capture the intent before either controller stops propagation, clear stale
+// component arming immediately, then wait until its synchronous activation /
+// Object-mode transaction has finished. Finally click the REAL Move button so
+// main.js changes its internal toolMode from Scale to Move as well as the UI.
 document.addEventListener('click',event=>{
   const button=event.target?.closest?.('#outlinerDuplicateBtn');
   if(!button||button.disabled)return;
   disarm();
   queueMicrotask(()=>{
     const mode=document.querySelector('#selectionModes button.active')?.dataset?.mode;
-    if(mode==='object')armMove();
+    if(mode==='object')activateRealMove();
   });
 },true);
 
@@ -98,6 +103,7 @@ globalThis.__boxlabTransformArming={
   constraint:()=>armedConstraint,
   active:()=>!!armedTool,
   disarm,
+  activateRealMove,
   setTool:tool=>{armedTool=tool||null;armedConstraint=armedTool?'free':null;enforce();},
   setConstraint
 };
