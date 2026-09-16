@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.217 — sequential Boolean BSP with conforming seam assembly.
+// BoxLab v0.36.18.247 — sequential Boolean BSP with degenerate-face input fallback.
 // Closed manifold meshes -> triangulation -> BSP CSG -> edge-conforming weld -> editable mesh.
 import * as THREE from 'three';
 import { EditableMesh } from './mesh.js';
 import { triangulatePoints, epsilonForMeshes } from './boolean-intersections.js?v=0.36.18.209';
 import { topologyInfo } from './boolean-classify.js?v=0.36.18.210';
 
-const VERSION='0.36.18.217';
+const VERSION='0.36.18.247';
 
 class BVertex{
   constructor(pos){this.pos=pos.clone();}
@@ -68,14 +68,21 @@ class BNode{
 }
 
 function faceNormal(points){const n=new THREE.Vector3();for(let i=0;i<points.length;i++){const a=points[i],b=points[(i+1)%points.length];n.x+=(a.y-b.y)*(a.z+b.z);n.y+=(a.z-b.z)*(a.x+b.x);n.z+=(a.x-b.x)*(a.y+b.y);}return n;}
+function centroid(points){const c=new THREE.Vector3();for(const p of points)c.add(p);return points.length?c.multiplyScalar(1/points.length):c;}
+function meshCenter(mesh){return centroid(mesh?.vertices||[]);}
 function meshPolygons(mesh,eps){
-  const polygons=[];
+  const polygons=[],center=meshCenter(mesh);
   for(const face of mesh?.faces||[]){
     const points=face.map(i=>mesh.vertices?.[i]).filter(Boolean);if(points.length!==face.length||points.length<3)continue;
-    const fn=faceNormal(points);if(fn.lengthSq()<=eps*eps)continue;
+    const fn=faceNormal(points),hasFaceNormal=fn.lengthSq()>eps*eps;
     for(let tri of triangulatePoints(points)){
       const tn=tri[1].clone().sub(tri[0]).cross(tri[2].clone().sub(tri[0]));
-      if(tn.dot(fn)<0)tri=[tri[0],tri[2],tri[1]];
+      if(tn.lengthSq()<=eps*eps)continue;
+      if(hasFaceNormal){if(tn.dot(fn)<0)tri=[tri[0],tri[2],tri[1]];}
+      else{
+        const tc=centroid(tri),outward=tc.clone().sub(center);
+        if(tn.dot(outward)<0)tri=[tri[0],tri[2],tri[1]];
+      }
       const p=new BPolygon(tri.map(v=>new BVertex(v)),eps);if(p.valid)polygons.push(p);
     }
   }
