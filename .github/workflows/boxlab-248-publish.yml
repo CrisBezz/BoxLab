@@ -27,3 +27,4 @@ jobs:
           git add src/boolean-bsp.js src/boolean-prototype.js index.html version.json
           git commit -m 'Release BoxLab v0.36.18.248 Boolean planar seam repair'
           git push
+# retry after version-agnostic Boolean regression update
