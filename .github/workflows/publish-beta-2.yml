@@ -1,0 +1,58 @@
+name: Publish BoxLab Beta 2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-beta-2.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish frozen Beta 2
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cat > /tmp/release-notes.md <<'EOF'
+          ## BoxLab v0.36.18.242 — Beta 2
+
+          Stable modelling checkpoint following the Cavity-Aware Through breakthrough.
+
+          ### Highlights
+          - Normal single Through
+          - Through into an existing tunnel / cavity
+          - Multiple ordered Through targets
+          - Continue a drag through an existing cavity to a farther outer wall
+          - Closed-topology validation and rollback protection
+
+          ### Confirmed working
+          - Extract + Undo / Redo
+          - Multi-object Base OBJ export
+          - Multi-object SubD OBJ export
+          - Vertex Bevel
+          - Boolean system from the proven v217 line
+          - Studio realtime mode
+          - Persistent selections and navigation
+          - Object management / Multi
+
+          ### Protected baseline
+          This release is frozen from `release/beta-2` at commit `efb4fb537cd90c044c35dba4739bad7d4acce8b5`.
+
+          The v0.36.18.242 Through system is considered a stable modelling baseline and should not be casually rewritten.
+          EOF
+
+          if gh release view 'v0.36.18.242-beta.2' --repo '${{ github.repository }}' >/dev/null 2>&1; then
+            echo 'Release already exists.'
+          else
+            gh release create 'v0.36.18.242-beta.2' \
+              --repo '${{ github.repository }}' \
+              --target 'efb4fb537cd90c044c35dba4739bad7d4acce8b5' \
+              --title 'BoxLab v0.36.18.242 — Beta 2' \
+              --notes-file /tmp/release-notes.md \
+              --prerelease
+          fi
