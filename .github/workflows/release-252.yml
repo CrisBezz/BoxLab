@@ -1,5 +1,6 @@
 name: Release 0.36.18.252
 
+# retry after updating duplicate transform regression contract
 on:
   push:
     paths:
