@@ -17,10 +17,11 @@ function sync(){ if(edgeButton)edgeButton.disabled=!edgeInfo(); if(faceButton)fa
 function finishBridge(result,before){
   const history=globalThis.__boxlabHistory;if(!result||!history)return false;history.push(before);
   const created=[...new Set(result.faceIndices||[])].filter(Number.isInteger);
+  const noun=result.unequal?'face':'quad';
   document.querySelector('#selectionModes button[data-mode="face"]')?.click();
   setTimeout(()=>{
     selectionBridge()?.set?.('face',[]);
-    if(status)status.textContent=`Bridge created • ${created.length} quad${created.length===1?'':'s'} • selection cleared`;
+    if(status)status.textContent=`Bridge created • ${created.length} ${noun}${created.length===1?'':'s'} • selection cleared`;
     sync();
   },0);return true;
 }
