@@ -1,0 +1,141 @@
+name: Release 0.36.18.253
+
+on:
+  push:
+    paths:
+      - '.github/workflows/release-253.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - name: Move duplicate handoff into duplicate owners
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          # Single-object Duplicate: complete creation/activation first, then
+          # hand the real transform engine to Move on the next animation frame.
+          p=Path('src/multi-object.js')
+          s=p.read_text()
+          old="""function duplicateActive() {
+            const source = activeObject();
+            if (!source) return;
+            saveActive();
+            addObject(source.mesh, `${source.name} copy`, { settings:source.settings, enterObjectMode:true });
+          }"""
+          new="""function duplicateActive() {
+            const source = activeObject();
+            if (!source) return;
+            saveActive();
+            const copy = addObject(source.mesh, `${source.name} copy`, { settings:source.settings, enterObjectMode:true });
+            if (!copy) return;
+            requestAnimationFrame(() => {
+              if (currentMode() !== 'object') return;
+              globalThis.__boxlabTransformArming?.activateRealMove?.();
+            });
+          }"""
+          if old not in s:
+            raise SystemExit('single Duplicate function did not match expected source')
+          p.write_text(s.replace(old,new,1))
+
+          # Multi Duplicate has its own capture controller. Give it the same
+          # post-transaction Move handoff after its selection/UI refresh.
+          p=Path('src/object-management.js')
+          s=p.read_text()
+          old="forceRender();updateUI();}\nfunction deleteSelection"
+          new="forceRender();updateUI();requestAnimationFrame(()=>{if(currentMode()==='object')globalThis.__boxlabTransformArming?.activateRealMove?.();});}\nfunction deleteSelection"
+          if old not in s:
+            raise SystemExit('Multi Duplicate tail did not match expected source')
+          p.write_text(s.replace(old,new,1))
+
+          # Remove the separate document-level Duplicate workaround. Duplicate
+          # ownership now lives with the operations that actually create copies.
+          p=Path('src/transform-arming.js')
+          s=p.read_text()
+          start=s.find('// Duplicate can be intercepted by either the single-object or Multi controller.')
+          if start < 0:
+            raise SystemExit('duplicate workaround start not found')
+          marker="document.addEventListener('click',event=>{\n  const button=event.target?.closest?.(directToolSelector);"
+          end=s.find(marker,start)
+          if end < 0:
+            raise SystemExit('duplicate workaround end not found')
+          s=s[:start]+s[end:]
+          p.write_text(s)
+
+          # Replace the old string-only regression with one that checks the
+          # actual duplicate owners and the real main.js transform setter.
+          Path('tests/duplicate-transform-handoff.test.mjs').write_text("""import test from 'node:test';
+          import assert from 'node:assert/strict';
+          import { readFileSync } from 'node:fs';
+
+          const arming=readFileSync(new URL('../src/transform-arming.js',import.meta.url),'utf8');
+          const single=readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
+          const multi=readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
+          const main=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
+
+          test('single Duplicate owns its post-activation Move handoff',()=>{
+            assert.match(single,/function duplicateActive\(\)[\s\S]*requestAnimationFrame\(\(\) => \{[\s\S]*activateRealMove\?\.\(\)/);
+          });
+
+          test('Multi Duplicate owns the same post-transaction Move handoff',()=>{
+            assert.match(multi,/function duplicateSelection\(\)[\s\S]*requestAnimationFrame\(\(\)=>\{if\(currentMode\(\)===['\"]object['\"]\)globalThis\.__boxlabTransformArming\?\.activateRealMove\?\.\(\)/);
+          });
+
+          test('global arming layer no longer tries to infer Duplicate clicks',()=>{
+            assert.doesNotMatch(arming,/outlinerDuplicateBtn/);
+            assert.match(arming,/moveButton\.click\(\)/);
+          });
+
+          test('real Move button still owns main transform toolMode',()=>{
+            assert.match(main,/toolMode=btn\.dataset\.tool/);
+          });
+          """)
+          PY
+      - run: npm test
+      - name: Package 0.36.18.253
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p=Path('src/direct-bevel.js')
+          s=p.read_text()
+          s=re.sub(r"import './transform-arming\.js\?v=[^']+';", "import './transform-arming.js?v=0.36.18.253';", s)
+          p.write_text(s)
+
+          p=Path('index.html')
+          s=p.read_text()
+          s=s.replace('<title>BoxLab v0.36.18.252</title>','<title>BoxLab v0.36.18.253</title>')
+          s=s.replace('<span id="appVersion">v0.36.18.252</span>','<span id="appVersion">v0.36.18.253</span>')
+          s=re.sub(r'direct-bevel\.js\?v=[^"<]+','direct-bevel.js?v=0.36.18.253',s)
+          s=re.sub(r'multi-object\.js\?v=[^"<]+','multi-object.js?v=0.36.18.253',s)
+          s=re.sub(r'object-management\.js\?v=[^"<]+','object-management.js?v=0.36.18.253',s)
+          p.write_text(s)
+          Path('version.json').write_text('{"version":"0.36.18.253"}\n')
+          PY
+          grep -q "transform-arming.js?v=0.36.18.253" src/direct-bevel.js
+          grep -q 'direct-bevel.js?v=0.36.18.253' index.html
+          grep -q 'multi-object.js?v=0.36.18.253' index.html
+          grep -q 'object-management.js?v=0.36.18.253' index.html
+          grep -q '<title>BoxLab v0.36.18.253</title>' index.html
+          grep -q '"version":"0.36.18.253"' version.json
+          grep -q 'src/multi-object-transform.js?v=0.36.1.0' index.html
+      - name: Commit release
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/multi-object.js src/object-management.js src/transform-arming.js src/direct-bevel.js tests/duplicate-transform-handoff.test.mjs index.html version.json
+          git commit -m 'Release BoxLab v0.36.18.253 duplicate Move ownership'
+          git push
