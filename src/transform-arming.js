@@ -40,6 +40,12 @@ function disarm(){
   enforce();
 }
 
+function armMove(){
+  armedTool='move';
+  armedConstraint='free';
+  enforce();
+}
+
 for(const button of toolButtons){
   button.addEventListener('click',()=>setTool(button.dataset.tool),false);
   new MutationObserver(()=>queueMicrotask(enforce)).observe(button,{attributes:true,attributeFilter:['class']});
@@ -66,16 +72,18 @@ document.querySelector('#selectionModes')?.addEventListener('click',event=>{
   disarm();
 },true);
 
-// Duplicate starts a new object transform session. Clear any stale component
-// transform first, then explicitly arm Object Move so the new copy can be
-// dragged immediately, matching BoxLab's established duplicate workflow.
-document.querySelector('#outlinerDuplicateBtn')?.addEventListener('click',event=>{
-  if(event.currentTarget?.disabled)return;
+// Duplicate is intercepted by different object controllers (single and Multi),
+// some of which stop propagation on the button itself. Listen at document
+// capture so every Duplicate starts by clearing the stale component transform.
+// Re-arm Move in a microtask only after the duplicate/activation transaction
+// and its Object-mode clicks have completed, otherwise those clicks disarm it.
+document.addEventListener('click',event=>{
+  const button=event.target?.closest?.('#outlinerDuplicateBtn');
+  if(!button||button.disabled)return;
   disarm();
   queueMicrotask(()=>{
-    armedTool='move';
-    armedConstraint='free';
-    enforce();
+    const mode=document.querySelector('#selectionModes button.active')?.dataset?.mode;
+    if(mode==='object')armMove();
   });
 },true);
 
