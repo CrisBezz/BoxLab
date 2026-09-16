@@ -1,0 +1,240 @@
+name: Release 0.36.18.254
+
+on:
+  push:
+    paths:
+      - '.github/workflows/release-254.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - name: Add globally optimised unequal Bridge planner
+        run: |
+          cat > src/bridge-unequal-global.js <<'EOF'
+          // BoxLab v0.36.18.254 — globally optimised unequal-loop Bridge strip.
+          // Keeps v246 correspondence as the fallback, then uses dynamic programming
+          // to place the minimum required mismatch triangles among a quad-dominant strip.
+          const VERSION='0.36.18.254';
+          const EPS=1e-10;
+
+          function faceShapePenalty(mesh,face){
+            let min=Infinity,max=0;
+            for(let i=0;i<face.length;i++){
+              const a=mesh.vertices[face[i]],b=mesh.vertices[face[(i+1)%face.length]];
+              if(!a||!b)return Infinity;
+              const l=a.distanceTo(b);if(!Number.isFinite(l)||l<=EPS)return Infinity;
+              min=Math.min(min,l);max=Math.max(max,l);
+            }
+            return max/Math.max(min,EPS)-1;
+          }
+
+          function bridgeScale(mesh,loopA,loopB){
+            let sum=0,count=0;
+            for(const ai of loopA){
+              const a=mesh.vertices[ai];if(!a)continue;
+              let best=Infinity;
+              for(const bi of loopB){const b=mesh.vertices[bi];if(b)best=Math.min(best,a.distanceToSquared(b));}
+              if(Number.isFinite(best)){sum+=best;count++;}
+            }
+            for(const bi of loopB){
+              const b=mesh.vertices[bi];if(!b)continue;
+              let best=Infinity;
+              for(const ai of loopA){const a=mesh.vertices[ai];if(a)best=Math.min(best,b.distanceToSquared(a));}
+              if(Number.isFinite(best)){sum+=best;count++;}
+            }
+            return Math.max(count?sum/count:1,1e-6);
+          }
+
+          function faceCost(mesh,face,aSet,bSet,scale){
+            if(face.length<3||new Set(face).size!==face.length)return Infinity;
+            let connectors=0;
+            for(let i=0;i<face.length;i++){
+              const a=face[i],b=face[(i+1)%face.length];
+              if((aSet.has(a)&&bSet.has(b))||(bSet.has(a)&&aSet.has(b))){
+                const av=mesh.vertices[a],bv=mesh.vertices[b];if(!av||!bv)return Infinity;
+                connectors+=av.distanceToSquared(bv);
+              }
+            }
+            const shape=faceShapePenalty(mesh,face);if(!Number.isFinite(shape))return Infinity;
+            return connectors+shape*scale*0.08+(face.length===3?scale*0.18:0);
+          }
+
+          function planScore(mesh,faces,aSet,bSet,scale){
+            let total=0;
+            for(const face of faces){const cost=faceCost(mesh,face,aSet,bSet,scale);if(!Number.isFinite(cost))return Infinity;total+=cost;}
+            return total;
+          }
+
+          function optimiseStrip(mesh,loopA,mapped,flip){
+            const m=loopA.length,n=mapped.length,aSet=new Set(loopA),bSet=new Set(mapped),scale=bridgeScale(mesh,loopA,mapped);
+            const dp=Array.from({length:m+1},()=>Array(n+1).fill(Infinity));
+            const prev=Array.from({length:m+1},()=>Array(n+1).fill(null));
+            dp[0][0]=0;
+            const relax=(i,j,ni,nj,face,kind)=>{
+              const shapeCost=faceCost(mesh,face,aSet,bSet,scale);if(!Number.isFinite(shapeCost))return;
+              const progress=Math.abs(ni/m-nj/n);
+              const cost=dp[i][j]+shapeCost+progress*scale*0.12;
+              if(cost+EPS<dp[ni][nj]){dp[ni][nj]=cost;prev[ni][nj]={i,j,face,kind};}
+            };
+            for(let i=0;i<=m;i++)for(let j=0;j<=n;j++){
+              if(!Number.isFinite(dp[i][j])||(i===m&&j===n))continue;
+              const ac=loopA[i%m],bc=mapped[j%n];
+              if(i<m&&j<n){
+                const an=loopA[(i+1)%m],bn=mapped[(j+1)%n];
+                relax(i,j,i+1,j+1,[ac,an,bn,bc],'quad');
+              }
+              if(m<n&&j<n&&n-(j+1)>=m-i){
+                const bn=mapped[(j+1)%n];
+                relax(i,j,i,j+1,[ac,bn,bc],'b-triangle');
+              }
+              if(m>n&&i<m&&m-(i+1)>=n-j){
+                const an=loopA[(i+1)%m];
+                relax(i,j,i+1,j,[ac,an,bc],'a-triangle');
+              }
+            }
+            if(!Number.isFinite(dp[m][n]))return null;
+            const faces=[];let i=m,j=n;
+            while(i||j){const step=prev[i][j];if(!step)return null;faces.push(step.face);i=step.i;j=step.j;}
+            faces.reverse();
+            const oriented=flip?faces.map(face=>[...face].reverse()):faces.map(face=>[...face]);
+            return{faces:oriented,score:planScore(mesh,oriented,aSet,bSet,scale),scale};
+          }
+
+          export function installUnequalBridgeGlobal(EditableMesh){
+            const proto=EditableMesh?.prototype;
+            if(!proto||proto.__unequalBridgeGlobal254Installed)return;
+            if(typeof proto.bestUnequalBridgePlan!=='function')return;
+            const fallback=proto.bestUnequalBridgePlan;
+            proto.bestUnequalBridgePlan=function(loopA,loopB){
+              const base=fallback.call(this,loopA,loopB);
+              if(!base?.unequal||!Array.isArray(loopA)||!Array.isArray(loopB)||loopA.length===loopB.length)return base;
+              const direction=base.direction===-1?-1:1,offset=Number.isInteger(base.offset)?base.offset:0;
+              const mapped=Array.from({length:loopB.length},(_,i)=>loopB[(offset+direction*i+loopB.length*4)%loopB.length]);
+              const optimised=optimiseStrip(this,loopA,mapped,!!base.flip);if(!optimised)return base;
+              const aSet=new Set(loopA),bSet=new Set(mapped),scale=optimised.scale;
+              const fallbackScore=planScore(this,base.faces||[],aSet,bSet,scale);
+              const minimumTriangles=Math.abs(loopA.length-loopB.length);
+              const triangles=optimised.faces.filter(face=>face.length===3).length;
+              const quads=optimised.faces.filter(face=>face.length===4).length;
+              if(triangles!==minimumTriangles||quads!==Math.min(loopA.length,loopB.length))return base;
+              if(Number.isFinite(fallbackScore)&&optimised.score>fallbackScore*1.25)return base;
+              return{...base,faces:optimised.faces,score:optimised.score,globalOptimized:true,quadDominant:true,triangleCount:triangles,quadCount:quads};
+            };
+            proto.__unequalBridgeGlobal254Installed=true;
+            globalThis.__boxlabUnequalBridgeGlobal={version:VERSION};
+          }
+          EOF
+
+          cat > tests/bridge-unequal-global.test.mjs <<'EOF'
+          import test from 'node:test';
+          import assert from 'node:assert/strict';
+          import * as THREE from 'three';
+          import { EditableMesh } from '../src/mesh.js';
+          import { installBridgeTopology } from '../src/bridge-topology.js';
+          import { installUnequalBridge } from '../src/bridge-unequal.js';
+          import { installUnequalBridgeQuality } from '../src/bridge-unequal-quality.js';
+          import { installUnequalBridgeAlignment } from '../src/bridge-unequal-alignment.js';
+          import { installUnequalBridgeGlobal } from '../src/bridge-unequal-global.js';
+          import { installTransactionalBridge } from '../src/bridge-transactional.js';
+
+          installBridgeTopology(EditableMesh);
+          installUnequalBridge(EditableMesh);
+          installUnequalBridgeQuality(EditableMesh);
+          installUnequalBridgeAlignment(EditableMesh);
+          installUnequalBridgeGlobal(EditableMesh);
+          installTransactionalBridge(EditableMesh);
+
+          function ring(count,z,{radius=1,rotation=0,offsetX=0,offsetY=0,stretchX=1,stretchY=1}={}){
+            return Array.from({length:count},(_,i)=>{const a=rotation+Math.PI*2*i/count,w=i===1?1.35:1;return new THREE.Vector3(offsetX+Math.cos(a)*radius*stretchX*w,offsetY+Math.sin(a)*radius*stretchY,z);});
+          }
+          function caps(aCount,bCount,topOptions={}){
+            const bottom=ring(aCount,-1,{radius:1.1,stretchX:1.25,stretchY:.9});
+            const top=ring(bCount,1,{radius:1,rotation:.57,offsetX:.42,offsetY:-.24,stretchX:.82,stretchY:1.22,...topOptions});
+            const vertices=[...bottom,...top];
+            const bottomFace=Array.from({length:aCount},(_,i)=>aCount-1-i),topFace=Array.from({length:bCount},(_,i)=>aCount+i);
+            return new EditableMesh(vertices,[bottomFace,topFace]);
+          }
+
+          test('4 to 7 unequal Bridge becomes quad-dominant with the minimum three mismatch triangles',()=>{
+            const mesh=caps(4,7),ids=mesh.edges().map((_,i)=>i),info=mesh.bridgeEdgeSelectionInfo(ids);
+            const plan=mesh.bestUnequalBridgePlan(info.loops[0],info.loops[1]);
+            assert.equal(plan?.globalOptimized,true);
+            assert.equal(plan.quadCount,4);
+            assert.equal(plan.triangleCount,3);
+            const result=mesh.bridgeSelectedEdges(ids);
+            assert.equal(result?.plan?.globalOptimized,true);
+            assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:false}).ok,true);
+            assert.equal(globalThis.__boxlabBridgeTransaction?.ok,true);
+          });
+
+          test('5 to 8 rotated offset Bridge uses five quads and three triangles deterministically',()=>{
+            const mesh=caps(5,8,{rotation:.94,offsetX:-.38,offsetY:.31}),ids=mesh.edges().map((_,i)=>i),info=mesh.bridgeEdgeSelectionInfo(ids);
+            const first=mesh.bestUnequalBridgePlan(info.loops[0],info.loops[1]);
+            const second=mesh.bestUnequalBridgePlan(info.loops[0],info.loops[1]);
+            assert.equal(first?.globalOptimized,true);
+            assert.equal(first.quadCount,5);
+            assert.equal(first.triangleCount,3);
+            assert.deepEqual(first.faces,second.faces);
+          });
+
+          test('equal-count Bridge remains on the proven equal solver',()=>{
+            const mesh=caps(4,4),ids=mesh.edges().map((_,i)=>i),result=mesh.bridgeSelectedEdges(ids);
+            assert.ok(result);
+            assert.equal(result.unequal,undefined);
+            assert.equal(result.plan?.globalOptimized,undefined);
+            assert.equal(result.faceIndices.length,4);
+          });
+          EOF
+
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('src/loose-bootstrap.js');s=p.read_text()
+          old="import { installUnequalBridgeAlignment } from './bridge-unequal-alignment.js?v=0.36.18.246';\nimport { installTransactionalBridge }"
+          new="import { installUnequalBridgeAlignment } from './bridge-unequal-alignment.js?v=0.36.18.246';\nimport { installUnequalBridgeGlobal } from './bridge-unequal-global.js?v=0.36.18.254';\nimport { installTransactionalBridge }"
+          if old not in s: raise SystemExit('bootstrap import marker missing')
+          s=s.replace(old,new,1)
+          old="installUnequalBridgeAlignment(EditableMesh);\ninstallUnequalBridgeAlignment(LiveEditableMesh);\ninstallTransactionalBridge(EditableMesh);"
+          new="installUnequalBridgeAlignment(EditableMesh);\ninstallUnequalBridgeAlignment(LiveEditableMesh);\ninstallUnequalBridgeGlobal(EditableMesh);\ninstallUnequalBridgeGlobal(LiveEditableMesh);\ninstallTransactionalBridge(EditableMesh);"
+          if old not in s: raise SystemExit('bootstrap install marker missing')
+          p.write_text(s.replace(old,new,1))
+
+          p=Path('.github/workflows/through-regression.yml');s=p.read_text()
+          s=s.replace("      - 'src/bridge-unequal-alignment.js'\n", "      - 'src/bridge-unequal-alignment.js'\n      - 'src/bridge-unequal-global.js'\n")
+          p.write_text(s)
+          PY
+      - run: npm test
+      - name: Package 0.36.18.254
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html');s=p.read_text()
+          s=re.sub(r'<title>BoxLab v[^<]+</title>','<title>BoxLab v0.36.18.254</title>',s,1)
+          s=re.sub(r'<span id="appVersion">v[^<]+</span>','<span id="appVersion">v0.36.18.254</span>',s,1)
+          s=re.sub(r'loose-bootstrap\.js\?v=[^"<]+','loose-bootstrap.js?v=0.36.18.254',s,1)
+          p.write_text(s)
+          Path('version.json').write_text('{"version":"0.36.18.254"}\n')
+          PY
+          grep -q "bridge-unequal-global.js?v=0.36.18.254" src/loose-bootstrap.js
+          grep -q 'loose-bootstrap.js?v=0.36.18.254' index.html
+          grep -q '<title>BoxLab v0.36.18.254</title>' index.html
+          grep -q '"version":"0.36.18.254"' version.json
+          grep -q 'src/multi-object-transform.js?v=0.36.1.0' index.html
+      - name: Commit release
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/bridge-unequal-global.js src/loose-bootstrap.js tests/bridge-unequal-global.test.mjs .github/workflows/through-regression.yml index.html version.json
+          git commit -m 'Release BoxLab v0.36.18.254 globally optimised unequal Bridge'
+          git push
