@@ -1,13 +1,14 @@
-// BoxLab v0.36.18.217 — stable-first hybrid Boolean dispatcher.
-// Proven stable convex path remains default; sequential BSP is used only after an explicit convex-only refusal.
+// BoxLab v0.36.18.247 — stable-first hybrid Boolean dispatcher.
+// Proven stable convex path remains default; sequential BSP also handles safe geometric-degeneracy fallback.
 import * as THREE from 'three';
 import { EditableMesh } from './mesh.js';
 import { meshIntersections, epsilonForMeshes } from './boolean-intersections.js?v=0.36.18.209';
 import { topologyInfo } from './boolean-classify.js?v=0.36.18.210';
-import { booleanBSP } from './boolean-bsp.js?v=0.36.18.217';
+import { booleanBSP } from './boolean-bsp.js?v=0.36.18.247';
 
-const VERSION='0.36.18.217';
+const VERSION='0.36.18.247';
 const CONVEX_ONLY='Current Boolean supports convex solids only';
+const DEGENERATE_INPUT='Degenerate face in Boolean input';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 
@@ -48,7 +49,7 @@ function buildConvexPlanes(mesh,eps){
   for(let faceIndex=0;faceIndex<mesh.faces.length;faceIndex++){
     const face=mesh.faces[faceIndex],points=face.map(i=>mesh.vertices[i]);
     if(points.length<3||points.some(p=>!p))return{ok:false,reason:'Invalid face topology'};
-    const normal=newell(points);if(normal.lengthSq()<=eps*eps)return{ok:false,reason:'Degenerate face in Boolean input'};normal.normalize();
+    const normal=newell(points);if(normal.lengthSq()<=eps*eps)return{ok:false,reason:DEGENERATE_INPUT,faceIndex};normal.normalize();
     const fc=centroid(points);if(normal.dot(center.clone().sub(fc))>0)normal.negate();
     const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,points[0]);
     for(const v of mesh.vertices)if(plane.distanceToPoint(v)>eps*24)return{ok:false,reason:CONVEX_ONLY};
@@ -127,7 +128,7 @@ function assemble(polygons,eps){
 }
 function buildStableResult(a,b,operation){
   const eps=epsilonForMeshes(a,b),pa=buildConvexPlanes(a,eps),pb=buildConvexPlanes(b,eps);
-  if(!pa.ok||!pb.ok)return{ok:false,reason:!pa.ok?pa.reason:pb.reason};
+  if(!pa.ok||!pb.ok)return{ok:false,reason:!pa.ok?pa.reason:pb.reason,faceIndex:!pa.ok?pa.faceIndex:pb.faceIndex};
   const intersections=meshIntersections(a,b);
   if(intersections.coplanarCount>0)return{ok:false,reason:'Coplanar overlap is not yet supported by the Boolean prototype'};
   const fa=fragmentMesh(a,pb.planes,eps),fb=fragmentMesh(b,pa.planes,eps);let polygons=[];
@@ -141,10 +142,11 @@ function buildStableResult(a,b,operation){
 }
 function buildResult(a,b,operation){
   const stable=buildStableResult(a,b,operation);
-  if(stable.ok||stable.reason!==CONVEX_ONLY)return stable;
+  const fallbackAllowed=stable.reason===CONVEX_ONLY||stable.reason===DEGENERATE_INPUT;
+  if(stable.ok||!fallbackAllowed)return stable;
   const sequential=booleanBSP(a,b,operation);
-  if(sequential.ok)return{...sequential,engine:'sequential'};
-  return{...sequential,engine:'sequential',reason:`Sequential Boolean refused • ${sequential.reason||'general solver failed'}`};
+  if(sequential.ok)return{...sequential,engine:'sequential',fallbackReason:stable.reason};
+  return{...sequential,engine:'sequential',fallbackReason:stable.reason,reason:`Sequential Boolean refused • ${sequential.reason||'general solver failed'}`};
 }
 function ensureUI(){
   if(!objectTools)return null;
@@ -182,7 +184,8 @@ function apply(operation){
   if(!created){e.active.visible=true;e.other.visible=true;setStatus(`Boolean ${label} failed • result object could not be created`);return;}
   selection()?.select?.([created.id]);
   globalThis.__boxlabTopologyGate?.sync?.();
-  setStatus(`${label} created • ${result.mesh.vertices.length} verts • ${result.mesh.faces.length} faces • ${result.engine==='sequential'?'sequential solver':'stable solver'} • originals hidden`);
+  const fallbackText=result.fallbackReason===DEGENERATE_INPUT?' • repaired degenerate input':'';
+  setStatus(`${label} created • ${result.mesh.vertices.length} verts • ${result.mesh.faces.length} faces • ${result.engine==='sequential'?'sequential solver':'stable solver'}${fallbackText} • originals hidden`);
 }
 
 ensureUI();
