@@ -66,11 +66,17 @@ document.querySelector('#selectionModes')?.addEventListener('click',event=>{
   disarm();
 },true);
 
-// Duplicate must begin neutral. This prevents the newly-created object from
-// inheriting a stale component Scale/Move/Rotate state from the source mesh.
+// Duplicate starts a new object transform session. Clear any stale component
+// transform first, then explicitly arm Object Move so the new copy can be
+// dragged immediately, matching BoxLab's established duplicate workflow.
 document.querySelector('#outlinerDuplicateBtn')?.addEventListener('click',event=>{
   if(event.currentTarget?.disabled)return;
   disarm();
+  queueMicrotask(()=>{
+    armedTool='move';
+    armedConstraint='free';
+    enforce();
+  });
 },true);
 
 document.addEventListener('click',event=>{
