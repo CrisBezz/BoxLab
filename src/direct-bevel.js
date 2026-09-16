@@ -3,7 +3,7 @@ import './ui-cleanup-0322.js?v=0.32.6';
 import './bridge-ui.js?v=0.32.22';
 import './dissolve-bootstrap.js?v=0.32.4';
 import './dissolve-ui.js?v=0.32.22';
-import './transform-arming.js?v=0.36.18.250';
+import './transform-arming.js?v=0.36.18.251';
 import './component-tap-toggle.js?v=0.32.21';
 import * as THREE from 'three';
 const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('#viewport'),width=document.querySelector('#bevelWidth'),out=document.querySelector('#bevelWidthOut'),multiToggle=document.querySelector('#multiSelectToggle'),ray=new THREE.Raycaster(),pointer=new THREE.Vector2();ray.params.Line.threshold=.09;let armed=false,drag=null;
