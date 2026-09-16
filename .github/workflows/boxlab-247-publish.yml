@@ -1,0 +1,35 @@
+name: Publish BoxLab 247
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/boxlab-247-publish.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Cache-hop Boolean runtime to 247
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html')
+          s=p.read_text()
+          s,n1=re.subn(r'<title>BoxLab v[^<]+</title>','<title>BoxLab v0.36.18.247</title>',s,count=1)
+          s,n2=re.subn(r'<span id="appVersion">v[^<]+</span>','<span id="appVersion">v0.36.18.247</span>',s,count=1)
+          s,n3=re.subn(r'\./src/boolean-prototype\.js\?v=[^"<]+','./src/boolean-prototype.js?v=0.36.18.247',s,count=1)
+          if not all((n1,n2,n3)): raise SystemExit(f'markers missing title={n1} version={n2} boolean={n3}')
+          p.write_text(s)
+          Path('version.json').write_text('{"version":"0.36.18.247"}\n')
+          PY
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html version.json
+          git commit -m 'Release BoxLab v0.36.18.247 Boolean fallback'
+          git push
