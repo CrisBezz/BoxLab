@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { EditableMesh } from './mesh.js';
 import { meshIntersections, epsilonForMeshes } from './boolean-intersections.js?v=0.36.18.209';
 import { topologyInfo } from './boolean-classify.js?v=0.36.18.210';
-import { booleanBSP } from './boolean-bsp.js?v=0.36.18.247';
+import { booleanBSP } from './boolean-bsp.js?v=0.36.18.248';
 
 const VERSION='0.36.18.247';
 const CONVEX_ONLY='Current Boolean supports convex solids only';
