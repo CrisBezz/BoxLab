@@ -54,11 +54,11 @@ function context(m,fi) {
     if(areaVector(p).dot(dir)>eps*eps&&Math.max(...depths)>eps)hits.push({min:Math.max(eps,Math.min(...depths)),max:Math.max(...depths)});
   }
   if(!hits.length)fail('no-exit-shell');
-  hits.sort((a,b)=>a.min-b.min);const first=hits[0].min,depth=hits[0].max;
-  // A stepped/nonparallel exit may require separate depths; reject instead of crossing a second shell.
-  if(hits.some(h=>h.min>depth+eps*8))fail('multiple-exit-depths');
+  hits.sort((a,b)=>a.min-b.min);const first=hits[0].min;
+  // v241: existing tunnels can legitimately create several shell crossings along the same inward prism.
+  // Promote the gesture to Through and use the farthest valid exit depth.
   const endDepth=Math.max(...hits.map(h=>h.max));
-  return {source,n,dir,sides,start,eps,ts:ts.map(t=>t.p),first,depth:endDepth,fi};
+  return {source,n,dir,sides,start,eps,ts:ts.map(t=>t.p),first,depth:endDepth,fi,multiExit:hits.length>1};
 }
 export function planThrough(m,fi) {try {const c=context(m,fi);return {ok:true,sourceFaceIndex:fi,distance:-c.depth,firstDistance:-c.first};}catch(e){return{ok:false,reason:e.message};}}
 // Split every incident face together before replacing shell fragments. Generated seam
