@@ -75,7 +75,7 @@ function faceShapePenalty(mesh,face){
   return max/Math.max(min,EPS)-1;
 }
 
-function radialAlignmentPenalty(mesh,loopA,loopB,mapped){
+function radialAlignmentPenalty(mesh,loopA,mapped){
   const centerA=loopCenter(mesh,loopA),centerB=loopCenter(mesh,mapped);
   if(!centerA||!centerB)return Infinity;
   const axis=axisBetween(centerA,centerB);if(!axis)return 0;
