@@ -1,0 +1,62 @@
+name: Release 0.36.18.255
+
+on:
+  push:
+    paths:
+      - '.github/workflows/release-255.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - name: Add Object selection ownership regression
+        run: |
+          cat > tests/object-selection-layout-contract.test.mjs <<'EOF'
+          import test from 'node:test';
+          import assert from 'node:assert/strict';
+          import { readFileSync } from 'node:fs';
+          const source=readFileSync(new URL('../src/object-selection-layout.js',import.meta.url),'utf8');
+          test('Object selection layout prefers live Objects-drawer toolbar',()=>{
+            assert.match(source,/objectsDrawerContent\?\.querySelector\('#objectManagementTools,\.object-management-tools'\)/);
+            assert.match(source,/removeStaleExcept\(t\)/);
+            assert.match(source,/selectionDrawer\.appendChild\(t\)/);
+          });
+          test('Object selection layout owns v255 single-toolbar contract',()=>{
+            assert.match(source,/0\.36\.18\.255/);
+            assert.match(source,/ownedToolbar/);
+          });
+          EOF
+      - run: npm test
+      - name: Package 0.36.18.255
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html'); s=p.read_text()
+          s=re.sub(r'<title>BoxLab v[^<]+</title>','<title>BoxLab v0.36.18.255</title>',s,1)
+          s=re.sub(r'<span id="appVersion">v[^<]+</span>','<span id="appVersion">v0.36.18.255</span>',s,1)
+          s=re.sub(r'object-selection-layout\.js\?v=[^"<]+','object-selection-layout.js?v=0.36.18.255',s,1)
+          p.write_text(s)
+          Path('version.json').write_text('{"version":"0.36.18.255"}\n')
+          PY
+          grep -q 'object-selection-layout.js?v=0.36.18.255' index.html
+          grep -q '<title>BoxLab v0.36.18.255</title>' index.html
+          grep -q '"version":"0.36.18.255"' version.json
+          grep -q 'src/multi-object-transform.js?v=0.36.1.0' index.html
+      - name: Commit release
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add src/object-selection-layout.js tests/object-selection-layout-contract.test.mjs index.html version.json
+          git commit -m 'Release BoxLab v0.36.18.255 Object selection ownership'
+          git push
