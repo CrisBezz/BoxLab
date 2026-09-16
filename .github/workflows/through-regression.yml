@@ -1,4 +1,4 @@
-name: Through regression
+name: Topology regression
 
 on:
   push:
@@ -8,6 +8,10 @@ on:
       - 'src/multi-face-direct.js'
       - 'src/topology-foundation.js'
       - 'src/topology-seam-conformance.js'
+      - 'src/bridge-topology.js'
+      - 'src/bridge-transactional.js'
+      - 'src/bridge-ui.js'
+      - 'src/loose-bootstrap.js'
       - 'src/mesh.js'
       - 'src/history.js'
       - 'tests/**'
@@ -20,6 +24,10 @@ on:
       - 'src/multi-face-direct.js'
       - 'src/topology-foundation.js'
       - 'src/topology-seam-conformance.js'
+      - 'src/bridge-topology.js'
+      - 'src/bridge-transactional.js'
+      - 'src/bridge-ui.js'
+      - 'src/loose-bootstrap.js'
       - 'src/mesh.js'
       - 'src/history.js'
       - 'tests/**'
@@ -31,7 +39,7 @@ permissions:
   contents: read
 
 jobs:
-  test-through:
+  topology-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
