@@ -270,7 +270,12 @@ function duplicateActive() {
   const source = activeObject();
   if (!source) return;
   saveActive();
-  addObject(source.mesh, `${source.name} copy`, { settings:source.settings, enterObjectMode:true });
+  const copy = addObject(source.mesh, `${source.name} copy`, { settings:source.settings, enterObjectMode:true });
+  if (!copy) return;
+  requestAnimationFrame(() => {
+    if (currentMode() !== 'object') return;
+    globalThis.__boxlabTransformArming?.activateRealMove?.();
+  });
 }
 
 function renameActive() {

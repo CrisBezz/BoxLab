@@ -77,21 +77,6 @@ document.querySelector('#selectionModes')?.addEventListener('click',event=>{
   disarm();
 },true);
 
-// Duplicate can be intercepted by either the single-object or Multi controller.
-// Capture the intent before either controller stops propagation, clear stale
-// component arming immediately, then wait until its synchronous activation /
-// Object-mode transaction has finished. Finally click the REAL Move button so
-// main.js changes its internal toolMode from Scale to Move as well as the UI.
-document.addEventListener('click',event=>{
-  const button=event.target?.closest?.('#outlinerDuplicateBtn');
-  if(!button||button.disabled)return;
-  disarm();
-  queueMicrotask(()=>{
-    const mode=document.querySelector('#selectionModes button.active')?.dataset?.mode;
-    if(mode==='object')activateRealMove();
-  });
-},true);
-
 document.addEventListener('click',event=>{
   const button=event.target?.closest?.(directToolSelector);
   if(!button||button.disabled)return;

@@ -2,20 +2,24 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-const source=readFileSync(new URL('../src/transform-arming.js',import.meta.url),'utf8');
+const arming=readFileSync(new URL('../src/transform-arming.js',import.meta.url),'utf8');
+const single=readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
+const multi=readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
 const main=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 
-test('Duplicate clears stale transform before deferred real Move handoff',()=>{
-  assert.match(source,/closest\?\.\('#outlinerDuplicateBtn'\)/);
-  assert.match(source,/disarm\(\);\s*queueMicrotask\(\(\)=>\{/s);
-  assert.match(source,/if\(mode==='object'\)activateRealMove\(\)/);
+test('single Duplicate owns its post-activation Move handoff',()=>{
+  assert.match(single,/function duplicateActive\(\)[\s\S]*requestAnimationFrame\(\(\) => \{[\s\S]*activateRealMove\?\.\(\)/);
 });
 
-test('real Move handoff drives main engine toolMode through normal Move button',()=>{
-  assert.match(source,/function activateRealMove\(\)[\s\S]*moveButton\.click\(\)/);
+test('Multi Duplicate owns the same post-transaction Move handoff',()=>{
+  assert.match(multi,/function duplicateSelection\(\)[\s\S]*requestAnimationFrame\(\(\)=>\{if\(currentMode\(\)===['"]object['"]\)globalThis\.__boxlabTransformArming\?\.activateRealMove\?\.\(\)/);
+});
+
+test('global arming layer no longer tries to infer Duplicate clicks',()=>{
+  assert.doesNotMatch(arming,/outlinerDuplicateBtn/);
+  assert.match(arming,/moveButton\.click\(\)/);
+});
+
+test('real Move button still owns main transform toolMode',()=>{
   assert.match(main,/toolMode=btn\.dataset\.tool/);
-});
-
-test('Duplicate handoff is captured above button-level interceptors',()=>{
-  assert.match(source,/document\.addEventListener\('click',[\s\S]*#outlinerDuplicateBtn[\s\S]*,true\);/);
 });
