@@ -8,10 +8,10 @@ const key=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
 function square(){return [new THREE.Vector3(-1,-1,0),new THREE.Vector3(1,-1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(-1,1,0)];}
 function ring(n,z=2,r=1.2){return Array.from({length:n},(_,i)=>new THREE.Vector3(Math.cos(i*Math.PI*2/n)*r,Math.sin(i*Math.PI*2/n)*r,z));}
 
-test('268 eligibility is deliberately conservative',()=>{
+test('279 eligibility remains conservative beyond the expanded envelope',()=>{
   assert.equal(canTryAllQuad([0,1,2,3],[4,5,6,7,8,9]),true);
   assert.equal(canTryAllQuad([0,1,2,3,4],[5,6,7,8,9,10,11,12]),true);
-  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9]),false);
+  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9]),true);
   assert.equal(canTryAllQuad([0,1,2,3],[4,5,6,7]),false);
 });
 
@@ -59,15 +59,15 @@ test('4 to 6 uses two inserted vertices and produces six quads',()=>{
   assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
 });
 
-test('extreme mismatch falls through without adding vertices',()=>{
+test('3 to 8 mismatch falls through without adding vertices',()=>{
   class FallbackMesh{
-    constructor(){this.vertices=[...ring(3,0),...ring(7,2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
+    constructor(){this.vertices=[...ring(3,0),...ring(8,2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
     edgeKey(a,b){return key(a,b);}
     bridgeLoops(){return{fallback:true,faceIndices:[99],unequal:true};}
   }
   globalThis.__boxlabTopology={cloneMeshState:()=>null,restoreMeshState:()=>{}};
   installSubdFriendlyBridge(FallbackMesh);
-  const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9]);
+  const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10]);
   assert.equal(result?.fallback,true);
   assert.equal(mesh.vertices.length,before);
 });
