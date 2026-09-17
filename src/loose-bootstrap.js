@@ -9,6 +9,7 @@ import { installUnequalBridgeGlobal } from './bridge-unequal-global.js?v=0.36.18
 import { installSubdFriendlyBridge } from './bridge-all-quad.js?v=0.36.18.272';
 import { installTransactionalBridge } from './bridge-transactional.js?v=0.36.18.243';
 import { installOpenChainBridge } from './bridge-open-chain.js?v=0.36.18.266';
+import { installOpenChainAllQuadBridge } from './bridge-open-chain-all-quad.js?v=0.36.18.273';
 import { installBevelTopology } from './bevel-topology.js?v=0.28.3';
 import { installRoundedLoopBevel } from './rounded-loop-bevel.js?v=0.28.8';
 import { installGeneralEdgeBevelTopology } from './general-edge-bevel-topology.js?v=0.28.7';
@@ -26,9 +27,6 @@ import './selection-transform-state.js?v=0.12';
 import './face-pick-repair.js?v=0.12';
 
 installLooseTopology(EditableMesh);
-// main.js imports mesh.js?v=0.12, which is a distinct ES-module identity in some browsers.
-// Install loose-edge and Bridge support onto both identities so the live modelling
-// mesh receives the same protected topology operations.
 installLooseTopology(LiveEditableMesh);
 installBridgeTopology(EditableMesh);
 installBridgeTopology(LiveEditableMesh);
@@ -46,6 +44,8 @@ installTransactionalBridge(EditableMesh);
 installTransactionalBridge(LiveEditableMesh);
 installOpenChainBridge(EditableMesh);
 installOpenChainBridge(LiveEditableMesh);
+installOpenChainAllQuadBridge(EditableMesh);
+installOpenChainAllQuadBridge(LiveEditableMesh);
 installBevelTopology(EditableMesh);
 installRoundedLoopBevel(EditableMesh);
 installGeneralEdgeBevelTopology(EditableMesh);
