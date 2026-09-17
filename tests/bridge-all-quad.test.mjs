@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
-import { canTryAllQuad, densifyLoopToCount, splitBoundaryEdge, installSubdFriendlyBridge } from '../src/bridge-all-quad.js';
+import { canTryAllQuad, densifyLoopToCount, splitBoundaryEdge, balancedSplitEdgeIndex, installSubdFriendlyBridge } from '../src/bridge-all-quad.js';
 
 const key=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
 
@@ -70,4 +70,21 @@ test('extreme mismatch falls through without adding vertices',()=>{
   const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9]);
   assert.equal(result?.fallback,true);
   assert.equal(mesh.vertices.length,before);
+});
+
+
+test('272 spreads comparable splits around a regular loop',()=>{
+  const mesh={vertices:square(),faces:[[0,1,2,3]],creases:new Map(),looseEdges:new Set(),looseVertices:new Set(),edgeKey:key};
+  const dense=densifyLoopToCount(mesh,[0,1,2,3],6);
+  assert.equal(dense.length,6);
+  const added=mesh.vertices.slice(4);
+  assert.equal(added.length,2);
+  assert.ok(added[0].distanceTo(new THREE.Vector3(0,-1,0))<1e-9);
+  assert.ok(added[1].distanceTo(new THREE.Vector3(0,1,0))<1e-9);
+});
+
+test('272 still gives a materially longer edge priority over spread',()=>{
+  const verts=[new THREE.Vector3(0,0,0),new THREE.Vector3(4,0,0),new THREE.Vector3(3,1,0),new THREE.Vector3(0,1,0)];
+  const mesh={vertices:verts,faces:[[0,1,2,3]],creases:new Map(),looseEdges:new Set(),looseVertices:new Set(),edgeKey:key};
+  assert.equal(balancedSplitEdgeIndex(mesh,[0,1,2,3],[new THREE.Vector3(2,0,0)]),0);
 });
