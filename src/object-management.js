@@ -25,7 +25,7 @@ function buildToolbar(){if(!drawer||toolbar)return;injectStyle();toolbar=documen
   visibilityButton=document.createElement('button');visibilityButton.type='button';visibilityButton.textContent='Hide';
   lockButton=document.createElement('button');lockButton.type='button';lockButton.textContent='Lock';
   clearButton=document.createElement('button');clearButton.type='button';clearButton.textContent='Clear';
-  countLabel=document.createElement('div');countLabel.className='object-management-count';toolbar.append(multiButton,allButton,visibilityButton,lockButton,clearButton,countLabel);drawer.insertBefore(toolbar,list||drawer.firstChild);
+  countLabel=document.createElement('div');countLabel.className='object-management-count';toolbar.append(multiButton,allButton,visibilityButton,lockButton,clearButton,countLabel);const selectionHost=document.querySelector('#selectionDrawer');(selectionHost||drawer).appendChild(toolbar);
   multiButton.addEventListener('click',()=>{multiEnabled=!multiEnabled;selectedIds.clear();if(multiEnabled&&activeId()!=null)selectedIds.add(activeId());updateUI();});
   allButton.addEventListener('click',()=>{multiEnabled=true;const all=objects(),every=all.length&&all.every(o=>selectedIds.has(o.id));selectedIds=every?new Set():new Set(all.map(o=>o.id));updateUI();});
   visibilityButton.addEventListener('click',()=>{const chosen=selectedObjects();if(!chosen.length)return;const hide=chosen.some(o=>o.visible);for(const o of chosen)o.visible=!hide;forceRender();updateUI();});
