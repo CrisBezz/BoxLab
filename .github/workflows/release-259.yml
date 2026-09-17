@@ -37,11 +37,15 @@ jobs:
           s=s.replace(old3,new3,1)
           p.write_text(s)
           PY
-      - name: Update layout version
+      - name: Update layout version and stale contract
         run: |
           python - <<'PY'
           from pathlib import Path
           p=Path('src/object-selection-layout.js'); s=p.read_text(); s=s.replace('0.36.18.258','0.36.18.259'); p.write_text(s)
+          t=Path('tests/object-selection-proxy-contract.test.mjs')
+          if t.exists():
+            q=t.read_text().replace('0\\.36\\.18\\.258','0\\.36\\.18\\.259').replace('0.36.18.258','0.36.18.259')
+            t.write_text(q)
           PY
       - name: Add singleton toolbar regression
         run: |
@@ -78,6 +82,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/object-management.js src/object-selection-layout.js tests/object-selection-singleton-contract.test.mjs index.html version.json
+          git add src/object-management.js src/object-selection-layout.js tests/object-selection-proxy-contract.test.mjs tests/object-selection-singleton-contract.test.mjs index.html version.json
           git commit -m 'Release BoxLab v0.36.18.259 single Object selection toolbar'
           git push
