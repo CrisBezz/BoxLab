@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.275 — even SubD-friendly unequal open-chain Bridge densification.
+// BoxLab v0.36.18.276 — expanded SubD-friendly unequal open-chain Bridge envelope.
 // Conservatively densifies the smaller open chain, then builds an all-quad strip.
 // Preserves original chain vertices, spaces inserted vertices evenly, and keeps the v274 quality guard/fallback.
 
-const VERSION='0.36.18.275';
+const VERSION='0.36.18.276';
 const EPS=1e-12;
 const MAX_ADDED=4;
-const MAX_RATIO=2;
+const MAX_RATIO=2.5;
 const NEAR_LONGEST=0.95;
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
@@ -217,7 +217,7 @@ function trialFrom(mesh,topology){
 function diagnostic(ok,reason,extra={}){globalThis.__boxlabOpenChainAllQuadBridge={version:VERSION,ok,allQuad:!!ok,qualityGuarded:true,lastReject:reason||null,...extra};}
 
 export function installOpenChainAllQuadBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge275Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge276Installed)return;
   const baseSelected=proto.bridgeSelectedEdges,topology=globalThis.__boxlabTopology;
   if(typeof baseSelected!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
@@ -243,6 +243,6 @@ export function installOpenChainAllQuadBridge(EditableMesh){
     return result;
   };
 
-  proto.__openChainAllQuadBridge275Installed=true;
+  proto.__openChainAllQuadBridge276Installed=true;
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
