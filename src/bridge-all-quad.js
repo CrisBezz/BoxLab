@@ -1,10 +1,10 @@
-// BoxLab v0.36.18.272 — balanced SubD-friendly unequal Bridge densification.
+// BoxLab v0.36.18.279 — expanded closed-loop SubD-friendly unequal Bridge envelope.
 // Densifies the smaller closed boundary loop, spreading comparable splits around the loop,
 // then reuses the proven equal-count Bridge solver.
 
-const VERSION='0.36.18.272';
+const VERSION='0.36.18.279';
 const MAX_ADDED=4;
-const MAX_RATIO=2;
+const MAX_RATIO=2.5;
 const NEAR_LONGEST=0.95;
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
@@ -93,7 +93,7 @@ export function canTryAllQuad(loopA,loopB){
 }
 
 export function installSubdFriendlyBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge272Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge279Installed)return;
   const baseBridgeLoops=proto.bridgeLoops,topology=globalThis.__boxlabTopology;
   if(typeof baseBridgeLoops!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState)return;
 
@@ -111,6 +111,6 @@ export function installSubdFriendlyBridge(EditableMesh){
     return result;
   };
 
-  proto.__subdFriendlyBridge272Installed=true;
+  proto.__subdFriendlyBridge279Installed=true;
   globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:null,balancedDensification:true,addedVertices:0,denseCounts:[]};
 }
