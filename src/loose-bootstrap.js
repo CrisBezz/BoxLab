@@ -7,6 +7,7 @@ import { installUnequalBridgeQuality } from './bridge-unequal-quality.js?v=0.36.
 import { installUnequalBridgeAlignment } from './bridge-unequal-alignment.js?v=0.36.18.246';
 import { installUnequalBridgeGlobal } from './bridge-unequal-global.js?v=0.36.18.263';
 import { installTransactionalBridge } from './bridge-transactional.js?v=0.36.18.243';
+import { installOpenChainBridge } from './bridge-open-chain.js?v=0.36.18.264';
 import { installBevelTopology } from './bevel-topology.js?v=0.28.3';
 import { installRoundedLoopBevel } from './rounded-loop-bevel.js?v=0.28.8';
 import { installGeneralEdgeBevelTopology } from './general-edge-bevel-topology.js?v=0.28.7';
@@ -40,6 +41,8 @@ installUnequalBridgeGlobal(EditableMesh);
 installUnequalBridgeGlobal(LiveEditableMesh);
 installTransactionalBridge(EditableMesh);
 installTransactionalBridge(LiveEditableMesh);
+installOpenChainBridge(EditableMesh);
+installOpenChainBridge(LiveEditableMesh);
 installBevelTopology(EditableMesh);
 installRoundedLoopBevel(EditableMesh);
 installGeneralEdgeBevelTopology(EditableMesh);
