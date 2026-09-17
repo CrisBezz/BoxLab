@@ -30,6 +30,6 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add src/main.js index.html version.json tests/selection-navigation-retention.test.mjs
+          git add src/main.js index.html version.json tests/selection-navigation-retention.test.mjs tests/unified-toggle-selection.test.mjs
           git commit -m 'Release BoxLab v0.36.18.269 selection navigation retention'
           git push
