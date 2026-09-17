@@ -1,0 +1,27 @@
+name: Release 0.36.18.257
+
+on:
+  push:
+    paths:
+      - '.github/workflows/release-257.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Package 0.36.18.257
+        run: |
+          python -c "from pathlib import Path; p=Path('index.html'); s=p.read_text(); s=s.replace('<title>BoxLab v0.36.18.256</title>','<title>BoxLab v0.36.18.257</title>').replace('<span id=\"appVersion\">v0.36.18.256</span>','<span id=\"appVersion\">v0.36.18.257</span>').replace('object-selection-layout.js?v=0.36.18.256','object-selection-layout.js?v=0.36.18.257'); p.write_text(s); Path('version.json').write_text('{\"version\":\"0.36.18.257\"}\\n')"
+          grep -q 'object-selection-layout.js?v=0.36.18.257' index.html
+          grep -q 'src/multi-object-transform.js?v=0.36.1.0' index.html
+      - name: Commit release
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html version.json src/object-selection-layout.js
+          git commit -m 'Release BoxLab v0.36.18.257 render starvation fix'
+          git push
