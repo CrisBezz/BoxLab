@@ -152,7 +152,7 @@ test('275 direct split supports non-midpoint placement and preserves crease halv
   assert.ok(id!==null);
   assert.ok(Math.abs(mesh.vertices[id].x-1)<1e-9);
   assert.equal(mesh.creases.get('0:'+id),0.7);
-  assert.equal(mesh.creases.get(id+':1'),0.7);
+  assert.equal(mesh.creases.get('1:'+id),0.7);
 });
 
 test('275 equal-length 2 to 5 allocation keeps final spans balanced',()=>{
