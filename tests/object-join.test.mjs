@@ -66,7 +66,17 @@ test('277 object manager and Selection toolbar own Join',()=>{
   const management=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
   assert.match(multi,/joinObjects\(ids\)/);
   assert.match(multi,/combineEditableMeshes/);
-  assert.match(management,/joinButton\.textContent='Join'/);
+  assert.match(management,/const joinButton=document\.querySelector\('#joinObjectsBtn'\)/);
   assert.match(management,/manager\(\)\?\.joinObjects/);
-  assert.match(management,/\['Join'\]\.includes\(label\)/);
+  assert.match(management,/#joinObjectsBtn/);
+});
+
+
+test('278 Join button lives in Object Active Tools, not Selection toolbar',()=>{
+  const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  const objectBlock=index.match(/<div class="mode-tools" data-mode-tools="object">[\s\S]*?<\/div><\/div>/)?.[0]||'';
+  assert.match(objectBlock,/id="joinObjectsBtn"/);
+  assert.doesNotMatch(objectBlock,/id="objectManagementTools"/);
+  const management=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
+  assert.doesNotMatch(management,/toolbar\.append\([^\n]*joinButton/);
 });
