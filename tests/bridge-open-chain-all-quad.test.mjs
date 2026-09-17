@@ -162,3 +162,41 @@ test('275 equal-length 2 to 5 allocation keeps final spans balanced',()=>{
   assert.equal(dense.length,6);
   assert.ok(Math.max(...spans)-Math.min(...spans)<=1/6+1e-9);
 });
+
+
+test('276 eligibility expands to 2 to 5 and 3 to 7 but not 1 to 4 or 2 to 6',()=>{
+  assert.equal(canTryOpenAllQuad([0,1,2],[3,4,5,6,7,8]),true);
+  assert.equal(canTryOpenAllQuad([0,1,2,3],[4,5,6,7,8,9,10,11]),true);
+  assert.equal(canTryOpenAllQuad([0,1],[2,3,4,5,6]),false);
+  assert.equal(canTryOpenAllQuad([0,1,2],[3,4,5,6,7,8,9]),false);
+});
+
+test('276 clean parallel 2 edge to 5 edge chains become five quads',()=>{
+  const {mesh,ids}=looseParallel(2,5),before=mesh.vertices.length,result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.subdFriendly,true);
+  assert.equal(result?.addedVertices,3);
+  assert.equal(result?.plan?.quadCount,5);
+  assert.equal(result?.plan?.triangleCount,0);
+  assert.equal(mesh.vertices.length,before+3);
+  assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
+
+test('276 clean parallel 3 edge to 7 edge chains become seven quads',()=>{
+  const {mesh,ids}=looseParallel(3,7),before=mesh.vertices.length,result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.addedVertices,4);
+  assert.equal(result?.plan?.quadCount,7);
+  assert.equal(result?.plan?.triangleCount,0);
+  assert.equal(mesh.vertices.length,before+4);
+  assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
+
+test('276 1 to 4 remains on proven fallback',()=>{
+  const {mesh,ids}=looseParallel(1,4),result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,undefined);
+  assert.equal(result?.unequal,true);
+  assert.equal(result?.plan?.triangleCount,3);
+});
