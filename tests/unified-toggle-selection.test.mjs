@@ -16,8 +16,9 @@ test('selected component tap records exact hit and toggles it off on pointer-up'
   assert.match(main,/toggleSelection\(current\.tapHit\)/);
 });
 
-test('blank component-area tap clears selection without Multi mode distinction',()=>{
-  assert.match(main,/const hit=pick\(event\);if\(!hit\)\{clearSelection\(\);renderMesh\(\);return;\}/);
+test('blank component-area tap still clears selection, but only after tap confirmation',()=>{
+  assert.match(main,/if\(!tap\.cancelled&&!moved\)\{clearSelection\(\);renderMesh\(\);\}/);
+  assert.doesNotMatch(main,/const hit=pick\(event\);if\(!hit\)\{clearSelection\(\);renderMesh\(\);return;\}/);
 });
 
 test('legacy Multi control is hidden and edge-only toggle repair is retired',()=>{
