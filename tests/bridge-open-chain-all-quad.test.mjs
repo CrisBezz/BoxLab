@@ -10,7 +10,7 @@ import { installUnequalBridgeAlignment } from '../src/bridge-unequal-alignment.j
 import { installUnequalBridgeGlobal } from '../src/bridge-unequal-global.js';
 import { installTransactionalBridge } from '../src/bridge-transactional.js';
 import { installOpenChainBridge } from '../src/bridge-open-chain.js';
-import { installOpenChainAllQuadBridge,canTryOpenAllQuad,densifyOpenChainToCount,validateOpenAllQuadCandidate } from '../src/bridge-open-chain-all-quad.js';
+import { installOpenChainAllQuadBridge,canTryOpenAllQuad,densifyOpenChainToCount,validateOpenAllQuadCandidate,splitOpenBoundaryEdgeAt } from '../src/bridge-open-chain-all-quad.js';
 
 installLooseTopology(EditableMesh);
 installBridgeTopology(EditableMesh);
@@ -134,4 +134,31 @@ test('274 fallback records reason for fold-prone L-shaped all-quad attempt',()=>
   assert.equal(result?.allQuad,undefined);
   assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.ok,false);
   assert.ok(['folded-quad','degenerate-quad','connector-distortion','topology-rejected','same-direction-edge','non-manifold-edge'].includes(globalThis.__boxlabOpenChainAllQuadBridge?.lastReject));
+});
+
+
+test('275 one-edge densification spaces two inserts at thirds',()=>{
+  const mesh={vertices:[new THREE.Vector3(0,0,0),new THREE.Vector3(3,0,0)],faces:[],creases:new Map(),looseEdges:new Set(['0:1']),looseVertices:new Set(),edgeKey:(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`};
+  const dense=densifyOpenChainToCount(mesh,[0,1],4);
+  assert.equal(dense.length,4);
+  assert.ok(Math.abs(mesh.vertices[dense[1]].x-1)<1e-9);
+  assert.ok(Math.abs(mesh.vertices[dense[2]].x-2)<1e-9);
+});
+
+test('275 direct split supports non-midpoint placement and preserves crease halves',()=>{
+  const mesh={vertices:[new THREE.Vector3(0,0,0),new THREE.Vector3(4,0,0)],faces:[[0,1,0]],creases:new Map([['0:1',0.7]]),looseEdges:new Set(),looseVertices:new Set(),edgeKey:(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`};
+  mesh.faces=[];
+  const chain=[0,1],id=splitOpenBoundaryEdgeAt(mesh,chain,0,.25);
+  assert.ok(id!==null);
+  assert.ok(Math.abs(mesh.vertices[id].x-1)<1e-9);
+  assert.equal(mesh.creases.get('0:'+id),0.7);
+  assert.equal(mesh.creases.get(id+':1'),0.7);
+});
+
+test('275 equal-length 2 to 5 allocation keeps final spans balanced',()=>{
+  const mesh={vertices:[new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0)],faces:[],creases:new Map(),looseEdges:new Set(['0:1','1:2']),looseVertices:new Set(),edgeKey:(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`};
+  const dense=densifyOpenChainToCount(mesh,[0,1,2],6);
+  const spans=[];for(let i=0;i<dense.length-1;i++)spans.push(mesh.vertices[dense[i]].distanceTo(mesh.vertices[dense[i+1]]));
+  assert.equal(dense.length,6);
+  assert.ok(Math.max(...spans)-Math.min(...spans)<=1/6+1e-9);
 });
