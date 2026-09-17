@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.274 — explicit quality guard for SubD-friendly unequal open-chain Bridge.
+// BoxLab v0.36.18.275 — even SubD-friendly unequal open-chain Bridge densification.
 // Conservatively densifies the smaller open chain, then builds an all-quad strip.
-// Unsafe all-quad candidates report a reason and fall back to the proven v266 solver.
+// Preserves original chain vertices, spaces inserted vertices evenly, and keeps the v274 quality guard/fallback.
 
-const VERSION='0.36.18.274';
+const VERSION='0.36.18.275';
 const EPS=1e-12;
 const MAX_ADDED=4;
 const MAX_RATIO=2;
@@ -21,8 +21,8 @@ function faceEdgeSlot(face,a,b){
   return-1;
 }
 
-export function splitOpenBoundaryEdge(mesh,chain,edgeIndex){
-  if(!mesh||!Array.isArray(chain)||chain.length<2||edgeIndex<0||edgeIndex>=chain.length-1)return null;
+export function splitOpenBoundaryEdgeAt(mesh,chain,edgeIndex,t=.5){
+  if(!mesh||!Array.isArray(chain)||chain.length<2||edgeIndex<0||edgeIndex>=chain.length-1||!(t>0&&t<1))return null;
   const a=chain[edgeIndex],b=chain[edgeIndex+1],va=mesh.vertices[a],vb=mesh.vertices[b];
   if(!va||!vb)return null;
   const key=edgeKey(mesh,a,b),owners=[];
@@ -32,7 +32,7 @@ export function splitOpenBoundaryEdge(mesh,chain,edgeIndex){
   }
   if(owners.length>1)return null;
   const vertex=mesh.vertices.length;
-  mesh.vertices.push(va.clone().lerp(vb,.5));
+  mesh.vertices.push(va.clone().lerp(vb,t));
   for(const {fi,slot} of owners)mesh.faces[fi].splice(slot+1,0,vertex);
   if(mesh.creases instanceof Map&&mesh.creases.has(key)){
     const strength=mesh.creases.get(key);mesh.creases.delete(key);
@@ -44,6 +44,51 @@ export function splitOpenBoundaryEdge(mesh,chain,edgeIndex){
   if(mesh.looseVertices instanceof Set)mesh.looseVertices.delete(vertex);
   chain.splice(edgeIndex+1,0,vertex);
   return vertex;
+}
+
+export function splitOpenBoundaryEdge(mesh,chain,edgeIndex){return splitOpenBoundaryEdgeAt(mesh,chain,edgeIndex,.5);}
+
+function subdivisionAllocation(mesh,chain,targetEdgeCount){
+  const edges=[];
+  for(let i=0;i<chain.length-1;i++){
+    const a=mesh.vertices[chain[i]],b=mesh.vertices[chain[i+1]];
+    if(!a||!b)return null;
+    edges.push({index:i,length:Math.sqrt(a.distanceToSquared(b)),segments:1});
+  }
+  let remaining=targetEdgeCount-edges.length;
+  while(remaining-->0){
+    let best=edges[0];
+    for(const e of edges){
+      const span=e.length/e.segments,bestSpan=best.length/best.segments;
+      if(span>bestSpan+1e-12||(Math.abs(span-bestSpan)<=1e-12&&e.index<best.index))best=e;
+    }
+    best.segments++;
+  }
+  return edges.map(e=>e.segments);
+}
+
+function subdivideOriginalOpenEdge(mesh,a,b,segments){
+  if(segments<=1)return[];
+  const va=mesh.vertices[a],vb=mesh.vertices[b];if(!va||!vb)return null;
+  const key=edgeKey(mesh,a,b),owners=[];
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const face=mesh.faces[fi];if(!Array.isArray(face))continue;
+    const slot=faceEdgeSlot(face,a,b);if(slot>=0)owners.push({fi,slot,forward:face[slot]===a});
+  }
+  if(owners.length>1)return null;
+  const inserted=[];
+  for(let j=1;j<segments;j++){const id=mesh.vertices.length;mesh.vertices.push(va.clone().lerp(vb,j/segments));inserted.push(id);}
+  for(const {fi,slot,forward} of owners)mesh.faces[fi].splice(slot+1,0,...(forward?inserted:[...inserted].reverse()));
+  if(mesh.creases instanceof Map&&mesh.creases.has(key)){
+    const strength=mesh.creases.get(key);mesh.creases.delete(key);const seq=[a,...inserted,b];
+    for(let i=0;i<seq.length-1;i++)mesh.creases.set(edgeKey(mesh,seq[i],seq[i+1]),strength);
+  }
+  if(mesh.looseEdges instanceof Set&&mesh.looseEdges.has(key)){
+    mesh.looseEdges.delete(key);const seq=[a,...inserted,b];
+    for(let i=0;i<seq.length-1;i++)mesh.looseEdges.add(edgeKey(mesh,seq[i],seq[i+1]));
+  }
+  if(mesh.looseVertices instanceof Set)for(const id of inserted)mesh.looseVertices.delete(id);
+  return inserted;
 }
 
 function openEdgeMetrics(mesh,chain){
@@ -74,13 +119,14 @@ export function balancedOpenSplitEdgeIndex(mesh,chain,splitPoints=[]){
 
 export function densifyOpenChainToCount(mesh,chain,targetVertexCount){
   if(!Array.isArray(chain)||chain.length<2||targetVertexCount<chain.length)return null;
-  const out=[...chain],splitPoints=[];
-  while(out.length<targetVertexCount){
-    const edge=balancedOpenSplitEdgeIndex(mesh,out,splitPoints);if(edge<0)return null;
-    const vertex=splitOpenBoundaryEdge(mesh,out,edge);if(vertex===null)return null;
-    splitPoints.push(mesh.vertices[vertex].clone());
+  if(targetVertexCount===chain.length)return[...chain];
+  const allocation=subdivisionAllocation(mesh,chain,targetVertexCount-1);if(!allocation)return null;
+  const out=[chain[0]];
+  for(let i=0;i<chain.length-1;i++){
+    const inserted=subdivideOriginalOpenEdge(mesh,chain[i],chain[i+1],allocation[i]);if(inserted===null)return null;
+    out.push(...inserted,chain[i+1]);
   }
-  return out;
+  return out.length===targetVertexCount?out:null;
 }
 
 export function canTryOpenAllQuad(chainA,chainB){
@@ -171,7 +217,7 @@ function trialFrom(mesh,topology){
 function diagnostic(ok,reason,extra={}){globalThis.__boxlabOpenChainAllQuadBridge={version:VERSION,ok,allQuad:!!ok,qualityGuarded:true,lastReject:reason||null,...extra};}
 
 export function installOpenChainAllQuadBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge274Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge275Installed)return;
   const baseSelected=proto.bridgeSelectedEdges,topology=globalThis.__boxlabTopology;
   if(typeof baseSelected!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
@@ -197,6 +243,6 @@ export function installOpenChainAllQuadBridge(EditableMesh){
     return result;
   };
 
-  proto.__openChainAllQuadBridge274Installed=true;
+  proto.__openChainAllQuadBridge275Installed=true;
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
