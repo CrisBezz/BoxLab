@@ -1,5 +1,5 @@
-// BoxLab v0.36.18.259 — native Object selection toolbar lives in Selection.
-const VERSION='0.36.18.259';
+// BoxLab v0.36.18.260 — native Object selection toolbar lives in Selection.
+const VERSION='0.36.18.260';
 const selectionDrawer=document.querySelector('#selectionDrawer');
 const componentTools=document.querySelector('#componentSelectionTools');
 const title=document.querySelector('#selectionDrawer .always-selection-title');
