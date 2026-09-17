@@ -9,7 +9,7 @@ import { installUnequalBridgeQuality } from '../src/bridge-unequal-quality.js';
 import { installUnequalBridgeAlignment } from '../src/bridge-unequal-alignment.js';
 import { installUnequalBridgeGlobal } from '../src/bridge-unequal-global.js';
 import { installTransactionalBridge } from '../src/bridge-transactional.js';
-import { installOpenChainBridge } from '../src/bridge-open-chain.js';
+import { installOpenChainBridge,validateOpenChainCandidate } from '../src/bridge-open-chain.js';
 
 installLooseTopology(EditableMesh);
 installBridgeTopology(EditableMesh);
@@ -29,7 +29,7 @@ function twoQuads(){
   return new EditableMesh(v,[[0,3,2,1],[4,5,6,7]]);
 }
 
-test('1 edge to 1 edge creates one open quad',()=>{
+test('1 edge to 1 edge creates one quality-guarded open quad',()=>{
   const mesh=twoQuads();
   const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,4,5)];
   const info=mesh.bridgeEdgeSelectionInfo(ids);
@@ -39,8 +39,10 @@ test('1 edge to 1 edge creates one open quad',()=>{
   const before=mesh.faces.length,result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.openChain,true);
   assert.equal(result.unequal,false);
+  assert.equal(result.plan.qualityGuarded,true);
   assert.equal(result.faceIndices.length,1);
   assert.equal(mesh.faces.length,before+1);
+  assert.equal(globalThis.__boxlabOpenChainBridge?.qualityGuarded,true);
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
 
@@ -52,6 +54,7 @@ test('2 edges to 2 edges creates two quads and remains open',()=>{
   assert.equal(info.edgeCount,2);
   const result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.faceIndices.length,2);
+  assert.equal(result.plan.qualityGuarded,true);
   assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
   const validation=globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true});
   assert.equal(validation.ok,true);
@@ -66,6 +69,7 @@ test('3 edges to 3 edges creates a three-quad open strip',()=>{
   assert.equal(info.edgeCount,3);
   const result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.faceIndices.length,3);
+  assert.equal(result.plan.qualityGuarded,true);
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
 
@@ -98,6 +102,7 @@ test('1 edge to 2 edges creates one quad plus one triangle',()=>{
   assert.equal(result.faceIndices.length,2);
   assert.equal(result.plan.quadCount,1);
   assert.equal(result.plan.triangleCount,1);
+  assert.equal(result.plan.qualityGuarded,true);
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
 
@@ -109,6 +114,7 @@ test('2 edges to 3 edges creates two quads plus one triangle and stays open',()=
   const result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.plan.quadCount,2);
   assert.equal(result.plan.triangleCount,1);
+  assert.equal(result.plan.qualityGuarded,true);
   assert.equal(result.faceIndices.length,3);
   const validation=globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true});
   assert.equal(validation.ok,true);
@@ -129,6 +135,21 @@ test('unequal loose chains 3 to 5 use minimum triangles',()=>{
   assert.equal(result?.unequal,true);
   assert.equal(result.plan.quadCount,3);
   assert.equal(result.plan.triangleCount,2);
+  assert.equal(result.plan.qualityGuarded,true);
   assert.equal(result.faceIndices.length,5);
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
+
+test('quality guard rejects a folded open-chain quad',()=>{
+  const mesh={vertices:[new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(1,1,0),new THREE.Vector3(1,-1,0)]};
+  const result=validateOpenChainCandidate(mesh,[[0,1,2,3]],[0,1],[3,2],1);
+  assert.equal(result.ok,false);
+  assert.equal(result.reason,'folded-quad');
+});
+
+test('quality guard rejects extreme open-chain connector distortion',()=>{
+  const mesh={vertices:[new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(100,1,0)]};
+  const result=validateOpenChainCandidate(mesh,[[0,1,2]],[0,1],[2],1);
+  assert.equal(result.ok,false);
+  assert.equal(result.reason,'connector-distortion');
 });
