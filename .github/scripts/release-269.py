@@ -33,6 +33,13 @@ h=h.replace('./src/main.js?v=0.36.18.267','./src/main.js?v=0.36.18.269')
 index.write_text(h)
 Path('version.json').write_text('{"version":"0.36.18.269"}\n')
 
+legacy=Path('tests/unified-toggle-selection.test.mjs')
+legacy_text=legacy.read_text()
+old_test="""test('blank component-area tap clears selection without Multi mode distinction',()=>{\n  assert.match(main,/const hit=pick\\(event\\);if\\(!hit\\)\\{clearSelection\\(\\);renderMesh\\(\\);return;\\}/);\n});"""
+new_test="""test('blank component-area tap still clears selection, but only after tap confirmation',()=>{\n  assert.match(main,/if\\(!tap\\.cancelled&&!moved\\)\\{clearSelection\\(\\);renderMesh\\(\\);\\}/);\n  assert.doesNotMatch(main,/const hit=pick\\(event\\);if\\(!hit\\)\\{clearSelection\\(\\);renderMesh\\(\\);return;\\}/);\n});"""
+if old_test not in legacy_text: raise SystemExit('legacy blank-selection test not found')
+legacy.write_text(legacy_text.replace(old_test,new_test,1))
+
 test=Path('tests/selection-navigation-retention.test.mjs')
 test.write_text("""import test from 'node:test';
 import assert from 'node:assert/strict';
