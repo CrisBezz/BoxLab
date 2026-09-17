@@ -147,7 +147,7 @@ test('272 spreads comparable splits around a regular loop',()=>{
 });
 
 test('272 still gives a materially longer edge priority over spread',()=>{
-  const verts=[new THREE.Vector3(0,0,0),new THREE.Vector3(4,0,0),new THREE.Vector3(4,1,0),new THREE.Vector3(0,1,0)];
+  const verts=[new THREE.Vector3(0,0,0),new THREE.Vector3(4,0,0),new THREE.Vector3(3,1,0),new THREE.Vector3(0,1,0)];
   const mesh={vertices:verts,faces:[[0,1,2,3]],creases:new Map(),looseEdges:new Set(),looseVertices:new Set(),edgeKey:key};
   assert.equal(balancedSplitEdgeIndex(mesh,[0,1,2,3],[new THREE.Vector3(2,0,0)]),0);
 });
