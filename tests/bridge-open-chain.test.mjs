@@ -34,9 +34,11 @@ test('1 edge to 1 edge creates one open quad',()=>{
   const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,4,5)];
   const info=mesh.bridgeEdgeSelectionInfo(ids);
   assert.equal(info?.openChain,true);
+  assert.equal(info.unequal,false);
   assert.equal(info.edgeCount,1);
   const before=mesh.faces.length,result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.openChain,true);
+  assert.equal(result.unequal,false);
   assert.equal(result.faceIndices.length,1);
   assert.equal(mesh.faces.length,before+1);
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
@@ -84,9 +86,49 @@ test('two loose edges can seed a single open quad',()=>{
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
 
-test('unequal open chains are deferred rather than bridged in 264',()=>{
+test('1 edge to 2 edges creates one quad plus one triangle',()=>{
   const mesh=twoQuads();
   const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,4,5),edgeIndex(mesh,5,6)];
-  assert.equal(mesh.bridgeEdgeSelectionInfo(ids),null);
-  assert.equal(mesh.bridgeSelectedEdges(ids),null);
+  const info=mesh.bridgeEdgeSelectionInfo(ids);
+  assert.equal(info?.openChain,true);
+  assert.equal(info.unequal,true);
+  assert.deepEqual([...info.counts].sort((a,b)=>a-b),[1,2]);
+  const result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.unequal,true);
+  assert.equal(result.faceIndices.length,2);
+  assert.equal(result.plan.quadCount,1);
+  assert.equal(result.plan.triangleCount,1);
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
+
+test('2 edges to 3 edges creates two quads plus one triangle and stays open',()=>{
+  const mesh=twoQuads();
+  const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,1,2),edgeIndex(mesh,4,5),edgeIndex(mesh,5,6),edgeIndex(mesh,6,7)];
+  const info=mesh.bridgeEdgeSelectionInfo(ids);
+  assert.equal(info?.unequal,true);
+  const result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.plan.quadCount,2);
+  assert.equal(result.plan.triangleCount,1);
+  assert.equal(result.faceIndices.length,3);
+  const validation=globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true});
+  assert.equal(validation.ok,true);
+  assert.ok(validation.boundary.length>0);
+});
+
+test('unequal loose chains 3 to 5 use minimum triangles',()=>{
+  const vertices=[];
+  for(let i=0;i<4;i++)vertices.push(new THREE.Vector3(i,0,0));
+  for(let i=0;i<6;i++)vertices.push(new THREE.Vector3(i*.6,.25,2));
+  const mesh=new EditableMesh(vertices,[]);mesh.ensureLooseTopology();
+  for(let i=0;i<3;i++)mesh.addLooseEdge(i,i+1);
+  for(let i=4;i<9;i++)mesh.addLooseEdge(i,i+1);
+  const ids=[];
+  for(let i=0;i<3;i++)ids.push(edgeIndex(mesh,i,i+1));
+  for(let i=4;i<9;i++)ids.push(edgeIndex(mesh,i,i+1));
+  const result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.unequal,true);
+  assert.equal(result.plan.quadCount,3);
+  assert.equal(result.plan.triangleCount,2);
+  assert.equal(result.faceIndices.length,5);
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
