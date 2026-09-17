@@ -88,3 +88,34 @@ test('272 still gives a materially longer edge priority over spread',()=>{
   const mesh={vertices:verts,faces:[[0,1,2,3]],creases:new Map(),looseEdges:new Set(),looseVertices:new Set(),edgeKey:key};
   assert.equal(balancedSplitEdgeIndex(mesh,[0,1,2,3],[new THREE.Vector3(2,0,0)]),0);
 });
+
+
+test('279 eligibility expands to closed-loop 3 to 7 but not 3 to 8',()=>{
+  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9]),true);
+  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10]),false);
+});
+
+test('279 3 to 7 can produce seven quads with four inserted vertices',()=>{
+  class DummyMesh{
+    constructor(){this.vertices=[...ring(3,0,1),...ring(7,2,1.2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
+    edgeKey(a,b){return key(a,b);}
+    bridgeLoops(a,b){
+      if(a.length!==b.length)return{fallback:true,faceIndices:[],plan:{faces:[]},unequal:true};
+      const start=this.faces.length;
+      for(let i=0;i<a.length;i++){const j=(i+1)%a.length;this.faces.push([a[i],a[j],b[j],b[i]]);}
+      return{faceIndices:Array.from({length:a.length},(_,i)=>start+i),plan:{quads:true}};
+    }
+  }
+  globalThis.__boxlabTopology={
+    cloneMeshState:m=>({vertices:m.vertices.map(v=>v.clone()),faces:m.faces.map(f=>[...f]),creases:new Map(m.creases),looseEdges:new Set(m.looseEdges),looseVertices:new Set(m.looseVertices)}),
+    restoreMeshState:(m,s)=>{m.vertices=s.vertices.map(v=>v.clone());m.faces=s.faces.map(f=>[...f]);m.creases=new Map(s.creases);m.looseEdges=new Set(s.looseEdges);m.looseVertices=new Set(s.looseVertices);}
+  };
+  installSubdFriendlyBridge(DummyMesh);
+  const mesh=new DummyMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9]);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.addedVertices,4);
+  assert.deepEqual(result?.denseCounts,[7,7]);
+  assert.equal(mesh.vertices.length,before+4);
+  assert.equal(result.faceIndices.length,7);
+  assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
+});
