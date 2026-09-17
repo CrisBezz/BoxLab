@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { EditableMesh } from './mesh.js';
 import { subdivide } from './subdivision.js';
 import { applyMirror } from './mirror.js';
+import { combineEditableMeshes, modifierSettingsCompatible } from './object-join-core.js?v=0.36.18.277';
 
 const canvas = document.querySelector('#viewport');
 const list = document.querySelector('#outlinerList');
@@ -278,6 +279,39 @@ function duplicateActive() {
   });
 }
 
+function joinObjects(ids = []) {
+  const requested = [...new Set((ids || []).map(Number).filter(Number.isFinite))];
+  let chosen = objects.filter(object => requested.includes(object.id));
+  if (chosen.length < 2) return { ok:false, reason:'Select at least two objects' };
+  if (chosen.some(object => object.kind === 'reference')) return { ok:false, reason:'Reference objects cannot be joined' };
+  if (chosen.some(object => object.locked)) return { ok:false, reason:'Unlock selected objects before Join' };
+
+  let primary = chosen.find(object => object.id === activeId) || chosen[0];
+  if (primary.id !== activeId && !activateObject(primary.id)) return { ok:false, reason:'Could not activate primary object' };
+  saveActive();
+  chosen = objects.filter(object => requested.includes(object.id));
+  primary = chosen.find(object => object.id === activeId) || primary;
+  if (!modifierSettingsCompatible(chosen)) return { ok:false, reason:'Selected objects must use matching Mirror/SubD settings before Join' };
+
+  const combined = combineEditableMeshes(chosen.map(object => object.mesh));
+  if (!combined) return { ok:false, reason:'Could not combine selected meshes' };
+  const live = state()?.mesh;
+  if (!live) return { ok:false, reason:'No active editable mesh' };
+
+  primary.mesh = combined.clone();
+  replaceMeshInPlace(live, combined);
+  primary.history = captureHistory();
+  const removedIds = new Set(chosen.filter(object => object.id !== primary.id).map(object => object.id));
+  for (let i = objects.length - 1; i >= 0; i--) if (removedIds.has(objects[i].id)) objects.splice(i, 1);
+  if (soloId && removedIds.has(soloId)) soloId = null;
+  clearComponentSelection();
+  forceRender();
+  renderOutliner();
+  if (status) status.textContent = `${chosen.length} objects joined • ${primary.name} remains active`;
+  return { ok:true, primaryId:primary.id, removedIds:[...removedIds], objectCount:chosen.length, vertexCount:combined.vertices.length, faceCount:combined.faces.length };
+}
+
+
 function renameActive() {
   const object = activeObject();
   if (!object) return;
@@ -499,6 +533,7 @@ function initialize() {
   globalThis.__boxlabObjectManager = {
     addMesh(mesh, name = 'Object', options = {}) { return addObject(mesh, name, options); },
     activate(id) { return activateObject(id); },
+    joinObjects(ids) { return joinObjects(ids); },
     resetAll,
     saveActive,
     get activeId() { return activeId; },
