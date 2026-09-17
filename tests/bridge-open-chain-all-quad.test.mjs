@@ -1,0 +1,104 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import * as THREE from 'three';
+import { EditableMesh } from '../src/mesh.js';
+import { installLooseTopology } from '../src/loose-topology.js';
+import { installBridgeTopology } from '../src/bridge-topology.js';
+import { installUnequalBridge } from '../src/bridge-unequal.js';
+import { installUnequalBridgeQuality } from '../src/bridge-unequal-quality.js';
+import { installUnequalBridgeAlignment } from '../src/bridge-unequal-alignment.js';
+import { installUnequalBridgeGlobal } from '../src/bridge-unequal-global.js';
+import { installTransactionalBridge } from '../src/bridge-transactional.js';
+import { installOpenChainBridge } from '../src/bridge-open-chain.js';
+import { installOpenChainAllQuadBridge,canTryOpenAllQuad,densifyOpenChainToCount } from '../src/bridge-open-chain-all-quad.js';
+
+installLooseTopology(EditableMesh);
+installBridgeTopology(EditableMesh);
+installUnequalBridge(EditableMesh);
+installUnequalBridgeQuality(EditableMesh);
+installUnequalBridgeAlignment(EditableMesh);
+installUnequalBridgeGlobal(EditableMesh);
+installTransactionalBridge(EditableMesh);
+installOpenChainBridge(EditableMesh);
+installOpenChainAllQuadBridge(EditableMesh);
+
+function edgeIndex(mesh,a,b){const key=mesh.edgeKey(a,b);return mesh.edges().findIndex(e=>mesh.edgeKey(e.a,e.b)===key);}
+function twoQuads(){
+  const v=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(1,1,0),new THREE.Vector3(0,1,0),
+    new THREE.Vector3(0,0,2),new THREE.Vector3(1,0,2),new THREE.Vector3(1,1,2),new THREE.Vector3(0,1,2)
+  ];
+  return new EditableMesh(v,[[0,3,2,1],[4,5,6,7]]);
+}
+
+test('273 eligibility is conservative for unequal open chains',()=>{
+  assert.equal(canTryOpenAllQuad([0,1],[2,3,4]),true);
+  assert.equal(canTryOpenAllQuad([0,1,2],[3,4,5,6]),true);
+  assert.equal(canTryOpenAllQuad([0,1],[2,3,4,5,6]),false);
+  assert.equal(canTryOpenAllQuad([0,1,2],[3,4,5]),false);
+});
+
+test('273 densifies only interior edges and preserves open endpoints',()=>{
+  const mesh={vertices:[new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0)],faces:[],creases:new Map(),looseEdges:new Set(['0:1','1:2']),looseVertices:new Set(),edgeKey:(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`};
+  const dense=densifyOpenChainToCount(mesh,[0,1,2],5);
+  assert.equal(dense.length,5);
+  assert.equal(dense[0],0);
+  assert.equal(dense.at(-1),2);
+  assert.equal(mesh.vertices.length,5);
+});
+
+test('1 edge to 2 edges becomes a two-quad open strip',()=>{
+  const mesh=twoQuads();
+  const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,4,5),edgeIndex(mesh,5,6)];
+  const beforeVertices=mesh.vertices.length,result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.subdFriendly,true);
+  assert.equal(result?.balancedDensification,true);
+  assert.equal(result?.addedVertices,1);
+  assert.equal(result?.plan?.triangleCount,0);
+  assert.equal(result?.plan?.quadCount,2);
+  assert.equal(mesh.vertices.length,beforeVertices+1);
+  assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
+
+test('2 edges to 3 edges becomes a three-quad open strip',()=>{
+  const mesh=twoQuads();
+  const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,1,2),edgeIndex(mesh,4,5),edgeIndex(mesh,5,6),edgeIndex(mesh,6,7)];
+  const result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.plan?.triangleCount,0);
+  assert.equal(result?.plan?.quadCount,3);
+  assert.deepEqual([...result.denseCounts].sort((a,b)=>a-b),[3,3]);
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
+
+test('3 edge to 5 edge loose chains become five quads with two balanced inserts',()=>{
+  const vertices=[];
+  for(let i=0;i<4;i++)vertices.push(new THREE.Vector3(i,0,0));
+  for(let i=0;i<6;i++)vertices.push(new THREE.Vector3(i*.6,.25,2));
+  const mesh=new EditableMesh(vertices,[]);mesh.ensureLooseTopology();
+  for(let i=0;i<3;i++)mesh.addLooseEdge(i,i+1);
+  for(let i=4;i<9;i++)mesh.addLooseEdge(i,i+1);
+  const ids=[];for(let i=0;i<3;i++)ids.push(edgeIndex(mesh,i,i+1));for(let i=4;i<9;i++)ids.push(edgeIndex(mesh,i,i+1));
+  const result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.addedVertices,2);
+  assert.equal(result?.plan?.quadCount,5);
+  assert.equal(result?.plan?.triangleCount,0);
+  assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
+
+test('extreme open-chain mismatch falls back to the proven 266 solver',()=>{
+  const vertices=[];
+  for(let i=0;i<2;i++)vertices.push(new THREE.Vector3(i,0,0));
+  for(let i=0;i<5;i++)vertices.push(new THREE.Vector3(i*.25,.1,2));
+  const mesh=new EditableMesh(vertices,[]);mesh.ensureLooseTopology();mesh.addLooseEdge(0,1);for(let i=2;i<6;i++)mesh.addLooseEdge(i,i+1);
+  const ids=[edgeIndex(mesh,0,1)];for(let i=2;i<6;i++)ids.push(edgeIndex(mesh,i,i+1));
+  const result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,undefined);
+  assert.equal(result?.unequal,true);
+  assert.equal(result?.plan?.triangleCount,3);
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
