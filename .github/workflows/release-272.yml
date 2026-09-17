@@ -1,4 +1,5 @@
 name: Release BoxLab 272
+# rerun after corrected materially-longer-edge fixture
 on:
   push:
     paths:
