@@ -8,3 +8,13 @@
 /* v0.32.1 interface polish */
 #modifiersDrawer .drawer-content{display:grid;gap:6px}#modifiersDrawer .toggle-row{min-height:36px;padding:4px 7px;border:1px solid rgba(255,255,255,.08);border-radius:8px;background:rgba(255,255,255,.025)}#modifiersDrawer .toggle-row input{margin:0}#modifiersDrawer .range-row{grid-template-columns:62px 1fr 34px}#modifiersDrawer .drawer-subtitle{margin:6px 0 1px}#modifiersDrawer button{margin-top:0}
 .edge-tools .edge-move-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}.edge-tools .edge-move-actions button{margin:0}.edge-tools .crease-button-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}.edge-tools .crease-button-row button{margin:0}
+
+/* v0.36.18.270 selection button layout */
+.selection-dock{grid-template-columns:repeat(3,minmax(0,1fr));}
+#paintSelectDepth{display:contents;}
+#paintSelectDepth [data-paint-depth="visible"]{order:1;}
+#paintSelectDepth [data-paint-depth="through"]{order:2;}
+#lassoSelectBtn{order:3;}
+#deselectAllBtn{order:4;}
+#selectAllBtn{order:5;}
+#invertSelectionBtn{order:6;}
