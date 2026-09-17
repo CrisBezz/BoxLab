@@ -1,13 +1,12 @@
-// BoxLab v0.36.18.256 — Object selection proxy toolbar.
+// BoxLab v0.36.18.257 — Object selection proxy toolbar.
 // object-management.js remains the single owner of Object selection state/actions.
 // Its proven native toolbar stays alive inside the Objects drawer but is hidden;
 // visible Selection-drawer controls simply forward clicks to those native buttons.
-const VERSION='0.36.18.256';
+const VERSION='0.36.18.257';
 const selectionDrawer=document.querySelector('#selectionDrawer');
 const componentTools=document.querySelector('#componentSelectionTools');
 const title=document.querySelector('#selectionDrawer .always-selection-title');
 let proxy=null;
-let observer=null;
 
 function currentMode(){return document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
 function nativeToolbar(){return document.querySelector('#objectsDrawer #objectManagementTools,#objectsDrawer .object-management-tools');}
@@ -99,6 +98,5 @@ window.addEventListener('boxlab-bridge-state',()=>setTimeout(sync,0));
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(sync)));
 const objectsDrawer=document.querySelector('#objectsDrawer .drawer-content');
 if(objectsDrawer)new MutationObserver(()=>queueMicrotask(syncProxy)).observe(objectsDrawer,{childList:true,subtree:true,characterData:true});
-if(!observer&&selectionDrawer){observer=new MutationObserver(()=>queueMicrotask(syncProxy));observer.observe(selectionDrawer,{childList:true,subtree:true});}
 
 globalThis.__boxlabObjectSelectionLayout={version:VERSION,sync,toolbar:()=>proxy};
