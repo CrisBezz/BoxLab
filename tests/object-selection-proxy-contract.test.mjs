@@ -8,7 +8,7 @@ test('Object management creates the real toolbar in Selection',()=>{
   assert.match(management,/\(selectionHost\|\|drawer\)\.appendChild\(toolbar\)/);
 });
 test('Selection layout has no proxy or toolbar relocation machinery',()=>{
-  assert.match(layout,/0\.36\.18\.258/);
+  assert.match(layout,/0\.36\.18\.259/);
   assert.doesNotMatch(layout,/objectSelectionProxyTools/);
   assert.doesNotMatch(layout,/MutationObserver/);
   assert.doesNotMatch(layout,/\.click\(\)/);
