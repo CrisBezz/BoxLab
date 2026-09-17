@@ -1,4 +1,5 @@
 name: Release BoxLab 274
+# rerun after broadening explicit fallback regression reasons
 on:
   push:
     paths:
@@ -16,7 +17,9 @@ jobs:
         with:
           node-version: 22
       - name: Apply 274 open-chain quality guard
-        run: python .github/scripts/release-274.py
+        run: |
+          python .github/scripts/release-274.py
+          python .github/scripts/release-274-fix.py
       - run: npm install --no-audit --no-fund
       - run: npm test
       - name: Package 274
