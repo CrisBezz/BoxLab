@@ -30,6 +30,19 @@ function twoQuads(){
   ];
   return new EditableMesh(v,[[0,3,2,1],[4,5,6,7]]);
 }
+function looseParallel(edgeCountA,edgeCountB){
+  const vertices=[];
+  for(let i=0;i<=edgeCountA;i++)vertices.push(new THREE.Vector3(i/edgeCountA,0,0));
+  const offset=vertices.length;
+  for(let i=0;i<=edgeCountB;i++)vertices.push(new THREE.Vector3(i/edgeCountB,.15,2));
+  const mesh=new EditableMesh(vertices,[]);mesh.ensureLooseTopology();
+  for(let i=0;i<edgeCountA;i++)mesh.addLooseEdge(i,i+1);
+  for(let i=0;i<edgeCountB;i++)mesh.addLooseEdge(offset+i,offset+i+1);
+  const ids=[];
+  for(let i=0;i<edgeCountA;i++)ids.push(edgeIndex(mesh,i,i+1));
+  for(let i=0;i<edgeCountB;i++)ids.push(edgeIndex(mesh,offset+i,offset+i+1));
+  return{mesh,ids};
+}
 
 test('273 eligibility is conservative for unequal open chains',()=>{
   assert.equal(canTryOpenAllQuad([0,1],[2,3,4]),true);
@@ -62,10 +75,8 @@ test('1 edge to 2 edges becomes a two-quad open strip',()=>{
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
 
-test('2 edges to 3 edges becomes a three-quad open strip',()=>{
-  const mesh=twoQuads();
-  const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,1,2),edgeIndex(mesh,4,5),edgeIndex(mesh,5,6),edgeIndex(mesh,6,7)];
-  const result=mesh.bridgeSelectedEdges(ids);
+test('clean parallel 2 edge to 3 edge chains become a three-quad open strip',()=>{
+  const {mesh,ids}=looseParallel(2,3),result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.allQuad,true);
   assert.equal(result?.plan?.triangleCount,0);
   assert.equal(result?.plan?.quadCount,3);
@@ -73,15 +84,18 @@ test('2 edges to 3 edges becomes a three-quad open strip',()=>{
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
 
-test('3 edge to 5 edge loose chains become five quads with two balanced inserts',()=>{
-  const vertices=[];
-  for(let i=0;i<4;i++)vertices.push(new THREE.Vector3(i,0,0));
-  for(let i=0;i<6;i++)vertices.push(new THREE.Vector3(i*.6,.25,2));
-  const mesh=new EditableMesh(vertices,[]);mesh.ensureLooseTopology();
-  for(let i=0;i<3;i++)mesh.addLooseEdge(i,i+1);
-  for(let i=4;i<9;i++)mesh.addLooseEdge(i,i+1);
-  const ids=[];for(let i=0;i<3;i++)ids.push(edgeIndex(mesh,i,i+1));for(let i=4;i<9;i++)ids.push(edgeIndex(mesh,i,i+1));
+test('fold-prone L-shaped 2 to 3 boundary case safely falls back to 266',()=>{
+  const mesh=twoQuads();
+  const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,1,2),edgeIndex(mesh,4,5),edgeIndex(mesh,5,6),edgeIndex(mesh,6,7)];
   const result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,undefined);
+  assert.equal(result?.unequal,true);
+  assert.equal(result?.plan?.triangleCount,1);
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
+
+test('3 edge to 5 edge loose chains become five quads with two balanced inserts',()=>{
+  const {mesh,ids}=looseParallel(3,5),result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.allQuad,true);
   assert.equal(result?.addedVertices,2);
   assert.equal(result?.plan?.quadCount,5);
@@ -91,12 +105,7 @@ test('3 edge to 5 edge loose chains become five quads with two balanced inserts'
 });
 
 test('extreme open-chain mismatch falls back to the proven 266 solver',()=>{
-  const vertices=[];
-  for(let i=0;i<2;i++)vertices.push(new THREE.Vector3(i,0,0));
-  for(let i=0;i<5;i++)vertices.push(new THREE.Vector3(i*.25,.1,2));
-  const mesh=new EditableMesh(vertices,[]);mesh.ensureLooseTopology();mesh.addLooseEdge(0,1);for(let i=2;i<6;i++)mesh.addLooseEdge(i,i+1);
-  const ids=[edgeIndex(mesh,0,1)];for(let i=2;i<6;i++)ids.push(edgeIndex(mesh,i,i+1));
-  const result=mesh.bridgeSelectedEdges(ids);
+  const {mesh,ids}=looseParallel(1,4),result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.allQuad,undefined);
   assert.equal(result?.unequal,true);
   assert.equal(result?.plan?.triangleCount,3);
