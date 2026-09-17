@@ -10,7 +10,7 @@ import { installUnequalBridgeAlignment } from '../src/bridge-unequal-alignment.j
 import { installUnequalBridgeGlobal } from '../src/bridge-unequal-global.js';
 import { installTransactionalBridge } from '../src/bridge-transactional.js';
 import { installOpenChainBridge } from '../src/bridge-open-chain.js';
-import { installOpenChainAllQuadBridge,canTryOpenAllQuad,densifyOpenChainToCount } from '../src/bridge-open-chain-all-quad.js';
+import { installOpenChainAllQuadBridge,canTryOpenAllQuad,densifyOpenChainToCount,validateOpenAllQuadCandidate } from '../src/bridge-open-chain-all-quad.js';
 
 installLooseTopology(EditableMesh);
 installBridgeTopology(EditableMesh);
@@ -110,4 +110,28 @@ test('extreme open-chain mismatch falls back to the proven 266 solver',()=>{
   assert.equal(result?.unequal,true);
   assert.equal(result?.plan?.triangleCount,3);
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
+
+
+test('274 guard reports folded quad explicitly',()=>{
+  const mesh={vertices:[new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(1,1,0),new THREE.Vector3(1,-1,0)]};
+  const result=validateOpenAllQuadCandidate(mesh,[[0,1,2,3]],[0,1],[3,2],1);
+  assert.equal(result.ok,false);
+  assert.equal(result.reason,'folded-quad');
+});
+
+test('274 guard reports extreme connector distortion explicitly',()=>{
+  const mesh={vertices:[new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(100,1,0),new THREE.Vector3(101,1,0)]};
+  const result=validateOpenAllQuadCandidate(mesh,[[0,1,3,2]],[0,1],[2,3],1);
+  assert.equal(result.ok,false);
+  assert.equal(result.reason,'connector-distortion');
+});
+
+test('274 fallback records reason for fold-prone L-shaped all-quad attempt',()=>{
+  const mesh=twoQuads();
+  const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,1,2),edgeIndex(mesh,4,5),edgeIndex(mesh,5,6),edgeIndex(mesh,6,7)];
+  const result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,undefined);
+  assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.ok,false);
+  assert.ok(['folded-quad','degenerate-quad','connector-distortion','topology-rejected','same-direction-edge','non-manifold-edge'].includes(globalThis.__boxlabOpenChainAllQuadBridge?.lastReject));
 });
