@@ -70,6 +70,13 @@ For each change:
 
 Before finishing a session that changes BoxLab:
 
+0. Prepare a short **user manual test list** for the final reply:
+   - normally 3–6 quick checks maximum
+   - only ask the user to test visible/tactile behaviour they can realistically verify in the app
+   - do not ask the user to recreate synthetic backend fixtures or topology torture cases that are better covered by automated tests
+   - clearly distinguish what automated regression already covered from what the user should manually sanity-check
+   - if no meaningful manual test is needed, say so explicitly
+
 1. Rewrite `AI_HANDOFF.md` so it describes the repository AFTER the work.
 2. Update current version, HEAD/release commit references, current focus, known issues, and next step as applicable.
 3. Append a concise entry to `DEV_HISTORY.md`.
