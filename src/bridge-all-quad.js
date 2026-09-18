@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.280 — quality-guarded closed-loop SubD-friendly unequal Bridge.
+// BoxLab v0.36.18.281 — even closed-loop SubD-friendly unequal Bridge densification.
 // Densifies the smaller closed boundary loop, spreading comparable splits around the loop,
 // then reuses the proven equal-count Bridge solver.
 
-const VERSION='0.36.18.280';
+const VERSION='0.36.18.281';
 const MAX_ADDED=4;
 const MAX_RATIO=2.5;
 const NEAR_LONGEST=0.95;
@@ -116,17 +116,60 @@ export function balancedSplitEdgeIndex(mesh,loop,splitPoints=[]){
   return best?.index??-1;
 }
 
+function closedSubdivisionAllocation(mesh,loop,targetCount){
+  const edges=[];
+  for(let i=0;i<loop.length;i++){
+    const a=mesh.vertices[loop[i]],b=mesh.vertices[loop[(i+1)%loop.length]];
+    if(!a||!b)return null;
+    edges.push({index:i,length:Math.sqrt(a.distanceToSquared(b)),segments:1});
+  }
+  let remaining=targetCount-loop.length;
+  while(remaining-->0){
+    let best=edges[0];
+    for(const e of edges){
+      const span=e.length/e.segments,bestSpan=best.length/best.segments;
+      if(span>bestSpan+1e-12||(Math.abs(span-bestSpan)<=1e-12&&e.index<best.index))best=e;
+    }
+    best.segments++;
+  }
+  return edges.map(e=>e.segments);
+}
+
+function subdivideOriginalBoundaryEdge(mesh,a,b,segments){
+  if(segments<=1)return[];
+  const va=mesh.vertices[a],vb=mesh.vertices[b];if(!va||!vb)return null;
+  const key=edgeKey(mesh,a,b),owners=[];
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const face=mesh.faces[fi];if(!Array.isArray(face))continue;
+    const slot=faceEdgeSlot(face,a,b);if(slot>=0)owners.push({fi,slot,forward:face[slot]===a});
+  }
+  if(owners.length>1)return null;
+  const inserted=[];
+  for(let j=1;j<segments;j++){const id=mesh.vertices.length;mesh.vertices.push(va.clone().lerp(vb,j/segments));inserted.push(id);}
+  for(const {fi,slot,forward} of owners)mesh.faces[fi].splice(slot+1,0,...(forward?inserted:[...inserted].reverse()));
+  if(mesh.creases instanceof Map&&mesh.creases.has(key)){
+    const strength=mesh.creases.get(key);mesh.creases.delete(key);const seq=[a,...inserted,b];
+    for(let i=0;i<seq.length-1;i++)mesh.creases.set(edgeKey(mesh,seq[i],seq[i+1]),strength);
+  }
+  if(mesh.looseEdges instanceof Set&&mesh.looseEdges.has(key)){
+    mesh.looseEdges.delete(key);const seq=[a,...inserted,b];
+    for(let i=0;i<seq.length-1;i++)mesh.looseEdges.add(edgeKey(mesh,seq[i],seq[i+1]));
+  }
+  if(mesh.looseVertices instanceof Set)for(const id of inserted)mesh.looseVertices.delete(id);
+  return inserted;
+}
+
 export function densifyLoopToCount(mesh,loop,target){
   if(!Array.isArray(loop)||loop.length<3||target<loop.length)return null;
-  const out=[...loop],splitPoints=[];
-  while(out.length<target){
-    const edge=balancedSplitEdgeIndex(mesh,out,splitPoints);
-    if(edge<0)return null;
-    const vertex=splitBoundaryEdge(mesh,out,edge);
-    if(vertex===null)return null;
-    splitPoints.push(mesh.vertices[vertex].clone());
+  if(target===loop.length)return[...loop];
+  const allocation=closedSubdivisionAllocation(mesh,loop,target);if(!allocation)return null;
+  const out=[];
+  for(let i=0;i<loop.length;i++){
+    const a=loop[i],b=loop[(i+1)%loop.length],inserted=subdivideOriginalBoundaryEdge(mesh,a,b,allocation[i]);
+    if(inserted===null)return null;
+    out.push(a,...inserted);
   }
-  return out;
+  return out.length===target?out:null;
 }
 
 export function canTryAllQuad(loopA,loopB){
@@ -136,7 +179,7 @@ export function canTryAllQuad(loopA,loopB){
 }
 
 export function installSubdFriendlyBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge280Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge281Installed)return;
   const baseBridgeLoops=proto.bridgeLoops,topology=globalThis.__boxlabTopology;
   if(typeof baseBridgeLoops!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
@@ -161,7 +204,7 @@ export function installSubdFriendlyBridge(EditableMesh){
     return result;
   };
 
-  proto.__subdFriendlyBridge280Installed=true;
+  proto.__subdFriendlyBridge281Installed=true;
   globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:null,balancedDensification:true,qualityGuarded:true,addedVertices:0,denseCounts:[]};
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
