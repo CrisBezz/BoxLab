@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -403,4 +403,22 @@ test('300 residual triangle-pair cleanup preserves a context-misaligned candidat
   assert.equal(result.changed,false);
   assert.equal(result.merged,0);
   assert.equal(result.contextRejected,1);
+});
+
+
+test('301 whole-patch boundary context tracks worst local flow instead of hiding it in the average',()=>{
+  const result=quadPatchBoundaryContext([
+    {flowPenalty:0.05},
+    {flowPenalty:0.1},
+    {flowPenalty:0.9}
+  ]);
+  assert.equal(result.samples,3);
+  assert.ok(result.avgFlow>0.34&&result.avgFlow<0.36);
+  assert.equal(result.worstFlow,0.9);
+  assert.equal(result.penalty,0.45);
+});
+
+test('301 whole-patch boundary context is neutral with no surrounding quad evidence',()=>{
+  const result=quadPatchBoundaryContext([{flowPenalty:0},{flowPenalty:0}]);
+  assert.deepEqual(result,{samples:0,avgFlow:0,worstFlow:0,penalty:0});
 });
