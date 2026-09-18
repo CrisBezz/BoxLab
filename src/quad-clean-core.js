@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.321 — Clean for SubD worst-local interior valence regularity.
+// BoxLab v0.36.18.322 — Clean for SubD worst-local internal flow regularity.
 // Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding/internal flow scoring, aggregate quality, worst-boundary guards, and interior valence-aware ranking. Phase 4 merges remaining safe triangle pairs using the same surrounding-quad flow and quality guards. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
@@ -13,6 +13,7 @@ const PATCH_MAX_AVG_SCORE=Math.log(4);
 const PATCH_MAX_BOUNDARY_FLOW=.65;
 const PATCH_BOUNDARY_WORST_WEIGHT=.5;
 const PATCH_INTERNAL_FLOW_WEIGHT=.5;
+const PATCH_INTERNAL_WORST_WEIGHT=.1;
 const PATCH_VALENCE_WEIGHT=.25;
 const PATCH_VALENCE_WORST_WEIGHT=.1;
 
@@ -144,9 +145,18 @@ export function quadPatchBoundaryContext(pairs){
   return{samples:samples.length,avgFlow,worstFlow,penalty:worstFlow*PATCH_BOUNDARY_WORST_WEIGHT};
 }
 
+export function quadInternalFlowPenalty(flows){
+  const values=(flows||[]).map(Number).filter(Number.isFinite);
+  if(!values.length)return{samples:0,avgFlow:0,worstFlow:0,penalty:0,rankingPenalty:0};
+  const avgFlow=values.reduce((sum,v)=>sum+v,0)/values.length;
+  const worstFlow=Math.max(...values);
+  const penalty=avgFlow*PATCH_INTERNAL_FLOW_WEIGHT;
+  return{samples:values.length,avgFlow,worstFlow,penalty,rankingPenalty:penalty+worstFlow*PATCH_INTERNAL_WORST_WEIGHT};
+}
+
 export function quadPatchInternalFlowContext(mesh,pairs){
   const quads=(pairs||[]).map(p=>p?.quad).filter(q=>Array.isArray(q)&&q.length===4);
-  let total=0,worstFlow=0,samples=0;
+  const flows=[];
   for(let i=0;i<quads.length;i++)for(let j=i+1;j<quads.length;j++){
     const a=quads[i],b=quads[j],shared=[];
     for(const v of a)if(b.includes(v))shared.push(v);
@@ -158,11 +168,9 @@ export function quadPatchInternalFlowContext(mesh,pairs){
     const ao=[a[(ai+2)%4],a[(ai+3)%4]],bo=[b[(bi+2)%4],b[(bi+3)%4]];
     const da=undirectedEdgeDirection(mesh,ao[0],ao[1]),db=undirectedEdgeDirection(mesh,bo[0],bo[1]);
     if(!da||!db)continue;
-    const flow=1-Math.abs(Math.max(-1,Math.min(1,da.dot(db))));
-    total+=flow;worstFlow=Math.max(worstFlow,flow);samples++;
+    flows.push(1-Math.abs(Math.max(-1,Math.min(1,da.dot(db)))));
   }
-  const avgFlow=samples?total/samples:0;
-  return{samples,avgFlow,worstFlow,penalty:avgFlow*PATCH_INTERNAL_FLOW_WEIGHT};
+  return quadInternalFlowPenalty(flows);
 }
 
 export function quadValencePenalty(errors){
@@ -223,7 +231,7 @@ function trianglePatchCandidate(mesh,faces){
       const internal=quadPatchInternalFlowContext(mesh,pairs);
       const valence=quadPatchValenceContext(mesh,pairs);
       const qualityScore=score+boundary.penalty+internal.penalty;
-      const patchScore=qualityScore+valence.penalty;
+      const patchScore=score+boundary.penalty+(internal.rankingPenalty??internal.penalty)+valence.penalty;
       if(!best||patchScore<best.score-EPS||(Math.abs(patchScore-best.score)<=EPS&&key<best.key))best={pairs:[...pairs],score:patchScore,qualityScore,pairScore:score,key,boundary,internal,valence};
       return;
     }

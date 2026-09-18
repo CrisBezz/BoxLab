@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadPatchValenceContext, quadValencePenalty, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadInternalFlowPenalty, quadPatchValenceContext, quadValencePenalty, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -867,4 +867,16 @@ test('321 worst-local valence term distinguishes equal-average error distributio
   assert.equal(balanced.worstError,1);
   assert.equal(concentrated.worstError,2);
   assert.ok(concentrated.penalty>balanced.penalty);
+});
+
+
+test('322 worst-local internal flow distinguishes equal-average mismatch without changing acceptance penalty',()=>{
+  const balanced=quadInternalFlowPenalty([0.5,0.5]);
+  const concentrated=quadInternalFlowPenalty([0,1]);
+  assert.equal(balanced.avgFlow,0.5);
+  assert.equal(concentrated.avgFlow,0.5);
+  assert.equal(balanced.penalty,concentrated.penalty);
+  assert.equal(balanced.worstFlow,0.5);
+  assert.equal(concentrated.worstFlow,1);
+  assert.ok(concentrated.rankingPenalty>balanced.rankingPenalty);
 });
