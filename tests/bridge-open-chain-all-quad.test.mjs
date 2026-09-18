@@ -84,13 +84,16 @@ test('clean parallel 2 edge to 3 edge chains become a three-quad open strip',()=
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
 
-test('fold-prone L-shaped 2 to 3 boundary case safely falls back to 266',()=>{
+test('285 bounded search rescues the formerly fold-prone L-shaped 2 to 3 case',()=>{
   const mesh=twoQuads();
   const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,1,2),edgeIndex(mesh,4,5),edgeIndex(mesh,5,6),edgeIndex(mesh,6,7)];
   const result=mesh.bridgeSelectedEdges(ids);
-  assert.equal(result?.allQuad,undefined);
-  assert.equal(result?.unequal,true);
-  assert.equal(result?.plan?.triangleCount,1);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.qualityGuarded,true);
+  assert.equal(result?.plan?.triangleCount,0);
+  assert.equal(result?.plan?.quadCount,3);
+  assert.equal(result?.correspondenceSearch,true);
+  assert.ok(result?.searchCandidates>=1);
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
 
@@ -127,13 +130,14 @@ test('274 guard reports extreme connector distortion explicitly',()=>{
   assert.equal(result.reason,'connector-distortion');
 });
 
-test('274 fallback records reason for fold-prone L-shaped all-quad attempt',()=>{
+test('285 rescued L-shaped case records successful guarded search diagnostics',()=>{
   const mesh=twoQuads();
   const ids=[edgeIndex(mesh,0,1),edgeIndex(mesh,1,2),edgeIndex(mesh,4,5),edgeIndex(mesh,5,6),edgeIndex(mesh,6,7)];
   const result=mesh.bridgeSelectedEdges(ids);
-  assert.equal(result?.allQuad,undefined);
-  assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.ok,false);
-  assert.ok(['folded-quad','degenerate-quad','connector-distortion','topology-rejected','same-direction-edge','non-manifold-edge'].includes(globalThis.__boxlabOpenChainAllQuadBridge?.lastReject));
+  assert.equal(result?.allQuad,true);
+  assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.ok,true);
+  assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.lastReject,null);
+  assert.ok(globalThis.__boxlabOpenChainAllQuadBridge?.searchCandidates>=1);
 });
 
 
