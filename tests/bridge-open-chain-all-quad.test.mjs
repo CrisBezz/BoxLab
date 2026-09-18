@@ -90,6 +90,7 @@ test('285 bounded search rescues the formerly fold-prone L-shaped 2 to 3 case',(
   const result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.allQuad,true);
   assert.equal(result?.qualityGuarded,true);
+  assert.equal(result?.plan?.qualityGuarded,true);
   assert.equal(result?.plan?.triangleCount,0);
   assert.equal(result?.plan?.quadCount,3);
   assert.equal(result?.correspondenceSearch,true);
