@@ -247,7 +247,7 @@ export function installOpenChainAllQuadBridge(EditableMesh){
     if(!best)return fallback(lastReject,{searchCandidates:tested});
     topology.restoreMeshState(this,topology.cloneMeshState(best.trial));
     const faceIndices=Array.from({length:best.plan.faces.length},(_,i)=>best.start+i),addedVertices=Math.abs(info.counts[0]-info.counts[1]);
-    const result={faceIndices,plan:{...best.plan,quadCount:faceIndices.length,triangleCount:0,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,reverseShort:best.reverseShort},openChain:true,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,correspondenceSearch:true,searchCandidates:tested,addedVertices,denseCounts:[best.denseA.length-1,best.denseB.length-1]};
+    const result={faceIndices,plan:{...best.plan,quadCount:faceIndices.length,triangleCount:0,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,reverseShort:best.reverseShort},openChain:true,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,addedVertices,denseCounts:[best.denseA.length-1,best.denseB.length-1]};
     diagnostic(true,null,{addedVertices,denseCounts:result.denseCounts,connectors:best.quality.connectors,searchCandidates:tested,reverseShort:best.reverseShort,searchScore:best.score});
     return result;
   };
