@@ -159,7 +159,7 @@ function closedSubdivisionAllocation(mesh,loop,targetCount,phase=0){
       const as=spread(a),bs=spread(b),aSpan=a.length/a.segments,bSpan=b.length/b.segments;
       return bs-as||bSpan-aSpan||a.index-b.index;
     });
-    const pick=((phase+step)%candidates.length+candidates.length)%candidates.length;
+    const pick=((phase%candidates.length)+candidates.length)%candidates.length;
     const best=candidates[pick];
     best.segments++;chosen.push(best);step++;
   }
