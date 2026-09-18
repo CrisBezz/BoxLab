@@ -18,7 +18,7 @@ test('295 Clean for SubD keeps the existing Quad Clean engine and reports produc
 });
 
 test('320 Clean for SubD cache-hop is isolated from protected Selection styling',()=>{
-  assert.match(index,/quad-clean\.js\?v=0\.36\.18\.319/);
+  assert.match(index,/quad-clean\.js\?v=0\.36\.18\.320/);
   assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
 });
 
