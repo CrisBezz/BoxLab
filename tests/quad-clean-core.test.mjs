@@ -392,7 +392,7 @@ test('300 residual triangle-pair cleanup preserves a context-misaligned candidat
     new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),
     new THREE.Vector3(1,1,0),new THREE.Vector3(0,1,0),
     new THREE.Vector3(0,-1,0),new THREE.Vector3(1,-1,0),
-    new THREE.Vector3(2,1.7,0)
+    new THREE.Vector3(1.1,2,0)
   ];
   const mesh=new EditableMesh(verts,[
     [0,1,2],[0,2,6],
