@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.290 — Object > Quad Clean UI.
+// BoxLab v0.36.18.291 — Object > Quad Clean with guarded quad-flow relax.
 
-import { quadCleanTrianglePairs } from './quad-clean-core.js?v=0.36.18.290';
+import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.291';
 
 const button=document.querySelector('#quadCleanBtn');
 const status=document.querySelector('#selectionStatus');
@@ -24,7 +24,7 @@ button?.addEventListener('click',()=>{
   const before=topology?.cloneMeshState?.(mesh)||{
     vertices:mesh.vertices.map(v=>v.clone()),faces:mesh.faces.map(f=>[...f]),creases:new Map(mesh.creases||[])
   };
-  const result=quadCleanTrianglePairs(mesh);
+  const result=quadCleanMesh(mesh);
   if(!result.ok){setStatus(result.reason||'Quad Clean failed');return;}
   if(result.changed&&topology?.validateTopology){
     const validation=topology.validateTopology(mesh,{allowBoundary:true});
@@ -37,9 +37,15 @@ button?.addEventListener('click',()=>{
     }
   }
   manager()?.saveActive?.();
-  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.290',...result};
-  if(result.changed)setStatus(`Quad Clean • ${result.merged} triangle pair${result.merged===1?'':'s'} → quads • triangles ${result.before.triangles}→${result.after.triangles} • quads ${result.before.quads}→${result.after.quads}`);
-  else setStatus(`Quad Clean • no safe triangle pairs found • ${result.before.triangles} triangles • ${result.before.quads} quads`);
+  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.291',...result};
+  if(result.changed){
+    const parts=[];
+    if(result.merged)parts.push(`${result.merged} triangle pair${result.merged===1?'':'s'} → quads`);
+    if(result.relaxedVertices)parts.push(`${result.relaxedVertices} flow-relaxed vert${result.relaxedVertices===1?'ex':'ices'}`);
+    parts.push(`tris ${result.before.triangles}→${result.after.triangles}`);
+    parts.push(`quads ${result.before.quads}→${result.after.quads}`);
+    setStatus(`Quad Clean • ${parts.join(' • ')}`);
+  }else setStatus(`Quad Clean • no safe repairs found • ${result.before.triangles} triangles • ${result.before.quads} quads`);
   forceRender();
 });
 
