@@ -62,13 +62,13 @@ test('4 to 6 uses two inserted vertices and produces six quads',()=>{
 
 test('3 to 9 mismatch falls through without adding vertices',()=>{
   class FallbackMesh{
-    constructor(){this.vertices=[...ring(3,0),...ring(9,2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
+    constructor(){this.vertices=[...ring(3,0),...ring(10,2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
     edgeKey(a,b){return key(a,b);}
     bridgeLoops(){return{fallback:true,faceIndices:[99],unequal:true};}
   }
   globalThis.__boxlabTopology={cloneMeshState:()=>null,restoreMeshState:()=>{},validateTopology:()=>({ok:true})};
   installSubdFriendlyBridge(FallbackMesh);
-  const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11]);
+  const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11,12]);
   assert.equal(result?.fallback,true);
   assert.equal(mesh.vertices.length,before);
 });
@@ -94,7 +94,8 @@ test('272 still gives a materially longer edge priority over spread',()=>{
 test('282 eligibility includes 3 to 8 but still excludes 3 to 9',()=>{
   assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9]),true);
   assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10]),true);
-  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11]),false);
+  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11]),true);
+  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11,12]),false);
 });
 
 test('279 3 to 7 can produce seven quads with four inserted vertices',()=>{
@@ -194,7 +195,7 @@ test('281 regular square to eight allocates one insert per original edge',()=>{
 });
 
 
-test('282 eligibility expands to closed-loop 3 to 8 but not 3 to 9',()=>{
+test('284 eligibility expands to closed-loop 3 to 9 but not 3 to 10',()=>{
   assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10]),true);
   assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11]),false);
 });
@@ -226,7 +227,7 @@ test('282 guarded 3 to 8 can produce eight quads with five inserted vertices',()
   assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
 });
 
-test('282 3 to 9 remains on proven unequal fallback without densification',()=>{
+test('284 3 to 10 remains on proven unequal fallback without densification',()=>{
   class FallbackMesh{
     constructor(){this.vertices=[...ring(3,0),...ring(9,2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
     edgeKey(a,b){return key(a,b);}
@@ -237,4 +238,32 @@ test('282 3 to 9 remains on proven unequal fallback without densification',()=>{
   const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11]);
   assert.equal(result?.fallback,true);
   assert.equal(mesh.vertices.length,before);
+});
+
+
+test('284 guarded 3 to 9 can produce nine quads with six inserted vertices',()=>{
+  class DummyMesh{
+    constructor(){this.vertices=[...ring(3,0,1),...ring(9,2,1.2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
+    edgeKey(a,b){return key(a,b);}
+    bridgeLoops(a,b){
+      if(a.length!==b.length)return{fallback:true,faceIndices:[],unequal:true};
+      const start=this.faces.length;
+      for(let i=0;i<a.length;i++){const j=(i+1)%a.length;this.faces.push([a[i],a[j],b[j],b[i]]);}
+      return{faceIndices:Array.from({length:a.length},(_,i)=>start+i),plan:{quads:true}};
+    }
+  }
+  globalThis.__boxlabTopology={
+    cloneMeshState:m=>({vertices:m.vertices.map(v=>v.clone()),faces:m.faces.map(f=>[...f]),creases:new Map(m.creases),looseEdges:new Set(m.looseEdges),looseVertices:new Set(m.looseVertices)}),
+    restoreMeshState:(m,s)=>{m.vertices=s.vertices.map(v=>v.clone());m.faces=s.faces.map(f=>[...f]);m.creases=new Map(s.creases);m.looseEdges=new Set(s.looseEdges);m.looseVertices=new Set(s.looseVertices);},
+    validateTopology:()=>({ok:true})
+  };
+  installSubdFriendlyBridge(DummyMesh);
+  const mesh=new DummyMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11]);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.qualityGuarded,true);
+  assert.equal(result?.addedVertices,6);
+  assert.deepEqual(result?.denseCounts,[9,9]);
+  assert.equal(mesh.vertices.length,before+6);
+  assert.equal(result.faceIndices.length,9);
+  assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
 });
