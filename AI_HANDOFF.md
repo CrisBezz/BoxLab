@@ -25,52 +25,40 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.320**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **c27fae6054ffcbce7227fc01bb7e236965ddfa21**
-- Current code-bearing/release commit: **40e119774f39373ffadab22d0782428e8be7ea2c**
-- v0.36.18.320 release PR: **#4**
-- Corrected PR regression run: **35401945842** — success
-- Post-merge topology regression run: **35401986107** — success
-- Current `version.json`: **0.36.18.320**
-- Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.320**
+- Repository release: **v0.36.18.321**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **3282ef94e0406f178d1ef18edba914fbb01a2586**
+- Current code-bearing/release commit: **0b838da0cd2a31cd4d88c2390a9e15e9b0c58905**
+- v0.36.18.321 release PR: **#5**
+- PR topology regression: **35403817957** — success
+- Current `version.json`: **0.36.18.321**
+- Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.321**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
 - `styles.css` intentionally remains pinned at **v0.36.18.270**
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 - Only permanent workflow currently under `.github/workflows`: **through-regression.yml**
-- GitHub Pages deployment is triggered from `main`; a documentation commit may supersede/cancel the preceding Pages run while the newest `main` deployment completes.
 
-Chronology note: .319 was the internal proposed-quad flow-coherence release. .320 builds on that same 40-triangle bounded solver with valence-aware completed-patch ranking; it is not a patch-cap expansion.
+Chronology note: .319 added internal proposed-quad flow coherence. .320 added smooth-interior average valence regularity. .321 adds worst-local valence regularity while preserving the same 40-triangle bounded solver and the same acceptance gates.
 
-## Latest completed development — v0.36.18.320
+## Latest completed development — v0.36.18.321
 
-Theme: **Clean for SubD — smooth-interior valence-aware complete-patch ranking**.
+Theme: **Clean for SubD — worst-local interior valence-aware complete-patch ranking**.
 
-The bounded triangle-island solver remains capped at **40 connected triangles**. .320 does not expand that envelope and does not relax the .319 quality gates.
+The bounded triangle-island solver remains capped at **40 connected triangles**. .321 does not expand that envelope and does not relax any .320 quality/eligibility gate.
 
-The new helper is `quadPatchValenceContext(mesh,pairs)` with:
-
+The valence ranking now uses:
 - `PATCH_VALENCE_WEIGHT=.25`
+- `PATCH_VALENCE_WORST_WEIGHT=.1`
 
-It evaluates a **completed proposed matching** after the existing pair, surrounding-flow, and internal-flow terms. For vertices touched by removed triangle diagonals, it considers only smooth interior vertices whose incident edges are manifold and uncreased. It estimates the resulting quad valence after those paired diagonals are removed and adds a small ranking penalty for deviation from valence 4.
+The new helper `quadValencePenalty(errors)` combines:
+- average smooth-interior valence error
+- worst local smooth-interior valence error
 
-Important safety property: the valence term is **ranking-only**. The pre-existing .319 quality score remains the score used by `PATCH_MAX_AVG_SCORE` and the other acceptance guards. Therefore .320 can select a better complete matching without making a previously unsafe patch eligible or rejecting a safe patch merely because of the new preference.
+This prevents a severe extraordinary vertex from being diluted by several perfect vertices when two complete matchings have the same average valence error.
 
-Current relevant constants in `src/quad-clean-core.js` include:
+Important safety property: the valence terms remain **ranking-only**. The pre-existing .320 quality score remains the score used by `PATCH_MAX_AVG_SCORE` and the other acceptance guards.
 
-- `MAX_TRIANGLE_PATCH=40`
-- `PATCH_FLOW_WEIGHT=.75`
-- `PATCH_MAX_EDGE_RATIO=4`
-- `PATCH_MAX_AVG_SCORE=Math.log(4)`
-- `PATCH_MAX_BOUNDARY_FLOW=.65`
-- `PATCH_BOUNDARY_WORST_WEIGHT=.5`
-- `PATCH_INTERNAL_FLOW_WEIGHT=.5`
-- `PATCH_VALENCE_WEIGHT=.25`
-
-Regression coverage now proves:
-- coherent neighboring proposed quads score better than zig-zag internal flow
-- a matching that restores an eligible smooth interior vertex to quad valence 4 scores better than an under-resolved alternative
-- vertices in a protected crease ring are excluded from valence regularity scoring
+Regression coverage proves that two alternatives with the same average valence error are ordered in favour of the lower worst local error.
 
 ## Current Clean for SubD pipeline
 
@@ -92,6 +80,7 @@ Regression coverage now proves:
    - worst-boundary mismatch guard
    - **.319 internal proposed-quad flow-coherence scoring**
    - **.320 smooth-interior valence-aware completed-patch ranking**
+   - **.321 worst-local valence-aware completed-patch ranking**
    - no vertex movement
    - no surrounding-quad rewrite
    - rejected patches remain untouched
@@ -214,15 +203,15 @@ Scene / modifiers:
 
 ## Next development step
 
-There is **no unfinished .321 feature recorded in the repo**.
+There is **no unfinished .322 feature recorded in the repo**.
 
-The .320 valence-aware qualitative step is complete and merged. On the next user `/nextbuild`:
-1. inspect current `main` first
-2. confirm version and the newest Pages deployment state
-3. select the next conservative roadmap step from current code and user direction
-4. prefer another qualitative topology improvement over blind expansion of the 40-triangle cap
+The .321 worst-local valence ranking step is complete and merged. On the next user `/nextbuild`:
+1. inspect current `main`
+2. confirm version/live deployment state
+3. choose another conservative qualitative topology improvement
+4. preserve the 40-triangle envelope unless there is specific evidence that expansion is needed
 5. preserve the .314 Face multi-select fix and all protected baselines
-6. keep new complete-patch preferences ranking-only unless there is explicit evidence that an acceptance guard should change
+6. keep complete-patch preference terms ranking-only unless there is explicit evidence for changing acceptance
 
 The current preferred development principle remains:
 
