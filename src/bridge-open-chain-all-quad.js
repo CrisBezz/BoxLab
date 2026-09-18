@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.285 — bounded densification search for guarded open-chain all-quad Bridge.
+// BoxLab v0.36.18.286 — multi-phase densification search for guarded open-chain all-quad Bridge.
 // Conservatively densifies the smaller open chain, then builds an all-quad strip.
 // Preserves original chain vertices, spaces inserted vertices evenly, and keeps the v274 quality guard/fallback.
 
-const VERSION='0.36.18.285';
+const VERSION='0.36.18.286';
 const EPS=1e-12;
 const MAX_ADDED=6;
 const MAX_RATIO=3;
@@ -48,21 +48,20 @@ export function splitOpenBoundaryEdgeAt(mesh,chain,edgeIndex,t=.5){
 
 export function splitOpenBoundaryEdge(mesh,chain,edgeIndex){return splitOpenBoundaryEdgeAt(mesh,chain,edgeIndex,.5);}
 
-function subdivisionAllocation(mesh,chain,targetEdgeCount){
+function subdivisionAllocation(mesh,chain,targetEdgeCount,phase=0){
   const edges=[];
   for(let i=0;i<chain.length-1;i++){
     const a=mesh.vertices[chain[i]],b=mesh.vertices[chain[i+1]];
     if(!a||!b)return null;
     edges.push({index:i,length:Math.sqrt(a.distanceToSquared(b)),segments:1});
   }
-  let remaining=targetEdgeCount-edges.length;
+  let remaining=targetEdgeCount-edges.length,step=0;
   while(remaining-->0){
-    let best=edges[0];
-    for(const e of edges){
-      const span=e.length/e.segments,bestSpan=best.length/best.segments;
-      if(span>bestSpan+1e-12||(Math.abs(span-bestSpan)<=1e-12&&e.index<best.index))best=e;
-    }
-    best.segments++;
+    const spans=edges.map(e=>e.length/e.segments),max=Math.max(...spans),threshold=max*NEAR_LONGEST;
+    const candidates=edges.filter((e,i)=>spans[i]+1e-12>=threshold).sort((a,b)=>a.index-b.index);
+    if(!candidates.length)return null;
+    const pick=((phase+step)%candidates.length+candidates.length)%candidates.length;
+    candidates[pick].segments++;step++;
   }
   return edges.map(e=>e.segments);
 }
@@ -117,10 +116,10 @@ export function balancedOpenSplitEdgeIndex(mesh,chain,splitPoints=[]){
   return best?.index??-1;
 }
 
-export function densifyOpenChainToCount(mesh,chain,targetVertexCount){
+export function densifyOpenChainToCount(mesh,chain,targetVertexCount,phase=0){
   if(!Array.isArray(chain)||chain.length<2||targetVertexCount<chain.length)return null;
   if(targetVertexCount===chain.length)return[...chain];
-  const allocation=subdivisionAllocation(mesh,chain,targetVertexCount-1);if(!allocation)return null;
+  const allocation=subdivisionAllocation(mesh,chain,targetVertexCount-1,phase);if(!allocation)return null;
   const out=[chain[0]];
   for(let i=0;i<chain.length-1;i++){
     const inserted=subdivideOriginalOpenEdge(mesh,chain[i],chain[i+1],allocation[i]);if(inserted===null)return null;
@@ -217,7 +216,7 @@ function trialFrom(mesh,topology){
 function diagnostic(ok,reason,extra={}){globalThis.__boxlabOpenChainAllQuadBridge={version:VERSION,ok,allQuad:!!ok,qualityGuarded:true,lastReject:reason||null,...extra};}
 
 export function installOpenChainAllQuadBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge285Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge286Installed)return;
   const baseSelected=proto.bridgeSelectedEdges,topology=globalThis.__boxlabTopology;
   if(typeof baseSelected!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
@@ -227,12 +226,14 @@ export function installOpenChainAllQuadBridge(EditableMesh){
     const fallback=(reason,extra={})=>{diagnostic(false,reason,{counts:info.counts||[],...extra});return baseSelected.call(this,edgeIndices);};
     const before=topology.validateTopology(this,{allowBoundary:true});if(!before.ok)return fallback('input-topology');
     const sourceA=[...info.chains[0]],sourceB=[...info.chains[1]],target=Math.max(sourceA.length,sourceB.length),shortA=sourceA.length<sourceB.length;
-    let best=null,lastReject='no-candidate',tested=0;
-    for(const reverseShort of[false,true]){
+    let best=null,lastReject='no-candidate',tested=0,attempted=0;
+    const shortEdges=Math.min(sourceA.length,sourceB.length)-1,phaseCount=Math.max(1,Math.min(shortEdges,4));
+    for(const reverseShort of[false,true])for(let phase=0;phase<phaseCount;phase++){
+      attempted++;
       const trial=trialFrom(this,topology),a=[...sourceA],b=[...sourceB];
       let short=shortA?a:b,long=shortA?b:a;
       if(reverseShort)short=[...short].reverse();
-      let denseShort=densifyOpenChainToCount(trial,short,target);if(!denseShort){lastReject='densify-failed';continue;}
+      let denseShort=densifyOpenChainToCount(trial,short,target,phase);if(!denseShort){lastReject='densify-failed';continue;}
       if(reverseShort)denseShort=[...denseShort].reverse();
       const denseA=shortA?denseShort:long,denseB=shortA?long:denseShort;
       const planned=bestEqualQuadPlan(trial,denseA,denseB),plan=planned.plan;if(!plan){lastReject=planned.reason||'quality-rejected';continue;}
@@ -242,16 +243,16 @@ export function installOpenChainAllQuadBridge(EditableMesh){
       const validation=topology.validateTopology(trial,{allowBoundary:true});if(!validation.ok){lastReject='topology-rejected';continue;}
       const winding=windingValidation(trial);if(!winding.ok){lastReject=winding.reason||'winding-rejected';continue;}
       const quality=validateOpenAllQuadCandidate(trial,plan.faces,denseA,plan.mapped);if(!quality.ok){lastReject=quality.reason;continue;}
-      if(!best||plan.score<best.score-1e-12)best={score:plan.score,reverseShort,trial,plan,start,denseA,denseB,quality};
+      if(!best||plan.score<best.score-1e-12)best={score:plan.score,reverseShort,phase,trial,plan,start,denseA,denseB,quality};
     }
-    if(!best)return fallback(lastReject,{searchCandidates:tested});
+    if(!best)return fallback(lastReject,{searchCandidates:tested,searchAttempts:attempted});
     topology.restoreMeshState(this,topology.cloneMeshState(best.trial));
     const faceIndices=Array.from({length:best.plan.faces.length},(_,i)=>best.start+i),addedVertices=Math.abs(info.counts[0]-info.counts[1]);
-    const result={faceIndices,plan:{...best.plan,quadCount:faceIndices.length,triangleCount:0,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,reverseShort:best.reverseShort},openChain:true,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,addedVertices,denseCounts:[best.denseA.length-1,best.denseB.length-1]};
-    diagnostic(true,null,{addedVertices,denseCounts:result.denseCounts,connectors:best.quality.connectors,searchCandidates:tested,reverseShort:best.reverseShort,searchScore:best.score});
+    const result={faceIndices,plan:{...best.plan,quadCount:faceIndices.length,triangleCount:0,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchPhase:best.phase,reverseShort:best.reverseShort},openChain:true,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchPhase:best.phase,addedVertices,denseCounts:[best.denseA.length-1,best.denseB.length-1]};
+    diagnostic(true,null,{addedVertices,denseCounts:result.denseCounts,connectors:best.quality.connectors,searchCandidates:tested,searchAttempts:attempted,searchPhase:best.phase,reverseShort:best.reverseShort,searchScore:best.score});
     return result;
   };
 
-  proto.__openChainAllQuadBridge285Installed=true;
+  proto.__openChainAllQuadBridge286Installed=true;
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
