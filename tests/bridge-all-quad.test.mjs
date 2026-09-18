@@ -35,7 +35,7 @@ test('boundary split preserves crease strength across both new edge halves',()=>
 
 test('4 to 6 uses two inserted vertices and produces six quads',()=>{
   class DummyMesh{
-    constructor(){this.vertices=[...square(),...ring(6)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
+    constructor(){this.vertices=[...ring(4,0,1.2),...ring(6,2,1.2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
     edgeKey(a,b){return key(a,b);}
     bridgeLoops(a,b){
       if(a.length!==b.length)return{fallback:true,faceIndices:[],plan:{faces:[]},unequal:true};
