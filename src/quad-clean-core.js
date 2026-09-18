@@ -243,7 +243,7 @@ function sliverProtectedVertices(mesh,edges){
   const protectedVertices=new Set();
   for(const edge of edges){
     const key=edgeKey(mesh,edge.a,edge.b);
-    if(edge.faces?.length!==2||(mesh.creases instanceof Map&&(mesh.creases.get(key)||0)>0){
+    if(edge.faces?.length!==2||(mesh.creases instanceof Map&&(mesh.creases.get(key)||0)>0)){
       protectedVertices.add(edge.a);protectedVertices.add(edge.b);
     }
   }
