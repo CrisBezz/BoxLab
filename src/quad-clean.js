@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.297 — Clean for SubD with bounded even triangle-island retopo.
+// BoxLab v0.36.18.298 — Clean for SubD with quad-flow-aware bounded triangle-island retopo.
 
-import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.297';
+import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.298';
 
 const button=document.querySelector('#quadCleanBtn');
 const status=document.querySelector('#selectionStatus');
@@ -37,7 +37,7 @@ button?.addEventListener('click',()=>{
     }
   }
   manager()?.saveActive?.();
-  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.297',workflow:'clean-for-subd',...result};
+  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.298',workflow:'clean-for-subd',...result};
   if(result.changed){
     const parts=[];
     if(result.fanRepairs)parts.push(`${result.fanRepairs} quad fan${result.fanRepairs===1?'':'s'} repaired`);
