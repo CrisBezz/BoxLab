@@ -1,5 +1,5 @@
-// BoxLab v0.36.18.298 — Clean for SubD quad-flow-aware bounded local triangle-island retopo.
-// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding quad-flow scoring. Phase 4 merges remaining safe triangle pairs. Phase 5 tangent-relaxes safe interior all-quad vertices.
+// BoxLab v0.36.18.299 — Clean for SubD bounded local triangle-island retopo with aggregate patch-quality guard.
+// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding quad-flow scoring and rejects low-quality complete patches. Phase 4 merges remaining safe triangle pairs. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
 const MAX_EDGE_RATIO=5;
@@ -8,6 +8,8 @@ const SLIVER_EDGE_FRACTION=.12;
 const SLIVER_MIN_NORMAL_DOT=Math.cos(Math.PI/6);
 const MAX_TRIANGLE_PATCH=8;
 const PATCH_FLOW_WEIGHT=.75;
+const PATCH_MAX_EDGE_RATIO=4;
+const PATCH_MAX_AVG_SCORE=Math.log(4);
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
 function triNormal(mesh,face){
@@ -162,19 +164,28 @@ function trianglePatchCandidate(mesh,faces){
     }
   }
   search(new Set(faces),[],0);
-  return best;
+  if(!best)return null;
+  const worstEdgeRatio=Math.max(...best.pairs.map(p=>p.edgeRatio||Infinity));
+  const avgScore=best.score/Math.max(best.pairs.length,1);
+  const flowSamples=best.pairs.filter(p=>(p.flowPenalty||0)>0);
+  const avgFlow=flowSamples.length?flowSamples.reduce((sum,p)=>sum+(p.flowPenalty||0),0)/flowSamples.length:0;
+  return{...best,worstEdgeRatio,avgScore,avgFlow,qualityOk:worstEdgeRatio<=PATCH_MAX_EDGE_RATIO&&avgScore<=PATCH_MAX_AVG_SCORE};
 }
 
 export function quadCleanTriangleIslands(mesh,{minTriangles=4,maxTriangles=MAX_TRIANGLE_PATCH}={}){
-  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,patchRepairs:0,merged:0,patchTriangles:0};
+  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,patchRepairs:0,merged:0,patchTriangles:0,rejectedPatches:0};
   const lo=Math.max(4,minTriangles+(minTriangles%2)),hi=Math.min(MAX_TRIANGLE_PATCH,maxTriangles-(maxTriangles%2));
   const components=connectedTriangleComponents(mesh),chosen=[];
+  let candidates=0,rejectedPatches=0;
   for(const faces of components){
     if(faces.length<lo||faces.length>hi||faces.length%2)continue;
     const candidate=trianglePatchCandidate(mesh,faces);
-    if(candidate)chosen.push({faces,candidate});
+    if(!candidate)continue;
+    candidates++;
+    if(!candidate.qualityOk){rejectedPatches++;continue;}
+    chosen.push({faces,candidate});
   }
-  if(!chosen.length)return{ok:true,changed:false,patchRepairs:0,merged:0,patchTriangles:0,candidates:0};
+  if(!chosen.length)return{ok:true,changed:false,patchRepairs:0,merged:0,patchTriangles:0,candidates,rejectedPatches};
   const replacement=new Map(),remove=new Set();
   let merged=0,patchTriangles=0;
   for(const {faces,candidate} of chosen){
@@ -191,7 +202,7 @@ export function quadCleanTriangleIslands(mesh,{minTriangles=4,maxTriangles=MAX_T
   }
   mesh.faces=next;
   mesh.edges?.();
-  return{ok:true,changed:true,patchRepairs:chosen.length,merged,patchTriangles,candidates:chosen.length};
+  return{ok:true,changed:true,patchRepairs:chosen.length,merged,patchTriangles,candidates,rejectedPatches};
 }
 
 export function quadCleanFourTrianglePatches(mesh){
@@ -661,6 +672,7 @@ export function quadCleanMesh(mesh){
     patchRepairs:patches.patchRepairs||0,
     patchMerged:patches.merged||0,
     patchTriangles:patches.patchTriangles||0,
+    patchRejected:patches.rejectedPatches||0,
     merged:(patches.merged||0)+(merge.merged||0),
     relaxedVertices:relax.relaxedVertices||0,
     before:start,
