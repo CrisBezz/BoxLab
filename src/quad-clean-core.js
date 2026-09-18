@@ -1,5 +1,5 @@
-// BoxLab v0.36.18.291 — Quad Clean foundation + conservative quad-flow relax.
-// Phase 1 merges safe triangle pairs. Phase 2 tangent-relaxes safe interior all-quad vertices only when mesh flow improves.
+// BoxLab v0.36.18.292 — Quad Clean local retopo repair + conservative quad-flow relax.
+// Phase 1 repairs safe four-triangle quad fans. Phase 2 merges safe triangle pairs. Phase 3 tangent-relaxes safe interior all-quad vertices only when mesh flow improves.
 
 const EPS=1e-12;
 const MAX_EDGE_RATIO=5;
@@ -112,6 +112,113 @@ export function quadCleanTrianglePairs(mesh){
   return{ok:true,changed:true,merged:chosen.length,before,after,candidates:candidates.length};
 }
 
+
+function compactUnusedVertices(mesh){
+  const used=new Set();
+  for(const face of mesh.faces||[])for(const v of face||[])used.add(v);
+  if(mesh.looseEdges instanceof Set)for(const key of mesh.looseEdges){
+    const [a,b]=String(key).split(':').map(Number);if(Number.isInteger(a))used.add(a);if(Number.isInteger(b))used.add(b);
+  }
+  if(mesh.looseVertices instanceof Set)for(const v of mesh.looseVertices)used.add(v);
+  const map=new Map(),vertices=[];
+  for(let i=0;i<mesh.vertices.length;i++)if(used.has(i)){map.set(i,vertices.length);vertices.push(mesh.vertices[i]);}
+  if(vertices.length===mesh.vertices.length)return 0;
+  mesh.faces=(mesh.faces||[]).map(face=>face.map(v=>map.get(v)));
+  if(mesh.creases instanceof Map){
+    const next=new Map();
+    for(const [key,strength] of mesh.creases){
+      const [a,b]=String(key).split(':').map(Number),na=map.get(a),nb=map.get(b);
+      if(Number.isInteger(na)&&Number.isInteger(nb)&&na!==nb)next.set(na<nb?`${na}:${nb}`:`${nb}:${na}`,strength);
+    }
+    mesh.creases=next;
+  }
+  if(mesh.looseEdges instanceof Set){
+    const next=new Set();
+    for(const key of mesh.looseEdges){
+      const [a,b]=String(key).split(':').map(Number),na=map.get(a),nb=map.get(b);
+      if(Number.isInteger(na)&&Number.isInteger(nb)&&na!==nb)next.add(na<nb?`${na}:${nb}`:`${nb}:${na}`);
+    }
+    mesh.looseEdges=next;
+  }
+  if(mesh.looseVertices instanceof Set){
+    const next=new Set();for(const v of mesh.looseVertices){const nv=map.get(v);if(Number.isInteger(nv))next.add(nv);}mesh.looseVertices=next;
+  }
+  const removed=mesh.vertices.length-vertices.length;mesh.vertices=vertices;return removed;
+}
+
+function orderedQuadFanBoundary(mesh,center,faceIds){
+  const adjacency=new Map(),edges=[];
+  for(const fi of faceIds){
+    const face=mesh.faces[fi],outer=face.filter(v=>v!==center);
+    if(outer.length!==2||outer[0]===outer[1])return null;
+    const [a,b]=outer;edges.push([a,b]);
+    if(!adjacency.has(a))adjacency.set(a,new Set());if(!adjacency.has(b))adjacency.set(b,new Set());
+    adjacency.get(a).add(b);adjacency.get(b).add(a);
+  }
+  if(adjacency.size!==4||[...adjacency.values()].some(set=>set.size!==2))return null;
+  const start=Math.min(...adjacency.keys()),cycle=[start],seen=new Set([start]);
+  let prev=null,current=start;
+  for(let step=0;step<3;step++){
+    const next=[...adjacency.get(current)].find(v=>v!==prev&&!seen.has(v));
+    if(next==null)return null;cycle.push(next);seen.add(next);prev=current;current=next;
+  }
+  if(!adjacency.get(current)?.has(start))return null;
+  return cycle;
+}
+
+function evaluateQuadFan(mesh,center,faceIds){
+  if(faceIds.length!==4||faceIds.some(fi=>mesh.faces[fi]?.length!==3))return{ok:false,reason:'not-four-triangle-fan'};
+  const radialNeighbors=new Set();
+  for(const fi of faceIds)for(const v of mesh.faces[fi])if(v!==center)radialNeighbors.add(v);
+  if(radialNeighbors.size!==4)return{ok:false,reason:'fan-boundary-count'};
+  for(const v of radialNeighbors){
+    const key=edgeKey(mesh,center,v),edge=mesh.edges?.().find(e=>edgeKey(mesh,e.a,e.b)===key);
+    if(edge?.faces?.length!==2)return{ok:false,reason:'fan-non-manifold'};
+    if(mesh.creases instanceof Map&&(mesh.creases.get(key)||0)>0)return{ok:false,reason:'creased-radial-edge'};
+  }
+  const normals=faceIds.map(fi=>triNormal(mesh,mesh.faces[fi]));
+  if(normals.some(n=>!n))return{ok:false,reason:'degenerate-fan'};
+  const avg=normals[0].clone().multiplyScalar(0);for(const n of normals)avg.add(n);
+  if(avg.length()<=EPS)return{ok:false,reason:'fan-normal-cancel'};avg.normalize();
+  const minDot=Math.min(...normals.map(n=>n.dot(avg)));
+  if(minDot<MIN_NORMAL_DOT)return{ok:false,reason:'fan-normal-break'};
+  let quad=orderedQuadFanBoundary(mesh,center,faceIds);
+  if(!quad)return{ok:false,reason:'fan-boundary-order'};
+  const p=quad.map(i=>mesh.vertices[i]);
+  let q1=p[1].clone().sub(p[0]).cross(p[2].clone().sub(p[0]));
+  let q2=p[2].clone().sub(p[0]).cross(p[3].clone().sub(p[0]));
+  if(q1.length()<=EPS||q2.length()<=EPS)return{ok:false,reason:'degenerate-quad'};
+  if(q1.clone().add(q2).dot(avg)<0){quad=[quad[0],quad[3],quad[2],quad[1]];const pp=quad.map(i=>mesh.vertices[i]);q1=pp[1].clone().sub(pp[0]).cross(pp[2].clone().sub(pp[0]));q2=pp[2].clone().sub(pp[0]).cross(pp[3].clone().sub(pp[0]));}
+  const l1=q1.length(),l2=q2.length();if(l1<=EPS||l2<=EPS||q1.dot(q2)/(l1*l2)<-0.05)return{ok:false,reason:'folded-quad'};
+  const lengths=quad.map((v,i)=>mesh.vertices[v].distanceTo(mesh.vertices[quad[(i+1)%4]]));
+  const min=Math.min(...lengths),max=Math.max(...lengths);
+  if(min<=EPS||max/min>MAX_EDGE_RATIO)return{ok:false,reason:'aspect-ratio'};
+  const quadN=q1.clone().add(q2).normalize(),normalDot=Math.max(-1,Math.min(1,quadN.dot(avg)));
+  return{ok:true,center,faces:[...faceIds],quad,score:(1-normalDot)*2+Math.log(Math.max(max/min,1)),edgeRatio:max/min,normalDot};
+}
+
+export function quadCleanLocalRetopo(mesh){
+  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,fanRepairs:0};
+  const incident=Array.from({length:mesh.vertices.length},()=>[]);
+  for(let fi=0;fi<mesh.faces.length;fi++)for(const v of mesh.faces[fi]||[])incident[v]?.push(fi);
+  const candidates=[];
+  for(let center=0;center<incident.length;center++){
+    if(incident[center].length!==4)continue;
+    const c=evaluateQuadFan(mesh,center,incident[center]);if(c.ok)candidates.push(c);
+  }
+  candidates.sort((a,b)=>a.score-b.score||a.center-b.center);
+  const usedFaces=new Set(),chosen=[];
+  for(const c of candidates){if(c.faces.some(fi=>usedFaces.has(fi)))continue;for(const fi of c.faces)usedFaces.add(fi);chosen.push(c);}
+  if(!chosen.length)return{ok:true,changed:false,fanRepairs:0,candidates:candidates.length,removedVertices:0};
+  const replacement=new Map(),remove=new Set();
+  for(const c of chosen){const keep=Math.min(...c.faces);replacement.set(keep,c.quad);for(const fi of c.faces)if(fi!==keep)remove.add(fi);}
+  const next=[];
+  for(let fi=0;fi<mesh.faces.length;fi++){if(remove.has(fi))continue;next.push(replacement.get(fi)||[...mesh.faces[fi]]);}
+  mesh.faces=next;
+  const removedVertices=compactUnusedVertices(mesh);
+  mesh.edges?.();
+  return{ok:true,changed:true,fanRepairs:chosen.length,candidates:candidates.length,removedVertices};
+}
 
 function quadNormal(mesh,face){
   if(!Array.isArray(face)||face.length!==4)return null;
@@ -233,6 +340,8 @@ export function quadCleanMesh(mesh){
     quads:mesh.faces.filter(f=>f.length===4).length,
     ngons:mesh.faces.filter(f=>f.length>4).length
   };
+  const retopo=quadCleanLocalRetopo(mesh);
+  if(!retopo.ok)return retopo;
   const merge=quadCleanTrianglePairs(mesh);
   if(!merge.ok)return merge;
   const relax=quadRelaxFlow(mesh);
@@ -245,7 +354,9 @@ export function quadCleanMesh(mesh){
   };
   return{
     ok:true,
-    changed:!!merge.changed||!!relax.changed,
+    changed:!!retopo.changed||!!merge.changed||!!relax.changed,
+    fanRepairs:retopo.fanRepairs||0,
+    removedVertices:retopo.removedVertices||0,
     merged:merge.merged||0,
     relaxedVertices:relax.relaxedVertices||0,
     before:start,
@@ -253,6 +364,7 @@ export function quadCleanMesh(mesh){
     flowBefore:relax.beforeScore,
     flowAfter:relax.afterScore,
     relaxRejectedScore:relax.rejectedScore,
+    retopo,
     merge,
     relax
   };
