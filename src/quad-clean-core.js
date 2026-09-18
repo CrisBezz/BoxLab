@@ -1,5 +1,5 @@
-// BoxLab v0.36.18.299 — Clean for SubD bounded local triangle-island retopo with aggregate patch-quality guard.
-// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding quad-flow scoring and rejects low-quality complete patches. Phase 4 merges remaining safe triangle pairs. Phase 5 tangent-relaxes safe interior all-quad vertices.
+// BoxLab v0.36.18.300 — Clean for SubD mixed-context residual triangle-pair cleanup.
+// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding quad-flow scoring and rejects low-quality complete patches. Phase 4 merges remaining safe triangle pairs using the same surrounding-quad flow and quality guards. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
 const MAX_EDGE_RATIO=5;
@@ -219,20 +219,27 @@ export function quadCleanTrianglePairs(mesh){
     ngons:mesh.faces.filter(f=>f.length>4).length
   };
   const candidates=[];
+  let contextRejected=0;
   const edges=mesh.edges?.()||[];
   for(const edge of edges){
     if(edge.faces?.length!==2)continue;
     const [a,b]=edge.faces;
     const evaluated=evaluateTrianglePair(mesh,a,b);
-    if(evaluated.ok)candidates.push({a,b,...evaluated});
+    if(!evaluated.ok)continue;
+    const patchFaces=new Set([a,b]);
+    const flowPenalty=quadBoundaryFlowPenalty(mesh,evaluated.quad,patchFaces);
+    const totalScore=evaluated.score+flowPenalty*PATCH_FLOW_WEIGHT;
+    const qualityOk=evaluated.edgeRatio<=PATCH_MAX_EDGE_RATIO&&totalScore<=PATCH_MAX_AVG_SCORE;
+    if(!qualityOk){contextRejected++;continue;}
+    candidates.push({a,b,...evaluated,flowPenalty,totalScore});
   }
-  candidates.sort((x,y)=>x.score-y.score||x.a-y.a||x.b-y.b);
+  candidates.sort((x,y)=>x.totalScore-y.totalScore||x.a-y.a||x.b-y.b);
   const used=new Set(),chosen=[];
   for(const c of candidates){
     if(used.has(c.a)||used.has(c.b))continue;
     used.add(c.a);used.add(c.b);chosen.push(c);
   }
-  if(!chosen.length)return{ok:true,changed:false,merged:0,before,after:{...before},candidates:candidates.length};
+  if(!chosen.length)return{ok:true,changed:false,merged:0,before,after:{...before},candidates:candidates.length,contextRejected};
   const replacement=new Map(),remove=new Set();
   for(const c of chosen){replacement.set(Math.min(c.a,c.b),c.quad);remove.add(Math.max(c.a,c.b));}
   const faces=[];
@@ -249,7 +256,7 @@ export function quadCleanTrianglePairs(mesh){
     quads:mesh.faces.filter(f=>f.length===4).length,
     ngons:mesh.faces.filter(f=>f.length>4).length
   };
-  return{ok:true,changed:true,merged:chosen.length,before,after,candidates:candidates.length};
+  return{ok:true,changed:true,merged:chosen.length,before,after,candidates:candidates.length,contextRejected};
 }
 
 
@@ -674,6 +681,7 @@ export function quadCleanMesh(mesh){
     patchTriangles:patches.patchTriangles||0,
     patchRejected:patches.rejectedPatches||0,
     merged:(patches.merged||0)+(merge.merged||0),
+    pairRejected:merge.contextRejected||0,
     relaxedVertices:relax.relaxedVertices||0,
     before:start,
     after,
