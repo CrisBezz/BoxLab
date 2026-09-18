@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.322 — Clean for SubD worst-local internal flow regularity.
+// BoxLab v0.36.18.323 — Phase A final Clean for SubD transactional topology audit.
 // Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding/internal flow scoring, aggregate quality, worst-boundary guards, and interior valence-aware ranking. Phase 4 merges remaining safe triangle pairs using the same surrounding-quad flow and quality guards. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
@@ -726,8 +726,49 @@ export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15}={}){
   return{ok:true,changed:true,relaxedVertices:proposed.size,beforeScore,afterScore,candidates:proposed.size};
 }
 
+export function quadTopologyAudit(mesh){
+  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',errors:['invalid-mesh'],boundaryEdges:0,nonManifoldEdges:0};
+  const errors=[],faceKeys=new Set();
+  const edgeOwners=new Map();
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const face=mesh.faces[fi];
+    if(!Array.isArray(face)||face.length<3){errors.push(`face-${fi}-too-small`);continue;}
+    const seen=new Set();
+    for(const v of face){
+      if(!Number.isInteger(v)||v<0||v>=mesh.vertices.length){errors.push(`face-${fi}-invalid-vertex`);continue;}
+      if(seen.has(v))errors.push(`face-${fi}-repeated-vertex`);
+      seen.add(v);
+    }
+    const key=canonicalFace(face);
+    if(faceKeys.has(key))errors.push(`face-${fi}-duplicate`);
+    faceKeys.add(key);
+    for(const [a,b] of faceEdges(face)){
+      if(a===b){errors.push(`face-${fi}-zero-edge`);continue;}
+      const ek=edgeKey(mesh,a,b);
+      if(!edgeOwners.has(ek))edgeOwners.set(ek,[]);
+      edgeOwners.get(ek).push(fi);
+      const va=mesh.vertices[a],vb=mesh.vertices[b];
+      if(va&&vb&&va.distanceTo(vb)<=EPS)errors.push(`face-${fi}-collapsed-edge`);
+    }
+    if(face.length===3&&!triNormal(mesh,face))errors.push(`face-${fi}-degenerate-triangle`);
+    if(face.length===4&&!quadNormal(mesh,face))errors.push(`face-${fi}-degenerate-quad`);
+  }
+  let boundaryEdges=0,nonManifoldEdges=0;
+  for(const owners of edgeOwners.values()){
+    if(owners.length===1)boundaryEdges++;
+    else if(owners.length>2){nonManifoldEdges++;errors.push('non-manifold-edge');}
+  }
+  if(mesh.creases instanceof Map)for(const key of mesh.creases.keys()){
+    if(!edgeOwners.has(String(key)))errors.push('orphan-crease');
+  }
+  return{ok:errors.length===0,reason:errors[0]||null,errors,boundaryEdges,nonManifoldEdges};
+}
+
 export function quadCleanMesh(mesh){
   if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false};
+  const transaction=collapseSnapshot(mesh);
+  const initialAudit=quadTopologyAudit(mesh);
+  if(!initialAudit.ok)return{ok:false,reason:`input-${initialAudit.reason}`,changed:false,audit:initialAudit};
   const start={
     vertices:mesh.vertices.length,
     faces:mesh.faces.length,
@@ -735,15 +776,31 @@ export function quadCleanMesh(mesh){
     quads:mesh.faces.filter(f=>f.length===4).length,
     ngons:mesh.faces.filter(f=>f.length>4).length
   };
+  const rollback=(stage,result)=>{
+    restoreCollapseSnapshot(mesh,transaction);
+    return{ok:false,reason:`${stage}-${result?.reason||'topology-audit'}`,changed:false,rolledBack:true,stage,audit:result?.audit||result};
+  };
+  const auditStage=(stage)=>{
+    const audit=quadTopologyAudit(mesh);
+    return audit.ok?null:rollback(stage,{reason:audit.reason,audit});
+  };
+
   const retopo=quadCleanLocalRetopo(mesh);
-  if(!retopo.ok)return retopo;
+  if(!retopo.ok)return rollback('retopo',retopo);
+  {const failed=auditStage('retopo');if(failed)return failed;}
   const slivers=quadCleanSlivers(mesh);
-  if(!slivers.ok)return slivers;
+  if(!slivers.ok)return rollback('slivers',slivers);
+  {const failed=auditStage('slivers');if(failed)return failed;}
   const patches=quadCleanTriangleIslands(mesh);
-  if(!patches.ok)return patches;
+  if(!patches.ok)return rollback('patches',patches);
+  {const failed=auditStage('patches');if(failed)return failed;}
   const merge=quadCleanTrianglePairs(mesh);
-  if(!merge.ok)return merge;
+  if(!merge.ok)return rollback('pairs',merge);
+  {const failed=auditStage('pairs');if(failed)return failed;}
   const relax=quadRelaxFlow(mesh);
+  if(!relax.ok)return rollback('relax',relax);
+  {const failed=auditStage('relax');if(failed)return failed;}
+  const finalAudit=quadTopologyAudit(mesh);
   const after={
     vertices:mesh.vertices.length,
     faces:mesh.faces.length,
@@ -771,6 +828,7 @@ export function quadCleanMesh(mesh){
     flowBefore:relax.beforeScore,
     flowAfter:relax.afterScore,
     relaxRejectedScore:relax.rejectedScore,
+    audit:finalAudit,
     retopo,
     slivers,
     patches,
