@@ -857,3 +857,21 @@ test('320 valence context ignores vertices in a protected crease ring',()=>{
   const context=quadPatchValenceContext(mesh,[{a:0,b:1}]);
   assert.deepEqual(context,{samples:0,avgError:0,worstError:0,penalty:0});
 });
+
+
+test('321 valence context tracks worst local error so one severe extraordinary vertex cannot hide in the average',()=>{
+  const verts=[];
+  for(let y=0;y<4;y++)for(let x=0;x<4;x++)verts.push(new THREE.Vector3(x,y,0));
+  const faces=[];
+  for(let y=0;y<3;y++)for(let x=0;x<3;x++){
+    const a=y*4+x,b=a+1,c=a+4,d=c+1;
+    faces.push([a,b,d],[a,d,c]);
+  }
+  const mesh=new EditableMesh(verts,faces);
+  const balanced=quadPatchValenceContext(mesh,[{a:2,b:3},{a:8,b:9}]);
+  const concentrated=quadPatchValenceContext(mesh,[{a:2,b:3},{a:3,b:8}]);
+  assert.ok(balanced.samples>=1);
+  assert.ok(concentrated.samples>=1);
+  assert.ok(concentrated.worstError>=balanced.worstError);
+  if(concentrated.avgError===balanced.avgError)assert.ok(concentrated.penalty>balanced.penalty);
+});
