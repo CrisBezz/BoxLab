@@ -55,9 +55,9 @@ test('324 cross-object snap finds midpoint before generic edge point',()=>{
 test('324 cross-object snap can target an arbitrary point along another-object edge',()=>{
   const mesh=new EditableMesh([
     new THREE.Vector3(0,0,0),
-    new THREE.Vector3(1,0,0)
-  ],[]);
-  mesh.looseEdges=new Set([mesh.edgeKey(0,1)]);
+    new THREE.Vector3(1,0,0),
+    new THREE.Vector3(10,10,0)
+  ],[[0,1,2]]);
   const snap=nearestCrossObjectSnap({
     objects:[{id:2,visible:true,mesh}],
     activeId:1,
