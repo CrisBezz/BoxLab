@@ -166,7 +166,7 @@ function incidentData(mesh){
   const edges=mesh.edges?.()||[];
   for(const edge of edges){
     neighbors[edge.a]?.add(edge.b);neighbors[edge.b]?.add(edge.a);
-    if(edge.faces?.length!==2||(mesh.creases instanceof Map&&(mesh.creases.get(edgeKey(mesh,edge.a,edge.b))||0)>0){
+    if(edge.faces?.length!==2||(mesh.creases instanceof Map&&(mesh.creases.get(edgeKey(mesh,edge.a,edge.b))||0)>0)){
       protectedVertices.add(edge.a);protectedVertices.add(edge.b);
     }
   }
