@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -286,4 +286,33 @@ test('297 bounded island solver leaves six-triangle island untouched when no com
   assert.equal(result.patchRepairs,0);
   assert.equal(result.merged,0);
   assert.equal(mesh.faces.length,6);
+});
+
+
+test('298 surrounding quad-flow penalty prefers continuation of neighbouring quad rows',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),
+    new THREE.Vector3(1,1,0),new THREE.Vector3(0,1,0),
+    new THREE.Vector3(0,-1,0),new THREE.Vector3(1,-1,0),
+    new THREE.Vector3(1,2,0)
+  ];
+  const mesh=new EditableMesh(verts,[
+    [0,1,2],[0,2,3],
+    [4,5,1,0]
+  ]);
+  const patchFaces=new Set([0,1]);
+  const aligned=quadBoundaryFlowPenalty(mesh,[0,1,2,3],patchFaces);
+  const crossed=quadBoundaryFlowPenalty(mesh,[0,1,2,6],patchFaces);
+  assert.ok(aligned<1e-12);
+  assert.ok(crossed>0.99);
+});
+
+test('298 quad-flow scoring is neutral when a repaired patch has no neighbouring quads',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),
+    new THREE.Vector3(1,1,0),new THREE.Vector3(0,1,0)
+  ];
+  const mesh=new EditableMesh(verts,[[0,1,2],[0,2,3]]);
+  const penalty=quadBoundaryFlowPenalty(mesh,[0,1,2,3],new Set([0,1]));
+  assert.equal(penalty,0);
 });
