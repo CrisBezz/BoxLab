@@ -8,6 +8,15 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.321 worst-local valence-aware patch ranking
+
+- Released **v0.36.18.321** from PR #5; squash merge commit: `0b838da0cd2a31cd4d88c2390a9e15e9b0c58905`.
+- Clean for SubD valence ranking now combines average smooth-interior valence error with a small worst-local error term.
+- New helper `quadValencePenalty(errors)` makes the ranking behavior explicit and regression-testable.
+- Equal-average alternatives now prefer the patch that avoids concentrating error into a more extreme extraordinary vertex.
+- The new worst-local term is ranking-only; the .320 acceptance/quality gates and 40-triangle solver envelope are unchanged.
+- Regression workflow for PR #5 passed successfully before merge.
+
 ## 2026-09-19 — v0.36.18.320 interior valence-aware patch ranking
 
 - Released **v0.36.18.320** from PR #4; squash merge commit: `40e119774f39373ffadab22d0782428e8be7ea2c`.
