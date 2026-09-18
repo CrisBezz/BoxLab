@@ -172,13 +172,13 @@ test('281 regular triangle to seven spaces repeated inserts evenly on original e
 });
 
 test('281 two inserts on one closed-loop edge are placed at thirds and preserve crease segments',()=>{
-  const verts=[new THREE.Vector3(0,0,0),new THREE.Vector3(6,0,0),new THREE.Vector3(6,1,0),new THREE.Vector3(0,1,0)];
+  const verts=[new THREE.Vector3(0,0,0),new THREE.Vector3(9,0,0),new THREE.Vector3(6,.1,0),new THREE.Vector3(3,.1,0)];
   const mesh={vertices:verts,faces:[[0,1,2,3]],creases:new Map([[key(0,1),.6]]),looseEdges:new Set(),looseVertices:new Set(),edgeKey:key};
   const dense=densifyLoopToCount(mesh,[0,1,2,3],6);
   const between=dense.slice(1,dense.indexOf(1));
   assert.equal(between.length,2);
-  assert.ok(Math.abs(mesh.vertices[between[0]].x-2)<1e-9);
-  assert.ok(Math.abs(mesh.vertices[between[1]].x-4)<1e-9);
+  assert.ok(Math.abs(mesh.vertices[between[0]].x-3)<1e-9);
+  assert.ok(Math.abs(mesh.vertices[between[1]].x-6)<1e-9);
   assert.equal(mesh.creases.get(key(0,between[0])),.6);
   assert.equal(mesh.creases.get(key(between[0],between[1])),.6);
   assert.equal(mesh.creases.get(key(between[1],1)),.6);
