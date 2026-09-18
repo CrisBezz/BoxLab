@@ -1,0 +1,39 @@
+name: Verify BoxLab 319 Pages
+on:
+  push:
+    paths:
+      - '.github/workflows/verify-319-pages.yml'
+permissions:
+  contents: write
+jobs:
+  verify-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Create final clean-main deployment marker and remove verifier
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          rm .github/workflows/verify-319-pages.yml
+          printf 'BoxLab 0.36.18.319 final clean Pages deployment\n' > deploy-319-clean.txt
+          git add .github/workflows/verify-319-pages.yml deploy-319-clean.txt
+          git commit -m 'Finalize BoxLab 319 clean Pages deployment marker'
+          git push
+      - name: Verify final clean-main Pages content
+        run: |
+          set -e
+          final_sha="$(git rev-parse HEAD)"
+          ok=0
+          for i in $(seq 1 90); do
+            marker="$(curl -fsSL "https://crisbezz.github.io/BoxLab/deploy-319-clean.txt?sha=$final_sha&try=$i" || true)"
+            version="$(curl -fsSL "https://crisbezz.github.io/BoxLab/version.json?sha=$final_sha&try=$i" || true)"
+            page="$(curl -fsSL "https://crisbezz.github.io/BoxLab/?sha=$final_sha&try=$i" || true)"
+            if printf '%s' "$marker" | grep -q 'BoxLab 0.36.18.319 final clean Pages deployment' && printf '%s' "$version" | grep -q '"version":"0.36.18.319"' && printf '%s' "$page" | grep -q 'quad-clean.js?v=0.36.18.319' && printf '%s' "$page" | grep -q 'component-multi-init.js?v=0.36.18.314'; then
+              ok=1
+              break
+            fi
+            sleep 5
+          done
+          test "$ok" = "1"
