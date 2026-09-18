@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.320 — Clean for SubD completed-patch interior valence regularity.
+// BoxLab v0.36.18.321 — Clean for SubD worst-local interior valence regularity.
 // Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding/internal flow scoring, aggregate quality, worst-boundary guards, and interior valence-aware ranking. Phase 4 merges remaining safe triangle pairs using the same surrounding-quad flow and quality guards. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
@@ -14,6 +14,7 @@ const PATCH_MAX_BOUNDARY_FLOW=.65;
 const PATCH_BOUNDARY_WORST_WEIGHT=.5;
 const PATCH_INTERNAL_FLOW_WEIGHT=.5;
 const PATCH_VALENCE_WEIGHT=.25;
+const PATCH_VALENCE_WORST_WEIGHT=.1;
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
 function triNormal(mesh,face){
@@ -190,7 +191,7 @@ export function quadPatchValenceContext(mesh,pairs){
     total+=error;worstError=Math.max(worstError,error);samples++;
   }
   const avgError=samples?total/samples:0;
-  return{samples,avgError,worstError,penalty:avgError*PATCH_VALENCE_WEIGHT};
+  return{samples,avgError,worstError,penalty:avgError*PATCH_VALENCE_WEIGHT+worstError*PATCH_VALENCE_WORST_WEIGHT};
 }
 
 function trianglePatchCandidate(mesh,faces){
