@@ -1,4 +1,4 @@
-name: Release BoxLab 296
+name: Release BoxLab 296 Retry
 on:
   push:
     paths:
