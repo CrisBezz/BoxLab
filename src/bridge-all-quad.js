@@ -121,16 +121,35 @@ function closedSubdivisionAllocation(mesh,loop,targetCount){
   for(let i=0;i<loop.length;i++){
     const a=mesh.vertices[loop[i]],b=mesh.vertices[loop[(i+1)%loop.length]];
     if(!a||!b)return null;
-    edges.push({index:i,length:Math.sqrt(a.distanceToSquared(b)),segments:1});
+    edges.push({index:i,length:Math.sqrt(a.distanceToSquared(b)),segments:1,mid:a.clone().lerp(b,.5)});
   }
+  const chosen=[];
   let remaining=targetCount-loop.length;
   while(remaining-->0){
-    let best=edges[0];
-    for(const e of edges){
-      const span=e.length/e.segments,bestSpan=best.length/best.segments;
-      if(span>bestSpan+1e-12||(Math.abs(span-bestSpan)<=1e-12&&e.index<best.index))best=e;
+    const spans=edges.map(e=>e.length/e.segments),max=Math.max(...spans),threshold=max*NEAR_LONGEST;
+    const candidates=edges.filter((e,i)=>spans[i]+1e-12>=threshold);
+    let best=candidates[0];
+    if(chosen.length){
+      const spread=e=>{
+        let min=Infinity;
+        for(const prior of chosen){
+          const d=e.mid.distanceToSquared(prior.mid);
+          if(d<min)min=d;
+        }
+        return min;
+      };
+      for(const e of candidates){
+        const es=spread(e),bs=spread(best),eSpan=e.length/e.segments,bSpan=best.length/best.segments;
+        if(es>bs+1e-12||(Math.abs(es-bs)<=1e-12&&(eSpan>bSpan+1e-12||(Math.abs(eSpan-bSpan)<=1e-12&&e.index<best.index))))best=e;
+      }
+    }else{
+      for(const e of candidates){
+        const eSpan=e.length/e.segments,bSpan=best.length/best.segments;
+        if(eSpan>bSpan+1e-12||(Math.abs(eSpan-bSpan)<=1e-12&&e.index<best.index))best=e;
+      }
     }
     best.segments++;
+    chosen.push(best);
   }
   return edges.map(e=>e.segments);
 }
