@@ -1,5 +1,5 @@
-// BoxLab v0.36.18.297 — Clean for SubD bounded local triangle-island retopo + conservative sliver cleanup + quad-flow relax.
-// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches. Phase 4 merges remaining safe triangle pairs. Phase 5 tangent-relaxes safe interior all-quad vertices.
+// BoxLab v0.36.18.298 — Clean for SubD quad-flow-aware bounded local triangle-island retopo.
+// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding quad-flow scoring. Phase 4 merges remaining safe triangle pairs. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
 const MAX_EDGE_RATIO=5;
@@ -7,6 +7,7 @@ const MIN_NORMAL_DOT=Math.cos(Math.PI/4);
 const SLIVER_EDGE_FRACTION=.12;
 const SLIVER_MIN_NORMAL_DOT=Math.cos(Math.PI/6);
 const MAX_TRIANGLE_PATCH=8;
+const PATCH_FLOW_WEIGHT=.75;
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
 function triNormal(mesh,face){
@@ -97,6 +98,37 @@ function connectedTriangleComponents(mesh){
   return components;
 }
 
+function undirectedEdgeDirection(mesh,a,b){
+  const va=mesh.vertices?.[a],vb=mesh.vertices?.[b];
+  if(!va||!vb)return null;
+  const d=vb.clone().sub(va),l=d.length();
+  return l>EPS?d.multiplyScalar(1/l):null;
+}
+
+export function quadBoundaryFlowPenalty(mesh,quad,patchFaces){
+  if(!mesh?.faces||!mesh?.vertices||!Array.isArray(quad)||quad.length!==4)return 0;
+  const patchSet=patchFaces instanceof Set?patchFaces:new Set(patchFaces||[]);
+  let penalty=0,samples=0;
+  const edges=mesh.edges?.()||[];
+  for(let qi=0;qi<4;qi++){
+    const a=quad[qi],b=quad[(qi+1)%4],key=edgeKey(mesh,a,b);
+    const edge=edges.find(e=>edgeKey(mesh,e.a,e.b)===key);
+    if(!edge)continue;
+    const outside=(edge.faces||[]).find(fi=>!patchSet.has(fi)&&mesh.faces?.[fi]?.length===4);
+    if(outside==null)continue;
+    const neighbor=mesh.faces[outside],ni=faceEdges(neighbor).findIndex(([x,y])=>edgeKey(mesh,x,y)===key);
+    if(ni<0)continue;
+    const candidateOpp=[quad[(qi+2)%4],quad[(qi+3)%4]];
+    const neighborOpp=[neighbor[(ni+2)%4],neighbor[(ni+3)%4]];
+    const dc=undirectedEdgeDirection(mesh,candidateOpp[0],candidateOpp[1]);
+    const dn=undirectedEdgeDirection(mesh,neighborOpp[0],neighborOpp[1]);
+    if(!dc||!dn)continue;
+    penalty+=1-Math.abs(Math.max(-1,Math.min(1,dc.dot(dn))));
+    samples++;
+  }
+  return samples?penalty/samples:0;
+}
+
 function trianglePatchCandidate(mesh,faces){
   if(faces.length<4||faces.length>MAX_TRIANGLE_PATCH||faces.length%2)return null;
   const faceSet=new Set(faces),byFace=new Map();
@@ -107,10 +139,11 @@ function trianglePatchCandidate(mesh,faces){
     if(!faceSet.has(a)||!faceSet.has(b))continue;
     const evaluated=evaluateTrianglePair(mesh,a,b);
     if(!evaluated.ok)continue;
-    const pair={a,b,...evaluated};
+    const flowPenalty=quadBoundaryFlowPenalty(mesh,evaluated.quad,faceSet);
+    const pair={a,b,...evaluated,flowPenalty,totalScore:evaluated.score+flowPenalty*PATCH_FLOW_WEIGHT};
     byFace.get(a).push(pair);byFace.get(b).push(pair);
   }
-  for(const list of byFace.values())list.sort((x,y)=>x.score-y.score||Math.min(x.a,x.b)-Math.min(y.a,y.b)||Math.max(x.a,x.b)-Math.max(y.a,y.b));
+  for(const list of byFace.values())list.sort((x,y)=>x.totalScore-y.totalScore||Math.min(x.a,x.b)-Math.min(y.a,y.b)||Math.max(x.a,x.b)-Math.max(y.a,y.b));
   let best=null;
   function search(remaining,pairs,score){
     if(!remaining.size){
@@ -124,7 +157,7 @@ function trianglePatchCandidate(mesh,faces){
       const other=pair.a===first?pair.b:pair.a;
       if(!remaining.has(other))continue;
       remaining.delete(first);remaining.delete(other);
-      pairs.push(pair);search(remaining,pairs,score+pair.score);pairs.pop();
+      pairs.push(pair);search(remaining,pairs,score+pair.totalScore);pairs.pop();
       remaining.add(first);remaining.add(other);
     }
   }
