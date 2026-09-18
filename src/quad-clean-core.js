@@ -165,6 +165,14 @@ export function quadPatchInternalFlowContext(mesh,pairs){
   return{samples,avgFlow,worstFlow,penalty:avgFlow*PATCH_INTERNAL_FLOW_WEIGHT};
 }
 
+export function quadValencePenalty(errors){
+  const values=(errors||[]).map(Number).filter(Number.isFinite);
+  if(!values.length)return{samples:0,avgError:0,worstError:0,penalty:0};
+  const avgError=values.reduce((sum,v)=>sum+v,0)/values.length;
+  const worstError=Math.max(...values);
+  return{samples:values.length,avgError,worstError,penalty:avgError*PATCH_VALENCE_WEIGHT+worstError*PATCH_VALENCE_WORST_WEIGHT};
+}
+
 export function quadPatchValenceContext(mesh,pairs){
   if(!mesh?.faces||!mesh?.vertices)return{samples:0,avgError:0,worstError:0,penalty:0};
   const edges=mesh.edges?.()||[],incident=Array.from({length:mesh.vertices.length},()=>[]);
@@ -179,7 +187,7 @@ export function quadPatchValenceContext(mesh,pairs){
     if(shared.length!==2)continue;
     for(const v of shared)removedByVertex.set(v,(removedByVertex.get(v)||0)+1);
   }
-  let total=0,worstError=0,samples=0;
+  const errors=[];
   for(const [v,removed] of removedByVertex){
     const ring=incident[v]||[];
     if(!ring.length)continue;
@@ -187,11 +195,9 @@ export function quadPatchValenceContext(mesh,pairs){
     if(ring.some(edge=>(mesh.creases instanceof Map)&&(mesh.creases.get(edgeKey(mesh,edge.a,edge.b))||0)>0))continue;
     const resultValence=ring.length-removed;
     if(resultValence<3)continue;
-    const error=Math.abs(resultValence-4);
-    total+=error;worstError=Math.max(worstError,error);samples++;
+    errors.push(Math.abs(resultValence-4));
   }
-  const avgError=samples?total/samples:0;
-  return{samples,avgError,worstError,penalty:avgError*PATCH_VALENCE_WEIGHT+worstError*PATCH_VALENCE_WORST_WEIGHT};
+  return quadValencePenalty(errors);
 }
 
 function trianglePatchCandidate(mesh,faces){
