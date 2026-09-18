@@ -17,8 +17,8 @@ test('295 Clean for SubD keeps the existing Quad Clean engine and reports produc
   assert.match(runtime,/faces \$\{result\.before\.faces\}→\$\{result\.after\.faces\}/);
 });
 
-test('322 Clean for SubD cache-hop is isolated from protected Selection styling',()=>{
-  assert.match(index,/quad-clean\.js\?v=0\.36\.18\.322/);
+test('323 Clean for SubD cache-hop is isolated from protected Selection styling',()=>{
+  assert.match(index,/quad-clean\.js\?v=0\.36\.18\.323/);
   assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
 });
 
