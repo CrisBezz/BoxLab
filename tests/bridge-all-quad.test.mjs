@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { canTryAllQuad, densifyLoopToCount, splitBoundaryEdge, balancedSplitEdgeIndex, validateClosedAllQuadCandidate, installSubdFriendlyBridge } from '../src/bridge-all-quad.js';
+import { bridgeFlowRegularity } from '../src/bridge-flow-regularity.js';
 
 const key=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
 
@@ -336,4 +337,41 @@ test('287 3 to 9 closed-loop search evaluates nine bounded attempts',()=>{
 test('287 keeps the closed-loop 3x envelope unchanged',()=>{
   assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11]),true);
   assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11,12]),false);
+});
+
+
+test('288 flow regularity prefers an even quad strip to an abrupt connector jump',()=>{
+  const mesh={vertices:[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0),
+    new THREE.Vector3(0,4,0),new THREE.Vector3(1,4,0)
+  ]};
+  const even=bridgeFlowRegularity(mesh,[[0,1,4,3],[1,2,5,4]],{closed:false});
+  const jump=bridgeFlowRegularity(mesh,[[0,1,4,3],[1,2,7,6]],{closed:false});
+  assert.ok(even.penalty<jump.penalty);
+  assert.ok(jump.aspectPenalty>even.aspectPenalty);
+});
+
+test('288 closed-loop Bridge reports edge-flow scoring diagnostics',()=>{
+  class DummyMesh{
+    constructor(){this.vertices=[...ring(3,0,1),...ring(9,2,1.2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
+    edgeKey(a,b){return key(a,b);}
+    bridgeLoops(a,b){
+      if(a.length!==b.length)return{fallback:true,faceIndices:[],unequal:true};
+      const start=this.faces.length;
+      for(let i=0;i<a.length;i++){const j=(i+1)%a.length;this.faces.push([a[i],a[j],b[j],b[i]]);}
+      return{faceIndices:Array.from({length:a.length},(_,i)=>start+i),plan:{quads:true}};
+    }
+  }
+  globalThis.__boxlabTopology={
+    cloneMeshState:m=>({vertices:m.vertices.map(v=>v.clone()),faces:m.faces.map(f=>[...f]),creases:new Map(m.creases),looseEdges:new Set(m.looseEdges),looseVertices:new Set(m.looseVertices)}),
+    restoreMeshState:(m,s)=>{m.vertices=s.vertices.map(v=>v.clone());m.faces=s.faces.map(f=>[...f]);m.creases=new Map(s.creases);m.looseEdges=new Set(s.looseEdges);m.looseVertices=new Set(s.looseVertices);},
+    validateTopology:()=>({ok:true})
+  };
+  installSubdFriendlyBridge(DummyMesh);
+  const mesh=new DummyMesh(),result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11]);
+  assert.equal(result?.allQuad,true);
+  assert.ok(Number.isFinite(result?.flowPenalty));
+  assert.ok(result.flowPenalty>=0);
+  assert.equal(globalThis.__boxlabClosedAllQuadBridge?.flowPenalty,result.flowPenalty);
 });
