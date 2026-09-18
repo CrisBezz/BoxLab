@@ -267,3 +267,30 @@ test('284 guarded 3 to 9 can produce nine quads with six inserted vertices',()=>
   assert.equal(result.faceIndices.length,9);
   assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
 });
+
+
+test('285 closed-loop guarded Bridge reports bounded densification search',()=>{
+  class DummyMesh{
+    constructor(){this.vertices=[...ring(3,0,1),...ring(9,2,1.2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
+    edgeKey(a,b){return key(a,b);}
+    bridgeLoops(a,b){
+      if(a.length!==b.length)return{fallback:true,faceIndices:[],unequal:true};
+      const start=this.faces.length;
+      for(let i=0;i<a.length;i++){const j=(i+1)%a.length;this.faces.push([a[i],a[j],b[j],b[i]]);}
+      return{faceIndices:Array.from({length:a.length},(_,i)=>start+i),plan:{quads:true}};
+    }
+  }
+  globalThis.__boxlabTopology={
+    cloneMeshState:m=>({vertices:m.vertices.map(v=>v.clone()),faces:m.faces.map(f=>[...f]),creases:new Map(m.creases),looseEdges:new Set(m.looseEdges),looseVertices:new Set(m.looseVertices)}),
+    restoreMeshState:(m,s)=>{m.vertices=s.vertices.map(v=>v.clone());m.faces=s.faces.map(f=>[...f]);m.creases=new Map(s.creases);m.looseEdges=new Set(s.looseEdges);m.looseVertices=new Set(s.looseVertices);},
+    validateTopology:()=>({ok:true})
+  };
+  installSubdFriendlyBridge(DummyMesh);
+  const mesh=new DummyMesh(),result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11]);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.correspondenceSearch,true);
+  assert.ok(result?.searchCandidates>=1&&result.searchCandidates<=3);
+  assert.ok(Number.isFinite(result?.searchScore));
+  assert.equal(globalThis.__boxlabClosedAllQuadBridge?.ok,true);
+  assert.equal(globalThis.__boxlabClosedAllQuadBridge?.searchCandidates,result.searchCandidates);
+});
