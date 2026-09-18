@@ -1,11 +1,12 @@
-// BoxLab v0.36.18.296 — Clean for SubD local patch retopo + conservative sliver cleanup + quad-flow relax.
-// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves bounded four-triangle islands as complete two-quad patches. Phase 4 merges remaining safe triangle pairs. Phase 5 tangent-relaxes safe interior all-quad vertices.
+// BoxLab v0.36.18.297 — Clean for SubD bounded local triangle-island retopo + conservative sliver cleanup + quad-flow relax.
+// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches. Phase 4 merges remaining safe triangle pairs. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
 const MAX_EDGE_RATIO=5;
 const MIN_NORMAL_DOT=Math.cos(Math.PI/4);
 const SLIVER_EDGE_FRACTION=.12;
 const SLIVER_MIN_NORMAL_DOT=Math.cos(Math.PI/6);
+const MAX_TRIANGLE_PATCH=8;
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
 function triNormal(mesh,face){
@@ -96,41 +97,58 @@ function connectedTriangleComponents(mesh){
   return components;
 }
 
-function fourTrianglePatchCandidate(mesh,faces){
-  if(faces.length!==4)return null;
-  const faceSet=new Set(faces),pairs=[];
+function trianglePatchCandidate(mesh,faces){
+  if(faces.length<4||faces.length>MAX_TRIANGLE_PATCH||faces.length%2)return null;
+  const faceSet=new Set(faces),byFace=new Map();
+  for(const fi of faces)byFace.set(fi,[]);
   for(const edge of mesh.edges?.()||[]){
     if(edge.faces?.length!==2)continue;
     const [a,b]=edge.faces;
     if(!faceSet.has(a)||!faceSet.has(b))continue;
     const evaluated=evaluateTrianglePair(mesh,a,b);
-    if(evaluated.ok)pairs.push({a,b,...evaluated});
+    if(!evaluated.ok)continue;
+    const pair={a,b,...evaluated};
+    byFace.get(a).push(pair);byFace.get(b).push(pair);
   }
+  for(const list of byFace.values())list.sort((x,y)=>x.score-y.score||Math.min(x.a,x.b)-Math.min(y.a,y.b)||Math.max(x.a,x.b)-Math.max(y.a,y.b));
   let best=null;
-  for(let i=0;i<pairs.length;i++)for(let j=i+1;j<pairs.length;j++){
-    const p=pairs[i],q=pairs[j],used=new Set([p.a,p.b,q.a,q.b]);
-    if(used.size!==4)continue;
-    const score=p.score+q.score;
-    const key=[Math.min(p.a,p.b),Math.max(p.a,p.b),Math.min(q.a,q.b),Math.max(q.a,q.b)].join(':');
-    if(!best||score<best.score-1e-12||(Math.abs(score-best.score)<=1e-12&&key<best.key))best={pairs:[p,q],score,key};
+  function search(remaining,pairs,score){
+    if(!remaining.size){
+      const key=pairs.map(p=>`${Math.min(p.a,p.b)}:${Math.max(p.a,p.b)}`).sort().join('|');
+      if(!best||score<best.score-EPS||(Math.abs(score-best.score)<=EPS&&key<best.key))best={pairs:[...pairs],score,key};
+      return;
+    }
+    if(best&&score>=best.score-EPS)return;
+    const first=Math.min(...remaining);
+    for(const pair of byFace.get(first)||[]){
+      const other=pair.a===first?pair.b:pair.a;
+      if(!remaining.has(other))continue;
+      remaining.delete(first);remaining.delete(other);
+      pairs.push(pair);search(remaining,pairs,score+pair.score);pairs.pop();
+      remaining.add(first);remaining.add(other);
+    }
   }
+  search(new Set(faces),[],0);
   return best;
 }
 
-export function quadCleanFourTrianglePatches(mesh){
-  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,patchRepairs:0,merged:0};
+export function quadCleanTriangleIslands(mesh,{minTriangles=4,maxTriangles=MAX_TRIANGLE_PATCH}={}){
+  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,patchRepairs:0,merged:0,patchTriangles:0};
+  const lo=Math.max(4,minTriangles+(minTriangles%2)),hi=Math.min(MAX_TRIANGLE_PATCH,maxTriangles-(maxTriangles%2));
   const components=connectedTriangleComponents(mesh),chosen=[];
   for(const faces of components){
-    if(faces.length!==4)continue;
-    const candidate=fourTrianglePatchCandidate(mesh,faces);
+    if(faces.length<lo||faces.length>hi||faces.length%2)continue;
+    const candidate=trianglePatchCandidate(mesh,faces);
     if(candidate)chosen.push({faces,candidate});
   }
-  if(!chosen.length)return{ok:true,changed:false,patchRepairs:0,merged:0,candidates:0};
+  if(!chosen.length)return{ok:true,changed:false,patchRepairs:0,merged:0,patchTriangles:0,candidates:0};
   const replacement=new Map(),remove=new Set();
-  for(const {candidate} of chosen){
+  let merged=0,patchTriangles=0;
+  for(const {faces,candidate} of chosen){
+    patchTriangles+=faces.length;
     for(const pair of candidate.pairs){
       const keep=Math.min(pair.a,pair.b),drop=Math.max(pair.a,pair.b);
-      replacement.set(keep,pair.quad);remove.add(drop);
+      replacement.set(keep,pair.quad);remove.add(drop);merged++;
     }
   }
   const next=[];
@@ -140,7 +158,11 @@ export function quadCleanFourTrianglePatches(mesh){
   }
   mesh.faces=next;
   mesh.edges?.();
-  return{ok:true,changed:true,patchRepairs:chosen.length,merged:chosen.length*2,candidates:chosen.length};
+  return{ok:true,changed:true,patchRepairs:chosen.length,merged,patchTriangles,candidates:chosen.length};
+}
+
+export function quadCleanFourTrianglePatches(mesh){
+  return quadCleanTriangleIslands(mesh,{minTriangles:4,maxTriangles:4});
 }
 
 export function quadCleanTrianglePairs(mesh){
@@ -583,7 +605,7 @@ export function quadCleanMesh(mesh){
   if(!retopo.ok)return retopo;
   const slivers=quadCleanSlivers(mesh);
   if(!slivers.ok)return slivers;
-  const patches=quadCleanFourTrianglePatches(mesh);
+  const patches=quadCleanTriangleIslands(mesh);
   if(!patches.ok)return patches;
   const merge=quadCleanTrianglePairs(mesh);
   if(!merge.ok)return merge;
@@ -605,6 +627,7 @@ export function quadCleanMesh(mesh){
     sliverRemovedFaces:slivers.removedFaces||0,
     patchRepairs:patches.patchRepairs||0,
     patchMerged:patches.merged||0,
+    patchTriangles:patches.patchTriangles||0,
     merged:(patches.merged||0)+(merge.merged||0),
     relaxedVertices:relax.relaxedVertices||0,
     before:start,
