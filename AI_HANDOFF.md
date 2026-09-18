@@ -25,28 +25,36 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Visible/live release: **v0.36.18.319**
-- Current documentation HEAD after this audit sequence: **79adf5517e65781f8b2def97e3d2d8a22511925a** before the final `AI_HANDOFF.md` documentation commit
-- Current code-bearing HEAD: **a0a2d072acbf2e397ca68e2276fd75c8a1643846**
-- Canonical .319 release commit: **68e45845f6696b3e66929ee4b181748b85d99b09**
-- Canonical .319 final clean Pages marker: **4ed534dfe8697e54921a8a80d7b50945b6792342**
-- .319 release workflow run: **35398314887** — success
-- .319 live verifier run: **35398373581** — success
-- Current `version.json`: **0.36.18.319**
-- Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.319**
+- Repository release: **v0.36.18.320**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **c27fae6054ffcbce7227fc01bb7e236965ddfa21**
+- Current code-bearing/release commit: **40e119774f39373ffadab22d0782428e8be7ea2c**
+- v0.36.18.320 release PR: **#4**
+- Corrected PR regression run: **35401945842** — success
+- Post-merge topology regression run: **35401986107** — success
+- Current `version.json`: **0.36.18.320**
+- Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.320**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
 - `styles.css` intentionally remains pinned at **v0.36.18.270**
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 - Only permanent workflow currently under `.github/workflows`: **through-regression.yml**
+- GitHub Pages deployment is triggered from `main`; a documentation commit may supersede/cancel the preceding Pages run while the newest `main` deployment completes.
 
-Important chronology note: after the canonical .319 release and verifier completed, the handoff system was added. Three later .319 commits — `51117f59...`, `a91ac689...`, and `a0a2d072...` — re-exposed/cache-hopped/tested the same .319 internal-flow state. They do **not** represent a newer numbered release.
+Chronology note: .319 was the internal proposed-quad flow-coherence release. .320 builds on that same 40-triangle bounded solver with valence-aware completed-patch ranking; it is not a patch-cap expansion.
 
-## Latest completed development — v0.36.18.319
+## Latest completed development — v0.36.18.320
 
-Theme: **Clean for SubD — internal proposed-quad flow coherence**.
+Theme: **Clean for SubD — smooth-interior valence-aware complete-patch ranking**.
 
-The bounded triangle-island solver remains capped at **40 connected triangles**. .319 did not increase that cap. Instead it added scoring at the completed-patch stage so that, when multiple safe complete triangle-pair matchings exist, the solver prefers internally coherent proposed quad rows over zig-zag arrangements.
+The bounded triangle-island solver remains capped at **40 connected triangles**. .320 does not expand that envelope and does not relax the .319 quality gates.
+
+The new helper is `quadPatchValenceContext(mesh,pairs)` with:
+
+- `PATCH_VALENCE_WEIGHT=.25`
+
+It evaluates a **completed proposed matching** after the existing pair, surrounding-flow, and internal-flow terms. For vertices touched by removed triangle diagonals, it considers only smooth interior vertices whose incident edges are manifold and uncreased. It estimates the resulting quad valence after those paired diagonals are removed and adds a small ranking penalty for deviation from valence 4.
+
+Important safety property: the valence term is **ranking-only**. The pre-existing .319 quality score remains the score used by `PATCH_MAX_AVG_SCORE` and the other acceptance guards. Therefore .320 can select a better complete matching without making a previously unsafe patch eligible or rejecting a safe patch merely because of the new preference.
 
 Current relevant constants in `src/quad-clean-core.js` include:
 
@@ -57,20 +65,12 @@ Current relevant constants in `src/quad-clean-core.js` include:
 - `PATCH_MAX_BOUNDARY_FLOW=.65`
 - `PATCH_BOUNDARY_WORST_WEIGHT=.5`
 - `PATCH_INTERNAL_FLOW_WEIGHT=.5`
+- `PATCH_VALENCE_WEIGHT=.25`
 
-The .319 internal-flow helper is `quadPatchInternalFlowContext(mesh,pairs)`.
-
-The internal-flow score:
-- is evaluated only for a completed proposed quad patch
-- compares opposite-edge directions across shared edges between proposed quads
-- adds a conservative average-flow penalty to patch ranking
-- does **not** change eligibility rules
-- does **not** loosen quality thresholds
-- does **not** move vertices
-- does **not** rewrite surrounding existing quads
-- preserves deterministic all-or-nothing complete matching
-
-Regression coverage includes a fixture proving coherent neighboring proposed quads score better than a zig-zag arrangement.
+Regression coverage now proves:
+- coherent neighboring proposed quads score better than zig-zag internal flow
+- a matching that restores an eligible smooth interior vertex to quad valence 4 scores better than an under-resolved alternative
+- vertices in a protected crease ring are excluded from valence regularity scoring
 
 ## Current Clean for SubD pipeline
 
@@ -91,6 +91,7 @@ Regression coverage includes a fixture proving coherent neighboring proposed qua
    - aggregate patch-quality guard
    - worst-boundary mismatch guard
    - **.319 internal proposed-quad flow-coherence scoring**
+   - **.320 smooth-interior valence-aware completed-patch ranking**
    - no vertex movement
    - no surrounding-quad rewrite
    - rejected patches remain untouched
@@ -213,14 +214,15 @@ Scene / modifiers:
 
 ## Next development step
 
-There is **no unfinished .320 feature recorded in the repo**.
+There is **no unfinished .321 feature recorded in the repo**.
 
-The .319 qualitative flow-coherence step is complete and released. On the next user `/nextbuild`:
+The .320 valence-aware qualitative step is complete and merged. On the next user `/nextbuild`:
 1. inspect current `main` first
-2. confirm version/live state
+2. confirm version and the newest Pages deployment state
 3. select the next conservative roadmap step from current code and user direction
-4. do not automatically resume blind patch-cap expansion without evaluating whether a qualitative topology improvement is more valuable
+4. prefer another qualitative topology improvement over blind expansion of the 40-triangle cap
 5. preserve the .314 Face multi-select fix and all protected baselines
+6. keep new complete-patch preferences ranking-only unless there is explicit evidence that an acceptance guard should change
 
 The current preferred development principle remains:
 
