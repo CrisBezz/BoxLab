@@ -11,6 +11,7 @@ import { installUnequalBridgeGlobal } from '../src/bridge-unequal-global.js';
 import { installTransactionalBridge } from '../src/bridge-transactional.js';
 import { installOpenChainBridge } from '../src/bridge-open-chain.js';
 import { installOpenChainAllQuadBridge,canTryOpenAllQuad,densifyOpenChainToCount,validateOpenAllQuadCandidate,splitOpenBoundaryEdgeAt } from '../src/bridge-open-chain-all-quad.js';
+import { bridgeFlowRegularity } from '../src/bridge-flow-regularity.js';
 
 installLooseTopology(EditableMesh);
 installBridgeTopology(EditableMesh);
@@ -288,4 +289,22 @@ test('286 3 to 9 search evaluates six bounded allocation attempts',()=>{
 test('286 keeps the 3x eligibility envelope unchanged',()=>{
   assert.equal(canTryOpenAllQuad([0,1,2,3],[4,5,6,7,8,9,10,11,12,13]),true);
   assert.equal(canTryOpenAllQuad([0,1,2,3],[4,5,6,7,8,9,10,11,12,13,14]),false);
+});
+
+
+test('288 open-chain result exposes edge-flow regularity diagnostics',()=>{
+  const {mesh,ids}=looseParallel(3,9),result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,true);
+  assert.ok(Number.isFinite(result?.plan?.flowPenalty));
+  assert.ok(result.plan.flowPenalty>=0);
+  assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.flowPenalty,result.plan.flowPenalty);
+});
+
+test('288 flow regularity is zero-or-low for a uniform two-quad strip',()=>{
+  const mesh={vertices:[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0)
+  ]};
+  const flow=bridgeFlowRegularity(mesh,[[0,1,4,3],[1,2,5,4]],{closed:false});
+  assert.ok(flow.penalty<1e-9);
 });
