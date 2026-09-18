@@ -1,0 +1,931 @@
+
+> test
+> node --test tests/*.test.mjs
+
+TAP version 13
+# Subtest: Boolean dispatcher routes degenerate input to sequential BSP fallback
+ok 1 - Boolean dispatcher routes degenerate input to sequential BSP fallback
+  ---
+  duration_ms: 1.418617
+  type: 'test'
+  ...
+# Subtest: BSP can triangulate a face even when its aggregate Newell normal degenerates
+ok 2 - BSP can triangulate a face even when its aggregate Newell normal degenerates
+  ---
+  duration_ms: 0.337538
+  type: 'test'
+  ...
+# Subtest: sequential Boolean has conservative planar boundary-loop repair
+ok 3 - sequential Boolean has conservative planar boundary-loop repair
+  ---
+  duration_ms: 1.50558
+  type: 'test'
+  ...
+# Subtest: Boolean repair remains validation-gated
+ok 4 - Boolean repair remains validation-gated
+  ---
+  duration_ms: 0.287875
+  type: 'test'
+  ...
+# Subtest: 279 eligibility remains conservative beyond the expanded envelope
+ok 5 - 279 eligibility remains conservative beyond the expanded envelope
+  ---
+  duration_ms: 1.981505
+  type: 'test'
+  ...
+# Subtest: densifying a boundary inserts vertices into its owning face
+ok 6 - densifying a boundary inserts vertices into its owning face
+  ---
+  duration_ms: 1.311188
+  type: 'test'
+  ...
+# Subtest: boundary split preserves crease strength across both new edge halves
+ok 7 - boundary split preserves crease strength across both new edge halves
+  ---
+  duration_ms: 0.502254
+  type: 'test'
+  ...
+# Subtest: 4 to 6 uses two inserted vertices and produces six quads
+ok 8 - 4 to 6 uses two inserted vertices and produces six quads
+  ---
+  duration_ms: 10.858592
+  type: 'test'
+  ...
+# Subtest: 3 to 9 mismatch falls through without adding vertices
+ok 9 - 3 to 9 mismatch falls through without adding vertices
+  ---
+  duration_ms: 0.453092
+  type: 'test'
+  ...
+# Subtest: 272 spreads comparable splits around a regular loop
+ok 10 - 272 spreads comparable splits around a regular loop
+  ---
+  duration_ms: 0.410172
+  type: 'test'
+  ...
+# Subtest: 272 still gives a materially longer edge priority over spread
+ok 11 - 272 still gives a materially longer edge priority over spread
+  ---
+  duration_ms: 0.687118
+  type: 'test'
+  ...
+# Subtest: 282 eligibility includes 3 to 8 but still excludes 3 to 9
+ok 12 - 282 eligibility includes 3 to 8 but still excludes 3 to 9
+  ---
+  duration_ms: 0.204912
+  type: 'test'
+  ...
+# Subtest: 279 3 to 7 can produce seven quads with four inserted vertices
+ok 13 - 279 3 to 7 can produce seven quads with four inserted vertices
+  ---
+  duration_ms: 5.634046
+  type: 'test'
+  ...
+# Subtest: 280 guard rejects a folded closed-loop quad explicitly
+ok 14 - 280 guard rejects a folded closed-loop quad explicitly
+  ---
+  duration_ms: 1.408759
+  type: 'test'
+  ...
+# Subtest: 280 guard rejects extreme closed-loop connector distortion explicitly
+ok 15 - 280 guard rejects extreme closed-loop connector distortion explicitly
+  ---
+  duration_ms: 0.399753
+  type: 'test'
+  ...
+# Subtest: 280 quality guard marks successful 3 to 7 all-quad bridge
+ok 16 - 280 quality guard marks successful 3 to 7 all-quad bridge
+  ---
+  duration_ms: 2.91458
+  type: 'test'
+  ...
+# Subtest: 281 regular triangle to seven spaces repeated inserts evenly on original edges
+ok 17 - 281 regular triangle to seven spaces repeated inserts evenly on original edges
+  ---
+  duration_ms: 0.292674
+  type: 'test'
+  ...
+# Subtest: 281 two inserts on one closed-loop edge are placed at thirds and preserve crease segments
+ok 18 - 281 two inserts on one closed-loop edge are placed at thirds and preserve crease segments
+  ---
+  duration_ms: 0.346164
+  type: 'test'
+  ...
+# Subtest: 281 regular square to eight allocates one insert per original edge
+ok 19 - 281 regular square to eight allocates one insert per original edge
+  ---
+  duration_ms: 0.260754
+  type: 'test'
+  ...
+# Subtest: 284 eligibility expands to closed-loop 3 to 9 but not 3 to 10
+ok 20 - 284 eligibility expands to closed-loop 3 to 9 but not 3 to 10
+  ---
+  duration_ms: 0.172731
+  type: 'test'
+  ...
+# Subtest: 282 guarded 3 to 8 can produce eight quads with five inserted vertices
+ok 21 - 282 guarded 3 to 8 can produce eight quads with five inserted vertices
+  ---
+  duration_ms: 3.153093
+  type: 'test'
+  ...
+# Subtest: 284 3 to 10 remains on proven unequal fallback without densification
+ok 22 - 284 3 to 10 remains on proven unequal fallback without densification
+  ---
+  duration_ms: 0.413489
+  type: 'test'
+  ...
+# Subtest: 284 guarded 3 to 9 can produce nine quads with six inserted vertices
+ok 23 - 284 guarded 3 to 9 can produce nine quads with six inserted vertices
+  ---
+  duration_ms: 5.910891
+  type: 'test'
+  ...
+# Subtest: 287 closed-loop guarded Bridge reports bounded multi-phase search
+ok 24 - 287 closed-loop guarded Bridge reports bounded multi-phase search
+  ---
+  duration_ms: 2.490862
+  type: 'test'
+  ...
+# Subtest: 287 closed-loop densification phases vary comparable-edge allocations
+ok 25 - 287 closed-loop densification phases vary comparable-edge allocations
+  ---
+  duration_ms: 0.604023
+  type: 'test'
+  ...
+# Subtest: 287 3 to 9 closed-loop search evaluates nine bounded attempts
+ok 26 - 287 3 to 9 closed-loop search evaluates nine bounded attempts
+  ---
+  duration_ms: 3.408077
+  type: 'test'
+  ...
+# Subtest: 287 keeps the closed-loop 3x envelope unchanged
+ok 27 - 287 keeps the closed-loop 3x envelope unchanged
+  ---
+  duration_ms: 0.201765
+  type: 'test'
+  ...
+# Subtest: 288 flow regularity prefers an even quad strip to an abrupt connector jump
+ok 28 - 288 flow regularity prefers an even quad strip to an abrupt connector jump
+  ---
+  duration_ms: 0.971566
+  type: 'test'
+  ...
+# Subtest: 288 closed-loop Bridge reports edge-flow scoring diagnostics
+ok 29 - 288 closed-loop Bridge reports edge-flow scoring diagnostics
+  ---
+  duration_ms: 5.546063
+  type: 'test'
+  ...
+# Subtest: 289 flow regularity penalises an abrupt surface-normal kink
+ok 30 - 289 flow regularity penalises an abrupt surface-normal kink
+  ---
+  duration_ms: 0.491504
+  type: 'test'
+  ...
+# Subtest: 289 closed-loop Bridge reports surface-flow diagnostics
+ok 31 - 289 closed-loop Bridge reports surface-flow diagnostics
+  ---
+  duration_ms: 1.972337
+  type: 'test'
+  ...
+# Subtest: 273 eligibility is conservative for unequal open chains
+ok 32 - 273 eligibility is conservative for unequal open chains
+  ---
+  duration_ms: 2.093874
+  type: 'test'
+  ...
+# Subtest: 273 densifies only interior edges and preserves open endpoints
+ok 33 - 273 densifies only interior edges and preserves open endpoints
+  ---
+  duration_ms: 1.083014
+  type: 'test'
+  ...
+# Subtest: 1 edge to 2 edges becomes a two-quad open strip
+ok 34 - 1 edge to 2 edges becomes a two-quad open strip
+  ---
+  duration_ms: 7.352461
+  type: 'test'
+  ...
+# Subtest: clean parallel 2 edge to 3 edge chains become a three-quad open strip
+ok 35 - clean parallel 2 edge to 3 edge chains become a three-quad open strip
+  ---
+  duration_ms: 6.468858
+  type: 'test'
+  ...
+# Subtest: 285 bounded search rescues the formerly fold-prone L-shaped 2 to 3 case
+ok 36 - 285 bounded search rescues the formerly fold-prone L-shaped 2 to 3 case
+  ---
+  duration_ms: 3.052676
+  type: 'test'
+  ...
+# Subtest: 3 edge to 5 edge loose chains become five quads with two balanced inserts
+ok 37 - 3 edge to 5 edge loose chains become five quads with two balanced inserts
+  ---
+  duration_ms: 10.062429
+  type: 'test'
+  ...
+# Subtest: extreme open-chain mismatch falls back to the proven 266 solver
+ok 38 - extreme open-chain mismatch falls back to the proven 266 solver
+  ---
+  duration_ms: 4.22671
+  type: 'test'
+  ...
+# Subtest: 274 guard reports folded quad explicitly
+ok 39 - 274 guard reports folded quad explicitly
+  ---
+  duration_ms: 0.283166
+  type: 'test'
+  ...
+# Subtest: 274 guard reports extreme connector distortion explicitly
+ok 40 - 274 guard reports extreme connector distortion explicitly
+  ---
+  duration_ms: 0.501553
+  type: 'test'
+  ...
+# Subtest: 285 rescued L-shaped case records successful guarded search diagnostics
+ok 41 - 285 rescued L-shaped case records successful guarded search diagnostics
+  ---
+  duration_ms: 2.361882
+  type: 'test'
+  ...
+# Subtest: 275 one-edge densification spaces two inserts at thirds
+ok 42 - 275 one-edge densification spaces two inserts at thirds
+  ---
+  duration_ms: 0.38688
+  type: 'test'
+  ...
+# Subtest: 275 direct split supports non-midpoint placement and preserves crease halves
+ok 43 - 275 direct split supports non-midpoint placement and preserves crease halves
+  ---
+  duration_ms: 0.426673
+  type: 'test'
+  ...
+# Subtest: 275 equal-length 2 to 5 allocation keeps final spans balanced
+ok 44 - 275 equal-length 2 to 5 allocation keeps final spans balanced
+  ---
+  duration_ms: 0.299667
+  type: 'test'
+  ...
+# Subtest: 284 three-times envelope keeps 1 to 4 out but now includes 2 to 6
+ok 45 - 284 three-times envelope keeps 1 to 4 out but now includes 2 to 6
+  ---
+  duration_ms: 0.160168
+  type: 'test'
+  ...
+# Subtest: 276 clean parallel 2 edge to 5 edge chains become five quads
+ok 46 - 276 clean parallel 2 edge to 5 edge chains become five quads
+  ---
+  duration_ms: 3.024123
+  type: 'test'
+  ...
+# Subtest: 276 clean parallel 3 edge to 7 edge chains become seven quads
+ok 47 - 276 clean parallel 3 edge to 7 edge chains become seven quads
+  ---
+  duration_ms: 7.70511
+  type: 'test'
+  ...
+# Subtest: 276 1 to 4 remains on proven fallback
+ok 48 - 276 1 to 4 remains on proven fallback
+  ---
+  duration_ms: 1.421292
+  type: 'test'
+  ...
+# Subtest: 284 eligibility expands to 3 edge to 9 edge but not 3 to 10
+ok 49 - 284 eligibility expands to 3 edge to 9 edge but not 3 to 10
+  ---
+  duration_ms: 0.109303
+  type: 'test'
+  ...
+# Subtest: 283 clean parallel 3 edge to 8 edge chains become eight guarded quads
+ok 50 - 283 clean parallel 3 edge to 8 edge chains become eight guarded quads
+  ---
+  duration_ms: 3.383491
+  type: 'test'
+  ...
+# Subtest: 284 3 edge to 10 edge remains on proven fallback
+ok 51 - 284 3 edge to 10 edge remains on proven fallback
+  ---
+  duration_ms: 3.298413
+  type: 'test'
+  ...
+# Subtest: 284 clean parallel 3 edge to 9 edge chains become nine guarded quads
+ok 52 - 284 clean parallel 3 edge to 9 edge chains become nine guarded quads
+  ---
+  duration_ms: 3.607528
+  type: 'test'
+  ...
+# Subtest: 286 open-chain guarded Bridge evaluates bounded multi-phase allocations
+ok 53 - 286 open-chain guarded Bridge evaluates bounded multi-phase allocations
+  ---
+  duration_ms: 2.997914
+  type: 'test'
+  ...
+# Subtest: 285 open-chain search preserves the 3x fallback boundary
+ok 54 - 285 open-chain search preserves the 3x fallback boundary
+  ---
+  duration_ms: 2.058447
+  type: 'test'
+  ...
+# Subtest: 286 densification phases distribute comparable splits differently
+ok 55 - 286 densification phases distribute comparable splits differently
+  ---
+  duration_ms: 0.359849
+  type: 'test'
+  ...
+# Subtest: 286 3 to 9 search evaluates six bounded allocation attempts
+ok 56 - 286 3 to 9 search evaluates six bounded allocation attempts
+  ---
+  duration_ms: 2.619471
+  type: 'test'
+  ...
+# Subtest: 286 keeps the 3x eligibility envelope unchanged
+ok 57 - 286 keeps the 3x eligibility envelope unchanged
+  ---
+  duration_ms: 0.109384
+  type: 'test'
+  ...
+# Subtest: 288 open-chain result exposes edge-flow regularity diagnostics
+ok 58 - 288 open-chain result exposes edge-flow regularity diagnostics
+  ---
+  duration_ms: 2.945737
+  type: 'test'
+  ...
+# Subtest: 288 flow regularity is zero-or-low for a uniform two-quad strip
+ok 59 - 288 flow regularity is zero-or-low for a uniform two-quad strip
+  ---
+  duration_ms: 0.520748
+  type: 'test'
+  ...
+# Subtest: 289 open-chain Bridge exposes surface-flow diagnostics
+ok 60 - 289 open-chain Bridge exposes surface-flow diagnostics
+  ---
+  duration_ms: 3.293615
+  type: 'test'
+  ...
+# Subtest: 1 edge to 1 edge creates one quality-guarded open quad
+ok 61 - 1 edge to 1 edge creates one quality-guarded open quad
+  ---
+  duration_ms: 6.70611
+  type: 'test'
+  ...
+# Subtest: 2 edges to 2 edges creates two quads and remains open
+ok 62 - 2 edges to 2 edges creates two quads and remains open
+  ---
+  duration_ms: 2.734104
+  type: 'test'
+  ...
+# Subtest: 3 edges to 3 edges creates a three-quad open strip
+ok 63 - 3 edges to 3 edges creates a three-quad open strip
+  ---
+  duration_ms: 2.014596
+  type: 'test'
+  ...
+# Subtest: two loose edges can seed a single open quad
+ok 64 - two loose edges can seed a single open quad
+  ---
+  duration_ms: 3.118489
+  type: 'test'
+  ...
+# Subtest: 1 edge to 2 edges creates one quad plus one triangle
+ok 65 - 1 edge to 2 edges creates one quad plus one triangle
+  ---
+  duration_ms: 4.093572
+  type: 'test'
+  ...
+# Subtest: 2 edges to 3 edges creates two quads plus one triangle and stays open
+ok 66 - 2 edges to 3 edges creates two quads plus one triangle and stays open
+  ---
+  duration_ms: 1.619081
+  type: 'test'
+  ...
+# Subtest: unequal loose chains 3 to 5 use minimum triangles
+ok 67 - unequal loose chains 3 to 5 use minimum triangles
+  ---
+  duration_ms: 3.759691
+  type: 'test'
+  ...
+# Subtest: quality guard rejects a folded open-chain quad
+ok 68 - quality guard rejects a folded open-chain quad
+  ---
+  duration_ms: 0.259002
+  type: 'test'
+  ...
+# Subtest: quality guard rejects extreme open-chain connector distortion
+ok 69 - quality guard rejects extreme open-chain connector distortion
+  ---
+  duration_ms: 0.510229
+  type: 'test'
+  ...
+# Subtest: edge Bridge commits a closed validated trial result
+ok 70 - edge Bridge commits a closed validated trial result
+  ---
+  duration_ms: 5.309823
+  type: 'test'
+  ...
+# Subtest: face Bridge removes two caps and commits only a valid closed result
+ok 71 - face Bridge removes two caps and commits only a valid closed result
+  ---
+  duration_ms: 4.013333
+  type: 'test'
+  ...
+# Subtest: invalid Bridge output is rejected without mutating the live mesh
+ok 72 - invalid Bridge output is rejected without mutating the live mesh
+  ---
+  duration_ms: 1.05429
+  type: 'test'
+  ...
+# Subtest: rotated offset 4 to 7 Bridge uses twist-aware correspondence and remains closed
+ok 73 - rotated offset 4 to 7 Bridge uses twist-aware correspondence and remains closed
+  ---
+  duration_ms: 8.856778
+  type: 'test'
+  ...
+# Subtest: rotated offset 5 to 8 Bridge produces a finite deterministic alignment plan
+ok 74 - rotated offset 5 to 8 Bridge produces a finite deterministic alignment plan
+  ---
+  duration_ms: 7.603608
+  type: 'test'
+  ...
+# Subtest: equal-count Bridge still bypasses the unequal twist-aware planner
+ok 75 - equal-count Bridge still bypasses the unequal twist-aware planner
+  ---
+  duration_ms: 2.279859
+  type: 'test'
+  ...
+# Subtest: 4 to 7 Bridge is globally matched, surface-scored, quad-dominant and closed
+ok 76 - 4 to 7 Bridge is globally matched, surface-scored, quad-dominant and closed
+  ---
+  duration_ms: 40.972727
+  type: 'test'
+  ...
+# Subtest: 5 to 8 rotated Bridge searches all cyclic correspondences deterministically
+ok 77 - 5 to 8 rotated Bridge searches all cyclic correspondences deterministically
+  ---
+  duration_ms: 29.330279
+  type: 'test'
+  ...
+# Subtest: direct correspondence search evaluates both loop directions and every offset
+ok 78 - direct correspondence search evaluates both loop directions and every offset
+  ---
+  duration_ms: 19.891563
+  type: 'test'
+  ...
+# Subtest: surface quality cost prefers balanced planar quad to twisted quad
+ok 79 - surface quality cost prefers balanced planar quad to twisted quad
+  ---
+  duration_ms: 0.286993
+  type: 'test'
+  ...
+# Subtest: surface quality cost penalises skinny triangle
+ok 80 - surface quality cost penalises skinny triangle
+  ---
+  duration_ms: 0.276554
+  type: 'test'
+  ...
+# Subtest: quality guard rejects degenerate candidate faces
+ok 81 - quality guard rejects degenerate candidate faces
+  ---
+  duration_ms: 0.293196
+  type: 'test'
+  ...
+# Subtest: quality guard rejects extreme connector distortion
+ok 82 - quality guard rejects extreme connector distortion
+  ---
+  duration_ms: 0.18833
+  type: 'test'
+  ...
+# Subtest: equal-count Bridge stays on proven equal solver
+ok 83 - equal-count Bridge stays on proven equal solver
+  ---
+  duration_ms: 2.791212
+  type: 'test'
+  ...
+# Subtest: perimeter-aware planner handles an irregular 4 to 7 Bridge
+ok 84 - perimeter-aware planner handles an irregular 4 to 7 Bridge
+  ---
+  duration_ms: 14.394285
+  type: 'test'
+  ...
+# Subtest: awkward 3 to 7 ratio remains closed and transactional
+ok 85 - awkward 3 to 7 ratio remains closed and transactional
+  ---
+  duration_ms: 2.121134
+  type: 'test'
+  ...
+# Subtest: equal-count Bridge remains on the original quad solver
+ok 86 - equal-count Bridge remains on the original quad solver
+  ---
+  duration_ms: 2.05961
+  type: 'test'
+  ...
+# Subtest: edge Bridge joins 4-edge and 6-edge boundary loops transactionally
+ok 87 - edge Bridge joins 4-edge and 6-edge boundary loops transactionally
+  ---
+  duration_ms: 10.353763
+  type: 'test'
+  ...
+# Subtest: face Bridge accepts unequal polygon counts without damaging topology
+ok 88 - face Bridge accepts unequal polygon counts without damaging topology
+  ---
+  duration_ms: 1.665046
+  type: 'test'
+  ...
+# Subtest: equal-count Bridge remains on the existing quad solver
+ok 89 - equal-count Bridge remains on the existing quad solver
+  ---
+  duration_ms: 2.036116
+  type: 'test'
+  ...
+# Subtest: 295 Object Active Tools exposes Clean for SubD without adding another top-level cleanup button
+ok 90 - 295 Object Active Tools exposes Clean for SubD without adding another top-level cleanup button
+  ---
+  duration_ms: 1.513534
+  type: 'test'
+  ...
+# Subtest: 295 Clean for SubD keeps the existing Quad Clean engine and reports production before-after counts
+ok 91 - 295 Clean for SubD keeps the existing Quad Clean engine and reports production before-after counts
+  ---
+  duration_ms: 0.278618
+  type: 'test'
+  ...
+# Subtest: 295 Clean for SubD cache-hop is isolated from protected Selection styling
+not ok 92 - 295 Clean for SubD cache-hop is isolated from protected Selection styling
+  ---
+  duration_ms: 2.62972
+  type: 'test'
+  location: '/home/runner/work/BoxLab/BoxLab/tests/clean-for-subd-ui.test.mjs:20:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    The input did not match the regular expression /quad-clean\.js\?v=0\.36\.18\.295/. Input:
+    
+    '<!doctype html>\n' +
+      '<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"/><meta name="theme-color" content="#111318"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/><meta http-equiv="Pragma" content="no-cache"/><meta http-equiv="Expires" content="0"/><title>BoxLab v0.36.18.295</title><link rel="stylesheet" href="./styles.css?v=0.36.18.270"/><link rel="stylesheet" href="./transform-strip.css?v=0.33.2"/><link rel="manifest" href="./manifest.webmanifest?v=0.28.3"/><link rel="icon" href="./icon.svg?v=0.28.3" type="image/svg+xml"/><link rel="apple-touch-icon" href="./icon.svg?v=0.28.3"/><script src="./src/release-bootstrap.js?v=0.36.18.163"></script><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js","three/":"https://cdn.jsdelivr.net/npm/three@0.179.1/","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.179.1/examples/jsm/","./src/mesh.js":"./src/mesh.js?v=0.12","./src/subdivision.js":"./src/subdivision.js?v=0.12","./src/mirror.js":"./src/mirror.js?v=0.12","./src/export.js":"./src/export.js?v=0.12","./src/history.js":"./src/history.js?v=0.12","./src/loose-topology.js":"./src/loose-topology.js?v=0.12","./src/bridge-topology.js":"./src/bridge-topology.js?v=0.12"}}</script></head><body><div id="app"><header class="topbar"><details class="top-file-menu" id="fileMenu"><summary>File</summary><div class="top-file-content"><div class="drawer-subtitle">Import</div><div class="segmented import-kind" id="importKind"><button type="button" data-import-kind="editable" class="active">Editable</button><button type="button" data-import-kind="reference">Reference</button></div><button id="importMeshBtn">Import OBJ / GLB / GLTF</button><input id="importMeshInput" type="file" accept=".obj,.glb,.gltf" hidden/><div class="drawer-subtitle">Export</div><div class="outliner-actions"><button id="exportBaseBtn">Base OBJ</button><button id="exportSubdBtn">SubD OBJ</button></div><button id="installAppBtn">Add BoxLab to Home Screen</button><button id="resetBtn" class="danger">Reset All Objects</button></div></details><div class="segmented" id="selectionModes"><button data-mode="vertex"><span>Vertex</span></button><button data-mode="edge"><span>Edge</span></button><button data-mode="face" class="active"><span>Face</span></button><button data-mode="object"><span>Object</span></button></div><div class="brand"><strong>BoxLab</strong><span id="appVersion">v0.36.18.295</span></div><div class="top-actions"><button id="undoBtn">Undo</button><button id="redoBtn">Redo</button></div></header><main id="viewportWrap"><canvas id="viewport"></canvas><section class="floating-panel left-panel tool-drawer"><div class="quick-snap"><span>Snap</span><label><input id="axisSnapToggle" type="checkbox"/><span>Axis</span></label><label><input id="inferenceSnapToggle" type="checkbox"/><span>Geometry</span></label></div><section class="always-selection" id="selectionDrawer"><div class="always-selection-title">Selection</div><div class="drawer-content" id="componentSelectionTools"><div class="selection-dock"><input id="multiSelectToggle" type="checkbox" hidden/><div class="segmented selection-depth" id="paintSelectDepth"><button type="button" data-paint-depth="visible" class="active">Visible</button><button type="button" data-paint-depth="through">Through</button></div><button id="selectAllBtn">All</button><button id="deselectAllBtn">Deselect</button></div><div class="selection-context"><div class="selection-edge-actions"><button id="selectLoopBtn" disabled>Loop</button><button id="selectRingBtn" disabled>Ring</button><button id="selectBoundaryBtn" disabled>Boundary</button></div><div class="selection-grow-actions"><button id="growSelectionBtn">+</button><button id="shrinkSelectionBtn">−</button><button id="connectedSelectionBtn">Conn</button><button id="angleSelectionBtn">∠</button><button id="normalSelectionBtn">⟂</button></div><label class="selection-angle"><span>∠</span><input id="angleSelectThreshold" type="range" min="5" max="180" value="30" step="5"/><output id="angleSelectThresholdOut">30°</output></label></div></div></section><div class="always-transform" id="transformStrip"><div class="segmented" id="toolModes"><button data-tool="move">Move</button><button data-tool="scale">Scale</button><button data-tool="rotate">Rotate</button></div></div><details class="drawer-section" id="editDrawer" open><summary>Active Tools</summary><div class="drawer-content"><div class="mode-tools" data-mode-tools="object"><div class="panel-title context-title">Object</div><div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="joinObjectsBtn" type="button" disabled>Join</button><button id="quadCleanBtn" type="button">Clean for SubD</button></div></div><div class="mode-tools" data-mode-tools="vertex"><div class="panel-title context-title">Vertex</div><div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)"><button id="addVertexBtn">Add</button><button id="buildEdgeBtn">Build Edge</button><button id="vertexSlideBtn" disabled>Slide</button><button id="vertexBevelBtn">Bevel</button></div><label class="range-row vertex-bevel-options"><span>Width</span><input id="vertexBevelWidth" type="range" min="2" max="49" value="20" step="1"/><output id="vertexBevelWidthOut">20%</output></label><div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="connectVertexBtn">Join</button><button id="weldVertexBtn">Weld</button><button id="deleteVertexBtn" class="danger">Delete</button></div></div><div class="mode-tools edge-tools" data-mode-tools="edge"><div class="panel-title context-title">Edge</div><div class="outliner-actions edge-primary-actions"><button id="loopCutBtn">Loop</button><button id="faceSplitBtn">Split</button><button id="bevelBtn">Bevel</button><button id="applyCreaseBtn">Crease</button></div><label class="range-row edge-option loop-cut-option"><span>Loops</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1"/><output id="loopCutCountOut">1</output></label><div class="edge-option bevel-option"><label class="range-row"><span>Width</span><input id="bevelWidth" type="range" min="2" max="49" value="20" step="1"/><output id="bevelWidthOut">20%</output></label><label class="range-row"><span>Segments</span><input id="bevelSegments" type="range" min="1" max="4" value="1" step="1"/><output id="bevelSegmentsOut">1 • Chamfer</output></label><div class="edge-option crease-options"><label class="range-row"><span>Strength</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5"/><output id="creaseStrengthOut">100%</output></label></div></div><div class="crease-button-row"><button id="applyCreaseBtnMirror" type="button">Crease</button><button id="clearCreaseBtn">Uncrease</button></div><div class="edge-section-label">Move</div><div class="edge-move-actions"><button id="edgeSlideBtn" disabled>Edge Slide</button><button id="offsetLoopBtn" disabled>Offset Loop</button></div><label class="range-row edge-option loop-slide-option"><span>Loop Slide</span><input id="loopSlide" type="range" min="5" max="95" value="50" step="1" disabled/><output id="loopSlideOut">50%</output></label><label class="range-row edge-option offset-option"><span>Support Spacing</span><input id="offsetLoopSpacing" type="range" min="2" max="45" value="20" step="1"/><output id="offsetLoopSpacingOut">20%</output></label><div class="edge-section-label">Topology</div><div class="outliner-actions"><button id="bridgeEdgesBtn" disabled>Bridge</button><button id="fillFaceBtn">Fill</button></div><div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="dissolveLoopBtn" disabled>Dissolve Loop</button><button id="dissolveEdgeBtn" disabled>Dissolve Edge</button><button id="deleteEdgeBtn" class="danger">Delete</button></div></div><div class="mode-tools" data-mode-tools="face"><div class="panel-title context-title">Face</div><div class="outliner-actions"><button id="extrudeBtn">Extrude</button><button id="insetBtn">Inset</button><button id="knifeBtn">Knife</button></div><div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="extractFacesBtn">Extract</button><button id="bridgeFacesBtn" disabled>Bridge</button><button id="deleteFaceBtn" class="danger">Delete</button></div></div></div></details><details class="drawer-section" id="objectsDrawer"><summary>Objects</summary><div class="drawer-content"><div id="outlinerMode"></div><div id="outlinerList"></div><div class="outliner-actions"><button id="outlinerAddBtn">+ Add</button><button id="outlinerDuplicateBtn">Duplicate</button><button id="outlinerRenameBtn">Rename</button><button id="outlinerDeleteBtn">Delete</button></div></div></details><details class="drawer-section" id="modifiersDrawer"><summary>Modifiers</summary><div class="drawer-content"><div class="drawer-subtitle">Mirror</div><label class="toggle-row"><input data-mirror-axis="x" type="checkbox"/><span>Mirror X</span></label><label class="toggle-row"><input data-mirror-axis="y" type="checkbox"/><span>Mirror Y</span></label><label class="toggle-row"><input data-mirror-axis="z" type="checkbox"/><span>Mirror Z</span></label><button id="alignMirrorBtn" disabled>Align Object to Mirror</button><div class="drawer-subtitle">Subdivision</div><label class="toggle-row"><input id="subdToggle" type="checkbox"/><span>SubD Preview</span></label><label class="toggle-row"><input id="cageToggle" type="checkbox" checked/><span>Show Cage</span></label><label class="range-row"><span>Level</span><input id="subdLevel" type="range" min="1" max="4" value="1"/><output id="subdLevelOut">1</output></label></div></details></section><footer class="statusbar"><'... 4350 more characters
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+  actual: |-
+    <!doctype html>
+    <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"/><meta name="theme-color" content="#111318"/><meta name="apple-mobile-web-app-capable" content="yes"/><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/><meta http-equiv="Pragma" content="no-cache"/><meta http-equiv="Expires" content="0"/><title>BoxLab v0.36.18.295</title><link rel="stylesheet" href="./styles.css?v=0.36.18.270"/><link rel="stylesheet" href="./transform-strip.css?v=0.33.2"/><link rel="manifest" href="./manifest.webmanifest?v=0.28.3"/><link rel="icon" href="./icon.svg?v=0.28.3" type="image/svg+xml"/><link rel="apple-touch-icon" href="./icon.svg?v=0.28.3"/><script src="./src/release-bootstrap.js?v=0.36.18.163"></script><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.179.1/build/three.module.js","three/":"https://cdn.jsdelivr.net/npm/three@0.179.1/","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.179.1/examples/jsm/","./src/mesh.js":"./src/mesh.js?v=0.12","./src/subdivision.js":"./src/subdivision.js?v=0.12","./src/mirror.js":"./src/mirror.js?v=0.12","./src/export.js":"./src/export.js?v=0.12","./src/history.js":"./src/history.js?v=0.12","./src/loose-topology.js":"./src/loose-topology.js?v=0.12","./src/bridge-topology.js":"./src/bridge-topology.js?v=0.12"}}</script></head><body><div id="app"><header class="topbar"><details class="top-file-menu" id="fileMenu"><summary>File</summary><div class="top-file-content"><div class="drawer-subtitle">Import</div><div class="segmented import-kind" id="importKind"><button type="button" data-import-kind="editable" class="active">Editable</button><button type="button" data-import-kind="reference">Reference</button></div><button id="importMeshBtn">Import OBJ / GLB / GLTF</button><input id="importMeshInput" type="file" accept=".obj,.glb,.gltf" hidden/><div class="drawer-subtitle">Export</div><div class="outliner-actions"><button id="exportBaseBtn">Base OBJ</button><button id="exportSubdBtn">SubD OBJ</button></div><button id="installAppBtn">Add BoxLab to Home Screen</button><button id="resetBtn" class="danger">Reset All Objects</button></div></details><div class="segmented" id="selectionModes"><button data-mode="vertex"><span>Vertex</span></button><button data-mode="edge"><span>Edge</span></button><button data-mode="face" class="active"><span>Face</span></button><button data-mode="object"><span>Object</span></button></div><div class="brand"><strong>BoxLab</strong><span id="appVersion">v0.36.18.295</span></div><div class="top-actions"><button id="undoBtn">Undo</button><button id="redoBtn">Redo</button></div></header><main id="viewportWrap"><canvas id="viewport"></canvas><section class="floating-panel left-panel tool-drawer"><div class="quick-snap"><span>Snap</span><label><input id="axisSnapToggle" type="checkbox"/><span>Axis</span></label><label><input id="inferenceSnapToggle" type="checkbox"/><span>Geometry</span></label></div><section class="always-selection" id="selectionDrawer"><div class="always-selection-title">Selection</div><div class="drawer-content" id="componentSelectionTools"><div class="selection-dock"><input id="multiSelectToggle" type="checkbox" hidden/><div class="segmented selection-depth" id="paintSelectDepth"><button type="button" data-paint-depth="visible" class="active">Visible</button><button type="button" data-paint-depth="through">Through</button></div><button id="selectAllBtn">All</button><button id="deselectAllBtn">Deselect</button></div><div class="selection-context"><div class="selection-edge-actions"><button id="selectLoopBtn" disabled>Loop</button><button id="selectRingBtn" disabled>Ring</button><button id="selectBoundaryBtn" disabled>Boundary</button></div><div class="selection-grow-actions"><button id="growSelectionBtn">+</button><button id="shrinkSelectionBtn">−</button><button id="connectedSelectionBtn">Conn</button><button id="angleSelectionBtn">∠</button><button id="normalSelectionBtn">⟂</button></div><label class="selection-angle"><span>∠</span><input id="angleSelectThreshold" type="range" min="5" max="180" value="30" step="5"/><output id="angleSelectThresholdOut">30°</output></label></div></div></section><div class="always-transform" id="transformStrip"><div class="segmented" id="toolModes"><button data-tool="move">Move</button><button data-tool="scale">Scale</button><button data-tool="rotate">Rotate</button></div></div><details class="drawer-section" id="editDrawer" open><summary>Active Tools</summary><div class="drawer-content"><div class="mode-tools" data-mode-tools="object"><div class="panel-title context-title">Object</div><div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="joinObjectsBtn" type="button" disabled>Join</button><button id="quadCleanBtn" type="button">Clean for SubD</button></div></div><div class="mode-tools" data-mode-tools="vertex"><div class="panel-title context-title">Vertex</div><div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)"><button id="addVertexBtn">Add</button><button id="buildEdgeBtn">Build Edge</button><button id="vertexSlideBtn" disabled>Slide</button><button id="vertexBevelBtn">Bevel</button></div><label class="range-row vertex-bevel-options"><span>Width</span><input id="vertexBevelWidth" type="range" min="2" max="49" value="20" step="1"/><output id="vertexBevelWidthOut">20%</output></label><div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="connectVertexBtn">Join</button><button id="weldVertexBtn">Weld</button><button id="deleteVertexBtn" class="danger">Delete</button></div></div><div class="mode-tools edge-tools" data-mode-tools="edge"><div class="panel-title context-title">Edge</div><div class="outliner-actions edge-primary-actions"><button id="loopCutBtn">Loop</button><button id="faceSplitBtn">Split</button><button id="bevelBtn">Bevel</button><button id="applyCreaseBtn">Crease</button></div><label class="range-row edge-option loop-cut-option"><span>Loops</span><input id="loopCutCount" type="range" min="1" max="5" value="1" step="1"/><output id="loopCutCountOut">1</output></label><div class="edge-option bevel-option"><label class="range-row"><span>Width</span><input id="bevelWidth" type="range" min="2" max="49" value="20" step="1"/><output id="bevelWidthOut">20%</output></label><label class="range-row"><span>Segments</span><input id="bevelSegments" type="range" min="1" max="4" value="1" step="1"/><output id="bevelSegmentsOut">1 • Chamfer</output></label><div class="edge-option crease-options"><label class="range-row"><span>Strength</span><input id="creaseStrength" type="range" min="0" max="100" value="100" step="5"/><output id="creaseStrengthOut">100%</output></label></div></div><div class="crease-button-row"><button id="applyCreaseBtnMirror" type="button">Crease</button><button id="clearCreaseBtn">Uncrease</button></div><div class="edge-section-label">Move</div><div class="edge-move-actions"><button id="edgeSlideBtn" disabled>Edge Slide</button><button id="offsetLoopBtn" disabled>Offset Loop</button></div><label class="range-row edge-option loop-slide-option"><span>Loop Slide</span><input id="loopSlide" type="range" min="5" max="95" value="50" step="1" disabled/><output id="loopSlideOut">50%</output></label><label class="range-row edge-option offset-option"><span>Support Spacing</span><input id="offsetLoopSpacing" type="range" min="2" max="45" value="20" step="1"/><output id="offsetLoopSpacingOut">20%</output></label><div class="edge-section-label">Topology</div><div class="outliner-actions"><button id="bridgeEdgesBtn" disabled>Bridge</button><button id="fillFaceBtn">Fill</button></div><div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="dissolveLoopBtn" disabled>Dissolve Loop</button><button id="dissolveEdgeBtn" disabled>Dissolve Edge</button><button id="deleteEdgeBtn" class="danger">Delete</button></div></div><div class="mode-tools" data-mode-tools="face"><div class="panel-title context-title">Face</div><div class="outliner-actions"><button id="extrudeBtn">Extrude</button><button id="insetBtn">Inset</button><button id="knifeBtn">Knife</button></div><div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="extractFacesBtn">Extract</button><button id="bridgeFacesBtn" disabled>Bridge</button><button id="deleteFaceBtn" class="danger">Delete</button></div></div></div></details><details class="drawer-section" id="objectsDrawer"><summary>Objects</summary><div class="drawer-content"><div id="outlinerMode"></div><div id="outlinerList"></div><div class="outliner-actions"><button id="outlinerAddBtn">+ Add</button><button id="outlinerDuplicateBtn">Duplicate</button><button id="outlinerRenameBtn">Rename</button><button id="outlinerDeleteBtn">Delete</button></div></div></details><details class="drawer-section" id="modifiersDrawer"><summary>Modifiers</summary><div class="drawer-content"><div class="drawer-subtitle">Mirror</div><label class="toggle-row"><input data-mirror-axis="x" type="checkbox"/><span>Mirror X</span></label><label class="toggle-row"><input data-mirror-axis="y" type="checkbox"/><span>Mirror Y</span></label><label class="toggle-row"><input data-mirror-axis="z" type="checkbox"/><span>Mirror Z</span></label><button id="alignMirrorBtn" disabled>Align Object to Mirror</button><div class="drawer-subtitle">Subdivision</div><label class="toggle-row"><input id="subdToggle" type="checkbox"/><span>SubD Preview</span></label><label class="toggle-row"><input id="cageToggle" type="checkbox" checked/><span>Show Cage</span></label><label class="range-row"><span>Level</span><input id="subdLevel" type="range" min="1" max="4" value="1"/><output id="subdLevelOut">1</output></label></div></details></section><footer class="statusbar"><span id="meshStats">8 verts • 6 faces</span><span id="selectionStatus">Face mode • nothing selected</span></footer></main></div><div id="portraitNotice"><strong>Rotate iPad to landscape</strong></div><script type="module" src="./src/loose-bootstrap.js?v=0.36.18.295"></script><script type="module" src="./src/pencil-orbit-gate.js?v=0.32.35"></script><script type="module" src="./src/main.js?v=0.36.18.269"></script><script type="module" src="./src/multi-face-direct.js?v=0.36.18.242"></script><script type="module" src="./src/direct-topology-conformance-guard.js?v=0.36.18.242"></script><script type="module" src="./src/direct-multi-vertex-bevel.js?v=0.30.1"></script><script type="module" src="./src/transform-upgrade.js?v=0.34.1"></script><script type="module" src="./src/transform-polish.js?v=0.32.24"></script><script type="module" src="./src/add-vertex-edge-snap.js?v=0.36.18.164"></script><script type="module" src="./src/add-session-tool-handoff.js?v=0.36.18.167"></script><script type="module" src="./src/vertex-pick-assist.js?v=0.36.18.294"></script><script type="module" src="./src/rotate-transform.js?v=0.25.0"></script><script type="module" src="./src/loop-cut-commit.js?v=0.25.0"></script><script type="module" src="./src/edge-object-bridge.js?v=0.32.20"></script><script type="module" src="./src/component-slide.js?v=0.32.21"></script><script type="module" src="./src/dissolve-bootstrap.js?v=0.32.4"></script><script type="module" src="./src/add-edge-ui.js?v=0.36.10.0"></script><script type="module" src="./src/face-bridge-preview.js?v=0.36.8.2"></script><script type="module" src="./src/bridge-ui.js?v=0.36.18.244"></script><script type="module" src="./src/face-strip-selection.js?v=0.36.12.0"></script><script type="module" src="./src/select-loop.js?v=0.30.5"></script><script type="module" src="./src/directed-loop.js?v=0.36.10.4"></script><script type="module" src="./src/strict-select-loop.js?v=0.36.10.4"></script><script type="module" src="./src/ring-select.js?v=0.32.0"></script><script type="module" src="./src/edge-paint-select.js?v=0.22.0"></script><script type="module" src="./src/advanced-selection.js?v=0.24.0"></script><script type="module" src="./src/boundary-tools.js?v=0.32.1"></script><script type="module" src="./src/dissolve-ui.js?v=0.32.22"></script><script type="module" src="./src/bevel-ui.js?v=0.28.11"></script><script type="module" src="./src/direct-bevel.js?v=0.36.18.253"></script><script type="module" src="./src/fill-boundary-ui.js?v=0.36.10.1"></script><script type="module" src="./src/face-split.js?v=0.36.18.208"></script><script type="module" src="./src/knife-tool.js?v=0.36.13.2"></script><script type="module" src="./src/multi-object.js?v=0.36.18.277"></script><script type="module" src="./src/object-management.js?v=0.36.18.290"></script><script type="module" src="./src/quad-clean.js?v=0.36.18.296"></script><script type="module" src="./src/multi-object-transform.js?v=0.36.1.0"></script><script type="module" src="./src/primitive-ui.js?v=0.36.18.226"></script><script type="module" src="./src/extract-faces.js?v=0.36.18.236"></script><script type="module" src="./src/import-mesh.js?v=0.36.18.205"></script><script type="module" src="./src/drawer-ui.js?v=0.36.18.210"></script><script type="module" src="./src/object-selection-layout.js?v=0.36.18.260"></script><script type="module" src="./src/boolean-ux-history.js?v=0.36.18.224"></script><script type="module" src="./src/boolean-degenerate-face-cleanup.js?v=0.36.18.234"></script><script type="module" src="./src/boolean-duplicate-face-cleanup.js?v=0.36.18.233"></script><script type="module" src="./src/boolean-result-cleanup.js?v=0.36.18.232"></script><script type="module" src="./src/boolean-prototype.js?v=0.36.18.248"></script><script type="module" src="./src/boolean-button-sync.js?v=0.36.18.226"></script><script type="module" src="./src/release-version.js?v=0.36.18.246.1"></script><script type="module" src="./src/pwa-install.js?v=0.27.2"></script><script type="module" src="./src/view-modes.js?v=0.36.18.178"></script><script type="module" src="./src/topbar-layout.js?v=0.36.18.178"></script><script type="module" src="./src/render-modes.js?v=0.36.18.196"></script><script>document.addEventListener('click',e=>{if(e.target?.id==='applyCreaseBtnMirror')document.querySelector('#applyCreaseBtn')?.click();},true);</script></body></html>
+  operator: 'match'
+  stack: |-
+    TestContext.<anonymous> (file:///home/runner/work/BoxLab/BoxLab/tests/clean-for-subd-ui.test.mjs:21:10)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1047:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:744:18)
+    Test.postRun (node:internal/test_runner/test:1173:19)
+    Test.run (node:internal/test_runner/test:1101:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: single Duplicate owns its post-activation Move handoff
+ok 93 - single Duplicate owns its post-activation Move handoff
+  ---
+  duration_ms: 1.447281
+  type: 'test'
+  ...
+# Subtest: Multi Duplicate owns the same post-transaction Move handoff
+ok 94 - Multi Duplicate owns the same post-transaction Move handoff
+  ---
+  duration_ms: 0.315868
+  type: 'test'
+  ...
+# Subtest: global arming layer no longer tries to infer Duplicate clicks
+ok 95 - global arming layer no longer tries to infer Duplicate clicks
+  ---
+  duration_ms: 0.235729
+  type: 'test'
+  ...
+# Subtest: real Move button still owns main transform toolMode
+ok 96 - real Move button still owns main transform toolMode
+  ---
+  duration_ms: 0.210602
+  type: 'test'
+  ...
+# Subtest: 277 combines two non-intersecting objects into one disconnected EditableMesh
+ok 97 - 277 combines two non-intersecting objects into one disconnected EditableMesh
+  ---
+  duration_ms: 2.996612
+  type: 'test'
+  ...
+# Subtest: 277 offsets crease and loose-topology indices from later objects
+ok 98 - 277 offsets crease and loose-topology indices from later objects
+  ---
+  duration_ms: 0.632175
+  type: 'test'
+  ...
+# Subtest: 277 joined closed objects can immediately use existing face Bridge
+ok 99 - 277 joined closed objects can immediately use existing face Bridge
+  ---
+  duration_ms: 4.777864
+  type: 'test'
+  ...
+# Subtest: 277 modifier compatibility blocks destructive mixed modifier joins
+ok 100 - 277 modifier compatibility blocks destructive mixed modifier joins
+  ---
+  duration_ms: 0.449716
+  type: 'test'
+  ...
+# Subtest: 277 object manager and Selection toolbar own Join
+ok 101 - 277 object manager and Selection toolbar own Join
+  ---
+  duration_ms: 0.948904
+  type: 'test'
+  ...
+# Subtest: 278 Join button lives in Object Active Tools, not Selection toolbar
+ok 102 - 278 Join button lives in Object Active Tools, not Selection toolbar
+  ---
+  duration_ms: 0.649579
+  type: 'test'
+  ...
+# Subtest: Object management creates the real toolbar in Selection
+ok 103 - Object management creates the real toolbar in Selection
+  ---
+  duration_ms: 1.381689
+  type: 'test'
+  ...
+# Subtest: Selection layout has no proxy or toolbar relocation machinery
+ok 104 - Selection layout has no proxy or toolbar relocation machinery
+  ---
+  duration_ms: 0.253562
+  type: 'test'
+  ...
+# Subtest: Object selection runtime initializes only once across duplicate module URLs
+ok 105 - Object selection runtime initializes only once across duplicate module URLs
+  ---
+  duration_ms: 0.824112
+  type: 'test'
+  ...
+# Subtest: Object selection toolbar has a single authoritative live owner
+ok 106 - Object selection toolbar has a single authoritative live owner
+  ---
+  duration_ms: 1.190364
+  type: 'test'
+  ...
+# Subtest: 290 merges a clean triangulated quad without moving vertices
+ok 107 - 290 merges a clean triangulated quad without moving vertices
+  ---
+  duration_ms: 2.91485
+  type: 'test'
+  ...
+# Subtest: 290 preserves a creased triangle diagonal
+ok 108 - 290 preserves a creased triangle diagonal
+  ---
+  duration_ms: 0.298633
+  type: 'test'
+  ...
+# Subtest: 290 refuses triangle pairs across a sharp surface break
+ok 109 - 290 refuses triangle pairs across a sharp surface break
+  ---
+  duration_ms: 0.303283
+  type: 'test'
+  ...
+# Subtest: 290 greedily converts two independent triangulated quads
+ok 110 - 290 greedily converts two independent triangulated quads
+  ---
+  duration_ms: 0.679689
+  type: 'test'
+  ...
+# Subtest: 291 relax improves a perturbed interior quad vertex while keeping the boundary fixed
+ok 111 - 291 relax improves a perturbed interior quad vertex while keeping the boundary fixed
+  ---
+  duration_ms: 2.018751
+  type: 'test'
+  ...
+# Subtest: 291 relax freezes vertices touching a crease
+ok 112 - 291 relax freezes vertices touching a crease
+  ---
+  duration_ms: 0.543246
+  type: 'test'
+  ...
+# Subtest: 291 Quad Clean runs merge then relax as one pipeline
+ok 113 - 291 Quad Clean runs merge then relax as one pipeline
+  ---
+  duration_ms: 2.215678
+  type: 'test'
+  ...
+# Subtest: 292 local retopo turns a four-triangle fan into one quad and removes the centre vertex
+ok 114 - 292 local retopo turns a four-triangle fan into one quad and removes the centre vertex
+  ---
+  duration_ms: 1.259826
+  type: 'test'
+  ...
+# Subtest: 292 local retopo preserves a fan when a radial edge is creased
+ok 115 - 292 local retopo preserves a fan when a radial edge is creased
+  ---
+  duration_ms: 0.686635
+  type: 'test'
+  ...
+# Subtest: 292 Quad Clean pipeline repairs a quad fan before triangle-pair merging
+ok 116 - 292 Quad Clean pipeline repairs a quad fan before triangle-pair merging
+  ---
+  duration_ms: 0.981478
+  type: 'test'
+  ...
+# Subtest: 293 sliver cleanup collapses an extremely short smooth interior triangle edge when quality improves
+ok 117 - 293 sliver cleanup collapses an extremely short smooth interior triangle edge when quality improves
+  ---
+  duration_ms: 4.535213
+  type: 'test'
+  ...
+# Subtest: 293 sliver cleanup preserves a short boundary edge
+ok 118 - 293 sliver cleanup preserves a short boundary edge
+  ---
+  duration_ms: 0.845266
+  type: 'test'
+  ...
+# Subtest: 293 sliver cleanup preserves a creased short interior edge
+ok 119 - 293 sliver cleanup preserves a creased short interior edge
+  ---
+  duration_ms: 0.313546
+  type: 'test'
+  ...
+# Subtest: 296 four-triangle patch solver converts a bounded triangle island into two quads
+ok 120 - 296 four-triangle patch solver converts a bounded triangle island into two quads
+  ---
+  duration_ms: 0.760268
+  type: 'test'
+  ...
+# Subtest: 296 four-triangle patch solver preserves a bounded island when one required pairing is creased
+ok 121 - 296 four-triangle patch solver preserves a bounded island when one required pairing is creased
+  ---
+  duration_ms: 0.503287
+  type: 'test'
+  ...
+# Subtest: visible release version is not pinned to Beta 2
+ok 122 - visible release version is not pinned to Beta 2
+  ---
+  duration_ms: 0.902808
+  type: 'test'
+  ...
+# Subtest: release-version module remains the final visible version owner
+ok 123 - release-version module remains the final visible version owner
+  ---
+  duration_ms: 0.159988
+  type: 'test'
+  ...
+# Subtest: Selection primary controls render as requested 3 by 2 grid
+ok 124 - Selection primary controls render as requested 3 by 2 grid
+  ---
+  duration_ms: 1.339891
+  type: 'test'
+  ...
+# Subtest: 270 cache-hops stylesheet
+ok 125 - 270 cache-hops stylesheet
+  ---
+  duration_ms: 0.267898
+  type: 'test'
+  ...
+# Subtest: blank pointer-down arms deselect instead of clearing immediately
+ok 126 - blank pointer-down arms deselect instead of clearing immediately
+  ---
+  duration_ms: 0.99522
+  type: 'test'
+  ...
+# Subtest: navigation movement preserves current selection
+ok 127 - navigation movement preserves current selection
+  ---
+  duration_ms: 0.210117
+  type: 'test'
+  ...
+# Subtest: second pointer cancels pending blank deselect for pan and pinch
+ok 128 - second pointer cancels pending blank deselect for pan and pinch
+  ---
+  duration_ms: 0.147979
+  type: 'test'
+  ...
+# Subtest: 269 cache-hops main runtime
+ok 129 - 269 cache-hops main runtime
+  ---
+  duration_ms: 0.139981
+  type: 'test'
+  ...
+# Subtest: v242 cavity-aware Through keeps ordered target planning
+ok 130 - v242 cavity-aware Through keeps ordered target planning
+  ---
+  duration_ms: 1.224909
+  type: 'test'
+  ...
+# Subtest: v242 drag controller can stop at each cavity exit and continue farther
+ok 131 - v242 drag controller can stop at each cavity exit and continue farther
+  ---
+  duration_ms: 0.22108
+  type: 'test'
+  ...
+# Subtest: Through rollback/closed-topology guards remain active
+ok 132 - Through rollback/closed-topology guards remain active
+  ---
+  duration_ms: 0.333029
+  type: 'test'
+  ...
+# Subtest: protected transform stays pinned and no service worker is introduced
+ok 133 - protected transform stays pinned and no service worker is introduced
+  ---
+  duration_ms: 0.391319
+  type: 'test'
+  ...
+# Subtest: A/F: clean inset quad through, exact volume and history
+ok 134 - A/F: clean inset quad through, exact volume and history
+  ---
+  duration_ms: 14.314843
+  type: 'test'
+  ...
+# Subtest: B: known corner arrangement and all front polygons
+ok 135 - B: known corner arrangement and all front polygons
+  ---
+  duration_ms: 10.122188
+  type: 'test'
+  ...
+# Subtest: C/F: double-Knife front polygons over existing tunnel
+ok 136 - C/F: double-Knife front polygons over existing tunnel
+  ---
+  duration_ms: 16.320845
+  type: 'test'
+  ...
+# Subtest: D: all sixteen Loop Cut source faces
+ok 137 - D: all sixteen Loop Cut source faces
+  ---
+  duration_ms: 48.095128
+  type: 'test'
+  ...
+# Subtest: E: sequential Through on remaining front face
+ok 138 - E: sequential Through on remaining front face
+  ---
+  duration_ms: 3.080667
+  type: 'test'
+  ...
+# Subtest: G: damaged regression inputs reject without changes
+ok 139 - G: damaged regression inputs reject without changes
+  ---
+  duration_ms: 10.440173
+  type: 'test'
+  ...
+# Subtest: G: cancellation equivalent / full solid removal leaves input untouched
+ok 140 - G: cancellation equivalent / full solid removal leaves input untouched
+  ---
+  duration_ms: 1.174978
+  type: 'test'
+  ...
+# Subtest: F/H: triangulated target and permuted face ownership
+ok 141 - F/H: triangulated target and permuted face ownership
+  ---
+  duration_ms: 3.826202
+  type: 'test'
+  ...
+# Subtest: protected transform and retired handler imports
+ok 142 - protected transform and retired handler imports
+  ---
+  duration_ms: 0.54495
+  type: 'test'
+  ...
+# Subtest: G: diagonal sequential cut rejects four-owner edge and preserves mesh
+ok 143 - G: diagonal sequential cut rejects four-owner edge and preserves mesh
+  ---
+  duration_ms: 3.056995
+  type: 'test'
+  ...
+# Subtest: E: native Loop Cut crosses rebuilt tunnel, then another Through
+ok 144 - E: native Loop Cut crosses rebuilt tunnel, then another Through
+  ---
+  duration_ms: 6.453734
+  type: 'test'
+  ...
+# Subtest: canonical crease splitting and loose data remain transactional
+ok 145 - canonical crease splitting and loose data remain transactional
+  ---
+  duration_ms: 3.100853
+  type: 'test'
+  ...
+# Subtest: component taps add regardless of legacy Multi state
+ok 146 - component taps add regardless of legacy Multi state
+  ---
+  duration_ms: 0.976377
+  type: 'test'
+  ...
+# Subtest: selected component tap records exact hit and toggles it off on pointer-up
+ok 147 - selected component tap records exact hit and toggles it off on pointer-up
+  ---
+  duration_ms: 0.192878
+  type: 'test'
+  ...
+# Subtest: blank component-area tap still clears selection, but only after tap confirmation
+ok 148 - blank component-area tap still clears selection, but only after tap confirmation
+  ---
+  duration_ms: 0.159665
+  type: 'test'
+  ...
+# Subtest: legacy Multi control is hidden and edge-only toggle repair is retired
+ok 149 - legacy Multi control is hidden and edge-only toggle repair is retired
+  ---
+  duration_ms: 0.156417
+  type: 'test'
+  ...
+1..149
+# tests 149
+# suites 0
+# pass 148
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1085.728317
