@@ -196,8 +196,8 @@ test('281 regular square to eight allocates one insert per original edge',()=>{
 
 
 test('284 eligibility expands to closed-loop 3 to 9 but not 3 to 10',()=>{
-  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10]),true);
-  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11]),false);
+  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11]),true);
+  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11,12]),false);
 });
 
 test('282 guarded 3 to 8 can produce eight quads with five inserted vertices',()=>{
@@ -229,13 +229,13 @@ test('282 guarded 3 to 8 can produce eight quads with five inserted vertices',()
 
 test('284 3 to 10 remains on proven unequal fallback without densification',()=>{
   class FallbackMesh{
-    constructor(){this.vertices=[...ring(3,0),...ring(9,2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
+    constructor(){this.vertices=[...ring(3,0),...ring(10,2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
     edgeKey(a,b){return key(a,b);}
     bridgeLoops(){return{fallback:true,faceIndices:[99],unequal:true};}
   }
   globalThis.__boxlabTopology={cloneMeshState:()=>null,restoreMeshState:()=>{},validateTopology:()=>({ok:true})};
   installSubdFriendlyBridge(FallbackMesh);
-  const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11]);
+  const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11,12]);
   assert.equal(result?.fallback,true);
   assert.equal(mesh.vertices.length,before);
 });
