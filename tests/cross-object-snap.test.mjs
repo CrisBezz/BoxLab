@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { nearestCrossObjectSnap, crossObjectSnapCandidates } from '../src/cross-object-snap-core.js';
+import { nearestCrossObjectSnap, crossObjectSnapCandidates, componentSnapDelta } from '../src/cross-object-snap-core.js';
 
 const project=v=>({x:v.x*100,y:v.y*100});
 
@@ -83,4 +83,21 @@ test('324 cross-object snap respects solo visibility',()=>{
     clientY:0
   });
   assert.equal(snap,null);
+});
+
+
+test('325 component Move free snap delta lands the moving reference on the target',()=>{
+  const start=new THREE.Vector3(1,2,3);
+  const target=new THREE.Vector3(4,6,8);
+  const delta=componentSnapDelta(start,target);
+  assert.deepEqual(delta.toArray(),[3,4,5]);
+  assert.deepEqual(start.clone().add(delta).toArray(),target.toArray());
+});
+
+test('325 component Move axis snap changes only the constrained coordinate',()=>{
+  const start=new THREE.Vector3(1,2,3);
+  const target=new THREE.Vector3(4,6,8);
+  const delta=componentSnapDelta(start,target,'y');
+  assert.deepEqual(delta.toArray(),[0,4,0]);
+  assert.deepEqual(start.clone().add(delta).toArray(),[1,6,3]);
 });

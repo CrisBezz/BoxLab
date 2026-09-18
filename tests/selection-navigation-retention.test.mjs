@@ -19,6 +19,6 @@ test('second pointer cancels pending blank deselect for pan and pinch',()=>{
   assert.match(main,/if\(backgroundTap&&backgroundTap\.pointerId!==event\.pointerId\)backgroundTap\.cancelled=true/);
 });
 
-test('269 cache-hops main runtime',()=>{
-  assert.match(index,/main\.js\?v=0\.36\.18\.269/);
+test('325 cache-hops main runtime after component Move snap update',()=>{
+  assert.match(index,/main\.js\?v=0\.36\.18\.325/);
 });
