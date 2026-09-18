@@ -68,3 +68,14 @@ export function nearestCrossObjectSnap({objects=[],activeId=null,soloId=null,pro
 }
 
 export const CROSS_OBJECT_SNAP_DEFAULTS=Object.freeze({...DEFAULTS});
+
+
+export function componentSnapDelta(startReference,targetPosition,axis=null){
+  if(!startReference?.isVector3||!targetPosition?.isVector3)return null;
+  if(axis&&['x','y','z'].includes(axis)){
+    const delta=new THREE.Vector3();
+    delta[axis]=targetPosition[axis]-startReference[axis];
+    return delta;
+  }
+  return targetPosition.clone().sub(startReference);
+}
