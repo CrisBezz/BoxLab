@@ -1,9 +1,11 @@
-// BoxLab v0.36.18.292 — Quad Clean local retopo repair + conservative quad-flow relax.
-// Phase 1 repairs safe four-triangle quad fans. Phase 2 merges safe triangle pairs. Phase 3 tangent-relaxes safe interior all-quad vertices only when mesh flow improves.
+// BoxLab v0.36.18.293 — Quad Clean local retopo + conservative sliver cleanup + quad-flow relax.
+// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 merges safe triangle pairs. Phase 4 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
 const MAX_EDGE_RATIO=5;
 const MIN_NORMAL_DOT=Math.cos(Math.PI/4);
+const SLIVER_EDGE_FRACTION=.12;
+const SLIVER_MIN_NORMAL_DOT=Math.cos(Math.PI/6);
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
 function triNormal(mesh,face){
@@ -220,6 +222,171 @@ export function quadCleanLocalRetopo(mesh){
   return{ok:true,changed:true,fanRepairs:chosen.length,candidates:candidates.length,removedVertices};
 }
 
+
+function triangleShapePenalty(mesh,face){
+  if(!Array.isArray(face)||face.length!==3)return 0;
+  const p=face.map(i=>mesh.vertices?.[i]);if(p.some(v=>!v))return Infinity;
+  const ab=p[1].clone().sub(p[0]),ac=p[2].clone().sub(p[0]);
+  const area2=ab.clone().cross(ac).length();
+  const lengths=[p[0].distanceTo(p[1]),p[1].distanceTo(p[2]),p[2].distanceTo(p[0])];
+  const max=Math.max(...lengths);
+  return area2>EPS&&max>EPS?(max*max/area2):Infinity;
+}
+
+function median(values){
+  const a=values.filter(Number.isFinite).sort((x,y)=>x-y);
+  if(!a.length)return 0;
+  const m=Math.floor(a.length/2);return a.length%2?a[m]:(a[m-1]+a[m])*.5;
+}
+
+function sliverProtectedVertices(mesh,edges){
+  const protectedVertices=new Set();
+  for(const edge of edges){
+    const key=edgeKey(mesh,edge.a,edge.b);
+    if(edge.faces?.length!==2||(mesh.creases instanceof Map&&(mesh.creases.get(key)||0)>0){
+      protectedVertices.add(edge.a);protectedVertices.add(edge.b);
+    }
+  }
+  if(mesh.looseEdges instanceof Set)for(const key of mesh.looseEdges){
+    const [a,b]=String(key).split(':').map(Number);
+    if(Number.isInteger(a))protectedVertices.add(a);
+    if(Number.isInteger(b))protectedVertices.add(b);
+  }
+  if(mesh.looseVertices instanceof Set)for(const v of mesh.looseVertices)protectedVertices.add(v);
+  return protectedVertices;
+}
+
+function collapseSnapshot(mesh){
+  return{
+    vertices:mesh.vertices.map(v=>v.clone()),
+    faces:mesh.faces.map(f=>[...f]),
+    creases:mesh.creases instanceof Map?new Map(mesh.creases):mesh.creases,
+    looseEdges:mesh.looseEdges instanceof Set?new Set(mesh.looseEdges):mesh.looseEdges,
+    looseVertices:mesh.looseVertices instanceof Set?new Set(mesh.looseVertices):mesh.looseVertices
+  };
+}
+function restoreCollapseSnapshot(mesh,snap){
+  mesh.vertices=snap.vertices;mesh.faces=snap.faces;
+  if(snap.creases instanceof Map)mesh.creases=new Map(snap.creases);
+  if(snap.looseEdges instanceof Set)mesh.looseEdges=new Set(snap.looseEdges);
+  if(snap.looseVertices instanceof Set)mesh.looseVertices=new Set(snap.looseVertices);
+  mesh.edges?.();
+}
+function canonicalFace(face){return [...face].sort((a,b)=>a-b).join(':');}
+function hasDuplicateFaces(mesh){
+  const seen=new Set();
+  for(const face of mesh.faces||[]){
+    const key=canonicalFace(face);
+    if(seen.has(key))return true;
+    seen.add(key);
+  }
+  return false;
+}
+function cleanCollapsedFace(face){
+  const out=[];
+  for(const v of face){
+    if(out.length&&out[out.length-1]===v)continue;
+    out.push(v);
+  }
+  if(out.length>1&&out[0]===out[out.length-1])out.pop();
+  return new Set(out).size===out.length?out:null;
+}
+function incidentTriangles(mesh,vertex){
+  const faces=[];
+  for(const face of mesh.faces||[])if(face?.includes(vertex)){
+    if(face.length!==3)return null;
+    faces.push(face);
+  }
+  return faces;
+}
+function smoothTriangleRing(mesh,faces){
+  const normals=faces.map(face=>triNormal(mesh,face));
+  if(normals.some(n=>!n)||!normals.length)return false;
+  const avg=normals[0].clone().multiplyScalar(0);for(const n of normals)avg.add(n);
+  if(avg.length()<=EPS)return false;avg.normalize();
+  return normals.every(n=>n.dot(avg)>=SLIVER_MIN_NORMAL_DOT);
+}
+function edgeCollapseCandidate(mesh,edge,edges,protectedVertices){
+  const a=edge.a,b=edge.b;
+  if(edge.faces?.length!==2||protectedVertices.has(a)||protectedVertices.has(b))return null;
+  if(edge.faces.some(fi=>mesh.faces?.[fi]?.length!==3))return null;
+  const key=edgeKey(mesh,a,b);
+  if(mesh.creases instanceof Map&&(mesh.creases.get(key)||0)>0)return null;
+  const ringA=incidentTriangles(mesh,a),ringB=incidentTriangles(mesh,b);
+  if(!ringA||!ringB)return null;
+  const ringFaces=[...new Set([...edge.faces,
+    ...mesh.faces.map((f,i)=>f?.includes(a)||f?.includes(b)?i:-1).filter(i=>i>=0)])].map(i=>mesh.faces[i]);
+  if(!smoothTriangleRing(mesh,ringFaces))return null;
+  const neighborsA=new Set(),neighborsB=new Set(),localLengths=[];
+  for(const e of edges){
+    if(e.a===a){neighborsA.add(e.b);if(e.b!==b)localLengths.push(mesh.vertices[a].distanceTo(mesh.vertices[e.b]));}
+    else if(e.b===a){neighborsA.add(e.a);if(e.a!==b)localLengths.push(mesh.vertices[a].distanceTo(mesh.vertices[e.a]));}
+    if(e.a===b){neighborsB.add(e.b);if(e.b!==a)localLengths.push(mesh.vertices[b].distanceTo(mesh.vertices[e.b]));}
+    else if(e.b===b){neighborsB.add(e.a);if(e.a!==a)localLengths.push(mesh.vertices[b].distanceTo(mesh.vertices[e.a]));}
+  }
+  neighborsA.delete(b);neighborsB.delete(a);
+  const shared=[...neighborsA].filter(v=>neighborsB.has(v)).sort((x,y)=>x-y);
+  const opposites=[...new Set(edge.faces.flatMap(fi=>mesh.faces[fi].filter(v=>v!==a&&v!==b)))].sort((x,y)=>x-y);
+  if(shared.length!==2||opposites.length!==2||shared.some((v,i)=>v!==opposites[i]))return null;
+  const reference=median(localLengths);
+  const length=mesh.vertices[a].distanceTo(mesh.vertices[b]);
+  if(!(reference>EPS)||!(length/reference<=SLIVER_EDGE_FRACTION))return null;
+  const beforePenalties=ringFaces.map(face=>triangleShapePenalty(mesh,face));
+  if(beforePenalties.some(x=>!Number.isFinite(x)))return null;
+  return{a,b,length,reference,beforeWorst:Math.max(...beforePenalties),beforeAvg:beforePenalties.reduce((x,y)=>x+y,0)/beforePenalties.length};
+}
+function applySliverCollapse(mesh,candidate){
+  const {a,b}=candidate,snap=collapseSnapshot(mesh);
+  const midpoint=mesh.vertices[a].clone().add(mesh.vertices[b]).multiplyScalar(.5);
+  mesh.vertices[a].copy(midpoint);
+  const next=[];
+  for(const face of mesh.faces){
+    const mapped=face.map(v=>v===b?a:v),clean=cleanCollapsedFace(mapped);
+    if(!clean){restoreCollapseSnapshot(mesh,snap);return{ok:false,reason:'collapse-face-order'};}
+    if(clean.length<3)continue;
+    next.push(clean);
+  }
+  mesh.faces=next;
+  if(hasDuplicateFaces(mesh)){restoreCollapseSnapshot(mesh,snap);return{ok:false,reason:'duplicate-face'};}
+  const removedVertices=compactUnusedVertices(mesh);
+  mesh.edges?.();
+  let midpointIndex=-1,best=Infinity;
+  for(let i=0;i<mesh.vertices.length;i++){const d=mesh.vertices[i].distanceTo(midpoint);if(d<best){best=d;midpointIndex=i;}}
+  if(midpointIndex<0||best>1e-9){restoreCollapseSnapshot(mesh,snap);return{ok:false,reason:'collapsed-vertex-missing'};}
+  const afterFaces=incidentTriangles(mesh,midpointIndex);
+  if(!afterFaces?.length||!smoothTriangleRing(mesh,afterFaces)){restoreCollapseSnapshot(mesh,snap);return{ok:false,reason:'surface-guard'};}
+  const afterPenalties=afterFaces.map(face=>triangleShapePenalty(mesh,face));
+  if(afterPenalties.some(x=>!Number.isFinite(x))){restoreCollapseSnapshot(mesh,snap);return{ok:false,reason:'degenerate-result'};}
+  const afterWorst=Math.max(...afterPenalties),afterAvg=afterPenalties.reduce((x,y)=>x+y,0)/afterPenalties.length;
+  const improved=afterWorst<candidate.beforeWorst*.95&&afterAvg<=candidate.beforeAvg*1.02;
+  if(!improved){restoreCollapseSnapshot(mesh,snap);return{ok:false,reason:'quality-not-improved',afterWorst,afterAvg};}
+  return{ok:true,removedVertices,removedFaces:snap.faces.length-mesh.faces.length,beforeWorst:candidate.beforeWorst,afterWorst,beforeAvg:candidate.beforeAvg,afterAvg};
+}
+
+export function quadCleanSlivers(mesh,{maxRepairs=24}={}){
+  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,sliverRepairs:0};
+  let sliverRepairs=0,removedVertices=0,removedFaces=0,rejected=0;
+  for(let pass=0;pass<maxRepairs;pass++){
+    const edges=mesh.edges?.()||[],protectedVertices=sliverProtectedVertices(mesh,edges),candidates=[];
+    for(const edge of edges){
+      const c=edgeCollapseCandidate(mesh,edge,edges,protectedVertices);
+      if(c)candidates.push(c);
+    }
+    candidates.sort((x,y)=>(x.length/x.reference)-(y.length/y.reference)||y.beforeWorst-x.beforeWorst||x.a-y.a||x.b-y.b);
+    if(!candidates.length)break;
+    let committed=false;
+    for(const candidate of candidates){
+      const result=applySliverCollapse(mesh,candidate);
+      if(result.ok){
+        sliverRepairs++;removedVertices+=result.removedVertices||0;removedFaces+=result.removedFaces||0;committed=true;break;
+      }
+      rejected++;
+    }
+    if(!committed)break;
+  }
+  return{ok:true,changed:sliverRepairs>0,sliverRepairs,removedVertices,removedFaces,rejected};
+}
+
 function quadNormal(mesh,face){
   if(!Array.isArray(face)||face.length!==4)return null;
   const a=mesh.vertices?.[face[0]],b=mesh.vertices?.[face[1]],c=mesh.vertices?.[face[2]],d=mesh.vertices?.[face[3]];
@@ -342,6 +509,8 @@ export function quadCleanMesh(mesh){
   };
   const retopo=quadCleanLocalRetopo(mesh);
   if(!retopo.ok)return retopo;
+  const slivers=quadCleanSlivers(mesh);
+  if(!slivers.ok)return slivers;
   const merge=quadCleanTrianglePairs(mesh);
   if(!merge.ok)return merge;
   const relax=quadRelaxFlow(mesh);
@@ -354,9 +523,12 @@ export function quadCleanMesh(mesh){
   };
   return{
     ok:true,
-    changed:!!retopo.changed||!!merge.changed||!!relax.changed,
+    changed:!!retopo.changed||!!slivers.changed||!!merge.changed||!!relax.changed,
     fanRepairs:retopo.fanRepairs||0,
     removedVertices:retopo.removedVertices||0,
+    sliverRepairs:slivers.sliverRepairs||0,
+    sliverRemovedVertices:slivers.removedVertices||0,
+    sliverRemovedFaces:slivers.removedFaces||0,
     merged:merge.merged||0,
     relaxedVertices:relax.relaxedVertices||0,
     before:start,
@@ -365,6 +537,7 @@ export function quadCleanMesh(mesh){
     flowAfter:relax.afterScore,
     relaxRejectedScore:relax.rejectedScore,
     retopo,
+    slivers,
     merge,
     relax
   };
