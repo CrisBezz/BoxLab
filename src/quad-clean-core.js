@@ -1,5 +1,5 @@
-// BoxLab v0.36.18.290 — conservative Quad Clean foundation.
-// Phase 1: merge safe adjacent triangle pairs into subdivision-friendly quads without moving vertices.
+// BoxLab v0.36.18.291 — Quad Clean foundation + conservative quad-flow relax.
+// Phase 1 merges safe triangle pairs. Phase 2 tangent-relaxes safe interior all-quad vertices only when mesh flow improves.
 
 const EPS=1e-12;
 const MAX_EDGE_RATIO=5;
@@ -110,4 +110,150 @@ export function quadCleanTrianglePairs(mesh){
     ngons:mesh.faces.filter(f=>f.length>4).length
   };
   return{ok:true,changed:true,merged:chosen.length,before,after,candidates:candidates.length};
+}
+
+
+function quadNormal(mesh,face){
+  if(!Array.isArray(face)||face.length!==4)return null;
+  const a=mesh.vertices?.[face[0]],b=mesh.vertices?.[face[1]],c=mesh.vertices?.[face[2]],d=mesh.vertices?.[face[3]];
+  if(!a||!b||!c||!d)return null;
+  const n1=b.clone().sub(a).cross(c.clone().sub(a));
+  const n2=c.clone().sub(a).cross(d.clone().sub(a));
+  const n=n1.add(n2),l=n.length();
+  return l>EPS?n.multiplyScalar(1/l):null;
+}
+
+function quadAspectPenalty(mesh,face){
+  const lengths=face.map((v,i)=>mesh.vertices[v].distanceTo(mesh.vertices[face[(i+1)%4]]));
+  const min=Math.min(...lengths),max=Math.max(...lengths);
+  if(!(min>EPS)||!Number.isFinite(max))return Infinity;
+  const ratio=Math.max(max/min,1),log=Math.log(ratio);
+  return log*log;
+}
+
+export function quadMeshFlowScore(mesh){
+  if(!mesh?.faces||!mesh?.vertices)return Infinity;
+  let score=0;
+  const quads=[];
+  for(let i=0;i<mesh.faces.length;i++){
+    const face=mesh.faces[i];
+    if(face?.length!==4)continue;
+    const normal=quadNormal(mesh,face);
+    if(!normal)return Infinity;
+    const aspect=quadAspectPenalty(mesh,face);
+    if(!Number.isFinite(aspect))return Infinity;
+    score+=aspect*.35;
+    quads.push({i,face,normal});
+  }
+  const edgeOwners=new Map();
+  for(const q of quads)for(const [a,b] of faceEdges(q.face)){
+    const key=edgeKey(mesh,a,b);
+    if(!edgeOwners.has(key))edgeOwners.set(key,[]);
+    edgeOwners.get(key).push(q);
+  }
+  for(const owners of edgeOwners.values()){
+    if(owners.length!==2)continue;
+    const dot=Math.max(-1,Math.min(1,owners[0].normal.dot(owners[1].normal)));
+    score+=(1-dot)*.65;
+  }
+  return score;
+}
+
+function incidentData(mesh){
+  const neighbors=Array.from({length:mesh.vertices.length},()=>new Set());
+  const incidentFaces=Array.from({length:mesh.vertices.length},()=>new Set());
+  const protectedVertices=new Set();
+  const edges=mesh.edges?.()||[];
+  for(const edge of edges){
+    neighbors[edge.a]?.add(edge.b);neighbors[edge.b]?.add(edge.a);
+    if(edge.faces?.length!==2||(mesh.creases instanceof Map&&(mesh.creases.get(edgeKey(mesh,edge.a,edge.b))||0)>0){
+      protectedVertices.add(edge.a);protectedVertices.add(edge.b);
+    }
+  }
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const face=mesh.faces[fi];
+    for(const v of face||[])incidentFaces[v]?.add(fi);
+    if(face?.length!==4)for(const v of face||[])protectedVertices.add(v);
+  }
+  return{neighbors,incidentFaces,protectedVertices};
+}
+
+export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15}={}){
+  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,relaxedVertices:0};
+  const beforeScore=quadMeshFlowScore(mesh);
+  if(!Number.isFinite(beforeScore))return{ok:false,reason:'invalid-quad-region',changed:false,relaxedVertices:0,beforeScore};
+  const original=mesh.vertices.map(v=>v.clone());
+  const {neighbors,incidentFaces,protectedVertices}=incidentData(mesh);
+  const proposed=new Map();
+  for(let vi=0;vi<mesh.vertices.length;vi++){
+    if(protectedVertices.has(vi))continue;
+    const ring=[...(neighbors[vi]||[])];
+    if(ring.length<4)continue;
+    const faces=[...(incidentFaces[vi]||[])];
+    if(faces.length<3||faces.some(fi=>mesh.faces[fi]?.length!==4))continue;
+    const current=mesh.vertices[vi],target=current.clone().multiplyScalar(0);
+    for(const ni of ring)target.add(mesh.vertices[ni]);
+    target.multiplyScalar(1/ring.length);
+    const move=target.sub(current);
+    const normal=current.clone().multiplyScalar(0);
+    let normalCount=0;
+    for(const fi of faces){
+      const n=quadNormal(mesh,mesh.faces[fi]);
+      if(n){normal.add(n);normalCount++;}
+    }
+    if(normalCount){
+      const nl=normal.length();
+      if(nl>EPS){normal.multiplyScalar(1/nl);move.addScaledVector(normal,-move.dot(normal));}
+    }
+    let avgEdge=0;
+    for(const ni of ring)avgEdge+=current.distanceTo(mesh.vertices[ni]);
+    avgEdge/=ring.length;
+    const maxMove=Math.max(avgEdge*maxFraction,0);
+    move.multiplyScalar(Math.max(0,Math.min(1,strength)));
+    if(move.length()>maxMove&&maxMove>0)move.setLength(maxMove);
+    if(move.length()>avgEdge*1e-6)proposed.set(vi,current.clone().add(move));
+  }
+  if(!proposed.size)return{ok:true,changed:false,relaxedVertices:0,beforeScore,afterScore:beforeScore};
+  for(const [vi,pos] of proposed)mesh.vertices[vi].copy(pos);
+  const afterScore=quadMeshFlowScore(mesh);
+  const improved=Number.isFinite(afterScore)&&afterScore<beforeScore-1e-9;
+  if(!improved){
+    for(let i=0;i<original.length;i++)mesh.vertices[i].copy(original[i]);
+    return{ok:true,changed:false,relaxedVertices:0,beforeScore,afterScore:beforeScore,rejectedScore:afterScore,candidates:proposed.size};
+  }
+  return{ok:true,changed:true,relaxedVertices:proposed.size,beforeScore,afterScore,candidates:proposed.size};
+}
+
+export function quadCleanMesh(mesh){
+  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false};
+  const start={
+    vertices:mesh.vertices.length,
+    faces:mesh.faces.length,
+    triangles:mesh.faces.filter(f=>f.length===3).length,
+    quads:mesh.faces.filter(f=>f.length===4).length,
+    ngons:mesh.faces.filter(f=>f.length>4).length
+  };
+  const merge=quadCleanTrianglePairs(mesh);
+  if(!merge.ok)return merge;
+  const relax=quadRelaxFlow(mesh);
+  const after={
+    vertices:mesh.vertices.length,
+    faces:mesh.faces.length,
+    triangles:mesh.faces.filter(f=>f.length===3).length,
+    quads:mesh.faces.filter(f=>f.length===4).length,
+    ngons:mesh.faces.filter(f=>f.length>4).length
+  };
+  return{
+    ok:true,
+    changed:!!merge.changed||!!relax.changed,
+    merged:merge.merged||0,
+    relaxedVertices:relax.relaxedVertices||0,
+    before:start,
+    after,
+    flowBefore:relax.beforeScore,
+    flowAfter:relax.afterScore,
+    relaxRejectedScore:relax.rejectedScore,
+    merge,
+    relax
+  };
 }
