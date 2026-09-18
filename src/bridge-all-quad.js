@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.284 — 3x quality-guarded closed-loop all-quad Bridge.
+// BoxLab v0.36.18.285 — bounded densification search for guarded closed-loop all-quad Bridge.
 // Densifies the smaller closed boundary loop, spreading comparable splits around the loop,
 // then reuses the proven equal-count Bridge solver.
 
-const VERSION='0.36.18.284';
+const VERSION='0.36.18.285';
 const MAX_ADDED=6;
 const MAX_RATIO=3;
 const NEAR_LONGEST=0.95;
@@ -53,6 +53,26 @@ function windingValidation(mesh){
 }
 
 function diagnostic(ok,reason,extra={}){globalThis.__boxlabClosedAllQuadBridge={version:VERSION,ok,allQuad:!!ok,qualityGuarded:true,lastReject:reason||null,...extra};}
+function closedCandidateScore(mesh,faces,loopA,loopB){
+  const aSet=new Set(loopA),bSet=new Set(loopB);let score=0;
+  for(const face of faces){
+    const p=face.map(i=>mesh.vertices[i]);
+    const d1=p[0].distanceToSquared(p[2]),d2=p[1].distanceToSquared(p[3]);
+    score+=Math.abs(Math.log(Math.max(d1,EPS)/Math.max(d2,EPS)));
+    const n1=triNormal(p[0],p[1],p[2]),n2=triNormal(p[0],p[2],p[3]),l1=n1.length(),l2=n2.length();
+    if(l1>EPS&&l2>EPS)score+=0.25*(1-Math.max(-1,Math.min(1,n1.dot(n2)/(l1*l2))));
+    for(let i=0;i<4;i++){
+      const x=face[i],y=face[(i+1)%4];
+      if((aSet.has(x)&&bSet.has(y))||(bSet.has(x)&&aSet.has(y)))score+=mesh.vertices[x].distanceToSquared(mesh.vertices[y]);
+    }
+  }
+  return score;
+}
+
+function rotatedLoop(loop,offset){
+  const n=loop.length,k=((offset%n)+n)%n;
+  return [...loop.slice(k),...loop.slice(0,k)];
+}
 
 function faceEdgeSlot(face,a,b){
   for(let i=0;i<face.length;i++){
@@ -198,32 +218,41 @@ export function canTryAllQuad(loopA,loopB){
 }
 
 export function installSubdFriendlyBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge284Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge285Installed)return;
   const baseBridgeLoops=proto.bridgeLoops,topology=globalThis.__boxlabTopology;
   if(typeof baseBridgeLoops!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
   proto.bridgeLoops=function(loopA,loopB){
     if(!canTryAllQuad(loopA,loopB))return baseBridgeLoops.call(this,loopA,loopB);
-    const before=snapshot(this,topology),fallback=(reason)=>{restore(this,topology,before);diagnostic(false,reason,{counts:[loopA.length,loopB.length]});return baseBridgeLoops.call(this,loopA,loopB);};
+    const before=snapshot(this,topology),fallback=(reason,extra={})=>{restore(this,topology,before);diagnostic(false,reason,{counts:[loopA.length,loopB.length],...extra});return baseBridgeLoops.call(this,loopA,loopB);};
     const input=topology.validateTopology(this,{allowBoundary:true});if(!input.ok)return fallback('input-topology');
-    const a=[...loopA],b=[...loopB],target=Math.max(a.length,b.length),shortA=a.length<b.length;
-    const denseA=shortA?densifyLoopToCount(this,a,target):a,denseB=shortA?b:densifyLoopToCount(this,b,target);
-    if(!denseA||!denseB)return fallback('densify-failed');
-    let result=null;
-    try{result=baseBridgeLoops.call(this,denseA,denseB);}catch{}
-    const allQuad=!!result&&Array.isArray(result.faceIndices)&&result.faceIndices.length===target&&result.faceIndices.every(fi=>this.faces[fi]?.length===4);
-    if(!allQuad)return fallback('not-all-quad');
-    const faces=result.faceIndices.map(fi=>this.faces[fi]).filter(Boolean);
-    const quality=validateClosedAllQuadCandidate(this,faces,denseA,denseB);if(!quality.ok)return fallback(quality.reason);
-    const validation=topology.validateTopology(this,{allowBoundary:true});if(!validation.ok)return fallback('topology-rejected');
-    const winding=windingValidation(this);if(!winding.ok)return fallback(winding.reason||'winding-rejected');
-    result={...result,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,addedVertices:target-Math.min(loopA.length,loopB.length),denseCounts:[denseA.length,denseB.length]};
-    diagnostic(true,null,{addedVertices:result.addedVertices,denseCounts:result.denseCounts,connectors:quality.connectors});
-    globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:true,balancedDensification:true,qualityGuarded:true,addedVertices:result.addedVertices,denseCounts:result.denseCounts};
+    const target=Math.max(loopA.length,loopB.length),shortA=loopA.length<loopB.length,shortLoop=shortA?loopA:loopB,longLoop=shortA?loopB:loopA;
+    const phases=Math.min(shortLoop.length,4);let best=null,lastReject='no-candidate',tested=0;
+    for(let phase=0;phase<phases;phase++){
+      restore(this,topology,before);
+      const shortRot=rotatedLoop([...shortLoop],phase),longBase=[...longLoop];
+      const denseShort=densifyLoopToCount(this,shortRot,target);if(!denseShort){lastReject='densify-failed';continue;}
+      const denseA=shortA?denseShort:longBase,denseB=shortA?longBase:denseShort;
+      let result=null;try{result=baseBridgeLoops.call(this,denseA,denseB);}catch{}
+      tested++;
+      const allQuad=!!result&&Array.isArray(result.faceIndices)&&result.faceIndices.length===target&&result.faceIndices.every(fi=>this.faces[fi]?.length===4);
+      if(!allQuad){lastReject='not-all-quad';continue;}
+      const faces=result.faceIndices.map(fi=>this.faces[fi]).filter(Boolean);
+      const quality=validateClosedAllQuadCandidate(this,faces,denseA,denseB);if(!quality.ok){lastReject=quality.reason;continue;}
+      const validation=topology.validateTopology(this,{allowBoundary:true});if(!validation.ok){lastReject='topology-rejected';continue;}
+      const winding=windingValidation(this);if(!winding.ok){lastReject=winding.reason||'winding-rejected';continue;}
+      const score=closedCandidateScore(this,faces,denseA,denseB);
+      if(!best||score<best.score-1e-12)best={score,phase,result:{...result},state:snapshot(this,topology),denseCounts:[denseA.length,denseB.length],connectors:quality.connectors};
+    }
+    if(!best)return fallback(lastReject,{searchCandidates:tested});
+    restore(this,topology,best.state);
+    const result={...best.result,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchPhase:best.phase,searchScore:best.score,addedVertices:target-Math.min(loopA.length,loopB.length),denseCounts:best.denseCounts};
+    diagnostic(true,null,{addedVertices:result.addedVertices,denseCounts:result.denseCounts,connectors:best.connectors,searchCandidates:tested,searchPhase:best.phase,searchScore:best.score});
+    globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchPhase:best.phase,addedVertices:result.addedVertices,denseCounts:result.denseCounts};
     return result;
   };
 
-  proto.__subdFriendlyBridge284Installed=true;
+  proto.__subdFriendlyBridge285Installed=true;
   globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:null,balancedDensification:true,qualityGuarded:true,addedVertices:0,denseCounts:[]};
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
