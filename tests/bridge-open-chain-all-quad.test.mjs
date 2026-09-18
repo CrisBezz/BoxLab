@@ -265,3 +265,27 @@ test('285 open-chain search preserves the 3x fallback boundary',()=>{
   assert.equal(result?.unequal,true);
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
+
+
+test('286 densification phases distribute comparable splits differently',()=>{
+  const make=()=>({vertices:[0,1,2,3].map(x=>new THREE.Vector3(x,0,0)),faces:[],creases:new Map(),looseEdges:new Set(['0:1','1:2','2:3']),looseVertices:new Set(),edgeKey:(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`});
+  const a=make(),b=make();
+  const da=densifyOpenChainToCount(a,[0,1,2,3],6,0),db=densifyOpenChainToCount(b,[0,1,2,3],6,1);
+  const spans=(mesh,dense)=>{const counts=[0,0,0];for(let i=1;i<dense.length-1;i++){const x=mesh.vertices[dense[i]].x;if(x>0&&x<1)counts[0]++;else if(x>1&&x<2)counts[1]++;else if(x>2&&x<3)counts[2]++;}return counts;};
+  assert.notDeepEqual(spans(a,da),spans(b,db));
+});
+
+test('286 3 to 9 search evaluates six bounded allocation attempts',()=>{
+  const {mesh,ids}=looseParallel(3,9),result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.searchAttempts,6);
+  assert.ok(result?.searchCandidates>=1&&result.searchCandidates<=6);
+  assert.ok(result?.searchPhase>=0&&result.searchPhase<3);
+  assert.equal(result?.plan?.searchAttempts,6);
+  assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.searchAttempts,6);
+});
+
+test('286 keeps the 3x eligibility envelope unchanged',()=>{
+  assert.equal(canTryOpenAllQuad([0,1,2,3],[4,5,6,7,8,9,10,11,12,13]),true);
+  assert.equal(canTryOpenAllQuad([0,1,2,3],[4,5,6,7,8,9,10,11,12,13,14]),false);
+});
