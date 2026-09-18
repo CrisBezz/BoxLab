@@ -102,6 +102,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] surrounding quad-flow context influences candidate quality
 - [ ] internal proposed-quad flow coherence influences candidate quality
 - [ ] coherent neighboring proposed quads score better than an equivalent zig-zag internal flow arrangement
+- [ ] completed-patch ranking prefers smooth interior vertices closer to quad valence 4 when safe alternatives exist
+- [ ] crease/boundary-protected vertices are excluded from valence regularity scoring
 - [ ] safe remaining triangle pairs can merge to quads
 - [ ] all-quad tangent relaxation remains guarded
 - [ ] topology validation rejects/rolls back invalid results
