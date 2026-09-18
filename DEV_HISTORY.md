@@ -8,6 +8,15 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.322 worst-local internal-flow ranking
+
+- Released **v0.36.18.322** from PR #6; squash merge commit: `0f03befbb7d69ca53194536579c240a993efd9ff`.
+- Clean for SubD internal proposed-quad flow ranking now combines average mismatch with a small worst-local mismatch term.
+- New helper `quadInternalFlowPenalty(flows)` separates the acceptance penalty from the ranking-only worst-local term.
+- Equal-average alternatives now prefer the patch that avoids concentrating flow mismatch into one badly aligned internal quad junction.
+- The new worst-local term is ranking-only: the .321 acceptance score, quality thresholds, and 40-triangle solver envelope are unchanged.
+- Regression workflow run **35404138276** completed successfully before merge.
+
 ## 2026-09-19 — v0.36.18.321 worst-local valence-aware patch ranking
 
 - Released **v0.36.18.321** from PR #5; squash merge commit: `0b838da0cd2a31cd4d88c2390a9e15e9b0c58905`.
