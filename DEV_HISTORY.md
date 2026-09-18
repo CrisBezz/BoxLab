@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.323 Phase A complete / transactional topology audit
+
+- Released **v0.36.18.323** from PR #7; squash merge commit: `040e210bf2868a45791c35c9c1392bc1e6f244fe`.
+- This is the final planned Phase A Clean for SubD backend release.
+- Added `quadTopologyAudit(mesh)` covering invalid references, repeated/collapsed edges, duplicate faces, non-manifold edges, orphan crease data, and valid open-boundary handling.
+- `quadCleanMesh(mesh)` now snapshots the original mesh and audits after retopo, sliver cleanup, bounded triangle-patch solving, residual pair merge, and relaxation; any stage failure restores the original mesh transactionally.
+- Added deterministic generated irregular-strip fixtures and invalid-topology regression coverage.
+- Kept the 40-triangle solver cap and all existing quality/acceptance gates unchanged.
+- Added persistent `ROADMAP.md`; Phase A is frozen unless a concrete modelling failure justifies reopening it.
+- PR topology regression run **35406242201** completed successfully before merge.
+
 ## 2026-09-19 — v0.36.18.322 worst-local internal-flow ranking
 
 - Released **v0.36.18.322** from PR #6; squash merge commit: `0f03befbb7d69ca53194536579c240a993efd9ff`.
