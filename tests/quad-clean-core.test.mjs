@@ -446,7 +446,7 @@ test('302 bounded island solver converts ten connected triangles into five quads
   assert.equal(mesh.faces.every(face=>face.length===4),true);
 });
 
-test('302 bounded island solver keeps twelve connected triangles outside the local-search envelope',()=>{
+test('303 bounded island solver converts twelve connected triangles into six quads',()=>{
   const verts=[
     new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),new THREE.Vector3(3,0,0),new THREE.Vector3(4,0,0),new THREE.Vector3(5,0,0),new THREE.Vector3(6,0,0),
     new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0),new THREE.Vector3(3,1,0),new THREE.Vector3(4,1,0),new THREE.Vector3(5,1,0),new THREE.Vector3(6,1,0)
@@ -459,8 +459,31 @@ test('302 bounded island solver keeps twelve connected triangles outside the loc
   const mesh=new EditableMesh(verts,faces);
   const result=quadCleanTriangleIslands(mesh);
   assert.equal(result.ok,true);
+  assert.equal(result.changed,true);
+  assert.equal(result.patchRepairs,1);
+  assert.equal(result.patchTriangles,12);
+  assert.equal(result.merged,6);
+  assert.equal(result.rejectedPatches,0);
+  assert.equal(mesh.faces.length,6);
+  assert.equal(mesh.faces.every(face=>face.length===4),true);
+});
+
+
+test('303 bounded island solver keeps fourteen connected triangles outside the local-search envelope',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),new THREE.Vector3(3,0,0),new THREE.Vector3(4,0,0),new THREE.Vector3(5,0,0),new THREE.Vector3(6,0,0),new THREE.Vector3(7,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0),new THREE.Vector3(3,1,0),new THREE.Vector3(4,1,0),new THREE.Vector3(5,1,0),new THREE.Vector3(6,1,0),new THREE.Vector3(7,1,0)
+  ];
+  const faces=[];
+  for(let x=0;x<7;x++){
+    const a=x,b=x+1,c=x+8,d=x+9;
+    faces.push([a,b,d],[a,d,c]);
+  }
+  const mesh=new EditableMesh(verts,faces);
+  const result=quadCleanTriangleIslands(mesh);
+  assert.equal(result.ok,true);
   assert.equal(result.changed,false);
   assert.equal(result.patchRepairs,0);
   assert.equal(result.patchTriangles,0);
-  assert.equal(mesh.faces.length,12);
+  assert.equal(mesh.faces.length,14);
 });
