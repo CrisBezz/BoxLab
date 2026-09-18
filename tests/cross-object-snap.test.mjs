@@ -20,9 +20,9 @@ test('324 cross-object snap ignores active and hidden objects',()=>{
 test('324 cross-object snap prefers a target vertex over midpoint and edge',()=>{
   const mesh=new EditableMesh([
     new THREE.Vector3(0,0,0),
-    new THREE.Vector3(1,0,0)
-  ],[]);
-  mesh.looseEdges=new Set([mesh.edgeKey(0,1)]);
+    new THREE.Vector3(1,0,0),
+    new THREE.Vector3(10,10,0)
+  ],[[0,1,2]]);
   const snap=nearestCrossObjectSnap({
     objects:[{id:2,visible:true,mesh}],
     activeId:1,
@@ -38,9 +38,9 @@ test('324 cross-object snap prefers a target vertex over midpoint and edge',()=>
 test('324 cross-object snap finds midpoint before generic edge point',()=>{
   const mesh=new EditableMesh([
     new THREE.Vector3(0,0,0),
-    new THREE.Vector3(1,0,0)
-  ],[]);
-  mesh.looseEdges=new Set([mesh.edgeKey(0,1)]);
+    new THREE.Vector3(1,0,0),
+    new THREE.Vector3(10,10,0)
+  ],[[0,1,2]]);
   const snap=nearestCrossObjectSnap({
     objects:[{id:2,visible:true,mesh}],
     activeId:1,
