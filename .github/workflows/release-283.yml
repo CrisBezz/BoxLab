@@ -1,0 +1,50 @@
+name: Release BoxLab 283
+on:
+  push:
+    paths:
+      - '.github/workflows/release-283.yml'
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+      - name: Package 283
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html'); s=p.read_text()
+          s=re.sub(r'BoxLab v0\.36\.18\.\d+','BoxLab v0.36.18.283',s,count=1)
+          s=re.sub(r'(<span id="appVersion">v0\.36\.18\.)\d+(</span>)',r'\g<1>283\2',s,count=1)
+          s=re.sub(r'(src="./src/loose-bootstrap\.js\?v=0\.36\.18\.)\d+(")',r'\g<1>283\2',s,count=1)
+          s=re.sub(r'(href="./styles\.css\?v=0\.36\.18\.)\d+(")',r'\g<1>270\2',s,count=1)
+          p.write_text(s)
+          Path('version.json').write_text('{"version":"0.36.18.283"}\n')
+          PY
+      - name: Verify package and protected transform
+        run: |
+          grep -q 'BoxLab v0.36.18.283' index.html
+          grep -q 'loose-bootstrap.js?v=0.36.18.283' index.html
+          grep -q 'bridge-open-chain-all-quad.js?v=0.36.18.283' src/loose-bootstrap.js
+          grep -q "const VERSION='0.36.18.283'" src/bridge-open-chain-all-quad.js
+          grep -q 'const MAX_ADDED=5' src/bridge-open-chain-all-quad.js
+          grep -q 'const MAX_RATIO=2.75' src/bridge-open-chain-all-quad.js
+          grep -q 'styles.css?v=0.36.18.270' index.html
+          grep -q '"version":"0.36.18.283"' version.json
+          test "$(git hash-object src/multi-object-transform.js)" = "0b6f676900bf9a3787cf420e276bbb0f57ac46ff"
+      - name: Commit release
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html version.json
+          git commit -m 'Release BoxLab v0.36.18.283 wider open-chain all-quad Bridge'
+          git push
