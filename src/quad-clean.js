@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.298 — Clean for SubD with quad-flow-aware bounded triangle-island retopo.
+// BoxLab v0.36.18.299 — Clean for SubD with aggregate local patch-quality guard.
 
-import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.298';
+import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.299';
 
 const button=document.querySelector('#quadCleanBtn');
 const status=document.querySelector('#selectionStatus');
@@ -37,13 +37,14 @@ button?.addEventListener('click',()=>{
     }
   }
   manager()?.saveActive?.();
-  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.298',workflow:'clean-for-subd',...result};
+  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.299',workflow:'clean-for-subd',...result};
   if(result.changed){
     const parts=[];
     if(result.fanRepairs)parts.push(`${result.fanRepairs} quad fan${result.fanRepairs===1?'':'s'} repaired`);
     if(result.removedVertices)parts.push(`${result.removedVertices} redundant vert${result.removedVertices===1?'ex':'ices'} removed`);
     if(result.sliverRepairs)parts.push(`${result.sliverRepairs} sliver${result.sliverRepairs===1?'':'s'} repaired`);
     if(result.patchRepairs)parts.push(`${result.patchTriangles||0} tris in ${result.patchRepairs} local patch${result.patchRepairs===1?'':'es'} → quads`);
+    if(result.patchRejected)parts.push(`${result.patchRejected} low-quality patch${result.patchRejected===1?'':'es'} preserved`);
     if(result.merged)parts.push(`${result.merged} triangle pair${result.merged===1?'':'s'} → quads`);
     if(result.relaxedVertices)parts.push(`${result.relaxedVertices} flow-relaxed vert${result.relaxedVertices===1?'ex':'ices'}`);
     parts.push(`tris ${result.before.triangles}→${result.after.triangles}`);
