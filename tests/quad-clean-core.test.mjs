@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadPatchValenceContext, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -820,4 +820,40 @@ test('319 internal proposed-quad flow context prefers coherent neighboring rows'
   assert.equal(zigzag.samples,1);
   assert.ok(zigzag.avgFlow>.99);
   assert.ok(coherent.penalty<zigzag.penalty);
+});
+
+
+test('320 completed-patch valence context prefers removing diagonals that restore interior quad valence four',()=>{
+  const verts=[];
+  for(let y=0;y<3;y++)for(let x=0;x<3;x++)verts.push(new THREE.Vector3(x,y,0));
+  const faces=[
+    [0,1,4],[0,4,3],
+    [1,2,5],[1,5,4],
+    [3,4,7],[3,7,6],
+    [4,5,8],[4,8,7]
+  ];
+  const mesh=new EditableMesh(verts,faces);
+  const regularized=quadPatchValenceContext(mesh,[{a:0,b:1},{a:6,b:7}]);
+  const underResolved=quadPatchValenceContext(mesh,[{a:0,b:1}]);
+  assert.equal(regularized.samples,1);
+  assert.equal(regularized.avgError,0);
+  assert.equal(regularized.penalty,0);
+  assert.equal(underResolved.samples,1);
+  assert.equal(underResolved.avgError,1);
+  assert.ok(regularized.penalty<underResolved.penalty);
+});
+
+
+test('320 valence context ignores vertices in a protected crease ring',()=>{
+  const verts=[];
+  for(let y=0;y<3;y++)for(let x=0;x<3;x++)verts.push(new THREE.Vector3(x,y,0));
+  const faces=[
+    [0,1,4],[0,4,3],
+    [1,2,5],[1,5,4],
+    [3,4,7],[3,7,6],
+    [4,5,8],[4,8,7]
+  ];
+  const mesh=new EditableMesh(verts,faces,[[meshKey(1,4),1]]);
+  const context=quadPatchValenceContext(mesh,[{a:0,b:1}]);
+  assert.deepEqual(context,{samples:0,avgError:0,worstError:0,penalty:0});
 });
