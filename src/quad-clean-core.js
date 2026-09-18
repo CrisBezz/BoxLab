@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.316 — Clean for SubD bounded thirty-six-triangle local retopo.
+// BoxLab v0.36.18.317 — Clean for SubD bounded thirty-eight-triangle local retopo.
 // Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding quad-flow scoring, aggregate quality, and worst-boundary guards. Phase 4 merges remaining safe triangle pairs using the same surrounding-quad flow and quality guards. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
@@ -6,7 +6,7 @@ const MAX_EDGE_RATIO=5;
 const MIN_NORMAL_DOT=Math.cos(Math.PI/4);
 const SLIVER_EDGE_FRACTION=.12;
 const SLIVER_MIN_NORMAL_DOT=Math.cos(Math.PI/6);
-const MAX_TRIANGLE_PATCH=36;
+const MAX_TRIANGLE_PATCH=38;
 const PATCH_FLOW_WEIGHT=.75;
 const PATCH_MAX_EDGE_RATIO=4;
 const PATCH_MAX_AVG_SCORE=Math.log(4);
