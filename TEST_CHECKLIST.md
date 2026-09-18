@@ -105,6 +105,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] completed-patch ranking prefers smooth interior vertices closer to quad valence 4 when safe alternatives exist
 - [ ] crease/boundary-protected vertices are excluded from valence regularity scoring
 - [ ] equal-average valence alternatives prefer the patch with the lower worst local valence error
+- [ ] equal-average internal-flow alternatives prefer the patch with the lower worst local flow mismatch
 - [ ] safe remaining triangle pairs can merge to quads
 - [ ] all-quad tangent relaxation remains guarded
 - [ ] topology validation rejects/rolls back invalid results
