@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadPatchValenceContext, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadPatchValenceContext, quadValencePenalty, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -859,19 +859,12 @@ test('320 valence context ignores vertices in a protected crease ring',()=>{
 });
 
 
-test('321 valence context tracks worst local error so one severe extraordinary vertex cannot hide in the average',()=>{
-  const verts=[];
-  for(let y=0;y<4;y++)for(let x=0;x<4;x++)verts.push(new THREE.Vector3(x,y,0));
-  const faces=[];
-  for(let y=0;y<3;y++)for(let x=0;x<3;x++){
-    const a=y*4+x,b=a+1,c=a+4,d=c+1;
-    faces.push([a,b,d],[a,d,c]);
-  }
-  const mesh=new EditableMesh(verts,faces);
-  const balanced=quadPatchValenceContext(mesh,[{a:2,b:3},{a:8,b:9}]);
-  const concentrated=quadPatchValenceContext(mesh,[{a:2,b:3},{a:3,b:8}]);
-  assert.ok(balanced.samples>=1);
-  assert.ok(concentrated.samples>=1);
-  assert.ok(concentrated.worstError>=balanced.worstError);
-  if(concentrated.avgError===balanced.avgError)assert.ok(concentrated.penalty>balanced.penalty);
+test('321 worst-local valence term distinguishes equal-average error distributions',()=>{
+  const balanced=quadValencePenalty([1,1]);
+  const concentrated=quadValencePenalty([0,2]);
+  assert.equal(balanced.avgError,1);
+  assert.equal(concentrated.avgError,1);
+  assert.equal(balanced.worstError,1);
+  assert.equal(concentrated.worstError,2);
+  assert.ok(concentrated.penalty>balanced.penalty);
 });
