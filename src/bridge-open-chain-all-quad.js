@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.284 — 3x quality-guarded open-chain all-quad Bridge.
+// BoxLab v0.36.18.285 — bounded densification search for guarded open-chain all-quad Bridge.
 // Conservatively densifies the smaller open chain, then builds an all-quad strip.
 // Preserves original chain vertices, spaces inserted vertices evenly, and keeps the v274 quality guard/fallback.
 
-const VERSION='0.36.18.284';
+const VERSION='0.36.18.285';
 const EPS=1e-12;
 const MAX_ADDED=6;
 const MAX_RATIO=3;
@@ -217,7 +217,7 @@ function trialFrom(mesh,topology){
 function diagnostic(ok,reason,extra={}){globalThis.__boxlabOpenChainAllQuadBridge={version:VERSION,ok,allQuad:!!ok,qualityGuarded:true,lastReject:reason||null,...extra};}
 
 export function installOpenChainAllQuadBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge284Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge285Installed)return;
   const baseSelected=proto.bridgeSelectedEdges,topology=globalThis.__boxlabTopology;
   if(typeof baseSelected!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
@@ -226,23 +226,32 @@ export function installOpenChainAllQuadBridge(EditableMesh){
     if(!info?.openChain||!info.unequal||!canTryOpenAllQuad(info.chains?.[0],info.chains?.[1]))return baseSelected.call(this,edgeIndices);
     const fallback=(reason,extra={})=>{diagnostic(false,reason,{counts:info.counts||[],...extra});return baseSelected.call(this,edgeIndices);};
     const before=topology.validateTopology(this,{allowBoundary:true});if(!before.ok)return fallback('input-topology');
-    const trial=trialFrom(this,topology),a=[...info.chains[0]],b=[...info.chains[1]],target=Math.max(a.length,b.length),shortA=a.length<b.length;
-    const denseA=shortA?densifyOpenChainToCount(trial,a,target):a,denseB=shortA?b:densifyOpenChainToCount(trial,b,target);
-    if(!denseA||!denseB)return fallback('densify-failed');
-    const planned=bestEqualQuadPlan(trial,denseA,denseB),plan=planned.plan;if(!plan)return fallback(planned.reason||'quality-rejected');
-    const start=trial.faces.length;trial.faces.push(...plan.faces.map(f=>[...f]));
-    if(trial.looseEdges instanceof Set)for(const chain of[denseA,denseB])for(let i=0;i<chain.length-1;i++)trial.looseEdges.delete(edgeKey(trial,chain[i],chain[i+1]));
-    trial.edges?.();
-    const validation=topology.validateTopology(trial,{allowBoundary:true});if(!validation.ok)return fallback('topology-rejected');
-    const winding=windingValidation(trial);if(!winding.ok)return fallback(winding.reason||'winding-rejected');
-    const quality=validateOpenAllQuadCandidate(trial,plan.faces,denseA,plan.mapped);if(!quality.ok)return fallback(quality.reason);
-    topology.restoreMeshState(this,topology.cloneMeshState(trial));
-    const faceIndices=Array.from({length:plan.faces.length},(_,i)=>start+i),addedVertices=Math.abs(info.counts[0]-info.counts[1]);
-    const result={faceIndices,plan:{...plan,quadCount:faceIndices.length,triangleCount:0,qualityGuarded:true},openChain:true,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,addedVertices,denseCounts:[denseA.length-1,denseB.length-1]};
-    diagnostic(true,null,{addedVertices,denseCounts:result.denseCounts,connectors:quality.connectors});
+    const sourceA=[...info.chains[0]],sourceB=[...info.chains[1]],target=Math.max(sourceA.length,sourceB.length),shortA=sourceA.length<sourceB.length;
+    let best=null,lastReject='no-candidate',tested=0;
+    for(const reverseShort of[false,true]){
+      const trial=trialFrom(this,topology),a=[...sourceA],b=[...sourceB];
+      let short=shortA?a:b,long=shortA?b:a;
+      if(reverseShort)short=[...short].reverse();
+      let denseShort=densifyOpenChainToCount(trial,short,target);if(!denseShort){lastReject='densify-failed';continue;}
+      if(reverseShort)denseShort=[...denseShort].reverse();
+      const denseA=shortA?denseShort:long,denseB=shortA?long:denseShort;
+      const planned=bestEqualQuadPlan(trial,denseA,denseB),plan=planned.plan;if(!plan){lastReject=planned.reason||'quality-rejected';continue;}
+      const start=trial.faces.length;trial.faces.push(...plan.faces.map(f=>[...f]));
+      if(trial.looseEdges instanceof Set)for(const chain of[denseA,denseB])for(let i=0;i<chain.length-1;i++)trial.looseEdges.delete(edgeKey(trial,chain[i],chain[i+1]));
+      trial.edges?.();tested++;
+      const validation=topology.validateTopology(trial,{allowBoundary:true});if(!validation.ok){lastReject='topology-rejected';continue;}
+      const winding=windingValidation(trial);if(!winding.ok){lastReject=winding.reason||'winding-rejected';continue;}
+      const quality=validateOpenAllQuadCandidate(trial,plan.faces,denseA,plan.mapped);if(!quality.ok){lastReject=quality.reason;continue;}
+      if(!best||plan.score<best.score-1e-12)best={score:plan.score,reverseShort,trial,plan,start,denseA,denseB,quality};
+    }
+    if(!best)return fallback(lastReject,{searchCandidates:tested});
+    topology.restoreMeshState(this,topology.cloneMeshState(best.trial));
+    const faceIndices=Array.from({length:best.plan.faces.length},(_,i)=>best.start+i),addedVertices=Math.abs(info.counts[0]-info.counts[1]);
+    const result={faceIndices,plan:{...best.plan,quadCount:faceIndices.length,triangleCount:0,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,reverseShort:best.reverseShort},openChain:true,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,correspondenceSearch:true,searchCandidates:tested,addedVertices,denseCounts:[best.denseA.length-1,best.denseB.length-1]};
+    diagnostic(true,null,{addedVertices,denseCounts:result.denseCounts,connectors:best.quality.connectors,searchCandidates:tested,reverseShort:best.reverseShort,searchScore:best.score});
     return result;
   };
 
-  proto.__openChainAllQuadBridge284Installed=true;
+  proto.__openChainAllQuadBridge285Installed=true;
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
