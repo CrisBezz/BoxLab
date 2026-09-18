@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -795,4 +795,29 @@ test('318 bounded island solver keeps forty-two connected triangles outside the 
   assert.equal(result.patchRepairs,0);
   assert.equal(result.patchTriangles,0);
   assert.equal(mesh.faces.length,42);
+});
+
+
+test('319 internal proposed-quad flow context prefers coherent neighboring rows',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0), // 0
+    new THREE.Vector3(1,0,0), // 1
+    new THREE.Vector3(2,0,0), // 2
+    new THREE.Vector3(0,1,0), // 3
+    new THREE.Vector3(1,1,0), // 4
+    new THREE.Vector3(2,1,0), // 5
+    new THREE.Vector3(0,2,0), // 6
+    new THREE.Vector3(1,2,0), // 7
+    new THREE.Vector3(2,0,0), // 8
+    new THREE.Vector3(3,0,0)  // 9
+  ];
+  const mesh=new EditableMesh(verts,[]);
+  const seed={quad:[0,1,4,3]};
+  const coherent=quadPatchInternalFlowContext(mesh,[seed,{quad:[1,2,5,4]}]);
+  const zigzag=quadPatchInternalFlowContext(mesh,[seed,{quad:[1,4,8,9]}]);
+  assert.equal(coherent.samples,1);
+  assert.ok(coherent.avgFlow<1e-12);
+  assert.equal(zigzag.samples,1);
+  assert.ok(zigzag.avgFlow>.99);
+  assert.ok(coherent.penalty<zigzag.penalty);
 });
