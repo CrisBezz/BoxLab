@@ -25,42 +25,54 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.322**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **cdcc90e85dc53a98fde943e11a5b0774695c675f**
-- Current code-bearing/release commit: **0f03befbb7d69ca53194536579c240a993efd9ff**
-- v0.36.18.322 release PR: **#6**
-- PR topology regression: **35404138276** — success
-- Current `version.json`: **0.36.18.322**
-- Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.322**
+- Repository release: **v0.36.18.323**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **a808a6a051ef8bc8bce492864e2afddbb070efca**
+- Current code-bearing/release commit: **040e210bf2868a45791c35c9c1392bc1e6f244fe**
+- v0.36.18.323 release PR: **#7**
+- PR topology regression: **35406242201** — success
+- Current `version.json`: **0.36.18.323**
+- Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.323**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
 - `styles.css` intentionally remains pinned at **v0.36.18.270**
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
+- Persistent product roadmap: **ROADMAP.md**
 - Only permanent workflow currently under `.github/workflows`: **through-regression.yml**
 
-Chronology note: .319 added internal proposed-quad flow coherence. .320 added average interior valence regularity. .321 added worst-local valence regularity. .322 now adds worst-local internal proposed-quad flow regularity, still within the same 40-triangle bounded solver and without relaxing acceptance.
+**Phase A is complete and frozen at v0.36.18.323.** Do not continue speculative Clean for SubD research or expand the 40-triangle envelope unless a concrete modelling failure or reproducible regression justifies reopening it.
 
-## Latest completed development — v0.36.18.322
+## Latest completed development — v0.36.18.323
 
-Theme: **Clean for SubD — worst-local internal proposed-quad flow ranking**.
+Theme: **Phase A final — transactional topology audit and cleanup freeze**.
 
-The bounded triangle-island solver remains capped at **40 connected triangles**. .322 does not expand that envelope and does not change any .321 eligibility or acceptance threshold.
+The final Phase A release moves the safety contract into the Clean for SubD core itself.
 
-The internal flow ranking now uses:
-- `PATCH_INTERNAL_FLOW_WEIGHT=.5`
-- `PATCH_INTERNAL_WORST_WEIGHT=.1`
+New exported helper:
+- `quadTopologyAudit(mesh)`
 
-The new helper `quadInternalFlowPenalty(flows)` returns:
-- average internal flow mismatch
-- worst local internal flow mismatch
-- the existing average-only `penalty` used by the quality/acceptance score
-- a `rankingPenalty` that adds the small worst-local term only for comparing safe complete matchings
+It detects:
+- invalid face vertex references
+- repeated vertices / zero edges
+- collapsed edges
+- duplicate faces
+- non-manifold edges
+- orphan crease references
+- while treating valid open boundaries as valid topology
 
-This prevents a single badly aligned proposed quad junction from being diluted by several coherent internal junctions when two candidate patches have the same average internal-flow mismatch.
+`quadCleanMesh(mesh)` now snapshots the original mesh and audits after:
+1. local four-triangle retopo
+2. sliver cleanup
+3. bounded triangle-island solving
+4. residual triangle-pair merge
+5. guarded all-quad relaxation
 
-Important safety property: `qualityScore` still uses only `internal.penalty`; the new `internal.rankingPenalty` affects patch selection only.
+If any stage fails or produces invalid topology, the original mesh is restored transactionally.
 
-Regression coverage proves that equal-average flow distributions keep the same acceptance penalty while the alternative with lower worst local mismatch receives the better ranking.
+Regression coverage now also includes deterministic generated irregular triangulated-strip fixtures.
+
+The **40-triangle cap, quality thresholds, acceptance guards, valence ranking and flow ranking are unchanged**.
+
+This release closes the planned backend Clean for SubD development phase. Future work moves to Phase B precision modelling.
 
 ## Current Clean for SubD pipeline
 
@@ -84,6 +96,7 @@ Regression coverage proves that equal-average flow distributions keep the same a
    - **.320 smooth-interior valence-aware completed-patch ranking**
    - **.321 worst-local valence-aware completed-patch ranking**
    - **.322 worst-local internal-flow-aware completed-patch ranking**
+   - **.323 per-stage topology audit + transactional core rollback**
    - no vertex movement
    - no surrounding-quad rewrite
    - rejected patches remain untouched
@@ -206,19 +219,28 @@ Scene / modifiers:
 
 ## Next development step
 
-There is **no unfinished .323 feature recorded in the repo**.
+**Phase A is complete. The next active roadmap phase is Phase B — Precision Modelling.**
 
-The .322 worst-local internal-flow ranking step is complete and merged. On the next user `/nextbuild`:
-1. inspect current `main`
-2. confirm version/live deployment state
-3. choose another conservative qualitative topology improvement
-4. preserve the 40-triangle envelope unless there is specific evidence that expansion is needed
-5. preserve the .314 Face multi-select fix and all protected baselines
-6. keep complete-patch preference terms ranking-only unless there is explicit evidence for changing acceptance
+Before the next code change:
+1. read `ROADMAP.md`
+2. inspect current `main`
+3. choose the highest-value Phase B item that can be added without destabilizing protected modelling behaviour
 
-The current preferred development principle remains:
+Current Phase B priority candidates:
+- cross-object snapping
+- precision drag/readback polish
+- Repeat Previous audit/polish
+- Align / Flatten component tools
+- Circle / regularize selected components
+- Edge Flip
+- stronger structured Fill / Grid Fill / Cap workflows
+- support-loop construction improvements
 
-**detect → bounded enumerate → validate → score complete patch → commit only safe/better → otherwise leave untouched**
+Do not reopen Clean for SubD merely to continue version increments. Reopen Phase A only for a concrete user-facing failure or reproducible topology regression.
+
+The current modelling principle remains:
+
+**direct Pencil interaction → precise topology-aware operation → validate → commit transactionally → preserve everything unrelated**
 
 ## End-of-session requirement
 
