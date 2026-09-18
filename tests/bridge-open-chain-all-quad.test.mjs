@@ -242,3 +242,21 @@ test('284 clean parallel 3 edge to 9 edge chains become nine guarded quads',()=>
   assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
   assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
 });
+
+
+test('285 open-chain guarded Bridge evaluates bounded short-chain allocations',()=>{
+  const {mesh,ids}=looseParallel(3,9),result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,true);
+  assert.equal(result?.correspondenceSearch,true);
+  assert.ok(result?.searchCandidates>=1&&result.searchCandidates<=2);
+  assert.equal(result?.plan?.correspondenceSearch,true);
+  assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.ok,true);
+  assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.searchCandidates,result.searchCandidates);
+});
+
+test('285 open-chain search preserves the 3x fallback boundary',()=>{
+  const {mesh,ids}=looseParallel(3,10),result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,undefined);
+  assert.equal(result?.unequal,true);
+  assert.equal(globalThis.__boxlabTopology.validateTopology(mesh,{allowBoundary:true}).ok,true);
+});
