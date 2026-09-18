@@ -1,10 +1,10 @@
-// BoxLab v0.36.18.282 — wider quality-guarded closed-loop all-quad Bridge.
+// BoxLab v0.36.18.284 — 3x quality-guarded closed-loop all-quad Bridge.
 // Densifies the smaller closed boundary loop, spreading comparable splits around the loop,
 // then reuses the proven equal-count Bridge solver.
 
-const VERSION='0.36.18.282';
-const MAX_ADDED=5;
-const MAX_RATIO=2.75;
+const VERSION='0.36.18.284';
+const MAX_ADDED=6;
+const MAX_RATIO=3;
 const NEAR_LONGEST=0.95;
 const EPS=1e-12;
 
@@ -198,7 +198,7 @@ export function canTryAllQuad(loopA,loopB){
 }
 
 export function installSubdFriendlyBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge282Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge284Installed)return;
   const baseBridgeLoops=proto.bridgeLoops,topology=globalThis.__boxlabTopology;
   if(typeof baseBridgeLoops!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
@@ -223,7 +223,7 @@ export function installSubdFriendlyBridge(EditableMesh){
     return result;
   };
 
-  proto.__subdFriendlyBridge282Installed=true;
+  proto.__subdFriendlyBridge284Installed=true;
   globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:null,balancedDensification:true,qualityGuarded:true,addedVertices:0,denseCounts:[]};
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
