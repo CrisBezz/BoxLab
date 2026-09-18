@@ -469,7 +469,7 @@ test('303 bounded island solver converts twelve connected triangles into six qua
 });
 
 
-test('303 bounded island solver keeps fourteen connected triangles outside the local-search envelope',()=>{
+test('304 bounded island solver converts fourteen connected triangles into seven quads',()=>{
   const verts=[
     new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),new THREE.Vector3(3,0,0),new THREE.Vector3(4,0,0),new THREE.Vector3(5,0,0),new THREE.Vector3(6,0,0),new THREE.Vector3(7,0,0),
     new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0),new THREE.Vector3(3,1,0),new THREE.Vector3(4,1,0),new THREE.Vector3(5,1,0),new THREE.Vector3(6,1,0),new THREE.Vector3(7,1,0)
@@ -482,8 +482,31 @@ test('303 bounded island solver keeps fourteen connected triangles outside the l
   const mesh=new EditableMesh(verts,faces);
   const result=quadCleanTriangleIslands(mesh);
   assert.equal(result.ok,true);
+  assert.equal(result.changed,true);
+  assert.equal(result.patchRepairs,1);
+  assert.equal(result.patchTriangles,14);
+  assert.equal(result.merged,7);
+  assert.equal(result.rejectedPatches,0);
+  assert.equal(mesh.faces.length,7);
+  assert.equal(mesh.faces.every(face=>face.length===4),true);
+});
+
+
+test('304 bounded island solver keeps sixteen connected triangles outside the local-search envelope',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),new THREE.Vector3(3,0,0),new THREE.Vector3(4,0,0),new THREE.Vector3(5,0,0),new THREE.Vector3(6,0,0),new THREE.Vector3(7,0,0),new THREE.Vector3(8,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0),new THREE.Vector3(3,1,0),new THREE.Vector3(4,1,0),new THREE.Vector3(5,1,0),new THREE.Vector3(6,1,0),new THREE.Vector3(7,1,0),new THREE.Vector3(8,1,0)
+  ];
+  const faces=[];
+  for(let x=0;x<8;x++){
+    const a=x,b=x+1,c=x+9,d=x+10;
+    faces.push([a,b,d],[a,d,c]);
+  }
+  const mesh=new EditableMesh(verts,faces);
+  const result=quadCleanTriangleIslands(mesh);
+  assert.equal(result.ok,true);
   assert.equal(result.changed,false);
   assert.equal(result.patchRepairs,0);
   assert.equal(result.patchTriangles,0);
-  assert.equal(mesh.faces.length,14);
+  assert.equal(mesh.faces.length,16);
 });
