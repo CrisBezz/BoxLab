@@ -492,7 +492,7 @@ test('304 bounded island solver converts fourteen connected triangles into seven
 });
 
 
-test('304 bounded island solver keeps sixteen connected triangles outside the local-search envelope',()=>{
+test('305 bounded island solver converts sixteen connected triangles into eight quads',()=>{
   const verts=[
     new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),new THREE.Vector3(3,0,0),new THREE.Vector3(4,0,0),new THREE.Vector3(5,0,0),new THREE.Vector3(6,0,0),new THREE.Vector3(7,0,0),new THREE.Vector3(8,0,0),
     new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0),new THREE.Vector3(3,1,0),new THREE.Vector3(4,1,0),new THREE.Vector3(5,1,0),new THREE.Vector3(6,1,0),new THREE.Vector3(7,1,0),new THREE.Vector3(8,1,0)
@@ -505,8 +505,30 @@ test('304 bounded island solver keeps sixteen connected triangles outside the lo
   const mesh=new EditableMesh(verts,faces);
   const result=quadCleanTriangleIslands(mesh);
   assert.equal(result.ok,true);
+  assert.equal(result.changed,true);
+  assert.equal(result.patchRepairs,1);
+  assert.equal(result.patchTriangles,16);
+  assert.equal(result.merged,8);
+  assert.equal(result.rejectedPatches,0);
+  assert.equal(mesh.faces.length,8);
+  assert.equal(mesh.faces.every(face=>face.length===4),true);
+});
+
+
+test('305 bounded island solver keeps eighteen connected triangles outside the local-search envelope',()=>{
+  const verts=[];
+  for(let x=0;x<=9;x++)verts.push(new THREE.Vector3(x,0,0));
+  for(let x=0;x<=9;x++)verts.push(new THREE.Vector3(x,1,0));
+  const faces=[];
+  for(let x=0;x<9;x++){
+    const a=x,b=x+1,c=x+10,d=x+11;
+    faces.push([a,b,d],[a,d,c]);
+  }
+  const mesh=new EditableMesh(verts,faces);
+  const result=quadCleanTriangleIslands(mesh);
+  assert.equal(result.ok,true);
   assert.equal(result.changed,false);
   assert.equal(result.patchRepairs,0);
   assert.equal(result.patchTriangles,0);
-  assert.equal(mesh.faces.length,16);
+  assert.equal(mesh.faces.length,18);
 });
