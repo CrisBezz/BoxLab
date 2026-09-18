@@ -1,5 +1,5 @@
-// BoxLab v0.36.18.293 — Quad Clean local retopo + conservative sliver cleanup + quad-flow relax.
-// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 merges safe triangle pairs. Phase 4 tangent-relaxes safe interior all-quad vertices.
+// BoxLab v0.36.18.296 — Clean for SubD local patch retopo + conservative sliver cleanup + quad-flow relax.
+// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves bounded four-triangle islands as complete two-quad patches. Phase 4 merges remaining safe triangle pairs. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
 const MAX_EDGE_RATIO=5;
@@ -69,6 +69,78 @@ export function evaluateTrianglePair(mesh,faceA,faceB){
   if(min<=EPS||max/min>MAX_EDGE_RATIO)return{ok:false,reason:'aspect-ratio'};
   const score=(1-normalDot)*2+Math.log(Math.max(max/min,1));
   return{ok:true,quad,sharedKey,score,normalDot,edgeRatio:max/min};
+}
+
+function triangleAdjacency(mesh){
+  const adjacent=Array.from({length:mesh.faces.length},()=>new Set());
+  for(const edge of mesh.edges?.()||[]){
+    if(edge.faces?.length!==2)continue;
+    const [a,b]=edge.faces;
+    if(mesh.faces[a]?.length!==3||mesh.faces[b]?.length!==3)continue;
+    adjacent[a].add(b);adjacent[b].add(a);
+  }
+  return adjacent;
+}
+
+function connectedTriangleComponents(mesh){
+  const adjacent=triangleAdjacency(mesh),seen=new Set(),components=[];
+  for(let seed=0;seed<mesh.faces.length;seed++){
+    if(seen.has(seed)||mesh.faces[seed]?.length!==3)continue;
+    const q=[seed],component=[];seen.add(seed);
+    while(q.length){
+      const fi=q.pop();component.push(fi);
+      for(const n of adjacent[fi]||[])if(!seen.has(n)){seen.add(n);q.push(n);}
+    }
+    components.push(component.sort((a,b)=>a-b));
+  }
+  return components;
+}
+
+function fourTrianglePatchCandidate(mesh,faces){
+  if(faces.length!==4)return null;
+  const faceSet=new Set(faces),pairs=[];
+  for(const edge of mesh.edges?.()||[]){
+    if(edge.faces?.length!==2)continue;
+    const [a,b]=edge.faces;
+    if(!faceSet.has(a)||!faceSet.has(b))continue;
+    const evaluated=evaluateTrianglePair(mesh,a,b);
+    if(evaluated.ok)pairs.push({a,b,...evaluated});
+  }
+  let best=null;
+  for(let i=0;i<pairs.length;i++)for(let j=i+1;j<pairs.length;j++){
+    const p=pairs[i],q=pairs[j],used=new Set([p.a,p.b,q.a,q.b]);
+    if(used.size!==4)continue;
+    const score=p.score+q.score;
+    const key=[Math.min(p.a,p.b),Math.max(p.a,p.b),Math.min(q.a,q.b),Math.max(q.a,q.b)].join(':');
+    if(!best||score<best.score-1e-12||(Math.abs(score-best.score)<=1e-12&&key<best.key))best={pairs:[p,q],score,key};
+  }
+  return best;
+}
+
+export function quadCleanFourTrianglePatches(mesh){
+  if(!mesh?.faces||!mesh?.vertices)return{ok:false,reason:'invalid-mesh',changed:false,patchRepairs:0,merged:0};
+  const components=connectedTriangleComponents(mesh),chosen=[];
+  for(const faces of components){
+    if(faces.length!==4)continue;
+    const candidate=fourTrianglePatchCandidate(mesh,faces);
+    if(candidate)chosen.push({faces,candidate});
+  }
+  if(!chosen.length)return{ok:true,changed:false,patchRepairs:0,merged:0,candidates:0};
+  const replacement=new Map(),remove=new Set();
+  for(const {candidate} of chosen){
+    for(const pair of candidate.pairs){
+      const keep=Math.min(pair.a,pair.b),drop=Math.max(pair.a,pair.b);
+      replacement.set(keep,pair.quad);remove.add(drop);
+    }
+  }
+  const next=[];
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    if(remove.has(fi))continue;
+    next.push(replacement.get(fi)||[...mesh.faces[fi]]);
+  }
+  mesh.faces=next;
+  mesh.edges?.();
+  return{ok:true,changed:true,patchRepairs:chosen.length,merged:chosen.length*2,candidates:chosen.length};
 }
 
 export function quadCleanTrianglePairs(mesh){
@@ -511,6 +583,8 @@ export function quadCleanMesh(mesh){
   if(!retopo.ok)return retopo;
   const slivers=quadCleanSlivers(mesh);
   if(!slivers.ok)return slivers;
+  const patches=quadCleanFourTrianglePatches(mesh);
+  if(!patches.ok)return patches;
   const merge=quadCleanTrianglePairs(mesh);
   if(!merge.ok)return merge;
   const relax=quadRelaxFlow(mesh);
@@ -523,13 +597,15 @@ export function quadCleanMesh(mesh){
   };
   return{
     ok:true,
-    changed:!!retopo.changed||!!slivers.changed||!!merge.changed||!!relax.changed,
+    changed:!!retopo.changed||!!slivers.changed||!!patches.changed||!!merge.changed||!!relax.changed,
     fanRepairs:retopo.fanRepairs||0,
     removedVertices:retopo.removedVertices||0,
     sliverRepairs:slivers.sliverRepairs||0,
     sliverRemovedVertices:slivers.removedVertices||0,
     sliverRemovedFaces:slivers.removedFaces||0,
-    merged:merge.merged||0,
+    patchRepairs:patches.patchRepairs||0,
+    patchMerged:patches.merged||0,
+    merged:(patches.merged||0)+(merge.merged||0),
     relaxedVertices:relax.relaxedVertices||0,
     before:start,
     after,
@@ -538,6 +614,7 @@ export function quadCleanMesh(mesh){
     relaxRejectedScore:relax.rejectedScore,
     retopo,
     slivers,
+    patches,
     merge,
     relax
   };
