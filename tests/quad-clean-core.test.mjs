@@ -316,3 +316,39 @@ test('298 quad-flow scoring is neutral when a repaired patch has no neighbouring
   const penalty=quadBoundaryFlowPenalty(mesh,[0,1,2,3],new Set([0,1]));
   assert.equal(penalty,0);
 });
+
+
+test('299 aggregate patch quality guard accepts regular six-triangle island',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),new THREE.Vector3(3,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0),new THREE.Vector3(3,1,0)
+  ];
+  const faces=[
+    [0,1,5],[0,5,4],
+    [1,2,6],[1,6,5],
+    [2,3,7],[2,7,6]
+  ];
+  const mesh=new EditableMesh(verts,faces);
+  const result=quadCleanTriangleIslands(mesh);
+  assert.equal(result.changed,true);
+  assert.equal(result.patchRepairs,1);
+  assert.equal(result.rejectedPatches,0);
+});
+
+test('299 aggregate patch quality guard rejects stretched but technically valid quad patch',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(4.5,0,0),new THREE.Vector3(9,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(4.5,1,0),new THREE.Vector3(9,1,0)
+  ];
+  const faces=[
+    [0,1,4],[0,4,3],
+    [1,2,5],[1,5,4]
+  ];
+  const mesh=new EditableMesh(verts,faces);
+  const result=quadCleanTriangleIslands(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,false);
+  assert.equal(result.patchRepairs,0);
+  assert.equal(result.rejectedPatches,1);
+  assert.equal(mesh.faces.length,4);
+});
