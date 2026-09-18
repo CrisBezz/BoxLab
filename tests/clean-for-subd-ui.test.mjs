@@ -21,3 +21,13 @@ test('313 Clean for SubD cache-hop is isolated from protected Selection styling'
   assert.match(index,/quad-clean\.js\?v=0\.36\.18\.313/);
   assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
 });
+
+
+test('314 component multi-select initializes hidden toggle for component modes', async()=>{
+  const fs=await import('node:fs/promises');
+  const source=await fs.readFile(new URL('../src/component-multi-init.js',import.meta.url),'utf8');
+  assert.match(source,/toggle\.checked=true/);
+  assert.match(source,/dispatchEvent\(new Event\('change'/);
+  assert.match(source,/mode==='object'/);
+  assert.match(source,/querySelectorAll\('#selectionModes button'\)/);
+});
