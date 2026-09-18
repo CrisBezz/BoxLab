@@ -16,7 +16,7 @@ BoxLab should stay fast, direct, topology-aware and shallow. It should not becom
 
 ## Phase A — Topology intelligence / Clean for SubD
 
-**Status: COMPLETE at v0.36.18.323 once release regression is green.**
+**Status: COMPLETE at v0.36.18.323.**
 
 Delivered:
 - conservative four-triangle fan repair
