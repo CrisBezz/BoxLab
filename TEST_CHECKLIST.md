@@ -19,6 +19,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Vertex selection works
 - [ ] Edge selection works
 - [ ] Face selection works
+- [ ] Face multi-select works immediately after a fresh app load, without requiring a mode change first
+- [ ] returning to Face/Edge/Vertex from another selection mode restores intended additive component multi-selection
 - [ ] Object selection works
 - [ ] Visible / Through selection-depth controls work
 - [ ] Loop selection works
@@ -94,9 +96,12 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] safe four-triangle fan repair works
 - [ ] conservative sliver/skinny-triangle repair works
 - [ ] bounded even triangle islands can be proposed up to the current 40-triangle envelope
+- [ ] a safe 40-triangle strip can resolve to 20 quads
+- [ ] a 42-triangle connected island remains outside the bounded complete-matching stage
 - [ ] poor-quality patches are preserved rather than forced
 - [ ] surrounding quad-flow context influences candidate quality
 - [ ] internal proposed-quad flow coherence influences candidate quality
+- [ ] coherent neighboring proposed quads score better than an equivalent zig-zag internal flow arrangement
 - [ ] safe remaining triangle pairs can merge to quads
 - [ ] all-quad tangent relaxation remains guarded
 - [ ] topology validation rejects/rolls back invalid results
@@ -147,6 +152,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] module cache pins changed only where intended
 - [ ] `styles.css?v=0.36.18.270` remains pinned unless deliberately changed
 - [ ] `src/multi-object-transform.js?v=0.36.1.0` remains untouched unless deliberately changed
+- [ ] `component-multi-init.js?v=0.36.18.314` remains present/pinned unless component-selection startup is deliberately changed
 - [ ] drawer behaviour remains intact
 - [ ] no service worker was introduced unintentionally
 - [ ] GitHub Pages loads the intended build after release
