@@ -352,3 +352,55 @@ test('299 aggregate patch quality guard rejects stretched but technically valid 
   assert.equal(result.rejectedPatches,1);
   assert.equal(mesh.faces.length,4);
 });
+
+
+test('300 residual triangle-pair cleanup keeps a regular isolated pair working',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),
+    new THREE.Vector3(1,1,0),new THREE.Vector3(0,1,0)
+  ];
+  const mesh=new EditableMesh(verts,[[0,1,2],[0,2,3]]);
+  const result=quadCleanTrianglePairs(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,true);
+  assert.equal(result.merged,1);
+  assert.equal(result.contextRejected,0);
+  assert.equal(mesh.faces.length,1);
+  assert.equal(mesh.faces[0].length,4);
+});
+
+test('300 residual triangle-pair cleanup rejects stretched mixed-context merge',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(4.5,0,0),
+    new THREE.Vector3(4.5,1,0),new THREE.Vector3(0,1,0),
+    new THREE.Vector3(0,-1,0),new THREE.Vector3(4.5,-1,0)
+  ];
+  const mesh=new EditableMesh(verts,[
+    [0,1,2],[0,2,3],
+    [4,5,1,0]
+  ]);
+  const result=quadCleanTrianglePairs(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,false);
+  assert.equal(result.merged,0);
+  assert.equal(result.contextRejected,1);
+  assert.equal(mesh.faces.length,3);
+});
+
+test('300 residual triangle-pair cleanup preserves a context-misaligned candidate',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),
+    new THREE.Vector3(1,1,0),new THREE.Vector3(0,1,0),
+    new THREE.Vector3(0,-1,0),new THREE.Vector3(1,-1,0),
+    new THREE.Vector3(2,1.7,0)
+  ];
+  const mesh=new EditableMesh(verts,[
+    [0,1,2],[0,2,6],
+    [4,5,1,0]
+  ]);
+  const result=quadCleanTrianglePairs(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,false);
+  assert.equal(result.merged,0);
+  assert.equal(result.contextRejected,1);
+});
