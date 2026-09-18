@@ -8,6 +8,18 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.325 component Move cross-object snapping
+
+- Released **v0.36.18.325** from PR #9; squash merge commit: `11f3d80d871d2fa2375d908aa904527bd549e394`.
+- Extended Phase B precision modelling so Geometry-enabled component Move can snap to visible geometry on other objects.
+- Single-vertex Move snaps that vertex; Edge/Face/multi-component Move snaps the component centre.
+- Free Move can snap to other-object vertices, midpoints and edge positions.
+- Axis-constrained Move only adopts the target coordinate on the constrained axis.
+- Object mode is excluded and target objects remain unchanged.
+- Added `componentSnapDelta()` to the shared cross-object snap core and dedicated runtime/delta regression coverage.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+- Final PR regression run **35407390765** passed. The earlier failed run only flagged the intentionally changed `main.js` cache pin in an old release contract.
+
 ## 2026-09-19 — v0.36.18.324 Phase B begins / cross-object Add Vertex snapping
 
 - Released **v0.36.18.324** from PR #8; squash merge commit: `70df4c4f137a55e553227aa391bdd68324a0d732`.
