@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadInternalFlowPenalty, quadPatchValenceContext, quadValencePenalty, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadInternalFlowPenalty, quadPatchValenceContext, quadValencePenalty, quadRelaxFlow, quadMeshFlowScore, quadTopologyAudit, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -879,4 +879,70 @@ test('322 worst-local internal flow distinguishes equal-average mismatch without
   assert.equal(balanced.worstFlow,0.5);
   assert.equal(concentrated.worstFlow,1);
   assert.ok(concentrated.rankingPenalty>balanced.rankingPenalty);
+});
+
+
+test('323 topology audit accepts a clean open boundary quad patch',()=>{
+  const mesh=new EditableMesh([
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),
+    new THREE.Vector3(1,1,0),new THREE.Vector3(0,1,0)
+  ],[[0,1,2,3]]);
+  const audit=quadTopologyAudit(mesh);
+  assert.equal(audit.ok,true);
+  assert.equal(audit.boundaryEdges,4);
+  assert.equal(audit.nonManifoldEdges,0);
+});
+
+test('323 topology audit rejects duplicate and non-manifold topology deterministically',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(0,-1,0),
+    new THREE.Vector3(0,0,1)
+  ];
+  const duplicate=new EditableMesh(verts,[[0,1,2],[0,1,2]]);
+  const duplicateAudit=quadTopologyAudit(duplicate);
+  assert.equal(duplicateAudit.ok,false);
+  assert.ok(duplicateAudit.errors.some(e=>e.includes('duplicate')));
+
+  const nonManifold=new EditableMesh(verts,[[0,1,2],[1,0,3],[0,1,4]]);
+  const nonManifoldAudit=quadTopologyAudit(nonManifold);
+  assert.equal(nonManifoldAudit.ok,false);
+  assert.equal(nonManifoldAudit.nonManifoldEdges,1);
+});
+
+test('323 Clean for SubD refuses invalid input without mutating it',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),
+    new THREE.Vector3(0,1,0)
+  ];
+  const mesh=new EditableMesh(verts,[[0,1,2],[0,1,2]]);
+  const beforeFaces=mesh.faces.map(f=>[...f]);
+  const beforeVerts=mesh.vertices.map(v=>v.clone());
+  const result=quadCleanMesh(mesh);
+  assert.equal(result.ok,false);
+  assert.equal(result.changed,false);
+  assert.match(result.reason,/^input-/);
+  assert.deepEqual(mesh.faces,beforeFaces);
+  assert.equal(mesh.vertices.length,beforeVerts.length);
+  for(let i=0;i<beforeVerts.length;i++)assert.ok(mesh.vertices[i].distanceTo(beforeVerts[i])<1e-12);
+});
+
+test('323 generated irregular triangulated strips remain topologically valid after cleanup',()=>{
+  for(const widths of [[1,1.15,0.9,1.2,0.85,1.05],[1,0.8,1.25,0.95,1.1,0.9,1.2]]){
+    const xs=[0];
+    for(const w of widths)xs.push(xs[xs.length-1]+w);
+    const verts=[];
+    for(const y of [0,1])for(const x of xs)verts.push(new THREE.Vector3(x,y+(x%1)*0.08,0));
+    const row=xs.length,faces=[];
+    for(let x=0;x<widths.length;x++){
+      const a=x,b=x+1,c=row+x,d=row+x+1;
+      if(x%2===0)faces.push([a,b,d],[a,d,c]);
+      else faces.push([a,b,c],[b,d,c]);
+    }
+    const mesh=new EditableMesh(verts,faces);
+    const result=quadCleanMesh(mesh);
+    assert.equal(result.ok,true);
+    assert.equal(quadTopologyAudit(mesh).ok,true);
+    assert.equal(mesh.faces.some(f=>f.length<3),false);
+  }
 });
