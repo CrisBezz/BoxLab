@@ -1,0 +1,51 @@
+name: Release BoxLab 287
+on:
+  push:
+    paths:
+      - '.github/workflows/release-287.yml'
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+      - name: Package 287
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html'); s=p.read_text()
+          s=re.sub(r'BoxLab v0\.36\.18\.\d+','BoxLab v0.36.18.287',s,count=1)
+          s=re.sub(r'(<span id="appVersion">v0\.36\.18\.)\d+(</span>)',r'\g<1>287\2',s,count=1)
+          s=re.sub(r'(src="./src/loose-bootstrap\.js\?v=0\.36\.18\.)\d+(")',r'\g<1>287\2',s,count=1)
+          s=re.sub(r'(href="./styles\.css\?v=0\.36\.18\.)\d+(")',r'\g<1>270\2',s,count=1)
+          p.write_text(s)
+          Path('version.json').write_text('{"version":"0.36.18.287"}\n')
+          PY
+      - name: Verify package and protected transform
+        run: |
+          grep -q 'BoxLab v0.36.18.287' index.html
+          grep -q 'loose-bootstrap.js?v=0.36.18.287' index.html
+          grep -q 'bridge-all-quad.js?v=0.36.18.287' src/loose-bootstrap.js
+          grep -q "const VERSION='0.36.18.287'" src/bridge-all-quad.js
+          grep -q 'searchAttempts:attempted' src/bridge-all-quad.js
+          grep -q 'searchRotation:best.rotation' src/bridge-all-quad.js
+          grep -q 'searchPhase:best.phase' src/bridge-all-quad.js
+          grep -q 'styles.css?v=0.36.18.270' index.html
+          grep -q '"version":"0.36.18.287"' version.json
+          test "$(git hash-object src/multi-object-transform.js)" = "0b6f676900bf9a3787cf420e276bbb0f57ac46ff"
+      - name: Commit release
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html version.json
+          git commit -m 'Release BoxLab v0.36.18.287 multi-phase closed-loop densification search'
+          git push
