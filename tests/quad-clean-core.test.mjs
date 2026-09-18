@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -64,3 +64,51 @@ test('290 greedily converts two independent triangulated quads',()=>{
 });
 
 function meshKey(a,b){return a<b?`${a}:${b}`:`${b}:${a}`;}
+
+
+test('291 relax improves a perturbed interior quad vertex while keeping the boundary fixed',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1.35,1,0),new THREE.Vector3(2,1,0),
+    new THREE.Vector3(0,2,0),new THREE.Vector3(1,2,0),new THREE.Vector3(2,2,0)
+  ];
+  const mesh=new EditableMesh(verts,[[0,1,4,3],[1,2,5,4],[3,4,7,6],[4,5,8,7]]);
+  const boundary=[0,1,2,3,5,6,7,8].map(i=>mesh.vertices[i].clone());
+  const before=quadMeshFlowScore(mesh),x=mesh.vertices[4].x;
+  const result=quadRelaxFlow(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,true);
+  assert.equal(result.relaxedVertices,1);
+  assert.ok(mesh.vertices[4].x<x);
+  assert.ok(quadMeshFlowScore(mesh)<before);
+  [0,1,2,3,5,6,7,8].forEach((vi,n)=>assert.ok(mesh.vertices[vi].distanceTo(boundary[n])<1e-12));
+});
+
+test('291 relax freezes vertices touching a crease',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1.35,1,0),new THREE.Vector3(2,1,0),
+    new THREE.Vector3(0,2,0),new THREE.Vector3(1,2,0),new THREE.Vector3(2,2,0)
+  ];
+  const mesh=new EditableMesh(verts,[[0,1,4,3],[1,2,5,4],[3,4,7,6],[4,5,8,7]],[[meshKey(1,4),1]]);
+  const center=mesh.vertices[4].clone();
+  const result=quadRelaxFlow(mesh);
+  assert.equal(result.changed,false);
+  assert.ok(mesh.vertices[4].distanceTo(center)<1e-12);
+});
+
+test('291 Quad Clean runs merge then relax as one pipeline',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1.25,1,0),new THREE.Vector3(2,1,0),
+    new THREE.Vector3(0,2,0),new THREE.Vector3(1,2,0),new THREE.Vector3(2,2,0)
+  ];
+  const faces=[[0,1,4],[0,4,3],[1,2,5,4],[3,4,7,6],[4,5,8,7]];
+  const mesh=new EditableMesh(verts,faces);
+  const result=quadCleanMesh(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.merged,1);
+  assert.equal(result.after.triangles,0);
+  assert.equal(result.after.quads,4);
+  assert.ok(result.relaxedVertices>=0);
+});
