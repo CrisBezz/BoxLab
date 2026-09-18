@@ -60,15 +60,15 @@ test('4 to 6 uses two inserted vertices and produces six quads',()=>{
   assert.ok(result.faceIndices.every(fi=>mesh.faces[fi]?.length===4));
 });
 
-test('3 to 8 mismatch falls through without adding vertices',()=>{
+test('3 to 9 mismatch falls through without adding vertices',()=>{
   class FallbackMesh{
-    constructor(){this.vertices=[...ring(3,0),...ring(8,2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
+    constructor(){this.vertices=[...ring(3,0),...ring(9,2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
     edgeKey(a,b){return key(a,b);}
     bridgeLoops(){return{fallback:true,faceIndices:[99],unequal:true};}
   }
   globalThis.__boxlabTopology={cloneMeshState:()=>null,restoreMeshState:()=>{},validateTopology:()=>({ok:true})};
   installSubdFriendlyBridge(FallbackMesh);
-  const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10]);
+  const mesh=new FallbackMesh(),before=mesh.vertices.length,result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11]);
   assert.equal(result?.fallback,true);
   assert.equal(mesh.vertices.length,before);
 });
@@ -91,9 +91,10 @@ test('272 still gives a materially longer edge priority over spread',()=>{
 });
 
 
-test('279 eligibility expands to closed-loop 3 to 7 but not 3 to 8',()=>{
+test('282 eligibility includes 3 to 8 but still excludes 3 to 9',()=>{
   assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9]),true);
-  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10]),false);
+  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10]),true);
+  assert.equal(canTryAllQuad([0,1,2],[3,4,5,6,7,8,9,10,11]),false);
 });
 
 test('279 3 to 7 can produce seven quads with four inserted vertices',()=>{
