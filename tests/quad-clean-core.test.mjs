@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -160,4 +160,59 @@ test('292 Quad Clean pipeline repairs a quad fan before triangle-pair merging',(
   assert.equal(result.after.triangles,0);
   assert.equal(result.after.quads,1);
   assert.equal(result.after.vertices,4);
+});
+
+
+function triangulatedGrid4(shortInterior=false){
+  const verts=[];
+  for(let y=0;y<4;y++)for(let x=0;x<4;x++){
+    let px=x;
+    if(shortInterior&&x===2&&y===1)px=1.04;
+    verts.push(new THREE.Vector3(px,y,0));
+  }
+  const faces=[];
+  for(let y=0;y<3;y++)for(let x=0;x<3;x++){
+    const a=y*4+x,b=a+1,c=a+4,d=c+1;
+    faces.push([a,b,d],[a,d,c]);
+  }
+  return new EditableMesh(verts,faces);
+}
+
+test('293 sliver cleanup collapses an extremely short smooth interior triangle edge when quality improves',()=>{
+  const mesh=triangulatedGrid4(true);
+  const beforeV=mesh.vertices.length,beforeF=mesh.faces.length;
+  const result=quadCleanSlivers(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,true);
+  assert.equal(result.sliverRepairs,1);
+  assert.equal(mesh.vertices.length,beforeV-1);
+  assert.equal(mesh.faces.length,beforeF-2);
+});
+
+test('293 sliver cleanup preserves a short boundary edge',()=>{
+  const verts=[];
+  for(let y=0;y<4;y++)for(let x=0;x<4;x++){
+    let px=x;
+    if(x===2&&y===0)px=1.04;
+    verts.push(new THREE.Vector3(px,y,0));
+  }
+  const faces=[];
+  for(let y=0;y<3;y++)for(let x=0;x<3;x++){
+    const a=y*4+x,b=a+1,c=a+4,d=c+1;
+    faces.push([a,b,d],[a,d,c]);
+  }
+  const mesh=new EditableMesh(verts,faces);
+  const before=mesh.vertices.map(v=>v.clone());
+  const result=quadCleanSlivers(mesh);
+  assert.equal(result.changed,false);
+  assert.equal(mesh.vertices.length,16);
+  for(let i=0;i<16;i++)assert.ok(mesh.vertices[i].distanceTo(before[i])<1e-12);
+});
+
+test('293 sliver cleanup preserves a creased short interior edge',()=>{
+  const mesh=triangulatedGrid4(true);
+  mesh.creases.set(meshKey(5,6),1);
+  const result=quadCleanSlivers(mesh);
+  assert.equal(result.changed,false);
+  assert.equal(mesh.vertices.length,16);
 });
