@@ -16,7 +16,21 @@ jobs:
         with:
           node-version: 22
       - run: npm install --no-audit --no-fund
-      - run: npm test
+      - name: Regression tests
+        run: |
+          set +e
+          npm test > release-293-test.log 2>&1
+          code=$?
+          cat release-293-test.log
+          if [ $code -ne 0 ]; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add release-293-test.log
+            git commit -m 'Capture BoxLab 293 regression failure'
+            git push
+            exit $code
+          fi
+          rm -f release-293-test.log
       - name: Package 293
         run: |
           python - <<'PY'
