@@ -1,11 +1,10 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.157 — rendered-marker Vertex tap picking.
+// BoxLab v0.36.18.294 — rendered-marker Vertex tap picking with always-additive component selection.
 // The visible cage marker is authoritative so newly added vertices cannot be
 // displaced by a stale bridge mesh/index position.
 
 const canvas=document.querySelector('#viewport');
-const multiToggle=document.querySelector('#multiSelectToggle');
 const status=document.querySelector('#selectionStatus');
 const PICK_RADIUS_PX=22;
 const TAP_MOVE_PX=12;
@@ -44,7 +43,7 @@ function nearestVertexAt(x,y){
   return best;
 }
 function selected(){return [...new Set(bridge()?.indices?.()||[])];}
-function applyPick(index){const current=selected(),has=current.includes(index),multi=!!multiToggle?.checked;let next;if(multi)next=has?current.filter(i=>i!==index):[...current,index];else next=has?[]:[index];bridge()?.set?.('vertex',next);if(status)status.textContent=next.length?`Vertex mode • ${next.length} selected`:'Vertex mode • nothing selected';}
+function applyPick(index){const current=selected(),has=current.includes(index),next=has?current.filter(i=>i!==index):[...current,index];bridge()?.set?.('vertex',next);if(status)status.textContent=next.length?`Vertex mode • ${next.length} selected`:'Vertex mode • nothing selected';}
 
 document.addEventListener('pointerdown',event=>{
   if(event.target!==canvas||!event.isPrimary||mode()!=='vertex'||addVertexSessionActive()||directToolActive())return;
@@ -78,4 +77,4 @@ document.addEventListener('pointerup',event=>{
 document.addEventListener('pointercancel',event=>{if(!press||press.id===event.pointerId)press=null;},true);
 document.addEventListener('pointerleave',event=>{if(event.pointerType==='pen'&&event.pressure===0)press=null;},true);
 
-globalThis.__boxlabVertexPickAssist={version:'0.36.18.157',nearestVertexAt};
+globalThis.__boxlabVertexPickAssist={version:'0.36.18.294',nearestVertexAt};
