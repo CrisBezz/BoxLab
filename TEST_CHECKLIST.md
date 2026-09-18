@@ -43,6 +43,14 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] object transforms do not regress
 - [ ] reference objects remain protected from destructive editing
 
+## Precision snapping
+
+- [ ] Geometry-enabled component Move can snap selected vertices to visible geometry on other objects
+- [ ] free component Move can align an edge/face/multi-component centre to another-object snap target
+- [ ] axis-constrained component Move changes only the constrained coordinate when snapping cross-object
+- [ ] target object remains unchanged during component Move snapping
+- [ ] hidden/solo-excluded objects do not contribute component Move snap targets
+
 ## Vertex tools
 
 - [ ] Add Vertex can snap to visible geometry on other objects without modifying the target object
