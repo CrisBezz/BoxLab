@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -215,4 +215,33 @@ test('293 sliver cleanup preserves a creased short interior edge',()=>{
   const result=quadCleanSlivers(mesh);
   assert.equal(result.changed,false);
   assert.equal(mesh.vertices.length,16);
+});
+
+
+test('296 four-triangle patch solver converts a bounded triangle island into two quads',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0)
+  ];
+  const mesh=new EditableMesh(verts,[[0,1,4],[0,4,3],[1,2,5],[1,5,4]]);
+  const result=quadCleanFourTrianglePatches(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,true);
+  assert.equal(result.patchRepairs,1);
+  assert.equal(result.merged,2);
+  assert.equal(mesh.faces.length,2);
+  assert.equal(mesh.faces.every(face=>face.length===4),true);
+});
+
+test('296 four-triangle patch solver preserves a bounded island when one required pairing is creased',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0)
+  ];
+  const mesh=new EditableMesh(verts,[[0,1,4],[0,4,3],[1,2,5],[1,5,4]],[[meshKey(0,4),1],[meshKey(1,5),1]]);
+  const result=quadCleanFourTrianglePatches(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,false);
+  assert.equal(result.patchRepairs,0);
+  assert.equal(mesh.faces.length,4);
 });
