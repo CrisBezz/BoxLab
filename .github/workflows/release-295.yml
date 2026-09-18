@@ -1,0 +1,48 @@
+name: Release BoxLab 295
+on:
+  push:
+    paths:
+      - '.github/workflows/release-295.yml'
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm test
+      - name: Verify Clean for SubD milestone and protected baselines
+        run: |
+          grep -q '>Clean for SubD</button>' index.html
+          grep -q 'quad-clean.js?v=0.36.18.295' index.html
+          grep -q "quad-clean-core.js?v=0.36.18.295" src/quad-clean.js
+          grep -q "workflow:'clean-for-subd'" src/quad-clean.js
+          grep -q 'styles.css?v=0.36.18.270' index.html
+          grep -q 'vertex-pick-assist.js?v=0.36.18.294' index.html
+          test "$(git hash-object src/multi-object-transform.js)" = "0b6f676900bf9a3787cf420e276bbb0f57ac46ff"
+      - name: Package 295
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html'); s=p.read_text()
+          s=re.sub(r'BoxLab v0\.36\.18\.\d+','BoxLab v0.36.18.295',s,count=1)
+          s=re.sub(r'(<span id="appVersion">v0\.36\.18\.)\d+(</span>)',r'\g<1>295\2',s,count=1)
+          s=re.sub(r'(src="./src/loose-bootstrap\.js\?v=0\.36\.18\.)\d+(")',r'\g<1>295\2',s,count=1)
+          s=re.sub(r'(href="./styles\.css\?v=0\.36\.18\.)\d+(")',r'\g<1>270\2',s,count=1)
+          p.write_text(s)
+          Path('version.json').write_text('{"version":"0.36.18.295"}\n')
+          PY
+      - name: Commit release
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html version.json
+          git commit -m 'Release BoxLab v0.36.18.295 Clean for SubD milestone'
+          git push
