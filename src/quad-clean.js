@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.320 — Clean for SubD with interior valence-aware patch ranking.
+// BoxLab v0.36.18.321 — Clean for SubD with worst-local valence-aware patch ranking.
 
-import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.320';
+import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.321';
 
 const button=document.querySelector('#quadCleanBtn');
 const status=document.querySelector('#selectionStatus');
@@ -37,7 +37,7 @@ button?.addEventListener('click',()=>{
     }
   }
   manager()?.saveActive?.();
-  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.320',workflow:'clean-for-subd',...result};
+  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.321',workflow:'clean-for-subd',...result};
   if(result.changed){
     const parts=[];
     if(result.fanRepairs)parts.push(`${result.fanRepairs} quad fan${result.fanRepairs===1?'':'s'} repaired`);

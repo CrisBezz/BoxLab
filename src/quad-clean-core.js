@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.320 — Clean for SubD completed-patch interior valence regularity.
+// BoxLab v0.36.18.321 — Clean for SubD worst-local interior valence regularity.
 // Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding/internal flow scoring, aggregate quality, worst-boundary guards, and interior valence-aware ranking. Phase 4 merges remaining safe triangle pairs using the same surrounding-quad flow and quality guards. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
@@ -14,6 +14,7 @@ const PATCH_MAX_BOUNDARY_FLOW=.65;
 const PATCH_BOUNDARY_WORST_WEIGHT=.5;
 const PATCH_INTERNAL_FLOW_WEIGHT=.5;
 const PATCH_VALENCE_WEIGHT=.25;
+const PATCH_VALENCE_WORST_WEIGHT=.1;
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
 function triNormal(mesh,face){
@@ -164,6 +165,14 @@ export function quadPatchInternalFlowContext(mesh,pairs){
   return{samples,avgFlow,worstFlow,penalty:avgFlow*PATCH_INTERNAL_FLOW_WEIGHT};
 }
 
+export function quadValencePenalty(errors){
+  const values=(errors||[]).map(Number).filter(Number.isFinite);
+  if(!values.length)return{samples:0,avgError:0,worstError:0,penalty:0};
+  const avgError=values.reduce((sum,v)=>sum+v,0)/values.length;
+  const worstError=Math.max(...values);
+  return{samples:values.length,avgError,worstError,penalty:avgError*PATCH_VALENCE_WEIGHT+worstError*PATCH_VALENCE_WORST_WEIGHT};
+}
+
 export function quadPatchValenceContext(mesh,pairs){
   if(!mesh?.faces||!mesh?.vertices)return{samples:0,avgError:0,worstError:0,penalty:0};
   const edges=mesh.edges?.()||[],incident=Array.from({length:mesh.vertices.length},()=>[]);
@@ -178,7 +187,7 @@ export function quadPatchValenceContext(mesh,pairs){
     if(shared.length!==2)continue;
     for(const v of shared)removedByVertex.set(v,(removedByVertex.get(v)||0)+1);
   }
-  let total=0,worstError=0,samples=0;
+  const errors=[];
   for(const [v,removed] of removedByVertex){
     const ring=incident[v]||[];
     if(!ring.length)continue;
@@ -186,11 +195,9 @@ export function quadPatchValenceContext(mesh,pairs){
     if(ring.some(edge=>(mesh.creases instanceof Map)&&(mesh.creases.get(edgeKey(mesh,edge.a,edge.b))||0)>0))continue;
     const resultValence=ring.length-removed;
     if(resultValence<3)continue;
-    const error=Math.abs(resultValence-4);
-    total+=error;worstError=Math.max(worstError,error);samples++;
+    errors.push(Math.abs(resultValence-4));
   }
-  const avgError=samples?total/samples:0;
-  return{samples,avgError,worstError,penalty:avgError*PATCH_VALENCE_WEIGHT};
+  return quadValencePenalty(errors);
 }
 
 function trianglePatchCandidate(mesh,faces){

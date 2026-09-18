@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadPatchValenceContext, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadBoundaryFlowPenalty, quadPatchBoundaryContext, quadPatchInternalFlowContext, quadPatchValenceContext, quadValencePenalty, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -856,4 +856,15 @@ test('320 valence context ignores vertices in a protected crease ring',()=>{
   const mesh=new EditableMesh(verts,faces,[[meshKey(1,4),1]]);
   const context=quadPatchValenceContext(mesh,[{a:0,b:1}]);
   assert.deepEqual(context,{samples:0,avgError:0,worstError:0,penalty:0});
+});
+
+
+test('321 worst-local valence term distinguishes equal-average error distributions',()=>{
+  const balanced=quadValencePenalty([1,1]);
+  const concentrated=quadValencePenalty([0,2]);
+  assert.equal(balanced.avgError,1);
+  assert.equal(concentrated.avgError,1);
+  assert.equal(balanced.worstError,1);
+  assert.equal(concentrated.worstError,2);
+  assert.ok(concentrated.penalty>balanced.penalty);
 });
