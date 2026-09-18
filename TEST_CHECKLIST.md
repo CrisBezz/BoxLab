@@ -106,6 +106,10 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] crease/boundary-protected vertices are excluded from valence regularity scoring
 - [ ] equal-average valence alternatives prefer the patch with the lower worst local valence error
 - [ ] equal-average internal-flow alternatives prefer the patch with the lower worst local flow mismatch
+- [ ] topology audit accepts valid open-boundary meshes
+- [ ] topology audit rejects duplicate/non-manifold/collapsed topology deterministically
+- [ ] core Clean for SubD pipeline is transactional and restores the original mesh if a stage fails its topology audit
+- [ ] generated irregular triangulated-strip fixtures remain topologically valid after cleanup
 - [ ] safe remaining triangle pairs can merge to quads
 - [ ] all-quad tangent relaxation remains guarded
 - [ ] topology validation rejects/rolls back invalid results
