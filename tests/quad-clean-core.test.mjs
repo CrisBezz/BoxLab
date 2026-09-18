@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadCleanSlivers, quadCleanFourTrianglePatches, quadCleanTriangleIslands, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -244,4 +244,46 @@ test('296 four-triangle patch solver preserves a bounded island when one require
   assert.equal(result.changed,false);
   assert.equal(result.patchRepairs,0);
   assert.equal(mesh.faces.length,4);
+});
+
+
+test('297 bounded island solver converts six connected triangles into three quads',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),new THREE.Vector3(3,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0),new THREE.Vector3(3,1,0)
+  ];
+  const faces=[
+    [0,1,5],[0,5,4],
+    [1,2,6],[1,6,5],
+    [2,3,7],[2,7,6]
+  ];
+  const mesh=new EditableMesh(verts,faces);
+  const result=quadCleanTriangleIslands(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,true);
+  assert.equal(result.patchRepairs,1);
+  assert.equal(result.patchTriangles,6);
+  assert.equal(result.merged,3);
+  assert.equal(mesh.faces.length,3);
+  assert.equal(mesh.faces.every(face=>face.length===4),true);
+});
+
+test('297 bounded island solver leaves six-triangle island untouched when no complete safe pairing exists',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),new THREE.Vector3(3,0,0),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,0),new THREE.Vector3(3,1,0)
+  ];
+  const faces=[
+    [0,1,5],[0,5,4],
+    [1,2,6],[1,6,5],
+    [2,3,7],[2,7,6]
+  ];
+  const mesh=new EditableMesh(verts,faces);
+  for(const edge of mesh.edges())if(edge.faces?.length===2)mesh.creases.set(meshKey(edge.a,edge.b),1);
+  const result=quadCleanTriangleIslands(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,false);
+  assert.equal(result.patchRepairs,0);
+  assert.equal(result.merged,0);
+  assert.equal(mesh.faces.length,6);
 });
