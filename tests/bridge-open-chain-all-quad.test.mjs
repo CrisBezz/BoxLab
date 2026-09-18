@@ -308,3 +308,11 @@ test('288 flow regularity is zero-or-low for a uniform two-quad strip',()=>{
   const flow=bridgeFlowRegularity(mesh,[[0,1,4,3],[1,2,5,4]],{closed:false});
   assert.ok(flow.penalty<1e-9);
 });
+
+
+test('289 open-chain Bridge exposes surface-flow diagnostics',()=>{
+  const {mesh,ids}=looseParallel(3,9),result=mesh.bridgeSelectedEdges(ids);
+  assert.equal(result?.allQuad,true);
+  assert.ok(Number.isFinite(result?.plan?.surfaceFlowPenalty));
+  assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.surfaceFlowPenalty,result.plan.surfaceFlowPenalty);
+});
