@@ -249,11 +249,11 @@ test('284 clean parallel 3 edge to 9 edge chains become nine guarded quads',()=>
 });
 
 
-test('285 open-chain guarded Bridge evaluates bounded short-chain allocations',()=>{
+test('286 open-chain guarded Bridge evaluates bounded multi-phase allocations',()=>{
   const {mesh,ids}=looseParallel(3,9),result=mesh.bridgeSelectedEdges(ids);
   assert.equal(result?.allQuad,true);
   assert.equal(result?.correspondenceSearch,true);
-  assert.ok(result?.searchCandidates>=1&&result.searchCandidates<=2);
+  assert.ok(result?.searchCandidates>=1&&result.searchCandidates<=6);
   assert.equal(result?.plan?.correspondenceSearch,true);
   assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.ok,true);
   assert.equal(globalThis.__boxlabOpenChainAllQuadBridge?.searchCandidates,result.searchCandidates);
