@@ -160,3 +160,34 @@ test('280 quality guard marks successful 3 to 7 all-quad bridge',()=>{
   assert.equal(globalThis.__boxlabClosedAllQuadBridge?.ok,true);
   assert.equal(globalThis.__boxlabClosedAllQuadBridge?.lastReject,null);
 });
+
+
+test('281 regular triangle to seven spaces repeated inserts evenly on original edges',()=>{
+  const verts=ring(3,0,1.5),mesh={vertices:verts,faces:[[0,1,2]],creases:new Map(),looseEdges:new Set(),looseVertices:new Set(),edgeKey:key};
+  const dense=densifyLoopToCount(mesh,[0,1,2],7);
+  assert.equal(dense.length,7);
+  assert.equal(mesh.vertices.length,7);
+  const original=[0,1,2];
+  for(const a of original)assert.ok(dense.includes(a));
+});
+
+test('281 two inserts on one closed-loop edge are placed at thirds and preserve crease segments',()=>{
+  const verts=[new THREE.Vector3(0,0,0),new THREE.Vector3(6,0,0),new THREE.Vector3(6,1,0),new THREE.Vector3(0,1,0)];
+  const mesh={vertices:verts,faces:[[0,1,2,3]],creases:new Map([[key(0,1),.6]]),looseEdges:new Set(),looseVertices:new Set(),edgeKey:key};
+  const dense=densifyLoopToCount(mesh,[0,1,2,3],6);
+  const between=dense.slice(1,dense.indexOf(1));
+  assert.equal(between.length,2);
+  assert.ok(Math.abs(mesh.vertices[between[0]].x-2)<1e-9);
+  assert.ok(Math.abs(mesh.vertices[between[1]].x-4)<1e-9);
+  assert.equal(mesh.creases.get(key(0,between[0])),.6);
+  assert.equal(mesh.creases.get(key(between[0],between[1])),.6);
+  assert.equal(mesh.creases.get(key(between[1],1)),.6);
+});
+
+test('281 regular square to eight allocates one insert per original edge',()=>{
+  const mesh={vertices:square(),faces:[[0,1,2,3]],creases:new Map(),looseEdges:new Set(),looseVertices:new Set(),edgeKey:key};
+  const dense=densifyLoopToCount(mesh,[0,1,2,3],8);
+  assert.equal(dense.length,8);
+  assert.equal(mesh.faces[0].length,8);
+  assert.equal(mesh.vertices.length,8);
+});
