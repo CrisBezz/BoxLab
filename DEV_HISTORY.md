@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.324 Phase B begins / cross-object Add Vertex snapping
+
+- Released **v0.36.18.324** from PR #8; squash merge commit: `70df4c4f137a55e553227aa391bdd68324a0d732`.
+- Started Phase B precision modelling with cross-object snapping for Add Vertex.
+- Existing local-edge snapping keeps priority.
+- When no local edge is hit, Add Vertex can snap to visible other-object vertices, then midpoints, then arbitrary edge positions.
+- Snap targets do not modify the target object; hidden and solo-excluded objects are ignored.
+- Added pure helper module `src/cross-object-snap-core.js` plus dedicated regression coverage.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+- Final corrected PR regression run **35406677103** passed successfully. Earlier PR runs failed only because the new test fixture incorrectly used loose edges that `EditableMesh.edges()` does not enumerate.
+
 ## 2026-09-19 — v0.36.18.323 Phase A complete / transactional topology audit
 
 - Released **v0.36.18.323** from PR #7; squash merge commit: `040e210bf2868a45791c35c9c1392bc1e6f244fe`.
