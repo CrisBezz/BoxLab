@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.285 — bounded densification search for guarded closed-loop all-quad Bridge.
+// BoxLab v0.36.18.287 — multi-phase densification search for guarded closed-loop all-quad Bridge.
 // Densifies the smaller closed boundary loop, spreading comparable splits around the loop,
 // then reuses the proven equal-count Bridge solver.
 
-const VERSION='0.36.18.285';
+const VERSION='0.36.18.287';
 const MAX_ADDED=6;
 const MAX_RATIO=3;
 const NEAR_LONGEST=0.95;
@@ -136,7 +136,7 @@ export function balancedSplitEdgeIndex(mesh,loop,splitPoints=[]){
   return best?.index??-1;
 }
 
-function closedSubdivisionAllocation(mesh,loop,targetCount){
+function closedSubdivisionAllocation(mesh,loop,targetCount,phase=0){
   const edges=[];
   for(let i=0;i<loop.length;i++){
     const a=mesh.vertices[loop[i]],b=mesh.vertices[loop[(i+1)%loop.length]];
@@ -144,32 +144,24 @@ function closedSubdivisionAllocation(mesh,loop,targetCount){
     edges.push({index:i,length:Math.sqrt(a.distanceToSquared(b)),segments:1,mid:a.clone().lerp(b,.5)});
   }
   const chosen=[];
-  let remaining=targetCount-loop.length;
+  let remaining=targetCount-loop.length,step=0;
   while(remaining-->0){
     const spans=edges.map(e=>e.length/e.segments),max=Math.max(...spans),threshold=max*NEAR_LONGEST;
     const candidates=edges.filter((e,i)=>spans[i]+1e-12>=threshold);
-    let best=candidates[0];
-    if(chosen.length){
-      const spread=e=>{
-        let min=Infinity;
-        for(const prior of chosen){
-          const d=e.mid.distanceToSquared(prior.mid);
-          if(d<min)min=d;
-        }
-        return min;
-      };
-      for(const e of candidates){
-        const es=spread(e),bs=spread(best),eSpan=e.length/e.segments,bSpan=best.length/best.segments;
-        if(es>bs+1e-12||(Math.abs(es-bs)<=1e-12&&(eSpan>bSpan+1e-12||(Math.abs(eSpan-bSpan)<=1e-12&&e.index<best.index))))best=e;
-      }
-    }else{
-      for(const e of candidates){
-        const eSpan=e.length/e.segments,bSpan=best.length/best.segments;
-        if(eSpan>bSpan+1e-12||(Math.abs(eSpan-bSpan)<=1e-12&&e.index<best.index))best=e;
-      }
-    }
-    best.segments++;
-    chosen.push(best);
+    if(!candidates.length)return null;
+    const spread=e=>{
+      if(!chosen.length)return 0;
+      let min=Infinity;
+      for(const prior of chosen)min=Math.min(min,e.mid.distanceToSquared(prior.mid));
+      return min;
+    };
+    candidates.sort((a,b)=>{
+      const as=spread(a),bs=spread(b),aSpan=a.length/a.segments,bSpan=b.length/b.segments;
+      return bs-as||bSpan-aSpan||a.index-b.index;
+    });
+    const pick=((phase+step)%candidates.length+candidates.length)%candidates.length;
+    const best=candidates[pick];
+    best.segments++;chosen.push(best);step++;
   }
   return edges.map(e=>e.segments);
 }
@@ -198,10 +190,10 @@ function subdivideOriginalBoundaryEdge(mesh,a,b,segments){
   return inserted;
 }
 
-export function densifyLoopToCount(mesh,loop,target){
+export function densifyLoopToCount(mesh,loop,target,phase=0){
   if(!Array.isArray(loop)||loop.length<3||target<loop.length)return null;
   if(target===loop.length)return[...loop];
-  const allocation=closedSubdivisionAllocation(mesh,loop,target);if(!allocation)return null;
+  const allocation=closedSubdivisionAllocation(mesh,loop,target,phase);if(!allocation)return null;
   const out=[];
   for(let i=0;i<loop.length;i++){
     const a=loop[i],b=loop[(i+1)%loop.length],inserted=subdivideOriginalBoundaryEdge(mesh,a,b,allocation[i]);
@@ -218,7 +210,7 @@ export function canTryAllQuad(loopA,loopB){
 }
 
 export function installSubdFriendlyBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge285Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge287Installed)return;
   const baseBridgeLoops=proto.bridgeLoops,topology=globalThis.__boxlabTopology;
   if(typeof baseBridgeLoops!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
@@ -227,11 +219,12 @@ export function installSubdFriendlyBridge(EditableMesh){
     const before=snapshot(this,topology),fallback=(reason,extra={})=>{restore(this,topology,before);diagnostic(false,reason,{counts:[loopA.length,loopB.length],...extra});return baseBridgeLoops.call(this,loopA,loopB);};
     const input=topology.validateTopology(this,{allowBoundary:true});if(!input.ok)return fallback('input-topology');
     const target=Math.max(loopA.length,loopB.length),shortA=loopA.length<loopB.length,shortLoop=shortA?loopA:loopB,longLoop=shortA?loopB:loopA;
-    const phases=Math.min(shortLoop.length,4);let best=null,lastReject='no-candidate',tested=0;
-    for(let phase=0;phase<phases;phase++){
+    const rotations=Math.min(shortLoop.length,4),allocationPhases=Math.min(shortLoop.length,4);let best=null,lastReject='no-candidate',tested=0,attempted=0;
+    for(let rotation=0;rotation<rotations;rotation++)for(let phase=0;phase<allocationPhases;phase++){
+      attempted++;
       restore(this,topology,before);
-      const shortRot=rotatedLoop([...shortLoop],phase),longBase=[...longLoop];
-      const denseShort=densifyLoopToCount(this,shortRot,target);if(!denseShort){lastReject='densify-failed';continue;}
+      const shortRot=rotatedLoop([...shortLoop],rotation),longBase=[...longLoop];
+      const denseShort=densifyLoopToCount(this,shortRot,target,phase);if(!denseShort){lastReject='densify-failed';continue;}
       const denseA=shortA?denseShort:longBase,denseB=shortA?longBase:denseShort;
       let result=null;try{result=baseBridgeLoops.call(this,denseA,denseB);}catch{}
       tested++;
@@ -242,17 +235,17 @@ export function installSubdFriendlyBridge(EditableMesh){
       const validation=topology.validateTopology(this,{allowBoundary:true});if(!validation.ok){lastReject='topology-rejected';continue;}
       const winding=windingValidation(this);if(!winding.ok){lastReject=winding.reason||'winding-rejected';continue;}
       const score=closedCandidateScore(this,faces,denseA,denseB);
-      if(!best||score<best.score-1e-12)best={score,phase,result:{...result},state:snapshot(this,topology),denseCounts:[denseA.length,denseB.length],connectors:quality.connectors};
+      if(!best||score<best.score-1e-12)best={score,rotation,phase,result:{...result},state:snapshot(this,topology),denseCounts:[denseA.length,denseB.length],connectors:quality.connectors};
     }
-    if(!best)return fallback(lastReject,{searchCandidates:tested});
+    if(!best)return fallback(lastReject,{searchCandidates:tested,searchAttempts:attempted});
     restore(this,topology,best.state);
-    const result={...best.result,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchPhase:best.phase,searchScore:best.score,addedVertices:target-Math.min(loopA.length,loopB.length),denseCounts:best.denseCounts};
-    diagnostic(true,null,{addedVertices:result.addedVertices,denseCounts:result.denseCounts,connectors:best.connectors,searchCandidates:tested,searchPhase:best.phase,searchScore:best.score});
-    globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchPhase:best.phase,addedVertices:result.addedVertices,denseCounts:result.denseCounts};
+    const result={...best.result,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchRotation:best.rotation,searchPhase:best.phase,searchScore:best.score,addedVertices:target-Math.min(loopA.length,loopB.length),denseCounts:best.denseCounts};
+    diagnostic(true,null,{addedVertices:result.addedVertices,denseCounts:result.denseCounts,connectors:best.connectors,searchCandidates:tested,searchAttempts:attempted,searchRotation:best.rotation,searchPhase:best.phase,searchScore:best.score});
+    globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchRotation:best.rotation,searchPhase:best.phase,addedVertices:result.addedVertices,denseCounts:result.denseCounts};
     return result;
   };
 
-  proto.__subdFriendlyBridge285Installed=true;
+  proto.__subdFriendlyBridge287Installed=true;
   globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:null,balancedDensification:true,qualityGuarded:true,addedVertices:0,denseCounts:[]};
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
