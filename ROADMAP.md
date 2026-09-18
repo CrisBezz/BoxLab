@@ -46,7 +46,7 @@ Phase A freeze rule:
 **Next active phase.**
 
 Priority candidates:
-- cross-object snapping
+- cross-object snapping — **started in v0.36.18.324 with Add Vertex snapping to visible other-object vertices/midpoints/edges**
 - precision drag/readback polish
 - Repeat Previous audit/polish for exact repeated operations
 - Align / Flatten component tools
