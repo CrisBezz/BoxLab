@@ -842,3 +842,18 @@ test('320 completed-patch valence context prefers removing diagonals that restor
   assert.equal(underResolved.avgError,1);
   assert.ok(regularized.penalty<underResolved.penalty);
 });
+
+
+test('320 valence context ignores vertices in a protected crease ring',()=>{
+  const verts=[];
+  for(let y=0;y<3;y++)for(let x=0;x<3;x++)verts.push(new THREE.Vector3(x,y,0));
+  const faces=[
+    [0,1,4],[0,4,3],
+    [1,2,5],[1,5,4],
+    [3,4,7],[3,7,6],
+    [4,5,8],[4,8,7]
+  ];
+  const mesh=new EditableMesh(verts,faces,[[meshKey(1,4),1]]);
+  const context=quadPatchValenceContext(mesh,[{a:0,b:1}]);
+  assert.deepEqual(context,{samples:0,avgError:0,worstError:0,penalty:0});
+});
