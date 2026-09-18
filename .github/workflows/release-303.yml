@@ -1,0 +1,50 @@
+name: Release BoxLab 303
+on:
+  push:
+    paths:
+      - '.github/workflows/release-303.yml'
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - name: Regression tests
+        run: npm test
+      - name: Verify 303 bounded twelve-triangle solver and protected baselines
+        run: |
+          grep -q 'quad-clean.js?v=0.36.18.303' index.html
+          grep -q "quad-clean-core.js?v=0.36.18.303" src/quad-clean.js
+          grep -q 'MAX_TRIANGLE_PATCH=12' src/quad-clean-core.js
+          grep -q 'PATCH_MAX_BOUNDARY_FLOW=.65' src/quad-clean-core.js
+          grep -q 'PATCH_MAX_EDGE_RATIO=4' src/quad-clean-core.js
+          grep -q 'styles.css?v=0.36.18.270' index.html
+          grep -q 'vertex-pick-assist.js?v=0.36.18.294' index.html
+          test "$(git hash-object src/multi-object-transform.js)" = "0b6f676900bf9a3787cf420e276bbb0f57ac46ff"
+      - name: Package 303
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p=Path('index.html'); s=p.read_text()
+          s=re.sub(r'BoxLab v0\.36\.18\.\d+','BoxLab v0.36.18.303',s,count=1)
+          s=re.sub(r'(<span id="appVersion">v0\.36\.18\.)\d+(</span>)',r'\g<1>303\2',s,count=1)
+          s=re.sub(r'(src="./src/loose-bootstrap\.js\?v=0\.36\.18\.)\d+(")',r'\g<1>303\2',s,count=1)
+          s=re.sub(r'(href="./styles\.css\?v=0\.36\.18\.)\d+(")',r'\g<1>270\2',s,count=1)
+          p.write_text(s)
+          Path('version.json').write_text('{"version":"0.36.18.303"}\n')
+          PY
+      - name: Commit release
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add index.html version.json
+          git commit -m 'Release BoxLab v0.36.18.303 bounded twelve-triangle local retopo'
+          git push
