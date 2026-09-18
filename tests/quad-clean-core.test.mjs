@@ -80,6 +80,7 @@ test('291 relax improves a perturbed interior quad vertex while keeping the boun
   assert.equal(result.changed,true);
   assert.equal(result.relaxedVertices,1);
   assert.ok(mesh.vertices[4].x<x);
+  assert.ok(Math.abs(mesh.vertices[4].z)<1e-12);
   assert.ok(quadMeshFlowScore(mesh)<before);
   [0,1,2,3,5,6,7,8].forEach((vi,n)=>assert.ok(mesh.vertices[vi].distanceTo(boundary[n])<1e-12));
 });
