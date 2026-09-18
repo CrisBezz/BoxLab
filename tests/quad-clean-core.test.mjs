@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
 import { EditableMesh } from '../src/mesh.js';
-import { evaluateTrianglePair, quadCleanTrianglePairs, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
+import { evaluateTrianglePair, quadCleanTrianglePairs, quadCleanLocalRetopo, quadRelaxFlow, quadMeshFlowScore, quadCleanMesh } from '../src/quad-clean-core.js';
 
 test('290 merges a clean triangulated quad without moving vertices',()=>{
   const verts=[
@@ -112,4 +112,52 @@ test('291 Quad Clean runs merge then relax as one pipeline',()=>{
   assert.equal(result.after.triangles,0);
   assert.equal(result.after.quads,4);
   assert.ok(result.relaxedVertices>=0);
+});
+
+
+test('292 local retopo turns a four-triangle fan into one quad and removes the centre vertex',()=>{
+  const verts=[
+    new THREE.Vector3(-1,-1,0),new THREE.Vector3(1,-1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(-1,1,0),
+    new THREE.Vector3(0,0,0)
+  ];
+  const mesh=new EditableMesh(verts,[[4,0,1],[4,1,2],[4,2,3],[4,3,0]]);
+  const boundary=verts.slice(0,4).map(v=>v.clone());
+  const result=quadCleanLocalRetopo(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,true);
+  assert.equal(result.fanRepairs,1);
+  assert.equal(result.removedVertices,1);
+  assert.equal(mesh.vertices.length,4);
+  assert.equal(mesh.faces.length,1);
+  assert.equal(mesh.faces[0].length,4);
+  assert.equal(new Set(mesh.faces[0]).size,4);
+  for(let i=0;i<4;i++)assert.ok(mesh.vertices[i].distanceTo(boundary[i])<1e-12);
+});
+
+test('292 local retopo preserves a fan when a radial edge is creased',()=>{
+  const verts=[
+    new THREE.Vector3(-1,-1,0),new THREE.Vector3(1,-1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(-1,1,0),
+    new THREE.Vector3(0,0,0)
+  ];
+  const mesh=new EditableMesh(verts,[[4,0,1],[4,1,2],[4,2,3],[4,3,0]],[[meshKey(4,1),1]]);
+  const result=quadCleanLocalRetopo(mesh);
+  assert.equal(result.changed,false);
+  assert.equal(result.fanRepairs,0);
+  assert.equal(mesh.vertices.length,5);
+  assert.equal(mesh.faces.length,4);
+});
+
+test('292 Quad Clean pipeline repairs a quad fan before triangle-pair merging',()=>{
+  const verts=[
+    new THREE.Vector3(-1,-1,0),new THREE.Vector3(1,-1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(-1,1,0),
+    new THREE.Vector3(0,0,0)
+  ];
+  const mesh=new EditableMesh(verts,[[4,0,1],[4,1,2],[4,2,3],[4,3,0]]);
+  const result=quadCleanMesh(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.fanRepairs,1);
+  assert.equal(result.merged,0);
+  assert.equal(result.after.triangles,0);
+  assert.equal(result.after.quads,1);
+  assert.equal(result.after.vertices,4);
 });
