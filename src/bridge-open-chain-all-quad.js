@@ -1,8 +1,10 @@
-// BoxLab v0.36.18.286 — multi-phase densification search for guarded open-chain all-quad Bridge.
+// BoxLab v0.36.18.288 — edge-flow regularity scoring for guarded open-chain all-quad Bridge.
 // Conservatively densifies the smaller open chain, then builds an all-quad strip.
 // Preserves original chain vertices, spaces inserted vertices evenly, and keeps the v274 quality guard/fallback.
 
-const VERSION='0.36.18.286';
+import { bridgeFlowRegularity } from './bridge-flow-regularity.js?v=0.36.18.288';
+
+const VERSION='0.36.18.288';
 const EPS=1e-12;
 const MAX_ADDED=6;
 const MAX_RATIO=3;
@@ -186,8 +188,8 @@ function bestEqualQuadPlan(mesh,chainA,chainB){
       const faces=[];
       for(let i=0;i<chainA.length-1;i++)faces.push(flip?[chainA[i],mapped[i],mapped[i+1],chainA[i+1]]:[chainA[i],chainA[i+1],mapped[i+1],mapped[i]]);
       const quality=validateOpenAllQuadCandidate(mesh,faces,chainA,mapped,scale);if(!quality.ok){lastReject=quality.reason;continue;}
-      const winding=windingPenalty(mesh,faces),surface=faces.reduce((s,f)=>s+quadShapePenalty(mesh,f,scale),0),score=distance+surface+winding*1e9;
-      if(!best||score<best.score)best={faces,mapped,reverse,flip,windingPenalty:winding,surfacePenalty:surface,score,qualityGuarded:true};
+      const winding=windingPenalty(mesh,faces),surface=faces.reduce((s,f)=>s+quadShapePenalty(mesh,f,scale),0),flow=bridgeFlowRegularity(mesh,faces,{closed:false}),score=distance+surface+flow.penalty*scale*.12+winding*1e9;
+      if(!best||score<best.score)best={faces,mapped,reverse,flip,windingPenalty:winding,surfacePenalty:surface,flowPenalty:flow.penalty,connectorFlowPenalty:flow.connectorPenalty,quadAspectPenalty:flow.aspectPenalty,score,qualityGuarded:true};
     }
   }
   return{plan:best,reason:best?null:lastReject};
@@ -216,7 +218,7 @@ function trialFrom(mesh,topology){
 function diagnostic(ok,reason,extra={}){globalThis.__boxlabOpenChainAllQuadBridge={version:VERSION,ok,allQuad:!!ok,qualityGuarded:true,lastReject:reason||null,...extra};}
 
 export function installOpenChainAllQuadBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge286Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__openChainAllQuadBridge288Installed)return;
   const baseSelected=proto.bridgeSelectedEdges,topology=globalThis.__boxlabTopology;
   if(typeof baseSelected!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
@@ -248,11 +250,11 @@ export function installOpenChainAllQuadBridge(EditableMesh){
     if(!best)return fallback(lastReject,{searchCandidates:tested,searchAttempts:attempted});
     topology.restoreMeshState(this,topology.cloneMeshState(best.trial));
     const faceIndices=Array.from({length:best.plan.faces.length},(_,i)=>best.start+i),addedVertices=Math.abs(info.counts[0]-info.counts[1]);
-    const result={faceIndices,plan:{...best.plan,quadCount:faceIndices.length,triangleCount:0,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchPhase:best.phase,reverseShort:best.reverseShort},openChain:true,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchPhase:best.phase,addedVertices,denseCounts:[best.denseA.length-1,best.denseB.length-1]};
-    diagnostic(true,null,{addedVertices,denseCounts:result.denseCounts,connectors:best.quality.connectors,searchCandidates:tested,searchAttempts:attempted,searchPhase:best.phase,reverseShort:best.reverseShort,searchScore:best.score});
+    const result={faceIndices,plan:{...best.plan,quadCount:faceIndices.length,triangleCount:0,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchPhase:best.phase,reverseShort:best.reverseShort,flowPenalty:best.plan.flowPenalty??0,connectorFlowPenalty:best.plan.connectorFlowPenalty??0,quadAspectPenalty:best.plan.quadAspectPenalty??0},openChain:true,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchPhase:best.phase,addedVertices,denseCounts:[best.denseA.length-1,best.denseB.length-1]};
+    diagnostic(true,null,{addedVertices,denseCounts:result.denseCounts,connectors:best.quality.connectors,searchCandidates:tested,searchAttempts:attempted,searchPhase:best.phase,reverseShort:best.reverseShort,searchScore:best.score,flowPenalty:best.plan.flowPenalty??0,connectorFlowPenalty:best.plan.connectorFlowPenalty??0,quadAspectPenalty:best.plan.quadAspectPenalty??0});
     return result;
   };
 
-  proto.__openChainAllQuadBridge286Installed=true;
+  proto.__openChainAllQuadBridge288Installed=true;
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
