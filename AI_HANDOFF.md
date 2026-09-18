@@ -25,12 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.324**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **d3567a4901ba701b323bf6e1f574e0cf957dcf1f**
-- Current code-bearing/release commit: **70df4c4f137a55e553227aa391bdd68324a0d732**
-- v0.36.18.324 release PR: **#8**
-- Final corrected PR topology regression: **35406677103** — success
-- Current `version.json`: **0.36.18.324**
+- Repository release: **v0.36.18.325**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **b00f05f77f3caa8897157153da7f282f178cdf75**
+- Current code-bearing/release commit: **11f3d80d871d2fa2375d908aa904527bd549e394**
+- v0.36.18.325 release PR: **#9**
+- Final PR topology regression: **35407390765** — success
+- Current `version.json`: **0.36.18.325**
+- Current main runtime pin: **main.js?v=0.36.18.325**
 - Current Add Vertex cache pin: **add-vertex-edge-snap.js?v=0.36.18.324**
 - Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.323**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
@@ -39,32 +40,33 @@ Audited from current `main` on 2026-09-19.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 - Persistent product roadmap: **ROADMAP.md**
 
-Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is now active.
+Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.324
+## Latest completed development — v0.36.18.325
 
-Theme: **Phase B start — cross-object Add Vertex snapping**.
+Theme: **Phase B — cross-object component Move snapping**.
 
-New pure helper module:
-- `src/cross-object-snap-core.js`
+The shared cross-object snap system now supports component Move in Vertex/Edge/Face modes when Geometry snapping is enabled.
 
-Add Vertex snapping now behaves as follows:
-1. existing local active-mesh edge snapping keeps priority
-2. if no local edge is hit and Geometry snapping is enabled, visible other objects are considered
-3. other-object target priority is:
+Behavior:
+1. visible other-object geometry is considered using the same target priority introduced in .324:
    - Vertex
    - Midpoint
    - generic Edge position
-4. the active object receives the new vertex; the target object is never modified
-5. hidden objects and objects excluded by Solo do not contribute snap targets
+2. single-vertex Move snaps that selected vertex directly to the target
+3. Edge/Face/multi-component Move snaps the selected component centre to the target
+4. axis-constrained Move changes only the selected axis coordinate to match the target
+5. Object mode is excluded
+6. target objects are read-only and are never modified by the snap
+7. hidden and Solo-excluded objects do not contribute targets
 
-This includes reference/locked objects as usable geometric references when visible.
+New shared helper:
+- `componentSnapDelta(startReference,targetPosition,axis)`
 
-Important implementation boundary:
-- `src/multi-object-transform.js?v=0.36.1.0` was **not changed**
-- this release covers Add Vertex only; cross-object transform snapping is not yet implemented
+Important protected boundary:
+- `src/multi-object-transform.js?v=0.36.1.0` remains untouched
 
-Regression coverage proves candidate filtering, vertex priority, midpoint priority, generic edge interpolation, and solo exclusion.
+Regression coverage includes free component delta, constrained-axis delta, runtime use of the shared cross-object snap core, Object-mode exclusion and the protected transform pin.
 
 ## Current Clean for SubD pipeline
 
@@ -211,14 +213,14 @@ Scene / modifiers:
 
 ## Next development step
 
-**Phase B — Precision Modelling is active.**
+**Phase B — Precision Modelling remains active.**
 
-The first slice, cross-object snapping for Add Vertex, is complete.
+Cross-object snapping now covers:
+- Add Vertex (.324)
+- component Move in Vertex/Edge/Face modes (.325)
 
 Recommended next build:
-- extend cross-object snapping to a second high-value precision workflow without touching the protected multi-object transform module unless there is a proven need
-- strongest candidates are component Move snapping or precision/readback polish
-- preserve Add Vertex local-snap priority and the new other-object target ordering
+- precision drag/readback polish so Move gives clearer live numerical feedback while dragging and snapping
 
 Other Phase B priorities remain:
 - Repeat Previous audit/polish
@@ -227,6 +229,8 @@ Other Phase B priorities remain:
 - Edge Flip
 - stronger structured Fill / Grid Fill / Cap workflows
 - support-loop construction improvements
+
+Do not extend snapping into Object-mode multi-transform by editing the protected `src/multi-object-transform.js` unless there is a concrete user need and explicit reason to touch that protected system.
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
