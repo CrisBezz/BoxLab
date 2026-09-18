@@ -29,7 +29,7 @@ Before finishing any development session that changes BoxLab, update this file a
 Audited from `main` on 2026-09-19 (Australia/Brisbane context).
 
 - Visible app version: **v0.36.18.319**
-- Current audited HEAD: **4ed534dfe8697e54921a8a80d7b50945b6792342**
+- Current audited HEAD after handoff setup: **e9821750a66b95ca2ad8ba4fe3eb0cd32543bfe2**
 - Release commit for .319: **68e45845f6696b3e66929ee4b181748b85d99b09**
 - Latest release theme: **Clean for SubD — internal proposed-quad flow coherence**
 - `styles.css` remains intentionally pinned at **v0.36.18.270**
