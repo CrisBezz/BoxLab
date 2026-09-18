@@ -25,54 +25,46 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.323**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **a808a6a051ef8bc8bce492864e2afddbb070efca**
-- Current code-bearing/release commit: **040e210bf2868a45791c35c9c1392bc1e6f244fe**
-- v0.36.18.323 release PR: **#7**
-- PR topology regression: **35406242201** — success
-- Current `version.json`: **0.36.18.323**
+- Repository release: **v0.36.18.324**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **d3567a4901ba701b323bf6e1f574e0cf957dcf1f**
+- Current code-bearing/release commit: **70df4c4f137a55e553227aa391bdd68324a0d732**
+- v0.36.18.324 release PR: **#8**
+- Final corrected PR topology regression: **35406677103** — success
+- Current `version.json`: **0.36.18.324**
+- Current Add Vertex cache pin: **add-vertex-edge-snap.js?v=0.36.18.324**
 - Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.323**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
 - `styles.css` intentionally remains pinned at **v0.36.18.270**
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 - Persistent product roadmap: **ROADMAP.md**
-- Only permanent workflow currently under `.github/workflows`: **through-regression.yml**
 
-**Phase A is complete and frozen at v0.36.18.323.** Do not continue speculative Clean for SubD research or expand the 40-triangle envelope unless a concrete modelling failure or reproducible regression justifies reopening it.
+Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is now active.
 
-## Latest completed development — v0.36.18.323
+## Latest completed development — v0.36.18.324
 
-Theme: **Phase A final — transactional topology audit and cleanup freeze**.
+Theme: **Phase B start — cross-object Add Vertex snapping**.
 
-The final Phase A release moves the safety contract into the Clean for SubD core itself.
+New pure helper module:
+- `src/cross-object-snap-core.js`
 
-New exported helper:
-- `quadTopologyAudit(mesh)`
+Add Vertex snapping now behaves as follows:
+1. existing local active-mesh edge snapping keeps priority
+2. if no local edge is hit and Geometry snapping is enabled, visible other objects are considered
+3. other-object target priority is:
+   - Vertex
+   - Midpoint
+   - generic Edge position
+4. the active object receives the new vertex; the target object is never modified
+5. hidden objects and objects excluded by Solo do not contribute snap targets
 
-It detects:
-- invalid face vertex references
-- repeated vertices / zero edges
-- collapsed edges
-- duplicate faces
-- non-manifold edges
-- orphan crease references
-- while treating valid open boundaries as valid topology
+This includes reference/locked objects as usable geometric references when visible.
 
-`quadCleanMesh(mesh)` now snapshots the original mesh and audits after:
-1. local four-triangle retopo
-2. sliver cleanup
-3. bounded triangle-island solving
-4. residual triangle-pair merge
-5. guarded all-quad relaxation
+Important implementation boundary:
+- `src/multi-object-transform.js?v=0.36.1.0` was **not changed**
+- this release covers Add Vertex only; cross-object transform snapping is not yet implemented
 
-If any stage fails or produces invalid topology, the original mesh is restored transactionally.
-
-Regression coverage now also includes deterministic generated irregular triangulated-strip fixtures.
-
-The **40-triangle cap, quality thresholds, acceptance guards, valence ranking and flow ranking are unchanged**.
-
-This release closes the planned backend Clean for SubD development phase. Future work moves to Phase B precision modelling.
+Regression coverage proves candidate filtering, vertex priority, midpoint priority, generic edge interpolation, and solo exclusion.
 
 ## Current Clean for SubD pipeline
 
@@ -219,16 +211,16 @@ Scene / modifiers:
 
 ## Next development step
 
-**Phase A is complete. The next active roadmap phase is Phase B — Precision Modelling.**
+**Phase B — Precision Modelling is active.**
 
-Before the next code change:
-1. read `ROADMAP.md`
-2. inspect current `main`
-3. choose the highest-value Phase B item that can be added without destabilizing protected modelling behaviour
+The first slice, cross-object snapping for Add Vertex, is complete.
 
-Current Phase B priority candidates:
-- cross-object snapping
-- precision drag/readback polish
+Recommended next build:
+- extend cross-object snapping to a second high-value precision workflow without touching the protected multi-object transform module unless there is a proven need
+- strongest candidates are component Move snapping or precision/readback polish
+- preserve Add Vertex local-snap priority and the new other-object target ordering
+
+Other Phase B priorities remain:
 - Repeat Previous audit/polish
 - Align / Flatten component tools
 - Circle / regularize selected components
@@ -236,11 +228,7 @@ Current Phase B priority candidates:
 - stronger structured Fill / Grid Fill / Cap workflows
 - support-loop construction improvements
 
-Do not reopen Clean for SubD merely to continue version increments. Reopen Phase A only for a concrete user-facing failure or reproducible topology regression.
-
-The current modelling principle remains:
-
-**direct Pencil interaction → precise topology-aware operation → validate → commit transactionally → preserve everything unrelated**
+Do not reopen Phase A unless a concrete cleanup regression is reported.
 
 ## End-of-session requirement
 
