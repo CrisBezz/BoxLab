@@ -1,5 +1,5 @@
-// BoxLab v0.36.18.319 — Clean for SubD internal proposed-quad flow coherence.
-// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding quad-flow scoring, aggregate quality, and worst-boundary guards. Phase 4 merges remaining safe triangle pairs using the same surrounding-quad flow and quality guards. Phase 5 tangent-relaxes safe interior all-quad vertices.
+// BoxLab v0.36.18.320 — Clean for SubD completed-patch interior valence regularity.
+// Phase 1 repairs safe four-triangle quad fans. Phase 2 collapses only demonstrably-better skinny interior triangle edges. Phase 3 solves small even triangle islands as complete quad patches with surrounding/internal flow scoring, aggregate quality, worst-boundary guards, and interior valence-aware ranking. Phase 4 merges remaining safe triangle pairs using the same surrounding-quad flow and quality guards. Phase 5 tangent-relaxes safe interior all-quad vertices.
 
 const EPS=1e-12;
 const MAX_EDGE_RATIO=5;
@@ -13,6 +13,7 @@ const PATCH_MAX_AVG_SCORE=Math.log(4);
 const PATCH_MAX_BOUNDARY_FLOW=.65;
 const PATCH_BOUNDARY_WORST_WEIGHT=.5;
 const PATCH_INTERNAL_FLOW_WEIGHT=.5;
+const PATCH_VALENCE_WEIGHT=.25;
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
 function triNormal(mesh,face){
@@ -163,6 +164,35 @@ export function quadPatchInternalFlowContext(mesh,pairs){
   return{samples,avgFlow,worstFlow,penalty:avgFlow*PATCH_INTERNAL_FLOW_WEIGHT};
 }
 
+export function quadPatchValenceContext(mesh,pairs){
+  if(!mesh?.faces||!mesh?.vertices)return{samples:0,avgError:0,worstError:0,penalty:0};
+  const edges=mesh.edges?.()||[],incident=Array.from({length:mesh.vertices.length},()=>[]);
+  for(const edge of edges){
+    incident[edge.a]?.push(edge);incident[edge.b]?.push(edge);
+  }
+  const removedByVertex=new Map();
+  for(const pair of pairs||[]){
+    const a=mesh.faces?.[pair?.a],b=mesh.faces?.[pair?.b];
+    if(!Array.isArray(a)||!Array.isArray(b))continue;
+    const shared=a.filter(v=>b.includes(v));
+    if(shared.length!==2)continue;
+    for(const v of shared)removedByVertex.set(v,(removedByVertex.get(v)||0)+1);
+  }
+  let total=0,worstError=0,samples=0;
+  for(const [v,removed] of removedByVertex){
+    const ring=incident[v]||[];
+    if(!ring.length)continue;
+    if(ring.some(edge=>edge.faces?.length!==2))continue;
+    if(ring.some(edge=>(mesh.creases instanceof Map)&&(mesh.creases.get(edgeKey(mesh,edge.a,edge.b))||0)>0))continue;
+    const resultValence=ring.length-removed;
+    if(resultValence<3)continue;
+    const error=Math.abs(resultValence-4);
+    total+=error;worstError=Math.max(worstError,error);samples++;
+  }
+  const avgError=samples?total/samples:0;
+  return{samples,avgError,worstError,penalty:avgError*PATCH_VALENCE_WEIGHT};
+}
+
 function trianglePatchCandidate(mesh,faces){
   if(faces.length<4||faces.length>MAX_TRIANGLE_PATCH||faces.length%2)return null;
   const faceSet=new Set(faces),byFace=new Map();
@@ -184,8 +214,10 @@ function trianglePatchCandidate(mesh,faces){
       const key=pairs.map(p=>`${Math.min(p.a,p.b)}:${Math.max(p.a,p.b)}`).sort().join('|');
       const boundary=quadPatchBoundaryContext(pairs);
       const internal=quadPatchInternalFlowContext(mesh,pairs);
-      const patchScore=score+boundary.penalty+internal.penalty;
-      if(!best||patchScore<best.score-EPS||(Math.abs(patchScore-best.score)<=EPS&&key<best.key))best={pairs:[...pairs],score:patchScore,pairScore:score,key,boundary,internal};
+      const valence=quadPatchValenceContext(mesh,pairs);
+      const qualityScore=score+boundary.penalty+internal.penalty;
+      const patchScore=qualityScore+valence.penalty;
+      if(!best||patchScore<best.score-EPS||(Math.abs(patchScore-best.score)<=EPS&&key<best.key))best={pairs:[...pairs],score:patchScore,qualityScore,pairScore:score,key,boundary,internal,valence};
       return;
     }
     if(best&&score>=best.score-EPS)return;
@@ -201,10 +233,11 @@ function trianglePatchCandidate(mesh,faces){
   search(new Set(faces),[],0);
   if(!best)return null;
   const worstEdgeRatio=Math.max(...best.pairs.map(p=>p.edgeRatio||Infinity));
-  const avgScore=best.score/Math.max(best.pairs.length,1);
+  const avgScore=(best.qualityScore??best.score)/Math.max(best.pairs.length,1);
   const boundary=best.boundary||quadPatchBoundaryContext(best.pairs);
   const internal=best.internal||quadPatchInternalFlowContext(mesh,best.pairs);
-  return{...best,worstEdgeRatio,avgScore,avgFlow:boundary.avgFlow,worstFlow:boundary.worstFlow,boundarySamples:boundary.samples,internalAvgFlow:internal.avgFlow,internalWorstFlow:internal.worstFlow,internalSamples:internal.samples,qualityOk:worstEdgeRatio<=PATCH_MAX_EDGE_RATIO&&avgScore<=PATCH_MAX_AVG_SCORE&&boundary.worstFlow<=PATCH_MAX_BOUNDARY_FLOW};
+  const valence=best.valence||quadPatchValenceContext(mesh,best.pairs);
+  return{...best,worstEdgeRatio,avgScore,avgFlow:boundary.avgFlow,worstFlow:boundary.worstFlow,boundarySamples:boundary.samples,internalAvgFlow:internal.avgFlow,internalWorstFlow:internal.worstFlow,internalSamples:internal.samples,valenceAvgError:valence.avgError,valenceWorstError:valence.worstError,valenceSamples:valence.samples,valencePenalty:valence.penalty,qualityOk:worstEdgeRatio<=PATCH_MAX_EDGE_RATIO&&avgScore<=PATCH_MAX_AVG_SCORE&&boundary.worstFlow<=PATCH_MAX_BOUNDARY_FLOW};
 }
 
 export function quadCleanTriangleIslands(mesh,{minTriangles=4,maxTriangles=MAX_TRIANGLE_PATCH}={}){
