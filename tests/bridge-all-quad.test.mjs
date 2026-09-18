@@ -269,7 +269,7 @@ test('284 guarded 3 to 9 can produce nine quads with six inserted vertices',()=>
 });
 
 
-test('285 closed-loop guarded Bridge reports bounded densification search',()=>{
+test('287 closed-loop guarded Bridge reports bounded multi-phase search',()=>{
   class DummyMesh{
     constructor(){this.vertices=[...ring(3,0,1),...ring(9,2,1.2)];this.faces=[];this.creases=new Map();this.looseEdges=new Set();this.looseVertices=new Set();}
     edgeKey(a,b){return key(a,b);}
@@ -289,7 +289,7 @@ test('285 closed-loop guarded Bridge reports bounded densification search',()=>{
   const mesh=new DummyMesh(),result=mesh.bridgeLoops([0,1,2],[3,4,5,6,7,8,9,10,11]);
   assert.equal(result?.allQuad,true);
   assert.equal(result?.correspondenceSearch,true);
-  assert.ok(result?.searchCandidates>=1&&result.searchCandidates<=3);
+  assert.ok(result?.searchCandidates>=1&&result.searchCandidates<=9);
   assert.ok(Number.isFinite(result?.searchScore));
   assert.equal(globalThis.__boxlabClosedAllQuadBridge?.ok,true);
   assert.equal(globalThis.__boxlabClosedAllQuadBridge?.searchCandidates,result.searchCandidates);
