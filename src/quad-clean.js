@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.293 — Object > Quad Clean with local retopo repair + guarded flow relax.
+// BoxLab v0.36.18.295 — Object > Clean for SubD production cleanup workflow.
 
-import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.293';
+import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.295';
 
 const button=document.querySelector('#quadCleanBtn');
 const status=document.querySelector('#selectionStatus');
@@ -25,19 +25,19 @@ button?.addEventListener('click',()=>{
     vertices:mesh.vertices.map(v=>v.clone()),faces:mesh.faces.map(f=>[...f]),creases:new Map(mesh.creases||[])
   };
   const result=quadCleanMesh(mesh);
-  if(!result.ok){setStatus(result.reason||'Quad Clean failed');return;}
+  if(!result.ok){setStatus(result.reason||'Clean for SubD failed');return;}
   if(result.changed&&topology?.validateTopology){
     const validation=topology.validateTopology(mesh,{allowBoundary:true});
     if(!validation?.ok){
       if(topology.restoreMeshState)topology.restoreMeshState(mesh,before);
       else{mesh.vertices=before.vertices;mesh.faces=before.faces;mesh.creases=before.creases;}
-      setStatus('Quad Clean rolled back • topology guard rejected result');
+      setStatus('Clean for SubD rolled back • topology guard rejected result');
       globalThis.__boxlabQuadCleanLastResult={...result,ok:false,rolledBack:true,reason:'topology-rejected'};
       forceRender();return;
     }
   }
   manager()?.saveActive?.();
-  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.293',...result};
+  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.295',workflow:'clean-for-subd',...result};
   if(result.changed){
     const parts=[];
     if(result.fanRepairs)parts.push(`${result.fanRepairs} quad fan${result.fanRepairs===1?'':'s'} repaired`);
@@ -47,8 +47,9 @@ button?.addEventListener('click',()=>{
     if(result.relaxedVertices)parts.push(`${result.relaxedVertices} flow-relaxed vert${result.relaxedVertices===1?'ex':'ices'}`);
     parts.push(`tris ${result.before.triangles}→${result.after.triangles}`);
     parts.push(`quads ${result.before.quads}→${result.after.quads}`);
-    setStatus(`Quad Clean • ${parts.join(' • ')}`);
-  }else setStatus(`Quad Clean • no safe repairs found • ${result.before.triangles} triangles • ${result.before.quads} quads`);
+    parts.push(`faces ${result.before.faces}→${result.after.faces}`);
+    setStatus(`Clean for SubD • ${parts.join(' • ')}`);
+  }else setStatus(`Clean for SubD • no safe repairs found • ${result.after.triangles} tris • ${result.after.quads} quads • ${result.after.ngons} ngons`);
   forceRender();
 });
 
