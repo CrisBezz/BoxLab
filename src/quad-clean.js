@@ -1,6 +1,6 @@
-// BoxLab v0.36.18.303 — Clean for SubD with bounded twelve-triangle local retopo.
+// BoxLab v0.36.18.304 — Clean for SubD with bounded fourteen-triangle local retopo.
 
-import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.303';
+import { quadCleanMesh } from './quad-clean-core.js?v=0.36.18.304';
 
 const button=document.querySelector('#quadCleanBtn');
 const status=document.querySelector('#selectionStatus');
@@ -37,7 +37,7 @@ button?.addEventListener('click',()=>{
     }
   }
   manager()?.saveActive?.();
-  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.303',workflow:'clean-for-subd',...result};
+  globalThis.__boxlabQuadCleanLastResult={version:'0.36.18.304',workflow:'clean-for-subd',...result};
   if(result.changed){
     const parts=[];
     if(result.fanRepairs)parts.push(`${result.fanRepairs} quad fan${result.fanRepairs===1?'':'s'} repaired`);
