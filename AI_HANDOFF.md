@@ -25,40 +25,42 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.321**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **3282ef94e0406f178d1ef18edba914fbb01a2586**
-- Current code-bearing/release commit: **0b838da0cd2a31cd4d88c2390a9e15e9b0c58905**
-- v0.36.18.321 release PR: **#5**
-- PR topology regression: **35403817957** — success
-- Current `version.json`: **0.36.18.321**
-- Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.321**
+- Repository release: **v0.36.18.322**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **cdcc90e85dc53a98fde943e11a5b0774695c675f**
+- Current code-bearing/release commit: **0f03befbb7d69ca53194536579c240a993efd9ff**
+- v0.36.18.322 release PR: **#6**
+- PR topology regression: **35404138276** — success
+- Current `version.json`: **0.36.18.322**
+- Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.322**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
 - `styles.css` intentionally remains pinned at **v0.36.18.270**
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 - Only permanent workflow currently under `.github/workflows`: **through-regression.yml**
 
-Chronology note: .319 added internal proposed-quad flow coherence. .320 added smooth-interior average valence regularity. .321 adds worst-local valence regularity while preserving the same 40-triangle bounded solver and the same acceptance gates.
+Chronology note: .319 added internal proposed-quad flow coherence. .320 added average interior valence regularity. .321 added worst-local valence regularity. .322 now adds worst-local internal proposed-quad flow regularity, still within the same 40-triangle bounded solver and without relaxing acceptance.
 
-## Latest completed development — v0.36.18.321
+## Latest completed development — v0.36.18.322
 
-Theme: **Clean for SubD — worst-local interior valence-aware complete-patch ranking**.
+Theme: **Clean for SubD — worst-local internal proposed-quad flow ranking**.
 
-The bounded triangle-island solver remains capped at **40 connected triangles**. .321 does not expand that envelope and does not relax any .320 quality/eligibility gate.
+The bounded triangle-island solver remains capped at **40 connected triangles**. .322 does not expand that envelope and does not change any .321 eligibility or acceptance threshold.
 
-The valence ranking now uses:
-- `PATCH_VALENCE_WEIGHT=.25`
-- `PATCH_VALENCE_WORST_WEIGHT=.1`
+The internal flow ranking now uses:
+- `PATCH_INTERNAL_FLOW_WEIGHT=.5`
+- `PATCH_INTERNAL_WORST_WEIGHT=.1`
 
-The new helper `quadValencePenalty(errors)` combines:
-- average smooth-interior valence error
-- worst local smooth-interior valence error
+The new helper `quadInternalFlowPenalty(flows)` returns:
+- average internal flow mismatch
+- worst local internal flow mismatch
+- the existing average-only `penalty` used by the quality/acceptance score
+- a `rankingPenalty` that adds the small worst-local term only for comparing safe complete matchings
 
-This prevents a severe extraordinary vertex from being diluted by several perfect vertices when two complete matchings have the same average valence error.
+This prevents a single badly aligned proposed quad junction from being diluted by several coherent internal junctions when two candidate patches have the same average internal-flow mismatch.
 
-Important safety property: the valence terms remain **ranking-only**. The pre-existing .320 quality score remains the score used by `PATCH_MAX_AVG_SCORE` and the other acceptance guards.
+Important safety property: `qualityScore` still uses only `internal.penalty`; the new `internal.rankingPenalty` affects patch selection only.
 
-Regression coverage proves that two alternatives with the same average valence error are ordered in favour of the lower worst local error.
+Regression coverage proves that equal-average flow distributions keep the same acceptance penalty while the alternative with lower worst local mismatch receives the better ranking.
 
 ## Current Clean for SubD pipeline
 
@@ -81,6 +83,7 @@ Regression coverage proves that two alternatives with the same average valence e
    - **.319 internal proposed-quad flow-coherence scoring**
    - **.320 smooth-interior valence-aware completed-patch ranking**
    - **.321 worst-local valence-aware completed-patch ranking**
+   - **.322 worst-local internal-flow-aware completed-patch ranking**
    - no vertex movement
    - no surrounding-quad rewrite
    - rejected patches remain untouched
@@ -203,9 +206,9 @@ Scene / modifiers:
 
 ## Next development step
 
-There is **no unfinished .322 feature recorded in the repo**.
+There is **no unfinished .323 feature recorded in the repo**.
 
-The .321 worst-local valence ranking step is complete and merged. On the next user `/nextbuild`:
+The .322 worst-local internal-flow ranking step is complete and merged. On the next user `/nextbuild`:
 1. inspect current `main`
 2. confirm version/live deployment state
 3. choose another conservative qualitative topology improvement
