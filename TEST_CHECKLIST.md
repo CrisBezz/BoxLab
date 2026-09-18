@@ -45,6 +45,9 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Vertex tools
 
+- [ ] Add Vertex can snap to visible geometry on other objects without modifying the target object
+- [ ] cross-object snapping prefers target vertices, then midpoints, then generic edge positions
+- [ ] hidden/solo-excluded objects do not contribute snap targets
 - [ ] Add Vertex works
 - [ ] Build Edge works
 - [ ] Vertex Slide works

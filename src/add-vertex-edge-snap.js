@@ -1,10 +1,11 @@
 import * as THREE from 'three';
+import { nearestCrossObjectSnap } from './cross-object-snap-core.js?v=0.36.18.324';
 
-// BoxLab v0.36.18.164 — Add Vertex preserves the live bridge mesh across history snapshots.
+// BoxLab v0.36.18.324 — Add Vertex adds cross-object geometry snapping.
 // 18.150 tap/orbit placement behavior is preserved. Starting Add disarms
 // Lasso first, and Lasso can explicitly stop the Add session without selecting.
 
-const VERSION='0.36.18.164';
+const VERSION='0.36.18.324';
 const canvas=document.querySelector('#viewport');
 const addVertexBtn=document.querySelector('#addVertexBtn');
 const status=document.querySelector('#selectionStatus');
@@ -68,6 +69,28 @@ function nearestEdge(clientX,clientY){
     if(distance<=EDGE_HIT_PX&&(!best||distance<best.distance))best={index,edge,t,distance,snapType:midpointSnap?'Midpoint':'Edge'};
   });
   return best;
+}
+
+function nearestOtherObjectSnap(clientX,clientY){
+  if(!geometryOn())return null;
+  const manager=globalThis.__boxlabObjectManager;
+  if(!manager)return null;
+  const objects=manager.objects||[];
+  const activeId=manager.activeId??null;
+  const result=nearestCrossObjectSnap({
+    objects,
+    activeId,
+    soloId:manager.soloId??null,
+    project:screenPoint,
+    clientX,
+    clientY,
+    vertexPx:14,
+    midpointPx:MIDPOINT_PX,
+    edgePx:EDGE_HIT_PX
+  });
+  if(!result)return null;
+  const object=objects.find(o=>o.id===result.objectId);
+  return{...result,objectName:object?.name||'Object'};
 }
 
 function freeSpacePoint(event,m){
@@ -245,6 +268,20 @@ document.addEventListener('pointerdown',event=>{
     render();
     return;
   }
+  const cross=nearestOtherObjectSnap(event.clientX,event.clientY);
+  if(cross){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const before=m.clone();
+    const vertex=addLooseVertex(m,cross.position);
+    if(!Number.isInteger(vertex))return;
+    pushSnapshotPreservingLive(h,before,m);
+    lastVertex=vertex;
+    tapCandidate=null;
+    if(status)status.textContent=`Add Vertex • ${cross.type} snap • ${cross.objectName}`;
+    render();
+    return;
+  }
   tapCandidate={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startedAt:performance.now(),multi:activePointers.size>1,moved:false};
 },true);
 
@@ -297,4 +334,4 @@ document.addEventListener('pointercancel',event=>{
   if(tapCandidate?.pointerId===event.pointerId)tapCandidate=null;
 },true);
 
-globalThis.__boxlabAddVertex={version:VERSION,isActive,sessionActive:()=>sessionActive,stop:stopSession,nearestEdge,splitEdge,freeSpacePoint};
+globalThis.__boxlabAddVertex={version:VERSION,isActive,sessionActive:()=>sessionActive,stop:stopSession,nearestEdge,nearestOtherObjectSnap,splitEdge,freeSpacePoint};
