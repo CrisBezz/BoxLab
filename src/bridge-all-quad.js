@@ -1,8 +1,10 @@
-// BoxLab v0.36.18.287 — multi-phase densification search for guarded closed-loop all-quad Bridge.
+// BoxLab v0.36.18.288 — edge-flow regularity scoring for guarded closed-loop all-quad Bridge.
 // Densifies the smaller closed boundary loop, spreading comparable splits around the loop,
 // then reuses the proven equal-count Bridge solver.
 
-const VERSION='0.36.18.287';
+import { bridgeFlowRegularity } from './bridge-flow-regularity.js?v=0.36.18.288';
+
+const VERSION='0.36.18.288';
 const MAX_ADDED=6;
 const MAX_RATIO=3;
 const NEAR_LONGEST=0.95;
@@ -66,7 +68,8 @@ function closedCandidateScore(mesh,faces,loopA,loopB){
       if((aSet.has(x)&&bSet.has(y))||(bSet.has(x)&&aSet.has(y)))score+=mesh.vertices[x].distanceToSquared(mesh.vertices[y]);
     }
   }
-  return score;
+  const flow=bridgeFlowRegularity(mesh,faces,{closed:true}),scale=loopScale(mesh,loopA,loopB);
+  return{score:score+flow.penalty*scale*.12,flow};
 }
 
 function rotatedLoop(loop,offset){
@@ -210,7 +213,7 @@ export function canTryAllQuad(loopA,loopB){
 }
 
 export function installSubdFriendlyBridge(EditableMesh){
-  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge287Installed)return;
+  const proto=EditableMesh?.prototype;if(!proto||proto.__subdFriendlyBridge288Installed)return;
   const baseBridgeLoops=proto.bridgeLoops,topology=globalThis.__boxlabTopology;
   if(typeof baseBridgeLoops!=='function'||!topology?.cloneMeshState||!topology?.restoreMeshState||!topology?.validateTopology)return;
 
@@ -234,18 +237,18 @@ export function installSubdFriendlyBridge(EditableMesh){
       const quality=validateClosedAllQuadCandidate(this,faces,denseA,denseB);if(!quality.ok){lastReject=quality.reason;continue;}
       const validation=topology.validateTopology(this,{allowBoundary:true});if(!validation.ok){lastReject='topology-rejected';continue;}
       const winding=windingValidation(this);if(!winding.ok){lastReject=winding.reason||'winding-rejected';continue;}
-      const score=closedCandidateScore(this,faces,denseA,denseB);
-      if(!best||score<best.score-1e-12)best={score,rotation,phase,result:{...result},state:snapshot(this,topology),denseCounts:[denseA.length,denseB.length],connectors:quality.connectors};
+      const scored=closedCandidateScore(this,faces,denseA,denseB),score=scored.score;
+      if(!best||score<best.score-1e-12)best={score,flow:scored.flow,rotation,phase,result:{...result},state:snapshot(this,topology),denseCounts:[denseA.length,denseB.length],connectors:quality.connectors};
     }
     if(!best)return fallback(lastReject,{searchCandidates:tested,searchAttempts:attempted});
     restore(this,topology,best.state);
-    const result={...best.result,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchRotation:best.rotation,searchPhase:best.phase,searchScore:best.score,addedVertices:target-Math.min(loopA.length,loopB.length),denseCounts:best.denseCounts};
-    diagnostic(true,null,{addedVertices:result.addedVertices,denseCounts:result.denseCounts,connectors:best.connectors,searchCandidates:tested,searchAttempts:attempted,searchRotation:best.rotation,searchPhase:best.phase,searchScore:best.score});
+    const result={...best.result,unequal:true,allQuad:true,subdFriendly:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchRotation:best.rotation,searchPhase:best.phase,searchScore:best.score,flowPenalty:best.flow?.penalty??0,connectorFlowPenalty:best.flow?.connectorPenalty??0,quadAspectPenalty:best.flow?.aspectPenalty??0,addedVertices:target-Math.min(loopA.length,loopB.length),denseCounts:best.denseCounts};
+    diagnostic(true,null,{addedVertices:result.addedVertices,denseCounts:result.denseCounts,connectors:best.connectors,searchCandidates:tested,searchAttempts:attempted,searchRotation:best.rotation,searchPhase:best.phase,searchScore:best.score,flowPenalty:best.flow?.penalty??0,connectorFlowPenalty:best.flow?.connectorPenalty??0,quadAspectPenalty:best.flow?.aspectPenalty??0});
     globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:true,balancedDensification:true,qualityGuarded:true,correspondenceSearch:true,searchCandidates:tested,searchAttempts:attempted,searchRotation:best.rotation,searchPhase:best.phase,addedVertices:result.addedVertices,denseCounts:result.denseCounts};
     return result;
   };
 
-  proto.__subdFriendlyBridge287Installed=true;
+  proto.__subdFriendlyBridge288Installed=true;
   globalThis.__boxlabSubdFriendlyBridge={version:VERSION,ok:null,balancedDensification:true,qualityGuarded:true,addedVertices:0,denseCounts:[]};
   diagnostic(null,null,{addedVertices:0,denseCounts:[]});
 }
