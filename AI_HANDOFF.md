@@ -26,7 +26,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-19.
 
 - Repository release: **v0.36.18.343**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **779ed8da4e6d9855d806c082ad9b86918475f158**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **aa9eac72e96678c20993c9b756017470a68f40e5**
 - Current code-bearing/release commit: **b35e542b93469b8c957b55c3c3de1e96e9ebc65a**
 - v0.36.18.343 release PR: **#27**
 - Corrected PR topology regression: **35435127026** — success
