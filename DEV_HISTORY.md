@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.335 restore Edge Split with canonical Multi
+
+- Released **v0.36.18.335** from PR #19; squash merge commit: `04b23e2d445888dea952efc650161be1d5a53286`.
+- Root cause: canonical always-additive component Multi left `edge-paint-select.js` active, and its capture-phase pointer handler consumed an unselected Edge tap before `face-split.js` could receive it.
+- Face Split now exposes an armed state and participates in the existing `boxlab-direct-tool-exclusive` convention.
+- While Face Split is armed, additive Edge paint selection yields instead of consuming the gesture.
+- When Face Split is disarmed, normal canonical additive Edge selection resumes immediately.
+- Global Multi remains enabled; there is no rollback to the old Multi toggle model.
+- Cache-hopped `edge-paint-select.js` and `face-split.js` to .335.
+- PR topology regression run **35417550936** passed before merge.
+
 ## 2026-09-19 — v0.36.18.334 Circle moved to Active Tools
 
 - Released **v0.36.18.334** from PR #18; squash merge commit: `6dc2d183e0332d6953f60e9bf21f5b39c1686ec8`.
