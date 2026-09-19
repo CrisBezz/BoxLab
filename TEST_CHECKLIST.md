@@ -56,6 +56,9 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] multi-object selection/management works
 - [ ] grouped Outliner hierarchy preserves group membership through Object Undo/Redo
 - [ ] custom group names survive scene Undo/Redo and group rename is one Undo step
+- [ ] selecting one complete group enables the normal Rename button as Rename Group
+- [ ] selected group header is visibly distinct and its name acts as the primary group selection target
+- [ ] group header direct Ungroup works without breaking normal Group Selection / Multi behavior
 - [ ] collapsed/expanded group state survives scene Undo/Redo when the group still exists
 - [ ] removed groups do not leak stale names/collapse state into later groups that reuse an ID
 - [ ] object transforms do not regress
