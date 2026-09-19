@@ -25,14 +25,14 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.342**
+- Repository release: **v0.36.18.343**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **779ed8da4e6d9855d806c082ad9b86918475f158**
-- Current code-bearing/release commit: **cf9ee2dc3c1b9db9963e5fdc23435d3b1acabbe8**
-- v0.36.18.342 release PR: **#26**
-- Corrected PR topology regression: **35432345834** — success
-- Current `version.json`: **0.36.18.342**
+- Current code-bearing/release commit: **b35e542b93469b8c957b55c3c3de1e96e9ebc65a**
+- v0.36.18.343 release PR: **#27**
+- Corrected PR topology regression: **35435127026** — success
+- Current `version.json`: **0.36.18.343**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.342**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.343**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
@@ -49,11 +49,30 @@ Audited from current `main` on 2026-09-19.
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
-Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is the next active focus.
+Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.342
+## Latest completed development — v0.36.18.343
 
-Theme: **File menu viewport fit and stable 3-column Face Active Tools**.
+Theme: **linked-instance foundation and explicit Make Unique**.
+
+Mandatory audit result:
+- current main did not contain a live linked-instance implementation
+- the old v0.36.19.x instance layer had been intentionally removed
+- ordinary Duplicate in current main was already independent
+- therefore v0.36.18.343 adds a new explicit linked path without changing ordinary Duplicate
+
+Current linked-instance architecture:
+- owned by the authoritative `multi-object.js` manager
+- **Linked Duplicate** creates a shared-source peer
+- **Make Unique** detaches only the active peer
+- each linked object keeps its own world placement through `instanceMatrix`
+- Object-mode transforms update placement only
+- component edits update the shared local source and regenerate all linked peers
+- placement solving is tested for both solid and planar meshes
+- Outliner labels linked groups with `Link ×N`
+- Object scene snapshots preserve `sourceId` and `instanceMatrix`
+- Join always produces a unique result
+- protected `multi-object-transform.js?v=0.36.1.0` remains untouched
 
 User-visible UI baseline:
 - File menu opens below the command bar and fits inside the available iPad viewport
@@ -250,10 +269,10 @@ Scene / modifiers:
 **Phase C — Object / instance workflow is next.**
 
 Recommended next build:
-- **linked-instance editing robustness + Make Unique audit**
-- perform the mandatory existing-feature audit first across current instance/link/duplicate/object-management modules
-- verify the current live behavior before relying on older .19.3/.19.4 history
-- prefer repairing/consolidating the existing instance pathway rather than introducing a second instance model
+- **linked-instance live robustness pass** after manual testing of .343
+- specifically test component Extrude / Inset / Move on a moved linked peer, then Undo/Redo and Make Unique
+- repair only concrete regressions found in the new manager-owned pathway
+- after linked editing is stable, continue to cross-object reference/edit workflows
 
 Phase B completed precision slices:
 - Add Vertex cross-object snapping (.324)
@@ -270,6 +289,7 @@ Phase B completed precision slices:
 - transactional/Multi-safe Offset Loop support workflow (.340)
 - Vertex toolbar / Build Edge handoff regression fixed (.341)
 - File menu fit + stable 3-column Face layout (.342)
+- linked-instance foundation + Make Unique (.343)
 
 Keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch.
 
