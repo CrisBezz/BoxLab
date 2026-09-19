@@ -53,12 +53,14 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] duplicating an already-numbered sibling continues the same numbering family rather than nesting another suffix
 - [ ] linked and Multi duplicate naming follows the same numbered object-name rule
 - [ ] rename works
+- [ ] Object Rename opens the BoxLab rename field already focused with the current text selected for immediate typing
 - [ ] delete works
 - [ ] Boolean results use compact B numbering (B1, B2, B3…) from the active/base object name instead of concatenating operand names
 - [ ] Join works
 - [ ] multi-object selection/management works
 - [ ] grouped Outliner hierarchy preserves group membership through Object Undo/Redo
 - [ ] custom group names survive scene Undo/Redo and group rename is one Undo step
+- [ ] Group Rename immediately updates the visible Group header and opens focused with the current name selected
 - [ ] selecting one complete group enables the normal Rename button as Rename Group
 - [ ] selected group header is visibly distinct and its name acts as the primary group selection target
 - [ ] Group Selection immediately creates the visible hierarchy row; it must not merely stamp per-object group IDs/tags

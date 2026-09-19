@@ -40,6 +40,47 @@ function activeObject() { return objects.find(object => object.id === activeId) 
 function currentMode() { return document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
 function cap(text) { return text ? text.charAt(0).toUpperCase() + text.slice(1) : ''; }
 
+function ensureRenameDialogStyle() {
+  if (document.querySelector('#boxlabRenameDialogStyle')) return;
+  const style = document.createElement('style');
+  style.id = 'boxlabRenameDialogStyle';
+  style.textContent = `
+#boxlabRenameDialog{position:fixed;inset:0;z-index:12000;display:grid;place-items:center;padding:24px;background:rgba(4,6,9,.48);backdrop-filter:blur(5px)}
+#boxlabRenameDialog .rename-card{width:min(390px,calc(100vw - 32px));padding:14px;border:1px solid rgba(255,255,255,.18);border-radius:14px;background:rgba(20,23,29,.98);box-shadow:0 20px 54px rgba(0,0,0,.46)}
+#boxlabRenameDialog .rename-title{font-size:13px;font-weight:700;margin:0 0 8px;color:#eef1f7}
+#boxlabRenameDialog input{width:100%;min-height:42px;padding:9px 11px;border:1px solid rgba(255,255,255,.24);border-radius:9px;background:#0f1217;color:#eef1f7;font-size:16px;outline:none;user-select:text;-webkit-user-select:text}
+#boxlabRenameDialog input:focus{border-color:#eef1f7;box-shadow:0 0 0 2px rgba(238,241,247,.12)}
+#boxlabRenameDialog .rename-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+#boxlabRenameDialog .rename-actions button{min-height:38px}
+`;
+  document.head.append(style);
+}
+function requestRename({title='Rename',value=''}={}) {
+  ensureRenameDialogStyle();
+  document.querySelector('#boxlabRenameDialog')?.remove();
+  return new Promise(resolve => {
+    const overlay=document.createElement('div');overlay.id='boxlabRenameDialog';
+    const form=document.createElement('form');form.className='rename-card';
+    const label=document.createElement('div');label.className='rename-title';label.textContent=title;
+    const input=document.createElement('input');input.type='text';input.value=String(value||'');input.autocomplete='off';input.autocapitalize='off';input.spellcheck=false;input.enterKeyHint='done';
+    const actions=document.createElement('div');actions.className='rename-actions';
+    const cancel=document.createElement('button');cancel.type='button';cancel.textContent='Cancel';
+    const done=document.createElement('button');done.type='submit';done.textContent='Rename';done.className='primary';
+    actions.append(cancel,done);form.append(label,input,actions);overlay.append(form);document.body.append(overlay);
+    let settled=false;
+    const finish=result=>{if(settled)return;settled=true;overlay.remove();resolve(result);};
+    cancel.addEventListener('click',()=>finish(null));
+    overlay.addEventListener('pointerdown',event=>{if(event.target===overlay)finish(null);});
+    form.addEventListener('submit',event=>{event.preventDefault();finish(input.value);});
+    input.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();finish(null);}});
+    const focusAndSelect=()=>{try{input.focus({preventScroll:true});}catch{input.focus();}input.select();};
+    focusAndSelect();
+    requestAnimationFrame(focusAndSelect);
+    setTimeout(focusAndSelect,80);
+  });
+}
+globalThis.__boxlabRenameDialog=requestRename;
+
 function cloneLooseValue(value) {
   if (value instanceof Map) return new Map(value);
   if (value instanceof Set) return new Set(value);
@@ -442,15 +483,16 @@ function joinObjects(ids = []) {
 }
 
 
-function renameActive() {
+async function renameActive() {
   const object = activeObject();
   if (!object) return;
-  const value = window.prompt('Object name', object.name);
+  const value = await requestRename({ title:'Rename Object', value:object.name });
   if (value === null) return;
   const clean = value.trim();
   if (!clean) return;
   object.name = uniqueName(clean, object.id);
   renderOutliner();
+  if (status) status.textContent = `${object.name} renamed`;
 }
 
 function deleteActive() {
