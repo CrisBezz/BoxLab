@@ -25,13 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.344**
+- Repository release: **v0.36.18.345**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **a3310b62e7a499f64cbd4c5b0889001ab16e6139**
-- Current code-bearing/release commit: **6118b0f60073573fb035c31d17d2082512c31d41**
-- v0.36.18.344 release PR: **#28**
-- PR topology regression: **35436090086** — success
+- Current code-bearing/release commit: **296c2742faff6734f9af422a5050918a700dceb4**
+- v0.36.18.345 release PR: **#29**
+- PR topology regression: **35437021036** — success
 - Post-merge topology regression: **35436107413** — success
-- Current `version.json`: **0.36.18.344**
+- Current `version.json`: **0.36.18.345**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.344**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -52,9 +52,16 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.344
+## Latest completed development — v0.36.18.345
 
-Theme: **Reference objects hardened as permanently read-only modelling guides**.
+Theme: **Safari native-selection interaction hardening**.
+
+Protected iPad interaction baseline:
+- BoxLab chrome and modelling surface must not become native Safari-selected during touch/Pencil work
+- native long-press callout and browser drag-selection are suppressed on the app surface
+- real editable controls remain selectable/editable
+- existing touch-action / orbit / pan / pinch / Pencil gesture routing is unchanged
+- guard lives in `src/app-interaction-guard.js`; do not duplicate this behavior elsewhere
 
 Reference guide baseline:
 - imported Reference meshes already participate in existing cross-object snapping
@@ -307,6 +314,7 @@ Phase B completed precision slices:
 - File menu fit + stable 3-column Face layout (.342)
 - linked-instance foundation + Make Unique (.343)
 - permanent read-only Reference guide workflow (.344)
+- Safari native-selection interaction guard (.345)
 
 Keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch.
 
