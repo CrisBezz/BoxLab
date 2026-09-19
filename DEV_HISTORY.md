@@ -8,6 +8,14 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.332 Circle visibility hotfix
+
+- Released **v0.36.18.332** from PR #16; squash merge commit: `86f5efe098b26fa7543d1018122fc7deeeacdb04`.
+- Fixed Circle not appearing on iPad/Safari because `index.html` still loaded `drawer-ui.js?v=0.36.18.210`, allowing the browser to reuse an older cached drawer module that did not import Circle.
+- Cache-hopped the authoritative drawer loader to `drawer-ui.js?v=0.36.18.332`.
+- Circle now remains visible-but-disabled outside Vertex/Edge mode instead of disappearing, improving discoverability.
+- Added regression coverage for the current drawer cache key and Circle visibility.
+
 ## 2026-09-19 — v0.36.18.331 Circle regularize for closed loops
 
 - Released **v0.36.18.331** from PR #15; squash merge commit: `64bb42b17ef463e489c66989bf6f51dc99917126`.
