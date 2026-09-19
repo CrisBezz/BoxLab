@@ -3,14 +3,17 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
 const precision=fs.readFileSync(new URL('../src/precision-face.js',import.meta.url),'utf8');
 const repeat=fs.readFileSync(new URL('../src/repeat-face-previous.js',import.meta.url),'utf8');
 
-test('327 live app loads Precision Face before Repeat Previous',()=>{
-  const multi=index.indexOf('multi-face-direct.js?v=0.36.18.242');
-  const p=index.indexOf('precision-face.js?v=0.36.18.327');
-  const r=index.indexOf('repeat-face-previous.js?v=0.36.18.327');
-  assert.ok(multi>=0&&p>multi&&r>p);
+test('328 Repeat Previous has one authoritative loader through drawer UI',()=>{
+  assert.doesNotMatch(index,/precision-face\.js\?v=/);
+  assert.doesNotMatch(index,/repeat-face-previous\.js\?v=/);
+  assert.match(drawer,/import\('\.\/precision-face\.js\?v=0\.36\.18\.327'\)/);
+  assert.match(drawer,/import\('\.\/repeat-face-previous\.js\?v=0\.36\.18\.327'\)/);
+  assert.equal((drawer.match(/precision-face\.js\?v=/g)||[]).length,1);
+  assert.equal((drawer.match(/repeat-face-previous\.js\?v=/g)||[]).length,1);
 });
 
 test('327 precision Face exposes exact replay API and committed last operation',()=>{
