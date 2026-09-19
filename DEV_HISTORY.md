@@ -19,6 +19,7 @@ Newest entries should be added at the top.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Refreshed `object-management.js → drawer-ui.js → index.html` cache chain.
 - Added regression coverage for upward popover positioning and protected pins.
+- Released from PR **#41**; squash merge commit: `d7c4655f125c0811bbee12c8733da02090ec3926`.
 
 ## 2026-09-20 — v0.36.18.356 compact Outliner polish
 
