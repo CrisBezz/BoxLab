@@ -43,13 +43,13 @@ function info(){
 }
 
 function apply(axis){
-  const {m,md,ids,vertices}=info();
-  if(!m||!['vertex','edge','face'].includes(md)||vertices.length<2)return false;
+  const {m,md,ids,vertices}=info(),history=globalThis.__boxlabHistory;
+  if(!m||!history||!['vertex','edge','face'].includes(md)||vertices.length<2)return false;
   const before=m.clone?.();
   if(!before)return false;
   const result=alignComponentAxis(m,vertices,axis);
   if(!result)return false;
-  globalThis.__boxlabHistory?.push(before);
+  history.push(before);
   bridge()?.set?.(md,ids);
   render();
   if(status)status.textContent=`Align ${axis.toUpperCase()} • ${result.count} verts • ${axis.toUpperCase()} = ${result.target.toFixed(3)}`;
