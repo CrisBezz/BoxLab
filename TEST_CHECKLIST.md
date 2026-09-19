@@ -85,6 +85,11 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Face tools
 
+- [ ] normal Extrude drag records an exact previous value for Repeat Previous
+- [ ] normal Inset drag records an exact previous value for Repeat Previous
+- [ ] Repeat Previous can be armed and applied by tapping another Face
+- [ ] repeated Face operation uses the exact previously committed value
+- [ ] Through / blocked / rollback Extrude gestures do not become Repeat Previous operations
 - [ ] Extrude works
 - [ ] connected multi-face Extrude works
 - [ ] Inset works

@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.84 — one-click Repeat Previous with immediate pointer arming.
+// BoxLab v0.36.18.327 — reconnected one-click Repeat Previous with exact committed Face values.
 // Repeat owns Face taps before the normal drag controller and replays only the
 // frozen value committed by precision-face from a real Face operation.
 
@@ -173,4 +173,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 [0,40,120,300,700].forEach(delay=>setTimeout(syncButton,delay));
 
-globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.84',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
+globalThis.__boxlabRepeatFacePrevious={version:'0.36.18.327',arm,disarm,isArmed:()=>armed,last:lastOperation,replayFace,pickFace};
