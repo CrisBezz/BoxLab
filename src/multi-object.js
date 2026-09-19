@@ -140,9 +140,31 @@ function syncLinkedPeers(sourceId, activeObjectId=null) {
 }
 function detachLinkedObject(object) {
   if(!object?.sourceId)return false;
+  const sourceId=object.sourceId;
   delete object.sourceId;
   delete object.instanceMatrix;
+  const peers=objects.filter(item=>item.sourceId===sourceId);
+  if(peers.length===1){
+    delete peers[0].sourceId;
+    delete peers[0].instanceMatrix;
+    linkedSources.delete(sourceId);
+  }else if(peers.length===0){
+    linkedSources.delete(sourceId);
+  }
   return true;
+}
+function linkedDuplicateObject(sourceObject,{name=null,enterObjectMode=true}={}) {
+  if(!sourceObject||sourceObject.kind==='reference')return null;
+  if(sourceObject.id===activeId)saveActive();
+  const source=ensureLinkedSource(sourceObject);
+  if(!source)return null;
+  const copy=addObject(sourceObject.mesh,name||`${sourceObject.name} linked`,{settings:sourceObject.settings,enterObjectMode});
+  if(!copy)return null;
+  copy.sourceId=sourceObject.sourceId;
+  setInstanceMatrix(copy,matrixForInstance(sourceObject));
+  copy.mesh=sourceObject.mesh.clone();
+  if(sourceObject.origin)copy.origin={...sourceObject.origin};
+  return copy;
 }
 function saveActive() {
   const object = activeObject(), live = state()?.mesh;
@@ -344,36 +366,39 @@ function duplicateActive() {
 
 function linkedDuplicateActive() {
   const sourceObject=activeObject();
-  if(!sourceObject||sourceObject.kind==='reference')return;
+  if(!sourceObject||sourceObject.kind==='reference')return null;
   const beforeScene=globalThis.__boxlabObjectHistory?.capture?.()||null;
-  saveActive();
-  const source=ensureLinkedSource(sourceObject);
-  if(!source)return;
-  const copy=addObject(sourceObject.mesh,`${sourceObject.name} linked`,{settings:sourceObject.settings,enterObjectMode:true});
-  if(!copy)return;
-  copy.sourceId=sourceObject.sourceId;
-  setInstanceMatrix(copy,matrixForInstance(sourceObject));
-  copy.mesh=sourceObject.mesh.clone();
-  if(sourceObject.origin)copy.origin={...sourceObject.origin};
+  const copy=linkedDuplicateObject(sourceObject,{enterObjectMode:true});
+  if(!copy)return null;
   if(beforeScene)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(beforeScene);
   renderOutliner();
-  if(status)status.textContent=`Linked Duplicate created • ${linkedCount(sourceObject.sourceId)} share geometry`;
+  if(status)status.textContent=`Linked Duplicate created • ${linkedCount(copy.sourceId)} share geometry`;
   requestAnimationFrame(()=>{if(currentMode()==='object')globalThis.__boxlabTransformArming?.activateRealMove?.();});
+  return copy;
 }
 
+function makeObjectsUnique(ids=[],checkpoint=true) {
+  const chosen=objects.filter(object=>ids.includes(object.id)&&object.sourceId);
+  if(!chosen.length)return[];
+  if(checkpoint)globalThis.__boxlabObjectHistory?.checkpoint?.();
+  saveActive();
+  const detached=[];
+  for(const object of chosen){
+    if(object.id===activeId)object.mesh=state()?.mesh?.clone?.()||object.mesh.clone();
+    if(detachLinkedObject(object))detached.push(object.id);
+  }
+  renderOutliner();
+  return detached;
+}
 function makeActiveUnique() {
   const object=activeObject();
   if(!object||linkedCount(object.sourceId)<2){
     if(status)status.textContent='Object is already unique';
     return false;
   }
-  globalThis.__boxlabObjectHistory?.checkpoint?.();
-  saveActive();
-  detachLinkedObject(object);
-  object.mesh=state()?.mesh?.clone?.()||object.mesh.clone();
-  renderOutliner();
-  if(status)status.textContent=`${object.name} made unique`;
-  return true;
+  const detached=makeObjectsUnique([object.id],true);
+  if(status&&detached.length)status.textContent=`${object.name} made unique`;
+  return !!detached.length;
 }
 
 function joinObjects(ids = []) {
@@ -657,7 +682,9 @@ function initialize() {
     activate(id) { return activateObject(id); },
     joinObjects(ids) { return joinObjects(ids); },
     linkedDuplicate() { return linkedDuplicateActive(); },
+    linkedDuplicateObject(id, options={}) { return linkedDuplicateObject(objects.find(item=>item.id===id),options); },
     makeUnique() { return makeActiveUnique(); },
+    makeUniqueIds(ids=[]) { return makeObjectsUnique(ids,false); },
     linkedIds(id) { const object=objects.find(item=>item.id===id); return object?.sourceId?objects.filter(item=>item.sourceId===object.sourceId).map(item=>item.id):[]; },
     sourceId(id) { return objects.find(item=>item.id===id)?.sourceId||null; },
     resetAll,
@@ -666,7 +693,7 @@ function initialize() {
     get objects() { saveActive(); return objects; },
     get soloId() { return soloId; }
   };
-  globalThis.__boxlabObjectGeometry={version:'0.36.18.343',sourceId:id=>globalThis.__boxlabObjectManager?.sourceId?.(id)||null,linkedIds:id=>globalThis.__boxlabObjectManager?.linkedIds?.(id)||[]};
+  globalThis.__boxlabObjectGeometry={version:'0.36.18.346',sourceId:id=>globalThis.__boxlabObjectManager?.sourceId?.(id)||null,linkedIds:id=>globalThis.__boxlabObjectManager?.linkedIds?.(id)||[]};
   window.dispatchEvent(new Event('boxlab-object-manager-ready'));
   renderOutliner();
   forceRender();
