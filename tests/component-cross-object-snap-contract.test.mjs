@@ -12,8 +12,8 @@ test('325 component Move runtime uses shared cross-object snap core',()=>{
   assert.match(main,/inferenceSnapEnabled/);
 });
 
-test('325 component Move snap stays out of Object mode and keeps protected transform pin',()=>{
+test('326 component Move snap stays out of Object mode and keeps protected transform pin',()=>{
   assert.match(main,/sel\?\.type==='object'\)return null/);
-  assert.match(index,/main\.js\?v=0\.36\.18\.325/);
+  assert.match(index,/main\.js\?v=0\.36\.18\.326/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
