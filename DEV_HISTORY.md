@@ -8,7 +8,7 @@ Newest entries should be added at the top.
 
 ---
 
-## 2026-09-19 — v0.36.18.328 duplicate Repeat Previous UI removed
+## 2026-09-19 — v0.36.18.328 duplicate Repeat UI removed
 
 - Released **v0.36.18.328** from PR #12; squash merge commit: `f731849f96b5808c986b6d46dc92e53c9f64f9c3`.
 - Fixed duplicate Precision Face / Repeat Previous controls introduced by v0.36.18.327.
@@ -18,10 +18,10 @@ Newest entries should be added at the top.
 - Added regression coverage ensuring there is only one loader path for each module.
 - This fix preserves the existing Repeat Previous behavior and exact-value replay logic; it only removes duplicate UI instantiation.
 
-## 2026-09-19 — v0.36.18.327 Repeat Previous reconnected
+## 2026-09-19 — v0.36.18.327 redundant Repeat Previous reconnect
 
 - Released **v0.36.18.327** from PR #11; squash merge commit: `462eabc59076afdfa7efaf10338bfa49f83355c1`.
-- Reconnected the existing `precision-face.js` and `repeat-face-previous.js` modules into the live app.
+- This release was later identified as redundant: Repeat Extrude / Repeat Inset were already live through `drawer-ui.js` before .327.
 - Normal Face Extrude and Inset operations record committed model-unit values.
 - Repeat Previous can replay the exact previous Extrude/Inset value on another Face.
 - Through-ready, Through, blocked and rollback Extrude gestures remain explicitly non-repeatable.
