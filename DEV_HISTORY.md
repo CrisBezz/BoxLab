@@ -8,6 +8,15 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.334 Circle moved to Active Tools
+
+- Released **v0.36.18.334** from PR #18; squash merge commit: `6dc2d183e0332d6953f60e9bf21f5b39c1686ec8`.
+- Relocated the existing Circle control out of the Selection drawer.
+- Circle now appears contextually inside Vertex / Edge / Face **Active Tools**.
+- Kept one authoritative Circle implementation and one handler; geometry, selection, Undo, and Face/Edge/Vertex behavior are unchanged.
+- Updated dynamic loader/cache pins to .334.
+- PR topology regression run **35417217225** passed before merge.
+
 ## 2026-09-19 — v0.36.18.333 Face Circle support
 
 - Released **v0.36.18.333** from PR #17; squash merge commit: `fbfbf9f46f45b4551cb0e5fdc1086cac248e7919`.
