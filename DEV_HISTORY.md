@@ -8,6 +8,18 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.358 anchored upward Outliner popovers
+
+- User confirmed v0.36.18.357 still rendered Group More downward on iPad despite `bottom:` CSS.
+- Replaced bottom-offset positioning with an explicit Safari-resistant anchor:
+  - popup `top:0`
+  - `bottom:auto`
+  - translated upward by its own full height
+  - critical positioning uses `!important`
+- Applied consistently to Object row More, Group More and footer Object-action More.
+- No changes to selection, Group hierarchy, transforms, linked instances, Boolean behavior or Reference protection.
+- Protected `object-origin.js?v=0.36.18.355` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+
 ## 2026-09-20 — v0.36.18.357 upward Outliner popovers
 
 - User screenshot showed the compact Object **More** menu opening downward near the bottom of the Objects drawer, causing Lock/Solo to be clipped by the drawer edge.
