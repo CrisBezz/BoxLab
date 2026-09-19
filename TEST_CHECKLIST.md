@@ -42,6 +42,10 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] component edits on one linked instance propagate to all linked peers in their own placements
 - [ ] Make Unique detaches only the active linked instance; later edits no longer propagate between it and the former link group
 - [ ] Linked Duplicate / Make Unique survive Object-mode Undo/Redo with link metadata intact
+- [ ] with Object Multi active, Linked Duplicate operates on every selected editable object and selects the newly created linked set
+- [ ] Multi Linked Duplicate skips Reference guides and preserves duplicated group relationships / relative arrangement
+- [ ] with Object Multi active, Make Unique detaches all selected linked objects in one history step
+- [ ] ordinary Multi Duplicate remains independent and does not silently become linked
 - [ ] Join produces a unique combined result even if one input was linked
 - [ ] object creation works
 - [ ] switching active object works
