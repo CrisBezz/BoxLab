@@ -8,6 +8,23 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.359 Outliner Delete restoration + keyboard Delete
+
+- User reported that compact Outliner polish had made object Delete too hard to find and requested a keyboard shortcut.
+- Every object-row **More** menu now includes **Delete Object**.
+- Row-level Delete removes that specific object and creates exactly one Object scene-history checkpoint.
+- Global/footer Delete keeps its existing authoritative history capture; `deleteActive()` therefore suppresses a second internal checkpoint.
+- In Object mode, hardware-keyboard **Delete** and **Backspace** trigger the existing authoritative Delete button.
+- Keyboard Delete therefore inherits current selection semantics:
+  - single object → delete active object
+  - Multi selection → delete selected objects
+  - whole Group selection → delete selected Group members through the existing Multi pathway
+- Keyboard handling ignores Meta/Ctrl/Alt-modified shortcuts and does not fire inside inputs, textareas, selects, contenteditable elements or the BoxLab Rename dialog.
+- Added future roadmap item for **Group Boolean convenience** using temporary Join-derived compound operands rather than a new Group geometry type.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for row Delete, keyboard Delete/Backspace, editable-field protection and one-step history semantics.
+
 ## 2026-09-20 — v0.36.18.358 anchored upward Outliner popovers
 
 - User confirmed v0.36.18.357 still rendered Group More downward on iPad despite `bottom:` CSS.
