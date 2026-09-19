@@ -25,17 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.349**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **e2125994c69127f4d0607edae40bcfa299fb6821**
-- Current code-bearing/release commit: **12fdaa389d507799253482bd7c8f4747a1e1a8f4**
-- v0.36.18.349 release PR: **#33**
+- Repository release candidate: **v0.36.18.350**
+- Current documentation HEAD: **v0.36.18.350 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.350 PR branch; pending merge**
+- v0.36.18.350 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**n: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.349**
+- Current `version.json`: **0.36.18.350**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.349**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.350**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.349**
+- Object management loader: **object-management.js?v=0.36.18.350**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -53,7 +53,32 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.349
+## Latest completed development — v0.36.18.350
+
+Theme: **compact Group tree UX**.
+
+User-facing change:
+- Grouping no longer consumes a permanent management strip in the Object drawer
+- existing Groups are represented as compact scene-tree rows: disclosure / name / visibility / lock / More
+- children are tightly indented beneath the Group header
+- More contains Rename Group + Ungroup
+- Group Selection only appears contextually when 2+ selected objects can form a new Group
+- fully selected Groups still use the first-class selection / Rename Group model from .349
+
+History consistency:
+- group visibility checkpoints Object scene history
+- group lock checkpoints Object scene history
+- direct Ungroup continues through the existing authoritative group action/history route
+- collapse is UI presentation state, not treated as a modelling history action
+
+Protected behavior:
+- automatic Group transform expansion unchanged
+- linked-instance behavior unchanged
+- Reference guides remain permanently read-only
+- Group metadata persistence from .348 unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.349
 
 Theme: **first-class Group selection UX**.
 
@@ -373,11 +398,12 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **Group action/history consistency audit**
-- inspect group visibility, lock and direct Ungroup against authoritative Object scene history
-- make sure every group-wide destructive/state action has one predictable Undo/Redo step
-- preserve the new first-class Group selection model from .349
-- preserve existing automatic Group transform expansion, linked instances and Reference protection
+- **compact Outliner polish / user-test response**
+- first respond to user testing of the .350 compact Group tree
+- inspect whether object rows themselves should inherit the same denser scene-tree treatment without harming touch targets
+- consider a compact object More menu only if it reduces clutter without duplicating existing Object actions
+- preserve first-class Group selection, contextual Group creation and history-safe Group state actions
+- preserve existing automatic Group transforms, linked instances and Reference protection
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
 Completed Phase C slices now include:
@@ -387,6 +413,7 @@ Completed Phase C slices now include:
 - unified Join / Boolean Object scene history (.347)
 - persistent Group organization metadata (.348)
 - first-class Group selection / Rename UX (.349)
+- compact Group tree + history-safe group state actions (.350)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 

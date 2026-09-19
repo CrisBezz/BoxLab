@@ -8,6 +8,21 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.350 compact Group tree
+
+- User supplied a dense scene/group hierarchy reference and reported the current Group UX still consumed too much vertical space.
+- Kept the existing Group ownership and transform model; no second hierarchy system was introduced.
+- Existing Groups now present as a compact Outliner tree row with disclosure, Group name, visibility, lock and a small More menu.
+- Group children are more tightly indented beneath the header with a simple tree guide rather than a large rounded container.
+- Group More menu contains **Rename Group** and **Ungroup**; the normal Object **Rename Group** action from v0.36.18.349 remains valid.
+- The old Group/Ungroup control strip is no longer permanently visible. **Group Selection** appears only when 2+ selected objects can actually form a new Group; the plumbing Ungroup control remains hidden for existing history-safe behavior.
+- Group visibility and lock now checkpoint authoritative Object scene history before state changes, so each action has predictable Undo/Redo.
+- Collapse remains a lightweight Outliner presentation state rather than a destructive modelling action.
+- Existing automatic Group transform expansion, linked-instance behavior, Reference read-only protection and Group metadata persistence remain unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `object-management.js → drawer-ui.js → index.html` cache chain for iPad/Safari.
+- Added regression coverage for contextual Group creation, compact tree structure, More actions, history-safe visibility/lock and protected cache/transform pins.
+
 ## 2026-09-20 — v0.36.18.349 first-class Group selection UX
 
 - User reported that normal **Rename** stayed disabled after selecting a whole Group and that Group interaction still felt fragmented.

@@ -32,9 +32,11 @@ function installGroupUiPolish() {
     const style = document.createElement('style');
     style.id = 'boxlabGroupUiPolish';
     style.textContent = `
-#objectGroupTools{display:grid!important;grid-template-columns:1fr!important;margin:5px 0 3px!important}
+#objectGroupTools{display:grid!important;grid-template-columns:1fr!important;margin:3px 0!important}
+#objectGroupTools[hidden]{display:none!important}
 #objectGroupTools>span{display:none!important}
-#objectGroupTools button{width:100%;font-size:11px;padding:5px 8px!important}
+#objectGroupTools [data-group-action="ungroup"]{display:none!important}
+#objectGroupTools button{width:100%;min-height:30px;font-size:11px;padding:4px 8px!important}
 #objectGroupTools button[disabled]{display:none!important}
 .boxlab-group-tag{font-size:9px!important;line-height:1!important;padding:2px 4px!important;border:0!important;border-radius:5px!important;opacity:.45!important;margin-left:3px!important;background:rgba(255,255,255,.06)!important;letter-spacing:-.2px!important;pointer-events:none}
 `;
@@ -48,7 +50,7 @@ function installGroupUiPolish() {
 
 syncDrawerToMode();
 
-import('./object-management.js?v=0.36.18.349').catch(error => console.warn('BoxLab object management failed to load', error));
+import('./object-management.js?v=0.36.18.350').catch(error => console.warn('BoxLab object management failed to load', error));
 import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxLab object drawer retain failed to load', error));
 import('./studio-scene-fix.js?v=0.36.18.197').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
 import('./lasso-select.js?v=0.36.18.152').catch(error => console.warn('BoxLab Lasso Select failed to load', error));
