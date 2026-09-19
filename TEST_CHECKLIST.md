@@ -45,6 +45,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Precision snapping
 
+- [ ] component Move displays live ΔX / ΔY / ΔZ while dragging
+- [ ] snapped component Move keeps numeric delta readback visible alongside the snap target label
 - [ ] Geometry-enabled component Move can snap selected vertices to visible geometry on other objects
 - [ ] free component Move can align an edge/face/multi-component centre to another-object snap target
 - [ ] axis-constrained component Move changes only the constrained coordinate when snapping cross-object
