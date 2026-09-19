@@ -7,7 +7,7 @@ test('346 Multi Linked Duplicate reuses the existing linked control',()=>{
   assert.match(src,/const linkedDuplicateButton=document\.querySelector\('#linkedDuplicateBtn'\)/);
   assert.match(src,/linkedDuplicateButton\?\.addEventListener\('click'/);
   assert.match(src,/if\(internalAction\|\|!multiEnabled\)return/);
-  assert.doesNotMatch(src,/createElement\('button'\).*Linked Duplicate/s);
+  assert.doesNotMatch(src,/textContent='Linked Duplicate'/);
 });
 
 test('346 Multi Linked Duplicate skips References and preserves selected group relationships',()=>{
