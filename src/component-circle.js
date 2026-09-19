@@ -17,11 +17,20 @@ button.style.cssText='min-width:0;width:100%';
 
 function place(md=mode()){
   if(md==='vertex'){
+    const owner=globalThis.__boxlabVertexToolLayout;
+    if(owner?.sync?.())return true;
     const createFace=document.querySelector('#createFaceFromVerticesBtn');
     const row=createFace?.parentElement;
     if(!row)return false;
     row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
-    if(button.parentElement!==row)row.appendChild(button);
+    const bevel=document.querySelector('#vertexBevelBtn');
+    const add=document.querySelector('#addVertexBtn');
+    const build=document.querySelector('#buildEdgeBtn');
+    const slide=document.querySelector('#vertexSlideBtn');
+    const ordered=[bevel,add,build,slide,createFace,button].filter(Boolean);
+    const current=[...row.children].filter(child=>ordered.includes(child));
+    const stable=current.length===ordered.length&&ordered.every((item,index)=>current[index]===item);
+    if(!stable)for(const item of ordered)row.appendChild(item);
     return true;
   }
   if(md==='edge'){
@@ -79,4 +88,4 @@ document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMic
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 [0,60,180,500].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabComponentCircle={version:'0.36.18.336',apply,sync,info};
+globalThis.__boxlabComponentCircle={version:'0.36.18.341',apply,sync,info};
