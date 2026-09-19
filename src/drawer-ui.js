@@ -68,7 +68,7 @@ import('./edge-context-ui.js?v=0.36.18.35').catch(error => console.warn('BoxLab 
 import('./collapse-edge.js?v=0.36.18.36').catch(error => console.warn('BoxLab Collapse Edge failed to load', error));
 import('./vertex-merge.js?v=0.36.18.37').catch(error => console.warn('BoxLab Vertex Merge failed to load', error));
 import('./merge-by-distance.js?v=0.36.18.41').catch(error => console.warn('BoxLab Merge by Distance failed to load', error));
-import('./face-reconstruct.js?v=0.36.18.75').catch(error => console.warn('BoxLab Face Reconstruction failed to load', error));
+import('./face-reconstruct.js?v=0.36.18.341').catch(error => console.warn('BoxLab Face Reconstruction failed to load', error));
 import('./join-coplanar.js?v=0.36.18.75').catch(error => console.warn('BoxLab Join Coplanar failed to load', error));
 import('./clean-vertices.js?v=0.36.18.39').catch(error => console.warn('BoxLab Clean Vertices failed to load', error));
 import('./select-loose-vertices.js?v=0.36.18.56').catch(error => console.warn('BoxLab Select Loose Vertices failed to load', error));
@@ -100,7 +100,7 @@ import('./face-workflow-layout.js?v=0.36.18.337').catch(error => console.warn('B
 import('./component-inspect-repair-drawers.js?v=0.36.18.175').catch(error => console.warn('BoxLab component Inspect/Repair drawers failed to load', error));
 import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./component-align.js?v=0.36.18.330').catch(error => console.warn('BoxLab component Align failed to load', error));
-import('./component-circle.js?v=0.36.18.336').catch(error => console.warn('BoxLab component Circle failed to load', error));
+import('./component-circle.js?v=0.36.18.341').catch(error => console.warn('BoxLab component Circle failed to load', error));
 import('./grid-fill.js?v=0.36.18.338').catch(error => console.warn('BoxLab Grid Fill failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
