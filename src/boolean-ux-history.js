@@ -2,7 +2,7 @@
 // Boolean geometry remains owned by boolean-prototype.js; scene Undo/Redo is owned by object-management.js.
 import * as THREE from 'three';
 
-const VERSION='0.36.18.352';
+const VERSION='0.36.18.354';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 const outliner=document.querySelector('#outlinerList');
@@ -105,16 +105,20 @@ function requestViewportRender(){
 function syncSelectionColours(){
   restoreViewportMaterials();
   if(currentMode()!=='object'){requestViewportRender();return;}
-  const m=manager(),ids=selection()?.ids;if(!m||!ids?.size){requestViewportRender();return;}
-  const activeId=m.activeId;
-  if(ids.has(activeId))applyBodyTint(findBodyForObject(activeId,true),COLOR_A);
-  for(const id of ids){if(id===activeId)continue;applyBodyTint(findBodyForObject(id,false),COLOR_B);}
+  const m=manager(),sel=selection(),ids=sel?.ids;if(!m||!ids?.size){requestViewportRender();return;}
+  const wholeGroupId=sel?.wholeGroupId??null,activeId=m.activeId;
+  if(wholeGroupId!=null){
+    for(const id of ids)applyBodyTint(findBodyForObject(id,id===activeId),COLOR_A);
+  }else if(ids.size===2){
+    if(ids.has(activeId))applyBodyTint(findBodyForObject(activeId,true),COLOR_A);
+    for(const id of ids){if(id===activeId)continue;applyBodyTint(findBodyForObject(id,false),COLOR_B);}
+  }
   requestViewportRender();
 }
 
 function syncUI(){
   selectionSyncQueued=false;
-  const panel=ensureOperandUI(),e=operands();keepBooleanToolsVisible(false);markOutliner({ok:false});if(e.ok)syncSelectionColours();else{restoreViewportMaterials();requestViewportRender();}if(!panel)return;
+  const panel=ensureOperandUI(),e=operands();keepBooleanToolsVisible(false);markOutliner({ok:false});syncSelectionColours();if(!panel)return;
   const a=panel.querySelector('.bool-a'),b=panel.querySelector('.bool-b'),swap=panel.querySelector('#booleanSwapAB218');
   if(e.ok){
     a.innerHTML=`<strong>A · ${escapeHtml(e.a.name)}</strong><span>Active / Base</span>`;
