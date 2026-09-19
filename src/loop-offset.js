@@ -83,7 +83,6 @@ const slider = document.querySelector('#offsetLoopSpacing');
 const output = document.querySelector('#offsetLoopSpacingOut');
 const status = document.querySelector('#selectionStatus');
 const canvas = document.querySelector('#viewport');
-const multiToggle = document.querySelector('#multiSelectToggle');
 const START_PX = 7;
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
@@ -175,10 +174,8 @@ function tapEdge(mesh, edgeIndex) {
   return false;
 }
 function selectCreatedLoops(mesh, indices) {
-  document.querySelector('#deselectAllBtn')?.click();
-  if (multiToggle) { multiToggle.checked=true; multiToggle.dispatchEvent(new Event('change',{bubbles:true})); }
-  for (const index of [...new Set(indices)]) tapEdge(mesh,index);
-  if (multiToggle) { multiToggle.checked=false; multiToggle.dispatchEvent(new Event('change',{bubbles:true})); }
+  const ids=[...new Set(indices)].filter(Number.isInteger);
+  globalThis.__boxlabSelectionBridge?.set?.('edge',ids);
 }
 function highlightEdges(indices, hex) {
   const state=liveState(); let count=0;
@@ -201,15 +198,21 @@ function applyPendingHighlight() {
 }
 
 slider?.addEventListener('input',()=>{ if(output) output.textContent=`${slider.value}%`; });
+function announceExclusive(tool){document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));}
+function disarm(message='Offset Loop off'){
+  armed=false;drag=null;sync();announceExclusive('none');
+  if(status)status.textContent=message;
+}
 button?.addEventListener('click',event=>{
   event.preventDefault();
   armed=!armed;
+  if(armed)announceExclusive('offset-loop');else announceExclusive('none');
   sync();
   if(status) status.textContent=armed?'Offset Loop • Pencil-drag a selected loop edge':'Offset Loop off';
 });
 document.addEventListener('click',event=>{
   if(!armed||event.target?.closest?.('#offsetLoopBtn')) return;
-  if(event.target?.closest?.('button')) { armed=false; sync(); }
+  if(event.target?.closest?.('button')) disarm();
 },true);
 
 canvas?.addEventListener('pointerdown',event=>{
@@ -252,6 +255,14 @@ function finish(event){
     if(status) status.textContent='Offset Loop • Pencil-drag a selected loop edge';
     return;
   }
+  const topology=globalThis.__boxlabTopology,gate=globalThis.__boxlabTopologyGate;
+  const topoValidation=topology?.validateTopology?.(current.mesh,{allowBoundary:true})||null;
+  const gateValidation=gate?.validate?.(current.mesh)||null;
+  if((topoValidation&&!topoValidation.ok)||(gateValidation&&!gateValidation.valid)){
+    restore(current.mesh,current.before);forceRender();
+    disarm('Offset Loop • validation failed • rolled back');
+    return;
+  }
   globalThis.__boxlabHistory?.push(current.before);
   pendingHighlight=current.preview;
   forceRender();
@@ -260,9 +271,12 @@ function finish(event){
     forceRender();
     requestAnimationFrame(applyPendingHighlight);
   });
-  armed=false; sync();
+  disarm('Offset Loop committed');
 }
 canvas?.addEventListener('pointerup',finish,true);
 canvas?.addEventListener('pointercancel',finish,true);
 window.addEventListener('boxlab-bridge-state',()=>{sync();applyPendingHighlight();});
 sync();
+
+
+globalThis.__boxlabOffsetLoop={version:'0.36.18.340',isArmed:()=>armed,disarm,info};
