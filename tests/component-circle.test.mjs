@@ -64,3 +64,15 @@ test('331 Circle has one drawer loader and no direct index load',()=>{
   assert.equal((drawer.match(/component-circle\.js\?v=0\.36\.18\.331/g)||[]).length,1);
   assert.doesNotMatch(index,/component-circle\.js\?v=/);
 });
+
+
+test('332 drawer UI cache key exposes current dynamic Circle loader',()=>{
+  const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.332/);
+});
+
+test('332 Circle remains visible for discovery outside Vertex Edge mode',()=>{
+  const ui=fs.readFileSync(new URL('../src/component-circle.js',import.meta.url),'utf8');
+  assert.match(ui,/row\.style\.display='';/);
+  assert.match(ui,/Circle works in Vertex or Edge mode/);
+});
