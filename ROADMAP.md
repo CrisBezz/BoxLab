@@ -37,6 +37,7 @@ Delivered:
 - UI-level topology validation remains as a second line of defence
 
 Phase A freeze rule:
+- v0.36.18.339 reopened Phase A only for a concrete Clean shape-preservation regression; sharp incident normal breaks are now protected during relaxation
 - do not resume blind triangle-cap growth
 - do not chase exotic remeshing research without a concrete user-facing failure
 - future Clean for SubD changes require a real modelling case or a reproducible regression
