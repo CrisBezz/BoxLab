@@ -149,7 +149,7 @@ function linkedDuplicateObject(sourceObject,{name=null,enterObjectMode=true}={})
   if(sourceObject.id===activeId)saveActive();
   const source=ensureLinkedSource(sourceObject);
   if(!source)return null;
-  const copy=addObject(sourceObject.mesh,name||`${sourceObject.name} linked`,{settings:sourceObject.settings,visible:sourceObject.visible!==false,locked:false,enterObjectMode});
+  const copy=addObject(sourceObject.mesh,name||nextDuplicateName(sourceObject.name),{settings:sourceObject.settings,visible:sourceObject.visible!==false,locked:false,enterObjectMode});
   if(!copy)return null;
   copy.sourceId=sourceObject.sourceId;
   setInstanceMatrix(copy,matrixForInstance(sourceObject));
@@ -320,6 +320,22 @@ function uniqueName(base, excludeId = null) {
   return `${base} ${i}`;
 }
 
+function duplicateStem(name) {
+  let stem = String(name || 'Object').trim().replace(/\s+(?:copy|linked)$/i, '');
+  const numbered = stem.match(/^(.*)\s(\d{2,})$/);
+  if (numbered) stem = numbered[1].trim();
+  return stem || 'Object';
+}
+function nextDuplicateName(name) {
+  const stem = duplicateStem(name);
+  const names = new Set(objects.map(object => object.name));
+  let i = 1, candidate = '';
+  do {
+    candidate = `${stem} ${String(i++).padStart(2, '0')}`;
+  } while (names.has(candidate));
+  return candidate;
+}
+
 function addObject(mesh, name = 'Cube', options = {}) {
   saveActive();
   const object = {
@@ -347,7 +363,7 @@ function duplicateActive() {
   const source = activeObject();
   if (!source) return;
   saveActive();
-  const copy = addObject(source.mesh, `${source.name} copy`, { settings:source.settings, enterObjectMode:true });
+  const copy = addObject(source.mesh, nextDuplicateName(source.name), { settings:source.settings, enterObjectMode:true });
   if (!copy) return;
   requestAnimationFrame(() => {
     if (currentMode() !== 'object') return;
@@ -674,6 +690,7 @@ function initialize() {
     joinObjects(ids) { return joinObjects(ids); },
     linkedDuplicate() { return linkedDuplicateActive(); },
     linkedDuplicateObject(id, options={}) { return linkedDuplicateObject(objects.find(item=>item.id===id),options); },
+    nextDuplicateName(name) { return nextDuplicateName(name); },
     makeUnique() { return makeActiveUnique(); },
     makeUniqueIds(ids=[]) { return makeObjectsUnique(ids,false); },
     linkedIds(id) { const object=objects.find(item=>item.id===id); return object?.sourceId?objects.filter(item=>item.sourceId===object.sourceId).map(item=>item.id):[]; },

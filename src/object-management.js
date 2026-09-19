@@ -126,7 +126,7 @@ function ungroupSelection(ids=[...selectedIds]){
   setStatus(`${groups.size} group${groups.size===1?'':'s'} ungrouped`);return true;
 }
 
-function duplicateSelection(){const m=manager();if(!m)return;const chosen=selectedObjects();if(!chosen.length)return;const sourceGroups=new Map();for(const o of chosen)if(o.groupId!=null){if(!sourceGroups.has(o.groupId))sourceGroups.set(o.groupId,nextGroupId()+sourceGroups.size);}const snapshots=chosen.map(o=>({name:o.name,mesh:o.mesh.clone(),visible:o.visible,kind:o.kind,origin:o.origin?{...o.origin}:null,groupId:o.groupId,settings:cloneSettings(o.settings)}));const created=[];for(const src of snapshots){const copy=m.addMesh(src.mesh,`${src.name} copy`,{visible:src.visible,locked:false,kind:src.kind,settings:src.settings,enterObjectMode:false});if(!copy)continue;if(src.origin)copy.origin={...src.origin};if(src.groupId!=null&&sourceGroups.has(src.groupId))copy.groupId=sourceGroups.get(src.groupId);created.push(copy.id);}for(const [sourceId,newId] of sourceGroups)if(groupNames.has(sourceId))groupNames.set(newId,`${groupNames.get(sourceId)} copy`);multiEnabled=created.length>1||multiEnabled;selectedIds=new Set(created);setStatus(`${created.length} object${created.length===1?'':'s'} duplicated${sourceGroups.size?' • group relationship preserved':''}`);forceRender();updateUI();requestAnimationFrame(()=>{if(currentMode()==='object')globalThis.__boxlabTransformArming?.activateRealMove?.();});}
+function duplicateSelection(){const m=manager();if(!m)return;const chosen=selectedObjects();if(!chosen.length)return;const sourceGroups=new Map();for(const o of chosen)if(o.groupId!=null){if(!sourceGroups.has(o.groupId))sourceGroups.set(o.groupId,nextGroupId()+sourceGroups.size);}const snapshots=chosen.map(o=>({name:o.name,mesh:o.mesh.clone(),visible:o.visible,kind:o.kind,origin:o.origin?{...o.origin}:null,groupId:o.groupId,settings:cloneSettings(o.settings)}));const created=[];for(const src of snapshots){const copy=m.addMesh(src.mesh,m.nextDuplicateName?.(src.name)||`${src.name} 01`,{visible:src.visible,locked:false,kind:src.kind,settings:src.settings,enterObjectMode:false});if(!copy)continue;if(src.origin)copy.origin={...src.origin};if(src.groupId!=null&&sourceGroups.has(src.groupId))copy.groupId=sourceGroups.get(src.groupId);created.push(copy.id);}for(const [sourceId,newId] of sourceGroups)if(groupNames.has(sourceId))groupNames.set(newId,`${groupNames.get(sourceId)} copy`);multiEnabled=created.length>1||multiEnabled;selectedIds=new Set(created);setStatus(`${created.length} object${created.length===1?'':'s'} duplicated${sourceGroups.size?' • group relationship preserved':''}`);forceRender();updateUI();requestAnimationFrame(()=>{if(currentMode()==='object')globalThis.__boxlabTransformArming?.activateRealMove?.();});}
 
 function linkedDuplicateSelection(){
   const m=manager();if(!m)return;
@@ -137,7 +137,7 @@ function linkedDuplicateSelection(){
   for(const o of editable)if(o.groupId!=null&&!sourceGroups.has(o.groupId))sourceGroups.set(o.groupId,nextGroupId()+sourceGroups.size);
   const created=[];
   for(const source of editable){
-    const copy=m.linkedDuplicateObject?.(source.id,{name:`${source.name} linked`,enterObjectMode:false});
+    const copy=m.linkedDuplicateObject?.(source.id,{name:m.nextDuplicateName?.(source.name),enterObjectMode:false});
     if(!copy)continue;
     if(source.groupId!=null&&sourceGroups.has(source.groupId))copy.groupId=sourceGroups.get(source.groupId);
     created.push(copy.id);

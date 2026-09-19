@@ -2,7 +2,7 @@
 // Boolean geometry remains owned by boolean-prototype.js; scene Undo/Redo is owned by object-management.js.
 import * as THREE from 'three';
 
-const VERSION='0.36.18.351';
+const VERSION='0.36.18.352';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 const outliner=document.querySelector('#outlinerList');
@@ -114,7 +114,7 @@ function syncSelectionColours(){
 
 function syncUI(){
   selectionSyncQueued=false;
-  const panel=ensureOperandUI(),e=operands();keepBooleanToolsVisible(false);markOutliner({ok:false});restoreViewportMaterials();requestViewportRender();if(!panel)return;
+  const panel=ensureOperandUI(),e=operands();keepBooleanToolsVisible(false);markOutliner({ok:false});if(e.ok)syncSelectionColours();else{restoreViewportMaterials();requestViewportRender();}if(!panel)return;
   const a=panel.querySelector('.bool-a'),b=panel.querySelector('.bool-b'),swap=panel.querySelector('#booleanSwapAB218');
   if(e.ok){
     a.innerHTML=`<strong>A · ${escapeHtml(e.a.name)}</strong><span>Active / Base</span>`;

@@ -49,9 +49,12 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Join produces a unique combined result even if one input was linked
 - [ ] object creation works
 - [ ] switching active object works
-- [ ] duplicate works
+- [ ] duplicate works and uses padded numbering (01, 02, 03…) instead of appending copy
+- [ ] duplicating an already-numbered sibling continues the same numbering family rather than nesting another suffix
+- [ ] linked and Multi duplicate naming follows the same numbered object-name rule
 - [ ] rename works
 - [ ] delete works
+- [ ] Boolean results use compact B numbering (B1, B2, B3…) from the active/base object name instead of concatenating operand names
 - [ ] Join works
 - [ ] multi-object selection/management works
 - [ ] grouped Outliner hierarchy preserves group membership through Object Undo/Redo
@@ -62,7 +65,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] compact Group tree keeps Group Selection contextual: the creation control is hidden unless 2+ groupable objects are selected
 - [ ] compact Group header uses disclosure + name + visibility + lock + More without expanding drawer height unnecessarily
 - [ ] Group More menu Rename/Ungroup works while the normal Rename Group pathway remains available
-- [ ] ordinary two-object Multi selection remains visually neutral; Boolean A/B colour treatment stays inside the Boolean workflow rather than taking over the Outliner
+- [ ] exactly two selected objects show amber/blue viewport tint (active/primary amber, second blue) while the Outliner remains neutral unless Boolean-specific UI is in use
 - [ ] group visibility and lock each Undo/Redo as one Object scene-history step
 - [ ] group header direct Ungroup works without breaking normal Group Selection / Multi behavior
 - [ ] collapsed/expanded group state survives scene Undo/Redo when the group still exists
