@@ -1,4 +1,4 @@
-import './duplicate-faces.js?v=0.36.18.89';
+import './duplicate-faces.js?v=0.36.18.342';
 import './flip-faces.js?v=0.36.18.90';
 import './triangulate-faces.js?v=0.36.18.91';
 import './poke-faces.js?v=0.36.18.92';
