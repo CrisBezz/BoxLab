@@ -25,16 +25,16 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.335**
+- Repository release: **v0.36.18.336**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **c5c236852791147eeee62f3c7f710b2e73da57a2**
-- Current code-bearing/release commit: **04b23e2d445888dea952efc650161be1d5a53286**
-- v0.36.18.335 release PR: **#19**
+- Current code-bearing/release commit: **586efff69f7d1565ff5687c296e183143b0566c7**
+- v0.36.18.336 release PR: **#20**
 - PR topology regression: **35416581512** — success
-- Current `version.json`: **0.36.18.335**
+- Current `version.json`: **0.36.18.336**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.334**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.336**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
-- Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.334**
+- Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.336**
 - Component Circle core: **component-circle-core.js?v=0.36.18.333**
 - Existing Make Planar remains: **make-planar.js?v=0.36.18.93** via `face-workflow-layout.js`
 - Precision Face implementation pin: **precision-face.js?v=0.36.18.327**
@@ -48,9 +48,9 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.335
+## Latest completed development — v0.36.18.336
 
-Theme: **Edge Split compatibility with canonical additive Multi**.
+Theme: **exact Circle placement inside per-mode Active Tools**.
 
 Existing-feature audit result:
 - no current Circle / Regularize tool existed
@@ -73,6 +73,10 @@ Implementation:
 - `src/component-circle.js`
 - loaded once through `drawer-ui.js`
 - Circle control is owned by contextual Vertex / Edge / Face **Active Tools**, not Selection
+- Vertex placement: third slot beside Slide / Create Face
+- Edge placement: immediately after Delete in the bottom Topology row
+- Face placement: beside Poke Faces
+- no standalone bottom Circle row remains
 
 Edge Split regression fix:
 - canonical additive Multi remains enabled
@@ -242,6 +246,7 @@ Completed precision slices:
 - exactly one selected Face can Circle its boundary (.333)
 - Circle moved from Selection into contextual Active Tools (.334)
 - Face Split restored under canonical additive Multi (.335)
+- Circle exact per-mode Active Tools layout (.336)
 
 Recommended next build:
 - **Edge Flip** for manual topology-flow correction, after the mandatory existing-feature audit for rotate-edge / diagonal-swap equivalents
