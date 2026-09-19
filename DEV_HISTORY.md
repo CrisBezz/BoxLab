@@ -8,6 +8,21 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.338 conservative four-sided Grid Fill
+
+- Released **v0.36.18.338** from PR #22; squash merge commit: `72ec70b123e27c2ee8d3ca116f0b23481a0f1afa`.
+- Mandatory existing-feature audit confirmed existing **Fill** is already the simple single-face Cap and Bridge/Quadify do not provide a structured hole grid.
+- Added **Grid Fill** as a distinct Edge Topology operation for one simple planar convex four-sided boundary with matching opposite segment counts.
+- Corner detection treats collinear intermediate boundary vertices as side subdivisions, so a segmented rectangular boundary can form a U×V quad grid.
+- Existing boundary vertices remain fixed; only required interior vertices are created.
+- Grid positions use a Coons-style interpolation across the four boundary sides.
+- Grid Fill creates only quads, selects the resulting faces, and commits as one Undo step.
+- Candidate topology is built on a clone and validated before the live mesh is changed.
+- Irregular/curved boundaries, mismatched opposite counts, non-boundary/internal edges, ambiguous loops, and simple four-edge caps are rejected.
+- Grid Fill is loaded once through `drawer-ui.js` and is placed beside existing Fill in the Edge Topology row.
+- First PR run failed only because an older Flip Edge test hard-coded the prior drawer loader version; the Grid Fill tests themselves all passed. The parent-loader test was made version-resilient.
+- Corrected PR topology regression run **35429713006** passed before merge.
+
 ## 2026-09-19 — v0.36.18.337 existing Rotate Edge consolidated as Flip Edge
 
 - Released **v0.36.18.337** from PR #21; squash merge commit: `72f1847dad79b15955a4f406b273b60b44b4ee9f`.
