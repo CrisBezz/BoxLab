@@ -1,21 +1,18 @@
-// BoxLab v0.36.18.224 — rollback to safe immediate Object-mode selection colours + Boolean A/B UX/history.
-// Boolean geometry remains owned by boolean-prototype.js v0.36.18.217 and boolean-bsp.js v0.36.18.217.
+// BoxLab v0.36.18.347 — Boolean A/B UX using the authoritative Object scene-history bridge.
+// Boolean geometry remains owned by boolean-prototype.js; scene Undo/Redo is owned by object-management.js.
 import * as THREE from 'three';
 
-const VERSION='0.36.18.224';
+const VERSION='0.36.18.347';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
 const outliner=document.querySelector('#outlinerList');
 const editDrawer=document.querySelector('#editDrawer');
 const COLOR_A=0xf3b34a,COLOR_B=0x5da9ff;
-let pending=null,historyInstalled=false,restoring=false,selectionSyncQueued=false;
-const booleanUndo=[],booleanRedo=[];
+let selectionSyncQueued=false;
 let tintedBodies=[];
 
 function manager(){return globalThis.__boxlabObjectManager||null;}
 function selection(){return globalThis.__boxlabObjectSelection||null;}
-function sceneHistory(){return globalThis.__boxlabObjectHistory||null;}
-function history(){return globalThis.__boxlabHistory||null;}
 function currentMode(){return document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
 function selectedObjects(){
   const m=manager(),ids=selection()?.ids;if(!m||!ids)return[];
@@ -27,61 +24,7 @@ function operands(){
   const a=chosen.find(o=>o.id===m.activeId),b=chosen.find(o=>o.id!==m.activeId);
   return a&&b?{ok:true,a,b,chosen}:{ok:false,chosen};
 }
-function captureScene(){const api=sceneHistory();manager()?.saveActive?.();return api?.capture?.()||null;}
-function sceneSignature(snapshot){
-  if(!snapshot)return'';
-  const objects=(snapshot.objects||[]).map(o=>`${o.id}:${o.visible!==false?1:0}:${o.locked?1:0}`).join(',');
-  const selected=[...(snapshot.selected||[])].sort((a,b)=>a-b).join(',');
-  return `${snapshot.activeId}|${objects}|${selected}|${snapshot.multi?1:0}`;
-}
-function currentSignature(){return sceneSignature(captureScene());}
-function restoreScene(snapshot){
-  if(!snapshot)return false;
-  restoring=true;
-  try{sceneHistory()?.restore?.(snapshot);}finally{restoring=false;}
-  setTimeout(()=>{globalThis.__boxlabTopologyGate?.sync?.();syncUI();},0);
-  return true;
-}
 function setStatus(text){if(status)status.textContent=text;}
-
-function installHistoryBridge(){
-  const h=history();if(!h||historyInstalled||h.__boxlabBooleanScene218)return !!h;
-  historyInstalled=true;h.__boxlabBooleanScene218=true;
-  const basePush=h.push.bind(h),baseUndo=h.undo.bind(h),baseRedo=h.redo.bind(h),baseClear=h.clear?.bind(h);
-  h.push=function(mesh){if(!restoring&&booleanRedo.length)booleanRedo.length=0;return basePush(mesh);};
-  h.undo=function(current){
-    const tx=booleanUndo[booleanUndo.length-1];
-    if(tx&&!this.undoStack?.length&&currentSignature()===tx.afterSig){
-      booleanUndo.pop();booleanRedo.push(tx);restoreScene(tx.before);
-      setStatus(`Undo ${tx.label} • restored A + B`);return current;
-    }
-    return baseUndo(current);
-  };
-  h.redo=function(current){
-    const tx=booleanRedo[booleanRedo.length-1];
-    if(tx&&currentSignature()===tx.beforeSig){
-      booleanRedo.pop();booleanUndo.push(tx);restoreScene(tx.after);
-      setStatus(`Redo ${tx.label} • restored Boolean result`);return current;
-    }
-    return baseRedo(current);
-  };
-  if(baseClear)h.clear=function(){booleanUndo.length=0;booleanRedo.length=0;return baseClear();};
-  return true;
-}
-
-function beginBoolean(event){
-  const button=event.target?.closest?.('[data-boolean217]');if(!button)return;
-  installHistoryBridge();const before=captureScene();if(!before)return;
-  pending={before,beforeSig:sceneSignature(before),beforeCount:before.objects?.length||0,operation:button.dataset.boolean217};
-  setTimeout(finalizeBoolean,0);
-}
-function finalizeBoolean(){
-  const p=pending;pending=null;if(!p)return;
-  const after=captureScene();if(!after)return;
-  if((after.objects?.length||0)!==p.beforeCount+1||after.activeId===p.before.activeId)return;
-  const labels={difference:'Cut',intersection:'Intersect',union:'Union'},label=labels[p.operation]||'Boolean';
-  booleanUndo.push({before:p.before,after,beforeSig:p.beforeSig,afterSig:sceneSignature(after),label});booleanRedo.length=0;
-}
 
 function installStyle(){
   let s=document.querySelector('#boxlabBooleanOperandStyle218');
@@ -191,8 +134,7 @@ function queueSelectionSync(){
 }
 function escapeHtml(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-document.addEventListener('click',beginBoolean,true);
-window.addEventListener('boxlab-object-manager-ready',()=>{installHistoryBridge();queueSelectionSync();});
+window.addEventListener('boxlab-object-manager-ready',queueSelectionSync);
 window.addEventListener('boxlab-bridge-state',queueSelectionSync);
 document.addEventListener('pointerup',queueSelectionSync,false);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',queueSelectionSync));
@@ -201,6 +143,6 @@ if(outliner){
   new MutationObserver(mutations=>{if(mutations.some(m=>m.attributeName==='aria-selected'))queueSelectionSync();}).observe(outliner,{subtree:true,attributes:true,attributeFilter:['aria-selected']});
   new MutationObserver(queueSelectionSync).observe(outliner,{childList:true,subtree:true});
 }
-[0,80,250,700].forEach(delay=>setTimeout(()=>{installHistoryBridge();syncUI();},delay));
+[0,80,250,700].forEach(delay=>setTimeout(syncUI,delay));
 
-globalThis.__boxlabBooleanUX={version:VERSION,sync:syncUI,get undoCount(){return booleanUndo.length;},get redoCount(){return booleanRedo.length;}};
+globalThis.__boxlabBooleanUX={version:VERSION,sync:syncUI,historyOwner:'object-scene'};

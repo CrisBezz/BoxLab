@@ -25,17 +25,18 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.346**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **f7dd33d03e99bf124431dca9a12c856b9689b948**
-- Current code-bearing/release commit: **c9e52c091da47a5e88539a14a9abba7807fe45f6**
-- v0.36.18.346 release PR: **#30**
-- PR topology regression: **35437992611** — success
-- Post-merge topology regression: **35438009230** — success
-- Current `version.json`: **0.36.18.346**
+- Repository release candidate: **v0.36.18.347**
+- Current documentation HEAD: **PR #31 branch; refresh after merge**
+- Current code-bearing/release commit: **PR #31 pending merge**
+- v0.36.18.347 release PR: **#31**
+- PR topology regression: **pending**
+- Post-merge topology regression: **pending**
+- Current `version.json`: **0.36.18.347**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.346**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
+- Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.347**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
 - Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.341**
@@ -52,7 +53,30 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.346
+## Latest completed development — v0.36.18.347
+
+Theme: **Join / Boolean scene-history consolidation**.
+
+Mandatory audit result:
+- existing Join already lives in Object > Active Tools and already checkpoints through the authoritative Object scene-history bridge
+- existing Boolean already checkpoints that same Object scene before creating the result
+- `boolean-ux-history.js` still contained an older second Undo/Redo wrapper and private Boolean history stacks
+- no second Join, Boolean, result-management, or transform system was added
+
+v0.36.18.347 behavior:
+- removed the legacy parallel Boolean Undo/Redo wrapper
+- Join and Boolean now rely on one authoritative Object scene-history pathway
+- Boolean A/B colours, active/base labels, Swap control, solver dispatch and cleanup chain are unchanged
+- Boolean still hides only selected A/B originals and creates a new unique editable result
+- Boolean results do not inherit `sourceId` / `instanceMatrix` even when an operand was linked
+- unselected linked peers remain untouched
+- Object Undo/Redo restores linked metadata/placements from scene snapshots
+- Reference objects remain excluded from both Join and Boolean
+- protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched
+
+Regression coverage now protects single history ownership plus Boolean linked-instance/Reference contracts.
+
+## Previous completed development — v0.36.18.346
 
 Theme: **Object Multi linked-instance parity**.
 
@@ -305,35 +329,19 @@ Scene / modifiers:
 
 ## Next development step
 
-**Phase C — Object / instance workflow is next.**
+**Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **Join / Boolean workflow audit and polish**
-- inspect current Join ownership, Boolean operand selection, result/original handling, history, linked-instance interaction and Reference exclusions before changing anything
-- preserve the authoritative Multi selection / transform pathway
-- prefer consolidating existing Join/Boolean behavior rather than introducing parallel result-management controls
+- **persistent object / group organization audit**
+- inspect current Group ownership, group naming, collapse state, scene-history behavior and linked-instance interaction before changing anything
+- preserve the authoritative Object Multi selection / transform pathway
+- prefer strengthening existing Group/Outliner behavior over introducing a second hierarchy system
 
-Phase B completed precision slices:
-- Add Vertex cross-object snapping (.324)
-- component Move cross-object snapping (.325)
-- live component Move ΔX/ΔY/ΔZ readback (.326)
-- Repeat UI duplication corrected (.328)
-- component Align X/Y/Z (.329)
-- explicit pick-anchor Align workflow (.330)
-- Circle regularize (.331–.336)
-- Face Split restored under canonical additive Multi (.335)
-- existing Rotate Edge consolidated as Flip Edge (.337)
-- four-sided transactional all-quad Grid Fill (.338)
-- Clean sharp-fold cave-in regression fixed (.339)
-- transactional/Multi-safe Offset Loop support workflow (.340)
-- Vertex toolbar / Build Edge handoff regression fixed (.341)
-- File menu fit + stable 3-column Face layout (.342)
+Completed Phase C slices now include:
 - linked-instance foundation + Make Unique (.343)
 - permanent read-only Reference guide workflow (.344)
-- Safari native-selection interaction guard (.345)
 - Object Multi Linked Duplicate / Make Unique parity (.346)
-
-Keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch.
+- unified Join / Boolean Object scene history (.347)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 

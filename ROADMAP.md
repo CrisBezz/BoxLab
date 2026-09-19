@@ -66,7 +66,7 @@ Priority candidates:
 - Make Unique audit/polish — **explicit Make Unique detach path added in v0.36.18.343; continue robustness testing/polish**
 - cross-object reference/edit workflows — **Reference imports already served as snap targets; v0.36.18.344 hardens them as permanently read-only modelling guides across single/Multi/Group/history paths**
 - stronger multi-object editing — **audit confirmed Multi Move / Scale / Rotate / numeric transforms / grouping / Duplicate / Join / Boolean already existed; Multi Linked Duplicate + Multi Make Unique parity added in v0.36.18.346**
-- Join/Boolean workflow polish
+- Join/Boolean workflow polish — **v0.36.18.347 consolidates both workflows onto the authoritative Object scene-history bridge; legacy parallel Boolean Undo/Redo wrapper removed while A/B UX, hidden originals, unique results, linked-instance metadata and Reference exclusions are preserved**
 - persistent object/region organization
 
 ## Phase D — Construction tools
