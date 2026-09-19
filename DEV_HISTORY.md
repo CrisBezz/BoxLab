@@ -8,6 +8,19 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.339 Clean sharp-fold shape-preservation hotfix
+
+- Released **v0.36.18.339** from PR #23; squash merge commit: `e651e7d1360d9f09e8723ddf1d6c0556b8b9b395`.
+- Concrete user video regression: Object > Clean for SubD visibly caved in a box-with-opening after the all-quad relaxation phase.
+- Root cause: `quadRelaxFlow()` treated any interior all-quad, uncreased vertex as smooth. Around an opening/corner, horizontal and vertical incident faces could be averaged into a blended tangent even though the geometry represented a sharp fold.
+- Added a geometric normal-fan guard: a relax candidate is now protected if any incident quad-face normal pair differs by more than 30°.
+- This protection applies even when the user has not explicitly assigned a Crease.
+- Existing planar smooth-grid relaxation remains enabled and still improves a perturbed interior quad vertex.
+- Added regression coverage for both cases: smooth planar relaxation still works; an uncreased sharp folded quad fan remains fixed.
+- Clean remains transactional; protected topology systems and `src/multi-object-transform.js?v=0.36.1.0` were untouched.
+- First PR run failed only because the old Clean UI contract hard-coded the .323 module pin. The new geometry tests already passed. The loader contract was made version-resilient.
+- Corrected PR topology regression run **35430414020** passed before merge.
+
 ## 2026-09-19 — v0.36.18.338 conservative four-sided Grid Fill
 
 - Released **v0.36.18.338** from PR #22; squash merge commit: `72ec70b123e27c2ee8d3ca116f0b23481a0f1afa`.
