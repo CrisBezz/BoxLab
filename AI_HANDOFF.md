@@ -25,17 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.348**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **90c98f0ed9cdafb892e1ce0d4ae372d4930ea3d9**
-- Current code-bearing/release commit: **cf80a9bd11a4916eb586e954a2152b04dd46b49f**
-- v0.36.18.348 release PR: **#32**
+- Repository release candidate: **v0.36.18.349**
+- Current documentation HEAD: **v0.36.18.349 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.349 PR branch; pending merge**
+- v0.36.18.349 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**n: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.348**
+- Current `version.json`: **0.36.18.349**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.348**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.349**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.348**
+- Object management loader: **object-management.js?v=0.36.18.349**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -53,7 +53,27 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.348
+## Latest completed development — v0.36.18.349
+
+Theme: **first-class Group selection UX**.
+
+User-facing issue:
+- selecting a Group selected all members but left normal Object Rename disabled
+- Group controls felt split between the Outliner header and normal Object actions
+
+v0.36.18.349 behavior:
+- exactly one fully selected Group is detected as a Group context
+- normal Object **Rename** enables and changes to **Rename Group**
+- Group Rename uses the existing metadata/history pathway
+- partial or mixed Multi selections remain ordinary Multi and cannot masquerade as a Group
+- selection readout shows the Group name + member count
+- selected Group header receives stronger visual emphasis
+- group name remains the primary tap target
+- header actions are now Collapse / Name / Visibility / Lock / Ungroup; old tiny rename pencil is removed
+- existing Group transform expansion, linked-instance behavior and Reference protection are unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched
+
+## Previous completed development — v0.36.18.348
 
 Theme: **persistent Group organization**.
 
@@ -353,10 +373,11 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **Group / Outliner action consistency audit**
-- inspect group-level visibility, lock, rename, collapse and ungroup behavior for consistent scene-history semantics
-- inspect whether group labels should expose custom names more directly in member rows without duplicating hierarchy UI
-- preserve existing automatic group transform expansion and linked-instance behavior
+- **Group action/history consistency audit**
+- inspect group visibility, lock and direct Ungroup against authoritative Object scene history
+- make sure every group-wide destructive/state action has one predictable Undo/Redo step
+- preserve the new first-class Group selection model from .349
+- preserve existing automatic Group transform expansion, linked instances and Reference protection
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
 Completed Phase C slices now include:
@@ -365,6 +386,7 @@ Completed Phase C slices now include:
 - Object Multi Linked Duplicate / Make Unique parity (.346)
 - unified Join / Boolean Object scene history (.347)
 - persistent Group organization metadata (.348)
+- first-class Group selection / Rename UX (.349)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
