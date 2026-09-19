@@ -25,19 +25,19 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.340**
+- Repository release: **v0.36.18.341**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **779ed8da4e6d9855d806c082ad9b86918475f158**
-- Current code-bearing/release commit: **54d7e1822235db0cb88c05c0541fae7d8c1560b7**
-- v0.36.18.340 release PR: **#24**
-- Corrected PR topology regression: **35431669328** — success
-- Current `version.json`: **0.36.18.340**
+- Current code-bearing/release commit: **f04cbb2a92c7bc0a54155cc65d07e4f3a0cc1300**
+- v0.36.18.341 release PR: **#25**
+- Corrected PR topology regression: **35432049975** — success
+- Current `version.json`: **0.36.18.341**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.340**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.341**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
-- Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.336**
+- Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.341**
 - Component Circle core: **component-circle-core.js?v=0.36.18.333**
 - Existing Make Planar remains: **make-planar.js?v=0.36.18.93** via `face-workflow-layout.js`
 - Precision Face implementation pin: **precision-face.js?v=0.36.18.327**
@@ -51,9 +51,21 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is the next active focus.
 
-## Latest completed development — v0.36.18.340
+## Latest completed development — v0.36.18.341
 
-Theme: **transactional Offset Loop support workflow**.
+Theme: **Vertex Active Tools stability and Build Edge/Add handoff hotfix**.
+
+User-visible regression fixed:
+- tapping Build Edge on iPad no longer reshuffles the Vertex buttons
+- Circle no longer jumps to the first row
+- Add no longer re-lights when Build Edge is being armed
+
+Protected Vertex toolbar baseline:
+- fixed six-button order: **Bevel / Add / Build Edge / Slide / Create Face / Circle**
+- `face-reconstruct.js` is the single Vertex layout owner
+- stable layout sync must not physically re-append already-correct buttons
+- Circle delegates Vertex placement to that owner
+- Build Edge fully disarms both Add's wrapper session and underlying core Add direct-tool state before arming
 
 Mandatory existing-feature audit result:
 - BoxLab already had the support-loop construction capability
@@ -247,6 +259,7 @@ Phase B completed precision slices:
 - four-sided transactional all-quad Grid Fill (.338)
 - Clean sharp-fold cave-in regression fixed (.339)
 - transactional/Multi-safe Offset Loop support workflow (.340)
+- Vertex toolbar / Build Edge handoff regression fixed (.341)
 
 Keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch.
 
