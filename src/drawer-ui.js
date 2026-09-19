@@ -101,6 +101,7 @@ import('./component-inspect-repair-drawers.js?v=0.36.18.175').catch(error => con
 import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
 import('./component-align.js?v=0.36.18.330').catch(error => console.warn('BoxLab component Align failed to load', error));
 import('./component-circle.js?v=0.36.18.336').catch(error => console.warn('BoxLab component Circle failed to load', error));
+import('./grid-fill.js?v=0.36.18.338').catch(error => console.warn('BoxLab Grid Fill failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
 import('./vertex-slide-polish.js?v=0.36.18.162').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
