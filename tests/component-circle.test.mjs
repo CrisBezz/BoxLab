@@ -68,12 +68,13 @@ test('Circle has one authoritative drawer loader and no direct index load',()=>{
 
 test('drawer UI cache key exposes the current dynamic Circle loader',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.333/);
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.334/);
 });
 
-test('Circle remains visible for discovery outside supported modes',()=>{
+test('334 Circle is placed in contextual Active Tools rather than Selection',()=>{
   const ui=fs.readFileSync(new URL('../src/component-circle.js',import.meta.url),'utf8');
-  assert.match(ui,/row\.style\.display='';/);
+  assert.match(ui,/\[data-mode-tools="\$\{md\}"\]/);
+  assert.doesNotMatch(ui,/componentSelectionTools/);
   assert.match(ui,/Circle works in Vertex, Edge or Face mode/);
 });
 
@@ -92,12 +93,12 @@ test('333 Circle refuses multiple selected Faces',()=>{
   assert.equal(info.ok,false);
 });
 
-test('333 Face Circle UI and loader pins are current',()=>{
+test('334 Face Circle UI and loader pins are current',()=>{
   const ui=fs.readFileSync(new URL('../src/component-circle.js',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(ui,/\['vertex','edge','face'\]/);
-  assert.match(ui,/component-circle-core\.js\?v=0\.36\.18\.333/);
-  assert.match(drawer,/component-circle\.js\?v=0\.36\.18\.333/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.333/);
+  assert.match(ui,/component-circle-core\.js\?v=0\.36\.18\.334/);
+  assert.match(drawer,/component-circle\.js\?v=0\.36\.18\.334/);
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.334/);
 });
