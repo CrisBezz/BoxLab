@@ -205,6 +205,10 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 ## Boolean / extraction
 
 - [ ] Boolean workflow works
+- [ ] Boolean and Join both use the authoritative Object scene-history bridge; Boolean must not install a second Undo/Redo wrapper
+- [ ] Boolean Undo restores the two selected originals with linked-instance metadata/placements intact; Redo restores the unique result
+- [ ] Boolean hides only the selected A/B operands; unselected linked peers remain unaffected
+- [ ] Boolean result is unique even when an operand was linked
 - [ ] Boolean cleanup does not leave duplicate/degenerate faces
 - [ ] Extract + Undo works
 - [ ] Extract + Redo works
