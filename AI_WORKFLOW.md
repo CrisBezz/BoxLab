@@ -32,6 +32,7 @@ Before changing code:
 
 - **Do not add a feature until you have confirmed it does not already exist elsewhere in the current app.**
 - Avoid duplicate buttons, duplicate modules, overlapping interaction handlers, and parallel implementations of the same user-facing capability.
+- When changing a dynamically loaded UI module, verify the parent loader URL/cache key is also refreshed if browser caching could otherwise retain stale wiring.
 - If the requested feature already exists, first determine whether the real task is bug-fixing, reconnecting, consolidating, or improving it.
 - Keep changes narrow and modular.
 - Preserve stable behaviour outside the requested scope.
