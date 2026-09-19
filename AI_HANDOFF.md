@@ -25,12 +25,12 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.334**
+- Repository release: **v0.36.18.335**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **c5c236852791147eeee62f3c7f710b2e73da57a2**
-- Current code-bearing/release commit: **6dc2d183e0332d6953f60e9bf21f5b39c1686ec8**
-- v0.36.18.334 release PR: **#18**
+- Current code-bearing/release commit: **04b23e2d445888dea952efc650161be1d5a53286**
+- v0.36.18.335 release PR: **#19**
 - PR topology regression: **35416581512** — success
-- Current `version.json`: **0.36.18.334**
+- Current `version.json`: **0.36.18.335**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.334**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -48,9 +48,9 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.334
+## Latest completed development — v0.36.18.335
 
-Theme: **Circle UI relocated to contextual Active Tools**.
+Theme: **Edge Split compatibility with canonical additive Multi**.
 
 Existing-feature audit result:
 - no current Circle / Regularize tool existed
@@ -73,6 +73,13 @@ Implementation:
 - `src/component-circle.js`
 - loaded once through `drawer-ui.js`
 - Circle control is owned by contextual Vertex / Edge / Face **Active Tools**, not Selection
+
+Edge Split regression fix:
+- canonical additive Multi remains enabled
+- `edge-paint-select.js` yields only while Face Split is armed
+- `face-split.js` exposes `isArmed()` and participates in `boxlab-direct-tool-exclusive`
+- ordinary additive Edge selection resumes immediately after Split is off
+- preserve this ordering for future direct Edge tools
 
 Protected transform and Through systems remain untouched.
 
@@ -234,6 +241,7 @@ Completed precision slices:
 - Circle visibility/cache fix (.332)
 - exactly one selected Face can Circle its boundary (.333)
 - Circle moved from Selection into contextual Active Tools (.334)
+- Face Split restored under canonical additive Multi (.335)
 
 Recommended next build:
 - **Edge Flip** for manual topology-flow correction, after the mandatory existing-feature audit for rotate-edge / diagonal-swap equivalents
