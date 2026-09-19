@@ -116,6 +116,9 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Uncrease works
 - [ ] Edge Slide works
 - [ ] Offset Loop works
+- [ ] Offset Loop drag and exact-entry commits validate topology and roll back invalid results
+- [ ] Offset Loop leaves canonical additive Multi enabled and selects both created support rails directly
+- [ ] while Offset Loop is armed, Edge paint selection yields so Pencil drag reaches the modelling tool
 - [ ] Edge Bridge works
 - [ ] Fill works
 - [ ] Dissolve Loop works
