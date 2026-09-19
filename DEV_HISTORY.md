@@ -8,6 +8,22 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.349 first-class Group selection UX
+
+- User reported that normal **Rename** stayed disabled after selecting a whole Group and that Group interaction still felt fragmented.
+- Audit confirmed a selected Group is represented as a Multi selection of all member objects, but the normal Object action row still treated every multi-selection as anonymous objects.
+- Added one-whole-group detection to the authoritative Object management layer.
+- When exactly one complete Group is selected, the existing **Rename** button now enables and changes label to **Rename Group**.
+- Rename Group uses the existing group name store and authoritative Object scene-history checkpoint, so it remains one Undo/Redo step.
+- Partial/mixed multi-selections still cannot rename as a Group.
+- Selected Group readout now shows the Group name and member count instead of the generic multi-selection message.
+- Strengthened the selected Group header visual state.
+- Simplified the Group header: group name is the primary selection target; collapse, visibility and lock stay directly available; the old tiny rename pencil was replaced by a direct **Ungroup** action because rename now belongs to the standard Object action row.
+- Existing Group Selection / Ungroup controls, automatic whole-group transforms, linked instances and Reference protection remain unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Updated `object-management.js → drawer-ui.js → index.html` cache chain for iPad/Safari.
+- Added regression coverage for whole-group detection, Rename Group routing, simplified header and protected transform/cache pins.
+
 ## 2026-09-19 — v0.36.18.348 persistent Group organization
 
 - Mandatory Phase C audit confirmed BoxLab already had one authoritative Group implementation: membership and transforms are owned by `object-origin.js`, while the grouped Outliner hierarchy / names / collapse UI are owned by `object-management.js`.
