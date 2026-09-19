@@ -63,13 +63,37 @@ function selectedWholeGroupId(chosen=selectedObjects()){
   const groupId=[...ids][0],members=groupMembers(groupId);
   return members.length===chosen.length&&members.every(o=>selectedIds.has(o.id))?groupId:null;
 }
-function renameGroup(groupId){
-  const value=window.prompt('Group name',groupLabel(groupId));if(value===null)return false;
-  const clean=value.trim();if(!clean)return false;
+async function renameGroup(groupId){
+  const dialog=globalThis.__boxlabRenameDialog;
+  const value=dialog ? await dialog({title:'Rename Group',value:groupLabel(groupId)}) : window.prompt('Group name',groupLabel(groupId));
+  if(value===null)return false;
+  const clean=String(value).trim();if(!clean)return false;
   globalThis.__boxlabObjectHistory?.checkpoint?.();
   groupNames.set(groupId,clean);updateUI();setStatus(`${clean} renamed`);return true;
 }
 function selectGroup(groupId){const members=groupMembers(groupId);multiEnabled=true;selectedIds=new Set(members.map(o=>o.id));updateUI();setStatus(`${groupLabel(groupId)} • ${members.length} objects selected`);}
+function reconcileExistingHierarchy(){
+  if(!list)return;
+  for(const block of [...list.querySelectorAll(':scope > .boxlab-group-block')]){
+    const groupId=Number(block.dataset.groupId),members=groupMembers(groupId),memberIds=new Set(members.map(o=>o.id));
+    const children=block.querySelector('.boxlab-group-children'),rows=[...(children?.querySelectorAll(':scope > .outliner-row')||[])],rowIds=new Set(rows.map(row=>Number(row.dataset.objectId)));
+    const valid=members.length>=2&&memberIds.size===rowIds.size&&[...memberIds].every(id=>rowIds.has(id));
+    if(!valid){
+      for(const row of rows)block.before(row);
+      block.remove();
+      continue;
+    }
+    const collapsed=collapsedGroups.has(groupId);
+    block.classList.toggle('collapsed',collapsed);
+    const disclosure=block.querySelector('.boxlab-group-disclosure');
+    if(disclosure){disclosure.textContent=collapsed?'▸':'▾';disclosure.title=collapsed?'Expand group':'Collapse group';}
+    const name=block.querySelector('.boxlab-group-name');if(name)name.textContent=groupLabel(groupId);
+    const visible=block.querySelector('.boxlab-group-visible'),allHidden=members.every(o=>!o.visible);
+    if(visible){visible.textContent=allHidden?'○':'●';visible.title=allHidden?'Show group':'Hide group';}
+    const editable=members.filter(o=>o.kind!=='reference'),allLocked=editable.length&&editable.every(o=>o.locked),lock=block.querySelector('.boxlab-group-lock');
+    if(lock){lock.textContent=editable.length?(allLocked?'■':'□'):'R';lock.title=editable.length?(allLocked?'Unlock editable group members':'Lock editable group members'):'Reference-only group • read-only';lock.disabled=!editable.length;}
+  }
+}
 function decorateHierarchy(){
   if(!list||hierarchyDecorating)return;
   const directRows=[...list.children].filter(el=>el.classList?.contains('outliner-row'));
@@ -85,8 +109,8 @@ function decorateHierarchy(){
       header.className='boxlab-group-row';children.className='boxlab-group-children';
       const collapse=document.createElement('button');collapse.type='button';collapse.className='boxlab-group-disclosure';collapse.textContent=collapsedGroups.has(groupId)?'▸':'▾';collapse.title=collapsedGroups.has(groupId)?'Expand group':'Collapse group';collapse.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();collapsedGroups.has(groupId)?collapsedGroups.delete(groupId):collapsedGroups.add(groupId);updateUI();});
       const name=document.createElement('button');name.type='button';name.className='boxlab-group-name';name.textContent=groupLabel(groupId);name.title='Select whole group';name.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();selectGroup(groupId);});
-      const visible=document.createElement('button');visible.type='button';const members=groupMembers(groupId),allHidden=members.length&&members.every(o=>!o.visible);visible.textContent=allHidden?'○':'●';visible.title=allHidden?'Show group':'Hide group';visible.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();globalThis.__boxlabObjectHistory?.checkpoint?.();const hide=groupMembers(groupId).some(o=>o.visible);for(const o of groupMembers(groupId))o.visible=!hide;forceRender();updateUI();});
-      const lock=document.createElement('button');lock.type='button';const editableMembers=members.filter(o=>o.kind!=='reference'),allLocked=editableMembers.length&&editableMembers.every(o=>o.locked);lock.textContent=editableMembers.length?(allLocked?'■':'□'):'R';lock.title=editableMembers.length?(allLocked?'Unlock editable group members':'Lock editable group members'):'Reference-only group • read-only';lock.disabled=!editableMembers.length;lock.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const editable=groupMembers(groupId).filter(o=>o.kind!=='reference');if(!editable.length)return;globalThis.__boxlabObjectHistory?.checkpoint?.();const next=editable.some(o=>!o.locked);for(const o of editable)o.locked=next;for(const o of groupMembers(groupId))if(o.kind==='reference')o.locked=true;if(next&&editable.some(o=>o.id===activeId()))document.querySelector('#toolModes button[data-tool="move"]')?.click();forceRender();updateUI();});
+      const visible=document.createElement('button');visible.type='button';visible.className='boxlab-group-visible';const members=groupMembers(groupId),allHidden=members.length&&members.every(o=>!o.visible);visible.textContent=allHidden?'○':'●';visible.title=allHidden?'Show group':'Hide group';visible.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();globalThis.__boxlabObjectHistory?.checkpoint?.();const hide=groupMembers(groupId).some(o=>o.visible);for(const o of groupMembers(groupId))o.visible=!hide;forceRender();updateUI();});
+      const lock=document.createElement('button');lock.type='button';lock.className='boxlab-group-lock';const editableMembers=members.filter(o=>o.kind!=='reference'),allLocked=editableMembers.length&&editableMembers.every(o=>o.locked);lock.textContent=editableMembers.length?(allLocked?'■':'□'):'R';lock.title=editableMembers.length?(allLocked?'Unlock editable group members':'Lock editable group members'):'Reference-only group • read-only';lock.disabled=!editableMembers.length;lock.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const editable=groupMembers(groupId).filter(o=>o.kind!=='reference');if(!editable.length)return;globalThis.__boxlabObjectHistory?.checkpoint?.();const next=editable.some(o=>!o.locked);for(const o of editable)o.locked=next;for(const o of groupMembers(groupId))if(o.kind==='reference')o.locked=true;if(next&&editable.some(o=>o.id===activeId()))document.querySelector('#toolModes button[data-tool="move"]')?.click();forceRender();updateUI();});
       const more=document.createElement('details');more.className='boxlab-group-more';
       const moreSummary=document.createElement('summary');moreSummary.textContent='•••';moreSummary.title='Group actions';
       const menu=document.createElement('div');menu.className='boxlab-group-menu';
@@ -99,7 +123,7 @@ function decorateHierarchy(){
 }
 function updateRows(){list?.querySelectorAll('.outliner-row').forEach(r=>{const id=Number(r.dataset.objectId);r.classList.toggle('object-selected',selectedIds.has(id));r.setAttribute('aria-selected',selectedIds.has(id)?'true':'false');});list?.querySelectorAll('.boxlab-group-row').forEach(r=>{const groupId=Number(r.parentElement?.dataset?.groupId),members=groupMembers(groupId);r.classList.toggle('group-selected',members.length>0&&members.every(o=>selectedIds.has(o.id)));});}
 function syncGroupControls(chosen){const host=document.querySelector('#objectGroupTools'),groupButton=host?.querySelector('[data-group-action="group"]'),ungroupButton=host?.querySelector('[data-group-action="ungroup"]'),wholeGroupId=selectedWholeGroupId(chosen),canGroup=chosen.length>=2&&wholeGroupId==null;if(groupButton)groupButton.disabled=!canGroup;if(ungroupButton)ungroupButton.disabled=!chosen.some(o=>o.groupId!=null);if(host)host.hidden=!canGroup;}
-function updateUI(){cleanSelection();pruneGroupMetadata();decorateHierarchy();const chosen=selectedObjects(),wholeGroupId=selectedWholeGroupId(chosen),lockable=chosen.filter(o=>o.kind!=='reference'),editable=chosen.filter(o=>o.kind!=='reference'),linked=chosen.filter(o=>(manager()?.linkedIds?.(o.id)?.length||0)>1);multiButton?.classList.toggle('active',multiEnabled);if(allButton)allButton.textContent=objects().length&&objects().every(o=>selectedIds.has(o.id))?'None':'All';if(visibilityButton)visibilityButton.textContent=chosen.length&&chosen.every(o=>!o.visible)?'Show':'Hide';if(lockButton)lockButton.textContent=lockable.length&&lockable.every(o=>o.locked)?'Unlock':'Lock';if(joinButton)joinButton.disabled=chosen.length<2||chosen.some(o=>o.locked||o.kind==='reference');if(visibilityButton)visibilityButton.disabled=!chosen.length;if(lockButton)lockButton.disabled=!lockable.length;if(clearButton)clearButton.disabled=!chosen.length;if(countLabel)countLabel.textContent=wholeGroupId!=null?`${groupLabel(wholeGroupId)} • ${chosen.length} objects selected`:multiEnabled?`${chosen.length} of ${objects().length} selected • active object remains primary`:'Single object selection';if(renameButton){renameButton.textContent=wholeGroupId!=null?'Rename Group':'Rename';renameButton.disabled=multiEnabled?!(chosen.length===1||wholeGroupId!=null):false;}if(multiEnabled){if(duplicateButton)duplicateButton.disabled=!chosen.length;if(linkedDuplicateButton)linkedDuplicateButton.disabled=!editable.length;if(makeUniqueButton)makeUniqueButton.disabled=!linked.length;if(deleteButton)deleteButton.disabled=!chosen.length||chosen.length>=objects().length;}updateRows();syncGroupControls(chosen);}
+function updateUI(){cleanSelection();pruneGroupMetadata();reconcileExistingHierarchy();decorateHierarchy();const chosen=selectedObjects(),wholeGroupId=selectedWholeGroupId(chosen),lockable=chosen.filter(o=>o.kind!=='reference'),editable=chosen.filter(o=>o.kind!=='reference'),linked=chosen.filter(o=>(manager()?.linkedIds?.(o.id)?.length||0)>1);multiButton?.classList.toggle('active',multiEnabled);if(allButton)allButton.textContent=objects().length&&objects().every(o=>selectedIds.has(o.id))?'None':'All';if(visibilityButton)visibilityButton.textContent=chosen.length&&chosen.every(o=>!o.visible)?'Show':'Hide';if(lockButton)lockButton.textContent=lockable.length&&lockable.every(o=>o.locked)?'Unlock':'Lock';if(joinButton)joinButton.disabled=chosen.length<2||chosen.some(o=>o.locked||o.kind==='reference');if(visibilityButton)visibilityButton.disabled=!chosen.length;if(lockButton)lockButton.disabled=!lockable.length;if(clearButton)clearButton.disabled=!chosen.length;if(countLabel)countLabel.textContent=wholeGroupId!=null?`${groupLabel(wholeGroupId)} • ${chosen.length} objects selected`:multiEnabled?`${chosen.length} of ${objects().length} selected • active object remains primary`:'Single object selection';if(renameButton){renameButton.textContent=wholeGroupId!=null?'Rename Group':'Rename';renameButton.disabled=multiEnabled?!(chosen.length===1||wholeGroupId!=null):false;}if(multiEnabled){if(duplicateButton)duplicateButton.disabled=!chosen.length;if(linkedDuplicateButton)linkedDuplicateButton.disabled=!editable.length;if(makeUniqueButton)makeUniqueButton.disabled=!linked.length;if(deleteButton)deleteButton.disabled=!chosen.length||chosen.length>=objects().length;}updateRows();syncGroupControls(chosen);}
 function toggleObjectSelection(id){selectedIds.has(id)?selectedIds.delete(id):selectedIds.add(id);updateUI();}
 function nextGroupId(){let max=0;for(const o of objects())if(Number.isInteger(o.groupId))max=Math.max(max,o.groupId);return max+1;}
 function cleanupSingletonGroups(){
