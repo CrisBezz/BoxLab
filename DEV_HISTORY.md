@@ -8,6 +8,23 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.352 two-object colour cue + compact naming
+
+- User clarified that the amber/blue viewport colouring was useful as a general two-object Multi-selection indicator, even though Boolean-specific Outliner takeover was not.
+- Restored viewport tint for exactly two selected objects in Object mode:
+  - active / primary object = amber
+  - second selected object = blue
+- Outliner remains neutral; Boolean A/B row borders/badges are not restored as a generic Multi-selection treatment.
+- Ordinary Duplicate naming now uses padded sibling numbers instead of `copy`: `Cube` → `Cube 01` → `Cube 02`.
+- Duplicating an already numbered object continues the same base-name family rather than nesting suffixes.
+- Linked Duplicate and Multi Duplicate use the same numbered object-name allocator.
+- Boolean result naming is now compact: active/base object stem + `B1`, `B2`, etc., instead of concatenating active name + operation + cutter name.
+- Boolean operation status text and geometry behavior remain unchanged.
+- Group ownership / compact hierarchy from .351 remains unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `multi-object.js`, `object-management.js`, `boolean-ux-history.js`, `boolean-prototype.js`, `drawer-ui.js` and `index.html` cache pins.
+- Added regression coverage for two-object viewport tint, numbered Duplicate/Linked/Multi naming, Boolean B-numbering and protected cache/transform pins.
+
 ## 2026-09-20 — v0.36.18.351 Group ownership + Boolean UI cleanup
 
 - User reported that the visible Group Selection button did not actually produce the compact Group hierarchy and that the amber/blue Boolean A/B treatment still dominated the Object rows.
