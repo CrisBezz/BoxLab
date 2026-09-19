@@ -140,17 +140,8 @@ function syncLinkedPeers(sourceId, activeObjectId=null) {
 }
 function detachLinkedObject(object) {
   if(!object?.sourceId)return false;
-  const sourceId=object.sourceId;
   delete object.sourceId;
   delete object.instanceMatrix;
-  const peers=objects.filter(item=>item.sourceId===sourceId);
-  if(peers.length===1){
-    delete peers[0].sourceId;
-    delete peers[0].instanceMatrix;
-    linkedSources.delete(sourceId);
-  }else if(peers.length===0){
-    linkedSources.delete(sourceId);
-  }
   return true;
 }
 function linkedDuplicateObject(sourceObject,{name=null,enterObjectMode=true}={}) {
