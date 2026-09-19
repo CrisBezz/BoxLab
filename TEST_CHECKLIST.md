@@ -56,6 +56,9 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Object Rename opens the BoxLab rename field already focused with the current text selected for immediate typing
 - [ ] Object footer is compact Add / Duplicate / More, while Rename / Delete / Linked Duplicate / Make Unique remain available and correctly enabled inside More
 - [ ] delete works
+- [ ] each object-row More menu includes Delete Object and deletes that specific object with one Undo step
+- [ ] in Object mode, Delete and Backspace trigger the authoritative Delete action for the current single/Multi/Group selection
+- [ ] Delete / Backspace do nothing while typing in Rename or another editable field
 - [ ] Boolean results use compact B numbering (B1, B2, B3…) from the active/base object name instead of concatenating operand names
 - [ ] Join works
 - [ ] multi-object selection/management works

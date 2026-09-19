@@ -318,7 +318,19 @@ function renderOutliner() {
       else { forceRender(); renderOutliner(); }
     });
 
-    menu.append(lock,solo);
+    const remove = document.createElement('button');
+    remove.type = 'button';
+    remove.className = 'outliner-delete-action danger';
+    remove.textContent = 'Delete Object';
+    remove.disabled = objects.length <= 1;
+    remove.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      more.open=false;
+      deleteObjectById(object.id);
+    });
+
+    menu.append(lock,solo,remove);
     more.append(moreSummary,menu);
     row.append(name, visible, more);
     list.append(row);
@@ -509,15 +521,28 @@ async function renameActive() {
   if (status) status.textContent = `${object.name} renamed`;
 }
 
-function deleteActive() {
-  if (objects.length <= 1) return;
-  const index = objects.findIndex(object => object.id === activeId);
-  if (index < 0) return;
+function deleteObjectById(id,{checkpoint=true}={}) {
+  if (objects.length <= 1) return false;
+  const index = objects.findIndex(object => object.id === id);
+  if (index < 0) return false;
+  if(checkpoint)globalThis.__boxlabObjectHistory?.checkpoint?.();
+  const deletingActive = id === activeId;
   objects.splice(index, 1);
-  if (soloId === activeId) soloId = null;
-  const replacement = objects[Math.min(index, objects.length - 1)];
-  activeId = null;
-  activateObject(replacement.id, true);
+  if (soloId === id) soloId = null;
+  if (deletingActive) {
+    const replacement = objects[Math.min(index, objects.length - 1)];
+    activeId = null;
+    activateObject(replacement.id, true);
+  } else {
+    forceRender();
+    renderOutliner();
+  }
+  globalThis.__boxlabObjectSelection?.refresh?.();
+  if (status) status.textContent = 'Object deleted';
+  return true;
+}
+function deleteActive() {
+  deleteObjectById(activeId,{checkpoint:false});
 }
 
 function resetAll() {
@@ -750,6 +775,16 @@ function initialize() {
   installRenderObserver();
   installViewportActivation();
   installUI();
+  window.addEventListener('keydown', event => {
+    if (currentMode() !== 'object') return;
+    if (event.key !== 'Delete' && event.key !== 'Backspace') return;
+    if (event.metaKey || event.ctrlKey || event.altKey) return;
+    const target=event.target;
+    if (target?.matches?.('input,textarea,select,[contenteditable="true"]') || target?.closest?.('#boxlabRenameDialog')) return;
+    if (!deleteButton || deleteButton.disabled) return;
+    event.preventDefault();
+    deleteButton.click();
+  }, true);
   globalThis.__boxlabObjectManager = {
     addMesh(mesh, name = 'Object', options = {}) { return addObject(mesh, name, options); },
     activate(id) { return activateObject(id); },
