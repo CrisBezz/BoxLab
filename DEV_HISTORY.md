@@ -23,6 +23,7 @@ Newest entries should be added at the top.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Updated `object-management.js → drawer-ui.js → index.html` cache chain for iPad/Safari.
 - Added regression coverage for whole-group detection, Rename Group routing, simplified header and protected transform/cache pins.
+- Released from PR **#33**; squash merge commit: `12fdaa389d507799253482bd7c8f4747a1e1a8f4`.
 
 ## 2026-09-19 — v0.36.18.348 persistent Group organization
 
