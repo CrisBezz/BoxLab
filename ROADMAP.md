@@ -60,7 +60,7 @@ Priority candidates:
 
 ## Phase C — Object / instance workflow
 
-**Next active phase after v0.36.18.342 UI stability hotfixes.**
+**Active phase.**
 
 - linked-instance editing robustness — **explicit Linked Duplicate + shared-source manager foundation added in v0.36.18.343; ordinary Duplicate remains independent**
 - Make Unique audit/polish — **explicit Make Unique detach path added in v0.36.18.343; continue robustness testing/polish**
