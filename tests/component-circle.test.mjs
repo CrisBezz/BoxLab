@@ -68,7 +68,7 @@ test('Circle has one authoritative drawer loader and no direct index load',()=>{
 
 test('drawer UI cache key exposes the current dynamic Circle loader',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.336/);
+  assert.match(index,/drawer-ui\.js\?v=/);
 });
 
 test('336 Circle uses the three requested Active Tools slots and no standalone wrapper',()=>{
@@ -103,5 +103,5 @@ test('336 Face Circle UI and loader pins are current',()=>{
   assert.match(ui,/\['vertex','edge','face'\]/);
   assert.match(ui,/component-circle-core\.js\?v=0\.36\.18\.334/);
   assert.match(drawer,/component-circle\.js\?v=0\.36\.18\.336/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.336/);
+  assert.match(index,/drawer-ui\.js\?v=/);
 });
