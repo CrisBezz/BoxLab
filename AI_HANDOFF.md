@@ -46,7 +46,7 @@ Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is a
 
 ## Latest completed development — v0.36.18.328
 
-Theme: **remove duplicate Precision Face / Repeat Previous UI**.
+Theme: **remove the duplicate Repeat UI introduced by the unnecessary .327 reconnect**.
 
 Root cause:
 - `drawer-ui.js` already dynamically loaded `precision-face.js` and `repeat-face-previous.js`
@@ -60,8 +60,10 @@ Fix:
 - added a regression contract that asserts one loader path only
 
 Important:
-- the feature itself was not rewritten
-- Repeat Previous exact-value behavior is preserved
+- Repeat Extrude / Repeat Inset were existing user-facing features before .327
+- .327 should not be treated as the origin of Repeat functionality
+- .328 restores the intended single Repeat UI implementation
+- Repeat exact-value behavior is preserved
 - Through exclusion remains preserved
 - future work must audit existing/dynamic loaders before adding module tags
 
@@ -218,8 +220,9 @@ Completed precision slices:
 - Add Vertex cross-object snapping (.324)
 - component Move cross-object snapping (.325)
 - live component Move ΔX/ΔY/ΔZ readback (.326)
-- Repeat Previous for Face Extrude/Inset (.327)
-- duplicate Repeat Previous UI loader removed (.328)
+- Repeat Extrude / Repeat Inset were already established before .327
+- .327 unnecessarily reintroduced/versioned the existing Repeat UI path
+- .328 removed the duplicate loader and restored a single Repeat UI implementation
 
 Recommended next build:
 - **Align / Flatten component tools**, but first search the current source/UI/dynamic imports for any existing Align/Flatten implementation or equivalent
