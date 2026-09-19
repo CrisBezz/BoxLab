@@ -25,48 +25,40 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.325**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **b00f05f77f3caa8897157153da7f282f178cdf75**
-- Current code-bearing/release commit: **11f3d80d871d2fa2375d908aa904527bd549e394**
-- v0.36.18.325 release PR: **#9**
-- Final PR topology regression: **35407390765** — success
-- Current `version.json`: **0.36.18.325**
-- Current main runtime pin: **main.js?v=0.36.18.325**
+- Repository release: **v0.36.18.326**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **ea17d502bfdba0ff83a553e4842ef2edd743eab4**
+- Current code-bearing/release commit: **80605a225d9855f098a1cff7596d77fc8d6a2d7e**
+- v0.36.18.326 release PR: **#10**
+- Final PR topology regression: **35408617550** — success
+- Current `version.json`: **0.36.18.326**
+- Current main runtime pin: **main.js?v=0.36.18.326**
 - Current Add Vertex cache pin: **add-vertex-edge-snap.js?v=0.36.18.324**
 - Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.323**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
 - `styles.css` intentionally remains pinned at **v0.36.18.270**
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
-- Persistent product roadmap: **ROADMAP.md**
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.325
+## Latest completed development — v0.36.18.326
 
-Theme: **Phase B — cross-object component Move snapping**.
+Theme: **Phase B — live Move precision readback**.
 
-The shared cross-object snap system now supports component Move in Vertex/Edge/Face modes when Geometry snapping is enabled.
+Component Move in Vertex/Edge/Face modes now shows live numerical movement in the existing stats line:
+- **ΔX**
+- **ΔY**
+- **ΔZ**
 
-Behavior:
-1. visible other-object geometry is considered using the same target priority introduced in .324:
-   - Vertex
-   - Midpoint
-   - generic Edge position
-2. single-vertex Move snaps that selected vertex directly to the target
-3. Edge/Face/multi-component Move snaps the selected component centre to the target
-4. axis-constrained Move changes only the selected axis coordinate to match the target
-5. Object mode is excluded
-6. target objects are read-only and are never modified by the snap
-7. hidden and Solo-excluded objects do not contribute targets
+Readback is shown to three decimal places and updates continuously during ordinary Move drags and cross-object snapped drags.
 
-New shared helper:
-- `componentSnapDelta(startReference,targetPosition,axis)`
+When a snap is active, the numeric delta remains visible and the existing snap target label is appended rather than replacing it.
 
-Important protected boundary:
+This release changes presentation/readback only:
+- no Move transform math changed
+- no snapping thresholds changed
+- Object-mode transform behavior is unchanged
 - `src/multi-object-transform.js?v=0.36.1.0` remains untouched
-
-Regression coverage includes free component delta, constrained-axis delta, runtime use of the shared cross-object snap core, Object-mode exclusion and the protected transform pin.
 
 ## Current Clean for SubD pipeline
 
@@ -215,22 +207,20 @@ Scene / modifiers:
 
 **Phase B — Precision Modelling remains active.**
 
-Cross-object snapping now covers:
-- Add Vertex (.324)
-- component Move in Vertex/Edge/Face modes (.325)
+Completed precision slices:
+- Add Vertex cross-object snapping (.324)
+- component Move cross-object snapping (.325)
+- live component Move ΔX/ΔY/ΔZ readback (.326)
 
 Recommended next build:
-- precision drag/readback polish so Move gives clearer live numerical feedback while dragging and snapping
+- **Repeat Previous audit/polish** for exact repeated operations, especially Extrude / Inset and other direct modelling tools where a previous exact value is meaningful
 
 Other Phase B priorities remain:
-- Repeat Previous audit/polish
 - Align / Flatten component tools
 - Circle / regularize selected components
 - Edge Flip
 - stronger structured Fill / Grid Fill / Cap workflows
 - support-loop construction improvements
-
-Do not extend snapping into Object-mode multi-transform by editing the protected `src/multi-object-transform.js` unless there is a concrete user need and explicit reason to touch that protected system.
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
