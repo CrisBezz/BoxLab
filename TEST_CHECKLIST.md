@@ -46,9 +46,11 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 ## Component alignment
 
 - [ ] existing Make Planar remains available for a selected Face
-- [ ] Align X flattens selected Vertex/Edge/Face component vertices to their average X coordinate
-- [ ] Align Y flattens selected Vertex/Edge/Face component vertices to their average Y coordinate
-- [ ] Align Z flattens selected Vertex/Edge/Face component vertices to their average Z coordinate
+- [ ] Align X enters anchor-pick mode, then aligns the other selected component vertices to the picked anchor X coordinate
+- [ ] Align Y enters anchor-pick mode, then aligns the other selected component vertices to the picked anchor Y coordinate
+- [ ] Align Z enters anchor-pick mode, then aligns the other selected component vertices to the picked anchor Z coordinate
+- [ ] picked Align anchor stays fixed
+- [ ] picked Align anchor gets the amber Boolean-style reference cue
 - [ ] component Align preserves the current component selection
 - [ ] component Align commits as one Undo step
 - [ ] component Align is hidden in Object mode
