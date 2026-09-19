@@ -85,6 +85,21 @@ test('291 relax improves a perturbed interior quad vertex while keeping the boun
   [0,1,2,3,5,6,7,8].forEach((vi,n)=>assert.ok(mesh.vertices[vi].distanceTo(boundary[n])<1e-12));
 });
 
+test('339 relax freezes an uncreased sharp geometric fold',()=>{
+  const verts=[
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,2),
+    new THREE.Vector3(0,1,0),new THREE.Vector3(1,1,0),new THREE.Vector3(2,1,2),
+    new THREE.Vector3(0,2,0),new THREE.Vector3(1,2,0),new THREE.Vector3(2,2,2)
+  ];
+  const mesh=new EditableMesh(verts,[[0,1,4,3],[1,2,5,4],[3,4,7,6],[4,5,8,7]]);
+  const center=mesh.vertices[4].clone();
+  const result=quadRelaxFlow(mesh);
+  assert.equal(result.ok,true);
+  assert.equal(result.changed,false);
+  assert.ok(result.protectedNormalBreaks>=1);
+  assert.ok(mesh.vertices[4].distanceTo(center)<1e-12);
+});
+
 test('291 relax freezes vertices touching a crease',()=>{
   const verts=[
     new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(2,0,0),
