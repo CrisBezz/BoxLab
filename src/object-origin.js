@@ -116,52 +116,19 @@ function cleanupGroups(){
   }
 }
 function groupSelected(){
-  const ids = baseSelectionIds();
-  if(ids.size < 2){
-    if(status) status.textContent = 'Select at least two objects to group';
-    return;
-  }
-  const id = allocateGroupId();
-  for(const object of manager()?.objects || []) if(ids.has(object.id)) object.groupId = id;
-  cleanupGroups();
-  decorateGroups();
-  updateGroupControls();
-  if(status) status.textContent = `${ids.size} objects grouped • G${id}`;
-  const drawer = document.querySelector('#objectsDrawer'); if(drawer) drawer.open = true;
+  const ids=baseSelectionIds();
+  const ok=globalThis.__boxlabObjectGroups?.groupSelection?.(ids);
+  if(!ok&&ids.size<2&&status)status.textContent='Select at least two objects to group';
+  const drawer=document.querySelector('#objectsDrawer');if(drawer)drawer.open=true;
 }
 function ungroupSelected(){
-  const ids = baseSelectionIds();
-  const groups = new Set();
-  for(const object of manager()?.objects || []) if(ids.has(object.id) && object.groupId != null) groups.add(object.groupId);
-  if(!groups.size){
-    if(status) status.textContent = 'Selected objects are not grouped';
-    return;
-  }
-  for(const object of manager()?.objects || []) if(groups.has(object.groupId)) delete object.groupId;
-  decorateGroups();
-  updateGroupControls();
-  if(status) status.textContent = `${groups.size} group${groups.size === 1 ? '' : 's'} ungrouped`;
-  const drawer = document.querySelector('#objectsDrawer'); if(drawer) drawer.open = true;
+  const ids=baseSelectionIds();
+  globalThis.__boxlabObjectGroups?.ungroupSelection?.(ids);
+  const drawer=document.querySelector('#objectsDrawer');if(drawer)drawer.open=true;
 }
 function decorateGroups(){
-  cleanupGroups();
-  const objects = manager()?.objects || [];
-  outlinerList?.querySelectorAll('.outliner-row').forEach(row => {
-    const id = Number(row.dataset.objectId);
-    const object = objects.find(item => item.id === id);
-    let tag = row.querySelector('.boxlab-group-tag');
-    if(object?.groupId == null){
-      tag?.remove();
-      return;
-    }
-    if(!tag){
-      tag = document.createElement('span');
-      tag.className = 'boxlab-group-tag';
-      row.append(tag);
-    }
-    tag.textContent = `G${object.groupId}`;
-    tag.title = `Group ${object.groupId}`;
-  });
+  outlinerList?.querySelectorAll('.boxlab-group-tag').forEach(tag=>tag.remove());
+  globalThis.__boxlabObjectGroups?.refresh?.();
 }
 function updateGroupControls(){
   if(!groupControls) return;
@@ -229,8 +196,8 @@ function buildControls(){
   updateGroupControls();
   decorateGroups();
   if(!groupObserver && outlinerList){
-    groupObserver = new MutationObserver(() => queueMicrotask(decorateGroups));
-    groupObserver.observe(outlinerList,{childList:true});
+    groupObserver = new MutationObserver(() => queueMicrotask(()=>outlinerList.querySelectorAll('.boxlab-group-tag').forEach(tag=>tag.remove())));
+    groupObserver.observe(outlinerList,{childList:true,subtree:true});
   }
 }
 function ensureMarker(){
