@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.330 explicit Align anchor workflow
+
+- Released **v0.36.18.330** from PR #14; squash merge commit: `e5ee279298b14cca76cbca5274c10f6a2484e802`.
+- Upgraded component Align X/Y/Z from average-based flattening to an explicit iPad anchor workflow.
+- Workflow: multi-select components → choose Align X/Y/Z → tap one selected component as the fixed anchor.
+- The picked anchor component stays fixed; other selected component vertices align to the anchor component's centre coordinate on the chosen axis.
+- Reused the existing Boolean amber/orange reference colour (`#f3b34a`) for the temporary anchor cue.
+- Existing Make Planar remains unchanged and distinct.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- PR topology regression run **35415067002** passed before merge.
+
 ## 2026-09-19 — v0.36.18.329 component Align X/Y/Z
 
 - Released **v0.36.18.329** from PR #13; squash merge commit: `6edb552a3219435f1a3a2de7cc9a47be46815c07`.
