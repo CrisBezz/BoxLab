@@ -23,6 +23,7 @@ Newest entries should be added at the top.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Refreshed `object-management.js`, `object-origin.js`, `boolean-ux-history.js`, `drawer-ui.js` and `index.html` cache pins.
 - Added regression coverage for authoritative Group ownership, legacy delegation, immediate hierarchy refresh, neutral generic Multi selection and protected transform/cache pins.
+- Released from PR **#35**; squash merge commit: `8faa0cb38cd25f1a1acf561929d6685fc0aabe6e`.
 
 ## 2026-09-20 — v0.36.18.350 compact Group tree
 
