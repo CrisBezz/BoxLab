@@ -65,7 +65,7 @@ Priority candidates:
 - linked-instance editing robustness — **explicit Linked Duplicate + shared-source manager foundation added in v0.36.18.343; ordinary Duplicate remains independent**
 - Make Unique audit/polish — **explicit Make Unique detach path added in v0.36.18.343; continue robustness testing/polish**
 - cross-object reference/edit workflows — **Reference imports already served as snap targets; v0.36.18.344 hardens them as permanently read-only modelling guides across single/Multi/Group/history paths**
-- stronger multi-object editing
+- stronger multi-object editing — **audit confirmed Multi Move / Scale / Rotate / numeric transforms / grouping / Duplicate / Join / Boolean already existed; Multi Linked Duplicate + Multi Make Unique parity added in v0.36.18.346**
 - Join/Boolean workflow polish
 - persistent object/region organization
 
