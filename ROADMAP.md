@@ -67,7 +67,7 @@ Priority candidates:
 - cross-object reference/edit workflows — **Reference imports already served as snap targets; v0.36.18.344 hardens them as permanently read-only modelling guides across single/Multi/Group/history paths**
 - stronger multi-object editing — **audit confirmed Multi Move / Scale / Rotate / numeric transforms / grouping / Duplicate / Join / Boolean already existed; Multi Linked Duplicate + Multi Make Unique parity added in v0.36.18.346**
 - Join/Boolean workflow polish — **v0.36.18.347 consolidates both workflows onto the authoritative Object scene-history bridge; legacy parallel Boolean Undo/Redo wrapper removed while A/B UX, hidden originals, unique results, linked-instance metadata and Reference exclusions are preserved**
-- persistent object/region organization — **v0.36.18.348 makes existing Group names and collapsed state part of authoritative Object scene snapshots, makes group Rename undoable, and prunes stale metadata when groups disappear**
+- persistent object/region organization — **v0.36.18.348 makes Group names/collapse state persistent; v0.36.18.349 makes a fully selected Group a first-class Object selection so normal Rename becomes Rename Group, strengthens selected-group feedback, and simplifies the group header around Select / Collapse / Visibility / Lock / Ungroup**
 
 ## Phase D — Construction tools
 
