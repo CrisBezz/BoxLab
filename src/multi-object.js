@@ -3,6 +3,7 @@ import { EditableMesh } from './mesh.js';
 import { subdivide } from './subdivision.js';
 import { applyMirror } from './mirror.js';
 import { combineEditableMeshes, modifierSettingsCompatible } from './object-join-core.js?v=0.36.18.277';
+import { matrixForInstance, setInstanceMatrix, transformEditableMesh, meshesNear, deriveInstancePlacement, localMeshFromWorld } from './instance-core.js?v=0.36.18.343';
 
 const canvas = document.querySelector('#viewport');
 const list = document.querySelector('#outlinerList');
@@ -11,6 +12,8 @@ const addButton = document.querySelector('#outlinerAddBtn');
 const duplicateButton = document.querySelector('#outlinerDuplicateBtn');
 const renameButton = document.querySelector('#outlinerRenameBtn');
 const deleteButton = document.querySelector('#outlinerDeleteBtn');
+let linkedDuplicateButton = null;
+let makeUniqueButton = null;
 const status = document.querySelector('#selectionStatus');
 const app = document.querySelector('#app');
 const raycaster = new THREE.Raycaster();
@@ -28,6 +31,8 @@ let activeRoot = null;
 let initialized = false;
 let renderQueued = false;
 let touchTap = null;
+let nextSourceId = 1;
+const linkedSources = new Map();
 
 function state() { return globalThis.__boxlabBridgeState; }
 function history() { return globalThis.__boxlabHistory; }
@@ -109,10 +114,57 @@ function restoreHistory(snapshot) {
   h.redoStack = (snapshot?.redo || []).map(mesh => mesh.clone());
 }
 
+function linkedCount(sourceId) {
+  return sourceId ? objects.filter(object => object.sourceId === sourceId).length : 0;
+}
+function newLinkedSource(mesh) {
+  const id=`source-${nextSourceId++}`;
+  linkedSources.set(id,{ id, mesh:mesh.clone(), revision:0 });
+  return id;
+}
+function ensureLinkedSource(object) {
+  if(!object)return null;
+  if(object.sourceId&&linkedSources.has(object.sourceId))return linkedSources.get(object.sourceId);
+  object.sourceId=newLinkedSource(object.mesh);
+  setInstanceMatrix(object,new THREE.Matrix4());
+  return linkedSources.get(object.sourceId);
+}
+function syncLinkedPeers(sourceId, activeObjectId=null) {
+  const source=linkedSources.get(sourceId);
+  if(!source)return;
+  for(const peer of objects){
+    if(peer.sourceId!==sourceId||peer.id===activeObjectId)continue;
+    const evaluated=transformEditableMesh(source.mesh,matrixForInstance(peer));
+    if(evaluated)peer.mesh=evaluated;
+  }
+}
+function detachLinkedObject(object) {
+  if(!object?.sourceId)return false;
+  delete object.sourceId;
+  delete object.instanceMatrix;
+  return true;
+}
 function saveActive() {
   const object = activeObject(), live = state()?.mesh;
   if (!object || !live) return;
-  object.mesh = live.clone();
+  if(object.sourceId&&linkedSources.has(object.sourceId)){
+    const source=linkedSources.get(object.sourceId);
+    if(currentMode()==='object'){
+      const placement=deriveInstancePlacement(source.mesh,live);
+      if(placement)setInstanceMatrix(object,placement);
+      object.mesh=live.clone();
+    }else{
+      const local=localMeshFromWorld(live,matrixForInstance(object));
+      if(local&&!meshesNear(local,source.mesh)){
+        source.mesh=local.clone();
+        source.revision++;
+        syncLinkedPeers(object.sourceId,object.id);
+      }
+      object.mesh=live.clone();
+    }
+  }else{
+    object.mesh = live.clone();
+  }
   object.settings = captureSettings();
   object.history = captureHistory();
 }
@@ -155,7 +207,9 @@ function renderOutliner() {
 
     const name = document.createElement('button');
     name.className = 'outliner-name';
-    name.textContent = object.kind === 'reference' ? `${object.name} • Ref` : object.name;
+    const baseName = object.kind === 'reference' ? `${object.name} • Ref` : object.name;
+    const links = linkedCount(object.sourceId);
+    name.textContent = links > 1 ? `${baseName} • Link ×${links}` : baseName;
     name.title = object.locked ? 'Locked object — unlock to edit' : 'Make active object';
     name.addEventListener('click', () => activateObject(object.id));
 
@@ -199,6 +253,8 @@ function renderOutliner() {
   if (duplicateButton) duplicateButton.disabled = !active;
   if (renameButton) renameButton.disabled = !active;
   if (deleteButton) deleteButton.disabled = objects.length <= 1;
+  if(linkedDuplicateButton)linkedDuplicateButton.disabled=!active||active.kind==='reference';
+  if(makeUniqueButton)makeUniqueButton.disabled=!active||linkedCount(active.sourceId)<2;
   updateLockUI();
 }
 
@@ -279,6 +335,39 @@ function duplicateActive() {
   });
 }
 
+function linkedDuplicateActive() {
+  const sourceObject=activeObject();
+  if(!sourceObject||sourceObject.kind==='reference')return;
+  globalThis.__boxlabObjectHistory?.checkpoint?.();
+  saveActive();
+  const source=ensureLinkedSource(sourceObject);
+  if(!source)return;
+  const copy=addObject(sourceObject.mesh,`${sourceObject.name} linked`,{settings:sourceObject.settings,enterObjectMode:true});
+  if(!copy)return;
+  copy.sourceId=sourceObject.sourceId;
+  setInstanceMatrix(copy,matrixForInstance(sourceObject));
+  copy.mesh=sourceObject.mesh.clone();
+  if(sourceObject.origin)copy.origin={...sourceObject.origin};
+  renderOutliner();
+  if(status)status.textContent=`Linked Duplicate created • ${linkedCount(sourceObject.sourceId)} share geometry`;
+  requestAnimationFrame(()=>{if(currentMode()==='object')globalThis.__boxlabTransformArming?.activateRealMove?.();});
+}
+
+function makeActiveUnique() {
+  const object=activeObject();
+  if(!object||linkedCount(object.sourceId)<2){
+    if(status)status.textContent='Object is already unique';
+    return false;
+  }
+  globalThis.__boxlabObjectHistory?.checkpoint?.();
+  saveActive();
+  detachLinkedObject(object);
+  object.mesh=state()?.mesh?.clone?.()||object.mesh.clone();
+  renderOutliner();
+  if(status)status.textContent=`${object.name} made unique`;
+  return true;
+}
+
 function joinObjects(ids = []) {
   const requested = [...new Set((ids || []).map(Number).filter(Number.isFinite))];
   let chosen = objects.filter(object => requested.includes(object.id));
@@ -299,6 +388,7 @@ function joinObjects(ids = []) {
   if (!live) return { ok:false, reason:'No active editable mesh' };
 
   primary.mesh = combined.clone();
+  detachLinkedObject(primary);
   replaceMeshInPlace(live, combined);
   primary.history = captureHistory();
   const removedIds = new Set(chosen.filter(object => object.id !== primary.id).map(object => object.id));
@@ -341,6 +431,7 @@ function resetAll() {
   replaceMeshInPlace(live, EditableMesh.cube(2));
   history()?.clear?.();
   soloId = null;
+  linkedSources.clear();
   const initial = {
     id: nextId++,
     name:'Cube',
@@ -497,8 +588,29 @@ function installRenderObserver() {
 }
 
 function installUI() {
+  const standardRow=addButton?.parentElement;
+  if(standardRow&&!document.querySelector('#instanceObjectActions')){
+    const row=document.createElement('div');
+    row.id='instanceObjectActions';
+    row.className='outliner-actions';
+    row.style.gridTemplateColumns='repeat(2,minmax(0,1fr))';
+    linkedDuplicateButton=document.createElement('button');
+    linkedDuplicateButton.type='button';
+    linkedDuplicateButton.id='linkedDuplicateBtn';
+    linkedDuplicateButton.textContent='Linked Duplicate';
+    linkedDuplicateButton.title='Create a linked copy with independent object placement';
+    makeUniqueButton=document.createElement('button');
+    makeUniqueButton.type='button';
+    makeUniqueButton.id='makeUniqueBtn';
+    makeUniqueButton.textContent='Make Unique';
+    makeUniqueButton.title='Detach the active linked instance from shared geometry';
+    row.append(linkedDuplicateButton,makeUniqueButton);
+    standardRow.before(row);
+  }
   addButton?.addEventListener('click', () => addObject(EditableMesh.cube(2), 'Cube', { enterObjectMode:true }));
   duplicateButton?.addEventListener('click', duplicateActive);
+  linkedDuplicateButton?.addEventListener('click', linkedDuplicateActive);
+  makeUniqueButton?.addEventListener('click', makeActiveUnique);
   renameButton?.addEventListener('click', renameActive);
   deleteButton?.addEventListener('click', deleteActive);
   document.querySelectorAll('#selectionModes button').forEach(button => button.addEventListener('click', queueOutliner));
@@ -534,12 +646,17 @@ function initialize() {
     addMesh(mesh, name = 'Object', options = {}) { return addObject(mesh, name, options); },
     activate(id) { return activateObject(id); },
     joinObjects(ids) { return joinObjects(ids); },
+    linkedDuplicate() { return linkedDuplicateActive(); },
+    makeUnique() { return makeActiveUnique(); },
+    linkedIds(id) { const object=objects.find(item=>item.id===id); return object?.sourceId?objects.filter(item=>item.sourceId===object.sourceId).map(item=>item.id):[]; },
+    sourceId(id) { return objects.find(item=>item.id===id)?.sourceId||null; },
     resetAll,
     saveActive,
     get activeId() { return activeId; },
     get objects() { saveActive(); return objects; },
     get soloId() { return soloId; }
   };
+  globalThis.__boxlabObjectGeometry={version:'0.36.18.343',sourceId:id=>globalThis.__boxlabObjectManager?.sourceId?.(id)||null,linkedIds:id=>globalThis.__boxlabObjectManager?.linkedIds?.(id)||[]};
   window.dispatchEvent(new Event('boxlab-object-manager-ready'));
   renderOutliner();
   forceRender();
