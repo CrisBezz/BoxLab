@@ -25,14 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.339**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **c5c236852791147eeee62f3c7f710b2e73da57a2**
-- Current code-bearing/release commit: **e651e7d1360d9f09e8723ddf1d6c0556b8b9b395**
-- v0.36.18.339 release PR: **#23**
-- PR topology regression: **35416581512** — success
-- Current `version.json`: **0.36.18.339**
+- Repository release: **v0.36.18.340**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **779ed8da4e6d9855d806c082ad9b86918475f158**
+- Current code-bearing/release commit: **54d7e1822235db0cb88c05c0541fae7d8c1560b7**
+- v0.36.18.340 release PR: **#24**
+- Corrected PR topology regression: **35431669328** — success
+- Current `version.json`: **0.36.18.340**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.338**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.340**
+- Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
+- Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
+- Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
 - Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.336**
 - Component Circle core: **component-circle-core.js?v=0.36.18.333**
@@ -46,51 +49,33 @@ Audited from current `main` on 2026-09-19.
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
-Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
+Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is the next active focus.
 
-## Latest completed development — v0.36.18.339
+## Latest completed development — v0.36.18.340
 
-Theme: **Clean for SubD sharp-fold shape preservation hotfix**.
+Theme: **transactional Offset Loop support workflow**.
 
-Existing-feature audit result:
-- no current Circle / Regularize tool existed
-- existing loop selection, loop slide, Offset Loop and bevel regularity helpers remain separate and unchanged
+Mandatory existing-feature audit result:
+- BoxLab already had the support-loop construction capability
+- the authoritative tool is **Offset Loop**
+- Loop Cut and Bevel remain separate modelling operations
+- no duplicate Support Loop button/tool was added
 
-New Circle behavior:
-1. works in Vertex, Edge, or exactly one Face selection
-2. Vertex/Edge require one simple closed selected loop; Face uses that face boundary
-3. rejects open chains, branches, multiple loops, ambiguous loops and degenerate loops
-4. preserves the loop centre
-5. preserves the loop working plane
-6. uses the average selected loop radius
-7. evenly spaces the existing vertices around that circle
-8. creates/deletes no topology
-9. preserves the current selection
-10. commits as one Undo history step
+v0.36.18.340 improvements:
+1. drag-finish Offset Loop validates topology before history commit
+2. invalid drag results restore the pre-drag snapshot
+3. exact-entry Offset Loop uses the same validate-before-commit / rollback discipline
+4. the two created support rails are selected directly through the canonical Selection Bridge
+5. the legacy hidden Multi control is no longer toggled off after support-loop creation
+6. canonical additive Multi therefore remains active
+7. while Offset Loop is armed, Edge paint selection yields its capture-phase Pencil handler
+8. Offset Loop exposes one armed-state controller through `globalThis.__boxlabOffsetLoop`
 
-Implementation:
-- `src/component-circle-core.js`
-- `src/component-circle.js`
-- loaded once through `drawer-ui.js`
-- Circle control is owned by contextual Vertex / Edge / Face **Active Tools**, not Selection
-- Vertex placement: third slot beside Slide / Create Face
-- Edge placement: immediately after Delete in the bottom Topology row
-- Face placement: beside Poke Faces
-- no standalone bottom Circle row remains
+Preserve this as the support-loop baseline. Future work should improve this implementation rather than introducing a second support-loop tool.
 
-Edge Split regression fix:
-- canonical additive Multi remains enabled
-- `edge-paint-select.js` yields only while Face Split is armed
-- `face-split.js` exposes `isArmed()` and participates in `boxlab-direct-tool-exclusive`
-- ordinary additive Edge selection resumes immediately after Split is off
-- preserve this ordering for future direct Edge tools
-
-Clean for SubD shape-preservation guard:
-- all-quad relaxation may still improve genuinely smooth planar/curved flow
-- a candidate vertex is now protected when its incident quad-face normals contain a break sharper than 30°
-- this guard does not require an explicit Crease
-- this prevents box corners, hole rims and similar hard geometric folds from being pulled inward by tangent relaxation
-- preserve this guard in all future Clean work
+The v0.36.18.339 Clean sharp-fold guard remains protected:
+- genuinely smooth all-quad regions may relax
+- sharp incident normal breaks >30° remain protected even without an explicit Crease
 
 Protected transform and Through systems remain untouched.
 
@@ -241,32 +226,29 @@ Scene / modifiers:
 
 ## Next development step
 
-**Phase B — Precision Modelling remains active.**
+**Phase C — Object / instance workflow is next.**
 
-Completed precision slices:
+Recommended next build:
+- **linked-instance editing robustness + Make Unique audit**
+- perform the mandatory existing-feature audit first across current instance/link/duplicate/object-management modules
+- verify the current live behavior before relying on older .19.3/.19.4 history
+- prefer repairing/consolidating the existing instance pathway rather than introducing a second instance model
+
+Phase B completed precision slices:
 - Add Vertex cross-object snapping (.324)
 - component Move cross-object snapping (.325)
 - live component Move ΔX/ΔY/ΔZ readback (.326)
 - Repeat UI duplication corrected (.328)
 - component Align X/Y/Z (.329)
 - explicit pick-anchor Align workflow (.330)
-- Circle regularize for simple closed Vertex/Edge loops (.331)
-- Circle visibility/cache fix (.332)
-- exactly one selected Face can Circle its boundary (.333)
-- Circle moved from Selection into contextual Active Tools (.334)
+- Circle regularize (.331–.336)
 - Face Split restored under canonical additive Multi (.335)
-- Circle exact per-mode Active Tools layout (.336)
-- existing Rotate Edge audited as Edge Flip and consolidated under the Flip Edge label (.337)
+- existing Rotate Edge consolidated as Flip Edge (.337)
 - four-sided transactional all-quad Grid Fill (.338)
 - Clean sharp-fold cave-in regression fixed (.339)
+- transactional/Multi-safe Offset Loop support workflow (.340)
 
-Recommended next build:
-- **support-loop construction improvements**, after the mandatory existing-feature audit for existing Offset Loop / Loop Cut / bevel-derived support workflows
-- keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch
-
-Other Phase B priorities remain:
-- stronger structured Fill / Grid Fill / Cap workflows
-- support-loop construction improvements
+Keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch.
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
