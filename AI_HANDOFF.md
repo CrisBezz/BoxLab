@@ -25,14 +25,14 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.341**
+- Repository release: **v0.36.18.342**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **779ed8da4e6d9855d806c082ad9b86918475f158**
-- Current code-bearing/release commit: **f04cbb2a92c7bc0a54155cc65d07e4f3a0cc1300**
-- v0.36.18.341 release PR: **#25**
-- Corrected PR topology regression: **35432049975** — success
-- Current `version.json`: **0.36.18.341**
+- Current code-bearing/release commit: **cf9ee2dc3c1b9db9963e5fdc23435d3b1acabbe8**
+- v0.36.18.342 release PR: **#26**
+- Corrected PR topology regression: **35432345834** — success
+- Current `version.json`: **0.36.18.342**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.341**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.342**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
@@ -51,9 +51,18 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is the next active focus.
 
-## Latest completed development — v0.36.18.341
+## Latest completed development — v0.36.18.342
 
-Theme: **Vertex Active Tools stability and Build Edge/Add handoff hotfix**.
+Theme: **File menu viewport fit and stable 3-column Face Active Tools**.
+
+User-visible UI baseline:
+- File menu opens below the command bar and fits inside the available iPad viewport
+- File menu scrolls internally if the available height is too small
+- Face primary tools remain a stable 3-column grid: **Extrude / Inset / Knife**
+- Join Coplanar wraps below instead of forcing a fourth column
+- Face secondary tools remain a stable 3-column grid: **Extract / Duplicate / Bridge**
+- Delete wraps below instead of creating a four-column row
+- Face layout sync must not physically re-append already-correct buttons
 
 User-visible regression fixed:
 - tapping Build Edge on iPad no longer reshuffles the Vertex buttons
@@ -260,6 +269,7 @@ Phase B completed precision slices:
 - Clean sharp-fold cave-in regression fixed (.339)
 - transactional/Multi-safe Offset Loop support workflow (.340)
 - Vertex toolbar / Build Edge handoff regression fixed (.341)
+- File menu fit + stable 3-column Face layout (.342)
 
 Keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch.
 
