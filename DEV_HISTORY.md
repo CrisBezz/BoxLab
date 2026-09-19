@@ -8,6 +8,16 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.326 live component Move precision readback
+
+- Released **v0.36.18.326** from PR #10; squash merge commit: `80605a225d9855f098a1cff7596d77fc8d6a2d7e`.
+- Added live component Move readback in the existing stats line: **ΔX / ΔY / ΔZ** to three decimal places.
+- Numeric readback remains visible during ordinary drags and cross-object snapping.
+- Existing snap target labels remain visible alongside the numeric delta.
+- No transform math changed; this is presentation/readback only.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+- Final PR regression run **35408617550** passed. The earlier failed run only flagged a stale .325 cache-pin assertion; the new .326 readback tests were already passing.
+
 ## 2026-09-19 — v0.36.18.325 component Move cross-object snapping
 
 - Released **v0.36.18.325** from PR #9; squash merge commit: `11f3d80d871d2fa2375d908aa904527bd549e394`.
