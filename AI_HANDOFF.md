@@ -25,17 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.332**
+- Repository release: **v0.36.18.333**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **c5c236852791147eeee62f3c7f710b2e73da57a2**
-- Current code-bearing/release commit: **86f5efe098b26fa7543d1018122fc7deeeacdb04**
-- v0.36.18.332 release PR: **#16**
+- Current code-bearing/release commit: **fbfbf9f46f45b4551cb0e5fdc1086cac248e7919**
+- v0.36.18.333 release PR: **#17**
 - PR topology regression: **35416581512** — success
-- Current `version.json`: **0.36.18.332**
+- Current `version.json`: **0.36.18.333**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.332**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.333**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
-- Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.331**
-- Component Circle core: **component-circle-core.js?v=0.36.18.331**
+- Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.333**
+- Component Circle core: **component-circle-core.js?v=0.36.18.333**
 - Existing Make Planar remains: **make-planar.js?v=0.36.18.93** via `face-workflow-layout.js`
 - Precision Face implementation pin: **precision-face.js?v=0.36.18.327**
 - Repeat Previous implementation pin: **repeat-face-previous.js?v=0.36.18.327**
@@ -48,17 +48,17 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.332
+## Latest completed development — v0.36.18.333
 
-Theme: **Circle visibility hotfix and drawer cache-key correction**.
+Theme: **Face-selection support for Circle**.
 
 Existing-feature audit result:
 - no current Circle / Regularize tool existed
 - existing loop selection, loop slide, Offset Loop and bevel regularity helpers remain separate and unchanged
 
 New Circle behavior:
-1. works only in Vertex or Edge mode
-2. requires one simple closed selected loop
+1. works in Vertex, Edge, or exactly one Face selection
+2. Vertex/Edge require one simple closed selected loop; Face uses that face boundary
 3. rejects open chains, branches, multiple loops, ambiguous loops and degenerate loops
 4. preserves the loop centre
 5. preserves the loop working plane
@@ -230,6 +230,8 @@ Completed precision slices:
 - component Align X/Y/Z (.329)
 - explicit pick-anchor Align workflow (.330)
 - Circle regularize for simple closed Vertex/Edge loops (.331)
+- Circle visibility/cache fix (.332)
+- exactly one selected Face can Circle its boundary (.333)
 
 Recommended next build:
 - **Edge Flip** for manual topology-flow correction, after the mandatory existing-feature audit for rotate-edge / diagonal-swap equivalents
