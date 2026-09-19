@@ -9,21 +9,38 @@ function mode(){return bridge()?.mode?.()||document.querySelector('#selectionMod
 function selected(){return[...new Set(bridge()?.indices?.()||[])];}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 
-const row=document.createElement('div');
-row.id='componentCircleRow';
-row.style.cssText='margin-top:4px';
 const button=document.createElement('button');
 button.id='componentCircleBtn';
 button.type='button';
 button.textContent='Circle';
-button.style.cssText='width:100%;min-width:0';
-row.appendChild(button);
+button.style.cssText='min-width:0;width:100%';
 
 function place(md=mode()){
-  const host=document.querySelector(`[data-mode-tools="${md}"]`);
-  if(!host)return false;
-  if(row.parentElement!==host)host.appendChild(row);
-  return true;
+  if(md==='vertex'){
+    const createFace=document.querySelector('#createFaceFromVerticesBtn');
+    const row=createFace?.parentElement;
+    if(!row)return false;
+    row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+    if(button.parentElement!==row)row.appendChild(button);
+    return true;
+  }
+  if(md==='edge'){
+    const deleteEdge=document.querySelector('#deleteEdgeBtn');
+    const row=deleteEdge?.parentElement;
+    if(!row)return false;
+    row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+    if(button.parentElement!==row)deleteEdge.insertAdjacentElement('afterend',button);
+    return true;
+  }
+  if(md==='face'){
+    const poke=document.querySelector('#pokeFacesBtn');
+    const row=poke?.parentElement;
+    if(!row)return false;
+    row.style.gridTemplateColumns='repeat(2,minmax(0,1fr))';
+    if(button.parentElement!==row)row.appendChild(button);
+    return true;
+  }
+  return false;
 }
 
 function info(){
@@ -47,7 +64,6 @@ function apply(){
 function sync(){
   const {md,loop}=info();
   place(md);
-  row.style.display='';
   const supported=['vertex','edge','face'].includes(md);
   button.disabled=!supported||!loop.ok||!globalThis.__boxlabHistory;
   button.title=!supported
@@ -63,4 +79,4 @@ document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMic
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 [0,60,180,500].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabComponentCircle={version:'0.36.18.334',apply,sync,info};
+globalThis.__boxlabComponentCircle={version:'0.36.18.336',apply,sync,info};
