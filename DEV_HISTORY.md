@@ -8,6 +8,27 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.343 linked-instance foundation + Make Unique
+
+- Released **v0.36.18.343** from PR #27; squash merge commit: `b35e542b93469b8c957b55c3c3de1e96e9ebc65a`.
+- Mandatory audit confirmed current main had **no live linked-instance system**; the old v0.36.19.x instance foundation had been deliberately removed when BoxLab was restored to the pre-instance modelling baseline.
+- Ordinary **Duplicate remains independent** and continues to clone geometry normally.
+- Added explicit **Linked Duplicate** and **Make Unique** controls in the Objects drawer.
+- Linked instances are implemented inside the authoritative `multi-object.js` manager rather than through an external pointerup/event synchronizer.
+- Each link group owns one shared local source mesh; each object stores its own `instanceMatrix` and evaluated world-space mesh.
+- Object-mode Move / Rotate / Scale update only that instance's placement matrix.
+- Component edits are transformed back to shared local source space, then regenerated into every linked peer using each peer's own placement.
+- Added tested placement solving for both solid 3D meshes and planar meshes; solved transforms are validated against all vertices before acceptance.
+- **Make Unique** removes only the active object's link metadata while leaving its evaluated geometry unchanged.
+- **Join** explicitly detaches the combined primary result from any link group.
+- Reset clears the linked-source registry.
+- Object scene snapshots now preserve `sourceId` and `instanceMatrix`.
+- Linked Duplicate captures the scene-before state and transfers that checkpoint to the newly active duplicate's history so Undo can restore the pre-duplicate scene.
+- Outliner labels linked peers with `Link ×N`.
+- The protected `src/multi-object-transform.js?v=0.36.1.0` was not modified.
+- First PR run failed only because the previous .342 UI test hard-coded the parent drawer cache version. All new instance tests passed on that run. The parent-loader assertion was made version-resilient.
+- Corrected PR topology regression run **35435127026** passed before merge.
+
 ## 2026-09-19 — v0.36.18.342 File menu fit + stable 3-column Face layout
 
 - Released **v0.36.18.342** from PR #26; squash merge commit: `cf9ee2dc3c1b9db9963e5fdc23435d3b1acabbe8`.
