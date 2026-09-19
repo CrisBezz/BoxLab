@@ -8,6 +8,20 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.348 persistent Group organization
+
+- Mandatory Phase C audit confirmed BoxLab already had one authoritative Group implementation: membership and transforms are owned by `object-origin.js`, while the grouped Outliner hierarchy / names / collapse UI are owned by `object-management.js`.
+- No second hierarchy or group-transform layer was added.
+- Audit found Object scene snapshots preserved each object's `groupId` but did not preserve custom group names or collapsed/expanded state.
+- Added group metadata to the authoritative Object scene snapshot and restore path.
+- Restore filters metadata against group IDs that genuinely exist in the restored scene, preventing stale names/collapse flags from attaching to unrelated later groups.
+- Group Rename now checkpoints Object scene history before changing the label, making rename one Undo/Redo step.
+- Stale name/collapse metadata is pruned when a group truly disappears.
+- Existing Group membership, automatic whole-group transform expansion, linked-instance behavior and Reference protection remain unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Updated the `object-management.js → drawer-ui.js → index.html` cache chain for iPad/Safari.
+- Added regression coverage for metadata snapshot/restore, rename history, stale metadata pruning and protected transform/cache pins.
+
 ## 2026-09-19 — v0.36.18.347 Join / Boolean scene-history consolidation
 
 - Phase C audit confirmed existing **Join** is already authoritative in Object > Active Tools and already checkpoints through the Object scene-history bridge.
