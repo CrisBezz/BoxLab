@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.96 — conservative triangle-pair Edge Rotate.
+// BoxLab v0.36.18.337 — existing conservative triangle-pair Edge Flip, previously labelled Rotate Edge.
 // Flips one uncreased shared diagonal between exactly two consistently wound triangles.
 
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
@@ -20,7 +20,7 @@ function edgeKey(m,a,b){return m.edgeKey(a,b);}
 const button=document.createElement('button');
 button.id='rotateEdgeBtn';
 button.type='button';
-button.textContent='Rotate Edge';
+button.textContent='Flip Edge';
 button.disabled=true;
 button.style.cssText='width:100%;min-width:0';
 
@@ -70,7 +70,7 @@ function info(m,edgeIndex){
   const owners=(edge.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&Array.isArray(m.faces?.[fi]));
   if(owners.length!==2)return{ok:false,reason:'Edge must be shared by exactly two Faces'};
   const [f0,f1]=owners,face0=m.faces[f0],face1=m.faces[f1];
-  if(face0.length!==3||face1.length!==3)return{ok:false,reason:'Rotate Edge requires two triangles'};
+  if(face0.length!==3||face1.length!==3)return{ok:false,reason:'Flip Edge requires two triangles'};
 
   const oldKey=edgeKey(m,edge.a,edge.b);
   if((m.creases?.get?.(oldKey)||0)>0)return{ok:false,reason:'Creased Edges cannot be rotated'};
@@ -109,7 +109,7 @@ function apply(){
   const m=mesh(),ids=selectedEdges(),history=globalThis.__boxlabHistory;
   if(!m||ids.length!==1||!history)return false;
   const plan=info(m,ids[0]);
-  if(!plan.ok){if(status)status.textContent=`Rotate Edge • ${plan.reason}`;sync();return false;}
+  if(!plan.ok){if(status)status.textContent=`Flip Edge • ${plan.reason}`;sync();return false;}
 
   history.push(m.clone());
   m.faces[plan.faceIndices[0]]=[...plan.newFaces[0]];
@@ -120,7 +120,7 @@ function apply(){
   const resultIndex=edges.findIndex(e=>edgeKey(m,e.a,e.b)===plan.newKey);
   bridge()?.set?.('edge',resultIndex>=0?[resultIndex]:[]);
   render();
-  if(status)status.textContent='Rotate Edge • diagonal flipped • new Edge selected';
+  if(status)status.textContent='Flip Edge • diagonal flipped • new Edge selected';
   queueMicrotask(sync);
   return true;
 }
@@ -141,8 +141,8 @@ function sync(){
 
 function stampVersion(){
   const version=document.querySelector('#appVersion');
-  if(version)version.textContent='v0.36.18.96';
-  document.title='BoxLab v0.36.18.96';
+  if(version)version.textContent='v0.36.18.337';
+  document.title='BoxLab v0.36.18.337';
 }
 
 button.addEventListener('click',apply);
@@ -152,4 +152,4 @@ document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListene
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 [120,500,1000,1600].forEach(delay=>setTimeout(stampVersion,delay));
 
-globalThis.__boxlabRotateEdge={version:'0.36.18.96',info,apply};
+globalThis.__boxlabRotateEdge={version:'0.36.18.337',info,apply};
