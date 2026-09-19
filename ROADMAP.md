@@ -47,7 +47,7 @@ Phase A freeze rule:
 
 Priority candidates:
 - cross-object snapping — **Add Vertex in v0.36.18.324; component Move snapping added in v0.36.18.325**
-- precision drag/readback polish
+- precision drag/readback polish — **live component Move ΔX/ΔY/ΔZ readback added in v0.36.18.326**
 - Repeat Previous audit/polish for exact repeated operations
 - Align / Flatten component tools
 - Circle / regularize selected components where topology permits
