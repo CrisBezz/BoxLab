@@ -25,15 +25,16 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.330**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **9ee09e46e88f289255cbc9c3eca244f14fdff9c9**
-- Current code-bearing/release commit: **e5ee279298b14cca76cbca5274c10f6a2484e802**
-- v0.36.18.330 release PR: **#14**
-- PR topology regression: **35415067002** — success
-- Current `version.json`: **0.36.18.330**
+- Repository release: **v0.36.18.331**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **c5c236852791147eeee62f3c7f710b2e73da57a2**
+- Current code-bearing/release commit: **64bb42b17ef463e489c66989bf6f51dc99917126**
+- v0.36.18.331 release PR: **#15**
+- PR topology regression: **35416581512** — success
+- Current `version.json`: **0.36.18.331**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
-- Component Align core: **component-align-core.js?v=0.36.18.330**
+- Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.331**
+- Component Circle core: **component-circle-core.js?v=0.36.18.331**
 - Existing Make Planar remains: **make-planar.js?v=0.36.18.93** via `face-workflow-layout.js`
 - Precision Face implementation pin: **precision-face.js?v=0.36.18.327**
 - Repeat Previous implementation pin: **repeat-face-previous.js?v=0.36.18.327**
@@ -46,31 +47,32 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.330
+## Latest completed development — v0.36.18.331
 
-Theme: **explicit component Align anchor workflow**.
+Theme: **Circle / regularize for simple closed component loops**.
 
-Workflow:
-1. multi-select the Vertex / Edge / Face components to align
-2. tap Align X, Align Y or Align Z
-3. BoxLab enters a short anchor-pick state
-4. tap one already-selected component to keep fixed
-5. all other selected component vertices align to that anchor component's centre coordinate on the chosen axis
+Existing-feature audit result:
+- no current Circle / Regularize tool existed
+- existing loop selection, loop slide, Offset Loop and bevel regularity helpers remain separate and unchanged
 
-Anchor behavior:
-- Vertex anchor uses that vertex coordinate directly
-- Edge anchor uses the edge centre coordinate on the chosen axis
-- Face anchor uses the face centre coordinate on the chosen axis
-- anchor component vertices remain unchanged
-- selected movable geometry keeps the normal selection colour
-- anchor gets a temporary amber/orange reference cue matching the Boolean A/base visual language (`#f3b34a`)
+New Circle behavior:
+1. works only in Vertex or Edge mode
+2. requires one simple closed selected loop
+3. rejects open chains, branches, multiple loops, ambiguous loops and degenerate loops
+4. preserves the loop centre
+5. preserves the loop working plane
+6. uses the average selected loop radius
+7. evenly spaces the existing vertices around that circle
+8. creates/deletes no topology
+9. preserves the current selection
+10. commits as one Undo history step
 
-Important:
-- existing Make Planar remains unchanged and distinct
-- Object mode remains excluded
-- selection remains preserved after alignment
-- operation is one Undo step
-- `src/multi-object-transform.js?v=0.36.1.0` remains untouched
+Implementation:
+- `src/component-circle-core.js`
+- `src/component-circle.js`
+- loaded once through `drawer-ui.js`
+
+Protected transform and Through systems remain untouched.
 
 ## Current Clean for SubD pipeline
 
@@ -225,13 +227,13 @@ Completed precision slices:
 - live component Move ΔX/ΔY/ΔZ readback (.326)
 - Repeat UI duplication corrected (.328)
 - component Align X/Y/Z (.329)
-- explicit pick-anchor Align workflow with amber reference cue (.330)
+- explicit pick-anchor Align workflow (.330)
+- Circle regularize for simple closed Vertex/Edge loops (.331)
 
 Recommended next build:
-- **Circle / regularize selected components**, but perform the mandatory existing-feature audit first for circle / regularize / relax / spacing equivalents
+- **Edge Flip** for manual topology-flow correction, after the mandatory existing-feature audit for rotate-edge / diagonal-swap equivalents
 
 Other Phase B priorities remain:
-- Edge Flip
 - stronger structured Fill / Grid Fill / Cap workflows
 - support-loop construction improvements
 
