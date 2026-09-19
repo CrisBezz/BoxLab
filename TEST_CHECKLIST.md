@@ -129,6 +129,9 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Face tools
 
+- [ ] Face Active Tools primary row remains 3 columns: Extrude / Inset / Knife; Join Coplanar wraps below instead of forcing 4 across
+- [ ] Face secondary row remains 3 columns with Duplicate present; selecting/arming Inset or Extrude must not reshuffle Face buttons
+- [ ] File menu opens below the command bar, fits within the viewport, and scrolls internally when needed
 - [ ] Precision Face / Repeat Previous UI appears only once
 - [ ] drawer-ui is the single authoritative loader for Precision Face / Repeat Previous
 - [ ] normal Extrude drag records an exact previous value for Repeat Previous
