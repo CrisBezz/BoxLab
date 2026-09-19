@@ -25,15 +25,15 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.345**
+- Repository release: **v0.36.18.346**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **ebbf5e2642c10bab964bfa7da60a4546b4a57ad7**
-- Current code-bearing/release commit: **296c2742faff6734f9af422a5050918a700dceb4**
-- v0.36.18.345 release PR: **#29**
-- PR topology regression: **35437021036** — success
+- Current code-bearing/release commit: **c9e52c091da47a5e88539a14a9abba7807fe45f6**
+- v0.36.18.346 release PR: **#30**
+- PR topology regression: **35437992611** — success
 - Post-merge topology regression: **35437048587** — success
-- Current `version.json`: **0.36.18.345**
+- Current `version.json`: **0.36.18.346**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.344**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.346**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
@@ -52,9 +52,25 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.345
+## Latest completed development — v0.36.18.346
 
-Theme: **Safari native-selection interaction hardening**.
+Theme: **Object Multi linked-instance parity**.
+
+Stronger-Multi audit result:
+- Object Multi Move / Scale / Rotate already existed
+- numeric transforms and pivot modes already existed
+- grouping, ordinary Multi Duplicate, Join and Boolean already existed
+- protected `multi-object-transform.js?v=0.36.1.0` remains authoritative and unchanged
+- no second multi-transform layer was added
+
+v0.36.18.346 Multi link behavior:
+- with Object Multi active, the existing **Linked Duplicate** control duplicates every selected editable object as a linked peer
+- Reference guides are skipped
+- duplicated group relationships are recreated in a new group set
+- newly created linked copies become the current Multi selection
+- with Object Multi active, the existing **Make Unique** control detaches every selected linked object in one history step
+- ordinary Duplicate / Multi Duplicate remain independent
+- single-object Linked Duplicate / Make Unique behavior from .343 remains unchanged
 
 Protected iPad interaction baseline:
 - BoxLab chrome and modelling surface must not become native Safari-selected during touch/Pencil work
@@ -292,10 +308,10 @@ Scene / modifiers:
 **Phase C — Object / instance workflow is next.**
 
 Recommended next build:
-- **stronger multi-object editing audit**
-- inspect current Object Multi selection, transforms, Join/Boolean, grouping, duplication and any existing cross-object component-edit hooks before adding anything
-- preserve the now-tested linked-instance manager and permanent Reference-guide contract
-- prefer extending the authoritative Object/Multi pathway rather than adding a parallel multi-edit system
+- **Join / Boolean workflow audit and polish**
+- inspect current Join ownership, Boolean operand selection, result/original handling, history, linked-instance interaction and Reference exclusions before changing anything
+- preserve the authoritative Multi selection / transform pathway
+- prefer consolidating existing Join/Boolean behavior rather than introducing parallel result-management controls
 
 Phase B completed precision slices:
 - Add Vertex cross-object snapping (.324)
@@ -315,6 +331,7 @@ Phase B completed precision slices:
 - linked-instance foundation + Make Unique (.343)
 - permanent read-only Reference guide workflow (.344)
 - Safari native-selection interaction guard (.345)
+- Object Multi Linked Duplicate / Make Unique parity (.346)
 
 Keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch.
 
