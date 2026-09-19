@@ -8,6 +8,20 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.355 whole-Group transform routing fix
+
+- User reported that a hierarchy-declared Group could still move as separate ordinary selected objects on iPad/Pencil, and that the two grouped objects still showed amber/blue instead of unified Group amber.
+- Root cause 1: `object-origin.js` only treated Move as a grouped transform when group expansion added extra IDs. If every Group member was already selected, `groupedExpansionActive()` returned false and Move fell back to ordinary object behavior.
+- Root cause 2: the legacy selection wrapper replaced `__boxlabObjectSelection` without forwarding `wholeGroupId`, so downstream viewport selection code could not see whole-Group context.
+- Added `wholeGroupSelectionActive()` and made Move use the grouped pivot/transform pathway when either:
+  - selecting a member expands to more Group members, or
+  - exactly one whole Group is already selected.
+- The legacy wrapper now forwards `wholeGroupId`, authoritative owner metadata and refresh.
+- The wrapper continues to suppress generic Multi-transform interception for grouped Move so the existing group-aware origin/pivot transform pathway owns the gesture.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed the stale `object-origin.js` cache pin from .351 to .355 through `drawer-ui.js`, and refreshed the outer release cache chain for iPad/Safari.
+- Added regression coverage for whole-Group Move routing, wrapper context preservation, cache refresh and the protected transform pin.
+
 ## 2026-09-20 — v0.36.18.354 whole-Group viewport selection context
 
 - User screenshot showed a selected/moving Group with no viewport-level Group selection feedback while an unrelated previously active object (Cube 2) still showed its Object-mode cage/verts and active Outliner emphasis.
