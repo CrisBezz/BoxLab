@@ -65,6 +65,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] selected group header is visibly distinct and its name acts as the primary group selection target
 - [ ] selecting a whole Group promotes the hidden active/primary object into that Group if the previous active object was outside it
 - [ ] a whole selected Group renders amber as one viewport selection state
+- [ ] a whole selected Group moves together on iPad/Pencil even when every member is already selected in the hierarchy
+- [ ] Group context survives the object-origin selection wrapper so viewport tint and transform routing agree
 - [ ] while a whole Group is selected, the active member's individual cage/verts are suppressed and no outside object remains visually highlighted
 - [ ] Group Selection immediately creates the visible hierarchy row; it must not merely stamp per-object group IDs/tags
 - [ ] compact Group tree keeps Group Selection contextual: the creation control is hidden unless 2+ groupable objects are selected
