@@ -19,6 +19,7 @@ Newest entries should be added at the top.
 - Applied consistently to Object row More, Group More and footer Object-action More.
 - No changes to selection, Group hierarchy, transforms, linked instances, Boolean behavior or Reference protection.
 - Protected `object-origin.js?v=0.36.18.355` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+- Released from PR **#42**; squash merge commit: `59ec46a6e8198befabfc5723928cc0df525da5f2`.
 
 ## 2026-09-20 — v0.36.18.357 upward Outliner popovers
 
