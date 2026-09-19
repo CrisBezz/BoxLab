@@ -8,6 +8,26 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.353 focused Rename + live Group header refresh
+
+- User reported Group Rename either did not work or did not update the visible Group name, and requested that Rename open with the edit cursor already inside the text field.
+- Root cause of the stale Group label: once a compact Group block had been composed, later `updateUI()` calls did not reconcile the already-existing header text/state.
+- Added `reconcileExistingHierarchy()` so existing Group rows refresh their:
+  - Group name
+  - disclosure/collapse state
+  - visibility state
+  - lock state
+- Invalid/stale Group blocks are unwrapped back to object rows so hierarchy changes can be rebuilt cleanly.
+- Added a BoxLab-native Rename dialog shared by Object and Group rename.
+- Rename input is focused and its current text selected immediately, with repeated focus/select on the next animation frame and a short iPad/Safari retry.
+- Object Rename no longer uses `window.prompt`.
+- Group Rename uses the shared focused dialog, preserves the existing Object scene-history checkpoint, and updates the visible Group header immediately via normal UI reconciliation.
+- Enter confirms, Escape/Cancel dismisses.
+- Group ownership, compact hierarchy, two-object amber/blue scene cue, numbered duplicate naming, Boolean B-numbering, linked instances and Reference protection remain unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `multi-object.js`, `object-management.js`, `drawer-ui.js` and `index.html` cache pins.
+- Added regression coverage for focused rename behavior, shared Group Rename routing, live Group header reconciliation and protected cache/transform pins.
+
 ## 2026-09-20 — v0.36.18.352 two-object colour cue + compact naming
 
 - User clarified that the amber/blue viewport colouring was useful as a general two-object Multi-selection indicator, even though Boolean-specific Outliner takeover was not.
