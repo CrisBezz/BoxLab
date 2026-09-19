@@ -82,6 +82,10 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 ## Circle / regularize
 
 - [ ] Circle appears in contextual Vertex / Edge / Face Active Tools, not in Selection
+- [ ] Vertex Circle sits in the Slide / Create Face row as the third button
+- [ ] Edge Circle sits immediately after Delete in the bottom Topology row
+- [ ] Face Circle sits beside Poke Faces in the same row
+- [ ] no old standalone bottom Circle row remains
 - [ ] Circle is available for a simple closed selected Vertex/Edge loop or exactly one selected Face boundary
 - [ ] Circle preserves the selected loop centre and working plane
 - [ ] Circle regularizes existing loop vertices to one radius with even angular spacing
