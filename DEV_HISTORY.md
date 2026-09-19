@@ -8,6 +8,19 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.342 File menu fit + stable 3-column Face layout
+
+- Released **v0.36.18.342** from PR #26; squash merge commit: `cf9ee2dc3c1b9db9963e5fdc23435d3b1acabbe8`.
+- User reported two UI issues on iPad: File menu did not fit cleanly on screen, and selecting/arming Inset caused Face Active Tools to jump to four buttons across.
+- File menu now opens below the second command bar, sits above it in z-order, is constrained to the available viewport height, and scrolls internally when required.
+- Face primary tools are now protected as a 3-column grid: **Extrude / Inset / Knife**. Join Coplanar wraps below rather than forcing a fourth column.
+- Face secondary tools are also 3-column: **Extract / Duplicate / Bridge**, with Delete wrapping below rather than squeezing four across.
+- `join-selected-coplanar-faces.js` now avoids re-appending already-correct primary buttons during sync, preventing click-time DOM movement.
+- Updated dynamic loader/cache chain for Face workflow and topbar layout.
+- Added regression coverage for File menu fit, Face 3-column layout, and stable no-op Face sync.
+- First PR run failed only from stale parent-loader version assertions in Flip Edge and Vertex layout tests; those were made version-resilient.
+- Corrected PR topology regression run **35432345834** passed before merge.
+
 ## 2026-09-19 — v0.36.18.341 Vertex toolbar stability / Build Edge handoff hotfix
 
 - Released **v0.36.18.341** from PR #25; squash merge commit: `f04cbb2a92c7bc0a54155cc65d07e4f3a0cc1300`.
