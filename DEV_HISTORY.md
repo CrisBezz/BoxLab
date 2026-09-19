@@ -21,6 +21,7 @@ Newest entries should be added at the top.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Updated the `object-management.js → drawer-ui.js → index.html` cache chain for iPad/Safari.
 - Added regression coverage for metadata snapshot/restore, rename history, stale metadata pruning and protected transform/cache pins.
+- Released from PR **#32**; squash merge commit: `cf80a9bd11a4916eb586e954a2152b04dd46b49f`.
 
 ## 2026-09-19 — v0.36.18.347 Join / Boolean scene-history consolidation
 
