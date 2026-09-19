@@ -8,6 +8,19 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.347 Join / Boolean scene-history consolidation
+
+- Phase C audit confirmed existing **Join** is already authoritative in Object > Active Tools and already checkpoints through the Object scene-history bridge.
+- Audit confirmed Boolean already uses the same Object scene checkpoint before creating its result, but `boolean-ux-history.js` still installed an older second Undo/Redo wrapper with private Boolean stacks.
+- Removed that parallel Boolean history layer instead of adding another result-management system.
+- Boolean A/B operand colours, Swap control, active/base semantics, solver dispatch, cleanup chain and button ownership are unchanged.
+- Boolean still hides only the two selected operands and creates a new unique editable result; selected linked operands are not propagated into the result and unselected linked peers remain untouched.
+- Object scene snapshots remain responsible for restoring `sourceId` and `instanceMatrix` on Undo/Redo.
+- Reference operands remain excluded from Join and Boolean.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` and `styles.css?v=0.36.18.270` remain untouched.
+- Added regression coverage enforcing one authoritative scene-history owner for Join/Boolean and protecting unique-result / linked-peer / Reference behavior.
+- Release PR: **#31**.
+
 ## 2026-09-19 — v0.36.18.346 Multi linked-instance parity
 
 - Released **v0.36.18.346** from PR #30; squash merge commit: `c9e52c091da47a5e88539a14a9abba7807fe45f6`.
