@@ -58,6 +58,8 @@ style.textContent=`
 .topbar{height:var(--boxlab-topbar-h)!important}
 .brand{order:1}.top-file-menu{order:0}.top-actions{order:2}
 #commandBar{position:absolute;z-index:100;top:var(--boxlab-topbar-h);left:0;right:0;height:var(--boxlab-commandbar-h);display:flex;align-items:center;gap:10px;padding:5px 16px;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(13,15,19,.95);backdrop-filter:blur(18px);overflow:visible}
+.top-file-menu{z-index:140}
+.top-file-content{top:calc(100% + var(--boxlab-commandbar-h) + 6px);max-height:calc(100dvh - var(--boxlab-topbar-h) - var(--boxlab-commandbar-h) - 18px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 #viewportWrap{top:calc(var(--boxlab-topbar-h) + var(--boxlab-commandbar-h))!important}
 #commandBar #selectionModes{flex:0 0 auto;display:flex;align-items:center;padding:3px;gap:3px}
 #commandBar #selectionModes button{min-width:46px;min-height:36px;padding:5px 9px;justify-content:center}
@@ -68,6 +70,7 @@ style.textContent=`
   #commandBar{padding-left:8px;padding-right:8px;gap:6px}
   #commandBar #selectionModes button{min-width:40px;padding:5px 7px}
   #commandBar #selectionModes .mode-label{display:none}
+  .top-file-content{width:min(300px,calc(100vw - 16px));max-width:calc(100vw - 16px)}
 }
 `;
 document.head.append(style);

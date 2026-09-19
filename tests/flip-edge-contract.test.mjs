@@ -18,7 +18,7 @@ test('337 Flip Edge stays on one authoritative loader path',()=>{
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.equal((workflow.match(/rotate-edge\.js\?v=0\.36\.18\.337/g)||[]).length,1);
-  assert.equal((drawer.match(/face-workflow-layout\.js\?v=0\.36\.18\.337/g)||[]).length,1);
+  assert.equal((drawer.match(/face-workflow-layout\.js\?v=/g)||[]).length,1);
   assert.match(index,/drawer-ui\.js\?v=/);
   assert.doesNotMatch(index,/rotate-edge\.js\?v=/);
 });

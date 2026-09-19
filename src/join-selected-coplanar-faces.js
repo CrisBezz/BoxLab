@@ -29,11 +29,12 @@ function place(){
   const knife=document.querySelector('#knifeBtn');
   const row=extrude?.parentElement;
   if(row&&inset&&knife){
-    row.style.gridTemplateColumns='repeat(4,minmax(0,1fr))';
-    for(const item of [extrude,inset,knife,button]){
-      item.style.minWidth='0';
-      row.appendChild(item);
-    }
+    row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+    const ordered=[extrude,inset,knife,button];
+    for(const item of ordered)item.style.minWidth='0';
+    const current=[...row.children].filter(child=>ordered.includes(child));
+    const stable=current.length===ordered.length&&ordered.every((item,index)=>current[index]===item);
+    if(!stable)for(const item of ordered)row.appendChild(item);
     return true;
   }
   return false;
