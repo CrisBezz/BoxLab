@@ -49,7 +49,7 @@ Priority candidates:
 - cross-object snapping — **Add Vertex in v0.36.18.324; component Move snapping added in v0.36.18.325**
 - precision drag/readback polish — **live component Move ΔX/ΔY/ΔZ readback added in v0.36.18.326**
 - Repeat Previous audit/polish for exact repeated operations — **Repeat Extrude / Repeat Inset pre-existed .327; redundant duplicate loader removed in v0.36.18.328**
-- Align / Flatten component tools — **existing Make Planar retained; new component Align X/Y/Z added in v0.36.18.329**
+- Align / Flatten component tools — **existing Make Planar retained; Align X/Y/Z added in .329 and upgraded to explicit pick-anchor workflow in v0.36.18.330**
 - Circle / regularize selected components where topology permits
 - Edge Flip for manual topology-flow correction
 - stronger structured Fill / Grid Fill / Cap workflows
