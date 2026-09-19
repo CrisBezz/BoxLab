@@ -44,3 +44,13 @@ test('343 protected multi-object transform pin stays exact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
+
+
+test('343 Linked Duplicate transfers scene-before checkpoint to newly active object',()=>{
+  const multi=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
+  const management=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
+  assert.match(multi,/const beforeScene=globalThis\.__boxlabObjectHistory\?\.capture\?\.\(\)\|\|null/);
+  assert.match(multi,/checkpointSnapshot\?\.\(beforeScene\)/);
+  assert.match(management,/checkpointSnapshot=snapshot=>/);
+  assert.match(management,/__boxlabObjectHistory=\{checkpoint,checkpointSnapshot,capture:captureScene,restore:restoreScene\}/);
+});
