@@ -96,6 +96,10 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Edge tools
 
+- [ ] Flip Edge is the single existing triangle-pair diagonal-swap tool (formerly Rotate Edge)
+- [ ] Flip Edge enables only for one uncreased shared Edge between exactly two triangles
+- [ ] Flip Edge selects the new diagonal after commit
+- [ ] Flip Edge commits as one Undo step and rejects unsafe/inverted results
 - [ ] Face Split works while canonical additive Multi selection remains enabled
 - [ ] arming Face Split temporarily prevents Edge paint selection from consuming its boundary-edge taps
 - [ ] leaving Face Split restores ordinary additive Edge paint selection
