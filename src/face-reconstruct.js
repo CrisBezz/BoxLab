@@ -30,8 +30,10 @@ function place(){
     for(const item of ordered){
       item.style.minWidth='0';
       item.style.width='100%';
-      row.appendChild(item);
     }
+    const current=[...row.children].filter(child=>ordered.includes(child));
+    const stable=current.length===ordered.length&&ordered.every((item,index)=>current[index]===item);
+    if(!stable)for(const item of ordered)row.appendChild(item);
     return true;
   }
   if(!button.isConnected&&vertexTools){
