@@ -8,6 +8,19 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.331 Circle regularize for closed loops
+
+- Released **v0.36.18.331** from PR #15; squash merge commit: `64bb42b17ef463e489c66989bf6f51dc99917126`.
+- Existing-feature audit confirmed there was no current Circle / Regularize equivalent.
+- Added conservative Circle regularization for one simple closed selected Vertex or Edge loop.
+- The operation preserves the loop centre and current working plane, uses the average loop radius, and evenly spaces the existing vertices around the circle.
+- No topology is created or deleted.
+- Open chains, branches, multiple/ambiguous loops, and degenerate selections are refused.
+- Selection is preserved and the operation commits as one Undo step.
+- New modules: `src/component-circle-core.js` and `src/component-circle.js`.
+- `drawer-ui.js` remains the single authoritative loader.
+- PR topology regression run **35416581512** passed before merge.
+
 ## 2026-09-19 — v0.36.18.330 explicit Align anchor workflow
 
 - Released **v0.36.18.330** from PR #14; squash merge commit: `e5ee279298b14cca76cbca5274c10f6a2484e802`.
