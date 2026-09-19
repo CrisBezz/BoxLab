@@ -79,6 +79,16 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Weld works
 - [ ] Delete Vertex works safely
 
+## Circle / regularize
+
+- [ ] Circle is available only for a simple closed selected Vertex or Edge loop
+- [ ] Circle preserves the selected loop centre and working plane
+- [ ] Circle regularizes existing loop vertices to one radius with even angular spacing
+- [ ] Circle does not create or delete topology
+- [ ] Circle preserves the current Vertex/Edge selection
+- [ ] Circle commits as one Undo step
+- [ ] open chains / branched / ambiguous selections are refused
+
 ## Edge tools
 
 - [ ] Loop Cut works
