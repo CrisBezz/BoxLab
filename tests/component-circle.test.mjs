@@ -71,8 +71,9 @@ test('drawer UI cache key exposes the current dynamic Circle loader',()=>{
   assert.match(index,/drawer-ui\.js\?v=/);
 });
 
-test('336 Circle uses the three requested Active Tools slots and no standalone wrapper',()=>{
+test('341 Circle uses the three requested Active Tools slots and stable Vertex layout ownership',()=>{
   const ui=fs.readFileSync(new URL('../src/component-circle.js',import.meta.url),'utf8');
+  assert.match(ui,/__boxlabVertexToolLayout/);
   assert.match(ui,/#createFaceFromVerticesBtn/);
   assert.match(ui,/#deleteEdgeBtn/);
   assert.match(ui,/#pokeFacesBtn/);
@@ -96,12 +97,12 @@ test('333 Circle refuses multiple selected Faces',()=>{
   assert.equal(info.ok,false);
 });
 
-test('336 Face Circle UI and loader pins are current',()=>{
+test('341 Face Circle UI and loader pins are current',()=>{
   const ui=fs.readFileSync(new URL('../src/component-circle.js',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(ui,/\['vertex','edge','face'\]/);
   assert.match(ui,/component-circle-core\.js\?v=0\.36\.18\.334/);
-  assert.match(drawer,/component-circle\.js\?v=0\.36\.18\.336/);
+  assert.match(drawer,/component-circle\.js\?v=0\.36\.18\.341/);
   assert.match(index,/drawer-ui\.js\?v=/);
 });

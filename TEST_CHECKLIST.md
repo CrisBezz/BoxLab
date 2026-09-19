@@ -72,6 +72,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] hidden/solo-excluded objects do not contribute snap targets
 - [ ] Add Vertex works
 - [ ] Build Edge works
+- [ ] arming Build Edge fully disarms Add Vertex; Add must not light back up after the Build Edge click
+- [ ] Vertex Active Tools keep the fixed order Bevel / Add / Build Edge / Slide / Create Face / Circle without jumping during selection renders
 - [ ] Vertex Slide works
 - [ ] Vertex Bevel works
 - [ ] multi-vertex bevel works where supported

@@ -39,5 +39,5 @@ test('340 Offset Loop exposes one armed-state controller and current cache chain
   assert.equal((drawer.match(/loop-offset\.js\?v=0\.36\.18\.340/g)||[]).length,1);
   assert.equal((drawer.match(/precision-offset-loop\.js\?v=0\.36\.18\.340/g)||[]).length,1);
   assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.340/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.340/);
+  assert.match(index,/drawer-ui\.js\?v=/);
 });

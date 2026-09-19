@@ -80,6 +80,9 @@ function disarmBuildEdge(){
   buildEdgeBtn?.classList.remove('active');
 }
 function armBuildEdge(){
+  const addButton=document.querySelector('#addVertexBtn');
+  if(globalThis.__boxlabAddVertex?.isActive?.())globalThis.__boxlabAddVertex.stop?.(false);
+  if(addButton?.classList.contains('active'))document.querySelector('#selectionModes button[data-mode="vertex"]')?.click();
   buildArmed=true; buildDrag=null; clearBuildPreview();
   document.querySelector('#extrudeBtn.active,#insetBtn.active')?.click();
   globalThis.__boxlabTransformArming?.disarm?.();
