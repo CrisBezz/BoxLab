@@ -76,3 +76,28 @@ test('332 Circle remains visible for discovery outside Vertex Edge mode',()=>{
   assert.match(ui,/row\.style\.display='';/);
   assert.match(ui,/Circle works in Vertex or Edge mode/);
 });
+
+
+test('333 Circle accepts one selected Face boundary',()=>{
+  const m=mesh();
+  const info=circleLoopInfo(m,'face',[0]);
+  assert.equal(info.ok,true);
+  assert.deepEqual(info.ordered,[0,1,2,3]);
+});
+
+test('333 Circle refuses multiple selected Faces',()=>{
+  const m=mesh();
+  m.faces.push([1,2,4]);
+  const info=circleLoopInfo(m,'face',[0,1]);
+  assert.equal(info.ok,false);
+});
+
+test('333 Face Circle UI and loader pins are current',()=>{
+  const ui=fs.readFileSync(new URL('../src/component-circle.js',import.meta.url),'utf8');
+  const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
+  const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.match(ui,/\['vertex','edge','face'\]/);
+  assert.match(ui,/component-circle-core\.js\?v=0\.36\.18\.333/);
+  assert.match(drawer,/component-circle\.js\?v=0\.36\.18\.333/);
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.333/);
+});
