@@ -25,14 +25,14 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.337**
+- Repository release: **v0.36.18.338**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **c5c236852791147eeee62f3c7f710b2e73da57a2**
-- Current code-bearing/release commit: **72f1847dad79b15955a4f406b273b60b44b4ee9f**
-- v0.36.18.337 release PR: **#21**
+- Current code-bearing/release commit: **72ec70b123e27c2ee8d3ca116f0b23481a0f1afa**
+- v0.36.18.338 release PR: **#22**
 - PR topology regression: **35416581512** — success
-- Current `version.json`: **0.36.18.337**
+- Current `version.json`: **0.36.18.338**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.337**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.338**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
 - Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.336**
 - Component Circle core: **component-circle-core.js?v=0.36.18.333**
@@ -48,9 +48,9 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.337
+## Latest completed development — v0.36.18.338
 
-Theme: **existing Rotate Edge consolidated as Flip Edge after mandatory feature audit**.
+Theme: **conservative structured Grid Fill for four-sided boundaries**.
 
 Existing-feature audit result:
 - no current Circle / Regularize tool existed
@@ -199,6 +199,8 @@ Edge:
 - Offset Loop
 - Bridge
 - Fill
+- Grid Fill
+- Flip Edge
 - Dissolve Loop
 - Dissolve Edge
 - Delete
@@ -248,10 +250,11 @@ Completed precision slices:
 - Face Split restored under canonical additive Multi (.335)
 - Circle exact per-mode Active Tools layout (.336)
 - existing Rotate Edge audited as Edge Flip and consolidated under the Flip Edge label (.337)
+- four-sided transactional all-quad Grid Fill (.338)
 
 Recommended next build:
-- **Grid Fill** for a conservative structured closed-boundary fill workflow, after the mandatory existing-feature audit
-- existing **Fill** already functions as a single-face Cap for one selected closed edge loop, so do not duplicate Cap
+- **support-loop construction improvements**, after the mandatory existing-feature audit for existing Offset Loop / Loop Cut / bevel-derived support workflows
+- keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch
 
 Other Phase B priorities remain:
 - stronger structured Fill / Grid Fill / Cap workflows
