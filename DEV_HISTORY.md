@@ -8,6 +8,16 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.327 Repeat Previous reconnected
+
+- Released **v0.36.18.327** from PR #11; squash merge commit: `462eabc59076afdfa7efaf10338bfa49f83355c1`.
+- Reconnected the existing `precision-face.js` and `repeat-face-previous.js` modules into the live app.
+- Normal Face Extrude and Inset operations record committed model-unit values.
+- Repeat Previous can replay the exact previous Extrude/Inset value on another Face.
+- Through-ready, Through, blocked and rollback Extrude gestures remain explicitly non-repeatable.
+- No `main.js`, Through kernel, or protected `src/multi-object-transform.js?v=0.36.1.0` changes were required.
+- Final PR regression run **35410554813** passed after aligning the exported Precision Face API version with the .327 release.
+
 ## 2026-09-19 — v0.36.18.326 live component Move precision readback
 
 - Released **v0.36.18.326** from PR #10; squash merge commit: `80605a225d9855f098a1cff7596d77fc8d6a2d7e`.
