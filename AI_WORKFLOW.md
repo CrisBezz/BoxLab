@@ -19,11 +19,20 @@ Before changing code:
 3. Read `TEST_CHECKLIST.md`.
 4. Read the recent relevant entries in `DEV_HISTORY.md`.
 5. Inspect current `main`, including the visible app version and recent commits.
-6. Identify protected files, protected behaviours, and the current task.
-7. If the handoff is stale, reconcile it from the repository before coding.
+6. **Audit for existing functionality before implementing anything new.**
+   - Search the current UI wiring and source tree for the requested feature or close equivalents.
+   - Check whether the feature already exists but is hidden, duplicated, disconnected, version-pinned, or implemented by a later-loaded module.
+   - Check relevant frozen beta code/history when useful before assuming a feature is missing.
+   - Prefer repairing, reconnecting, consolidating, or exposing existing functionality over adding a second implementation.
+   - If two implementations already exist, identify the authoritative one before changing either.
+7. Identify protected files, protected behaviours, and the current task.
+8. If the handoff is stale, reconcile it from the repository before coding.
 
 ## Development rules
 
+- **Do not add a feature until you have confirmed it does not already exist elsewhere in the current app.**
+- Avoid duplicate buttons, duplicate modules, overlapping interaction handlers, and parallel implementations of the same user-facing capability.
+- If the requested feature already exists, first determine whether the real task is bug-fixing, reconnecting, consolidating, or improving it.
 - Keep changes narrow and modular.
 - Preserve stable behaviour outside the requested scope.
 - Do not silently refactor unrelated systems.
