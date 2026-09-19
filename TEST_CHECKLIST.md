@@ -81,11 +81,11 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Circle / regularize
 
-- [ ] Circle is available only for a simple closed selected Vertex or Edge loop
+- [ ] Circle is available for a simple closed selected Vertex/Edge loop or exactly one selected Face boundary
 - [ ] Circle preserves the selected loop centre and working plane
 - [ ] Circle regularizes existing loop vertices to one radius with even angular spacing
 - [ ] Circle does not create or delete topology
-- [ ] Circle preserves the current Vertex/Edge selection
+- [ ] Circle preserves the current Vertex/Edge/Face selection
 - [ ] Circle commits as one Undo step
 - [ ] open chains / branched / ambiguous selections are refused
 

@@ -1,4 +1,4 @@
-import {circleLoopInfo,circularizeLoop} from './component-circle-core.js?v=0.36.18.331';
+import {circleLoopInfo,circularizeLoop} from './component-circle-core.js?v=0.36.18.333';
 
 const selectionTools=document.querySelector('#componentSelectionTools');
 const status=document.querySelector('#selectionStatus');
@@ -52,10 +52,10 @@ function sync(){
   place();
   const {md,loop}=info();
   row.style.display='';
-  const supported=['vertex','edge'].includes(md);
+  const supported=['vertex','edge','face'].includes(md);
   button.disabled=!supported||!loop.ok||!globalThis.__boxlabHistory;
   button.title=!supported
-    ?'Circle works in Vertex or Edge mode'
+    ?'Circle works in Vertex, Edge or Face mode'
     :loop.ok
       ?`Regularize selected ${md} loop to an evenly spaced circle in its current working plane`
       :loop.reason;
@@ -67,4 +67,4 @@ document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMic
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 [0,60,180,500].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabComponentCircle={version:'0.36.18.331',apply,sync,info};
+globalThis.__boxlabComponentCircle={version:'0.36.18.333',apply,sync,info};

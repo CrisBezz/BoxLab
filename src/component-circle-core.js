@@ -3,9 +3,20 @@ import * as THREE from 'three';
 function uniqueInts(values=[]){return[...new Set(values)].filter(Number.isInteger);}
 
 export function circleLoopInfo(mesh,mode,indices=[]){
-  if(!mesh||!['vertex','edge'].includes(mode))return{ok:false,reason:'Circle works on Vertex or Edge selections'};
+  if(!mesh||!['vertex','edge','face'].includes(mode))return{ok:false,reason:'Circle works on Vertex, Edge or one Face selection'};
   const edges=mesh.edges?.()||[];
   const selectedIds=uniqueInts(indices);
+
+  if(mode==='face'){
+    if(selectedIds.length!==1)return{ok:false,reason:'Select exactly one Face to circle its boundary'};
+    const face=mesh.faces?.[selectedIds[0]];
+    if(!Array.isArray(face)||face.length<3)return{ok:false,reason:'Selected Face has no valid boundary'};
+    const ordered=[...face];
+    const points=ordered.map(i=>mesh.vertices?.[i]);
+    if(points.some(v=>!v))return{ok:false,reason:'Selected Face contains invalid vertices'};
+    return circleInfoFromOrdered(points,ordered);
+  }
+
   if(selectedIds.length<3)return{ok:false,reason:'Select a closed loop with at least three components'};
 
   let loopEdges=[];
@@ -42,7 +53,10 @@ export function circleLoopInfo(mesh,mode,indices=[]){
 
   const points=ordered.map(i=>mesh.vertices?.[i]);
   if(points.some(v=>!v))return{ok:false,reason:'Selection contains invalid vertices'};
+  return circleInfoFromOrdered(points,ordered);
+}
 
+function circleInfoFromOrdered(points,ordered){
   const center=new THREE.Vector3();
   points.forEach(p=>center.add(p));
   center.multiplyScalar(1/points.length);
@@ -73,7 +87,7 @@ export function circleLoopInfo(mesh,mode,indices=[]){
   const radius=radii.reduce((a,b)=>a+b,0)/radii.length;
   if(!Number.isFinite(radius)||radius<1e-7)return{ok:false,reason:'Selected loop radius is too small'};
 
-  return{ok:true,ordered,center,normal,u,v,radius};
+  return{ok:true,ordered:[...ordered],center,normal,u,v,radius};
 }
 
 export function circularizeLoop(mesh,info){
