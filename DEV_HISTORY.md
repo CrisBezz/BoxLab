@@ -8,6 +8,16 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.328 duplicate Repeat Previous UI removed
+
+- Released **v0.36.18.328** from PR #12; squash merge commit: `f731849f96b5808c986b6d46dc92e53c9f64f9c3`.
+- Fixed duplicate Precision Face / Repeat Previous controls introduced by v0.36.18.327.
+- Root cause: `drawer-ui.js` already dynamically imported both modules, while .327 also added direct `index.html` module loads.
+- Removed the direct `index.html` loads.
+- Kept `drawer-ui.js` as the single authoritative loader and updated its Precision Face / Repeat Previous pins to `0.36.18.327`.
+- Added regression coverage ensuring there is only one loader path for each module.
+- This fix preserves the existing Repeat Previous behavior and exact-value replay logic; it only removes duplicate UI instantiation.
+
 ## 2026-09-19 — v0.36.18.327 Repeat Previous reconnected
 
 - Released **v0.36.18.327** from PR #11; squash merge commit: `462eabc59076afdfa7efaf10338bfa49f83355c1`.
