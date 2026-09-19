@@ -8,6 +8,19 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.337 existing Rotate Edge consolidated as Flip Edge
+
+- Released **v0.36.18.337** from PR #21; squash merge commit: `72f1847dad79b15955a4f406b273b60b44b4ee9f`.
+- Mandatory existing-feature audit confirmed the queued Edge Flip already existed as `src/rotate-edge.js`.
+- The existing tool already performs the intended conservative diagonal swap between exactly two consistently wound triangles.
+- No second Edge Flip implementation was added.
+- Renamed the user-facing control/status language from **Rotate Edge** to **Flip Edge** while preserving the existing topology, selection and Undo behavior.
+- Refreshed the `rotate-edge.js` → `face-workflow-layout.js` → `drawer-ui.js` cache chain for iPad/Safari.
+- Added regression coverage protecting one authoritative Flip Edge implementation.
+- First PR run failed only because a Circle test hard-coded the previous drawer cache version; that test was made version-resilient.
+- Corrected PR topology regression run **35419239003** passed before merge.
+- Audit also confirmed existing **Fill** already acts as a single-face Cap for one selected closed edge loop; the remaining structured-fill gap is **Grid Fill**.
+
 ## 2026-09-19 — v0.36.18.336 Circle exact Active Tools layout
 
 - Released **v0.36.18.336** from PR #20; squash merge commit: `586efff69f7d1565ff5687c296e183143b0566c7`.
