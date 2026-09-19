@@ -81,6 +81,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Circle / regularize
 
+- [ ] Circle appears in contextual Vertex / Edge / Face Active Tools, not in Selection
 - [ ] Circle is available for a simple closed selected Vertex/Edge loop or exactly one selected Face boundary
 - [ ] Circle preserves the selected loop centre and working plane
 - [ ] Circle regularizes existing loop vertices to one radius with even angular spacing
