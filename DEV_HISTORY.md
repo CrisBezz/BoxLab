@@ -8,6 +8,22 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.344 Reference guides permanently read-only
+
+- Released **v0.36.18.344** from PR #28; squash merge commit: `6118b0f60073573fb035c31d17d2082512c31d41`.
+- Mandatory audit confirmed imported **Reference** meshes already participated in existing cross-object snapping; no second reference/snap system was added.
+- The real gap was protection consistency: Reference objects could be unlocked through Outliner, Multi, or Group lock controls.
+- Reference objects are now permanently read-only modelling guides.
+- `multi-object.js` forces `kind='reference'` objects to `locked=true` at creation, including duplicated References.
+- The per-object lock control renders Reference as `R`, is disabled, and describes it as an always-read-only guide.
+- Multi lock/unlock operates only on editable selected objects and leaves selected References locked.
+- Group lock/unlock operates only on editable group members; reference-only groups expose a disabled `R` control.
+- Scene-history restore reasserts `locked=true` for every Reference, so Undo/Redo cannot revive an unlocked guide.
+- Reference visibility, solo/isolate behavior, Outliner identity, and existing cross-object snap eligibility remain unchanged.
+- Editable-object lock behavior remains unchanged.
+- Added regression coverage for import kind/lock, single/Multi/Group protection, scene restore, duplicated References, and continued cross-object snap eligibility.
+- PR topology regression run **35436090086** passed on the first run.
+
 ## 2026-09-19 — v0.36.18.343 linked-instance foundation + Make Unique
 
 - Released **v0.36.18.343** from PR #27; squash merge commit: `b35e542b93469b8c957b55c3c3de1e96e9ebc65a`.
