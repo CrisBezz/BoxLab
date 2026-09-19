@@ -521,11 +521,11 @@ async function renameActive() {
   if (status) status.textContent = `${object.name} renamed`;
 }
 
-function deleteObjectById(id) {
+function deleteObjectById(id,{checkpoint=true}={}) {
   if (objects.length <= 1) return false;
   const index = objects.findIndex(object => object.id === id);
   if (index < 0) return false;
-  globalThis.__boxlabObjectHistory?.checkpoint?.();
+  if(checkpoint)globalThis.__boxlabObjectHistory?.checkpoint?.();
   const deletingActive = id === activeId;
   objects.splice(index, 1);
   if (soloId === id) soloId = null;
@@ -542,7 +542,7 @@ function deleteObjectById(id) {
   return true;
 }
 function deleteActive() {
-  deleteObjectById(activeId);
+  deleteObjectById(activeId,{checkpoint:false});
 }
 
 function resetAll() {
