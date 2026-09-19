@@ -25,18 +25,18 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.357**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **a30f2807454bca110ee9b64f7729dcc4a132dab6**
-- Current code-bearing/release commit: **d7c4655f125c0811bbee12c8733da02090ec3926**
-- v0.36.18.357 release PR: **#41**
+- Repository release candidate: **v0.36.18.358**
+- Current documentation HEAD: **v0.36.18.358 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.358 PR branch; pending merge**
+- v0.36.18.358 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.357**
+- Current `version.json`: **0.36.18.358**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.357**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.358**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.357**
+- Object management loader: **object-management.js?v=0.36.18.358**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -54,7 +54,17 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.357
+## Latest completed development — v0.36.18.358
+
+Theme: **Safari-resistant upward Outliner popovers**.
+
+- Object, Group and footer More menus are now anchored at the trigger top and translated upward by their own height.
+- This replaces the .357 `bottom:` approach, which Safari/iPad still rendered downward for Group More.
+- Positioning is enforced with explicit `top:0 !important`, `bottom:auto !important` and upward transform.
+- No functional Object/Group behavior changed.
+- Protected `object-origin.js?v=0.36.18.355` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+
+## Previous completed development — v0.36.18.357
 
 Theme: **upward Outliner popovers**.
 
