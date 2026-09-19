@@ -25,15 +25,16 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.327**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **6df326044787997da540b89c908b82029a6aa1ac**
-- Current code-bearing/release commit: **462eabc59076afdfa7efaf10338bfa49f83355c1**
-- v0.36.18.327 release PR: **#11**
-- Final PR topology regression: **35410554813** — success
-- Current `version.json`: **0.36.18.327**
+- Repository release: **v0.36.18.328**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **b924658f145e33a1194d05be374c2b20bafc808f**
+- Current code-bearing/release commit: **f731849f96b5808c986b6d46dc92e53c9f64f9c3**
+- v0.36.18.328 release PR: **#12**
+- Current `version.json`: **0.36.18.328**
+- Precision Face implementation pin: **precision-face.js?v=0.36.18.327**
+- Repeat Previous implementation pin: **repeat-face-previous.js?v=0.36.18.327**
+- **Authoritative loader for both modules: `drawer-ui.js` only**
+- Direct `index.html` loading of Precision Face / Repeat Previous is prohibited to avoid duplicate UI instantiation
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Precision Face pin: **precision-face.js?v=0.36.18.327**
-- Repeat Previous pin: **repeat-face-previous.js?v=0.36.18.327**
 - Current Add Vertex pin: **add-vertex-edge-snap.js?v=0.36.18.324**
 - Current Clean for SubD pin: **quad-clean.js?v=0.36.18.323**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
@@ -43,27 +44,26 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.327
+## Latest completed development — v0.36.18.328
 
-Theme: **Phase B — Repeat Previous reconnected for Face tools**.
+Theme: **remove duplicate Precision Face / Repeat Previous UI**.
 
-The existing precision Face stack is now loaded by the live app again:
-- `src/precision-face.js?v=0.36.18.327`
-- `src/repeat-face-previous.js?v=0.36.18.327`
+Root cause:
+- `drawer-ui.js` already dynamically loaded `precision-face.js` and `repeat-face-previous.js`
+- v0.36.18.327 also added direct module loads in `index.html`
+- both modules executed twice, creating duplicate UI/handlers
 
-Behavior:
-1. normal Face Extrude and Inset operations record their committed model-unit value
-2. the Face precision row exposes the last exact value
-3. Repeat Previous can be armed
-4. while armed, tapping another Face replays the exact previous Extrude/Inset value
-5. Through-ready, Through, blocked and rollback Extrude states are excluded from repeat capture
+Fix:
+- removed direct `index.html` loads
+- retained `drawer-ui.js` as the single authoritative loader
+- updated its dynamic import pins to the current .327 implementations
+- added a regression contract that asserts one loader path only
 
-Important boundaries:
-- `main.js` was not changed for this release
-- Through kernel code was not changed
-- `src/multi-object-transform.js?v=0.36.1.0` remains untouched
-
-Regression coverage verifies module load order, exact replay API availability, Extrude/Inset-only replay, and Through/rollback exclusion.
+Important:
+- the feature itself was not rewritten
+- Repeat Previous exact-value behavior is preserved
+- Through exclusion remains preserved
+- future work must audit existing/dynamic loaders before adding module tags
 
 ## Current Clean for SubD pipeline
 
@@ -212,14 +212,17 @@ Scene / modifiers:
 
 **Phase B — Precision Modelling remains active.**
 
+Before any next feature work, follow the mandatory existing-feature audit in `AI_WORKFLOW.md`, including dynamic imports such as `drawer-ui.js`.
+
 Completed precision slices:
 - Add Vertex cross-object snapping (.324)
 - component Move cross-object snapping (.325)
 - live component Move ΔX/ΔY/ΔZ readback (.326)
 - Repeat Previous for Face Extrude/Inset (.327)
+- duplicate Repeat Previous UI loader removed (.328)
 
 Recommended next build:
-- **Align / Flatten component tools**, starting with a small safe Vertex/Edge/Face selection utility that works in one axis at a time
+- **Align / Flatten component tools**, but first search the current source/UI/dynamic imports for any existing Align/Flatten implementation or equivalent
 
 Other Phase B priorities remain:
 - Circle / regularize selected components
