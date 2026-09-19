@@ -1,4 +1,4 @@
-import {circleLoopInfo,circularizeLoop} from './component-circle-core.js?v=0.36.18.333';
+import {circleLoopInfo,circularizeLoop} from './component-circle-core.js?v=0.36.18.334';
 
 const status=document.querySelector('#selectionStatus');
 
@@ -63,4 +63,4 @@ document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMic
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 [0,60,180,500].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabComponentCircle={version:'0.36.18.333',apply,sync,info};
+globalThis.__boxlabComponentCircle={version:'0.36.18.334',apply,sync,info};
