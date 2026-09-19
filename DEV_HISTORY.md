@@ -24,6 +24,7 @@ Newest entries should be added at the top.
 - Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Added regression coverage for row Delete, keyboard Delete/Backspace, editable-field protection and one-step history semantics.
+- Released from PR **#43**; squash merge commit: `d9da984e331e561dc2a490554df95eaf8f1e7f94`.
 
 ## 2026-09-20 — v0.36.18.358 anchored upward Outliner popovers
 
