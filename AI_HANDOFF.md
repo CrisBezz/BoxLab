@@ -25,18 +25,18 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.347**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **919f9c4bae17a2f43d3166af4a2fff8bd1f5638b**
-- Current code-bearing/release commit: **ebc9ec498d16b82301fc86e4bc3203afdd9d5cd2**
-- v0.36.18.347 release PR: **#31**
-- PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
-- Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.347**
+- Repository release candidate: **v0.36.18.348**
+- Current documentation HEAD: **v0.36.18.348 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.348 PR branch; pending merge**
+- v0.36.18.348 release PR: **pending**
+- PR topology regression: **pending**n: **not separately verified through the connector in this session**
+- Current `version.json`: **0.36.18.348**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.346**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.348**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.347**
+- Object management loader: **object-management.js?v=0.36.18.348**
+- Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
 - Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.341**
@@ -53,7 +53,28 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.347
+## Latest completed development — v0.36.18.348
+
+Theme: **persistent Group organization**.
+
+Mandatory audit result:
+- Group membership and transform expansion already existed in `object-origin.js`
+- grouped Outliner hierarchy, custom names and collapse UI already existed in `object-management.js`
+- the real gap was persistence: Object scene snapshots stored each object's `groupId` but not the group's custom name or collapsed state
+- no second grouping, hierarchy, or transform system was added
+
+v0.36.18.348 behavior:
+- Object scene snapshots now include custom group names and collapsed group IDs
+- Undo/Redo restores group metadata only for groups present in the restored scene
+- stale group metadata is pruned when groups genuinely disappear
+- group Rename creates one Object scene-history checkpoint
+- existing Group membership, whole-group transforms, linked-instance behavior and Reference protection remain unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched
+- Safari/iPad cache chain refreshed through `object-management.js → drawer-ui.js → index.html`
+
+Regression coverage protects metadata snapshot/restore, rename history, stale metadata cleanup and the protected transform pin.
+
+## Previous completed development — v0.36.18.347
 
 Theme: **Join / Boolean scene-history consolidation**.
 
@@ -332,16 +353,18 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **persistent object / group organization audit**
-- inspect current Group ownership, group naming, collapse state, scene-history behavior and linked-instance interaction before changing anything
-- preserve the authoritative Object Multi selection / transform pathway
-- prefer strengthening existing Group/Outliner behavior over introducing a second hierarchy system
+- **Group / Outliner action consistency audit**
+- inspect group-level visibility, lock, rename, collapse and ungroup behavior for consistent scene-history semantics
+- inspect whether group labels should expose custom names more directly in member rows without duplicating hierarchy UI
+- preserve existing automatic group transform expansion and linked-instance behavior
+- do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
 Completed Phase C slices now include:
 - linked-instance foundation + Make Unique (.343)
 - permanent read-only Reference guide workflow (.344)
 - Object Multi Linked Duplicate / Make Unique parity (.346)
 - unified Join / Boolean Object scene history (.347)
+- persistent Group organization metadata (.348)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 

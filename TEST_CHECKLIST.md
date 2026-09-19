@@ -54,6 +54,10 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] delete works
 - [ ] Join works
 - [ ] multi-object selection/management works
+- [ ] grouped Outliner hierarchy preserves group membership through Object Undo/Redo
+- [ ] custom group names survive scene Undo/Redo and group rename is one Undo step
+- [ ] collapsed/expanded group state survives scene Undo/Redo when the group still exists
+- [ ] removed groups do not leak stale names/collapse state into later groups that reuse an ID
 - [ ] object transforms do not regress
 - [ ] reference objects remain protected from destructive editing
 - [ ] Reference imports are permanently read-only guides: single, Multi and Group lock controls cannot unlock them
