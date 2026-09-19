@@ -26,10 +26,11 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-19.
 
 - Repository release: **v0.36.18.344**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **aa9eac72e96678c20993c9b756017470a68f40e5**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **a3310b62e7a499f64cbd4c5b0889001ab16e6139**
 - Current code-bearing/release commit: **6118b0f60073573fb035c31d17d2082512c31d41**
 - v0.36.18.344 release PR: **#28**
 - PR topology regression: **35436090086** — success
+- Post-merge topology regression: **35436107413** — success
 - Current `version.json`: **0.36.18.344**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.344**
