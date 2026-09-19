@@ -99,6 +99,7 @@ import('./select-connected-shell.js?v=0.36.18.73').catch(error => console.warn('
 import('./face-workflow-layout.js?v=0.36.18.210').catch(error => console.warn('BoxLab Face workflow layout failed to load', error));
 import('./component-inspect-repair-drawers.js?v=0.36.18.175').catch(error => console.warn('BoxLab component Inspect/Repair drawers failed to load', error));
 import('./selection-workflow-polish.js?v=0.36.18.31').catch(error => console.warn('BoxLab selection workflow polish failed to load', error));
+import('./component-align.js?v=0.36.18.329').catch(error => console.warn('BoxLab component Align failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
 import('./vertex-slide-polish.js?v=0.36.18.162').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
