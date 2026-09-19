@@ -6,6 +6,9 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Core navigation
 
+- [ ] Safari/iPad native text or element selection never washes the BoxLab modelling UI blue during ordinary touch/Pencil actions
+- [ ] native long-press callout/drag selection is suppressed on BoxLab chrome and viewport
+- [ ] input / textarea / select / contenteditable controls retain normal text/value interaction
 - [ ] one-finger orbit works
 - [ ] two-finger pan works
 - [ ] pinch zoom works
