@@ -51,13 +51,16 @@ function groupedExpansionActive(){
   const expanded = expandedSelectionIds();
   return expanded.size > base.size && expanded.size > 1;
 }
+function wholeGroupSelectionActive(){
+  return actualSelection()?.wholeGroupId != null;
+}
 function isSingleObjectTransform(){
   return mode() === 'object' && expandedSelectionIds().size <= 1;
 }
 function isMultiPivotTransform(){
   if(mode() !== 'object' || expandedSelectionIds().size <= 1) return false;
   const t = tool();
-  return t === 'scale' || t === 'rotate' || (t === 'move' && groupedExpansionActive());
+  return t === 'scale' || t === 'rotate' || (t === 'move' && (groupedExpansionActive() || wholeGroupSelectionActive()));
 }
 function meshBounds(mesh){
   const box = new THREE.Box3();
@@ -482,15 +485,19 @@ function wrapLegacyMultiSelection(){
   selectionApi=globalThis.__boxlabObjectSelection;
   const base=selectionApi;
   globalThis.__boxlabObjectSelection={
+    __authoritative:base.__authoritative,
+    owner:base.owner,
     get ids(){ return expandedSelectionIds(); },
     get multi(){
       const t=tool();
       if(t==='scale'||t==='rotate') return false;
-      if(t==='move'&&groupedExpansionActive()) return false;
+      if(t==='move'&&(groupedExpansionActive()||wholeGroupSelectionActive())) return false;
       return base.multi;
     },
+    get wholeGroupId(){ return base.wholeGroupId ?? null; },
     select(ids=[]){ return base.select?.(ids); },
-    clear(){ return base.clear?.(); }
+    clear(){ return base.clear?.(); },
+    refresh(){ return base.refresh?.(); }
   };
 }
 
