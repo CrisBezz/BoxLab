@@ -25,12 +25,12 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.338**
+- Repository release: **v0.36.18.339**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **c5c236852791147eeee62f3c7f710b2e73da57a2**
-- Current code-bearing/release commit: **72ec70b123e27c2ee8d3ca116f0b23481a0f1afa**
-- v0.36.18.338 release PR: **#22**
+- Current code-bearing/release commit: **e651e7d1360d9f09e8723ddf1d6c0556b8b9b395**
+- v0.36.18.339 release PR: **#23**
 - PR topology regression: **35416581512** — success
-- Current `version.json`: **0.36.18.338**
+- Current `version.json`: **0.36.18.339**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.338**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -40,7 +40,7 @@ Audited from current `main` on 2026-09-19.
 - Precision Face implementation pin: **precision-face.js?v=0.36.18.327**
 - Repeat Previous implementation pin: **repeat-face-previous.js?v=0.36.18.327**
 - Current Add Vertex pin: **add-vertex-edge-snap.js?v=0.36.18.324**
-- Current Clean for SubD pin: **quad-clean.js?v=0.36.18.323**
+- Current Clean for SubD pin: **quad-clean.js?v=0.36.18.339**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
 - `styles.css` intentionally remains pinned at **v0.36.18.270**
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
@@ -48,9 +48,9 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.338
+## Latest completed development — v0.36.18.339
 
-Theme: **conservative structured Grid Fill for four-sided boundaries**.
+Theme: **Clean for SubD sharp-fold shape preservation hotfix**.
 
 Existing-feature audit result:
 - no current Circle / Regularize tool existed
@@ -84,6 +84,13 @@ Edge Split regression fix:
 - `face-split.js` exposes `isArmed()` and participates in `boxlab-direct-tool-exclusive`
 - ordinary additive Edge selection resumes immediately after Split is off
 - preserve this ordering for future direct Edge tools
+
+Clean for SubD shape-preservation guard:
+- all-quad relaxation may still improve genuinely smooth planar/curved flow
+- a candidate vertex is now protected when its incident quad-face normals contain a break sharper than 30°
+- this guard does not require an explicit Crease
+- this prevents box corners, hole rims and similar hard geometric folds from being pulled inward by tangent relaxation
+- preserve this guard in all future Clean work
 
 Protected transform and Through systems remain untouched.
 
@@ -251,6 +258,7 @@ Completed precision slices:
 - Circle exact per-mode Active Tools layout (.336)
 - existing Rotate Edge audited as Edge Flip and consolidated under the Flip Edge label (.337)
 - four-sided transactional all-quad Grid Fill (.338)
+- Clean sharp-fold cave-in regression fixed (.339)
 
 Recommended next build:
 - **support-loop construction improvements**, after the mandatory existing-feature audit for existing Offset Loop / Loop Cut / bevel-derived support workflows
