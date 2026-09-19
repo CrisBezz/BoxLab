@@ -96,6 +96,11 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Edge tools
 
+- [ ] Grid Fill enables only for one simple planar convex four-sided boundary with matching opposite segment counts
+- [ ] Grid Fill preserves all existing boundary vertices
+- [ ] Grid Fill creates an all-quad U×V patch and selects the new faces
+- [ ] Grid Fill is one Undo step and commits only after topology validation
+- [ ] Grid Fill rejects irregular/curved boundaries, mismatched opposite counts, internal/non-boundary Edges and simple 4-edge caps
 - [ ] Flip Edge is the single existing triangle-pair diagonal-swap tool (formerly Rotate Edge)
 - [ ] Flip Edge enables only for one uncreased shared Edge between exactly two triangles
 - [ ] Flip Edge selects the new diagonal after commit
