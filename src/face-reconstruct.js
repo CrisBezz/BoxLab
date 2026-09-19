@@ -22,11 +22,14 @@ function place(){
   const add=document.querySelector('#addVertexBtn');
   const build=document.querySelector('#buildEdgeBtn');
   const slide=document.querySelector('#vertexSlideBtn');
+  const circle=document.querySelector('#componentCircleBtn');
   const row=bevel?.parentElement;
   if(row&&add&&build&&slide){
     row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
-    for(const item of [bevel,add,build,slide,button]){
+    const ordered=[bevel,add,build,slide,button,circle].filter(Boolean);
+    for(const item of ordered){
       item.style.minWidth='0';
+      item.style.width='100%';
       row.appendChild(item);
     }
     return true;
@@ -115,3 +118,6 @@ function sync(){place();const info=createInfo(mesh(),selectedVertices());button.
 button.addEventListener('click',apply);window.addEventListener('boxlab-bridge-state',sync);document.addEventListener('pointerup',()=>queueMicrotask(sync),true);setTimeout(sync,0);
 
 globalThis.__boxlabFaceReconstruct={version:'0.36.18.75',info:createInfo,apply};
+
+
+globalThis.__boxlabVertexToolLayout={version:'0.36.18.341',sync:place};
