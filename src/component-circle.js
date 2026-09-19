@@ -51,11 +51,14 @@ function apply(){
 function sync(){
   place();
   const {md,loop}=info();
-  row.style.display=['vertex','edge'].includes(md)?'':'none';
-  button.disabled=!loop.ok||!globalThis.__boxlabHistory;
-  button.title=loop.ok
-    ?`Regularize selected ${md} loop to an evenly spaced circle in its current working plane`
-    :loop.reason;
+  row.style.display='';
+  const supported=['vertex','edge'].includes(md);
+  button.disabled=!supported||!loop.ok||!globalThis.__boxlabHistory;
+  button.title=!supported
+    ?'Circle works in Vertex or Edge mode'
+    :loop.ok
+      ?`Regularize selected ${md} loop to an evenly spaced circle in its current working plane`
+      :loop.reason;
 }
 
 button.addEventListener('click',apply);
