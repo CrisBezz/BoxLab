@@ -8,6 +8,16 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.336 Circle exact Active Tools layout
+
+- Released **v0.36.18.336** from PR #20; squash merge commit: `586efff69f7d1565ff5687c296e183143b0566c7`.
+- Pure UI rearrangement of the existing Circle tool; geometry/selection/history behavior unchanged.
+- Vertex: Circle is the third item in the row with Slide and Create Face.
+- Edge: Circle sits immediately after Delete in the bottom Topology row.
+- Face: Circle sits beside Poke Faces in the same two-column row.
+- Removed the old standalone `componentCircleRow` wrapper entirely, preventing an old bottom Circle location from remaining.
+- PR topology regression run **35418641336** passed before merge.
+
 ## 2026-09-19 — v0.36.18.335 restore Edge Split with canonical Multi
 
 - Released **v0.36.18.335** from PR #19; squash merge commit: `04b23e2d445888dea952efc650161be1d5a53286`.
