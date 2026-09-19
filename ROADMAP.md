@@ -60,7 +60,7 @@ Priority candidates:
 
 ## Phase C — Object / instance workflow
 
-**Next active phase after v0.36.18.341 Vertex UI regression hotfix.**
+**Next active phase after v0.36.18.342 UI stability hotfixes.**
 
 - finish linked-instance editing robustness
 - Make Unique audit/polish
