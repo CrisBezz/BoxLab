@@ -8,6 +8,24 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.346 Multi linked-instance parity
+
+- Released **v0.36.18.346** from PR #30; squash merge commit: `c9e52c091da47a5e88539a14a9abba7807fe45f6`.
+- Mandatory stronger-Multi audit confirmed BoxLab already had Object Multi Move / Scale / Rotate, numeric transforms, pivot modes, grouping, ordinary Multi Duplicate, Join and Boolean.
+- No second multi-transform system was added; protected `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+- The genuine gap was linked-instance parity while Object Multi was active.
+- The existing **Linked Duplicate** control now operates on every selected editable object when Multi is active.
+- Selected Reference guides are skipped and remain protected.
+- Multi Linked Duplicate preserves each object's current placement, visibility and linked-source semantics.
+- Duplicated group relationships are recreated as a new linked group set rather than mixing copies back into the source group.
+- The newly created linked copies become the current Multi selection and Move is re-armed for immediate placement.
+- The existing **Make Unique** control now detaches every selected linked object when Multi is active.
+- Multi Make Unique commits as one scene-history step; selected unlinked objects are ignored.
+- Ordinary Duplicate and ordinary Multi Duplicate remain independent copies and never silently become linked.
+- Shared-source registry lifetime remains unchanged so Object Undo/Redo can restore prior linked metadata safely.
+- First PR regression run failed only because the new single-control test regex was too broad; every implementation contract passed. The test was tightened to the actual ownership invariant.
+- Corrected PR topology regression run **35437992611** passed before merge.
+
 ## 2026-09-19 — v0.36.18.345 Safari native-selection interaction guard
 
 - Released **v0.36.18.345** from PR #29; squash merge commit: `296c2742faff6734f9af422a5050918a700dceb4`.
