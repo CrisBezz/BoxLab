@@ -208,4 +208,4 @@ new MutationObserver(()=>{
   }
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.87',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
+window.__boxlabPrecisionFace={version:'0.36.18.327',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
