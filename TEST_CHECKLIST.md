@@ -149,6 +149,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] unrelated Extrude/Inset behaviour is unchanged after Through edits
 
 ## Clean for SubD / Quad Clean
+- [ ] Clean for SubD must preserve sharp geometric folds/corners even when those edges are not explicitly creased
+- [ ] all-quad relaxation may only move vertices across a genuinely smooth incident normal fan
 
 - [ ] Clean for SubD button is available in Object > Active Tools
 - [ ] locked/reference objects cannot be destructively cleaned

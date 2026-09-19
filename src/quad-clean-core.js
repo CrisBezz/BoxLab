@@ -16,6 +16,7 @@ const PATCH_INTERNAL_FLOW_WEIGHT=.5;
 const PATCH_INTERNAL_WORST_WEIGHT=.1;
 const PATCH_VALENCE_WEIGHT=.25;
 const PATCH_VALENCE_WORST_WEIGHT=.1;
+const RELAX_MIN_NORMAL_DOT=Math.cos(Math.PI/6); // protect geometric folds sharper than 30°
 
 function edgeKey(mesh,a,b){return mesh.edgeKey?mesh.edgeKey(a,b):(a<b?`${a}:${b}`:`${b}:${a}`);}
 function triNormal(mesh,face){
@@ -677,7 +678,20 @@ function incidentData(mesh){
     for(const v of face||[])incidentFaces[v]?.add(fi);
     if(face?.length!==4)for(const v of face||[])protectedVertices.add(v);
   }
-  return{neighbors,incidentFaces,protectedVertices};
+  const normalBreakVertices=new Set();
+  for(let vi=0;vi<mesh.vertices.length;vi++){
+    if(protectedVertices.has(vi))continue;
+    const faces=[...(incidentFaces[vi]||[])];
+    if(faces.length<2)continue;
+    const normals=faces.map(fi=>quadNormal(mesh,mesh.faces[fi]));
+    if(normals.some(n=>!n)){protectedVertices.add(vi);normalBreakVertices.add(vi);continue;}
+    let sharp=false;
+    for(let i=0;i<normals.length&&!sharp;i++)for(let j=i+1;j<normals.length;j++){
+      if(normals[i].dot(normals[j])<RELAX_MIN_NORMAL_DOT){sharp=true;break;}
+    }
+    if(sharp){protectedVertices.add(vi);normalBreakVertices.add(vi);}
+  }
+  return{neighbors,incidentFaces,protectedVertices,normalBreakVertices};
 }
 
 export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15}={}){
@@ -685,7 +699,7 @@ export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15}={}){
   const beforeScore=quadMeshFlowScore(mesh);
   if(!Number.isFinite(beforeScore))return{ok:false,reason:'invalid-quad-region',changed:false,relaxedVertices:0,beforeScore};
   const original=mesh.vertices.map(v=>v.clone());
-  const {neighbors,incidentFaces,protectedVertices}=incidentData(mesh);
+  const {neighbors,incidentFaces,protectedVertices,normalBreakVertices}=incidentData(mesh);
   const proposed=new Map();
   for(let vi=0;vi<mesh.vertices.length;vi++){
     if(protectedVertices.has(vi))continue;
@@ -715,15 +729,15 @@ export function quadRelaxFlow(mesh,{strength=.35,maxFraction=.15}={}){
     if(move.length()>maxMove&&maxMove>0)move.setLength(maxMove);
     if(move.length()>avgEdge*1e-6)proposed.set(vi,current.clone().add(move));
   }
-  if(!proposed.size)return{ok:true,changed:false,relaxedVertices:0,beforeScore,afterScore:beforeScore};
+  if(!proposed.size)return{ok:true,changed:false,relaxedVertices:0,protectedNormalBreaks:normalBreakVertices.size,beforeScore,afterScore:beforeScore};
   for(const [vi,pos] of proposed)mesh.vertices[vi].copy(pos);
   const afterScore=quadMeshFlowScore(mesh);
   const improved=Number.isFinite(afterScore)&&afterScore<beforeScore-1e-9;
   if(!improved){
     for(let i=0;i<original.length;i++)mesh.vertices[i].copy(original[i]);
-    return{ok:true,changed:false,relaxedVertices:0,beforeScore,afterScore:beforeScore,rejectedScore:afterScore,candidates:proposed.size};
+    return{ok:true,changed:false,relaxedVertices:0,protectedNormalBreaks:normalBreakVertices.size,beforeScore,afterScore:beforeScore,rejectedScore:afterScore,candidates:proposed.size};
   }
-  return{ok:true,changed:true,relaxedVertices:proposed.size,beforeScore,afterScore,candidates:proposed.size};
+  return{ok:true,changed:true,relaxedVertices:proposed.size,protectedNormalBreaks:normalBreakVertices.size,beforeScore,afterScore,candidates:proposed.size};
 }
 
 export function quadTopologyAudit(mesh){
