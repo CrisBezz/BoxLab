@@ -44,7 +44,7 @@ Phase A freeze rule:
 
 ## Phase B — Precision modelling
 
-**Next active phase.**
+**Status: planned precision slice complete through v0.36.18.340.**
 
 Priority candidates:
 - cross-object snapping — **Add Vertex in v0.36.18.324; component Move snapping added in v0.36.18.325**
@@ -59,6 +59,8 @@ Priority candidates:
 - preserve direct Pencil interaction and minimal mode switching
 
 ## Phase C — Object / instance workflow
+
+**Next active phase.**
 
 - finish linked-instance editing robustness
 - Make Unique audit/polish
