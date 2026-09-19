@@ -168,6 +168,15 @@ function eligibility(){
   const ta=topologyInfo(active.mesh),tb=topologyInfo(other.mesh);if(!ta.closed||!tb.closed)return{ok:false,reason:'Both Boolean operands must be closed manifold meshes'};
   return{ok:true,active,other};
 }
+function booleanNameStem(name){
+  return String(name||'Object').trim().replace(/\s+B\d+$/i,'')||'Object';
+}
+function nextBooleanName(name){
+  const m=manager(),stem=booleanNameStem(name),names=new Set((m?.objects||[]).map(o=>o.name));
+  let i=1,candidate='';
+  do{candidate=`${stem} B${i++}`;}while(names.has(candidate));
+  return candidate;
+}
 function sync(){
   const group=ensureUI();if(!group)return false;const e=eligibility();
   group.querySelectorAll('[data-boolean217]').forEach(button=>{button.disabled=!e.ok;button.title=e.ok?(button.dataset.boolean217==='difference'?`Cut ${e.other.name} from active ${e.active.name}`:`${button.textContent}: ${e.active.name} + ${e.other.name}`):e.reason;});return e;
@@ -180,7 +189,7 @@ function apply(operation){
   globalThis.__boxlabObjectHistory?.checkpoint?.();
   e.active.visible=false;e.other.visible=false;
   const label=operation==='difference'?'Cut':operation==='intersection'?'Intersect':'Union';
-  const created=manager()?.addMesh?.(result.mesh,`${e.active.name} ${label} ${e.other.name}`,{kind:'editable',visible:true,locked:false,enterObjectMode:true});
+  const created=manager()?.addMesh?.(result.mesh,nextBooleanName(e.active.name),{kind:'editable',visible:true,locked:false,enterObjectMode:true});
   if(!created){e.active.visible=true;e.other.visible=true;setStatus(`Boolean ${label} failed • result object could not be created`);return;}
   selection()?.select?.([created.id]);
   globalThis.__boxlabTopologyGate?.sync?.();
