@@ -37,10 +37,10 @@ test('329 Align X flattens only X and preserves other coordinates',()=>{
   assert.equal(m.vertices[2].z,before[2].z);
 });
 
-test('329 component Align UI has one authoritative drawer loader',()=>{
+test('330 component Align UI has one authoritative drawer loader',()=>{
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.equal((drawer.match(/component-align\.js\?v=0\.36\.18\.329/g)||[]).length,1);
+  assert.equal((drawer.match(/component-align\.js\?v=0\.36\.18\.330/g)||[]).length,1);
   assert.doesNotMatch(index,/component-align\.js\?v=/);
 });
 
