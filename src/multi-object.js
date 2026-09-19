@@ -149,7 +149,7 @@ function linkedDuplicateObject(sourceObject,{name=null,enterObjectMode=true}={})
   if(sourceObject.id===activeId)saveActive();
   const source=ensureLinkedSource(sourceObject);
   if(!source)return null;
-  const copy=addObject(sourceObject.mesh,name||`${sourceObject.name} linked`,{settings:sourceObject.settings,enterObjectMode});
+  const copy=addObject(sourceObject.mesh,name||`${sourceObject.name} linked`,{settings:sourceObject.settings,visible:sourceObject.visible!==false,locked:false,enterObjectMode});
   if(!copy)return null;
   copy.sourceId=sourceObject.sourceId;
   setInstanceMatrix(copy,matrixForInstance(sourceObject));
