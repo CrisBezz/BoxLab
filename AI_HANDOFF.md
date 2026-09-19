@@ -25,17 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.353**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **a9d9901632ff5bf35f5eb200c004a3e0ef0831e7**
-- Current code-bearing/release commit: **3816c57f1ecfa2fd1d1ff150f9dac098b888cbe4**
-- v0.36.18.353 release PR: **#37**
+- Repository release candidate: **v0.36.18.354**
+- Current documentation HEAD: **v0.36.18.354 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.354 PR branch; pending merge**
+- v0.36.18.354 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**n: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.353**
+- Current `version.json`: **0.36.18.354**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.353**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.354**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.353**
+- Object management loader: **object-management.js?v=0.36.18.354**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -53,7 +53,30 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.353
+## Latest completed development — v0.36.18.354
+
+Theme: **whole-Group visual selection context**.
+
+User-facing fix:
+- selecting a Group no longer leaves an unrelated previously active object visually highlighted
+- if the current active object is outside the selected Group, an editable Group member becomes the hidden primary
+- the whole selected Group is tinted amber in the viewport
+- the selected Group header gets amber emphasis
+- Group child rows suppress stale individual active/selection emphasis
+- the hidden primary member's Object cage/verts/mirror-edge overlays are suppressed while whole-Group context is active
+- renderer-level suppression prevents the cage from reappearing during Group Move/Rotate/Scale refreshes
+- leaving Group context restores normal single-object cage behavior
+- ordinary two-object Multi selection still uses amber primary + blue secondary
+
+Protected behavior:
+- authoritative Group ownership unchanged
+- Group transform expansion unchanged
+- compact hierarchy and focused Rename unchanged
+- duplicate numbering / Boolean B-numbering unchanged
+- linked instances and Reference protection unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.353
 
 Theme: **focused Rename + live Group header reconciliation**.
 
@@ -474,12 +497,13 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .353 Rename behavior and compact Group hierarchy**
-- verify Group Rename updates the visible Group header immediately
-- verify Object and Group Rename open with keyboard focus and existing text selected
-- verify Enter / Cancel / Escape behavior on iPad
-- continue compact Outliner polish only after this interaction is confirmed
-- preserve authoritative Group ownership, amber/blue two-object cue, compact naming, linked instances and Reference protection
+- **user-test .354 whole-Group selection visuals**
+- verify selecting a Group no longer leaves any outside object highlighted
+- verify all Group members appear amber and the active member cage/verts are suppressed during Move/Rotate/Scale
+- verify clicking a single object after Group selection restores normal single-object cage/verts
+- verify ordinary two-object Multi selection still shows amber/blue
+- continue compact Outliner polish only after these state transitions are confirmed
+- preserve authoritative Group ownership, compact naming, linked instances and Reference protection
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
 Completed Phase C slices now include:
@@ -493,6 +517,7 @@ Completed Phase C slices now include:
 - authoritative Group ownership + Boolean UI decoupling (.351)
 - two-object amber/blue scene cue + compact numbering (.352)
 - focused Object/Group Rename + live Group header refresh (.353)
+- whole-Group amber viewport/Outliner selection context + cage suppression (.354)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
