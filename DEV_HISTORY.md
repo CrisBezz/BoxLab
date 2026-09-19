@@ -19,7 +19,7 @@ Newest entries should be added at the top.
 - Reference operands remain excluded from Join and Boolean.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` and `styles.css?v=0.36.18.270` remain untouched.
 - Added regression coverage enforcing one authoritative scene-history owner for Join/Boolean and protecting unique-result / linked-peer / Reference behavior.
-- Release PR: **#31**.
+- Released from PR **#31**; squash merge commit: `ebc9ec498d16b82301fc86e4bc3203afdd9d5cd2`.
 
 ## 2026-09-19 — v0.36.18.346 Multi linked-instance parity
 
