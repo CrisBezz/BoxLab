@@ -256,7 +256,7 @@ function renderOutliner() {
   list.replaceChildren();
   for (const object of objects) {
     const row = document.createElement('div');
-    row.className = `outliner-row${object.id === activeId ? ' active' : ''}${object.locked ? ' locked' : ''}`;
+    row.className = `outliner-row compact-object-row${object.id === activeId ? ' active' : ''}${object.locked ? ' locked' : ''}`;
     row.dataset.objectId = String(object.id);
 
     const name = document.createElement('button');
@@ -266,12 +266,12 @@ function renderOutliner() {
     name.textContent = links > 1 ? `${baseName} • Link ×${links}` : baseName;
     name.title = object.kind === 'reference'
       ? 'Reference guide — read-only snapping geometry'
-      : (object.locked ? 'Locked object — unlock to edit' : 'Make active object');
+      : (object.locked ? 'Locked object — unlock from More' : 'Make active object');
     name.addEventListener('click', () => activateObject(object.id));
 
     const visible = document.createElement('button');
-    visible.className = 'outliner-mini';
-    visible.textContent = object.visible ? 'V' : '–';
+    visible.className = 'outliner-mini outliner-visibility';
+    visible.textContent = object.visible ? '●' : '○';
     visible.title = object.visible ? 'Hide object' : 'Show object';
     visible.addEventListener('click', event => {
       event.stopPropagation();
@@ -280,33 +280,47 @@ function renderOutliner() {
       renderOutliner();
     });
 
-    const lock = document.createElement('button');
-    lock.className = 'outliner-mini';
+    const more = document.createElement('details');
+    more.className = 'outliner-more';
+    const moreSummary = document.createElement('summary');
+    moreSummary.textContent = '•••';
+    moreSummary.title = 'Object actions';
+    const menu = document.createElement('div');
+    menu.className = 'outliner-more-menu';
+
     const referenceGuide = object.kind === 'reference';
-    lock.textContent = referenceGuide ? 'R' : (object.locked ? 'L' : '○');
-    lock.title = referenceGuide ? 'Reference guide — always read-only' : (object.locked ? 'Unlock object' : 'Lock object');
+    const lock = document.createElement('button');
+    lock.type = 'button';
+    lock.className = 'outliner-lock-action';
+    lock.textContent = referenceGuide ? 'Reference • Read Only' : (object.locked ? 'Unlock' : 'Lock');
     lock.disabled = referenceGuide;
     lock.addEventListener('click', event => {
+      event.preventDefault();
       event.stopPropagation();
       if(referenceGuide)return;
       object.locked = !object.locked;
       if (object.id === activeId && object.locked) document.querySelector('#toolModes button[data-tool="move"]')?.click();
+      more.open=false;
       updateLockUI();
       renderOutliner();
     });
 
     const solo = document.createElement('button');
-    solo.className = `outliner-mini${soloId === object.id ? ' active' : ''}`;
-    solo.textContent = 'S';
-    solo.title = soloId === object.id ? 'Exit isolate' : 'Isolate / Solo';
+    solo.type = 'button';
+    solo.className = 'outliner-solo-action';
+    solo.textContent = soloId === object.id ? 'Exit Solo' : 'Solo';
     solo.addEventListener('click', event => {
+      event.preventDefault();
       event.stopPropagation();
       soloId = soloId === object.id ? null : object.id;
+      more.open=false;
       if (soloId && !object.locked) activateObject(object.id);
       else { forceRender(); renderOutliner(); }
     });
 
-    row.append(name, visible, lock, solo);
+    menu.append(lock,solo);
+    more.append(moreSummary,menu);
+    row.append(name, visible, more);
     list.append(row);
   }
   if (duplicateButton) duplicateButton.disabled = !active;
@@ -675,11 +689,7 @@ function installRenderObserver() {
 
 function installUI() {
   const standardRow=addButton?.parentElement;
-  if(standardRow&&!document.querySelector('#instanceObjectActions')){
-    const row=document.createElement('div');
-    row.id='instanceObjectActions';
-    row.className='outliner-actions';
-    row.style.gridTemplateColumns='repeat(2,minmax(0,1fr))';
+  if(standardRow&&!document.querySelector('#objectActionMore')){
     linkedDuplicateButton=document.createElement('button');
     linkedDuplicateButton.type='button';
     linkedDuplicateButton.id='linkedDuplicateBtn';
@@ -690,8 +700,20 @@ function installUI() {
     makeUniqueButton.id='makeUniqueBtn';
     makeUniqueButton.textContent='Make Unique';
     makeUniqueButton.title='Detach the active linked instance from shared geometry';
-    row.append(linkedDuplicateButton,makeUniqueButton);
-    standardRow.before(row);
+
+    const more=document.createElement('details');
+    more.id='objectActionMore';
+    more.className='object-action-more';
+    const summary=document.createElement('summary');
+    summary.textContent='•••';
+    summary.title='More object actions';
+    const menu=document.createElement('div');
+    menu.className='object-action-menu';
+    menu.append(renameButton,linkedDuplicateButton,makeUniqueButton,deleteButton);
+    more.append(summary,menu);
+    standardRow.style.gridTemplateColumns='minmax(0,1fr) minmax(0,1fr) 42px';
+    standardRow.append(more);
+    menu.addEventListener('click',event=>{if(event.target.closest('button'))queueMicrotask(()=>{more.open=false;});});
   }
   addButton?.addEventListener('click', () => addObject(EditableMesh.cube(2), 'Cube', { enterObjectMode:true }));
   duplicateButton?.addEventListener('click', duplicateActive);

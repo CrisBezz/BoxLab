@@ -8,6 +8,23 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.356 compact Outliner polish
+
+- User confirmed v0.36.18.355 as the stable Group baseline and approved continuing UI/UX polish.
+- This build is presentation-only around the Object Outliner; Group selection/transform routing from .355 is intentionally untouched.
+- Object rows are reduced from permanent **Name / Visibility / Lock / Solo** controls to **Name / Visibility / More**.
+- Object **More** contains the existing Lock/Unlock and Solo/Exit Solo actions; the underlying behavior and handlers are preserved.
+- Group rows are reduced from **Disclosure / Name / Visibility / Lock / More** to **Disclosure / Name / Visibility / More**.
+- Group **More** now contains Lock/Unlock, Rename Group and Ungroup.
+- The bottom Object action stack is reduced from three rows to **Add / Duplicate / More**.
+- The existing Rename, Linked Duplicate, Make Unique and Delete buttons are physically moved into the Object More menu so their existing IDs, handlers and Multi enable/disable logic remain authoritative.
+- Object and Group rows now share a denser visual rhythm with 28–32 px touch targets and fewer permanent boxed controls, following the compact scene-tree direction established by the user's Nomad reference.
+- No changes to Group membership, selection semantics, transform routing, Boolean geometry, linked-instance geometry or Reference protection.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- `object-origin.js?v=0.36.18.355` remains pinned to the confirmed working Group transform baseline.
+- Refreshed `multi-object.js`, `object-management.js`, `drawer-ui.js` and outer release cache pins.
+- Added regression coverage for compact Object/Group row structure, relocated action buttons and protected Group transform pins.
+
 ## 2026-09-20 — v0.36.18.355 whole-Group transform routing fix
 
 - User reported that a hierarchy-declared Group could still move as separate ordinary selected objects on iPad/Pencil, and that the two grouped objects still showed amber/blue instead of unified Group amber.

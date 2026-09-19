@@ -25,17 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.355**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **dcc2acc817b71517dbda9b791f77bec332ee21d1**
-- Current code-bearing/release commit: **1cace3102b45dcf6d830849efbda0a82e66f3307**
-- v0.36.18.355 release PR: **#39**
+- Repository release candidate: **v0.36.18.356**
+- Current documentation HEAD: **v0.36.18.356 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.356 PR branch; pending merge**
+- v0.36.18.356 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**n: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.355**
+- Current `version.json`: **0.36.18.356**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.355**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.356**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.355**
+- Object management loader: **object-management.js?v=0.36.18.356**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -53,7 +53,34 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.355
+## Latest completed development — v0.36.18.356
+
+Theme: **compact Outliner polish on the protected .355 Group baseline**.
+
+Object scene-tree:
+- object rows now show **Name / Visibility / More**
+- Lock/Unlock and Solo/Exit Solo moved into the object's More menu
+- existing behavior is reused; no parallel action system was added
+
+Group scene-tree:
+- Group rows now show **Disclosure / Name / Visibility / More**
+- Group More contains Lock/Unlock, Rename Group and Ungroup
+- selected Group amber treatment, whole-Group context and Group transforms are unchanged from .355
+
+Object action footer:
+- permanent footer reduced to **Add / Duplicate / More**
+- existing Rename / Linked Duplicate / Make Unique / Delete controls are moved into More
+- original button IDs and event handlers are preserved, including Multi enable/disable behavior
+
+Protected behavior:
+- .355 Group selection/transform routing is the protected baseline
+- `object-origin.js?v=0.36.18.355` intentionally remains pinned
+- amber whole-Group and amber/blue ordinary Multi viewport cues unchanged
+- focused Rename and compact naming unchanged
+- linked instances and Reference protection unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.355
 
 Theme: **whole-Group transform routing repair**.
 
@@ -520,13 +547,12 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .355 Group transform behavior first**
-- verify a whole Group selected from the hierarchy moves together with Pencil
-- verify Group remains uniformly amber during Move/Rotate/Scale
-- verify ordinary two-object Multi remains amber/blue when not a whole Group
-- verify selecting one object from inside or outside the Group exits whole-Group context cleanly
-- continue Outliner polish only after Group hierarchy + transform behavior is confirmed stable
-- preserve authoritative Group ownership, compact naming, linked instances and Reference protection
+- **user-test .356 compact Outliner presentation first**
+- verify Group/Object More menus are easy to use with Pencil/finger and do not clip awkwardly inside the drawer
+- verify Lock / Solo / Rename / Delete / Linked Duplicate / Make Unique still behave exactly as before
+- verify the .355 Group baseline remains intact: whole Group amber + Move/Rotate/Scale together
+- if .356 feels good, continue UI/UX polish by auditing the Object-mode Origin/Pivot controls and Selection toolbar for similar space savings
+- preserve `object-origin.js?v=0.36.18.355` unless a concrete Group regression requires changing it
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
 Completed Phase C slices now include:
@@ -542,6 +568,7 @@ Completed Phase C slices now include:
 - focused Object/Group Rename + live Group header refresh (.353)
 - whole-Group amber viewport/Outliner selection context + cage suppression (.354)
 - whole-Group Move routing + wrapper context preservation (.355)
+- compact Object/Group Outliner rows + compact Object action footer (.356)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 

@@ -54,6 +54,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] linked and Multi duplicate naming follows the same numbered object-name rule
 - [ ] rename works
 - [ ] Object Rename opens the BoxLab rename field already focused with the current text selected for immediate typing
+- [ ] Object footer is compact Add / Duplicate / More, while Rename / Delete / Linked Duplicate / Make Unique remain available and correctly enabled inside More
 - [ ] delete works
 - [ ] Boolean results use compact B numbering (B1, B2, B3…) from the active/base object name instead of concatenating operand names
 - [ ] Join works
@@ -70,7 +71,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] while a whole Group is selected, the active member's individual cage/verts are suppressed and no outside object remains visually highlighted
 - [ ] Group Selection immediately creates the visible hierarchy row; it must not merely stamp per-object group IDs/tags
 - [ ] compact Group tree keeps Group Selection contextual: the creation control is hidden unless 2+ groupable objects are selected
-- [ ] compact Group header uses disclosure + name + visibility + lock + More without expanding drawer height unnecessarily
+- [ ] compact Group header uses disclosure + name + visibility + More; Lock / Rename / Ungroup live inside More without expanding drawer height unnecessarily
+- [ ] compact object rows use name + visibility + More; Lock / Solo remain available inside More
 - [ ] Group More menu Rename/Ungroup works while the normal Rename Group pathway remains available
 - [ ] exactly two selected objects show amber/blue viewport tint (active/primary amber, second blue) while the Outliner remains neutral unless Boolean-specific UI is in use
 - [ ] group visibility and lock each Undo/Redo as one Object scene-history step
