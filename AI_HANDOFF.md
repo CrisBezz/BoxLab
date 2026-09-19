@@ -25,17 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.351**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **9c29e770b24013f1f17939bea2938d9c2566109b**
-- Current code-bearing/release commit: **8faa0cb38cd25f1a1acf561929d6685fc0aabe6e**
-- v0.36.18.351 release PR: **#35**
+- Repository release candidate: **v0.36.18.352**
+- Current documentation HEAD: **v0.36.18.352 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.352 PR branch; pending merge**
+- v0.36.18.352 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**n: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.351**
+- Current `version.json`: **0.36.18.352**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.351**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.352**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.351**
+- Object management loader: **object-management.js?v=0.36.18.352**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -53,7 +53,32 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.351
+## Latest completed development — v0.36.18.352
+
+Theme: **two-object selection colour cue + compact naming**.
+
+Selection feedback:
+- exactly two selected objects in Object mode are tinted in the viewport
+- active / primary = amber
+- second selected = blue
+- this is a general Multi-selection cue, not a Boolean-only cue
+- the Outliner remains neutral; generic A/B row borders and badges stay removed
+
+Naming:
+- ordinary Duplicate uses padded numbers: `Cube 01`, `Cube 02`, ...
+- duplicating a numbered sibling continues the same base-name family
+- Linked Duplicate and Multi Duplicate use the same allocator
+- Boolean results use compact active/base stem + `B1`, `B2`, ... rather than long operand-concatenated names
+
+Protected behavior:
+- authoritative Group ownership from .351 unchanged
+- compact Group hierarchy unchanged
+- Boolean geometry/history behavior unchanged
+- linked-instance behavior unchanged
+- Reference protection unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.351
 
 Theme: **authoritative Group ownership + Boolean UI decoupling**.
 
@@ -423,12 +448,12 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test the repaired Group creation + compact hierarchy first**
-- verify Group Selection creates a visible compact Group row immediately
-- verify normal two-object selection stays neutral until a Boolean action is intentionally used
-- then continue compact Outliner polish based on the user's screenshot feedback
-- preserve the new single Group ownership pathway; do not reintroduce legacy per-object `G#` tags
-- preserve automatic Group transforms, linked instances and Reference protection
+- **user-test .352 selection tint + naming + repaired Group hierarchy first**
+- verify exactly two selected objects show amber/blue in the scene while the Outliner stays neutral
+- verify Duplicate naming proceeds 01 / 02 / 03 across single, Multi and linked duplicates
+- verify Boolean result naming proceeds B1 / B2 without long concatenated names
+- then continue compact Outliner polish based on the user's scene-panel feedback
+- preserve authoritative Group ownership, compact hierarchy, linked instances and Reference protection
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
 Completed Phase C slices now include:
@@ -439,7 +464,8 @@ Completed Phase C slices now include:
 - persistent Group organization metadata (.348)
 - first-class Group selection / Rename UX (.349)
 - compact Group tree + history-safe state actions (.350)
-- authoritative Group ownership + Boolean A/B decoupling (.351)
+- authoritative Group ownership + Boolean UI decoupling (.351)
+- two-object amber/blue scene cue + compact numbering (.352)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
