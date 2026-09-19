@@ -338,7 +338,7 @@ function duplicateActive() {
 function linkedDuplicateActive() {
   const sourceObject=activeObject();
   if(!sourceObject||sourceObject.kind==='reference')return;
-  globalThis.__boxlabObjectHistory?.checkpoint?.();
+  const beforeScene=globalThis.__boxlabObjectHistory?.capture?.()||null;
   saveActive();
   const source=ensureLinkedSource(sourceObject);
   if(!source)return;
@@ -348,6 +348,7 @@ function linkedDuplicateActive() {
   setInstanceMatrix(copy,matrixForInstance(sourceObject));
   copy.mesh=sourceObject.mesh.clone();
   if(sourceObject.origin)copy.origin={...sourceObject.origin};
+  if(beforeScene)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(beforeScene);
   renderOutliner();
   if(status)status.textContent=`Linked Duplicate created • ${linkedCount(sourceObject.sourceId)} share geometry`;
   requestAnimationFrame(()=>{if(currentMode()==='object')globalThis.__boxlabTransformArming?.activateRealMove?.();});
