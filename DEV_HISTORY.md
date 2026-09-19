@@ -8,6 +8,18 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.329 component Align X/Y/Z
+
+- Released **v0.36.18.329** from PR #13; squash merge commit: `6edb552a3219435f1a3a2de7cc9a47be46815c07`.
+- Existing-feature audit confirmed **Make Planar** already existed for Face-specific arbitrary-plane flattening; it was retained unchanged.
+- Added only the missing generic component axis-align tool for Vertex / Edge / Face selections.
+- Align X / Y / Z sets all vertices belonging to the selected components to their average coordinate on the chosen axis.
+- Selection is preserved, Object mode is excluded, and the operation commits as one history step.
+- New modules: `src/component-align-core.js` and `src/component-align.js`.
+- `drawer-ui.js` is the single loader for the new UI module.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- PR regression run **35411656859** passed before merge.
+
 ## 2026-09-19 — v0.36.18.328 duplicate Repeat UI removed
 
 - Released **v0.36.18.328** from PR #12; squash merge commit: `f731849f96b5808c986b6d46dc92e53c9f64f9c3`.
