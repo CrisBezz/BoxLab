@@ -49,6 +49,9 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] multi-object selection/management works
 - [ ] object transforms do not regress
 - [ ] reference objects remain protected from destructive editing
+- [ ] Reference imports are permanently read-only guides: single, Multi and Group lock controls cannot unlock them
+- [ ] Reference visibility / solo still work and visible Reference geometry remains eligible for cross-object snapping
+- [ ] duplicating or restoring a Reference through scene Undo/Redo must preserve kind=reference and locked=true
 
 ## Component alignment
 

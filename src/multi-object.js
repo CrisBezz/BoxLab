@@ -210,7 +210,9 @@ function renderOutliner() {
     const baseName = object.kind === 'reference' ? `${object.name} • Ref` : object.name;
     const links = linkedCount(object.sourceId);
     name.textContent = links > 1 ? `${baseName} • Link ×${links}` : baseName;
-    name.title = object.locked ? 'Locked object — unlock to edit' : 'Make active object';
+    name.title = object.kind === 'reference'
+      ? 'Reference guide — read-only snapping geometry'
+      : (object.locked ? 'Locked object — unlock to edit' : 'Make active object');
     name.addEventListener('click', () => activateObject(object.id));
 
     const visible = document.createElement('button');
@@ -226,10 +228,13 @@ function renderOutliner() {
 
     const lock = document.createElement('button');
     lock.className = 'outliner-mini';
-    lock.textContent = object.locked ? 'L' : '○';
-    lock.title = object.locked ? 'Unlock object' : 'Lock object';
+    const referenceGuide = object.kind === 'reference';
+    lock.textContent = referenceGuide ? 'R' : (object.locked ? 'L' : '○');
+    lock.title = referenceGuide ? 'Reference guide — always read-only' : (object.locked ? 'Unlock object' : 'Lock object');
+    lock.disabled = referenceGuide;
     lock.addEventListener('click', event => {
       event.stopPropagation();
+      if(referenceGuide)return;
       object.locked = !object.locked;
       if (object.id === activeId && object.locked) document.querySelector('#toolModes button[data-tool="move"]')?.click();
       updateLockUI();
@@ -274,7 +279,9 @@ function activateObject(id, forceLocked = false) {
   const target = objects.find(object => object.id === id);
   if (!target || target.id === activeId) { renderOutliner(); return !!target; }
   if (target.locked && !forceLocked) {
-    if (status) status.textContent = `${target.name} is locked • unlock it in the Outliner to edit`;
+    if (status) status.textContent = target.kind === 'reference'
+      ? `${target.name} • Reference guide • read-only • available for snapping`
+      : `${target.name} is locked • unlock it in the Outliner to edit`;
     renderOutliner();
     return false;
   }
@@ -307,7 +314,7 @@ function addObject(mesh, name = 'Cube', options = {}) {
     name: uniqueName(name),
     mesh: mesh.clone(),
     visible: options.visible !== false,
-    locked: !!options.locked,
+    locked: options.kind === 'reference' ? true : !!options.locked,
     kind: options.kind === 'reference' ? 'reference' : 'editable',
     settings: cloneSettings(options.settings || captureSettings()),
     history: { undo:[], redo:[] }
@@ -498,7 +505,9 @@ function handleViewportActivation(event, stopEvent = true) {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
-    if (status) status.textContent = `${active.name} is locked • unlock it in the Outliner to edit`;
+    if (status) status.textContent = active.kind === 'reference'
+      ? `${active.name} • Reference guide • read-only • available for snapping`
+      : `${active.name} is locked • unlock it in the Outliner to edit`;
     return true;
   }
   return false;
