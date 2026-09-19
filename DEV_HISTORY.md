@@ -8,6 +8,20 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.340 transactional Offset Loop support workflow
+
+- Released **v0.36.18.340** from PR #24; squash merge commit: `54d7e1822235db0cb88c05c0541fae7d8c1560b7`.
+- Mandatory existing-feature audit confirmed **Offset Loop is already BoxLab's support-loop construction tool**; no duplicate Support Loop tool was added.
+- Offset Loop drag commits now run both the topology validator and topology gate before history commit; invalid results restore the pre-drag snapshot.
+- Exact Offset Loop now uses the same validate-before-commit / rollback discipline.
+- Created left/right support rails are selected directly through the canonical Selection Bridge instead of toggling the legacy hidden Multi control.
+- Canonical additive Multi therefore remains enabled after Offset Loop.
+- While Offset Loop is armed, `edge-paint-select.js` yields its capture-phase Pencil handler so the modelling drag receives the gesture.
+- Offset Loop now exposes one armed-state controller through `globalThis.__boxlabOffsetLoop`.
+- Refreshed `loop-offset.js`, `precision-offset-loop.js`, `edge-paint-select.js`, and the drawer/cache chain to .340.
+- New Offset Loop regression contracts all passed from the first PR run. Two subsequent CI failures were only stale historical parent-loader / exact-handler assertions in Face Split and Grid Fill tests; those tests were made invariant-based.
+- Corrected PR topology regression run **35431669328** passed before merge.
+
 ## 2026-09-19 — v0.36.18.339 Clean sharp-fold shape-preservation hotfix
 
 - Released **v0.36.18.339** from PR #23; squash merge commit: `e651e7d1360d9f09e8723ddf1d6c0556b8b9b395`.
