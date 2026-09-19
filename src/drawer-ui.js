@@ -50,7 +50,7 @@ function installGroupUiPolish() {
 
 syncDrawerToMode();
 
-import('./object-management.js?v=0.36.18.354').catch(error => console.warn('BoxLab object management failed to load', error));
+import('./object-management.js?v=0.36.18.355').catch(error => console.warn('BoxLab object management failed to load', error));
 import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxLab object drawer retain failed to load', error));
 import('./studio-scene-fix.js?v=0.36.18.197').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
 import('./lasso-select.js?v=0.36.18.152').catch(error => console.warn('BoxLab Lasso Select failed to load', error));
@@ -111,7 +111,7 @@ import('./dissolve-selection-polish.js?v=0.36.18.28').catch(error => console.war
 import('./selection-history-safe.js?v=0.36.18.34').catch(error => console.warn('BoxLab selection-aware history failed to load', error));
 import('./loop-cut-added-vertex.js?v=0.36.18.162').catch(error => console.warn('BoxLab Add-vertex Loop promotion failed to load', error));
 // Normal Through remains owned by multi-face-direct + through-kernel; fallback only wakes when kernel planning fails.
-import('./object-origin.js?v=0.36.18.351').then(() => {
+import('./object-origin.js?v=0.36.18.355').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();
 }).catch(error => console.warn('BoxLab object origin failed to load', error));
