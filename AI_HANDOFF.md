@@ -25,17 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.354**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **998fc1b632fa782173be5f6dd9a6676392f7e08a**
-- Current code-bearing/release commit: **7ab87d240569f71a6cdf82f79405411241db989e**
-- v0.36.18.354 release PR: **#38**
+- Repository release candidate: **v0.36.18.355**
+- Current documentation HEAD: **v0.36.18.355 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.355 PR branch; pending merge**
+- v0.36.18.355 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**n: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.354**
+- Current `version.json`: **0.36.18.355**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.354**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.355**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.354**
+- Object management loader: **object-management.js?v=0.36.18.355**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -53,7 +53,30 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.354
+## Latest completed development — v0.36.18.355
+
+Theme: **whole-Group transform routing repair**.
+
+Critical functional fix:
+- a whole selected Group is now recognised as a grouped Move context even when all members are already selected
+- `object-origin.js` no longer requires expansion to add extra IDs before Group Move engages
+- the legacy selection wrapper now forwards `wholeGroupId`, so viewport Group tint and transform routing see the same context
+- grouped Move continues through the existing group-aware origin/pivot transform pathway
+- protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched
+
+Cache correction:
+- `object-origin.js` was still pinned at .351 inside `drawer-ui.js`
+- refreshed to `object-origin.js?v=0.36.18.355`
+- refreshed surrounding Object management / drawer / release pins for Safari/iPad
+
+Expected user-facing state:
+- Group header selected = Group context
+- grouped objects all amber in viewport
+- Move/Rotate/Scale acts on the whole Group
+- no amber/blue split while exactly one whole Group is selected
+- ordinary two-object Multi selection remains amber/blue
+
+## Previous completed development — v0.36.18.354
 
 Theme: **whole-Group visual selection context**.
 
@@ -497,12 +520,12 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .354 whole-Group selection visuals**
-- verify selecting a Group no longer leaves any outside object highlighted
-- verify all Group members appear amber and the active member cage/verts are suppressed during Move/Rotate/Scale
-- verify clicking a single object after Group selection restores normal single-object cage/verts
-- verify ordinary two-object Multi selection still shows amber/blue
-- continue compact Outliner polish only after these state transitions are confirmed
+- **user-test .355 Group transform behavior first**
+- verify a whole Group selected from the hierarchy moves together with Pencil
+- verify Group remains uniformly amber during Move/Rotate/Scale
+- verify ordinary two-object Multi remains amber/blue when not a whole Group
+- verify selecting one object from inside or outside the Group exits whole-Group context cleanly
+- continue Outliner polish only after Group hierarchy + transform behavior is confirmed stable
 - preserve authoritative Group ownership, compact naming, linked instances and Reference protection
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
@@ -518,6 +541,7 @@ Completed Phase C slices now include:
 - two-object amber/blue scene cue + compact numbering (.352)
 - focused Object/Group Rename + live Group header refresh (.353)
 - whole-Group amber viewport/Outliner selection context + cage suppression (.354)
+- whole-Group Move routing + wrapper context preservation (.355)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
