@@ -1,6 +1,5 @@
 import {circleLoopInfo,circularizeLoop} from './component-circle-core.js?v=0.36.18.333';
 
-const selectionTools=document.querySelector('#componentSelectionTools');
 const status=document.querySelector('#selectionStatus');
 
 function bridge(){return globalThis.__boxlabSelectionBridge;}
@@ -20,14 +19,11 @@ button.textContent='Circle';
 button.style.cssText='width:100%;min-width:0';
 row.appendChild(button);
 
-function place(){
-  if(row.isConnected)return true;
-  const align=document.querySelector('#componentAlignRow');
-  if(align?.parentElement){align.insertAdjacentElement('afterend',row);return true;}
-  const anchor=selectionTools?.querySelector('.selection-context');
-  if(anchor?.parentElement){anchor.insertAdjacentElement('afterend',row);return true;}
-  if(selectionTools){selectionTools.appendChild(row);return true;}
-  return false;
+function place(md=mode()){
+  const host=document.querySelector(`[data-mode-tools="${md}"]`);
+  if(!host)return false;
+  if(row.parentElement!==host)host.appendChild(row);
+  return true;
 }
 
 function info(){
@@ -49,8 +45,8 @@ function apply(){
 }
 
 function sync(){
-  place();
   const {md,loop}=info();
+  place(md);
   row.style.display='';
   const supported=['vertex','edge','face'].includes(md);
   button.disabled=!supported||!loop.ok||!globalThis.__boxlabHistory;
