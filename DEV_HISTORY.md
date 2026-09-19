@@ -21,6 +21,7 @@ Newest entries should be added at the top.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Refreshed the stale `object-origin.js` cache pin from .351 to .355 through `drawer-ui.js`, and refreshed the outer release cache chain for iPad/Safari.
 - Added regression coverage for whole-Group Move routing, wrapper context preservation, cache refresh and the protected transform pin.
+- Released from PR **#39**; squash merge commit: `1cace3102b45dcf6d830849efbda0a82e66f3307`.
 
 ## 2026-09-20 — v0.36.18.354 whole-Group viewport selection context
 
