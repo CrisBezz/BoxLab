@@ -24,6 +24,7 @@ Newest entries should be added at the top.
 - `object-origin.js?v=0.36.18.355` remains pinned to the confirmed working Group transform baseline.
 - Refreshed `multi-object.js`, `object-management.js`, `drawer-ui.js` and outer release cache pins.
 - Added regression coverage for compact Object/Group row structure, relocated action buttons and protected Group transform pins.
+- Released from PR **#40**; squash merge commit: `562dd8697aca5c4a2d9b6c39729e8d725857320b`.
 
 ## 2026-09-20 — v0.36.18.355 whole-Group transform routing fix
 
