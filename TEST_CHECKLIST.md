@@ -85,6 +85,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Face tools
 
+- [ ] Precision Face / Repeat Previous UI appears only once
+- [ ] drawer-ui is the single authoritative loader for Precision Face / Repeat Previous
 - [ ] normal Extrude drag records an exact previous value for Repeat Previous
 - [ ] normal Inset drag records an exact previous value for Repeat Previous
 - [ ] Repeat Previous can be armed and applied by tapping another Face
