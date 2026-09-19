@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.333 Face Circle support
+
+- Released **v0.36.18.333** from PR #17; squash merge commit: `fbfbf9f46f45b4551cb0e5fdc1086cac248e7919`.
+- Extended Circle so exactly one selected Face can drive the operation from its perimeter vertices.
+- Face mode now enables Circle for one valid face; multiple selected Faces are refused.
+- Existing Vertex/Edge Circle behavior remains unchanged.
+- No topology is created or deleted; the selected Face remains selected and the operation is one Undo step.
+- Cache-hopped `component-circle-core.js`, `component-circle.js`, and the authoritative `drawer-ui.js` loader to .333.
+- First PR run failed only because older Circle contract tests still hard-coded .331/.332 pins/text; those assertions were rewritten to protect invariants instead of stale version strings.
+- Corrected PR topology regression run **35417107014** passed before merge.
+
 ## 2026-09-19 — v0.36.18.332 Circle visibility hotfix
 
 - Released **v0.36.18.332** from PR #16; squash merge commit: `86f5efe098b26fa7543d1018122fc7deeeacdb04`.
