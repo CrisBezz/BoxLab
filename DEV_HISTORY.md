@@ -22,6 +22,7 @@ Newest entries should be added at the top.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Refreshed `object-management.js → drawer-ui.js → index.html` cache chain for iPad/Safari.
 - Added regression coverage for contextual Group creation, compact tree structure, More actions, history-safe visibility/lock and protected cache/transform pins.
+- Released from PR **#34**; squash merge commit: `11843516865bfcb50aa4d5686d7405611ba567e0`.
 
 ## 2026-09-20 — v0.36.18.349 first-class Group selection UX
 
