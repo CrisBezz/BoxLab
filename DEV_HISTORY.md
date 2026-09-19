@@ -8,6 +8,24 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.354 whole-Group viewport selection context
+
+- User screenshot showed a selected/moving Group with no viewport-level Group selection feedback while an unrelated previously active object (Cube 2) still showed its Object-mode cage/verts and active Outliner emphasis.
+- Root cause: Group selection was a higher-level Multi selection but `activeId` could remain outside the selected Group, while the base renderer continued presenting that active object as the visible Object selection.
+- Group selection now ensures the hidden active/primary object belongs to the selected Group. If the previous active object is outside the Group, BoxLab promotes an editable Group member as primary.
+- The authoritative Object selection API now exposes `wholeGroupId` when exactly one complete Group is selected.
+- Whole-Group selection is a first-class visual state:
+  - all selected Group member bodies are tinted amber in the viewport
+  - ordinary two-object Multi selection still uses amber primary + blue secondary
+  - selected Group header gets explicit amber emphasis
+  - child object rows lose stale individual active/selected emphasis while Group context is active
+- The multi-object render observer now suppresses the active member's normal Object cage/vertex/mirror-edge overlays as they are created while a whole Group is selected, so they do not reappear during Move/Rotate/Scale refreshes.
+- Leaving Group context restores normal single-object cage behavior automatically.
+- Group transforms themselves remain on the existing protected expansion/transform pathways.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `multi-object.js`, `object-management.js`, `boolean-ux-history.js`, `drawer-ui.js` and `index.html` cache pins.
+- Added regression coverage for in-Group primary promotion, explicit whole-Group context, amber Group tint, cage suppression and protected cache/transform pins.
+
 ## 2026-09-20 — v0.36.18.353 focused Rename + live Group header refresh
 
 - User reported Group Rename either did not work or did not update the visible Group name, and requested that Rename open with the edit cursor already inside the text field.
