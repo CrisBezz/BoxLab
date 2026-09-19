@@ -27,6 +27,7 @@ Newest entries should be added at the top.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Refreshed `multi-object.js`, `object-management.js`, `drawer-ui.js` and `index.html` cache pins.
 - Added regression coverage for focused rename behavior, shared Group Rename routing, live Group header reconciliation and protected cache/transform pins.
+- Released from PR **#37**; squash merge commit: `3816c57f1ecfa2fd1d1ff150f9dac098b888cbe4`.
 
 ## 2026-09-20 — v0.36.18.352 two-object colour cue + compact naming
 
