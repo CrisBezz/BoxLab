@@ -8,6 +8,18 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-19 — v0.36.18.345 Safari native-selection interaction guard
+
+- Released **v0.36.18.345** from PR #29; squash merge commit: `296c2742faff6734f9af422a5050918a700dceb4`.
+- Added a standalone `src/app-interaction-guard.js` to prevent Safari/iPad native text/element selection, touch callouts and drag-selection from washing the modelling UI blue during touch/Pencil work.
+- The guard applies `user-select:none`, `-webkit-user-select:none`, and `-webkit-touch-callout:none` across BoxLab chrome and the modelling surface.
+- `selectstart` and native `dragstart` are prevented outside editable controls.
+- Real editable controls remain exempt: `input`, `textarea`, `select`, `contenteditable`, and explicit `data-allow-selection=true` targets retain normal selection/value interaction.
+- Existing `touch-action:none` gesture routing was left unchanged.
+- Protected `styles.css?v=0.36.18.270`, Pencil/orbit handlers, and `src/multi-object-transform.js?v=0.36.1.0` were untouched.
+- Added regression coverage for native-selection suppression, editable-field exceptions, single authoritative loader, and protected gesture/transform pins.
+- PR topology regression run **35437021036** passed on the first run.
+
 ## 2026-09-19 — v0.36.18.344 Reference guides permanently read-only
 
 - Released **v0.36.18.344** from PR #28; squash merge commit: `6118b0f60073573fb035c31d17d2082512c31d41`.
