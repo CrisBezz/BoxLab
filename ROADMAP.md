@@ -90,6 +90,7 @@ Only add focused tools that suit BoxLab:
 
 ## Phase F — iPad UX polish
 
+- browser-selection interaction guard — **native Safari selection/callout suppressed across BoxLab UI while editable fields remain exempt in v0.36.18.345**
 - drawer consolidation
 - persistent tool modes
 - left-hand access
