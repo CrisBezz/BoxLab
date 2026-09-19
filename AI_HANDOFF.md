@@ -25,13 +25,14 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.331**
+- Repository release: **v0.36.18.332**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **c5c236852791147eeee62f3c7f710b2e73da57a2**
-- Current code-bearing/release commit: **64bb42b17ef463e489c66989bf6f51dc99917126**
-- v0.36.18.331 release PR: **#15**
+- Current code-bearing/release commit: **86f5efe098b26fa7543d1018122fc7deeeacdb04**
+- v0.36.18.332 release PR: **#16**
 - PR topology regression: **35416581512** — success
-- Current `version.json`: **0.36.18.331**
+- Current `version.json`: **0.36.18.332**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.332**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
 - Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.331**
 - Component Circle core: **component-circle-core.js?v=0.36.18.331**
@@ -47,9 +48,9 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.331
+## Latest completed development — v0.36.18.332
 
-Theme: **Circle / regularize for simple closed component loops**.
+Theme: **Circle visibility hotfix and drawer cache-key correction**.
 
 Existing-feature audit result:
 - no current Circle / Regularize tool existed
