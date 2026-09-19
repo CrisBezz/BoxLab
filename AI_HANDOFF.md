@@ -25,15 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.326**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **ea17d502bfdba0ff83a553e4842ef2edd743eab4**
-- Current code-bearing/release commit: **80605a225d9855f098a1cff7596d77fc8d6a2d7e**
-- v0.36.18.326 release PR: **#10**
-- Final PR topology regression: **35408617550** — success
-- Current `version.json`: **0.36.18.326**
-- Current main runtime pin: **main.js?v=0.36.18.326**
-- Current Add Vertex cache pin: **add-vertex-edge-snap.js?v=0.36.18.324**
-- Current Clean for SubD cache pin: **quad-clean.js?v=0.36.18.323**
+- Repository release: **v0.36.18.327**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **6df326044787997da540b89c908b82029a6aa1ac**
+- Current code-bearing/release commit: **462eabc59076afdfa7efaf10338bfa49f83355c1**
+- v0.36.18.327 release PR: **#11**
+- Final PR topology regression: **35410554813** — success
+- Current `version.json`: **0.36.18.327**
+- Current main runtime pin remains: **main.js?v=0.36.18.326**
+- Precision Face pin: **precision-face.js?v=0.36.18.327**
+- Repeat Previous pin: **repeat-face-previous.js?v=0.36.18.327**
+- Current Add Vertex pin: **add-vertex-edge-snap.js?v=0.36.18.324**
+- Current Clean for SubD pin: **quad-clean.js?v=0.36.18.323**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
 - `styles.css` intentionally remains pinned at **v0.36.18.270**
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
@@ -41,24 +43,27 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.326
+## Latest completed development — v0.36.18.327
 
-Theme: **Phase B — live Move precision readback**.
+Theme: **Phase B — Repeat Previous reconnected for Face tools**.
 
-Component Move in Vertex/Edge/Face modes now shows live numerical movement in the existing stats line:
-- **ΔX**
-- **ΔY**
-- **ΔZ**
+The existing precision Face stack is now loaded by the live app again:
+- `src/precision-face.js?v=0.36.18.327`
+- `src/repeat-face-previous.js?v=0.36.18.327`
 
-Readback is shown to three decimal places and updates continuously during ordinary Move drags and cross-object snapped drags.
+Behavior:
+1. normal Face Extrude and Inset operations record their committed model-unit value
+2. the Face precision row exposes the last exact value
+3. Repeat Previous can be armed
+4. while armed, tapping another Face replays the exact previous Extrude/Inset value
+5. Through-ready, Through, blocked and rollback Extrude states are excluded from repeat capture
 
-When a snap is active, the numeric delta remains visible and the existing snap target label is appended rather than replacing it.
-
-This release changes presentation/readback only:
-- no Move transform math changed
-- no snapping thresholds changed
-- Object-mode transform behavior is unchanged
+Important boundaries:
+- `main.js` was not changed for this release
+- Through kernel code was not changed
 - `src/multi-object-transform.js?v=0.36.1.0` remains untouched
+
+Regression coverage verifies module load order, exact replay API availability, Extrude/Inset-only replay, and Through/rollback exclusion.
 
 ## Current Clean for SubD pipeline
 
@@ -211,12 +216,12 @@ Completed precision slices:
 - Add Vertex cross-object snapping (.324)
 - component Move cross-object snapping (.325)
 - live component Move ΔX/ΔY/ΔZ readback (.326)
+- Repeat Previous for Face Extrude/Inset (.327)
 
 Recommended next build:
-- **Repeat Previous audit/polish** for exact repeated operations, especially Extrude / Inset and other direct modelling tools where a previous exact value is meaningful
+- **Align / Flatten component tools**, starting with a small safe Vertex/Edge/Face selection utility that works in one axis at a time
 
 Other Phase B priorities remain:
-- Align / Flatten component tools
 - Circle / regularize selected components
 - Edge Flip
 - stronger structured Fill / Grid Fill / Cap workflows
