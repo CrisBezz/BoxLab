@@ -25,17 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.356**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **237581476ed6e93eed7cc77a5cb989f4054414e5**
-- Current code-bearing/release commit: **562dd8697aca5c4a2d9b6c39729e8d725857320b**
-- v0.36.18.356 release PR: **#40**
+- Repository release candidate: **v0.36.18.357**
+- Current documentation HEAD: **v0.36.18.357 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.357 PR branch; pending merge**
+- v0.36.18.357 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**n: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.356**
+- Current `version.json`: **0.36.18.357**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.356**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.357**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.356**
+- Object management loader: **object-management.js?v=0.36.18.357**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -53,7 +53,24 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.356
+## Latest completed development — v0.36.18.357
+
+Theme: **upward Outliner popovers**.
+
+User-facing polish:
+- Object row More menus open upward from the dots
+- Group row More menus open upward from the dots
+- bottom Object action More menu opens upward
+- prevents Lock / Solo / Rename / Delete / Linked Duplicate / Make Unique menus from being clipped by the drawer bottom
+
+Protected behavior:
+- no changes to Group selection or transform behavior
+- `object-origin.js?v=0.36.18.355` remains the protected Group transform baseline
+- compact Outliner structure from .356 unchanged
+- linked instances, Boolean behavior and Reference protection unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.356
 
 Theme: **compact Outliner polish on the protected .355 Group baseline**.
 
@@ -547,11 +564,10 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .356 compact Outliner presentation first**
-- verify Group/Object More menus are easy to use with Pencil/finger and do not clip awkwardly inside the drawer
+- **user-test .357 popover placement**
+- verify Object / Group / footer More menus open upward and remain fully visible with Pencil/finger
 - verify Lock / Solo / Rename / Delete / Linked Duplicate / Make Unique still behave exactly as before
-- verify the .355 Group baseline remains intact: whole Group amber + Move/Rotate/Scale together
-- if .356 feels good, continue UI/UX polish by auditing the Object-mode Origin/Pivot controls and Selection toolbar for similar space savings
+- if confirmed, continue UI/UX polish by auditing Object-mode Origin/Pivot controls and Selection toolbar for space savings
 - preserve `object-origin.js?v=0.36.18.355` unless a concrete Group regression requires changing it
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
@@ -569,6 +585,7 @@ Completed Phase C slices now include:
 - whole-Group amber viewport/Outliner selection context + cage suppression (.354)
 - whole-Group Move routing + wrapper context preservation (.355)
 - compact Object/Group Outliner rows + compact Object action footer (.356)
+- upward More popovers to avoid drawer-edge clipping (.357)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 

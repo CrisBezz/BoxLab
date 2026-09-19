@@ -8,6 +8,18 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.357 upward Outliner popovers
+
+- User screenshot showed the compact Object **More** menu opening downward near the bottom of the Objects drawer, causing Lock/Solo to be clipped by the drawer edge.
+- Object row More menus now open upward from the dots.
+- Group row More menus now open upward from the dots.
+- Bottom Object action More menu also opens upward.
+- This is CSS/layout only; no changes to selection, Group hierarchy, transforms, linked instances, Boolean behavior or Reference protection.
+- Protected Group transform baseline remains `object-origin.js?v=0.36.18.355`.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `object-management.js → drawer-ui.js → index.html` cache chain.
+- Added regression coverage for upward popover positioning and protected pins.
+
 ## 2026-09-20 — v0.36.18.356 compact Outliner polish
 
 - User confirmed v0.36.18.355 as the stable Group baseline and approved continuing UI/UX polish.
