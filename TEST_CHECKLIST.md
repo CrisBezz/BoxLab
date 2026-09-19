@@ -43,6 +43,16 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] object transforms do not regress
 - [ ] reference objects remain protected from destructive editing
 
+## Component alignment
+
+- [ ] existing Make Planar remains available for a selected Face
+- [ ] Align X flattens selected Vertex/Edge/Face component vertices to their average X coordinate
+- [ ] Align Y flattens selected Vertex/Edge/Face component vertices to their average Y coordinate
+- [ ] Align Z flattens selected Vertex/Edge/Face component vertices to their average Z coordinate
+- [ ] component Align preserves the current component selection
+- [ ] component Align commits as one Undo step
+- [ ] component Align is hidden in Object mode
+
 ## Precision snapping
 
 - [ ] component Move displays live ΔX / ΔY / ΔZ while dragging
