@@ -9,7 +9,7 @@ const pointer=new THREE.Vector2();
 ray.params.Line.threshold=.09;
 let armed=false,first=null;
 
-function disarm(){armed=false;first=null;button?.classList.remove('active');}
+function disarm(){armed=false;first=null;button?.classList.remove('active');document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));}
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
@@ -18,7 +18,7 @@ function hitEdge(event){const s=state(),rect=canvas?.getBoundingClientRect();if(
 function faceHasNonAdjacentEdges(face,a,b){const n=face?.length||0;const locate=edge=>{for(let i=0;i<n;i++)if((face[i]===edge.a&&face[(i+1)%n]===edge.b)||(face[i]===edge.b&&face[(i+1)%n]===edge.a))return i;return-1;};const ia=locate(a),ib=locate(b);return ia>=0&&ib>=0&&ia!==ib&&(ia-ib+n)%n!==1&&(ib-ia+n)%n!==1;}
 function indexForKey(mesh,key){return mesh.edges().findIndex(edge=>edgeKey(mesh,edge)===key);}
 
-button?.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();armed=!armed;first=null;document.querySelector('#selectionModes button[data-mode="edge"]')?.click();button.classList.toggle('active',armed);if(status)status.textContent=armed?'Face Split • tap the first boundary edge of an ngon':'Edge mode • Face Split off';},true);
+button?.addEventListener('click',event=>{event.preventDefault();event.stopImmediatePropagation();armed=!armed;first=null;if(armed)document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'face-split'}}));document.querySelector('#selectionModes button[data-mode="edge"]')?.click();button.classList.toggle('active',armed);if(status)status.textContent=armed?'Face Split • tap the first boundary edge of an ngon':'Edge mode • Face Split off';},true);
 document.addEventListener('click',event=>{if(!armed||!event.isTrusted||event.target?.closest?.('#faceSplitBtn'))return;if(event.target?.closest?.('button'))disarm();},true);
 
 canvas?.addEventListener('pointerdown',event=>{
@@ -41,4 +41,4 @@ canvas?.addEventListener('pointerdown',event=>{
   if(status)status.textContent=`Face Split committed • canonical intersection-segment transaction${beforeGate&&!beforeGate.valid?' • source mesh had pre-existing issues':''}`;
 },true);
 
-globalThis.__boxlabFaceSplit={version:'0.36.18.208',kernel:'0.36.18.208',transaction:'insertFaceSegment'};
+globalThis.__boxlabFaceSplit={version:'0.36.18.335',kernel:'0.36.18.208',transaction:'insertFaceSegment',isArmed:()=>armed,disarm};
