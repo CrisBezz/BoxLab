@@ -25,14 +25,14 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.343**
+- Repository release: **v0.36.18.344**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **aa9eac72e96678c20993c9b756017470a68f40e5**
-- Current code-bearing/release commit: **b35e542b93469b8c957b55c3c3de1e96e9ebc65a**
-- v0.36.18.343 release PR: **#27**
-- Corrected PR topology regression: **35435127026** — success
-- Current `version.json`: **0.36.18.343**
+- Current code-bearing/release commit: **6118b0f60073573fb035c31d17d2082512c31d41**
+- v0.36.18.344 release PR: **#28**
+- PR topology regression: **35436090086** — success
+- Current `version.json`: **0.36.18.344**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.343**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.344**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
@@ -51,9 +51,24 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.343
+## Latest completed development — v0.36.18.344
 
-Theme: **linked-instance foundation and explicit Make Unique**.
+Theme: **Reference objects hardened as permanently read-only modelling guides**.
+
+Reference guide baseline:
+- imported Reference meshes already participate in existing cross-object snapping
+- no second reference/snap implementation exists or is needed
+- every Reference object is permanently `locked=true`
+- single-object Outliner lock control displays disabled **R**
+- Multi and Group lock/unlock ignore Reference members and only operate on editable objects
+- duplicated References remain Reference + locked
+- Object scene Undo/Redo restore reasserts Reference locked state
+- visibility and solo remain available
+- visible References remain valid cross-object snap targets
+- Reference objects remain excluded from Join and linked duplication
+- editable-object lock behavior is unchanged
+
+Linked-instance architecture from v0.36.18.343 remains protected.
 
 Mandatory audit result:
 - current main did not contain a live linked-instance implementation
@@ -269,10 +284,10 @@ Scene / modifiers:
 **Phase C — Object / instance workflow is next.**
 
 Recommended next build:
-- **linked-instance live robustness pass** after manual testing of .343
-- specifically test component Extrude / Inset / Move on a moved linked peer, then Undo/Redo and Make Unique
-- repair only concrete regressions found in the new manager-owned pathway
-- after linked editing is stable, continue to cross-object reference/edit workflows
+- **stronger multi-object editing audit**
+- inspect current Object Multi selection, transforms, Join/Boolean, grouping, duplication and any existing cross-object component-edit hooks before adding anything
+- preserve the now-tested linked-instance manager and permanent Reference-guide contract
+- prefer extending the authoritative Object/Multi pathway rather than adding a parallel multi-edit system
 
 Phase B completed precision slices:
 - Add Vertex cross-object snapping (.324)
@@ -290,6 +305,7 @@ Phase B completed precision slices:
 - Vertex toolbar / Build Edge handoff regression fixed (.341)
 - File menu fit + stable 3-column Face layout (.342)
 - linked-instance foundation + Make Unique (.343)
+- permanent read-only Reference guide workflow (.344)
 
 Keep existing Fill as the simple Cap and Grid Fill as the structured four-sided quad patch.
 
