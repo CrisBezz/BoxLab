@@ -25,6 +25,7 @@ Newest entries should be added at the top.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Refreshed `multi-object.js`, `object-management.js`, `boolean-ux-history.js`, `drawer-ui.js` and `index.html` cache pins.
 - Added regression coverage for in-Group primary promotion, explicit whole-Group context, amber Group tint, cage suppression and protected cache/transform pins.
+- Released from PR **#38**; squash merge commit: `7ab87d240569f71a6cdf82f79405411241db989e`.
 
 ## 2026-09-20 — v0.36.18.353 focused Rename + live Group header refresh
 
