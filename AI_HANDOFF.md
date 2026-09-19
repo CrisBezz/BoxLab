@@ -25,16 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.328**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **b924658f145e33a1194d05be374c2b20bafc808f**
-- Current code-bearing/release commit: **f731849f96b5808c986b6d46dc92e53c9f64f9c3**
-- v0.36.18.328 release PR: **#12**
-- Current `version.json`: **0.36.18.328**
+- Repository release: **v0.36.18.329**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **d96b0b4985a10e76f2a536e4b4c487e87ba435d7**
+- Current code-bearing/release commit: **6edb552a3219435f1a3a2de7cc9a47be46815c07**
+- v0.36.18.329 release PR: **#13**
+- PR topology regression: **35411656859** — success
+- Current `version.json`: **0.36.18.329**
+- Current main runtime pin remains: **main.js?v=0.36.18.326**
+- Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.329**
+- Existing Make Planar remains: **make-planar.js?v=0.36.18.93** via `face-workflow-layout.js`
 - Precision Face implementation pin: **precision-face.js?v=0.36.18.327**
 - Repeat Previous implementation pin: **repeat-face-previous.js?v=0.36.18.327**
-- **Authoritative loader for both modules: `drawer-ui.js` only**
-- Direct `index.html` loading of Precision Face / Repeat Previous is prohibited to avoid duplicate UI instantiation
-- Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Current Add Vertex pin: **add-vertex-edge-snap.js?v=0.36.18.324**
 - Current Clean for SubD pin: **quad-clean.js?v=0.36.18.323**
 - Current component multi-select initializer pin: **component-multi-init.js?v=0.36.18.314**
@@ -44,28 +45,35 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.328
+## Latest completed development — v0.36.18.329
 
-Theme: **remove the duplicate Repeat UI introduced by the unnecessary .327 reconnect**.
+Theme: **component Align X / Y / Z after existing-feature audit**.
 
-Root cause:
-- `drawer-ui.js` already dynamically loaded `precision-face.js` and `repeat-face-previous.js`
-- v0.36.18.327 also added direct module loads in `index.html`
-- both modules executed twice, creating duplicate UI/handlers
+Audit result:
+- Face **Make Planar** already existed and already handles arbitrary-plane flattening of one selected Face
+- therefore no second generic “Flatten Face” tool was added
 
-Fix:
-- removed direct `index.html` loads
-- retained `drawer-ui.js` as the single authoritative loader
-- updated its dynamic import pins to the current .327 implementations
-- added a regression contract that asserts one loader path only
+New capability:
+- Align X
+- Align Y
+- Align Z
 
-Important:
-- Repeat Extrude / Repeat Inset were existing user-facing features before .327
-- .327 should not be treated as the origin of Repeat functionality
-- .328 restores the intended single Repeat UI implementation
-- Repeat exact-value behavior is preserved
-- Through exclusion remains preserved
-- future work must audit existing/dynamic loaders before adding module tags
+The new Align utility works on Vertex / Edge / Face selections by gathering the unique vertices belonging to the selected components and setting the chosen axis coordinate to the average selected coordinate.
+
+Behavior:
+1. works in Vertex / Edge / Face modes
+2. hidden in Object mode
+3. preserves current component selection
+4. commits as one Undo history step
+5. does not alter unrelated coordinates
+6. does not replace or duplicate Make Planar
+
+Implementation:
+- `src/component-align-core.js`
+- `src/component-align.js`
+- loaded once through `drawer-ui.js`
+
+Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ## Current Clean for SubD pipeline
 
@@ -214,21 +222,17 @@ Scene / modifiers:
 
 **Phase B — Precision Modelling remains active.**
 
-Before any next feature work, follow the mandatory existing-feature audit in `AI_WORKFLOW.md`, including dynamic imports such as `drawer-ui.js`.
-
 Completed precision slices:
 - Add Vertex cross-object snapping (.324)
 - component Move cross-object snapping (.325)
 - live component Move ΔX/ΔY/ΔZ readback (.326)
-- Repeat Extrude / Repeat Inset were already established before .327
-- .327 unnecessarily reintroduced/versioned the existing Repeat UI path
-- .328 removed the duplicate loader and restored a single Repeat UI implementation
+- Repeat UI duplication corrected (.328)
+- component Align X/Y/Z (.329), while retaining existing Make Planar
 
 Recommended next build:
-- **Align / Flatten component tools**, but first search the current source/UI/dynamic imports for any existing Align/Flatten implementation or equivalent
+- **Circle / regularize selected components**, but perform the mandatory existing-feature audit first for circle / regularize / relax / spacing equivalents
 
 Other Phase B priorities remain:
-- Circle / regularize selected components
 - Edge Flip
 - stronger structured Fill / Grid Fill / Cap workflows
 - support-loop construction improvements
