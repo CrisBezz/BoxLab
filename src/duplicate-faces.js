@@ -46,7 +46,7 @@ button.title='Duplicate selected Faces into a new object';
 function place(){
   const row=extractButton?.parentElement;
   if(!row)return false;
-  row.style.gridTemplateColumns='repeat(4,minmax(0,1fr))';
+  row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
   if(button.parentElement!==row)extractButton.insertAdjacentElement('afterend',button);
   return true;
 }
