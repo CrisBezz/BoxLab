@@ -628,6 +628,7 @@ function installViewportActivation() {
 function installRenderObserver() {
   if (THREE.Group.prototype.__boxlabMultiObjectInstalled) return;
   const baseAdd = THREE.Group.prototype.add;
+  const groupSuppressedKinds=new Set(['edge','vertex','mirror-edge','edge-selection-overlay']);
   THREE.Group.prototype.add = function (...items) {
     const body = items.find(item => item?.userData?.kind === 'body');
     const activeSource = body ? state()?.mesh : null;
@@ -637,8 +638,8 @@ function installRenderObserver() {
       saveActive();
       body.visible = activeShouldShow();
     } else if (this === activeRoot) {
-      const show = activeShouldShow();
-      for (const item of items) if (item?.userData?.kind !== 'boxlab-inactive-body') item.visible = show;
+      const show = activeShouldShow(),groupContext=globalThis.__boxlabObjectSelection?.wholeGroupId!=null;
+      for (const item of items) if (item?.userData?.kind !== 'boxlab-inactive-body') item.visible = show && !(groupContext&&groupSuppressedKinds.has(item?.userData?.kind));
     }
 
     const result = baseAdd.apply(this, items);
@@ -665,6 +666,7 @@ function installRenderObserver() {
       globalThis.__boxlabRenderModes?.refreshStudio?.();
       activeSource?.edges?.();
       queueOutliner();
+      queueMicrotask(()=>globalThis.__boxlabBooleanUX?.sync?.());
     }
     return result;
   };
