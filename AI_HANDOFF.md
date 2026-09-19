@@ -25,17 +25,17 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.350**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **42b36a8b5676fd08a92eaed96d9b5d8524e7174f**
-- Current code-bearing/release commit: **11843516865bfcb50aa4d5686d7405611ba567e0**
-- v0.36.18.350 release PR: **#34**
+- Repository release candidate: **v0.36.18.351**
+- Current documentation HEAD: **v0.36.18.351 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.351 PR branch; pending merge**
+- v0.36.18.351 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**n: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.350**
+- Current `version.json`: **0.36.18.351**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.350**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.351**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.350**
+- Object management loader: **object-management.js?v=0.36.18.351**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -53,7 +53,32 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.350
+## Latest completed development — v0.36.18.351
+
+Theme: **authoritative Group ownership + Boolean UI decoupling**.
+
+Critical bug fixed:
+- legacy `object-origin.js` was still mutating group membership and only adding per-object `G#` tags
+- the newer Object Management hierarchy was not notified, so Group Selection could appear to do nothing
+- Object Management now owns Group/Ungroup mutation and hierarchy refresh in one pathway
+- legacy origin/transform code delegates Group/Ungroup and no longer owns visible group tags
+
+Boolean UI cleanup:
+- generic two-object Multi selection is now visually neutral
+- no automatic amber/blue Outliner borders/badges
+- no automatic viewport A/B tint
+- no Boolean drawer forcing itself open merely because two objects are selected
+- Boolean A/B names remain inside the Boolean operand controls; Boolean geometry behavior is unchanged
+
+Protected behavior:
+- compact Group hierarchy from .350 preserved
+- first-class Group selection / Rename preserved
+- Group metadata history preserved
+- automatic Group transforms preserved
+- linked instances and Reference protection preserved
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.350
 
 Theme: **compact Group tree UX**.
 
@@ -398,12 +423,12 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **compact Outliner polish / user-test response**
-- first respond to user testing of the .350 compact Group tree
-- inspect whether object rows themselves should inherit the same denser scene-tree treatment without harming touch targets
-- consider a compact object More menu only if it reduces clutter without duplicating existing Object actions
-- preserve first-class Group selection, contextual Group creation and history-safe Group state actions
-- preserve existing automatic Group transforms, linked instances and Reference protection
+- **user-test the repaired Group creation + compact hierarchy first**
+- verify Group Selection creates a visible compact Group row immediately
+- verify normal two-object selection stays neutral until a Boolean action is intentionally used
+- then continue compact Outliner polish based on the user's screenshot feedback
+- preserve the new single Group ownership pathway; do not reintroduce legacy per-object `G#` tags
+- preserve automatic Group transforms, linked instances and Reference protection
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
 Completed Phase C slices now include:
@@ -413,7 +438,8 @@ Completed Phase C slices now include:
 - unified Join / Boolean Object scene history (.347)
 - persistent Group organization metadata (.348)
 - first-class Group selection / Rename UX (.349)
-- compact Group tree + history-safe group state actions (.350)
+- compact Group tree + history-safe state actions (.350)
+- authoritative Group ownership + Boolean A/B decoupling (.351)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 

@@ -58,9 +58,11 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] custom group names survive scene Undo/Redo and group rename is one Undo step
 - [ ] selecting one complete group enables the normal Rename button as Rename Group
 - [ ] selected group header is visibly distinct and its name acts as the primary group selection target
+- [ ] Group Selection immediately creates the visible hierarchy row; it must not merely stamp per-object group IDs/tags
 - [ ] compact Group tree keeps Group Selection contextual: the creation control is hidden unless 2+ groupable objects are selected
 - [ ] compact Group header uses disclosure + name + visibility + lock + More without expanding drawer height unnecessarily
 - [ ] Group More menu Rename/Ungroup works while the normal Rename Group pathway remains available
+- [ ] ordinary two-object Multi selection remains visually neutral; Boolean A/B colour treatment stays inside the Boolean workflow rather than taking over the Outliner
 - [ ] group visibility and lock each Undo/Redo as one Object scene-history step
 - [ ] group header direct Ungroup works without breaking normal Group Selection / Multi behavior
 - [ ] collapsed/expanded group state survives scene Undo/Redo when the group still exists

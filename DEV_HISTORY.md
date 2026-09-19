@@ -8,6 +8,22 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.351 Group ownership + Boolean UI cleanup
+
+- User reported that the visible Group Selection button did not actually produce the compact Group hierarchy and that the amber/blue Boolean A/B treatment still dominated the Object rows.
+- Root cause: legacy `object-origin.js` still owned Group/Ungroup mutation. It assigned `groupId` and added per-object `G#` tags, but did not notify the newer hierarchy renderer; therefore the compact Group row was never built.
+- `object-management.js` is now the authoritative owner of Group/Ungroup mutations as well as Group hierarchy presentation.
+- Added `__boxlabObjectGroups` API for Group Selection / Ungroup / Select / Rename / refresh.
+- Legacy `object-origin.js` now delegates Group/Ungroup and only consumes group membership for transform expansion; legacy `G#` row tags are removed.
+- Group Selection now updates the hierarchy immediately in the same action, so a newly formed Group becomes a visible compact Group row without waiting for an unrelated Outliner redraw.
+- Removed duplicate automatic history checkpointing on legacy Group buttons; authoritative Group API owns the single history step.
+- Generic two-object Multi selection no longer triggers Boolean A/B Outliner borders, operand badges, viewport tinting, or automatic drawer forcing.
+- Boolean A/B information remains in the Boolean operand controls and Boolean operations themselves are unchanged.
+- This allows two-object selection for Grouping, Join, transforms or other workflows to remain visually neutral.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `object-management.js`, `object-origin.js`, `boolean-ux-history.js`, `drawer-ui.js` and `index.html` cache pins.
+- Added regression coverage for authoritative Group ownership, legacy delegation, immediate hierarchy refresh, neutral generic Multi selection and protected transform/cache pins.
+
 ## 2026-09-20 — v0.36.18.350 compact Group tree
 
 - User supplied a dense scene/group hierarchy reference and reported the current Group UX still consumed too much vertical space.
