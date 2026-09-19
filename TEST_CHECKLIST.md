@@ -73,6 +73,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] compact Group tree keeps Group Selection contextual: the creation control is hidden unless 2+ groupable objects are selected
 - [ ] compact Group header uses disclosure + name + visibility + More; Lock / Rename / Ungroup live inside More without expanding drawer height unnecessarily
 - [ ] compact object rows use name + visibility + More; Lock / Solo remain available inside More
+- [ ] Object / Group / footer More popovers open upward and remain visible above the drawer's lower edge
 - [ ] Group More menu Rename/Ungroup works while the normal Rename Group pathway remains available
 - [ ] exactly two selected objects show amber/blue viewport tint (active/primary amber, second blue) while the Outliner remains neutral unless Boolean-specific UI is in use
 - [ ] group visibility and lock each Undo/Redo as one Object scene-history step
