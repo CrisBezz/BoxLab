@@ -33,6 +33,13 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Object / Multi
 
+- [ ] ordinary Duplicate stays independent and does not share geometry
+- [ ] Linked Duplicate creates a second editable object that shares source geometry but keeps independent Object-mode placement
+- [ ] moving / rotating / scaling one linked instance in Object mode does not move the others
+- [ ] component edits on one linked instance propagate to all linked peers in their own placements
+- [ ] Make Unique detaches only the active linked instance; later edits no longer propagate between it and the former link group
+- [ ] Linked Duplicate / Make Unique survive Object-mode Undo/Redo with link metadata intact
+- [ ] Join produces a unique combined result even if one input was linked
 - [ ] object creation works
 - [ ] switching active object works
 - [ ] duplicate works
