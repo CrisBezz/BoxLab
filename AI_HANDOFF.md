@@ -25,14 +25,14 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.336**
+- Repository release: **v0.36.18.337**
 - Current documentation HEAD before this final `AI_HANDOFF.md` update: **c5c236852791147eeee62f3c7f710b2e73da57a2**
-- Current code-bearing/release commit: **586efff69f7d1565ff5687c296e183143b0566c7**
-- v0.36.18.336 release PR: **#20**
+- Current code-bearing/release commit: **72f1847dad79b15955a4f406b273b60b44b4ee9f**
+- v0.36.18.337 release PR: **#21**
 - PR topology regression: **35416581512** — success
-- Current `version.json`: **0.36.18.336**
+- Current `version.json`: **0.36.18.337**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.336**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.337**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
 - Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.336**
 - Component Circle core: **component-circle-core.js?v=0.36.18.333**
@@ -48,9 +48,9 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen at v0.36.18.323. Phase B — Precision Modelling — is active.
 
-## Latest completed development — v0.36.18.336
+## Latest completed development — v0.36.18.337
 
-Theme: **exact Circle placement inside per-mode Active Tools**.
+Theme: **existing Rotate Edge consolidated as Flip Edge after mandatory feature audit**.
 
 Existing-feature audit result:
 - no current Circle / Regularize tool existed
@@ -247,9 +247,11 @@ Completed precision slices:
 - Circle moved from Selection into contextual Active Tools (.334)
 - Face Split restored under canonical additive Multi (.335)
 - Circle exact per-mode Active Tools layout (.336)
+- existing Rotate Edge audited as Edge Flip and consolidated under the Flip Edge label (.337)
 
 Recommended next build:
-- **Edge Flip** for manual topology-flow correction, after the mandatory existing-feature audit for rotate-edge / diagonal-swap equivalents
+- **Grid Fill** for a conservative structured closed-boundary fill workflow, after the mandatory existing-feature audit
+- existing **Fill** already functions as a single-face Cap for one selected closed edge loop, so do not duplicate Cap
 
 Other Phase B priorities remain:
 - stronger structured Fill / Grid Fill / Cap workflows
