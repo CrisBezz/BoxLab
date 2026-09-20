@@ -8,6 +8,24 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.362 linked-instance placement stability
+
+- User reported linked instances could be moved and modelled independently, but selecting a different peer caused them to jump together and lose independent placement.
+- Root cause was a split source-of-truth problem between cached evaluated world meshes and shared source + instanceMatrix state.
+- In Object mode, `saveActive()` still first attempts to recover a placement matrix from shared source → live mesh.
+- If placement recovery succeeds, only that instance's `instanceMatrix` is updated.
+- If placement recovery fails, BoxLab now treats the live mesh as a shared-geometry edit at the existing instance placement:
+  - transforms live world mesh back through the current instance matrix
+  - updates the shared local source
+  - increments source revision
+  - regenerates linked peers from shared source × each peer's own instanceMatrix
+- Activating a linked object now regenerates its world mesh from shared source × instanceMatrix before loading it into the live mesh.
+- Inactive linked rendering also regenerates from shared source × instanceMatrix rather than trusting stale cached world geometry.
+- Intended contract is now explicit: **shared geometry, independent placement**.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for placement fallback, activation regeneration, inactive rendering and protected pins.
+
 ## 2026-09-20 — v0.36.18.361 per-object Outliner SubD toggle
 
 - Added a compact per-object **S** button to each editable Object row.
