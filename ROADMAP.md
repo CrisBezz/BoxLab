@@ -69,7 +69,7 @@ Priority candidates:
 - Join/Boolean workflow polish — **v0.36.18.347 consolidates both workflows onto the authoritative Object scene-history bridge; legacy parallel Boolean Undo/Redo wrapper removed while A/B UX, hidden originals, unique results, linked-instance metadata and Reference exclusions are preserved**
 - persistent object/region organization — **v0.36.18.348 makes Group metadata persistent; v0.36.18.349 makes Groups first-class; v0.36.18.350 compacts the tree; v0.36.18.351 centralizes Group ownership; v0.36.18.352 restores two-object viewport feedback + compact naming; v0.36.18.353 fixes focused Rename/live header refresh; v0.36.18.354 adds whole-Group visual context; v0.36.18.355 fixes grouped transform routing; v0.36.18.356 compacts Object/Group rows; v0.36.18.357–.358 harden upward More popovers; v0.36.18.359 restores per-object Delete and adds keyboard Delete/Backspace.; v0.36.18.360 makes Origin/Pivot contextual and compacts the Object Selection toolbar.; v0.36.18.361 adds direct per-object SubD Preview toggles to compact Outliner rows.**
 
-- Group Boolean convenience — **future polish item:** allow two complete Groups to act as Boolean operands by building temporary compound meshes through the existing Join → Boolean pathway; preserve original Groups for Undo/history rather than introducing a new Group geometry type.
+- Group Boolean convenience — **v0.36.18.368:** two complete Groups can act as Boolean A/B operands through temporary compound meshes built with the existing Join helper; no Group geometry type is introduced, and source Groups remain intact/hidden for Undo.
 
 ## Phase D — Construction tools
 
