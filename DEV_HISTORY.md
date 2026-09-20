@@ -8,6 +8,18 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.374 Solidify hard-fold offset + live preview
+
+- User confirmed Solidify worked on flat sheets but reported incorrect thickness around a 90° multi-sheet fold.
+- Root cause: the .372 core used a normalized averaged vertex normal, which under-offsets each source plane at hard folds.
+- Replaced hard-fold displacement with offset-plane intersection / miter solving.
+- Added an explicit 90° two-quad regression fixture requiring full requested thickness to both source planes.
+- Added conservative guards for opposed folds, singular plane systems and excessive miters.
+- Solidify now uses a two-stage preview workflow: Solidify → live preview; Thickness slider updates non-destructively; Apply Solidify commits.
+- Preview cancellation occurs when leaving Object mode or changing active object.
+- Preview does not push history or mutate live geometry; final commit remains one Object-scene history step.
+- Frozen `/beta-3/` remains unchanged.
+
 ## 2026-09-20 — v0.36.18.373 visible-version ownership fix
 
 - User observed live main apparently reverting to **v0.36.1.0**.
