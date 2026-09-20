@@ -8,6 +8,20 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — Beta 3 frozen and published
+
+- User completed the v0.36.18.371 hands-on iPad release gate with a **BIG PASS**.
+- Frozen Beta 3 is an exact checkpoint of the approved v0.36.18.371 code-bearing release commit:
+  - release commit: `c17fb0f996f406449975a1add5b774eadc30e529`
+  - freeze PR: **#55**
+  - freeze merge commit: `a227042e2bd2972c96361aedf7840bdcc62c78bb`
+- `/beta-3/` was created by reusing the approved release commit's blob/tree SHAs, not by rewriting runtime files.
+- Frozen checkpoint contains the approved app assets and source tree, including `index.html`, styles/assets, `src/`, `docs/`, `tests/`, package/version files and the Beta 3 release checklist.
+- Live main runtime was not changed by the freeze operation.
+- Public checkpoint URL: `https://crisbezz.github.io/BoxLab/beta-3/`
+- Frozen Beta 3 should now be treated as immutable except for an explicitly approved emergency release fix.
+- Phase D / post-Beta-3 development may resume on live `main`.
+
 ## 2026-09-20 — v0.36.18.371 Beta 3 release candidate
 
 - Entered Beta 3 release-candidate hardening after user confirmation that v0.36.18.369 Group Boolean works.
