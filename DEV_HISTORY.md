@@ -16,7 +16,7 @@ Newest entries should be added at the top.
 - The top-bar version label now carries an explicit release-shell version stamp.
 - `release-version.js` uses that shell value immediately and its existing observer reasserts the real app version if any older module mutates the label later.
 - `version.json` remains the network/source-of-truth confirmation path.
-- Phase D Solidify from .372 is unchanged.
+- Phase D Solidify from .372 is unchanged.\n- Released from PR **#57**; squash merge commit: `3a7139dabc09731ffb29bb952c15ef1bb276559f`.\n- PR Topology regression passed in workflow run **35502647303**.
 
 ## 2026-09-20 — v0.36.18.372 Phase D Solidify foundation
 
