@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-20.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.376 — Solidify Active Tools drawer lock**
+- Current live development build: **v0.36.18.377 — closed-solid Shell with selected-face openings**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **77eab5bb8e441f5ce93801963c432dcf2f12bd86**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -35,14 +35,15 @@ Audited from current `main` on 2026-09-20.
 - Previous v0.36.18.372 PR: **#56**
 - Previous v0.36.18.373 PR: **#57**
 - Previous v0.36.18.374 PR: **#58**
-- Previous v0.36.18.375 PR: **#59**\n- Current v0.36.18.376 PR: **#60**
+- Previous v0.36.18.375 PR: **#59**
+- Current v0.36.18.376 PR: **#60**
 - Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35506658206**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.376**
-- Current Phase D loader: **solidify.js?v=0.36.18.376** → `solidify-core.js?v=0.36.18.374`
+- Current `version.json`: **0.36.18.377**
+- Current Phase D loaders: **solidify.js?v=0.36.18.377** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.377** → `shell-core.js?v=0.36.18.377` → shared Solidify core
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -65,7 +66,22 @@ Audited from current `main` on 2026-09-20.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.376
+## Latest completed development — v0.36.18.377
+
+Theme: **closed-solid Shell with selected Face openings**.
+
+- Added Face > Active Tools > **Shell** as the closed-solid companion to Object > Solidify.
+- Shell uses the authoritative Face selection bridge already used by Extract/Duplicate.
+- One or more selected Faces are removed as openings; the remaining closed-solid skin is compacted into an open sheet and passed through the existing .374 Solidify offset engine.
+- Thickness offsets inward using the same hard-fold plane-intersection/miter solver already proven by Solidify.
+- Adjacent selected Faces can form a larger connected opening.
+- Input must be a closed manifold solid; open sheets, loose topology, empty selections and selecting every Face are refused before live mutation.
+- Shell preview is non-destructive and uses **Shell Thickness** before **Apply Shell** commits.
+- Apply Shell owns one Object scene-history checkpoint, saves through Object Manager, clears stale Face selection after compaction, and validates the final result as closed/manifold.
+- Active Tools uses the same keep-open contract during Shell preview so Apply Shell stays accessible.
+- Frozen Beta 3 remains untouched.
+
+## Previous completed development — v0.36.18.376
 
 Theme: **keep Active Tools available throughout interactive Solidify**.
 
