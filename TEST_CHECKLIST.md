@@ -62,6 +62,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Boolean results use compact B numbering (B1, B2, B3…) from the active/base object name instead of concatenating operand names
 - [ ] Join works
 - [ ] multi-object selection/management works
+- [ ] Object Selection toolbar stays in a compact five-button strip with readable status text
 - [ ] grouped Outliner hierarchy preserves group membership through Object Undo/Redo
 - [ ] custom group names survive scene Undo/Redo and group rename is one Undo step
 - [ ] Group Rename immediately updates the visible Group header and opens focused with the current name selected

@@ -38,6 +38,16 @@ function installGroupUiPolish() {
 #objectGroupTools [data-group-action="ungroup"]{display:none!important}
 #objectGroupTools button{width:100%;min-height:30px;font-size:11px;padding:4px 8px!important}
 #objectGroupTools button[disabled]{display:none!important}
+#objectOriginTools,#objectPivotTools{gap:3px!important;margin:3px 0!important;align-items:center!important}
+#objectOriginTools{grid-template-columns:40px repeat(3,minmax(0,1fr))!important}
+#objectPivotTools{grid-template-columns:40px repeat(4,minmax(0,1fr))!important}
+#objectOriginTools>span,#objectPivotTools>span{font-size:10px!important;opacity:.58!important;padding:0!important}
+#objectOriginTools button,#objectPivotTools button{min-height:30px!important;padding:3px 5px!important;font-size:10.5px!important;border-radius:7px!important}
+.boxlab-object-multi-context #objectOriginTools{display:none!important}
+.boxlab-object-single-context #objectPivotTools{display:none!important}
+#selectionDrawer #objectManagementTools{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:3px!important;margin:3px 0 4px!important}
+#selectionDrawer #objectManagementTools button{min-height:30px!important;padding:3px 4px!important;font-size:10.5px!important;border-radius:7px!important}
+#selectionDrawer #objectManagementTools .object-management-count{font-size:10px!important;line-height:1.2!important;padding:1px 2px 0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
 .boxlab-group-tag{font-size:9px!important;line-height:1!important;padding:2px 4px!important;border:0!important;border-radius:5px!important;opacity:.45!important;margin-left:3px!important;background:rgba(255,255,255,.06)!important;letter-spacing:-.2px!important;pointer-events:none}
 `;
     document.head.appendChild(style);
@@ -50,7 +60,7 @@ function installGroupUiPolish() {
 
 syncDrawerToMode();
 
-import('./object-management.js?v=0.36.18.358').catch(error => console.warn('BoxLab object management failed to load', error));
+import('./object-management.js?v=0.36.18.360').catch(error => console.warn('BoxLab object management failed to load', error));
 import('./object-drawer-retain.js?v=0.36.1.4').catch(error => console.warn('BoxLab object drawer retain failed to load', error));
 import('./studio-scene-fix.js?v=0.36.18.197').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
 import('./lasso-select.js?v=0.36.18.152').catch(error => console.warn('BoxLab Lasso Select failed to load', error));

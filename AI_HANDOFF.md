@@ -25,18 +25,18 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.359**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **9813fafff5fb403fb704faf7c74f2106dd2d453e**
-- Current code-bearing/release commit: **d9da984e331e561dc2a490554df95eaf8f1e7f94**
-- v0.36.18.359 release PR: **#43**
+- Repository release candidate: **v0.36.18.360**
+- Current documentation HEAD: **v0.36.18.360 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.360 PR branch; pending merge**
+- v0.36.18.360 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.359**
+- Current `version.json`: **0.36.18.360**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.358**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.360**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.358**
+- Object management loader: **object-management.js?v=0.36.18.360**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -54,7 +54,25 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.359
+## Latest completed development — v0.36.18.360
+
+Theme: **contextual Object-mode controls**.
+
+UI behavior:
+- single-object selection shows compact Origin presets and hides Pivot controls
+- Multi / whole-Group selection shows compact Pivot controls and hides Origin presets
+- Object Selection actions are tightened into a five-button strip with a compact status line
+- all existing control IDs and handlers remain authoritative
+
+Protected behavior:
+- no changes to Origin/Pivot transform maths
+- no changes to Group selection or Group Move/Rotate/Scale
+- `object-origin.js?v=0.36.18.355` remains the protected Group transform baseline
+- compact Outliner / upward popovers / Delete shortcut remain unchanged
+- linked instances, Boolean behavior and Reference protection unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.359
 
 Theme: **restore discoverable Delete + hardware keyboard shortcut**.
 
@@ -595,12 +613,13 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .359 Delete restoration + keyboard shortcut**
-- verify each object-row More menu can delete that specific object
-- verify hardware Delete/Backspace works for single object, Multi selection and whole Group selection
-- verify Rename typing is never interrupted by Backspace/Delete
-- continue UI/UX polish after this is confirmed
-- later Phase C polish item: Group Boolean via temporary Join-derived compound operands, not a new Group geometry system
+- **user-test .360 contextual Origin/Pivot and compact Selection strip**
+- verify single-object context shows Origin only
+- verify Multi / whole Group shows Pivot only
+- verify Median / Active / Individual / World still behave exactly as before for Scale/Rotate
+- verify Selection toolbar remains comfortable with Pencil/finger
+- if confirmed, continue compact Object drawer polish or move to the queued Group Boolean convenience wrapper
+- Group Boolean should reuse temporary Join-derived compound operands and existing Boolean, not introduce a new Group geometry type
 - preserve `object-origin.js?v=0.36.18.355` unless a concrete Group regression requires changing it
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
@@ -620,6 +639,7 @@ Completed Phase C slices now include:
 - compact Object/Group Outliner rows + compact Object action footer (.356)
 - upward More popovers + Safari-resistant anchoring (.357–.358)
 - per-object Delete restoration + hardware Delete/Backspace (.359)
+- contextual Origin/Pivot + compact Object Selection strip (.360)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
