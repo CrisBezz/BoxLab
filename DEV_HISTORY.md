@@ -8,6 +8,28 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.366 authoritative live-mesh bridge timing
+
+- User confirmed .365 fixed ordinary object activation persistence, but two linked-instance regressions remained:
+  - Extrude showed all linked peers updating during preview, then the edit snapped back on commit
+  - changing from Object mode to Edge mode caused inactive objects to disappear
+- Root cause: `__boxlabBridgeState.mesh` was being published indirectly by `EditableMesh.edges()`.
+- The multi-object `THREE.Group.add(body)` hook calls `saveActive()` as soon as the new body is added.
+- On renders where the core lexical `mesh` had just been reassigned (notably direct Extrude / Inset preview), the bridge could still point at the previous mesh object when `saveActive()` ran.
+- Result: screen showed the new mesh, but linked save/propagation could commit the previous mesh and snap the shared source back.
+- Mode changes could likewise rebuild inactive linked geometry from stale bridge state.
+- `main.js::renderMesh()` now explicitly assigns:
+  - `globalThis.__boxlabBridgeState.mesh = mesh`
+  - before `clearGroup(root)`
+  - before the active body is created/added
+- Downstream modules therefore see the exact lexical mesh being rendered in that frame.
+- No linked-source algorithm was otherwise changed.
+- Persistent inactive scene layer from .365 remains in place.
+- Linked creation/propagation from .363 and touch isolation from .364 remain in place.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for publish-before-clear/body-add ordering and protected pins.
+
 ## 2026-09-20 — v0.36.18.365 persistent inactive-object scene layer
 
 - User confirmed .364 still failed immediately: the first finger activation left only the newly active object visible; all other objects remained in the Outliner but disappeared from the viewport.
