@@ -23,8 +23,8 @@ test('350 existing groups render as a compact tree row with a More menu',()=>{
 
 test('350 group visibility and lock each checkpoint Object scene history',()=>{
   const src=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
-  const at=src.indexOf("visible.textContent=allHidden?'○':'●'");
-  const visibility=src.slice(at,at+850);
+  const at=src.indexOf("visible.addEventListener('click'");
+  const visibility=src.slice(at,at+700);
   assert.match(visibility,/__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
   const lockAt=src.indexOf("menuLock.textContent=editableMembers.length?(allLocked?'Unlock':'Lock'):'Reference • Read Only'");
   const lock=src.slice(lockAt,lockAt+1200);
