@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.382 Phase D Linear Array foundation
+
+- Added Object-mode Linear Array using the existing linked-instance Object Manager path.
+- Count is total objects including the source; spacing is world-space; axes X/Y/Z are supported.
+- First tap arms a non-destructive translucent preview; Apply creates linked instances.
+- Apply uses one Object-scene history snapshot and reactivates the source.
+- Generated instance placement is committed through the existing live-mesh + saveActive instance derivation path rather than protected transform code.
+- Count/Spacing Pencil sliders use explicit Pencil mapping and late native Safari event protection.
+- Active Tools stays open while the preview is armed.
+- No edits to protected multi-object-transform, Through, Boolean, Solidify core or Shell core.
+
 ## 2026-09-21 — v0.36.18.381 Solidify preview backface visibility
 
 - User screenshots confirmed the remaining preview visibility issue was Solidify, not Shell.
