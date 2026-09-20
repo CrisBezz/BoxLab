@@ -24,6 +24,7 @@ Newest entries should be added at the top.
 - .366 authoritative live-mesh publication remains unchanged.
 - Protected `object-origin.js?v=0.36.18.355` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
 - Added regression coverage for OrbitControls pointer-up visibility, authoritative mode source, post-activation inactive rebuild and protected pins.
+- Released from PR **#51**; squash merge commit: `db74acc2c2069c16b583874c67f4051ba1310fc4`.
 
 ## 2026-09-20 — v0.36.18.366 authoritative live-mesh bridge timing
 
