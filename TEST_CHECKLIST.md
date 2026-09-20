@@ -249,6 +249,11 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Array Count includes the source object and produces Count-1 copies
 - [ ] Array supports X / Y / Z world axes
 - [ ] Array Spacing controls equal step distance between consecutive instances
+- [ ] direct viewport spacing drag works on any preview instance with Pencil/finger
+- [ ] grabbed later preview copies track the pointer while all instances remain equally spaced
+- [ ] direct Array spacing drag updates the Spacing slider/output continuously
+- [ ] OrbitControls pauses only during Array spacing drag and restores on release/cancel
+- [ ] camera-aligned array axes decline direct drag cleanly without breaking slider adjustment
 - [ ] first Array tap creates a non-destructive preview and Apply Array performs the commit
 - [ ] changing Count / Spacing / axis updates the preview without creating objects
 - [ ] Count and Spacing work with both finger and Apple Pencil without late native slider snap-back
