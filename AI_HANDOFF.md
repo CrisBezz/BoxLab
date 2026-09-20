@@ -27,20 +27,21 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-20.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.374 — Solidify hard-fold offset + live thickness preview**
+- Current live development build: **v0.36.18.375 — direct-drag Solidify thickness preview**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **85046592160df22d8bc12666ddd821cc1c44c13e**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
-- Previous v0.36.18.373 PR: **#57**\n- Current v0.36.18.374 PR: **#58**
+- Previous v0.36.18.373 PR: **#57**
+- Current v0.36.18.374 PR: **#58**
 - Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35503005511**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.374**
-- Current Phase D loader: **solidify.js?v=0.36.18.374** → `solidify-core.js?v=0.36.18.374`
+- Current `version.json`: **0.36.18.375**
+- Current Phase D loader: **solidify.js?v=0.36.18.375** → `solidify-core.js?v=0.36.18.374`
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -63,7 +64,21 @@ Audited from current `main` on 2026-09-20.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.374
+## Latest completed development — v0.36.18.375
+
+Theme: **direct-manipulation Solidify thickness**.
+
+- Solidify preview remains non-destructive, but Thickness can now be adjusted directly in the viewport.
+- Pencil/finger down on the translucent generated shell ray-picks the preview surface.
+- Drag distance is projected onto that picked face's screen-space normal, giving a spatial thicker/thinner gesture rather than a generic vertical slider gesture.
+- During direct thickness drag only, OrbitControls is temporarily disabled; release/cancel restores its previous enabled state.
+- Preview rebuilds continuously while dragging and the existing Thickness slider/output stays synchronized as the exact-value fallback.
+- Preview now shows only generated geometry (inner shell + boundary walls), leaving the source sheet visually distinct underneath.
+- Direct drag clamps to the existing Thickness control range and does not create history.
+- Apply Solidify remains the sole commit and remains one Object-scene history step.
+- The .374 hard-fold plane-intersection solver is unchanged.
+
+## Previous completed development — v0.36.18.374
 
 Theme: **Solidify hard-fold correctness + pre-commit thickness preview**.
 
