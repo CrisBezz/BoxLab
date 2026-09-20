@@ -25,10 +25,10 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release candidate: **v0.36.18.362**
-- Current documentation HEAD: **v0.36.18.362 PR branch; refresh after merge**
-- Current code-bearing/release commit: **v0.36.18.362 PR branch; pending merge**
-- v0.36.18.362 release PR: **pending**
+- Repository release: **v0.36.18.362**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **5b1d1c94cca8f6826dbd06f6fad70dafedefe8d6**
+- Current code-bearing/release commit: **8dcef36d789bf6d42bc092aa2897115789c636bd**
+- v0.36.18.362 release PR: **#46**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
 - Current `version.json`: **0.36.18.362**
