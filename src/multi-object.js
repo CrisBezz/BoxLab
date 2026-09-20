@@ -440,6 +440,8 @@ function activateObject(id, forceLocked = false) {
   clearComponentSelection();
   forceRender();
   renderOutliner();
+  queueMicrotask(()=>{ if(activeBody) rebuildInactiveLayer(activeBody); });
+  requestAnimationFrame(()=>{ if(activeBody) rebuildInactiveLayer(activeBody); });
   if (status) status.textContent = `${target.name} active`;
   return true;
 }
@@ -724,7 +726,7 @@ function installViewportActivation() {
     if (event.pointerType !== 'touch' || !touchTap || event.pointerId !== touchTap.pointerId) return;
     const candidate=touchTap;touchTap=null;
     if (candidate.cancelled || !candidate.objectMode || currentMode() !== 'object') return;
-    handleViewportActivation(event, true);
+    handleViewportActivation(event, false);
   }, true);
 
   canvas?.addEventListener('pointercancel', event => {
