@@ -2,11 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-test('352 exactly two selected objects restore amber blue viewport tint without Outliner takeover',()=>{
+test('352 exactly two selected objects keep amber blue viewport tint without Outliner takeover',()=>{
   const src=fs.readFileSync(new URL('../src/boolean-ux-history.js',import.meta.url),'utf8');
   const sync=src.slice(src.indexOf('function syncUI'),src.indexOf('function queueSelectionSync'));
-  assert.match(sync,/if\(e\.ok\)syncSelectionColours\(\)/);
   assert.match(sync,/markOutliner\(\{ok:false\}\)/);
+  assert.match(sync,/syncSelectionColours\(\)/);
+  assert.match(src,/else if\(ids\.size===2\)/);
   assert.match(src,/const COLOR_A=0xf3b34a,COLOR_B=0x5da9ff/);
 });
 
@@ -34,14 +35,14 @@ test('352 Boolean results use compact B numbering',()=>{
   assert.doesNotMatch(src,/\$\{e\.active\.name\} \$\{label\} \$\{e\.other\.name\}/);
 });
 
-test('352 release cache chain and protected transform pin remain intact',()=>{
+test('352 current release cache chain and protected transform pin remain intact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/multi-object\.js\?v=0\.36\.18\.352/);
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.352/);
-  assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.352/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.352/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.352/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.352/);
+  assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
+  assert.match(index,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.369/);
+  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.369/);
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
+  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.368/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
