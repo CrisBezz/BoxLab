@@ -302,7 +302,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## UI / release integrity
 
-- [ ] visible app version matches intended release
+- [ ] visible app version matches intended release\n- [ ] protected multi-object-transform legacy v0.36.1.0 stamp cannot override the current release label/title
 - [ ] module cache pins changed only where intended
 - [ ] `styles.css?v=0.36.18.270` remains pinned unless deliberately changed
 - [ ] `src/multi-object-transform.js?v=0.36.1.0` remains untouched unless deliberately changed
