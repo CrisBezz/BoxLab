@@ -28,6 +28,8 @@ Newest entries should be added at the top.
   - no-service-worker release policy
 - Beta 3 scope freeze: fix only reproducible release-blocking regressions until the checkpoint is frozen.
 - Planned frozen URL after user approval: `https://crisbezz.github.io/BoxLab/beta-3/`.
+- PR **#54** Topology regression passed (`npm test`, workflow run **35495835508**) before merge.
+- Released from PR **#54**; squash merge commit: `c17fb0f996f406449975a1add5b774eadc30e529`.
 
 ## 2026-09-20 — v0.36.18.369 shell-by-shell Group Boolean + persistent Swap drawer
 
