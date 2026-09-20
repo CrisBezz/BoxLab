@@ -19,7 +19,7 @@ Newest entries should be added at the top.
 - Existing crease weights are mirrored to the inner shell.
 - One authoritative Object scene-history checkpoint owns the operation; existing Object Manager save/linked propagation pathway is reused.
 - Frozen `/beta-3/` remains untouched.
-- Next Phase D slice: closed-solid Shell with selected-face removal, built on this same thickness core.
+- Next Phase D slice: closed-solid Shell with selected-face removal, built on this same thickness core.\n- Released from PR **#56**; squash merge commit: `537c83069b749ff8ad8ed7a8887f7dc3e7f5b37a`.\n- PR Topology regression passed in workflow run **35501284867**.
 
 ## 2026-09-20 — Beta 3 frozen and published
 
