@@ -4,6 +4,7 @@ import fs from 'node:fs';
 
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const shell=fs.readFileSync(new URL('../src/shell.js',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 test('378 Shell Pencil thickness runtime is pinned',()=>{
   assert.match(index,/shell\.js\?v=0\.36\.18\.378/);
