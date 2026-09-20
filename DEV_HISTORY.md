@@ -18,6 +18,8 @@ Newest entries should be added at the top.
 - Slider remains synchronized and available when the axis is too camera-aligned for a stable screen drag.
 - No history is created during preview drag; Apply Array remains one scene-history operation.
 - Next task is inward/negative Face Extrude cutting behavior.
+- Released from PR **#67**; squash merge commit: `5babe7eb2905fe12907d0a6edc61b02d495cba73`.
+- Final Topology regression passed in workflow run **35545622459**.
 
 ## 2026-09-21 — v0.36.18.382 Phase D Linear Array foundation
 
