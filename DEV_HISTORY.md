@@ -8,6 +8,26 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.365 persistent inactive-object scene layer
+
+- User confirmed .364 still failed immediately: the first finger activation left only the newly active object visible; all other objects remained in the Outliner but disappeared from the viewport.
+- Root cause is architectural: inactive object meshes were being injected directly into the same core modelling `root` group that `renderMesh()` destroys with `clearGroup(root)` on every rebuild.
+- That made inactive visibility depend on the monkey-patched `root.add(body)` hook re-inserting all inactive meshes at exactly the right moment after every active switch.
+- Inactive objects now live in a dedicated persistent scene sibling:
+  - `BoxLab Inactive Objects`
+  - attached directly to the scene
+  - not a child of the core modelling root
+- Every active body rebuild now refreshes this dedicated layer rather than injecting peers into `root`.
+- `clearInactiveLayer()` explicitly removes/disposes the old inactive meshes before rebuilding.
+- Core `renderMesh()` is free to clear/rebuild its modelling root without deleting inactive object bodies.
+- Ray-picking remains valid because `inactiveBodies` still tracks the scene-layer meshes directly.
+- Studio/render modes still apply to each inactive body and Studio bounds continue to include `boxlab-inactive-body`.
+- Linked propagation and atomic linked creation from .363 remain unchanged.
+- Touch event isolation from .364 remains unchanged.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for persistent scene-layer ownership, rebuild behavior, linked propagation retention and protected pins.
+
 ## 2026-09-20 — v0.36.18.364 touch object activation render-race fix
 
 - User confirmed .363 restored linked edit propagation, but finger-tapping a different object still made every non-tapped linked peer disappear from the viewport while their Outliner rows remained.
