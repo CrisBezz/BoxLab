@@ -28,10 +28,10 @@ test('362 inactive linked rendering also regenerates from source times instance 
   assert.match(block,/object\.mesh=evaluated/);
 });
 
-test('362 protected Group transform baseline remains untouched',()=>{
+test('362 current linked runtime and protected Group transform baseline remain pinned',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/multi-object\.js\?v=0\.36\.18\.362/);
+  assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

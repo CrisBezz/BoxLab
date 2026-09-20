@@ -20,7 +20,7 @@ test('347 Boolean UX no longer wraps the global mesh Undo Redo stack',()=>{
 
 test('347 Boolean result stays unique while only selected operands are hidden',()=>{
   const boolean=fs.readFileSync(new URL('../src/boolean-prototype.js',import.meta.url),'utf8');
-  assert.match(boolean,/e\.active\.visible=false;e\.other\.visible=false/);
+  assert.match(boolean,/for\(const object of originals\)object\.visible=false/);
   assert.match(boolean,/addMesh\?\.\(result\.mesh/);
   assert.doesNotMatch(boolean,/sourceId:/);
   assert.match(boolean,/Reference objects cannot be Boolean operands/);
@@ -29,5 +29,5 @@ test('347 Boolean result stays unique while only selected operands are hidden',(
 test('347 protected multi-object transform pin remains untouched',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
-  assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.347/);
+  assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.369/);
 });

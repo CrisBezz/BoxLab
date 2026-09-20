@@ -8,6 +8,27 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.371 Beta 3 release candidate
+
+- Entered Beta 3 release-candidate hardening after user confirmation that v0.36.18.369 Group Boolean works.
+- No new modelling feature was added.
+- App/version metadata advanced to **v0.36.18.371**; .370 remains an abandoned, unmerged experimental branch.
+- Added `BETA3_RELEASE_CHECKLIST.md` as the persistent hands-on release gate for iPad Safari.
+- Added `tests/beta3-release-candidate-371.test.mjs` to guard the release-sensitive architecture and frozen pins:
+  - linked-instance/navigation baseline `multi-object.js?v=0.36.18.367`
+  - persistent inactive-object scene layer
+  - authoritative selection-mode bridge
+  - authoritative live-mesh publication before render rebuild
+  - protected Group transform `object-origin.js?v=0.36.18.355`
+  - protected `multi-object-transform.js?v=0.36.1.0`
+  - fresh-load component Multi `component-multi-init.js?v=0.36.18.314`
+  - mature Through loader pins
+  - Clean for SubD `quad-clean.js?v=0.36.18.339`
+  - Group Boolean compound path from .369
+  - no-service-worker release policy
+- Beta 3 scope freeze: fix only reproducible release-blocking regressions until the checkpoint is frozen.
+- Planned frozen URL after user approval: `https://crisbezz.github.io/BoxLab/beta-3/`.
+
 ## 2026-09-20 — v0.36.18.369 shell-by-shell Group Boolean + persistent Swap drawer
 
 - User test of .368 showed Group selection/A-B assignment worked, but Cut failed topology validation with boundary/non-manifold edges.

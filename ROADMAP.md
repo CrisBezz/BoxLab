@@ -71,6 +71,10 @@ Priority candidates:
 
 - Group Boolean convenience — **v0.36.18.368–.369:** two complete Groups can act as Boolean A/B operands; .369 replaces the naive disconnected Join operand with a shell-by-shell compound Boolean path, while source Groups remain intact/hidden for Undo.
 
+### Beta 3 release-candidate hardening
+
+**v0.36.18.371** is the Beta 3 release candidate. No new modelling features are to be added until the release gate in `BETA3_RELEASE_CHECKLIST.md` is completed. Release-blocking regressions may be fixed narrowly; otherwise the approved .371 tree will be frozen to `/beta-3/`.
+
 ## Phase D — Construction tools
 
 Only add focused tools that suit BoxLab:

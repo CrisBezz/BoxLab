@@ -7,7 +7,8 @@ test('354 selecting a whole Group promotes an in-group primary when needed',()=>
   assert.match(src,/function ensureGroupPrimary\(members\)/);
   assert.match(src,/if\(members\.some\(o=>o\.id===activeId\(\)\)\)return/);
   assert.match(src,/manager\(\)\?\.activate\?\.\(target\.id,true\)/);
-  assert.match(src,/function selectGroup\(groupId\)\{const members=groupMembers\(groupId\);ensureGroupPrimary\(members\)/);
+  assert.match(src,/function selectGroup\(groupId,\{additive=false\}=\{\}\)/);
+  assert.match(src,/if\(!additive\)\{ensureGroupPrimary\(members\)/);
 });
 
 test('354 whole Group selection is exposed as an explicit selection context',()=>{
@@ -21,7 +22,7 @@ test('354 selected Group is amber and ordinary two-object Multi stays amber blue
   const src=fs.readFileSync(new URL('../src/boolean-ux-history.js',import.meta.url),'utf8');
   const block=src.slice(src.indexOf('function syncSelectionColours'),src.indexOf('function syncUI'));
   assert.match(block,/wholeGroupId=sel\?\.wholeGroupId\?\?null/);
-  assert.match(block,/if\(wholeGroupId!=null\)/);
+  assert.match(block,/else if\(wholeGroupId!=null\)/);
   assert.match(block,/applyBodyTint\(findBodyForObject\(id,id===activeId\),COLOR_A\)/);
   assert.match(block,/else if\(ids\.size===2\)/);
   assert.match(block,/COLOR_B/);
@@ -35,13 +36,13 @@ test('354 active member cage and verts are suppressed while whole Group context 
   assert.match(src,/queueMicrotask\(\(\)=>globalThis\.__boxlabBooleanUX\?\.sync\?\.\(\)\)/);
 });
 
-test('354 cache chain and protected transform pin remain intact',()=>{
+test('354 current cache chain and protected transform pin remain intact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/multi-object\.js\?v=0\.36\.18\.354/);
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.354/);
-  assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.354/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.354/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.354/);
+  assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
+  assert.match(index,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.369/);
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
+  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.368/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

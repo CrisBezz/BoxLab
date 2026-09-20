@@ -33,8 +33,8 @@ test('346 manager linked duplicate helper preserves source link, placement and v
   const block=src.slice(src.indexOf('function linkedDuplicateObject('),src.indexOf('function saveActive()'));
   assert.match(block,/ensureLinkedSource\(sourceObject\)/);
   assert.match(block,/visible:sourceObject\.visible!==false/);
-  assert.match(block,/copy\.sourceId=sourceObject\.sourceId/);
-  assert.match(block,/setInstanceMatrix\(copy,matrixForInstance\(sourceObject\)\)/);
+  assert.match(block,/sourceId:sourceObject\.sourceId/);
+  assert.match(block,/instanceMatrix:placement\.elements/);
 });
 
 test('346 Multi Make Unique detaches only selected linked objects in one history step',()=>{

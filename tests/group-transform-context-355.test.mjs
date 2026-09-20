@@ -25,13 +25,13 @@ test('355 grouped Move stays on custom group path instead of protected generic M
   assert.match(block,/return false/);
 });
 
-test('355 object-origin cache key is refreshed through drawer and release pins',()=>{
+test('355 object-origin remains pinned while current Object UI loaders advance independently',()=>{
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.355/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.355/);
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.355/);
+  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
+  assert.match(index,/object-management\.js\?v=0\.36\.18\.368/);
 });
 
 test('355 protected multi-object transform pin remains exact',()=>{
