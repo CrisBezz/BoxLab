@@ -23,6 +23,7 @@ Newest entries should be added at the top.
 - Protected `object-origin.js?v=0.36.18.355` remains untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Added regression coverage for row presence/state, active/inactive synchronization, Reference exclusion and protected pins.
+- Released from PR **#45**; squash merge commit: `81121843def91f766c8f0b25f6b5cc479671598b`.
 
 ## 2026-09-20 — v0.36.18.360 contextual Object controls
 
