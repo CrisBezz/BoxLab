@@ -15,7 +15,8 @@ test('Solidify direct-drag wrapper follows current app build',()=>{
 
 test('375 preview supports viewport ray-picked thickness dragging',()=>{
   assert.match(ui,/new THREE\.Raycaster\(\)/);
-  assert.match(ui,/raycaster\.intersectObject\(preview,false\)/);
+  assert.match(ui,/raycaster\.intersectObject\(preview,true\)/);
+  assert.match(ui,/hit\.object\?\.matrixWorld\|\|preview\.matrixWorld/);
   assert.match(ui,/function projectedNormalAxis\(hit\)/);
   assert.match(ui,/projected=dx\*thicknessDrag\.axisX\+dy\*thicknessDrag\.axisY/);
   assert.match(ui,/setThickness\(next,\{rebuild:true\}\)/);

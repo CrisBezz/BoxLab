@@ -8,6 +8,15 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.381 Solidify preview backface visibility
+
+- User screenshots confirmed the remaining preview visibility issue was Solidify, not Shell.
+- Replaced Solidify's single translucent preview Mesh with a Group containing translucent DoubleSide fill plus brighter DoubleSide wireframe overlay.
+- Disabled depth test/write on both preview layers so generated inner/back faces remain visible through the source sheet.
+- Preserved direct preview thickness dragging by switching raycast to recursive Group traversal and using the hit child mesh matrix for normal projection.
+- Preview disposal now traverses child meshes and disposes shared resources safely.
+- No Solidify topology, offset solver, history or linked-instance behavior changed.
+
 ## 2026-09-21 — v0.36.18.380 Shell preview backface visibility
 
 - User requested better Shell preview visibility from the reverse/interior side.

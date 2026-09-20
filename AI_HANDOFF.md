@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-20.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.380 — improved double-sided Shell preview visibility**
+- Current live development build: **v0.36.18.381 — improved Solidify preview backface visibility**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **39252588b9e7530fd276a0715739a040efc87d59**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -46,8 +46,8 @@ Audited from current `main` on 2026-09-20.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.380**
-- Current Phase D loaders: **solidify.js?v=0.36.18.380** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.380** → `shell-core.js?v=0.36.18.380` → shared Solidify core
+- Current `version.json`: **0.36.18.381**
+- Current Phase D loaders: **solidify.js?v=0.36.18.381** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.381** → `shell-core.js?v=0.36.18.381` → shared Solidify core
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -70,7 +70,22 @@ Audited from current `main` on 2026-09-20.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.380
+## Latest completed development — v0.36.18.381
+
+Theme: **Solidify preview visibility parity with Shell**.
+
+- User screenshots showed the remaining visibility problem was in **Solidify preview**, not Shell preview.
+- Solidify's generated-geometry preview is now a two-layer Group:
+  - translucent filled **DoubleSide** surface layer for front/back/interior readability
+  - brighter **DoubleSide wireframe** overlay for topology clarity
+- Both layers render with depth test/write disabled so the generated inner shell remains visible through the source sheet from either viewing direction.
+- Direct thickness drag remains supported:
+  - raycasting now traverses the preview Group recursively
+  - projected drag normal is derived from the actual hit child mesh transform
+- Preview disposal now traverses the Group and safely disposes shared geometry/materials once.
+- Solidify core/topology, thickness maths, drawer locking, history and linked propagation are unchanged.
+
+## Previous completed development — v0.36.18.380
 
 Theme: **Shell preview backface/interior visibility**.
 
