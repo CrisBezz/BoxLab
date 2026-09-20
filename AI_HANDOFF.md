@@ -23,21 +23,21 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 ## Current audited repository state
 
-Audited from current `main` on 2026-09-19.
+Audited from current `main` on 2026-09-20.
 
 - Repository release candidate: **v0.36.18.371**
 - Current documentation HEAD: **v0.36.18.371 PR branch; refresh after merge**
 - Current code-bearing/release commit: **v0.36.18.371 PR branch; pending merge**
 - v0.36.18.371 release PR: **pending**
-- PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
-- Post-merge topology regression: **not separately verified through the connector in this session**
+- PR regression / CI status: **pending PR creation / automatic checks**
+- Post-merge regression / CI status: **pending**
 - Current `version.json`: **0.36.18.371**
-- Current main runtime pin remains: **main.js?v=0.36.18.326**
+- Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.361**
-- Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
+- Object management loader: **object-management.js?v=0.36.18.368**
+- Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.369**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
 - Component Circle loader: **drawer-ui.js → component-circle.js?v=0.36.18.341**
