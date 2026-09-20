@@ -8,6 +8,14 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.380 Shell preview backface visibility
+
+- User requested better Shell preview visibility from the reverse/interior side.
+- Replaced wireframe-only preview with a two-layer Group: translucent DoubleSide fill plus brighter DoubleSide wireframe overlay.
+- Both preview layers render depth-test/write disabled so inner/back faces remain legible through the source mesh.
+- Preview disposal now traverses child meshes and disposes shared resources safely.
+- No Shell topology, thickness, selection, history or Apply behaviour changed.
+
 ## 2026-09-20 — v0.36.18.379 Shell Pencil late-native guard
 
 - .378 still snapped to 0.01 under Apple Pencil hands-on testing.
