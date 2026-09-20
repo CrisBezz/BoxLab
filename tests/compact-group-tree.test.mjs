@@ -13,7 +13,7 @@ test('350 Group creation control is contextual instead of permanently occupying 
 
 test('350 existing groups render as a compact tree row with a More menu',()=>{
   const src=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
-  assert.match(src,/grid-template-columns:20px minmax\(0,1fr\) 26px 26px 26px/);
+  assert.match(src,/grid-template-columns:20px minmax\(0,1fr\) 26px 28px/);
   assert.match(src,/className='boxlab-group-more'/);
   assert.match(src,/moreSummary\.textContent='•••'/);
   assert.match(src,/menuRename\.textContent='Rename Group'/);
@@ -26,7 +26,7 @@ test('350 group visibility and lock each checkpoint Object scene history',()=>{
   const at=src.indexOf("visible.textContent=allHidden?'○':'●'");
   const visibility=src.slice(at,at+850);
   assert.match(visibility,/__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
-  const lockAt=src.indexOf("lock.textContent=editableMembers.length?(allLocked?'■':'□'):'R'");
+  const lockAt=src.indexOf("menuLock.textContent=editableMembers.length?(allLocked?'Unlock':'Lock'):'Reference • Read Only'");
   const lock=src.slice(lockAt,lockAt+1200);
   assert.match(lock,/__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
 });
@@ -42,8 +42,8 @@ test('350 compact group row preserves first-class group selection and direct act
 test('350 cache chain and protected transform pin remain intact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.350/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.350/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.350/);
+  assert.match(index,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
+  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.368/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
