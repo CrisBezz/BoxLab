@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-20.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.379 — hardened Apple Pencil Shell thickness ownership**
+- Current live development build: **v0.36.18.380 — improved double-sided Shell preview visibility**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **13d9ea9aa3c58333abfc660dcd990ed26363d94f**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -45,8 +45,8 @@ Audited from current `main` on 2026-09-20.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.379**
-- Current Phase D loaders: **solidify.js?v=0.36.18.379** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.379** → `shell-core.js?v=0.36.18.379` → shared Solidify core
+- Current `version.json`: **0.36.18.380**
+- Current Phase D loaders: **solidify.js?v=0.36.18.380** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.380** → `shell-core.js?v=0.36.18.380` → shared Solidify core
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -69,7 +69,20 @@ Audited from current `main` on 2026-09-20.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.379
+## Latest completed development — v0.36.18.380
+
+Theme: **Shell preview backface/interior visibility**.
+
+- User confirmed .379 Pencil thickness handling works correctly.
+- Shell preview was visually weak from many camera angles because the preview was wireframe-only.
+- Preview is now a two-layer Group:
+  - translucent filled **DoubleSide** surface layer for front and back/interior visibility
+  - brighter **DoubleSide wireframe** overlay for topology clarity
+- Both preview layers render without depth writing/testing so the hollow interior remains readable through the source mesh from either viewing direction.
+- Preview disposal now traverses the Group and safely disposes shared geometry/materials once.
+- Shell topology, thickness handling, history, Face selection and Apply behaviour are unchanged.
+
+## Previous completed development — v0.36.18.379
 
 Theme: **harden Apple Pencil ownership against late Safari range events**.
 
