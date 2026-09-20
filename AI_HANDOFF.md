@@ -24,10 +24,10 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 ## Current audited repository state
 
-Audited from current `main` on 2026-09-20.
+Audited from current `main` on 2026-09-21.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.381 — improved Solidify preview backface visibility**
+- Current live development build: **v0.36.18.382 — Phase D Linear Array foundation**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **a4ee4ae3779586be82365ee98f169527d49fb08d**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -47,8 +47,8 @@ Audited from current `main` on 2026-09-20.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.381**
-- Current Phase D loaders: **solidify.js?v=0.36.18.381** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.381** → `shell-core.js?v=0.36.18.381` → shared Solidify core
+- Current `version.json`: **0.36.18.382**
+- Current Phase D loaders: **solidify.js?v=0.36.18.382** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.382** → `shell-core.js?v=0.36.18.377` → shared Solidify core; **linear-array.js?v=0.36.18.382** uses existing linked-instance Object Manager APIs
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -71,7 +71,28 @@ Audited from current `main` on 2026-09-20.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.381
+## Latest completed development — v0.36.18.382
+
+Theme: **Phase D Linear Array foundation using existing linked instances**.
+
+- Added Object > Active Tools > **Array** as a thin higher-level modelling layer over the existing authoritative linked-instance system.
+- Linear Array controls:
+  - Count 2–10, counting the original object
+  - Spacing 0.1–10 world units
+  - world X / Y / Z axis selection
+- First Array tap arms a non-destructive viewport preview; the button becomes **Apply Array**.
+- Preview displays every future copy as translucent fill + wire overlay while leaving the source object unchanged.
+- Apply creates the requested copies through `__boxlabObjectManager.linkedDuplicateObject(...)`; it does not create a parallel object or instance system.
+- Each generated object is a linked instance sharing source geometry while keeping independent placement.
+- Generated placements are established by moving the live duplicate and using the existing Object Manager `saveActive()` instance-placement derivation path.
+- The original source object is reactivated after Apply.
+- Apply records one Object-scene history snapshot for Undo/Redo.
+- Count and Spacing use explicit Pencil range mapping with the same late-Safari-event protection proven by Shell.
+- Active Tools stays open throughout Array preview.
+- Protected `multi-object-transform.js?v=0.36.1.0` is untouched.
+- Frozen Beta 3 remains untouched.
+
+## Previous completed development — v0.36.18.381
 
 Theme: **Solidify preview visibility parity with Shell**.
 
