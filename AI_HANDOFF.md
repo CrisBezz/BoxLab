@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-20.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.378 — Apple Pencil Shell thickness parity fix**
+- Current live development build: **v0.36.18.379 — hardened Apple Pencil Shell thickness ownership**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **4b50d300a72c41c774f74eb55daf18a220f8acdd**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -44,8 +44,8 @@ Audited from current `main` on 2026-09-20.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.378**
-- Current Phase D loaders: **solidify.js?v=0.36.18.378** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.378** → `shell-core.js?v=0.36.18.378` → shared Solidify core
+- Current `version.json`: **0.36.18.379**
+- Current Phase D loaders: **solidify.js?v=0.36.18.379** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.379** → `shell-core.js?v=0.36.18.379` → shared Solidify core
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -68,7 +68,18 @@ Audited from current `main` on 2026-09-20.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.378
+## Latest completed development — v0.36.18.379
+
+Theme: **harden Apple Pencil ownership against late Safari range events**.
+
+- Hands-on testing showed .378 still snapped to 0.01 with Apple Pencil.
+- The .378 pointer mapping itself was correct; the remaining failure was a late native Safari range input/change arriving after Pencil-up and overwriting the computed value.
+- Shell now stores the Pencil-owned thickness value for the entire Pencil gesture and through two animation frames after release.
+- Every input/change event during that ownership window is forced back to the Pencil-computed value before output/preview update.
+- Native finger interaction remains unchanged once Pencil ownership is released.
+- No Shell topology, Solidify core, selection, drawer or history logic changed.
+
+## Previous completed development — v0.36.18.378
 
 Theme: **Apple Pencil / finger parity for Shell Thickness**.
 

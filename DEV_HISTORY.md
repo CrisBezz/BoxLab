@@ -8,6 +8,15 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.379 Shell Pencil late-native guard
+
+- .378 still snapped to 0.01 under Apple Pencil hands-on testing.
+- Pencil coordinate mapping was correct; Safari could emit a late native range input/change after pointerup and overwrite the value.
+- Shell now retains Pencil ownership of the thickness value through two animation frames after release.
+- Input/change handlers enforce the Pencil-owned value before updating output/preview.
+- Finger/touch remains native after Pencil ownership clears.
+- No topology/history/selection changes.
+
 ## 2026-09-20 — v0.36.18.378 Shell Pencil thickness parity
 
 - User reported Shell Thickness worked correctly with finger input but Apple Pencil snapped the value back to 0.01.

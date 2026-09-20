@@ -251,6 +251,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Shell Thickness preview updates before Apply Shell commits
 - [ ] Shell Thickness gives the same selected value with Apple Pencil and finger input
 - [ ] Apple Pencil dragging Shell Thickness no longer snaps the value to the 0.01 minimum
+- [ ] Pencil-selected Shell Thickness remains unchanged after Pencil-up (late Safari input/change cannot overwrite it)
+- [ ] Finger can immediately take over the slider normally after Pencil ownership releases
 - [ ] Pencil drag remains stable if the Pencil leaves the slider track while still pressed
 - [ ] Pencil and finger both update the same visible thickness output and preview
 - [ ] Apply Shell clears stale Face selection created against pre-compaction Face indices

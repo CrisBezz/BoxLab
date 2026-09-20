@@ -6,7 +6,7 @@ const status=document.querySelector('#selectionStatus');
 const activeToolsDrawer=document.querySelector('#editDrawer');
 const canvas=document.querySelector('#viewport');
 
-let preview=null,previewArmed=false,previewObjectId=null,previewFaces=[],drawerLockState=null,pencilThicknessPointer=null;
+let preview=null,previewArmed=false,previewObjectId=null,previewFaces=[],drawerLockState=null,pencilThicknessPointer=null,pencilThicknessValue=null,pencilReleaseFrame=null;
 
 const controls=document.createElement('div');
 controls.className='shell-face-controls';
@@ -50,8 +50,15 @@ function rangeValueAtClientX(clientX){
 }
 function applyThicknessValue(value){
   if(!input)return;
+  pencilThicknessValue=value;
   input.value=String(value);
   input.dispatchEvent(new Event('input',{bubbles:true}));
+}
+function enforcePencilThickness(){
+  if(!input||pencilThicknessValue===null)return false;
+  const expected=String(pencilThicknessValue);
+  if(input.value!==expected)input.value=expected;
+  return true;
 }
 function beginPencilThickness(event){
   if(event.pointerType!=='pen')return;
@@ -73,6 +80,17 @@ function endPencilThickness(event){
   event.stopPropagation();
   if(input?.hasPointerCapture?.(event.pointerId))input.releasePointerCapture(event.pointerId);
   pencilThicknessPointer=null;
+  if(pencilReleaseFrame)cancelAnimationFrame(pencilReleaseFrame);
+  // Safari may emit a late native range input/change after Pencil-up.
+  // Keep Pencil ownership through one extra painted frame, then release it.
+  pencilReleaseFrame=requestAnimationFrame(()=>{
+    enforcePencilThickness();
+    pencilReleaseFrame=requestAnimationFrame(()=>{
+      enforcePencilThickness();
+      pencilThicknessValue=null;
+      pencilReleaseFrame=null;
+    });
+  });
 }
 function setStatus(text){if(status)status.textContent=text;}
 function scene(){return state()?.scene||null;}
@@ -150,7 +168,16 @@ function forceRender(){
   globalThis.__boxlabTopologyGate?.sync?.();
 }
 
-input?.addEventListener('input',()=>{syncThickness();if(previewArmed)buildPreview();});
+input?.addEventListener('input',()=>{
+  enforcePencilThickness();
+  syncThickness();
+  if(previewArmed)buildPreview();
+});
+input?.addEventListener('change',()=>{
+  if(!enforcePencilThickness())return;
+  syncThickness();
+  if(previewArmed)buildPreview();
+});
 input?.addEventListener('pointerdown',beginPencilThickness,{capture:true,passive:false});
 input?.addEventListener('pointermove',movePencilThickness,{capture:true,passive:false});
 input?.addEventListener('pointerup',endPencilThickness,{capture:true,passive:false});
@@ -180,7 +207,7 @@ button?.addEventListener('click',()=>{
   button.textContent='Shell';
   bridge()?.set?.('face',[]);
   manager()?.saveActive?.();
-  globalThis.__boxlabShellLastResult={version:'0.36.18.378',...result};
+  globalThis.__boxlabShellLastResult={version:'0.36.18.379',...result};
   setStatus(`Shell • ${result.removedFaces} opening face${result.removedFaces===1?'':'s'} • thickness ${Number(result.thickness.toFixed(3))} • closed solid`);
   forceRender();
 });
@@ -193,7 +220,7 @@ window.addEventListener('beforeunload',()=>{disposePreview();unlockDrawer();});
 sync();
 
 globalThis.__boxlabShell={
-  version:'0.36.18.377',
+  version:'0.36.18.379',
   analyze:analyzeShellInput,
   cancel:cancelPreview,
   get active(){return previewArmed;}
