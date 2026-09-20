@@ -29,7 +29,7 @@ Audited from current `main` on 2026-09-21.
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
 - Current live development build: **v0.36.18.383 — direct viewport spacing for Linear Array**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **6871a0dbdfaa338b2528d53254c97d98bdd65158**
+- Current live code-bearing commit: **5babe7eb2905fe12907d0a6edc61b02d495cba73**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
@@ -42,8 +42,9 @@ Audited from current `main` on 2026-09-21.
 - Previous v0.36.18.379 PR: **#63**
 - Previous v0.36.18.380 PR: **#64**
 - Previous v0.36.18.381 PR: **#65**
-- Current v0.36.18.382 PR: **#66**
-- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35545288948**
+- Previous v0.36.18.382 PR: **#66**
+- Current v0.36.18.383 PR: **#67**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35545622459**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
@@ -1026,3 +1027,8 @@ Before finishing any future code-changing BoxLab session:
 - append the milestone to `DEV_HISTORY.md`
 - update `TEST_CHECKLIST.md` for newly stable behavior
 - verify a brand-new chat could continue using only the repo and these files
+
+
+### Immediate next task — inward / negative Face Extrude
+
+User hands-on screenshot on 2026-09-21 shows a selected side Face extruded inward: the selected face moves inward, but the adjacent side walls stretch/fold through the solid instead of being cut/trimmed to form a proper recessed cut. Investigate whether an earlier inward-cut/negative-extrude path already exists before implementing anything new. Audit normal Extrude, Through/cut topology, precision/repeat capture and frozen Beta history. Preserve ordinary outward Extrude, connected multi-face Extrude, Through and the protected transform baseline.
