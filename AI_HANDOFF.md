@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-21.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.382 — Phase D Linear Array foundation**
+- Current live development build: **v0.36.18.383 — direct viewport spacing for Linear Array**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **6871a0dbdfaa338b2528d53254c97d98bdd65158**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -48,7 +48,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.382**
+- Current `version.json`: **0.36.18.383**
 - Current Phase D loaders: **solidify.js?v=0.36.18.382** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.382** → `shell-core.js?v=0.36.18.377` → shared Solidify core; **linear-array.js?v=0.36.18.382** uses existing linked-instance Object Manager APIs
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -72,7 +72,21 @@ Audited from current `main` on 2026-09-21.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.382
+## Latest completed development — v0.36.18.383
+
+Theme: **direct viewport spacing for Linear Array**.
+
+- User hands-on testing passed the .382 Linear Array foundation.
+- While Array preview is armed, Pencil/finger can now press any translucent preview instance and drag it along the currently selected X/Y/Z array direction.
+- Dragging a later preview copy divides world movement by that copy's array index, so the grabbed copy tracks the Pencil/finger while maintaining equal spacing across the whole array.
+- Spacing slider/output updates continuously during direct drag and remains the exact-value fallback.
+- OrbitControls pauses only during the spacing drag and restores immediately on release/cancel.
+- If the active world axis projects almost directly into the camera and has no useful screen direction, direct drag declines cleanly and the slider remains available.
+- Direct spacing drag is preview-only and creates no history entry; Apply Array remains the single commit/history step.
+- Existing linked-instance creation, Count, X/Y/Z, Pencil-safe sliders and source-reactivation behavior are unchanged.
+- Next task after user verification: revisit inward Face Extrude so negative/inward extrusion cuts the surrounding side walls rather than folding/stretching them through the volume.
+
+## Previous completed development — v0.36.18.382
 
 Theme: **Phase D Linear Array foundation using existing linked instances**.
 
