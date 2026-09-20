@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 
 const EPS=1e-9;
+const NORMAL_MATCH=0.999999;
+const MAX_MITER=25;
 const edgeKey=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
 
 function cloneState(mesh){
@@ -58,22 +60,74 @@ function faceAreaNormal(mesh,face){
   }
   return sum;
 }
-function vertexNormals(mesh){
-  const normals=mesh.vertices.map(()=>new THREE.Vector3());
+function faceUnitNormals(mesh){
+  const normals=[];
   for(const face of mesh.faces){
     const n=faceAreaNormal(mesh,face);
     if(n.lengthSq()<=EPS*EPS)return{ok:false,reason:'zero-area-face'};
-    for(const vi of face)normals[vi].add(n);
-  }
-  for(let i=0;i<normals.length;i++){
-    if(normals[i].lengthSq()<=EPS*EPS)return{ok:false,reason:'zero-vertex-normal',vertex:i};
-    normals[i].normalize();
+    normals.push(n.normalize());
   }
   return{ok:true,normals};
 }
-function validateClosed(mesh){
-  const check=inspectClosed(mesh);
-  return check.ok;
+function uniqueIncidentNormals(mesh,faceNormals){
+  const perVertex=mesh.vertices.map(()=>[]);
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const n=faceNormals[fi];
+    for(const vi of mesh.faces[fi]){
+      const list=perVertex[vi];
+      if(!list.some(existing=>existing.dot(n)>=NORMAL_MATCH))list.push(n.clone());
+    }
+  }
+  return perVertex;
+}
+function solveOffsetVector(normals,distance){
+  const target=-distance;
+  if(!normals.length)return{ok:false,reason:'zero-vertex-normal'};
+  if(normals.length===1)return{ok:true,delta:normals[0].clone().multiplyScalar(target)};
+
+  if(normals.length===2){
+    const a=normals[0],b=normals[1],c=THREE.MathUtils.clamp(a.dot(b),-1,1);
+    const denom=1+c;
+    if(Math.abs(denom)<=1e-7)return{ok:false,reason:'opposed-fold'};
+    const delta=a.clone().add(b).multiplyScalar(target/denom);
+    if(delta.length()>Math.abs(distance)*MAX_MITER)return{ok:false,reason:'excessive-miter'};
+    return{ok:true,delta};
+  }
+
+  let m00=0,m01=0,m02=0,m11=0,m12=0,m22=0;
+  const rhs=new THREE.Vector3();
+  for(const n of normals){
+    m00+=n.x*n.x;m01+=n.x*n.y;m02+=n.x*n.z;
+    m11+=n.y*n.y;m12+=n.y*n.z;m22+=n.z*n.z;
+    rhs.addScaledVector(n,target);
+  }
+  const matrix=new THREE.Matrix3().set(
+    m00,m01,m02,
+    m01,m11,m12,
+    m02,m12,m22
+  );
+  if(Math.abs(matrix.determinant())<=1e-10){
+    let best=null,bestCross=0;
+    for(let i=0;i<normals.length;i++)for(let j=i+1;j<normals.length;j++){
+      const cross=new THREE.Vector3().crossVectors(normals[i],normals[j]).lengthSq();
+      if(cross>bestCross){bestCross=cross;best=[normals[i],normals[j]];}
+    }
+    return best&&bestCross>1e-10?solveOffsetVector(best,distance):{ok:false,reason:'singular-offset'};
+  }
+  const delta=rhs.applyMatrix3(matrix.clone().invert());
+  if(delta.length()>Math.abs(distance)*MAX_MITER)return{ok:false,reason:'excessive-miter'};
+  return{ok:true,delta};
+}
+function offsetVectors(mesh,distance){
+  const faces=faceUnitNormals(mesh);
+  if(!faces.ok)return faces;
+  const incident=uniqueIncidentNormals(mesh,faces.normals),vectors=[];
+  for(let i=0;i<incident.length;i++){
+    const solved=solveOffsetVector(incident[i],distance);
+    if(!solved.ok)return{...solved,vertex:i};
+    vectors.push(solved.delta);
+  }
+  return{ok:true,vectors,faceNormals:faces.normals,incidentNormals:incident};
 }
 function inspectClosed(mesh){
   const uses=new Map(),seenFaces=new Set();
@@ -101,25 +155,25 @@ function inspectClosed(mesh){
 export function analyzeSolidifyInput(mesh){
   const topology=inspect(mesh);
   if(!topology.ok)return topology;
-  const normals=vertexNormals(mesh);
-  if(!normals.ok)return normals;
-  return{ok:true,boundaryEdges:topology.boundary.length,normals:normals.normals};
+  const offsets=offsetVectors(mesh,1);
+  if(!offsets.ok)return offsets;
+  return{ok:true,boundaryEdges:topology.boundary.length};
 }
 
 export function solidifyOpenMesh(mesh,thickness=0.2){
   const distance=Number(thickness);
   if(!Number.isFinite(distance)||Math.abs(distance)<=EPS)return{ok:false,changed:false,reason:'invalid-thickness'};
-  const analysis=analyzeSolidifyInput(mesh);
-  if(!analysis.ok)return{...analysis,changed:false};
+  const topology=inspect(mesh);
+  if(!topology.ok)return{...topology,changed:false};
+  const offsets=offsetVectors(mesh,distance);
+  if(!offsets.ok)return{...offsets,changed:false};
+
   const before=cloneState(mesh),count=mesh.vertices.length;
   try{
-    const offset=-distance;
-    for(let i=0;i<count;i++)mesh.vertices.push(mesh.vertices[i].clone().addScaledVector(analysis.normals[i],offset));
+    for(let i=0;i<count;i++)mesh.vertices.push(mesh.vertices[i].clone().add(offsets.vectors[i]));
     const originalFaces=mesh.faces.map(f=>[...f]);
     const innerFaces=originalFaces.map(face=>face.map(vi=>vi+count).reverse());
     const sideFaces=[];
-    const topology=inspect({vertices:before.vertices,faces:before.faces});
-    if(!topology.ok)throw new Error(topology.reason||'boundary-analysis-failed');
     for(const edge of topology.boundary)sideFaces.push([edge.a,edge.a+count,edge.b+count,edge.b]);
     mesh.faces=[...originalFaces,...innerFaces,...sideFaces];
 
@@ -130,6 +184,7 @@ export function solidifyOpenMesh(mesh,thickness=0.2){
     }
     mesh.creases=creases;
     mesh.edges?.();
+
     const validation=inspectClosed(mesh);
     if(!validation.ok){
       restoreState(mesh,before);
@@ -137,7 +192,7 @@ export function solidifyOpenMesh(mesh,thickness=0.2){
     }
     return{
       ok:true,changed:true,thickness:distance,
-      before:{vertices:count,faces:originalFaces.length,boundaryEdges:analysis.boundaryEdges},
+      before:{vertices:count,faces:originalFaces.length,boundaryEdges:topology.boundary.length},
       after:{vertices:mesh.vertices.length,faces:mesh.faces.length,boundaryEdges:0},
       sideFaces:sideFaces.length
     };
@@ -147,4 +202,4 @@ export function solidifyOpenMesh(mesh,thickness=0.2){
   }
 }
 
-export const __solidifyInternals={edgeKey,inspect,inspectClosed,vertexNormals,validateClosed};
+export const __solidifyInternals={edgeKey,inspect,inspectClosed,faceUnitNormals,uniqueIncidentNormals,solveOffsetVector,offsetVectors};

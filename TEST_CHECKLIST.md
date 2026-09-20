@@ -248,12 +248,12 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Solidify is available in Object > Active Tools with a Thickness control
 - [ ] one open quad Solidify produces a closed six-face solid
 - [ ] a connected multi-face open sheet Solidify produces one watertight solid and bridges every boundary edge
-- [ ] Solidify offsets the duplicate shell consistently along averaged vertex normals
+- [ ] flat Solidify offsets the duplicate shell consistently by the requested thickness\n- [ ] a 90° folded multi-sheet preserves full requested thickness to both source planes using a proper miter/plane intersection
 - [ ] existing crease weights are preserved on the original shell and copied to the inner shell
 - [ ] Solidify refuses an already closed mesh without mutation
 - [ ] Solidify refuses non-manifold, branched-boundary, inconsistent-winding, duplicate/degenerate or zero-area input without partial mutation
 - [ ] Solidify output is topology-validated as closed/manifold and rolls back if validation fails
-- [ ] Solidify is one Object-scene Undo step and Redo restores the solid
+- [ ] first Solidify tap creates a non-destructive preview rather than committing\n- [ ] Thickness slider updates the Solidify preview live\n- [ ] Apply Solidify commits geometry matching the preview\n- [ ] leaving Object mode or changing active object cancels preview without mutation\n- [ ] Solidify is one Object-scene Undo step and Redo restores the solid
 - [ ] Solidify on a linked instance propagates shared geometry without collapsing independent instance placement
 - [ ] Reference / locked objects cannot Solidify
 - [ ] frozen `/beta-3/` remains unchanged

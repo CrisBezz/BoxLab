@@ -26,16 +26,21 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-20.
 
-- Frozen release checkpoint: **v0.36.18.371 — Beta 3**\n- Current live development build: **v0.36.18.373 — visible-version ownership fix on Phase D Solidify**
+- Frozen release checkpoint: **v0.36.18.371 — Beta 3**
+- Current live development build: **v0.36.18.374 — Solidify hard-fold offset + live thickness preview**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **3a7139dabc09731ffb29bb952c15ef1bb276559f**\n- Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
+- Current live code-bearing commit: **3a7139dabc09731ffb29bb952c15ef1bb276559f**
+- Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
-- Previous v0.36.18.372 PR: **#56**\n- Current v0.36.18.373 PR: **#57**\n- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35502647303**
+- Previous v0.36.18.372 PR: **#56**
+- Current v0.36.18.373 PR: **#57**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35502647303**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.373**\n- Current Phase D loader: **solidify.js?v=0.36.18.373** → `solidify-core.js?v=0.36.18.372`
+- Current `version.json`: **0.36.18.374**
+- Current Phase D loader: **solidify.js?v=0.36.18.374** → `solidify-core.js?v=0.36.18.374`
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -58,7 +63,20 @@ Audited from current `main` on 2026-09-20.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.373
+## Latest completed development — v0.36.18.374
+
+Theme: **Solidify hard-fold correctness + pre-commit thickness preview**.
+
+- Replaced averaged-vertex-normal thickness at hard folds with offset-plane intersection / miter solving.
+- A 90° two-face fold now preserves the full requested thickness to both source planes instead of under-offsetting the inside corner diagonally.
+- Single-plane regions still offset normally; two-plane folds use an exact two-plane solution; multi-plane corners use a least-squares plane intersection with conservative singular/excessive-miter guards.
+- Solidify is now two-stage: tap **Solidify** to arm a non-destructive translucent preview, drag **Thickness** to update the preview live, then tap **Apply Solidify** to commit.
+- Preview does not create history or mutate the editable mesh.
+- Leaving Object mode or changing active object cancels the preview.
+- Commit remains one Object-scene history step and continues through the existing Object Manager / linked-instance save pathway.
+- Frozen Beta 3 remains untouched.
+
+## Previous completed development — v0.36.18.373
 
 Theme: **visible app version ownership fix**.
 
@@ -857,14 +875,13 @@ Scene / modifiers:
 
 ## Next development step
 
-**Post-Beta-3 development may resume.**
+**Hands-on verify v0.36.18.374 before moving to closed-solid Shell.**
 
-- Keep frozen Beta 3 at `/beta-3/` immutable.
-- Live `main` is now free for the next development phase.
-- Start with the next agreed roadmap item rather than altering the frozen checkpoint.
-- Preserve the confirmed v0.36.18.371 interaction/modelling baseline unless a concrete regression requires a change.
-- Keep `multi-object.js?v=0.36.18.367`, `object-origin.js?v=0.36.18.355`, and `multi-object-transform.js?v=0.36.1.0` protected.
-- Wider Beta 3 testing feedback should be reproduced on the frozen URL first; fixes belong on live `main` unless the user explicitly approves a Beta 3 patch release.
+- Test a flat sheet and a 90° folded multi-sheet at several thicknesses.
+- Confirm preview updates continuously and commit matches the preview.
+- Confirm Undo/Redo and linked-instance propagation remain correct.
+- Then continue with closed-solid **Shell with selected-face removal**, reusing this corrected offset-plane core.
+
 
 ## End-of-session requirement
 
