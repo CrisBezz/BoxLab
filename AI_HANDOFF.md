@@ -25,13 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.362**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **5b1d1c94cca8f6826dbd06f6fad70dafedefe8d6**
-- Current code-bearing/release commit: **8dcef36d789bf6d42bc092aa2897115789c636bd**
-- v0.36.18.362 release PR: **#46**
+- Repository release candidate: **v0.36.18.363**
+- Current documentation HEAD: **v0.36.18.363 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.363 PR branch; pending merge**
+- v0.36.18.363 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.362**
+- Current `version.json`: **0.36.18.363**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -54,7 +54,27 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.362
+## Latest completed development — v0.36.18.363
+
+Theme: **linked copies are born linked before first activation**.
+
+Critical fix:
+- `linkedDuplicateObject()` no longer creates a normal object and patches link metadata afterward
+- `addObject()` now accepts `sourceId`, `instanceMatrix` and `origin` at creation time
+- linked copies therefore enter activation/rendering with their shared source + placement already valid
+- linked duplicate of a linked duplicate follows the same source and should propagate edits
+- .362 source × matrix regeneration remains authoritative for active/inactive linked rendering
+
+Target regressions:
+- second-generation linked duplicate not propagating edits
+- finger-selecting another object causing linked copies to vanish from viewport while remaining in Outliner
+
+Protected behavior:
+- Group baseline remains `object-origin.js?v=0.36.18.355`
+- compact Outliner / SubD row toggle / contextual Origin-Pivot unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.362
 
 Theme: **linked instances keep independent placement while sharing geometry**.
 
@@ -658,36 +678,17 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .362 linked-instance placement first**
-- create Linked Duplicate, move peers apart, then switch active object repeatedly
-- model one peer further, then switch between all peers and verify geometry propagates but placement never jumps
-- test Move / Scale / Rotate on individual linked peers
-- test Make Unique after peers are separated and edited
-- if stable, continue Outliner polish or move to queued Group Boolean convenience
+- **user-test .363 linked creation lifecycle first**
+- make Linked Duplicate A → B, then Linked Duplicate B → C
+- move A / B / C apart
+- edit geometry on B or C and verify A / B / C all update
+- finger-select an unrelated object and verify all linked peers remain visible
+- repeatedly switch active object between A / B / C and unrelated objects
+- verify Make Unique still detaches only the chosen peer
 - preserve `object-origin.js?v=0.36.18.355` unless a concrete Group regression requires changing it
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
-Completed Phase C slices now include:
-- linked-instance foundation + Make Unique (.343)
-- permanent read-only Reference guide workflow (.344)
-- Object Multi Linked Duplicate / Make Unique parity (.346)
-- unified Join / Boolean Object scene history (.347)
-- persistent Group organization metadata (.348)
-- first-class Group selection / Rename UX (.349)
-- compact Group tree + history-safe state actions (.350)
-- authoritative Group ownership + Boolean UI decoupling (.351)
-- two-object amber/blue scene cue + compact numbering (.352)
-- focused Object/Group Rename + live Group header refresh (.353)
-- whole-Group amber viewport/Outliner selection context + cage suppression (.354)
-- whole-Group Move routing + wrapper context preservation (.355)
-- compact Object/Group Outliner rows + compact Object action footer (.356)
-- upward More popovers + Safari-resistant anchoring (.357–.358)
-- per-object Delete restoration + hardware Delete/Backspace (.359)
-- contextual Origin/Pivot + compact Object Selection strip (.360)
-- per-object Outliner SubD Preview toggle (.361)
-- linked-instance shared-geometry / independent-placement stability (.362)
-
-Do not reopen Phase A unless a concrete cleanup regression is reported.
+Do not continue UI polish until linked-instance lifecycle is confirmed stable.
 
 ## End-of-session requirement
 
