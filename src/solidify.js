@@ -59,8 +59,16 @@ function keepDrawerVisible(){
 }
 function disposePreview(){
   if(preview?.parent)preview.parent.remove(preview);
-  preview?.geometry?.dispose?.();
-  preview?.material?.dispose?.();
+  if(preview){
+    const geometries=new Set(),materials=new Set();
+    preview.traverse?.(node=>{
+      if(node.geometry)geometries.add(node.geometry);
+      if(Array.isArray(node.material))node.material.forEach(m=>m&&materials.add(m));
+      else if(node.material)materials.add(node.material);
+    });
+    geometries.forEach(g=>g.dispose?.());
+    materials.forEach(m=>m.dispose?.());
+  }
   preview=null;
 }
 function endThicknessDrag(){
@@ -90,10 +98,21 @@ function buildPreview(){
   // The source sheet remains the normal editable object underneath.
   working.faces=working.faces.slice(sourceFaceCount);
   const geometry=working.triangulatedGeometry();
-  const material=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.34,side:THREE.DoubleSide,depthWrite:false});
-  preview=new THREE.Mesh(geometry,material);
+  const fillMaterial=new THREE.MeshBasicMaterial({
+    color:0x62d8ff,transparent:true,opacity:.18,side:THREE.DoubleSide,
+    depthTest:false,depthWrite:false
+  });
+  const wireMaterial=new THREE.MeshBasicMaterial({
+    color:0x62d8ff,transparent:true,opacity:.72,side:THREE.DoubleSide,
+    wireframe:true,depthTest:false,depthWrite:false
+  });
+  const fill=new THREE.Mesh(geometry,fillMaterial);
+  const wire=new THREE.Mesh(geometry,wireMaterial);
+  fill.renderOrder=12;
+  wire.renderOrder=13;
+  preview=new THREE.Group();
+  preview.add(fill,wire);
   preview.name='BoxLab Solidify Preview';
-  preview.renderOrder=12;
   preview.userData.boxlabSolidifyPreview=true;
   targetScene.add(preview);
   if(!thicknessDrag)setStatus(`Solidify preview • ${Number(thickness().toFixed(3))} • drag translucent shell or use Thickness • Apply Solidify to commit`);
@@ -136,7 +155,7 @@ function pointerNdc(event){
 function projectedNormalAxis(hit){
   const cam=camera(),rect=canvas?.getBoundingClientRect();
   if(!cam||!rect||!hit?.face?.normal)return null;
-  const worldNormal=hit.face.normal.clone().transformDirection(preview.matrixWorld).normalize();
+  const worldNormal=hit.face.normal.clone().transformDirection(hit.object?.matrixWorld||preview.matrixWorld).normalize();
   const p0=hit.point.clone(),distance=Math.max(0.01,cam.position.distanceTo(p0));
   const worldProbe=Math.max(distance*0.08,0.05);
   const p1=p0.clone().addScaledVector(worldNormal,worldProbe);
@@ -154,7 +173,7 @@ function beginThicknessDrag(event){
   const cam=camera();
   if(!cam||!pointerNdc(event))return false;
   raycaster.setFromCamera(pointer,cam);
-  const hit=raycaster.intersectObject(preview,false)[0];
+  const hit=raycaster.intersectObject(preview,true)[0];
   if(!hit)return false;
   const axis=projectedNormalAxis(hit);
   if(!axis)return false;
@@ -224,7 +243,7 @@ button?.addEventListener('click',()=>{
   unlockActiveToolsDrawer();
   button.textContent='Solidify';
   manager()?.saveActive?.();
-  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.376',...result};
+  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.381',...result};
   setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid`);
   forceRender();
 });
