@@ -8,6 +8,19 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.372 Phase D Solidify foundation
+
+- Phase D higher-level modelling started from the frozen v0.36.18.371 Beta 3 baseline.
+- Audit confirmed no existing Shell/Solidify implementation was present.
+- Added Object-mode Solidify for valid open manifold sheets.
+- The new topology core duplicates the sheet, offsets the inner shell along averaged area-weighted vertex normals, reverses inner winding, and bridges every open boundary edge with a side quad.
+- Input guards reject closed, non-manifold, branched-boundary, inconsistent-winding, duplicate/degenerate and zero-area inputs before mutation.
+- Output must validate as a closed consistently wound manifold or the edit rolls back.
+- Existing crease weights are mirrored to the inner shell.
+- One authoritative Object scene-history checkpoint owns the operation; existing Object Manager save/linked propagation pathway is reused.
+- Frozen `/beta-3/` remains untouched.
+- Next Phase D slice: closed-solid Shell with selected-face removal, built on this same thickness core.
+
 ## 2026-09-20 — Beta 3 frozen and published
 
 - User completed the v0.36.18.371 hands-on iPad release gate with a **BIG PASS**.
