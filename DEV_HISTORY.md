@@ -18,7 +18,7 @@ Newest entries should be added at the top.
 - Solidify now uses a two-stage preview workflow: Solidify → live preview; Thickness slider updates non-destructively; Apply Solidify commits.
 - Preview cancellation occurs when leaving Object mode or changing active object.
 - Preview does not push history or mutate live geometry; final commit remains one Object-scene history step.
-- Frozen `/beta-3/` remains unchanged.
+- Frozen `/beta-3/` remains unchanged.\n- Released from PR **#58**; squash merge commit: `85046592160df22d8bc12666ddd821cc1c44c13e`.\n- Final Topology regression passed in workflow run **35503005511**.
 
 ## 2026-09-20 — v0.36.18.373 visible-version ownership fix
 
