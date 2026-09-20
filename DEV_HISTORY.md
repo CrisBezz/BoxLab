@@ -33,6 +33,7 @@ Newest entries should be added at the top.
 - Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Added regression coverage for additive Group selection, Group eligibility, history semantics, A/B UX and protected pins.
+- Released from PR **#52**; squash merge commit: `960db8c5d89c987c82c2a95c8ab3dd3a7eccdf04`.
 
 ## 2026-09-20 — v0.36.18.367 touch orbit + selection-mode stability
 
