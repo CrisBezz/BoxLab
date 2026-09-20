@@ -6,7 +6,7 @@ const status=document.querySelector('#selectionStatus');
 const activeToolsDrawer=document.querySelector('#editDrawer');
 const canvas=document.querySelector('#viewport');
 
-let preview=null,previewArmed=false,previewObjectId=null,previewFaces=[],drawerLockState=null;
+let preview=null,previewArmed=false,previewObjectId=null,previewFaces=[],drawerLockState=null,pencilThicknessPointer=null;
 
 const controls=document.createElement('div');
 controls.className='shell-face-controls';
@@ -38,6 +38,42 @@ function selectedFaces(){
 }
 function thickness(){const n=Number(input?.value);return Number.isFinite(n)?n:0.2;}
 function syncThickness(){if(output)output.textContent=Number(thickness().toFixed(3)).toString();}
+function rangeValueAtClientX(clientX){
+  if(!input)return 0.2;
+  const rect=input.getBoundingClientRect();
+  const min=Number(input.min)||0.01,max=Number(input.max)||1,step=Number(input.step)||0.01;
+  if(!rect.width)return thickness();
+  const t=Math.max(0,Math.min(1,(clientX-rect.left)/rect.width));
+  const raw=min+t*(max-min);
+  const snapped=min+Math.round((raw-min)/step)*step;
+  return Number(Math.max(min,Math.min(max,snapped)).toFixed(6));
+}
+function applyThicknessValue(value){
+  if(!input)return;
+  input.value=String(value);
+  input.dispatchEvent(new Event('input',{bubbles:true}));
+}
+function beginPencilThickness(event){
+  if(event.pointerType!=='pen')return;
+  pencilThicknessPointer=event.pointerId;
+  input?.setPointerCapture?.(event.pointerId);
+  event.preventDefault();
+  event.stopPropagation();
+  applyThicknessValue(rangeValueAtClientX(event.clientX));
+}
+function movePencilThickness(event){
+  if(event.pointerType!=='pen'||event.pointerId!==pencilThicknessPointer)return;
+  event.preventDefault();
+  event.stopPropagation();
+  applyThicknessValue(rangeValueAtClientX(event.clientX));
+}
+function endPencilThickness(event){
+  if(event.pointerType!=='pen'||event.pointerId!==pencilThicknessPointer)return;
+  event.preventDefault();
+  event.stopPropagation();
+  if(input?.hasPointerCapture?.(event.pointerId))input.releasePointerCapture(event.pointerId);
+  pencilThicknessPointer=null;
+}
 function setStatus(text){if(status)status.textContent=text;}
 function scene(){return state()?.scene||null;}
 function disposePreview(){
@@ -115,6 +151,10 @@ function forceRender(){
 }
 
 input?.addEventListener('input',()=>{syncThickness();if(previewArmed)buildPreview();});
+input?.addEventListener('pointerdown',beginPencilThickness,{capture:true,passive:false});
+input?.addEventListener('pointermove',movePencilThickness,{capture:true,passive:false});
+input?.addEventListener('pointerup',endPencilThickness,{capture:true,passive:false});
+input?.addEventListener('pointercancel',endPencilThickness,{capture:true,passive:false});
 activeToolsDrawer?.addEventListener('toggle',keepDrawerVisible);
 
 button?.addEventListener('click',()=>{
@@ -140,7 +180,7 @@ button?.addEventListener('click',()=>{
   button.textContent='Shell';
   bridge()?.set?.('face',[]);
   manager()?.saveActive?.();
-  globalThis.__boxlabShellLastResult={version:'0.36.18.377',...result};
+  globalThis.__boxlabShellLastResult={version:'0.36.18.378',...result};
   setStatus(`Shell • ${result.removedFaces} opening face${result.removedFaces===1?'':'s'} • thickness ${Number(result.thickness.toFixed(3))} • closed solid`);
   forceRender();
 });
