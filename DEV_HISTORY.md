@@ -26,6 +26,7 @@ Newest entries should be added at the top.
 - Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Added regression coverage for consuming touch activation, non-hit fallthrough, linked propagation retention and protected pins.
+- Released from PR **#48**; squash merge commit: `001b4078e9fe38c365797794341b9bbfe467af39`.
 
 ## 2026-09-20 — v0.36.18.363 atomic linked-duplicate creation
 
