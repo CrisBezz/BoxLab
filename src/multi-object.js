@@ -248,6 +248,29 @@ function updateLockUI() {
   app?.classList.toggle('boxlab-active-locked', !!activeObject()?.locked);
 }
 
+function setObjectSubd(object,next){
+  if(!object||object.kind==='reference')return false;
+  globalThis.__boxlabObjectHistory?.checkpoint?.();
+  const enabled=!!next;
+  if(object.id===activeId){
+    const input=document.querySelector('#subdToggle');
+    if(input){
+      input.checked=enabled;
+      input.dispatchEvent(new Event('change',{bubbles:true}));
+    }
+    object.settings=cloneSettings(captureSettings());
+    saveActive();
+  }else{
+    object.settings=cloneSettings(object.settings);
+    object.settings.subd=enabled;
+  }
+  forceRender();
+  renderOutliner();
+  globalThis.__boxlabObjectSelection?.refresh?.();
+  if(status)status.textContent=`${object.name} • SubD ${enabled?'On':'Off'}`;
+  return true;
+}
+
 function renderOutliner() {
   if (!list) return;
   const mode = currentMode();
@@ -268,6 +291,20 @@ function renderOutliner() {
       ? 'Reference guide — read-only snapping geometry'
       : (object.locked ? 'Locked object — unlock from More' : 'Make active object');
     name.addEventListener('click', () => activateObject(object.id));
+
+    const subd = document.createElement('button');
+    subd.type = 'button';
+    subd.className = 'outliner-mini outliner-subd-toggle';
+    subd.textContent = 'S';
+    subd.title = object.kind === 'reference' ? 'Reference guides do not use SubD Preview' : (object.settings?.subd ? 'Turn SubD Preview off' : 'Turn SubD Preview on');
+    subd.disabled = object.kind === 'reference';
+    subd.classList.toggle('active', !!object.settings?.subd);
+    subd.setAttribute('aria-pressed', object.settings?.subd ? 'true' : 'false');
+    subd.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      setObjectSubd(object,!object.settings?.subd);
+    });
 
     const visible = document.createElement('button');
     visible.className = 'outliner-mini outliner-visibility';
@@ -332,7 +369,7 @@ function renderOutliner() {
 
     menu.append(lock,solo,remove);
     more.append(moreSummary,menu);
-    row.append(name, visible, more);
+    row.append(name, subd, visible, more);
     list.append(row);
   }
   if (duplicateButton) duplicateButton.disabled = !active;
