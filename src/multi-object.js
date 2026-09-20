@@ -26,6 +26,7 @@ let activeId = null;
 let soloId = null;
 let nextId = 1;
 let inactiveBodies = [];
+let inactiveLayer = null;
 let activeBody = null;
 let activeRoot = null;
 let initialized = false;
@@ -731,6 +732,53 @@ function installViewportActivation() {
   }, true);
 }
 
+function ensureInactiveLayer(){
+  const scene=state()?.scene;
+  if(!scene)return null;
+  if(inactiveLayer?.parent===scene)return inactiveLayer;
+  inactiveLayer=new THREE.Group();
+  inactiveLayer.name='BoxLab Inactive Objects';
+  inactiveLayer.userData.boxlabInactiveLayer=true;
+  scene.add(inactiveLayer);
+  return inactiveLayer;
+}
+function clearInactiveLayer(){
+  if(!inactiveLayer)return;
+  for(const child of [...inactiveLayer.children]){
+    inactiveLayer.remove(child);
+    child.traverse?.(node=>{
+      if(node.geometry?.dispose)node.geometry.dispose();
+      if(node!==child&&node.material?.userData?.boxlabRenderOverlay)node.material?.dispose?.();
+    });
+    if(child.material?.userData?.disposable)child.material.dispose?.();
+  }
+  inactiveBodies=[];
+}
+function rebuildInactiveLayer(body){
+  const layer=ensureInactiveLayer();
+  if(!layer)return;
+  clearInactiveLayer();
+  for(const object of objects){
+    if(object.id===activeId||!shouldShow(object))continue;
+    try{
+      const display=displayMeshFor(object);
+      const material=body.material?.clone?.()||new THREE.MeshStandardMaterial({roughness:.62,metalness:.02,side:THREE.DoubleSide});
+      material.transparent=true;
+      material.opacity=object.locked?.32:.52;
+      material.userData={...(material.userData||{}),disposable:true};
+      const inactive=new THREE.Mesh(display.triangulatedGeometry(),material);
+      inactive.userData={kind:'boxlab-inactive-body',objectId:object.id};
+      inactive.renderOrder=-1;
+      inactiveBodies.push(inactive);
+      layer.add(inactive);
+      globalThis.__boxlabRenderModes?.apply?.(inactive);
+    }catch(error){
+      console.warn('BoxLab inactive object render skipped',error);
+    }
+  }
+  globalThis.__boxlabRenderModes?.refreshStudio?.();
+}
+
 function installRenderObserver() {
   if (THREE.Group.prototype.__boxlabMultiObjectInstalled) return;
   const baseAdd = THREE.Group.prototype.add;
@@ -750,26 +798,7 @@ function installRenderObserver() {
 
     const result = baseAdd.apply(this, items);
     if (body) {
-      inactiveBodies = [];
-      for (const object of objects) {
-        if (object.id === activeId || !shouldShow(object)) continue;
-        try {
-          const display = displayMeshFor(object);
-          const material = body.material?.clone?.() || new THREE.MeshStandardMaterial({ roughness:.62, metalness:.02, side:THREE.DoubleSide });
-          material.transparent = true;
-          material.opacity = object.locked ? 0.32 : 0.52;
-          material.userData.disposable = true;
-          const inactive = new THREE.Mesh(display.triangulatedGeometry(), material);
-          inactive.userData = { kind:'boxlab-inactive-body', objectId:object.id };
-          inactive.renderOrder = -1;
-          inactiveBodies.push(inactive);
-          baseAdd.call(this, inactive);
-          globalThis.__boxlabRenderModes?.apply?.(inactive);
-        } catch (error) {
-          console.warn('BoxLab inactive object render skipped', error);
-        }
-      }
-      globalThis.__boxlabRenderModes?.refreshStudio?.();
+      rebuildInactiveLayer(body);
       activeSource?.edges?.();
       queueOutliner();
       queueMicrotask(()=>globalThis.__boxlabBooleanUX?.sync?.());
