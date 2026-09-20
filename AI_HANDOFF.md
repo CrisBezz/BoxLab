@@ -25,13 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.365**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **54027beef0318d334e307c78d82e7439e1573515**
-- Current code-bearing/release commit: **8acba4d282d1c51293f9b9cf08ea7c462ac7ac6e**
-- v0.36.18.365 release PR: **#49**
+- Repository release candidate: **v0.36.18.366**
+- Current documentation HEAD: **v0.36.18.366 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.366 PR branch; pending merge**
+- v0.36.18.366 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.365**
+- Current `version.json`: **0.36.18.366**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -54,7 +54,27 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.365
+## Latest completed development — v0.36.18.366
+
+Theme: **the bridge now publishes the exact mesh currently being rendered**.
+
+Critical fix:
+- `main.js::renderMesh()` explicitly sets `__boxlabBridgeState.mesh = mesh` before clearing/rebuilding the root
+- multi-object `saveActive()` therefore cannot read a one-render-old mesh during direct Extrude / Inset preview or selection-mode changes
+- linked edit commit should no longer snap back after preview
+- Object → Edge / Face / Vertex transitions should rebuild inactive peers from current geometry, not stale bridge geometry
+
+Preserved:
+- .365 persistent inactive scene layer
+- .363 linked source propagation + atomic creation
+- .364 touch event isolation
+- existing SubD / Studio / Outliner behavior
+
+Protected behavior:
+- Group baseline remains `object-origin.js?v=0.36.18.355`
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.365
 
 Theme: **inactive objects moved out of the core modelling root**.
 
@@ -724,14 +744,13 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .365 persistent inactive layer first**
-- create several ordinary and linked objects and move them apart
-- finger-tap between objects repeatedly
-- verify every non-active visible object remains rendered after each activation
-- toggle visibility off/on for inactive objects and verify the persistent layer rebuilds correctly
-- confirm linked edit propagation from .363 still works
-- confirm Pencil activation and Studio mode still render all objects
-- do not resume UI polish until this viewport lifecycle is confirmed stable
+- **user-test .366 linked edit commit + mode transitions first**
+- A → linked B → linked C, move apart
+- Face mode: Extrude on one peer and verify all peers update and remain changed after pointer-up
+- Inset test likewise
+- switch repeatedly Object ↔ Edge ↔ Face ↔ Vertex and verify all visible inactive objects remain rendered
+- activate different peers after edits and verify no snap-back
+- do not resume UI polish until this is confirmed stable
 - preserve `object-origin.js?v=0.36.18.355`
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
