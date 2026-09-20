@@ -26,7 +26,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-20.
 
-- Repository release: **v0.36.18.371 — frozen Beta 3**
+- Frozen release checkpoint: **v0.36.18.371 — Beta 3**\n- Current live development build: **v0.36.18.372 — Phase D Solidify**
 - Current documentation HEAD: **post-Beta-3-freeze documentation; see latest main**
 - Current code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
@@ -35,7 +35,7 @@ Audited from current `main` on 2026-09-20.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.371**
+- Current `version.json`: **0.36.18.372**\n- Current Phase D loader: **solidify.js?v=0.36.18.372** → `solidify-core.js?v=0.36.18.372`
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -56,9 +56,25 @@ Audited from current `main` on 2026-09-20.
 - `src/multi-object-transform.js` intentionally remains pinned at **v0.36.1.0**
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
-Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
+Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.371
+## Latest completed development — v0.36.18.372
+
+Theme: **Phase D begins — open-sheet Solidify foundation**.
+
+- Added Object > Active Tools > **Solidify** with a Thickness control.
+- Solidify accepts a valid open manifold sheet and generates a closed watertight solid.
+- New inner shell is offset along area-weighted averaged vertex normals.
+- Boundary edges are bridged automatically with side quads.
+- Existing crease weights are copied to the corresponding inner-shell edges.
+- Closed meshes, non-manifold inputs, branched boundaries, inconsistent winding, duplicate/degenerate faces and zero-area normals are refused before mutation.
+- Final topology is validated as closed/manifold; failed output rolls back transactionally.
+- Operation owns one Object scene-history checkpoint and saves through the existing Object Manager so linked-instance propagation remains in the established pathway.
+- No Through / Extrude / Boolean / Group / transform implementation was changed.
+- Frozen Beta 3 at `/beta-3/` remains immutable.
+- This is the conservative Solidify foundation. Closed-solid **Shell with selected-face removal** is the next Phase D extension.
+
+## Previous completed development — v0.36.18.371
 
 Theme: **frozen Beta 3 checkpoint / post-release handoff**.
 
