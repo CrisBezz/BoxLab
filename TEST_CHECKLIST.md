@@ -243,6 +243,24 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] no-change result reports safely without corrupting the mesh
 - [ ] Undo/Redo remains valid after a clean operation
 
+## Phase D — Array
+
+- [ ] Linear Array is available in Object > Active Tools for editable unlocked objects
+- [ ] Array Count includes the source object and produces Count-1 copies
+- [ ] Array supports X / Y / Z world axes
+- [ ] Array Spacing controls equal step distance between consecutive instances
+- [ ] first Array tap creates a non-destructive preview and Apply Array performs the commit
+- [ ] changing Count / Spacing / axis updates the preview without creating objects
+- [ ] Count and Spacing work with both finger and Apple Pencil without late native slider snap-back
+- [ ] Apply Array creates linked instances rather than unique mesh copies
+- [ ] editing source geometry after Array propagates to generated linked instances
+- [ ] generated Array instances retain independent object placement
+- [ ] source object remains active after Apply Array
+- [ ] Array Apply is one Object-scene Undo step and Redo restores the instances
+- [ ] Active Tools remains open throughout Array preview
+- [ ] locked/reference objects cannot Array
+- [ ] existing Linked Duplicate / Make Unique behavior remains unchanged
+
 ## Phase D — Solidify / Shell foundation
 
 - [ ] Shell appears in Face > Active Tools when one or more Faces are selected on an editable closed solid
