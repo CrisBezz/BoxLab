@@ -96,8 +96,16 @@ function setStatus(text){if(status)status.textContent=text;}
 function scene(){return state()?.scene||null;}
 function disposePreview(){
   if(preview?.parent)preview.parent.remove(preview);
-  preview?.geometry?.dispose?.();
-  preview?.material?.dispose?.();
+  if(preview){
+    const geometries=new Set(),materials=new Set();
+    preview.traverse?.(node=>{
+      if(node.geometry)geometries.add(node.geometry);
+      if(Array.isArray(node.material))node.material.forEach(m=>m&&materials.add(m));
+      else if(node.material)materials.add(node.material);
+    });
+    geometries.forEach(g=>g.dispose?.());
+    materials.forEach(m=>m.dispose?.());
+  }
   preview=null;
 }
 function lockDrawer(){
@@ -131,13 +139,21 @@ function buildPreview(){
   disposePreview();
   if(!result.ok){setStatus(`Shell preview unavailable • ${result.detail||result.reason}`);return false;}
   const geometry=working.triangulatedGeometry();
-  const material=new THREE.MeshBasicMaterial({
-    color:0x62d8ff,transparent:true,opacity:.24,side:THREE.DoubleSide,
+  const fillMaterial=new THREE.MeshBasicMaterial({
+    color:0x62d8ff,transparent:true,opacity:.18,side:THREE.DoubleSide,
+    depthTest:false,depthWrite:false
+  });
+  const wireMaterial=new THREE.MeshBasicMaterial({
+    color:0x62d8ff,transparent:true,opacity:.72,side:THREE.DoubleSide,
     wireframe:true,depthTest:false,depthWrite:false
   });
-  preview=new THREE.Mesh(geometry,material);
+  const fill=new THREE.Mesh(geometry,fillMaterial);
+  const wire=new THREE.Mesh(geometry,wireMaterial);
+  fill.renderOrder=13;
+  wire.renderOrder=14;
+  preview=new THREE.Group();
+  preview.add(fill,wire);
   preview.name='BoxLab Shell Preview';
-  preview.renderOrder=13;
   preview.userData.boxlabShellPreview=true;
   target.add(preview);
   setStatus(`Shell preview • ${previewFaces.length} opening face${previewFaces.length===1?'':'s'} • thickness ${Number(thickness().toFixed(3))} • Apply Shell to commit`);
@@ -207,7 +223,7 @@ button?.addEventListener('click',()=>{
   button.textContent='Shell';
   bridge()?.set?.('face',[]);
   manager()?.saveActive?.();
-  globalThis.__boxlabShellLastResult={version:'0.36.18.379',...result};
+  globalThis.__boxlabShellLastResult={version:'0.36.18.380',...result};
   setStatus(`Shell • ${result.removedFaces} opening face${result.removedFaces===1?'':'s'} • thickness ${Number(result.thickness.toFixed(3))} • closed solid`);
   forceRender();
 });
@@ -220,7 +236,7 @@ window.addEventListener('beforeunload',()=>{disposePreview();unlockDrawer();});
 sync();
 
 globalThis.__boxlabShell={
-  version:'0.36.18.379',
+  version:'0.36.18.380',
   analyze:analyzeShellInput,
   cancel:cancelPreview,
   get active(){return previewArmed;}
