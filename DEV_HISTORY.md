@@ -8,6 +8,22 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.361 per-object Outliner SubD toggle
+
+- Added a compact per-object **S** button to each editable Object row.
+- Outliner row layout is now **Name / S / Visibility / More**.
+- **S** directly reflects the existing per-object `object.settings.subd` state.
+- Lit/active S = SubD Preview on; dim S = off.
+- Toggling an inactive object updates its existing stored modifier settings and refreshes the viewport without making it active.
+- Toggling the active object drives the existing `#subdToggle` control and then re-captures the same authoritative object settings, so the Outliner and Modifiers drawer stay synchronized.
+- Each SubD toggle creates one Object scene-history checkpoint.
+- Reference objects keep SubD disabled.
+- No new subdivision implementation or modifier state was introduced; existing `displayMeshFor()`, `subdivide()`, SubD level and Cage controls remain authoritative.
+- Contextual Origin/Pivot UI from .360 and compact Outliner behavior remain unchanged.
+- Protected `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for row presence/state, active/inactive synchronization, Reference exclusion and protected pins.
+
 ## 2026-09-20 — v0.36.18.360 contextual Object controls
 
 - Continued UI/UX polish on the protected v0.36.18.355 Group transform baseline.

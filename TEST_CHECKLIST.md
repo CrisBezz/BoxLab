@@ -76,7 +76,10 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Group Selection immediately creates the visible hierarchy row; it must not merely stamp per-object group IDs/tags
 - [ ] compact Group tree keeps Group Selection contextual: the creation control is hidden unless 2+ groupable objects are selected
 - [ ] compact Group header uses disclosure + name + visibility + More; Lock / Rename / Ungroup live inside More without expanding drawer height unnecessarily
-- [ ] compact object rows use name + visibility + More; Lock / Solo remain available inside More
+- [ ] compact object rows use Name + SubD + Visibility + More; Lock / Solo / Delete remain available inside More
+- [ ] per-object SubD button reflects object.settings.subd and updates inactive-object rendering without changing active object
+- [ ] active-object SubD button stays synchronized with the existing Modifiers > SubD Preview checkbox
+- [ ] Reference objects cannot enable SubD from the Outliner
 - [ ] Object / Group / footer More popovers are explicitly anchored above their trigger and remain visible above the drawer's lower edge
 - [ ] Group More menu Rename/Ungroup works while the normal Rename Group pathway remains available
 - [ ] exactly two selected objects show amber/blue viewport tint (active/primary amber, second blue) while the Outliner remains neutral unless Boolean-specific UI is in use

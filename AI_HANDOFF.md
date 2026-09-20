@@ -25,18 +25,18 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.360**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **9ebb16d905342c7e49e99790280ea7317aec4cb0**
-- Current code-bearing/release commit: **41fa0636d5b601cd059afe4bc911f4f36b4a9dab**
-- v0.36.18.360 release PR: **#44**
+- Repository release candidate: **v0.36.18.361**
+- Current documentation HEAD: **v0.36.18.361 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.361 PR branch; pending merge**
+- v0.36.18.361 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.360**
+- Current `version.json`: **0.36.18.361**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
-- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.360**
+- Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.360**
+- Object management loader: **object-management.js?v=0.36.18.361**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.348**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -54,7 +54,30 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.360
+## Latest completed development — v0.36.18.361
+
+Theme: **per-object SubD control in the compact Outliner**.
+
+User-facing behavior:
+- editable Object rows now show **Name / S / Visibility / More**
+- S is lit when that object's existing SubD Preview is enabled
+- tap S to toggle SubD for that object without opening Modifiers
+- inactive objects can be toggled without becoming active
+- active-object S stays synchronized with the existing Modifiers > SubD Preview checkbox
+- Reference rows cannot enable SubD
+
+Implementation principle:
+- no second SubD system was added
+- existing `object.settings.subd`, `subdLevel`, `displayMeshFor()` and main SubD controls remain authoritative
+- each toggle participates in Object scene history
+
+Protected behavior:
+- contextual Origin/Pivot UI from .360 unchanged
+- Group selection/transform baseline remains `object-origin.js?v=0.36.18.355`
+- linked instances, Boolean behavior and Reference protection unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.360
 
 Theme: **contextual Object-mode controls**.
 
@@ -613,12 +636,12 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .360 contextual Origin/Pivot and compact Selection strip**
-- verify single-object context shows Origin only
-- verify Multi / whole Group shows Pivot only
-- verify Median / Active / Individual / World still behave exactly as before for Scale/Rotate
-- verify Selection toolbar remains comfortable with Pencil/finger
-- if confirmed, continue compact Object drawer polish or move to the queued Group Boolean convenience wrapper
+- **user-test .361 Outliner SubD control**
+- verify S toggles active and inactive editable objects independently
+- verify active S remains synchronized with Modifiers > SubD Preview
+- verify SubD level remains per-object and unchanged by the row toggle
+- verify grouped children can each show/toggle their own SubD state without affecting Group transforms
+- if confirmed, continue compact Object drawer polish or move to queued Group Boolean convenience
 - Group Boolean should reuse temporary Join-derived compound operands and existing Boolean, not introduce a new Group geometry type
 - preserve `object-origin.js?v=0.36.18.355` unless a concrete Group regression requires changing it
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
@@ -640,6 +663,7 @@ Completed Phase C slices now include:
 - upward More popovers + Safari-resistant anchoring (.357–.358)
 - per-object Delete restoration + hardware Delete/Backspace (.359)
 - contextual Origin/Pivot + compact Object Selection strip (.360)
+- per-object Outliner SubD Preview toggle (.361)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
