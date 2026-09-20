@@ -25,12 +25,12 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-20.
 
-- Repository release candidate: **v0.36.18.371**
-- Current documentation HEAD: **v0.36.18.371 PR branch; refresh after merge**
-- Current code-bearing/release commit: **v0.36.18.371 PR branch; pending merge**
-- v0.36.18.371 release PR: **pending**
-- PR regression / CI status: **pending PR creation / automatic checks**
-- Post-merge regression / CI status: **pending**
+- Repository release: **v0.36.18.371 — Beta 3 release candidate**
+- Current documentation HEAD before this final `AI_HANDOFF.md` update: **a0753632d3c0cbce9626c42296033f5bb2fc7b0c**
+- Current code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
+- v0.36.18.371 release PR: **#54**
+- PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35495835508**
+- Post-merge regression / CI status: **not separately rerun; release code is the tested PR squash merge**
 - Current `version.json`: **0.36.18.371**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
