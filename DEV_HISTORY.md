@@ -15,6 +15,8 @@ Newest entries should be added at the top.
 - Both preview layers render depth-test/write disabled so inner/back faces remain legible through the source mesh.
 - Preview disposal now traverses child meshes and disposes shared resources safely.
 - No Shell topology, thickness, selection, history or Apply behaviour changed.
+- Released from PR **#64**; squash merge commit: `39252588b9e7530fd276a0715739a040efc87d59`.
+- Final Topology regression passed in workflow run **35544543433**.
 
 ## 2026-09-20 — v0.36.18.379 Shell Pencil late-native guard
 
