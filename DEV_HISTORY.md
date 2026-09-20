@@ -8,6 +8,34 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.369 shell-by-shell Group Boolean + persistent Swap drawer
+
+- User test of .368 showed Group selection/A-B assignment worked, but Cut failed topology validation with boundary/non-manifold edges.
+- Root cause: .368 concatenated every Group member into one disconnected EditableMesh and then fed that multi-shell mesh into the existing pairwise Boolean solver, which assumes a single closed solid operand.
+- .369 keeps Group members as separate closed shells throughout the Boolean calculation.
+- Added `splitConnectedShells()` to split pairwise results back into closed components after operations that can divide a solid.
+- Added `solidsInteract()` using real face intersections plus point-in-solid containment so disjoint shells do not enter the pairwise solver unnecessarily.
+- Group Cut:
+  - starts with each A shell independently
+  - applies every B cutter shell to every surviving A shell
+  - drops shells that become empty
+  - splits resulting geometry into connected shells before the next cutter
+- Group Intersect:
+  - evaluates every interacting A/B shell pair
+  - collects the resulting closed pieces
+  - normalizes overlapping result pieces through compound union
+- Group Union:
+  - incrementally unions only interacting/contained shells
+  - genuinely disjoint shells stay separate
+  - final closed shells are concatenated only after all pairwise Boolean solving is complete
+- Group operand eligibility now validates every member as a closed manifold individually; it no longer uses a disconnected concatenated Group mesh as solver input.
+- Result remains one normal editable object and may contain multiple disconnected closed shells where that is geometrically correct.
+- User also reported Swap closed Active Tools.
+- Boolean A/B UX now marks Active Tools as `keepOpen` while valid Boolean operands exist, explicitly opens it before Swap, and reopens it after active-operand activation.
+- Protected linked-instance/navigation baseline `multi-object.js?v=0.36.18.367` remains untouched.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+
 ## 2026-09-20 — v0.36.18.368 Group Boolean convenience
 
 - Built the queued Phase C Group Boolean workflow without introducing a Group geometry type.

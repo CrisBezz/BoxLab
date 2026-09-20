@@ -51,7 +51,7 @@ function installStyle(){
 #booleanPrototype217 [data-boolean217="difference"] .bool-a-label{color:var(--bool-a);font-weight:800}#booleanPrototype217 [data-boolean217="difference"] .bool-b-label{color:var(--bool-b);font-weight:800}
 `;
 }
-function keepBooleanToolsVisible(){if(editDrawer)delete editDrawer.dataset.keepOpen;}
+function keepBooleanToolsVisible(on=false){if(!editDrawer)return;if(on){editDrawer.dataset.keepOpen='true';editDrawer.open=true;}else delete editDrawer.dataset.keepOpen;}
 function ensureOperandUI(){
   installStyle();const group=document.querySelector('#booleanPrototype217');if(!group)return null;
   let panel=document.querySelector('#booleanOperand218');if(panel)return panel;
@@ -61,8 +61,10 @@ function ensureOperandUI(){
   const swap=document.createElement('button');swap.type='button';swap.id='booleanSwapAB218';swap.textContent='Swap';swap.title='Swap A / B Boolean operands';
   swap.addEventListener('click',event=>{
     event.preventDefault();event.stopPropagation();const e=operands();if(!e.ok)return;
+    keepBooleanToolsVisible(true);
     const targetId=e.b?.primaryId??e.b?.id;
     if(targetId!=null)manager()?.activate?.(targetId);
+    requestAnimationFrame(()=>keepBooleanToolsVisible(true));
     setStatus(`Boolean operands swapped • A ${e.b.name} • B ${e.a.name}`);queueSelectionSync();
   });
   panel.append(a,b,swap);group.firstElementChild?.after(panel);return panel;
@@ -128,7 +130,7 @@ function syncSelectionColours(){
 
 function syncUI(){
   selectionSyncQueued=false;
-  const panel=ensureOperandUI(),e=operands();keepBooleanToolsVisible(false);markOutliner({ok:false});syncSelectionColours();if(!panel)return;
+  const panel=ensureOperandUI(),e=operands();keepBooleanToolsVisible(!!e.ok);markOutliner({ok:false});syncSelectionColours();if(!panel)return;
   const a=panel.querySelector('.bool-a'),b=panel.querySelector('.bool-b'),swap=panel.querySelector('#booleanSwapAB218');
   if(e.ok){
     a.innerHTML=`<strong>A · ${escapeHtml(e.a.name)}</strong><span>Active / Base</span>`;

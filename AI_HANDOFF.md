@@ -25,13 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.368**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **65ed453bb263de6a9bd06859e492afa86daec7cc**
-- Current code-bearing/release commit: **960db8c5d89c987c82c2a95c8ab3dd3a7eccdf04**
-- v0.36.18.368 release PR: **#52**
+- Repository release candidate: **v0.36.18.369**
+- Current documentation HEAD: **v0.36.18.369 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.369 PR branch; pending merge**
+- v0.36.18.369 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.368**
+- Current `version.json`: **0.36.18.369**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -54,7 +54,27 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.368
+## Latest completed development — v0.36.18.369
+
+Theme: **real compound Group Boolean + persistent Boolean drawer**.
+
+Fixes from user test of .368:
+- Group Boolean no longer sends a disconnected concatenated Group mesh into the ordinary pairwise Boolean solver
+- Group members remain separate closed shells during Boolean solving
+- Cut applies each B shell across surviving A shells
+- Intersect evaluates interacting A/B shell pairs
+- Union only merges interacting/contained shells and leaves genuinely disjoint shells as separate closed result components
+- final result is assembled only after pairwise solving
+- Swap keeps Active Tools open before and after changing the active Boolean operand
+
+Preserved:
+- .368 additive whole-Group A/B selection
+- one-step Object scene-history ownership and source Group preservation
+- .367 confirmed linked-instance/navigation baseline
+- .355 protected Group transforms
+- protected multi-object-transform.js v0.36.1.0
+
+## Previous completed development — v0.36.18.368
 
 Theme: **Group Boolean convenience over the existing Join + Boolean architecture**.
 
@@ -785,12 +805,12 @@ Scene / modifiers:
 **Phase C remains active.**
 
 Recommended:
-- user-test .368 Group Boolean convenience
-- verify Group A + Group B additive selection is comfortable on iPad
-- verify Union / Cut / Intersect results and one-step Undo
-- verify original Group names/hierarchy return unchanged after Undo
+- user-test .369 using the same two Groups that failed in .368
+- verify Group Cut now completes without the disconnected-operand topology failure
+- verify Union / Intersect on simple overlapping Group solids
+- tap Swap and confirm Active Tools stays open
+- Undo and confirm both source Groups return with names/hierarchy unchanged
 - verify ordinary two-object Boolean remains unchanged
-- if stable, continue Make Unique robustness/polish or move to the next Phase C object-workflow gap
 - preserve `multi-object.js?v=0.36.18.367`, `object-origin.js?v=0.36.18.355`, and `multi-object-transform.js?v=0.36.1.0`
 
 ## End-of-session requirement

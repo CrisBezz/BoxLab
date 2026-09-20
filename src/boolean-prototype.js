@@ -3,7 +3,7 @@
 import * as THREE from 'three';
 import { EditableMesh } from './mesh.js';
 import { meshIntersections, epsilonForMeshes } from './boolean-intersections.js?v=0.36.18.209';
-import { topologyInfo } from './boolean-classify.js?v=0.36.18.210';
+import { topologyInfo, classifyPoint } from './boolean-classify.js?v=0.36.18.210';
 import { booleanBSP } from './boolean-bsp.js?v=0.36.18.248';
 import { combineEditableMeshes } from './object-join-core.js?v=0.36.18.277';
 
@@ -150,6 +150,101 @@ function buildResult(a,b,operation){
   if(sequential.ok)return{...sequential,engine:'sequential',fallbackReason:stable.reason};
   return{...sequential,engine:'sequential',fallbackReason:stable.reason,reason:`Sequential Boolean refused • ${sequential.reason||'general solver failed'}`};
 }
+function splitConnectedShells(mesh){
+  if(!mesh?.faces?.length)return[];
+  const edgeFaces=new Map(),faceEdges=[];
+  const key=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
+  mesh.faces.forEach((face,fi)=>{
+    const edges=[];
+    for(let i=0;i<face.length;i++){
+      const k=key(face[i],face[(i+1)%face.length]);edges.push(k);
+      if(!edgeFaces.has(k))edgeFaces.set(k,[]);
+      edgeFaces.get(k).push(fi);
+    }
+    faceEdges[fi]=edges;
+  });
+  const seen=new Set(),components=[];
+  for(let seed=0;seed<mesh.faces.length;seed++){
+    if(seen.has(seed))continue;
+    const queue=[seed],faces=[];seen.add(seed);
+    while(queue.length){
+      const fi=queue.shift();faces.push(fi);
+      for(const k of faceEdges[fi]||[])for(const other of edgeFaces.get(k)||[])if(!seen.has(other)){seen.add(other);queue.push(other);}
+    }
+    components.push(faces);
+  }
+  return components.map(faceIds=>{
+    const used=[...new Set(faceIds.flatMap(fi=>mesh.faces[fi]))],map=new Map(used.map((old,i)=>[old,i]));
+    return new EditableMesh(used.map(i=>mesh.vertices[i].clone()),faceIds.map(fi=>mesh.faces[fi].map(i=>map.get(i))));
+  });
+}
+function solidsInteract(a,b){
+  const intersections=meshIntersections(a,b);
+  if(intersections.pairCount>0)return true;
+  const eps=epsilonForMeshes(a,b);
+  const av=a.vertices?.[0],bv=b.vertices?.[0];
+  const ain=av?classifyPoint(av,b,{eps}).state:null;
+  const bin=bv?classifyPoint(bv,a,{eps}).state:null;
+  return ain==='inside'||ain==='boundary'||bin==='inside'||bin==='boundary';
+}
+function emptyBoolean(result){return !result?.ok&&/result is empty/i.test(String(result?.reason||''));}
+function compoundUnion(shells){
+  const out=[];
+  for(const source of shells.filter(Boolean)){
+    let pending=source.clone(),merged=true;
+    while(merged){
+      merged=false;
+      for(let i=0;i<out.length;i++){
+        if(!solidsInteract(pending,out[i]))continue;
+        const result=buildResult(pending,out[i],'union');
+        if(!result.ok)return result;
+        const parts=splitConnectedShells(result.mesh);
+        if(parts.length!==1)return{ok:false,reason:'Group Union could not resolve overlapping shells to one closed result'};
+        pending=parts[0];out.splice(i,1);merged=true;break;
+      }
+    }
+    out.push(pending);
+  }
+  return out.length?{ok:true,shells:out}:{ok:false,reason:'Boolean result is empty'};
+}
+function buildGroupResult(active,other,operation){
+  const aShells=(active.members||[]).map(o=>o.mesh.clone()),bShells=(other.members||[]).map(o=>o.mesh.clone());
+  if(operation==='union'){
+    const union=compoundUnion([...aShells,...bShells]);if(!union.ok)return union;
+    const mesh=union.shells.length===1?union.shells[0]:combineEditableMeshes(union.shells);
+    return mesh?{ok:true,mesh,engine:'compound',shellCount:union.shells.length}:{ok:false,reason:'Could not assemble Group Union result'};
+  }
+  if(operation==='difference'){
+    let shells=aShells;
+    for(const cutter of bShells){
+      const next=[];
+      for(const shell of shells){
+        if(!solidsInteract(shell,cutter)){next.push(shell);continue;}
+        const result=buildResult(shell,cutter,'difference');
+        if(emptyBoolean(result))continue;
+        if(!result.ok)return result;
+        next.push(...splitConnectedShells(result.mesh));
+      }
+      shells=next;if(!shells.length)break;
+    }
+    if(!shells.length)return{ok:false,reason:'Boolean result is empty'};
+    const mesh=shells.length===1?shells[0]:combineEditableMeshes(shells);
+    return mesh?{ok:true,mesh,engine:'compound',shellCount:shells.length}:{ok:false,reason:'Could not assemble Group Cut result'};
+  }
+  const pieces=[];
+  for(const a of aShells)for(const b of bShells){
+    if(!solidsInteract(a,b))continue;
+    const result=buildResult(a,b,'intersection');
+    if(emptyBoolean(result))continue;
+    if(!result.ok)return result;
+    pieces.push(...splitConnectedShells(result.mesh));
+  }
+  if(!pieces.length)return{ok:false,reason:'Boolean result is empty'};
+  const normalized=compoundUnion(pieces);if(!normalized.ok)return normalized;
+  const mesh=normalized.shells.length===1?normalized.shells[0]:combineEditableMeshes(normalized.shells);
+  return mesh?{ok:true,mesh,engine:'compound',shellCount:normalized.shells.length}:{ok:false,reason:'Could not assemble Group Intersect result'};
+}
+
 function ensureUI(){
   if(!objectTools)return null;
   document.querySelector('#booleanPrototype211')?.remove();document.querySelector('#booleanPrototype212')?.remove();document.querySelector('#booleanPrototype214')?.remove();document.querySelector('#booleanPrototype215')?.remove();document.querySelector('#booleanPrototype216')?.remove();
@@ -177,7 +272,7 @@ function eligibility(){
   const selected=allObjects.filter(o=>selectedIds.has(o.id));
   const allowed=new Set(groupIds),invalidSelected=selected.some(o=>o.groupId==null||!allowed.has(o.groupId));
   if(invalidSelected)return{ok:false,reason:'Group Boolean requires exactly two complete Groups'};
-  const operandFor=id=>{const members=g.members?.(id)||allObjects.filter(o=>o.groupId===id);if(members.length<2||members.some(o=>!selectedIds.has(o.id)))return null;if(members.some(o=>o.kind==='reference'))return{error:'Reference objects cannot be Boolean operands'};if(members.some(o=>o.locked))return{error:'Unlock all Group members before Boolean'};const mesh=combineEditableMeshes(members.map(o=>o.mesh));if(!mesh)return{error:'Could not build temporary Group operand'};const topo=topologyInfo(mesh);if(!topo.closed)return{error:'Both Group operands must contain closed manifold meshes'};return{name:g.label?.(id)||`Group ${id}`,groupId:id,members,mesh,primaryId:members[0]?.id};};
+  const operandFor=id=>{const members=g.members?.(id)||allObjects.filter(o=>o.groupId===id);if(members.length<2||members.some(o=>!selectedIds.has(o.id)))return null;if(members.some(o=>o.kind==='reference'))return{error:'Reference objects cannot be Boolean operands'};if(members.some(o=>o.locked))return{error:'Unlock all Group members before Boolean'};if(members.some(o=>!topologyInfo(o.mesh).closed))return{error:'Every Group member must be a closed manifold mesh'};return{name:g.label?.(id)||`Group ${id}`,groupId:id,members,primaryId:members[0]?.id};};
   const activeObject=allObjects.find(o=>o.id===m.activeId),activeGroupId=activeObject?.groupId;
   if(!allowed.has(activeGroupId))return{ok:false,reason:'Active object must belong to one selected Group'};
   const otherGroupId=groupIds.find(id=>id!==activeGroupId),active=operandFor(activeGroupId),other=operandFor(otherGroupId);
@@ -201,7 +296,7 @@ function sync(){
 function apply(operation){
   const e=eligibility();if(!e.ok){setStatus(`Boolean • ${e.reason}`);return;}
   setStatus(`Boolean ${operation} • calculating…`);
-  const result=buildResult(e.active.mesh,e.other.mesh,operation);
+  const result=e.kind==='groups'?buildGroupResult(e.active,e.other,operation):buildResult(e.active.mesh,e.other.mesh,operation);
   if(!result.ok){setStatus(`Boolean ${operation} refused • ${result.reason}`);return;}
   globalThis.__boxlabObjectHistory?.checkpoint?.();
   const originals=e.originals||[e.active,e.other],visibility=new Map(originals.map(o=>[o.id,o.visible!==false]));
@@ -211,9 +306,9 @@ function apply(operation){
   if(!created){for(const object of originals)object.visible=visibility.get(object.id)!==false;setStatus(`Boolean ${label} failed • result object could not be created`);return;}
   selection()?.select?.([created.id]);
   globalThis.__boxlabTopologyGate?.sync?.();
-  const fallbackText=result.fallbackReason===DEGENERATE_INPUT?' • repaired degenerate input':'';
+  const fallbackText=result.fallbackReason===DEGENERATE_INPUT?' • repaired degenerate input':'';const engineText=result.engine==='compound'?'compound solver':result.engine==='sequential'?'sequential solver':'stable solver';
   const sourceText=e.kind==='groups'?' • source Groups hidden':' • originals hidden';
-  setStatus(`${label} created • ${result.mesh.vertices.length} verts • ${result.mesh.faces.length} faces • ${result.engine==='sequential'?'sequential solver':'stable solver'}${fallbackText}${sourceText}`);
+  setStatus(`${label} created • ${result.mesh.vertices.length} verts • ${result.mesh.faces.length} faces • ${engineText}${fallbackText}${sourceText}`);
 }
 
 ensureUI();
@@ -223,4 +318,4 @@ window.addEventListener('boxlab-bridge-state',()=>setTimeout(sync,0));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 [0,100,400,900].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabBooleanPrototype={version:VERSION,buildStableResult,buildResult,eligibility,apply,sync};
+globalThis.__boxlabBooleanPrototype={version:VERSION,buildStableResult,buildResult,buildGroupResult,eligibility,apply,sync};
