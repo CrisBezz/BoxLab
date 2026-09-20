@@ -28,19 +28,19 @@ test('363 second-generation linked duplicate remains on same shared source',()=>
   assert.match(block,/sourceId:sourceObject\.sourceId/);
 });
 
-test('363 inactive linked bodies continue to evaluate from source times instance matrix',()=>{
+test('363 inactive linked bodies evaluate through persistent source-times-instance layer',()=>{
   const src=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
   const display=src.slice(src.indexOf('function displayMeshFor'),src.indexOf('function queueOutliner'));
-  const observer=src.slice(src.indexOf('function installRenderObserver'),src.indexOf('function installUI'));
+  const rebuild=src.slice(src.indexOf('function rebuildInactiveLayer'),src.indexOf('function installRenderObserver'));
   assert.match(display,/transformEditableMesh\(source\.mesh,matrixForInstance\(object\)\)/);
-  assert.match(observer,/const display = displayMeshFor\(object\)/);
-  assert.match(observer,/inactive\.userData = \{ kind:'boxlab-inactive-body', objectId:object\.id \}/);
+  assert.match(rebuild,/const display=displayMeshFor\(object\)/);
+  assert.match(rebuild,/inactive\.userData=\{kind:'boxlab-inactive-body',objectId:object\.id\}/);
 });
 
-test('363 protected Group transform baseline remains untouched',()=>{
+test('363 current linked runtime and protected Group transform baseline remain pinned',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/multi-object\.js\?v=0\.36\.18\.363/);
+  assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
