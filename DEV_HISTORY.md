@@ -18,6 +18,8 @@ Newest entries should be added at the top.
 - Count/Spacing Pencil sliders use explicit Pencil mapping and late native Safari event protection.
 - Active Tools stays open while the preview is armed.
 - No edits to protected multi-object-transform, Through, Boolean, Solidify core or Shell core.
+- Released from PR **#66**; squash merge commit: `6871a0dbdfaa338b2528d53254c97d98bdd65158`.
+- Final Topology regression passed in workflow run **35545288948**.
 
 ## 2026-09-21 — v0.36.18.381 Solidify preview backface visibility
 
