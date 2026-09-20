@@ -19,18 +19,22 @@ The repository is authoritative. If anything here conflicts with current `main`,
 - Production branch: `main`
 - Live app: https://crisbezz.github.io/BoxLab/
 - Frozen Beta 2: https://crisbezz.github.io/BoxLab/beta-2/
+- Frozen Beta 3: https://crisbezz.github.io/BoxLab/beta-3/
 - Product: iPad-first touch/Pencil polygon modeller and Nomad Sculpt companion.
 
 ## Current audited repository state
 
 Audited from current `main` on 2026-09-20.
 
-- Repository release: **v0.36.18.371 — Beta 3 release candidate**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **a0753632d3c0cbce9626c42296033f5bb2fc7b0c**
+- Repository release: **v0.36.18.371 — frozen Beta 3**
+- Current documentation HEAD: **post-Beta-3-freeze documentation; see latest main**
 - Current code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35495835508**
-- Post-merge regression / CI status: **not separately rerun; release code is the tested PR squash merge**
+- Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
+- User hands-on release gate: **PASS**
+- Beta 3 freeze PR: **#55**
+- Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
 - Current `version.json`: **0.36.18.371**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -56,14 +60,14 @@ Phase A remains frozen except for concrete regressions. The planned Phase B prec
 
 ## Latest completed development — v0.36.18.371
 
-Theme: **Beta 3 release-candidate hardening / feature freeze**.
+Theme: **frozen Beta 3 checkpoint / post-release handoff**.
 
 Release intent:
-- no new modelling capability in .371
-- preserve the current user-tested modelling/object baseline
-- run the hands-on release gate in `BETA3_RELEASE_CHECKLIST.md`
-- fix only reproducible release blockers
-- once approved, freeze the exact approved tree to `/beta-3/`
+- v0.36.18.371 passed the hands-on iPad release gate
+- exact approved runtime tree is frozen at `/beta-3/`
+- frozen checkpoint derives from code-bearing release commit `c17fb0f996f406449975a1add5b774eadc30e529`
+- freeze merged in PR #55 at `a227042e2bd2972c96361aedf7840bdcc62c78bb`
+- Beta 3 is immutable except for an explicitly approved emergency release fix
 
 New release guards:
 - `tests/beta3-release-candidate-371.test.mjs` locks the critical linked-instance, navigation, Group transform, component-Multi, Through, Clean and Group Boolean baselines
@@ -825,16 +829,14 @@ Scene / modifiers:
 
 ## Next development step
 
-**Beta 3 release gate is active.**
+**Post-Beta-3 development may resume.**
 
-1. User runs the iPad hands-on checks in `BETA3_RELEASE_CHECKLIST.md`.
-2. Fix only concrete release-blocking regressions.
-3. If the gate passes, freeze the approved tree to `/beta-3/`.
-4. Smoke-test both the live app and frozen Beta 3 URL.
-5. Resume Phase D only after the checkpoint is confirmed.
-
-Do not merge the abandoned .370 experiment into main.
-Preserve `multi-object.js?v=0.36.18.367`, `object-origin.js?v=0.36.18.355`, and `multi-object-transform.js?v=0.36.1.0`.
+- Keep frozen Beta 3 at `/beta-3/` immutable.
+- Live `main` is now free for the next development phase.
+- Start with the next agreed roadmap item rather than altering the frozen checkpoint.
+- Preserve the confirmed v0.36.18.371 interaction/modelling baseline unless a concrete regression requires a change.
+- Keep `multi-object.js?v=0.36.18.367`, `object-origin.js?v=0.36.18.355`, and `multi-object-transform.js?v=0.36.1.0` protected.
+- Wider Beta 3 testing feedback should be reproduced on the frozen URL first; fixes belong on live `main` unless the user explicitly approves a Beta 3 patch release.
 
 ## End-of-session requirement
 
