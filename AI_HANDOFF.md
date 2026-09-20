@@ -29,7 +29,7 @@ Audited from current `main` on 2026-09-20.
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
 - Current live development build: **v0.36.18.379 — hardened Apple Pencil Shell thickness ownership**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **4b50d300a72c41c774f74eb55daf18a220f8acdd**
+- Current live code-bearing commit: **13d9ea9aa3c58333abfc660dcd990ed26363d94f**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
@@ -38,8 +38,9 @@ Audited from current `main` on 2026-09-20.
 - Previous v0.36.18.375 PR: **#59**
 - Previous v0.36.18.376 PR: **#60**
 - Previous v0.36.18.377 PR: **#61**
-- Current v0.36.18.378 PR: **#62**
-- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35507531277**
+- Previous v0.36.18.378 PR: **#62**
+- Current v0.36.18.379 PR: **#63**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35507874713**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
