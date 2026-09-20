@@ -25,13 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.367**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **ec4b68efff035dfb8c1c43e8dac850f3fd0363f0**
-- Current code-bearing/release commit: **db74acc2c2069c16b583874c67f4051ba1310fc4**
-- v0.36.18.367 release PR: **#51**
+- Repository release candidate: **v0.36.18.368**
+- Current documentation HEAD: **v0.36.18.368 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.368 PR branch; pending merge**
+- v0.36.18.368 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.367**
+- Current `version.json`: **0.36.18.368**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -54,7 +54,32 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.367
+## Latest completed development — v0.36.18.368
+
+Theme: **Group Boolean convenience over the existing Join + Boolean architecture**.
+
+User-facing workflow:
+- select a whole Group
+- with Multi active, tap a second Group header to add that whole Group
+- existing Boolean controls become available for Union / Cut / Intersect
+- A Group is amber, B Group is blue
+- result is a normal editable object
+- source Groups remain intact but hidden after success
+
+Architecture:
+- no Group geometry type
+- each Group is combined temporarily in memory with existing `combineEditableMeshes()`
+- existing Boolean solver remains authoritative
+- one Object scene-history checkpoint owns the operation
+- Undo restores source Groups/hierarchy/visibility
+- partial Groups, Reference members and locked members are rejected
+
+Protected:
+- confirmed stable linked-instance/navigation baseline remains `multi-object.js?v=0.36.18.367`
+- Group transform baseline remains `object-origin.js?v=0.36.18.355`
+- `multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.367
 
 Theme: **restore touch navigation after object activation and harden selection-mode transitions**.
 
@@ -757,17 +782,16 @@ Scene / modifiers:
 
 ## Next development step
 
-**Phase C — linked-instance lifecycle remains the priority.**
+**Phase C remains active.**
 
-Recommended test:
-- finger-select between linked peers several times
-- verify one-finger orbit and pinch zoom remain correct after every selection
-- verify non-active peers remain visible after object activation
-- switch Object ↔ Edge ↔ Face ↔ Vertex and verify peers remain visible
-- confirm linked Extrude still commits and propagates
-- do not resume UI polish until all four are confirmed
-- preserve `object-origin.js?v=0.36.18.355`
-- do not touch `src/multi-object-transform.js?v=0.36.1.0`
+Recommended:
+- user-test .368 Group Boolean convenience
+- verify Group A + Group B additive selection is comfortable on iPad
+- verify Union / Cut / Intersect results and one-step Undo
+- verify original Group names/hierarchy return unchanged after Undo
+- verify ordinary two-object Boolean remains unchanged
+- if stable, continue Make Unique robustness/polish or move to the next Phase C object-workflow gap
+- preserve `multi-object.js?v=0.36.18.367`, `object-origin.js?v=0.36.18.355`, and `multi-object-transform.js?v=0.36.1.0`
 
 ## End-of-session requirement
 
