@@ -17,7 +17,7 @@ Newest entries should be added at the top.
 - OrbitControls is disabled only during the active thickness drag and restored on pointer-up/cancel.
 - Preview shows generated inner shell + boundary walls rather than repainting the unchanged source sheet.
 - Direct drag remains preview-only: no mesh mutation and no history entry until Apply Solidify.
-- The .374 90° hard-fold/miter solver remains authoritative and unchanged.
+- The .374 90° hard-fold/miter solver remains authoritative and unchanged.\n- Released from PR **#59**; squash merge commit: `3bc25065adfcc4de8c840c9fd00a6771cb6a2d59`.\n- Final Topology regression passed in workflow run **35506408342**.
 
 ## 2026-09-20 — v0.36.18.374 Solidify hard-fold offset + live preview
 
