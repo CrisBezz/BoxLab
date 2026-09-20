@@ -8,7 +8,7 @@ test('356 Object rows use compact name visibility More structure',()=>{
   assert.match(block,/compact-object-row/);
   assert.match(block,/outliner-visibility/);
   assert.match(block,/moreSummary\.textContent = '•••'/);
-  assert.match(block,/menu\.append\(lock,solo\)/);
+  assert.match(block,/menu\.append\(lock,solo,remove\)/);
   assert.doesNotMatch(block,/row\.append\(name, visible, lock, solo\)/);
 });
 
@@ -34,7 +34,7 @@ test('356 Group row uses disclosure name visibility More with lock inside More',
 
 test('356 compact Outliner CSS aligns object and group controls',()=>{
   const src=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
-  assert.match(src,/\.compact-object-row\{grid-template-columns:minmax\(0,1fr\) 28px 30px!important/);
+  assert.match(src,/\.compact-object-row\{grid-template-columns:minmax\(0,1fr\) 28px 28px 30px!important/);
   assert.match(src,/\.boxlab-group-row\{display:grid;grid-template-columns:20px minmax\(0,1fr\) 26px 28px/);
   assert.match(src,/\.object-action-menu/);
   assert.match(src,/\.outliner-more-menu/);
@@ -43,10 +43,10 @@ test('356 compact Outliner CSS aligns object and group controls',()=>{
 test('356 release cache chain and protected Group transform baseline remain intact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/multi-object\.js\?v=0\.36\.18\.356/);
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.356/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.356/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.356/);
+  assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
+  assert.match(index,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
+  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.368/);
   assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
