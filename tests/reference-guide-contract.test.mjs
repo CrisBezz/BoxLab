@@ -13,7 +13,7 @@ test('344 object manager always forces Reference objects locked',()=>{
   assert.match(src,/locked: options\.kind === 'reference' \? true : !!options\.locked/);
   assert.match(src,/const referenceGuide = object\.kind === 'reference'/);
   assert.match(src,/lock\.disabled = referenceGuide/);
-  assert.match(src,/Reference guide — always read-only/);
+  assert.match(src,/Reference • Read Only/);
 });
 
 test('344 Multi and Group lock controls never unlock Reference guides',()=>{
