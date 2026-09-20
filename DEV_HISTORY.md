@@ -15,7 +15,7 @@ Newest entries should be added at the top.
 - Solidify now temporarily claims that existing keep-open contract for the entire armed preview session.
 - Active Tools is explicitly reopened if any competing UI path closes it before the preview is applied/cancelled.
 - Keep-open ownership is released after Apply/Cancel/invalidation; `drawer-ui.js` remains unchanged.
-- No topology, hard-fold, direct-drag or history logic changed.
+- No topology, hard-fold, direct-drag or history logic changed.\n- Released from PR **#60**; squash merge commit: `77eab5bb8e441f5ce93801963c432dcf2f12bd86`.\n- Final Topology regression passed in workflow run **35506658206**.
 
 ## 2026-09-20 — v0.36.18.375 direct-drag Solidify thickness
 
