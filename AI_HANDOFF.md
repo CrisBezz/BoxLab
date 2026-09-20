@@ -29,14 +29,14 @@ Audited from current `main` on 2026-09-20.
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
 - Current live development build: **v0.36.18.376 — Solidify Active Tools drawer lock**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **3bc25065adfcc4de8c840c9fd00a6771cb6a2d59**
+- Current live code-bearing commit: **77eab5bb8e441f5ce93801963c432dcf2f12bd86**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
 - Previous v0.36.18.373 PR: **#57**
 - Previous v0.36.18.374 PR: **#58**
-- Current v0.36.18.375 PR: **#59**
-- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35506408342**
+- Previous v0.36.18.375 PR: **#59**\n- Current v0.36.18.376 PR: **#60**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35506658206**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
