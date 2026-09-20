@@ -30,6 +30,6 @@ test('383 direct spacing pauses orbit only during drag and keeps slider synchron
 });
 
 test('383 direct spacing has no history commit path',()=>{
-  const drag=ui.slice(ui.indexOf('function beginSpacingDrag'),ui.indexOf('function installPenRange'));
+  const drag=ui.slice(ui.indexOf('function beginSpacingDrag'),ui.indexOf('function sync(){'));
   assert.doesNotMatch(drag,/checkpoint|capture\?\.\(/);
 });
