@@ -30,7 +30,7 @@ test('351 ordinary two-object selection no longer gets automatic Boolean A B tak
   const src=fs.readFileSync(new URL('../src/boolean-ux-history.js',import.meta.url),'utf8');
   const sync=src.slice(src.indexOf('function syncUI'),src.indexOf('function queueSelectionSync'));
   assert.match(sync,/markOutliner\(\{ok:false\}\)/);
-  assert.match(sync,/restoreViewportMaterials\(\)/);
+  assert.match(src,/function syncSelectionColours\(\)\{\s*restoreViewportMaterials\(\)/s);
   assert.match(sync,/keepBooleanToolsVisible\(!!e\.ok\)/);
   assert.match(sync,/syncSelectionColours\(\)/);
 });
