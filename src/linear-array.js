@@ -3,6 +3,9 @@ import * as THREE from 'three';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 const drawer=document.querySelector('#editDrawer');
+const canvas=document.querySelector('#viewport');
+const raycaster=new THREE.Raycaster();
+const pointer=new THREE.Vector2();
 
 const controls=document.createElement('div');
 controls.className='linear-array-controls';
@@ -36,10 +39,12 @@ const spacingInput=controls.querySelector('#linearArraySpacing');
 const spacingOut=controls.querySelector('#linearArraySpacingOut');
 const axisButtons=[...controls.querySelectorAll('[data-array-axis]')];
 
-let axis='x',preview=null,previewArmed=false,previewObjectId=null,drawerLock=null;
+let axis='x',preview=null,previewArmed=false,previewObjectId=null,drawerLock=null,spacingDrag=null;
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function state(){return globalThis.__boxlabBridgeState;}
+function camera(){return state()?.camera||null;}
+function orbitControls(){return state()?.controls||null;}
 function activeObject(){const m=manager();return m?.objects?.find(o=>o.id===m.activeId)||null;}
 function mode(){return globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
 function count(){return Math.max(2,Math.min(10,Math.round(Number(countInput?.value)||3)));}
@@ -47,6 +52,15 @@ function spacing(){return Math.max(.1,Math.min(10,Number(spacingInput?.value)||2
 function axisVector(){return axis==='y'?new THREE.Vector3(0,1,0):axis==='z'?new THREE.Vector3(0,0,1):new THREE.Vector3(1,0,0);}
 function setStatus(text){if(status)status.textContent=text;}
 function syncOutputs(){if(countOut)countOut.textContent=String(count());if(spacingOut)spacingOut.textContent=Number(spacing().toFixed(2)).toString();}
+function setSpacing(value,{rebuild=true}={}){
+  if(!spacingInput)return;
+  const min=Number(spacingInput.min)||.1,max=Number(spacingInput.max)||10,step=Number(spacingInput.step)||.1;
+  const clamped=Math.max(min,Math.min(max,Number(value)||min));
+  const snapped=min+Math.round((clamped-min)/step)*step;
+  spacingInput.value=String(Number(snapped.toFixed(6)));
+  syncOutputs();
+  if(rebuild&&previewArmed)buildPreview();
+}
 
 function disposePreview(){
   if(preview?.parent)preview.parent.remove(preview);
@@ -73,7 +87,14 @@ function unlockDrawer(){
   if(old.keepOpen===undefined)delete drawer.dataset.keepOpen;else drawer.dataset.keepOpen=old.keepOpen;
   if(old.open)drawer.open=true;
 }
+function endSpacingDrag(){
+  if(!spacingDrag)return;
+  const ctl=orbitControls();
+  if(ctl)ctl.enabled=spacingDrag.controlsWereEnabled;
+  spacingDrag=null;
+}
 function cancelPreview({silent=false}={}){
+  endSpacingDrag();
   disposePreview();previewArmed=false;previewObjectId=null;unlockDrawer();
   if(button)button.textContent='Array';
   if(!silent)setStatus('Array preview cancelled');
@@ -92,6 +113,7 @@ function buildPreview(){
     const fill=new THREE.Mesh(geometry,fillMaterial),wire=new THREE.Mesh(geometry,wireMaterial);
     const offset=dir.clone().multiplyScalar(spacing()*i);
     fill.position.copy(offset);wire.position.copy(offset);
+    fill.userData.arrayIndex=i;wire.userData.arrayIndex=i;
     fill.renderOrder=10;wire.renderOrder=11;
     group.add(fill,wire);
   }
@@ -99,6 +121,66 @@ function buildPreview(){
   preview.name='BoxLab Linear Array Preview';
   preview.userData.boxlabLinearArrayPreview=true;
   scene.add(preview);
+  setStatus(`Array preview • ${count()} total • ${axis.toUpperCase()} • spacing ${Number(spacing().toFixed(2))} • drag preview to space • Apply Array to commit`);
+  return true;
+}
+function pointerNdc(event){
+  const rect=canvas?.getBoundingClientRect();
+  if(!rect||!rect.width||!rect.height)return false;
+  pointer.x=((event.clientX-rect.left)/rect.width)*2-1;
+  pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;
+  return true;
+}
+function projectedArrayAxis(point){
+  const cam=camera(),rect=canvas?.getBoundingClientRect();
+  if(!cam||!rect||!point)return null;
+  const dir=axisVector(),distance=Math.max(.01,cam.position.distanceTo(point));
+  const probe=Math.max(distance*.08,.05);
+  const a=point.clone().project(cam),b=point.clone().addScaledVector(dir,probe).project(cam);
+  const dx=(b.x-a.x)*rect.width*.5,dy=-(b.y-a.y)*rect.height*.5;
+  const length=Math.hypot(dx,dy);
+  if(length<4)return null;
+  const worldPerPixel=cam.isPerspectiveCamera
+    ?(2*distance*Math.tan(THREE.MathUtils.degToRad(cam.fov*.5)))/Math.max(1,rect.height)
+    :Math.max(.0001,(cam.top-cam.bottom)/Math.max(1,rect.height));
+  return{x:dx/length,y:dy/length,worldPerPixel};
+}
+function beginSpacingDrag(event){
+  if(!previewArmed||!preview||spacingDrag||(event.pointerType==='mouse'&&event.button!==0))return false;
+  const cam=camera();
+  if(!cam||!pointerNdc(event))return false;
+  raycaster.setFromCamera(pointer,cam);
+  const hit=raycaster.intersectObject(preview,true).find(item=>Number(item.object?.userData?.arrayIndex)>0);
+  if(!hit)return false;
+  const screenAxis=projectedArrayAxis(hit.point),arrayIndex=Number(hit.object.userData.arrayIndex)||1;
+  if(!screenAxis)return false;
+  const ctl=orbitControls();
+  spacingDrag={
+    pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,
+    startSpacing:spacing(),arrayIndex,
+    axisX:screenAxis.x,axisY:screenAxis.y,worldPerPixel:screenAxis.worldPerPixel,
+    controlsWereEnabled:ctl?.enabled!==false
+  };
+  if(ctl)ctl.enabled=false;
+  canvas?.setPointerCapture?.(event.pointerId);
+  event.preventDefault();event.stopPropagation();event.stopImmediatePropagation?.();
+  setStatus(`Array direct spacing • ${Number(spacing().toFixed(2))} • drag selected preview along ${axis.toUpperCase()}`);
+  return true;
+}
+function moveSpacingDrag(event){
+  if(!spacingDrag||event.pointerId!==spacingDrag.pointerId)return false;
+  const dx=event.clientX-spacingDrag.startX,dy=event.clientY-spacingDrag.startY;
+  const projected=dx*spacingDrag.axisX+dy*spacingDrag.axisY;
+  const worldDelta=projected*spacingDrag.worldPerPixel;
+  setSpacing(spacingDrag.startSpacing+worldDelta/Math.max(1,spacingDrag.arrayIndex),{rebuild:true});
+  setStatus(`Array direct spacing • ${Number(spacing().toFixed(2))} • release to keep preview value`);
+  event.preventDefault();event.stopPropagation();event.stopImmediatePropagation?.();
+  return true;
+}
+function finishSpacingDrag(event){
+  if(!spacingDrag||event.pointerId!==spacingDrag.pointerId)return false;
+  event.preventDefault();event.stopPropagation();event.stopImmediatePropagation?.();
+  endSpacingDrag();
   setStatus(`Array preview • ${count()} total • ${axis.toUpperCase()} • spacing ${Number(spacing().toFixed(2))} • Apply Array to commit`);
   return true;
 }
@@ -134,7 +216,7 @@ function applyArray(){
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
   globalThis.__boxlabObjectSelection?.refresh?.();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
-  globalThis.__boxlabLinearArrayLastResult={version:'0.36.18.382',sourceId,createdIds:created,count:count(),spacing:spacing(),axis};
+  globalThis.__boxlabLinearArrayLastResult={version:'0.36.18.383',sourceId,createdIds:created,count:count(),spacing:spacing(),axis};
   setStatus(`Array • ${created.length} linked instance${created.length===1?'':'s'} created • ${axis.toUpperCase()} spacing ${Number(spacing().toFixed(2))}`);
   return true;
 }
@@ -180,6 +262,10 @@ axisButtons.forEach(control=>control.addEventListener('click',()=>{
 }));
 installPenRange(countInput,()=>{syncOutputs();if(previewArmed)buildPreview();});
 installPenRange(spacingInput,()=>{syncOutputs();if(previewArmed)buildPreview();});
+canvas?.addEventListener('pointerdown',beginSpacingDrag,true);
+canvas?.addEventListener('pointermove',moveSpacingDrag,true);
+canvas?.addEventListener('pointerup',finishSpacingDrag,true);
+canvas?.addEventListener('pointercancel',finishSpacingDrag,true);
 drawer?.addEventListener('toggle',()=>{if(previewArmed&&!drawer.open)queueMicrotask(()=>{if(previewArmed)drawer.open=true;});});
 
 button?.addEventListener('click',()=>{
@@ -196,12 +282,13 @@ button?.addEventListener('click',()=>{
 window.addEventListener('boxlab-object-manager-ready',sync);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
-window.addEventListener('beforeunload',()=>{disposePreview();unlockDrawer();});
+window.addEventListener('beforeunload',()=>{endSpacingDrag();disposePreview();unlockDrawer();});
 sync();
 
 globalThis.__boxlabLinearArray={
-  version:'0.36.18.382',
+  version:'0.36.18.383',
   get active(){return previewArmed;},
+  get dragging(){return!!spacingDrag;},
   rebuild:buildPreview,
   cancel:cancelPreview
 };

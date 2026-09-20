@@ -4,10 +4,13 @@ import fs from 'node:fs';
 
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const ui=fs.readFileSync(new URL('../src/linear-array.js',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('382 Linear Array runtime is loaded',()=>{
-  assert.match(index,/linear-array\.js\?v=0\.36\.18\.382/);
-  assert.match(index,/data-release-version="0\.36\.18\.382"/);
+test('Linear Array runtime follows current app build',()=>{
+  const wrapper=index.match(/linear-array\.js\?v=([^"]+)/)?.[1];
+  const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
+  assert.equal(wrapper,version);
+  assert.equal(stamp,version);
 });
 
 test('382 Array is a linked-instance Object Manager client',()=>{

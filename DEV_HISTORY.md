@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.383 Array direct spacing drag
+
+- .382 Linear Array passed initial iPad hands-on testing.
+- Added direct Pencil/finger spacing drag on any preview instance.
+- Drag projects the selected world X/Y/Z axis into screen space and converts pointer movement back to world spacing.
+- Later preview copies divide movement by their array index so the grabbed copy follows the gesture while all copies remain equally spaced.
+- Orbit controls pause only during the direct spacing gesture and restore on release/cancel.
+- Slider remains synchronized and available when the axis is too camera-aligned for a stable screen drag.
+- No history is created during preview drag; Apply Array remains one scene-history operation.
+- Next task is inward/negative Face Extrude cutting behavior.
+
 ## 2026-09-21 — v0.36.18.382 Phase D Linear Array foundation
 
 - Added Object-mode Linear Array using the existing linked-instance Object Manager path.
