@@ -31,6 +31,7 @@ Newest entries should be added at the top.
 - Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Added regression coverage for atomic linked metadata, second-generation propagation, inactive linked rendering and protected pins.
+- Released from PR **#47**; squash merge commit: `4f0441660512c4eacf557320d8a5f935b931243e`.
 
 ## 2026-09-20 — v0.36.18.362 linked-instance placement stability
 
