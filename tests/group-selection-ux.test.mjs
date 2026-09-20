@@ -12,7 +12,7 @@ test('349 one whole group is a first-class rename target',()=>{
 
 test('349 Rename Group uses the normal Object Rename button and one history step',()=>{
   const src=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
-  assert.match(src,/function renameGroup\(groupId\)/);
+  assert.match(src,/async function renameGroup\(groupId\)/);
   assert.match(src,/__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
   const handler=src.slice(src.indexOf("renameButton?.addEventListener"),src.indexOf("deleteButton?.addEventListener"));
   assert.match(handler,/selectedWholeGroupId\(chosen\)/);
@@ -20,28 +20,28 @@ test('349 Rename Group uses the normal Object Rename button and one history step
   assert.match(handler,/stopImmediatePropagation/);
 });
 
-test('349 group header uses select name plus collapse visibility lock and direct ungroup',()=>{
+test('349 compact Group header keeps select plus More-menu actions',()=>{
   const src=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
   const hierarchy=src.slice(src.indexOf('function decorateHierarchy'),src.indexOf('function updateRows'));
   assert.match(hierarchy,/name\.title='Select whole group'/);
-  assert.match(hierarchy,/ungroup\.textContent='U'/);
-  assert.match(hierarchy,/ungroup\.title='Ungroup'/);
-  assert.match(hierarchy,/data-group-action="ungroup"/);
-  assert.doesNotMatch(hierarchy,/rename\.textContent='✎'/);
+  assert.match(hierarchy,/menuRename\.textContent='Rename Group'/);
+  assert.match(hierarchy,/menuUngroup\.textContent='Ungroup'/);
+  assert.match(hierarchy,/menu\.append\(menuLock,menuRename,menuUngroup\)/);
+  assert.match(hierarchy,/ungroupSelection\(new Set\(groupMembers\(groupId\)\.map\(o=>o\.id\)\)\)/);
 });
 
 test('349 selected group gets explicit context readout and stronger header state',()=>{
   const src=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
   assert.match(src,/wholeGroupId!=null\?\`\$\{groupLabel\(wholeGroupId\)\} • \$\{chosen\.length\} objects selected\`/);
-  assert.match(src,/\.boxlab-group-row\.group-selected\{[^}]*outline:/);
-  assert.match(src,/\.boxlab-group-row\.group-selected \.boxlab-group-name\{font-weight:800\}/);
+  assert.match(src,/\.boxlab-group-row\.group-selected\{[^}]*box-shadow:/);
+  assert.match(src,/\.boxlab-group-row\.group-selected \.boxlab-group-name\{font-weight:800/);
 });
 
-test('349 cache chain and protected transform remain intact',()=>{
+test('349 current cache chain and protected transform remain intact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.349/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.349/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.349/);
+  assert.match(index,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
+  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.368/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
