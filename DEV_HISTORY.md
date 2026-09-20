@@ -27,6 +27,7 @@ Newest entries should be added at the top.
 - Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Added regression coverage for persistent scene-layer ownership, rebuild behavior, linked propagation retention and protected pins.
+- Released from PR **#49**; squash merge commit: `8acba4d282d1c51293f9b9cf08ea7c462ac7ac6e`.
 
 ## 2026-09-20 — v0.36.18.364 touch object activation render-race fix
 
