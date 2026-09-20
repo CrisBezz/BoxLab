@@ -38,7 +38,7 @@ const linkedSources = new Map();
 function state() { return globalThis.__boxlabBridgeState; }
 function history() { return globalThis.__boxlabHistory; }
 function activeObject() { return objects.find(object => object.id === activeId) || null; }
-function currentMode() { return document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
+function currentMode() { return globalThis.__boxlabSelectionBridge?.mode?.() || document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
 function cap(text) { return text ? text.charAt(0).toUpperCase() + text.slice(1) : ''; }
 
 function ensureRenameDialogStyle() {
