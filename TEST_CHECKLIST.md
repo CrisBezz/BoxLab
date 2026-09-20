@@ -10,6 +10,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] native long-press callout/drag selection is suppressed on BoxLab chrome and viewport
 - [ ] input / textarea / select / contenteditable controls retain normal text/value interaction
 - [ ] one-finger orbit works
+- [ ] after finger-selecting another object, one-finger orbit remains orbit (not pan) and pinch zoom still works
 - [ ] two-finger pan works
 - [ ] pinch zoom works
 - [ ] two-finger tap Undo works
