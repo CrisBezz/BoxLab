@@ -8,6 +8,16 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.378 Shell Pencil thickness parity
+
+- User reported Shell Thickness worked correctly with finger input but Apple Pencil snapped the value back to 0.01.
+- Root cause scope was the native iPad range-control Pencil path, not Shell topology.
+- Added an explicit Pencil-only pointer handler on the Shell Thickness range.
+- Pencil X position maps to slider bounds, clamps to min/max, snaps to the same step, and dispatches the normal input event so preview/output use the existing pathway.
+- Pointer capture stabilizes Pencil dragging beyond the narrow slider track.
+- Finger/touch native range behaviour remains unchanged.
+- No Shell core, Solidify core, selection, drawer or history logic changed.
+
 ## 2026-09-20 — v0.36.18.377 closed-solid Shell
 
 - Phase D advanced from open-sheet Solidify to closed-solid Shell.
