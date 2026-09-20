@@ -27,21 +27,22 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-20.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.375 — direct-drag Solidify thickness preview**
+- Current live development build: **v0.36.18.376 — Solidify Active Tools drawer lock**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **3bc25065adfcc4de8c840c9fd00a6771cb6a2d59**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
 - Previous v0.36.18.373 PR: **#57**
-- Previous v0.36.18.374 PR: **#58**\n- Current v0.36.18.375 PR: **#59**
+- Previous v0.36.18.374 PR: **#58**
+- Current v0.36.18.375 PR: **#59**
 - Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35506408342**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.375**
-- Current Phase D loader: **solidify.js?v=0.36.18.375** → `solidify-core.js?v=0.36.18.374`
+- Current `version.json`: **0.36.18.376**
+- Current Phase D loader: **solidify.js?v=0.36.18.376** → `solidify-core.js?v=0.36.18.374`
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -64,7 +65,19 @@ Audited from current `main` on 2026-09-20.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.375
+## Latest completed development — v0.36.18.376
+
+Theme: **keep Active Tools available throughout interactive Solidify**.
+
+- User reported Active Tools collapsing during direct thickness drag, making **Apply Solidify** inaccessible.
+- Solidify now claims the drawer system's existing `data-keep-open="true"` contract for the whole preview session.
+- The Active Tools drawer is explicitly opened when Solidify preview is armed.
+- If another UI path tries to close it while preview remains armed, a toggle guard immediately reopens it.
+- The temporary keep-open ownership is released only after Apply, Cancel, object/mode invalidation, or unload.
+- Existing `drawer-ui.js?v=0.36.18.361` is untouched; this is a narrow Solidify-side fix.
+- Direct thickness drag, slider synchronization, .374 hard-fold core, navigation protection, and one-step Apply history are unchanged.
+
+## Previous completed development — v0.36.18.375
 
 Theme: **direct-manipulation Solidify thickness**.
 
