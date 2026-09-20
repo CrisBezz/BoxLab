@@ -64,3 +64,36 @@ test('372 Solidify duplicates existing crease weights onto the inner shell',()=>
   assert.equal(mesh.creases.get(mesh.edgeKey(0,1)),0.75);
   assert.equal(mesh.creases.get(mesh.edgeKey(4,5)),0.75);
 });
+
+
+test('374 90-degree folded sheet keeps full thickness to both source planes',()=>{
+  const mesh=new EditableMesh([
+    new THREE.Vector3(0,0,0),
+    new THREE.Vector3(0,1,0),
+    new THREE.Vector3(1,0,0),
+    new THREE.Vector3(1,1,0),
+    new THREE.Vector3(0,0,1),
+    new THREE.Vector3(0,1,1)
+  ],[
+    [0,2,3,1],
+    [0,1,5,4]
+  ]);
+  const result=solidifyOpenMesh(mesh,0.2);
+  assert.equal(result.ok,true);
+  const innerShared0=mesh.vertices[6];
+  const innerShared1=mesh.vertices[7];
+  assert.ok(Math.abs(innerShared0.x+0.2)<1e-12);
+  assert.ok(Math.abs(innerShared0.z+0.2)<1e-12);
+  assert.ok(Math.abs(innerShared1.x+0.2)<1e-12);
+  assert.ok(Math.abs(innerShared1.z+0.2)<1e-12);
+  assert.equal(__solidifyInternals.inspectClosed(mesh).ok,true);
+});
+
+test('374 hard-fold offset is plane-intersection miter, not normalized-average under-offset',()=>{
+  const n1=new THREE.Vector3(1,0,0),n2=new THREE.Vector3(0,0,1);
+  const solved=__solidifyInternals.solveOffsetVector([n1,n2],0.25);
+  assert.equal(solved.ok,true);
+  assert.ok(Math.abs(solved.delta.x+0.25)<1e-12);
+  assert.ok(Math.abs(solved.delta.z+0.25)<1e-12);
+  assert.ok(Math.abs(solved.delta.length()-Math.sqrt(2)*0.25)<1e-12);
+});
