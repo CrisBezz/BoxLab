@@ -16,6 +16,8 @@ Newest entries should be added at the top.
 - Preserved direct preview thickness dragging by switching raycast to recursive Group traversal and using the hit child mesh matrix for normal projection.
 - Preview disposal now traverses child meshes and disposes shared resources safely.
 - No Solidify topology, offset solver, history or linked-instance behavior changed.
+- Released from PR **#65**; squash merge commit: `a4ee4ae3779586be82365ee98f169527d49fb08d`.
+- Final Topology regression passed in workflow run **35544854000**.
 
 ## 2026-09-21 — v0.36.18.380 Shell preview backface visibility
 
