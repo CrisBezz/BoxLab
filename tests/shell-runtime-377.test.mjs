@@ -5,10 +5,13 @@ import fs from 'node:fs';
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const shell=fs.readFileSync(new URL('../src/shell.js',import.meta.url),'utf8');
 const core=fs.readFileSync(new URL('../src/shell-core.js',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('377 Shell runtime is loaded and versioned',()=>{
-  assert.match(index,/shell\.js\?v=0\.36\.18\.377/);
-  assert.match(index,/data-release-version="0\.36\.18\.377"/);
+test('Shell wrapper follows current app build',()=>{
+  const wrapper=index.match(/shell\.js\?v=([^"]+)/)?.[1];
+  const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
+  assert.equal(wrapper,version);
+  assert.equal(stamp,version);
 });
 
 test('377 Shell reuses Face selection bridge and shared Solidify core',()=>{

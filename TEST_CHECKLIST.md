@@ -249,6 +249,10 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] one selected cube Face becomes one open top/rim while the result remains a watertight solid shell
 - [ ] adjacent selected Faces can create one larger connected opening
 - [ ] Shell Thickness preview updates before Apply Shell commits
+- [ ] Shell Thickness gives the same selected value with Apple Pencil and finger input
+- [ ] Apple Pencil dragging Shell Thickness no longer snaps the value to the 0.01 minimum
+- [ ] Pencil drag remains stable if the Pencil leaves the slider track while still pressed
+- [ ] Pencil and finger both update the same visible thickness output and preview
 - [ ] Apply Shell clears stale Face selection created against pre-compaction Face indices
 - [ ] Shell uses the same inward hard-fold offset behaviour as Solidify
 - [ ] Shell refuses open-sheet input, loose topology, no selected Faces and all Faces selected without partial mutation
