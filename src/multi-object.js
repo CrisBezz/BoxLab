@@ -190,13 +190,18 @@ function linkedDuplicateObject(sourceObject,{name=null,enterObjectMode=true}={})
   if(sourceObject.id===activeId)saveActive();
   const source=ensureLinkedSource(sourceObject);
   if(!source)return null;
-  const copy=addObject(sourceObject.mesh,name||nextDuplicateName(sourceObject.name),{settings:sourceObject.settings,visible:sourceObject.visible!==false,locked:false,enterObjectMode});
-  if(!copy)return null;
-  copy.sourceId=sourceObject.sourceId;
-  setInstanceMatrix(copy,matrixForInstance(sourceObject));
-  copy.mesh=sourceObject.mesh.clone();
-  if(sourceObject.origin)copy.origin={...sourceObject.origin};
-  return copy;
+  const placement=matrixForInstance(sourceObject);
+  const evaluated=transformEditableMesh(source.mesh,placement)||sourceObject.mesh.clone();
+  const copy=addObject(evaluated,name||nextDuplicateName(sourceObject.name),{
+    settings:sourceObject.settings,
+    visible:sourceObject.visible!==false,
+    locked:false,
+    enterObjectMode,
+    sourceId:sourceObject.sourceId,
+    instanceMatrix:placement.elements,
+    origin:sourceObject.origin||null
+  });
+  return copy||null;
 }
 function saveActive() {
   const object = activeObject(), live = state()?.mesh;
@@ -474,6 +479,9 @@ function addObject(mesh, name = 'Cube', options = {}) {
     settings: cloneSettings(options.settings || captureSettings()),
     history: { undo:[], redo:[] }
   };
+  if(options.sourceId)object.sourceId=options.sourceId;
+  if(Array.isArray(options.instanceMatrix)&&options.instanceMatrix.length===16)object.instanceMatrix=[...options.instanceMatrix];
+  if(options.origin)object.origin={...options.origin};
   objects.push(object);
   if (!object.locked) {
     activateObject(object.id);
