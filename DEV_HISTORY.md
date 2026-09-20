@@ -18,6 +18,8 @@ Newest entries should be added at the top.
 - Closed-input, loose-topology, all-faces-selected and invalid-opening guards run before live mutation.
 - Final output is validated as watertight; Apply is one Object-scene history step and uses Object Manager save propagation.
 - Added cube one-face and adjacent-two-face automated fixtures plus refusal cases.
+- Released from PR **#61**; squash merge commit: `91de88416823050100ed3df3a40ec8886087095f`.
+- Final Topology regression passed in workflow run **35507041994**.
 
 ## 2026-09-20 — v0.36.18.376 Solidify Active Tools drawer lock
 
