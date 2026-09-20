@@ -1,3 +1,10 @@
+## Beta 3 release gate
+
+- [ ] Complete the hands-on checks in `BETA3_RELEASE_CHECKLIST.md` on iPad Safari before freezing `/beta-3/`
+- [ ] Do not add new modelling features during the release-candidate cycle
+- [ ] Fix only reproducible release-blocking regressions
+- [ ] Confirm the frozen Beta 3 URL and live main URL both smoke-test successfully after release
+
 # BoxLab Regression Test Checklist
 
 This checklist is the persistent regression contract for BoxLab.
