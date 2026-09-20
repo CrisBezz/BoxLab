@@ -13,11 +13,11 @@ test('358 footer Object More menu is forced above the trigger too',()=>{
   assert.match(src,/\.object-action-menu\{top:0!important;bottom:auto!important;transform:translateY\(calc\(-100% - 3px\)\)\}/);
 });
 
-test('358 protected Group transform baseline remains pinned',()=>{
+test('358 current Object management and protected Group transform baselines remain pinned',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.358/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.358/);
+  assert.match(index,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.368/);
   assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
