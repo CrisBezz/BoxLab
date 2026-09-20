@@ -8,6 +8,25 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.364 touch object activation render-race fix
+
+- User confirmed .363 restored linked edit propagation, but finger-tapping a different object still made every non-tapped linked peer disappear from the viewport while their Outliner rows remained.
+- Root cause was a touch-only event collision between the multi-object activation layer and the core modeller's background-tap handler.
+- On touch pointer-down over an inactive object:
+  - core modeller cannot ray-pick inactive bodies because it only considers the active `body`
+  - core therefore arms a background tap
+- On pointer-up:
+  - multi-object layer correctly activates the inactive object
+  - but .363 passed `stopEvent=false`, allowing the same pointer-up to continue into core
+  - core then completed its stale background tap and called another `renderMesh()`, racing the inactive-body rebuild
+- Touch object activation now calls `handleViewportActivation(event, true)`.
+- When an inactive object is actually hit, the event is prevented and stopped immediately after activation, so the core background-tap handler cannot run a second render.
+- Ordinary background taps remain unaffected because `handleViewportActivation()` only consumes the event when it actually handles an inactive/locked object hit.
+- Linked propagation logic from .363 remains unchanged.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for consuming touch activation, non-hit fallthrough, linked propagation retention and protected pins.
+
 ## 2026-09-20 — v0.36.18.363 atomic linked-duplicate creation
 
 - User reported two regressions after .362:

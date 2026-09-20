@@ -25,13 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.363**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **7422482f6e7210db6aa9932360c4136d0f32f8ab**
-- Current code-bearing/release commit: **4f0441660512c4eacf557320d8a5f935b931243e**
-- v0.36.18.363 release PR: **#47**
+- Repository release candidate: **v0.36.18.364**
+- Current documentation HEAD: **v0.36.18.364 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.364 PR branch; pending merge**
+- v0.36.18.364 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.363**
+- Current `version.json`: **0.36.18.364**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -54,7 +54,29 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.363
+## Latest completed development — v0.36.18.364
+
+Theme: **touch object activation no longer races the core background-tap renderer**.
+
+Critical fix:
+- finger pointer-up activation of an inactive object now uses the consuming event path
+- once an inactive object is successfully hit/activated, `preventDefault()` + `stopImmediatePropagation()` prevent the core modeller from completing a stale background tap and calling a second render
+- background taps still fall through normally when no inactive object was handled
+
+Preserved from .363:
+- linked duplicate of linked duplicate stays on the same source
+- edits propagate across linked peers
+- source × instanceMatrix remains authoritative for linked rendering
+
+Target regression:
+- non-tapped linked peers disappearing from viewport after finger-selecting another object while remaining in Outliner
+
+Protected behavior:
+- Group baseline remains `object-origin.js?v=0.36.18.355`
+- compact Outliner / SubD row toggle / contextual Origin-Pivot unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.363
 
 Theme: **linked copies are born linked before first activation**.
 
@@ -678,17 +700,16 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .363 linked creation lifecycle first**
-- make Linked Duplicate A → B, then Linked Duplicate B → C
-- move A / B / C apart
-- edit geometry on B or C and verify A / B / C all update
-- finger-select an unrelated object and verify all linked peers remain visible
-- repeatedly switch active object between A / B / C and unrelated objects
-- verify Make Unique still detaches only the chosen peer
-- preserve `object-origin.js?v=0.36.18.355` unless a concrete Group regression requires changing it
+- **user-test .364 touch activation first**
+- create A → linked B → linked C and move all apart
+- verify edit propagation still works across A/B/C
+- finger-tap A, B, C and unrelated objects repeatedly
+- verify all non-active visible objects remain rendered every time
+- verify visibility toggles still work after touch switching
+- verify Pencil activation still behaves as before
+- do not resume UI polish until this touch lifecycle is confirmed stable
+- preserve `object-origin.js?v=0.36.18.355`
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
-
-Do not continue UI polish until linked-instance lifecycle is confirmed stable.
 
 ## End-of-session requirement
 
