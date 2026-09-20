@@ -38,7 +38,7 @@ const linkedSources = new Map();
 function state() { return globalThis.__boxlabBridgeState; }
 function history() { return globalThis.__boxlabHistory; }
 function activeObject() { return objects.find(object => object.id === activeId) || null; }
-function currentMode() { return document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
+function currentMode() { return globalThis.__boxlabSelectionBridge?.mode?.() || document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
 function cap(text) { return text ? text.charAt(0).toUpperCase() + text.slice(1) : ''; }
 
 function ensureRenameDialogStyle() {
@@ -440,6 +440,8 @@ function activateObject(id, forceLocked = false) {
   clearComponentSelection();
   forceRender();
   renderOutliner();
+  queueMicrotask(()=>{ if(activeBody) rebuildInactiveLayer(activeBody); });
+  requestAnimationFrame(()=>{ if(activeBody) rebuildInactiveLayer(activeBody); });
   if (status) status.textContent = `${target.name} active`;
   return true;
 }
@@ -724,7 +726,7 @@ function installViewportActivation() {
     if (event.pointerType !== 'touch' || !touchTap || event.pointerId !== touchTap.pointerId) return;
     const candidate=touchTap;touchTap=null;
     if (candidate.cancelled || !candidate.objectMode || currentMode() !== 'object') return;
-    handleViewportActivation(event, true);
+    handleViewportActivation(event, false);
   }, true);
 
   canvas?.addEventListener('pointercancel', event => {

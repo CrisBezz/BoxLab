@@ -8,6 +8,23 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.367 touch orbit + selection-mode stability
+
+- User confirmed .366 fixed linked Extrude commit/propagation.
+- Remaining regressions:
+  - after selecting another object with a finger, one-finger navigation became pan and pinch zoom broke
+  - selecting/changing mode could still make non-active objects disappear
+- Navigation root cause: .364 consumed the touch pointer-up after object activation even though OrbitControls had already received the matching pointer-down.
+- OrbitControls therefore retained a stale touch pointer and interpreted the next one-finger gesture as a multi-touch gesture.
+- Touch activation now uses the non-consuming path again so OrbitControls always receives pointer-up cleanup.
+- .365 persistent inactive scene layer means the old pointer-up suppression is no longer needed to protect inactive bodies.
+- Object activation now schedules an additional inactive-layer refresh at microtask + requestAnimationFrame boundaries after the full activation handoff.
+- `currentMode()` now reads `__boxlabSelectionBridge.mode()` first, using the DOM active-button class only as fallback.
+- This removes a one-render lag where Object → Edge/Face/Vertex could be processed as the previous mode during `saveActive()`.
+- .366 authoritative live-mesh publication remains unchanged.
+- Protected `object-origin.js?v=0.36.18.355` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+- Added regression coverage for OrbitControls pointer-up visibility, authoritative mode source, post-activation inactive rebuild and protected pins.
+
 ## 2026-09-20 — v0.36.18.366 authoritative live-mesh bridge timing
 
 - User confirmed .365 fixed ordinary object activation persistence, but two linked-instance regressions remained:

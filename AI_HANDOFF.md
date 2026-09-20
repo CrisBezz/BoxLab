@@ -25,13 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.366**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **4d16dd0e61c01bad16d7571493ac60232d0a9d7b**
-- Current code-bearing/release commit: **40e25b3425971a970ac97641734517be91e6df42**
-- v0.36.18.366 release PR: **#50**
+- Repository release candidate: **v0.36.18.367**
+- Current documentation HEAD: **v0.36.18.367 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.367 PR branch; pending merge**
+- v0.36.18.367 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.366**
+- Current `version.json`: **0.36.18.367**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -54,7 +54,23 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.366
+## Latest completed development — v0.36.18.367
+
+Theme: **restore touch navigation after object activation and harden selection-mode transitions**.
+
+Critical fixes:
+- touch object activation no longer consumes pointer-up, allowing OrbitControls to clean up the pointer it saw on pointer-down
+- fixes one-finger orbit turning into pan and broken pinch zoom after selecting another object
+- activation schedules final persistent inactive-layer refreshes after the full handoff
+- multi-object `currentMode()` now uses `__boxlabSelectionBridge.mode()` as authoritative, avoiding a one-frame stale DOM mode during Object ↔ Edge/Face/Vertex renders
+
+Preserved:
+- .366 live-mesh bridge fix and linked edit propagation
+- .365 persistent inactive scene layer
+- .363 atomic linked creation
+- protected Group transform baseline
+
+## Previous completed development — v0.36.18.366
 
 Theme: **the bridge now publishes the exact mesh currently being rendered**.
 
@@ -741,18 +757,17 @@ Scene / modifiers:
 
 ## Next development step
 
-**Phase C — Object / instance workflow remains active.**
+**Phase C — linked-instance lifecycle remains the priority.**
 
-Recommended next build:
-- **user-test .366 linked edit commit + mode transitions first**
-- A → linked B → linked C, move apart
-- Face mode: Extrude on one peer and verify all peers update and remain changed after pointer-up
-- Inset test likewise
-- switch repeatedly Object ↔ Edge ↔ Face ↔ Vertex and verify all visible inactive objects remain rendered
-- activate different peers after edits and verify no snap-back
-- do not resume UI polish until this is confirmed stable
+Recommended test:
+- finger-select between linked peers several times
+- verify one-finger orbit and pinch zoom remain correct after every selection
+- verify non-active peers remain visible after object activation
+- switch Object ↔ Edge ↔ Face ↔ Vertex and verify peers remain visible
+- confirm linked Extrude still commits and propagates
+- do not resume UI polish until all four are confirmed
 - preserve `object-origin.js?v=0.36.18.355`
-- do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
+- do not touch `src/multi-object-transform.js?v=0.36.1.0`
 
 ## End-of-session requirement
 
