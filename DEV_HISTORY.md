@@ -35,6 +35,7 @@ Newest entries should be added at the top.
 - Protected linked-instance/navigation baseline `multi-object.js?v=0.36.18.367` remains untouched.
 - Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Released from PR **#53**; squash merge commit: `4520d63bb39e0b3b6f61287dd92b423377f3aad9`.
 
 ## 2026-09-20 — v0.36.18.368 Group Boolean convenience
 
