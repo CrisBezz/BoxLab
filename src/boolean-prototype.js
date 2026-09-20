@@ -5,6 +5,7 @@ import { EditableMesh } from './mesh.js';
 import { meshIntersections, epsilonForMeshes } from './boolean-intersections.js?v=0.36.18.209';
 import { topologyInfo } from './boolean-classify.js?v=0.36.18.210';
 import { booleanBSP } from './boolean-bsp.js?v=0.36.18.248';
+import { combineEditableMeshes } from './object-join-core.js?v=0.36.18.277';
 
 const VERSION='0.36.18.247';
 const CONVEX_ONLY='Current Boolean supports convex solids only';
@@ -14,6 +15,7 @@ const objectTools=document.querySelector('[data-mode-tools="object"]');
 
 function manager(){return globalThis.__boxlabObjectManager||null;}
 function selection(){return globalThis.__boxlabObjectSelection||null;}
+function groups(){return globalThis.__boxlabObjectGroups||null;}
 function selectedObjects(){
   const m=manager(),ids=selection()?.ids;if(!m||!ids)return[];
   m.saveActive?.();
@@ -160,13 +162,28 @@ function ensureUI(){
 }
 function eligibility(){
   const m=manager(),chosen=selectedObjects();
-  if(!m||chosen.length!==2)return{ok:false,reason:'Select exactly 2 objects with Multi'};
-  const active=chosen.find(o=>o.id===m.activeId),other=chosen.find(o=>o.id!==m.activeId);
-  if(!active||!other)return{ok:false,reason:'One selected object must be active'};
-  if(active.kind==='reference'||other.kind==='reference')return{ok:false,reason:'Reference objects cannot be Boolean operands'};
-  if(active.locked||other.locked)return{ok:false,reason:'Unlock both Boolean operands'};
-  const ta=topologyInfo(active.mesh),tb=topologyInfo(other.mesh);if(!ta.closed||!tb.closed)return{ok:false,reason:'Both Boolean operands must be closed manifold meshes'};
-  return{ok:true,active,other};
+  if(!m)return{ok:false,reason:'Object manager unavailable'};
+  if(chosen.length===2){
+    const active=chosen.find(o=>o.id===m.activeId),other=chosen.find(o=>o.id!==m.activeId);
+    if(!active||!other)return{ok:false,reason:'One selected object must be active'};
+    if(active.kind==='reference'||other.kind==='reference')return{ok:false,reason:'Reference objects cannot be Boolean operands'};
+    if(active.locked||other.locked)return{ok:false,reason:'Unlock both Boolean operands'};
+    const ta=topologyInfo(active.mesh),tb=topologyInfo(other.mesh);if(!ta.closed||!tb.closed)return{ok:false,reason:'Both Boolean operands must be closed manifold meshes'};
+    return{ok:true,kind:'objects',active,other,chosen,originals:[active,other]};
+  }
+  const g=groups(),groupIds=g?.completeSelectedGroupIds?.()||[];
+  if(groupIds.length!==2)return{ok:false,reason:'Select exactly 2 objects or 2 complete Groups with Multi'};
+  const allObjects=m.objects||[],selectedIds=selection()?.ids||new Set();
+  const selected=allObjects.filter(o=>selectedIds.has(o.id));
+  const allowed=new Set(groupIds),invalidSelected=selected.some(o=>o.groupId==null||!allowed.has(o.groupId));
+  if(invalidSelected)return{ok:false,reason:'Group Boolean requires exactly two complete Groups'};
+  const operandFor=id=>{const members=g.members?.(id)||allObjects.filter(o=>o.groupId===id);if(members.length<2||members.some(o=>!selectedIds.has(o.id)))return null;if(members.some(o=>o.kind==='reference'))return{error:'Reference objects cannot be Boolean operands'};if(members.some(o=>o.locked))return{error:'Unlock all Group members before Boolean'};const mesh=combineEditableMeshes(members.map(o=>o.mesh));if(!mesh)return{error:'Could not build temporary Group operand'};const topo=topologyInfo(mesh);if(!topo.closed)return{error:'Both Group operands must contain closed manifold meshes'};return{name:g.label?.(id)||`Group ${id}`,groupId:id,members,mesh,primaryId:members[0]?.id};};
+  const activeObject=allObjects.find(o=>o.id===m.activeId),activeGroupId=activeObject?.groupId;
+  if(!allowed.has(activeGroupId))return{ok:false,reason:'Active object must belong to one selected Group'};
+  const otherGroupId=groupIds.find(id=>id!==activeGroupId),active=operandFor(activeGroupId),other=operandFor(otherGroupId);
+  if(active?.error)return{ok:false,reason:active.error};if(other?.error)return{ok:false,reason:other.error};
+  if(!active||!other)return{ok:false,reason:'Could not build Group Boolean operands'};
+  return{ok:true,kind:'groups',active,other,chosen:selected,originals:[...active.members,...other.members]};
 }
 function booleanNameStem(name){
   return String(name||'Object').trim().replace(/\s+B\d+$/i,'')||'Object';
@@ -187,14 +204,16 @@ function apply(operation){
   const result=buildResult(e.active.mesh,e.other.mesh,operation);
   if(!result.ok){setStatus(`Boolean ${operation} refused • ${result.reason}`);return;}
   globalThis.__boxlabObjectHistory?.checkpoint?.();
-  e.active.visible=false;e.other.visible=false;
+  const originals=e.originals||[e.active,e.other],visibility=new Map(originals.map(o=>[o.id,o.visible!==false]));
+  for(const object of originals)object.visible=false;
   const label=operation==='difference'?'Cut':operation==='intersection'?'Intersect':'Union';
   const created=manager()?.addMesh?.(result.mesh,nextBooleanName(e.active.name),{kind:'editable',visible:true,locked:false,enterObjectMode:true});
-  if(!created){e.active.visible=true;e.other.visible=true;setStatus(`Boolean ${label} failed • result object could not be created`);return;}
+  if(!created){for(const object of originals)object.visible=visibility.get(object.id)!==false;setStatus(`Boolean ${label} failed • result object could not be created`);return;}
   selection()?.select?.([created.id]);
   globalThis.__boxlabTopologyGate?.sync?.();
   const fallbackText=result.fallbackReason===DEGENERATE_INPUT?' • repaired degenerate input':'';
-  setStatus(`${label} created • ${result.mesh.vertices.length} verts • ${result.mesh.faces.length} faces • ${result.engine==='sequential'?'sequential solver':'stable solver'}${fallbackText} • originals hidden`);
+  const sourceText=e.kind==='groups'?' • source Groups hidden':' • originals hidden';
+  setStatus(`${label} created • ${result.mesh.vertices.length} verts • ${result.mesh.faces.length} faces • ${result.engine==='sequential'?'sequential solver':'stable solver'}${fallbackText}${sourceText}`);
 }
 
 ensureUI();
@@ -204,4 +223,4 @@ window.addEventListener('boxlab-bridge-state',()=>setTimeout(sync,0));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 [0,100,400,900].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabBooleanPrototype={version:VERSION,buildStableResult,buildResult,apply,sync};
+globalThis.__boxlabBooleanPrototype={version:VERSION,buildStableResult,buildResult,eligibility,apply,sync};

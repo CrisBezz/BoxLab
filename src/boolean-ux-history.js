@@ -19,10 +19,15 @@ function selectedObjects(){
   m.saveActive?.();return (m.objects||[]).filter(o=>ids.has(o.id));
 }
 function operands(){
+  const proto=globalThis.__boxlabBooleanPrototype;
+  if(proto?.eligibility){
+    const e=proto.eligibility();
+    if(e?.ok)return{ok:true,a:e.active,b:e.other,kind:e.kind,chosen:e.chosen||[]};
+  }
   const m=manager(),chosen=selectedObjects();
   if(!m||chosen.length!==2)return{ok:false,chosen};
   const a=chosen.find(o=>o.id===m.activeId),b=chosen.find(o=>o.id!==m.activeId);
-  return a&&b?{ok:true,a,b,chosen}:{ok:false,chosen};
+  return a&&b?{ok:true,a,b,kind:'objects',chosen}:{ok:false,chosen};
 }
 function setStatus(text){if(status)status.textContent=text;}
 
@@ -42,7 +47,7 @@ function installStyle(){
 .outliner-row.boolean-operand-a .outliner-name::before,.outliner-row.boolean-operand-b .outliner-name::before{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:4px;margin-right:5px;font-size:9px;font-weight:800;vertical-align:1px;color:#111}
 .outliner-row.boolean-operand-a .outliner-name::before{content:'A';background:var(--bool-a);outline:1px solid color-mix(in srgb,var(--bool-a) 70%,white)}
 .outliner-row.boolean-operand-b .outliner-name::before{content:'B';background:var(--bool-b);outline:1px solid color-mix(in srgb,var(--bool-b) 70%,white)}
-#booleanPrototype217 [data-boolean217="difference"]{background:linear-gradient(90deg,color-mix(in srgb,var(--bool-a) 20%,transparent) 0 46%,rgba(255,255,255,.035) 46% 54%,color-mix(in srgb,var(--bool-b) 20%,transparent) 54% 100%);border-color:rgba(255,255,255,.18)}
+.boxlab-group-row.boolean-group-a{box-shadow:inset 3px 0 0 var(--bool-a)!important}.boxlab-group-row.boolean-group-b{box-shadow:inset 3px 0 0 var(--bool-b)!important}\n#booleanPrototype217 [data-boolean217="difference"]{background:linear-gradient(90deg,color-mix(in srgb,var(--bool-a) 20%,transparent) 0 46%,rgba(255,255,255,.035) 46% 54%,color-mix(in srgb,var(--bool-b) 20%,transparent) 54% 100%);border-color:rgba(255,255,255,.18)}
 #booleanPrototype217 [data-boolean217="difference"] .bool-a-label{color:var(--bool-a);font-weight:800}#booleanPrototype217 [data-boolean217="difference"] .bool-b-label{color:var(--bool-b);font-weight:800}
 `;
 }
@@ -56,16 +61,18 @@ function ensureOperandUI(){
   const swap=document.createElement('button');swap.type='button';swap.id='booleanSwapAB218';swap.textContent='Swap';swap.title='Swap A / B Boolean operands';
   swap.addEventListener('click',event=>{
     event.preventDefault();event.stopPropagation();const e=operands();if(!e.ok)return;
-    manager()?.activate?.(e.b.id);
+    const targetId=e.b?.primaryId??e.b?.id;
+    if(targetId!=null)manager()?.activate?.(targetId);
     setStatus(`Boolean operands swapped • A ${e.b.name} • B ${e.a.name}`);queueSelectionSync();
   });
   panel.append(a,b,swap);group.firstElementChild?.after(panel);return panel;
 }
 function markOutliner(e){
   outliner?.querySelectorAll('.outliner-row').forEach(row=>row.classList.remove('boolean-operand-a','boolean-operand-b'));
+  outliner?.querySelectorAll('.boxlab-group-row').forEach(row=>row.classList.remove('boolean-group-a','boolean-group-b'));
   if(!e.ok)return;
-  outliner?.querySelector(`.outliner-row[data-object-id="${e.a.id}"]`)?.classList.add('boolean-operand-a');
-  outliner?.querySelector(`.outliner-row[data-object-id="${e.b.id}"]`)?.classList.add('boolean-operand-b');
+  const mark=(operand,cls,groupCls)=>{const members=operand?.members||[operand];for(const object of members)outliner?.querySelector(`.outliner-row[data-object-id="${object.id}"]`)?.classList.add(cls);if(operand?.groupId!=null)outliner?.querySelector(`.boxlab-group-block[data-group-id="${operand.groupId}"] > .boxlab-group-row`)?.classList.add(groupCls);};
+  mark(e.a,'boolean-operand-a','boolean-group-a');mark(e.b,'boolean-operand-b','boolean-group-b');
 }
 
 function restoreViewportMaterials(){
@@ -106,8 +113,11 @@ function syncSelectionColours(){
   restoreViewportMaterials();
   if(currentMode()!=='object'){requestViewportRender();return;}
   const m=manager(),sel=selection(),ids=sel?.ids;if(!m||!ids?.size){requestViewportRender();return;}
-  const wholeGroupId=sel?.wholeGroupId??null,activeId=m.activeId;
-  if(wholeGroupId!=null){
+  const wholeGroupId=sel?.wholeGroupId??null,activeId=m.activeId,e=operands();
+  if(e.ok&&e.kind==='groups'){
+    for(const object of e.a.members||[])applyBodyTint(findBodyForObject(object.id,object.id===activeId),COLOR_A);
+    for(const object of e.b.members||[])applyBodyTint(findBodyForObject(object.id,object.id===activeId),COLOR_B);
+  }else if(wholeGroupId!=null){
     for(const id of ids)applyBodyTint(findBodyForObject(id,id===activeId),COLOR_A);
   }else if(ids.size===2){
     if(ids.has(activeId))applyBodyTint(findBodyForObject(activeId,true),COLOR_A);

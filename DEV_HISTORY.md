@@ -8,6 +8,32 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.368 Group Boolean convenience
+
+- Built the queued Phase C Group Boolean workflow without introducing a Group geometry type.
+- Group header selection is additive while Multi is active:
+  - select Group A
+  - tap Group B
+  - both complete Groups become one Multi selection
+- Boolean eligibility now accepts either:
+  - the existing exactly-two-object workflow, unchanged
+  - exactly two complete Groups with no partial/extra selected objects
+- Each Group operand is built in memory with the existing `combineEditableMeshes()` Join helper.
+- Existing Boolean solver remains authoritative for Union / Cut / Intersect.
+- Reference members and locked members are refused.
+- Source Group members are hidden only after one authoritative Object scene-history checkpoint.
+- Boolean result is a normal unique editable object; no Group metadata is attached to the result.
+- Undo can therefore restore original source objects, Group names/hierarchy, visibility and selection through the existing scene-history bridge.
+- Existing Boolean A/B panel now understands Group operands:
+  - active Group = A / amber
+  - other Group = B / blue
+  - all member rows and Group headers receive the corresponding A/B cue
+  - Swap activates a member of the opposite Group to reverse A/B
+- Protected linked-instance baseline `multi-object.js?v=0.36.18.367` remains pinned.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for additive Group selection, Group eligibility, history semantics, A/B UX and protected pins.
+
 ## 2026-09-20 — v0.36.18.367 touch orbit + selection-mode stability
 
 - User confirmed .366 fixed linked Extrude commit/propagation.
