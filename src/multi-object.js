@@ -205,7 +205,16 @@ function saveActive() {
     const source=linkedSources.get(object.sourceId);
     if(currentMode()==='object'){
       const placement=deriveInstancePlacement(source.mesh,live);
-      if(placement)setInstanceMatrix(object,placement);
+      if(placement){
+        setInstanceMatrix(object,placement);
+      }else{
+        const local=localMeshFromWorld(live,matrixForInstance(object));
+        if(local&&!meshesNear(local,source.mesh)){
+          source.mesh=local.clone();
+          source.revision++;
+          syncLinkedPeers(object.sourceId,object.id);
+        }
+      }
       object.mesh=live.clone();
     }else{
       const local=localMeshFromWorld(live,matrixForInstance(object));
@@ -234,6 +243,14 @@ function shouldShow(object) {
 
 function displayMeshFor(object) {
   let display = object.mesh;
+  if(object?.sourceId&&linkedSources.has(object.sourceId)){
+    const source=linkedSources.get(object.sourceId);
+    const evaluated=transformEditableMesh(source.mesh,matrixForInstance(object));
+    if(evaluated){
+      object.mesh=evaluated;
+      display=evaluated;
+    }
+  }
   if (object.settings?.subd) display = subdivide(display, Math.max(1, Math.min(4, object.settings.subdLevel || 1)));
   return applyMirror(display, object.settings?.mirror || { x:false, y:false, z:false });
 }
@@ -406,6 +423,11 @@ function activateObject(id, forceLocked = false) {
   if (!live) return false;
   saveActive();
   activeId = target.id;
+  if(target.sourceId&&linkedSources.has(target.sourceId)){
+    const source=linkedSources.get(target.sourceId);
+    const evaluated=transformEditableMesh(source.mesh,matrixForInstance(target));
+    if(evaluated)target.mesh=evaluated;
+  }
   replaceMeshInPlace(live, target.mesh);
   restoreHistory(target.history);
   restoreSettings(target.settings);

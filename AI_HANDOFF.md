@@ -25,13 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.361**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **7aa15c1dbcc4b4d723900a27beedf20647ca9df5**
-- Current code-bearing/release commit: **81121843def91f766c8f0b25f6b5cc479671598b**
-- v0.36.18.361 release PR: **#45**
+- Repository release candidate: **v0.36.18.362**
+- Current documentation HEAD: **v0.36.18.362 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.362 PR branch; pending merge**
+- v0.36.18.362 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.361**
+- Current `version.json`: **0.36.18.362**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -54,7 +54,29 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.361
+## Latest completed development — v0.36.18.362
+
+Theme: **linked instances keep independent placement while sharing geometry**.
+
+Critical fix:
+- moving and editing one linked instance no longer permits stale evaluated world meshes to become authoritative
+- Object-mode save first tries to recover placement from shared source → live mesh
+- if that fails, the live mesh is treated as a shared geometry edit under the existing instanceMatrix
+- shared source is updated in local coordinates and every peer is regenerated from source × its own instanceMatrix
+- selecting a linked peer regenerates its active world mesh from source × instanceMatrix
+- inactive linked rendering does the same
+
+Intended invariant:
+- geometry edits propagate to linked peers
+- object placement does not
+- switching active peer must never collapse instances onto one another
+
+Protected behavior:
+- Group baseline remains `object-origin.js?v=0.36.18.355`
+- compact Outliner, SubD row toggle and contextual Origin/Pivot remain unchanged
+- protected `src/multi-object-transform.js?v=0.36.1.0` untouched
+
+## Previous completed development — v0.36.18.361
 
 Theme: **per-object SubD control in the compact Outliner**.
 
@@ -636,13 +658,12 @@ Scene / modifiers:
 **Phase C — Object / instance workflow remains active.**
 
 Recommended next build:
-- **user-test .361 Outliner SubD control**
-- verify S toggles active and inactive editable objects independently
-- verify active S remains synchronized with Modifiers > SubD Preview
-- verify SubD level remains per-object and unchanged by the row toggle
-- verify grouped children can each show/toggle their own SubD state without affecting Group transforms
-- if confirmed, continue compact Object drawer polish or move to queued Group Boolean convenience
-- Group Boolean should reuse temporary Join-derived compound operands and existing Boolean, not introduce a new Group geometry type
+- **user-test .362 linked-instance placement first**
+- create Linked Duplicate, move peers apart, then switch active object repeatedly
+- model one peer further, then switch between all peers and verify geometry propagates but placement never jumps
+- test Move / Scale / Rotate on individual linked peers
+- test Make Unique after peers are separated and edited
+- if stable, continue Outliner polish or move to queued Group Boolean convenience
 - preserve `object-origin.js?v=0.36.18.355` unless a concrete Group regression requires changing it
 - do not touch protected `src/multi-object-transform.js?v=0.36.1.0`
 
@@ -664,6 +685,7 @@ Completed Phase C slices now include:
 - per-object Delete restoration + hardware Delete/Backspace (.359)
 - contextual Origin/Pivot + compact Object Selection strip (.360)
 - per-object Outliner SubD Preview toggle (.361)
+- linked-instance shared-geometry / independent-placement stability (.362)
 
 Do not reopen Phase A unless a concrete cleanup regression is reported.
 
