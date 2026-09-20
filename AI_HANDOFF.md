@@ -29,7 +29,7 @@ Audited from current `main` on 2026-09-20.
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
 - Current live development build: **v0.36.18.381 — improved Solidify preview backface visibility**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **39252588b9e7530fd276a0715739a040efc87d59**
+- Current live code-bearing commit: **a4ee4ae3779586be82365ee98f169527d49fb08d**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
@@ -40,8 +40,9 @@ Audited from current `main` on 2026-09-20.
 - Previous v0.36.18.377 PR: **#61**
 - Previous v0.36.18.378 PR: **#62**
 - Previous v0.36.18.379 PR: **#63**
-- Current v0.36.18.380 PR: **#64**
-- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35544543433**
+- Previous v0.36.18.380 PR: **#64**
+- Current v0.36.18.381 PR: **#65**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35544854000**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
