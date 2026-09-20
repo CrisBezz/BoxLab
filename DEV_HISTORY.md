@@ -8,6 +8,16 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.373 visible-version ownership fix
+
+- User observed live main apparently reverting to **v0.36.1.0**.
+- Root cause was found in protected `src/multi-object-transform.js`, which contains legacy UI-only lines that stamp `#appVersion` and `document.title` to its own historical module version.
+- Transform logic and the protected file/blob were deliberately left untouched.
+- The top-bar version label now carries an explicit release-shell version stamp.
+- `release-version.js` uses that shell value immediately and its existing observer reasserts the real app version if any older module mutates the label later.
+- `version.json` remains the network/source-of-truth confirmation path.
+- Phase D Solidify from .372 is unchanged.
+
 ## 2026-09-20 — v0.36.18.372 Phase D Solidify foundation
 
 - Phase D higher-level modelling started from the frozen v0.36.18.371 Beta 3 baseline.

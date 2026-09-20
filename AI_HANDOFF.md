@@ -26,7 +26,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-20.
 
-- Frozen release checkpoint: **v0.36.18.371 — Beta 3**\n- Current live development build: **v0.36.18.372 — Phase D Solidify**
+- Frozen release checkpoint: **v0.36.18.371 — Beta 3**\n- Current live development build: **v0.36.18.373 — visible-version ownership fix on Phase D Solidify**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **537c83069b749ff8ad8ed7a8887f7dc3e7f5b37a**\n- Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
@@ -35,7 +35,7 @@ Audited from current `main` on 2026-09-20.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.372**\n- Current Phase D loader: **solidify.js?v=0.36.18.372** → `solidify-core.js?v=0.36.18.372`
+- Current `version.json`: **0.36.18.373**\n- Current Phase D loader: **solidify.js?v=0.36.18.373** → `solidify-core.js?v=0.36.18.372`
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -58,7 +58,19 @@ Audited from current `main` on 2026-09-20.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.372
+## Latest completed development — v0.36.18.373
+
+Theme: **visible app version ownership fix**.
+
+- Root cause of apparent reversion to v0.36.1.0 was confirmed inside protected `src/multi-object-transform.js`: it still writes the historical v0.36.1.0 string into `#appVersion` and `document.title`.
+- The protected transform file and its exact cache pin remain untouched.
+- `#appVersion` now carries an explicit `data-release-version` shell stamp.
+- `release-version.js` now prefers that immutable shell stamp immediately, then continues to verify against `version.json`.
+- Its MutationObserver remains authoritative, so any later legacy module attempt to write an internal module version is corrected back to the actual app release.
+- This fixes version display ownership without changing transform behaviour.
+- Phase D Solidify behaviour from .372 is unchanged.
+
+## Previous completed development — v0.36.18.372
 
 Theme: **Phase D begins — open-sheet Solidify foundation**.
 

@@ -1,7 +1,8 @@
 // BoxLab release version owner.
-// version.json is the single source of truth for the visible app release number and document title.
+// version.json is the network source of truth; the HTML shell stamp prevents legacy modules from owning the visible version.
 const label=document.querySelector('#appVersion');
-let VERSION=(document.title.match(/BoxLab\s+v([^\s]+)/i)?.[1]||label?.textContent?.replace(/^v/,'')||'').trim();
+const SHELL_VERSION=String(label?.dataset?.releaseVersion||'').trim();
+let VERSION=(SHELL_VERSION||document.title.match(/BoxLab\s+v([^\s]+)/i)?.[1]||label?.textContent?.replace(/^v/,'')||'').trim();
 
 globalThis.__boxlabReleaseVersionObserver?.disconnect?.();
 
@@ -24,13 +25,14 @@ async function refresh(){
     const data=await response.json();
     const latest=String(data?.version||'').trim();
     if(latest)stamp(latest);
+    else stamp(SHELL_VERSION||VERSION);
   }catch(error){
     console.warn('BoxLab release version check failed',error);
-    stamp();
+    stamp(SHELL_VERSION||VERSION);
   }
 }
 
-stamp();
+stamp(SHELL_VERSION||VERSION);
 if(label){
   const observer=new MutationObserver(()=>stamp());
   observer.observe(label,{childList:true,characterData:true,subtree:true});
