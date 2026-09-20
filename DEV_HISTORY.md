@@ -16,6 +16,8 @@ Newest entries should be added at the top.
 - Input/change handlers enforce the Pencil-owned value before updating output/preview.
 - Finger/touch remains native after Pencil ownership clears.
 - No topology/history/selection changes.
+- Released from PR **#63**; squash merge commit: `13d9ea9aa3c58333abfc660dcd990ed26363d94f`.
+- Final Topology regression passed in workflow run **35507874713**.
 
 ## 2026-09-20 — v0.36.18.378 Shell Pencil thickness parity
 
