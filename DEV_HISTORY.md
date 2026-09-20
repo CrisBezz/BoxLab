@@ -27,6 +27,7 @@ Newest entries should be added at the top.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Refreshed `object-management.js → drawer-ui.js → index.html` cache chain.
 - Added regression coverage for contextual visibility, compact Selection layout and protected pins.
+- Released from PR **#44**; squash merge commit: `41fa0636d5b601cd059afe4bc911f4f36b4a9dab`.
 
 ## 2026-09-20 — v0.36.18.359 Outliner Delete restoration + keyboard Delete
 
