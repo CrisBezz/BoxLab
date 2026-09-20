@@ -28,9 +28,9 @@ Audited from current `main` on 2026-09-20.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**\n- Current live development build: **v0.36.18.373 — visible-version ownership fix on Phase D Solidify**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **537c83069b749ff8ad8ed7a8887f7dc3e7f5b37a**\n- Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
+- Current live code-bearing commit: **3a7139dabc09731ffb29bb952c15ef1bb276559f**\n- Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
-- Current v0.36.18.372 PR: **#56**\n- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35501284867**
+- Previous v0.36.18.372 PR: **#56**\n- Current v0.36.18.373 PR: **#57**\n- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35502647303**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
