@@ -29,6 +29,7 @@ Newest entries should be added at the top.
 - Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Added regression coverage for publish-before-clear/body-add ordering and protected pins.
+- Released from PR **#50**; squash merge commit: `40e25b3425971a970ac97641734517be91e6df42`.
 
 ## 2026-09-20 — v0.36.18.365 persistent inactive-object scene layer
 
