@@ -723,7 +723,7 @@ function installViewportActivation() {
     if (event.pointerType !== 'touch' || !touchTap || event.pointerId !== touchTap.pointerId) return;
     const candidate=touchTap;touchTap=null;
     if (candidate.cancelled || !candidate.objectMode || currentMode() !== 'object') return;
-    handleViewportActivation(event, false);
+    handleViewportActivation(event, true);
   }, true);
 
   canvas?.addEventListener('pointercancel', event => {
