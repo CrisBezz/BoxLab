@@ -25,13 +25,13 @@ The repository is authoritative. If anything here conflicts with current `main`,
 
 Audited from current `main` on 2026-09-19.
 
-- Repository release: **v0.36.18.369**
-- Current documentation HEAD before this final `AI_HANDOFF.md` update: **6af15c75b784cc97d0e4f9584daf815e16e30caa**
-- Current code-bearing/release commit: **4520d63bb39e0b3b6f61287dd92b423377f3aad9**
-- v0.36.18.369 release PR: **#53**
+- Repository release candidate: **v0.36.18.371**
+- Current documentation HEAD: **v0.36.18.371 PR branch; refresh after merge**
+- Current code-bearing/release commit: **v0.36.18.371 PR branch; pending merge**
+- v0.36.18.371 release PR: **pending**
 - PR topology regression: **merged successfully; connector does not expose the Actions check run ID**
 - Post-merge topology regression: **not separately verified through the connector in this session**
-- Current `version.json`: **0.36.18.369**
+- Current `version.json`: **0.36.18.371**
 - Current main runtime pin remains: **main.js?v=0.36.18.326**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -54,7 +54,30 @@ Audited from current `main` on 2026-09-19.
 
 Phase A remains frozen except for concrete regressions. The planned Phase B precision-modelling slice is complete through v0.36.18.340. Phase C — Object / instance workflow — is active.
 
-## Latest completed development — v0.36.18.369
+## Latest completed development — v0.36.18.371
+
+Theme: **Beta 3 release-candidate hardening / feature freeze**.
+
+Release intent:
+- no new modelling capability in .371
+- preserve the current user-tested modelling/object baseline
+- run the hands-on release gate in `BETA3_RELEASE_CHECKLIST.md`
+- fix only reproducible release blockers
+- once approved, freeze the exact approved tree to `/beta-3/`
+
+New release guards:
+- `tests/beta3-release-candidate-371.test.mjs` locks the critical linked-instance, navigation, Group transform, component-Multi, Through, Clean and Group Boolean baselines
+- `BETA3_RELEASE_CHECKLIST.md` is the authoritative manual pre-release checklist
+
+Protected release baseline:
+- linked-instance/navigation: `multi-object.js?v=0.36.18.367`
+- Group transforms: `object-origin.js?v=0.36.18.355`
+- protected transform core: `multi-object-transform.js?v=0.36.1.0`
+- Group Boolean compound solver: .369
+- no service worker
+- no speculative UI or topology refactors during release testing
+
+## Previous completed development — v0.36.18.369
 
 Theme: **real compound Group Boolean + persistent Boolean drawer**.
 
@@ -802,16 +825,16 @@ Scene / modifiers:
 
 ## Next development step
 
-**Phase C remains active.**
+**Beta 3 release gate is active.**
 
-Recommended:
-- user-test .369 using the same two Groups that failed in .368
-- verify Group Cut now completes without the disconnected-operand topology failure
-- verify Union / Intersect on simple overlapping Group solids
-- tap Swap and confirm Active Tools stays open
-- Undo and confirm both source Groups return with names/hierarchy unchanged
-- verify ordinary two-object Boolean remains unchanged
-- preserve `multi-object.js?v=0.36.18.367`, `object-origin.js?v=0.36.18.355`, and `multi-object-transform.js?v=0.36.1.0`
+1. User runs the iPad hands-on checks in `BETA3_RELEASE_CHECKLIST.md`.
+2. Fix only concrete release-blocking regressions.
+3. If the gate passes, freeze the approved tree to `/beta-3/`.
+4. Smoke-test both the live app and frozen Beta 3 URL.
+5. Resume Phase D only after the checkpoint is confirmed.
+
+Do not merge the abandoned .370 experiment into main.
+Preserve `multi-object.js?v=0.36.18.367`, `object-origin.js?v=0.36.18.355`, and `multi-object-transform.js?v=0.36.1.0`.
 
 ## End-of-session requirement
 
