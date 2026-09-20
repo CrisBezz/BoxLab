@@ -4,10 +4,13 @@ import fs from 'node:fs';
 
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const ui=fs.readFileSync(new URL('../src/solidify.js',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('375 Solidify direct-drag runtime is pinned',()=>{
-  assert.match(index,/solidify\.js\?v=0\.36\.18\.375/);
-  assert.match(index,/data-release-version="0\.36\.18\.375"/);
+test('Solidify direct-drag wrapper follows current app build',()=>{
+  const wrapper=index.match(/solidify\.js\?v=([^"]+)/)?.[1];
+  const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
+  assert.equal(wrapper,version);
+  assert.equal(stamp,version);
 });
 
 test('375 preview supports viewport ray-picked thickness dragging',()=>{

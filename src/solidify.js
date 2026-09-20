@@ -6,10 +6,11 @@ const input=document.querySelector('#solidifyThickness');
 const output=document.querySelector('#solidifyThicknessOut');
 const status=document.querySelector('#selectionStatus');
 const canvas=document.querySelector('#viewport');
+const activeToolsDrawer=document.querySelector('#editDrawer');
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
 
-let preview=null,previewObjectId=null,previewArmed=false,thicknessDrag=null;
+let preview=null,previewObjectId=null,previewArmed=false,thicknessDrag=null,drawerLockState=null;
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function mesh(){return globalThis.__boxlabBridgeState?.mesh||null;}
@@ -32,6 +33,30 @@ function setThickness(value,{rebuild=true}={}){
 }
 function syncThickness(){if(output)output.textContent=Number(thickness().toFixed(3)).toString();}
 function scene(){return globalThis.__boxlabBridgeState?.scene||null;}
+function lockActiveToolsDrawer(){
+  if(!activeToolsDrawer)return;
+  if(!drawerLockState)drawerLockState={
+    keepOpen:activeToolsDrawer.dataset.keepOpen,
+    open:activeToolsDrawer.open
+  };
+  activeToolsDrawer.dataset.keepOpen='true';
+  activeToolsDrawer.open=true;
+}
+function unlockActiveToolsDrawer(){
+  if(!activeToolsDrawer||!drawerLockState)return;
+  const previous=drawerLockState;
+  drawerLockState=null;
+  if(previous.keepOpen===undefined)delete activeToolsDrawer.dataset.keepOpen;
+  else activeToolsDrawer.dataset.keepOpen=previous.keepOpen;
+  // Do not force-close after a successful/cancelled Solidify session;
+  // the user may still need the Object tools. Only restore an originally-open drawer.
+  if(previous.open)activeToolsDrawer.open=true;
+}
+function keepDrawerVisible(){
+  if(previewArmed&&activeToolsDrawer&&!activeToolsDrawer.open){
+    queueMicrotask(()=>{if(previewArmed)activeToolsDrawer.open=true;});
+  }
+}
 function disposePreview(){
   if(preview?.parent)preview.parent.remove(preview);
   preview?.geometry?.dispose?.();
@@ -48,6 +73,7 @@ function endThicknessDrag(){
 function cancelPreview({silent=false}={}){
   endThicknessDrag();
   disposePreview();previewArmed=false;previewObjectId=null;
+  unlockActiveToolsDrawer();
   if(button)button.textContent='Solidify';
   if(!silent)setStatus('Solidify preview cancelled');
 }
@@ -173,6 +199,7 @@ canvas?.addEventListener('pointerdown',beginThicknessDrag,true);
 canvas?.addEventListener('pointermove',moveThicknessDrag,true);
 canvas?.addEventListener('pointerup',finishThicknessDrag,true);
 canvas?.addEventListener('pointercancel',finishThicknessDrag,true);
+activeToolsDrawer?.addEventListener('toggle',keepDrawerVisible);
 
 button?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh();
@@ -182,6 +209,7 @@ button?.addEventListener('click',()=>{
     const preflight=analyzeSolidifyInput(live);
     if(!preflight.ok){setStatus(preflightMessage(preflight.reason));return;}
     previewArmed=true;previewObjectId=object.id;
+    lockActiveToolsDrawer();
     button.textContent='Apply Solidify';
     buildPreview();
     return;
@@ -193,9 +221,10 @@ button?.addEventListener('click',()=>{
   const result=solidifyOpenMesh(live,thickness());
   if(!result.ok){setStatus(`Solidify rolled back • ${result.reason||'topology validation failed'}`);cancelPreview({silent:true});forceRender();return;}
   disposePreview();previewArmed=false;previewObjectId=null;
+  unlockActiveToolsDrawer();
   button.textContent='Solidify';
   manager()?.saveActive?.();
-  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.375',...result};
+  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.376',...result};
   setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid`);
   forceRender();
 });
@@ -203,7 +232,7 @@ button?.addEventListener('click',()=>{
 window.addEventListener('boxlab-object-manager-ready',update);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(update));
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(update)));
-window.addEventListener('beforeunload',()=>{endThicknessDrag();disposePreview();});
+window.addEventListener('beforeunload',()=>{endThicknessDrag();disposePreview();unlockActiveToolsDrawer();});
 update();
 
 globalThis.__boxlabSolidifyPreview={

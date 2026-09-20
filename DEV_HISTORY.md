@@ -8,6 +8,15 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.376 Solidify Active Tools drawer lock
+
+- User reported that Active Tools collapsed during interactive Solidify thickness dragging, hiding Apply Solidify.
+- Root cause path is the shared drawer exclusivity system; it already supports `data-keep-open="true"`.
+- Solidify now temporarily claims that existing keep-open contract for the entire armed preview session.
+- Active Tools is explicitly reopened if any competing UI path closes it before the preview is applied/cancelled.
+- Keep-open ownership is released after Apply/Cancel/invalidation; `drawer-ui.js` remains unchanged.
+- No topology, hard-fold, direct-drag or history logic changed.
+
 ## 2026-09-20 — v0.36.18.375 direct-drag Solidify thickness
 
 - User requested direct interactive thickness control by dragging the translucent Solidify preview itself.

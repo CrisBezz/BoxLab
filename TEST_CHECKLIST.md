@@ -260,6 +260,9 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] direct thickness drag follows the picked preview face's projected normal rather than a fixed screen axis
 - [ ] direct drag updates the Thickness slider/output continuously
 - [ ] OrbitControls pauses only during direct thickness drag and restores immediately on release/cancel
+- [ ] Active Tools stays open for the entire armed Solidify preview/drag session so Apply Solidify remains accessible
+- [ ] Solidify uses the existing drawer keep-open contract without changing drawer-ui global behaviour
+- [ ] Apply/Cancel releases Solidify's temporary drawer lock cleanly
 - [ ] direct drag clamps safely to the Thickness control range and creates no history entry
 - [ ] preview visually distinguishes generated inner shell / boundary walls from the unchanged source sheet
 - [ ] Apply Solidify commits geometry matching the preview
