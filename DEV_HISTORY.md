@@ -17,6 +17,8 @@ Newest entries should be added at the top.
 - Pointer capture stabilizes Pencil dragging beyond the narrow slider track.
 - Finger/touch native range behaviour remains unchanged.
 - No Shell core, Solidify core, selection, drawer or history logic changed.
+- Released from PR **#62**; squash merge commit: `4b50d300a72c41c774f74eb55daf18a220f8acdd`.
+- Final Topology regression passed in workflow run **35507531277**.
 
 ## 2026-09-20 — v0.36.18.377 closed-solid Shell
 
