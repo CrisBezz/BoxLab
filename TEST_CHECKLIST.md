@@ -249,6 +249,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] one selected cube Face becomes one open top/rim while the result remains a watertight solid shell
 - [ ] adjacent selected Faces can create one larger connected opening
 - [ ] Shell Thickness preview updates before Apply Shell commits
+- [ ] Shell preview shows interior/back faces clearly from both viewing directions, not just wireframe edges
+- [ ] Shell preview retains visible topology edges over the translucent filled preview
 - [ ] Shell Thickness gives the same selected value with Apple Pencil and finger input
 - [ ] Apple Pencil dragging Shell Thickness no longer snaps the value to the 0.01 minimum
 - [ ] Pencil-selected Shell Thickness remains unchanged after Pencil-up (late Safari input/change cannot overwrite it)
