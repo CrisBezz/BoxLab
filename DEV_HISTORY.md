@@ -8,6 +8,30 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.363 atomic linked-duplicate creation
+
+- User reported two regressions after .362:
+  - a linked duplicate made from another linked duplicate did not propagate edits
+  - finger-selecting a different object could make linked copies disappear from the viewport while their Outliner rows remained
+- Root cause: `linkedDuplicateObject()` created and activated the new object first, then attached `sourceId` and `instanceMatrix` afterward.
+- That allowed a new linked copy to enter the scene/activation lifecycle temporarily as a normal independent object.
+- `addObject()` now accepts optional linked metadata:
+  - `sourceId`
+  - `instanceMatrix`
+  - `origin`
+- `linkedDuplicateObject()` now:
+  - resolves the shared source
+  - captures source instance placement
+  - evaluates source × placement
+  - creates the new object with linked metadata already attached
+  - only then allows normal activation/rendering
+- No post-activation reassignment of `copy.sourceId` or `copy.instanceMatrix` remains.
+- This makes first-generation and second-generation linked duplicates follow the same creation path.
+- Existing .362 source × matrix regeneration remains in place for active/inactive rendering.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for atomic linked metadata, second-generation propagation, inactive linked rendering and protected pins.
+
 ## 2026-09-20 — v0.36.18.362 linked-instance placement stability
 
 - User reported linked instances could be moved and modelled independently, but selecting a different peer caused them to jump together and lose independent placement.
