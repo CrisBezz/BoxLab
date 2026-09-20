@@ -8,6 +8,26 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.360 contextual Object controls
+
+- Continued UI/UX polish on the protected v0.36.18.355 Group transform baseline.
+- Audited Object-mode Origin/Pivot controls and confirmed:
+  - Origin presets are single-object controls.
+  - Pivot mode only affects multi-object / grouped Scale and Rotate behavior.
+- Object UI now exposes a lightweight selection-context class from authoritative Object Management:
+  - single-object context
+  - multi / whole-Group context
+- Presentation is now contextual:
+  - single object → compact Origin row shown, Pivot row hidden
+  - Multi / whole Group → compact Pivot row shown, Origin row hidden
+- Origin/Pivot button dimensions, gaps and labels are tightened for iPad without changing their handlers.
+- Object Selection toolbar is forced into a compact five-button strip with smaller gaps and a tighter status readout.
+- No changes to Origin/Pivot maths, Group selection, Group transforms, linked instances, Boolean behavior or Reference protection.
+- Protected `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `object-management.js → drawer-ui.js → index.html` cache chain.
+- Added regression coverage for contextual visibility, compact Selection layout and protected pins.
+
 ## 2026-09-20 — v0.36.18.359 Outliner Delete restoration + keyboard Delete
 
 - User reported that compact Outliner polish had made object Delete too hard to find and requested a keyboard shortcut.
