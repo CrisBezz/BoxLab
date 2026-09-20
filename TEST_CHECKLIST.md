@@ -245,6 +245,16 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Phase D — Solidify / Shell foundation
 
+- [ ] Shell appears in Face > Active Tools when one or more Faces are selected on an editable closed solid
+- [ ] one selected cube Face becomes one open top/rim while the result remains a watertight solid shell
+- [ ] adjacent selected Faces can create one larger connected opening
+- [ ] Shell Thickness preview updates before Apply Shell commits
+- [ ] Apply Shell clears stale Face selection created against pre-compaction Face indices
+- [ ] Shell uses the same inward hard-fold offset behaviour as Solidify
+- [ ] Shell refuses open-sheet input, loose topology, no selected Faces and all Faces selected without partial mutation
+- [ ] Shell preview keeps Active Tools open so Apply Shell remains accessible
+- [ ] Shell is one Object-scene Undo step and linked-instance save propagation remains intact
+
 - [ ] Solidify is available in Object > Active Tools with a Thickness control
 - [ ] one open quad Solidify produces a closed six-face solid
 - [ ] a connected multi-face open sheet Solidify produces one watertight solid and bridges every boundary edge

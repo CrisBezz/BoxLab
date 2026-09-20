@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.377 closed-solid Shell
+
+- Phase D advanced from open-sheet Solidify to closed-solid Shell.
+- Shell consumes the existing Face selection bridge rather than creating a parallel selection system.
+- Selected Face(s) become openings; remaining solid Faces are compacted to an open manifold sheet and sent through the shared .374 Solidify offset/miter core.
+- Added non-destructive preview with Shell Thickness and Apply Shell.
+- Adjacent selected Faces can form one larger opening.
+- Closed-input, loose-topology, all-faces-selected and invalid-opening guards run before live mutation.
+- Final output is validated as watertight; Apply is one Object-scene history step and uses Object Manager save propagation.
+- Added cube one-face and adjacent-two-face automated fixtures plus refusal cases.
+
 ## 2026-09-20 — v0.36.18.376 Solidify Active Tools drawer lock
 
 - User reported that Active Tools collapsed during interactive Solidify thickness dragging, hiding Apply Solidify.
