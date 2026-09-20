@@ -1,6 +1,14 @@
 # BoxLab Beta 3 Release Checklist
 
-Release candidate: **v0.36.18.371**
+Release: **v0.36.18.371**
+
+Status: **APPROVED / FROZEN** on 2026-09-20 after user hands-on iPad regression pass.
+
+Frozen public checkpoint: `https://crisbezz.github.io/BoxLab/beta-3/`
+
+Approved code-bearing release commit: `c17fb0f996f406449975a1add5b774eadc30e529`
+
+Freeze merge commit: `a227042e2bd2972c96361aedf7840bdcc62c78bb`
 
 Purpose: freeze a user-tested Beta 3 checkpoint from the current modelling/object-workflow baseline before Phase D construction tools begin.
 
