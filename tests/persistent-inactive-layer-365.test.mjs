@@ -32,10 +32,10 @@ test('365 linked source propagation and atomic creation stay intact',()=>{
   assert.match(src,/transformEditableMesh\(source\.mesh,matrixForInstance\(object\)\)/);
 });
 
-test('365 protected Group transform baseline remains untouched',()=>{
+test('365 current linked runtime and protected Group transform baseline remain untouched',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/multi-object\.js\?v=0\.36\.18\.365/);
+  assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
