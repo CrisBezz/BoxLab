@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-20 — v0.36.18.375 direct-drag Solidify thickness
+
+- User requested direct interactive thickness control by dragging the translucent Solidify preview itself.
+- Added preview ray-picking on the viewport.
+- A picked preview face supplies a screen-projected normal axis; Pencil/finger drag along that axis maps to world-space thickness.
+- Thickness slider/output remains synchronized for exact numeric fallback.
+- OrbitControls is disabled only during the active thickness drag and restored on pointer-up/cancel.
+- Preview shows generated inner shell + boundary walls rather than repainting the unchanged source sheet.
+- Direct drag remains preview-only: no mesh mutation and no history entry until Apply Solidify.
+- The .374 90° hard-fold/miter solver remains authoritative and unchanged.
+
 ## 2026-09-20 — v0.36.18.374 Solidify hard-fold offset + live preview
 
 - User confirmed Solidify worked on flat sheets but reported incorrect thickness around a 90° multi-sheet fold.
