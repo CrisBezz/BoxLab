@@ -1,4 +1,14 @@
-# Bo## 2026-09-20 — v0.36.18.369 shell-by-shell Group Boolean + persistent Swap drawer
+# BoxLab Development History
+
+This is the concise append-only development log used for cross-chat continuity.
+
+Do not record every tiny cache-busting or temporary deployment workflow commit. Record meaningful modelling, architecture, UI, stability, and release milestones.
+
+Newest entries should be added at the top.
+
+---
+
+## 2026-09-20 — v0.36.18.369 shell-by-shell Group Boolean + persistent Swap drawer
 
 - User test of .368 showed Group selection/A-B assignment worked, but Cut failed topology validation with boundary/non-manifold edges.
 - Root cause: .368 concatenated every Group member into one disconnected EditableMesh and then fed that multi-shell mesh into the existing pairwise Boolean solver, which assumes a single closed solid operand.
@@ -26,131 +36,794 @@
 - Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
-xLab Development Roadmap
+## 2026-09-20 — v0.36.18.368 Group Boolean convenience
 
-This is the persistent product roadmap for BoxLab.
+- Built the queued Phase C Group Boolean workflow without introducing a Group geometry type.
+- Group header selection is additive while Multi is active:
+  - select Group A
+  - tap Group B
+  - both complete Groups become one Multi selection
+- Boolean eligibility now accepts either:
+  - the existing exactly-two-object workflow, unchanged
+  - exactly two complete Groups with no partial/extra selected objects
+- Each Group operand is built in memory with the existing `combineEditableMeshes()` Join helper.
+- Existing Boolean solver remains authoritative for Union / Cut / Intersect.
+- Reference members and locked members are refused.
+- Source Group members are hidden only after one authoritative Object scene-history checkpoint.
+- Boolean result is a normal unique editable object; no Group metadata is attached to the result.
+- Undo can therefore restore original source objects, Group names/hierarchy, visibility and selection through the existing scene-history bridge.
+- Existing Boolean A/B panel now understands Group operands:
+  - active Group = A / amber
+  - other Group = B / blue
+  - all member rows and Group headers receive the corresponding A/B cue
+  - Swap activates a member of the opposite Group to reverse A/B
+- Protected linked-instance baseline `multi-object.js?v=0.36.18.367` remains pinned.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for additive Group selection, Group eligibility, history semantics, A/B UX and protected pins.
+- Released from PR **#52**; squash merge commit: `960db8c5d89c987c82c2a95c8ab3dd3a7eccdf04`.
 
-The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
+## 2026-09-20 — v0.36.18.367 touch orbit + selection-mode stability
 
-## Product direction
+- User confirmed .366 fixed linked Extrude commit/propagation.
+- Remaining regressions:
+  - after selecting another object with a finger, one-finger navigation became pan and pinch zoom broke
+  - selecting/changing mode could still make non-active objects disappear
+- Navigation root cause: .364 consumed the touch pointer-up after object activation even though OrbitControls had already received the matching pointer-down.
+- OrbitControls therefore retained a stale touch pointer and interpreted the next one-finger gesture as a multi-touch gesture.
+- Touch activation now uses the non-consuming path again so OrbitControls always receives pointer-up cleanup.
+- .365 persistent inactive scene layer means the old pointer-up suppression is no longer needed to protect inactive bodies.
+- Object activation now schedules an additional inactive-layer refresh at microtask + requestAnimationFrame boundaries after the full activation handoff.
+- `currentMode()` now reads `__boxlabSelectionBridge.mode()` first, using the DOM active-button class only as fallback.
+- This removes a one-render lag where Object → Edge/Face/Vertex could be processed as the previous mode during `saveActive()`.
+- .366 authoritative live-mesh publication remains unchanged.
+- Protected `object-origin.js?v=0.36.18.355` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+- Added regression coverage for OrbitControls pointer-up visibility, authoritative mode source, post-activation inactive rebuild and protected pins.
+- Released from PR **#51**; squash merge commit: `db74acc2c2069c16b583874c67f4051ba1310fc4`.
 
-BoxLab is an **iPad-first touch/Pencil polygon modeller and Nomad Sculpt companion**.
+## 2026-09-20 — v0.36.18.366 authoritative live-mesh bridge timing
 
-Core principle:
+- User confirmed .365 fixed ordinary object activation persistence, but two linked-instance regressions remained:
+  - Extrude showed all linked peers updating during preview, then the edit snapped back on commit
+  - changing from Object mode to Edge mode caused inactive objects to disappear
+- Root cause: `__boxlabBridgeState.mesh` was being published indirectly by `EditableMesh.edges()`.
+- The multi-object `THREE.Group.add(body)` hook calls `saveActive()` as soon as the new body is added.
+- On renders where the core lexical `mesh` had just been reassigned (notably direct Extrude / Inset preview), the bridge could still point at the previous mesh object when `saveActive()` ran.
+- Result: screen showed the new mesh, but linked save/propagation could commit the previous mesh and snap the shared source back.
+- Mode changes could likewise rebuild inactive linked geometry from stale bridge state.
+- `main.js::renderMesh()` now explicitly assigns:
+  - `globalThis.__boxlabBridgeState.mesh = mesh`
+  - before `clearGroup(root)`
+  - before the active body is created/added
+- Downstream modules therefore see the exact lexical mesh being rendered in that frame.
+- No linked-source algorithm was otherwise changed.
+- Persistent inactive scene layer from .365 remains in place.
+- Linked creation/propagation from .363 and touch isolation from .364 remain in place.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for publish-before-clear/body-add ordering and protected pins.
+- Released from PR **#50**; squash merge commit: `40e25b3425971a970ac97641734517be91e6df42`.
 
-**Import → Clean → Model → Export → Nomad Sculpt**
+## 2026-09-20 — v0.36.18.365 persistent inactive-object scene layer
 
-BoxLab should stay fast, direct, topology-aware and shallow. It should not become Blender-on-iPad.
+- User confirmed .364 still failed immediately: the first finger activation left only the newly active object visible; all other objects remained in the Outliner but disappeared from the viewport.
+- Root cause is architectural: inactive object meshes were being injected directly into the same core modelling `root` group that `renderMesh()` destroys with `clearGroup(root)` on every rebuild.
+- That made inactive visibility depend on the monkey-patched `root.add(body)` hook re-inserting all inactive meshes at exactly the right moment after every active switch.
+- Inactive objects now live in a dedicated persistent scene sibling:
+  - `BoxLab Inactive Objects`
+  - attached directly to the scene
+  - not a child of the core modelling root
+- Every active body rebuild now refreshes this dedicated layer rather than injecting peers into `root`.
+- `clearInactiveLayer()` explicitly removes/disposes the old inactive meshes before rebuilding.
+- Core `renderMesh()` is free to clear/rebuild its modelling root without deleting inactive object bodies.
+- Ray-picking remains valid because `inactiveBodies` still tracks the scene-layer meshes directly.
+- Studio/render modes still apply to each inactive body and Studio bounds continue to include `boxlab-inactive-body`.
+- Linked propagation and atomic linked creation from .363 remain unchanged.
+- Touch event isolation from .364 remains unchanged.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for persistent scene-layer ownership, rebuild behavior, linked propagation retention and protected pins.
+- Released from PR **#49**; squash merge commit: `8acba4d282d1c51293f9b9cf08ea7c462ac7ac6e`.
 
-## Phase A — Topology intelligence / Clean for SubD
+## 2026-09-20 — v0.36.18.364 touch object activation render-race fix
 
-**Status: COMPLETE at v0.36.18.323.**
+- User confirmed .363 restored linked edit propagation, but finger-tapping a different object still made every non-tapped linked peer disappear from the viewport while their Outliner rows remained.
+- Root cause was a touch-only event collision between the multi-object activation layer and the core modeller's background-tap handler.
+- On touch pointer-down over an inactive object:
+  - core modeller cannot ray-pick inactive bodies because it only considers the active `body`
+  - core therefore arms a background tap
+- On pointer-up:
+  - multi-object layer correctly activates the inactive object
+  - but .363 passed `stopEvent=false`, allowing the same pointer-up to continue into core
+  - core then completed its stale background tap and called another `renderMesh()`, racing the inactive-body rebuild
+- Touch object activation now calls `handleViewportActivation(event, true)`.
+- When an inactive object is actually hit, the event is prevented and stopped immediately after activation, so the core background-tap handler cannot run a second render.
+- Ordinary background taps remain unaffected because `handleViewportActivation()` only consumes the event when it actually handles an inactive/locked object hit.
+- Linked propagation logic from .363 remains unchanged.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for consuming touch activation, non-hit fallthrough, linked propagation retention and protected pins.
+- Released from PR **#48**; squash merge commit: `001b4078e9fe38c365797794341b9bbfe467af39`.
 
-Delivered:
-- conservative four-triangle fan repair
-- sliver/skinny-triangle cleanup
-- bounded even triangle-island complete matching up to 40 connected triangles
-- complete matching only; no stranded triangle forcing
-- surrounding quad-flow quality
-- whole-patch boundary guards
-- internal proposed-quad flow coherence
-- average + worst-local internal-flow ranking
-- smooth-interior valence regularity
-- average + worst-local valence ranking
-- conservative residual triangle-pair merge
-- guarded all-quad tangent relaxation
-- topology audit for invalid references, repeated/collapsed edges, duplicate faces, non-manifold edges and orphan crease data
-- transactional rollback in the core cleanup pipeline
-- generated irregular-mesh regression fixtures
-- UI-level topology validation remains as a second line of defence
+## 2026-09-20 — v0.36.18.363 atomic linked-duplicate creation
 
-Phase A freeze rule:
-- v0.36.18.339 reopened Phase A only for a concrete Clean shape-preservation regression; sharp incident normal breaks are now protected during relaxation
-- do not resume blind triangle-cap growth
-- do not chase exotic remeshing research without a concrete user-facing failure
-- future Clean for SubD changes require a real modelling case or a reproducible regression
+- User reported two regressions after .362:
+  - a linked duplicate made from another linked duplicate did not propagate edits
+  - finger-selecting a different object could make linked copies disappear from the viewport while their Outliner rows remained
+- Root cause: `linkedDuplicateObject()` created and activated the new object first, then attached `sourceId` and `instanceMatrix` afterward.
+- That allowed a new linked copy to enter the scene/activation lifecycle temporarily as a normal independent object.
+- `addObject()` now accepts optional linked metadata:
+  - `sourceId`
+  - `instanceMatrix`
+  - `origin`
+- `linkedDuplicateObject()` now:
+  - resolves the shared source
+  - captures source instance placement
+  - evaluates source × placement
+  - creates the new object with linked metadata already attached
+  - only then allows normal activation/rendering
+- No post-activation reassignment of `copy.sourceId` or `copy.instanceMatrix` remains.
+- This makes first-generation and second-generation linked duplicates follow the same creation path.
+- Existing .362 source × matrix regeneration remains in place for active/inactive rendering.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for atomic linked metadata, second-generation propagation, inactive linked rendering and protected pins.
+- Released from PR **#47**; squash merge commit: `4f0441660512c4eacf557320d8a5f935b931243e`.
 
-## Phase B — Precision modelling
+## 2026-09-20 — v0.36.18.362 linked-instance placement stability
 
-**Status: planned precision slice complete through v0.36.18.340.**
+- User reported linked instances could be moved and modelled independently, but selecting a different peer caused them to jump together and lose independent placement.
+- Root cause was a split source-of-truth problem between cached evaluated world meshes and shared source + instanceMatrix state.
+- In Object mode, `saveActive()` still first attempts to recover a placement matrix from shared source → live mesh.
+- If placement recovery succeeds, only that instance's `instanceMatrix` is updated.
+- If placement recovery fails, BoxLab now treats the live mesh as a shared-geometry edit at the existing instance placement:
+  - transforms live world mesh back through the current instance matrix
+  - updates the shared local source
+  - increments source revision
+  - regenerates linked peers from shared source × each peer's own instanceMatrix
+- Activating a linked object now regenerates its world mesh from shared source × instanceMatrix before loading it into the live mesh.
+- Inactive linked rendering also regenerates from shared source × instanceMatrix rather than trusting stale cached world geometry.
+- Intended contract is now explicit: **shared geometry, independent placement**.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for placement fallback, activation regeneration, inactive rendering and protected pins.
+- Released from PR **#46**; squash merge commit: `8dcef36d789bf6d42bc092aa2897115789c636bd`.
 
-Priority candidates:
-- cross-object snapping — **Add Vertex in v0.36.18.324; component Move snapping added in v0.36.18.325**
-- precision drag/readback polish — **live component Move ΔX/ΔY/ΔZ readback added in v0.36.18.326**
-- Repeat Previous audit/polish for exact repeated operations — **Repeat Extrude / Repeat Inset pre-existed .327; redundant duplicate loader removed in v0.36.18.328**
-- Align / Flatten component tools — **existing Make Planar retained; Align X/Y/Z added in .329 and upgraded to explicit pick-anchor workflow in v0.36.18.330**
-- Circle / regularize selected components where topology permits — **simple closed Vertex/Edge loop Circle added in .331; single selected Face boundary support added in .333; UI moved from Selection to contextual Active Tools in .334; exact Vertex/Edge/Face Active Tools slots arranged in v0.36.18.336**
-- Edge Split canonical-Multi regression — **fixed in v0.36.18.335 by making Edge paint selection yield while Face Split is armed**
-- Edge Flip for manual topology-flow correction — **existing Rotate Edge audited as the same triangle-pair diagonal swap; consolidated under the clearer Flip Edge label in v0.36.18.337**
-- stronger structured Fill / Grid Fill / Cap workflows — **existing Fill is the current single-face Cap; conservative four-sided all-quad Grid Fill added in v0.36.18.338**
-- support-loop construction improvements — **existing Offset Loop audited as the support-loop tool; transactional validation, canonical rail selection and Multi-safe Pencil handoff added in v0.36.18.340**
-- preserve direct Pencil interaction and minimal mode switching
+## 2026-09-20 — v0.36.18.361 per-object Outliner SubD toggle
 
-## Phase C — Object / instance workflow
+- Added a compact per-object **S** button to each editable Object row.
+- Outliner row layout is now **Name / S / Visibility / More**.
+- **S** directly reflects the existing per-object `object.settings.subd` state.
+- Lit/active S = SubD Preview on; dim S = off.
+- Toggling an inactive object updates its existing stored modifier settings and refreshes the viewport without making it active.
+- Toggling the active object drives the existing `#subdToggle` control and then re-captures the same authoritative object settings, so the Outliner and Modifiers drawer stay synchronized.
+- Each SubD toggle creates one Object scene-history checkpoint.
+- Reference objects keep SubD disabled.
+- No new subdivision implementation or modifier state was introduced; existing `displayMeshFor()`, `subdivide()`, SubD level and Cage controls remain authoritative.
+- Contextual Origin/Pivot UI from .360 and compact Outliner behavior remain unchanged.
+- Protected `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for row presence/state, active/inactive synchronization, Reference exclusion and protected pins.
+- Released from PR **#45**; squash merge commit: `81121843def91f766c8f0b25f6b5cc479671598b`.
 
-**Active phase.**
+## 2026-09-20 — v0.36.18.360 contextual Object controls
 
-- linked-instance editing robustness — **explicit Linked Duplicate + shared-source manager foundation added in v0.36.18.343; ordinary Duplicate remains independent** — **v0.36.18.362 hardens the shared-geometry / independent-placement contract across activation and modelling edits**; **v0.36.18.363 makes linked-copy creation atomic so second-generation links are born attached before activation** — **v0.36.18.366 makes the live mesh bridge authoritative before every render so linked edits commit the visible mesh**
-- Make Unique audit/polish — **explicit Make Unique detach path added in v0.36.18.343; continue robustness testing/polish**
-- cross-object reference/edit workflows — **Reference imports already served as snap targets; v0.36.18.344 hardens them as permanently read-only modelling guides across single/Multi/Group/history paths**
-- stronger multi-object editing — **audit confirmed Multi Move / Scale / Rotate / numeric transforms / grouping / Duplicate / Join / Boolean already existed; Multi Linked Duplicate + Multi Make Unique parity added in v0.36.18.346**
-- Join/Boolean workflow polish — **v0.36.18.347 consolidates both workflows onto the authoritative Object scene-history bridge; legacy parallel Boolean Undo/Redo wrapper removed while A/B UX, hidden originals, unique results, linked-instance metadata and Reference exclusions are preserved**
-- persistent object/region organization — **v0.36.18.348 makes Group metadata persistent; v0.36.18.349 makes Groups first-class; v0.36.18.350 compacts the tree; v0.36.18.351 centralizes Group ownership; v0.36.18.352 restores two-object viewport feedback + compact naming; v0.36.18.353 fixes focused Rename/live header refresh; v0.36.18.354 adds whole-Group visual context; v0.36.18.355 fixes grouped transform routing; v0.36.18.356 compacts Object/Group rows; v0.36.18.357–.358 harden upward More popovers; v0.36.18.359 restores per-object Delete and adds keyboard Delete/Backspace.; v0.36.18.360 makes Origin/Pivot contextual and compacts the Object Selection toolbar.; v0.36.18.361 adds direct per-object SubD Preview toggles to compact Outliner rows.**
+- Continued UI/UX polish on the protected v0.36.18.355 Group transform baseline.
+- Audited Object-mode Origin/Pivot controls and confirmed:
+  - Origin presets are single-object controls.
+  - Pivot mode only affects multi-object / grouped Scale and Rotate behavior.
+- Object UI now exposes a lightweight selection-context class from authoritative Object Management:
+  - single-object context
+  - multi / whole-Group context
+- Presentation is now contextual:
+  - single object → compact Origin row shown, Pivot row hidden
+  - Multi / whole Group → compact Pivot row shown, Origin row hidden
+- Origin/Pivot button dimensions, gaps and labels are tightened for iPad without changing their handlers.
+- Object Selection toolbar is forced into a compact five-button strip with smaller gaps and a tighter status readout.
+- No changes to Origin/Pivot maths, Group selection, Group transforms, linked instances, Boolean behavior or Reference protection.
+- Protected `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `object-management.js → drawer-ui.js → index.html` cache chain.
+- Added regression coverage for contextual visibility, compact Selection layout and protected pins.
+- Released from PR **#44**; squash merge commit: `41fa0636d5b601cd059afe4bc911f4f36b4a9dab`.
 
-- Group Boolean convenience — **v0.36.18.368–.369:** two complete Groups can act as Boolean A/B operands; .369 replaces the naive disconnected Join operand with a shell-by-shell compound Boolean path, while source Groups remain intact/hidden for Undo.
+## 2026-09-20 — v0.36.18.359 Outliner Delete restoration + keyboard Delete
 
-## Phase D — Construction tools
+- User reported that compact Outliner polish had made object Delete too hard to find and requested a keyboard shortcut.
+- Every object-row **More** menu now includes **Delete Object**.
+- Row-level Delete removes that specific object and creates exactly one Object scene-history checkpoint.
+- Global/footer Delete keeps its existing authoritative history capture; `deleteActive()` therefore suppresses a second internal checkpoint.
+- In Object mode, hardware-keyboard **Delete** and **Backspace** trigger the existing authoritative Delete button.
+- Keyboard Delete therefore inherits current selection semantics:
+  - single object → delete active object
+  - Multi selection → delete selected objects
+  - whole Group selection → delete selected Group members through the existing Multi pathway
+- Keyboard handling ignores Meta/Ctrl/Alt-modified shortcuts and does not fire inside inputs, textareas, selects, contenteditable elements or the BoxLab Rename dialog.
+- Added future roadmap item for **Group Boolean convenience** using temporary Join-derived compound operands rather than a new Group geometry type.
+- Protected Group transform baseline `object-origin.js?v=0.36.18.355` remains untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Added regression coverage for row Delete, keyboard Delete/Backspace, editable-field protection and one-step history semantics.
+- Released from PR **#43**; squash merge commit: `d9da984e331e561dc2a490554df95eaf8f1e7f94`.
 
-Only add focused tools that suit BoxLab:
-- topology-aware Symmetry / Bisect / Apply
-- Shell / Solidify
-- Array
-- Sweep where appropriate
-- Lathe where appropriate
-- lightweight deformers only if they fit direct touch modelling
+## 2026-09-20 — v0.36.18.358 anchored upward Outliner popovers
 
-## Phase E — Import / repair / handoff
+- User confirmed v0.36.18.357 still rendered Group More downward on iPad despite `bottom:` CSS.
+- Replaced bottom-offset positioning with an explicit Safari-resistant anchor:
+  - popup `top:0`
+  - `bottom:auto`
+  - translated upward by its own full height
+  - critical positioning uses `!important`
+- Applied consistently to Object row More, Group More and footer Object-action More.
+- No changes to selection, Group hierarchy, transforms, linked instances, Boolean behavior or Reference protection.
+- Protected `object-origin.js?v=0.36.18.355` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+- Released from PR **#42**; squash merge commit: `59ec46a6e8198befabfc5723928cc0df525da5f2`.
 
-- Mesh Health / Inspect workflow
-- Auto Close / Make Watertight
-- stronger boundary diagnostics
-- normals / triangulation controls
-- export polish
-- GLB export if useful for the Nomad/3D handoff workflow
+## 2026-09-20 — v0.36.18.357 upward Outliner popovers
 
-## Phase F — iPad UX polish
+- User screenshot showed the compact Object **More** menu opening downward near the bottom of the Objects drawer, causing Lock/Solo to be clipped by the drawer edge.
+- Object row More menus now open upward from the dots.
+- Group row More menus now open upward from the dots.
+- Bottom Object action More menu also opens upward.
+- This is CSS/layout only; no changes to selection, Group hierarchy, transforms, linked instances, Boolean behavior or Reference protection.
+- Protected Group transform baseline remains `object-origin.js?v=0.36.18.355`.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `object-management.js → drawer-ui.js → index.html` cache chain.
+- Added regression coverage for upward popover positioning and protected pins.
+- Released from PR **#41**; squash merge commit: `d7c4655f125c0811bbee12c8733da02090ec3926`.
 
-- browser-selection interaction guard — **native Safari selection/callout suppressed across BoxLab UI while editable fields remain exempt in v0.36.18.345**
-- drawer consolidation
-- persistent tool modes
-- left-hand access
-- reduced tap count
-- consistent Pencil drag behaviour
-- selection-region workflow
-- numerical precision entry/readback
-- landscape-first layout
-- selection visibility at all zoom levels
+## 2026-09-20 — v0.36.18.356 compact Outliner polish
 
-## Protected product behaviour
+- User confirmed v0.36.18.355 as the stable Group baseline and approved continuing UI/UX polish.
+- This build is presentation-only around the Object Outliner; Group selection/transform routing from .355 is intentionally untouched.
+- Object rows are reduced from permanent **Name / Visibility / Lock / Solo** controls to **Name / Visibility / More**.
+- Object **More** contains the existing Lock/Unlock and Solo/Exit Solo actions; the underlying behavior and handlers are preserved.
+- Group rows are reduced from **Disclosure / Name / Visibility / Lock / More** to **Disclosure / Name / Visibility / More**.
+- Group **More** now contains Lock/Unlock, Rename Group and Ungroup.
+- The bottom Object action stack is reduced from three rows to **Add / Duplicate / More**.
+- The existing Rename, Linked Duplicate, Make Unique and Delete buttons are physically moved into the Object More menu so their existing IDs, handlers and Multi enable/disable logic remain authoritative.
+- Object and Group rows now share a denser visual rhythm with 28–32 px touch targets and fewer permanent boxed controls, following the compact scene-tree direction established by the user's Nomad reference.
+- No changes to Group membership, selection semantics, transform routing, Boolean geometry, linked-instance geometry or Reference protection.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- `object-origin.js?v=0.36.18.355` remains pinned to the confirmed working Group transform baseline.
+- Refreshed `multi-object.js`, `object-management.js`, `drawer-ui.js` and outer release cache pins.
+- Added regression coverage for compact Object/Group row structure, relocated action buttons and protected Group transform pins.
+- Released from PR **#40**; squash merge commit: `562dd8697aca5c4a2d9b6c39729e8d725857320b`.
 
-Preserve:
-- one-finger orbit
-- two-finger pan
-- pinch zoom
-- two-finger tap Undo
-- three-finger tap Redo
-- no-jump orbit pivot
+## 2026-09-20 — v0.36.18.355 whole-Group transform routing fix
+
+- User reported that a hierarchy-declared Group could still move as separate ordinary selected objects on iPad/Pencil, and that the two grouped objects still showed amber/blue instead of unified Group amber.
+- Root cause 1: `object-origin.js` only treated Move as a grouped transform when group expansion added extra IDs. If every Group member was already selected, `groupedExpansionActive()` returned false and Move fell back to ordinary object behavior.
+- Root cause 2: the legacy selection wrapper replaced `__boxlabObjectSelection` without forwarding `wholeGroupId`, so downstream viewport selection code could not see whole-Group context.
+- Added `wholeGroupSelectionActive()` and made Move use the grouped pivot/transform pathway when either:
+  - selecting a member expands to more Group members, or
+  - exactly one whole Group is already selected.
+- The legacy wrapper now forwards `wholeGroupId`, authoritative owner metadata and refresh.
+- The wrapper continues to suppress generic Multi-transform interception for grouped Move so the existing group-aware origin/pivot transform pathway owns the gesture.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed the stale `object-origin.js` cache pin from .351 to .355 through `drawer-ui.js`, and refreshed the outer release cache chain for iPad/Safari.
+- Added regression coverage for whole-Group Move routing, wrapper context preservation, cache refresh and the protected transform pin.
+- Released from PR **#39**; squash merge commit: `1cace3102b45dcf6d830849efbda0a82e66f3307`.
+
+## 2026-09-20 — v0.36.18.354 whole-Group viewport selection context
+
+- User screenshot showed a selected/moving Group with no viewport-level Group selection feedback while an unrelated previously active object (Cube 2) still showed its Object-mode cage/verts and active Outliner emphasis.
+- Root cause: Group selection was a higher-level Multi selection but `activeId` could remain outside the selected Group, while the base renderer continued presenting that active object as the visible Object selection.
+- Group selection now ensures the hidden active/primary object belongs to the selected Group. If the previous active object is outside the Group, BoxLab promotes an editable Group member as primary.
+- The authoritative Object selection API now exposes `wholeGroupId` when exactly one complete Group is selected.
+- Whole-Group selection is a first-class visual state:
+  - all selected Group member bodies are tinted amber in the viewport
+  - ordinary two-object Multi selection still uses amber primary + blue secondary
+  - selected Group header gets explicit amber emphasis
+  - child object rows lose stale individual active/selected emphasis while Group context is active
+- The multi-object render observer now suppresses the active member's normal Object cage/vertex/mirror-edge overlays as they are created while a whole Group is selected, so they do not reappear during Move/Rotate/Scale refreshes.
+- Leaving Group context restores normal single-object cage behavior automatically.
+- Group transforms themselves remain on the existing protected expansion/transform pathways.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `multi-object.js`, `object-management.js`, `boolean-ux-history.js`, `drawer-ui.js` and `index.html` cache pins.
+- Added regression coverage for in-Group primary promotion, explicit whole-Group context, amber Group tint, cage suppression and protected cache/transform pins.
+- Released from PR **#38**; squash merge commit: `7ab87d240569f71a6cdf82f79405411241db989e`.
+
+## 2026-09-20 — v0.36.18.353 focused Rename + live Group header refresh
+
+- User reported Group Rename either did not work or did not update the visible Group name, and requested that Rename open with the edit cursor already inside the text field.
+- Root cause of the stale Group label: once a compact Group block had been composed, later `updateUI()` calls did not reconcile the already-existing header text/state.
+- Added `reconcileExistingHierarchy()` so existing Group rows refresh their:
+  - Group name
+  - disclosure/collapse state
+  - visibility state
+  - lock state
+- Invalid/stale Group blocks are unwrapped back to object rows so hierarchy changes can be rebuilt cleanly.
+- Added a BoxLab-native Rename dialog shared by Object and Group rename.
+- Rename input is focused and its current text selected immediately, with repeated focus/select on the next animation frame and a short iPad/Safari retry.
+- Object Rename no longer uses `window.prompt`.
+- Group Rename uses the shared focused dialog, preserves the existing Object scene-history checkpoint, and updates the visible Group header immediately via normal UI reconciliation.
+- Enter confirms, Escape/Cancel dismisses.
+- Group ownership, compact hierarchy, two-object amber/blue scene cue, numbered duplicate naming, Boolean B-numbering, linked instances and Reference protection remain unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `multi-object.js`, `object-management.js`, `drawer-ui.js` and `index.html` cache pins.
+- Added regression coverage for focused rename behavior, shared Group Rename routing, live Group header reconciliation and protected cache/transform pins.
+- Released from PR **#37**; squash merge commit: `3816c57f1ecfa2fd1d1ff150f9dac098b888cbe4`.
+
+## 2026-09-20 — v0.36.18.352 two-object colour cue + compact naming
+
+- User clarified that the amber/blue viewport colouring was useful as a general two-object Multi-selection indicator, even though Boolean-specific Outliner takeover was not.
+- Restored viewport tint for exactly two selected objects in Object mode:
+  - active / primary object = amber
+  - second selected object = blue
+- Outliner remains neutral; Boolean A/B row borders/badges are not restored as a generic Multi-selection treatment.
+- Ordinary Duplicate naming now uses padded sibling numbers instead of `copy`: `Cube` → `Cube 01` → `Cube 02`.
+- Duplicating an already numbered object continues the same base-name family rather than nesting suffixes.
+- Linked Duplicate and Multi Duplicate use the same numbered object-name allocator.
+- Boolean result naming is now compact: active/base object stem + `B1`, `B2`, etc., instead of concatenating active name + operation + cutter name.
+- Boolean operation status text and geometry behavior remain unchanged.
+- Group ownership / compact hierarchy from .351 remains unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `multi-object.js`, `object-management.js`, `boolean-ux-history.js`, `boolean-prototype.js`, `drawer-ui.js` and `index.html` cache pins.
+- Added regression coverage for two-object viewport tint, numbered Duplicate/Linked/Multi naming, Boolean B-numbering and protected cache/transform pins.
+- Released from PR **#36**; squash merge commit: `c848cf3f867edcfd732b21d400f11d734b614caf`.
+
+## 2026-09-20 — v0.36.18.351 Group ownership + Boolean UI cleanup
+
+- User reported that the visible Group Selection button did not actually produce the compact Group hierarchy and that the amber/blue Boolean A/B treatment still dominated the Object rows.
+- Root cause: legacy `object-origin.js` still owned Group/Ungroup mutation. It assigned `groupId` and added per-object `G#` tags, but did not notify the newer hierarchy renderer; therefore the compact Group row was never built.
+- `object-management.js` is now the authoritative owner of Group/Ungroup mutations as well as Group hierarchy presentation.
+- Added `__boxlabObjectGroups` API for Group Selection / Ungroup / Select / Rename / refresh.
+- Legacy `object-origin.js` now delegates Group/Ungroup and only consumes group membership for transform expansion; legacy `G#` row tags are removed.
+- Group Selection now updates the hierarchy immediately in the same action, so a newly formed Group becomes a visible compact Group row without waiting for an unrelated Outliner redraw.
+- Removed duplicate automatic history checkpointing on legacy Group buttons; authoritative Group API owns the single history step.
+- Generic two-object Multi selection no longer triggers Boolean A/B Outliner borders, operand badges, viewport tinting, or automatic drawer forcing.
+- Boolean A/B information remains in the Boolean operand controls and Boolean operations themselves are unchanged.
+- This allows two-object selection for Grouping, Join, transforms or other workflows to remain visually neutral.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `object-management.js`, `object-origin.js`, `boolean-ux-history.js`, `drawer-ui.js` and `index.html` cache pins.
+- Added regression coverage for authoritative Group ownership, legacy delegation, immediate hierarchy refresh, neutral generic Multi selection and protected transform/cache pins.
+- Released from PR **#35**; squash merge commit: `8faa0cb38cd25f1a1acf561929d6685fc0aabe6e`.
+
+## 2026-09-20 — v0.36.18.350 compact Group tree
+
+- User supplied a dense scene/group hierarchy reference and reported the current Group UX still consumed too much vertical space.
+- Kept the existing Group ownership and transform model; no second hierarchy system was introduced.
+- Existing Groups now present as a compact Outliner tree row with disclosure, Group name, visibility, lock and a small More menu.
+- Group children are more tightly indented beneath the header with a simple tree guide rather than a large rounded container.
+- Group More menu contains **Rename Group** and **Ungroup**; the normal Object **Rename Group** action from v0.36.18.349 remains valid.
+- The old Group/Ungroup control strip is no longer permanently visible. **Group Selection** appears only when 2+ selected objects can actually form a new Group; the plumbing Ungroup control remains hidden for existing history-safe behavior.
+- Group visibility and lock now checkpoint authoritative Object scene history before state changes, so each action has predictable Undo/Redo.
+- Collapse remains a lightweight Outliner presentation state rather than a destructive modelling action.
+- Existing automatic Group transform expansion, linked-instance behavior, Reference read-only protection and Group metadata persistence remain unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Refreshed `object-management.js → drawer-ui.js → index.html` cache chain for iPad/Safari.
+- Added regression coverage for contextual Group creation, compact tree structure, More actions, history-safe visibility/lock and protected cache/transform pins.
+- Released from PR **#34**; squash merge commit: `11843516865bfcb50aa4d5686d7405611ba567e0`.
+
+## 2026-09-20 — v0.36.18.349 first-class Group selection UX
+
+- User reported that normal **Rename** stayed disabled after selecting a whole Group and that Group interaction still felt fragmented.
+- Audit confirmed a selected Group is represented as a Multi selection of all member objects, but the normal Object action row still treated every multi-selection as anonymous objects.
+- Added one-whole-group detection to the authoritative Object management layer.
+- When exactly one complete Group is selected, the existing **Rename** button now enables and changes label to **Rename Group**.
+- Rename Group uses the existing group name store and authoritative Object scene-history checkpoint, so it remains one Undo/Redo step.
+- Partial/mixed multi-selections still cannot rename as a Group.
+- Selected Group readout now shows the Group name and member count instead of the generic multi-selection message.
+- Strengthened the selected Group header visual state.
+- Simplified the Group header: group name is the primary selection target; collapse, visibility and lock stay directly available; the old tiny rename pencil was replaced by a direct **Ungroup** action because rename now belongs to the standard Object action row.
+- Existing Group Selection / Ungroup controls, automatic whole-group transforms, linked instances and Reference protection remain unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Updated `object-management.js → drawer-ui.js → index.html` cache chain for iPad/Safari.
+- Added regression coverage for whole-group detection, Rename Group routing, simplified header and protected transform/cache pins.
+- Released from PR **#33**; squash merge commit: `12fdaa389d507799253482bd7c8f4747a1e1a8f4`.
+
+## 2026-09-19 — v0.36.18.348 persistent Group organization
+
+- Mandatory Phase C audit confirmed BoxLab already had one authoritative Group implementation: membership and transforms are owned by `object-origin.js`, while the grouped Outliner hierarchy / names / collapse UI are owned by `object-management.js`.
+- No second hierarchy or group-transform layer was added.
+- Audit found Object scene snapshots preserved each object's `groupId` but did not preserve custom group names or collapsed/expanded state.
+- Added group metadata to the authoritative Object scene snapshot and restore path.
+- Restore filters metadata against group IDs that genuinely exist in the restored scene, preventing stale names/collapse flags from attaching to unrelated later groups.
+- Group Rename now checkpoints Object scene history before changing the label, making rename one Undo/Redo step.
+- Stale name/collapse metadata is pruned when a group truly disappears.
+- Existing Group membership, automatic whole-group transform expansion, linked-instance behavior and Reference protection remain unchanged.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Updated the `object-management.js → drawer-ui.js → index.html` cache chain for iPad/Safari.
+- Added regression coverage for metadata snapshot/restore, rename history, stale metadata pruning and protected transform/cache pins.
+- Released from PR **#32**; squash merge commit: `cf80a9bd11a4916eb586e954a2152b04dd46b49f`.
+
+## 2026-09-19 — v0.36.18.347 Join / Boolean scene-history consolidation
+
+- Phase C audit confirmed existing **Join** is already authoritative in Object > Active Tools and already checkpoints through the Object scene-history bridge.
+- Audit confirmed Boolean already uses the same Object scene checkpoint before creating its result, but `boolean-ux-history.js` still installed an older second Undo/Redo wrapper with private Boolean stacks.
+- Removed that parallel Boolean history layer instead of adding another result-management system.
+- Boolean A/B operand colours, Swap control, active/base semantics, solver dispatch, cleanup chain and button ownership are unchanged.
+- Boolean still hides only the two selected operands and creates a new unique editable result; selected linked operands are not propagated into the result and unselected linked peers remain untouched.
+- Object scene snapshots remain responsible for restoring `sourceId` and `instanceMatrix` on Undo/Redo.
+- Reference operands remain excluded from Join and Boolean.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` and `styles.css?v=0.36.18.270` remain untouched.
+- Added regression coverage enforcing one authoritative scene-history owner for Join/Boolean and protecting unique-result / linked-peer / Reference behavior.
+- Released from PR **#31**; squash merge commit: `ebc9ec498d16b82301fc86e4bc3203afdd9d5cd2`.
+
+## 2026-09-19 — v0.36.18.346 Multi linked-instance parity
+
+- Released **v0.36.18.346** from PR #30; squash merge commit: `c9e52c091da47a5e88539a14a9abba7807fe45f6`.
+- Mandatory stronger-Multi audit confirmed BoxLab already had Object Multi Move / Scale / Rotate, numeric transforms, pivot modes, grouping, ordinary Multi Duplicate, Join and Boolean.
+- No second multi-transform system was added; protected `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+- The genuine gap was linked-instance parity while Object Multi was active.
+- The existing **Linked Duplicate** control now operates on every selected editable object when Multi is active.
+- Selected Reference guides are skipped and remain protected.
+- Multi Linked Duplicate preserves each object's current placement, visibility and linked-source semantics.
+- Duplicated group relationships are recreated as a new linked group set rather than mixing copies back into the source group.
+- The newly created linked copies become the current Multi selection and Move is re-armed for immediate placement.
+- The existing **Make Unique** control now detaches every selected linked object when Multi is active.
+- Multi Make Unique commits as one scene-history step; selected unlinked objects are ignored.
+- Ordinary Duplicate and ordinary Multi Duplicate remain independent copies and never silently become linked.
+- Shared-source registry lifetime remains unchanged so Object Undo/Redo can restore prior linked metadata safely.
+- First PR regression run failed only because the new single-control test regex was too broad; every implementation contract passed. The test was tightened to the actual ownership invariant.
+- Corrected PR topology regression run **35437992611** passed before merge.
+
+## 2026-09-19 — v0.36.18.345 Safari native-selection interaction guard
+
+- Released **v0.36.18.345** from PR #29; squash merge commit: `296c2742faff6734f9af422a5050918a700dceb4`.
+- Added a standalone `src/app-interaction-guard.js` to prevent Safari/iPad native text/element selection, touch callouts and drag-selection from washing the modelling UI blue during touch/Pencil work.
+- The guard applies `user-select:none`, `-webkit-user-select:none`, and `-webkit-touch-callout:none` across BoxLab chrome and the modelling surface.
+- `selectstart` and native `dragstart` are prevented outside editable controls.
+- Real editable controls remain exempt: `input`, `textarea`, `select`, `contenteditable`, and explicit `data-allow-selection=true` targets retain normal selection/value interaction.
+- Existing `touch-action:none` gesture routing was left unchanged.
+- Protected `styles.css?v=0.36.18.270`, Pencil/orbit handlers, and `src/multi-object-transform.js?v=0.36.1.0` were untouched.
+- Added regression coverage for native-selection suppression, editable-field exceptions, single authoritative loader, and protected gesture/transform pins.
+- PR topology regression run **35437021036** passed on the first run.
+
+## 2026-09-19 — v0.36.18.344 Reference guides permanently read-only
+
+- Released **v0.36.18.344** from PR #28; squash merge commit: `6118b0f60073573fb035c31d17d2082512c31d41`.
+- Mandatory audit confirmed imported **Reference** meshes already participated in existing cross-object snapping; no second reference/snap system was added.
+- The real gap was protection consistency: Reference objects could be unlocked through Outliner, Multi, or Group lock controls.
+- Reference objects are now permanently read-only modelling guides.
+- `multi-object.js` forces `kind='reference'` objects to `locked=true` at creation, including duplicated References.
+- The per-object lock control renders Reference as `R`, is disabled, and describes it as an always-read-only guide.
+- Multi lock/unlock operates only on editable selected objects and leaves selected References locked.
+- Group lock/unlock operates only on editable group members; reference-only groups expose a disabled `R` control.
+- Scene-history restore reasserts `locked=true` for every Reference, so Undo/Redo cannot revive an unlocked guide.
+- Reference visibility, solo/isolate behavior, Outliner identity, and existing cross-object snap eligibility remain unchanged.
+- Editable-object lock behavior remains unchanged.
+- Added regression coverage for import kind/lock, single/Multi/Group protection, scene restore, duplicated References, and continued cross-object snap eligibility.
+- PR topology regression run **35436090086** passed on the first run.
+
+## 2026-09-19 — v0.36.18.343 linked-instance foundation + Make Unique
+
+- Released **v0.36.18.343** from PR #27; squash merge commit: `b35e542b93469b8c957b55c3c3de1e96e9ebc65a`.
+- Mandatory audit confirmed current main had **no live linked-instance system**; the old v0.36.19.x instance foundation had been deliberately removed when BoxLab was restored to the pre-instance modelling baseline.
+- Ordinary **Duplicate remains independent** and continues to clone geometry normally.
+- Added explicit **Linked Duplicate** and **Make Unique** controls in the Objects drawer.
+- Linked instances are implemented inside the authoritative `multi-object.js` manager rather than through an external pointerup/event synchronizer.
+- Each link group owns one shared local source mesh; each object stores its own `instanceMatrix` and evaluated world-space mesh.
+- Object-mode Move / Rotate / Scale update only that instance's placement matrix.
+- Component edits are transformed back to shared local source space, then regenerated into every linked peer using each peer's own placement.
+- Added tested placement solving for both solid 3D meshes and planar meshes; solved transforms are validated against all vertices before acceptance.
+- **Make Unique** removes only the active object's link metadata while leaving its evaluated geometry unchanged.
+- **Join** explicitly detaches the combined primary result from any link group.
+- Reset clears the linked-source registry.
+- Object scene snapshots now preserve `sourceId` and `instanceMatrix`.
+- Linked Duplicate captures the scene-before state and transfers that checkpoint to the newly active duplicate's history so Undo can restore the pre-duplicate scene.
+- Outliner labels linked peers with `Link ×N`.
+- The protected `src/multi-object-transform.js?v=0.36.1.0` was not modified.
+- First PR run failed only because the previous .342 UI test hard-coded the parent drawer cache version. All new instance tests passed on that run. The parent-loader assertion was made version-resilient.
+- Corrected PR topology regression run **35435127026** passed before merge.
+
+## 2026-09-19 — v0.36.18.342 File menu fit + stable 3-column Face layout
+
+- Released **v0.36.18.342** from PR #26; squash merge commit: `cf9ee2dc3c1b9db9963e5fdc23435d3b1acabbe8`.
+- User reported two UI issues on iPad: File menu did not fit cleanly on screen, and selecting/arming Inset caused Face Active Tools to jump to four buttons across.
+- File menu now opens below the second command bar, sits above it in z-order, is constrained to the available viewport height, and scrolls internally when required.
+- Face primary tools are now protected as a 3-column grid: **Extrude / Inset / Knife**. Join Coplanar wraps below rather than forcing a fourth column.
+- Face secondary tools are also 3-column: **Extract / Duplicate / Bridge**, with Delete wrapping below rather than squeezing four across.
+- `join-selected-coplanar-faces.js` now avoids re-appending already-correct primary buttons during sync, preventing click-time DOM movement.
+- Updated dynamic loader/cache chain for Face workflow and topbar layout.
+- Added regression coverage for File menu fit, Face 3-column layout, and stable no-op Face sync.
+- First PR run failed only from stale parent-loader version assertions in Flip Edge and Vertex layout tests; those were made version-resilient.
+- Corrected PR topology regression run **35432345834** passed before merge.
+
+## 2026-09-19 — v0.36.18.341 Vertex toolbar stability / Build Edge handoff hotfix
+
+- Released **v0.36.18.341** from PR #25; squash merge commit: `f04cbb2a92c7bc0a54155cc65d07e4f3a0cc1300`.
+- Concrete iPad regression from user screenshots: tapping **Build Edge** caused the Vertex Active Tools buttons to jump; Circle moved to the first slot and Add appeared active instead of Build Edge.
+- Root cause 1: `face-reconstruct.js` re-appended the pre-Circle Vertex buttons on every selection/render sync, physically moving the tapped DOM node during the click lifecycle and stranding Circle at the front.
+- Root cause 2: the Add Vertex wrapper session could stop while the older core `directTool='addVertex'` remained armed underneath, so a render could light Add back up.
+- `face-reconstruct.js` is now the single Vertex toolbar layout owner with deterministic order: **Bevel / Add / Build Edge / Slide / Create Face / Circle**.
+- The layout owner first checks whether the order is already correct and does not move any DOM nodes when stable.
+- Circle delegates Vertex placement to the shared layout owner rather than independently appending itself.
+- Arming Build Edge now fully stops the Add session and clears any remaining core Add direct-tool state before Build Edge becomes armed.
+- Added regression coverage for stable six-button ordering, no-op stable layout sync, Circle delegation, Build Edge/Add handoff, and the current cache chain.
+- First PR run failed only because the prior Offset Loop test hard-coded the parent drawer cache version; the new .341 tests already passed. That parent-loader assertion was made version-resilient.
+- Corrected PR topology regression run **35432049975** passed before merge.
+
+## 2026-09-19 — v0.36.18.340 transactional Offset Loop support workflow
+
+- Released **v0.36.18.340** from PR #24; squash merge commit: `54d7e1822235db0cb88c05c0541fae7d8c1560b7`.
+- Mandatory existing-feature audit confirmed **Offset Loop is already BoxLab's support-loop construction tool**; no duplicate Support Loop tool was added.
+- Offset Loop drag commits now run both the topology validator and topology gate before history commit; invalid results restore the pre-drag snapshot.
+- Exact Offset Loop now uses the same validate-before-commit / rollback discipline.
+- Created left/right support rails are selected directly through the canonical Selection Bridge instead of toggling the legacy hidden Multi control.
+- Canonical additive Multi therefore remains enabled after Offset Loop.
+- While Offset Loop is armed, `edge-paint-select.js` yields its capture-phase Pencil handler so the modelling drag receives the gesture.
+- Offset Loop now exposes one armed-state controller through `globalThis.__boxlabOffsetLoop`.
+- Refreshed `loop-offset.js`, `precision-offset-loop.js`, `edge-paint-select.js`, and the drawer/cache chain to .340.
+- New Offset Loop regression contracts all passed from the first PR run. Two subsequent CI failures were only stale historical parent-loader / exact-handler assertions in Face Split and Grid Fill tests; those tests were made invariant-based.
+- Corrected PR topology regression run **35431669328** passed before merge.
+
+## 2026-09-19 — v0.36.18.339 Clean sharp-fold shape-preservation hotfix
+
+- Released **v0.36.18.339** from PR #23; squash merge commit: `e651e7d1360d9f09e8723ddf1d6c0556b8b9b395`.
+- Concrete user video regression: Object > Clean for SubD visibly caved in a box-with-opening after the all-quad relaxation phase.
+- Root cause: `quadRelaxFlow()` treated any interior all-quad, uncreased vertex as smooth. Around an opening/corner, horizontal and vertical incident faces could be averaged into a blended tangent even though the geometry represented a sharp fold.
+- Added a geometric normal-fan guard: a relax candidate is now protected if any incident quad-face normal pair differs by more than 30°.
+- This protection applies even when the user has not explicitly assigned a Crease.
+- Existing planar smooth-grid relaxation remains enabled and still improves a perturbed interior quad vertex.
+- Added regression coverage for both cases: smooth planar relaxation still works; an uncreased sharp folded quad fan remains fixed.
+- Clean remains transactional; protected topology systems and `src/multi-object-transform.js?v=0.36.1.0` were untouched.
+- First PR run failed only because the old Clean UI contract hard-coded the .323 module pin. The new geometry tests already passed. The loader contract was made version-resilient.
+- Corrected PR topology regression run **35430414020** passed before merge.
+
+## 2026-09-19 — v0.36.18.338 conservative four-sided Grid Fill
+
+- Released **v0.36.18.338** from PR #22; squash merge commit: `72ec70b123e27c2ee8d3ca116f0b23481a0f1afa`.
+- Mandatory existing-feature audit confirmed existing **Fill** is already the simple single-face Cap and Bridge/Quadify do not provide a structured hole grid.
+- Added **Grid Fill** as a distinct Edge Topology operation for one simple planar convex four-sided boundary with matching opposite segment counts.
+- Corner detection treats collinear intermediate boundary vertices as side subdivisions, so a segmented rectangular boundary can form a U×V quad grid.
+- Existing boundary vertices remain fixed; only required interior vertices are created.
+- Grid positions use a Coons-style interpolation across the four boundary sides.
+- Grid Fill creates only quads, selects the resulting faces, and commits as one Undo step.
+- Candidate topology is built on a clone and validated before the live mesh is changed.
+- Irregular/curved boundaries, mismatched opposite counts, non-boundary/internal edges, ambiguous loops, and simple four-edge caps are rejected.
+- Grid Fill is loaded once through `drawer-ui.js` and is placed beside existing Fill in the Edge Topology row.
+- First PR run failed only because an older Flip Edge test hard-coded the prior drawer loader version; the Grid Fill tests themselves all passed. The parent-loader test was made version-resilient.
+- Corrected PR topology regression run **35429713006** passed before merge.
+
+## 2026-09-19 — v0.36.18.337 existing Rotate Edge consolidated as Flip Edge
+
+- Released **v0.36.18.337** from PR #21; squash merge commit: `72f1847dad79b15955a4f406b273b60b44b4ee9f`.
+- Mandatory existing-feature audit confirmed the queued Edge Flip already existed as `src/rotate-edge.js`.
+- The existing tool already performs the intended conservative diagonal swap between exactly two consistently wound triangles.
+- No second Edge Flip implementation was added.
+- Renamed the user-facing control/status language from **Rotate Edge** to **Flip Edge** while preserving the existing topology, selection and Undo behavior.
+- Refreshed the `rotate-edge.js` → `face-workflow-layout.js` → `drawer-ui.js` cache chain for iPad/Safari.
+- Added regression coverage protecting one authoritative Flip Edge implementation.
+- First PR run failed only because a Circle test hard-coded the previous drawer cache version; that test was made version-resilient.
+- Corrected PR topology regression run **35419239003** passed before merge.
+- Audit also confirmed existing **Fill** already acts as a single-face Cap for one selected closed edge loop; the remaining structured-fill gap is **Grid Fill**.
+
+## 2026-09-19 — v0.36.18.336 Circle exact Active Tools layout
+
+- Released **v0.36.18.336** from PR #20; squash merge commit: `586efff69f7d1565ff5687c296e183143b0566c7`.
+- Pure UI rearrangement of the existing Circle tool; geometry/selection/history behavior unchanged.
+- Vertex: Circle is the third item in the row with Slide and Create Face.
+- Edge: Circle sits immediately after Delete in the bottom Topology row.
+- Face: Circle sits beside Poke Faces in the same two-column row.
+- Removed the old standalone `componentCircleRow` wrapper entirely, preventing an old bottom Circle location from remaining.
+- PR topology regression run **35418641336** passed before merge.
+
+## 2026-09-19 — v0.36.18.335 restore Edge Split with canonical Multi
+
+- Released **v0.36.18.335** from PR #19; squash merge commit: `04b23e2d445888dea952efc650161be1d5a53286`.
+- Root cause: canonical always-additive component Multi left `edge-paint-select.js` active, and its capture-phase pointer handler consumed an unselected Edge tap before `face-split.js` could receive it.
+- Face Split now exposes an armed state and participates in the existing `boxlab-direct-tool-exclusive` convention.
+- While Face Split is armed, additive Edge paint selection yields instead of consuming the gesture.
+- When Face Split is disarmed, normal canonical additive Edge selection resumes immediately.
+- Global Multi remains enabled; there is no rollback to the old Multi toggle model.
+- Cache-hopped `edge-paint-select.js` and `face-split.js` to .335.
+- PR topology regression run **35417550936** passed before merge.
+
+## 2026-09-19 — v0.36.18.334 Circle moved to Active Tools
+
+- Released **v0.36.18.334** from PR #18; squash merge commit: `6dc2d183e0332d6953f60e9bf21f5b39c1686ec8`.
+- Relocated the existing Circle control out of the Selection drawer.
+- Circle now appears contextually inside Vertex / Edge / Face **Active Tools**.
+- Kept one authoritative Circle implementation and one handler; geometry, selection, Undo, and Face/Edge/Vertex behavior are unchanged.
+- Updated dynamic loader/cache pins to .334.
+- PR topology regression run **35417217225** passed before merge.
+
+## 2026-09-19 — v0.36.18.333 Face Circle support
+
+- Released **v0.36.18.333** from PR #17; squash merge commit: `fbfbf9f46f45b4551cb0e5fdc1086cac248e7919`.
+- Extended Circle so exactly one selected Face can drive the operation from its perimeter vertices.
+- Face mode now enables Circle for one valid face; multiple selected Faces are refused.
+- Existing Vertex/Edge Circle behavior remains unchanged.
+- No topology is created or deleted; the selected Face remains selected and the operation is one Undo step.
+- Cache-hopped `component-circle-core.js`, `component-circle.js`, and the authoritative `drawer-ui.js` loader to .333.
+- First PR run failed only because older Circle contract tests still hard-coded .331/.332 pins/text; those assertions were rewritten to protect invariants instead of stale version strings.
+- Corrected PR topology regression run **35417107014** passed before merge.
+
+## 2026-09-19 — v0.36.18.332 Circle visibility hotfix
+
+- Released **v0.36.18.332** from PR #16; squash merge commit: `86f5efe098b26fa7543d1018122fc7deeeacdb04`.
+- Fixed Circle not appearing on iPad/Safari because `index.html` still loaded `drawer-ui.js?v=0.36.18.210`, allowing the browser to reuse an older cached drawer module that did not import Circle.
+- Cache-hopped the authoritative drawer loader to `drawer-ui.js?v=0.36.18.332`.
+- Circle now remains visible-but-disabled outside Vertex/Edge mode instead of disappearing, improving discoverability.
+- Added regression coverage for the current drawer cache key and Circle visibility.
+
+## 2026-09-19 — v0.36.18.331 Circle regularize for closed loops
+
+- Released **v0.36.18.331** from PR #15; squash merge commit: `64bb42b17ef463e489c66989bf6f51dc99917126`.
+- Existing-feature audit confirmed there was no current Circle / Regularize equivalent.
+- Added conservative Circle regularization for one simple closed selected Vertex or Edge loop.
+- The operation preserves the loop centre and current working plane, uses the average loop radius, and evenly spaces the existing vertices around the circle.
+- No topology is created or deleted.
+- Open chains, branches, multiple/ambiguous loops, and degenerate selections are refused.
+- Selection is preserved and the operation commits as one Undo step.
+- New modules: `src/component-circle-core.js` and `src/component-circle.js`.
+- `drawer-ui.js` remains the single authoritative loader.
+- PR topology regression run **35416581512** passed before merge.
+
+## 2026-09-19 — v0.36.18.330 explicit Align anchor workflow
+
+- Released **v0.36.18.330** from PR #14; squash merge commit: `e5ee279298b14cca76cbca5274c10f6a2484e802`.
+- Upgraded component Align X/Y/Z from average-based flattening to an explicit iPad anchor workflow.
+- Workflow: multi-select components → choose Align X/Y/Z → tap one selected component as the fixed anchor.
+- The picked anchor component stays fixed; other selected component vertices align to the anchor component's centre coordinate on the chosen axis.
+- Reused the existing Boolean amber/orange reference colour (`#f3b34a`) for the temporary anchor cue.
+- Existing Make Planar remains unchanged and distinct.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- PR topology regression run **35415067002** passed before merge.
+
+## 2026-09-19 — v0.36.18.329 component Align X/Y/Z
+
+- Released **v0.36.18.329** from PR #13; squash merge commit: `6edb552a3219435f1a3a2de7cc9a47be46815c07`.
+- Existing-feature audit confirmed **Make Planar** already existed for Face-specific arbitrary-plane flattening; it was retained unchanged.
+- Added only the missing generic component axis-align tool for Vertex / Edge / Face selections.
+- Align X / Y / Z sets all vertices belonging to the selected components to their average coordinate on the chosen axis.
+- Selection is preserved, Object mode is excluded, and the operation commits as one history step.
+- New modules: `src/component-align-core.js` and `src/component-align.js`.
+- `drawer-ui.js` is the single loader for the new UI module.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- PR regression run **35411656859** passed before merge.
+
+## 2026-09-19 — v0.36.18.328 duplicate Repeat UI removed
+
+- Released **v0.36.18.328** from PR #12; squash merge commit: `f731849f96b5808c986b6d46dc92e53c9f64f9c3`.
+- Fixed duplicate Precision Face / Repeat Previous controls introduced by v0.36.18.327.
+- Root cause: `drawer-ui.js` already dynamically imported both modules, while .327 also added direct `index.html` module loads.
+- Removed the direct `index.html` loads.
+- Kept `drawer-ui.js` as the single authoritative loader and updated its Precision Face / Repeat Previous pins to `0.36.18.327`.
+- Added regression coverage ensuring there is only one loader path for each module.
+- This fix preserves the existing Repeat Previous behavior and exact-value replay logic; it only removes duplicate UI instantiation.
+
+## 2026-09-19 — v0.36.18.327 redundant Repeat Previous reconnect
+
+- Released **v0.36.18.327** from PR #11; squash merge commit: `462eabc59076afdfa7efaf10338bfa49f83355c1`.
+- This release was later identified as redundant: Repeat Extrude / Repeat Inset were already live through `drawer-ui.js` before .327.
+- Normal Face Extrude and Inset operations record committed model-unit values.
+- Repeat Previous can replay the exact previous Extrude/Inset value on another Face.
+- Through-ready, Through, blocked and rollback Extrude gestures remain explicitly non-repeatable.
+- No `main.js`, Through kernel, or protected `src/multi-object-transform.js?v=0.36.1.0` changes were required.
+- Final PR regression run **35410554813** passed after aligning the exported Precision Face API version with the .327 release.
+
+## 2026-09-19 — v0.36.18.326 live component Move precision readback
+
+- Released **v0.36.18.326** from PR #10; squash merge commit: `80605a225d9855f098a1cff7596d77fc8d6a2d7e`.
+- Added live component Move readback in the existing stats line: **ΔX / ΔY / ΔZ** to three decimal places.
+- Numeric readback remains visible during ordinary drags and cross-object snapping.
+- Existing snap target labels remain visible alongside the numeric delta.
+- No transform math changed; this is presentation/readback only.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+- Final PR regression run **35408617550** passed. The earlier failed run only flagged a stale .325 cache-pin assertion; the new .326 readback tests were already passing.
+
+## 2026-09-19 — v0.36.18.325 component Move cross-object snapping
+
+- Released **v0.36.18.325** from PR #9; squash merge commit: `11f3d80d871d2fa2375d908aa904527bd549e394`.
+- Extended Phase B precision modelling so Geometry-enabled component Move can snap to visible geometry on other objects.
+- Single-vertex Move snaps that vertex; Edge/Face/multi-component Move snaps the component centre.
+- Free Move can snap to other-object vertices, midpoints and edge positions.
+- Axis-constrained Move only adopts the target coordinate on the constrained axis.
+- Object mode is excluded and target objects remain unchanged.
+- Added `componentSnapDelta()` to the shared cross-object snap core and dedicated runtime/delta regression coverage.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+- Final PR regression run **35407390765** passed. The earlier failed run only flagged the intentionally changed `main.js` cache pin in an old release contract.
+
+## 2026-09-19 — v0.36.18.324 Phase B begins / cross-object Add Vertex snapping
+
+- Released **v0.36.18.324** from PR #8; squash merge commit: `70df4c4f137a55e553227aa391bdd68324a0d732`.
+- Started Phase B precision modelling with cross-object snapping for Add Vertex.
+- Existing local-edge snapping keeps priority.
+- When no local edge is hit, Add Vertex can snap to visible other-object vertices, then midpoints, then arbitrary edge positions.
+- Snap targets do not modify the target object; hidden and solo-excluded objects are ignored.
+- Added pure helper module `src/cross-object-snap-core.js` plus dedicated regression coverage.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+- Final corrected PR regression run **35406677103** passed successfully. Earlier PR runs failed only because the new test fixture incorrectly used loose edges that `EditableMesh.edges()` does not enumerate.
+
+## 2026-09-19 — v0.36.18.323 Phase A complete / transactional topology audit
+
+- Released **v0.36.18.323** from PR #7; squash merge commit: `040e210bf2868a45791c35c9c1392bc1e6f244fe`.
+- This is the final planned Phase A Clean for SubD backend release.
+- Added `quadTopologyAudit(mesh)` covering invalid references, repeated/collapsed edges, duplicate faces, non-manifold edges, orphan crease data, and valid open-boundary handling.
+- `quadCleanMesh(mesh)` now snapshots the original mesh and audits after retopo, sliver cleanup, bounded triangle-patch solving, residual pair merge, and relaxation; any stage failure restores the original mesh transactionally.
+- Added deterministic generated irregular-strip fixtures and invalid-topology regression coverage.
+- Kept the 40-triangle solver cap and all existing quality/acceptance gates unchanged.
+- Added persistent `ROADMAP.md`; Phase A is frozen unless a concrete modelling failure justifies reopening it.
+- PR topology regression run **35406242201** completed successfully before merge.
+
+## 2026-09-19 — v0.36.18.322 worst-local internal-flow ranking
+
+- Released **v0.36.18.322** from PR #6; squash merge commit: `0f03befbb7d69ca53194536579c240a993efd9ff`.
+- Clean for SubD internal proposed-quad flow ranking now combines average mismatch with a small worst-local mismatch term.
+- New helper `quadInternalFlowPenalty(flows)` separates the acceptance penalty from the ranking-only worst-local term.
+- Equal-average alternatives now prefer the patch that avoids concentrating flow mismatch into one badly aligned internal quad junction.
+- The new worst-local term is ranking-only: the .321 acceptance score, quality thresholds, and 40-triangle solver envelope are unchanged.
+- Regression workflow run **35404138276** completed successfully before merge.
+
+## 2026-09-19 — v0.36.18.321 worst-local valence-aware patch ranking
+
+- Released **v0.36.18.321** from PR #5; squash merge commit: `0b838da0cd2a31cd4d88c2390a9e15e9b0c58905`.
+- Clean for SubD valence ranking now combines average smooth-interior valence error with a small worst-local error term.
+- New helper `quadValencePenalty(errors)` makes the ranking behavior explicit and regression-testable.
+- Equal-average alternatives now prefer the patch that avoids concentrating error into a more extreme extraordinary vertex.
+- The new worst-local term is ranking-only; the .320 acceptance/quality gates and 40-triangle solver envelope are unchanged.
+- Regression workflow for PR #5 passed successfully before merge.
+
+## 2026-09-19 — v0.36.18.320 interior valence-aware patch ranking
+
+- Released **v0.36.18.320** from PR #4; squash merge commit: `40e119774f39373ffadab22d0782428e8be7ea2c`.
+- Clean for SubD complete-patch ranking now includes smooth-interior vertex valence regularity after the existing shape, surrounding-flow, and internal-flow terms.
+- The new helper is `quadPatchValenceContext(mesh,pairs)` with `PATCH_VALENCE_WEIGHT=.25`.
+- Ranking prefers safe complete matchings that leave eligible smooth interior vertices closer to quad valence 4 after paired triangle diagonals are removed.
+- Boundary vertices and vertices touching creases are excluded from valence scoring.
+- Valence is ranking-only: the existing .319 quality score still controls acceptance, so the 40-triangle envelope and prior quality/eligibility guards remain unchanged.
+- Added regression coverage for valence-4 preference and crease-ring exclusion; Topology regression run **35401945842** completed successfully on the corrected PR head.
+
+## 2026-09-19 — .319 handoff audit / repo reconciliation
+
+- Re-audited current `main` against `AI_WORKFLOW.md` before closing the development chat.
+- Confirmed **v0.36.18.319** is the released/live baseline: internal proposed-quad flow coherence is present, the bounded triangle-island envelope remains 40 triangles, and the .319 release/verifier had already completed successfully.
+- Canonical .319 release commit remains `68e45845f6696b3e66929ee4b181748b85d99b09`; final clean Pages marker commit remains `4ed534dfe8697e54921a8a80d7b50945b6792342`.
+- After the handoff files were first introduced, three later .319 commits (`51117f59...`, `a91ac689...`, `a0a2d072...`) re-exposed/cache-hopped/tested the same .319 internal-flow state. They do **not** represent a newer numbered release.
+- Current code-bearing HEAD at this audit is `a0a2d072acbf2e397ca68e2276fd75c8a1643846`.
+- Only permanent workflow currently present under `.github/workflows` is `through-regression.yml`; temporary .319 release/verifier workflows are removed.
+
+## 2026-09-19 — Repository handoff system established
+
+- Added `AI_WORKFLOW.md`, `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
+- Future AI development sessions must treat the repository as source of truth.
+- Future sessions must update the living handoff and append meaningful history before finishing code-changing work.
+- Initial handoff was audited from current `main`, not reconstructed from an older chat version.
+
+## v0.36.18.319 — Internal proposed-quad flow coherence
+
+- Clean for SubD patch scoring now considers flow coherence inside the proposed quad patch in addition to surrounding boundary context.
+- Bounded triangle-island solving remains conservative and quality-gated.
+- User-facing Clean for SubD wrapper retains topology validation and rollback.
+- Release commit: `68e45845f6696b3e66929ee4b181748b85d99b09`.
+- Audited post-release HEAD: `4ed534dfe8697e54921a8a80d7b50945b6792342`.
+
+## v0.36.18.318 — Forty-triangle bounded local retopo
+
+- Extended bounded local triangle-island retopology envelope to 40 triangles.
+- Kept conservative patch quality guards and regression tests.
+
+## v0.36.18.317 — Thirty-eight-triangle bounded local retopo
+
+- Extended bounded local triangle-island retopology envelope to 38 triangles.
+
+## v0.36.18.316 — Thirty-six-triangle bounded local retopo
+
+- Extended bounded local triangle-island retopology envelope to 36 triangles.
+
+## v0.36.18.315 — Thirty-four-triangle bounded local retopo
+
+- Extended bounded local triangle-island retopology envelope to 34 triangles.
+
+## Earlier protected baseline retained
+
+The current repository has evolved through many earlier releases. Important protected behaviours that remain relevant include:
+
+- iPad navigation gesture model
 - persistent selections during navigation
-- Studio realtime default/behaviour
+- Studio realtime workflow
 - object management / Multi
-- current snapping
-- mature Through behaviour
-- existing core modelling tools
-- transactional topology operations
+- Knife / Loop Cut / Bevel / Extrude / Inset
+- connected multi-face Extrude
+- cavity-aware Through
+- Extract
+- Bridge
+- Join
+- Boolean workflows
+- Base/SubD export
+- protected `src/multi-object-transform.js?v=0.36.1.0`
+- intentionally pinned selection/UI stylesheet baseline where still referenced by current `index.html`
 
-## Deferred / intentionally not active
-
-- path tracing: abandoned in favour of Studio realtime
-- broad sculpting / voxel remesh: belongs in Nomad rather than BoxLab
-- Blender-scale scene-management complexity
-- speculative topology work without a user-facing failure
+For exact implementation state, always inspect current `main`; this history is context, not authority.
