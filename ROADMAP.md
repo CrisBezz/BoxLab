@@ -73,7 +73,7 @@ Priority candidates:
 
 ### Beta 3 release-candidate hardening
 
-**v0.36.18.371** is the Beta 3 release candidate. No new modelling features are to be added until the release gate in `BETA3_RELEASE_CHECKLIST.md` is completed. Release-blocking regressions may be fixed narrowly; otherwise the approved .371 tree will be frozen to `/beta-3/`.
+**v0.36.18.371** is the approved **frozen Beta 3** checkpoint. The user completed the hands-on release gate on 2026-09-20 and the exact approved release tree is published under `/beta-3/`. Phase D may now resume on live `main` while Beta 3 remains immutable except for an explicitly approved emergency release fix.
 
 ## Phase D — Construction tools
 
