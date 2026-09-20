@@ -248,12 +248,23 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Solidify is available in Object > Active Tools with a Thickness control
 - [ ] one open quad Solidify produces a closed six-face solid
 - [ ] a connected multi-face open sheet Solidify produces one watertight solid and bridges every boundary edge
-- [ ] flat Solidify offsets the duplicate shell consistently by the requested thickness\n- [ ] a 90° folded multi-sheet preserves full requested thickness to both source planes using a proper miter/plane intersection
+- [ ] flat Solidify offsets the duplicate shell consistently by the requested thickness
+- [ ] a 90° folded multi-sheet preserves full requested thickness to both source planes using a proper miter/plane intersection
 - [ ] existing crease weights are preserved on the original shell and copied to the inner shell
 - [ ] Solidify refuses an already closed mesh without mutation
 - [ ] Solidify refuses non-manifold, branched-boundary, inconsistent-winding, duplicate/degenerate or zero-area input without partial mutation
 - [ ] Solidify output is topology-validated as closed/manifold and rolls back if validation fails
-- [ ] first Solidify tap creates a non-destructive preview rather than committing\n- [ ] Thickness slider updates the Solidify preview live\n- [ ] Apply Solidify commits geometry matching the preview\n- [ ] leaving Object mode or changing active object cancels preview without mutation\n- [ ] Solidify is one Object-scene Undo step and Redo restores the solid
+- [ ] first Solidify tap creates a non-destructive preview rather than committing
+- [ ] Thickness slider updates the Solidify preview live
+- [ ] Pencil/finger can press the translucent generated shell and drag interactively to change thickness
+- [ ] direct thickness drag follows the picked preview face's projected normal rather than a fixed screen axis
+- [ ] direct drag updates the Thickness slider/output continuously
+- [ ] OrbitControls pauses only during direct thickness drag and restores immediately on release/cancel
+- [ ] direct drag clamps safely to the Thickness control range and creates no history entry
+- [ ] preview visually distinguishes generated inner shell / boundary walls from the unchanged source sheet
+- [ ] Apply Solidify commits geometry matching the preview
+- [ ] leaving Object mode or changing active object cancels preview without mutation
+- [ ] Solidify is one Object-scene Undo step and Redo restores the solid
 - [ ] Solidify on a linked instance propagates shared geometry without collapsing independent instance placement
 - [ ] Reference / locked objects cannot Solidify
 - [ ] frozen `/beta-3/` remains unchanged
@@ -302,7 +313,8 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## UI / release integrity
 
-- [ ] visible app version matches intended release\n- [ ] protected multi-object-transform legacy v0.36.1.0 stamp cannot override the current release label/title
+- [ ] visible app version matches intended release
+- [ ] protected multi-object-transform legacy v0.36.1.0 stamp cannot override the current release label/title
 - [ ] module cache pins changed only where intended
 - [ ] `styles.css?v=0.36.18.270` remains pinned unless deliberately changed
 - [ ] `src/multi-object-transform.js?v=0.36.1.0` remains untouched unless deliberately changed
