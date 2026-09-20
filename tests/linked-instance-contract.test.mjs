@@ -14,8 +14,9 @@ test('343 Linked Duplicate shares source metadata and Make Unique detaches',()=>
   const src=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
   assert.match(src,/linkedDuplicateButton\.textContent='Linked Duplicate'/);
   assert.match(src,/makeUniqueButton\.textContent='Make Unique'/);
-  assert.match(src,/copy\.sourceId=sourceObject\.sourceId/);
-  assert.match(src,/setInstanceMatrix\(copy,matrixForInstance\(sourceObject\)\)/);
+  const block=src.slice(src.indexOf('function linkedDuplicateObject'),src.indexOf('function saveActive'));
+  assert.match(block,/sourceId:sourceObject\.sourceId/);
+  assert.match(block,/instanceMatrix:placement\.elements/);
   assert.match(src,/detachLinkedObject\(object\)/);
 });
 
@@ -44,7 +45,6 @@ test('343 protected multi-object transform pin stays exact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
-
 
 test('343 Linked Duplicate transfers scene-before checkpoint to newly active object',()=>{
   const multi=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
