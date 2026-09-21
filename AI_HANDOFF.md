@@ -27,9 +27,9 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-21.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.393 — Sweep Path foundation**
+- Current live development build: **v0.36.18.394 — Sweep Apply redraw + 3D geometry path snapping**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **403cfc677fa934f2c9c3b9a7a25fe50bf9c559f8**
+- Current live code-bearing commit: **300bf36b75306e413afc70760e4dc020f599a0ad**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
@@ -53,14 +53,15 @@ Audited from current `main` on 2026-09-21.
 - Previous v0.36.18.390 PR: **#74**
 - Previous v0.36.18.391 PR: **#75**
 - Previous v0.36.18.392 PR: **#76**
-- Current v0.36.18.393 PR: **#77**
-- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35568629908**
+- Previous v0.36.18.393 PR: **#77**
+- Current v0.36.18.394 PR: **#78**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35569411629**
 - Current post-merge main regression: **PASS — Topology regression / `npm test`, workflow run 35568666909**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.393**
+- Current `version.json`: **0.36.18.394**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -84,7 +85,30 @@ Audited from current `main` on 2026-09-21.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.393
+## Latest completed development — v0.36.18.394
+
+Theme: **Sweep Apply redraw + geometry-snapped 3D path authoring**.
+
+- User hands-on found that Apply Sweep replaced the mesh internally but left the construction plane visible until another object selection forced a redraw.
+- Sweep Apply now mirrors the proven Revolve Apply finish:
+  - dispose construction overlay
+  - hide Sweep construction controls
+  - force immediate cage/view rebuild
+  - keep the Sweep result as the authoritative active object
+- Geometry Snap now works while drawing/editing Sweep Path against visible external objects:
+  - Vertex has first priority
+  - Edge projection has second priority
+  - Face ray-hit point is the fallback
+- Sweep path points now store construction-local **u/v/w** coordinates rather than being forced flat to the construction plane.
+- Free Pencil drawing still uses the construction plane; snapped points may sit off-plane and therefore form a genuine 3D path.
+- Visible/solo filtering and evaluated object geometry follow the established cross-object snap conventions.
+- Touch navigation remains untouched while Edit Path is active.
+- PR **#78**, squash merge **300bf36b75306e413afc70760e4dc020f599a0ad**.
+- Final PR regression **35569411629 PASS**.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+
+## Previous completed development — v0.36.18.393
+
 
 Theme: **iPad-native Sweep Path construction foundation**.
 
@@ -1226,14 +1250,14 @@ Scene / modifiers:
 
 ## Next development step
 
-**Hands-on verify v0.36.18.393 Sweep Path on iPad.**
+**Hands-on verify v0.36.18.394 Sweep fixes on iPad.**
 
-- Add → Sweep Path, position the construction plane, then Edit Path.
-- Draw a short bent path with Pencil while confirming touch orbit / pan / pinch remain normal.
-- Exercise Radius, Sides and Caps with the live preview.
-- Apply Sweep and confirm the result is an ordinary editable mesh with normal active-object styling and no stale Boolean A/B tint.
-- Confirm Undo returns the applied geometry to the construction-plane state.
-- After Sweep passes, either refine Sweep from concrete hands-on feedback or continue Phase D toward broader import/repair/mesh-health work.
+- Apply a Sweep and confirm the sweep result appears immediately; the construction plane must disappear without selecting another object.
+- With Geometry Snap ON, draw/drag Sweep points near another object's vertex, edge and face and confirm each can be targeted.
+- Place at least one snapped point off the construction plane and confirm the live Sweep genuinely follows that 3D point.
+- With Geometry Snap OFF, confirm free Pencil path drawing still stays on the construction plane.
+- Confirm finger orbit / two-finger pan / pinch zoom remain normal during Edit Path.
+- After pass, continue refining Sweep only from concrete hands-on feedback before broader Phase D/E work.
 
 ## End-of-session requirement
 
