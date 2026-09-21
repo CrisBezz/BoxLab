@@ -23,7 +23,7 @@ function buildMenu(){
   });
 
   const title = document.createElement('div');
-  title.textContent = 'Add Primitive';
+  title.textContent = 'Add';
   Object.assign(title.style,{fontWeight:'700',fontSize:'13px',marginBottom:'8px'});
   panel.append(title);
 
@@ -48,6 +48,18 @@ function buildMenu(){
     grid.append(button);
   }
   panel.append(grid);
+
+  const revolveProfile = document.createElement('button');
+  revolveProfile.type = 'button';
+  revolveProfile.textContent = 'Revolve Profile';
+  revolveProfile.dataset.specialObject = 'revolve-profile';
+  Object.assign(revolveProfile.style,{width:'100%',marginTop:'8px'});
+  revolveProfile.addEventListener('click', event => {
+    event.preventDefault(); event.stopPropagation();
+    window.dispatchEvent(new CustomEvent('boxlab-add-revolve-profile'));
+    closeMenu();
+  });
+  panel.append(revolveProfile);
 
   const detailTitle = document.createElement('div');
   detailTitle.textContent = 'Starting detail';
