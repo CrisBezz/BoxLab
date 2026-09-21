@@ -1311,9 +1311,20 @@ v0.36.18.398 addresses the two concrete causes:
 ### Requested modelling backlog
 - **Edge Extrude** — explicitly requested; not yet implemented. Preserve this as a Phase B/precision-modelling candidate.
 
+## Current development — v0.36.18.399 Sweep side-normal correction
+
+User feedback on .398: the C-profile geometry was substantially improved, but the resulting Sweep side faces displayed flipped normals.
+
+v0.36.18.399 replaces the old global clockwise/anticlockwise side-face rule with an edge-local outward-orientation check:
+- every profile edge derives its own outward 2D direction from the authored profile winding
+- that outward vector is mapped through the adjacent transported Sweep frames into 3D
+- each generated side quad compares its actual normal against that expected outward direction and reverses only when required
+- cap logic and .398 exact start-ring placement remain unchanged
+- this specifically protects concave profiles and direction-changing paths from inside-out side walls
+
 ## Next development step
 
-**Hands-on verify v0.36.18.398 with a concave C-shaped closed profile and inspect the first sweep section carefully.**
+**Hands-on verify v0.36.18.399 normals on the same concave C-profile Sweep shown in the user screenshot.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
