@@ -27,9 +27,9 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-21.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.392 — Revolve Apply selection/tint cleanup**
+- Current live development build: **v0.36.18.393 — Sweep Path foundation**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **fd6b27f79fd1a78d51b3a96ba618e36ef1f43b34**
+- Current live code-bearing commit: **403cfc677fa934f2c9c3b9a7a25fe50bf9c559f8**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
@@ -51,14 +51,17 @@ Audited from current `main` on 2026-09-21.
 - Previous v0.36.18.388 PR: **#72**
 - Previous v0.36.18.389 PR: **#73**
 - Previous v0.36.18.390 PR: **#74**
-- Current v0.36.18.391 PR: **#75**
-- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35563645227**
+- Previous v0.36.18.391 PR: **#75**
+- Previous v0.36.18.392 PR: **#76**
+- Current v0.36.18.393 PR: **#77**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35568629908**
+- Current post-merge main regression: **PASS — Topology regression / `npm test`, workflow run 35568666909**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.392**
-- Current Phase D loaders: **solidify.js?v=0.36.18.382** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.382** → `shell-core.js?v=0.36.18.377` → shared Solidify core; **linear-array.js?v=0.36.18.382** uses existing linked-instance Object Manager APIs
+- Current `version.json`: **0.36.18.393**
+- Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
@@ -81,7 +84,35 @@ Audited from current `main` on 2026-09-21.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.392
+## Latest completed development — v0.36.18.393
+
+Theme: **iPad-native Sweep Path construction foundation**.
+
+- User advanced from the hands-on-approved .392 Revolve selection/tint cleanup with `/nextbuild`.
+- Added **Add → Sweep Path** as a new Phase D construction object.
+- Sweep Path starts as an ordinary movable/rotatable/scalable/snappable construction plane.
+- **Edit Path** gives Pencil/mouse ownership of path authoring while touch remains the normal BoxLab navigation path:
+  - Pencil/mouse empty click appends a point
+  - near-point click selects/drags an existing point
+  - near-segment click inserts a point
+  - Undo Point / Delete Point / Clear remain preview-only
+- Path coordinates are stored in construction-plane UV space, so the path and preview remain attached when the construction plane is repositioned.
+- Live preview uses a circular section with:
+  - Radius 0.03–1.5
+  - Sides 3–24
+  - Caps On/Off
+  - established Apple Pencil slider ownership / late-event guard
+- `sweep-core.js` uses parallel-transport frames along the path to avoid obvious 180° section flips and builds quad strips between section rings.
+- Apply Sweep converts the construction into ordinary editable mesh, pushes one mesh-history step, saves the active object, returns authoritative Object selection to the Sweep result, and resyncs Boolean tint state.
+- V1 scope is intentionally shallow: **planar authored path + circular section**. No arbitrary 3D path authoring, custom profile, twist/banking control or corner fillet system yet.
+- New files: `src/sweep-core.js`, `src/sweep-path.js`, `tests/sweep-core-393.test.mjs`, `tests/sweep-runtime-393.test.mjs`.
+- Add menu wiring lives in `primitive-ui.js?v=0.36.18.393`.
+- PR **#77**, squash merge **403cfc677fa934f2c9c3b9a7a25fe50bf9c559f8**.
+- Final PR regression **35568629908 PASS**; post-merge main regression **35568666909 PASS**.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+
+## Previous completed development — v0.36.18.392
+
 
 Theme: **restore normal single-object selection after Revolve Apply**.
 
@@ -1195,13 +1226,14 @@ Scene / modifiers:
 
 ## Next development step
 
-**Hands-on verify v0.36.18.377 Shell before the next Phase D feature.**
+**Hands-on verify v0.36.18.393 Sweep Path on iPad.**
 
-- Select one Face on a cube, run Shell, confirm the opening and inward wall thickness.
-- Select two adjacent Faces and confirm they become one larger opening.
-- Confirm Shell preview / Apply Shell / Undo / Redo behave correctly.
-- After Shell passes, continue Phase D in the planned order: **Array → Lathe/Revolve → Sweep → broader import/repair/mesh-health**.
-
+- Add → Sweep Path, position the construction plane, then Edit Path.
+- Draw a short bent path with Pencil while confirming touch orbit / pan / pinch remain normal.
+- Exercise Radius, Sides and Caps with the live preview.
+- Apply Sweep and confirm the result is an ordinary editable mesh with normal active-object styling and no stale Boolean A/B tint.
+- Confirm Undo returns the applied geometry to the construction-plane state.
+- After Sweep passes, either refine Sweep from concrete hands-on feedback or continue Phase D toward broader import/repair/mesh-health work.
 
 ## End-of-session requirement
 
@@ -1212,6 +1244,3 @@ Before finishing any future code-changing BoxLab session:
 - verify a brand-new chat could continue using only the repo and these files
 
 
-### Immediate next task — inward / negative Face Extrude
-
-User hands-on screenshot on 2026-09-21 shows a selected side Face extruded inward: the selected face moves inward, but the adjacent side walls stretch/fold through the solid instead of being cut/trimmed to form a proper recessed cut. Investigate whether an earlier inward-cut/negative-extrude path already exists before implementing anything new. Audit normal Extrude, Through/cut topology, precision/repeat capture and frozen Beta history. Preserve ordinary outward Extrude, connected multi-face Extrude, Through and the protected transform baseline.
