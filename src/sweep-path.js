@@ -97,8 +97,8 @@ function captureSnapReferences(){
   }
   return refs;
 }
-function externalGeometrySnap(event,refs){
-  if(!geometryToggle?.checked||!refs?.length)return null;
+function externalGeometrySnap(event,refs,force=false){
+  if((!force&&!geometryToggle?.checked)||!refs?.length)return null;
   const camera=state()?.camera;if(!camera)return null;
   const click=new THREE.Vector2(event.clientX,event.clientY);
   let bestVertex=null;
@@ -203,7 +203,7 @@ function signature(){
 function tick(){const s=signature();if(s!==lastSignature){lastSignature=s;buildOverlay();}if(!s&&overlay){lastSignature='';buildOverlay();}raf=requestAnimationFrame(tick);}
 function disarmOther(m,which){if(which!=='profile')m.editProfile=false;if(which!=='path')m.editPath=false;}
 function addEdgeToPath(event,frame,m){
-  const hit=externalGeometrySnap(event,captureSnapReferences());
+  const hit=externalGeometrySnap(event,captureSnapReferences(),true);
   if(!hit||hit.kind!=='Edge'||!hit.a||!hit.b){setStatus('Sweep - Follow Edges: tap an existing visible edge');return false;}
   pushPathHistory(m);
   const current=pathWorld(frame,m),tail=current.at(-1);let a=hit.a,b=hit.b;if(tail.distanceTo(b)<tail.distanceTo(a)){const t=a;a=b;b=t;}
@@ -296,7 +296,7 @@ function setPathMode(mode){
 window.addEventListener('boxlab-add-sweep-path',addSweepPath);
 window.addEventListener('pointerdown',begin,true);window.addEventListener('pointermove',move,true);window.addEventListener('pointerup',end,true);window.addEventListener('pointercancel',cancel,true);
 circleBtn.addEventListener('click',()=>setProfileType('circle'));rectBtn.addEventListener('click',()=>setProfileType('rectangle'));drawProfileBtn.addEventListener('click',()=>setProfileType('draw'));
-editProfileBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;if(m.profileType!=='draw')m.profileType='draw';m.editProfile=!m.editProfile;if(m.editProfile){disarmOther(m,'profile');m.interacted=true;lockTools();}else if(state()?.controls)state().controls.enabled=true;lastSignature='';});
+editProfileBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;if(m.profileType!=='draw'){m.profilePoints=profile2D(m).map(p=>({...p}));m.profileType='draw';}m.editProfile=!m.editProfile;if(m.editProfile){disarmOther(m,'profile');m.interacted=true;lockTools();}else if(state()?.controls)state().controls.enabled=true;lastSignature='';});
 undoProfileBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m?.profileHistory.length)return;m.profilePoints=m.profileHistory.pop();lastSignature='';});
 clearProfileBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m?.profilePoints.length)return;pushProfileHistory(m);m.profilePoints=[];lastSignature='';});
 followBtn.addEventListener('click',()=>setPathMode('edges'));drawPathBtn.addEventListener('click',()=>setPathMode('draw'));
