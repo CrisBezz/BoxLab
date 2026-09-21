@@ -1103,6 +1103,23 @@ The v0.36.18.339 Clean sharp-fold guard remains protected:
 
 Protected transform and Through systems remain untouched.
 
+
+## Current development — v0.36.18.395 Sweep Profile + dual path
+
+The user hands-on passed v0.36.18.394 and requested the next Sweep iteration.
+
+v0.36.18.395 changes the Sweep construction model while preserving the stable .394 Apply/preview foundation:
+- the construction plane is now explicitly the **Profile Plane**
+- built-in **Circle** and **Rectangle** profiles plus a custom **Draw** profile share one generalized Sweep backend
+- built-in profiles can be converted into editable profile points through **Edit Profile**
+- **Follow Edges** supplies a SketchUp-style path from existing visible connected geometry and does not depend on the Geometry Snap toggle
+- **Draw Path** remains available for free 3D authoring; Geometry Snap can still target external vertices, edges and face hit-points
+- free Draw Path uses an invisible camera-facing working plane through the current path end; no path construction plane is shown
+- Profile and Path can be edited alternately before Apply
+- generalized buildSweepProfile() parallel-transports arbitrary closed profiles along the path and produces ordinary editable mesh topology
+- legacy buildSweepTube() remains as a compatibility wrapper over the generalized profile backend
+- protected src/multi-object-transform.js?v=0.36.1.0 and pinned styles.css?v=0.36.18.270 remain untouched
+
 ## Current Clean for SubD pipeline
 
 1. **Four-triangle center-fan repair**
@@ -1250,14 +1267,15 @@ Scene / modifiers:
 
 ## Next development step
 
-**Hands-on verify v0.36.18.394 Sweep fixes on iPad.**
+**Hands-on verify v0.36.18.395 Sweep Profile + dual-path workflow on iPad.**
 
-- Apply a Sweep and confirm the sweep result appears immediately; the construction plane must disappear without selecting another object.
-- With Geometry Snap ON, draw/drag Sweep points near another object's vertex, edge and face and confirm each can be targeted.
-- Place at least one snapped point off the construction plane and confirm the live Sweep genuinely follows that 3D point.
-- With Geometry Snap OFF, confirm free Pencil path drawing still stays on the construction plane.
-- Confirm finger orbit / two-finger pan / pinch zoom remain normal during Edit Path.
-- After pass, continue refining Sweep only from concrete hands-on feedback before broader Phase D/E work.
+- Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
+- Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
+- With Follow Edges, select a connected edge route on existing geometry and confirm the live Sweep follows it with Geometry Snap either OFF or ON.
+- Switch to Draw Path and verify Pencil/mouse free path authoring plus optional Vertex/Edge/Face Geometry Snap, with no visible path plane.
+- Bounce between Profile and Path editing before Apply; live preview must update without restarting the Sweep.
+- Apply and confirm ordinary editable mesh appears immediately and the Profile Plane disappears.
+- After pass, refine only concrete Sweep issues before moving further through Phase D/E.
 
 ## End-of-session requirement
 
