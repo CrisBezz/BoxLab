@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 import {buildRevolveFromPoints} from './revolve-core.js?v=0.36.18.389';
 
-const VERSION='0.36.18.390';
+const VERSION='0.36.18.391';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -36,7 +36,7 @@ const segmentInput=controls.querySelector('#revolveProfileSegments');
 const segmentOut=controls.querySelector('#revolveProfileSegmentsOut');
 const applyButton=controls.querySelector('#revolveProfileApplyBtn');
 
-let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0,cachedActiveId=null,cachedActiveObject=null;
+let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0,cachedActiveId=null,cachedActiveObject=null,drawerLockState=null;
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
 
@@ -67,11 +67,12 @@ function looksConstructionMesh(mesh){
 }
 function ensureMeta(object){
   if(!object)return null;
-  object.revolveProfile ||= {version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[],selectedPoint:null};
+  object.revolveProfile ||= {version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[],selectedPoint:null,interacted:false,initialPlaneSignature:''};
   object.revolveProfile.points ||= [];
   object.revolveProfile.pointHistory ||= [];
   if(!Number.isInteger(object.revolveProfile.selectedPoint))object.revolveProfile.selectedPoint=null;
   object.revolveProfile.segments=Math.max(3,Math.min(64,Math.round(Number(object.revolveProfile.segments)||24)));
+  object.revolveProfile.initialPlaneSignature ||= planeSignature(liveMesh());
   return object.revolveProfile;
 }
 function clonePoints(points){return(points||[]).map(p=>({u:Number(p.u)||0,v:Number(p.v)||0}));}
@@ -80,6 +81,24 @@ function pushPointHistory(meta){
   if(meta.pointHistory.length>30)meta.pointHistory.shift();
 }
 function setStatus(text){if(status)status.textContent=text;}
+function planeSignature(mesh){return looksConstructionMesh(mesh)?mesh.vertices.map(v=>[v.x,v.y,v.z].map(n=>n.toFixed(6)).join(',')).join('|'):'';}
+function lockActiveTools(){
+  if(!editDrawer)return;
+  if(!drawerLockState)drawerLockState={keepOpen:editDrawer.dataset.keepOpen,open:editDrawer.open};
+  editDrawer.dataset.keepOpen='true';
+  editDrawer.open=true;
+}
+function unlockActiveTools(){
+  if(!editDrawer||!drawerLockState)return;
+  const old=drawerLockState;drawerLockState=null;
+  if(old.keepOpen===undefined)delete editDrawer.dataset.keepOpen; else editDrawer.dataset.keepOpen=old.keepOpen;
+  if(old.open)editDrawer.open=true;
+}
+function claimRevolveTools(meta){
+  if(!meta)return;
+  meta.interacted=true;
+  lockActiveTools();
+}
 function replaceMesh(target,source){
   target.vertices=source.vertices.map(v=>v.clone());
   target.faces=source.faces.map(f=>[...f]);
@@ -195,8 +214,11 @@ function buildOverlay(){
   const construction=looksConstructionMesh(mesh);
   meta.applied=!construction;
   controls.hidden=!construction;
-  if(!construction){disposeOverlay();activeProfileId=object.id;return;}
+  if(!construction){disposeOverlay();activeProfileId=object.id;unlockActiveTools();return;}
   activeProfileId=object.id;
+  const currentPlaneSignature=planeSignature(mesh);
+  if(meta.initialPlaneSignature&&currentPlaneSignature&&currentPlaneSignature!==meta.initialPlaneSignature)claimRevolveTools(meta);
+  if(meta.edit||meta.interacted)lockActiveTools();
   const frame=frameFor(mesh);if(!frame){disposeOverlay();return;}
   disposeOverlay();
   overlay=new THREE.Group();overlay.name='BoxLab Revolve Profile Construction';overlay.userData.boxlabRevolveProfile=true;
@@ -324,7 +346,7 @@ function addRevolveProfile(){
   const object=m.addMesh(constructionPlane(),'Revolve Profile',{enterObjectMode:true});
   if(!object)return;
   cachedActiveId=object.id;cachedActiveObject=object;
-  object.revolveProfile={version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[],selectedPoint:null};
+  object.revolveProfile={version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[],selectedPoint:null,interacted:false,initialPlaneSignature:planeSignature(liveMesh())};
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
   setStatus('Revolve Profile added • position/snap the plane first • then tap Edit Profile');
   lastSignature='';
@@ -338,6 +360,7 @@ function applyRevolve(){
   globalThis.__boxlabHistory?.push(before);
   replaceMesh(mesh,result.mesh);
   meta.applied=true;meta.edit=false;
+  unlockActiveTools();
   object.name=object.name.replace(/ Profile(?: \d+)?$/,'')||'Revolve';
   manager()?.saveActive?.();
   disposeOverlay();controls.hidden=true;lastSignature='';
@@ -371,6 +394,7 @@ window.addEventListener('pointercancel',cancelProfilePointer,true);
 editButton.addEventListener('click',()=>{
   const object=profileObject();if(!object)return;
   const meta=ensureMeta(object);meta.edit=!meta.edit;
+  if(meta.edit)claimRevolveTools(meta);
   if(!meta.edit&&state()?.controls)state().controls.enabled=true;
   setStatus(meta.edit?'Revolve Profile • Pencil/mouse draws • touch still orbits/pans/zooms':'Revolve Profile • position/snap plane with Object tools');
   lastSignature='';
@@ -395,7 +419,7 @@ installPenRange(segmentInput,()=>{
 applyButton.addEventListener('click',applyRevolve);
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedActiveId=null;cachedActiveObject=null;lastSignature='';buildOverlay();}));
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(()=>{lastSignature='';buildOverlay();})));
-window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();});
+window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();unlockActiveTools();});
 tick();
 
 globalThis.__boxlabRevolveProfile={
