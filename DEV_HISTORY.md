@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-21 — v0.36.18.394 Sweep Apply redraw + 3D geometry snapping
+
+- Fixed Sweep Apply stale-view bug: construction plane no longer remains visible until another object is selected.
+- Apply Sweep now disposes its overlay, hides construction controls and forces an immediate viewport rebuild like Revolve.
+- Geometry Snap during Sweep Path editing now targets visible external vertices, edges and face hit-points.
+- Sweep path coordinates expanded from planar u/v to construction-local u/v/w, allowing snapped path points to sit off-plane and create a true 3D path.
+- Free drawing remains construction-plane based when Geometry Snap is off or no target is found.
+- PR #78; squash merge `300bf36b75306e413afc70760e4dc020f599a0ad`.
+- Final PR regression run **35569411629** passed.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+
+
 ## 2026-09-21 — v0.36.18.393 Sweep Path foundation
 
 - Released Phase D **Sweep Path** foundation from PR #77; squash merge commit: `403cfc677fa934f2c9c3b9a7a25fe50bf9c559f8`.
