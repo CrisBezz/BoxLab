@@ -272,6 +272,23 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] locked/reference objects cannot Array
 - [ ] existing Linked Duplicate / Make Unique behavior remains unchanged
 
+## Phase D — Revolve / Lathe
+
+- [ ] Revolve is available in Edge mode for a standalone loose-edge profile
+- [ ] entire loose profile must be selected; partial selection refuses
+- [ ] branched loose profiles refuse
+- [ ] closed-loop loose profiles refuse in the foundation build
+- [ ] stray loose vertices outside the profile refuse
+- [ ] X / Y / Z axis buttons revolve through active Object Origin
+- [ ] Segments 6–64 updates preview live with finger and Apple Pencil
+- [ ] first Revolve tap creates a non-destructive translucent fill + wire preview
+- [ ] Revolve preview shows the active axis guide
+- [ ] profile vertices on the axis collapse to a single pole rather than duplicate degenerate rings
+- [ ] endpoints off-axis remain open boundary rings
+- [ ] Apply Revolve converts the loose profile into ordinary editable faces
+- [ ] Apply Revolve clears loose topology and is one Undo step
+- [ ] existing Array, outward/inward Extrude, Through and navigation remain unchanged
+
 ## Phase D — Solidify / Shell foundation
 
 - [ ] Shell appears in Face > Active Tools when one or more Faces are selected on an editable closed solid
