@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-21 — v0.36.18.394 Sweep Apply redraw + Geometry Snap
+
+- Fixed post-Apply Sweep viewport state: generated geometry now redraws immediately instead of leaving the construction plane visible until object selection changes.
+- Added Geometry Snap to Sweep path authoring.
+- Vertex targets take priority, then Edge, then true Face ray-hit points.
+- Free drawing still falls back to the Sweep construction plane when no geometry target is acquired.
+- Sweep path point storage extended from plane `u/v` to plane-local `u/v/w`, enabling snapped points to follow existing mesh geometry in 3D while remaining relative to the construction plane transform.
+- Geometry Snap works on both point creation and point drag.
+- Preserved touch navigation, live preview, Radius/Sides/Caps, parallel-transport frames and post-Apply single-selection/Boolean tint cleanup.
+- PR **#79**, squash merge `375cced7bc5c2fd2e863cd16f631c3d2e2b379d9`.
+- PR Topology regression **35574552705 PASS**.
+
+
 ## 2026-09-21 — v0.36.18.394 Sweep Apply redraw + 3D geometry snapping
 
 - Fixed Sweep Apply stale-view bug: construction plane no longer remains visible until another object is selected.
