@@ -1269,6 +1269,8 @@ Scene / modifiers:
 
 ## Current development — v0.36.18.396 Sweep Draw Profile refinement
 
+**Released on main via PR #81; squash merge `37ad0fc5c1dea9e6ba5281b93f9e72ba366d4b69`. PR regression run `35593175171` passed.**
+
 User feedback on .395: the Profile Plane was much too large; Circle/Rectangle worked; Draw became trapped at two points, gave no useful preview, and had no explicit open/closed state.
 
 v0.36.18.396 addresses that directly:
