@@ -19,6 +19,7 @@ test('390 profile point selection has a visible selected marker',()=>{
 test('390 can insert a point into an existing profile segment',()=>{
   assert.match(ui,/function nearestProfileSegment/);
   assert.match(ui,/distanceToSegment2D/);
+  assert.match(ui,/d<=18/);
   assert.match(ui,/meta\.points\.splice\(segment\+1,0,planeUV\(frame,world\)\)/);
 });
 
