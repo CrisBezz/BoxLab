@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-21.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.384 — endpoint-vector Array UX**
+- Current live development build: **v0.36.18.385 — inward Extrude side-wall cut preview/commit**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **daa7ef47b34a79f1b00c167217d4eeb116a349ea**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -50,7 +50,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.384**
+- Current `version.json`: **0.36.18.385**
 - Current Phase D loaders: **solidify.js?v=0.36.18.382** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.382** → `shell-core.js?v=0.36.18.377` → shared Solidify core; **linear-array.js?v=0.36.18.382** uses existing linked-instance Object Manager APIs
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -74,7 +74,27 @@ Audited from current `main` on 2026-09-21.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.384
+## Latest completed development — v0.36.18.385
+
+Theme: **inward Face Extrude cuts overlapping side walls instead of stacking/stretching them**.
+
+- .384 endpoint-vector Array passed hands-on testing as PERFECT and is the protected Array baseline.
+- Root cause of the inward Extrude artifact was confirmed: normal Extrude preview duplicated boundary walls over existing exterior side faces until late Through fallback takeover.
+- Existing `sequential-through-fallback.js` already knew which source boundary edges swept across exterior side faces, but only took over at ~55% of the distance toward the opposing region.
+- The fallback now takes ownership as soon as a meaningful drag moves toward the opposite shell.
+- For partial inward travel it builds a real cut preview:
+  - source face is moved to the current depth as the new cap
+  - existing exterior side faces intersected by the swept boundary are clipped back to the moving cap plane
+  - boundary edges that do **not** run along an exterior wall receive normal recess side walls
+  - exterior-edge slots do not get duplicate overlapping walls
+- When the drag reaches the far side, the mature Through kernel is preferred; legacy region Through rebuild remains fallback only.
+- Partial inward commit is closed-topology gated and transactional; invalid results rollback.
+- History is now pushed only on successful pointer-up commit, not when fallback first takes over.
+- Outward Extrude remains on the normal path.
+- Connected multi-face Extrude is unchanged; this cut path remains single-Face only.
+- Through kernel remains pinned to the protected .242 line.
+
+## Previous completed development — v0.36.18.384
 
 Theme: **endpoint-vector Array UX**.
 
