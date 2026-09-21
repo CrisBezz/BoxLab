@@ -7,6 +7,8 @@
 - Fixed mirrored profile editing when the Sweep path leaves opposite the Profile Plane normal.
 - Added an orientation-preserving initial Sweep frame that keeps Profile Plane U/V axes visually stable for both path directions.
 - Added regression coverage for clockwise point order, last→first closure integrity and left/right orientation preservation.
+- Released via PR **#82**; squash merge `2cc8e9d89a87ef080411d61afd8f8d2535e97a42`.
+- Final PR Topology regression run **35594079715 PASS**.
 
 ## 2026-09-21 — v0.36.18.396 Sweep Draw Profile refinement
 
