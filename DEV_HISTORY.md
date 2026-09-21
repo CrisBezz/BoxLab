@@ -8,6 +8,16 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.384 endpoint-vector Array UX
+
+- Reworked Array from axis+spacing to source→endpoint vector workflow.
+- Array opens with exactly one END duplicate preview (Count=2).
+- END copy supports direct Free/X/Y/Z movement; Free uses the camera plane and constrained modes adjust world-axis components.
+- Count fills linked preview/committed copies evenly using endpoint * i/(Count-1).
+- Removed Spacing slider as primary UX.
+- Apply remains one history step and linked-instance creation still uses the established Object Manager API.
+- Next task remains inward/negative Face Extrude cutting.
+
 ## 2026-09-21 — v0.36.18.383 Array direct spacing drag
 
 - .382 Linear Array passed initial iPad hands-on testing.
