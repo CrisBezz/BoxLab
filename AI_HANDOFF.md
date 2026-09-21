@@ -1297,6 +1297,8 @@ v0.36.18.397 fixes both from the same root cause:
 
 ## Current development — v0.36.18.398 Sweep concave-profile + start-ring hardening
 
+**Released on main via PR #83; squash merge `eb56d9df1c08fbbd3ba95112378f0a6e8397eb47`. Final corrected PR regression run `35659397337` passed.**
+
 User feedback on .397: a closed C-shaped profile produced an inside-out/unclean mesh; the sweep generally followed the profile but the start of the sweep was visibly wrong.
 
 v0.36.18.398 addresses the two concrete causes:
