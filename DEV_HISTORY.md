@@ -19,6 +19,8 @@ Newest entries should be added at the top.
 - Partial and Through commits run through closed-topology gate and rollback on failure.
 - Removed early history push at takeover; successful pointer-up is the history commit point.
 - Outward Extrude and connected multi-face Extrude are unchanged.
+- Released from PR **#69**; squash merge commit: `a1cbd03d782cb03529447af292c379ab731051bc`.
+- Final Topology regression passed in workflow run **35548866964**.
 
 ## 2026-09-21 — v0.36.18.384 endpoint-vector Array UX
 
