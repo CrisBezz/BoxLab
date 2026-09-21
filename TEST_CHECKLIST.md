@@ -487,3 +487,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Apply Sweep converts the construction into ordinary editable mesh, returns to normal single-object selection and clears stale Boolean A/B tint
 - [ ] one Undo returns the applied object geometry to the construction plane state
 - [ ] Revolve, Array, Solidify, Shell, Through and touch navigation remain unchanged
+
+
+## Phase D — Sweep Path — .394
+
+- [ ] Apply Sweep immediately shows the generated Sweep result without requiring object reselection
+- [ ] Apply Sweep immediately removes the construction plane/preview overlay
+- [ ] Geometry Snap ON can place Sweep path points on visible external vertices
+- [ ] Geometry Snap ON can place Sweep path points on visible external edges
+- [ ] Geometry Snap ON can place Sweep path points on visible external face hit-points
+- [ ] snapped Sweep points may sit off the construction plane and the live preview follows the resulting 3D path
+- [ ] Geometry Snap OFF preserves free construction-plane path drawing
+- [ ] touch orbit/pan/pinch remain normal while Pencil/mouse edits the Sweep path
