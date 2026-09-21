@@ -12,6 +12,8 @@
 - Profile and Path construction remain live/editable until Apply; Apply still produces ordinary editable mesh.
 - Added focused regression coverage for arbitrary-profile straight/bent Sweep generation and the profile-first dual-path runtime contract.
 - Protected transform, Through, Shell/Solidify and frozen Beta 3 behavior remain untouched.
+- Released via PR **#80**; squash merge `1855f447784d13067088dd179f472d4d2cc8e000`.
+- Final PR Topology regression run **35583108817 PASS**.
 
 ## 2026-09-21 — v0.36.18.394 Sweep Apply redraw + Geometry Snap
 
