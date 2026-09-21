@@ -1106,6 +1106,8 @@ Protected transform and Through systems remain untouched.
 
 ## Current development — v0.36.18.395 Sweep Profile + dual path
 
+**Released on main via PR #80; squash merge `1855f447784d13067088dd179f472d4d2cc8e000`. PR regression run `35583108817` passed.**
+
 The user hands-on passed v0.36.18.394 and requested the next Sweep iteration.
 
 v0.36.18.395 changes the Sweep construction model while preserving the stable .394 Apply/preview foundation:
