@@ -9,6 +9,8 @@
 - Closed profiles require 3+ points and retain the normal closed-section Sweep with optional end caps.
 - Circle/Rectangle stay closed; Edit Profile preserves closure when converting built-ins to editable points.
 - Added focused .396 regression coverage for open two-point Sweep surfaces, closure validation and runtime UI contract.
+- Released via PR **#81**; squash merge `37ad0fc5c1dea9e6ba5281b93f9e72ba366d4b69`.
+- Final PR Topology regression run **35593175171 PASS**.
 
 ## 2026-09-21 — v0.36.18.395 Sweep Profile + dual path
 
