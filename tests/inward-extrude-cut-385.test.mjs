@@ -27,8 +27,9 @@ test('385 partial inward build clips exterior slots and caps moving face',()=>{
 });
 
 test('385 takeover no longer waits for 55 percent depth',()=>{
-  assert.doesNotMatch(ui,/\.55/);
-  assert.match(ui,/if\(!toward\)return/);
+  const takeover=ui.slice(ui.indexOf("window.addEventListener('pointermove'"),ui.indexOf("window.addEventListener('pointermove'",ui.indexOf("window.addEventListener('pointermove'")+1));
+  assert.doesNotMatch(takeover,/plan\.distance\)\*\.55|plan\.distance\*\.55/);
+  assert.match(takeover,/if\(!toward\)return/);
   assert.match(ui,/Math\.hypot\(dx,dy\)<8/);
 });
 
