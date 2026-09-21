@@ -9,6 +9,8 @@
 - Oriented start/end cap triangles to the actual path direction to prevent inside-out end faces.
 - Left global mesh triangulation untouched; the fix is scoped to Sweep.
 - Regression refinement: convex profiles keep their existing single-cap topology; only concave profiles use triangulated caps.
+- Released via PR **#83**; squash merge `eb56d9df1c08fbbd3ba95112378f0a6e8397eb47`.
+- Final corrected PR Topology regression run **35659397337 PASS**.
 
 ## 2026-09-21 — v0.36.18.397 Sweep profile orientation fix
 
