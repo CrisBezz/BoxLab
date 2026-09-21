@@ -29,7 +29,7 @@ Audited from current `main` on 2026-09-21.
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
 - Current live development build: **v0.36.18.390 — Revolve profile point editing**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **f733c23f7f15e861a10b2e607e54c684de9b92b5**
+- Current live code-bearing commit: **eb46b48f221ceea87432fdd7725afbd39977ece7**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
@@ -49,8 +49,9 @@ Audited from current `main` on 2026-09-21.
 - Previous v0.36.18.386 PR: **#70**
 - Previous v0.36.18.387 PR: **#71**
 - Previous v0.36.18.388 PR: **#72**
-- Current v0.36.18.389 PR: **#73**
-- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35559953090**
+- Previous v0.36.18.389 PR: **#73**
+- Current v0.36.18.390 PR: **#74**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35563284475**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
