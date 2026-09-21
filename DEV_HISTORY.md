@@ -8,6 +8,14 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.387 component Delete key routing
+
+- Extended Delete/Backspace UX from Object mode to Face, Edge and Vertex modes.
+- New router delegates to the existing delete buttons instead of reimplementing deletion.
+- Preserves each mode's established history/topology behavior and Object Multi/Group semantics.
+- Ignores editable text controls and modified-key shortcuts.
+- No protected modelling core changes.
+
 ## 2026-09-21 — v0.36.18.386 Revolve foundation
 
 - .385 inward Extrude cut passed hands-on testing.
