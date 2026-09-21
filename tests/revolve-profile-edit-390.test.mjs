@@ -5,9 +5,11 @@ import fs from 'node:fs';
 const ui=fs.readFileSync(new URL('../src/revolve-profile.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
-test('390 Revolve profile editor runtime is current',()=>{
-  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.390/);
-  assert.match(ui,/const VERSION='0\.36\.18\.390'/);
+test('Revolve profile editor runtime follows current app build',()=>{
+  const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
+  const wrapper=index.match(/revolve-profile\.js\?v=([^"]+)/)?.[1];
+  assert.equal(wrapper,version);
+  assert.match(ui,new RegExp("const VERSION='"+version.replaceAll('.','\\.')+"'"));
 });
 
 test('390 profile point selection has a visible selected marker',()=>{

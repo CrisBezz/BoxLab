@@ -8,6 +8,15 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.391 Revolve Active Tools auto-open
+
+- User reported that after positioning/interacting with a Revolve Profile plane, Active Tools stayed closed and hid the Revolve-specific controls.
+- Added construction-plane interaction detection from its initial vertex signature.
+- Move / Rotate / Scale / Geometry Snap changes now automatically open and retain Active Tools for the active Revolve construction.
+- Entering Edit Profile also opens/retains Active Tools.
+- Uses the existing Shell/Solidify `data-keep-open` drawer contract; Apply or leaving construction releases the lock.
+- No modelling-core changes.
+
 ## 2026-09-21 — v0.36.18.390 Revolve profile point editing
 
 - Continued from the successful .389 Revolve refinement baseline.

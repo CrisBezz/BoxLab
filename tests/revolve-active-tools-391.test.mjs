@@ -1,0 +1,32 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+
+const ui=fs.readFileSync(new URL('../src/revolve-profile.js',import.meta.url),'utf8');
+const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+
+test('391 Revolve Active Tools runtime is current',()=>{
+  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.391/);
+  assert.match(ui,/const VERSION='0\.36\.18\.391'/);
+});
+
+test('391 construction transform claims Active Tools',()=>{
+  assert.match(ui,/initialPlaneSignature/);
+  assert.match(ui,/currentPlaneSignature!==meta\.initialPlaneSignature/);
+  assert.match(ui,/claimRevolveTools\(meta\)/);
+});
+
+test('391 uses established keep-open drawer contract',()=>{
+  assert.match(ui,/editDrawer\.dataset\.keepOpen='true'/);
+  assert.match(ui,/editDrawer\.open=true/);
+  assert.match(ui,/unlockActiveTools/);
+});
+
+test('391 Edit Profile opens Revolve tools immediately',()=>{
+  assert.match(ui,/if\(meta\.edit\)claimRevolveTools\(meta\)/);
+});
+
+test('391 Apply releases the drawer lock',()=>{
+  const apply=ui.slice(ui.indexOf('function applyRevolve'),ui.indexOf('function installPenRange'));
+  assert.match(apply,/unlockActiveTools\(\)/);
+});

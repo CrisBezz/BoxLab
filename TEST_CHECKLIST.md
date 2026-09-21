@@ -282,6 +282,18 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Delete/Backspace does not fire while typing in inputs, textareas, selects or contenteditable fields
 - [ ] Object Multi/Group delete behavior remains unchanged
 
+## Phase D — Revolve Profile — .391 Active Tools
+
+- [ ] newly added Revolve Profile may remain in positioning mode without forcing Active Tools
+- [ ] moving the Revolve plane opens Active Tools automatically
+- [ ] rotating the Revolve plane opens Active Tools automatically
+- [ ] scaling the Revolve plane opens Active Tools automatically
+- [ ] snapping/repositioning the Revolve plane opens Active Tools automatically
+- [ ] Edit Profile opens Active Tools immediately
+- [ ] Active Tools stays open while active Revolve construction tooling is in use
+- [ ] Apply Revolve releases the drawer lock
+- [ ] switching away from the construction does not leave a stale drawer lock
+
 ## Phase D — Revolve Profile — .390 point editing
 
 - [ ] tapping/pressing an existing profile point selects it
