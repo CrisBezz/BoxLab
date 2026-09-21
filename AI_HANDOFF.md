@@ -1284,6 +1284,8 @@ v0.36.18.396 addresses that directly:
 
 ## Current development — v0.36.18.397 Sweep profile orientation fix
 
+**Released on main via PR #82; squash merge `2cc8e9d89a87ef080411d61afd8f8d2535e97a42`. PR regression run `35594079715` passed.**
+
 User feedback on .396: closing a Draw profile could jump to an unexpected vertex, and profile editing appeared mirrored — dragging a point left moved the Sweep preview right.
 
 v0.36.18.397 fixes both from the same root cause:
