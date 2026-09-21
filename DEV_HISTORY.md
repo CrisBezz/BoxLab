@@ -18,6 +18,8 @@ Newest entries should be added at the top.
 - Core orders the loose-edge chain, rejects branches/closed/partial/mixed profiles, and collapses points on the axis to single pole vertices.
 - Apply replaces the loose profile with ordinary editable revolve faces in one history step and uses existing Object Manager save propagation.
 - No changes to Array, inward Extrude/Through, or protected multi-object transform.
+- Released from PR **#70**; squash merge commit: `2984d6dd4f3173652cdbbb2061cc736e3a77bba5`.
+- Final Topology regression passed in workflow run **35557272061**.
 
 ## 2026-09-21 — v0.36.18.385 inward Extrude side-wall cut
 
