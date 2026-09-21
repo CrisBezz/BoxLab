@@ -17,6 +17,8 @@ Newest entries should be added at the top.
 - Added Delete Point for selected profile points.
 - Undo/Clear now clear stale selected-point state safely.
 - Preserved touch navigation, plane positioning/snap, live preview, 3–64 segments, normal unification and Apply behavior.
+- Released from PR **#74**; squash merge commit: `eb46b48f221ceea87432fdd7725afbd39977ece7`.
+- Final Topology regression passed in workflow run **35563284475**.
 
 ## 2026-09-21 — v0.36.18.389 Revolve refinement
 
