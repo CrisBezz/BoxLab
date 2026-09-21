@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-21 — v0.36.18.397 Sweep profile orientation fix
+
+- Fixed custom Draw profile closure jumping by preserving authored profile point order exactly.
+- Removed automatic clockwise profile reversal from `cleanProfile()`; winding is now handled only when generating side/cap face order.
+- Fixed mirrored profile editing when the Sweep path leaves opposite the Profile Plane normal.
+- Added an orientation-preserving initial Sweep frame that keeps Profile Plane U/V axes visually stable for both path directions.
+- Added regression coverage for clockwise point order, last→first closure integrity and left/right orientation preservation.
+
 ## 2026-09-21 — v0.36.18.396 Sweep Draw Profile refinement
 
 - Reduced the initial Sweep Profile Plane from 4×4 units to 0.7×0.7 units, close to the default Circle profile footprint.
