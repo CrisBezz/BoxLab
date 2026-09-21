@@ -8,6 +8,20 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.388 live Revolve Profile construction
+
+- User identified the missing authoring layer for Revolve: free Add Vertex points could not guarantee a coplanar profile or obvious revolve axis.
+- Added Add → Revolve Profile construction object.
+- Construction object is a plane whose left edge is visibly blue and authoritative as the revolve axis.
+- Profile points are normalized plane UV coordinates; Pencil/finger taps add points and direct drags reshape them while remaining on the plane.
+- Profile chain connects automatically and points near the axis snap exactly to it.
+- Live translucent revolve preview updates continuously when profile points or Segments change.
+- Edit Profile can be toggled off for navigation and back on for further shaping.
+- Added local Undo Point/Clear controls before Apply.
+- Revolve core now exposes arbitrary-axis `buildRevolveFromPoints`; .386 loose-edge Revolve path remains intact.
+- Apply converts construction to ordinary mesh in one history step.
+- No changes to protected Array, Through/Extrude or multi-object transform.
+
 ## 2026-09-21 — v0.36.18.387 component Delete key routing
 
 - Extended Delete/Backspace UX from Object mode to Face, Edge and Vertex modes.

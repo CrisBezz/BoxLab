@@ -4,10 +4,13 @@ import fs from 'node:fs';
 
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const router=fs.readFileSync(new URL('../src/delete-key-router.js',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('387 delete-key router runtime is loaded',()=>{
-  assert.match(index,/delete-key-router\.js\?v=0\.36\.18\.387/);
-  assert.match(index,/data-release-version="0\.36\.18\.387"/);
+test('Delete-key router runtime follows current app build',()=>{
+  const wrapper=index.match(/delete-key-router\.js\?v=([^"]+)/)?.[1];
+  const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
+  assert.equal(wrapper,version);
+  assert.equal(stamp,version);
 });
 
 test('387 routes each selection mode to existing authoritative delete button',()=>{

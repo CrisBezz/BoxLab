@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.386';
+const VERSION='0.36.18.388';
 
 function clonePoint(v){return v?.clone?v.clone():new THREE.Vector3(v?.x||0,v?.y||0,v?.z||0);}
 function axisVector(axis){
@@ -10,22 +10,24 @@ function axisVector(axis){
 function normalizeOrigin(origin){
   return origin?.clone?origin.clone():new THREE.Vector3(origin?.x||0,origin?.y||0,origin?.z||0);
 }
+function normalizeAxis(axis){
+  const out=axis?.clone?axis.clone():new THREE.Vector3(axis?.x||0,axis?.y||1,axis?.z||0);
+  return out.lengthSq()>1e-12?out.normalize():new THREE.Vector3(0,1,0);
+}
 function looseEdgeRecords(mesh){
   const all=mesh?.edges?.()||[];
   return all.map((edge,index)=>({...edge,index})).filter(edge=>edge?.loose===true);
 }
 function selectedLooseEdges(mesh,edgeIndices){
   const all=mesh?.edges?.()||[];
-  const selected=[...new Set((edgeIndices||[]).filter(Number.isInteger))].map(index=>({...all[index],index})).filter(edge=>edge?.loose===true);
-  return selected;
+  return [...new Set((edgeIndices||[]).filter(Number.isInteger))].map(index=>({...all[index],index})).filter(edge=>edge?.loose===true);
 }
 function orderChain(edges){
   if(!edges.length)return{ok:false,reason:'Select an open loose-edge profile'};
   const adjacency=new Map();
   const add=(v,edge)=>{if(!adjacency.has(v))adjacency.set(v,[]);adjacency.get(v).push(edge);};
   for(const edge of edges){add(edge.a,edge);add(edge.b,edge);}
-  const branched=[...adjacency.entries()].filter(([,list])=>list.length>2);
-  if(branched.length)return{ok:false,reason:'Profile branches are not supported'};
+  if([...adjacency.values()].some(list=>list.length>2))return{ok:false,reason:'Profile branches are not supported'};
   const ends=[...adjacency.entries()].filter(([,list])=>list.length===1).map(([v])=>v);
   if(ends.length!==2)return{ok:false,reason:'Profile must be one open chain'};
   const ordered=[ends[0]],used=new Set();
@@ -47,18 +49,15 @@ export function analyzeRevolveInput(mesh,edgeIndices,options={}){
   if(!selected.length)return{ok:false,reason:'Select the loose profile edges'};
   if(selected.length!==allLoose.length)return{ok:false,reason:'Select the entire loose-edge profile'};
   const chain=orderChain(selected);if(!chain.ok)return chain;
-  const used=new Set(chain.vertices);
-  const looseVertices=[...(mesh.looseVertices||[])].filter(Number.isInteger);
+  const used=new Set(chain.vertices),looseVertices=[...(mesh.looseVertices||[])].filter(Number.isInteger);
   if(looseVertices.some(v=>!used.has(v)))return{ok:false,reason:'Remove stray loose vertices before Revolve'};
   const axis=options.axis||'y';
   if(!['x','y','z'].includes(axis))return{ok:false,reason:'Choose X, Y or Z axis'};
-  const origin=normalizeOrigin(options.origin);
-  const segments=Math.max(3,Math.min(128,Math.round(Number(options.segments)||24)));
+  const origin=normalizeOrigin(options.origin),segments=Math.max(3,Math.min(128,Math.round(Number(options.segments)||24)));
   const points=chain.vertices.map(index=>clonePoint(mesh.vertices[index]));
-  let scale=0;
-  for(const p of points)scale=Math.max(scale,p.distanceTo(origin));
+  let scale=0;for(const p of points)scale=Math.max(scale,p.distanceTo(origin));
   const tolerance=Math.max(1e-7,scale*1e-6);
-  return{ok:true,axis,origin,segments,vertexIndices:chain.vertices,points,tolerance};
+  return{ok:true,axis,origin,axisDirection:axisVector(axis),segments,vertexIndices:chain.vertices,points,tolerance};
 }
 function radialVector(point,origin,axis){
   const rel=point.clone().sub(origin),along=axis.clone().multiplyScalar(rel.dot(axis));
@@ -68,8 +67,7 @@ function faceNormal(vertices,face){
   if(!face||face.length<3)return new THREE.Vector3();
   const a=vertices[face[0]];
   for(let i=1;i<face.length-1;i++){
-    const b=vertices[face[i]],c=vertices[face[i+1]];
-    const n=new THREE.Vector3().crossVectors(b.clone().sub(a),c.clone().sub(a));
+    const b=vertices[face[i]],c=vertices[face[i+1]],n=new THREE.Vector3().crossVectors(b.clone().sub(a),c.clone().sub(a));
     if(n.lengthSq()>1e-12)return n.normalize();
   }
   return new THREE.Vector3();
@@ -80,12 +78,15 @@ function orientOutward(vertices,face,origin,axis){
   if(radial.lengthSq()<1e-12)return face;
   return faceNormal(vertices,face).dot(radial)<0?[...face].reverse():face;
 }
-export function buildRevolveMesh(mesh,edgeIndices,options={}){
-  const analysis=analyzeRevolveInput(mesh,edgeIndices,options);
-  if(!analysis.ok)return analysis;
-  const {points,origin,segments,tolerance}=analysis,axis=axisVector(analysis.axis);
+export function buildRevolveFromPoints(points,options={}){
+  const source=(points||[]).map(clonePoint);
+  if(source.length<2)return{ok:false,reason:'Add at least two profile points'};
+  const origin=normalizeOrigin(options.axisOrigin||options.origin),axis=normalizeAxis(options.axisDirection||options.axis||new THREE.Vector3(0,1,0));
+  const segments=Math.max(3,Math.min(128,Math.round(Number(options.segments)||24)));
+  let scale=0;for(const p of source)scale=Math.max(scale,p.distanceTo(origin));
+  const tolerance=Math.max(1e-7,Number(options.tolerance)||scale*1e-6);
   const vertices=[],faces=[],rings=[];
-  for(const point of points){
+  for(const point of source){
     const radial=radialVector(point,origin,axis);
     if(radial.length()<=tolerance){
       const id=vertices.length;vertices.push(point.clone());rings.push(Array(segments).fill(id));continue;
@@ -93,16 +94,14 @@ export function buildRevolveMesh(mesh,edgeIndices,options={}){
     const ring=[];
     for(let s=0;s<segments;s++){
       const q=new THREE.Quaternion().setFromAxisAngle(axis,(Math.PI*2*s)/segments);
-      const rotated=point.clone().sub(origin).applyQuaternion(q).add(origin);
-      ring.push(vertices.length);vertices.push(rotated);
+      ring.push(vertices.length);vertices.push(point.clone().sub(origin).applyQuaternion(q).add(origin));
     }
     rings.push(ring);
   }
   for(let row=0;row<rings.length-1;row++){
     const a=rings[row],b=rings[row+1];
     for(let s=0;s<segments;s++){
-      const n=(s+1)%segments;
-      const ids=[a[s],a[n],b[n],b[s]],unique=[...new Set(ids)];
+      const n=(s+1)%segments,ids=[a[s],a[n],b[n],b[s]],unique=[...new Set(ids)];
       if(unique.length<3)continue;
       const face=unique.length===3?unique:ids;
       faces.push(orientOutward(vertices,face,origin,axis));
@@ -112,15 +111,22 @@ export function buildRevolveMesh(mesh,edgeIndices,options={}){
   const result=new EditableMesh(vertices,faces);
   result.looseEdges=new Set();result.looseVertices=new Set();result.edges?.();
   return{
-    ok:true,mesh:result,axis:analysis.axis,segments,
-    sourceVertices:analysis.vertexIndices.length,
-    vertices:result.vertices.length,faces:result.faces.length,
-    closedEnds:{
-      start:rings[0].every(id=>id===rings[0][0]),
-      end:rings[rings.length-1].every(id=>id===rings[rings.length-1][0])
-    }
+    ok:true,mesh:result,segments,sourceVertices:source.length,vertices:result.vertices.length,faces:result.faces.length,
+    closedEnds:{start:rings[0].every(id=>id===rings[0][0]),end:rings[rings.length-1].every(id=>id===rings[rings.length-1][0])}
   };
 }
+export function buildRevolveMesh(mesh,edgeIndices,options={}){
+  const analysis=analyzeRevolveInput(mesh,edgeIndices,options);
+  if(!analysis.ok)return analysis;
+  const result=buildRevolveFromPoints(analysis.points,{
+    axisOrigin:analysis.origin,
+    axisDirection:analysis.axisDirection,
+    segments:analysis.segments,
+    tolerance:analysis.tolerance
+  });
+  if(!result.ok)return result;
+  return{...result,axis:analysis.axis};
+}
 
-export const __revolveInternals={axisVector,orderChain,radialVector,orientOutward};
-globalThis.__boxlabRevolveCore={version:VERSION,analyzeRevolveInput,buildRevolveMesh};
+export const __revolveInternals={axisVector,orderChain,radialVector,orientOutward,normalizeAxis};
+globalThis.__boxlabRevolveCore={version:VERSION,analyzeRevolveInput,buildRevolveMesh,buildRevolveFromPoints};

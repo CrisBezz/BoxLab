@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-21.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.387 — Delete/Backspace across Object, Face, Edge and Vertex modes**
+- Current live development build: **v0.36.18.388 — live Revolve Profile construction object**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **b955b9077a3ac0ec1290b04bee7d45d787ca8449**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -53,7 +53,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.387**
+- Current `version.json`: **0.36.18.388**
 - Current Phase D loaders: **solidify.js?v=0.36.18.382** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.382** → `shell-core.js?v=0.36.18.377` → shared Solidify core; **linear-array.js?v=0.36.18.382** uses existing linked-instance Object Manager APIs
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -77,7 +77,33 @@ Audited from current `main` on 2026-09-21.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.387
+## Latest completed development — v0.36.18.388
+
+Theme: **live iPad-native Revolve Profile construction object**.
+
+- Added **Add → Revolve Profile** as a first-class construction workflow.
+- A Revolve Profile starts as a rectangular construction plane.
+- The **left plane edge is the blue Revolve axis**.
+- Profile points are stored as normalized UV coordinates on that plane rather than free world-space points.
+  - points therefore remain coplanar by construction
+  - moving/rotating/scaling the construction plane keeps the profile attached to the plane
+- While **Edit Profile** is active:
+  - Pencil/finger tap on the plane adds the next profile point
+  - Pencil/finger drag an existing point to reshape the profile
+  - points are clamped to the plane bounds
+  - points near the blue edge snap exactly onto the revolve axis
+- The profile chain is connected automatically in draw order.
+- A translucent fill + wire Revolve preview is generated as soon as there are at least two profile points.
+- Dragging any profile point updates the preview live before commit.
+- Segments 6–64 updates the preview live and uses the hardened Apple Pencil range ownership path.
+- **Edit Profile** can be toggled off to return viewport navigation, then toggled back on without losing the profile.
+- Added local **Undo Point** and **Clear** controls for pre-commit profile authoring.
+- **Apply Revolve** replaces the construction plane with ordinary editable mesh geometry in one mesh-history step.
+- The construction metadata remains attached so Undo back to the 4-vertex plane can restore the live construction state; Redo returns to the applied mesh.
+- Extended `revolve-core.js` with `buildRevolveFromPoints(...)` using an arbitrary normalized axis vector. Existing .386 loose-edge Revolve remains available and is not removed.
+- Protected Array, Extrude/Through, Object management and `multi-object-transform.js` remain untouched.
+
+## Previous completed development — v0.36.18.387
 
 Theme: **consistent Delete/Backspace routing across all selection modes**.
 

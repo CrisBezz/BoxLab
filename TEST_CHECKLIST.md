@@ -282,6 +282,25 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Delete/Backspace does not fire while typing in inputs, textareas, selects or contenteditable fields
 - [ ] Object Multi/Group delete behavior remains unchanged
 
+## Phase D — Live Revolve Profile construction
+
+- [ ] Add → Revolve Profile creates a construction plane
+- [ ] left edge of construction plane is visibly blue and acts as the revolve axis
+- [ ] Edit Profile: tap plane adds points constrained to the plane
+- [ ] consecutive profile points connect automatically as one open chain
+- [ ] dragging a profile point keeps it on the construction plane
+- [ ] dragging a profile point updates the revolved fill + wire preview live
+- [ ] profile points near the blue axis snap exactly onto it
+- [ ] toggling Edit Profile off restores viewport navigation without losing points
+- [ ] toggling Edit Profile back on resumes profile editing
+- [ ] Segments 6–64 updates preview live with finger and Apple Pencil
+- [ ] Undo Point reverses the last profile authoring gesture
+- [ ] Clear removes profile points but preserves the construction plane
+- [ ] moving/rotating/scaling the construction plane keeps profile + preview attached
+- [ ] Apply Revolve converts the construction to ordinary editable mesh geometry
+- [ ] Apply Revolve is one Undo step; undo back to construction plane restores live profile state
+- [ ] legacy loose-edge Revolve remains available
+
 ## Phase D — Revolve / Lathe
 
 - [ ] Revolve is available in Edge mode for a standalone loose-edge profile
