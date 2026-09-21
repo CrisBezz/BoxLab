@@ -21,6 +21,8 @@ Newest entries should be added at the top.
 - Revolve core now exposes arbitrary-axis `buildRevolveFromPoints`; .386 loose-edge Revolve path remains intact.
 - Apply converts construction to ordinary mesh in one history step.
 - No changes to protected Array, Through/Extrude or multi-object transform.
+- Released from PR **#72**; squash merge commit: `f6b0870e8651c212b8b3af83fb8ebbd0d068b086`.
+- Final Topology regression passed in workflow run **35558948343**.
 
 ## 2026-09-21 — v0.36.18.387 component Delete key routing
 
