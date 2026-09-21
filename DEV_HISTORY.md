@@ -16,6 +16,8 @@ Newest entries should be added at the top.
 - Segments minimum lowered from 6 to 3.
 - Replaced per-face radial normal flipping with shared-edge winding unification plus one global shell orientation decision, fixing inward normal bands on concave profiles.
 - Preserved live profile preview, plane-relative UV points, Apply behavior and legacy loose-edge Revolve.
+- Released from PR **#73**; squash merge commit: `f733c23f7f15e861a10b2e607e54c684de9b92b5`.
+- Final Topology regression passed in workflow run **35559953090**.
 
 ## 2026-09-21 — v0.36.18.388 live Revolve Profile construction
 
