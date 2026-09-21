@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-21.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.386 — Phase D Revolve foundation**
+- Current live development build: **v0.36.18.387 — Delete/Backspace across Object, Face, Edge and Vertex modes**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **2984d6dd4f3173652cdbbb2061cc736e3a77bba5**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -52,7 +52,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.386**
+- Current `version.json`: **0.36.18.387**
 - Current Phase D loaders: **solidify.js?v=0.36.18.382** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.382** → `shell-core.js?v=0.36.18.377` → shared Solidify core; **linear-array.js?v=0.36.18.382** uses existing linked-instance Object Manager APIs
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -76,7 +76,23 @@ Audited from current `main` on 2026-09-21.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.386
+## Latest completed development — v0.36.18.387
+
+Theme: **consistent Delete/Backspace routing across all selection modes**.
+
+- Added a small capture-phase keyboard router in `src/delete-key-router.js`.
+- Delete or Backspace now routes to the existing authoritative delete action for the current mode:
+  - Object → `#outlinerDeleteBtn`
+  - Face → `#deleteFaceBtn`
+  - Edge → `#deleteEdgeBtn`
+  - Vertex → `#deleteVertexBtn`
+- The router deliberately does not implement topology deletion itself; existing button handlers remain authoritative for history, selection and topology semantics.
+- Keyboard delete is ignored while typing in input/textarea/select/contenteditable controls.
+- Modified-key combinations using Alt/Ctrl/Meta are ignored.
+- Existing Object Multi/Group delete behavior is preserved because Object mode still clicks the existing Outliner Delete action.
+- No edits to protected `main.js`, `multi-object-transform.js`, Array, Revolve, Extrude or Through topology.
+
+## Previous completed development — v0.36.18.386
 
 Theme: **Phase D Revolve / Lathe foundation**.
 
