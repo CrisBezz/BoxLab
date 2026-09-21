@@ -26,7 +26,7 @@ test('387 handles Delete and Backspace in capture phase',()=>{
 
 test('387 ignores editable text controls and modified shortcuts',()=>{
   assert.match(router,/isContentEditable/);
-  assert.match(router,/input\|textarea\|select/);
+  assert.match(router,/tag==='input'\|\|tag==='textarea'\|\|tag==='select'/);
   assert.match(router,/event\.altKey\|\|event\.ctrlKey\|\|event\.metaKey/);
 });
 
