@@ -29,9 +29,9 @@ test('355 object-origin remains pinned while current Object UI loaders advance i
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.392/);
   assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(index,/object-management\.js\?v=0\.36\.18\.392/);
 });
 
 test('355 protected multi-object transform pin remains exact',()=>{
