@@ -1313,6 +1313,8 @@ v0.36.18.398 addresses the two concrete causes:
 
 ## Current development — v0.36.18.399 Sweep side-normal correction
 
+**Released on main via PR #84; squash merge `0884f4d1acad778c9cbca1f93526a072eda495da`. PR regression run `35663109891` passed.**
+
 User feedback on .398: the C-profile geometry was substantially improved, but the resulting Sweep side faces displayed flipped normals.
 
 v0.36.18.399 replaces the old global clockwise/anticlockwise side-face rule with an edge-local outward-orientation check:
