@@ -8,6 +8,17 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.386 Revolve foundation
+
+- .385 inward Extrude cut passed hands-on testing.
+- Added Edge-mode Revolve for a standalone selected loose-edge open chain.
+- Revolve axis is X/Y/Z through Object Origin; full 360° with Segments 6–64.
+- Preview is non-destructive with translucent fill, wire overlay and axis guide.
+- Axis/Segments rebuild preview live; Segments uses hardened Pencil range handling.
+- Core orders the loose-edge chain, rejects branches/closed/partial/mixed profiles, and collapses points on the axis to single pole vertices.
+- Apply replaces the loose profile with ordinary editable revolve faces in one history step and uses existing Object Manager save propagation.
+- No changes to Array, inward Extrude/Through, or protected multi-object transform.
+
 ## 2026-09-21 — v0.36.18.385 inward Extrude side-wall cut
 
 - .384 endpoint-vector Array passed hands-on testing.

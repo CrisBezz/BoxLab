@@ -5,9 +5,11 @@ import fs from 'node:fs';
 const ui=fs.readFileSync(new URL('../src/sequential-through-fallback.js',import.meta.url),'utf8');
 const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('385 inward-cut runtime is pinned',()=>{
-  assert.match(index,/data-release-version="0\.36\.18\.385"/);
+test('Inward-cut runtime follows current app build',()=>{
+  const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
+  assert.equal(stamp,version);
   assert.match(drawer,/sequential-through-fallback\.js\?v=0\.36\.18\.385/);
 });
 

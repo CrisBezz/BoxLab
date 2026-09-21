@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-21.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.385 — inward Extrude side-wall cut preview/commit**
+- Current live development build: **v0.36.18.386 — Phase D Revolve foundation**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **a1cbd03d782cb03529447af292c379ab731051bc**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -51,7 +51,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.385**
+- Current `version.json`: **0.36.18.386**
 - Current Phase D loaders: **solidify.js?v=0.36.18.382** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.382** → `shell-core.js?v=0.36.18.377` → shared Solidify core; **linear-array.js?v=0.36.18.382** uses existing linked-instance Object Manager APIs
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -75,7 +75,32 @@ Audited from current `main` on 2026-09-21.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.385
+## Latest completed development — v0.36.18.386
+
+Theme: **Phase D Revolve / Lathe foundation**.
+
+- .385 inward single-Face Extrude side-wall cutting passed user hands-on testing.
+- Added a conservative first Revolve workflow based on BoxLab's existing loose-edge profile system.
+- Revolve lives in **Edge mode** under Active Tools.
+- First build intentionally accepts only a standalone selected loose-edge profile:
+  - no existing Faces in the source object
+  - selected edges must be loose edges
+  - entire loose-edge profile must be selected
+  - profile must be one connected open chain
+  - branches, closed loops, partial profile selections and stray loose vertices refuse rather than guess
+- Axis is world X/Y/Z through the active **Object Origin**.
+- Default axis Y; Segments 6–64, default 24.
+- First tap arms a non-destructive translucent filled + wire preview and shows the revolve axis guide.
+- Axis and Segments update the preview live.
+- Segments slider uses the hardened Apple Pencil range path.
+- Full 360° revolve uses shared seam vertices around the ring.
+- Profile points on the axis collapse to a single pole vertex, avoiding degenerate duplicate pole rings.
+- Profile endpoints not on the axis remain open boundary rings; endpoints on the axis close naturally to poles.
+- Apply converts the loose profile object into ordinary editable face geometry, clears loose topology and commits one mesh-history step.
+- Object Manager save propagation is reused; no parallel object system.
+- Protected Array, inward Extrude/Through and multi-object-transform remain untouched.
+
+## Previous completed development — v0.36.18.385
 
 Theme: **inward Face Extrude cuts overlapping side walls instead of stacking/stretching them**.
 
