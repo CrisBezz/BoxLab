@@ -5,10 +5,13 @@ import fs from 'node:fs';
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const ui=fs.readFileSync(new URL('../src/revolve.js',import.meta.url),'utf8');
 const core=fs.readFileSync(new URL('../src/revolve-core.js',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('386 Revolve runtime is loaded',()=>{
-  assert.match(index,/revolve\.js\?v=0\.36\.18\.386/);
-  assert.match(index,/data-release-version="0\.36\.18\.386"/);
+test('Revolve runtime follows current app build',()=>{
+  const wrapper=index.match(/revolve\.js\?v=([^"]+)/)?.[1];
+  const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
+  assert.equal(wrapper,version);
+  assert.equal(stamp,version);
 });
 
 test('386 Revolve UI has X Y Z and Segments preview controls',()=>{
