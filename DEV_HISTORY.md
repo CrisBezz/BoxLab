@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-21 — v0.36.18.395 Sweep Profile + dual path
+
+- User hands-on passed the .394 Sweep redraw/3D Geometry Snap build and chose to continue Sweep rather than move to another construction tool.
+- Reframed the existing Sweep construction plane as the **Profile Plane**; no visible path construction plane is required.
+- Generalized sweep-core.js from circular tubes to arbitrary closed 2D profiles through buildSweepProfile(), while retaining buildSweepTube() as a compatibility wrapper.
+- Added Circle, Rectangle and custom Draw profile modes with live preview and pre-Apply profile editing.
+- Added two interchangeable path sources: **Follow Edges** for SketchUp-style connected existing-edge routes and **Draw Path** for free 3D path authoring.
+- Follow Edges deliberately works independently of the Geometry Snap toggle; Draw Path retains optional external Vertex/Edge/Face snapping.
+- Free Draw Path uses an invisible view-facing working plane through the current path end instead of showing a path plane.
+- Profile and Path construction remain live/editable until Apply; Apply still produces ordinary editable mesh.
+- Added focused regression coverage for arbitrary-profile straight/bent Sweep generation and the profile-first dual-path runtime contract.
+- Protected transform, Through, Shell/Solidify and frozen Beta 3 behavior remain untouched.
+
 ## 2026-09-21 — v0.36.18.394 Sweep Apply redraw + Geometry Snap
 
 - Fixed post-Apply Sweep viewport state: generated geometry now redraws immediately instead of leaving the construction plane visible until object selection changes.
