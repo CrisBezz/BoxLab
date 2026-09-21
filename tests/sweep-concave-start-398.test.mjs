@@ -39,12 +39,13 @@ test('398 cap normals face outward at both ends',()=>{
   const path=[new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,2)];
   const result=buildSweepProfile(path,profile,{profileClosed:true,profileU:U,profileV:V,profileNormal:N});
   assert.equal(result.ok,true);
-  const triFaces=result.mesh.faces.filter(f=>f.length===3);
+  const sideCount=profile.length*(path.length-1);
+  const startFace=result.mesh.faces[sideCount],endFace=result.mesh.faces[sideCount+1];
   const normal=face=>{
-    const [a,b,c]=face.map(i=>result.mesh.vertices[i]);
+    const [a,b,c]=face.slice(0,3).map(i=>result.mesh.vertices[i]);
     return new THREE.Vector3().crossVectors(b.clone().sub(a),c.clone().sub(a)).normalize();
   };
-  const start=normal(triFaces[0]),end=normal(triFaces.at(-1));
+  const start=normal(startFace),end=normal(endFace);
   assert.ok(start.z<-.99);
   assert.ok(end.z>.99);
 });
