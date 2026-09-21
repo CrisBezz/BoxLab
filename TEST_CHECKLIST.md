@@ -499,3 +499,21 @@ Add new permanent regression checks below when future features need protection.
 - [ ] snapped Sweep points may sit off the construction plane and the live preview follows the resulting 3D path
 - [ ] Geometry Snap OFF preserves free construction-plane path drawing
 - [ ] touch orbit/pan/pinch remain normal while Pencil/mouse edits the Sweep path
+
+
+## Phase D — Sweep Profile + dual path — .395
+
+- [ ] Add → Sweep creates a movable/snappable **Profile Plane**, not a visible path plane
+- [ ] Circle and Rectangle create live built-in profiles on the Profile Plane
+- [ ] Draw creates a closed editable custom profile on the Profile Plane
+- [ ] Edit Profile converts a built-in Circle/Rectangle into editable profile points without losing its current shape
+- [ ] profile points can be inserted/moved and Undo Profile / Clear Profile update the live preview
+- [ ] Follow Edges can use visible existing object/reference edges even when Geometry Snap is OFF
+- [ ] Follow Edges extends along connected existing edges and refuses disconnected continuation edges
+- [ ] Draw Path can create/edit path points without displaying a path construction plane
+- [ ] Draw Path uses external Vertex/Edge/Face Geometry Snap when enabled
+- [ ] profile and path can be edited alternately before Apply without restarting Sweep
+- [ ] bent paths keep a stable transported profile orientation without obvious 180° flips
+- [ ] touch orbit/pan/pinch remain available while Pencil/mouse authors profile/path geometry
+- [ ] Apply Sweep converts preview to ordinary editable mesh and removes Profile Plane/preview immediately
+- [ ] Apply Sweep remains one normal history step and preserves authoritative single-object selection
