@@ -38,7 +38,7 @@ test('351 ordinary two-object selection no longer gets automatic Boolean A B tak
 test('351 cache chain and protected transform pin remain intact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.368/);
+  assert.match(index,/object-management\.js\?v=0\.36\.18\.392/);
   assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
   assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.369/);
   assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
