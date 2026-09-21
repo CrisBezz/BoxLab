@@ -29,7 +29,7 @@ Audited from current `main` on 2026-09-21.
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
 - Current live development build: **v0.36.18.384 — endpoint-vector Array UX**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **5babe7eb2905fe12907d0a6edc61b02d495cba73**
+- Current live code-bearing commit: **daa7ef47b34a79f1b00c167217d4eeb116a349ea**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
@@ -43,8 +43,9 @@ Audited from current `main` on 2026-09-21.
 - Previous v0.36.18.380 PR: **#64**
 - Previous v0.36.18.381 PR: **#65**
 - Previous v0.36.18.382 PR: **#66**
-- Current v0.36.18.383 PR: **#67**
-- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35545622459**
+- Previous v0.36.18.383 PR: **#67**
+- Current v0.36.18.384 PR: **#68**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35547016085**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
