@@ -38,22 +38,38 @@ function initialNormalFromProfile(tangent,profileU,profileV){
   }
   return initialNormal(tangent);
 }
+function initialFrame(tangent,profileU,profileV){
+  let n=initialNormalFromProfile(tangent,profileU,profileV);
+  let b=null;
+  if(profileV?.isVector3){
+    b=profileV.clone().addScaledVector(tangent,-profileV.dot(tangent)).addScaledVector(n,-profileV.dot(n));
+    if(b.lengthSq()>EPS*EPS)b.normalize();else b=null;
+  }
+  if(!b)b=new THREE.Vector3().crossVectors(tangent,n).normalize();
+  if(profileU?.isVector3&&n.dot(profileU)<0)n.negate();
+  if(profileV?.isVector3&&b.dot(profileV)<0)b.negate();
+  return{t:tangent.clone(),n,b,handedness:Math.sign(new THREE.Vector3().crossVectors(n,b).dot(tangent))||1};
+}
 function transportedFrames(points,{profileU=null,profileV=null}={}){
   const frames=[];
-  let t=tangentAt(points,0),n=initialNormalFromProfile(t,profileU,profileV),b=new THREE.Vector3().crossVectors(t,n).normalize();
-  if(profileV?.isVector3&&b.dot(profileV)<0){n.negate();b.negate();}
-  n=new THREE.Vector3().crossVectors(b,t).normalize();
-  frames.push({t:t.clone(),n:n.clone(),b:b.clone()});
+  let t=tangentAt(points,0);
+  let start=initialFrame(t,profileU,profileV),n=start.n.clone(),b=start.b.clone(),handedness=start.handedness;
+  frames.push({t:t.clone(),n:n.clone(),b:b.clone(),handedness});
   for(let i=1;i<points.length;i++){
     const nextT=tangentAt(points,i);
     const q=new THREE.Quaternion().setFromUnitVectors(t,nextT);
     n.applyQuaternion(q);
     n.addScaledVector(nextT,-n.dot(nextT));
     if(n.lengthSq()<EPS*EPS)n=initialNormal(nextT); else n.normalize();
-    b=new THREE.Vector3().crossVectors(nextT,n).normalize();
-    n=new THREE.Vector3().crossVectors(b,nextT).normalize();
+    b.applyQuaternion(q);
+    b.addScaledVector(nextT,-b.dot(nextT)).addScaledVector(n,-b.dot(n));
+    if(b.lengthSq()<EPS*EPS){
+      b=new THREE.Vector3().crossVectors(nextT,n).normalize();
+      if(handedness<0)b.negate();
+    }else b.normalize();
+    if(handedness*(new THREE.Vector3().crossVectors(n,b).dot(nextT))<0)b.negate();
     t=nextT;
-    frames.push({t:t.clone(),n:n.clone(),b:b.clone()});
+    frames.push({t:t.clone(),n:n.clone(),b:b.clone(),handedness});
   }
   return frames;
 }
@@ -118,5 +134,5 @@ export function buildSweepTube(rawPoints,options={}){
   const result=buildSweepProfile(rawPoints,profile,{...options,profileClosed:true});
   return result.ok?{...result,radius,sides}:result;
 }
-export const __sweepInternals={cleanPath,tangentAt,transportedFrames,cleanProfile,signedArea2D};
+export const __sweepInternals={cleanPath,tangentAt,initialFrame,transportedFrames,cleanProfile,signedArea2D};
 globalThis.__boxlabSweepCore={version:VERSION,buildSweepTube,buildSweepProfile};
