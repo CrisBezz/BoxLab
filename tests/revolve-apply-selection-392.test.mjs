@@ -6,10 +6,12 @@ const revolve=fs.readFileSync(new URL('../src/revolve-profile.js',import.meta.ur
 const objectManagement=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
 const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('392 runtime is current',()=>{
-  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.392/);
-  assert.match(revolve,/const VERSION='0\.36\.18\.392'/);
+test('Revolve Apply cleanup runtime follows current app build',()=>{
+  const wrapper=index.match(/revolve-profile\.js\?v=([^"]+)/)?.[1];
+  assert.equal(wrapper,version);
+  assert.match(revolve,new RegExp("const VERSION='"+version.replaceAll('.','\\.')+"'"));
   assert.match(drawer,/object-management\.js\?v=0\.36\.18\.392/);
 });
 

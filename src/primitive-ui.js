@@ -61,6 +61,18 @@ function buildMenu(){
   });
   panel.append(revolveProfile);
 
+  const sweepPath = document.createElement('button');
+  sweepPath.type = 'button';
+  sweepPath.textContent = 'Sweep Path';
+  sweepPath.dataset.specialObject = 'sweep-path';
+  Object.assign(sweepPath.style,{width:'100%',marginTop:'6px'});
+  sweepPath.addEventListener('click', event => {
+    event.preventDefault(); event.stopPropagation();
+    window.dispatchEvent(new CustomEvent('boxlab-add-sweep-path'));
+    closeMenu();
+  });
+  panel.append(sweepPath);
+
   const detailTitle = document.createElement('div');
   detailTitle.textContent = 'Starting detail';
   Object.assign(detailTitle.style,{fontSize:'11px',opacity:'.7',marginTop:'10px',marginBottom:'5px'});
