@@ -1267,9 +1267,22 @@ Scene / modifiers:
 - Distinguish release commits from later cache-hop, Pages-marker, or handoff-documentation commits.
 - Do not infer a new release number just because current `main` has commits after the canonical release commit.
 
+## Current development — v0.36.18.396 Sweep Draw Profile refinement
+
+User feedback on .395: the Profile Plane was much too large; Circle/Rectangle worked; Draw became trapped at two points, gave no useful preview, and had no explicit open/closed state.
+
+v0.36.18.396 addresses that directly:
+- Profile Plane half-size reduced from 2.0 to 0.35, close to the default 0.25-radius Circle
+- custom Draw profiles start **Open**
+- open Draw appends points naturally instead of treating a two-point line as a closed insertion loop
+- open profiles preview after two points as swept surfaces
+- explicit **Open / Closed** profile toggle; closing requires at least three points
+- closed profiles keep the solid-style seam and optional Caps; open profiles show Caps N/A
+- Circle/Rectangle remain closed; converting them through Edit Profile preserves a closed editable profile
+
 ## Next development step
 
-**Hands-on verify v0.36.18.395 Sweep Profile + dual-path workflow on iPad.**
+**Hands-on verify v0.36.18.396 Sweep Draw Profile behaviour on iPad.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
