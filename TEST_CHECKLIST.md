@@ -282,6 +282,21 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Delete/Backspace does not fire while typing in inputs, textareas, selects or contenteditable fields
 - [ ] Object Multi/Group delete behavior remains unchanged
 
+## Phase D — Revolve Profile — .390 point editing
+
+- [ ] tapping/pressing an existing profile point selects it
+- [ ] selected profile point has a clear persistent highlight
+- [ ] dragging selected point reshapes profile and live preview
+- [ ] tapping close to a profile segment inserts a point into that segment
+- [ ] inserted point appears between the correct two chain points
+- [ ] tapping away from points/segments still appends at the end
+- [ ] Delete Point removes only the selected profile point
+- [ ] Delete Point disables when no profile point is selected
+- [ ] Undo Point reverses add / insert / delete / drag profile edits
+- [ ] Clear removes all points and clears point selection
+- [ ] touch navigation remains available while Edit Profile is ON
+- [ ] Apply Revolve after inserted/deleted points produces ordinary editable mesh
+
 ## Phase D — Revolve Profile — .389 refinement
 
 - [ ] new Revolve Profile starts with Edit Profile OFF
