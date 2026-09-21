@@ -473,3 +473,17 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 ## Session-specific additions
 
 Add new permanent regression checks below when future features need protection.
+
+
+## Phase D — Sweep Path — .393
+
+- [ ] Add → Sweep Path creates a movable/snappable construction plane in Object mode
+- [ ] Edit Path lets Apple Pencil/mouse add, insert, select and drag path points while touch navigation remains one-finger orbit / two-finger pan / pinch zoom
+- [ ] Undo Point / Delete Point / Clear update the live preview without committing geometry
+- [ ] Radius updates the live preview and is Pencil-draggable without late Safari value snap-back
+- [ ] Sides 3–24 updates the live preview and is Pencil-draggable
+- [ ] Caps On/Off toggles both sweep end caps
+- [ ] curved multi-point paths keep a coherent section orientation without obvious 180° flips
+- [ ] Apply Sweep converts the construction into ordinary editable mesh, returns to normal single-object selection and clears stale Boolean A/B tint
+- [ ] one Undo returns the applied object geometry to the construction plane state
+- [ ] Revolve, Array, Solidify, Shell, Through and touch navigation remain unchanged
