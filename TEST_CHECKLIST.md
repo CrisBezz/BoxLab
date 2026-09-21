@@ -539,3 +539,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Dragging a profile point left moves the Sweep preview left, never mirrored right
 - [ ] Profile Plane U/V orientation remains visually consistent whether the path leaves along +normal or -normal
 - [ ] Existing Circle/Rectangle profile orientation remains unchanged
+
+
+## Phase D — Sweep concave/start-ring hardening — .398
+
+- [ ] Ring 0 exactly matches the authored Profile Plane section; no shifted/rotated/mirrored start section
+- [ ] Closed concave C-shaped profile sweeps without inside-out side faces
+- [ ] Concave start/end caps triangulate cleanly without fan-overlap artifacts
+- [ ] Start cap faces outward opposite the first path segment and end cap faces outward along the final segment
+- [ ] Convex Circle/Rectangle/custom profiles remain unchanged
+- [ ] Open profiles remain uncapped and unaffected

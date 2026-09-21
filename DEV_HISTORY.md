@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-21 — v0.36.18.398 Sweep concave profile + exact start ring
+
+- Added **Edge Extrude** to the persistent modelling backlog.
+- Fixed Sweep start geometry so ring 0 is generated directly from the Profile Plane U/V basis and exactly matches the authored profile.
+- Added Profile Plane normal into Sweep frame construction while preserving the established transported-frame logic for later rings.
+- Replaced concave closed Sweep cap n-gons with proper polygon triangulation, avoiding fan-triangulation overlap on C-shaped profiles.
+- Oriented start/end cap triangles to the actual path direction to prevent inside-out end faces.
+- Left global mesh triangulation untouched; the fix is scoped to Sweep.
+- Regression refinement: convex profiles keep their existing single-cap topology; only concave profiles use triangulated caps.
+
 ## 2026-09-21 — v0.36.18.397 Sweep profile orientation fix
 
 - Fixed custom Draw profile closure jumping by preserving authored profile point order exactly.

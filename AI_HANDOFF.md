@@ -1295,9 +1295,23 @@ v0.36.18.397 fixes both from the same root cause:
 - the initial Sweep frame now preserves Profile Plane U and V orientation even when the path runs opposite the plane normal
 - editing and preview should now move in the same screen-space direction
 
+## Current development — v0.36.18.398 Sweep concave-profile + start-ring hardening
+
+User feedback on .397: a closed C-shaped profile produced an inside-out/unclean mesh; the sweep generally followed the profile but the start of the sweep was visibly wrong.
+
+v0.36.18.398 addresses the two concrete causes:
+- ring 0 is now generated directly from the authored Profile Plane U/V basis, so the start section is exactly the profile drawn on the plane
+- subsequent frames continue from the established transport logic
+- concave closed profile caps use polygon triangulation instead of the generic fan-from-vertex-0 cap face
+- cap triangle winding is oriented against/with the path direction at start/end to avoid inside-out end faces
+- global mesh triangulation remains untouched
+
+### Requested modelling backlog
+- **Edge Extrude** — explicitly requested; not yet implemented. Preserve this as a Phase B/precision-modelling candidate.
+
 ## Next development step
 
-**Hands-on verify v0.36.18.397 custom profile closure and edit orientation on iPad.**
+**Hands-on verify v0.36.18.398 with a concave C-shaped closed profile and inspect the first sweep section carefully.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
