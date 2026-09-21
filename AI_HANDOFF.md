@@ -29,7 +29,7 @@ Audited from current `main` on 2026-09-21.
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
 - Current live development build: **v0.36.18.387 — Delete/Backspace across Object, Face, Edge and Vertex modes**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
-- Current live code-bearing commit: **2984d6dd4f3173652cdbbb2061cc736e3a77bba5**
+- Current live code-bearing commit: **b955b9077a3ac0ec1290b04bee7d45d787ca8449**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
 - v0.36.18.371 release PR: **#54**
 - Previous v0.36.18.372 PR: **#56**
@@ -46,8 +46,9 @@ Audited from current `main` on 2026-09-21.
 - Previous v0.36.18.383 PR: **#67**
 - Previous v0.36.18.384 PR: **#68**
 - Previous v0.36.18.385 PR: **#69**
-- Current v0.36.18.386 PR: **#70**
-- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35557272061**
+- Previous v0.36.18.386 PR: **#70**
+- Current v0.36.18.387 PR: **#71**
+- Current PR regression / CI status: **PASS — Topology regression / `npm test`, workflow run 35557933604**
 - Release regression / CI status: **PASS — PR #54 Topology regression / `npm test`, workflow run 35495835508**
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
