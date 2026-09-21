@@ -530,3 +530,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Closed profile can be reopened without losing points
 - [ ] Circle/Rectangle remain closed and unchanged
 - [ ] Edit Profile on Circle/Rectangle converts current shape to editable closed Draw points
+
+
+## Phase D — Sweep profile orientation — .397
+
+- [ ] Closing a custom Draw profile connects the final authored point directly back to point 0 without reordering points
+- [ ] Clockwise and counter-clockwise custom profiles preserve authored vertex order
+- [ ] Dragging a profile point left moves the Sweep preview left, never mirrored right
+- [ ] Profile Plane U/V orientation remains visually consistent whether the path leaves along +normal or -normal
+- [ ] Existing Circle/Rectangle profile orientation remains unchanged
