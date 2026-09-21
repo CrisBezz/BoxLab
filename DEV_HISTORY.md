@@ -8,6 +8,15 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.389 Revolve refinement
+
+- .388 Revolve Profile UI received a strong hands-on pass; four refinements requested.
+- Revolve Profile now starts in positioning mode (Edit Profile off), allowing Object Move/Rotate/Scale and existing Geometry Snap before drawing.
+- Touch navigation remains live while profile editing: one-finger orbit and two-finger pan/pinch pass through; Pencil/mouse handles profile authoring.
+- Segments minimum lowered from 6 to 3.
+- Replaced per-face radial normal flipping with shared-edge winding unification plus one global shell orientation decision, fixing inward normal bands on concave profiles.
+- Preserved live profile preview, plane-relative UV points, Apply behavior and legacy loose-edge Revolve.
+
 ## 2026-09-21 — v0.36.18.388 live Revolve Profile construction
 
 - User identified the missing authoring layer for Revolve: free Add Vertex points could not guarantee a coplanar profile or obvious revolve axis.
