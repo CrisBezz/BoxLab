@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import {planThrough} from './through-kernel.js?v=0.36.16.0';
+import {planThrough,buildThrough} from './through-kernel.js?v=0.36.18.242';
+import {gateClosedEdit} from './topology-seam-conformance.js?v=0.36.18.242';
 
 const canvas=document.querySelector('#viewport');
 const extrudeButton=document.querySelector('#extrudeBtn');
@@ -73,6 +74,41 @@ function pointKey3(p,tol){const s=1/Math.max(tol,1e-7);return`${Math.round(p.x*s
 function getVertex(trial,cache,p,tol){const k=pointKey3(p,tol);if(cache.has(k))return cache.get(k);trial.vertices.push(p.clone());const id=trial.vertices.length-1;cache.set(k,id);return id;}
 function clipFaceByCuts(trial,faceIndex,cuts,cache,tol){const face=trial.faces[faceIndex];if(!Array.isArray(face)||face.length<3)return[];const normal=trial.faceNormal(faceIndex)?.clone().normalize();if(!normal)return[];const {origin,u,v,tris}=triangulateFace2D(trial,face,normal),to2=p=>new THREE.Vector2(p.clone().sub(origin).dot(u),p.clone().sub(origin).dot(v)),to3=p=>origin.clone().addScaledVector(u,p.x).addScaledVector(v,p.y),clipPolys=cuts.map(c=>c.map(to2)),outFaces=[];for(const tri of tris){let pieces=[tri];for(const clip of clipPolys){const next=[];for(const piece of pieces)next.push(...subtractConvex(piece,clip));pieces=next;if(!pieces.length)break;}for(let piece of pieces){piece=dedupePoly(piece);if(piece.length<3)continue;let ids=piece.map(p=>getVertex(trial,cache,to3(p),tol));if(new Set(ids).size<3)continue;if(ids.length===3)outFaces.push(orientLike(trial,ids,normal));else{const tt=THREE.ShapeUtils.triangulateShape(piece,[]);for(const triIdx of tt){const f=triIdx.map(i=>ids[i]);if(new Set(f).size===3)outFaces.push(orientLike(trial,f,normal));}}}}return outFaces;}
 function uniqueFaces(values){return[...new Set(values.filter(Number.isInteger))];}
+function buildPartialRegion(before,plan,distance){
+  const trial=before.clone(),source=[...(trial.faces[plan.sourceFaceIndex]||[])];
+  if(source.length<3)return null;
+  const sourceNormal=trial.faceNormal(plan.sourceFaceIndex)?.clone().normalize();
+  if(!sourceNormal)return null;
+  const projected=source.map(id=>trial.vertices[id].clone().addScaledVector(sourceNormal,distance));
+  const cutsByFace=new Map(),addCut=(fis,poly)=>{for(const fi of fis){if(fi===plan.sourceFaceIndex)continue;if(!cutsByFace.has(fi))cutsByFace.set(fi,[]);cutsByFace.get(fi).push(poly);}};
+  const exteriorSlots=new Set();
+  for(const ext of plan.exteriorEdges){
+    const i=ext.slot,j=(i+1)%source.length;
+    const quad=[trial.vertices[source[i]].clone(),trial.vertices[source[j]].clone(),projected[j].clone(),projected[i].clone()];
+    addCut(ext.faces,quad);exteriorSlots.add(i);
+  }
+  const cache=new Map();trial.vertices.forEach((p,i)=>cache.set(pointKey3(p,plan.tol),i));
+  const opening=projected.map(p=>getVertex(trial,cache,p,plan.tol));
+  const remove=uniqueFaces([plan.sourceFaceIndex,...cutsByFace.keys()]).sort((a,b)=>b-a),replacements=[];
+  for(const [fi,cuts] of cutsByFace)replacements.push(...clipFaceByCuts(trial,fi,cuts,cache,plan.tol));
+  for(const fi of remove)trial.faces.splice(fi,1);
+  trial.faces.push(...replacements);
+  for(let i=0;i<source.length;i++){
+    if(exteriorSlots.has(i))continue;
+    const j=(i+1)%source.length,q=[source[i],source[j],opening[j],opening[i]];
+    if(new Set(q).size===4)trial.faces.push(orientAgainstMesh(trial,q));
+  }
+  const capFaceIndex=trial.faces.length;
+  trial.faces.push(orientLike(trial,opening,sourceNormal));
+  trial.edges();
+  return{mesh:trial,capFaceIndex,exteriorSlots:[...exteriorSlots]};
+}
+function previewPartialRegion(live,before,plan,distance){
+  const built=buildPartialRegion(before,plan,distance);
+  if(!built)return null;
+  restore(live,built.mesh);
+  return built;
+}
 function buildRegion(before,plan){
   const trial=before.clone(),source=[...(trial.faces[plan.sourceFaceIndex]||[])];if(source.length<3)return null;
   const cutsByFace=new Map(),addCut=(fis,poly)=>{for(const fi of fis){if(fi===plan.sourceFaceIndex)continue;if(!cutsByFace.has(fi))cutsByFace.set(fi,[]);cutsByFace.get(fi).push(poly);}};
@@ -88,15 +124,110 @@ function buildRegion(before,plan){
   trial.edges();return trial;
 }
 function clear(){probe=null;takeover=null;}
+function commitEditedResult(t,built,label){
+  if(!built?.mesh)return false;
+  const gated=gateClosedEdit(t.before,built.mesh);
+  if(!gated.ok){
+    restore(t.m,t.before);bridge()?.set?.('face',[t.faceIndex]);
+    if(status)status.textContent=`${label} • rollback • ${gated.reason}`;
+    return false;
+  }
+  globalThis.__boxlabHistory?.push(t.before);
+  restore(t.m,gated.mesh);
+  if(Number.isInteger(built.capFaceIndex))bridge()?.set?.('face',[built.capFaceIndex]);
+  else bridge()?.set?.('face',[]);
+  if(status)status.textContent=gated.repaired?`${label} • seam conformance • ${gated.splits} split${gated.splits===1?'':'s'} • CLOSED`:`${label} • CLOSED`;
+  return true;
+}
 window.addEventListener('pointerdown',event=>{
   if(internalCancel||event.target!==canvas||!event.isPrimary||!extrudeArmed())return;
   const m=mesh(),faceIndex=selectedFace(),camera=state()?.camera;if(!m||!Number.isInteger(faceIndex)||!camera)return;
-  if(planThrough(m,faceIndex).ok)return;
-  const plan=regionPlan(m,faceIndex);if(!plan)return;
+  const throughPlan=planThrough(m,faceIndex),plan=regionPlan(m,faceIndex);
+  if(!plan)return;
   const normal2d=projectedNormal(m,faceIndex,camera);if(!normal2d)return;
-  probe={id:event.pointerId,x:event.clientX,y:event.clientY,m,faceIndex,before:m.clone(),plan,normal2d,passedMove:false};
+  probe={id:event.pointerId,x:event.clientX,y:event.clientY,m,faceIndex,before:m.clone(),plan,throughPlan,normal2d};
 },true);
-window.addEventListener('pointermove',event=>{if(internalCancel||!probe||probe.id!==event.pointerId||takeover)return;const dx=event.clientX-probe.x,dy=event.clientY-probe.y;if(Math.hypot(dx,dy)<8)return;const distance=(dx*probe.normal2d.x+dy*probe.normal2d.y)*.006,toward=Math.sign(distance)===Math.sign(probe.plan.distance);if(toward&&Math.abs(distance)>=Math.abs(probe.plan.distance)*.55){event.preventDefault();event.stopImmediatePropagation();if(!probe.passedMove)globalThis.__boxlabHistory?.push(probe.before);cancelNativeDrag(probe.id);takeover=probe;probe=null;let d=distance,ready=false;if(Math.abs(d)>=Math.abs(takeover.plan.distance)){d=takeover.plan.distance;ready=true;}takeover.distance=d;takeover.ready=ready;previewExtrude(takeover.m,takeover.before,takeover.faceIndex,d);if(status)status.textContent=`${ready?'THROUGH REGION READY':'Extrude In'} • sequential fallback • ${d>=0?'+':''}${d.toFixed(2)}`;render();}else probe.passedMove=true;},true);
-window.addEventListener('pointermove',event=>{if(internalCancel||!takeover||takeover.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-takeover.x,dy=event.clientY-takeover.y;let d=(dx*takeover.normal2d.x+dy*takeover.normal2d.y)*.006,ready=Math.sign(d)===Math.sign(takeover.plan.distance)&&Math.abs(d)>=Math.abs(takeover.plan.distance);if(ready)d=takeover.plan.distance;takeover.distance=d;takeover.ready=ready;previewExtrude(takeover.m,takeover.before,takeover.faceIndex,d);if(status)status.textContent=`${ready?'THROUGH REGION READY':d<0?'Extrude In':'Extrude'} • sequential fallback • ${d>=0?'+':''}${d.toFixed(2)}`;render();},true);
-window.addEventListener('pointerup',event=>{if(internalCancel)return;if(takeover&&takeover.id===event.pointerId){event.preventDefault();event.stopImmediatePropagation();const t=takeover;takeover=null;probe=null;if(t.ready){const built=buildRegion(t.before,t.plan);if(built){restore(t.m,built);bridge()?.set?.('face',[]);if(status)status.textContent='Extrude Through • sequential topology fallback';}else{restore(t.m,t.before);bridge()?.set?.('face',[t.faceIndex]);if(status)status.textContent='Extrude Through • sequential rebuild failed';}}else{previewExtrude(t.m,t.before,t.faceIndex,t.distance);bridge()?.set?.('face',[t.faceIndex]);}render();return;}probe=null;},true);
-window.addEventListener('pointercancel',event=>{if(internalCancel)return;if(takeover&&takeover.id===event.pointerId){restore(takeover.m,takeover.before);render();}clear();},true);
+window.addEventListener('pointermove',event=>{
+  if(internalCancel||!probe||probe.id!==event.pointerId||takeover)return;
+  const dx=event.clientX-probe.x,dy=event.clientY-probe.y;if(Math.hypot(dx,dy)<8)return;
+  const distance=(dx*probe.normal2d.x+dy*probe.normal2d.y)*.006;
+  const toward=Math.sign(distance)===Math.sign(probe.plan.distance);
+  if(!toward)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  cancelNativeDrag(probe.id);takeover=probe;probe=null;
+  let d=distance,ready=false;
+  if(Math.abs(d)>=Math.abs(takeover.plan.distance)){d=takeover.plan.distance;ready=true;}
+  takeover.distance=d;takeover.ready=ready;
+  if(ready){
+    const preview=takeover.throughPlan?.ok?buildThrough(takeover.before,takeover.throughPlan):{ok:false};
+    if(preview?.ok)restore(takeover.m,preview.mesh);else{
+      const fallback=buildRegion(takeover.before,takeover.plan);
+      if(fallback)restore(takeover.m,fallback);
+    }
+  }else previewPartialRegion(takeover.m,takeover.before,takeover.plan,d);
+  if(status)status.textContent=`${ready?'THROUGH READY':'Extrude In • CUT'} • ${d>=0?'+':''}${d.toFixed(2)}`;
+  render();
+},true);
+window.addEventListener('pointermove',event=>{
+  if(internalCancel||!takeover||takeover.id!==event.pointerId)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  const dx=event.clientX-takeover.x,dy=event.clientY-takeover.y;
+  let d=(dx*takeover.normal2d.x+dy*takeover.normal2d.y)*.006;
+  const toward=Math.sign(d)===Math.sign(takeover.plan.distance);
+  if(!toward){
+    takeover.distance=d;takeover.ready=false;
+    previewExtrude(takeover.m,takeover.before,takeover.faceIndex,d);
+    if(status)status.textContent=`Extrude • ${d>=0?'+':''}${d.toFixed(2)}`;
+    render();return;
+  }
+  let ready=Math.abs(d)>=Math.abs(takeover.plan.distance);
+  if(ready)d=takeover.plan.distance;
+  takeover.distance=d;takeover.ready=ready;
+  if(ready){
+    const preview=takeover.throughPlan?.ok?buildThrough(takeover.before,takeover.throughPlan):{ok:false};
+    if(preview?.ok)restore(takeover.m,preview.mesh);else{
+      const fallback=buildRegion(takeover.before,takeover.plan);
+      if(fallback)restore(takeover.m,fallback);
+    }
+  }else previewPartialRegion(takeover.m,takeover.before,takeover.plan,d);
+  if(status)status.textContent=`${ready?'THROUGH READY':'Extrude In • CUT'} • ${d>=0?'+':''}${d.toFixed(2)}`;
+  render();
+},true);
+window.addEventListener('pointerup',event=>{
+  if(internalCancel)return;
+  if(takeover&&takeover.id===event.pointerId){
+    event.preventDefault();event.stopImmediatePropagation();
+    const t=takeover;takeover=null;probe=null;
+    if(t.ready){
+      let built=null;
+      if(t.throughPlan?.ok){
+        const through=buildThrough(t.before,t.throughPlan);
+        if(through.ok)built={mesh:through.mesh,capFaceIndex:null};
+      }
+      if(!built){
+        const fallback=buildRegion(t.before,t.plan);
+        if(fallback)built={mesh:fallback,capFaceIndex:null};
+      }
+      if(!commitEditedResult(t,built,'Extrude Through')){
+        restore(t.m,t.before);bridge()?.set?.('face',[t.faceIndex]);
+      }
+    }else{
+      const built=buildPartialRegion(t.before,t.plan,t.distance);
+      if(!commitEditedResult(t,built,'Extrude In • CUT')){
+        restore(t.m,t.before);bridge()?.set?.('face',[t.faceIndex]);
+      }
+    }
+    render();return;
+  }
+  probe=null;
+},true);
+window.addEventListener('pointercancel',event=>{
+  if(internalCancel)return;
+  if(takeover&&takeover.id===event.pointerId){restore(takeover.m,takeover.before);render();}
+  clear();
+},true);
+
+globalThis.__boxlabInwardExtrudeCut={
+  version:'0.36.18.385',
+  buildPartialRegion
+};

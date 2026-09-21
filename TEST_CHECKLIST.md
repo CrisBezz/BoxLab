@@ -198,6 +198,12 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] repeated Face operation uses the exact previously committed value
 - [ ] Through / blocked / rollback Extrude gestures do not become Repeat Previous operations
 - [ ] Extrude works
+- [ ] inward single-Face Extrude trims overlapping exterior side walls instead of leaving stacked/z-fighting wall faces
+- [ ] inward Extrude preview shows the side-wall cut continuously from the start of meaningful inward travel
+- [ ] inward Extrude interior boundary edges create recess walls while exterior boundary edges cut existing wall faces
+- [ ] partial inward Extrude commits a closed valid result or rolls back transactionally
+- [ ] inward Extrude reaching the far side still resolves through the mature Through kernel
+- [ ] cancelling an inward cut preview restores the exact pre-drag mesh and does not add history
 - [ ] connected multi-face Extrude works
 - [ ] Inset works
 - [ ] Knife works
