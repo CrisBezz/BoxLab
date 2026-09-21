@@ -8,6 +8,7 @@
 - Replaced concave closed Sweep cap n-gons with proper polygon triangulation, avoiding fan-triangulation overlap on C-shaped profiles.
 - Oriented start/end cap triangles to the actual path direction to prevent inside-out end faces.
 - Left global mesh triangulation untouched; the fix is scoped to Sweep.
+- Regression refinement: convex profiles keep their existing single-cap topology; only concave profiles use triangulated caps.
 
 ## 2026-09-21 — v0.36.18.397 Sweep profile orientation fix
 
