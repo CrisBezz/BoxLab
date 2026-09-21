@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.399 Sweep side-normal correction
+
+- User confirmed .398 geometry was much improved but side-face normals were flipped.
+- Replaced Sweep side winding based only on whole-profile clockwise state with an edge-local outward-normal test.
+- Each side quad now compares its actual 3D normal against the outward direction of the corresponding profile edge mapped through adjacent Sweep frames.
+- Concave corners and changing path directions can therefore orient each side face independently while preserving authored profile order.
+- .398 exact start ring and concave-cap triangulation remain unchanged.
+
 ## 2026-09-21 — v0.36.18.398 Sweep concave profile + exact start ring
 
 - Added **Edge Extrude** to the persistent modelling backlog.
