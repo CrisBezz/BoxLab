@@ -16,6 +16,8 @@ Newest entries should be added at the top.
 - Entering Edit Profile also opens/retains Active Tools.
 - Uses the existing Shell/Solidify `data-keep-open` drawer contract; Apply or leaving construction releases the lock.
 - No modelling-core changes.
+- Released from PR **#75**; squash merge commit: `fd6b27f79fd1a78d51b3a96ba618e36ef1f43b34`.
+- Final Topology regression passed in workflow run **35563645227**.
 
 ## 2026-09-21 — v0.36.18.390 Revolve profile point editing
 
