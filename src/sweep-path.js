@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.397';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.398';
 
-const VERSION='0.36.18.397';
+const VERSION='0.36.18.398';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -167,7 +167,7 @@ function disposeOverlay(){if(!overlay)return;overlay.removeFromParent();overlay.
 function pointerRay(event){const rect=canvas.getBoundingClientRect();pointer.set(((event.clientX-rect.left)/rect.width)*2-1,-(((event.clientY-rect.top)/rect.height)*2-1));raycaster.setFromCamera(pointer,state()?.camera);}
 function screenPoint(world){const camera=state()?.camera,rect=canvas?.getBoundingClientRect();if(!camera||!rect)return null;const p=world.clone().project(camera);return new THREE.Vector2(rect.left+(p.x*.5+.5)*rect.width,rect.top+(-p.y*.5+.5)*rect.height);}
 function planeSurface(frame){const p2=frame.p1.clone().add(frame.p3).sub(frame.p0),g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute([frame.p0.x,frame.p0.y,frame.p0.z,frame.p1.x,frame.p1.y,frame.p1.z,p2.x,p2.y,p2.z,frame.p0.x,frame.p0.y,frame.p0.z,p2.x,p2.y,p2.z,frame.p3.x,frame.p3.y,frame.p3.z],3));const m=new THREE.MeshBasicMaterial({transparent:true,opacity:.08,side:THREE.DoubleSide,depthTest:false,depthWrite:false});return new THREE.Mesh(g,m);}
-function buildResult(frame,m){return buildSweepProfile(pathWorld(frame,m),profile2D(m),{profileClosed:m.profileClosed,capStart:m.caps,capEnd:m.caps,profileU:frame.u,profileV:frame.v});}
+function buildResult(frame,m){return buildSweepProfile(pathWorld(frame,m),profile2D(m),{profileClosed:m.profileClosed,capStart:m.caps,capEnd:m.caps,profileU:frame.u,profileV:frame.v,profileNormal:frame.normal});}
 function lineOverlay(points,closed=false){
   if(points.length<2)return null;const list=closed?[...points,points[0]]:points;
   return new THREE.Line(new THREE.BufferGeometry().setFromPoints(list),new THREE.LineBasicMaterial({depthTest:false,depthWrite:false}));
