@@ -15,6 +15,8 @@ Newest entries should be added at the top.
 - Preserves each mode's established history/topology behavior and Object Multi/Group semantics.
 - Ignores editable text controls and modified-key shortcuts.
 - No protected modelling core changes.
+- Released from PR **#71**; squash merge commit: `b955b9077a3ac0ec1290b04bee7d45d787ca8449`.
+- Final Topology regression passed in workflow run **35557933604**.
 
 ## 2026-09-21 — v0.36.18.386 Revolve foundation
 
