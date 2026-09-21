@@ -1282,9 +1282,20 @@ v0.36.18.396 addresses that directly:
 - closed profiles keep the solid-style seam and optional Caps; open profiles show Caps N/A
 - Circle/Rectangle remain closed; converting them through Edit Profile preserves a closed editable profile
 
+## Current development — v0.36.18.397 Sweep profile orientation fix
+
+User feedback on .396: closing a Draw profile could jump to an unexpected vertex, and profile editing appeared mirrored — dragging a point left moved the Sweep preview right.
+
+v0.36.18.397 fixes both from the same root cause:
+- `cleanProfile()` no longer reverses clockwise authored point order
+- closure remains exactly final point → point 0
+- winding is handled in generated face/cap order instead of by mutating the profile
+- the initial Sweep frame now preserves Profile Plane U and V orientation even when the path runs opposite the plane normal
+- editing and preview should now move in the same screen-space direction
+
 ## Next development step
 
-**Hands-on verify v0.36.18.396 Sweep Draw Profile behaviour on iPad.**
+**Hands-on verify v0.36.18.397 custom profile closure and edit orientation on iPad.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
