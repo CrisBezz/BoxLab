@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildRevolveFromPoints} from './revolve-core.js?v=0.36.18.388';
+import {buildRevolveFromPoints} from './revolve-core.js?v=0.36.18.389';
 
-const VERSION='0.36.18.388';
+const VERSION='0.36.18.389';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -20,7 +20,7 @@ controls.innerHTML=`
   </div>
   <label class="range-row">
     <span>Segments</span>
-    <input id="revolveProfileSegments" type="range" min="6" max="64" value="24" step="1"/>
+    <input id="revolveProfileSegments" type="range" min="3" max="64" value="24" step="1"/>
     <output id="revolveProfileSegmentsOut">24</output>
   </label>
   <button id="revolveProfileApplyBtn" type="button">Apply Revolve</button>
@@ -65,10 +65,10 @@ function looksConstructionMesh(mesh){
 }
 function ensureMeta(object){
   if(!object)return null;
-  object.revolveProfile ||= {version:VERSION,points:[],segments:24,edit:true,applied:false,pointHistory:[]};
+  object.revolveProfile ||= {version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[]};
   object.revolveProfile.points ||= [];
   object.revolveProfile.pointHistory ||= [];
-  object.revolveProfile.segments=Math.max(6,Math.min(64,Math.round(Number(object.revolveProfile.segments)||24)));
+  object.revolveProfile.segments=Math.max(3,Math.min(64,Math.round(Number(object.revolveProfile.segments)||24)));
   return object.revolveProfile;
 }
 function clonePoints(points){return(points||[]).map(p=>({u:Number(p.u)||0,v:Number(p.v)||0}));}
@@ -246,7 +246,7 @@ function profileInteractionActive(){
 }
 function beginProfilePointer(event){
   if(event.target!==canvas||!event.isPrimary||!profileInteractionActive())return;
-  if(event.pointerType==='touch'&&!event.isPrimary)return;
+  if(event.pointerType==='touch')return;
   const object=profileObject(),meta=ensureMeta(object),frame=frameFor(liveMesh());if(!frame)return;
   const world=pointOnPlane(event,frame);if(!world)return;
   event.preventDefault();event.stopImmediatePropagation();
@@ -292,9 +292,9 @@ function addRevolveProfile(){
   const object=m.addMesh(constructionPlane(),'Revolve Profile',{enterObjectMode:true});
   if(!object)return;
   cachedActiveId=object.id;cachedActiveObject=object;
-  object.revolveProfile={version:VERSION,points:[],segments:24,edit:true,applied:false,pointHistory:[]};
+  object.revolveProfile={version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[]};
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
-  setStatus('Revolve Profile added • blue edge is axis • tap plane to draw');
+  setStatus('Revolve Profile added • position/snap the plane first • then tap Edit Profile');
   lastSignature='';
 }
 function applyRevolve(){
@@ -340,7 +340,7 @@ editButton.addEventListener('click',()=>{
   const object=profileObject();if(!object)return;
   const meta=ensureMeta(object);meta.edit=!meta.edit;
   if(!meta.edit&&state()?.controls)state().controls.enabled=true;
-  setStatus(meta.edit?'Revolve Profile • tap to add, drag points to reshape':'Revolve Profile • navigation enabled');
+  setStatus(meta.edit?'Revolve Profile • Pencil/mouse draws • touch still orbits/pans/zooms':'Revolve Profile • position/snap plane with Object tools');
   lastSignature='';
 });
 undoButton.addEventListener('click',()=>{
@@ -353,7 +353,7 @@ clearButton.addEventListener('click',()=>{
 });
 installPenRange(segmentInput,()=>{
   const object=profileObject(),meta=object&&ensureMeta(object);if(!meta)return;
-  meta.segments=Math.max(6,Math.min(64,Math.round(Number(segmentInput.value)||24)));
+  meta.segments=Math.max(3,Math.min(64,Math.round(Number(segmentInput.value)||24)));
   segmentOut.textContent=String(meta.segments);lastSignature='';
 });
 applyButton.addEventListener('click',applyRevolve);
