@@ -272,6 +272,16 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] locked/reference objects cannot Array
 - [ ] existing Linked Duplicate / Make Unique behavior remains unchanged
 
+## Cross-mode — Delete / Backspace keyboard routing
+
+- [ ] Delete/Backspace in Object mode triggers existing Outliner Delete behavior
+- [ ] Delete/Backspace in Face mode deletes selected face(s) exactly like Face > Delete
+- [ ] Delete/Backspace in Edge mode deletes selected edge(s) exactly like Edge > Delete
+- [ ] Delete/Backspace in Vertex mode deletes selected vertex/vertices exactly like Vertex > Delete
+- [ ] component Delete remains one normal Undo step through existing handlers
+- [ ] Delete/Backspace does not fire while typing in inputs, textareas, selects or contenteditable fields
+- [ ] Object Multi/Group delete behavior remains unchanged
+
 ## Phase D — Revolve / Lathe
 
 - [ ] Revolve is available in Edge mode for a standalone loose-edge profile
