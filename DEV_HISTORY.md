@@ -8,6 +8,14 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.392 Revolve Apply selection cleanup
+
+- User observed an inactive cube showing amber while the freshly applied Revolve mesh was grey.
+- Confirmed amber originated in Boolean/Object multi-selection viewport tinting, not Revolve geometry/material generation.
+- Added authoritative Object-selection `single(id)` API to leave Multi mode and select one active object cleanly.
+- Revolve Apply now resets to the active Revolve object and immediately resyncs Boolean UX, clearing stale operand tint.
+- Valid Boolean A/B selection behavior is preserved.
+
 ## 2026-09-21 — v0.36.18.391 Revolve Active Tools auto-open
 
 - User reported that after positioning/interacting with a Revolve Profile plane, Active Tools stayed closed and hid the Revolve-specific controls.
