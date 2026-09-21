@@ -6,9 +6,12 @@ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const ui=fs.readFileSync(new URL('../src/revolve-profile.js',import.meta.url),'utf8');
 const primitive=fs.readFileSync(new URL('../src/primitive-ui.js',import.meta.url),'utf8');
 
-test('388 live Revolve Profile runtime is loaded and exposed from Add',()=>{
-  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.388/);
-  assert.match(index,/data-release-version="0\.36\.18\.388"/);
+test('Live Revolve Profile runtime follows current app build and stays exposed from Add',()=>{
+  const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
+  const wrapper=index.match(/revolve-profile\.js\?v=([^"]+)/)?.[1];
+  const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
+  assert.equal(wrapper,version);
+  assert.equal(stamp,version);
   assert.match(primitive,/Revolve Profile/);
   assert.match(primitive,/boxlab-add-revolve-profile/);
 });
@@ -36,7 +39,7 @@ test('388 direct profile point drag rebuilds live preview',()=>{
 
 test('388 construction has Edit, Undo Point, Clear, Segments and Apply',()=>{
   for(const token of ['Edit Profile','Undo Point','Clear','Segments','Apply Revolve'])assert.match(ui,new RegExp(token));
-  assert.match(ui,/min="6" max="64"/);
+  assert.match(ui,/min="3" max="64"/);
   assert.match(ui,/function installPenRange/);
 });
 
