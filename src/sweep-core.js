@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.395';
+const VERSION='0.36.18.396';
 const EPS=1e-7;
 
 function cleanPath(points=[]){
@@ -77,11 +77,12 @@ function cleanProfile(raw=[]){
   return out;
 }
 export function buildSweepProfile(rawPath,rawProfile,options={}){
-  const points=cleanPath(rawPath),profile=cleanProfile(rawProfile);
+  const points=cleanPath(rawPath),profile=cleanProfile(rawProfile),profileClosed=options.profileClosed!==false;
   if(points.length<2)return{ok:false,reason:'Sweep path needs at least two points'};
-  if(profile.length<3)return{ok:false,reason:'Sweep profile needs at least three points'};
-  if(Math.abs(signedArea2D(profile))<EPS)return{ok:false,reason:'Sweep profile area is too small'};
-  const capStart=options.capStart!==false,capEnd=options.capEnd!==false;
+  if(profileClosed&&profile.length<3)return{ok:false,reason:'Closed Sweep profile needs at least three points'};
+  if(!profileClosed&&profile.length<2)return{ok:false,reason:'Open Sweep profile needs at least two points'};
+  if(profileClosed&&Math.abs(signedArea2D(profile))<EPS)return{ok:false,reason:'Sweep profile area is too small'};
+  const capStart=profileClosed&&options.capStart!==false,capEnd=profileClosed&&options.capEnd!==false;
   const frames=transportedFrames(points,{profileU:options.profileU,profileV:options.profileV});
   const vertices=[],rings=[];
   for(let i=0;i<points.length;i++){
@@ -95,14 +96,15 @@ export function buildSweepProfile(rawPath,rawProfile,options={}){
   const faces=[];
   for(let i=0;i<rings.length-1;i++){
     const a=rings[i],b=rings[i+1];
-    for(let j=0;j<profile.length;j++){
-      const k=(j+1)%profile.length;
+    const edgeCount=profileClosed?profile.length:profile.length-1;
+    for(let j=0;j<edgeCount;j++){
+      const k=profileClosed?(j+1)%profile.length:j+1;
       faces.push([a[j],a[k],b[k],b[j]]);
     }
   }
   if(capStart)faces.push([...rings[0]].reverse());
   if(capEnd)faces.push([...rings.at(-1)]);
-  return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,capStart,capEnd};
+  return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,profileClosed,capStart,capEnd};
 }
 export function buildSweepTube(rawPoints,options={}){
   const radius=Math.max(1e-4,Number(options.radius)||0.25);
@@ -112,7 +114,7 @@ export function buildSweepTube(rawPoints,options={}){
     const a=Math.PI*2*j/sides;
     profile.push({x:Math.cos(a)*radius,y:Math.sin(a)*radius});
   }
-  const result=buildSweepProfile(rawPoints,profile,{...options});
+  const result=buildSweepProfile(rawPoints,profile,{...options,profileClosed:true});
   return result.ok?{...result,radius,sides}:result;
 }
 export const __sweepInternals={cleanPath,tangentAt,transportedFrames,cleanProfile,signedArea2D};

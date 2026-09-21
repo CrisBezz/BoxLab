@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-21 — v0.36.18.396 Sweep Draw Profile refinement
+
+- Reduced the initial Sweep Profile Plane from 4×4 units to 0.7×0.7 units, close to the default Circle profile footprint.
+- Fixed the custom Draw profile two-point trap: open-profile drawing now appends point 3 and beyond naturally instead of interpreting the 2-point line as a closed loop segment.
+- Added explicit Open / Closed profile state.
+- Open profiles preview from two points as swept surfaces with no seam or caps.
+- Closed profiles require 3+ points and retain the normal closed-section Sweep with optional end caps.
+- Circle/Rectangle stay closed; Edit Profile preserves closure when converting built-ins to editable points.
+- Added focused .396 regression coverage for open two-point Sweep surfaces, closure validation and runtime UI contract.
+
 ## 2026-09-21 — v0.36.18.395 Sweep Profile + dual path
 
 - User hands-on passed the .394 Sweep redraw/3D Geometry Snap build and chose to continue Sweep rather than move to another construction tool.

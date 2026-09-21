@@ -517,3 +517,16 @@ Add new permanent regression checks below when future features need protection.
 - [ ] touch orbit/pan/pinch remain available while Pencil/mouse authors profile/path geometry
 - [ ] Apply Sweep converts preview to ordinary editable mesh and removes Profile Plane/preview immediately
 - [ ] Apply Sweep remains one normal history step and preserves authoritative single-object selection
+
+
+## Phase D — Sweep Draw Profile fixes — .396
+
+- [ ] Profile Plane starts close to the default Circle profile size rather than filling the viewport
+- [ ] Draw Profile starts Open and accepts 3+ points by appending points naturally
+- [ ] Open Draw Profile previews after 2 points as a swept surface
+- [ ] Closed button refuses closure below 3 points and closes a valid 3+ point profile explicitly
+- [ ] Closed profile preview generates the normal closed-section Sweep and Caps become available
+- [ ] Open profile shows Caps N/A and produces no profile seam/end caps
+- [ ] Closed profile can be reopened without losing points
+- [ ] Circle/Rectangle remain closed and unchanged
+- [ ] Edit Profile on Circle/Rectangle converts current shape to editable closed Draw points
