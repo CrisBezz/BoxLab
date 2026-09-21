@@ -7,6 +7,8 @@
 - Each side quad now compares its actual 3D normal against the outward direction of the corresponding profile edge mapped through adjacent Sweep frames.
 - Concave corners and changing path directions can therefore orient each side face independently while preserving authored profile order.
 - .398 exact start ring and concave-cap triangulation remain unchanged.
+- Released via PR **#84**; squash merge `0884f4d1acad778c9cbca1f93526a072eda495da`.
+- Final PR Topology regression run **35663109891 PASS**.
 
 ## 2026-09-21 — v0.36.18.398 Sweep concave profile + exact start ring
 
