@@ -8,6 +8,18 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.385 inward Extrude side-wall cut
+
+- .384 endpoint-vector Array passed hands-on testing.
+- Investigated inward Face Extrude screenshot artifact: duplicate extrusion walls overlapped existing exterior side faces.
+- Reused the existing sequential region/Through topology classifier instead of inventing a parallel cutter.
+- Sequential fallback now takes over immediately once the drag is meaningfully directed inward toward the opposing shell, rather than waiting for 55% travel.
+- Added partial inward cut rebuild: clips swept exterior side-face regions, skips duplicate walls on exterior slots, adds recess walls on interior slots, and caps at the current depth.
+- Mature Through kernel remains preferred when the drag reaches the far side.
+- Partial and Through commits run through closed-topology gate and rollback on failure.
+- Removed early history push at takeover; successful pointer-up is the history commit point.
+- Outward Extrude and connected multi-face Extrude are unchanged.
+
 ## 2026-09-21 — v0.36.18.384 endpoint-vector Array UX
 
 - Reworked Array from axis+spacing to source→endpoint vector workflow.
