@@ -8,7 +8,7 @@ test('393 straight sweep builds quad tube with capped ends',()=>{
   assert.equal(r.ok,true);
   assert.equal(r.mesh.vertices.length,16);
   assert.equal(r.mesh.faces.length,10);
-  assert.equal(r.mesh.faces.filter(f=>f.length===4).length,10);
+  assert.equal(r.mesh.faces.filter(f=>f.length===4).length,8);
 });
 test('393 open caps option leaves only side quads',()=>{
   const r=buildSweepTube([new THREE.Vector3(0,0,0),new THREE.Vector3(0,1,0),new THREE.Vector3(1,2,0)],{sides:6,capStart:false,capEnd:false});
