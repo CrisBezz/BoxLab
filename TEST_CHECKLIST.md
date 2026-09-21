@@ -282,6 +282,15 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Delete/Backspace does not fire while typing in inputs, textareas, selects or contenteditable fields
 - [ ] Object Multi/Group delete behavior remains unchanged
 
+## Phase D — Revolve Profile — .392 post-Apply selection
+
+- [ ] Apply Revolve leaves the Revolve object as the normal single active Object selection
+- [ ] any previously active/inactive cube loses stale amber/blue Boolean tint after Apply
+- [ ] Object Multi mode is not left armed by Revolve Apply
+- [ ] Boolean A/B tint still appears correctly when two objects are deliberately selected afterward
+- [ ] Undo/Redo of Revolve Apply does not corrupt authoritative Object selection
+- [ ] Studio/Solid view materials remain normal after Apply
+
 ## Phase D — Revolve Profile — .391 Active Tools
 
 - [ ] newly added Revolve Profile may remain in positioning mode without forcing Active Tools
