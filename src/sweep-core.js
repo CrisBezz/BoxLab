@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.397';
+const VERSION='0.36.18.398';
 const EPS=1e-7;
 
 function cleanPath(points=[]){
@@ -50,11 +50,15 @@ function initialFrame(tangent,profileU,profileV){
   if(profileV?.isVector3&&b.dot(profileV)<0)b.negate();
   return{t:tangent.clone(),n,b,handedness:Math.sign(new THREE.Vector3().crossVectors(n,b).dot(tangent))||1};
 }
-function transportedFrames(points,{profileU=null,profileV=null}={}){
+function transportedFrames(points,{profileU=null,profileV=null,profileNormal=null}={}){
   const frames=[];
   let t=tangentAt(points,0);
   let start=initialFrame(t,profileU,profileV),n=start.n.clone(),b=start.b.clone(),handedness=start.handedness;
-  frames.push({t:t.clone(),n:n.clone(),b:b.clone(),handedness});
+  if(profileU?.isVector3&&profileV?.isVector3){
+    const exactN=profileU.clone().normalize(),exactB=profileV.clone().normalize();
+    const exactT=profileNormal?.isVector3?profileNormal.clone().normalize():t.clone();
+    frames.push({t:exactT,n:exactN,b:exactB,handedness:Math.sign(new THREE.Vector3().crossVectors(exactN,exactB).dot(exactT))||1,exactProfile:true});
+  }else frames.push({t:t.clone(),n:n.clone(),b:b.clone(),handedness});
   for(let i=1;i<points.length;i++){
     const nextT=tangentAt(points,i);
     const q=new THREE.Quaternion().setFromUnitVectors(t,nextT);
@@ -91,6 +95,21 @@ function cleanProfile(raw=[]){
   if(out.length>2&&Math.hypot(out[0].x-out.at(-1).x,out[0].y-out.at(-1).y)<=EPS)out.pop();
   return out;
 }
+function triangulateCap(profile){
+  if(profile.length<3)return[];
+  return THREE.ShapeUtils.triangulateShape(profile.map(p=>new THREE.Vector2(p.x,p.y)),[]);
+}
+function orientedCapFaces(ring,triangles,vertices,desiredNormal){
+  const out=[];
+  for(const tri of triangles){
+    const face=tri.map(i=>ring[i]);
+    const a=vertices[face[0]],b=vertices[face[1]],c=vertices[face[2]];
+    const n=new THREE.Vector3().crossVectors(b.clone().sub(a),c.clone().sub(a));
+    if(n.dot(desiredNormal)<0)[face[1],face[2]]=[face[2],face[1]];
+    out.push(face);
+  }
+  return out;
+}
 export function buildSweepProfile(rawPath,rawProfile,options={}){
   const points=cleanPath(rawPath),profile=cleanProfile(rawProfile),profileClosed=options.profileClosed!==false;
   if(points.length<2)return{ok:false,reason:'Sweep path needs at least two points'};
@@ -100,7 +119,7 @@ export function buildSweepProfile(rawPath,rawProfile,options={}){
   if(profileClosed&&Math.abs(profileArea)<EPS)return{ok:false,reason:'Sweep profile area is too small'};
   const clockwise=profileClosed&&profileArea<0;
   const capStart=profileClosed&&options.capStart!==false,capEnd=profileClosed&&options.capEnd!==false;
-  const frames=transportedFrames(points,{profileU:options.profileU,profileV:options.profileV});
+  const frames=transportedFrames(points,{profileU:options.profileU,profileV:options.profileV,profileNormal:options.profileNormal});
   const vertices=[],rings=[];
   for(let i=0;i<points.length;i++){
     const ring=[];
@@ -119,8 +138,17 @@ export function buildSweepProfile(rawPath,rawProfile,options={}){
       faces.push(clockwise?[a[j],b[j],b[k],a[k]]:[a[j],a[k],b[k],b[j]]);
     }
   }
-  if(capStart)faces.push(clockwise?[...rings[0]]:[...rings[0]].reverse());
-  if(capEnd)faces.push(clockwise?[...rings.at(-1)].reverse():[...rings.at(-1)]);
+  if(capStart||capEnd){
+    const capTriangles=triangulateCap(profile);
+    if(capStart){
+      const desired=points[0].clone().sub(points[1]).normalize();
+      faces.push(...orientedCapFaces(rings[0],capTriangles,vertices,desired));
+    }
+    if(capEnd){
+      const desired=points.at(-1).clone().sub(points.at(-2)).normalize();
+      faces.push(...orientedCapFaces(rings.at(-1),capTriangles,vertices,desired));
+    }
+  }
   return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,profileClosed,clockwise,capStart,capEnd};
 }
 export function buildSweepTube(rawPoints,options={}){
@@ -134,5 +162,5 @@ export function buildSweepTube(rawPoints,options={}){
   const result=buildSweepProfile(rawPoints,profile,{...options,profileClosed:true});
   return result.ok?{...result,radius,sides}:result;
 }
-export const __sweepInternals={cleanPath,tangentAt,initialFrame,transportedFrames,cleanProfile,signedArea2D};
+export const __sweepInternals={cleanPath,tangentAt,initialFrame,transportedFrames,cleanProfile,signedArea2D,triangulateCap,orientedCapFaces};
 globalThis.__boxlabSweepCore={version:VERSION,buildSweepTube,buildSweepProfile};
