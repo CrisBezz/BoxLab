@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.393';
+const VERSION='0.36.18.395';
 const EPS=1e-7;
 
 function cleanPath(points=[]){
@@ -26,9 +26,22 @@ function initialNormal(tangent){
   const n=axes[0].clone().addScaledVector(tangent,-axes[0].dot(tangent));
   return n.lengthSq()>EPS*EPS?n.normalize():new THREE.Vector3(1,0,0);
 }
-function transportedFrames(points){
+function initialNormalFromProfile(tangent,profileU,profileV){
+  const candidates=[profileU,profileV].filter(v=>v?.isVector3);
+  for(const candidate of candidates){
+    const n=candidate.clone().addScaledVector(tangent,-candidate.dot(tangent));
+    if(n.lengthSq()>EPS*EPS){
+      n.normalize();
+      if(profileU?.isVector3&&n.dot(profileU)<0)n.negate();
+      return n;
+    }
+  }
+  return initialNormal(tangent);
+}
+function transportedFrames(points,{profileU=null,profileV=null}={}){
   const frames=[];
-  let t=tangentAt(points,0),n=initialNormal(t),b=new THREE.Vector3().crossVectors(t,n).normalize();
+  let t=tangentAt(points,0),n=initialNormalFromProfile(t,profileU,profileV),b=new THREE.Vector3().crossVectors(t,n).normalize();
+  if(profileV?.isVector3&&b.dot(profileV)<0){n.negate();b.negate();}
   n=new THREE.Vector3().crossVectors(b,t).normalize();
   frames.push({t:t.clone(),n:n.clone(),b:b.clone()});
   for(let i=1;i<points.length;i++){
@@ -44,21 +57,37 @@ function transportedFrames(points){
   }
   return frames;
 }
-export function buildSweepTube(rawPoints,options={}){
-  const points=cleanPath(rawPoints);
+function signedArea2D(points){
+  let area=0;
+  for(let i=0;i<points.length;i++){
+    const a=points[i],b=points[(i+1)%points.length];
+    area+=(Number(a.x)||0)*(Number(b.y)||0)-(Number(b.x)||0)*(Number(a.y)||0);
+  }
+  return area*0.5;
+}
+function cleanProfile(raw=[]){
+  const out=[];
+  for(const p of raw){
+    const x=Number(p?.x),y=Number(p?.y);
+    if(!Number.isFinite(x)||!Number.isFinite(y))continue;
+    if(!out.length||Math.hypot(out[out.length-1].x-x,out[out.length-1].y-y)>EPS)out.push({x,y});
+  }
+  if(out.length>2&&Math.hypot(out[0].x-out.at(-1).x,out[0].y-out.at(-1).y)<=EPS)out.pop();
+  if(out.length>=3&&signedArea2D(out)<0)out.reverse();
+  return out;
+}
+export function buildSweepProfile(rawPath,rawProfile,options={}){
+  const points=cleanPath(rawPath),profile=cleanProfile(rawProfile);
   if(points.length<2)return{ok:false,reason:'Sweep path needs at least two points'};
-  const radius=Math.max(1e-4,Number(options.radius)||0.25);
-  const sides=Math.max(3,Math.min(64,Math.round(Number(options.sides)||8)));
+  if(profile.length<3)return{ok:false,reason:'Sweep profile needs at least three points'};
+  if(Math.abs(signedArea2D(profile))<EPS)return{ok:false,reason:'Sweep profile area is too small'};
   const capStart=options.capStart!==false,capEnd=options.capEnd!==false;
-  const frames=transportedFrames(points);
+  const frames=transportedFrames(points,{profileU:options.profileU,profileV:options.profileV});
   const vertices=[],rings=[];
   for(let i=0;i<points.length;i++){
     const ring=[];
-    for(let j=0;j<sides;j++){
-      const a=Math.PI*2*j/sides;
-      const v=points[i].clone()
-        .addScaledVector(frames[i].n,Math.cos(a)*radius)
-        .addScaledVector(frames[i].b,Math.sin(a)*radius);
+    for(const p of profile){
+      const v=points[i].clone().addScaledVector(frames[i].n,p.x).addScaledVector(frames[i].b,p.y);
       ring.push(vertices.length);vertices.push(v);
     }
     rings.push(ring);
@@ -66,15 +95,25 @@ export function buildSweepTube(rawPoints,options={}){
   const faces=[];
   for(let i=0;i<rings.length-1;i++){
     const a=rings[i],b=rings[i+1];
-    for(let j=0;j<sides;j++){
-      const k=(j+1)%sides;
+    for(let j=0;j<profile.length;j++){
+      const k=(j+1)%profile.length;
       faces.push([a[j],a[k],b[k],b[j]]);
     }
   }
   if(capStart)faces.push([...rings[0]].reverse());
-  if(capEnd)faces.push([...rings[rings.length-1]]);
-  const mesh=new EditableMesh(vertices,faces);
-  return{ok:true,mesh,points,frames,radius,sides,capStart,capEnd};
+  if(capEnd)faces.push([...rings.at(-1)]);
+  return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,capStart,capEnd};
 }
-export const __sweepInternals={cleanPath,tangentAt,transportedFrames};
-globalThis.__boxlabSweepCore={version:VERSION,buildSweepTube};
+export function buildSweepTube(rawPoints,options={}){
+  const radius=Math.max(1e-4,Number(options.radius)||0.25);
+  const sides=Math.max(3,Math.min(64,Math.round(Number(options.sides)||8)));
+  const profile=[];
+  for(let j=0;j<sides;j++){
+    const a=Math.PI*2*j/sides;
+    profile.push({x:Math.cos(a)*radius,y:Math.sin(a)*radius});
+  }
+  const result=buildSweepProfile(rawPoints,profile,{...options});
+  return result.ok?{...result,radius,sides}:result;
+}
+export const __sweepInternals={cleanPath,tangentAt,transportedFrames,cleanProfile,signedArea2D};
+globalThis.__boxlabSweepCore={version:VERSION,buildSweepTube,buildSweepProfile};

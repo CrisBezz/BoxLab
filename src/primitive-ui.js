@@ -63,7 +63,7 @@ function buildMenu(){
 
   const sweepPath = document.createElement('button');
   sweepPath.type = 'button';
-  sweepPath.textContent = 'Sweep Path';
+  sweepPath.textContent = 'Sweep';
   sweepPath.dataset.specialObject = 'sweep-path';
   Object.assign(sweepPath.style,{width:'100%',marginTop:'6px'});
   sweepPath.addEventListener('click', event => {

@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepTube} from './sweep-core.js?v=0.36.18.393';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.395';
 
-const VERSION='0.36.18.394';
+const VERSION='0.36.18.395';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -11,22 +11,23 @@ const geometryToggle=document.querySelector('#inferenceSnapToggle');
 
 const controls=document.createElement('div');
 controls.id='sweepPathControls';controls.hidden=true;
-controls.innerHTML=`
-  <div class="edge-section-label">Sweep Path</div>
-  <div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)">
-    <button id="sweepEditBtn" type="button">Edit Path</button>
-    <button id="sweepUndoBtn" type="button">Undo Point</button>
-    <button id="sweepDeleteBtn" type="button">Delete Point</button>
-    <button id="sweepClearBtn" type="button">Clear</button>
-  </div>
-  <label class="range-row"><span>Radius</span><input id="sweepRadius" type="range" min="0.03" max="1.5" value="0.25" step="0.01"/><output id="sweepRadiusOut">0.25</output></label>
-  <label class="range-row"><span>Sides</span><input id="sweepSides" type="range" min="3" max="24" value="8" step="1"/><output id="sweepSidesOut">8</output></label>
-  <div class="outliner-actions" style="grid-template-columns:1fr 2fr"><button id="sweepCapsBtn" type="button" class="active">Caps</button><button id="sweepApplyBtn" type="button">Apply Sweep</button></div>
-`;
+controls.innerHTML=
+  '<div class="edge-section-label">Sweep</div>'+
+  '<div class="edge-section-label" style="margin-top:6px">Profile</div>'+
+  '<div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="sweepProfileCircle" type="button">Circle</button><button id="sweepProfileRect" type="button">Rectangle</button><button id="sweepProfileDraw" type="button">Draw</button></div>'+
+  '<div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="sweepEditProfile" type="button">Edit Profile</button><button id="sweepUndoProfile" type="button">Undo Profile</button><button id="sweepClearProfile" type="button">Clear Profile</button></div>'+
+  '<label class="range-row"><span>Profile Size</span><input id="sweepProfileSize" type="range" min="0.03" max="1.5" value="0.25" step="0.01"/><output id="sweepProfileSizeOut">0.25</output></label>'+
+  '<label class="range-row"><span>Circle Sides</span><input id="sweepProfileSides" type="range" min="3" max="24" value="8" step="1"/><output id="sweepProfileSidesOut">8</output></label>'+
+  '<div class="edge-section-label" style="margin-top:8px">Path</div>'+
+  '<div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="sweepFollowEdges" type="button">Follow Edges</button><button id="sweepDrawPath" type="button">Draw Path</button></div>'+
+  '<div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)"><button id="sweepEditPath" type="button">Edit Path</button><button id="sweepUndoPath" type="button">Undo Path</button><button id="sweepDeletePath" type="button">Delete Point</button><button id="sweepClearPath" type="button">Clear Path</button></div>'+
+  '<div class="outliner-actions" style="grid-template-columns:1fr 2fr"><button id="sweepCapsBtn" type="button" class="active">Caps On</button><button id="sweepApplyBtn" type="button">Apply Sweep</button></div>';
 objectTools?.appendChild(controls);
 
-const editBtn=controls.querySelector('#sweepEditBtn'),undoBtn=controls.querySelector('#sweepUndoBtn'),deleteBtn=controls.querySelector('#sweepDeleteBtn'),clearBtn=controls.querySelector('#sweepClearBtn');
-const radiusInput=controls.querySelector('#sweepRadius'),radiusOut=controls.querySelector('#sweepRadiusOut'),sidesInput=controls.querySelector('#sweepSides'),sidesOut=controls.querySelector('#sweepSidesOut');
+const circleBtn=controls.querySelector('#sweepProfileCircle'),rectBtn=controls.querySelector('#sweepProfileRect'),drawProfileBtn=controls.querySelector('#sweepProfileDraw');
+const editProfileBtn=controls.querySelector('#sweepEditProfile'),undoProfileBtn=controls.querySelector('#sweepUndoProfile'),clearProfileBtn=controls.querySelector('#sweepClearProfile');
+const sizeInput=controls.querySelector('#sweepProfileSize'),sizeOut=controls.querySelector('#sweepProfileSizeOut'),sidesInput=controls.querySelector('#sweepProfileSides'),sidesOut=controls.querySelector('#sweepProfileSidesOut');
+const followBtn=controls.querySelector('#sweepFollowEdges'),drawPathBtn=controls.querySelector('#sweepDrawPath'),editPathBtn=controls.querySelector('#sweepEditPath'),undoPathBtn=controls.querySelector('#sweepUndoPath'),deletePathBtn=controls.querySelector('#sweepDeletePath'),clearPathBtn=controls.querySelector('#sweepClearPath');
 const capsBtn=controls.querySelector('#sweepCapsBtn'),applyBtn=controls.querySelector('#sweepApplyBtn');
 
 let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null;
@@ -40,16 +41,49 @@ function liveMesh(){return state()?.mesh||null;}
 function constructionPlane(){return new EditableMesh([new THREE.Vector3(-2,-2,0),new THREE.Vector3(2,-2,0),new THREE.Vector3(2,2,0),new THREE.Vector3(-2,2,0)],[[0,1,2,3]]);}
 function looksConstructionMesh(mesh){return !!mesh&&mesh.vertices?.length===4&&mesh.faces?.length===1&&mesh.faces[0]?.length===4;}
 function planeSignature(mesh){return looksConstructionMesh(mesh)?mesh.vertices.map(v=>[v.x,v.y,v.z].map(n=>n.toFixed(5)).join(',')).join('|'):'';}
-function ensureMeta(o){if(!o)return null;o.sweepPath||={version:VERSION,points:[],radius:.25,sides:8,caps:true,edit:false,history:[],selectedPoint:null,interacted:false,initialPlaneSignature:''};const m=o.sweepPath;m.version=VERSION;m.points||=[];for(const p of m.points)if(!Number.isFinite(Number(p.w)))p.w=0;m.history||=[];m.radius=Math.max(.03,Math.min(1.5,Number(m.radius)||.25));m.sides=Math.max(3,Math.min(24,Math.round(Number(m.sides)||8)));m.caps=m.caps!==false;if(!Number.isInteger(m.selectedPoint))m.selectedPoint=null;m.initialPlaneSignature||=planeSignature(liveMesh());return m;}
-function frameFor(mesh){if(!looksConstructionMesh(mesh))return null;const p0=mesh.vertices[0].clone(),p1=mesh.vertices[1].clone(),p3=mesh.vertices[3].clone(),u=p1.clone().sub(p0),v=p3.clone().sub(p0),width=u.length(),height=v.length();if(width<1e-6||height<1e-6)return null;u.normalize();v.normalize();const normal=new THREE.Vector3().crossVectors(u,v).normalize();return{p0,p1,p3,u,v,normal,width,height};}
-function worldPoint(frame,p){return frame.p0.clone().addScaledVector(frame.u,(Number(p.u)||0)*frame.width).addScaledVector(frame.v,(Number(p.v)||0)*frame.height).addScaledVector(frame.normal,Number(p.w)||0);}
-function pathWorld(frame,meta){return meta.points.map(p=>worldPoint(frame,p));}
-function localFor(frame,world,{clampToPlane=false}={}){
-  const rel=world.clone().sub(frame.p0);
-  let u=rel.dot(frame.u)/frame.width,v=rel.dot(frame.v)/frame.height;
-  if(clampToPlane){u=THREE.MathUtils.clamp(u,0,1);v=THREE.MathUtils.clamp(v,0,1);if(u<.025)u=0;if(u>.975)u=1;if(v<.025)v=0;if(v>.975)v=1;}
-  return{u,v,w:rel.dot(frame.normal)};
+function ensureMeta(o){
+  if(!o)return null;
+  o.sweepPath||={};const m=o.sweepPath;
+  m.version=VERSION;
+  m.profileType||='circle';
+  m.profilePoints||=[];
+  m.profileHistory||=[];
+  m.profileSize=Math.max(.03,Math.min(1.5,Number(m.profileSize??m.radius)||.25));
+  m.profileSides=Math.max(3,Math.min(24,Math.round(Number(m.profileSides??m.sides)||8)));
+  m.editProfile=!!m.editProfile;
+  m.pathMode||='edges';
+  m.pathPoints||=[];
+  m.pathHistory||=[];
+  m.editPath=!!m.editPath;
+  m.selectedPathPoint=Number.isInteger(m.selectedPathPoint)?m.selectedPathPoint:null;
+  m.caps=m.caps!==false;
+  m.interacted=!!m.interacted;
+  m.initialPlaneSignature||=planeSignature(liveMesh());
+  return m;
 }
+function frameFor(mesh){
+  if(!looksConstructionMesh(mesh))return null;
+  const p0=mesh.vertices[0].clone(),p1=mesh.vertices[1].clone(),p3=mesh.vertices[3].clone(),u=p1.clone().sub(p0),v=p3.clone().sub(p0),width=u.length(),height=v.length();
+  if(width<1e-6||height<1e-6)return null;
+  u.normalize();v.normalize();
+  const normal=new THREE.Vector3().crossVectors(u,v).normalize();
+  const center=p0.clone().addScaledVector(u,width*.5).addScaledVector(v,height*.5);
+  return{p0,p1,p3,u,v,normal,width,height,center};
+}
+function profile2D(m){
+  const r=m.profileSize;
+  if(m.profileType==='rectangle')return[{x:-r,y:-r},{x:r,y:-r},{x:r,y:r},{x:-r,y:r}];
+  if(m.profileType==='draw')return m.profilePoints.map(p=>({x:Number(p.x)||0,y:Number(p.y)||0}));
+  const out=[];for(let i=0;i<m.profileSides;i++){const a=Math.PI*2*i/m.profileSides;out.push({x:Math.cos(a)*r,y:Math.sin(a)*r});}return out;
+}
+function profileWorld(frame,m){return profile2D(m).map(p=>frame.center.clone().addScaledVector(frame.u,p.x).addScaledVector(frame.v,p.y));}
+function pathWorld(frame,m){
+  const rest=m.pathPoints.map(p=>new THREE.Vector3(Number(p.x)||0,Number(p.y)||0,Number(p.z)||0));
+  if(!rest.length)return[frame.center.clone()];
+  if(rest[0].distanceToSquared(frame.center)<1e-8)return rest;
+  return[frame.center.clone(),...rest];
+}
+function localProfile(frame,world){const rel=world.clone().sub(frame.center);return{x:rel.dot(frame.u),y:rel.dot(frame.v)};}
 function evaluatedMesh(object){return globalThis.__boxlabObjectGeometry?.evaluatedMesh?.(object.id)||object.mesh;}
 function captureSnapReferences(){
   const m=manager();if(!m)return[];
@@ -63,8 +97,8 @@ function captureSnapReferences(){
   }
   return refs;
 }
-function externalGeometrySnap(event,refs){
-  if(!geometryToggle?.checked||!refs?.length)return null;
+function externalGeometrySnap(event,refs,force=false){
+  if((!force&&!geometryToggle?.checked)||!refs?.length)return null;
   const camera=state()?.camera;if(!camera)return null;
   const click=new THREE.Vector2(event.clientX,event.clientY);
   let bestVertex=null;
@@ -81,7 +115,7 @@ function externalGeometrySnap(event,refs){
       const a=screenPoint(ref.mesh.vertices[edge.a]),b=screenPoint(ref.mesh.vertices[edge.b]);if(!a||!b)return;
       const ab=b.clone().sub(a),l=ab.lengthSq();if(l<1)return;
       const t=THREE.MathUtils.clamp(click.clone().sub(a).dot(ab)/l,0,1),q=a.clone().addScaledVector(ab,t),d=click.distanceTo(q);
-      if(d<=20&&(!bestEdge||d<bestEdge.distance))bestEdge={kind:'Edge',name:ref.name,point:ref.mesh.vertices[edge.a].clone().lerp(ref.mesh.vertices[edge.b],t),distance:d,index,t};
+      if(d<=20&&(!bestEdge||d<bestEdge.distance))bestEdge={kind:'Edge',name:ref.name,point:ref.mesh.vertices[edge.a].clone().lerp(ref.mesh.vertices[edge.b],t),distance:d,index,t,ref,edge,a:ref.mesh.vertices[edge.a].clone(),b:ref.mesh.vertices[edge.b].clone()};
     });
   }
   if(bestEdge)return bestEdge;
@@ -97,47 +131,181 @@ function externalGeometrySnap(event,refs){
   }
   return bestFace;
 }
-function authoredPoint(event,frame,refs){
-  const snap=externalGeometrySnap(event,refs);
-  if(snap)return{local:localFor(frame,snap.point),snap};
-  const world=pointOnPlane(event,frame);
-  return world?{local:localFor(frame,world,{clampToPlane:true}),snap:null}:null;
+function pointOnProfilePlane(event,frame){
+  pointerRay(event);const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(frame.normal,frame.center),out=new THREE.Vector3();
+  return raycaster.ray.intersectPlane(plane,out)?out:null;
 }
+function pointOnViewPlane(event,anchor){
+  pointerRay(event);const camera=state()?.camera;if(!camera)return null;
+  const normal=new THREE.Vector3();camera.getWorldDirection(normal);
+  const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,anchor),out=new THREE.Vector3();
+  return raycaster.ray.intersectPlane(plane,out)?out:null;
+}
+function nearestProfilePoint(event,frame,m){
+  const click=new THREE.Vector2(event.clientX,event.clientY),pts=profileWorld(frame,m);let best=null,bestD=18;
+  for(let i=0;i<pts.length;i++){const p=screenPoint(pts[i]);if(!p)continue;const d=p.distanceTo(click);if(d<bestD){bestD=d;best=i;}}
+  return best;
+}
+function nearestProfileSegment(event,frame,m){
+  const click=new THREE.Vector2(event.clientX,event.clientY),pts=profileWorld(frame,m);let best=null,bestD=14;
+  for(let i=0;i<pts.length;i++){const a=screenPoint(pts[i]),b=screenPoint(pts[(i+1)%pts.length]);if(!a||!b)continue;const d=segmentDistance(click,a,b);if(d<bestD){bestD=d;best=i;}}
+  return best;
+}
+function nearestPathPoint(event,frame,m){
+  const click=new THREE.Vector2(event.clientX,event.clientY),pts=pathWorld(frame,m);let best=null,bestD=18;
+  for(let i=1;i<pts.length;i++){const p=screenPoint(pts[i]);if(!p)continue;const d=p.distanceTo(click);if(d<bestD){bestD=d;best=i-1;}}
+  return best;
+}
+function pushProfileHistory(m){m.profileHistory.push(m.profilePoints.map(p=>({...p})));if(m.profileHistory.length>30)m.profileHistory.shift();}
+function pushPathHistory(m){m.pathHistory.push(m.pathPoints.map(p=>({...p})));if(m.pathHistory.length>30)m.pathHistory.shift();}
 function setStatus(t){if(status)status.textContent=t;}
 function lockTools(){if(!editDrawer)return;if(!drawerLockState)drawerLockState={keepOpen:editDrawer.dataset.keepOpen,open:editDrawer.open};editDrawer.dataset.keepOpen='true';editDrawer.open=true;}
 function unlockTools(){if(!editDrawer||!drawerLockState)return;const old=drawerLockState;drawerLockState=null;if(old.keepOpen===undefined)delete editDrawer.dataset.keepOpen;else editDrawer.dataset.keepOpen=old.keepOpen;if(old.open)editDrawer.open=true;}
 function replaceMesh(target,source){target.vertices=source.vertices.map(v=>v.clone());target.faces=source.faces.map(f=>[...f]);target.creases=new Map(source.creases||[]);target.looseEdges=new Set();target.looseVertices=new Set();target.edges?.();}
 function disposeOverlay(){if(!overlay)return;overlay.removeFromParent();overlay.traverse(o=>{o.geometry?.dispose?.();if(Array.isArray(o.material))o.material.forEach(m=>m?.dispose?.());else o.material?.dispose?.();});overlay=null;}
 function pointerRay(event){const rect=canvas.getBoundingClientRect();pointer.set(((event.clientX-rect.left)/rect.width)*2-1,-(((event.clientY-rect.top)/rect.height)*2-1));raycaster.setFromCamera(pointer,state()?.camera);}
-function pointOnPlane(event,frame){pointerRay(event);const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(frame.normal,frame.p0),out=new THREE.Vector3();return raycaster.ray.intersectPlane(plane,out)?out:null;}
 function screenPoint(world){const camera=state()?.camera,rect=canvas?.getBoundingClientRect();if(!camera||!rect)return null;const p=world.clone().project(camera);return new THREE.Vector2(rect.left+(p.x*.5+.5)*rect.width,rect.top+(-p.y*.5+.5)*rect.height);}
-function nearestPoint(event,frame,meta){const click=new THREE.Vector2(event.clientX,event.clientY),pts=pathWorld(frame,meta);let best=null,bestD=18;for(let i=0;i<pts.length;i++){const s=screenPoint(pts[i]);if(!s)continue;const d=s.distanceTo(click);if(d<bestD){bestD=d;best=i;}}return best;}
-function segmentDistance(p,a,b){const ab=b.clone().sub(a),l=ab.lengthSq();if(l<1e-8)return p.distanceTo(a);const t=THREE.MathUtils.clamp(p.clone().sub(a).dot(ab)/l,0,1);return p.distanceTo(a.clone().add(ab.multiplyScalar(t)));}
-function nearestSegment(event,frame,meta){const click=new THREE.Vector2(event.clientX,event.clientY),pts=pathWorld(frame,meta);let best=null,bestD=14;for(let i=0;i<pts.length-1;i++){const a=screenPoint(pts[i]),b=screenPoint(pts[i+1]);if(!a||!b)continue;const d=segmentDistance(click,a,b);if(d<bestD){bestD=d;best=i;}}return best;}
-function pushHistory(meta){meta.history.push(meta.points.map(p=>({...p})));if(meta.history.length>30)meta.history.shift();}
 function planeSurface(frame){const p2=frame.p1.clone().add(frame.p3).sub(frame.p0),g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute([frame.p0.x,frame.p0.y,frame.p0.z,frame.p1.x,frame.p1.y,frame.p1.z,p2.x,p2.y,p2.z,frame.p0.x,frame.p0.y,frame.p0.z,p2.x,p2.y,p2.z,frame.p3.x,frame.p3.y,frame.p3.z],3));const m=new THREE.MeshBasicMaterial({transparent:true,opacity:.08,side:THREE.DoubleSide,depthTest:false,depthWrite:false});return new THREE.Mesh(g,m);}
-function buildOverlay(){const o=pathObject(),mesh=liveMesh(),scene=state()?.scene;if(!o||!scene){disposeOverlay();controls.hidden=true;unlockTools();return;}const meta=ensureMeta(o),construction=looksConstructionMesh(mesh);controls.hidden=!construction;if(!construction){disposeOverlay();unlockTools();return;}const frame=frameFor(mesh);if(!frame){disposeOverlay();return;}if(meta.initialPlaneSignature&&planeSignature(mesh)!==meta.initialPlaneSignature){meta.interacted=true;lockTools();}if(meta.edit||meta.interacted)lockTools();disposeOverlay();overlay=new THREE.Group();overlay.name='BoxLab Sweep Path Construction';overlay.userData.boxlabSweepPath=true;overlay.add(planeSurface(frame));const pts=pathWorld(frame,meta);if(pts.length){const pg=new THREE.BufferGeometry().setFromPoints(pts),pm=new THREE.PointsMaterial({size:9,sizeAttenuation:false,depthTest:false,depthWrite:false});overlay.add(new THREE.Points(pg,pm));if(pts.length>1){const lg=new THREE.BufferGeometry().setFromPoints(pts),lm=new THREE.LineBasicMaterial({depthTest:false,depthWrite:false});overlay.add(new THREE.Line(lg,lm));}if(Number.isInteger(meta.selectedPoint)&&pts[meta.selectedPoint]){const sm=new THREE.Mesh(new THREE.SphereGeometry(Math.max(.025,Math.hypot(frame.width,frame.height)*.012),12,8),new THREE.MeshBasicMaterial({color:0xffe14a,depthTest:false,depthWrite:false}));sm.position.copy(pts[meta.selectedPoint]);overlay.add(sm);}}
-  if(pts.length>=2){const result=buildSweepTube(pts,{radius:meta.radius,sides:meta.sides,capStart:meta.caps,capEnd:meta.caps});if(result.ok){const g=result.mesh.triangulatedGeometry(),fm=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.16,side:THREE.DoubleSide,depthTest:false,depthWrite:false}),wm=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.58,wireframe:true,side:THREE.DoubleSide,depthTest:false,depthWrite:false});overlay.add(new THREE.Mesh(g,fm),new THREE.Mesh(g,wm));applyBtn.disabled=false;}else{applyBtn.disabled=true;setStatus('Sweep Path • '+result.reason);}}else applyBtn.disabled=true;
-  scene.add(overlay);editBtn.classList.toggle('active',!!meta.edit);editBtn.textContent=meta.edit?'Editing Path':'Edit Path';undoBtn.disabled=!meta.history.length;deleteBtn.disabled=!Number.isInteger(meta.selectedPoint)||!meta.points[meta.selectedPoint];clearBtn.disabled=!meta.points.length;radiusInput.value=String(meta.radius);radiusOut.textContent=meta.radius.toFixed(2);sidesInput.value=String(meta.sides);sidesOut.textContent=String(meta.sides);capsBtn.classList.toggle('active',meta.caps);capsBtn.textContent=meta.caps?'Caps On':'Caps Off';}
-function signature(){const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return'';const m=ensureMeta(o);return[o.id,planeSignature(mesh),m.points.map(p=>`${Number(p.u).toFixed(4)},${Number(p.v).toFixed(4)},${Number(p.w||0).toFixed(4)}`).join('|'),m.radius.toFixed(3),m.sides,m.caps,m.edit].join(';');}
+function buildResult(frame,m){return buildSweepProfile(pathWorld(frame,m),profile2D(m),{capStart:m.caps,capEnd:m.caps,profileU:frame.u,profileV:frame.v});}
+function lineOverlay(points,closed=false){
+  if(points.length<2)return null;const list=closed?[...points,points[0]]:points;
+  return new THREE.Line(new THREE.BufferGeometry().setFromPoints(list),new THREE.LineBasicMaterial({depthTest:false,depthWrite:false}));
+}
+function pointsOverlay(points,size=8){if(!points.length)return null;return new THREE.Points(new THREE.BufferGeometry().setFromPoints(points),new THREE.PointsMaterial({size,sizeAttenuation:false,depthTest:false,depthWrite:false}));}
+function buildOverlay(){
+  const o=pathObject(),mesh=liveMesh(),scene=state()?.scene;
+  if(!o||!scene){disposeOverlay();controls.hidden=true;unlockTools();return;}
+  const m=ensureMeta(o),construction=looksConstructionMesh(mesh);controls.hidden=!construction;
+  if(!construction){disposeOverlay();unlockTools();return;}
+  const frame=frameFor(mesh);if(!frame){disposeOverlay();return;}
+  if(m.initialPlaneSignature&&planeSignature(mesh)!==m.initialPlaneSignature)m.interacted=true;
+  if(m.editProfile||m.editPath||m.interacted)lockTools();
+  disposeOverlay();overlay=new THREE.Group();overlay.name='BoxLab Sweep Construction';overlay.userData.boxlabSweepPath=true;overlay.add(planeSurface(frame));
+  const profile=profileWorld(frame,m),pp=pointsOverlay(profile,8),pl=lineOverlay(profile,true);if(pp)overlay.add(pp);if(pl)overlay.add(pl);
+  const path=pathWorld(frame,m),pathPts=pointsOverlay(path,9),pathLine=lineOverlay(path,false);if(pathPts)overlay.add(pathPts);if(pathLine)overlay.add(pathLine);
+  const result=buildResult(frame,m);
+  if(result.ok){
+    const g=result.mesh.triangulatedGeometry(),fm=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.16,side:THREE.DoubleSide,depthTest:false,depthWrite:false}),wm=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.58,wireframe:true,side:THREE.DoubleSide,depthTest:false,depthWrite:false});
+    overlay.add(new THREE.Mesh(g,fm),new THREE.Mesh(g,wm));applyBtn.disabled=false;
+  }else applyBtn.disabled=true;
+  scene.add(overlay);
+  circleBtn.classList.toggle('active',m.profileType==='circle');rectBtn.classList.toggle('active',m.profileType==='rectangle');drawProfileBtn.classList.toggle('active',m.profileType==='draw');
+  editProfileBtn.classList.toggle('active',m.editProfile);editProfileBtn.textContent=m.editProfile?'Editing Profile':'Edit Profile';undoProfileBtn.disabled=!m.profileHistory.length;clearProfileBtn.disabled=m.profileType!=='draw'||!m.profilePoints.length;
+  sizeInput.disabled=m.profileType==='draw';sidesInput.disabled=m.profileType!=='circle';sizeInput.value=String(m.profileSize);sizeOut.textContent=m.profileSize.toFixed(2);sidesInput.value=String(m.profileSides);sidesOut.textContent=String(m.profileSides);
+  followBtn.classList.toggle('active',m.pathMode==='edges');drawPathBtn.classList.toggle('active',m.pathMode==='draw');editPathBtn.classList.toggle('active',m.editPath);editPathBtn.textContent=m.editPath?'Editing Path':'Edit Path';undoPathBtn.disabled=!m.pathHistory.length;deletePathBtn.disabled=!Number.isInteger(m.selectedPathPoint)||!m.pathPoints[m.selectedPathPoint];clearPathBtn.disabled=!m.pathPoints.length;
+  capsBtn.classList.toggle('active',m.caps);capsBtn.textContent=m.caps?'Caps On':'Caps Off';
+}
+function signature(){
+  const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return'';
+  const m=ensureMeta(o);
+  return[o.id,planeSignature(mesh),m.profileType,m.profilePoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))).join('|'),m.profileSize,m.profileSides,m.editProfile,m.pathMode,m.pathPoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))+','+String(Number(p.z).toFixed(4))).join('|'),m.editPath,m.caps].join(';');
+}
 function tick(){const s=signature();if(s!==lastSignature){lastSignature=s;buildOverlay();}if(!s&&overlay){lastSignature='';buildOverlay();}raf=requestAnimationFrame(tick);}
-function interactionActive(){const o=pathObject();return !!o&&looksConstructionMesh(liveMesh())&&!!ensureMeta(o).edit;}
-function begin(event){if(event.target!==canvas||!event.isPrimary||!interactionActive()||event.pointerType==='touch')return;const o=pathObject(),m=ensureMeta(o),f=frameFor(liveMesh());if(!f)return;const refs=captureSnapReferences(),authored=authoredPoint(event,f,refs);if(!authored)return;event.preventDefault();event.stopImmediatePropagation();const hit=nearestPoint(event,f,m),seg=hit===null?nearestSegment(event,f,m):null;pushHistory(m);let index=hit;if(index===null&&seg!==null){m.points.splice(seg+1,0,authored.local);index=seg+1;}else if(index===null){m.points.push(authored.local);index=m.points.length-1;}m.selectedPoint=index;m.points[index]=authored.local;drag={id:event.pointerId,index,objectId:o.id,refs,snap:authored.snap};if(state()?.controls)state().controls.enabled=false;m.interacted=true;lockTools();if(authored.snap)setStatus(`Sweep Path • snapped to ${authored.snap.name} ${authored.snap.kind}`);lastSignature='';}
-function move(event){if(!drag||event.pointerId!==drag.id)return;event.preventDefault();event.stopImmediatePropagation();const o=pathObject();if(!o||o.id!==drag.objectId)return;const f=frameFor(liveMesh()),authored=f&&authoredPoint(event,f,drag.refs);if(!f||!authored)return;ensureMeta(o).points[drag.index]=authored.local;drag.snap=authored.snap;if(authored.snap)setStatus(`Sweep Path • snapped to ${authored.snap.name} ${authored.snap.kind}`);lastSignature='';}
+function disarmOther(m,which){if(which!=='profile')m.editProfile=false;if(which!=='path')m.editPath=false;}
+function addEdgeToPath(event,frame,m){
+  const hit=externalGeometrySnap(event,captureSnapReferences(),true);
+  if(!hit||hit.kind!=='Edge'||!hit.a||!hit.b){setStatus('Sweep - Follow Edges: tap an existing visible edge');return false;}
+  pushPathHistory(m);
+  const current=pathWorld(frame,m),tail=current.at(-1);let a=hit.a,b=hit.b;if(tail.distanceTo(b)<tail.distanceTo(a)){const t=a;a=b;b=t;}
+  const tol=Math.max(.02,Math.hypot(frame.width,frame.height)*.025);
+  if(m.pathPoints.length&&tail.distanceTo(a)>tol){m.pathHistory.pop();setStatus('Sweep - choose an edge connected to the current path end');return false;}
+  if(!m.pathPoints.length&&frame.center.distanceTo(a)>tol)m.pathPoints.push({x:a.x,y:a.y,z:a.z});
+  m.pathPoints.push({x:b.x,y:b.y,z:b.z});m.selectedPathPoint=m.pathPoints.length-1;m.interacted=true;lockTools();
+  setStatus('Sweep - Follow Edges - '+hit.name);return true;
+}
+function begin(event){
+  if(event.target!==canvas||!event.isPrimary||event.pointerType==='touch')return;
+  const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return;
+  const m=ensureMeta(o),f=frameFor(mesh);if(!f)return;
+  if(m.editProfile&&m.profileType==='draw'){
+    const world=pointOnProfilePlane(event,f);if(!world)return;
+    event.preventDefault();event.stopImmediatePropagation();
+    const hit=nearestProfilePoint(event,f,m),seg=hit===null&&m.profilePoints.length>1?nearestProfileSegment(event,f,m):null;
+    pushProfileHistory(m);let index=hit;
+    if(index===null&&seg!==null){m.profilePoints.splice(seg+1,0,localProfile(f,world));index=seg+1;}
+    else if(index===null){m.profilePoints.push(localProfile(f,world));index=m.profilePoints.length-1;}
+    m.profilePoints[index]=localProfile(f,world);drag={id:event.pointerId,kind:'profile',index,objectId:o.id};
+    if(state()?.controls)state().controls.enabled=false;m.interacted=true;lockTools();lastSignature='';return;
+  }
+  if(!m.editPath)return;
+  if(m.pathMode==='edges'){
+    event.preventDefault();event.stopImmediatePropagation();addEdgeToPath(event,f,m);lastSignature='';return;
+  }
+  const refs=captureSnapReferences(),snap=geometryToggle?.checked?externalGeometrySnap(event,refs):null,path=pathWorld(f,m),anchor=path.at(-1)||f.center,world=snap?.point||pointOnViewPlane(event,anchor);
+  if(!world)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  const hit=nearestPathPoint(event,f,m);pushPathHistory(m);let index=hit;
+  if(index===null){m.pathPoints.push({x:world.x,y:world.y,z:world.z});index=m.pathPoints.length-1;}else m.pathPoints[index]={x:world.x,y:world.y,z:world.z};
+  m.selectedPathPoint=index;drag={id:event.pointerId,kind:'path',index,objectId:o.id,refs};
+  if(state()?.controls)state().controls.enabled=false;m.interacted=true;lockTools();
+  if(snap)setStatus('Sweep - Draw Path - snapped to '+snap.name+' '+snap.kind);else setStatus('Sweep - Draw Path');
+  lastSignature='';
+}
+function move(event){
+  if(!drag||event.pointerId!==drag.id)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  const o=pathObject();if(!o||o.id!==drag.objectId)return;
+  const m=ensureMeta(o),f=frameFor(liveMesh());if(!f)return;
+  if(drag.kind==='profile'){
+    const world=pointOnProfilePlane(event,f);if(world)m.profilePoints[drag.index]=localProfile(f,world);
+  }else{
+    const snap=geometryToggle?.checked?externalGeometrySnap(event,drag.refs):null;
+    const anchor=drag.index>0?new THREE.Vector3(m.pathPoints[drag.index-1].x,m.pathPoints[drag.index-1].y,m.pathPoints[drag.index-1].z):f.center;
+    const world=snap?.point||pointOnViewPlane(event,anchor);if(world)m.pathPoints[drag.index]={x:world.x,y:world.y,z:world.z};
+  }
+  lastSignature='';
+}
 function end(event){if(!drag||event.pointerId!==drag.id)return;event.preventDefault();event.stopImmediatePropagation();drag=null;if(state()?.controls)state().controls.enabled=true;lastSignature='';}
-function cancel(event){if(!drag||event.pointerId!==drag.id)return;drag=null;if(state()?.controls)state().controls.enabled=true;const o=pathObject(),m=o&&ensureMeta(o);if(m?.history?.length)m.points=m.history.pop();if(m)m.selectedPoint=null;lastSignature='';}
-function addSweepPath(){const m=manager();if(!m?.addMesh)return;const before=globalThis.__boxlabObjectHistory?.capture?.()||null;const o=m.addMesh(constructionPlane(),'Sweep Path',{enterObjectMode:true});if(!o)return;cachedId=o.id;cachedObject=o;o.sweepPath={version:VERSION,points:[],radius:.25,sides:8,caps:true,edit:false,history:[],selectedPoint:null,interacted:false,initialPlaneSignature:planeSignature(liveMesh())};if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);setStatus('Sweep Path added • position/snap the plane first • then tap Edit Path');lastSignature='';}
-function applySweep(){const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return false;const m=ensureMeta(o),f=frameFor(mesh),result=buildSweepTube(pathWorld(f,m),{radius:m.radius,sides:m.sides,capStart:m.caps,capEnd:m.caps});if(!result.ok){setStatus('Sweep refused • '+result.reason);return false;}globalThis.__boxlabHistory?.push(mesh.clone());replaceMesh(mesh,result.mesh);m.edit=false;m.applied=true;unlockTools();o.name=o.name.replace(/ Path(?: \d+)?$/,'')||'Sweep';manager()?.saveActive?.();globalThis.__boxlabObjectSelection?.single?.(o.id);globalThis.__boxlabBooleanUX?.sync?.();disposeOverlay();controls.hidden=true;lastSignature='';document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));setStatus(`Sweep applied • ${result.points.length} path points • ${m.sides} sides`);return true;}
+function cancel(event){
+  if(!drag||event.pointerId!==drag.id)return;
+  const o=pathObject(),m=o&&ensureMeta(o);
+  if(m){if(drag.kind==='profile'&&m.profileHistory.length)m.profilePoints=m.profileHistory.pop();if(drag.kind==='path'&&m.pathHistory.length)m.pathPoints=m.pathHistory.pop();}
+  drag=null;if(state()?.controls)state().controls.enabled=true;lastSignature='';
+}
+function addSweepPath(){
+  const man=manager();if(!man?.addMesh)return;
+  const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
+  const o=man.addMesh(constructionPlane(),'Sweep',{enterObjectMode:true});if(!o)return;
+  cachedId=o.id;cachedObject=o;
+  o.sweepPath={version:VERSION,profileType:'circle',profilePoints:[],profileHistory:[],profileSize:.25,profileSides:8,editProfile:false,pathMode:'edges',pathPoints:[],pathHistory:[],editPath:false,selectedPathPoint:null,caps:true,interacted:false,initialPlaneSignature:planeSignature(liveMesh())};
+  if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
+  setStatus('Sweep added - position/snap the Profile Plane - then choose Profile and Path');lastSignature='';
+}
+function applySweep(){
+  const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return false;
+  const m=ensureMeta(o),f=frameFor(mesh),result=buildResult(f,m);
+  if(!result.ok){setStatus('Sweep refused - '+result.reason);return false;}
+  globalThis.__boxlabHistory?.push(mesh.clone());replaceMesh(mesh,result.mesh);m.editProfile=false;m.editPath=false;m.applied=true;unlockTools();
+  o.name='Sweep';manager()?.saveActive?.();globalThis.__boxlabObjectSelection?.single?.(o.id);globalThis.__boxlabBooleanUX?.sync?.();
+  disposeOverlay();controls.hidden=true;lastSignature='';document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  setStatus('Sweep applied - '+result.profile.length+'-point profile - '+result.points.length+' path points');return true;
+}
 function installPenRange(input,onValue){let pointerId=null,owned=null,releaseFrame=null;const min=()=>Number(input.min),max=()=>Number(input.max),step=()=>Number(input.step)||1;const map=x=>{const r=input.getBoundingClientRect(),t=THREE.MathUtils.clamp((x-r.left)/Math.max(1,r.width),0,1);return Math.round((min()+(max()-min())*t)/step())*step();};const apply=v=>{owned=String(v);input.value=owned;onValue();};const enforce=()=>{if(owned==null)return false;if(input.value!==owned)input.value=owned;return true;};input.addEventListener('pointerdown',e=>{if(e.pointerType!=='pen')return;pointerId=e.pointerId;e.preventDefault();e.stopPropagation();input.setPointerCapture?.(pointerId);apply(map(e.clientX));},{capture:true,passive:false});input.addEventListener('pointermove',e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();apply(map(e.clientX));},{capture:true,passive:false});const finish=e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();if(input.hasPointerCapture?.(pointerId))input.releasePointerCapture(pointerId);pointerId=null;if(releaseFrame)cancelAnimationFrame(releaseFrame);releaseFrame=requestAnimationFrame(()=>{enforce();releaseFrame=requestAnimationFrame(()=>{enforce();owned=null;releaseFrame=null;});});};input.addEventListener('pointerup',finish,{capture:true,passive:false});input.addEventListener('pointercancel',finish,{capture:true,passive:false});input.addEventListener('input',()=>{enforce();onValue();});input.addEventListener('change',()=>{if(enforce())onValue();});}
 
+function setProfileType(type){
+  const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
+  m.profileType=type;if(type==='draw'&&!m.profilePoints.length){m.editProfile=true;disarmOther(m,'profile');}
+  m.interacted=true;lockTools();lastSignature='';
+}
+function setPathMode(mode){
+  const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
+  m.pathMode=mode;m.editPath=true;disarmOther(m,'path');m.interacted=true;lockTools();
+  setStatus(mode==='edges'?'Sweep - Follow Edges: tap connected existing edges':'Sweep - Draw Path: Pencil/mouse draws; Geometry Snap targets model geometry');
+  lastSignature='';
+}
 window.addEventListener('boxlab-add-sweep-path',addSweepPath);
 window.addEventListener('pointerdown',begin,true);window.addEventListener('pointermove',move,true);window.addEventListener('pointerup',end,true);window.addEventListener('pointercancel',cancel,true);
-editBtn.addEventListener('click',()=>{const o=pathObject();if(!o)return;const m=ensureMeta(o);m.edit=!m.edit;if(m.edit){m.interacted=true;lockTools();}if(!m.edit&&state()?.controls)state().controls.enabled=true;setStatus(m.edit?'Sweep Path • Pencil/mouse draws • touch still orbits/pans/zooms':'Sweep Path • position/snap plane with Object tools');lastSignature='';});
-undoBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m?.history?.length)return;m.points=m.history.pop();m.selectedPoint=null;lastSignature='';});
-deleteBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m||!Number.isInteger(m.selectedPoint)||!m.points[m.selectedPoint])return;pushHistory(m);m.points.splice(m.selectedPoint,1);m.selectedPoint=null;lastSignature='';});
-clearBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m?.points?.length)return;pushHistory(m);m.points=[];m.selectedPoint=null;lastSignature='';});
-installPenRange(radiusInput,()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.radius=Math.max(.03,Math.min(1.5,Number(radiusInput.value)||.25));radiusOut.textContent=m.radius.toFixed(2);lastSignature='';});
-installPenRange(sidesInput,()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.sides=Math.max(3,Math.min(24,Math.round(Number(sidesInput.value)||8)));sidesOut.textContent=String(m.sides);lastSignature='';});
+circleBtn.addEventListener('click',()=>setProfileType('circle'));rectBtn.addEventListener('click',()=>setProfileType('rectangle'));drawProfileBtn.addEventListener('click',()=>setProfileType('draw'));
+editProfileBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;if(m.profileType!=='draw'){m.profilePoints=profile2D(m).map(p=>({...p}));m.profileType='draw';}m.editProfile=!m.editProfile;if(m.editProfile){disarmOther(m,'profile');m.interacted=true;lockTools();}else if(state()?.controls)state().controls.enabled=true;lastSignature='';});
+undoProfileBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m?.profileHistory.length)return;m.profilePoints=m.profileHistory.pop();lastSignature='';});
+clearProfileBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m?.profilePoints.length)return;pushProfileHistory(m);m.profilePoints=[];lastSignature='';});
+followBtn.addEventListener('click',()=>setPathMode('edges'));drawPathBtn.addEventListener('click',()=>setPathMode('draw'));
+editPathBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.editPath=!m.editPath;if(m.editPath){disarmOther(m,'path');m.interacted=true;lockTools();}else if(state()?.controls)state().controls.enabled=true;lastSignature='';});
+undoPathBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m?.pathHistory.length)return;m.pathPoints=m.pathHistory.pop();m.selectedPathPoint=null;lastSignature='';});
+deletePathBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m||!Number.isInteger(m.selectedPathPoint)||!m.pathPoints[m.selectedPathPoint])return;pushPathHistory(m);m.pathPoints.splice(m.selectedPathPoint,1);m.selectedPathPoint=null;lastSignature='';});
+clearPathBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m?.pathPoints.length)return;pushPathHistory(m);m.pathPoints=[];m.selectedPathPoint=null;lastSignature='';});
+installPenRange(sizeInput,()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.profileSize=Math.max(.03,Math.min(1.5,Number(sizeInput.value)||.25));lastSignature='';});
+installPenRange(sidesInput,()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.profileSides=Math.max(3,Math.min(24,Math.round(Number(sidesInput.value)||8)));lastSignature='';});
 capsBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.caps=!m.caps;lastSignature='';});
 applyBtn.addEventListener('click',applySweep);
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedId=null;cachedObject=null;lastSignature='';buildOverlay();}));

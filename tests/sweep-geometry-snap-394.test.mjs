@@ -6,14 +6,14 @@ const ui=fs.readFileSync(new URL('../src/sweep-path.js',import.meta.url),'utf8')
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('394 Sweep Apply forces immediate viewport rebuild',()=>{
+test('394 Apply immediate viewport rebuild remains protected',()=>{
   assert.match(ui,/disposeOverlay\(\);controls\.hidden=true;lastSignature='';document\.querySelector\('#cageToggle'\)\?\.dispatchEvent/);
 });
 
-test('394 Sweep path points support construction-local depth',()=>{
-  assert.match(ui,/addScaledVector\(frame\.normal,Number\(p\.w\)\|\|0\)/);
-  assert.match(ui,/w:rel\.dot\(frame\.normal\)/);
-  assert.match(ui,/Number\(p\.w\|\|0\)\.toFixed/);
+test('395 Draw Path stores genuine world-space 3D points',()=>{
+  assert.match(ui,/pathPoints\.push\(\{x:world\.x,y:world\.y,z:world\.z\}\)/);
+  assert.match(ui,/new THREE\.Vector3\(Number\(p\.x\)\|\|0,Number\(p\.y\)\|\|0,Number\(p\.z\)\|\|0\)/);
+  assert.match(ui,/pointOnViewPlane/);
 });
 
 test('394 Geometry Snap targets visible external vertices edges and faces',()=>{
@@ -25,12 +25,13 @@ test('394 Geometry Snap targets visible external vertices edges and faces',()=>{
   assert.match(ui,/object\.id===activeId\|\|object\.visible===false/);
 });
 
-test('394 snapped points are not flattened back to construction plane',()=>{
-  assert.match(ui,/if\(snap\)return\{local:localFor\(frame,snap\.point\),snap\}/);
-  assert.match(ui,/clampToPlane:true/);
+test('395 Draw Path preserves snapped point depth and Follow Edges can force edge picking',()=>{
+  assert.match(ui,/snap=geometryToggle\?\.checked\?externalGeometrySnap\(event,refs\):null/);
+  assert.match(ui,/snap\?\.point\|\|pointOnViewPlane/);
+  assert.match(ui,/externalGeometrySnap\(event,captureSnapReferences\(\),true\)/);
 });
 
-test('394 release wrapper follows current build',()=>{
+test('Sweep release wrapper follows current build',()=>{
   const wrapper=index.match(/sweep-path\.js\?v=([^"]+)/)?.[1];
   assert.equal(wrapper,version);
 });
