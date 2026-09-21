@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.398';
+const VERSION='0.36.18.399';
 const EPS=1e-7;
 
 function cleanPath(points=[]){
@@ -111,6 +111,26 @@ function triangulateCap(profile){
   if(profile.length<3)return[];
   return THREE.ShapeUtils.triangulateShape(profile.map(p=>new THREE.Vector2(p.x,p.y)),[]);
 }
+function sideOutward2D(a,b,clockwise){
+  const dx=b.x-a.x,dy=b.y-a.y;
+  const out=clockwise?new THREE.Vector2(-dy,dx):new THREE.Vector2(dy,-dx);
+  return out.lengthSq()>EPS*EPS?out.normalize():out;
+}
+function averagedAxis(a,b,fallback){
+  const out=a.clone().add(b);
+  return out.lengthSq()>EPS*EPS?out.normalize():fallback.clone();
+}
+function orientedSideFace(aRing,bRing,j,k,vertices,frameA,frameB,profileA,profileB,clockwise){
+  const face=[aRing[j],aRing[k],bRing[k],bRing[j]];
+  const va=vertices[face[0]],vb=vertices[face[1]],vc=vertices[face[2]];
+  const actual=new THREE.Vector3().crossVectors(vb.clone().sub(va),vc.clone().sub(va));
+  const out2=sideOutward2D(profileA,profileB,clockwise);
+  const nAxis=averagedAxis(frameA.n,frameB.n,frameA.n);
+  const bAxis=averagedAxis(frameA.b,frameB.b,frameA.b);
+  const expected=nAxis.multiplyScalar(out2.x).add(bAxis.multiplyScalar(out2.y));
+  if(actual.dot(expected)<0)face.reverse();
+  return face;
+}
 function orientedCapFaces(ring,triangles,vertices,desiredNormal){
   const out=[];
   for(const tri of triangles){
@@ -147,7 +167,7 @@ export function buildSweepProfile(rawPath,rawProfile,options={}){
     const edgeCount=profileClosed?profile.length:profile.length-1;
     for(let j=0;j<edgeCount;j++){
       const k=profileClosed?(j+1)%profile.length:j+1;
-      faces.push(clockwise?[a[j],b[j],b[k],a[k]]:[a[j],a[k],b[k],b[j]]);
+      faces.push(orientedSideFace(a,b,j,k,vertices,frames[i],frames[i+1],profile[j],profile[k],clockwise));
     }
   }
   if(capStart||capEnd){
@@ -180,5 +200,5 @@ export function buildSweepTube(rawPoints,options={}){
   const result=buildSweepProfile(rawPoints,profile,{...options,profileClosed:true});
   return result.ok?{...result,radius,sides}:result;
 }
-export const __sweepInternals={cleanPath,tangentAt,initialFrame,transportedFrames,cleanProfile,signedArea2D,isConvexProfile,triangulateCap,orientedCapFaces};
+export const __sweepInternals={cleanPath,tangentAt,initialFrame,transportedFrames,cleanProfile,signedArea2D,isConvexProfile,sideOutward2D,orientedSideFace,triangulateCap,orientedCapFaces};
 globalThis.__boxlabSweepCore={version:VERSION,buildSweepTube,buildSweepProfile};
