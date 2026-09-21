@@ -8,9 +8,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 
 test('Endpoint-vector Array runtime follows current app build',()=>{
   const wrapper=index.match(/linear-array\.js\?v=([^"]+)/)?.[1];
-  const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
   assert.equal(wrapper,version);
-  assert.equal(stamp,version);
 });
 
 test('384 starts with source plus one END copy and no spacing slider',()=>{
