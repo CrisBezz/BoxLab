@@ -15,6 +15,7 @@ test('392 runtime is current',()=>{
 
 test('392 object selection exposes authoritative single-selection reset',()=>{
   assert.match(objectManagement,/single\(id=activeId\(\)\)\{multiEnabled=false;selectedIds=new Set\(id==null\?\[\]:\[id\]\);updateUI\(\);\}/);
+  assert.match(objectManagement,/get multi\(\)\{return multiEnabled;\}/);
 });
 
 test('392 Revolve Apply resets selection to active result and resyncs Boolean tint',()=>{
