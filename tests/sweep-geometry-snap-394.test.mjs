@@ -26,7 +26,7 @@ test('394 Geometry Snap targets visible external vertices edges and faces',()=>{
 });
 
 test('395 Draw Path preserves snapped point depth and Follow Edges can force edge picking',()=>{
-  assert.match(ui,/const snap=geometryToggle\?\.checked\?externalGeometrySnap\(event,refs\):null/);
+  assert.match(ui,/snap=geometryToggle\?\.checked\?externalGeometrySnap\(event,refs\):null/);
   assert.match(ui,/snap\?\.point\|\|pointOnViewPlane/);
   assert.match(ui,/externalGeometrySnap\(event,captureSnapReferences\(\),true\)/);
 });
