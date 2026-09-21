@@ -27,7 +27,7 @@ The repository is authoritative. If anything here conflicts with current `main`,
 Audited from current `main` on 2026-09-21.
 
 - Frozen release checkpoint: **v0.36.18.371 — Beta 3**
-- Current live development build: **v0.36.18.391 — Revolve Active Tools auto-open**
+- Current live development build: **v0.36.18.392 — Revolve Apply selection/tint cleanup**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **fd6b27f79fd1a78d51b3a96ba618e36ef1f43b34**
 - Frozen Beta 3 code-bearing/release commit: **c17fb0f996f406449975a1add5b774eadc30e529**
@@ -57,13 +57,13 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.391**
+- Current `version.json`: **0.36.18.392**
 - Current Phase D loaders: **solidify.js?v=0.36.18.382** → `solidify-core.js?v=0.36.18.374`; **shell.js?v=0.36.18.382** → `shell-core.js?v=0.36.18.377` → shared Solidify core; **linear-array.js?v=0.36.18.382** uses existing linked-instance Object Manager APIs
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
 - Offset Loop loader: **drawer-ui.js → loop-offset.js?v=0.36.18.340**
 - Precision Offset Loop loader: **drawer-ui.js → precision-offset-loop.js?v=0.36.18.340**
-- Object management loader: **object-management.js?v=0.36.18.368**
+- Object management loader: **object-management.js?v=0.36.18.392**
 - Boolean A/B UX pin: **boolean-ux-history.js?v=0.36.18.369**
 - Edge paint selector pin: **edge-paint-select.js?v=0.36.18.340**
 - Component Align loader: **drawer-ui.js → component-align.js?v=0.36.18.330**
@@ -81,7 +81,22 @@ Audited from current `main` on 2026-09-21.
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
 
-## Latest completed development — v0.36.18.391
+## Latest completed development — v0.36.18.392
+
+Theme: **restore normal single-object selection after Revolve Apply**.
+
+- User reported post-Revolve shading inversion: the new Revolve mesh appeared normal grey while an inactive cube remained amber.
+- Root cause was stale authoritative Object multi-selection state being interpreted by the Boolean A/B viewport tint layer after the construction mesh was converted.
+- Added `__boxlabObjectSelection.single(id)` to return Object selection to normal non-Multi single-object state without UI clicking or material hacks.
+- Revolve Apply now:
+  - saves the final active geometry
+  - resets authoritative Object selection to the active Revolve object only
+  - explicitly resyncs Boolean/Object viewport tint state
+- No changes to Boolean operand colours or material definitions; valid two-object Boolean selection remains unchanged.
+- Object management loader advances to `object-management.js?v=0.36.18.392`.
+- Revolve geometry/profile/normals/navigation remain unchanged.
+
+## Previous completed development — v0.36.18.391
 
 Theme: **surface Revolve tooling automatically after construction interaction**.
 
