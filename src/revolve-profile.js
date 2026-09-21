@@ -34,7 +34,7 @@ const segmentInput=controls.querySelector('#revolveProfileSegments');
 const segmentOut=controls.querySelector('#revolveProfileSegmentsOut');
 const applyButton=controls.querySelector('#revolveProfileApplyBtn');
 
-let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0;
+let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0,cachedActiveId=null,cachedActiveObject=null;
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
 
@@ -42,7 +42,10 @@ function state(){return globalThis.__boxlabBridgeState;}
 function manager(){return globalThis.__boxlabObjectManager;}
 function activeObject(){
   const m=manager();if(!m)return null;
-  return m.objects?.find?.(o=>o.id===m.activeId)||null;
+  if(cachedActiveId===m.activeId&&cachedActiveObject?.id===m.activeId)return cachedActiveObject;
+  cachedActiveId=m.activeId;
+  cachedActiveObject=m.objects?.find?.(o=>o.id===m.activeId)||null;
+  return cachedActiveObject;
 }
 function profileObject(){
   const object=activeObject();
@@ -288,6 +291,7 @@ function addRevolveProfile(){
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
   const object=m.addMesh(constructionPlane(),'Revolve Profile',{enterObjectMode:true});
   if(!object)return;
+  cachedActiveId=object.id;cachedActiveObject=object;
   object.revolveProfile={version:VERSION,points:[],segments:24,edit:true,applied:false,pointHistory:[]};
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
   setStatus('Revolve Profile added • blue edge is axis • tap plane to draw');
@@ -353,7 +357,7 @@ installPenRange(segmentInput,()=>{
   segmentOut.textContent=String(meta.segments);lastSignature='';
 });
 applyButton.addEventListener('click',applyRevolve);
-document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{lastSignature='';buildOverlay();}));
+document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedActiveId=null;cachedActiveObject=null;lastSignature='';buildOverlay();}));
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(()=>{lastSignature='';buildOverlay();})));
 window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();});
 tick();
