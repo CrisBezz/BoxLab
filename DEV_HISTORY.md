@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-21 — v0.36.18.393 Sweep Path foundation
+
+- Released Phase D **Sweep Path** foundation from PR #77; squash merge commit: `403cfc677fa934f2c9c3b9a7a25fe50bf9c559f8`.
+- Added Add → Sweep Path construction object with movable/snappable construction plane and Pencil/mouse path authoring.
+- Touch remains dedicated to normal BoxLab navigation while path editing is active.
+- Added live circular-section preview with Radius, Sides 3–24 and Caps On/Off controls; Pencil sliders use the established Safari late-event guard.
+- New `sweep-core.js` builds quad-ring tubes using parallel-transport section frames to reduce section flipping along bent paths.
+- Apply converts to ordinary editable mesh, owns one mesh-history step, returns to authoritative single-object selection and resyncs Boolean viewport tint.
+- V1 deliberately stays shallow: planar path + circular section; custom profiles, arbitrary 3D paths, twist/banking and corner fillets are deferred.
+- Final PR regression run **35568629908** passed; post-merge main regression run **35568666909** passed.
+- `src/multi-object-transform.js?v=0.36.1.0` remained untouched.
+
+
 This is the concise append-only development log used for cross-chat continuity.
 
 Do not record every tiny cache-busting or temporary deployment workflow commit. Record meaningful modelling, architecture, UI, stability, and release milestones.
