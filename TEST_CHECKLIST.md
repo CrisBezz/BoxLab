@@ -245,23 +245,23 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 
 ## Phase D — Array
 
-- [ ] Linear Array is available in Object > Active Tools for editable unlocked objects
-- [ ] Array Count includes the source object and produces Count-1 copies
-- [ ] Array supports X / Y / Z world axes
-- [ ] Array Spacing controls equal step distance between consecutive instances
-- [ ] direct viewport spacing drag works on any preview instance with Pencil/finger
-- [ ] grabbed later preview copies track the pointer while all instances remain equally spaced
-- [ ] direct Array spacing drag updates the Spacing slider/output continuously
-- [ ] OrbitControls pauses only during Array spacing drag and restores on release/cancel
-- [ ] camera-aligned array axes decline direct drag cleanly without breaking slider adjustment
-- [ ] first Array tap creates a non-destructive preview and Apply Array performs the commit
-- [ ] changing Count / Spacing / axis updates the preview without creating objects
-- [ ] Count and Spacing work with both finger and Apple Pencil without late native slider snap-back
-- [ ] Apply Array creates linked instances rather than unique mesh copies
-- [ ] editing source geometry after Array propagates to generated linked instances
-- [ ] generated Array instances retain independent object placement
-- [ ] source object remains active after Apply Array
-- [ ] Array Apply is one Object-scene Undo step and Redo restores the instances
+- [ ] Array opens with Count=2: source + exactly one highlighted END preview copy
+- [ ] Spacing slider is no longer part of the primary Array UX
+- [ ] END preview can be dragged with Pencil/finger
+- [ ] Free endpoint movement follows the current camera/view plane
+- [ ] X / Y / Z endpoint modes constrain only the selected world-axis component
+- [ ] switching Free/X/Y/Z during one preview preserves the existing endpoint position
+- [ ] Count includes source and END and supports 2–12 total objects
+- [ ] increasing Count fills intermediate previews evenly between source and END
+- [ ] diagonal/3D END vectors produce evenly spaced diagonal/3D intermediate copies
+- [ ] END copy stays visually stronger than intermediate preview copies
+- [ ] Count works with finger and Apple Pencil without late native snap-back
+- [ ] changing Count/endpoint remains preview-only and does not create history
+- [ ] Apply Array creates linked instances at the exact preview positions
+- [ ] source geometry edits propagate to every Array instance after Apply
+- [ ] Array instances retain independent object placement
+- [ ] source object remains active after Apply
+- [ ] Apply Array is one Object-scene Undo step and Redo restores all generated instances
 - [ ] Active Tools remains open throughout Array preview
 - [ ] locked/reference objects cannot Array
 - [ ] existing Linked Duplicate / Make Unique behavior remains unchanged
