@@ -8,6 +8,16 @@ Newest entries should be added at the top.
 
 ---
 
+## 2026-09-21 — v0.36.18.390 Revolve profile point editing
+
+- Continued from the successful .389 Revolve refinement baseline.
+- Added explicit profile point selection and selected-point highlight.
+- Tapping/pressing close to an existing profile segment inserts a new point into that segment rather than forcing append-only editing.
+- Tapping elsewhere still appends to the profile end.
+- Added Delete Point for selected profile points.
+- Undo/Clear now clear stale selected-point state safely.
+- Preserved touch navigation, plane positioning/snap, live preview, 3–64 segments, normal unification and Apply behavior.
+
 ## 2026-09-21 — v0.36.18.389 Revolve refinement
 
 - .388 Revolve Profile UI received a strong hands-on pass; four refinements requested.

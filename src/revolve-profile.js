@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 import {buildRevolveFromPoints} from './revolve-core.js?v=0.36.18.389';
 
-const VERSION='0.36.18.389';
+const VERSION='0.36.18.390';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -13,9 +13,10 @@ controls.id='revolveProfileControls';
 controls.hidden=true;
 controls.innerHTML=`
   <div class="edge-section-label">Revolve Profile</div>
-  <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
+  <div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)">
     <button id="revolveProfileEditBtn" type="button">Edit Profile</button>
     <button id="revolveProfileUndoPointBtn" type="button">Undo Point</button>
+    <button id="revolveProfileDeletePointBtn" type="button">Delete Point</button>
     <button id="revolveProfileClearBtn" type="button">Clear</button>
   </div>
   <label class="range-row">
@@ -29,6 +30,7 @@ objectTools?.appendChild(controls);
 
 const editButton=controls.querySelector('#revolveProfileEditBtn');
 const undoButton=controls.querySelector('#revolveProfileUndoPointBtn');
+const deletePointButton=controls.querySelector('#revolveProfileDeletePointBtn');
 const clearButton=controls.querySelector('#revolveProfileClearBtn');
 const segmentInput=controls.querySelector('#revolveProfileSegments');
 const segmentOut=controls.querySelector('#revolveProfileSegmentsOut');
@@ -65,9 +67,10 @@ function looksConstructionMesh(mesh){
 }
 function ensureMeta(object){
   if(!object)return null;
-  object.revolveProfile ||= {version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[]};
+  object.revolveProfile ||= {version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[],selectedPoint:null};
   object.revolveProfile.points ||= [];
   object.revolveProfile.pointHistory ||= [];
+  if(!Number.isInteger(object.revolveProfile.selectedPoint))object.revolveProfile.selectedPoint=null;
   object.revolveProfile.segments=Math.max(3,Math.min(64,Math.round(Number(object.revolveProfile.segments)||24)));
   return object.revolveProfile;
 }
@@ -126,6 +129,23 @@ function screenPoint(world){
   const camera=state()?.camera,rect=canvas?.getBoundingClientRect();if(!camera||!rect)return null;
   const p=world.clone().project(camera);
   return new THREE.Vector2(rect.left+(p.x*.5+.5)*rect.width,rect.top+(-p.y*.5+.5)*rect.height);
+}
+function distanceToSegment2D(p,a,b){
+  const ab=b.clone().sub(a),len2=ab.lengthSq();
+  if(len2<1e-8)return p.distanceTo(a);
+  const t=THREE.MathUtils.clamp(p.clone().sub(a).dot(ab)/len2,0,1);
+  return p.distanceTo(a.clone().add(ab.multiplyScalar(t)));
+}
+function nearestProfileSegment(event,frame,meta){
+  if(meta.points.length<2)return null;
+  const target=new THREE.Vector2(event.clientX,event.clientY),pts=profileWorldPoints(frame,meta).map(screenPoint);
+  let best=null;
+  for(let i=0;i<pts.length-1;i++){
+    if(!pts[i]||!pts[i+1])continue;
+    const d=distanceToSegment2D(target,pts[i],pts[i+1]);
+    if(d<=18&&(!best||d<best.distance))best={index:i,distance:d};
+  }
+  return best?.index??null;
 }
 function nearestProfilePoint(event,frame,meta){
   let best=null;
@@ -197,6 +217,11 @@ function buildOverlay(){
     const pointGeo=new THREE.BufferGeometry().setFromPoints(points);
     const pointMat=new THREE.PointsMaterial({size:9,sizeAttenuation:false,depthTest:false,depthWrite:false});
     const dots=new THREE.Points(pointGeo,pointMat);dots.renderOrder=30;overlay.add(dots);
+    if(Number.isInteger(meta.selectedPoint)&&points[meta.selectedPoint]){
+      const selectedGeo=new THREE.SphereGeometry(Math.max(.025,Math.hypot(frame.width,frame.height)*.012),14,10);
+      const selectedMat=new THREE.MeshBasicMaterial({color:0xffe14a,depthTest:false,depthWrite:false});
+      const selected=new THREE.Mesh(selectedGeo,selectedMat);selected.position.copy(points[meta.selectedPoint]);selected.renderOrder=32;overlay.add(selected);
+    }
     if(points.length>1){
       const chainGeo=new THREE.BufferGeometry().setFromPoints(points);
       const chainMat=new THREE.LineBasicMaterial({transparent:true,opacity:.95,depthTest:false,depthWrite:false});
@@ -223,6 +248,7 @@ function buildOverlay(){
   editButton.classList.toggle('active',!!meta.edit);
   editButton.textContent=meta.edit?'Editing Profile':'Edit Profile';
   undoButton.disabled=!meta.pointHistory.length;
+  deletePointButton.disabled=!Number.isInteger(meta.selectedPoint)||!meta.points[meta.selectedPoint];
   clearButton.disabled=!meta.points.length;
   segmentInput.value=String(meta.segments);
   segmentOut.textContent=String(meta.segments);
@@ -251,12 +277,17 @@ function beginProfilePointer(event){
   const world=pointOnPlane(event,frame);if(!world)return;
   event.preventDefault();event.stopImmediatePropagation();
   const existing=nearestProfilePoint(event,frame,meta);
+  const segment=existing===null?nearestProfileSegment(event,frame,meta):null;
   pushPointHistory(meta);
   let index=existing;
-  if(index===null){
+  if(index===null&&segment!==null){
+    meta.points.splice(segment+1,0,planeUV(frame,world));
+    index=segment+1;
+  }else if(index===null){
     meta.points.push(planeUV(frame,world));
     index=meta.points.length-1;
   }
+  meta.selectedPoint=index;
   drag={id:event.pointerId,index,objectId:object.id};
   state()?.controls&&(state().controls.enabled=false);
   meta.points[index]=planeUV(frame,world);
@@ -284,6 +315,7 @@ function cancelProfilePointer(event){
   if(state()?.controls)state().controls.enabled=true;
   const object=profileObject(),meta=object&&ensureMeta(object);
   if(meta?.pointHistory?.length)meta.points=meta.pointHistory.pop();
+  if(meta)meta.selectedPoint=null;
   lastSignature='';
 }
 function addRevolveProfile(){
@@ -292,7 +324,7 @@ function addRevolveProfile(){
   const object=m.addMesh(constructionPlane(),'Revolve Profile',{enterObjectMode:true});
   if(!object)return;
   cachedActiveId=object.id;cachedActiveObject=object;
-  object.revolveProfile={version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[]};
+  object.revolveProfile={version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[],selectedPoint:null};
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
   setStatus('Revolve Profile added • position/snap the plane first • then tap Edit Profile');
   lastSignature='';
@@ -345,11 +377,15 @@ editButton.addEventListener('click',()=>{
 });
 undoButton.addEventListener('click',()=>{
   const object=profileObject(),meta=object&&ensureMeta(object);if(!meta?.pointHistory?.length)return;
-  meta.points=meta.pointHistory.pop();lastSignature='';
+  meta.points=meta.pointHistory.pop();meta.selectedPoint=null;lastSignature='';
+});
+deletePointButton.addEventListener('click',()=>{
+  const object=profileObject(),meta=object&&ensureMeta(object);if(!meta||!Number.isInteger(meta.selectedPoint)||!meta.points[meta.selectedPoint])return;
+  pushPointHistory(meta);meta.points.splice(meta.selectedPoint,1);meta.selectedPoint=null;lastSignature='';
 });
 clearButton.addEventListener('click',()=>{
   const object=profileObject(),meta=object&&ensureMeta(object);if(!meta||!meta.points.length)return;
-  pushPointHistory(meta);meta.points=[];lastSignature='';
+  pushPointHistory(meta);meta.points=[];meta.selectedPoint=null;lastSignature='';
 });
 installPenRange(segmentInput,()=>{
   const object=profileObject(),meta=object&&ensureMeta(object);if(!meta)return;
