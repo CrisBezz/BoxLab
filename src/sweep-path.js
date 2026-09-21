@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.396';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.397';
 
-const VERSION='0.36.18.396';
+const VERSION='0.36.18.397';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
