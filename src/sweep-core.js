@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.396';
+const VERSION='0.36.18.397';
 const EPS=1e-7;
 
 function cleanPath(points=[]){
@@ -73,7 +73,6 @@ function cleanProfile(raw=[]){
     if(!out.length||Math.hypot(out[out.length-1].x-x,out[out.length-1].y-y)>EPS)out.push({x,y});
   }
   if(out.length>2&&Math.hypot(out[0].x-out.at(-1).x,out[0].y-out.at(-1).y)<=EPS)out.pop();
-  if(out.length>=3&&signedArea2D(out)<0)out.reverse();
   return out;
 }
 export function buildSweepProfile(rawPath,rawProfile,options={}){
@@ -81,7 +80,9 @@ export function buildSweepProfile(rawPath,rawProfile,options={}){
   if(points.length<2)return{ok:false,reason:'Sweep path needs at least two points'};
   if(profileClosed&&profile.length<3)return{ok:false,reason:'Closed Sweep profile needs at least three points'};
   if(!profileClosed&&profile.length<2)return{ok:false,reason:'Open Sweep profile needs at least two points'};
-  if(profileClosed&&Math.abs(signedArea2D(profile))<EPS)return{ok:false,reason:'Sweep profile area is too small'};
+  const profileArea=profileClosed?signedArea2D(profile):0;
+  if(profileClosed&&Math.abs(profileArea)<EPS)return{ok:false,reason:'Sweep profile area is too small'};
+  const clockwise=profileClosed&&profileArea<0;
   const capStart=profileClosed&&options.capStart!==false,capEnd=profileClosed&&options.capEnd!==false;
   const frames=transportedFrames(points,{profileU:options.profileU,profileV:options.profileV});
   const vertices=[],rings=[];
@@ -99,12 +100,12 @@ export function buildSweepProfile(rawPath,rawProfile,options={}){
     const edgeCount=profileClosed?profile.length:profile.length-1;
     for(let j=0;j<edgeCount;j++){
       const k=profileClosed?(j+1)%profile.length:j+1;
-      faces.push([a[j],a[k],b[k],b[j]]);
+      faces.push(clockwise?[a[j],b[j],b[k],a[k]]:[a[j],a[k],b[k],b[j]]);
     }
   }
-  if(capStart)faces.push([...rings[0]].reverse());
-  if(capEnd)faces.push([...rings.at(-1)]);
-  return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,profileClosed,capStart,capEnd};
+  if(capStart)faces.push(clockwise?[...rings[0]]:[...rings[0]].reverse());
+  if(capEnd)faces.push(clockwise?[...rings.at(-1)].reverse():[...rings.at(-1)]);
+  return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,profileClosed,clockwise,capStart,capEnd};
 }
 export function buildSweepTube(rawPoints,options={}){
   const radius=Math.max(1e-4,Number(options.radius)||0.25);
