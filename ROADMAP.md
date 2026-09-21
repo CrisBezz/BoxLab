@@ -81,7 +81,7 @@ Only add focused tools that suit BoxLab:
 - topology-aware Symmetry / Bisect / Apply
 - Shell / Solidify
 - Array
-- Sweep where appropriate — **Sweep Path foundation added in v0.36.18.393 with Pencil-authored planar path, live circular-section preview, Radius/Sides/Caps controls and ordinary mesh Apply**
+- Sweep where appropriate — **Sweep Path foundation added in v0.36.18.393; v0.36.18.394 added reliable Apply redraw + true 3D Geometry Snap; v0.36.18.395 changes Sweep to a profile-first workflow with a movable Profile Plane, Circle/Rectangle/custom profiles, editable construction state, and dual path sources: SketchUp-style Follow Edges or free Draw Path**
 - Lathe where appropriate
 - lightweight deformers only if they fit direct touch modelling
 
