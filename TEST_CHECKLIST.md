@@ -282,6 +282,21 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] Delete/Backspace does not fire while typing in inputs, textareas, selects or contenteditable fields
 - [ ] Object Multi/Group delete behavior remains unchanged
 
+## Phase D — Revolve Profile — .389 refinement
+
+- [ ] new Revolve Profile starts with Edit Profile OFF
+- [ ] construction plane can Move / Rotate / Scale before drawing
+- [ ] existing Object Geometry Snap can position the construction plane against another object
+- [ ] after positioning, Edit Profile resumes plane-constrained authoring
+- [ ] one-finger orbit works while Edit Profile is ON
+- [ ] two-finger pan and pinch zoom work while Edit Profile is ON
+- [ ] Apple Pencil still adds and drags profile points while touch remains navigation
+- [ ] Segments permits 3, 4, 5 and all values through 64
+- [ ] 3-segment Revolve preview and Apply produce valid triangular radial form
+- [ ] concave/overhanging profiles finish with topologically unified face winding
+- [ ] no isolated inward-normal bands appear on concave Revolve results
+- [ ] .388 live preview / Undo Point / Clear / Apply behaviors remain unchanged
+
 ## Phase D — Live Revolve Profile construction
 
 - [ ] Add → Revolve Profile creates a construction plane

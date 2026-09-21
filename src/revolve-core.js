@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.388';
+const VERSION='0.36.18.389';
 
 function clonePoint(v){return v?.clone?v.clone():new THREE.Vector3(v?.x||0,v?.y||0,v?.z||0);}
 function axisVector(axis){
@@ -72,11 +72,56 @@ function faceNormal(vertices,face){
   }
   return new THREE.Vector3();
 }
-function orientOutward(vertices,face,origin,axis){
-  const center=new THREE.Vector3();face.forEach(i=>center.add(vertices[i]));center.multiplyScalar(1/face.length);
-  const radial=radialVector(center,origin,axis);
-  if(radial.lengthSq()<1e-12)return face;
-  return faceNormal(vertices,face).dot(radial)<0?[...face].reverse():face;
+function orientedEdgeKey(a,b){return a<b?`${a}:${b}`:`${b}:${a}`;}
+function unifyFaceWinding(vertices,faces,origin,axis){
+  const edgeOwners=new Map();
+  faces.forEach((face,fi)=>{
+    for(let i=0;i<face.length;i++){
+      const a=face[i],b=face[(i+1)%face.length],key=orientedEdgeKey(a,b);
+      if(!edgeOwners.has(key))edgeOwners.set(key,[]);
+      edgeOwners.get(key).push({fi,a,b});
+    }
+  });
+  const links=new Map();
+  const addLink=(a,b,sameDirection)=>{
+    if(!links.has(a))links.set(a,[]);
+    links.get(a).push({fi:b,sameDirection});
+  };
+  for(const owners of edgeOwners.values()){
+    if(owners.length<2)continue;
+    const root=owners[0];
+    for(let i=1;i<owners.length;i++){
+      const other=owners[i],sameDirection=root.a===other.a&&root.b===other.b;
+      addLink(root.fi,other.fi,sameDirection);
+      addLink(other.fi,root.fi,sameDirection);
+    }
+  }
+  const flip=new Array(faces.length).fill(null);
+  for(let seed=0;seed<faces.length;seed++){
+    if(flip[seed]!==null)continue;
+    flip[seed]=false;
+    const queue=[seed];
+    while(queue.length){
+      const fi=queue.shift(),current=flip[fi];
+      for(const link of links.get(fi)||[]){
+        const wanted=link.sameDirection?!current:current;
+        if(flip[link.fi]===null){flip[link.fi]=wanted;queue.push(link.fi);}
+      }
+    }
+  }
+  const unified=faces.map((face,fi)=>flip[fi]?[...face].reverse():[...face]);
+  let score=0;
+  for(const face of unified){
+    if(face.length<3)continue;
+    const center=new THREE.Vector3();face.forEach(i=>center.add(vertices[i]));center.multiplyScalar(1/face.length);
+    const radial=radialVector(center,origin,axis);
+    if(radial.lengthSq()<1e-12)continue;
+    const a=vertices[face[0]],b=vertices[face[1]],d=vertices[face[2]];
+    const areaNormal=new THREE.Vector3().crossVectors(b.clone().sub(a),d.clone().sub(a));
+    score+=areaNormal.dot(radial.normalize());
+  }
+  if(score<0)return unified.map(face=>[...face].reverse());
+  return unified;
 }
 export function buildRevolveFromPoints(points,options={}){
   const source=(points||[]).map(clonePoint);
@@ -104,11 +149,12 @@ export function buildRevolveFromPoints(points,options={}){
       const n=(s+1)%segments,ids=[a[s],a[n],b[n],b[s]],unique=[...new Set(ids)];
       if(unique.length<3)continue;
       const face=unique.length===3?unique:ids;
-      faces.push(orientOutward(vertices,face,origin,axis));
+      faces.push(face);
     }
   }
   if(!faces.length)return{ok:false,reason:'Profile lies on the Revolve axis'};
-  const result=new EditableMesh(vertices,faces);
+  const unifiedFaces=unifyFaceWinding(vertices,faces,origin,axis);
+  const result=new EditableMesh(vertices,unifiedFaces);
   result.looseEdges=new Set();result.looseVertices=new Set();result.edges?.();
   return{
     ok:true,mesh:result,segments,sourceVertices:source.length,vertices:result.vertices.length,faces:result.faces.length,
@@ -128,5 +174,5 @@ export function buildRevolveMesh(mesh,edgeIndices,options={}){
   return{...result,axis:analysis.axis};
 }
 
-export const __revolveInternals={axisVector,orderChain,radialVector,orientOutward,normalizeAxis};
+export const __revolveInternals={axisVector,orderChain,radialVector,normalizeAxis,unifyFaceWinding};
 globalThis.__boxlabRevolveCore={version:VERSION,analyzeRevolveInput,buildRevolveMesh,buildRevolveFromPoints};
