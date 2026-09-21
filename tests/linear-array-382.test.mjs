@@ -20,14 +20,10 @@ test('382 Array is a linked-instance Object Manager client',()=>{
   assert.doesNotMatch(ui,/multi-object-transform/);
 });
 
-test('382 Array has Count Spacing X Y Z and non-destructive preview',()=>{
+test('Array keeps Count, linked preview and Apply workflow',()=>{
   assert.match(ui,/linearArrayCount/);
-  assert.match(ui,/linearArraySpacing/);
-  assert.match(ui,/data-array-axis="x"/);
-  assert.match(ui,/data-array-axis="y"/);
-  assert.match(ui,/data-array-axis="z"/);
   assert.match(ui,/Apply Array/);
-  assert.match(ui,/BoxLab Linear Array Preview/);
+  assert.match(ui,/boxlabLinearArrayPreview/);
 });
 
 test('382 Array Apply owns one scene snapshot and keeps source active',()=>{
@@ -36,7 +32,7 @@ test('382 Array Apply owns one scene snapshot and keeps source active',()=>{
   assert.match(ui,/m\.activate\?\.\(sourceId\)/);
 });
 
-test('382 Array Pencil ranges own pen input and guard late native events',()=>{
+test('Array Count Pencil range owns pen input and guards late native events',()=>{
   assert.match(ui,/function installPenRange/);
   assert.match(ui,/event\.pointerType!=='pen'/);
   assert.match(ui,/setPointerCapture/);
