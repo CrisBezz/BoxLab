@@ -549,3 +549,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Start cap faces outward opposite the first path segment and end cap faces outward along the final segment
 - [ ] Convex Circle/Rectangle/custom profiles remain unchanged
 - [ ] Open profiles remain uncapped and unaffected
+
+
+## Phase D — Sweep side normals — .399
+
+- [ ] Same concave C-profile used for .398 displays outward side normals around the complete Sweep
+- [ ] Side normals stay outward through corners/path direction changes
+- [ ] Concave inner returns face the cavity, outer edges face away from the section
+- [ ] Clockwise and counter-clockwise authored profiles both produce outward side faces
+- [ ] Exact ring-0 profile placement from .398 remains unchanged
+- [ ] Concave cap triangulation and convex cap topology remain unchanged
