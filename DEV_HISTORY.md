@@ -17,6 +17,8 @@ Newest entries should be added at the top.
 - Removed Spacing slider as primary UX.
 - Apply remains one history step and linked-instance creation still uses the established Object Manager API.
 - Next task remains inward/negative Face Extrude cutting.
+- Released from PR **#68**; squash merge commit: `daa7ef47b34a79f1b00c167217d4eeb116a349ea`.
+- Final Topology regression passed in workflow run **35547016085**.
 
 ## 2026-09-21 — v0.36.18.383 Array direct spacing drag
 
