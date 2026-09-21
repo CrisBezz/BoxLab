@@ -10,24 +10,20 @@ const pointer=new THREE.Vector2();
 const controls=document.createElement('div');
 controls.className='linear-array-controls';
 controls.innerHTML=`
-  <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr);margin-top:8px">
+  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr);margin-top:8px">
     <button id="linearArrayBtn" type="button" disabled>Array</button>
-    <button type="button" data-array-axis="x" class="active">X</button>
-    <button type="button" data-array-axis="y">Y</button>
+    <span class="drawer-hint" style="align-self:center">Place end copy</span>
   </div>
-  <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
-    <button type="button" data-array-axis="z">Z</button>
-    <span></span><span></span>
+  <div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)">
+    <button type="button" data-array-move="free" class="active">Free</button>
+    <button type="button" data-array-move="x">X</button>
+    <button type="button" data-array-move="y">Y</button>
+    <button type="button" data-array-move="z">Z</button>
   </div>
   <label class="range-row">
     <span>Count</span>
-    <input id="linearArrayCount" type="range" min="2" max="10" value="3" step="1"/>
-    <output id="linearArrayCountOut">3</output>
-  </label>
-  <label class="range-row">
-    <span>Spacing</span>
-    <input id="linearArraySpacing" type="range" min="0.1" max="10" value="2.5" step="0.1"/>
-    <output id="linearArraySpacingOut">2.5</output>
+    <input id="linearArrayCount" type="range" min="2" max="12" value="2" step="1"/>
+    <output id="linearArrayCountOut">2</output>
   </label>
 `;
 objectTools?.appendChild(controls);
@@ -35,11 +31,11 @@ objectTools?.appendChild(controls);
 const button=controls.querySelector('#linearArrayBtn');
 const countInput=controls.querySelector('#linearArrayCount');
 const countOut=controls.querySelector('#linearArrayCountOut');
-const spacingInput=controls.querySelector('#linearArraySpacing');
-const spacingOut=controls.querySelector('#linearArraySpacingOut');
-const axisButtons=[...controls.querySelectorAll('[data-array-axis]')];
+const moveButtons=[...controls.querySelectorAll('[data-array-move]')];
 
-let axis='x',preview=null,previewArmed=false,previewObjectId=null,drawerLock=null,spacingDrag=null;
+let moveMode='free';
+let endpoint=new THREE.Vector3(2.5,0,0);
+let preview=null,previewArmed=false,previewObjectId=null,drawerLock=null,endpointDrag=null;
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function state(){return globalThis.__boxlabBridgeState;}
@@ -47,19 +43,12 @@ function camera(){return state()?.camera||null;}
 function orbitControls(){return state()?.controls||null;}
 function activeObject(){const m=manager();return m?.objects?.find(o=>o.id===m.activeId)||null;}
 function mode(){return globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
-function count(){return Math.max(2,Math.min(10,Math.round(Number(countInput?.value)||3)));}
-function spacing(){return Math.max(.1,Math.min(10,Number(spacingInput?.value)||2.5));}
-function axisVector(){return axis==='y'?new THREE.Vector3(0,1,0):axis==='z'?new THREE.Vector3(0,0,1):new THREE.Vector3(1,0,0);}
+function count(){return Math.max(2,Math.min(12,Math.round(Number(countInput?.value)||2)));}
 function setStatus(text){if(status)status.textContent=text;}
-function syncOutputs(){if(countOut)countOut.textContent=String(count());if(spacingOut)spacingOut.textContent=Number(spacing().toFixed(2)).toString();}
-function setSpacing(value,{rebuild=true}={}){
-  if(!spacingInput)return;
-  const min=Number(spacingInput.min)||.1,max=Number(spacingInput.max)||10,step=Number(spacingInput.step)||.1;
-  const clamped=Math.max(min,Math.min(max,Number(value)||min));
-  const snapped=min+Math.round((clamped-min)/step)*step;
-  spacingInput.value=String(Number(snapped.toFixed(6)));
-  syncOutputs();
-  if(rebuild&&previewArmed)buildPreview();
+function syncCount(){if(countOut)countOut.textContent=String(count());}
+function endpointLength(){return endpoint.length();}
+function endpointText(){
+  return `Δ ${endpoint.x.toFixed(2)}, ${endpoint.y.toFixed(2)}, ${endpoint.z.toFixed(2)}`;
 }
 
 function disposePreview(){
@@ -87,14 +76,14 @@ function unlockDrawer(){
   if(old.keepOpen===undefined)delete drawer.dataset.keepOpen;else drawer.dataset.keepOpen=old.keepOpen;
   if(old.open)drawer.open=true;
 }
-function endSpacingDrag(){
-  if(!spacingDrag)return;
+function endEndpointDrag(){
+  if(!endpointDrag)return;
   const ctl=orbitControls();
-  if(ctl)ctl.enabled=spacingDrag.controlsWereEnabled;
-  spacingDrag=null;
+  if(ctl)ctl.enabled=endpointDrag.controlsWereEnabled;
+  endpointDrag=null;
 }
 function cancelPreview({silent=false}={}){
-  endSpacingDrag();
+  endEndpointDrag();
   disposePreview();previewArmed=false;previewObjectId=null;unlockDrawer();
   if(button)button.textContent='Array';
   if(!silent)setStatus('Array preview cancelled');
@@ -106,22 +95,31 @@ function buildPreview(){
   disposePreview();
   const geometry=object.mesh?.triangulatedGeometry?.();
   if(!geometry)return false;
-  const fillMaterial=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.16,side:THREE.DoubleSide,depthWrite:false});
-  const wireMaterial=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.58,side:THREE.DoubleSide,wireframe:true,depthWrite:false});
-  const dir=axisVector(),group=new THREE.Group();
-  for(let i=1;i<count();i++){
+
+  const group=new THREE.Group();
+  const total=count();
+  for(let i=1;i<total;i++){
+    const isEndpoint=i===total-1;
+    const fillMaterial=new THREE.MeshBasicMaterial({
+      color:0x62d8ff,transparent:true,opacity:isEndpoint?.28:.11,side:THREE.DoubleSide,depthWrite:false
+    });
+    const wireMaterial=new THREE.MeshBasicMaterial({
+      color:0x62d8ff,transparent:true,opacity:isEndpoint?.9:.42,side:THREE.DoubleSide,wireframe:true,depthWrite:false
+    });
     const fill=new THREE.Mesh(geometry,fillMaterial),wire=new THREE.Mesh(geometry,wireMaterial);
-    const offset=dir.clone().multiplyScalar(spacing()*i);
+    const t=i/(total-1);
+    const offset=endpoint.clone().multiplyScalar(t);
     fill.position.copy(offset);wire.position.copy(offset);
     fill.userData.arrayIndex=i;wire.userData.arrayIndex=i;
-    fill.renderOrder=10;wire.renderOrder=11;
+    fill.userData.arrayEndpoint=isEndpoint;wire.userData.arrayEndpoint=isEndpoint;
+    fill.renderOrder=isEndpoint?12:10;wire.renderOrder=isEndpoint?13:11;
     group.add(fill,wire);
   }
   preview=group;
-  preview.name='BoxLab Linear Array Preview';
+  preview.name='BoxLab Linear Array Endpoint Preview';
   preview.userData.boxlabLinearArrayPreview=true;
   scene.add(preview);
-  setStatus(`Array preview • ${count()} total • ${axis.toUpperCase()} • spacing ${Number(spacing().toFixed(2))} • drag preview to space • Apply Array to commit`);
+  setStatus(`Array preview • ${count()} total • ${endpointText()} • move END copy (${moveMode.toUpperCase()}) • Apply Array`);
   return true;
 }
 function pointerNdc(event){
@@ -131,12 +129,12 @@ function pointerNdc(event){
   pointer.y=-((event.clientY-rect.top)/rect.height)*2+1;
   return true;
 }
-function projectedArrayAxis(point){
+function screenAxis(point,axisVector){
   const cam=camera(),rect=canvas?.getBoundingClientRect();
   if(!cam||!rect||!point)return null;
-  const dir=axisVector(),distance=Math.max(.01,cam.position.distanceTo(point));
+  const distance=Math.max(.01,cam.position.distanceTo(point));
   const probe=Math.max(distance*.08,.05);
-  const a=point.clone().project(cam),b=point.clone().addScaledVector(dir,probe).project(cam);
+  const a=point.clone().project(cam),b=point.clone().addScaledVector(axisVector,probe).project(cam);
   const dx=(b.x-a.x)*rect.width*.5,dy=-(b.y-a.y)*rect.height*.5;
   const length=Math.hypot(dx,dy);
   if(length<4)return null;
@@ -145,47 +143,68 @@ function projectedArrayAxis(point){
     :Math.max(.0001,(cam.top-cam.bottom)/Math.max(1,rect.height));
   return{x:dx/length,y:dy/length,worldPerPixel};
 }
-function beginSpacingDrag(event){
-  if(!previewArmed||!preview||spacingDrag||(event.pointerType==='mouse'&&event.button!==0))return false;
+function worldPointOnViewPlane(event,plane){
+  const cam=camera();
+  if(!cam||!pointerNdc(event))return null;
+  raycaster.setFromCamera(pointer,cam);
+  return raycaster.ray.intersectPlane(plane,new THREE.Vector3());
+}
+function beginEndpointDrag(event){
+  if(!previewArmed||!preview||endpointDrag||(event.pointerType==='mouse'&&event.button!==0))return false;
   const cam=camera();
   if(!cam||!pointerNdc(event))return false;
   raycaster.setFromCamera(pointer,cam);
-  const hit=raycaster.intersectObject(preview,true).find(item=>Number(item.object?.userData?.arrayIndex)>0);
+  const hit=raycaster.intersectObject(preview,true).find(item=>item.object?.userData?.arrayEndpoint===true);
   if(!hit)return false;
-  const screenAxis=projectedArrayAxis(hit.point),arrayIndex=Number(hit.object.userData.arrayIndex)||1;
-  if(!screenAxis)return false;
+
   const ctl=orbitControls();
-  spacingDrag={
+  const drag={
     pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,
-    startSpacing:spacing(),arrayIndex,
-    axisX:screenAxis.x,axisY:screenAxis.y,worldPerPixel:screenAxis.worldPerPixel,
-    controlsWereEnabled:ctl?.enabled!==false
+    startEndpoint:endpoint.clone(),controlsWereEnabled:ctl?.enabled!==false,mode:moveMode
   };
+  if(moveMode==='free'){
+    const normal=cam.getWorldDirection(new THREE.Vector3()).normalize();
+    drag.plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,hit.point);
+    drag.startWorld=worldPointOnViewPlane(event,drag.plane);
+    if(!drag.startWorld)return false;
+  }else{
+    const axisVector=moveMode==='y'?new THREE.Vector3(0,1,0):moveMode==='z'?new THREE.Vector3(0,0,1):new THREE.Vector3(1,0,0);
+    const projected=screenAxis(hit.point,axisVector);
+    if(!projected)return false;
+    drag.axisVector=axisVector;drag.axisX=projected.x;drag.axisY=projected.y;drag.worldPerPixel=projected.worldPerPixel;
+  }
+  endpointDrag=drag;
   if(ctl)ctl.enabled=false;
   canvas?.setPointerCapture?.(event.pointerId);
   event.preventDefault();event.stopPropagation();event.stopImmediatePropagation?.();
-  setStatus(`Array direct spacing • ${Number(spacing().toFixed(2))} • drag selected preview along ${axis.toUpperCase()}`);
+  setStatus(`Array endpoint • ${endpointText()} • drag ${moveMode==='free'?'freely in view plane':moveMode.toUpperCase()}`);
   return true;
 }
-function moveSpacingDrag(event){
-  if(!spacingDrag||event.pointerId!==spacingDrag.pointerId)return false;
-  const dx=event.clientX-spacingDrag.startX,dy=event.clientY-spacingDrag.startY;
-  const projected=dx*spacingDrag.axisX+dy*spacingDrag.axisY;
-  const worldDelta=projected*spacingDrag.worldPerPixel;
-  setSpacing(spacingDrag.startSpacing+worldDelta/Math.max(1,spacingDrag.arrayIndex),{rebuild:true});
-  setStatus(`Array direct spacing • ${Number(spacing().toFixed(2))} • release to keep preview value`);
+function moveEndpointDrag(event){
+  if(!endpointDrag||event.pointerId!==endpointDrag.pointerId)return false;
+  if(endpointDrag.mode==='free'){
+    const p=worldPointOnViewPlane(event,endpointDrag.plane);
+    if(p)endpoint.copy(endpointDrag.startEndpoint).add(p.sub(endpointDrag.startWorld));
+  }else{
+    const dx=event.clientX-endpointDrag.startX,dy=event.clientY-endpointDrag.startY;
+    const projected=dx*endpointDrag.axisX+dy*endpointDrag.axisY;
+    endpoint.copy(endpointDrag.startEndpoint).addScaledVector(endpointDrag.axisVector,projected*endpointDrag.worldPerPixel);
+  }
+  buildPreview();
+  setStatus(`Array endpoint • ${endpointText()} • release to keep endpoint`);
   event.preventDefault();event.stopPropagation();event.stopImmediatePropagation?.();
   return true;
 }
-function finishSpacingDrag(event){
-  if(!spacingDrag||event.pointerId!==spacingDrag.pointerId)return false;
+function finishEndpointDrag(event){
+  if(!endpointDrag||event.pointerId!==endpointDrag.pointerId)return false;
   event.preventDefault();event.stopPropagation();event.stopImmediatePropagation?.();
-  endSpacingDrag();
-  setStatus(`Array preview • ${count()} total • ${axis.toUpperCase()} • spacing ${Number(spacing().toFixed(2))} • Apply Array to commit`);
+  endEndpointDrag();
+  setStatus(`Array preview • ${count()} total • ${endpointText()} • choose Count or Apply Array`);
   return true;
 }
+
 function sync(){
-  syncOutputs();
+  syncCount();
   const object=activeObject();
   const eligible=mode()==='object'&&!!object&&!object.locked&&object.kind!=='reference';
   if(button)button.disabled=!eligible;
@@ -201,13 +220,14 @@ function nudgeLive(offset){
 function applyArray(){
   const m=manager(),source=activeObject();
   if(!m||!source||source.id!==previewObjectId||source.locked||source.kind==='reference')return false;
+  if(endpointLength()<1e-6){setStatus('Array refused • end copy must be moved away from source');return false;}
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
   m.saveActive?.();
-  const sourceId=source.id,created=[],dir=axisVector();
-  for(let i=1;i<count();i++){
+  const sourceId=source.id,created=[],total=count();
+  for(let i=1;i<total;i++){
     const copy=m.linkedDuplicateObject?.(sourceId,{enterObjectMode:false,name:m.nextDuplicateName?.(source.name)});
     if(!copy){setStatus('Array refused • linked duplicate could not be created');return false;}
-    const offset=dir.clone().multiplyScalar(spacing()*i);
+    const offset=endpoint.clone().multiplyScalar(i/(total-1));
     if(!nudgeLive(offset)){setStatus('Array refused • active instance mesh unavailable');return false;}
     m.saveActive?.();
     created.push(copy.id);
@@ -216,8 +236,11 @@ function applyArray(){
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
   globalThis.__boxlabObjectSelection?.refresh?.();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
-  globalThis.__boxlabLinearArrayLastResult={version:'0.36.18.383',sourceId,createdIds:created,count:count(),spacing:spacing(),axis};
-  setStatus(`Array • ${created.length} linked instance${created.length===1?'':'s'} created • ${axis.toUpperCase()} spacing ${Number(spacing().toFixed(2))}`);
+  globalThis.__boxlabLinearArrayLastResult={
+    version:'0.36.18.384',sourceId,createdIds:created,count:total,
+    endpoint:[endpoint.x,endpoint.y,endpoint.z]
+  };
+  setStatus(`Array • ${created.length} linked instance${created.length===1?'':'s'} • evenly distributed to ${endpointText()}`);
   return true;
 }
 
@@ -255,23 +278,25 @@ function installPenRange(input,onValue){
   input.addEventListener('change',()=>{if(enforce())onValue();});
 }
 
-axisButtons.forEach(control=>control.addEventListener('click',()=>{
-  axis=control.dataset.arrayAxis;
-  axisButtons.forEach(b=>b.classList.toggle('active',b===control));
-  if(previewArmed)buildPreview();
+moveButtons.forEach(control=>control.addEventListener('click',()=>{
+  moveMode=control.dataset.arrayMove;
+  moveButtons.forEach(b=>b.classList.toggle('active',b===control));
+  if(previewArmed)setStatus(`Array preview • move END copy (${moveMode.toUpperCase()}) • ${endpointText()}`);
 }));
-installPenRange(countInput,()=>{syncOutputs();if(previewArmed)buildPreview();});
-installPenRange(spacingInput,()=>{syncOutputs();if(previewArmed)buildPreview();});
-canvas?.addEventListener('pointerdown',beginSpacingDrag,true);
-canvas?.addEventListener('pointermove',moveSpacingDrag,true);
-canvas?.addEventListener('pointerup',finishSpacingDrag,true);
-canvas?.addEventListener('pointercancel',finishSpacingDrag,true);
+installPenRange(countInput,()=>{syncCount();if(previewArmed)buildPreview();});
+canvas?.addEventListener('pointerdown',beginEndpointDrag,true);
+canvas?.addEventListener('pointermove',moveEndpointDrag,true);
+canvas?.addEventListener('pointerup',finishEndpointDrag,true);
+canvas?.addEventListener('pointercancel',finishEndpointDrag,true);
 drawer?.addEventListener('toggle',()=>{if(previewArmed&&!drawer.open)queueMicrotask(()=>{if(previewArmed)drawer.open=true;});});
 
 button?.addEventListener('click',()=>{
   const object=activeObject();
   if(!object||mode()!=='object'||object.locked||object.kind==='reference')return;
   if(!previewArmed){
+    endpoint.set(2.5,0,0);
+    if(countInput)countInput.value='2';
+    syncCount();
     previewArmed=true;previewObjectId=object.id;lockDrawer();button.textContent='Apply Array';buildPreview();return;
   }
   if(applyArray()){
@@ -282,13 +307,14 @@ button?.addEventListener('click',()=>{
 window.addEventListener('boxlab-object-manager-ready',sync);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
-window.addEventListener('beforeunload',()=>{endSpacingDrag();disposePreview();unlockDrawer();});
+window.addEventListener('beforeunload',()=>{endEndpointDrag();disposePreview();unlockDrawer();});
 sync();
 
 globalThis.__boxlabLinearArray={
-  version:'0.36.18.383',
+  version:'0.36.18.384',
   get active(){return previewArmed;},
-  get dragging(){return!!spacingDrag;},
+  get dragging(){return!!endpointDrag;},
+  get endpoint(){return endpoint.clone();},
   rebuild:buildPreview,
   cancel:cancelPreview
 };
