@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.425 Edge Extrude directional constraints
+
+- User approved constrained Edge Extrude so ribbon pulls can produce more regular controlled geometry.
+- Edge Extrude now reads the existing shared transform constraint state: Free / X / Y / Z / Auto.
+- X/Y/Z are projected perpendicular to the source edge before extrusion, removing any component that would slide along the edge.
+- If the chosen world axis is effectively parallel to the source edge, the pull refuses with a clear status instead of generating a sliver.
+- Auto evaluates valid perpendicular X/Y/Z candidates and locks to the one that best matches the initial drag direction.
+- Free remains the existing unconstrained screen-plane ribbon workflow.
+- Axis Snap ON with Free behaves as Auto for Edge Extrude, matching existing Move behavior.
+- While Edge Extrude is armed, it owns the viewport pointer drag so normal Move does not steal Pencil input; the shared constraint strip remains interactive.
+- Ribbon topology and repeated outer-rail selection from .423/.424 are unchanged.
+
+
 ## 2026-09-22 — v0.36.18.424 Edge Extrude arming hotfix
 
 - First hands-on .423 test showed a valid selected boundary edge with Edge Extrude incorrectly disabled.

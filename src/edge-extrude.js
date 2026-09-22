@@ -1,4 +1,4 @@
-import {boundarySelectionInfo,extrudeBoundaryEdges} from './edge-extrude-core.js?v=0.36.18.423';
+import {boundarySelectionInfo,extrudeBoundaryEdges,perpendicularAxisDirection} from './edge-extrude-core.js?v=0.36.18.425';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.423 — direct boundary Edge Extrude / ribbon workflow.
@@ -6,7 +6,7 @@ import * as THREE from 'three';
 // Pencil/mouse/touch-drag a selected edge. The newly-created outer rail
 // remains selected and Extrude stays armed for rapid repeated pulls.
 
-const VERSION='0.36.18.424';
+const VERSION='0.36.18.425';
 const canvas=document.querySelector('#viewport');
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const moveRow=edgeTools?.querySelector('.edge-move-actions');
@@ -35,6 +35,62 @@ function history(){return globalThis.__boxlabHistory;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function unique(values){return[...new Set(values)];}
 function selectedEdges(){const b=bridge();return b?.mode?.()==='edge'?unique(b.indices?.()||[]):[];}
+function transformConstraint(){
+  return globalThis.__boxlabTransformArming?.constraint?.()||'free';
+}
+function axisSnapOn(){return !!document.querySelector('#axisSnapToggle')?.checked;}
+function axisVector(axis){
+  return new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);
+}
+function seedEdgeDirection(m,info,seedIndex){
+  const seed=info?.infos?.find(edge=>edge.index===seedIndex)||info?.infos?.[0];
+  if(!seed||!m?.vertices?.[seed.a]||!m?.vertices?.[seed.b])return null;
+  const dir=m.vertices[seed.b].clone().sub(m.vertices[seed.a]);
+  return dir.lengthSq()>1e-12?dir.normalize():null;
+}
+function constrainedDirection(drag,axis){
+  if(!['x','y','z'].includes(axis))return null;
+  return perpendicularAxisDirection(drag.edgeDirection,axisVector(axis));
+}
+function screenDirection(center,dir){
+  const a=screenPoint(center),b=screenPoint(center.clone().add(dir));
+  return a&&b?b.sub(a):null;
+}
+function chooseAutoAxis(drag,dx,dy){
+  const motion=new THREE.Vector2(dx,dy);
+  if(motion.lengthSq()<1)return null;
+  motion.normalize();
+  let best=null;
+  for(const axis of ['x','y','z']){
+    const dir=constrainedDirection(drag,axis);
+    if(!dir)continue;
+    const rail=screenDirection(drag.center,dir);
+    if(!rail||rail.lengthSq()<4)continue;
+    const score=Math.abs(motion.dot(rail.clone().normalize()));
+    if(!best||score>best.score)best={axis,dir,rail,score};
+  }
+  return best;
+}
+function constrainedDelta(drag,event,dx,dy){
+  const constraint=drag.constraint;
+  if(constraint==='free'&&!drag.axisSnap)return null;
+  if(['x','y','z'].includes(constraint)){
+    const dir=constrainedDirection(drag,constraint);
+    if(!dir)return{invalid:true,axis:constraint};
+    const rail=screenDirection(drag.center,dir);
+    if(!rail||rail.lengthSq()<4)return{invalid:true,axis:constraint};
+    const amount=new THREE.Vector2(dx,dy).dot(rail)/rail.lengthSq();
+    return{delta:dir.multiplyScalar(amount),axis:constraint};
+  }
+  if(constraint==='auto'||drag.axisSnap){
+    if(!drag.autoChoice)drag.autoChoice=chooseAutoAxis(drag,dx,dy);
+    if(!drag.autoChoice)return{invalid:true,axis:'auto'};
+    const {axis,dir,rail}=drag.autoChoice;
+    const amount=new THREE.Vector2(dx,dy).dot(rail)/rail.lengthSq();
+    return{delta:dir.clone().multiplyScalar(amount),axis};
+  }
+  return null;
+}
 
 function screenPoint(v){
   const cam=camera();
@@ -113,6 +169,7 @@ document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListene
 window.addEventListener('boxlab-bridge-state',syncButton);
 document.addEventListener('click',event=>{
   if(!armed||event.target===button||event.target?.closest?.('#edgeExtrudeBtn'))return;
+  if(event.target?.closest?.('#transformPrecision,#toolModes,.quick-snap'))return;
   if(event.target?.closest?.('button')&&!event.target?.closest?.('#selectionModes'))setArmed(false);
 },true);
 
@@ -126,7 +183,8 @@ canvas.addEventListener('pointerdown',event=>{
   const center=centerOfSelection(m,info),plane=screenPlaneAt(center),start=rayPlanePoint(event,plane);
   if(!plane||!start)return;
   event.preventDefault();event.stopImmediatePropagation();
-  drag={pointerId:event.pointerId,mesh:m,before:m.clone(),info,seed,start,startX:event.clientX,startY:event.clientY,plane,preview:false,result:null};
+  const edgeDirection=seedEdgeDirection(m,info,seed);if(!edgeDirection)return;
+  drag={pointerId:event.pointerId,mesh:m,before:m.clone(),info,seed,start,startX:event.clientX,startY:event.clientY,plane,center,edgeDirection,constraint:transformConstraint(),axisSnap:axisSnapOn(),autoChoice:null,preview:false,result:null};
   state().controls&&(state().controls.enabled=false);
   canvas.setPointerCapture?.(event.pointerId);
 },true);
@@ -136,15 +194,19 @@ canvas.addEventListener('pointermove',event=>{
   event.preventDefault();event.stopImmediatePropagation();
   const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;
   if(!drag.preview&&Math.hypot(dx,dy)<SNAP_START_PX)return;
-  const now=rayPlanePoint(event,drag.plane);if(!now)return;
-  const delta=now.clone().sub(drag.start);
+  let delta;
+  const constrained=constrainedDelta(drag,event,dx,dy);
+  if(constrained?.invalid){if(status)status.textContent=`Edge Extrude • ${String(constrained.axis).toUpperCase()} is parallel to this edge • choose another axis`;return;}
+  if(constrained?.delta)delta=constrained.delta;
+  else{const now=rayPlanePoint(event,drag.plane);if(!now)return;delta=now.clone().sub(drag.start);}
   restore(drag.mesh,drag.before);
   const result=extrudeBoundaryEdges(drag.mesh,drag.before,drag.info,delta);
   if(!result){restore(drag.mesh,drag.before);drag.result=null;drag.preview=false;render();return;}
   drag.result=result;drag.preview=true;
   render();
   bridge()?.set?.('edge',result.outer);
-  if(status)status.textContent=`Edge Extrude • ${drag.info.ids.length} edge${drag.info.ids.length===1?'':'s'} • ribbon preview`;
+  const axisLabel=constrained?.axis?` • ${String(constrained.axis).toUpperCase()} ⟂ edge`:drag.constraint==='free'&&!drag.axisSnap?' • Free':'';
+  if(status)status.textContent=`Edge Extrude • ${drag.info.ids.length} edge${drag.info.ids.length===1?'':'s'} • ribbon preview${axisLabel}`;
 },true);
 
 function finish(event,cancel=false){
@@ -175,7 +237,8 @@ function finish(event,cancel=false){
   const next=current.result.outerKeys.map(k=>map.get(k)).filter(Number.isInteger);
   bridge()?.set?.('edge',next);
   setArmed(true);
-  if(status)status.textContent=`Edge Extrude committed • ${next.length} outer edge${next.length===1?'':'s'} selected • drag again`;
+  const mode=current.autoChoice?.axis||(['x','y','z'].includes(current.constraint)?current.constraint:current.axisSnap?'auto':'free');
+  if(status)status.textContent=`Edge Extrude committed • ${next.length} outer edge${next.length===1?'':'s'} selected • ${String(mode).toUpperCase()} • drag again`;
 }
 canvas.addEventListener('pointerup',event=>finish(event,false),true);
 canvas.addEventListener('pointercancel',event=>finish(event,true),true);
