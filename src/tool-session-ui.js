@@ -41,7 +41,7 @@ function begin({id,title,node,subtitle=''}={}){
   if(!drawer||!host||!node||!id)return false;
   if(active&&active.id!==id)end(active.id);
   if(!active){
-    active={id,title,node,subtitle,parent:node.parentNode,next:node.nextSibling,summary:summary?.textContent||'Active Tools'};
+    active={id,title,node,subtitle,parent:node.parentNode,next:node.nextSibling,summary:summary?.textContent||'Active Tools',keepOpen:drawer.dataset.keepOpen,open:drawer.open};
   }else{
     active.title=title||active.title;
     active.subtitle=subtitle||active.subtitle;
@@ -63,7 +63,8 @@ function end(id=null){
   host.replaceChildren();
   host.hidden=true;
   delete drawer.dataset.toolSessionActive;
-  if(drawer.dataset.keepOpen==='true')delete drawer.dataset.keepOpen;
+  if(old.keepOpen===undefined)delete drawer.dataset.keepOpen;else drawer.dataset.keepOpen=old.keepOpen;
+  drawer.open=old.open!==false;
   if(summary)summary.textContent=old.summary||'Active Tools';
   window.dispatchEvent(new CustomEvent('boxlab-tool-session-change',{detail:{active:false,id:old.id,title:old.title}}));
   return true;
