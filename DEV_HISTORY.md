@@ -8,6 +8,8 @@
 - Fixed Pages URL: https://crisbezz.github.io/BoxLab/beta-4/
 - Beta 4 captures post-Beta-3 Phase D work including Sweep, Array/Solidify/Shell/Revolve Tool Sessions and Edge Extrude ribbon/axis/plane/selection-handoff workflows.
 - `/beta-4/` is now intended to be immutable during normal development.
+- Beta 4 freeze PR **#113** merged as `2743d9d0e10f8fb9605e1e37ab92f0c53c636837`.
+- The snapshot reuses the exact v0.36.18.427 blobs/tree; frozen source regression run **35713131703 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.427 Edge Extrude selection handoff
