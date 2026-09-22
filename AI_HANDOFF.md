@@ -93,6 +93,9 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 - Frozen source is main commit `ec45b3ba208ef3ffa40015d7a3b62666c63f379e`.
 - Exact app tree is copied to `/beta-4/` for immutable GitHub Pages hosting.
 - Beta 4 fixed URL: https://crisbezz.github.io/BoxLab/beta-4/
+- Beta 4 freeze PR: **#113**
+- Beta 4 freeze merge commit: **2743d9d0e10f8fb9605e1e37ab92f0c53c636837**
+- Frozen source regression: **35713131703 PASS**
 - Future development continues on live `main`; `/beta-4/` must not change except for an explicitly approved emergency release fix.
 
 ## Current development — v0.36.18.427 Edge Extrude selection handoff
