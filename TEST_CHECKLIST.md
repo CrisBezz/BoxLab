@@ -614,3 +614,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] same behaviour works for closed Edge-loop profile sources
 - [ ] Circle/Rectangle Sweep remains centre-anchored
 - [ ] Draw Path behaviour remains unchanged when no Follow Edge anchor is established
+
+
+## Phase D — Sweep shell normal unification — .405
+
+- [ ] Closed capped selected-Face Sweep has outward normals after Apply
+- [ ] Closed capped clockwise and counter-clockwise profiles both resolve to outward shell orientation
+- [ ] anchored profile geometry/path placement from .404 remains unchanged
+- [ ] concave C-profile Sweep remains clean and outward-oriented
+- [ ] open-profile Sweep surfaces are not auto-reversed
+- [ ] uncapped closed-profile Sweep surfaces are not volume-flipped
