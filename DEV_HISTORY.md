@@ -11,6 +11,8 @@
 - Axis Snap ON with Free behaves as Auto for Edge Extrude, matching existing Move behavior.
 - While Edge Extrude is armed, it owns the viewport pointer drag so normal Move does not steal Pencil input; the shared constraint strip remains interactive.
 - Ribbon topology and repeated outer-rail selection from .423/.424 are unchanged.
+- Released via PR **#110**; squash merge `44fa20f0f769750b6c956f16ac5d8cb071144fb2`.
+- Final PR Topology regression run **35707683401 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.424 Edge Extrude arming hotfix
