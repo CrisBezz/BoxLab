@@ -6,6 +6,8 @@
 - Root cause was UI validation calling boundarySelectionInfo(mesh()) without passing the live selected edge IDs.
 - Both button enable/disable sync and the click-to-arm gate now call boundarySelectionInfo(mesh(), selectedEdges()).
 - Edge Extrude topology and ribbon generation are unchanged from .423.
+- Released via PR **#109**; squash merge `9be062ec965ca8c21e5ea00d1ba784865598e1d6`.
+- Final PR Topology regression run **35705932023 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.423 direct Edge Extrude ribbons
