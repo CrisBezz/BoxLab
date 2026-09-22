@@ -6,7 +6,7 @@ import * as THREE from 'three';
 // Pencil/mouse/touch-drag a selected edge. The newly-created outer rail
 // remains selected and Extrude stays armed for rapid repeated pulls.
 
-const VERSION='0.36.18.426';
+const VERSION='0.36.18.427';
 const canvas=document.querySelector('#viewport');
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const moveRow=edgeTools?.querySelector('.edge-move-actions');
@@ -134,6 +134,13 @@ function hitSelectedEdge(event,ids){
   const hit=raycaster.intersectObjects(candidates,false)[0];
   return Number.isInteger(hit?.object?.userData?.index)?hit.object.userData.index:null;
 }
+function hitAnyEdge(event){
+  const s=state(),objects=s?.edgeObjects,cam=camera();
+  if(!objects||!cam)return null;
+  setPointer(event);raycaster.setFromCamera(pointer,cam);
+  const hit=raycaster.intersectObjects([...(objects.values?.()||[])].filter(Boolean),false)[0];
+  return Number.isInteger(hit?.object?.userData?.index)?hit.object.userData.index:null;
+}
 function edgePlaneAt(point,edgeDirection){
   if(!edgeDirection||edgeDirection.lengthSq()<1e-12)return null;
   return new THREE.Plane().setFromNormalAndCoplanarPoint(edgeDirection.clone().normalize(),point);
@@ -174,9 +181,9 @@ function validate(m){
 
 function syncButton(){
   const valid=!!boundarySelectionInfo(mesh(),selectedEdges());
-  button.disabled=!valid;
+  button.disabled=!armed&&!valid;
   button.classList.toggle('active',armed);
-  if(armed&&!valid&& !drag){armed=false;button.classList.remove('active');}
+  syncPlaneButton();
 }
 function setArmed(next){
   armed=!!next;
@@ -216,17 +223,30 @@ document.addEventListener('click',event=>{
 canvas.addEventListener('pointerdown',event=>{
   if(!armed||!event.isPrimary)return;
   if(event.pointerType==='mouse'&&event.button!==0)return;
-  const m=mesh(),ids=selectedEdges(),info=boundarySelectionInfo(m,ids);
-  if(!m||!info)return;
-  const seed=hitSelectedEdge(event,ids);
-  if(!Number.isInteger(seed))return;
+  const m=mesh();if(!m)return;
+  const previousIds=selectedEdges();
+  const hit=hitAnyEdge(event);
+  if(!Number.isInteger(hit))return;
+  const wasSelected=previousIds.includes(hit);
+  let ids=previousIds,info=null;
+  if(wasSelected){
+    info=boundarySelectionInfo(m,ids);
+    if(!info)return;
+  }else{
+    const candidate=boundarySelectionInfo(m,[hit]);
+    if(!candidate)return;
+    ids=[hit];
+    info=candidate;
+    bridge()?.set?.('edge',ids);
+  }
+  const seed=hit;
   const center=centerOfSelection(m,info),plane=screenPlaneAt(center),start=rayPlanePoint(event,plane);
   if(!plane||!start)return;
   event.preventDefault();event.stopImmediatePropagation();
   const edgeDirection=seedEdgeDirection(m,info,seed);if(!edgeDirection)return;
   const edgePlane=edgePlaneAt(center,edgeDirection);
   const planeStart=edgePlane?rayPlanePoint(event,edgePlane):null;
-  drag={pointerId:event.pointerId,mesh:m,before:m.clone(),info,seed,start,startX:event.clientX,startY:event.clientY,plane,center,edgeDirection,edgePlane,planeStart,constraint:transformConstraint(),axisSnap:axisSnapOn(),autoChoice:null,preview:false,result:null};
+  drag={pointerId:event.pointerId,mesh:m,before:m.clone(),info,seed,previousIds,switched:!wasSelected,start,startX:event.clientX,startY:event.clientY,plane,center,edgeDirection,edgePlane,planeStart,constraint:transformConstraint(),axisSnap:axisSnapOn(),autoChoice:null,preview:false,result:null};
   state().controls&&(state().controls.enabled=false);
   canvas.setPointerCapture?.(event.pointerId);
 },true);
@@ -257,11 +277,25 @@ function finish(event,cancel=false){
   const current=drag;drag=null;
   if(state()?.controls)state().controls.enabled=true;
   try{canvas.releasePointerCapture?.(event.pointerId);}catch{}
-  if(cancel||!current.preview||!current.result){
+  if(cancel){
     restore(current.mesh,current.before);
     render();
-    bridge()?.set?.('edge',current.info.ids);
+    bridge()?.set?.('edge',current.previousIds||current.info.ids);
     if(status)status.textContent='Edge Extrude • cancelled';
+    return;
+  }
+  if(!current.preview||!current.result){
+    restore(current.mesh,current.before);
+    render();
+    if(current.switched){
+      bridge()?.set?.('edge',[current.seed]);
+      if(status)status.textContent='Edge Extrude • edge switched • tool + constraint preserved';
+    }else{
+      const remaining=(current.previousIds||current.info.ids).filter(index=>index!==current.seed);
+      bridge()?.set?.('edge',remaining);
+      if(status)status.textContent=remaining.length?'Edge Extrude • edge deselected • tool + constraint preserved':'Edge Extrude • no edge selected • choose another boundary edge';
+    }
+    setArmed(true);
     return;
   }
   const check=validate(current.mesh);
