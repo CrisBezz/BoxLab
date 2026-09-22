@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.406 Tool Session UI foundation + Sweep UX
+
+- Audited Sweep, Revolve, Array, Boolean, Solidify, Shell and the shared Active Tools architecture after the user reported that Sweep had become difficult to navigate.
+- Confirmed the root UX issue: complex tools independently append persistent controls into the same mode-tools containers, so unrelated Object controls accumulate and bury the active workflow.
+- Added reusable `tool-session-ui.js` with an exclusive Active Tools host; an active session hides normal drawer content and restores prior drawer state on exit.
+- Migrated Sweep as the first Tool Session client.
+- Reorganized Sweep into **PROFILE / PATH / FINISH** stages with only one stage visible at a time.
+- Promoted Face/Edge contextual launch to a compact **Sweep** button near the top of the active component tools.
+- Face/Edge → Sweep now auto-loads the selected profile and opens directly on PATH with Follow Edges active; Object Add → Sweep starts on PROFILE.
+- Apply Sweep ends the session and restores normal Active Tools.
+- Kept .405 Sweep geometry/topology behaviour unchanged; this build is UI ownership/workflow only.
+
 ## 2026-09-22 — v0.36.18.405 Sweep shell normal unification
 
 - User confirmed .404 selected-profile anchoring was correct but the final closed Sweep shell still displayed flipped normals.
