@@ -709,3 +709,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] rail refs and button state initialize before `manager.saveActive()`
 - [ ] manual Use Selection remains profile-only unless path mode is explicitly activated
 - [ ] .410 picker and .412 hard visual state remain unchanged
+
+
+## Phase D/F — Follow Edges rail-state declaration regression — .414
+
+- [ ] Follow Edges activates without runtime error
+- [ ] `hotRailHit` is declared at module scope
+- [ ] `railSnapRefs` is declared at module scope
+- [ ] Follow Edges button shows `Follow Edges · Active`
+- [ ] rail candidate overlay appears immediately
+- [ ] .410 edge-only picker and .413 atomic handoff remain intact
