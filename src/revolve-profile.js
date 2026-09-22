@@ -2,17 +2,25 @@ import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 import {buildRevolveFromPoints} from './revolve-core.js?v=0.36.18.389';
 
-const VERSION='0.36.18.421';
+const VERSION='0.36.18.422';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
-const editDrawer=document.querySelector('#editDrawer');
+
+const launchRow=document.createElement('div');
+launchRow.className='outliner-actions revolve-profile-launch-row';
+launchRow.style.gridTemplateColumns='1fr';
+launchRow.hidden=true;
+launchRow.innerHTML='<button id="revolveProfileLaunchBtn" type="button">Revolve Profile</button>';
+objectTools?.appendChild(launchRow);
+const launchButton=launchRow.querySelector('#revolveProfileLaunchBtn');
 
 const controls=document.createElement('div');
 controls.id='revolveProfileControls';
+controls.className='boxlab-tool-session-shell revolve-profile-controls';
 controls.hidden=true;
 controls.innerHTML=`
-  <div class="edge-section-label">Revolve Profile</div>
+  <div class="boxlab-tool-session-title"><span>Revolve Profile</span><span class="boxlab-tool-session-subtitle">Profile · Segments · Apply</span></div>
   <div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)">
     <button id="revolveProfileEditBtn" type="button">Edit Profile</button>
     <button id="revolveProfileUndoPointBtn" type="button">Undo Point</button>
@@ -24,7 +32,7 @@ controls.innerHTML=`
     <input id="revolveProfileSegments" type="range" min="3" max="64" value="24" step="1"/>
     <output id="revolveProfileSegmentsOut">24</output>
   </label>
-  <button id="revolveProfileApplyBtn" type="button">Apply Revolve</button>
+  <button id="revolveProfileApplyBtn" class="boxlab-tool-session-primary" type="button">Apply Revolve</button>
 `;
 objectTools?.appendChild(controls);
 
@@ -36,7 +44,7 @@ const segmentInput=controls.querySelector('#revolveProfileSegments');
 const segmentOut=controls.querySelector('#revolveProfileSegmentsOut');
 const applyButton=controls.querySelector('#revolveProfileApplyBtn');
 
-let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0,cachedActiveId=null,cachedActiveObject=null,drawerLockState=null;
+let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0,cachedActiveId=null,cachedActiveObject=null;
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
 
@@ -82,22 +90,19 @@ function pushPointHistory(meta){
 }
 function setStatus(text){if(status)status.textContent=text;}
 function planeSignature(mesh){return looksConstructionMesh(mesh)?mesh.vertices.map(v=>[v.x,v.y,v.z].map(n=>n.toFixed(6)).join(',')).join('|'):'';}
-function lockActiveTools(){
-  if(!editDrawer)return;
-  if(!drawerLockState)drawerLockState={keepOpen:editDrawer.dataset.keepOpen,open:editDrawer.open};
-  editDrawer.dataset.keepOpen='true';
-  editDrawer.open=true;
+function toolSession(){return globalThis.__boxlabToolSession||null;}
+function beginRevolveSession(){
+  controls.hidden=false;
+  toolSession()?.begin?.({id:'revolve-profile',title:'Revolve Profile',node:controls,subtitle:'Profile · Segments · Apply'});
 }
-function unlockActiveTools(){
-  if(!editDrawer||!drawerLockState)return;
-  const old=drawerLockState;drawerLockState=null;
-  if(old.keepOpen===undefined)delete editDrawer.dataset.keepOpen; else editDrawer.dataset.keepOpen=old.keepOpen;
-  if(old.open)editDrawer.open=true;
+function endRevolveSession(){
+  controls.hidden=true;
+  toolSession()?.end?.('revolve-profile');
 }
 function claimRevolveTools(meta){
   if(!meta)return;
   meta.interacted=true;
-  lockActiveTools();
+  beginRevolveSession();
 }
 function replaceMesh(target,source){
   target.vertices=source.vertices.map(v=>v.clone());
@@ -209,16 +214,17 @@ function planeSurface(frame){
 }
 function buildOverlay(){
   const object=profileObject(),mesh=liveMesh(),scene=state()?.scene;
-  if(!object||!scene){disposeOverlay();controls.hidden=true;activeProfileId=null;return;}
+  if(!object||!scene){disposeOverlay();launchRow.hidden=true;endRevolveSession();activeProfileId=null;return;}
   const meta=ensureMeta(object);
   const construction=looksConstructionMesh(mesh);
   meta.applied=!construction;
-  controls.hidden=!construction;
-  if(!construction){disposeOverlay();activeProfileId=object.id;unlockActiveTools();return;}
+  launchRow.hidden=!construction;
+  if(!construction){disposeOverlay();activeProfileId=object.id;endRevolveSession();return;}
   activeProfileId=object.id;
   const currentPlaneSignature=planeSignature(mesh);
   if(meta.initialPlaneSignature&&currentPlaneSignature&&currentPlaneSignature!==meta.initialPlaneSignature)claimRevolveTools(meta);
-  if(meta.edit||meta.interacted)lockActiveTools();
+  if(meta.edit||meta.interacted){if(!toolSession()?.isActive?.('revolve-profile'))beginRevolveSession();}
+  else if(toolSession()?.isActive?.('revolve-profile'))endRevolveSession();
   const frame=frameFor(mesh);if(!frame){disposeOverlay();return;}
   disposeOverlay();
   overlay=new THREE.Group();overlay.name='BoxLab Revolve Profile Construction';overlay.userData.boxlabRevolveProfile=true;
@@ -274,7 +280,7 @@ function buildOverlay(){
   clearButton.disabled=!meta.points.length;
   segmentInput.value=String(meta.segments);
   segmentOut.textContent=String(meta.segments);
-  if(editDrawer&&construction)editDrawer.open=true;
+
 }
 function frameSignature(){
   const object=profileObject(),mesh=liveMesh();if(!object||!looksConstructionMesh(mesh))return '';
@@ -360,12 +366,12 @@ function applyRevolve(){
   globalThis.__boxlabHistory?.push(before);
   replaceMesh(mesh,result.mesh);
   meta.applied=true;meta.edit=false;
-  unlockActiveTools();
+  endRevolveSession();
   object.name=object.name.replace(/ Profile(?: \d+)?$/,'')||'Revolve';
   manager()?.saveActive?.();
   globalThis.__boxlabObjectSelection?.single?.(object.id);
   globalThis.__boxlabBooleanUX?.sync?.();
-  disposeOverlay();controls.hidden=true;lastSignature='';
+  disposeOverlay();launchRow.hidden=true;controls.hidden=true;lastSignature='';
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   setStatus(`Revolve applied • ${meta.segments} segments • ${result.faces} faces`);
   return true;
@@ -389,6 +395,14 @@ function installPenRange(input,onValue){
 }
 
 window.addEventListener('boxlab-add-revolve-profile',addRevolveProfile);
+launchButton?.addEventListener('click',()=>{
+  const object=profileObject(),mesh=liveMesh();
+  if(!object||!looksConstructionMesh(mesh))return;
+  const meta=ensureMeta(object);
+  claimRevolveTools(meta);
+  setStatus('Revolve Profile • edit profile, adjust Segments, then Apply Revolve');
+  lastSignature='';
+});
 window.addEventListener('pointerdown',beginProfilePointer,true);
 window.addEventListener('pointermove',moveProfilePointer,true);
 window.addEventListener('pointerup',endProfilePointer,true);
@@ -421,7 +435,7 @@ installPenRange(segmentInput,()=>{
 applyButton.addEventListener('click',applyRevolve);
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedActiveId=null;cachedActiveObject=null;lastSignature='';buildOverlay();}));
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(()=>{lastSignature='';buildOverlay();})));
-window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();unlockActiveTools();});
+window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();endRevolveSession();});
 tick();
 
 globalThis.__boxlabRevolveProfile={

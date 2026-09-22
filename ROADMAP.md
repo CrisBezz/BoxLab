@@ -98,7 +98,7 @@ Only add focused tools that suit BoxLab:
 ## Phase F — iPad UX polish
 
 - browser-selection interaction guard — **native Safari selection/callout suppressed across BoxLab UI while editable fields remain exempt in v0.36.18.345**
-- **Solidify/Shell migrated to Tool Session in v0.36.18.421; Revolve next**
+- **Solidify/Shell migrated in .421; Revolve Profile migrated in .422**
 - persistent tool modes
 - left-hand access
 - reduced tap count — **v0.36.18.406 makes Face/Edge → Sweep jump directly to PATH/Follow Edges and removes the need to hunt through Object Active Tools**

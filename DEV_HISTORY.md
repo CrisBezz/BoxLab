@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.422 Revolve Profile Tool Session
+
+- User hands-on passed v0.36.18.421 Solidify/Shell Tool Sessions and advanced with /nextbuild.
+- Revolve Profile now uses the shared exclusive Tool Session instead of its private Active Tools drawer-lock implementation.
+- New Revolve Profile construction still starts as a normal Object-mode positioning plane; it does not immediately steal the drawer.
+- A compact Revolve Profile launcher is available while the construction plane is active.
+- Moving/snapping the plane or entering profile editing automatically claims the Revolve Profile Tool Session.
+- Session contains Edit Profile, Undo Point, Delete Point, Clear, Segments 3–64 and Apply Revolve.
+- Existing Pencil/mouse profile authoring, touch navigation, segment slider ownership, winding/normals, snapping and Apply geometry are unchanged.
+- Apply ends the Tool Session and retains the established single-object selection / Boolean tint cleanup.
+
+
 ## 2026-09-22 — v0.36.18.421 Solidify / Shell Tool Sessions
 
 - User hands-on passed v0.36.18.420 Vertex transform ownership and advanced to the next roadmap task.

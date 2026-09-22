@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.421**
+- Current `version.json`: **0.36.18.422**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -1648,6 +1648,25 @@ v0.36.18.421 migrates only their UX/session ownership:
 - protected multi-object transform remains pinned at v0.36.1.0
 
 **Hands-on verify v0.36.18.421:** Solidify an open sheet and confirm the exclusive session, live thickness/direct drag, Cancel and Apply. Then Shell a closed cube with one face selected and confirm session, thickness, Cancel/Apply. Quick Array/Vertex sanity check afterward.
+
+## Current development — v0.36.18.422 Revolve Profile Tool Session
+
+**Development branch: feature/revolve-profile-tool-session-422.**
+
+Following the hands-on pass of .421, Revolve Profile is migrated to the shared exclusive Tool Session.
+
+v0.36.18.422 preserves the proven Revolve construction workflow:
+- a new Revolve Profile still starts as a normal movable/snappable Object-mode construction plane
+- a compact Revolve Profile launcher is visible while that construction is active
+- moving/snapping the plane automatically claims the Tool Session, matching the established .391 behavior
+- tapping the launcher claims the session immediately without requiring a move first
+- Edit Profile / Undo Point / Delete Point / Clear / Segments 3–64 / Apply Revolve live inside the exclusive session
+- Pencil/mouse authors the profile while touch navigation remains unchanged
+- Apply geometry, winding/normals, single-object selection cleanup and Boolean tint sync are unchanged
+- old private drawer-lock ownership is removed in favor of the shared Tool Session
+- protected multi-object transform remains pinned at v0.36.1.0
+
+**Hands-on verify v0.36.18.422:** Add → Revolve Profile; move/snap the plane and confirm Active Tools becomes Revolve Profile. Draw/edit a profile, change Segments, orbit/pan/zoom while editing, and Apply. Also try a fresh profile without moving it: open Active Tools and tap the compact Revolve Profile launcher.
 
 ## Next development step
 
