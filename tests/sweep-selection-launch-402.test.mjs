@@ -21,7 +21,7 @@ test('402 captures selection before creating Sweep object',()=>{
 test('402 auto-applies captured selection after object-mode handoff',()=>{
   assert.ok(source.includes('function addSweepPath(selectionProfileOverride=null,autoUseSelection=false)'));
   assert.ok(source.includes('selectionProfileOverride||selectionProfileCandidate()'));
-  assert.ok(source.includes("if(selectionProfile&&autoUseSelection)queueMicrotask(()=>{applySelectionProfile();setPathMode('edges');setSweepStage('path');})"));
+  assert.ok(source.includes("if(selectionProfile&&autoUseSelection)queueMicrotask(()=>applySelectionProfile({activateFollowEdges:true}))"));
 });
 
 test('402 launch buttons follow current component selection context',()=>{
