@@ -1,3 +1,4 @@
+import {boundarySelectionInfo,extrudeBoundaryEdges} from './edge-extrude-core.js?v=0.36.18.423';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.423 — direct boundary Edge Extrude / ribbon workflow.
@@ -34,27 +35,6 @@ function history(){return globalThis.__boxlabHistory;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function unique(values){return[...new Set(values)];}
 function selectedEdges(){const b=bridge();return b?.mode?.()==='edge'?unique(b.indices?.()||[]):[];}
-function realFaces(m,edge){return(edge?.faces||[]).filter(fi=>Number.isInteger(fi)&&fi>=0&&fi<m.faces.length&&Array.isArray(m.faces[fi])&&m.faces[fi].length>=3);}
-function edgeKeySet(m,ids){const edges=m.edges();return ids.map(i=>edges[i]).filter(Boolean).map(e=>m.edgeKey(e.a,e.b));}
-
-function boundarySelectionInfo(m,ids=selectedEdges()){
-  if(!m||!ids.length)return null;
-  const edges=m.edges(),infos=[];
-  for(const index of ids){
-    const edge=edges[index];
-    if(!edge)return null;
-    const faces=realFaces(m,edge);
-    if(!(edge.loose===true||faces.length===1))return null;
-    infos.push({index,a:edge.a,b:edge.b,loose:edge.loose===true,faceIndex:faces[0]??null});
-  }
-  const degree=new Map();
-  for(const info of infos){
-    degree.set(info.a,(degree.get(info.a)||0)+1);
-    degree.set(info.b,(degree.get(info.b)||0)+1);
-  }
-  if([...degree.values()].some(v=>v>2))return null;
-  return{ids:[...ids],infos};
-}
 
 function screenPoint(v){
   const cam=camera();
@@ -98,52 +78,6 @@ function restore(target,snapshot){
   target.looseEdges=new Set(snapshot.looseEdges||[]);
   target.looseVertices=new Set(snapshot.looseVertices||[]);
   target.edges?.();
-}
-function faceTraverses(m,faceIndex,a,b){
-  const face=m.faces[faceIndex];if(!face)return null;
-  for(let i=0;i<face.length;i++){
-    const x=face[i],y=face[(i+1)%face.length];
-    if(x===a&&y===b)return true;
-    if(x===b&&y===a)return false;
-  }
-  return null;
-}
-
-function extrudeBoundaryEdges(target,source,info,delta){
-  const duplicate=new Map();
-  const sourceVertexIds=unique(info.infos.flatMap(e=>[e.a,e.b]));
-  for(const oldIndex of sourceVertexIds){
-    const next=target.vertices.length;
-    target.vertices.push(source.vertices[oldIndex].clone().add(delta));
-    duplicate.set(oldIndex,next);
-  }
-
-  for(const edgeInfo of info.infos){
-    const a=edgeInfo.a,b=edgeInfo.b,na=duplicate.get(a),nb=duplicate.get(b);
-    if(!Number.isInteger(na)||!Number.isInteger(nb))return null;
-    let face;
-    if(edgeInfo.loose){
-      face=[a,b,nb,na];
-      target.looseEdges?.delete?.(target.edgeKey(a,b));
-    }else{
-      const forward=faceTraverses(source,edgeInfo.faceIndex,a,b);
-      if(forward===null)return null;
-      face=forward?[b,a,na,nb]:[a,b,nb,na];
-    }
-    target.faces.push(face);
-  }
-
-  if(target.looseVertices instanceof Set){
-    for(const oldIndex of sourceVertexIds)target.looseVertices.delete(oldIndex);
-    for(const next of duplicate.values())target.looseVertices.delete(next);
-  }
-
-  target.edges?.();
-  const outerKeys=info.infos.map(e=>target.edgeKey(duplicate.get(e.a),duplicate.get(e.b)));
-  const edgeMap=new Map(target.edges().map((e,i)=>[target.edgeKey(e.a,e.b),i]));
-  const outer=outerKeys.map(k=>edgeMap.get(k)).filter(Number.isInteger);
-  if(outer.length!==info.infos.length)return null;
-  return{outer,outerKeys,vertices:[...duplicate.values()]};
 }
 
 function validate(m){
