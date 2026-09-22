@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.403 closed Sweep profile node insertion
+
+- Fixed inability to insert a new node into a closed Sweep profile.
+- Root cause was a missing `segmentDistance()` helper used only by closed-profile edge hit-testing.
+- Added a clamped 2D point-to-segment distance implementation in `sweep-path.js`.
+- Open-profile authoring, profile closure, Sweep topology and path behaviour remain unchanged.
+
 ## 2026-09-22 — v0.36.18.402 Sweep direct selection launch
 
 - Fixed the .401 workflow flaw where Face/Edge selection was lost when entering Object mode before Add → Sweep.
