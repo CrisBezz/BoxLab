@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.418 Tool Session drawer ownership
+
+- User hands-on showed .417 still allowed Active Tools itself to collapse as soon as the Array END copy was touched, even though Array session/source ownership remained armed.
+- Root cause was at the shared Tool Session layer: begin() opened the <details> drawer, but there was no contract preventing another interaction path from closing it later in the same live session.
+- Tool Session now watches the Active Tools drawer toggle event and reopens it on the next microtask whenever a session is active.
+- The guard is generic for Array, Sweep and future Solidify/Shell/Revolve migrations; normal drawer collapse remains unchanged when no Tool Session is active.
+- Array endpoint drag math, linked-instance Apply, Object selection and protected multi-object transform remain unchanged.
+
+
 ## 2026-09-22 — v0.36.18.417 Array session ownership during repositioning
 
 - User reported Array Tool Session dropped back to normal Object Active Tools when selecting/repositioning the array object.
