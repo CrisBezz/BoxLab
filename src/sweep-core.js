@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.416';
+const VERSION='0.36.18.417';
 const EPS=1e-7;
 
 function cleanPath(points=[]){
