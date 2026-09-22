@@ -20,13 +20,15 @@ The repository is authoritative. If anything here conflicts with current `main`,
 - Live app: https://crisbezz.github.io/BoxLab/
 - Frozen Beta 2: https://crisbezz.github.io/BoxLab/beta-2/
 - Frozen Beta 3: https://crisbezz.github.io/BoxLab/beta-3/
+- Frozen Beta 4: https://crisbezz.github.io/BoxLab/beta-4/
 - Product: iPad-first touch/Pencil polygon modeller and Nomad Sculpt companion.
 
 ## Current audited repository state
 
 Audited from current `main` on 2026-09-21.
 
-- Frozen release checkpoint: **v0.36.18.371 — Beta 3**
+- Frozen release checkpoint: **v0.36.18.427 — Beta 4**
+- Beta 4 frozen source main commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Current live development build: **v0.36.18.394 — Sweep Apply redraw + 3D geometry path snapping**
 - Current documentation HEAD: **post-v0.36.18.372 merge documentation; see latest main**
 - Current live code-bearing commit: **300bf36b75306e413afc70760e4dc020f599a0ad**
@@ -84,6 +86,14 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Beta 4 freeze — v0.36.18.427
+
+- User approved publishing Beta 4 after the Edge Extrude ribbon/constraint/selection-handoff sequence.
+- Frozen source is main commit `ec45b3ba208ef3ffa40015d7a3b62666c63f379e`.
+- Exact app tree is copied to `/beta-4/` for immutable GitHub Pages hosting.
+- Beta 4 fixed URL: https://crisbezz.github.io/BoxLab/beta-4/
+- Future development continues on live `main`; `/beta-4/` must not change except for an explicitly approved emergency release fix.
 
 ## Current development — v0.36.18.427 Edge Extrude selection handoff
 

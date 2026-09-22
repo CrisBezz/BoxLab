@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-22 — Beta 4 freeze at v0.36.18.427
+
+- User requested a Beta 4 release after hands-on approval of the Edge Extrude workflow through .427.
+- Frozen source main commit: `ec45b3ba208ef3ffa40015d7a3b62666c63f379e`.
+- Snapshot includes the current app shell, src, tests, docs and release assets under `/beta-4/`.
+- Fixed Pages URL: https://crisbezz.github.io/BoxLab/beta-4/
+- Beta 4 captures post-Beta-3 Phase D work including Sweep, Array/Solidify/Shell/Revolve Tool Sessions and Edge Extrude ribbon/axis/plane/selection-handoff workflows.
+- `/beta-4/` is now intended to be immutable during normal development.
+
+
 ## 2026-09-22 — v0.36.18.427 Edge Extrude selection handoff
 
 - Hands-on .426 exposed a workflow break: after an extrusion, the new outer edge stayed selected but could not be deselected by tapping while Edge Extrude owned the viewport.
