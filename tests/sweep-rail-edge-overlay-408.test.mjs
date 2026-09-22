@@ -21,6 +21,6 @@ test('408 rail guide appears only in PATH Follow Edges',()=>{
   assert.ok(block.includes('overlay.add(railGuide)'));
 });
 
-test('408 rail guide is depth-tested and does not write depth',()=>{
-  assert.ok(source.includes('depthTest:true,depthWrite:false'));
+test('408/411 rail guide does not write depth and stays visible over shaded faces',()=>{
+  assert.ok(source.includes('depthTest:false,depthWrite:false'));
 });
