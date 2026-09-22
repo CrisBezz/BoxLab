@@ -1340,6 +1340,8 @@ v0.36.18.400 fixes the interaction ownership:
 
 ## Current development — v0.36.18.401 Sweep Use Selection profile
 
+**Released on main via PR #86; squash merge `0b6ae224f717c9c95a408f1db9bc77ad52c09169`. Final corrected PR regression run `35673404201` passed.**
+
 The user hands-on passed .400 and requested `/nextbuild`.
 
 v0.36.18.401 completes the remaining profile-source option from the agreed Sweep design:
