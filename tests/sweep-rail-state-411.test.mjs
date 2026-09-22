@@ -21,7 +21,7 @@ test('411 setPathMode updates button state before stage redraw',()=>{
 
 test('411 Follow Edges has explicit visible active styling',()=>{
   assert.ok(source.includes("#sweepPathControls button.active"));
-  assert.ok(source.includes("background:rgba(74,134,205,.28)"));
+  assert.ok(source.includes('background:#eef1f7!important'));
 });
 
 test('411 candidate rails render above shaded faces',()=>{

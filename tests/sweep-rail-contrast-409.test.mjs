@@ -5,7 +5,7 @@ import fs from 'node:fs';
 const source=fs.readFileSync(new URL('../src/sweep-path.js',import.meta.url),'utf8');
 
 test('409 distinguishes candidate hot and accepted rail states',()=>{
-  assert.ok(source.includes('color:0xe8f8ff'));
+  assert.ok(source.includes('color:0xffffff'));
   assert.ok(source.includes('color:0xffc857'));
   assert.ok(source.includes('color:0x62d8ff'));
   assert.ok(source.includes('function hotRailOverlay(hit)'));

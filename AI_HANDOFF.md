@@ -1503,9 +1503,20 @@ v0.36.18.411 fixes the UI/visibility layer directly:
 - the rail guide remains temporary and only appears during PATH → Follow Edges
 - .410 dedicated edge-only picker remains unchanged
 
+## Current development — v0.36.18.412 hard Follow Edges active-state indicator
+
+User reported .411 still did not make Follow Edges visibly light.
+
+Audit confirmed global button CSS is not stripping the state, so .412 removes ambiguity from presentation:
+- Follow Edges / Draw Path selected styling is now driven by `aria-pressed="true"` as well as the `active` class
+- selected-state styling uses a dedicated Sweep selector with `!important`, independent of generic button styling
+- active Follow Edges changes its label to **Follow Edges · Active**; Draw Path does the same when active
+- candidate rail guide is made fully opaque white while active to maximize contrast over shaded surfaces
+- no picker, path, geometry or Tool Session behavior changes
+
 ## Next development step
 
-**Hands-on verify v0.36.18.411 on the same Knife-cut test: Follow Edges should visibly light immediately and internal cut edges should draw clearly over the shaded face.**
+**Hands-on verify v0.36.18.412. If Follow Edges is active, the button must literally read `Follow Edges · Active`. If not, the next investigation is state propagation rather than CSS.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.

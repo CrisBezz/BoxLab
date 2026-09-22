@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.412 hard Follow Edges active-state indicator
+
+- User reported .411 still did not visibly light Follow Edges.
+- Added a dedicated `aria-pressed="true"` selected-state selector with `!important` styling.
+- Active Follow Edges / Draw Path buttons now change their visible label to include `· Active`.
+- Candidate rail guide is fully opaque white for maximum contrast over shaded surfaces.
+- No Sweep picker, geometry or Tool Session behavior changed.
+
 ## 2026-09-22 — v0.36.18.411 Follow Edges explicit state and rail visibility
 
 - User reported .410 Follow Edges still did not visibly light as active and internal Knife-cut rails remained invisible on shaded faces.
