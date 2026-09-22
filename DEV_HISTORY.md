@@ -1,5 +1,20 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.428 Symmetry / Bisect foundation
+
+- Development resumed after the Beta 4 freeze with the next Phase D construction tool.
+- Audited existing Mirror first: it remains the authoritative non-destructive origin-based mirror modifier and is not replaced.
+- Added destructive Object-mode Symmetry / Bisect as a separate Tool Session.
+- Foundation uses the object local origin plane on X, Y or Z.
+- Keep + / Keep − clips polygon faces against the selected plane using shared edge-intersection vertices.
+- Mirror kept half optionally reflects the clipped result through the existing applyMirror path, welding coincident centre-plane vertices.
+- Bisect-only leaves the cut boundary open by design; Mirror produces the symmetric welded shell/surface result.
+- Session provides live translucent result preview plus visible symmetry plane, Cancel and Apply.
+- Apply is one Object-history step and commits back into the active editable mesh.
+- Existing non-destructive Mirror must be turned off before launching to avoid double-mirror ambiguity.
+- Frozen Beta 4 remains exactly v0.36.18.427 and is regression-protected.
+
+
 ## 2026-09-22 — Beta 4 freeze at v0.36.18.427
 
 - User requested a Beta 4 release after hands-on approval of the Edge Extrude workflow through .427.

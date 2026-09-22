@@ -777,3 +777,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Edge Extrude selection handoff: while armed, tap the selected outer edge to deselect it without losing Extrude or the active constraint
 - [ ] Edge Extrude selection handoff: tap a different valid boundary edge and confirm selection switches while Extrude + Plane/X/Y/Z/Auto remain armed
 - [ ] Edge Extrude direct handoff: drag a different valid boundary edge without preselecting it and confirm BoxLab switches selection and extrudes it in the same gesture
+
+- [ ] Symmetry/Bisect: Object mode launcher opens exclusive Tool Session with visible origin plane
+- [ ] Symmetry/Bisect X/Y/Z: changing axis updates live preview around the object local origin
+- [ ] Symmetry/Bisect Keep + / Keep −: retained side swaps correctly
+- [ ] Symmetry/Bisect Mirror ON: kept half is mirrored and centre seam is welded
+- [ ] Symmetry/Bisect Mirror OFF: destructive bisect leaves the cut boundary open
+- [ ] Symmetry/Bisect Apply is one Undo step and Cancel leaves source geometry unchanged
+- [ ] Frozen Beta 4 remains v0.36.18.427 while live main advances beyond it
