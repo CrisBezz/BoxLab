@@ -63,7 +63,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.428**
+- Current `version.json`: **0.36.18.429**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -86,6 +86,15 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.429 Solidify mirrored-object fix
+
+- Solidify now evaluates the existing non-destructive Mirror modifier before preflight, preview and Apply.
+- On Apply, Solidify bakes the mirrored evaluated mesh into the editable object and clears the old Mirror modifier to prevent double mirroring.
+- Mirrored open sheets now follow the same Solidify topology path as ordinary open sheets.
+- The operation remains one Object-history step and Beta 4 remains frozen at v0.36.18.427.
+
+**Hands-on verify .429:** create an open sheet crossing/meeting a Mirror plane, enable Mirror, launch Solidify, confirm preview covers the full mirrored form, Apply, and verify Mirror is now off while the resulting solid remains complete. Then Undo once.
 
 ## Current development — v0.36.18.428 Symmetry / Bisect foundation
 

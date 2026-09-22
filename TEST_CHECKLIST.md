@@ -785,3 +785,7 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Symmetry/Bisect Mirror OFF: destructive bisect leaves the cut boundary open
 - [ ] Symmetry/Bisect Apply is one Undo step and Cancel leaves source geometry unchanged
 - [ ] Frozen Beta 4 remains v0.36.18.427 while live main advances beyond it
+
+- [ ] Solidify with non-destructive Mirror enabled evaluates the mirrored result, previews correctly, and Apply produces one editable closed solid
+- [ ] Solidify Apply on a mirrored object bakes the Mirror result and clears the old Mirror modifier so geometry is not doubled
+- [ ] Undo after mirrored Solidify restores the pre-Solidify object/modifier state as one Object-history step

@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.429 Solidify mirrored-object fix
+
+- Hands-on testing after .428 exposed that Solidify could not operate on an object with the existing non-destructive Mirror modifier enabled.
+- Root cause: Solidify preflight/preview/apply read the editable base mesh while the viewport displayed applyMirror(base, mirrorAxes).
+- Solidify now evaluates the active Mirror modifier before preflight, preview and Apply.
+- Apply bakes the evaluated mirrored geometry into the editable mesh, then clears the old Mirror modifier so the result is not mirrored twice.
+- The baked mirrored Solidify result remains one Object-history step.
+- Added a regression fixture using a half-sheet mirrored across X and confirmed the evaluated mesh solidifies to closed topology.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-22 — v0.36.18.428 Symmetry / Bisect foundation
 
 - Development resumed after the Beta 4 freeze with the next Phase D construction tool.
