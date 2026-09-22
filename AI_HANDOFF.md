@@ -89,6 +89,8 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.430 Solidify preserves Mirror modifier
 
+**Released on main via PR #116; squash merge `4a393fa0021d196c9921cf978fd029f109035ce9`. Final regression run `35724663296` passed.**
+
 - .429's bake-on-apply approach was rejected after user hands-on testing; Shell on the same mirrored object worked correctly.
 - Solidify now follows Shell's modifier philosophy: preflight/apply operate on the authoritative base editable mesh, while Mirror remains non-destructive and enabled.
 - Only the translucent Solidify preview is evaluated through Mirror so the preview visually matches both sides.
