@@ -1447,6 +1447,8 @@ v0.36.18.407 adds a true local face-winding unification pass before the existing
 
 ## Current development — v0.36.18.408 Sweep Follow Edges rail guide
 
+**Released on main via PR #93; squash merge `e2bdaaa18b803fce0adb7d3ef4b63c8dad64b455`. PR regression run `35682072137` passed.**
+
 User hands-on passed .407 and reported a visibility problem in PATH → Follow Edges: BoxLab could snap to internal topology edges such as Knife cuts across a face, but those edges were not visibly drawn in the viewport.
 
 v0.36.18.408 adds an automatic temporary rail-edge guide:
