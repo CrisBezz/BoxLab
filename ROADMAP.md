@@ -98,7 +98,7 @@ Only add focused tools that suit BoxLab:
 ## Phase F — iPad UX polish
 
 - browser-selection interaction guard — **native Safari selection/callout suppressed across BoxLab UI while editable fields remain exempt in v0.36.18.345**
-- drawer consolidation — **v0.36.18.406 adds the reusable exclusive Tool Session host and migrates Sweep first; Array migrated in v0.36.18.416; v0.36.18.418 hardens shared Tool Session drawer ownership so viewport interaction cannot collapse Active Tools mid-session; migrate Solidify/Shell next, then Revolve**
+- **Solidify/Shell migrated to Tool Session in v0.36.18.421; Revolve next**
 - persistent tool modes
 - left-hand access
 - reduced tap count — **v0.36.18.406 makes Face/Edge → Sweep jump directly to PATH/Follow Edges and removes the need to hunt through Object Active Tools**
