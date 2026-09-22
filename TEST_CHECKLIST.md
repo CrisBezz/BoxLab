@@ -602,3 +602,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Existing profile vertices still drag normally
 - [ ] Open profile append behaviour remains unchanged
 - [ ] inserted node updates live Sweep preview immediately
+
+
+## Phase D — selected-profile Sweep anchor — .404
+
+- [ ] Face → Sweep → Follow Edges begins directly from a profile vertex on the selected rail, with no profile-centre lead-in
+- [ ] nearest profile vertex to the first selected rail endpoint becomes the anchor
+- [ ] Profile Plane translates so the anchor vertex sits exactly on that endpoint
+- [ ] selected profile shape/offset remains unchanged relative to the anchor
+- [ ] subsequent connected Follow Edges continue from the same rail path
+- [ ] same behaviour works for closed Edge-loop profile sources
+- [ ] Circle/Rectangle Sweep remains centre-anchored
+- [ ] Draw Path behaviour remains unchanged when no Follow Edge anchor is established
