@@ -1408,17 +1408,35 @@ v0.36.18.405 adds a final closed-shell orientation validation inside the Sweep g
 - open-profile surface sweeps and uncapped sweeps are not auto-flipped because they are not closed solids
 - .404 profile-anchor behaviour remains unchanged
 
+## Current development — v0.36.18.406 Tool Session UI foundation + Sweep UX
+
+The user confirmed .405 Sweep geometry/normals and requested a UI/UX audit before leaving Sweep. The audit found that recent complex tools were all appending controls into the same Active Tools container, causing Sweep to be buried among unrelated Object tools such as Array and Boolean.
+
+v0.36.18.406 introduces a reusable **Tool Session** UI foundation and migrates Sweep onto it:
+- new `src/tool-session-ui.js` owns an exclusive host at the top of Active Tools
+- while a Tool Session is active, normal Active Tools content is hidden rather than left visible underneath
+- previous drawer open/keep-open state is restored when the session ends
+- Sweep is the first Tool Session client
+- Sweep controls are regrouped into three persistent stages: **PROFILE / PATH / FINISH**
+- only the selected stage's controls are visible; unrelated Array/Boolean/Clean/Solidify controls are hidden while Sweep is active
+- selected Face/closed Edge-loop launch button is promoted near the top of the relevant contextual Active Tools and shortened to **Sweep**
+- Face/Edge → Sweep captures/applies the profile and jumps directly into **PATH** with Follow Edges active
+- Object Add → Sweep starts in **PROFILE**
+- PROFILE/PATH stage ownership is exclusive so the hidden editor cannot continue stealing viewport gestures
+- Apply Sweep ends the Tool Session and restores normal Active Tools
+- stable .405 Sweep geometry/topology code remains unchanged apart from version wiring
+
+This Tool Session pattern is the intended basis for later migration of Revolve, Array, Solidify and Shell; do not independently add more permanent complex-tool blocks to Active Tools.
+
 ## Next development step
 
-**Hands-on verify v0.36.18.405 on the same anchored triangular Face Sweep; geometry should remain identical to .404 but all closed-shell normals should face outward.**
+**Hands-on verify v0.36.18.406 Sweep Tool Session UX on iPad before migrating any other complex tool.**
 
-- Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
-- Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
-- With Follow Edges, select a connected edge route on existing geometry and confirm the live Sweep follows it with Geometry Snap either OFF or ON.
-- Switch to Draw Path and verify Pencil/mouse free path authoring plus optional Vertex/Edge/Face Geometry Snap, with no visible path plane.
-- Bounce between Profile and Path editing before Apply; live preview must update without restarting the Sweep.
-- Apply and confirm ordinary editable mesh appears immediately and the Profile Plane disappears.
-- After pass, refine only concrete Sweep issues before moving further through Phase D/E.
+- Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
+- Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.
+- Use PROFILE / PATH / FINISH tabs to move backward/forward without losing the live Sweep.
+- Apply Sweep and confirm the normal Active Tools UI returns immediately.
+- Add → Sweep from Object mode should begin on PROFILE rather than PATH.
 
 ## End-of-session requirement
 

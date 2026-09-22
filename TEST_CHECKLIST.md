@@ -624,3 +624,16 @@ Add new permanent regression checks below when future features need protection.
 - [ ] concave C-profile Sweep remains clean and outward-oriented
 - [ ] open-profile Sweep surfaces are not auto-reversed
 - [ ] uncapped closed-profile Sweep surfaces are not volume-flipped
+
+
+## Phase F — Tool Session / Sweep UX — .406
+
+- [ ] Face mode with one selected Face shows Sweep near the top of Face Active Tools, not appended at the bottom
+- [ ] closed Edge-loop selection shows the same compact Sweep launch near the top of Edge Active Tools
+- [ ] Face/Edge → Sweep takes exclusive ownership of Active Tools and opens directly on PATH
+- [ ] normal Object tools (Array, Boolean, Clean for SubD, Solidify, etc.) are hidden while the Sweep Tool Session is active
+- [ ] PROFILE / PATH / FINISH switch cleanly without scrolling through unrelated controls
+- [ ] switching PROFILE/PATH prevents the hidden editor from retaining viewport gesture ownership
+- [ ] Object Add → Sweep begins on PROFILE
+- [ ] Apply Sweep ends the Tool Session and restores the previous Active Tools drawer state
+- [ ] Sweep geometry, snapping, anchoring, normals and Apply behaviour remain unchanged from .405
