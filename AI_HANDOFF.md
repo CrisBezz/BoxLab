@@ -1380,6 +1380,8 @@ v0.36.18.403 adds the missing clamped point-to-segment distance helper, restorin
 
 ## Current development — v0.36.18.404 selected-profile Sweep anchor
 
+**Released on main via PR #89; squash merge `4b3b1c09e52341e0bc02e2c4f9614be919130e59`. PR regression run `35678133922` passed.**
+
 User feedback on .403: Face → Sweep worked, but Follow Edges swept from the profile centre to the first rail endpoint before following the path. In the supplied triangular-profile example, the desired rail anchor is the triangle's top-right profile vertex.
 
 v0.36.18.404 adds an explicit profile anchor for selected Face/Edge-loop profiles:
