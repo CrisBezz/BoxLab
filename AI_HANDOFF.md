@@ -1338,9 +1338,23 @@ v0.36.18.400 fixes the interaction ownership:
 - Sweep exposes an `editing` state so viewport gesture ownership is unambiguous
 - existing touch navigation remains untouched
 
+## Current development — v0.36.18.401 Sweep Use Selection profile
+
+The user hands-on passed .400 and requested `/nextbuild`.
+
+v0.36.18.401 completes the remaining profile-source option from the agreed Sweep design:
+- select exactly one Face or a closed selected Edge loop **before** Add → Sweep
+- Sweep snapshots that source before it switches to the new Sweep object
+- **Use Selection** appears with Circle / Rectangle / Draw and is enabled only when a valid source was captured
+- Use Selection aligns the Profile Plane to the selected planar geometry, preserving the actual outline as an editable closed Draw profile
+- closed Edge-loop capture requires one connected cycle with degree 2 at every loop vertex
+- non-planar or invalid selections are rejected rather than approximated
+- applying Use Selection clears any stale path because the profile origin/plane may move
+- the original source object remains untouched
+
 ## Next development step
 
-**Hands-on verify v0.36.18.400 Draw Profile point 4+ and Move disarm on iPad.**
+**Hands-on verify v0.36.18.401 Use Selection on one Face and one closed Edge loop on iPad.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
