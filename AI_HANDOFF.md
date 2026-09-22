@@ -1630,7 +1630,7 @@ v0.36.18.420 fixes the event-ownership conflict:
 
 ## Current development — v0.36.18.421 Solidify / Shell Tool Sessions
 
-**Development branch: feature/solidify-shell-tool-session-421.**
+**Released on main via PR #106; squash merge `f7ac0b986b01c5441be888d69bfeda88c92299d2`. Final PR regression run `35695761384` passed.**
 
 Following the hands-on pass of .420, the next Tool Session migration is Solidify/Shell.
 
