@@ -1,4 +1,4 @@
-import {boundarySelectionInfo,extrudeBoundaryEdges,perpendicularAxisDirection} from './edge-extrude-core.js?v=0.36.18.425';
+import {boundarySelectionInfo,extrudeBoundaryEdges,perpendicularAxisDirection,projectPerpendicularDelta} from './edge-extrude-core.js?v=0.36.18.426';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.423 — direct boundary Edge Extrude / ribbon workflow.
@@ -92,7 +92,9 @@ function constrainedDelta(drag,event,dx,dy){
   if(constraint==='plane'){
     const now=rayPlanePoint(event,drag.edgePlane);
     if(!now||!drag.planeStart)return{invalid:true,axis:'plane'};
-    return{delta:now.clone().sub(drag.planeStart),axis:'plane'};
+    const delta=projectPerpendicularDelta(now.clone().sub(drag.planeStart),drag.edgeDirection);
+    if(!delta)return{invalid:true,axis:'plane'};
+    return{delta,axis:'plane'};
   }
   if(constraint==='free'&&!drag.axisSnap)return null;
   if(['x','y','z'].includes(constraint)){
@@ -182,9 +184,12 @@ function setArmed(next){
   syncPlaneButton();
   if(status)status.textContent=armed?'Edge Extrude • drag selected boundary edge(s) • repeat to pull ribbon':'Edge mode';
 }
+precision?.querySelectorAll('[data-constraint]').forEach(control=>control.addEventListener('click',()=>queueMicrotask(syncPlaneButton),true));
+
 planeButton.addEventListener('click',event=>{
   if(!armed)return;
   event.preventDefault();event.stopImmediatePropagation();
+  if(!globalThis.__boxlabTransformArming?.active?.())globalThis.__boxlabTransformArming?.activateRealMove?.();
   globalThis.__boxlabTransformArming?.setConstraint?.('plane');
   syncPlaneButton();
   if(status)status.textContent='Edge Extrude • Plane constraint • free movement perpendicular to edge';
