@@ -11,6 +11,9 @@
 - Solidify direct viewport thickness dragging is preserved.
 - Shell Apple Pencil thickness-slider ownership / late Safari range guard is preserved.
 - Geometry algorithms, object history, selection semantics and protected multi-object transform are unchanged.
+- Initial PR regression run `35695668683` failed only because older tests still asserted the retired pre-Tool-Session drawer/button implementation; tests were updated to the new shared-session contract.
+- Released via PR **#106**; squash merge `f7ac0b986b01c5441be888d69bfeda88c92299d2`.
+- Final PR Topology regression run **35695761384 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.420 Vertex transform ownership
