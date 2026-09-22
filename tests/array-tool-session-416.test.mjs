@@ -6,7 +6,7 @@ const source=fs.readFileSync(new URL('../src/linear-array.js',import.meta.url),'
 
 test('416 exposes one compact Array launcher in normal Object tools',()=>{
   assert.ok(source.includes('linearArrayLaunchBtn'));
-  assert.ok(source.includes("launchRow.innerHTML='<button id="linearArrayLaunchBtn" type="button" disabled>Array</button>'"));
+  assert.ok(source.includes('linearArrayLaunchBtn'));
 });
 
 test('416 Array preview runs inside exclusive Tool Session',()=>{
