@@ -7,6 +7,8 @@
 - `applySelectionProfile({activateFollowEdges:true})` now sets `pathMode='edges'`, `editPath=true`, `sessionStage='path'`, refreshes rail refs and syncs path buttons before save/render events.
 - Removed the fragile follow-up `setPathMode()` / `setSweepStage()` re-lookup from the auto launch queue.
 - Manual Use Selection behaviour remains profile-only.
+- Released via PR **#98**; squash merge `e30e895e82453e85d3b8ac4e97dbfb0ebdc0a82f`.
+- Final corrected PR Topology regression run **35686329704 PASS**.
 
 ## 2026-09-22 — v0.36.18.412 hard Follow Edges active-state indicator
 
