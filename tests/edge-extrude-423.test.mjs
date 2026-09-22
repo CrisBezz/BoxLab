@@ -136,3 +136,14 @@ test('426 Plane control is Edge-Extrude-only and uses the grabbed edge as plane 
   assert.ok(ui.includes("projectPerpendicularDelta"));
   assert.ok(ui.includes("drag.edgeDirection"));
 });
+
+
+test('427 Edge Extrude preserves tool state while selection changes',()=>{
+  const ui=fs.readFileSync(new URL('../src/edge-extrude.js',import.meta.url),'utf8');
+  assert.ok(ui.includes("button.disabled=!armed&&!valid"));
+  assert.ok(ui.includes("const hit=hitAnyEdge(event)"));
+  assert.ok(ui.includes("bridge()?.set?.('edge',ids)"));
+  assert.ok(ui.includes("edge switched • tool + constraint preserved"));
+  assert.ok(ui.includes("edge deselected • tool + constraint preserved"));
+  assert.ok(ui.includes("setArmed(true)"));
+});
