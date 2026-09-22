@@ -63,7 +63,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.429**
+- Current `version.json`: **0.36.18.430**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -86,6 +86,17 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.430 Solidify preserves Mirror modifier
+
+- .429's bake-on-apply approach was rejected after user hands-on testing; Shell on the same mirrored object worked correctly.
+- Solidify now follows Shell's modifier philosophy: preflight/apply operate on the authoritative base editable mesh, while Mirror remains non-destructive and enabled.
+- Only the translucent Solidify preview is evaluated through Mirror so the preview visually matches both sides.
+- Apply no longer bakes or clears Mirror.
+- This avoids evaluated-mesh overlap/non-manifold ambiguity and keeps one Object-history step.
+- Beta 4 remains frozen at v0.36.18.427.
+
+**Hands-on verify .430:** on the same object that failed .429, leave Mirror ON, run Solidify, confirm the preview appears on both sides, Apply, verify Mirror remains ON and the full mirrored solid remains, then Undo once.
 
 ## Current development — v0.36.18.429 Solidify mirrored-object fix
 

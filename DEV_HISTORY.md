@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.430 Solidify preserves Mirror modifier
+
+- Hands-on testing showed the .429 bake-on-apply approach still failed on the user's mirrored object, while Shell worked correctly.
+- Comparing Shell and Solidify confirmed the better BoxLab modifier model: destructive tools should edit the authoritative base mesh and leave non-destructive Mirror active.
+- Solidify preflight/apply now operate on the base editable mesh again.
+- Solidify preview mirrors only the newly-created preview shell so the translucent preview matches the currently displayed mirrored object.
+- Apply no longer bakes or clears Mirror; the Mirror modifier remains ON after Solidify.
+- This matches Shell's proven modifier-preserving behavior and avoids double/overlapping evaluated topology during Solidify preflight.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-22 — v0.36.18.429 Solidify mirrored-object fix
 
 - Hands-on testing after .428 exposed that Solidify could not operate on an object with the existing non-destructive Mirror modifier enabled.

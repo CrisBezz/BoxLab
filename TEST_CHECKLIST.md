@@ -789,3 +789,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Solidify with non-destructive Mirror enabled evaluates the mirrored result, previews correctly, and Apply produces one editable closed solid
 - [ ] Solidify Apply on a mirrored object bakes the Mirror result and clears the old Mirror modifier so geometry is not doubled
 - [ ] Undo after mirrored Solidify restores the pre-Solidify object/modifier state as one Object-history step
+
+- [ ] Solidify on a mirrored open sheet operates on the base editable half/object and preserves the non-destructive Mirror modifier
+- [ ] mirrored Solidify preview shows the added shell geometry on both mirrored sides
+- [ ] Solidify Apply leaves Mirror enabled and the resulting mirrored solid visually intact
+- [ ] Undo after mirrored Solidify restores the pre-Solidify base mesh while Mirror remains a modifier
