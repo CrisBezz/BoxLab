@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.419**
+- Current `version.json`: **0.36.18.420**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -1614,6 +1614,19 @@ v0.36.18.419 keeps the .418 drawer fix and hardens END-copy teardown:
 - OrbitControls restoration remains paired with pointer release
 - free component Move implementation itself is untouched
 - protected multi-object transform stays pinned at v0.36.1.0
+
+## Current development — v0.36.18.420 Vertex transform ownership
+
+**Development branch: fix/vertex-transform-ownership-420.**
+
+Hands-on after .419 established a Vertex-only transform failure: vertices could be selected and bevelled, while Edge and Face transforms still worked.
+
+v0.36.18.420 fixes the event-ownership conflict:
+- Vertex Pick Assist now yields whenever Move / Scale / Rotate is armed
+- it no longer stops the selected-vertex pointerdown before the transform system can own the drag
+- ordinary Vertex tap selection still uses Vertex Pick Assist when no transform is armed
+- direct Vertex tools remain unchanged
+- Array .418/.419 fixes and protected multi-object transform remain intact
 
 ## Next development step
 
