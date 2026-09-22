@@ -11,6 +11,8 @@
 - Face/Edge → Sweep now auto-loads the selected profile and opens directly on PATH with Follow Edges active; Object Add → Sweep starts on PROFILE.
 - Apply Sweep ends the session and restores normal Active Tools.
 - Kept .405 Sweep geometry/topology behaviour unchanged; this build is UI ownership/workflow only.
+- Released via PR **#91**; squash merge `84bb7c68af215560061fda034f723d42be5dce2a`.
+- Final corrected PR Topology regression run **35680137829 PASS**.
 
 ## 2026-09-22 — v0.36.18.405 Sweep shell normal unification
 
