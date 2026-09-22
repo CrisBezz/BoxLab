@@ -89,6 +89,8 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.428 Symmetry / Bisect foundation
 
+**Released on main via PR #114; squash merge `72a30c2f5799d048235684e326da8fdf3a71fa2c`. Final regression run `35721391817` passed.**
+
 - New destructive Object-mode Symmetry / Bisect Tool Session; existing non-destructive Mirror remains separate and untouched.
 - Current plane is fixed to object-local origin and selectable X/Y/Z.
 - Keep + / Keep − clips faces against the plane with shared intersection vertices.
