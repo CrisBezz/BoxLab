@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.402 Sweep direct selection launch
+
+- Fixed the .401 workflow flaw where Face/Edge selection was lost when entering Object mode before Add → Sweep.
+- Added **Sweep from Selection** directly to Face and Edge Active Tools.
+- The component profile is captured before object-mode handoff, then Sweep is created and the saved profile is applied automatically.
+- Existing Use Selection profile validation/alignment remains authoritative; this build changes the launch path rather than duplicating profile conversion logic.
+
 ## 2026-09-22 — v0.36.18.401 Sweep Use Selection profile
 
 - User hands-on passed the .400 Sweep edit-ownership fixes and requested the next Sweep build.
