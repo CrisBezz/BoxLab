@@ -742,3 +742,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Apply creates evenly spaced linked instances in one scene-history step and restores normal Active Tools
 - [ ] Cancel removes preview without creating objects and restores normal Active Tools
 - [ ] changing active object or leaving Object mode cancels Array preview safely
+
+
+## Phase F — Array Tool Session ownership — .417
+
+- [ ] Array preview remains in exclusive Array Tool Session while repositioning the END copy
+- [ ] tapping/dragging the Array preview does not return Active Tools to normal Object tools
+- [ ] temporary active-object changes while Array is armed restore the original Array source instead of cancelling
+- [ ] Array Tool Session reasserts itself if displaced while preview remains armed
+- [ ] endpoint pointer-down is captured before normal object selection on the viewport
+- [ ] leaving Object mode still cancels Array safely
+- [ ] Apply and Cancel still exit Array and restore normal Active Tools
