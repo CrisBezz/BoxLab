@@ -87,6 +87,8 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.426 Edge Extrude Plane constraint
 
+**Released on main via PR #111; squash merge `3ecb2d9ba6004a6f6379985e4ae6064ca62356f6`. Final regression run `35709099628` passed.**
+
 - Edge Extrude now has an additional Plane constraint visible only while the tool is armed.
 - The grabbed seed edge defines the working plane normal; the plane passes through the selected-edge/chain centre.
 - Pointer movement is raycast onto that plane, allowing free two-dimensional extrusion while preventing movement along the seed edge direction.
