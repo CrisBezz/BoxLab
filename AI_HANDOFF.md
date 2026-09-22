@@ -1617,7 +1617,7 @@ v0.36.18.419 keeps the .418 drawer fix and hardens END-copy teardown:
 
 ## Current development — v0.36.18.420 Vertex transform ownership
 
-**Development branch: fix/vertex-transform-ownership-420.**
+**Released on main via PR #105; squash merge `80677f75d32329a452ccc517ce4d52379d0fb628`. PR regression run `35695257815` passed.**
 
 Hands-on after .419 established a Vertex-only transform failure: vertices could be selected and bevelled, while Edge and Face transforms still worked.
 
