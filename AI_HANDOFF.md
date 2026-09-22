@@ -1394,9 +1394,21 @@ v0.36.18.404 adds an explicit profile anchor for selected Face/Edge-loop profile
 - Circle/Rectangle/default-centred profiles remain centre-anchored
 - Draw Path remains unchanged unless a rail anchor has explicitly been established
 
+## Current development — v0.36.18.405 Sweep shell normal unification
+
+User feedback on .404: the selected-face anchor/rail relationship is now correct, but the applied closed Sweep still shows flipped normals.
+
+v0.36.18.405 adds a final closed-shell orientation validation inside the Sweep generator:
+- for closed profiles with both end caps, BoxLab computes the signed volume of the completed Sweep shell
+- if the shell is inward-wound, every face is reversed once before the EditableMesh is created
+- this acts as a Sweep-specific Unify Normals pass at generation time
+- it is independent of source face winding, selected anchor vertex, concavity and path bends
+- open-profile surface sweeps and uncapped sweeps are not auto-flipped because they are not closed solids
+- .404 profile-anchor behaviour remains unchanged
+
 ## Next development step
 
-**Hands-on verify v0.36.18.404 using the same triangular Face profile: its top-right vertex should sit directly on the first Follow Edge endpoint and remain on the rail through the sweep.**
+**Hands-on verify v0.36.18.405 on the same anchored triangular Face Sweep; geometry should remain identical to .404 but all closed-shell normals should face outward.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
