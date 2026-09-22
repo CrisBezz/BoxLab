@@ -8,6 +8,8 @@
 - Cached rail reference meshes during active Follow Edges to avoid cloning them on every Pencil hover event.
 - Draw Path retains the generic Vertex/Edge/Face snapper.
 - .409 rail contrast remains unchanged.
+- Released via PR **#95**; squash merge `19652f2ecff87f9de5a75fe0aaa678e132b88ee0`.
+- Final corrected PR Topology regression run **35684334992 PASS**.
 
 ## 2026-09-22 — v0.36.18.409 Sweep rail contrast and hot-edge feedback
 
