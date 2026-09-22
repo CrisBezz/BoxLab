@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.394**
+- Current `version.json`: **0.36.18.418**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -1588,6 +1588,19 @@ v0.36.18.417 hardens Array session ownership:
 - only explicit Apply, Cancel, or leaving Object mode ends the Array session
 - endpoint preview pointer-down now listens at document capture level (while still requiring the viewport canvas target), so Array gets first refusal before ordinary object selection logic
 - endpoint drag math, Count, linked-instance Apply and scene history remain unchanged
+
+## Current development — v0.36.18.418 Tool Session drawer ownership
+
+**Development branch: fix/array-session-drawer-418.**
+
+User hands-on showed .417 still failed visually: touching the Array END copy collapsed Active Tools immediately even though Array remained logically armed.
+
+v0.36.18.418 fixes the ownership at the shared Tool Session layer:
+- Tool Session now listens for Active Tools <details> toggle events
+- if another interaction path closes the drawer while a session is active, it is reopened on the next microtask
+- this keeps Array controls visible throughout END-copy interaction without changing normal drawer behaviour outside Tool Sessions
+- the fix automatically protects Sweep and future Solidify/Shell/Revolve Tool Session clients
+- Array geometry, endpoint drag math, linked-instance Apply, selection semantics and protected multi-object transform are unchanged
 
 ## Next development step
 
