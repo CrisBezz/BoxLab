@@ -25,5 +25,5 @@ test('409 hot edge updates only during PATH Follow Edges editing',()=>{
 test('409 hot state clears on stage or mode exit',()=>{
   assert.ok(source.includes("if(valid!=='path'){hotRailHit=null;railSnapRefs=null;}"));
   assert.ok(source.includes("if(mode!=='edges'){hotRailHit=null;railSnapRefs=null;}else railRefs(true)"));
-  assert.ok(source.includes('disposeOverlay();hotRailHit=null;controls.hidden=true'));
+  assert.ok(source.includes('disposeOverlay();hotRailHit=null;railSnapRefs=null;controls.hidden=true'));
 });
