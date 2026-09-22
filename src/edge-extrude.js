@@ -6,7 +6,7 @@ import * as THREE from 'three';
 // Pencil/mouse/touch-drag a selected edge. The newly-created outer rail
 // remains selected and Extrude stays armed for rapid repeated pulls.
 
-const VERSION='0.36.18.423';
+const VERSION='0.36.18.424';
 const canvas=document.querySelector('#viewport');
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const moveRow=edgeTools?.querySelector('.edge-move-actions');
@@ -90,7 +90,7 @@ function validate(m){
 }
 
 function syncButton(){
-  const valid=!!boundarySelectionInfo(mesh());
+  const valid=!!boundarySelectionInfo(mesh(),selectedEdges());
   button.disabled=!valid;
   button.classList.toggle('active',armed);
   if(armed&&!valid&& !drag){armed=false;button.classList.remove('active');}
@@ -102,7 +102,7 @@ function setArmed(next){
 }
 button.addEventListener('click',event=>{
   event.preventDefault();event.stopImmediatePropagation();
-  if(!boundarySelectionInfo(mesh()))return;
+  if(!boundarySelectionInfo(mesh(),selectedEdges()))return;
   setArmed(!armed);
 },true);
 

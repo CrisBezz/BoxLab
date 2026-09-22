@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import {EditableMesh} from '../src/mesh.js';
 import {installLooseTopology} from '../src/loose-topology.js';
 import {boundarySelectionInfo,extrudeBoundaryEdges} from '../src/edge-extrude-core.js';
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 installLooseTopology(EditableMesh);
 
@@ -80,13 +81,14 @@ test('423 rejects interior and branched edge selections',()=>{
   if(incident.length>2)assert.equal(boundarySelectionInfo(mesh,incident),null);
 });
 
-test('423 UI stays armed for repeated pulls and preserves protected transform pin',()=>{
+test('423/424 UI stays armed, validates the live selected edge ids, and preserves protected transform pin',()=>{
   const ui=fs.readFileSync(new URL('../src/edge-extrude.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.ok(ui.includes("button.id='edgeExtrudeBtn'"));
+  assert.ok(ui.includes("boundarySelectionInfo(mesh(),selectedEdges())"));
   assert.ok(ui.includes("setArmed(true)"));
   assert.ok(ui.includes("bridge()?.set?.('edge',next)"));
   assert.ok(ui.includes("repeat(3,minmax(0,1fr))"));
-  assert.ok(index.includes('src/edge-extrude.js?v=0.36.18.423'));
+  assert.ok(index.includes('src/edge-extrude.js?v='+version));
   assert.ok(index.includes('src/multi-object-transform.js?v=0.36.1.0'));
 });

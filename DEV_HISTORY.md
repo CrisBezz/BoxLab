@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.424 Edge Extrude arming hotfix
+
+- First hands-on .423 test showed a valid selected boundary edge with Edge Extrude incorrectly disabled.
+- Root cause was UI validation calling boundarySelectionInfo(mesh()) without passing the live selected edge IDs.
+- Both button enable/disable sync and the click-to-arm gate now call boundarySelectionInfo(mesh(), selectedEdges()).
+- Edge Extrude topology and ribbon generation are unchanged from .423.
+
+
 ## 2026-09-22 — v0.36.18.423 direct Edge Extrude ribbons
 
 - User promoted Edge Extrude ahead of Symmetry and requested fast repeated ribbon-style geometry creation.

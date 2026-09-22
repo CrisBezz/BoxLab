@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.423**
+- Current `version.json`: **0.36.18.424**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -84,6 +84,13 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.424 Edge Extrude arming hotfix
+
+- Hands-on .423 exposed a UI-only bug: valid selected boundary edges left the new Extrude button disabled.
+- Root cause: the button validator omitted selectedEdges() and therefore always saw an empty selection.
+- .424 passes the live selected edge IDs in both syncButton() and the click arming gate.
+- Ribbon topology/geometry remains the proven .423 implementation.
 
 ## Current development — v0.36.18.423 direct Edge Extrude ribbons
 
