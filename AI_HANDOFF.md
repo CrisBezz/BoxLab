@@ -87,6 +87,8 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.424 Edge Extrude arming hotfix
 
+**Released on main via PR #109; squash merge `9be062ec965ca8c21e5ea00d1ba784865598e1d6`. Final regression run `35705932023` passed.**
+
 - Hands-on .423 exposed a UI-only bug: valid selected boundary edges left the new Extrude button disabled.
 - Root cause: the button validator omitted selectedEdges() and therefore always saw an empty selection.
 - .424 passes the live selected edge IDs in both syncButton() and the click arming gate.
