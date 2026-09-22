@@ -7,6 +7,8 @@
 - Hot-edge detection uses the same forced external edge snap used by Follow Edges, so hover feedback matches the edge that would be selected.
 - Hot state clears on mode/stage exit and Sweep Apply/exit.
 - No Sweep geometry, snap logic or Tool Session structure changed.
+- Released via PR **#94**; squash merge `1ee7a5ff1fe2b6105d6cb26eebcef6a8484b96b8`.
+- Final corrected PR Topology regression run **35683804432 PASS**.
 
 ## 2026-09-22 — v0.36.18.408 Sweep Follow Edges rail guide
 
