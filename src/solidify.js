@@ -1,16 +1,35 @@
 import * as THREE from 'three';
 import { analyzeSolidifyInput, solidifyOpenMesh } from './solidify-core.js?v=0.36.18.374';
 
+const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const button=document.querySelector('#solidifyBtn');
 const input=document.querySelector('#solidifyThickness');
 const output=document.querySelector('#solidifyThicknessOut');
+const thicknessRow=input?.closest?.('.range-row')||input?.parentElement||null;
 const status=document.querySelector('#selectionStatus');
 const canvas=document.querySelector('#viewport');
-const activeToolsDrawer=document.querySelector('#editDrawer');
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
 
-let preview=null,previewObjectId=null,previewArmed=false,thicknessDrag=null,drawerLockState=null;
+const sessionControls=document.createElement('div');
+sessionControls.id='solidifySession';
+sessionControls.className='boxlab-tool-session-shell solidify-session-controls';
+sessionControls.hidden=true;
+sessionControls.innerHTML=`
+  <div class="boxlab-tool-session-title"><span>Solidify</span><span class="boxlab-tool-session-subtitle">Open sheet → closed solid</span></div>
+  <div class="boxlab-tool-session-section">Thickness</div>
+`;
+if(thicknessRow)sessionControls.appendChild(thicknessRow);
+const sessionActions=document.createElement('div');
+sessionActions.className='outliner-actions';
+sessionActions.style.gridTemplateColumns='repeat(2,1fr)';
+sessionActions.innerHTML='<button id="solidifyCancelBtn" type="button">Cancel</button><button id="solidifyApplyBtn" class="boxlab-tool-session-primary" type="button">Apply Solidify</button>';
+sessionControls.appendChild(sessionActions);
+objectTools?.appendChild(sessionControls);
+const applyButton=sessionControls.querySelector('#solidifyApplyBtn');
+const cancelButton=sessionControls.querySelector('#solidifyCancelBtn');
+
+let preview=null,previewObjectId=null,previewArmed=false,thicknessDrag=null;
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function mesh(){return globalThis.__boxlabBridgeState?.mesh||null;}
@@ -33,29 +52,14 @@ function setThickness(value,{rebuild=true}={}){
 }
 function syncThickness(){if(output)output.textContent=Number(thickness().toFixed(3)).toString();}
 function scene(){return globalThis.__boxlabBridgeState?.scene||null;}
-function lockActiveToolsDrawer(){
-  if(!activeToolsDrawer)return;
-  if(!drawerLockState)drawerLockState={
-    keepOpen:activeToolsDrawer.dataset.keepOpen,
-    open:activeToolsDrawer.open
-  };
-  activeToolsDrawer.dataset.keepOpen='true';
-  activeToolsDrawer.open=true;
+function toolSession(){return globalThis.__boxlabToolSession||null;}
+function beginSolidifySession(){
+  sessionControls.hidden=false;
+  toolSession()?.begin?.({id:'solidify',title:'Solidify',node:sessionControls,subtitle:'Thickness · Preview · Apply'});
 }
-function unlockActiveToolsDrawer(){
-  if(!activeToolsDrawer||!drawerLockState)return;
-  const previous=drawerLockState;
-  drawerLockState=null;
-  if(previous.keepOpen===undefined)delete activeToolsDrawer.dataset.keepOpen;
-  else activeToolsDrawer.dataset.keepOpen=previous.keepOpen;
-  // Do not force-close after a successful/cancelled Solidify session;
-  // the user may still need the Object tools. Only restore an originally-open drawer.
-  if(previous.open)activeToolsDrawer.open=true;
-}
-function keepDrawerVisible(){
-  if(previewArmed&&activeToolsDrawer&&!activeToolsDrawer.open){
-    queueMicrotask(()=>{if(previewArmed)activeToolsDrawer.open=true;});
-  }
+function endSolidifySession(){
+  sessionControls.hidden=true;
+  toolSession()?.end?.('solidify');
 }
 function disposePreview(){
   if(preview?.parent)preview.parent.remove(preview);
@@ -81,8 +85,7 @@ function endThicknessDrag(){
 function cancelPreview({silent=false}={}){
   endThicknessDrag();
   disposePreview();previewArmed=false;previewObjectId=null;
-  unlockActiveToolsDrawer();
-  if(button)button.textContent='Solidify';
+  endSolidifySession();
   if(!silent)setStatus('Solidify preview cancelled');
 }
 function buildPreview(){
@@ -137,7 +140,8 @@ function update(){
   const object=activeObject(),live=mesh();
   if(previewArmed&&(selectionMode()!=='object'||object?.id!==previewObjectId))cancelPreview({silent:true});
   const eligible=selectionMode()==='object'&&!!object&&!!live&&!object.locked&&object.kind!=='reference';
-  if(button)button.disabled=!eligible;
+  if(button)button.disabled=!eligible||previewArmed;
+  if(previewArmed&&!toolSession()?.isActive?.('solidify'))beginSolidifySession();
   syncThickness();
 }
 function forceRender(){
@@ -218,43 +222,40 @@ canvas?.addEventListener('pointerdown',beginThicknessDrag,true);
 canvas?.addEventListener('pointermove',moveThicknessDrag,true);
 canvas?.addEventListener('pointerup',finishThicknessDrag,true);
 canvas?.addEventListener('pointercancel',finishThicknessDrag,true);
-activeToolsDrawer?.addEventListener('toggle',keepDrawerVisible);
-
 button?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh();
-  if(!object||!live||object.locked||object.kind==='reference'||selectionMode()!=='object')return;
-
-  if(!previewArmed){
-    const preflight=analyzeSolidifyInput(live);
-    if(!preflight.ok){setStatus(preflightMessage(preflight.reason));return;}
-    previewArmed=true;previewObjectId=object.id;
-    lockActiveToolsDrawer();
-    button.textContent='Apply Solidify';
-    buildPreview();
-    return;
-  }
-
-  if(object.id!==previewObjectId){cancelPreview({silent:true});return;}
+  if(!object||!live||object.locked||object.kind==='reference'||selectionMode()!=='object'||previewArmed)return;
+  const preflight=analyzeSolidifyInput(live);
+  if(!preflight.ok){setStatus(preflightMessage(preflight.reason));return;}
+  previewArmed=true;previewObjectId=object.id;
+  beginSolidifySession();
+  buildPreview();
+});
+applyButton?.addEventListener('click',()=>{
+  const object=activeObject(),live=mesh();
+  if(!previewArmed||!object||!live||object.id!==previewObjectId){cancelPreview({silent:true});return;}
   endThicknessDrag();
   globalThis.__boxlabObjectHistory?.checkpoint?.();
   const result=solidifyOpenMesh(live,thickness());
   if(!result.ok){setStatus(`Solidify rolled back • ${result.reason||'topology validation failed'}`);cancelPreview({silent:true});forceRender();return;}
   disposePreview();previewArmed=false;previewObjectId=null;
-  unlockActiveToolsDrawer();
-  button.textContent='Solidify';
+  endSolidifySession();
   manager()?.saveActive?.();
-  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.381',...result};
+  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.421',...result};
   setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid`);
   forceRender();
+  update();
 });
+cancelButton?.addEventListener('click',()=>cancelPreview());
 
 window.addEventListener('boxlab-object-manager-ready',update);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(update));
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(update)));
-window.addEventListener('beforeunload',()=>{endThicknessDrag();disposePreview();unlockActiveToolsDrawer();});
+window.addEventListener('beforeunload',()=>{endThicknessDrag();disposePreview();endSolidifySession();});
 update();
 
 globalThis.__boxlabSolidifyPreview={
+  version:'0.36.18.421',
   get active(){return previewArmed;},
   get dragging(){return!!thicknessDrag;},
   rebuild:buildPreview,

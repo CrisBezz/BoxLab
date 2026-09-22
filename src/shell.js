@@ -3,28 +3,43 @@ import { analyzeShellInput, shellClosedMesh } from './shell-core.js?v=0.36.18.37
 
 const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
 const status=document.querySelector('#selectionStatus');
-const activeToolsDrawer=document.querySelector('#editDrawer');
 const canvas=document.querySelector('#viewport');
 
-let preview=null,previewArmed=false,previewObjectId=null,previewFaces=[],drawerLockState=null,pencilThicknessPointer=null,pencilThicknessValue=null,pencilReleaseFrame=null;
+let preview=null,previewArmed=false,previewObjectId=null,previewFaces=[],pencilThicknessPointer=null,pencilThicknessValue=null,pencilReleaseFrame=null;
 
-const controls=document.createElement('div');
-controls.className='shell-face-controls';
-controls.innerHTML=`
+const launchControls=document.createElement('div');
+launchControls.className='shell-face-controls shell-launch-controls';
+launchControls.innerHTML=`
   <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
     <button id="shellFacesBtn" type="button" disabled>Shell</button>
   </div>
+`;
+faceTools?.appendChild(launchControls);
+
+const controls=document.createElement('div');
+controls.id='shellSession';
+controls.className='boxlab-tool-session-shell shell-face-controls';
+controls.hidden=true;
+controls.innerHTML=`
+  <div class="boxlab-tool-session-title"><span>Shell</span><span class="boxlab-tool-session-subtitle">Closed solid → hollow solid</span></div>
+  <div class="boxlab-tool-session-section">Thickness</div>
   <label class="range-row shell-thickness-row">
     <span>Shell Thickness</span>
     <input id="shellThickness" type="range" min="0.01" max="1" value="0.2" step="0.01"/>
     <output id="shellThicknessOut">0.2</output>
   </label>
+  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
+    <button id="shellCancelBtn" type="button">Cancel</button>
+    <button id="shellApplyBtn" class="boxlab-tool-session-primary" type="button">Apply Shell</button>
+  </div>
 `;
 faceTools?.appendChild(controls);
 
-const button=controls.querySelector('#shellFacesBtn');
+const button=launchControls.querySelector('#shellFacesBtn');
 const input=controls.querySelector('#shellThickness');
 const output=controls.querySelector('#shellThicknessOut');
+const applyButton=controls.querySelector('#shellApplyBtn');
+const cancelButton=controls.querySelector('#shellCancelBtn');
 
 function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
@@ -108,26 +123,18 @@ function disposePreview(){
   }
   preview=null;
 }
-function lockDrawer(){
-  if(!activeToolsDrawer)return;
-  if(!drawerLockState)drawerLockState={keepOpen:activeToolsDrawer.dataset.keepOpen,open:activeToolsDrawer.open};
-  activeToolsDrawer.dataset.keepOpen='true';
-  activeToolsDrawer.open=true;
+function toolSession(){return globalThis.__boxlabToolSession||null;}
+function beginShellSession(){
+  controls.hidden=false;
+  toolSession()?.begin?.({id:'shell',title:'Shell',node:controls,subtitle:'Opening Faces · Thickness · Apply'});
 }
-function unlockDrawer(){
-  if(!activeToolsDrawer||!drawerLockState)return;
-  const old=drawerLockState;drawerLockState=null;
-  if(old.keepOpen===undefined)delete activeToolsDrawer.dataset.keepOpen;
-  else activeToolsDrawer.dataset.keepOpen=old.keepOpen;
-  if(old.open)activeToolsDrawer.open=true;
-}
-function keepDrawerVisible(){
-  if(previewArmed&&activeToolsDrawer&&!activeToolsDrawer.open)queueMicrotask(()=>{if(previewArmed)activeToolsDrawer.open=true;});
+function endShellSession(){
+  controls.hidden=true;
+  toolSession()?.end?.('shell');
 }
 function cancelPreview({silent=false}={}){
   disposePreview();previewArmed=false;previewObjectId=null;previewFaces=[];
-  unlockDrawer();
-  if(button)button.textContent='Shell';
+  endShellSession();
   if(!silent)setStatus('Shell preview cancelled');
 }
 function buildPreview(){
@@ -173,9 +180,10 @@ function sync(){
   syncThickness();
   const object=activeObject(),live=mesh(),ids=selectedFaces();
   const eligible=!!object&&!!live&&!object.locked&&object.kind!=='reference'&&ids.length>0;
-  if(button)button.disabled=!eligible;
+  if(button)button.disabled=!eligible||previewArmed;
   if(previewArmed){
     if(object?.id!==previewObjectId||bridge()?.mode?.()!=='face')cancelPreview({silent:true});
+    else if(!toolSession()?.isActive?.('shell'))beginShellSession();
   }
 }
 function forceRender(){
@@ -198,45 +206,41 @@ input?.addEventListener('pointerdown',beginPencilThickness,{capture:true,passive
 input?.addEventListener('pointermove',movePencilThickness,{capture:true,passive:false});
 input?.addEventListener('pointerup',endPencilThickness,{capture:true,passive:false});
 input?.addEventListener('pointercancel',endPencilThickness,{capture:true,passive:false});
-activeToolsDrawer?.addEventListener('toggle',keepDrawerVisible);
-
 button?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh(),ids=selectedFaces();
-  if(!object||!live||object.locked||object.kind==='reference')return;
-
-  if(!previewArmed){
-    const check=analyzeShellInput(live,ids);
-    if(!check.ok){setStatus(message(check));return;}
-    previewArmed=true;previewObjectId=object.id;previewFaces=[...check.selectedFaces];
-    lockDrawer();
-    button.textContent='Apply Shell';
-    buildPreview();
-    return;
-  }
-
-  if(object.id!==previewObjectId){cancelPreview({silent:true});return;}
+  if(!object||!live||object.locked||object.kind==='reference'||previewArmed)return;
+  const check=analyzeShellInput(live,ids);
+  if(!check.ok){setStatus(message(check));return;}
+  previewArmed=true;previewObjectId=object.id;previewFaces=[...check.selectedFaces];
+  beginShellSession();
+  buildPreview();
+});
+applyButton?.addEventListener('click',()=>{
+  const object=activeObject(),live=mesh();
+  if(!previewArmed||!object||!live||object.id!==previewObjectId){cancelPreview({silent:true});return;}
   globalThis.__boxlabObjectHistory?.checkpoint?.();
   const result=shellClosedMesh(live,previewFaces,thickness());
   if(!result.ok){setStatus(message(result));cancelPreview({silent:true});forceRender();return;}
   disposePreview();previewArmed=false;previewObjectId=null;previewFaces=[];
-  unlockDrawer();
-  button.textContent='Shell';
+  endShellSession();
   bridge()?.set?.('face',[]);
   manager()?.saveActive?.();
-  globalThis.__boxlabShellLastResult={version:'0.36.18.380',...result};
+  globalThis.__boxlabShellLastResult={version:'0.36.18.421',...result};
   setStatus(`Shell • ${result.removedFaces} opening face${result.removedFaces===1?'':'s'} • thickness ${Number(result.thickness.toFixed(3))} • closed solid`);
   forceRender();
+  sync();
 });
+cancelButton?.addEventListener('click',()=>cancelPreview());
 
 window.addEventListener('boxlab-object-manager-ready',sync);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
-window.addEventListener('beforeunload',()=>{disposePreview();unlockDrawer();});
+window.addEventListener('beforeunload',()=>{disposePreview();endShellSession();});
 sync();
 
 globalThis.__boxlabShell={
-  version:'0.36.18.380',
+  version:'0.36.18.421',
   analyze:analyzeShellInput,
   cancel:cancelPreview,
   get active(){return previewArmed;}

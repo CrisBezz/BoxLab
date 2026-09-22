@@ -14,9 +14,10 @@ test('Solidify live wrapper follows the current app build while hard-fold core s
 });
 
 test('374 Solidify uses explicit preview then apply workflow',()=>{
-  assert.match(ui,/button\.textContent='Apply Solidify'/);
+  assert.match(ui,/solidifyApplyBtn/);
   assert.match(ui,/const working=live\.clone\(\)/);
   assert.match(ui,/previewArmed=false/);
+  assert.match(ui,/applyButton\?\.addEventListener\('click'/);
 });
 
 test('374 hard-fold core uses plane-intersection solver rather than averaged vertex normal',()=>{
