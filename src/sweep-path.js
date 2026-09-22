@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.403';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.404';
 
-const VERSION='0.36.18.403';
+const VERSION='0.36.18.404';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -67,6 +67,7 @@ function ensureMeta(o){
   m.profileSides=Math.max(3,Math.min(24,Math.round(Number(m.profileSides??m.sides)||8)));
   m.editProfile=!!m.editProfile;
   if(typeof m.profileClosed!=='boolean')m.profileClosed=m.profileType!=='draw';
+  if(!Number.isInteger(m.profileAnchorIndex))m.profileAnchorIndex=null;
   m.pathMode||='edges';
   m.pathPoints||=[];
   m.pathHistory||=[];
@@ -93,11 +94,23 @@ function profile2D(m){
   const out=[];for(let i=0;i<m.profileSides;i++){const a=Math.PI*2*i/m.profileSides;out.push({x:Math.cos(a)*r,y:Math.sin(a)*r});}return out;
 }
 function profileWorld(frame,m){return profile2D(m).map(p=>frame.center.clone().addScaledVector(frame.u,p.x).addScaledVector(frame.v,p.y));}
+function profileAnchor2D(m){
+  const pts=profile2D(m),i=Number.isInteger(m.profileAnchorIndex)?m.profileAnchorIndex:null;
+  return i!==null&&pts[i]?{x:pts[i].x,y:pts[i].y}:{x:0,y:0};
+}
+function profileAnchorWorld(frame,m){
+  const a=profileAnchor2D(m);
+  return frame.center.clone().addScaledVector(frame.u,a.x).addScaledVector(frame.v,a.y);
+}
+function sweepProfile2D(m){
+  const a=profileAnchor2D(m);
+  return profile2D(m).map(p=>({x:p.x-a.x,y:p.y-a.y}));
+}
 function pathWorld(frame,m){
-  const rest=m.pathPoints.map(p=>new THREE.Vector3(Number(p.x)||0,Number(p.y)||0,Number(p.z)||0));
-  if(!rest.length)return[frame.center.clone()];
-  if(rest[0].distanceToSquared(frame.center)<1e-8)return rest;
-  return[frame.center.clone(),...rest];
+  const origin=profileAnchorWorld(frame,m),rest=m.pathPoints.map(p=>new THREE.Vector3(Number(p.x)||0,Number(p.y)||0,Number(p.z)||0));
+  if(!rest.length)return[origin];
+  if(rest[0].distanceToSquared(origin)<1e-8)return rest;
+  return[origin,...rest];
 }
 function localProfile(frame,world){const rel=world.clone().sub(frame.center);return{x:rel.dot(frame.u),y:rel.dot(frame.v)};}
 function evaluatedMesh(object){return globalThis.__boxlabObjectGeometry?.evaluatedMesh?.(object.id)||object.mesh;}
@@ -227,7 +240,7 @@ function applySelectionProfile(){
   const pv=candidate.planeVertices||[];if(pv.length!==4){setStatus('Sweep - saved profile selection is unavailable');return false;}
   const plane=new EditableMesh(pv.map(p=>new THREE.Vector3(Number(p.x)||0,Number(p.y)||0,Number(p.z)||0)),[[0,1,2,3]]);
   replaceMesh(mesh,plane);
-  m.profileType='draw';m.profileClosed=true;m.profilePoints=(candidate.profilePoints||[]).map(p=>({...p}));m.profileHistory=[];
+  m.profileType='draw';m.profileClosed=true;m.profilePoints=(candidate.profilePoints||[]).map(p=>({...p}));m.profileHistory=[];m.profileAnchorIndex=null;
   m.editProfile=false;m.editPath=false;m.pathPoints=[];m.pathHistory=[];m.selectedPathPoint=null;m.interacted=true;
   m.initialPlaneSignature=planeSignature(mesh);
   disarmTransforms();lockTools();manager()?.saveActive?.();
@@ -277,7 +290,7 @@ function disposeOverlay(){if(!overlay)return;overlay.removeFromParent();overlay.
 function pointerRay(event){const rect=canvas.getBoundingClientRect();pointer.set(((event.clientX-rect.left)/rect.width)*2-1,-(((event.clientY-rect.top)/rect.height)*2-1));raycaster.setFromCamera(pointer,state()?.camera);}
 function screenPoint(world){const camera=state()?.camera,rect=canvas?.getBoundingClientRect();if(!camera||!rect)return null;const p=world.clone().project(camera);return new THREE.Vector2(rect.left+(p.x*.5+.5)*rect.width,rect.top+(-p.y*.5+.5)*rect.height);}
 function planeSurface(frame){const p2=frame.p1.clone().add(frame.p3).sub(frame.p0),g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute([frame.p0.x,frame.p0.y,frame.p0.z,frame.p1.x,frame.p1.y,frame.p1.z,p2.x,p2.y,p2.z,frame.p0.x,frame.p0.y,frame.p0.z,p2.x,p2.y,p2.z,frame.p3.x,frame.p3.y,frame.p3.z],3));const m=new THREE.MeshBasicMaterial({transparent:true,opacity:.08,side:THREE.DoubleSide,depthTest:false,depthWrite:false});return new THREE.Mesh(g,m);}
-function buildResult(frame,m){return buildSweepProfile(pathWorld(frame,m),profile2D(m),{profileClosed:m.profileClosed,capStart:m.caps,capEnd:m.caps,profileU:frame.u,profileV:frame.v,profileNormal:frame.normal});}
+function buildResult(frame,m){return buildSweepProfile(pathWorld(frame,m),sweepProfile2D(m),{profileClosed:m.profileClosed,capStart:m.caps,capEnd:m.caps,profileU:frame.u,profileV:frame.v,profileNormal:frame.normal});}
 function lineOverlay(points,closed=false){
   if(points.length<2)return null;const list=closed?[...points,points[0]]:points;
   return new THREE.Line(new THREE.BufferGeometry().setFromPoints(list),new THREE.LineBasicMaterial({depthTest:false,depthWrite:false}));
@@ -321,14 +334,37 @@ function disarmOther(m,which){
   if(which!=='path')m.editPath=false;
   if(which==='profile'||which==='path')disarmTransforms();
 }
+function alignSelectionProfileAnchorToEdge(frame,m,hit){
+  if(!m.selectionProfile||m.profileType!=='draw'||!m.profilePoints.length||m.pathPoints.length)return null;
+  const world=profileWorld(frame,m),ends=[hit.a,hit.b];
+  let best=null;
+  for(let i=0;i<world.length;i++)for(let e=0;e<2;e++){
+    const d=world[i].distanceToSquared(ends[e]);
+    if(!best||d<best.d)best={i,e,d};
+  }
+  if(!best)return null;
+  const start=ends[best.e].clone(),end=ends[1-best.e].clone(),anchorWorld=world[best.i];
+  const delta=start.clone().sub(anchorWorld),mesh=liveMesh();
+  if(mesh?.vertices?.length)for(const v of mesh.vertices)v.add(delta);
+  m.profileAnchorIndex=best.i;
+  m.initialPlaneSignature=planeSignature(mesh);
+  manager()?.saveActive?.();
+  return{start,end,index:best.i};
+}
 function addEdgeToPath(event,frame,m){
   const hit=externalGeometrySnap(event,captureSnapReferences(),true);
   if(!hit||hit.kind!=='Edge'||!hit.a||!hit.b){setStatus('Sweep - Follow Edges: tap an existing visible edge');return false;}
   pushPathHistory(m);
+  const anchored=alignSelectionProfileAnchorToEdge(frame,m,hit);
+  if(anchored){
+    m.pathPoints.push({x:anchored.end.x,y:anchored.end.y,z:anchored.end.z});
+    m.selectedPathPoint=0;m.interacted=true;lockTools();
+    setStatus('Sweep - Profile vertex '+(anchored.index+1)+' anchored to '+hit.name+' path');return true;
+  }
   const current=pathWorld(frame,m),tail=current.at(-1);let a=hit.a,b=hit.b;if(tail.distanceTo(b)<tail.distanceTo(a)){const t=a;a=b;b=t;}
   const tol=Math.max(.02,Math.hypot(frame.width,frame.height)*.025);
   if(m.pathPoints.length&&tail.distanceTo(a)>tol){m.pathHistory.pop();setStatus('Sweep - choose an edge connected to the current path end');return false;}
-  if(!m.pathPoints.length&&frame.center.distanceTo(a)>tol)m.pathPoints.push({x:a.x,y:a.y,z:a.z});
+  if(!m.pathPoints.length&&profileAnchorWorld(frame,m).distanceTo(a)>tol)m.pathPoints.push({x:a.x,y:a.y,z:a.z});
   m.pathPoints.push({x:b.x,y:b.y,z:b.z});m.selectedPathPoint=m.pathPoints.length-1;m.interacted=true;lockTools();
   setStatus('Sweep - Follow Edges - '+hit.name);return true;
 }
@@ -423,7 +459,7 @@ function setProfileType(type){
 }
 function setPathMode(mode){
   const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
-  m.pathMode=mode;m.editPath=true;disarmOther(m,'path');m.interacted=true;lockTools();
+  m.pathMode=mode;m.editPath=true;disarmOther(m,'path');if(mode!=='edges'&&!m.pathPoints.length)m.profileAnchorIndex=null;m.interacted=true;lockTools();
   setStatus(mode==='edges'?'Sweep - Follow Edges: tap connected existing edges':'Sweep - Draw Path: Pencil/mouse draws; Geometry Snap targets model geometry');
   lastSignature='';
 }
