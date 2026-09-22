@@ -9,6 +9,8 @@
 - The baked mirrored Solidify result remains one Object-history step.
 - Added a regression fixture using a half-sheet mirrored across X and confirmed the evaluated mesh solidifies to closed topology.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#115**; squash merge `70831c5a24d975417c81adb16d6e56a76d4191cc`.
+- Final PR Topology regression run **35723194132 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.428 Symmetry / Bisect foundation
