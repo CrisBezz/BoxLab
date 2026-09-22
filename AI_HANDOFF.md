@@ -87,6 +87,8 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.427 Edge Extrude selection handoff
 
+**Released on main via PR #112; squash merge `387e7d00470e4aa300f0212ceddf9446cdd66fb9`. Final regression run `35713131703` passed.**
+
 - Edge Extrude tap handling now distinguishes selection changes from actual drag extrusion.
 - While armed, tapping the current selected edge deselects it and leaves Extrude + the active Plane/X/Y/Z/Auto constraint armed.
 - Tapping a different valid boundary edge switches selection to it without leaving the tool.
