@@ -30,7 +30,8 @@ test('custom profile follows a bent three-point path without changing ring size'
 test('Sweep runtime exposes profile-first dual path workflow',async()=>{
   const fs=await import('node:fs/promises');
   const source=await fs.readFile(new URL('../src/sweep-path.js',import.meta.url),'utf8');
-  assert.match(source,/Profile Plane/);
+  assert.match(source,/function constructionPlane\(\)/);
+  assert.match(source,/Profile source/);
   assert.match(source,/Follow Edges/);
   assert.match(source,/Draw Path/);
   assert.match(source,/profileType/);
