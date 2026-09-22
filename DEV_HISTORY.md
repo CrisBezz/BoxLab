@@ -7,6 +7,8 @@
 - Array now explicitly releases viewport pointer capture when END-copy drag ends, is cancelled, or is torn down by Apply/mode/session changes.
 - Existing OrbitControls restoration remains in the same teardown path.
 - Free component Move code is unchanged; protected multi-object transform remains pinned at v0.36.1.0.
+- Released via PR **#104**; squash merge `c2b054d418a5c3b7e9f4fdfc747b6109c6c95fcb`.
+- Final PR Topology regression run **35691232067 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.418 Tool Session drawer ownership
