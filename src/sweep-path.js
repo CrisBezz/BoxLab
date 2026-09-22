@@ -264,7 +264,7 @@ function applySelectionProfile(){
   m.initialPlaneSignature=planeSignature(mesh);
   disarmTransforms();lockTools();manager()?.saveActive?.();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
-  setStatus('Sweep - '+candidate.label+' loaded as editable Profile');
+  setStatus('Sweep - '+candidate.label+' loaded as Profile');
   lastSignature='';return true;
 }
 
@@ -460,10 +460,11 @@ function addSweepPath(selectionProfileOverride=null,autoUseSelection=false){
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
   const o=man.addMesh(constructionPlane(),'Sweep',{enterObjectMode:true});if(!o)return;
   cachedId=o.id;cachedObject=o;
-  o.sweepPath={version:VERSION,profileType:'circle',profileClosed:true,profilePoints:[],profileHistory:[],profileSize:.25,profileSides:8,editProfile:false,pathMode:'edges',pathPoints:[],pathHistory:[],editPath:false,selectedPathPoint:null,caps:true,interacted:false,selectionProfile,initialPlaneSignature:planeSignature(liveMesh())};
+  o.sweepPath={version:VERSION,profileType:'circle',profileClosed:true,profilePoints:[],profileHistory:[],profileSize:.25,profileSides:8,editProfile:false,pathMode:'edges',pathPoints:[],pathHistory:[],editPath:false,selectedPathPoint:null,caps:true,interacted:false,selectionProfile,sessionStage:selectionProfile&&autoUseSelection?'path':'profile',initialPlaneSignature:planeSignature(liveMesh())};
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
-  setStatus(selectionProfile?'Sweep added - '+selectionProfile.label+' captured - Use Selection or choose another Profile':'Sweep added - position/snap the Profile Plane - then choose Profile and Path');lastSignature='';
-  if(selectionProfile&&autoUseSelection)queueMicrotask(()=>applySelectionProfile());
+  beginSweepSession(o.sweepPath.sessionStage);
+  setStatus(selectionProfile?'Sweep - '+selectionProfile.label+' captured':'Sweep - choose a Profile, then Path');lastSignature='';
+  if(selectionProfile&&autoUseSelection)queueMicrotask(()=>{applySelectionProfile();setPathMode('edges');setSweepStage('path');});
 }
 function applySweep(){
   const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return false;
@@ -471,7 +472,7 @@ function applySweep(){
   if(!result.ok){setStatus('Sweep refused - '+result.reason);return false;}
   globalThis.__boxlabHistory?.push(mesh.clone());replaceMesh(mesh,result.mesh);m.editProfile=false;m.editPath=false;m.applied=true;unlockTools();
   o.name='Sweep';manager()?.saveActive?.();globalThis.__boxlabObjectSelection?.single?.(o.id);globalThis.__boxlabBooleanUX?.sync?.();
-  disposeOverlay();controls.hidden=true;lastSignature='';document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  disposeOverlay();controls.hidden=true;endSweepSession();lastSignature='';document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   setStatus('Sweep applied - '+result.profile.length+'-point profile - '+result.points.length+' path points');return true;
 }
 function installPenRange(input,onValue){let pointerId=null,owned=null,releaseFrame=null;const min=()=>Number(input.min),max=()=>Number(input.max),step=()=>Number(input.step)||1;const map=x=>{const r=input.getBoundingClientRect(),t=THREE.MathUtils.clamp((x-r.left)/Math.max(1,r.width),0,1);return Math.round((min()+(max()-min())*t)/step())*step();};const apply=v=>{owned=String(v);input.value=owned;onValue();};const enforce=()=>{if(owned==null)return false;if(input.value!==owned)input.value=owned;return true;};input.addEventListener('pointerdown',e=>{if(e.pointerType!=='pen')return;pointerId=e.pointerId;e.preventDefault();e.stopPropagation();input.setPointerCapture?.(pointerId);apply(map(e.clientX));},{capture:true,passive:false});input.addEventListener('pointermove',e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();apply(map(e.clientX));},{capture:true,passive:false});const finish=e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();if(input.hasPointerCapture?.(pointerId))input.releasePointerCapture(pointerId);pointerId=null;if(releaseFrame)cancelAnimationFrame(releaseFrame);releaseFrame=requestAnimationFrame(()=>{enforce();releaseFrame=requestAnimationFrame(()=>{enforce();owned=null;releaseFrame=null;});});};input.addEventListener('pointerup',finish,{capture:true,passive:false});input.addEventListener('pointercancel',finish,{capture:true,passive:false});input.addEventListener('input',()=>{enforce();onValue();});input.addEventListener('change',()=>{if(enforce())onValue();});}
@@ -492,14 +493,17 @@ function refreshSelectionLaunchButtons(){
 function setProfileType(type){
   const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
   m.profileType=type;if(type==='draw'){m.profileClosed=false;m.editProfile=true;disarmOther(m,'profile');}else m.profileClosed=true;
-  m.interacted=true;lockTools();lastSignature='';
+  m.sessionStage='profile';m.interacted=true;lockTools();setSweepStage('profile');lastSignature='';
 }
 function setPathMode(mode){
   const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
-  m.pathMode=mode;m.editPath=true;disarmOther(m,'path');if(mode!=='edges'&&!m.pathPoints.length)m.profileAnchorIndex=null;m.interacted=true;lockTools();
-  setStatus(mode==='edges'?'Sweep - Follow Edges: tap connected existing edges':'Sweep - Draw Path: Pencil/mouse draws; Geometry Snap targets model geometry');
+  m.pathMode=mode;m.editPath=true;m.sessionStage='path';disarmOther(m,'path');if(mode!=='edges'&&!m.pathPoints.length)m.profileAnchorIndex=null;m.interacted=true;lockTools();setSweepStage('path');
+  setStatus(mode==='edges'?'Sweep - tap connected path edges':'Sweep - draw path; Geometry Snap targets model geometry');
   lastSignature='';
 }
+stageProfileBtn.addEventListener('click',()=>setSweepStage('profile'));
+stagePathBtn.addEventListener('click',()=>setSweepStage('path',{activatePath:true}));
+stageFinishBtn.addEventListener('click',()=>setSweepStage('finish'));
 window.addEventListener('boxlab-add-sweep-path',()=>addSweepPath());
 window.addEventListener('pointerdown',begin,true);window.addEventListener('pointermove',move,true);window.addEventListener('pointerup',end,true);window.addEventListener('pointercancel',cancel,true);
 faceSelectionSweepBtn.addEventListener('click',launchSweepFromCurrentSelection);edgeSelectionSweepBtn.addEventListener('click',launchSweepFromCurrentSelection);
@@ -518,6 +522,6 @@ installPenRange(sidesInput,()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)re
 capsBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.caps=!m.caps;lastSignature='';});
 applyBtn.addEventListener('click',applySweep);
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedId=null;cachedObject=null;lastSignature='';buildOverlay();}));
-window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();unlockTools();});
+window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();unlockTools();endSweepSession();});
 tick();
-globalThis.__boxlabSweepPath={version:VERSION,add:addSweepPath,apply:applySweep,get active(){return !!pathObject()&&looksConstructionMesh(liveMesh());},get editing(){const o=pathObject(),m=o&&ensureMeta(o);return !!m&&(m.editProfile||m.editPath);},rebuild(){lastSignature='';buildOverlay();}};
+globalThis.__boxlabSweepPath={version:VERSION,add:addSweepPath,apply:applySweep,setStage:setSweepStage,get active(){return !!pathObject()&&looksConstructionMesh(liveMesh());},get editing(){const o=pathObject(),m=o&&ensureMeta(o);return !!m&&(m.editProfile||m.editPath);},rebuild(){lastSignature='';buildOverlay();}};
