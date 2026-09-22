@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.414 Follow Edges root-cause fix
+
+- Found the actual reason Follow Edges would not activate: `hotRailHit` and `railSnapRefs` had been lost from the module-level state declaration while the code still referenced them.
+- This caused a runtime `ReferenceError` at the start of Follow Edges activation, before button state or rail overlay could update.
+- Restored both variables at module scope.
+- Added regression coverage to protect the rail-state declarations from disappearing again.
+- No geometry, picker or Tool Session behaviour changed.
+
 ## 2026-09-22 — v0.36.18.413 atomic selected-profile Follow Edges handoff
 
 - .412 hands-on screenshot proved PATH stage activation succeeded while Follow Edges mode activation did not.
