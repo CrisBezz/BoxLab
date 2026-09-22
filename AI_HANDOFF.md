@@ -1577,6 +1577,8 @@ This is the second client of `tool-session-ui.js` after Sweep and confirms the i
 
 ## Current development — v0.36.18.417 Array Tool Session ownership during repositioning
 
+**Released on main via PR #102; squash merge `58e65c14d04ce3f8ebc21f98b4860373007a3126`. PR regression run `35689604956` passed.**
+
 User hands-on found that while Array preview was active, selecting/repositioning the array object could cause Active Tools to leave the Array Tool Session and return to the normal Object drawer.
 
 v0.36.18.417 hardens Array session ownership:
