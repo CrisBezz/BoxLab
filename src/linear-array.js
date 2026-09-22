@@ -7,35 +7,49 @@ const canvas=document.querySelector('#viewport');
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
 
+const launchRow=document.createElement('div');
+launchRow.className='outliner-actions linear-array-launch-row';
+launchRow.style.gridTemplateColumns='1fr';
+launchRow.innerHTML='<button id="linearArrayLaunchBtn" type="button" disabled>Array</button>';
+objectTools?.appendChild(launchRow);
+
 const controls=document.createElement('div');
-controls.className='linear-array-controls';
+controls.id='linearArraySession';
+controls.className='boxlab-tool-session-shell linear-array-controls';
+controls.hidden=true;
 controls.innerHTML=`
-  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr);margin-top:8px">
-    <button id="linearArrayBtn" type="button" disabled>Array</button>
-    <span class="drawer-hint" style="align-self:center">Place end copy</span>
-  </div>
+  <div class="boxlab-tool-session-title"><span>Array</span><span class="boxlab-tool-session-subtitle">Linked instances</span></div>
+  <div class="boxlab-tool-session-section">Direction</div>
   <div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)">
     <button type="button" data-array-move="free" class="active">Free</button>
     <button type="button" data-array-move="x">X</button>
     <button type="button" data-array-move="y">Y</button>
     <button type="button" data-array-move="z">Z</button>
   </div>
+  <div class="boxlab-tool-session-section">Copies</div>
   <label class="range-row">
     <span>Count</span>
     <input id="linearArrayCount" type="range" min="2" max="12" value="2" step="1"/>
     <output id="linearArrayCountOut">2</output>
   </label>
+  <div class="drawer-hint">Drag the highlighted END copy in the viewport to set the full array vector.</div>
+  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
+    <button id="linearArrayCancelBtn" type="button">Cancel</button>
+    <button id="linearArrayApplyBtn" class="boxlab-tool-session-primary" type="button">Apply Array</button>
+  </div>
 `;
 objectTools?.appendChild(controls);
 
-const button=controls.querySelector('#linearArrayBtn');
+const launchButton=launchRow.querySelector('#linearArrayLaunchBtn');
+const applyButton=controls.querySelector('#linearArrayApplyBtn');
+const cancelButton=controls.querySelector('#linearArrayCancelBtn');
 const countInput=controls.querySelector('#linearArrayCount');
 const countOut=controls.querySelector('#linearArrayCountOut');
 const moveButtons=[...controls.querySelectorAll('[data-array-move]')];
 
 let moveMode='free';
 let endpoint=new THREE.Vector3(2.5,0,0);
-let preview=null,previewArmed=false,previewObjectId=null,drawerLock=null,endpointDrag=null;
+let preview=null,previewArmed=false,previewObjectId=null,endpointDrag=null;
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function state(){return globalThis.__boxlabBridgeState;}
@@ -65,16 +79,14 @@ function disposePreview(){
   }
   preview=null;
 }
-function lockDrawer(){
-  if(!drawer)return;
-  if(!drawerLock)drawerLock={keepOpen:drawer.dataset.keepOpen,open:drawer.open};
-  drawer.dataset.keepOpen='true';drawer.open=true;
+function toolSession(){return globalThis.__boxlabToolSession||null;}
+function beginArraySession(){
+  controls.hidden=false;
+  toolSession()?.begin?.({id:'array',title:'Array',node:controls,subtitle:'Direction · Count · Apply'});
 }
-function unlockDrawer(){
-  if(!drawer||!drawerLock)return;
-  const old=drawerLock;drawerLock=null;
-  if(old.keepOpen===undefined)delete drawer.dataset.keepOpen;else drawer.dataset.keepOpen=old.keepOpen;
-  if(old.open)drawer.open=true;
+function endArraySession(){
+  controls.hidden=true;
+  toolSession()?.end?.('array');
 }
 function endEndpointDrag(){
   if(!endpointDrag)return;
@@ -84,8 +96,7 @@ function endEndpointDrag(){
 }
 function cancelPreview({silent=false}={}){
   endEndpointDrag();
-  disposePreview();previewArmed=false;previewObjectId=null;unlockDrawer();
-  if(button)button.textContent='Array';
+  disposePreview();previewArmed=false;previewObjectId=null;endArraySession();
   if(!silent)setStatus('Array preview cancelled');
 }
 function buildPreview(){
@@ -207,7 +218,7 @@ function sync(){
   syncCount();
   const object=activeObject();
   const eligible=mode()==='object'&&!!object&&!object.locked&&object.kind!=='reference';
-  if(button)button.disabled=!eligible;
+  if(launchButton)launchButton.disabled=!eligible;
   if(previewArmed&&(object?.id!==previewObjectId||mode()!=='object'))cancelPreview({silent:true});
 }
 function nudgeLive(offset){
@@ -237,7 +248,7 @@ function applyArray(){
   globalThis.__boxlabObjectSelection?.refresh?.();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   globalThis.__boxlabLinearArrayLastResult={
-    version:'0.36.18.384',sourceId,createdIds:created,count:total,
+    version:'0.36.18.416',sourceId,createdIds:created,count:total,
     endpoint:[endpoint.x,endpoint.y,endpoint.z]
   };
   setStatus(`Array • ${created.length} linked instance${created.length===1?'':'s'} • evenly distributed to ${endpointText()}`);
@@ -288,30 +299,33 @@ canvas?.addEventListener('pointerdown',beginEndpointDrag,true);
 canvas?.addEventListener('pointermove',moveEndpointDrag,true);
 canvas?.addEventListener('pointerup',finishEndpointDrag,true);
 canvas?.addEventListener('pointercancel',finishEndpointDrag,true);
-drawer?.addEventListener('toggle',()=>{if(previewArmed&&!drawer.open)queueMicrotask(()=>{if(previewArmed)drawer.open=true;});});
 
-button?.addEventListener('click',()=>{
+launchButton?.addEventListener('click',()=>{
   const object=activeObject();
-  if(!object||mode()!=='object'||object.locked||object.kind==='reference')return;
-  if(!previewArmed){
-    endpoint.set(2.5,0,0);
-    if(countInput)countInput.value='2';
-    syncCount();
-    previewArmed=true;previewObjectId=object.id;lockDrawer();button.textContent='Apply Array';buildPreview();return;
-  }
+  if(!object||mode()!=='object'||object.locked||object.kind==='reference'||previewArmed)return;
+  endpoint.set(2.5,0,0);
+  if(countInput)countInput.value='2';
+  syncCount();
+  previewArmed=true;previewObjectId=object.id;
+  beginArraySession();
+  buildPreview();
+});
+applyButton?.addEventListener('click',()=>{
+  if(!previewArmed)return;
   if(applyArray()){
-    disposePreview();previewArmed=false;previewObjectId=null;unlockDrawer();button.textContent='Array';
+    disposePreview();previewArmed=false;previewObjectId=null;endArraySession();
   }
 });
+cancelButton?.addEventListener('click',()=>cancelPreview());
 
 window.addEventListener('boxlab-object-manager-ready',sync);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
-window.addEventListener('beforeunload',()=>{endEndpointDrag();disposePreview();unlockDrawer();});
+window.addEventListener('beforeunload',()=>{endEndpointDrag();disposePreview();endArraySession();});
 sync();
 
 globalThis.__boxlabLinearArray={
-  version:'0.36.18.384',
+  version:'0.36.18.416',
   get active(){return previewArmed;},
   get dragging(){return!!endpointDrag;},
   get endpoint(){return endpoint.clone();},

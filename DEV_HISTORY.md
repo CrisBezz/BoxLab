@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.416 Array Tool Session migration
+
+- Migrated existing Linear Array onto the reusable exclusive Tool Session UI introduced for Sweep.
+- Replaced the permanently expanded Object-mode Array block with one compact Array launcher.
+- Active Array preview now owns Active Tools and shows only Direction, Count, viewport endpoint guidance, Cancel and Apply Array.
+- Cancel and Apply both end the Tool Session and restore normal Active Tools.
+- Preserved endpoint-vector preview/dragging, Free/X/Y/Z constraints, linked-instance commit, one scene-history snapshot and Pencil Count handling.
+- No Array geometry or linked-instance engine rewrite.
+
 ## 2026-09-22 — v0.36.18.415 fresh Sweep placement and immediate Move
 
 - Fixed fresh Add → Sweep profile plane spawning at world origin inside the default cube.

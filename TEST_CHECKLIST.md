@@ -729,3 +729,16 @@ Add new permanent regression checks below when future features need protection.
 - [ ] real Move is armed automatically on the next frame
 - [ ] fresh Sweep no longer spawns buried inside the default cube
 - [ ] Face → Sweep and Edge-loop → Sweep still use the selected source geometry position/orientation exactly
+
+
+## Phase F — Array Tool Session — .416
+
+- [ ] normal Object Active Tools shows one compact Array launcher, not permanent Array controls
+- [ ] launching Array makes Array exclusively own Active Tools
+- [ ] unrelated Object tools are hidden during Array preview
+- [ ] Free / X / Y / Z endpoint constraints behave as before
+- [ ] highlighted END copy remains directly draggable in the viewport
+- [ ] Count remains Pencil-friendly and redistributes preview live
+- [ ] Apply creates evenly spaced linked instances in one scene-history step and restores normal Active Tools
+- [ ] Cancel removes preview without creating objects and restores normal Active Tools
+- [ ] changing active object or leaving Object mode cancels Array preview safely

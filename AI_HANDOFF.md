@@ -1557,9 +1557,25 @@ v0.36.18.415 changes only the fresh Add → Sweep placement path:
 - real Move is automatically armed on the next animation frame for fresh Sweep creation, matching the direct-manipulation behavior already used by Duplicate
 - Face/Edge → Sweep does **not** use this offset; selected-profile Sweeps still replace the placeholder plane with the captured source geometry exactly in place
 
+## Current development — v0.36.18.416 Array Tool Session migration
+
+After Sweep established the Tool Session pattern, the user selected roadmap item 1: migrate Array next.
+
+v0.36.18.416 keeps the proven endpoint-vector Array engine and changes only UI ownership/workflow:
+- normal Object Active Tools now shows one compact **Array** launch button instead of the full permanent Array control block
+- launching Array starts an exclusive **Array Tool Session** and hides unrelated Object tools while preview is active
+- the session contains only **Direction** (Free/X/Y/Z), **Count**, viewport endpoint guidance, **Cancel**, and **Apply Array**
+- the highlighted END copy remains directly draggable in the viewport; Count still distributes linked instances evenly across the endpoint vector
+- Apply keeps the existing one-scene-snapshot linked-instance commit and returns to the source object
+- Cancel removes only the preview and restores normal Active Tools
+- switching away from the active source/object mode still cancels the preview safely
+- Array geometry, linked-instance semantics, Pencil Count ownership, Undo/Redo and endpoint drag math are unchanged
+
+This is the second client of `tool-session-ui.js` after Sweep and confirms the intended migration path for Solidify/Shell and Revolve.
+
 ## Next development step
 
-**Hands-on verify v0.36.18.415 with Object → Add → Sweep. The profile plane should appear visibly in front of the current object and Move should be ready immediately. Then verify Face/Edge → Sweep still stays exactly on the selected profile.**
+**Hands-on verify v0.36.18.416 on iPad: Object mode should show one Array launcher; launching it should make Array exclusively own Active Tools; endpoint drag / axis constraints / Count / Apply / Cancel should behave exactly as before.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.
