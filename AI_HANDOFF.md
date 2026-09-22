@@ -1461,6 +1461,8 @@ v0.36.18.408 adds an automatic temporary rail-edge guide:
 
 ## Current development — v0.36.18.409 Sweep rail contrast / hot-edge feedback
 
+**Released on main via PR #94; squash merge `1ee7a5ff1fe2b6105d6cb26eebcef6a8484b96b8`. Final corrected PR regression run `35683804432` passed.**
+
 User feedback on .408: the rail network is now visible, but the selectable path still needs more contrast and clearer interaction feedback.
 
 v0.36.18.409 adds a three-state visual hierarchy in PATH → Follow Edges:
