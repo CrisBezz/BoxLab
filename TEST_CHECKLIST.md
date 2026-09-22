@@ -559,3 +559,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Clockwise and counter-clockwise authored profiles both produce outward side faces
 - [ ] Exact ring-0 profile placement from .398 remains unchanged
 - [ ] Concave cap triangulation and convex cap topology remain unchanged
+
+
+## Phase D — Sweep edit ownership — .400
+
+- [ ] Draw Profile starts/stays Open until the user explicitly presses Closed
+- [ ] Draw Profile accepts point 4 and subsequent points without requiring Open to be reselected
+- [ ] Edit Profile disarms Move/Scale/Rotate before Pencil/mouse profile editing begins
+- [ ] Draw Path / Follow Edges / Edit Path disarm Move/Scale/Rotate before path authoring begins
+- [ ] transform gesture layer yields while Sweep profile/path editing owns the viewport
+- [ ] touch orbit/pan/pinch remain available during Sweep editing
+- [ ] leaving Sweep editing does not silently re-arm Move
