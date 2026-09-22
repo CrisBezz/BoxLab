@@ -1604,7 +1604,7 @@ v0.36.18.418 fixes the ownership at the shared Tool Session layer:
 
 ## Current development — v0.36.18.419 Array pointer cleanup
 
-**Development branch: fix/array-pointer-cleanup-419.**
+**Released on main via PR #104; squash merge `c2b054d418a5c3b7e9f4fdfc747b6109c6c95fcb`. PR regression run `35691232067` passed.**
 
 User hands-on passed .418 Array drawer ownership but reported free Vertex movement stopped afterward.
 
