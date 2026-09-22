@@ -354,14 +354,14 @@ function railEdgeOverlay(refs){
 function hotRailOverlay(hit){
   if(!hit?.a||!hit?.b)return null;
   const geometry=new THREE.BufferGeometry().setFromPoints([hit.a,hit.b]);
-  const material=new THREE.LineBasicMaterial({color:0xffffff,transparent:false,depthTest:false,depthWrite:false});
+  const material=new THREE.LineBasicMaterial({color:0xffc857,transparent:false,depthTest:false,depthWrite:false});
   const line=new THREE.Line(geometry,material);line.renderOrder=90;
   return line;
 }
 function acceptedPathOverlay(points){
   if(points.length<2)return null;
   const geometry=new THREE.BufferGeometry().setFromPoints(points);
-  const material=new THREE.LineBasicMaterial({color:0xffffff,transparent:false,depthTest:false,depthWrite:false});
+  const material=new THREE.LineBasicMaterial({color:0x62d8ff,transparent:false,depthTest:false,depthWrite:false});
   const line=new THREE.Line(geometry,material);line.renderOrder=95;
   return line;
 }
