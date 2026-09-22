@@ -1459,9 +1459,21 @@ v0.36.18.408 adds an automatic temporary rail-edge guide:
 - switching to PROFILE, Draw Path, FINISH, or ending Sweep removes the guide automatically with the normal Sweep construction overlay
 - .406 Tool Session UX and .407 winding fixes remain unchanged
 
+## Current development — v0.36.18.409 Sweep rail contrast / hot-edge feedback
+
+User feedback on .408: the rail network is now visible, but the selectable path still needs more contrast and clearer interaction feedback.
+
+v0.36.18.409 adds a three-state visual hierarchy in PATH → Follow Edges:
+- **candidate rails** use a brighter high-contrast neutral edge guide
+- the edge currently under the Pencil/cursor becomes a distinct **hot rail** highlight
+- the already accepted Sweep rail is redrawn as a strong Sweep-cyan path
+- hover/proximity testing reuses the same Follow Edges edge picker, so the hot highlight represents the edge BoxLab would actually select
+- hot-edge state clears automatically when leaving PATH, switching to Draw Path, applying Sweep, or exiting the tool
+- no geometry, snapping or Tool Session behaviour changes
+
 ## Next development step
 
-**Hands-on verify v0.36.18.408 using a Knife cut across a face as the Sweep rail. The internal cut edge should be clearly visible in PATH → Follow Edges and immediately disappear outside that mode.**
+**Hands-on verify v0.36.18.409 over dense/internal topology: candidate edges should read clearly, the intended edge should pop distinctly before selection, and accepted rails should remain obvious.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.
