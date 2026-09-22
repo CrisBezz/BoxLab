@@ -1546,6 +1546,8 @@ No picker, geometry, Tool Session or workflow logic changes are made beyond rest
 
 ## Current development — v0.36.18.415 fresh Sweep placement / immediate Move
 
+**Released on main via PR #100; squash merge `69299520f61b36186d121026f8e27b807889db46`. Final corrected PR regression run `35688505420` passed.**
+
 After .414 fixed Follow Edges, the user reported a fresh Add → Sweep construction plane spawning inside the first cube and being difficult/impossible to select for repositioning.
 
 v0.36.18.415 changes only the fresh Add → Sweep placement path:
