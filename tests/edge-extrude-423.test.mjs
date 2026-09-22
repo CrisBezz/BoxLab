@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import fs from 'node:fs';
 import {EditableMesh} from '../src/mesh.js';
 import {installLooseTopology} from '../src/loose-topology.js';
-import {boundarySelectionInfo,extrudeBoundaryEdges,perpendicularAxisDirection} from '../src/edge-extrude-core.js';
+import {boundarySelectionInfo,extrudeBoundaryEdges,perpendicularAxisDirection,projectPerpendicularDelta} from '../src/edge-extrude-core.js';
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 installLooseTopology(EditableMesh);
@@ -117,4 +117,22 @@ test('425 Edge Extrude owns Pencil drag while armed and reads shared transform c
   assert.ok(ui.includes("#transformPrecision,#toolModes,.quick-snap"));
   assert.ok(transform.includes("__boxlabEdgeExtrude?.isArmed?.()"));
   assert.ok(index.includes('src/transform-upgrade.js?v=0.36.18.425'));
+});
+
+
+test('426 Plane constraint removes all along-edge displacement',()=>{
+  const edge=new THREE.Vector3(1,2,3).normalize();
+  const raw=new THREE.Vector3(4,-1,2);
+  const delta=projectPerpendicularDelta(raw,edge);
+  assert.ok(delta);
+  assert.ok(Math.abs(delta.dot(edge))<1e-9);
+});
+
+test('426 Plane control is Edge-Extrude-only and uses the grabbed edge as plane normal',()=>{
+  const ui=fs.readFileSync(new URL('../src/edge-extrude.js',import.meta.url),'utf8');
+  assert.ok(ui.includes("edgeExtrudePlaneConstraintBtn"));
+  assert.ok(ui.includes("planeButton.hidden=!armed"));
+  assert.ok(ui.includes("new THREE.Plane().setFromNormalAndCoplanarPoint(edgeDirection.clone().normalize(),point)"));
+  assert.ok(ui.includes("projectPerpendicularDelta"));
+  assert.ok(ui.includes("drag.edgeDirection"));
 });
