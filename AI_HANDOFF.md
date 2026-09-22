@@ -63,7 +63,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.427**
+- Current `version.json`: **0.36.18.428**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -86,6 +86,20 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.428 Symmetry / Bisect foundation
+
+- New destructive Object-mode Symmetry / Bisect Tool Session; existing non-destructive Mirror remains separate and untouched.
+- Current plane is fixed to object-local origin and selectable X/Y/Z.
+- Keep + / Keep − clips faces against the plane with shared intersection vertices.
+- Mirror kept half optionally uses the proven Mirror deduplication path to reflect and weld the centre seam.
+- Mirror OFF is a true bisect-only result with an open cut boundary.
+- Live translucent preview and visible plane update with axis/side/mirror changes.
+- Apply commits in one Object-history step; Cancel leaves source mesh unchanged.
+- Existing non-destructive Mirror must be off before launch to prevent a double-mirror display/result ambiguity.
+- Beta 4 at /beta-4/ remains frozen at v0.36.18.427.
+
+**Hands-on verify .428:** on an offset/asymmetric object, launch Symmetry / Bisect in Object mode, test X/Y/Z, Keep + and Keep −, toggle Mirror off/on, Apply then Undo. Confirm the plane is through the object origin and the mirrored seam appears welded.
 
 ## Beta 4 freeze — v0.36.18.427
 
