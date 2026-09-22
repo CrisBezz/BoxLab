@@ -1356,6 +1356,8 @@ v0.36.18.401 completes the remaining profile-source option from the agreed Sweep
 
 ## Current development — v0.36.18.402 Sweep direct selection launch
 
+**Released on main via PR #87; squash merge `1c512bd2b3c487e9839b0021e8607473340910f4`. Final corrected PR regression run `35674435817` passed.**
+
 User feedback on .401 exposed a workflow flaw: switching from Face/Edge mode to Object mode clears the component selection before Add → Sweep can capture it.
 
 v0.36.18.402 fixes the workflow rather than trying to preserve component selection across mode changes:
