@@ -42,7 +42,7 @@ test('406 Sweep begins and ends exclusive Tool Session',()=>{
 
 test('406 selected Face or Edge launch jumps directly to Path Follow Edges',()=>{
   assert.ok(sweep.includes("sessionStage:selectionProfile&&autoUseSelection?'path':'profile'"));
-  assert.ok(sweep.includes("queueMicrotask(()=>{applySelectionProfile();setPathMode('edges');setSweepStage('path');})"));
+  assert.ok(sweep.includes("queueMicrotask(()=>applySelectionProfile({activateFollowEdges:true}))"));
 });
 
 test('406 Face and Edge Sweep launch is promoted near top of contextual tools',()=>{
