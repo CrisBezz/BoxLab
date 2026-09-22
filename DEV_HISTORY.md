@@ -6,6 +6,8 @@
 - Root cause was a missing `segmentDistance()` helper used only by closed-profile edge hit-testing.
 - Added a clamped 2D point-to-segment distance implementation in `sweep-path.js`.
 - Open-profile authoring, profile closure, Sweep topology and path behaviour remain unchanged.
+- Released via PR **#88**; squash merge `e5b62249db5d80ed6148f02b52bb20563c088c4b`.
+- Final PR Topology regression run **35675477945 PASS**.
 
 ## 2026-09-22 — v0.36.18.402 Sweep direct selection launch
 
