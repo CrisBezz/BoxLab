@@ -25,6 +25,7 @@ Run the sections relevant to a change. Expand this file when a new stable workfl
 - [ ] orbit pivot does not jump
 - [ ] navigation does not unexpectedly clear persistent selections
 - [ ] while any Tool Session is active, Active Tools cannot collapse from viewport interaction; Apply/Cancel/end-session restores normal drawer behaviour
+- [ ] after Array END-copy drag / Apply / Cancel, free Vertex Move immediately works again and no stale pointer capture remains
 
 ## Selection
 

@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.418**
+- Current `version.json`: **0.36.18.419**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -1601,6 +1601,19 @@ v0.36.18.418 fixes the ownership at the shared Tool Session layer:
 - this keeps Array controls visible throughout END-copy interaction without changing normal drawer behaviour outside Tool Sessions
 - the fix automatically protects Sweep and future Solidify/Shell/Revolve Tool Session clients
 - Array geometry, endpoint drag math, linked-instance Apply, selection semantics and protected multi-object transform are unchanged
+
+## Current development — v0.36.18.419 Array pointer cleanup
+
+**Development branch: fix/array-pointer-cleanup-419.**
+
+User hands-on passed .418 Array drawer ownership but reported free Vertex movement stopped afterward.
+
+v0.36.18.419 keeps the .418 drawer fix and hardens END-copy teardown:
+- Array now explicitly releases canvas pointer capture when endpoint dragging ends
+- the same teardown is used by pointer-up, pointer-cancel, Apply, Cancel and mode/session exit paths
+- OrbitControls restoration remains paired with pointer release
+- free component Move implementation itself is untouched
+- protected multi-object transform stays pinned at v0.36.1.0
 
 ## Next development step
 

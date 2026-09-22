@@ -90,8 +90,10 @@ function endArraySession(){
 }
 function endEndpointDrag(){
   if(!endpointDrag)return;
+  const pointerId=endpointDrag.pointerId;
   const ctl=orbitControls();
   if(ctl)ctl.enabled=endpointDrag.controlsWereEnabled;
+  if(canvas?.hasPointerCapture?.(pointerId))canvas.releasePointerCapture?.(pointerId);
   endpointDrag=null;
 }
 function cancelPreview({silent=false}={}){
@@ -254,7 +256,7 @@ function applyArray(){
   globalThis.__boxlabObjectSelection?.refresh?.();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   globalThis.__boxlabLinearArrayLastResult={
-    version:'0.36.18.418',sourceId,createdIds:created,count:total,
+    version:'0.36.18.419',sourceId,createdIds:created,count:total,
     endpoint:[endpoint.x,endpoint.y,endpoint.z]
   };
   setStatus(`Array • ${created.length} linked instance${created.length===1?'':'s'} • evenly distributed to ${endpointText()}`);

@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.419 Array pointer cleanup
+
+- User hands-on passed the .418 Array drawer-ownership fix but reported that free Vertex movement no longer worked afterward.
+- The narrow shared-state risk was Array END-copy pointer cleanup: Array captured the viewport pointer during endpoint drag but relied on browser implicit release.
+- Array now explicitly releases viewport pointer capture when END-copy drag ends, is cancelled, or is torn down by Apply/mode/session changes.
+- Existing OrbitControls restoration remains in the same teardown path.
+- Free component Move code is unchanged; protected multi-object transform remains pinned at v0.36.1.0.
+
+
 ## 2026-09-22 — v0.36.18.418 Tool Session drawer ownership
 
 - User hands-on showed .417 still allowed Active Tools itself to collapse as soon as the Array END copy was touched, even though Array session/source ownership remained armed.
