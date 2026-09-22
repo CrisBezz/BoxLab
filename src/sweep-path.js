@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.411';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.412';
 
-const VERSION='0.36.18.411';
+const VERSION='0.36.18.412';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -44,7 +44,7 @@ const followBtn=controls.querySelector('#sweepFollowEdges'),drawPathBtn=controls
 const capsBtn=controls.querySelector('#sweepCapsBtn'),applyBtn=controls.querySelector('#sweepApplyBtn');
 
 const sweepModeStyle=document.createElement('style');
-sweepModeStyle.textContent='#sweepPathControls button.active{box-shadow:inset 0 0 0 1px rgba(115,183,255,.95);background:rgba(74,134,205,.28)}';
+sweepModeStyle.textContent='#sweepPathControls button.active,#sweepPathControls button[aria-pressed="true"]{box-shadow:inset 0 0 0 2px rgba(138,208,255,1)!important;background:#eef1f7!important;color:#15171b!important}';
 document.head.appendChild(sweepModeStyle);
 
 const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
@@ -369,7 +369,7 @@ function railEdgeOverlay(refs){
   if(!positions.length)return null;
   const geometry=new THREE.BufferGeometry();
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
-  const material=new THREE.LineBasicMaterial({color:0xe8f8ff,transparent:true,opacity:.92,depthTest:false,depthWrite:false});
+  const material=new THREE.LineBasicMaterial({color:0xffffff,transparent:false,opacity:1,depthTest:false,depthWrite:false});
   const lines=new THREE.LineSegments(geometry,material);
   lines.renderOrder=50;
   group.add(lines);
@@ -583,6 +583,8 @@ function syncPathModeButtons(m){
   followBtn.classList.toggle('active',edges);drawPathBtn.classList.toggle('active',draw);
   followBtn.setAttribute('aria-pressed',edges?'true':'false');
   drawPathBtn.setAttribute('aria-pressed',draw?'true':'false');
+  followBtn.textContent=edges?'Follow Edges · Active':'Follow Edges';
+  drawPathBtn.textContent=draw?'Draw Path · Active':'Draw Path';
 }
 function setPathMode(mode){
   const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
