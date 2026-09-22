@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.409 Sweep rail contrast and hot-edge feedback
+
+- User confirmed .408 exposed internal rail edges but requested stronger selectable-path contrast.
+- Added three rail states in PATH → Follow Edges: bright candidate edge network, distinct hot edge under Pencil/cursor, and strong cyan accepted rail.
+- Hot-edge detection uses the same forced external edge snap used by Follow Edges, so hover feedback matches the edge that would be selected.
+- Hot state clears on mode/stage exit and Sweep Apply/exit.
+- No Sweep geometry, snap logic or Tool Session structure changed.
+
 ## 2026-09-22 — v0.36.18.408 Sweep Follow Edges rail guide
 
 - User passed .407 and reported that internal topology edges were pickable by Follow Edges but not visible, making Knife-cut rails difficult to use.

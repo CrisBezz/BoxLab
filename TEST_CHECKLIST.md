@@ -658,3 +658,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Draw Path hides the rail guide
 - [ ] FINISH and Apply remove the rail guide
 - [ ] .406 Tool Session and .407 winding behaviour remain unchanged
+
+
+## Phase D/F — Sweep rail contrast / hover — .409
+
+- [ ] candidate Follow Edges network has stronger contrast than .408
+- [ ] edge under Pencil/cursor receives a distinct hot highlight before selection
+- [ ] hot highlight corresponds to the exact edge Follow Edges would select
+- [ ] accepted Sweep path is visually distinct from both candidate and hot states
+- [ ] hot state clears when leaving PATH or switching to Draw Path
+- [ ] Apply/exit clears all temporary rail highlighting
+- [ ] .408 internal-edge visibility remains intact
