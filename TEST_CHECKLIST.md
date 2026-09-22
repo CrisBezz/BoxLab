@@ -582,3 +582,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] source object/selection geometry remains unchanged after Use Selection
 - [ ] imported selection becomes an editable closed Draw profile via Edit Profile
 - [ ] applying Use Selection clears stale path points if the Profile Plane is repositioned
+
+
+## Phase D — Sweep direct selection launch — .402
+
+- [ ] With one Face selected, Face Active Tools exposes Sweep from Selection
+- [ ] Sweep from Selection captures the Face before Object mode clears component selection
+- [ ] Face launch creates Sweep, enters Object mode and immediately loads/aligned the selected Face as the editable profile
+- [ ] With a closed Edge loop selected, Edge Active Tools exposes Sweep from Selection
+- [ ] Edge launch captures the loop before Object mode handoff and loads it as the editable profile
+- [ ] user does not need to manually enter Object mode before launching selected-profile Sweep
+- [ ] invalid open/branched/non-planar Edge selections are still rejected by .401 validation
