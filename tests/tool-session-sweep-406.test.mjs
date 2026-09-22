@@ -5,10 +5,11 @@ import fs from 'node:fs';
 const session=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.url),'utf8');
 const sweep=fs.readFileSync(new URL('../src/sweep-path.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 test('406 Tool Session module loads before Sweep',()=>{
-  const tool=index.indexOf('src/tool-session-ui.js?v=0.36.18.406');
-  const sweepIndex=index.indexOf('src/sweep-path.js?v=0.36.18.406');
+  const tool=index.indexOf('src/tool-session-ui.js?v='+version);
+  const sweepIndex=index.indexOf('src/sweep-path.js?v='+version);
   assert.ok(tool>=0&&sweepIndex>tool);
 });
 
