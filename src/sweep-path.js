@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.402';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.403';
 
-const VERSION='0.36.18.402';
+const VERSION='0.36.18.403';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -245,6 +245,12 @@ function pointOnViewPlane(event,anchor){
   const normal=new THREE.Vector3();camera.getWorldDirection(normal);
   const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,anchor),out=new THREE.Vector3();
   return raycaster.ray.intersectPlane(plane,out)?out:null;
+}
+function segmentDistance(point,a,b){
+  const ab=b.clone().sub(a),lenSq=ab.lengthSq();
+  if(lenSq<=1e-12)return point.distanceTo(a);
+  const t=THREE.MathUtils.clamp(point.clone().sub(a).dot(ab)/lenSq,0,1);
+  return point.distanceTo(a.clone().addScaledVector(ab,t));
 }
 function nearestProfilePoint(event,frame,m){
   const click=new THREE.Vector2(event.clientX,event.clientY),pts=profileWorld(frame,m);let best=null,bestD=18;

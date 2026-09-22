@@ -1368,9 +1368,17 @@ v0.36.18.402 fixes the workflow rather than trying to preserve component selecti
 - the .401 Use Selection button remains available inside Sweep for already captured profile sources
 - invalid/open/branched/non-planar edge selections are still rejected by the existing conservative validation
 
+## Current development — v0.36.18.403 closed-profile node insertion fix
+
+User feedback on .402: closed custom Sweep profiles could not accept an inserted node.
+
+Root cause: `nearestProfileSegment()` called a missing `segmentDistance()` helper. Open-profile authoring never used that path, which is why the problem only appeared after closing the profile.
+
+v0.36.18.403 adds the missing clamped point-to-segment distance helper, restoring edge hit-testing for closed profile insertion without changing profile topology or Sweep generation.
+
 ## Next development step
 
-**Hands-on verify v0.36.18.402 by launching Sweep directly from a selected Face and from a closed Edge loop without manually entering Object mode.**
+**Hands-on verify v0.36.18.403 by closing a custom profile, entering Edit Profile, and inserting a node on each segment including the closing segment.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.

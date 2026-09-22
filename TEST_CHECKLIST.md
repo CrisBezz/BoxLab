@@ -593,3 +593,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Edge launch captures the loop before Object mode handoff and loads it as the editable profile
 - [ ] user does not need to manually enter Object mode before launching selected-profile Sweep
 - [ ] invalid open/branched/non-planar Edge selections are still rejected by .401 validation
+
+
+## Phase D — closed Sweep profile insertion — .403
+
+- [ ] Closed Draw profile in Edit Profile accepts a new node on any profile segment
+- [ ] Closing segment from last point back to point 0 also accepts insertion
+- [ ] Existing profile vertices still drag normally
+- [ ] Open profile append behaviour remains unchanged
+- [ ] inserted node updates live Sweep preview immediately
