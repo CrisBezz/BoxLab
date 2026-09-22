@@ -10,6 +10,9 @@
 - Session contains Edit Profile, Undo Point, Delete Point, Clear, Segments 3–64 and Apply Revolve.
 - Existing Pencil/mouse profile authoring, touch navigation, segment slider ownership, winding/normals, snapping and Apply geometry are unchanged.
 - Apply ends the Tool Session and retains the established single-object selection / Boolean tint cleanup.
+- Initial PR regressions were stale tests for the retired private drawer-lock contract and old current-build cache pins; tests were updated to protect the shared Tool Session contract instead.
+- Released via PR **#107**; squash merge `478f2a8613873c0c3533a3ce82bb7227925e8230`.
+- Final PR Topology regression run **35696735145 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.421 Solidify / Shell Tool Sessions
