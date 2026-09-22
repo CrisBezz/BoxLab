@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.401';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.402';
 
-const VERSION='0.36.18.401';
+const VERSION='0.36.18.402';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -29,6 +29,21 @@ const editProfileBtn=controls.querySelector('#sweepEditProfile'),profileClosedBt
 const sizeInput=controls.querySelector('#sweepProfileSize'),sizeOut=controls.querySelector('#sweepProfileSizeOut'),sidesInput=controls.querySelector('#sweepProfileSides'),sidesOut=controls.querySelector('#sweepProfileSidesOut');
 const followBtn=controls.querySelector('#sweepFollowEdges'),drawPathBtn=controls.querySelector('#sweepDrawPath'),editPathBtn=controls.querySelector('#sweepEditPath'),undoPathBtn=controls.querySelector('#sweepUndoPath'),deletePathBtn=controls.querySelector('#sweepDeletePath'),clearPathBtn=controls.querySelector('#sweepClearPath');
 const capsBtn=controls.querySelector('#sweepCapsBtn'),applyBtn=controls.querySelector('#sweepApplyBtn');
+
+const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
+const edgeTools=document.querySelector('.mode-tools[data-mode-tools="edge"]');
+function makeSelectionLaunchButton(mode){
+  const button=document.createElement('button');
+  button.type='button';button.className='sweep-selection-launch';
+  button.dataset.sweepSelectionMode=mode;
+  button.textContent='Sweep from Selection';
+  button.title=mode==='face'?'Use the selected Face as a Sweep profile':'Use the selected closed Edge loop as a Sweep profile';
+  button.disabled=true;
+  return button;
+}
+const faceSelectionSweepBtn=makeSelectionLaunchButton('face'),edgeSelectionSweepBtn=makeSelectionLaunchButton('edge');
+faceTools?.appendChild(faceSelectionSweepBtn);edgeTools?.appendChild(edgeSelectionSweepBtn);
+
 
 let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
@@ -290,7 +305,7 @@ function signature(){
   const m=ensureMeta(o);
   return[o.id,planeSignature(mesh),m.profileType,m.profileClosed,m.profilePoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))).join('|'),m.profileSize,m.profileSides,m.editProfile,m.pathMode,m.pathPoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))+','+String(Number(p.z).toFixed(4))).join('|'),m.editPath,m.caps].join(';');
 }
-function tick(){const s=signature();if(s!==lastSignature){lastSignature=s;buildOverlay();}if(!s&&overlay){lastSignature='';buildOverlay();}raf=requestAnimationFrame(tick);}
+function tick(){refreshSelectionLaunchButtons();const s=signature();if(s!==lastSignature){lastSignature=s;buildOverlay();}if(!s&&overlay){lastSignature='';buildOverlay();}raf=requestAnimationFrame(tick);}
 function disarmTransforms(){
   globalThis.__boxlabTransformArming?.disarm?.();
   document.querySelectorAll('#toolModes button.active').forEach(button=>button.classList.remove('active'));
@@ -360,15 +375,16 @@ function cancel(event){
   if(m){if(drag.kind==='profile'&&m.profileHistory.length)m.profilePoints=m.profileHistory.pop();if(drag.kind==='path'&&m.pathHistory.length)m.pathPoints=m.pathHistory.pop();}
   drag=null;if(state()?.controls)state().controls.enabled=true;lastSignature='';
 }
-function addSweepPath(){
+function addSweepPath(selectionProfileOverride=null,autoUseSelection=false){
   const man=manager();if(!man?.addMesh)return;
-  const selectionProfile=selectionProfileCandidate();
+  const selectionProfile=selectionProfileOverride||selectionProfileCandidate();
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
   const o=man.addMesh(constructionPlane(),'Sweep',{enterObjectMode:true});if(!o)return;
   cachedId=o.id;cachedObject=o;
   o.sweepPath={version:VERSION,profileType:'circle',profileClosed:true,profilePoints:[],profileHistory:[],profileSize:.25,profileSides:8,editProfile:false,pathMode:'edges',pathPoints:[],pathHistory:[],editPath:false,selectedPathPoint:null,caps:true,interacted:false,selectionProfile,initialPlaneSignature:planeSignature(liveMesh())};
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
   setStatus(selectionProfile?'Sweep added - '+selectionProfile.label+' captured - Use Selection or choose another Profile':'Sweep added - position/snap the Profile Plane - then choose Profile and Path');lastSignature='';
+  if(selectionProfile&&autoUseSelection)queueMicrotask(()=>applySelectionProfile());
 }
 function applySweep(){
   const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return false;
@@ -381,6 +397,19 @@ function applySweep(){
 }
 function installPenRange(input,onValue){let pointerId=null,owned=null,releaseFrame=null;const min=()=>Number(input.min),max=()=>Number(input.max),step=()=>Number(input.step)||1;const map=x=>{const r=input.getBoundingClientRect(),t=THREE.MathUtils.clamp((x-r.left)/Math.max(1,r.width),0,1);return Math.round((min()+(max()-min())*t)/step())*step();};const apply=v=>{owned=String(v);input.value=owned;onValue();};const enforce=()=>{if(owned==null)return false;if(input.value!==owned)input.value=owned;return true;};input.addEventListener('pointerdown',e=>{if(e.pointerType!=='pen')return;pointerId=e.pointerId;e.preventDefault();e.stopPropagation();input.setPointerCapture?.(pointerId);apply(map(e.clientX));},{capture:true,passive:false});input.addEventListener('pointermove',e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();apply(map(e.clientX));},{capture:true,passive:false});const finish=e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();if(input.hasPointerCapture?.(pointerId))input.releasePointerCapture(pointerId);pointerId=null;if(releaseFrame)cancelAnimationFrame(releaseFrame);releaseFrame=requestAnimationFrame(()=>{enforce();releaseFrame=requestAnimationFrame(()=>{enforce();owned=null;releaseFrame=null;});});};input.addEventListener('pointerup',finish,{capture:true,passive:false});input.addEventListener('pointercancel',finish,{capture:true,passive:false});input.addEventListener('input',()=>{enforce();onValue();});input.addEventListener('change',()=>{if(enforce())onValue();});}
 
+
+function launchSweepFromCurrentSelection(){
+  const candidate=selectionProfileCandidate();
+  if(!candidate){setStatus('Sweep - select one Face or one connected closed Edge loop');return false;}
+  addSweepPath(candidate,true);
+  return true;
+}
+function refreshSelectionLaunchButtons(){
+  const bridge=globalThis.__boxlabSelectionBridge,mode=bridge?.mode?.(),ids=bridge?.indices?.()||[];
+  if(faceSelectionSweepBtn)faceSelectionSweepBtn.disabled=!(mode==='face'&&ids.length===1);
+  if(edgeSelectionSweepBtn)edgeSelectionSweepBtn.disabled=!(mode==='edge'&&ids.length>=3);
+}
+
 function setProfileType(type){
   const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
   m.profileType=type;if(type==='draw'){m.profileClosed=false;m.editProfile=true;disarmOther(m,'profile');}else m.profileClosed=true;
@@ -392,8 +421,9 @@ function setPathMode(mode){
   setStatus(mode==='edges'?'Sweep - Follow Edges: tap connected existing edges':'Sweep - Draw Path: Pencil/mouse draws; Geometry Snap targets model geometry');
   lastSignature='';
 }
-window.addEventListener('boxlab-add-sweep-path',addSweepPath);
+window.addEventListener('boxlab-add-sweep-path',()=>addSweepPath());
 window.addEventListener('pointerdown',begin,true);window.addEventListener('pointermove',move,true);window.addEventListener('pointerup',end,true);window.addEventListener('pointercancel',cancel,true);
+faceSelectionSweepBtn.addEventListener('click',launchSweepFromCurrentSelection);edgeSelectionSweepBtn.addEventListener('click',launchSweepFromCurrentSelection);
 circleBtn.addEventListener('click',()=>setProfileType('circle'));rectBtn.addEventListener('click',()=>setProfileType('rectangle'));drawProfileBtn.addEventListener('click',()=>setProfileType('draw'));useSelectionBtn.addEventListener('click',applySelectionProfile);
 profileClosedBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m||m.profileType!=='draw')return;if(!m.profileClosed&&m.profilePoints.length<3){setStatus('Sweep - Closed profile needs at least 3 points');return;}m.profileClosed=!m.profileClosed;m.interacted=true;lockTools();setStatus(m.profileClosed?'Sweep - profile closed':'Sweep - profile open surface');lastSignature='';});
 editProfileBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;if(m.profileType!=='draw'){m.profilePoints=profile2D(m).map(p=>({...p}));m.profileType='draw';m.profileClosed=true;}m.editProfile=!m.editProfile;if(m.editProfile){disarmOther(m,'profile');m.interacted=true;lockTools();}else if(state()?.controls)state().controls.enabled=true;lastSignature='';});
