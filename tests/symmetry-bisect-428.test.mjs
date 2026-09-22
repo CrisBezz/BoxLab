@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import fs from 'node:fs';
 import {EditableMesh} from '../src/mesh.js';
 import {bisectMesh,symmetryBisect} from '../src/symmetry-bisect-core.js';
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 function approx(a,b,eps=1e-8){return Math.abs(a-b)<=eps;}
 
@@ -61,6 +62,6 @@ test('428 UI uses Tool Session and preserves frozen Beta 4 version',()=>{
   assert.ok(ui.includes("data-sym-keep"));
   assert.ok(ui.includes("Mirror kept half"));
   assert.ok(ui.includes("turn off the non-destructive Mirror modifier first"));
-  assert.ok(index.includes('src/symmetry-bisect.js?v=0.36.18.428'));
+  assert.ok(index.includes('src/symmetry-bisect.js?v='+version));
   assert.equal(JSON.parse(beta4).version,'0.36.18.427');
 });
