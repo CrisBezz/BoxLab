@@ -1575,9 +1575,21 @@ v0.36.18.416 keeps the proven endpoint-vector Array engine and changes only UI o
 
 This is the second client of `tool-session-ui.js` after Sweep and confirms the intended migration path for Solidify/Shell and Revolve.
 
+## Current development — v0.36.18.417 Array Tool Session ownership during repositioning
+
+User hands-on found that while Array preview was active, selecting/repositioning the array object could cause Active Tools to leave the Array Tool Session and return to the normal Object drawer.
+
+v0.36.18.417 hardens Array session ownership:
+- while preview is armed, Object-mode selection changes no longer cancel Array
+- the original Array source object remains authoritative; if another object temporarily becomes active during a repositioning gesture, Array immediately restores the preview source
+- Array reasserts its Tool Session if any external drawer/selection path displaces it
+- only explicit Apply, Cancel, or leaving Object mode ends the Array session
+- endpoint preview pointer-down now listens at document capture level (while still requiring the viewport canvas target), so Array gets first refusal before ordinary object selection logic
+- endpoint drag math, Count, linked-instance Apply and scene history remain unchanged
+
 ## Next development step
 
-**Hands-on verify v0.36.18.416 on iPad: Object mode should show one Array launcher; launching it should make Array exclusively own Active Tools; endpoint drag / axis constraints / Count / Apply / Cancel should behave exactly as before.**
+**Hands-on verify v0.36.18.417: launch Array, tap/drag the highlighted END copy and reposition it. Active Tools must stay on ARRAY throughout; only Apply/Cancel or leaving Object mode should exit the session.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.

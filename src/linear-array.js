@@ -161,7 +161,7 @@ function worldPointOnViewPlane(event,plane){
   return raycaster.ray.intersectPlane(plane,new THREE.Vector3());
 }
 function beginEndpointDrag(event){
-  if(!previewArmed||!preview||endpointDrag||(event.pointerType==='mouse'&&event.button!==0))return false;
+  if(event.target!==canvas||!previewArmed||!preview||endpointDrag||(event.pointerType==='mouse'&&event.button!==0))return false;
   const cam=camera();
   if(!cam||!pointerNdc(event))return false;
   raycaster.setFromCamera(pointer,cam);
@@ -216,10 +216,16 @@ function finishEndpointDrag(event){
 
 function sync(){
   syncCount();
-  const object=activeObject();
-  const eligible=mode()==='object'&&!!object&&!object.locked&&object.kind!=='reference';
+  const object=activeObject(),currentMode=mode();
+  const eligible=currentMode==='object'&&!!object&&!object.locked&&object.kind!=='reference';
   if(launchButton)launchButton.disabled=!eligible;
-  if(previewArmed&&(object?.id!==previewObjectId||mode()!=='object'))cancelPreview({silent:true});
+  if(!previewArmed)return;
+  if(currentMode!=='object'){cancelPreview({silent:true});return;}
+  if(object?.id!==previewObjectId){
+    const source=manager()?.objects?.find?.(o=>o.id===previewObjectId);
+    if(source)manager()?.activate?.(previewObjectId);
+  }
+  if(!toolSession()?.isActive?.('array'))beginArraySession();
 }
 function nudgeLive(offset){
   const live=state()?.mesh;
@@ -248,7 +254,7 @@ function applyArray(){
   globalThis.__boxlabObjectSelection?.refresh?.();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   globalThis.__boxlabLinearArrayLastResult={
-    version:'0.36.18.416',sourceId,createdIds:created,count:total,
+    version:'0.36.18.417',sourceId,createdIds:created,count:total,
     endpoint:[endpoint.x,endpoint.y,endpoint.z]
   };
   setStatus(`Array • ${created.length} linked instance${created.length===1?'':'s'} • evenly distributed to ${endpointText()}`);
@@ -295,7 +301,7 @@ moveButtons.forEach(control=>control.addEventListener('click',()=>{
   if(previewArmed)setStatus(`Array preview • move END copy (${moveMode.toUpperCase()}) • ${endpointText()}`);
 }));
 installPenRange(countInput,()=>{syncCount();if(previewArmed)buildPreview();});
-canvas?.addEventListener('pointerdown',beginEndpointDrag,true);
+document.addEventListener('pointerdown',beginEndpointDrag,true);
 canvas?.addEventListener('pointermove',moveEndpointDrag,true);
 canvas?.addEventListener('pointerup',finishEndpointDrag,true);
 canvas?.addEventListener('pointercancel',finishEndpointDrag,true);
@@ -321,7 +327,7 @@ cancelButton?.addEventListener('click',()=>cancelPreview());
 window.addEventListener('boxlab-object-manager-ready',sync);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
-window.addEventListener('beforeunload',()=>{endEndpointDrag();disposePreview();endArraySession();});
+window.addEventListener('beforeunload',()=>{document.removeEventListener('pointerdown',beginEndpointDrag,true);endEndpointDrag();disposePreview();endArraySession();});
 sync();
 
 globalThis.__boxlabLinearArray={
