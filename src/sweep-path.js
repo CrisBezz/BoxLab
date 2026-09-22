@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.399';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.400';
 
-const VERSION='0.36.18.399';
+const VERSION='0.36.18.400';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -202,7 +202,15 @@ function signature(){
   return[o.id,planeSignature(mesh),m.profileType,m.profileClosed,m.profilePoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))).join('|'),m.profileSize,m.profileSides,m.editProfile,m.pathMode,m.pathPoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))+','+String(Number(p.z).toFixed(4))).join('|'),m.editPath,m.caps].join(';');
 }
 function tick(){const s=signature();if(s!==lastSignature){lastSignature=s;buildOverlay();}if(!s&&overlay){lastSignature='';buildOverlay();}raf=requestAnimationFrame(tick);}
-function disarmOther(m,which){if(which!=='profile')m.editProfile=false;if(which!=='path')m.editPath=false;}
+function disarmTransforms(){
+  globalThis.__boxlabTransformArming?.disarm?.();
+  document.querySelectorAll('#toolModes button.active').forEach(button=>button.classList.remove('active'));
+}
+function disarmOther(m,which){
+  if(which!=='profile')m.editProfile=false;
+  if(which!=='path')m.editPath=false;
+  if(which==='profile'||which==='path')disarmTransforms();
+}
 function addEdgeToPath(event,frame,m){
   const hit=externalGeometrySnap(event,captureSnapReferences(),true);
   if(!hit||hit.kind!=='Edge'||!hit.a||!hit.b){setStatus('Sweep - Follow Edges: tap an existing visible edge');return false;}
@@ -285,7 +293,7 @@ function installPenRange(input,onValue){let pointerId=null,owned=null,releaseFra
 
 function setProfileType(type){
   const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
-  m.profileType=type;if(type==='draw'){if(!m.profilePoints.length)m.profileClosed=false;m.editProfile=true;disarmOther(m,'profile');}else m.profileClosed=true;
+  m.profileType=type;if(type==='draw'){m.profileClosed=false;m.editProfile=true;disarmOther(m,'profile');}else m.profileClosed=true;
   m.interacted=true;lockTools();lastSignature='';
 }
 function setPathMode(mode){
@@ -313,4 +321,4 @@ applyBtn.addEventListener('click',applySweep);
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedId=null;cachedObject=null;lastSignature='';buildOverlay();}));
 window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();unlockTools();});
 tick();
-globalThis.__boxlabSweepPath={version:VERSION,add:addSweepPath,apply:applySweep,get active(){return !!pathObject()&&looksConstructionMesh(liveMesh());},rebuild(){lastSignature='';buildOverlay();}};
+globalThis.__boxlabSweepPath={version:VERSION,add:addSweepPath,apply:applySweep,get active(){return !!pathObject()&&looksConstructionMesh(liveMesh());},get editing(){const o=pathObject(),m=o&&ensureMeta(o);return !!m&&(m.editProfile||m.editPath);},rebuild(){lastSignature='';buildOverlay();}};
