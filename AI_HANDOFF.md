@@ -1559,6 +1559,8 @@ v0.36.18.415 changes only the fresh Add → Sweep placement path:
 
 ## Current development — v0.36.18.416 Array Tool Session migration
 
+**Released on main via PR #101; squash merge `00f555ed3475c11194c131aca9599db8280a7536`. Final corrected PR regression run `35689094456` passed.**
+
 After Sweep established the Tool Session pattern, the user selected roadmap item 1: migrate Array next.
 
 v0.36.18.416 keeps the proven endpoint-vector Array engine and changes only UI ownership/workflow:
