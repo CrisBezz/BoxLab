@@ -13,6 +13,8 @@
 - Apply is one Object-history step and commits back into the active editable mesh.
 - Existing non-destructive Mirror must be turned off before launching to avoid double-mirror ambiguity.
 - Frozen Beta 4 remains exactly v0.36.18.427 and is regression-protected.
+- Released via PR **#114**; squash merge `72a30c2f5799d048235684e326da8fdf3a71fa2c`.
+- Final PR Topology regression run **35721391817 PASS**.
 
 
 ## 2026-09-22 — Beta 4 freeze at v0.36.18.427
