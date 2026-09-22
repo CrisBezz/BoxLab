@@ -1370,6 +1370,8 @@ v0.36.18.402 fixes the workflow rather than trying to preserve component selecti
 
 ## Current development — v0.36.18.403 closed-profile node insertion fix
 
+**Released on main via PR #88; squash merge `e5b62249db5d80ed6148f02b52bb20563c088c4b`. PR regression run `35675477945` passed.**
+
 User feedback on .402: closed custom Sweep profiles could not accept an inserted node.
 
 Root cause: `nearestProfileSegment()` called a missing `segmentDistance()` helper. Open-profile authoring never used that path, which is why the problem only appeared after closing the profile.
