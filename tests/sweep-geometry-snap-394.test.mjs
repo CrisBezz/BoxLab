@@ -7,7 +7,7 @@ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 test('394 Apply immediate viewport rebuild remains protected',()=>{
-  assert.match(ui,/disposeOverlay\(\);(?:hotRailHit=null;)?controls\.hidden=true;endSweepSession\(\);lastSignature='';document\.querySelector\('#cageToggle'\)\?\.dispatchEvent/);
+  assert.match(ui,/disposeOverlay\(\);hotRailHit=null;railSnapRefs=null;controls\.hidden=true;endSweepSession\(\);lastSignature='';document\.querySelector\('#cageToggle'\)\?\.dispatchEvent/);
 });
 
 test('395 Draw Path stores genuine world-space 3D points',()=>{
@@ -28,7 +28,7 @@ test('394 Geometry Snap targets visible external vertices edges and faces',()=>{
 test('395 Draw Path preserves snapped point depth and Follow Edges can force edge picking',()=>{
   assert.match(ui,/snap=geometryToggle\?\.checked\?externalGeometrySnap\(event,refs\):null/);
   assert.match(ui,/snap\?\.point\|\|pointOnViewPlane/);
-  assert.match(ui,/externalGeometrySnap\(event,captureSnapReferences\(\),true\)/);
+  assert.match(ui,/externalEdgeSnap\(event,railRefs\(\)\)/);
 });
 
 test('Sweep release wrapper follows current build',()=>{
