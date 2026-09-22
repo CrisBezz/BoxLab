@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.404';
+const VERSION='0.36.18.405';
 const EPS=1e-7;
 
 function cleanPath(points=[]){
@@ -131,6 +131,23 @@ function orientedSideFace(aRing,bRing,j,k,vertices,frameA,frameB,profileA,profil
   if(actual.dot(expected)<0)face.reverse();
   return face;
 }
+function signedMeshVolume(vertices,faces){
+  let volume=0;
+  for(const face of faces){
+    if(!face||face.length<3)continue;
+    const a=vertices[face[0]];
+    for(let i=1;i<face.length-1;i++){
+      const b=vertices[face[i]],c=vertices[face[i+1]];
+      volume+=a.dot(new THREE.Vector3().crossVectors(b,c))/6;
+    }
+  }
+  return volume;
+}
+function orientClosedShellOutward(vertices,faces){
+  const volume=signedMeshVolume(vertices,faces);
+  if(volume<0)for(const face of faces)face.reverse();
+  return{volume:Math.abs(volume),flipped:volume<0};
+}
 function orientedCapFaces(ring,triangles,vertices,desiredNormal){
   const out=[];
   for(const tri of triangles){
@@ -187,7 +204,8 @@ export function buildSweepProfile(rawPath,rawProfile,options={}){
       }
     }
   }
-  return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,profileClosed,clockwise,capStart,capEnd};
+  const shellOrientation=profileClosed&&capStart&&capEnd?orientClosedShellOutward(vertices,faces):{volume:0,flipped:false};
+  return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,profileClosed,clockwise,capStart,capEnd,shellOrientation};
 }
 export function buildSweepTube(rawPoints,options={}){
   const radius=Math.max(1e-4,Number(options.radius)||0.25);
@@ -200,5 +218,5 @@ export function buildSweepTube(rawPoints,options={}){
   const result=buildSweepProfile(rawPoints,profile,{...options,profileClosed:true});
   return result.ok?{...result,radius,sides}:result;
 }
-export const __sweepInternals={cleanPath,tangentAt,initialFrame,transportedFrames,cleanProfile,signedArea2D,isConvexProfile,sideOutward2D,orientedSideFace,triangulateCap,orientedCapFaces};
+export const __sweepInternals={cleanPath,tangentAt,initialFrame,transportedFrames,cleanProfile,signedArea2D,isConvexProfile,sideOutward2D,orientedSideFace,triangulateCap,orientedCapFaces,signedMeshVolume,orientClosedShellOutward};
 globalThis.__boxlabSweepCore={version:VERSION,buildSweepTube,buildSweepProfile};

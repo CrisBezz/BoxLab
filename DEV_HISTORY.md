@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.405 Sweep shell normal unification
+
+- User confirmed .404 selected-profile anchoring was correct but the final closed Sweep shell still displayed flipped normals.
+- Added signed-volume validation for closed capped Sweep shells.
+- If the generated shell has negative signed volume, all generated faces are reversed once before EditableMesh creation.
+- This provides a Sweep-specific final Unify Normals pass without depending on source face winding or anchor orientation.
+- Open or uncapped Sweep surfaces remain untouched.
+- .404 profile-anchor/path behaviour remains unchanged.
+
 ## 2026-09-22 — v0.36.18.404 selected-profile Sweep anchor
 
 - Fixed Face/Edge-loop Sweep starting from the profile centroid before reaching the selected Follow Edge path.
