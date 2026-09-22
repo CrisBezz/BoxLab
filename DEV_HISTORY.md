@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.401 Sweep Use Selection profile
+
+- User hands-on passed the .400 Sweep edit-ownership fixes and requested the next Sweep build.
+- Added **Use Selection** as the fourth Sweep profile source beside Circle / Rectangle / Draw.
+- A single selected Face or connected closed selected Edge loop is captured before Add → Sweep changes the active object.
+- Use Selection aligns the Profile Plane to the source geometry and converts the exact planar outline into an editable closed Draw profile.
+- Closed Edge-loop validation requires a single cycle; invalid/non-planar selections are rejected conservatively.
+- Source geometry is snapshotted only for profile construction and remains unchanged.
+
 ## 2026-09-22 — v0.36.18.400 Sweep edit ownership
 
 - Fixed Draw Profile remaining/returning Closed during free profile authoring; selecting Draw now explicitly opens the custom profile until the user chooses Closed.
