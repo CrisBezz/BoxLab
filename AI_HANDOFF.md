@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.426**
+- Current `version.json`: **0.36.18.427**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -84,6 +84,17 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.427 Edge Extrude selection handoff
+
+- Edge Extrude tap handling now distinguishes selection changes from actual drag extrusion.
+- While armed, tapping the current selected edge deselects it and leaves Extrude + the active Plane/X/Y/Z/Auto constraint armed.
+- Tapping a different valid boundary edge switches selection to it without leaving the tool.
+- Dragging a different valid boundary edge switches selection and starts extrusion immediately in that same gesture.
+- A temporarily empty selection no longer disarms Edge Extrude.
+- Existing ribbon topology, Plane constraint math, X/Y/Z/Auto behavior and Undo semantics are unchanged.
+
+**Hands-on verify .427:** after a Plane extrusion, tap the selected outer edge to deselect it, tap another boundary edge and confirm Plane remains active, then try dragging an unselected boundary edge directly to switch-and-extrude in one motion.
 
 ## Current development — v0.36.18.426 Edge Extrude Plane constraint
 
