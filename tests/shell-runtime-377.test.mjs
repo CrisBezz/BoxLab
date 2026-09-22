@@ -21,9 +21,10 @@ test('377 Shell reuses Face selection bridge and shared Solidify core',()=>{
   assert.match(core,/solidify-core\.js\?v=0\.36\.18\.374/);
 });
 
-test('377 Shell preview is apply-gated and keeps Active Tools open',()=>{
-  assert.match(shell,/button\.textContent='Apply Shell'/);
-  assert.match(shell,/activeToolsDrawer\.dataset\.keepOpen='true'/);
+test('377 Shell preview remains apply-gated and now delegates Active Tools ownership to Tool Session',()=>{
+  assert.match(shell,/shellApplyBtn/);
+  assert.match(shell,/toolSession\(\)\?\.begin\?\.\(\{id:'shell'/);
+  assert.match(shell,/toolSession\(\)\?\.end\?\.\('shell'\)/);
   assert.match(shell,/previewArmed/);
 });
 
