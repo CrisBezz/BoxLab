@@ -1430,9 +1430,22 @@ v0.36.18.406 introduces a reusable **Tool Session** UI foundation and migrates S
 
 This Tool Session pattern is the intended basis for later migration of Revolve, Array, Solidify and Shell; do not independently add more permanent complex-tool blocks to Active Tools.
 
+## Current development — v0.36.18.407 Sweep local winding unification
+
+User hands-on passed the .406 Tool Session UX and reported one remaining isolated backface in Sweep.
+
+v0.36.18.407 adds a true local face-winding unification pass before the existing closed-shell signed-volume orientation check:
+- shared edges are indexed across generated Sweep faces
+- adjacent faces are traversed component-by-component
+- any neighbour using the same shared-edge direction is reversed
+- after all local winding is consistent, closed capped shells still use the .405 signed-volume pass to choose outward global orientation
+- this repairs isolated backfaces that a shell-volume test cannot detect
+- open/uncapped Sweep surfaces also gain local winding consistency, but are not globally flipped
+- .406 Tool Session UX remains unchanged
+
 ## Next development step
 
-**Hands-on verify v0.36.18.406 Sweep Tool Session UX on iPad before migrating any other complex tool.**
+**Hands-on verify v0.36.18.407 on the same Sweep that showed one backface; geometry and UI should be unchanged, with no isolated reversed face.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.
