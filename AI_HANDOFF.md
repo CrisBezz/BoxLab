@@ -1410,6 +1410,8 @@ v0.36.18.405 adds a final closed-shell orientation validation inside the Sweep g
 
 ## Current development — v0.36.18.406 Tool Session UI foundation + Sweep UX
 
+**Released on main via PR #91; squash merge `84bb7c68af215560061fda034f723d42be5dce2a`. Final corrected PR regression run `35680137829` passed.**
+
 The user confirmed .405 Sweep geometry/normals and requested a UI/UX audit before leaving Sweep. The audit found that recent complex tools were all appending controls into the same Active Tools container, causing Sweep to be buried among unrelated Object tools such as Array and Boolean.
 
 v0.36.18.406 introduces a reusable **Tool Session** UI foundation and migrates Sweep onto it:
