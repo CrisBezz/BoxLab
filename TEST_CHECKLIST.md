@@ -764,3 +764,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Edge Extrude ribbon: repeatedly drag the newly selected outer edge to grow a continuous ribbon without reselecting or leaving Edge mode
 - [ ] Edge Extrude chain: select a connected boundary chain and drag; shared vertices stay welded and the new outer chain remains selected
 - [ ] Edge Extrude refuses interior or branched selections and Undo removes one pull at a time
+
+- [ ] Edge Extrude constraints: with X/Y/Z selected, drag a boundary edge and confirm the ribbon grows along that world-axis direction projected perpendicular to the source edge
+- [ ] Edge Extrude constraints: choose an axis parallel to the source edge and confirm the pull refuses instead of producing a sliver
+- [ ] Edge Extrude Auto: Auto or Axis Snap ON chooses one valid X/Y/Z perpendicular direction from the initial drag and keeps it locked through the pull
+- [ ] Edge Extrude Free: Axis Snap OFF + Free preserves the original unconstrained ribbon drag
