@@ -9,6 +9,8 @@
 - Apply no longer bakes or clears Mirror; the Mirror modifier remains ON after Solidify.
 - This matches Shell's proven modifier-preserving behavior and avoids double/overlapping evaluated topology during Solidify preflight.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#116**; squash merge `4a393fa0021d196c9921cf978fd029f109035ce9`.
+- Final PR Topology regression run **35724663296 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.429 Solidify mirrored-object fix
