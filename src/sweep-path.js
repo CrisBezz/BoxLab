@@ -93,6 +93,7 @@ function ensureMeta(o){
   m.selectedPathPoint=Number.isInteger(m.selectedPathPoint)?m.selectedPathPoint:null;
   m.caps=m.caps!==false;
   m.interacted=!!m.interacted;
+  m.sessionStage||='profile';
   m.initialPlaneSignature||=planeSignature(liveMesh());
   return m;
 }
@@ -301,6 +302,22 @@ function nearestPathPoint(event,frame,m){
 function pushProfileHistory(m){m.profileHistory.push(m.profilePoints.map(p=>({...p})));if(m.profileHistory.length>30)m.profileHistory.shift();}
 function pushPathHistory(m){m.pathHistory.push(m.pathPoints.map(p=>({...p})));if(m.pathHistory.length>30)m.pathHistory.shift();}
 function setStatus(t){if(status)status.textContent=t;}
+function toolSession(){return globalThis.__boxlabToolSession||null;}
+function setSweepStage(stage,{activatePath=false}={}){
+  const valid=stage==='path'||stage==='finish'?stage:'profile';
+  const o=pathObject(),m=o&&ensureMeta(o);if(m)m.sessionStage=valid;
+  profilePanel.hidden=valid!=='profile';pathPanel.hidden=valid!=='path';finishPanel.hidden=valid!=='finish';
+  stageProfileBtn.classList.toggle('active',valid==='profile');stagePathBtn.classList.toggle('active',valid==='path');stageFinishBtn.classList.toggle('active',valid==='finish');
+  if(valid==='finish'&&m){m.editProfile=false;m.editPath=false;disarmTransforms();}
+  if(valid==='path'&&activatePath&&m&&!m.editPath)setPathMode(m.pathMode||'edges');
+  if(editDrawer)editDrawer.open=true;
+}
+function beginSweepSession(stage='profile'){
+  controls.hidden=false;
+  toolSession()?.begin?.({id:'sweep',title:'Sweep',node:controls,subtitle:'Profile · Path · Finish'});
+  setSweepStage(stage);
+}
+function endSweepSession(){toolSession()?.end?.('sweep');}
 function lockTools(){if(!editDrawer)return;if(!drawerLockState)drawerLockState={keepOpen:editDrawer.dataset.keepOpen,open:editDrawer.open};editDrawer.dataset.keepOpen='true';editDrawer.open=true;}
 function unlockTools(){if(!editDrawer||!drawerLockState)return;const old=drawerLockState;drawerLockState=null;if(old.keepOpen===undefined)delete editDrawer.dataset.keepOpen;else editDrawer.dataset.keepOpen=old.keepOpen;if(old.open)editDrawer.open=true;}
 function replaceMesh(target,source){target.vertices=source.vertices.map(v=>v.clone());target.faces=source.faces.map(f=>[...f]);target.creases=new Map(source.creases||[]);target.looseEdges=new Set();target.looseVertices=new Set();target.edges?.();}
@@ -316,9 +333,10 @@ function lineOverlay(points,closed=false){
 function pointsOverlay(points,size=8){if(!points.length)return null;return new THREE.Points(new THREE.BufferGeometry().setFromPoints(points),new THREE.PointsMaterial({size,sizeAttenuation:false,depthTest:false,depthWrite:false}));}
 function buildOverlay(){
   const o=pathObject(),mesh=liveMesh(),scene=state()?.scene;
-  if(!o||!scene){disposeOverlay();controls.hidden=true;unlockTools();return;}
+  if(!o||!scene){disposeOverlay();controls.hidden=true;unlockTools();endSweepSession();return;}
   const m=ensureMeta(o),construction=looksConstructionMesh(mesh);controls.hidden=!construction;
-  if(!construction){disposeOverlay();unlockTools();return;}
+  if(!construction){disposeOverlay();unlockTools();endSweepSession();return;}
+  beginSweepSession(m.sessionStage||'profile');
   const frame=frameFor(mesh);if(!frame){disposeOverlay();return;}
   if(m.initialPlaneSignature&&planeSignature(mesh)!==m.initialPlaneSignature)m.interacted=true;
   if(m.editProfile||m.editPath||m.interacted)lockTools();
@@ -336,11 +354,12 @@ function buildOverlay(){
   sizeInput.disabled=m.profileType==='draw';sidesInput.disabled=m.profileType!=='circle';sizeInput.value=String(m.profileSize);sizeOut.textContent=m.profileSize.toFixed(2);sidesInput.value=String(m.profileSides);sidesOut.textContent=String(m.profileSides);
   followBtn.classList.toggle('active',m.pathMode==='edges');drawPathBtn.classList.toggle('active',m.pathMode==='draw');editPathBtn.classList.toggle('active',m.editPath);editPathBtn.textContent=m.editPath?'Editing Path':'Edit Path';undoPathBtn.disabled=!m.pathHistory.length;deletePathBtn.disabled=!Number.isInteger(m.selectedPathPoint)||!m.pathPoints[m.selectedPathPoint];clearPathBtn.disabled=!m.pathPoints.length;
   capsBtn.disabled=!m.profileClosed;capsBtn.classList.toggle('active',m.caps&&m.profileClosed);capsBtn.textContent=m.profileClosed?(m.caps?'Caps On':'Caps Off'):'Caps N/A';
+  setSweepStage(m.sessionStage||'profile');
 }
 function signature(){
   const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return'';
   const m=ensureMeta(o);
-  return[o.id,planeSignature(mesh),m.profileType,m.profileClosed,m.profilePoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))).join('|'),m.profileSize,m.profileSides,m.editProfile,m.pathMode,m.pathPoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))+','+String(Number(p.z).toFixed(4))).join('|'),m.editPath,m.caps].join(';');
+  return[o.id,planeSignature(mesh),m.profileType,m.profileClosed,m.profilePoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))).join('|'),m.profileSize,m.profileSides,m.editProfile,m.pathMode,m.pathPoints.map(p=>String(Number(p.x).toFixed(4))+','+String(Number(p.y).toFixed(4))+','+String(Number(p.z).toFixed(4))).join('|'),m.editPath,m.caps,m.sessionStage].join(';');
 }
 function tick(){refreshSelectionLaunchButtons();const s=signature();if(s!==lastSignature){lastSignature=s;buildOverlay();}if(!s&&overlay){lastSignature='';buildOverlay();}raf=requestAnimationFrame(tick);}
 function disarmTransforms(){
