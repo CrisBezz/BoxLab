@@ -133,7 +133,7 @@ function orientedSideFace(aRing,bRing,j,k,vertices,frameA,frameB,profileA,profil
 }
 function unifyFaceWinding(faces){
   const edgeMap=new Map(),adj=Array.from({length:faces.length},()=>[]);
-  const edgeKey=(a,b)=>a<b?\`${a}:${b}\`:\`${b}:${a}\`;
+  const edgeKey=(a,b)=>a<b?(a+':'+b):(b+':'+a);
   for(let fi=0;fi<faces.length;fi++){
     const face=faces[fi]||[];
     for(let i=0;i<face.length;i++){
