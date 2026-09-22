@@ -1516,9 +1516,21 @@ Audit confirmed global button CSS is not stripping the state, so .412 removes am
 - candidate rail guide is made fully opaque white while active to maximize contrast over shaded surfaces
 - no picker, path, geometry or Tool Session behavior changes
 
+## Current development — v0.36.18.413 atomic selected-profile → Follow Edges handoff
+
+The .412 screenshot proved CSS was not the root cause: PATH was active, but Follow Edges was not. This means the selected-profile launch reached the PATH stage while the actual path-mode activation was being lost during the profile/save/render handoff.
+
+v0.36.18.413 removes that fragile second-stage lookup:
+- `applySelectionProfile()` now accepts `activateFollowEdges:true`
+- selected Face/Edge profile loading, `pathMode='edges'`, `editPath=true`, and `sessionStage='path'` are written atomically to the same Sweep metadata object
+- Follow Edges button state and rail references are initialized before `manager.saveActive()` and the cage/render event
+- the old sequence `applySelectionProfile(); setPathMode('edges'); setSweepStage('path')` is removed from the auto-launch path
+- manual Use Selection still loads only the profile unless explicitly asked to activate Follow Edges
+- .412 hard active-state label and .410 edge-only picker remain intact
+
 ## Next development step
 
-**Hands-on verify v0.36.18.412. If Follow Edges is active, the button must literally read `Follow Edges · Active`. If not, the next investigation is state propagation rather than CSS.**
+**Hands-on verify v0.36.18.413 from a selected Face/closed Edge loop. PATH should open with the button literally reading `Follow Edges · Active`, and the rail network should be visible immediately.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.
