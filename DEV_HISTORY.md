@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.400 Sweep edit ownership
+
+- Fixed Draw Profile remaining/returning Closed during free profile authoring; selecting Draw now explicitly opens the custom profile until the user chooses Closed.
+- Fixed point 4+ authoring so custom profiles continue to append normally.
+- Added explicit transform disarm when Sweep Profile or Path editing takes viewport ownership.
+- Added a Sweep `editing` state and made `transform-upgrade.js` yield while Sweep is editing, preventing Move/Scale/Rotate from stealing Pencil/mouse gestures.
+- Preserved touch orbit/pan/pinch and all .399 Sweep topology/normal work.
+
 ## 2026-09-22 — v0.36.18.399 Sweep side-normal correction
 
 - User confirmed .398 geometry was much improved but side-face normals were flipped.
