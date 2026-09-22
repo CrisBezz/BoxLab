@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.413';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.414';
 
-const VERSION='0.36.18.413';
+const VERSION='0.36.18.414';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -67,7 +67,7 @@ function placeLaunchButton(container,button){
 }
 placeLaunchButton(faceTools,faceSelectionSweepBtn);placeLaunchButton(edgeTools,edgeSelectionSweepBtn);
 
-let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null;
+let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null,hotRailHit=null,railSnapRefs=null;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 
 function state(){return globalThis.__boxlabBridgeState;}
