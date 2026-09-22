@@ -7,6 +7,8 @@
 - The overlay includes internal mesh edges as well as boundaries, so Knife/Loop Cut topology can be followed visually.
 - Rail guides appear only in PATH → Follow Edges and disappear automatically in PROFILE, Draw Path, FINISH, Apply, or Sweep exit.
 - No Sweep geometry, path-selection or Tool Session behaviour changed.
+- Released via PR **#93**; squash merge `e2bdaaa18b803fce0adb7d3ef4b63c8dad64b455`.
+- Final PR Topology regression run **35682072137 PASS**.
 
 ## 2026-09-22 — v0.36.18.407 Sweep local face-winding unification
 
