@@ -1518,6 +1518,8 @@ Audit confirmed global button CSS is not stripping the state, so .412 removes am
 
 ## Current development — v0.36.18.413 atomic selected-profile → Follow Edges handoff
 
+**Released on main via PR #98; squash merge `e30e895e82453e85d3b8ac4e97dbfb0ebdc0a82f`. Final corrected PR regression run `35686329704` passed.**
+
 The .412 screenshot proved CSS was not the root cause: PATH was active, but Follow Edges was not. This means the selected-profile launch reached the PATH stage while the actual path-mode activation was being lost during the profile/save/render handoff.
 
 v0.36.18.413 removes that fragile second-stage lookup:
