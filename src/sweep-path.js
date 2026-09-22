@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.410';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.411';
 
-const VERSION='0.36.18.410';
+const VERSION='0.36.18.411';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -42,6 +42,10 @@ const editProfileBtn=controls.querySelector('#sweepEditProfile'),profileClosedBt
 const sizeInput=controls.querySelector('#sweepProfileSize'),sizeOut=controls.querySelector('#sweepProfileSizeOut'),sidesInput=controls.querySelector('#sweepProfileSides'),sidesOut=controls.querySelector('#sweepProfileSidesOut');
 const followBtn=controls.querySelector('#sweepFollowEdges'),drawPathBtn=controls.querySelector('#sweepDrawPath'),editPathBtn=controls.querySelector('#sweepEditPath'),undoPathBtn=controls.querySelector('#sweepUndoPath'),deletePathBtn=controls.querySelector('#sweepDeletePath'),clearPathBtn=controls.querySelector('#sweepClearPath');
 const capsBtn=controls.querySelector('#sweepCapsBtn'),applyBtn=controls.querySelector('#sweepApplyBtn');
+
+const sweepModeStyle=document.createElement('style');
+sweepModeStyle.textContent='#sweepPathControls button.active{box-shadow:inset 0 0 0 1px rgba(115,183,255,.95);background:rgba(74,134,205,.28)}';
+document.head.appendChild(sweepModeStyle);
 
 const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
 const edgeTools=document.querySelector('.mode-tools[data-mode-tools="edge"]');
@@ -365,7 +369,7 @@ function railEdgeOverlay(refs){
   if(!positions.length)return null;
   const geometry=new THREE.BufferGeometry();
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
-  const material=new THREE.LineBasicMaterial({color:0xe8f8ff,transparent:true,opacity:.95,depthTest:true,depthWrite:false});
+  const material=new THREE.LineBasicMaterial({color:0xe8f8ff,transparent:true,opacity:.92,depthTest:false,depthWrite:false});
   const lines=new THREE.LineSegments(geometry,material);
   lines.renderOrder=50;
   group.add(lines);
@@ -418,7 +422,7 @@ function buildOverlay(){
   circleBtn.classList.toggle('active',m.profileType==='circle');rectBtn.classList.toggle('active',m.profileType==='rectangle');drawProfileBtn.classList.toggle('active',m.profileType==='draw');useSelectionBtn.disabled=!m.selectionProfile;
   editProfileBtn.classList.toggle('active',m.editProfile);editProfileBtn.textContent=m.editProfile?'Editing Profile':'Edit Profile';profileClosedBtn.disabled=m.profileType!=='draw';profileClosedBtn.classList.toggle('active',m.profileClosed);profileClosedBtn.textContent=m.profileClosed?'Closed':'Open';undoProfileBtn.disabled=!m.profileHistory.length;clearProfileBtn.disabled=m.profileType!=='draw'||!m.profilePoints.length;
   sizeInput.disabled=m.profileType==='draw';sidesInput.disabled=m.profileType!=='circle';sizeInput.value=String(m.profileSize);sizeOut.textContent=m.profileSize.toFixed(2);sidesInput.value=String(m.profileSides);sidesOut.textContent=String(m.profileSides);
-  followBtn.classList.toggle('active',m.pathMode==='edges');drawPathBtn.classList.toggle('active',m.pathMode==='draw');editPathBtn.classList.toggle('active',m.editPath);editPathBtn.textContent=m.editPath?'Editing Path':'Edit Path';undoPathBtn.disabled=!m.pathHistory.length;deletePathBtn.disabled=!Number.isInteger(m.selectedPathPoint)||!m.pathPoints[m.selectedPathPoint];clearPathBtn.disabled=!m.pathPoints.length;
+  syncPathModeButtons(m);editPathBtn.classList.toggle('active',m.editPath);editPathBtn.textContent=m.editPath?'Editing Path':'Edit Path';undoPathBtn.disabled=!m.pathHistory.length;deletePathBtn.disabled=!Number.isInteger(m.selectedPathPoint)||!m.pathPoints[m.selectedPathPoint];clearPathBtn.disabled=!m.pathPoints.length;
   capsBtn.disabled=!m.profileClosed;capsBtn.classList.toggle('active',m.caps&&m.profileClosed);capsBtn.textContent=m.profileClosed?(m.caps?'Caps On':'Caps Off'):'Caps N/A';
   setSweepStage(m.sessionStage||'profile');
 }
@@ -574,11 +578,17 @@ function setProfileType(type){
   m.profileType=type;if(type==='draw'){m.profileClosed=false;m.editProfile=true;disarmOther(m,'profile');}else m.profileClosed=true;
   m.sessionStage='profile';m.interacted=true;lockTools();setSweepStage('profile');lastSignature='';
 }
+function syncPathModeButtons(m){
+  const edges=m?.pathMode==='edges',draw=m?.pathMode==='draw';
+  followBtn.classList.toggle('active',edges);drawPathBtn.classList.toggle('active',draw);
+  followBtn.setAttribute('aria-pressed',edges?'true':'false');
+  drawPathBtn.setAttribute('aria-pressed',draw?'true':'false');
+}
 function setPathMode(mode){
   const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
   if(mode!=='edges'){hotRailHit=null;railSnapRefs=null;}else railRefs(true);
-  m.pathMode=mode;m.editPath=true;m.sessionStage='path';disarmOther(m,'path');if(mode!=='edges'&&!m.pathPoints.length)m.profileAnchorIndex=null;m.interacted=true;lockTools();setSweepStage('path');
-  setStatus(mode==='edges'?'Sweep - tap connected path edges':'Sweep - draw path; Geometry Snap targets model geometry');
+  m.pathMode=mode;m.editPath=true;m.sessionStage='path';disarmOther(m,'path');if(mode!=='edges'&&!m.pathPoints.length)m.profileAnchorIndex=null;m.interacted=true;lockTools();syncPathModeButtons(m);setSweepStage('path');
+  setStatus(mode==='edges'?'Sweep - Follow Edges active · tap connected path edges':'Sweep - Draw Path active · draw path; Geometry Snap targets model geometry');
   lastSignature='';
 }
 stageProfileBtn.addEventListener('click',()=>setSweepStage('profile'));
