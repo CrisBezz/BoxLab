@@ -690,3 +690,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Knife-cut/internal rail edge remains visible over a shaded face
 - [ ] rail guide remains temporary and only visible in PATH → Follow Edges
 - [ ] .410 edge-only picker behaviour remains unchanged
+
+
+## Phase D/F — hard Follow Edges active-state indicator — .412
+
+- [ ] active Follow Edges button literally reads `Follow Edges · Active`
+- [ ] inactive Follow Edges button reads `Follow Edges`
+- [ ] selected path button styling is driven by aria-pressed and remains visible regardless of generic button CSS
+- [ ] active candidate rail guide is fully opaque over shaded surfaces
+- [ ] .410 picker and .411 rail visibility behavior remain unchanged
