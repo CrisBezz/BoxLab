@@ -7,6 +7,8 @@
 - Array now restores its original preview source if selection changes during an armed preview and reasserts the `array` Tool Session if displaced.
 - Endpoint preview pointer-down moved to document capture level (canvas target only) so Array can win before ordinary object selection.
 - Array still exits on Apply, Cancel, or explicitly leaving Object mode.
+- Released via PR **#102**; squash merge `58e65c14d04ce3f8ebc21f98b4860373007a3126`.
+- Final PR Topology regression run **35689604956 PASS**.
 
 ## 2026-09-22 — v0.36.18.416 Array Tool Session migration
 
