@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import fs from 'node:fs';
 import {EditableMesh} from '../src/mesh.js';
 import {installLooseTopology} from '../src/loose-topology.js';
-import {boundarySelectionInfo,extrudeBoundaryEdges} from '../src/edge-extrude-core.js';
+import {boundarySelectionInfo,extrudeBoundaryEdges,perpendicularAxisDirection} from '../src/edge-extrude-core.js';
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 installLooseTopology(EditableMesh);
@@ -91,4 +91,30 @@ test('423/424 UI stays armed, validates the live selected edge ids, and preserve
   assert.ok(ui.includes("repeat(3,minmax(0,1fr))"));
   assert.ok(index.includes('src/edge-extrude.js?v='+version));
   assert.ok(index.includes('src/multi-object-transform.js?v=0.36.1.0'));
+});
+
+
+test('425 axis direction is projected perpendicular to the source edge',()=>{
+  const edge=new THREE.Vector3(1,1,0).normalize();
+  const dir=perpendicularAxisDirection(edge,new THREE.Vector3(1,0,0));
+  assert.ok(dir);
+  assert.ok(Math.abs(dir.dot(edge))<1e-9);
+  assert.ok(dir.x>0);
+});
+
+test('425 parallel axis is rejected rather than creating a sliver',()=>{
+  const edge=new THREE.Vector3(1,0,0);
+  assert.equal(perpendicularAxisDirection(edge,new THREE.Vector3(1,0,0)),null);
+});
+
+test('425 Edge Extrude owns Pencil drag while armed and reads shared transform constraints',()=>{
+  const ui=fs.readFileSync(new URL('../src/edge-extrude.js',import.meta.url),'utf8');
+  const transform=fs.readFileSync(new URL('../src/transform-upgrade.js',import.meta.url),'utf8');
+  const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.ok(ui.includes("__boxlabTransformArming?.constraint?.()"));
+  assert.ok(ui.includes("perpendicularAxisDirection"));
+  assert.ok(ui.includes("chooseAutoAxis"));
+  assert.ok(ui.includes("#transformPrecision,#toolModes,.quick-snap"));
+  assert.ok(transform.includes("__boxlabEdgeExtrude?.isArmed?.()"));
+  assert.ok(index.includes('src/transform-upgrade.js?v=0.36.18.425'));
 });
