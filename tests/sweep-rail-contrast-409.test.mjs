@@ -13,7 +13,7 @@ test('409 distinguishes candidate hot and accepted rail states',()=>{
 });
 
 test('409 hot edge uses the same Follow Edges picker',()=>{
-  assert.ok(source.includes("const hit=externalGeometrySnap(event,captureSnapReferences(),true)"));
+  assert.ok(source.includes("const hit=externalEdgeSnap(event,railRefs())"));
   assert.ok(source.includes("const next=hit?.kind==='Edge'?hit:null"));
   assert.ok(source.includes('hotRailHit=next'));
 });
@@ -23,7 +23,7 @@ test('409 hot edge updates only during PATH Follow Edges editing',()=>{
 });
 
 test('409 hot state clears on stage or mode exit',()=>{
-  assert.ok(source.includes("if(valid!=='path')hotRailHit=null"));
-  assert.ok(source.includes("if(mode!=='edges')hotRailHit=null"));
+  assert.ok(source.includes("if(valid!=='path'){hotRailHit=null;railSnapRefs=null;}"));
+  assert.ok(source.includes("if(mode!=='edges'){hotRailHit=null;railSnapRefs=null;}else railRefs(true)"));
   assert.ok(source.includes('disposeOverlay();hotRailHit=null;controls.hidden=true'));
 });
