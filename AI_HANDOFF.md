@@ -87,7 +87,7 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.423 direct Edge Extrude ribbons
 
-**Development branch: feature/edge-extrude-ribbon-423.**
+**Released on main via PR #108; squash merge `e92c11463449f481e6ef84d74f4a00dad8f3775c`. Final PR regression run `35704689025` passed.**
 
 Edge Extrude is now the active build following the hands-on pass of .422 Revolve Profile Tool Session.
 
