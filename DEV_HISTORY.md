@@ -6,6 +6,8 @@
 - Fresh Sweep now creates a camera-facing profile plane just in front of the current active mesh bounding sphere, toward the camera.
 - Fresh Sweep automatically arms real Move on the next frame so repositioning is immediately available without reselecting the construction object.
 - Selected Face/Edge Sweep placement remains unchanged and still comes directly from the selected source geometry.
+- Released via PR **#100**; squash merge `69299520f61b36186d121026f8e27b807889db46`.
+- Final corrected PR Topology regression run **35688505420 PASS**.
 
 ## 2026-09-22 — v0.36.18.414 Follow Edges root-cause fix
 
