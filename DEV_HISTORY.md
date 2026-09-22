@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.415 fresh Sweep placement and immediate Move
+
+- Fixed fresh Add → Sweep profile plane spawning at world origin inside the default cube.
+- Fresh Sweep now creates a camera-facing profile plane just in front of the current active mesh bounding sphere, toward the camera.
+- Fresh Sweep automatically arms real Move on the next frame so repositioning is immediately available without reselecting the construction object.
+- Selected Face/Edge Sweep placement remains unchanged and still comes directly from the selected source geometry.
+
 ## 2026-09-22 — v0.36.18.414 Follow Edges root-cause fix
 
 - Found the actual reason Follow Edges would not activate: `hotRailHit` and `railSnapRefs` had been lost from the module-level state declaration while the code still referenced them.
