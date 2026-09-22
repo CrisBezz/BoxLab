@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.410 Follow Edges edge-only picker
+
+- Fixed .409 regression where Follow Edges could fail because the generic snapper returned a Vertex near edge endpoints.
+- Added dedicated edge-only rail picking for Follow Edges.
+- Hot-edge preview and click selection now use the exact same edge-only picker.
+- Cached rail reference meshes during active Follow Edges to avoid cloning them on every Pencil hover event.
+- Draw Path retains the generic Vertex/Edge/Face snapper.
+- .409 rail contrast remains unchanged.
+
 ## 2026-09-22 — v0.36.18.409 Sweep rail contrast and hot-edge feedback
 
 - User confirmed .408 exposed internal rail edges but requested stronger selectable-path contrast.
