@@ -8,6 +8,8 @@
 - Extrude and the current Plane/X/Y/Z/Auto constraint remain armed even when the selection becomes temporarily empty.
 - This removes the previous Deselect → select edge → Move → Extrude → Plane re-entry loop.
 - Ribbon topology, Plane math and one-pull-per-Undo are unchanged.
+- Released via PR **#112**; squash merge `387e7d00470e4aa300f0212ceddf9446cdd66fb9`.
+- Final PR Topology regression run **35713131703 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.426 Edge Extrude Plane constraint
