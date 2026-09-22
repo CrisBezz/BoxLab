@@ -1475,6 +1475,8 @@ v0.36.18.409 adds a three-state visual hierarchy in PATH → Follow Edges:
 
 ## Current development — v0.36.18.410 Follow Edges dedicated edge picker
 
+**Released on main via PR #95; squash merge `19652f2ecff87f9de5a75fe0aaa678e132b88ee0`. Final corrected PR regression run `35684334992` passed.**
+
 User reported that Follow Edges stopped working after .409 contrast/hot-edge feedback.
 
 Root cause: .409 reused the generic geometry snapper for hot-edge feedback and Follow Edges. That snapper intentionally prioritizes Vertex before Edge, so near endpoints a rail click/hover could resolve as a Vertex and be rejected by Follow Edges.
