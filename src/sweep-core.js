@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 
-const VERSION='0.36.18.406';
+const VERSION='0.36.18.407';
 const EPS=1e-7;
 
 function cleanPath(points=[]){
@@ -131,6 +131,50 @@ function orientedSideFace(aRing,bRing,j,k,vertices,frameA,frameB,profileA,profil
   if(actual.dot(expected)<0)face.reverse();
   return face;
 }
+function unifyFaceWinding(faces){
+  const edgeMap=new Map(),adj=Array.from({length:faces.length},()=>[]);
+  const edgeKey=(a,b)=>a<b?\`${a}:${b}\`:\`${b}:${a}\`;
+  for(let fi=0;fi<faces.length;fi++){
+    const face=faces[fi]||[];
+    for(let i=0;i<face.length;i++){
+      const a=face[i],b=face[(i+1)%face.length],key=edgeKey(a,b);
+      if(!edgeMap.has(key))edgeMap.set(key,[]);
+      edgeMap.get(key).push({fi,a,b});
+    }
+  }
+  for(const entries of edgeMap.values()){
+    if(entries.length!==2)continue;
+    const a=entries[0],b=entries[1];
+    adj[a.fi].push({fi:b.fi,a:a.a,b:a.b,otherA:b.a,otherB:b.b});
+    adj[b.fi].push({fi:a.fi,a:b.a,b:b.b,otherA:a.a,otherB:a.b});
+  }
+  const visited=new Set(),components=[];
+  for(let seed=0;seed<faces.length;seed++){
+    if(visited.has(seed))continue;
+    const queue=[seed],component=[];visited.add(seed);
+    while(queue.length){
+      const fi=queue.shift();component.push(fi);
+      for(const link of adj[fi]){
+        if(visited.has(link.fi))continue;
+        const current=faces[fi],other=faces[link.fi];
+        let sameDirection=false,found=false;
+        for(let i=0;i<current.length;i++){
+          const a=current[i],b=current[(i+1)%current.length];
+          if(!((a===link.a&&b===link.b)||(a===link.b&&b===link.a)))continue;
+          for(let j=0;j<other.length;j++){
+            const oa=other[j],ob=other[(j+1)%other.length];
+            if((oa===a&&ob===b)||(oa===b&&ob===a)){sameDirection=(oa===a&&ob===b);found=true;break;}
+          }
+          if(found)break;
+        }
+        if(found&&sameDirection)other.reverse();
+        visited.add(link.fi);queue.push(link.fi);
+      }
+    }
+    components.push(component);
+  }
+  return{components};
+}
 function signedMeshVolume(vertices,faces){
   let volume=0;
   for(const face of faces){
@@ -204,8 +248,9 @@ export function buildSweepProfile(rawPath,rawProfile,options={}){
       }
     }
   }
+  const winding=unifyFaceWinding(faces);
   const shellOrientation=profileClosed&&capStart&&capEnd?orientClosedShellOutward(vertices,faces):{volume:0,flipped:false};
-  return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,profileClosed,clockwise,capStart,capEnd,shellOrientation};
+  return{ok:true,mesh:new EditableMesh(vertices,faces),points,profile,frames,profileClosed,clockwise,capStart,capEnd,winding,shellOrientation};
 }
 export function buildSweepTube(rawPoints,options={}){
   const radius=Math.max(1e-4,Number(options.radius)||0.25);
@@ -218,5 +263,5 @@ export function buildSweepTube(rawPoints,options={}){
   const result=buildSweepProfile(rawPoints,profile,{...options,profileClosed:true});
   return result.ok?{...result,radius,sides}:result;
 }
-export const __sweepInternals={cleanPath,tangentAt,initialFrame,transportedFrames,cleanProfile,signedArea2D,isConvexProfile,sideOutward2D,orientedSideFace,triangulateCap,orientedCapFaces,signedMeshVolume,orientClosedShellOutward};
+export const __sweepInternals={cleanPath,tangentAt,initialFrame,transportedFrames,cleanProfile,signedArea2D,isConvexProfile,sideOutward2D,orientedSideFace,triangulateCap,orientedCapFaces,unifyFaceWinding,signedMeshVolume,orientClosedShellOutward};
 globalThis.__boxlabSweepCore={version:VERSION,buildSweepTube,buildSweepProfile};
