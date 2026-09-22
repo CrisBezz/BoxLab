@@ -1378,9 +1378,23 @@ Root cause: `nearestProfileSegment()` called a missing `segmentDistance()` helpe
 
 v0.36.18.403 adds the missing clamped point-to-segment distance helper, restoring edge hit-testing for closed profile insertion without changing profile topology or Sweep generation.
 
+## Current development — v0.36.18.404 selected-profile Sweep anchor
+
+User feedback on .403: Face → Sweep worked, but Follow Edges swept from the profile centre to the first rail endpoint before following the path. In the supplied triangular-profile example, the desired rail anchor is the triangle's top-right profile vertex.
+
+v0.36.18.404 adds an explicit profile anchor for selected Face/Edge-loop profiles:
+- on the first Follow Edge pick, BoxLab finds the nearest profile-vertex / edge-endpoint pair
+- that profile vertex becomes the Sweep anchor
+- the Profile Plane is translated so the chosen vertex sits exactly on the rail start
+- the section is rebased around that anchor before sweep generation, preserving the full profile shape and offset
+- path generation begins directly at the rail endpoint, removing the old centroid-to-rail lead-in segment
+- subsequent Follow Edges continue from the selected rail as before
+- Circle/Rectangle/default-centred profiles remain centre-anchored
+- Draw Path remains unchanged unless a rail anchor has explicitly been established
+
 ## Next development step
 
-**Hands-on verify v0.36.18.403 by closing a custom profile, entering Edit Profile, and inserting a node on each segment including the closing segment.**
+**Hands-on verify v0.36.18.404 using the same triangular Face profile: its top-right vertex should sit directly on the first Follow Edge endpoint and remain on the rail through the sweep.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
