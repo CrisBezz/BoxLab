@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.422**
+- Current `version.json`: **0.36.18.423**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -84,6 +84,23 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.423 direct Edge Extrude ribbons
+
+**Development branch: feature/edge-extrude-ribbon-423.**
+
+Edge Extrude is now the active build following the hands-on pass of .422 Revolve Profile Tool Session.
+
+- Edge mode now has Extrude in the Move row beside Edge Slide and Offset Loop.
+- Valid inputs are boundary edges, connected non-branching boundary chains, and loose edges.
+- Dragging a selected edge produces live quad-strip geometry.
+- Connected chain vertices are duplicated once so the strip stays welded.
+- After commit, the newly created outer rail is selected and Extrude remains armed for immediate repeated ribbon pulls.
+- Each pull is transactional: one history step, topology validation, rollback on invalid output.
+- Interior edges and branched selections refuse rather than guessing.
+- Existing Face Extrude, Through, selection, navigation and protected multi-object transform are untouched.
+
+**Hands-on verify .423:** create an open boundary, select one boundary edge, arm Edge Extrude and drag. Confirm the new outer edge stays selected, then drag again several times to make a ribbon. Also test a connected two-edge boundary chain and Undo one pull at a time.
 
 ## Latest completed development — v0.36.18.394
 
