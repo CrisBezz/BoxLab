@@ -8,6 +8,8 @@
 - Use Selection aligns the Profile Plane to the source geometry and converts the exact planar outline into an editable closed Draw profile.
 - Closed Edge-loop validation requires a single cycle; invalid/non-planar selections are rejected conservatively.
 - Source geometry is snapshotted only for profile construction and remains unchanged.
+- Released via PR **#86**; squash merge `0b6ae224f717c9c95a408f1db9bc77ad52c09169`.
+- Final corrected PR Topology regression run **35673404201 PASS**.
 
 ## 2026-09-22 — v0.36.18.400 Sweep edit ownership
 
