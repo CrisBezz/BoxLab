@@ -1432,6 +1432,8 @@ This Tool Session pattern is the intended basis for later migration of Revolve, 
 
 ## Current development — v0.36.18.407 Sweep local winding unification
 
+**Released on main via PR #92; squash merge `9eaf20a927aa0c87f27e19df1ade2026b1453fad`. Final corrected PR regression run `35680632722` passed.**
+
 User hands-on passed the .406 Tool Session UX and reported one remaining isolated backface in Sweep.
 
 v0.36.18.407 adds a true local face-winding unification pass before the existing closed-shell signed-volume orientation check:
