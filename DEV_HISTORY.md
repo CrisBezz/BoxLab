@@ -7,6 +7,8 @@
 - Added explicit Sweep active-button styling so Follow Edges visibly highlights when selected.
 - Changed candidate rail guide to render without depth testing, preventing coplanar topology lines from disappearing into shaded faces.
 - Kept .410 dedicated edge-only picker and all Sweep geometry behaviour unchanged.
+- Released via PR **#96**; squash merge `57186abed6bf6daff3015b7d3d01e7601fe74062`.
+- Final corrected PR Topology regression run **35684868346 PASS**.
 
 ## 2026-09-22 — v0.36.18.410 Follow Edges edge-only picker
 
