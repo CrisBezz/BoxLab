@@ -1354,9 +1354,21 @@ v0.36.18.401 completes the remaining profile-source option from the agreed Sweep
 - applying Use Selection clears any stale path because the profile origin/plane may move
 - the original source object remains untouched
 
+## Current development — v0.36.18.402 Sweep direct selection launch
+
+User feedback on .401 exposed a workflow flaw: switching from Face/Edge mode to Object mode clears the component selection before Add → Sweep can capture it.
+
+v0.36.18.402 fixes the workflow rather than trying to preserve component selection across mode changes:
+- Face Active Tools now includes **Sweep from Selection** when exactly one Face is selected
+- Edge Active Tools now includes **Sweep from Selection** when a closed-loop-sized Edge selection exists
+- the button captures the selected component geometry immediately, while the selection still exists
+- BoxLab then creates the Sweep object, enters Object mode, aligns the Profile Plane and automatically applies the captured profile
+- the .401 Use Selection button remains available inside Sweep for already captured profile sources
+- invalid/open/branched/non-planar edge selections are still rejected by the existing conservative validation
+
 ## Next development step
 
-**Hands-on verify v0.36.18.401 Use Selection on one Face and one closed Edge loop on iPad.**
+**Hands-on verify v0.36.18.402 by launching Sweep directly from a selected Face and from a closed Edge loop without manually entering Object mode.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.

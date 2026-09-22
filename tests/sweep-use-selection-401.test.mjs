@@ -15,8 +15,8 @@ test('401 captures one Face or a closed Edge loop before Sweep object creation',
   assert.ok(source.includes("mode==='face'&&ids.length===1"));
   assert.ok(source.includes("mode==='edge'&&ids.length>=3"));
   assert.ok(source.includes('orderClosedEdgeLoop'));
-  assert.ok(source.includes('const selectionProfile=selectionProfileCandidate();'));
-  const captureIndex=source.indexOf('const selectionProfile=selectionProfileCandidate();');
+  assert.ok(source.includes('const selectionProfile=selectionProfileOverride||selectionProfileCandidate();'));
+  const captureIndex=source.indexOf('const selectionProfile=selectionProfileOverride||selectionProfileCandidate();');
   const addIndex=source.indexOf("man.addMesh(constructionPlane(),'Sweep'");
   assert.ok(captureIndex>=0&&addIndex>captureIndex);
 });
