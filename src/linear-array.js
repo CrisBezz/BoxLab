@@ -325,7 +325,7 @@ window.addEventListener('beforeunload',()=>{endEndpointDrag();disposePreview();e
 sync();
 
 globalThis.__boxlabLinearArray={
-  version:'0.36.18.384',
+  version:'0.36.18.416',
   get active(){return previewArmed;},
   get dragging(){return!!endpointDrag;},
   get endpoint(){return endpoint.clone();},
