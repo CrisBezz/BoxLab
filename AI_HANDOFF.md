@@ -1324,9 +1324,21 @@ v0.36.18.399 replaces the old global clockwise/anticlockwise side-face rule with
 - cap logic and .398 exact start-ring placement remain unchanged
 - this specifically protects concave profiles and direction-changing paths from inside-out side walls
 
+## Current development — v0.36.18.400 Sweep edit ownership
+
+User feedback on .399: Draw Profile could not add a fourth point until Open was selected again; Move also remained armed when Edit Profile/Edit Path was selected, blocking authoring.
+
+v0.36.18.400 fixes the interaction ownership:
+- selecting Draw Profile now explicitly forces the custom profile Open and keeps append-style authoring active until the user explicitly closes it
+- point 4+ therefore appends normally without reselecting Open
+- entering Profile or Path editing explicitly disarms BoxLab transform arming
+- the upgraded Move/Scale/Rotate gesture layer now yields completely while Sweep reports itself as editing
+- Sweep exposes an `editing` state so viewport gesture ownership is unambiguous
+- existing touch navigation remains untouched
+
 ## Next development step
 
-**Hands-on verify v0.36.18.399 normals on the same concave C-profile Sweep shown in the user screenshot.**
+**Hands-on verify v0.36.18.400 Draw Profile point 4+ and Move disarm on iPad.**
 
 - Position/orient the Profile Plane and verify Circle / Rectangle / Draw profile creation.
 - Enter Edit Profile and confirm a built-in profile becomes directly editable rather than resetting blank.
