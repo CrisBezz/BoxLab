@@ -570,3 +570,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] transform gesture layer yields while Sweep profile/path editing owns the viewport
 - [ ] touch orbit/pan/pinch remain available during Sweep editing
 - [ ] leaving Sweep editing does not silently re-arm Move
+
+
+## Phase D — Sweep Use Selection — .401
+
+- [ ] Select one Face, Add → Sweep, then Use Selection reproduces that face outline on an aligned Profile Plane
+- [ ] Select a connected closed Edge loop, Add → Sweep, then Use Selection reproduces the loop in connected order
+- [ ] Use Selection is disabled when no valid Face/closed Edge-loop source was captured before Add → Sweep
+- [ ] open/disconnected/branched edge selections are rejected rather than converted
+- [ ] non-planar selected outlines are rejected rather than flattened silently
+- [ ] source object/selection geometry remains unchanged after Use Selection
+- [ ] imported selection becomes an editable closed Draw profile via Edit Profile
+- [ ] applying Use Selection clears stale path points if the Profile Plane is repositioned
