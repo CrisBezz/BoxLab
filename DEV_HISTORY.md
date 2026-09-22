@@ -8,6 +8,8 @@
 - This provides a Sweep-specific final Unify Normals pass without depending on source face winding or anchor orientation.
 - Open or uncapped Sweep surfaces remain untouched.
 - .404 profile-anchor/path behaviour remains unchanged.
+- Released via PR **#90**; squash merge `5076c8ee5fa268bc6fa0722a3796f2e766b86bc5`.
+- Final PR Topology regression run **35678568877 PASS**.
 
 ## 2026-09-22 — v0.36.18.404 selected-profile Sweep anchor
 
