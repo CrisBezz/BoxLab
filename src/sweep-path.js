@@ -195,7 +195,7 @@ function selectionProfileCandidate(){
   const projected=points.map(p=>{const r=p.clone().sub(center);return{x:r.dot(u),y:r.dot(v),z:r.dot(normal)};});
   const span=Math.max(...projected.map(p=>Math.hypot(p.x,p.y)),.001);
   if(projected.some(p=>Math.abs(p.z)>Math.max(1e-4,span*1e-4)))return null;
-  const hx=Math.max(.15,...projected.map(p=>Math.abs(p.x))*1.15),hy=Math.max(.15,...projected.map(p=>Math.abs(p.y))*1.15);
+  const hx=Math.max(.15,...projected.map(p=>Math.abs(p.x)*1.15)),hy=Math.max(.15,...projected.map(p=>Math.abs(p.y)*1.15));
   const p0=center.clone().addScaledVector(u,-hx).addScaledVector(v,-hy);
   const p1=center.clone().addScaledVector(u,hx).addScaledVector(v,-hy);
   const p2=center.clone().addScaledVector(u,hx).addScaledVector(v,hy);
@@ -203,13 +203,14 @@ function selectionProfileCandidate(){
   return{
     label,
     profilePoints:projected.map(p=>({x:p.x,y:p.y})),
-    plane:new EditableMesh([p0,p1,p2,p3],[[0,1,2,3]])
+    planeVertices:[p0,p1,p2,p3].map(p=>({x:p.x,y:p.y,z:p.z}))
   };
 }
 function applySelectionProfile(){
   const o=pathObject(),mesh=liveMesh(),m=o&&ensureMeta(o),candidate=m?.selectionProfile;
   if(!o||!m||!candidate||!looksConstructionMesh(mesh)){setStatus('Sweep - select a Face or closed Edge loop before Add → Sweep');return false;}
-  const plane=candidate.plane?.clone?.();if(!plane){setStatus('Sweep - saved profile selection is unavailable');return false;}
+  const pv=candidate.planeVertices||[];if(pv.length!==4){setStatus('Sweep - saved profile selection is unavailable');return false;}
+  const plane=new EditableMesh(pv.map(p=>new THREE.Vector3(Number(p.x)||0,Number(p.y)||0,Number(p.z)||0)),[[0,1,2,3]]);
   replaceMesh(mesh,plane);
   m.profileType='draw';m.profileClosed=true;m.profilePoints=(candidate.profilePoints||[]).map(p=>({...p}));m.profileHistory=[];
   m.editProfile=false;m.editPath=false;m.pathPoints=[];m.pathHistory=[];m.selectedPathPoint=null;m.interacted=true;
