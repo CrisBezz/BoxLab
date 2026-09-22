@@ -1591,7 +1591,7 @@ v0.36.18.417 hardens Array session ownership:
 
 ## Current development — v0.36.18.418 Tool Session drawer ownership
 
-**Development branch: fix/array-session-drawer-418.**
+**Released on main via PR #103; squash merge `5bbe750f4fc21fd85f0d47b7a0117be11072273f`. PR regression run `35690638630` passed.**
 
 User hands-on showed .417 still failed visually: touching the Array END copy collapsed Active Tools immediately even though Array remained logically armed.
 
