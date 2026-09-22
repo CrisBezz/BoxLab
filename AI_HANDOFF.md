@@ -1491,6 +1491,8 @@ v0.36.18.410 separates the rail interaction cleanly:
 
 ## Current development — v0.36.18.411 Follow Edges explicit state + surface-visible rails
 
+**Released on main via PR #96; squash merge `57186abed6bf6daff3015b7d3d01e7601fe74062`. Final corrected PR regression run `35684868346` passed.**
+
 User feedback after .410: Follow Edges still did not visibly light as active, and internal Knife-cut rails were still not visible on shaded faces.
 
 v0.36.18.411 fixes the UI/visibility layer directly:
