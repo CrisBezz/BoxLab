@@ -69,6 +69,13 @@ function end(id=null){
   window.dispatchEvent(new CustomEvent('boxlab-tool-session-change',{detail:{active:false,id:old.id,title:old.title}}));
   return true;
 }
+function enforceOpenWhileActive(){
+  if(!active||!drawer||drawer.open)return;
+  drawer.open=true;
+}
+drawer?.addEventListener('toggle',()=>{
+  if(active&&!drawer.open)queueMicrotask(enforceOpenWhileActive);
+});
 function isActive(id=null){return !!active&&(!id||active.id===id);}
 function current(){return active?{id:active.id,title:active.title}:null;}
 
