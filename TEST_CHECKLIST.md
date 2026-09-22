@@ -719,3 +719,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Follow Edges button shows `Follow Edges · Active`
 - [ ] rail candidate overlay appears immediately
 - [ ] .410 edge-only picker and .413 atomic handoff remain intact
+
+
+## Phase D/F — fresh Sweep placement — .415
+
+- [ ] Object → Add → Sweep profile plane appears visibly in front of the current active object/scene
+- [ ] fresh Sweep plane is camera-facing
+- [ ] fresh Sweep remains the active object after creation
+- [ ] real Move is armed automatically on the next frame
+- [ ] fresh Sweep no longer spawns buried inside the default cube
+- [ ] Face → Sweep and Edge-loop → Sweep still use the selected source geometry position/orientation exactly
