@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 // BoxLab v0.36.18.423 — topology core for direct boundary Edge Extrude.
 
 function unique(values){return[...new Set(values)];}
@@ -64,4 +66,15 @@ export function extrudeBoundaryEdges(target,source,info,delta){
   const outer=outerKeys.map(key=>edgeMap.get(key)).filter(Number.isInteger);
   if(outer.length!==info.infos.length)return null;
   return{outer,outerKeys,vertices:[...duplicate.values()]};
+}
+
+
+export function perpendicularAxisDirection(edgeVector,axisVector,epsilon=1e-6){
+  const edge=edgeVector?.clone?.()||new THREE.Vector3(...(edgeVector||[0,0,0]));
+  const axis=axisVector?.clone?.()||new THREE.Vector3(...(axisVector||[0,0,0]));
+  if(edge.lengthSq()<=epsilon*epsilon||axis.lengthSq()<=epsilon*epsilon)return null;
+  edge.normalize();axis.normalize();
+  const projected=axis.addScaledVector(edge,-axis.dot(edge));
+  if(projected.lengthSq()<=epsilon*epsilon)return null;
+  return projected.normalize();
 }
