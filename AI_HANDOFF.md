@@ -1326,6 +1326,8 @@ v0.36.18.399 replaces the old global clockwise/anticlockwise side-face rule with
 
 ## Current development — v0.36.18.400 Sweep edit ownership
 
+**Released on main via PR #85; squash merge `45419ad01b683d46c26179497bafb186ca90f632`. PR regression run `35672719322` passed.**
+
 User feedback on .399: Draw Profile could not add a fourth point until Open was selected again; Move also remained armed when Edit Profile/Edit Path was selected, blocking authoring.
 
 v0.36.18.400 fixes the interaction ownership:
