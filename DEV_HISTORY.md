@@ -8,6 +8,8 @@
 - Closed capped Sweeps then retain the .405 signed-volume check to orient the now-consistent shell outward globally.
 - Open/uncapped Sweep surfaces receive local consistency only.
 - No UI or Sweep shape/path behaviour changed.
+- Released via PR **#92**; squash merge `9eaf20a927aa0c87f27e19df1ade2026b1453fad`.
+- Final corrected PR Topology regression run **35680632722 PASS**.
 
 ## 2026-09-22 — v0.36.18.406 Tool Session UI foundation + Sweep UX
 
