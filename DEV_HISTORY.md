@@ -7,6 +7,8 @@
 - First Follow Edge selection chooses the nearest profile vertex and rail endpoint, translates the Profile Plane so they coincide, and rebases the swept section around that vertex.
 - Removes the unwanted centre-to-edge lead-in while preserving the selected profile's exact shape and offset.
 - Default Circle/Rectangle Sweep remains centre-anchored.
+- Released via PR **#89**; squash merge `4b3b1c09e52341e0bc02e2c4f9614be919130e59`.
+- Final PR Topology regression run **35678133922 PASS**.
 
 ## 2026-09-22 — v0.36.18.403 closed Sweep profile node insertion
 
