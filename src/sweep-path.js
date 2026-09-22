@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.412';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.413';
 
-const VERSION='0.36.18.412';
+const VERSION='0.36.18.413';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -277,18 +277,21 @@ function selectionProfileCandidate(){
     planeVertices:[p0,p1,p2,p3].map(p=>({x:p.x,y:p.y,z:p.z}))
   };
 }
-function applySelectionProfile(){
+function applySelectionProfile({activateFollowEdges=false}={}){
   const o=pathObject(),mesh=liveMesh(),m=o&&ensureMeta(o),candidate=m?.selectionProfile;
   if(!o||!m||!candidate||!looksConstructionMesh(mesh)){setStatus('Sweep - select a Face or closed Edge loop before Add → Sweep');return false;}
   const pv=candidate.planeVertices||[];if(pv.length!==4){setStatus('Sweep - saved profile selection is unavailable');return false;}
   const plane=new EditableMesh(pv.map(p=>new THREE.Vector3(Number(p.x)||0,Number(p.y)||0,Number(p.z)||0)),[[0,1,2,3]]);
   replaceMesh(mesh,plane);
   m.profileType='draw';m.profileClosed=true;m.profilePoints=(candidate.profilePoints||[]).map(p=>({...p}));m.profileHistory=[];m.profileAnchorIndex=null;
-  m.editProfile=false;m.editPath=false;m.pathPoints=[];m.pathHistory=[];m.selectedPathPoint=null;m.interacted=true;
+  m.editProfile=false;m.editPath=!!activateFollowEdges;m.pathPoints=[];m.pathHistory=[];m.selectedPathPoint=null;m.interacted=true;
+  if(activateFollowEdges){m.pathMode='edges';m.sessionStage='path';hotRailHit=null;railSnapRefs=null;}
   m.initialPlaneSignature=planeSignature(mesh);
-  disarmTransforms();lockTools();manager()?.saveActive?.();
+  disarmTransforms();lockTools();
+  if(activateFollowEdges){railRefs(true);syncPathModeButtons(m);setSweepStage('path');}
+  manager()?.saveActive?.();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
-  setStatus('Sweep - '+candidate.label+' loaded as Profile');
+  setStatus(activateFollowEdges?'Sweep - Follow Edges active · tap connected path edges':'Sweep - '+candidate.label+' loaded as Profile');
   lastSignature='';return true;
 }
 
@@ -547,7 +550,7 @@ function addSweepPath(selectionProfileOverride=null,autoUseSelection=false){
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
   beginSweepSession(o.sweepPath.sessionStage);
   setStatus(selectionProfile?'Sweep - '+selectionProfile.label+' captured':'Sweep - choose a Profile, then Path');lastSignature='';
-  if(selectionProfile&&autoUseSelection)queueMicrotask(()=>{applySelectionProfile();setPathMode('edges');setSweepStage('path');});
+  if(selectionProfile&&autoUseSelection)queueMicrotask(()=>applySelectionProfile({activateFollowEdges:true}));
 }
 function applySweep(){
   const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return false;

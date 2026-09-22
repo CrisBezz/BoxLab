@@ -699,3 +699,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] selected path button styling is driven by aria-pressed and remains visible regardless of generic button CSS
 - [ ] active candidate rail guide is fully opaque over shaded surfaces
 - [ ] .410 picker and .411 rail visibility behavior remain unchanged
+
+
+## Phase D/F — atomic selected-profile Follow Edges handoff — .413
+
+- [ ] Face → Sweep opens PATH with `Follow Edges · Active` immediately
+- [ ] closed Edge-loop → Sweep does the same
+- [ ] selected-profile auto launch has `editPath=true`, `pathMode='edges'`, `sessionStage='path'` before save/render events
+- [ ] rail refs and button state initialize before `manager.saveActive()`
+- [ ] manual Use Selection remains profile-only unless path mode is explicitly activated
+- [ ] .410 picker and .412 hard visual state remain unchanged

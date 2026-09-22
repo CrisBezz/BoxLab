@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.413 atomic selected-profile Follow Edges handoff
+
+- .412 hands-on screenshot proved PATH stage activation succeeded while Follow Edges mode activation did not.
+- Reworked selected-profile auto launch so profile loading and Follow Edges activation happen atomically on the same `sweepPath` metadata object.
+- `applySelectionProfile({activateFollowEdges:true})` now sets `pathMode='edges'`, `editPath=true`, `sessionStage='path'`, refreshes rail refs and syncs path buttons before save/render events.
+- Removed the fragile follow-up `setPathMode()` / `setSweepStage()` re-lookup from the auto launch queue.
+- Manual Use Selection behaviour remains profile-only.
+
 ## 2026-09-22 — v0.36.18.412 hard Follow Edges active-state indicator
 
 - User reported .411 still did not visibly light Follow Edges.
