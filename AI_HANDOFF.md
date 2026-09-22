@@ -1505,6 +1505,8 @@ v0.36.18.411 fixes the UI/visibility layer directly:
 
 ## Current development — v0.36.18.412 hard Follow Edges active-state indicator
 
+**Released on main via PR #97; squash merge `01784ed914e1351da3c3d84af6bafefb576ca654`. Final corrected PR regression run `35685824200` passed.**
+
 User reported .411 still did not make Follow Edges visibly light.
 
 Audit confirmed global button CSS is not stripping the state, so .412 removes ambiguity from presentation:
