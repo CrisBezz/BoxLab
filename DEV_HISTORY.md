@@ -9,6 +9,9 @@
 - A final projection removes any numerical along-edge component before topology generation.
 - Plane mode leaves Free/X/Y/Z/Auto behavior from .425 unchanged.
 - Repeated outer-rail selection and one-pull-per-Undo remain unchanged.
+- Initial PR regression failure was only a stale .425 transform-upgrade cache-pin assertion; the new .426 Plane tests passed.
+- Released via PR **#111**; squash merge `3ecb2d9ba6004a6f6379985e4ae6064ca62356f6`.
+- Final PR Topology regression run **35709099628 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.425 Edge Extrude directional constraints
