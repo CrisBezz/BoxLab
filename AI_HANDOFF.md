@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.420**
+- Current `version.json`: **0.36.18.421**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -1627,6 +1627,27 @@ v0.36.18.420 fixes the event-ownership conflict:
 - ordinary Vertex tap selection still uses Vertex Pick Assist when no transform is armed
 - direct Vertex tools remain unchanged
 - Array .418/.419 fixes and protected multi-object transform remain intact
+
+## Current development — v0.36.18.421 Solidify / Shell Tool Sessions
+
+**Development branch: feature/solidify-shell-tool-session-421.**
+
+Following the hands-on pass of .420, the next Tool Session migration is Solidify/Shell.
+
+Audit confirmed they must remain distinct modelling operations:
+- Solidify = Object-mode open sheet → closed solid
+- Shell = Face-mode closed solid + chosen opening faces → hollow solid
+
+v0.36.18.421 migrates only their UX/session ownership:
+- idle Object/Face Active Tools keep compact launch buttons
+- launch starts the shared exclusive Tool Session
+- live Thickness controls plus Cancel / Apply live inside the session
+- Solidify direct viewport thickness dragging is preserved
+- Shell Apple Pencil thickness slider guard is preserved
+- geometry cores/history behavior are unchanged
+- protected multi-object transform remains pinned at v0.36.1.0
+
+**Hands-on verify v0.36.18.421:** Solidify an open sheet and confirm the exclusive session, live thickness/direct drag, Cancel and Apply. Then Shell a closed cube with one face selected and confirm session, thickness, Cancel/Apply. Quick Array/Vertex sanity check afterward.
 
 ## Next development step
 
