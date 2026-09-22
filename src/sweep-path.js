@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.405';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.406';
 
-const VERSION='0.36.18.405';
+const VERSION='0.36.18.406';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -10,20 +10,33 @@ const editDrawer=document.querySelector('#editDrawer');
 const geometryToggle=document.querySelector('#inferenceSnapToggle');
 
 const controls=document.createElement('div');
-controls.id='sweepPathControls';controls.hidden=true;
+controls.id='sweepPathControls';controls.hidden=true;controls.className='boxlab-tool-session-shell';
 controls.innerHTML=
-  '<div class="edge-section-label">Sweep</div>'+
-  '<div class="edge-section-label" style="margin-top:6px">Profile</div>'+
-  '<div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)"><button id="sweepProfileCircle" type="button">Circle</button><button id="sweepProfileRect" type="button">Rectangle</button><button id="sweepProfileDraw" type="button">Draw</button><button id="sweepProfileUseSelection" type="button">Use Selection</button></div>'+
-  '<div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)"><button id="sweepEditProfile" type="button">Edit Profile</button><button id="sweepProfileClosed" type="button">Closed</button><button id="sweepUndoProfile" type="button">Undo Profile</button><button id="sweepClearProfile" type="button">Clear Profile</button></div>'+
-  '<label class="range-row"><span>Profile Size</span><input id="sweepProfileSize" type="range" min="0.03" max="1.5" value="0.25" step="0.01"/><output id="sweepProfileSizeOut">0.25</output></label>'+
-  '<label class="range-row"><span>Circle Sides</span><input id="sweepProfileSides" type="range" min="3" max="24" value="8" step="1"/><output id="sweepProfileSidesOut">8</output></label>'+
-  '<div class="edge-section-label" style="margin-top:8px">Path</div>'+
-  '<div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="sweepFollowEdges" type="button">Follow Edges</button><button id="sweepDrawPath" type="button">Draw Path</button></div>'+
-  '<div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)"><button id="sweepEditPath" type="button">Edit Path</button><button id="sweepUndoPath" type="button">Undo Path</button><button id="sweepDeletePath" type="button">Delete Point</button><button id="sweepClearPath" type="button">Clear Path</button></div>'+
-  '<div class="outliner-actions" style="grid-template-columns:1fr 2fr"><button id="sweepCapsBtn" type="button" class="active">Caps On</button><button id="sweepApplyBtn" type="button">Apply Sweep</button></div>';
+  '<div class="boxlab-tool-session-title"><span>Sweep</span><span class="boxlab-tool-session-subtitle">Live construction</span></div>'+
+  '<div class="boxlab-tool-session-tabs"><button id="sweepStageProfile" type="button">Profile</button><button id="sweepStagePath" type="button">Path</button><button id="sweepStageFinish" type="button">Finish</button></div>'+
+  '<div id="sweepProfilePanel" class="boxlab-tool-session-panel">'+
+    '<div class="boxlab-tool-session-section">Profile source</div>'+
+    '<div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="sweepProfileCircle" type="button">Circle</button><button id="sweepProfileRect" type="button">Rectangle</button><button id="sweepProfileDraw" type="button">Draw</button><button id="sweepProfileUseSelection" type="button">Use Selection</button></div>'+
+    '<div class="boxlab-tool-session-section">Edit</div>'+
+    '<div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="sweepEditProfile" type="button">Edit Profile</button><button id="sweepProfileClosed" type="button">Closed</button><button id="sweepUndoProfile" type="button">Undo</button><button id="sweepClearProfile" type="button">Clear</button></div>'+
+    '<label class="range-row"><span>Profile Size</span><input id="sweepProfileSize" type="range" min="0.03" max="1.5" value="0.25" step="0.01"/><output id="sweepProfileSizeOut">0.25</output></label>'+
+    '<label class="range-row"><span>Circle Sides</span><input id="sweepProfileSides" type="range" min="3" max="24" value="8" step="1"/><output id="sweepProfileSidesOut">8</output></label>'+
+  '</div>'+
+  '<div id="sweepPathPanel" class="boxlab-tool-session-panel" hidden>'+
+    '<div class="boxlab-tool-session-section">Path source</div>'+
+    '<div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="sweepFollowEdges" type="button">Follow Edges</button><button id="sweepDrawPath" type="button">Draw Path</button></div>'+
+    '<div class="boxlab-tool-session-section">Edit</div>'+
+    '<div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="sweepEditPath" type="button">Edit Path</button><button id="sweepUndoPath" type="button">Undo</button><button id="sweepDeletePath" type="button">Delete Point</button><button id="sweepClearPath" type="button">Clear</button></div>'+
+  '</div>'+
+  '<div id="sweepFinishPanel" class="boxlab-tool-session-panel" hidden>'+
+    '<div class="boxlab-tool-session-section">Finish</div>'+
+    '<button id="sweepCapsBtn" type="button" class="active">Caps On</button>'+
+    '<button id="sweepApplyBtn" class="boxlab-tool-session-primary" type="button">Apply Sweep</button>'+
+  '</div>';
 objectTools?.appendChild(controls);
 
+const stageProfileBtn=controls.querySelector('#sweepStageProfile'),stagePathBtn=controls.querySelector('#sweepStagePath'),stageFinishBtn=controls.querySelector('#sweepStageFinish');
+const profilePanel=controls.querySelector('#sweepProfilePanel'),pathPanel=controls.querySelector('#sweepPathPanel'),finishPanel=controls.querySelector('#sweepFinishPanel');
 const circleBtn=controls.querySelector('#sweepProfileCircle'),rectBtn=controls.querySelector('#sweepProfileRect'),drawProfileBtn=controls.querySelector('#sweepProfileDraw'),useSelectionBtn=controls.querySelector('#sweepProfileUseSelection');
 const editProfileBtn=controls.querySelector('#sweepEditProfile'),profileClosedBtn=controls.querySelector('#sweepProfileClosed'),undoProfileBtn=controls.querySelector('#sweepUndoProfile'),clearProfileBtn=controls.querySelector('#sweepClearProfile');
 const sizeInput=controls.querySelector('#sweepProfileSize'),sizeOut=controls.querySelector('#sweepProfileSizeOut'),sidesInput=controls.querySelector('#sweepProfileSides'),sidesOut=controls.querySelector('#sweepProfileSidesOut');
@@ -33,17 +46,22 @@ const capsBtn=controls.querySelector('#sweepCapsBtn'),applyBtn=controls.querySel
 const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
 const edgeTools=document.querySelector('.mode-tools[data-mode-tools="edge"]');
 function makeSelectionLaunchButton(mode){
+  const row=document.createElement('div');row.className='outliner-actions sweep-selection-launch-row';row.style.gridTemplateColumns='1fr';
   const button=document.createElement('button');
   button.type='button';button.className='sweep-selection-launch';
   button.dataset.sweepSelectionMode=mode;
-  button.textContent='Sweep from Selection';
-  button.title=mode==='face'?'Use the selected Face as a Sweep profile':'Use the selected closed Edge loop as a Sweep profile';
-  button.disabled=true;
+  button.textContent='Sweep';
+  button.title=mode==='face'?'Sweep the selected Face along a path':'Sweep the selected closed Edge loop along a path';
+  button.disabled=true;row.appendChild(button);button._sweepRow=row;
   return button;
 }
 const faceSelectionSweepBtn=makeSelectionLaunchButton('face'),edgeSelectionSweepBtn=makeSelectionLaunchButton('edge');
-faceTools?.appendChild(faceSelectionSweepBtn);edgeTools?.appendChild(edgeSelectionSweepBtn);
-
+function placeLaunchButton(container,button){
+  if(!container||!button?._sweepRow)return;
+  const title=container.querySelector('.panel-title');
+  if(title?.nextSibling)container.insertBefore(button._sweepRow,title.nextSibling);else container.prepend(button._sweepRow);
+}
+placeLaunchButton(faceTools,faceSelectionSweepBtn);placeLaunchButton(edgeTools,edgeSelectionSweepBtn);
 
 let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
