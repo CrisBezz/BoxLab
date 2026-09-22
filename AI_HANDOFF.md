@@ -1396,6 +1396,8 @@ v0.36.18.404 adds an explicit profile anchor for selected Face/Edge-loop profile
 
 ## Current development — v0.36.18.405 Sweep shell normal unification
 
+**Released on main via PR #90; squash merge `5076c8ee5fa268bc6fa0722a3796f2e766b86bc5`. PR regression run `35678568877` passed.**
+
 User feedback on .404: the selected-face anchor/rail relationship is now correct, but the applied closed Sweep still shows flipped normals.
 
 v0.36.18.405 adds a final closed-shell orientation validation inside the Sweep generator:
