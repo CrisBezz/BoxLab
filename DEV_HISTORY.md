@@ -7,6 +7,8 @@
 - Added explicit transform disarm when Sweep Profile or Path editing takes viewport ownership.
 - Added a Sweep `editing` state and made `transform-upgrade.js` yield while Sweep is editing, preventing Move/Scale/Rotate from stealing Pencil/mouse gestures.
 - Preserved touch orbit/pan/pinch and all .399 Sweep topology/normal work.
+- Released via PR **#85**; squash merge `45419ad01b683d46c26179497bafb186ca90f632`.
+- Final PR Topology regression run **35672719322 PASS**.
 
 ## 2026-09-22 — v0.36.18.399 Sweep side-normal correction
 
