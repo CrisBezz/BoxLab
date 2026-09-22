@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.421 Solidify / Shell Tool Sessions
+
+- User hands-on passed v0.36.18.420 Vertex transform ownership and advanced to the next roadmap task.
+- Audited Solidify and Shell before migration; they remain separate modelling operations:
+  - Solidify: Object-mode open sheet → closed solid.
+  - Shell: Face-mode closed solid + selected opening faces → hollow solid.
+- Both tools now use the shared exclusive Tool Session UI after launch.
+- Idle Object/Face Active Tools remain compact; session controls contain live Thickness plus Cancel / Apply.
+- Solidify direct viewport thickness dragging is preserved.
+- Shell Apple Pencil thickness-slider ownership / late Safari range guard is preserved.
+- Geometry algorithms, object history, selection semantics and protected multi-object transform are unchanged.
+
+
 ## 2026-09-22 — v0.36.18.420 Vertex transform ownership
 
 - Hands-on after .419 showed Vertex selection and Bevel worked, while Vertex Move/Scale/Rotate did not; Edge and Face transforms remained good.
