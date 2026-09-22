@@ -6,6 +6,7 @@ const solidify=fs.readFileSync(new URL('../src/solidify.js',import.meta.url),'ut
 const shell=fs.readFileSync(new URL('../src/shell.js',import.meta.url),'utf8');
 const toolSession=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 test('421 Solidify launches an exclusive Tool Session with cancel/apply controls',()=>{
   assert.ok(solidify.includes("id:'solidify'"));
@@ -37,8 +38,8 @@ test('421 Shell keeps Pencil-owned thickness slider guard',()=>{
 
 test('421 shared Tool Session owns drawer visibility and protected multi-object transform remains pinned',()=>{
   assert.ok(toolSession.includes('enforceOpenWhileActive'));
-  assert.ok(index.includes('src/tool-session-ui.js?v=0.36.18.421'));
-  assert.ok(index.includes('src/solidify.js?v=0.36.18.421'));
-  assert.ok(index.includes('src/shell.js?v=0.36.18.421'));
+  assert.ok(index.includes('src/tool-session-ui.js?v='+version));
+  assert.ok(index.includes('src/solidify.js?v='+version));
+  assert.ok(index.includes('src/shell.js?v='+version));
   assert.ok(index.includes('src/multi-object-transform.js?v=0.36.1.0'));
 });
