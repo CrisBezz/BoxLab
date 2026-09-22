@@ -23,6 +23,7 @@ const button=document.createElement('button');
 button.id='edgeExtrudeBtn';
 button.type='button';
 button.textContent='Extrude';
+moveRow.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
 moveRow.prepend(button);
 
 function state(){return globalThis.__boxlabBridgeState;}
