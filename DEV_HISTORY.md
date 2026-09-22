@@ -8,6 +8,8 @@
 - Cancel and Apply both end the Tool Session and restore normal Active Tools.
 - Preserved endpoint-vector preview/dragging, Free/X/Y/Z constraints, linked-instance commit, one scene-history snapshot and Pencil Count handling.
 - No Array geometry or linked-instance engine rewrite.
+- Released via PR **#101**; squash merge `00f555ed3475c11194c131aca9599db8280a7536`.
+- Final corrected PR Topology regression run **35689094456 PASS**.
 
 ## 2026-09-22 — v0.36.18.415 fresh Sweep placement and immediate Move
 
