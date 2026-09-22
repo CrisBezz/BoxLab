@@ -7,6 +7,8 @@
 - Restored both variables at module scope.
 - Added regression coverage to protect the rail-state declarations from disappearing again.
 - No geometry, picker or Tool Session behaviour changed.
+- Released via PR **#99**; squash merge `ac6c3a630757f849962cae832f0b53999d68fbc9`.
+- Final PR Topology regression run **35686712355 PASS**.
 
 ## 2026-09-22 — v0.36.18.413 atomic selected-profile Follow Edges handoff
 
