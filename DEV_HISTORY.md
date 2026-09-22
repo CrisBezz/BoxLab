@@ -11,6 +11,9 @@
 - Each pull is one history step and validates topology before commit; invalid results roll back.
 - Edge Extrude is placed in the existing Edge Move row with Edge Slide and Offset Loop.
 - Protected multi-object transform remains pinned at v0.36.1.0.
+- Initial PR regression failure was only a stale .422 cache-pin assertion; the Edge Extrude topology tests passed.
+- Released via PR **#108**; squash merge `e92c11463449f481e6ef84d74f4a00dad8f3775c`.
+- Final PR Topology regression run **35704689025 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.422 Revolve Profile Tool Session
