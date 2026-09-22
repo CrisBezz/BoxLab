@@ -254,7 +254,7 @@ function applyArray(){
   globalThis.__boxlabObjectSelection?.refresh?.();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   globalThis.__boxlabLinearArrayLastResult={
-    version:'0.36.18.417',sourceId,createdIds:created,count:total,
+    version:'0.36.18.418',sourceId,createdIds:created,count:total,
     endpoint:[endpoint.x,endpoint.y,endpoint.z]
   };
   setStatus(`Array • ${created.length} linked instance${created.length===1?'':'s'} • evenly distributed to ${endpointText()}`);
@@ -331,7 +331,7 @@ window.addEventListener('beforeunload',()=>{document.removeEventListener('pointe
 sync();
 
 globalThis.__boxlabLinearArray={
-  version:'0.36.18.416',
+  version:'0.36.18.418',
   get active(){return previewArmed;},
   get dragging(){return!!endpointDrag;},
   get endpoint(){return endpoint.clone();},
