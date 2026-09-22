@@ -759,3 +759,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] endpoint pointer-down is captured before normal object selection on the viewport
 - [ ] leaving Object mode still cancels Array safely
 - [ ] Apply and Cancel still exit Array and restore normal Active Tools
+
+- [ ] Edge Extrude: select one boundary edge, arm Extrude, drag it to create one quad strip; the new outer edge remains selected and Extrude remains armed
+- [ ] Edge Extrude ribbon: repeatedly drag the newly selected outer edge to grow a continuous ribbon without reselecting or leaving Edge mode
+- [ ] Edge Extrude chain: select a connected boundary chain and drag; shared vertices stay welded and the new outer chain remains selected
+- [ ] Edge Extrude refuses interior or branched selections and Undo removes one pull at a time
