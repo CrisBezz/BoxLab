@@ -305,7 +305,12 @@ function setStatus(t){if(status)status.textContent=t;}
 function toolSession(){return globalThis.__boxlabToolSession||null;}
 function setSweepStage(stage,{activatePath=false}={}){
   const valid=stage==='path'||stage==='finish'?stage:'profile';
-  const o=pathObject(),m=o&&ensureMeta(o);if(m)m.sessionStage=valid;
+  const o=pathObject(),m=o&&ensureMeta(o);
+  if(m){
+    m.sessionStage=valid;
+    if(valid==='profile')m.editPath=false;
+    if(valid==='path')m.editProfile=false;
+  }
   profilePanel.hidden=valid!=='profile';pathPanel.hidden=valid!=='path';finishPanel.hidden=valid!=='finish';
   stageProfileBtn.classList.toggle('active',valid==='profile');stagePathBtn.classList.toggle('active',valid==='path');stageFinishBtn.classList.toggle('active',valid==='finish');
   if(valid==='finish'&&m){m.editProfile=false;m.editPath=false;disarmTransforms();}
