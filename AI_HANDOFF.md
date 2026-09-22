@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.425**
+- Current `version.json`: **0.36.18.426**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -84,6 +84,16 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.426 Edge Extrude Plane constraint
+
+- Edge Extrude now has an additional Plane constraint visible only while the tool is armed.
+- The grabbed seed edge defines the working plane normal; the plane passes through the selected-edge/chain centre.
+- Pointer movement is raycast onto that plane, allowing free two-dimensional extrusion while preventing movement along the seed edge direction.
+- A final perpendicular projection hardens the zero along-edge displacement invariant.
+- Existing Free/X/Y/Z/Auto modes, ribbon topology, repeated outer-rail selection and Undo semantics remain unchanged.
+
+**Hands-on verify .426:** arm Edge Extrude, choose Plane, pull an edge diagonally around its perpendicular plane, then continue from the resulting edge. Switch between Plane and X/Y/Z/Auto while staying armed.
 
 ## Current development — v0.36.18.425 Edge Extrude directional constraints
 

@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.426 Edge Extrude Plane constraint
+
+- User requested free Edge Extrude movement constrained to a plane perpendicular to the grabbed edge.
+- Added an Edge-Extrude-only Plane control into the shared transform constraint strip; it is visible only while Edge Extrude is armed.
+- Plane origin is the current selected-edge/chain centre and plane normal is the specific edge grabbed to begin the pull.
+- Pointer motion is raycast directly onto that plane for free 2D movement while preserving zero along-edge displacement.
+- A final projection removes any numerical along-edge component before topology generation.
+- Plane mode leaves Free/X/Y/Z/Auto behavior from .425 unchanged.
+- Repeated outer-rail selection and one-pull-per-Undo remain unchanged.
+
+
 ## 2026-09-22 — v0.36.18.425 Edge Extrude directional constraints
 
 - User approved constrained Edge Extrude so ribbon pulls can produce more regular controlled geometry.

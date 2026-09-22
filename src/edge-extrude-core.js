@@ -78,3 +78,13 @@ export function perpendicularAxisDirection(edgeVector,axisVector,epsilon=1e-6){
   if(projected.lengthSq()<=epsilon*epsilon)return null;
   return projected.normalize();
 }
+
+
+export function projectPerpendicularDelta(delta,edgeVector,epsilon=1e-9){
+  const out=delta?.clone?.()||new THREE.Vector3(...(delta||[0,0,0]));
+  const edge=edgeVector?.clone?.()||new THREE.Vector3(...(edgeVector||[0,0,0]));
+  if(edge.lengthSq()<=epsilon*epsilon)return null;
+  edge.normalize();
+  out.addScaledVector(edge,-out.dot(edge));
+  return out;
+}
