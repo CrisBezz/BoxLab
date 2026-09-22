@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.408';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.409';
 
-const VERSION='0.36.18.408';
+const VERSION='0.36.18.409';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -305,6 +305,7 @@ function setStatus(t){if(status)status.textContent=t;}
 function toolSession(){return globalThis.__boxlabToolSession||null;}
 function setSweepStage(stage,{activatePath=false}={}){
   const valid=stage==='path'||stage==='finish'?stage:'profile';
+  if(valid!=='path')hotRailHit=null;
   const o=pathObject(),m=o&&ensureMeta(o);
   if(m){
     m.sessionStage=valid;
@@ -344,11 +345,25 @@ function railEdgeOverlay(refs){
   if(!positions.length)return null;
   const geometry=new THREE.BufferGeometry();
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
-  const material=new THREE.LineBasicMaterial({color:0x8fdcff,transparent:true,opacity:.82,depthTest:true,depthWrite:false});
+  const material=new THREE.LineBasicMaterial({color:0xe8f8ff,transparent:true,opacity:.95,depthTest:true,depthWrite:false});
   const lines=new THREE.LineSegments(geometry,material);
   lines.renderOrder=50;
   group.add(lines);
   return group;
+}
+function hotRailOverlay(hit){
+  if(!hit?.a||!hit?.b)return null;
+  const geometry=new THREE.BufferGeometry().setFromPoints([hit.a,hit.b]);
+  const material=new THREE.LineBasicMaterial({color:0xffffff,transparent:false,depthTest:false,depthWrite:false});
+  const line=new THREE.Line(geometry,material);line.renderOrder=90;
+  return line;
+}
+function acceptedPathOverlay(points){
+  if(points.length<2)return null;
+  const geometry=new THREE.BufferGeometry().setFromPoints(points);
+  const material=new THREE.LineBasicMaterial({color:0xffffff,transparent:false,depthTest:false,depthWrite:false});
+  const line=new THREE.Line(geometry,material);line.renderOrder=95;
+  return line;
 }
 function buildResult(frame,m){return buildSweepProfile(pathWorld(frame,m),sweepProfile2D(m),{profileClosed:m.profileClosed,capStart:m.caps,capEnd:m.caps,profileU:frame.u,profileV:frame.v,profileNormal:frame.normal});}
 function lineOverlay(points,closed=false){
@@ -367,11 +382,13 @@ function buildOverlay(){
   if(m.editProfile||m.editPath||m.interacted)lockTools();
   disposeOverlay();overlay=new THREE.Group();overlay.name='BoxLab Sweep Construction';overlay.userData.boxlabSweepPath=true;overlay.add(planeSurface(frame));
   const profile=profileWorld(frame,m),pp=pointsOverlay(profile,8),pl=lineOverlay(profile,m.profileClosed);if(pp)overlay.add(pp);if(pl)overlay.add(pl);
-  const path=pathWorld(frame,m),pathPts=pointsOverlay(path,9),pathLine=lineOverlay(path,false);if(pathPts)overlay.add(pathPts);if(pathLine)overlay.add(pathLine);
+  const path=pathWorld(frame,m),pathPts=pointsOverlay(path,9),pathLine=lineOverlay(path,false);if(pathPts)overlay.add(pathPts);
   if(m.sessionStage==='path'&&m.pathMode==='edges'){
     const railGuide=railEdgeOverlay(captureSnapReferences());
     if(railGuide)overlay.add(railGuide);
-  }
+    const accepted=acceptedPathOverlay(path);if(accepted)overlay.add(accepted);
+    const hot=hotRailOverlay(hotRailHit);if(hot)overlay.add(hot);
+  }else if(pathLine)overlay.add(pathLine);
   const result=buildResult(frame,m);
   if(result.ok){
     const g=result.mesh.triangulatedGeometry(),fm=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.16,side:THREE.DoubleSide,depthTest:false,depthWrite:false}),wm=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.58,wireframe:true,side:THREE.DoubleSide,depthTest:false,depthWrite:false});
@@ -463,7 +480,20 @@ function begin(event){
   lastSignature='';
 }
 function move(event){
-  if(!drag||event.pointerId!==drag.id)return;
+  if(!drag){
+    if(event.target===canvas&&event.isPrimary&&event.pointerType!=='touch'){
+      const o=pathObject(),m=o&&ensureMeta(o);
+      if(o&&m?.sessionStage==='path'&&m.pathMode==='edges'&&m.editPath){
+        const hit=externalGeometrySnap(event,captureSnapReferences(),true);
+        const next=hit?.kind==='Edge'?hit:null;
+        const changed=(hotRailHit?.ref?.id!==next?.ref?.id)||(hotRailHit?.index!==next?.index);
+        hotRailHit=next;
+        if(changed)lastSignature='';
+      }else if(hotRailHit){hotRailHit=null;lastSignature='';}
+    }
+    return;
+  }
+  if(event.pointerId!==drag.id)return;
   event.preventDefault();event.stopImmediatePropagation();
   const o=pathObject();if(!o||o.id!==drag.objectId)return;
   const m=ensureMeta(o),f=frameFor(liveMesh());if(!f)return;
@@ -501,7 +531,7 @@ function applySweep(){
   if(!result.ok){setStatus('Sweep refused - '+result.reason);return false;}
   globalThis.__boxlabHistory?.push(mesh.clone());replaceMesh(mesh,result.mesh);m.editProfile=false;m.editPath=false;m.applied=true;unlockTools();
   o.name='Sweep';manager()?.saveActive?.();globalThis.__boxlabObjectSelection?.single?.(o.id);globalThis.__boxlabBooleanUX?.sync?.();
-  disposeOverlay();controls.hidden=true;endSweepSession();lastSignature='';document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  disposeOverlay();hotRailHit=null;controls.hidden=true;endSweepSession();lastSignature='';document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   setStatus('Sweep applied - '+result.profile.length+'-point profile - '+result.points.length+' path points');return true;
 }
 function installPenRange(input,onValue){let pointerId=null,owned=null,releaseFrame=null;const min=()=>Number(input.min),max=()=>Number(input.max),step=()=>Number(input.step)||1;const map=x=>{const r=input.getBoundingClientRect(),t=THREE.MathUtils.clamp((x-r.left)/Math.max(1,r.width),0,1);return Math.round((min()+(max()-min())*t)/step())*step();};const apply=v=>{owned=String(v);input.value=owned;onValue();};const enforce=()=>{if(owned==null)return false;if(input.value!==owned)input.value=owned;return true;};input.addEventListener('pointerdown',e=>{if(e.pointerType!=='pen')return;pointerId=e.pointerId;e.preventDefault();e.stopPropagation();input.setPointerCapture?.(pointerId);apply(map(e.clientX));},{capture:true,passive:false});input.addEventListener('pointermove',e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();apply(map(e.clientX));},{capture:true,passive:false});const finish=e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();if(input.hasPointerCapture?.(pointerId))input.releasePointerCapture(pointerId);pointerId=null;if(releaseFrame)cancelAnimationFrame(releaseFrame);releaseFrame=requestAnimationFrame(()=>{enforce();releaseFrame=requestAnimationFrame(()=>{enforce();owned=null;releaseFrame=null;});});};input.addEventListener('pointerup',finish,{capture:true,passive:false});input.addEventListener('pointercancel',finish,{capture:true,passive:false});input.addEventListener('input',()=>{enforce();onValue();});input.addEventListener('change',()=>{if(enforce())onValue();});}
@@ -526,6 +556,7 @@ function setProfileType(type){
 }
 function setPathMode(mode){
   const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
+  if(mode!=='edges')hotRailHit=null;
   m.pathMode=mode;m.editPath=true;m.sessionStage='path';disarmOther(m,'path');if(mode!=='edges'&&!m.pathPoints.length)m.profileAnchorIndex=null;m.interacted=true;lockTools();setSweepStage('path');
   setStatus(mode==='edges'?'Sweep - tap connected path edges':'Sweep - draw path; Geometry Snap targets model geometry');
   lastSignature='';
@@ -551,6 +582,6 @@ installPenRange(sidesInput,()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)re
 capsBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.caps=!m.caps;lastSignature='';});
 applyBtn.addEventListener('click',applySweep);
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedId=null;cachedObject=null;lastSignature='';buildOverlay();}));
-window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();unlockTools();endSweepSession();});
+window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);hotRailHit=null;disposeOverlay();unlockTools();endSweepSession();});
 tick();
 globalThis.__boxlabSweepPath={version:VERSION,add:addSweepPath,apply:applySweep,setStage:setSweepStage,get active(){return !!pathObject()&&looksConstructionMesh(liveMesh());},get editing(){const o=pathObject(),m=o&&ensureMeta(o);return !!m&&(m.editProfile||m.editPath);},rebuild(){lastSignature='';buildOverlay();}};
