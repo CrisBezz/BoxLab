@@ -7,6 +7,8 @@
 - Active Follow Edges / Draw Path buttons now change their visible label to include `· Active`.
 - Candidate rail guide is fully opaque white for maximum contrast over shaded surfaces.
 - No Sweep picker, geometry or Tool Session behavior changed.
+- Released via PR **#97**; squash merge `01784ed914e1351da3c3d84af6bafefb576ca654`.
+- Final corrected PR Topology regression run **35685824200 PASS**.
 
 ## 2026-09-22 — v0.36.18.411 Follow Edges explicit state and rail visibility
 
