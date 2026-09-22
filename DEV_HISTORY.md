@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.404 selected-profile Sweep anchor
+
+- Fixed Face/Edge-loop Sweep starting from the profile centroid before reaching the selected Follow Edge path.
+- Added a profile anchor index for selected-profile Sweep.
+- First Follow Edge selection chooses the nearest profile vertex and rail endpoint, translates the Profile Plane so they coincide, and rebases the swept section around that vertex.
+- Removes the unwanted centre-to-edge lead-in while preserving the selected profile's exact shape and offset.
+- Default Circle/Rectangle Sweep remains centre-anchored.
+
 ## 2026-09-22 — v0.36.18.403 closed Sweep profile node insertion
 
 - Fixed inability to insert a new node into a closed Sweep profile.
