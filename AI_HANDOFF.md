@@ -89,6 +89,8 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.429 Solidify mirrored-object fix
 
+**Released on main via PR #115; squash merge `70831c5a24d975417c81adb16d6e56a76d4191cc`. Final regression run `35723194132` passed.**
+
 - Solidify now evaluates the existing non-destructive Mirror modifier before preflight, preview and Apply.
 - On Apply, Solidify bakes the mirrored evaluated mesh into the editable object and clears the old Mirror modifier to prevent double mirroring.
 - Mirrored open sheets now follow the same Solidify topology path as ordinary open sheets.
