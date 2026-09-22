@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.407 Sweep local face-winding unification
+
+- User passed the .406 Tool Session UX but reported one remaining isolated Sweep backface.
+- Added adjacency-based face-winding unification across all generated Sweep faces.
+- Shared-edge neighbours are forced to traverse their common edge in opposite directions, repairing local reversed quads/triangles.
+- Closed capped Sweeps then retain the .405 signed-volume check to orient the now-consistent shell outward globally.
+- Open/uncapped Sweep surfaces receive local consistency only.
+- No UI or Sweep shape/path behaviour changed.
+
 ## 2026-09-22 — v0.36.18.406 Tool Session UI foundation + Sweep UX
 
 - Audited Sweep, Revolve, Array, Boolean, Solidify, Shell and the shared Active Tools architecture after the user reported that Sweep had become difficult to navigate.
