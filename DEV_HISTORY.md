@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.417 Array session ownership during repositioning
+
+- User reported Array Tool Session dropped back to normal Object Active Tools when selecting/repositioning the array object.
+- Removed the old preview cancellation rule for temporary active-object changes while Array remains in Object mode.
+- Array now restores its original preview source if selection changes during an armed preview and reasserts the `array` Tool Session if displaced.
+- Endpoint preview pointer-down moved to document capture level (canvas target only) so Array can win before ordinary object selection.
+- Array still exits on Apply, Cancel, or explicitly leaving Object mode.
+
 ## 2026-09-22 — v0.36.18.416 Array Tool Session migration
 
 - Migrated existing Linear Array onto the reusable exclusive Tool Session UI introduced for Sweep.
