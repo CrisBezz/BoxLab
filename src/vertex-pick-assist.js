@@ -18,6 +18,11 @@ function bridge(){return globalThis.__boxlabSelectionBridge;}
 function mode(){return bridge()?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode;}
 function addVertexSessionActive(){return !!globalThis.__boxlabAddVertex?.sessionActive?.();}
 function directToolActive(){return !!document.querySelector('#extrudeBtn.active,#insetBtn.active,#bevelBtn.active,#vertexBevelBtn.active,#loopCutBtn.active,#applyCreaseBtn.active,#addVertexBtn.active,#buildEdgeBtn.active,#vertexSlideBtn.active,#edgeSlideBtn.active,#offsetLoopBtn.active,#bridgeEdgesBtn.active,#fillFaceBtn.active,#dissolveLoopBtn.active,#dissolveEdgeBtn.active,#deleteEdgeBtn.active,#addEdgeBtn.active,#connectVertexBtn.active,#weldVertexBtn.active,#deleteVertexBtn.active');}
+function transformArmed(){
+  const api=globalThis.__boxlabTransformArming;
+  if(api?.active?.())return true;
+  return !!document.querySelector('#toolModes button.active[data-tool]');
+}
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return{x:r.left+(p.x*.5+.5)*r.width,y:r.top+(-p.y*.5+.5)*r.height,z:p.z};}
 function renderedVertexObjects(){const out=[];state()?.scene?.traverse?.(object=>{if(object?.visible&&object.userData?.kind==='vertex'&&Number.isInteger(object.userData.index))out.push(object);});return out;}
 function nearestVertexAt(x,y){
@@ -46,7 +51,7 @@ function selected(){return [...new Set(bridge()?.indices?.()||[])];}
 function applyPick(index){const current=selected(),has=current.includes(index),next=has?current.filter(i=>i!==index):[...current,index];bridge()?.set?.('vertex',next);if(status)status.textContent=next.length?`Vertex mode • ${next.length} selected`:'Vertex mode • nothing selected';}
 
 document.addEventListener('pointerdown',event=>{
-  if(event.target!==canvas||!event.isPrimary||mode()!=='vertex'||addVertexSessionActive()||directToolActive())return;
+  if(event.target!==canvas||!event.isPrimary||mode()!=='vertex'||addVertexSessionActive()||directToolActive()||transformArmed())return;
   if(event.pointerType==='pen'&&!(event.pressure>0))return;
   const hit=nearestVertexAt(event.clientX,event.clientY);
   if(!hit)return;
@@ -57,7 +62,7 @@ document.addEventListener('pointerdown',event=>{
 
 document.addEventListener('pointermove',event=>{
   if(!press||press.id!==event.pointerId)return;
-  if(addVertexSessionActive()){press=null;return;}
+  if(addVertexSessionActive()||transformArmed()){press=null;return;}
   if(Math.hypot(event.clientX-press.x,event.clientY-press.y)>TAP_MOVE_PX){press.moved=true;return;}
   event.preventDefault();
   event.stopImmediatePropagation();
@@ -66,7 +71,7 @@ document.addEventListener('pointermove',event=>{
 document.addEventListener('pointerup',event=>{
   if(!press||press.id!==event.pointerId)return;
   const p=press;press=null;
-  if(p.moved||addVertexSessionActive())return;
+  if(p.moved||addVertexSessionActive()||transformArmed())return;
   event.preventDefault();
   event.stopImmediatePropagation();
   if(event.target!==canvas||mode()!=='vertex'||directToolActive())return;
@@ -77,4 +82,4 @@ document.addEventListener('pointerup',event=>{
 document.addEventListener('pointercancel',event=>{if(!press||press.id===event.pointerId)press=null;},true);
 document.addEventListener('pointerleave',event=>{if(event.pointerType==='pen'&&event.pressure===0)press=null;},true);
 
-globalThis.__boxlabVertexPickAssist={version:'0.36.18.294',nearestVertexAt};
+globalThis.__boxlabVertexPickAssist={version:'0.36.18.420',nearestVertexAt};

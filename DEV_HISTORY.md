@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.420 Vertex transform ownership
+
+- Hands-on after .419 showed Vertex selection and Bevel worked, while Vertex Move/Scale/Rotate did not; Edge and Face transforms remained good.
+- Root cause was Vertex Pick Assist owning viewport pointerdown at document-capture phase and stopping propagation even when a transform was armed.
+- Vertex Pick Assist now yields completely whenever Move / Scale / Rotate owns the interaction.
+- Ordinary Vertex tap selection, Bevel, Add, Build Edge and other direct Vertex tools remain unchanged.
+- Protected multi-object transform remains pinned at v0.36.1.0.
+
+
 ## 2026-09-22 — v0.36.18.419 Array pointer cleanup
 
 - User hands-on passed the .418 Array drawer-ownership fix but reported that free Vertex movement no longer worked afterward.
