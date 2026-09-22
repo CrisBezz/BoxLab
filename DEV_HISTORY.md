@@ -7,6 +7,8 @@
 - Vertex Pick Assist now yields completely whenever Move / Scale / Rotate owns the interaction.
 - Ordinary Vertex tap selection, Bevel, Add, Build Edge and other direct Vertex tools remain unchanged.
 - Protected multi-object transform remains pinned at v0.36.1.0.
+- Released via PR **#105**; squash merge `80677f75d32329a452ccc517ce4d52379d0fb628`.
+- Final PR Topology regression run **35695257815 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.419 Array pointer cleanup
