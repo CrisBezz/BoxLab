@@ -7,6 +7,8 @@
 - Tool Session now watches the Active Tools drawer toggle event and reopens it on the next microtask whenever a session is active.
 - The guard is generic for Array, Sweep and future Solidify/Shell/Revolve migrations; normal drawer collapse remains unchanged when no Tool Session is active.
 - Array endpoint drag math, linked-instance Apply, Object selection and protected multi-object transform remain unchanged.
+- Released via PR **#103**; squash merge `5bbe750f4fc21fd85f0d47b7a0117be11072273f`.
+- Final PR Topology regression run **35690638630 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.417 Array session ownership during repositioning
