@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.423 direct Edge Extrude ribbons
+
+- User promoted Edge Extrude ahead of Symmetry and requested fast repeated ribbon-style geometry creation.
+- Added direct Edge-mode Extrude for selected boundary edges, connected boundary chains and loose edges.
+- Dragging a selected valid edge creates a live quad-strip preview.
+- Shared chain vertices are duplicated once so connected selections stay welded.
+- The newly created outer rail remains selected after commit and Edge Extrude remains armed for repeated pulls without reselecting or mode switching.
+- Boundary validation rejects interior edges and branched selections.
+- Each pull is one history step and validates topology before commit; invalid results roll back.
+- Edge Extrude is placed in the existing Edge Move row with Edge Slide and Offset Loop.
+- Protected multi-object transform remains pinned at v0.36.1.0.
+
+
 ## 2026-09-22 — v0.36.18.422 Revolve Profile Tool Session
 
 - User hands-on passed v0.36.18.421 Solidify/Shell Tool Sessions and advanced with /nextbuild.
