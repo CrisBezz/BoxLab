@@ -18,17 +18,17 @@ test('391 construction transform claims Active Tools',()=>{
   assert.match(ui,/claimRevolveTools\(meta\)/);
 });
 
-test('391 uses established keep-open drawer contract',()=>{
-  assert.match(ui,/editDrawer\.dataset\.keepOpen='true'/);
-  assert.match(ui,/editDrawer\.open=true/);
-  assert.match(ui,/unlockActiveTools/);
+test('391 construction interaction still claims persistent Active Tools ownership through shared Tool Session',()=>{
+  assert.match(ui,/toolSession\(\)\?\.begin\?\.\(\{id:'revolve-profile'/);
+  assert.match(ui,/toolSession\(\)\?\.isActive\?\.\('revolve-profile'\)/);
+  assert.match(ui,/endRevolveSession/);
 });
 
 test('391 Edit Profile opens Revolve tools immediately',()=>{
   assert.match(ui,/if\(meta\.edit\)claimRevolveTools\(meta\)/);
 });
 
-test('391 Apply releases the drawer lock',()=>{
+test('391 Apply releases Active Tools ownership',()=>{
   const apply=ui.slice(ui.indexOf('function applyRevolve'),ui.indexOf('function installPenRange'));
-  assert.match(apply,/unlockActiveTools\(\)/);
+  assert.match(apply,/endRevolveSession\(\)/);
 });
