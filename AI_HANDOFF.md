@@ -61,7 +61,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.424**
+- Current `version.json`: **0.36.18.425**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -84,6 +84,18 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.425 Edge Extrude directional constraints
+
+- Edge Extrude now consumes the existing shared Free / X / Y / Z / Auto constraint state.
+- Explicit X/Y/Z directions are projected perpendicular to the selected source edge, preventing along-edge shear.
+- A chosen axis parallel to the source edge refuses instead of generating degenerate ribbon geometry.
+- Auto (or Axis Snap ON while Free) chooses the best valid perpendicular world-axis direction from the initial drag.
+- Free with Axis Snap OFF preserves the .423/.424 screen-plane ribbon behavior.
+- Edge Extrude owns viewport drag while armed; normal Move yields, but the shared transform constraint controls remain usable.
+- Repeated outer-rail selection, transactional topology validation and one-pull-per-Undo remain unchanged.
+
+**Hands-on verify .425:** make a ribbon from a boundary edge with X, Y and Z constraints; check that growth is square to the source edge, try an axis parallel to the edge and confirm refusal, then compare Auto and Free.
 
 ## Current development — v0.36.18.424 Edge Extrude arming hotfix
 
