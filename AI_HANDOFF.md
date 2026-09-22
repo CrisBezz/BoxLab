@@ -87,6 +87,8 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.425 Edge Extrude directional constraints
 
+**Released on main via PR #110; squash merge `44fa20f0f769750b6c956f16ac5d8cb071144fb2`. Final regression run `35707683401` passed.**
+
 - Edge Extrude now consumes the existing shared Free / X / Y / Z / Auto constraint state.
 - Explicit X/Y/Z directions are projected perpendicular to the selected source edge, preventing along-edge shear.
 - A chosen axis parallel to the source edge refuses instead of generating degenerate ribbon geometry.
