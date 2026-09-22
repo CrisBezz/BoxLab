@@ -6,6 +6,8 @@
 - Added **Sweep from Selection** directly to Face and Edge Active Tools.
 - The component profile is captured before object-mode handoff, then Sweep is created and the saved profile is applied automatically.
 - Existing Use Selection profile validation/alignment remains authoritative; this build changes the launch path rather than duplicating profile conversion logic.
+- Released via PR **#87**; squash merge `1c512bd2b3c487e9839b0021e8607473340910f4`.
+- Final corrected PR Topology regression run **35674435817 PASS**.
 
 ## 2026-09-22 — v0.36.18.401 Sweep Use Selection profile
 
