@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.411 Follow Edges explicit state and rail visibility
+
+- User reported .410 Follow Edges still did not visibly light as active and internal Knife-cut rails remained invisible on shaded faces.
+- Added immediate path-mode button synchronization via `syncPathModeButtons()` plus `aria-pressed` state.
+- Added explicit Sweep active-button styling so Follow Edges visibly highlights when selected.
+- Changed candidate rail guide to render without depth testing, preventing coplanar topology lines from disappearing into shaded faces.
+- Kept .410 dedicated edge-only picker and all Sweep geometry behaviour unchanged.
+
 ## 2026-09-22 — v0.36.18.410 Follow Edges edge-only picker
 
 - Fixed .409 regression where Follow Edges could fail because the generic snapper returned a Vertex near edge endpoints.

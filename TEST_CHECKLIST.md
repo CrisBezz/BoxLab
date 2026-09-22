@@ -680,3 +680,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] rail reference cache refreshes on entering Follow Edges and clears on exit/Apply
 - [ ] Draw Path generic Vertex/Edge/Face snapping remains unchanged
 - [ ] .409 candidate/hot/accepted contrast remains intact
+
+
+## Phase D/F — Follow Edges state + rail visibility — .411
+
+- [ ] Follow Edges lights immediately when activated
+- [ ] Draw Path lights immediately when activated
+- [ ] path buttons expose matching aria-pressed state
+- [ ] Knife-cut/internal rail edge remains visible over a shaded face
+- [ ] rail guide remains temporary and only visible in PATH → Follow Edges
+- [ ] .410 edge-only picker behaviour remains unchanged

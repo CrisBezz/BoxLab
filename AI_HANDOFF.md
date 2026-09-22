@@ -1489,9 +1489,21 @@ v0.36.18.410 separates the rail interaction cleanly:
 - Draw Path continues using the generic Vertex/Edge/Face snapper
 - .409 candidate/hot/accepted rail contrast is preserved
 
+## Current development — v0.36.18.411 Follow Edges explicit state + surface-visible rails
+
+User feedback after .410: Follow Edges still did not visibly light as active, and internal Knife-cut rails were still not visible on shaded faces.
+
+v0.36.18.411 fixes the UI/visibility layer directly:
+- adds `syncPathModeButtons()` so Follow Edges / Draw Path button state is updated immediately when path mode changes instead of waiting for the next overlay rebuild
+- Follow Edges and Draw Path also expose `aria-pressed` state for an explicit UI state contract
+- Sweep session buttons now have an explicit active-button style, so Follow Edges visibly lights when active rather than relying on unrelated global button styling
+- candidate rail lines now render with `depthTest:false`, preventing coplanar Knife/Loop-Cut edges from disappearing into the shaded face through depth conflict
+- the rail guide remains temporary and only appears during PATH → Follow Edges
+- .410 dedicated edge-only picker remains unchanged
+
 ## Next development step
 
-**Hands-on verify v0.36.18.410 by selecting rail edges near vertices/endpoints as well as mid-edge; Follow Edges should work reliably while retaining .409 highlight feedback.**
+**Hands-on verify v0.36.18.411 on the same Knife-cut test: Follow Edges should visibly light immediately and internal cut edges should draw clearly over the shaded face.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.
