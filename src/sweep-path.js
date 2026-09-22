@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.414';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.415';
 
-const VERSION='0.36.18.414';
+const VERSION='0.36.18.415';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -76,6 +76,25 @@ function activeObject(){const m=manager();if(!m)return null;if(cachedId===m.acti
 function pathObject(){const o=activeObject();return o?.sweepPath?o:null;}
 function liveMesh(){return state()?.mesh||null;}
 function constructionPlane(){const h=.35;return new EditableMesh([new THREE.Vector3(-h,-h,0),new THREE.Vector3(h,-h,0),new THREE.Vector3(h,h,0),new THREE.Vector3(-h,h,0)],[[0,1,2,3]]);}
+function visibleFreshConstructionPlane(){
+  const h=.35,camera=state()?.camera,source=liveMesh();
+  if(!camera||!source?.vertices?.length)return constructionPlane();
+  const box=new THREE.Box3().setFromPoints(source.vertices);
+  const sphere=new THREE.Sphere();box.getBoundingSphere(sphere);
+  const towardCamera=camera.position.clone().sub(sphere.center);
+  if(towardCamera.lengthSq()<1e-8)camera.getWorldDirection(towardCamera).multiplyScalar(-1);
+  towardCamera.normalize();
+  const clearance=Math.max(.8,sphere.radius*.35);
+  const center=sphere.center.clone().addScaledVector(towardCamera,sphere.radius+clearance);
+  const right=new THREE.Vector3(1,0,0).applyQuaternion(camera.quaternion).normalize();
+  const up=new THREE.Vector3(0,1,0).applyQuaternion(camera.quaternion).normalize();
+  return new EditableMesh([
+    center.clone().addScaledVector(right,-h).addScaledVector(up,-h),
+    center.clone().addScaledVector(right, h).addScaledVector(up,-h),
+    center.clone().addScaledVector(right, h).addScaledVector(up, h),
+    center.clone().addScaledVector(right,-h).addScaledVector(up, h)
+  ],[[0,1,2,3]]);
+}
 function looksConstructionMesh(mesh){return !!mesh&&mesh.vertices?.length===4&&mesh.faces?.length===1&&mesh.faces[0]?.length===4;}
 function planeSignature(mesh){return looksConstructionMesh(mesh)?mesh.vertices.map(v=>[v.x,v.y,v.z].map(n=>n.toFixed(5)).join(',')).join('|'):'';}
 function ensureMeta(o){
@@ -544,13 +563,15 @@ function addSweepPath(selectionProfileOverride=null,autoUseSelection=false){
   const man=manager();if(!man?.addMesh)return;
   const selectionProfile=selectionProfileOverride||selectionProfileCandidate();
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
-  const o=man.addMesh(constructionPlane(),'Sweep',{enterObjectMode:true});if(!o)return;
+  const plane=selectionProfile?constructionPlane():visibleFreshConstructionPlane();
+  const o=man.addMesh(plane,'Sweep',{enterObjectMode:true});if(!o)return;
   cachedId=o.id;cachedObject=o;
   o.sweepPath={version:VERSION,profileType:'circle',profileClosed:true,profilePoints:[],profileHistory:[],profileSize:.25,profileSides:8,editProfile:false,pathMode:'edges',pathPoints:[],pathHistory:[],editPath:false,selectedPathPoint:null,caps:true,interacted:false,selectionProfile,sessionStage:selectionProfile&&autoUseSelection?'path':'profile',initialPlaneSignature:planeSignature(liveMesh())};
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
   beginSweepSession(o.sweepPath.sessionStage);
   setStatus(selectionProfile?'Sweep - '+selectionProfile.label+' captured':'Sweep - choose a Profile, then Path');lastSignature='';
   if(selectionProfile&&autoUseSelection)queueMicrotask(()=>applySelectionProfile({activateFollowEdges:true}));
+  else requestAnimationFrame(()=>{if(manager()?.activeId===o.id)globalThis.__boxlabTransformArming?.activateRealMove?.();});
 }
 function applySweep(){
   const o=pathObject(),mesh=liveMesh();if(!o||!looksConstructionMesh(mesh))return false;

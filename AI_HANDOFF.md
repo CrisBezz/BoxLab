@@ -1544,9 +1544,20 @@ v0.36.18.414 restores both variables at module scope:
 
 No picker, geometry, Tool Session or workflow logic changes are made beyond restoring the missing runtime state.
 
+## Current development — v0.36.18.415 fresh Sweep placement / immediate Move
+
+After .414 fixed Follow Edges, the user reported a fresh Add → Sweep construction plane spawning inside the first cube and being difficult/impossible to select for repositioning.
+
+v0.36.18.415 changes only the fresh Add → Sweep placement path:
+- a brand-new Sweep profile plane is created camera-facing rather than fixed to world XY
+- its center is placed just in front of the currently active mesh bounding sphere, toward the camera, so it is immediately visible instead of buried inside the default cube
+- the new Sweep remains the active object from `addMesh()`
+- real Move is automatically armed on the next animation frame for fresh Sweep creation, matching the direct-manipulation behavior already used by Duplicate
+- Face/Edge → Sweep does **not** use this offset; selected-profile Sweeps still replace the placeholder plane with the captured source geometry exactly in place
+
 ## Next development step
 
-**Hands-on verify v0.36.18.414. Follow Edges should now activate normally, show `Follow Edges · Active`, and display the rail network immediately.**
+**Hands-on verify v0.36.18.415 with Object → Add → Sweep. The profile plane should appear visibly in front of the current object and Move should be ready immediately. Then verify Face/Edge → Sweep still stays exactly on the selected profile.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.
