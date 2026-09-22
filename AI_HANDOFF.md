@@ -1651,7 +1651,7 @@ v0.36.18.421 migrates only their UX/session ownership:
 
 ## Current development — v0.36.18.422 Revolve Profile Tool Session
 
-**Development branch: feature/revolve-profile-tool-session-422.**
+**Released on main via PR #107; squash merge `478f2a8613873c0c3533a3ce82bb7227925e8230`. Final PR regression run `35696735145` passed.**
 
 Following the hands-on pass of .421, Revolve Profile is migrated to the shared exclusive Tool Session.
 
