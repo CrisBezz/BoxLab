@@ -1532,6 +1532,8 @@ v0.36.18.413 removes that fragile second-stage lookup:
 
 ## Current development — v0.36.18.414 Follow Edges root-cause fix
 
+**Released on main via PR #99; squash merge `ac6c3a630757f849962cae832f0b53999d68fbc9`. PR regression run `35686712355` passed.**
+
 Hands-on after .413 still showed PATH active but Follow Edges unable to activate.
 
 Root cause was found in `src/sweep-path.js`: the module-level variables `hotRailHit` and `railSnapRefs` had accidentally disappeared from the declaration, while Follow Edges code still referenced them. Tapping Follow Edges therefore threw a `ReferenceError` before `setPathMode()` could update the UI or build the rail guide.
