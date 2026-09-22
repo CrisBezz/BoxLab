@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.427 Edge Extrude selection handoff
+
+- Hands-on .426 exposed a workflow break: after an extrusion, the new outer edge stayed selected but could not be deselected by tapping while Edge Extrude owned the viewport.
+- Edge Extrude now owns tap-selection semantics while armed instead of treating every no-drag pointer gesture as a cancelled extrusion.
+- Tap a selected edge to deselect it; tap a different valid boundary edge to switch selection to it; drag a different valid boundary edge to switch and extrude in the same gesture.
+- Extrude and the current Plane/X/Y/Z/Auto constraint remain armed even when the selection becomes temporarily empty.
+- This removes the previous Deselect → select edge → Move → Extrude → Plane re-entry loop.
+- Ribbon topology, Plane math and one-pull-per-Undo are unchanged.
+
+
 ## 2026-09-22 — v0.36.18.426 Edge Extrude Plane constraint
 
 - User requested free Edge Extrude movement constrained to a plane perpendicular to the grabbed edge.
