@@ -1530,9 +1530,21 @@ v0.36.18.413 removes that fragile second-stage lookup:
 - manual Use Selection still loads only the profile unless explicitly asked to activate Follow Edges
 - .412 hard active-state label and .410 edge-only picker remain intact
 
+## Current development — v0.36.18.414 Follow Edges root-cause fix
+
+Hands-on after .413 still showed PATH active but Follow Edges unable to activate.
+
+Root cause was found in `src/sweep-path.js`: the module-level variables `hotRailHit` and `railSnapRefs` had accidentally disappeared from the declaration, while Follow Edges code still referenced them. Tapping Follow Edges therefore threw a `ReferenceError` before `setPathMode()` could update the UI or build the rail guide.
+
+v0.36.18.414 restores both variables at module scope:
+- `hotRailHit=null`
+- `railSnapRefs=null`
+
+No picker, geometry, Tool Session or workflow logic changes are made beyond restoring the missing runtime state.
+
 ## Next development step
 
-**Hands-on verify v0.36.18.413 from a selected Face/closed Edge loop. PATH should open with the button literally reading `Follow Edges · Active`, and the rail network should be visible immediately.**
+**Hands-on verify v0.36.18.414. Follow Edges should now activate normally, show `Follow Edges · Active`, and display the rail network immediately.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.
