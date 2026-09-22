@@ -8,7 +8,7 @@ const toolSession=fs.readFileSync(new URL('../src/tool-session-ui.js',import.met
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
 test('421 Solidify launches an exclusive Tool Session with cancel/apply controls',()=>{
-  assert.ok(solidify.includes("id='solidify'"));
+  assert.ok(solidify.includes("id:'solidify'"));
   assert.ok(solidify.includes("title:'Solidify'"));
   assert.ok(solidify.includes('solidifyCancelBtn'));
   assert.ok(solidify.includes('solidifyApplyBtn'));
@@ -16,7 +16,7 @@ test('421 Solidify launches an exclusive Tool Session with cancel/apply controls
 });
 
 test('421 Shell launches an exclusive Tool Session and preserves selected opening faces',()=>{
-  assert.ok(shell.includes("id='shell'"));
+  assert.ok(shell.includes("id:'shell'"));
   assert.ok(shell.includes("title:'Shell'"));
   assert.ok(shell.includes('shellCancelBtn'));
   assert.ok(shell.includes('shellApplyBtn'));
