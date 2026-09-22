@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-22 — v0.36.18.408 Sweep Follow Edges rail guide
+
+- User passed .407 and reported that internal topology edges were pickable by Follow Edges but not visible, making Knife-cut rails difficult to use.
+- Added a temporary rail-edge overlay built from the same evaluated snap-reference meshes used by Follow Edges.
+- The overlay includes internal mesh edges as well as boundaries, so Knife/Loop Cut topology can be followed visually.
+- Rail guides appear only in PATH → Follow Edges and disappear automatically in PROFILE, Draw Path, FINISH, Apply, or Sweep exit.
+- No Sweep geometry, path-selection or Tool Session behaviour changed.
+
 ## 2026-09-22 — v0.36.18.407 Sweep local face-winding unification
 
 - User passed the .406 Tool Session UX but reported one remaining isolated Sweep backface.

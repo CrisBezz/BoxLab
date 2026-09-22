@@ -1445,9 +1445,21 @@ v0.36.18.407 adds a true local face-winding unification pass before the existing
 - open/uncapped Sweep surfaces also gain local winding consistency, but are not globally flipped
 - .406 Tool Session UX remains unchanged
 
+## Current development — v0.36.18.408 Sweep Follow Edges rail guide
+
+User hands-on passed .407 and reported a visibility problem in PATH → Follow Edges: BoxLab could snap to internal topology edges such as Knife cuts across a face, but those edges were not visibly drawn in the viewport.
+
+v0.36.18.408 adds an automatic temporary rail-edge guide:
+- while Sweep is in **PATH** with **Follow Edges** selected, BoxLab overlays the complete edge network of every eligible visible snap-reference mesh
+- the guide is generated from the same evaluated meshes used by Follow Edges snapping, so visible rail candidates and pickable rail candidates match
+- internal Knife / Loop Cut / topology edges are included, not only silhouette/boundary edges
+- the guide is depth-tested and non-writing so it behaves like a modelling aid rather than permanent wireframe mode
+- switching to PROFILE, Draw Path, FINISH, or ending Sweep removes the guide automatically with the normal Sweep construction overlay
+- .406 Tool Session UX and .407 winding fixes remain unchanged
+
 ## Next development step
 
-**Hands-on verify v0.36.18.407 on the same Sweep that showed one backface; geometry and UI should be unchanged, with no isolated reversed face.**
+**Hands-on verify v0.36.18.408 using a Knife cut across a face as the Sweep rail. The internal cut edge should be clearly visible in PATH → Follow Edges and immediately disappear outside that mode.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.

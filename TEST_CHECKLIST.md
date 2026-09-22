@@ -646,3 +646,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] bent selected-profile Sweep remains outward and clean
 - [ ] concave C-profile Sweep remains outward and clean
 - [ ] .406 Tool Session UX remains unchanged
+
+
+## Phase D/F — Sweep rail-edge visibility — .408
+
+- [ ] PATH → Follow Edges shows the full edge network of eligible visible meshes
+- [ ] Knife-cut edge across a face is visibly available as a rail
+- [ ] Loop Cut/internal topology edges are visible, not only boundary/silhouette edges
+- [ ] rail guide is sourced from the same evaluated meshes used by Follow Edges snapping
+- [ ] PROFILE hides the rail guide
+- [ ] Draw Path hides the rail guide
+- [ ] FINISH and Apply remove the rail guide
+- [ ] .406 Tool Session and .407 winding behaviour remain unchanged

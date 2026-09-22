@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.407';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.408';
 
-const VERSION='0.36.18.407';
+const VERSION='0.36.18.408';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -330,6 +330,26 @@ function disposeOverlay(){if(!overlay)return;overlay.removeFromParent();overlay.
 function pointerRay(event){const rect=canvas.getBoundingClientRect();pointer.set(((event.clientX-rect.left)/rect.width)*2-1,-(((event.clientY-rect.top)/rect.height)*2-1));raycaster.setFromCamera(pointer,state()?.camera);}
 function screenPoint(world){const camera=state()?.camera,rect=canvas?.getBoundingClientRect();if(!camera||!rect)return null;const p=world.clone().project(camera);return new THREE.Vector2(rect.left+(p.x*.5+.5)*rect.width,rect.top+(-p.y*.5+.5)*rect.height);}
 function planeSurface(frame){const p2=frame.p1.clone().add(frame.p3).sub(frame.p0),g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute([frame.p0.x,frame.p0.y,frame.p0.z,frame.p1.x,frame.p1.y,frame.p1.z,p2.x,p2.y,p2.z,frame.p0.x,frame.p0.y,frame.p0.z,p2.x,p2.y,p2.z,frame.p3.x,frame.p3.y,frame.p3.z],3));const m=new THREE.MeshBasicMaterial({transparent:true,opacity:.08,side:THREE.DoubleSide,depthTest:false,depthWrite:false});return new THREE.Mesh(g,m);}
+function railEdgeOverlay(refs){
+  const group=new THREE.Group();group.name='Sweep Rail Edge Guide';
+  const positions=[];
+  for(const ref of refs||[]){
+    const mesh=ref.mesh,edges=mesh?.edges?.()||[];
+    for(const edge of edges){
+      const a=mesh.vertices?.[edge.a],b=mesh.vertices?.[edge.b];
+      if(!a||!b)continue;
+      positions.push(a.x,a.y,a.z,b.x,b.y,b.z);
+    }
+  }
+  if(!positions.length)return null;
+  const geometry=new THREE.BufferGeometry();
+  geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+  const material=new THREE.LineBasicMaterial({color:0x8fdcff,transparent:true,opacity:.82,depthTest:true,depthWrite:false});
+  const lines=new THREE.LineSegments(geometry,material);
+  lines.renderOrder=50;
+  group.add(lines);
+  return group;
+}
 function buildResult(frame,m){return buildSweepProfile(pathWorld(frame,m),sweepProfile2D(m),{profileClosed:m.profileClosed,capStart:m.caps,capEnd:m.caps,profileU:frame.u,profileV:frame.v,profileNormal:frame.normal});}
 function lineOverlay(points,closed=false){
   if(points.length<2)return null;const list=closed?[...points,points[0]]:points;
@@ -348,6 +368,10 @@ function buildOverlay(){
   disposeOverlay();overlay=new THREE.Group();overlay.name='BoxLab Sweep Construction';overlay.userData.boxlabSweepPath=true;overlay.add(planeSurface(frame));
   const profile=profileWorld(frame,m),pp=pointsOverlay(profile,8),pl=lineOverlay(profile,m.profileClosed);if(pp)overlay.add(pp);if(pl)overlay.add(pl);
   const path=pathWorld(frame,m),pathPts=pointsOverlay(path,9),pathLine=lineOverlay(path,false);if(pathPts)overlay.add(pathPts);if(pathLine)overlay.add(pathLine);
+  if(m.sessionStage==='path'&&m.pathMode==='edges'){
+    const railGuide=railEdgeOverlay(captureSnapReferences());
+    if(railGuide)overlay.add(railGuide);
+  }
   const result=buildResult(frame,m);
   if(result.ok){
     const g=result.mesh.triangulatedGeometry(),fm=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.16,side:THREE.DoubleSide,depthTest:false,depthWrite:false}),wm=new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.58,wireframe:true,side:THREE.DoubleSide,depthTest:false,depthWrite:false});
