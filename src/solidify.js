@@ -40,13 +40,9 @@ function activeMirrorAxes(){
   return axes;
 }
 function hasMirror(axes=activeMirrorAxes()){return !!(axes.x||axes.y||axes.z);}
-function evaluatedSource(live,axes=activeMirrorAxes()){return hasMirror(axes)?applyMirror(live,axes):live.clone();}
-function clearMirrorModifier(){
-  document.querySelectorAll('[data-mirror-axis]').forEach(input=>{
-    if(!input.checked)return;
-    input.checked=false;
-    input.dispatchEvent(new Event('change',{bubbles:true}));
-  });
+function previewEvaluatedSource(live,axes=activeMirrorAxes()){
+  const working=live.clone();
+  return{working,axes,mirrored:hasMirror(axes)};
 }
 function activeObject(){const m=manager();return m?.objects?.find(o=>o.id===m.activeId)||null;}
 function selectionMode(){return document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
@@ -107,7 +103,7 @@ function buildPreview(){
   if(!previewArmed)return false;
   const object=activeObject(),live=mesh(),targetScene=scene();
   if(!object||!live||!targetScene||object.id!==previewObjectId){cancelPreview({silent:true});return false;}
-  const working=evaluatedSource(live),sourceFaceCount=working.faces.length;
+  const {working,axes,mirrored}=previewEvaluatedSource(live),sourceFaceCount=working.faces.length;
   const result=solidifyOpenMesh(working,thickness());
   disposePreview();
   if(!result.ok){setStatus(`Solidify preview unavailable • ${result.reason||'invalid thickness'}`);return false;}
@@ -115,7 +111,8 @@ function buildPreview(){
   // Preview only geometry created by Solidify (inner shell + boundary walls).
   // The source sheet remains the normal editable object underneath.
   working.faces=working.faces.slice(sourceFaceCount);
-  const geometry=working.triangulatedGeometry();
+  const displayMesh=mirrored?applyMirror(working,axes):working;
+  const geometry=displayMesh.triangulatedGeometry();
   const fillMaterial=new THREE.MeshBasicMaterial({
     color:0x62d8ff,transparent:true,opacity:.18,side:THREE.DoubleSide,
     depthTest:false,depthWrite:false
@@ -240,8 +237,7 @@ canvas?.addEventListener('pointercancel',finishThicknessDrag,true);
 button?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh();
   if(!object||!live||object.locked||object.kind==='reference'||selectionMode()!=='object'||previewArmed)return;
-  const axes=activeMirrorAxes(),evaluated=evaluatedSource(live,axes);
-  const preflight=analyzeSolidifyInput(evaluated);
+  const preflight=analyzeSolidifyInput(live);
   if(!preflight.ok){setStatus(preflightMessage(preflight.reason));return;}
   previewArmed=true;previewObjectId=object.id;
   beginSolidifySession();
@@ -252,18 +248,14 @@ applyButton?.addEventListener('click',()=>{
   if(!previewArmed||!object||!live||object.id!==previewObjectId){cancelPreview({silent:true});return;}
   endThicknessDrag();
   globalThis.__boxlabObjectHistory?.checkpoint?.();
-  const axes=activeMirrorAxes(),working=evaluatedSource(live,axes);
-  const result=solidifyOpenMesh(working,thickness());
+  const axes=activeMirrorAxes();
+  const result=solidifyOpenMesh(live,thickness());
   if(!result.ok){setStatus(`Solidify rolled back • ${result.reason||'topology validation failed'}`);cancelPreview({silent:true});forceRender();return;}
-  live.vertices=working.vertices.map(v=>v.clone());
-  live.faces=working.faces.map(f=>[...f]);
-  live.creases=new Map(working.creases||[]);
-  if(hasMirror(axes))clearMirrorModifier();
   disposePreview();previewArmed=false;previewObjectId=null;
   endSolidifySession();
   manager()?.saveActive?.();
-  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.429',bakedMirror:hasMirror(axes),...result};
-  setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid${hasMirror(axes)?' • Mirror baked':''}`);
+  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.430',preservedMirror:hasMirror(axes),...result};
+  setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid${hasMirror(axes)?' • Mirror preserved':''}`);
   forceRender();
   update();
 });
