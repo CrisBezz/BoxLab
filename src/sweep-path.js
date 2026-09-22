@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildSweepProfile} from './sweep-core.js?v=0.36.18.409';
+import {buildSweepProfile} from './sweep-core.js?v=0.36.18.410';
 
-const VERSION='0.36.18.409';
+const VERSION='0.36.18.410';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -144,6 +144,26 @@ function captureSnapReferences(){
     refs.push({id:object.id,name:object.name||`Object ${object.id}`,mesh:source.clone()});
   }
   return refs;
+}
+function externalEdgeSnap(event,refs){
+  if(!refs?.length)return null;
+  const click=new THREE.Vector2(event.clientX,event.clientY);
+  let bestEdge=null;
+  for(const ref of refs){
+    const edges=ref.mesh.edges?.()||[];
+    edges.forEach((edge,index)=>{
+      const va=ref.mesh.vertices[edge.a],vb=ref.mesh.vertices[edge.b];
+      const a=screenPoint(va),b=screenPoint(vb);if(!a||!b)return;
+      const ab=b.clone().sub(a),l=ab.lengthSq();if(l<1)return;
+      const t=THREE.MathUtils.clamp(click.clone().sub(a).dot(ab)/l,0,1),q=a.clone().addScaledVector(ab,t),d=click.distanceTo(q);
+      if(d<=22&&(!bestEdge||d<bestEdge.distance))bestEdge={kind:'Edge',name:ref.name,point:va.clone().lerp(vb,t),distance:d,index,t,ref,edge,a:va.clone(),b:vb.clone()};
+    });
+  }
+  return bestEdge;
+}
+function railRefs(refresh=false){
+  if(refresh||!railSnapRefs)railSnapRefs=captureSnapReferences();
+  return railSnapRefs;
 }
 function externalGeometrySnap(event,refs,force=false){
   if((!force&&!geometryToggle?.checked)||!refs?.length)return null;
@@ -305,7 +325,7 @@ function setStatus(t){if(status)status.textContent=t;}
 function toolSession(){return globalThis.__boxlabToolSession||null;}
 function setSweepStage(stage,{activatePath=false}={}){
   const valid=stage==='path'||stage==='finish'?stage:'profile';
-  if(valid!=='path')hotRailHit=null;
+  if(valid!=='path'){hotRailHit=null;railSnapRefs=null;}
   const o=pathObject(),m=o&&ensureMeta(o);
   if(m){
     m.sessionStage=valid;
@@ -384,7 +404,7 @@ function buildOverlay(){
   const profile=profileWorld(frame,m),pp=pointsOverlay(profile,8),pl=lineOverlay(profile,m.profileClosed);if(pp)overlay.add(pp);if(pl)overlay.add(pl);
   const path=pathWorld(frame,m),pathPts=pointsOverlay(path,9),pathLine=lineOverlay(path,false);if(pathPts)overlay.add(pathPts);
   if(m.sessionStage==='path'&&m.pathMode==='edges'){
-    const railGuide=railEdgeOverlay(captureSnapReferences());
+    const railGuide=railEdgeOverlay(railRefs());
     if(railGuide)overlay.add(railGuide);
     const accepted=acceptedPathOverlay(path);if(accepted)overlay.add(accepted);
     const hot=hotRailOverlay(hotRailHit);if(hot)overlay.add(hot);
@@ -435,7 +455,7 @@ function alignSelectionProfileAnchorToEdge(frame,m,hit){
   return{start,end,index:best.i};
 }
 function addEdgeToPath(event,frame,m){
-  const hit=externalGeometrySnap(event,captureSnapReferences(),true);
+  const hit=externalEdgeSnap(event,railRefs());
   if(!hit||hit.kind!=='Edge'||!hit.a||!hit.b){setStatus('Sweep - Follow Edges: tap an existing visible edge');return false;}
   pushPathHistory(m);
   const anchored=alignSelectionProfileAnchorToEdge(frame,m,hit);
@@ -484,7 +504,7 @@ function move(event){
     if(event.target===canvas&&event.isPrimary&&event.pointerType!=='touch'){
       const o=pathObject(),m=o&&ensureMeta(o);
       if(o&&m?.sessionStage==='path'&&m.pathMode==='edges'&&m.editPath){
-        const hit=externalGeometrySnap(event,captureSnapReferences(),true);
+        const hit=externalEdgeSnap(event,railRefs());
         const next=hit?.kind==='Edge'?hit:null;
         const changed=(hotRailHit?.ref?.id!==next?.ref?.id)||(hotRailHit?.index!==next?.index);
         hotRailHit=next;
@@ -531,7 +551,7 @@ function applySweep(){
   if(!result.ok){setStatus('Sweep refused - '+result.reason);return false;}
   globalThis.__boxlabHistory?.push(mesh.clone());replaceMesh(mesh,result.mesh);m.editProfile=false;m.editPath=false;m.applied=true;unlockTools();
   o.name='Sweep';manager()?.saveActive?.();globalThis.__boxlabObjectSelection?.single?.(o.id);globalThis.__boxlabBooleanUX?.sync?.();
-  disposeOverlay();hotRailHit=null;controls.hidden=true;endSweepSession();lastSignature='';document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  disposeOverlay();hotRailHit=null;railSnapRefs=null;controls.hidden=true;endSweepSession();lastSignature='';document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   setStatus('Sweep applied - '+result.profile.length+'-point profile - '+result.points.length+' path points');return true;
 }
 function installPenRange(input,onValue){let pointerId=null,owned=null,releaseFrame=null;const min=()=>Number(input.min),max=()=>Number(input.max),step=()=>Number(input.step)||1;const map=x=>{const r=input.getBoundingClientRect(),t=THREE.MathUtils.clamp((x-r.left)/Math.max(1,r.width),0,1);return Math.round((min()+(max()-min())*t)/step())*step();};const apply=v=>{owned=String(v);input.value=owned;onValue();};const enforce=()=>{if(owned==null)return false;if(input.value!==owned)input.value=owned;return true;};input.addEventListener('pointerdown',e=>{if(e.pointerType!=='pen')return;pointerId=e.pointerId;e.preventDefault();e.stopPropagation();input.setPointerCapture?.(pointerId);apply(map(e.clientX));},{capture:true,passive:false});input.addEventListener('pointermove',e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();apply(map(e.clientX));},{capture:true,passive:false});const finish=e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();if(input.hasPointerCapture?.(pointerId))input.releasePointerCapture(pointerId);pointerId=null;if(releaseFrame)cancelAnimationFrame(releaseFrame);releaseFrame=requestAnimationFrame(()=>{enforce();releaseFrame=requestAnimationFrame(()=>{enforce();owned=null;releaseFrame=null;});});};input.addEventListener('pointerup',finish,{capture:true,passive:false});input.addEventListener('pointercancel',finish,{capture:true,passive:false});input.addEventListener('input',()=>{enforce();onValue();});input.addEventListener('change',()=>{if(enforce())onValue();});}
@@ -556,7 +576,7 @@ function setProfileType(type){
 }
 function setPathMode(mode){
   const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;
-  if(mode!=='edges')hotRailHit=null;
+  if(mode!=='edges'){hotRailHit=null;railSnapRefs=null;}else railRefs(true);
   m.pathMode=mode;m.editPath=true;m.sessionStage='path';disarmOther(m,'path');if(mode!=='edges'&&!m.pathPoints.length)m.profileAnchorIndex=null;m.interacted=true;lockTools();setSweepStage('path');
   setStatus(mode==='edges'?'Sweep - tap connected path edges':'Sweep - draw path; Geometry Snap targets model geometry');
   lastSignature='';
@@ -582,6 +602,6 @@ installPenRange(sidesInput,()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)re
 capsBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.caps=!m.caps;lastSignature='';});
 applyBtn.addEventListener('click',applySweep);
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedId=null;cachedObject=null;lastSignature='';buildOverlay();}));
-window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);hotRailHit=null;disposeOverlay();unlockTools();endSweepSession();});
+window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);hotRailHit=null;railSnapRefs=null;disposeOverlay();unlockTools();endSweepSession();});
 tick();
 globalThis.__boxlabSweepPath={version:VERSION,add:addSweepPath,apply:applySweep,setStage:setSweepStage,get active(){return !!pathObject()&&looksConstructionMesh(liveMesh());},get editing(){const o=pathObject(),m=o&&ensureMeta(o);return !!m&&(m.editProfile||m.editPath);},rebuild(){lastSignature='';buildOverlay();}};

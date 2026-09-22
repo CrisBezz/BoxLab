@@ -1473,9 +1473,23 @@ v0.36.18.409 adds a three-state visual hierarchy in PATH → Follow Edges:
 - hot-edge state clears automatically when leaving PATH, switching to Draw Path, applying Sweep, or exiting the tool
 - no geometry, snapping or Tool Session behaviour changes
 
+## Current development — v0.36.18.410 Follow Edges dedicated edge picker
+
+User reported that Follow Edges stopped working after .409 contrast/hot-edge feedback.
+
+Root cause: .409 reused the generic geometry snapper for hot-edge feedback and Follow Edges. That snapper intentionally prioritizes Vertex before Edge, so near endpoints a rail click/hover could resolve as a Vertex and be rejected by Follow Edges.
+
+v0.36.18.410 separates the rail interaction cleanly:
+- new `externalEdgeSnap()` searches edges only
+- both hot-edge hover and Follow Edges click use the same edge-only picker
+- candidate rail references are cached for the active Follow Edges session, reducing repeated mesh cloning during Pencil hover
+- entering Follow Edges refreshes the cache; leaving PATH/Follow Edges or applying Sweep clears it
+- Draw Path continues using the generic Vertex/Edge/Face snapper
+- .409 candidate/hot/accepted rail contrast is preserved
+
 ## Next development step
 
-**Hands-on verify v0.36.18.409 over dense/internal topology: candidate edges should read clearly, the intended edge should pop distinctly before selection, and accepted rails should remain obvious.**
+**Hands-on verify v0.36.18.410 by selecting rail edges near vertices/endpoints as well as mid-edge; Follow Edges should work reliably while retaining .409 highlight feedback.**
 
 - Face selected → tap Sweep near the top of Face Active Tools; Sweep should take over Active Tools and open directly on PATH.
 - Confirm Array, Boolean, Clean for SubD, Solidify and other normal Object tools are not visible while Sweep is active.

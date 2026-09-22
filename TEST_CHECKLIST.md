@@ -669,3 +669,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] hot state clears when leaving PATH or switching to Draw Path
 - [ ] Apply/exit clears all temporary rail highlighting
 - [ ] .408 internal-edge visibility remains intact
+
+
+## Phase D/F — Follow Edges picker regression — .410
+
+- [ ] Follow Edges selects an edge when tapping near either endpoint
+- [ ] Vertex proximity no longer steals/rejects a Follow Edges pick
+- [ ] hot edge and clicked edge use the same edge-only picker
+- [ ] mid-edge picking remains reliable
+- [ ] rail reference cache refreshes on entering Follow Edges and clears on exit/Apply
+- [ ] Draw Path generic Vertex/Edge/Face snapping remains unchanged
+- [ ] .409 candidate/hot/accepted contrast remains intact

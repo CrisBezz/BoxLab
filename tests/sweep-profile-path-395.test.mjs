@@ -37,6 +37,6 @@ test('Sweep runtime exposes profile-first dual path workflow',async()=>{
   assert.match(source,/profileType/);
   assert.match(source,/pathMode/);
   assert.match(source,/pointOnViewPlane/);
-  assert.match(source,/externalGeometrySnap\(event,captureSnapReferences\(\),true\)/);
+  assert.match(source,/externalEdgeSnap\(event,railRefs\(\)\)/);
   assert.doesNotMatch(source,/Sweep Path added • position\/snap the plane first/);
 });

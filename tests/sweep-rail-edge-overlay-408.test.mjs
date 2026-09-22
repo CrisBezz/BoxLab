@@ -11,7 +11,7 @@ test('408 Follow Edges has a temporary rail-edge overlay',()=>{
 });
 
 test('408 rail guide uses the same evaluated references as snapping',()=>{
-  assert.ok(source.includes('railEdgeOverlay(captureSnapReferences())'));
+  assert.ok(source.includes('railEdgeOverlay(railRefs())'));
   assert.ok(source.includes('const edges=mesh?.edges?.()||[]'));
 });
 
