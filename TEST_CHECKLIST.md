@@ -637,3 +637,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Object Add → Sweep begins on PROFILE
 - [ ] Apply Sweep ends the Tool Session and restores the previous Active Tools drawer state
 - [ ] Sweep geometry, snapping, anchoring, normals and Apply behaviour remain unchanged from .405
+
+
+## Phase D — Sweep local winding — .407
+
+- [ ] previously isolated Sweep backface is gone
+- [ ] every manifold shared edge has opposite face-edge traversal
+- [ ] bent selected-profile Sweep remains outward and clean
+- [ ] concave C-profile Sweep remains outward and clean
+- [ ] .406 Tool Session UX remains unchanged
