@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.435 Symmetry Align to Face + Flip Plane
+
+- Continued the now-working arbitrary Symmetry plane after .434 hands-on PASS.
+- Added one-shot Align to Face inside the Symmetry Tool Session.
+- With Align to Face armed, Pencil/mouse tap on a source face moves the plane to the hit point and adopts that source face normal.
+- Touch remains reserved for ordinary iPad navigation.
+- Added Flip Plane to reverse the plane normal in place without moving the plane.
+- X/Y/Z remain quick orientation presets; aligned faces are treated as Custom orientation.
+- Existing Move/Rotate plane ownership and arbitrary-plane topology kernel remain unchanged.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-23 — v0.36.18.434 Symmetry plane transform ownership + arbitrary rotation
 
 - User found that pressing Rotate during an active Symmetry / Bisect session rotated the source cube instead of the yellow construction plane.
