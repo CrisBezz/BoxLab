@@ -11,6 +11,8 @@
 - Mirror remains non-destructive and enabled after Apply.
 - Added a dedicated half-sheet-on-X-mirror-plane regression proving the evaluated mirrored solid is closed manifold topology.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#117**; squash merge `b3b63b00c505827f74a00175e2d18770a1aeeb55`.
+- Final PR Topology regression run **35809943265 PASS**.
 
 
 ## 2026-09-22 — v0.36.18.430 Solidify preserves Mirror modifier
