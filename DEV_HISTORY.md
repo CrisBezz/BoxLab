@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-23 — handoff cleanup after v0.36.18.432
+
+- Reworked `AI_HANDOFF.md` back into a true current-state document before the next major handoff.
+- Removed stale audit lines that still described .394-era main as current while preserving chronology in this file.
+- New handoff snapshot now records live v0.36.18.432, Beta 4 frozen at .427, current PR/CI, protected files/pins, mature Phase D systems, recent architecture lessons, and next intended build .433 movable/snappable Symmetry / Bisect plane.
+- Added a compact copy/paste handoff prompt for the next chat.
+- Documentation-only cleanup; no runtime version bump.
+
+
 ## 2026-09-23 — v0.36.18.432 Face Delete orphan compaction
 
 - User isolated the apparent mirrored-Solidify failure to a simpler reproduction: cube with three adjacent faces deleted would not Solidify, while an extracted/duplicated equivalent mesh would.
