@@ -11,6 +11,8 @@
 - Candidate must re-audit as Closed · Clean with zero boundary/non-manifold/winding issues before commit.
 - Successful close is one Object Undo step and Mesh Health refreshes immediately.
 - Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+- Released via PR **#128**; squash merge `d4e964e3741d7e53ac0176c1a811b05ea3edb727`.
+- Final PR Topology regression run **35928602689 PASS**.
 
 ## 2026-09-23 — v0.36.18.440 Mesh Health Safe Repair
 
