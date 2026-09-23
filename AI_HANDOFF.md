@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.437**
+- Current live version: **v0.36.18.437**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
 - Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
 - Latest regression: **35812426602 PASS**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.437 — Surface Transform face-to-face anchoring
+
+**Released on main via PR #124; squash merge `5a6ef4338c2997b5e65dbf59f77bc129d7e152cd`. Final regression run `35841565536` passed.**
 
 - Corrects .436 centre-of-mass placement after hands-on testing.
 - Transform now uses a two-face workflow: first tap source face on selected object, second tap target face on another visible object.
@@ -304,7 +306,7 @@ Keep these so the next chat does not repeat them:
 - Beta 2: frozen legacy checkpoint
 - Beta 3: **v0.36.18.371**
 - Beta 4: **v0.36.18.427**
-- Live main / active development target: **v0.36.18.437**
+- Live main / active development: **v0.36.18.437**
 
 Future Beta folders are immutable snapshots. Normal development continues at the live root.
 
