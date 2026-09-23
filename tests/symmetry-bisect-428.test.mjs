@@ -92,7 +92,7 @@ test('433 moved symmetry mirrors around the moved plane and welds that seam',()=
 
 test('433 UI exposes movable plane, reset and geometry snapping while keeping touch navigation free',()=>{
   const ui=fs.readFileSync(new URL('../src/symmetry-bisect.js',import.meta.url),'utf8');
-  assert.ok(ui.includes('Move Plane'));
+  assert.ok(ui.includes('Move / Rotate'));
   assert.ok(ui.includes('Reset Origin'));
   assert.ok(ui.includes("event.pointerType==='touch'"));
   assert.ok(ui.includes('nearestCrossObjectSnap'));
