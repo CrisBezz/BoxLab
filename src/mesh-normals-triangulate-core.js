@@ -99,10 +99,20 @@ function projectedFace(mesh,face){
 function triangulateFace(mesh,face){
   if(face.length===3)return[[...face]];
   const projected=projectedFace(mesh,face);
-  if(!projected)return null;
+  const sourceNormal=newellNormal(mesh,face);
+  if(!projected||sourceNormal.lengthSq()<=1e-20)return null;
   const triangles=THREE.ShapeUtils.triangulateShape(projected,[]);
   if(!Array.isArray(triangles)||triangles.length!==face.length-2)return null;
-  return triangles.map(tri=>tri.map(local=>face[local]));
+  return triangles.map(tri=>{
+    const mapped=tri.map(local=>face[local]);
+    const a=mesh.vertices[mapped[0]],b=mesh.vertices[mapped[1]],d=mesh.vertices[mapped[2]];
+    const triNormal=new THREE.Vector3().crossVectors(
+      new THREE.Vector3().subVectors(b,a),
+      new THREE.Vector3().subVectors(d,a)
+    );
+    if(triNormal.dot(sourceNormal)<0)mapped.reverse();
+    return mapped;
+  });
 }
 export function triangulateMesh(mesh){
   if(!mesh?.clone)return{ok:false,changed:false,reason:'invalid-mesh'};
