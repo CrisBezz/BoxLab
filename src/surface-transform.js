@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {surfaceTransformMesh,cycleSurfaceTransformMode} from './surface-transform-core.js?v=0.36.18.436';
 
 const VERSION='0.36.18.436';
 const canvas=document.querySelector('#viewport');
@@ -77,15 +78,22 @@ function updateModeUI(){
   if(hint)hint.textContent=!target?'Tap a target face':`${mode[0].toUpperCase()+mode.slice(1)} on surface · tap to cycle`;
 }
 function setMode(next){mode=next;updateModeUI();setStatus(`Transform • ${mode[0].toUpperCase()+mode.slice(1)} • surface frame`);}
-function cycleMode(){setMode(mode==='move'?'rotate':mode==='rotate'?'scale':'move');}
+function cycleMode(){setMode(cycleSurfaceTransformMode(mode));}
 function sourceValid(){
   const object=activeObject();
   return currentMode()==='object'&&object&&object.id===sourceId&&!object.locked&&object.kind!=='reference';
 }
 function cancel({silent=false}={}){
   if(!active)return;
-  const history=globalThis.__boxlabObjectHistory;
+  const history=globalThis.__boxlabObjectHistory,live=liveMesh();
+  const snapshot=beforeScene?.objects?.find?.(o=>o.id===beforeScene?.activeId)||null;
   if(beforeScene)history?.restore?.(beforeScene);
+  if(live&&snapshot?.mesh){
+    live.vertices=snapshot.mesh.vertices.map(v=>v.clone());
+    live.faces=snapshot.mesh.faces.map(f=>[...f]);
+    live.creases=new Map(snapshot.mesh.creases||[]);
+    forceRender();
+  }
   gesture=null;target=null;active=false;sourceId=null;sourceMesh=null;beforeScene=null;mode='move';endSession();
   if(!silent)setStatus('Transform cancelled');
 }
@@ -128,19 +136,16 @@ function targetFaceHit(event){
   for(const display of temporary){display.geometry?.dispose?.();display.material?.dispose?.();}
   return out;
 }
-function alignmentQuaternion(normal){return new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0),normal.clone().normalize());}
 function rebuild(){
   if(!active||!sourceMesh)return;
   const live=liveMesh();if(!live)return;
-  const qAlign=alignmentQuaternion(state.normal);
-  const qSpin=new THREE.Quaternion().setFromAxisAngle(state.normal.clone().normalize(),state.spin);
-  live.vertices=sourceMesh.vertices.map(v=>{
-    const p=v.clone().sub(sourceCenter).multiplyScalar(state.scale);
-    p.applyQuaternion(qAlign).applyQuaternion(qSpin).add(state.point);
-    return p;
+  const transformed=surfaceTransformMesh(sourceMesh,{
+    sourceCenter,point:state.point,normal:state.normal,spin:state.spin,scale:state.scale
   });
-  live.faces=sourceMesh.faces.map(f=>[...f]);
-  live.creases=new Map(sourceMesh.creases||[]);
+  if(!transformed)return;
+  live.vertices=transformed.vertices.map(v=>v.clone());
+  live.faces=transformed.faces.map(f=>[...f]);
+  live.creases=new Map(transformed.creases||[]);
   manager()?.saveActive?.();forceRender();
 }
 function placeOnTarget(hit){
