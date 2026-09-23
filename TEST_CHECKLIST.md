@@ -845,3 +845,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Mesh Health .439: triangle/quad/ngon counts match the inspected active mesh
 - [ ] Mesh Health .439: Refresh updates the report after edits without changing geometry
 - [ ] Mesh Health .439: Close leaves mesh/history untouched and restores normal Object Active Tools
+
+- [ ] Mesh Health .440: Safe Repair is disabled when the active mesh has no safe automatic repair candidates
+- [ ] Mesh Health .440: exact same-direction duplicate faces are removed and report updates immediately
+- [ ] Mesh Health .440: zero-area faces are removed without changing healthy faces
+- [ ] Mesh Health .440: accidental orphan vertices are compacted while intentional loose vertices/edges are preserved
+- [ ] Mesh Health .440: opposite-winding coincident faces are not auto-deleted
+- [ ] Mesh Health .440: one Undo restores the exact pre-repair Object scene
