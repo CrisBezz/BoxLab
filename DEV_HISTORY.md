@@ -12,6 +12,8 @@
 - Mirrored symmetry across an arbitrary plane reflects geometry directly across that plane and reuses seam vertices to weld the cut boundary.
 - Touch remains ordinary iPad navigation; Pencil/mouse owns plane transform gestures.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#121**; squash merge `6cb0a5aca9d2d69dbed23511ef617d381a1871c6`.
+- Final PR Topology regression run **35818444568 PASS**.
 
 
 ## 2026-09-23 — v0.36.18.433 movable / snappable Symmetry plane
