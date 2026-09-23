@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.432 Face Delete orphan compaction
+
+- User isolated the apparent mirrored-Solidify failure to a simpler reproduction: cube with three adjacent faces deleted would not Solidify, while an extracted/duplicated equivalent mesh would.
+- Root cause: Face Delete removed face records but left vertices no longer referenced by any face. Solidify then encountered those zero-incidence vertices and failed offset solving with `zero-vertex-normal`.
+- Added `EditableMesh.compactUnusedVertices()` to remove accidental orphan vertices, remap faces/creases, and preserve explicitly loose vertices/edges.
+- Face Delete now runs this compaction once after a multi-face delete transaction.
+- Added regression for cube → delete three adjacent faces → compact one orphan vertex → Solidify succeeds.
+- Existing intentional loose geometry is regression-protected through the compaction pass.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-23 — v0.36.18.431 Mirror-seam-aware Solidify
 
 - User confirmed .430 still failed on a mirrored object despite Shell working.
