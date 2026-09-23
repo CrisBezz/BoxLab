@@ -1,9 +1,10 @@
-import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.442';
-import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.442';
-import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.442';
-import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.442';
+import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.443';
+import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
+import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
+import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
+import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 
-const VERSION='0.36.18.442';
+const VERSION='0.36.18.443';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -32,6 +33,12 @@ panel.innerHTML=`
     <button id="meshHealthSelectBoundary" type="button">Select Boundary</button>
     <button id="meshHealthSelectNonManifold" type="button">Select Non-Manifold</button>
   </div>
+  <div class="boxlab-tool-session-section">Normals / triangulation</div>
+  <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
+    <button id="meshHealthUnifyWinding" type="button">Unify Winding</button>
+    <button id="meshHealthFlipNormals" type="button">Flip Normals</button>
+    <button id="meshHealthTriangulate" type="button">Triangulate</button>
+  </div>
   <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
     <button id="meshHealthRefresh" type="button">Refresh</button>
     <button id="meshHealthRepair" type="button">Safe Repair</button>
@@ -51,6 +58,9 @@ const repairButton=panel.querySelector('#meshHealthRepair');
 const autoCloseButton=panel.querySelector('#meshHealthAutoClose');
 const selectBoundaryButton=panel.querySelector('#meshHealthSelectBoundary');
 const selectNonManifoldButton=panel.querySelector('#meshHealthSelectNonManifold');
+const unifyButton=panel.querySelector('#meshHealthUnifyWinding');
+const flipNormalsButton=panel.querySelector('#meshHealthFlipNormals');
+const triangulateButton=panel.querySelector('#meshHealthTriangulate');
 const closeButton=panel.querySelector('#meshHealthClose');
 let active=false,last=null,lastBoundary=null,objectId=null;
 
@@ -99,6 +109,9 @@ function renderReport(){
   }
   if(selectBoundaryButton)selectBoundaryButton.disabled=!lastBoundary.boundaryEdgeIndices.length;
   if(selectNonManifoldButton)selectNonManifoldButton.disabled=!lastBoundary.nonManifoldEdgeIndices.length;
+  if(unifyButton)unifyButton.disabled=!last.inconsistentWindingEdges;
+  if(flipNormalsButton)flipNormalsButton.disabled=!last.faces;
+  if(triangulateButton)triangulateButton.disabled=!(last.quads||last.ngons);
   if(!last.issues.length&&!last.warnings.length){
     const row=document.createElement('div');row.textContent='✓ No topology findings';findings.append(row);
   }
@@ -170,6 +183,23 @@ function handoffEdges(indices,label){
 }
 function selectBoundary(){return handoffEdges(lastBoundary?.boundaryEdgeIndices,'boundary');}
 function selectNonManifold(){return handoffEdges(lastBoundary?.nonManifoldEdgeIndices,'non-manifold');}
+function commitTopologyAction(action,label){
+  const object=activeObject(),mesh=liveMesh(),history=globalThis.__boxlabObjectHistory;
+  if(!active||!object||object.id!==objectId||!mesh)return false;
+  const beforeScene=history?.capture?.()||null;
+  const result=action(mesh);
+  if(!result?.ok){setStatus(`Mesh Health • ${label} refused • ${result?.reason||'validation'}`);renderReport();return false;}
+  if(!result.changed){setStatus(`Mesh Health • ${label} • no change needed`);renderReport();return false;}
+  manager()?.saveActive?.();
+  if(beforeScene)history?.checkpointSnapshot?.(beforeScene);
+  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  renderReport();
+  setStatus(`Mesh Health • ${label} applied`);
+  return true;
+}
+function unifyWinding(){return commitTopologyAction(unifyFaceWinding,'Unify Winding');}
+function flipNormals(){return commitTopologyAction(flipAllFaces,'Flip Normals');}
+function triangulate(){return commitTopologyAction(triangulateMesh,'Triangulate');}
 function close(){
   if(!active)return;
   active=false;objectId=null;panel.hidden=true;toolSession()?.end?.('mesh-health');
@@ -188,6 +218,9 @@ repairButton?.addEventListener('click',repair);
 autoCloseButton?.addEventListener('click',autoClose);
 selectBoundaryButton?.addEventListener('click',selectBoundary);
 selectNonManifoldButton?.addEventListener('click',selectNonManifold);
+unifyButton?.addEventListener('click',unifyWinding);
+flipNormalsButton?.addEventListener('click',flipNormals);
+triangulateButton?.addEventListener('click',triangulate);
 closeButton?.addEventListener('click',close);
 window.addEventListener('boxlab-bridge-state',()=>{
   if(!active)return;
@@ -196,4 +229,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{if(active&&currentMode()!=='object')close();}));
 
-globalThis.__boxlabMeshHealth={version:VERSION,analyze:analyzeMeshHealth,repair,autoClose,selectBoundary,selectNonManifold,get active(){return active;},get last(){return last;},get boundary(){return lastBoundary;},refresh:renderReport,close};
+globalThis.__boxlabMeshHealth={version:VERSION,analyze:analyzeMeshHealth,repair,autoClose,selectBoundary,selectNonManifold,unifyWinding,flipNormals,triangulate,get active(){return active;},get last(){return last;},get boundary(){return lastBoundary;},refresh:renderReport,close};
