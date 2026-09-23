@@ -63,7 +63,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.430**
+- Current `version.json`: **0.36.18.431**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -86,6 +86,19 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.431 Mirror-seam-aware Solidify
+
+- .430 still failed on the user's mirrored object; the remaining issue was actual symmetry-seam topology, not UI gating.
+- Solidify now receives the active Mirror axes.
+- Boundary edges that lie fully on an active mirror plane are treated as symmetry seams and do not receive Solidify side walls.
+- Inner offset vertices on a mirror plane are pinned back to that plane.
+- Validation for mirror-aware Solidify runs on the final evaluated mirrored result, so the editable half can stay open along symmetry seams while the displayed result is closed.
+- Mirror remains non-destructive and stays enabled after Apply.
+- Added a dedicated half-sheet-on-mirror-plane regression.
+- Beta 4 remains frozen at v0.36.18.427.
+
+**Hands-on verify .431:** use the exact mirrored object that failed .429/.430. Leave Mirror ON, run Solidify, confirm a full mirrored thickness preview, Apply, confirm no internal seam wall/gap at the mirror plane and Mirror remains ON, then Undo once.
 
 ## Current development — v0.36.18.430 Solidify preserves Mirror modifier
 
