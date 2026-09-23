@@ -31,8 +31,9 @@ test('441 Auto Close can close multiple disjoint simple holes transactionally',(
 
 test('441 Auto Close refuses branched boundary graphs',()=>{
   const mesh=new EditableMesh([
-    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(1,1,0),new THREE.Vector3(0,1,0),new THREE.Vector3(2,0,0)
-  ],[[0,1,2,3],[1,4,2]]);
+    new THREE.Vector3(0,0,0),new THREE.Vector3(1,0,0),new THREE.Vector3(0,1,0),
+    new THREE.Vector3(-1,0,0),new THREE.Vector3(0,-1,0)
+  ],[[0,1,2],[0,3,4]]);
   const info=simpleBoundaryLoops(mesh);
   assert.equal(info.ok,false);
   assert.equal(info.reason,'branched-boundary');
