@@ -17,6 +17,40 @@ function resolvePlane({axis='x',offset=0,planeNormal=null,planePoint=null}={}){
 function signedDistance(v,plane){return plane.normal.dot(v)-plane.constant;}
 function projectToPlane(v,plane){return v.clone().addScaledVector(plane.normal,-signedDistance(v,plane));}
 function reflectPoint(v,plane){return v.clone().addScaledVector(plane.normal,-2*signedDistance(v,plane));}
+function weldPlaneSeam(mesh,plane,tolerance=1e-7){
+  const vertices=[],remap=new Map(),seamKeys=new Map();
+  const scale=1/Math.max(tolerance,1e-12);
+  const keyFor=v=>[v.x,v.y,v.z].map(n=>Math.round(n*scale)).join(':');
+  for(let i=0;i<mesh.vertices.length;i++){
+    const source=mesh.vertices[i];
+    if(Math.abs(signedDistance(source,plane))<=tolerance){
+      const projected=projectToPlane(source,plane),key=keyFor(projected);
+      if(seamKeys.has(key)){remap.set(i,seamKeys.get(key));continue;}
+      const index=vertices.length;vertices.push(projected);seamKeys.set(key,index);remap.set(i,index);
+    }else{
+      const index=vertices.length;vertices.push(source.clone());remap.set(i,index);
+    }
+  }
+  const faces=[];
+  for(const face of mesh.faces){
+    const mapped=face.map(i=>remap.get(i));
+    const cleaned=[];
+    for(const id of mapped)if(cleaned[cleaned.length-1]!==id)cleaned.push(id);
+    if(cleaned.length>2&&cleaned[0]===cleaned[cleaned.length-1])cleaned.pop();
+    if(new Set(cleaned).size>=3)faces.push(cleaned);
+  }
+  const result=new EditableMesh(vertices,faces);
+  if(mesh.creases instanceof Map){
+    result.creases=new Map();
+    for(const [key,value] of mesh.creases){
+      const [a,b]=String(key).split(':').map(Number);
+      const na=remap.get(a),nb=remap.get(b);
+      if(!Number.isInteger(na)||!Number.isInteger(nb)||na===nb)continue;
+      result.creases.set(result.edgeKey(na,nb),value);
+    }
+  }
+  return result;
+}
 
 export function bisectMesh(mesh,{axis='x',keep='positive',offset=0,planeNormal=null,planePoint=null}={}){
   if(!mesh?.vertices?.length||!mesh?.faces?.length)return{ok:false,reason:'empty-mesh'};
@@ -68,7 +102,7 @@ export function bisectMesh(mesh,{axis='x',keep='positive',offset=0,planeNormal=n
     if(new Set(cleaned).size>=3)faces.push(cleaned);
   }
   if(!faces.length)return{ok:false,reason:'plane-removes-mesh'};
-  const result=new EditableMesh(vertices,faces);
+  const result=weldPlaneSeam(new EditableMesh(vertices,faces),plane);
   return{
     ok:true,mesh:result,axis,keep,offset:Number(offset)||0,
     planeNormal:plane.normal.clone(),planePoint:plane.point.clone(),
@@ -114,4 +148,4 @@ export function symmetryBisect(mesh,{axis='x',keep='positive',mirror=true,offset
   };
 }
 
-export const __symmetryBisectInternals={resolvePlane,signedDistance,projectToPlane,reflectPoint,mirrorAcrossPlane};
+export const __symmetryBisectInternals={resolvePlane,signedDistance,projectToPlane,reflectPoint,weldPlaneSeam,mirrorAcrossPlane};
