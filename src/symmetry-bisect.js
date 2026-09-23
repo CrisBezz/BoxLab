@@ -103,7 +103,7 @@ function planeVisual(sourceMesh){
   plane.userData.boxlabSymmetryPlane=true;
   if(axis==='x')plane.rotation.y=Math.PI/2;
   else if(axis==='y')plane.rotation.x=Math.PI/2;
-  plane.position[axis]=offset;
+  plane.position.copy(planeCenter());
   plane.renderOrder=20;
   const wire=new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:0xffd45c,transparent:true,opacity:.95,depthTest:false}));
   wire.rotation.copy(plane.rotation);wire.position.copy(plane.position);wire.renderOrder=21;
