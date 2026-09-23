@@ -11,6 +11,8 @@
 - X/Y/Z, Keep + / Keep − and optional Mirror remain live during plane movement.
 - Face-normal orientation is intentionally deferred to the next refinement rather than broadening this first interaction build.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#120**; squash merge `ff9be6110c7e34b79fac08e82589b3bd40b66237`.
+- Final PR Topology regression run **35812426602 PASS**.
 
 
 ## 2026-09-23 — handoff cleanup after v0.36.18.432
