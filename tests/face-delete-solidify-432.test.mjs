@@ -9,7 +9,8 @@ test('432 deleting three adjacent cube faces compacts the orphan vertex and rema
   assert.equal(mesh.faces.length,3);
   assert.equal(mesh.vertices.length,8);
   const before=analyzeSolidifyInput(mesh);
-  assert.ok(before.ok);
+  assert.equal(before.ok,false);
+  assert.equal(before.reason,'zero-vertex-normal');
   const raw=solidifyOpenMesh(mesh.clone(),0.2);
   assert.equal(raw.ok,false);
   assert.equal(raw.reason,'zero-vertex-normal');
