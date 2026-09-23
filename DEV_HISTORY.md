@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.440 Mesh Health Safe Repair
+
+- Advanced from the .439 inspection baseline into the first Phase E repair action.
+- Added Safe Repair inside the Mesh Health Tool Session.
+- Repair is intentionally narrow: exact same-direction duplicate faces, zero-area faces, and accidental orphan vertices only.
+- Opposite-winding coincident faces are preserved as ambiguous rather than guessed away.
+- Candidate repair runs on a clone first and is refused if topology health worsens or the issue load fails to improve.
+- Successful repair saves back through the existing Object manager and records one Object Undo step.
+- Mesh Health automatically refreshes after repair to show remaining issues.
+- Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+
 ## 2026-09-23 — v0.36.18.439 Mesh Health / Inspect foundation
 
 - User hands-on passed .438 Insert Tool and advanced with /nextbuild.
