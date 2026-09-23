@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.441 Mesh Health Auto Close / Make Watertight foundation
+
+- Advanced from .440 Safe Repair into the next Phase E roadmap item: Auto Close / Make Watertight.
+- Audited existing Boundary + Fill first and reused their simple-loop detection/orientation principles rather than adding a parallel cap convention.
+- Auto Close is available only for otherwise-clean open meshes.
+- Entire boundary graph must resolve to simple closed loops with degree 2 at every boundary vertex.
+- One or multiple disjoint holes are capped together, each oriented opposite its neighbouring surface along the shared boundary.
+- Branched/open boundary graphs and meshes with pre-existing topology issues are refused.
+- Candidate must re-audit as Closed · Clean with zero boundary/non-manifold/winding issues before commit.
+- Successful close is one Object Undo step and Mesh Health refreshes immediately.
+- Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+
 ## 2026-09-23 — v0.36.18.440 Mesh Health Safe Repair
 
 - Advanced from the .439 inspection baseline into the first Phase E repair action.

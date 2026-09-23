@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.440**
+- Current live version / branch target: **v0.36.18.441**
 - Current main HEAD at audit: **73e6958874de73d8e553f0bb2ad73cd31c503004**
 - Latest code-bearing release merge: **v0.36.18.440 / PR #127 / squash `73e6958874de73d8e553f0bb2ad73cd31c503004`**
 - Latest regression: **35858042579 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.441 — Mesh Health Auto Close / Make Watertight foundation
+
+- Extends Mesh Health with conservative **Auto Close** for otherwise-clean open meshes.
+- Reuses the existing Boundary / Fill rules: boundary components must be simple closed loops and cap winding is oriented opposite the neighbouring face along the shared boundary.
+- Auto Close is enabled only for **Open · Clean** meshes whose entire boundary graph resolves into one or more simple loops.
+- All simple boundary loops are capped in one transaction; multiple disjoint holes can be closed together.
+- Branched/open boundary graphs, non-manifold input, duplicate/degenerate/winding issues, and other ambiguous topology are refused rather than guessed.
+- Candidate topology must re-audit as **Closed · Clean** with zero boundary/non-manifold/winding issues before commit.
+- Successful Auto Close is one Object Undo step and Mesh Health immediately refreshes to show the watertight result.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.440 — Mesh Health Safe Repair
 
