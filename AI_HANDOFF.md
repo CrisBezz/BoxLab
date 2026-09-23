@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.439**
-- Current main HEAD at audit: **3483edd3b8809b38fca738ed8e6f3085bb2e26f6**
-- Latest code-bearing release merge: **v0.36.18.438 / PR #125 / squash `3483edd3b8809b38fca738ed8e6f3085bb2e26f6`**
-- Latest regression: **35843005403 PASS**
+- Current main HEAD at audit: **60187e2f17c444c319c6862a80e3a107588dc9cb**
+- Latest code-bearing release merge: **v0.36.18.439 / PR #126 / squash `60187e2f17c444c319c6862a80e3a107588dc9cb`**
+- Latest regression: **35854298290 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.439 — Mesh Health / Inspect foundation
+
+**Released on main via PR #126; squash merge `60187e2f17c444c319c6862a80e3a107588dc9cb`. Final regression run `35854298290` passed.**
 
 - Starts Phase E Import / Repair / Handoff with a non-destructive Object-mode **Mesh Health** Tool Session.
 - Reports verts/faces/edges plus triangle/quad/ngon mix.
