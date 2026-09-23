@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.442**
-- Current main HEAD at audit: **d4e964e3741d7e53ac0176c1a811b05ea3edb727**
-- Latest code-bearing release merge: **v0.36.18.441 / PR #128 / squash `d4e964e3741d7e53ac0176c1a811b05ea3edb727`**
-- Latest regression: **35928602689 PASS**
+- Current main HEAD at audit: **cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71**
+- Latest code-bearing release merge: **v0.36.18.442 / PR #129 / squash `cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71`**
+- Latest regression: **35929633430 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.442 — Mesh Health boundary diagnostics
+
+**Released on main via PR #129; squash merge `cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71`. Final regression run `35929633430` passed.**
 
 - Extends Mesh Health with stronger boundary diagnostics rather than another automatic repair.
 - Boundary edges are grouped into connected components and classified as **loop**, **chain**, **branched**, or other.
