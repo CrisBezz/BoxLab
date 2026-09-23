@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version: **v0.36.18.434**
+- Current live version / branch target: **v0.36.18.435**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
 - Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
 - Latest regression: **35812426602 PASS**
@@ -51,6 +51,16 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.435 — Symmetry Align to Face + Flip Plane
+
+- Adds one-shot Align to Face inside the Symmetry/Bisect Tool Session.
+- Pencil/mouse tap on a source face sets plane point to the hit and plane normal to that face normal.
+- Touch remains normal navigation while alignment is armed.
+- Flip Plane reverses the plane normal in place so Keep +/- direction can be inverted without moving the cut.
+- X/Y/Z presets, Move/Rotate plane ownership, snapping and arbitrary-plane Apply remain intact.
+- Beta 4 remains frozen at v0.36.18.427.
+
 
 ### v0.36.18.434 — Symmetry plane transform ownership + arbitrary rotation
 
@@ -266,7 +276,7 @@ Keep these so the next chat does not repeat them:
 - Beta 2: frozen legacy checkpoint
 - Beta 3: **v0.36.18.371**
 - Beta 4: **v0.36.18.427**
-- Live main / active development target: **v0.36.18.434**
+- Live main / active development target: **v0.36.18.435**
 
 Future Beta folders are immutable snapshots. Normal development continues at the live root.
 
@@ -293,4 +303,4 @@ Documentation-only handoff cleanup does **not** require a runtime version bump.
 
 Use this:
 
-> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live development target is v0.36.18.434; Beta 4 is frozen at v0.36.18.427. .432 Face Delete orphan compaction is hands-on PASS. Current work fixes Symmetry transform ownership and adds true arbitrary-plane rotation after .433 hands-on testing showed Rotate still affected the source object. Preserve all protected iPad navigation, Tool Session behavior, mature Through, Edge Extrude, Sweep, Solidify/Shell, object-management behavior, and src/multi-object-transform.js?v=0.36.1.0 exactly.
+> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live development target is v0.36.18.435; Beta 4 is frozen at v0.36.18.427. .434 Symmetry transform ownership/arbitrary rotation is hands-on PASS. Current work adds Align to Face and Flip Plane to finish the main Symmetry construction-plane workflow. Preserve all protected iPad navigation, Tool Session behavior, mature Through, Edge Extrude, Sweep, Solidify/Shell, object-management behavior, and src/multi-object-transform.js?v=0.36.1.0 exactly.
