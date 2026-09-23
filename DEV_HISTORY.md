@@ -11,6 +11,8 @@
 - Reuses the existing topology seam-conformance summary as the base topology definition.
 - No geometry/history mutation is performed by Inspect.
 - Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+- Released via PR **#126**; squash merge `60187e2f17c444c319c6862a80e3a107588dc9cb`.
+- Final PR Topology regression run **35854298290 PASS**.
 
 ## 2026-09-23 — v0.36.18.438 linked-instance Insert Tool foundation
 
