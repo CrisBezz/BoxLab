@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.433 movable / snappable Symmetry plane
+
+- Continued the .428 Symmetry / Bisect foundation after the .432 Face Delete regression fix and handoff cleanup.
+- Bisect core now accepts a non-zero X/Y/Z plane offset rather than being locked to object-local origin.
+- Mirrored results translate the clipped mesh to a temporary origin, reuse the proven Mirror engine for welding, then translate back so the seam weld occurs on the moved plane.
+- Symmetry Tool Session adds Move Plane, Reset Origin and live offset readback.
+- Pencil/mouse drag on the yellow plane moves it along its normal; touch is deliberately ignored so ordinary iPad navigation stays intact.
+- Geometry Snap can move the plane to active/visible Vertex, Edge, Midpoint and Face hit positions.
+- X/Y/Z, Keep + / Keep − and optional Mirror remain live during plane movement.
+- Face-normal orientation is intentionally deferred to the next refinement rather than broadening this first interaction build.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-23 — handoff cleanup after v0.36.18.432
 
 - Reworked `AI_HANDOFF.md` back into a true current-state document before the next major handoff.

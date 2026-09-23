@@ -30,10 +30,10 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version: **v0.36.18.432**
+- Current live version: **v0.36.18.433**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
-- Latest code-bearing release merge: **v0.36.18.432 / PR #118 / squash `31e2c4d0c727f1910543d10d723a4fcedda72e77`**
-- Latest regression: **35810612232 PASS**
+- Current development branch target: **v0.36.18.433 — movable/snappable Symmetry plane**
+- Latest completed main regression: **35810612232 PASS**; .433 PR regression pending until merge
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -49,6 +49,19 @@ Audited from `main` on 2026-09-23.
 - Phase D — Construction tools: **active**
 - Phase E — Import / repair / handoff: **next major phase after current Symmetry work**
 - Phase F — iPad UX polish: **continuous as real issues surface**
+
+## Current development
+
+### v0.36.18.433 — Movable / snappable Symmetry plane
+
+- Symmetry/Bisect plane is no longer locked to object origin.
+- X/Y/Z plane offset is topology-aware in the core.
+- Pencil/mouse drag on the yellow plane moves it along its normal while touch remains normal navigation.
+- Geometry Snap targets Vertex, Edge, Midpoint and Face hit positions from active/visible geometry.
+- Reset Origin restores offset 0.
+- Keep + / Keep − and optional Mirror remain live while the plane moves.
+- Mirrored results weld on the moved plane by translating to/from the proven origin-based Mirror engine.
+- Face-normal orientation / Align to Selection remains a likely .434 refinement.
 
 ## Latest completed work
 
@@ -99,25 +112,7 @@ Current implemented foundation:
 
 ## Next intended build
 
-### v0.36.18.433 — Movable / snappable Symmetry plane
-
-This is the next planned build unless a new concrete regression supersedes it.
-
-Target:
-- reposition the Symmetry / Bisect plane before Apply
-- geometry snapping to useful existing geometry
-- preserve X / Y / Z orientation controls
-- live Keep + / Keep − preview while the plane moves
-- retain optional mirrored/welded result
-- use existing Tool Session interaction language
-- preserve normal iPad orbit / pan / pinch navigation
-
-Likely first scope:
-- translate plane along its normal / relevant constrained direction
-- snap plane origin to Vertex / Edge / Face reference positions
-- do **not** overbuild arbitrary orientation until the translation/snapping interaction is proven
-
-Potential follow-up .434:
+### Potential follow-up v0.36.18.434:
 - face-normal orientation / Align to Selection
 - flip plane / side indication
 - weld tolerance polish
@@ -255,7 +250,7 @@ Keep these so the next chat does not repeat them:
 - Beta 2: frozen legacy checkpoint
 - Beta 3: **v0.36.18.371**
 - Beta 4: **v0.36.18.427**
-- Live main: **v0.36.18.432**
+- Live main / active development: **v0.36.18.433**
 
 Future Beta folders are immutable snapshots. Normal development continues at the live root.
 
@@ -282,4 +277,4 @@ Documentation-only handoff cleanup does **not** require a runtime version bump.
 
 Use this:
 
-> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live is v0.36.18.432; Beta 4 is frozen at v0.36.18.427. Latest hands-on pass confirmed the Face Delete orphan-compaction fix. Next intended build is v0.36.18.433: movable/snappable Symmetry / Bisect plane. Preserve all protected iPad navigation, Tool Session behavior, mature Through, Edge Extrude, Sweep, Solidify/Shell, object-management behavior, and src/multi-object-transform.js?v=0.36.1.0 exactly.
+> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live development is v0.36.18.433; Beta 4 is frozen at v0.36.18.427. .432 Face Delete orphan compaction is hands-on PASS. Current work is movable/snappable Symmetry / Bisect plane; likely next refinement is .434 face-normal orientation / Align to Selection after .433 hands-on testing. Preserve all protected iPad navigation, Tool Session behavior, mature Through, Edge Extrude, Sweep, Solidify/Shell, object-management behavior, and src/multi-object-transform.js?v=0.36.1.0 exactly.

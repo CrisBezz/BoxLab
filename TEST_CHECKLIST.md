@@ -803,3 +803,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Face Delete + Solidify: delete three adjacent faces from a cube and confirm the remaining open 3-face corner Solidifies successfully
 - [ ] Face Delete compaction removes only accidental orphan vertices and does not delete explicitly loose vertices/edges
 - [ ] Face Delete remains one Undo step and restores the original cube cleanly
+
+- [ ] Symmetry/Bisect .433: drag the yellow X/Y/Z plane with Pencil/mouse and confirm touch still orbits/pans/zooms normally
+- [ ] Symmetry/Bisect .433: Geometry Snap moves the plane to active/visible Vertex, Edge/Midpoint or Face hit positions
+- [ ] Symmetry/Bisect .433: Reset Origin returns the active plane offset to 0
+- [ ] Symmetry/Bisect .433: Keep + / Keep − and Mirror remain live while the plane is moved
+- [ ] Symmetry/Bisect .433: Apply welds mirrored geometry on the moved plane and Undo restores the source object in one step
