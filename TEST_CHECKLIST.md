@@ -871,3 +871,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Mesh Health .443: Triangulate converts cube quads to triangles while staying Closed · Clean
 - [ ] Mesh Health .443: concave n-gon triangulates without creating invalid/non-manifold topology
 - [ ] Mesh Health .443: each normals/triangulation action is one Object Undo step
+
+- [ ] Export .444: Base OBJ status reports closed/open/issues preflight counts
+- [ ] Export .444: exported OBJ contains per-object Mesh Health comments and scene preflight summary
+- [ ] Export .444: OBJ contains both object and group records for each editable object
+- [ ] Export .444: Mirror is evaluated before export preflight
+- [ ] Export .444: SubD OBJ preflight reflects the subdivided export mesh, not only the base cage
+- [ ] Export .444: Reference objects remain excluded from scene OBJ export
