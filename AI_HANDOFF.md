@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version: **v0.36.18.437**
+- Current live version / branch target: **v0.36.18.438**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
 - Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
 - Latest regression: **35812426602 PASS**
@@ -51,6 +51,19 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.438 — linked-instance Insert Tool foundation
+
+- Adds Nomad-inspired **Insert** beside Transform in Object Active Tools.
+- Workflow: choose a source face on the selected editable object, then choose a target face on another visible object.
+- The target pick creates a **Linked Duplicate**, not an independent copy: geometry stays shared through the existing sourceId/instanceMatrix architecture.
+- The inserted source face lands face-to-face on the target using the same `surface-transform-core.js` placement engine as Transform.
+- After placement, Pencil/mouse keeps the established Move → Rotate → Scale → Move tap-cycle; touch remains ordinary navigation.
+- Move slides on the target surface plane, Rotate spins about the target normal, and Scale acts about the placement point.
+- Cancel restores the exact pre-tool Object scene, including removing the inserted linked instance; Apply records one Object Undo step.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Beta 4 remains frozen at v0.36.18.427.
+
 
 ### v0.36.18.437 — Surface Transform face-to-face anchoring
 
@@ -306,7 +319,7 @@ Keep these so the next chat does not repeat them:
 - Beta 2: frozen legacy checkpoint
 - Beta 3: **v0.36.18.371**
 - Beta 4: **v0.36.18.427**
-- Live main / active development: **v0.36.18.437**
+- Live main / active development target: **v0.36.18.438**
 
 Future Beta folders are immutable snapshots. Normal development continues at the live root.
 
@@ -333,4 +346,4 @@ Documentation-only handoff cleanup does **not** require a runtime version bump.
 
 Use this:
 
-> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live development target is v0.36.18.437; Beta 4 is frozen at v0.36.18.427. .436 Surface Transform interaction is hands-on PASS, with one correction now in progress: source-face to target-face anchoring for true face-to-face placement. Planned follow-up remains Transform polish then an Insert Tool using the same surface-frame controller. Preserve all protected iPad navigation, mature topology/construction systems, linked-instance geometry/placement separation, and src/multi-object-transform.js?v=0.36.1.0 exactly.
+> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live development target is v0.36.18.438; Beta 4 is frozen at v0.36.18.427. Surface Transform .437 is the face-to-face placement baseline. Current work is the linked-instance Insert Tool using the same surface-frame controller and existing sourceId/instanceMatrix architecture. Preserve all protected iPad navigation, mature topology/construction systems, linked-instance geometry/placement separation, and src/multi-object-transform.js?v=0.36.1.0 exactly.
