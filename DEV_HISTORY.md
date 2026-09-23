@@ -11,6 +11,8 @@
 - Export remains permissive; problems are surfaced rather than blocking file creation.
 - Reference objects remain excluded.
 - Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+- Released via PR **#131**; squash merge `b9e16eaedad2044c8ce031bc8ae56f7ee736de4f`.
+- Final PR Topology regression run **35934485708 PASS**.
 
 ## 2026-09-24 — v0.36.18.443 Mesh Health normals / triangulation controls
 
