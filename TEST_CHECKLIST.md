@@ -820,3 +820,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Symmetry/Bisect .435: Align to Face ignores touch navigation and uses Pencil/mouse for the face pick
 - [ ] Symmetry/Bisect .435: Flip Plane reverses the plane normal in place and Keep + / Keep − responds predictably
 - [ ] Symmetry/Bisect .435: after Align to Face, Move and Rotate continue to edit the plane and Apply creates the matching cut/mirror
+
+- [ ] Transform Tool .436: select one editable object, start Transform, tap a face on another visible object and confirm the object centre snaps to the hit while +Y aligns to the face normal
+- [ ] Transform Tool .436: Pencil/mouse drag in Move slides across the picked surface plane while touch still orbits/pans/zooms
+- [ ] Transform Tool .436: a tap cycles Move → Rotate → Scale → Move without moving the object
+- [ ] Transform Tool .436: Rotate spins around the target face normal and honours existing 15° snap; Scale works from the placement point
+- [ ] Transform Tool .436: Cancel restores the exact pre-tool scene; Apply is one Object Undo step
+- [ ] Transform Tool .436: linked objects retain shared geometry while placement remains independent through the existing instanceMatrix path

@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version: **v0.36.18.435**
+- Current live version / branch target: **v0.36.18.436**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
 - Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
 - Latest regression: **35812426602 PASS**
@@ -51,6 +51,19 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.436 — Surface Transform Tool foundation
+
+- Product direction now includes a Nomad-inspired surface-relative Transform / future Insert workflow rather than separate conventional Align commands.
+- New Object-mode Transform Tool: tap a target face on another visible object, selected object centre snaps to the hit and source +Y aligns to that face normal.
+- Surface frame persists through Move / Rotate / Scale. Move slides across the target plane; Rotate spins around target normal; Scale works about the placement point.
+- Pencil/mouse tap cycles Move → Rotate → Scale → Move. Touch remains protected navigation.
+- Existing 15° rotation snap is reused.
+- Tool is transactional via pre-launch Object scene capture: Cancel restores exact prior state; Apply checkpoints it as one Object Undo step.
+- `surface-transform-core.js` is intentionally reusable by the planned Insert Tool, which should place linked instances through the same controller.
+- Linked-instance placement should remain independent via existing Object-mode `instanceMatrix` derivation; shared geometry must stay protected.
+- Beta 4 remains frozen at v0.36.18.427.
+
 
 ### v0.36.18.435 — Symmetry Align to Face + Flip Plane
 
@@ -278,7 +291,7 @@ Keep these so the next chat does not repeat them:
 - Beta 2: frozen legacy checkpoint
 - Beta 3: **v0.36.18.371**
 - Beta 4: **v0.36.18.427**
-- Live main / active development target: **v0.36.18.435**
+- Live main / active development target: **v0.36.18.436**
 
 Future Beta folders are immutable snapshots. Normal development continues at the live root.
 
@@ -305,4 +318,4 @@ Documentation-only handoff cleanup does **not** require a runtime version bump.
 
 Use this:
 
-> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live development target is v0.36.18.435; Beta 4 is frozen at v0.36.18.427. .434 Symmetry transform ownership/arbitrary rotation is hands-on PASS. Current work adds Align to Face and Flip Plane to finish the main Symmetry construction-plane workflow. Preserve all protected iPad navigation, Tool Session behavior, mature Through, Edge Extrude, Sweep, Solidify/Shell, object-management behavior, and src/multi-object-transform.js?v=0.36.1.0 exactly.
+> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live development target is v0.36.18.436; Beta 4 is frozen at v0.36.18.427. .435 Symmetry Align to Face is hands-on PASS. Current work is the Nomad-inspired Surface Transform Tool foundation; planned follow-up is Transform polish then an Insert Tool that creates linked instances using the same surface-frame controller. Preserve all protected iPad navigation, mature topology/construction systems, linked-instance geometry/placement separation, and src/multi-object-transform.js?v=0.36.1.0 exactly.
