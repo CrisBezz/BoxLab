@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.438**
+- Current live version / branch target: **v0.36.18.439**
 - Current main HEAD at audit: **3483edd3b8809b38fca738ed8e6f3085bb2e26f6**
 - Latest code-bearing release merge: **v0.36.18.438 / PR #125 / squash `3483edd3b8809b38fca738ed8e6f3085bb2e26f6`**
 - Latest regression: **35843005403 PASS**
@@ -51,6 +51,16 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.439 — Mesh Health / Inspect foundation
+
+- Starts Phase E Import / Repair / Handoff with a non-destructive Object-mode **Mesh Health** Tool Session.
+- Reports verts/faces/edges plus triangle/quad/ngon mix.
+- Distinguishes **Closed · Clean**, **Open · Clean**, and **Issues Found** rather than treating every open mesh as broken.
+- Detects boundary edges, non-manifold edges, invalid/degenerate faces, zero-area faces, duplicate faces, inconsistent winding, orphan vertices, and intentional loose geometry.
+- Refresh reruns the audit without changing geometry; Close exits cleanly.
+- Uses the existing topology seam-conformance summary as the base rather than inventing a parallel topology definition.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.438 — linked-instance Insert Tool foundation
 
