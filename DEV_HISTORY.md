@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.438 linked-instance Insert Tool foundation
+
+- Continued the approved Nomad-style Transform interaction into an Insert workflow rather than creating another unrelated placement system.
+- Added **Insert** beside Transform in Object Active Tools.
+- Insert first captures a source face, then a target face on another visible object.
+- The target pick creates a linked duplicate through the existing linked-instance manager, preserving shared geometry and independent Object placement.
+- The inserted source face is positioned face-to-face using the existing Surface Transform core.
+- Move / Rotate / Scale use the same surface-frame interaction and tap-cycle as Transform; touch navigation remains protected.
+- Cancel restores the exact pre-session scene; Apply commits one Object-history step.
+- `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-23 — v0.36.18.437 Surface Transform face-to-face anchoring
 
 - First hands-on test of .436 was a strong interaction PASS, but user identified that centre-of-mass anchoring caused the placed object to intersect the target surface.

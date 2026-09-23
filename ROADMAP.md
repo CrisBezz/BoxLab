@@ -81,7 +81,7 @@ Priority candidates:
 **v0.36.18.427** is the Beta 4 checkpoint, frozen from main commit `ec45b3ba208ef3ffa40015d7a3b62666c63f379e` under `/beta-4/`. It captures the Phase D Tool Session consolidation plus the direct Edge Extrude ribbon workflow through Plane constraints and live edge-selection handoff. Normal development continues on live `main`; Beta 4 remains immutable except for an explicitly approved emergency fix.
 
 ## Phase D — Construction tools
-- surface-relative Transform / Insert workflow — **Transform Tool foundation added in v0.36.18.436: target-face placement, Move/Rotate/Scale surface frame, tap-to-cycle interaction; intended shared engine for future linked-instance Insert Tool**
+- surface-relative Transform / Insert workflow — **Transform Tool foundation added in v0.36.18.436; v0.36.18.437 upgrades it to source-face → target-face true face-to-face anchoring; v0.36.18.438 adds the linked-instance Insert Tool foundation using the same surface-frame controller and existing sourceId/instanceMatrix architecture.**
 
 
 Only add focused tools that suit BoxLab:

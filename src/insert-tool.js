@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {surfaceTransformMesh,cycleSurfaceTransformMode} from './surface-transform-core.js?v=0.36.18.438';
+import {surfaceTransformMesh,cycleSurfaceTransformMode} from './surface-transform-core.js?v=0.36.18.437';
 
 const VERSION='0.36.18.438';
 const canvas=document.querySelector('#viewport');
@@ -7,41 +7,47 @@ const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const DRAG_THRESHOLD=8;
 
-const launchRow=document.createElement('div');
-launchRow.className='outliner-actions surface-transform-launch-row';
-launchRow.style.gridTemplateColumns='1fr';
-launchRow.innerHTML='<button id="surfaceTransformBtn" type="button">Transform</button>';
-objectTools?.appendChild(launchRow);
-const launchButton=launchRow.querySelector('#surfaceTransformBtn');
+const launchRow=document.querySelector('.surface-transform-launch-row')||document.createElement('div');
+if(!launchRow.isConnected){
+  launchRow.className='outliner-actions surface-transform-launch-row';
+  objectTools?.appendChild(launchRow);
+}
+launchRow.style.gridTemplateColumns='repeat(2,1fr)';
+const launchButton=document.createElement('button');
+launchButton.id='surfaceInsertBtn';
+launchButton.type='button';
+launchButton.textContent='Insert';
+launchButton.title='Place a linked instance onto another surface';
+launchRow.appendChild(launchButton);
 
 const controls=document.createElement('div');
-controls.id='surfaceTransformSession';
-controls.className='boxlab-tool-session-shell surface-transform-session';
+controls.id='surfaceInsertSession';
+controls.className='boxlab-tool-session-shell surface-insert-session';
 controls.hidden=true;
 controls.innerHTML=`
-  <div class="boxlab-tool-session-title"><span>Transform</span><span class="boxlab-tool-session-subtitle">Pick surface · drag · tap to cycle</span></div>
+  <div class="boxlab-tool-session-title"><span>Insert</span><span class="boxlab-tool-session-subtitle">Linked instance · pick faces · tap to cycle</span></div>
   <div class="boxlab-tool-session-section">Mode</div>
   <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
-    <button id="surfaceTransformMove" type="button" class="active">Move</button>
-    <button id="surfaceTransformRotate" type="button">Rotate</button>
-    <button id="surfaceTransformScale" type="button">Scale</button>
+    <button id="surfaceInsertMove" type="button" class="active">Move</button>
+    <button id="surfaceInsertRotate" type="button">Rotate</button>
+    <button id="surfaceInsertScale" type="button">Scale</button>
   </div>
-  <div class="boxlab-tool-session-subtitle" id="surfaceTransformHint">Tap a target face</div>
+  <div class="boxlab-tool-session-subtitle" id="surfaceInsertHint">Tap a face on source object</div>
   <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
-    <button id="surfaceTransformCancel" type="button">Cancel</button>
-    <button id="surfaceTransformApply" class="boxlab-tool-session-primary" type="button">Apply</button>
+    <button id="surfaceInsertCancel" type="button">Cancel</button>
+    <button id="surfaceInsertApply" class="boxlab-tool-session-primary" type="button">Apply</button>
   </div>
 `;
 objectTools?.appendChild(controls);
 
-const moveButton=controls.querySelector('#surfaceTransformMove');
-const rotateButton=controls.querySelector('#surfaceTransformRotate');
-const scaleButton=controls.querySelector('#surfaceTransformScale');
-const hint=controls.querySelector('#surfaceTransformHint');
-const cancelButton=controls.querySelector('#surfaceTransformCancel');
-const applyButton=controls.querySelector('#surfaceTransformApply');
+const moveButton=controls.querySelector('#surfaceInsertMove');
+const rotateButton=controls.querySelector('#surfaceInsertRotate');
+const scaleButton=controls.querySelector('#surfaceInsertScale');
+const hint=controls.querySelector('#surfaceInsertHint');
+const cancelButton=controls.querySelector('#surfaceInsertCancel');
+const applyButton=controls.querySelector('#surfaceInsertApply');
 
-let active=false,sourceId=null,sourceMesh=null,sourceCenter=new THREE.Vector3(),sourceFace=null,beforeScene=null;
+let active=false,creating=false,sourceObjectId=null,insertedObjectId=null,sourceMesh=null,sourceCenter=new THREE.Vector3(),sourceFace=null,beforeScene=null;
 let target=null,phase='source',mode='move',state={point:new THREE.Vector3(),normal:new THREE.Vector3(0,1,0),spin:0,scale:1};
 let gesture=null;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
@@ -69,59 +75,60 @@ function forceRender(){
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   globalThis.__boxlabObjectSelection?.refresh?.();
 }
-function beginSession(){controls.hidden=false;toolSession()?.begin?.({id:'surface-transform',title:'Transform',node:controls,subtitle:'Surface-relative Move · Rotate · Scale'});}
-function endSession(){controls.hidden=true;toolSession()?.end?.('surface-transform');}
+function beginSession(){controls.hidden=false;toolSession()?.begin?.({id:'surface-insert',title:'Insert',node:controls,subtitle:'Linked instance · surface-relative Move · Rotate · Scale'});}
+function endSession(){controls.hidden=true;toolSession()?.end?.('surface-insert');}
 function updateModeUI(){
   moveButton?.classList.toggle('active',mode==='move');
   rotateButton?.classList.toggle('active',mode==='rotate');
   scaleButton?.classList.toggle('active',mode==='scale');
-  if(hint)hint.textContent=phase==='source'?'Tap a face on selected object':phase==='target'?'Tap a target face':`${mode[0].toUpperCase()+mode.slice(1)} on surface · tap to cycle`;
+  if(hint)hint.textContent=phase==='source'?'Tap a face on source object':phase==='target'?'Tap a target face':`${mode[0].toUpperCase()+mode.slice(1)} inserted instance · tap to cycle`;
 }
-function setMode(next){mode=next;updateModeUI();setStatus(`Transform • ${mode[0].toUpperCase()+mode.slice(1)} • surface frame`);}
+function setMode(next){mode=next;updateModeUI();setStatus(`Insert • ${mode[0].toUpperCase()+mode.slice(1)} • linked surface instance`);}
 function cycleMode(){setMode(cycleSurfaceTransformMode(mode));}
-function sourceValid(){
+function sessionValid(){
+  if(currentMode()!=='object')return false;
   const object=activeObject();
-  return currentMode()==='object'&&object&&object.id===sourceId&&!object.locked&&object.kind!=='reference';
+  if(!object)return false;
+  if(phase==='placed')return object.id===insertedObjectId&&!object.locked&&object.kind!=='reference';
+  return object.id===sourceObjectId&&!object.locked&&object.kind!=='reference';
+}
+function resetState(){
+  gesture=null;target=null;sourceFace=null;phase='source';active=false;creating=false;
+  sourceObjectId=null;insertedObjectId=null;sourceMesh=null;beforeScene=null;mode='move';
 }
 function cancel({silent=false}={}){
   if(!active)return;
-  const history=globalThis.__boxlabObjectHistory,live=liveMesh();
-  const snapshot=beforeScene?.objects?.find?.(o=>o.id===beforeScene?.activeId)||null;
+  const history=globalThis.__boxlabObjectHistory;
   if(beforeScene)history?.restore?.(beforeScene);
-  if(live&&snapshot?.mesh){
-    live.vertices=snapshot.mesh.vertices.map(v=>v.clone());
-    live.faces=snapshot.mesh.faces.map(f=>[...f]);
-    live.creases=new Map(snapshot.mesh.creases||[]);
-    forceRender();
-  }
-  gesture=null;target=null;sourceFace=null;phase='source';active=false;sourceId=null;sourceMesh=null;beforeScene=null;mode='move';endSession();
-  if(!silent)setStatus('Transform cancelled');
+  resetState();endSession();forceRender();
+  if(!silent)setStatus('Insert cancelled');
 }
 function finishApply(){
-  if(!active||!sourceValid())return cancel({silent:true});
-  if(!sourceFace||!target){setStatus('Transform • pick source and target faces first');return;}
-  globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(beforeScene);
+  if(!active||!sessionValid())return cancel({silent:true});
+  if(!sourceFace||!target||insertedObjectId==null){setStatus('Insert • pick source and target faces first');return;}
   manager()?.saveActive?.();
-  active=false;gesture=null;beforeScene=null;sourceMesh=null;sourceId=null;sourceFace=null;target=null;phase='source';mode='move';endSession();forceRender();
-  setStatus('Transform applied • one Object Undo step');
+  globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(beforeScene);
+  const inserted=activeObject();
+  const label=inserted?.name||'Linked instance';
+  resetState();endSession();forceRender();
+  setStatus(`${label} inserted • linked geometry • one Object Undo step`);
 }
-function sourceFaceHit(event){
-  if(!sourceMesh?.faces?.length||!setPointer(event))return null;
-  const geometry=sourceMesh.triangulatedGeometry?.();if(!geometry)return null;
+function faceHitOnMesh(event,mesh){
+  if(!mesh?.faces?.length||!setPointer(event))return null;
+  const geometry=mesh.triangulatedGeometry?.();if(!geometry)return null;
   const material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
   const display=new THREE.Mesh(geometry,material);
   const hit=raycaster.intersectObject(display,false)[0]||null;
   let out=null;
   if(hit){
     let faceIndex=null,cursor=0;
-    for(let fi=0;fi<sourceMesh.faces.length;fi++){
-      const triCount=Math.max(0,sourceMesh.faces[fi].length-2);
+    for(let fi=0;fi<mesh.faces.length;fi++){
+      const triCount=Math.max(0,mesh.faces[fi].length-2);
       if(hit.faceIndex<cursor+triCount){faceIndex=fi;break;}
       cursor+=triCount;
     }
     if(Number.isInteger(faceIndex)){
-      const normal=sourceMesh.faceNormal(faceIndex);
-      const center=sourceMesh.faceCenter(faceIndex);
+      const normal=mesh.faceNormal(faceIndex),center=mesh.faceCenter(faceIndex);
       if(normal?.lengthSq?.()>1e-12)out={faceIndex,center:center.clone(),normal:normal.clone().normalize()};
     }
   }
@@ -133,7 +140,7 @@ function targetFaceHit(event){
   const m=manager();if(!m)return null;
   const temporary=[];
   for(const object of m.objects||[]){
-    if(!object||object.id===sourceId||object.visible===false)continue;
+    if(!object||object.id===sourceObjectId||object.visible===false)continue;
     if(m.soloId!=null&&object.id!==m.soloId)continue;
     const mesh=object.mesh;if(!mesh?.faces?.length)continue;
     const geometry=mesh.triangulatedGeometry?.();if(!geometry)continue;
@@ -145,8 +152,7 @@ function targetFaceHit(event){
   const hit=temporary.length?raycaster.intersectObjects(temporary,false)[0]:null;
   let out=null;
   if(hit){
-    const object=hit.object.userData.boxlabTargetObject;
-    const mesh=object.mesh;
+    const object=hit.object.userData.boxlabTargetObject,mesh=object.mesh;
     let faceIndex=null,cursor=0;
     for(let fi=0;fi<mesh.faces.length;fi++){
       const triCount=Math.max(0,mesh.faces[fi].length-2);
@@ -160,7 +166,7 @@ function targetFaceHit(event){
   return out;
 }
 function rebuild(){
-  if(!active||!sourceMesh)return;
+  if(!active||phase!=='placed'||!sourceMesh||insertedObjectId==null)return;
   const live=liveMesh();if(!live)return;
   const transformed=surfaceTransformMesh(sourceMesh,{
     sourceCenter,
@@ -175,11 +181,22 @@ function rebuild(){
   live.creases=new Map(transformed.creases||[]);
   manager()?.saveActive?.();forceRender();
 }
-function placeOnTarget(hit){
-  target=hit;phase='placed';
-  state.point.copy(hit.point);state.normal.copy(hit.normal);state.spin=0;state.scale=1;
-  mode='move';updateModeUI();rebuild();
-  setStatus(`Transform • face-to-face on ${manager()?.objects?.find(o=>o.id===hit.objectId)?.name||'surface'} • Move`);
+function createAndPlace(hit){
+  const m=manager();if(!m||!sourceFace)return false;
+  const sourceObject=m.objects?.find(o=>o.id===sourceObjectId);
+  if(!sourceObject)return false;
+  creating=true;
+  const copy=m.linkedDuplicateObject?.(sourceObjectId,{
+    name:m.nextDuplicateName?.(sourceObject.name),
+    enterObjectMode:true
+  });
+  creating=false;
+  if(!copy){setStatus('Insert • linked instance could not be created');return false;}
+  insertedObjectId=copy.id;target=hit;phase='placed';
+  state.point.copy(hit.point);state.normal.copy(hit.normal);state.spin=0;state.scale=1;mode='move';
+  updateModeUI();rebuild();
+  setStatus(`Insert • ${copy.name} face-to-face • Move`);
+  return true;
 }
 function rayPlanePoint(event,plane){
   if(!setPointer(event))return null;
@@ -193,33 +210,30 @@ function screenPoint(v){
 }
 function beginGesture(event){
   if(!active||event.target!==canvas||!event.isPrimary||event.pointerType==='touch')return;
-  if(!sourceValid())return cancel({silent:true});
+  if(!sessionValid())return cancel({silent:true});
   if(phase==='source'){
     event.preventDefault();event.stopImmediatePropagation();
-    const hit=sourceFaceHit(event);
-    if(hit){
-      sourceFace=hit;phase='target';updateModeUI();
-      setStatus(`Transform • source Face ${hit.faceIndex+1} selected • tap target face`);
-    }else setStatus('Transform • tap a face on the selected object');
+    const hit=faceHitOnMesh(event,sourceMesh);
+    if(hit){sourceFace=hit;phase='target';updateModeUI();setStatus(`Insert • source Face ${hit.faceIndex+1} selected • tap target face`);}
+    else setStatus('Insert • tap a face on the source object');
     return;
   }
   if(phase==='target'){
     event.preventDefault();event.stopImmediatePropagation();
     const hit=targetFaceHit(event);
-    if(hit)placeOnTarget(hit);else setStatus('Transform • tap a face on another visible object');
+    if(hit)createAndPlace(hit);else setStatus('Insert • tap a face on another visible object');
     return;
   }
   event.preventDefault();event.stopImmediatePropagation();
   const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(state.normal,state.point);
-  const startOnPlane=rayPlanePoint(event,plane);
-  const centerScreen=screenPoint(state.point);
+  const startOnPlane=rayPlanePoint(event,plane),centerScreen=screenPoint(state.point);
   gesture={
     id:event.pointerId,startX:event.clientX,startY:event.clientY,moved:false,
     startPoint:state.point.clone(),startSpin:state.spin,startScale:state.scale,
     plane,startOnPlane,centerScreen,
     startVector:centerScreen?new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen):new THREE.Vector2()
   };
-  bridge().controls.enabled=false;
+  if(bridge()?.controls)bridge().controls.enabled=false;
   canvas.setPointerCapture?.(event.pointerId);
 }
 function moveGesture(event){
@@ -244,7 +258,7 @@ function moveGesture(event){
     state.scale=THREE.MathUtils.clamp(g.startScale*Math.exp((dx-dy)*.006),.05,20);
   }
   rebuild();
-  setStatus(`Transform • ${mode[0].toUpperCase()+mode.slice(1)} • ${mode==='rotate'?`${THREE.MathUtils.radToDeg(state.spin).toFixed(0)}°`:mode==='scale'?`${state.scale.toFixed(2)}×`:'surface slide'}`);
+  setStatus(`Insert • ${mode[0].toUpperCase()+mode.slice(1)} • ${mode==='rotate'?`${THREE.MathUtils.radToDeg(state.spin).toFixed(0)}°`:mode==='scale'?`${state.scale.toFixed(2)}×`:'surface slide'}`);
 }
 function endGesture(event){
   const g=gesture;if(!g||g.id!==event.pointerId)return;
@@ -261,16 +275,17 @@ function cancelGesture(event){
   gesture=null;
 }
 
-launchButton?.addEventListener('click',()=>{
+launchButton.addEventListener('click',()=>{
   const object=activeObject(),live=liveMesh(),sel=objectSelection();
   if(active||currentMode()!=='object'||!object||!live||object.locked||object.kind==='reference'||sel?.multi&&sel.ids?.size>1)return;
   beforeScene=globalThis.__boxlabObjectHistory?.capture?.()||null;
-  if(!beforeScene){setStatus('Transform • object history unavailable');return;}
-  sourceId=object.id;sourceMesh=live.clone();sourceCenter=objectCenter(sourceMesh);
-  active=true;sourceFace=null;target=null;phase='source';mode='move';state={point:sourceCenter.clone(),normal:new THREE.Vector3(0,1,0),spin:0,scale:1};
-  beginSession();updateModeUI();
+  if(!beforeScene){setStatus('Insert • object history unavailable');return;}
+  sourceObjectId=object.id;sourceMesh=live.clone();sourceCenter=objectCenter(sourceMesh);
+  insertedObjectId=null;sourceFace=null;target=null;phase='source';mode='move';
+  state={point:sourceCenter.clone(),normal:new THREE.Vector3(0,1,0),spin:0,scale:1};
+  active=true;beginSession();updateModeUI();
   globalThis.__boxlabTransformArming?.disarm?.();
-  setStatus('Transform • tap a face on the selected object');
+  setStatus('Insert • tap a face on the source object');
 });
 moveButton?.addEventListener('click',()=>setMode('move'));
 rotateButton?.addEventListener('click',()=>setMode('rotate'));
@@ -282,14 +297,14 @@ window.addEventListener('pointerdown',beginGesture,true);
 window.addEventListener('pointermove',moveGesture,true);
 window.addEventListener('pointerup',endGesture,true);
 window.addEventListener('pointercancel',cancelGesture,true);
-window.addEventListener('boxlab-bridge-state',()=>{if(active&&!sourceValid())cancel({silent:true});});
+window.addEventListener('boxlab-bridge-state',()=>{if(active&&!creating&&!sessionValid())cancel({silent:true});});
 window.addEventListener('beforeunload',()=>{if(active)cancel({silent:true});});
 
-globalThis.__boxlabSurfaceTransform={
+globalThis.__boxlabSurfaceInsert={
   version:VERSION,
   get active(){return active;},
   get mode(){return mode;},
-  get target(){return target?{...target,point:target.point.clone(),normal:target.normal.clone()}:null;},
+  get insertedObjectId(){return insertedObjectId;},
   cycle:cycleMode,
   cancel
 };
