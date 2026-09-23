@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version: **v0.36.18.436**
+- Current live version / branch target: **v0.36.18.437**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
 - Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
 - Latest regression: **35812426602 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.437 — Surface Transform face-to-face anchoring
+
+- Corrects .436 centre-of-mass placement after hands-on testing.
+- Transform now uses a two-face workflow: first tap source face on selected object, second tap target face on another visible object.
+- Source face centre is the placement anchor.
+- Source face normal aligns opposite the target face normal for true face-to-face contact.
+- Existing Move / Rotate / Scale tap-cycle is preserved exactly after placement.
+- `surface-transform-core.js` now supports sourceAnchor/sourceNormal + oppose mode, keeping the future Insert Tool on the same placement engine.
+- Beta 4 remains frozen at v0.36.18.427.
+
 
 ### v0.36.18.436 — Surface Transform Tool foundation
 
@@ -293,7 +304,7 @@ Keep these so the next chat does not repeat them:
 - Beta 2: frozen legacy checkpoint
 - Beta 3: **v0.36.18.371**
 - Beta 4: **v0.36.18.427**
-- Live main / active development: **v0.36.18.436**
+- Live main / active development target: **v0.36.18.437**
 
 Future Beta folders are immutable snapshots. Normal development continues at the live root.
 
@@ -320,4 +331,4 @@ Documentation-only handoff cleanup does **not** require a runtime version bump.
 
 Use this:
 
-> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live development target is v0.36.18.436; Beta 4 is frozen at v0.36.18.427. .435 Symmetry Align to Face is hands-on PASS. Current work is the Nomad-inspired Surface Transform Tool foundation; planned follow-up is Transform polish then an Insert Tool that creates linked instances using the same surface-frame controller. Preserve all protected iPad navigation, mature topology/construction systems, linked-instance geometry/placement separation, and src/multi-object-transform.js?v=0.36.1.0 exactly.
+> Continue BoxLab from current main. Read AI_WORKFLOW.md, AI_HANDOFF.md, TEST_CHECKLIST.md, newest DEV_HISTORY.md and ROADMAP.md, then inspect current main before coding. Live development target is v0.36.18.437; Beta 4 is frozen at v0.36.18.427. .436 Surface Transform interaction is hands-on PASS, with one correction now in progress: source-face to target-face anchoring for true face-to-face placement. Planned follow-up remains Transform polish then an Insert Tool using the same surface-frame controller. Preserve all protected iPad navigation, mature topology/construction systems, linked-instance geometry/placement separation, and src/multi-object-transform.js?v=0.36.1.0 exactly.
