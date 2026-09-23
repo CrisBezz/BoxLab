@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.438**
-- Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
-- Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
-- Latest regression: **35812426602 PASS**
+- Current main HEAD at audit: **3483edd3b8809b38fca738ed8e6f3085bb2e26f6**
+- Latest code-bearing release merge: **v0.36.18.438 / PR #125 / squash `3483edd3b8809b38fca738ed8e6f3085bb2e26f6`**
+- Latest regression: **35843005403 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.438 — linked-instance Insert Tool foundation
+
+**Released on main via PR #125; squash merge `3483edd3b8809b38fca738ed8e6f3085bb2e26f6`. Final regression run `35843005403` passed.**
 
 - Adds Nomad-inspired **Insert** beside Transform in Object Active Tools.
 - Workflow: choose a source face on the selected editable object, then choose a target face on another visible object.
