@@ -95,7 +95,7 @@ Only add focused tools that suit BoxLab:
 ## Phase E — Import / repair / handoff
 
 - Mesh Health / Inspect workflow — **foundation added in v0.36.18.439: non-destructive Object audit with Closed/Open clean states and topology issue counts; v0.36.18.440 adds transactional Safe Repair for exact duplicate faces, zero-area faces and accidental orphan vertices**
-- Auto Close / Make Watertight
+- Auto Close / Make Watertight — **v0.36.18.441 adds conservative Auto Close for Open · Clean meshes made entirely of simple closed boundary loops, with cap orientation reuse and closed-topology validation**
 - stronger boundary diagnostics
 - normals / triangulation controls
 - export polish
