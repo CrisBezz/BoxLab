@@ -9,6 +9,8 @@
 - Added regression for cube → delete three adjacent faces → compact one orphan vertex → Solidify succeeds.
 - Existing intentional loose geometry is regression-protected through the compaction pass.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#118**; squash merge `31e2c4d0c727f1910543d10d723a4fcedda72e77`.
+- Final PR Topology regression run **35810612232 PASS**.
 
 
 ## 2026-09-23 — v0.36.18.431 Mirror-seam-aware Solidify
