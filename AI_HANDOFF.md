@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.441**
-- Current main HEAD at audit: **73e6958874de73d8e553f0bb2ad73cd31c503004**
-- Latest code-bearing release merge: **v0.36.18.440 / PR #127 / squash `73e6958874de73d8e553f0bb2ad73cd31c503004`**
-- Latest regression: **35858042579 PASS**
+- Current main HEAD at audit: **d4e964e3741d7e53ac0176c1a811b05ea3edb727**
+- Latest code-bearing release merge: **v0.36.18.441 / PR #128 / squash `d4e964e3741d7e53ac0176c1a811b05ea3edb727`**
+- Latest regression: **35928602689 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.441 — Mesh Health Auto Close / Make Watertight foundation
+
+**Released on main via PR #128; squash merge `d4e964e3741d7e53ac0176c1a811b05ea3edb727`. Final regression run `35928602689` passed.**
 
 - Extends Mesh Health with conservative **Auto Close** for otherwise-clean open meshes.
 - Reuses the existing Boundary / Fill rules: boundary components must be simple closed loops and cap winding is oriented opposite the neighbouring face along the shared boundary.
