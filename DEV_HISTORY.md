@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.444 OBJ export polish / topology preflight
+
+- User hands-on passed .443 normals/triangulation and advanced with /nextbuild.
+- Audited export and retained the existing scene OBJ exporter rather than introducing a parallel path.
+- Added a reusable scene OBJ export core that evaluates each object after Mirror and optional SubD before preflight.
+- Each exported mesh is audited with Mesh Health and receives compact health metadata comments in the OBJ.
+- Scene header reports closed-clean / open-clean / issues counts.
+- Added OBJ `g` records alongside `o` records for clearer downstream grouping.
+- Export remains permissive; problems are surfaced rather than blocking file creation.
+- Reference objects remain excluded.
+- Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+
 ## 2026-09-24 — v0.36.18.443 Mesh Health normals / triangulation controls
 
 - User hands-on passed .442 boundary diagnostics and advanced with /nextbuild.
