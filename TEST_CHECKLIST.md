@@ -832,3 +832,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Transform Tool .437: second tap chooses the target face on another visible object
 - [ ] Transform Tool .437: source face centre lands on the target hit point and source/target normals oppose, producing face-to-face contact without half the object intersecting the target
 - [ ] Transform Tool .437: Move → Rotate → Scale tap-cycle remains unchanged after face-to-face placement
+
+- [ ] Insert Tool .438: select one editable Object, launch Insert, pick a source face, then pick a target face on another visible object
+- [ ] Insert Tool .438: the target pick creates a linked instance and leaves the original source object in place
+- [ ] Insert Tool .438: the source face lands face-to-face on the target; Move → Rotate → Scale tap-cycle behaves like Transform while touch navigation remains normal
+- [ ] Insert Tool .438: after Apply, component edits propagate between source and inserted instance while their Object placements remain independent
+- [ ] Insert Tool .438: Cancel removes the temporary inserted instance exactly; Apply is one Object Undo step and Undo removes the insertion
