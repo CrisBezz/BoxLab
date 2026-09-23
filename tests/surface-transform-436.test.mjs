@@ -52,7 +52,7 @@ test('436 UI owns a surface-relative transactional Tool Session',()=>{
   assert.ok(ui.includes('state.normal.copy(hit.normal)'));
   assert.ok(ui.includes('checkpointSnapshot?.(beforeScene)'));
   assert.ok(ui.includes("id:'surface-transform'"));
-  assert.ok(index.includes('src/surface-transform.js?v=0.36.18.440'));
+  assert.ok(index.includes('src/surface-transform.js?v=0.36.18.441'));
   assert.equal(beta4.version,'0.36.18.427');
 });
 
