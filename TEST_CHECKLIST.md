@@ -852,3 +852,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Mesh Health .440: accidental orphan vertices are compacted while intentional loose vertices/edges are preserved
 - [ ] Mesh Health .440: opposite-winding coincident faces are not auto-deleted
 - [ ] Mesh Health .440: one Undo restores the exact pre-repair Object scene
+
+- [ ] Mesh Health .441: cube with one deleted face reports Open · Clean and enables Auto Close
+- [ ] Mesh Health .441: Auto Close caps the hole with correct winding and immediately reports Closed · Clean
+- [ ] Mesh Health .441: multiple disjoint simple holes close together in one operation
+- [ ] Mesh Health .441: branched/open boundary graphs keep Auto Close disabled/refused
+- [ ] Mesh Health .441: meshes with existing topology issues are not auto-capped
+- [ ] Mesh Health .441: one Undo restores the exact pre-close open mesh
