@@ -827,3 +827,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Transform Tool .436: Rotate spins around the target face normal and honours existing 15° snap; Scale works from the placement point
 - [ ] Transform Tool .436: Cancel restores the exact pre-tool scene; Apply is one Object Undo step
 - [ ] Transform Tool .436: linked objects retain shared geometry while placement remains independent through the existing instanceMatrix path
+
+- [ ] Transform Tool .437: launch Transform and first tap chooses a source face on the selected object
+- [ ] Transform Tool .437: second tap chooses the target face on another visible object
+- [ ] Transform Tool .437: source face centre lands on the target hit point and source/target normals oppose, producing face-to-face contact without half the object intersecting the target
+- [ ] Transform Tool .437: Move → Rotate → Scale tap-cycle remains unchanged after face-to-face placement
