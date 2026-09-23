@@ -11,6 +11,8 @@
 - Cancel restores the exact pre-session scene; Apply commits one Object-history step.
 - `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#125**; squash merge `3483edd3b8809b38fca738ed8e6f3085bb2e26f6`.
+- Final PR Topology regression run **35843005403 PASS**.
 
 
 ## 2026-09-23 — v0.36.18.437 Surface Transform face-to-face anchoring
