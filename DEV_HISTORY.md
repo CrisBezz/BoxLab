@@ -9,6 +9,8 @@
 - Existing Nomad-style Move → Rotate → Scale → Move tap-cycle remains unchanged after placement.
 - Surface transform core generalized with sourceAnchor/sourceNormal and oppose mode for reuse by the future Insert Tool.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#124**; squash merge `5a6ef4338c2997b5e65dbf59f77bc129d7e152cd`.
+- Final PR Topology regression run **35841565536 PASS**.
 
 
 ## 2026-09-23 — v0.36.18.436 Surface Transform Tool foundation
