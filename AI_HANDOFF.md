@@ -89,6 +89,8 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.431 Mirror-seam-aware Solidify
 
+**Released on main via PR #117; squash merge `b3b63b00c505827f74a00175e2d18770a1aeeb55`. Final regression run `35809943265` passed.**
+
 - .430 still failed on the user's mirrored object; the remaining issue was actual symmetry-seam topology, not UI gating.
 - Solidify now receives the active Mirror axes.
 - Boundary edges that lie fully on an active mirror plane are treated as symmetry seams and do not receive Solidify side walls.
