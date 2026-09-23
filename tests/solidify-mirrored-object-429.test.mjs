@@ -47,7 +47,7 @@ test('430 Solidify runtime preserves Mirror and mirrors only the preview display
   assert.ok(ui.includes("previewEvaluatedSource(live"));
   assert.ok(ui.includes("const displayMesh=mirrored?applyMirror(working,axes):working"));
   assert.ok(ui.includes("const preflight=analyzeSolidifyInput(live)"));
-  assert.ok(ui.includes("const result=solidifyOpenMesh(live,thickness())"));
+  assert.ok(ui.includes("const result=solidifyOpenMesh(live,thickness(),{symmetryAxes:axes})"));
   assert.ok(ui.includes("Mirror preserved"));
   assert.ok(!ui.includes("clearMirrorModifier()"));
   assert.ok(index.includes('src/solidify.js?v=0.36.18.431'));
