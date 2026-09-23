@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.436**
+- Current live version: **v0.36.18.436**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
 - Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
 - Latest regression: **35812426602 PASS**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.436 — Surface Transform Tool foundation
+
+**Released on main via PR #123; squash merge `db817eb623ebc52ff2d7b6e344f2911873ead8d6`. Final regression run `35839401940` passed.**
 
 - Product direction now includes a Nomad-inspired surface-relative Transform / future Insert workflow rather than separate conventional Align commands.
 - New Object-mode Transform Tool: tap a target face on another visible object, selected object centre snaps to the hit and source +Y aligns to that face normal.
@@ -291,7 +293,7 @@ Keep these so the next chat does not repeat them:
 - Beta 2: frozen legacy checkpoint
 - Beta 3: **v0.36.18.371**
 - Beta 4: **v0.36.18.427**
-- Live main / active development target: **v0.36.18.436**
+- Live main / active development: **v0.36.18.436**
 
 Future Beta folders are immutable snapshots. Normal development continues at the live root.
 
