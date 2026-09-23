@@ -859,3 +859,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Mesh Health .441: branched/open boundary graphs keep Auto Close disabled/refused
 - [ ] Mesh Health .441: meshes with existing topology issues are not auto-capped
 - [ ] Mesh Health .441: one Undo restores the exact pre-close open mesh
+
+- [ ] Mesh Health .442: a cube with one deleted face reports one boundary group / one loop
+- [ ] Mesh Health .442: branched boundary topology is labelled branched rather than a closable loop
+- [ ] Mesh Health .442: Select Boundary exits to Edge mode with all boundary edges selected
+- [ ] Mesh Health .442: Select Non-Manifold exits to Edge mode with all non-manifold edges selected
+- [ ] Mesh Health .442: diagnostic selection does not change geometry or create an Undo step

@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.442 Mesh Health boundary diagnostics
+
+- Advanced from .441 Auto Close into the next Phase E roadmap item: stronger boundary diagnostics.
+- Added connected-component analysis for boundary edges with loop / chain / branched classification.
+- Mesh Health now reports boundary group counts alongside existing edge totals.
+- Added Select Boundary and Select Non-Manifold diagnostic handoffs.
+- Diagnostic handoff exits Mesh Health into standard Edge mode with the relevant edges selected so existing Fill / Bridge / Move / Delete / repair tools remain authoritative.
+- No geometry or Object history mutation occurs during diagnostic selection.
+- Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+
 ## 2026-09-24 — v0.36.18.441 Mesh Health Auto Close / Make Watertight foundation
 
 - Advanced from .440 Safe Repair into the next Phase E roadmap item: Auto Close / Make Watertight.

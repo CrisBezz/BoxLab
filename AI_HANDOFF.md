@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.441**
+- Current live version / branch target: **v0.36.18.442**
 - Current main HEAD at audit: **d4e964e3741d7e53ac0176c1a811b05ea3edb727**
 - Latest code-bearing release merge: **v0.36.18.441 / PR #128 / squash `d4e964e3741d7e53ac0176c1a811b05ea3edb727`**
 - Latest regression: **35928602689 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.442 — Mesh Health boundary diagnostics
+
+- Extends Mesh Health with stronger boundary diagnostics rather than another automatic repair.
+- Boundary edges are grouped into connected components and classified as **loop**, **chain**, **branched**, or other.
+- Mesh Health shows the number of boundary groups plus loop/chain/branched counts.
+- **Select Boundary** exits Mesh Health into normal Edge mode with all boundary edges selected.
+- **Select Non-Manifold** does the same for non-manifold edges.
+- Diagnostic selection deliberately hands control back to the mature native modelling tools instead of inventing a separate viewport overlay/highlight system.
+- No geometry mutation occurs during diagnostic selection.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.441 — Mesh Health Auto Close / Make Watertight foundation
 
