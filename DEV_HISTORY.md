@@ -9,6 +9,8 @@
 - Diagnostic handoff exits Mesh Health into standard Edge mode with the relevant edges selected so existing Fill / Bridge / Move / Delete / repair tools remain authoritative.
 - No geometry or Object history mutation occurs during diagnostic selection.
 - Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+- Released via PR **#129**; squash merge `cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71`.
+- Final PR Topology regression run **35929633430 PASS**.
 
 ## 2026-09-24 — v0.36.18.441 Mesh Health Auto Close / Make Watertight foundation
 
