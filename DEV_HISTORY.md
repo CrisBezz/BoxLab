@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.434 Symmetry plane transform ownership + arbitrary rotation
+
+- User found that pressing Rotate during an active Symmetry / Bisect session rotated the source cube instead of the yellow construction plane.
+- Root cause: .433 owned direct plane dragging but the shared transform engine still owned Object-mode Move/Rotate/Scale.
+- Symmetry now has explicit transform ownership while its Tool Session is active; the shared Object transform engine yields completely.
+- Move/direct drag targets the symmetry plane; Rotate targets the plane normal; Scale is disabled because an infinite cut plane has no meaningful scale.
+- X/Y/Z remain quick orientation presets. After free rotation the plane is marked Custom.
+- Rotate respects the existing world-axis transform constraints and the existing 15° rotation snap toggle.
+- Bisect core generalized from axis+offset to arbitrary plane point+normal while keeping legacy X/Y/Z+offset calls working.
+- Mirrored symmetry across an arbitrary plane reflects geometry directly across that plane and reuses seam vertices to weld the cut boundary.
+- Touch remains ordinary iPad navigation; Pencil/mouse owns plane transform gestures.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-23 — v0.36.18.433 movable / snappable Symmetry plane
 
 - Continued the .428 Symmetry / Bisect foundation after the .432 Face Delete regression fix and handoff cleanup.
