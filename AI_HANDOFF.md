@@ -89,6 +89,8 @@ Phase A remains frozen except for concrete regressions. Phase B precision modell
 
 ## Current development — v0.36.18.432 Face Delete orphan compaction
 
+**Released on main via PR #118; squash merge `31e2c4d0c727f1910543d10d723a4fcedda72e77`. Final regression run `35810612232` passed.**
+
 - User found the real Solidify reproduction: deleting three adjacent cube faces leaves an accidental orphan vertex, while extracting/duplicating the same faces compacts the mesh and Solidifies correctly.
 - `EditableMesh.compactUnusedVertices()` now removes vertices no longer referenced by faces while preserving intentional `looseVertices` / `looseEdges` and remapping creases.
 - Face Delete runs the compaction once after the requested multi-face deletion completes.
