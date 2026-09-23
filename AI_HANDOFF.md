@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.435**
+- Current live version: **v0.36.18.435**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
 - Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
 - Latest regression: **35812426602 PASS**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.435 — Symmetry Align to Face + Flip Plane
+
+**Released on main via PR #122; squash merge `6bf2b5a5308d639c0e03f7cd2862695d10624591`. Final regression run `35819789567` passed.**
 
 - Adds one-shot Align to Face inside the Symmetry/Bisect Tool Session.
 - Pencil/mouse tap on a source face sets plane point to the hit and plane normal to that face normal.
