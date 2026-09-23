@@ -10,6 +10,8 @@
 - All three operations run transactionally with validation and one Object Undo step.
 - Mesh Health refreshes immediately after each operation.
 - Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+- Released via PR **#130**; squash merge `1313089ed7c445ac03124ad2a71f7185eb89afee`.
+- Final PR Topology regression run **35933890155 PASS**.
 
 ## 2026-09-24 — v0.36.18.442 Mesh Health boundary diagnostics
 
