@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.437 Surface Transform face-to-face anchoring
+
+- First hands-on test of .436 was a strong interaction PASS, but user identified that centre-of-mass anchoring caused the placed object to intersect the target surface.
+- Transform workflow now picks two faces: first a source face on the selected object, then a target face on another visible object.
+- Source face centre becomes the placement anchor.
+- Source face normal is rotated to oppose the target face normal, so the two faces meet rather than the object centre being embedded in the target.
+- Existing Nomad-style Move → Rotate → Scale → Move tap-cycle remains unchanged after placement.
+- Surface transform core generalized with sourceAnchor/sourceNormal and oppose mode for reuse by the future Insert Tool.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-23 — v0.36.18.436 Surface Transform Tool foundation
 
 - After .435 Align to Face hands-on PASS, product direction expanded from separate Align commands toward a Nomad-inspired surface-relative Transform / Insert interaction model.
