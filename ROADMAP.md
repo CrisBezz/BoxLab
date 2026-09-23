@@ -94,7 +94,7 @@ Only add focused tools that suit BoxLab:
 
 ## Phase E — Import / repair / handoff
 
-- Mesh Health / Inspect workflow
+- Mesh Health / Inspect workflow — **foundation added in v0.36.18.439: non-destructive Object audit with Closed/Open clean states and topology issue counts**
 - Auto Close / Make Watertight
 - stronger boundary diagnostics
 - normals / triangulation controls
