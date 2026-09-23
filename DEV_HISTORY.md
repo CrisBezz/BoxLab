@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.443 Mesh Health normals / triangulation controls
+
+- User hands-on passed .442 boundary diagnostics and advanced with /nextbuild.
+- Added Unify Winding, Flip Normals, and Triangulate to Mesh Health.
+- Unify Winding fixes adjacency direction across manifold connected faces without making an outward/inward assumption.
+- Flip Normals reverses every face explicitly.
+- Triangulate uses projected ear clipping so concave n-gons do not rely on unsafe fan triangulation.
+- All three operations run transactionally with validation and one Object Undo step.
+- Mesh Health refreshes immediately after each operation.
+- Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+
 ## 2026-09-24 — v0.36.18.442 Mesh Health boundary diagnostics
 
 - Advanced from .441 Auto Close into the next Phase E roadmap item: stronger boundary diagnostics.
