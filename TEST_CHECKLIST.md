@@ -838,3 +838,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Insert Tool .438: the source face lands face-to-face on the target; Move → Rotate → Scale tap-cycle behaves like Transform while touch navigation remains normal
 - [ ] Insert Tool .438: after Apply, component edits propagate between source and inserted instance while their Object placements remain independent
 - [ ] Insert Tool .438: Cancel removes the temporary inserted instance exactly; Apply is one Object Undo step and Undo removes the insertion
+
+- [ ] Mesh Health .439: default closed cube reports Closed · Clean with zero boundary/non-manifold/orphan issues
+- [ ] Mesh Health .439: a valid open sheet reports Open · Clean rather than Issues Found
+- [ ] Mesh Health .439: broken topology reports counts for non-manifold/duplicate/degenerate/winding/orphan problems as applicable
+- [ ] Mesh Health .439: triangle/quad/ngon counts match the inspected active mesh
+- [ ] Mesh Health .439: Refresh updates the report after edits without changing geometry
+- [ ] Mesh Health .439: Close leaves mesh/history untouched and restores normal Object Active Tools
