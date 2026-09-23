@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.442**
+- Current live version / branch target: **v0.36.18.443**
 - Current main HEAD at audit: **cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71**
 - Latest code-bearing release merge: **v0.36.18.442 / PR #129 / squash `cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71`**
 - Latest regression: **35929633430 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.443 — Mesh Health normals / triangulation controls
+
+- Adds explicit Object-level normals and triangulation preparation controls inside Mesh Health.
+- **Unify Winding** propagates consistent face orientation across manifold connected faces without guessing outward vs inward.
+- **Flip Normals** deliberately reverses every face in the active mesh.
+- **Triangulate** converts polygon faces to triangles using projected ear-clipping rather than naive fan splitting, including concave n-gons.
+- Unify Winding refuses invalid/non-manifold ambiguity and validates zero inconsistent winding before commit.
+- Triangulate preserves vertices and validates that invalid/non-manifold/boundary counts do not worsen.
+- Each operation is transactional and records one Object Undo step; Mesh Health refreshes immediately afterward.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.442 — Mesh Health boundary diagnostics
 
