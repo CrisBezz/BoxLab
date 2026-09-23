@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.431 Mirror-seam-aware Solidify
+
+- User confirmed .430 still failed on a mirrored object despite Shell working.
+- Root cause is geometric: an ordinary Solidify on a half-mesh creates side walls along mirror-plane boundary edges and can offset inner seam vertices away from the mirror plane. Mirroring that result produces overlapping/internal seam topology.
+- Solidify now accepts active symmetry axes from the Mirror modifier.
+- Boundary edges lying wholly on an active mirror plane are treated as symmetry seams and do not receive Solidify side walls.
+- Inner vertices whose source lies on a mirror plane are pinned back onto that plane after offset.
+- For mirror-aware Solidify, topology validation runs on the evaluated mirrored result; the editable half is allowed to remain open along symmetry seams by design.
+- Mirror remains non-destructive and enabled after Apply.
+- Added a dedicated half-sheet-on-X-mirror-plane regression proving the evaluated mirrored solid is closed manifold topology.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-22 — v0.36.18.430 Solidify preserves Mirror modifier
 
 - Hands-on testing showed the .429 bake-on-apply approach still failed on the user's mirrored object, while Shell worked correctly.

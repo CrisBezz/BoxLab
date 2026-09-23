@@ -794,3 +794,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] mirrored Solidify preview shows the added shell geometry on both mirrored sides
 - [ ] Solidify Apply leaves Mirror enabled and the resulting mirrored solid visually intact
 - [ ] Undo after mirrored Solidify restores the pre-Solidify base mesh while Mirror remains a modifier
+
+- [ ] Solidify + Mirror seam: a half-sheet whose boundary lies on the active mirror plane solidifies without creating a side wall on that seam
+- [ ] Solidify + Mirror seam: inner seam vertices remain exactly on the mirror plane after thickness offset
+- [ ] Solidify + Mirror seam: evaluated mirrored result is closed/manifold after Apply while the editable half remains open only on symmetry seams
+- [ ] Mirror remains enabled after mirror-aware Solidify Apply
