@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.440**
-- Current main HEAD at audit: **60187e2f17c444c319c6862a80e3a107588dc9cb**
-- Latest code-bearing release merge: **v0.36.18.439 / PR #126 / squash `60187e2f17c444c319c6862a80e3a107588dc9cb`**
-- Latest regression: **35854298290 PASS**
+- Current main HEAD at audit: **73e6958874de73d8e553f0bb2ad73cd31c503004**
+- Latest code-bearing release merge: **v0.36.18.440 / PR #127 / squash `73e6958874de73d8e553f0bb2ad73cd31c503004`**
+- Latest regression: **35858042579 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.440 — Mesh Health Safe Repair
+
+**Released on main via PR #127; squash merge `73e6958874de73d8e553f0bb2ad73cd31c503004`. Final regression run `35858042579` passed.**
 
 - Extends the .439 Mesh Health inspector with a deliberately conservative **Safe Repair** action.
 - Safe Repair currently fixes only high-confidence topology defects: exact same-direction duplicate faces, zero-area faces, and accidental orphan vertices.
