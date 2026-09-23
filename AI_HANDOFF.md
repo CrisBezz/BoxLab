@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.443**
-- Current main HEAD at audit: **cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71**
-- Latest code-bearing release merge: **v0.36.18.442 / PR #129 / squash `cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71`**
-- Latest regression: **35929633430 PASS**
+- Current main HEAD at audit: **1313089ed7c445ac03124ad2a71f7185eb89afee**
+- Latest code-bearing release merge: **v0.36.18.443 / PR #130 / squash `1313089ed7c445ac03124ad2a71f7185eb89afee`**
+- Latest regression: **35933890155 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.443 — Mesh Health normals / triangulation controls
+
+**Released on main via PR #130; squash merge `1313089ed7c445ac03124ad2a71f7185eb89afee`. Final regression run `35933890155` passed.**
 
 - Adds explicit Object-level normals and triangulation preparation controls inside Mesh Health.
 - **Unify Winding** propagates consistent face orientation across manifold connected faces without guessing outward vs inward.
