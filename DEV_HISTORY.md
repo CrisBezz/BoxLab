@@ -12,6 +12,8 @@
 - Placement math extracted to `surface-transform-core.js` so the future Insert Tool can reuse exactly the same controller instead of duplicating interaction logic.
 - Existing linked-instance Object-mode save path can derive independent `instanceMatrix` placement from the transformed live mesh while retaining shared geometry.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#123**; squash merge `db817eb623ebc52ff2d7b6e344f2911873ead8d6`.
+- Final PR Topology regression run **35839401940 PASS**.
 
 
 ## 2026-09-23 — v0.36.18.435 Symmetry Align to Face + Flip Plane
