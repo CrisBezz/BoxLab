@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.443**
+- Current live version / branch target: **v0.36.18.444**
 - Current main HEAD at audit: **1313089ed7c445ac03124ad2a71f7185eb89afee**
 - Latest code-bearing release merge: **v0.36.18.443 / PR #130 / squash `1313089ed7c445ac03124ad2a71f7185eb89afee`**
 - Latest regression: **35933890155 PASS**
@@ -51,6 +51,19 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.444 — OBJ export polish / topology preflight
+
+- Keeps the existing multi-object scene OBJ exporter as the authoritative export path.
+- Adds an export-core preflight that resolves the exact mesh being written, including Mirror and optional SubD evaluation.
+- Every exported object is audited with Mesh Health before serialization.
+- OBJ output now embeds compact per-object health comments: Closed/Open/Issues, boundary count, non-manifold count, winding count, and triangle/quad/ngon mix.
+- Export header includes a scene preflight summary with counts of closed-clean, open-clean, and issue-bearing objects.
+- OBJ now writes both `o` and `g` records for each BoxLab object to improve handoff grouping in downstream apps.
+- Export remains permissive: open/problem meshes are reported, not silently blocked.
+- Status bar reports the export preflight immediately after download.
+- Reference objects remain excluded exactly as before.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.443 — Mesh Health normals / triangulation controls
 
