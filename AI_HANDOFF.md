@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.434**
+- Current live version: **v0.36.18.434**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
 - Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
 - Latest regression: **35812426602 PASS**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.434 — Symmetry plane transform ownership + arbitrary rotation
+
+**Released on main via PR #121; squash merge `6cb0a5aca9d2d69dbed23511ef617d381a1871c6`. Final regression run `35818444568` passed.**
 
 - Fixes .433 hands-on issue where Rotate acted on the source object instead of the yellow symmetry plane.
 - While Symmetry / Bisect is active, shared Object transforms yield to the construction plane.
