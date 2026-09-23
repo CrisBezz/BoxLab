@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.444**
-- Current main HEAD at audit: **1313089ed7c445ac03124ad2a71f7185eb89afee**
-- Latest code-bearing release merge: **v0.36.18.443 / PR #130 / squash `1313089ed7c445ac03124ad2a71f7185eb89afee`**
-- Latest regression: **35933890155 PASS**
+- Current main HEAD at audit: **b9e16eaedad2044c8ce031bc8ae56f7ee736de4f**
+- Latest code-bearing release merge: **v0.36.18.444 / PR #131 / squash `b9e16eaedad2044c8ce031bc8ae56f7ee736de4f`**
+- Latest regression: **35934485708 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.444 — OBJ export polish / topology preflight
+
+**Released on main via PR #131; squash merge `b9e16eaedad2044c8ce031bc8ae56f7ee736de4f`. Final regression run `35934485708` passed.**
 
 - Keeps the existing multi-object scene OBJ exporter as the authoritative export path.
 - Adds an export-core preflight that resolves the exact mesh being written, including Mirror and optional SubD evaluation.
