@@ -865,3 +865,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Mesh Health .442: Select Boundary exits to Edge mode with all boundary edges selected
 - [ ] Mesh Health .442: Select Non-Manifold exits to Edge mode with all non-manifold edges selected
 - [ ] Mesh Health .442: diagnostic selection does not change geometry or create an Undo step
+
+- [ ] Mesh Health .443: reversing one cube face makes Unify Winding available and it restores consistent winding
+- [ ] Mesh Health .443: Flip Normals reverses the whole object and one Undo restores the prior winding
+- [ ] Mesh Health .443: Triangulate converts cube quads to triangles while staying Closed · Clean
+- [ ] Mesh Health .443: concave n-gon triangulates without creating invalid/non-manifold topology
+- [ ] Mesh Health .443: each normals/triangulation action is one Object Undo step
