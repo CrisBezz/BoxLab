@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.439**
+- Current live version / branch target: **v0.36.18.440**
 - Current main HEAD at audit: **60187e2f17c444c319c6862a80e3a107588dc9cb**
 - Latest code-bearing release merge: **v0.36.18.439 / PR #126 / squash `60187e2f17c444c319c6862a80e3a107588dc9cb`**
 - Latest regression: **35854298290 PASS**
@@ -46,11 +46,23 @@ Audited from `main` on 2026-09-23.
 - Phase A — Clean for SubD: **frozen except concrete regressions**
 - Phase B — Precision modelling: **planned slice complete**
 - Phase C — Object / instance workflow: **mature baseline reached**
-- Phase D — Construction tools: **active**
-- Phase E — Import / repair / handoff: **next major phase after current Symmetry work**
+- Phase D — Construction tools: **mature current slice**
+- Phase E — Import / repair / handoff: **active**
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.440 — Mesh Health Safe Repair
+
+- Extends the .439 Mesh Health inspector with a deliberately conservative **Safe Repair** action.
+- Safe Repair currently fixes only high-confidence topology defects: exact same-direction duplicate faces, zero-area faces, and accidental orphan vertices.
+- Opposite-winding coincident faces are left untouched because they can represent ambiguous double-sided/shell intent.
+- Holes, non-manifold structures, boundary reconstruction, and broad winding repair remain diagnostic-only for now.
+- Repair runs on a cloned candidate first and is refused if invalid/non-manifold/winding issue counts worsen or the overall issue load does not improve.
+- Apply is transactional through Object scene history and becomes one Undo step.
+- Linked instances keep the existing shared-geometry / independent-placement contract because Object save-back remains authoritative.
+- Mesh Health immediately re-runs after repair so unresolved findings remain visible.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.439 — Mesh Health / Inspect foundation
 
