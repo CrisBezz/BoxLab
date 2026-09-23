@@ -45,7 +45,7 @@ test('439 Mesh Health UI is non-destructive Tool Session and current shell loads
   assert.match(ui,/Inspect · non-destructive/);
   assert.match(ui,/id:'mesh-health'/);
   assert.doesNotMatch(ui,/checkpoint|push\(|restoreMesh|vertices\s*=/);
-  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.439/);
+  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.440/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });
