@@ -10,6 +10,8 @@
 - Successful repair saves back through the existing Object manager and records one Object Undo step.
 - Mesh Health automatically refreshes after repair to show remaining issues.
 - Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+- Released via PR **#127**; squash merge `73e6958874de73d8e553f0bb2ad73cd31c503004`.
+- Final PR Topology regression run **35858042579 PASS**.
 
 ## 2026-09-23 — v0.36.18.439 Mesh Health / Inspect foundation
 
