@@ -32,8 +32,8 @@ Audited from `main` on 2026-09-23.
 
 - Current live version: **v0.36.18.433**
 - Current main HEAD at audit: **38b5b5a5486c0b4bd03e3024c19b0830b22817f4**
-- Current development branch target: **v0.36.18.433 — movable/snappable Symmetry plane**
-- Latest completed main regression: **35810612232 PASS**; .433 PR regression pending until merge
+- Latest code-bearing release merge: **v0.36.18.433 / PR #120 / squash `ff9be6110c7e34b79fac08e82589b3bd40b66237`**
+- Latest regression: **35812426602 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.433 — Movable / snappable Symmetry plane
+
+**Released on main via PR #120; squash merge `ff9be6110c7e34b79fac08e82589b3bd40b66237`. Final regression run `35812426602` passed.**
 
 - Symmetry/Bisect plane is no longer locked to object origin.
 - X/Y/Z plane offset is topology-aware in the core.
