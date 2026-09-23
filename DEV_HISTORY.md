@@ -10,6 +10,8 @@
 - X/Y/Z remain quick orientation presets; aligned faces are treated as Custom orientation.
 - Existing Move/Rotate plane ownership and arbitrary-plane topology kernel remain unchanged.
 - Frozen Beta 4 remains v0.36.18.427.
+- Released via PR **#122**; squash merge `6bf2b5a5308d639c0e03f7cd2862695d10624591`.
+- Final PR Topology regression run **35819789567 PASS**.
 
 
 ## 2026-09-23 — v0.36.18.434 Symmetry plane transform ownership + arbitrary rotation
