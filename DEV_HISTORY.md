@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.436 Surface Transform Tool foundation
+
+- After .435 Align to Face hands-on PASS, product direction expanded from separate Align commands toward a Nomad-inspired surface-relative Transform / Insert interaction model.
+- Added Object-mode Transform Tool Session for one editable object.
+- First target-face tap on another visible object places the selected object centre at the hit point and aligns source +Y to the target face normal.
+- Persistent surface frame drives three states: Move slides across the target plane, Rotate spins around the target normal, Scale grows/shrinks around the placement point.
+- Pencil/mouse tap cycles Move → Rotate → Scale → Move; touch remains ordinary iPad navigation.
+- Existing 15° rotation snap is reused.
+- Tool is transactional: full Object scene captured before launch, Cancel restores it, Apply records that captured scene as one Object Undo step.
+- Placement math extracted to `surface-transform-core.js` so the future Insert Tool can reuse exactly the same controller instead of duplicating interaction logic.
+- Existing linked-instance Object-mode save path can derive independent `instanceMatrix` placement from the transformed live mesh while retaining shared geometry.
+- Frozen Beta 4 remains v0.36.18.427.
+
+
 ## 2026-09-23 — v0.36.18.435 Symmetry Align to Face + Flip Plane
 
 - Continued the now-working arbitrary Symmetry plane after .434 hands-on PASS.
