@@ -809,3 +809,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Symmetry/Bisect .433: Reset Origin returns the active plane offset to 0
 - [ ] Symmetry/Bisect .433: Keep + / Keep − and Mirror remain live while the plane is moved
 - [ ] Symmetry/Bisect .433: Apply welds mirrored geometry on the moved plane and Undo restores the source object in one step
+
+- [ ] Symmetry/Bisect .434: while the Tool Session is active, Rotate changes the yellow plane and does not rotate the source object
+- [ ] Symmetry/Bisect .434: Move continues to move the plane; Scale is disabled for the infinite plane
+- [ ] Symmetry/Bisect .434: Free Rotate produces a true oblique cut/mirror, not just a rotated guide
+- [ ] Symmetry/Bisect .434: X/Y/Z transform constraints rotate the plane around the chosen world axis; 15° rotation snap still applies
+- [ ] Symmetry/Bisect .434: Apply/Cancel restores normal Object transform ownership

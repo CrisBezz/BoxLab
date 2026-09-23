@@ -1,12 +1,14 @@
 import * as THREE from 'three';
-import {symmetryBisect} from './symmetry-bisect-core.js?v=0.36.18.433';
+import {symmetryBisect} from './symmetry-bisect-core.js?v=0.36.18.434';
 import {nearestCrossObjectSnap} from './cross-object-snap-core.js?v=0.36.18.324';
 
-const VERSION='0.36.18.433';
+const VERSION='0.36.18.434';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 const canvas=document.querySelector('#viewport');
 const geometryToggle=document.querySelector('#inferenceSnapToggle');
+const scaleButton=document.querySelector('#toolModes button[data-tool="scale"]');
+const rotateSnapButton=document.querySelector('#transformSnapBtn');
 
 const launchRow=document.createElement('div');
 launchRow.className='outliner-actions symmetry-bisect-launch-row';
@@ -20,8 +22,8 @@ controls.id='symmetryBisectSession';
 controls.className='boxlab-tool-session-shell symmetry-bisect-session';
 controls.hidden=true;
 controls.innerHTML=`
-  <div class="boxlab-tool-session-title"><span>Symmetry / Bisect</span><span class="boxlab-tool-session-subtitle">Move / snap plane · then Apply</span></div>
-  <div class="boxlab-tool-session-section">Axis</div>
+  <div class="boxlab-tool-session-title"><span>Symmetry / Bisect</span><span class="boxlab-tool-session-subtitle">Move / Rotate / Snap plane · then Apply</span></div>
+  <div class="boxlab-tool-session-section">Orientation presets</div>
   <div class="outliner-actions symmetry-axis" style="grid-template-columns:repeat(3,1fr)">
     <button type="button" data-sym-axis="x" class="active">X</button>
     <button type="button" data-sym-axis="y">Y</button>
@@ -29,10 +31,10 @@ controls.innerHTML=`
   </div>
   <div class="boxlab-tool-session-section">Plane</div>
   <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
-    <button id="symmetryMovePlaneBtn" type="button" class="active">Move Plane</button>
+    <button id="symmetryMovePlaneBtn" type="button" class="active">Move / Rotate</button>
     <button id="symmetryResetPlaneBtn" type="button">Reset Origin</button>
   </div>
-  <div class="boxlab-tool-session-subtitle" id="symmetryPlaneReadout">Offset 0.000</div>
+  <div class="boxlab-tool-session-subtitle" id="symmetryPlaneReadout">X · Origin</div>
   <div class="boxlab-tool-session-section">Keep side</div>
   <div class="outliner-actions symmetry-keep" style="grid-template-columns:repeat(2,1fr)">
     <button type="button" data-sym-keep="positive" class="active">Keep +</button>
@@ -54,7 +56,7 @@ const planeReadout=controls.querySelector('#symmetryPlaneReadout');
 const cancelButton=controls.querySelector('#symmetryCancelBtn');
 const applyButton=controls.querySelector('#symmetryApplyBtn');
 
-let active=false,objectId=null,source=null,preview=null,planeSurface=null,axis='x',keep='positive',offset=0,drag=null;
+let active=false,objectId=null,source=null,preview=null,planeSurface=null,axis='x',keep='positive',planeNormal=new THREE.Vector3(1,0,0),planePoint=new THREE.Vector3(),drag=null,scaleWasDisabled=false;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 
 function manager(){return globalThis.__boxlabObjectManager;}
@@ -63,21 +65,42 @@ function mesh(){return globalThis.__boxlabBridgeState?.mesh||null;}
 function scene(){return globalThis.__boxlabBridgeState?.scene||null;}
 function camera(){return globalThis.__boxlabBridgeState?.camera||null;}
 function mode(){return document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
+function tool(){return globalThis.__boxlabTransformArming?.tool?.()||document.querySelector('#toolModes button.active')?.dataset?.tool||null;}
+function constraint(){return globalThis.__boxlabTransformArming?.constraint?.()||'free';}
 function toolSession(){return globalThis.__boxlabToolSession||null;}
 function setStatus(text){if(status)status.textContent=text;}
 function mirrorModifierActive(){return [...document.querySelectorAll('[data-mirror-axis]')].some(input=>input.checked);}
 function geometryOn(){return geometryToggle?.checked!==false;}
-function beginSession(){controls.hidden=false;toolSession()?.begin?.({id:'symmetry-bisect',title:'Symmetry / Bisect',node:controls,subtitle:'Axis · Move/Snap Plane · Keep · Mirror · Apply'});}
-function endSession(){controls.hidden=true;toolSession()?.end?.('symmetry-bisect');}
-function axisVector(){return new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);}
+function beginSession(){
+  controls.hidden=false;
+  scaleWasDisabled=!!scaleButton?.disabled;
+  if(scaleButton)scaleButton.disabled=true;
+  toolSession()?.begin?.({id:'symmetry-bisect',title:'Symmetry / Bisect',node:controls,subtitle:'Move · Rotate · Snap Plane · Keep · Mirror · Apply'});
+}
+function endSession(){
+  controls.hidden=true;
+  if(scaleButton)scaleButton.disabled=scaleWasDisabled;
+  toolSession()?.end?.('symmetry-bisect');
+}
+function axisVector(name){return new THREE.Vector3(name==='x'?1:0,name==='y'?1:0,name==='z'?1:0);}
 function meshCenter(sourceMesh=source){
   const box=new THREE.Box3().setFromPoints(sourceMesh?.vertices||[]),center=new THREE.Vector3();
   return box.isEmpty()?center:box.getCenter(center);
 }
-function planeCenter(){
-  const center=meshCenter();
-  center[axis]=offset;
-  return center;
+function originPlanePoint(normal=planeNormal){
+  const center=meshCenter(),n=normal.clone().normalize();
+  return center.addScaledVector(n,-center.dot(n));
+}
+function visualPlaneCenter(){
+  const center=meshCenter(),n=planeNormal.clone().normalize();
+  return center.addScaledVector(n,-(center.clone().sub(planePoint)).dot(n));
+}
+function planeConstant(){return planeNormal.dot(planePoint);}
+function setAxisPreset(name){
+  axis=name;
+  planeNormal.copy(axisVector(name));
+  planePoint.copy(originPlanePoint(planeNormal));
+  updateButtons();
 }
 function setPointer(event){
   const cam=camera(),r=canvas?.getBoundingClientRect();if(!cam||!r?.width||!r?.height)return false;
@@ -101,20 +124,20 @@ function planeVisual(sourceMesh){
   const m=new THREE.MeshBasicMaterial({color:0xffd45c,transparent:true,opacity:.18,side:THREE.DoubleSide,depthTest:false,depthWrite:false});
   const plane=new THREE.Mesh(g,m);
   plane.userData.boxlabSymmetryPlane=true;
-  if(axis==='x')plane.rotation.y=Math.PI/2;
-  else if(axis==='y')plane.rotation.x=Math.PI/2;
-  plane.position.copy(planeCenter());
+  plane.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1),planeNormal.clone().normalize());
+  plane.position.copy(visualPlaneCenter());
   plane.renderOrder=20;
   const wire=new THREE.LineSegments(new THREE.EdgesGeometry(g),new THREE.LineBasicMaterial({color:0xffd45c,transparent:true,opacity:.95,depthTest:false}));
-  wire.rotation.copy(plane.rotation);wire.position.copy(plane.position);wire.renderOrder=21;
+  wire.quaternion.copy(plane.quaternion);wire.position.copy(plane.position);wire.renderOrder=21;
   const group=new THREE.Group();group.add(plane,wire);planeSurface=plane;return group;
 }
 function updateReadout(snap=null){
-  if(planeReadout)planeReadout.textContent=`Offset ${offset.toFixed(3)}${snap?` · Snap ${snap}`:''}`;
+  const label=axis==='custom'?'Custom':axis.toUpperCase();
+  if(planeReadout)planeReadout.textContent=`${label} · d ${planeConstant().toFixed(3)}${snap?` · Snap ${snap}`:''}`;
 }
 function buildPreview(snapLabel=null){
   if(!active||!source)return false;
-  const result=symmetryBisect(source,{axis,keep,offset,mirror:!!mirrorToggle?.checked});
+  const result=symmetryBisect(source,{axis:axis==='custom'?'x':axis,keep,planeNormal,planePoint,mirror:!!mirrorToggle?.checked});
   disposePreview();updateReadout(snapLabel);
   if(!result.ok){setStatus(`Symmetry/Bisect preview unavailable • ${result.reason}`);return false;}
   const targetScene=scene();if(!targetScene)return false;
@@ -124,12 +147,12 @@ function buildPreview(snapLabel=null){
   fill.renderOrder=18;wire.renderOrder=19;
   preview=new THREE.Group();preview.name='BoxLab Symmetry Bisect Preview';preview.userData.boxlabSymmetryPreview=true;preview.add(fill,wire,planeVisual(source));
   targetScene.add(preview);
-  setStatus(`Symmetry/Bisect • ${axis.toUpperCase()} plane ${offset.toFixed(3)} • Keep ${keep==='positive'?'+':'−'} • ${mirrorToggle?.checked?'Mirror':'Bisect only'}${snapLabel?` • Snap ${snapLabel}`:''}`);
+  setStatus(`Symmetry/Bisect • ${axis==='custom'?'Custom':axis.toUpperCase()} plane • Keep ${keep==='positive'?'+':'−'} • ${mirrorToggle?.checked?'Mirror':'Bisect only'}${snapLabel?` • Snap ${snapLabel}`:''}`);
   return true;
 }
 function cancel({silent=false}={}){
   if(drag&&globalThis.__boxlabBridgeState?.controls)globalThis.__boxlabBridgeState.controls.enabled=true;
-  drag=null;disposePreview();active=false;objectId=null;source=null;offset=0;endSession();sync();
+  drag=null;disposePreview();active=false;objectId=null;source=null;axis='x';planeNormal.set(1,0,0);planePoint.set(0,0,0);endSession();sync();
   if(!silent)setStatus('Symmetry / Bisect cancelled');
 }
 function forceRender(){
@@ -144,7 +167,7 @@ function sync(){
   if(active&&!toolSession()?.isActive?.('symmetry-bisect'))beginSession();
 }
 function updateButtons(){
-  axisButtons.forEach(b=>b.classList.toggle('active',b.dataset.symAxis===axis));
+  axisButtons.forEach(b=>b.classList.toggle('active',axis!=='custom'&&b.dataset.symAxis===axis));
   keepButtons.forEach(b=>b.classList.toggle('active',b.dataset.symKeep===keep));
 }
 function planeHit(event){
@@ -200,56 +223,97 @@ function geometrySnap(event){
   const other=otherGeometrySnap(event);if(other)return other;
   return faceSnap(event);
 }
-function beginPlaneDrag(event){
+function movePlaneToSnap(snap){
+  const delta=snap.position.clone().sub(planePoint).dot(planeNormal);
+  planePoint.addScaledVector(planeNormal,delta);
+}
+function beginInteraction(event){
   if(!active||event.target!==canvas||!event.isPrimary||event.pointerType==='touch')return;
-  const hit=planeHit(event);if(!hit)return;
-  const center=planeCenter(),c=screenPoint(center),a=screenPoint(center.clone().add(axisVector()));
-  if(!c||!a)return;
-  const rail=a.sub(c);
-  if(rail.lengthSq()<16){setStatus('Symmetry/Bisect • plane axis nearly end-on • orbit view to move plane');return;}
-  event.preventDefault();event.stopImmediatePropagation();
-  drag={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startOffset:offset,rail};
+  const currentTool=tool();
+  if(currentTool==='scale'){
+    event.preventDefault();event.stopImmediatePropagation();
+    setStatus('Symmetry/Bisect • Scale does not apply to an infinite plane');
+    return;
+  }
+  if(currentTool==='rotate'){
+    const center=visualPlaneCenter(),centerScreen=screenPoint(center);
+    if(!centerScreen)return;
+    event.preventDefault();event.stopImmediatePropagation();
+    drag={
+      kind:'rotate',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,
+      centerScreen,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(centerScreen),
+      startNormal:planeNormal.clone(),constraint:constraint()
+    };
+  }else{
+    const hit=planeHit(event);if(!hit)return;
+    const center=visualPlaneCenter(),c=screenPoint(center),a=screenPoint(center.clone().add(planeNormal));
+    if(!c||!a)return;
+    const rail=a.sub(c);
+    if(rail.lengthSq()<16){setStatus('Symmetry/Bisect • plane normal nearly end-on • orbit view to move plane');return;}
+    event.preventDefault();event.stopImmediatePropagation();
+    drag={kind:'move',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPoint:planePoint.clone(),rail};
+  }
   if(globalThis.__boxlabBridgeState?.controls)globalThis.__boxlabBridgeState.controls.enabled=false;
   canvas.setPointerCapture?.(event.pointerId);
 }
-function movePlaneDrag(event){
+function moveInteraction(event){
   if(!drag||event.pointerId!==drag.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();
-  const snap=geometrySnap(event);
-  if(snap){
-    offset=snap.position[axis];buildPreview(snap.label);return;
+  if(drag.kind==='move'){
+    const snap=geometrySnap(event);
+    planePoint.copy(drag.startPoint);
+    if(snap){movePlaneToSnap(snap);buildPreview(snap.label);return;}
+    const d=new THREE.Vector2(event.clientX-drag.startX,event.clientY-drag.startY);
+    const amount=d.dot(drag.rail)/drag.rail.lengthSq();
+    planePoint.addScaledVector(planeNormal,amount);
+    buildPreview();
+    return;
   }
-  const screenDelta=new THREE.Vector2(event.clientX-drag.startX,event.clientY-drag.startY);
-  offset=drag.startOffset+screenDelta.dot(drag.rail)/drag.rail.lengthSq();
-  buildPreview();
+  const dx=event.clientX-drag.startX;
+  const currentVector=new THREE.Vector2(event.clientX,event.clientY).sub(drag.centerScreen);
+  let angle;
+  if(drag.startVector.length()>18&&currentVector.length()>18){
+    const a=drag.startVector.clone().normalize(),b=currentVector.clone().normalize();
+    angle=Math.atan2(a.x*b.y-a.y*b.x,THREE.MathUtils.clamp(a.dot(b),-1,1));
+  }else angle=dx*.012;
+  if(rotateSnapButton?.classList.contains('active'))angle=THREE.MathUtils.degToRad(Math.round(THREE.MathUtils.radToDeg(angle)/15)*15);
+  const named=['x','y','z'].includes(drag.constraint)?drag.constraint:null;
+  const rotationAxis=named?axisVector(named):(()=>{const v=new THREE.Vector3();camera()?.getWorldDirection(v);return v.normalize();})();
+  planeNormal.copy(drag.startNormal).applyQuaternion(new THREE.Quaternion().setFromAxisAngle(rotationAxis,angle)).normalize();
+  axis='custom';updateButtons();buildPreview();
+  setStatus(`Symmetry/Bisect • Rotate plane • ${named?named.toUpperCase():'View'} • ${THREE.MathUtils.radToDeg(angle).toFixed(0)}°`);
 }
-function endPlaneDrag(event){
+function endInteraction(event){
   if(!drag||event.pointerId!==drag.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();
   drag=null;if(globalThis.__boxlabBridgeState?.controls)globalThis.__boxlabBridgeState.controls.enabled=true;
   buildPreview();
 }
-function cancelPlaneDrag(event){
+function cancelInteraction(event){
   if(!drag||event.pointerId!==drag.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();
-  offset=drag.startOffset;drag=null;if(globalThis.__boxlabBridgeState?.controls)globalThis.__boxlabBridgeState.controls.enabled=true;buildPreview();
+  if(drag.kind==='move')planePoint.copy(drag.startPoint);
+  else planeNormal.copy(drag.startNormal);
+  drag=null;if(globalThis.__boxlabBridgeState?.controls)globalThis.__boxlabBridgeState.controls.enabled=true;buildPreview();
 }
 
 launchButton?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh();
   if(!object||!live||mode()!=='object'||object.locked||object.kind==='reference'||active)return;
   if(mirrorModifierActive()){setStatus('Symmetry / Bisect • turn off the non-destructive Mirror modifier first');return;}
-  source=live.clone();objectId=object.id;active=true;axis='x';keep='positive';offset=0;if(mirrorToggle)mirrorToggle.checked=true;updateButtons();beginSession();buildPreview();
+  source=live.clone();objectId=object.id;active=true;keep='positive';setAxisPreset('x');if(mirrorToggle)mirrorToggle.checked=true;beginSession();
+  queueMicrotask(()=>globalThis.__boxlabTransformArming?.activateRealMove?.());
+  buildPreview();
 });
-axisButtons.forEach(button=>button.addEventListener('click',()=>{axis=button.dataset.symAxis;offset=0;updateButtons();buildPreview();}));
+axisButtons.forEach(button=>button.addEventListener('click',()=>{setAxisPreset(button.dataset.symAxis);buildPreview();}));
 keepButtons.forEach(button=>button.addEventListener('click',()=>{keep=button.dataset.symKeep;updateButtons();buildPreview();}));
-resetPlaneButton?.addEventListener('click',()=>{offset=0;buildPreview();});
+resetPlaneButton?.addEventListener('click',()=>{planePoint.copy(originPlanePoint(planeNormal));buildPreview();});
 mirrorToggle?.addEventListener('change',buildPreview);
 cancelButton?.addEventListener('click',()=>cancel());
 applyButton?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh();
   if(!active||!source||!object||!live||object.id!==objectId){cancel({silent:true});return;}
-  const result=symmetryBisect(source,{axis,keep,offset,mirror:!!mirrorToggle?.checked});
+  const result=symmetryBisect(source,{axis:axis==='custom'?'x':axis,keep,planeNormal,planePoint,mirror:!!mirrorToggle?.checked});
   if(!result.ok){setStatus(`Symmetry / Bisect refused • ${result.reason}`);return;}
   globalThis.__boxlabObjectHistory?.checkpoint?.();
   live.vertices=result.mesh.vertices.map(v=>v.clone());
@@ -257,18 +321,24 @@ applyButton?.addEventListener('click',()=>{
   live.creases=new Map(result.mesh.creases||[]);
   disposePreview();active=false;objectId=null;source=null;drag=null;endSession();
   manager()?.saveActive?.();forceRender();sync();
-  globalThis.__boxlabSymmetryLastResult={version:VERSION,axis,keep,offset:result.offset,mirrored:result.mirrored,cutVertices:result.cutVertices};
-  setStatus(`Symmetry / Bisect applied • ${axis.toUpperCase()} @ ${result.offset.toFixed(3)} • Keep ${keep==='positive'?'+':'−'} • ${result.mirrored?'mirrored + welded':'bisected'}`);
+  globalThis.__boxlabSymmetryLastResult={version:VERSION,axis,keep,planeNormal:result.planeNormal?.toArray?.(),planePoint:result.planePoint?.toArray?.(),mirrored:result.mirrored,cutVertices:result.cutVertices};
+  setStatus(`Symmetry / Bisect applied • ${axis==='custom'?'Custom':axis.toUpperCase()} • Keep ${keep==='positive'?'+':'−'} • ${result.mirrored?'mirrored + welded':'bisected'}`);
 });
 
-window.addEventListener('pointerdown',beginPlaneDrag,true);
-window.addEventListener('pointermove',movePlaneDrag,true);
-window.addEventListener('pointerup',endPlaneDrag,true);
-window.addEventListener('pointercancel',cancelPlaneDrag,true);
+window.addEventListener('pointerdown',beginInteraction,true);
+window.addEventListener('pointermove',moveInteraction,true);
+window.addEventListener('pointerup',endInteraction,true);
+window.addEventListener('pointercancel',cancelInteraction,true);
 window.addEventListener('boxlab-object-manager-ready',sync);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 window.addEventListener('beforeunload',()=>cancel({silent:true}));
 sync();
 
-globalThis.__boxlabSymmetryBisect={version:VERSION,get active(){return active;},get offset(){return offset;},rebuild:buildPreview,cancel};
+globalThis.__boxlabSymmetryBisect={
+  version:VERSION,
+  get active(){return active;},
+  get planeNormal(){return planeNormal.clone();},
+  get planePoint(){return planePoint.clone();},
+  rebuild:buildPreview,cancel
+};
