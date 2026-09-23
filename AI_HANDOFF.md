@@ -63,7 +63,7 @@ Audited from current `main` on 2026-09-21.
 - User hands-on release gate: **PASS**
 - Beta 3 freeze PR: **#55**
 - Beta 3 freeze merge commit: **a227042e2bd2972c96361aedf7840bdcc62c78bb**
-- Current `version.json`: **0.36.18.431**
+- Current `version.json`: **0.36.18.432**
 - Current Phase D wrapper cache pins: **solidify.js?v=0.36.18.393** → core .374; **shell.js?v=0.36.18.393** → core .377; **linear-array.js?v=0.36.18.393** → endpoint-vector behavior .384; **revolve.js?v=0.36.18.393** → core .386; **revolve-profile.js?v=0.36.18.393** → Revolve Profile behavior through .392; **sweep-path.js?v=0.36.18.393** → **sweep-core.js?v=0.36.18.393**
 - Current main runtime pin: **main.js?v=0.36.18.366**
 - Authoritative drawer loader pin: **drawer-ui.js?v=0.36.18.361**
@@ -86,6 +86,17 @@ Audited from current `main` on 2026-09-21.
 - Protected `src/multi-object-transform.js` git blob SHA: **0b6f676900bf9a3787cf420e276bbb0f57ac46ff**
 
 Phase A remains frozen except for concrete regressions. Phase B precision modelling is complete. Phase C Object / instance workflow reached the Beta 3 checkpoint. **Phase D — higher-level modelling features — is now active.**
+
+## Current development — v0.36.18.432 Face Delete orphan compaction
+
+- User found the real Solidify reproduction: deleting three adjacent cube faces leaves an accidental orphan vertex, while extracting/duplicating the same faces compacts the mesh and Solidifies correctly.
+- `EditableMesh.compactUnusedVertices()` now removes vertices no longer referenced by faces while preserving intentional `looseVertices` / `looseEdges` and remapping creases.
+- Face Delete runs the compaction once after the requested multi-face deletion completes.
+- Dedicated regression protects cube → delete faces 0/2/4 → one orphan removed → remaining three-face corner Solidifies successfully.
+- Mirror-aware Solidify from .431 remains in place; this fix addresses the underlying dirty-mesh case independently.
+- Beta 4 remains frozen at v0.36.18.427.
+
+**Hands-on verify .432:** start with a cube, delete three adjacent faces exactly as in the user's failing test, switch to Object mode and Solidify. Confirm it now works. Undo the delete and verify the original cube restores cleanly.
 
 ## Current development — v0.36.18.431 Mirror-seam-aware Solidify
 

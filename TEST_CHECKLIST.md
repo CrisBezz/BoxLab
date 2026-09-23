@@ -799,3 +799,7 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Solidify + Mirror seam: inner seam vertices remain exactly on the mirror plane after thickness offset
 - [ ] Solidify + Mirror seam: evaluated mirrored result is closed/manifold after Apply while the editable half remains open only on symmetry seams
 - [ ] Mirror remains enabled after mirror-aware Solidify Apply
+
+- [ ] Face Delete + Solidify: delete three adjacent faces from a cube and confirm the remaining open 3-face corner Solidifies successfully
+- [ ] Face Delete compaction removes only accidental orphan vertices and does not delete explicitly loose vertices/edges
+- [ ] Face Delete remains one Undo step and restores the original cube cleanly
