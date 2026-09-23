@@ -32,7 +32,7 @@ test('438 Insert is transactional and preserves linked placement ownership',()=>
 
 test('438 shell loads Insert beside Transform and Beta 4 stays frozen',()=>{
   const beta4=JSON.parse(fs.readFileSync(new URL('../beta-4/version.json',import.meta.url),'utf8'));
-  assert.match(index,/src\/surface-transform\.js\?v=0\.36\.18\.441/);
-  assert.match(index,/src\/insert-tool\.js\?v=0\.36\.18\.441/);
+  assert.match(index,/src\/surface-transform\.js\?v=0\.36\.18\.442/);
+  assert.match(index,/src\/insert-tool\.js\?v=0\.36\.18\.442/);
   assert.equal(beta4.version,'0.36.18.427');
 });
