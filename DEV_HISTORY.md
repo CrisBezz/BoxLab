@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-23 — v0.36.18.439 Mesh Health / Inspect foundation
+
+- User hands-on passed .438 Insert Tool and advanced with /nextbuild.
+- Phase D Transform/Insert slice is now considered functionally established, so development moves into Phase E Import / Repair / Handoff.
+- Added non-destructive Object-mode Mesh Health Tool Session.
+- Audit reports mesh counts and polygon mix, boundary/non-manifold edges, invalid or degenerate faces, zero-area faces, duplicate faces, inconsistent winding, orphan vertices, and intentional loose topology.
+- Open-but-valid meshes are reported as **Open · Clean**, not incorrectly treated as failures.
+- Closed valid meshes report **Closed · Clean**; structural problems report **Issues Found**.
+- Reuses the existing topology seam-conformance summary as the base topology definition.
+- No geometry/history mutation is performed by Inspect.
+- Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+
 ## 2026-09-23 — v0.36.18.438 linked-instance Insert Tool foundation
 
 - Continued the approved Nomad-style Transform interaction into an Insert workflow rather than creating another unrelated placement system.
