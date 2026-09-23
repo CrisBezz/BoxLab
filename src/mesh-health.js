@@ -1,7 +1,8 @@
-import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.440';
-import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.440';
+import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.441';
+import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.441';
+import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.441';
 
-const VERSION='0.36.18.440';
+const VERSION='0.36.18.441';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -24,9 +25,10 @@ panel.innerHTML=`
   <div id="meshHealthTopology" style="display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:11px"></div>
   <div class="boxlab-tool-session-section">Findings</div>
   <div id="meshHealthFindings" style="display:flex;flex-direction:column;gap:4px;font-size:11px"></div>
-  <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
+  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
     <button id="meshHealthRefresh" type="button">Refresh</button>
     <button id="meshHealthRepair" type="button">Safe Repair</button>
+    <button id="meshHealthAutoClose" type="button">Auto Close</button>
     <button id="meshHealthClose" class="boxlab-tool-session-primary" type="button">Close</button>
   </div>
 `;
@@ -38,6 +40,7 @@ const topology=panel.querySelector('#meshHealthTopology');
 const findings=panel.querySelector('#meshHealthFindings');
 const refreshButton=panel.querySelector('#meshHealthRefresh');
 const repairButton=panel.querySelector('#meshHealthRepair');
+const autoCloseButton=panel.querySelector('#meshHealthAutoClose');
 const closeButton=panel.querySelector('#meshHealthClose');
 let active=false,last=null,objectId=null;
 
@@ -75,6 +78,8 @@ function renderReport(){
   for(const item of last.warnings)addFinding('warning',item);
   const repairable=Number(last.duplicateFaces||0)+Number(last.zeroAreaFaces||0)+Number(last.orphanVertices||0);
   if(repairButton)repairButton.disabled=!repairable;
+  const boundary=last.state==='open-clean'?simpleBoundaryLoops(mesh):null;
+  if(autoCloseButton)autoCloseButton.disabled=!(last.state==='open-clean'&&boundary?.ok&&boundary.loops?.length);
   if(!last.issues.length&&!last.warnings.length){
     const row=document.createElement('div');row.textContent='✓ No topology findings';findings.append(row);
   }
@@ -107,6 +112,29 @@ function repair(){
   setStatus(`Mesh Health • Safe Repair • ${parts.join(' • ')}`);
   return true;
 }
+function autoClose(){
+  const object=activeObject(),mesh=liveMesh(),history=globalThis.__boxlabObjectHistory;
+  if(!active||!object||object.id!==objectId||!mesh)return false;
+  const beforeScene=history?.capture?.()||null;
+  const result=autoCloseSimpleHoles(mesh);
+  if(!result.ok){
+    setStatus(result.reason==='branched-boundary'?'Mesh Health • Auto Close refused • boundary branches':'Mesh Health • Auto Close refused • repair manually');
+    renderReport();
+    return false;
+  }
+  if(!result.changed){
+    setStatus(result.reason==='already-closed'?'Mesh Health • already watertight':'Mesh Health • no closable boundary loops');
+    renderReport();
+    return false;
+  }
+  manager()?.saveActive?.();
+  if(beforeScene)history?.checkpointSnapshot?.(beforeScene);
+  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  window.dispatchEvent(new CustomEvent('boxlab-mesh-auto-close',{detail:result}));
+  renderReport();
+  setStatus(`Mesh Health • Auto Close • ${result.holesClosed} hole${result.holesClosed===1?'':'s'} capped • WATERTIGHT`);
+  return true;
+}
 function close(){
   if(!active)return;
   active=false;objectId=null;panel.hidden=true;toolSession()?.end?.('mesh-health');
@@ -122,6 +150,7 @@ function launch(){
 launchButton?.addEventListener('click',launch);
 refreshButton?.addEventListener('click',renderReport);
 repairButton?.addEventListener('click',repair);
+autoCloseButton?.addEventListener('click',autoClose);
 closeButton?.addEventListener('click',close);
 window.addEventListener('boxlab-bridge-state',()=>{
   if(!active)return;
@@ -130,4 +159,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{if(active&&currentMode()!=='object')close();}));
 
-globalThis.__boxlabMeshHealth={version:VERSION,analyze:analyzeMeshHealth,repair,get active(){return active;},get last(){return last;},refresh:renderReport,close};
+globalThis.__boxlabMeshHealth={version:VERSION,analyze:analyzeMeshHealth,repair,autoClose,get active(){return active;},get last(){return last;},refresh:renderReport,close};
