@@ -71,9 +71,9 @@ test('451 runtime keeps protected modelling pins and loads presentation wrapper 
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
   assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.452/);
-  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.451/);
-  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.451/);
-  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.451/);
-  assert.match(index,/ui-presentation-451\.js\?v=0\.36\.18\.451/);
+  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.452/);
+  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.452/);
+  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.452/);
+  assert.match(index,/ui-presentation-451\.js\?v=0\.36\.18\.452/);
   assert.equal(beta4.version,'0.36.18.427');
 });
