@@ -21,9 +21,8 @@ document.addEventListener('click',event=>{
   const bevelButton=event.target?.closest?.('#vertexBevelBtn');
   if(bevelButton){
     event.preventDefault();event.stopImmediatePropagation();
-    armed=!armed;
-    if(armed){globalThis.__boxlabTransformArming?.disarm?.();if(bridge()?.mode?.()!=='vertex')document.querySelector('#selectionModes button[data-mode="vertex"]')?.click();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'vertex-bevel'}}));}
-    syncButton();updateStatus();
+    if(bridge()?.mode?.()!=='vertex')document.querySelector('#selectionModes button[data-mode="vertex"]')?.click();
+    armed=!armed;syncButton();updateStatus();
     return;
   }
   if(!armed||!event.isTrusted)return;
@@ -62,6 +61,3 @@ function end(event){
   updateStatus();render();
 }
 canvas?.addEventListener('pointerup',end,true);canvas?.addEventListener('pointercancel',end,true);
-
-
-globalThis.__boxlabDirectVertexBevel={version:'0.36.18.452',get active(){return armed;},disarm};
