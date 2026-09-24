@@ -7,7 +7,7 @@ import { topologyInfo, classifyPoint } from './boolean-classify.js?v=0.36.18.210
 import { booleanBSP } from './boolean-bsp.js?v=0.36.18.248';
 import { combineEditableMeshes } from './object-join-core.js?v=0.36.18.277';
 
-const VERSION='0.36.18.247';
+const VERSION='0.36.18.454';
 const CONVEX_ONLY='Current Boolean supports convex solids only';
 const DEGENERATE_INPUT='Degenerate face in Boolean input';
 const status=document.querySelector('#selectionStatus');
@@ -298,14 +298,13 @@ function apply(operation){
   setStatus(`Boolean ${operation} • calculating…`);
   const result=e.kind==='groups'?buildGroupResult(e.active,e.other,operation):buildResult(e.active.mesh,e.other.mesh,operation);
   if(!result.ok){setStatus(`Boolean ${operation} refused • ${result.reason}`);return;}
-  const beforeScene=globalThis.__boxlabObjectHistory?.capture?.()||null;
+  globalThis.__boxlabObjectHistory?.checkpoint?.();
   const originals=e.originals||[e.active,e.other],visibility=new Map(originals.map(o=>[o.id,o.visible!==false]));
   for(const object of originals)object.visible=false;
   const label=operation==='difference'?'Cut':operation==='intersection'?'Intersect':'Union';
   const created=manager()?.addMesh?.(result.mesh,nextBooleanName(e.active.name),{kind:'editable',visible:true,locked:false,enterObjectMode:true});
   if(!created){for(const object of originals)object.visible=visibility.get(object.id)!==false;setStatus(`Boolean ${label} failed • result object could not be created`);return;}
   selection()?.select?.([created.id]);
-  if(beforeScene)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(beforeScene);
   globalThis.__boxlabTopologyGate?.sync?.();
   const fallbackText=result.fallbackReason===DEGENERATE_INPUT?' • repaired degenerate input':'';const engineText=result.engine==='compound'?'compound solver':result.engine==='sequential'?'sequential solver':'stable solver';
   const sourceText=e.kind==='groups'?' • source Groups hidden':' • originals hidden';
