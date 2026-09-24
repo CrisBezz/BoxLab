@@ -887,3 +887,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .445: Extrude/Inset/face split descendants inherit the parent facegroup
 - [ ] Facegroups .445: Mirror/SubD descendants inherit parent facegroups
 - [ ] Facegroups .445: new Auto Close cap faces are ungrouped
+
+- [ ] Facegroups .446: Viewport > Render Look includes Facegroups
+- [ ] Facegroups .446: imported groups display with distinct stable colours
+- [ ] Facegroups .446: ungrouped faces display neutral grey
+- [ ] Facegroups .446: switching back to Studio/Solid restores normal rendering
+- [ ] Facegroups .446: Mirror/SubD descendants retain and display inherited group colours
+- [ ] Facegroups .446: inactive objects also show facegroup colours

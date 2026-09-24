@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.445**
+- Current live version / branch target: **v0.36.18.446**
 - Current main HEAD at audit: **66e9e6e00d7734a0c5f0df28b1f8413bd6a220b9**
 - Latest code-bearing release merge: **v0.36.18.445 / PR #132 / squash `66e9e6e00d7734a0c5f0df28b1f8413bd6a220b9`**
 - Latest regression: **35949682949 PASS**
@@ -51,6 +51,16 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.446 — Viewport Facegroup Colours
+
+- Adds **Facegroups** as a Viewport > Render Look option.
+- Uses preserved `EditableMesh.faceGroups[]` metadata from .445; no mesh/export data is changed by the display mode.
+- Each facegroup gets a stable deterministic colour from its group name.
+- Ungrouped faces display in neutral grey.
+- Facegroup colours are lighting-aware through a MeshStandardMaterial rather than a flat debug overlay.
+- Active and inactive scene objects both use the evaluated display mesh, so Mirror/SubD inherited facegroups display correctly.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.445 — OBJ facegroup preservation foundation
 
