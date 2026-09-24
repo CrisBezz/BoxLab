@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.448 Facegroups first-activation fix
+
+- User reported that first selecting Viewport > Facegroups showed an almost-black mesh until Default/Soft/Vivid/Contrast was pressed.
+- Fixed render lifecycle so Facegroups rebuilds then reapplies after viewport/evaluated mesh synchronisation.
+- Vertex-colour facegroup material is no longer assigned when colour application fails.
+- Failure falls back to normal material rather than a dark invalid state.
+- No topology, facegroup IDs, OBJ handoff data, or protected modelling/navigation runtimes changed.
+
 ## 2026-09-24 — v0.36.18.447 Facegroup colour controls
 
 - User hands-on passed .446 Facegroups Render Look and requested direct colour controls before the broader UI/UX cleanup.

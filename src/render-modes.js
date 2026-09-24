@@ -148,9 +148,18 @@ function applyMode(body){
   else if(mode==='facegroups'){
     const source=evaluatedMeshForBody(body);
     const result=applyFaceGroupColours(body.geometry,source,facegroupView);
-    body.material=inactive?facegroupInactiveMaterial:facegroupMaterial;
-    addBackface(body);
-    body.userData.boxlabFacegroupCount=result?.groups||0;
+    if(result?.ok){
+      body.material=inactive?facegroupInactiveMaterial:facegroupMaterial;
+      body.material.needsUpdate=true;
+      addBackface(body);
+      body.userData.boxlabFacegroupCount=result.groups||0;
+      delete body.userData.boxlabFacegroupPending;
+    }else{
+      body.material=frontOnly(original);
+      body.material.needsUpdate=true;
+      body.userData.boxlabFacegroupCount=0;
+      body.userData.boxlabFacegroupPending=true;
+    }
   }
   else{body.material=frontOnly(original);addBackface(body);}
 }
@@ -165,10 +174,19 @@ function rebuild(){document.querySelector('#cageToggle')?.dispatchEvent(new Even
 function applyToSceneBodies(){const scene=bridge()?.scene;if(!scene)return false;let found=false;scene.traverse(object=>{const kind=object?.userData?.kind;if(kind==='body'||kind==='boxlab-inactive-body'){applyMode(object);found=true;}});return found;}
 function modeLabel(){if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='facegroups')return'Facegroups';if(mode==='studio')return'Studio';return mode[0].toUpperCase()+mode.slice(1);}
 
+function enterFacegroupsReady(){
+  facegroupView=normaliseFacegroupView(facegroupView);
+  syncFacegroupControls();
+  rebuild();
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    if(mode==='facegroups')applyToSceneBodies();
+  }));
+}
 function setMode(next){
   mode=next;
   document.querySelectorAll('#viewportRenderLooks button[data-render]').forEach(button=>button.classList.toggle('active',button.dataset.render===mode));
-  if(!applyToSceneBodies())rebuild();
+  if(mode==='facegroups')enterFacegroupsReady();
+  else if(!applyToSceneBodies())rebuild();
   syncFacegroupControls();
   document.dispatchEvent(new CustomEvent('boxlab-render-mode-change',{detail:{mode}}));
   if(status)status.textContent=`View • ${modeLabel()}`;

@@ -902,3 +902,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .447: Reseed changes group colour assignment without changing facegroup IDs
 - [ ] Facegroups .447: Reset restores default facegroup display settings
 - [ ] Facegroups .447: settings persist after reload while OBJ export remains unchanged
+
+- [ ] Facegroups .448: from Studio/Solid, first tap on Facegroups immediately shows group colours with no palette-button press
+- [ ] Facegroups .448: first activation never renders the mesh near-black if evaluated mesh/body geometry is temporarily unsynchronised
+- [ ] Facegroups .448: current persisted palette/Saturation/Lightness/Ungrouped settings are applied on first activation
+- [ ] Facegroups .448: switching away and back to Facegroups immediately restores colours
