@@ -19,6 +19,8 @@ test('459 still reserves touch for viewport navigation',()=>{
   assert.match(paint,/if\(event\.pointerType==='touch'\)return/);
 });
 
-test('459 direct Face controller still consumes an already selected face for drag',()=>{
-  assert.match(direct,/const ids=faces\(\);if\(!ids\.length\)return/);
+test('461 direct Face controller can acquire the face itself and begin drag',()=>{
+  assert.match(direct,/let ids=faces\(\);const hit=hitFace\(event,m,camera\)/);
+  assert.match(direct,/if\(!ids\.includes\(hit\)\)/);
+  assert.match(direct,/drag=\{id:event\.pointerId/);
 });
