@@ -912,3 +912,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Viewport .449: menu scrolls vertically with touch/Pencil when content exceeds available height
 - [ ] Viewport .449: Facegroup colour controls and lower Studio Light controls are reachable without browser-page scrolling
 - [ ] Viewport .449: tapping View Direction / Render Look controls still works after scrolling
+
+- [ ] UI .450: Object mode home shows launch buttons only; inactive Symmetry/Transform/Insert/Mesh Health/Array/Revolve/Sweep settings are not visible
+- [ ] UI .450: pressing an Object Tool Session launcher replaces mode-home clutter with that tool's settings, then returns cleanly on Apply/Cancel/Close
+- [ ] UI .450: Boolean appears as one button at rest; Union/Cut/Intersect appear only after pressing Boolean
+- [ ] UI .450: Face mode shows only Shell button at rest; Shell thickness/settings appear only while Shell is active
+- [ ] UI .450: Vertex Slide number/exact controls appear only while Slide is active
+- [ ] UI .450: Vertex Bevel width/exact controls appear only while Bevel is active
+- [ ] UI .450: Edge and Face existing direct-tool behaviour remains unchanged
