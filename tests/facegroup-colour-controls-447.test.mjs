@@ -38,7 +38,7 @@ test('447 viewport controls are contextual and persistent without touching mesh 
   assert.match(render,/panel\.hidden=mode!=='facegroups'/);
   assert.match(render,/localStorage\.setItem\(FACEGROUP_VIEW_KEY/);
   assert.match(render,/applyFaceGroupColours\(body\.geometry,source,facegroupView\)/);
-  assert.match(index,/src\/render-modes\.js\?v=0\.36\.18\.448/);
+  assert.match(index,/src\/render-modes\.js\?v=0\.36\.18\.449/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });
