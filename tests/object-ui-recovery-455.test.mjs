@@ -12,7 +12,7 @@ test('455 Object Selection remains one compact five-button strip',()=>{
 });
 
 test('455 Boolean uses one presentation launcher without broad component wrapper',()=>{
-  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.460/);
+  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.461/);
   assert.doesNotMatch(index,/ui-presentation-451\.js/);
   assert.match(booleanUI,/booleanLaunchBtn/);
   assert.match(booleanUI,/booleanCloseBtn/);
@@ -20,7 +20,7 @@ test('455 Boolean uses one presentation launcher without broad component wrapper
 });
 
 test('455 preserves protected modelling pins',()=>{
-  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.242/);
+  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.461/);
   assert.match(index,/direct-bevel\.js\?v=0\.36\.18\.253/);
   assert.match(index,/direct-multi-vertex-bevel\.js\?v=0\.30\.1/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
