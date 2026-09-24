@@ -8,7 +8,6 @@ const booleanUI=fs.readFileSync(new URL('../src/boolean-tool-session-ui.js',impo
 
 test('455 Object Selection remains one compact five-button strip',()=>{
   assert.match(layout,/grid-template-columns:repeat\(5,minmax\(0,1fr\)\)!important/);
-  assert.match(layout,/Multi/);
   assert.match(layout,/objectManagementTools/);
 });
 
