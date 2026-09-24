@@ -8,6 +8,8 @@
 - Allowed normal Face paint selection while Extrude/Inset are armed so selection can occur first, then the proven controller owns the drag.
 - Legacy Move remains blocked under Face direct tools.
 - No Through topology rewrite and no Bevel changes in this build.
+- Released as a targeted v0.36.18.461 hotfix via PR **#150**; squash merge `5408b084e4f0fd5e953ab8483e7cce29fd1068b4`.
+- Final PR Topology regression run **36073060381 PASS**.
 
 
 ## 2026-09-25 — v0.36.18.461 direct tools own pick + drag
