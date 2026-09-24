@@ -30,7 +30,7 @@ test('453 preserves protected modelling and navigation pins',()=>{
   assert.match(index,/src\/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
-  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.242/);
   assert.match(index,/direct-bevel\.js\?v=0\.36\.18\.253/);
   assert.match(index,/direct-multi-vertex-bevel\.js\?v=0\.30\.1/);
 });
