@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.453**
-- Current main HEAD at audit: **4e2733d1ac38974265a4da9524239429481b90ea**
-- Latest code-bearing release merge: **v0.36.18.452 / PR #139 / squash `4e2733d1ac38974265a4da9524239429481b90ea`**
-- Latest regression: **35988721656 PASS**
+- Current main HEAD at audit: **69a4a8b8ab13bb03f8d93d93ee798106f0b6ed18**
+- Latest code-bearing release merge: **v0.36.18.453 / PR #140 / squash `69a4a8b8ab13bb03f8d93d93ee798106f0b6ed18`**
+- Latest regression: **35991654724 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.453 — Restore proven pre-cleanup interaction runtime
+
+**Released on main via PR #140; squash merge `69a4a8b8ab13bb03f8d93d93ee798106f0b6ed18`. Final PR regression run `35991654724` passed.**
 
 - User hands-on report on .452: the affected modelling tools remained unusable; the .450–.452 UI/ownership recovery path was not successful.
 - Recovery strategy: return the interaction-sensitive runtime to the last hands-on-good .449 behaviour instead of adding another interception/ownership patch.
