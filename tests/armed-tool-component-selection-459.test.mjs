@@ -16,7 +16,7 @@ test('459 keeps finger touch out of paint selection',()=>{
 });
 
 test('459 keeps protected modelling cores pinned',()=>{
-  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.242/);
   assert.match(index,/direct-bevel\.js\?v=0\.36\.18\.253/);
   assert.match(index,/direct-multi-vertex-bevel\.js\?v=0\.30\.1/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
