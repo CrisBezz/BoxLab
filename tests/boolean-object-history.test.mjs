@@ -7,7 +7,7 @@ test('347 Boolean and Join share the authoritative Object scene-history bridge',
   const boolean=fs.readFileSync(new URL('../src/boolean-prototype.js',import.meta.url),'utf8');
   assert.match(management,/#joinObjectsBtn/);
   assert.match(management,/checkpoint()/);
-  assert.match(boolean,/globalThis\.__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
+  assert.match(boolean,/globalThis\.__boxlabObjectHistory\?\.checkpointSnapshot\?\.\(beforeScene\)/);
 });
 
 test('347 Boolean UX no longer wraps the global mesh Undo Redo stack',()=>{

@@ -47,7 +47,7 @@ function install(){
     queueMicrotask(()=>close({silent:true}));
   }));
 
-  globalThis.__boxlabBooleanVisibility={version:'0.36.18.455',open,close};
+  globalThis.__boxlabBooleanVisibility={version:'0.36.18.456',open,close};
   return true;
 }
 
