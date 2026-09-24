@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.452 Tool ownership / Boolean Undo recovery
+
+- User retest of .451: Inset failed; Through passed; Edge Bevel failed; Vertex Bevel failed; Boolean one-step Undo failed; Revolve Profile passed; Edge Revolve failed.
+- Traced the common modelling failure to transform gesture ownership surviving while direct component tools were armed.
+- Fixed this in the transform layer rather than modifying proven Face/Bevel topology controllers.
+- Edge Revolve now has a real arm API instead of launcher -> hidden-button click indirection.
+- Boolean now captures the complete pre-operation scene and checkpoints that snapshot once after successful result creation.
+- No Through topology changes; the strong cavity-aware baseline remains protected.
+- Beta 5 remains deferred pending hands-on confirmation.
+
 ## 2026-09-24 — v0.36.18.451 Cross-mode UI regression recovery
 
 - User hands-on test of .450 reported a common regression pattern across Object / Face / Edge / Vertex.
