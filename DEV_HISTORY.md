@@ -7,6 +7,8 @@
 - Vertex-colour facegroup material is no longer assigned when colour application fails.
 - Failure falls back to normal material rather than a dark invalid state.
 - No topology, facegroup IDs, OBJ handoff data, or protected modelling/navigation runtimes changed.
+- Released via PR **#135**; squash merge `7c8eb0c1c36fe0bc8a69397390771043c0aefe20`.
+- Final PR Topology regression run **35970042762 PASS**.
 
 ## 2026-09-24 — v0.36.18.447 Facegroup colour controls
 
