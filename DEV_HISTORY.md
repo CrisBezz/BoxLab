@@ -10,6 +10,8 @@
 - Revolve Profile can now launch/create directly from Active Tools and Cancel restores the pre-tool scene.
 - Added cross-mode regression checks for controller arming plus presentation-only UI ownership.
 - Beta 5 remains deferred until user hands-on pass.
+- Released via PR **#138**; squash merge `b4ad4077d6813df50699fb53dccd11252809d5b5`.
+- Final PR Topology regression run **35984043420 PASS**.
 
 ## 2026-09-24 — v0.36.18.450 Tool-first UI/UX consolidation
 
