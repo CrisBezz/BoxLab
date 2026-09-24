@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.454 Object UI recovery
+
+- User clarified Boolean itself works; the broken part is the workflow/presentation around Object Multi selection.
+- Object Selection toolbar had regressed to a three-column layout despite the established compact five-button contract.
+- Shared Tool Session CSS was missing the hidden-shell override, causing inactive Object Tool Sessions to appear simultaneously in Active Tools.
+- Restored five-button Object Selection strip and explicit hidden Tool Session shell behavior.
+- Restored only the narrow Boolean launcher/close wrapper; the broader .451 Face/Edge/Vertex presentation wrapper remains disabled.
+- No modelling algorithm changes.
+
+
 ## 2026-09-24 — v0.36.18.453 Proven-runtime recovery
 
 - User hands-on test reported that .452 still left the affected modelling tools unusable.

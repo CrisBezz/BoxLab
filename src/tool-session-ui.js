@@ -14,7 +14,7 @@ style.textContent=`
 #editDrawer[data-tool-session-active="true"]>.drawer-content>:not(#boxlabToolSessionHost){display:none!important}
 #boxlabToolSessionHost[hidden]{display:none!important}
 #boxlabToolSessionHost{display:block!important}
-.boxlab-tool-session-shell{display:flex;flex-direction:column;gap:7px}
+.boxlab-tool-session-shell[hidden]{display:none!important}\n.boxlab-tool-session-shell{display:flex;flex-direction:column;gap:7px}
 .boxlab-tool-session-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:1px 1px 3px}
 .boxlab-tool-session-subtitle{font-size:10px;font-weight:400;opacity:.58;text-transform:none;letter-spacing:0}
 .boxlab-tool-session-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}

@@ -1,5 +1,5 @@
 // BoxLab v0.36.18.260 — native Object selection toolbar lives in Selection.
-const VERSION='0.36.18.260';
+const VERSION='0.36.18.454';
 const selectionDrawer=document.querySelector('#selectionDrawer');
 const componentTools=document.querySelector('#componentSelectionTools');
 const title=document.querySelector('#selectionDrawer .always-selection-title');
@@ -11,8 +11,8 @@ function installStyle(){
   const style=document.createElement('style');
   style.id='boxlabObjectSelectionLayoutStyle';
   style.textContent=`
-#selectionDrawer #objectManagementTools,#selectionDrawer .object-management-tools{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important;margin:0!important;padding:0!important}
-#selectionDrawer #objectManagementTools button,#selectionDrawer .object-management-tools button{min-width:0!important;width:100%!important;padding:5px 5px!important;font-size:10px!important}
+#selectionDrawer #objectManagementTools,#selectionDrawer .object-management-tools{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:4px!important;margin:0!important;padding:0!important}
+#selectionDrawer #objectManagementTools button,#selectionDrawer .object-management-tools button{min-width:0!important;width:100%!important;padding:4px 3px!important;font-size:9.5px!important}
 #selectionDrawer #objectManagementTools .object-management-count,#selectionDrawer .object-management-tools .object-management-count{grid-column:1/-1!important;padding:1px 1px 0!important;margin:0!important;font-size:10px!important;opacity:.62!important}
 #selectionDrawer.object-selection-active #componentSelectionTools{display:none!important}
 #selectionDrawer:not(.object-selection-active) #objectManagementTools,#selectionDrawer:not(.object-selection-active) .object-management-tools{display:none!important}
