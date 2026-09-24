@@ -12,7 +12,7 @@ test('455 Object Selection remains one compact five-button strip',()=>{
 });
 
 test('455 Boolean uses one presentation launcher without broad component wrapper',()=>{
-  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.457/);
+  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.458/);
   assert.doesNotMatch(index,/ui-presentation-451\.js/);
   assert.match(booleanUI,/booleanLaunchBtn/);
   assert.match(booleanUI,/booleanCloseBtn/);

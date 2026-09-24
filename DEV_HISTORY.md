@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — v0.36.18.458 armed Face selection handoff
+
+- User confirmed orbit/pan/zoom and ordinary selection work; Inset fails because a face cannot be highlighted after arming the tool.
+- Found `persistent-face-tool-select.js` present but omitted from the live loader.
+- Restored it immediately before `multi-face-direct.js`, re-enabling tool-first face selection for Extrude/Inset.
+- No UI, topology or navigation changes.
+
+
 ## 2026-09-24 — v0.36.18.457 viewport pointer ownership repair
 
 - User confirmed the UI itself is good but all viewport interaction is dead.
