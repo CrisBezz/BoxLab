@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.455**
-- Current main HEAD at audit: **9cecc658ab40c9a4f8f6e286453cdb8045835e98**
-- Latest code-bearing release merge: **v0.36.18.454 / PR #141 / squash `9cecc658ab40c9a4f8f6e286453cdb8045835e98`**
-- Latest regression: **35994630718 PASS**
+- Current main HEAD at audit: **3ec6d638b08a437480d9be9efb232f4f3783b596**
+- Latest code-bearing release merge: **v0.36.18.455 / PR #143 / squash `3ec6d638b08a437480d9be9efb232f4f3783b596`**
+- Latest regression: **35995205443 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.455 — Object Multi + Boolean presentation recovery
+
+**Released on main via PR #143; squash merge `3ec6d638b08a437480d9be9efb232f4f3783b596`. Final PR regression run `35995205443` passed.**
 
 - User clarified that Boolean geometry works; the problem is the workflow/presentation around selecting operands.
 - Keeps the v0.36.18.454 global iPad interaction ownership recovery intact.
