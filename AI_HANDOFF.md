@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.458**
+- Current live version / branch target: **v0.36.18.459**
 - Current main HEAD at audit: **ad62458c55ec6a5c3bf02f32e389093889874325**
 - Latest code-bearing release merge: **v0.36.18.458 / PR #146 / squash `ad62458c55ec6a5c3bf02f32e389093889874325`**
 - Latest regression: **36062528604 PASS**
@@ -51,6 +51,16 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.459 — Restore armed-tool component selection
+
+- User confirmed navigation and ordinary component selection work; failure occurs only after arming a direct tool.
+- Root cause traced to the .457 component paint guard: `directToolActive()` prevented Face/Edge/Vertex selection whenever Inset/Extrude/Bevel/etc. was armed.
+- Restored the proven pre-UI selector behaviour from .449: Pencil can still select/highlight components while a direct tool is armed.
+- Retained the .457 iPad navigation protection: finger/touch remains reserved for viewport navigation.
+- Removed the .458 `persistent-face-tool-select.js` loader because the known-good .449 runtime did not use that architecture.
+- No topology, Through, navigation or UI layout changes.
+
 
 ### v0.36.18.458 — Restore armed Face selection handoff
 
