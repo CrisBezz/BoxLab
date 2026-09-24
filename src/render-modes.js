@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import {applyFaceGroupColours} from './facegroup-colours-core.js?v=0.36.18.446';
+import {subdivide} from './subdivision.js?v=0.12';
+import {applyMirror} from './mirror.js?v=0.12';
 
 const status=document.querySelector('#selectionStatus');
 let mode='studio';
@@ -13,6 +15,19 @@ let studioRefreshQueued=false;
 const frontMaterialCache=new WeakMap();
 
 function bridge(){return globalThis.__boxlabBridgeState||null;}
+function manager(){return globalThis.__boxlabObjectManager||null;}
+function evaluatedMeshForBody(body){
+  const m=manager();if(!m)return null;
+  const object=body?.userData?.kind==='boxlab-inactive-body'
+    ? m.objects?.find(item=>item.id===body.userData.objectId)
+    : m.objects?.find(item=>item.id===m.activeId);
+  let mesh=(body?.userData?.kind==='body'?bridge()?.mesh:object?.mesh);
+  if(!mesh?.clone)return null;
+  mesh=mesh.clone();
+  const settings=object?.settings||{};
+  if(settings.subd)mesh=subdivide(mesh,Math.max(1,Math.min(4,Number(settings.subdLevel||1))));
+  return applyMirror(mesh,settings.mirror||{x:false,y:false,z:false});
+}
 
 const clayMaterial=new THREE.MeshStandardMaterial({color:0xc8c1b5,roughness:.92,metalness:0,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const studioMaterial=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.48,metalness:.03,emissive:0x05080d,emissiveIntensity:.08,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
@@ -122,7 +137,7 @@ function applyMode(body){
   else if(mode==='wire'){body.material=inactive?wireInactiveSurfaceMaterial:wireSurfaceMaterial;addBackface(body);addWire(body,wireMaterial,13);}
   else if(mode==='xray'){body.material=xrayMaterial;addWire(body,xrayHiddenWireMaterial,10);addWire(body,xrayVisibleWireMaterial,13);}
   else if(mode==='facegroups'){
-    const source=body.userData.boxlabDisplayMesh;
+    const source=evaluatedMeshForBody(body);
     const result=applyFaceGroupColours(body.geometry,source);
     body.material=inactive?facegroupInactiveMaterial:facegroupMaterial;
     addBackface(body);
