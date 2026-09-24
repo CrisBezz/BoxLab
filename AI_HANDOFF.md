@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.450**
-- Current main HEAD at audit: **df6f10db0df4fb6b8bdcc9af4367db9bf9c9827c**
-- Latest code-bearing release merge: **v0.36.18.449 / PR #136 / squash `df6f10db0df4fb6b8bdcc9af4367db9bf9c9827c`**
-- Latest regression: **35974096070 PASS**
+- Current main HEAD at audit: **d77ec35968d0f59a75747c7be573a3fc3d33bc8c**
+- Latest code-bearing release merge: **v0.36.18.450 / PR #137 / squash `d77ec35968d0f59a75747c7be573a3fc3d33bc8c`**
+- Latest regression: **35976396864 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.450 — Tool-first UI/UX consolidation
+
+**Released on main via PR #137; squash merge `d77ec35968d0f59a75747c7be573a3fc3d33bc8c`. Final regression run `35976396864` passed.**
 
 - Begins the dedicated pre-Beta-5 UI/UX cleanup without changing modelling algorithms.
 - Establishes the UI rule: **mode home shows tool buttons only; tool settings are visible only while that tool is active**.
@@ -380,6 +382,7 @@ Do not casually edit:
 - `src/object-management.js?v=0.36.18.392`
 - `src/drawer-ui.js?v=0.36.18.361`
 - `src/boolean-ux-history.js?v=0.36.18.369`
+- `src/boolean-prototype.js?v=0.36.18.369` is regression-protected; UI changes must wrap it rather than repin/rewrite it casually.
 - `src/quad-clean.js?v=0.36.18.339`
 - no service worker
 - avoid broad MutationObservers
