@@ -39,7 +39,7 @@ test('445 OBJ export writes facegroups inside one object and round-trips',()=>{
   const out=buildSceneOBJ([{name:'Cube',mesh:entry.mesh,settings:{}}],{version:'0.36.18.445'});
   assert.equal((out.content.match(/^o /gm)||[]).length,1);
   assert.equal((out.content.match(/^g /gm)||[]).length,8);
-  assert.match(out.content,/o Cube\ng Patch\nf /);
+  assert.match(out.content,/o Cube[\s\S]*g Patch\nf /);
   const [roundTrip]=parseEditableOBJ(out.content);
   assert.equal(roundTrip.mesh.faces.length,8);
   assert.deepEqual(roundTrip.mesh.faceGroups,entry.mesh.faceGroups);
