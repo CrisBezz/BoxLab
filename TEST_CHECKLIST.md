@@ -894,3 +894,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .446: switching back to Studio/Solid restores normal rendering
 - [ ] Facegroups .446: Mirror/SubD descendants retain and display inherited group colours
 - [ ] Facegroups .446: inactive objects also show facegroup colours
+
+- [ ] Facegroups .447: colour controls appear only while Viewport > Facegroups is active
+- [ ] Facegroups .447: Default / Soft / Vivid / High Contrast visibly change the palette
+- [ ] Facegroups .447: Saturation and Lightness update facegroup display live
+- [ ] Facegroups .447: Ungrouped colour updates ungrouped faces only
+- [ ] Facegroups .447: Reseed changes group colour assignment without changing facegroup IDs
+- [ ] Facegroups .447: Reset restores default facegroup display settings
+- [ ] Facegroups .447: settings persist after reload while OBJ export remains unchanged
