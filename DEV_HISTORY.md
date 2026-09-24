@@ -4,7 +4,7 @@
 
 - User hands-on test reported that .452 still left the affected modelling tools unusable.
 - Abandoned the .450–.452 presentation-wrapper/ownership repair direction as the active runtime.
-- Restored transform, Edge Revolve and Revolve Profile interaction runtimes from the last hands-on-good .449 state.
+- Restored transform and Edge Revolve interaction runtimes from the last hands-on-good .449 state; retained the hands-on-passed .452 Revolve Profile controller.
 - Removed the Boolean Tool Session and .451 presentation wrappers from the live loader.
 - Retained the .452 Boolean transactional one-step scene snapshot fix in the core Boolean module.
 - Kept mature Through topology and protected multi-object transform untouched.
