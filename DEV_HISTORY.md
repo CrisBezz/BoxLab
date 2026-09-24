@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.454 iPad interaction ownership recovery
+
+- User hands-on report on .453: Inset, Edge Bevel, Vertex Bevel, Boolean, Edge Revolve and navigation all failed.
+- Reframed the failure as interaction ownership rather than separate topology failures.
+- Component paint selection now ignores touch so finger gestures remain available to OrbitControls.
+- Paint selection yields to armed direct modelling tools; shared transform gestures also yield to authoritative direct-tool state.
+- Symmetry/Bisect, Surface Transform and Insert attach capture-phase pointer listeners only while active.
+- Restored authoritative hidden state for inactive Tool Session shells.
+- Restored frozen Beta 4 Boolean checkpoint-before-mutation transaction path.
+- Protected multi-object transform remained untouched.
+- Released via PR **#141**; squash merge `9cecc658ab40c9a4f8f6e286453cdb8045835e98`.
+- Final PR Topology regression run **35994630718 PASS**.
+
+
 ## 2026-09-24 — v0.36.18.453 Proven-runtime recovery
 
 - User hands-on test reported that .452 still left the affected modelling tools unusable.
