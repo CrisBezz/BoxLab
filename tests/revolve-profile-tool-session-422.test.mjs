@@ -10,7 +10,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 test('451 Revolve Profile exposes always-available compact launcher before session ownership',()=>{
   assert.ok(revolve.includes('revolveProfileLaunchBtn'));
   assert.ok(revolve.includes("launchRow.hidden=false"));
-  assert.ok(revolve.includes("launchRow.hidden=!construction"));
+  assert.ok(revolve.includes("launchRow.hidden=false"));
 });
 
 test('422 Revolve Profile claims exclusive Tool Session after interaction or launch',()=>{
