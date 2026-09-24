@@ -19,10 +19,13 @@ function syncSessionShells(){
   });
 }
 function syncFace(){
-  const direct=active('#extrudeBtn')||active('#insetBtn')||
-    document.querySelector('#extrudeBtn')?.classList.contains('boxlab-direct-stable')||
-    document.querySelector('#insetBtn')?.classList.contains('boxlab-direct-stable');
+  const extrude=active('#extrudeBtn')||document.querySelector('#extrudeBtn')?.classList.contains('boxlab-direct-stable');
+  const inset=active('#insetBtn')||document.querySelector('#insetBtn')?.classList.contains('boxlab-direct-stable');
+  const direct=extrude||inset;
   showPair('#precisionFaceRow',direct);
+  const row=document.querySelector('#precisionFaceRow');
+  const label=row?.querySelector('span');
+  if(label&&direct)label.textContent=extrude?'Extrude Exact':'Inset Exact';
 }
 function syncVertex(){
   const slide=active('#vertexSlideBtn'),bevel=active('#vertexBevelBtn');
@@ -31,11 +34,16 @@ function syncVertex(){
   shown(vertexTools?.querySelector('.vertex-bevel-options'),bevel,'grid');
 }
 function syncEdge(){
-  const bevel=active('#bevelBtn'),slide=active('#edgeSlideBtn'),offset=active('#offsetLoopBtn');
+  const bevel=active('#bevelBtn'),slide=active('#edgeSlideBtn'),offset=active('#offsetLoopBtn'),loop=active('#loopCutBtn'),crease=active('#applyCreaseBtn');
   showPair('#precisionEdgeBevelRow',bevel);
   showPair('#precisionEdgeSlideRow',slide);
   showPair('#precisionOffsetLoopRow',offset);
   edgeTools?.querySelectorAll('.bevel-option > .range-row').forEach(row=>shown(row,bevel,'grid'));
+  shown(edgeTools?.querySelector('.loop-cut-option'),loop,'grid');
+  shown(edgeTools?.querySelector('.offset-option'),offset,'grid');
+  shown(edgeTools?.querySelector('.crease-options'),crease,'block');
+  const loopSlide=edgeTools?.querySelector('.loop-slide-option');
+  shown(loopSlide,!!loopSlide?.querySelector('input')&&!loopSlide.querySelector('input').disabled,'grid');
   const revolve=globalThis.__boxlabRevolve;
   shown(edgeTools?.querySelector('.revolve-controls'),!!revolve?.active,'block');
 }
