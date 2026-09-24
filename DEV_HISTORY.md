@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.445 OBJ facegroup preservation foundation
+
+- User clarified Nomad/Blender/ZBrush facegroup semantics: facegroups are per-face IDs inside one object, not separate objects.
+- Corrected editable OBJ parsing so `o` creates object boundaries and `g` only changes per-face facegroup metadata.
+- Added `EditableMesh.faceGroups[]` and preservation through clone, Extrude, Inset, face split, Triangulate, Mirror and SubD.
+- Added File > Import > **Split objects by groups** checkbox, OFF by default, to deliberately reproduce split-by-group behavior when wanted.
+- OBJ export now emits preserved `g` records within each object and clears groups when required.
+- Safe Repair preserves surviving group metadata; Auto Close caps are intentionally ungrouped.
+- Added regression coverage for one object with eight facegroups, explicit split mode, OBJ round-trip, and parent-to-descendant inheritance.
+- Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+
 ## 2026-09-24 — v0.36.18.444 OBJ export polish / topology preflight
 
 - User hands-on passed .443 normals/triangulation and advanced with /nextbuild.
