@@ -9,6 +9,8 @@
 - Controls remain hidden unless Facegroups is the active Render Look.
 - No facegroup IDs, mesh topology, or OBJ handoff data are changed.
 - Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+- Released via PR **#134**; squash merge `cfd8e9e64f84e8a3f5b19dfb0dd5de3f421a0bf3`.
+- Final PR Topology regression run **35955642406 PASS**.
 
 ## 2026-09-24 — v0.36.18.446 Viewport Facegroup Colours
 
