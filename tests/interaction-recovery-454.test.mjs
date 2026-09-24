@@ -7,8 +7,8 @@ const paint=fs.readFileSync(new URL('../src/edge-paint-select.js',import.meta.ur
 const transform=fs.readFileSync(new URL('../src/transform-upgrade.js',import.meta.url),'utf8');
 const toolSession=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.url),'utf8');
 
-test('457 keeps proven transform routing while component paint yields to direct tools and touch navigation',()=>{
-  assert.match(paint,/function directToolActive\(\)/);
+test('459 keeps proven transform routing while armed tools still permit component selection and touch navigation',()=>{
+  assert.doesNotMatch(paint,/function directToolActive\(\)/);
   assert.match(paint,/if\(event.pointerType==='touch'\)return/);
   assert.doesNotMatch(transform,/function directComponentToolActive\(\)/);
   assert.match(transform,/function directFaceToolActive\(\)/);
