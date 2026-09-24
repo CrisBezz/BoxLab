@@ -948,3 +948,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Edge Revolve arms and produces its preview/result using the proven pre-cleanup interaction path
 - [ ] orbit / pan / zoom remain available whenever no direct tool owns the gesture
 - [ ] the .450-.452 presentation wrappers are not loaded in the live runtime
+
+
+## v0.36.18.454 interaction recovery
+
+- [ ] one-finger touch orbits without component paint-selection stealing the gesture
+- [ ] two-finger pan and pinch zoom begin reliably over mesh geometry
+- [ ] Face Inset arms and drags the inset rather than moving the selected Face
+- [ ] Edge Bevel arms and Pencil drag produces a bevel
+- [ ] Vertex Bevel arms and Pencil drag produces a bevel
+- [ ] Boolean operation completes and one Undo restores the pre-operation scene
+- [ ] Edge Revolve arms and produces its preview/result
+- [ ] inactive Symmetry / Transform / Insert sessions do not affect viewport interaction
