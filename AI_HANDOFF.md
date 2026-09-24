@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.461**
+- Current live version / branch target: **v0.36.18.462**
 - Current main HEAD at audit: **a3c1fa4200da58dd01a1f54b337ae32053a3e341**
 - Latest code-bearing release merge: **v0.36.18.461 / PR #149 / squash `a3c1fa4200da58dd01a1f54b337ae32053a3e341`**
 - Latest regression: **36068948326 PASS**
@@ -51,6 +51,20 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.462 — Restore proven Face direct path; isolate Inset selection
+
+- User confirmed .461 broke Extrude as well as Inset.
+- Reverted `multi-face-direct.js` to the proven .242 controller used when Extrude/Through was confirmed working.
+- Removed the .461 self-pick Face-controller change.
+- Face paint selection is again allowed while Extrude/Inset is armed.
+- Intended interaction:
+  - no selection: first Pencil tap selects/highlights the face;
+  - selected face: next drag is captured by the proven Face direct controller;
+  - preselected face: first drag after arming goes directly to Extrude/Inset.
+- Legacy Move remains blocked while Face direct tools are armed.
+- Bevel ownership is unchanged in this build.
+
 
 ### v0.36.18.461 — Direct tools own pick + drag
 
