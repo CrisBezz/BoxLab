@@ -10,7 +10,7 @@ const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]'
 const launchRow=document.createElement('div');
 launchRow.className='outliner-actions revolve-profile-launch-row';
 launchRow.style.gridTemplateColumns='1fr';
-launchRow.hidden=true;
+launchRow.hidden=false;
 launchRow.innerHTML='<button id="revolveProfileLaunchBtn" type="button">Revolve Profile</button>';
 objectTools?.appendChild(launchRow);
 const launchButton=launchRow.querySelector('#revolveProfileLaunchBtn');
@@ -32,7 +32,10 @@ controls.innerHTML=`
     <input id="revolveProfileSegments" type="range" min="3" max="64" value="24" step="1"/>
     <output id="revolveProfileSegmentsOut">24</output>
   </label>
-  <button id="revolveProfileApplyBtn" class="boxlab-tool-session-primary" type="button">Apply Revolve</button>
+  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
+    <button id="revolveProfileCancelBtn" type="button">Cancel</button>
+    <button id="revolveProfileApplyBtn" class="boxlab-tool-session-primary" type="button">Apply Revolve</button>
+  </div>
 `;
 objectTools?.appendChild(controls);
 
@@ -43,8 +46,9 @@ const clearButton=controls.querySelector('#revolveProfileClearBtn');
 const segmentInput=controls.querySelector('#revolveProfileSegments');
 const segmentOut=controls.querySelector('#revolveProfileSegmentsOut');
 const applyButton=controls.querySelector('#revolveProfileApplyBtn');
+const cancelButton=controls.querySelector('#revolveProfileCancelBtn');
 
-let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0,cachedActiveId=null,cachedActiveObject=null;
+let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0,cachedActiveId=null,cachedActiveObject=null,profileBeforeScene=null,profileUndoDepth=null,profileRedoDepth=null;
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
 
@@ -214,11 +218,11 @@ function planeSurface(frame){
 }
 function buildOverlay(){
   const object=profileObject(),mesh=liveMesh(),scene=state()?.scene;
-  if(!object||!scene){disposeOverlay();launchRow.hidden=true;endRevolveSession();activeProfileId=null;return;}
+  if(!object||!scene){disposeOverlay();launchRow.hidden=false;endRevolveSession();activeProfileId=null;return;}
   const meta=ensureMeta(object);
   const construction=looksConstructionMesh(mesh);
   meta.applied=!construction;
-  launchRow.hidden=!construction;
+  launchRow.hidden=false;
   if(!construction){disposeOverlay();activeProfileId=object.id;endRevolveSession();return;}
   activeProfileId=object.id;
   const currentPlaneSignature=planeSignature(mesh);
@@ -347,8 +351,12 @@ function cancelProfilePointer(event){
   lastSignature='';
 }
 function addRevolveProfile(){
-  const m=manager();if(!m?.addMesh)return;
+  const m=manager();if(!m?.addMesh)return null;
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
+  const history=globalThis.__boxlabHistory;
+  profileBeforeScene=before;
+  profileUndoDepth=Array.isArray(history?.undoStack)?history.undoStack.length:null;
+  profileRedoDepth=Array.isArray(history?.redoStack)?history.redoStack.length:null;
   const object=m.addMesh(constructionPlane(),'Revolve Profile',{enterObjectMode:true});
   if(!object)return;
   cachedActiveId=object.id;cachedActiveObject=object;
@@ -356,6 +364,24 @@ function addRevolveProfile(){
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
   setStatus('Revolve Profile added • position/snap the plane first • then tap Edit Profile');
   lastSignature='';
+  return object;
+}
+function cancelRevolveProfile(){
+  drag=null;
+  if(state()?.controls)state().controls.enabled=true;
+  disposeOverlay();
+  endRevolveSession();
+  const history=globalThis.__boxlabHistory;
+  if(profileBeforeScene&&globalThis.__boxlabObjectHistory?.restore){
+    globalThis.__boxlabObjectHistory.restore(profileBeforeScene);
+    if(Array.isArray(history?.undoStack)&&Number.isInteger(profileUndoDepth))history.undoStack.length=profileUndoDepth;
+    if(Array.isArray(history?.redoStack)&&Number.isInteger(profileRedoDepth))history.redoStack.length=profileRedoDepth;
+  }
+  profileBeforeScene=null;profileUndoDepth=null;profileRedoDepth=null;
+  activeProfileId=null;cachedActiveId=null;cachedActiveObject=null;lastSignature='';
+  setStatus('Revolve Profile cancelled');
+  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  return true;
 }
 function applyRevolve(){
   const object=profileObject(),mesh=liveMesh();if(!object||!looksConstructionMesh(mesh))return false;
@@ -371,7 +397,7 @@ function applyRevolve(){
   manager()?.saveActive?.();
   globalThis.__boxlabObjectSelection?.single?.(object.id);
   globalThis.__boxlabBooleanUX?.sync?.();
-  disposeOverlay();launchRow.hidden=true;controls.hidden=true;lastSignature='';
+  disposeOverlay();launchRow.hidden=false;controls.hidden=true;lastSignature='';
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   setStatus(`Revolve applied • ${meta.segments} segments • ${result.faces} faces`);
   return true;
@@ -396,11 +422,15 @@ function installPenRange(input,onValue){
 
 window.addEventListener('boxlab-add-revolve-profile',addRevolveProfile);
 launchButton?.addEventListener('click',()=>{
-  const object=profileObject(),mesh=liveMesh();
+  let object=profileObject(),mesh=liveMesh();
+  if(!object||!looksConstructionMesh(mesh)){
+    object=addRevolveProfile();
+    mesh=liveMesh();
+  }
   if(!object||!looksConstructionMesh(mesh))return;
   const meta=ensureMeta(object);
   claimRevolveTools(meta);
-  setStatus('Revolve Profile • edit profile, adjust Segments, then Apply Revolve');
+  setStatus('Revolve Profile • position/snap plane, Edit Profile, then Apply Revolve');
   lastSignature='';
 });
 window.addEventListener('pointerdown',beginProfilePointer,true);
@@ -432,7 +462,8 @@ installPenRange(segmentInput,()=>{
   meta.segments=Math.max(3,Math.min(64,Math.round(Number(segmentInput.value)||24)));
   segmentOut.textContent=String(meta.segments);lastSignature='';
 });
-applyButton.addEventListener('click',applyRevolve);
+applyButton.addEventListener('click',()=>{if(applyRevolve()){profileBeforeScene=null;profileUndoDepth=null;profileRedoDepth=null;}});
+cancelButton?.addEventListener('click',cancelRevolveProfile);
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedActiveId=null;cachedActiveObject=null;lastSignature='';buildOverlay();}));
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(()=>{lastSignature='';buildOverlay();})));
 window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();endRevolveSession();});
@@ -442,6 +473,7 @@ globalThis.__boxlabRevolveProfile={
   version:VERSION,
   add:addRevolveProfile,
   apply:applyRevolve,
+  cancel:cancelRevolveProfile,
   get active(){return !!profileObject()&&looksConstructionMesh(liveMesh());},
   rebuild(){lastSignature='';buildOverlay();}
 };
