@@ -10,6 +10,8 @@
 - Kept mature Through topology and protected multi-object transform untouched.
 - Added regression checks that the failed wrappers are not loaded and protected runtime pins remain intact.
 - Beta 5 remains deferred until hands-on recovery passes.
+- Released via PR **#140**; squash merge `69a4a8b8ab13bb03f8d93d93ee798106f0b6ed18`.
+- Final PR Topology regression run **35991654724 PASS**.
 
 
 ## 2026-09-24 — v0.36.18.452 Tool ownership / Boolean Undo recovery
