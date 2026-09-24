@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.457**
+- Current live version / branch target: **v0.36.18.458**
 - Current main HEAD at audit: **b4ce2101bc749193a4f03934889efbf8500ceb5f**
 - Latest code-bearing release merge: **v0.36.18.457 / PR #145 / squash `b4ce2101bc749193a4f03934889efbf8500ceb5f`**
 - Latest regression: **35998556661 PASS**
@@ -51,6 +51,15 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.458 — Restore armed Face selection handoff
+
+- User confirmed viewport navigation and ordinary component selection are working; failure occurs only after arming a direct tool such as Inset.
+- Root cause: `persistent-face-tool-select.js` existed in the repo but was not loaded by `index.html`.
+- That module is the explicit handoff for the tool-first workflow: arm Extrude/Inset, then Pencil-select a face, then let `multi-face-direct.js` own the drag.
+- Restored the handoff loader immediately before `multi-face-direct.js`.
+- No UI layout, topology, Through, transform or navigation changes.
+
 
 ### v0.36.18.457 — Viewport pointer ownership repair
 
