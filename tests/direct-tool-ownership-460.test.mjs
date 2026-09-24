@@ -11,18 +11,20 @@ test('461 keeps the useful 460 legacy-Move yield',()=>{
   assert.match(main,/extrudeBtn\.boxlab-direct-stable,#insetBtn\.boxlab-direct-stable,#bevelBtn\.active/);
 });
 
-test('461 supersedes the 460 coordinator with direct self-picking',()=>{
+test('462 supersedes the 460 coordinator by restoring proven selected-face ownership',()=>{
   assert.doesNotMatch(index,/direct-tool-ownership-460\.js/);
-  assert.match(face,/const hit=hitFace\(event,m,camera\)/);
-  assert.match(face,/bridge\(\)\?\.set\?\.\('face',ids\)/);
+  assert.match(face,/const ids=faces\(\);if\(!ids\.length\)return/);
+  assert.match(face,/hitSelectedFace\(event,m,ids,camera\)/);
 });
 
-test('461 paint selection yields to self-picking direct tools',()=>{
-  assert.match(paint,/#extrudeBtn\.boxlab-direct-stable,#insetBtn\.boxlab-direct-stable,#bevelBtn\.active/);
+test('462 paint selection remains available for Face tools but yields to Bevel',()=>{
+  assert.doesNotMatch(paint,/#extrudeBtn\.boxlab-direct-stable/);
+  assert.doesNotMatch(paint,/#insetBtn\.boxlab-direct-stable/);
+  assert.match(paint,/#bevelBtn\.active/);
 });
 
 test('461 preserves critical controller/runtime pins',()=>{
-  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.242/);
   assert.match(index,/direct-bevel\.js\?v=0\.36\.18\.253/);
   assert.match(index,/direct-multi-vertex-bevel\.js\?v=0\.30\.1/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
