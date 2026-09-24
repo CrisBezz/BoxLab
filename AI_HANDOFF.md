@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.462**
-- Current main HEAD at audit: **a3c1fa4200da58dd01a1f54b337ae32053a3e341**
-- Latest code-bearing release merge: **v0.36.18.461 / PR #149 / squash `a3c1fa4200da58dd01a1f54b337ae32053a3e341`**
-- Latest regression: **36068948326 PASS**
+- Current main HEAD at audit: **5408b084e4f0fd5e953ab8483e7cce29fd1068b4**
+- Latest code-bearing release merge: **v0.36.18.461 hotfix / PR #150 / squash `5408b084e4f0fd5e953ab8483e7cce29fd1068b4`**
+- Latest regression: **36073060381 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
