@@ -7,7 +7,7 @@ import { topologyInfo, classifyPoint } from './boolean-classify.js?v=0.36.18.210
 import { booleanBSP } from './boolean-bsp.js?v=0.36.18.248';
 import { combineEditableMeshes } from './object-join-core.js?v=0.36.18.277';
 
-const VERSION='0.36.18.454';
+const VERSION='0.36.18.455';
 const CONVEX_ONLY='Current Boolean supports convex solids only';
 const DEGENERATE_INPUT='Degenerate face in Boolean input';
 const status=document.querySelector('#selectionStatus');
