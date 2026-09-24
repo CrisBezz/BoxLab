@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-25 — v0.36.18.459 armed-tool component selection
+
+- Navigation and ordinary selection remained good, but arming Inset prevented a face from being highlighted.
+- Found the regression in .457: `edge-paint-select.js` returned early whenever a direct tool was active.
+- Restored .449-style component selection while tools are armed, while keeping touch reserved for viewport navigation.
+- Removed the experimental .458 persistent Face handoff loader.
+- No topology or UI layout changes.
+
+
 ## 2026-09-25 — v0.36.18.458 armed Face selection handoff
 
 - User confirmed orbit/pan/zoom and ordinary selection work; Inset fails because a face cannot be highlighted after arming the tool.

@@ -10,11 +10,9 @@ test('457 finger touch is never captured by component paint selection',()=>{
   assert.match(paint,/if\(event\.pointerType==='touch'\)return/);
 });
 
-test('457 component paint yields to direct modelling tools',()=>{
-  assert.match(paint,/function directToolActive\(\)/);
-  assert.match(paint,/#bevelBtn\.active,#vertexBevelBtn\.active/);
-  assert.match(paint,/__boxlabRevolve\?\.active/);
-  assert.match(paint,/if\(directToolActive\(\)/);
+test('459 component paint remains available for armed direct tools',()=>{
+  assert.doesNotMatch(paint,/function directToolActive\(\)/);
+  assert.doesNotMatch(paint,/if\(directToolActive\(\)/);
 });
 
 test('457 Edge Revolve keeps only its launcher visible until armed',()=>{
