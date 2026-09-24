@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.445**
-- Current main HEAD at audit: **b9e16eaedad2044c8ce031bc8ae56f7ee736de4f**
-- Latest code-bearing release merge: **v0.36.18.444 / PR #131 / squash `b9e16eaedad2044c8ce031bc8ae56f7ee736de4f`**
-- Latest regression: **35934485708 PASS**
+- Current main HEAD at audit: **66e9e6e00d7734a0c5f0df28b1f8413bd6a220b9**
+- Latest code-bearing release merge: **v0.36.18.445 / PR #132 / squash `66e9e6e00d7734a0c5f0df28b1f8413bd6a220b9`**
+- Latest regression: **35949682949 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.445 — OBJ facegroup preservation foundation
+
+**Released on main via PR #132; squash merge `66e9e6e00d7734a0c5f0df28b1f8413bd6a220b9`. Final regression run `35949682949` passed.**
 
 - Corrects editable OBJ semantics so `o` defines BoxLab object boundaries while `g` is preserved as per-face facegroup metadata inside that object.
 - Adds `EditableMesh.faceGroups[]`, aligned one-to-one with `faces[]`; clone and common face-topology methods preserve or inherit it.
