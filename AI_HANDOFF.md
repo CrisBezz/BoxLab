@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.460**
+- Current live version / branch target: **v0.36.18.461**
 - Current main HEAD at audit: **d66425309248f220968cf11d86a0d6d8bc7ee9e0**
 - Latest code-bearing release merge: **v0.36.18.460 / PR #148 / squash `d66425309248f220968cf11d86a0d6d8bc7ee9e0`**
 - Latest regression: **36067498993 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.461 — Direct tools own pick + drag
+
+- User confirmed .460 stopped legacy Move, but Inset and Bevel still did not perform.
+- Root cause: armed direct tools still depended on separate paint-selection ownership. The paint selector could consume the first Pencil press before the modelling controller received the gesture.
+- Face direct tools now hit-test and acquire the face themselves on the same pointerdown that begins Inset/Extrude.
+- While Face direct tools or Edge Bevel are armed, component paint selection yields to those self-picking controllers.
+- The .460 coordination shim is removed from the live runtime.
+- Legacy `main.js` Move still yields while these direct tools are armed.
+- Through and Bevel topology solvers are otherwise unchanged.
+
 
 ### v0.36.18.460 — Direct tool ownership repair
 
