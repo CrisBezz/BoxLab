@@ -10,6 +10,8 @@
 - Safe Repair preserves surviving group metadata; Auto Close caps are intentionally ungrouped.
 - Added regression coverage for one object with eight facegroups, explicit split mode, OBJ round-trip, and parent-to-descendant inheritance.
 - Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+- Released via PR **#132**; squash merge `66e9e6e00d7734a0c5f0df28b1f8413bd6a220b9`.
+- Final PR Topology regression run **35949682949 PASS**.
 
 ## 2026-09-24 — v0.36.18.444 OBJ export polish / topology preflight
 
