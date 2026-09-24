@@ -20,7 +20,7 @@ test('368 Boolean eligibility accepts exactly two complete Groups',()=>{
 test('368 Group Boolean hides source Groups only after one scene checkpoint',()=>{
   const src=fs.readFileSync(new URL('../src/boolean-prototype.js',import.meta.url),'utf8');
   const block=src.slice(src.indexOf('function apply(operation)'),src.indexOf('ensureUI();',src.indexOf('function apply(operation)')));
-  assert.match(block,/__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
+  assert.match(block,/__boxlabObjectHistory\?\.checkpointSnapshot\?\.\(beforeScene\)/);
   assert.match(block,/for\(const object of originals\)object\.visible=false/);
   assert.match(block,/source Groups hidden/);
 });
@@ -39,7 +39,7 @@ test('368 protected linked-instance and Group transform baselines remain pinned'
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   assert.match(index,/object-management\.js\?v=0\.36\.18\.392/);
   assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.369/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.369/);
+  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.452/);
   assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);

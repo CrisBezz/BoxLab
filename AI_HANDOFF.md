@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.451**
+- Current live version / branch target: **v0.36.18.452**
 - Current main HEAD at audit: **b4ad4077d6813df50699fb53dccd11252809d5b5**
 - Latest code-bearing release merge: **v0.36.18.451 / PR #138 / squash `b4ad4077d6813df50699fb53dccd11252809d5b5`**
 - Latest regression: **35984043420 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.452 — Authoritative tool ownership + Boolean one-step Undo
+
+- Hands-on .451 retest passed Extrude Through, Revolve Profile and UI presentation, but Inset, Edge Bevel, Vertex Bevel, Boolean Undo and Edge Revolve still failed.
+- Root cause for the modelling-tool failures: the transform layer could still begin a Move/Scale/Rotate gesture while a direct component tool was armed. Through survived because its transactional takeover has its own higher-priority path.
+- `transform-upgrade.js` now explicitly yields whenever Face Extrude/Inset, Edge Bevel, Vertex Bevel or Edge Revolve owns the interaction.
+- Proven modelling controllers remain byte-for-byte unchanged: `multi-face-direct.js?v=0.36.18.242`, `direct-bevel.js?v=0.36.18.253`, and `direct-multi-vertex-bevel.js?v=0.30.1`.
+- Edge Revolve now exposes an authoritative `arm()` API; the clean launcher calls that directly instead of synthesising a click on hidden controls.
+- Boolean Undo is converted from pre-mutation `checkpoint()` to the transactional scene pattern: capture exact pre-Boolean scene, perform the Boolean, then store that scene once with `checkpointSnapshot(beforeScene)` after successful result creation.
+- This is a concrete regression fix, so `boolean-prototype.js` intentionally advances from the previously protected .369 pin to .452.
+- Beta 5 remains blocked until hands-on confirms these five regressions.
 
 ### v0.36.18.451 — Cross-mode UI regression recovery
 

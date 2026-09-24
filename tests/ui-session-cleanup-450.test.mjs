@@ -25,8 +25,8 @@ test('450/451 Boolean core stays protected while UI wrapper is presentation-only
   const core=fs.readFileSync(new URL('../src/boolean-prototype.js',import.meta.url),'utf8');
   const ui=fs.readFileSync(new URL('../src/boolean-tool-session-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.369/);
-  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.451/);
+  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.452/);
+  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.452/);
   assert.match(core,/globalThis\.__boxlabBooleanPrototype/);
   assert.match(ui,/id='booleanVisibilityLaunch'/);
   assert.match(ui,/id="booleanLaunchBtn"/);
@@ -42,9 +42,9 @@ test('451 protected modelling runtime pins remain intact',()=>{
   assert.match(index,/src\/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.451/);
-  assert.match(index,/src\/boolean-prototype\.js\?v=0\.36\.18\.369/);
-  assert.match(index,/src\/boolean-tool-session-ui\.js\?v=0\.36\.18\.451/);
-  assert.match(index,/src\/ui-presentation-451\.js\?v=0\.36\.18\.451/);
+  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.452/);
+  assert.match(index,/src\/boolean-prototype\.js\?v=0\.36\.18\.452/);
+  assert.match(index,/src\/boolean-tool-session-ui\.js\?v=0\.36\.18\.452/);
+  assert.match(index,/src\/ui-presentation-451\.js\?v=0\.36\.18\.452/);
   assert.equal(beta4.version,'0.36.18.427');
 });

@@ -930,3 +930,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] UI .451: Vertex Bevel arms and drag bevels the selected vertex/vertices
 - [ ] UI .451: Boolean Union/Cut/Intersect result returns to the exact pre-Boolean scene with one Undo
 - [ ] UI .451: Revolve Profile launches directly from Active Tools, can be positioned/edited, and Cancel restores the pre-tool scene
+
+- [ ] .452 Face Inset: with Move previously used, arm Inset and drag selected face; transform must not steal gesture
+- [ ] .452 Edge Bevel: with Move previously used, arm Bevel and drag selected edge(s); bevel owns pointer
+- [ ] .452 Vertex Bevel: with Move previously used, arm Bevel and drag selected vertex/vertices; bevel owns pointer
+- [ ] .452 Edge Revolve: launcher directly arms selected loose-edge profile and reveals axis/segments/Apply/Cancel
+- [ ] .452 Boolean: Union/Cut/Intersect result returns to exact pre-operation scene with one Undo
+- [ ] .452 Through: cavity-aware Through remains unchanged and still passes previous hard cases

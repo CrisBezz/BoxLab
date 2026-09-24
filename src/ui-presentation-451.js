@@ -58,7 +58,7 @@ function ensureEdgeRevolveLauncher(){
   row.innerHTML='<button id="edgeRevolveLaunchBtn" type="button">Revolve</button>';
   controls.insertAdjacentElement('beforebegin',row);
   row.querySelector('#edgeRevolveLaunchBtn')?.addEventListener('click',()=>{
-    source.click();
+    globalThis.__boxlabRevolve?.arm?.();
     setTimeout(syncAll,0);
   });
   const cancel=document.createElement('button');
@@ -86,4 +86,4 @@ window.addEventListener('pointerup',()=>setTimeout(syncAll,0),false);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>setTimeout(syncAll,0)));
 
 [0,30,80,180,400,900].forEach(delay=>setTimeout(syncAll,delay));
-globalThis.__boxlabUIPresentation={version:'0.36.18.451',sync:syncAll};
+globalThis.__boxlabUIPresentation={version:'0.36.18.452',sync:syncAll};
