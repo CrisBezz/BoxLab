@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {applyFaceGroupColours} from './facegroup-colours-core.js?v=0.36.18.446';
+import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js?v=0.36.18.447';
 import {subdivide} from './subdivision.js?v=0.12';
 import {applyMirror} from './mirror.js?v=0.12';
 
@@ -13,6 +13,15 @@ let studioKeyTarget=null;
 let originalBackground=null;
 let studioRefreshQueued=false;
 const frontMaterialCache=new WeakMap();
+const FACEGROUP_VIEW_KEY='boxlab-facegroup-view-v1';
+function loadFacegroupView(){
+  try{return normaliseFacegroupView(JSON.parse(localStorage.getItem(FACEGROUP_VIEW_KEY)||'{}'));}catch{return{...DEFAULT_FACEGROUP_VIEW};}
+}
+let facegroupView=loadFacegroupView();
+function saveFacegroupView(){
+  try{localStorage.setItem(FACEGROUP_VIEW_KEY,JSON.stringify(facegroupView));}catch{}
+}
+
 
 function bridge(){return globalThis.__boxlabBridgeState||null;}
 function manager(){return globalThis.__boxlabObjectManager||null;}
@@ -138,7 +147,7 @@ function applyMode(body){
   else if(mode==='xray'){body.material=xrayMaterial;addWire(body,xrayHiddenWireMaterial,10);addWire(body,xrayVisibleWireMaterial,13);}
   else if(mode==='facegroups'){
     const source=evaluatedMeshForBody(body);
-    const result=applyFaceGroupColours(body.geometry,source);
+    const result=applyFaceGroupColours(body.geometry,source,facegroupView);
     body.material=inactive?facegroupInactiveMaterial:facegroupMaterial;
     addBackface(body);
     body.userData.boxlabFacegroupCount=result?.groups||0;
@@ -146,7 +155,12 @@ function applyMode(body){
   else{body.material=frontOnly(original);addBackface(body);}
 }
 
-Object.assign(globalThis.__boxlabRenderModes ||= {},{apply:applyMode,refreshStudio});
+Object.assign(globalThis.__boxlabRenderModes ||= {},{
+  apply:applyMode,
+  refreshStudio,
+  facegroupView:()=>({...facegroupView}),
+  setFacegroupView(next){facegroupView=normaliseFacegroupView({...facegroupView,...next});saveFacegroupView();syncFacegroupControls();if(mode==='facegroups')applyToSceneBodies();}
+});
 function rebuild(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function applyToSceneBodies(){const scene=bridge()?.scene;if(!scene)return false;let found=false;scene.traverse(object=>{const kind=object?.userData?.kind;if(kind==='body'||kind==='boxlab-inactive-body'){applyMode(object);found=true;}});return found;}
 function modeLabel(){if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='facegroups')return'Facegroups';if(mode==='studio')return'Studio';return mode[0].toUpperCase()+mode.slice(1);}
@@ -155,6 +169,7 @@ function setMode(next){
   mode=next;
   document.querySelectorAll('#viewportRenderLooks button[data-render]').forEach(button=>button.classList.toggle('active',button.dataset.render===mode));
   if(!applyToSceneBodies())rebuild();
+  syncFacegroupControls();
   document.dispatchEvent(new CustomEvent('boxlab-render-mode-change',{detail:{mode}}));
   if(status)status.textContent=`View • ${modeLabel()}`;
 }
@@ -162,11 +177,62 @@ function setMode(next){
 const baseAdd=THREE.Group.prototype.add;
 if(!THREE.Group.prototype.__boxlabRenderModesInstalled){THREE.Group.prototype.add=function(...objects){const result=baseAdd.apply(this,objects);for(const object of objects)if(object?.userData?.kind==='body')applyMode(object);return result;};THREE.Group.prototype.__boxlabRenderModesInstalled=true;}
 
+function syncFacegroupControls(){
+  const panel=document.querySelector('#facegroupViewControls');if(!panel)return;
+  panel.hidden=mode!=='facegroups';
+  panel.querySelectorAll('[data-facegroup-palette]').forEach(button=>button.classList.toggle('active',button.dataset.facegroupPalette===facegroupView.palette));
+  const sat=panel.querySelector('#facegroupSaturation'),light=panel.querySelector('#facegroupLightness'),ungrouped=panel.querySelector('#facegroupUngrouped');
+  if(sat)sat.value=String(Math.round(facegroupView.saturation*100));
+  if(light)light.value=String(Math.round(facegroupView.lightness*100));
+  if(ungrouped)ungrouped.value=facegroupView.ungrouped;
+  const satOut=panel.querySelector('#facegroupSaturationOut'),lightOut=panel.querySelector('#facegroupLightnessOut');
+  if(satOut)satOut.textContent=`${Math.round(facegroupView.saturation*100)}%`;
+  if(lightOut)lightOut.textContent=`${facegroupView.lightness>=0?'+':''}${Math.round(facegroupView.lightness*100)}`;
+}
+function updateFacegroupView(patch){
+  facegroupView=normaliseFacegroupView({...facegroupView,...patch});
+  saveFacegroupView();syncFacegroupControls();
+  if(mode==='facegroups')applyToSceneBodies();
+}
+function installFacegroupControls(host){
+  const section=host?.closest?.('.viewport-menu-section');if(!section||document.querySelector('#facegroupViewControls'))return;
+  const panel=document.createElement('div');
+  panel.id='facegroupViewControls';
+  panel.hidden=true;
+  panel.innerHTML=`
+    <div class="viewport-menu-label" style="margin-top:9px">Facegroup Colours</div>
+    <div class="viewport-render-grid facegroup-palette-grid">
+      <button type="button" data-facegroup-palette="default">Default</button>
+      <button type="button" data-facegroup-palette="soft">Soft</button>
+      <button type="button" data-facegroup-palette="vivid">Vivid</button>
+      <button type="button" data-facegroup-palette="contrast">Contrast</button>
+    </div>
+    <label class="range-row"><span>Saturation</span><input id="facegroupSaturation" type="range" min="20" max="180" value="100" step="5"/><output id="facegroupSaturationOut">100%</output></label>
+    <label class="range-row"><span>Lightness</span><input id="facegroupLightness" type="range" min="-28" max="28" value="0" step="2"/><output id="facegroupLightnessOut">+0</output></label>
+    <label class="toggle-row"><span>Ungrouped</span><input id="facegroupUngrouped" type="color" value="#7f8792" aria-label="Ungrouped face colour"/></label>
+    <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
+      <button id="facegroupReseed" type="button">Reseed Colours</button>
+      <button id="facegroupReset" type="button">Reset</button>
+    </div>`;
+  section.appendChild(panel);
+  panel.addEventListener('click',event=>{
+    const palette=event.target.closest('[data-facegroup-palette]');
+    if(palette){event.preventDefault();event.stopPropagation();updateFacegroupView({palette:palette.dataset.facegroupPalette});return;}
+    if(event.target.closest('#facegroupReseed')){event.preventDefault();event.stopPropagation();updateFacegroupView({seed:facegroupView.seed+1});return;}
+    if(event.target.closest('#facegroupReset')){event.preventDefault();event.stopPropagation();facegroupView={...DEFAULT_FACEGROUP_VIEW};saveFacegroupView();syncFacegroupControls();if(mode==='facegroups')applyToSceneBodies();}
+  });
+  panel.querySelector('#facegroupSaturation')?.addEventListener('input',event=>updateFacegroupView({saturation:Number(event.target.value)/100}));
+  panel.querySelector('#facegroupLightness')?.addEventListener('input',event=>updateFacegroupView({lightness:Number(event.target.value)/100}));
+  panel.querySelector('#facegroupUngrouped')?.addEventListener('input',event=>updateFacegroupView({ungrouped:event.target.value}));
+  syncFacegroupControls();
+}
+
 function installUI(){
   const host=document.querySelector('#viewportRenderLooks');
   if(!host||host.dataset.ready==='true')return false;
   host.dataset.ready='true';
   host.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="facegroups">Facegroups</button><button type="button" data-render="normals">Normals</button><button type="button" data-render="wire">Wire</button><button type="button" data-render="xray">X-Ray</button>';
+  installFacegroupControls(host);
   host.addEventListener('click',event=>{const button=event.target.closest('button[data-render]');if(!button)return;event.preventDefault();event.stopPropagation();setMode(button.dataset.render);});
   return true;
 }
