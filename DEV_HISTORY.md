@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.449 Scrollable Viewport menu
+
+- User confirmed .448 works and reported the expanded Viewport menu now extends beyond the iPad screen and cannot scroll.
+- Added viewport-relative max height, vertical overflow scrolling, contained overscroll and iPad inertial scrolling.
+- Kept the Viewport menu position/width and existing controls unchanged.
+- No modelling or facegroup data behavior changed.
+
 ## 2026-09-24 — v0.36.18.448 Facegroups first-activation fix
 
 - User reported that first selecting Viewport > Facegroups showed an almost-black mesh until Default/Soft/Vivid/Contrast was pressed.
