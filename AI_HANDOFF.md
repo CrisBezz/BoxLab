@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.461**
-- Current main HEAD at audit: **d66425309248f220968cf11d86a0d6d8bc7ee9e0**
-- Latest code-bearing release merge: **v0.36.18.460 / PR #148 / squash `d66425309248f220968cf11d86a0d6d8bc7ee9e0`**
-- Latest regression: **36067498993 PASS**
+- Current main HEAD at audit: **a3c1fa4200da58dd01a1f54b337ae32053a3e341**
+- Latest code-bearing release merge: **v0.36.18.461 / PR #149 / squash `a3c1fa4200da58dd01a1f54b337ae32053a3e341`**
+- Latest regression: **36068948326 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.461 — Direct tools own pick + drag
+
+**Released on main via PR #149; squash merge `a3c1fa4200da58dd01a1f54b337ae32053a3e341`. Final PR regression run `36068948326` passed.**
 
 - User confirmed .460 stopped legacy Move, but Inset and Bevel still did not perform.
 - Root cause: armed direct tools still depended on separate paint-selection ownership. The paint selector could consume the first Pencil press before the modelling controller received the gesture.
