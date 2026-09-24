@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-25 — v0.36.18.461 direct tools own pick + drag
+
+- .460 proved legacy Move was no longer stealing the gesture, but Inset and Bevel still received no modelling drag.
+- Corrected the architecture: the armed tool itself now owns component hit-test plus modelling drag.
+- Face direct tools can acquire an unselected face and begin Inset/Extrude on the same Pencil press.
+- Component paint yields to armed Face direct tools and Edge Bevel.
+- Removed the .460 coordination shim from the live runtime.
+- No Through solver or Bevel topology rewrite.
+
+
 ## 2026-09-25 — v0.36.18.460 direct-tool ownership repair
 
 - Inset: arming the tool could leave hidden component selection unavailable, while legacy `main.js` Move remained a fallback owner.

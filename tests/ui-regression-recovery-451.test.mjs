@@ -9,28 +9,28 @@ const profile=fs.readFileSync(new URL('../src/revolve-profile.js',import.meta.ur
 
 test('453 removes the post-449 presentation wrappers from the runtime',()=>{
   assert.doesNotMatch(index,/ui-presentation-451\.js/);
-  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.460/);
+  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.461/);
 });
 
 test('453 restores the proven direct component interaction path',()=>{
-  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.460/);
+  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.461/);
   assert.doesNotMatch(transform,/directComponentToolActive/);
   assert.match(transform,/directFaceToolActive\(\)/);
 });
 
 test('453 restores proven Edge Revolve while retaining confirmed-good Revolve Profile controller',()=>{
-  assert.match(index,/revolve\.js\?v=0\.36\.18\.460/);
-  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.460/);
+  assert.match(index,/revolve\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.461/);
   assert.doesNotMatch(revolve,/function armRevolve\(\)/);
   assert.match(profile,/revolveProfileCancelBtn/);
 });
 
 test('453 preserves protected modelling and navigation pins',()=>{
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.460/);
+  assert.match(index,/src\/main\.js\?v=0\.36\.18\.461/);
   assert.match(index,/src\/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
-  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.242/);
+  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.461/);
   assert.match(index,/direct-bevel\.js\?v=0\.36\.18\.253/);
   assert.match(index,/direct-multi-vertex-bevel\.js\?v=0\.30\.1/);
 });
