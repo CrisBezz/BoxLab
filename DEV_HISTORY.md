@@ -8,6 +8,8 @@
 - Restored only the narrow Boolean launcher/close presentation wrapper.
 - Broad .451 component presentation wrapper remains disabled.
 - No modelling algorithm changes.
+- Released via PR **#143**; squash merge `3ec6d638b08a437480d9be9efb232f4f3783b596`.
+- Final PR Topology regression run **35995205443 PASS**.
 
 
 ## 2026-09-24 — v0.36.18.454 iPad interaction ownership recovery
