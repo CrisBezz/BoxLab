@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.460**
-- Current main HEAD at audit: **6ca71fc6142060498a46e73acac0b9b7d7a9a044**
-- Latest code-bearing release merge: **v0.36.18.459 / PR #147 / squash `6ca71fc6142060498a46e73acac0b9b7d7a9a044`**
-- Latest regression: **36065555151 PASS**
+- Current main HEAD at audit: **d66425309248f220968cf11d86a0d6d8bc7ee9e0**
+- Latest code-bearing release merge: **v0.36.18.460 / PR #148 / squash `d66425309248f220968cf11d86a0d6d8bc7ee9e0`**
+- Latest regression: **36067498993 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.460 — Direct tool ownership repair
+
+**Released on main via PR #148; squash merge `d66425309248f220968cf11d86a0d6d8bc7ee9e0`. Final PR regression run `36067498993` passed.**
 
 - User confirmed Inset still cannot acquire a face after arming; preselecting a face then arming Inset falls through to legacy Move. Edge Bevel can acquire edges but may reject the additive set as non-bevellable.
 - Mature `multi-face-direct.js?v=0.36.18.242` and `direct-bevel.js?v=0.36.18.253` are preserved unchanged.
