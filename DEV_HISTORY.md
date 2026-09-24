@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-25 — v0.36.18.460 direct-tool ownership repair
+
+- Inset: arming the tool could leave hidden component selection unavailable, while legacy `main.js` Move remained a fallback owner.
+- Edge Bevel: additive hidden Multi could hand the mature controller an invalid stale edge set.
+- Preserved the mature Face and Bevel controllers unchanged.
+- Added a small ownership coordinator and made legacy component drag yield to mature direct tools.
+- No topology, Through, navigation or UI layout changes.
+
+
 ## 2026-09-25 — v0.36.18.459 armed-tool component selection
 
 - Navigation and ordinary selection remained good, but arming Inset prevented a face from being highlighted.
