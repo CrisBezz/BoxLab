@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.452**
-- Current main HEAD at audit: **b4ad4077d6813df50699fb53dccd11252809d5b5**
-- Latest code-bearing release merge: **v0.36.18.451 / PR #138 / squash `b4ad4077d6813df50699fb53dccd11252809d5b5`**
-- Latest regression: **35984043420 PASS**
+- Current main HEAD at audit: **4e2733d1ac38974265a4da9524239429481b90ea**
+- Latest code-bearing release merge: **v0.36.18.452 / PR #139 / squash `4e2733d1ac38974265a4da9524239429481b90ea`**
+- Latest regression: **35988721656 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.452 — Authoritative tool ownership + Boolean one-step Undo
+
+**Released on main via PR #139; squash merge `4e2733d1ac38974265a4da9524239429481b90ea`. Final PR regression run `35988721656` passed.**
 
 - Hands-on .451 retest passed Extrude Through, Revolve Profile and UI presentation, but Inset, Edge Bevel, Vertex Bevel, Boolean Undo and Edge Revolve still failed.
 - Root cause for the modelling-tool failures: the transform layer could still begin a Move/Scale/Rotate gesture while a direct component tool was armed. Through survived because its transactional takeover has its own higher-priority path.
