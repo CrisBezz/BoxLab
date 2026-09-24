@@ -10,16 +10,16 @@ const session=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.ur
 const objectLayout=fs.readFileSync(new URL('../src/object-selection-layout.js',import.meta.url),'utf8');
 
 test('456 preserves current UI presentation',()=>{
-  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.456/);
+  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.457/);
   assert.match(session,/\.boxlab-tool-session-shell\[hidden\]\{display:none!important/);
   assert.match(objectLayout,/grid-template-columns:repeat\(5,minmax\(0,1fr\)\)!important/);
 });
 
-test('456 restores proven pre-reorder selection and transform ownership beneath UI',()=>{
+test('457 preserves proven transform ownership and fixes component paint boundary beneath UI',()=>{
   assert.doesNotMatch(transform,/directComponentToolActive/);
   assert.match(transform,/directFaceToolActive\(\)/);
-  assert.doesNotMatch(paint,/function directToolActive\(\)/);
-  assert.doesNotMatch(paint,/pointerType==='touch'/);
+  assert.match(paint,/function directToolActive\(\)/);
+  assert.match(paint,/pointerType==='touch'/);
 });
 
 test('456 restores transactional Boolean one-step Undo',()=>{
