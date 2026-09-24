@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {symmetryBisect} from './symmetry-bisect-core.js?v=0.36.18.434';
 import {nearestCrossObjectSnap} from './cross-object-snap-core.js?v=0.36.18.324';
 
-const VERSION='0.36.18.435';
+const VERSION='0.36.18.454';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 const canvas=document.querySelector('#viewport');
@@ -62,6 +62,23 @@ const applyButton=controls.querySelector('#symmetryApplyBtn');
 
 let active=false,objectId=null,source=null,preview=null,planeSurface=null,axis='x',keep='positive',planeNormal=new THREE.Vector3(1,0,0),planePoint=new THREE.Vector3(),drag=null,alignFaceArmed=false,scaleWasDisabled=false;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
+let interactionHandlersAttached=false;
+function attachInteractionHandlers(){
+  if(interactionHandlersAttached)return;
+  interactionHandlersAttached=true;
+  window.addEventListener('pointerdown',beginInteraction,true);
+  window.addEventListener('pointermove',moveInteraction,true);
+  window.addEventListener('pointerup',endInteraction,true);
+  window.addEventListener('pointercancel',cancelInteraction,true);
+}
+function detachInteractionHandlers(){
+  if(!interactionHandlersAttached)return;
+  interactionHandlersAttached=false;
+  window.removeEventListener('pointerdown',beginInteraction,true);
+  window.removeEventListener('pointermove',moveInteraction,true);
+  window.removeEventListener('pointerup',endInteraction,true);
+  window.removeEventListener('pointercancel',cancelInteraction,true);
+}
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function activeObject(){const m=manager();return m?.objects?.find(o=>o.id===m.activeId)||null;}
@@ -156,7 +173,7 @@ function buildPreview(snapLabel=null){
 }
 function cancel({silent=false}={}){
   if(drag&&globalThis.__boxlabBridgeState?.controls)globalThis.__boxlabBridgeState.controls.enabled=true;
-  drag=null;alignFaceArmed=false;disposePreview();active=false;objectId=null;source=null;axis='x';planeNormal.set(1,0,0);planePoint.set(0,0,0);endSession();sync();
+  drag=null;alignFaceArmed=false;disposePreview();active=false;objectId=null;source=null;axis='x';planeNormal.set(1,0,0);planePoint.set(0,0,0);detachInteractionHandlers();endSession();sync();
   if(!silent)setStatus('Symmetry / Bisect cancelled');
 }
 function forceRender(){
@@ -341,7 +358,7 @@ launchButton?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh();
   if(!object||!live||mode()!=='object'||object.locked||object.kind==='reference'||active)return;
   if(mirrorModifierActive()){setStatus('Symmetry / Bisect • turn off the non-destructive Mirror modifier first');return;}
-  source=live.clone();objectId=object.id;active=true;keep='positive';setAxisPreset('x');if(mirrorToggle)mirrorToggle.checked=true;beginSession();
+  source=live.clone();objectId=object.id;active=true;keep='positive';setAxisPreset('x');if(mirrorToggle)mirrorToggle.checked=true;attachInteractionHandlers();beginSession();
   queueMicrotask(()=>globalThis.__boxlabTransformArming?.activateRealMove?.());
   buildPreview();
 });
@@ -369,16 +386,12 @@ applyButton?.addEventListener('click',()=>{
   live.vertices=result.mesh.vertices.map(v=>v.clone());
   live.faces=result.mesh.faces.map(f=>[...f]);
   live.creases=new Map(result.mesh.creases||[]);
-  disposePreview();active=false;objectId=null;source=null;drag=null;endSession();
+  disposePreview();active=false;objectId=null;source=null;drag=null;detachInteractionHandlers();endSession();
   manager()?.saveActive?.();forceRender();sync();
   globalThis.__boxlabSymmetryLastResult={version:VERSION,axis,keep,planeNormal:result.planeNormal?.toArray?.(),planePoint:result.planePoint?.toArray?.(),mirrored:result.mirrored,cutVertices:result.cutVertices};
   setStatus(`Symmetry / Bisect applied • ${axis==='custom'?'Custom':axis.toUpperCase()} • Keep ${keep==='positive'?'+':'−'} • ${result.mirrored?'mirrored + welded':'bisected'}`);
 });
 
-window.addEventListener('pointerdown',beginInteraction,true);
-window.addEventListener('pointermove',moveInteraction,true);
-window.addEventListener('pointerup',endInteraction,true);
-window.addEventListener('pointercancel',cancelInteraction,true);
 window.addEventListener('boxlab-object-manager-ready',sync);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));

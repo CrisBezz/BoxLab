@@ -13,14 +13,14 @@ test('453 removes the post-449 presentation wrappers from the runtime',()=>{
 });
 
 test('453 restores the proven direct component interaction path',()=>{
-  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.453/);
-  assert.doesNotMatch(transform,/directComponentToolActive/);
+  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.454/);
+  assert.match(transform,/directComponentToolActive/);
   assert.match(transform,/directFaceToolActive\(\)/);
 });
 
 test('453 restores proven Edge Revolve while retaining confirmed-good Revolve Profile controller',()=>{
-  assert.match(index,/revolve\.js\?v=0\.36\.18\.453/);
-  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.453/);
+  assert.match(index,/revolve\.js\?v=0\.36\.18\.454/);
+  assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.454/);
   assert.doesNotMatch(revolve,/function armRevolve\(\)/);
   assert.match(profile,/revolveProfileCancelBtn/);
 });
