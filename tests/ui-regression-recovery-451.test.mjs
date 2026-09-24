@@ -57,7 +57,7 @@ test('451 Revolve Profile can launch directly and Cancel restores pre-tool scene
 test('451 Boolean presentation wrapper adds no history step',()=>{
   const core=fs.readFileSync(new URL('../src/boolean-prototype.js',import.meta.url),'utf8');
   const ui=fs.readFileSync(new URL('../src/boolean-tool-session-ui.js',import.meta.url),'utf8');
-  assert.equal((core.match(/__boxlabObjectHistory\?\.checkpoint\?\.\(\)/g)||[]).length,1);
+  assert.equal((core.match(/__boxlabObjectHistory\?\.checkpointSnapshot\?\.\(beforeScene\)/g)||[]).length,1);
   assert.doesNotMatch(ui,/ObjectHistory|__boxlabHistory|toolSession/);
   assert.match(ui,/booleanLaunchBtn/);
   assert.match(ui,/booleanCloseBtn/);
@@ -70,7 +70,7 @@ test('451 runtime keeps protected modelling pins and loads presentation wrapper 
   assert.match(index,/src\/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.369/);
+  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.452/);
   assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.451/);
   assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.451/);
   assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.451/);
