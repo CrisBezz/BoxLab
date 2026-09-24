@@ -7,6 +7,8 @@
 - Preserved the mature Face and Bevel controllers unchanged.
 - Added a small ownership coordinator and made legacy component drag yield to mature direct tools.
 - No topology, Through, navigation or UI layout changes.
+- Released via PR **#148**; squash merge `d66425309248f220968cf11d86a0d6d8bc7ee9e0`.
+- Final PR Topology regression run **36067498993 PASS**.
 
 
 ## 2026-09-25 — v0.36.18.459 armed-tool component selection
