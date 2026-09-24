@@ -40,9 +40,9 @@ test('454 inactive Tool Session shells are authoritatively hidden',()=>{
 });
 
 test('454 runtime cache keys are fresh and protected multi-object transform remains pinned',()=>{
-  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.454/);
-  assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.454/);
-  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.454/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.454/);
+  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.455/);
+  assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.455/);
+  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.455/);
+  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.455/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

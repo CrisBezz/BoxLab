@@ -38,6 +38,6 @@ test('340 Offset Loop exposes one armed-state controller and current cache chain
   assert.match(loop,/__boxlabOffsetLoop=\{version:'0\.36\.18\.340',isArmed:\(\)=>armed,disarm,info\}/);
   assert.equal((drawer.match(/loop-offset\.js\?v=0\.36\.18\.340/g)||[]).length,1);
   assert.equal((drawer.match(/precision-offset-loop\.js\?v=0\.36\.18\.340/g)||[]).length,1);
-  assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.454/);
+  assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.455/);
   assert.match(index,/drawer-ui\.js\?v=/);
 });

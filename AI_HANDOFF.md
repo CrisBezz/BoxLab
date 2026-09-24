@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.454**
+- Current live version / branch target: **v0.36.18.455**
 - Current main HEAD at audit: **9cecc658ab40c9a4f8f6e286453cdb8045835e98**
 - Latest code-bearing release merge: **v0.36.18.454 / PR #141 / squash `9cecc658ab40c9a4f8f6e286453cdb8045835e98`**
 - Latest regression: **35994630718 PASS**
@@ -51,6 +51,18 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.455 — Object Multi + Boolean presentation recovery
+
+- User clarified that Boolean geometry works; the problem is the workflow/presentation around selecting operands.
+- Keeps the v0.36.18.454 global iPad interaction ownership recovery intact.
+- Restores Object Selection to the established compact five-button strip so Multi / All / Hide / Lock / Clear stay inside one consistent Selection UI.
+- Restores the narrow Boolean launcher/close wrapper so Union / Cut / Intersect are hidden until Boolean is opened.
+- The broad .451 Face/Edge/Vertex presentation wrapper remains disabled.
+- Shared Tool Session hidden-shell protection from .454 remains intact.
+- No modelling topology or protected multi-object transform behaviour is changed.
+- Hands-on target: Object Multi stays compact; Active Tools stays clean; Boolean opens from one button and closes after operation.
+
 
 ### v0.36.18.454 — iPad interaction ownership recovery
 
