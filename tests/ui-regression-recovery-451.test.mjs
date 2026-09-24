@@ -7,9 +7,9 @@ const transform=fs.readFileSync(new URL('../src/transform-upgrade.js',import.met
 const revolve=fs.readFileSync(new URL('../src/revolve.js',import.meta.url),'utf8');
 const profile=fs.readFileSync(new URL('../src/revolve-profile.js',import.meta.url),'utf8');
 
-test('453 removes the post-449 presentation wrappers from the runtime',()=>{
+test('454 keeps broad component presentation wrapper disabled while restoring Boolean presentation',()=>{
   assert.doesNotMatch(index,/ui-presentation-451\.js/);
-  assert.doesNotMatch(index,/boolean-tool-session-ui\.js/);
+  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.454/);
 });
 
 test('453 restores the proven direct component interaction path',()=>{
