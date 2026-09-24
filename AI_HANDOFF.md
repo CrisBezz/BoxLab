@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.459**
+- Current live version / branch target: **v0.36.18.460**
 - Current main HEAD at audit: **6ca71fc6142060498a46e73acac0b9b7d7a9a044**
 - Latest code-bearing release merge: **v0.36.18.459 / PR #147 / squash `6ca71fc6142060498a46e73acac0b9b7d7a9a044`**
 - Latest regression: **36065555151 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.460 — Direct tool ownership repair
+
+- User confirmed Inset still cannot acquire a face after arming; preselecting a face then arming Inset falls through to legacy Move. Edge Bevel can acquire edges but may reject the additive set as non-bevellable.
+- Mature `multi-face-direct.js?v=0.36.18.242` and `direct-bevel.js?v=0.36.18.253` are preserved unchanged.
+- Legacy `main.js` component drag now yields whenever mature Face direct tools or Edge Bevel are visibly armed.
+- Added `direct-tool-ownership-460.js` as a coordination-only layer:
+  - re-enables hidden component selection after arming Extrude/Inset;
+  - reduces only an invalid additive Bevel set to the edge actually touched before the mature Bevel controller handles the gesture.
+- No Inset/Bevel topology, Through, UI layout or navigation changes.
+
 
 ### v0.36.18.459 — Restore armed-tool component selection
 
