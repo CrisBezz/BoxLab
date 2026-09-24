@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.447**
+- Current live version / branch target: **v0.36.18.448**
 - Current main HEAD at audit: **cfd8e9e64f84e8a3f5b19dfb0dd5de3f421a0bf3**
 - Latest code-bearing release merge: **v0.36.18.447 / PR #134 / squash `cfd8e9e64f84e8a3f5b19dfb0dd5de3f421a0bf3`**
 - Latest regression: **35955642406 PASS**
@@ -51,6 +51,16 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.448 — Facegroups first-activation fix
+
+- Fixes a hands-on regression where entering Viewport > Facegroups could initially show the mesh nearly black until a palette button was pressed.
+- Root cause: the first render-mode pass could occur before evaluated mesh/body geometry were fully synchronised; the vertex-colour material was still being assigned even when colour application failed.
+- Facegroup material is now assigned only when the colour attribute is successfully generated.
+- Entering Facegroups normalises the current viewport colour preferences, forces a clean viewport rebuild, then reapplies colours after the viewport settles.
+- Failed first-pass colour application now falls back to the normal front material instead of rendering a dark/invalid vertex-colour state.
+- No facegroup IDs, mesh topology, OBJ handoff data, or protected modelling/navigation runtimes are changed.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.447 — Facegroup colour controls
 
