@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.455 Object Multi + Boolean presentation recovery
+
+- User clarified Boolean itself works; the broken part is the operand-selection and Active Tools presentation.
+- Preserved the .454 interaction-ownership recovery.
+- Restored the established compact five-button Object Selection toolbar.
+- Restored only the narrow Boolean launcher/close presentation wrapper.
+- Broad .451 component presentation wrapper remains disabled.
+- No modelling algorithm changes.
+
+
 ## 2026-09-24 — v0.36.18.454 iPad interaction ownership recovery
 
 - User hands-on report on .453: Inset, Edge Bevel, Vertex Bevel, Boolean, Edge Revolve and navigation all failed.
