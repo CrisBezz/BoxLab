@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {symmetryBisect} from './symmetry-bisect-core.js?v=0.36.18.434';
 import {nearestCrossObjectSnap} from './cross-object-snap-core.js?v=0.36.18.324';
 
-const VERSION='0.36.18.458';
+const VERSION='0.36.18.459';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 const canvas=document.querySelector('#viewport');
