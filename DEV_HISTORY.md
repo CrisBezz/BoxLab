@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.446 Viewport Facegroup Colours
+
+- User hands-on passed .445 facegroup import/export and requested facegroup colours in Viewport settings.
+- Added Facegroups to the existing Viewport Render Look menu.
+- Stable deterministic colours are derived from facegroup names; ungrouped faces remain neutral grey.
+- Display uses the evaluated active/inactive meshes so Mirror/SubD inherited groups remain visible.
+- Facegroup view is non-destructive and does not alter export metadata.
+- Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+
 ## 2026-09-24 — v0.36.18.445 OBJ facegroup preservation foundation
 
 - User clarified Nomad/Blender/ZBrush facegroup semantics: facegroups are per-face IDs inside one object, not separate objects.
