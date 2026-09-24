@@ -8,6 +8,8 @@
 - Restored pre-reorder transform and component-selection ownership runtimes.
 - Restored transactional Boolean pre-scene snapshot for one-step Undo.
 - No modelling topology or UI layout changes.
+- Released via PR **#144**; squash merge `6e93491e841991631fc09b79cf0c9f7d53faa9e7`.
+- Final PR Topology regression run **35996984651 PASS**.
 
 
 ## 2026-09-24 — v0.36.18.455 Object Multi + Boolean presentation recovery
