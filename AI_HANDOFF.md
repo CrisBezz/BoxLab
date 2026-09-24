@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.455**
+- Current live version / branch target: **v0.36.18.456**
 - Current main HEAD at audit: **3ec6d638b08a437480d9be9efb232f4f3783b596**
 - Latest code-bearing release merge: **v0.36.18.455 / PR #143 / squash `3ec6d638b08a437480d9be9efb232f4f3783b596`**
 - Latest regression: **35995205443 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.456 — Preserve new UI, repair underlying tool ownership
+
+- User clarified the new UI/UX itself is correct and should not be rolled back; the regression is that multiple modelling tools stopped responding after the UI reordering.
+- Current .455 presentation is preserved: compact five-button Object Selection, Tool Session visibility rules and Boolean launcher remain.
+- Restored `transform-upgrade.js` from the pre-reorder .449 runtime so the proven transform ownership path sits underneath the new UI.
+- Restored `edge-paint-select.js` from the pre-reorder runtime so component selection no longer uses the later global ownership interception.
+- Restored the .452 transactional Boolean pre-scene snapshot so Boolean returns to one-step Undo without changing Boolean geometry or the new launcher UI.
+- Direct Face/Edge/Vertex modelling cores, Through topology, Revolve controller, protected multi-object transform and new UI presentation remain untouched.
+- Hands-on validation should focus on the previously failed tools while confirming the current UI looks identical to .455.
+
 
 ### v0.36.18.455 — Object Multi + Boolean presentation recovery
 
