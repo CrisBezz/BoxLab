@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.449**
-- Current main HEAD at audit: **7c8eb0c1c36fe0bc8a69397390771043c0aefe20**
-- Latest code-bearing release merge: **v0.36.18.448 / PR #135 / squash `7c8eb0c1c36fe0bc8a69397390771043c0aefe20`**
-- Latest regression: **35970042762 PASS**
+- Current main HEAD at audit: **df6f10db0df4fb6b8bdcc9af4367db9bf9c9827c**
+- Latest code-bearing release merge: **v0.36.18.449 / PR #136 / squash `df6f10db0df4fb6b8bdcc9af4367db9bf9c9827c`**
+- Latest regression: **35974096070 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.449 — Scrollable Viewport menu
+
+**Released on main via PR #136; squash merge `df6f10db0df4fb6b8bdcc9af4367db9bf9c9827c`. Final regression run `35974096070` passed.**
 
 - Fixes Viewport settings overflowing off-screen on iPad now that Facegroup colour controls increased menu height.
 - Viewport panel now has a viewport-relative maximum height and vertical scrolling.
