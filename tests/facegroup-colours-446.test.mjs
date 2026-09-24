@@ -39,7 +39,7 @@ test('446 viewport exposes Facegroups render look and evaluated mesh handoff',()
   assert.match(render,/evaluatedMeshForBody/);
   assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
   assert.match(index,/src\/multi-object\.js\?v=0\.36\.18\.367/);
-  assert.match(index,/src\/render-modes\.js\?v=0\.36\.18\.446/);
+  assert.match(index,/src\/render-modes\.js\?v=0\.36\.18\.447/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });

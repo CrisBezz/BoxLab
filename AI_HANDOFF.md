@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.446**
+- Current live version / branch target: **v0.36.18.447**
 - Current main HEAD at audit: **fcd19de9f38bfca2d65a1de643387a64e03ab318**
 - Latest code-bearing release merge: **v0.36.18.446 / PR #133 / squash `fcd19de9f38bfca2d65a1de643387a64e03ab318`**
 - Latest regression: **35950814715 PASS**
@@ -51,6 +51,18 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.447 — Facegroup colour controls
+
+- Extends Viewport > Facegroups with contextual colour controls shown only while the Facegroups Render Look is active.
+- Adds palette presets: **Default, Soft, Vivid, High Contrast**.
+- Adds Saturation and Lightness controls.
+- Adds a user-selectable **Ungrouped** face colour.
+- Adds **Reseed Colours** to change deterministic group colour assignment without changing group IDs.
+- Adds **Reset** to restore the default palette, saturation, lightness, seed and ungrouped colour.
+- Preferences persist in browser local storage as viewport-only settings.
+- No mesh topology, facegroup IDs, OBJ import/export data, or protected modelling/navigation runtimes are changed.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.446 — Viewport Facegroup Colours
 

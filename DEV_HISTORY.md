@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.447 Facegroup colour controls
+
+- User hands-on passed .446 Facegroups Render Look and requested direct colour controls before the broader UI/UX cleanup.
+- Added contextual Facegroup Colours controls inside Viewport settings.
+- Added Default / Soft / Vivid / High Contrast palettes, Saturation, Lightness, Ungrouped colour, Reseed and Reset.
+- View settings persist in local storage and remain purely visual.
+- Controls remain hidden unless Facegroups is the active Render Look.
+- No facegroup IDs, mesh topology, or OBJ handoff data are changed.
+- Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+
 ## 2026-09-24 — v0.36.18.446 Viewport Facegroup Colours
 
 - User hands-on passed .445 facegroup import/export and requested facegroup colours in Viewport settings.
