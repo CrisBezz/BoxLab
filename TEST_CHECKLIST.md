@@ -920,3 +920,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] UI .450: Vertex Slide number/exact controls appear only while Slide is active
 - [ ] UI .450: Vertex Bevel width/exact controls appear only while Bevel is active
 - [ ] UI .450: Edge and Face existing direct-tool behaviour remains unchanged
+
+- [ ] UI .451: Face Inset arms normally and drag performs Inset rather than Move
+- [ ] UI .451: Face Extrude retains strong cavity-aware Through behaviour from the proven pre-clean baseline
+- [ ] UI .451: Face Exact row is absent at rest and appears as Extrude Exact / Inset Exact only for the armed tool
+- [ ] UI .451: Edge Bevel arms and drag bevels the selected edge(s)
+- [ ] UI .451: Edge Lathe/Revolve shows one launcher at rest; axis/segments/Apply/Cancel appear only while active
+- [ ] UI .451: Edge Slide / Offset / Loop / Bevel settings are contextual rather than permanently exposed
+- [ ] UI .451: Vertex Bevel arms and drag bevels the selected vertex/vertices
+- [ ] UI .451: Boolean Union/Cut/Intersect result returns to the exact pre-Boolean scene with one Undo
+- [ ] UI .451: Revolve Profile launches directly from Active Tools, can be positioned/edited, and Cancel restores the pre-tool scene
