@@ -11,6 +11,9 @@
 - Migrated Boolean behind a single Boolean launcher with Union/Cut/Intersect inside a Tool Session.
 - Kept protected modelling/navigation runtimes and topology algorithms untouched.
 - Intended next milestone after user hands-on pass: Beta 5 freeze.
+- Released via PR **#137**; squash merge `d77ec35968d0f59a75747c7be573a3fc3d33bc8c`.
+- Final PR Topology regression run **35976396864 PASS**.
+- Boolean core remained pinned at `boolean-prototype.js?v=0.36.18.369`; UI cleanup is provided by a separate Tool Session wrapper.
 
 ## 2026-09-24 — v0.36.18.449 Scrollable Viewport menu
 
