@@ -8,6 +8,8 @@
 - Component paint yields to armed Face direct tools and Edge Bevel.
 - Removed the .460 coordination shim from the live runtime.
 - No Through solver or Bevel topology rewrite.
+- Released via PR **#149**; squash merge `a3c1fa4200da58dd01a1f54b337ae32053a3e341`.
+- Final PR Topology regression run **36068948326 PASS**.
 
 
 ## 2026-09-25 — v0.36.18.460 direct-tool ownership repair
