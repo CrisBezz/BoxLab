@@ -30,10 +30,10 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.453**
-- Current main HEAD at audit: **69a4a8b8ab13bb03f8d93d93ee798106f0b6ed18**
-- Latest code-bearing release merge: **v0.36.18.453 / PR #140 / squash `69a4a8b8ab13bb03f8d93d93ee798106f0b6ed18`**
-- Latest regression: **35991654724 PASS**
+- Current live version / branch target: **v0.36.18.454**
+- Current main HEAD at audit: **9cecc658ab40c9a4f8f6e286453cdb8045835e98**
+- Latest code-bearing release merge: **v0.36.18.454 / PR #141 / squash `9cecc658ab40c9a4f8f6e286453cdb8045835e98`**
+- Latest regression: **35994630718 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -51,6 +51,22 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.454 — iPad interaction ownership recovery
+
+**Released on main via PR #141; squash merge `9cecc658ab40c9a4f8f6e286453cdb8045835e98`. Final PR regression run `35994630718` passed.**
+
+- Hands-on .453 report: Inset, Edge Bevel, Vertex Bevel, Boolean, Edge Revolve and navigation all still failed.
+- Reframed the problem as global interaction ownership rather than six independent tool regressions.
+- Finger/touch is now reserved for viewport navigation in component paint selection; paint selection no longer captures the first touch of an OrbitControls gesture.
+- Component paint selection explicitly yields to armed direct modelling tools including Face Extrude/Inset, Edge Bevel, Vertex Bevel and Edge Revolve.
+- Shared transform gesture handling explicitly yields to all armed direct component tools using authoritative runtime state.
+- Symmetry/Bisect, Surface Transform and Insert no longer register global capture-phase pointer listeners while inactive; listeners attach only for the active Tool Session and detach on Apply/Cancel.
+- Inactive Tool Session shells are authoritatively hidden with `display:none!important`.
+- Boolean core is restored to the frozen Beta 4 one-checkpoint transaction path.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains unchanged.
+- Beta 5 remains blocked pending hands-on confirmation of the six regression checks.
+
 
 ### v0.36.18.453 — Restore proven pre-cleanup interaction runtime
 
