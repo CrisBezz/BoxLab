@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.457 viewport pointer ownership repair
+
+- User confirmed the UI itself is good but all viewport interaction is dead.
+- Identified shared component Multi paint selection as capable of capturing the first touch pointer before OrbitControls/direct tools.
+- Reserved finger touch for viewport navigation and made component paint yield to armed direct tools.
+- Kept current UI/UX intact.
+- Hid Edge Lathe/Revolve settings until Revolve is actually armed; compact Revolve launcher remains visible.
+- No topology changes.
+
+
 ## 2026-09-24 — v0.36.18.456 UI-preserved tool runtime repair
 
 - User clarified the redesigned UI is correct; only the modelling tools underneath it regressed.

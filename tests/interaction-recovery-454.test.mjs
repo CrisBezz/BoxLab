@@ -7,8 +7,9 @@ const paint=fs.readFileSync(new URL('../src/edge-paint-select.js',import.meta.ur
 const transform=fs.readFileSync(new URL('../src/transform-upgrade.js',import.meta.url),'utf8');
 const toolSession=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.url),'utf8');
 
-test('456 replaces failed 454 component ownership interception with proven pre-reorder routing',()=>{
-  assert.doesNotMatch(paint,/function directToolActive\(\)/);
+test('457 keeps proven transform routing while component paint yields to direct tools and touch navigation',()=>{
+  assert.match(paint,/function directToolActive\(\)/);
+  assert.match(paint,/if\(event.pointerType==='touch'\)return/);
   assert.doesNotMatch(transform,/function directComponentToolActive\(\)/);
   assert.match(transform,/function directFaceToolActive\(\)/);
 });
@@ -27,9 +28,9 @@ test('456 inactive Tool Session shells stay hidden while the current UI is prese
 });
 
 test('456 runtime cache keys and protected multi-object transform remain pinned',()=>{
-  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.456/);
-  assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.456/);
-  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.456/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.456/);
+  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.457/);
+  assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.457/);
+  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.457/);
+  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.457/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

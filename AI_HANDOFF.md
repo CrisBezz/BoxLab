@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.456**
+- Current live version / branch target: **v0.36.18.457**
 - Current main HEAD at audit: **6e93491e841991631fc09b79cf0c9f7d53faa9e7**
 - Latest code-bearing release merge: **v0.36.18.456 / PR #144 / squash `6e93491e841991631fc09b79cf0c9f7d53faa9e7`**
 - Latest regression: **35996984651 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.457 — Viewport pointer ownership repair
+
+- User confirmed the redesigned UI is good; the remaining failure is that viewport interaction is dead.
+- Root cause found in shared component Multi plumbing: component Multi is intentionally enabled by default, while `edge-paint-select.js` could capture the first touch pointer over selectable geometry before OrbitControls or direct tools received it.
+- Finger/touch is now reserved for viewport navigation in component paint selection.
+- Component paint selection yields to armed direct modelling tools, including Face Extrude/Inset, Edge/Vertex Bevel and Revolve.
+- Current .456 UI/UX is otherwise preserved.
+- Edge Revolve remains available as a compact launcher, while Lathe/Revolve axis/segment settings remain hidden until Revolve is actually armed.
+- No topology solver changes.
+
 
 ### v0.36.18.456 — Preserve new UI, repair underlying tool ownership
 
