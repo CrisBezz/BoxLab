@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.453**
+- Current live version / branch target: **v0.36.18.454**
 - Current main HEAD at audit: **69a4a8b8ab13bb03f8d93d93ee798106f0b6ed18**
 - Latest code-bearing release merge: **v0.36.18.453 / PR #140 / squash `69a4a8b8ab13bb03f8d93d93ee798106f0b6ed18`**
 - Latest regression: **35991654724 PASS**
@@ -51,6 +51,16 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.454 — Object UI recovery after .453 hands-on feedback
+
+- Boolean geometry is confirmed working by hands-on test; the failure is in the workflow/presentation around Object Multi selection.
+- Restores the established compact five-button Object Selection toolbar layout so Multi stays within the Selection UI.
+- Adds the missing `.boxlab-tool-session-shell[hidden]{display:none!important}` contract so inactive Object Tool Sessions do not all appear open in Active Tools.
+- Re-enables only the narrow Boolean launcher/close presentation wrapper. The broader .451 component presentation wrapper remains disabled.
+- No Face/Edge/Vertex modelling core, Boolean geometry solver, Through topology, or protected multi-object transform changes.
+- Hands-on target: compact Object Selection Multi workflow + single Boolean launcher + inactive Object sessions hidden.
+
 
 ### v0.36.18.453 — Restore proven pre-cleanup interaction runtime
 
