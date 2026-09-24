@@ -937,3 +937,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] .452 Edge Revolve: launcher directly arms selected loose-edge profile and reveals axis/segments/Apply/Cancel
 - [ ] .452 Boolean: Union/Cut/Intersect result returns to exact pre-operation scene with one Undo
 - [ ] .452 Through: cavity-aware Through remains unchanged and still passes previous hard cases
+
+
+## v0.36.18.453 recovery sanity
+
+- [ ] Inset arms and drags the inset rather than moving the selected Face
+- [ ] Edge Bevel arms and Pencil drag produces a bevel
+- [ ] Vertex Bevel arms and Pencil drag produces a bevel
+- [ ] Boolean direct controls operate and one Undo restores the exact pre-Boolean scene
+- [ ] Edge Revolve arms and produces its preview/result using the proven pre-cleanup interaction path
+- [ ] orbit / pan / zoom remain available whenever no direct tool owns the gesture
+- [ ] the .450-.452 presentation wrappers are not loaded in the live runtime
