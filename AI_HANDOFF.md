@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.448**
+- Current live version / branch target: **v0.36.18.449**
 - Current main HEAD at audit: **7c8eb0c1c36fe0bc8a69397390771043c0aefe20**
 - Latest code-bearing release merge: **v0.36.18.448 / PR #135 / squash `7c8eb0c1c36fe0bc8a69397390771043c0aefe20`**
 - Latest regression: **35970042762 PASS**
@@ -51,6 +51,15 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.449 — Scrollable Viewport menu
+
+- Fixes Viewport settings overflowing off-screen on iPad now that Facegroup colour controls increased menu height.
+- Viewport panel now has a viewport-relative maximum height and vertical scrolling.
+- Adds iPad-friendly inertial scrolling, contained overscroll and vertical pan touch handling.
+- Keeps the Viewport button and floating-panel placement unchanged.
+- No modelling, facegroup, export, selection or navigation behaviour is changed.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.448 — Facegroups first-activation fix
 

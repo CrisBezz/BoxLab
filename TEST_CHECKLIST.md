@@ -907,3 +907,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .448: first activation never renders the mesh near-black if evaluated mesh/body geometry is temporarily unsynchronised
 - [ ] Facegroups .448: current persisted palette/Saturation/Lightness/Ungrouped settings are applied on first activation
 - [ ] Facegroups .448: switching away and back to Facegroups immediately restores colours
+
+- [ ] Viewport .449: menu remains within iPad landscape screen height
+- [ ] Viewport .449: menu scrolls vertically with touch/Pencil when content exceeds available height
+- [ ] Viewport .449: Facegroup colour controls and lower Studio Light controls are reachable without browser-page scrolling
+- [ ] Viewport .449: tapping View Direction / Render Look controls still works after scrolling
