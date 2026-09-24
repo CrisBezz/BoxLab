@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.453 Proven-runtime recovery
+
+- User hands-on test reported that .452 still left the affected modelling tools unusable.
+- Abandoned the .450–.452 presentation-wrapper/ownership repair direction as the active runtime.
+- Restored transform and Edge Revolve interaction runtimes from the last hands-on-good .449 state; retained the hands-on-passed .452 Revolve Profile controller.
+- Removed the Boolean Tool Session and .451 presentation wrappers from the live loader.
+- Retained the .452 Boolean transactional one-step scene snapshot fix in the core Boolean module.
+- Kept mature Through topology and protected multi-object transform untouched.
+- Added regression checks that the failed wrappers are not loaded and protected runtime pins remain intact.
+- Beta 5 remains deferred until hands-on recovery passes.
+
+
 ## 2026-09-24 — v0.36.18.452 Tool ownership / Boolean Undo recovery
 
 - User retest of .451: Inset failed; Through passed; Edge Bevel failed; Vertex Bevel failed; Boolean one-step Undo failed; Revolve Profile passed; Edge Revolve failed.

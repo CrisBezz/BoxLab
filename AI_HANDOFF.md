@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.452**
+- Current live version / branch target: **v0.36.18.453**
 - Current main HEAD at audit: **4e2733d1ac38974265a4da9524239429481b90ea**
 - Latest code-bearing release merge: **v0.36.18.452 / PR #139 / squash `4e2733d1ac38974265a4da9524239429481b90ea`**
 - Latest regression: **35988721656 PASS**
@@ -51,6 +51,17 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.453 — Restore proven pre-cleanup interaction runtime
+
+- User hands-on report on .452: the affected modelling tools remained unusable; the .450–.452 UI/ownership recovery path was not successful.
+- Recovery strategy: return the interaction-sensitive runtime to the last hands-on-good .449 behaviour instead of adding another interception/ownership patch.
+- Restored `transform-upgrade.js` and Edge `revolve.js` from the .449 runtime; retained the hands-on-passed .452 Revolve Profile controller and cache-bumped it for .453.
+- Removed `boolean-tool-session-ui.js` and `ui-presentation-451.js` from the live loader. Their files remain for history but they no longer participate in runtime interaction.
+- Boolean core keeps the .452 transactional pre-scene snapshot fix, but its direct proven UI is exposed again because the Boolean wrapper is no longer loaded.
+- Protected `multi-object-transform.js?v=0.36.1.0`, core Face/Bevel controllers, Through topology, main runtime and styles remain untouched.
+- This is a deliberate stability recovery. UI consolidation can be reintroduced later only in small independently hands-on-tested slices.
+- Beta 5 remains blocked pending hands-on confirmation of Inset, Edge Bevel, Vertex Bevel, Boolean, Edge Revolve and general navigation; Revolve Profile remains on its previously passed controller.
 
 ### v0.36.18.452 — Authoritative tool ownership + Boolean one-step Undo
 
