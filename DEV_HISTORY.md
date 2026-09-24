@@ -6,6 +6,8 @@
 - Added viewport-relative max height, vertical overflow scrolling, contained overscroll and iPad inertial scrolling.
 - Kept the Viewport menu position/width and existing controls unchanged.
 - No modelling or facegroup data behavior changed.
+- Released via PR **#136**; squash merge `df6f10db0df4fb6b8bdcc9af4367db9bf9c9827c`.
+- Final PR Topology regression run **35974096070 PASS**.
 
 ## 2026-09-24 — v0.36.18.448 Facegroups first-activation fix
 
