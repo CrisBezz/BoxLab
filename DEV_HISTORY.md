@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.456 UI-preserved tool runtime repair
+
+- User clarified the redesigned UI is correct; only the modelling tools underneath it regressed.
+- Abandoned the proposed UI rollback before merge.
+- Preserved the complete .455 presentation layer.
+- Restored pre-reorder transform and component-selection ownership runtimes.
+- Restored transactional Boolean pre-scene snapshot for one-step Undo.
+- No modelling topology or UI layout changes.
+
+
 ## 2026-09-24 — v0.36.18.455 Object Multi + Boolean presentation recovery
 
 - User clarified Boolean itself works; the broken part is the operand-selection and Active Tools presentation.
