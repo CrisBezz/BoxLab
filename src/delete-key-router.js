@@ -1,4 +1,4 @@
-const VERSION='0.36.18.455';
+const VERSION='0.36.18.456';
 
 function currentMode(){
   return globalThis.__boxlabSelectionBridge?.mode?.()
