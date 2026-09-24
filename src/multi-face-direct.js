@@ -152,6 +152,3 @@ function finish(event){
   render();syncButtons();
 }
 document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);
-
-
-globalThis.__boxlabDirectFace={version:'0.36.18.452',get active(){return armed;},get tool(){return armed;}};
