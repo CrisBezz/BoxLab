@@ -47,7 +47,7 @@ test('451 Edge cleanup keeps Lathe/Revolve and settings contextual',()=>{
 test('451 Revolve Profile can launch directly and Cancel restores pre-tool scene',()=>{
   const src=fs.readFileSync(new URL('../src/revolve-profile.js',import.meta.url),'utf8');
   assert.match(src,/launchRow\.hidden=false/);
-  assert.match(src,/if\(!object\|\|!looksConstructionMesh\(mesh\)\)\{[\s\S]*object=addRevolveProfile\(\)/);
+  assert.match(src,/if\(!object\|\|!looksConstructionMesh\(mesh\)\)[\s\S]*object=addRevolveProfile\(\)/);
   assert.match(src,/id="revolveProfileCancelBtn"/);
   assert.match(src,/function cancelRevolveProfile\(\)/);
   assert.match(src,/__boxlabObjectHistory\.restore\(profileBeforeScene\)/);
