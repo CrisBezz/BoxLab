@@ -10,7 +10,7 @@ const session=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.ur
 const objectLayout=fs.readFileSync(new URL('../src/object-selection-layout.js',import.meta.url),'utf8');
 
 test('456 preserves current UI presentation',()=>{
-  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.455/);
+  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.456/);
   assert.match(session,/\.boxlab-tool-session-shell\[hidden\]\{display:none!important/);
   assert.match(objectLayout,/grid-template-columns:repeat\(5,minmax\(0,1fr\)\)!important/);
 });
