@@ -26,7 +26,7 @@ function makeRow(host,id,labelText){
   const input=document.createElement('input');input.type='number';input.min='2';input.max='49';input.step='0.1';input.inputMode='decimal';input.placeholder='20.0';input.style.cssText='min-width:0;width:100%;box-sizing:border-box;padding:5px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.055);color:inherit;font:inherit';
   const apply=document.createElement('button');apply.type='button';apply.textContent='Apply';apply.style.cssText='padding:5px 8px;white-space:nowrap';
   row.append(label,input,apply);host.append(row);
-  const readout=document.createElement('div');readout.id=id==='precisionVertexBevelRow'?'precisionVertexBevelReadout':id==='precisionEdgeBevelRow'?'precisionEdgeBevelReadout':'';readout.style.cssText='font-size:10px;opacity:.72;margin:2px 0 1px;min-height:12px';host.append(readout);
+  const readout=document.createElement('div');readout.style.cssText='font-size:10px;opacity:.72;margin:2px 0 1px;min-height:12px';host.append(readout);
   return{row,input,apply,readout};
 }
 
