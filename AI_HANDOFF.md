@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.451**
-- Current main HEAD at audit: **d77ec35968d0f59a75747c7be573a3fc3d33bc8c**
-- Latest code-bearing release merge: **v0.36.18.450 / PR #137 / squash `d77ec35968d0f59a75747c7be573a3fc3d33bc8c`**
-- Latest regression: **35976396864 PASS**
+- Current main HEAD at audit: **b4ad4077d6813df50699fb53dccd11252809d5b5**
+- Latest code-bearing release merge: **v0.36.18.451 / PR #138 / squash `b4ad4077d6813df50699fb53dccd11252809d5b5`**
+- Latest regression: **35984043420 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.451 — Cross-mode UI regression recovery
+
+**Released on main via PR #138; squash merge `b4ad4077d6813df50699fb53dccd11252809d5b5`. Final PR regression run `35984043420` passed.**
 
 - .450 hands-on testing found that the UI cleanup was too invasive: Boolean lost expected one-step Undo, Revolve Profile launch/cancel UX was incomplete, and Face/Edge/Vertex tool arming appeared broken across Inset / Through / Bevel workflows.
 - Source audit confirmed the proven modelling controllers for Face Inset/Extrude/Through, Edge Bevel and Vertex Bevel were unchanged from the working .449 baseline.
