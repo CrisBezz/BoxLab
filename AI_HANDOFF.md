@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.455**
+- Current live version / branch target: **v0.36.18.456**
 - Current main HEAD at audit: **3ec6d638b08a437480d9be9efb232f4f3783b596**
 - Latest code-bearing release merge: **v0.36.18.455 / PR #143 / squash `3ec6d638b08a437480d9be9efb232f4f3783b596`**
 - Latest regression: **35995205443 PASS**
@@ -51,6 +51,20 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.456 — Restore pre-.450 UI interaction architecture
+
+- User identified the regression boundary: failures began after the .450 UI/UX reordering/consolidation.
+- Recovery strategy is now architectural rollback, not per-tool patching.
+- Restored `tool-session-ui.js` from the hands-on-good .449 UI wiring baseline.
+- Removed the Boolean presentation/session wrapper from the live loader.
+- Restored `transform-upgrade.js` to the pre-cleanup .449 ownership model.
+- Restored `edge-paint-select.js` to its pre-cleanup .340 runtime.
+- Restored Boolean core/history to the pre-cleanup .369 path.
+- Later independent modelling features remain in the app; only the interaction-sensitive UI/ownership layer is rolled back.
+- Protected `multi-object-transform.js?v=0.36.1.0`, Through topology, direct Face/Edge/Vertex modelling cores and frozen Beta 4 remain untouched.
+- Do not reintroduce the .450-.455 contextual Tool Session/presentation architecture until the recovered interaction baseline passes hands-on testing.
+
 
 ### v0.36.18.455 — Object Multi + Boolean presentation recovery
 
