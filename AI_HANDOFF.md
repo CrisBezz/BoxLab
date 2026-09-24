@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.446**
-- Current main HEAD at audit: **66e9e6e00d7734a0c5f0df28b1f8413bd6a220b9**
-- Latest code-bearing release merge: **v0.36.18.445 / PR #132 / squash `66e9e6e00d7734a0c5f0df28b1f8413bd6a220b9`**
-- Latest regression: **35949682949 PASS**
+- Current main HEAD at audit: **fcd19de9f38bfca2d65a1de643387a64e03ab318**
+- Latest code-bearing release merge: **v0.36.18.446 / PR #133 / squash `fcd19de9f38bfca2d65a1de643387a64e03ab318`**
+- Latest regression: **35950814715 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.446 — Viewport Facegroup Colours
+
+**Released on main via PR #133; squash merge `fcd19de9f38bfca2d65a1de643387a64e03ab318`. Final regression run `35950814715` passed.**
 
 - Adds **Facegroups** as a Viewport > Render Look option.
 - Uses preserved `EditableMesh.faceGroups[]` metadata from .445; no mesh/export data is changed by the display mode.
