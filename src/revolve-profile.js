@@ -218,11 +218,11 @@ function planeSurface(frame){
 }
 function buildOverlay(){
   const object=profileObject(),mesh=liveMesh(),scene=state()?.scene;
-  if(!object||!scene){disposeOverlay();launchRow.hidden=true;endRevolveSession();activeProfileId=null;return;}
+  if(!object||!scene){disposeOverlay();launchRow.hidden=false;endRevolveSession();activeProfileId=null;return;}
   const meta=ensureMeta(object);
   const construction=looksConstructionMesh(mesh);
   meta.applied=!construction;
-  launchRow.hidden=!construction;
+  launchRow.hidden=false;
   if(!construction){disposeOverlay();activeProfileId=object.id;endRevolveSession();return;}
   activeProfileId=object.id;
   const currentPlaneSignature=planeSignature(mesh);
@@ -397,7 +397,7 @@ function applyRevolve(){
   manager()?.saveActive?.();
   globalThis.__boxlabObjectSelection?.single?.(object.id);
   globalThis.__boxlabBooleanUX?.sync?.();
-  disposeOverlay();launchRow.hidden=true;controls.hidden=true;lastSignature='';
+  disposeOverlay();launchRow.hidden=false;controls.hidden=true;lastSignature='';
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   setStatus(`Revolve applied • ${meta.segments} segments • ${result.faces} faces`);
   return true;
@@ -422,11 +422,15 @@ function installPenRange(input,onValue){
 
 window.addEventListener('boxlab-add-revolve-profile',addRevolveProfile);
 launchButton?.addEventListener('click',()=>{
-  const object=profileObject(),mesh=liveMesh();
+  let object=profileObject(),mesh=liveMesh();
+  if(!object||!looksConstructionMesh(mesh)){
+    object=addRevolveProfile();
+    mesh=liveMesh();
+  }
   if(!object||!looksConstructionMesh(mesh))return;
   const meta=ensureMeta(object);
   claimRevolveTools(meta);
-  setStatus('Revolve Profile • edit profile, adjust Segments, then Apply Revolve');
+  setStatus('Revolve Profile • position/snap plane, Edit Profile, then Apply Revolve');
   lastSignature='';
 });
 window.addEventListener('pointerdown',beginProfilePointer,true);
