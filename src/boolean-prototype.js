@@ -12,6 +12,7 @@ const CONVEX_ONLY='Current Boolean supports convex solids only';
 const DEGENERATE_INPUT='Degenerate face in Boolean input';
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('[data-mode-tools="object"]');
+function toolSession(){return globalThis.__boxlabToolSession||null;}
 
 function manager(){return globalThis.__boxlabObjectManager||null;}
 function selection(){return globalThis.__boxlabObjectSelection||null;}
@@ -248,12 +249,38 @@ function buildGroupResult(active,other,operation){
 function ensureUI(){
   if(!objectTools)return null;
   document.querySelector('#booleanPrototype211')?.remove();document.querySelector('#booleanPrototype212')?.remove();document.querySelector('#booleanPrototype214')?.remove();document.querySelector('#booleanPrototype215')?.remove();document.querySelector('#booleanPrototype216')?.remove();
-  let group=document.querySelector('#booleanPrototype217');if(group)return group;
-  group=document.createElement('div');group.id='booleanPrototype217';group.style.cssText='margin:7px 0 3px';
-  const label=document.createElement('div');label.textContent='BOOLEAN • STABLE + SEQUENTIAL';label.style.cssText='font-size:9px;letter-spacing:.35px;opacity:.55;margin:0 0 4px 1px';
+  let group=document.querySelector('#booleanPrototype217');
+  if(group)return group;
+
+  const launchRow=document.createElement('div');
+  launchRow.className='outliner-actions boolean-launch-row';
+  launchRow.style.gridTemplateColumns='1fr';
+  launchRow.innerHTML='<button id="booleanLaunchBtn" type="button">Boolean</button>';
+  objectTools.appendChild(launchRow);
+
+  group=document.createElement('div');
+  group.id='booleanPrototype217';
+  group.className='boxlab-tool-session-shell boolean-session';
+  group.hidden=true;
+  group.innerHTML='<div class="boxlab-tool-session-title"><span>Boolean</span><span class="boxlab-tool-session-subtitle">Two objects / Groups</span></div>'+
+    '<div class="boxlab-tool-session-section">Operation</div>';
   const row=document.createElement('div');row.className='outliner-actions';row.style.cssText='grid-template-columns:repeat(3,minmax(0,1fr));gap:4px';
   for(const [op,text] of [['union','Union'],['difference','Cut'],['intersection','Intersect']]){const b=document.createElement('button');b.type='button';b.dataset.boolean217=op;b.textContent=text;b.style.cssText='min-width:0;padding:5px 3px;font-size:10px';row.appendChild(b);}
-  group.append(label,row);objectTools.appendChild(group);return group;
+  const hint=document.createElement('div');hint.id='booleanEligibilityHint';hint.className='boxlab-tool-session-subtitle';hint.textContent='Select exactly two closed objects';
+  const closeRow=document.createElement('div');closeRow.className='outliner-actions';closeRow.style.gridTemplateColumns='1fr';closeRow.innerHTML='<button id="booleanCloseBtn" type="button">Close</button>';
+  group.append(row,hint,closeRow);objectTools.appendChild(group);
+
+  launchRow.querySelector('#booleanLaunchBtn')?.addEventListener('click',()=>{
+    group.hidden=false;
+    toolSession()?.begin?.({id:'boolean',title:'Boolean',node:group,subtitle:'Union · Cut · Intersect'});
+    sync();
+  });
+  group.querySelector('#booleanCloseBtn')?.addEventListener('click',()=>{
+    group.hidden=true;
+    toolSession()?.end?.('boolean');
+    setStatus('Boolean closed');
+  });
+  return group;
 }
 function eligibility(){
   const m=manager(),chosen=selectedObjects();
@@ -291,7 +318,10 @@ function nextBooleanName(name){
 }
 function sync(){
   const group=ensureUI();if(!group)return false;const e=eligibility();
-  group.querySelectorAll('[data-boolean217]').forEach(button=>{button.disabled=!e.ok;button.title=e.ok?(button.dataset.boolean217==='difference'?`Cut ${e.other.name} from active ${e.active.name}`:`${button.textContent}: ${e.active.name} + ${e.other.name}`):e.reason;});return e;
+  group.querySelectorAll('[data-boolean217]').forEach(button=>{button.disabled=!e.ok;button.title=e.ok?(button.dataset.boolean217==='difference'?`Cut ${e.other.name} from active ${e.active.name}`:`${button.textContent}: ${e.active.name} + ${e.other.name}`):e.reason;});
+  const hint=group.querySelector('#booleanEligibilityHint');
+  if(hint)hint.textContent=e.ok?`${e.active.name} + ${e.other.name}`:e.reason;
+  return e;
 }
 function apply(operation){
   const e=eligibility();if(!e.ok){setStatus(`Boolean • ${e.reason}`);return;}
@@ -309,6 +339,8 @@ function apply(operation){
   const fallbackText=result.fallbackReason===DEGENERATE_INPUT?' • repaired degenerate input':'';const engineText=result.engine==='compound'?'compound solver':result.engine==='sequential'?'sequential solver':'stable solver';
   const sourceText=e.kind==='groups'?' • source Groups hidden':' • originals hidden';
   setStatus(`${label} created • ${result.mesh.vertices.length} verts • ${result.mesh.faces.length} faces • ${engineText}${fallbackText}${sourceText}`);
+  const group=document.querySelector('#booleanPrototype217');if(group)group.hidden=true;
+  toolSession()?.end?.('boolean');
 }
 
 ensureUI();
@@ -318,4 +350,4 @@ window.addEventListener('boxlab-bridge-state',()=>setTimeout(sync,0));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 [0,100,400,900].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabBooleanPrototype={version:VERSION,buildStableResult,buildResult,buildGroupResult,eligibility,apply,sync};
+globalThis.__boxlabBooleanPrototype={version:'0.36.18.450',buildStableResult,buildResult,buildGroupResult,eligibility,apply,sync};
