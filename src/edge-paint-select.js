@@ -51,7 +51,7 @@ canvas?.addEventListener('pointerdown', event => {
   // Finger/touch belongs to viewport navigation. Component paint selection is
   // Pencil/mouse only so the first touch cannot steal OrbitControls' gesture.
   if(event.pointerType==='touch')return;
-  if(globalThis.__boxlabFaceSplit?.isArmed?.()||globalThis.__boxlabOffsetLoop?.isArmed?.()) return;
+  if(document.querySelector('#extrudeBtn.boxlab-direct-stable,#insetBtn.boxlab-direct-stable,#bevelBtn.active')||globalThis.__boxlabFaceSplit?.isArmed?.()||globalThis.__boxlabOffsetLoop?.isArmed?.()) return;
   const type = mode();
   const bridge = selection();
   if (!event.isPrimary || !multiToggle?.checked || !['vertex', 'edge', 'face'].includes(type)) return;
