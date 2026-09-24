@@ -9,6 +9,8 @@
 - Boolean now captures the complete pre-operation scene and checkpoints that snapshot once after successful result creation.
 - No Through topology changes; the strong cavity-aware baseline remains protected.
 - Beta 5 remains deferred pending hands-on confirmation.
+- Released via PR **#139**; squash merge `4e2733d1ac38974265a4da9524239429481b90ea`.
+- Final PR Topology regression run **35988721656 PASS**.
 
 ## 2026-09-24 — v0.36.18.451 Cross-mode UI regression recovery
 
