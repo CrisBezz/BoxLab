@@ -158,16 +158,11 @@ axisButtons.forEach(control=>control.addEventListener('click',()=>{
   axis=control.dataset.revolveAxis;axisButtons.forEach(b=>b.classList.toggle('active',b===control));if(previewArmed)buildPreview();
 }));
 installPenRange(segmentInput,()=>{if(segmentOut)segmentOut.textContent=String(segments());if(previewArmed)buildPreview();});
-function armRevolve(){
-  if(previewArmed)return true;
-  globalThis.__boxlabTransformArming?.disarm?.();
-  const check=preflight();if(!check.ok){setStatus(`Revolve refused • ${check.reason}`);return false;}
-  previewEdges=edgeSelection();previewObjectId=activeObject()?.id||null;previewArmed=true;lockDrawer();button.textContent='Apply Revolve';
-  document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'edge-revolve'}}));
-  buildPreview();return true;
-}
 button?.addEventListener('click',()=>{
-  if(!previewArmed){armRevolve();return;}
+  if(!previewArmed){
+    const check=preflight();if(!check.ok){setStatus(`Revolve refused • ${check.reason}`);return;}
+    previewEdges=edgeSelection();previewObjectId=activeObject()?.id||null;previewArmed=true;lockDrawer();button.textContent='Apply Revolve';buildPreview();return;
+  }
   if(applyRevolve()){disposePreview();previewArmed=false;previewObjectId=null;previewEdges=[];unlockDrawer();button.textContent='Revolve';}
 });
 drawer?.addEventListener('toggle',()=>{if(previewArmed&&!drawer.open)queueMicrotask(()=>{if(previewArmed)drawer.open=true;});});
@@ -177,9 +172,8 @@ window.addEventListener('beforeunload',()=>{disposePreview();unlockDrawer();});
 if(segmentOut)segmentOut.textContent=String(segments());
 
 globalThis.__boxlabRevolve={
-  version:'0.36.18.452',
+  version:'0.36.18.386',
   analyze:analyzeRevolveInput,
-  arm:armRevolve,
   get active(){return previewArmed;},
   rebuild:buildPreview,
   cancel:cancelPreview
