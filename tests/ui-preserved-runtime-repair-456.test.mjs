@@ -10,7 +10,7 @@ const session=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.ur
 const objectLayout=fs.readFileSync(new URL('../src/object-selection-layout.js',import.meta.url),'utf8');
 
 test('456 preserves current UI presentation',()=>{
-  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.460/);
+  assert.match(index,/boolean-tool-session-ui\.js\?v=0\.36\.18\.461/);
   assert.match(session,/\.boxlab-tool-session-shell\[hidden\]\{display:none!important/);
   assert.match(objectLayout,/grid-template-columns:repeat\(5,minmax\(0,1fr\)\)!important/);
 });
@@ -28,7 +28,7 @@ test('456 restores transactional Boolean one-step Undo',()=>{
 });
 
 test('456 keeps core modelling and navigation pins',()=>{
-  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.242/);
+  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.461/);
   assert.match(index,/direct-bevel\.js\?v=0\.36\.18\.253/);
   assert.match(index,/direct-multi-vertex-bevel\.js\?v=0\.30\.1/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
