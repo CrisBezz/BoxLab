@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.457**
-- Current main HEAD at audit: **6e93491e841991631fc09b79cf0c9f7d53faa9e7**
-- Latest code-bearing release merge: **v0.36.18.456 / PR #144 / squash `6e93491e841991631fc09b79cf0c9f7d53faa9e7`**
-- Latest regression: **35996984651 PASS**
+- Current main HEAD at audit: **b4ce2101bc749193a4f03934889efbf8500ceb5f**
+- Latest code-bearing release merge: **v0.36.18.457 / PR #145 / squash `b4ce2101bc749193a4f03934889efbf8500ceb5f`**
+- Latest regression: **35998556661 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.457 — Viewport pointer ownership repair
+
+**Released on main via PR #145; squash merge `b4ce2101bc749193a4f03934889efbf8500ceb5f`. Final PR regression run `35998556661` passed.**
 
 - User confirmed the redesigned UI is good; the remaining failure is that viewport interaction is dead.
 - Root cause found in shared component Multi plumbing: component Multi is intentionally enabled by default, while `edge-paint-select.js` could capture the first touch pointer over selectable geometry before OrbitControls or direct tools received it.
