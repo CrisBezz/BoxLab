@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.451 Cross-mode UI regression recovery
+
+- User hands-on test of .450 reported a common regression pattern across Object / Face / Edge / Vertex.
+- Reported: Boolean not returning in one Undo; Revolve Profile launcher requiring Object > Add and lacking Cancel; Face exact controls orphaned; Inset moving the face; Through weakened; Edge Bevel inactive; Lathe controls visible while unarmed; Edge UI still cluttered; Vertex Bevel inactive.
+- Audit showed Face direct/Through, Edge Bevel and Vertex Bevel controller source was byte-identical to the proven .449 baseline, so topology code was not rewritten.
+- Restored the .449 Tool Session runtime and moved cleanup into a late presentation-only wrapper that does not intercept tool events.
+- Boolean solver/history remains pinned at .369; its cleanup wrapper now only shows/hides the existing controls.
+- Revolve Profile can now launch/create directly from Active Tools and Cancel restores the pre-tool scene.
+- Added cross-mode regression checks for controller arming plus presentation-only UI ownership.
+- Beta 5 remains deferred until user hands-on pass.
+
 ## 2026-09-24 — v0.36.18.450 Tool-first UI/UX consolidation
 
 - User requested a deliberate UI/UX rebuild before freezing Beta 5.
