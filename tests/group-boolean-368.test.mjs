@@ -20,7 +20,7 @@ test('368 Boolean eligibility accepts exactly two complete Groups',()=>{
 test('368 Group Boolean hides source Groups only after one scene checkpoint',()=>{
   const src=fs.readFileSync(new URL('../src/boolean-prototype.js',import.meta.url),'utf8');
   const block=src.slice(src.indexOf('function apply(operation)'),src.indexOf('ensureUI();',src.indexOf('function apply(operation)')));
-  assert.match(block,/__boxlabObjectHistory\?\.checkpointSnapshot\?\.\(beforeScene\)/);
+  assert.match(block,/__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
   assert.match(block,/for\(const object of originals\)object\.visible=false/);
   assert.match(block,/source Groups hidden/);
 });
