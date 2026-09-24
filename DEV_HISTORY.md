@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.456 pre-.450 UI interaction rollback
+
+- User identified the broad failure as beginning with the .450 UI/UX reorder/consolidation.
+- Reframed recovery around restoring the last hands-on-good UI interaction architecture rather than patching individual tools.
+- Restored pre-cleanup Tool Session, transform ownership, component paint selection and Boolean history/runtime paths.
+- Removed the Boolean presentation/session wrapper from the live loader.
+- Later independent modelling features remain present.
+- No protected Through or multi-object transform rewrite.
+
+
 ## 2026-09-24 — v0.36.18.455 Object Multi + Boolean presentation recovery
 
 - User clarified Boolean itself works; the broken part is the operand-selection and Active Tools presentation.
