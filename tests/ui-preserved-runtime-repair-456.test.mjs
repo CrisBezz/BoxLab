@@ -15,10 +15,10 @@ test('456 preserves current UI presentation',()=>{
   assert.match(objectLayout,/grid-template-columns:repeat\(5,minmax\(0,1fr\)\)!important/);
 });
 
-test('457 preserves proven transform ownership and fixes component paint boundary beneath UI',()=>{
+test('459 preserves proven transform ownership and armed-tool component selection beneath UI',()=>{
   assert.doesNotMatch(transform,/directComponentToolActive/);
   assert.match(transform,/directFaceToolActive\(\)/);
-  assert.match(paint,/function directToolActive\(\)/);
+  assert.doesNotMatch(paint,/function directToolActive\(\)/);
   assert.match(paint,/pointerType==='touch'/);
 });
 
