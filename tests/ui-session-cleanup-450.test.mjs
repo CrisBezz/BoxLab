@@ -44,6 +44,7 @@ test('450 protected modelling runtime pins remain intact',()=>{
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
   assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.450/);
-  assert.match(index,/src\/boolean-prototype\.js\?v=0\.36\.18\.369/);\n  assert.match(index,/src\/boolean-tool-session-ui\.js\?v=0\.36\.18\.450/);
+  assert.match(index,/src\/boolean-prototype\.js\?v=0\.36\.18\.369/);
+  assert.match(index,/src\/boolean-tool-session-ui\.js\?v=0\.36\.18\.450/);
   assert.equal(beta4.version,'0.36.18.427');
 });
