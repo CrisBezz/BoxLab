@@ -42,7 +42,7 @@ test('371 protects Group Boolean compound solver and additive whole-Group select
   assert.match(booleanProto,/function buildGroupResult\(active,other,operation\)/);
   assert.match(booleanProto,/function compoundUnion\(shells\)/);
   assert.match(mgmt,/completeSelectedGroupIds:selectedCompleteGroupIds/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.458/);
+  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.459/);
   assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.369/);
 });
 
