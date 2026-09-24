@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.447**
-- Current main HEAD at audit: **fcd19de9f38bfca2d65a1de643387a64e03ab318**
-- Latest code-bearing release merge: **v0.36.18.446 / PR #133 / squash `fcd19de9f38bfca2d65a1de643387a64e03ab318`**
-- Latest regression: **35950814715 PASS**
+- Current main HEAD at audit: **cfd8e9e64f84e8a3f5b19dfb0dd5de3f421a0bf3**
+- Latest code-bearing release merge: **v0.36.18.447 / PR #134 / squash `cfd8e9e64f84e8a3f5b19dfb0dd5de3f421a0bf3`**
+- Latest regression: **35955642406 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.447 — Facegroup colour controls
+
+**Released on main via PR #134; squash merge `cfd8e9e64f84e8a3f5b19dfb0dd5de3f421a0bf3`. Final regression run `35955642406` passed.**
 
 - Extends Viewport > Facegroups with contextual colour controls shown only while the Facegroups Render Look is active.
 - Adds palette presets: **Default, Soft, Vivid, High Contrast**.
