@@ -878,3 +878,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Export .444: Mirror is evaluated before export preflight
 - [ ] Export .444: SubD OBJ preflight reflects the subdivided export mesh, not only the base cage
 - [ ] Export .444: Reference objects remain excluded from scene OBJ export
+
+- [ ] Facegroups .445: import one OBJ object with 8 groups and confirm it remains one BoxLab object by default
+- [ ] Facegroups .445: imported object retains 8 facegroup IDs internally
+- [ ] Facegroups .445: enable Split objects by groups and confirm the same file imports as 8 BoxLab objects
+- [ ] Facegroups .445: Base OBJ export writes one object plus preserved group records and round-trips the 8 groups
+- [ ] Facegroups .445: moving/scaling/rotating the object does not lose facegroup metadata
+- [ ] Facegroups .445: Extrude/Inset/face split descendants inherit the parent facegroup
+- [ ] Facegroups .445: Mirror/SubD descendants inherit parent facegroups
+- [ ] Facegroups .445: new Auto Close cap faces are ungrouped

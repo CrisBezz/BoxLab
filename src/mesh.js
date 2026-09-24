@@ -1,10 +1,11 @@
 import * as THREE from 'three';
 
 export class EditableMesh {
-  constructor(vertices, faces, creases = null) {
+  constructor(vertices, faces, creases = null, faceGroups = null) {
     this.vertices = vertices.map(v => v.clone ? v.clone() : new THREE.Vector3(...v));
     this.faces = faces.map(f => [...f]);
     this.creases = new Map(creases ? [...creases] : []);
+    this.faceGroups = this.faces.map((_,i)=>typeof faceGroups?.[i]==='string'&&faceGroups[i].trim()?faceGroups[i].trim():null);
   }
 
   static cube(size = 2) {
@@ -15,7 +16,7 @@ export class EditableMesh {
     );
   }
 
-  clone(){ return new EditableMesh(this.vertices,this.faces,this.creases); }
+  clone(){ return new EditableMesh(this.vertices,this.faces,this.creases,this.faceGroups); }
 
   edgeKey(a,b){ return a<b?`${a}:${b}`:`${b}:${a}`; }
 
@@ -94,10 +95,13 @@ export class EditableMesh {
       return this.vertices.length-1;
     });
     const oldFace=[...face];
+    const inheritedGroup=this.faceGroups?.[faceIndex]??null;
     this.faces[faceIndex]=newIndices;
+    if(this.faceGroups)this.faceGroups[faceIndex]=inheritedGroup;
     for(let i=0;i<oldFace.length;i++){
       const a=oldFace[i], b=oldFace[(i+1)%oldFace.length], nb=newIndices[(i+1)%oldFace.length], na=newIndices[i];
       this.faces.push([a,b,nb,na]);
+      this.faceGroups?.push(inheritedGroup);
     }
     return {type:'face',index:faceIndex};
   }
@@ -112,12 +116,14 @@ export class EditableMesh {
       this.vertices.push(v);
       return this.vertices.length-1;
     });
-    const outer=[...face];
+    const outer=[...face],inheritedGroup=this.faceGroups?.[faceIndex]??null;
     this.faces[faceIndex]=inner;
+    if(this.faceGroups)this.faceGroups[faceIndex]=inheritedGroup;
     for(let i=0;i<outer.length;i++){
       const a=outer[i], b=outer[(i+1)%outer.length];
       const ib=inner[(i+1)%inner.length], ia=inner[i];
       this.faces.push([a,b,ib,ia]);
+      this.faceGroups?.push(inheritedGroup);
     }
     return {type:'face',index:faceIndex};
   }
@@ -149,7 +155,9 @@ export class EditableMesh {
       if(!path1||!path2||path1.length<3||path2.length<3) continue;
       if(new Set(path1).size!==path1.length||new Set(path2).size!==path2.length) continue;
 
+      const inheritedGroup=this.faceGroups?.[faceIndex]??null;
       this.faces.splice(faceIndex,1,[...path1],[...path2]);
+      this.faceGroups?.splice(faceIndex,1,inheritedGroup,inheritedGroup);
       return {ok:true,edgeKey:key,faceIndex};
     }
     return {ok:false,reason:'Vertices need one shared face'};
@@ -158,6 +166,7 @@ export class EditableMesh {
   deleteFace(faceIndex){
     if(faceIndex<0 || faceIndex>=this.faces.length) return false;
     this.faces.splice(faceIndex,1);
+    this.faceGroups?.splice(faceIndex,1);
     return true;
   }
 

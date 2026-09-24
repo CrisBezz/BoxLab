@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.444**
+- Current live version / branch target: **v0.36.18.445**
 - Current main HEAD at audit: **b9e16eaedad2044c8ce031bc8ae56f7ee736de4f**
 - Latest code-bearing release merge: **v0.36.18.444 / PR #131 / squash `b9e16eaedad2044c8ce031bc8ae56f7ee736de4f`**
 - Latest regression: **35934485708 PASS**
@@ -51,6 +51,18 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.445 — OBJ facegroup preservation foundation
+
+- Corrects editable OBJ semantics so `o` defines BoxLab object boundaries while `g` is preserved as per-face facegroup metadata inside that object.
+- Adds `EditableMesh.faceGroups[]`, aligned one-to-one with `faces[]`; clone and common face-topology methods preserve or inherit it.
+- Editable OBJ import now keeps one OBJ object as one BoxLab object by default even when it contains many groups.
+- Adds **Split objects by groups** in File > Import, OFF by default. When enabled, OBJ groups are deliberately split into separate BoxLab objects.
+- OBJ export writes preserved facegroups back as `g` records within each `o` object instead of using `g` as a duplicate object record.
+- Obvious descendants inherit parent facegroups through Extrude, Inset, face split, Triangulate, Mirror and SubD.
+- Safe Repair preserves surviving facegroups; Auto Close creates new cap faces as ungrouped.
+- Object transforms / linked-instance placement preserve facegroups through the existing mesh clone path.
+- Frozen Beta 4 remains v0.36.18.427; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 ### v0.36.18.444 — OBJ export polish / topology preflight
 
