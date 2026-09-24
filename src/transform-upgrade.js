@@ -26,8 +26,8 @@ function bridge(){return globalThis.__boxlabSelectionBridge;}
 function mode(){return bridge()?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
 function activeToolButton(){return document.querySelector('#toolModes button.active');}
 function tool(){return activeToolButton()?.dataset?.tool||null;}
-function directFaceToolActive(){return !!globalThis.__boxlabDirectFace?.active||!!document.querySelector('#extrudeBtn.active,#insetBtn.active');}
-function directComponentToolActive(){return !!globalThis.__boxlabDirectBevel?.active||!!globalThis.__boxlabDirectVertexBevel?.active||!!globalThis.__boxlabRevolve?.active;}
+function directFaceToolActive(){return !!document.querySelector('#extrudeBtn.active,#insetBtn.active');}
+function directComponentToolActive(){return !!document.querySelector('#bevelBtn.active,#vertexBevelBtn.active')||!!globalThis.__boxlabRevolve?.active;}
 function selected(){return [...new Set(bridge()?.indices?.()||[])];}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function axisVector(axis){return new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);}
