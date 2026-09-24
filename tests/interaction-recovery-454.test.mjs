@@ -28,9 +28,9 @@ test('456 inactive Tool Session shells stay hidden while the current UI is prese
 });
 
 test('456 runtime cache keys and protected multi-object transform remain pinned',()=>{
-  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.460/);
-  assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.460/);
-  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.460/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.460/);
+  assert.match(index,/transform-upgrade\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.461/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
