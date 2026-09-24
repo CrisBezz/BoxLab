@@ -18,11 +18,11 @@ test('453 restores the proven direct component interaction path',()=>{
   assert.match(transform,/directFaceToolActive\(\)/);
 });
 
-test('453 restores proven Revolve and Revolve Profile controllers',()=>{
+test('453 restores proven Edge Revolve while retaining confirmed-good Revolve Profile controller',()=>{
   assert.match(index,/revolve\.js\?v=0\.36\.18\.453/);
   assert.match(index,/revolve-profile\.js\?v=0\.36\.18\.453/);
   assert.doesNotMatch(revolve,/function armRevolve\(\)/);
-  assert.doesNotMatch(profile,/revolveProfileCancelBtn/);
+  assert.match(profile,/revolveProfileCancelBtn/);
 });
 
 test('453 preserves protected modelling and navigation pins',()=>{
