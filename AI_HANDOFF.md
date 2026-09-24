@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.450**
+- Current live version / branch target: **v0.36.18.451**
 - Current main HEAD at audit: **d77ec35968d0f59a75747c7be573a3fc3d33bc8c**
 - Latest code-bearing release merge: **v0.36.18.450 / PR #137 / squash `d77ec35968d0f59a75747c7be573a3fc3d33bc8c`**
 - Latest regression: **35976396864 PASS**
@@ -51,6 +51,20 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.451 — Cross-mode UI regression recovery
+
+- .450 hands-on testing found that the UI cleanup was too invasive: Boolean lost expected one-step Undo, Revolve Profile launch/cancel UX was incomplete, and Face/Edge/Vertex tool arming appeared broken across Inset / Through / Bevel workflows.
+- Source audit confirmed the proven modelling controllers for Face Inset/Extrude/Through, Edge Bevel and Vertex Bevel were unchanged from the working .449 baseline.
+- Restores the proven .449 shared Tool Session implementation rather than changing topology/model algorithms.
+- Adds a late-loaded **presentation-only** UI wrapper that changes visibility after tool state changes but never calls `preventDefault`, never owns pointer events, and never mutates selection.
+- Face exact controls are hidden at rest and relabel to **Extrude Exact** or **Inset Exact** only while that direct tool is armed.
+- Edge Bevel / Edge Slide / Offset / Loop settings are contextual. Lathe/Revolve is a single launcher at rest; axis/segments/Apply/Cancel appear only while active.
+- Vertex Slide and Vertex Bevel settings are contextual without changing their established arming controllers.
+- Boolean keeps the protected `boolean-prototype.js?v=0.36.18.369` solver/history path and uses a presentation-only show/hide launcher; the wrapper adds no history operation.
+- Revolve Profile is now directly launchable from Active Tools without first using Object > Add, and has **Cancel** which restores the pre-tool scene/history depth.
+- Strong cavity-aware Extrude Through remains the required baseline; there is no intended reduction in supported Through behaviour.
+- Beta 5 remains blocked until this recovery receives a hands-on pass.
 
 ### v0.36.18.450 — Tool-first UI/UX consolidation
 
@@ -341,7 +355,7 @@ Current implemented foundation:
 
 ## Next intended build
 
-### Beta 5 checkpoint after .450 hands-on UI pass
+### Beta 5 checkpoint after .451 regression-recovery hands-on pass
 
 1. Hands-on audit Object / Face / Edge / Vertex mode homes for any remaining orphan settings.
 2. Fix only concrete UI regressions found in that pass.
