@@ -7,6 +7,8 @@
 - Restored .449-style component selection while tools are armed, while keeping touch reserved for viewport navigation.
 - Removed the experimental .458 persistent Face handoff loader.
 - No topology or UI layout changes.
+- Released via PR **#147**; squash merge `6ca71fc6142060498a46e73acac0b9b7d7a9a044`.
+- Final PR Topology regression run **36065555151 PASS**.
 
 
 ## 2026-09-25 — v0.36.18.458 armed Face selection handoff
