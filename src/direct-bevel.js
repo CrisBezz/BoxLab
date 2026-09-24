@@ -46,7 +46,7 @@ function installFrameAll(){
   });
 }
 installFrameAll();
-button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();armed=!armed;if(armed){globalThis.__boxlabTransformArming?.disarm?.();if(bridge()?.mode?.()!=='edge')document.querySelector('#selectionModes button[data-mode="edge"]')?.click();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'edge-bevel'}}));}button.classList.toggle('active',armed);const count=selectedEdgeIds().length,useMulti=!!multiToggle?.checked&&count>1;document.querySelector('#selectionStatus').textContent=armed?(useMulti?`Bevel ${count} edges • drag any selected edge`:'Bevel Edge • drag an edge'):'Edge mode • nothing selected'},true);
+button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();armed=!armed;if(armed&&bridge()?.mode?.()!=='edge')document.querySelector('#selectionModes button[data-mode="edge"]')?.click();button.classList.toggle('active',armed);const count=selectedEdgeIds().length,useMulti=!!multiToggle?.checked&&count>1;document.querySelector('#selectionStatus').textContent=armed?(useMulti?`Bevel ${count} edges • drag any selected edge`:'Bevel Edge • drag an edge'):'Edge mode • nothing selected'},true);
 document.addEventListener('click',e=>{if(!armed||!e.isTrusted||e.target?.closest?.('#bevelBtn'))return;if(e.target?.closest?.('button'))disarm();},true);
 function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices)}function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}))}
 function bevelSegments(){return Math.max(1,Number(document.querySelector('#bevelSegments')?.value||1));}
@@ -71,4 +71,4 @@ function applyExact(value,selectionOverride=null){
   const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Bevel committed • ${valid.ids.length} edge${valid.ids.length===1?'':'s'} • ${amount}%`;
   return{ok:true,ids:[...valid.ids],percent:amount,segments:bevelSegments()};
 }
-globalThis.__boxlabDirectBevel={version:'0.36.18.452',applyExact,get active(){return armed;},disarm};
+globalThis.__boxlabDirectBevel={version:'0.36.18.32',applyExact};
