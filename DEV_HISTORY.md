@@ -8,6 +8,8 @@
 - Display uses the evaluated active/inactive meshes so Mirror/SubD inherited groups remain visible.
 - Facegroup view is non-destructive and does not alter export metadata.
 - Frozen Beta 4 remains v0.36.18.427; protected multi-object transform remains untouched.
+- Released via PR **#133**; squash merge `fcd19de9f38bfca2d65a1de643387a64e03ab318`.
+- Final PR Topology regression run **35950814715 PASS**.
 
 ## 2026-09-24 — v0.36.18.445 OBJ facegroup preservation foundation
 
