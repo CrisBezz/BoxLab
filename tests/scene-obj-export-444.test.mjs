@@ -19,7 +19,8 @@ test('444 scene OBJ preflight reports clean closed and open export meshes',()=>{
   assert.match(result.content,/# Preflight: 1 closed clean \| 1 open clean \| 0 issues/);
   assert.match(result.content,/# BoxLab health: Closed · Clean/);
   assert.match(result.content,/# BoxLab health: Open · Clean/);
-  assert.match(result.content,/o Closed Cube\ng Closed Cube/);
+  assert.match(result.content,/o Closed Cube/);
+  assert.doesNotMatch(result.content,/g Closed Cube/);
 });
 
 test('444 export preflight runs after Mirror evaluation',()=>{
