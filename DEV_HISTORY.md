@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-24 — v0.36.18.450 Tool-first UI/UX consolidation
+
+- User requested a deliberate UI/UX rebuild before freezing Beta 5.
+- Formalised the interaction rule: mode home shows tool launch buttons only; settings appear only while the owning tool is active.
+- Root-caused widespread Object/Shell clutter to a shared Tool Session CSS bug: `.boxlab-tool-session-shell` forced `display:flex` and could defeat the HTML `hidden` state.
+- Added an explicit `.boxlab-tool-session-shell[hidden]{display:none!important}` contract.
+- Made Vertex Slide exact controls contextual to Slide active state.
+- Made Vertex Bevel width/exact controls contextual to Bevel active state.
+- Migrated Boolean behind a single Boolean launcher with Union/Cut/Intersect inside a Tool Session.
+- Kept protected modelling/navigation runtimes and topology algorithms untouched.
+- Intended next milestone after user hands-on pass: Beta 5 freeze.
+
 ## 2026-09-24 — v0.36.18.449 Scrollable Viewport menu
 
 - User confirmed .448 works and reported the expanded Viewport menu now extends beyond the iPad screen and cannot scroll.

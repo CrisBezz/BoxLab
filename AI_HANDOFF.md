@@ -30,7 +30,7 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.449**
+- Current live version / branch target: **v0.36.18.450**
 - Current main HEAD at audit: **df6f10db0df4fb6b8bdcc9af4367db9bf9c9827c**
 - Latest code-bearing release merge: **v0.36.18.449 / PR #136 / squash `df6f10db0df4fb6b8bdcc9af4367db9bf9c9827c`**
 - Latest regression: **35974096070 PASS**
@@ -51,6 +51,19 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.450 — Tool-first UI/UX consolidation
+
+- Begins the dedicated pre-Beta-5 UI/UX cleanup without changing modelling algorithms.
+- Establishes the UI rule: **mode home shows tool buttons only; tool settings are visible only while that tool is active**.
+- Fixes the shared Tool Session visibility bug where `.boxlab-tool-session-shell { display:flex }` could override `hidden=true` and expose inactive Object/Face session panels.
+- Object Tool Sessions such as Symmetry/Bisect, Transform, Insert, Mesh Health, Array, Revolve Profile and Sweep now remain visually hidden until activated by their launcher/workflow.
+- Face Shell settings remain hidden until Shell is launched.
+- Vertex Slide exact controls/readout remain hidden until Slide is armed.
+- Vertex Bevel Width + Exact controls/readout remain hidden until Bevel is armed.
+- Boolean is migrated from an always-open operation block to a single **Boolean** launcher that opens a Tool Session containing Union / Cut / Intersect and Close.
+- Protected modelling/navigation runtimes remain unchanged: `main.js?v=0.36.18.366`, `multi-object.js?v=0.36.18.367`, `multi-object-transform.js?v=0.36.1.0`, and `styles.css?v=0.36.18.270`.
+- Next step after hands-on UI pass: freeze **Beta 5** for wider testing.
 
 ### v0.36.18.449 — Scrollable Viewport menu
 
@@ -326,19 +339,13 @@ Current implemented foundation:
 
 ## Next intended build
 
-### Potential follow-up v0.36.18.434:
-- face-normal orientation / Align to Selection
-- flip plane / side indication
-- weld tolerance polish
-- clearer preview-side visualization
+### Beta 5 checkpoint after .450 hands-on UI pass
 
-After Symmetry/Bisect:
-1. Mesh Health / Inspect
-2. Make Watertight / Auto Close
-3. stronger boundary diagnostics
-4. normals / triangulation controls
-5. export / handoff polish
-6. GLB export only if it materially improves Nomad/3D handoff
+1. Hands-on audit Object / Face / Edge / Vertex mode homes for any remaining orphan settings.
+2. Fix only concrete UI regressions found in that pass.
+3. Freeze the resulting clean main as **Beta 5** for wider user testing.
+4. Resume Phase E / Phase F development from live main after the checkpoint.
+
 
 ## Protected interaction behavior
 

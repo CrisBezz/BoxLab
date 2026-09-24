@@ -140,3 +140,5 @@ Preserve:
 - broad sculpting / voxel remesh: belongs in Nomad rather than BoxLab
 - Blender-scale scene-management complexity
 - speculative topology work without a user-facing failure
+
+- Tool-first UI/UX consolidation — **v0.36.18.450 hides inactive Tool Session settings, contextualises legacy Vertex settings, and moves Boolean behind a Tool Session launcher; planned as the pre-Beta-5 cleanup baseline.**
