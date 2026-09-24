@@ -8,6 +8,8 @@
 - Kept current UI/UX intact.
 - Hid Edge Lathe/Revolve settings until Revolve is actually armed; compact Revolve launcher remains visible.
 - No topology changes.
+- Released via PR **#145**; squash merge `b4ce2101bc749193a4f03934889efbf8500ceb5f`.
+- Final PR Topology regression run **35998556661 PASS**.
 
 
 ## 2026-09-24 — v0.36.18.456 UI-preserved tool runtime repair
