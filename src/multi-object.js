@@ -769,7 +769,7 @@ function rebuildInactiveLayer(body){
       material.opacity=object.locked?.32:.52;
       material.userData={...(material.userData||{}),disposable:true};
       const inactive=new THREE.Mesh(display.triangulatedGeometry(),material);
-      inactive.userData={kind:'boxlab-inactive-body',objectId:object.id,boxlabDisplayMesh:display};
+      inactive.userData={kind:'boxlab-inactive-body',objectId:object.id};
       inactive.renderOrder=-1;
       inactiveBodies.push(inactive);
       layer.add(inactive);
