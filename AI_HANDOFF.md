@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.459**
-- Current main HEAD at audit: **ad62458c55ec6a5c3bf02f32e389093889874325**
-- Latest code-bearing release merge: **v0.36.18.458 / PR #146 / squash `ad62458c55ec6a5c3bf02f32e389093889874325`**
-- Latest regression: **36062528604 PASS**
+- Current main HEAD at audit: **6ca71fc6142060498a46e73acac0b9b7d7a9a044**
+- Latest code-bearing release merge: **v0.36.18.459 / PR #147 / squash `6ca71fc6142060498a46e73acac0b9b7d7a9a044`**
+- Latest regression: **36065555151 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.459 — Restore armed-tool component selection
+
+**Released on main via PR #147; squash merge `6ca71fc6142060498a46e73acac0b9b7d7a9a044`. Final PR regression run `36065555151` passed.**
 
 - User confirmed navigation and ordinary component selection work; failure occurs only after arming a direct tool.
 - Root cause traced to the .457 component paint guard: `directToolActive()` prevented Face/Edge/Vertex selection whenever Inset/Extrude/Bevel/etc. was armed.
