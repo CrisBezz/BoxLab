@@ -33,7 +33,7 @@ test('371 protects fresh-load component Multi baseline',()=>{
 });
 
 test('371 protects mature Through and Clean loaders',()=>{
-  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.242/);
   assert.match(index,/direct-topology-conformance-guard\.js\?v=0\.36\.18\.242/);
   assert.match(index,/quad-clean\.js\?v=0\.36\.18\.339/);
 });

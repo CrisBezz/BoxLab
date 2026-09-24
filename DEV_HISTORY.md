@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-25 — v0.36.18.462 restore proven Face direct path
+
+- User confirmed .461 broke Extrude as well as Inset.
+- Restored the proven `multi-face-direct.js?v=0.36.18.242` controller.
+- Removed the .461 Face self-pick experiment.
+- Allowed normal Face paint selection while Extrude/Inset are armed so selection can occur first, then the proven controller owns the drag.
+- Legacy Move remains blocked under Face direct tools.
+- No Through topology rewrite and no Bevel changes in this build.
+
+
 ## 2026-09-25 — v0.36.18.461 direct tools own pick + drag
 
 - .460 proved legacy Move was no longer stealing the gesture, but Inset and Bevel still received no modelling drag.
