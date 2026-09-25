@@ -142,3 +142,11 @@ Preserve:
 - speculative topology work without a user-facing failure
 
 - Tool-first UI/UX consolidation — **v0.36.18.450 hides inactive Tool Session settings, contextualises legacy Vertex settings, and moves Boolean behind a Tool Session launcher; planned as the pre-Beta-5 cleanup baseline.**
+
+
+## Recovery rule after .465
+
+- Current development restarts from the hands-on-good v0.36.18.449 runtime.
+- Reintroduce UI/UX cleanup one narrow slice at a time.
+- Each slice must pass hands-on interaction checks before the next UI slice begins.
+- Do not reapply the v0.36.18.450 bulk consolidation wholesale.

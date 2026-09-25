@@ -7,10 +7,10 @@ const toolSession=fs.readFileSync(new URL('../src/tool-session-ui.js',import.met
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('451 Revolve Profile exposes always-available compact launcher before session ownership',()=>{
+test('422 Revolve Profile exposes compact launcher before session ownership',()=>{
   assert.ok(revolve.includes('revolveProfileLaunchBtn'));
-  assert.ok(revolve.includes("launchRow.hidden=false"));
-  assert.ok(revolve.includes("launchRow.hidden=false"));
+  assert.ok(revolve.includes("launchRow.hidden=true"));
+  assert.ok(revolve.includes("launchRow.hidden=!construction"));
 });
 
 test('422 Revolve Profile claims exclusive Tool Session after interaction or launch',()=>{

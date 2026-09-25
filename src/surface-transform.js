@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {surfaceTransformMesh,cycleSurfaceTransformMode} from './surface-transform-core.js?v=0.36.18.445';
 
-const VERSION='0.36.18.460';
+const VERSION='0.36.18.445';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -45,23 +45,6 @@ let active=false,sourceId=null,sourceMesh=null,sourceCenter=new THREE.Vector3(),
 let target=null,phase='source',mode='move',state={point:new THREE.Vector3(),normal:new THREE.Vector3(0,1,0),spin:0,scale:1};
 let gesture=null;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
-let interactionHandlersAttached=false;
-function attachInteractionHandlers(){
-  if(interactionHandlersAttached)return;
-  interactionHandlersAttached=true;
-  window.addEventListener('pointerdown',beginGesture,true);
-  window.addEventListener('pointermove',moveGesture,true);
-  window.addEventListener('pointerup',endGesture,true);
-  window.addEventListener('pointercancel',cancelGesture,true);
-}
-function detachInteractionHandlers(){
-  if(!interactionHandlersAttached)return;
-  interactionHandlersAttached=false;
-  window.removeEventListener('pointerdown',beginGesture,true);
-  window.removeEventListener('pointermove',moveGesture,true);
-  window.removeEventListener('pointerup',endGesture,true);
-  window.removeEventListener('pointercancel',cancelGesture,true);
-}
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function objectSelection(){return globalThis.__boxlabObjectSelection;}
@@ -111,7 +94,7 @@ function cancel({silent=false}={}){
     live.creases=new Map(snapshot.mesh.creases||[]);
     forceRender();
   }
-  gesture=null;target=null;sourceFace=null;phase='source';active=false;sourceId=null;sourceMesh=null;beforeScene=null;mode='move';detachInteractionHandlers();endSession();
+  gesture=null;target=null;sourceFace=null;phase='source';active=false;sourceId=null;sourceMesh=null;beforeScene=null;mode='move';endSession();
   if(!silent)setStatus('Transform cancelled');
 }
 function finishApply(){
@@ -119,7 +102,7 @@ function finishApply(){
   if(!sourceFace||!target){setStatus('Transform • pick source and target faces first');return;}
   globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(beforeScene);
   manager()?.saveActive?.();
-  active=false;gesture=null;beforeScene=null;sourceMesh=null;sourceId=null;sourceFace=null;target=null;phase='source';mode='move';detachInteractionHandlers();endSession();forceRender();
+  active=false;gesture=null;beforeScene=null;sourceMesh=null;sourceId=null;sourceFace=null;target=null;phase='source';mode='move';endSession();forceRender();
   setStatus('Transform applied • one Object Undo step');
 }
 function sourceFaceHit(event){
@@ -285,7 +268,7 @@ launchButton?.addEventListener('click',()=>{
   if(!beforeScene){setStatus('Transform • object history unavailable');return;}
   sourceId=object.id;sourceMesh=live.clone();sourceCenter=objectCenter(sourceMesh);
   active=true;sourceFace=null;target=null;phase='source';mode='move';state={point:sourceCenter.clone(),normal:new THREE.Vector3(0,1,0),spin:0,scale:1};
-  attachInteractionHandlers();beginSession();updateModeUI();
+  beginSession();updateModeUI();
   globalThis.__boxlabTransformArming?.disarm?.();
   setStatus('Transform • tap a face on the selected object');
 });
@@ -295,6 +278,10 @@ scaleButton?.addEventListener('click',()=>setMode('scale'));
 cancelButton?.addEventListener('click',()=>cancel());
 applyButton?.addEventListener('click',finishApply);
 
+window.addEventListener('pointerdown',beginGesture,true);
+window.addEventListener('pointermove',moveGesture,true);
+window.addEventListener('pointerup',endGesture,true);
+window.addEventListener('pointercancel',cancelGesture,true);
 window.addEventListener('boxlab-bridge-state',()=>{if(active&&!sourceValid())cancel({silent:true});});
 window.addEventListener('beforeunload',()=>{if(active)cancel({silent:true});});
 
