@@ -1,8 +1,9 @@
-import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.441';
-import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.441';
-import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.441';
+import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.442';
+import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.442';
+import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.442';
+import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.442';
 
-const VERSION='0.36.18.441';
+const VERSION='0.36.18.442';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -25,6 +26,12 @@ panel.innerHTML=`
   <div id="meshHealthTopology" style="display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:11px"></div>
   <div class="boxlab-tool-session-section">Findings</div>
   <div id="meshHealthFindings" style="display:flex;flex-direction:column;gap:4px;font-size:11px"></div>
+  <div class="boxlab-tool-session-section">Boundary diagnostics</div>
+  <div id="meshHealthBoundarySummary" class="boxlab-tool-session-subtitle"></div>
+  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
+    <button id="meshHealthSelectBoundary" type="button">Select Boundary</button>
+    <button id="meshHealthSelectNonManifold" type="button">Select Non-Manifold</button>
+  </div>
   <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
     <button id="meshHealthRefresh" type="button">Refresh</button>
     <button id="meshHealthRepair" type="button">Safe Repair</button>
@@ -38,11 +45,14 @@ const verdict=panel.querySelector('#meshHealthVerdict');
 const summary=panel.querySelector('#meshHealthSummary');
 const topology=panel.querySelector('#meshHealthTopology');
 const findings=panel.querySelector('#meshHealthFindings');
+const boundarySummary=panel.querySelector('#meshHealthBoundarySummary');
 const refreshButton=panel.querySelector('#meshHealthRefresh');
 const repairButton=panel.querySelector('#meshHealthRepair');
 const autoCloseButton=panel.querySelector('#meshHealthAutoClose');
+const selectBoundaryButton=panel.querySelector('#meshHealthSelectBoundary');
+const selectNonManifoldButton=panel.querySelector('#meshHealthSelectNonManifold');
 const closeButton=panel.querySelector('#meshHealthClose');
-let active=false,last=null,objectId=null;
+let active=false,last=null,lastBoundary=null,objectId=null;
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function toolSession(){return globalThis.__boxlabToolSession;}
@@ -80,6 +90,15 @@ function renderReport(){
   if(repairButton)repairButton.disabled=!repairable;
   const boundary=last.state==='open-clean'?simpleBoundaryLoops(mesh):null;
   if(autoCloseButton)autoCloseButton.disabled=!(last.state==='open-clean'&&boundary?.ok&&boundary.loops?.length);
+  lastBoundary=boundaryDiagnostics(mesh);
+  if(boundarySummary){
+    const parts=[];
+    if(lastBoundary.boundaryEdges)parts.push(`${lastBoundary.components.length} group${lastBoundary.components.length===1?'':'s'} · ${lastBoundary.loops} loop${lastBoundary.loops===1?'':'s'} · ${lastBoundary.chains} chain${lastBoundary.chains===1?'':'s'} · ${lastBoundary.branched} branched`);
+    if(lastBoundary.nonManifoldEdges)parts.push(`${lastBoundary.nonManifoldEdges} non-manifold edge${lastBoundary.nonManifoldEdges===1?'':'s'}`);
+    boundarySummary.textContent=parts.length?parts.join(' · '):'No boundary or non-manifold edge diagnostics';
+  }
+  if(selectBoundaryButton)selectBoundaryButton.disabled=!lastBoundary.boundaryEdgeIndices.length;
+  if(selectNonManifoldButton)selectNonManifoldButton.disabled=!lastBoundary.nonManifoldEdgeIndices.length;
   if(!last.issues.length&&!last.warnings.length){
     const row=document.createElement('div');row.textContent='✓ No topology findings';findings.append(row);
   }
@@ -135,6 +154,22 @@ function autoClose(){
   setStatus(`Mesh Health • Auto Close • ${result.holesClosed} hole${result.holesClosed===1?'':'s'} capped • WATERTIGHT`);
   return true;
 }
+function handoffEdges(indices,label){
+  const bridge=globalThis.__boxlabSelectionBridge;
+  const unique=[...new Set(indices||[])].filter(Number.isInteger);
+  if(!unique.length)return false;
+  active=false;objectId=null;panel.hidden=true;toolSession()?.end?.('mesh-health');
+  const edgeMode=document.querySelector('#selectionModes button[data-mode="edge"]');
+  edgeMode?.click();
+  setTimeout(()=>{
+    const ok=!!bridge?.set?.('edge',unique);
+    document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+    setStatus(ok?`Mesh Health • ${label} selected • ${unique.length} edge${unique.length===1?'':'s'}`:'Mesh Health • diagnostic selection handoff failed');
+  },0);
+  return true;
+}
+function selectBoundary(){return handoffEdges(lastBoundary?.boundaryEdgeIndices,'boundary');}
+function selectNonManifold(){return handoffEdges(lastBoundary?.nonManifoldEdgeIndices,'non-manifold');}
 function close(){
   if(!active)return;
   active=false;objectId=null;panel.hidden=true;toolSession()?.end?.('mesh-health');
@@ -151,6 +186,8 @@ launchButton?.addEventListener('click',launch);
 refreshButton?.addEventListener('click',renderReport);
 repairButton?.addEventListener('click',repair);
 autoCloseButton?.addEventListener('click',autoClose);
+selectBoundaryButton?.addEventListener('click',selectBoundary);
+selectNonManifoldButton?.addEventListener('click',selectNonManifold);
 closeButton?.addEventListener('click',close);
 window.addEventListener('boxlab-bridge-state',()=>{
   if(!active)return;
@@ -159,4 +196,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{if(active&&currentMode()!=='object')close();}));
 
-globalThis.__boxlabMeshHealth={version:VERSION,analyze:analyzeMeshHealth,repair,autoClose,get active(){return active;},get last(){return last;},refresh:renderReport,close};
+globalThis.__boxlabMeshHealth={version:VERSION,analyze:analyzeMeshHealth,repair,autoClose,selectBoundary,selectNonManifold,get active(){return active;},get last(){return last;},get boundary(){return lastBoundary;},refresh:renderReport,close};
