@@ -989,3 +989,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .456: Facegroups mode colours active and inactive editable objects from their authoritative mesh data
 - [ ] Facegroups .456: Studio ↔ Facegroups switching remains clean
 - [ ] Facegroups .456: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Facegroups .457: first tap from Studio/Solid immediately shows facegroup colours without pressing Reseed
+- [ ] Facegroups .457: first activation never renders the mesh near-black while geometry is unsynchronised
+- [ ] Facegroups .457: persisted palette/Saturation/Lightness/Ungrouped settings apply on first activation
+- [ ] Facegroups .457: switching away and back immediately restores colours
+- [ ] Facegroups .457: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
