@@ -46,7 +46,7 @@ test('439 Mesh Health inspection remains read-only while current shell loads the
   assert.match(ui,/id:'mesh-health'/);
   assert.match(ui,/function renderReport\(\)/);
   assert.doesNotMatch(ui.match(/function renderReport\(\)\{[\s\S]*?\n\}/)?.[0]||'',/checkpoint|safeRepairMesh|vertices\s*=/);
-  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.440/);
+  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.441/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });
