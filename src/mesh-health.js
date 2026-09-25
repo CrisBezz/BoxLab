@@ -1,6 +1,7 @@
-import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.439';
+import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.440';
+import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.440';
 
-const VERSION='0.36.18.439';
+const VERSION='0.36.18.440';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -16,15 +17,16 @@ panel.id='meshHealthSession';
 panel.className='boxlab-tool-session-shell mesh-health-session';
 panel.hidden=true;
 panel.innerHTML=`
-  <div class="boxlab-tool-session-title"><span>Mesh Health</span><span class="boxlab-tool-session-subtitle">Inspect · non-destructive</span></div>
+  <div class="boxlab-tool-session-title"><span>Mesh Health</span><span class="boxlab-tool-session-subtitle">Inspect · safe repair</span></div>
   <div id="meshHealthVerdict" style="font-size:16px;font-weight:750;padding:4px 0"></div>
   <div id="meshHealthSummary" class="boxlab-tool-session-subtitle"></div>
   <div class="boxlab-tool-session-section">Topology</div>
   <div id="meshHealthTopology" style="display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:11px"></div>
   <div class="boxlab-tool-session-section">Findings</div>
   <div id="meshHealthFindings" style="display:flex;flex-direction:column;gap:4px;font-size:11px"></div>
-  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
+  <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
     <button id="meshHealthRefresh" type="button">Refresh</button>
+    <button id="meshHealthRepair" type="button">Safe Repair</button>
     <button id="meshHealthClose" class="boxlab-tool-session-primary" type="button">Close</button>
   </div>
 `;
@@ -35,6 +37,7 @@ const summary=panel.querySelector('#meshHealthSummary');
 const topology=panel.querySelector('#meshHealthTopology');
 const findings=panel.querySelector('#meshHealthFindings');
 const refreshButton=panel.querySelector('#meshHealthRefresh');
+const repairButton=panel.querySelector('#meshHealthRepair');
 const closeButton=panel.querySelector('#meshHealthClose');
 let active=false,last=null,objectId=null;
 
@@ -70,10 +73,38 @@ function renderReport(){
   findings.replaceChildren();
   for(const item of last.issues)addFinding('issue',item);
   for(const item of last.warnings)addFinding('warning',item);
+  const repairable=Number(last.duplicateFaces||0)+Number(last.zeroAreaFaces||0)+Number(last.orphanVertices||0);
+  if(repairButton)repairButton.disabled=!repairable;
   if(!last.issues.length&&!last.warnings.length){
     const row=document.createElement('div');row.textContent='✓ No topology findings';findings.append(row);
   }
   setStatus(`Mesh Health • ${object.name} • ${last.label} • ${last.boundaryEdges} boundary • ${last.nonManifoldEdges} non-manifold`);
+  return true;
+}
+function repair(){
+  const object=activeObject(),mesh=liveMesh(),history=globalThis.__boxlabObjectHistory;
+  if(!active||!object||object.id!==objectId||!mesh)return false;
+  const beforeScene=history?.capture?.()||null;
+  const result=safeRepairMesh(mesh);
+  if(!result.ok){
+    setStatus(result.reason==='safe-repair-validation-refused'?'Mesh Health • Safe Repair refused by topology guard':'Mesh Health • Safe Repair failed');
+    return false;
+  }
+  if(!result.changed){
+    setStatus('Mesh Health • no safe automatic repairs available');
+    renderReport();
+    return false;
+  }
+  manager()?.saveActive?.();
+  if(beforeScene)history?.checkpointSnapshot?.(beforeScene);
+  document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  window.dispatchEvent(new CustomEvent('boxlab-mesh-health-repair',{detail:result}));
+  renderReport();
+  const parts=[];
+  if(result.duplicatesRemoved)parts.push(`${result.duplicatesRemoved} duplicate face${result.duplicatesRemoved===1?'':'s'} removed`);
+  if(result.zeroAreaRemoved)parts.push(`${result.zeroAreaRemoved} zero-area face${result.zeroAreaRemoved===1?'':'s'} removed`);
+  if(result.orphanVerticesRemoved)parts.push(`${result.orphanVerticesRemoved} orphan vert${result.orphanVerticesRemoved===1?'ex':'ices'} removed`);
+  setStatus(`Mesh Health • Safe Repair • ${parts.join(' • ')}`);
   return true;
 }
 function close(){
@@ -85,11 +116,12 @@ function launch(){
   const object=activeObject(),mesh=liveMesh();
   if(currentMode()!=='object'||!object||!mesh)return;
   objectId=object.id;active=true;panel.hidden=false;
-  toolSession()?.begin?.({id:'mesh-health',title:'Mesh Health',node:panel,subtitle:'Non-destructive topology inspection'});
+  toolSession()?.begin?.({id:'mesh-health',title:'Mesh Health',node:panel,subtitle:'Inspect · safe repair'});
   renderReport();
 }
 launchButton?.addEventListener('click',launch);
 refreshButton?.addEventListener('click',renderReport);
+repairButton?.addEventListener('click',repair);
 closeButton?.addEventListener('click',close);
 window.addEventListener('boxlab-bridge-state',()=>{
   if(!active)return;
@@ -98,4 +130,4 @@ window.addEventListener('boxlab-bridge-state',()=>{
 });
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{if(active&&currentMode()!=='object')close();}));
 
-globalThis.__boxlabMeshHealth={version:VERSION,analyze:analyzeMeshHealth,get active(){return active;},get last(){return last;},refresh:renderReport,close};
+globalThis.__boxlabMeshHealth={version:VERSION,analyze:analyzeMeshHealth,repair,get active(){return active;},get last(){return last;},refresh:renderReport,close};
