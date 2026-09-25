@@ -45,7 +45,7 @@ test('442 UI exposes boundary diagnostic selection handoff and preserves frozen 
   assert.match(ui,/meshHealthSelectNonManifold/);
   assert.match(ui,/boundaryDiagnostics/);
   assert.match(ui,/set\?\.\('edge'/);
-  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.445/);
+  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.442/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });

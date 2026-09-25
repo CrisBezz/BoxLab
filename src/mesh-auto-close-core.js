@@ -78,7 +78,6 @@ export function simpleBoundaryLoops(mesh){
 function cloneInto(target,source){
   target.vertices=source.vertices.map(v=>v.clone());
   target.faces=source.faces.map(f=>[...f]);
-  target.faceGroups=source.faces.map((_,i)=>source.faceGroups?.[i]??null);
   target.creases=new Map(source.creases||[]);
   if(source.looseEdges instanceof Set)target.looseEdges=new Set(source.looseEdges);
   if(source.looseVertices instanceof Set)target.looseVertices=new Set(source.looseVertices);
@@ -93,7 +92,7 @@ export function autoCloseSimpleHoles(mesh){
   if(!info.ok||!info.loops.length)return{ok:false,changed:false,reason:info.reason||'no-simple-boundary-loops',before,boundary:info,holesClosed:0};
 
   const candidate=mesh.clone();
-  for(const loop of info.loops){candidate.faces.push([...loop]);candidate.faceGroups?.push(null);}
+  for(const loop of info.loops)candidate.faces.push([...loop]);
   candidate.edges?.();
   const after=analyzeMeshHealth(candidate);
   if(after.state!=='closed-clean'||after.boundaryEdges!==0||after.nonManifoldEdges!==0||after.inconsistentWindingEdges!==0)

@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 import {buildRevolveFromPoints} from './revolve-core.js?v=0.36.18.389';
 
-const VERSION='0.36.18.445';
+const VERSION='0.36.18.443';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -285,163 +285,88 @@ function buildOverlay(){
 function frameSignature(){
   const object=profileObject(),mesh=liveMesh();if(!object||!looksConstructionMesh(mesh))return '';
   const meta=ensureMeta(object),verts=mesh.vertices.map(v=>[v.x,v.y,v.z].map(n=>n.toFixed(5)).join(',')).join('|');
-  const pts=meta.points.map(p=>`${Number(p.u).toFixed(5)},${Number(p.v).toFixed(5)}`).join('|');
-  return`${object.id};${verts};${pts};${meta.segments};${meta.edit}`;
+  const points=meta.points.map(p=>`${p.u.toFixed(5)},${p.v.toFixed(5)}`).join('|');
+  return `${object.id}|${verts}|${points}|${meta.segments}|${meta.edit}|${meta.selectedPoint}`;
 }
 function tick(){
-  const sig=frameSignature();
-  if(sig!==lastSignature){lastSignature=sig;buildOverlay();}
-  if(!sig&&overlay){lastSignature='';buildOverlay();}
+  const signature=frameSignature();
+  if(signature!==lastSignature){lastSignature=signature;buildOverlay();}
   raf=requestAnimationFrame(tick);
 }
-function profileInteractionActive(){
-  const object=profileObject(),mesh=liveMesh();
-  return !!object&&looksConstructionMesh(mesh)&&!!ensureMeta(object).edit;
-}
-function beginProfilePointer(event){
-  if(event.target!==canvas||!event.isPrimary||!profileInteractionActive())return;
-  if(event.pointerType==='touch')return;
-  const object=profileObject(),meta=ensureMeta(object),frame=frameFor(liveMesh());if(!frame)return;
-  const world=pointOnPlane(event,frame);if(!world)return;
-  event.preventDefault();event.stopImmediatePropagation();
-  const existing=nearestProfilePoint(event,frame,meta);
-  const segment=existing===null?nearestProfileSegment(event,frame,meta):null;
-  pushPointHistory(meta);
-  let index=existing;
-  if(index===null&&segment!==null){
-    meta.points.splice(segment+1,0,planeUV(frame,world));
-    index=segment+1;
-  }else if(index===null){
-    meta.points.push(planeUV(frame,world));
-    index=meta.points.length-1;
+function onPointerDown(event){
+  const object=profileObject(),mesh=liveMesh();if(!object||!looksConstructionMesh(mesh))return;
+  const meta=ensureMeta(object);if(!meta.edit)return;
+  const frame=frameFor(mesh),world=pointOnPlane(event,frame);if(!frame||!world)return;
+  const pointIndex=nearestProfilePoint(event,frame,meta);
+  if(Number.isInteger(pointIndex)){
+    pushPointHistory(meta);meta.selectedPoint=pointIndex;drag={pointerId:event.pointerId,index:pointIndex};
+    canvas.setPointerCapture?.(event.pointerId);event.preventDefault();event.stopImmediatePropagation();lastSignature='';return;
   }
-  meta.selectedPoint=index;
-  drag={id:event.pointerId,index,objectId:object.id};
-  state()?.controls&&(state().controls.enabled=false);
-  meta.points[index]=planeUV(frame,world);
-  lastSignature='';
+  const segmentIndex=nearestProfileSegment(event,frame,meta);
+  pushPointHistory(meta);
+  const uv=planeUV(frame,world);
+  if(Number.isInteger(segmentIndex)){
+    meta.points.splice(segmentIndex+1,0,uv);meta.selectedPoint=segmentIndex+1;drag={pointerId:event.pointerId,index:segmentIndex+1};
+  }else{
+    meta.points.push(uv);meta.selectedPoint=meta.points.length-1;drag={pointerId:event.pointerId,index:meta.points.length-1};
+  }
+  canvas.setPointerCapture?.(event.pointerId);event.preventDefault();event.stopImmediatePropagation();lastSignature='';
 }
-function moveProfilePointer(event){
-  if(!drag||event.pointerId!==drag.id)return;
-  event.preventDefault();event.stopImmediatePropagation();
-  const object=profileObject();if(!object||object.id!==drag.objectId)return;
-  const meta=ensureMeta(object),frame=frameFor(liveMesh()),world=pointOnPlane(event,frame);
-  if(!frame||!world)return;
-  meta.points[drag.index]=planeUV(frame,world);
-  lastSignature='';
+function onPointerMove(event){
+  if(!drag||drag.pointerId!==event.pointerId)return;
+  const object=profileObject(),mesh=liveMesh(),meta=ensureMeta(object),frame=frameFor(mesh),world=pointOnPlane(event,frame);
+  if(!meta||!frame||!world||!meta.points[drag.index])return;
+  meta.points[drag.index]=planeUV(frame,world);meta.selectedPoint=drag.index;
+  event.preventDefault();event.stopImmediatePropagation();lastSignature='';
 }
-function endProfilePointer(event){
-  if(!drag||event.pointerId!==drag.id)return;
-  event.preventDefault();event.stopImmediatePropagation();
-  drag=null;
-  if(state()?.controls)state().controls.enabled=true;
-  lastSignature='';
+function onPointerUp(event){
+  if(!drag||drag.pointerId!==event.pointerId)return;
+  drag=null;canvas.releasePointerCapture?.(event.pointerId);event.preventDefault();event.stopImmediatePropagation();lastSignature='';
 }
-function cancelProfilePointer(event){
-  if(!drag||event.pointerId!==drag.id)return;
-  drag=null;
-  if(state()?.controls)state().controls.enabled=true;
-  const object=profileObject(),meta=object&&ensureMeta(object);
-  if(meta?.pointHistory?.length)meta.points=meta.pointHistory.pop();
-  if(meta)meta.selectedPoint=null;
-  lastSignature='';
+function launch(){
+  const object=profileObject(),mesh=liveMesh();if(!object||!looksConstructionMesh(mesh))return;
+  const meta=ensureMeta(object);claimRevolveTools(meta);meta.edit=true;lastSignature='';
+  setStatus('Revolve Profile • draw/edit points on the construction plane');
 }
-function addRevolveProfile(){
-  const m=manager();if(!m?.addMesh)return;
-  const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
-  const object=m.addMesh(constructionPlane(),'Revolve Profile',{enterObjectMode:true});
-  if(!object)return;
-  cachedActiveId=object.id;cachedActiveObject=object;
-  object.revolveProfile={version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[],selectedPoint:null,interacted:false,initialPlaneSignature:planeSignature(liveMesh())};
-  if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
-  setStatus('Revolve Profile added • position/snap the plane first • then tap Edit Profile');
-  lastSignature='';
+function undoPoint(){
+  const meta=ensureMeta(profileObject());if(!meta?.pointHistory?.length)return;
+  meta.points=meta.pointHistory.pop();meta.selectedPoint=null;lastSignature='';setStatus('Revolve Profile • point edit undone');
+}
+function deletePoint(){
+  const meta=ensureMeta(profileObject());if(!meta||!Number.isInteger(meta.selectedPoint)||!meta.points[meta.selectedPoint])return;
+  pushPointHistory(meta);meta.points.splice(meta.selectedPoint,1);meta.selectedPoint=null;lastSignature='';setStatus('Revolve Profile • point deleted');
+}
+function clearPoints(){
+  const meta=ensureMeta(profileObject());if(!meta?.points?.length)return;
+  pushPointHistory(meta);meta.points=[];meta.selectedPoint=null;lastSignature='';setStatus('Revolve Profile • profile cleared');
 }
 function applyRevolve(){
-  const object=profileObject(),mesh=liveMesh();if(!object||!looksConstructionMesh(mesh))return false;
-  const meta=ensureMeta(object),frame=frameFor(mesh),points=profileWorldPoints(frame,meta);
-  const result=buildRevolveFromPoints(points,{axisOrigin:frame.axisOrigin,axisDirection:frame.axisDirection,segments:meta.segments});
-  if(!result.ok){setStatus(`Revolve refused • ${result.reason}`);return false;}
-  const before=mesh.clone();
-  globalThis.__boxlabHistory?.push(before);
-  replaceMesh(mesh,result.mesh);
-  meta.applied=true;meta.edit=false;
-  endRevolveSession();
-  object.name=object.name.replace(/ Profile(?: \d+)?$/,'')||'Revolve';
-  manager()?.saveActive?.();
-  globalThis.__boxlabObjectSelection?.single?.(object.id);
-  globalThis.__boxlabBooleanUX?.sync?.();
-  disposeOverlay();launchRow.hidden=true;controls.hidden=true;lastSignature='';
+  const object=profileObject(),mesh=liveMesh(),meta=ensureMeta(object),frame=frameFor(mesh);
+  if(!object||!mesh||!meta||!frame||meta.points.length<2)return;
+  const result=buildRevolveFromPoints(profileWorldPoints(frame,meta),{axisOrigin:frame.axisOrigin,axisDirection:frame.axisDirection,segments:meta.segments});
+  if(!result.ok){setStatus(`Revolve Profile • ${result.reason}`);return;}
+  const history=globalThis.__boxlabObjectHistory,before=history?.capture?.()||null;
+  replaceMesh(mesh,result.mesh);object.revolveProfile.applied=true;object.revolveProfile.edit=false;
+  manager()?.saveActive?.();if(before)history?.checkpointSnapshot?.(before);
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
-  setStatus(`Revolve applied • ${meta.segments} segments • ${result.faces} faces`);
-  return true;
+  disposeOverlay();launchRow.hidden=true;endRevolveSession();lastSignature='';
+  setStatus(`Revolve Profile • applied • ${meta.segments} segments`);
 }
-function installPenRange(input,onValue){
-  if(!input)return;
-  let pointerId=null,owned=null,releaseFrame=null;
-  const map=clientX=>{
-    const rect=input.getBoundingClientRect(),min=Number(input.min),max=Number(input.max),step=Number(input.step)||1;
-    if(!rect.width)return Number(input.value);
-    const t=Math.max(0,Math.min(1,(clientX-rect.left)/rect.width)),raw=min+t*(max-min);
-    return min+Math.round((raw-min)/step)*step;
-  };
-  const apply=value=>{owned=value;input.value=String(value);onValue();};
-  const enforce=()=>{if(owned===null)return false;if(Number(input.value)!==Number(owned))input.value=String(owned);return true;};
-  input.addEventListener('pointerdown',event=>{if(event.pointerType!=='pen')return;pointerId=event.pointerId;input.setPointerCapture?.(pointerId);event.preventDefault();event.stopPropagation();apply(map(event.clientX));},{capture:true,passive:false});
-  input.addEventListener('pointermove',event=>{if(event.pointerType!=='pen'||event.pointerId!==pointerId)return;event.preventDefault();event.stopPropagation();apply(map(event.clientX));},{capture:true,passive:false});
-  const end=event=>{if(event.pointerType!=='pen'||event.pointerId!==pointerId)return;event.preventDefault();event.stopPropagation();if(input.hasPointerCapture?.(pointerId))input.releasePointerCapture(pointerId);pointerId=null;if(releaseFrame)cancelAnimationFrame(releaseFrame);releaseFrame=requestAnimationFrame(()=>{enforce();releaseFrame=requestAnimationFrame(()=>{enforce();owned=null;releaseFrame=null;});});};
-  input.addEventListener('pointerup',end,{capture:true,passive:false});input.addEventListener('pointercancel',end,{capture:true,passive:false});
-  input.addEventListener('input',()=>{enforce();onValue();});input.addEventListener('change',()=>{if(enforce())onValue();});
-}
+launchButton?.addEventListener('click',launch);
+editButton?.addEventListener('click',()=>{const meta=ensureMeta(profileObject());if(!meta)return;claimRevolveTools(meta);meta.edit=!meta.edit;lastSignature='';});
+undoButton?.addEventListener('click',undoPoint);
+deletePointButton?.addEventListener('click',deletePoint);
+clearButton?.addEventListener('click',clearPoints);
+segmentInput?.addEventListener('input',()=>{const meta=ensureMeta(profileObject());if(!meta)return;meta.segments=Math.max(3,Math.min(64,Math.round(Number(segmentInput.value)||24)));segmentOut.textContent=String(meta.segments);lastSignature='';});
+applyButton?.addEventListener('click',applyRevolve);
+canvas?.addEventListener('pointerdown',onPointerDown,true);
+canvas?.addEventListener('pointermove',onPointerMove,true);
+canvas?.addEventListener('pointerup',onPointerUp,true);
+canvas?.addEventListener('pointercancel',onPointerUp,true);
+window.addEventListener('beforeunload',()=>cancelAnimationFrame(raf));
+window.addEventListener('boxlab-object-list-changed',()=>{cachedActiveId=null;cachedActiveObject=null;lastSignature='';});
+window.addEventListener('boxlab-object-active-changed',()=>{cachedActiveId=null;cachedActiveObject=null;lastSignature='';});
+window.addEventListener('boxlab-bridge-state',()=>{cachedActiveId=null;cachedActiveObject=null;lastSignature='';});
 
-window.addEventListener('boxlab-add-revolve-profile',addRevolveProfile);
-launchButton?.addEventListener('click',()=>{
-  const object=profileObject(),mesh=liveMesh();
-  if(!object||!looksConstructionMesh(mesh))return;
-  const meta=ensureMeta(object);
-  claimRevolveTools(meta);
-  setStatus('Revolve Profile • edit profile, adjust Segments, then Apply Revolve');
-  lastSignature='';
-});
-window.addEventListener('pointerdown',beginProfilePointer,true);
-window.addEventListener('pointermove',moveProfilePointer,true);
-window.addEventListener('pointerup',endProfilePointer,true);
-window.addEventListener('pointercancel',cancelProfilePointer,true);
-editButton.addEventListener('click',()=>{
-  const object=profileObject();if(!object)return;
-  const meta=ensureMeta(object);meta.edit=!meta.edit;
-  if(meta.edit)claimRevolveTools(meta);
-  if(!meta.edit&&state()?.controls)state().controls.enabled=true;
-  setStatus(meta.edit?'Revolve Profile • Pencil/mouse draws • touch still orbits/pans/zooms':'Revolve Profile • position/snap plane with Object tools');
-  lastSignature='';
-});
-undoButton.addEventListener('click',()=>{
-  const object=profileObject(),meta=object&&ensureMeta(object);if(!meta?.pointHistory?.length)return;
-  meta.points=meta.pointHistory.pop();meta.selectedPoint=null;lastSignature='';
-});
-deletePointButton.addEventListener('click',()=>{
-  const object=profileObject(),meta=object&&ensureMeta(object);if(!meta||!Number.isInteger(meta.selectedPoint)||!meta.points[meta.selectedPoint])return;
-  pushPointHistory(meta);meta.points.splice(meta.selectedPoint,1);meta.selectedPoint=null;lastSignature='';
-});
-clearButton.addEventListener('click',()=>{
-  const object=profileObject(),meta=object&&ensureMeta(object);if(!meta||!meta.points.length)return;
-  pushPointHistory(meta);meta.points=[];meta.selectedPoint=null;lastSignature='';
-});
-installPenRange(segmentInput,()=>{
-  const object=profileObject(),meta=object&&ensureMeta(object);if(!meta)return;
-  meta.segments=Math.max(3,Math.min(64,Math.round(Number(segmentInput.value)||24)));
-  segmentOut.textContent=String(meta.segments);lastSignature='';
-});
-applyButton.addEventListener('click',applyRevolve);
-document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedActiveId=null;cachedActiveObject=null;lastSignature='';buildOverlay();}));
-document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(()=>{lastSignature='';buildOverlay();})));
-window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);disposeOverlay();endRevolveSession();});
+globalThis.__boxlabRevolveProfile={version:VERSION,launch,apply:applyRevolve,get activeId(){return activeProfileId;}};
 tick();
-
-globalThis.__boxlabRevolveProfile={
-  version:VERSION,
-  add:addRevolveProfile,
-  apply:applyRevolve,
-  get active(){return !!profileObject()&&looksConstructionMesh(liveMesh());},
-  rebuild(){lastSignature='';buildOverlay();}
-};
