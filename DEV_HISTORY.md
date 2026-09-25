@@ -7,6 +7,8 @@
 - Preserved current handoff/history/roadmap/checklist documents so the .450–.465 investigation remains available.
 - Removed post-.449 runtime wrappers and post-.449 recovery-only tests from the active baseline.
 - Git history remains forward-moving; no force-reset of main.
+- Released via PR **#154**; squash merge `83fd257442d21d7db64385c0084d1cb314fae017`.
+- Recovery Topology regression **36112631181 PASS**.
 - Future UI cleanup must be reintroduced as small, independently hands-on-tested slices from this baseline.
 
 ## 2026-09-25 — v0.36.18.465 live Inset Face Region API repair
