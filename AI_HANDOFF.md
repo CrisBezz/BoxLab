@@ -33,7 +33,8 @@ Audited from the recovery branch on 2026-09-25.
 - Current live version / branch target: **v0.36.18.449 — restored hands-on-good baseline**
 - Pre-recovery main HEAD: **d7b32672f1757dfbef80f5eb5f364ed1dcfc41ea**
 - Recovery source commit: **v0.36.18.449 / `4d700dc26e8a23a65a4fba27bcca259062c5be07`**
-- Latest known `.449` regression: **35974096070 PASS**
+- Recovery release: **PR #154 / squash `83fd257442d21d7db64385c0084d1cb314fae017`**
+- Recovery regression: **36112631181 PASS** (original `.449` regression was **35974096070 PASS**)
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
