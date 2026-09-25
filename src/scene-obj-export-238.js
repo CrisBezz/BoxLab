@@ -6,6 +6,9 @@ const VERSION='0.36.18.450';
 const baseButton=document.querySelector('#exportBaseBtn');
 const subdButton=document.querySelector('#exportSubdBtn');
 const status=document.querySelector('#selectionStatus');
+const versionNode=document.querySelector('#appVersion');
+if(versionNode){versionNode.textContent=`v${VERSION}`;versionNode.dataset.releaseVersion=VERSION;}
+document.title=`BoxLab v${VERSION}`;
 
 function manager(){return globalThis.__boxlabObjectManager||null;}
 function sceneObjects(){
@@ -24,9 +27,9 @@ function handle(event){
   const target=event.target?.closest?.('#exportBaseBtn,#exportSubdBtn');if(!target)return;
   const objects=sceneObjects();if(!objects.length)return;
   event.preventDefault();event.stopImmediatePropagation();
-  const subd=target===subdButton,pageVersion=document.title.match(/BoxLab v([^\s]+)/)?.[1]||VERSION;
-  const result=buildSceneOBJ(objects,{subd,version:pageVersion});
-  download(result.content,`BoxLab-v${pageVersion}-${subd?'subd-scene':'base-scene'}.obj`);
+  const subd=target===subdButton;
+  const result=buildSceneOBJ(objects,{subd,version:VERSION});
+  download(result.content,`BoxLab-v${VERSION}-${subd?'subd-scene':'base-scene'}.obj`);
   if(status){
     const p=result.preflight;
     status.textContent=`OBJ export • ${result.exported} object${result.exported===1?'':'s'} • ${p.closed} closed clean • ${p.open} open clean • ${p.issues} issues`;
