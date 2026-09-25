@@ -960,3 +960,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Boolean operation completes and one Undo restores the pre-operation scene
 - [ ] Edge Revolve arms and produces its preview/result
 - [ ] inactive Symmetry / Transform / Insert sessions do not affect viewport interaction
+
+
+## v0.36.18.449 recovery baseline
+
+- [ ] one-finger orbit, two-finger pan and pinch zoom work over mesh geometry
+- [ ] Face Extrude works with the established .449 interaction path
+- [ ] Face Inset works with the established .449 interaction path
+- [ ] Extrude Through retains the strong cavity-aware behaviour present at .449
+- [ ] Edge Bevel and Vertex Bevel arm and drag correctly
+- [ ] Boolean completes and one Undo restores the exact pre-Boolean scene
+- [ ] Edge Revolve works using the .449 interaction path
+- [ ] Object/Face/Edge/Vertex mode switching and persistent selection remain stable
