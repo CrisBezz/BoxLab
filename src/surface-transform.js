@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {surfaceTransformMesh,cycleSurfaceTransformMode} from './surface-transform-core.js?v=0.36.18.436';
+import {surfaceTransformMesh,cycleSurfaceTransformMode} from './surface-transform-core.js?v=0.36.18.437';
 
-const VERSION='0.36.18.436';
+const VERSION='0.36.18.437';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -41,8 +41,8 @@ const hint=controls.querySelector('#surfaceTransformHint');
 const cancelButton=controls.querySelector('#surfaceTransformCancel');
 const applyButton=controls.querySelector('#surfaceTransformApply');
 
-let active=false,sourceId=null,sourceMesh=null,sourceCenter=new THREE.Vector3(),beforeScene=null;
-let target=null,mode='move',state={point:new THREE.Vector3(),normal:new THREE.Vector3(0,1,0),spin:0,scale:1};
+let active=false,sourceId=null,sourceMesh=null,sourceCenter=new THREE.Vector3(),sourceFace=null,beforeScene=null;
+let target=null,phase='source',mode='move',state={point:new THREE.Vector3(),normal:new THREE.Vector3(0,1,0),spin:0,scale:1};
 let gesture=null;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 
@@ -75,7 +75,7 @@ function updateModeUI(){
   moveButton?.classList.toggle('active',mode==='move');
   rotateButton?.classList.toggle('active',mode==='rotate');
   scaleButton?.classList.toggle('active',mode==='scale');
-  if(hint)hint.textContent=!target?'Tap a target face':`${mode[0].toUpperCase()+mode.slice(1)} on surface · tap to cycle`;
+  if(hint)hint.textContent=phase==='source'?'Tap a face on selected object':phase==='target'?'Tap a target face':`${mode[0].toUpperCase()+mode.slice(1)} on surface · tap to cycle`;
 }
 function setMode(next){mode=next;updateModeUI();setStatus(`Transform • ${mode[0].toUpperCase()+mode.slice(1)} • surface frame`);}
 function cycleMode(){setMode(cycleSurfaceTransformMode(mode));}
@@ -94,16 +94,39 @@ function cancel({silent=false}={}){
     live.creases=new Map(snapshot.mesh.creases||[]);
     forceRender();
   }
-  gesture=null;target=null;active=false;sourceId=null;sourceMesh=null;beforeScene=null;mode='move';endSession();
+  gesture=null;target=null;sourceFace=null;phase='source';active=false;sourceId=null;sourceMesh=null;beforeScene=null;mode='move';endSession();
   if(!silent)setStatus('Transform cancelled');
 }
 function finishApply(){
   if(!active||!sourceValid())return cancel({silent:true});
-  if(!target){setStatus('Transform • pick a target face first');return;}
+  if(!sourceFace||!target){setStatus('Transform • pick source and target faces first');return;}
   globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(beforeScene);
   manager()?.saveActive?.();
-  active=false;gesture=null;beforeScene=null;sourceMesh=null;sourceId=null;target=null;mode='move';endSession();forceRender();
+  active=false;gesture=null;beforeScene=null;sourceMesh=null;sourceId=null;sourceFace=null;target=null;phase='source';mode='move';endSession();forceRender();
   setStatus('Transform applied • one Object Undo step');
+}
+function sourceFaceHit(event){
+  if(!sourceMesh?.faces?.length||!setPointer(event))return null;
+  const geometry=sourceMesh.triangulatedGeometry?.();if(!geometry)return null;
+  const material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
+  const display=new THREE.Mesh(geometry,material);
+  const hit=raycaster.intersectObject(display,false)[0]||null;
+  let out=null;
+  if(hit){
+    let faceIndex=null,cursor=0;
+    for(let fi=0;fi<sourceMesh.faces.length;fi++){
+      const triCount=Math.max(0,sourceMesh.faces[fi].length-2);
+      if(hit.faceIndex<cursor+triCount){faceIndex=fi;break;}
+      cursor+=triCount;
+    }
+    if(Number.isInteger(faceIndex)){
+      const normal=sourceMesh.faceNormal(faceIndex);
+      const center=sourceMesh.faceCenter(faceIndex);
+      if(normal?.lengthSq?.()>1e-12)out={faceIndex,center:center.clone(),normal:normal.clone().normalize()};
+    }
+  }
+  geometry.dispose?.();material.dispose?.();
+  return out;
 }
 function targetFaceHit(event){
   if(!setPointer(event))return null;
@@ -140,7 +163,11 @@ function rebuild(){
   if(!active||!sourceMesh)return;
   const live=liveMesh();if(!live)return;
   const transformed=surfaceTransformMesh(sourceMesh,{
-    sourceCenter,point:state.point,normal:state.normal,spin:state.spin,scale:state.scale
+    sourceCenter,
+    sourceAnchor:sourceFace?.center||sourceCenter,
+    sourceNormal:sourceFace?.normal||new THREE.Vector3(0,1,0),
+    point:state.point,normal:state.normal,spin:state.spin,scale:state.scale,
+    oppose:true
   });
   if(!transformed)return;
   live.vertices=transformed.vertices.map(v=>v.clone());
@@ -149,10 +176,10 @@ function rebuild(){
   manager()?.saveActive?.();forceRender();
 }
 function placeOnTarget(hit){
-  target=hit;
+  target=hit;phase='placed';
   state.point.copy(hit.point);state.normal.copy(hit.normal);state.spin=0;state.scale=1;
   mode='move';updateModeUI();rebuild();
-  setStatus(`Transform • placed on ${manager()?.objects?.find(o=>o.id===hit.objectId)?.name||'surface'} • Move`);
+  setStatus(`Transform • face-to-face on ${manager()?.objects?.find(o=>o.id===hit.objectId)?.name||'surface'} • Move`);
 }
 function rayPlanePoint(event,plane){
   if(!setPointer(event))return null;
@@ -167,7 +194,16 @@ function screenPoint(v){
 function beginGesture(event){
   if(!active||event.target!==canvas||!event.isPrimary||event.pointerType==='touch')return;
   if(!sourceValid())return cancel({silent:true});
-  if(!target){
+  if(phase==='source'){
+    event.preventDefault();event.stopImmediatePropagation();
+    const hit=sourceFaceHit(event);
+    if(hit){
+      sourceFace=hit;phase='target';updateModeUI();
+      setStatus(`Transform • source Face ${hit.faceIndex+1} selected • tap target face`);
+    }else setStatus('Transform • tap a face on the selected object');
+    return;
+  }
+  if(phase==='target'){
     event.preventDefault();event.stopImmediatePropagation();
     const hit=targetFaceHit(event);
     if(hit)placeOnTarget(hit);else setStatus('Transform • tap a face on another visible object');
@@ -231,10 +267,10 @@ launchButton?.addEventListener('click',()=>{
   beforeScene=globalThis.__boxlabObjectHistory?.capture?.()||null;
   if(!beforeScene){setStatus('Transform • object history unavailable');return;}
   sourceId=object.id;sourceMesh=live.clone();sourceCenter=objectCenter(sourceMesh);
-  active=true;target=null;mode='move';state={point:sourceCenter.clone(),normal:new THREE.Vector3(0,1,0),spin:0,scale:1};
+  active=true;sourceFace=null;target=null;phase='source';mode='move';state={point:sourceCenter.clone(),normal:new THREE.Vector3(0,1,0),spin:0,scale:1};
   beginSession();updateModeUI();
   globalThis.__boxlabTransformArming?.disarm?.();
-  setStatus('Transform • tap a face on another object');
+  setStatus('Transform • tap a face on the selected object');
 });
 moveButton?.addEventListener('click',()=>setMode('move'));
 rotateButton?.addEventListener('click',()=>setMode('rotate'));

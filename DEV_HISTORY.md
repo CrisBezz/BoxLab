@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.437 from Beta 4 audit lane
+
+- Reapplied the original face-to-face Surface Transform anchoring build exactly.
+- Historical source commit: `5a6ef4338c2997b5e65dbf59f77bc129d7e152cd`.
+- No .438+ changes included.
+- Inset was hands-on confirmed working on .436 before this replay.
+- Awaiting hands-on Inset and face-to-face Transform result on .437.
+
 ## 2026-09-25 — replay v0.36.18.436 from Beta 4 audit lane
 
 - Reapplied the original Surface Transform Tool foundation exactly.

@@ -52,6 +52,43 @@ test('436 UI owns a surface-relative transactional Tool Session',()=>{
   assert.ok(ui.includes('state.normal.copy(hit.normal)'));
   assert.ok(ui.includes('checkpointSnapshot?.(beforeScene)'));
   assert.ok(ui.includes("id:'surface-transform'"));
-  assert.ok(index.includes('src/surface-transform.js?v=0.36.18.436'));
+  assert.ok(index.includes('src/surface-transform.js?v=0.36.18.437'));
   assert.equal(beta4.version,'0.36.18.427');
+});
+
+
+test('437 face-to-face placement maps source face centre to target point and opposes normals',()=>{
+  const source=EditableMesh.cube(2);
+  const sourceFaceIndex=0;
+  const sourceAnchor=source.faceCenter(sourceFaceIndex);
+  const sourceNormal=source.faceNormal(sourceFaceIndex).normalize();
+  const targetPoint=new THREE.Vector3(3,2,-4);
+  const targetNormal=new THREE.Vector3(.3,.8,-.5).normalize();
+  const out=surfaceTransformMesh(source,{
+    sourceAnchor,sourceNormal,
+    point:targetPoint,normal:targetNormal,
+    spin:0,scale:1,oppose:true
+  });
+  assert.ok(out);
+  const transformedAnchor=sourceAnchor.clone()
+    .sub(sourceAnchor)
+    .applyQuaternion(new THREE.Quaternion().setFromUnitVectors(sourceNormal,targetNormal.clone().negate()))
+    .add(targetPoint);
+  assert.ok(approxVec(transformedAnchor,targetPoint));
+  const mappedNormal=sourceNormal.clone()
+    .applyQuaternion(new THREE.Quaternion().setFromUnitVectors(sourceNormal,targetNormal.clone().negate()))
+    .normalize();
+  assert.ok(mappedNormal.dot(targetNormal)<-0.999999);
+});
+
+test('437 UI requires source face then target face before placement',()=>{
+  const ui=fs.readFileSync(new URL('../src/surface-transform.js',import.meta.url),'utf8');
+  assert.ok(ui.includes("phase='source'"));
+  assert.ok(ui.includes('sourceFaceHit(event)'));
+  assert.ok(ui.includes("phase='target'"));
+  assert.ok(ui.includes('targetFaceHit(event)'));
+  assert.ok(ui.includes('sourceAnchor:sourceFace?.center||sourceCenter'));
+  assert.ok(ui.includes('sourceNormal:sourceFace?.normal'));
+  assert.ok(ui.includes('oppose:true'));
+  assert.ok(ui.includes('face-to-face'));
 });
