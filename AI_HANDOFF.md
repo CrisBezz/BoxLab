@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.442
+
+- Replayed original .442 Mesh Health boundary diagnostics exactly from `cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71`.
+- Active runtime/tests match historical .442 exactly.
+- Sentinel status entering this step: Inset confirmed working on .441.
+- Next action: hands-on Inset plus boundary/non-manifold selection handoff check on .442 before replaying .443.
+
 ### Replay checkpoint v0.36.18.441
 
 - Replayed original .441 Mesh Health Auto Close / Make Watertight exactly from `d4e964e3741d7e53ac0176c1a811b05ea3edb727`.
