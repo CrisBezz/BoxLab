@@ -1003,3 +1003,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .458: pending body retries automatically and clears pending when colours apply
 - [ ] Facegroups .458: switching Studio ↔ Facegroups remains clean
 - [ ] Facegroups .458: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Facegroups .459: grouped OBJ + Mirror X shows the same facegroup colour on source and mirrored descendant faces
+- [ ] Facegroups .459: Mirror Y/Z and multi-axis Mirror preserve facegroups without colour mismatch/dark fallback
+- [ ] Facegroups .459: inactive mirrored objects also show inherited Facegroup colours
+- [ ] Facegroups .459: first Facegroups activation remains immediate without Reseed
+- [ ] Facegroups .459: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
