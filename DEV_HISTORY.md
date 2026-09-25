@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-25 — v0.36.18.463 live Uniform Inset prototype repair
+
+- Extrude confirmed working again; Inset remained inert.
+- Found ES-module identity mismatch: `uniform-inset.js` patched `./mesh.js`, but live BoxLab uses `./mesh.js?v=0.12`.
+- Installed all Uniform Inset methods on the live versioned EditableMesh prototype too.
+- Loaded the repaired Uniform Inset module before the proven Face direct controller.
+- No changes to Extrude, Through, pointer ownership, Bevel, or protected transform code.
+
+
 ## 2026-09-25 — v0.36.18.462 restore proven Face direct path
 
 - User confirmed .461 broke Extrude as well as Inset.
