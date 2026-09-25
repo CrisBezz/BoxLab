@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.429 from Beta 4 audit lane
+
+- Reapplied the original mirrored-object Solidify fix exactly.
+- Historical source commit: `70831c5a24d975417c81adb16d6e56a76d4191cc`.
+- No .430+ changes included.
+- Inset was hands-on confirmed working on .428 before this replay.
+- Awaiting hands-on Inset result on .429.
+
 ## 2026-09-25 — replay v0.36.18.428 from Beta 4 audit lane
 
 - Reapplied the original .428 Symmetry / Bisect foundation exactly.
