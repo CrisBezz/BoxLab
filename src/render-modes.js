@@ -19,6 +19,7 @@ let facegroupView=loadFacegroupView();
 function saveFacegroupView(){try{localStorage.setItem(FACEGROUP_VIEW_KEY,JSON.stringify(facegroupView));}catch{}}
 
 function bridge(){return globalThis.__boxlabBridgeState||null;}
+function manager(){return globalThis.__boxlabObjectManager||null;}
 
 const clayMaterial=new THREE.MeshStandardMaterial({color:0xc8c1b5,roughness:.92,metalness:0,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const studioMaterial=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.48,metalness:.03,emissive:0x05080d,emissiveIntensity:.08,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
@@ -63,7 +64,14 @@ function frontOnly(material){
   if(!front){front=material.clone();front.side=THREE.FrontSide;front.needsUpdate=true;frontMaterialCache.set(material,front);}
   return front;
 }
-function sourceMeshForBody(body){return body?.userData?.editableMesh||body?.userData?.sourceMesh||body?.userData?.mesh||null;}
+function sourceMeshForBody(body){
+  if(body?.userData?.kind==='body')return bridge()?.mesh||null;
+  if(body?.userData?.kind==='boxlab-inactive-body'){
+    const m=manager(),id=body.userData.objectId;
+    return m?.objects?.find(item=>item.id===id)?.mesh||null;
+  }
+  return body?.userData?.editableMesh||body?.userData?.sourceMesh||body?.userData?.mesh||null;
+}
 
 function ensureStudioRig(){
   const state=bridge(),scene=state?.scene;if(!scene||studioRig)return;
