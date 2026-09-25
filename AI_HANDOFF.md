@@ -30,10 +30,10 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 Audited from `main` on 2026-09-23.
 
-- Current live version / branch target: **v0.36.18.462**
-- Current main HEAD at audit: **d8af8ac6c140c15ea83122baa16164d1905b0c88**
-- Latest code-bearing release merge: **v0.36.18.463 / PR #151 / squash `d8af8ac6c140c15ea83122baa16164d1905b0c88`**
-- Latest regression: **36086343100 PASS**
+- Current live version / branch target: **v0.36.18.464**
+- Current main HEAD at audit: **f7a092b82addc517a53ec1990324fdb0b66a00e3**
+- Latest code-bearing release merge: **v0.36.18.464 / PR #152 / squash `f7a092b82addc517a53ec1990324fdb0b66a00e3`**
+- Latest regression: **36094996497 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -51,6 +51,18 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### v0.36.18.464 — Public version sync + explicit Through runtime
+
+**Released on main via PR #152; squash merge `f7a092b82addc517a53ec1990324fdb0b66a00e3`. Final regression `36094996497` passed.**
+
+- Corrects the release ambiguity where merged hotfixes still presented publicly as v0.36.18.461.
+- Shell, version manifest and current live runtime cache chain now identify v0.36.18.464.
+- Loads `sequential-through-fallback.js` explicitly after the proven `multi-face-direct.js?v=0.36.18.242` controller, instead of relying only on the later dynamic drawer import.
+- Keeps the protected cavity-aware `through-kernel.js?v=0.36.18.242` unchanged.
+- Retains the v0.36.18.463 live Uniform Inset prototype repair.
+- No Extrude/Through topology solver rewrite.
+
 
 ### v0.36.18.463 — Live Uniform Inset prototype repair
 
