@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — Beta 4 forward replay audit begins
+
+- Reset active runtime/tests exactly to frozen v0.36.18.427 for hands-on Inset verification.
+- This is a forensic replay lane: .428 through .449 will be reapplied in original order, one numbered build at a time.
+- Inset is the sentinel regression check after every replay step.
+- No post-Beta-4 feature is being discarded; original commits remain the source for replay, including Mesh Health and later export/facegroup work.
+- Frozen /beta-4/ remains unchanged.
+
 ## 2026-09-25 — deliberate recovery to v0.36.18.449 baseline
 
 - User chose to stop patching the interaction regressions introduced after the large v0.36.18.450 UI/UX consolidation.
