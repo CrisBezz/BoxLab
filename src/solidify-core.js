@@ -1,17 +1,9 @@
 import * as THREE from 'three';
-import {applyMirror} from './mirror.js';
 
 const EPS=1e-9;
 const NORMAL_MATCH=0.999999;
 const MAX_MITER=25;
 const edgeKey=(a,b)=>a<b?`${a}:${b}`:`${b}:${a}`;
-function activeSymmetryAxes(axes={}){return ['x','y','z'].filter(axis=>!!axes?.[axis]);}
-function axisCoord(v,axis){return axis==='x'?v.x:axis==='y'?v.y:v.z;}
-function zeroAxis(v,axis){if(axis==='x')v.x=0;else if(axis==='y')v.y=0;else v.z=0;return v;}
-function vertexOnSymmetryPlane(v,axis){return Math.abs(axisCoord(v,axis))<=1e-7;}
-function edgeOnSymmetryPlane(mesh,edge,axes){
-  return activeSymmetryAxes(axes).some(axis=>vertexOnSymmetryPlane(mesh.vertices[edge.a],axis)&&vertexOnSymmetryPlane(mesh.vertices[edge.b],axis));
-}
 
 function cloneState(mesh){
   return {
@@ -168,7 +160,7 @@ export function analyzeSolidifyInput(mesh){
   return{ok:true,boundaryEdges:topology.boundary.length};
 }
 
-export function solidifyOpenMesh(mesh,thickness=0.2,{symmetryAxes=null}={}){
+export function solidifyOpenMesh(mesh,thickness=0.2){
   const distance=Number(thickness);
   if(!Number.isFinite(distance)||Math.abs(distance)<=EPS)return{ok:false,changed:false,reason:'invalid-thickness'};
   const topology=inspect(mesh);
@@ -176,20 +168,13 @@ export function solidifyOpenMesh(mesh,thickness=0.2,{symmetryAxes=null}={}){
   const offsets=offsetVectors(mesh,distance);
   if(!offsets.ok)return{...offsets,changed:false};
 
-  const before=cloneState(mesh),count=mesh.vertices.length,activeAxes=activeSymmetryAxes(symmetryAxes||{});
+  const before=cloneState(mesh),count=mesh.vertices.length;
   try{
-    for(let i=0;i<count;i++){
-      const inner=mesh.vertices[i].clone().add(offsets.vectors[i]);
-      for(const axis of activeAxes)if(vertexOnSymmetryPlane(mesh.vertices[i],axis))zeroAxis(inner,axis);
-      mesh.vertices.push(inner);
-    }
+    for(let i=0;i<count;i++)mesh.vertices.push(mesh.vertices[i].clone().add(offsets.vectors[i]));
     const originalFaces=mesh.faces.map(f=>[...f]);
     const innerFaces=originalFaces.map(face=>face.map(vi=>vi+count).reverse());
-    const sideFaces=[],symmetryBoundary=[];
-    for(const edge of topology.boundary){
-      if(activeAxes.length&&edgeOnSymmetryPlane(mesh,edge,symmetryAxes)){symmetryBoundary.push(edge);continue;}
-      sideFaces.push([edge.a,edge.a+count,edge.b+count,edge.b]);
-    }
+    const sideFaces=[];
+    for(const edge of topology.boundary)sideFaces.push([edge.a,edge.a+count,edge.b+count,edge.b]);
     mesh.faces=[...originalFaces,...innerFaces,...sideFaces];
 
     const creases=new Map(before.creases||[]);
@@ -200,8 +185,7 @@ export function solidifyOpenMesh(mesh,thickness=0.2,{symmetryAxes=null}={}){
     mesh.creases=creases;
     mesh.edges?.();
 
-    const validationTarget=activeAxes.length?applyMirror(mesh,symmetryAxes):mesh;
-    const validation=inspectClosed(validationTarget);
+    const validation=inspectClosed(mesh);
     if(!validation.ok){
       restoreState(mesh,before);
       return{ok:false,changed:false,rolledBack:true,reason:`validation-${validation.reason}`,validation};
@@ -210,9 +194,7 @@ export function solidifyOpenMesh(mesh,thickness=0.2,{symmetryAxes=null}={}){
       ok:true,changed:true,thickness:distance,
       before:{vertices:count,faces:originalFaces.length,boundaryEdges:topology.boundary.length},
       after:{vertices:mesh.vertices.length,faces:mesh.faces.length,boundaryEdges:0},
-      sideFaces:sideFaces.length,
-      symmetryBoundaryEdges:symmetryBoundary.length,
-      symmetryAxes:activeAxes
+      sideFaces:sideFaces.length
     };
   }catch(error){
     restoreState(mesh,before);
@@ -220,4 +202,4 @@ export function solidifyOpenMesh(mesh,thickness=0.2,{symmetryAxes=null}={}){
   }
 }
 
-export const __solidifyInternals={edgeKey,inspect,inspectClosed,faceUnitNormals,uniqueIncidentNormals,solveOffsetVector,offsetVectors,edgeOnSymmetryPlane,vertexOnSymmetryPlane};
+export const __solidifyInternals={edgeKey,inspect,inspectClosed,faceUnitNormals,uniqueIncidentNormals,solveOffsetVector,offsetVectors};
