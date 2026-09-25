@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-25 — v0.36.18.465 live Inset Face Region API repair
+
+- Hands-on .464: Extrude and Extrude Through pass; Inset fails.
+- Found the remaining ES-module split: live Uniform Inset methods existed, but their Face Region dependencies did not exist on the live `mesh.js?v=0.12` class.
+- Copied `faceRegionInfo`, `faceRegionNormal`, and `faceRegionsInfo` onto the live EditableMesh prototype before installing Uniform Inset methods.
+- Avoided rerunning the full Face Region installer to prevent duplicate legacy UI/event handlers.
+- No changes to Extrude, Through, Through kernel, Bevel, or protected multi-object transform code.
+
+
 ## 2026-09-25 — v0.36.18.464 public version + explicit Through runtime
 
 - Production shell and `version.json` now genuinely advance from .461 to .464.
