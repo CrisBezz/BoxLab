@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.433 from Beta 4 audit lane
+
+- Reapplied the original movable/snappable Symmetry/Bisect plane exactly.
+- Historical source commit: `ff9be6110c7e34b79fac08e82589b3bd40b66237`.
+- No .434+ changes included.
+- Inset was hands-on confirmed working on .432 before this replay.
+- Awaiting hands-on Inset and movable/snappable plane result on .433.
+
 ## 2026-09-25 — replay v0.36.18.432 from Beta 4 audit lane
 
 - Reapplied the original Face Delete orphan-compaction fix exactly.

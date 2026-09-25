@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.433
+
+- Replayed original .433 movable/snappable Symmetry/Bisect plane exactly from `ff9be6110c7e34b79fac08e82589b3bd40b66237`.
+- Active runtime/tests match historical .433 exactly.
+- Sentinel status entering this step: Inset confirmed working on .432.
+- Next action: hands-on Inset test and movable/snappable Bisect plane check on .433 before replaying .434.
+
 ### Replay checkpoint v0.36.18.432
 
 - Replayed original .432 Face Delete orphan-compaction fix exactly from `31e2c4d0c727f1910543d10d723a4fcedda72e77`.
