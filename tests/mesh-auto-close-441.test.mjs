@@ -59,7 +59,7 @@ test('441 UI exposes Auto Close in Mesh Health and protects frozen baselines',()
   assert.match(ui,/meshHealthAutoClose/);
   assert.match(ui,/autoCloseSimpleHoles/);
   assert.match(ui,/checkpointSnapshot/);
-  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.445/);
+  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.442/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });

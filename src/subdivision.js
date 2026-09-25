@@ -95,13 +95,12 @@ function catmullClarkStep(input){
     resultVertices.push(p.clone());
   });
 
-  const newFaces=[],newFaceGroups=[];
+  const newFaces=[];
   oldFaces.forEach((face,fi)=>{
     const fp=faceIndexMap.get(fi);
     for(let i=0;i<face.length;i++){
       const v=face[i],prev=face[(i-1+face.length)%face.length],next=face[(i+1)%face.length];
       newFaces.push([v,edgeIndexMap.get(edgeKey(v,next)),fp,edgeIndexMap.get(edgeKey(prev,v))]);
-      newFaceGroups.push(mesh.faceGroups?.[fi]??null);
     }
   });
 
@@ -114,7 +113,7 @@ function catmullClarkStep(input){
     nextCreases.set(edgeKey(ep,edge.b),w);
   });
 
-  return new EditableMesh(resultVertices,newFaces,nextCreases,newFaceGroups);
+  return new EditableMesh(resultVertices,newFaces,nextCreases);
 }
 
 export function catmullClark(input){return catmullClarkStep(input);}

@@ -6,7 +6,6 @@ function edgeKey(a,b){return a<b?`${a}:${b}`:`${b}:${a}`;}
 function cloneInto(target,source){
   target.vertices=source.vertices.map(v=>v.clone());
   target.faces=source.faces.map(f=>[...f]);
-  target.faceGroups=source.faces.map((_,i)=>source.faceGroups?.[i]??null);
   target.creases=new Map(source.creases||[]);
   if(source.looseEdges instanceof Set)target.looseEdges=new Set(source.looseEdges);
   if(source.looseVertices instanceof Set)target.looseVertices=new Set(source.looseVertices);
@@ -117,19 +116,17 @@ function triangulateFace(mesh,face){
 }
 export function triangulateMesh(mesh){
   if(!mesh?.clone)return{ok:false,changed:false,reason:'invalid-mesh'};
-  const before=analyzeMeshHealth(mesh),candidate=mesh.clone(),faces=[],faceGroups=[];
+  const before=analyzeMeshHealth(mesh),candidate=mesh.clone(),faces=[];
   let polygonFaces=0,trianglesCreated=0;
-  for(let faceIndex=0;faceIndex<candidate.faces.length;faceIndex++){
-    const face=candidate.faces[faceIndex];
+  for(const face of candidate.faces){
     if(!Array.isArray(face)||face.length<3)return{ok:false,changed:false,reason:'invalid-face',before};
     const tris=triangulateFace(candidate,face);
     if(!tris)return{ok:false,changed:false,reason:'triangulation-failed',before};
     if(face.length>3){polygonFaces++;trianglesCreated+=tris.length;}
     faces.push(...tris);
-    for(let i=0;i<tris.length;i++)faceGroups.push(candidate.faceGroups?.[faceIndex]??null);
   }
   if(!polygonFaces)return{ok:true,changed:false,reason:'already-triangulated',polygonFaces:0,trianglesCreated:0,before,after:before};
-  candidate.faces=faces;candidate.faceGroups=faceGroups;candidate.edges?.();
+  candidate.faces=faces;candidate.edges?.();
   const after=analyzeMeshHealth(candidate);
   if(after.invalidFaces>before.invalidFaces||after.nonManifoldEdges>before.nonManifoldEdges||after.boundaryEdges>before.boundaryEdges)
     return{ok:false,changed:false,rolledBack:true,reason:'triangulation-validation-refused',before,after,polygonFaces,trianglesCreated};
