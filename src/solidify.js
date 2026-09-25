@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { applyMirror } from './mirror.js?v=0.12';
 import { analyzeSolidifyInput, solidifyOpenMesh } from './solidify-core.js?v=0.36.18.374';
 
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -33,6 +34,20 @@ let preview=null,previewObjectId=null,previewArmed=false,thicknessDrag=null;
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function mesh(){return globalThis.__boxlabBridgeState?.mesh||null;}
+function activeMirrorAxes(){
+  const axes={x:false,y:false,z:false};
+  document.querySelectorAll('[data-mirror-axis]').forEach(input=>{axes[input.dataset.mirrorAxis]=!!input.checked;});
+  return axes;
+}
+function hasMirror(axes=activeMirrorAxes()){return !!(axes.x||axes.y||axes.z);}
+function evaluatedSource(live,axes=activeMirrorAxes()){return hasMirror(axes)?applyMirror(live,axes):live.clone();}
+function clearMirrorModifier(){
+  document.querySelectorAll('[data-mirror-axis]').forEach(input=>{
+    if(!input.checked)return;
+    input.checked=false;
+    input.dispatchEvent(new Event('change',{bubbles:true}));
+  });
+}
 function activeObject(){const m=manager();return m?.objects?.find(o=>o.id===m.activeId)||null;}
 function selectionMode(){return document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
 function camera(){return globalThis.__boxlabBridgeState?.camera||null;}
@@ -92,7 +107,7 @@ function buildPreview(){
   if(!previewArmed)return false;
   const object=activeObject(),live=mesh(),targetScene=scene();
   if(!object||!live||!targetScene||object.id!==previewObjectId){cancelPreview({silent:true});return false;}
-  const working=live.clone(),sourceFaceCount=working.faces.length;
+  const working=evaluatedSource(live),sourceFaceCount=working.faces.length;
   const result=solidifyOpenMesh(working,thickness());
   disposePreview();
   if(!result.ok){setStatus(`Solidify preview unavailable • ${result.reason||'invalid thickness'}`);return false;}
@@ -225,7 +240,8 @@ canvas?.addEventListener('pointercancel',finishThicknessDrag,true);
 button?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh();
   if(!object||!live||object.locked||object.kind==='reference'||selectionMode()!=='object'||previewArmed)return;
-  const preflight=analyzeSolidifyInput(live);
+  const axes=activeMirrorAxes(),evaluated=evaluatedSource(live,axes);
+  const preflight=analyzeSolidifyInput(evaluated);
   if(!preflight.ok){setStatus(preflightMessage(preflight.reason));return;}
   previewArmed=true;previewObjectId=object.id;
   beginSolidifySession();
@@ -236,13 +252,18 @@ applyButton?.addEventListener('click',()=>{
   if(!previewArmed||!object||!live||object.id!==previewObjectId){cancelPreview({silent:true});return;}
   endThicknessDrag();
   globalThis.__boxlabObjectHistory?.checkpoint?.();
-  const result=solidifyOpenMesh(live,thickness());
+  const axes=activeMirrorAxes(),working=evaluatedSource(live,axes);
+  const result=solidifyOpenMesh(working,thickness());
   if(!result.ok){setStatus(`Solidify rolled back • ${result.reason||'topology validation failed'}`);cancelPreview({silent:true});forceRender();return;}
+  live.vertices=working.vertices.map(v=>v.clone());
+  live.faces=working.faces.map(f=>[...f]);
+  live.creases=new Map(working.creases||[]);
+  if(hasMirror(axes))clearMirrorModifier();
   disposePreview();previewArmed=false;previewObjectId=null;
   endSolidifySession();
   manager()?.saveActive?.();
-  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.421',...result};
-  setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid`);
+  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.429',bakedMirror:hasMirror(axes),...result};
+  setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid${hasMirror(axes)?' • Mirror baked':''}`);
   forceRender();
   update();
 });
