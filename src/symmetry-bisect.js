@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {symmetryBisect} from './symmetry-bisect-core.js?v=0.36.18.434';
 import {nearestCrossObjectSnap} from './cross-object-snap-core.js?v=0.36.18.324';
 
-const VERSION='0.36.18.434';
+const VERSION='0.36.18.435';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 const canvas=document.querySelector('#viewport');
@@ -32,6 +32,8 @@ controls.innerHTML=`
   <div class="boxlab-tool-session-section">Plane</div>
   <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
     <button id="symmetryMovePlaneBtn" type="button" class="active">Move / Rotate</button>
+    <button id="symmetryAlignFaceBtn" type="button">Align to Face</button>
+    <button id="symmetryFlipPlaneBtn" type="button">Flip Plane</button>
     <button id="symmetryResetPlaneBtn" type="button">Reset Origin</button>
   </div>
   <div class="boxlab-tool-session-subtitle" id="symmetryPlaneReadout">X · Origin</div>
@@ -51,12 +53,14 @@ objectTools?.appendChild(controls);
 const axisButtons=[...controls.querySelectorAll('[data-sym-axis]')];
 const keepButtons=[...controls.querySelectorAll('[data-sym-keep]')];
 const mirrorToggle=controls.querySelector('#symmetryMirrorToggle');
+const alignFaceButton=controls.querySelector('#symmetryAlignFaceBtn');
+const flipPlaneButton=controls.querySelector('#symmetryFlipPlaneBtn');
 const resetPlaneButton=controls.querySelector('#symmetryResetPlaneBtn');
 const planeReadout=controls.querySelector('#symmetryPlaneReadout');
 const cancelButton=controls.querySelector('#symmetryCancelBtn');
 const applyButton=controls.querySelector('#symmetryApplyBtn');
 
-let active=false,objectId=null,source=null,preview=null,planeSurface=null,axis='x',keep='positive',planeNormal=new THREE.Vector3(1,0,0),planePoint=new THREE.Vector3(),drag=null,scaleWasDisabled=false;
+let active=false,objectId=null,source=null,preview=null,planeSurface=null,axis='x',keep='positive',planeNormal=new THREE.Vector3(1,0,0),planePoint=new THREE.Vector3(),drag=null,alignFaceArmed=false,scaleWasDisabled=false;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 
 function manager(){return globalThis.__boxlabObjectManager;}
@@ -152,7 +156,7 @@ function buildPreview(snapLabel=null){
 }
 function cancel({silent=false}={}){
   if(drag&&globalThis.__boxlabBridgeState?.controls)globalThis.__boxlabBridgeState.controls.enabled=true;
-  drag=null;disposePreview();active=false;objectId=null;source=null;axis='x';planeNormal.set(1,0,0);planePoint.set(0,0,0);endSession();sync();
+  drag=null;alignFaceArmed=false;disposePreview();active=false;objectId=null;source=null;axis='x';planeNormal.set(1,0,0);planePoint.set(0,0,0);endSession();sync();
   if(!silent)setStatus('Symmetry / Bisect cancelled');
 }
 function forceRender(){
@@ -169,6 +173,7 @@ function sync(){
 function updateButtons(){
   axisButtons.forEach(b=>b.classList.toggle('active',axis!=='custom'&&b.dataset.symAxis===axis));
   keepButtons.forEach(b=>b.classList.toggle('active',b.dataset.symKeep===keep));
+  alignFaceButton?.classList.toggle('active',alignFaceArmed);
 }
 function planeHit(event){
   if(!planeSurface||!setPointer(event))return null;
@@ -217,6 +222,31 @@ function faceSnap(event){
   for(const target of targets){target.geometry?.dispose?.();target.material?.dispose?.();}
   return out;
 }
+function sourceFaceFromTriangle(triangleIndex){
+  if(!Number.isInteger(triangleIndex)||!source?.faces?.length)return null;
+  let cursor=0;
+  for(let fi=0;fi<source.faces.length;fi++){
+    const triangles=Math.max(0,(source.faces[fi]?.length||0)-2);
+    if(triangleIndex<cursor+triangles)return fi;
+    cursor+=triangles;
+  }
+  return null;
+}
+function pickAlignmentFace(event){
+  if(!source?.faces?.length||!setPointer(event))return null;
+  const geometry=source.triangulatedGeometry?.();if(!geometry)return null;
+  const material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
+  const target=new THREE.Mesh(geometry,material);
+  const hit=raycaster.intersectObject(target,false)[0]||null;
+  let out=null;
+  if(hit){
+    const faceIndex=sourceFaceFromTriangle(hit.faceIndex);
+    const normal=Number.isInteger(faceIndex)?source.faceNormal?.(faceIndex):hit.face?.normal?.clone?.();
+    if(normal?.lengthSq?.()>1e-12)out={position:hit.point.clone(),normal:normal.clone().normalize(),faceIndex};
+  }
+  geometry.dispose?.();material.dispose?.();
+  return out;
+}
 function geometrySnap(event){
   if(!geometryOn())return null;
   const own=ownGeometrySnap(event);if(own)return{...own,label:`Active ${own.type}`};
@@ -229,6 +259,16 @@ function movePlaneToSnap(snap){
 }
 function beginInteraction(event){
   if(!active||event.target!==canvas||!event.isPrimary||event.pointerType==='touch')return;
+  if(alignFaceArmed){
+    event.preventDefault();event.stopImmediatePropagation();
+    const hit=pickAlignmentFace(event);
+    if(!hit){setStatus('Symmetry/Bisect • Align to Face • tap a source face');return;}
+    planePoint.copy(hit.position);
+    planeNormal.copy(hit.normal);
+    axis='custom';alignFaceArmed=false;updateButtons();buildPreview('Face normal');
+    setStatus(`Symmetry/Bisect • aligned to Face ${Number.isInteger(hit.faceIndex)?hit.faceIndex+1:''} • plane normal adopted`);
+    return;
+  }
   const currentTool=tool();
   if(currentTool==='scale'){
     event.preventDefault();event.stopImmediatePropagation();
@@ -305,9 +345,19 @@ launchButton?.addEventListener('click',()=>{
   queueMicrotask(()=>globalThis.__boxlabTransformArming?.activateRealMove?.());
   buildPreview();
 });
-axisButtons.forEach(button=>button.addEventListener('click',()=>{setAxisPreset(button.dataset.symAxis);buildPreview();}));
+axisButtons.forEach(button=>button.addEventListener('click',()=>{alignFaceArmed=false;setAxisPreset(button.dataset.symAxis);buildPreview();}));
+alignFaceButton?.addEventListener('click',()=>{
+  alignFaceArmed=!alignFaceArmed;
+  updateButtons();
+  setStatus(alignFaceArmed?'Symmetry/Bisect • Align to Face armed • tap a source face':'Symmetry/Bisect • Align to Face cancelled');
+});
+flipPlaneButton?.addEventListener('click',()=>{
+  alignFaceArmed=false;
+  planeNormal.negate();axis='custom';updateButtons();buildPreview();
+  setStatus('Symmetry/Bisect • plane normal flipped');
+});
 keepButtons.forEach(button=>button.addEventListener('click',()=>{keep=button.dataset.symKeep;updateButtons();buildPreview();}));
-resetPlaneButton?.addEventListener('click',()=>{planePoint.copy(originPlanePoint(planeNormal));buildPreview();});
+resetPlaneButton?.addEventListener('click',()=>{alignFaceArmed=false;planePoint.copy(originPlanePoint(planeNormal));updateButtons();buildPreview();});
 mirrorToggle?.addEventListener('change',buildPreview);
 cancelButton?.addEventListener('click',()=>cancel());
 applyButton?.addEventListener('click',()=>{

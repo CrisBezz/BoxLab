@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.435
+
+- Replayed original .435 Symmetry Align to Face + Flip Plane exactly from `6bf2b5a5308d639c0e03f7cd2862695d10624591`.
+- Active runtime/tests match historical .435 exactly.
+- Sentinel status entering this step: Inset confirmed working on .434.
+- Next action: hands-on Inset plus Align to Face / Flip Plane check on .435 before replaying .436.
+
 ### Replay checkpoint v0.36.18.434
 
 - Replayed original .434 Symmetry plane transform ownership + arbitrary rotation exactly from `6cb0a5aca9d2d69dbed23511ef617d381a1871c6`.

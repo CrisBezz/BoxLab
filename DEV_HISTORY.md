@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.435 from Beta 4 audit lane
+
+- Reapplied the original Symmetry Align to Face + Flip Plane build exactly.
+- Historical source commit: `6bf2b5a5308d639c0e03f7cd2862695d10624591`.
+- No .436+ changes included.
+- Inset was hands-on confirmed working on .434 before this replay.
+- Awaiting hands-on Inset and Align to Face / Flip Plane result on .435.
+
 ## 2026-09-25 — replay v0.36.18.434 from Beta 4 audit lane
 
 - Reapplied the original Symmetry plane transform ownership + arbitrary rotation build exactly.

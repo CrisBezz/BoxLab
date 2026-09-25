@@ -138,3 +138,28 @@ test('434 Symmetry owns Move Rotate and blocks object transform ownership',()=>{
   assert.ok(ui.includes("event.pointerType==='touch'"));
   assert.ok(transform.includes("globalThis.__boxlabSymmetryBisect?.active"));
 });
+
+
+test('435 flipping an arbitrary plane normal swaps the positive kept side without moving the plane',()=>{
+  const source=EditableMesh.cube(2);
+  const point=new THREE.Vector3(.2,0,0);
+  const normal=new THREE.Vector3(1,1,0).normalize();
+  const a=bisectMesh(source,{keep:'positive',planeNormal:normal,planePoint:point});
+  const b=bisectMesh(source,{keep:'positive',planeNormal:normal.clone().negate(),planePoint:point});
+  assert.ok(a.ok&&b.ok);
+  assert.ok(a.mesh.vertices.every(v=>normal.dot(v.clone().sub(point))>=-1e-8));
+  assert.ok(b.mesh.vertices.every(v=>normal.dot(v.clone().sub(point))<=1e-8));
+});
+
+test('435 Align to Face and Flip Plane are wired into the Symmetry Tool Session',()=>{
+  const ui=fs.readFileSync(new URL('../src/symmetry-bisect.js',import.meta.url),'utf8');
+  const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.ok(ui.includes('Align to Face'));
+  assert.ok(ui.includes('Flip Plane'));
+  assert.ok(ui.includes('pickAlignmentFace(event)'));
+  assert.ok(ui.includes('sourceFaceFromTriangle'));
+  assert.ok(ui.includes('planeNormal.copy(hit.normal)'));
+  assert.ok(ui.includes('planeNormal.negate()'));
+  assert.ok(ui.includes("event.pointerType==='touch'"));
+  assert.ok(index.includes('src/symmetry-bisect.js?v='+version));
+});
