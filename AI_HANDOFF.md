@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.438
+
+- Replayed original .438 linked-instance Insert Tool exactly from `3483edd3b8809b38fca738ed8e6f3085bb2e26f6`.
+- Active runtime/tests match historical .438 exactly.
+- Sentinel status entering this step: Inset confirmed working on .437.
+- Next action: hands-on Inset plus Insert Tool check on .438 before replaying .439.
+
 ### Replay checkpoint v0.36.18.437
 
 - Replayed original .437 face-to-face Surface Transform anchoring exactly from `5a6ef4338c2997b5e65dbf59f77bc129d7e152cd`.
