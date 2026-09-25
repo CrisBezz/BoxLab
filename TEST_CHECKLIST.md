@@ -981,3 +981,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .455: Reseed changes display colours without changing group IDs
 - [ ] Facegroups .455: Reset restores defaults and settings persist after reload
 - [ ] Facegroups .455: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Facegroups .456: grouped OBJ remains one BoxLab object by default and Facegroups colours are visible
+- [ ] Facegroups .456: Split objects by groups checkbox is present and OFF by default
+- [ ] Facegroups .456: enabling Split objects by groups imports one object per OBJ group
+- [ ] Facegroups .456: Facegroups mode colours active and inactive editable objects from their authoritative mesh data
+- [ ] Facegroups .456: Studio ↔ Facegroups switching remains clean
+- [ ] Facegroups .456: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected

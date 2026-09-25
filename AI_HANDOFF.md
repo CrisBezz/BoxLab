@@ -1,3 +1,14 @@
+## Current recovery checkpoint — v0.36.18.456
+
+- v0.36.18.455 Facegroup colour controls passed hands-on testing.
+- User identified two missing functional links: known facegrouped OBJ data did not colour in Facegroups mode, and the historical **Split objects by groups** import option was absent.
+- v0.36.18.456 restores only those links:
+  - File > Import checkbox splitImportGroups, OFF by default, passed to parseEditableOBJ with splitByGroups.
+  - Facegroups viewport source lookup now reads the active editable mesh from __boxlabBridgeState.mesh and inactive object meshes from __boxlabObjectManager.objects.
+- This does not restore Mirror/SubD facegroup propagation yet and does not change modelling topology.
+- .452 remains rejected; render changes must remain additive.
+- Sentinel: grouped OBJ imports as one object by default and shows distinct Facegroups colours; Split checkbox imports groups separately; Studio switching, Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.455
 
 - v0.36.18.454 additive Facegroups viewport integration was hands-on PASS: load, Studio/Facegroups switching, navigation and modelling sentinels remained healthy.
