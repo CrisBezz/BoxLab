@@ -1,18 +1,16 @@
 import * as THREE from 'three';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { EditableMesh } from './mesh.js?v=0.36.18.445';
-import { parseEditableOBJ } from './obj-facegroups-core.js?v=0.36.18.445';
+import { EditableMesh } from './mesh.js?v=0.21.2';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.445';
+const VERSION='0.36.18.205';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
 const status = document.querySelector('#selectionStatus');
 const kindButtons = [...document.querySelectorAll('#importKind [data-import-kind]')];
-const splitGroupsToggle = document.querySelector('#splitImportGroups');
 let importKind = 'editable';
 
 function fileBaseName(file) { return (file?.name || 'Imported Mesh').replace(/\.[^.]+$/, '') || 'Imported Mesh'; }
@@ -41,6 +39,42 @@ function importedMeshes(root) {
   return meshes;
 }
 
+function parseEditableOBJ(text) {
+  const sourceVertices=[];
+  const groups=[];
+  let current={name:'Mesh',faces:[]};groups.push(current);
+  const lines=String(text||'').split(/\r?\n/);
+  for(const raw of lines){
+    const line=raw.trim();if(!line||line.startsWith('#'))continue;
+    if(line.startsWith('v ')){
+      const p=line.split(/\s+/);const x=Number(p[1]),y=Number(p[2]),z=Number(p[3]);
+      if(Number.isFinite(x)&&Number.isFinite(y)&&Number.isFinite(z))sourceVertices.push(new THREE.Vector3(x,y,z));
+      continue;
+    }
+    if(line.startsWith('o ')||line.startsWith('g ')){
+      const name=line.slice(2).trim()||'Mesh';
+      if(current.faces.length){current={name,faces:[]};groups.push(current);}else current.name=name;
+      continue;
+    }
+    if(line.startsWith('f ')){
+      const tokens=line.slice(2).trim().split(/\s+/);const face=[];
+      for(const token of tokens){
+        const rawIndex=Number(token.split('/')[0]);if(!Number.isInteger(rawIndex)||rawIndex===0)continue;
+        const index=rawIndex>0?rawIndex-1:sourceVertices.length+rawIndex;
+        if(index>=0&&index<sourceVertices.length)face.push(index);
+      }
+      const cleaned=face.filter((v,i)=>i===0||v!==face[i-1]);
+      if(cleaned.length>1&&cleaned[0]===cleaned[cleaned.length-1])cleaned.pop();
+      if(new Set(cleaned).size>=3)current.faces.push(cleaned);
+    }
+  }
+  return groups.filter(group=>group.faces.length).map(group=>{
+    const used=[...new Set(group.faces.flat())].sort((a,b)=>a-b),remap=new Map(used.map((old,i)=>[old,i]));
+    const vertices=used.map(i=>sourceVertices[i].clone()),faces=group.faces.map(face=>face.map(i=>remap.get(i)));
+    return{mesh:new EditableMesh(vertices,faces),name:group.name||'Mesh',polygonPreserved:true};
+  });
+}
+
 function fitMeshesToBoxLabScale(meshes) {
   const bounds = new THREE.Box3();
   meshes.forEach(entry => entry.mesh.vertices.forEach(vertex => bounds.expandByPoint(vertex)));
@@ -63,17 +97,15 @@ function weldEditableMesh(mesh, tolerance=EDITABLE_WELD_TOLERANCE) {
     if (newIndex === undefined) { newIndex = vertices.length;buckets.set(key,newIndex);vertices.push(vertex.clone()); } else welded++;
     remap[oldIndex] = newIndex;
   });
-  const faces = [],faceGroups=[];let removedFaces = 0;
-  for (let faceIndex=0;faceIndex<mesh.faces.length;faceIndex++) {
-    const face=mesh.faces[faceIndex];
+  const faces = [];let removedFaces = 0;
+  for (const face of mesh.faces) {
     const mapped = face.map(index => remap[index]);
     const cleaned = mapped.filter((index, i) => i === 0 || index !== mapped[i-1]);
     if (cleaned.length > 1 && cleaned[0] === cleaned[cleaned.length-1]) cleaned.pop();
     if (new Set(cleaned).size < 3) { removedFaces++; continue; }
     faces.push(cleaned);
-    faceGroups.push(mesh.faceGroups?.[faceIndex]??null);
   }
-  return { mesh:new EditableMesh(vertices, faces, mesh.creases, faceGroups), welded, removedFaces };
+  return { mesh:new EditableMesh(vertices, faces, mesh.creases), welded, removedFaces };
 }
 
 function addImported(meshes, baseName) {
@@ -85,9 +117,8 @@ function addImported(meshes, baseName) {
   const options={kind:isReference?'reference':'editable',locked:isReference,enterObjectMode:!isReference,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}};
   meshes.forEach((entry,index)=>manager.addMesh(entry.mesh,meshes.length===1?baseName:`${baseName} • ${entry.name||index+1}`,options));
   const preserved=!isReference&&meshes.some(entry=>entry.polygonPreserved);
-  const groupCount=[...new Set(meshes.flatMap(entry=>entry.mesh.faceGroups||[]).filter(Boolean))].length;
   if(isReference)setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • locked reference`);
-  else setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • editable${preserved?' • OBJ polygons preserved':''}${groupCount?` • ${groupCount} facegroup${groupCount===1?'':'s'} preserved`:''} • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
+  else setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • editable${preserved?' • OBJ polygons preserved':''} • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
 }
 
 function loadOBJ(file) {
@@ -95,9 +126,7 @@ function loadOBJ(file) {
   reader.onload=()=>{
     try{
       const text=String(reader.result||'');
-      const meshes=importKind==='editable'
-        ? parseEditableOBJ(text,{splitByGroups:!!splitGroupsToggle?.checked})
-        : (()=>{const root=new OBJLoader().parse(text);return importedMeshes(root);})();
+      const meshes=importKind==='editable'?parseEditableOBJ(text):(()=>{const root=new OBJLoader().parse(text);return importedMeshes(root);})();
       if(!meshes.length)throw new Error('No mesh geometry was found in this OBJ.');
       addImported(meshes,fileBaseName(file));
     }catch(error){setStatus(`Import failed • ${error.message||'Unsupported OBJ'}`);}
