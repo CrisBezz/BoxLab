@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.457 Facegroups first-activation recovery
+
+- Restored the historical fix for the dark first Facegroups activation.
+- Facegroup material is now assigned only when colour generation succeeds.
+- Failed first pass falls back to the normal front material instead of a dark invalid vertex-colour state.
+- Entering Facegroups normalises settings, rebuilds the viewport, waits for two animation frames, then reapplies colours.
+- No topology, OBJ data or modelling interaction changes.
+
 ## 2026-09-26 — v0.36.18.456 Facegroup data connection + split import recovery
 
 - .455 passed hands-on, but a known facegrouped OBJ still displayed no Facegroups colours.
