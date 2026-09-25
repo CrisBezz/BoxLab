@@ -1,3 +1,12 @@
+## Current recovery checkpoint — v0.36.18.457
+
+- v0.36.18.456 restored the actual Facegroup data connection and Split objects by groups import option.
+- v0.36.18.457 restores the historical first-activation lifecycle fix.
+- Root cause: the first Facegroups render pass can occur before viewport body geometry and editable mesh are synchronised. Assigning a vertex-colour material before a valid colour attribute exists produces a dark/near-black mesh.
+- Fix: only assign the Facegroups material after applyFaceGroupColours succeeds; otherwise keep the normal front material and mark the body pending. Entering Facegroups now rebuilds, waits two animation frames, then reapplies colours after the viewport settles.
+- No topology, facegroup IDs, OBJ handoff or modelling/navigation code changes.
+- Sentinel: first tap into Facegroups must immediately show colours with no Reseed; switching away/back must also work; Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.456
 
 - v0.36.18.455 Facegroup colour controls passed hands-on testing.
