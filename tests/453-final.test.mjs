@@ -1,0 +1,1 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';test('453 final marker',()=>assert.match(fs.readFileSync(new URL('../453_FINAL.txt',import.meta.url),'utf8'),/FINAL/));
