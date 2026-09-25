@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.438 from Beta 4 audit lane
+
+- Reapplied the original linked-instance Insert Tool exactly.
+- Historical source commit: `3483edd3b8809b38fca738ed8e6f3085bb2e26f6`.
+- No .439+ changes included.
+- Inset was hands-on confirmed working on .437 before this replay.
+- Awaiting hands-on Inset and Insert Tool result on .438.
+
 ## 2026-09-25 — replay v0.36.18.437 from Beta 4 audit lane
 
 - Reapplied the original face-to-face Surface Transform anchoring build exactly.
