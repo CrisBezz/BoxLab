@@ -996,3 +996,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .457: persisted palette/Saturation/Lightness/Ungrouped settings apply on first activation
 - [ ] Facegroups .457: switching away and back immediately restores colours
 - [ ] Facegroups .457: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Facegroups .458: first activation shows group colours without Reseed
+- [ ] Facegroups .458: temporarily unsynchronised body remains normal material, never dark vertex-colour material
+- [ ] Facegroups .458: pending body retries automatically and clears pending when colours apply
+- [ ] Facegroups .458: switching Studio ↔ Facegroups remains clean
+- [ ] Facegroups .458: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
