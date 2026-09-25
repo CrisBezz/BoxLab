@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-25 — v0.36.18.464 public version + explicit Through runtime
+
+- Production shell and `version.json` now genuinely advance from .461 to .464.
+- Live runtime cache keys were aligned so Safari/GitHub Pages does not mix .461/.463/.464 modules.
+- Inward Extrude/Through takeover is now an explicit main runtime module as well as remaining available from the Drawer dynamic import.
+- Protected `through-kernel.js?v=0.36.18.242`, `multi-face-direct.js?v=0.36.18.242`, and `multi-object-transform.js?v=0.36.1.0` remain unchanged.
+- Released via PR **#152**; squash merge `f7a092b82addc517a53ec1990324fdb0b66a00e3`.
+- Final Topology regression run **36094996497 PASS**.
+
+
 ## 2026-09-25 — v0.36.18.464 public version sync + explicit Through runtime
 
 - User reported only v0.36.18.461 was visibly loading, despite later hotfix merges.
