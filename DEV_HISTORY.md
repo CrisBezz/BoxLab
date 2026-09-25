@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.459 Mirror facegroup propagation recovery
+
+- v0.36.18.458 first-activation pending-state repair passed hands-on testing.
+- Restored facegroup inheritance through non-destructive Mirror only.
+- Mirrored descendant faces inherit the source face's facegroup ID.
+- Facegroups Render Look evaluates current Mirror settings before applying viewport colours.
+- SubD propagation remains deferred for separate isolation.
+
 ## 2026-09-26 — v0.36.18.458 Facegroups pending-state first-activation repair
 
 - .457 historical two-frame retry did not resolve the recovered-runtime first-activation dark view.
