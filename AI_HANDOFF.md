@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.464**
-- Current main HEAD at audit: **f7a092b82addc517a53ec1990324fdb0b66a00e3**
-- Latest code-bearing release merge: **v0.36.18.464 / PR #152 / squash `f7a092b82addc517a53ec1990324fdb0b66a00e3`**
-- Latest regression: **36094996497 PASS**
+- Current main HEAD at audit: **d7b32672f1757dfbef80f5eb5f364ed1dcfc41ea**
+- Latest code-bearing release merge: **v0.36.18.465 / PR #153 / squash `d7b32672f1757dfbef80f5eb5f364ed1dcfc41ea`**
+- Latest regression: **36105980083 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.465 — Live Inset Face Region API repair
+
+**Released on main via PR #153; squash merge `d7b32672f1757dfbef80f5eb5f364ed1dcfc41ea`. Final regression `36105980083` passed.**
 
 - User confirmed v0.36.18.464: ordinary Extrude and Extrude Through both work; Inset remains inert.
 - Root cause is now fully isolated to the live mesh prototype:
