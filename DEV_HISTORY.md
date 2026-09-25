@@ -7,6 +7,8 @@
 - Copied `faceRegionInfo`, `faceRegionNormal`, and `faceRegionsInfo` onto the live EditableMesh prototype before installing Uniform Inset methods.
 - Avoided rerunning the full Face Region installer to prevent duplicate legacy UI/event handlers.
 - No changes to Extrude, Through, Through kernel, Bevel, or protected multi-object transform code.
+- Released via PR **#153**; squash merge `d7b32672f1757dfbef80f5eb5f364ed1dcfc41ea`.
+- Final Topology regression run **36105980083 PASS**.
 
 
 ## 2026-09-25 — v0.36.18.464 public version + explicit Through runtime
