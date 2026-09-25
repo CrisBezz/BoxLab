@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.439 from Beta 4 audit lane
+
+- Reapplied the original Mesh Health / Inspect foundation exactly.
+- Historical source commit: `60187e2f17c444c319c6862a80e3a107588dc9cb`.
+- No .440+ changes included.
+- Inset was hands-on confirmed working on .438 before this replay.
+- Awaiting hands-on Inset and Mesh Health inspection result on .439.
+
 ## 2026-09-25 — replay v0.36.18.438 from Beta 4 audit lane
 
 - Reapplied the original linked-instance Insert Tool exactly.

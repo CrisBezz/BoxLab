@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.439
+
+- Replayed original .439 Mesh Health / Inspect foundation exactly from `60187e2f17c444c319c6862a80e3a107588dc9cb`.
+- Active runtime/tests match historical .439 exactly.
+- Sentinel status entering this step: Inset confirmed working on .438.
+- Next action: hands-on Inset plus Mesh Health inspection check on .439 before replaying .440.
+
 ### Replay checkpoint v0.36.18.438
 
 - Replayed original .438 linked-instance Insert Tool exactly from `3483edd3b8809b38fca738ed8e6f3085bb2e26f6`.
