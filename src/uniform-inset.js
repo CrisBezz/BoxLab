@@ -1,6 +1,5 @@
 import './loose-bootstrap.js?v=0.30.3';
 import { EditableMesh } from './mesh.js';
-import { EditableMesh as LiveEditableMesh } from './mesh.js?v=0.12';
 import * as THREE from 'three';
 
 function signedArea(points){let a=0;for(let i=0;i<points.length;i++){const p=points[i],q=points[(i+1)%points.length];a+=p.x*q.y-q.x*p.y;}return a*.5;}
@@ -98,16 +97,3 @@ EditableMesh.prototype.insetFace=function(faceIndex,amount=.2){
   const result=this.insetFaceRegion([faceIndex],amount);
   return result?{type:'face',index:faceIndex,mode:result.mode,distance:result.distance,amount:result.amount}:null;
 };
-
-
-// The live app imports mesh.js?v=0.12, which is a distinct ES-module identity
-// from ./mesh.js. Uniform Inset depends on the Face Region geometry API, so
-// copy only those geometry methods plus the Inset methods onto the live class.
-// Do not rerun installFaceRegion() here because that installer also registers
-// legacy UI/event handlers and would duplicate interaction ownership.
-for(const name of ['faceRegionInfo','faceRegionNormal','faceRegionsInfo']){
-  LiveEditableMesh.prototype[name]=EditableMesh.prototype[name];
-}
-for(const name of ['insetFaceRegion','insetFaceRegions','insetFace']){
-  LiveEditableMesh.prototype[name]=EditableMesh.prototype[name];
-}
