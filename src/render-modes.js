@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {applyFaceGroupColours} from './facegroup-colours-core.js';
 
 const status=document.querySelector('#selectionStatus');
 let mode='studio';
@@ -17,6 +18,7 @@ const clayMaterial=new THREE.MeshStandardMaterial({color:0xc8c1b5,roughness:.92,
 const studioMaterial=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.48,metalness:.03,emissive:0x05080d,emissiveIntensity:.08,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const studioInactiveMaterial=new THREE.MeshStandardMaterial({color:0x98a6b8,roughness:.52,metalness:.02,emissive:0x03060a,emissiveIntensity:.06,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const backfaceMaterial=new THREE.MeshStandardMaterial({color:0xf2a766,roughness:.78,metalness:0,side:THREE.BackSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
+const facegroupMaterial=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.66,metalness:0,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 
 function makeMatcapTexture(){
   const canvas=document.createElement('canvas');canvas.width=256;canvas.height=256;
@@ -55,6 +57,7 @@ function frontOnly(material){
   if(!front){front=material.clone();front.side=THREE.FrontSide;front.needsUpdate=true;frontMaterialCache.set(material,front);}
   return front;
 }
+function sourceMeshForBody(body){return body?.userData?.editableMesh||body?.userData?.sourceMesh||body?.userData?.mesh||null;}
 
 function ensureStudioRig(){
   const state=bridge(),scene=state?.scene;if(!scene||studioRig)return;
@@ -118,13 +121,17 @@ function applyMode(body){
   else if(mode==='normals'){body.material=inactive?normalInactiveMaterial:normalMaterial;addBackface(body);}
   else if(mode==='wire'){body.material=inactive?wireInactiveSurfaceMaterial:wireSurfaceMaterial;addBackface(body);addWire(body,wireMaterial,13);}
   else if(mode==='xray'){body.material=xrayMaterial;addWire(body,xrayHiddenWireMaterial,10);addWire(body,xrayVisibleWireMaterial,13);}
+  else if(mode==='facegroups'){
+    const source=sourceMeshForBody(body),result=source?applyFaceGroupColours(body.geometry,source):null;
+    body.material=result?.ok?facegroupMaterial:frontOnly(original);addBackface(body);
+  }
   else{body.material=frontOnly(original);addBackface(body);}
 }
 
 Object.assign(globalThis.__boxlabRenderModes ||= {},{apply:applyMode,refreshStudio});
 function rebuild(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function applyToSceneBodies(){const scene=bridge()?.scene;if(!scene)return false;let found=false;scene.traverse(object=>{const kind=object?.userData?.kind;if(kind==='body'||kind==='boxlab-inactive-body'){applyMode(object);found=true;}});return found;}
-function modeLabel(){if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='studio')return'Studio';return mode[0].toUpperCase()+mode.slice(1);}
+function modeLabel(){if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='studio')return'Studio';if(mode==='facegroups')return'Facegroups';return mode[0].toUpperCase()+mode.slice(1);}
 
 function setMode(next){
   mode=next;
@@ -141,7 +148,7 @@ function installUI(){
   const host=document.querySelector('#viewportRenderLooks');
   if(!host||host.dataset.ready==='true')return false;
   host.dataset.ready='true';
-  host.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="normals">Normals</button><button type="button" data-render="wire">Wire</button><button type="button" data-render="xray">X-Ray</button>';
+  host.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="normals">Normals</button><button type="button" data-render="wire">Wire</button><button type="button" data-render="xray">X-Ray</button><button type="button" data-render="facegroups">Facegroups</button>';
   host.addEventListener('click',event=>{const button=event.target.closest('button[data-render]');if(!button)return;event.preventDefault();event.stopPropagation();setMode(button.dataset.render);});
   return true;
 }
