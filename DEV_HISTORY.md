@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.428 from Beta 4 audit lane
+
+- Reapplied the original .428 Symmetry / Bisect foundation exactly.
+- Historical source commit: `72a30c2f5799d048235684e326da8fdf3a71fa2c`.
+- No .429+ changes included.
+- Inset was hands-on confirmed working immediately before this replay on .427.
+- Awaiting hands-on Inset result on .428 before continuing.
+
 ## 2026-09-25 — Beta 4 forward replay audit begins
 
 - Reset active runtime/tests exactly to frozen v0.36.18.427 for hands-on Inset verification.
