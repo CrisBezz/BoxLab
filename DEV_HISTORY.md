@@ -7,6 +7,8 @@
 - Installed all Uniform Inset methods on the live versioned EditableMesh prototype too.
 - Loaded the repaired Uniform Inset module before the proven Face direct controller.
 - No changes to Extrude, Through, pointer ownership, Bevel, or protected transform code.
+- Released via PR **#151**; squash merge `d8af8ac6c140c15ea83122baa16164d1905b0c88`.
+- Final PR Topology regression run **36086343100 PASS**.
 
 
 ## 2026-09-25 — v0.36.18.462 restore proven Face direct path
