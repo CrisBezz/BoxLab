@@ -1,7 +1,4 @@
 import * as THREE from 'three';
-import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js?v=0.36.18.447';
-import {subdivide} from './subdivision.js?v=0.12';
-import {applyMirror} from './mirror.js?v=0.12';
 
 const status=document.querySelector('#selectionStatus');
 let mode='studio';
@@ -13,30 +10,8 @@ let studioKeyTarget=null;
 let originalBackground=null;
 let studioRefreshQueued=false;
 const frontMaterialCache=new WeakMap();
-const FACEGROUP_VIEW_KEY='boxlab-facegroup-view-v1';
-function loadFacegroupView(){
-  try{return normaliseFacegroupView(JSON.parse(localStorage.getItem(FACEGROUP_VIEW_KEY)||'{}'));}catch{return{...DEFAULT_FACEGROUP_VIEW};}
-}
-let facegroupView=loadFacegroupView();
-function saveFacegroupView(){
-  try{localStorage.setItem(FACEGROUP_VIEW_KEY,JSON.stringify(facegroupView));}catch{}
-}
-
 
 function bridge(){return globalThis.__boxlabBridgeState||null;}
-function manager(){return globalThis.__boxlabObjectManager||null;}
-function evaluatedMeshForBody(body){
-  const m=manager();if(!m)return null;
-  const object=body?.userData?.kind==='boxlab-inactive-body'
-    ? m.objects?.find(item=>item.id===body.userData.objectId)
-    : m.objects?.find(item=>item.id===m.activeId);
-  let mesh=(body?.userData?.kind==='body'?bridge()?.mesh:object?.mesh);
-  if(!mesh?.clone)return null;
-  mesh=mesh.clone();
-  const settings=object?.settings||{};
-  if(settings.subd)mesh=subdivide(mesh,Math.max(1,Math.min(4,Number(settings.subdLevel||1))));
-  return applyMirror(mesh,settings.mirror||{x:false,y:false,z:false});
-}
 
 const clayMaterial=new THREE.MeshStandardMaterial({color:0xc8c1b5,roughness:.92,metalness:0,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 const studioMaterial=new THREE.MeshStandardMaterial({color:0xaeb9c7,roughness:.48,metalness:.03,emissive:0x05080d,emissiveIntensity:.08,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
@@ -70,8 +45,6 @@ const wireMaterial=new THREE.MeshBasicMaterial({color:0xe5edf6,wireframe:true,tr
 const xrayMaterial=new THREE.MeshStandardMaterial({color:0x9eb4cc,roughness:.78,metalness:0,transparent:true,opacity:.14,depthWrite:false,side:THREE.DoubleSide});
 const xrayHiddenWireMaterial=new THREE.MeshBasicMaterial({color:0xaec3d9,wireframe:true,transparent:true,opacity:.22,depthTest:false,depthWrite:false});
 const xrayVisibleWireMaterial=new THREE.MeshBasicMaterial({color:0xf1f6fb,wireframe:true,transparent:true,opacity:.88,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
-const facegroupMaterial=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.62,metalness:.02,side:THREE.FrontSide,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
-const facegroupInactiveMaterial=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.7,metalness:.01,side:THREE.FrontSide,transparent:true,opacity:.68,polygonOffset:true,polygonOffsetFactor:1,polygonOffsetUnits:1});
 
 function clearRenderChildren(body){[...body.children].forEach(child=>{if(child?.userData?.boxlabRenderOverlay){body.remove(child);child.material?.dispose?.();}});}
 function addWire(body,material,order=12){const overlay=new THREE.Mesh(body.geometry,material.clone());overlay.userData.boxlabRenderOverlay=true;overlay.renderOrder=order;body.add(overlay);}
@@ -145,49 +118,18 @@ function applyMode(body){
   else if(mode==='normals'){body.material=inactive?normalInactiveMaterial:normalMaterial;addBackface(body);}
   else if(mode==='wire'){body.material=inactive?wireInactiveSurfaceMaterial:wireSurfaceMaterial;addBackface(body);addWire(body,wireMaterial,13);}
   else if(mode==='xray'){body.material=xrayMaterial;addWire(body,xrayHiddenWireMaterial,10);addWire(body,xrayVisibleWireMaterial,13);}
-  else if(mode==='facegroups'){
-    const source=evaluatedMeshForBody(body);
-    const result=applyFaceGroupColours(body.geometry,source,facegroupView);
-    if(result?.ok){
-      body.material=inactive?facegroupInactiveMaterial:facegroupMaterial;
-      body.material.needsUpdate=true;
-      addBackface(body);
-      body.userData.boxlabFacegroupCount=result.groups||0;
-      delete body.userData.boxlabFacegroupPending;
-    }else{
-      body.material=frontOnly(original);
-      body.material.needsUpdate=true;
-      body.userData.boxlabFacegroupCount=0;
-      body.userData.boxlabFacegroupPending=true;
-    }
-  }
   else{body.material=frontOnly(original);addBackface(body);}
 }
 
-Object.assign(globalThis.__boxlabRenderModes ||= {},{
-  apply:applyMode,
-  refreshStudio,
-  facegroupView:()=>({...facegroupView}),
-  setFacegroupView(next){facegroupView=normaliseFacegroupView({...facegroupView,...next});saveFacegroupView();syncFacegroupControls();if(mode==='facegroups')applyToSceneBodies();}
-});
+Object.assign(globalThis.__boxlabRenderModes ||= {},{apply:applyMode,refreshStudio});
 function rebuild(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function applyToSceneBodies(){const scene=bridge()?.scene;if(!scene)return false;let found=false;scene.traverse(object=>{const kind=object?.userData?.kind;if(kind==='body'||kind==='boxlab-inactive-body'){applyMode(object);found=true;}});return found;}
-function modeLabel(){if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='facegroups')return'Facegroups';if(mode==='studio')return'Studio';return mode[0].toUpperCase()+mode.slice(1);}
+function modeLabel(){if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='studio')return'Studio';return mode[0].toUpperCase()+mode.slice(1);}
 
-function enterFacegroupsReady(){
-  facegroupView=normaliseFacegroupView(facegroupView);
-  syncFacegroupControls();
-  rebuild();
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    if(mode==='facegroups')applyToSceneBodies();
-  }));
-}
 function setMode(next){
   mode=next;
   document.querySelectorAll('#viewportRenderLooks button[data-render]').forEach(button=>button.classList.toggle('active',button.dataset.render===mode));
-  if(mode==='facegroups')enterFacegroupsReady();
-  else if(!applyToSceneBodies())rebuild();
-  syncFacegroupControls();
+  if(!applyToSceneBodies())rebuild();
   document.dispatchEvent(new CustomEvent('boxlab-render-mode-change',{detail:{mode}}));
   if(status)status.textContent=`View • ${modeLabel()}`;
 }
@@ -195,62 +137,11 @@ function setMode(next){
 const baseAdd=THREE.Group.prototype.add;
 if(!THREE.Group.prototype.__boxlabRenderModesInstalled){THREE.Group.prototype.add=function(...objects){const result=baseAdd.apply(this,objects);for(const object of objects)if(object?.userData?.kind==='body')applyMode(object);return result;};THREE.Group.prototype.__boxlabRenderModesInstalled=true;}
 
-function syncFacegroupControls(){
-  const panel=document.querySelector('#facegroupViewControls');if(!panel)return;
-  panel.hidden=mode!=='facegroups';
-  panel.querySelectorAll('[data-facegroup-palette]').forEach(button=>button.classList.toggle('active',button.dataset.facegroupPalette===facegroupView.palette));
-  const sat=panel.querySelector('#facegroupSaturation'),light=panel.querySelector('#facegroupLightness'),ungrouped=panel.querySelector('#facegroupUngrouped');
-  if(sat)sat.value=String(Math.round(facegroupView.saturation*100));
-  if(light)light.value=String(Math.round(facegroupView.lightness*100));
-  if(ungrouped)ungrouped.value=facegroupView.ungrouped;
-  const satOut=panel.querySelector('#facegroupSaturationOut'),lightOut=panel.querySelector('#facegroupLightnessOut');
-  if(satOut)satOut.textContent=`${Math.round(facegroupView.saturation*100)}%`;
-  if(lightOut)lightOut.textContent=`${facegroupView.lightness>=0?'+':''}${Math.round(facegroupView.lightness*100)}`;
-}
-function updateFacegroupView(patch){
-  facegroupView=normaliseFacegroupView({...facegroupView,...patch});
-  saveFacegroupView();syncFacegroupControls();
-  if(mode==='facegroups')applyToSceneBodies();
-}
-function installFacegroupControls(host){
-  const section=host?.closest?.('.viewport-menu-section');if(!section||document.querySelector('#facegroupViewControls'))return;
-  const panel=document.createElement('div');
-  panel.id='facegroupViewControls';
-  panel.hidden=true;
-  panel.innerHTML=`
-    <div class="viewport-menu-label" style="margin-top:9px">Facegroup Colours</div>
-    <div class="viewport-render-grid facegroup-palette-grid">
-      <button type="button" data-facegroup-palette="default">Default</button>
-      <button type="button" data-facegroup-palette="soft">Soft</button>
-      <button type="button" data-facegroup-palette="vivid">Vivid</button>
-      <button type="button" data-facegroup-palette="contrast">Contrast</button>
-    </div>
-    <label class="range-row"><span>Saturation</span><input id="facegroupSaturation" type="range" min="20" max="180" value="100" step="5"/><output id="facegroupSaturationOut">100%</output></label>
-    <label class="range-row"><span>Lightness</span><input id="facegroupLightness" type="range" min="-28" max="28" value="0" step="2"/><output id="facegroupLightnessOut">+0</output></label>
-    <label class="toggle-row"><span>Ungrouped</span><input id="facegroupUngrouped" type="color" value="#7f8792" aria-label="Ungrouped face colour"/></label>
-    <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
-      <button id="facegroupReseed" type="button">Reseed Colours</button>
-      <button id="facegroupReset" type="button">Reset</button>
-    </div>`;
-  section.appendChild(panel);
-  panel.addEventListener('click',event=>{
-    const palette=event.target.closest('[data-facegroup-palette]');
-    if(palette){event.preventDefault();event.stopPropagation();updateFacegroupView({palette:palette.dataset.facegroupPalette});return;}
-    if(event.target.closest('#facegroupReseed')){event.preventDefault();event.stopPropagation();updateFacegroupView({seed:facegroupView.seed+1});return;}
-    if(event.target.closest('#facegroupReset')){event.preventDefault();event.stopPropagation();facegroupView={...DEFAULT_FACEGROUP_VIEW};saveFacegroupView();syncFacegroupControls();if(mode==='facegroups')applyToSceneBodies();}
-  });
-  panel.querySelector('#facegroupSaturation')?.addEventListener('input',event=>updateFacegroupView({saturation:Number(event.target.value)/100}));
-  panel.querySelector('#facegroupLightness')?.addEventListener('input',event=>updateFacegroupView({lightness:Number(event.target.value)/100}));
-  panel.querySelector('#facegroupUngrouped')?.addEventListener('input',event=>updateFacegroupView({ungrouped:event.target.value}));
-  syncFacegroupControls();
-}
-
 function installUI(){
   const host=document.querySelector('#viewportRenderLooks');
   if(!host||host.dataset.ready==='true')return false;
   host.dataset.ready='true';
-  host.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="facegroups">Facegroups</button><button type="button" data-render="normals">Normals</button><button type="button" data-render="wire">Wire</button><button type="button" data-render="xray">X-Ray</button>';
-  installFacegroupControls(host);
+  host.innerHTML='<button type="button" data-render="studio" class="active">Studio</button><button type="button" data-render="solid">Solid</button><button type="button" data-render="clay">Clay</button><button type="button" data-render="matcap">MatCap</button><button type="button" data-render="normals">Normals</button><button type="button" data-render="wire">Wire</button><button type="button" data-render="xray">X-Ray</button>';
   host.addEventListener('click',event=>{const button=event.target.closest('button[data-render]');if(!button)return;event.preventDefault();event.stopPropagation();setMode(button.dataset.render);});
   return true;
 }
