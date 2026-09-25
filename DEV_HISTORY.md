@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.456 Facegroup data connection + split import recovery
+
+- .455 passed hands-on, but a known facegrouped OBJ still displayed no Facegroups colours.
+- Root cause: render-mode source lookup expected mesh metadata on the Three.js body, while authoritative editable mesh data lives in the active bridge mesh / object manager.
+- Restored active/inactive mesh lookup without rewriting render runtime.
+- Restored File > Import > **Split objects by groups** checkbox, OFF by default, and wired it to the already recovered OBJ parser.
+- No Mirror/SubD facegroup propagation or modelling topology changes in this build.
+
 ## 2026-09-26 — v0.36.18.455 Facegroup colour controls recovery
 
 - v0.36.18.454 additive Facegroups viewport integration passed hands-on testing.
