@@ -101,7 +101,13 @@ EditableMesh.prototype.insetFace=function(faceIndex,amount=.2){
 
 
 // The live app imports mesh.js?v=0.12, which is a distinct ES-module identity
-// from ./mesh.js. Install the same uniform-Inset methods on that live class.
+// from ./mesh.js. Uniform Inset depends on the Face Region geometry API, so
+// copy only those geometry methods plus the Inset methods onto the live class.
+// Do not rerun installFaceRegion() here because that installer also registers
+// legacy UI/event handlers and would duplicate interaction ownership.
+for(const name of ['faceRegionInfo','faceRegionNormal','faceRegionsInfo']){
+  LiveEditableMesh.prototype[name]=EditableMesh.prototype[name];
+}
 for(const name of ['insetFaceRegion','insetFaceRegions','insetFace']){
   LiveEditableMesh.prototype[name]=EditableMesh.prototype[name];
 }

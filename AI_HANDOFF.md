@@ -52,6 +52,18 @@ Audited from `main` on 2026-09-23.
 
 ## Current development
 
+### v0.36.18.465 — Live Inset Face Region API repair
+
+- User confirmed v0.36.18.464: ordinary Extrude and Extrude Through both work; Inset remains inert.
+- Root cause is now fully isolated to the live mesh prototype:
+  - `uniform-inset.js` successfully installs the Inset methods on `mesh.js?v=0.12`;
+  - but those methods depend on `faceRegionInfo()`, `faceRegionNormal()`, and `faceRegionsInfo()`;
+  - `loose-bootstrap.js` only installed those Face Region methods on the other EditableMesh module identity.
+- `uniform-inset.js` now copies only the three Face Region geometry methods onto the live EditableMesh prototype before copying the Uniform Inset methods.
+- The full `installFaceRegion()` installer is deliberately NOT rerun because it also registers legacy UI/event handlers and would duplicate interaction ownership.
+- Confirmed-good Extrude, Through, the .242 Through kernel/controller, and protected transforms are untouched.
+
+
 ### v0.36.18.464 — Public version + explicit Through runtime
 
 **Released on main via PR #152; squash merge `f7a092b82addc517a53ec1990324fdb0b66a00e3`. Final regression `36094996497` passed.**

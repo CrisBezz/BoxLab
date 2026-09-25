@@ -12,7 +12,7 @@ test('463 uniform Inset installs onto live versioned EditableMesh class',()=>{
 });
 
 test('463 loads live Inset patch before proven Face direct controller',()=>{
-  const insetAt=index.indexOf('uniform-inset.js?v=0.36.18.464');
+  const insetAt=index.indexOf('uniform-inset.js?v=0.36.18.465');
   const faceAt=index.indexOf('multi-face-direct.js?v=0.36.18.242');
   assert.ok(insetAt>=0&&faceAt>insetAt);
 });
