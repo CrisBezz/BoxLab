@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js';
+import {applyMirror} from './mirror.js';
 
 const status=document.querySelector('#selectionStatus');
 let mode='studio';
@@ -65,10 +66,15 @@ function frontOnly(material){
   return front;
 }
 function sourceMeshForBody(body){
-  if(body?.userData?.kind==='body')return bridge()?.mesh||null;
+  const m=manager();
+  if(body?.userData?.kind==='body'){
+    const source=bridge()?.mesh||null;
+    const active=m?.objects?.find(item=>item.id===m.activeId);
+    return source&&active?.settings?.mirror?applyMirror(source,active.settings.mirror):source;
+  }
   if(body?.userData?.kind==='boxlab-inactive-body'){
-    const m=manager(),id=body.userData.objectId;
-    return m?.objects?.find(item=>item.id===id)?.mesh||null;
+    const id=body.userData.objectId,object=m?.objects?.find(item=>item.id===id);
+    return object?.mesh&&object?.settings?.mirror?applyMirror(object.mesh,object.settings.mirror):object?.mesh||null;
   }
   return body?.userData?.editableMesh||body?.userData?.sourceMesh||body?.userData?.mesh||null;
 }
