@@ -41,7 +41,7 @@ test('352 current release cache chain and protected transform pin remain intact'
   assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(index,/object-management\.js\?v=0\.36\.18\.392/);
   assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.369/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.464/);
+  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.465/);
   assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
   assert.match(drawer,/object-management\.js\?v=0\.36\.18\.392/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
