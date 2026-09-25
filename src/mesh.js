@@ -161,6 +161,62 @@ export class EditableMesh {
     return true;
   }
 
+  compactUnusedVertices({preserveLoose=true}={}){
+    const used=new Set();
+    for(const face of this.faces||[])for(const index of face||[])if(Number.isInteger(index))used.add(index);
+
+    if(preserveLoose){
+      if(this.looseVertices instanceof Set){
+        for(const index of this.looseVertices)if(Number.isInteger(index))used.add(index);
+      }
+      if(this.looseEdges instanceof Set){
+        for(const key of this.looseEdges){
+          const [a,b]=String(key).split(':').map(Number);
+          if(Number.isInteger(a))used.add(a);
+          if(Number.isInteger(b))used.add(b);
+        }
+      }
+    }
+
+    const map=new Map(),vertices=[];
+    this.vertices.forEach((vertex,index)=>{
+      if(!used.has(index))return;
+      map.set(index,vertices.length);
+      vertices.push(vertex.clone());
+    });
+
+    if(map.size===this.vertices.length)return{changed:false,removed:0,map};
+
+    const faces=this.faces.map(face=>face.map(index=>map.get(index)));
+    const creases=new Map();
+    for(const [key,value] of this.creases||[]){
+      const [a,b]=String(key).split(':').map(Number);
+      if(!map.has(a)||!map.has(b))continue;
+      const na=map.get(a),nb=map.get(b);
+      creases.set(this.edgeKey(na,nb),value);
+    }
+
+    let looseEdges=null,looseVertices=null;
+    if(this.looseEdges instanceof Set){
+      looseEdges=new Set();
+      for(const key of this.looseEdges){
+        const [a,b]=String(key).split(':').map(Number);
+        if(map.has(a)&&map.has(b))looseEdges.add(this.edgeKey(map.get(a),map.get(b)));
+      }
+    }
+    if(this.looseVertices instanceof Set){
+      looseVertices=new Set([...this.looseVertices].filter(index=>map.has(index)).map(index=>map.get(index)));
+    }
+
+    const removed=this.vertices.length-vertices.length;
+    this.vertices=vertices;
+    this.faces=faces;
+    this.creases=creases;
+    if(looseEdges)this.looseEdges=looseEdges;
+    if(looseVertices)this.looseVertices=looseVertices;
+    return{changed:true,removed,map};
+  }
+
   loopRing(edgeIndex){
     const allEdges=this.edges();
     const seed=allEdges[edgeIndex];
