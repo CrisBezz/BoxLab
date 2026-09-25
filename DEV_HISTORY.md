@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.436 from Beta 4 audit lane
+
+- Reapplied the original Surface Transform Tool foundation exactly.
+- Historical source commit: `db817eb623ebc52ff2d7b6e344f2911873ead8d6`.
+- No .437+ changes included.
+- Inset was hands-on confirmed working on .435 before this replay.
+- Awaiting hands-on Inset and Surface Transform result on .436.
+
 ## 2026-09-25 — replay v0.36.18.435 from Beta 4 audit lane
 
 - Reapplied the original Symmetry Align to Face + Flip Plane build exactly.
