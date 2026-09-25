@@ -92,11 +92,49 @@ test('433 moved symmetry mirrors around the moved plane and welds that seam',()=
 
 test('433 UI exposes movable plane, reset and geometry snapping while keeping touch navigation free',()=>{
   const ui=fs.readFileSync(new URL('../src/symmetry-bisect.js',import.meta.url),'utf8');
-  assert.ok(ui.includes('Move Plane'));
+  assert.ok(ui.includes('Move / Rotate'));
   assert.ok(ui.includes('Reset Origin'));
   assert.ok(ui.includes("event.pointerType==='touch'"));
   assert.ok(ui.includes('nearestCrossObjectSnap'));
   assert.ok(ui.includes("type:'Face'"));
-  assert.ok(ui.includes('offset=snap.position[axis]'));
-  assert.ok(ui.includes('symmetryBisect(source,{axis,keep,offset'));
+  assert.ok(ui.includes('movePlaneToSnap(snap)'));
+  assert.ok(ui.includes('symmetryBisect(source,{axis:axis===\'custom\'?\'x\':axis,keep,planeNormal,planePoint'));
+});
+
+
+test('434 arbitrary rotated plane clips against its actual normal',()=>{
+  const source=EditableMesh.cube(2);
+  const normal=new THREE.Vector3(1,1,0).normalize();
+  const point=new THREE.Vector3(0,0,0);
+  const result=bisectMesh(source,{keep:'positive',planeNormal:normal,planePoint:point});
+  assert.ok(result.ok);
+  assert.ok(result.mesh.vertices.every(v=>normal.dot(v.clone().sub(point))>=-1e-8));
+  assert.ok(result.mesh.vertices.some(v=>Math.abs(normal.dot(v.clone().sub(point)))<1e-8));
+});
+
+test('434 arbitrary rotated symmetry mirrors and welds on the oblique plane',()=>{
+  const source=EditableMesh.cube(2);
+  const normal=new THREE.Vector3(1,1,0).normalize();
+  const point=new THREE.Vector3(.15,-.15,0);
+  const result=symmetryBisect(source,{keep:'positive',mirror:true,planeNormal:normal,planePoint:point});
+  assert.ok(result.ok);
+  assert.equal(result.mirrored,true);
+  const seam=result.mesh.vertices.filter(v=>Math.abs(normal.dot(v.clone().sub(point)))<1e-8);
+  assert.ok(seam.length>0);
+  const keys=seam.map(v=>v.toArray().map(n=>n.toFixed(8)).join(':'));
+  assert.equal(new Set(keys).size,keys.length);
+  for(const face of result.mesh.faces){
+    assert.ok(face.length>=3);
+    assert.equal(new Set(face).size,face.length);
+  }
+});
+
+test('434 Symmetry owns Move Rotate and blocks object transform ownership',()=>{
+  const ui=fs.readFileSync(new URL('../src/symmetry-bisect.js',import.meta.url),'utf8');
+  const transform=fs.readFileSync(new URL('../src/transform-upgrade.js',import.meta.url),'utf8');
+  assert.ok(ui.includes("currentTool==='rotate'"));
+  assert.ok(ui.includes("planeNormal.copy(drag.startNormal).applyQuaternion"));
+  assert.ok(ui.includes("scaleButton.disabled=true"));
+  assert.ok(ui.includes("event.pointerType==='touch'"));
+  assert.ok(transform.includes("globalThis.__boxlabSymmetryBisect?.active"));
 });
