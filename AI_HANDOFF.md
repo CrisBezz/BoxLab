@@ -1,3 +1,13 @@
+## Current recovery checkpoint — v0.36.18.459
+
+- v0.36.18.458 pending-state first-activation repair was hands-on PASS.
+- v0.36.18.459 restores **Mirror facegroup propagation only**.
+- `applyMirror()` now copies each source facegroup to each mirrored descendant face.
+- Facegroups viewport source evaluation now applies the object's current Mirror settings before generating colours, for active and inactive editable bodies.
+- SubD facegroup propagation remains intentionally deferred to the next isolated build.
+- No modelling interaction/tool ownership changes.
+- Sentinel: grouped OBJ + Mirror X/Y/Z shows matching colours on original and mirrored faces; no dark first activation; Inset/Bevel/Extrude/navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.458
 
 - v0.36.18.457 historical two-frame first-activation fix was hands-on FAIL in the recovered runtime: initial Facegroups view could still be dark until Reseed.
