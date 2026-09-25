@@ -1,0 +1,61 @@
+import * as THREE from 'three';
+import {EditableMesh} from './mesh.js?v=0.36.18.445';
+
+export function parseEditableOBJ(text,{splitByGroups=false}={}) {
+  const sourceVertices=[];
+  const objects=[];
+  let currentObject={name:'Mesh',faces:[],faceGroups:[]};
+  let currentGroup=null;
+  objects.push(currentObject);
+  const lines=String(text||'').split(/\r?\n/);
+  for(const raw of lines){
+    const line=raw.trim();if(!line||line.startsWith('#'))continue;
+    if(line.startsWith('v ')){
+      const p=line.split(/\s+/),x=Number(p[1]),y=Number(p[2]),z=Number(p[3]);
+      if(Number.isFinite(x)&&Number.isFinite(y)&&Number.isFinite(z))sourceVertices.push(new THREE.Vector3(x,y,z));
+      continue;
+    }
+    if(line.startsWith('o ')){
+      const name=line.slice(2).trim()||'Mesh';
+      if(currentObject.faces.length){currentObject={name,faces:[],faceGroups:[]};objects.push(currentObject);}
+      else currentObject.name=name;
+      currentGroup=null;continue;
+    }
+    if(line==='g'||line.startsWith('g ')){currentGroup=line.length>1?(line.slice(1).trim()||null):null;continue;}
+    if(!line.startsWith('f '))continue;
+    const tokens=line.slice(2).trim().split(/\s+/),face=[];
+    for(const token of tokens){
+      const rawIndex=Number(token.split('/')[0]);if(!Number.isInteger(rawIndex)||rawIndex===0)continue;
+      const index=rawIndex>0?rawIndex-1:sourceVertices.length+rawIndex;
+      if(index>=0&&index<sourceVertices.length)face.push(index);
+    }
+    const cleaned=face.filter((v,i)=>i===0||v!==face[i-1]);
+    if(cleaned.length>1&&cleaned[0]===cleaned[cleaned.length-1])cleaned.pop();
+    if(new Set(cleaned).size>=3){currentObject.faces.push(cleaned);currentObject.faceGroups.push(currentGroup);}
+  }
+
+  const entries=[];
+  for(const object of objects.filter(item=>item.faces.length)){
+    if(splitByGroups){
+      const names=[...new Set(object.faceGroups.map(group=>group||'Ungrouped'))];
+      for(const groupName of names){
+        const pairs=object.faces.map((face,i)=>({face,group:object.faceGroups[i]||'Ungrouped'})).filter(pair=>pair.group===groupName);
+        if(!pairs.length)continue;
+        const used=[...new Set(pairs.flatMap(pair=>pair.face))].sort((a,b)=>a-b),remap=new Map(used.map((old,i)=>[old,i]));
+        entries.push({
+          mesh:new EditableMesh(used.map(i=>sourceVertices[i].clone()),pairs.map(pair=>pair.face.map(i=>remap.get(i))),null,pairs.map(pair=>pair.group==='Ungrouped'?null:pair.group)),
+          name:`${object.name} • ${groupName}`,
+          polygonPreserved:true
+        });
+      }
+    }else{
+      const used=[...new Set(object.faces.flat())].sort((a,b)=>a-b),remap=new Map(used.map((old,i)=>[old,i]));
+      entries.push({
+        mesh:new EditableMesh(used.map(i=>sourceVertices[i].clone()),object.faces.map(face=>face.map(i=>remap.get(i))),null,object.faceGroups),
+        name:object.name||'Mesh',
+        polygonPreserved:true
+      });
+    }
+  }
+  return entries;
+}

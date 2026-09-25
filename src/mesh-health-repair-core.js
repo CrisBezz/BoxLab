@@ -31,6 +31,7 @@ function safeFace(face,vertexCount){
 function cloneInto(target,source){
   target.vertices=source.vertices.map(v=>v.clone());
   target.faces=source.faces.map(f=>[...f]);
+  target.faceGroups=source.faces.map((_,i)=>source.faceGroups?.[i]??null);
   target.creases=new Map(source.creases||[]);
   if(source.looseEdges instanceof Set)target.looseEdges=new Set(source.looseEdges);
   if(source.looseVertices instanceof Set)target.looseVertices=new Set(source.looseVertices);
@@ -59,7 +60,10 @@ export function safeRepairMesh(mesh){
     seenDirected.set(directed,fi);
     if(faceArea2(candidate,face)<=EPS){drop.add(fi);zeroAreaRemoved++;}
   }
-  if(drop.size)candidate.faces=candidate.faces.filter((_,fi)=>!drop.has(fi));
+  if(drop.size){
+    candidate.faces=candidate.faces.filter((_,fi)=>!drop.has(fi));
+    candidate.faceGroups=(candidate.faceGroups||[]).filter((_,fi)=>!drop.has(fi));
+  }
   const compact=candidate.compactUnusedVertices?.({preserveLoose:true})||{changed:false,removed:0};
   candidate.edges?.();
 
