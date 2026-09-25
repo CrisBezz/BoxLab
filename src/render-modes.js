@@ -163,13 +163,31 @@ function rebuild(){document.querySelector('#cageToggle')?.dispatchEvent(new Even
 function applyToSceneBodies(){const scene=bridge()?.scene;if(!scene)return false;let found=false;scene.traverse(object=>{const kind=object?.userData?.kind;if(kind==='body'||kind==='boxlab-inactive-body'){applyMode(object);found=true;}});return found;}
 function modeLabel(){if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='studio')return'Studio';if(mode==='facegroups')return'Facegroups';return mode[0].toUpperCase()+mode.slice(1);}
 
+function retryPendingFacegroup(body,attempts=8){
+  if(mode!=='facegroups'||!body?.isMesh||attempts<=0)return;
+  requestAnimationFrame(()=>{
+    if(mode!=='facegroups'||!body?.parent)return;
+    applyMode(body);
+    if(body.userData.boxlabFacegroupPending)retryPendingFacegroup(body,attempts-1);
+  });
+}
+function retryPendingFacegroupsInScene(attempts=8){
+  const scene=bridge()?.scene;if(!scene||mode!=='facegroups'||attempts<=0)return;
+  let pending=false;
+  scene.traverse(object=>{
+    const kind=object?.userData?.kind;
+    if(kind!=='body'&&kind!=='boxlab-inactive-body')return;
+    applyMode(object);
+    if(object.userData.boxlabFacegroupPending)pending=true;
+  });
+  if(pending)requestAnimationFrame(()=>retryPendingFacegroupsInScene(attempts-1));
+}
+
 function enterFacegroupsReady(){
   facegroupView=normaliseFacegroupView(facegroupView);
   syncFacegroupControls();
   rebuild();
-  requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    if(mode==='facegroups')applyToSceneBodies();
-  }));
+  requestAnimationFrame(()=>retryPendingFacegroupsInScene());
 }
 function setMode(next){
   mode=next;
@@ -182,7 +200,7 @@ function setMode(next){
 }
 
 const baseAdd=THREE.Group.prototype.add;
-if(!THREE.Group.prototype.__boxlabRenderModesInstalled){THREE.Group.prototype.add=function(...objects){const result=baseAdd.apply(this,objects);for(const object of objects)if(object?.userData?.kind==='body')applyMode(object);return result;};THREE.Group.prototype.__boxlabRenderModesInstalled=true;}
+if(!THREE.Group.prototype.__boxlabRenderModesInstalled){THREE.Group.prototype.add=function(...objects){const result=baseAdd.apply(this,objects);for(const object of objects)if(object?.userData?.kind==='body'){applyMode(object);if(mode==='facegroups'&&object.userData.boxlabFacegroupPending)retryPendingFacegroup(object);}return result;};THREE.Group.prototype.__boxlabRenderModesInstalled=true;}
 
 
 function syncFacegroupControls(){
