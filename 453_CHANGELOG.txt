@@ -1,0 +1,3 @@
+RESTORE: src/render-modes.js to exact .451 blob.
+KEEP: .447-.451 recovered Facegroup import/export/core work and .450 Safari OBJ MIME fix.
+REMOVE FROM RUNTIME: rejected .452 Facegroups viewport wiring.
