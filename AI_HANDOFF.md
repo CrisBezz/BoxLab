@@ -1,3 +1,12 @@
+## Audit replay lane — Beta 4 forward
+
+- Active development has been deliberately reset to the exact frozen Beta 4 v0.36.18.427 runtime/test tree for regression isolation.
+- Source checkpoint: freeze commit `2743d9d0e10f8fb9605e1e37ab92f0c53c636837` / source tree from v0.36.18.427.
+- Goal: replay historical builds .428 → .449 one release at a time and hands-on test Face Inset after each step.
+- Stop immediately at the first build where Inset fails; inspect only that build's delta.
+- Frozen `/beta-4/` remains immutable and available as a permanent reference.
+- Later good work (including Mesh Health .439-.443, export/facegroups .444-.448, viewport .449) is to be replayed from original history rather than rewritten.
+
 # BoxLab — AI Development Handoff
 
 ## Read this first
