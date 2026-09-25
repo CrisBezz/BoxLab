@@ -104,7 +104,7 @@ function buildPreview(){
   const object=activeObject(),live=mesh(),targetScene=scene();
   if(!object||!live||!targetScene||object.id!==previewObjectId){cancelPreview({silent:true});return false;}
   const {working,axes,mirrored}=previewEvaluatedSource(live),sourceFaceCount=working.faces.length;
-  const result=solidifyOpenMesh(working,thickness());
+  const result=solidifyOpenMesh(working,thickness(),{symmetryAxes:axes});
   disposePreview();
   if(!result.ok){setStatus(`Solidify preview unavailable • ${result.reason||'invalid thickness'}`);return false;}
 
@@ -249,13 +249,13 @@ applyButton?.addEventListener('click',()=>{
   endThicknessDrag();
   globalThis.__boxlabObjectHistory?.checkpoint?.();
   const axes=activeMirrorAxes();
-  const result=solidifyOpenMesh(live,thickness());
+  const result=solidifyOpenMesh(live,thickness(),{symmetryAxes:axes});
   if(!result.ok){setStatus(`Solidify rolled back • ${result.reason||'topology validation failed'}`);cancelPreview({silent:true});forceRender();return;}
   disposePreview();previewArmed=false;previewObjectId=null;
   endSolidifySession();
   manager()?.saveActive?.();
-  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.430',preservedMirror:hasMirror(axes),...result};
-  setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid${hasMirror(axes)?' • Mirror preserved':''}`);
+  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.431',preservedMirror:hasMirror(axes),...result};
+  setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid${hasMirror(axes)?' • Mirror-aware seam preserved':''}`);
   forceRender();
   update();
 });
