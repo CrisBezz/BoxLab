@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-25 — v0.36.18.464 public version sync + explicit Through runtime
+
+- User reported only v0.36.18.461 was visibly loading, despite later hotfix merges.
+- User also confirmed ordinary Extrude worked but Extrude Through did not.
+- Advanced the actual public shell and version manifest to v0.36.18.464.
+- Standardised current live runtime cache keys to .464 while retaining protected historical pins.
+- Loaded `sequential-through-fallback.js` explicitly in the main runtime, with its dynamic drawer import aligned to the same URL.
+- Protected `through-kernel.js?v=0.36.18.242` and `multi-face-direct.js?v=0.36.18.242` remain unchanged.
+- Final Topology regression **36094996497 PASS**.
+- PR **#152**, squash merge `f7a092b82addc517a53ec1990324fdb0b66a00e3`.
+
+
 ## 2026-09-25 — v0.36.18.463 live Uniform Inset prototype repair
 
 - Extrude confirmed working again; Inset remained inert.
