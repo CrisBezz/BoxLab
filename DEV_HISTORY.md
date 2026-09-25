@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.440 from Beta 4 audit lane
+
+- Reapplied the original Mesh Health Safe Repair build exactly.
+- Historical source commit: `73e6958874de73d8e553f0bb2ad73cd31c503004`.
+- No .441+ changes included.
+- Inset was hands-on confirmed working on .439 before this replay.
+- Awaiting hands-on Inset and Safe Repair result on .440.
+
 ## 2026-09-25 — replay v0.36.18.439 from Beta 4 audit lane
 
 - Reapplied the original Mesh Health / Inspect foundation exactly.
