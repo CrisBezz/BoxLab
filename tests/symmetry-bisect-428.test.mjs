@@ -65,3 +65,38 @@ test('428 UI uses Tool Session and preserves frozen Beta 4 version',()=>{
   assert.ok(index.includes('src/symmetry-bisect.js?v='+version));
   assert.equal(JSON.parse(beta4).version,'0.36.18.427');
 });
+
+
+test('433 moved bisect plane clips at non-zero offset',()=>{
+  const source=EditableMesh.cube(2);
+  const result=bisectMesh(source,{axis:'x',keep:'positive',offset:0.35});
+  assert.ok(result.ok);
+  assert.equal(result.offset,0.35);
+  assert.ok(result.mesh.vertices.every(v=>v.x>=0.35-1e-8));
+  assert.ok(result.mesh.vertices.some(v=>approx(v.x,0.35)));
+});
+
+test('433 moved symmetry mirrors around the moved plane and welds that seam',()=>{
+  const source=EditableMesh.cube(2);
+  const result=symmetryBisect(source,{axis:'x',keep:'positive',offset:0.25,mirror:true});
+  assert.ok(result.ok);
+  assert.equal(result.offset,0.25);
+  const seam=result.mesh.vertices.filter(v=>approx(v.x,0.25));
+  assert.ok(seam.length>0);
+  const seamKeys=seam.map(v=>`${v.y.toFixed(8)}:${v.z.toFixed(8)}`);
+  assert.equal(new Set(seamKeys).size,seamKeys.length);
+  const reflectedXs=result.mesh.vertices.map(v=>v.x);
+  assert.ok(reflectedXs.some(x=>x>0.9));
+  assert.ok(reflectedXs.some(x=>x<-.4));
+});
+
+test('433 UI exposes movable plane, reset and geometry snapping while keeping touch navigation free',()=>{
+  const ui=fs.readFileSync(new URL('../src/symmetry-bisect.js',import.meta.url),'utf8');
+  assert.ok(ui.includes('Move Plane'));
+  assert.ok(ui.includes('Reset Origin'));
+  assert.ok(ui.includes("event.pointerType==='touch'"));
+  assert.ok(ui.includes('nearestCrossObjectSnap'));
+  assert.ok(ui.includes("type:'Face'"));
+  assert.ok(ui.includes('offset=snap.position[axis]'));
+  assert.ok(ui.includes('symmetryBisect(source,{axis,keep,offset'));
+});
