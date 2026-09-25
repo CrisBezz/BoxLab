@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.455 Facegroup colour controls recovery
+
+- v0.36.18.454 additive Facegroups viewport integration passed hands-on testing.
+- Reintroduced the original visual-only Facegroup palette controls in isolation: Default/Soft/Vivid/Contrast, saturation, lightness, ungrouped colour, reseed and reset.
+- Settings persist in localStorage and do not change facegroup IDs, topology or OBJ data.
+- Kept the .453/.454 render and modelling paths intact; no SubD/Mirror evaluation machinery added.
+- Regression boundary remains: .452 rejected because its render integration replaced proven runtime code and failed to load.
+
 ## 2026-09-25 — replay v0.36.18.442 from Beta 4 audit lane
 
 - Reapplied the original Mesh Health boundary diagnostics build exactly.
