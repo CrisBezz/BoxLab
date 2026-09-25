@@ -1,7 +1,7 @@
 import * as THREE from 'three';
-import {surfaceTransformMesh,cycleSurfaceTransformMode} from './surface-transform-core.js?v=0.36.18.437';
+import {surfaceTransformMesh,cycleSurfaceTransformMode} from './surface-transform-core.js?v=0.36.18.438';
 
-const VERSION='0.36.18.437';
+const VERSION='0.36.18.438';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
