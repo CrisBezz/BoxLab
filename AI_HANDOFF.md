@@ -52,6 +52,17 @@ Audited from `main` on 2026-09-23.
 
 ## Current development
 
+### v0.36.18.463 — Live Uniform Inset prototype repair
+
+- User confirmed Extrude is restored and working in both post-arm and preselected-face workflows.
+- Inset still selected/captured correctly but produced no geometry.
+- Root cause: `uniform-inset.js` patched the unversioned `./mesh.js` class, while the live app uses the distinct ES-module identity `./mesh.js?v=0.12`.
+- The live mesh therefore did not have `insetFaceRegions()`; the direct Face controller's optional call returned `undefined` and preview stayed empty.
+- `uniform-inset.js` now installs `insetFaceRegion`, `insetFaceRegions`, and `insetFace` onto the live versioned EditableMesh class as well.
+- A cache-busted live uniform-Inset module is loaded before the proven `multi-face-direct.js?v=0.36.18.242` controller.
+- Extrude/Through controller and geometry are untouched.
+
+
 ### v0.36.18.462 — Restore proven Face direct path; isolate Inset selection
 
 - User confirmed .461 broke Extrude as well as Inset.
