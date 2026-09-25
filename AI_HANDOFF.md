@@ -28,12 +28,12 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 
 ## Authoritative current state
 
-Audited from `main` on 2026-09-23.
+Audited from the recovery branch on 2026-09-25.
 
-- Current live version / branch target: **v0.36.18.464**
-- Current main HEAD at audit: **d7b32672f1757dfbef80f5eb5f364ed1dcfc41ea**
-- Latest code-bearing release merge: **v0.36.18.465 / PR #153 / squash `d7b32672f1757dfbef80f5eb5f364ed1dcfc41ea`**
-- Latest regression: **36105980083 PASS**
+- Current live version / branch target: **v0.36.18.449 — restored hands-on-good baseline**
+- Pre-recovery main HEAD: **d7b32672f1757dfbef80f5eb5f364ed1dcfc41ea**
+- Recovery source commit: **v0.36.18.449 / `4d700dc26e8a23a65a4fba27bcca259062c5be07`**
+- Latest known `.449` regression: **35974096070 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -51,6 +51,18 @@ Audited from `main` on 2026-09-23.
 - Phase F — iPad UX polish: **continuous as real issues surface**
 
 ## Current development
+
+### Recovery to v0.36.18.449 — deliberate stability reset
+
+- User elected to abandon the accumulated .450–.465 interaction-repair line and return to the last broadly hands-on-good baseline.
+- Runtime and regression-test files are restored exactly to main commit `4d700dc26e8a23a65a4fba27bcca259062c5be07` (v0.36.18.449).
+- The recovery is forward-moving Git history: later commits remain available for reference; history is not rewritten.
+- Living documentation remains current and records lessons from .450–.465.
+- Post-.449 UI/runtime wrappers and their tests are removed from the active recovery branch.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- **Next development rule:** rebuild the desired UI/UX cleanup from .449 in very small, independently hands-on-tested slices. Do not reintroduce the .450 bulk cleanup wholesale.
+- First hands-on target after deployment: confirm the .449 baseline (navigation, Face Inset/Extrude/Through, Edge/Vertex Bevel, Boolean one-step Undo, Edge Revolve) before starting any new UI slice.
+
 
 ### v0.36.18.465 — Live Inset Face Region API repair
 
