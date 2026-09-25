@@ -6,12 +6,13 @@ import { parseEditableOBJ } from './obj-facegroups-core.js?v=0.36.18.448';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.448';
+const VERSION='0.36.18.456';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
 const status = document.querySelector('#selectionStatus');
 const kindButtons = [...document.querySelectorAll('#importKind [data-import-kind]')];
+const splitGroupsToggle = document.querySelector('#splitImportGroups');
 let importKind = 'editable';
 
 function fileBaseName(file) { return (file?.name || 'Imported Mesh').replace(/\.[^.]+$/, '') || 'Imported Mesh'; }
@@ -94,7 +95,7 @@ function loadOBJ(file) {
   reader.onload=()=>{
     try{
       const text=String(reader.result||'');
-      const meshes=importKind==='editable'?parseEditableOBJ(text):(()=>{const root=new OBJLoader().parse(text);return importedMeshes(root);})();
+      const meshes=importKind==='editable'?parseEditableOBJ(text,{splitByGroups:!!splitGroupsToggle?.checked}):(()=>{const root=new OBJLoader().parse(text);return importedMeshes(root);})();
       if(!meshes.length)throw new Error('No mesh geometry was found in this OBJ.');
       addImported(meshes,fileBaseName(file));
     }catch(error){setStatus(`Import failed • ${error.message||'Unsupported OBJ'}`);}
