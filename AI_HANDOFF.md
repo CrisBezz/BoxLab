@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.441
+
+- Replayed original .441 Mesh Health Auto Close / Make Watertight exactly from `d4e964e3741d7e53ac0176c1a811b05ea3edb727`.
+- Active runtime/tests match historical .441 exactly.
+- Sentinel status entering this step: Inset confirmed working on .440.
+- Next action: hands-on Inset plus Auto Close check on .441 before replaying .442.
+
 ### Replay checkpoint v0.36.18.440
 
 - Replayed original .440 Mesh Health Safe Repair exactly from `73e6958874de73d8e553f0bb2ad73cd31c503004`.
