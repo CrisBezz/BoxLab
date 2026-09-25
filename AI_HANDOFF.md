@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.436
+
+- Replayed original .436 Surface Transform Tool foundation exactly from `db817eb623ebc52ff2d7b6e344f2911873ead8d6`.
+- Active runtime/tests match historical .436 exactly.
+- Sentinel status entering this step: Inset confirmed working on .435.
+- Next action: hands-on Inset plus Surface Transform interaction check on .436 before replaying .437.
+
 ### Replay checkpoint v0.36.18.435
 
 - Replayed original .435 Symmetry Align to Face + Flip Plane exactly from `6bf2b5a5308d639c0e03f7cd2862695d10624591`.
