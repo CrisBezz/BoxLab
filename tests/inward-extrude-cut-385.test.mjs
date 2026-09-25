@@ -10,7 +10,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 test('Inward-cut runtime follows current app build',()=>{
   const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
   assert.equal(stamp,version);
-  assert.match(drawer,/sequential-through-fallback\.js\?v=0\.36\.18\.464/);
+  assert.match(drawer,/sequential-through-fallback\.js\?v=0\.36\.18\.465/);
 });
 
 test('385 inward cut reuses protected Through and topology gate',()=>{
