@@ -25,9 +25,18 @@ export function buildSceneOBJ(objects,{subd=false,version='unknown'}={}){
     if(!mesh?.vertices?.length||!mesh?.faces?.length)continue;
     const name=safeOBJName(object.name,index),health=analyzeMeshHealth(mesh);
     reports.push({name,health,vertices:mesh.vertices.length,faces:mesh.faces.length});
-    lines.push('',`# Object ${exported+1}: ${name}`,summaryLine(health),`o ${name}`,`g ${name}`);
+    lines.push('',`# Object ${exported+1}: ${name}`,summaryLine(health),`o ${name}`);
     mesh.vertices.forEach(v=>lines.push(`v ${fmt(v.x)} ${fmt(v.y)} ${fmt(v.z)}`));
-    mesh.faces.forEach(face=>lines.push(`f ${face.map(i=>i+1+offset).join(' ')}`));
+    let activeGroup=undefined;
+    mesh.faces.forEach((face,faceIndex)=>{
+      const group=typeof mesh.faceGroups?.[faceIndex]==='string'&&mesh.faceGroups[faceIndex].trim()?mesh.faceGroups[faceIndex].trim():null;
+      if(group!==activeGroup){
+        if(group)lines.push(`g ${group}`);
+        else if(activeGroup!==undefined)lines.push('g');
+        activeGroup=group;
+      }
+      lines.push(`f ${face.map(i=>i+1+offset).join(' ')}`);
+    });
     offset+=mesh.vertices.length;exported++;
   }
   const open=reports.filter(r=>r.health.state==='open-clean').length;
