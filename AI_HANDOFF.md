@@ -1,3 +1,11 @@
+## Current recovery checkpoint — v0.36.18.455
+
+- v0.36.18.454 additive Facegroups viewport integration was hands-on PASS: load, Studio/Facegroups switching, navigation and modelling sentinels remained healthy.
+- v0.36.18.455 adds only contextual Facegroup colour controls: Default/Soft/Vivid/Contrast palettes, saturation, lightness, ungrouped colour, reseed and reset, persisted in localStorage.
+- The controls are visual-only. Do not alter facegroup IDs, mesh topology, OBJ import/export, Inset, Bevel or the protected interaction runtime.
+- v0.36.18.452 remains REJECTED: its wholesale render-modes integration failed to load. Future render work must remain additive against the proven runtime.
+- Sentinel after .455: load; Studio → Facegroups → Studio; palette/slider/reseed/reset; Inset; Edge Bevel; Vertex Bevel; Extrude; orbit/pan/zoom.
+
 ## Audit replay lane — Beta 4 forward
 
 ### Replay checkpoint v0.36.18.442
