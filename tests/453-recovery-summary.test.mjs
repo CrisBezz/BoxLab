@@ -1,0 +1,1 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';test('453 summary documents restore',()=>assert.match(fs.readFileSync(new URL('../RECOVERY_453.md',import.meta.url),'utf8'),/exactly to the confirmed-good/));

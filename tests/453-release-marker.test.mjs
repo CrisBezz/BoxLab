@@ -1,0 +1,1 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';test('453 release marker',()=>assert.equal(fs.readFileSync(new URL('../release-453.txt',import.meta.url),'utf8').trim(),'0.36.18.453'));
