@@ -16,7 +16,7 @@ test('449 Viewport scroll fix preserves protected modelling runtime pins',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const beta4=JSON.parse(fs.readFileSync(new URL('../beta-4/version.json',import.meta.url),'utf8'));
   assert.match(index,/src\/view-modes\.js\?v=0\.36\.18\.449/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.464/);
+  assert.match(index,/src\/main\.js\?v=0\.36\.18\.465/);
   assert.match(index,/src\/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
