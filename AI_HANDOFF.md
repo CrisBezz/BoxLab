@@ -1,5 +1,13 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.428
+
+- Replayed the original .428 Symmetry / Bisect foundation exactly from historical commit `72a30c2f5799d048235684e326da8fdf3a71fa2c`.
+- Active runtime/tests match historical .428 exactly.
+- Sentinel status entering this step: Inset confirmed working on .427 by hands-on test.
+- Next action: hands-on Inset test on .428 before any .429 replay.
+
+
 - Active development has been deliberately reset to the exact frozen Beta 4 v0.36.18.427 runtime/test tree for regression isolation.
 - Source checkpoint: freeze commit `2743d9d0e10f8fb9605e1e37ab92f0c53c636837` / source tree from v0.36.18.427.
 - Goal: replay historical builds .428 → .449 one release at a time and hands-on test Face Inset after each step.
