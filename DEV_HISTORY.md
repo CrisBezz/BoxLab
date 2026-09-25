@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.442 from Beta 4 audit lane
+
+- Reapplied the original Mesh Health boundary diagnostics build exactly.
+- Historical source commit: `cd3bc0ad6b5da3298b1b3e9d408e49c03c2f4a71`.
+- No .443+ changes included.
+- Inset was hands-on confirmed working on .441 before this replay.
+- Awaiting hands-on Inset and boundary diagnostics selection handoff result on .442.
+
 ## 2026-09-25 — replay v0.36.18.441 from Beta 4 audit lane
 
 - Reapplied the original Mesh Health Auto Close / Make Watertight build exactly.
