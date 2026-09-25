@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import {EditableMesh} from '../src/mesh.js';
 import {applyMirror} from '../src/mirror.js';
 import {analyzeSolidifyInput,solidifyOpenMesh} from '../src/solidify-core.js';
+const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 function mirroredHalfSheet(){
   const half=new EditableMesh(
@@ -50,7 +51,7 @@ test('430 Solidify runtime preserves Mirror and mirrors only the preview display
   assert.ok(ui.includes("const result=solidifyOpenMesh(live,thickness(),{symmetryAxes:axes})"));
   assert.ok(ui.includes("Mirror-aware seam preserved"));
   assert.ok(!ui.includes("clearMirrorModifier()"));
-  assert.ok(index.includes('src/solidify.js?v=0.36.18.431'));
+  assert.ok(index.includes('src/solidify.js?v='+version));
   assert.equal(beta4,'0.36.18.427');
 });
 
@@ -85,5 +86,5 @@ test('431 Solidify routes active Mirror axes into the topology core',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.ok(ui.includes("solidifyOpenMesh(working,thickness(),{symmetryAxes:axes})"));
   assert.ok(ui.includes("solidifyOpenMesh(live,thickness(),{symmetryAxes:axes})"));
-  assert.ok(index.includes('src/solidify.js?v=0.36.18.431'));
+  assert.ok(index.includes('src/solidify.js?v='+version));
 });

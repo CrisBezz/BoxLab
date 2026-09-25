@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.432 from Beta 4 audit lane
+
+- Reapplied the original Face Delete orphan-compaction fix exactly.
+- Historical source commit: `31e2c4d0c727f1910543d10d723a4fcedda72e77`.
+- No .433+ changes included.
+- Inset was hands-on confirmed working on .431 before this replay.
+- Awaiting hands-on Inset result on .432.
+
 ## 2026-09-25 — replay v0.36.18.431 from Beta 4 audit lane
 
 - Reapplied the original Mirror-seam-aware Solidify fix exactly.
