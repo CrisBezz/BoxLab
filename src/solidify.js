@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { applyMirror } from './mirror.js?v=0.12';
 import { analyzeSolidifyInput, solidifyOpenMesh } from './solidify-core.js?v=0.36.18.374';
 
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -34,16 +33,6 @@ let preview=null,previewObjectId=null,previewArmed=false,thicknessDrag=null;
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function mesh(){return globalThis.__boxlabBridgeState?.mesh||null;}
-function activeMirrorAxes(){
-  const axes={x:false,y:false,z:false};
-  document.querySelectorAll('[data-mirror-axis]').forEach(input=>{axes[input.dataset.mirrorAxis]=!!input.checked;});
-  return axes;
-}
-function hasMirror(axes=activeMirrorAxes()){return !!(axes.x||axes.y||axes.z);}
-function previewEvaluatedSource(live,axes=activeMirrorAxes()){
-  const working=live.clone();
-  return{working,axes,mirrored:hasMirror(axes)};
-}
 function activeObject(){const m=manager();return m?.objects?.find(o=>o.id===m.activeId)||null;}
 function selectionMode(){return document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
 function camera(){return globalThis.__boxlabBridgeState?.camera||null;}
@@ -103,16 +92,15 @@ function buildPreview(){
   if(!previewArmed)return false;
   const object=activeObject(),live=mesh(),targetScene=scene();
   if(!object||!live||!targetScene||object.id!==previewObjectId){cancelPreview({silent:true});return false;}
-  const {working,axes,mirrored}=previewEvaluatedSource(live),sourceFaceCount=working.faces.length;
-  const result=solidifyOpenMesh(working,thickness(),{symmetryAxes:axes});
+  const working=live.clone(),sourceFaceCount=working.faces.length;
+  const result=solidifyOpenMesh(working,thickness());
   disposePreview();
   if(!result.ok){setStatus(`Solidify preview unavailable • ${result.reason||'invalid thickness'}`);return false;}
 
   // Preview only geometry created by Solidify (inner shell + boundary walls).
   // The source sheet remains the normal editable object underneath.
   working.faces=working.faces.slice(sourceFaceCount);
-  const displayMesh=mirrored?applyMirror(working,axes):working;
-  const geometry=displayMesh.triangulatedGeometry();
+  const geometry=working.triangulatedGeometry();
   const fillMaterial=new THREE.MeshBasicMaterial({
     color:0x62d8ff,transparent:true,opacity:.18,side:THREE.DoubleSide,
     depthTest:false,depthWrite:false
@@ -248,14 +236,13 @@ applyButton?.addEventListener('click',()=>{
   if(!previewArmed||!object||!live||object.id!==previewObjectId){cancelPreview({silent:true});return;}
   endThicknessDrag();
   globalThis.__boxlabObjectHistory?.checkpoint?.();
-  const axes=activeMirrorAxes();
-  const result=solidifyOpenMesh(live,thickness(),{symmetryAxes:axes});
+  const result=solidifyOpenMesh(live,thickness());
   if(!result.ok){setStatus(`Solidify rolled back • ${result.reason||'topology validation failed'}`);cancelPreview({silent:true});forceRender();return;}
   disposePreview();previewArmed=false;previewObjectId=null;
   endSolidifySession();
   manager()?.saveActive?.();
-  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.431',preservedMirror:hasMirror(axes),...result};
-  setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid${hasMirror(axes)?' • Mirror-aware seam preserved':''}`);
+  globalThis.__boxlabSolidifyLastResult={version:'0.36.18.421',...result};
+  setStatus(`Solidify • thickness ${Number(result.thickness.toFixed(3))} • ${result.sideFaces} boundary wall${result.sideFaces===1?'':'s'} • closed solid`);
   forceRender();
   update();
 });
