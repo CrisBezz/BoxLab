@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.431
+
+- Replayed original .431 Mirror-seam-aware Solidify fix exactly from `b3b63b00c505827f74a00175e2d18770a1aeeb55`.
+- Active runtime/tests match historical .431 exactly.
+- Sentinel status entering this step: Inset confirmed working on .430.
+- Next action: hands-on Inset test on .431 before replaying .432.
+
 ### Replay checkpoint v0.36.18.430
 
 - Replayed original .430 Mirror-preserving Solidify fix exactly from `4a393fa0021d196c9921cf978fd029f109035ce9`.
