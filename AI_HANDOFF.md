@@ -52,6 +52,18 @@ Audited from `main` on 2026-09-23.
 
 ## Current development
 
+### v0.36.18.464 — Public version + explicit Through runtime
+
+**Released on main via PR #152; squash merge `f7a092b82addc517a53ec1990324fdb0b66a00e3`. Final regression `36094996497` passed.**
+
+- Fixes the release-identification problem where production remained visibly stamped v0.36.18.461 despite later hotfixes.
+- `index.html` and `version.json` now both identify v0.36.18.464.
+- Current live runtime cache keys are aligned to .464 while protected historical modelling pins remain intact.
+- `sequential-through-fallback.js` is loaded explicitly in the main runtime immediately after the proven Face direct controller, rather than depending only on the later dynamic Drawer import.
+- The cavity-aware `through-kernel.js?v=0.36.18.242` solver remains untouched.
+- The live Uniform Inset prototype repair remains active and cache-busted in .464.
+
+
 ### v0.36.18.464 — Public version sync + explicit Through runtime
 
 **Released on main via PR #152; squash merge `f7a092b82addc517a53ec1990324fdb0b66a00e3`. Final regression `36094996497` passed.**
