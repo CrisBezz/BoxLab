@@ -20,5 +20,5 @@ test('second pointer cancels pending blank deselect for pan and pinch',()=>{
 });
 
 test('current main runtime retains navigation-selection baseline',()=>{
-  assert.match(index,/main\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/main\.js\?v=0\.36\.18\.464/);
 });

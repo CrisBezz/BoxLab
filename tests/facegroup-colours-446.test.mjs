@@ -37,7 +37,7 @@ test('446 viewport exposes Facegroups render look and evaluated mesh handoff',()
   assert.doesNotMatch(main,/boxlabDisplayMesh/);
   assert.doesNotMatch(multi,/boxlabDisplayMesh/);
   assert.match(render,/evaluatedMeshForBody/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.461/);
+  assert.match(index,/src\/main\.js\?v=0\.36\.18\.464/);
   assert.match(index,/src\/multi-object\.js\?v=0\.36\.18\.367/);
   assert.match(index,/src\/render-modes\.js\?v=0\.36\.18\.449/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
