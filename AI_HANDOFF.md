@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.432
+
+- Replayed original .432 Face Delete orphan-compaction fix exactly from `31e2c4d0c727f1910543d10d723a4fcedda72e77`.
+- Active runtime/tests match historical .432 exactly.
+- Sentinel status entering this step: Inset confirmed working on .431.
+- Next action: hands-on Inset test on .432 before replaying .433.
+
 ### Replay checkpoint v0.36.18.431
 
 - Replayed original .431 Mirror-seam-aware Solidify fix exactly from `b3b63b00c505827f74a00175e2d18770a1aeeb55`.
