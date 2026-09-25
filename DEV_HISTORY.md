@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.441 from Beta 4 audit lane
+
+- Reapplied the original Mesh Health Auto Close / Make Watertight build exactly.
+- Historical source commit: `d4e964e3741d7e53ac0176c1a811b05ea3edb727`.
+- No .442+ changes included.
+- Inset was hands-on confirmed working on .440 before this replay.
+- Awaiting hands-on Inset and Auto Close result on .441.
+
 ## 2026-09-25 — replay v0.36.18.440 from Beta 4 audit lane
 
 - Reapplied the original Mesh Health Safe Repair build exactly.
