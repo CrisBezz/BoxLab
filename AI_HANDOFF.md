@@ -31,9 +31,9 @@ The repository is authoritative. `DEV_HISTORY.md` holds chronology; keep this fi
 Audited from `main` on 2026-09-23.
 
 - Current live version / branch target: **v0.36.18.462**
-- Current main HEAD at audit: **5408b084e4f0fd5e953ab8483e7cce29fd1068b4**
-- Latest code-bearing release merge: **v0.36.18.461 hotfix / PR #150 / squash `5408b084e4f0fd5e953ab8483e7cce29fd1068b4`**
-- Latest regression: **36073060381 PASS**
+- Current main HEAD at audit: **d8af8ac6c140c15ea83122baa16164d1905b0c88**
+- Latest code-bearing release merge: **v0.36.18.463 / PR #151 / squash `d8af8ac6c140c15ea83122baa16164d1905b0c88`**
+- Latest regression: **36086343100 PASS**
 - Frozen release checkpoint: **Beta 4 = v0.36.18.427**
 - Beta 4 frozen source commit: **ec45b3ba208ef3ffa40015d7a3b62666c63f379e**
 - Beta 4 freeze PR: **#113**
@@ -53,6 +53,8 @@ Audited from `main` on 2026-09-23.
 ## Current development
 
 ### v0.36.18.463 — Live Uniform Inset prototype repair
+
+**Released on main via PR #151; squash merge `d8af8ac6c140c15ea83122baa16164d1905b0c88`. Final regression `36086343100` passed.**
 
 - User confirmed Extrude is restored and working in both post-arm and preselected-face workflows.
 - Inset still selected/captured correctly but produced no geometry.
