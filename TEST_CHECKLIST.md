@@ -972,3 +972,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Boolean completes and one Undo restores the exact pre-Boolean scene
 - [ ] Edge Revolve works using the .449 interaction path
 - [ ] Object/Face/Edge/Vertex mode switching and persistent selection remain stable
+
+
+- [ ] Facegroups .455: colour controls appear only while Facegroups is active
+- [ ] Facegroups .455: Default / Soft / Vivid / Contrast visibly change group colours
+- [ ] Facegroups .455: Saturation and Lightness update display live
+- [ ] Facegroups .455: Ungrouped colour changes ungrouped faces only
+- [ ] Facegroups .455: Reseed changes display colours without changing group IDs
+- [ ] Facegroups .455: Reset restores defaults and settings persist after reload
+- [ ] Facegroups .455: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
