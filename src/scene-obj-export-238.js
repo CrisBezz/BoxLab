@@ -1,8 +1,8 @@
-// BoxLab v0.36.18.444 — scene OBJ export polish with evaluated-mesh topology preflight.
+// BoxLab v0.36.18.445 — scene OBJ export polish with evaluated-mesh topology preflight.
 // Preserves object boundaries and global vertex offsets while embedding compact Mesh Health metadata.
-import {buildSceneOBJ} from './scene-obj-export-core.js?v=0.36.18.444';
+import {buildSceneOBJ} from './scene-obj-export-core.js?v=0.36.18.445';
 
-const VERSION='0.36.18.444';
+const VERSION='0.36.18.445';
 const baseButton=document.querySelector('#exportBaseBtn');
 const subdButton=document.querySelector('#exportSubdBtn');
 const status=document.querySelector('#selectionStatus');

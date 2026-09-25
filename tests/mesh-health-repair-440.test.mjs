@@ -49,7 +49,7 @@ test('440 UI exposes Safe Repair transactionally inside Mesh Health and keeps pr
   assert.match(ui,/safeRepairMesh/);
   assert.match(ui,/checkpointSnapshot/);
   assert.match(ui,/capture\?\.\(\)/);
-  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.442/);
+  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.445/);
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });

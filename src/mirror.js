@@ -39,6 +39,7 @@ export function applyMirror(mesh,axes={x:false,y:false,z:false}){
 
   const vertices=[];
   const faces=[];
+  const faceGroups=[];
   const vertexMap=new Map();
   const faceKeys=new Set();
 
@@ -52,7 +53,8 @@ export function applyMirror(mesh,axes={x:false,y:false,z:false}){
   };
 
   for(const variant of variantsForAxes(axes)){
-    for(const sourceFace of mesh.faces){
+    for(let sourceFaceIndex=0;sourceFaceIndex<mesh.faces.length;sourceFaceIndex++){
+      const sourceFace=mesh.faces[sourceFaceIndex];
       const transformed=sourceFace.map(index=>{
         const source=mesh.vertices[index];
         const v=new THREE.Vector3(source.x*variant.x,source.y*variant.y,source.z*variant.z);
@@ -63,8 +65,9 @@ export function applyMirror(mesh,axes={x:false,y:false,z:false}){
       if(faceKeys.has(key)) continue;
       faceKeys.add(key);
       faces.push(transformed);
+      faceGroups.push(mesh.faceGroups?.[sourceFaceIndex]??null);
     }
   }
 
-  return new EditableMesh(vertices,faces);
+  return new EditableMesh(vertices,faces,null,faceGroups);
 }
