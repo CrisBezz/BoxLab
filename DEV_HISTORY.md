@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.458 Facegroups pending-state first-activation repair
+
+- .457 historical two-frame retry did not resolve the recovered-runtime first-activation dark view.
+- Replaced fixed-delay logic with a bounded pending-state retry tied to newly created viewport bodies and scene bodies.
+- Failed colour generation keeps normal material rather than applying invalid vertex colours; retries stop as soon as colour generation succeeds.
+- No modelling/topology or OBJ semantics changed.
+
 ## 2026-09-26 — v0.36.18.457 Facegroups first-activation recovery
 
 - Restored the historical fix for the dark first Facegroups activation.

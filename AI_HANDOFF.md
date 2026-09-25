@@ -1,3 +1,13 @@
+## Current recovery checkpoint — v0.36.18.458
+
+- v0.36.18.457 historical two-frame first-activation fix was hands-on FAIL in the recovered runtime: initial Facegroups view could still be dark until Reseed.
+- v0.36.18.458 replaces timing-only recovery with a pending-state retry at the actual body lifecycle.
+- If applyFaceGroupColours cannot yet match viewport geometry to the authoritative editable mesh, the body remains on normal material and is marked boxlabFacegroupPending.
+- Pending active/inactive bodies retry for up to 8 animation frames; newly created active bodies also retry from the Group.add hook.
+- Successful colour application clears the pending flag and applies the Facegroups material immediately.
+- No topology, OBJ data, facegroup IDs or modelling/navigation code changes.
+- Sentinel: first Facegroups activation must show colours with no Reseed; if it cannot colour immediately it must remain normal material rather than dark; modelling sentinels remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.457
 
 - v0.36.18.456 restored the actual Facegroup data connection and Split objects by groups import option.
