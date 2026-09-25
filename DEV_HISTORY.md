@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-25 — deliberate recovery to v0.36.18.449 baseline
+
+- User chose to stop patching the interaction regressions introduced after the large v0.36.18.450 UI/UX consolidation.
+- Restored every runtime and regression-test file to the exact v0.36.18.449 main snapshot at `4d700dc26e8a23a65a4fba27bcca259062c5be07`.
+- Preserved current handoff/history/roadmap/checklist documents so the .450–.465 investigation remains available.
+- Removed post-.449 runtime wrappers and post-.449 recovery-only tests from the active baseline.
+- Git history remains forward-moving; no force-reset of main.
+- Future UI cleanup must be reintroduced as small, independently hands-on-tested slices from this baseline.
+
 ## 2026-09-25 — v0.36.18.465 live Inset Face Region API repair
 
 - Hands-on .464: Extrude and Extrude Through pass; Inset fails.
