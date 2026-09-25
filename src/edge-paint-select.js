@@ -12,6 +12,7 @@ let paintDepth = 'visible';
 function state() { return globalThis.__boxlabBridgeState; }
 function selection() { return globalThis.__boxlabSelectionBridge; }
 function mode() { return selection()?.mode?.(); }
+
 function objectsFor(type) {
   const s = state();
   if (type === 'vertex') return [...(s?.vertexObjects?.values?.() || [])];
@@ -48,10 +49,7 @@ depthButtons.forEach(button => button.addEventListener('click', () => {
 }));
 
 canvas?.addEventListener('pointerdown', event => {
-  // Finger/touch belongs to viewport navigation. Component paint selection is
-  // Pencil/mouse only so the first touch cannot steal OrbitControls' gesture.
-  if(event.pointerType==='touch')return;
-  if(document.querySelector('#bevelBtn.active')||globalThis.__boxlabFaceSplit?.isArmed?.()||globalThis.__boxlabOffsetLoop?.isArmed?.()) return;
+  if(globalThis.__boxlabFaceSplit?.isArmed?.()||globalThis.__boxlabOffsetLoop?.isArmed?.()) return;
   const type = mode();
   const bridge = selection();
   if (!event.isPrimary || !multiToggle?.checked || !['vertex', 'edge', 'face'].includes(type)) return;
