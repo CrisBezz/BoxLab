@@ -1,5 +1,12 @@
 ## Audit replay lane — Beta 4 forward
 
+### Replay checkpoint v0.36.18.434
+
+- Replayed original .434 Symmetry plane transform ownership + arbitrary rotation exactly from `6cb0a5aca9d2d69dbed23511ef617d381a1871c6`.
+- Active runtime/tests match historical .434 exactly.
+- Sentinel status entering this step: Inset confirmed working on .433.
+- Next action: hands-on Inset test and Symmetry Rotate ownership check on .434 before replaying .435.
+
 ### Replay checkpoint v0.36.18.433
 
 - Replayed original .433 movable/snappable Symmetry/Bisect plane exactly from `ff9be6110c7e34b79fac08e82589b3bd40b66237`.

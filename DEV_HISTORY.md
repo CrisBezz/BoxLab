@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-25 — replay v0.36.18.434 from Beta 4 audit lane
+
+- Reapplied the original Symmetry plane transform ownership + arbitrary rotation build exactly.
+- Historical source commit: `6cb0a5aca9d2d69dbed23511ef617d381a1871c6`.
+- No .435+ changes included.
+- Inset was hands-on confirmed working on .433 before this replay.
+- Awaiting hands-on Inset and Symmetry Rotate ownership result on .434.
+
 ## 2026-09-25 — replay v0.36.18.433 from Beta 4 audit lane
 
 - Reapplied the original movable/snappable Symmetry/Bisect plane exactly.
