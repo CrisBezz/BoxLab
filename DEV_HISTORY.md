@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.504 Face drawer hierarchy repair
+
+- Replaced positional Face-row anchoring with explicit ID-based ordering.
+- Extrude/Inset/Knife row is restored directly below Face title.
+- Value/readout/Repeat remain directly below that row when armed.
+- Inspect and Repair are moved back down directly above Topology Gate.
+- Presentation/layout only; frozen .501 Face interaction untouched.
+
 ## 2026-09-26 — v0.36.18.503 Face disclosure control order
 
 - Moved Face Value/readout/Repeat Previous directly below the primary Extrude/Inset/Knife row.

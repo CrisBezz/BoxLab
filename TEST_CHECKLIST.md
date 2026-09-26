@@ -1300,3 +1300,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .503: disarm tool -> contextual controls hide again
 - [ ] Regression .503: .501 armed Face multi-select/deselect/drag still works
 
+- [ ] Workflow .504: Face mode -> Extrude / Inset / Knife row is directly below FACE title
+- [ ] Workflow .504: arm Extrude or Inset -> Value/readout/Repeat appear directly below that primary row
+- [ ] Workflow .504: Inspect then Repair sit near the bottom directly above Topology Gate
+- [ ] Workflow .504: late startup does not move Inspect/Repair above primary Face tools
+- [ ] Regression .504: .501 armed Face multi-select/deselect/drag remains unchanged
+

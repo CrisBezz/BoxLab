@@ -1,3 +1,16 @@
+## Current Face progressive-disclosure checkpoint — v0.36.18.504
+
+- User screenshot showed .503 anchored contextual controls to the wrong generated Face row, leaving Extrude/Inset/Knife below Inspect/Repair.
+- Root cause: .503 used the first Face `.outliner-actions` as the primary-row anchor; late Face modules reorder/generated rows so that assumption is not stable.
+- v0.36.18.504 uses explicit named anchors:
+  - primary Face row = row containing `#extrudeBtn`;
+  - move that row directly below the Face title;
+  - keep `#precisionFaceRow`, `#precisionFaceReadout`, and `#repeatFacePreviousRow` immediately below the primary row;
+  - place `#faceInspectDrawer` then `#faceRepairDrawer` directly above `#topologyValidityGate`.
+- Ordering reasserts after late Face drawer startup (1.8–2.2s) and on Face mode/state changes.
+- Armed-only visibility from .502 remains unchanged.
+- No pointer/controller/selection/topology changes; .501 Face interaction is frozen.
+
 ## Current Face progressive-disclosure checkpoint — v0.36.18.503
 
 - User requested the armed-only Face Value + Repeat controls to sit directly below the Extrude/Inset tool row.
