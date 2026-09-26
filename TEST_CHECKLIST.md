@@ -1010,3 +1010,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .459: inactive mirrored objects also show inherited Facegroup colours
 - [ ] Facegroups .459: first Facegroups activation remains immediate without Reseed
 - [ ] Facegroups .459: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Facegroups .460: grouped OBJ + SubD Preview preserves parent colours on all subdivided child faces
+- [ ] Facegroups .460: SubD levels 1–4 preserve facegroup assignment consistently
+- [ ] Facegroups .460: SubD + Mirror together preserve inherited colours and do not trigger dark fallback
+- [ ] Facegroups .460: inactive SubD objects also show inherited Facegroup colours
+- [ ] Facegroups .460: first activation remains immediate without Reseed
+- [ ] Facegroups .460: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected

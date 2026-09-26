@@ -1,3 +1,12 @@
+## Current recovery checkpoint — v0.36.18.460
+
+- v0.36.18.459 Mirror facegroup propagation was hands-on PASS.
+- v0.36.18.460 restores **SubD facegroup propagation only**.
+- Each Catmull-Clark child quad inherits the parent facegroup ID.
+- Facegroups viewport source evaluation now applies SubD at the object's current level before Mirror, matching the display pipeline.
+- Mirror propagation remains from .459; no additional modelling interaction changes.
+- Sentinel: grouped OBJ + SubD Preview preserves colours across subdivided descendants; SubD+Mirror also matches; first activation remains immediate; Inset/Bevel/Extrude/navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.459
 
 - v0.36.18.458 pending-state first-activation repair was hands-on PASS.

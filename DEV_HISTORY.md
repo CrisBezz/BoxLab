@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.460 SubD facegroup propagation recovery
+
+- v0.36.18.459 Mirror propagation passed hands-on testing.
+- Restored facegroup inheritance through Catmull-Clark subdivision only.
+- Each generated child quad inherits its parent facegroup ID.
+- Facegroups viewport evaluation now applies SubD before Mirror, matching BoxLab's display/evaluation order.
+- No modelling interaction/tool-ownership changes.
+
 ## 2026-09-26 — v0.36.18.459 Mirror facegroup propagation recovery
 
 - v0.36.18.458 first-activation pending-state repair passed hands-on testing.
