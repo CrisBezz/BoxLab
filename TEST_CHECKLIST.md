@@ -1174,3 +1174,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .481: Move and Scale remain functional in Vertex / Edge / Face
 - [ ] Navigation .481: one-finger orbit, two-finger pan and pinch zoom remain unchanged outside an active component transform
 
+- [ ] Workflow .482: with Vertex selection + Rotate armed, Pencil-drag anywhere in viewport rotates selection
+- [ ] Workflow .482: with Edge selection + Rotate armed, Pencil-drag anywhere in viewport rotates selection
+- [ ] Workflow .482: with Face selection + Rotate armed, Pencil-drag anywhere in viewport rotates selection
+- [ ] Workflow .482: Move/Scale still require their normal selected-component interaction
+- [ ] Navigation .482: orbit/pan/zoom unchanged while Rotate is not armed
+

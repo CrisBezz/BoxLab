@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.482 component Rotate start-gate repair
+
+- .481 still failed for all component Rotate modes.
+- Removed Rotate's dependency on `hitSelectedIndex`; an existing Vertex / Edge / Face selection plus armed Rotate is now sufficient to begin the transform from a viewport Pencil drag.
+- Move/Scale retain their existing hit-test behavior.
+- No Rotate maths or protected core runtime changed.
+
 ## 2026-09-26 — v0.36.18.481 shared transform pointermove capture repair
 
 - .480 still failed for all component Rotate modes.
