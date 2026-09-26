@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.505 compact Face modelling block
+
+- Rearranged Face tools into three compact rows to reduce vertical drawer usage.
+- Kept armed Value/readout/Repeat directly beneath Extrude/Inset/Knife.
+- Moved Inspect, Repair and Topology Gate below the entire modelling block.
+- Updated Join Coplanar placement to respect the compact row.
+- Layout only; frozen .501 Face interaction unchanged.
+
 ## 2026-09-26 — v0.36.18.504 Face drawer hierarchy repair
 
 - Replaced positional Face-row anchoring with explicit ID-based ordering.
