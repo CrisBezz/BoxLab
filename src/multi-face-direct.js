@@ -12,20 +12,6 @@ const status = document.querySelector('#selectionStatus');
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 const REF_VERTEX_PX=18,REF_EDGE_PX=16;
-const FACE_TAP_DEBUG=true;
-let faceTapDebug=document.querySelector('#faceTapDebug');
-if(!faceTapDebug){
-  faceTapDebug=document.createElement('span');
-  faceTapDebug.id='faceTapDebug';
-  faceTapDebug.style.cssText='margin-left:8px;font-variant-numeric:tabular-nums;';
-  document.querySelector('.statusbar')?.append(faceTapDebug);
-}
-function setFaceTapDebug(text,append=false){
-  if(!FACE_TAP_DEBUG||!faceTapDebug)return;
-  faceTapDebug.textContent=append&&faceTapDebug.textContent
-    ? `${faceTapDebug.textContent} | ${text}`
-    : `FaceTap • ${text}`;
-}
 let armed = null;
 let drag = null;
 let pendingSelection = null;
@@ -130,17 +116,8 @@ function extrudeConnectedFaceSelection(m,faceIndices,distance){const group=selec
 
 document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool==='knife'){armed=null;drag=null;pendingSelection=null;pendingFacePress=null;clearRefVisual();syncButtons();}},true);
 document.addEventListener('pointerdown',event=>{const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;const ids=faces();pendingSelection=ids.length?{tool:target.id==='extrudeBtn'?'extrude':'inset',ids:[...ids]}:null;},true);
-document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;pendingFacePress=null;armed=null;clearRefVisual();syncButtons();updateStatus();setFaceTapDebug('disarmed');document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();setFaceTapDebug(`armed=${armed} sel=[${faces().join(',')}]`);},true);
+document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;pendingFacePress=null;armed=null;clearRefVisual();syncButtons();updateStatus();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();},true);
 window.addEventListener('boxlab-bridge-state',()=>{if(!armed)return;queueMicrotask(()=>{syncButtons();updateStatus();});});
-document.addEventListener('click',event=>{
-  if(!armed||!event.target?.closest?.('#deselectAllBtn'))return;
-  pendingFacePress=null;
-  queueMicrotask(()=>{
-    syncButtons();
-    updateStatus();
-    setFaceTapDebug(`cleared sel=[] armed=${armed}`);
-  });
-},true);
 
 function beginDirectDrag(event,hit,selectionBefore,workingFaces){
   const m=mesh(),camera=state()?.camera;
@@ -160,14 +137,8 @@ document.addEventListener('pointerdown',event=>{
   if(!armed||event.target!==canvas||!event.isPrimary)return;
   const b=bridge(),picker=b?.pick;
   if(typeof picker!=='function')return;
-  const selectionBefore=faces(),selected=new Set(selectionBefore),
-    hits=typeof b?.pickHits==='function'?b.pickHits('face',event):[],
-    primary=picker('face',event)?.index,
-    firstUnselected=hits.find(item=>Number.isInteger(item.index)&&!selected.has(item.index))?.index,
-    hit=Number.isInteger(primary)&&selected.has(primary)&&Number.isInteger(firstUnselected)?firstUnselected:primary;
+  const selectionBefore=faces(),hit=picker('face',event)?.index;
   if(!Number.isInteger(hit))return;
-  const stack=hits.map(item=>`${item.index}@${Number(item.distance).toFixed(3)}`).join(',');
-  setFaceTapDebug(`down hit=${hit} primary=${primary} stack=[${stack}] mode=${b?.mode?.()} before=[${selectionBefore.join(',')}]`);
   pendingFacePress={
     id:event.pointerId,
     x:event.clientX,
@@ -199,12 +170,7 @@ function finish(event){
     pendingFacePress=null;
     event.preventDefault();event.stopImmediatePropagation();
     if(event.type==='pointerup'){
-      const before=[...p.selectionBefore];
-      const ok=bridge()?.toggle?.('face',p.hit);
-      const immediate=faces();
-      setFaceTapDebug(`up ok=${ok} now=[${immediate.join(',')}]`,true);
-      queueMicrotask(()=>setFaceTapDebug(`micro=[${faces().join(',')}]`,true));
-      requestAnimationFrame(()=>setFaceTapDebug(`raf=[${faces().join(',')}]`,true));
+      bridge()?.toggle?.('face',p.hit);
       updateStatus();
       syncButtons();
     }
@@ -243,7 +209,6 @@ function finish(event){
   render();syncButtons();
 }
 document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);
-
 
 globalThis.__boxlabFaceDirect={
   active:()=>!!armed,

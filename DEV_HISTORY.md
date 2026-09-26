@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.497 restore visible-only armed Face picking
+
+- Removed .495 selected-aware deeper-hit fallback after hands-on showed it caused through-selection and two-face Extrude while Visible selection was active.
+- Armed Extrude/Inset now use only the nearest native Face hit.
+- Native tap toggle remains; temporary diagnostics and .496 Deselect workaround removed.
+
 ## 2026-09-26 — v0.36.18.496 preserve armed Face tool across Deselect
 
 - .495 fixed additive armed Face selection.
