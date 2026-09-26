@@ -1,3 +1,15 @@
+## Current recovery checkpoint — v0.36.18.472
+
+- v0.36.18.471 successfully removed Edge Revolve from Edge Active Tools, but Add > Sweep still appeared inert.
+- Deeper audit found the actual .469 regression: transactional Sweep cancellation introduced assignments to `sweepBeforeScene`, `sweepUndoDepth` and `sweepRedoDepth` without declaring those variables.
+- Because `sweep-path.js` is an ES module, Add > Sweep threw a ReferenceError before `manager.addMesh()` could run.
+- v0.36.18.472 declares all three transaction-state variables in the existing Sweep runtime state block. The .471 mode-switch guard remains in place.
+- No Sweep profile/path/result geometry is changed.
+- Edge Bevel **Exact %** UI is relocated from the bottom of Edge Active Tools to the Move section, before the existing Slide % / Offset % precision controls.
+- `precision-bevel.js` is cache-hopped through `drawer-ui.js`, and the drawer loader is cache-hopped in `index.html` so iPad/Safari receives the new placement.
+- Edge Revolve remains absent from the Edge tool surface.
+- Sentinel: Add > Sweep creates the construction object/session; Cancel/mode escape remain transactional; Bevel Exact % sits above Slide % and Offset %; Inset/Bevel/Extrude/Through/navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.471
 
 - v0.36.18.470 Edge Revolve progressive disclosure passed hands-on: Revolve itself works.
