@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.491 native Face toggle bridge
+
+- .490 still allowed deselection but not additive selection while Extrude/Inset stayed armed.
+- Exposed main.js native `toggleSelection` through the selection bridge.
+- Armed Face taps now use native picker + native toggle end-to-end instead of rebuilding selection arrays in multi-face-direct.
+- Drag/modelling path remains unchanged.
+
 ## 2026-09-26 — v0.36.18.490 Face tap-before-model split
 
 - .489 still allowed deselection but not additive selection with a no-action tap.
