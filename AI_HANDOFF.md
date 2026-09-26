@@ -1,3 +1,14 @@
+## Current recovery checkpoint — v0.36.18.461
+
+- v0.36.18.460 SubD facegroup propagation was hands-on PASS.
+- v0.36.18.461 restores Facegroup metadata preservation through Mesh Health operations only.
+- Safe Repair keeps surviving faces aligned with their original facegroup IDs when duplicate/zero-area faces are removed.
+- Auto Close keeps all existing facegroups and assigns newly created cap faces `null` / Ungrouped.
+- Unify Winding and Flip Normals preserve facegroup IDs because face identity is unchanged.
+- Triangulate assigns every generated triangle the parent polygon's facegroup ID.
+- No modelling interaction/tool ownership changes.
+- Sentinel: grouped mesh retains groups through Safe Repair, Unify/Flip/Triangulate; Auto Close cap is neutral/ungrouped; Inset/Bevel/Extrude/navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.460
 
 - v0.36.18.459 Mirror facegroup propagation was hands-on PASS.

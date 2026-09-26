@@ -1018,3 +1018,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .460: inactive SubD objects also show inherited Facegroup colours
 - [ ] Facegroups .460: first activation remains immediate without Reseed
 - [ ] Facegroups .460: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Facegroups .461: Safe Repair preserves facegroups on all surviving faces
+- [ ] Facegroups .461: Auto Close preserves existing groups and new cap faces appear Ungrouped/neutral
+- [ ] Facegroups .461: Unify Winding preserves facegroup assignment
+- [ ] Facegroups .461: Flip Normals preserves facegroup assignment
+- [ ] Facegroups .461: Triangulate gives each child triangle its parent polygon facegroup
+- [ ] Facegroups .461: first activation, Mirror and SubD behaviour remain correct
+- [ ] Facegroups .461: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
