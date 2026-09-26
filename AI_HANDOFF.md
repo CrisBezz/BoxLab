@@ -1,3 +1,17 @@
+## Current recovery checkpoint — v0.36.18.498
+
+- .497 restored nearest-ray Visible semantics but user reported armed Extrude still could not select faces.
+- Diagnostics from .494/.495 showed raw ray depth is the wrong abstraction for this iPad UX: closed meshes naturally produce front/rear hit stacks, and deeper-hit fallback caused through-selection.
+- v0.36.18.498 introduces a dedicated armed-tool screen-space Face picker:
+  - project each face polygon into viewport coordinates;
+  - reject faces whose normal is not camera-facing;
+  - require Pencil point inside projected polygon (3 px edge tolerance);
+  - among eligible visible candidates, choose nearest depth.
+- This is used only by armed Extrude/Inset pointerdown.
+- Ordinary Face selection outside armed tools is unchanged.
+- Tap still uses native selection toggle; drag still promotes into existing Extrude/Inset modelling path.
+- No Through topology, Rotate .483, navigation or protected multi-object-transform changes.
+
 ## Current recovery checkpoint — v0.36.18.497
 
 - Hands-on .495 revealed a serious flaw in the selected-aware hit-stack workaround: armed Face selection was effectively selecting through the mesh and could extrude two faces while Selection was set to Visible.
