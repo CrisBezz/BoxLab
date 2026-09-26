@@ -5,6 +5,7 @@
 - Removed the Sweep-specific blue inset outline from active/pressed buttons.
 - Sweep now matches the standard BoxLab white active-button appearance.
 - Presentation-only change; no Sweep interaction or modelling logic changed.
+- PR #241 squash-merged as `26df6e06cfc15bc2aad15b1edd3e4a7fa3bc1b68`; .509 visual regressions passed in run #982.
 
 ## 2026-09-27 — v0.36.18.508 Edge progressive disclosure
 
