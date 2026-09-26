@@ -1,3 +1,12 @@
+## Current Face progressive-disclosure checkpoint — v0.36.18.503
+
+- User requested the armed-only Face Value + Repeat controls to sit directly below the Extrude/Inset tool row.
+- v0.36.18.503 keeps the .502 armed-only visibility and adds presentation/layout ordering in `tool-session-ui.js`.
+- `#precisionFaceRow`, `#precisionFaceReadout`, and `#repeatFacePreviousRow` are moved immediately after the primary Face tool row.
+- They remain hidden at Face home and appear only while Extrude or Inset is active.
+- No pointer/controller/selection/topology changes.
+- Frozen .501 Face interaction and .483 Rotate remain untouched.
+
 ## Current Face progressive-disclosure checkpoint — v0.36.18.502
 
 - .501 is the frozen stable Face interaction baseline: armed Extrude/Inset additive select, deselect and drag all confirmed working.

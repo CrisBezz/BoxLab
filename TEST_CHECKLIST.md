@@ -1294,3 +1294,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .502: armed Extrude/Inset multi-face select/deselect from .501 still works
 - [ ] Regression .502: Extrude, Inset, Through, Rotate .483 and viewport navigation unchanged
 
+- [ ] Workflow .503: Face home -> Value/readout/Repeat Previous remain hidden
+- [ ] Workflow .503: arm Extrude -> Value/readout/Repeat Previous appear directly below the Extrude/Inset/Knife row
+- [ ] Workflow .503: arm Inset -> same placement and visibility
+- [ ] Workflow .503: disarm tool -> contextual controls hide again
+- [ ] Regression .503: .501 armed Face multi-select/deselect/drag still works
+
