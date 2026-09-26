@@ -1162,3 +1162,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .479: Vertex / Edge / Object Rotate remain unchanged
 - [ ] Navigation .479: one-finger orbit, two-finger pan and pinch zoom remain unchanged while Rotate is not Pencil-dragging a selected Face
 
+- [ ] Workflow .480: Vertex multi-selection rotates with Rotate armed
+- [ ] Workflow .480: selected Edge rotates with Rotate armed
+- [ ] Workflow .480: selected Face rotates with Rotate armed
+- [ ] Workflow .480: Move and Scale still work in Vertex / Edge / Face
+- [ ] Navigation .480: orbit / pan / zoom remain unchanged
+
