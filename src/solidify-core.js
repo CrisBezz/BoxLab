@@ -17,13 +17,15 @@ function cloneState(mesh){
   return {
     vertices:mesh.vertices.map(v=>v.clone()),
     faces:mesh.faces.map(f=>[...f]),
-    creases:new Map(mesh.creases||[])
+    creases:new Map(mesh.creases||[]),
+    faceGroups:mesh.faces.map((_,fi)=>mesh.faceGroups?.[fi]??null)
   };
 }
 function restoreState(mesh,state){
   mesh.vertices=state.vertices.map(v=>v.clone());
   mesh.faces=state.faces.map(f=>[...f]);
   mesh.creases=new Map(state.creases||[]);
+  mesh.faceGroups=state.faces.map((_,fi)=>state.faceGroups?.[fi]??null);
   mesh.edges?.();
 }
 function inspect(mesh){
@@ -184,6 +186,7 @@ export function solidifyOpenMesh(mesh,thickness=0.2,{symmetryAxes=null}={}){
       mesh.vertices.push(inner);
     }
     const originalFaces=mesh.faces.map(f=>[...f]);
+    const originalGroups=originalFaces.map((_,fi)=>mesh.faceGroups?.[fi]??null);
     const innerFaces=originalFaces.map(face=>face.map(vi=>vi+count).reverse());
     const sideFaces=[],symmetryBoundary=[];
     for(const edge of topology.boundary){
@@ -191,6 +194,7 @@ export function solidifyOpenMesh(mesh,thickness=0.2,{symmetryAxes=null}={}){
       sideFaces.push([edge.a,edge.a+count,edge.b+count,edge.b]);
     }
     mesh.faces=[...originalFaces,...innerFaces,...sideFaces];
+    mesh.faceGroups=[...originalGroups,...originalGroups,...sideFaces.map(()=>null)];
 
     const creases=new Map(before.creases||[]);
     for(const [key,strength] of before.creases||[]){
