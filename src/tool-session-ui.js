@@ -32,6 +32,29 @@ style.textContent=`
 .mode-tools[data-mode-tools="vertex"]:has(#vertexBevelBtn.active) #precisionVertexBevelRow{display:grid!important}
 .mode-tools[data-mode-tools="vertex"]:has(#vertexBevelBtn.active) #precisionVertexBevelRow + div{display:block!important}
 .mode-tools[data-mode-tools="vertex"]:has(#vertexBevelBtn.active) .vertex-bevel-options{display:grid!important}
+
+.mode-tools[data-mode-tools="edge"] .loop-cut-option,
+.mode-tools[data-mode-tools="edge"] .loop-slide-option,
+.mode-tools[data-mode-tools="edge"] .bevel-option > .range-row,
+.mode-tools[data-mode-tools="edge"] .crease-options,
+.mode-tools[data-mode-tools="edge"] #precisionEdgeBevelRow,
+.mode-tools[data-mode-tools="edge"] #precisionEdgeBevelRow + div,
+.mode-tools[data-mode-tools="edge"] #precisionEdgeSlideRow,
+.mode-tools[data-mode-tools="edge"] #precisionEdgeSlideReadout,
+.mode-tools[data-mode-tools="edge"] #precisionOffsetLoopRow,
+.mode-tools[data-mode-tools="edge"] #precisionOffsetLoopReadout,
+.mode-tools[data-mode-tools="edge"] .offset-option{display:none!important}
+.mode-tools[data-mode-tools="edge"]:has(#loopCutBtn.active) .loop-cut-option,
+.mode-tools[data-mode-tools="edge"]:has(#loopCutBtn.active) .loop-slide-option{display:grid!important}
+.mode-tools[data-mode-tools="edge"]:has(#bevelBtn.active) .bevel-option > .range-row{display:grid!important}
+.mode-tools[data-mode-tools="edge"]:has(#bevelBtn.active) #precisionEdgeBevelRow{display:grid!important}
+.mode-tools[data-mode-tools="edge"]:has(#bevelBtn.active) #precisionEdgeBevelRow + div{display:block!important}
+.mode-tools[data-mode-tools="edge"]:has(#applyCreaseBtn.active) .crease-options{display:block!important}
+.mode-tools[data-mode-tools="edge"]:has(#edgeSlideBtn.active) #precisionEdgeSlideRow{display:grid!important}
+.mode-tools[data-mode-tools="edge"]:has(#edgeSlideBtn.active) #precisionEdgeSlideReadout{display:block!important}
+.mode-tools[data-mode-tools="edge"]:has(#offsetLoopBtn.active) #precisionOffsetLoopRow{display:grid!important}
+.mode-tools[data-mode-tools="edge"]:has(#offsetLoopBtn.active) #precisionOffsetLoopReadout{display:block!important}
+.mode-tools[data-mode-tools="edge"]:has(#offsetLoopBtn.active) .offset-option{display:grid!important}
 `;
 document.head.appendChild(style);
 
