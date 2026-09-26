@@ -6,33 +6,25 @@ const rotateButton = document.querySelector('#toolModes button[data-tool="rotate
 const DRAG_THRESHOLD = 8;
 
 let gesture = null;
-let selectedVertexIndices = new Set();
 
 function state() { return globalThis.__boxlabBridgeState; }
 function bridge() { return globalThis.__boxlabSelectionBridge; }
 function rotateActive() { return globalThis.__boxlabTransformArming?.tool?.()==='rotate' || !!rotateButton?.classList.contains('active'); }
 function currentMode() { return bridge()?.mode?.() || document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
 function selectedIndices(mode) { return bridge()?.mode?.()===mode ? [...new Set(bridge()?.indices?.()||[])] : []; }
-
-if (!THREE.Group.prototype.__boxlabRotateSelectionObserverInstalled) {
-  const baseAdd = THREE.Group.prototype.add;
-  THREE.Group.prototype.add = function (...objects) {
-    for (const object of objects) {
-      if (object?.userData?.kind === 'body') selectedVertexIndices = new Set();
-      if (object?.userData?.kind === 'vertex' && Number.isInteger(object.userData.index)) {
-        const hex = object?.material?.color?.getHex?.();
-        if (hex === 0xff615f) selectedVertexIndices.add(object.userData.index);
-      }
-    }
-    return baseAdd.apply(this, objects);
-  };
-  THREE.Group.prototype.__boxlabRotateSelectionObserverInstalled = true;
+function constraint(){ return globalThis.__boxlabTransformArming?.constraint?.()||'free'; }
+function axisVector(axis){
+  if(axis==='x')return new THREE.Vector3(1,0,0);
+  if(axis==='y')return new THREE.Vector3(0,1,0);
+  if(axis==='z')return new THREE.Vector3(0,0,1);
+  return null;
 }
+function snapOn(){ return !!document.querySelector('#transformSnapBtn')?.classList.contains('active'); }
 
 function selectionVertices(mode, mesh) {
   if (!mesh) return [];
   if (mode === 'object') return mesh.vertices.map((_, i) => i);
-  if (mode === 'vertex') return [...selectedVertexIndices];
+  if (mode === 'vertex') return selectedIndices('vertex');
   if (mode === 'edge') {
     const out = new Set();
     for (const index of selectedIndices('edge')) {
@@ -83,19 +75,20 @@ function forceRender() {
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true }));
 }
 
-canvas?.addEventListener('pointerdown', event => {
-  if (!event.isPrimary || !rotateActive() || event.pointerType === 'touch') return;
+document.addEventListener('pointerdown', event => {
+  if (event.target!==canvas || !event.isPrimary || !rotateActive() || event.pointerType === 'touch') return;
   const mesh = state()?.mesh, camera = state()?.camera, mode = currentMode();
   const indices = selectionVertices(mode, mesh);
-  if (!mesh || !camera || mode!=='face' || !indices.length || !pencilHitsMesh(event, mesh, camera)) return;
+  if (!mesh || !camera || !['vertex','edge','face'].includes(mode) || !indices.length) return;
 
   const center = new THREE.Vector3();
   indices.forEach(index => center.add(mesh.vertices[index]));
   center.multiplyScalar(1 / indices.length);
   const centerScreen = screenPoint(center, camera);
   const startVector = new THREE.Vector2(event.clientX, event.clientY).sub(centerScreen);
-  const axis = new THREE.Vector3();
-  camera.getWorldDirection(axis).normalize();
+  const explicitAxis = axisVector(constraint());
+  const axis = explicitAxis || new THREE.Vector3();
+  if(!explicitAxis) camera.getWorldDirection(axis).normalize();
 
   gesture = {
     pointerId: event.pointerId,
@@ -108,6 +101,8 @@ canvas?.addEventListener('pointerdown', event => {
     startX: event.clientX,
     startY: event.clientY,
     axis,
+    constraint: constraint(),
+    snap: snapOn(),
     original: new Map(indices.map(index => [index, mesh.vertices[index].clone()])),
     before: mesh.clone(),
     moved: false,
@@ -118,7 +113,7 @@ canvas?.addEventListener('pointerdown', event => {
   canvas.setPointerCapture?.(event.pointerId);
 }, true);
 
-canvas?.addEventListener('pointermove', event => {
+document.addEventListener('pointermove', event => {
   if (!gesture || gesture.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
@@ -143,6 +138,7 @@ canvas?.addEventListener('pointermove', event => {
     angle = (event.clientX - gesture.startX) * 0.012;
   }
 
+  if (gesture.snap) angle = THREE.MathUtils.degToRad(Math.round(THREE.MathUtils.radToDeg(angle) / 15) * 15);
   const q = new THREE.Quaternion().setFromAxisAngle(gesture.axis, angle);
   for (const index of gesture.indices) {
     const original = gesture.original.get(index);
@@ -150,7 +146,7 @@ canvas?.addEventListener('pointermove', event => {
     if (original && vertex) vertex.copy(original).sub(gesture.center).applyQuaternion(q).add(gesture.center);
   }
   forceRender();
-  if (status) status.textContent = `Rotate ${gesture.mode} • ${THREE.MathUtils.radToDeg(angle).toFixed(1)}°`;
+  if (status) status.textContent = `Rotate ${gesture.mode} • ${gesture.constraint==='free'?'View':gesture.constraint.toUpperCase()} • ${THREE.MathUtils.radToDeg(angle).toFixed(1)}°${gesture.snap?' • 15°':''}`;
 }, true);
 
 function finish(event) {
@@ -161,8 +157,8 @@ function finish(event) {
   gesture = null;
   if (moved && status) status.textContent = 'Rotate committed';
 }
-canvas?.addEventListener('pointerup', finish, true);
-canvas?.addEventListener('pointercancel', finish, true);
+document.addEventListener('pointerup', finish, true);
+document.addEventListener('pointercancel', finish, true);
 
 rotateButton?.addEventListener('click', () => {
   forceRender();
