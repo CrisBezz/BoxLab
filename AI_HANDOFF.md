@@ -1,3 +1,16 @@
+## Current recovery checkpoint — v0.36.18.484
+
+- After .483 restored unified component Rotate, user requested a Face UX refinement before progressive disclosure.
+- New armed-tool selection rule for Extrude and Inset:
+  - tap an unselected face while tool is armed = existing additive selection behavior remains;
+  - tap an already-selected face while tool is armed = deselect only that face;
+  - drag an already-selected face = perform Extrude/Inset exactly as before;
+  - post-operation selected faces remain selected as before.
+- Implemented only in `src/multi-face-direct.js` by remembering the hit selected face and resolving tap vs drag on pointerup.
+- No Face progressive-disclosure work yet.
+- Through, Move/Scale/Rotate, navigation, main.js and protected multi-object transform remain unchanged.
+- Sentinel: armed Extrude/Inset supports additive select + tap-to-deselect without disarming the tool.
+
 ## Current recovery checkpoint — v0.36.18.483
 
 - Hands-on .482: Face Rotate works in Free/View mode; Vertex and Edge Rotate still fail; X/Y/Z and 15° snap do not affect the working Face Rotate path.
