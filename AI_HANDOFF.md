@@ -1,3 +1,12 @@
+## Current recovery checkpoint — v0.36.18.478
+
+- v0.36.18.477 made Loop and Bevel mutually exclusive, but hands-on showed Loop → Bevel required two taps.
+- Root cause: the exclusivity shim disarmed Loop on pointerdown, before Bevel's own click handler. On iPad the state/UI change could consume the first gesture's eventual click.
+- v0.36.18.478 moves only the Loop↔Bevel handoff to document click-capture. The old tool is toggled off at the start of the same click, then the original click continues to the target tool's existing handler and arms it.
+- Split behavior is untouched and remains good.
+- Face Rotate cache repair from .477 is unchanged.
+- Sentinel: Loop → Bevel is one tap; Bevel → Loop is one tap; only one is active; Split handoff remains good.
+
 ## Current recovery checkpoint — v0.36.18.477
 
 - v0.36.18.476 Edge progressive-disclosure polish is the current hands-on baseline.

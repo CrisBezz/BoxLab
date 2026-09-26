@@ -1151,3 +1151,7 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .477: Face Rotate numeric Degrees and X/Y/Z constraints remain functional
 - [ ] Workflow .477: Face Move/Scale, Vertex/Edge transforms and orbit/pan/zoom remain unchanged
 
+- [ ] Workflow .478: with Loop active, one tap on Bevel disarms Loop and arms Bevel
+- [ ] Workflow .478: with Bevel active, one tap on Loop disarms Bevel and arms Loop
+- [ ] Workflow .478: Loop -> Split remains a one-tap handoff
+
