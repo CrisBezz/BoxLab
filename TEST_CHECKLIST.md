@@ -1121,3 +1121,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .473: split faces preserve their source facegroup assignment
 - [ ] Workflow .473: existing Symmetry Apply / Keep half behavior remains unchanged
 
+- [ ] UI .474: Vertex mode home hides Slide % exact controls until Slide is armed
+- [ ] UI .474: Vertex mode home hides Bevel Width / Exact % controls until Bevel is armed
+- [ ] UI .474: arming Slide reveals only Slide controls; disarming or changing mode hides them again
+- [ ] UI .474: arming Bevel reveals only Bevel controls; disarming or changing mode hides them again
+- [ ] Workflow .474: Vertex Add, Build Edge, Slide drag/exact, Bevel drag/exact, Join, Weld, Delete remain functional
+- [ ] Workflow .474: Vertex Move / Scale / Rotate and orbit/pan/zoom remain unchanged
+
