@@ -1136,3 +1136,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .475: Loop Cut, Bevel drag/exact, Crease/Uncrease, Edge Slide, Offset Loop, Fill/Bridge/Dissolve/Delete remain functional
 - [ ] Workflow .475: Edge selection, Move / Scale / Rotate and orbit/pan/zoom remain unchanged
 
+- [ ] UI .476: Loop Slide slider sits directly below Loops while Loop is active
+- [ ] UI .476: Edge Bevel Exact % row/readout sit directly below Segments while Bevel is active
+- [ ] UI .476: Offset Loop Support Spacing sits above Exact Offset % row/readout
+- [ ] UI .476: Crease Strength is hidden whenever Crease is not active
+- [ ] Workflow .476: arming Bevel / Edge Slide / Offset Loop / Face Split / another Edge tool disarms Crease
+- [ ] Workflow .476: choosing Move / Scale / Rotate or leaving Edge mode disarms Crease
+- [ ] Workflow .476: Loop, Bevel, Crease, Edge Slide, Offset Loop and navigation remain functional
+
