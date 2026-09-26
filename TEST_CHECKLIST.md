@@ -1329,3 +1329,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .507: Inspect / Repair / Topology Gate remain below all Face tools
 - [ ] Regression .507: armed Value/readout/Repeat still appear only under Row 1
 - [ ] Regression .507: .501 Face multi-select/deselect/drag remains unchanged
+
+- [ ] Workflow .507: Row 1 = Extrude / Inset / Knife
+- [ ] Workflow .507: Row 2 = Delete / Duplicate / Extract
+- [ ] Workflow .507: Row 3 = Join Coplanar / Bridge / Sweep
+- [ ] Workflow .507: Row 4 = Shell / Poke / Circle
+- [ ] Workflow .507: Row 5 = Close Holes / Triangulate / Flip
+- [ ] Workflow .507: Row 6 = Quad Cleanup / Quadify N-gons / blank
+- [ ] Workflow .507: Orient Faces remains in Repair
+- [ ] Workflow .507: Inspect / Repair / Topology Gate stay below all Face tools
+- [ ] Regression .507: .501 armed Face multi-select/deselect/drag remains unchanged
