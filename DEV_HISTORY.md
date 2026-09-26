@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.466 Shell-only facegroup propagation
+
+- .465 passed hands-on with Solidify Facegroups restored and Shell still healthy.
+- Reintroduced metadata only in `shell-core.js`.
+- Shell compact/clone paths keep surviving facegroups aligned with faces; opening-face groups are removed with those faces.
+- Solidify remains untouched and supplies the already-proven inner-face inheritance / Ungrouped side-wall behavior.
+
 ## 2026-09-26 — v0.36.18.465 Solidify-only facegroup propagation
 
 - .464 recovery passed hands-on: Shell restored, Solidify healthy.

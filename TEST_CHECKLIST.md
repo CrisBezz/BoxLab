@@ -1058,3 +1058,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .465: failed/rolled-back Solidify restores original faceGroups exactly
 - [ ] Recovery .465: Shell still launches, previews, adjusts thickness, Apply/Cancel correctly
 - [ ] Facegroups .465: prior Mirror/SubD/Mesh Health/Extract/Join and modelling sentinels remain healthy
+
+
+- [ ] Facegroups .466: Shell on grouped closed mesh still launches, previews, adjusts thickness and applies correctly
+- [ ] Facegroups .466: removed opening faces no longer appear in faceGroups
+- [ ] Facegroups .466: surviving outer faces retain original Facegroup colours
+- [ ] Facegroups .466: inner Shell faces inherit the same groups via Solidify
+- [ ] Facegroups .466: generated side walls remain Ungrouped/neutral
+- [ ] Facegroups .466: Cancel/rollback restores the exact pre-Shell faceGroups
