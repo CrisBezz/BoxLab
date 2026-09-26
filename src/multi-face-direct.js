@@ -20,7 +20,12 @@ if(!faceTapDebug){
   faceTapDebug.style.cssText='margin-left:8px;font-variant-numeric:tabular-nums;';
   document.querySelector('.statusbar')?.append(faceTapDebug);
 }
-function setFaceTapDebug(text){if(FACE_TAP_DEBUG&&faceTapDebug)faceTapDebug.textContent=`FaceTap • ${text}`;}
+function setFaceTapDebug(text,append=false){
+  if(!FACE_TAP_DEBUG||!faceTapDebug)return;
+  faceTapDebug.textContent=append&&faceTapDebug.textContent
+    ? `${faceTapDebug.textContent} | ${text}`
+    : `FaceTap • ${text}`;
+}
 let armed = null;
 let drag = null;
 let pendingSelection = null;
@@ -147,7 +152,7 @@ document.addEventListener('pointerdown',event=>{
   if(typeof picker!=='function')return;
   const hit=picker('face',event)?.index;
   if(!Number.isInteger(hit))return;
-  setFaceTapDebug(`down hit=${hit} before=[${faces().join(',')}]`);
+  setFaceTapDebug(`down hit=${hit} mode=${bridge()?.mode?.()} before=[${faces().join(',')}]`);
   pendingFacePress={
     id:event.pointerId,
     x:event.clientX,
@@ -182,9 +187,9 @@ function finish(event){
       const before=[...p.selectionBefore];
       const ok=bridge()?.toggle?.('face',p.hit);
       const immediate=faces();
-      setFaceTapDebug(`up hit=${p.hit} ok=${ok} before=[${before.join(',')}] now=[${immediate.join(',')}]`);
-      queueMicrotask(()=>setFaceTapDebug(`micro hit=${p.hit} sel=[${faces().join(',')}]`));
-      requestAnimationFrame(()=>setFaceTapDebug(`raf hit=${p.hit} sel=[${faces().join(',')}]`));
+      setFaceTapDebug(`up ok=${ok} now=[${immediate.join(',')}]`,true);
+      queueMicrotask(()=>setFaceTapDebug(`micro=[${faces().join(',')}]`,true));
+      requestAnimationFrame(()=>setFaceTapDebug(`raf=[${faces().join(',')}]`,true));
       updateStatus();
       syncButtons();
     }

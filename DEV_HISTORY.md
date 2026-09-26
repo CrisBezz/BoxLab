@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.493 persistent Face tap trace
+
+- .492 screenshot showed final RAF selection empty after a valid face hit.
+- Changed diagnostic output to retain every stage on one line so immediate commit vs later overwrite can be distinguished.
+- No modelling or selection behavior change.
+
 ## 2026-09-26 — v0.36.18.492 Face tap staged diagnostic
 
 - .491 still failed additive armed Face selection while deselection worked.
