@@ -1036,3 +1036,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .462: Shell preserves surviving groups, inner shell inheritance and ungrouped new side walls
 - [ ] Facegroups .462: first activation, Mirror, SubD and Mesh Health preservation remain correct
 - [ ] Facegroups .462: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Facegroups .463: Join two grouped editable objects and confirm every original group colour survives in the combined object
+- [ ] Facegroups .463: ungrouped faces remain Ungrouped after Join
+- [ ] Facegroups .463: Join with compatible Mirror/SubD settings preserves Facegroup display after evaluation
+- [ ] Facegroups .463: first activation, Mirror, SubD, Mesh Health, Extract, Solidify and Shell remain correct
+- [ ] Facegroups .463: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
