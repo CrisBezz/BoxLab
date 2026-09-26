@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.485 armed Face full selection ownership
+
+- .484 fixed tap-to-deselect but additive selection of unselected faces still flashed/dropped while Extrude/Inset stayed armed.
+- Consolidated armed Face tap/drag ownership into multi-face-direct instead of splitting unselected-face selection through edge-paint-select.
+- Armed taps now toggle faces both directions; drags operate on the resulting working selection.
+- No disclosure or topology changes.
+
 ## 2026-09-26 — v0.36.18.484 armed Extrude / Inset tap-toggle selection
 
 - Added tap-to-deselect for already-selected faces while Extrude or Inset remains armed.
