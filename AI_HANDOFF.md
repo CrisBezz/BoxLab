@@ -14,22 +14,6 @@
 - Existing button nodes are moved, not recreated; handlers remain attached.
 - Frozen .501 Face interaction and .483 Rotate remain untouched.
 
-## Current Face progressive-disclosure checkpoint — v0.36.18.507
-
-- User supplied a hand-drawn compact Face layout.
-- v0.36.18.507 arranges the modelling buttons into a dense 3-column grid:
-  - Row 1: Extrude / Inset / Knife
-  - armed-only context: Value / readout / Repeat Previous
-  - Row 2: Delete / Duplicate / Extract
-  - Row 3: Join Coplanar / Bridge / Sweep
-  - Row 4: Shell / Poke / Circle
-  - Row 5: Close Holes / Triangulate / Flip
-  - Row 6: Quad Cleanup / Quadify N-gons / Orient Faces
-  - then Inspect / Repair / Topology Gate
-- Existing button nodes are moved, not recreated.
-- Empty legacy full-width rows/wrappers are hidden after their buttons move into the dense grid.
-- .501 Face interaction remains frozen and untouched.
-
 ## Current Face progressive-disclosure checkpoint — v0.36.18.506
 
 - User screenshot showed .505 still left late-loaded Face tools below Inspect / Repair / Topology Gate.
