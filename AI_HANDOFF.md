@@ -1,3 +1,19 @@
+## Current recovery checkpoint — v0.36.18.475
+
+- v0.36.18.474 Vertex progressive disclosure passed hands-on and is now the clean Vertex baseline.
+- UI/UX recovery continues with the next isolated slice: **Edge progressive disclosure only**.
+- Edge settings are now hidden at rest and revealed only by the owning tool's existing active state:
+  - Loop: Loops + Loop Slide controls.
+  - Bevel: Width + Segments + Exact % + readout.
+  - Crease: Strength.
+  - Edge Slide: Exact Slide % + readout.
+  - Offset Loop: Exact Offset % + readout + Support Spacing.
+- The implementation is CSS-only inside the existing Tool Session stylesheet. No Edge click/pointer handlers, selection ownership, topology controllers or transform ownership are changed.
+- Bevel Exact % remains in the Move area above Slide/Offset precision controls when Bevel is active.
+- Revolve remains absent from normal Edge Active Tools.
+- Only `tool-session-ui.js` is cache-hopped to .475. Protected `main.js?v=0.36.18.366` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+- Sentinel: Edge home is clean at rest; each tool reveals only its own settings; Bevel/Loop/Crease/Slide/Offset interaction and selection/navigation remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.474
 
 - v0.36.18.473 is the hands-on-good forward baseline after true Bisect Only.
