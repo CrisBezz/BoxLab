@@ -7,6 +7,7 @@
 - Moved late-mounted Edge Extrude and Sweep launchers into the compact grid when available.
 - Hid legacy section labels / duplicate crease presentation row after authoritative buttons move.
 - Preserved Face .501, Rotate .483, Through, navigation and protected multi-object transform.
+- PR #240 squash-merged as `013162607862c5e6028918d26f200a4f5ae2d241`; new .508 regressions and the relevant .476 Loop Slide contract passed in run #980 despite unrelated stale-suite failures.
 
 ## 2026-09-26 — v0.36.18.507 handoff reconciliation
 
