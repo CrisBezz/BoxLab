@@ -6,6 +6,7 @@
 - Preserved the established .341 deterministic Vertex tool order to avoid reintroducing historical button-jump regressions.
 - Existing Vertex Slide and Vertex Bevel progressive disclosure remains unchanged.
 - Presentation-only change; no modelling or selection logic changed.
+- PR #243 squash-merged as `fe6df6b674064fd30473bd2c49c1254cadff63d4`; .511 and older .474 Vertex disclosure regressions passed in run #986.
 
 ## 2026-09-27 — v0.36.18.510 Edge Extrude Move/Plane cue
 
