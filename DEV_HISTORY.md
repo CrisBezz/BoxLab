@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.461 Mesh Health facegroup preservation recovery
+
+- v0.36.18.460 SubD facegroup propagation passed hands-on testing.
+- Restored facegroup metadata preservation through Safe Repair, Auto Close, Unify Winding, Flip Normals and Triangulate.
+- Safe Repair filters `faceGroups[]` in lockstep with removed faces.
+- Auto Close caps are deliberately ungrouped while existing faces retain their groups.
+- Triangulated child faces inherit the source polygon's facegroup.
+- No modelling interaction changes.
+
 ## 2026-09-26 — v0.36.18.460 SubD facegroup propagation recovery
 
 - v0.36.18.459 Mirror propagation passed hands-on testing.
