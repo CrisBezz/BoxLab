@@ -169,10 +169,7 @@ function finish(event){
     pendingFacePress=null;
     event.preventDefault();event.stopImmediatePropagation();
     if(event.type==='pointerup'){
-      const next=p.selectionBefore.includes(p.hit)
-        ? p.selectionBefore.filter(index=>index!==p.hit)
-        : [...new Set([...p.selectionBefore,p.hit])];
-      bridge()?.set?.('face',next);
+      bridge()?.toggle?.('face',p.hit);
       updateStatus();
       syncButtons();
     }
