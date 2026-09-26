@@ -24,7 +24,7 @@ button.style.width='100%';
 button.style.minWidth='0';
 
 function place(){
-  const compact=document.querySelector('#faceSecondaryCompactRow');
+  const compact=document.querySelector('#faceCompactRow3');
   if(compact){
     compact.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
     if(button.parentElement!==compact)compact.appendChild(button);
