@@ -1180,3 +1180,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .482: Move/Scale still require their normal selected-component interaction
 - [ ] Navigation .482: orbit/pan/zoom unchanged while Rotate is not armed
 
+- [ ] Workflow .483: Vertex selection rotates in Free/View mode
+- [ ] Workflow .483: Edge selection rotates in Free/View mode
+- [ ] Workflow .483: Face selection still rotates in Free/View mode
+- [ ] Workflow .483: X / Y / Z constrain Vertex / Edge / Face Rotate to the selected world axis
+- [ ] Workflow .483: 15° button ON snaps component Rotate to 15-degree increments
+- [ ] Workflow .483: 15° button OFF allows smooth unsnapped rotation
+- [ ] Workflow .483: Move / Scale remain unchanged in Vertex / Edge / Face
+

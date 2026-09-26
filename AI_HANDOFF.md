@@ -1,3 +1,17 @@
+## Current recovery checkpoint — v0.36.18.483
+
+- Hands-on .482: Face Rotate works in Free/View mode; Vertex and Edge Rotate still fail; X/Y/Z and 15° snap do not affect the working Face Rotate path.
+- This revealed two competing Rotate owners: dedicated `rotate-transform.js` is the path that actually works on iPad for Face, while Vertex/Edge were still relying on shared `transform-upgrade.js`.
+- v0.36.18.483 consolidates component Rotate:
+  - dedicated `rotate-transform.js` now owns Vertex, Edge and Face Rotate;
+  - authoritative component selections come from `__boxlabSelectionBridge`;
+  - Free keeps the proven view-axis rotation;
+  - X/Y/Z use world-axis rotation from `__boxlabTransformArming.constraint()`;
+  - 15° snap follows the existing `#transformSnapBtn` active state.
+- `transform-upgrade.js` yields Rotate only for Vertex/Edge/Face, while continuing to own Move/Scale and other transform modes.
+- Protected `main.js` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+- Sentinel: Vertex, Edge and Face all rotate through one path; X/Y/Z and 15° work; Free/View remains unchanged.
+
 ## Current recovery checkpoint — v0.36.18.482
 
 - Hands-on .481 still showed no Vertex / Edge / Face rotation.
