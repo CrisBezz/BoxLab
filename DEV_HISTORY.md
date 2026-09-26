@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.495 selected-aware Face hit-stack resolution
+
+- .494 proved the additive tap ray was hitting selected face 1 first and unselected face 4 second.
+- Armed Extrude/Inset now prefer the first unselected Face in the ordered hit stack when the primary hit is already selected.
+- If no unselected overlapping Face exists, the selected primary remains available for tap-to-deselect.
+- Ordinary Face selection behavior is unchanged.
+
 ## 2026-09-26 — v0.36.18.494 Face hit-stack diagnostic
 
 - .493 proved the tap was hitting selected face 3 and then correctly toggling it off.
