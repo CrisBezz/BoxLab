@@ -9,8 +9,10 @@ let gesture = null;
 let selectedVertexIndices = new Set();
 
 function state() { return globalThis.__boxlabBridgeState; }
-function rotateActive() { return !!rotateButton?.classList.contains('active'); }
-function currentMode() { return document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
+function bridge() { return globalThis.__boxlabSelectionBridge; }
+function rotateActive() { return globalThis.__boxlabTransformArming?.tool?.()==='rotate' || !!rotateButton?.classList.contains('active'); }
+function currentMode() { return bridge()?.mode?.() || document.querySelector('#selectionModes button.active')?.dataset?.mode || 'face'; }
+function selectedIndices(mode) { return bridge()?.mode?.()===mode ? [...new Set(bridge()?.indices?.()||[])] : []; }
 
 if (!THREE.Group.prototype.__boxlabRotateSelectionObserverInstalled) {
   const baseAdd = THREE.Group.prototype.add;
@@ -33,7 +35,7 @@ function selectionVertices(mode, mesh) {
   if (mode === 'vertex') return [...selectedVertexIndices];
   if (mode === 'edge') {
     const out = new Set();
-    for (const index of state()?.selectedEdges || []) {
+    for (const index of selectedIndices('edge')) {
       const edge = mesh.edges()[index];
       if (edge) { out.add(edge.a); out.add(edge.b); }
     }
@@ -41,7 +43,7 @@ function selectionVertices(mode, mesh) {
   }
   if (mode === 'face') {
     const out = new Set();
-    for (const index of state()?.selectedFaces || []) {
+    for (const index of selectedIndices('face')) {
       for (const vertex of mesh.faces[index] || []) out.add(vertex);
     }
     return [...out];
@@ -85,7 +87,7 @@ canvas?.addEventListener('pointerdown', event => {
   if (!event.isPrimary || !rotateActive() || event.pointerType === 'touch') return;
   const mesh = state()?.mesh, camera = state()?.camera, mode = currentMode();
   const indices = selectionVertices(mode, mesh);
-  if (!mesh || !camera || !indices.length || !pencilHitsMesh(event, mesh, camera)) return;
+  if (!mesh || !camera || mode!=='face' || !indices.length || !pencilHitsMesh(event, mesh, camera)) return;
 
   const center = new THREE.Vector3();
   indices.forEach(index => center.add(mesh.vertices[index]));

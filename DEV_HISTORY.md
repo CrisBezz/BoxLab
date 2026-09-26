@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.479 Face Rotate ownership repair
+
+- Isolated Face Rotate after .477 cache hop did not restore hands-on behavior.
+- Found two rotate owners plus stale face-selection lookup in dedicated rotate-transform.
+- Generic transform-upgrade now yields Face Rotate only.
+- Dedicated rotate-transform now uses authoritative selection bridge IDs for Face selection and transform-arming state for Rotate.
+- Move/Scale and non-Face Rotate paths remain unchanged; protected main runtime untouched.
+
 ## 2026-09-26 — v0.36.18.478 single-click Loop / Bevel handoff
 
 - Hands-on .477: Loop disarmed when Bevel was tapped, but Bevel required a second tap to arm.
