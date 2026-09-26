@@ -7,7 +7,7 @@
   - Row 3: Edge Slide / Offset Loop / Uncrease
   - Row 4: Bridge / Fill / Dissolve Loop
   - Row 5: Dissolve Edge / Delete / blank
-- Existing Edge parameter panels remain progressive/armed-only; no modelling controller is rewritten.
+- Existing Edge parameter panels remain progressive/armed-only; Loop Slide remains immediately beneath Loops per the .476 contract; no modelling controller is rewritten.
 - Legacy Move / Topology labels and the duplicate legacy crease row are presentation-hidden once their live buttons are moved.
 - Existing Sweep and Edge Extrude buttons are moved after their late-loaded modules mount; handlers remain attached.
 - Frozen Face .501 interaction, Rotate .483, Through, navigation and protected multi-object-transform remain untouched.
