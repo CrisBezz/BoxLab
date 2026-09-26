@@ -1306,3 +1306,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .504: late startup does not move Inspect/Repair above primary Face tools
 - [ ] Regression .504: .501 armed Face multi-select/deselect/drag remains unchanged
 
+- [ ] Workflow .505: Face tools form three compact rows with no full-width Sweep/Join waste
+- [ ] Workflow .505: Row 1 = Extrude / Inset / Knife
+- [ ] Workflow .505: Row 2 = Sweep / Join Coplanar / Delete
+- [ ] Workflow .505: Row 3 = Extract / Duplicate / Bridge
+- [ ] Workflow .505: armed Value/readout/Repeat appear between Row 1 and Row 2
+- [ ] Workflow .505: Inspect / Repair / Topology Gate are below all modelling rows
+- [ ] Regression .505: .501 armed Face multi-select/deselect/drag still works
+

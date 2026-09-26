@@ -24,6 +24,13 @@ button.style.width='100%';
 button.style.minWidth='0';
 
 function place(){
+  const compact=document.querySelector('#faceSecondaryCompactRow');
+  if(compact){
+    compact.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+    if(button.parentElement!==compact)compact.appendChild(button);
+    button.style.minWidth='0';button.style.width='100%';
+    return true;
+  }
   const extrude=document.querySelector('#extrudeBtn');
   const inset=document.querySelector('#insetBtn');
   const knife=document.querySelector('#knifeBtn');
