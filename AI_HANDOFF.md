@@ -1,3 +1,14 @@
+## Current recovery checkpoint — v0.36.18.496
+
+- .495 hands-on confirmed additive multi-face selection now works.
+- Remaining issue: after clearing all selected faces, user reported being unable to start a new selection while Extrude/Inset remains armed.
+- Audit found a distinct path when using Selection > Deselect:
+  - `main.js` clears selection and re-renders;
+  - this bypasses `multi-face-direct` and can desynchronize the direct tool's armed UI/state.
+- v0.36.18.496 listens for Deselect while Extrude/Inset is armed and, after the native clear completes, resynchronizes direct-tool button/status state without changing the selection clear itself.
+- .495 selected-aware hit-stack logic is unchanged.
+- No progressive disclosure, Through, Rotate .483, navigation or protected multi-object-transform changes.
+
 ## Current recovery checkpoint — v0.36.18.495
 
 - .494 hands-on trace: `down hit=1 stack=[1@6.108,4@7.939] mode=face before=[1] | up ok=true now=[] | ...`.
