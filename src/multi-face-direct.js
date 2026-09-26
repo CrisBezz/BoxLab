@@ -150,18 +150,21 @@ document.addEventListener('pointerdown',event=>{
   if(!armed||event.target!==canvas||!event.isPrimary)return;
   const b=bridge(),picker=b?.pick;
   if(typeof picker!=='function')return;
-  const hits=typeof b?.pickHits==='function'?b.pickHits('face',event):[];
-  const hit=picker('face',event)?.index;
+  const selectionBefore=faces(),selected=new Set(selectionBefore),
+    hits=typeof b?.pickHits==='function'?b.pickHits('face',event):[],
+    primary=picker('face',event)?.index,
+    firstUnselected=hits.find(item=>Number.isInteger(item.index)&&!selected.has(item.index))?.index,
+    hit=Number.isInteger(primary)&&selected.has(primary)&&Number.isInteger(firstUnselected)?firstUnselected:primary;
   if(!Number.isInteger(hit))return;
   const stack=hits.map(item=>`${item.index}@${Number(item.distance).toFixed(3)}`).join(',');
-  setFaceTapDebug(`down hit=${hit} stack=[${stack}] mode=${b?.mode?.()} before=[${faces().join(',')}]`);
+  setFaceTapDebug(`down hit=${hit} primary=${primary} stack=[${stack}] mode=${b?.mode?.()} before=[${selectionBefore.join(',')}]`);
   pendingFacePress={
     id:event.pointerId,
     x:event.clientX,
     y:event.clientY,
     tool:armed,
     hit,
-    selectionBefore:faces()
+    selectionBefore:[...selectionBefore]
   };
   event.preventDefault();
   event.stopImmediatePropagation();
