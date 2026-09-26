@@ -1,3 +1,17 @@
+## Current stable Face interaction checkpoint — v0.36.18.501
+
+- User hands-on confirmed .500 works perfectly for armed Extrude/Inset multi-face selection.
+- Diagnostic trace showed selection persists through immediate/microtask/RAF and main.js legacy directTool remains none.
+- Root cause of the earlier flash/drop was duplicate armed Face ownership: legacy `persistent-face-tool-select.js` added the face first, then recovered `multi-face-direct.js` toggled the same face back off.
+- Stable fix retained from .499/.500:
+  - legacy persistent helper yields whenever `__boxlabFaceDirect.active()`;
+  - `multi-face-direct.js` alone owns armed Extrude/Inset taps;
+  - native visible Face picker + native toggle are used;
+  - tap unselected adds, tap selected removes, drag models.
+- v0.36.18.501 removes temporary FaceOwner diagnostics only.
+- This is the clean baseline for Face progressive disclosure.
+- Through topology, Rotate .483, navigation and protected multi-object-transform remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.499
 
 - Root cause of the armed Extrude/Inset face flash finally identified: two selection owners were handling the same pointerdown.
