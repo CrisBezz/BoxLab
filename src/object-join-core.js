@@ -21,12 +21,17 @@ export function combineEditableMeshes(meshes=[]){
   if(valid.length<2)return null;
   const out=valid[0].clone();
   if(!(out.creases instanceof Map))out.creases=new Map(out.creases||[]);
+  out.faceGroups=out.faces.map((_,fi)=>out.faceGroups?.[fi]??null);
   if(!(out.looseEdges instanceof Set))out.looseEdges=new Set(out.looseEdges||[]);
   if(!(out.looseVertices instanceof Set))out.looseVertices=new Set(out.looseVertices||[]);
   for(let mi=1;mi<valid.length;mi++){
     const src=valid[mi],offset=out.vertices.length;
     out.vertices.push(...src.vertices.map(v=>v.clone?v.clone():v));
-    out.faces.push(...src.faces.filter(f=>Array.isArray(f)&&f.length>=3).map(f=>f.map(i=>i+offset)));
+    src.faces.forEach((face,fi)=>{
+      if(!Array.isArray(face)||face.length<3)return;
+      out.faces.push(face.map(i=>i+offset));
+      out.faceGroups.push(src.faceGroups?.[fi]??null);
+    });
     if(src.creases instanceof Map)for(const [key,value] of src.creases){
       const e=parseEdgeKey(key);if(!e)continue;
       out.creases.set(out.edgeKey(e.a+offset,e.b+offset),value);
