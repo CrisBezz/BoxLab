@@ -1,3 +1,13 @@
+## Current recovery checkpoint — v0.36.18.482
+
+- Hands-on .481 still showed no Vertex / Edge / Face rotation.
+- Shared Rotate had one remaining unique gate that Move/Scale did not depend on: it required the Pencil pointerdown to hit the already-selected component via `hitSelectedIndex`.
+- Because Rotate has no useful legacy fallback in `main.js`, a missed selected-component hit meant the Rotate gesture never started at all.
+- v0.36.18.482 removes that hit-test requirement for Rotate only. If Rotate is armed and a Vertex / Edge / Face selection exists, a Pencil drag anywhere on the viewport begins rotation of that existing selection.
+- Move and Scale retain their existing selected-component hit-test behavior.
+- Rotate maths, pointer capture level, navigation, `main.js` and protected multi-object transform remain unchanged.
+- Sentinel: select component(s) → arm Rotate → Pencil-drag viewport = visible rotation.
+
 ## Current recovery checkpoint — v0.36.18.481
 
 - Hands-on .480 still failed for Vertex, Edge and Face Rotate.
