@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.468 Object-mode Tool-first UI cleanup
+
+- Resumed the UI/UX cleanup from the proven .467 runtime instead of replaying the old broad rewrite.
+- Restored authoritative hidden-state CSS for Tool Session shells.
+- Wrapped the existing Boolean controls behind one launcher using the Tool Session host.
+- No direct modelling, pointer/selection ownership, topology or index cache rewiring changes.
+- This is the first presentation-only rebuild slice toward the previously approved clean UI.
+
 ## 2026-09-26 — v0.36.18.467 Viewport scroll recovery
 
 - .466 passed hands-on; Facegroup recovery considered complete.

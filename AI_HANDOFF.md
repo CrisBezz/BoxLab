@@ -1,3 +1,13 @@
+## Current recovery checkpoint — v0.36.18.468
+
+- v0.36.18.467 Viewport scrolling is the hands-on-good forward baseline after Facegroup recovery.
+- UI/UX cleanup resumes with **Object mode progressive disclosure only**.
+- Critical lesson from the rejected broad cleanup: this build does not touch modelling controllers, pointer ownership, selection ownership, direct-tool arming, index cache rewiring, or protected runtime pins.
+- Restored the missing CSS contract `.boxlab-tool-session-shell[hidden]{display:none!important}`, so inactive Object/Face Tool Session panels cannot leak into the mode home.
+- Boolean is presented as one **Boolean** launcher at rest; Union/Cut/Intersect live inside the existing Tool Session and Close returns cleanly to Object home.
+- Existing Symmetry, Transform, Insert, Mesh Health, Array, Revolve Profile, Sweep, Solidify and Shell session code is unchanged; only their existing hidden state is now respected.
+- Sentinel: Object mode home is clean; launch/cancel each Tool Session; Inset, Edge Bevel, Vertex Bevel, Extrude, Through and navigation must remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.467
 
 - v0.36.18.466 Shell-only Facegroup propagation was hands-on PASS.

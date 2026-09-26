@@ -14,6 +14,7 @@ style.textContent=`
 #editDrawer[data-tool-session-active="true"]>.drawer-content>:not(#boxlabToolSessionHost){display:none!important}
 #boxlabToolSessionHost[hidden]{display:none!important}
 #boxlabToolSessionHost{display:block!important}
+.boxlab-tool-session-shell[hidden]{display:none!important}
 .boxlab-tool-session-shell{display:flex;flex-direction:column;gap:7px}
 .boxlab-tool-session-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:1px 1px 3px}
 .boxlab-tool-session-subtitle{font-size:10px;font-weight:400;opacity:.58;text-transform:none;letter-spacing:0}
@@ -80,3 +81,51 @@ function isActive(id=null){return !!active&&(!id||active.id===id);}
 function current(){return active?{id:active.id,title:active.title}:null;}
 
 globalThis.__boxlabToolSession={begin,end,isActive,current,host};
+
+
+function installBooleanToolSession(){
+  const objectTools=document.querySelector('[data-mode-tools="object"]');
+  const group=document.querySelector('#booleanPrototype217');
+  if(!objectTools||!group)return false;
+  if(document.querySelector('#booleanToolSessionLaunch'))return true;
+
+  group.hidden=true;
+  const launchRow=document.createElement('div');
+  launchRow.id='booleanToolSessionLaunch';
+  launchRow.className='outliner-actions boolean-launch-row';
+  launchRow.style.gridTemplateColumns='1fr';
+  launchRow.innerHTML='<button id="booleanLaunchBtn" type="button">Boolean</button>';
+  group.insertAdjacentElement('beforebegin',launchRow);
+
+  const closeRow=document.createElement('div');
+  closeRow.className='outliner-actions boolean-session-close';
+  closeRow.style.gridTemplateColumns='1fr';
+  closeRow.innerHTML='<button id="booleanCloseBtn" type="button">Close</button>';
+  group.appendChild(closeRow);
+
+  const launch=launchRow.querySelector('#booleanLaunchBtn');
+  const close=closeRow.querySelector('#booleanCloseBtn');
+  const status=document.querySelector('#selectionStatus');
+
+  const open=()=>{
+    group.hidden=false;
+    begin({id:'boolean',title:'Boolean',node:group,subtitle:'Union · Cut · Intersect'});
+    globalThis.__boxlabBooleanPrototype?.sync?.();
+  };
+  const shut=({silent=false}={})=>{
+    group.hidden=true;
+    end('boolean');
+    if(!silent&&status)status.textContent='Boolean closed';
+  };
+
+  launch?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();open();});
+  close?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();shut();});
+  window.addEventListener('boxlab-tool-session-change',event=>{
+    const detail=event.detail||{};
+    if(detail.id==='boolean'&&detail.active===false)group.hidden=true;
+  });
+  globalThis.__boxlabBooleanToolSession={version:'0.36.18.468',open,close:shut};
+  return true;
+}
+[0,50,150,400,900].forEach(delay=>setTimeout(installBooleanToolSession,delay));
+window.addEventListener('boxlab-object-manager-ready',()=>queueMicrotask(installBooleanToolSession));

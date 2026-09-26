@@ -1073,3 +1073,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Viewport .467: Facegroup controls and lower Studio controls remain reachable
 - [ ] Viewport .467: tapping View Direction / Render Look controls still works after scrolling
 - [ ] Viewport .467: modelling/navigation sentinels remain unaffected
+
+
+- [ ] UI .468: Object mode home shows launchers only; inactive Tool Session settings are not visible
+- [ ] UI .468: Solidify, Symmetry/Bisect, Transform, Insert, Mesh Health, Array, Revolve Profile and Sweep settings appear only while active
+- [ ] UI .468: Boolean appears as one launcher at rest; Union/Cut/Intersect + Close appear only in the Boolean Tool Session
+- [ ] UI .468: Apply/Cancel/Close returns the Active Tools drawer cleanly to Object home
+- [ ] UI .468: Face Inset still arms/selects/drags correctly
+- [ ] UI .468: Edge Bevel and Vertex Bevel still arm/select/drag correctly
+- [ ] UI .468: Extrude and cavity-aware Through remain unchanged
+- [ ] UI .468: orbit / pan / zoom remain unchanged
