@@ -1188,3 +1188,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .483: 15° button OFF allows smooth unsnapped rotation
 - [ ] Workflow .483: Move / Scale remain unchanged in Vertex / Edge / Face
 
+- [ ] Workflow .484: arm Extrude, tap unselected face -> it adds to current Face selection
+- [ ] Workflow .484: arm Extrude, tap already-selected face -> only that face deselects and Extrude stays armed
+- [ ] Workflow .484: arm Extrude, drag selected face -> Extrude still executes
+- [ ] Workflow .484: repeat the same three checks for Inset
+- [ ] Workflow .484: multi-face additive selection still works after an Extrude/Inset operation
+- [ ] Regression .484: Through, component Rotate and viewport navigation remain unchanged
+
