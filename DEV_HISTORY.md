@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.474 Vertex progressive disclosure
+
+- Resumed the post-.449 Tool-first UI rebuild with Vertex mode only.
+- Reintroduced only the proven .450 CSS visibility rules for Vertex Slide and Vertex Bevel settings.
+- Slide % / readout are hidden until Slide is active.
+- Bevel Width / Exact % / readout are hidden until Bevel is active.
+- No tool handlers, selection ownership, transform ownership or topology code changed.
+- Cache-hopped only `tool-session-ui.js`.
+
 ## 2026-09-26 — v0.36.18.473 true Bisect Only
 
 - Added an explicit **Bisect Only** action to the existing Symmetry/Bisect Tool Session.
