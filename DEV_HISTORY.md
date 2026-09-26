@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.512 load recovery from failed .511
+
+- User reported .511 would not refresh/load in three browsers.
+- Reverted tool-session-ui.js exactly to the confirmed-loading .510 runtime content.
+- Cache-hopped the restored UI as .512.
+- Removed the failed .511 Vertex polish regression.
+- No modelling or interaction code changed from .510.
+
 ## 2026-09-27 — v0.36.18.511 Vertex cross-mode polish
 
 - Normalised Vertex tool rows to the same compact 3-column spacing and button sizing used by Edge and Face.

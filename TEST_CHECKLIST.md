@@ -1356,3 +1356,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .511: arming Vertex Bevel reveals only Bevel controls and does not reshuffle the tool buttons
 - [ ] Regression .511: Vertex selection and Move / Scale / Rotate remain unchanged
 - [ ] Regression .511: Edge .510 and Face .501 interaction remain unchanged
+
+- [ ] Recovery .512: app refreshes and loads in Safari
+- [ ] Recovery .512: app refreshes and loads in the other browsers that failed on .511
+- [ ] Recovery .512: Vertex / Edge / Face modes open normally
+- [ ] Recovery .512: confirmed .510 Edge Extrude Move + Plane behavior remains intact

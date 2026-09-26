@@ -1,3 +1,12 @@
+## Load recovery checkpoint — v0.36.18.512
+
+- Hands-on report: v0.36.18.511 failed to refresh/load across three browsers.
+- Recovery action: reverted src/tool-session-ui.js exactly to the known-loading .510 runtime state.
+- Published the restored file behind a fresh .512 cache key so browsers do not reuse the failed .511 asset.
+- Removed the .511 Vertex polish regression because that UI experiment is abandoned.
+- No modelling/runtime interaction code changed from the confirmed .510 baseline.
+- Next step after hands-on load confirmation: reattempt Vertex cross-mode polish with an even smaller approach, starting from this restored baseline.
+
 ## Current cross-mode polish checkpoint — v0.36.18.511
 
 - Begins the final pre-Beta-5 cross-mode polish from stable .510.
