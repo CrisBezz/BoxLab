@@ -49,6 +49,7 @@ function pickFace(event,m,camera){
 }
 
 window.addEventListener('pointerdown',event=>{
+  if(globalThis.__boxlabFaceDirect?.active?.())return;
   if(!armedTool()||event.target!==canvas||!event.isPrimary)return;
   const b=bridge(),s=state(),m=s?.mesh,camera=s?.camera;
   if(!b||b.mode?.()!=='face'||!m||!camera)return;
