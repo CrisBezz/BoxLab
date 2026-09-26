@@ -1,3 +1,14 @@
+## Current recovery checkpoint — v0.36.18.480
+
+- Hands-on .479 still failed: selected faces did not rotate.
+- Root cause was gesture capture order, not selection or rotation maths.
+- The protected Pencil orbit gate installs an early capture listener on the canvas. Face Rotate had been moved to a later canvas-capture owner in .479, so the gate could stop the Pencil pointerdown before Rotate saw it.
+- v0.36.18.480 moves the dedicated Face Rotate pointerdown/move/up/cancel lifecycle to document-capture, matching the proven transform-upgrade ownership level and therefore running before the canvas Pencil gate.
+- The Pencil orbit gate itself is untouched.
+- Face Rotate still uses authoritative `__boxlabSelectionBridge` selection from .479.
+- Move/Scale, non-Face Rotate, navigation and protected main/multi-object transform paths remain unchanged.
+- Sentinel: Face → select face → Rotate → Pencil-drag selected face must visibly rotate.
+
 ## Current recovery checkpoint — v0.36.18.479
 
 - User explicitly requested Face Rotate repair before continuing UI rebuild.

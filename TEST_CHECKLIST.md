@@ -1162,3 +1162,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .479: Vertex / Edge / Object Rotate remain unchanged
 - [ ] Navigation .479: one-finger orbit, two-finger pan and pinch zoom remain unchanged while Rotate is not Pencil-dragging a selected Face
 
+- [ ] Workflow .480: Face -> select face -> Rotate -> Pencil-drag starts immediately and visibly rotates face
+- [ ] Workflow .480: Face Rotate commits and selection remains
+- [ ] Navigation .480: Pencil orbit gate behavior is unchanged outside an armed Face Rotate drag
+- [ ] Workflow .480: Face Move/Scale and Vertex/Edge/Object transforms remain unchanged
+

@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.480 Face Rotate capture-order repair
+
+- .479 fixed Face Rotate selection ownership but hands-on still showed no rotation.
+- Root cause: dedicated Face Rotate was listening on canvas capture after the Pencil orbit gate's earlier canvas capture listener, so Pencil pointerdown could be stopped before Rotate began.
+- Moved Face Rotate pointerdown/move/up/cancel lifecycle to document capture, the same ownership level used by transform-upgrade.
+- Pencil orbit gate and rotate maths remain unchanged.
+
 ## 2026-09-26 — v0.36.18.479 Face Rotate ownership repair
 
 - Isolated Face Rotate after .477 cache hop did not restore hands-on behavior.
