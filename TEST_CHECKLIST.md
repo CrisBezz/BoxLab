@@ -1107,3 +1107,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] UI .471: Edge Active Tools no longer shows Revolve
 - [ ] Workflow .471: Inset, Edge Bevel, Vertex Bevel, Extrude, Through and orbit/pan/zoom remain unaffected
 
+- [ ] Workflow .472: Add > Sweep creates a Sweep construction object without any inert/no-op failure
+- [ ] Workflow .472: Sweep PROFILE / PATH / FINISH session appears after Add
+- [ ] Workflow .472: Cancel Sweep and later selection-mode escape still restore the exact pre-Sweep scene
+- [ ] UI .472: Edge Bevel Exact % appears above Slide % and Offset % controls in Edge Active Tools
+- [ ] UI .472: Edge Revolve remains absent
+- [ ] Workflow .472: Inset, Edge Bevel drag, Vertex Bevel, Extrude, Through and orbit/pan/zoom remain unaffected
+

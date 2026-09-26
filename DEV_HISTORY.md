@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.472 Sweep transaction declaration + Edge Bevel UI placement
+
+- .471 removed Edge Revolve correctly, but Add > Sweep remained inert.
+- Found the real .469 regression: `sweepBeforeScene`, `sweepUndoDepth` and `sweepRedoDepth` were assigned without declarations in an ES module, causing Add > Sweep to throw before object creation.
+- Declared those three transaction variables in the Sweep runtime state block; .471 mode-change cancellation guard remains intact.
+- Moved Edge Bevel Exact % from the bottom of Edge Active Tools to immediately before the Slide % / Offset % precision controls.
+- Cache-hopped `precision-bevel.js`, `drawer-ui.js` and `sweep-path.js` only as required.
+
 ## 2026-09-26 — v0.36.18.471 Sweep Add recovery + Edge Revolve removal
 
 - Hands-on .470 confirmed Edge Revolve works; removed its controls from the normal Edge Active Tools surface because it requires difficult-to-discover loose-edge profiles.
