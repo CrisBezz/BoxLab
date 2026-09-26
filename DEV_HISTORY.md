@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.507 dense Face tool grid
+
+- Reworked Face modelling controls into six compact 3-column rows following the user's markup.
+- Kept armed Value/readout/Repeat beneath Row 1.
+- Kept Inspect / Repair / Topology Gate as the final sections.
+- Preserved all existing buttons, including Orient Faces in the spare lower-right slot.
+- Layout only; .501 Face interaction unchanged.
+
 ## 2026-09-26 — v0.36.18.506 force Face diagnostics to true bottom
 
 - Fixed .505 ordering bug where late Face tools could remain below Inspect / Repair / Topology Gate.

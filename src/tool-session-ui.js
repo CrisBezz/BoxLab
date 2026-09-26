@@ -70,6 +70,11 @@ style.textContent=`
 
 .mode-tools[data-mode-tools="face"] .face-compact-row{margin:4px 0!important}
 .mode-tools[data-mode-tools="face"] .face-compact-row button{min-height:32px!important;padding:4px 5px!important;font-size:10.5px!important}
+.mode-tools[data-mode-tools="face"] #faceCompactRow2,
+.mode-tools[data-mode-tools="face"] #faceCompactRow3,
+.mode-tools[data-mode-tools="face"] #faceCompactRow4,
+.mode-tools[data-mode-tools="face"] #faceCompactRow5,
+.mode-tools[data-mode-tools="face"] #faceCompactRow6{margin:2px 0!important}
 .mode-tools[data-mode-tools="face"] .sweep-selection-launch-row:empty{display:none!important}
 `;
 document.head.appendChild(style);
@@ -112,6 +117,15 @@ function installFaceControlOrder(){
   const duplicate=document.querySelector('#duplicateFacesBtn');
   const bridge=document.querySelector('#bridgeFacesBtn');
   const del=document.querySelector('#deleteFaceBtn');
+  const shell=document.querySelector('#shellFacesBtn');
+  const poke=document.querySelector('#pokeFacesBtn');
+  const circle=document.querySelector('#componentCircleBtn');
+  const close=document.querySelector('#closeHolesBtn');
+  const triangulate=document.querySelector('#triangulateFacesBtn');
+  const flip=document.querySelector('#flipFacesBtn');
+  const orient=document.querySelector('#orientFacesBtn');
+  const quadClean=document.querySelector('#quadPairCleanupBtn');
+  const quadify=document.querySelector('#quadifyNgonsBtn');
   const inspect=document.querySelector('#faceInspectDrawer');
   const repair=document.querySelector('#faceRepairDrawer');
   const gate=document.querySelector('#topologyValidityGate');
@@ -137,16 +151,30 @@ function installFaceControlOrder(){
     cursor=node;
   }
 
-  const secondary=ensureFaceCompactRow(faceTools,'faceSecondaryCompactRow');
-  const tertiary=ensureFaceCompactRow(faceTools,'faceTertiaryCompactRow');
-  for(const button of [sweep,join,del])moveButtonToRow(button,secondary);
-  for(const button of [extract,duplicate,bridge])moveButtonToRow(button,tertiary);
+  const row2=ensureFaceCompactRow(faceTools,'faceCompactRow2');
+  const row3=ensureFaceCompactRow(faceTools,'faceCompactRow3');
+  const row4=ensureFaceCompactRow(faceTools,'faceCompactRow4');
+  const row5=ensureFaceCompactRow(faceTools,'faceCompactRow5');
+  const row6=ensureFaceCompactRow(faceTools,'faceCompactRow6');
 
-  if(cursor.nextElementSibling!==secondary)cursor.insertAdjacentElement('afterend',secondary);
-  if(secondary.nextElementSibling!==tertiary)secondary.insertAdjacentElement('afterend',tertiary);
+  for(const button of [del,duplicate,extract])moveButtonToRow(button,row2);
+  for(const button of [join,bridge,sweep])moveButtonToRow(button,row3);
+  for(const button of [shell,poke,circle])moveButtonToRow(button,row4);
+  for(const button of [close,triangulate,flip])moveButtonToRow(button,row5);
+  for(const button of [quadClean,quadify,orient])moveButtonToRow(button,row6);
+
+  const compactRows=[row2,row3,row4,row5,row6];
+  for(const row of compactRows){
+    if(cursor.nextElementSibling!==row)cursor.insertAdjacentElement('afterend',row);
+    cursor=row;
+  }
 
   faceTools.querySelectorAll('.sweep-selection-launch-row:empty,.outliner-actions:empty').forEach(row=>{
-    if(row!==primary&&row!==secondary&&row!==tertiary)row.style.display='none';
+    if(row!==primary&&!compactRows.includes(row))row.style.display='none';
+  });
+  faceTools.querySelectorAll('.shell-launch-controls').forEach(host=>{
+    const row=host.querySelector('.outliner-actions');
+    if(row&&!row.querySelector('button'))host.style.display='none';
   });
 
   for(const node of [inspect,repair,gate]){
