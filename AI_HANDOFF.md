@@ -1,3 +1,15 @@
+## Current recovery checkpoint — v0.36.18.474
+
+- v0.36.18.473 is the hands-on-good forward baseline after true Bisect Only.
+- UI/UX recovery resumes with the next single isolated slice: **Vertex progressive disclosure only**.
+- Restored the proven historical .450 Vertex presentation rules only:
+  - Vertex Slide exact row/readout are hidden at rest and shown only while `#vertexSlideBtn.active`.
+  - Vertex Bevel Width, Exact % row and readout are hidden at rest and shown only while `#vertexBevelBtn.active`.
+- The implementation is CSS-only inside the existing Tool Session stylesheet. It does not add pointer/click handlers, mutate selection, arm tools, or alter Vertex topology/controllers.
+- Add, Build Edge, Slide, Bevel, Join, Weld, Delete and Vertex Move/Scale/Rotate remain on their existing runtime paths.
+- Only `tool-session-ui.js` is cache-hopped to .474. Protected `main.js?v=0.36.18.366` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+- Sentinel: Vertex home is clean at rest; Slide settings appear only while Slide is active; Bevel settings appear only while Bevel is active; selection/navigation and all Vertex operations remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.473
 
 - v0.36.18.472 restored Add > Sweep and the Edge Bevel precision-control placement.
