@@ -1155,3 +1155,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .478: with Bevel active, one tap on Loop disarms Bevel and arms Loop
 - [ ] Workflow .478: Loop -> Split remains a one-tap handoff
 
+- [ ] Workflow .479: select one Face, arm Rotate, Pencil-drag the selected face and confirm visible rotation
+- [ ] Workflow .479: selected Face remains selected after Rotate commit
+- [ ] Workflow .479: multi-face selection rotates as one selection about its combined center
+- [ ] Workflow .479: Face Move and Scale still work
+- [ ] Workflow .479: Vertex / Edge / Object Rotate remain unchanged
+- [ ] Navigation .479: one-finger orbit, two-finger pan and pinch zoom remain unchanged while Rotate is not Pencil-dragging a selected Face
+
