@@ -1,3 +1,14 @@
+## Current recovery checkpoint — v0.36.18.491
+
+- Hands-on .490 still failed to add unselected faces while armed, although deselection worked.
+- Remaining asymmetry: armed tap used native picker but still rebuilt the Face selection array externally with bridge.set().
+- v0.36.18.491 exposes native main.js `toggleSelection({type,index})` through `__boxlabSelectionBridge.toggle(type,index)`.
+- Armed Extrude/Inset tap resolution now uses native picker + native toggle:
+  - hit comes from `pickKind('face')`;
+  - add/remove mutation comes from the exact same `toggleSelection` used by ordinary Face selection.
+- Drag promotion remains separate after the 8 px threshold and keeps existing Extrude/Inset modelling logic.
+- No progressive disclosure, Through, Rotate .483 or protected multi-object-transform changes.
+
 ## Current recovery checkpoint — v0.36.18.490
 
 - Hands-on .489: tap-to-deselect works, but tapping an unselected face with no modelling action still does not add it.
