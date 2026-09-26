@@ -1,3 +1,16 @@
+## Current recovery checkpoint — v0.36.18.489
+
+- Repeated armed Extrude/Inset multi-selection attempts (.485-.488) failed because they duplicated or handed off around the native Face picker rather than calling it directly.
+- Audit confirmed the authoritative native picker is `main.js -> pickKind(event,'face')`.
+- v0.36.18.489 exposes that exact picker read-only through `__boxlabSelectionBridge.pick(type,event)`.
+- `multi-face-direct.js` now calls the bridge picker directly while Extrude/Inset is armed:
+  - tap unselected face = add it to current Face selection;
+  - tap selected face = remove it;
+  - drag any hit face = operate on the working selection.
+- This removes duplicate geometry raycasts and event-handoff experiments.
+- `main.js` behavior is otherwise unchanged; only the bridge surface is extended.
+- Through, unified Rotate .483, navigation and protected `multi-object-transform.js?v=0.36.1.0` remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.488
 
 - Hands-on .487 still failed, confirming that duplicating Face picking outside main was the wrong architecture.
