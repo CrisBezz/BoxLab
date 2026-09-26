@@ -72,7 +72,7 @@ import('./precision-face.js?v=0.36.18.327').catch(error => console.warn('BoxLab 
 import('./repeat-face-previous.js?v=0.36.18.327').catch(error => console.warn('BoxLab Repeat Previous Face failed to load', error));
 import('./sequential-through-fallback.js?v=0.36.18.385').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
 import('./precision-transform.js?v=0.36.18.14').catch(error => console.warn('BoxLab precision Transform failed to load', error));
-import('./precision-bevel.js?v=0.36.18.32').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
+import('./precision-bevel.js?v=0.36.18.472').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
 import('./precision-edge-slide.js?v=0.36.18.16').catch(error => console.warn('BoxLab precision Edge Slide failed to load', error));
 import('./loop-offset.js?v=0.36.18.340').catch(error => console.warn('BoxLab Offset Loop failed to load', error));
 import('./precision-offset-loop.js?v=0.36.18.340').catch(error => console.warn('BoxLab precision Offset Loop failed to load', error));
