@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.483 unified component Rotate owner
+
+- Hands-on .482 showed Face Rotate working only through dedicated rotate-transform; Vertex/Edge remained broken and precision controls were ignored.
+- Extended the working dedicated Rotate owner to Vertex, Edge and Face using authoritative selection bridge IDs.
+- Wired world-axis X/Y/Z constraints and existing 15° snap button into that owner.
+- Shared transform now yields component Rotate to prevent dual ownership.
+- Move/Scale and protected main runtime remain unchanged.
+
 ## 2026-09-26 — v0.36.18.482 component Rotate start-gate repair
 
 - .481 still failed for all component Rotate modes.
