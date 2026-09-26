@@ -1223,3 +1223,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .488: repeat the same four checks for Inset
 - [ ] Regression .488: Through, Rotate .483 and viewport navigation remain unchanged
 
+- [ ] Workflow .489: Extrude armed -> tap multiple unselected faces; each remains selected
+- [ ] Workflow .489: Extrude armed -> tap selected faces to remove them without disarming
+- [ ] Workflow .489: Inset armed -> repeat additive/subtractive multi-selection
+- [ ] Workflow .489: drag selected or newly hit face still performs Extrude/Inset
+- [ ] Regression .489: Through and component Rotate .483 still work
+- [ ] Regression .489: viewport navigation unchanged
+
