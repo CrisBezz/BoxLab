@@ -1,3 +1,17 @@
+## Current recovery checkpoint — v0.36.18.499
+
+- Root cause of the armed Extrude/Inset face flash finally identified: two selection owners were handling the same pointerdown.
+- `persistent-face-tool-select.js` runs on window capture and was adding an unselected face first.
+- `multi-face-direct.js` then ran on document capture, saw that face as already selected, and its pointerup toggle removed it again.
+- This exactly explains the persistent flash-and-deselect behavior and why tap-to-deselect itself worked.
+- v0.36.18.499 establishes one owner:
+  - legacy `persistent-face-tool-select.js` yields whenever `__boxlabFaceDirect.active()` is true;
+  - `multi-face-direct.js` alone owns armed Extrude/Inset taps;
+  - it uses the native visible `selectionBridge.pick('face',event)` and native `selectionBridge.toggle('face',index)`.
+- Removed the .498 projected-face picker experiment and the .495 deeper-hit workaround.
+- Ordinary Face selection outside armed tools remains unchanged.
+- No progressive disclosure, Through topology, Rotate .483, navigation or protected multi-object-transform changes.
+
 ## Current recovery checkpoint — v0.36.18.498
 
 - .497 restored nearest-ray Visible semantics but user reported armed Extrude still could not select faces.

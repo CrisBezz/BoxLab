@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.499 single-owner armed Face selection
+
+- Identified the true flash cause: legacy persistent-face-tool-select added the face on window capture before multi-face-direct handled the same gesture and toggled it back off on pointerup.
+- Legacy helper now yields whenever the recovered direct Face owner is armed.
+- Restored native visible Face picker + native toggle inside multi-face-direct; removed projected/deeper-hit experiments.
+
 ## 2026-09-26 — v0.36.18.498 projected visible Face picker
 
 - .497 removed accidental through-selection but armed Face selection remained unusable.
