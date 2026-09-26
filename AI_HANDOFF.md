@@ -1,3 +1,15 @@
+## Current recovery checkpoint — v0.36.18.490
+
+- Hands-on .489: tap-to-deselect works, but tapping an unselected face with no modelling action still does not add it.
+- Root cause candidate isolated in armed Face controller: pointerdown immediately tried to build the prospective Extrude/Inset working region before deciding whether the gesture was only a tap.
+- v0.36.18.490 separates selection from modelling validation:
+  - pointerdown records the exact native Face hit and current selection only;
+  - pointerup before 8 px movement toggles that face selection directly;
+  - only after movement crosses 8 px does the controller build/validate the Extrude/Inset working region and begin modelling.
+- Therefore a pure selection tap can no longer fail because the prospective modelling region is unsupported.
+- Native picker bridge from .489 remains authoritative.
+- No progressive disclosure, Through, Rotate .483, navigation or protected multi-object-transform changes.
+
 ## Current recovery checkpoint — v0.36.18.489
 
 - Repeated armed Extrude/Inset multi-selection attempts (.485-.488) failed because they duplicated or handed off around the native Face picker rather than calling it directly.

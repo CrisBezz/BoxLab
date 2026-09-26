@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.490 Face tap-before-model split
+
+- .489 still allowed deselection but not additive selection with a no-action tap.
+- Deferred Extrude/Inset region construction until after the 8 px drag threshold.
+- Pointerdown now stores only the native Face hit + selection snapshot.
+- Pointerup before threshold toggles selection directly, independent of modelling-region validity.
+- Drag after threshold promotes into the existing direct modelling path.
+
 ## 2026-09-26 — v0.36.18.489 native Face picker bridge
 
 - Exposed main.js native `pickKind` read-only via `__boxlabSelectionBridge.pick(type,event)`.
