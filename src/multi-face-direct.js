@@ -15,6 +15,7 @@ const REF_VERTEX_PX=18,REF_EDGE_PX=16;
 let armed = null;
 let drag = null;
 let pendingSelection = null;
+let pendingFacePress = null;
 let refMarker=null,refGuide=null;
 
 if(!document.querySelector('#boxlabDirectStableStyle')){
@@ -113,9 +114,9 @@ function classifySingleFaceContact(m,sourceFaceIndex,distance,prepared){
 }
 function extrudeConnectedFaceSelection(m,faceIndices,distance){const group=selectionComponentsInfo(m,faceIndices);if(!group)return null;const results=[];for(const region of group.regions){if(!region.boundaryEdges.length)return null;const incident=new Map(region.regionVertices.map(v=>[v,[]]));for(const fi of region.faceIndices){const n=m.faceNormal(fi).clone().normalize();for(const v of m.faces[fi])incident.get(v)?.push(n);}const replacement=new Map();for(const vertex of region.regionVertices){const normals=incident.get(vertex)||[],sum=new THREE.Vector3();normals.forEach(n=>sum.add(n));let dir=sum.lengthSq()>1e-10?sum.normalize():normals[0]?.clone();if(!dir)return null;const dots=normals.map(n=>dir.dot(n)).filter(v=>v>1e-4),denom=dots.length?dots.reduce((a,b)=>a+b,0)/dots.length:1,move=dir.multiplyScalar(distance/Math.max(.15,denom));m.vertices.push(m.vertices[vertex].clone().add(move));replacement.set(vertex,m.vertices.length-1);}for(const fi of region.faceIndices)m.faces[fi]=m.faces[fi].map(v=>replacement.get(v));const sideStart=m.faces.length;for(const edge of region.boundaryEdges)m.faces.push([edge.a,edge.b,replacement.get(edge.b),replacement.get(edge.a)]);results.push({faceIndices:[...region.faceIndices],sideFaceIndices:Array.from({length:region.boundaryEdges.length},(_,i)=>sideStart+i),distance,mode:'connected-miter'});}m.edges();return{faceIndices:[...group.faceIndices],regions:results,regionCount:results.length,distance,mode:'connected-miter'};}
 
-document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool==='knife'){armed=null;drag=null;pendingSelection=null;clearRefVisual();syncButtons();}},true);
+document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool==='knife'){armed=null;drag=null;pendingSelection=null;pendingFacePress=null;clearRefVisual();syncButtons();}},true);
 document.addEventListener('pointerdown',event=>{const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;const ids=faces();pendingSelection=ids.length?{tool:target.id==='extrudeBtn'?'extrude':'inset',ids:[...ids]}:null;},true);
-document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;armed=null;clearRefVisual();syncButtons();updateStatus();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();},true);
+document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;pendingFacePress=null;armed=null;clearRefVisual();syncButtons();updateStatus();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();},true);
 window.addEventListener('boxlab-bridge-state',()=>{if(!armed)return;queueMicrotask(()=>{syncButtons();updateStatus();});});
 function beginDirectDrag(event,hit,selectionBefore,workingFaces){
   const m=mesh(),camera=state()?.camera;
@@ -133,29 +134,54 @@ function beginDirectDrag(event,hit,selectionBefore,workingFaces){
 
 document.addEventListener('pointerdown',event=>{
   if(!armed||event.target!==canvas||!event.isPrimary)return;
-  const m=mesh(),picker=bridge()?.pick;
-  if(!m||typeof picker!=='function')return;
+  const picker=bridge()?.pick;
+  if(typeof picker!=='function')return;
   const hit=picker('face',event)?.index;
   if(!Number.isInteger(hit))return;
-  const selectionBefore=faces(),hitWasSelected=selectionBefore.includes(hit),
-    workingFaces=hitWasSelected?[...selectionBefore]:[...selectionBefore,hit];
+  pendingFacePress={
+    id:event.pointerId,
+    x:event.clientX,
+    y:event.clientY,
+    tool:armed,
+    hit,
+    selectionBefore:faces()
+  };
   event.preventDefault();
   event.stopImmediatePropagation();
-  beginDirectDrag(event,hit,selectionBefore,workingFaces);
+  canvas.setPointerCapture?.(event.pointerId);
 },true);
-document.addEventListener('pointermove',event=>{if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){drag.changed=true;}restore(drag.m,drag.before);if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?referenceUnderPointer(event,drag):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}const contact=drag.faces.length===1?classifySingleFaceContact(drag.before,drag.faces[0],distance,drag.preparedThrough):{mode:'extrude',throughPlan:null,shellHit:null};drag.throughPlan=contact.throughPlan;drag.shellHit=contact.shellHit;drag.blocked=contact.mode==='blocked';drag.failureReason=contact.reason;if(drag.blocked){drag.preview=false;clearRefVisual();drag.snap=null;if(status)status.textContent=`Extrude In • BLOCKED — ${contact.reason||'unsupported shell contact'}${drag.shellHit?` • ${drag.shellHit.distance.toFixed(2)}`:''}`;}else{if(drag.throughPlan){distance=drag.throughPlan.distance;clearRefVisual();drag.snap=null;}const result=extrudeConnectedFaceSelection(drag.m,drag.faces,distance);drag.preview=!!result;if(result&&status){const mode=drag.throughPlan?'THROUGH READY':distance<0?'Extrude In':'Extrude';status.textContent=`${mode} • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${distance>=0?'+':''}${distance.toFixed(2)}${result.mode==='connected-miter'&&drag.faces.length>1?' • Connected band':''}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}}else{drag.throughPlan=null;drag.blocked=false;drag.shellHit=null;let amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));const ref=referenceUnderPointer(event,drag),inferred=ref?insetReference(drag,ref):null;if(ref&&inferred){amount=inferred.amount;showRefVisual(ref,inferred.boundaryPoint,drag.camera);drag.snap={...ref,insetDistance:inferred.distance};}else{clearRefVisual();drag.snap=null;}const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;if(result&&status){const distances=(result.regions||[]).map(r=>r.distance).filter(Number.isFinite),d=distances.length?Math.min(...distances):0;status.textContent=`Uniform Inset • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${d.toFixed(3)}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}render();syncButtons();},true);
+document.addEventListener('pointermove',event=>{
+  if(!drag&&pendingFacePress?.id===event.pointerId){
+    const p=pendingFacePress,dx=event.clientX-p.x,dy=event.clientY-p.y;
+    if(Math.hypot(dx,dy)<8)return;
+    const workingFaces=p.selectionBefore.includes(p.hit)?[...p.selectionBefore]:[...p.selectionBefore,p.hit];
+    if(beginDirectDrag(event,p.hit,p.selectionBefore,workingFaces)){
+      pendingFacePress=null;
+      drag.changed=true;
+    }else{
+      return;
+    }
+  }
+  if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){drag.changed=true;}restore(drag.m,drag.before);if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?referenceUnderPointer(event,drag):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}const contact=drag.faces.length===1?classifySingleFaceContact(drag.before,drag.faces[0],distance,drag.preparedThrough):{mode:'extrude',throughPlan:null,shellHit:null};drag.throughPlan=contact.throughPlan;drag.shellHit=contact.shellHit;drag.blocked=contact.mode==='blocked';drag.failureReason=contact.reason;if(drag.blocked){drag.preview=false;clearRefVisual();drag.snap=null;if(status)status.textContent=`Extrude In • BLOCKED — ${contact.reason||'unsupported shell contact'}${drag.shellHit?` • ${drag.shellHit.distance.toFixed(2)}`:''}`;}else{if(drag.throughPlan){distance=drag.throughPlan.distance;clearRefVisual();drag.snap=null;}const result=extrudeConnectedFaceSelection(drag.m,drag.faces,distance);drag.preview=!!result;if(result&&status){const mode=drag.throughPlan?'THROUGH READY':distance<0?'Extrude In':'Extrude';status.textContent=`${mode} • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${distance>=0?'+':''}${distance.toFixed(2)}${result.mode==='connected-miter'&&drag.faces.length>1?' • Connected band':''}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}}else{drag.throughPlan=null;drag.blocked=false;drag.shellHit=null;let amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));const ref=referenceUnderPointer(event,drag),inferred=ref?insetReference(drag,ref):null;if(ref&&inferred){amount=inferred.amount;showRefVisual(ref,inferred.boundaryPoint,drag.camera);drag.snap={...ref,insetDistance:inferred.distance};}else{clearRefVisual();drag.snap=null;}const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;if(result&&status){const distances=(result.regions||[]).map(r=>r.distance).filter(Number.isFinite),d=distances.length?Math.min(...distances):0;status.textContent=`Uniform Inset • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${d.toFixed(3)}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}render();syncButtons();},true);
 function finish(event){
+  if(pendingFacePress?.id===event.pointerId){
+    const p=pendingFacePress;
+    pendingFacePress=null;
+    event.preventDefault();event.stopImmediatePropagation();
+    if(event.type==='pointerup'){
+      const next=p.selectionBefore.includes(p.hit)
+        ? p.selectionBefore.filter(index=>index!==p.hit)
+        : [...new Set([...p.selectionBefore,p.hit])];
+      bridge()?.set?.('face',next);
+      updateStatus();
+      syncButtons();
+    }
+    return;
+  }
   if(!drag||drag.id!==event.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();clearRefVisual();
   const d=drag;drag=null;
-  if(event.type==='pointerup'&&!d.changed){
-    restore(d.m,d.before);
-    const next=d.hitWasSelected
-      ? d.selectionBefore.filter(index=>index!==d.hitFaceIndex)
-      : [...new Set([...d.selectionBefore,d.hitFaceIndex])];
-    bridge()?.set?.('face',next);
-    updateStatus();
-  }else if(event.type==='pointerup'&&d.changed&&d.preview&&!d.blocked){
+  if(event.type==='pointerup'&&d.changed&&d.preview&&!d.blocked){
     if(d.tool==='extrude'&&d.throughPlan){
       const built=buildThrough(d.before,d.throughPlan);
       if(built.ok){
