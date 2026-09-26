@@ -1128,3 +1128,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .474: Vertex Add, Build Edge, Slide drag/exact, Bevel drag/exact, Join, Weld, Delete remain functional
 - [ ] Workflow .474: Vertex Move / Scale / Rotate and orbit/pan/zoom remain unchanged
 
+- [ ] UI .475: Edge mode home hides Loop count/slide settings until Loop is armed
+- [ ] UI .475: Edge mode home hides Bevel Width / Segments / Exact % until Bevel is armed
+- [ ] UI .475: Edge mode home hides Crease Strength until Crease is armed
+- [ ] UI .475: Edge mode home hides Slide % until Edge Slide is armed
+- [ ] UI .475: Edge mode home hides Offset % / Support Spacing until Offset Loop is armed
+- [ ] Workflow .475: Loop Cut, Bevel drag/exact, Crease/Uncrease, Edge Slide, Offset Loop, Fill/Bridge/Dissolve/Delete remain functional
+- [ ] Workflow .475: Edge selection, Move / Scale / Rotate and orbit/pan/zoom remain unchanged
+
