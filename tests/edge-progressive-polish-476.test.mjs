@@ -33,7 +33,7 @@ test('476 Crease disarms when another Edge or transform tool takes over',()=>{
 });
 
 test('476 changed UI modules are cache-hopped',()=>{
-  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.476/);
+  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.508/);
   assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.476/);
   assert.match(index,/edge-crease-handoff\.js\?v=0\.36\.18\.476/);
   assert.match(drawer,/precision-bevel\.js\?v=0\.36\.18\.476/);
