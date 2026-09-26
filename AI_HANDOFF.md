@@ -1,3 +1,14 @@
+## Current recovery checkpoint — v0.36.18.497
+
+- Hands-on .495 revealed a serious flaw in the selected-aware hit-stack workaround: armed Face selection was effectively selecting through the mesh and could extrude two faces while Selection was set to Visible.
+- Root cause: every ray through a closed mesh naturally has front + rear Face hits; choosing the first unselected deeper hit is equivalent to through-selection.
+- v0.36.18.497 removes that workaround completely.
+- Armed Extrude/Inset now use only the authoritative native nearest Face hit from `selectionBridge.pick('face',event)`.
+- Tap resolution still uses native `toggleSelection` via `selectionBridge.toggle`.
+- Temporary FaceTap diagnostics and the .496 Deselect resync workaround were removed.
+- This is the clean Visible-selection baseline. Explicit Selection > Through behavior can be handled separately; Visible must never reach through the mesh.
+- No progressive disclosure, Through topology, Rotate .483, navigation or protected multi-object-transform changes.
+
 ## Current recovery checkpoint — v0.36.18.496
 
 - .495 hands-on confirmed additive multi-face selection now works.
