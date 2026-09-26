@@ -7,6 +7,8 @@
 - Presentation-only change in tool-session-ui.js; no Vertex modelling handlers, selection, transforms or topology are changed.
 - Face .501, Rotate .483, Edge .508/.510, Sweep .509, Through and protected multi-object-transform remain untouched.
 - Next step: hands-on confirm Vertex no longer feels visually larger than Edge/Face and arming Slide/Bevel reveals only their controls without button-row movement.
+- Merged via PR #243; squash merge `fe6df6b674064fd30473bd2c49c1254cadff63d4`.
+- Topology regression run #986: all new .511 tests and the older .474 Vertex progressive-disclosure checks passed; overall workflow remained red only from the known unrelated historical-suite backlog.
 
 ## Current Edge Extrude UX checkpoint — v0.36.18.510
 
