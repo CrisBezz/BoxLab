@@ -45,7 +45,7 @@ const followBtn=controls.querySelector('#sweepFollowEdges'),drawPathBtn=controls
 const capsBtn=controls.querySelector('#sweepCapsBtn'),applyBtn=controls.querySelector('#sweepApplyBtn'),cancelSweepBtn=controls.querySelector('#sweepCancelBtn');
 
 const sweepModeStyle=document.createElement('style');
-sweepModeStyle.textContent='#sweepPathControls button.active,#sweepPathControls button[aria-pressed="true"]{box-shadow:inset 0 0 0 2px rgba(138,208,255,1)!important;background:#eef1f7!important;color:#15171b!important}';
+sweepModeStyle.textContent='#sweepPathControls button.active,#sweepPathControls button[aria-pressed="true"]{box-shadow:none!important;background:#eef1f7!important;color:#15171b!important}';
 document.head.appendChild(sweepModeStyle);
 
 const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
