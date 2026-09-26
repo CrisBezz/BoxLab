@@ -24,7 +24,7 @@ controls.innerHTML=`
     <output id="revolveSegmentsOut">24</output>
   </label>
 `;
-edgeTools?.appendChild(controls);
+// Edge Revolve UI intentionally not mounted: loose-edge profiles are not discoverable enough for the normal Edge tool surface.
 
 const button=controls.querySelector('#revolveBtn');
 const segmentInput=controls.querySelector('#revolveSegments');

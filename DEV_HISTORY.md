@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.471 Sweep Add recovery + Edge Revolve removal
+
+- Hands-on .470 confirmed Edge Revolve works; removed its controls from the normal Edge Active Tools surface because it requires difficult-to-discover loose-edge profiles.
+- Fixed Add > Sweep immediately disappearing after creation.
+- Root cause was .469's queued mode-change cancellation observing the just-created Sweep after Sweep's own Add flow entered Object mode.
+- Mode-change cancellation now only acts when a Sweep already existed when the mode click began, preserving later user escape/cancel behavior.
+- Sweep construction/profile/path geometry code is unchanged.
+- Cache-hopped only `revolve.js` and `sweep-path.js` to .471.
+
 ## 2026-09-26 — v0.36.18.470 Edge Revolve progressive disclosure
 
 - Continued the post-.449 UI cleanup as one isolated Edge-mode presentation slice.
