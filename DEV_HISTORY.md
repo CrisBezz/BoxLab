@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.478 single-click Loop / Bevel handoff
+
+- Hands-on .477: Loop disarmed when Bevel was tapped, but Bevel required a second tap to arm.
+- Moved Loop↔Bevel exclusivity from pointerdown to click-capture so the same click can disarm the old tool and continue into the new tool handler.
+- No Bevel, Loop topology, selection, or transform code changed.
+
 ## 2026-09-26 — v0.36.18.477 Edge exclusivity + Face Rotate cache repair
 
 - Made Loop Cut and Edge Bevel mutually exclusive using their existing toggle paths.
