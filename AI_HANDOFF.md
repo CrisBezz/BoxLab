@@ -1,3 +1,11 @@
+## Current Face progressive-disclosure checkpoint — v0.36.18.506
+
+- User screenshot showed .505 still left late-loaded Face tools below Inspect / Repair / Topology Gate.
+- Root cause: .505 positioned diagnostics immediately after the compact tertiary row, not at the true end of the Face drawer.
+- v0.36.18.506 now appends `#faceInspectDrawer`, then `#faceRepairDrawer`, then `#topologyValidityGate` as the final Face drawer children on every layout sync.
+- Therefore all late modelling/repair rows (Flip Faces, Orient Faces, Triangulate, Poke, Circle, Shell, Close Holes, Quadify, cleanup rows, etc.) remain above the diagnostic stack.
+- Compact .505 modelling rows and .501 Face interaction remain unchanged.
+
 ## Current Face progressive-disclosure checkpoint — v0.36.18.505
 
 - User requested the Face modelling tools be rearranged to consume less vertical space, with Inspect / Repair / Topology Gate below all modelling tools.

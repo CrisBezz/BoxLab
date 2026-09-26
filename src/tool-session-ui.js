@@ -149,11 +149,8 @@ function installFaceControlOrder(){
     if(row!==primary&&row!==secondary&&row!==tertiary)row.style.display='none';
   });
 
-  let tail=tertiary;
   for(const node of [inspect,repair,gate]){
-    if(!node)continue;
-    if(node.parentElement!==faceTools||tail.nextElementSibling!==node)tail.insertAdjacentElement('afterend',node);
-    tail=node;
+    if(node)faceTools.appendChild(node);
   }
   return true;
 }

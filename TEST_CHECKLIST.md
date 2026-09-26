@@ -1314,3 +1314,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .505: Inspect / Repair / Topology Gate are below all modelling rows
 - [ ] Regression .505: .501 armed Face multi-select/deselect/drag still works
 
+- [ ] Workflow .506: all Face modelling/repair tools appear above Inspect
+- [ ] Workflow .506: Inspect is followed by Repair, then Topology Gate
+- [ ] Workflow .506: nothing in Face mode appears below Topology Gate
+- [ ] Regression .506: compact .505 rows remain intact
+- [ ] Regression .506: .501 Face multi-select/deselect/drag remains unchanged
