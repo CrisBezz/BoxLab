@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.498 projected visible Face picker
+
+- .497 removed accidental through-selection but armed Face selection remained unusable.
+- Added projected polygon picking for armed Extrude/Inset: camera-facing polygons only, Pencil point containment, nearest eligible depth.
+- No rear-face fallback. Native tap toggle and existing modelling drag path retained.
+
 ## 2026-09-26 — v0.36.18.497 restore visible-only armed Face picking
 
 - Removed .495 selected-aware deeper-hit fallback after hands-on showed it caused through-selection and two-face Extrude while Visible selection was active.
