@@ -1256,3 +1256,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .495: ordinary Face selection outside armed tools unchanged
 - [ ] Regression .495: Through, Rotate .483 and viewport navigation unchanged
 
+- [ ] Workflow .496: arm Extrude, build a multi-face selection, press Selection > Deselect, then tap a new face without re-arming
+- [ ] Workflow .496: Extrude remains visibly armed after Deselect
+- [ ] Workflow .496: repeat the same empty-selection restart for Inset
+- [ ] Regression .496: .495 additive overlap selection still works
+- [ ] Regression .496: Through, Rotate .483 and viewport navigation unchanged
+
