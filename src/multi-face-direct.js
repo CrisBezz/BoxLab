@@ -12,6 +12,15 @@ const status = document.querySelector('#selectionStatus');
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 const REF_VERTEX_PX=18,REF_EDGE_PX=16;
+const FACE_TAP_DEBUG=true;
+let faceTapDebug=document.querySelector('#faceTapDebug');
+if(!faceTapDebug){
+  faceTapDebug=document.createElement('span');
+  faceTapDebug.id='faceTapDebug';
+  faceTapDebug.style.cssText='margin-left:8px;font-variant-numeric:tabular-nums;';
+  document.querySelector('.statusbar')?.append(faceTapDebug);
+}
+function setFaceTapDebug(text){if(FACE_TAP_DEBUG&&faceTapDebug)faceTapDebug.textContent=`FaceTap • ${text}`;}
 let armed = null;
 let drag = null;
 let pendingSelection = null;
@@ -116,7 +125,7 @@ function extrudeConnectedFaceSelection(m,faceIndices,distance){const group=selec
 
 document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool==='knife'){armed=null;drag=null;pendingSelection=null;pendingFacePress=null;clearRefVisual();syncButtons();}},true);
 document.addEventListener('pointerdown',event=>{const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;const ids=faces();pendingSelection=ids.length?{tool:target.id==='extrudeBtn'?'extrude':'inset',ids:[...ids]}:null;},true);
-document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;pendingFacePress=null;armed=null;clearRefVisual();syncButtons();updateStatus();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();},true);
+document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;pendingFacePress=null;armed=null;clearRefVisual();syncButtons();updateStatus();setFaceTapDebug('disarmed');document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();setFaceTapDebug(`armed=${armed} sel=[${faces().join(',')}]`);},true);
 window.addEventListener('boxlab-bridge-state',()=>{if(!armed)return;queueMicrotask(()=>{syncButtons();updateStatus();});});
 function beginDirectDrag(event,hit,selectionBefore,workingFaces){
   const m=mesh(),camera=state()?.camera;
@@ -138,6 +147,7 @@ document.addEventListener('pointerdown',event=>{
   if(typeof picker!=='function')return;
   const hit=picker('face',event)?.index;
   if(!Number.isInteger(hit))return;
+  setFaceTapDebug(`down hit=${hit} before=[${faces().join(',')}]`);
   pendingFacePress={
     id:event.pointerId,
     x:event.clientX,
@@ -169,7 +179,12 @@ function finish(event){
     pendingFacePress=null;
     event.preventDefault();event.stopImmediatePropagation();
     if(event.type==='pointerup'){
-      bridge()?.toggle?.('face',p.hit);
+      const before=[...p.selectionBefore];
+      const ok=bridge()?.toggle?.('face',p.hit);
+      const immediate=faces();
+      setFaceTapDebug(`up hit=${p.hit} ok=${ok} before=[${before.join(',')}] now=[${immediate.join(',')}]`);
+      queueMicrotask(()=>setFaceTapDebug(`micro hit=${p.hit} sel=[${faces().join(',')}]`));
+      requestAnimationFrame(()=>setFaceTapDebug(`raf hit=${p.hit} sel=[${faces().join(',')}]`));
       updateStatus();
       syncButtons();
     }
