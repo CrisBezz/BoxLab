@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.465 Solidify-only facegroup propagation
+
+- .464 recovery passed hands-on: Shell restored, Solidify healthy.
+- Reintroduced facegroup metadata only in `solidify-core.js`; Shell left untouched.
+- Source and inner Solidify faces share the parent group; generated side walls are Ungrouped.
+- Rollback restores faceGroups with other mesh state.
+
 ## 2026-09-26 — v0.36.18.464 Shell/Solidify recovery
 
 - User found Shell broken after .462.

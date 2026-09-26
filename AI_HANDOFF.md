@@ -1,3 +1,12 @@
+## Current recovery checkpoint — v0.36.18.465
+
+- v0.36.18.464 Shell/Solidify recovery was hands-on PASS: Shell is back and Solidify works normally.
+- v0.36.18.465 reintroduces **Solidify facegroup propagation only**. `shell-core.js` is intentionally untouched.
+- Solidify original faces keep their group IDs; inner duplicate faces inherit the same IDs; new side-wall faces are Ungrouped.
+- Solidify rollback restores the prior faceGroups array together with vertices/faces/creases.
+- Shell remains on the confirmed-good .461 core path and should behave exactly as in .464.
+- Sentinel: Solidify on grouped open mesh preserves source/inner colours and neutral side walls; Shell still works unchanged; core modelling/navigation sentinels remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.464
 
 - User reported Shell broken after the .462 Facegroup propagation slice; .463 Join did not touch Shell but cannot be treated as a safe baseline until Shell is restored.

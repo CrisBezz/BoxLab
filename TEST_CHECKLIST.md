@@ -1050,3 +1050,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Recovery .464: Extract Faces still preserves Facegroups
 - [ ] Recovery .464: Object Join still preserves Facegroups
 - [ ] Recovery .464: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Facegroups .465: Solidify source faces retain original group colours
+- [ ] Facegroups .465: Solidify inner duplicate faces inherit the same group colours
+- [ ] Facegroups .465: Solidify generated side walls are Ungrouped/neutral
+- [ ] Facegroups .465: failed/rolled-back Solidify restores original faceGroups exactly
+- [ ] Recovery .465: Shell still launches, previews, adjusts thickness, Apply/Cancel correctly
+- [ ] Facegroups .465: prior Mirror/SubD/Mesh Health/Extract/Join and modelling sentinels remain healthy
