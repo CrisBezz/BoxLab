@@ -1100,3 +1100,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] UI .470: Revolve topology/history behavior is unchanged
 - [ ] UI .470: Inset, Edge Bevel, Vertex Bevel, Extrude, Through and orbit/pan/zoom remain unaffected
 
+- [ ] Workflow .471: Add > Sweep creates and leaves visible the Sweep construction object rather than immediately restoring the previous scene
+- [ ] Workflow .471: newly added Sweep opens its PROFILE / PATH / FINISH Tool Session normally
+- [ ] Workflow .471: Cancel Sweep still restores the exact pre-Sweep scene/history
+- [ ] Workflow .471: changing selection mode after Sweep already exists still cancels Sweep cleanly
+- [ ] UI .471: Edge Active Tools no longer shows Revolve
+- [ ] Workflow .471: Inset, Edge Bevel, Vertex Bevel, Extrude, Through and orbit/pan/zoom remain unaffected
+
