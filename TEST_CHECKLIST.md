@@ -1244,3 +1244,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .491: Through and component Rotate .483 still work
 - [ ] Regression .491: viewport navigation unchanged
 
+- [ ] Diagnostic .492: arm Extrude, tap one unselected face without dragging
+- [ ] Diagnostic .492: report the final FaceTap status-bar text after the tap
+- [ ] Diagnostic .492: repeat once with Inset
+- [ ] Do not evaluate progressive disclosure from .492; this build only traces armed Face tap state
+
