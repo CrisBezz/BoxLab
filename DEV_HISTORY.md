@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.488 native Face picker handoff
+
+- .487 still failed despite raycasting live scene face meshes.
+- Reframed ownership around the actual native picker: main.js pickKind('face') now handles unselected-face taps while Extrude/Inset remains armed.
+- Selected-face presses remain owned by multi-face-direct for deselection and modelling drag.
+- Unselected native taps can promote into direct modelling only after the drag threshold is crossed.
+- Removed duplicate armed Face picker logic.
+
 ## 2026-09-26 — v0.36.18.487 live scene Face picker
 
 - .486 still failed because it looked for a non-existent bridge `faceObjects` collection.

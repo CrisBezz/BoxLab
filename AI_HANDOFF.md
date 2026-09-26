@@ -1,3 +1,15 @@
+## Current recovery checkpoint — v0.36.18.488
+
+- Hands-on .487 still failed, confirming that duplicating Face picking outside main was the wrong architecture.
+- Audit established the true native tap path: `main.js -> pickKind('face')` raycasts `root.children` and owns ordinary Face selection.
+- v0.36.18.488 stops duplicating that picker:
+  - selected-face press while Extrude/Inset is armed stays with `multi-face-direct.js` for tap-to-deselect / drag-to-model;
+  - unselected-face press is deliberately not consumed, so native `main.js` adds it exactly as normal Face selection does;
+  - after the native picker adds that face, crossing the drag threshold promotes the same gesture into the armed Extrude/Inset drag.
+- A pure tap therefore uses native selection; a drag transitions to modelling.
+- Duplicate live-scene picker code is removed.
+- No progressive disclosure, topology, Rotate, main.js or protected multi-object-transform changes.
+
 ## Current recovery checkpoint — v0.36.18.487
 
 - Hands-on .486 still failed; the architectural idea was correct but its data source was not.

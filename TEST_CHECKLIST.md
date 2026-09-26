@@ -1216,3 +1216,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .487: no flash/drop on additive selection
 - [ ] Regression .487: Through, Rotate .483 and viewport navigation remain unchanged
 
+- [ ] Workflow .488: Extrude armed -> tap an unselected face and confirm native Face selection adds it without flashing away
+- [ ] Workflow .488: continue tapping additional unselected faces and confirm additive selection builds up
+- [ ] Workflow .488: tap selected faces to remove them while Extrude stays armed
+- [ ] Workflow .488: drag a newly selected face in one gesture and confirm Extrude takes over after threshold
+- [ ] Workflow .488: repeat the same four checks for Inset
+- [ ] Regression .488: Through, Rotate .483 and viewport navigation remain unchanged
+
