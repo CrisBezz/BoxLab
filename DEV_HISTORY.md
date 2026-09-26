@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.506 force Face diagnostics to true bottom
+
+- Fixed .505 ordering bug where late Face tools could remain below Inspect / Repair / Topology Gate.
+- Face layout sync now appends Inspect, Repair, and Topology Gate as the final three drawer children in that order.
+- Compact modelling rows and frozen .501 interaction unchanged.
+
 ## 2026-09-26 — v0.36.18.505 compact Face modelling block
 
 - Rearranged Face tools into three compact rows to reduce vertical drawer usage.
