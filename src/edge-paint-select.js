@@ -51,6 +51,7 @@ depthButtons.forEach(button => button.addEventListener('click', () => {
 canvas?.addEventListener('pointerdown', event => {
   if(globalThis.__boxlabFaceSplit?.isArmed?.()||globalThis.__boxlabOffsetLoop?.isArmed?.()) return;
   const type = mode();
+  if(type==='face'&&globalThis.__boxlabFaceDirect?.active?.()) return;
   const bridge = selection();
   if (!event.isPrimary || !multiToggle?.checked || !['vertex', 'edge', 'face'].includes(type)) return;
   const first = hitIndices(event, type)[0];

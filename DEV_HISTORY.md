@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.486 armed Face picker ownership repair
+
+- .485 still flashed/dropped newly tapped faces during armed Extrude/Inset.
+- Replaced the direct tool's temporary mesh raycast with the same live viewport faceObjects picker used by normal Face selection.
+- Added explicit armed Face direct ownership state and made edge-paint-select yield while that owner is active.
+- No topology or disclosure changes.
+
 ## 2026-09-26 — v0.36.18.485 armed Face full selection ownership
 
 - .484 fixed tap-to-deselect but additive selection of unselected faces still flashed/dropped while Extrude/Inset stayed armed.
