@@ -1,3 +1,12 @@
+## Current recovery checkpoint — v0.36.18.463
+
+- v0.36.18.462 Extract/Solidify/Shell facegroup propagation was hands-on PASS.
+- v0.36.18.463 restores Facegroup preservation through Object Join only.
+- The first object's cloned faceGroups remain intact; every appended joined face now appends its source facegroup in the same order.
+- Creases, loose topology and modifier compatibility behavior are unchanged.
+- Boolean facegroup semantics remain intentionally untouched for the next higher-risk slice.
+- Sentinel: join two grouped editable objects and confirm all pre-join colours survive in the joined object; prior Facegroup and modelling sentinels remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.462
 
 - v0.36.18.461 Mesh Health facegroup preservation was hands-on PASS.
