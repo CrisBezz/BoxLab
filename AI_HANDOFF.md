@@ -1,5 +1,21 @@
 ## Current Face progressive-disclosure checkpoint — v0.36.18.507
 
+- User supplied a marked-up iPad screenshot showing the desired compact Face grid.
+- v0.36.18.507 packs existing Face buttons into six 3-column rows:
+  - Row 1: Extrude / Inset / Knife
+  - Row 2: Delete / Duplicate / Extract
+  - Row 3: Join Coplanar / Bridge / Sweep
+  - Row 4: Shell / Poke / Circle
+  - Row 5: Close Holes / Triangulate / Flip
+  - Row 6: Quad Cleanup / Quadify N-gons / blank
+- Orient Faces is intentionally not pulled into the grid; it remains in Repair.
+- Armed-only Value/readout/Repeat remains directly beneath Row 1.
+- Inspect / Repair / Topology Gate remain the true final Face drawer sections.
+- Existing button nodes are moved, not recreated; handlers remain attached.
+- Frozen .501 Face interaction and .483 Rotate remain untouched.
+
+## Current Face progressive-disclosure checkpoint — v0.36.18.507
+
 - User supplied a hand-drawn compact Face layout.
 - v0.36.18.507 arranges the modelling buttons into a dense 3-column grid:
   - Row 1: Extrude / Inset / Knife
