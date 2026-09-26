@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.507 handoff reconciliation
+
+- Reconciled AI_HANDOFF.md and TEST_CHECKLIST.md with actual current main after the final .507 layout refinement.
+- Removed the superseded .507 note/checklist that still placed Orient Faces in the compact grid.
+- No app/runtime code changed; current .507 remains Row 6 = Quad Cleanup / Quadify N-gons / blank, with Orient Faces in Repair.
+
 ## 2026-09-26 — v0.36.18.507 compact Face 3-column grid
 
 - Repacked Face tools to match the user-marked six-row, three-column layout.
