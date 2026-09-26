@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.477 Edge exclusivity + Face Rotate cache repair
+
+- Made Loop Cut and Edge Bevel mutually exclusive using their existing toggle paths.
+- Audited Face Rotate against .449: transform source and ownership files are byte-identical to the known-good baseline.
+- Found current loader using stale `.444` transform-upgrade cache key instead of the later proven runtime key.
+- Cache-hopped unchanged `transform-upgrade.js` to .477 so iPad/Safari receives the current source.
+- No rotate algorithm or protected transform core changed.
+
 ## 2026-09-26 — v0.36.18.476 Edge progressive-disclosure polish
 
 - User requested layout refinements after .475 hands-on.
