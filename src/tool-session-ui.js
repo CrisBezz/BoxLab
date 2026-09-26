@@ -67,6 +67,10 @@ style.textContent=`
 .mode-tools[data-mode-tools="face"]:has(#insetBtn.active) #repeatFacePreviousRow{display:grid!important}
 .mode-tools[data-mode-tools="face"]:has(#extrudeBtn.active) #precisionFaceReadout,
 .mode-tools[data-mode-tools="face"]:has(#insetBtn.active) #precisionFaceReadout{display:block!important}
+
+.mode-tools[data-mode-tools="face"] .face-compact-row{margin:4px 0!important}
+.mode-tools[data-mode-tools="face"] .face-compact-row button{min-height:32px!important;padding:4px 5px!important;font-size:10.5px!important}
+.mode-tools[data-mode-tools="face"] .sweep-selection-launch-row:empty{display:none!important}
 `;
 document.head.appendChild(style);
 
@@ -78,6 +82,23 @@ function installEdgeControlOrder(){
 }
 installEdgeControlOrder();
 
+function ensureFaceCompactRow(faceTools,id){
+  let row=document.querySelector('#'+id);
+  if(row)return row;
+  row=document.createElement('div');
+  row.id=id;
+  row.className='outliner-actions face-compact-row';
+  row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+  row.style.gap='4px';
+  return row;
+}
+function moveButtonToRow(button,row){
+  if(!button||!row)return false;
+  if(button.parentElement!==row)row.appendChild(button);
+  button.style.minWidth='0';
+  button.style.width='100%';
+  return true;
+}
 function installFaceControlOrder(){
   const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
   const title=faceTools?.querySelector(':scope > .panel-title');
@@ -85,11 +106,23 @@ function installFaceControlOrder(){
   const value=document.querySelector('#precisionFaceRow');
   const readout=document.querySelector('#precisionFaceReadout');
   const repeat=document.querySelector('#repeatFacePreviousRow');
+  const sweep=document.querySelector('.sweep-selection-launch[data-sweep-selection-mode="face"]');
+  const join=document.querySelector('#joinSelectedCoplanarFacesBtn');
+  const extract=document.querySelector('#extractFacesBtn');
+  const duplicate=document.querySelector('#duplicateFacesBtn');
+  const bridge=document.querySelector('#bridgeFacesBtn');
+  const del=document.querySelector('#deleteFaceBtn');
   const inspect=document.querySelector('#faceInspectDrawer');
   const repair=document.querySelector('#faceRepairDrawer');
   const gate=document.querySelector('#topologyValidityGate');
   if(!faceTools||!primary)return false;
 
+  primary.id='facePrimaryCompactRow';
+  primary.classList.add('face-compact-row');
+  primary.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+  for(const button of [document.querySelector('#extrudeBtn'),document.querySelector('#insetBtn'),document.querySelector('#knifeBtn')]){
+    moveButtonToRow(button,primary);
+  }
   if(primary.parentElement!==faceTools){
     if(title?.parentElement===faceTools)title.insertAdjacentElement('afterend',primary);
     else faceTools.prepend(primary);
@@ -104,20 +137,29 @@ function installFaceControlOrder(){
     cursor=node;
   }
 
-  if(gate?.parentElement===faceTools){
-    if(inspect&&inspect.parentElement!==faceTools)faceTools.insertBefore(inspect,gate);
-    else if(inspect&&inspect.nextElementSibling!==repair&&repair?.parentElement===faceTools)gate.parentElement.insertBefore(inspect,gate);
-    if(repair&&repair.parentElement!==faceTools)faceTools.insertBefore(repair,gate);
-    if(inspect?.parentElement===faceTools&&repair?.parentElement===faceTools&&inspect.nextElementSibling!==repair)inspect.insertAdjacentElement('afterend',repair);
-    if(repair?.parentElement===faceTools&&repair.nextElementSibling!==gate)repair.insertAdjacentElement('afterend',gate);
-  }else{
-    if(inspect?.parentElement===faceTools)faceTools.appendChild(inspect);
-    if(repair?.parentElement===faceTools)faceTools.appendChild(repair);
+  const secondary=ensureFaceCompactRow(faceTools,'faceSecondaryCompactRow');
+  const tertiary=ensureFaceCompactRow(faceTools,'faceTertiaryCompactRow');
+  for(const button of [sweep,join,del])moveButtonToRow(button,secondary);
+  for(const button of [extract,duplicate,bridge])moveButtonToRow(button,tertiary);
+
+  if(cursor.nextElementSibling!==secondary)cursor.insertAdjacentElement('afterend',secondary);
+  if(secondary.nextElementSibling!==tertiary)secondary.insertAdjacentElement('afterend',tertiary);
+
+  faceTools.querySelectorAll('.sweep-selection-launch-row:empty,.outliner-actions:empty').forEach(row=>{
+    if(row!==primary&&row!==secondary&&row!==tertiary)row.style.display='none';
+  });
+
+  let tail=tertiary;
+  for(const node of [inspect,repair,gate]){
+    if(!node)continue;
+    if(node.parentElement!==faceTools||tail.nextElementSibling!==node)tail.insertAdjacentElement('afterend',node);
+    tail=node;
   }
   return true;
 }
-[0,80,250,600,1800,1950,2200].forEach(delay=>setTimeout(installFaceControlOrder,delay));
+[0,80,250,600,800,1800,1950,2200].forEach(delay=>setTimeout(installFaceControlOrder,delay));
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(installFaceControlOrder));
+document.addEventListener('pointerup',()=>queueMicrotask(()=>queueMicrotask(installFaceControlOrder)),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(installFaceControlOrder)));
 
 let active=null;
