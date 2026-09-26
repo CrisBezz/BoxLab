@@ -1,3 +1,15 @@
+## Current recovery checkpoint — v0.36.18.479
+
+- User explicitly requested Face Rotate repair before continuing UI rebuild.
+- Audit found overlapping rotate ownership: generic `transform-upgrade.js` and dedicated `rotate-transform.js` could both claim Rotate gestures.
+- The dedicated rotate fallback also used stale `bridgeState.selectedFaces` / `selectedEdges` fields instead of the authoritative `__boxlabSelectionBridge`.
+- v0.36.18.479 gives Face Rotate one owner only:
+  - generic transform-upgrade yields when mode=Face and tool=Rotate;
+  - dedicated rotate-transform reads the selected face IDs from `__boxlabSelectionBridge`, converts them to face vertices, and owns that gesture.
+- Move/Scale and Vertex/Edge/Object transform paths remain on transform-upgrade unchanged.
+- `main.js` and `multi-object-transform.js?v=0.36.1.0` remain untouched.
+- Sentinel: select face → Rotate → Pencil-drag selected face rotates around its selection center; selection remains; one-finger navigation stays orbit.
+
 ## Current recovery checkpoint — v0.36.18.478
 
 - v0.36.18.477 made Loop and Bevel mutually exclusive, but hands-on showed Loop → Bevel required two taps.
