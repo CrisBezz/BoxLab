@@ -6,7 +6,7 @@ import * as THREE from 'three';
 // Pencil/mouse/touch-drag a selected edge. The newly-created outer rail
 // remains selected and Extrude stays armed for rapid repeated pulls.
 
-const VERSION='0.36.18.427';
+const VERSION='0.36.18.510';
 const canvas=document.querySelector('#viewport');
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const moveRow=edgeTools?.querySelector('.edge-move-actions');
@@ -186,10 +186,15 @@ function syncButton(){
   syncPlaneButton();
 }
 function setArmed(next){
+  const wasArmed=armed;
   armed=!!next;
+  if(armed&&!wasArmed){
+    globalThis.__boxlabTransformArming?.activateRealMove?.();
+    globalThis.__boxlabTransformArming?.setConstraint?.('plane');
+  }
   button.classList.toggle('active',armed);
   syncPlaneButton();
-  if(status)status.textContent=armed?'Edge Extrude • drag selected boundary edge(s) • repeat to pull ribbon':'Edge mode';
+  if(status)status.textContent=armed?'Edge Extrude • Move armed • Plane constraint • drag selected boundary edge(s)':'Edge mode';
 }
 precision?.querySelectorAll('[data-constraint]').forEach(control=>control.addEventListener('click',()=>queueMicrotask(syncPlaneButton),true));
 
