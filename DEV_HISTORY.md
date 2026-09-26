@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.484 armed Extrude / Inset tap-toggle selection
+
+- Added tap-to-deselect for already-selected faces while Extrude or Inset remains armed.
+- The existing drag threshold still separates selection taps from modelling drags.
+- Dragging a selected face continues to run Extrude/Inset unchanged.
+- Additive selection of other faces remains intact; no progressive-disclosure changes yet.
+
 ## 2026-09-26 — v0.36.18.483 unified component Rotate owner
 
 - Hands-on .482 showed Face Rotate working only through dedicated rotate-transform; Vertex/Edge remained broken and precision controls were ignored.
