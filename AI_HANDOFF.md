@@ -1,3 +1,16 @@
+## Current recovery checkpoint — v0.36.18.495
+
+- .494 hands-on trace: `down hit=1 stack=[1@6.108,4@7.939] mode=face before=[1] | up ok=true now=[] | ...`.
+- This definitively showed the native ray intersects multiple Face pickers and always chooses nearest selected face 1, so additive tap toggles face 1 off instead of reaching face 4.
+- v0.36.18.495 changes armed Extrude/Inset hit resolution only:
+  - keep native ordered Face hit stack;
+  - if primary hit is unselected, use it;
+  - if primary hit is already selected and another unselected Face is also under the Pencil, choose the first unselected hit;
+  - if no unselected alternative exists, keep the selected primary hit so tap-to-deselect still works.
+- Diagnostic trace now shows both primary and chosen hit.
+- Ordinary Face selection outside armed Extrude/Inset is unchanged.
+- No progressive disclosure, Through, Rotate .483, navigation or protected multi-object-transform changes.
+
 ## Current diagnostic checkpoint — v0.36.18.494
 
 - .493 trace from hands-on: `down hit=3 mode=face before=[3] | up ok=true now=[] | micro=[] | raf=[]`.
