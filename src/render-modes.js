@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js';
 import {applyMirror} from './mirror.js';
+import {subdivide} from './subdivision.js';
 
 const status=document.querySelector('#selectionStatus');
 let mode='studio';
@@ -65,16 +66,23 @@ function frontOnly(material){
   if(!front){front=material.clone();front.side=THREE.FrontSide;front.needsUpdate=true;frontMaterialCache.set(material,front);}
   return front;
 }
+function evaluatedFacegroupMesh(mesh,settings={}){
+  if(!mesh)return null;
+  let out=mesh;
+  if(settings?.subd)out=subdivide(out,Math.max(1,Number(settings.subdLevel||1)));
+  if(settings?.mirror)out=applyMirror(out,settings.mirror);
+  return out;
+}
 function sourceMeshForBody(body){
   const m=manager();
   if(body?.userData?.kind==='body'){
     const source=bridge()?.mesh||null;
     const active=m?.objects?.find(item=>item.id===m.activeId);
-    return source&&active?.settings?.mirror?applyMirror(source,active.settings.mirror):source;
+    return evaluatedFacegroupMesh(source,active?.settings||{});
   }
   if(body?.userData?.kind==='boxlab-inactive-body'){
     const id=body.userData.objectId,object=m?.objects?.find(item=>item.id===id);
-    return object?.mesh&&object?.settings?.mirror?applyMirror(object.mesh,object.settings.mirror):object?.mesh||null;
+    return evaluatedFacegroupMesh(object?.mesh||null,object?.settings||{});
   }
   return body?.userData?.editableMesh||body?.userData?.sourceMesh||body?.userData?.mesh||null;
 }
