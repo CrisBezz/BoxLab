@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.507 compact Face 3-column grid
+
+- Repacked Face tools to match the user-marked six-row, three-column layout.
+- Left Orient Faces in Repair rather than the modelling grid.
+- Kept armed Value/readout/Repeat below Row 1 and diagnostics at the true bottom.
+- Layout only; frozen .501 Face interaction unchanged.
+
 ## 2026-09-26 — v0.36.18.507 dense Face tool grid
 
 - Reworked Face modelling controls into six compact 3-column rows following the user's markup.
