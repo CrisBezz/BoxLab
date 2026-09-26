@@ -6,6 +6,7 @@
 - Initial Edge Extrude constraint defaults to Plane, giving the most useful free movement perpendicular to the grabbed edge.
 - Defaulting occurs only on a fresh arm transition so later user-selected constraints persist across repeated ribbon pulls.
 - No topology or extrusion solver changes.
+- PR #242 squash-merged as `47a699bbd042e49cfaed58919dc9b26ead081216`; .510 and existing .427 Edge Extrude regressions passed in run #984.
 
 ## 2026-09-27 — v0.36.18.509 Sweep active-button polish
 
