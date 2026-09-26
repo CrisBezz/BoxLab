@@ -78,6 +78,25 @@ function installEdgeControlOrder(){
 }
 installEdgeControlOrder();
 
+function installFaceControlOrder(){
+  const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
+  const primary=faceTools?.querySelector(':scope > .outliner-actions');
+  const value=document.querySelector('#precisionFaceRow');
+  const readout=document.querySelector('#precisionFaceReadout');
+  const repeat=document.querySelector('#repeatFacePreviousRow');
+  if(!faceTools||!primary)return false;
+
+  let cursor=primary;
+  for(const node of [value,readout,repeat]){
+    if(!node)continue;
+    if(node.parentElement!==faceTools||cursor.nextElementSibling!==node)cursor.insertAdjacentElement('afterend',node);
+    cursor=node;
+  }
+  return !!(value||readout||repeat);
+}
+[0,80,250,600].forEach(delay=>setTimeout(installFaceControlOrder,delay));
+window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(installFaceControlOrder));
+
 let active=null;
 
 function restore(entry){
