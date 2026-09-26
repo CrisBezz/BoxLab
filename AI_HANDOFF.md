@@ -1,3 +1,13 @@
+## Current cross-mode polish checkpoint — v0.36.18.511
+
+- Begins the final pre-Beta-5 cross-mode polish from stable .510.
+- Vertex mode now uses the same compact 3-column spacing and button sizing rhythm as Edge and Face.
+- The established .341 deterministic Vertex tool ordering is intentionally preserved; this build does not reorder Vertex tools.
+- Existing Vertex Slide / Vertex Bevel progressive disclosure is unchanged.
+- Presentation-only change in tool-session-ui.js; no Vertex modelling handlers, selection, transforms or topology are changed.
+- Face .501, Rotate .483, Edge .508/.510, Sweep .509, Through and protected multi-object-transform remain untouched.
+- Next step: hands-on confirm Vertex no longer feels visually larger than Edge/Face and arming Slide/Bevel reveals only their controls without button-row movement.
+
 ## Current Edge Extrude UX checkpoint — v0.36.18.510
 
 - Edge Extrude now mirrors Sweep's transform cue: arming Edge Extrude automatically arms the real Move tool.
