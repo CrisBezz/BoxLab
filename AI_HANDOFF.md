@@ -4,6 +4,7 @@
 - Sweep active/pressed buttons now use the standard BoxLab white active appearance (#eef1f7 background, dark text, no special inset outline).
 - Presentation-only change in src/sweep-path.js; Sweep workflow, path authoring, cancellation, snapping and modelling behavior are unchanged.
 - Frozen Face .501 interaction, Rotate .483, Through, Edge .508 layout and protected multi-object-transform remain untouched.
+- Merged via PR #241; squash merge `26df6e06cfc15bc2aad15b1edd3e4a7fa3bc1b68`. New .509 visual regressions passed in run #982; the workflow remained red only from the known unrelated historical-suite backlog.
 
 ## Current Edge progressive-disclosure checkpoint — v0.36.18.508
 
