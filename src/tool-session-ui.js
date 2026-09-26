@@ -131,19 +131,21 @@ function installEdgeControlOrder(){
     cursor=row;
   }
 
-  const loopOptions=edgeTools.querySelector('.loop-cut-option');
+  const loops=edgeTools.querySelector('.loop-cut-option');
   const bevelOptions=edgeTools.querySelector('.bevel-option');
   const loopSlide=edgeTools.querySelector('.loop-slide-option');
   const offsetOptions=edgeTools.querySelector('.offset-option');
 
-  if(loopOptions&&row1.nextElementSibling!==loopOptions)row1.insertAdjacentElement('afterend',loopOptions);
-  if(bevelOptions&&loopOptions?.nextElementSibling!==bevelOptions)(loopOptions||row1).insertAdjacentElement('afterend',bevelOptions);
-  let actionAnchor=bevelOptions||loopOptions||row1;
+  if(loops&&row1.nextElementSibling!==loops)row1.insertAdjacentElement('afterend',loops);
+  if(loops&&loopSlide&&loops.nextElementSibling!==loopSlide)loops.insertAdjacentElement('afterend',loopSlide);
+  const primaryOptionAnchor=loopSlide||loops||row1;
+  if(bevelOptions&&primaryOptionAnchor.nextElementSibling!==bevelOptions)primaryOptionAnchor.insertAdjacentElement('afterend',bevelOptions);
+  let actionAnchor=bevelOptions||primaryOptionAnchor;
   for(const row of [row2,row3]){
     if(actionAnchor.nextElementSibling!==row)actionAnchor.insertAdjacentElement('afterend',row);
     actionAnchor=row;
   }
-  for(const node of [loopSlide,offsetOptions]){
+  for(const node of [offsetOptions]){
     if(!node)continue;
     if(actionAnchor.nextElementSibling!==node)actionAnchor.insertAdjacentElement('afterend',node);
     actionAnchor=node;
