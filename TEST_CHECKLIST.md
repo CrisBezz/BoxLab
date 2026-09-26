@@ -1249,3 +1249,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Diagnostic .492: repeat once with Inset
 - [ ] Do not evaluate progressive disclosure from .492; this build only traces armed Face tap state
 
+- [ ] Workflow .495: with Face 1 selected, arm Extrude and tap overlapping Face 4 position; Face 4 is added instead of Face 1 being removed
+- [ ] Workflow .495: tap a selected face where no unselected Face is also under the Pencil; it still deselects
+- [ ] Workflow .495: repeat both checks for Inset
+- [ ] Workflow .495: drag still promotes into Extrude/Inset normally
+- [ ] Regression .495: ordinary Face selection outside armed tools unchanged
+- [ ] Regression .495: Through, Rotate .483 and viewport navigation unchanged
+
