@@ -80,11 +80,22 @@ installEdgeControlOrder();
 
 function installFaceControlOrder(){
   const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
-  const primary=faceTools?.querySelector(':scope > .outliner-actions');
+  const title=faceTools?.querySelector(':scope > .panel-title');
+  const primary=document.querySelector('#extrudeBtn')?.closest('.outliner-actions');
   const value=document.querySelector('#precisionFaceRow');
   const readout=document.querySelector('#precisionFaceReadout');
   const repeat=document.querySelector('#repeatFacePreviousRow');
+  const inspect=document.querySelector('#faceInspectDrawer');
+  const repair=document.querySelector('#faceRepairDrawer');
+  const gate=document.querySelector('#topologyValidityGate');
   if(!faceTools||!primary)return false;
+
+  if(primary.parentElement!==faceTools){
+    if(title?.parentElement===faceTools)title.insertAdjacentElement('afterend',primary);
+    else faceTools.prepend(primary);
+  }else if(title?.parentElement===faceTools&&title.nextElementSibling!==primary){
+    title.insertAdjacentElement('afterend',primary);
+  }
 
   let cursor=primary;
   for(const node of [value,readout,repeat]){
@@ -92,10 +103,22 @@ function installFaceControlOrder(){
     if(node.parentElement!==faceTools||cursor.nextElementSibling!==node)cursor.insertAdjacentElement('afterend',node);
     cursor=node;
   }
-  return !!(value||readout||repeat);
+
+  if(gate?.parentElement===faceTools){
+    if(inspect&&inspect.parentElement!==faceTools)faceTools.insertBefore(inspect,gate);
+    else if(inspect&&inspect.nextElementSibling!==repair&&repair?.parentElement===faceTools)gate.parentElement.insertBefore(inspect,gate);
+    if(repair&&repair.parentElement!==faceTools)faceTools.insertBefore(repair,gate);
+    if(inspect?.parentElement===faceTools&&repair?.parentElement===faceTools&&inspect.nextElementSibling!==repair)inspect.insertAdjacentElement('afterend',repair);
+    if(repair?.parentElement===faceTools&&repair.nextElementSibling!==gate)repair.insertAdjacentElement('afterend',gate);
+  }else{
+    if(inspect?.parentElement===faceTools)faceTools.appendChild(inspect);
+    if(repair?.parentElement===faceTools)faceTools.appendChild(repair);
+  }
+  return true;
 }
-[0,80,250,600].forEach(delay=>setTimeout(installFaceControlOrder,delay));
+[0,80,250,600,1800,1950,2200].forEach(delay=>setTimeout(installFaceControlOrder,delay));
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(installFaceControlOrder));
+document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(installFaceControlOrder)));
 
 let active=null;
 
