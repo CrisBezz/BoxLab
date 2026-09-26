@@ -1,3 +1,17 @@
+## Current diagnostic checkpoint — v0.36.18.492
+
+- Hands-on .491 still: deselect works, additive select flashes/fails; user also reports selection action buttons all light up during the failed tap.
+- Repeated picker/toggle changes are paused.
+- v0.36.18.492 is a diagnostic-only build for armed Extrude/Inset Face taps.
+- Adds a small status-bar `FaceTap` readout showing:
+  - pointerdown hit + selection before;
+  - pointerup native toggle return value + immediate selection;
+  - selection again in a microtask;
+  - selection again on next animation frame.
+- No intended selection/modeling behavior changed from .491.
+- Goal: determine whether additive selection fails to commit immediately or commits then gets overwritten/render-lost.
+- Through, Rotate .483, navigation and protected multi-object transform unchanged.
+
 ## Current recovery checkpoint — v0.36.18.491
 
 - Hands-on .490 still failed to add unselected faces while armed, although deselection worked.
