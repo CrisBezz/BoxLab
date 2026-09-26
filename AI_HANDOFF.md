@@ -1,3 +1,15 @@
+## Current recovery checkpoint — v0.36.18.477
+
+- v0.36.18.476 Edge progressive-disclosure polish is the current hands-on baseline.
+- User found two follow-up issues:
+  - Loop and Bevel could remain armed at the same time.
+  - Face Rotate appeared non-functional.
+- Loop and Bevel are now mutually exclusive through the existing Edge handoff shim: arming one first toggles the other off through its own existing button/controller path.
+- Face Rotate audit found the complete transform implementation remains byte-identical to the hands-on-good .449 runtime: `main.js`, `transform-upgrade.js`, `rotate-transform.js`, selection and Pencil/orbit layers are unchanged.
+- The rebuilt loader had regressed to the older cache key `transform-upgrade.js?v=0.36.18.444`, whereas .449 loaded the proven transform runtime under a fresh .449 key. v0.36.18.477 cache-hops the unchanged transform source to .477 so iPad/Safari cannot reuse a stale .444 module.
+- No Face Rotate algorithm, selection, transform ownership or protected multi-object transform code is modified.
+- Sentinel: Loop and Bevel cannot coexist; Face Rotate works with selected face(s); Move/Scale, Vertex/Edge transforms and navigation remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.476
 
 - v0.36.18.475 Edge progressive disclosure passed to hands-on with five requested polish fixes.

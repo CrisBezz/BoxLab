@@ -1144,3 +1144,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .476: choosing Move / Scale / Rotate or leaving Edge mode disarms Crease
 - [ ] Workflow .476: Loop, Bevel, Crease, Edge Slide, Offset Loop and navigation remain functional
 
+- [ ] Workflow .477: arming Edge Bevel while Loop is active disarms Loop first
+- [ ] Workflow .477: arming Loop while Edge Bevel is active disarms Bevel first
+- [ ] Workflow .477: Loop and Bevel are never visually active at the same time
+- [ ] Workflow .477: selected Face rotates by viewport drag with Rotate armed
+- [ ] Workflow .477: Face Rotate numeric Degrees and X/Y/Z constraints remain functional
+- [ ] Workflow .477: Face Move/Scale, Vertex/Edge transforms and orbit/pan/zoom remain unchanged
+
