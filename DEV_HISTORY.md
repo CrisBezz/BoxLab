@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.494 Face hit-stack diagnostic
+
+- .493 proved the tap was hitting selected face 3 and then correctly toggling it off.
+- Added ordered native Face raycast hit-stack diagnostics with per-hit distance.
+- No modelling or selection behavior change.
+
 ## 2026-09-26 — v0.36.18.493 persistent Face tap trace
 
 - .492 screenshot showed final RAF selection empty after a valid face hit.
