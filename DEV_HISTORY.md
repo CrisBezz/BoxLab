@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.463 Object Join facegroup preservation
+
+- v0.36.18.462 Extract/Solidify/Shell propagation passed hands-on testing.
+- `combineEditableMeshes()` now carries `faceGroups[]` in lockstep with appended faces.
+- Joined source objects preserve their existing group IDs and colours in the combined editable mesh.
+- No Boolean or interaction behavior changed.
+
 ## 2026-09-26 — v0.36.18.462 Extract / Solidify / Shell facegroup propagation
 
 - v0.36.18.461 Mesh Health facegroup preservation passed hands-on testing.
