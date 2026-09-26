@@ -1,3 +1,12 @@
+## Current recovery checkpoint — v0.36.18.467
+
+- v0.36.18.466 Shell-only Facegroup propagation was hands-on PASS.
+- Facegroup recovery is now treated as complete; historical .445 runtime/cache rewiring remains quarantined.
+- v0.36.18.467 restores only the useful historical .449 Viewport menu scrolling behavior inside `view-modes.js`.
+- Viewport menu gets viewport-relative max height, vertical scrolling, contained overscroll, iPad inertial scrolling and vertical pan touch handling.
+- No `index.html` cache/version rewiring and no modelling interaction changes.
+- After this checkpoint, proceed directly into UI cleanup in small functional slices rather than replaying the old broad .450 rewrite.
+
 ## Current recovery checkpoint — v0.36.18.466
 
 - v0.36.18.465 Solidify-only facegroup propagation was hands-on PASS and Shell remained healthy.

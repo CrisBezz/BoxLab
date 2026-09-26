@@ -38,13 +38,13 @@ function ensureUI(){
 #viewModes>summary::-webkit-details-marker{display:none}
 #viewModes[open]>summary{background:rgba(255,255,255,.1)}
 .viewport-menu-icon{font-size:15px;line-height:1;opacity:.9}.viewport-menu-caret{font-size:10px;opacity:.65}
-.viewport-menu-panel{position:absolute;right:0;top:calc(100% + 7px);z-index:200;width:min(360px,82vw);padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(17,19,24,.98);box-shadow:0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(18px);pointer-events:auto;touch-action:manipulation}
+.viewport-menu-panel{position:absolute;right:0;top:calc(100% + 7px);z-index:200;width:min(360px,82vw);max-height:calc(100dvh - 118px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable;padding:10px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(17,19,24,.98);box-shadow:0 14px 34px rgba(0,0,0,.38);backdrop-filter:blur(18px);pointer-events:auto;touch-action:pan-y}
 .viewport-menu-section+.viewport-menu-section{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.09)}
 .viewport-menu-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;opacity:.55;margin:0 2px 6px}
 .viewport-view-grid,.viewport-render-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
 .viewport-view-grid button,.viewport-render-grid button{min-width:0;min-height:34px;padding:5px 7px;font-size:11px;white-space:nowrap;touch-action:manipulation}
 .viewport-view-grid button.active,.viewport-render-grid button.active{background:#f2f5fa;color:#111318;border-color:#f2f5fa}
-@media(max-width:900px){#viewModes>summary{padding:5px 8px}.viewport-menu-panel{right:-4px;width:min(340px,88vw)}}
+@media(max-width:900px){#viewModes>summary{padding:5px 8px}.viewport-menu-panel{right:-4px;width:min(340px,88vw);max-height:calc(100dvh - 108px)}}
 `;
   document.head.append(style);
   return wrap;

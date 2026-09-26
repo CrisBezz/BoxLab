@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.467 Viewport scroll recovery
+
+- .466 passed hands-on; Facegroup recovery considered complete.
+- Restored only the functional part of historical .449: Viewport panel max-height + vertical scrolling for iPad.
+- Deliberately skipped historical index/module cache-version churn.
+- Next: resume UI cleanup in small isolated slices.
+
 ## 2026-09-26 — v0.36.18.466 Shell-only facegroup propagation
 
 - .465 passed hands-on with Solidify Facegroups restored and Shell still healthy.

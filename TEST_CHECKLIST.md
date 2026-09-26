@@ -1066,3 +1066,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .466: inner Shell faces inherit the same groups via Solidify
 - [ ] Facegroups .466: generated side walls remain Ungrouped/neutral
 - [ ] Facegroups .466: Cancel/rollback restores the exact pre-Shell faceGroups
+
+
+- [ ] Viewport .467: menu remains within iPad landscape screen height
+- [ ] Viewport .467: menu scrolls vertically with touch/Pencil when content exceeds available height
+- [ ] Viewport .467: Facegroup controls and lower Studio controls remain reachable
+- [ ] Viewport .467: tapping View Direction / Render Look controls still works after scrolling
+- [ ] Viewport .467: modelling/navigation sentinels remain unaffected
