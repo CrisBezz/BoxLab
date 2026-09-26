@@ -1262,3 +1262,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .496: .495 additive overlap selection still works
 - [ ] Regression .496: Through, Rotate .483 and viewport navigation unchanged
 
+- [ ] Workflow .497: Selection depth = Visible, Extrude armed -> tapping a visible face selects only the nearest visible face
+- [ ] Workflow .497: build a multi-face selection across separately visible faces without selecting rear faces
+- [ ] Workflow .497: tap a selected visible face to deselect it
+- [ ] Workflow .497: drag selected visible face(s) -> Extrude operates only on selected visible faces
+- [ ] Workflow .497: repeat visible-only checks for Inset
+- [ ] Regression .497: no unintended rear-face/through selection while Visible is active
+- [ ] Regression .497: Through topology, Rotate .483 and viewport navigation unchanged
+
