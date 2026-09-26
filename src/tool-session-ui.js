@@ -68,13 +68,8 @@ style.textContent=`
 .mode-tools[data-mode-tools="face"]:has(#extrudeBtn.active) #precisionFaceReadout,
 .mode-tools[data-mode-tools="face"]:has(#insetBtn.active) #precisionFaceReadout{display:block!important}
 
-.mode-tools[data-mode-tools="face"] .face-compact-row{margin:4px 0!important}
-.mode-tools[data-mode-tools="face"] .face-compact-row button{min-height:32px!important;padding:4px 5px!important;font-size:10.5px!important}
-.mode-tools[data-mode-tools="face"] #faceCompactRow2,
-.mode-tools[data-mode-tools="face"] #faceCompactRow3,
-.mode-tools[data-mode-tools="face"] #faceCompactRow4,
-.mode-tools[data-mode-tools="face"] #faceCompactRow5,
-.mode-tools[data-mode-tools="face"] #faceCompactRow6{margin:2px 0!important}
+.mode-tools[data-mode-tools="face"] .face-compact-row{margin:2px 0!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
+.mode-tools[data-mode-tools="face"] .face-compact-row button{min-height:31px!important;padding:4px 4px!important;font-size:10px!important;line-height:1.1!important;white-space:normal!important}
 .mode-tools[data-mode-tools="face"] .sweep-selection-launch-row:empty{display:none!important}
 `;
 document.head.appendChild(style);
@@ -123,7 +118,6 @@ function installFaceControlOrder(){
   const close=document.querySelector('#closeHolesBtn');
   const triangulate=document.querySelector('#triangulateFacesBtn');
   const flip=document.querySelector('#flipFacesBtn');
-  const orient=document.querySelector('#orientFacesBtn');
   const quadClean=document.querySelector('#quadPairCleanupBtn');
   const quadify=document.querySelector('#quadifyNgonsBtn');
   const inspect=document.querySelector('#faceInspectDrawer');
@@ -161,7 +155,7 @@ function installFaceControlOrder(){
   for(const button of [join,bridge,sweep])moveButtonToRow(button,row3);
   for(const button of [shell,poke,circle])moveButtonToRow(button,row4);
   for(const button of [close,triangulate,flip])moveButtonToRow(button,row5);
-  for(const button of [quadClean,quadify,orient])moveButtonToRow(button,row6);
+  for(const button of [quadClean,quadify])moveButtonToRow(button,row6);
 
   const compactRows=[row2,row3,row4,row5,row6];
   for(const row of compactRows){
@@ -182,7 +176,7 @@ function installFaceControlOrder(){
   }
   return true;
 }
-[0,80,250,600,800,1800,1950,2200].forEach(delay=>setTimeout(installFaceControlOrder,delay));
+[0,80,250,600,800,1200,1800,1950,2200,2600].forEach(delay=>setTimeout(installFaceControlOrder,delay));
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(installFaceControlOrder));
 document.addEventListener('pointerup',()=>queueMicrotask(()=>queueMicrotask(installFaceControlOrder)),true);
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(installFaceControlOrder)));
