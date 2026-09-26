@@ -86,45 +86,6 @@ function info(ids=faces()){
 }
 function updateStatus(){const i=info();if(!status)return;if(!armed){status.textContent='Face mode • tool off';return;}if(!i){status.textContent=`${armed==='extrude'?'Extrude':'Inset'} • select face or faces`;return;}status.textContent=`${i.faceIndices.length} face${i.faceIndices.length===1?'':'s'} • ${i.regionCount} region${i.regionCount===1?'':'s'} • drag to ${armed==='extrude'?'Extrude':'Uniform Inset'}`;}
 function screenPoint(point,camera){const p=point.clone().project(camera),r=canvas.getBoundingClientRect();return{x:r.left+(p.x*.5+.5)*r.width,y:r.top+(-p.y*.5+.5)*r.height};}
-function pointInPolygon2D(x,y,points){
-  let inside=false;
-  for(let i=0,j=points.length-1;i<points.length;j=i++){
-    const a=points[i],b=points[j];
-    const hit=((a.y>y)!==(b.y>y))&&(x<(b.x-a.x)*(y-a.y)/((b.y-a.y)||1e-9)+a.x);
-    if(hit)inside=!inside;
-  }
-  return inside;
-}
-function pointSegmentDistance2D(x,y,a,b){
-  const vx=b.x-a.x,vy=b.y-a.y,l2=vx*vx+vy*vy;
-  if(l2<1e-9)return Math.hypot(x-a.x,y-a.y);
-  const t=Math.max(0,Math.min(1,((x-a.x)*vx+(y-a.y)*vy)/l2));
-  return Math.hypot(x-(a.x+vx*t),y-(a.y+vy*t));
-}
-function armedVisibleFaceHit(event,m,camera){
-  if(!m||!camera)return null;
-  const px=event.clientX,py=event.clientY,candidates=[];
-  setPointer(event);raycaster.setFromCamera(pointer,camera);
-  m.faces.forEach((face,index)=>{
-    if(!Array.isArray(face)||face.length<3)return;
-    const center=m.faceCenter(index),normal=m.faceNormal(index)?.clone?.().normalize?.();
-    if(!center||!normal)return;
-    const toCamera=camera.position.clone().sub(center).normalize();
-    if(normal.dot(toCamera)<=1e-5)return;
-    const poly=face.map(vi=>m.vertices[vi]).filter(Boolean).map(v=>screenPoint(v,camera));
-    if(poly.length<3)return;
-    const inside=pointInPolygon2D(px,py,poly);
-    let edgeDist=Infinity;
-    if(!inside)for(let i=0;i<poly.length;i++)edgeDist=Math.min(edgeDist,pointSegmentDistance2D(px,py,poly[i],poly[(i+1)%poly.length]));
-    if(!inside&&edgeDist>3)return;
-    const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,center),point=new THREE.Vector3();
-    if(!raycaster.ray.intersectPlane(plane,point))return;
-    const distance=raycaster.ray.origin.distanceTo(point);
-    if(distance>0)candidates.push({index,distance});
-  });
-  candidates.sort((a,b)=>a.distance-b.distance);
-  return candidates[0]?.index??null;
-}
 function centerOf(m,vertices){const c=m.vertices[vertices[0]].clone().set(0,0,0);vertices.forEach(i=>c.add(m.vertices[i]));return c.multiplyScalar(1/vertices.length);}
 function projectedNormal(m,region,camera){const n=region?.normal||m.faceRegionNormal?.(region?.faceIndices||[]);if(!region||!n||!camera)return{x:0,y:-1};const c=centerOf(m,region.regionVertices),a=screenPoint(c,camera),b=screenPoint(c.clone().add(n),camera),x=b.x-a.x,y=b.y-a.y,l=Math.hypot(x,y);return l>1e-4?{x:x/l,y:y/l}:{x:0,y:-1};}
 function setPointer(event){const r=canvas.getBoundingClientRect();pointer.set((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1));}
@@ -174,9 +135,9 @@ function beginDirectDrag(event,hit,selectionBefore,workingFaces){
 
 document.addEventListener('pointerdown',event=>{
   if(!armed||event.target!==canvas||!event.isPrimary)return;
-  const b=bridge(),m=mesh(),camera=state()?.camera;
-  if(!b||!m||!camera)return;
-  const selectionBefore=faces(),hit=armedVisibleFaceHit(event,m,camera);
+  const b=bridge(),picker=b?.pick;
+  if(!b||typeof picker!=='function')return;
+  const selectionBefore=faces(),hit=picker('face',event)?.index;
   if(!Number.isInteger(hit))return;
   pendingFacePress={
     id:event.pointerId,
