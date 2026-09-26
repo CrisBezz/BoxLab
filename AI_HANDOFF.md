@@ -1,3 +1,16 @@
+## Current recovery checkpoint — v0.36.18.485
+
+- Hands-on .484 confirmed tap-to-deselect works for armed Extrude/Inset, but additive selection of new faces still flashed and dropped.
+- Root cause: armed Face interaction was split across two owners: `edge-paint-select.js` added unselected faces while `multi-face-direct.js` owned selected-face tap/drag.
+- v0.36.18.485 consolidates armed Extrude/Inset viewport ownership into `multi-face-direct.js`:
+  - tap unselected face = add to current selection;
+  - tap selected face = remove from current selection;
+  - drag selected face = operate on current selection;
+  - drag unselected face = add it to the working selection and perform Extrude/Inset in the same gesture.
+- Extrude/Inset remain armed throughout.
+- No Face progressive-disclosure work yet.
+- Through, unified Rotate .483, Move/Scale, navigation, main.js and protected multi-object transform remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.484
 
 - After .483 restored unified component Rotate, user requested a Face UX refinement before progressive disclosure.
