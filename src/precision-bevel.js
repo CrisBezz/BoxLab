@@ -31,10 +31,12 @@ function makeRow(host,id,labelText){
 }
 
 const edgeUi=makeRow(edgeTools,'precisionEdgeBevelRow','Exact %');
-const edgePrecisionAnchor=document.querySelector('.loop-slide-option');
-if(edgeUi&&edgePrecisionAnchor){
-  edgePrecisionAnchor.parentElement?.insertBefore(edgeUi.row,edgePrecisionAnchor);
-  edgePrecisionAnchor.parentElement?.insertBefore(edgeUi.readout,edgePrecisionAnchor);
+const edgeBevelOptions=document.querySelector('.bevel-option');
+const edgeBevelSegments=edgeBevelOptions?.querySelectorAll?.('.range-row')?.[1]||null;
+if(edgeUi&&edgeBevelOptions){
+  if(edgeBevelSegments)edgeBevelSegments.insertAdjacentElement('afterend',edgeUi.row);
+  else edgeBevelOptions.append(edgeUi.row);
+  edgeUi.row.insertAdjacentElement('afterend',edgeUi.readout);
 }
 const vertexUi=makeRow(vertexTools,'precisionVertexBevelRow','Exact %');
 
