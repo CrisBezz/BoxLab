@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.489 native Face picker bridge
+
+- Exposed main.js native `pickKind` read-only via `__boxlabSelectionBridge.pick(type,event)`.
+- Armed Extrude/Inset now use that exact picker directly for both selected and unselected faces.
+- Removed previous duplicate scene-raycast / native-handoff experiments and stale pending handoff state.
+- main.js native behavior remains unchanged apart from the new bridge method.
+
 ## 2026-09-26 — v0.36.18.488 native Face picker handoff
 
 - .487 still failed despite raycasting live scene face meshes.
