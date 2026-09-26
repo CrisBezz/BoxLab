@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.503 Face disclosure control order
+
+- Moved Face Value/readout/Repeat Previous directly below the primary Extrude/Inset/Knife row.
+- Kept .502 armed-only visibility for Extrude and Inset.
+- Presentation/layout only; no Face interaction changes.
+
 ## 2026-09-26 — v0.36.18.502 Face progressive disclosure: exact controls
 
 - Started Face progressive disclosure from frozen .501 interaction baseline.
