@@ -4,6 +4,7 @@ import { analyzeSolidifyInput, solidifyOpenMesh, __solidifyInternals } from './s
 function cloneInto(target,source){
   target.vertices=source.vertices.map(v=>v.clone());
   target.faces=source.faces.map(f=>[...f]);
+  target.faceGroups=source.faces.map((_,fi)=>source.faceGroups?.[fi]??null);
   target.creases=new Map(source.creases||[]);
   target.looseEdges=new Set(source.looseEdges||[]);
   target.looseVertices=new Set(source.looseVertices||[]);
@@ -14,6 +15,7 @@ function selectedFaceIds(mesh,faceIndices){
 }
 function compactRemaining(mesh,removed){
   const faces=mesh.faces.filter((_,i)=>!removed.has(i)).map(f=>[...f]);
+  const faceGroups=mesh.faces.map((_,i)=>mesh.faceGroups?.[i]??null).filter((_,i)=>!removed.has(i));
   if(!faces.length)return null;
   const used=new Set(faces.flat());
   const map=new Map(),vertices=[];
@@ -30,7 +32,7 @@ function compactRemaining(mesh,removed){
     const na=map.get(a),nb=map.get(b);
     creases.set(na<nb?`${na}:${nb}`:`${nb}:${na}`,value);
   }
-  return new EditableMesh(vertices,compactFaces,creases);
+  return new EditableMesh(vertices,compactFaces,creases,faceGroups);
 }
 
 export function analyzeShellInput(mesh,faceIndices){

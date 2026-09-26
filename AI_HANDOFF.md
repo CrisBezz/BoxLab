@@ -1,3 +1,13 @@
+## Current recovery checkpoint — v0.36.18.462
+
+- v0.36.18.461 Mesh Health facegroup preservation was hands-on PASS.
+- v0.36.18.462 restores facegroup propagation through Extract Faces, Solidify and the Shell path that depends on Solidify.
+- Extracted faces retain their original facegroup IDs; remaining source faces keep their corresponding IDs.
+- Solidify duplicates each source facegroup onto the inner face copy; newly created boundary side walls are intentionally Ungrouped.
+- Shell preserves groups on surviving/opened faces, inherits them onto the inner shell via Solidify, and keeps new side walls Ungrouped.
+- No interaction/tool ownership changes.
+- Sentinel: Extract keeps group colours on source/new object; Solidify/Shell preserve original groups and neutral side walls; prior Facegroup/Mirror/SubD/Mesh Health and modelling sentinels remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.461
 
 - v0.36.18.460 SubD facegroup propagation was hands-on PASS.

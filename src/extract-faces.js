@@ -7,7 +7,7 @@ function state() { return globalThis.__boxlabBridgeState; }
 function selection() { return globalThis.__boxlabSelectionBridge; }
 function render() { document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true })); }
 
-function compactMesh(mesh, faces, includeLoose = false) {
+function compactMesh(mesh, faces, includeLoose = false, faceGroups = null) {
   const used = new Set(faces.flat());
   if (includeLoose) {
     for (const key of mesh.looseEdges || []) key.split(':').map(Number).forEach(index => used.add(index));
@@ -28,7 +28,8 @@ function compactMesh(mesh, faces, includeLoose = false) {
       creases.set(na < nb ? `${na}:${nb}` : `${nb}:${na}`, value);
     }
   }
-  const out = new EditableMesh(vertices, compactFaces, creases);
+  const groups=compactFaces.map((_,i)=>faceGroups?.[i]??null);
+  const out = new EditableMesh(vertices, compactFaces, creases, groups);
   if (includeLoose) {
     out.looseEdges = new Set();
     for (const key of mesh.looseEdges || []) {
@@ -48,8 +49,10 @@ function extractFaces() {
 
   const picked = new Set(selected);
   const extractedFaces = selected.map(index => [...mesh.faces[index]]);
+  const extractedGroups = selected.map(index => mesh.faceGroups?.[index]??null);
   const remainingFaces = mesh.faces.filter((_, index) => !picked.has(index));
-  const extracted = compactMesh(mesh, extractedFaces);
+  const remainingGroups = mesh.faces.map((_,index)=>mesh.faceGroups?.[index]??null).filter((_, index) => !picked.has(index));
+  const extracted = compactMesh(mesh, extractedFaces, false, extractedGroups);
   if (!extracted.faces.length) return;
 
   // Extract is a scene transaction: source edit + new object must undo/redo together.
@@ -59,9 +62,10 @@ function extractFaces() {
   // blank object when every face happens to be selected.
   if (remainingFaces.length) {
     const before = mesh.clone();
-    const remaining = compactMesh(mesh, remainingFaces, true);
+    const remaining = compactMesh(mesh, remainingFaces, true, remainingGroups);
     mesh.vertices = remaining.vertices;
     mesh.faces = remaining.faces;
+    mesh.faceGroups = [...remaining.faceGroups];
     mesh.creases = remaining.creases;
     mesh.looseEdges = new Set(remaining.looseEdges || []);
     mesh.looseVertices = new Set(remaining.looseVertices || []);

@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.462 Extract / Solidify / Shell facegroup propagation
+
+- v0.36.18.461 Mesh Health facegroup preservation passed hands-on testing.
+- Extract Faces now carries selected facegroup IDs into the new object and preserves remaining source groups.
+- Solidify copies source groups to inner duplicate faces and marks new side-wall faces Ungrouped.
+- Shell's compact/restore path now preserves groups and inherits Solidify semantics.
+- No modelling interaction changes.
+
 ## 2026-09-26 — v0.36.18.461 Mesh Health facegroup preservation recovery
 
 - v0.36.18.460 SubD facegroup propagation passed hands-on testing.
