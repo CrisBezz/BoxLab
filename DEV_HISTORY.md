@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.496 preserve armed Face tool across Deselect
+
+- .495 fixed additive armed Face selection.
+- Added a narrow recovery for Selection > Deselect while Extrude/Inset is armed.
+- After main.js clears selection, multi-face-direct resynchronizes its armed button/status state so a new Face selection can be started without re-arming.
+- .495 hit-stack selection logic unchanged.
+
 ## 2026-09-26 — v0.36.18.495 selected-aware Face hit-stack resolution
 
 - .494 proved the additive tap ray was hitting selected face 1 first and unselected face 4 second.
