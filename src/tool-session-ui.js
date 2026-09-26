@@ -58,6 +58,14 @@ style.textContent=`
 `;
 document.head.appendChild(style);
 
+function installEdgeControlOrder(){
+  const edgeTools=document.querySelector('.mode-tools[data-mode-tools="edge"]');
+  const loops=edgeTools?.querySelector('.loop-cut-option');
+  const loopSlide=edgeTools?.querySelector('.loop-slide-option');
+  if(loops&&loopSlide&&loops.nextElementSibling!==loopSlide)loops.insertAdjacentElement('afterend',loopSlide);
+}
+installEdgeControlOrder();
+
 let active=null;
 
 function restore(entry){

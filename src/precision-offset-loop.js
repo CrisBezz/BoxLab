@@ -16,7 +16,8 @@ const input=document.createElement('input');input.type='number';input.inputMode=
 const apply=document.createElement('button');apply.type='button';apply.textContent='Apply';apply.style.cssText='padding:5px 8px';
 row.append(label,input,apply);
 const anchor=document.querySelector('.offset-option');
-(anchor?.parentElement||edgeTools).insertBefore(row,anchor||null);
+if(anchor?.parentElement)anchor.insertAdjacentElement('afterend',row);
+else edgeTools.append(row);
 
 const readout=document.createElement('div');
 readout.id='precisionOffsetLoopReadout';
