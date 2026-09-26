@@ -1338,3 +1338,7 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .508: Loop / Bevel / Crease / Edge Slide / Offset Loop controls appear only when their tool is active
 - [ ] Regression .508: Edge Extrude and Sweep still launch and retain their existing handlers
 - [ ] Regression .508: Face .501 armed multi-select/deselect/drag, Through, Rotate .483 and viewport navigation remain unchanged
+
+- [ ] Workflow .509: Sweep active tabs/buttons use the same white active appearance as the rest of BoxLab
+- [ ] Regression .509: no blue inset outline appears on Follow Edges, Editing Path, Profile/Path/Finish, or other active Sweep controls
+- [ ] Regression .509: Sweep workflow behavior remains unchanged
