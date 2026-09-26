@@ -110,6 +110,93 @@ export function bisectMesh(mesh,{axis='x',keep='positive',offset=0,planeNormal=n
   };
 }
 
+
+export function splitMeshByPlane(mesh,{axis='x',offset=0,planeNormal=null,planePoint=null}={}){
+  if(!mesh?.vertices?.length||!mesh?.faces?.length)return{ok:false,reason:'empty-mesh'};
+  const plane=resolvePlane({axis,offset,planeNormal,planePoint});
+  if(!plane)return{ok:false,reason:'invalid-plane'};
+
+  const vertices=[],faces=[],faceGroups=[];
+  const originalMap=new Map(),intersectionMap=new Map();
+
+  const getOriginal=index=>{
+    if(originalMap.has(index))return originalMap.get(index);
+    const source=mesh.vertices[index]?.clone?.();if(!source)return null;
+    const d=signedDistance(source,plane);
+    const v=Math.abs(d)<=EPS?projectToPlane(source,plane):source;
+    const out=vertices.length;vertices.push(v);originalMap.set(index,out);return out;
+  };
+  const getIntersection=(a,b)=>{
+    const key=edgeKey(a,b);
+    if(intersectionMap.has(key))return intersectionMap.get(key);
+    const va=mesh.vertices[a],vb=mesh.vertices[b];if(!va||!vb)return null;
+    const da=signedDistance(va,plane),db=signedDistance(vb,plane),den=db-da;
+    if(Math.abs(den)<=EPS)return null;
+    const t=-da/den;
+    if(t<=EPS)return getOriginal(a);
+    if(t>=1-EPS)return getOriginal(b);
+    const v=projectToPlane(va.clone().lerp(vb,t),plane);
+    const out=vertices.length;vertices.push(v);intersectionMap.set(key,out);return out;
+  };
+  const clean=ids=>{
+    const out=[];
+    for(const id of ids)if(Number.isInteger(id)&&out[out.length-1]!==id)out.push(id);
+    if(out.length>2&&out[0]===out[out.length-1])out.pop();
+    return new Set(out).size>=3?out:null;
+  };
+  const pushFace=(ids,group)=>{
+    const c=clean(ids);if(!c)return;
+    faces.push(c);faceGroups.push(group??0);
+  };
+
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const face=mesh.faces[fi];if(!Array.isArray(face)||face.length<3)continue;
+    const pos=[],neg=[];
+    let prev=face[face.length-1],dp=signedDistance(mesh.vertices[prev],plane);
+    for(const curr of face){
+      const dc=signedDistance(mesh.vertices[curr],plane);
+      const prevPos=dp>EPS,prevNeg=dp<-EPS,currPos=dc>EPS,currNeg=dc<-EPS;
+      if(!prevNeg){const id=getOriginal(prev);if(Number.isInteger(id)&&pos[pos.length-1]!==id)pos.push(id);}
+      if(!prevPos){const id=getOriginal(prev);if(Number.isInteger(id)&&neg[neg.length-1]!==id)neg.push(id);}
+      if((prevPos&&currNeg)||(prevNeg&&currPos)){
+        const cut=getIntersection(prev,curr);
+        if(Number.isInteger(cut)){if(pos[pos.length-1]!==cut)pos.push(cut);if(neg[neg.length-1]!==cut)neg.push(cut);}
+      }
+      prev=curr;dp=dc;
+    }
+    const group=mesh.faceGroups?.[fi]??0;
+    pushFace(pos,group);
+    pushFace(neg,group);
+  }
+
+  if(!faces.length)return{ok:false,reason:'plane-does-not-split-mesh'};
+  const result=new EditableMesh(vertices,faces);
+  result.faceGroups=faceGroups.slice();
+
+  if(mesh.creases instanceof Map){
+    result.creases=new Map();
+    const existing=new Set((result.edges?.()||[]).map(e=>result.edgeKey(e.a,e.b)));
+    const addCrease=(a,b,value)=>{
+      if(!Number.isInteger(a)||!Number.isInteger(b)||a===b)return;
+      const key=result.edgeKey(a,b);if(existing.has(key))result.creases.set(key,value);
+    };
+    for(const [key,value] of mesh.creases){
+      const [a,b]=String(key).split(':').map(Number);
+      const na=getOriginal(a),nb=getOriginal(b);
+      const da=signedDistance(mesh.vertices[a],plane),db=signedDistance(mesh.vertices[b],plane);
+      if(da*db<-EPS*EPS){
+        const cut=getIntersection(a,b);addCrease(na,cut,value);addCrease(cut,nb,value);
+      }else addCrease(na,nb,value);
+    }
+  }
+
+  return{
+    ok:true,mesh:result,axis,offset:Number(offset)||0,
+    planeNormal:plane.normal.clone(),planePoint:plane.point.clone(),
+    cutVertices:intersectionMap.size
+  };
+}
+
 function mirrorAcrossPlane(mesh,plane){
   const vertices=mesh.vertices.map(v=>v.clone()),faces=mesh.faces.map(f=>[...f]);
   const mapped=new Map();
