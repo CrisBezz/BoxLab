@@ -1083,3 +1083,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] UI .468: Edge Bevel and Vertex Bevel still arm/select/drag correctly
 - [ ] UI .468: Extrude and cavity-aware Through remain unchanged
 - [ ] UI .468: orbit / pan / zoom remain unchanged
+
+
+- [ ] Workflow .469: Add > Revolve Profile creates the construction plane and opens the expected workflow
+- [ ] Workflow .469: Revolve Profile Cancel restores the scene cleanly
+- [ ] Workflow .469: Sweep shows Cancel Sweep at Profile / Path / Finish stages
+- [ ] Workflow .469: Sweep Cancel restores the pre-Sweep scene and history state
+- [ ] Workflow .469: changing selection mode while Sweep is active cancels Sweep cleanly
+- [ ] Workflow .469: launching another Tool Session while Sweep is active cancels Sweep first
+- [ ] Workflow .469: Inset, Edge Bevel, Vertex Bevel, Extrude, Through and navigation remain unaffected
