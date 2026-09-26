@@ -1,3 +1,11 @@
+## Current diagnostic checkpoint — v0.36.18.494
+
+- .493 trace from hands-on: `down hit=3 mode=face before=[3] | up ok=true now=[] | micro=[] | raf=[]`.
+- This proves the armed tap is toggling the already-selected face 3, not failing to commit a new face.
+- New question: does the native raycast return multiple face hits and simply choose selected face 3 first?
+- .494 exposes the full ordered native Face raycast stack with distances through `selectionBridge.pickHits()` and shows it in the FaceTap line.
+- No intended selection/modelling behavior change.
+
 ## Current diagnostic checkpoint — v0.36.18.493
 
 - User screenshot from .492 showed final `FaceTap • raf hit=3 sel=[]`.
