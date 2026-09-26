@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.470 Edge Revolve progressive disclosure
+
+- Continued the post-.449 UI cleanup as one isolated Edge-mode presentation slice.
+- Restored only the previously proven historical .457 Revolve visibility pattern: at rest Edge Active Tools shows one Revolve launcher; Lathe/Revolve label, axis buttons and Segments appear only after a valid Revolve is armed.
+- Apply, Cancel/mode escape and active-object escape return Revolve to the compact resting state.
+- Revolve core geometry, preview, history, selection and Pencil range behavior are unchanged.
+- Audit also found PR #199 (.469) regression run failed with 57 stale contract tests, mostly old current-version/pin assumptions and recovery-era assertions. No broad runtime repinning was introduced to satisfy them.
+
 ## 2026-09-26 — v0.36.18.469 Revolve Profile + Sweep session recovery
 
 - Restored the known-good historical Revolve Profile controller from .453 because the recovered .443 file lacked the later Add/Cancel transaction path.

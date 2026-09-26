@@ -1,3 +1,13 @@
+## Current recovery checkpoint — v0.36.18.470
+
+- v0.36.18.469 Revolve Profile + Sweep cancellation recovery remains the functional baseline.
+- UI cleanup continues as one isolated Edge-mode presentation slice only.
+- Restored the previously proven historical Edge Revolve progressive-disclosure pattern from the old .457 line: at rest only **Revolve** is shown; Lathe/Revolve label, X/Y/Z axis buttons and Segments are hidden until Revolve is successfully armed.
+- Arming adds only the `revolve-active` presentation state; Apply/Cancel/mode escape removes it. Revolve geometry, preflight, preview, history, selection and Pencil-range logic are unchanged.
+- No Face direct-tool, Inset, Bevel, Through, navigation, Object Tool Session or protected multi-object transform code is changed.
+- Important repo condition discovered during this audit: PR #199 (.469) regression job failed with 57 stale contract failures, largely old runtime-pin/current-version assertions plus recovery-era contracts. Do not broad-repin the recovered runtime merely to satisfy those stale tests; repair the test suite separately and deliberately.
+- Sentinel: Edge mode home shows one Revolve launcher at rest; selecting a valid loose-edge profile and pressing Revolve reveals X/Y/Z + Segments and normal preview/apply behavior; leaving Edge mode cancels/hides settings; Inset/Bevel/Extrude/Through/navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.469
 
 - v0.36.18.468 Object Tool-first presentation is merged.

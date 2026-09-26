@@ -1092,3 +1092,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .469: changing selection mode while Sweep is active cancels Sweep cleanly
 - [ ] Workflow .469: launching another Tool Session while Sweep is active cancels Sweep first
 - [ ] Workflow .469: Inset, Edge Bevel, Vertex Bevel, Extrude, Through and navigation remain unaffected
+
+- [ ] UI .470: Edge mode home shows a single Revolve launcher; Lathe/Revolve label, X/Y/Z and Segments are hidden at rest
+- [ ] UI .470: selecting a valid loose-edge profile and pressing Revolve reveals X/Y/Z + Segments and starts the established preview
+- [ ] UI .470: Apply returns Revolve to the compact resting state
+- [ ] UI .470: leaving Edge mode or other Revolve cancellation returns Revolve to the compact resting state
+- [ ] UI .470: Revolve topology/history behavior is unchanged
+- [ ] UI .470: Inset, Edge Bevel, Vertex Bevel, Extrude, Through and orbit/pan/zoom remain unaffected
+

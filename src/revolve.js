@@ -7,15 +7,18 @@ const status=document.querySelector('#selectionStatus');
 
 const controls=document.createElement('div');
 controls.className='revolve-controls';
+const revolveStyle=document.createElement('style');
+revolveStyle.textContent='.revolve-controls:not(.revolve-active) [data-revolve-settings]{display:none!important}.revolve-controls:not(.revolve-active) .outliner-actions{grid-template-columns:1fr!important}';
+document.head.appendChild(revolveStyle);
 controls.innerHTML=`
-  <div class="edge-section-label">Lathe / Revolve</div>
+  <div class="edge-section-label" data-revolve-settings>Lathe / Revolve</div>
   <div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)">
     <button id="revolveBtn" type="button">Revolve</button>
-    <button type="button" data-revolve-axis="x">X</button>
-    <button type="button" data-revolve-axis="y" class="active">Y</button>
-    <button type="button" data-revolve-axis="z">Z</button>
+    <button type="button" data-revolve-axis="x" data-revolve-settings>X</button>
+    <button type="button" data-revolve-axis="y" data-revolve-settings class="active">Y</button>
+    <button type="button" data-revolve-axis="z" data-revolve-settings>Z</button>
   </div>
-  <label class="range-row">
+  <label class="range-row" data-revolve-settings>
     <span>Segments</span>
     <input id="revolveSegments" type="range" min="6" max="64" value="24" step="1"/>
     <output id="revolveSegmentsOut">24</output>
@@ -81,7 +84,7 @@ function unlockDrawer(){
 }
 function cancelPreview({silent=false}={}){
   disposePreview();previewArmed=false;previewObjectId=null;previewEdges=[];unlockDrawer();
-  if(button)button.textContent='Revolve';
+  if(button)button.textContent='Revolve';controls.classList.remove('revolve-active');
   if(!silent)setStatus('Revolve preview cancelled');
 }
 function previewOptions(){
@@ -161,9 +164,9 @@ installPenRange(segmentInput,()=>{if(segmentOut)segmentOut.textContent=String(se
 button?.addEventListener('click',()=>{
   if(!previewArmed){
     const check=preflight();if(!check.ok){setStatus(`Revolve refused • ${check.reason}`);return;}
-    previewEdges=edgeSelection();previewObjectId=activeObject()?.id||null;previewArmed=true;lockDrawer();button.textContent='Apply Revolve';buildPreview();return;
+    previewEdges=edgeSelection();previewObjectId=activeObject()?.id||null;previewArmed=true;controls.classList.add('revolve-active');lockDrawer();button.textContent='Apply Revolve';buildPreview();return;
   }
-  if(applyRevolve()){disposePreview();previewArmed=false;previewObjectId=null;previewEdges=[];unlockDrawer();button.textContent='Revolve';}
+  if(applyRevolve()){disposePreview();previewArmed=false;previewObjectId=null;previewEdges=[];controls.classList.remove('revolve-active');unlockDrawer();button.textContent='Revolve';}
 });
 drawer?.addEventListener('toggle',()=>{if(previewArmed&&!drawer.open)queueMicrotask(()=>{if(previewArmed)drawer.open=true;});});
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(()=>{if(previewArmed&&mode()!=='edge')cancelPreview({silent:true});})));
