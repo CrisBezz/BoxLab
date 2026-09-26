@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.480 shared component Rotate repair
+
+- Hands-on established Vertex, Edge and Face Rotate all fail, so .479 Face-only ownership diagnosis was incomplete.
+- Shared transform owner now reads authoritative `__boxlabTransformArming.tool()` before DOM active-class fallback.
+- Removed the .479 Face-only yield so Vertex / Edge / Face Rotate share one transform path again.
+- Rotate maths, protected main runtime and Pencil navigation remain unchanged.
+
 ## 2026-09-26 — v0.36.18.479 Face Rotate ownership repair
 
 - Isolated Face Rotate after .477 cache hop did not restore hands-on behavior.

@@ -1,3 +1,13 @@
+## Current recovery checkpoint — v0.36.18.480
+
+- Hands-on after .479 showed the failure is not Face-specific: Vertex, Edge and Face Rotate all fail.
+- Root cause scope therefore moved back to the shared component transform owner.
+- `transform-upgrade.js` was reading the active transform only from the button's visual `.active` class, even though BoxLab already has authoritative transform state in `__boxlabTransformArming`.
+- v0.36.18.480 changes shared transform ownership to read `__boxlabTransformArming.tool()` first, with the active button only as fallback.
+- The .479 Face-only yield is removed: the shared transform engine once again owns Move / Scale / Rotate for Vertex, Edge and Face consistently.
+- No Rotate maths, `main.js`, Pencil orbit gate or protected `multi-object-transform.js?v=0.36.1.0` are changed.
+- Sentinel: Vertex multi-selection, Edge and Face Rotate all respond to Pencil drag; Move/Scale remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.479
 
 - User explicitly requested Face Rotate repair before continuing UI rebuild.
