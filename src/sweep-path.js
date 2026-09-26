@@ -662,7 +662,7 @@ installPenRange(sidesInput,()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)re
 capsBtn.addEventListener('click',()=>{const o=pathObject(),m=o&&ensureMeta(o);if(!m)return;m.caps=!m.caps;lastSignature='';});
 applyBtn.addEventListener('click',applySweep);
 cancelSweepBtn?.addEventListener('click',()=>cancelSweepSession());
-document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(()=>{if(pathObject())cancelSweepSession();})));
+document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{const activeAtClick=pathObject();if(!activeAtClick)return;queueMicrotask(()=>{const activeNow=pathObject();if(activeNow?.id===activeAtClick.id)cancelSweepSession();});}));
 window.addEventListener('boxlab-tool-session-change',event=>{const detail=event.detail||{};if(detail.active&&detail.id&&detail.id!=='sweep'&&pathObject())cancelSweepSession({silent:true});});
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedId=null;cachedObject=null;lastSignature='';buildOverlay();}));
 window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);hotRailHit=null;railSnapRefs=null;disposeOverlay();unlockTools();endSweepSession();});
