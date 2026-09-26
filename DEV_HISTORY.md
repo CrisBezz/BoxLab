@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.481 shared transform pointermove capture repair
+
+- .480 still failed for all component Rotate modes.
+- Found ownership split inside transform-upgrade: pointerdown used document capture, pointermove used canvas capture behind the Pencil orbit gate.
+- Moved shared transform pointermove to document capture so an active Rotate drag cannot be intercepted mid-gesture.
+- No transform maths or protected core runtime changed.
+
 ## 2026-09-26 — v0.36.18.480 shared component Rotate repair
 
 - Hands-on established Vertex, Edge and Face Rotate all fail, so .479 Face-only ownership diagnosis was incomplete.

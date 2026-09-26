@@ -1,3 +1,12 @@
+## Current recovery checkpoint — v0.36.18.481
+
+- Hands-on .480 still failed for Vertex, Edge and Face Rotate.
+- Shared transform pointerdown was already on document capture, but pointermove remained on canvas capture.
+- The protected Pencil orbit gate installs earlier canvas-capture handlers, so an armed transform could begin successfully yet have its Pencil movement stopped before the transform owner received pointermove.
+- v0.36.18.481 moves shared transform pointermove to document capture too, keeping the full active drag above the Pencil orbit gate.
+- Rotate maths, hit-testing, selection ownership, main.js and protected multi-object transform remain unchanged.
+- Sentinel: Vertex / Edge / Face Rotate must now visibly move during Pencil drag; Move/Scale and orbit/pan/zoom must remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.480
 
 - Hands-on after .479 showed the failure is not Face-specific: Vertex, Edge and Face Rotate all fail.
