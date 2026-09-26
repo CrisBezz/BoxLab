@@ -1,3 +1,18 @@
+## Current Edge progressive-disclosure checkpoint — v0.36.18.508
+
+- Continues the UI cleanup in a narrow presentation-only slice after stable Face .507.
+- Edge mode home is compacted into five 3-column rows using the existing button nodes:
+  - Row 1: Loop / Bevel / Crease
+  - Row 2: Split / Extrude / Sweep
+  - Row 3: Edge Slide / Offset Loop / Uncrease
+  - Row 4: Bridge / Fill / Dissolve Loop
+  - Row 5: Dissolve Edge / Delete / blank
+- Existing Edge parameter panels remain progressive/armed-only; Loop Slide remains immediately beneath Loops per the .476 contract; no modelling controller is rewritten.
+- Legacy Move / Topology labels and the duplicate legacy crease row are presentation-hidden once their live buttons are moved.
+- Existing Sweep and Edge Extrude buttons are moved after their late-loaded modules mount; handlers remain attached.
+- Frozen Face .501 interaction, Rotate .483, Through, navigation and protected multi-object-transform remain untouched.
+- Next step: hands-on check the compact Edge home and armed Loop/Bevel/Crease/Slide/Offset panels before any further disclosure work.
+
 ## Current Face progressive-disclosure checkpoint — v0.36.18.507
 
 - User supplied a marked-up iPad screenshot showing the desired compact Face grid.

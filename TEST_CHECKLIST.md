@@ -1329,3 +1329,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .507: Orient Faces remains in Repair
 - [ ] Workflow .507: Inspect / Repair / Topology Gate stay below all Face tools
 - [ ] Regression .507: .501 armed Face multi-select/deselect/drag remains unchanged
+
+- [ ] Workflow .508: Edge home Row 1 = Loop / Bevel / Crease
+- [ ] Workflow .508: Edge home Row 2 = Split / Extrude / Sweep
+- [ ] Workflow .508: Edge home Row 3 = Edge Slide / Offset Loop / Uncrease
+- [ ] Workflow .508: Edge home Row 4 = Bridge / Fill / Dissolve Loop
+- [ ] Workflow .508: Edge home Row 5 = Dissolve Edge / Delete / blank
+- [ ] Workflow .508: Loop / Bevel / Crease / Edge Slide / Offset Loop controls appear only when their tool is active
+- [ ] Regression .508: Edge Extrude and Sweep still launch and retain their existing handlers
+- [ ] Regression .508: Face .501 armed multi-select/deselect/drag, Through, Rotate .483 and viewport navigation remain unchanged

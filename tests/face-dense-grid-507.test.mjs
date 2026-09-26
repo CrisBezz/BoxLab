@@ -10,7 +10,8 @@ test('507 builds dense Face rows matching requested layout',()=>{
   assert.match(ui,/for\(const button of \[join,bridge,sweep\]\)/);
   assert.match(ui,/for\(const button of \[shell,poke,circle\]\)/);
   assert.match(ui,/for\(const button of \[close,triangulate,flip\]\)/);
-  assert.match(ui,/for\(const button of \[quadClean,quadify,orient\]\)/);
+  assert.match(ui,/for\(const button of \[quadClean,quadify\]\)/);
+  assert.doesNotMatch(ui,/quadClean,quadify,orient/);
 });
 
 test('507 keeps diagnostics at the true end',()=>{

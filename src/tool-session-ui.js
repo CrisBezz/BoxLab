@@ -68,19 +68,98 @@ style.textContent=`
 .mode-tools[data-mode-tools="face"]:has(#extrudeBtn.active) #precisionFaceReadout,
 .mode-tools[data-mode-tools="face"]:has(#insetBtn.active) #precisionFaceReadout{display:block!important}
 
+.mode-tools[data-mode-tools="edge"] .edge-compact-row{margin:2px 0!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
+.mode-tools[data-mode-tools="edge"] .edge-compact-row button{min-height:31px!important;padding:4px 4px!important;font-size:10px!important;line-height:1.1!important;white-space:normal!important}
+.mode-tools[data-mode-tools="edge"] .edge-section-label{display:none!important}
+.mode-tools[data-mode-tools="edge"] .crease-button-row{display:none!important}
+.mode-tools[data-mode-tools="edge"] .edge-move-actions:empty,
+.mode-tools[data-mode-tools="edge"] .sweep-selection-launch-row:empty,
+.mode-tools[data-mode-tools="edge"] .outliner-actions:empty{display:none!important}
+
 .mode-tools[data-mode-tools="face"] .face-compact-row{margin:2px 0!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
 .mode-tools[data-mode-tools="face"] .face-compact-row button{min-height:31px!important;padding:4px 4px!important;font-size:10px!important;line-height:1.1!important;white-space:normal!important}
 .mode-tools[data-mode-tools="face"] .sweep-selection-launch-row:empty{display:none!important}
 `;
 document.head.appendChild(style);
 
+function ensureEdgeCompactRow(edgeTools,id){
+  let row=document.querySelector('#'+id);
+  if(row)return row;
+  row=document.createElement('div');
+  row.id=id;
+  row.className='outliner-actions edge-compact-row';
+  row.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';
+  row.style.gap='4px';
+  return row;
+}
 function installEdgeControlOrder(){
   const edgeTools=document.querySelector('.mode-tools[data-mode-tools="edge"]');
-  const loops=edgeTools?.querySelector('.loop-cut-option');
-  const loopSlide=edgeTools?.querySelector('.loop-slide-option');
+  const title=edgeTools?.querySelector(':scope > .panel-title');
+  if(!edgeTools)return false;
+
+  const row1=ensureEdgeCompactRow(edgeTools,'edgeCompactRow1');
+  const row2=ensureEdgeCompactRow(edgeTools,'edgeCompactRow2');
+  const row3=ensureEdgeCompactRow(edgeTools,'edgeCompactRow3');
+  const row4=ensureEdgeCompactRow(edgeTools,'edgeCompactRow4');
+  const row5=ensureEdgeCompactRow(edgeTools,'edgeCompactRow5');
+
+  const loop=document.querySelector('#loopCutBtn');
+  const bevel=document.querySelector('#bevelBtn');
+  const crease=document.querySelector('#applyCreaseBtn');
+  const split=document.querySelector('#faceSplitBtn');
+  const extrude=document.querySelector('#edgeExtrudeBtn');
+  const sweep=document.querySelector('.sweep-selection-launch[data-sweep-selection-mode="edge"]');
+  const slide=document.querySelector('#edgeSlideBtn');
+  const offset=document.querySelector('#offsetLoopBtn');
+  const uncrease=document.querySelector('#clearCreaseBtn');
+  const bridge=document.querySelector('#bridgeEdgesBtn');
+  const fill=document.querySelector('#fillFaceBtn');
+  const dissolveLoop=document.querySelector('#dissolveLoopBtn');
+  const dissolveEdge=document.querySelector('#dissolveEdgeBtn');
+  const del=document.querySelector('#deleteEdgeBtn');
+
+  for(const button of [loop,bevel,crease])moveButtonToRow(button,row1);
+  for(const button of [split,extrude,sweep])moveButtonToRow(button,row2);
+  for(const button of [slide,offset,uncrease])moveButtonToRow(button,row3);
+  for(const button of [bridge,fill,dissolveLoop])moveButtonToRow(button,row4);
+  for(const button of [dissolveEdge,del])moveButtonToRow(button,row5);
+
+  let cursor=title;
+  for(const row of [row1,row2,row3,row4,row5]){
+    if(!cursor)break;
+    if(row.parentElement!==edgeTools||cursor.nextElementSibling!==row)cursor.insertAdjacentElement('afterend',row);
+    cursor=row;
+  }
+
+  const loops=edgeTools.querySelector('.loop-cut-option');
+  const bevelOptions=edgeTools.querySelector('.bevel-option');
+  const loopSlide=edgeTools.querySelector('.loop-slide-option');
+  const offsetOptions=edgeTools.querySelector('.offset-option');
+
+  if(loops&&row1.nextElementSibling!==loops)row1.insertAdjacentElement('afterend',loops);
   if(loops&&loopSlide&&loops.nextElementSibling!==loopSlide)loops.insertAdjacentElement('afterend',loopSlide);
+  const primaryOptionAnchor=loopSlide||loops||row1;
+  if(bevelOptions&&primaryOptionAnchor.nextElementSibling!==bevelOptions)primaryOptionAnchor.insertAdjacentElement('afterend',bevelOptions);
+  let actionAnchor=bevelOptions||primaryOptionAnchor;
+  for(const row of [row2,row3]){
+    if(actionAnchor.nextElementSibling!==row)actionAnchor.insertAdjacentElement('afterend',row);
+    actionAnchor=row;
+  }
+  for(const node of [offsetOptions]){
+    if(!node)continue;
+    if(actionAnchor.nextElementSibling!==node)actionAnchor.insertAdjacentElement('afterend',node);
+    actionAnchor=node;
+  }
+  for(const row of [row4,row5]){
+    if(actionAnchor.nextElementSibling!==row)actionAnchor.insertAdjacentElement('afterend',row);
+    actionAnchor=row;
+  }
+
+  return true;
 }
-installEdgeControlOrder();
+[0,80,250,600,900,1200,1800,2200,2600].forEach(delay=>setTimeout(installEdgeControlOrder,delay));
+window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(installEdgeControlOrder));
+document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(installEdgeControlOrder)));
 
 function ensureFaceCompactRow(faceTools,id){
   let row=document.querySelector('#'+id);
