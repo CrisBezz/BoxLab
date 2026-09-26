@@ -1349,3 +1349,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .510: choose X/Y/Z/Auto after arming -> repeated pulls preserve the chosen constraint rather than resetting to Plane
 - [ ] Regression .510: Edge Extrude selection switching/repeated pull behavior remains unchanged
 - [ ] Regression .510: Face .501, Through, Rotate .483, Sweep .509 and viewport navigation remain unchanged
+
+- [ ] Workflow .511: Vertex tool rows use the same compact 3-column visual rhythm as Edge and Face
+- [ ] Workflow .511: Vertex button order remains stable when Add / Build Edge / Slide / Bevel / Create Face / Circle become available
+- [ ] Workflow .511: arming Vertex Slide reveals only Slide controls and does not reshuffle the tool buttons
+- [ ] Workflow .511: arming Vertex Bevel reveals only Bevel controls and does not reshuffle the tool buttons
+- [ ] Regression .511: Vertex selection and Move / Scale / Rotate remain unchanged
+- [ ] Regression .511: Edge .510 and Face .501 interaction remain unchanged
