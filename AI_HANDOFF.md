@@ -1,3 +1,10 @@
+## Current diagnostic checkpoint — v0.36.18.493
+
+- User screenshot from .492 showed final `FaceTap • raf hit=3 sel=[]`.
+- This proves the face hit is being found, but .492 overwrote earlier diagnostic stages so it did not reveal whether selection failed immediately or was cleared afterward.
+- .493 keeps the complete tap trace in one status line: down/mode/before | up/ok/now | micro | raf.
+- No interaction behavior changed from .492.
+
 ## Current diagnostic checkpoint — v0.36.18.492
 
 - Hands-on .491 still: deselect works, additive select flashes/fails; user also reports selection action buttons all light up during the failed tap.
