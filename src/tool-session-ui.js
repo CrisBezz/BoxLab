@@ -55,6 +55,18 @@ style.textContent=`
 .mode-tools[data-mode-tools="edge"]:has(#offsetLoopBtn.active) #precisionOffsetLoopRow{display:grid!important}
 .mode-tools[data-mode-tools="edge"]:has(#offsetLoopBtn.active) #precisionOffsetLoopReadout{display:block!important}
 .mode-tools[data-mode-tools="edge"]:has(#offsetLoopBtn.active) .offset-option{display:grid!important}
+
+.mode-tools[data-mode-tools="face"] #precisionFaceRow,
+.mode-tools[data-mode-tools="face"] #precisionFaceReadout,
+.mode-tools[data-mode-tools="face"] #repeatFacePreviousRow{display:none!important}
+.mode-tools[data-mode-tools="face"]:has(#extrudeBtn.active) #precisionFaceRow,
+.mode-tools[data-mode-tools="face"]:has(#extrudeBtn.active) #precisionFaceReadout,
+.mode-tools[data-mode-tools="face"]:has(#extrudeBtn.active) #repeatFacePreviousRow,
+.mode-tools[data-mode-tools="face"]:has(#insetBtn.active) #precisionFaceRow,
+.mode-tools[data-mode-tools="face"]:has(#insetBtn.active) #precisionFaceReadout,
+.mode-tools[data-mode-tools="face"]:has(#insetBtn.active) #repeatFacePreviousRow{display:grid!important}
+.mode-tools[data-mode-tools="face"]:has(#extrudeBtn.active) #precisionFaceReadout,
+.mode-tools[data-mode-tools="face"]:has(#insetBtn.active) #precisionFaceReadout{display:block!important}
 `;
 document.head.appendChild(style);
 

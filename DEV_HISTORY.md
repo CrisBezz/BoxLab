@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.502 Face progressive disclosure: exact controls
+
+- Started Face progressive disclosure from frozen .501 interaction baseline.
+- Hidden Face exact-value row/readout and Repeat Previous at rest.
+- These controls now appear only while Extrude or Inset is active.
+- CSS/presentation only; no Face handlers or modelling logic changed.
+
 ## 2026-09-26 — v0.36.18.501 freeze single-owner armed Face selection
 
 - User confirmed .500 armed Extrude/Inset Face selection works perfectly.

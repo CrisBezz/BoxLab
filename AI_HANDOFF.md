@@ -1,3 +1,16 @@
+## Current Face progressive-disclosure checkpoint — v0.36.18.502
+
+- .501 is the frozen stable Face interaction baseline: armed Extrude/Inset additive select, deselect and drag all confirmed working.
+- v0.36.18.502 starts Face progressive disclosure with a presentation-only slice in `tool-session-ui.js`.
+- At Face home, these contextual controls are hidden:
+  - `#precisionFaceRow`
+  - `#precisionFaceReadout`
+  - `#repeatFacePreviousRow`
+- Arming either Extrude or Inset reveals those controls.
+- No pointer/controller/selection/topology changes.
+- `multi-face-direct.js?v=0.36.18.501`, `main.js?v=0.36.18.501`, Rotate .483 and protected multi-object transform remain untouched.
+- Next Face disclosure slices should continue presentation-only unless hands-on reveals a UI-specific need.
+
 ## Current stable Face interaction checkpoint — v0.36.18.501
 
 - User hands-on confirmed .500 works perfectly for armed Extrude/Inset multi-face selection.
