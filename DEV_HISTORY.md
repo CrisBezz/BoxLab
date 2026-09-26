@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.476 Edge progressive-disclosure polish
+
+- User requested layout refinements after .475 hands-on.
+- Moved Loop Slide directly below Loops.
+- Moved Edge Bevel Exact % + readout directly below Segments.
+- Moved Offset Loop Support Spacing above Exact Offset % + readout.
+- Added narrow Crease handoff coordination so selecting another Edge/transform tool or leaving Edge mode disarms Crease through its existing control path.
+- Crease Strength remains visible only while Crease is actually active.
+- Protected main modelling runtime remains unchanged.
+
 ## 2026-09-26 — v0.36.18.475 Edge progressive disclosure
 
 - User hands-on passed .474 Vertex progressive disclosure.
