@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.492 Face tap staged diagnostic
+
+- .491 still failed additive armed Face selection while deselection worked.
+- Added visible status-bar diagnostic for before/immediate/microtask/RAF selection state around native toggle.
+- No selection or topology behavior intentionally changed.
+
 ## 2026-09-26 — v0.36.18.491 native Face toggle bridge
 
 - .490 still allowed deselection but not additive selection while Extrude/Inset stayed armed.
