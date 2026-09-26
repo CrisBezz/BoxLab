@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.473 true Bisect Only
+
+- Added an explicit **Bisect Only** action to the existing Symmetry/Bisect Tool Session.
+- Unlike the old non-mirrored keep-half path, the new operation keeps both sides and only inserts the plane cut into crossed faces.
+- Added `splitMeshByPlane()` to the symmetry core, reusing the current arbitrary movable/rotatable plane definition.
+- Split faces inherit their source facegroup; crease edges are remapped through cut intersections where possible.
+- Existing Symmetry Apply path remains unchanged; old “Bisect only” wording for keep-half mode is corrected to “Keep half”.
+
 ## 2026-09-26 — v0.36.18.472 Sweep transaction declaration + Edge Bevel UI placement
 
 - .471 removed Edge Revolve correctly, but Add > Sweep remained inert.

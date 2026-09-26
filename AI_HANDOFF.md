@@ -1,3 +1,14 @@
+## Current recovery checkpoint — v0.36.18.473
+
+- v0.36.18.472 restored Add > Sweep and the Edge Bevel precision-control placement.
+- User identified a missing Symmetry/Bisect operation: the current unchecked Mirror state kept only one clipped half, despite being described as “Bisect only”.
+- v0.36.18.473 adds a true **Bisect Only** action inside the existing Symmetry/Bisect Tool Session.
+- True Bisect Only uses the current movable/rotatable/snappable plane, inserts plane intersections into crossed faces, splits those faces into two faces sharing the cut edge, and keeps geometry on both sides. It does not mirror or discard either side.
+- Existing Symmetry Apply behavior is unchanged. Its non-mirrored state is now described as **Keep half** rather than the misleading “Bisect only”.
+- Facegroup IDs are inherited by both child faces created from a split source face. Existing crease edges are preserved/remapped through plane intersections where applicable.
+- Only `symmetry-bisect.js` is cache-hopped in `index.html`; protected transform/navigation runtime remains untouched.
+- Sentinel: Symmetry remains working; Bisect Only cuts without deleting/mirroring; moved/rotated/aligned planes still work; Sweep/Inset/Bevel/Extrude/Through/navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.472
 
 - v0.36.18.471 successfully removed Edge Revolve from Edge Active Tools, but Add > Sweep still appeared inert.

@@ -1114,3 +1114,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] UI .472: Edge Revolve remains absent
 - [ ] Workflow .472: Inset, Edge Bevel drag, Vertex Bevel, Extrude, Through and orbit/pan/zoom remain unaffected
 
+- [ ] Workflow .473: Symmetry/Bisect Tool Session exposes an explicit Bisect Only button
+- [ ] Workflow .473: Bisect Only inserts a cut across intersected faces while retaining geometry on both sides
+- [ ] Workflow .473: Bisect Only does not mirror either side and does not delete either side
+- [ ] Workflow .473: moved / rotated / Align-to-Face plane positions are respected by Bisect Only
+- [ ] Workflow .473: split faces preserve their source facegroup assignment
+- [ ] Workflow .473: existing Symmetry Apply / Keep half behavior remains unchanged
+
