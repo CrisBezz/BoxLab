@@ -148,11 +148,13 @@ function beginDirectDrag(event,hit,selectionBefore,workingFaces){
 
 document.addEventListener('pointerdown',event=>{
   if(!armed||event.target!==canvas||!event.isPrimary)return;
-  const picker=bridge()?.pick;
+  const b=bridge(),picker=b?.pick;
   if(typeof picker!=='function')return;
+  const hits=typeof b?.pickHits==='function'?b.pickHits('face',event):[];
   const hit=picker('face',event)?.index;
   if(!Number.isInteger(hit))return;
-  setFaceTapDebug(`down hit=${hit} mode=${bridge()?.mode?.()} before=[${faces().join(',')}]`);
+  const stack=hits.map(item=>`${item.index}@${Number(item.distance).toFixed(3)}`).join(',');
+  setFaceTapDebug(`down hit=${hit} stack=[${stack}] mode=${b?.mode?.()} before=[${faces().join(',')}]`);
   pendingFacePress={
     id:event.pointerId,
     x:event.clientX,
