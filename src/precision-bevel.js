@@ -31,6 +31,11 @@ function makeRow(host,id,labelText){
 }
 
 const edgeUi=makeRow(edgeTools,'precisionEdgeBevelRow','Exact %');
+const edgePrecisionAnchor=document.querySelector('.loop-slide-option');
+if(edgeUi&&edgePrecisionAnchor){
+  edgePrecisionAnchor.parentElement?.insertBefore(edgeUi.row,edgePrecisionAnchor);
+  edgePrecisionAnchor.parentElement?.insertBefore(edgeUi.readout,edgePrecisionAnchor);
+}
 const vertexUi=makeRow(vertexTools,'precisionVertexBevelRow','Exact %');
 
 function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices);mesh.edges?.();}
