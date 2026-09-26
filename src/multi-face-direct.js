@@ -89,8 +89,10 @@ function centerOf(m,vertices){const c=m.vertices[vertices[0]].clone().set(0,0,0)
 function projectedNormal(m,region,camera){const n=region?.normal||m.faceRegionNormal?.(region?.faceIndices||[]);if(!region||!n||!camera)return{x:0,y:-1};const c=centerOf(m,region.regionVertices),a=screenPoint(c,camera),b=screenPoint(c.clone().add(n),camera),x=b.x-a.x,y=b.y-a.y,l=Math.hypot(x,y);return l>1e-4?{x:x/l,y:y/l}:{x:0,y:-1};}
 function setPointer(event){const r=canvas.getBoundingClientRect();pointer.set((event.clientX-r.left)/r.width*2-1,-((event.clientY-r.top)/r.height*2-1));}
 function hitViewportFace(event){
-  const camera=state()?.camera,objects=[...(state()?.faceObjects?.values?.()||[])].filter(Boolean);
-  if(!camera||!objects.length)return null;
+  const camera=state()?.camera,scene=state()?.scene,objects=[];
+  if(!camera||!scene)return null;
+  scene.traverse?.(object=>{if(object?.userData?.kind==='face'&&Number.isInteger(object.userData.index))objects.push(object);});
+  if(!objects.length)return null;
   setPointer(event);raycaster.setFromCamera(pointer,camera);
   const hit=raycaster.intersectObjects(objects,false)[0],index=hit?.object?.userData?.index;
   return Number.isInteger(index)?index:null;
