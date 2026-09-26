@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.511 Vertex cross-mode polish
+
+- Normalised Vertex tool rows to the same compact 3-column spacing and button sizing used by Edge and Face.
+- Preserved the established .341 deterministic Vertex tool order to avoid reintroducing historical button-jump regressions.
+- Existing Vertex Slide and Vertex Bevel progressive disclosure remains unchanged.
+- Presentation-only change; no modelling or selection logic changed.
+
 ## 2026-09-27 — v0.36.18.510 Edge Extrude Move/Plane cue
 
 - Edge Extrude now automatically arms the real Move transform when the tool is activated.

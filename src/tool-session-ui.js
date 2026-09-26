@@ -68,6 +68,9 @@ style.textContent=`
 .mode-tools[data-mode-tools="face"]:has(#extrudeBtn.active) #precisionFaceReadout,
 .mode-tools[data-mode-tools="face"]:has(#insetBtn.active) #precisionFaceReadout{display:block!important}
 
+.mode-tools[data-mode-tools="vertex"] > .outliner-actions{margin:2px 0!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
+.mode-tools[data-mode-tools="vertex"] > .outliner-actions button{min-height:31px!important;padding:4px 4px!important;font-size:10px!important;line-height:1.1!important;white-space:normal!important}
+
 .mode-tools[data-mode-tools="edge"] .edge-compact-row{margin:2px 0!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:4px!important}
 .mode-tools[data-mode-tools="edge"] .edge-compact-row button{min-height:31px!important;padding:4px 4px!important;font-size:10px!important;line-height:1.1!important;white-space:normal!important}
 .mode-tools[data-mode-tools="edge"] .edge-section-label{display:none!important}
