@@ -1278,3 +1278,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .498: no rear/opposite Face selection while Visible is active
 - [ ] Regression .498: Through topology, Rotate .483 and viewport navigation unchanged
 
+- [ ] Workflow .499: Extrude armed -> tap unselected visible face; it remains selected with no flash/drop
+- [ ] Workflow .499: tap additional visible faces; selection builds additively
+- [ ] Workflow .499: tap selected face; it deselects while Extrude remains armed
+- [ ] Workflow .499: drag selected face(s); Extrude works
+- [ ] Workflow .499: repeat all checks for Inset
+- [ ] Regression .499: no rear/through selection while Visible is active
+- [ ] Regression .499: ordinary Face selection outside armed tools unchanged
+- [ ] Regression .499: Through topology, Rotate .483 and viewport navigation unchanged
+
