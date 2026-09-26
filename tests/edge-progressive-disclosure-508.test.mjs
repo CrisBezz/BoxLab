@@ -17,6 +17,7 @@ test('508 keeps Edge options progressive and hides legacy layout chrome',()=>{
   assert.match(ui,/edge-section-label\{display:none!important\}/);
   assert.match(ui,/crease-button-row\{display:none!important\}/);
   assert.match(ui,/:has\(#loopCutBtn\.active\) \.loop-cut-option/);
+  assert.match(ui,/loops\.insertAdjacentElement\('afterend',loopSlide\)/);
   assert.match(ui,/:has\(#bevelBtn\.active\) \.bevel-option > \.range-row/);
   assert.match(ui,/:has\(#applyCreaseBtn\.active\) \.crease-options/);
   assert.match(ui,/:has\(#edgeSlideBtn\.active\) #precisionEdgeSlideRow/);
