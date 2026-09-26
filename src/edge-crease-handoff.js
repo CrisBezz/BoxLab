@@ -12,7 +12,9 @@ const otherEdgeTools=new Set([
 document.addEventListener('pointerdown',event=>{
   if(!crease?.classList.contains('active'))return;
   const button=event.target?.closest?.('button');
-  if(!button||!otherEdgeTools.has(button.id))return;
+  if(!button)return;
+  const transformTool=!!button.closest?.('#toolModes');
+  if(!otherEdgeTools.has(button.id)&&!transformTool)return;
   crease.click();
 },true);
 
