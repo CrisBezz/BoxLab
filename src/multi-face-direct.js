@@ -132,6 +132,16 @@ document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail
 document.addEventListener('pointerdown',event=>{const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;const ids=faces();pendingSelection=ids.length?{tool:target.id==='extrudeBtn'?'extrude':'inset',ids:[...ids]}:null;},true);
 document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;pendingFacePress=null;armed=null;clearRefVisual();syncButtons();updateStatus();setFaceTapDebug('disarmed');document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();setFaceTapDebug(`armed=${armed} sel=[${faces().join(',')}]`);},true);
 window.addEventListener('boxlab-bridge-state',()=>{if(!armed)return;queueMicrotask(()=>{syncButtons();updateStatus();});});
+document.addEventListener('click',event=>{
+  if(!armed||!event.target?.closest?.('#deselectAllBtn'))return;
+  pendingFacePress=null;
+  queueMicrotask(()=>{
+    syncButtons();
+    updateStatus();
+    setFaceTapDebug(`cleared sel=[] armed=${armed}`);
+  });
+},true);
+
 function beginDirectDrag(event,hit,selectionBefore,workingFaces){
   const m=mesh(),camera=state()?.camera;
   if(!m||!camera||!Number.isInteger(hit)||!workingFaces?.length)return false;
