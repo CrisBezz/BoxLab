@@ -68,7 +68,7 @@ function placeLaunchButton(container,button){
 }
 placeLaunchButton(faceTools,faceSelectionSweepBtn);placeLaunchButton(edgeTools,edgeSelectionSweepBtn);
 
-let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null,hotRailHit=null,railSnapRefs=null;
+let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null,hotRailHit=null,railSnapRefs=null,sweepBeforeScene=null,sweepUndoDepth=null,sweepRedoDepth=null;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 
 function state(){return globalThis.__boxlabBridgeState;}
