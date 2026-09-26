@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.464 Shell/Solidify recovery
+
+- User found Shell broken after .462.
+- Restored `solidify-core.js` and `shell-core.js` exactly to the confirmed-working .461 state rather than layering another speculative fix.
+- Retained the successful Extract Faces and Object Join facegroup preservation work.
+- Solidify/Shell facegroup propagation is deferred for separate reintroduction after functional recovery is hands-on confirmed.
+
+# BoxLab Development History
+
 ## 2026-09-26 — v0.36.18.463 Object Join facegroup preservation
 
 - v0.36.18.462 Extract/Solidify/Shell propagation passed hands-on testing.
