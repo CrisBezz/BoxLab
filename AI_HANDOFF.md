@@ -1,3 +1,10 @@
+## Current Sweep UI polish checkpoint — v0.36.18.509
+
+- Removed Sweep's custom blue active-button outline.
+- Sweep active/pressed buttons now use the standard BoxLab white active appearance (#eef1f7 background, dark text, no special inset outline).
+- Presentation-only change in src/sweep-path.js; Sweep workflow, path authoring, cancellation, snapping and modelling behavior are unchanged.
+- Frozen Face .501 interaction, Rotate .483, Through, Edge .508 layout and protected multi-object-transform remain untouched.
+
 ## Current Edge progressive-disclosure checkpoint — v0.36.18.508
 
 - Continues the UI cleanup in a narrow presentation-only slice after stable Face .507.
