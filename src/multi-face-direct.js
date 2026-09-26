@@ -12,17 +12,6 @@ const status = document.querySelector('#selectionStatus');
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 const REF_VERTEX_PX=18,REF_EDGE_PX=16;
-let ownerTrace=document.querySelector('#faceOwnerTrace');
-if(!ownerTrace){
-  ownerTrace=document.createElement('span');
-  ownerTrace.id='faceOwnerTrace';
-  ownerTrace.style.cssText='margin-left:8px;font-variant-numeric:tabular-nums;';
-  document.querySelector('.statusbar')?.append(ownerTrace);
-}
-function setOwnerTrace(text,append=false){
-  if(!ownerTrace)return;
-  ownerTrace.textContent=append&&ownerTrace.textContent?`${ownerTrace.textContent} | ${text}`:`FaceOwner • ${text}`;
-}
 let armed = null;
 let drag = null;
 let pendingSelection = null;
@@ -150,7 +139,6 @@ document.addEventListener('pointerdown',event=>{
   if(!b||typeof picker!=='function')return;
   const selectionBefore=faces(),hit=picker('face',event)?.index;
   if(!Number.isInteger(hit))return;
-  setOwnerTrace(`down hit=${hit} before=[${selectionBefore.join(',')}] mainTool=${b.directTool?.()||'none'}`);
   pendingFacePress={
     id:event.pointerId,
     x:event.clientX,
@@ -182,10 +170,7 @@ function finish(event){
     pendingFacePress=null;
     event.preventDefault();event.stopImmediatePropagation();
     if(event.type==='pointerup'){
-      const b=bridge(),ok=b?.toggle?.('face',p.hit);
-      setOwnerTrace(`up ok=${ok} now=[${faces().join(',')}] mainTool=${b?.directTool?.()||'none'}`,true);
-      queueMicrotask(()=>setOwnerTrace(`micro=[${faces().join(',')}] mainTool=${bridge()?.directTool?.()||'none'}`,true));
-      requestAnimationFrame(()=>setOwnerTrace(`raf=[${faces().join(',')}] mainTool=${bridge()?.directTool?.()||'none'}`,true));
+      bridge()?.toggle?.('face',p.hit);
       updateStatus();
       syncButtons();
     }
