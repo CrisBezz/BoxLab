@@ -26,6 +26,12 @@ style.textContent=`
 .boxlab-tool-session-panel .outliner-actions{margin:0}
 .boxlab-tool-session-section{font-size:9.5px;opacity:.58;text-transform:uppercase;letter-spacing:.45px;margin-top:2px}
 .boxlab-tool-session-primary{min-height:36px;font-weight:650}
+#precisionVertexSlideRow,#precisionVertexSlideReadout,#precisionVertexBevelRow,#precisionVertexBevelRow + div,.vertex-bevel-options{display:none!important}
+.mode-tools[data-mode-tools="vertex"]:has(#vertexSlideBtn.active) #precisionVertexSlideRow{display:grid!important}
+.mode-tools[data-mode-tools="vertex"]:has(#vertexSlideBtn.active) #precisionVertexSlideReadout{display:block!important}
+.mode-tools[data-mode-tools="vertex"]:has(#vertexBevelBtn.active) #precisionVertexBevelRow{display:grid!important}
+.mode-tools[data-mode-tools="vertex"]:has(#vertexBevelBtn.active) #precisionVertexBevelRow + div{display:block!important}
+.mode-tools[data-mode-tools="vertex"]:has(#vertexBevelBtn.active) .vertex-bevel-options{display:grid!important}
 `;
 document.head.appendChild(style);
 
