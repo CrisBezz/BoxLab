@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.475 Edge progressive disclosure
+
+- User hands-on passed .474 Vertex progressive disclosure.
+- Continued the Tool-first rebuild with Edge mode only.
+- Loop count/slide, Bevel width/segments/exact, Crease strength, Edge Slide exact and Offset Loop exact/support controls are now hidden at rest and shown only while their owning tool is active.
+- No Edge tool handlers, selection ownership, topology solvers or transform ownership changed.
+- Cache-hopped only `tool-session-ui.js`.
+
 ## 2026-09-26 — v0.36.18.474 Vertex progressive disclosure
 
 - Resumed the post-.449 Tool-first UI rebuild with Vertex mode only.
