@@ -1,3 +1,15 @@
+## Current recovery checkpoint — v0.36.18.471
+
+- v0.36.18.470 Edge Revolve progressive disclosure passed hands-on: Revolve itself works.
+- User requested Edge Revolve be removed from the normal Edge Active Tools because its loose-edge-only input is difficult to discover/use in ordinary modelling.
+- `src/revolve.js` remains loaded for historical/core availability, but its controls are intentionally no longer mounted into the Edge tool surface.
+- User also reported Add > Sweep appears to do nothing.
+- Root cause: .469 mode-switch cancellation queued a `pathObject()` check. Sweep creation itself calls Object-mode entry through `addMesh(...,{enterObjectMode:true})`; the queued cancellation then ran after `o.sweepPath` had been attached and immediately restored the pre-Sweep scene.
+- Fix: mode-switch cancellation now captures whether a Sweep already existed at the instant the mode click began. Initial Add → Object mode therefore does not cancel the new Sweep, while later user mode changes still cancel the same active Sweep transactionally.
+- Only changed runtime cache keys are advanced: `revolve.js?v=0.36.18.471` and `sweep-path.js?v=0.36.18.471`.
+- No Sweep geometry/profile/path algorithms, Inset, Bevel, Extrude, Through, navigation or protected multi-object transform code is changed.
+- Sentinel: Add > Sweep creates the Sweep construction object/session; Cancel still restores the prior scene; switching mode after Sweep exists still cancels; Edge Active Tools has no Revolve control; core modelling/navigation remains healthy.
+
 ## Current recovery checkpoint — v0.36.18.470
 
 - v0.36.18.469 Revolve Profile + Sweep cancellation recovery remains the functional baseline.
