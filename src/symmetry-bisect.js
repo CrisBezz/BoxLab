@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import {symmetryBisect} from './symmetry-bisect-core.js?v=0.36.18.434';
+import {symmetryBisect,splitMeshByPlane} from './symmetry-bisect-core.js?v=0.36.18.473';
 import {nearestCrossObjectSnap} from './cross-object-snap-core.js?v=0.36.18.324';
 
-const VERSION='0.36.18.435';
+const VERSION='0.36.18.473';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 const canvas=document.querySelector('#viewport');
@@ -43,8 +43,9 @@ controls.innerHTML=`
     <button type="button" data-sym-keep="negative">Keep −</button>
   </div>
   <label class="toggle-row"><input id="symmetryMirrorToggle" type="checkbox" checked/><span>Mirror kept half</span></label>
-  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
+  <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
     <button id="symmetryCancelBtn" type="button">Cancel</button>
+    <button id="symmetryBisectOnlyBtn" type="button">Bisect Only</button>
     <button id="symmetryApplyBtn" class="boxlab-tool-session-primary" type="button">Apply</button>
   </div>
 `;
@@ -58,6 +59,7 @@ const flipPlaneButton=controls.querySelector('#symmetryFlipPlaneBtn');
 const resetPlaneButton=controls.querySelector('#symmetryResetPlaneBtn');
 const planeReadout=controls.querySelector('#symmetryPlaneReadout');
 const cancelButton=controls.querySelector('#symmetryCancelBtn');
+const bisectOnlyButton=controls.querySelector('#symmetryBisectOnlyBtn');
 const applyButton=controls.querySelector('#symmetryApplyBtn');
 
 let active=false,objectId=null,source=null,preview=null,planeSurface=null,axis='x',keep='positive',planeNormal=new THREE.Vector3(1,0,0),planePoint=new THREE.Vector3(),drag=null,alignFaceArmed=false,scaleWasDisabled=false;
@@ -151,7 +153,7 @@ function buildPreview(snapLabel=null){
   fill.renderOrder=18;wire.renderOrder=19;
   preview=new THREE.Group();preview.name='BoxLab Symmetry Bisect Preview';preview.userData.boxlabSymmetryPreview=true;preview.add(fill,wire,planeVisual(source));
   targetScene.add(preview);
-  setStatus(`Symmetry/Bisect • ${axis==='custom'?'Custom':axis.toUpperCase()} plane • Keep ${keep==='positive'?'+':'−'} • ${mirrorToggle?.checked?'Mirror':'Bisect only'}${snapLabel?` • Snap ${snapLabel}`:''}`);
+  setStatus(`Symmetry/Bisect • ${axis==='custom'?'Custom':axis.toUpperCase()} plane • Keep ${keep==='positive'?'+':'−'} • ${mirrorToggle?.checked?'Mirror':'Keep half'}${snapLabel?` • Snap ${snapLabel}`:''}`);
   return true;
 }
 function cancel({silent=false}={}){
@@ -360,6 +362,21 @@ keepButtons.forEach(button=>button.addEventListener('click',()=>{keep=button.dat
 resetPlaneButton?.addEventListener('click',()=>{alignFaceArmed=false;planePoint.copy(originPlanePoint(planeNormal));updateButtons();buildPreview();});
 mirrorToggle?.addEventListener('change',buildPreview);
 cancelButton?.addEventListener('click',()=>cancel());
+bisectOnlyButton?.addEventListener('click',()=>{
+  const object=activeObject(),live=mesh();
+  if(!active||!source||!object||!live||object.id!==objectId){cancel({silent:true});return;}
+  const result=splitMeshByPlane(source,{axis:axis==='custom'?'x':axis,planeNormal,planePoint});
+  if(!result.ok){setStatus(`Bisect Only refused • ${result.reason}`);return;}
+  globalThis.__boxlabObjectHistory?.checkpoint?.();
+  live.vertices=result.mesh.vertices.map(v=>v.clone());
+  live.faces=result.mesh.faces.map(f=>[...f]);
+  live.creases=new Map(result.mesh.creases||[]);
+  live.faceGroups=Array.isArray(result.mesh.faceGroups)?[...result.mesh.faceGroups]:[];
+  disposePreview();active=false;objectId=null;source=null;drag=null;endSession();
+  manager()?.saveActive?.();forceRender();sync();
+  globalThis.__boxlabSymmetryLastResult={version:VERSION,axis,planeNormal:result.planeNormal?.toArray?.(),planePoint:result.planePoint?.toArray?.(),mirrored:false,bisectOnly:true,cutVertices:result.cutVertices};
+  setStatus(`Bisect Only applied • ${axis==='custom'?'Custom':axis.toUpperCase()} plane • both sides kept • ${result.cutVertices} cut vertices`);
+});
 applyButton?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh();
   if(!active||!source||!object||!live||object.id!==objectId){cancel({silent:true});return;}
@@ -372,7 +389,7 @@ applyButton?.addEventListener('click',()=>{
   disposePreview();active=false;objectId=null;source=null;drag=null;endSession();
   manager()?.saveActive?.();forceRender();sync();
   globalThis.__boxlabSymmetryLastResult={version:VERSION,axis,keep,planeNormal:result.planeNormal?.toArray?.(),planePoint:result.planePoint?.toArray?.(),mirrored:result.mirrored,cutVertices:result.cutVertices};
-  setStatus(`Symmetry / Bisect applied • ${axis==='custom'?'Custom':axis.toUpperCase()} • Keep ${keep==='positive'?'+':'−'} • ${result.mirrored?'mirrored + welded':'bisected'}`);
+  setStatus(`Symmetry / Bisect applied • ${axis==='custom'?'Custom':axis.toUpperCase()} • Keep ${keep==='positive'?'+':'−'} • ${result.mirrored?'mirrored + welded':'kept half'}`);
 });
 
 window.addEventListener('pointerdown',beginInteraction,true);
