@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.508 Edge progressive disclosure
+
+- Compacted Edge home into five dense 3-column rows without replacing button nodes or changing modelling handlers.
+- Kept existing armed-only Loop, Bevel, Crease, Edge Slide and Offset Loop controls.
+- Moved late-mounted Edge Extrude and Sweep launchers into the compact grid when available.
+- Hid legacy section labels / duplicate crease presentation row after authoritative buttons move.
+- Preserved Face .501, Rotate .483, Through, navigation and protected multi-object transform.
+
 ## 2026-09-26 — v0.36.18.507 handoff reconciliation
 
 - Reconciled AI_HANDOFF.md and TEST_CHECKLIST.md with actual current main after the final .507 layout refinement.
