@@ -1,3 +1,17 @@
+## Current Face progressive-disclosure checkpoint — v0.36.18.505
+
+- User requested the Face modelling tools be rearranged to consume less vertical space, with Inspect / Repair / Topology Gate below all modelling tools.
+- v0.36.18.505 creates a compact Face modelling block:
+  - Row 1: Extrude / Inset / Knife
+  - armed-only context: Value / readout / Repeat Previous
+  - Row 2: Sweep / Join Coplanar / Delete
+  - Row 3: Extract / Duplicate / Bridge
+  - then Inspect / Repair / Topology Gate
+- Existing button nodes are moved rather than recreated, preserving handlers.
+- Join Coplanar placement now respects the compact secondary row so its own sync routine cannot move it back beside Extrude.
+- Empty legacy Sweep/action rows are hidden after their buttons move into compact rows.
+- No Face pointer/controller/selection/topology changes; .501 Face interaction remains frozen.
+
 ## Current Face progressive-disclosure checkpoint — v0.36.18.504
 
 - User screenshot showed .503 anchored contextual controls to the wrong generated Face row, leaving Extrude/Inset/Knife below Inspect/Repair.
