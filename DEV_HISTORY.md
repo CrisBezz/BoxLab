@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.469 Revolve Profile + Sweep session recovery
+
+- Restored the known-good historical Revolve Profile controller from .453 because the recovered .443 file lacked the later Add/Cancel transaction path.
+- Added true transactional Sweep cancellation with scene/history rollback.
+- Sweep now exposes Cancel Sweep at every stage and cancels cleanly when leaving the workflow or opening another Tool Session.
+- Kept the protected Face/Bevel/Inset/Through interaction runtime untouched.
+
 ## 2026-09-26 — v0.36.18.468 Object-mode Tool-first UI cleanup
 
 - Resumed the UI/UX cleanup from the proven .467 runtime instead of replaying the old broad rewrite.

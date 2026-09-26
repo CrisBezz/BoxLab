@@ -1,3 +1,13 @@
+## Current recovery checkpoint — v0.36.18.469
+
+- v0.36.18.468 Object Tool-first presentation is merged.
+- User found two pre-existing workflow gaps during UI testing: Revolve Profile could not be added; Sweep could not be cancelled / escaped by changing mode.
+- Revolve Profile is restored from the confirmed-good historical .453 controller, which contains the proper Add event handler, transactional scene snapshot/rollback and explicit Cancel action.
+- Sweep gains a real session-level transactional Cancel. The pre-Sweep scene is captured; Cancel restores it and restores history depths.
+- Sweep Cancel is available as an explicit button and also triggers when leaving the Sweep workflow via selection-mode change or opening another Tool Session.
+- No Face direct-tool, Bevel, Inset, Through or navigation ownership code is changed.
+- Sentinel: Add > Revolve Profile creates a construction plane and can Cancel; Sweep can Cancel from any stage and mode-switch escape restores the prior scene; Inset/Bevel/Extrude/Through/navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.468
 
 - v0.36.18.467 Viewport scrolling is the hands-on-good forward baseline after Facegroup recovery.
