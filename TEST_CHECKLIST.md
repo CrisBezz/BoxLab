@@ -1027,3 +1027,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .461: Triangulate gives each child triangle its parent polygon facegroup
 - [ ] Facegroups .461: first activation, Mirror and SubD behaviour remain correct
 - [ ] Facegroups .461: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Facegroups .462: Extract Faces new object retains the selected faces' original group colours
+- [ ] Facegroups .462: source object retains correct groups after extraction
+- [ ] Facegroups .462: Solidify original + inner duplicate faces share the same group IDs
+- [ ] Facegroups .462: Solidify new side-wall faces are Ungrouped/neutral
+- [ ] Facegroups .462: Shell preserves surviving groups, inner shell inheritance and ungrouped new side walls
+- [ ] Facegroups .462: first activation, Mirror, SubD and Mesh Health preservation remain correct
+- [ ] Facegroups .462: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
