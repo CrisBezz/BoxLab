@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.501 freeze single-owner armed Face selection
+
+- User confirmed .500 armed Extrude/Inset Face selection works perfectly.
+- Removed temporary FaceOwner trace and read-only legacy directTool diagnostic bridge.
+- Retained .499 single-owner fix: persistent-face-tool-select yields while multi-face-direct is armed.
+- Clean baseline for Face progressive disclosure.
+
 ## 2026-09-26 — v0.36.18.499 single-owner armed Face selection
 
 - Identified the true flash cause: legacy persistent-face-tool-select added the face on window capture before multi-face-direct handled the same gesture and toggled it back off on pointerup.
