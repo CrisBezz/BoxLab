@@ -83,8 +83,8 @@ function forceRender() {
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change', { bubbles:true }));
 }
 
-canvas?.addEventListener('pointerdown', event => {
-  if (!event.isPrimary || !rotateActive() || event.pointerType === 'touch') return;
+document.addEventListener('pointerdown', event => {
+  if (event.target!==canvas || !event.isPrimary || !rotateActive() || event.pointerType === 'touch') return;
   const mesh = state()?.mesh, camera = state()?.camera, mode = currentMode();
   const indices = selectionVertices(mode, mesh);
   if (!mesh || !camera || mode!=='face' || !indices.length || !pencilHitsMesh(event, mesh, camera)) return;
@@ -118,7 +118,7 @@ canvas?.addEventListener('pointerdown', event => {
   canvas.setPointerCapture?.(event.pointerId);
 }, true);
 
-canvas?.addEventListener('pointermove', event => {
+document.addEventListener('pointermove', event => {
   if (!gesture || gesture.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
@@ -161,8 +161,8 @@ function finish(event) {
   gesture = null;
   if (moved && status) status.textContent = 'Rotate committed';
 }
-canvas?.addEventListener('pointerup', finish, true);
-canvas?.addEventListener('pointercancel', finish, true);
+document.addEventListener('pointerup', finish, true);
+document.addEventListener('pointercancel', finish, true);
 
 rotateButton?.addEventListener('click', () => {
   forceRender();
