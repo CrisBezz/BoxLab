@@ -1,3 +1,16 @@
+## Current recovery checkpoint — v0.36.18.476
+
+- v0.36.18.475 Edge progressive disclosure passed to hands-on with five requested polish fixes.
+- Edge control ordering is refined without changing modelling algorithms:
+  - Loop Slide now sits directly under the Loops slider.
+  - Edge Bevel Exact % row/readout now sit directly under Segments.
+  - Offset Loop Support Spacing now sits above the Exact Offset % row/readout.
+- Crease Strength remains contextual to Crease active state only.
+- Added a narrow Edge-only Crease handoff shim because Crease is owned by legacy `main.js` while Bevel / Edge Slide / Offset Loop / Face Split own separate controllers. Selecting another Edge tool, Move/Scale/Rotate, or leaving Edge mode now toggles Crease off through its existing button path.
+- Protected `main.js?v=0.36.18.366` remains untouched.
+- Only presentation/cache owners are advanced: `tool-session-ui.js`, `precision-bevel.js`, `precision-offset-loop.js`, `drawer-ui.js`, plus the new `edge-crease-handoff.js`.
+- Sentinel: Edge tool functionality remains unchanged; Crease never stays armed behind another tool; Strength hides when Crease is off; control order matches the active tool.
+
 ## Current recovery checkpoint — v0.36.18.475
 
 - v0.36.18.474 Vertex progressive disclosure passed hands-on and is now the clean Vertex baseline.
