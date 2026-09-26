@@ -1,3 +1,12 @@
+## Current recovery checkpoint — v0.36.18.464
+
+- User reported Shell broken after the .462 Facegroup propagation slice; .463 Join did not touch Shell but cannot be treated as a safe baseline until Shell is restored.
+- v0.36.18.464 restores `src/solidify-core.js` and `src/shell-core.js` exactly to the confirmed-working .461 versions.
+- Good .462 Extract Faces facegroup preservation and .463 Object Join facegroup preservation remain in place.
+- Solidify/Shell facegroup propagation is temporarily removed and will be reintroduced separately after Shell functionality is confirmed.
+- No UI/interaction changes.
+- Sentinel: Shell must work exactly as before; Solidify must work; Extract/Join Facegroups remain preserved; Inset/Bevel/Extrude/navigation remain healthy.
+
 ## Current recovery checkpoint — v0.36.18.463
 
 - v0.36.18.462 Extract/Solidify/Shell facegroup propagation was hands-on PASS.

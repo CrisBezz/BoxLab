@@ -1043,3 +1043,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Facegroups .463: Join with compatible Mirror/SubD settings preserves Facegroup display after evaluation
 - [ ] Facegroups .463: first activation, Mirror, SubD, Mesh Health, Extract, Solidify and Shell remain correct
 - [ ] Facegroups .463: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
+
+
+- [ ] Recovery .464: Shell launches, previews, adjusts thickness, Apply works, Cancel leaves source unchanged
+- [ ] Recovery .464: Solidify works with its established preview/apply behavior
+- [ ] Recovery .464: Extract Faces still preserves Facegroups
+- [ ] Recovery .464: Object Join still preserves Facegroups
+- [ ] Recovery .464: Inset, Edge Bevel, Vertex Bevel, Extrude and navigation remain unaffected
