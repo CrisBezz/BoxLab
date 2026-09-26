@@ -1,3 +1,15 @@
+## Current recovery checkpoint — v0.36.18.486
+
+- Hands-on .485 still showed unselected Face taps flashing and failing to remain selected while Extrude/Inset stayed armed.
+- Root cause: armed Face direct selection still used its own temporary geometry raycast, while normal Face selection used the live viewport `faceObjects` picker.
+- v0.36.18.486 aligns both systems:
+  - `multi-face-direct.js` now picks armed Face interactions from the authoritative live `state().faceObjects`;
+  - it exposes `__boxlabFaceDirect.active()` ownership state;
+  - `edge-paint-select.js` explicitly yields Face selection while Extrude/Inset direct ownership is active.
+- Intended UX remains: tap unselected = add; tap selected = remove; drag = operate; tool stays armed.
+- No Face progressive-disclosure work yet.
+- Through, unified Rotate .483, Move/Scale, navigation, main.js and protected multi-object transform remain unchanged.
+
 ## Current recovery checkpoint — v0.36.18.485
 
 - Hands-on .484 confirmed tap-to-deselect works for armed Extrude/Inset, but additive selection of new faces still flashed and dropped.
