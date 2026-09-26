@@ -1209,3 +1209,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .486: no face flash/drop during armed selection taps
 - [ ] Regression .486: Through, Rotate .483 and viewport navigation remain unchanged
 
+- [ ] Workflow .487: Extrude armed -> tap several different unselected faces and each remains selected
+- [ ] Workflow .487: Extrude armed -> tap selected faces to remove them without disarming
+- [ ] Workflow .487: Inset armed -> repeat additive and subtractive face selection
+- [ ] Workflow .487: drag a selected/newly hit face still performs the armed operation
+- [ ] Regression .487: no flash/drop on additive selection
+- [ ] Regression .487: Through, Rotate .483 and viewport navigation remain unchanged
+

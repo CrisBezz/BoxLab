@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-26 — v0.36.18.487 live scene Face picker
+
+- .486 still failed because it looked for a non-existent bridge `faceObjects` collection.
+- Audited main renderer and confirmed normal Face pickers are live scene objects tagged `userData.kind='face'`.
+- Armed Extrude/Inset now raycast those exact scene Face picker meshes.
+- Existing tap-toggle logic and direct-tool ownership are unchanged.
+
 ## 2026-09-26 — v0.36.18.486 armed Face picker ownership repair
 
 - .485 still flashed/dropped newly tapped faces during armed Extrude/Inset.

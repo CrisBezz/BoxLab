@@ -1,3 +1,13 @@
+## Current recovery checkpoint — v0.36.18.487
+
+- Hands-on .486 still failed; the architectural idea was correct but its data source was not.
+- Audit confirmed `main.js` does not expose `faceObjects` / `edgeObjects` / `vertexObjects` on `__boxlabBridgeState`; no other source populates them.
+- Normal core Face picking actually raycasts live scene objects whose `userData.kind === 'face'`.
+- v0.36.18.487 updates armed Extrude/Inset to traverse the live Three.js scene and raycast those exact rendered Face picker meshes.
+- Existing armed direct ownership remains: paint selection yields while Extrude/Inset owns Face interaction.
+- Intended UX remains tap unselected=add, tap selected=remove, drag=operate, tool stays armed.
+- No progressive disclosure, topology, Rotate, main.js or protected multi-object-transform changes.
+
 ## Current recovery checkpoint — v0.36.18.486
 
 - Hands-on .485 still showed unselected Face taps flashing and failing to remain selected while Extrude/Inset stayed armed.
