@@ -1342,3 +1342,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .509: Sweep active tabs/buttons use the same white active appearance as the rest of BoxLab
 - [ ] Regression .509: no blue inset outline appears on Follow Edges, Editing Path, Profile/Path/Finish, or other active Sweep controls
 - [ ] Regression .509: Sweep workflow behavior remains unchanged
+
+- [ ] Workflow .510: select a valid boundary edge and arm Edge Extrude -> Move becomes visibly active automatically
+- [ ] Workflow .510: Edge Extrude starts with Plane selected by default
+- [ ] Workflow .510: Plane drag extrudes freely in the plane perpendicular to the grabbed edge
+- [ ] Workflow .510: choose X/Y/Z/Auto after arming -> repeated pulls preserve the chosen constraint rather than resetting to Plane
+- [ ] Regression .510: Edge Extrude selection switching/repeated pull behavior remains unchanged
+- [ ] Regression .510: Face .501, Through, Rotate .483, Sweep .509 and viewport navigation remain unchanged

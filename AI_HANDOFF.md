@@ -1,3 +1,12 @@
+## Current Edge Extrude UX checkpoint — v0.36.18.510
+
+- Edge Extrude now mirrors Sweep's transform cue: arming Edge Extrude automatically arms the real Move tool.
+- On the off -> on arm transition, Move defaults to the Edge-Extrude-specific Plane constraint.
+- Plane means movement in the plane perpendicular to the grabbed edge, matching the mature Edge Extrude solver.
+- The default is applied only on the initial arm transition; repeated pulls keep Edge Extrude armed and preserve any later constraint the user chooses.
+- No Edge Extrude topology/solver changes. Face .501, Rotate .483, Through, Edge .508 layout, Sweep .509 and protected multi-object-transform remain untouched.
+- Next step: hands-on confirm Move visibly arms with Extrude, Plane is selected by default, and changing to X/Y/Z/Auto remains preserved across repeated pulls.
+
 ## Current Sweep UI polish checkpoint — v0.36.18.509
 
 - Removed Sweep's custom blue active-button outline.

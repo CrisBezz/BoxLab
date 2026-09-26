@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.510 Edge Extrude Move/Plane cue
+
+- Edge Extrude now automatically arms the real Move transform when the tool is activated.
+- Initial Edge Extrude constraint defaults to Plane, giving the most useful free movement perpendicular to the grabbed edge.
+- Defaulting occurs only on a fresh arm transition so later user-selected constraints persist across repeated ribbon pulls.
+- No topology or extrusion solver changes.
+
 ## 2026-09-27 — v0.36.18.509 Sweep active-button polish
 
 - Removed the Sweep-specific blue inset outline from active/pressed buttons.
