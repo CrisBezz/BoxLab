@@ -12,6 +12,8 @@
 - Existing Sweep and Edge Extrude buttons are moved after their late-loaded modules mount; handlers remain attached.
 - Frozen Face .501 interaction, Rotate .483, Through, navigation and protected multi-object-transform remain untouched.
 - Next step: hands-on check the compact Edge home and armed Loop/Bevel/Crease/Slide/Offset panels before any further disclosure work.
+- Merged via PR #240; squash merge `013162607862c5e6028918d26f200a4f5ae2d241`.
+- Topology regression run #980 completed with the known historical-suite failure backlog, while all new .508 tests and the relevant .476 Loop Slide contract passed.
 
 ## Current Face progressive-disclosure checkpoint — v0.36.18.507
 
