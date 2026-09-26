@@ -11,7 +11,7 @@ const otherEdgeTools=new Set([
   'bridgeEdgesBtn','fillFaceBtn','dissolveLoopBtn','dissolveEdgeBtn','deleteEdgeBtn'
 ]);
 
-document.addEventListener('pointerdown',event=>{
+document.addEventListener('click',event=>{
   const button=event.target?.closest?.('button');
   if(!button)return;
   if(button.id==='bevelBtn'&&loop?.classList.contains('active'))loop.click();
@@ -33,4 +33,4 @@ document.querySelector('#selectionModes')?.addEventListener('pointerdown',event=
   if(button&&button.dataset.mode!=='edge')crease.click();
 },true);
 
-globalThis.__boxlabEdgeCreaseHandoff={version:'0.36.18.477'};
+globalThis.__boxlabEdgeCreaseHandoff={version:'0.36.18.478'};
