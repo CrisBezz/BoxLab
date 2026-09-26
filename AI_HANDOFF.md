@@ -6,6 +6,8 @@
 - The default is applied only on the initial arm transition; repeated pulls keep Edge Extrude armed and preserve any later constraint the user chooses.
 - No Edge Extrude topology/solver changes. Face .501, Rotate .483, Through, Edge .508 layout, Sweep .509 and protected multi-object-transform remain untouched.
 - Next step: hands-on confirm Move visibly arms with Extrude, Plane is selected by default, and changing to X/Y/Z/Auto remains preserved across repeated pulls.
+- Merged via PR #242; squash merge `47a699bbd042e49cfaed58919dc9b26ead081216`.
+- Topology regression run #984: all new .510 tests and the existing .427 repeated-Edge-Extrude contract passed; overall workflow remained red only from the known unrelated historical-suite backlog.
 
 ## Current Sweep UI polish checkpoint — v0.36.18.509
 
