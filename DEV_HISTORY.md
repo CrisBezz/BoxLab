@@ -8,6 +8,7 @@
 - Sweep requests immediate shared layout settlement after its launch button is created.
 - Sweep controls normalized to compact 31px / 10px sizing.
 - Sweep topology/path behavior unchanged.
+- PR #247 squash-merged as `450dd4e3b287005fdc8ace77eb792a95add2410a`; .515 and older .509 Sweep regressions passed in run #995.
 
 ## 2026-09-27 — v0.36.18.514 Edge Slide / Offset / Extrude polish
 
