@@ -1473,3 +1473,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .528: Repeat remains armed for additional Face taps until explicitly turned off
 - [ ] Regression .528: sequential A -> B Extrude remains PASS
 - [ ] Regression .528: single/multi-face Inset remains PASS
+
+- [ ] Workflow .529: explicitly select visible front Face -> arm Extrude -> drag same Face; selected Face extrudes
+- [ ] Workflow .529: no rear/unselected Face substitution after deliberate preselection
+- [ ] Regression .529: after successful Extrude, keep armed -> drag another Face B -> sequential A -> B still PASS
+- [ ] Regression .529: deliberate multi-face Extrude remains PASS
+- [ ] Regression .529: single/multi-face Inset remains PASS
+- [ ] Workflow .529: Repeat Extrude and Repeat Inset still to be hands-on closed
