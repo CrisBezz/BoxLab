@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.516 Face armed-drag / Repeat repair
+
+- Corrected armed Face drag semantics so a drag beginning on an unselected Face operates that Face only instead of inheriting the prior completed Face selection.
+- Preserved deliberate multi-face operations: if the drag begins on a Face already in the selected set, the selected set is operated together.
+- Added a direct-controller press event so precision-face can capture Extrude/Inset values even when the Face was not preselected.
+- This reconnects Repeat Previous to valid armed Face workflows without changing Repeat's replay controller.
+- Protected main selection bridge and Through topology path remain unchanged.
+
 ## 2026-09-27 — v0.36.18.515 Sweep activation/layout repair
 
 - Diagnosed Sweep's first-press failure as a late Edge-toolbar ownership race.
