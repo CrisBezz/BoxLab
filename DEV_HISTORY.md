@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.519 provisional Face drag ownership
+
+- Hands-on .518 showed the second unselected-face Extrude still inherited stale prior-Face behavior strongly enough to deform Face A and contaminate the edited mesh.
+- Changed armed Face press ownership so an unselected hit Face becomes the provisional live selection immediately on pointerdown rather than waiting for the drag threshold.
+- Tap semantics are preserved transactionally: restore the prior selection, then apply the existing native Face toggle.
+- Drag semantics keep the provisional one-Face selection, so downstream handlers cannot observe the previous Face as the active working set.
+- No topology solver, Through, Inset, navigation, Rotate, Edge, Sweep or protected multi-object-transform changes.
+
 ## 2026-09-27 — v0.36.18.518 Face Extrude / Repeat repair
 
 - Fixed second armed Extrude on a different unselected Face by aligning the live Face selection with the actual drag working set before modelling begins.
