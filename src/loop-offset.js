@@ -214,6 +214,10 @@ document.addEventListener('click',event=>{
   if(!armed||event.target?.closest?.('#offsetLoopBtn')) return;
   if(event.target?.closest?.('button')) disarm();
 },true);
+document.addEventListener('boxlab-direct-tool-exclusive',event=>{
+  if(event.detail?.tool!=='edge-slide'||!armed)return;
+  armed=false;drag=null;sync();
+});
 
 canvas?.addEventListener('pointerdown',event=>{
   if(!armed||!event.isPrimary) return;
@@ -279,4 +283,4 @@ window.addEventListener('boxlab-bridge-state',()=>{sync();applyPendingHighlight(
 sync();
 
 
-globalThis.__boxlabOffsetLoop={version:'0.36.18.340',isArmed:()=>armed,disarm,info};
+globalThis.__boxlabOffsetLoop={version:'0.36.18.514',isArmed:()=>armed,disarm,info};
