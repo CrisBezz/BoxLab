@@ -72,13 +72,13 @@ import('./precision-face.js?v=0.36.18.327').catch(error => console.warn('BoxLab 
 import('./repeat-face-previous.js?v=0.36.18.327').catch(error => console.warn('BoxLab Repeat Previous Face failed to load', error));
 import('./sequential-through-fallback.js?v=0.36.18.385').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
 import('./precision-transform.js?v=0.36.18.14').catch(error => console.warn('BoxLab precision Transform failed to load', error));
-import('./precision-bevel.js?v=0.36.18.476').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
+import('./precision-bevel.js?v=0.36.18.513').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
 import('./precision-edge-slide.js?v=0.36.18.16').catch(error => console.warn('BoxLab precision Edge Slide failed to load', error));
 import('./loop-offset.js?v=0.36.18.340').catch(error => console.warn('BoxLab Offset Loop failed to load', error));
 import('./precision-offset-loop.js?v=0.36.18.476').catch(error => console.warn('BoxLab precision Offset Loop failed to load', error));
 import('./edge-context-ui.js?v=0.36.18.35').catch(error => console.warn('BoxLab contextual Edge controls failed to load', error));
 import('./collapse-edge.js?v=0.36.18.36').catch(error => console.warn('BoxLab Collapse Edge failed to load', error));
-import('./vertex-merge.js?v=0.36.18.37').catch(error => console.warn('BoxLab Vertex Merge failed to load', error));
+import('./vertex-merge.js?v=0.36.18.513').catch(error => console.warn('BoxLab Vertex Merge failed to load', error));
 import('./merge-by-distance.js?v=0.36.18.41').catch(error => console.warn('BoxLab Merge by Distance failed to load', error));
 import('./face-reconstruct.js?v=0.36.18.341').catch(error => console.warn('BoxLab Face Reconstruction failed to load', error));
 import('./join-coplanar.js?v=0.36.18.75').catch(error => console.warn('BoxLab Join Coplanar failed to load', error));
