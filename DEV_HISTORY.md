@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.526 constrain overlap hit preference for multi-Face Extrude
+
+- .525 fixed sequential A -> B armed Extrude.
+- Hands-on then revealed deliberate multi-face Extrude could choose an unselected face through the back of the model.
+- Cause: .523's unselected-hit preference was being applied even when multiple faces were deliberately selected.
+- Limited that preference to exactly one selected face.
+- With 2+ selected faces, pressing a selected face now preserves primary hit and therefore the full selected working set.
+- Sequential Through ownership fix from .525 remains unchanged.
+
 ## 2026-09-27 — v0.36.18.525 bind sequential Through fallback to resolved Face gesture
 
 - .524 screenshots proved B picking/workingFaces were correct but direct drag never began while geometry still mutated.
