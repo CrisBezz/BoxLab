@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.538 repair Boolean one-step Undo
+
+- Beta 5 final smoke found Boolean geometry working but Undo did nothing.
+- The pre-operation checkpoint was created before addMesh(), then lost when the new Boolean result became active and restored its empty history.
+- Changed Boolean history ordering to capture pre-scene first and checkpointSnapshot() after result activation.
+- Matches the proven Linked Duplicate scene-history pattern.
+- No Boolean solver changes.
+
 ## 2026-09-27 — v0.36.18.537 fix Shell first-press iPad launch race
 
 - Beta 5 Gate Batch 3 found Shell occasionally required a second press.
