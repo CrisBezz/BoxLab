@@ -6,6 +6,8 @@
 - Selection chronology is owned entirely by vertex-merge.js; protected main.js / selection bridge behavior remains unchanged.
 - Vertex Extrude is roadmap-only for after Beta 5.
 - Frozen recovery baseline .512, Face .501, Rotate .483, Edge .510, Sweep .509 and protected multi-object-transform remain untouched.
+- Merged via PR #245; squash merge `4f54930b2e4bfd982400a52219a9ba093bd65549`.
+- Topology regression run #990: all new .513 tests, older .474 Vertex disclosure checks, and .341 deterministic Vertex layout contract passed; overall workflow remained red only from the known unrelated historical-suite backlog.
 
 ## Load recovery checkpoint — v0.36.18.512
 
