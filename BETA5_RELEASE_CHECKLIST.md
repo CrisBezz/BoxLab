@@ -79,42 +79,42 @@ From this point until Beta 5 is frozen:
 
 ## 5. Object / Multi / Group / Boolean
 
-- [ ] ordinary Duplicate independent
-- [ ] Linked Duplicate shares geometry / independent placement
-- [ ] Make Unique
-- [ ] Multi Move / Scale / Rotate
-- [ ] Group create / rename / visibility / lock / ungroup
-- [ ] Join
-- [ ] Boolean Union
-- [ ] Boolean Cut
-- [ ] Boolean Intersect
-- [ ] Boolean one-step Undo
-- [ ] Boolean Swap keeps Active Tools available
+- [x] ordinary Duplicate independent
+- [x] Linked Duplicate shares geometry / independent placement
+- [x] Make Unique
+- [x] Multi Move / Scale / Rotate — PASS; drawer collapse to Active Tools accepted for Beta 5
+- [x] Group create / rename / visibility / lock / ungroup
+- [x] Join
+- [x] Boolean Union
+- [x] Boolean Cut
+- [x] Boolean Intersect
+- [ ] Boolean one-step Undo — retest on v0.36.18.538
+- [x] Boolean Swap keeps Active Tools available
 - [ ] object selection tint remains normal after construction tools
 
 ## 6. Mesh Health / import / export
 
-- [ ] Mesh Health inspection
-- [ ] Safe Repair
+- [x] Mesh Health inspection
+- [x] Safe Repair
 - [ ] Auto Close on simple valid boundary loop
 - [ ] Unify Winding / Flip Normals / Triangulate
-- [ ] editable OBJ import
-- [ ] Reference import stays read-only
+- [x] editable OBJ import
+- [x] Reference import stays read-only
 - [ ] OBJ group / facegroup preservation
 - [ ] Facegroups Render Look
-- [ ] Base OBJ export
-- [ ] SubD OBJ export
+- [x] Base OBJ export
+- [x] SubD OBJ export
 - [ ] export preflight does not block valid mesh export
 
 ## 7. iPad UI / presentation
 
-- [ ] no Safari blue-selection wash / native callout
-- [ ] File menu fits viewport and scrolls internally
-- [ ] Vertex / Edge / Face tool layouts do not jump when tools arm
-- [ ] progressive controls appear beneath their owning tool
-- [ ] Active Tools drawer does not unexpectedly collapse during Tool Sessions
-- [ ] Studio remains default and multi-object lighting looks correct
-- [ ] temporary FACE DEBUG overlay is gone
+- [x] no Safari blue-selection wash / native callout
+- [x] File menu fits viewport and scrolls internally
+- [x] Vertex / Edge / Face tool layouts do not jump when tools arm
+- [x] progressive controls appear beneath their owning tool
+- [x] Active Tools drawer does not unexpectedly collapse during Tool Sessions
+- [x] Studio remains default and multi-object lighting looks correct
+- [x] temporary FACE DEBUG overlay is gone
 
 ## Freeze procedure
 
