@@ -1412,3 +1412,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .519: armed tap on a selected Face still deselects only that Face
 - [ ] Workflow .519: Repeat Previous after a successful ordinary Extrude replays the committed Extrude value on another clean Face
 - [ ] Regression .519: Inset sequential unselected-face drag, deliberate multi-face Extrude/Inset and Extrude Through remain passing
+
+- [ ] Workflow .520: fresh cube -> arm Extrude -> drag Face A -> ordinary Extrude succeeds
+- [ ] Workflow .520: keep Extrude armed -> drag different unselected Face B -> only B extrudes
+- [ ] Workflow .520: repeat on a third unselected Face C -> only C extrudes
+- [ ] Regression .520: prior Face A does not move/deform when B or C is dragged
+- [ ] Workflow .520: after successful ordinary Extrude, Repeat Previous becomes available and replays the same Extrude value on another Face
+- [ ] Regression .520: armed Face tap add/remove behavior still works
+- [ ] Regression .520: Inset and Extrude Through remain unchanged on clean geometry
