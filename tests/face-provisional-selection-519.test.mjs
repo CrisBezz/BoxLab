@@ -19,6 +19,6 @@ test('519 tap path restores prior selection before native toggle',()=>{
 test('519 drag still uses authoritative one-face working set and protected pins',()=>{
   assert.match(direct,/const workingFaces=selectionBefore\.includes\(hit\)\?\[\.\.\.selectionBefore\]:\[hit\]/);
   assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.519/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
+  assert.match(index,/src\/main\.js\?v=0\.36\.18\.520/);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
