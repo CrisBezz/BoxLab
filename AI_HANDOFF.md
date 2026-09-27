@@ -1,3 +1,18 @@
+## Current Repeat state-sync checkpoint — v0.36.18.532
+
+- .531 hands-on PASS: direct transactional Repeat Extrude/Inset works.
+- New issue: after Repeat Inset, performing a new real Extrude could leave Repeat armed as the old Inset instead of switching to the new Extrude.
+- Root cause: Repeat only replaced armedOperation when !applying, so a real operation could be missed during replay cleanup timing.
+- .532 rule:
+  - replay-generated direct commits (detail.replay) do not replace the stored/latest real operation
+  - any new real Extrude or Inset commit updates precision last operation
+  - armed Repeat always adopts the newest boxlab-face-value-committed operation, independent of replay cleanup timing
+- Expected behavior:
+  - Repeat Inset remains Inset across repeated replay taps
+  - perform a real Extrude -> Repeat immediately becomes Repeat Extrude
+  - perform a real Inset -> Repeat immediately becomes Repeat Inset
+- Real Face geometry/targeting from .529 and direct Repeat transaction from .531 remain unchanged.
+
 ## Current Repeat transaction checkpoint — v0.36.18.531
 
 - .530 hands-on Repeat still FAIL.
