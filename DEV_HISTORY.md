@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.528 isolate Repeat/Exact synthetic Face gesture
+
+- .527 normal Face tools passed hands-on.
+- Repeat/Exact uses synthetic pointerId 9876 and already supplies the explicit selected target Face.
+- Prevented the sequential Extrude overlap preference from substituting another Face for pointerId 9876.
+- Prevented sequential-through-fallback from arming on pointerId 9876.
+- No change to real Pencil/touch Extrude, Inset, multi-face behavior or Through ownership.
+
 ## 2026-09-27 — v0.36.18.527 Face Extrude/Inset checkpoint HANDS-ON PASS
 
 - User confirmed .527 passes after the full Face regression repair sequence.
