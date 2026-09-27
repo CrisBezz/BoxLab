@@ -1,3 +1,13 @@
+## Beta 5 RC Shell first-press repair — v0.36.18.537
+
+- Beta 5 Gate Batch 3 exposed one concrete release blocker: Shell sometimes needed two presses.
+- User screenshots showed first press caused Face Active Tools layout settlement/reordering; second press then launched Shell.
+- Root cause: Shell launched only on click, while Face workflow layout can move the Shell button node on pointerup, causing Safari/iPad to lose that click.
+- .537 adds a touch/Pencil pointerdown launch path before the layout pointerup can relocate the node.
+- Mouse/keyboard click launch remains.
+- Shell geometry, preview, thickness, Apply/Cancel, Tool Session, and shell-core remain unchanged.
+- Hands-on retest: selected opening Face -> first press Shell must immediately enter Shell Tool Session and preview.
+
 ## Beta 5 release-candidate entry — v0.36.18.536
 
 - v0.36.18.535 is the protected hands-on-perfect Face/Repeat baseline.
