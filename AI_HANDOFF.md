@@ -1,3 +1,17 @@
+## Current Face targeting checkpoint — v0.36.18.523
+
+- Hands-on .522 still failed A -> B sequential Extrude even after restoring native single-Face extrudeFace(), so the geometry primitive alone was not the root cause.
+- Audit found a concrete regression: current multi-face-direct had lost the proven .495 hit-stack rule.
+- .495 behavior restored in .523:
+  - get full ordered Face hit stack from bridge.pickHits()
+  - if primary/nearest hit is already selected and an unselected Face exists deeper in the same hit stack, choose the first unselected Face
+  - otherwise keep the primary hit
+- This is specifically intended to prevent the previously extruded/selected A cap or overlapping geometry from stealing the next B gesture.
+- Current provisional selection / drag ownership logic remains in place.
+- Single Face Extrude continues to use native EditableMesh.extrudeFace() from .522; multi-face bands retain the connected solver.
+- Through, Inset, Rotate, Edge, Sweep, and protected multi-object-transform remain unchanged.
+- Next hands-on gate: fresh cube -> Extrude A -> while still armed drag a visibly different B. PASS requires A unchanged and B extruded.
+
 ## Current Face geometry checkpoint — v0.36.18.522
 
 - Hands-on .521 still failed the Face A -> B sequential Extrude test. .521 contained .520 modelling behavior unchanged, so both provisional selection and legacy-main ownership fixes are ruled out as the primary cause.
