@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.531 replace synthetic Repeat with direct Face transaction
+
+- Repeat remained non-functional on .530 despite correct target selection.
+- Retired the synthetic pointer replay path for Repeat.
+- Added direct transactional replay API to multi-face-direct.
+- Extrude replay uses stable native single-Face extrusion, topology gate and one history step; negative values that would become Through/blocked are refused.
+- Inset replay converts the stored geometric inset distance to target-face uniform inset amount and applies it directly with one history step.
+- Normal interactive Face ownership/selection code is unchanged.
+
 ## 2026-09-27 — v0.36.18.530 make Repeat/Exact trust explicit Face selection
 
 - Repeat remained non-functional after .529 normal targeting passed.
