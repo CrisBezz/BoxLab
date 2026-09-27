@@ -1,3 +1,11 @@
+## Current Object / Tool Session checkpoint — v0.36.18.517
+
+- Object drawer retain now yields whenever a Tool Session is active, preventing Array endpoint movement from fighting the pinned Active Tools drawer.
+- New Revolve Profile objects now start with Edit Profile armed and immediately enter their Revolve Tool Session.
+- Opening Boolean now enables authoritative Object Multi selection by default while preserving the current selected/active object.
+- No Array geometry logic, Boolean solver logic, or Revolve mesh generation changed.
+- Frozen Face .516, Sweep .515, Edge .514, Vertex .513, Rotate .483 and protected multi-object-transform remain untouched.
+
 ## Current Face armed-drag / Repeat checkpoint — v0.36.18.516
 
 - Root cause identified in the .501 armed Face interaction model: after a completed Extrude/Inset, dragging a different unselected Face inherited the previous selection and silently became a multi-face operation.
