@@ -1,3 +1,22 @@
+## Current selected-Face priority checkpoint — v0.36.18.535
+
+- .534 hands-on:
+  1. deliberately selected single Face -> Extrude FAIL, rear/through Face extruded
+  2. immediate sequential A -> B PASS, but deliberate multi-face Extrude FAIL and reverted to through Face
+  3. Repeat/tool cycle selected-Face test PASS
+- This proved state cleanup alone was not enough; generic viewport primary picking could still resolve a through Face even while pointer was over a selected Face.
+- .535 adds explicit selectedHit resolution with hitSelectedFace().
+- Priority:
+  - synthetic Repeat/Exact: explicit current selection
+  - 2+ selected Faces: selectedHit wins; full selected set remains workingFaces
+  - 1 selected Face outside immediate sequential continuation: selectedHit wins
+  - only immediate sequential A -> B state may use firstUnselected overlap substitution
+- Goal: preserve sequential A -> B while making deliberate single/multi selection authoritative.
+- Next hands-on gate:
+  1. select visible Face -> Extrude that Face
+  2. immediate A -> B sequential still passes
+  3. deliberate 2+ selected Faces -> Extrude selected set, no rear Face substitution
+
 ## Current Face sequential-selection checkpoint — v0.36.18.534
 
 - Screenshot on .532 showed deliberate selected-Face Extrude could again resolve to a different face behind the model after Repeat/Extrude/Inset cycling.
