@@ -1,3 +1,13 @@
+## Current Face direct-owner checkpoint — v0.36.18.520
+
+- Hands-on .519 still failed: after Extrude Face A, dragging a different unselected Face B did not behave correctly and could deform A; Repeat Previous also remained unavailable/failed.
+- Repo history audit found an exact earlier ownership fix in v0.36.18.460: legacy main.js viewport drag explicitly yielded whenever mature Face direct Extrude/Inset was armed.
+- That guard disappeared in the later .449 stability rollback and had not been restored while the new multi-face-direct recovery work proceeded.
+- .520 restores only that proven ownership guard at the very start of main.js canvas pointerdown: when #extrudeBtn.boxlab-direct-stable or #insetBtn.boxlab-direct-stable is present, legacy main.js viewport drag returns immediately.
+- This intentionally touches the previously frozen main.js .501 baseline, but only to restore the historically proven single-owner Face guard; selection bridge behavior and all other main.js logic remain unchanged.
+- multi-face-direct remains .519; precision-face remains .518; Through/topology, Rotate .483, Edge .514, Sweep .515 and protected multi-object-transform remain unchanged.
+- Next hands-on gate: fresh cube, Extrude A, then different unselected B and C while Extrude stays armed; A must remain unchanged. If that passes, verify Repeat Previous.
+
 ## Current Face sequential-drag checkpoint — v0.36.18.519
 
 - Hands-on .518 result: sequential unselected Face Extrude still failed; dragging Face B could deform previously extruded Face A. Repeat Previous also failed after that contaminated sequence. Inset, deliberate multi-face, armed tap-selection and Extrude Through continued to pass on a clean mesh.
