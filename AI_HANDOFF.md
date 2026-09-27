@@ -1,3 +1,20 @@
+## Current Face ownership checkpoint — v0.36.18.525
+
+- .524 diagnostic screenshots isolated the A -> B corruption.
+- On failed B: direct Face debug showed primary=3 chosen=3 before=[1] work=[3], proving B targeting was correct.
+- Crucially the debug never advanced from DOWN to DRAG-START, while mesh topology still changed from 12 verts / 10 faces to 20 verts / 22 faces.
+- Root cause found in src/sequential-through-fallback.js?v=0.36.18.385:
+  - it armed on window capture pointerdown before multi-face-direct resolved the new face;
+  - therefore the B gesture could snapshot stale selected Face A;
+  - on pointermove it could take over, mutate A, cancel the direct drag, and leave multi-face-direct stuck before DRAG-START.
+- .525 removes that stale window-pointerdown ownership.
+- Sequential Through fallback now arms only from the synchronous boxlab-face-direct-press event after multi-face-direct has resolved hit + workingFaces.
+- multi-face-direct now includes clientX/clientY in that event so fallback keeps the same gesture origin.
+- Fallback still handles its intended single-Face inward/Through special case, but now on the resolved current face.
+- .522 native single-Face Extrude routing and .523 hit-stack preference remain.
+- Visible .524 Face debug remains temporarily for validation.
+- Next hands-on gate: fresh cube -> A Extrude -> while still armed B Extrude. PASS requires debug to advance to DRAG-START on B and A to remain unchanged.
+
 ## Current Face targeting checkpoint — v0.36.18.523
 
 - Hands-on .522 still failed A -> B sequential Extrude even after restoring native single-Face extrudeFace(), so the geometry primitive alone was not the root cause.
