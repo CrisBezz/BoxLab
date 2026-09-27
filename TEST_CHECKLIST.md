@@ -1368,3 +1368,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .513: reverse the selection order -> Merge to First collapses to the newly first-selected vertex
 - [ ] Regression .513: Merge to Center remains unchanged
 - [ ] Regression .513: Vertex Add / Build Edge / Slide / Bevel ordering remains stable
+
+- [ ] Workflow .514: arm Edge Slide -> Slide % exact control appears directly beneath the Slide/Offset/Uncrease tool row
+- [ ] Workflow .514: arm Offset Loop while Edge Slide is active -> Edge Slide disarms
+- [ ] Workflow .514: arm Edge Slide while Offset Loop is active -> Offset Loop disarms
+- [ ] Workflow .514: arm Edge Extrude -> Move is active and Plane, not Free, is visibly/default selected
+- [ ] Regression .514: change Edge Extrude to X/Y/Z/Auto -> repeated pulls preserve the user-selected constraint
+- [ ] Regression .514: Edge Slide drag and exact entry still work
+- [ ] Regression .514: Offset Loop drag and exact entry still work

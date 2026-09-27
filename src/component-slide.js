@@ -97,13 +97,20 @@ function setTool(tool) {
   activeTool = activeTool === tool ? null : tool;
   vertexButton?.classList.toggle('active', activeTool === 'vertex');
   edgeButton?.classList.toggle('active', activeTool === 'edge');
+  if(activeTool==='edge')document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'edge-slide'}}));
   if (status) {
     const count = tool === 'edge' ? selectedEdges().length : 1;
     status.textContent = activeTool ? `${tool === 'vertex' ? 'Vertex' : count > 1 ? `Multi Edge (${count})` : 'Edge'} Slide • Pencil-drag the selected component${count > 1 ? 's' : ''}` : 'Slide tool off';
   }
 }
+function clearForExclusive(tool){
+  if(tool!=='offset-loop'||activeTool!=='edge')return;
+  activeTool=null;
+  edgeButton?.classList.remove('active');
+}
 vertexButton?.addEventListener('click', () => setTool('vertex'));
 edgeButton?.addEventListener('click', () => setTool('edge'));
+document.addEventListener('boxlab-direct-tool-exclusive',event=>clearForExclusive(event.detail?.tool));
 
 function syncButtons() {
   if (vertexButton) vertexButton.disabled = !activeMode('vertex') || selectedVertex() === null;

@@ -1,3 +1,11 @@
+## Current Edge polish checkpoint — v0.36.18.514
+
+- Edge Slide exact Slide % controls now stay directly beneath the Edge Slide action row when armed.
+- Edge Slide and Offset Loop are now mutually exclusive; arming either one disarms the other.
+- Edge Extrude now reasserts the real Move + Plane state after the initial arm click stack so Plane is the authoritative visible/default constraint.
+- Sweep is intentionally NOT changed in .514. Its two-click activation / late Circle appearance / apparent oversized UI will be handled as a separate follow-up after .514 hands-on passes.
+- Frozen .512 Tool Session baseline, Vertex .513, Face .501, Rotate .483, Sweep .509 and protected multi-object-transform remain untouched.
+
 ## Current Vertex polish checkpoint — v0.36.18.513
 
 - Vertex Bevel contextual controls now stay together directly beneath the Vertex tool row when Bevel is armed: Width first, then Exact % + readout.
