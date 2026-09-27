@@ -1,3 +1,25 @@
+## Current deliberate Face selection checkpoint — v0.36.18.529
+
+- .528 screenshot exposed a remaining Extrude targeting bug while testing Repeat:
+  - user explicitly selected a visible front Face, then armed/dragged Extrude;
+  - direct debug finished on hit=2/faces=[2], showing a different face was resolved;
+  - the one-selected-face overlap rule still substituted the deeper unselected Face.
+- .529 distinguishes explicit selection intent from sequential armed Extrude continuation.
+- New state: preferSequentialUnselected.
+  - false when Extrude/Inset is armed
+  - false after an explicit armed Face tap/toggle
+  - true only after a successful ordinary Extrude commit
+- Therefore:
+  - deliberate preselected Face owns its next drag
+  - after an Extrude, the next direct drag may still choose an unselected overlapping Face for A -> B continuation
+  - explicit re-selection cancels that sequential preference
+  - Repeat/Exact pointerId 9876 remains excluded
+- .525 Through-fallback ownership fix, .526 multi-face rule, .527 Inset targeting and .528 Repeat synthetic exclusions remain.
+- Next hands-on gate:
+  1. explicitly select front Face -> arm Extrude -> drag same Face; it must extrude that Face, not the rear Face
+  2. then keep Extrude armed -> drag a different Face B; sequential A -> B must still pass
+  3. then test Repeat Extrude and Repeat Inset.
+
 ## Current Repeat Face checkpoint — v0.36.18.528
 
 - .527 hands-on PASS confirmed normal sequential Extrude, deliberate multi-face Extrude, single-face Inset and multi-face Inset.
