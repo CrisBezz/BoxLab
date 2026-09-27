@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.520 restore proven Face direct-owner guard
+
+- .519 failed hands-on, so stopped iterating on selection handoff.
+- Audited repo history and found v0.36.18.460 had already solved a mature-direct-vs-legacy viewport ownership conflict with an explicit early return in main.js.
+- Restored only that proven Face ownership guard: legacy main.js canvas pointerdown now yields whenever direct Extrude/Inset is visibly armed.
+- This is a narrow, intentional exception to the frozen main.js .501 baseline; no selection bridge logic, topology solver, Through kernel, navigation, Rotate, Edge, Sweep or multi-object-transform behavior changed.
+- Added a regression contract that the guard executes before legacy viewport drag state.
+
 ## 2026-09-27 — v0.36.18.519 provisional Face drag ownership
 
 - Hands-on .518 showed the second unselected-face Extrude still inherited stale prior-Face behavior strongly enough to deform Face A and contaminate the edited mesh.
