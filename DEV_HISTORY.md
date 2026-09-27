@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.523 restore proven Face hit-stack targeting
+
+- .522 still failed sequential Face A -> B extrusion.
+- Current multi-face-direct was found to have lost the .495 overlap-selection rule even though main.js still exposes bridge.pickHits().
+- Restored the exact proven behavior: if the nearest Face hit is already selected, prefer the first unselected Face in the ordered hit stack.
+- Kept .519 provisional drag ownership and .522 native single-Face Extrude routing.
+- No Through/Inset/other modelling changes.
+
 ## 2026-09-27 — v0.36.18.522 restore mature native single-Face Extrude
 
 - .521 still failed hands-on, ruling out stale deployment and the restored .460-style legacy viewport yield as the primary Face failure.
