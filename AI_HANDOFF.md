@@ -1,3 +1,11 @@
+## Current Face Extrude / Repeat checkpoint — v0.36.18.518
+
+- Hands-on .517 result: Inset, deliberate multi-face, armed tap-selection and Extrude Through passed; second unselected-face Extrude and Repeat Previous failed.
+- Root cause: .516 computed the correct working Face set for the second drag but did not hand that set to the live selection bridge before Extrude began, leaving rendered/selection state on the prior Face.
+- .518 sets the live Face selection to the authoritative working set at direct-drag start.
+- Successful ordinary Extrude now emits its committed model-unit value directly to precision-face; Repeat no longer depends on post-topology reconstruction for Extrude.
+- Inset/Through/topology solver paths are otherwise unchanged.
+
 ## Current Object / Tool Session checkpoint — v0.36.18.517
 
 - Object drawer retain now yields whenever a Tool Session is active, preventing Array endpoint movement from fighting the pinned Active Tools drawer.
