@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.541 File menu refresh + File Name edit fix
+
+- Bumped stale styles.css cache key from .270 to .541 so File menu sizing reliably refreshes on Safari/iPad.
+- File Name now takes explicit touch/Pencil focus and temporarily allows normal text-edit touch behavior while focused.
+- Restores BoxLab touch-action when editing ends.
+- No GLB facegroup, modelling, or frozen Beta 5 changes.
+
 ## 2026-09-28 — v0.36.18.540 Nomad GLB facegroup round trip
 
 - GLB import now maps primitive/material boundaries into BoxLab faceGroups.
