@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.532 sync armed Repeat to newest real Face operation
+
+- .531 direct Repeat passed hands-on.
+- User found Repeat Inset could remain armed after subsequently performing a real Extrude.
+- Removed the !applying timing dependency from armed Repeat state updates.
+- Replay-generated direct commits are ignored by precision last-operation capture; new real Extrude/Inset commits always become the latest operation.
+- Armed Repeat now follows the latest real operation immediately.
+
 ## 2026-09-27 — v0.36.18.531 replace synthetic Repeat with direct Face transaction
 
 - Repeat remained non-functional on .530 despite correct target selection.
