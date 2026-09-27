@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.525 bind sequential Through fallback to resolved Face gesture
+
+- .524 screenshots proved B picking/workingFaces were correct but direct drag never began while geometry still mutated.
+- Found sequential-through-fallback .385 still owned window-capture pointerdown and therefore saw stale Face A before multi-face-direct switched to B.
+- It could then steal pointermove, mutate A and cancel the intended B drag.
+- Removed stale window pointerdown arming.
+- Fallback now subscribes to boxlab-face-direct-press and uses the resolved hit/workingFaces plus pointer coordinates from multi-face-direct.
+- This preserves the special inward/Through fallback while making multi-face-direct authoritative for Face targeting.
+
 ## 2026-09-27 — v0.36.18.523 restore proven Face hit-stack targeting
 
 - .522 still failed sequential Face A -> B extrusion.
