@@ -1,3 +1,21 @@
+## Current Repeat cycle checkpoint — v0.36.18.533
+
+- .532 passed the first Repeat state-switch check, but a longer cycle still failed:
+  1. Repeat Inset
+  2. real Extrude -> Repeat Extrude worked
+  3. real Inset -> Repeat Inset worked
+  4. next real Extrude did not become Repeat Extrude
+- Root cause found in repeat-face-previous replay cleanup:
+  - after every replay, a delayed setTimeout still executed armedOperation=op
+  - that stale replay operation could overwrite a newer real Face operation after the real operation had already updated Repeat
+- .533 removes armedOperation assignment from replay cleanup entirely.
+- Replay cleanup now only clears applying and repaints.
+- Armed Repeat operation may change only through:
+  - explicit Repeat arm from latest real operation
+  - a new boxlab-face-value-committed real operation
+- Geometry/targeting remains unchanged from the passed .529/.531 baseline.
+- Next hands-on gate is the exact two-cycle sequence above.
+
 ## Stable Face + Repeat checkpoint — v0.36.18.532 — HANDS-ON PASS
 
 - User hands-on confirmed .532 PASS.
