@@ -1,3 +1,32 @@
+## Current Repeat transaction checkpoint — v0.36.18.531
+
+- .530 hands-on Repeat still FAIL.
+- Targeting had already been isolated and corrected, so the synthetic pointer replay itself was retired.
+- .531 Repeat no longer calls precision-face.applyFor() / synthetic pointerId 9876 gesture.
+- multi-face-direct now exposes __boxlabFaceDirect.replay(tool,value,faceIndex).
+- Repeat Extrude:
+  - clone before
+  - reject zero
+  - for negative values, refuse if contact classification would become blocked/Through
+  - apply stable native single-Face extrudeFace()
+  - run gateClosedEdit()
+  - push exactly one history checkpoint
+  - preserve target Face selection
+- Repeat Inset:
+  - clone before
+  - derive target Face min edge
+  - convert stored geometric inset distance into that Face's uniform-inset amount
+  - apply insetFaceRegions([faceIndex], amount)
+  - push one history checkpoint
+  - preserve target Face selection
+- Real Pencil/touch Face behavior from .529 remains unchanged.
+- .525 Through fallback ownership and .528 synthetic exclusion remain, though Repeat no longer uses the synthetic path.
+- Next hands-on gate:
+  1. ordinary Extrude -> Repeat -> tap B -> same distance
+  2. tap C without rearming -> same distance again
+  3. ordinary Inset -> Repeat -> tap B -> same inset distance
+  4. quick normal Extrude/Inset regression.
+
 ## Current Repeat target checkpoint — v0.36.18.530
 
 - .529 hands-on PASS confirmed deliberate preselected Extrude target and sequential A -> B behavior.
