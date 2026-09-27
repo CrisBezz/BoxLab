@@ -1440,3 +1440,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .523: repeat with Face C
 - [ ] Regression .523: tapping the already-selected Face still allows normal deselect when there is no unselected overlapping hit
 - [ ] Regression .523: deliberate multi-face Extrude, Inset and Through unchanged
+
+- [ ] Workflow .525: A Extrude -> B Extrude while Extrude remains armed
+- [ ] Diagnostic .525: B reaches FACE DEBUG DRAG-START with hit/faces matching B
+- [ ] Workflow .525: A remains unchanged while B extrudes
+- [ ] Workflow .525: C sequential Extrude also works
+- [ ] Regression .525: inward Extrude / Through fallback still takes over only on the resolved current single Face
+- [ ] Regression .525: ordinary Extrude Through remains functional
