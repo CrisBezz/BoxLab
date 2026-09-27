@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.535 prioritize selected Face over generic through hit
+
+- .534 still allowed generic viewport primary picking to resolve a through Face despite deliberate selected Face(s).
+- Added selectedHit from the dedicated selected-face raycast.
+- Deliberate single and multi-face operations now prioritize selectedHit.
+- Immediate sequential A -> B retains its isolated overlap substitution path.
+
 ## 2026-09-27 — v0.36.18.534 bind sequential Extrude overlap to unchanged selection
 
 - User screenshot showed selected-Face Extrude could again jump to a rear Face after Repeat cycles.
