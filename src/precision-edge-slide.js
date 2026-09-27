@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.16 — exact Edge Slide percentage.
+// BoxLab v0.36.18.514 — exact Edge Slide percentage.
 // Adds signed numeric slide control without changing component-slide drag behaviour.
 
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
@@ -13,14 +13,24 @@ const label=document.createElement('span');label.textContent='Slide %';label.sty
 const input=document.createElement('input');input.type='number';input.inputMode='decimal';input.step='0.1';input.min='-98';input.max='98';input.placeholder='± %';input.style.cssText='min-width:0;width:100%;box-sizing:border-box;padding:5px 6px;border-radius:6px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.055);color:inherit;font:inherit';
 const apply=document.createElement('button');apply.type='button';apply.textContent='Apply';apply.style.cssText='padding:5px 8px';
 row.append(label,input,apply);
-const anchor=document.querySelector('.loop-slide-option');
-(anchor?.parentElement||edgeTools).insertBefore(row,anchor||null);
+function place(){
+  const actionRow=edgeSlideButton.closest('.edge-compact-row,.outliner-actions');
+  if(actionRow?.parentElement){
+    actionRow.insertAdjacentElement('afterend',row);
+    row.insertAdjacentElement('afterend',readout);
+    return true;
+  }
+  edgeTools.append(row,readout);
+  return false;
+}
 
 const readout=document.createElement('div');
 readout.id='precisionEdgeSlideReadout';
 readout.style.cssText='font-size:10px;opacity:.72;margin:2px 0 4px;min-height:12px';
 readout.textContent='Exact Edge Slide: + toward one side, − toward the other';
-row.insertAdjacentElement('afterend',readout);
+place();
+window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(place));
+document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMicrotask(place),true);
 
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
@@ -75,4 +85,4 @@ input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();appl
 
 new MutationObserver(()=>{const text=status?.textContent||'',m=text.match(/(?:Multi Edge|Edge) Slide.*?([0-9]+)%/i);if(m)readout.textContent=`Live Edge Slide • ${Number(m[1]).toFixed(1)}%`;}).observe(status,{childList:true,characterData:true,subtree:true});
 
-globalThis.__boxlabPrecisionEdgeSlide={version:'0.36.18.16',apply:value=>{input.value=String(value);applyExact();}};
+globalThis.__boxlabPrecisionEdgeSlide={version:'0.36.18.514',apply:value=>{input.value=String(value);applyExact();}};
