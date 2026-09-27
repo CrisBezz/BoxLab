@@ -6,6 +6,7 @@
 - Fixed Merge to First semantics by tracking the actual local order vertices are selected, rather than relying on core's numerically sorted selection IDs.
 - Kept the fix inside Vertex-owned modules; no main selection model or protected interaction runtime changed.
 - Vertex Extrude noted for post-Beta-5 roadmap only.
+- PR #245 squash-merged as `4f54930b2e4bfd982400a52219a9ba093bd65549`; .513, .474 and .341 Vertex regressions passed in run #990.
 
 ## 2026-09-27 — v0.36.18.512 load recovery from failed .511
 
