@@ -1,3 +1,12 @@
+## Current Vertex polish checkpoint — v0.36.18.513
+
+- Vertex Bevel contextual controls now stay together directly beneath the Vertex tool row when Bevel is armed: Width first, then Exact % + readout.
+- The existing Vertex Bevel controller and progressive disclosure remain unchanged; only the generated Exact % row placement moved.
+- Merge to First now tracks local vertex selection chronology instead of using numerically sorted selection IDs.
+- Selection chronology is owned entirely by vertex-merge.js; protected main.js / selection bridge behavior remains unchanged.
+- Vertex Extrude is roadmap-only for after Beta 5.
+- Frozen recovery baseline .512, Face .501, Rotate .483, Edge .510, Sweep .509 and protected multi-object-transform remain untouched.
+
 ## Load recovery checkpoint — v0.36.18.512
 
 - Hands-on report: v0.36.18.511 failed to refresh/load across three browsers.
