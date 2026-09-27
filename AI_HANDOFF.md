@@ -1,3 +1,14 @@
+## v0.36.18.542 — File Name edit root-cause fix
+
+- User confirmed File Name still could not be edited on .541.
+- Root cause was in `src/topbar-layout.js`: the File menu's capture click handler treated `#fileMenu input` and `label` as actions and queued `fileMenu.open=false` immediately after tapping the filename input.
+- .542 excludes editable controls from auto-close. File menu still closes after actual buttons.
+- Runtime pin for topbar-layout bumped from .342 to .542.
+- .541 stylesheet cache bust + touch focus hardening remain in place.
+- GLB facegroup work remains unchanged.
+- Frozen Beta 5 remains .538 untouched.
+- Hands-on retest: tap File Name, type a different name, leave field, then export and confirm the chosen filename is used.
+
 ## v0.36.18.541 — File menu refresh + File Name edit fix
 
 - User reported the new File menu styling did not appear to refresh and File Name was not editable on iPad.
