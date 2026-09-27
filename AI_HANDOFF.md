@@ -1,3 +1,15 @@
+## Beta 5 release-candidate entry — v0.36.18.536
+
+- v0.36.18.535 is the protected hands-on-perfect Face/Repeat baseline.
+- .536 is cleanup-only: removes the temporary FACE DEBUG overlay and does not intentionally change Face modelling behavior.
+- New dedicated release gate: BETA5_RELEASE_CHECKLIST.md.
+- Beta 5 policy is now active:
+  - no new modelling features until freeze
+  - fix only reproducible release-blocking regressions
+  - preserve .535 Face/Repeat ownership rules and protected multi-object-transform
+- Next work is concentrated iPad hands-on release testing in compact PASS/FAIL batches.
+- If the gate passes, freeze the approved tree to /beta-5/ and record the exact source SHA.
+
 ## Stable Face + Repeat checkpoint — v0.36.18.535 — PERFECT HANDS-ON PASS
 
 - User confirmed PERFECT PASS on the final selected-Face priority tests.
