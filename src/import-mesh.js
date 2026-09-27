@@ -6,7 +6,7 @@ import { parseEditableOBJ } from './obj-facegroups-core.js?v=0.36.18.448';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.456';
+const VERSION='0.36.18.540';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -18,16 +18,37 @@ let importKind = 'editable';
 function fileBaseName(file) { return (file?.name || 'Imported Mesh').replace(/\.[^.]+$/, '') || 'Imported Mesh'; }
 function setStatus(text) { if (status) status.textContent = text; }
 
-function geometryToEditableMesh(geometry, matrixWorld) {
+function decodeFaceGroup(material,materialIndex,hasGroups){
+  const explicit=material?.userData?.boxlabFaceGroup;
+  if(typeof explicit==='string'&&explicit.trim())return explicit.trim();
+  const name=String(material?.name||'');
+  const prefix='BoxLabFG::';
+  if(name.startsWith(prefix)){
+    try{return decodeURIComponent(name.slice(prefix.length))||null;}catch{return name.slice(prefix.length)||null;}
+  }
+  return hasGroups?`FaceGroup ${Number(materialIndex||0)+1}`:null;
+}
+function geometryToEditableMesh(geometry, matrixWorld, materials=null) {
   const source = geometry.index ? geometry.toNonIndexed() : geometry.clone();
   const position = source.getAttribute('position');
-  if (!position || position.count < 3) return null;
+  if (!position || position.count < 3) { source.dispose(); return null; }
   const vertices = [];
   for (let i = 0; i < position.count; i++) vertices.push(new THREE.Vector3(position.getX(i), position.getY(i), position.getZ(i)).applyMatrix4(matrixWorld));
-  const faces = [];
-  for (let i = 0; i + 2 < vertices.length; i += 3) faces.push([i, i + 1, i + 2]);
+  const groups=[...(source.groups||[])].sort((a,b)=>a.start-b.start);
+  const hasGroups=groups.length>1;
+  const materialList=Array.isArray(materials)?materials:[materials];
+  const groupForStart=start=>{
+    const group=groups.find(entry=>start>=entry.start&&start<entry.start+entry.count);
+    if(!group)return null;
+    return decodeFaceGroup(materialList[group.materialIndex]||materialList[0],group.materialIndex,hasGroups);
+  };
+  const faces = [],faceGroups=[];
+  for (let i = 0; i + 2 < vertices.length; i += 3) {
+    faces.push([i, i + 1, i + 2]);
+    faceGroups.push(groupForStart(i));
+  }
   source.dispose();
-  return faces.length ? new EditableMesh(vertices, faces) : null;
+  return faces.length ? new EditableMesh(vertices, faces, undefined, faceGroups) : null;
 }
 
 function importedMeshes(root) {
@@ -35,7 +56,7 @@ function importedMeshes(root) {
   const meshes = [];
   root.traverse(node => {
     if (!node.isMesh || !node.geometry) return;
-    const mesh = geometryToEditableMesh(node.geometry, node.matrixWorld);
+    const mesh = geometryToEditableMesh(node.geometry, node.matrixWorld, node.material);
     if (mesh) meshes.push({ mesh, name:node.name || 'Mesh' });
   });
   return meshes;
@@ -113,4 +134,4 @@ function importFile(file) { if(!file)return;const extension=file.name.split('.')
 kindButtons.forEach(item=>item.addEventListener('click',()=>{importKind=item.dataset.importKind;kindButtons.forEach(button=>button.classList.toggle('active',button===item));}));
 button?.addEventListener('click',()=>input?.click());input?.addEventListener('change',()=>{importFile(input.files?.[0]);input.value='';});
 if(!globalThis.__boxlabObjectManager)window.addEventListener('boxlab-object-manager-ready',()=>{},{once:true});
-globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ};
+globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ,geometryToEditableMesh};
