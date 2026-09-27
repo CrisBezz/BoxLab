@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.515 Sweep activation/layout repair
+
+- Diagnosed Sweep's first-press failure as a late Edge-toolbar ownership race.
+- Shared Edge layout now owns both Sweep and Circle placement.
+- Circle no longer independently relocates itself in Edge mode when pointerup fires.
+- Sweep requests immediate shared layout settlement after its launch button is created.
+- Sweep controls normalized to compact 31px / 10px sizing.
+- Sweep topology/path behavior unchanged.
+
 ## 2026-09-27 — v0.36.18.514 Edge Slide / Offset / Extrude polish
 
 - Repositioned Edge Slide exact Slide % controls directly beneath the Edge Slide action row.

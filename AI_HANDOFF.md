@@ -1,3 +1,13 @@
+## Current Sweep activation/layout checkpoint — v0.36.18.515
+
+- Root cause of the first-press Sweep failure was a late Edge-layout race: Sweep and component Circle could both relocate controls after user interaction began.
+- Shared Edge layout now owns both Sweep and Circle placement.
+- component-circle.js delegates Edge placement to the shared Edge layout owner instead of mutating the row independently.
+- sweep-path.js asks the shared Edge layout owner to settle immediately after creating the Edge Sweep launcher.
+- Sweep button sizing is normalized to the compact BoxLab rhythm: 31px minimum height, 10px text, 4px padding.
+- No Sweep topology/path solver changes.
+- Frozen Vertex .513, Edge .514 interaction fixes, Face .501, Rotate .483 and protected multi-object-transform remain untouched.
+
 ## Current Edge polish checkpoint — v0.36.18.514
 
 - Edge Slide exact Slide % controls now stay directly beneath the Edge Slide action row when armed.

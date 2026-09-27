@@ -1376,3 +1376,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .514: change Edge Extrude to X/Y/Z/Auto -> repeated pulls preserve the user-selected constraint
 - [ ] Regression .514: Edge Slide drag and exact entry still work
 - [ ] Regression .514: Offset Loop drag and exact entry still work
+
+- [ ] Workflow .515: Edge Sweep launches on the first press
+- [ ] Workflow .515: Circle is already present/stable before the first Sweep press; no toolbar mutation occurs under the pointer
+- [ ] Workflow .515: Sweep Profile / Path / Finish controls use compact BoxLab sizing
+- [ ] Workflow .515: Sweep still defaults to the same profile/path behavior and Follow Edges remains functional
+- [ ] Regression .515: Edge Slide / Offset / Extrude behavior from .514 remains unchanged

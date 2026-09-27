@@ -11,7 +11,7 @@ test('509 Sweep active buttons use standard white appearance',()=>{
 });
 
 test('509 cache-hops Sweep only and preserves protected interaction pins',()=>{
-  assert.match(index,/src\/sweep-path\.js\?v=0\.36\.18\.509/);
+  assert.match(index,/src\/sweep-path\.js\?v=0\.36\.18\.515/);
   assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
   assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.501/);
   assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);

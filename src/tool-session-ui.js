@@ -117,12 +117,13 @@ function installEdgeControlOrder(){
   const dissolveLoop=document.querySelector('#dissolveLoopBtn');
   const dissolveEdge=document.querySelector('#dissolveEdgeBtn');
   const del=document.querySelector('#deleteEdgeBtn');
+  const circle=document.querySelector('#componentCircleBtn');
 
   for(const button of [loop,bevel,crease])moveButtonToRow(button,row1);
   for(const button of [split,extrude,sweep])moveButtonToRow(button,row2);
   for(const button of [slide,offset,uncrease])moveButtonToRow(button,row3);
   for(const button of [bridge,fill,dissolveLoop])moveButtonToRow(button,row4);
-  for(const button of [dissolveEdge,del])moveButtonToRow(button,row5);
+  for(const button of [dissolveEdge,del,circle])moveButtonToRow(button,row5);
 
   let cursor=title;
   for(const row of [row1,row2,row3,row4,row5]){
@@ -160,6 +161,7 @@ function installEdgeControlOrder(){
 [0,80,250,600,900,1200,1800,2200,2600].forEach(delay=>setTimeout(installEdgeControlOrder,delay));
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(installEdgeControlOrder));
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(installEdgeControlOrder)));
+globalThis.__boxlabEdgeToolLayout={version:'0.36.18.515',sync:installEdgeControlOrder};
 
 function ensureFaceCompactRow(faceTools,id){
   let row=document.querySelector('#'+id);
