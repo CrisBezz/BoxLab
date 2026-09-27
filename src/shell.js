@@ -206,14 +206,26 @@ input?.addEventListener('pointerdown',beginPencilThickness,{capture:true,passive
 input?.addEventListener('pointermove',movePencilThickness,{capture:true,passive:false});
 input?.addEventListener('pointerup',endPencilThickness,{capture:true,passive:false});
 input?.addEventListener('pointercancel',endPencilThickness,{capture:true,passive:false});
-button?.addEventListener('click',()=>{
+function launchShell(){
   const object=activeObject(),live=mesh(),ids=selectedFaces();
-  if(!object||!live||object.locked||object.kind==='reference'||previewArmed)return;
+  if(!object||!live||object.locked||object.kind==='reference'||previewArmed)return false;
   const check=analyzeShellInput(live,ids);
-  if(!check.ok){setStatus(message(check));return;}
+  if(!check.ok){setStatus(message(check));return false;}
   previewArmed=true;previewObjectId=object.id;previewFaces=[...check.selectedFaces];
   beginShellSession();
   buildPreview();
+  return true;
+}
+button?.addEventListener('pointerdown',event=>{
+  if(event.pointerType==='mouse'||button.disabled||previewArmed)return;
+  event.preventDefault();
+  event.stopPropagation();
+  launchShell();
+},{capture:true,passive:false});
+button?.addEventListener('click',event=>{
+  event.preventDefault();
+  event.stopPropagation();
+  launchShell();
 });
 applyButton?.addEventListener('click',()=>{
   const object=activeObject(),live=mesh();
@@ -225,7 +237,7 @@ applyButton?.addEventListener('click',()=>{
   endShellSession();
   bridge()?.set?.('face',[]);
   manager()?.saveActive?.();
-  globalThis.__boxlabShellLastResult={version:'0.36.18.421',...result};
+  globalThis.__boxlabShellLastResult={version:'0.36.18.537',...result};
   setStatus(`Shell • ${result.removedFaces} opening face${result.removedFaces===1?'':'s'} • thickness ${Number(result.thickness.toFixed(3))} • closed solid`);
   forceRender();
   sync();
