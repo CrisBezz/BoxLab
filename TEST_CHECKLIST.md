@@ -1390,3 +1390,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .516: after an unselected-face Extrude/Inset, Repeat Previous becomes available and replays the committed value on another Face
 - [ ] Regression .516: tap while Extrude/Inset is armed still toggles Face selection without modelling
 - [ ] Regression .516: Extrude Through behavior remains unchanged
+
+- [ ] Workflow .517: Array preview endpoint can be dragged without Objects drawer flicker; Active Tools stays pinned
+- [ ] Workflow .517: new Revolve Profile enters with Edit Profile already active
+- [ ] Workflow .517: new Revolve Profile can immediately accept profile drawing input
+- [ ] Workflow .517: opening Boolean turns Multi selection on while keeping the current active object selected
+- [ ] Regression .517: closing Boolean returns to normal Object tooling without losing the active object
+- [ ] Regression .517: Array Apply/Cancel and Revolve Apply/Cancel remain unchanged

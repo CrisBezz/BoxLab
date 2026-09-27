@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.517 Object / Tool Session defaults
+
+- Prevented Objects drawer retain logic from reopening Objects while any Tool Session is active; this targets Array drawer flicker at the ownership source.
+- New Revolve Profile starts with Edit Profile active and opens its Tool Session immediately.
+- Boolean opens with Object Multi enabled through the authoritative Object Selection API.
+- No Array geometry, Boolean solver or Revolve topology changes.
+
 ## 2026-09-27 — v0.36.18.516 Face armed-drag / Repeat repair
 
 - Corrected armed Face drag semantics so a drag beginning on an unselected Face operates that Face only instead of inheriting the prior completed Face selection.

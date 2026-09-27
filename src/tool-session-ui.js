@@ -343,6 +343,10 @@ function installBooleanToolSession(){
   const open=()=>{
     group.hidden=false;
     begin({id:'boolean',title:'Boolean',node:group,subtitle:'Union · Cut · Intersect'});
+    const objectSelection=globalThis.__boxlabObjectSelection;
+    if(objectSelection&&!objectSelection.multi){
+      objectSelection.select?.([...(objectSelection.ids||[])]);
+    }
     globalThis.__boxlabBooleanPrototype?.sync?.();
   };
   const shut=({silent=false}={})=>{
