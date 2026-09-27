@@ -148,7 +148,7 @@ function replayFace(faceIndex){
     ok=direct.replay(op.tool,op.value,faceIndex)===true;
     if(status)status.textContent=ok?`Repeat Previous • ${shortLabel(op)} applied • tap another Face`:`Repeat Previous • ${shortLabel(op)} could not be applied to this Face`;
   }finally{
-    setTimeout(()=>{applying=false;armedOperation=op;forcePaintBurst();},0);
+    setTimeout(()=>{applying=false;forcePaintBurst();},0);
   }
   return ok;
 }
