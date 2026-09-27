@@ -1,5 +1,20 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.527 Face Extrude/Inset checkpoint HANDS-ON PASS
+
+- User confirmed .527 passes after the full Face regression repair sequence.
+- Confirmed working:
+  - sequential single-Face Extrude while tool remains armed
+  - deliberate multi-face Extrude
+  - single-Face Inset
+  - multi-face Inset
+- Final architecture:
+  - multi-face-direct is authoritative for Face hit resolution;
+  - sequential Through fallback waits for resolved boxlab-face-direct-press instead of stale window pointerdown selection;
+  - overlap substitution is limited to armed Extrude with exactly one selected Face;
+  - multi-face and Inset workflows preserve intentional selected faces.
+- This is now the stable Face baseline. Avoid speculative changes to these ownership rules.
+
 ## 2026-09-27 — v0.36.18.527 make overlap hit substitution Extrude-only
 
 - .526 passed sequential and deliberate multi-face Extrude, while Inset still failed.
