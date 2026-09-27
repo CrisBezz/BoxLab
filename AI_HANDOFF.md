@@ -1,3 +1,17 @@
+## Current Repeat target checkpoint — v0.36.18.530
+
+- .529 hands-on PASS confirmed deliberate preselected Extrude target and sequential A -> B behavior.
+- Repeat still did not work.
+- Audit found Repeat already picks the user-tapped Face and sets that Face as the explicit bridge selection, but precision-face then dispatches a synthetic pointer gesture (pointerId 9876) and multi-face-direct ray-picked the viewport again.
+- That second ray-pick could lose the explicit Repeat target.
+- .530 makes synthetic Repeat/Exact authoritative to current selection:
+  - pointerId 9876 uses selectionBefore[0] as hit
+  - workingFaces is the full current selected Face set
+  - no pickHits / overlap substitution / live viewport repick for the synthetic gesture
+- Real Pencil/touch behavior from .529 is unchanged.
+- .528 still excludes pointerId 9876 from sequential-through-fallback.
+- Next hands-on gate: normal Extrude -> arm Repeat -> tap another Face. Then normal Inset -> arm Repeat -> tap another Face.
+
 ## Current deliberate Face selection checkpoint — v0.36.18.529
 
 - .528 screenshot exposed a remaining Extrude targeting bug while testing Repeat:
