@@ -19,17 +19,6 @@ let pendingFacePress = null;
 let preferSequentialUnselected = false;
 let sequentialSelectionKey = null;
 let refMarker=null,refGuide=null;
-let faceDebug=null;
-function debugFace(text){
-  if(!faceDebug){
-    faceDebug=document.createElement('div');
-    faceDebug.id='faceDirectDebug';
-    faceDebug.style.cssText='position:fixed;right:8px;bottom:28px;z-index:10050;pointer-events:none;max-width:72vw;padding:4px 6px;border-radius:6px;background:rgba(0,0,0,.72);color:#fff;font:10px/1.25 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:normal';
-    document.body.appendChild(faceDebug);
-  }
-  faceDebug.textContent='FACE DEBUG • '+text;
-}
-
 
 if(!document.querySelector('#boxlabDirectStableStyle')){
   const style=document.createElement('style');
@@ -149,7 +138,6 @@ function beginDirectDrag(event,hit,selectionBefore,workingFaces){
     controlRegion=armed==='extrude'?{normal:worldNormal,regionVertices:[...hitFace]}:region,
     regionCenter=centerOf(m,controlRegion.regionVertices);
   drag={id:event.pointerId,x:event.clientX,y:event.clientY,tool:armed,m,before:m.clone(),faces:[...workingFaces],selectionBefore:[...selectionBefore],hitFaceIndex:hit,hitWasSelected:selectionBefore.includes(hit),normal:projectedNormal(m,controlRegion,camera),worldNormal,regionCenter,camera,changed:false,preview:false,snap:null,throughPlan:null,blocked:false,shellHit:null,lastValue:null,preparedThrough:armed==='extrude'&&workingFaces.length===1?planThrough(m,workingFaces[0]):null};
-  debugFace(`DRAG-START hit=${hit} faces=[${drag.faces.join(',')}] before=[${selectionBefore.join(',')}] faceCount=${m.faces.length}`);
   canvas.setPointerCapture?.(event.pointerId);
   return true;
 }
@@ -178,7 +166,6 @@ document.addEventListener('pointerdown',event=>{
   }
   if(!Number.isInteger(hit))return;
   const workingFaces=synthetic&&selectionBefore.length?[...selectionBefore]:(selectionBefore.includes(hit)?[...selectionBefore]:[hit]);
-  debugFace(`DOWN primary=${primary} selected=${selectedHit} chosen=${hit} seq=${sequentialValid} before=[${selectionBefore.join(',')}] work=[${workingFaces.join(',')}] stack=[${hits.map(item=>item.index).join(',')}]`);
   const provisionalSelection=!selectionBefore.includes(hit);
   if(provisionalSelection)b.set?.('face',[hit]);
   pendingFacePress={
@@ -234,7 +221,6 @@ function finish(event){
   if(!drag||drag.id!==event.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();clearRefVisual();
   const d=drag;drag=null;
-  debugFace(`FINISH tool=${d.tool} hit=${d.hitFaceIndex} faces=[${d.faces.join(',')}] changed=${d.changed} preview=${d.preview} blocked=${d.blocked} faceCount=${d.m?.faces?.length??'?'}`);
   if(event.type==='pointerup'&&d.changed&&d.preview&&!d.blocked){
     if(d.tool==='extrude'&&d.throughPlan){
       const built=buildThrough(d.before,d.throughPlan);
