@@ -1,3 +1,24 @@
+## v0.36.18.540 — Nomad GLB facegroup round trip + File menu sizing
+
+- GLB import now converts GLB primitive/material groups into BoxLab faceGroups.
+- BoxLab GLB export now keeps each BoxLab object as one mesh and writes facegroups as separate GLB material/primitive groups inside that mesh.
+- BoxLab facegroup names are preserved in GLB material metadata/name for BoxLab round trips.
+- External/Nomad GLBs without BoxLab metadata receive stable generated FaceGroup names from primitive/material grouping.
+- The File menu/export panel typography and control sizing now match general BoxLab UI:
+  - labels 12–14px
+  - buttons 13px / 38px high
+  - filename field 14px / 38px high
+  - quick export summary 13px
+- No OBJ behavior changes.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+- Hands-on test:
+  1. Import a Nomad GLB with multiple facegroups.
+  2. Confirm BoxLab Facegroups Render Look shows distinct groups.
+  3. Export GLB Base.
+  4. Re-open in Nomad and confirm one object remains one object and its facegroups remain available.
+  5. Repeat using SubD.
+  6. Check File menu sizing visually against normal BoxLab controls.
+
 ## Post-Beta-5 export workflow — v0.36.18.539
 
 - First normal-development build after frozen Beta 5.
