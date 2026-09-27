@@ -164,8 +164,11 @@ window.addEventListener('pointerdown',event=>{
 },true);
 
 document.addEventListener('boxlab-face-value-committed',event=>{
+  const detail=event.detail||{};
   if(!armed){syncButton();return;}
-  if(!applying&&event.detail&&(event.detail.tool==='extrude'||event.detail.tool==='inset')&&Math.abs(Number(event.detail.value))>1e-9)armedOperation={tool:event.detail.tool,value:Number(event.detail.value)};
+  if((detail.tool==='extrude'||detail.tool==='inset')&&Math.abs(Number(detail.value))>1e-9){
+    armedOperation={tool:detail.tool,value:Number(detail.value)};
+  }
   forcePaintBurst();
 });
 window.addEventListener('boxlab-bridge-state',()=>{
