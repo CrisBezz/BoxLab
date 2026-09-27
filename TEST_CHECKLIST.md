@@ -1404,3 +1404,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .518: Inset unselected-face sequence remains passing
 - [ ] Regression .518: deliberate preselected multi-face Extrude/Inset remains passing
 - [ ] Regression .518: armed tap-selection and Extrude Through remain passing
+
+- [ ] Workflow .519: arm Extrude with nothing selected -> drag Face A -> Extrude succeeds
+- [ ] Workflow .519: with Extrude still armed, press and drag a different unselected Face B -> B becomes the live Face immediately and only B extrudes
+- [ ] Regression .519: Face A does not move, deform or remain in the drag working set during Face B extrusion
+- [ ] Workflow .519: armed tap on an unselected Face still restores the previous selection then performs the normal additive toggle
+- [ ] Workflow .519: armed tap on a selected Face still deselects only that Face
+- [ ] Workflow .519: Repeat Previous after a successful ordinary Extrude replays the committed Extrude value on another clean Face
+- [ ] Regression .519: Inset sequential unselected-face drag, deliberate multi-face Extrude/Inset and Extrude Through remain passing
