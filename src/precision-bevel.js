@@ -39,6 +39,11 @@ if(edgeUi&&edgeBevelOptions){
   edgeUi.row.insertAdjacentElement('afterend',edgeUi.readout);
 }
 const vertexUi=makeRow(vertexTools,'precisionVertexBevelRow','Exact %');
+const vertexBevelOptions=document.querySelector('.vertex-bevel-options');
+if(vertexUi&&vertexBevelOptions){
+  vertexBevelOptions.insertAdjacentElement('afterend',vertexUi.row);
+  vertexUi.row.insertAdjacentElement('afterend',vertexUi.readout);
+}
 
 function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices);mesh.edges?.();}
 
@@ -91,4 +96,4 @@ vertexButton?.addEventListener('click',()=>queueMicrotask(()=>{if(vertexUi)verte
 if(edgeUi)edgeUi.readout.textContent='Edge Bevel • drag normally or enter Exact %';
 if(vertexUi)vertexUi.readout.textContent='Vertex Bevel • drag normally or enter Exact %';
 
-globalThis.__boxlabPrecisionBevel={version:'0.36.18.32',edge:value=>{if(edgeUi){edgeUi.input.value=String(value);applyEdge();}},vertex:value=>{if(vertexUi){vertexUi.input.value=String(value);applyVertex();}}};
+globalThis.__boxlabPrecisionBevel={version:'0.36.18.513',edge:value=>{if(edgeUi){edgeUi.input.value=String(value);applyEdge();}},vertex:value=>{if(vertexUi){vertexUi.input.value=String(value);applyVertex();}}};
