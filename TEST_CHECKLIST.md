@@ -1461,3 +1461,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .527: A -> B sequential Extrude remains PASS
 - [ ] Regression .527: deliberate multi-face Extrude remains PASS
 - [ ] Regression .527: Extrude Through / inward fallback unchanged
+
+- [x] Stable .527: sequential armed single-Face Extrude A -> B PASS
+- [x] Stable .527: deliberate multi-face Extrude PASS
+- [x] Stable .527: single-Face Inset PASS
+- [x] Stable .527: multi-face Inset PASS
