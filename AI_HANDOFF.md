@@ -1,3 +1,28 @@
+## Beta 5 RC Boolean Undo repair — v0.36.18.538
+
+- Final Beta 5 Batch 4:
+  - Duplicate / Linked Duplicate / Make Unique PASS
+  - Multi transforms functionally PASS; Object drawer collapsing to Active Tools on Multi is accepted as a non-blocking UI quirk for Beta 5
+  - Group PASS
+  - Join PASS
+  - Boolean geometry PASS, but one-step Undo FAIL
+  - Boolean Swap PASS
+  - Mesh Health PASS
+  - import/reference PASS
+  - Base/SubD OBJ export PASS
+  - final UI smoke PASS
+- Boolean Undo root cause:
+  - boolean-prototype called ObjectHistory.checkpoint() before addMesh()
+  - addMesh() activates the new Boolean result
+  - activating that new object restores its empty per-object history stack
+  - the pre-Boolean checkpoint was therefore lost
+- .538 follows the already-proven Linked Duplicate pattern:
+  1. capture full Object scene before mutation
+  2. create/activate Boolean result
+  3. checkpointSnapshot(beforeScene) after activation
+- Boolean geometry / operand logic / A-B UX / Swap are unchanged.
+- Remaining hands-on release blocker: Boolean -> Undo once must restore the original visible operands and remove the result.
+
 ## Beta 5 RC Shell first-press repair — v0.36.18.537
 
 - Beta 5 Gate Batch 3 exposed one concrete release blocker: Shell sometimes needed two presses.
