@@ -172,6 +172,8 @@ document.addEventListener('pointerdown',event=>{
   };
   document.dispatchEvent(new CustomEvent('boxlab-face-direct-press',{detail:{
     pointerId:event.pointerId,
+    clientX:event.clientX,
+    clientY:event.clientY,
     tool:armed,
     hit,
     selectionBefore:[...selectionBefore],
