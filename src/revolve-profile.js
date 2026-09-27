@@ -360,9 +360,10 @@ function addRevolveProfile(){
   const object=m.addMesh(constructionPlane(),'Revolve Profile',{enterObjectMode:true});
   if(!object)return;
   cachedActiveId=object.id;cachedActiveObject=object;
-  object.revolveProfile={version:VERSION,points:[],segments:24,edit:false,applied:false,pointHistory:[],selectedPoint:null,interacted:false,initialPlaneSignature:planeSignature(liveMesh())};
+  object.revolveProfile={version:VERSION,points:[],segments:24,edit:true,applied:false,pointHistory:[],selectedPoint:null,interacted:true,initialPlaneSignature:planeSignature(liveMesh())};
   if(before)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before);
-  setStatus('Revolve Profile added • position/snap the plane first • then tap Edit Profile');
+  beginRevolveSession();
+  setStatus('Revolve Profile added • Edit Profile active • draw profile or reposition plane with Object tools');
   lastSignature='';
   return object;
 }
