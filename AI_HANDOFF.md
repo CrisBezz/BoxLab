@@ -1,3 +1,24 @@
+## Stable Face checkpoint — v0.36.18.527 — HANDS-ON PASS
+
+- User hands-on confirmed .527 PASS.
+- Stable Face behavior now confirmed:
+  - sequential armed single-Face Extrude A -> B works
+  - deliberate multi-face Extrude works on the selected set
+  - single-Face Inset works
+  - multi-face Inset works
+- Root cause chain resolved:
+  1. sequential-through-fallback .385 was pre-arming from stale selected Face on window-capture pointerdown and stealing the next gesture before multi-face-direct reached DRAG-START;
+  2. fallback is now bound to boxlab-face-direct-press after direct Face hit resolution;
+  3. unselected-overlap hit preference is Extrude-only and only for exactly one selected Face;
+  4. deliberate multi-face selection preserves the selected set.
+- Keep these protections together:
+  - src/multi-face-direct.js?v=0.36.18.527
+  - src/drawer-ui.js?v=0.36.18.525 loading sequential-through-fallback.js?v=0.36.18.525
+  - src/main.js?v=0.36.18.520 direct-owner yield
+  - src/multi-object-transform.js?v=0.36.1.0 protected unchanged
+- Visible FACE DEBUG remains temporarily from .524 and can now be removed in a cleanup-only build once desired.
+- Do not reopen Face ownership/selection architecture without a concrete regression.
+
 ## Current Inset targeting checkpoint — v0.36.18.527
 
 - .526 hands-on:
