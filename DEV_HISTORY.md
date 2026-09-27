@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.518 Face Extrude / Repeat repair
+
+- Fixed second armed Extrude on a different unselected Face by aligning the live Face selection with the actual drag working set before modelling begins.
+- Added direct ordinary-Extrude commit value event so Repeat Previous captures the committed Extrude distance reliably.
+- Left Inset, deliberate multi-face, armed tap-selection and Through behavior unchanged.
+
 ## 2026-09-27 — v0.36.18.517 Object / Tool Session defaults
 
 - Prevented Objects drawer retain logic from reopening Objects while any Tool Session is active; this targets Array drawer flicker at the ownership source.
