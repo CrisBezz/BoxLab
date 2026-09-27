@@ -139,14 +139,29 @@ function commitEditedResult(t,built,label){
   if(status)status.textContent=gated.repaired?`${label} • seam conformance • ${gated.splits} split${gated.splits===1?'':'s'} • CLOSED`:`${label} • CLOSED`;
   return true;
 }
-window.addEventListener('pointerdown',event=>{
-  if(internalCancel||event.target!==canvas||!event.isPrimary||!extrudeArmed())return;
-  const m=mesh(),faceIndex=selectedFace(),camera=state()?.camera;if(!m||!Number.isInteger(faceIndex)||!camera)return;
+document.addEventListener('boxlab-face-direct-press',event=>{
+  if(internalCancel||!extrudeArmed())return;
+  const detail=event.detail||{};
+  if(detail.tool!=='extrude'||!Number.isInteger(detail.pointerId)||!Number.isInteger(detail.hit))return;
+  const workingFaces=[...new Set(detail.workingFaces||[])].filter(Number.isInteger);
+  if(workingFaces.length!==1||workingFaces[0]!==detail.hit)return;
+  const m=mesh(),faceIndex=detail.hit,camera=state()?.camera;
+  if(!m||!Number.isInteger(faceIndex)||!camera)return;
   const throughPlan=planThrough(m,faceIndex),plan=regionPlan(m,faceIndex);
   if(!plan)return;
   const normal2d=projectedNormal(m,faceIndex,camera);if(!normal2d)return;
-  probe={id:event.pointerId,x:event.clientX,y:event.clientY,m,faceIndex,before:m.clone(),plan,throughPlan,normal2d};
-},true);
+  probe={
+    id:detail.pointerId,
+    x:Number(detail.clientX)||0,
+    y:Number(detail.clientY)||0,
+    m,
+    faceIndex,
+    before:m.clone(),
+    plan,
+    throughPlan,
+    normal2d
+  };
+});
 window.addEventListener('pointermove',event=>{
   if(internalCancel||!probe||probe.id!==event.pointerId||takeover)return;
   const dx=event.clientX-probe.x,dy=event.clientY-probe.y;if(Math.hypot(dx,dy)<8)return;
