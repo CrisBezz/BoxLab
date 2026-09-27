@@ -1,3 +1,17 @@
+## Current Face geometry checkpoint — v0.36.18.522
+
+- Hands-on .521 still failed the Face A -> B sequential Extrude test. .521 contained .520 modelling behavior unchanged, so both provisional selection and legacy-main ownership fixes are ruled out as the primary cause.
+- Audit against the .449 recovery line found a meaningful geometry-path divergence: known-good ordinary single-Face Extrude used EditableMesh.extrudeFace(), while current multi-face-direct routed even a one-Face operation through extrudeConnectedFaceSelection(), the later connected-band miter solver.
+- EditableMesh.extrudeFace() preserves the cap face index and inherited faceGroups explicitly. The connected-band helper was introduced for deliberate multi-face extrusion and is no longer used for a single selected Face in .522.
+- .522 routing:
+  - exactly 1 Face -> native EditableMesh.extrudeFace(faceIndex, distance)
+  - 2+ Faces -> existing connected-band extrudeConnectedFaceSelection()
+  - Through classification/build/gating unchanged
+  - Inset unchanged
+  - Repeat Previous still replays through the same direct Face gesture, so it will exercise the restored native single-Face route.
+- .520 main.js direct-owner guard remains present. .519 selection/pointer ownership behavior remains otherwise unchanged.
+- Next hands-on gate: fresh cube -> A -> B -> C sequential single-Face Extrude. Only after that passes, test Repeat Previous and deliberate multi-face Extrude.
+
 ## Current deployment refresh checkpoint — v0.36.18.521
 
 - User reported .520 did not refresh across all browsers.
