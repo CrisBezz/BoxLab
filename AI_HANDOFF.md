@@ -1,3 +1,33 @@
+## Stable Face + Repeat checkpoint — v0.36.18.535 — PERFECT HANDS-ON PASS
+
+- User confirmed PERFECT PASS on the final selected-Face priority tests.
+- Stable confirmed behavior:
+  - deliberate selected single-Face Extrude
+  - immediate sequential armed Extrude A -> B
+  - deliberate multi-face Extrude
+  - single-face Inset
+  - multi-face Inset
+  - Repeat Extrude
+  - Repeat Inset
+  - Repeat persists for repeated taps
+  - newest real Face operation updates armed Repeat
+  - Repeat multi-cycle state switching remains stable
+- Final Face ownership rule:
+  - deliberate selected single Face uses selectedHit and wins
+  - deliberate 2+ selected Faces use selectedHit and preserve full selected set
+  - only immediate sequential A -> B continuation may use firstUnselected overlap substitution
+  - sequential continuation state is bound to the unchanged originating Face selection
+- Repeat is direct/transactional through __boxlabFaceDirect.replay(); no synthetic pointer replay.
+- Protect together:
+  - src/multi-face-direct.js?v=0.36.18.535
+  - src/precision-face.js?v=0.36.18.532
+  - src/repeat-face-previous.js?v=0.36.18.533
+  - src/sequential-through-fallback.js?v=0.36.18.528
+  - src/main.js?v=0.36.18.520
+  - src/multi-object-transform.js?v=0.36.1.0 unchanged
+- Temporary FACE DEBUG overlay from .524 remains and can be removed in a cleanup-only build.
+- Do not change Face ownership/selection rules without a concrete regression and hands-on gate.
+
 ## Current selected-Face priority checkpoint — v0.36.18.535
 
 - .534 hands-on:
