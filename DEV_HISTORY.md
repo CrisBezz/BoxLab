@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.536 enter Beta 5 release-candidate hardening
+
+- Removed temporary FACE DEBUG instrumentation only.
+- Created BETA5_RELEASE_CHECKLIST.md covering navigation, Face/Repeat, Vertex/Edge, construction tools, Object/Multi/Boolean, Mesh Health/import/export and iPad UI.
+- Feature development is paused for the release-candidate cycle; only reproducible release blockers should be changed before Beta 5 freeze.
+
 ## 2026-09-27 — v0.36.18.535 Face/Repeat checkpoint PERFECT PASS
 
 - User confirmed perfect hands-on pass after selected-hit priority repair.
