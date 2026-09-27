@@ -34,6 +34,8 @@ function place(md=mode()){
     return true;
   }
   if(md==='edge'){
+    const owner=globalThis.__boxlabEdgeToolLayout;
+    if(owner?.sync?.())return true;
     const deleteEdge=document.querySelector('#deleteEdgeBtn');
     const row=deleteEdge?.parentElement;
     if(!row)return false;
@@ -88,4 +90,4 @@ document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMic
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 [0,60,180,500].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabComponentCircle={version:'0.36.18.341',apply,sync,info};
+globalThis.__boxlabComponentCircle={version:'0.36.18.515',apply,sync,info};
