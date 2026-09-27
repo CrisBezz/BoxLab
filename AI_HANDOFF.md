@@ -1,3 +1,21 @@
+## Current Repeat Face checkpoint — v0.36.18.528
+
+- .527 hands-on PASS confirmed normal sequential Extrude, deliberate multi-face Extrude, single-face Inset and multi-face Inset.
+- Repeat Previous had not yet been hands-on closed.
+- Audit found two concrete synthetic-gesture conflicts before testing:
+  - Precision/Repeat dispatches synthetic pointerId 9876 on the explicitly selected target Face.
+  - The sequential Extrude overlap rule could still substitute an unselected deeper Face for that synthetic Extrude.
+  - sequential-through-fallback could also observe the synthetic Extrude press and arm its inward/Through takeover.
+- .528 makes the synthetic Repeat/Exact gesture authoritative:
+  - pointerId 9876 never uses the sequential unselected-overlap substitution
+  - sequential-through-fallback ignores pointerId 9876 entirely
+- Normal real-pointer Face behavior from .527 is otherwise unchanged.
+- Next hands-on gate:
+  1. normal Extrude with a clear non-zero value -> Repeat Previous -> tap another Face
+  2. normal Inset -> Repeat Previous -> tap another Face
+  3. verify each repeated result matches the stored value and no rear Face/Through takeover occurs
+  4. quick A -> B Extrude and normal Inset regression checks remain PASS.
+
 ## Stable Face checkpoint — v0.36.18.527 — HANDS-ON PASS
 
 - User hands-on confirmed .527 PASS.
