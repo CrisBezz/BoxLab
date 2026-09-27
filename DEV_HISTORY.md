@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.530 make Repeat/Exact trust explicit Face selection
+
+- Repeat remained non-functional after .529 normal targeting passed.
+- Root cause candidate found in the synthetic replay path: Repeat explicitly selected the tapped Face, then the synthetic pointer gesture caused multi-face-direct to ray-pick the viewport again.
+- Removed that redundant synthetic re-pick.
+- pointerId 9876 now trusts the current Face selection and preserves the full selected set.
+- Real pointer Face targeting, sequential Extrude, Inset and Through behavior are unchanged.
+
 ## 2026-09-27 — v0.36.18.529 preserve deliberate selected Face before sequential overlap
 
 - While testing Repeat on .528, user explicitly selected a front Face and then dragged Extrude, but the deeper rear Face was extruded.
