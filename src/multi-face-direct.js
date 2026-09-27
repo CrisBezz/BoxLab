@@ -154,7 +154,7 @@ document.addEventListener('pointerdown',event=>{
     hits=typeof b?.pickHits==='function'?b.pickHits('face',event):[],
     primary=picker('face',event)?.index,
     firstUnselected=hits.find(item=>Number.isInteger(item.index)&&!selected.has(item.index))?.index,
-    hit=Number.isInteger(primary)&&selected.has(primary)&&Number.isInteger(firstUnselected)?firstUnselected:primary;
+    hit=selectionBefore.length===1&&Number.isInteger(primary)&&selected.has(primary)&&Number.isInteger(firstUnselected)?firstUnselected:primary;
   if(!Number.isInteger(hit))return;
   const workingFaces=selectionBefore.includes(hit)?[...selectionBefore]:[hit];
   debugFace(`DOWN primary=${primary} chosen=${hit} before=[${selectionBefore.join(',')}] work=[${workingFaces.join(',')}] stack=[${hits.map(item=>item.index).join(',')}]`);
