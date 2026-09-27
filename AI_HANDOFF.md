@@ -10,6 +10,30 @@
   - Repeat Extrude
   - Repeat Inset
   - Repeat remains armed for subsequent taps
+  - newest real Face operation replaces the armed Repeat operation
+- Direct Repeat is transactional and does not synthesize pointer gestures.
+- Protect together:
+  - src/multi-face-direct.js?v=0.36.18.531
+  - src/precision-face.js?v=0.36.18.532
+  - src/repeat-face-previous.js?v=0.36.18.532
+  - src/sequential-through-fallback.js?v=0.36.18.528
+  - src/main.js?v=0.36.18.520
+  - src/multi-object-transform.js?v=0.36.1.0
+- Visible FACE DEBUG from .524 remains and is the next safe cleanup candidate.
+- Do not reopen Face/Repeat ownership without a concrete regression.
+
+## Stable Face + Repeat checkpoint — v0.36.18.532 — HANDS-ON PASS
+
+- User hands-on confirmed .532 PASS.
+- Stable confirmed Face behavior now includes:
+  - deliberate selected-Face Extrude
+  - sequential armed Extrude A -> B
+  - deliberate multi-face Extrude
+  - single-face Inset
+  - multi-face Inset
+  - Repeat Extrude
+  - Repeat Inset
+  - Repeat remains armed for subsequent taps
   - newest real Face operation replaces the armed Repeat operation (Inset -> real Extrude => Repeat Extrude; Extrude -> real Inset => Repeat Inset)
 - Direct Repeat architecture is now transactional and does not synthesize pointer gestures.
 - Keep protected together:
