@@ -1,3 +1,25 @@
+## Current Face sequential-selection checkpoint — v0.36.18.534
+
+- Screenshot on .532 showed deliberate selected-Face Extrude could again resolve to a different face behind the model after Repeat/Extrude/Inset cycling.
+- Root issue: sequential A->B overlap preference was stored as a loose boolean and could survive into unrelated selection state.
+- .534 binds sequential preference to the exact Face selection left by the successful Extrude that created it.
+- sequentialSelectionKey records the selected Face IDs at commit.
+- On every boxlab-bridge-state selection update, if current Face selection no longer matches that key, sequential preference is cleared.
+- Sequential overlap is only allowed when:
+  - Extrude is armed
+  - preference is active
+  - current selection still exactly matches the originating Extrude selection
+  - exactly one Face is selected
+- Therefore:
+  - immediate A->B continuation without changing selection still works
+  - any explicit Face selection/tap/Repeat/tool change cancels the preference
+  - a deliberately selected Face cannot be substituted by a rear Face.
+- .533 Repeat cleanup race fix remains unchanged.
+- Next hands-on gate:
+  1. explicitly select Face -> Extrude same Face
+  2. immediate A->B continuation still works
+  3. run Repeat Inset/Extrude cycle then explicitly select Face -> Extrude must stay on selected Face.
+
 ## Current Repeat cycle checkpoint — v0.36.18.533
 
 - .532 passed the first Repeat state-switch check, but a longer cycle still failed:
