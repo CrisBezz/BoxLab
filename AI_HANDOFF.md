@@ -5,6 +5,8 @@
 - Edge Extrude now reasserts the real Move + Plane state after the initial arm click stack so Plane is the authoritative visible/default constraint.
 - Sweep is intentionally NOT changed in .514. Its two-click activation / late Circle appearance / apparent oversized UI will be handled as a separate follow-up after .514 hands-on passes.
 - Frozen .512 Tool Session baseline, Vertex .513, Face .501, Rotate .483, Sweep .509 and protected multi-object-transform remain untouched.
+- Merged via PR #246; squash merge `8442af88cbddddc8829419e8da7d051d639c234e`.
+- Topology regression run #992: all new .514 tests plus existing .427/.475/.476 Edge contracts passed; overall workflow remained red only from the known unrelated historical-suite backlog.
 
 ## Current Vertex polish checkpoint — v0.36.18.513
 
