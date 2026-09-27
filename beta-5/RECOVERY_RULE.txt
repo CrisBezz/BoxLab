@@ -1,0 +1,1 @@
+Do not wholesale-replace render-modes.js for Facegroups. Future integration must be minimal additive edits against proven blob 977dda1ae40dd643e6fae95df075899db0191f64.

@@ -1,0 +1,1 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';test('452 marked rejected',()=>assert.match(fs.readFileSync(new URL('../rejected-452.txt',import.meta.url),'utf8'),/REJECTED/));

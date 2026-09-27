@@ -1,0 +1,2 @@
+BoxLab v0.36.18.197 Pages redeploy trigger.
+No runtime code changes.
