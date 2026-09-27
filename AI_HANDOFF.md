@@ -1,3 +1,21 @@
+## Current Inset targeting checkpoint — v0.36.18.527
+
+- .526 hands-on:
+  - deliberate multi-face Extrude PASS
+  - A -> B sequential Extrude remained PASS
+  - Inset still failed.
+- Audit found the .523/.526 overlap rule was shared by both Extrude and Inset.
+- That rule intentionally prefers an unselected deeper Face when the nearest hit is the currently selected Face.
+- Correct for sequential Extrude A -> B, but wrong for normal Inset because pressing a selected front Face on a closed mesh often has an unselected rear Face in the same hit stack.
+- .527 makes overlap substitution Extrude-only.
+- Inset behavior now:
+  - pressing an already-selected Face keeps that Face / selected set
+  - pressing an unselected Face while Inset is armed still uses that directly
+  - multi-face Inset preserves the selected set
+- .525 sequential Through ownership repair and .526 multi-face Extrude rule remain unchanged.
+- Visible Face debug remains temporarily.
+- Next hands-on gate: selected single Face -> arm Inset -> drag same Face. Then quick multi-face Inset and A -> B Extrude regression checks.
+
 ## Current Face multi-select checkpoint — v0.36.18.526
 
 - .525 hands-on: sequential A -> B armed Extrude PASS.
