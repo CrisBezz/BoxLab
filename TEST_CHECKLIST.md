@@ -1447,3 +1447,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .525: C sequential Extrude also works
 - [ ] Regression .525: inward Extrude / Through fallback still takes over only on the resolved current single Face
 - [ ] Regression .525: ordinary Extrude Through remains functional
+
+- [ ] Workflow .526: select 2+ visible faces deliberately
+- [ ] Workflow .526: with Extrude armed, drag from one selected face -> whole selected set extrudes
+- [ ] Workflow .526: no unselected/rear face is substituted into the operation
+- [ ] Regression .526: A -> B sequential single-Face Extrude remains PASS
+- [ ] Regression .526: C sequential single-Face Extrude remains PASS
+- [ ] Regression .526: Extrude Through / inward fallback still works on resolved current single Face
