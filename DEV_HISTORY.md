@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-27 — Beta 5 frozen at v0.36.18.538
+
+- Final Boolean one-step Undo retest passed hands-on.
+- Approved source commit: `343dc4dec00046762c7a9a11edaa92e0160a5a55`.
+- Immutable /beta-5/ snapshot added by freeze commit `7667df2f889aca84b67bad56bf559d9c8d67478e`.
+- Beta 5 closes the post-Beta-4 release hardening cycle including Face/Repeat ownership, progressive Vertex/Edge UI, construction-tool smoke testing, Shell first-press repair, and Boolean scene Undo repair.
+- Multi-selection Object drawer collapse to Active Tools is accepted as a non-blocking UI quirk; Multi transforms passed.
+- Normal development resumes on live main; /beta-5/ stays immutable.
+
 ## 2026-09-27 — v0.36.18.538 repair Boolean one-step Undo
 
 - Beta 5 final smoke found Boolean geometry working but Undo did nothing.
