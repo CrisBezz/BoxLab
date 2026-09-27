@@ -142,6 +142,7 @@ function commitEditedResult(t,built,label){
 document.addEventListener('boxlab-face-direct-press',event=>{
   if(internalCancel||!extrudeArmed())return;
   const detail=event.detail||{};
+  if(detail.pointerId===9876)return;
   if(detail.tool!=='extrude'||!Number.isInteger(detail.pointerId)||!Number.isInteger(detail.hit))return;
   const workingFaces=[...new Set(detail.workingFaces||[])].filter(Number.isInteger);
   if(workingFaces.length!==1||workingFaces[0]!==detail.hit)return;
