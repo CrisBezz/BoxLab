@@ -1361,3 +1361,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Recovery .512: app refreshes and loads in the other browsers that failed on .511
 - [ ] Recovery .512: Vertex / Edge / Face modes open normally
 - [ ] Recovery .512: confirmed .510 Edge Extrude Move + Plane behavior remains intact
+
+- [ ] Workflow .513: arm Vertex Bevel -> Width appears directly beneath the tool row and Exact % sits immediately beneath Width
+- [ ] Workflow .513: disarm Vertex Bevel -> Width and Exact % both disappear without reshuffling Vertex buttons
+- [ ] Workflow .513: select vertex A then vertex B -> Merge to First collapses to A's position
+- [ ] Workflow .513: reverse the selection order -> Merge to First collapses to the newly first-selected vertex
+- [ ] Regression .513: Merge to Center remains unchanged
+- [ ] Regression .513: Vertex Add / Build Edge / Slide / Bevel ordering remains stable
