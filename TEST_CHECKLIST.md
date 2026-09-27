@@ -1420,3 +1420,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .520: after successful ordinary Extrude, Repeat Previous becomes available and replays the same Extrude value on another Face
 - [ ] Regression .520: armed Face tap add/remove behavior still works
 - [ ] Regression .520: Inset and Extrude Through remain unchanged on clean geometry
+
+- [ ] Deployment .521: Safari refreshes and visibly reports v0.36.18.521
+- [ ] Deployment .521: Chrome/other test browsers refresh and visibly report v0.36.18.521
+- [ ] Deployment .521: reopening an already-stale tab converges to .521 without manual cache clearing
+- [ ] Regression .521: no repeated reload loop once the running shell is .521
+- [ ] Regression .521: Face runtime remains main.js .520 + multi-face-direct .519 with no modelling changes
