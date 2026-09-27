@@ -141,6 +141,8 @@ document.addEventListener('pointerdown',event=>{
   const selectionBefore=faces(),hit=picker('face',event)?.index;
   if(!Number.isInteger(hit))return;
   const workingFaces=selectionBefore.includes(hit)?[...selectionBefore]:[hit];
+  const provisionalSelection=!selectionBefore.includes(hit);
+  if(provisionalSelection)b.set?.('face',[hit]);
   pendingFacePress={
     id:event.pointerId,
     x:event.clientX,
@@ -148,7 +150,8 @@ document.addEventListener('pointerdown',event=>{
     tool:armed,
     hit,
     selectionBefore:[...selectionBefore],
-    workingFaces:[...workingFaces]
+    workingFaces:[...workingFaces],
+    provisionalSelection
   };
   document.dispatchEvent(new CustomEvent('boxlab-face-direct-press',{detail:{
     pointerId:event.pointerId,
@@ -179,6 +182,7 @@ function finish(event){
     const p=pendingFacePress;
     pendingFacePress=null;
     event.preventDefault();event.stopImmediatePropagation();
+    if(p.provisionalSelection)bridge()?.set?.('face',p.selectionBefore);
     if(event.type==='pointerup'){
       bridge()?.toggle?.('face',p.hit);
       updateStatus();
