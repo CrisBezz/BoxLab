@@ -1,3 +1,12 @@
+## Current Face armed-drag / Repeat checkpoint — v0.36.18.516
+
+- Root cause identified in the .501 armed Face interaction model: after a completed Extrude/Inset, dragging a different unselected Face inherited the previous selection and silently became a multi-face operation.
+- .516 changes armed drag semantics only: dragging an already-selected Face operates the existing selected set; dragging an unselected Face operates that Face only. Tap selection behavior remains additive/toggle as before.
+- multi-face-direct now emits an authoritative boxlab-face-direct-press event containing tool, hit Face, prior selection and working Face set.
+- precision-face now measures real armed Face operations from that direct-controller event, so Extrude/Inset performed without preselection can still become Repeat Previous operations.
+- Repeat module itself is unchanged.
+- main.js selection bridge remains frozen at .501; Through kernel/topology logic unchanged.
+
 ## Current Sweep activation/layout checkpoint — v0.36.18.515
 
 - Root cause of the first-press Sweep failure was a late Edge-layout race: Sweep and component Circle could both relocate controls after user interaction began.
