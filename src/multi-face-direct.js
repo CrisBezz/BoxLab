@@ -16,6 +16,7 @@ let armed = null;
 let drag = null;
 let pendingSelection = null;
 let pendingFacePress = null;
+let preferSequentialUnselected = false;
 let refMarker=null,refGuide=null;
 let faceDebug=null;
 function debugFace(text){
@@ -127,7 +128,7 @@ function extrudeConnectedFaceSelection(m,faceIndices,distance){const group=selec
 
 document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool==='knife'){armed=null;drag=null;pendingSelection=null;pendingFacePress=null;clearRefVisual();syncButtons();}},true);
 document.addEventListener('pointerdown',event=>{const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;const ids=faces();pendingSelection=ids.length?{tool:target.id==='extrudeBtn'?'extrude':'inset',ids:[...ids]}:null;},true);
-document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;pendingFacePress=null;armed=null;clearRefVisual();syncButtons();updateStatus();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();},true);
+document.addEventListener('click',event=>{const transform=event.target?.closest?.('#toolModes button');if(transform){pendingSelection=null;if(armed){armed=null;clearRefVisual();syncButtons();}return;}const target=event.target?.closest?.('#extrudeBtn,#insetBtn');if(!target)return;event.preventDefault();event.stopImmediatePropagation();const tool=target.id==='extrudeBtn'?'extrude':'inset';if(armed===tool){pendingSelection=null;pendingFacePress=null;preferSequentialUnselected=false;armed=null;clearRefVisual();syncButtons();updateStatus();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none'}}));return;}const captured=pendingSelection?.tool===tool?[...pendingSelection.ids]:faces();pendingSelection=null;preferSequentialUnselected=false;disarmTransforms();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool}}));if(captured.length)bridge()?.set?.('face',captured);armed=tool;syncButtons();updateStatus();},true);
 window.addEventListener('boxlab-bridge-state',()=>{if(!armed)return;queueMicrotask(()=>{syncButtons();updateStatus();});});
 
 function beginDirectDrag(event,hit,selectionBefore,workingFaces){
@@ -154,7 +155,7 @@ document.addEventListener('pointerdown',event=>{
     hits=typeof b?.pickHits==='function'?b.pickHits('face',event):[],
     primary=picker('face',event)?.index,
     firstUnselected=hits.find(item=>Number.isInteger(item.index)&&!selected.has(item.index))?.index,
-    hit=event.pointerId!==9876&&armed==='extrude'&&selectionBefore.length===1&&Number.isInteger(primary)&&selected.has(primary)&&Number.isInteger(firstUnselected)?firstUnselected:primary;
+    hit=event.pointerId!==9876&&armed==='extrude'&&preferSequentialUnselected&&selectionBefore.length===1&&Number.isInteger(primary)&&selected.has(primary)&&Number.isInteger(firstUnselected)?firstUnselected:primary;
   if(!Number.isInteger(hit))return;
   const workingFaces=selectionBefore.includes(hit)?[...selectionBefore]:[hit];
   debugFace(`DOWN primary=${primary} chosen=${hit} before=[${selectionBefore.join(',')}] work=[${workingFaces.join(',')}] stack=[${hits.map(item=>item.index).join(',')}]`);
@@ -204,6 +205,7 @@ function finish(event){
     if(p.provisionalSelection)bridge()?.set?.('face',p.selectionBefore);
     if(event.type==='pointerup'){
       bridge()?.toggle?.('face',p.hit);
+      preferSequentialUnselected=false;
       updateStatus();
       syncButtons();
     }
@@ -231,6 +233,7 @@ function finish(event){
         globalThis.__boxlabHistory?.push(d.before);
         if(gated.repaired)restore(d.m,gated.mesh);
         bridge()?.set?.('face',d.faces);
+        preferSequentialUnselected=true;
         if(Number.isFinite(d.lastValue)&&Math.abs(d.lastValue)>1e-6){
           document.dispatchEvent(new CustomEvent('boxlab-face-direct-committed',{detail:{tool:'extrude',value:d.lastValue,faces:[...d.faces],hit:d.hitFaceIndex}}));
         }
@@ -242,6 +245,7 @@ function finish(event){
         if(status)status.textContent='Extrude • rollback • open topology refused';
       }
     }else{
+      preferSequentialUnselected=false;
       globalThis.__boxlabHistory?.push(d.before);bridge()?.set?.('face',d.faces);
       document.dispatchEvent(new CustomEvent('boxlab-face-direct-committed',{detail:{tool:'inset',faces:[...d.faces],hit:d.hitFaceIndex}}));
       updateStatus();
