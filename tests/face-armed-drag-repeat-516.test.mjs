@@ -20,8 +20,8 @@ test('516 Face direct press exposes authoritative working set to precision/repea
 });
 
 test('516 protected runtime pins remain unchanged outside Face owners',()=>{
-  assert.match(drawer,/precision-face\.js\?v=0\.36\.18\.516/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.516/);
+  assert.match(drawer,/precision-face\.js\?v=0\.36\.18\.518/);
+  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.518/);
   assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
   assert.match(index,/src\/component-slide\.js\?v=0\.36\.18\.514/);
   assert.match(index,/src\/edge-extrude\.js\?v=0\.36\.18\.514/);
