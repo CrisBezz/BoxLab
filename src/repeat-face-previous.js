@@ -140,11 +140,12 @@ function replayFace(faceIndex){
   const op={...armedOperation};
   if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
   bridge()?.set?.('face',[faceIndex]);render();
-  const api=precision();if(!api?.applyFor)return false;
+  const direct=globalThis.__boxlabFaceDirect;
+  if(!direct?.replay)return false;
   applying=true;
   let ok=false;
   try{
-    ok=api.applyFor(op.tool,op.value)!==false;
+    ok=direct.replay(op.tool,op.value,faceIndex)===true;
     if(status)status.textContent=ok?`Repeat Previous • ${shortLabel(op)} applied • tap another Face`:`Repeat Previous • ${shortLabel(op)} could not be applied to this Face`;
   }finally{
     setTimeout(()=>{applying=false;armedOperation=op;forcePaintBurst();},0);
