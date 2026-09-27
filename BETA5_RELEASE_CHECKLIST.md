@@ -1,8 +1,20 @@
 # BoxLab Beta 5 Release Checklist
 
-Release candidate line: **v0.36.18.536+**
+Release: **v0.36.18.538**
+
+Status: **APPROVED / FROZEN** on 2026-09-27 after user hands-on iPad release gate.
+
+Frozen public checkpoint: `https://crisbezz.github.io/BoxLab/beta-5/`
+
+Approved source commit: `343dc4dec00046762c7a9a11edaa92e0160a5a55`
+
+Freeze commit: `7667df2f889aca84b67bad56bf559d9c8d67478e`
 
 Purpose: freeze the post-Beta-4 modelling/UI baseline after the Face/Repeat ownership repair chain and the wider Phase D/E/F work now on main.
+
+## Release result
+
+The user completed the Beta 5 release batches and confirmed the final Boolean Undo blocker PASS on v0.36.18.538. Beta 5 is frozen from the approved source commit above. The Multi-selection Object drawer collapse to Active Tools is explicitly accepted as a non-blocking UI quirk for this release; Multi transforms themselves passed.
 
 ## Release rule
 
