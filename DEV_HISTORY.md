@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.537 fix Shell first-press iPad launch race
+
+- Beta 5 Gate Batch 3 found Shell occasionally required a second press.
+- Face layout settlement could move the Shell button during the pointer gesture, cancelling the click.
+- Touch/Pencil now launches Shell on pointerdown before the pointerup layout pass.
+- Mouse/keyboard click path remains.
+- No Shell modelling/geometry changes.
+
 ## 2026-09-27 — v0.36.18.536 enter Beta 5 release-candidate hardening
 
 - Removed temporary FACE DEBUG instrumentation only.
