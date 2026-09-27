@@ -160,14 +160,25 @@ document.addEventListener('pointerdown',event=>{
   if(!b||typeof picker!=='function')return;
   const selectionBefore=faces(),selected=new Set(selectionBefore),
     synthetic=event.pointerId===9876,
+    m=mesh(),camera=state()?.camera,
     hits=synthetic?[]:(typeof b?.pickHits==='function'?b.pickHits('face',event):[]),
     primary=synthetic?(selectionBefore[0]??null):picker('face',event)?.index,
+    selectedHit=!synthetic&&selectionBefore.length&&m&&camera?hitSelectedFace(event,m,selectionBefore,camera):null,
     firstUnselected=hits.find(item=>Number.isInteger(item.index)&&!selected.has(item.index))?.index,
-    sequentialValid=preferSequentialUnselected&&sequentialSelectionKey===faceSelectionKey(selectionBefore),
-    hit=!synthetic&&armed==='extrude'&&sequentialValid&&selectionBefore.length===1&&Number.isInteger(primary)&&selected.has(primary)&&Number.isInteger(firstUnselected)?firstUnselected:primary;
+    sequentialValid=preferSequentialUnselected&&sequentialSelectionKey===faceSelectionKey(selectionBefore);
+  let hit=primary;
+  if(synthetic&&selectionBefore.length){
+    hit=selectionBefore[0];
+  }else if(selectionBefore.length>1&&Number.isInteger(selectedHit)){
+    hit=selectedHit;
+  }else if(selectionBefore.length===1&&!sequentialValid&&Number.isInteger(selectedHit)){
+    hit=selectedHit;
+  }else if(armed==='extrude'&&sequentialValid&&selectionBefore.length===1&&Number.isInteger(primary)&&selected.has(primary)&&Number.isInteger(firstUnselected)){
+    hit=firstUnselected;
+  }
   if(!Number.isInteger(hit))return;
   const workingFaces=synthetic&&selectionBefore.length?[...selectionBefore]:(selectionBefore.includes(hit)?[...selectionBefore]:[hit]);
-  debugFace(`DOWN primary=${primary} chosen=${hit} before=[${selectionBefore.join(',')}] work=[${workingFaces.join(',')}] stack=[${hits.map(item=>item.index).join(',')}]`);
+  debugFace(`DOWN primary=${primary} selected=${selectedHit} chosen=${hit} seq=${sequentialValid} before=[${selectionBefore.join(',')}] work=[${workingFaces.join(',')}] stack=[${hits.map(item=>item.index).join(',')}]`);
   const provisionalSelection=!selectionBefore.includes(hit);
   if(provisionalSelection)b.set?.('face',[hit]);
   pendingFacePress={
