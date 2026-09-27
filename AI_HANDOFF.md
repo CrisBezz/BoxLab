@@ -1,3 +1,23 @@
+## Current Face multi-select checkpoint — v0.36.18.526
+
+- .525 hands-on: sequential A -> B armed Extrude PASS.
+- New regression immediately exposed in deliberate multi-face Extrude:
+  - selected faces did not extrude;
+  - an unselected face behind the model was chosen/extruded instead.
+- Root cause is the .523 restored overlap rule being too broad.
+- .523 rule preferred first unselected Face hit whenever primary was already selected.
+- That is correct for sequential single-face A -> B handoff, but incorrect for intentional 2+ Face selection because touching a selected face should preserve and operate the whole selected set.
+- .526 narrows the overlap rule:
+  - selectionBefore.length === 1: may prefer first unselected overlap hit (preserves A -> B behavior)
+  - selectionBefore.length >= 2: keep primary selected hit, therefore workingFaces remains the full deliberate selection.
+- .525 sequential Through ownership fix remains unchanged.
+- .522 native single-Face Extrude path remains.
+- Visible Face debug remains temporarily.
+- Next hands-on gate:
+  1. deliberate 2+ selected faces -> Extrude from one selected face
+  2. verify selected set extrudes together and no rear/unselected face is chosen
+  3. quick A -> B single-face regression check remains PASS.
+
 ## Current Face ownership checkpoint — v0.36.18.525
 
 - .524 diagnostic screenshots isolated the A -> B corruption.
