@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.522 restore mature native single-Face Extrude
+
+- .521 still failed hands-on, ruling out stale deployment and the restored .460-style legacy viewport yield as the primary Face failure.
+- Compared the current direct Face geometry path with the .449 known-good behavior.
+- Found current code routed ordinary one-Face Extrude through the connected multi-face miter solver instead of EditableMesh.extrudeFace().
+- Restored native EditableMesh.extrudeFace() for exactly one selected Face; deliberate 2+ Face bands retain the connected solver.
+- Through contact classification, topology gate, Inset, navigation and protected multi-object-transform are unchanged.
+
 ## 2026-09-27 — v0.36.18.521 cross-browser stale-shell refresh repair
 
 - .520 deployed successfully on GitHub Pages but did not refresh on every browser.
