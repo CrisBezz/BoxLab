@@ -256,10 +256,56 @@ function finish(event){
 }
 document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);
 
+
+function replayFaceOperation(tool,value,faceIndex){
+  const m=mesh(),distance=Number(value);
+  if((tool!=='extrude'&&tool!=='inset')||!m||!Number.isInteger(faceIndex)||!Array.isArray(m.faces?.[faceIndex])||!Number.isFinite(distance))return false;
+  const before=m.clone();
+
+  if(tool==='extrude'){
+    if(Math.abs(distance)<1e-9)return false;
+    if(distance<0){
+      const contact=classifySingleFaceContact(before,faceIndex,distance,planThrough(before,faceIndex));
+      if(contact.mode!=='extrude')return false;
+    }
+    const result=m.extrudeFace?.(faceIndex,distance);
+    if(!result){restore(m,before);return false;}
+    const gated=gateClosedEdit(before,m);
+    if(!gated.ok){restore(m,before);return false;}
+    if(gated.repaired)restore(m,gated.mesh);
+    globalThis.__boxlabHistory?.push(before);
+    bridge()?.set?.('face',[faceIndex]);
+    preferSequentialUnselected=false;
+    render();
+    syncButtons();
+    document.dispatchEvent(new CustomEvent('boxlab-face-direct-committed',{detail:{tool:'extrude',value:distance,faces:[faceIndex],hit:faceIndex,replay:true}}));
+    return true;
+  }
+
+  const face=before.faces[faceIndex];
+  let minEdge=Infinity;
+  for(let i=0;i<face.length;i++){
+    const a=before.vertices[face[i]],b=before.vertices[face[(i+1)%face.length]];
+    if(a&&b)minEdge=Math.min(minEdge,a.distanceTo(b));
+  }
+  if(!Number.isFinite(minEdge)||minEdge<=1e-8){restore(m,before);return false;}
+  const amount=THREE.MathUtils.clamp(Math.abs(distance)/(minEdge*.5),.01,.95);
+  const result=m.insetFaceRegions?.([faceIndex],amount);
+  if(!result){restore(m,before);return false;}
+  globalThis.__boxlabHistory?.push(before);
+  bridge()?.set?.('face',[faceIndex]);
+  preferSequentialUnselected=false;
+  render();
+  syncButtons();
+  document.dispatchEvent(new CustomEvent('boxlab-face-direct-committed',{detail:{tool:'inset',value:distance,faces:[faceIndex],hit:faceIndex,replay:true}}));
+  return true;
+}
+
 globalThis.__boxlabFaceDirect={
   active:()=>!!armed,
   tool:()=>armed,
   dragging:()=>!!drag,
+  replay:replayFaceOperation,
   pending:()=>pendingFacePress?{
     pointerId:pendingFacePress.id,
     tool:pendingFacePress.tool,
