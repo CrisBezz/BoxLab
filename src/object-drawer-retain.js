@@ -8,6 +8,7 @@ function currentMode() {
 
 function ensureObjectsDrawerOpen() {
   if (currentMode() !== 'object' || !objectDrawer) return;
+  if (globalThis.__boxlabToolSession?.isActive?.()) return;
   objectDrawer.open = true;
 }
 
@@ -42,5 +43,5 @@ if (outliner) {
 }
 
 const version = document.querySelector('#appVersion');
-if (version) version.textContent = 'v0.36.1.4';
-document.title = 'BoxLab v0.36.1.4';
+if (version) version.textContent = 'v0.36.18.517';
+document.title = 'BoxLab v0.36.18.517';
