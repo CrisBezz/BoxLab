@@ -160,12 +160,13 @@ function finishGesture(g){
   }
 }
 
-window.addEventListener('pointerdown',event=>{
-  if(event.pointerId===9876||event.target!==canvas||!event.isPrimary)return;
-  const tool=activeTool();if(!tool)return;
-  const fi=pickSelectedFace(event.clientX,event.clientY);if(!Number.isInteger(fi))return;
-  const m=mesh(),ids=faces();if(!m||!ids.length)return;
-  gesture={pointerId:event.pointerId,tool,faceIndex:fi,repeatable:true,startCenter:null,startNormal:null,insetSnapshot:null};
+document.addEventListener('boxlab-face-direct-press',event=>{
+  const detail=event.detail||{},pointerId=detail.pointerId;
+  if(pointerId===9876)return;
+  const tool=detail.tool,fi=detail.hit,ids=[...new Set(detail.workingFaces||[])];
+  if((tool!=='extrude'&&tool!=='inset')||!Number.isInteger(fi)||!ids.length)return;
+  const m=mesh();if(!m)return;
+  gesture={pointerId,tool,faceIndex:fi,faceIds:ids,repeatable:true,startCenter:null,startNormal:null,insetSnapshot:null};
   if(tool==='extrude'){
     gesture.startCenter=centerOfFace(m,fi)?.clone?.()||null;
     gesture.startNormal=m.faceNormal?.(fi)?.clone?.().normalize?.()||null;
@@ -174,7 +175,7 @@ window.addEventListener('pointerdown',event=>{
     gesture.insetSnapshot=snapshotInset(m,ids);
     if(!gesture.insetSnapshot)gesture=null;
   }
-},true);
+});
 
 window.addEventListener('pointerup',event=>{
   if(!gesture||event.pointerId!==gesture.pointerId||event.pointerId===9876)return;
@@ -208,4 +209,4 @@ new MutationObserver(()=>{
   }
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.327',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
+window.__boxlabPrecisionFace={version:'0.36.18.516',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
