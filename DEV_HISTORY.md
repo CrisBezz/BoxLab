@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.535 Face/Repeat checkpoint PERFECT PASS
+
+- User confirmed perfect hands-on pass after selected-hit priority repair.
+- Final stable combination:
+  - deliberate single selected Face is authoritative
+  - deliberate multi-face selection is authoritative
+  - immediate sequential A -> B remains supported
+  - Inset single/multi remains stable
+  - Repeat Extrude/Inset works transactionally
+  - Repeat operation follows newest real Face operation across repeated cycles
+- This closes the Face/Repeat regression chain.
+- FACE DEBUG overlay remains cleanup-only.
+
 ## 2026-09-27 — v0.36.18.535 prioritize selected Face over generic through hit
 
 - .534 still allowed generic viewport primary picking to resolve a through Face despite deliberate selected Face(s).
