@@ -1,3 +1,15 @@
+## Current deployment refresh checkpoint — v0.36.18.521
+
+- User reported .520 did not refresh across all browsers.
+- GitHub Pages audit showed the .520 Pages deployment completed successfully, so the issue was client-side stale-shell handling rather than deployment failure.
+- Root cause: index.html was still stamped v0.36.18.444 and loaded release-bootstrap with the old .163 cache key. A stale client could redirect once to ?build=<latest>, still receive a cached old shell, then stop retrying because the old bootstrap treated an already-matching build query as success.
+- .521 is a refresh-only release: no modelling behavior changed from .520.
+- index.html shell title/data-release-version are now stamped .521.
+- release-bootstrap.js and release-version.js are cache-hopped to .521.
+- release-bootstrap now allows up to three fresh reload-nonce retries for the same latest build when the running HTML shell is still stale.
+- Face direct ownership fix from .520 remains unchanged: main.js .520 + multi-face-direct .519.
+- Next gate: confirm all target browsers visibly report v0.36.18.521 before continuing Face A/B/C testing.
+
 ## Current Face direct-owner checkpoint — v0.36.18.520
 
 - Hands-on .519 still failed: after Extrude Face A, dragging a different unselected Face B did not behave correctly and could deform A; Repeat Previous also remained unavailable/failed.
