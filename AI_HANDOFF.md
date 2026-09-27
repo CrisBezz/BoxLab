@@ -1,3 +1,12 @@
+## Current Face sequential-drag checkpoint — v0.36.18.519
+
+- Hands-on .518 result: sequential unselected Face Extrude still failed; dragging Face B could deform previously extruded Face A. Repeat Previous also failed after that contaminated sequence. Inset, deliberate multi-face, armed tap-selection and Extrude Through continued to pass on a clean mesh.
+- .519 moves ownership earlier: when an armed Extrude/Inset press lands on an unselected Face, that Face becomes the provisional live Face selection immediately on pointerdown, before any drag-threshold or downstream interaction handling.
+- If the gesture resolves as a tap, the previous selection is restored first and the established additive/toggle tap behavior is replayed unchanged.
+- If the gesture promotes to a drag, every downstream handler sees the authoritative one-Face working selection from the start, eliminating the stale prior-Face window.
+- Extrude/Inset topology solvers, Through kernel, precision-face .518, main.js .501, Rotate .483, Edge .514, Sweep .515 and protected multi-object-transform remain unchanged.
+- Next hands-on gate: Face A Extrude -> different unselected Face B Extrude; verify B alone moves and A stays unchanged. Then verify Repeat Previous on a clean follow-up Face.
+
 ## Current Face Extrude / Repeat checkpoint — v0.36.18.518
 
 - Hands-on .517 result: Inset, deliberate multi-face, armed tap-selection and Extrude Through passed; second unselected-face Extrude and Repeat Previous failed.
