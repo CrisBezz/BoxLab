@@ -72,7 +72,7 @@ From this point until Beta 5 is frozen:
 - [ ] Sweep simple profile/path Apply
 - [ ] Array endpoint/count Apply
 - [ ] Solidify
-- [ ] Shell
+- [ ] Shell — first-press launch retest on v0.36.18.537
 - [ ] Revolve Profile
 - [ ] legacy Edge Revolve / Lathe basic smoke
 - [ ] Tool Session drawer stays owned during active construction
