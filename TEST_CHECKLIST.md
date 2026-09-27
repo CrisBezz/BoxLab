@@ -1511,3 +1511,9 @@ Add new permanent regression checks below when future features need protection.
 - [x] Stable .532: Repeat Inset PASS
 - [x] Stable .532: Repeat remains armed across repeated taps PASS
 - [x] Stable .532: newest real Face operation updates armed Repeat PASS
+
+- [ ] Workflow .533: Repeat Inset -> real Extrude -> Repeat becomes Extrude
+- [ ] Workflow .533: Repeat Extrude -> real Inset -> Repeat becomes Inset
+- [ ] Workflow .533: Repeat Inset again -> real Extrude again -> Repeat becomes Extrude on second cycle
+- [ ] Regression .533: repeated taps keep same Repeat op until a new real Face operation occurs
+- [ ] Regression .533: Repeat Extrude/Inset geometry remains PASS
