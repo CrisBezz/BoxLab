@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.527 make overlap hit substitution Extrude-only
+
+- .526 passed sequential and deliberate multi-face Extrude, while Inset still failed.
+- Found shared Face hit logic was applying the sequential Extrude overlap preference to Inset too.
+- On a selected front Face, Inset could therefore choose an unselected rear Face from the same ray stack.
+- Limited the unselected-overlap substitution to armed Extrude only.
+- Inset now keeps the pressed selected Face while retaining direct press on an unselected Face.
+- No Inset geometry solver changes in this build.
+
 ## 2026-09-27 — v0.36.18.526 constrain overlap hit preference for multi-Face Extrude
 
 - .525 fixed sequential A -> B armed Extrude.
