@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.529 preserve deliberate selected Face before sequential overlap
+
+- While testing Repeat on .528, user explicitly selected a front Face and then dragged Extrude, but the deeper rear Face was extruded.
+- Root cause: the sequential overlap preference was still active for any one-selected-face real Extrude gesture.
+- Added preferSequentialUnselected state.
+- Tool arming and explicit Face taps reset it.
+- Successful ordinary Extrude sets it for the next direct sequential gesture only.
+- This preserves deliberate preselection while retaining the A -> B armed workflow.
+
 ## 2026-09-27 — v0.36.18.528 isolate Repeat/Exact synthetic Face gesture
 
 - .527 normal Face tools passed hands-on.
