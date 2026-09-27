@@ -69,7 +69,7 @@ import('./object-mode-retain.js?v=0.36.18.4').catch(error => console.warn('BoxLa
 import('./transform-state-fix.js?v=0.36.18.5').catch(error => console.warn('BoxLab transform state fix failed to load', error));
 import('./persistent-face-tool-select.js?v=0.36.18.499').catch(error => console.warn('BoxLab persistent face tool selection failed to load', error));
 import('./precision-face.js?v=0.36.18.532').catch(error => console.warn('BoxLab Face precision failed to load', error));
-import('./repeat-face-previous.js?v=0.36.18.532').catch(error => console.warn('BoxLab Repeat Previous Face failed to load', error));
+import('./repeat-face-previous.js?v=0.36.18.533').catch(error => console.warn('BoxLab Repeat Previous Face failed to load', error));
 import('./sequential-through-fallback.js?v=0.36.18.528').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
 import('./precision-transform.js?v=0.36.18.14').catch(error => console.warn('BoxLab precision Transform failed to load', error));
 import('./precision-bevel.js?v=0.36.18.513').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
