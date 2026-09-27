@@ -1397,3 +1397,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .517: opening Boolean turns Multi selection on while keeping the current active object selected
 - [ ] Regression .517: closing Boolean returns to normal Object tooling without losing the active object
 - [ ] Regression .517: Array Apply/Cancel and Revolve Apply/Cancel remain unchanged
+
+- [ ] Workflow .518: arm Extrude with nothing selected -> drag Face A -> then drag different unselected Face B -> only Face B extrudes
+- [ ] Workflow .518: Face A must not move/deform during the Face B extrusion attempt
+- [ ] Workflow .518: after unselected-face Extrude, Repeat Previous becomes available and replays the same Extrude value
+- [ ] Regression .518: Inset unselected-face sequence remains passing
+- [ ] Regression .518: deliberate preselected multi-face Extrude/Inset remains passing
+- [ ] Regression .518: armed tap-selection and Extrude Through remain passing

@@ -36,7 +36,7 @@ function minBoundaryEdge(m,ids){const info=m?.faceRegionsInfo?.(ids);let min=Inf
 function dispatchGesture(start,end){const id=9876,base={bubbles:true,cancelable:true,composed:true,pointerId:id,pointerType:'pen',isPrimary:true,button:0,buttons:1,pressure:.5,clientX:start.x,clientY:start.y};canvas.dispatchEvent(new PointerEvent('pointerdown',base));canvas.dispatchEvent(new PointerEvent('pointermove',{...base,clientX:end.x,clientY:end.y}));canvas.dispatchEvent(new PointerEvent('pointerup',{...base,buttons:0,pressure:0,clientX:end.x,clientY:end.y}));}
 function commitOperation(tool,value,source='drag'){
   const number=Number(value);if((tool!=='extrude'&&tool!=='inset')||!Number.isFinite(number))return null;
-  const saved={tool,value:number,source,version:'0.36.18.327'};
+  const saved={tool,value:number,source,version:'0.36.18.518'};
   globalThis.__boxlabLastFaceOperation=saved;
   input.value=number.toFixed(3);
   readout.textContent=`Last ${tool==='extrude'?'Extrude':'Inset'} • ${number>=0?'+':''}${number.toFixed(3)}`;
@@ -160,6 +160,14 @@ function finishGesture(g){
   }
 }
 
+document.addEventListener('boxlab-face-direct-committed',event=>{
+  const detail=event.detail||{};
+  if(detail.tool==='extrude'&&Number.isFinite(Number(detail.value))&&Math.abs(Number(detail.value))>1e-6){
+    commitOperation('extrude',Number(detail.value),'geometry');
+    if(gesture?.tool==='extrude')gesture.repeatable=false;
+  }
+});
+
 document.addEventListener('boxlab-face-direct-press',event=>{
   const detail=event.detail||{},pointerId=detail.pointerId;
   if(pointerId===9876)return;
@@ -209,4 +217,4 @@ new MutationObserver(()=>{
   }
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-window.__boxlabPrecisionFace={version:'0.36.18.516',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
+window.__boxlabPrecisionFace={version:'0.36.18.518',apply:value=>{input.value=String(value);return applyExact();},applyFor,last:()=>globalThis.__boxlabLastFaceOperation||null,commit:commitOperation,value:()=>Number(input.value)};
