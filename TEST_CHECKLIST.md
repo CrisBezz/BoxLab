@@ -1426,3 +1426,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Deployment .521: reopening an already-stale tab converges to .521 without manual cache clearing
 - [ ] Regression .521: no repeated reload loop once the running shell is .521
 - [ ] Regression .521: Face runtime remains main.js .520 + multi-face-direct .519 with no modelling changes
+
+- [ ] Workflow .522: fresh cube -> arm Extrude -> drag Face A -> native single-Face Extrude succeeds
+- [ ] Workflow .522: keep Extrude armed -> drag different unselected Face B -> only B extrudes; A remains unchanged
+- [ ] Workflow .522: keep Extrude armed -> drag Face C -> only C extrudes
+- [ ] Workflow .522: Repeat Previous replays the last ordinary single-Face Extrude value on another Face
+- [ ] Regression .522: deliberate 2+ selected Face Extrude still uses connected-band behavior
+- [ ] Regression .522: Extrude Through and Inset unchanged on clean geometry
