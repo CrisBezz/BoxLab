@@ -1,3 +1,20 @@
+## FROZEN BETA 5 — v0.36.18.538
+
+- User approved the final release blocker with Boolean one-step Undo PASS.
+- Approved source commit: `343dc4dec00046762c7a9a11edaa92e0160a5a55`
+- Freeze commit adding immutable snapshot: `7667df2f889aca84b67bad56bf559d9c8d67478e`
+- Frozen URL: https://crisbezz.github.io/BoxLab/beta-5/
+- Live main remains: https://crisbezz.github.io/BoxLab/
+- Beta 5 release gate hands-on batches passed:
+  - navigation / selection / Face / Repeat
+  - Vertex / Edge
+  - construction tools including .537 Shell first-press fix
+  - Object / Group / Join / Boolean / Mesh Health / import-export / UI
+- Accepted non-blocker: Object drawer may collapse to Active Tools upon Multi selection; Multi Move/Scale/Rotate itself passed.
+- Final release blocker fixed in .538: Boolean result activation no longer loses the pre-Boolean scene checkpoint; one-step Undo passed hands-on.
+- /beta-5/ is now immutable during normal development. Future work continues on live main only unless user explicitly approves an emergency Beta 5 fix.
+- Preserve v0.36.18.535 Face/Repeat ownership behavior and protected src/multi-object-transform.js?v=0.36.1.0.
+
 ## Beta 5 RC Boolean Undo repair — v0.36.18.538
 
 - Final Beta 5 Batch 4:
