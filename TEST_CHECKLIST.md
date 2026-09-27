@@ -1454,3 +1454,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .526: A -> B sequential single-Face Extrude remains PASS
 - [ ] Regression .526: C sequential single-Face Extrude remains PASS
 - [ ] Regression .526: Extrude Through / inward fallback still works on resolved current single Face
+
+- [ ] Workflow .527: select one Face -> arm Inset -> drag that same selected Face
+- [ ] Workflow .527: Inset operates the pressed selected Face, not a rear/unselected Face
+- [ ] Workflow .527: select 2+ Faces -> Inset preserves and operates the selected set
+- [ ] Regression .527: A -> B sequential Extrude remains PASS
+- [ ] Regression .527: deliberate multi-face Extrude remains PASS
+- [ ] Regression .527: Extrude Through / inward fallback unchanged
