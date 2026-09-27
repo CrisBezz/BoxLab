@@ -7,6 +7,8 @@
 - Sweep button sizing is normalized to the compact BoxLab rhythm: 31px minimum height, 10px text, 4px padding.
 - No Sweep topology/path solver changes.
 - Frozen Vertex .513, Edge .514 interaction fixes, Face .501, Rotate .483 and protected multi-object-transform remain untouched.
+- Merged via PR #247; squash merge `450dd4e3b287005fdc8ace77eb792a95add2410a`.
+- Topology regression run #995: all new .515 Sweep tests and both older .509 Sweep appearance/cache contracts passed; overall workflow remained red only from the known unrelated historical-suite backlog.
 
 ## Current Edge polish checkpoint — v0.36.18.514
 
