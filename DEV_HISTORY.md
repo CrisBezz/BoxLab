@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.533 remove delayed Repeat operation overwrite
+
+- User found a multi-cycle state regression after .532.
+- Delayed replay cleanup still restored the replayed op via armedOperation=op.
+- That stale timeout could overwrite a newer real Extrude/Inset state.
+- Removed the assignment; cleanup now only clears applying and refreshes UI.
+- This makes real Face commits authoritative for Repeat operation changes.
+
 ## 2026-09-27 — v0.36.18.532 Face + Repeat checkpoint HANDS-ON PASS
 
 - User confirmed .532 passes the remaining Repeat state-sync case.
