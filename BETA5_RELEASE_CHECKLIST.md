@@ -88,7 +88,7 @@ From this point until Beta 5 is frozen:
 - [x] Boolean Union
 - [x] Boolean Cut
 - [x] Boolean Intersect
-- [ ] Boolean one-step Undo — retest on v0.36.18.538
+- [x] Boolean one-step Undo — PASS on v0.36.18.538
 - [x] Boolean Swap keeps Active Tools available
 - [ ] object selection tint remains normal after construction tools
 
