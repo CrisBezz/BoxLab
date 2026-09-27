@@ -1529,3 +1529,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .535: deliberately select 2+ Faces -> Extrude full selected set
 - [ ] Regression .535: no through/rear Face substitution for deliberate single or multi selection
 - [ ] Regression .535: Repeat Extrude/Inset and state switching remain PASS
+
+- [x] Stable .535: deliberate selected single-Face Extrude PERFECT PASS
+- [x] Stable .535: immediate sequential A -> B Extrude PASS
+- [x] Stable .535: deliberate multi-face Extrude PERFECT PASS
+- [x] Stable .535: single-face Inset PASS
+- [x] Stable .535: multi-face Inset PASS
+- [x] Stable .535: Repeat Extrude PASS
+- [x] Stable .535: Repeat Inset PASS
+- [x] Stable .535: Repeat multi-cycle operation switching PASS
+- [x] Stable .535: no through/rear Face substitution for deliberate selection PASS
