@@ -76,9 +76,9 @@ Priority candidates:
 
 **v0.36.18.371** is the approved **frozen Beta 3** checkpoint. The user completed the hands-on release gate on 2026-09-20 and the exact approved release tree is published under `/beta-3/`. Phase D may now resume on live `main` while Beta 3 remains immutable except for an explicitly approved emergency release fix.
 
-### Beta 5 release-candidate hardening
+### Beta 5 release checkpoint
 
-**v0.36.18.536+** is now in Beta 5 release-candidate hardening. Feature development is paused until the iPad hands-on gate in `BETA5_RELEASE_CHECKLIST.md` passes. Fix only concrete release blockers, then freeze the approved tree under `/beta-5/`.
+**v0.36.18.538** is the approved **frozen Beta 5** checkpoint from source commit `343dc4dec00046762c7a9a11edaa92e0160a5a55`, snapshotted under `/beta-5/` by freeze commit `7667df2f889aca84b67bad56bf559d9c8d67478e`. The user completed the hands-on release gate on 2026-09-27. Normal development may resume on live `main`; Beta 5 remains immutable except for an explicitly approved emergency release fix.
 
 ### Beta 4 release checkpoint
 
