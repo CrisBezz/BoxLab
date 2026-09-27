@@ -1,3 +1,16 @@
+## v0.36.18.541 — File menu refresh + File Name edit fix
+
+- User reported the new File menu styling did not appear to refresh and File Name was not editable on iPad.
+- Root cause of stale styling: main still loaded `styles.css?v=0.36.18.270`, so Safari could reuse the old stylesheet even though .540 HTML/modules deployed successfully.
+- .541 bumps the stylesheet cache key to `styles.css?v=0.36.18.541`.
+- File Name now explicitly focuses on touch/Pencil and temporarily relaxes the app-level `touch-action:none` while editing; original touch-action is restored on blur.
+- GLB facegroup work from .540 is unchanged.
+- Frozen Beta 5 remains .538 untouched.
+- Hands-on retest:
+  1. confirm app shows v0.36.18.541 and the File menu uses the larger general BoxLab sizing;
+  2. tap File Name, edit it, dismiss keyboard, confirm edited text remains;
+  3. export GLB and confirm exported filename uses the edited name.
+
 ## v0.36.18.540 — Nomad GLB facegroup round trip + File menu sizing
 
 - GLB import now converts GLB primitive/material groups into BoxLab faceGroups.
