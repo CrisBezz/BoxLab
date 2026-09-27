@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.534 bind sequential Extrude overlap to unchanged selection
+
+- User screenshot showed selected-Face Extrude could again jump to a rear Face after Repeat cycles.
+- Replaced loose sequential-overlap boolean semantics with a selection-bound key.
+- Successful Extrude records the selected Face IDs that own the sequential continuation opportunity.
+- Any subsequent Face selection change clears that opportunity automatically.
+- Preserves immediate A->B continuation while protecting deliberate Face selection.
+
 ## 2026-09-27 — v0.36.18.533 remove delayed Repeat operation overwrite
 
 - User found a multi-cycle state regression after .532.
