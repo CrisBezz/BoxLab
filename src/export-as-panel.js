@@ -1,10 +1,10 @@
-// BoxLab v0.36.18.540 — Nomad facegroup-aware GLB round trip.
+// BoxLab v0.36.18.541 — File-name editing + cache refresh hardening.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.540';
+const VERSION='0.36.18.541';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -195,6 +195,33 @@ formatButtons.forEach(button=>button.addEventListener('click',()=>{
 geometryButtons.forEach(button=>button.addEventListener('click',()=>{
   geometry=button.dataset.exportGeometry||'base';setActive(geometryButtons,'exportGeometry',geometry);
 }));
+function setEditingTouchMode(editing){
+  const app=document.querySelector('#app');
+  for(const el of [document.documentElement,document.body,app].filter(Boolean)){
+    if(editing){
+      if(el.dataset.boxlabTouchActionBefore===undefined)el.dataset.boxlabTouchActionBefore=el.style.touchAction||'';
+      el.style.touchAction='auto';
+    }else if(el.dataset.boxlabTouchActionBefore!==undefined){
+      el.style.touchAction=el.dataset.boxlabTouchActionBefore;
+      delete el.dataset.boxlabTouchActionBefore;
+    }
+  }
+}
+function focusFileName(){
+  if(!nameInput)return;
+  try{nameInput.focus({preventScroll:true});}catch{nameInput.focus();}
+}
+nameInput?.addEventListener('pointerdown',event=>{
+  event.stopPropagation();
+  if(event.pointerType!=='mouse')focusFileName();
+},{capture:true});
+nameInput?.addEventListener('touchstart',event=>{
+  event.stopPropagation();
+  focusFileName();
+},{capture:true,passive:true});
+nameInput?.addEventListener('click',event=>{event.stopPropagation();focusFileName();});
+nameInput?.addEventListener('focus',()=>setEditingTouchMode(true));
+nameInput?.addEventListener('blur',()=>setEditingTouchMode(false));
 nameInput?.addEventListener('input',()=>{nameInput.value=nameInput.value.replace(/\.(obj|glb)$/i,'');});
 exportButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();exportAs();});
 
