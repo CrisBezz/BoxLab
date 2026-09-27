@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.513 Vertex Bevel + Merge to First
+
+- Moved Vertex Bevel Exact % row/readout directly beneath the existing Width control.
+- Fixed Merge to First semantics by tracking the actual local order vertices are selected, rather than relying on core's numerically sorted selection IDs.
+- Kept the fix inside Vertex-owned modules; no main selection model or protected interaction runtime changed.
+- Vertex Extrude noted for post-Beta-5 roadmap only.
+
 ## 2026-09-27 — v0.36.18.512 load recovery from failed .511
 
 - User reported .511 would not refresh/load in three browsers.

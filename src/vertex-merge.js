@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.37 — conservative Vertex Merge.
+// BoxLab v0.36.18.513 — conservative Vertex Merge.
 // Adds Merge to Center and Merge to First without altering existing Vertex tools.
 
 const status=document.querySelector('#selectionStatus');
@@ -10,7 +10,15 @@ const multiToggle=document.querySelector('#multiSelectToggle');
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function mesh(){return state()?.mesh||null;}
+let selectionOrder=[];
 function selectedVertices(){const b=bridge();return b?.mode?.()==='vertex'?[...new Set(b.indices?.()||[])].filter(Number.isInteger):[];}
+function orderedSelectedVertices(){
+  const ids=selectedVertices(),set=new Set(ids);
+  selectionOrder=selectionOrder.filter(id=>set.has(id));
+  for(const id of ids)if(!selectionOrder.includes(id))selectionOrder.push(id);
+  if(!ids.length)selectionOrder=[];
+  return [...selectionOrder];
+}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function key(m,a,b){return m.edgeKey(a,b);}
 
@@ -87,7 +95,7 @@ function compact(m,keepOld){
 }
 
 function apply(mode){
-  const m=mesh(),ids=selectedVertices(),history=globalThis.__boxlabHistory;
+  const m=mesh(),ids=mode==='first'?orderedSelectedVertices():selectedVertices(),history=globalThis.__boxlabHistory;
   if(!m||!history)return;
   const info=mergeInfo(m,ids,mode);
   if(!info.ok){if(status)status.textContent=`Vertex Merge • ${info.reason}`;sync();return;}
@@ -111,13 +119,13 @@ function apply(mode){
     if(status)status.textContent='Vertex Merge • rollback • result vertex was lost';return;
   }
   if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
-  bridge()?.set?.('vertex',[resultVertex]);render();
+  selectionOrder=[resultVertex];bridge()?.set?.('vertex',[resultVertex]);render();
   if(status)status.textContent=`Vertex Merge • ${info.vertices.length} vertices → 1 • ${mode==='first'?'to first':'center'} • result selected`;
   sync();
 }
 function sync(){
-  const m=mesh(),ids=selectedVertices();
-  const center=m?mergeInfo(m,ids,'center'):null,first=m?mergeInfo(m,ids,'first'):null;
+  const m=mesh(),ids=selectedVertices(),ordered=orderedSelectedVertices();
+  const center=m?mergeInfo(m,ids,'center'):null,first=m?mergeInfo(m,ordered,'first'):null;
   centerButton.disabled=!center?.ok;firstButton.disabled=!first?.ok;
   centerButton.title=center?.ok?'Merge selected vertices to their centroid':(center?.reason||'Select at least two vertices');
   firstButton.title=first?.ok?'Merge selected vertices to the first selected vertex':(first?.reason||'Select at least two vertices');
@@ -129,4 +137,4 @@ document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 setTimeout(sync,0);
 
-globalThis.__boxlabVertexMerge={version:'0.36.18.37',info:mergeInfo,center:()=>apply('center'),first:()=>apply('first')};
+globalThis.__boxlabVertexMerge={version:'0.36.18.513',info:mergeInfo,center:()=>apply('center'),first:()=>apply('first')};
