@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.521 cross-browser stale-shell refresh repair
+
+- .520 deployed successfully on GitHub Pages but did not refresh on every browser.
+- Found the HTML shell itself was still stamped .444 and release bootstrap/version scripts carried old cache keys.
+- More importantly, the old release bootstrap stopped retrying once the URL already contained build=<latest>, even if the browser had served the stale shell again.
+- Stamped the HTML shell and release scripts .521 and changed the bootstrap to retry stale-shell reloads with a fresh nonce, capped at three attempts per latest release.
+- This release changes deployment/cache behavior only; BoxLab modelling runtime remains the .520 Face-owner build.
+
 ## 2026-09-27 — v0.36.18.520 restore proven Face direct-owner guard
 
 - .519 failed hands-on, so stopped iterating on selection handoff.
