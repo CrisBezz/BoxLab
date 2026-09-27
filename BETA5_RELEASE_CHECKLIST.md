@@ -15,29 +15,29 @@ From this point until Beta 5 is frozen:
 
 ## 1. Navigation / selection
 
-- [ ] one-finger orbit
-- [ ] two-finger pan
-- [ ] pinch zoom
-- [ ] two-finger tap Undo
-- [ ] three-finger tap Redo
+- [x] one-finger orbit
+- [x] two-finger pan
+- [x] pinch zoom
+- [x] two-finger tap Undo
+- [x] three-finger tap Redo
 - [ ] no-jump orbit pivot
 - [ ] persistent component selection during navigation
-- [ ] Vertex / Edge / Face / Object mode switching
-- [ ] Visible / Through selection depth
-- [ ] deliberate single-Face selection remains authoritative
-- [ ] deliberate multi-Face selection remains authoritative
-- [ ] immediate sequential A -> B Extrude remains supported
+- [x] Vertex / Edge / Face / Object mode switching
+- [x] Visible / Through selection depth
+- [x] deliberate single-Face selection remains authoritative
+- [x] deliberate multi-Face selection remains authoritative
+- [x] immediate sequential A -> B Extrude remains supported
 
 ## 2. Face modelling — RELEASE BLOCKER SET
 
-- [ ] ordinary Face Extrude
-- [ ] connected multi-face Extrude
-- [ ] Inset
+- [x] ordinary Face Extrude
+- [x] connected multi-face Extrude
+- [x] Inset
 - [ ] multi-face Inset
-- [ ] Repeat Extrude
-- [ ] Repeat Inset
+- [x] Repeat Extrude
+- [x] Repeat Inset
 - [ ] Repeat stays armed for multiple taps
-- [ ] newest real Face operation replaces armed Repeat
+- [x] newest real Face operation replaces armed Repeat
 - [ ] Knife
 - [ ] Extract
 - [ ] Face Delete
