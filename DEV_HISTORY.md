@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.540 Nomad GLB facegroup round trip
+
+- GLB import now maps primitive/material boundaries into BoxLab faceGroups.
+- GLB export now writes BoxLab facegroups as grouped GLB primitives/material slots while keeping each BoxLab object intact as one object.
+- BoxLab facegroup names are embedded in GLB metadata/name where possible for exact BoxLab round trips.
+- Updated File menu/export panel sizing to the standard BoxLab UI scale.
+- Frozen Beta 5 remains untouched.
+
 ## 2026-09-27 — v0.36.18.539 Export As + GLB handoff
 
 - Added a structured File > Export / Save panel with filename, OBJ/GLB and Base/SubD choices.
