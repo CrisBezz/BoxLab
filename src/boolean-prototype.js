@@ -298,12 +298,13 @@ function apply(operation){
   setStatus(`Boolean ${operation} • calculating…`);
   const result=e.kind==='groups'?buildGroupResult(e.active,e.other,operation):buildResult(e.active.mesh,e.other.mesh,operation);
   if(!result.ok){setStatus(`Boolean ${operation} refused • ${result.reason}`);return;}
-  globalThis.__boxlabObjectHistory?.checkpoint?.();
+  const beforeScene=globalThis.__boxlabObjectHistory?.capture?.()||null;
   const originals=e.originals||[e.active,e.other],visibility=new Map(originals.map(o=>[o.id,o.visible!==false]));
   for(const object of originals)object.visible=false;
   const label=operation==='difference'?'Cut':operation==='intersection'?'Intersect':'Union';
   const created=manager()?.addMesh?.(result.mesh,nextBooleanName(e.active.name),{kind:'editable',visible:true,locked:false,enterObjectMode:true});
   if(!created){for(const object of originals)object.visible=visibility.get(object.id)!==false;setStatus(`Boolean ${label} failed • result object could not be created`);return;}
+  if(beforeScene)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(beforeScene);
   selection()?.select?.([created.id]);
   globalThis.__boxlabTopologyGate?.sync?.();
   const fallbackText=result.fallbackReason===DEGENERATE_INPUT?' • repaired degenerate input':'';const engineText=result.engine==='compound'?'compound solver':result.engine==='sequential'?'sequential solver':'stable solver';
@@ -318,4 +319,4 @@ window.addEventListener('boxlab-bridge-state',()=>setTimeout(sync,0));
 document.addEventListener('pointerup',()=>setTimeout(sync,0),true);
 [0,100,400,900].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabBooleanPrototype={version:VERSION,buildStableResult,buildResult,buildGroupResult,eligibility,apply,sync};
+globalThis.__boxlabBooleanPrototype={version:'0.36.18.538',buildStableResult,buildResult,buildGroupResult,eligibility,apply,sync};
