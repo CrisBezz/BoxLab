@@ -1433,3 +1433,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .522: Repeat Previous replays the last ordinary single-Face Extrude value on another Face
 - [ ] Regression .522: deliberate 2+ selected Face Extrude still uses connected-band behavior
 - [ ] Regression .522: Extrude Through and Inset unchanged on clean geometry
+
+- [ ] Workflow .523: fresh cube -> Extrude Face A
+- [ ] Workflow .523: keep Extrude armed -> drag visibly different Face B; B must be chosen even if A is the nearer overlapping ray hit
+- [ ] Workflow .523: A remains unchanged during B drag
+- [ ] Workflow .523: repeat with Face C
+- [ ] Regression .523: tapping the already-selected Face still allows normal deselect when there is no unselected overlapping hit
+- [ ] Regression .523: deliberate multi-face Extrude, Inset and Through unchanged
