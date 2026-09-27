@@ -1,10 +1,10 @@
-// BoxLab v0.36.18.539 — Export As panel + OBJ/GLB handoff.
+// BoxLab v0.36.18.540 — Nomad facegroup-aware GLB round trip.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.539';
+const VERSION='0.36.18.540';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -95,44 +95,74 @@ function triangulateFace(mesh,face){
   const tris=THREE.ShapeUtils.triangulateShape(points,[]);
   return tris.length?tris.map(t=>t.map(local=>face[local])):[];
 }
+function normalizedFaceGroup(mesh,faceIndex){
+  const value=mesh.faceGroups?.[faceIndex];
+  return typeof value==='string'&&value.trim()?value.trim():null;
+}
 function editableToGeometry(mesh){
-  const positions=[];
-  for(const face of mesh.faces||[]){
+  const buckets=new Map();
+  for(let faceIndex=0;faceIndex<(mesh.faces||[]).length;faceIndex++){
+    const face=mesh.faces[faceIndex];
     if(!Array.isArray(face)||face.length<3)continue;
-    for(const tri of triangulateFace(mesh,face)){
+    const group=normalizedFaceGroup(mesh,faceIndex);
+    const key=group??'__BOXLAB_UNGROUPED__';
+    if(!buckets.has(key))buckets.set(key,{name:group,triangles:[]});
+    buckets.get(key).triangles.push(...triangulateFace(mesh,face));
+  }
+  const positions=[],groups=[];
+  for(const bucket of buckets.values()){
+    const start=positions.length/3;
+    for(const tri of bucket.triangles){
       for(const index of tri){
         const v=mesh.vertices[index];
         if(v)positions.push(v.x,v.y,v.z);
       }
     }
+    const count=positions.length/3-start;
+    if(count)groups.push({start,count,name:bucket.name});
   }
   const geometry=new THREE.BufferGeometry();
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+  groups.forEach((group,index)=>geometry.addGroup(group.start,group.count,index));
+  geometry.userData.boxlabFaceGroups=groups.map(group=>group.name);
   geometry.computeVertexNormals();
   geometry.computeBoundingBox();
   geometry.computeBoundingSphere();
-  return geometry;
+  return{geometry,groups};
+}
+function materialForFaceGroup(name,index){
+  const material=new THREE.MeshStandardMaterial({color:0xbac5d4,roughness:.72,metalness:0,side:THREE.DoubleSide});
+  material.name=name?`BoxLabFG::${encodeURIComponent(name)}`:`BoxLabFG::Ungrouped_${index+1}`;
+  if(name)material.userData.boxlabFaceGroup=name;
+  else material.userData.boxlabUngrouped=true;
+  return material;
 }
 async function buildGLB(sceneObjects,subd){
   const root=new THREE.Group();
   root.name='BoxLab';
-  let count=0;
+  let count=0,faceGroupCount=0;
   sceneObjects.forEach((object,index)=>{
     const editable=resolveExportMesh(object,subd);
     if(!editable?.vertices?.length||!editable?.faces?.length)return;
-    const geometry=editableToGeometry(editable);
+    const built=editableToGeometry(editable),geometry=built.geometry;
     if(!geometry.getAttribute('position')?.count)return;
-    const material=new THREE.MeshStandardMaterial({color:0xbac5d4,roughness:.72,metalness:0,side:THREE.DoubleSide});
-    const node=new THREE.Mesh(geometry,material);
+    const materials=built.groups.map((group,groupIndex)=>materialForFaceGroup(group.name,groupIndex));
+    const node=new THREE.Mesh(geometry,materials.length===1?materials[0]:materials);
     node.name=safeOBJName(object.name,index);
     node.userData.boxlabObjectId=object.id;
+    node.userData.boxlabFaceGroupCount=built.groups.filter(group=>group.name).length;
+    faceGroupCount+=node.userData.boxlabFaceGroupCount;
     root.add(node);count++;
   });
   if(!count)throw new Error('No editable geometry to export');
   const exporter=new GLTFExporter();
   const buffer=await exporter.parseAsync(root,{binary:true,onlyVisible:true});
-  root.traverse(node=>{node.geometry?.dispose?.();if(node.material)node.material.dispose?.();});
-  return{buffer,count};
+  root.traverse(node=>{
+    node.geometry?.dispose?.();
+    if(Array.isArray(node.material))node.material.forEach(material=>material?.dispose?.());
+    else node.material?.dispose?.();
+  });
+  return{buffer,count,faceGroupCount};
 }
 async function exportAs(){
   const sceneObjects=objects();
@@ -150,7 +180,7 @@ async function exportAs(){
       const result=await buildGLB(sceneObjects,subd);
       const blob=new Blob([result.buffer],{type:'model/gltf-binary'});
       const outcome=await saveBlob(blob,fileName,'model/gltf-binary');
-      if(status&&outcome!=='cancelled')status.textContent=`GLB export • ${result.count} separate object${result.count===1?'':'s'} • ${outcome}`;
+      if(status&&outcome!=='cancelled')status.textContent=`GLB export • ${result.count} object${result.count===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'} • ${outcome}`;
     }
   }catch(error){
     console.error('BoxLab Export As failed',error);
