@@ -162,9 +162,15 @@ function finishGesture(g){
 
 document.addEventListener('boxlab-face-direct-committed',event=>{
   const detail=event.detail||{};
+  if(detail.replay)return;
   if(detail.tool==='extrude'&&Number.isFinite(Number(detail.value))&&Math.abs(Number(detail.value))>1e-6){
     commitOperation('extrude',Number(detail.value),'geometry');
     if(gesture?.tool==='extrude')gesture.repeatable=false;
+    return;
+  }
+  if(detail.tool==='inset'&&Number.isFinite(Number(detail.value))&&Math.abs(Number(detail.value))>1e-9){
+    commitOperation('inset',Number(detail.value),'geometry');
+    if(gesture?.tool==='inset')gesture.repeatable=false;
   }
 });
 
