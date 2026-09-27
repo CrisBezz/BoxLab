@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.539 Export As + GLB handoff
+
+- Added a structured File > Export / Save panel with filename, OBJ/GLB and Base/SubD choices.
+- Added GLB export via Three.js GLTFExporter.
+- GLB preserves visible editable BoxLab objects as separate named nodes for Nomad Sculpt / 3D handoff.
+- iPad uses the native share sheet so users can choose Save to Files; desktop uses showSaveFilePicker when supported; download remains fallback.
+- Existing quick OBJ export remains available.
+- Frozen Beta 5 remains untouched.
+
 ## 2026-09-27 — Beta 5 frozen at v0.36.18.538
 
 - Final Boolean one-step Undo retest passed hands-on.
