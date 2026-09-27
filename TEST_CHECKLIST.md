@@ -1382,3 +1382,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .515: Sweep Profile / Path / Finish controls use compact BoxLab sizing
 - [ ] Workflow .515: Sweep still defaults to the same profile/path behavior and Follow Edges remains functional
 - [ ] Regression .515: Edge Slide / Offset / Extrude behavior from .514 remains unchanged
+
+- [ ] Workflow .516: arm Extrude with no Face selected -> drag Face A -> Extrude succeeds
+- [ ] Workflow .516: with Extrude still armed -> drag a different unselected Face B -> only Face B extrudes
+- [ ] Workflow .516: preselect multiple Faces -> drag one selected Face -> multi-face Extrude still works
+- [ ] Workflow .516: repeat the same three checks with Inset
+- [ ] Workflow .516: after an unselected-face Extrude/Inset, Repeat Previous becomes available and replays the committed value on another Face
+- [ ] Regression .516: tap while Extrude/Inset is armed still toggles Face selection without modelling
+- [ ] Regression .516: Extrude Through behavior remains unchanged
