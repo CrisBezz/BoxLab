@@ -1523,3 +1523,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .534: after Repeat Inset/Extrude cycles, explicitly select Face -> Extrude remains on selected Face
 - [ ] Regression .534: no rear/unselected Face substitution after any explicit selection change
 - [ ] Regression .534: Repeat Extrude/Inset and state switching remain PASS
+
+- [ ] Workflow .535: deliberately select visible Face -> Extrude selected Face only
+- [ ] Regression .535: immediate sequential A -> B still PASS
+- [ ] Workflow .535: deliberately select 2+ Faces -> Extrude full selected set
+- [ ] Regression .535: no through/rear Face substitution for deliberate single or multi selection
+- [ ] Regression .535: Repeat Extrude/Inset and state switching remain PASS
