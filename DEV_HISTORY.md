@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-27 — v0.36.18.532 Face + Repeat checkpoint HANDS-ON PASS
+
+- User confirmed .532 passes the remaining Repeat state-sync case.
+- Confirmed stable: normal/sequential/multi-face Extrude, single/multi-face Inset, Repeat Extrude, Repeat Inset, persistent Repeat arming, and switching Repeat to the newest real Face operation.
+- This closes the Face/Repeat regression chain.
+- Temporary FACE DEBUG overlay remains for cleanup only.
+
 ## 2026-09-27 — v0.36.18.532 sync armed Repeat to newest real Face operation
 
 - .531 direct Repeat passed hands-on.
