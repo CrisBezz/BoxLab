@@ -45,7 +45,9 @@ function closeFileMenu(event){
 document.addEventListener('pointerdown',closeFileMenu,true);
 document.addEventListener('click',event=>{
   if(!fileMenu?.open)return;
-  const action=event.target?.closest?.('#fileMenu button,#fileMenu input,#fileMenu label');
+  const editable=event.target?.closest?.('#fileMenu input,#fileMenu textarea,#fileMenu select,#fileMenu [contenteditable="true"],#fileMenu [contenteditable=""]');
+  if(editable)return;
+  const action=event.target?.closest?.('#fileMenu button');
   if(action)queueMicrotask(()=>{fileMenu.open=false;});
 },true);
 
