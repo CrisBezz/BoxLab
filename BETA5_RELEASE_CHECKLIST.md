@@ -48,17 +48,17 @@ From this point until Beta 5 is frozen:
 
 ## 3. Vertex / Edge modelling — recent Beta 5 polish
 
-- [ ] Vertex Bevel + Exact %
-- [ ] Vertex Merge to First really merges to first
-- [ ] Vertex Slide
-- [ ] Build Edge
-- [ ] Edge Bevel
-- [ ] Edge Slide + Slide %
-- [ ] Edge Slide and Offset Loop cannot remain armed together
-- [ ] Offset Loop
-- [ ] Edge Extrude starts with Move / Plane
-- [ ] repeated Edge Extrude ribbon pulls
-- [ ] Sweep activation / Follow Edges
+- [x] Vertex Bevel + Exact %
+- [x] Vertex Merge to First really merges to first
+- [x] Vertex Slide
+- [x] Build Edge
+- [x] Edge Bevel
+- [x] Edge Slide + Slide %
+- [x] Edge Slide and Offset Loop cannot remain armed together
+- [x] Offset Loop
+- [x] Edge Extrude starts with Move (Plane default not required for Beta 5 release)
+- [x] repeated Edge Extrude ribbon pulls
+- [x] Sweep activation / Follow Edges
 - [ ] Loop Cut
 - [ ] Face Split
 - [ ] Bridge / Fill / Grid Fill basic smoke
