@@ -1,3 +1,28 @@
+## Post-Beta-5 export workflow — v0.36.18.539
+
+- First normal-development build after frozen Beta 5.
+- Added File > Export / Save panel with:
+  - editable filename
+  - OBJ / GLB format choice
+  - Base / SubD geometry choice
+  - Export / Save action
+  - legacy quick Base OBJ / SubD OBJ retained under Quick OBJ Export
+- GLB is the preferred Nomad Sculpt handoff format.
+- GLB export keeps visible editable BoxLab objects as separate named scene nodes rather than flattening the scene.
+- Save destination handling:
+  - desktop native Save As picker when available
+  - iPad/iPhone share sheet with Save to Files
+  - ordinary browser download fallback
+- Reference objects are excluded from export.
+- Frozen /beta-5/ remains v0.36.18.538 and untouched.
+- Protected src/multi-object-transform.js?v=0.36.1.0 remains pinned.
+- Hands-on checks for .539:
+  1. File menu shows the new panel without overflow.
+  2. Rename file and export OBJ Base.
+  3. Export GLB Base, choose Save to Files on iPad.
+  4. Import that GLB into Nomad and confirm separate BoxLab objects arrive separately.
+  5. Repeat GLB using SubD.
+
 ## FROZEN BETA 5 — v0.36.18.538
 
 - User approved the final release blocker with Boolean one-step Undo PASS.
