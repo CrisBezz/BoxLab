@@ -1487,3 +1487,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .530: Repeat remains armed for another Face tap
 - [ ] Regression .530: deliberate selected-Face Extrude remains PASS
 - [ ] Regression .530: sequential A -> B Extrude and normal Inset remain PASS
+
+- [ ] Workflow .531: normal Extrude -> Repeat -> tap Face B -> same stored Extrude distance
+- [ ] Workflow .531: tap Face C without rearming -> Repeat stays active and applies again
+- [ ] Workflow .531: normal Inset -> Repeat -> tap Face B -> same stored inset distance
+- [ ] Regression .531: each Repeat action creates exactly one Undo step
+- [ ] Regression .531: deliberate selected-Face Extrude remains PASS
+- [ ] Regression .531: sequential A -> B, multi-face Extrude and normal Inset remain PASS
