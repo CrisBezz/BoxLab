@@ -6,6 +6,7 @@
 - Made Edge Slide and Offset Loop mutually exclusive through their existing direct-tool exclusivity event path.
 - Reasserted Move + Plane on initial Edge Extrude arm after the click stack so Free cannot remain the visible/default state.
 - Kept Sweep out of this build for separate investigation.
+- PR #246 squash-merged as `8442af88cbddddc8829419e8da7d051d639c234e`; .514 plus existing .427/.475/.476 Edge regressions passed in run #992.
 
 ## 2026-09-27 — v0.36.18.513 Vertex Bevel + Merge to First
 
