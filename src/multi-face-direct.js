@@ -139,14 +139,23 @@ document.addEventListener('pointerdown',event=>{
   if(!b||typeof picker!=='function')return;
   const selectionBefore=faces(),hit=picker('face',event)?.index;
   if(!Number.isInteger(hit))return;
+  const workingFaces=selectionBefore.includes(hit)?[...selectionBefore]:[hit];
   pendingFacePress={
     id:event.pointerId,
     x:event.clientX,
     y:event.clientY,
     tool:armed,
     hit,
-    selectionBefore:[...selectionBefore]
+    selectionBefore:[...selectionBefore],
+    workingFaces:[...workingFaces]
   };
+  document.dispatchEvent(new CustomEvent('boxlab-face-direct-press',{detail:{
+    pointerId:event.pointerId,
+    tool:armed,
+    hit,
+    selectionBefore:[...selectionBefore],
+    workingFaces:[...workingFaces]
+  }}));
   event.preventDefault();
   event.stopImmediatePropagation();
   canvas.setPointerCapture?.(event.pointerId);
@@ -155,7 +164,7 @@ document.addEventListener('pointermove',event=>{
   if(!drag&&pendingFacePress?.id===event.pointerId){
     const p=pendingFacePress,dx=event.clientX-p.x,dy=event.clientY-p.y;
     if(Math.hypot(dx,dy)<8)return;
-    const workingFaces=p.selectionBefore.includes(p.hit)?[...p.selectionBefore]:[...p.selectionBefore,p.hit];
+    const workingFaces=p.workingFaces?.length?[...p.workingFaces]:(p.selectionBefore.includes(p.hit)?[...p.selectionBefore]:[p.hit]);
     if(beginDirectDrag(event,p.hit,p.selectionBefore,workingFaces)){
       pendingFacePress=null;
       drag.changed=true;
@@ -213,5 +222,12 @@ document.addEventListener('pointerup',finish,true);document.addEventListener('po
 globalThis.__boxlabFaceDirect={
   active:()=>!!armed,
   tool:()=>armed,
-  dragging:()=>!!drag
+  dragging:()=>!!drag,
+  pending:()=>pendingFacePress?{
+    pointerId:pendingFacePress.id,
+    tool:pendingFacePress.tool,
+    hit:pendingFacePress.hit,
+    selectionBefore:[...pendingFacePress.selectionBefore],
+    workingFaces:[...(pendingFacePress.workingFaces||[])]
+  }:null
 };
