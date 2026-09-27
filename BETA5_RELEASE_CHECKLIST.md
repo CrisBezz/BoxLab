@@ -65,17 +65,17 @@ From this point until Beta 5 is frozen:
 
 ## 4. Construction tools added/matured since Beta 4
 
-- [ ] Symmetry / Bisect Apply + Cancel
-- [ ] Symmetry Align to Face / Flip Plane
-- [ ] Surface Transform face-to-face placement
-- [ ] Insert Tool linked-instance placement
-- [ ] Sweep simple profile/path Apply
-- [ ] Array endpoint/count Apply
-- [ ] Solidify
+- [x] Symmetry / Bisect Apply + Cancel
+- [x] Symmetry Align to Face / Flip Plane
+- [x] Surface Transform face-to-face placement
+- [x] Insert Tool linked-instance placement
+- [x] Sweep simple profile/path Apply
+- [x] Array endpoint/count Apply
+- [x] Solidify
 - [ ] Shell — first-press launch retest on v0.36.18.537
-- [ ] Revolve Profile
-- [ ] legacy Edge Revolve / Lathe basic smoke
-- [ ] Tool Session drawer stays owned during active construction
+- [x] Revolve Profile
+- [x] legacy Edge Revolve / Lathe basic smoke
+- [x] Tool Session drawer stays owned during active construction
 
 ## 5. Object / Multi / Group / Boolean
 
