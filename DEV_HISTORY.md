@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.542 File Name edit root-cause fix
+
+- Found File menu auto-close handler explicitly included inputs/labels, so tapping File Name immediately closed the menu and killed editing.
+- Editable controls now keep the File menu open; button actions still close it.
+- Bumped topbar-layout runtime pin to .542.
+- No GLB facegroup, modelling, or frozen Beta 5 changes.
+
 ## 2026-09-28 — v0.36.18.541 File menu refresh + File Name edit fix
 
 - Bumped stale styles.css cache key from .270 to .541 so File menu sizing reliably refreshes on Safari/iPad.
