@@ -21,7 +21,7 @@ test('518 ordinary Extrude emits direct committed value for Repeat',()=>{
 
 test('518 preserves protected non-Face baselines',()=>{
   assert.match(drawer,/precision-face\.js\?v=0\.36\.18\.518/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.518/);
+  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.519/);
   assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
   assert.match(index,/src\/component-slide\.js\?v=0\.36\.18\.514/);
   assert.match(index,/src\/edge-extrude\.js\?v=0\.36\.18\.514/);
