@@ -45,7 +45,7 @@ const followBtn=controls.querySelector('#sweepFollowEdges'),drawPathBtn=controls
 const capsBtn=controls.querySelector('#sweepCapsBtn'),applyBtn=controls.querySelector('#sweepApplyBtn'),cancelSweepBtn=controls.querySelector('#sweepCancelBtn');
 
 const sweepModeStyle=document.createElement('style');
-sweepModeStyle.textContent='#sweepPathControls button.active,#sweepPathControls button[aria-pressed="true"]{box-shadow:none!important;background:#eef1f7!important;color:#15171b!important}';
+sweepModeStyle.textContent='#sweepPathControls button{min-height:31px!important;padding:4px 4px!important;font-size:10px!important;line-height:1.1!important}#sweepPathControls button.active,#sweepPathControls button[aria-pressed="true"]{box-shadow:none!important;background:#eef1f7!important;color:#15171b!important}';
 document.head.appendChild(sweepModeStyle);
 
 const faceTools=document.querySelector('.mode-tools[data-mode-tools="face"]');
@@ -67,6 +67,7 @@ function placeLaunchButton(container,button){
   if(title?.nextSibling)container.insertBefore(button._sweepRow,title.nextSibling);else container.prepend(button._sweepRow);
 }
 placeLaunchButton(faceTools,faceSelectionSweepBtn);placeLaunchButton(edgeTools,edgeSelectionSweepBtn);
+globalThis.__boxlabEdgeToolLayout?.sync?.();
 
 let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null,hotRailHit=null,railSnapRefs=null,sweepBeforeScene=null,sweepUndoDepth=null,sweepRedoDepth=null;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
