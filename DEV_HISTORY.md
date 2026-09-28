@@ -3060,3 +3060,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Static regression 6/6 PASS.
 - No gizmo/gesture logic changed; protected multi-object-transform .1.0 untouched.
 
+## 2026-09-28 — v0.36.18.558 selection mode dock position correction
+- .557 hands-on FAIL: selection modes rendered at the very top instead of bottom-left.
+- Moved the existing #selectionModes DOM node from header.topbar into #viewportWrap.
+- Added viewport-scoped absolute bottom-left positioning with safe-area handling and top/right reset.
+- Preserved IDs, buttons and selection-mode logic unchanged.
+- Static relocation regression 9/9 PASS.
+
