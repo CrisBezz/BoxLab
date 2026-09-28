@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.552 — topology-safe Nomad morph-layer preservation.
+// BoxLab v0.36.18.553 — indexed/welded GLB Base topology export.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.552';
+const VERSION='0.36.18.553';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -122,8 +122,7 @@ function editableToGeometry(mesh,channels={}){
     if(!buckets.has(key))buckets.set(key,{name:group,triangles:[]});
     for(const tri of triangulateFace(mesh,face))buckets.get(key).triangles.push({tri,faceIndex});
   }
-  const positions=[],uvs=[],tangents=[],colors=[],groups=[];
-  const morphPositionArrays=Array.isArray(morphTargets)?morphTargets.map(()=>[]):[];
+
   let uvComplete=Array.isArray(cornerUVs)&&cornerUVs.length===mesh.faces.length;
   let tangentComplete=Array.isArray(cornerTangents)&&cornerTangents.length===mesh.faces.length;
   let colorComplete=Array.isArray(cornerColors)&&cornerColors.length===mesh.faces.length;
@@ -135,45 +134,64 @@ function editableToGeometry(mesh,channels={}){
       if(colorItemSize===4)break;
     }
   }
+
+  const positions=[],uvs=[],tangents=[],colors=[],indices=[],groups=[];
+  const morphPositionArrays=Array.isArray(morphTargets)?morphTargets.map(()=>[]):[];
+  const vertexMap=new Map();
+  const keyNumber=value=>Number(value).toPrecision(12);
+  const cornerData=(faceIndex,index)=>{
+    const face=mesh.faces[faceIndex],local=face.indexOf(index);
+    const uv=uvComplete?cornerUVs?.[faceIndex]?.[local]:null;
+    const tangent=tangentComplete?cornerTangents?.[faceIndex]?.[local]:null;
+    const color=colorComplete?cornerColors?.[faceIndex]?.[local]:null;
+    const morphs=morphComplete?morphTargets.map(target=>target?.position?.[faceIndex]?.[local]):[];
+    if(uvComplete&&!(Array.isArray(uv)&&uv.length>=2&&uv.slice(0,2).every(Number.isFinite)))uvComplete=false;
+    if(tangentComplete&&!(Array.isArray(tangent)&&tangent.length>=4&&tangent.slice(0,4).every(Number.isFinite)))tangentComplete=false;
+    if(colorComplete&&!(Array.isArray(color)&&color.length>=3&&color.slice(0,3).every(Number.isFinite)))colorComplete=false;
+    if(morphComplete&&morphs.some(delta=>!(Array.isArray(delta)&&delta.length>=3&&delta.slice(0,3).every(Number.isFinite))))morphComplete=false;
+    return{local,uv,tangent,color,morphs};
+  };
+  const cornerKey=(index,data)=>{
+    const parts=[String(index)];
+    if(uvComplete)parts.push('u:'+data.uv.slice(0,2).map(keyNumber).join(','));
+    if(tangentComplete)parts.push('t:'+data.tangent.slice(0,4).map(keyNumber).join(','));
+    if(colorComplete)parts.push('c:'+data.color.slice(0,colorItemSize).map(value=>keyNumber(Number.isFinite(value)?value:1)).join(','));
+    if(morphComplete)data.morphs.forEach((delta,targetIndex)=>parts.push('m'+targetIndex+':'+delta.slice(0,3).map(keyNumber).join(',')));
+    return parts.join('|');
+  };
+  const emitVertex=(index,data)=>{
+    const key=cornerKey(index,data);
+    const existing=vertexMap.get(key);
+    if(existing!==undefined)return existing;
+    const v=mesh.vertices[index];
+    const next=positions.length/3;
+    positions.push(v.x,v.y,v.z);
+    if(uvComplete)uvs.push(data.uv[0],data.uv[1]);
+    if(tangentComplete)tangents.push(data.tangent[0],data.tangent[1],data.tangent[2],data.tangent[3]);
+    if(colorComplete){
+      colors.push(data.color[0],data.color[1],data.color[2]);
+      if(colorItemSize===4)colors.push(Number.isFinite(data.color[3])?data.color[3]:1);
+    }
+    if(morphComplete)data.morphs.forEach((delta,targetIndex)=>morphPositionArrays[targetIndex].push(delta[0],delta[1],delta[2]));
+    vertexMap.set(key,next);
+    return next;
+  };
+
   for(const bucket of buckets.values()){
-    const start=positions.length/3;
+    const start=indices.length;
     for(const item of bucket.triangles){
-      const face=mesh.faces[item.faceIndex];
       for(const index of item.tri){
-        const v=mesh.vertices[index];
-        if(v)positions.push(v.x,v.y,v.z);
-        const local=face.indexOf(index);
-        if(uvComplete){
-          const uv=cornerUVs?.[item.faceIndex]?.[local];
-          if(Array.isArray(uv)&&Number.isFinite(uv[0])&&Number.isFinite(uv[1]))uvs.push(uv[0],uv[1]);
-          else uvComplete=false;
-        }
-        if(tangentComplete){
-          const tangent=cornerTangents?.[item.faceIndex]?.[local];
-          if(Array.isArray(tangent)&&tangent.length>=4&&tangent.slice(0,4).every(Number.isFinite))tangents.push(tangent[0],tangent[1],tangent[2],tangent[3]);
-          else tangentComplete=false;
-        }
-        if(colorComplete){
-          const color=cornerColors?.[item.faceIndex]?.[local];
-          if(Array.isArray(color)&&color.length>=3&&color.slice(0,3).every(Number.isFinite)){
-            colors.push(color[0],color[1],color[2]);
-            if(colorItemSize===4)colors.push(Number.isFinite(color[3])?color[3]:1);
-          }else colorComplete=false;
-        }
-        if(morphComplete){
-          for(let targetIndex=0;targetIndex<morphTargets.length;targetIndex++){
-            const delta=morphTargets[targetIndex]?.position?.[item.faceIndex]?.[local];
-            if(Array.isArray(delta)&&delta.length>=3&&delta.slice(0,3).every(Number.isFinite))morphPositionArrays[targetIndex].push(delta[0],delta[1],delta[2]);
-            else {morphComplete=false;break;}
-          }
-        }
+        const data=cornerData(item.faceIndex,index);
+        indices.push(emitVertex(index,data));
       }
     }
-    const count=positions.length/3-start;
+    const count=indices.length-start;
     if(count)groups.push({start,count,name:bucket.name});
   }
+
   const geometry=new THREE.BufferGeometry();
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+  geometry.setIndex(indices);
   const vertexCount=positions.length/3;
   const uvRestored=uvComplete&&uvs.length===vertexCount*2;
   const tangentsRestored=tangentComplete&&tangents.length===vertexCount*4;
@@ -192,10 +210,13 @@ function editableToGeometry(mesh,channels={}){
   geometry.userData.boxlabTangentsRestored=tangentsRestored;
   geometry.userData.boxlabVertexColorsRestored=vertexColorsRestored;
   geometry.userData.boxlabMorphTargetsRestored=morphTargetsRestored;
+  geometry.userData.boxlabIndexed=true;
+  geometry.userData.boxlabExportVertexCount=vertexCount;
+  geometry.userData.boxlabExportIndexCount=indices.length;
   geometry.computeVertexNormals();
   geometry.computeBoundingBox();
   geometry.computeBoundingSphere();
-  return{geometry,groups,uvRestored,tangentsRestored,vertexColorsRestored,morphTargetsRestored};
+  return{geometry,groups,uvRestored,tangentsRestored,vertexColorsRestored,morphTargetsRestored,vertexCount,indexCount:indices.length};
 }
 
 function nomadGroupColour(index,total){
