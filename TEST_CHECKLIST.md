@@ -1549,3 +1549,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .551: import/export modules syntax-parse after import stripping; 13/13 targeted preservation assertions PASS
 - [x] Protection .551: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
 
+
+- [ ] Workflow .552: Nomad GLB with visible sculpt layer -> BoxLab import reports layers preserved
+- [ ] Workflow .552: immediate Base GLB export reports layers restored 1/1
+- [ ] Workflow .552: re-open exported GLB in Nomad -> original sculpt layer(s), deformation and weights survive
+- [ ] Regression .552: topology-changing edit disables morph-layer restoration rather than exporting stale target arrays
+- [ ] Regression .552: conservative GLB quad reconstruction does not merge across morph POSITION discontinuities
+- [x] Automated .552: import/export modules syntax-parse and 8/8 targeted morph assertions PASS
+- [x] Protection .552: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
+
