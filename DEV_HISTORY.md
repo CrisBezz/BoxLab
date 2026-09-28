@@ -3011,3 +3011,8 @@ For exact implementation state, always inspect current `main`; this history is c
 - Exporter syntax + 7 targeted indexed-topology assertions passed before publish.
 - Published v0.36.18.553; Beta 5 .538 and multi-object-transform .1.0 unchanged.
 
+## 2026-09-28 — v0.36.18.553 hands-on PASS
+- User confirmed indexed/welded Base GLB export behaves as connected topology in Nomad.
+- Nomad subdivision no longer treats the BoxLab export as separate triangles.
+- .553 is now the verified GLB topology checkpoint.
+
