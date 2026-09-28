@@ -1558,3 +1558,11 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .552: import/export modules syntax-parse and 8/8 targeted morph assertions PASS
 - [x] Protection .552: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
 
+
+- [ ] Workflow .553: BoxLab Base GLB re-opened in Nomad no longer imports as triangle-corner soup
+- [ ] Workflow .553: Nomad subdivision treats ordinary shared edges as connected/welded
+- [ ] Regression .553: UV/tangent/vertex-colour/morph seams remain attribute-correct where values genuinely differ
+- [ ] Regression .553: .552 morph/layer preservation still survives immediate BoxLab -> Nomad round-trip
+- [x] Automated .553: exporter syntax-parse and 7/7 indexed-topology assertions PASS
+- [x] Protection .553: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
+
