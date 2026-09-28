@@ -1,3 +1,16 @@
+## v0.36.18.550 — HANDS-ON PASS
+
+- User confirmed Nomad Preservation Layer Phase 2A UV round-trip PASS.
+- Verified:
+  - Nomad UVs survive GLB import as face-corner data
+  - UV seams survive weld + conservative quad reconstruction
+  - Base GLB export restores UVs when topology signature remains compatible
+  - texture alignment survives BoxLab -> Nomad round-trip
+- Treat .550 as the current verified Nomad preservation checkpoint.
+- Topology edits still intentionally disable UV restoration rather than writing stale UVs.
+- Next logical preservation channels: tangents and vertex colours using the same topology-compatibility framework.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
 ## v0.36.18.550 — Nomad Preservation Layer Phase 2A: topology-safe UVs
 
 - Builds on verified .549 Nomad GLB passthrough checkpoint.
