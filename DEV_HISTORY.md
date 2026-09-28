@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.543 Nomad round-trip validation
+
+- Added in-memory GLB self-verification before Save/Share.
+- Verifies logical object count and primitive/material group-slot count after GLTF re-read.
+- Successful GLB export reports `GLB verified`.
+- GLB import now records per-object facegroup counts for round-trip diagnostics.
+- No modelling behavior changes. Frozen Beta 5 remains untouched.
+
+
 ## 2026-09-28 — v0.36.18.542 File Name edit root-cause fix
 
 - Found File menu auto-close handler explicitly included inputs/labels, so tapping File Name immediately closed the menu and killed editing.
