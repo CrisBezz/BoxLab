@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.545 File menu interaction fix
+
+- Changed File menu auto-close ownership from all buttons to terminal actions only.
+- Configuration buttons and editable controls now keep the menu open.
+- No GLB or modelling behavior changes.
+- Frozen Beta 5 remains untouched.
+
 ## 2026-09-28 — v0.36.18.544 GLB logical object import
 
 - Fixed Nomad GLB imports creating one BoxLab object per facegroup when Split objects by groups was unticked.
