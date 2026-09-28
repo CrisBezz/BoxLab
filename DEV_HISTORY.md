@@ -3025,3 +3025,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Syntax parse + 8 targeted weighted-morph assertions passed before publish.
 - .553 indexed topology path preserved; Beta 5 .538 and multi-object-transform .1.0 untouched.
 
+## 2026-09-28 — v0.36.18.555 morph weight single-source + UV pole welding
+- .554 hands-on: deformation doubled after round-trip although layer weight survived; pole vertices also appeared unwelded.
+- Fixed redundant morph-weight restoration by preserving whether the source GLB used node.weights or mesh.weights and writing active weights to that location only.
+- Added high-valence UV singularity handling: vertices with 3+ distinct UV corner values ignore UV/tangent in the export weld key, allowing sphere poles to remain connected while ordinary two-sided UV seams stay intact.
+- Added `tests/nomad-morph-weight-pole-weld-555.test.mjs`.
+- Syntax parse + 10 targeted assertions passed before publish.
+- Published v0.36.18.555; Beta 5 .538 and multi-object-transform .1.0 unchanged.
+
