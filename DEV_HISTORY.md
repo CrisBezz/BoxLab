@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.547 Nomad-native facegroup export
+
+- Improved BoxLab facegroup display using deliberately spaced hues instead of hash-neighbour colours.
+- Reworked GLB facegroup export to follow the structure observed in the user's Nomad GLB:
+  - shared material
+  - mesh-level Nomad groups metadata
+  - primitive-level Nomad group indices
+- Goal is to keep one logical object intact in Nomad while retaining its facegroups.
+- Frozen Beta 5 remains untouched.
+
+
 ## 2026-09-28 — v0.36.18.546 Import module parse fix
 
 - Fixed syntax error in .544 GLB importer that prevented import-mesh.js from loading at all.
