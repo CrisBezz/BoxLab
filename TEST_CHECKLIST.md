@@ -1627,3 +1627,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .562: syntax/static regression 11/11 PASS
 - [x] Protection .562: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .563: Selection panel is back inside the left scrolling tool drawer
+- [ ] Workflow .563: bottom-left mode dock remains in place
+- [ ] Workflow .563: Viewport remains on the top action line
+- [ ] Workflow .563: empty second/packer row is gone and viewport gains vertical space
+- [ ] Workflow .563: no startup flashes
+- [ ] Regression .563: selection, mode switching and orbit/pan/zoom/Undo/Redo unchanged
+- [x] Automated .563: syntax/static regression 10/10 PASS
+- [x] Protection .563: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
