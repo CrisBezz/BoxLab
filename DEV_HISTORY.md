@@ -3098,3 +3098,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Removed the now-empty command/packer row and moved viewport directly below the main topbar, reclaiming 48px vertical space.
 - Syntax/static regression 10/10 PASS.
 
+## 2026-09-28 — v0.36.18.564 compact Selection panel sizing
+- Standardised mixed Selection panel typography/control heights to the compact UI scale.
+- Regular Selection controls now use 12px text and 32px height with consistent padding.
+- Selection heading reduced to 12px; symbol-only buttons use 13px for legibility.
+- No selection logic changed.
+- Static regression 8/8 PASS.
+
