@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.543 — Nomad GLB round-trip validation.
+// BoxLab v0.36.18.547 — Nomad-native facegroup GLB structure.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.543';
+const VERSION='0.36.18.547';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -131,12 +131,68 @@ function editableToGeometry(mesh){
   geometry.computeBoundingSphere();
   return{geometry,groups};
 }
-function materialForFaceGroup(name,index){
+function nomadGroupColour(index,total){
+  const hue=(index*.618033988749895)%1;
+  const colour=new THREE.Color().setHSL(hue,.72,.54,THREE.SRGBColorSpace);
+  return[colour.r,colour.g,colour.b];
+}
+function sharedNomadMaterial(){
   const material=new THREE.MeshStandardMaterial({color:0xbac5d4,roughness:.72,metalness:0,side:THREE.DoubleSide});
-  material.name=name?`BoxLabFG::${encodeURIComponent(name)}`:`BoxLabFG::Ungrouped_${index+1}`;
-  if(name)material.userData.boxlabFaceGroup=name;
-  else material.userData.boxlabUngrouped=true;
+  material.name='BoxLab Material';
+  material.userData.boxlabNomadSharedMaterial=true;
   return material;
+}
+function patchNomadFaceGroupGLB(buffer,objectDetails){
+  const source=new Uint8Array(buffer);
+  const view=new DataView(source.buffer,source.byteOffset,source.byteLength);
+  if(view.getUint32(0,true)!==0x46546c67)throw new Error('GLB patch failed: invalid header');
+  let offset=12,jsonChunk=null;
+  const chunks=[];
+  while(offset<source.byteLength){
+    const length=view.getUint32(offset,true),type=view.getUint32(offset+4,true);
+    const data=source.slice(offset+8,offset+8+length);
+    chunks.push({type,data});
+    if(type===0x4e4f534a)jsonChunk={type,data};
+    offset+=8+length;
+  }
+  if(!jsonChunk)throw new Error('GLB patch failed: JSON chunk missing');
+  const jsonText=new TextDecoder().decode(jsonChunk.data).replace(/\u0000+$/,'').trimEnd();
+  const gltf=JSON.parse(jsonText);
+  const meshes=gltf.meshes||[];
+  for(let meshIndex=0;meshIndex<meshes.length;meshIndex++){
+    const mesh=meshes[meshIndex],detail=objectDetails[meshIndex];
+    if(!detail)continue;
+    const names=detail.groupNames||[];
+    mesh.extras=mesh.extras||{};
+    mesh.extras.nomad={
+      ...(mesh.extras.nomad||{}),
+      version:1,
+      mesh_type:'multiresolution',
+      multires_level:0,
+      multires_level_count:1,
+      groups:names.map((name,index)=>({name:name||('FaceGroup '+(index+1)),color:nomadGroupColour(index,names.length)}))
+    };
+    (mesh.primitives||[]).forEach((primitive,index)=>{
+      primitive.extras=primitive.extras||{};
+      primitive.extras.nomad={...(primitive.extras.nomad||{}),group:index};
+    });
+  }
+  const encoded=new TextEncoder().encode(JSON.stringify(gltf));
+  const paddedLength=(encoded.length+3)&~3;
+  const padded=new Uint8Array(paddedLength);padded.fill(0x20);padded.set(encoded);
+  const rebuilt=[];
+  for(const chunk of chunks){
+    rebuilt.push({type:chunk.type,data:chunk.type===0x4e4f534a?padded:chunk.data});
+  }
+  const total=12+rebuilt.reduce((sum,chunk)=>sum+8+chunk.data.length,0);
+  const out=new Uint8Array(total),outView=new DataView(out.buffer);
+  outView.setUint32(0,0x46546c67,true);outView.setUint32(4,2,true);outView.setUint32(8,total,true);
+  let write=12;
+  for(const chunk of rebuilt){
+    outView.setUint32(write,chunk.data.length,true);outView.setUint32(write+4,chunk.type,true);
+    out.set(chunk.data,write+8);write+=8+chunk.data.length;
+  }
+  return out.buffer;
 }
 async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
   const loader=new GLTFLoader();
@@ -176,8 +232,9 @@ async function buildGLB(sceneObjects,subd){
     if(!editable?.vertices?.length||!editable?.faces?.length)return;
     const built=editableToGeometry(editable),geometry=built.geometry;
     if(!geometry.getAttribute('position')?.count)return;
-    const materials=built.groups.map((group,groupIndex)=>materialForFaceGroup(group.name,groupIndex));
-    const node=new THREE.Mesh(geometry,materials.length===1?materials[0]:materials);
+    const sharedMaterial=sharedNomadMaterial();
+    const materials=built.groups.map(()=>sharedMaterial);
+    const node=new THREE.Mesh(geometry,materials.length===1?sharedMaterial:materials);
     node.name=safeOBJName(object.name,index);
     node.userData.boxlabObjectId=object.id;
     node.userData.boxlabRoundTripObject=true;
@@ -185,12 +242,18 @@ async function buildGLB(sceneObjects,subd){
     node.userData.boxlabGroupSlotCount=built.groups.length;
     faceGroupCount+=node.userData.boxlabFaceGroupCount;
     groupSlotCount+=node.userData.boxlabGroupSlotCount;
-    objectDetails.push({name:node.name,faceGroups:node.userData.boxlabFaceGroupCount,groupSlots:node.userData.boxlabGroupSlotCount});
+    objectDetails.push({
+      name:node.name,
+      faceGroups:node.userData.boxlabFaceGroupCount,
+      groupSlots:node.userData.boxlabGroupSlotCount,
+      groupNames:built.groups.map((group,groupIndex)=>group.name||('FaceGroup '+(groupIndex+1)))
+    });
     root.add(node);count++;
   });
   if(!count)throw new Error('No editable geometry to export');
   const exporter=new GLTFExporter();
-  const buffer=await exporter.parseAsync(root,{binary:true,onlyVisible:true});
+  let buffer=await exporter.parseAsync(root,{binary:true,onlyVisible:true});
+  buffer=patchNomadFaceGroupGLB(buffer,objectDetails);
   root.traverse(node=>{
     node.geometry?.dispose?.();
     if(Array.isArray(node.material))node.material.forEach(material=>material?.dispose?.());
@@ -264,4 +327,4 @@ setActive(formatButtons,'exportFormat',format);
 setActive(geometryButtons,'exportGeometry',geometry);
 updateNote();
 
-globalThis.__boxlabExportAs={version:VERSION,exportAs,buildGLB,verifyGLB,get format(){return format;},get geometry(){return geometry;}};
+globalThis.__boxlabExportAs={version:VERSION,exportAs,buildGLB,verifyGLB,patchNomadFaceGroupGLB,get format(){return format;},get geometry(){return geometry;}};
