@@ -30,7 +30,7 @@ function ensureUI(){
         <div id="viewportRenderLooks" class="viewport-render-grid"></div>
       </div>
     </div>`;
-  topActions?.prepend(wrap);
+  topActions?.append(wrap);
   const style=document.createElement('style');
   style.textContent=`
 #viewModes{position:relative;z-index:120;flex:0 0 auto}
