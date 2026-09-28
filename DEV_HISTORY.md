@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.546 Import module parse fix
+
+- Fixed syntax error in .544 GLB importer that prevented import-mesh.js from loading at all.
+- Restores Editable / Reference controls and Import file-picker handler.
+- No intended GLB semantics changed beyond making the .544 importer actually run.
+- Frozen Beta 5 remains untouched.
+
 ## 2026-09-28 — v0.36.18.545 File menu interaction fix
 
 - Changed File menu auto-close ownership from all buttons to terminal actions only.
