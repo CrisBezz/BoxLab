@@ -3050,3 +3050,13 @@ For exact implementation state, always inspect current `main`; this history is c
 - Welded topology and pole subdivision remain connected.
 - .556 is now the verified Nomad round-trip preservation checkpoint.
 
+## 2026-09-28 — v0.36.18.557 bottom-left selection mode dock
+- Began incremental UI/UX pass from verified .556.
+- Moved the existing Vertex / Edge / Face / Object selector visually to the bottom-left using safe-area-aware fixed positioning.
+- Preserved existing #selectionModes DOM/IDs and all selection-mode logic.
+- Increased touch target height to 42px.
+- Updated styles cache pin to .557.
+- Added `tests/selection-mode-dock-557.test.mjs`.
+- Static regression 6/6 PASS.
+- No gizmo/gesture logic changed; protected multi-object-transform .1.0 untouched.
+
