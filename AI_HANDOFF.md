@@ -1,3 +1,25 @@
+## v0.36.18.544 — GLB logical object import / Split toggle parity
+
+- User found Nomad GLB import created one BoxLab object per facegroup even with "Split objects by groups" unticked.
+- Root cause: GLB path traversed every THREE.Mesh from GLTFLoader as an independent BoxLab object; Split toggle was only wired into OBJ import.
+- .544 applies Split objects by groups to GLB/GLTF too.
+- Split OFF:
+  - sibling GLB primitive meshes under one logical parent are merged back into one BoxLab object
+  - each primitive/material identity is preserved as a BoxLab facegroup
+- Split ON:
+  - primitives remain separate BoxLab objects
+- GLB primitive/material names are used for facegroup names where available; stable generated names are used otherwise.
+- Existing OBJ behavior unchanged.
+- .543 export self-verification unchanged.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
+Hands-on retest:
+1. In Nomad, create one object with several facegroups and export GLB.
+2. In BoxLab leave Split objects by groups OFF and import.
+3. PASS = one BoxLab object with multiple preserved facegroups.
+4. Repeat with Split ON.
+5. PASS = facegroup primitives arrive as separate BoxLab objects.
+
 ## v0.36.18.543 — Nomad round-trip validation
 
 - GLB export now re-opens the generated GLB in memory with GLTFLoader before Save/Share.
