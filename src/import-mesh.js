@@ -7,7 +7,7 @@ import { evaluateTrianglePair } from './quad-clean-core.js?v=0.36.18.323';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.555';
+const VERSION='0.36.18.556';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -268,10 +268,10 @@ function importedMeshes(root,{splitByGroups=false}={}) {
 function fitMeshesToBoxLabScale(meshes) {
   const bounds = new THREE.Box3();
   meshes.forEach(entry => entry.mesh.vertices.forEach(vertex => bounds.expandByPoint(vertex)));
-  if (bounds.isEmpty()) return 1;
+  if (bounds.isEmpty()) return {scale:1,center:new THREE.Vector3()};
   const size = bounds.getSize(new THREE.Vector3());
   const largestDimension = Math.max(size.x, size.y, size.z);
-  if (!Number.isFinite(largestDimension) || largestDimension < 1e-9) return 1;
+  if (!Number.isFinite(largestDimension) || largestDimension < 1e-9) return {scale:1,center:new THREE.Vector3()};
   const scale = IMPORT_TARGET_SIZE / largestDimension;
   const center = bounds.getCenter(new THREE.Vector3());
   meshes.forEach(entry => {
@@ -280,7 +280,7 @@ function fitMeshesToBoxLabScale(meshes) {
       if(Array.isArray(delta)&&delta.length>=3){delta[0]*=scale;delta[1]*=scale;delta[2]*=scale;}
     })));
   });
-  return scale;
+  return {scale,center};
 }
 
 function weldEditableMesh(mesh, tolerance=EDITABLE_WELD_TOLERANCE, cornerUVs=null, cornerTangents=null, cornerColors=null, morphTargets=null) {
@@ -400,7 +400,7 @@ function geometrySignature(mesh){
 function addImported(meshes, baseName,{reconstructQuads=false}={}) {
   const manager = globalThis.__boxlabObjectManager;
   if (!manager) throw new Error('The Outliner is still loading. Please try Import again.');
-  const isReference = importKind === 'reference';fitMeshesToBoxLabScale(meshes);
+  const isReference = importKind === 'reference';const importFit=fitMeshesToBoxLabScale(meshes);
   let weldedTotal = 0, removedTotal = 0, reconstructedQuads = 0;
   if (!isReference) meshes = meshes.map(entry => {
     const result=weldEditableMesh(entry.mesh,EDITABLE_WELD_TOLERANCE,entry.cornerUVs,entry.cornerTangents,entry.cornerColors,entry.morphTargets);
@@ -413,6 +413,10 @@ function addImported(meshes, baseName,{reconstructQuads=false}={}) {
     const passthrough=entry.glbPassthrough||null;
     if(passthrough){
       passthrough.activeMorphWeights=Array.isArray(entry.morphWeights)?[...entry.morphWeights]:[];
+      passthrough.boxlabImportFit={
+        scale:Number(importFit?.scale||1),
+        center:[Number(importFit?.center?.x||0),Number(importFit?.center?.y||0),Number(importFit?.center?.z||0)]
+      };
       passthrough.uvCorners=nextUVs;
       passthrough.uvTopologySignature=topologySignature(next);
       passthrough.uvFaceCount=next.faces.length;
