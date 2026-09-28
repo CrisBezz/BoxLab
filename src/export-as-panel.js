@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.550 — topology-safe Nomad UV preservation.
+// BoxLab v0.36.18.551 — topology-safe Nomad UV, tangent and vertex-colour preservation.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.550';
+const VERSION='0.36.18.551';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -104,7 +104,14 @@ function topologySignature(mesh){
   if(!mesh?.faces)return'';
   return mesh.faces.map((face,index)=>`${face.join(',')}@${mesh.faceGroups?.[index]??''}`).join('|');
 }
-function editableToGeometry(mesh,cornerUVs=null){
+function geometrySignature(mesh){
+  if(!mesh?.vertices)return'';
+  return topologySignature(mesh)+'#'+mesh.vertices.map(vertex=>[vertex.x,vertex.y,vertex.z].map(value=>Number(value).toPrecision(12)).join(',')).join('|');
+}
+function editableToGeometry(mesh,channels={}){
+  const cornerUVs=channels?.uvs||null;
+  const cornerTangents=channels?.tangents||null;
+  const cornerColors=channels?.colors||null;
   const buckets=new Map();
   for(let faceIndex=0;faceIndex<(mesh.faces||[]).length;faceIndex++){
     const face=mesh.faces[faceIndex];
@@ -114,8 +121,17 @@ function editableToGeometry(mesh,cornerUVs=null){
     if(!buckets.has(key))buckets.set(key,{name:group,triangles:[]});
     for(const tri of triangulateFace(mesh,face))buckets.get(key).triangles.push({tri,faceIndex});
   }
-  const positions=[],uvs=[],groups=[];
+  const positions=[],uvs=[],tangents=[],colors=[],groups=[];
   let uvComplete=Array.isArray(cornerUVs)&&cornerUVs.length===mesh.faces.length;
+  let tangentComplete=Array.isArray(cornerTangents)&&cornerTangents.length===mesh.faces.length;
+  let colorComplete=Array.isArray(cornerColors)&&cornerColors.length===mesh.faces.length;
+  let colorItemSize=3;
+  if(colorComplete){
+    for(const faceColors of cornerColors||[]){
+      for(const color of faceColors||[])if(Array.isArray(color)&&color.length>=4){colorItemSize=4;break;}
+      if(colorItemSize===4)break;
+    }
+  }
   for(const bucket of buckets.values()){
     const start=positions.length/3;
     for(const item of bucket.triangles){
@@ -123,10 +139,23 @@ function editableToGeometry(mesh,cornerUVs=null){
       for(const index of item.tri){
         const v=mesh.vertices[index];
         if(v)positions.push(v.x,v.y,v.z);
+        const local=face.indexOf(index);
         if(uvComplete){
-          const local=face.indexOf(index),uv=cornerUVs?.[item.faceIndex]?.[local];
+          const uv=cornerUVs?.[item.faceIndex]?.[local];
           if(Array.isArray(uv)&&Number.isFinite(uv[0])&&Number.isFinite(uv[1]))uvs.push(uv[0],uv[1]);
           else uvComplete=false;
+        }
+        if(tangentComplete){
+          const tangent=cornerTangents?.[item.faceIndex]?.[local];
+          if(Array.isArray(tangent)&&tangent.length>=4&&tangent.slice(0,4).every(Number.isFinite))tangents.push(tangent[0],tangent[1],tangent[2],tangent[3]);
+          else tangentComplete=false;
+        }
+        if(colorComplete){
+          const color=cornerColors?.[item.faceIndex]?.[local];
+          if(Array.isArray(color)&&color.length>=3&&color.slice(0,3).every(Number.isFinite)){
+            colors.push(color[0],color[1],color[2]);
+            if(colorItemSize===4)colors.push(Number.isFinite(color[3])?color[3]:1);
+          }else colorComplete=false;
         }
       }
     }
@@ -135,15 +164,22 @@ function editableToGeometry(mesh,cornerUVs=null){
   }
   const geometry=new THREE.BufferGeometry();
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
-  const uvRestored=uvComplete&&uvs.length===positions.length/3*2;
+  const vertexCount=positions.length/3;
+  const uvRestored=uvComplete&&uvs.length===vertexCount*2;
+  const tangentsRestored=tangentComplete&&tangents.length===vertexCount*4;
+  const vertexColorsRestored=colorComplete&&colors.length===vertexCount*colorItemSize;
   if(uvRestored)geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));
+  if(tangentsRestored)geometry.setAttribute('tangent',new THREE.Float32BufferAttribute(tangents,4));
+  if(vertexColorsRestored)geometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,colorItemSize));
   groups.forEach((group,index)=>geometry.addGroup(group.start,group.count,index));
   geometry.userData.boxlabFaceGroups=groups.map(group=>group.name);
   geometry.userData.boxlabUVRestored=uvRestored;
+  geometry.userData.boxlabTangentsRestored=tangentsRestored;
+  geometry.userData.boxlabVertexColorsRestored=vertexColorsRestored;
   geometry.computeVertexNormals();
   geometry.computeBoundingBox();
   geometry.computeBoundingSphere();
-  return{geometry,groups,uvRestored};
+  return{geometry,groups,uvRestored,tangentsRestored,vertexColorsRestored};
 }
 
 function nomadGroupColour(index,total){
@@ -329,17 +365,28 @@ async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
 async function buildGLB(sceneObjects,subd){
   const root=new THREE.Group();
   root.name='BoxLab';
-  let count=0,faceGroupCount=0,groupSlotCount=0,uvRestoredCount=0;
+  let count=0,faceGroupCount=0,groupSlotCount=0,uvRestoredCount=0,tangentsRestoredCount=0,vertexColorsRestoredCount=0;
   const objectDetails=[];
   sceneObjects.forEach((object,index)=>{
     const editable=resolveExportMesh(object,subd);
     if(!editable?.vertices?.length||!editable?.faces?.length)return;
     const passthrough=object.glbPassthrough||null;
-    const uvCompatible=!subd&&passthrough?.uvTopologySignature&&passthrough.uvTopologySignature===topologySignature(editable);
-    const built=editableToGeometry(editable,uvCompatible?passthrough.uvCorners:null),geometry=built.geometry;
+    const topology=topologySignature(editable);
+    const geometryState=geometrySignature(editable);
+    const uvCompatible=!subd&&passthrough?.uvTopologySignature&&passthrough.uvTopologySignature===topology;
+    const colorCompatible=!subd&&passthrough?.vertexColorTopologySignature&&passthrough.vertexColorTopologySignature===topology;
+    const tangentCompatible=!subd&&passthrough?.tangentTopologySignature===topology&&passthrough?.tangentGeometrySignature===geometryState;
+    const built=editableToGeometry(editable,{
+      uvs:uvCompatible?passthrough.uvCorners:null,
+      tangents:tangentCompatible?passthrough.tangentCorners:null,
+      colors:colorCompatible?passthrough.vertexColorCorners:null
+    }),geometry=built.geometry;
     if(!geometry.getAttribute('position')?.count)return;
     if(built.uvRestored)uvRestoredCount++;
+    if(built.tangentsRestored)tangentsRestoredCount++;
+    if(built.vertexColorsRestored)vertexColorsRestoredCount++;
     const sharedMaterial=sharedNomadMaterial();
+    sharedMaterial.vertexColors=!!built.vertexColorsRestored;
     const materials=built.groups.map(()=>sharedMaterial);
     const node=new THREE.Mesh(geometry,materials.length===1?sharedMaterial:materials);
     node.name=safeOBJName(object.name,index);
@@ -348,6 +395,8 @@ async function buildGLB(sceneObjects,subd){
     node.userData.boxlabFaceGroupCount=built.groups.filter(group=>group.name).length;
     node.userData.boxlabGroupSlotCount=built.groups.length;
     node.userData.boxlabUVRestored=!!built.uvRestored;
+    node.userData.boxlabTangentsRestored=!!built.tangentsRestored;
+    node.userData.boxlabVertexColorsRestored=!!built.vertexColorsRestored;
     faceGroupCount+=node.userData.boxlabFaceGroupCount;
     groupSlotCount+=node.userData.boxlabGroupSlotCount;
     objectDetails.push({
@@ -357,7 +406,11 @@ async function buildGLB(sceneObjects,subd){
       groupNames:built.groups.map((group,groupIndex)=>group.name||('FaceGroup '+(groupIndex+1))),
       passthrough,
       uvRestored:!!built.uvRestored,
-      uvCompatible:!!uvCompatible
+      uvCompatible:!!uvCompatible,
+      tangentsRestored:!!built.tangentsRestored,
+      tangentCompatible:!!tangentCompatible,
+      vertexColorsRestored:!!built.vertexColorsRestored,
+      vertexColorCompatible:!!colorCompatible
     });
     root.add(node);count++;
   });
@@ -372,8 +425,13 @@ async function buildGLB(sceneObjects,subd){
   });
   const verification=await verifyGLB(buffer,count,groupSlotCount);
   globalThis.__boxlabNomadRoundTrip ||= {};
+  globalThis.__boxlabNomadRoundTrip.lastAttributeExport={
+    uv:{restored:uvRestoredCount,total:count},
+    tangents:{restored:tangentsRestoredCount,total:count},
+    vertexColors:{restored:vertexColorsRestoredCount,total:count}
+  };
   globalThis.__boxlabNomadRoundTrip.lastUVExport={restored:uvRestoredCount,total:count};
-  return{buffer,count,faceGroupCount,groupSlotCount,uvRestoredCount,objectDetails,verification};
+  return{buffer,count,faceGroupCount,groupSlotCount,uvRestoredCount,tangentsRestoredCount,vertexColorsRestoredCount,objectDetails,verification};
 }
 async function exportAs(){
   const sceneObjects=objects();
@@ -391,7 +449,7 @@ async function exportAs(){
       const result=await buildGLB(sceneObjects,subd);
       const blob=new Blob([result.buffer],{type:'model/gltf-binary'});
       const outcome=await saveBlob(blob,fileName,'model/gltf-binary');
-      if(status&&outcome!=='cancelled'){const preserved=result.objectDetails.filter(item=>item.passthrough).length;status.textContent=`GLB verified • ${result.verification.objects} object${result.verification.objects===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'}${preserved?` • ${preserved} Nomad payload preserved`:''}${result.uvRestoredCount?` • UVs restored ${result.uvRestoredCount}/${result.count}`:''} • ${outcome}`;}
+      if(status&&outcome!=='cancelled'){const preserved=result.objectDetails.filter(item=>item.passthrough).length;status.textContent=`GLB verified • ${result.verification.objects} object${result.verification.objects===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'}${preserved?` • ${preserved} Nomad payload preserved`:''}${result.uvRestoredCount?` • UVs restored ${result.uvRestoredCount}/${result.count}`:''}${result.tangentsRestoredCount?` • tangents restored ${result.tangentsRestoredCount}/${result.count}`:''}${result.vertexColorsRestoredCount?` • vertex colours restored ${result.vertexColorsRestoredCount}/${result.count}`:''} • ${outcome}`;}
     }
   }catch(error){
     console.error('BoxLab Export As failed',error);
@@ -440,4 +498,4 @@ setActive(formatButtons,'exportFormat',format);
 setActive(geometryButtons,'exportGeometry',geometry);
 updateNote();
 
-globalThis.__boxlabExportAs={version:VERSION,exportAs,buildGLB,verifyGLB,patchNomadFaceGroupGLB,topologySignature,get format(){return format;},get geometry(){return geometry;}};
+globalThis.__boxlabExportAs={version:VERSION,exportAs,buildGLB,verifyGLB,patchNomadFaceGroupGLB,topologySignature,geometrySignature,get format(){return format;},get geometry(){return geometry;}};
