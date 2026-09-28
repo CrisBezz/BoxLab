@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.553 — indexed/welded GLB Base topology export.
+// BoxLab v0.36.18.554 — weighted Nomad morph display/base reconstruction.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.553';
+const VERSION='0.36.18.554';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -113,6 +113,7 @@ function editableToGeometry(mesh,channels={}){
   const cornerTangents=channels?.tangents||null;
   const cornerColors=channels?.colors||null;
   const morphTargets=channels?.morphTargets||null;
+  const morphWeights=Array.isArray(channels?.morphWeights)?channels.morphWeights:[];
   const buckets=new Map();
   for(let faceIndex=0;faceIndex<(mesh.faces||[]).length;faceIndex++){
     const face=mesh.faces[faceIndex];
@@ -165,7 +166,14 @@ function editableToGeometry(mesh,channels={}){
     if(existing!==undefined)return existing;
     const v=mesh.vertices[index];
     const next=positions.length/3;
-    positions.push(v.x,v.y,v.z);
+    let px=v.x,py=v.y,pz=v.z;
+    if(morphComplete&&morphWeights.length){
+      data.morphs.forEach((delta,targetIndex)=>{
+        const weight=Number(morphWeights[targetIndex]??0);
+        if(weight&&Array.isArray(delta)){px-=delta[0]*weight;py-=delta[1]*weight;pz-=delta[2]*weight;}
+      });
+    }
+    positions.push(px,py,pz);
     if(uvComplete)uvs.push(data.uv[0],data.uv[1]);
     if(tangentComplete)tangents.push(data.tangent[0],data.tangent[1],data.tangent[2],data.tangent[3]);
     if(colorComplete){
@@ -309,8 +317,12 @@ function patchNomadFaceGroupGLB(buffer,objectDetails){
     if(node&&passthrough?.nodeExtras){
       node.extras={...(cloneJSON(passthrough.nodeExtras)||{}),...(node.extras||{})};
     }
-    if(node&&Array.isArray(passthrough?.nodeWeights)&&(mesh.primitives?.[0]?.targets?.length||0)===passthrough.nodeWeights.length)node.weights=cloneJSON(passthrough.nodeWeights);
-    if(Array.isArray(passthrough?.meshWeights)&&(mesh.primitives?.[0]?.targets?.length||0)===passthrough.meshWeights.length)mesh.weights=cloneJSON(passthrough.meshWeights);
+    const targetCount=mesh.primitives?.[0]?.targets?.length||0;
+    const activeWeights=Array.isArray(passthrough?.activeMorphWeights)&&passthrough.activeMorphWeights.length===targetCount?passthrough.activeMorphWeights:null;
+    if(node&&activeWeights)node.weights=cloneJSON(activeWeights);
+    else if(node&&Array.isArray(passthrough?.nodeWeights)&&targetCount===passthrough.nodeWeights.length)node.weights=cloneJSON(passthrough.nodeWeights);
+    if(activeWeights)mesh.weights=cloneJSON(activeWeights);
+    else if(Array.isArray(passthrough?.meshWeights)&&targetCount===passthrough.meshWeights.length)mesh.weights=cloneJSON(passthrough.meshWeights);
     (mesh.primitives||[]).forEach((primitive,index)=>{
       primitive.extras=primitive.extras||{};
       primitive.extras.nomad={...(primitive.extras.nomad||{}),group:index};
@@ -420,7 +432,8 @@ async function buildGLB(sceneObjects,subd){
       uvs:uvCompatible?passthrough.uvCorners:null,
       tangents:tangentCompatible?passthrough.tangentCorners:null,
       colors:colorCompatible?passthrough.vertexColorCorners:null,
-      morphTargets:morphCompatible?passthrough.morphTargets:null
+      morphTargets:morphCompatible?passthrough.morphTargets:null,
+      morphWeights:morphCompatible?passthrough.activeMorphWeights:null
     }),geometry=built.geometry;
     if(!geometry.getAttribute('position')?.count)return;
     if(built.uvRestored)uvRestoredCount++;
@@ -433,7 +446,7 @@ async function buildGLB(sceneObjects,subd){
     const node=new THREE.Mesh(geometry,materials.length===1?sharedMaterial:materials);
     if(built.morphTargetsRestored){
       const targetCount=geometry.morphAttributes?.position?.length||0;
-      const preservedWeights=Array.isArray(passthrough?.nodeWeights)&&passthrough.nodeWeights.length===targetCount?passthrough.nodeWeights:Array.isArray(passthrough?.meshWeights)&&passthrough.meshWeights.length===targetCount?passthrough.meshWeights:null;
+      const preservedWeights=Array.isArray(passthrough?.activeMorphWeights)&&passthrough.activeMorphWeights.length===targetCount?passthrough.activeMorphWeights:Array.isArray(passthrough?.nodeWeights)&&passthrough.nodeWeights.length===targetCount?passthrough.nodeWeights:Array.isArray(passthrough?.meshWeights)&&passthrough.meshWeights.length===targetCount?passthrough.meshWeights:null;
       if(preservedWeights)node.morphTargetInfluences=[...preservedWeights];
     }
     node.name=safeOBJName(object.name,index);
