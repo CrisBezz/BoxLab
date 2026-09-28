@@ -32,7 +32,7 @@ function installSecondRow(){
     row.className='command-bar';
     topbar.insertAdjacentElement('afterend',row);
   }
-  row.append(selectionModes);
+  if(viewportWrap)viewportWrap.append(selectionModes);
   if(viewModes)row.append(viewModes);
 }
 
@@ -60,20 +60,21 @@ const style=document.createElement('style');
 style.textContent=`
 :root{--boxlab-topbar-h:max(60px,calc(48px + env(safe-area-inset-top)));--boxlab-commandbar-h:48px}
 .topbar{height:var(--boxlab-topbar-h)!important}
-.brand{order:1}.top-file-menu{order:0}.top-actions{order:2}
+.brand{order:1;display:flex!important}.top-file-menu{order:0}.top-actions{order:2}
 #commandBar{position:absolute;z-index:100;top:var(--boxlab-topbar-h);left:0;right:0;height:var(--boxlab-commandbar-h);display:flex;align-items:center;gap:10px;padding:5px 16px;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(13,15,19,.95);backdrop-filter:blur(18px);overflow:visible}
 .top-file-menu{z-index:140}
 .top-file-content{top:calc(100% + var(--boxlab-commandbar-h) + 6px);max-height:calc(100dvh - var(--boxlab-topbar-h) - var(--boxlab-commandbar-h) - 18px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 #viewportWrap{top:calc(var(--boxlab-topbar-h) + var(--boxlab-commandbar-h))!important}
-#commandBar #selectionModes{flex:0 0 auto;display:flex;align-items:center;padding:3px;gap:3px}
-#commandBar #selectionModes button{min-width:46px;min-height:36px;padding:5px 9px;justify-content:center}
-#commandBar #selectionModes svg{width:19px;height:19px;flex:0 0 auto}
-#commandBar #selectionModes .mode-label{font-size:12px}
+#viewportWrap > #selectionModes{position:absolute;z-index:120;left:max(16px,env(safe-area-inset-left));bottom:max(48px,calc(env(safe-area-inset-bottom) + 38px));top:auto;right:auto;display:flex;align-items:center;padding:4px;gap:4px;background:rgba(18,21,27,.92);border:1px solid rgba(255,255,255,.14);border-radius:13px;box-shadow:0 10px 28px rgba(0,0,0,.28);backdrop-filter:blur(16px)}
+#viewportWrap > #selectionModes button{min-width:46px;min-height:42px;padding:7px 11px;justify-content:center}
+#viewportWrap > #selectionModes svg{width:19px;height:19px;flex:0 0 auto}
+#viewportWrap > #selectionModes .mode-label{font-size:12px}
 #commandBar #viewModes{margin-left:auto}
 @media(max-width:900px){
   #commandBar{padding-left:8px;padding-right:8px;gap:6px}
-  #commandBar #selectionModes button{min-width:40px;padding:5px 7px}
-  #commandBar #selectionModes .mode-label{display:none}
+  #viewportWrap > #selectionModes{left:max(8px,env(safe-area-inset-left));bottom:max(46px,calc(env(safe-area-inset-bottom) + 36px));gap:2px;padding:3px}
+  #viewportWrap > #selectionModes button{min-width:42px;min-height:42px;padding:7px 8px}
+  #viewportWrap > #selectionModes .mode-label{display:none}
   .top-file-content{width:min(300px,calc(100vw - 16px));max-width:calc(100vw - 16px)}
 }
 `;
