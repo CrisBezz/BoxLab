@@ -1,10 +1,11 @@
-// BoxLab v0.36.18.542 — File-name editing ownership fix.
+// BoxLab v0.36.18.543 — Nomad GLB round-trip validation.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
+import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.542';
+const VERSION='0.36.18.543';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -137,10 +138,34 @@ function materialForFaceGroup(name,index){
   else material.userData.boxlabUngrouped=true;
   return material;
 }
+async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
+  const loader=new GLTFLoader();
+  const gltf=await loader.parseAsync(buffer,'');
+  let objects=0,groupSlots=0;
+  const details=[];
+  gltf.scene.updateMatrixWorld(true);
+  gltf.scene.traverse(node=>{
+    if(!node.isMesh||!node.geometry)return;
+    objects++;
+    const slots=Math.max(
+      node.geometry.groups?.length||0,
+      Array.isArray(node.material)?node.material.length:(node.material?1:0)
+    );
+    groupSlots+=slots;
+    details.push({name:node.name||('Mesh '+objects),groupSlots:slots});
+  });
+  const pass=objects===expectedObjects&&groupSlots===expectedGroupSlots;
+  const report={pass,objects,groupSlots,expectedObjects,expectedGroupSlots,details};
+  globalThis.__boxlabNomadRoundTrip ||= {};
+  globalThis.__boxlabNomadRoundTrip.lastExportVerification=report;
+  if(!pass)throw new Error('GLB self-check failed: expected '+expectedObjects+' object(s) / '+expectedGroupSlots+' group slot(s), got '+objects+' / '+groupSlots);
+  return report;
+}
 async function buildGLB(sceneObjects,subd){
   const root=new THREE.Group();
   root.name='BoxLab';
-  let count=0,faceGroupCount=0;
+  let count=0,faceGroupCount=0,groupSlotCount=0;
+  const objectDetails=[];
   sceneObjects.forEach((object,index)=>{
     const editable=resolveExportMesh(object,subd);
     if(!editable?.vertices?.length||!editable?.faces?.length)return;
@@ -151,7 +176,10 @@ async function buildGLB(sceneObjects,subd){
     node.name=safeOBJName(object.name,index);
     node.userData.boxlabObjectId=object.id;
     node.userData.boxlabFaceGroupCount=built.groups.filter(group=>group.name).length;
+    node.userData.boxlabGroupSlotCount=built.groups.length;
     faceGroupCount+=node.userData.boxlabFaceGroupCount;
+    groupSlotCount+=node.userData.boxlabGroupSlotCount;
+    objectDetails.push({name:node.name,faceGroups:node.userData.boxlabFaceGroupCount,groupSlots:node.userData.boxlabGroupSlotCount});
     root.add(node);count++;
   });
   if(!count)throw new Error('No editable geometry to export');
@@ -162,7 +190,8 @@ async function buildGLB(sceneObjects,subd){
     if(Array.isArray(node.material))node.material.forEach(material=>material?.dispose?.());
     else node.material?.dispose?.();
   });
-  return{buffer,count,faceGroupCount};
+  const verification=await verifyGLB(buffer,count,groupSlotCount);
+  return{buffer,count,faceGroupCount,groupSlotCount,objectDetails,verification};
 }
 async function exportAs(){
   const sceneObjects=objects();
@@ -180,7 +209,7 @@ async function exportAs(){
       const result=await buildGLB(sceneObjects,subd);
       const blob=new Blob([result.buffer],{type:'model/gltf-binary'});
       const outcome=await saveBlob(blob,fileName,'model/gltf-binary');
-      if(status&&outcome!=='cancelled')status.textContent=`GLB export • ${result.count} object${result.count===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'} • ${outcome}`;
+      if(status&&outcome!=='cancelled')status.textContent=`GLB verified • ${result.verification.objects} object${result.verification.objects===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'} • ${result.verification.groupSlots} group slot${result.verification.groupSlots===1?'':'s'} • ${outcome}`;
     }
   }catch(error){
     console.error('BoxLab Export As failed',error);
@@ -229,4 +258,4 @@ setActive(formatButtons,'exportFormat',format);
 setActive(geometryButtons,'exportGeometry',geometry);
 updateNote();
 
-globalThis.__boxlabExportAs={version:VERSION,exportAs,buildGLB,get format(){return format;},get geometry(){return geometry;}};
+globalThis.__boxlabExportAs={version:VERSION,exportAs,buildGLB,verifyGLB,get format(){return format;},get geometry(){return geometry;}};
