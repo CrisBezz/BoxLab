@@ -1,3 +1,41 @@
+## v0.36.18.549 — Nomad GLB preservation layer Phase 1
+
+- Uses the user's actual Nomad GLB as the reference structure.
+- Import now captures an opaque per-object GLB passthrough payload containing:
+  - Nomad mesh extras
+  - Nomad node extras / pivot-related metadata
+  - PBR material JSON
+  - sampler definitions
+  - texture definitions
+  - embedded image bytes
+  - original primitive attribute/target descriptions
+- Object manager stores that passthrough payload on the imported BoxLab object.
+- Export reattaches safe preserved data to the newly generated BoxLab GLB:
+  - original Nomad mesh/node extras
+  - original facegroup colour/name metadata where available
+  - original PBR material definitions
+  - original sampler/texture/image data
+  - embedded texture bytes are appended into the outgoing GLB BIN chunk
+- BoxLab's current facegroup table/group ids still override the preserved facegroup mapping so edited groups remain coherent.
+- Topology-bound channels are CAPTURED but NOT remapped yet:
+  - UV values
+  - tangents
+  - vertex colours
+  - morph/layer target arrays
+- Those channels depend on vertex correspondence and must not be blindly copied after Extrude/Bevel/etc.
+- .548 conservative GLB quad reconstruction remains intact.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
+Hands-on test:
+1. Import the supplied Nomad GLB with Split OFF.
+2. Export it immediately as GLB Base without topology edits.
+3. Open in Nomad.
+4. Check one logical object + facegroups still survive.
+5. Check original PBR material / embedded texture is present.
+6. Check Nomad material/settings metadata where visible.
+7. Layer definitions should remain in metadata, but topology-bound layer/morph deformation is not yet guaranteed in Phase 1.
+8. Then make a topology edit in BoxLab and export again; material/texture/object metadata should still survive without corrupting the GLB.
+
 ## v0.36.18.548 — conservative GLB quad reconstruction
 
 - User confirmed .547 Nomad round-trip PASS and showed a Nomad GLB cube arriving in BoxLab as triangles.
