@@ -1,3 +1,16 @@
+## v0.36.18.549 — HANDS-ON PASS
+
+- User confirmed .549 Nomad GLB Preservation Layer Phase 1 PASS.
+- Verified workflow now includes:
+  - Nomad GLB import as logical object with facegroups
+  - conservative quad reconstruction for editable BoxLab topology
+  - stronger facegroup display colours
+  - BoxLab GLB export preserving one logical Nomad object with facegroups
+  - safe passthrough of PBR materials, embedded textures and Nomad metadata
+- Treat .549 as the current verified Nomad handoff checkpoint.
+- Topology-bound channels remain a future phase: UVs, tangents, vertex colours and morph/layer target arrays are captured but not remapped after topology edits.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
 ## v0.36.18.549 — Nomad GLB preservation layer Phase 1
 
 - Uses the user's actual Nomad GLB as the reference structure.
