@@ -25,3 +25,8 @@
 
 /* v0.36.18.541 editable File Name interaction */
 #exportFileName{touch-action:auto!important;-webkit-user-select:text!important;user-select:text!important;-webkit-touch-callout:default!important}
+
+
+/* v0.36.18.561 prevent selection dock startup flash */
+#selectionModes{visibility:hidden}
+#viewportWrap > #selectionModes{visibility:visible}
