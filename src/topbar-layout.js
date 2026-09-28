@@ -65,7 +65,7 @@ style.textContent=`
 .top-file-menu{z-index:140}
 .top-file-content{top:calc(100% + var(--boxlab-commandbar-h) + 6px);max-height:calc(100dvh - var(--boxlab-topbar-h) - var(--boxlab-commandbar-h) - 18px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 #viewportWrap{top:calc(var(--boxlab-topbar-h) + var(--boxlab-commandbar-h))!important}
-#viewportWrap > #selectionModes{position:absolute;z-index:120;left:max(16px,env(safe-area-inset-left));bottom:max(48px,calc(env(safe-area-inset-bottom) + 38px));top:auto;right:auto;display:flex;align-items:center;padding:4px;gap:4px;background:rgba(18,21,27,.92);border:1px solid rgba(255,255,255,.14);border-radius:13px;box-shadow:0 10px 28px rgba(0,0,0,.28);backdrop-filter:blur(16px)}
+#viewportWrap > #selectionModes{visibility:visible;position:absolute;z-index:120;left:max(16px,env(safe-area-inset-left));bottom:max(48px,calc(env(safe-area-inset-bottom) + 38px));top:auto;right:auto;display:flex;align-items:center;padding:4px;gap:4px;background:rgba(18,21,27,.92);border:1px solid rgba(255,255,255,.14);border-radius:13px;box-shadow:0 10px 28px rgba(0,0,0,.28);backdrop-filter:blur(16px)}
 #viewportWrap > #selectionModes button{min-width:46px;min-height:42px;padding:7px 11px;justify-content:center}
 #viewportWrap > #selectionModes svg{width:19px;height:19px;flex:0 0 auto}
 #viewportWrap > #selectionModes .mode-label{font-size:12px}
