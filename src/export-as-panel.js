@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.554 — weighted Nomad morph display/base reconstruction.
+// BoxLab v0.36.18.555 — single-source morph weights + welded UV poles.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.554';
+const VERSION='0.36.18.555';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -139,6 +139,20 @@ function editableToGeometry(mesh,channels={}){
   const positions=[],uvs=[],tangents=[],colors=[],indices=[],groups=[];
   const morphPositionArrays=Array.isArray(morphTargets)?morphTargets.map(()=>[]):[];
   const vertexMap=new Map();
+  const collapseUVVertices=new Set();
+  if(uvComplete){
+    const variants=new Map();
+    for(let faceIndex=0;faceIndex<mesh.faces.length;faceIndex++){
+      const face=mesh.faces[faceIndex];
+      for(let local=0;local<face.length;local++){
+        const index=face[local],uv=cornerUVs?.[faceIndex]?.[local];
+        if(!(Array.isArray(uv)&&uv.length>=2&&uv.slice(0,2).every(Number.isFinite)))continue;
+        if(!variants.has(index))variants.set(index,new Set());
+        variants.get(index).add(Number(uv[0]).toPrecision(8)+','+Number(uv[1]).toPrecision(8));
+      }
+    }
+    for(const [index,set] of variants)if(set.size>=3)collapseUVVertices.add(index);
+  }
   const keyNumber=value=>Number(value).toPrecision(12);
   const cornerData=(faceIndex,index)=>{
     const face=mesh.faces[faceIndex],local=face.indexOf(index);
@@ -154,8 +168,9 @@ function editableToGeometry(mesh,channels={}){
   };
   const cornerKey=(index,data)=>{
     const parts=[String(index)];
-    if(uvComplete)parts.push('u:'+data.uv.slice(0,2).map(keyNumber).join(','));
-    if(tangentComplete)parts.push('t:'+data.tangent.slice(0,4).map(keyNumber).join(','));
+    const collapseUV=collapseUVVertices.has(index);
+    if(uvComplete&&!collapseUV)parts.push('u:'+data.uv.slice(0,2).map(keyNumber).join(','));
+    if(tangentComplete&&!collapseUV)parts.push('t:'+data.tangent.slice(0,4).map(keyNumber).join(','));
     if(colorComplete)parts.push('c:'+data.color.slice(0,colorItemSize).map(value=>keyNumber(Number.isFinite(value)?value:1)).join(','));
     if(morphComplete)data.morphs.forEach((delta,targetIndex)=>parts.push('m'+targetIndex+':'+delta.slice(0,3).map(keyNumber).join(',')));
     return parts.join('|');
@@ -319,10 +334,19 @@ function patchNomadFaceGroupGLB(buffer,objectDetails){
     }
     const targetCount=mesh.primitives?.[0]?.targets?.length||0;
     const activeWeights=Array.isArray(passthrough?.activeMorphWeights)&&passthrough.activeMorphWeights.length===targetCount?passthrough.activeMorphWeights:null;
-    if(node&&activeWeights)node.weights=cloneJSON(activeWeights);
-    else if(node&&Array.isArray(passthrough?.nodeWeights)&&targetCount===passthrough.nodeWeights.length)node.weights=cloneJSON(passthrough.nodeWeights);
-    if(activeWeights)mesh.weights=cloneJSON(activeWeights);
-    else if(Array.isArray(passthrough?.meshWeights)&&targetCount===passthrough.meshWeights.length)mesh.weights=cloneJSON(passthrough.meshWeights);
+    const weightSource=passthrough?.morphWeightSource||'none';
+    if(weightSource==='node'){
+      if(node&&activeWeights)node.weights=cloneJSON(activeWeights);
+      else if(node&&Array.isArray(passthrough?.nodeWeights)&&targetCount===passthrough.nodeWeights.length)node.weights=cloneJSON(passthrough.nodeWeights);
+      delete mesh.weights;
+    }else if(weightSource==='mesh'){
+      if(node)delete node.weights;
+      if(activeWeights)mesh.weights=cloneJSON(activeWeights);
+      else if(Array.isArray(passthrough?.meshWeights)&&targetCount===passthrough.meshWeights.length)mesh.weights=cloneJSON(passthrough.meshWeights);
+    }else{
+      if(node)delete node.weights;
+      delete mesh.weights;
+    }
     (mesh.primitives||[]).forEach((primitive,index)=>{
       primitive.extras=primitive.extras||{};
       primitive.extras.nomad={...(primitive.extras.nomad||{}),group:index};
