@@ -1,22 +1,18 @@
-## v0.36.18.557 — bottom-left selection mode dock
+## v0.36.18.558 — selection mode dock position correction
 
-- First incremental UI/UX pass after verified .556 Nomad round-trip checkpoint.
-- Vertex / Edge / Face / Object selector moved visually to the bottom-left for easier iPad thumb/Pencil access.
-- Layout-only change: existing `#selectionModes` DOM, IDs, buttons, active-state logic and mode handlers are unchanged.
-- Implemented with a fixed safe-area-aware dock rather than moving selection logic or rebuilding the header.
-- Button target height increased to 42px for touch access.
-- Mobile breakpoint keeps icon-only compact behaviour.
-- No gizmo or gesture changes in this build.
-- Automated static regression 6/6 PASS.
+- User reported .557 selection modes appeared at the very top of the screen instead of bottom-left.
+- Root cause: `#selectionModes` was still physically inside the top header, so CSS-only fixed positioning did not produce the intended dock in the current app layout.
+- .558 moves the existing `#selectionModes` element out of `header.topbar` and into `#viewportWrap`, immediately after the canvas.
+- The same element ID, buttons, active classes and mode handlers are preserved.
+- Viewport-scoped CSS now positions the dock absolutely at bottom-left with safe-area offsets and explicitly clears top/right.
+- No mode logic, gizmo logic or gesture logic changed.
+- Static relocation regression 9/9 PASS.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
 - Frozen Beta 5 v0.36.18.538 untouched.
 
 Hands-on check:
-1. Confirm Vertex / Edge / Face / Object now appears bottom-left in landscape iPad.
-2. Confirm all four modes switch exactly as before.
-3. Confirm active mode highlight follows correctly.
-4. Confirm the dock does not block important Selection/Active Tools controls or the bottom status text.
-5. Confirm orbit/pan/zoom/Undo/Redo behaviour is unchanged.
-
-Next planned UI/UX task after PASS: unified Move / Rotate / Scale gizmo, object-mode first.
+1. Confirm Vertex / Edge / Face / Object appears at the actual bottom-left of the viewport.
+2. Confirm all four modes still switch/highlight correctly.
+3. Confirm it does not overlap the bottom status text or left tool drawer.
+4. Confirm navigation gestures remain unchanged.
 
