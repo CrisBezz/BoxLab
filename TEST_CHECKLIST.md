@@ -1610,3 +1610,11 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .559: runtime/static ownership regression 11/11 PASS
 - [x] Protection .559: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .561: no top/header mode-selector flash during startup
+- [ ] Workflow .561: mode dock remains bottom-left after load
+- [ ] Workflow .561: left tool drawer scroll ends above mode dock with final controls fully reachable
+- [ ] Workflow .561: BoxLab + version remain visible at top
+- [ ] Regression .561: mode switching and orbit/pan/zoom/Undo/Redo unchanged
+- [x] Automated .561: syntax/static regression 9/9 PASS
+- [x] Protection .561: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
