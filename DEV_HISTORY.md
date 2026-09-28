@@ -3118,3 +3118,9 @@ For exact implementation state, always inspect current `main`; this history is c
 - Preserved safe-area handling, mode behavior and scroll-above-dock behavior.
 - Syntax/static regression 7/7 PASS.
 
+## 2026-09-28 — v0.36.18.567 Viewport menu anchored to right edge
+- Changed Viewport flyout from trigger-relative absolute positioning to viewport-fixed positioning.
+- Menu now opens against the right safe-area edge instead of ~1/4 screen inward.
+- Trigger location and viewport functionality unchanged.
+- Syntax/static regression 5/5 PASS.
+
