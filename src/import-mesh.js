@@ -7,7 +7,7 @@ import { evaluateTrianglePair } from './quad-clean-core.js?v=0.36.18.323';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.550';
+const VERSION='0.36.18.551';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -101,7 +101,22 @@ function geometryToEditableMesh(geometry, matrixWorld, materials=null, fallbackG
   const source = geometry.index ? geometry.toNonIndexed() : geometry.clone();
   const position = source.getAttribute('position');
   const uv = source.getAttribute('uv');
+  const tangent = source.getAttribute('tangent');
+  const color = source.getAttribute('color');
   if (!position || position.count < 3) { source.dispose(); return null; }
+  const normalMatrix=new THREE.Matrix3().getNormalMatrix(matrixWorld);
+  const handedness=matrixWorld.determinant()<0?-1:1;
+  const readTangent=index=>{
+    if(!tangent)return null;
+    const direction=new THREE.Vector3(tangent.getX(index),tangent.getY(index),tangent.getZ(index)).applyNormalMatrix(normalMatrix).normalize();
+    return[direction.x,direction.y,direction.z,tangent.getW(index)*handedness];
+  };
+  const readColor=index=>{
+    if(!color)return null;
+    const value=[color.getX(index),color.getY(index),color.getZ(index)];
+    if(color.itemSize>=4)value.push(color.getW(index));
+    return value;
+  };
   const vertices = [];
   for (let i = 0; i < position.count; i++) vertices.push(new THREE.Vector3(position.getX(i), position.getY(i), position.getZ(i)).applyMatrix4(matrixWorld));
   const groups=[...(source.groups||[])].sort((a,b)=>a.start-b.start);
@@ -112,19 +127,21 @@ function geometryToEditableMesh(geometry, matrixWorld, materials=null, fallbackG
     if(!group)return null;
     return decodeFaceGroup(materialList[group.materialIndex]||materialList[0],group.materialIndex,hasGroups,fallbackGroupName);
   };
-  const faces = [],faceGroups=[],cornerUVs=[];
+  const faces = [],faceGroups=[],cornerUVs=[],cornerTangents=[],cornerColors=[];
   for (let i = 0; i + 2 < vertices.length; i += 3) {
     faces.push([i, i + 1, i + 2]);
     faceGroups.push(groupForStart(i)??fallbackGroupName);
     cornerUVs.push(uv?[[uv.getX(i),uv.getY(i)],[uv.getX(i+1),uv.getY(i+1)],[uv.getX(i+2),uv.getY(i+2)]]:null);
+    cornerTangents.push(tangent?[readTangent(i),readTangent(i+1),readTangent(i+2)]:null);
+    cornerColors.push(color?[readColor(i),readColor(i+1),readColor(i+2)]:null);
   }
   source.dispose();
-  return faces.length ? {mesh:new EditableMesh(vertices, faces, undefined, faceGroups),cornerUVs} : null;
+  return faces.length ? {mesh:new EditableMesh(vertices, faces, undefined, faceGroups),cornerUVs,cornerTangents,cornerColors} : null;
 }
 
 
 function mergeEditableMeshes(entries,name){
-  const vertices=[],faces=[],faceGroups=[],cornerUVs=[];
+  const vertices=[],faces=[],faceGroups=[],cornerUVs=[],cornerTangents=[],cornerColors=[];
   for(const entry of entries){
     const offset=vertices.length;
     entry.mesh.vertices.forEach(vertex=>vertices.push(vertex.clone()));
@@ -132,13 +149,17 @@ function mergeEditableMeshes(entries,name){
       faces.push(face.map(index=>index+offset));
       faceGroups.push(entry.mesh.faceGroups?.[faceIndex]??entry.groupName??null);
       cornerUVs.push(entry.cornerUVs?.[faceIndex]||null);
+      cornerTangents.push(entry.cornerTangents?.[faceIndex]||null);
+      cornerColors.push(entry.cornerColors?.[faceIndex]||null);
     });
   }
   return{
     mesh:new EditableMesh(vertices,faces,undefined,faceGroups),
     name:name||entries[0]?.name||'Mesh',
     importedFaceGroups:[...new Set(faceGroups.filter(Boolean))],
-    cornerUVs
+    cornerUVs,
+    cornerTangents,
+    cornerColors
   };
 }
 
@@ -166,6 +187,8 @@ function importedMeshes(root,{splitByGroups=false}={}) {
     primitiveEntries.push({
       mesh:converted.mesh,
       cornerUVs:converted.cornerUVs,
+      cornerTangents:converted.cornerTangents,
+      cornerColors:converted.cornerColors,
       node,
       owner:logicalPrimitiveOwner(node,root),
       name:node.name || 'Mesh',
@@ -177,7 +200,9 @@ function importedMeshes(root,{splitByGroups=false}={}) {
       mesh:entry.mesh,
       name:entry.groupName||entry.name,
       importedFaceGroups:[...new Set((entry.mesh.faceGroups||[]).filter(Boolean))],
-      cornerUVs:entry.cornerUVs||[]
+      cornerUVs:entry.cornerUVs||[],
+      cornerTangents:entry.cornerTangents||[],
+      cornerColors:entry.cornerColors||[]
     }));
   }
   const buckets=new Map();
@@ -193,7 +218,9 @@ function importedMeshes(root,{splitByGroups=false}={}) {
         mesh:entry.mesh,
         name:owner?.name||entry.name,
         importedFaceGroups:[...new Set((entry.mesh.faceGroups||[]).filter(Boolean))],
-        cornerUVs:entry.cornerUVs||[]
+        cornerUVs:entry.cornerUVs||[],
+      cornerTangents:entry.cornerTangents||[],
+      cornerColors:entry.cornerColors||[]
       };
     }
     return mergeEditableMeshes(entries,owner?.name||entries[0]?.name||'Mesh');
@@ -213,8 +240,8 @@ function fitMeshesToBoxLabScale(meshes) {
   return scale;
 }
 
-function weldEditableMesh(mesh, tolerance=EDITABLE_WELD_TOLERANCE, cornerUVs=null) {
-  if (!mesh?.vertices?.length || !mesh?.faces?.length) return { mesh, welded:0, removedFaces:0, cornerUVs:cornerUVs||[] };
+function weldEditableMesh(mesh, tolerance=EDITABLE_WELD_TOLERANCE, cornerUVs=null, cornerTangents=null, cornerColors=null) {
+  if (!mesh?.vertices?.length || !mesh?.faces?.length) return { mesh, welded:0, removedFaces:0, cornerUVs:cornerUVs||[], cornerTangents:cornerTangents||[], cornerColors:cornerColors||[] };
   const inverse = 1 / tolerance,buckets = new Map(),vertices = [],remap = new Array(mesh.vertices.length);let welded = 0;
   mesh.vertices.forEach((vertex, oldIndex) => {
     const key = `${Math.round(vertex.x*inverse)}:${Math.round(vertex.y*inverse)}:${Math.round(vertex.z*inverse)}`;
@@ -222,7 +249,7 @@ function weldEditableMesh(mesh, tolerance=EDITABLE_WELD_TOLERANCE, cornerUVs=nul
     if (newIndex === undefined) { newIndex = vertices.length;buckets.set(key,newIndex);vertices.push(vertex.clone()); } else welded++;
     remap[oldIndex] = newIndex;
   });
-  const faces = [],faceGroups=[],nextCornerUVs=[];let removedFaces = 0;
+  const faces = [],faceGroups=[],nextCornerUVs=[],nextCornerTangents=[],nextCornerColors=[];let removedFaces = 0;
   for (let faceIndex=0;faceIndex<mesh.faces.length;faceIndex++) {
     const face=mesh.faces[faceIndex];
     const mapped = face.map(index => remap[index]);
@@ -232,30 +259,33 @@ function weldEditableMesh(mesh, tolerance=EDITABLE_WELD_TOLERANCE, cornerUVs=nul
     faces.push(cleaned);
     faceGroups.push(mesh.faceGroups?.[faceIndex]??null);
     nextCornerUVs.push(cornerUVs?.[faceIndex]||null);
+    nextCornerTangents.push(cornerTangents?.[faceIndex]||null);
+    nextCornerColors.push(cornerColors?.[faceIndex]||null);
   }
-  return { mesh:new EditableMesh(vertices, faces, mesh.creases, faceGroups), welded, removedFaces, cornerUVs:nextCornerUVs };
+  return { mesh:new EditableMesh(vertices, faces, mesh.creases, faceGroups), welded, removedFaces, cornerUVs:nextCornerUVs, cornerTangents:nextCornerTangents, cornerColors:nextCornerColors };
 }
 
-
-function uvClose(a,b){return Array.isArray(a)&&Array.isArray(b)&&Math.abs(a[0]-b[0])<1e-6&&Math.abs(a[1]-b[1])<1e-6;}
-function quadCornerUVs(mesh,a,b,quad,cornerUVs){
-  if(!cornerUVs?.[a]||!cornerUVs?.[b])return null;
-  const faces=[mesh.faces[a],mesh.faces[b]],uvSets=[cornerUVs[a],cornerUVs[b]];
-  const out=[];
+function cornerValueClose(a,b){
+  return Array.isArray(a)&&Array.isArray(b)&&a.length===b.length&&a.every((value,index)=>Math.abs(value-b[index])<1e-6);
+}
+function quadCornerChannel(mesh,a,b,quad,values){
+  if(!values?.[a]&&!values?.[b])return null;
+  if(!values?.[a]||!values?.[b])return null;
+  const faces=[mesh.faces[a],mesh.faces[b]],sets=[values[a],values[b]],out=[];
   for(const vertex of quad){
     const matches=[];
     for(let fi=0;fi<2;fi++){
       const local=faces[fi].indexOf(vertex);
-      if(local>=0&&uvSets[fi]?.[local])matches.push(uvSets[fi][local]);
+      if(local>=0&&sets[fi]?.[local])matches.push(sets[fi][local]);
     }
     if(!matches.length)return null;
-    if(matches.length>1&&!uvClose(matches[0],matches[1]))return null;
+    if(matches.length>1&&!cornerValueClose(matches[0],matches[1]))return null;
     out.push([...matches[0]]);
   }
   return out;
 }
-function reconstructImportedQuads(mesh,cornerUVs=null){
-  if(!mesh?.faces?.length||!mesh?.faceGroups?.length)return{mesh,merged:0,cornerUVs:cornerUVs||[]};
+function reconstructImportedQuads(mesh,cornerUVs=null,cornerTangents=null,cornerColors=null){
+  if(!mesh?.faces?.length||!mesh?.faceGroups?.length)return{mesh,merged:0,cornerUVs:cornerUVs||[],cornerTangents:cornerTangents||[],cornerColors:cornerColors||[]};
   const candidates=[];
   for(const edge of mesh.edges?.()||[]){
     if(edge.faces?.length!==2)continue;
@@ -265,9 +295,13 @@ function reconstructImportedQuads(mesh,cornerUVs=null){
     if(!groupA||groupA!==groupB)continue;
     const evaluated=evaluateTrianglePair(mesh,a,b);
     if(!evaluated?.ok||evaluated.normalDot<0.9995)continue;
-    const uvQuad=cornerUVs?quadCornerUVs(mesh,a,b,evaluated.quad,cornerUVs):null;
-    if(cornerUVs&&(cornerUVs[a]||cornerUVs[b])&&!uvQuad)continue;
-    candidates.push({a,b,quad:evaluated.quad,score:evaluated.score,group:groupA,uvQuad});
+    const uvQuad=quadCornerChannel(mesh,a,b,evaluated.quad,cornerUVs);
+    const tangentQuad=quadCornerChannel(mesh,a,b,evaluated.quad,cornerTangents);
+    const colorQuad=quadCornerChannel(mesh,a,b,evaluated.quad,cornerColors);
+    if((cornerUVs?.[a]||cornerUVs?.[b])&&!uvQuad)continue;
+    if((cornerTangents?.[a]||cornerTangents?.[b])&&!tangentQuad)continue;
+    if((cornerColors?.[a]||cornerColors?.[b])&&!colorQuad)continue;
+    candidates.push({a,b,quad:evaluated.quad,score:evaluated.score,group:groupA,uvQuad,tangentQuad,colorQuad});
   }
   candidates.sort((x,y)=>x.score-y.score||Math.min(x.a,x.b)-Math.min(y.a,y.b));
   const used=new Set(),chosen=[];
@@ -275,14 +309,14 @@ function reconstructImportedQuads(mesh,cornerUVs=null){
     if(used.has(candidate.a)||used.has(candidate.b))continue;
     used.add(candidate.a);used.add(candidate.b);chosen.push(candidate);
   }
-  if(!chosen.length)return{mesh,merged:0,cornerUVs:cornerUVs||[]};
+  if(!chosen.length)return{mesh,merged:0,cornerUVs:cornerUVs||[],cornerTangents:cornerTangents||[],cornerColors:cornerColors||[]};
   const replacements=new Map(),remove=new Set();
   for(const candidate of chosen){
     const keep=Math.min(candidate.a,candidate.b),drop=Math.max(candidate.a,candidate.b);
-    replacements.set(keep,{face:[...candidate.quad],group:candidate.group,uv:candidate.uvQuad||null});
+    replacements.set(keep,{face:[...candidate.quad],group:candidate.group,uv:candidate.uvQuad||null,tangent:candidate.tangentQuad||null,color:candidate.colorQuad||null});
     remove.add(drop);
   }
-  const faces=[],faceGroups=[],nextCornerUVs=[];
+  const faces=[],faceGroups=[],nextCornerUVs=[],nextCornerTangents=[],nextCornerColors=[];
   for(let i=0;i<mesh.faces.length;i++){
     if(remove.has(i))continue;
     const replacement=replacements.get(i);
@@ -290,18 +324,26 @@ function reconstructImportedQuads(mesh,cornerUVs=null){
       faces.push(replacement.face);
       faceGroups.push(replacement.group);
       nextCornerUVs.push(replacement.uv);
+      nextCornerTangents.push(replacement.tangent);
+      nextCornerColors.push(replacement.color);
     }else{
       faces.push([...mesh.faces[i]]);
       faceGroups.push(mesh.faceGroups?.[i]??null);
       nextCornerUVs.push(cornerUVs?.[i]||null);
+      nextCornerTangents.push(cornerTangents?.[i]||null);
+      nextCornerColors.push(cornerColors?.[i]||null);
     }
   }
-  return{mesh:new EditableMesh(mesh.vertices,faces,mesh.creases,faceGroups),merged:chosen.length,cornerUVs:nextCornerUVs};
+  return{mesh:new EditableMesh(mesh.vertices,faces,mesh.creases,faceGroups),merged:chosen.length,cornerUVs:nextCornerUVs,cornerTangents:nextCornerTangents,cornerColors:nextCornerColors};
 }
 
 function topologySignature(mesh){
   if(!mesh?.faces)return'';
   return mesh.faces.map((face,index)=>`${face.join(',')}@${mesh.faceGroups?.[index]??''}`).join('|');
+}
+function geometrySignature(mesh){
+  if(!mesh?.vertices)return'';
+  return topologySignature(mesh)+'#'+mesh.vertices.map(vertex=>[vertex.x,vertex.y,vertex.z].map(value=>Number(value).toPrecision(12)).join(',')).join('|');
 }
 
 
@@ -311,31 +353,38 @@ function addImported(meshes, baseName,{reconstructQuads=false}={}) {
   const isReference = importKind === 'reference';fitMeshesToBoxLabScale(meshes);
   let weldedTotal = 0, removedTotal = 0, reconstructedQuads = 0;
   if (!isReference) meshes = meshes.map(entry => {
-    const result=weldEditableMesh(entry.mesh,EDITABLE_WELD_TOLERANCE,entry.cornerUVs);
+    const result=weldEditableMesh(entry.mesh,EDITABLE_WELD_TOLERANCE,entry.cornerUVs,entry.cornerTangents,entry.cornerColors);
     weldedTotal+=result.welded;removedTotal+=result.removedFaces;
-    let next=result.mesh,nextUVs=result.cornerUVs;
+    let next=result.mesh,nextUVs=result.cornerUVs,nextTangents=result.cornerTangents,nextColors=result.cornerColors;
     if(reconstructQuads){
-      const rebuilt=reconstructImportedQuads(next,nextUVs);
-      next=rebuilt.mesh;nextUVs=rebuilt.cornerUVs;reconstructedQuads+=rebuilt.merged;
+      const rebuilt=reconstructImportedQuads(next,nextUVs,nextTangents,nextColors);
+      next=rebuilt.mesh;nextUVs=rebuilt.cornerUVs;nextTangents=rebuilt.cornerTangents;nextColors=rebuilt.cornerColors;reconstructedQuads+=rebuilt.merged;
     }
     const passthrough=entry.glbPassthrough||null;
     if(passthrough){
       passthrough.uvCorners=nextUVs;
       passthrough.uvTopologySignature=topologySignature(next);
       passthrough.uvFaceCount=next.faces.length;
+      passthrough.vertexColorCorners=nextColors;
+      passthrough.vertexColorTopologySignature=topologySignature(next);
+      passthrough.tangentCorners=nextTangents;
+      passthrough.tangentTopologySignature=topologySignature(next);
+      passthrough.tangentGeometrySignature=geometrySignature(next);
     }
-    return{...entry,mesh:next,cornerUVs:nextUVs,glbPassthrough:passthrough};
+    return{...entry,mesh:next,cornerUVs:nextUVs,cornerTangents:nextTangents,cornerColors:nextColors,glbPassthrough:passthrough};
   });
   const options={kind:isReference?'reference':'editable',locked:isReference,enterObjectMode:!isReference,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}};
   meshes.forEach((entry,index)=>manager.addMesh(entry.mesh,meshes.length===1?baseName:`${baseName} • ${entry.name||index+1}`,{...options,glbPassthrough:entry.glbPassthrough||null}));
   const preserved=!isReference&&meshes.some(entry=>entry.polygonPreserved);
   const groupCount=[...new Set(meshes.flatMap(entry=>entry.mesh.faceGroups||[]).filter(Boolean))].length;
   const uvCount=meshes.filter(entry=>entry.glbPassthrough?.uvCorners?.some(Boolean)).length;
+  const tangentCount=meshes.filter(entry=>entry.glbPassthrough?.tangentCorners?.some(Boolean)).length;
+  const colorCount=meshes.filter(entry=>entry.glbPassthrough?.vertexColorCorners?.some(Boolean)).length;
   const perObject=meshes.map(entry=>({name:entry.name||'Mesh',faceGroups:[...new Set((entry.mesh.faceGroups||[]).filter(Boolean))].length}));
   globalThis.__boxlabNomadRoundTrip ||= {};
-  globalThis.__boxlabNomadRoundTrip.lastImport={objects:meshes.length,faceGroups:groupCount,uvObjects:uvCount,details:perObject};
+  globalThis.__boxlabNomadRoundTrip.lastImport={objects:meshes.length,faceGroups:groupCount,uvObjects:uvCount,tangentObjects:tangentCount,vertexColorObjects:colorCount,details:perObject};
   if(isReference)setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • locked reference`);
-  else setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • editable${preserved?' • OBJ polygons preserved':''}${groupCount?` • ${groupCount} facegroup${groupCount===1?'':'s'} preserved`:''}${uvCount?` • UVs preserved`:''}${reconstructedQuads?` • ${reconstructedQuads} quad${reconstructedQuads===1?'':'s'} reconstructed`:''} • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
+  else setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • editable${preserved?' • OBJ polygons preserved':''}${groupCount?` • ${groupCount} facegroup${groupCount===1?'':'s'} preserved`:''}${uvCount?` • UVs preserved`:''}${tangentCount?` • tangents preserved`:''}${colorCount?` • vertex colours preserved`:''}${reconstructedQuads?` • ${reconstructedQuads} quad${reconstructedQuads===1?'':'s'} reconstructed`:''} • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
 }
 
 
@@ -362,4 +411,4 @@ function importFile(file) { if(!file)return;const extension=file.name.split('.')
 kindButtons.forEach(item=>item.addEventListener('click',()=>{importKind=item.dataset.importKind;kindButtons.forEach(button=>button.classList.toggle('active',button===item));}));
 button?.addEventListener('click',()=>input?.click());input?.addEventListener('change',()=>{importFile(input.files?.[0]);input.value='';});
 if(!globalThis.__boxlabObjectManager)window.addEventListener('boxlab-object-manager-ready',()=>{},{once:true});
-globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ,geometryToEditableMesh,importedMeshes,mergeEditableMeshes,reconstructImportedQuads,parseGLBPassthrough,topologySignature};
+globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ,geometryToEditableMesh,importedMeshes,mergeEditableMeshes,reconstructImportedQuads,parseGLBPassthrough,topologySignature,geometrySignature};
