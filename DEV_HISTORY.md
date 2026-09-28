@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.550 Nomad UV Preservation Phase 2A
+
+- Added per-face-corner UV capture on GLB import.
+- UV seams survive welding because UVs are not collapsed onto shared geometry vertices.
+- Conservative quad reconstruction carries UVs only when the two source triangles agree along the shared edge.
+- Imported reconstructed topology receives a stable topology signature.
+- Base GLB export restores UVs only when topology still matches that signature.
+- Vertex movement is allowed; topology edits safely disable UV restoration.
+- .549 PBR/material/texture passthrough remains in place.
+- Frozen Beta 5 remains untouched.
+
+
 ## 2026-09-28 — v0.36.18.549 HANDS-ON PASS
 
 - User confirmed Nomad GLB Preservation Layer Phase 1 PASS.
