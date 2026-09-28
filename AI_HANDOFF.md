@@ -1,23 +1,22 @@
-## v0.36.18.555 — morph weight single-source + UV pole welding
+## v0.36.18.556 — restore original GLB round-trip scale
 
-- User hands-on result on .554: FAIL — deformation doubled on round-trip; layer weight retained. Also reported apparent non-welded pole vertices.
-- Double deformation root cause: .554 restored active morph weights to both glTF node.weights and mesh.weights. .555 now records the original source location on import and restores active weights to one location only:
-  - original node weights -> node.weights only; mesh.weights removed
-  - original mesh weights -> mesh.weights only; node.weights removed
-  - no original weights -> neither location written
-- Pole welding root cause: .553/.554 included UV and tangent corner values in the unified glTF vertex key. High-valence UV singularities such as sphere poles therefore split into multiple vertices.
-- .555 identifies vertices with 3+ distinct UV corner values and collapses UV/tangent participation in the export key for those singular vertices only. Ordinary two-sided UV seams remain preserved.
-- Morph/colour discontinuities still prevent welding, so topology-bound sculpt data is not merged across genuine value changes.
-- Automated syntax + 10 targeted weight-location / pole-weld assertions passed.
+- User hands-on result on .555: topology/welding PASS; exported/imported scale still wrong.
+- Root cause: BoxLab normalises imported geometry to `IMPORT_TARGET_SIZE = 2` for editing, but the GLB round-trip exporter wrote that BoxLab working scale directly back to Nomad.
+- .556 records the import fit transform in passthrough:
+  - global import centre
+  - normalising scale factor
+- Base GLB export now reverses that fit transform on POSITION before writing the file.
+- Morph POSITION deltas are also divided by the same fit scale, so layer deformation magnitude remains consistent in restored Nomad/world scale.
+- .555 single-source morph weights and UV pole welding remain intact.
+- Automated import/export syntax + 8 scale-restoration assertions passed.
 - Frozen Beta 5 remains v0.36.18.538 untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
 
 Hands-on test:
 1. Import the same layered Nomad GLB into BoxLab.
-2. PASS = deformation appears once at the correct magnitude.
+2. Confirm BoxLab working display remains normal.
 3. Export Base GLB and reopen in Nomad.
-4. PASS = deformation remains once (not doubled) and the layer weight is retained/adjustable.
-5. Inspect the sphere/pole area.
-6. PASS = pole behaves as one connected vertex region during subdivision.
-7. Confirm the rest of the UV seam remains visually/materially acceptable.
+4. PASS = object returns at the same original size/placement as the source GLB.
+5. PASS = sculpt deformation magnitude matches source and layer weight remains adjustable.
+6. PASS = .555 welded topology, including the poles, remains connected on subdivision.
 
