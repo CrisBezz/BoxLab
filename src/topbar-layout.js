@@ -58,7 +58,7 @@ installSecondRow();
 
 const style=document.createElement('style');
 style.textContent=`
-:root{--boxlab-topbar-h:max(60px,calc(48px + env(safe-area-inset-top)));--boxlab-commandbar-h:48px}
+:root{--boxlab-topbar-h:max(60px,calc(48px + env(safe-area-inset-top)));--boxlab-commandbar-h:48px;--boxlab-mode-dock-clearance:104px}
 .topbar{height:var(--boxlab-topbar-h)!important}
 .brand{order:1;display:flex!important}.top-file-menu{order:0}.top-actions{order:2}
 #commandBar{position:absolute;z-index:100;top:var(--boxlab-topbar-h);left:0;right:0;height:var(--boxlab-commandbar-h);display:flex;align-items:center;gap:10px;padding:5px 16px;border-bottom:1px solid rgba(255,255,255,.09);background:rgba(13,15,19,.95);backdrop-filter:blur(18px);overflow:visible}
@@ -69,12 +69,14 @@ style.textContent=`
 #viewportWrap > #selectionModes button{min-width:46px;min-height:42px;padding:7px 11px;justify-content:center}
 #viewportWrap > #selectionModes svg{width:19px;height:19px;flex:0 0 auto}
 #viewportWrap > #selectionModes .mode-label{font-size:12px}
+#viewportWrap > .floating-panel.left-panel{max-height:calc(100% - var(--boxlab-mode-dock-clearance));padding-bottom:18px}
 #commandBar #viewModes{margin-left:auto}
 @media(max-width:900px){
   #commandBar{padding-left:8px;padding-right:8px;gap:6px}
   #viewportWrap > #selectionModes{left:max(8px,env(safe-area-inset-left));bottom:max(46px,calc(env(safe-area-inset-bottom) + 36px));gap:2px;padding:3px}
   #viewportWrap > #selectionModes button{min-width:42px;min-height:42px;padding:7px 8px}
   #viewportWrap > #selectionModes .mode-label{display:none}
+  #viewportWrap > .floating-panel.left-panel{max-height:calc(100% - 96px);padding-bottom:18px}
   .top-file-content{width:min(300px,calc(100vw - 16px));max-width:calc(100vw - 16px)}
 }
 `;
