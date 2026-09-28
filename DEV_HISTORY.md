@@ -3112,3 +3112,9 @@ For exact implementation state, always inspect current `main`; this history is c
 - Scroll viewport now ends above the mode dock.
 - Syntax/static regression 5/5 PASS.
 
+## 2026-09-28 — v0.36.18.566 lower bottom mode dock / reclaim vertical space
+- Lowered bottom mode strip closer to the device safe-area edge.
+- Reduced left drawer lower clearance accordingly, recovering roughly 20–30px vertical space.
+- Preserved safe-area handling, mode behavior and scroll-above-dock behavior.
+- Syntax/static regression 7/7 PASS.
+
