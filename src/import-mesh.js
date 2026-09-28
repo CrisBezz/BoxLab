@@ -6,7 +6,7 @@ import { parseEditableOBJ } from './obj-facegroups-core.js?v=0.36.18.448';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.540';
+const VERSION='0.36.18.543';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -57,7 +57,10 @@ function importedMeshes(root) {
   root.traverse(node => {
     if (!node.isMesh || !node.geometry) return;
     const mesh = geometryToEditableMesh(node.geometry, node.matrixWorld, node.material);
-    if (mesh) meshes.push({ mesh, name:node.name || 'Mesh' });
+    if (mesh) {
+      const importedFaceGroups=[...new Set((mesh.faceGroups||[]).filter(Boolean))];
+      meshes.push({ mesh, name:node.name || 'Mesh', importedFaceGroups });
+    }
   });
   return meshes;
 }
@@ -107,6 +110,9 @@ function addImported(meshes, baseName) {
   meshes.forEach((entry,index)=>manager.addMesh(entry.mesh,meshes.length===1?baseName:`${baseName} • ${entry.name||index+1}`,options));
   const preserved=!isReference&&meshes.some(entry=>entry.polygonPreserved);
   const groupCount=[...new Set(meshes.flatMap(entry=>entry.mesh.faceGroups||[]).filter(Boolean))].length;
+  const perObject=meshes.map(entry=>({name:entry.name||'Mesh',faceGroups:[...new Set((entry.mesh.faceGroups||[]).filter(Boolean))].length}));
+  globalThis.__boxlabNomadRoundTrip ||= {};
+  globalThis.__boxlabNomadRoundTrip.lastImport={objects:meshes.length,faceGroups:groupCount,details:perObject};
   if(isReference)setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • locked reference`);
   else setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • editable${preserved?' • OBJ polygons preserved':''}${groupCount?` • ${groupCount} facegroup${groupCount===1?'':'s'} preserved`:''} • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
 }
