@@ -1643,3 +1643,11 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .564: static sizing regression 8/8 PASS
 - [x] Protection .564: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .565: left tool drawer scroll ends above bottom mode dock
+- [ ] Workflow .565: final drawer controls remain fully visible/clickable at maximum scroll
+- [ ] Workflow .565: Selection remains in original drawer position
+- [ ] Workflow .565: mode dock remains fixed bottom-left
+- [ ] Regression .565: selection and navigation behavior unchanged
+- [x] Automated .565: syntax/static regression 5/5 PASS
+- [x] Protection .565: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
