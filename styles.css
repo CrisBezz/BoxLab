@@ -31,3 +31,59 @@
 #selectionModes{visibility:hidden}
 #viewportWrap > #selectionModes{visibility:visible}
 
+
+
+/* v0.36.18.564 compact Selection panel sizing */
+#selectionDrawer .always-selection-title{
+  padding:7px 9px 0;
+  font-size:12px;
+  font-weight:650;
+}
+#selectionDrawer .drawer-content{
+  padding:6px 8px 8px;
+}
+#selectionDrawer button,
+#selectionDrawer .selection-depth button,
+#selectionDrawer .selection-edge-actions button,
+#selectionDrawer .selection-grow-actions button{
+  min-height:32px!important;
+  height:32px;
+  padding:5px 6px!important;
+  font-size:12px!important;
+  line-height:1;
+  border-radius:8px;
+}
+#selectionDrawer .selection-depth{
+  padding:2px;
+  gap:2px;
+}
+#selectionDrawer .selection-depth button{
+  min-width:0;
+  padding:4px 5px!important;
+  border-radius:6px;
+}
+#selectionDrawer .selection-context{
+  gap:5px;
+  margin-top:5px;
+}
+#selectionDrawer .selection-edge-actions,
+#selectionDrawer .selection-grow-actions{
+  gap:5px;
+}
+#selectionDrawer .selection-grow-actions button:nth-child(1),
+#selectionDrawer .selection-grow-actions button:nth-child(2),
+#selectionDrawer .selection-grow-actions button:nth-child(4),
+#selectionDrawer .selection-grow-actions button:nth-child(5){
+  flex:0 0 32px;
+  font-size:13px!important;
+}
+#selectionDrawer .selection-angle{
+  min-height:26px;
+  font-size:11px;
+}
+#selectionDrawer .selection-angle output{
+  font-size:11px;
+}
+#selectionDrawer .selection-object-note{
+  font-size:10px;
+}
