@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.544 GLB logical object import
+
+- Fixed Nomad GLB imports creating one BoxLab object per facegroup when Split objects by groups was unticked.
+- GLB/GLTF import now honors the same Split toggle as OBJ.
+- Split off merges sibling GLB primitives back into one logical editable object and preserves each primitive as a facegroup.
+- Split on keeps primitives as separate BoxLab objects.
+- Existing export verification and frozen Beta 5 remain unchanged.
+
 ## 2026-09-28 — v0.36.18.543 Nomad round-trip validation
 
 - Added in-memory GLB self-verification before Save/Share.
