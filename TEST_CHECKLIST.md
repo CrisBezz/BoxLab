@@ -1588,3 +1588,10 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .556: import/export modules syntax-parse and 8/8 scale-restoration assertions PASS
 - [x] Protection .556: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
 
+- [ ] Workflow .557: Vertex / Edge / Face / Object selector appears bottom-left on landscape iPad
+- [ ] Workflow .557: all four selection modes switch and highlight exactly as before
+- [ ] Workflow .557: dock does not obstruct Selection/Active Tools controls or status text
+- [ ] Regression .557: one-finger orbit, two-finger pan, pinch zoom, two-finger Undo and three-finger Redo unchanged
+- [x] Automated .557: static mode-dock regression 6/6 PASS
+- [x] Protection .557: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
