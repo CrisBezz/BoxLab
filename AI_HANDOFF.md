@@ -1,3 +1,28 @@
+## v0.36.18.551 — Nomad Preservation Layer Phase 2B: tangents + vertex colours
+
+- Builds directly on the verified .550 topology-safe UV checkpoint.
+- GLB import now captures `TANGENT` and `COLOR_0` as per-face-corner data alongside UVs before weld / quad reconstruction.
+- Conservative GLB quad reconstruction carries all preserved corner channels only when shared-corner values agree; a seam/discontinuity blocks that quad merge instead of corrupting data.
+- Base GLB export restores vertex colours when the editable topology signature still matches the imported topology.
+- Tangents use a stricter guard: topology AND geometry-position signature must still match. This deliberately drops stale imported tangents after vertex geometry edits, because tangents are surface-direction data rather than purely topological data.
+- Tangent XYZ is transformed into BoxLab/world orientation on import; tangent handedness W is adjusted for mirrored transforms.
+- SubD GLB export does not reuse imported UVs, tangents or vertex colours in this phase.
+- Export status can report `tangents restored N/N` and `vertex colours restored N/N` in addition to the existing UV status.
+- Automated regression/syntax assertions passed for the new import/export wiring; hands-on Nomad round-trip is still required.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+
+Hands-on test:
+1. Import a Nomad GLB that actually contains vertex colour data and/or tangents, with Split OFF.
+2. Export GLB Base immediately.
+3. PASS = export status reports the applicable restored channel(s), and Nomad shows the same vertex colour / normal-map appearance.
+4. Make only a topology-preserving vertex-position edit and export Base again.
+5. PASS = vertex colours may still restore, but tangents should no longer report restored after geometry changes.
+6. Make a topology-changing edit such as Extrude.
+7. PASS = UV/tangent/vertex-colour restoration is disabled rather than writing stale topology-bound arrays.
+
+Next logical preservation channel after .551: morph/layer target arrays. Treat those as a separate topology/correspondence problem; do not blindly copy target accessors after topology edits.
+
 ## v0.36.18.550 — HANDS-ON PASS
 
 - User confirmed Nomad Preservation Layer Phase 2A UV round-trip PASS.
