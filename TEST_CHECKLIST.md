@@ -1636,3 +1636,10 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .563: syntax/static regression 10/10 PASS
 - [x] Protection .563: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .564: Selection panel typography matches compact UI scale
+- [ ] Workflow .564: Selection buttons are consistently 32px high with 12px text
+- [ ] Workflow .564: symbol-only selection buttons remain legible without appearing oversized
+- [ ] Regression .564: Selection behavior and mode switching unchanged
+- [x] Automated .564: static sizing regression 8/8 PASS
+- [x] Protection .564: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
