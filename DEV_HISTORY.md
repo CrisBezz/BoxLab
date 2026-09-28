@@ -3075,3 +3075,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Forced topbar brand visibility so BoxLab/version remain visible.
 - Static/runtime ownership regression 11/11 PASS.
 
+## 2026-09-28 — v0.36.18.561 mode dock clearance + no startup flash
+- .559 hands-on showed correct bottom-left placement, but the left tool drawer scrolled behind the dock.
+- .560 reserved lower viewport clearance for the scrolling left tool drawer.
+- User additionally reported one-frame startup flash at the old top/header location.
+- .561 hides #selectionModes in its initial DOM location and reveals it only once topbar-layout.js has moved it into #viewportWrap.
+- Published CSS/topbar cache pins as .561.
+- Syntax/static regression 9/9 PASS.
+
