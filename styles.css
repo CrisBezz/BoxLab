@@ -31,7 +31,3 @@
 #selectionModes{visibility:hidden}
 #viewportWrap > #selectionModes{visibility:visible}
 
-
-/* v0.36.18.562 prevent selection panel relocation flash */
-#selectionDrawer{visibility:hidden}
-#viewportWrap > #selectionDrawer{visibility:visible}
