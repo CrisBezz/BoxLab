@@ -1,3 +1,24 @@
+## v0.36.18.543 — Nomad round-trip validation
+
+- GLB export now re-opens the generated GLB in memory with GLTFLoader before Save/Share.
+- Each exported BoxLab object carries a transient round-trip marker in GLB extras for validation.
+- Self-check verifies:
+  - logical BoxLab object count
+  - total GLB primitive/material group-slot count
+- The verifier accepts either one mesh with material groups or a parent object containing several primitive meshes.
+- Export is blocked with a clear error if the GLB structure does not match what BoxLab intended to write.
+- Successful export status now says `GLB verified` and reports object, facegroup and group-slot counts.
+- GLB import records a per-object facegroup report at `globalThis.__boxlabNomadRoundTrip.lastImport`.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
+Hands-on Nomad test:
+1. Use a scene with 2+ objects and multiple facegroups.
+2. Export GLB Base and confirm status begins `GLB verified`.
+3. Open in Nomad: objects should remain separate and facegroups should be available.
+4. Make one harmless Nomad edit, export GLB from Nomad, then import it back into BoxLab.
+5. Confirm object separation and facegroup display.
+6. Repeat with SubD GLB.
+
 ## v0.36.18.542 — File Name edit root-cause fix
 
 - User confirmed File Name still could not be edited on .541.
