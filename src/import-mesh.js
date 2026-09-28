@@ -7,7 +7,7 @@ import { evaluateTrianglePair } from './quad-clean-core.js?v=0.36.18.323';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.552';
+const VERSION='0.36.18.554';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -98,7 +98,7 @@ function decodeFaceGroup(material,materialIndex,hasGroups,fallbackName=null){
   if(name&&name!=='Material')return name;
   return hasGroups?(fallbackName||`FaceGroup ${Number(materialIndex||0)+1}`):fallbackName;
 }
-function geometryToEditableMesh(geometry, matrixWorld, materials=null, fallbackGroupName=null) {
+function geometryToEditableMesh(geometry, matrixWorld, materials=null, fallbackGroupName=null, morphWeights=null) {
   const source = geometry.index ? geometry.toNonIndexed() : geometry.clone();
   const position = source.getAttribute('position');
   const uv = source.getAttribute('uv');
@@ -107,6 +107,7 @@ function geometryToEditableMesh(geometry, matrixWorld, materials=null, fallbackG
   const morphPositions = source.morphAttributes?.position||[];
   if (!position || position.count < 3) { source.dispose(); return null; }
   const normalMatrix=new THREE.Matrix3().getNormalMatrix(matrixWorld);
+  const linearMatrix=new THREE.Matrix3().setFromMatrix4(matrixWorld);
   const handedness=matrixWorld.determinant()<0?-1:1;
   const readTangent=index=>{
     if(!tangent)return null;
@@ -119,8 +120,28 @@ function geometryToEditableMesh(geometry, matrixWorld, materials=null, fallbackG
     if(color.itemSize>=4)value.push(color.getW(index));
     return value;
   };
+  const weights=Array.isArray(morphWeights)?morphWeights:[];
+  const relativeMorphs=!!source.morphTargetsRelative;
+  const readMorphDelta=(targetIndex,index)=>{
+    const attr=morphPositions[targetIndex];
+    if(!attr)return null;
+    const base=new THREE.Vector3(position.getX(index),position.getY(index),position.getZ(index));
+    const target=new THREE.Vector3(attr.getX(index),attr.getY(index),attr.getZ(index));
+    const delta=relativeMorphs?target:target.sub(base);
+    delta.applyMatrix3(linearMatrix);
+    return[delta.x,delta.y,delta.z];
+  };
   const vertices = [];
-  for (let i = 0; i < position.count; i++) vertices.push(new THREE.Vector3(position.getX(i), position.getY(i), position.getZ(i)).applyMatrix4(matrixWorld));
+  for (let i = 0; i < position.count; i++) {
+    const vertex=new THREE.Vector3(position.getX(i), position.getY(i), position.getZ(i)).applyMatrix4(matrixWorld);
+    for(let targetIndex=0;targetIndex<morphPositions.length;targetIndex++){
+      const weight=Number(weights[targetIndex]??0);
+      if(!weight)continue;
+      const delta=readMorphDelta(targetIndex,i);
+      if(delta)vertex.add(new THREE.Vector3(delta[0],delta[1],delta[2]).multiplyScalar(weight));
+    }
+    vertices.push(vertex);
+  }
   const groups=[...(source.groups||[])].sort((a,b)=>a.start-b.start);
   const hasGroups=groups.length>1;
   const materialList=Array.isArray(materials)?materials:[materials];
@@ -137,10 +158,10 @@ function geometryToEditableMesh(geometry, matrixWorld, materials=null, fallbackG
     cornerUVs.push(uv?[[uv.getX(i),uv.getY(i)],[uv.getX(i+1),uv.getY(i+1)],[uv.getX(i+2),uv.getY(i+2)]]:null);
     cornerTangents.push(tangent?[readTangent(i),readTangent(i+1),readTangent(i+2)]:null);
     cornerColors.push(color?[readColor(i),readColor(i+1),readColor(i+2)]:null);
-    morphTargets.forEach((target,targetIndex)=>{const attr=morphPositions[targetIndex];target.position.push(attr?[[attr.getX(i),attr.getY(i),attr.getZ(i)],[attr.getX(i+1),attr.getY(i+1),attr.getZ(i+1)],[attr.getX(i+2),attr.getY(i+2),attr.getZ(i+2)]]:null);});
+    morphTargets.forEach((target,targetIndex)=>target.position.push([readMorphDelta(targetIndex,i),readMorphDelta(targetIndex,i+1),readMorphDelta(targetIndex,i+2)]));
   }
   source.dispose();
-  return faces.length ? {mesh:new EditableMesh(vertices, faces, undefined, faceGroups),cornerUVs,cornerTangents,cornerColors,morphTargets} : null;
+  return faces.length ? {mesh:new EditableMesh(vertices, faces, undefined, faceGroups),cornerUVs,cornerTangents,cornerColors,morphTargets,morphWeights:[...weights]} : null;
 }
 
 
@@ -168,7 +189,8 @@ function mergeEditableMeshes(entries,name){
     cornerUVs,
     cornerTangents,
     cornerColors,
-    morphTargets
+    morphTargets,
+    morphWeights:entries[0]?.morphWeights||[]
   };
 }
 
@@ -191,7 +213,7 @@ function importedMeshes(root,{splitByGroups=false}={}) {
     const materialName=materialList.find(material=>material?.userData?.boxlabFaceGroup)?.userData?.boxlabFaceGroup
       || materialList.find(material=>material?.name&&material.name!=='Material')?.name
       || `FaceGroup ${primitiveIndex}`;
-    const converted = geometryToEditableMesh(node.geometry, node.matrixWorld, node.material, materialName);
+    const converted = geometryToEditableMesh(node.geometry, node.matrixWorld, node.material, materialName, node.morphTargetInfluences);
     if (!converted?.mesh) return;
     primitiveEntries.push({
       mesh:converted.mesh,
@@ -199,6 +221,7 @@ function importedMeshes(root,{splitByGroups=false}={}) {
       cornerTangents:converted.cornerTangents,
       cornerColors:converted.cornerColors,
       morphTargets:converted.morphTargets,
+      morphWeights:converted.morphWeights,
       node,
       owner:logicalPrimitiveOwner(node,root),
       name:node.name || 'Mesh',
@@ -213,7 +236,8 @@ function importedMeshes(root,{splitByGroups=false}={}) {
       cornerUVs:entry.cornerUVs||[],
       cornerTangents:entry.cornerTangents||[],
       cornerColors:entry.cornerColors||[],
-      morphTargets:entry.morphTargets||[]
+      morphTargets:entry.morphTargets||[],
+      morphWeights:entry.morphWeights||[]
     }));
   }
   const buckets=new Map();
@@ -232,7 +256,8 @@ function importedMeshes(root,{splitByGroups=false}={}) {
         cornerUVs:entry.cornerUVs||[],
       cornerTangents:entry.cornerTangents||[],
       cornerColors:entry.cornerColors||[],
-      morphTargets:entry.morphTargets||[]
+      morphTargets:entry.morphTargets||[],
+      morphWeights:entry.morphWeights||[]
       };
     }
     return mergeEditableMeshes(entries,owner?.name||entries[0]?.name||'Mesh');
@@ -248,7 +273,12 @@ function fitMeshesToBoxLabScale(meshes) {
   if (!Number.isFinite(largestDimension) || largestDimension < 1e-9) return 1;
   const scale = IMPORT_TARGET_SIZE / largestDimension;
   const center = bounds.getCenter(new THREE.Vector3());
-  meshes.forEach(entry => entry.mesh.vertices.forEach(vertex => vertex.sub(center).multiplyScalar(scale)));
+  meshes.forEach(entry => {
+    entry.mesh.vertices.forEach(vertex => vertex.sub(center).multiplyScalar(scale));
+    (entry.morphTargets||[]).forEach(target=>(target?.position||[]).forEach(face=>(face||[]).forEach(delta=>{
+      if(Array.isArray(delta)&&delta.length>=3){delta[0]*=scale;delta[1]*=scale;delta[2]*=scale;}
+    })));
+  });
   return scale;
 }
 
@@ -381,6 +411,7 @@ function addImported(meshes, baseName,{reconstructQuads=false}={}) {
     }
     const passthrough=entry.glbPassthrough||null;
     if(passthrough){
+      passthrough.activeMorphWeights=Array.isArray(entry.morphWeights)?[...entry.morphWeights]:[];
       passthrough.uvCorners=nextUVs;
       passthrough.uvTopologySignature=topologySignature(next);
       passthrough.uvFaceCount=next.faces.length;
@@ -392,7 +423,7 @@ function addImported(meshes, baseName,{reconstructQuads=false}={}) {
       passthrough.morphTargets=nextMorphTargets;
       passthrough.morphTopologySignature=topologySignature(next);
     }
-    return{...entry,mesh:next,cornerUVs:nextUVs,cornerTangents:nextTangents,cornerColors:nextColors,morphTargets:nextMorphTargets,glbPassthrough:passthrough};
+    return{...entry,mesh:next,cornerUVs:nextUVs,cornerTangents:nextTangents,cornerColors:nextColors,morphTargets:nextMorphTargets,morphWeights:entry.morphWeights||[],glbPassthrough:passthrough};
   });
   const options={kind:isReference?'reference':'editable',locked:isReference,enterObjectMode:!isReference,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}};
   meshes.forEach((entry,index)=>manager.addMesh(entry.mesh,meshes.length===1?baseName:`${baseName} • ${entry.name||index+1}`,{...options,glbPassthrough:entry.glbPassthrough||null}));
