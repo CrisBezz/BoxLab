@@ -65,6 +65,7 @@ function parseGLBPassthrough(buffer){
         nodeName:String(nodeInfo?.node?.name||''),
         nodeExtras:cloneJSON(nodeInfo?.node?.extras||null),
         nodeMatrix:cloneJSON(nodeInfo?.node?.matrix||null),
+        nodeWeights:cloneJSON(nodeInfo?.node?.weights||null),
         materialIndices,
         materials:cloneJSON(json.materials||[]),
         samplers:cloneJSON(json.samplers||[]),
