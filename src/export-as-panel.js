@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.555 — single-source morph weights + welded UV poles.
+// BoxLab v0.36.18.556 — restore original GLB round-trip scale.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.555';
+const VERSION='0.36.18.556';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -114,6 +114,10 @@ function editableToGeometry(mesh,channels={}){
   const cornerColors=channels?.colors||null;
   const morphTargets=channels?.morphTargets||null;
   const morphWeights=Array.isArray(channels?.morphWeights)?channels.morphWeights:[];
+  const importFit=channels?.importFit||null;
+  const fitScale=Number(importFit?.scale||1);
+  const fitCenter=Array.isArray(importFit?.center)&&importFit.center.length>=3?importFit.center:[0,0,0];
+  const restoreFit=Number.isFinite(fitScale)&&Math.abs(fitScale)>1e-12;
   const buckets=new Map();
   for(let faceIndex=0;faceIndex<(mesh.faces||[]).length;faceIndex++){
     const face=mesh.faces[faceIndex];
@@ -188,6 +192,11 @@ function editableToGeometry(mesh,channels={}){
         if(weight&&Array.isArray(delta)){px-=delta[0]*weight;py-=delta[1]*weight;pz-=delta[2]*weight;}
       });
     }
+    if(restoreFit){
+      px=px/fitScale+Number(fitCenter[0]||0);
+      py=py/fitScale+Number(fitCenter[1]||0);
+      pz=pz/fitScale+Number(fitCenter[2]||0);
+    }
     positions.push(px,py,pz);
     if(uvComplete)uvs.push(data.uv[0],data.uv[1]);
     if(tangentComplete)tangents.push(data.tangent[0],data.tangent[1],data.tangent[2],data.tangent[3]);
@@ -195,7 +204,10 @@ function editableToGeometry(mesh,channels={}){
       colors.push(data.color[0],data.color[1],data.color[2]);
       if(colorItemSize===4)colors.push(Number.isFinite(data.color[3])?data.color[3]:1);
     }
-    if(morphComplete)data.morphs.forEach((delta,targetIndex)=>morphPositionArrays[targetIndex].push(delta[0],delta[1],delta[2]));
+    if(morphComplete)data.morphs.forEach((delta,targetIndex)=>{
+      const inv=restoreFit?1/fitScale:1;
+      morphPositionArrays[targetIndex].push(delta[0]*inv,delta[1]*inv,delta[2]*inv);
+    });
     vertexMap.set(key,next);
     return next;
   };
@@ -457,7 +469,8 @@ async function buildGLB(sceneObjects,subd){
       tangents:tangentCompatible?passthrough.tangentCorners:null,
       colors:colorCompatible?passthrough.vertexColorCorners:null,
       morphTargets:morphCompatible?passthrough.morphTargets:null,
-      morphWeights:morphCompatible?passthrough.activeMorphWeights:null
+      morphWeights:morphCompatible?passthrough.activeMorphWeights:null,
+      importFit:passthrough?.boxlabImportFit||null
     }),geometry=built.geometry;
     if(!geometry.getAttribute('position')?.count)return;
     if(built.uvRestored)uvRestoredCount++;
