@@ -1659,3 +1659,10 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .566: syntax/static regression 7/7 PASS
 - [x] Protection .566: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .567: Viewport flyout opens at the right screen/app border
+- [ ] Workflow .567: flyout respects right safe-area margin
+- [ ] Workflow .567: View Direction / Render Look controls remain fully usable
+- [ ] Regression .567: Viewport button position and camera behavior unchanged
+- [x] Automated .567: syntax/static regression 5/5 PASS
+- [x] Protection .567: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
