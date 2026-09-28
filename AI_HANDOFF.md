@@ -1,3 +1,12 @@
+## v0.36.18.553 — HANDS-ON PASS
+
+- User confirmed the indexed/welded GLB topology export fix PASS.
+- Verified BoxLab -> Nomad Base GLB no longer behaves as separate triangles on subdivision.
+- Treat .553 as the current verified GLB topology checkpoint.
+- .552 morph/layer preservation remains present on top of this corrected export path.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+
 ## v0.36.18.553 — GLB indexed/welded topology export fix
 
 - User hands-on result on .552: FAIL for topology continuity after BoxLab -> Nomad GLB round-trip.
