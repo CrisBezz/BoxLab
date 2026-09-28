@@ -1595,3 +1595,10 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .557: static mode-dock regression 6/6 PASS
 - [x] Protection .557: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .558: Vertex / Edge / Face / Object dock appears at true bottom-left of viewport
+- [ ] Workflow .558: all four selection modes switch and highlight exactly as before
+- [ ] Workflow .558: dock does not overlap status text or left tool drawer
+- [ ] Regression .558: orbit/pan/zoom/Undo/Redo unchanged
+- [x] Automated .558: relocation regression 9/9 PASS
+- [x] Protection .558: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
