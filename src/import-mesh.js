@@ -3,10 +3,11 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { EditableMesh } from './mesh.js?v=0.21.2';
 import { parseEditableOBJ } from './obj-facegroups-core.js?v=0.36.18.448';
+import { evaluateTrianglePair } from './quad-clean-core.js?v=0.36.18.323';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.546';
+const VERSION='0.36.18.548';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -157,12 +158,62 @@ function weldEditableMesh(mesh, tolerance=EDITABLE_WELD_TOLERANCE) {
   return { mesh:new EditableMesh(vertices, faces, mesh.creases, faceGroups), welded, removedFaces };
 }
 
-function addImported(meshes, baseName) {
+function reconstructImportedQuads(mesh){
+  if(!mesh?.faces?.length||!mesh?.faceGroups?.length)return{mesh,merged:0};
+  const candidates=[];
+  for(const edge of mesh.edges?.()||[]){
+    if(edge.faces?.length!==2)continue;
+    const [a,b]=edge.faces;
+    if(mesh.faces[a]?.length!==3||mesh.faces[b]?.length!==3)continue;
+    const groupA=mesh.faceGroups?.[a]??null,groupB=mesh.faceGroups?.[b]??null;
+    if(!groupA||groupA!==groupB)continue;
+    const evaluated=evaluateTrianglePair(mesh,a,b);
+    if(!evaluated?.ok||evaluated.normalDot<0.9995)continue;
+    candidates.push({a,b,quad:evaluated.quad,score:evaluated.score,group:groupA});
+  }
+  candidates.sort((x,y)=>x.score-y.score||Math.min(x.a,x.b)-Math.min(y.a,y.b));
+  const used=new Set(),chosen=[];
+  for(const candidate of candidates){
+    if(used.has(candidate.a)||used.has(candidate.b))continue;
+    used.add(candidate.a);used.add(candidate.b);chosen.push(candidate);
+  }
+  if(!chosen.length)return{mesh,merged:0};
+  const replacements=new Map(),remove=new Set();
+  for(const candidate of chosen){
+    const keep=Math.min(candidate.a,candidate.b),drop=Math.max(candidate.a,candidate.b);
+    replacements.set(keep,{face:[...candidate.quad],group:candidate.group});
+    remove.add(drop);
+  }
+  const faces=[],faceGroups=[];
+  for(let i=0;i<mesh.faces.length;i++){
+    if(remove.has(i))continue;
+    const replacement=replacements.get(i);
+    if(replacement){
+      faces.push(replacement.face);
+      faceGroups.push(replacement.group);
+    }else{
+      faces.push([...mesh.faces[i]]);
+      faceGroups.push(mesh.faceGroups?.[i]??null);
+    }
+  }
+  return{mesh:new EditableMesh(mesh.vertices,faces,mesh.creases,faceGroups),merged:chosen.length};
+}
+
+function addImported(meshes, baseName,{reconstructQuads=false}={}) {
   const manager = globalThis.__boxlabObjectManager;
   if (!manager) throw new Error('The Outliner is still loading. Please try Import again.');
   const isReference = importKind === 'reference';fitMeshesToBoxLabScale(meshes);
-  let weldedTotal = 0, removedTotal = 0;
-  if (!isReference) meshes = meshes.map(entry => { const result=weldEditableMesh(entry.mesh);weldedTotal+=result.welded;removedTotal+=result.removedFaces;return{...entry,mesh:result.mesh}; });
+  let weldedTotal = 0, removedTotal = 0, reconstructedQuads = 0;
+  if (!isReference) meshes = meshes.map(entry => {
+    const result=weldEditableMesh(entry.mesh);
+    weldedTotal+=result.welded;removedTotal+=result.removedFaces;
+    let next=result.mesh;
+    if(reconstructQuads){
+      const rebuilt=reconstructImportedQuads(next);
+      next=rebuilt.mesh;reconstructedQuads+=rebuilt.merged;
+    }
+    return{...entry,mesh:next};
+  });
   const options={kind:isReference?'reference':'editable',locked:isReference,enterObjectMode:!isReference,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}};
   meshes.forEach((entry,index)=>manager.addMesh(entry.mesh,meshes.length===1?baseName:`${baseName} • ${entry.name||index+1}`,options));
   const preserved=!isReference&&meshes.some(entry=>entry.polygonPreserved);
@@ -171,7 +222,7 @@ function addImported(meshes, baseName) {
   globalThis.__boxlabNomadRoundTrip ||= {};
   globalThis.__boxlabNomadRoundTrip.lastImport={objects:meshes.length,faceGroups:groupCount,details:perObject};
   if(isReference)setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • locked reference`);
-  else setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • editable${preserved?' • OBJ polygons preserved':''}${groupCount?` • ${groupCount} facegroup${groupCount===1?'':'s'} preserved`:''} • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
+  else setStatus(`${meshes.length} imported ${meshes.length===1?'mesh':'meshes'} • editable${preserved?' • OBJ polygons preserved':''}${groupCount?` • ${groupCount} facegroup${groupCount===1?'':'s'} preserved`:''}${reconstructedQuads?` • ${reconstructedQuads} quad${reconstructedQuads===1?'':'s'} reconstructed`:''} • ${weldedTotal} coincident vertices welded${removedTotal?` • ${removedTotal} collapsed faces removed`:''}`);
 }
 
 function loadOBJ(file) {
@@ -189,7 +240,7 @@ function loadOBJ(file) {
 
 function loadGLTF(file) {
   const reader = new FileReader();
-  reader.onload = () => { const loader=new GLTFLoader();loader.parse(reader.result,'',gltf=>{try{const meshes=importedMeshes(gltf.scene,{splitByGroups:!!splitGroupsToggle?.checked});if(!meshes.length)throw new Error('No mesh geometry was found in this file.');addImported(meshes,fileBaseName(file));}catch(error){setStatus(`Import failed • ${error.message||'Unsupported GLTF'}`);}},error=>setStatus(`Import failed • ${error.message||'GLB/GLTF could not be read'}`)); };
+  reader.onload = () => { const loader=new GLTFLoader();loader.parse(reader.result,'',gltf=>{try{const meshes=importedMeshes(gltf.scene,{splitByGroups:!!splitGroupsToggle?.checked});if(!meshes.length)throw new Error('No mesh geometry was found in this file.');addImported(meshes,fileBaseName(file),{reconstructQuads:true});}catch(error){setStatus(`Import failed • ${error.message||'Unsupported GLTF'}`);}},error=>setStatus(`Import failed • ${error.message||'GLB/GLTF could not be read'}`)); };
   reader.onerror=()=>setStatus('Import failed • could not read GLB/GLTF');reader.readAsArrayBuffer(file);
 }
 
@@ -197,4 +248,4 @@ function importFile(file) { if(!file)return;const extension=file.name.split('.')
 kindButtons.forEach(item=>item.addEventListener('click',()=>{importKind=item.dataset.importKind;kindButtons.forEach(button=>button.classList.toggle('active',button===item));}));
 button?.addEventListener('click',()=>input?.click());input?.addEventListener('change',()=>{importFile(input.files?.[0]);input.value='';});
 if(!globalThis.__boxlabObjectManager)window.addEventListener('boxlab-object-manager-ready',()=>{},{once:true});
-globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ,geometryToEditableMesh,importedMeshes,mergeEditableMeshes};
+globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ,geometryToEditableMesh,importedMeshes,mergeEditableMeshes,reconstructImportedQuads};
