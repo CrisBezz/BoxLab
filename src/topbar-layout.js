@@ -63,7 +63,7 @@ style.textContent=`
 #viewportWrap > #selectionModes button{min-width:46px;min-height:42px;padding:7px 11px;justify-content:center}
 #viewportWrap > #selectionModes svg{width:19px;height:19px;flex:0 0 auto}
 #viewportWrap > #selectionModes .mode-label{font-size:12px}
-#viewportWrap > .floating-panel.left-panel{max-height:calc(100% - 54px);padding-bottom:18px}
+#viewportWrap > .floating-panel.left-panel{bottom:104px;max-height:none;padding-bottom:18px}
 .top-actions{align-items:center}
 .top-actions>button,.top-actions>#viewModes>summary{min-height:38px;height:38px;padding:7px 10px;font-size:13px!important;font-weight:600;line-height:1}
 .top-actions>#viewModes{margin:0}
@@ -72,7 +72,7 @@ style.textContent=`
     #viewportWrap > #selectionModes{left:max(8px,env(safe-area-inset-left));bottom:max(46px,calc(env(safe-area-inset-bottom) + 36px));gap:2px;padding:3px}
   #viewportWrap > #selectionModes button{min-width:42px;min-height:42px;padding:7px 8px}
   #viewportWrap > #selectionModes .mode-label{display:none}
-    #viewportWrap > .floating-panel.left-panel{max-height:calc(100% - 46px);padding-bottom:18px}
+    #viewportWrap > .floating-panel.left-panel{bottom:96px;max-height:none;padding-bottom:18px}
   .top-actions>button,.top-actions>#viewModes>summary{min-height:38px;height:38px;padding:7px 9px;font-size:13px!important}
   .top-file-content{width:min(300px,calc(100vw - 16px));max-width:calc(100vw - 16px)}
 }
