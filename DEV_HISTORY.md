@@ -3067,3 +3067,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Preserved IDs, buttons and selection-mode logic unchanged.
 - Static relocation regression 9/9 PASS.
 
+## 2026-09-28 — v0.36.18.559 runtime-owned bottom-left selection mode dock
+- .557/.558 failed because topbar-layout.js reparented #selectionModes back into #commandBar at runtime, causing flashing and breaking topbar composition.
+- Restored original header markup and removed the conflicting CSS relocation blocks.
+- Changed topbar-layout.js to own the relocation and append the existing #selectionModes node into #viewportWrap instead.
+- Runtime style now owns bottom-left safe-area positioning.
+- Forced topbar brand visibility so BoxLab/version remain visible.
+- Static/runtime ownership regression 11/11 PASS.
+
