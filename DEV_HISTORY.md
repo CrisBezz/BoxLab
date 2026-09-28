@@ -2982,3 +2982,13 @@ The current repository has evolved through many earlier releases. Important prot
 - intentionally pinned selection/UI stylesheet baseline where still referenced by current `index.html`
 
 For exact implementation state, always inspect current `main`; this history is context, not authority.
+
+## 2026-09-28 — v0.36.18.551 Nomad attribute preservation Phase 2B
+- Extended the .550 face-corner preservation pipeline to GLB `TANGENT` and `COLOR_0`.
+- Weld and conservative quad reconstruction now carry UV/tangent/colour corner channels together and reject merges that would cross attribute discontinuities.
+- Vertex colours restore on Base GLB export while topology remains compatible.
+- Tangents restore only while both topology and vertex-position geometry remain compatible, preventing stale tangent vectors after shape edits.
+- Added `tests/nomad-attribute-preservation-551.test.mjs`; syntax parse + 13 targeted assertions passed through the repository audit.
+- Published runtime pins/version as v0.36.18.551.
+- Beta 5 .538 and protected multi-object-transform .1.0 remained untouched.
+
