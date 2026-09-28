@@ -3105,3 +3105,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - No selection logic changed.
 - Static regression 8/8 PASS.
 
+## 2026-09-28 — v0.36.18.565 left tool drawer scroll boundary above mode dock
+- Selection had been restored to the original left drawer, but scrolling still passed underneath the bottom mode strip.
+- Replaced max-height based clearance with a true bottom boundary on the absolute-positioned left drawer.
+- Standard layout bottom boundary: 104px; compact/mobile: 96px.
+- Scroll viewport now ends above the mode dock.
+- Syntax/static regression 5/5 PASS.
+
