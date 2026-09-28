@@ -1,3 +1,29 @@
+## v0.36.18.546 — Import module parse fix
+
+- User reported on .545:
+  - Editable / Reference could not be switched.
+  - Import closed the File menu without opening the file picker.
+  - Export still worked.
+- Root cause was a syntax error introduced in .544 GLB logical-object import:
+  - a generated facegroup fallback template literal was committed with escaped backticks and escaped interpolation.
+  - Because import-mesh.js failed to parse, none of its event listeners were installed.
+- .546 corrects that one parse error and bumps the import module runtime pin.
+- Expected restored behavior:
+  - Editable / Reference swaps normally.
+  - Import OBJ / GLB / GLTF opens the system file picker.
+  - .544 GLB Split-toggle logic remains intact.
+  - .545 File menu configuration behavior remains intact.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
+Hands-on retest:
+1. Open File.
+2. Tap Editable, then Reference, then Editable.
+3. PASS = active state swaps each time and menu stays open.
+4. Tap Import OBJ / GLB / GLTF.
+5. PASS = system file picker opens.
+6. Import the Nomad GLB with Split OFF.
+7. PASS = logical object/facegroup behavior can then be tested.
+
 ## v0.36.18.545 — File menu configuration controls stay open
 
 - User reported .544 File menu closed whenever any control was clicked.
