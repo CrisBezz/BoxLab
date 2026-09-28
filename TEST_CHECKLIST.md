@@ -1666,3 +1666,11 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .567: syntax/static regression 5/5 PASS
 - [x] Protection .567: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .568: no Viewport ownership/reordering flash during startup
+- [ ] Workflow .568: Viewport button sits at far-right of top action row
+- [ ] Workflow .568: Viewport flyout remains right-edge anchored
+- [ ] Workflow .568: Facegroup panel uses compact standard control sizing
+- [ ] Workflow .568: Facegroup palette/sliders/reseed/reset remain functional
+- [x] Automated .568: syntax/static regression 13/13 PASS
+- [x] Protection .568: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
