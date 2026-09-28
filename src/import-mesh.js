@@ -7,7 +7,7 @@ import { evaluateTrianglePair } from './quad-clean-core.js?v=0.36.18.323';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.548';
+const VERSION='0.36.18.549';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -18,6 +18,73 @@ let importKind = 'editable';
 
 function fileBaseName(file) { return (file?.name || 'Imported Mesh').replace(/\.[^.]+$/, '') || 'Imported Mesh'; }
 function setStatus(text) { if (status) status.textContent = text; }
+
+
+function cloneJSON(value){
+  return value==null?value:JSON.parse(JSON.stringify(value));
+}
+function parseGLBPassthrough(buffer){
+  try{
+    const bytes=new Uint8Array(buffer),view=new DataView(bytes.buffer,bytes.byteOffset,bytes.byteLength);
+    if(bytes.byteLength<20||view.getUint32(0,true)!==0x46546c67)return null;
+    let offset=12,json=null,bin=null;
+    while(offset+8<=bytes.byteLength){
+      const length=view.getUint32(offset,true),type=view.getUint32(offset+4,true);
+      const data=bytes.slice(offset+8,offset+8+length);
+      if(type===0x4e4f534a)json=JSON.parse(new TextDecoder().decode(data).replace(/\u0000+$/,'').trimEnd());
+      else if(type===0x004e4942)bin=data;
+      offset+=8+length;
+    }
+    if(!json)return null;
+    const images=(json.images||[]).map(image=>{
+      const copy=cloneJSON(image);
+      let data=null;
+      if(bin&&Number.isInteger(image?.bufferView)){
+        const bv=json.bufferViews?.[image.bufferView];
+        if(bv){
+          const start=Number(bv.byteOffset||0),end=start+Number(bv.byteLength||0);
+          data=bin.slice(start,end);
+        }
+      }
+      return{definition:copy,data};
+    });
+    const nodesByMesh=new Map();
+    (json.nodes||[]).forEach((node,index)=>{
+      if(Number.isInteger(node?.mesh)&&!nodesByMesh.has(node.mesh))nodesByMesh.set(node.mesh,{index,node});
+    });
+    const objects=(json.meshes||[]).map((mesh,index)=>{
+      const nodeInfo=nodesByMesh.get(index)||null;
+      const materialIndices=[...new Set((mesh.primitives||[]).map(p=>p.material).filter(Number.isInteger))];
+      return{
+        version:1,
+        source:'glb',
+        generator:String(json.asset?.generator||''),
+        meshName:String(mesh.name||''),
+        meshExtras:cloneJSON(mesh.extras||null),
+        meshWeights:cloneJSON(mesh.weights||null),
+        nodeName:String(nodeInfo?.node?.name||''),
+        nodeExtras:cloneJSON(nodeInfo?.node?.extras||null),
+        nodeMatrix:cloneJSON(nodeInfo?.node?.matrix||null),
+        materialIndices,
+        materials:cloneJSON(json.materials||[]),
+        samplers:cloneJSON(json.samplers||[]),
+        textures:cloneJSON(json.textures||[]),
+        images,
+        originalTopology:{
+          primitiveCount:(mesh.primitives||[]).length,
+          positionCounts:(mesh.primitives||[]).map(p=>json.accessors?.[p?.attributes?.POSITION]?.count||0),
+          attributes:(mesh.primitives||[]).map(p=>cloneJSON(p.attributes||{})),
+          targets:(mesh.primitives||[]).map(p=>cloneJSON(p.targets||null))
+        },
+        topologyBoundPreserved:true
+      };
+    });
+    return{asset:cloneJSON(json.asset||{}),objects};
+  }catch(error){
+    console.warn('BoxLab GLB passthrough capture failed',error);
+    return null;
+  }
+}
 
 function decodeFaceGroup(material,materialIndex,hasGroups,fallbackName=null){
   const explicit=material?.userData?.boxlabFaceGroup;
@@ -215,7 +282,7 @@ function addImported(meshes, baseName,{reconstructQuads=false}={}) {
     return{...entry,mesh:next};
   });
   const options={kind:isReference?'reference':'editable',locked:isReference,enterObjectMode:!isReference,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}};
-  meshes.forEach((entry,index)=>manager.addMesh(entry.mesh,meshes.length===1?baseName:`${baseName} • ${entry.name||index+1}`,options));
+  meshes.forEach((entry,index)=>manager.addMesh(entry.mesh,meshes.length===1?baseName:`${baseName} • ${entry.name||index+1}`,{...options,glbPassthrough:entry.glbPassthrough||null}));
   const preserved=!isReference&&meshes.some(entry=>entry.polygonPreserved);
   const groupCount=[...new Set(meshes.flatMap(entry=>entry.mesh.faceGroups||[]).filter(Boolean))].length;
   const perObject=meshes.map(entry=>({name:entry.name||'Mesh',faceGroups:[...new Set((entry.mesh.faceGroups||[]).filter(Boolean))].length}));
@@ -240,7 +307,7 @@ function loadOBJ(file) {
 
 function loadGLTF(file) {
   const reader = new FileReader();
-  reader.onload = () => { const loader=new GLTFLoader();loader.parse(reader.result,'',gltf=>{try{const meshes=importedMeshes(gltf.scene,{splitByGroups:!!splitGroupsToggle?.checked});if(!meshes.length)throw new Error('No mesh geometry was found in this file.');addImported(meshes,fileBaseName(file),{reconstructQuads:true});}catch(error){setStatus(`Import failed • ${error.message||'Unsupported GLTF'}`);}},error=>setStatus(`Import failed • ${error.message||'GLB/GLTF could not be read'}`)); };
+  reader.onload = () => { const loader=new GLTFLoader();loader.parse(reader.result,'',gltf=>{try{const meshes=importedMeshes(gltf.scene,{splitByGroups:!!splitGroupsToggle?.checked});if(!meshes.length)throw new Error('No mesh geometry was found in this file.');const passthrough=parseGLBPassthrough(reader.result);if(passthrough&&!splitGroupsToggle?.checked)meshes.forEach((entry,index)=>{entry.glbPassthrough=passthrough.objects?.[index]||null;});addImported(meshes,fileBaseName(file),{reconstructQuads:true});}catch(error){setStatus(`Import failed • ${error.message||'Unsupported GLTF'}`);}},error=>setStatus(`Import failed • ${error.message||'GLB/GLTF could not be read'}`)); };
   reader.onerror=()=>setStatus('Import failed • could not read GLB/GLTF');reader.readAsArrayBuffer(file);
 }
 
@@ -248,4 +315,4 @@ function importFile(file) { if(!file)return;const extension=file.name.split('.')
 kindButtons.forEach(item=>item.addEventListener('click',()=>{importKind=item.dataset.importKind;kindButtons.forEach(button=>button.classList.toggle('active',button===item));}));
 button?.addEventListener('click',()=>input?.click());input?.addEventListener('change',()=>{importFile(input.files?.[0]);input.value='';});
 if(!globalThis.__boxlabObjectManager)window.addEventListener('boxlab-object-manager-ready',()=>{},{once:true});
-globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ,geometryToEditableMesh,importedMeshes,mergeEditableMeshes,reconstructImportedQuads};
+globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ,geometryToEditableMesh,importedMeshes,mergeEditableMeshes,reconstructImportedQuads,parseGLBPassthrough};
