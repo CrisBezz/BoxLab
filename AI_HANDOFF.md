@@ -1,21 +1,23 @@
-## v0.36.18.565 — left tool drawer scroll boundary above mode dock
+## v0.36.18.566 — lower bottom mode dock / reclaim vertical space
 
-- User confirmed Selection is back in the desired original drawer position, but the left tool drawer still scrolls underneath the bottom-left mode strip.
-- Root cause: the drawer still used a loose max-height, so its scroll box extended behind the mode dock.
-- .565 replaces that with a hard bottom boundary:
-  - normal layout: `bottom:104px; max-height:none`
-  - compact/mobile layout: `bottom:96px; max-height:none`
-- This makes the scroll container physically end above the Vertex / Edge / Face / Object dock.
-- Selection remains inside the drawer.
-- Mode dock remains bottom-left.
-- Topbar/Viewport layout from .563/.564 remains unchanged.
-- Automated syntax/static regression 5/5 PASS.
+- User requested maximum vertical viewport/tool-drawer space.
+- .565 correctly stopped the tool drawer above the bottom mode dock, but the dock still sat conservatively high above the physical bottom edge.
+- .566 lowers the mode dock close to the actual device safe-area bottom:
+  - normal: `bottom:max(10px, env(safe-area-inset-bottom) + 6px)`
+  - compact/iPad: `bottom:max(8px, env(safe-area-inset-bottom) + 4px)`
+- The left tool drawer bottom boundary follows the dock downward:
+  - normal: 72px
+  - compact/iPad: 66px
+- Drawer bottom padding reduced from 18px to 14px.
+- This recovers roughly 20–30px of useful vertical tool space while keeping the mode dock reachable and clear of the safe-area edge.
+- No mode logic, selection logic or navigation logic changed.
+- Automated syntax/static regression 7/7 PASS.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
 
 Hands-on check:
-1. Scroll the left tool drawer to the very bottom.
-2. Final controls must stop above the mode dock and remain fully visible/clickable.
-3. Selection remains at the top of the drawer.
-4. Mode dock remains fixed bottom-left.
-5. Navigation and selection behavior remain unchanged.
+1. Mode dock sits noticeably closer to the bottom edge.
+2. It still clears the iPad safe area/home indicator comfortably.
+3. Tool drawer scroll still ends above the dock.
+4. Final controls remain fully visible/clickable.
+5. Navigation and mode switching remain unchanged.
 
