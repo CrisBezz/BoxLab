@@ -3002,3 +3002,12 @@ For exact implementation state, always inspect current `main`; this history is c
 - Published runtime pins/version as v0.36.18.552.
 - Beta 5 .538 and protected multi-object-transform .1.0 remained untouched.
 
+## 2026-09-28 — v0.36.18.553 indexed GLB topology export
+- .552 hands-on exposed non-welded GLB output: Nomad subdivision behaved like separate triangles.
+- Root cause: export geometry duplicated every triangle corner and had no index buffer.
+- Reworked `editableToGeometry()` to deduplicate exported vertices by BoxLab vertex identity plus preserved corner-channel signature and emit `geometry.setIndex(indices)`.
+- Real UV/tangent/colour/morph seams remain split; identical corners now share indices.
+- Added `tests/nomad-indexed-topology-553.test.mjs`.
+- Exporter syntax + 7 targeted indexed-topology assertions passed before publish.
+- Published v0.36.18.553; Beta 5 .538 and multi-object-transform .1.0 unchanged.
+
