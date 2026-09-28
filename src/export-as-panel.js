@@ -145,14 +145,19 @@ async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
   const details=[];
   gltf.scene.updateMatrixWorld(true);
   gltf.scene.traverse(node=>{
-    if(!node.isMesh||!node.geometry)return;
+    if(node.userData?.boxlabRoundTripObject!==true)return;
     objects++;
-    const slots=Math.max(
-      node.geometry.groups?.length||0,
-      Array.isArray(node.material)?node.material.length:(node.material?1:0)
-    );
+    let slots=0;
+    node.traverse(part=>{
+      if(!part.isMesh||!part.geometry)return;
+      slots+=Math.max(
+        part.geometry.groups?.length||0,
+        Array.isArray(part.material)?part.material.length:(part.material?1:0),
+        1
+      );
+    });
     groupSlots+=slots;
-    details.push({name:node.name||('Mesh '+objects),groupSlots:slots});
+    details.push({name:node.name||('Object '+objects),groupSlots:slots});
   });
   const pass=objects===expectedObjects&&groupSlots===expectedGroupSlots;
   const report={pass,objects,groupSlots,expectedObjects,expectedGroupSlots,details};
@@ -175,6 +180,7 @@ async function buildGLB(sceneObjects,subd){
     const node=new THREE.Mesh(geometry,materials.length===1?materials[0]:materials);
     node.name=safeOBJName(object.name,index);
     node.userData.boxlabObjectId=object.id;
+    node.userData.boxlabRoundTripObject=true;
     node.userData.boxlabFaceGroupCount=built.groups.filter(group=>group.name).length;
     node.userData.boxlabGroupSlotCount=built.groups.length;
     faceGroupCount+=node.userData.boxlabFaceGroupCount;
