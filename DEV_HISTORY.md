@@ -3083,3 +3083,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Published CSS/topbar cache pins as .561.
 - Syntax/static regression 9/9 PASS.
 
+## 2026-09-28 — v0.36.18.562 bottom Selection dock + top Viewport actions
+- Moved the existing Selection panel out of the scrolling left tool drawer and docked it above the bottom-left mode strip.
+- Added no-flash relocation for #selectionDrawer.
+- Kept Viewport settings in .top-actions beside the top action buttons rather than the second command row.
+- Normalized .top-actions button/Viewport summary typography to 13px and 38px control height, covering Frame All / Viewport / Undo / Redo where present.
+- Preserved all existing IDs/handlers.
+- Syntax/static regression 11/11 PASS.
+
