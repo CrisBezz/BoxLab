@@ -1,3 +1,32 @@
+## v0.36.18.547 — stronger facegroup colours + Nomad-native GLB grouping
+
+- User confirmed .546 import controls PASS.
+- User then reported:
+  1. BoxLab facegroup display colours were too similar to distinguish reliably.
+  2. Exported GLB re-opened in Nomad as separate objects per facegroup.
+- Facegroup display now assigns hues with golden-angle spacing across the actual facegroups in the object, giving much stronger visual separation.
+- render-modes now cache-busts facegroup-colours-core at .547 so Safari receives the new palette.
+- Nomad reference GLB confirmed one logical mesh with:
+  - several glTF primitives
+  - one shared PBR material
+  - mesh.extras.nomad.groups[] containing facegroup names/colours
+  - primitive.extras.nomad.group containing each primitive's facegroup index
+- .547 exporter now mirrors that structure:
+  - one BoxLab object -> one glTF mesh
+  - one shared material across its primitives
+  - Nomad facegroup table injected into mesh extras
+  - per-primitive Nomad group indices injected into primitive extras
+- .543 structural self-check remains in place after the Nomad metadata patch.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
+Hands-on retest:
+1. Import the Nomad test GLB with Split OFF.
+2. In Facegroups render look, confirm six groups are visually much more distinct.
+3. Export GLB Base from BoxLab.
+4. Open the result in Nomad.
+5. PASS = one Nomad object, with the facegroups available inside that object rather than six separate objects.
+6. Repeat with SubD only after Base passes.
+
 ## v0.36.18.546 — Import module parse fix
 
 - User reported on .545:
