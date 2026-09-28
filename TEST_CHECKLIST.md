@@ -1651,3 +1651,11 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .565: syntax/static regression 5/5 PASS
 - [x] Protection .565: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .566: bottom mode dock sits close to the iPad safe-area edge
+- [ ] Workflow .566: mode dock remains comfortably above the home indicator / unsafe area
+- [ ] Workflow .566: left tool drawer scroll still ends above the dock
+- [ ] Workflow .566: reclaimed vertical space is visible/useful
+- [ ] Regression .566: mode switching and navigation unchanged
+- [x] Automated .566: syntax/static regression 7/7 PASS
+- [x] Protection .566: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
