@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.550 HANDS-ON PASS
+
+- User confirmed topology-safe Nomad UV round-trip PASS.
+- .550 becomes the verified Nomad preservation checkpoint.
+- UV seams and texture alignment survive the tested unchanged-topology round trip.
+- Future work: tangents and vertex colours, then topology-aware morph/layer correspondence.
+
 ## 2026-09-28 — v0.36.18.550 Nomad UV Preservation Phase 2A
 
 - Added per-face-corner UV capture on GLB import.
