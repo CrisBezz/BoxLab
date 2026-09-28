@@ -6,7 +6,7 @@ import { parseEditableOBJ } from './obj-facegroups-core.js?v=0.36.18.448';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.544';
+const VERSION='0.36.18.546';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -86,7 +86,7 @@ function importedMeshes(root,{splitByGroups=false}={}) {
     const materialList=Array.isArray(node.material)?node.material:[node.material];
     const materialName=materialList.find(material=>material?.userData?.boxlabFaceGroup)?.userData?.boxlabFaceGroup
       || materialList.find(material=>material?.name&&material.name!=='Material')?.name
-      || \`FaceGroup \${primitiveIndex}\`;
+      || `FaceGroup ${primitiveIndex}`;
     const mesh = geometryToEditableMesh(node.geometry, node.matrixWorld, node.material, materialName);
     if (!mesh) return;
     primitiveEntries.push({
