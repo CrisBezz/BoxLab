@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.547 — Nomad-native facegroup GLB structure.
+// BoxLab v0.36.18.549 — Nomad GLB safe passthrough preservation.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.547';
+const VERSION='0.36.18.549';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -142,48 +142,135 @@ function sharedNomadMaterial(){
   material.userData.boxlabNomadSharedMaterial=true;
   return material;
 }
+function cloneJSON(value){
+  return value==null?value:JSON.parse(JSON.stringify(value));
+}
+function remapTextureRefs(material,textureBase){
+  const copy=cloneJSON(material||{});
+  const bump=info=>{if(info&&Number.isInteger(info.index))info.index+=textureBase;};
+  bump(copy.pbrMetallicRoughness?.baseColorTexture);
+  bump(copy.pbrMetallicRoughness?.metallicRoughnessTexture);
+  bump(copy.normalTexture);
+  bump(copy.occlusionTexture);
+  bump(copy.emissiveTexture);
+  return copy;
+}
 function patchNomadFaceGroupGLB(buffer,objectDetails){
   const source=new Uint8Array(buffer);
   const view=new DataView(source.buffer,source.byteOffset,source.byteLength);
   if(view.getUint32(0,true)!==0x46546c67)throw new Error('GLB patch failed: invalid header');
-  let offset=12,jsonChunk=null;
+  let offset=12,jsonChunk=null,binChunk=null;
   const chunks=[];
   while(offset<source.byteLength){
     const length=view.getUint32(offset,true),type=view.getUint32(offset+4,true);
     const data=source.slice(offset+8,offset+8+length);
     chunks.push({type,data});
     if(type===0x4e4f534a)jsonChunk={type,data};
+    if(type===0x004e4942)binChunk={type,data};
     offset+=8+length;
   }
   if(!jsonChunk)throw new Error('GLB patch failed: JSON chunk missing');
   const jsonText=new TextDecoder().decode(jsonChunk.data).replace(/\u0000+$/,'').trimEnd();
   const gltf=JSON.parse(jsonText);
+  let bin=binChunk?.data?new Uint8Array(binChunk.data):new Uint8Array();
+  const appendBinary=data=>{
+    const bytes=data instanceof Uint8Array?data:new Uint8Array(data||[]);
+    const start=(bin.length+3)&~3;
+    const end=start+bytes.length;
+    const paddedEnd=(end+3)&~3;
+    const next=new Uint8Array(paddedEnd);
+    next.set(bin,0);
+    next.set(bytes,start);
+    bin=next;
+    return{byteOffset:start,byteLength:bytes.length};
+  };
+  gltf.bufferViews ||= [];
+  gltf.images ||= [];
+  gltf.samplers ||= [];
+  gltf.textures ||= [];
+  gltf.materials ||= [];
+  let passthroughObjects=0;
   const meshes=gltf.meshes||[];
   for(let meshIndex=0;meshIndex<meshes.length;meshIndex++){
     const mesh=meshes[meshIndex],detail=objectDetails[meshIndex];
     if(!detail)continue;
+    const passthrough=detail.passthrough||null;
     const names=detail.groupNames||[];
-    mesh.extras=mesh.extras||{};
-    mesh.extras.nomad={
-      ...(mesh.extras.nomad||{}),
-      version:1,
-      mesh_type:'multiresolution',
-      multires_level:0,
-      multires_level_count:1,
-      groups:names.map((name,index)=>({name:name||('FaceGroup '+(index+1)),color:nomadGroupColour(index,names.length)}))
+    const preservedNomad=cloneJSON(passthrough?.meshExtras?.nomad||{});
+    mesh.extras={
+      ...(cloneJSON(passthrough?.meshExtras)||{}),
+      ...(mesh.extras||{})
     };
+    mesh.extras.nomad={
+      ...preservedNomad,
+      ...(mesh.extras.nomad||{}),
+      version:Number(preservedNomad.version||1),
+      mesh_type:preservedNomad.mesh_type||'multiresolution',
+      multires_level:Number.isFinite(preservedNomad.multires_level)?preservedNomad.multires_level:0,
+      multires_level_count:Number.isFinite(preservedNomad.multires_level_count)?preservedNomad.multires_level_count:1,
+      groups:names.map((name,index)=>{
+        const preserved=preservedNomad.groups?.[index]||{};
+        return{
+          ...preserved,
+          name:name||preserved.name||('FaceGroup '+(index+1)),
+          color:Array.isArray(preserved.color)?preserved.color:nomadGroupColour(index,names.length)
+        };
+      })
+    };
+    const node=(gltf.nodes||[]).find(entry=>entry?.mesh===meshIndex);
+    if(node&&passthrough?.nodeExtras){
+      node.extras={...(cloneJSON(passthrough.nodeExtras)||{}),...(node.extras||{})};
+    }
     (mesh.primitives||[]).forEach((primitive,index)=>{
       primitive.extras=primitive.extras||{};
       primitive.extras.nomad={...(primitive.extras.nomad||{}),group:index};
     });
+
+    if(passthrough?.materials?.length){
+      passthroughObjects++;
+      const samplerBase=gltf.samplers.length;
+      for(const sampler of passthrough.samplers||[])gltf.samplers.push(cloneJSON(sampler));
+      const imageBase=gltf.images.length;
+      for(const imageEntry of passthrough.images||[]){
+        const definition=cloneJSON(imageEntry?.definition||{});
+        delete definition.uri;
+        if(imageEntry?.data?.length){
+          const appended=appendBinary(imageEntry.data);
+          definition.bufferView=gltf.bufferViews.length;
+          gltf.bufferViews.push({buffer:0,byteOffset:appended.byteOffset,byteLength:appended.byteLength});
+        }else{
+          delete definition.bufferView;
+        }
+        gltf.images.push(definition);
+      }
+      const textureBase=gltf.textures.length;
+      for(const texture of passthrough.textures||[]){
+        const next=cloneJSON(texture);
+        if(Number.isInteger(next.sampler))next.sampler+=samplerBase;
+        if(Number.isInteger(next.source))next.source+=imageBase;
+        gltf.textures.push(next);
+      }
+      const materialBase=gltf.materials.length;
+      for(const material of passthrough.materials||[])gltf.materials.push(remapTextureRefs(material,textureBase));
+      const sourceMaterial=Number.isInteger(passthrough.materialIndices?.[0])?passthrough.materialIndices[0]:0;
+      const materialIndex=materialBase+Math.min(sourceMaterial,Math.max(0,passthrough.materials.length-1));
+      for(const primitive of mesh.primitives||[])primitive.material=materialIndex;
+    }
   }
+  if(gltf.buffers?.length)gltf.buffers[0].byteLength=bin.length;
+  else if(bin.length)gltf.buffers=[{byteLength:bin.length}];
+
   const encoded=new TextEncoder().encode(JSON.stringify(gltf));
   const paddedLength=(encoded.length+3)&~3;
   const padded=new Uint8Array(paddedLength);padded.fill(0x20);padded.set(encoded);
   const rebuilt=[];
+  let wroteBin=false;
   for(const chunk of chunks){
-    rebuilt.push({type:chunk.type,data:chunk.type===0x4e4f534a?padded:chunk.data});
+    if(chunk.type===0x4e4f534a)rebuilt.push({type:chunk.type,data:padded});
+    else if(chunk.type===0x004e4942){rebuilt.push({type:chunk.type,data:bin});wroteBin=true;}
+    else rebuilt.push(chunk);
   }
+  if(bin.length&&!wroteBin)rebuilt.push({type:0x004e4942,data:bin});
   const total=12+rebuilt.reduce((sum,chunk)=>sum+8+chunk.data.length,0);
   const out=new Uint8Array(total),outView=new DataView(out.buffer);
   outView.setUint32(0,0x46546c67,true);outView.setUint32(4,2,true);outView.setUint32(8,total,true);
@@ -192,6 +279,8 @@ function patchNomadFaceGroupGLB(buffer,objectDetails){
     outView.setUint32(write,chunk.data.length,true);outView.setUint32(write+4,chunk.type,true);
     out.set(chunk.data,write+8);write+=8+chunk.data.length;
   }
+  globalThis.__boxlabNomadRoundTrip ||= {};
+  globalThis.__boxlabNomadRoundTrip.lastPassthrough={objects:passthroughObjects};
   return out.buffer;
 }
 async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
@@ -246,7 +335,8 @@ async function buildGLB(sceneObjects,subd){
       name:node.name,
       faceGroups:node.userData.boxlabFaceGroupCount,
       groupSlots:node.userData.boxlabGroupSlotCount,
-      groupNames:built.groups.map((group,groupIndex)=>group.name||('FaceGroup '+(groupIndex+1)))
+      groupNames:built.groups.map((group,groupIndex)=>group.name||('FaceGroup '+(groupIndex+1))),
+      passthrough:object.glbPassthrough||null
     });
     root.add(node);count++;
   });
@@ -278,7 +368,7 @@ async function exportAs(){
       const result=await buildGLB(sceneObjects,subd);
       const blob=new Blob([result.buffer],{type:'model/gltf-binary'});
       const outcome=await saveBlob(blob,fileName,'model/gltf-binary');
-      if(status&&outcome!=='cancelled')status.textContent=`GLB verified • ${result.verification.objects} object${result.verification.objects===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'} • ${result.verification.groupSlots} group slot${result.verification.groupSlots===1?'':'s'} • ${outcome}`;
+      if(status&&outcome!=='cancelled'){const preserved=result.objectDetails.filter(item=>item.passthrough).length;status.textContent=`GLB verified • ${result.verification.objects} object${result.verification.objects===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'}${preserved?` • ${preserved} Nomad payload preserved`:''} • ${outcome}`;}
     }
   }catch(error){
     console.error('BoxLab Export As failed',error);
