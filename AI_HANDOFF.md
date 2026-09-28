@@ -1,3 +1,34 @@
+## v0.36.18.550 — Nomad Preservation Layer Phase 2A: topology-safe UVs
+
+- Builds on verified .549 Nomad GLB passthrough checkpoint.
+- GLB import now captures `TEXCOORD_0` as per-face-corner UV data rather than welded per-vertex UVs.
+- This preserves UV seams through:
+  - GLB triangle import
+  - coincident-vertex weld
+  - .548 conservative triangle-pair -> quad reconstruction
+- Quad reconstruction only carries UVs into a reconstructed quad when shared-corner UVs agree; a UV seam prevents that quad merge rather than corrupting mapping.
+- After import, the passthrough payload stores:
+  - per-face-corner UVs
+  - topology signature of the reconstructed editable mesh
+- Base GLB export restores a Three.js `uv` attribute only when the current mesh topology signature still matches the imported topology.
+- Pure vertex movement / scale / transform does not invalidate the signature.
+- Topology edits such as Extrude, Inset, Bevel, delete, subdivision export, etc. disable UV restoration automatically.
+- SubD GLB export never reuses Base UVs in this phase.
+- Export status reports `UVs restored N/N` when restoration occurs.
+- PBR/material/texture/Nomad passthrough from .549 remains intact.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
+Hands-on test:
+1. Import the supplied textured Nomad GLB with Split OFF.
+2. Export GLB Base immediately.
+3. PASS = status includes `UVs restored 1/1`.
+4. Open in Nomad and confirm the original texture alignment is unchanged.
+5. Back in BoxLab, move/scale vertices without changing topology, export Base GLB again.
+6. PASS = UVs still restored and texture remains aligned to the same face corners.
+7. Make a topology-changing edit such as Extrude.
+8. Export Base GLB.
+9. PASS = export succeeds but does NOT report UVs restored; material/texture metadata still survives via .549 passthrough.
+
 ## v0.36.18.549 — HANDS-ON PASS
 
 - User confirmed .549 Nomad GLB Preservation Layer Phase 1 PASS.
