@@ -7,7 +7,7 @@ import { evaluateTrianglePair } from './quad-clean-core.js?v=0.36.18.323';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.554';
+const VERSION='0.36.18.555';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -66,6 +66,7 @@ function parseGLBPassthrough(buffer){
         nodeExtras:cloneJSON(nodeInfo?.node?.extras||null),
         nodeMatrix:cloneJSON(nodeInfo?.node?.matrix||null),
         nodeWeights:cloneJSON(nodeInfo?.node?.weights||null),
+        morphWeightSource:Array.isArray(nodeInfo?.node?.weights)?'node':Array.isArray(mesh.weights)?'mesh':'none',
         materialIndices,
         materials:cloneJSON(json.materials||[]),
         samplers:cloneJSON(json.samplers||[]),
