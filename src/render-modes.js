@@ -280,3 +280,52 @@ if(!installUI())queueMicrotask(installUI);
 queueMicrotask(rebuild);
 
 // Visible release identity is owned by release-version.js.
+
+
+/* v0.36.18.568 compact Facegroup controls */
+const facegroupUiStyle=document.createElement('style');
+facegroupUiStyle.textContent=`
+#facegroupViewControls{font-size:12px}
+#facegroupViewControls .viewport-menu-label{font-size:10px}
+#facegroupViewControls button{
+  min-height:32px!important;
+  height:32px;
+  padding:5px 6px!important;
+  font-size:12px!important;
+  line-height:1;
+}
+#facegroupViewControls .range-row{
+  grid-template-columns:72px minmax(0,1fr) 42px;
+  gap:6px;
+  align-items:center;
+  min-height:32px;
+  font-size:11px;
+}
+#facegroupViewControls .range-row input[type="range"]{
+  width:100%;
+  height:20px;
+  margin:0;
+}
+#facegroupViewControls .range-row output{
+  font-size:11px;
+  text-align:right;
+}
+#facegroupViewControls .toggle-row{
+  min-height:32px;
+  padding:4px 6px;
+  font-size:11px;
+}
+#facegroupViewControls input[type="color"]{
+  width:34px;
+  height:24px;
+  padding:1px;
+}
+#facegroupViewControls .outliner-actions{
+  gap:5px;
+  margin-top:6px;
+}
+#facegroupViewControls .facegroup-palette-grid{
+  gap:5px;
+}
+`;
+document.head.append(facegroupUiStyle);
