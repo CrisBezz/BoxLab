@@ -482,6 +482,7 @@ function addObject(mesh, name = 'Cube', options = {}) {
     settings: cloneSettings(options.settings || captureSettings()),
     history: { undo:[], redo:[] }
   };
+  if(options.glbPassthrough)object.glbPassthrough=options.glbPassthrough;
   if(options.sourceId)object.sourceId=options.sourceId;
   if(Array.isArray(options.instanceMatrix)&&options.instanceMatrix.length===16)object.instanceMatrix=[...options.instanceMatrix];
   if(options.origin)object.origin={...options.origin};
