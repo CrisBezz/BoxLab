@@ -3042,3 +3042,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Syntax parse + 8 targeted scale-restoration assertions passed before publish.
 - .555 morph-weight single-source and pole-weld logic preserved.
 
+## 2026-09-28 — v0.36.18.556 hands-on full round-trip PASS
+- User confirmed all .556 checks PASS.
+- Original Nomad size/placement restored.
+- Sculpt deformation magnitude correct.
+- Layer weight retained and adjustable without double deformation.
+- Welded topology and pole subdivision remain connected.
+- .556 is now the verified Nomad round-trip preservation checkpoint.
+
