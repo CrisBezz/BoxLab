@@ -3016,3 +3016,12 @@ For exact implementation state, always inspect current `main`; this history is c
 - Nomad subdivision no longer treats the BoxLab export as separate triangles.
 - .553 is now the verified GLB topology checkpoint.
 
+## 2026-09-28 — v0.36.18.554 weighted Nomad morph display + export reconstruction
+- User reported sculpt-layer deformation absent when Nomad GLB was imported into BoxLab.
+- Found that morph target payloads were preserved but active morph weights were never applied to editable vertices.
+- Import now applies GLTFLoader morph influences, transforms morph deltas into BoxLab/world coordinates, and scales morph deltas with the fitted mesh.
+- Export subtracts active weighted morph deltas from editable positions to recover the underlying base before writing morph targets/weights back, preventing double-deformation.
+- Added `tests/nomad-weighted-morph-554.test.mjs`.
+- Syntax parse + 8 targeted weighted-morph assertions passed before publish.
+- .553 indexed topology path preserved; Beta 5 .538 and multi-object-transform .1.0 untouched.
+
