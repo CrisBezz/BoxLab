@@ -1602,3 +1602,11 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .558: relocation regression 9/9 PASS
 - [x] Protection .558: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .559: no selection-mode flashing or UI tug-of-war on load
+- [ ] Workflow .559: BoxLab + version remain visible in the topbar
+- [ ] Workflow .559: Vertex / Edge / Face / Object dock appears at true bottom-left
+- [ ] Workflow .559: all four selection modes switch and highlight normally
+- [ ] Regression .559: orbit/pan/zoom/Undo/Redo unchanged
+- [x] Automated .559: runtime/static ownership regression 11/11 PASS
+- [x] Protection .559: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
