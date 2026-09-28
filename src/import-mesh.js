@@ -6,7 +6,7 @@ import { parseEditableOBJ } from './obj-facegroups-core.js?v=0.36.18.448';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.543';
+const VERSION='0.36.18.544';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -18,17 +18,18 @@ let importKind = 'editable';
 function fileBaseName(file) { return (file?.name || 'Imported Mesh').replace(/\.[^.]+$/, '') || 'Imported Mesh'; }
 function setStatus(text) { if (status) status.textContent = text; }
 
-function decodeFaceGroup(material,materialIndex,hasGroups){
+function decodeFaceGroup(material,materialIndex,hasGroups,fallbackName=null){
   const explicit=material?.userData?.boxlabFaceGroup;
   if(typeof explicit==='string'&&explicit.trim())return explicit.trim();
   const name=String(material?.name||'');
   const prefix='BoxLabFG::';
   if(name.startsWith(prefix)){
-    try{return decodeURIComponent(name.slice(prefix.length))||null;}catch{return name.slice(prefix.length)||null;}
+    try{return decodeURIComponent(name.slice(prefix.length))||fallbackName;}catch{return name.slice(prefix.length)||fallbackName;}
   }
-  return hasGroups?`FaceGroup ${Number(materialIndex||0)+1}`:null;
+  if(name&&name!=='Material')return name;
+  return hasGroups?(fallbackName||`FaceGroup ${Number(materialIndex||0)+1}`):fallbackName;
 }
-function geometryToEditableMesh(geometry, matrixWorld, materials=null) {
+function geometryToEditableMesh(geometry, matrixWorld, materials=null, fallbackGroupName=null) {
   const source = geometry.index ? geometry.toNonIndexed() : geometry.clone();
   const position = source.getAttribute('position');
   if (!position || position.count < 3) { source.dispose(); return null; }
@@ -40,31 +41,87 @@ function geometryToEditableMesh(geometry, matrixWorld, materials=null) {
   const groupForStart=start=>{
     const group=groups.find(entry=>start>=entry.start&&start<entry.start+entry.count);
     if(!group)return null;
-    return decodeFaceGroup(materialList[group.materialIndex]||materialList[0],group.materialIndex,hasGroups);
+    return decodeFaceGroup(materialList[group.materialIndex]||materialList[0],group.materialIndex,hasGroups,fallbackGroupName);
   };
   const faces = [],faceGroups=[];
   for (let i = 0; i + 2 < vertices.length; i += 3) {
     faces.push([i, i + 1, i + 2]);
-    faceGroups.push(groupForStart(i));
+    faceGroups.push(groupForStart(i)??fallbackGroupName);
   }
   source.dispose();
   return faces.length ? new EditableMesh(vertices, faces, undefined, faceGroups) : null;
 }
 
-function importedMeshes(root) {
+function mergeEditableMeshes(entries,name){
+  const vertices=[],faces=[],faceGroups=[];
+  for(const entry of entries){
+    const offset=vertices.length;
+    entry.mesh.vertices.forEach(vertex=>vertices.push(vertex.clone()));
+    entry.mesh.faces.forEach((face,faceIndex)=>{
+      faces.push(face.map(index=>index+offset));
+      faceGroups.push(entry.mesh.faceGroups?.[faceIndex]??entry.groupName??null);
+    });
+  }
+  return{
+    mesh:new EditableMesh(vertices,faces,undefined,faceGroups),
+    name:name||entries[0]?.name||'Mesh',
+    importedFaceGroups:[...new Set(faceGroups.filter(Boolean))]
+  };
+}
+function logicalPrimitiveOwner(node,root){
+  const parent=node.parent;
+  if(!parent||parent===root)return node;
+  const meshChildren=parent.children?.filter(child=>child?.isMesh)||[];
+  const nonMeshChildren=parent.children?.filter(child=>!child?.isMesh)||[];
+  if(meshChildren.length>1&&nonMeshChildren.length===0)return parent;
+  return node;
+}
+function importedMeshes(root,{splitByGroups=false}={}) {
   root.updateMatrixWorld(true);
-  const meshes = [];
+  const primitiveEntries=[];
+  let primitiveIndex=0;
   root.traverse(node => {
     if (!node.isMesh || !node.geometry) return;
-    const mesh = geometryToEditableMesh(node.geometry, node.matrixWorld, node.material);
-    if (mesh) {
-      const importedFaceGroups=[...new Set((mesh.faceGroups||[]).filter(Boolean))];
-      meshes.push({ mesh, name:node.name || 'Mesh', importedFaceGroups });
-    }
+    primitiveIndex++;
+    const materialList=Array.isArray(node.material)?node.material:[node.material];
+    const materialName=materialList.find(material=>material?.userData?.boxlabFaceGroup)?.userData?.boxlabFaceGroup
+      || materialList.find(material=>material?.name&&material.name!=='Material')?.name
+      || \`FaceGroup \${primitiveIndex}\`;
+    const mesh = geometryToEditableMesh(node.geometry, node.matrixWorld, node.material, materialName);
+    if (!mesh) return;
+    primitiveEntries.push({
+      mesh,
+      node,
+      owner:logicalPrimitiveOwner(node,root),
+      name:node.name || 'Mesh',
+      groupName:materialName
+    });
   });
-  return meshes;
+  if(splitByGroups){
+    return primitiveEntries.map(entry=>({
+      mesh:entry.mesh,
+      name:entry.groupName||entry.name,
+      importedFaceGroups:[...new Set((entry.mesh.faceGroups||[]).filter(Boolean))]
+    }));
+  }
+  const buckets=new Map();
+  for(const entry of primitiveEntries){
+    const key=entry.owner;
+    if(!buckets.has(key))buckets.set(key,[]);
+    buckets.get(key).push(entry);
+  }
+  return [...buckets.entries()].map(([owner,entries])=>{
+    if(entries.length===1){
+      const entry=entries[0];
+      return{
+        mesh:entry.mesh,
+        name:owner?.name||entry.name,
+        importedFaceGroups:[...new Set((entry.mesh.faceGroups||[]).filter(Boolean))]
+      };
+    }
+    return mergeEditableMeshes(entries,owner?.name||entries[0]?.name||'Mesh');
+  });
 }
-
 function fitMeshesToBoxLabScale(meshes) {
   const bounds = new THREE.Box3();
   meshes.forEach(entry => entry.mesh.vertices.forEach(vertex => bounds.expandByPoint(vertex)));
@@ -132,7 +189,7 @@ function loadOBJ(file) {
 
 function loadGLTF(file) {
   const reader = new FileReader();
-  reader.onload = () => { const loader=new GLTFLoader();loader.parse(reader.result,'',gltf=>{try{const meshes=importedMeshes(gltf.scene);if(!meshes.length)throw new Error('No mesh geometry was found in this file.');addImported(meshes,fileBaseName(file));}catch(error){setStatus(`Import failed • ${error.message||'Unsupported GLTF'}`);}},error=>setStatus(`Import failed • ${error.message||'GLB/GLTF could not be read'}`)); };
+  reader.onload = () => { const loader=new GLTFLoader();loader.parse(reader.result,'',gltf=>{try{const meshes=importedMeshes(gltf.scene,{splitByGroups:!!splitGroupsToggle?.checked});if(!meshes.length)throw new Error('No mesh geometry was found in this file.');addImported(meshes,fileBaseName(file));}catch(error){setStatus(`Import failed • ${error.message||'Unsupported GLTF'}`);}},error=>setStatus(`Import failed • ${error.message||'GLB/GLTF could not be read'}`)); };
   reader.onerror=()=>setStatus('Import failed • could not read GLB/GLTF');reader.readAsArrayBuffer(file);
 }
 
@@ -140,4 +197,4 @@ function importFile(file) { if(!file)return;const extension=file.name.split('.')
 kindButtons.forEach(item=>item.addEventListener('click',()=>{importKind=item.dataset.importKind;kindButtons.forEach(button=>button.classList.toggle('active',button===item));}));
 button?.addEventListener('click',()=>input?.click());input?.addEventListener('change',()=>{importFile(input.files?.[0]);input.value='';});
 if(!globalThis.__boxlabObjectManager)window.addEventListener('boxlab-object-manager-ready',()=>{},{once:true});
-globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ,geometryToEditableMesh};
+globalThis.__boxlabImportMesh={version:VERSION,weldEditableMesh,parseEditableOBJ,geometryToEditableMesh,importedMeshes,mergeEditableMeshes};
