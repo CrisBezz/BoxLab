@@ -1,3 +1,31 @@
+## v0.36.18.552 — Nomad Preservation Layer Phase 2C: morph/layer POSITION deltas
+
+- Builds on verified .551 tangent + vertex-colour preservation.
+- GLB import now captures Three.js morph `position` attributes as per-face-corner relative deltas before weld / quad reconstruction.
+- Weld and conservative quad reconstruction carry morph POSITION deltas with the same seam-safety rule as UV/tangent/colour channels; a shared corner mismatch blocks that quad merge rather than corrupting the layer.
+- Base GLB export rebuilds `geometry.morphAttributes.position` and sets `morphTargetsRelative=true` only while topology remains compatible.
+- Original Nomad mesh/node morph weights are retained and patched back when target counts match.
+- Existing Nomad mesh/node extras continue to carry layer names/settings metadata where Nomad stored them.
+- This phase intentionally restores morph POSITION only. Morph NORMAL/TANGENT target channels are not copied yet.
+- SubD GLB export does not reuse imported morph targets.
+- Export status reports `layers restored N/N` when morph targets are successfully regenerated.
+- Automated syntax + targeted preservation assertions passed; hands-on Nomad layer round-trip is required.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+
+Hands-on test:
+1. In Nomad, use an object with at least one sculpt layer containing a visible deformation, and export GLB.
+2. Import into BoxLab with Split OFF.
+3. PASS = import status includes `layers preserved`.
+4. Export GLB Base immediately.
+5. PASS = export status includes `layers restored 1/1`.
+6. Open the exported GLB in Nomad.
+7. PASS = original layer(s) are present and their deformation/weight behaviour survives.
+8. Back in BoxLab, make a topology-changing edit such as Extrude and export again.
+9. PASS = layer restoration switches off rather than exporting stale target arrays.
+
+Next step after hands-on result: if Nomad exposes missing morph NORMAL/TANGENT channels or layer metadata loss, inspect the returned GLB structure and extend only the missing channel.
+
 ## v0.36.18.551 — Nomad Preservation Layer Phase 2B: tangents + vertex colours
 
 - Builds directly on the verified .550 topology-safe UV checkpoint.
