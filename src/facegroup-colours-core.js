@@ -47,25 +47,46 @@ export function faceGroupColour(group,settings={}){
   colour.setHSL(wrappedHue,sat,light,THREE.SRGBColorSpace);
   return colour;
 }
+function spacedFaceGroupColours(groups,settings={}){
+  const view=normaliseFacegroupView(settings);
+  const preset=FACEGROUP_PRESETS[view.palette];
+  const names=[...groups];
+  const rotation=((hashString(String(view.seed))%360)/360);
+  const map=new Map();
+  names.forEach((name,index)=>{
+    const hue=(rotation+(index*.618033988749895))%1;
+    const sat=clamp01(.72*preset.saturation*view.saturation);
+    const light=clamp01(.54+preset.lightness+view.lightness);
+    const colour=new THREE.Color();
+    colour.setHSL(hue,sat,light,THREE.SRGBColorSpace);
+    map.set(name,colour);
+  });
+  return map;
+}
 export function applyFaceGroupColours(geometry,mesh,settings={}){
   if(!geometry?.getAttribute||!mesh?.faces)return{ok:false,groups:0,faces:0};
   const position=geometry.getAttribute('position');
   if(!position)return{ok:false,groups:0,faces:0};
+  const orderedGroups=[];
+  const seen=new Set();
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const group=typeof mesh.faceGroups?.[fi]==='string'&&mesh.faceGroups[fi].trim()?mesh.faceGroups[fi].trim():null;
+    if(group&&!seen.has(group)){seen.add(group);orderedGroups.push(group);}
+  }
+  const palette=spacedFaceGroupColours(orderedGroups,settings);
   const colours=[];
-  const unique=new Set();
   let expectedVertices=0;
   for(let fi=0;fi<mesh.faces.length;fi++){
     const face=mesh.faces[fi];if(!Array.isArray(face)||face.length<3)continue;
     const group=typeof mesh.faceGroups?.[fi]==='string'&&mesh.faceGroups[fi].trim()?mesh.faceGroups[fi].trim():null;
-    if(group)unique.add(group);
-    const colour=faceGroupColour(group,settings);
+    const colour=group?(palette.get(group)||faceGroupColour(group,settings)):faceGroupColour(null,settings);
     for(let tri=1;tri<face.length-1;tri++){
       for(let corner=0;corner<3;corner++)colours.push(colour.r,colour.g,colour.b);
       expectedVertices+=3;
     }
   }
-  if(expectedVertices!==position.count)return{ok:false,groups:unique.size,faces:mesh.faces.length,reason:'geometry-face-mismatch'};
+  if(expectedVertices!==position.count)return{ok:false,groups:orderedGroups.length,faces:mesh.faces.length,reason:'geometry-face-mismatch'};
   geometry.setAttribute('color',new THREE.Float32BufferAttribute(colours,3));
   geometry.attributes.color.needsUpdate=true;
-  return{ok:true,groups:unique.size,faces:mesh.faces.length,settings:normaliseFacegroupView(settings)};
+  return{ok:true,groups:orderedGroups.length,faces:mesh.faces.length,settings:normaliseFacegroupView(settings)};
 }
