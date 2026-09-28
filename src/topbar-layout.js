@@ -1,7 +1,5 @@
 const topbar=document.querySelector('.topbar');
 const selectionModes=document.querySelector('#selectionModes');
-const viewModes=document.querySelector('#viewModes');
-const topActions=document.querySelector('.top-actions');
 const fileMenu=document.querySelector('#fileMenu');
 const viewportWrap=document.querySelector('#viewportWrap');
 
@@ -28,7 +26,6 @@ function installSecondRow(){
   if(!topbar||!selectionModes)return;
   document.querySelector('#commandBar')?.remove();
   if(viewportWrap)viewportWrap.append(selectionModes);
-  if(viewModes&&topActions)topActions.prepend(viewModes);
 }
 
 function closeFileMenu(event){
@@ -66,7 +63,7 @@ style.textContent=`
 #viewportWrap > .floating-panel.left-panel{bottom:72px;max-height:none;padding-bottom:14px}
 .top-actions{align-items:center}
 .top-actions>button,.top-actions>#viewModes>summary{min-height:38px;height:38px;padding:7px 10px;font-size:13px!important;font-weight:600;line-height:1}
-.top-actions>#viewModes{margin:0}
+.top-actions>#viewModes{margin-left:auto}
 .top-actions>#viewModes>summary{border-radius:10px}
 @media(max-width:900px){
     #viewportWrap > #selectionModes{left:max(8px,env(safe-area-inset-left));bottom:max(8px,calc(env(safe-area-inset-bottom) + 4px));gap:2px;padding:3px}
