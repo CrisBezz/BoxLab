@@ -30,3 +30,8 @@
 /* v0.36.18.561 prevent selection dock startup flash */
 #selectionModes{visibility:hidden}
 #viewportWrap > #selectionModes{visibility:visible}
+
+
+/* v0.36.18.562 prevent selection panel relocation flash */
+#selectionDrawer{visibility:hidden}
+#viewportWrap > #selectionDrawer{visibility:visible}
