@@ -2992,3 +2992,13 @@ For exact implementation state, always inspect current `main`; this history is c
 - Published runtime pins/version as v0.36.18.551.
 - Beta 5 .538 and protected multi-object-transform .1.0 remained untouched.
 
+## 2026-09-28 — v0.36.18.552 Nomad morph/layer preservation Phase 2C
+- Extended the face-corner preservation pipeline to morph POSITION deltas exposed by GLTFLoader.
+- Morph deltas survive weld + conservative quad reconstruction only where shared-corner values agree.
+- Base GLB export rebuilds relative morph POSITION targets when topology remains compatible.
+- Original mesh/node morph weights are patched back when target counts match; preserved Nomad extras continue to carry layer metadata.
+- Added `tests/nomad-morph-layer-preservation-552.test.mjs`.
+- Syntax parse + 8 targeted morph assertions passed before publish.
+- Published runtime pins/version as v0.36.18.552.
+- Beta 5 .538 and protected multi-object-transform .1.0 remained untouched.
+
