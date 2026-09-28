@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.548 conservative GLB quad reconstruction
+
+- Added conservative quad recovery for editable GLB/GLTF imports.
+- Reuses existing BoxLab triangle-pair topology validation.
+- Requires same non-empty facegroup and near-perfect coplanarity before removing a GLB diagonal.
+- OBJ path remains untouched.
+- Goal: recover obvious original Nomad quads without remeshing genuine triangulated geometry.
+- Frozen Beta 5 remains untouched.
+
 ## 2026-09-28 — v0.36.18.547 Nomad-native facegroup export
 
 - Improved BoxLab facegroup display using deliberately spaced hues instead of hash-neighbour colours.
