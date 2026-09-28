@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.549 HANDS-ON PASS
+
+- User confirmed Nomad GLB Preservation Layer Phase 1 PASS.
+- .549 is now the verified Nomad handoff checkpoint.
+- Safe material/texture/Nomad metadata passthrough survives the tested round trip.
+- Future work remains for topology-bound UV/tangent/vertex-colour/morph correspondence.
+
 ## 2026-09-28 — v0.36.18.549 Nomad GLB preservation layer Phase 1
 
 - Added opaque Nomad GLB passthrough capture at import.
