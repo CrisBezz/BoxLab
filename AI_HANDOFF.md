@@ -1,3 +1,32 @@
+## v0.36.18.545 — File menu configuration controls stay open
+
+- User reported .544 File menu closed whenever any control was clicked.
+- Root cause: topbar-layout still auto-closed the File menu after every button click.
+- .545 only auto-closes for terminal actions:
+  - Import
+  - Export / Save
+  - Quick Base OBJ
+  - Quick SubD OBJ
+  - Add to Home Screen
+  - Reset
+- Configuration controls now stay open:
+  - Editable / Reference
+  - Split objects by groups
+  - OBJ / GLB
+  - Base / SubD
+  - File Name
+- No changes to GLB import/export semantics.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
+Hands-on retest:
+1. Open File.
+2. Tap Editable/Reference, Split toggle, OBJ/GLB and Base/SubD.
+3. PASS = File menu remains open through all configuration changes.
+4. Tap File Name and edit it.
+5. PASS = menu remains open and text edits normally.
+6. Tap Export / Save.
+7. PASS = terminal action may close the menu normally.
+
 ## v0.36.18.544 — GLB logical object import / Split toggle parity
 
 - User found Nomad GLB import created one BoxLab object per facegroup even with "Split objects by groups" unticked.
