@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.549 — Nomad GLB safe passthrough preservation.
+// BoxLab v0.36.18.550 — topology-safe Nomad UV preservation.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.549';
+const VERSION='0.36.18.550';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -100,7 +100,11 @@ function normalizedFaceGroup(mesh,faceIndex){
   const value=mesh.faceGroups?.[faceIndex];
   return typeof value==='string'&&value.trim()?value.trim():null;
 }
-function editableToGeometry(mesh){
+function topologySignature(mesh){
+  if(!mesh?.faces)return'';
+  return mesh.faces.map((face,index)=>`${face.join(',')}@${mesh.faceGroups?.[index]??''}`).join('|');
+}
+function editableToGeometry(mesh,cornerUVs=null){
   const buckets=new Map();
   for(let faceIndex=0;faceIndex<(mesh.faces||[]).length;faceIndex++){
     const face=mesh.faces[faceIndex];
@@ -108,15 +112,22 @@ function editableToGeometry(mesh){
     const group=normalizedFaceGroup(mesh,faceIndex);
     const key=group??'__BOXLAB_UNGROUPED__';
     if(!buckets.has(key))buckets.set(key,{name:group,triangles:[]});
-    buckets.get(key).triangles.push(...triangulateFace(mesh,face));
+    for(const tri of triangulateFace(mesh,face))buckets.get(key).triangles.push({tri,faceIndex});
   }
-  const positions=[],groups=[];
+  const positions=[],uvs=[],groups=[];
+  let uvComplete=Array.isArray(cornerUVs)&&cornerUVs.length===mesh.faces.length;
   for(const bucket of buckets.values()){
     const start=positions.length/3;
-    for(const tri of bucket.triangles){
-      for(const index of tri){
+    for(const item of bucket.triangles){
+      const face=mesh.faces[item.faceIndex];
+      for(const index of item.tri){
         const v=mesh.vertices[index];
         if(v)positions.push(v.x,v.y,v.z);
+        if(uvComplete){
+          const local=face.indexOf(index),uv=cornerUVs?.[item.faceIndex]?.[local];
+          if(Array.isArray(uv)&&Number.isFinite(uv[0])&&Number.isFinite(uv[1]))uvs.push(uv[0],uv[1]);
+          else uvComplete=false;
+        }
       }
     }
     const count=positions.length/3-start;
@@ -124,13 +135,17 @@ function editableToGeometry(mesh){
   }
   const geometry=new THREE.BufferGeometry();
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+  const uvRestored=uvComplete&&uvs.length===positions.length/3*2;
+  if(uvRestored)geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));
   groups.forEach((group,index)=>geometry.addGroup(group.start,group.count,index));
   geometry.userData.boxlabFaceGroups=groups.map(group=>group.name);
+  geometry.userData.boxlabUVRestored=uvRestored;
   geometry.computeVertexNormals();
   geometry.computeBoundingBox();
   geometry.computeBoundingSphere();
-  return{geometry,groups};
+  return{geometry,groups,uvRestored};
 }
+
 function nomadGroupColour(index,total){
   const hue=(index*.618033988749895)%1;
   const colour=new THREE.Color().setHSL(hue,.72,.54,THREE.SRGBColorSpace);
@@ -314,13 +329,16 @@ async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
 async function buildGLB(sceneObjects,subd){
   const root=new THREE.Group();
   root.name='BoxLab';
-  let count=0,faceGroupCount=0,groupSlotCount=0;
+  let count=0,faceGroupCount=0,groupSlotCount=0,uvRestoredCount=0;
   const objectDetails=[];
   sceneObjects.forEach((object,index)=>{
     const editable=resolveExportMesh(object,subd);
     if(!editable?.vertices?.length||!editable?.faces?.length)return;
-    const built=editableToGeometry(editable),geometry=built.geometry;
+    const passthrough=object.glbPassthrough||null;
+    const uvCompatible=!subd&&passthrough?.uvTopologySignature&&passthrough.uvTopologySignature===topologySignature(editable);
+    const built=editableToGeometry(editable,uvCompatible?passthrough.uvCorners:null),geometry=built.geometry;
     if(!geometry.getAttribute('position')?.count)return;
+    if(built.uvRestored)uvRestoredCount++;
     const sharedMaterial=sharedNomadMaterial();
     const materials=built.groups.map(()=>sharedMaterial);
     const node=new THREE.Mesh(geometry,materials.length===1?sharedMaterial:materials);
@@ -329,6 +347,7 @@ async function buildGLB(sceneObjects,subd){
     node.userData.boxlabRoundTripObject=true;
     node.userData.boxlabFaceGroupCount=built.groups.filter(group=>group.name).length;
     node.userData.boxlabGroupSlotCount=built.groups.length;
+    node.userData.boxlabUVRestored=!!built.uvRestored;
     faceGroupCount+=node.userData.boxlabFaceGroupCount;
     groupSlotCount+=node.userData.boxlabGroupSlotCount;
     objectDetails.push({
@@ -336,7 +355,9 @@ async function buildGLB(sceneObjects,subd){
       faceGroups:node.userData.boxlabFaceGroupCount,
       groupSlots:node.userData.boxlabGroupSlotCount,
       groupNames:built.groups.map((group,groupIndex)=>group.name||('FaceGroup '+(groupIndex+1))),
-      passthrough:object.glbPassthrough||null
+      passthrough,
+      uvRestored:!!built.uvRestored,
+      uvCompatible:!!uvCompatible
     });
     root.add(node);count++;
   });
@@ -350,7 +371,9 @@ async function buildGLB(sceneObjects,subd){
     else node.material?.dispose?.();
   });
   const verification=await verifyGLB(buffer,count,groupSlotCount);
-  return{buffer,count,faceGroupCount,groupSlotCount,objectDetails,verification};
+  globalThis.__boxlabNomadRoundTrip ||= {};
+  globalThis.__boxlabNomadRoundTrip.lastUVExport={restored:uvRestoredCount,total:count};
+  return{buffer,count,faceGroupCount,groupSlotCount,uvRestoredCount,objectDetails,verification};
 }
 async function exportAs(){
   const sceneObjects=objects();
@@ -368,7 +391,7 @@ async function exportAs(){
       const result=await buildGLB(sceneObjects,subd);
       const blob=new Blob([result.buffer],{type:'model/gltf-binary'});
       const outcome=await saveBlob(blob,fileName,'model/gltf-binary');
-      if(status&&outcome!=='cancelled'){const preserved=result.objectDetails.filter(item=>item.passthrough).length;status.textContent=`GLB verified • ${result.verification.objects} object${result.verification.objects===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'}${preserved?` • ${preserved} Nomad payload preserved`:''} • ${outcome}`;}
+      if(status&&outcome!=='cancelled'){const preserved=result.objectDetails.filter(item=>item.passthrough).length;status.textContent=`GLB verified • ${result.verification.objects} object${result.verification.objects===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'}${preserved?` • ${preserved} Nomad payload preserved`:''}${result.uvRestoredCount?` • UVs restored ${result.uvRestoredCount}/${result.count}`:''} • ${outcome}`;}
     }
   }catch(error){
     console.error('BoxLab Export As failed',error);
@@ -417,4 +440,4 @@ setActive(formatButtons,'exportFormat',format);
 setActive(geometryButtons,'exportGeometry',geometry);
 updateNote();
 
-globalThis.__boxlabExportAs={version:VERSION,exportAs,buildGLB,verifyGLB,patchNomadFaceGroupGLB,get format(){return format;},get geometry(){return geometry;}};
+globalThis.__boxlabExportAs={version:VERSION,exportAs,buildGLB,verifyGLB,patchNomadFaceGroupGLB,topologySignature,get format(){return format;},get geometry(){return geometry;}};
