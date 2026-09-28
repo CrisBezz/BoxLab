@@ -1,3 +1,30 @@
+## v0.36.18.548 — conservative GLB quad reconstruction
+
+- User confirmed .547 Nomad round-trip PASS and showed a Nomad GLB cube arriving in BoxLab as triangles.
+- glTF/GLB stores triangle primitives, so original quad/ngon editability is not represented directly.
+- .548 adds an import-only reconstruction pass for GLB/GLTF editable imports.
+- Reuses BoxLab's existing mature `evaluateTrianglePair` topology check from quad-clean-core.
+- Additional strict GLB-import requirements:
+  - both faces are triangles
+  - triangles share one interior edge
+  - both carry the same non-empty facegroup
+  - candidate passes BoxLab quad topology/convexity checks
+  - triangle normals must match at dot >= 0.9995
+- Only non-overlapping best candidates are merged.
+- Facegroup identity is preserved on the reconstructed quad.
+- OBJ import remains unchanged because OBJ can preserve polygon faces directly.
+- Import status reports how many quads were reconstructed.
+- No automatic reconstruction across facegroup boundaries or for ungrouped generic triangles.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+
+Hands-on retest:
+1. Import the same Nomad cube GLB with Split OFF.
+2. PASS = one logical BoxLab object.
+3. PASS = six facegroups remain.
+4. PASS = visible cube topology returns to 6 quad faces rather than 12 triangles.
+5. Confirm no diagonal edges remain across those planar facegroup faces.
+6. Export GLB Base back to Nomad and confirm one Nomad object with facegroups still survives.
+
 ## v0.36.18.547 — stronger facegroup colours + Nomad-native GLB grouping
 
 - User confirmed .546 import controls PASS.
