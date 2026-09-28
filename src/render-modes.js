@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js';
+import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js?v=0.36.18.547';
 import {applyMirror} from './mirror.js';
 import {subdivide} from './subdivision.js';
 
