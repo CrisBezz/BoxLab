@@ -3091,3 +3091,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Preserved all existing IDs/handlers.
 - Syntax/static regression 11/11 PASS.
 
+## 2026-09-28 — v0.36.18.563 Selection drawer restored + empty command row removed
+- User preferred Selection in its original scrolling left drawer.
+- Reversed only the .562 Selection-panel relocation and removed its no-flash visibility override.
+- Kept bottom-left mode dock and top-line Viewport placement.
+- Removed the now-empty command/packer row and moved viewport directly below the main topbar, reclaiming 48px vertical space.
+- Syntax/static regression 10/10 PASS.
+
