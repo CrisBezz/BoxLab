@@ -1573,3 +1573,11 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .554: import/export modules syntax-parse and 8/8 weighted-morph assertions PASS
 - [x] Protection .554: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
 
+- [ ] Workflow .555: layered Nomad GLB imports to BoxLab with deformation shown once at correct magnitude
+- [ ] Workflow .555: Base GLB round-trip to Nomad preserves deformation without doubling
+- [ ] Workflow .555: original layer weight remains adjustable after round-trip
+- [ ] Workflow .555: high-valence pole vertices subdivide as connected/welded topology
+- [ ] Regression .555: ordinary two-sided UV seams remain preserved outside singular pole vertices
+- [x] Automated .555: import/export modules syntax-parse and 10/10 weight-location + pole-weld assertions PASS
+- [x] Protection .555: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
+
