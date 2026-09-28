@@ -1,3 +1,22 @@
+## v0.36.18.556 — HANDS-ON PASS
+
+- User confirmed full Nomad GLB round-trip PASS.
+- Verified:
+  - original object size/placement restored
+  - sculpt deformation magnitude preserved
+  - layer weight retained and adjustable
+  - deformation not doubled
+  - exported topology welded/connected
+  - pole subdivision remains connected
+- Treat .556 as the current verified Nomad round-trip preservation checkpoint.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Next planned work may return to the queued UI/UX pass:
+  1. relocate Vertex / Edge / Face / Object mode selector to bottom-left
+  2. unified move/rotate/scale gizmo
+  3. selection gesture system, beginning with tap background = deselect
+  Implement incrementally, not as one broad UI rewrite.
+
 ## v0.36.18.556 — restore original GLB round-trip scale
 
 - User hands-on result on .555: topology/welding PASS; exported/imported scale still wrong.
