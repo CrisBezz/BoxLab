@@ -58,3 +58,21 @@
     padding:7px 8px;
   }
 }
+
+
+/* v0.36.18.558 viewport selection mode dock correction */
+#viewportWrap > #selectionModes{
+  position:absolute;
+  left:max(16px,env(safe-area-inset-left));
+  bottom:max(48px,calc(env(safe-area-inset-bottom) + 38px));
+  top:auto;
+  right:auto;
+}
+@media(max-width:760px){
+  #viewportWrap > #selectionModes{
+    left:max(8px,env(safe-area-inset-left));
+    bottom:max(46px,calc(env(safe-area-inset-bottom) + 36px));
+    top:auto;
+    right:auto;
+  }
+}
