@@ -1,22 +1,23 @@
-## v0.36.18.563 — Selection drawer restored + empty command row removed
+## v0.36.18.564 — compact Selection panel sizing
 
-- User preferred the Selection panel in its original left tool drawer location.
-- .563 rolls back only the .562 Selection-panel relocation.
-- `#selectionDrawer` remains in its original DOM position inside the left scrolling tool drawer; no runtime reparenting or visibility hack remains.
-- Bottom-left Vertex / Edge / Face / Object mode dock is retained.
-- Viewport settings remains in the top action line beside Undo / Redo and other top actions.
-- The now-empty second command/packer row is removed entirely.
-- `#viewportWrap` now starts immediately below the main topbar, reclaiming the former 48px command-row height.
-- Top action typography normalization from .562 remains.
-- Automated syntax/static regression 10/10 PASS.
+- User requested the Selection panel match the agreed compact UI sizing.
+- Existing Selection CSS had accumulated mixed 11px / 12px / 14px / 15px type sizes and 29px / 32px button heights.
+- .564 standardises Selection controls:
+  - regular control text: 12px
+  - button height: 32px
+  - consistent 5px × 6px padding
+  - Selection heading: 12px
+  - compact symbol-only grow/shrink/angle/normal buttons: 13px for legibility
+  - angle/output text: 11px
+- No selection logic or layout ownership changed.
+- Bottom-left mode dock and .563 topbar real-estate cleanup remain intact.
+- Automated static regression 8/8 PASS.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
-- Frozen Beta 5 v0.36.18.538 untouched.
 
 Hands-on check:
-1. Selection is back at the top of the left scrolling tool drawer.
-2. Mode strip remains bottom-left.
-3. Viewport settings remains on the top action line.
-4. Empty second/packer row is gone and viewport gains the extra height.
-5. No startup flashes.
-6. Selection, mode switching and navigation remain unchanged.
+1. Selection panel feels visually consistent with other compact tool controls.
+2. Visible / Through / Lasso / Deselect / All / Invert use consistent text and height.
+3. Loop / Ring / Boundary and grow/shrink controls no longer look oversized.
+4. Selection heading hierarchy feels correct without wasting vertical space.
+5. Selection behaviour is unchanged.
 
