@@ -1566,3 +1566,10 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .553: exporter syntax-parse and 7/7 indexed-topology assertions PASS
 - [x] Protection .553: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
 
+- [ ] Workflow .554: Nomad sculpt-layer deformation is visible immediately after GLB import to BoxLab
+- [ ] Workflow .554: immediate Base GLB round-trip to Nomad preserves deformation without doubling
+- [ ] Workflow .554: original Nomad layer and weight control remain usable after round-trip
+- [ ] Regression .554: .553 indexed/welded topology and Nomad subdivision remain connected
+- [x] Automated .554: import/export modules syntax-parse and 8/8 weighted-morph assertions PASS
+- [x] Protection .554: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
+
