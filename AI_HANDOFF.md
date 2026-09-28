@@ -1,23 +1,21 @@
-## v0.36.18.564 — compact Selection panel sizing
+## v0.36.18.565 — left tool drawer scroll boundary above mode dock
 
-- User requested the Selection panel match the agreed compact UI sizing.
-- Existing Selection CSS had accumulated mixed 11px / 12px / 14px / 15px type sizes and 29px / 32px button heights.
-- .564 standardises Selection controls:
-  - regular control text: 12px
-  - button height: 32px
-  - consistent 5px × 6px padding
-  - Selection heading: 12px
-  - compact symbol-only grow/shrink/angle/normal buttons: 13px for legibility
-  - angle/output text: 11px
-- No selection logic or layout ownership changed.
-- Bottom-left mode dock and .563 topbar real-estate cleanup remain intact.
-- Automated static regression 8/8 PASS.
+- User confirmed Selection is back in the desired original drawer position, but the left tool drawer still scrolls underneath the bottom-left mode strip.
+- Root cause: the drawer still used a loose max-height, so its scroll box extended behind the mode dock.
+- .565 replaces that with a hard bottom boundary:
+  - normal layout: `bottom:104px; max-height:none`
+  - compact/mobile layout: `bottom:96px; max-height:none`
+- This makes the scroll container physically end above the Vertex / Edge / Face / Object dock.
+- Selection remains inside the drawer.
+- Mode dock remains bottom-left.
+- Topbar/Viewport layout from .563/.564 remains unchanged.
+- Automated syntax/static regression 5/5 PASS.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
 
 Hands-on check:
-1. Selection panel feels visually consistent with other compact tool controls.
-2. Visible / Through / Lasso / Deselect / All / Invert use consistent text and height.
-3. Loop / Ring / Boundary and grow/shrink controls no longer look oversized.
-4. Selection heading hierarchy feels correct without wasting vertical space.
-5. Selection behaviour is unchanged.
+1. Scroll the left tool drawer to the very bottom.
+2. Final controls must stop above the mode dock and remain fully visible/clickable.
+3. Selection remains at the top of the drawer.
+4. Mode dock remains fixed bottom-left.
+5. Navigation and selection behavior remain unchanged.
 
