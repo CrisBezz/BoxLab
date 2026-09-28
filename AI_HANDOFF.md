@@ -1,3 +1,30 @@
+## v0.36.18.553 — GLB indexed/welded topology export fix
+
+- User hands-on result on .552: FAIL for topology continuity after BoxLab -> Nomad GLB round-trip.
+- Symptom: Nomad import showed many non-welded vertices; subdivision behaved like separate triangles.
+- Root cause found in `editableToGeometry()`: BoxLab GLB export emitted a fresh POSITION entry for every triangle corner and no index buffer, so even two triangles from one quad were disconnected in the exported mesh.
+- .553 rebuilds Base GLB geometry as indexed geometry:
+  - shared BoxLab vertices reuse one GLB vertex/index when all preserved corner channels agree
+  - `geometry.setIndex(indices)` is now always written for exported editable geometry
+  - UV / tangent / vertex-colour / morph seams remain intentionally split where their corner values genuinely differ
+- This removes triangle-corner soup while preserving topology-bound attribute seams.
+- Important glTF limitation: glTF uses one unified vertex index across POSITION and attributes, so a genuine UV/colour/tangent/morph seam can still require duplicate geometric vertices. .553 eliminates unnecessary duplicates but does not falsely weld real attribute seams.
+- .552 morph/layer preservation remains present and is still awaiting successful hands-on validation after topology continuity is fixed.
+- Automated exporter syntax + indexed-topology assertions pass.
+- Frozen Beta 5 remains v0.36.18.538 untouched.
+- Protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+
+Hands-on test:
+1. Import the same Nomad GLB used for the .552 test into BoxLab, Split OFF.
+2. Export GLB Base immediately.
+3. Re-open in Nomad.
+4. PASS = ordinary shared mesh edges are welded/connected; the mesh no longer behaves as separate triangles.
+5. Subdivide once in Nomad.
+6. PASS = subdivision behaves as a connected surface rather than each source triangle separating.
+7. Also confirm the .552 layer preservation status/result again on this corrected topology build.
+
+Next step: if only UV seams remain split in Nomad after .553, inspect whether Nomad requires a topology/remap extra to preserve welded sculpt topology independently from glTF attribute indexing before changing the UV pipeline.
+
 ## v0.36.18.552 — Nomad Preservation Layer Phase 2C: morph/layer POSITION deltas
 
 - Builds on verified .551 tangent + vertex-colour preservation.
