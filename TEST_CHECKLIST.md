@@ -1581,10 +1581,10 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .555: import/export modules syntax-parse and 10/10 weight-location + pole-weld assertions PASS
 - [x] Protection .555: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
 
-- [ ] Workflow .556: Base GLB returns to Nomad at original source size/placement
-- [ ] Workflow .556: morph/layer deformation magnitude matches the original source after scale restoration
-- [ ] Regression .556: .555 pole welding remains connected after restored-scale export
-- [ ] Regression .556: layer weight remains adjustable and is not doubled
+- [x] Workflow .556: Base GLB returns to Nomad at original source size/placement
+- [x] Workflow .556: morph/layer deformation magnitude matches the original source after scale restoration
+- [x] Regression .556: .555 pole welding remains connected after restored-scale export
+- [x] Regression .556: layer weight remains adjustable and is not doubled
 - [x] Automated .556: import/export modules syntax-parse and 8/8 scale-restoration assertions PASS
 - [x] Protection .556: Beta 5 remains v0.36.18.538 and src/multi-object-transform.js?v=0.36.1.0 remains pinned
 
