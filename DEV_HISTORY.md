@@ -3033,3 +3033,12 @@ For exact implementation state, always inspect current `main`; this history is c
 - Syntax parse + 10 targeted assertions passed before publish.
 - Published v0.36.18.555; Beta 5 .538 and multi-object-transform .1.0 unchanged.
 
+## 2026-09-28 — v0.36.18.556 restore original GLB round-trip scale
+- .555 hands-on: welding/poles fixed, but Nomad round-trip object scale remained wrong.
+- Root cause: BoxLab import normalises geometry to a size-2 working envelope and export did not reverse that fit transform.
+- Import now stores the global fit centre + scale in GLB passthrough.
+- Base GLB export reverses the fit transform for POSITION and divides morph POSITION deltas by the same scale before writing.
+- Added `tests/nomad-roundtrip-scale-556.test.mjs`.
+- Syntax parse + 8 targeted scale-restoration assertions passed before publish.
+- .555 morph-weight single-source and pole-weld logic preserved.
+
