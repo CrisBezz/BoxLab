@@ -3124,3 +3124,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Trigger location and viewport functionality unchanged.
 - Syntax/static regression 5/5 PASS.
 
+## 2026-09-28 — v0.36.18.568 Viewport ownership fix + far-right placement + compact Facegroups
+- Fixed .567 ownership flash by removing Viewport reordering from topbar-layout.js.
+- view-modes.js now owns placement from creation and appends Viewport at the far-right of .top-actions.
+- Retained right-edge flyout anchoring.
+- Normalized Facegroup Viewport controls to compact 32px / 12px sizing with 11px range labels/outputs.
+- Syntax/static regression 13/13 PASS.
+
