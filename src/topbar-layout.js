@@ -47,8 +47,10 @@ document.addEventListener('click',event=>{
   if(!fileMenu?.open)return;
   const editable=event.target?.closest?.('#fileMenu input,#fileMenu textarea,#fileMenu select,#fileMenu [contenteditable="true"],#fileMenu [contenteditable=""]');
   if(editable)return;
-  const action=event.target?.closest?.('#fileMenu button');
-  if(action)queueMicrotask(()=>{fileMenu.open=false;});
+  const terminalAction=event.target?.closest?.(
+    '#importMeshBtn,#exportAsBtn,#exportBaseBtn,#exportSubdBtn,#installAppBtn,#resetBtn'
+  );
+  if(terminalAction)queueMicrotask(()=>{fileMenu.open=false;});
 },true);
 
 installModeIcons();
