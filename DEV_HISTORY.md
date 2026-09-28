@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-28 — v0.36.18.549 Nomad GLB preservation layer Phase 1
+
+- Added opaque Nomad GLB passthrough capture at import.
+- Stored original PBR materials, embedded image bytes, texture/sampler definitions, Nomad mesh/node extras, and topology-bound channel descriptors.
+- Export now reattaches safe PBR/texture/Nomad metadata to rebuilt BoxLab GLB geometry.
+- UV/tangent/vertex-colour/morph arrays are captured but deliberately not remapped yet because they are topology-bound.
+- .548 quad reconstruction and .547 Nomad facegroup structure remain in place.
+- Frozen Beta 5 remains untouched.
+
+
 ## 2026-09-28 — v0.36.18.548 conservative GLB quad reconstruction
 
 - Added conservative quad recovery for editable GLB/GLTF imports.
