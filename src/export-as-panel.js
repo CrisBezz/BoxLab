@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.599 — extension-driven GLB share type test for iPad/Nomad.
+// BoxLab v0.36.18.600 — explicit Save for Nomad workflow after Web Share target limitation.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.599';
+const VERSION='0.36.18.600';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -14,7 +14,7 @@ const exportButton=document.querySelector('#exportAsBtn');
 const shareButton=document.createElement('button');
 shareButton.type='button';
 shareButton.id='exportShareBtn';
-shareButton.textContent='Share / Open In…';
+shareButton.textContent='Save for Nomad…';
 shareButton.className='export-secondary';
 exportButton?.insertAdjacentElement('afterend',shareButton);
 const note=document.querySelector('#exportDestinationNote');
@@ -37,9 +37,18 @@ function setActive(buttons,key,value){
   for(const button of buttons)button.classList.toggle('active',button.dataset[key]===value);
 }
 function updateNote(){
+  if(format==='glb'){
+    shareButton.textContent='Save for Nomad…';
+    if(!note)return;
+    if(navigator.share&&typeof File!=='undefined')note.textContent='Nomad handoff: Save to Files here, then in Files use Share → Nomad Sculpt.';
+    else if(typeof window.showSaveFilePicker==='function')note.textContent='Save the GLB, then open it in Nomad Sculpt.';
+    else note.textContent='Save the GLB, then open it in Nomad Sculpt.';
+    return;
+  }
+  shareButton.textContent='Share / Open In…';
   if(!note)return;
   if(typeof window.showSaveFilePicker==='function')note.textContent='Save location chosen when you export.';
-  else if(navigator.share&&typeof File!=='undefined')note.textContent='On iPad choose Save to Files from the share sheet.';
+  else if(navigator.share&&typeof File!=='undefined')note.textContent='On iPad choose Save to Files or another compatible app.';
   else note.textContent='Your browser will save to its normal download location.';
 }
 function extension(){return format==='glb'?'glb':'obj';}
@@ -52,10 +61,7 @@ function downloadBlob(blob,fileName){
 
 async function shareBlob(blob,fileName,mime){
   if(!(navigator.share&&typeof File!=='undefined'))return 'unavailable';
-  const isGLB=/\.glb$/i.test(fileName);
-  const file=isGLB
-    ? new File([blob],fileName)
-    : new File([blob],fileName,{type:mime});
+  const file=new File([blob],fileName,{type:mime});
   if(navigator.canShare&&!navigator.canShare({files:[file]}))return 'unavailable';
   try{
     await navigator.share({files:[file]});
@@ -578,7 +584,7 @@ async function shareOpenIn(){
       downloadBlob(blob,fileName);
       if(status)status.textContent='Share unavailable • file downloaded instead';
     }else if(status&&outcome!=='cancelled'){
-      status.textContent=`${format.toUpperCase()} • Share / Open In complete`;
+      status.textContent=format==='glb'?'GLB ready • saved/shared via iPad sheet • open from Files in Nomad':`${format.toUpperCase()} • Share / Open In complete`;
     }
   }catch(error){
     console.error('BoxLab Share / Open In failed',error);
