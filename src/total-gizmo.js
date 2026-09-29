@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.577 — Total Gizmo v1.
+// BoxLab v0.36.18.578 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -190,6 +190,7 @@ for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center):not(.tg-pl
   const hitWidth=el.classList.contains('tg-arc')?12:el.classList.contains('tg-screen-ring')||el.classList.contains('tg-scale-ring')?13:16;
   hit.style.strokeWidth=String(hitWidth);
   hit.__visual=el;
+  el.__hitProxy=hit;
   el.parentNode.insertBefore(hit,el);
   hit.addEventListener('pointerdown',e=>onHandleDown.call(hit,e));
   hit.addEventListener('pointerenter',()=>el.classList.add('hover-proxy'));
@@ -226,7 +227,7 @@ function ringBasis(axis){
 }
 function projectedRingPath(center,camera,axis){
   const [u,v]=ringBasis(axis),radius=ringWorldRadius(center,camera),centerScreen=screenPoint(center,camera);
-  const rect=canvas.getBoundingClientRect(),sx=SIZE/Math.max(1,rect.width),sy=SIZE/Math.max(1,rect.height),segments=96;
+  const gizmoRect=root.getBoundingClientRect(),sx=SIZE/Math.max(1,gizmoRect.width),sy=SIZE/Math.max(1,gizmoRect.height),segments=96;
   let d='';
   for(let i=0;i<=segments;i++){
     const a=i/segments*Math.PI*2;
@@ -243,7 +244,11 @@ function projectedRingPath(center,camera,axis){
 function syncRotationRings(center,camera){
   for(const axis of ['x','y','z']){
     const path=root.querySelector(`.tg-arc[data-ring-axis="${axis}"]`);
-    if(path)path.setAttribute('d',projectedRingPath(center,camera,axis));
+    if(!path)continue;
+    const d=projectedRingPath(center,camera,axis);
+    path.setAttribute('d',d);
+    const hit=path.__hitProxy;
+    if(hit)hit.setAttribute('d',d);
   }
 }
 function syncAxisVisuals(center,camera){
@@ -284,5 +289,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.577'
+  version:'0.36.18.578'
 };
