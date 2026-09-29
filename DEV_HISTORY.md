@@ -3197,3 +3197,8 @@ For exact implementation state, always inspect current `main`; this history is c
 - Projected ring hit proxies are now updated from the same d path each frame.
 - Prepublish syntax/static regression 7/7 PASS.
 
+## 2026-09-29 — v0.36.18.579 projected rotation ring visible-path selector fix
+- Found that querySelector was updating the transparent hit-proxy path instead of the visible ring path.
+- syncRotationRings now targets .tg-handle.tg-arc explicitly and mirrors its d path to the linked proxy.
+- Syntax/static regression 4/4 PASS.
+
