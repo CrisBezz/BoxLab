@@ -3148,3 +3148,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Hover/active state still thickens selected handle.
 - Syntax/static regression 9/9 PASS.
 
+## 2026-09-29 — v0.36.18.572 Total Gizmo axis handles are intrinsically constrained
+- Removed dependency on global Axis Snap for explicit gizmo X/Y/Z handles.
+- Total Gizmo now exposes its active constraint; transform-upgrade gives that constraint priority over free/auto snap state.
+- X/Y/Z move, scale and rotate handles are intrinsically constrained by the handle selected.
+- Protected multi-object-transform pin unchanged.
+- Syntax/static regression 8/8 PASS.
+
