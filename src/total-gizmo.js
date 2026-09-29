@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.571 — Total Gizmo v1.
+// BoxLab v0.36.18.572 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -17,6 +17,7 @@ const HALF=SIZE/2;
 let activeHandle=null;
 let pointerId=null;
 let raf=0;
+let explicitGizmoConstraint=null;
 
 function state(){return globalThis.__boxlabBridgeState||null;}
 function currentMode(){return globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
@@ -49,12 +50,14 @@ function arm(tool,constraint='free'){
   const arming=globalThis.__boxlabTransformArming;
   if(arming?.setTool){
     arming.setTool(tool);
-  }else if(!b.classList.contains('active')){
-    b.click();
+    arming.setConstraint?.(constraint);
+  }else{
+    if(!b.classList.contains('active'))b.click();
+    arming?.setConstraint?.(constraint);
   }
-  arming?.setConstraint?.(constraint);
-  const c=precision()?.querySelector(`[data-constraint="${constraint}"]`);
-  c?.click?.();
+  // Important: gizmo handles are explicit constraints. Do not click the
+  // precision/Axis Snap UI here, because that can re-route through the
+  // global snapping state. The handle itself owns the constraint.
   return true;
 }
 function syntheticDown(event){
@@ -74,6 +77,7 @@ function onHandleDown(event){
   if(!arm(spec.tool,spec.constraint))return;
   const visual=el.__visual||el;
   activeHandle=visual;pointerId=event.pointerId;
+  explicitGizmoConstraint=spec.constraint;
   root.dataset.dragging='true';
   visual.classList.add('active');
   if(hud){hud.hidden=false;hud.textContent=`${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;}
@@ -89,6 +93,7 @@ function finish(event){
   root.querySelectorAll('.tg-handle').forEach(h=>h.classList.remove('muted'));
   root.dataset.dragging='false';
   activeHandle=null;pointerId=null;
+  explicitGizmoConstraint=null;
   if(hud)hud.hidden=true;
 }
 document.addEventListener('pointerup',finish,true);
@@ -219,7 +224,8 @@ sync();
 
 globalThis.__boxlabTotalGizmo={
   element:root,
+  activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.571'
+  version:'0.36.18.572'
 };
