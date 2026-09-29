@@ -1674,3 +1674,18 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .568: syntax/static regression 13/13 PASS
 - [x] Protection .568: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .570: Total Gizmo appears in Object mode on active object
+- [ ] Workflow .570: projected X/Y/Z move axes follow camera orientation correctly
+- [ ] Workflow .570: center puck performs free move
+- [ ] Workflow .570: X/Y/Z arrow shafts perform constrained move
+- [ ] Workflow .570: X/Y/Z square handles perform constrained scale
+- [ ] Workflow .570: X/Y/Z arcs perform constrained rotation
+- [ ] Workflow .570: inner neutral ring performs screen/view rotation
+- [ ] Workflow .570: outer orange ring performs uniform scale
+- [ ] Workflow .570: hover/active emphasis makes intended handle obvious
+- [ ] Workflow .570: live HUD reflects transform feedback
+- [ ] Regression .570: navigation gestures and Undo/Redo unchanged away from gizmo
+- [ ] Regression .570: existing Move / Scale / Rotate strip still works as fallback
+- [x] Automated .570: syntax/static regression 13/13 PASS
+- [x] Protection .570: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
