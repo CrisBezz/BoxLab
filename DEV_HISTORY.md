@@ -3224,3 +3224,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Normal Export / Save remains available.
 - Prepublish syntax/static regression 12/12 PASS.
 
+## 2026-09-29 — v0.36.18.583 transform input focus + Focus View + wider GLB share handoff
+- Added explicit iPad touch/Pencil focus behavior to transform numeric input so Rotate/Scale type-in can invoke the keyboard reliably.
+- Removed native browser fullscreen path and replaced it with in-page Focus View that preserves the top action row while hiding the left drawer.
+- GLB Web Share now uses application/octet-stream with .glb filename to test extension-based iPadOS/Nomad destination discovery.
+- Normal save/export path unchanged.
+- Prepublish syntax/static regression 9/9 PASS.
+
