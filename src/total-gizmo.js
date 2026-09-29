@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.575 — Total Gizmo v1.
+// BoxLab v0.36.18.576 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -105,9 +105,12 @@ root.hidden=true;
 root.innerHTML=`
 <svg viewBox="0 0 ${SIZE} ${SIZE}" aria-label="BoxLab Total Gizmo">
   <g class="tg-rotate tg-axis-rotate">
-    <ellipse class="tg-handle tg-arc tg-x" data-tool="rotate" data-constraint="x" cx="${HALF}" cy="${HALF}" rx="52" ry="22" transform="rotate(-18 ${HALF} ${HALF})"/>
-    <ellipse class="tg-handle tg-arc tg-y" data-tool="rotate" data-constraint="y" cx="${HALF}" cy="${HALF}" rx="23" ry="53" transform="rotate(14 ${HALF} ${HALF})"/>
-    <ellipse class="tg-handle tg-arc tg-z" data-tool="rotate" data-constraint="z" cx="${HALF}" cy="${HALF}" rx="50" ry="50"/>
+    <path class="tg-handle tg-arc tg-ring-back tg-x" data-tool="rotate" data-constraint="x" data-ring-axis="x" data-ring-side="back" d=""/>
+    <path class="tg-handle tg-arc tg-ring-front tg-x" data-tool="rotate" data-constraint="x" data-ring-axis="x" data-ring-side="front" d=""/>
+    <path class="tg-handle tg-arc tg-ring-back tg-y" data-tool="rotate" data-constraint="y" data-ring-axis="y" data-ring-side="back" d=""/>
+    <path class="tg-handle tg-arc tg-ring-front tg-y" data-tool="rotate" data-constraint="y" data-ring-axis="y" data-ring-side="front" d=""/>
+    <path class="tg-handle tg-arc tg-ring-back tg-z" data-tool="rotate" data-constraint="z" data-ring-axis="z" data-ring-side="back" d=""/>
+    <path class="tg-handle tg-arc tg-ring-front tg-z" data-tool="rotate" data-constraint="z" data-ring-axis="z" data-ring-side="front" d=""/>
   </g>
   <circle class="tg-handle tg-screen-ring" data-tool="rotate" data-constraint="free" data-kind="screen" cx="${HALF}" cy="${HALF}" r="35"/>
   <circle class="tg-handle tg-scale-ring" data-tool="scale" data-constraint="free" data-kind="uniform" cx="${HALF}" cy="${HALF}" r="78"/>
@@ -161,7 +164,9 @@ style.textContent=`
 #totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:none;box-shadow:0 5px 15px rgba(0,0,0,.28)}
 #totalGizmo .tg-hud[hidden]{display:none}
 #totalGizmo .tg-handle::before{pointer-events:stroke}
-#totalGizmo .tg-arc{stroke-width:1.05;opacity:.78;stroke-dasharray:72 18;stroke-linecap:round}
+#totalGizmo .tg-arc{stroke-width:1.05;stroke-linecap:round;stroke-linejoin:round}
+#totalGizmo .tg-ring-front{opacity:.88}
+#totalGizmo .tg-ring-back{opacity:.22}
 #totalGizmo .tg-handle:hover,#totalGizmo .tg-handle.hover-proxy,#totalGizmo .tg-handle.active{stroke-width:3!important;opacity:1!important;filter:drop-shadow(0 0 3px currentColor)}
 #totalGizmo .tg-center:hover,#totalGizmo .tg-center.active{fill:rgba(255,255,255,.46)}
 #totalGizmo .tg-handle.muted{opacity:.16!important}
@@ -213,6 +218,52 @@ function planePoints(a,b){
   const p3=p0.clone().addScaledVector(b,size);
   return [p0,p1,p2,p3].map(p=>`${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ');
 }
+function ringWorldRadius(center,camera,targetPixels=52){
+  const r=canvas.getBoundingClientRect(),distance=Math.max(.001,camera.position.distanceTo(center));
+  const worldPerPixel=2*Math.tan(THREE.MathUtils.degToRad(camera.fov)*.5)*distance/Math.max(1,r.height);
+  return worldPerPixel*targetPixels;
+}
+function ringBasis(axis){
+  if(axis==='x')return [new THREE.Vector3(0,1,0),new THREE.Vector3(0,0,1)];
+  if(axis==='y')return [new THREE.Vector3(1,0,0),new THREE.Vector3(0,0,1)];
+  return [new THREE.Vector3(1,0,0),new THREE.Vector3(0,1,0)];
+}
+function projectedRingPaths(center,camera,axis){
+  const [u,v]=ringBasis(axis),radius=ringWorldRadius(center,camera),centerScreen=screenPoint(center,camera);
+  const rootPx=Math.max(1,root.getBoundingClientRect().width),toSvg=SIZE/rootPx,segments=72;
+  const samples=[];
+  for(let i=0;i<=segments;i++){
+    const a=i/segments*Math.PI*2;
+    const world=center.clone().addScaledVector(u,Math.cos(a)*radius).addScaledVector(v,Math.sin(a)*radius);
+    const screen=screenPoint(world,camera);
+    samples.push({
+      x:HALF+(screen.x-centerScreen.x)*toSvg,
+      y:HALF+(screen.y-centerScreen.y)*toSvg,
+      front:camera.position.distanceToSquared(world)<=camera.position.distanceToSquared(center)
+    });
+  }
+  function pathFor(front){
+    let d='',pen=false;
+    for(let i=0;i<samples.length;i++){
+      const p=samples[i];
+      if(p.front===front){
+        d+=`${pen?'L':'M'}${p.x.toFixed(2)} ${p.y.toFixed(2)} `;
+        pen=true;
+      }else pen=false;
+    }
+    return d.trim();
+  }
+  return{front:pathFor(true),back:pathFor(false)};
+}
+function syncRotationRings(center,camera){
+  for(const axis of ['x','y','z']){
+    const paths=projectedRingPaths(center,camera,axis);
+    const front=root.querySelector(`.tg-ring-front[data-ring-axis="${axis}"]`);
+    const back=root.querySelector(`.tg-ring-back[data-ring-axis="${axis}"]`);
+    if(front)front.setAttribute('d',paths.front);
+    if(back)back.setAttribute('d',paths.back);
+  }
+}
 function syncAxisVisuals(center,camera){
   const dirs={
     x:axisScreen(center,camera,new THREE.Vector3(1,0,0)),
@@ -228,6 +279,7 @@ function syncAxisVisuals(center,camera){
   if(xy)xy.setAttribute('points',planePoints(dirs.x,dirs.y));
   if(xz)xz.setAttribute('points',planePoints(dirs.x,dirs.z));
   if(yz)yz.setAttribute('points',planePoints(dirs.y,dirs.z));
+  syncRotationRings(center,camera);
 }
 
 function sync(){
@@ -250,5 +302,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.575'
+  version:'0.36.18.576'
 };
