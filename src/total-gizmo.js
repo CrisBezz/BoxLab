@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.581 — Total Gizmo v1.
+// BoxLab v0.36.18.584 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -223,23 +223,19 @@ function beginHudExactEntry(){
   hud.hidden=false;hudText.hidden=true;hudInput.hidden=false;
   hudInput.value='';
   hudInput.placeholder=lastSpec.tool==='rotate'?'Degrees':lastSpec.tool==='scale'?'Factor':'Distance';
-  hudInput.focus();
+  try{hudInput.focus({preventScroll:true});}catch{hudInput.focus();}
+  hudInput.select?.();
 }
 function commitHudExact(){
-  const legacy=document.querySelector('#transformValue'),value=hudInput.value.trim();
-  if(!legacy||!value)return;
-  if(['x','y','z'].includes(lastSpec?.constraint)){
-    globalThis.__boxlabTransformArming?.setTool?.(lastSpec.tool);
-    globalThis.__boxlabTransformArming?.setConstraint?.(lastSpec.constraint);
-    const constraintButton=document.querySelector(`#transformPrecision [data-constraint="${lastSpec.constraint}"]`);
-    constraintButton?.click?.();
-  }else if(lastSpec?.constraint==='free'){
-    document.querySelector('#transformPrecision [data-constraint="free"]')?.click?.();
+  const value=hudInput.value.trim();
+  if(!value||!lastSpec)return;
+  const ok=globalThis.__boxlabTransformUpgrade?.applyExact?.(lastSpec.tool,lastSpec.constraint,value);
+  if(!ok){
+    hudText.textContent='Exact transform failed';
+  }else{
+    hudText.textContent=`${lastSpec.tool[0].toUpperCase()+lastSpec.tool.slice(1)} exact • ${lastSpec.constraint==='free'?'Free':lastSpec.constraint.toUpperCase()} • ${value}`;
   }
-  legacy.value=value;
-  legacy.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,cancelable:true}));
   hudInput.hidden=true;hudText.hidden=false;
-  hudText.textContent=`${lastSpec?.tool||'Transform'} exact • ${value}`;
   clearTimeout(hudHideTimer);hudHideTimer=setTimeout(()=>{if(pointerId===null)hud.hidden=true;},2200);
 }
 hud?.addEventListener('pointerdown',event=>{if(pointerId===null&&!event.target.closest('.tg-hud-input')){event.preventDefault();event.stopPropagation();beginHudExactEntry();}});
@@ -247,7 +243,9 @@ hudInput?.addEventListener('keydown',event=>{
   if(event.key==='Enter'){event.preventDefault();event.stopPropagation();commitHudExact();}
   else if(event.key==='Escape'){event.preventDefault();hudInput.blur();hudInput.hidden=true;hudText.hidden=false;}
 });
-hudInput?.addEventListener('pointerdown',event=>event.stopPropagation());
+hudInput?.addEventListener('pointerdown',event=>{event.stopPropagation();try{hudInput.focus({preventScroll:true});}catch{hudInput.focus();}},{capture:true});
+hudInput?.addEventListener('touchstart',event=>{event.stopPropagation();try{hudInput.focus({preventScroll:true});}catch{hudInput.focus();}},{capture:true,passive:true});
+hudInput?.addEventListener('click',event=>{event.stopPropagation();try{hudInput.focus({preventScroll:true});}catch{hudInput.focus();}});
 
 function planePoints(a,b){
   const o=new THREE.Vector2(HALF,HALF),startA=18,startB=18,size=15;
@@ -332,5 +330,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.581'
+  version:'0.36.18.584'
 };
