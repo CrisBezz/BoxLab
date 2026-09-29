@@ -1924,3 +1924,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .593: prepublish syntax/static regression 4/4 PASS
 - [x] Protection .593: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Regression .594: Move floating exact entry remains working
+- [ ] Regression .594: Rotate floating exact entry remains working
+- [ ] Regression .594: Scale and Uniform Scale floating exact entry remain working
+- [ ] Workflow .594: gizmo Rotate catches softly at useful angles
+- [ ] Workflow .594: Rotate detent releases when drag continues past catch
+- [ ] Workflow .594: gizmo Scale catches softly at useful ratios
+- [ ] Workflow .594: Scale detent releases when drag continues past catch
+- [ ] Workflow .594: gizmo HUD shows live angle/factor and detent state
+- [ ] Regression .594: legacy Rotate retains existing 15° snap behavior
+- [ ] Regression .594: Move adaptive soft detents unchanged
+- [x] Automated .594: prepublish syntax/static regression 7/7 PASS
+- [x] Protection .594: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
