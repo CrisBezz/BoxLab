@@ -1736,3 +1736,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .575: prepublish syntax/static regression 9/9 PASS
 - [x] Protection .575: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .576: X rotation ring follows projected YZ plane
+- [ ] Workflow .576: Y rotation ring follows projected XZ plane
+- [ ] Workflow .576: Z rotation ring follows projected XY plane
+- [ ] Workflow .576: all three rings change shape continuously with camera perspective
+- [ ] Workflow .576: face-on ring appears close to circular
+- [ ] Workflow .576: edge-on ring collapses toward a line
+- [ ] Workflow .576: front ring half reads stronger than rear half
+- [ ] Workflow .576: screen-rotate ring remains circular
+- [ ] Workflow .576: X/Y/Z rotation dragging still works
+- [ ] Regression .576: planar move and X/Y/Z movement unchanged
+- [x] Automated .576: prepublish syntax/static regression 10/10 PASS
+- [x] Protection .576: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
