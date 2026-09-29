@@ -3257,3 +3257,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Focus top-row placement retained.
 - Prepublish syntax/static regression 8/8 PASS.
 
+## 2026-09-29 — v0.36.18.587 standalone floating exact-transform input
+- Rebuilt floating exact input outside the Total Gizmo DOM/SVG overlay.
+- New transformFloatInput is a normal viewport sibling with pointer-events:auto and touch-action:auto.
+- It uses the proven transform-upgrade applyExact API for Move/Rotate/Scale.
+- Left-panel exact field remains fallback.
+- Prepublish syntax/static regression 9/9 PASS.
+
