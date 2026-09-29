@@ -72,10 +72,12 @@ function onHandleDown(event){
   if(currentMode()!=='object')return;
   const el=event.currentTarget,spec=handleSpec(el);
   if(!arm(spec.tool,spec.constraint))return;
-  activeHandle=el;pointerId=event.pointerId;
+  const visual=el.__visual||el;
+  activeHandle=visual;pointerId=event.pointerId;
   root.dataset.dragging='true';
-  el.classList.add('active');
-  root.querySelectorAll('.tg-handle').forEach(h=>{if(h!==el)h.classList.add('muted');});
+  visual.classList.add('active');
+  if(hud){hud.hidden=false;hud.textContent=`${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;}
+  root.querySelectorAll('.tg-handle').forEach(h=>{if(h!==visual)h.classList.add('muted');});
   if(status)status.textContent=`Total Gizmo • ${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;
   syntheticDown(event);
   event.preventDefault();
@@ -87,6 +89,7 @@ function finish(event){
   root.querySelectorAll('.tg-handle').forEach(h=>h.classList.remove('muted'));
   root.dataset.dragging='false';
   activeHandle=null;pointerId=null;
+  if(hud)hud.hidden=true;
 }
 document.addEventListener('pointerup',finish,true);
 document.addEventListener('pointercancel',finish,true);
@@ -106,20 +109,24 @@ root.innerHTML=`
   <g class="tg-move-axes">
     <g class="tg-axis-group tg-x-group">
       <line class="tg-handle tg-axis tg-x" data-tool="move" data-constraint="x" x1="${HALF}" y1="${HALF}" x2="${HALF+58}" y2="${HALF}"/>
+      <rect class="tg-handle tg-scale-node tg-x" data-tool="scale" data-constraint="x" x="${HALF+34}" y="${HALF-4.5}" width="9" height="9" rx="1.5"/>
       <polygon class="tg-head tg-x-fill" points="${HALF+67},${HALF} ${HALF+55},${HALF-6} ${HALF+55},${HALF+6}"/>
     </g>
     <g class="tg-axis-group tg-y-group">
       <line class="tg-handle tg-axis tg-y" data-tool="move" data-constraint="y" x1="${HALF}" y1="${HALF}" x2="${HALF}" y2="${HALF-58}"/>
+      <rect class="tg-handle tg-scale-node tg-y" data-tool="scale" data-constraint="y" x="${HALF+34}" y="${HALF-4.5}" width="9" height="9" rx="1.5"/>
       <polygon class="tg-head tg-y-fill" points="${HALF},${HALF-67} ${HALF-6},${HALF-55} ${HALF+6},${HALF-55}"/>
     </g>
     <g class="tg-axis-group tg-z-group">
       <line class="tg-handle tg-axis tg-z" data-tool="move" data-constraint="z" x1="${HALF}" y1="${HALF}" x2="${HALF-45}" y2="${HALF+37}"/>
+      <rect class="tg-handle tg-scale-node tg-z" data-tool="scale" data-constraint="z" x="${HALF+34}" y="${HALF-4.5}" width="9" height="9" rx="1.5"/>
       <polygon class="tg-head tg-z-fill" points="${HALF-52},${HALF+43} ${HALF-41},${HALF+30} ${HALF-35},${HALF+38}"/>
     </g>
   </g>
   <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="10"/>
-</svg>`;
+</svg><div class="tg-hud" hidden></div>`;
 viewportWrap?.append(root);
+const hud=root.querySelector('.tg-hud');
 
 const style=document.createElement('style');
 style.textContent=`
@@ -135,6 +142,9 @@ style.textContent=`
 #totalGizmo .tg-screen-ring{stroke:#eef2f7;stroke-width:1.5;opacity:.62}
 #totalGizmo .tg-scale-ring{stroke:#ff9a66;stroke-width:1.6;opacity:.72}
 #totalGizmo .tg-center{fill:rgba(238,242,247,.22);stroke:#f1f4f8;stroke-width:1.5;pointer-events:all}
+#totalGizmo .tg-scale-node{fill:rgba(17,19,24,.9);stroke-width:2.2;pointer-events:all}
+#totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:none;box-shadow:0 5px 15px rgba(0,0,0,.28)}
+#totalGizmo .tg-hud[hidden]{display:none}
 #totalGizmo .tg-handle::before{pointer-events:stroke}
 #totalGizmo .tg-arc{stroke-width:1.7;opacity:.76}
 #totalGizmo .tg-handle:hover,#totalGizmo .tg-handle.hover-proxy,#totalGizmo .tg-handle.active{stroke-width:4.5!important;opacity:1!important;filter:drop-shadow(0 0 4px currentColor)}
@@ -161,12 +171,21 @@ for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center)')]){
   hit.style.pointerEvents='stroke';
   hit.style.stroke='transparent';
   hit.style.strokeWidth='16';
+  hit.__visual=el;
   el.parentNode.insertBefore(hit,el);
   hit.addEventListener('pointerdown',e=>onHandleDown.call(hit,e));
   hit.addEventListener('pointerenter',()=>el.classList.add('hover-proxy'));
   hit.addEventListener('pointerleave',()=>el.classList.remove('hover-proxy'));
 }
 for(const el of root.querySelectorAll('.tg-handle'))el.addEventListener('pointerdown',onHandleDown);
+
+if(status&&hud){
+  new MutationObserver(()=>{
+    if(pointerId===null||root.dataset.dragging!=='true')return;
+    const text=(status.textContent||'').trim();
+    if(text)hud.textContent=text.replace(/^Total Gizmo\s*•\s*/,'');
+  }).observe(status,{childList:true,subtree:true,characterData:true});
+}
 
 function syncAxisVisuals(center,camera){
   const dirs={
@@ -200,5 +219,5 @@ globalThis.__boxlabTotalGizmo={
   element:root,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.569'
+  version:'0.36.18.570'
 };
