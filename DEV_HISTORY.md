@@ -3184,3 +3184,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Removed dashed-ring workaround.
 - Prepublish syntax/static regression 10/10 PASS.
 
+## 2026-09-29 — v0.36.18.577 projected rotation rings visibility repair
+- .576 projected rings were not visible in hands-on testing.
+- Removed front/back split path generation and DOM-size conversion.
+- Rings now render as one full 96-sample camera-projected closed path per world rotation plane.
+- Depth fading deferred until basic projected-ring behavior is validated.
+- Prepublish syntax/static regression 9/9 PASS.
+
