@@ -3278,3 +3278,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Rotate/Scale remain on semantic transform-end routing for continued isolation.
 - Prepublish syntax/static regression 5/5 PASS.
 
+## 2026-09-29 — v0.36.18.590 Rotate floating type-in isolated
+- Confirmed rotate-transform.js does not own Object-mode rotation.
+- Preserved .589 Move path unchanged.
+- Object-mode Rotate now uses the same proven gizmo release trigger to show floating exact entry.
+- Scale intentionally untouched.
+- Prepublish syntax/static regression 4/4 PASS.
+
