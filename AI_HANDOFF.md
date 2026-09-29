@@ -1,22 +1,22 @@
-## v0.36.18.596 — single-file iPad Share / Open In payload
+## v0.36.18.597 — transform-menu gizmo transient reset
 
-- User identified why Nomad Sculpt was absent from the iPad share/open-in destination list:
-  - BoxLab was creating one GLB/OBJ File but also supplied `title:fileName` to `navigator.share()`.
-  - On iOS the extra share title was exposed as a second text payload/sidecar, so destinations had to accept both the model and text payload.
-  - Nomad accepts the model type but not the text payload, so iOS filtered Nomad out.
-- .596 changes both iPad share paths to call `navigator.share({files:[file]})` only.
-- Applies to:
-  - File > Share / Open In…
-  - iPad Web Share fallback used by Export / Save…
-- No geometry, GLB/OBJ construction, Nomad PBR/UV/tangent/vertex-colour/layer passthrough, or facegroup code changed.
-- Export module cache pin bumped to .596.
+- User reported that clicking anything in the Transform menu could leave the Total Gizmo stuck.
+- Root cause/audit:
+  - Transform tool/constraint menu clicks changed transform arming state but did not explicitly clear Total Gizmo transient ownership.
+  - Total Gizmo can retain transient fields such as active handle, pointer ID, explicit gizmo constraint, dragging dataset state, HUD state, and `__boxlabActiveGizmoDrag`.
+- .597 adds a narrow `resetTransient()` API to Total Gizmo.
+- Move / Scale / Rotate tool-button clicks and Free / X / Y / Z / Auto constraint clicks now call that reset before applying the new transform-menu state.
+- The reset does NOT disarm the selected transform; it only clears stale gizmo drag/visual ownership so the gizmo returns to idle and remains reusable.
+- Floating exact-entry UI is dismissed when the user deliberately changes transform menu state.
+- .596 single-file iPad Share / Open In fix remains unchanged.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
 
 Hands-on check:
-1. Export GLB with Share / Open In… and confirm only one shared item appears.
-2. Confirm Nomad Sculpt now appears as an eligible destination and opens the GLB.
-3. Repeat with OBJ if useful.
-4. Regression: Export / Save… still offers Save to Files and saves the model normally.
+1. Select an object so Total Gizmo is visible.
+2. Click Move, Scale, Rotate and several Free/X/Y/Z/Auto controls in the Transform menu.
+3. After each click, confirm the gizmo remains idle, follows the object normally, and can immediately start a new gizmo drag.
+4. Regression: gizmo floating exact-entry still appears after a completed Move/Rotate/Scale drag.
+5. Regression: Share / Open In .596 still sends one model file only.
 
 Next:
-- If .596 passes, return to the pending .595 Rotate/Scale soft-detent hands-on verification before further modeless interaction work.
+- If .597 passes, resume .595 Rotate/Scale soft-detent hands-on verification.
