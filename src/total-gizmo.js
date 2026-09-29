@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.586 — Total Gizmo v1.
+// BoxLab v0.36.18.587 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -75,6 +75,7 @@ function handleSpec(el){
 }
 function onHandleDown(event){
   if(currentMode()!=='object')return;
+  hideFloatInput();
   const el=event.currentTarget,spec=handleSpec(el);
   if(!arm(spec.tool,spec.constraint))return;
   const visual=el.__visual||el;
@@ -103,9 +104,10 @@ function finish(event){
   if(hud){
     clearTimeout(hudHideTimer);
     hudText.hidden=false;
-    hudText.textContent=`${lastSpec?.tool?.[0]?.toUpperCase()||''}${lastSpec?.tool?.slice?.(1)||''} • ${lastSpec?.constraint==='free'?'Free':(lastSpec?.constraint||'').toUpperCase()} • exact entry in left panel`;
-    hudHideTimer=setTimeout(()=>{if(pointerId===null)hud.hidden=true;},2600);
+    hudText.textContent=`${lastSpec?.tool?.[0]?.toUpperCase()||''}${lastSpec?.tool?.slice?.(1)||''} • ${lastSpec?.constraint==='free'?'Free':(lastSpec?.constraint||'').toUpperCase()}`;
+    hudHideTimer=setTimeout(()=>{if(pointerId===null)hud.hidden=true;},1800);
   }
+  showFloatInput(lastSpec);
 }
 document.addEventListener('pointerup',finish,true);
 document.addEventListener('pointercancel',finish,true);
@@ -153,6 +155,72 @@ viewportWrap?.append(root);
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
 let hudHideTimer=null,lastSpec=null;
 
+const floatPalette=document.createElement('div');
+floatPalette.id='transformFloatInput';
+floatPalette.hidden=true;
+floatPalette.innerHTML=`
+  <span class="tfi-label">Transform</span>
+  <input class="tfi-input" inputmode="decimal" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Exact transform value"/>
+  <button type="button" class="tfi-apply">Apply</button>
+`;
+viewportWrap?.append(floatPalette);
+const floatLabel=floatPalette.querySelector('.tfi-label');
+const floatInput=floatPalette.querySelector('.tfi-input');
+const floatApply=floatPalette.querySelector('.tfi-apply');
+let floatHideTimer=null;
+
+function floatTitle(spec){
+  if(!spec)return'Transform';
+  const tool=spec.tool?.[0]?.toUpperCase()+spec.tool?.slice(1);
+  const constraint=spec.constraint==='free'?(spec.kind==='uniform'?'Uniform':'Free'):(spec.constraint||'').toUpperCase();
+  return `${tool} ${constraint}`.trim();
+}
+function floatPlaceholder(spec){
+  return spec?.tool==='rotate'?'Degrees':spec?.tool==='scale'?'Factor':'Distance';
+}
+function showFloatInput(spec){
+  if(!spec)return;
+  clearTimeout(floatHideTimer);
+  floatLabel.textContent=floatTitle(spec);
+  floatInput.placeholder=floatPlaceholder(spec);
+  floatInput.value='';
+  floatPalette.hidden=false;
+}
+function hideFloatInput(){
+  floatPalette.hidden=true;
+  floatInput.blur();
+}
+function commitFloatInput(){
+  const value=floatInput.value.trim();
+  if(!value||!lastSpec)return;
+  const ok=globalThis.__boxlabTransformUpgrade?.applyExact?.(lastSpec.tool,lastSpec.constraint,value);
+  if(ok){
+    const legacy=document.querySelector('#transformValue');
+    if(legacy)legacy.value='';
+    if(status)status.textContent=`${floatTitle(lastSpec)} exact • ${value}${lastSpec.tool==='rotate'?'°':lastSpec.tool==='scale'?'×':''}`;
+    hideFloatInput();
+  }else{
+    floatInput.select?.();
+  }
+}
+for(const el of [floatPalette,floatInput,floatApply]){
+  el?.addEventListener('pointerdown',event=>event.stopPropagation(),true);
+  el?.addEventListener('touchstart',event=>event.stopPropagation(),{capture:true,passive:true});
+}
+floatInput?.addEventListener('click',event=>{
+  event.stopPropagation();
+  try{floatInput.focus({preventScroll:true});}catch{floatInput.focus();}
+});
+floatInput?.addEventListener('keydown',event=>{
+  if(event.key==='Enter'){event.preventDefault();event.stopPropagation();commitFloatInput();}
+  else if(event.key==='Escape'){event.preventDefault();hideFloatInput();}
+});
+floatApply?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();commitFloatInput();});
+document.addEventListener('pointerdown',event=>{
+  if(floatPalette.hidden||event.target?.closest?.('#transformFloatInput'))return;
+  hideFloatInput();
+},true);
+
 const style=document.createElement('style');
 style.textContent=`
 #totalGizmo{position:absolute;z-index:115;width:${SIZE}px;height:${SIZE}px;transform:translate(-50%,-50%);pointer-events:none;touch-action:none;filter:drop-shadow(0 2px 4px #0009)}
@@ -175,6 +243,57 @@ style.textContent=`
 #totalGizmo .tg-plane:hover,#totalGizmo .tg-plane.active{opacity:1;stroke-width:2!important;fill:rgba(255,255,255,.16);filter:drop-shadow(0 0 3px currentColor)}
 #totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:auto;box-shadow:0 5px 15px rgba(0,0,0,.28)}
 #totalGizmo .tg-hud[hidden]{display:none}
+#transformFloatInput{
+  position:absolute;
+  z-index:132;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transform:translate(-50%,calc(-100% - 112px));
+  padding:6px 7px;
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:8px;
+  background:rgba(12,14,18,.96);
+  box-shadow:0 8px 22px rgba(0,0,0,.34);
+  pointer-events:auto;
+  touch-action:auto;
+  user-select:text;
+  -webkit-user-select:text;
+}
+#transformFloatInput[hidden]{display:none!important}
+#transformFloatInput .tfi-label{
+  font-size:11px;
+  font-weight:650;
+  white-space:nowrap;
+  color:#eef2f7;
+  pointer-events:none;
+}
+#transformFloatInput .tfi-input{
+  width:84px;
+  min-height:30px;
+  box-sizing:border-box;
+  padding:4px 7px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:6px;
+  background:#080a0e;
+  color:#fff;
+  font-size:13px;
+  line-height:1;
+  outline:none;
+  pointer-events:auto;
+  touch-action:auto;
+  -webkit-user-select:text;
+  user-select:text;
+}
+#transformFloatInput .tfi-input:focus{border-color:rgba(255,255,255,.62)}
+#transformFloatInput .tfi-apply{
+  min-height:30px;
+  padding:4px 7px;
+  font-size:11px;
+  border-radius:6px;
+  pointer-events:auto;
+  touch-action:manipulation;
+}
 #totalGizmo .tg-handle::before{pointer-events:stroke}
 #totalGizmo .tg-arc{stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
 #totalGizmo .tg-handle:hover,#totalGizmo .tg-handle.hover-proxy,#totalGizmo .tg-handle.active{stroke-width:3!important;opacity:1!important;filter:drop-shadow(0 0 3px currentColor)}
@@ -287,13 +406,16 @@ function syncAxisVisuals(center,camera){
 function sync(){
   raf=requestAnimationFrame(sync);
   if(!canvas||!viewportWrap||currentMode()!=='object'||!objectSelected()){
-    root.hidden=true;return;
+    root.hidden=true;hideFloatInput();return;
   }
   const s=state(),mesh=s?.mesh,camera=s?.camera;
-  if(!mesh?.vertices?.length||!camera){root.hidden=true;return;}
+  if(!mesh?.vertices?.length||!camera){root.hidden=true;hideFloatInput();return;}
   const c=centerOf(mesh),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
-  root.style.left=`${cr.left-vr.left+p.x}px`;
-  root.style.top=`${cr.top-vr.top+p.y}px`;
+  const left=cr.left-vr.left+p.x,top=cr.top-vr.top+p.y;
+  root.style.left=`${left}px`;
+  root.style.top=`${top}px`;
+  floatPalette.style.left=`${left}px`;
+  floatPalette.style.top=`${top}px`;
   root.hidden=false;
   syncAxisVisuals(c,camera);
 }
@@ -304,5 +426,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.586'
+  version:'0.36.18.587'
 };
