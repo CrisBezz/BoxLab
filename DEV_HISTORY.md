@@ -3155,3 +3155,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Protected multi-object-transform pin unchanged.
 - Syntax/static regression 8/8 PASS.
 
+## 2026-09-29 — v0.36.18.573 Total Gizmo axis constraint fixed in actual Object drag owner
+- .572 failed because transform-upgrade was not the final owner of Object-mode drag movement.
+- main.js initializes and applies drag.axisLock for Object/component transforms.
+- main.js now seeds axisLock from active Total Gizmo X/Y/Z handle and prevents Axis Snap auto-selection from replacing an explicit gizmo axis.
+- Explicit gizmo axis movement is now independent of Axis Snap state.
+- Static regression 6/6 PASS.
+
