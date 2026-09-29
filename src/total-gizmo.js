@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.585 — Total Gizmo v1.
+// BoxLab v0.36.18.586 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -47,6 +47,11 @@ function axisScreen(center,camera,axis){
 function arm(tool,constraint='free'){
   const b=toolButtons.find(x=>x.dataset.tool===tool);
   if(!b||b.disabled)return false;
+  const upgrade=globalThis.__boxlabTransformUpgrade;
+  if(upgrade?.setContext){
+    upgrade.setContext(tool,['x','y','z','free','auto'].includes(constraint)?constraint:'free');
+    return true;
+  }
   const arming=globalThis.__boxlabTransformArming;
   if(arming?.setTool){
     arming.setTool(tool);
@@ -55,9 +60,6 @@ function arm(tool,constraint='free'){
     if(!b.classList.contains('active'))b.click();
     arming?.setConstraint?.(constraint);
   }
-  // Important: gizmo handles are explicit constraints. Do not click the
-  // precision/Axis Snap UI here, because that can re-route through the
-  // global snapping state. The handle itself owns the constraint.
   return true;
 }
 function syntheticDown(event){
@@ -80,7 +82,7 @@ function onHandleDown(event){
   explicitGizmoConstraint=spec.constraint;
   root.dataset.dragging='true';
   visual.classList.add('active');
-  if(hud){clearTimeout(hudHideTimer);hud.hidden=false;hudInput.hidden=true;hudText.hidden=false;hudText.textContent=`${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;lastSpec=spec;}
+  if(hud){clearTimeout(hudHideTimer);hud.hidden=false;hudText.hidden=false;hudText.textContent=`${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;lastSpec=spec;}
   root.querySelectorAll('.tg-handle').forEach(h=>{if(h!==visual)h.classList.add('muted');});
   if(status)status.textContent=`Total Gizmo • ${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;
   syntheticDown(event);
@@ -98,16 +100,11 @@ function finish(event){
   root.dataset.dragging='false';
   activeHandle=null;pointerId=null;
   explicitGizmoConstraint=null;
-  if(hud&&lastSpec){
+  if(hud){
     clearTimeout(hudHideTimer);
-    hud.hidden=false;
-    hudText.hidden=true;
-    hudInput.hidden=false;
-    hudInput.value='';
-    hudInput.placeholder=lastSpec.tool==='rotate'?'Degrees':lastSpec.tool==='scale'?'Factor':'Distance';
-    hudHideTimer=setTimeout(()=>{
-      if(pointerId===null&&document.activeElement!==hudInput)hud.hidden=true;
-    },4200);
+    hudText.hidden=false;
+    hudText.textContent=`${lastSpec?.tool?.[0]?.toUpperCase()||''}${lastSpec?.tool?.slice?.(1)||''} • ${lastSpec?.constraint==='free'?'Free':(lastSpec?.constraint||'').toUpperCase()} • exact entry in left panel`;
+    hudHideTimer=setTimeout(()=>{if(pointerId===null)hud.hidden=true;},2600);
   }
 }
 document.addEventListener('pointerup',finish,true);
@@ -151,9 +148,9 @@ root.innerHTML=`
     </g>
   </g>
   <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="10"/>
-</svg><div class="tg-hud" hidden><span class="tg-hud-text"></span><input class="tg-hud-input" inputmode="decimal" aria-label="Exact transform value" hidden/></div>`;
+</svg><div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
-const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text'),hudInput=root.querySelector('.tg-hud-input');
+const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
 let hudHideTimer=null,lastSpec=null;
 
 const style=document.createElement('style');
@@ -177,7 +174,6 @@ style.textContent=`
 #totalGizmo .tg-plane-yz{stroke:#62e6dd;fill:rgba(98,230,221,.065)}
 #totalGizmo .tg-plane:hover,#totalGizmo .tg-plane.active{opacity:1;stroke-width:2!important;fill:rgba(255,255,255,.16);filter:drop-shadow(0 0 3px currentColor)}
 #totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:auto;box-shadow:0 5px 15px rgba(0,0,0,.28)}
-#totalGizmo .tg-hud-input{width:96px;min-height:30px;padding:4px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.32);background:#090b0f;color:#fff;font-size:13px;outline:none;box-sizing:border-box}
 #totalGizmo .tg-hud[hidden]{display:none}
 #totalGizmo .tg-handle::before{pointer-events:stroke}
 #totalGizmo .tg-arc{stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
@@ -221,41 +217,9 @@ if(status&&hud){
   new MutationObserver(()=>{
     if(pointerId===null||root.dataset.dragging!=='true')return;
     const text=(status.textContent||'').trim();
-    if(text){hudText.textContent=text.replace(/^Total Gizmo\s*•\s*/,'');hudText.hidden=false;hudInput.hidden=true;}
+    if(text){hudText.textContent=text.replace(/^Total Gizmo\s*•\s*/,'');hudText.hidden=false;}
   }).observe(status,{childList:true,subtree:true,characterData:true});
 }
-
-function beginHudExactEntry(){
-  if(!lastSpec||pointerId!==null)return;
-  const legacy=document.querySelector('#transformValue');
-  if(!legacy)return;
-  clearTimeout(hudHideTimer);
-  hud.hidden=false;hudText.hidden=true;hudInput.hidden=false;
-  hudInput.value='';
-  hudInput.placeholder=lastSpec.tool==='rotate'?'Degrees':lastSpec.tool==='scale'?'Factor':'Distance';
-  try{hudInput.focus({preventScroll:true});}catch{hudInput.focus();}
-  hudInput.select?.();
-}
-function commitHudExact(){
-  const value=hudInput.value.trim();
-  if(!value||!lastSpec)return;
-  const ok=globalThis.__boxlabTransformUpgrade?.applyExact?.(lastSpec.tool,lastSpec.constraint,value);
-  if(!ok){
-    hudText.textContent='Exact transform failed';
-  }else{
-    hudText.textContent=`${lastSpec.tool[0].toUpperCase()+lastSpec.tool.slice(1)} exact • ${lastSpec.constraint==='free'?'Free':lastSpec.constraint.toUpperCase()} • ${value}`;
-  }
-  hudInput.hidden=true;hudText.hidden=false;
-  clearTimeout(hudHideTimer);hudHideTimer=setTimeout(()=>{if(pointerId===null)hud.hidden=true;},2200);
-}
-hud?.addEventListener('pointerdown',event=>{if(event.target===hud||event.target===hudText){event.preventDefault();event.stopPropagation();beginHudExactEntry();}});
-hudInput?.addEventListener('keydown',event=>{
-  if(event.key==='Enter'){event.preventDefault();event.stopPropagation();commitHudExact();}
-  else if(event.key==='Escape'){event.preventDefault();hudInput.blur();hudInput.hidden=true;hudText.hidden=false;}
-});
-hudInput?.addEventListener('pointerdown',event=>{event.stopPropagation();try{hudInput.focus({preventScroll:true});}catch{hudInput.focus();}},{capture:true});
-hudInput?.addEventListener('touchstart',event=>{event.stopPropagation();try{hudInput.focus({preventScroll:true});}catch{hudInput.focus();}},{capture:true,passive:true});
-hudInput?.addEventListener('click',event=>{event.stopPropagation();try{hudInput.focus({preventScroll:true});}catch{hudInput.focus();}});
 
 function planePoints(a,b){
   const o=new THREE.Vector2(HALF,HALF),startA=18,startB=18,size=15;
@@ -340,5 +304,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.585'
+  version:'0.36.18.586'
 };
