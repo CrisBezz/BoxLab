@@ -1,22 +1,30 @@
-## v0.36.18.574 — legacy X/Y/Z constraints no longer depend on Axis Snap
+## v0.36.18.575 — Total Gizmo planar move + interaction refinement
 
-- User confirmed .573 Total Gizmo explicit axis constraint works and noted the older precision X/Y/Z buttons had the same conceptual bug.
-- Root cause: `src/main.js` only seeded `drag.axisLock` from the gizmo or from automatic Axis Snap inference; the legacy X/Y/Z precision buttons were not authoritative in the actual Object drag owner.
-- .574 makes the active legacy X/Y/Z precision button an explicit hard axis constraint.
-- Constraint priority:
-  1. active Total Gizmo X/Y/Z handle
-  2. active legacy precision X/Y/Z button
-  3. Axis Snap auto-inference only if neither explicit constraint exists
-- Therefore X/Y/Z buttons now work with Axis Snap OFF.
-- Free remains free; Auto/Axis Snap remain inference behavior rather than master enable switches.
+- Added true XY / XZ / YZ planar move handles to the Object-mode Total Gizmo.
+- Planar handles are projected from the current world axes and update as the camera orbits.
+- main.js now creates the drag plane from the selected gizmo plane:
+  - XY => world Z normal
+  - XZ => world Y normal
+  - YZ => world X normal
+- Planar movement is therefore a real world-plane constraint, not a fake screen-plane drag.
+- Rotation arcs use segmented/dashed rendering to read more clearly through overlapping gizmo geometry.
+- Hit priority refined:
+  - axis shafts retain generous 16px hit zones
+  - rotation arcs reduced to 12px hit zones
+  - screen/uniform rings use 13px hit zones
+  - planar pads use direct filled-area hit testing
+- Existing X/Y/Z explicit constraints from .573/.574 remain authoritative.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
-- Static regression 7/7 PASS.
+- Prepublish syntax/static regression 9/9 PASS.
 
 Hands-on check:
-1. Axis Snap OFF.
-2. Legacy Move > X: drag object and confirm X-only.
-3. Repeat Y and Z.
-4. Free should move freely.
-5. With Axis Snap ON, explicit X/Y/Z must still win.
-6. Total Gizmo X/Y/Z behavior from .573 remains unchanged.
+1. XY pad moves only in XY.
+2. XZ pad moves only in XZ.
+3. YZ pad moves only in YZ.
+4. Orbit camera and confirm plane pads continue to sit between the correct projected axes.
+5. Rotation arcs remain easy to identify and grab.
+6. Axis arrows/scale nodes should win when directly targeted near overlapping rings.
+7. Navigation and legacy transforms remain unchanged.
+
+Next: precision HUD + exact transform input.
 
