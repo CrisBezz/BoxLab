@@ -1882,3 +1882,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .589: left-panel Move type-in remains working
 - [x] Automated .589: prepublish syntax/static regression 5/5 PASS
 
+- [ ] Regression .590: Move floating Distance entry remains working
+- [ ] Workflow .590: X Rotate ring release shows floating Degrees palette
+- [ ] Workflow .590: Y Rotate ring release shows floating Degrees palette
+- [ ] Workflow .590: Z Rotate ring release shows floating Degrees palette
+- [ ] Workflow .590: Enter/Apply commits exact Rotate
+- [ ] Workflow .590: Undo exact Rotate works
+- [ ] Scope .590: Scale floating type-in intentionally unchanged
+- [x] Automated .590: prepublish syntax/static regression 4/4 PASS
+- [x] Protection .590: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
