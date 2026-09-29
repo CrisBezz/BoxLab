@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.595 — Total Gizmo v1.
+// BoxLab v0.36.18.597 — Total Gizmo transient-state reset on transform-menu interaction.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -97,6 +98,17 @@ function clearTransientHandleState(){
   root.querySelectorAll('.tg-handle').forEach(h=>{
     h.classList.remove('active','muted','hover-proxy');
   });
+}
+function resetTransientState({hideFloat=false}={}){
+  awaitingTransformEnd=false;
+  clearTransientHandleState();
+  root.dataset.dragging='false';
+  activeHandle=null;
+  pointerId=null;
+  explicitGizmoConstraint=null;
+  globalThis.__boxlabActiveGizmoDrag=null;
+  if(hud){clearTimeout(hudHideTimer);hud.hidden=true;}
+  if(hideFloat)hideFloatInput();
 }
 function finish(event){
   if(pointerId!==event.pointerId)return;
@@ -443,6 +455,7 @@ globalThis.__boxlabTotalGizmo={
   activeDragSpec:()=>pointerId!==null&&lastSpec?{...lastSpec}:null,
   visible:()=>!root.hidden,
   refresh:()=>{},
+  resetTransient:(options={})=>{resetTransientState(options);sync();return true;},
   completeExactEntry:(detail={})=>{
     if(detail.tool!=='rotate'||lastSpec?.tool!=='rotate')return false;
     awaitingTransformEnd=false;
@@ -455,5 +468,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.595'
+  version:'0.36.18.597'
 };
