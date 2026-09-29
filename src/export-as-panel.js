@@ -1,16 +1,22 @@
-// BoxLab v0.36.18.556 — restore original GLB round-trip scale.
+// BoxLab v0.36.18.582 — iPad Share / Open In export handoff.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.556';
+const VERSION='0.36.18.582';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
 const geometryButtons=[...document.querySelectorAll('#exportGeometry [data-export-geometry]')];
 const exportButton=document.querySelector('#exportAsBtn');
+const shareButton=document.createElement('button');
+shareButton.type='button';
+shareButton.id='exportShareBtn';
+shareButton.textContent='Share / Open In…';
+shareButton.className='export-secondary';
+exportButton?.insertAdjacentElement('afterend',shareButton);
 const note=document.querySelector('#exportDestinationNote');
 const status=document.querySelector('#selectionStatus');
 
@@ -43,6 +49,20 @@ function downloadBlob(blob,fileName){
   a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1200);
 }
+
+async function shareBlob(blob,fileName,mime){
+  if(!(navigator.share&&typeof File!=='undefined'))return 'unavailable';
+  const file=new File([blob],fileName,{type:mime});
+  if(navigator.canShare&&!navigator.canShare({files:[file]}))return 'unavailable';
+  try{
+    await navigator.share({files:[file],title:fileName});
+    return 'shared';
+  }catch(error){
+    if(error?.name==='AbortError')return 'cancelled';
+    throw error;
+  }
+}
+
 async function saveBlob(blob,fileName,mime){
   if(typeof window.showSaveFilePicker==='function'){
     try{
@@ -534,6 +554,37 @@ async function buildGLB(sceneObjects,subd){
   globalThis.__boxlabNomadRoundTrip.lastUVExport={restored:uvRestoredCount,total:count};
   return{buffer,count,faceGroupCount,groupSlotCount,uvRestoredCount,tangentsRestoredCount,vertexColorsRestoredCount,morphTargetsRestoredCount,objectDetails,verification};
 }
+
+async function shareOpenIn(){
+  const sceneObjects=objects();
+  if(!sceneObjects.length){if(status)status.textContent='Share • no visible editable objects';return;}
+  const subd=geometry==='subd',fileName=filename();
+  shareButton.disabled=true;
+  try{
+    let blob,mime;
+    if(format==='obj'){
+      const result=buildSceneOBJ(sceneObjects,{subd,version:VERSION});
+      blob=new Blob([result.content],{type:'model/obj'});mime='model/obj';
+    }else{
+      if(status)status.textContent='GLB share • building scene…';
+      const result=await buildGLB(sceneObjects,subd);
+      blob=new Blob([result.buffer],{type:'model/gltf-binary'});mime='model/gltf-binary';
+    }
+    const outcome=await shareBlob(blob,fileName,mime);
+    if(outcome==='unavailable'){
+      downloadBlob(blob,fileName);
+      if(status)status.textContent='Share unavailable • file downloaded instead';
+    }else if(status&&outcome!=='cancelled'){
+      status.textContent=`${format.toUpperCase()} • Share / Open In complete`;
+    }
+  }catch(error){
+    console.error('BoxLab Share / Open In failed',error);
+    if(status)status.textContent=`Share failed • ${error?.message||error}`;
+  }finally{
+    shareButton.disabled=false;
+  }
+}
+
 async function exportAs(){
   const sceneObjects=objects();
   if(!sceneObjects.length){if(status)status.textContent='Export • no visible editable objects';return;}
@@ -594,9 +645,10 @@ nameInput?.addEventListener('focus',()=>setEditingTouchMode(true));
 nameInput?.addEventListener('blur',()=>setEditingTouchMode(false));
 nameInput?.addEventListener('input',()=>{nameInput.value=nameInput.value.replace(/\.(obj|glb)$/i,'');});
 exportButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();exportAs();});
+shareButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();shareOpenIn();});
 
 setActive(formatButtons,'exportFormat',format);
 setActive(geometryButtons,'exportGeometry',geometry);
 updateNote();
 
-globalThis.__boxlabExportAs={version:VERSION,exportAs,buildGLB,verifyGLB,patchNomadFaceGroupGLB,topologySignature,geometrySignature,get format(){return format;},get geometry(){return geometry;}};
+globalThis.__boxlabExportAs={version:VERSION,exportAs,shareOpenIn,buildGLB,verifyGLB,patchNomadFaceGroupGLB,topologySignature,geometrySignature,get format(){return format;},get geometry(){return geometry;}};
