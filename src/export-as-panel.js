@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.583 — iPad Share / Open In compatibility pass.
+// BoxLab v0.36.18.596 — single-file iPad Share / Open In payload.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.583';
+const VERSION='0.36.18.596';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -56,7 +56,7 @@ async function shareBlob(blob,fileName,mime){
   const file=new File([blob],fileName,{type:shareType});
   if(navigator.canShare&&!navigator.canShare({files:[file]}))return 'unavailable';
   try{
-    await navigator.share({files:[file],title:fileName});
+    await navigator.share({files:[file]});
     return 'shared';
   }catch(error){
     if(error?.name==='AbortError')return 'cancelled';
@@ -83,7 +83,7 @@ async function saveBlob(blob,fileName,mime){
     if(navigator.share&&typeof File!=='undefined'){
       const file=new File([blob],fileName,{type:mime});
       if(!navigator.canShare||navigator.canShare({files:[file]})){
-        await navigator.share({files:[file],title:fileName});
+        await navigator.share({files:[file]});
         return 'shared';
       }
     }
