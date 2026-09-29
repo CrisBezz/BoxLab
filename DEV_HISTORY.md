@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-29 — v0.36.18.598 typed GLB File sharing
+
+- Single-item Web Share was working, but Nomad Sculpt still did not accept the shared GLB.
+- Found Share / Open In was explicitly changing GLB File.type to `application/octet-stream`.
+- GLB share now creates a real `.glb` File with MIME `model/gltf-binary`.
+- Web Share remains files-only with no title/text payload.
+- HTML shell and `version.json` advanced together to .598.
+- No GLB geometry, facegroup, PBR, UV, tangent, vertex-colour or layer-preservation logic changed.
+
 ## 2026-09-29 — v0.36.18.597 release manifest sync
 
 - Live shell visibly loaded .597, then reverted to .595.
