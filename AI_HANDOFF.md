@@ -1,31 +1,30 @@
-## v0.36.18.583 — transform input focus + Focus View + wider GLB share handoff
+## v0.36.18.584 — direct exact transforms + Focus View activation fix
 
-- .582 hands-on feedback:
-  - Move numeric type-in worked.
-  - Rotate and Scale numeric boxes did not reliably accept typing on iPad.
-  - Native browser fullscreen was unsuitable because Chrome/iPad adds swipe-down-to-exit and exiting could leave BoxLab top actions missing.
-  - Share / Open In did not naturally offer Nomad even though Files can open GLB in Nomad.
-- .583 changes:
-  - `#transformValue` gets explicit iPad/Pencil/touch focus handling, mirroring the proven export filename field pattern. Scale and Rotate use the existing exact-value maths; this change fixes input acquisition rather than creating another transform engine.
-  - Native Fullscreen API removed from BoxLab Viewport UI.
-  - Replaced with **Focus View**:
-    - stays inside the normal page/browser
-    - keeps File / Frame All / Undo / Redo / Viewport top row
-    - hides only the left tool drawer to maximise modelling space
-    - no browser swipe-down fullscreen exit gesture
-  - GLB Share / Open In now presents the .glb file to iPadOS as `application/octet-stream` while preserving the `.glb` filename, to encourage extension-based destination matching rather than strict Web Share MIME filtering.
-  - Normal Export / Save continues to use the established GLB MIME and remains unchanged.
-- If Nomad still does not appear in the Web Share sheet, that indicates iPadOS/Nomad exposes GLB through Files/document import but not as a Safari Web Share destination.
+- .583 hands-on feedback:
+  - Move exact type-in worked.
+  - Rotate and Scale exact type-in still did not.
+  - Focus View did not hide the left drawer.
+  - Share/Open In remains inconclusive; user can already download GLB and open it in Nomad manually.
+- .584 fixes the two BoxLab issues directly:
+  - `transform-upgrade.js` now exposes a direct exact-transform API: `applyExact(tool,constraint,value)`.
+  - Gizmo HUD exact entry no longer synthesizes Enter into the legacy value field; it calls that exact-transform API directly with the gizmo's tool/constraint/value.
+  - Exact Rotate does not inherit the 15-degree drag snap; typed degrees are exact.
+  - Exact Scale uses the same direct path and history/undo engine.
+  - Gizmo HUD input gets explicit iPad touch/Pencil focus handling.
+  - Focus View bug traced to stale `fullscreenBtn` handler branches after the rename.
+  - Focus View now calls `toggleFocusView()` correctly.
+  - Touch/Pencil Viewport actions use pointerup plus a 700ms synthesized-click suppression window, preventing Focus View from toggling on and immediately back off.
+- Share/Open In is unchanged in this build.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
-- Prepublish syntax/static regression 9/9 PASS.
+- Prepublish syntax/static regression 8/8 PASS.
 
 Hands-on check:
-1. Select Rotate; tap Degrees/Value field with finger/Pencil and verify keyboard/input works.
-2. Enter exact degrees and confirm rotation.
-3. Select Scale; tap Scale/Value field and enter exact factor.
-4. Undo both exact operations.
-5. Viewport > Focus View hides left drawer but keeps the complete top row.
-6. Exit Focus View restores left drawer.
-7. Share / Open In GLB and check whether Nomad now appears.
-8. Normal Export / Save remains unchanged.
+1. Use gizmo Rotate, release, tap HUD, type exact degrees, Enter.
+2. Confirm typed angle is exact even if 15° rotation snap is enabled.
+3. Undo exact Rotate.
+4. Use gizmo Scale, release, tap HUD, type factor, Enter.
+5. Undo exact Scale.
+6. Viewport > Focus View should hide the left drawer on the first tap and keep the top action row.
+7. Exit Focus View should restore the left drawer.
+8. Move exact type-in remains working.
 
