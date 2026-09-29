@@ -1,16 +1,22 @@
-## v0.36.18.579 — projected rotation ring visible-path selector fix
+## v0.36.18.580 — clear stranded Total Gizmo hover/active state
 
-- .578 hands-on FAIL: projected rings still invisible.
-- Root cause: each ring's invisible hit-proxy clone is inserted before the visible path and retains the `.tg-arc` class.
-- `syncRotationRings()` used a generic `.tg-arc[data-ring-axis]` selector, so it updated the transparent hit proxy first while the visible coloured path remained `d=""`.
-- .579 explicitly targets `.tg-handle.tg-arc[data-ring-axis]` for the visible ring, then copies that generated path to its linked hit proxy.
-- No ring math or transform logic changed.
+- User confirmed .579 projected rings look correct.
+- Remaining issue: after interacting with a rotation ring, it stayed thicker/highlighted.
+- Root cause: when the gizmo forwards a drag to the viewport canvas, pointer capture can prevent the invisible hit proxy from receiving its normal pointerleave event. The visible ring therefore retained `hover-proxy`.
+- .580 adds centralized transient-state cleanup:
+  - clears `active`
+  - clears `muted`
+  - clears `hover-proxy`
+  - runs on transform finish/cancel
+  - includes a pointerleave safety cleanup when no gizmo drag is active
+- No transform math or projected ring geometry changed.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
-- Syntax/static regression 4/4 PASS.
+- Syntax/static regression 5/5 PASS.
 
 Hands-on check:
-1. Red/green/blue projected rotation rings are visible.
-2. Rings deform with camera perspective.
-3. Hit paths follow the visible rings.
-4. X/Y/Z rotation remains correct.
+1. Hover ring => temporary thick highlight.
+2. Drag/release ring => ring returns to normal thin idle line.
+3. Repeat X/Y/Z.
+4. Move/scale handles also return to idle after interaction.
+5. Projected ring perspective behavior remains unchanged.
 
