@@ -1816,3 +1816,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .583: prepublish syntax/static regression 9/9 PASS
 - [x] Protection .583: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .584: gizmo Rotate HUD accepts exact degree input
+- [ ] Workflow .584: exact Rotate ignores 15-degree drag snap
+- [ ] Workflow .584: Undo exact Rotate works
+- [ ] Workflow .584: gizmo Scale HUD accepts exact factor input
+- [ ] Workflow .584: Undo exact Scale works
+- [ ] Regression .584: exact Move remains working
+- [ ] Workflow .584: Focus View hides left drawer on first activation
+- [ ] Workflow .584: Focus View keeps top File/Frame All/Undo/Redo/Viewport row
+- [ ] Workflow .584: Exit Focus View restores left drawer
+- [x] Automated .584: prepublish syntax/static regression 8/8 PASS
+- [x] Protection .584: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
