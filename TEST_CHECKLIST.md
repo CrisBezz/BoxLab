@@ -1963,3 +1963,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .597: gizmo follows the selected object normally after menu interaction
 - [ ] Regression .597: floating exact-entry still appears after completed gizmo Move/Rotate/Scale drag
 - [x] Protection .597: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .598: GLB Share / Open In creates a single .glb File with type model/gltf-binary
+- [ ] Workflow .598: Web Share payload contains files only, with no title/text sidecar
+- [ ] Workflow .598: Nomad Sculpt appears as an eligible iPad destination for GLB
+- [ ] Workflow .598: Nomad opens/imports the shared GLB
+- [ ] Regression .598: OBJ Share / Open In remains functional
+- [ ] Regression .598: Export / Save remains functional
+- [x] Protection .598: src/multi-object-transform.js?v=0.36.1.0 unchanged
