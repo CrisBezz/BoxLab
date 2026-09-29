@@ -30,7 +30,7 @@ function directFaceToolActive(){return !!document.querySelector('#extrudeBtn.act
 function selected(){return [...new Set(bridge()?.indices?.()||[])];}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function axisVector(axis){return new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);}
-function explicitAxis(){return ['x','y','z'].includes(constraint)?constraint:null;}
+function explicitAxis(){const gizmo=globalThis.__boxlabTotalGizmo?.activeConstraint?.();if(['x','y','z'].includes(gizmo))return gizmo;return ['x','y','z'].includes(constraint)?constraint:null;}
 function constraintLabel(){return constraint==='free'?'Free':constraint==='auto'?'Auto':constraint.toUpperCase();}
 function axisSnapOn(){return !!axisSnapToggle?.checked;}
 function inferenceSnapOn(){return !!inferenceSnapToggle?.checked;}
