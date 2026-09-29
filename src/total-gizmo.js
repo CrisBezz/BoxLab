@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.580 — Total Gizmo v1.
+// BoxLab v0.36.18.581 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -80,7 +80,7 @@ function onHandleDown(event){
   explicitGizmoConstraint=spec.constraint;
   root.dataset.dragging='true';
   visual.classList.add('active');
-  if(hud){hud.hidden=false;hud.textContent=`${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;}
+  if(hud){clearTimeout(hudHideTimer);hud.hidden=false;hudInput.hidden=true;hudText.hidden=false;hudText.textContent=`${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;lastSpec=spec;}
   root.querySelectorAll('.tg-handle').forEach(h=>{if(h!==visual)h.classList.add('muted');});
   if(status)status.textContent=`Total Gizmo • ${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;
   syntheticDown(event);
@@ -98,7 +98,7 @@ function finish(event){
   root.dataset.dragging='false';
   activeHandle=null;pointerId=null;
   explicitGizmoConstraint=null;
-  if(hud)hud.hidden=true;
+  if(hud){clearTimeout(hudHideTimer);hudHideTimer=setTimeout(()=>{if(pointerId===null&&!hudInput.matches(':focus'))hud.hidden=true;},2600);}
 }
 document.addEventListener('pointerup',finish,true);
 document.addEventListener('pointercancel',finish,true);
@@ -141,9 +141,10 @@ root.innerHTML=`
     </g>
   </g>
   <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="10"/>
-</svg><div class="tg-hud" hidden></div>`;
+</svg><div class="tg-hud" hidden><span class="tg-hud-text"></span><input class="tg-hud-input" inputmode="decimal" aria-label="Exact transform value" hidden/></div>`;
 viewportWrap?.append(root);
-const hud=root.querySelector('.tg-hud');
+const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text'),hudInput=root.querySelector('.tg-hud-input');
+let hudHideTimer=null,lastSpec=null;
 
 const style=document.createElement('style');
 style.textContent=`
@@ -165,7 +166,8 @@ style.textContent=`
 #totalGizmo .tg-plane-xz{stroke:#d26eff;fill:rgba(210,110,255,.065)}
 #totalGizmo .tg-plane-yz{stroke:#62e6dd;fill:rgba(98,230,221,.065)}
 #totalGizmo .tg-plane:hover,#totalGizmo .tg-plane.active{opacity:1;stroke-width:2!important;fill:rgba(255,255,255,.16);filter:drop-shadow(0 0 3px currentColor)}
-#totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:none;box-shadow:0 5px 15px rgba(0,0,0,.28)}
+#totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:auto;box-shadow:0 5px 15px rgba(0,0,0,.28)}
+#totalGizmo .tg-hud-input{width:88px;min-height:25px;padding:2px 6px;border-radius:5px;border:1px solid rgba(255,255,255,.24);background:#090b0f;color:#fff;font-size:12px;outline:none}
 #totalGizmo .tg-hud[hidden]{display:none}
 #totalGizmo .tg-handle::before{pointer-events:stroke}
 #totalGizmo .tg-arc{stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
@@ -209,9 +211,39 @@ if(status&&hud){
   new MutationObserver(()=>{
     if(pointerId===null||root.dataset.dragging!=='true')return;
     const text=(status.textContent||'').trim();
-    if(text)hud.textContent=text.replace(/^Total Gizmo\s*•\s*/,'');
+    if(text){hudText.textContent=text.replace(/^Total Gizmo\s*•\s*/,'');hudText.hidden=false;hudInput.hidden=true;}
   }).observe(status,{childList:true,subtree:true,characterData:true});
 }
+
+function beginHudExactEntry(){
+  if(!lastSpec||pointerId!==null)return;
+  const legacy=document.querySelector('#transformValue');
+  if(!legacy)return;
+  clearTimeout(hudHideTimer);
+  hud.hidden=false;hudText.hidden=true;hudInput.hidden=false;
+  hudInput.value='';
+  hudInput.placeholder=lastSpec.tool==='rotate'?'Degrees':lastSpec.tool==='scale'?'Factor':'Distance';
+  hudInput.focus();
+}
+function commitHudExact(){
+  const legacy=document.querySelector('#transformValue'),value=hudInput.value.trim();
+  if(!legacy||!value)return;
+  if(['x','y','z'].includes(lastSpec?.constraint)){
+    globalThis.__boxlabTransformArming?.setTool?.(lastSpec.tool);
+    globalThis.__boxlabTransformArming?.setConstraint?.(lastSpec.constraint);
+  }
+  legacy.value=value;
+  legacy.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,cancelable:true}));
+  hudInput.hidden=true;hudText.hidden=false;
+  hudText.textContent=`${lastSpec?.tool||'Transform'} exact • ${value}`;
+  clearTimeout(hudHideTimer);hudHideTimer=setTimeout(()=>{if(pointerId===null)hud.hidden=true;},2200);
+}
+hud?.addEventListener('pointerdown',event=>{if(pointerId===null&&!event.target.closest('.tg-hud-input')){event.preventDefault();event.stopPropagation();beginHudExactEntry();}});
+hudInput?.addEventListener('keydown',event=>{
+  if(event.key==='Enter'){event.preventDefault();event.stopPropagation();commitHudExact();}
+  else if(event.key==='Escape'){event.preventDefault();hudInput.blur();hudInput.hidden=true;hudText.hidden=false;}
+});
+hudInput?.addEventListener('pointerdown',event=>event.stopPropagation());
 
 function planePoints(a,b){
   const o=new THREE.Vector2(HALF,HALF),startA=18,startB=18,size=15;
@@ -296,5 +328,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.580'
+  version:'0.36.18.581'
 };
