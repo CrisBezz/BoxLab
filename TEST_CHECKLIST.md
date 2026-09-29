@@ -1804,3 +1804,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .582: prepublish syntax/static regression 12/12 PASS
 - [x] Protection .582: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .583: Rotate value field accepts touch/Pencil focus and keyboard input
+- [ ] Workflow .583: exact Rotate applies entered degrees
+- [ ] Workflow .583: Scale value field accepts touch/Pencil focus and keyboard input
+- [ ] Workflow .583: exact Scale applies entered factor
+- [ ] Regression .583: exact Move remains working
+- [ ] Workflow .583: Focus View hides left drawer but keeps File/Frame All/Undo/Redo/Viewport
+- [ ] Workflow .583: Exit Focus View restores left drawer cleanly
+- [ ] Workflow .583: GLB Share / Open In tests broader iPadOS destination matching
+- [ ] Regression .583: normal Export / Save remains unchanged
+- [x] Automated .583: prepublish syntax/static regression 9/9 PASS
+- [x] Protection .583: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
