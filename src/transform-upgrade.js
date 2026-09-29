@@ -92,7 +92,7 @@ function applyNumeric(){const n=numeric();if(n===null)return;applyExactTransform
 
 axisSnapToggle?.addEventListener('change',()=>{if(status)status.textContent=`Axis Snap ${axisSnapOn()?'ON':'OFF'}${inferenceSnapOn()?' • Inference ON':''}`;});
 inferenceSnapToggle?.addEventListener('change',()=>{if(status)status.textContent=`Inference Snap ${inferenceSnapOn()?'ON':'OFF'}`;});
-precision.querySelectorAll('[data-constraint]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();constraint=b.dataset.constraint;globalThis.__boxlabTransformArming?.setConstraint?.(constraint);syncPrecision();if(status)status.textContent=`${constraintLabel()} constraint • ${tool()||'no transform'}`;}));
+precision.querySelectorAll('[data-constraint]').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});constraint=b.dataset.constraint;globalThis.__boxlabTransformArming?.setConstraint?.(constraint);syncPrecision();if(status)status.textContent=`${constraintLabel()} constraint • ${tool()||'no transform'}`;}));
 snapButton?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();angleSnap=!angleSnap;syncPrecision();if(status)status.textContent=`Rotation snap ${angleSnap?'15° ON':'OFF'}`;});
 valueInput?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();applyNumeric();}else if(e.key==='Escape'){valueInput.value='';valueInput.blur();}});
 
@@ -127,7 +127,7 @@ function finish(event){const g=gesture;if(!g||g.id!==event.pointerId)return;even
     window.dispatchEvent(new CustomEvent('boxlab-transform-end',{detail:{tool:g.t,constraint:g.axis||g.constraint||'free',pointerId:event.pointerId,owner:'transform-upgrade'}}));
   }
 }}
-document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);toolButtons.forEach(b=>b.addEventListener('click',()=>queueMicrotask(()=>{constraint=globalThis.__boxlabTransformArming?.constraint?.()||'free';render();syncPrecision();}),true));syncPrecision();
+document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);toolButtons.forEach(b=>b.addEventListener('click',()=>{globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});queueMicrotask(()=>{constraint=globalThis.__boxlabTransformArming?.constraint?.()||'free';render();syncPrecision();});},true));syncPrecision();
 
 
 function setTransformContext(toolName,constraintName='free'){
