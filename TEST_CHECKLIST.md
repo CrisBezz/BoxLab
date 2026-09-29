@@ -1793,3 +1793,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .581: projected rings and navigation unchanged
 - [x] Protection .581: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .582: mesh/vert readout is readable below mode dock
+- [ ] Workflow .582: transform status is readable at bottom-right
+- [ ] Workflow .582: Viewport > Full Screen enters native or focus fullscreen
+- [ ] Workflow .582: Exit Full Screen restores layout
+- [ ] Workflow .582: Share / Open In opens iPad share sheet with exported file
+- [ ] Workflow .582: Nomad appears if iPadOS registers it for the exported file type
+- [ ] Regression .582: normal Export / Save still works
+- [ ] Regression .582: mode dock and left drawer scrolling remain usable
+- [x] Automated .582: prepublish syntax/static regression 12/12 PASS
+- [x] Protection .582: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
