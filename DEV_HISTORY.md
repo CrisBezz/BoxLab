@@ -3208,3 +3208,12 @@ For exact implementation state, always inspect current `main`; this history is c
 - Added pointerleave safety cleanup when idle.
 - Syntax/static regression 5/5 PASS.
 
+## 2026-09-29 — v0.36.18.581 Total Gizmo precision HUD + adaptive axis detents
+- Added adaptive soft move detents for explicit gizmo X/Y/Z movement.
+- Detent step is selected from nice increments based on projected pixels-per-unit; catch threshold is screen-space based.
+- Added post-drag gizmo HUD persistence and tap-to-enter exact value.
+- HUD exact input reuses the existing transformValue/Enter path and transfers the last gizmo X/Y/Z constraint first.
+- Free and planar movement remain unrestricted.
+- Projected rings unchanged.
+- Protected multi-object-transform pin unchanged.
+
