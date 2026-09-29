@@ -29,6 +29,12 @@ function ensureUI(){
         <div class="viewport-menu-label">Render Look</div>
         <div id="viewportRenderLooks" class="viewport-render-grid"></div>
       </div>
+      <div class="viewport-menu-section">
+        <div class="viewport-menu-label">Display</div>
+        <div class="viewport-display-grid">
+          <button type="button" id="fullscreenBtn">Full Screen</button>
+        </div>
+      </div>
     </div>`;
   topActions?.append(wrap);
   const style=document.createElement('style');
@@ -42,7 +48,8 @@ function ensureUI(){
 .viewport-menu-section+.viewport-menu-section{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.09)}
 .viewport-menu-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;opacity:.55;margin:0 2px 6px}
 .viewport-view-grid,.viewport-render-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
-.viewport-view-grid button,.viewport-render-grid button{min-width:0;min-height:34px;padding:5px 7px;font-size:11px;white-space:nowrap;touch-action:manipulation}
+.viewport-display-grid{display:grid;grid-template-columns:1fr;gap:5px}
+.viewport-view-grid button,.viewport-render-grid button,.viewport-display-grid button{min-width:0;min-height:34px;padding:5px 7px;font-size:11px;white-space:nowrap;touch-action:manipulation}
 .viewport-view-grid button.active,.viewport-render-grid button.active{background:#f2f5fa;color:#111318;border-color:#f2f5fa}
 @media(max-width:900px){#viewModes>summary{padding:5px 8px}.viewport-menu-panel{right:max(8px,env(safe-area-inset-right));width:min(340px,calc(100vw - 16px));max-height:calc(100dvh - var(--boxlab-topbar-h,60px) - 14px)}}
 `;
@@ -102,25 +109,58 @@ function setView(view){
   if(status)status.textContent=`View • ${view==='axon'?'3D Axon':view[0].toUpperCase()+view.slice(1)}`;
 }
 
+
+function fullscreenElement(){return document.fullscreenElement||document.webkitFullscreenElement||null;}
+function focusFullscreenOn(){return document.documentElement.classList.contains('boxlab-focus-fullscreen');}
+function syncFullscreenButton(){
+  const button=document.querySelector('#fullscreenBtn');
+  if(!button)return;
+  button.textContent=(fullscreenElement()||focusFullscreenOn())?'Exit Full Screen':'Full Screen';
+}
+async function toggleFullscreen(){
+  const target=document.documentElement;
+  try{
+    if(fullscreenElement()){
+      const exit=document.exitFullscreen||document.webkitExitFullscreen;
+      if(exit){await exit.call(document);syncFullscreenButton();return;}
+    }
+    if(focusFullscreenOn()){
+      document.documentElement.classList.remove('boxlab-focus-fullscreen');
+      syncFullscreenButton();window.dispatchEvent(new Event('resize'));return;
+    }
+    const request=target.requestFullscreen||target.webkitRequestFullscreen;
+    if(request){
+      await request.call(target);
+      syncFullscreenButton();return;
+    }
+  }catch{}
+  document.documentElement.classList.add('boxlab-focus-fullscreen');
+  syncFullscreenButton();
+  window.dispatchEvent(new Event('resize'));
+}
+
 function activateButton(button){
   if(!button)return false;
   if(button.dataset.view){setView(button.dataset.view);return true;}
   if(button.dataset.render){button.click();return true;}
+  if(button.id==='fullscreenBtn'){toggleFullscreen();return true;}
   return false;
 }
 
 const ui=ensureUI();
 ui?.addEventListener('click',event=>{
-  const button=event.target.closest('button[data-view]');
+  const button=event.target.closest('button[data-view],#fullscreenBtn');
   if(!button)return;
-  event.preventDefault();event.stopPropagation();setView(button.dataset.view);
+  event.preventDefault();event.stopPropagation();
+  if(button.id==='fullscreenBtn')toggleFullscreen();
+  else setView(button.dataset.view);
 });
 
 // iPadOS can suppress the synthesized click after touch/Pencil interaction inside
 // an absolutely positioned details panel. Activate Viewport buttons on pointerup too.
 ui?.addEventListener('pointerup',event=>{
   if(event.pointerType==='mouse')return;
-  const button=event.target.closest('button[data-view],button[data-render]');
+  const button=event.target.closest('button[data-view],button[data-render],#fullscreenBtn');
   if(!button)return;
   event.preventDefault();event.stopPropagation();activateButton(button);
 });
@@ -132,3 +172,16 @@ document.addEventListener('pointerdown',event=>{
 },true);
 
 // Visible release identity is owned by release-version.js.
+
+
+const fullscreenStyle=document.createElement('style');
+fullscreenStyle.textContent=`
+html.boxlab-focus-fullscreen .topbar{display:none!important}
+html.boxlab-focus-fullscreen #viewportWrap{top:0!important}
+html.boxlab-focus-fullscreen{background:#111318}
+`;
+document.head.append(fullscreenStyle);
+document.addEventListener('fullscreenchange',syncFullscreenButton);
+document.addEventListener('webkitfullscreenchange',syncFullscreenButton);
+
+syncFullscreenButton();
