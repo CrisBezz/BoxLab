@@ -1698,3 +1698,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .571: syntax/static regression 9/9 PASS
 - [x] Protection .571: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .572: X/Y/Z move arrows remain axis-constrained with Axis Snap OFF
+- [ ] Workflow .572: X/Y/Z scale handles remain axis-constrained with Axis Snap OFF
+- [ ] Workflow .572: X/Y/Z rotation arcs remain axis-constrained with Axis Snap OFF
+- [ ] Workflow .572: center free-move remains free when no intentional snap applies
+- [ ] Regression .572: global Axis Snap still works for free/auto transforms
+- [ ] Regression .572: navigation and legacy transform strip unchanged
+- [x] Automated .572: syntax/static regression 8/8 PASS
+- [x] Protection .572: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
