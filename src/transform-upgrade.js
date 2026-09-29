@@ -105,7 +105,31 @@ function finish(event){const g=gesture;if(!g||g.id!==event.pointerId)return;even
 document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);toolButtons.forEach(b=>b.addEventListener('click',()=>queueMicrotask(()=>{constraint=globalThis.__boxlabTransformArming?.constraint?.()||'free';render();syncPrecision();}),true));syncPrecision();
 
 
+function setTransformContext(toolName,constraintName='free'){
+  if(['move','scale','rotate'].includes(toolName)){
+    globalThis.__boxlabTransformArming?.setTool?.(toolName);
+  }
+  if(['free','x','y','z','auto'].includes(constraintName)){
+    constraint=constraintName;
+    globalThis.__boxlabTransformArming?.setConstraint?.(constraintName);
+  }
+  syncPrecision();
+  toolButtons.forEach(button=>button.classList.toggle('active',button.dataset.tool===toolName));
+  if(valueInput){
+    valueInput.disabled=false;
+    valueInput.placeholder=toolName==='move'?'Distance':toolName==='scale'?'Scale factor':toolName==='rotate'?'Degrees':'Transform';
+  }
+  window.dispatchEvent(new CustomEvent('boxlab-transform-context',{detail:{tool:toolName,constraint:constraintName}}));
+  return true;
+}
+
 globalThis.__boxlabTransformUpgrade={
   ...(globalThis.__boxlabTransformUpgrade||{}),
-  applyExact:(toolName,constraintName,value)=>applyExactTransform(toolName,constraintName,value)
+  applyExact:(toolName,constraintName,value)=>applyExactTransform(toolName,constraintName,value),
+  setContext:(toolName,constraintName)=>setTransformContext(toolName,constraintName),
+  focusValue:()=>{
+    if(!valueInput)return false;
+    try{valueInput.focus({preventScroll:true});}catch{valueInput.focus();}
+    return true;
+  }
 };
