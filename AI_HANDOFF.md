@@ -1,18 +1,20 @@
-## v0.36.18.589 — restore proven Move floating exact-input path
+## v0.36.18.590 — Rotate floating type-in isolated onto proven gizmo release path
 
-- .588 hands-on regression: Move floating type-in stopped working.
-- .589 restores the known-good Move completion path from .587:
-  - Move gizmo release shows the standalone floating Distance palette directly from the gizmo's own pointer-release path.
-  - This path was already hands-on proven before the semantic-event experiment.
-- Rotate/Scale continue to use the semantic `boxlab-transform-end` architecture introduced in .588, since those are the transforms whose raw pointer completion can be swallowed by competing owners.
-- The first route to open the palette clears `awaitingTransformEnd`, preventing duplicate palettes.
-- Old gizmo HUD is hidden when the standalone palette opens.
+- .589 restored Move floating exact entry and user confirmed Move is back.
+- Investigation of `rotate-transform.js` shows it does not own Object-mode rotation; it only handles Vertex/Edge/Face.
+- Object-mode Total Gizmo rotation is therefore owned by `transform-upgrade.js`.
+- .590 leaves Move completely unchanged and gives Object-mode Rotate the same proven gizmo pointer-release palette trigger as Move.
+- Rotation maths remains in transform-upgrade; this build changes only the floating Degrees palette trigger.
+- Scale remains untouched for the next isolated build.
+- The semantic transform-end path remains available but is no longer required just to show the Object-mode Rotate palette.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
-- Prepublish syntax/static regression 5/5 PASS.
+- Prepublish syntax/static regression 4/4 PASS.
 
 Hands-on check:
-1. Move gizmo -> release -> floating Distance palette appears again.
-2. Enter/Apply exact Move works.
-3. Rotate/Scale behavior remains available for continued diagnosis.
-4. No duplicate floating palette/HUD.
+1. Confirm Move floating Distance entry still works exactly as .589.
+2. Drag/release X/Y/Z rotation ring.
+3. Floating palette should appear with Rotate X/Y/Z + Degrees.
+4. Tap field, enter exact angle, Enter or Apply.
+5. Undo exact Rotate.
+6. Ignore Scale for this build; it is intentionally unchanged.
 
