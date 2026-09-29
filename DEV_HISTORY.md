@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.600 Save for Nomad Files workflow
+
+- .599 hands-on FAIL for direct Safari/Web Share -> Nomad target eligibility.
+- Same GLB remains valid and opens in Nomad after saving to Files, so browser target discovery is treated as a platform limitation rather than an export defect.
+- Replaced misleading GLB Share / Open In wording with Save for Nomad.
+- Added explicit iPad guidance: Save to Files, then in Files use Share → Nomad Sculpt.
+- Restored GLB Web Share File MIME to `model/gltf-binary`.
+- OBJ Share / Open In remains unchanged.
+- HTML shell and version.json advanced together to .600.
+- Protected multi-object-transform module unchanged.
+
 ## 2026-09-29 — v0.36.18.599 extension-driven GLB share type test
 
 - .598 single typed GLB share still did not surface Nomad Sculpt.
