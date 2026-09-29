@@ -1876,3 +1876,9 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .588: prepublish syntax/static regression 9/9 PASS
 - [x] Protection .588: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .589: Move gizmo release shows floating Distance palette again
+- [ ] Workflow .589: Move floating exact entry commits with Enter/Apply
+- [ ] Workflow .589: no duplicate floating palette or old HUD
+- [ ] Regression .589: left-panel Move type-in remains working
+- [x] Automated .589: prepublish syntax/static regression 5/5 PASS
+
