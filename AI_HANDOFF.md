@@ -9,6 +9,7 @@
 - The reset does NOT disarm the selected transform; it only clears stale gizmo drag/visual ownership so the gizmo returns to idle and remains reusable.
 - Floating exact-entry UI is dismissed when the user deliberately changes transform menu state.
 - .596 single-file iPad Share / Open In fix remains unchanged.
+- Release-manifest correction: `version.json` is now synced to `0.36.18.597`. A stale `version.json` at `.595` was causing the live `.597` shell to flash briefly and then be rewritten back to `.595` by `release-version.js`.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
 
 Hands-on check:
