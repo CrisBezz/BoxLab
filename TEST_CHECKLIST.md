@@ -1707,3 +1707,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .572: syntax/static regression 8/8 PASS
 - [x] Protection .572: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .573: with Axis Snap OFF, X gizmo arrow moves X only
+- [ ] Workflow .573: with Axis Snap OFF, Y gizmo arrow moves Y only
+- [ ] Workflow .573: with Axis Snap OFF, Z gizmo arrow moves Z only
+- [ ] Workflow .573: with Axis Snap ON, explicit gizmo axis still wins
+- [ ] Workflow .573: center free-move remains unconstrained
+- [ ] Regression .573: navigation and Undo/Redo unchanged
+- [x] Automated .573: source/static regression 6/6 PASS
+- [x] Protection .573: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
