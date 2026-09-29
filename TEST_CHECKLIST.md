@@ -1779,3 +1779,17 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .580: projected ring perspective behavior unchanged
 - [x] Automated .580: syntax/static regression 5/5 PASS
 
+- [ ] Workflow .581: explicit X/Y/Z gizmo movement has soft adaptive increment catches
+- [ ] Workflow .581: detents can be dragged through and do not hard-lock movement
+- [ ] Workflow .581: detent spacing remains sensible across zoom levels
+- [ ] Workflow .581: centre free move remains unrestricted
+- [ ] Workflow .581: XY/XZ/YZ planar move remains unrestricted
+- [ ] Workflow .581: HUD remains briefly visible after transform
+- [ ] Workflow .581: tapping post-drag HUD opens exact value input
+- [ ] Workflow .581: exact X/Y/Z move inherits the last gizmo axis
+- [ ] Workflow .581: exact rotate accepts degrees
+- [ ] Workflow .581: exact scale accepts factor
+- [ ] Regression .581: Undo/history still works for exact transforms
+- [ ] Regression .581: projected rings and navigation unchanged
+- [x] Protection .581: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
