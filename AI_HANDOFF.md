@@ -1,35 +1,30 @@
-## v0.36.18.587 — standalone floating exact-transform input
+## v0.36.18.588 — unified semantic transform completion event
 
-- User confirmed .586's persistent left-panel exact type-in works for Rotate/Scale, proving the transform maths/context is correct.
-- Floating exact entry remained unreliable when nested inside the Total Gizmo overlay.
-- .587 rebuilds the floating entry as a completely separate normal HTML palette:
-  - sibling of `#totalGizmo` under `#viewportWrap`
-  - no SVG ancestry
-  - no `pointer-events:none` inheritance
-  - no gizmo transform inheritance
-  - `touch-action:auto` and normal text selection/focus behavior
-- After a gizmo transform releases, the standalone palette appears adjacent to the gizmo with:
-  - Move X/Y/Z + Distance
-  - Rotate X/Y/Z + Degrees
-  - Scale X/Y/Z + Factor
-  - Scale Free/Uniform + Factor
-- Enter or Apply calls the exact same proven `__boxlabTransformUpgrade.applyExact(tool,constraint,value)` API used by the working left-panel path.
-- New gizmo drag hides any existing palette; background tap dismisses it.
-- Palette position follows the gizmo from the viewport sibling layer.
-- Existing left-panel type-in remains untouched as fallback.
-- Focus top-row placement remains unchanged.
+- .587 hands-on feedback:
+  - Move displayed the standalone floating input.
+  - Rotate/Scale still did not.
+  - Screenshot also showed the old gizmo HUD underneath the new floating palette.
+- Root cause: transform completion was still tied to raw pointerup visibility. Different transform modules own pointerup differently and some call `stopImmediatePropagation()`, so the Total Gizmo could not reliably observe completion across Move/Rotate/Scale.
+- .588 introduces a semantic `boxlab-transform-end` event emitted by the actual transform owners:
+  - `main.js`
+  - `transform-upgrade.js`
+  - `rotate-transform.js`
+- Total Gizmo no longer uses raw pointerup to decide when to show floating exact entry.
+- Instead it sets an `awaitingTransformEnd` flag on gizmo drag start and shows the standalone palette only when the semantic transform-end event arrives.
+- When the standalone floating palette opens, the old gizmo HUD is explicitly hidden, removing the duplicate black boxes seen in .587.
+- This event-based pattern is the intended foundation for later modeless contextual interaction: gesture owners emit semantic events and UI reacts, rather than multiple UI modules competing for raw pointer events.
+- Existing .586 persistent left-panel exact entry remains untouched and remains a fallback.
+- Focus top-row placement unchanged.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
 - Prepublish syntax/static regression 9/9 PASS.
 
 Hands-on check:
-1. Drag/release Move X -> floating palette shows Move X / Distance.
-2. Tap floating field, type exact distance, Enter or Apply.
-3. Drag/release Rotate X/Y/Z -> palette shows matching Rotate axis / Degrees.
-4. Tap field, type exact angle, Enter or Apply.
-5. Drag/release Scale X/Y/Z -> palette shows matching Scale axis / Factor.
-6. Outer scale ring -> Scale Uniform/Free / Factor.
-7. Confirm iPad keyboard appears for all three transform types.
-8. Confirm exact transforms and Undo work.
-9. Background tap dismisses palette.
-10. Left-panel type-in still works as fallback.
+1. Move gizmo -> release -> one floating Distance palette appears; no old HUD beneath.
+2. Rotate X/Y/Z ring -> release -> one floating Degrees palette appears.
+3. Scale X/Y/Z handle -> release -> one floating Factor palette appears.
+4. Uniform scale ring -> release -> floating Factor palette appears.
+5. Tap field and confirm iPad keyboard opens.
+6. Enter/Apply commits exact value.
+7. Undo exact Rotate/Scale.
+8. Left-panel exact input still works.
 
