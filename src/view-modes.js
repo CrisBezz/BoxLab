@@ -32,7 +32,7 @@ function ensureUI(){
       <div class="viewport-menu-section">
         <div class="viewport-menu-label">Display</div>
         <div class="viewport-display-grid">
-          <button type="button" id="fullscreenBtn">Full Screen</button>
+          <button type="button" id="focusViewBtn">Focus View</button>
         </div>
       </div>
     </div>`;
@@ -110,32 +110,15 @@ function setView(view){
 }
 
 
-function fullscreenElement(){return document.fullscreenElement||document.webkitFullscreenElement||null;}
-function focusFullscreenOn(){return document.documentElement.classList.contains('boxlab-focus-fullscreen');}
-function syncFullscreenButton(){
-  const button=document.querySelector('#fullscreenBtn');
+function focusViewOn(){return document.documentElement.classList.contains('boxlab-focus-view');}
+function syncFocusViewButton(){
+  const button=document.querySelector('#focusViewBtn');
   if(!button)return;
-  button.textContent=(fullscreenElement()||focusFullscreenOn())?'Exit Full Screen':'Full Screen';
+  button.textContent=focusViewOn()?'Exit Focus View':'Focus View';
 }
-async function toggleFullscreen(){
-  const target=document.documentElement;
-  try{
-    if(fullscreenElement()){
-      const exit=document.exitFullscreen||document.webkitExitFullscreen;
-      if(exit){await exit.call(document);syncFullscreenButton();return;}
-    }
-    if(focusFullscreenOn()){
-      document.documentElement.classList.remove('boxlab-focus-fullscreen');
-      syncFullscreenButton();window.dispatchEvent(new Event('resize'));return;
-    }
-    const request=target.requestFullscreen||target.webkitRequestFullscreen;
-    if(request){
-      await request.call(target);
-      syncFullscreenButton();return;
-    }
-  }catch{}
-  document.documentElement.classList.add('boxlab-focus-fullscreen');
-  syncFullscreenButton();
+function toggleFocusView(){
+  document.documentElement.classList.toggle('boxlab-focus-view');
+  syncFocusViewButton();
   window.dispatchEvent(new Event('resize'));
 }
 
@@ -149,7 +132,7 @@ function activateButton(button){
 
 const ui=ensureUI();
 ui?.addEventListener('click',event=>{
-  const button=event.target.closest('button[data-view],#fullscreenBtn');
+  const button=event.target.closest('button[data-view],#focusViewBtn');
   if(!button)return;
   event.preventDefault();event.stopPropagation();
   if(button.id==='fullscreenBtn')toggleFullscreen();
@@ -160,7 +143,7 @@ ui?.addEventListener('click',event=>{
 // an absolutely positioned details panel. Activate Viewport buttons on pointerup too.
 ui?.addEventListener('pointerup',event=>{
   if(event.pointerType==='mouse')return;
-  const button=event.target.closest('button[data-view],button[data-render],#fullscreenBtn');
+  const button=event.target.closest('button[data-view],button[data-render],#focusViewBtn');
   if(!button)return;
   event.preventDefault();event.stopPropagation();activateButton(button);
 });
@@ -174,14 +157,12 @@ document.addEventListener('pointerdown',event=>{
 // Visible release identity is owned by release-version.js.
 
 
-const fullscreenStyle=document.createElement('style');
-fullscreenStyle.textContent=`
-html.boxlab-focus-fullscreen .topbar{display:none!important}
-html.boxlab-focus-fullscreen #viewportWrap{top:0!important}
-html.boxlab-focus-fullscreen{background:#111318}
-`;
-document.head.append(fullscreenStyle);
-document.addEventListener('fullscreenchange',syncFullscreenButton);
-document.addEventListener('webkitfullscreenchange',syncFullscreenButton);
 
-syncFullscreenButton();
+const focusViewStyle=document.createElement('style');
+focusViewStyle.textContent=`
+html.boxlab-focus-view #viewportWrap > .floating-panel.left-panel{display:none!important}
+html.boxlab-focus-view #viewportWrap > #selectionModes{left:max(8px,env(safe-area-inset-left))!important}
+html.boxlab-focus-view .statusbar{left:10px!important}
+`;
+document.head.append(focusViewStyle);
+syncFocusViewButton();
