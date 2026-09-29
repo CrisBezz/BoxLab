@@ -1956,3 +1956,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .596: Export / Save iPad share-sheet fallback still saves the model to Files
 - [ ] Regression .596: GLB/OBJ geometry and Nomad preservation payload unchanged
 - [x] Protection .596: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .597: clicking Move/Scale/Rotate does not leave Total Gizmo stuck
+- [ ] Workflow .597: clicking Free/X/Y/Z/Auto does not leave Total Gizmo stuck
+- [ ] Workflow .597: gizmo can immediately start a fresh drag after transform-menu interaction
+- [ ] Regression .597: gizmo follows the selected object normally after menu interaction
+- [ ] Regression .597: floating exact-entry still appears after completed gizmo Move/Rotate/Scale drag
+- [x] Protection .597: src/multi-object-transform.js?v=0.36.1.0 unchanged
