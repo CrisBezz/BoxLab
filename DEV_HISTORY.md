@@ -3292,3 +3292,9 @@ For exact implementation state, always inspect current `main`; this history is c
 - Move path untouched; Scale intentionally untouched.
 - Prepublish syntax/static regression 7/7 PASS.
 
+## 2026-09-29 — v0.36.18.592 Rotate floating input captured before document transform owners
+- Identified document-capture ordering as the reason Rotate completion never reached Total Gizmo.
+- Moved Total Gizmo pointerup listener to window capture so it runs before transform-upgrade's document-capture stopImmediatePropagation.
+- Move and Rotate use this early release path; Scale unchanged.
+- Prepublish syntax/static regression 4/4 PASS.
+
