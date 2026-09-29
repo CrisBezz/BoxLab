@@ -127,3 +127,9 @@ Protected rule for iPad/browser interaction work:
 - Before adding modeless tap / multi-tap / hold / drag behavior, identify the single gesture owner and its capture level. Do not stack independent raw-pointer owners for the same gesture.
 - The v0.36.18.592 Rotate floating-type-in fix is the reference case: `transform-upgrade.js` consumed document-capture `pointerup`; moving Total Gizmo completion to window capture restored reliable release detection.
 
+### Gesture-owner precision rule
+
+- Precision behavior must live with the real gesture owner. Do not add snap/detent maths to a helper module unless that helper actually receives and mutates the active drag.
+- v0.36.18.594 demonstrated the failure mode: Scale detents were added to transform-upgrade while Object Scale was actually owned by main.js, so the feature could not affect the live drag.
+- Total Gizmo now exposes explicit active-drag ownership state so owner modules can distinguish gizmo gestures from legacy transform-strip gestures without inference.
+
