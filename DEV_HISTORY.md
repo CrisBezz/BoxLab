@@ -3285,3 +3285,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Scale intentionally untouched.
 - Prepublish syntax/static regression 4/4 PASS.
 
+## 2026-09-29 — v0.36.18.591 direct Object Rotate completion handoff
+- .590 Rotate floating palette still failed.
+- Removed event/waiting timing from Object-mode Rotate completion.
+- transform-upgrade now directly invokes Total Gizmo completeExactEntry() when Object Rotate commits.
+- Move path untouched; Scale intentionally untouched.
+- Prepublish syntax/static regression 7/7 PASS.
+
