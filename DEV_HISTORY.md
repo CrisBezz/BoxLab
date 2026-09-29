@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-29 — v0.36.18.596 single-file iPad Share / Open In payload
+
+- User traced missing Nomad Sculpt share destination to a second text payload accompanying GLB/OBJ exports.
+- Root cause was Web Share calls using both `files:[file]` and `title:fileName`; iOS exposed the title as an additional text item/sidecar.
+- Changed both Share / Open In and iPad Export / Save fallback to share only `{files:[file]}`.
+- No model export geometry, Nomad preservation, facegroup, PBR, UV, tangent, vertex-colour or layer logic changed.
+- Protected multi-object-transform module unchanged.
+
 ## 2026-09-28 — v0.36.18.550 HANDS-ON PASS
 
 - User confirmed topology-safe Nomad UV round-trip PASS.
