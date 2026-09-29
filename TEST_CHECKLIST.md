@@ -1978,3 +1978,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .599: saved GLB still shares to Nomad successfully from Files app
 - [ ] Regression .599: OBJ sharing remains functional
 - [x] Protection .599: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [x] Finding .599: direct Safari/Web Share does not surface Nomad, while Files does
+- [ ] Workflow .600: GLB secondary action reads Save for Nomad…
+- [ ] Workflow .600: GLB note instructs Save to Files, then Files Share → Nomad Sculpt
+- [ ] Workflow .600: GLB share uses one real File with model/gltf-binary
+- [ ] Workflow .600: saved GLB opens in Nomad from Files
+- [ ] Regression .600: OBJ secondary action remains Share / Open In…
+- [ ] Regression .600: normal Export / Save remains functional
+- [x] Protection .600: src/multi-object-transform.js?v=0.36.1.0 unchanged
