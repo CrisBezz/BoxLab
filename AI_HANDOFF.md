@@ -1,23 +1,28 @@
-## v0.36.18.597 — transform-menu gizmo transient reset
+## v0.36.18.598 — typed GLB File share for iPad/Nomad
 
-- User reported that clicking anything in the Transform menu could leave the Total Gizmo stuck.
-- Root cause/audit:
-  - Transform tool/constraint menu clicks changed transform arming state but did not explicitly clear Total Gizmo transient ownership.
-  - Total Gizmo can retain transient fields such as active handle, pointer ID, explicit gizmo constraint, dragging dataset state, HUD state, and `__boxlabActiveGizmoDrag`.
-- .597 adds a narrow `resetTransient()` API to Total Gizmo.
-- Move / Scale / Rotate tool-button clicks and Free / X / Y / Z / Auto constraint clicks now call that reset before applying the new transform-menu state.
-- The reset does NOT disarm the selected transform; it only clears stale gizmo drag/visual ownership so the gizmo returns to idle and remains reusable.
-- Floating exact-entry UI is dismissed when the user deliberately changes transform menu state.
-- .596 single-file iPad Share / Open In fix remains unchanged.
-- Release-manifest correction: `version.json` is now synced to `0.36.18.597`. A stale `version.json` at `.595` was causing the live `.597` shell to flash briefly and then be rewritten back to `.595` by `release-version.js`.
+- User confirmed .596/.597 now shares a single item, but Nomad Sculpt still does not accept it.
+- Root cause:
+  - Share / Open In was still overriding GLB File.type to `application/octet-stream`.
+  - iPadOS therefore saw a generic binary file rather than an explicit GLB.
+- .598 now constructs the shared GLB as a real File with:
+  - filename ending in `.glb`
+  - MIME `model/gltf-binary`
+  - payload `new File([blob], fileName, {type:'model/gltf-binary'})`
+- Web Share payload remains exactly:
+  - `navigator.share({files:[file]})`
+- OBJ sharing is unchanged and keeps its own MIME.
+- Export / Save fallback already used the requested MIME and remains unchanged.
+- .597 transform-menu gizmo reset remains in place.
+- `version.json` and HTML shell are both synced to `0.36.18.598`.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
 
 Hands-on check:
-1. Select an object so Total Gizmo is visible.
-2. Click Move, Scale, Rotate and several Free/X/Y/Z/Auto controls in the Transform menu.
-3. After each click, confirm the gizmo remains idle, follows the object normally, and can immediately start a new gizmo drag.
-4. Regression: gizmo floating exact-entry still appears after a completed Move/Rotate/Scale drag.
-5. Regression: Share / Open In .596 still sends one model file only.
+1. Confirm live version stays at .598.
+2. Choose GLB and Share / Open In….
+3. Confirm only one item is shared.
+4. Confirm Nomad Sculpt appears as an eligible destination.
+5. Open in Nomad and verify the model imports.
+6. Regression: normal Export / Save and OBJ sharing still work.
 
 Next:
-- If .597 passes, resume .595 Rotate/Scale soft-detent hands-on verification.
+- If Nomad still does not appear, inspect iPadOS/Nomad UTI compatibility rather than weakening the GLB MIME back to generic binary.
