@@ -51,6 +51,7 @@ axisSnap?.addEventListener('change',()=>queueMicrotask(sync));
 inferenceSnap?.addEventListener('change',()=>queueMicrotask(sync));
 document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMicrotask(sync),true);
 window.addEventListener('boxlab-bridge-state',sync);
+window.addEventListener('boxlab-transform-context',sync);
 
 // Pencil transforms should never inherit stale browser text/input focus.
 document.addEventListener('pointerdown',event=>{
