@@ -3272,3 +3272,9 @@ For exact implementation state, always inspect current `main`; this history is c
 - This semantic event architecture is intended as the baseline for future modeless gesture interaction.
 - Prepublish syntax/static regression 9/9 PASS.
 
+## 2026-09-29 — v0.36.18.589 restore proven Move floating exact-input path
+- .588 regressed Move floating type-in.
+- Restored Move's known-good gizmo pointer-release palette path from .587.
+- Rotate/Scale remain on semantic transform-end routing for continued isolation.
+- Prepublish syntax/static regression 5/5 PASS.
+
