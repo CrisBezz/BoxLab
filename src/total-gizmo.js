@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.572 — Total Gizmo v1.
+// BoxLab v0.36.18.575 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -111,6 +111,11 @@ root.innerHTML=`
   </g>
   <circle class="tg-handle tg-screen-ring" data-tool="rotate" data-constraint="free" data-kind="screen" cx="${HALF}" cy="${HALF}" r="35"/>
   <circle class="tg-handle tg-scale-ring" data-tool="scale" data-constraint="free" data-kind="uniform" cx="${HALF}" cy="${HALF}" r="78"/>
+  <g class="tg-plane-handles">
+    <polygon class="tg-handle tg-plane tg-plane-xy" data-tool="move" data-constraint="xy" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
+    <polygon class="tg-handle tg-plane tg-plane-xz" data-tool="move" data-constraint="xz" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
+    <polygon class="tg-handle tg-plane tg-plane-yz" data-tool="move" data-constraint="yz" data-kind="plane" points="0,0 0,0 0,0 0,0"/>
+  </g>
   <g class="tg-move-axes">
     <g class="tg-axis-group tg-x-group">
       <line class="tg-handle tg-axis tg-x" data-tool="move" data-constraint="x" x1="${HALF}" y1="${HALF}" x2="${HALF+58}" y2="${HALF}"/>
@@ -148,10 +153,15 @@ style.textContent=`
 #totalGizmo .tg-scale-ring{stroke:#ff9a66;stroke-width:1.1;opacity:.66}
 #totalGizmo .tg-center{fill:rgba(238,242,247,.16);stroke:#f1f4f8;stroke-width:1.1;pointer-events:all}
 #totalGizmo .tg-scale-node{fill:rgba(17,19,24,.78);stroke-width:1.25;pointer-events:all}
+#totalGizmo .tg-plane{pointer-events:all;stroke-width:1;opacity:.5;transition:opacity .09s,stroke-width .09s,fill .09s,filter .09s}
+#totalGizmo .tg-plane-xy{stroke:#ffd86a;fill:rgba(255,216,106,.07)}
+#totalGizmo .tg-plane-xz{stroke:#d26eff;fill:rgba(210,110,255,.065)}
+#totalGizmo .tg-plane-yz{stroke:#62e6dd;fill:rgba(98,230,221,.065)}
+#totalGizmo .tg-plane:hover,#totalGizmo .tg-plane.active{opacity:1;stroke-width:2!important;fill:rgba(255,255,255,.16);filter:drop-shadow(0 0 3px currentColor)}
 #totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:none;box-shadow:0 5px 15px rgba(0,0,0,.28)}
 #totalGizmo .tg-hud[hidden]{display:none}
 #totalGizmo .tg-handle::before{pointer-events:stroke}
-#totalGizmo .tg-arc{stroke-width:1.05;opacity:.72}
+#totalGizmo .tg-arc{stroke-width:1.05;opacity:.78;stroke-dasharray:72 18;stroke-linecap:round}
 #totalGizmo .tg-handle:hover,#totalGizmo .tg-handle.hover-proxy,#totalGizmo .tg-handle.active{stroke-width:3!important;opacity:1!important;filter:drop-shadow(0 0 3px currentColor)}
 #totalGizmo .tg-center:hover,#totalGizmo .tg-center.active{fill:rgba(255,255,255,.46)}
 #totalGizmo .tg-handle.muted{opacity:.16!important}
@@ -168,7 +178,7 @@ document.head.append(style);
 
 // SVG stroke hit targets are made touch-friendly by duplicating each stroked handle
 // with an invisible fat stroke underneath while preserving the thin visible line.
-for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center)')]){
+for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center):not(.tg-plane)')]){
   const hit=el.cloneNode(true);
   hit.classList.add('tg-hit');
   hit.classList.remove('tg-handle');
@@ -177,7 +187,8 @@ for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center)')]){
   hit.style.fill='none';
   hit.setAttribute('fill','none');
   hit.style.stroke='transparent';
-  hit.style.strokeWidth='16';
+  const hitWidth=el.classList.contains('tg-arc')?12:el.classList.contains('tg-screen-ring')||el.classList.contains('tg-scale-ring')?13:16;
+  hit.style.strokeWidth=String(hitWidth);
   hit.__visual=el;
   el.parentNode.insertBefore(hit,el);
   hit.addEventListener('pointerdown',e=>onHandleDown.call(hit,e));
@@ -194,6 +205,14 @@ if(status&&hud){
   }).observe(status,{childList:true,subtree:true,characterData:true});
 }
 
+function planePoints(a,b){
+  const o=new THREE.Vector2(HALF,HALF),startA=18,startB=18,size=15;
+  const p0=o.clone().addScaledVector(a,startA).addScaledVector(b,startB);
+  const p1=p0.clone().addScaledVector(a,size);
+  const p2=p1.clone().addScaledVector(b,size);
+  const p3=p0.clone().addScaledVector(b,size);
+  return [p0,p1,p2,p3].map(p=>`${p.x.toFixed(2)},${p.y.toFixed(2)}`).join(' ');
+}
 function syncAxisVisuals(center,camera){
   const dirs={
     x:axisScreen(center,camera,new THREE.Vector3(1,0,0)),
@@ -205,6 +224,10 @@ function syncAxisVisuals(center,camera){
     const g=root.querySelector(`.tg-${name}-group`);
     if(g)g.setAttribute('transform',`rotate(${angle} ${HALF} ${HALF})`);
   }
+  const xy=root.querySelector('.tg-plane-xy'),xz=root.querySelector('.tg-plane-xz'),yz=root.querySelector('.tg-plane-yz');
+  if(xy)xy.setAttribute('points',planePoints(dirs.x,dirs.y));
+  if(xz)xz.setAttribute('points',planePoints(dirs.x,dirs.z));
+  if(yz)yz.setAttribute('points',planePoints(dirs.y,dirs.z));
 }
 
 function sync(){
@@ -227,5 +250,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.572'
+  version:'0.36.18.575'
 };
