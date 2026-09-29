@@ -1,20 +1,23 @@
-## v0.36.18.590 — Rotate floating type-in isolated onto proven gizmo release path
+## v0.36.18.591 — direct Object Rotate completion handoff to floating exact input
 
-- .589 restored Move floating exact entry and user confirmed Move is back.
-- Investigation of `rotate-transform.js` shows it does not own Object-mode rotation; it only handles Vertex/Edge/Face.
-- Object-mode Total Gizmo rotation is therefore owned by `transform-upgrade.js`.
-- .590 leaves Move completely unchanged and gives Object-mode Rotate the same proven gizmo pointer-release palette trigger as Move.
-- Rotation maths remains in transform-upgrade; this build changes only the floating Degrees palette trigger.
-- Scale remains untouched for the next isolated build.
-- The semantic transform-end path remains available but is no longer required just to show the Object-mode Rotate palette.
+- .590 hands-on FAIL: Rotate floating Degrees palette still did not appear.
+- Root cause narrowed further: Object-mode Rotate is owned by `transform-upgrade.js`, and the event/waiting-flag handoff back to the gizmo could still be disrupted by pointer capture/cancel ordering.
+- .591 removes event timing from Object Rotate exact-entry display:
+  - on successful Object-mode Rotate commit, `transform-upgrade.js` calls `__boxlabTotalGizmo.completeExactEntry(...)` directly
+  - Total Gizmo opens the standalone floating Degrees palette immediately from that direct callback
+  - no document pointerup dependency
+  - no custom-event dependency for Object Rotate
+- Move remains on the known-good .589 path and is untouched.
+- Raw gizmo pointer-release no longer tries to open Rotate's palette.
+- Scale remains intentionally untouched.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
-- Prepublish syntax/static regression 4/4 PASS.
+- Prepublish syntax/static regression 7/7 PASS.
 
 Hands-on check:
-1. Confirm Move floating Distance entry still works exactly as .589.
-2. Drag/release X/Y/Z rotation ring.
-3. Floating palette should appear with Rotate X/Y/Z + Degrees.
-4. Tap field, enter exact angle, Enter or Apply.
+1. Confirm Move floating Distance entry remains working.
+2. Drag/release X/Y/Z Rotate ring.
+3. Floating Rotate X/Y/Z / Degrees palette should appear.
+4. Enter exact angle with Enter or Apply.
 5. Undo exact Rotate.
-6. Ignore Scale for this build; it is intentionally unchanged.
+6. Ignore Scale for this build.
 
