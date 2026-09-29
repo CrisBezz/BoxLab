@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.596 — single-file iPad Share / Open In payload.
+// BoxLab v0.36.18.598 — typed GLB File sharing for iPad/Nomad.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.596';
+const VERSION='0.36.18.598';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -52,8 +52,8 @@ function downloadBlob(blob,fileName){
 
 async function shareBlob(blob,fileName,mime){
   if(!(navigator.share&&typeof File!=='undefined'))return 'unavailable';
-  const shareType=/\.glb$/i.test(fileName)?'application/octet-stream':mime;
-  const file=new File([blob],fileName,{type:shareType});
+  const fileType=/\.glb$/i.test(fileName)?'model/gltf-binary':mime;
+  const file=new File([blob],fileName,{type:fileType});
   if(navigator.canShare&&!navigator.canShare({files:[file]}))return 'unavailable';
   try{
     await navigator.share({files:[file]});
