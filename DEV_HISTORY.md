@@ -3264,3 +3264,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Left-panel exact field remains fallback.
 - Prepublish syntax/static regression 9/9 PASS.
 
+## 2026-09-29 — v0.36.18.588 unified semantic transform completion event
+- Replaced raw pointerup-dependent floating input display with a semantic boxlab-transform-end event.
+- main.js, transform-upgrade.js and rotate-transform.js now emit the same completion event from their actual transform owners.
+- Total Gizmo listens to that event and opens the standalone floating exact-input palette only for an active gizmo transform.
+- Hides old gizmo HUD when floating palette opens, removing duplicate black boxes.
+- This semantic event architecture is intended as the baseline for future modeless gesture interaction.
+- Prepublish syntax/static regression 9/9 PASS.
+
