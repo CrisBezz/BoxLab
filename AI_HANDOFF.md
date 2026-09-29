@@ -1,27 +1,31 @@
-## v0.36.18.593 — Scale added to proven window-capture floating type-in path
+## v0.36.18.594 — gizmo soft Rotate/Scale detents + live precision readout
 
-- .592 hands-on PASS: Rotate floating Degrees type-in works.
-- User requested the capture-order discovery be remembered for future development.
-- The protected interaction rule has been added to `AI_WORKFLOW.md`:
-  - later document listeners may be blocked by tool owners using stopImmediatePropagation()
-  - use window capture for global completion that must run before document capture
-  - prefer one gesture owner + semantic events/state for future modeless interactions
-- .593 changes only Total Gizmo Scale completion:
-  - Move remains on the proven window-capture path
-  - Rotate remains on the proven window-capture path
-  - Scale now joins that exact same path
-- Scale axis nodes should open Factor input for X/Y/Z.
-- Outer uniform scale ring should open Scale Uniform / Factor.
-- Exact Scale commit continues to use the already proven transform-upgrade applyExact API.
-- Focus/topbar unchanged.
+- .593 hands-on PERFECT: full floating exact-entry system PASS for Move / Rotate / Scale / Uniform Scale.
+- .594 preserves .593 floating type-in unchanged.
+- Total Gizmo now exposes its active drag spec to transform-upgrade so precision behavior can be gizmo-specific.
+- Gizmo Rotate:
+  - replaces the legacy hard 15° step during an active Total Gizmo drag with soft catches
+  - useful catches: 0°, 5°, 15°, 30°, 45°, 60°, 90°, 120°, 135°, 180°
+  - catch window is about ±3.5°
+  - dragging through the catch releases naturally
+  - legacy/non-gizmo Rotate keeps its existing 15° snap behavior
+- Gizmo Scale:
+  - soft catches at 0.25×, 0.5×, 0.75×, 1×, 1.25×, 1.5×, 2×, 3×, 4×
+  - logarithmic catch window keeps behavior consistent across small/large factors
+  - legacy/non-gizmo Scale unchanged
+- Existing gizmo HUD already mirrors transform status, so live angle/factor appears during drag with “detent” when caught.
+- Move's adaptive detents unchanged.
+- Protected interaction capture rule remains documented in AI_WORKFLOW.md.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
-- Prepublish syntax/static regression 4/4 PASS.
+- Prepublish syntax/static regression 7/7 PASS.
 
 Hands-on check:
-1. Regression: Move floating Distance still works.
-2. Regression: Rotate floating Degrees still works.
-3. Drag/release X/Y/Z Scale node -> floating Scale axis / Factor palette.
-4. Type e.g. 1.5 -> Enter or Apply.
-5. Outer uniform scale ring -> Scale Uniform / Factor palette.
-6. Undo exact Scale.
+1. Regression: Move floating type-in still works.
+2. Regression: Rotate floating type-in still works.
+3. Regression: Scale/Uniform floating type-in still works.
+4. Drag Rotate slowly through 15° / 30° / 45° / 90° and feel/observe soft catches.
+5. Drag past a caught angle and confirm it releases rather than locking.
+6. Drag Scale through 0.5× / 0.75× / 1× / 1.25× / 1.5× / 2× and confirm soft catches.
+7. Confirm HUD shows live value and “detent” while caught.
+8. Legacy Rotate button still uses its existing 15° snap behavior.
 
