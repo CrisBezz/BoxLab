@@ -1850,3 +1850,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .586: prepublish syntax/static regression 8/8 PASS
 - [x] Protection .586: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .587: Move release shows standalone floating Distance field
+- [ ] Workflow .587: Rotate release shows standalone floating Degrees field
+- [ ] Workflow .587: Scale release shows standalone floating Factor field
+- [ ] Workflow .587: iPad keyboard opens when floating field is tapped for Move/Rotate/Scale
+- [ ] Workflow .587: Enter commits exact Rotate
+- [ ] Workflow .587: Enter commits exact Scale
+- [ ] Workflow .587: Apply button commits exact value
+- [ ] Workflow .587: background tap dismisses floating palette
+- [ ] Regression .587: left-panel exact type-in remains working
+- [ ] Regression .587: Undo exact transforms works
+- [x] Automated .587: prepublish syntax/static regression 9/9 PASS
+- [x] Protection .587: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
