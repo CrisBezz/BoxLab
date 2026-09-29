@@ -113,14 +113,14 @@ root.innerHTML=`
       <polygon class="tg-head tg-x-fill" points="${HALF+67},${HALF} ${HALF+55},${HALF-6} ${HALF+55},${HALF+6}"/>
     </g>
     <g class="tg-axis-group tg-y-group">
-      <line class="tg-handle tg-axis tg-y" data-tool="move" data-constraint="y" x1="${HALF}" y1="${HALF}" x2="${HALF}" y2="${HALF-58}"/>
+      <line class="tg-handle tg-axis tg-y" data-tool="move" data-constraint="y" x1="${HALF}" y1="${HALF}" x2="${HALF+58}" y2="${HALF}"/>
       <rect class="tg-handle tg-scale-node tg-y" data-tool="scale" data-constraint="y" x="${HALF+34}" y="${HALF-4.5}" width="9" height="9" rx="1.5"/>
-      <polygon class="tg-head tg-y-fill" points="${HALF},${HALF-67} ${HALF-6},${HALF-55} ${HALF+6},${HALF-55}"/>
+      <polygon class="tg-head tg-y-fill" points="${HALF+67},${HALF} ${HALF+55},${HALF-6} ${HALF+55},${HALF+6}"/>
     </g>
     <g class="tg-axis-group tg-z-group">
-      <line class="tg-handle tg-axis tg-z" data-tool="move" data-constraint="z" x1="${HALF}" y1="${HALF}" x2="${HALF-45}" y2="${HALF+37}"/>
+      <line class="tg-handle tg-axis tg-z" data-tool="move" data-constraint="z" x1="${HALF}" y1="${HALF}" x2="${HALF+58}" y2="${HALF}"/>
       <rect class="tg-handle tg-scale-node tg-z" data-tool="scale" data-constraint="z" x="${HALF+34}" y="${HALF-4.5}" width="9" height="9" rx="1.5"/>
-      <polygon class="tg-head tg-z-fill" points="${HALF-52},${HALF+43} ${HALF-41},${HALF+30} ${HALF-35},${HALF+38}"/>
+      <polygon class="tg-head tg-z-fill" points="${HALF+67},${HALF} ${HALF+55},${HALF-6} ${HALF+55},${HALF+6}"/>
     </g>
   </g>
   <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="10"/>
