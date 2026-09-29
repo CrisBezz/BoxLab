@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-29 — v0.36.18.599 extension-driven GLB share type test
+
+- .598 single typed GLB share still did not surface Nomad Sculpt.
+- Same exported GLB does surface Nomad when shared from iPad Files, isolating the difference to Safari/Web Share item representation rather than model validity.
+- GLB Web Share now omits File.type so iPadOS/WebKit must infer the document type from the .glb filename.
+- OBJ share remains explicitly typed.
+- HTML shell and version.json advanced together to .599.
+- If this fails, stop MIME guessing and treat direct web-share target eligibility as the likely platform limitation.
+
 ## 2026-09-29 — v0.36.18.598 typed GLB File sharing
 
 - Single-item Web Share was working, but Nomad Sculpt still did not accept the shared GLB.
