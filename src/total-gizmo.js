@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.579 — Total Gizmo v1.
+// BoxLab v0.36.18.580 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -87,10 +87,14 @@ function onHandleDown(event){
   event.preventDefault();
   event.stopPropagation();
 }
+function clearTransientHandleState(){
+  root.querySelectorAll('.tg-handle').forEach(h=>{
+    h.classList.remove('active','muted','hover-proxy');
+  });
+}
 function finish(event){
   if(pointerId!==event.pointerId)return;
-  activeHandle?.classList.remove('active');
-  root.querySelectorAll('.tg-handle').forEach(h=>h.classList.remove('muted'));
+  clearTransientHandleState();
   root.dataset.dragging='false';
   activeHandle=null;pointerId=null;
   explicitGizmoConstraint=null;
@@ -98,6 +102,9 @@ function finish(event){
 }
 document.addEventListener('pointerup',finish,true);
 document.addEventListener('pointercancel',finish,true);
+document.addEventListener('pointerleave',event=>{
+  if(pointerId===null)clearTransientHandleState();
+},true);
 
 const root=document.createElement('div');
 root.id='totalGizmo';
@@ -289,5 +296,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.579'
+  version:'0.36.18.580'
 };
