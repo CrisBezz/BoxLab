@@ -3162,3 +3162,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Explicit gizmo axis movement is now independent of Axis Snap state.
 - Static regression 6/6 PASS.
 
+## 2026-09-29 — v0.36.18.574 legacy X/Y/Z constraints no longer depend on Axis Snap
+- Extended .573's explicit gizmo axis-lock rule to the legacy precision X/Y/Z controls.
+- main.js now seeds drag.axisLock from active precision X/Y/Z when no gizmo axis handle is active.
+- Axis Snap automatic axis choice runs only if no explicit axis is already locked.
+- Free/Auto behavior preserved.
+- Static regression 7/7 PASS.
+
