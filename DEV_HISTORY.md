@@ -3313,3 +3313,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Legacy transform behavior and .593 exact-entry path unchanged.
 - Prepublish syntax/static regression 7/7 PASS.
 
+## 2026-09-29 — v0.36.18.595 owner-correct gizmo Rotate/Scale detents
+- .594 hands-on showed Scale detents absent and Rotate still governed by legacy 15° snap.
+- Added explicit global Total Gizmo drag ownership state.
+- Rotate now uses gizmo soft catches independently of the legacy 15° snap.
+- Moved Scale detent maths into main.js, the actual Scale gesture owner.
+- Move and .593 exact-entry paths unchanged.
+- Prepublish syntax/static regression 9/9 PASS.
+
