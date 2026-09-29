@@ -1,26 +1,43 @@
-## v0.36.18.568 — Viewport ownership fix + far-right placement + compact Facegroups
+## v0.36.18.570 — Total Gizmo v1 working prototype
 
-- User reported .567 reintroduced ownership flashing around the Viewport control.
-- Root cause: `view-modes.js` created `#viewModes` inside `.top-actions`, then `topbar-layout.js` touched/reordered that same element later.
-- .568 makes `view-modes.js` the sole owner of Viewport placement:
-  - Viewport is created with `topActions.append(wrap)`
-  - therefore it appears at the far-right of the top action row from first paint
-  - `topbar-layout.js` no longer queries/reparents/reorders Viewport
-  - `.top-actions>#viewModes{margin-left:auto}` keeps it pushed right
-- Existing right-edge Viewport flyout anchoring from .567 is retained.
-- Facegroup Viewport controls are normalized to compact UI sizing:
-  - buttons: 32px high / 12px text
-  - range labels/outputs: 11px
-  - compact slider rows and colour control
-  - consistent gaps/padding
-- No viewport camera/render behavior changed.
-- Automated syntax/static regression 13/13 PASS.
-- Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
+- First implementation pass of the unified BoxLab Total Gizmo after the .568 UI cleanup.
+- New isolated module: `src/total-gizmo.js`.
+- Object mode only in this first prototype.
+- The gizmo drives the established transform engine underneath it; protected `src/multi-object-transform.js?v=0.36.1.0` remains untouched.
+- Combined controls currently included:
+  - center puck = free move
+  - X / Y / Z arrows = axis move
+  - X / Y / Z rotation arcs = axis rotate
+  - inner neutral ring = screen/view rotate
+  - outer orange ring = uniform scale
+  - small X / Y / Z square handles = single-axis scale
+- Projected X/Y/Z move/scale axes follow the current camera orientation.
+- Visible geometry remains thin while invisible 16px SVG hit strokes provide Pencil/finger-friendly targeting.
+- Hover/proximity emphasizes the candidate handle; while dragging, competing handles dim.
+- Live compact HUD mirrors established transform feedback during a gizmo drag.
+- Touch/Pencil starts are handed into the existing transform engine as a gizmo-owned transform gesture so they do not get rejected as ordinary viewport touch navigation.
+- Existing Move / Scale / Rotate strip remains temporarily as a fallback during gizmo testing.
+- Static test added: `tests/total-gizmo-570.test.mjs`.
+- Syntax/static regression 13/13 PASS.
+- Frozen Beta 5 v0.36.18.538 untouched.
 
-Hands-on check:
-1. No Viewport ownership/reordering flash during startup.
-2. Viewport button is at the far-right of the top action row.
-3. Viewport flyout still opens at the right border.
-4. Facegroup panel buttons/text/sliders match compact BoxLab sizing.
-5. All Facegroup palette/sliders/reset/reseed controls still work.
+Hands-on test:
+1. Switch to Object mode and select/activate an object: Total Gizmo should appear at its center.
+2. Orbit camera: X/Y/Z move axes should continue to point along projected world axes.
+3. Drag center puck: free move.
+4. Drag red/green/blue arrow shafts: X/Y/Z constrained move.
+5. Drag red/green/blue small square handles: X/Y/Z constrained scale.
+6. Drag colored rotation arcs: X/Y/Z rotation.
+7. Drag inner neutral ring: screen/view rotation.
+8. Drag outer orange ring: uniform scale.
+9. Hover/Pencil proximity should thicken/highlight the intended handle; active drag should dim competitors.
+10. HUD should show live transform feedback.
+11. Confirm one-finger orbit, two-finger pan, pinch zoom, Undo/Redo remain unchanged away from the gizmo.
+12. Existing transform strip must still work as fallback.
+
+Next after hands-on validation:
+- tune geometry/spacing and hit priorities
+- add planar move handles
+- begin integrated precision/type-in HUD
+- then extend same gizmo language to Face/Edge/Vertex selections
 
