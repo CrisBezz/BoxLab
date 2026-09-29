@@ -1689,3 +1689,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .570: syntax/static regression 13/13 PASS
 - [x] Protection .570: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .571: no black circular background/hit-proxy fill is visible
+- [ ] Workflow .571: X/Y/Z rotation arcs are all visible
+- [ ] Workflow .571: idle gizmo linework is thin and visually quiet
+- [ ] Workflow .571: invisible hit zones remain easy to acquire with Pencil/finger
+- [ ] Workflow .571: hovered/active handle thickens clearly
+- [ ] Regression .571: transforms and navigation unchanged
+- [x] Automated .571: syntax/static regression 9/9 PASS
+- [x] Protection .571: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
