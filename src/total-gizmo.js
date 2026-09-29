@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.570 — Total Gizmo v1.
+// BoxLab v0.36.18.571 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -133,21 +133,21 @@ style.textContent=`
 #totalGizmo{position:absolute;z-index:115;width:${SIZE}px;height:${SIZE}px;transform:translate(-50%,-50%);pointer-events:none;touch-action:none;filter:drop-shadow(0 2px 4px #0009)}
 #totalGizmo[hidden]{display:none}
 #totalGizmo svg{width:100%;height:100%;overflow:visible}
-#totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:2;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
-#totalGizmo .tg-axis{stroke-width:2.2;pointer-events:stroke}
+#totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
+#totalGizmo .tg-axis{stroke-width:1.35;pointer-events:stroke}
 #totalGizmo .tg-head{pointer-events:none;opacity:.92}
 #totalGizmo .tg-x{stroke:#ff5d5d}.tg-x-fill{fill:#ff5d5d}
 #totalGizmo .tg-y{stroke:#65e67a}.tg-y-fill{fill:#65e67a}
 #totalGizmo .tg-z{stroke:#6f91ff}.tg-z-fill{fill:#6f91ff}
-#totalGizmo .tg-screen-ring{stroke:#eef2f7;stroke-width:1.5;opacity:.62}
-#totalGizmo .tg-scale-ring{stroke:#ff9a66;stroke-width:1.6;opacity:.72}
-#totalGizmo .tg-center{fill:rgba(238,242,247,.22);stroke:#f1f4f8;stroke-width:1.5;pointer-events:all}
-#totalGizmo .tg-scale-node{fill:rgba(17,19,24,.9);stroke-width:2.2;pointer-events:all}
+#totalGizmo .tg-screen-ring{stroke:#eef2f7;stroke-width:1.05;opacity:.58}
+#totalGizmo .tg-scale-ring{stroke:#ff9a66;stroke-width:1.1;opacity:.66}
+#totalGizmo .tg-center{fill:rgba(238,242,247,.16);stroke:#f1f4f8;stroke-width:1.1;pointer-events:all}
+#totalGizmo .tg-scale-node{fill:rgba(17,19,24,.78);stroke-width:1.25;pointer-events:all}
 #totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:none;box-shadow:0 5px 15px rgba(0,0,0,.28)}
 #totalGizmo .tg-hud[hidden]{display:none}
 #totalGizmo .tg-handle::before{pointer-events:stroke}
-#totalGizmo .tg-arc{stroke-width:1.7;opacity:.76}
-#totalGizmo .tg-handle:hover,#totalGizmo .tg-handle.hover-proxy,#totalGizmo .tg-handle.active{stroke-width:4.5!important;opacity:1!important;filter:drop-shadow(0 0 4px currentColor)}
+#totalGizmo .tg-arc{stroke-width:1.05;opacity:.72}
+#totalGizmo .tg-handle:hover,#totalGizmo .tg-handle.hover-proxy,#totalGizmo .tg-handle.active{stroke-width:3!important;opacity:1!important;filter:drop-shadow(0 0 3px currentColor)}
 #totalGizmo .tg-center:hover,#totalGizmo .tg-center.active{fill:rgba(255,255,255,.46)}
 #totalGizmo .tg-handle.muted{opacity:.16!important}
 #totalGizmo .tg-axis{stroke-linecap:round}
@@ -155,8 +155,8 @@ style.textContent=`
 #totalGizmo .tg-handle{cursor:grab}
 #totalGizmo[data-dragging="true"] .tg-handle.active{cursor:grabbing}
 #totalGizmo .tg-handle{--tg-hit:14px}
-#totalGizmo .tg-axis{stroke-width:2.2}
-#totalGizmo .tg-hit{stroke:transparent;stroke-width:14}
+#totalGizmo .tg-axis{stroke-width:1.35}
+#totalGizmo .tg-hit{fill:none!important;stroke:transparent!important;stroke-width:16!important}
 @media(max-width:900px){#totalGizmo{width:184px;height:184px}}
 `;
 document.head.append(style);
@@ -169,6 +169,8 @@ for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center)')]){
   hit.classList.remove('tg-handle');
   hit.removeAttribute('filter');
   hit.style.pointerEvents='stroke';
+  hit.style.fill='none';
+  hit.setAttribute('fill','none');
   hit.style.stroke='transparent';
   hit.style.strokeWidth='16';
   hit.__visual=el;
@@ -219,5 +221,5 @@ globalThis.__boxlabTotalGizmo={
   element:root,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.570'
+  version:'0.36.18.571'
 };
