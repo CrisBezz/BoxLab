@@ -1912,3 +1912,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .592: prepublish syntax/static regression 4/4 PASS
 - [x] Protection .592: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Regression .593: Move floating Distance remains working
+- [ ] Regression .593: Rotate floating Degrees remains working
+- [ ] Workflow .593: X Scale node release shows floating Factor palette
+- [ ] Workflow .593: Y Scale node release shows floating Factor palette
+- [ ] Workflow .593: Z Scale node release shows floating Factor palette
+- [ ] Workflow .593: outer uniform Scale ring release shows Factor palette
+- [ ] Workflow .593: Enter/Apply commits exact Scale
+- [ ] Workflow .593: Undo exact Scale works
+- [x] Architecture .593: pointer capture ownership rule documented in AI_WORKFLOW.md
+- [x] Automated .593: prepublish syntax/static regression 4/4 PASS
+- [x] Protection .593: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
