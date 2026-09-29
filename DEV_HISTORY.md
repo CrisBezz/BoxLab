@@ -3176,3 +3176,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Segmented rotation arcs improve readability through overlapping geometry.
 - Prepublish syntax/static regression 9/9 PASS.
 
+## 2026-09-29 — v0.36.18.576 3D-projected Total Gizmo rotation rings
+- Replaced fixed SVG X/Y/Z ellipses with true camera-projected world-space circles.
+- X ring uses YZ plane, Y ring XZ, Z ring XY.
+- 72-sample projected paths update every frame and respond correctly to camera perspective.
+- Front/back ring halves are drawn with different prominence for 3D depth readability.
+- Removed dashed-ring workaround.
+- Prepublish syntax/static regression 10/10 PASS.
+
