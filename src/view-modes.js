@@ -29,13 +29,14 @@ function ensureUI(){
         <div class="viewport-menu-label">Render Look</div>
         <div id="viewportRenderLooks" class="viewport-render-grid"></div>
       </div>
-      <div class="viewport-menu-section">
-        <div class="viewport-menu-label">Display</div>
-        <div class="viewport-display-grid">
-          <button type="button" id="focusViewBtn">Focus View</button>
-        </div>
-      </div>
+
     </div>`;
+  const focusButton=document.createElement('button');
+  focusButton.type='button';
+  focusButton.id='focusViewBtn';
+  focusButton.textContent='Focus';
+  focusButton.title='Toggle Focus View';
+  topActions?.append(focusButton);
   topActions?.append(wrap);
   const style=document.createElement('style');
   style.textContent=`
@@ -48,8 +49,7 @@ function ensureUI(){
 .viewport-menu-section+.viewport-menu-section{margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.09)}
 .viewport-menu-label{font-size:10px;text-transform:uppercase;letter-spacing:.08em;opacity:.55;margin:0 2px 6px}
 .viewport-view-grid,.viewport-render-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
-.viewport-display-grid{display:grid;grid-template-columns:1fr;gap:5px}
-.viewport-view-grid button,.viewport-render-grid button,.viewport-display-grid button{min-width:0;min-height:34px;padding:5px 7px;font-size:11px;white-space:nowrap;touch-action:manipulation}
+.viewport-view-grid button,.viewport-render-grid button{min-width:0;min-height:34px;padding:5px 7px;font-size:11px;white-space:nowrap;touch-action:manipulation}
 .viewport-view-grid button.active,.viewport-render-grid button.active{background:#f2f5fa;color:#111318;border-color:#f2f5fa}
 @media(max-width:900px){#viewModes>summary{padding:5px 8px}.viewport-menu-panel{right:max(8px,env(safe-area-inset-right));width:min(340px,calc(100vw - 16px));max-height:calc(100dvh - var(--boxlab-topbar-h,60px) - 14px)}}
 `;
@@ -131,9 +131,11 @@ function activateButton(button){
 }
 
 const ui=ensureUI();
+const focusTopButton=document.querySelector('#focusViewBtn');
+focusTopButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleFocusView();});
 let suppressSyntheticClickUntil=0;
 ui?.addEventListener('click',event=>{
-  const button=event.target.closest('button[data-view],#focusViewBtn');
+  const button=event.target.closest('button[data-view]');
   if(!button)return;
   if(performance.now()<suppressSyntheticClickUntil){event.preventDefault();event.stopPropagation();return;}
   event.preventDefault();event.stopPropagation();activateButton(button);
@@ -143,7 +145,7 @@ ui?.addEventListener('click',event=>{
 // on pointerup. Suppress the following synthetic click so toggles fire only once.
 ui?.addEventListener('pointerup',event=>{
   if(event.pointerType==='mouse')return;
-  const button=event.target.closest('button[data-view],button[data-render],#focusViewBtn');
+  const button=event.target.closest('button[data-view],button[data-render]');
   if(!button)return;
   suppressSyntheticClickUntil=performance.now()+700;
   event.preventDefault();event.stopPropagation();activateButton(button);
