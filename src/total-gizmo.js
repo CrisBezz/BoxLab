@@ -59,7 +59,7 @@ function arm(tool,constraint='free'){
 }
 function syntheticDown(event){
   const ev=new PointerEvent('pointerdown',{
-    bubbles:true,cancelable:true,pointerId:event.pointerId,pointerType:event.pointerType||'pen',
+    bubbles:true,cancelable:true,pointerId:event.pointerId,pointerType:'pen',
     isPrimary:event.isPrimary!==false,clientX:event.clientX,clientY:event.clientY,
     buttons:1,button:0,pressure:event.pressure||.5
   });
@@ -137,7 +137,7 @@ style.textContent=`
 #totalGizmo .tg-center{fill:rgba(238,242,247,.22);stroke:#f1f4f8;stroke-width:1.5;pointer-events:all}
 #totalGizmo .tg-handle::before{pointer-events:stroke}
 #totalGizmo .tg-arc{stroke-width:1.7;opacity:.76}
-#totalGizmo .tg-handle:hover,#totalGizmo .tg-handle.active{stroke-width:4.5!important;opacity:1!important;filter:drop-shadow(0 0 4px currentColor)}
+#totalGizmo .tg-handle:hover,#totalGizmo .tg-handle.hover-proxy,#totalGizmo .tg-handle.active{stroke-width:4.5!important;opacity:1!important;filter:drop-shadow(0 0 4px currentColor)}
 #totalGizmo .tg-center:hover,#totalGizmo .tg-center.active{fill:rgba(255,255,255,.46)}
 #totalGizmo .tg-handle.muted{opacity:.16!important}
 #totalGizmo .tg-axis{stroke-linecap:round}
