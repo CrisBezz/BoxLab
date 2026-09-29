@@ -1,26 +1,30 @@
-## v0.36.18.585 — direct post-transform input + top-line Focus
+## v0.36.18.586 — one authoritative transform type-in system
 
-- User feedback on .584:
-  - Rotate/Scale gizmo exact input still did not behave reliably.
-  - Focus View itself worked well and should be promoted to the top action row.
-- .585 changes gizmo precision UX rather than adding another transform wrapper:
-  - after any gizmo transform finishes, the HUD now exposes a real numeric `<input>` immediately
-  - no intermediate “tap HUD text to convert it into an input” step
-  - placeholders are context-aware: Distance / Degrees / Factor
-  - larger 96×30px input improves iPad touch targeting
-  - exact commit still calls the direct `__boxlabTransformUpgrade.applyExact(tool,constraint,value)` path added in .584
-- Focus View moved out of Viewport menu and onto the top action row, immediately before Viewport.
-- Focus remains an in-page workspace toggle; top bar remains visible.
+- .585 hands-on feedback:
+  - Focus on top row is correct.
+  - Rotate/Scale gizmo floating HUD type-in still unreliable.
+- .586 removes the duplicate floating numeric-input experiment.
+- The gizmo now synchronizes the persistent transform strip through a new `__boxlabTransformUpgrade.setContext(tool,constraint)` API.
+- Gizmo handle mapping now drives the same visible type-in system:
+  - move arrows => Move + X/Y/Z
+  - rotate rings => Rotate + X/Y/Z
+  - axis scale squares => Scale + X/Y/Z
+  - uniform scale ring => Scale + Free/Uniform context
+- The persistent `#transformValue` field updates its placeholder/context accordingly and remains the only numeric-entry point.
+- Transform polish listens for `boxlab-transform-context` so enabled/title state refreshes immediately after gizmo use.
+- Gizmo HUD is back to readout-only and briefly tells the user exact entry is in the left panel.
+- Focus remains on top row; no change to its behavior.
 - Share/Open In unchanged.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
-- Prepublish syntax/static regression 9/9 PASS.
+- Prepublish syntax/static regression 8/8 PASS.
 
 Hands-on check:
-1. Drag/release Move gizmo handle -> numeric input appears directly in HUD.
-2. Drag/release Rotate ring -> Degrees input appears directly; tap field, type angle, Enter.
-3. Drag/release Scale handle/ring -> Factor input appears directly; type factor, Enter.
-4. Undo exact Rotate and Scale.
-5. Top row contains Focus beside the existing top actions, before Viewport.
-6. Focus toggles left drawer without hiding top row.
-7. Exit Focus restores drawer.
+1. Drag/release X move arrow => left transform strip shows Move + X and Distance field.
+2. Drag/release X/Y/Z rotate ring => left strip switches to Rotate + matching axis and Degrees field.
+3. Type exact degrees in that left field and press Enter.
+4. Drag/release X/Y/Z scale square => left strip switches to Scale + matching axis and Scale factor field.
+5. Type exact scale factor and press Enter.
+6. Outer uniform scale ring => Scale + Free/Uniform context.
+7. Move exact type-in remains unchanged.
+8. Focus top-row button remains working.
 
