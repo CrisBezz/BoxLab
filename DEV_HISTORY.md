@@ -3298,3 +3298,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Move and Rotate use this early release path; Scale unchanged.
 - Prepublish syntax/static regression 4/4 PASS.
 
+## 2026-09-29 — v0.36.18.593 Scale added to proven window-capture floating type-in
+- .592 Rotate floating type-in hands-on PASS.
+- Added protected pointer capture/ownership guidance to AI_WORKFLOW.md.
+- Scale now uses the same window-capture release path as working Move/Rotate.
+- Move and Rotate logic otherwise unchanged.
+- Prepublish syntax/static regression 4/4 PASS.
+
