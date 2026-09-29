@@ -3141,3 +3141,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Added tests/total-gizmo-570.test.mjs.
 - Syntax/static regression 13/13 PASS.
 
+## 2026-09-29 — v0.36.18.571 Total Gizmo black-fill bug fix + thinner idle graphics
+- Fixed black disc/ring artifacts caused by SVG hit proxies defaulting to black fill after .tg-handle class removal.
+- Explicitly set hit proxy fill:none; this also stops proxies obscuring X/Y rotation arcs.
+- Reduced idle axis/ring/arc line weights while retaining 16px invisible hit zones.
+- Hover/active state still thickens selected handle.
+- Syntax/static regression 9/9 PASS.
+
