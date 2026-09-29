@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.584 — Total Gizmo v1.
+// BoxLab v0.36.18.585 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -98,7 +98,17 @@ function finish(event){
   root.dataset.dragging='false';
   activeHandle=null;pointerId=null;
   explicitGizmoConstraint=null;
-  if(hud){clearTimeout(hudHideTimer);hudHideTimer=setTimeout(()=>{if(pointerId===null&&!hudInput.matches(':focus'))hud.hidden=true;},2600);}
+  if(hud&&lastSpec){
+    clearTimeout(hudHideTimer);
+    hud.hidden=false;
+    hudText.hidden=true;
+    hudInput.hidden=false;
+    hudInput.value='';
+    hudInput.placeholder=lastSpec.tool==='rotate'?'Degrees':lastSpec.tool==='scale'?'Factor':'Distance';
+    hudHideTimer=setTimeout(()=>{
+      if(pointerId===null&&document.activeElement!==hudInput)hud.hidden=true;
+    },4200);
+  }
 }
 document.addEventListener('pointerup',finish,true);
 document.addEventListener('pointercancel',finish,true);
@@ -167,7 +177,7 @@ style.textContent=`
 #totalGizmo .tg-plane-yz{stroke:#62e6dd;fill:rgba(98,230,221,.065)}
 #totalGizmo .tg-plane:hover,#totalGizmo .tg-plane.active{opacity:1;stroke-width:2!important;fill:rgba(255,255,255,.16);filter:drop-shadow(0 0 3px currentColor)}
 #totalGizmo .tg-hud{position:absolute;left:50%;top:-8px;transform:translate(-50%,-100%);padding:5px 8px;border:1px solid rgba(255,255,255,.16);border-radius:7px;background:rgba(12,14,18,.92);font-size:11px;font-weight:650;letter-spacing:.02em;white-space:nowrap;color:#f2f5fa;pointer-events:auto;box-shadow:0 5px 15px rgba(0,0,0,.28)}
-#totalGizmo .tg-hud-input{width:88px;min-height:25px;padding:2px 6px;border-radius:5px;border:1px solid rgba(255,255,255,.24);background:#090b0f;color:#fff;font-size:12px;outline:none}
+#totalGizmo .tg-hud-input{width:96px;min-height:30px;padding:4px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.32);background:#090b0f;color:#fff;font-size:13px;outline:none;box-sizing:border-box}
 #totalGizmo .tg-hud[hidden]{display:none}
 #totalGizmo .tg-handle::before{pointer-events:stroke}
 #totalGizmo .tg-arc{stroke-width:1.2;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
@@ -238,7 +248,7 @@ function commitHudExact(){
   hudInput.hidden=true;hudText.hidden=false;
   clearTimeout(hudHideTimer);hudHideTimer=setTimeout(()=>{if(pointerId===null)hud.hidden=true;},2200);
 }
-hud?.addEventListener('pointerdown',event=>{if(pointerId===null&&!event.target.closest('.tg-hud-input')){event.preventDefault();event.stopPropagation();beginHudExactEntry();}});
+hud?.addEventListener('pointerdown',event=>{if(event.target===hud||event.target===hudText){event.preventDefault();event.stopPropagation();beginHudExactEntry();}});
 hudInput?.addEventListener('keydown',event=>{
   if(event.key==='Enter'){event.preventDefault();event.stopPropagation();commitHudExact();}
   else if(event.key==='Escape'){event.preventDefault();hudInput.blur();hudInput.hidden=true;hudText.hidden=false;}
@@ -330,5 +340,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.584'
+  version:'0.36.18.585'
 };
