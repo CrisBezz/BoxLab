@@ -1971,3 +1971,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .598: OBJ Share / Open In remains functional
 - [ ] Regression .598: Export / Save remains functional
 - [x] Protection .598: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .599: GLB Share / Open In creates one *.glb File with extension-driven type inference
+- [ ] Workflow .599: share payload contains files only
+- [ ] Workflow .599: check whether Nomad Sculpt appears when type is inferred from .glb filename
+- [ ] Regression .599: saved GLB still shares to Nomad successfully from Files app
+- [ ] Regression .599: OBJ sharing remains functional
+- [x] Protection .599: src/multi-object-transform.js?v=0.36.1.0 unchanged
