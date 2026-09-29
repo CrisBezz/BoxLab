@@ -3217,3 +3217,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Projected rings unchanged.
 - Protected multi-object-transform pin unchanged.
 
+## 2026-09-29 — v0.36.18.582 bottom status lane + Full Screen + iPad Share/Open In
+- Reserved a separate bottom status strip under the mode dock.
+- Added Viewport > Full Screen with native API plus Safari focus fallback.
+- Added dedicated Share / Open In export using Web Share file handoff.
+- Normal Export / Save remains available.
+- Prepublish syntax/static regression 12/12 PASS.
+
