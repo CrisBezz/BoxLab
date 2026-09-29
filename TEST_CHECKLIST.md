@@ -1772,3 +1772,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .579: X/Y/Z ring drags rotate correctly
 - [x] Automated .579: syntax/static regression 4/4 PASS
 
+- [ ] Workflow .580: hovered ring thickens temporarily
+- [ ] Workflow .580: ring returns to normal thin idle line after drag/release
+- [ ] Workflow .580: X/Y/Z all clear transient highlight after interaction
+- [ ] Workflow .580: move/scale handles also clear transient highlight
+- [ ] Regression .580: projected ring perspective behavior unchanged
+- [x] Automated .580: syntax/static regression 5/5 PASS
+
