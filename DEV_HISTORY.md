@@ -3131,3 +3131,13 @@ For exact implementation state, always inspect current `main`; this history is c
 - Normalized Facegroup Viewport controls to compact 32px / 12px sizing with 11px range labels/outputs.
 - Syntax/static regression 13/13 PASS.
 
+## 2026-09-29 — v0.36.18.570 Total Gizmo v1 working prototype
+- Added isolated src/total-gizmo.js without editing protected multi-object-transform.js.
+- Object-mode combined gizmo includes free move, axis move, axis rotate, screen rotate, uniform scale and axis scale.
+- Thin visible geometry uses 16px invisible hit strokes for touch/Pencil usability.
+- Added hover/active emphasis and live transform HUD.
+- Corrected axis templates so X/Y/Z projected move/scale handles align with camera-projected world axes.
+- Existing transform strip retained as fallback.
+- Added tests/total-gizmo-570.test.mjs.
+- Syntax/static regression 13/13 PASS.
+
