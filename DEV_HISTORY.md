@@ -3241,3 +3241,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Share/Open In unchanged.
 - Prepublish syntax/static regression 8/8 PASS.
 
+## 2026-09-29 — v0.36.18.585 direct post-transform input + top-line Focus
+- Replaced gizmo HUD text-to-input conversion with an actual visible numeric input immediately after transform release.
+- Context placeholders: Distance / Degrees / Factor.
+- Exact commit continues to use direct transform-upgrade exact API.
+- Moved Focus View from Viewport menu to top action row before Viewport.
+- Share/Open In unchanged.
+- Prepublish syntax/static regression 9/9 PASS.
+
