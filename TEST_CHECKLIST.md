@@ -1949,3 +1949,10 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .595: prepublish syntax/static regression 9/9 PASS
 - [x] Protection .595: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+
+- [ ] Workflow .596: Share / Open In shares exactly one GLB/OBJ file with no text sidecar
+- [ ] Workflow .596: Nomad Sculpt appears as an eligible iPad destination for GLB
+- [ ] Workflow .596: selected Nomad destination receives/opens the GLB
+- [ ] Regression .596: Export / Save iPad share-sheet fallback still saves the model to Files
+- [ ] Regression .596: GLB/OBJ geometry and Nomad preservation payload unchanged
+- [x] Protection .596: src/multi-object-transform.js?v=0.36.1.0 unchanged
