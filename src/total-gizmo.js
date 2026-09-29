@@ -231,6 +231,10 @@ function commitHudExact(){
   if(['x','y','z'].includes(lastSpec?.constraint)){
     globalThis.__boxlabTransformArming?.setTool?.(lastSpec.tool);
     globalThis.__boxlabTransformArming?.setConstraint?.(lastSpec.constraint);
+    const constraintButton=document.querySelector(`#transformPrecision [data-constraint="${lastSpec.constraint}"]`);
+    constraintButton?.click?.();
+  }else if(lastSpec?.constraint==='free'){
+    document.querySelector('#transformPrecision [data-constraint="free"]')?.click?.();
   }
   legacy.value=value;
   legacy.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',bubbles:true,cancelable:true}));
