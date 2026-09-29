@@ -31,7 +31,7 @@ function selected(){return [...new Set(bridge()?.indices?.()||[])];}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function axisVector(axis){return new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);}
 function explicitAxis(){const gizmo=globalThis.__boxlabTotalGizmo?.activeConstraint?.();if(['x','y','z'].includes(gizmo))return gizmo;return ['x','y','z'].includes(constraint)?constraint:null;}
-function activeGizmoSpec(){return globalThis.__boxlabTotalGizmo?.activeDragSpec?.()||null;}
+function activeGizmoSpec(){return globalThis.__boxlabActiveGizmoDrag||globalThis.__boxlabTotalGizmo?.activeDragSpec?.()||null;}
 function softAngleDetent(deg){
   const targets=[0,5,15,30,45,60,90,120,135,180];
   const sign=deg<0?-1:1,abs=Math.abs(deg);
