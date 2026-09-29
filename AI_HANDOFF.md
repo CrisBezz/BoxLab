@@ -1,23 +1,21 @@
-## v0.36.18.572 — Total Gizmo axis handles are intrinsically constrained
+## v0.36.18.573 — Total Gizmo axis constraint fixed in actual Object drag owner
 
-- User correctly identified that X/Y/Z gizmo movement should never depend on the separate Axis Snap toggle.
-- Root cause: the gizmo set a UI constraint, but `transform-upgrade.js` still resolved the actual drag axis from its own local constraint/Axis Snap state.
-- .572 makes the active Total Gizmo handle authoritative:
-  - `src/total-gizmo.js` exposes the currently active gizmo constraint
-  - `src/transform-upgrade.js` checks that constraint first in `explicitAxis()`
-  - X/Y/Z move handles therefore always move strictly along their axis
-  - X/Y/Z scale handles always scale strictly on their axis
-  - X/Y/Z rotation arcs always rotate strictly around their axis
-- The global Axis Snap toggle remains relevant only to free/auto transforms outside explicit gizmo handles.
+- .572 hands-on FAIL: X/Y/Z gizmo move handles still moved freely with Axis Snap OFF.
+- Root cause traced to `src/main.js`, which owns the actual Object/component drag path. Its `drag.axisLock` was initialized to null and only assigned when global Axis Snap was enabled.
+- .573 fixes the real owner:
+  - on component/Object drag start, `main.js` reads `globalThis.__boxlabTotalGizmo.activeConstraint()`
+  - explicit X/Y/Z gizmo handles initialize `drag.axisLock` immediately
+  - automatic Axis Snap inference only runs when no explicit gizmo axis lock already exists
+- Therefore explicit gizmo axis movement no longer depends on Axis Snap.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
-- Syntax/static regression 8/8 PASS.
+- Static regression 6/6 PASS.
 
 Hands-on check:
-1. Turn Axis Snap OFF.
-2. Drag X move arrow: movement must remain X-only.
-3. Repeat Y and Z.
-4. Drag X/Y/Z scale squares: each must affect only that axis.
-5. Drag X/Y/Z rotation arcs: each must rotate only around that axis.
-6. Free center move should remain free unless another snapping mode is intentionally active.
-7. Navigation gestures and legacy transform strip remain unchanged.
+1. Axis Snap OFF.
+2. Drag X gizmo arrow: object must move on X only.
+3. Drag Y gizmo arrow: object must move on Y only.
+4. Drag Z gizmo arrow: object must move on Z only.
+5. Turn Axis Snap ON and repeat: explicit gizmo axis must still win.
+6. Center free-move remains free.
+7. Navigation/Undo/Redo unchanged.
 
