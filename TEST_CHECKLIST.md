@@ -1725,3 +1725,14 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .574: source/static regression 7/7 PASS
 - [x] Protection .574: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .575: XY pad moves only in XY
+- [ ] Workflow .575: XZ pad moves only in XZ
+- [ ] Workflow .575: YZ pad moves only in YZ
+- [ ] Workflow .575: plane pads track projected world axes while orbiting
+- [ ] Workflow .575: rotation arcs are clearly distinguishable
+- [ ] Workflow .575: overlapping axis/ring handles have sensible hit priority
+- [ ] Regression .575: X/Y/Z gizmo constraints remain correct
+- [ ] Regression .575: navigation and legacy transforms unchanged
+- [x] Automated .575: prepublish syntax/static regression 9/9 PASS
+- [x] Protection .575: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
