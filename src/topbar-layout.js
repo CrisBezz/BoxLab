@@ -79,3 +79,36 @@ document.head.append(style);
 if(viewportWrap)viewportWrap.dataset.commandBar='active';
 
 // Visible release identity is owned by release-version.js.
+
+
+const statusLaneStyle=document.createElement('style');
+statusLaneStyle.textContent=`
+/* v0.36.18.582 — reserve a readable bottom status lane below the mode dock */
+#viewportWrap > #selectionModes{
+  bottom:max(27px,calc(env(safe-area-inset-bottom) + 23px))!important;
+}
+#viewportWrap > .floating-panel.left-panel{
+  bottom:84px!important;
+}
+.statusbar{
+  bottom:max(2px,env(safe-area-inset-bottom))!important;
+  z-index:121!important;
+  min-height:16px;
+  line-height:14px;
+}
+.statusbar #meshStats,.statusbar #selectionStatus{
+  background:rgba(17,19,24,.58);
+  border-radius:5px;
+  padding:1px 4px;
+}
+@media(max-width:900px){
+  #viewportWrap > #selectionModes{
+    bottom:max(25px,calc(env(safe-area-inset-bottom) + 21px))!important;
+  }
+  #viewportWrap > .floating-panel.left-panel{
+    bottom:80px!important;
+  }
+  .statusbar{bottom:max(1px,env(safe-area-inset-bottom))!important;}
+}
+`;
+document.head.append(statusLaneStyle);
