@@ -3169,3 +3169,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Free/Auto behavior preserved.
 - Static regression 7/7 PASS.
 
+## 2026-09-29 — v0.36.18.575 Total Gizmo planar move + interaction refinement
+- Added projected XY/XZ/YZ planar move handles.
+- main.js now uses true world-plane constraints for those handles.
+- Refined ring/arc hit widths to reduce overlap conflicts.
+- Segmented rotation arcs improve readability through overlapping geometry.
+- Prepublish syntax/static regression 9/9 PASS.
+
