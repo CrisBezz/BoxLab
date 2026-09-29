@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-29 — v0.36.18.597 transform-menu gizmo transient reset
+
+- Fixed Total Gizmo becoming stuck after Transform menu interaction.
+- Added explicit transient-state reset covering active handle, pointer ownership, drag styling, explicit gizmo constraint, HUD state and global active-gizmo drag marker.
+- Transform tool and constraint menu clicks now reset gizmo transient state before applying the new menu state.
+- Transform remains armed as requested; this is not a modelling/tool-state reset.
+- .596 iPad single-file share fix remains unchanged.
+- Protected multi-object-transform module unchanged.
+
 ## 2026-09-29 — v0.36.18.596 single-file iPad Share / Open In payload
 
 - User traced missing Nomad Sculpt share destination to a second text payload accompanying GLB/OBJ exports.
