@@ -154,8 +154,19 @@ function finish(event) {
   event.preventDefault();
   event.stopImmediatePropagation();
   const moved = gesture.moved;
+  const finished = gesture;
   gesture = null;
   if (moved && status) status.textContent = 'Rotate committed';
+  if (moved && event.type === 'pointerup') {
+    window.dispatchEvent(new CustomEvent('boxlab-transform-end',{
+      detail:{
+        tool:'rotate',
+        constraint:finished.constraint||'free',
+        pointerId:event.pointerId,
+        owner:'rotate-transform'
+      }
+    }));
+  }
 }
 document.addEventListener('pointerup', finish, true);
 document.addEventListener('pointercancel', finish, true);
