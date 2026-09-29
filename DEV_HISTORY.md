@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-29 — v0.36.18.597 release manifest sync
+
+- Live shell visibly loaded .597, then reverted to .595.
+- Root cause: `version.json` was still `0.36.18.595`; `release-version.js` intentionally treats the manifest as network source of truth and restamped the UI back to .595.
+- Synced `version.json` to `0.36.18.597`.
+- No modelling/export/interaction code changed in this correction.
+
 ## 2026-09-29 — v0.36.18.597 transform-menu gizmo transient reset
 
 - Fixed Total Gizmo becoming stuck after Transform menu interaction.
