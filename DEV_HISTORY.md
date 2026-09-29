@@ -3202,3 +3202,9 @@ For exact implementation state, always inspect current `main`; this history is c
 - syncRotationRings now targets .tg-handle.tg-arc explicitly and mirrors its d path to the linked proxy.
 - Syntax/static regression 4/4 PASS.
 
+## 2026-09-29 — v0.36.18.580 clear stranded Total Gizmo hover/active state
+- .579 projected rings passed visually.
+- Fixed lingering thick/highlighted state after ring interaction by clearing active/muted/hover-proxy classes on transform finish/cancel.
+- Added pointerleave safety cleanup when idle.
+- Syntax/static regression 5/5 PASS.
+
