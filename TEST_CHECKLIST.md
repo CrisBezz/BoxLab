@@ -1839,3 +1839,14 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .585: prepublish syntax/static regression 9/9 PASS
 - [x] Protection .585: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .586: gizmo Move handle syncs left strip to Move + matching axis
+- [ ] Workflow .586: gizmo Rotate ring syncs left strip to Rotate + matching axis
+- [ ] Workflow .586: persistent Degrees field accepts exact Rotate input
+- [ ] Workflow .586: gizmo Scale handle syncs left strip to Scale + matching axis
+- [ ] Workflow .586: persistent Scale factor field accepts exact Scale input
+- [ ] Workflow .586: uniform scale ring syncs Scale + Free/Uniform context
+- [ ] Regression .586: exact Move remains working
+- [ ] Regression .586: Focus top-row toggle remains working
+- [x] Automated .586: prepublish syntax/static regression 8/8 PASS
+- [x] Protection .586: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
