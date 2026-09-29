@@ -3305,3 +3305,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Move and Rotate logic otherwise unchanged.
 - Prepublish syntax/static regression 4/4 PASS.
 
+## 2026-09-29 — v0.36.18.594 gizmo soft Rotate/Scale detents
+- .593 full floating type-in hands-on PERFECT.
+- Added gizmo-only soft angle detents: 0/5/15/30/45/60/90/120/135/180 degrees.
+- Added gizmo-only soft scale detents: .25/.5/.75/1/1.25/1.5/2/3/4.
+- Existing HUD provides live value feedback; caught values are marked “detent”.
+- Legacy transform behavior and .593 exact-entry path unchanged.
+- Prepublish syntax/static regression 7/7 PASS.
+
