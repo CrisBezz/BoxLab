@@ -3191,3 +3191,9 @@ For exact implementation state, always inspect current `main`; this history is c
 - Depth fading deferred until basic projected-ring behavior is validated.
 - Prepublish syntax/static regression 9/9 PASS.
 
+## 2026-09-29 — v0.36.18.578 projected rotation ring visibility root-cause fix
+- .577 rings collapsed because screen-pixel deltas were normalized by the full canvas size instead of the gizmo size.
+- Conversion now uses Total Gizmo rendered width/height, restoring intended projected ring radius.
+- Projected ring hit proxies are now updated from the same d path each frame.
+- Prepublish syntax/static regression 7/7 PASS.
+
