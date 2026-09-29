@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.587 — Total Gizmo v1.
+// BoxLab v0.36.18.588 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -18,6 +18,7 @@ let activeHandle=null;
 let pointerId=null;
 let raf=0;
 let explicitGizmoConstraint=null;
+let awaitingTransformEnd=false;
 
 function state(){return globalThis.__boxlabBridgeState||null;}
 function currentMode(){return globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
@@ -81,6 +82,7 @@ function onHandleDown(event){
   const visual=el.__visual||el;
   activeHandle=visual;pointerId=event.pointerId;
   explicitGizmoConstraint=spec.constraint;
+  awaitingTransformEnd=true;
   root.dataset.dragging='true';
   visual.classList.add('active');
   if(hud){clearTimeout(hudHideTimer);hud.hidden=false;hudText.hidden=false;hudText.textContent=`${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;lastSpec=spec;}
@@ -101,16 +103,18 @@ function finish(event){
   root.dataset.dragging='false';
   activeHandle=null;pointerId=null;
   explicitGizmoConstraint=null;
-  if(hud){
-    clearTimeout(hudHideTimer);
-    hudText.hidden=false;
-    hudText.textContent=`${lastSpec?.tool?.[0]?.toUpperCase()||''}${lastSpec?.tool?.slice?.(1)||''} • ${lastSpec?.constraint==='free'?'Free':(lastSpec?.constraint||'').toUpperCase()}`;
-    hudHideTimer=setTimeout(()=>{if(pointerId===null)hud.hidden=true;},1800);
-  }
-  showFloatInput(lastSpec);
 }
 document.addEventListener('pointerup',finish,true);
-document.addEventListener('pointercancel',finish,true);
+document.addEventListener('pointercancel',event=>{awaitingTransformEnd=false;finish(event);},true);
+window.addEventListener('boxlab-transform-end',event=>{
+  if(!awaitingTransformEnd||!lastSpec)return;
+  awaitingTransformEnd=false;
+  clearTransientHandleState();
+  root.dataset.dragging='false';
+  activeHandle=null;pointerId=null;explicitGizmoConstraint=null;
+  if(hud){clearTimeout(hudHideTimer);hud.hidden=true;}
+  showFloatInput(lastSpec);
+});
 document.addEventListener('pointerleave',event=>{
   if(pointerId===null)clearTransientHandleState();
 },true);
@@ -180,6 +184,7 @@ function floatPlaceholder(spec){
 }
 function showFloatInput(spec){
   if(!spec)return;
+  if(hud){clearTimeout(hudHideTimer);hud.hidden=true;}
   clearTimeout(floatHideTimer);
   floatLabel.textContent=floatTitle(spec);
   floatInput.placeholder=floatPlaceholder(spec);
@@ -426,5 +431,5 @@ globalThis.__boxlabTotalGizmo={
   activeConstraint:()=>explicitGizmoConstraint,
   visible:()=>!root.hidden,
   refresh:()=>{},
-  version:'0.36.18.587'
+  version:'0.36.18.588'
 };
