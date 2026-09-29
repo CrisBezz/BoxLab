@@ -126,25 +126,26 @@ function activateButton(button){
   if(!button)return false;
   if(button.dataset.view){setView(button.dataset.view);return true;}
   if(button.dataset.render){button.click();return true;}
-  if(button.id==='fullscreenBtn'){toggleFullscreen();return true;}
+  if(button.id==='focusViewBtn'){toggleFocusView();return true;}
   return false;
 }
 
 const ui=ensureUI();
+let suppressSyntheticClickUntil=0;
 ui?.addEventListener('click',event=>{
   const button=event.target.closest('button[data-view],#focusViewBtn');
   if(!button)return;
-  event.preventDefault();event.stopPropagation();
-  if(button.id==='fullscreenBtn')toggleFullscreen();
-  else setView(button.dataset.view);
+  if(performance.now()<suppressSyntheticClickUntil){event.preventDefault();event.stopPropagation();return;}
+  event.preventDefault();event.stopPropagation();activateButton(button);
 });
 
-// iPadOS can suppress the synthesized click after touch/Pencil interaction inside
-// an absolutely positioned details panel. Activate Viewport buttons on pointerup too.
+// iPadOS can suppress synthesized clicks in this panel, so touch/Pencil activates
+// on pointerup. Suppress the following synthetic click so toggles fire only once.
 ui?.addEventListener('pointerup',event=>{
   if(event.pointerType==='mouse')return;
   const button=event.target.closest('button[data-view],button[data-render],#focusViewBtn');
   if(!button)return;
+  suppressSyntheticClickUntil=performance.now()+700;
   event.preventDefault();event.stopPropagation();activateButton(button);
 });
 
