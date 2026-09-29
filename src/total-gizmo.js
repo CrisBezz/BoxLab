@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.591 — Total Gizmo v1.
+// BoxLab v0.36.18.592 — Total Gizmo v1.
 // Object-mode-only combined Move / Rotate / Scale overlay.
 // Uses the established transform engine by arming its existing controls and
 // forwarding the initial pointerdown to the viewport canvas. Protected
@@ -106,13 +106,13 @@ function finish(event){
   explicitGizmoConstraint=null;
   // Move is hands-on proven. Object-mode Rotate uses the same gizmo
   // release trigger; its transform math remains owned by transform-upgrade.
-  if(event.type==='pointerup'&&finishedSpec?.tool==='move'&&awaitingTransformEnd){
+  if(event.type==='pointerup'&&['move','rotate'].includes(finishedSpec?.tool)&&awaitingTransformEnd){
     awaitingTransformEnd=false;
     if(hud){clearTimeout(hudHideTimer);hud.hidden=true;}
     showFloatInput(finishedSpec);
   }
 }
-document.addEventListener('pointerup',finish,true);
+window.addEventListener('pointerup',finish,true);
 document.addEventListener('pointercancel',event=>{awaitingTransformEnd=false;finish(event);},true);
 window.addEventListener('boxlab-transform-end',event=>{
   if(!awaitingTransformEnd||!lastSpec)return;
@@ -451,5 +451,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.591'
+  version:'0.36.18.592'
 };
