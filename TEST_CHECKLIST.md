@@ -1863,3 +1863,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .587: prepublish syntax/static regression 9/9 PASS
 - [x] Protection .587: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .588: Move gizmo release shows one standalone Distance palette
+- [ ] Workflow .588: Rotate gizmo release shows one standalone Degrees palette
+- [ ] Workflow .588: Scale gizmo release shows one standalone Factor palette
+- [ ] Workflow .588: uniform scale release shows Factor palette
+- [ ] Workflow .588: old gizmo HUD is hidden when floating palette appears
+- [ ] Workflow .588: iPad keyboard opens for floating field
+- [ ] Workflow .588: Enter/Apply commits exact Rotate
+- [ ] Workflow .588: Enter/Apply commits exact Scale
+- [ ] Regression .588: left-panel exact entry remains working
+- [ ] Regression .588: Undo exact transforms works
+- [x] Automated .588: prepublish syntax/static regression 9/9 PASS
+- [x] Protection .588: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
