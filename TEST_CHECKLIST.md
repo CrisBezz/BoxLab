@@ -1937,3 +1937,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .594: prepublish syntax/static regression 7/7 PASS
 - [x] Protection .594: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Regression .595: Move floating exact entry remains working
+- [ ] Regression .595: Rotate floating exact entry remains working
+- [ ] Regression .595: Scale/Uniform floating exact entry remains working
+- [ ] Workflow .595: gizmo Rotate soft catches work with legacy 15° snap ON
+- [ ] Workflow .595: gizmo Rotate soft catches still work with legacy 15° snap OFF
+- [ ] Workflow .595: gizmo Rotate catch releases when drag continues
+- [ ] Workflow .595: gizmo Scale catches at useful ratios
+- [ ] Workflow .595: gizmo Scale catch releases when drag continues
+- [ ] Regression .595: legacy/non-gizmo Rotate retains existing 15° snap
+- [x] Automated .595: prepublish syntax/static regression 9/9 PASS
+- [x] Protection .595: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
