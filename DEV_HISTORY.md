@@ -3231,3 +3231,13 @@ For exact implementation state, always inspect current `main`; this history is c
 - Normal save/export path unchanged.
 - Prepublish syntax/static regression 9/9 PASS.
 
+## 2026-09-29 — v0.36.18.584 direct exact transforms + Focus View activation fix
+- Added direct exact transform API for Move/Scale/Rotate.
+- Gizmo HUD now calls exact transform API directly instead of simulating Enter in legacy input.
+- Exact Rotate bypasses 15-degree drag snap.
+- Hardened gizmo HUD touch/Pencil focus.
+- Fixed stale fullscreenBtn branches in Focus View handlers.
+- Added synthesized-click suppression so iPad pointerup/click does not double-toggle Focus View.
+- Share/Open In unchanged.
+- Prepublish syntax/static regression 8/8 PASS.
+
