@@ -57,6 +57,21 @@ precision.querySelectorAll('[data-constraint]').forEach(b=>b.addEventListener('c
 snapButton?.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();angleSnap=!angleSnap;syncPrecision();if(status)status.textContent=`Rotation snap ${angleSnap?'15° ON':'OFF'}`;});
 valueInput?.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();applyNumeric();}else if(e.key==='Escape'){valueInput.value='';valueInput.blur();}});
 
+function focusTransformValue(){
+  if(!valueInput)return;
+  try{valueInput.focus({preventScroll:true});}catch{valueInput.focus();}
+}
+valueInput?.addEventListener('pointerdown',event=>{
+  event.stopPropagation();
+  if(event.pointerType!=='mouse')focusTransformValue();
+},{capture:true});
+valueInput?.addEventListener('touchstart',event=>{
+  event.stopPropagation();
+  focusTransformValue();
+},{capture:true,passive:true});
+valueInput?.addEventListener('click',event=>{event.stopPropagation();focusTransformValue();});
+
+
 function startGesture(event){if(event.target!==canvas||!event.isPrimary||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing?.()||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return;const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected(),t=tool();if(t==='rotate'&&['vertex','edge','face'].includes(m))return;if(!mesh||!camera||!['move','scale','rotate'].includes(t))return;const indices=selectionVertices(mesh,m,ids),hitIndex=t==='rotate'?ids[0]??0:hitSelectedIndex(event,m,ids);if(!indices.length||t!=='rotate'&&(m!=='object'&&!Number.isInteger(hitIndex)))return;const c=center(mesh,indices),normal=new THREE.Vector3();camera.getWorldDirection(normal).normalize();const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,c),start=planePoint(event,plane,camera);if(!start)return;const cs=screenPoint(c,camera);gesture={id:event.pointerId,mesh,camera,m,ids,indices,hitIndex,t,center:c,centerScreen:cs,start,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(cs),plane,axes:screenAxes(c,camera),axis:explicitAxis(),auto:constraint==='auto',original:new Map(indices.map(i=>[i,mesh.vertices[i].clone()])),before:mesh.clone(),changed:false,snap:null};event.preventDefault();event.stopImmediatePropagation();canvas.setPointerCapture?.(event.pointerId);}
 document.addEventListener('pointerdown',startGesture,true);
 
