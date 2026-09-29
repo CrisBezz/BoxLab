@@ -1749,3 +1749,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .576: prepublish syntax/static regression 10/10 PASS
 - [x] Protection .576: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .577: red X rotation ring is visible
+- [ ] Workflow .577: green Y rotation ring is visible
+- [ ] Workflow .577: blue Z rotation ring is visible
+- [ ] Workflow .577: all three rings deform continuously with camera perspective
+- [ ] Workflow .577: X/Y/Z ring dragging rotates around correct axis
+- [ ] Regression .577: planar move and axis transforms unchanged
+- [x] Automated .577: prepublish syntax/static regression 9/9 PASS
+- [x] Protection .577: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
