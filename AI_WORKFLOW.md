@@ -115,3 +115,15 @@ Before ending a session, ask:
 > Could a new ChatGPT conversation continue BoxLab correctly using only the current repository and these handoff files?
 
 If not, improve the handoff first.
+
+## Interaction event ownership
+
+Protected rule for iPad/browser interaction work:
+
+- Tool-specific transform/selection modules may consume pointer events with `stopImmediatePropagation()`.
+- A later `document` listener is therefore **not guaranteed** to observe pointer completion.
+- For global gizmo/viewport completion that must survive those tool owners, prefer **`window` capture** so it runs before `document` capture.
+- Where possible, the actual gesture owner should emit a semantic completion event/state transition and downstream UI should react to that instead of competing for raw pointer events.
+- Before adding modeless tap / multi-tap / hold / drag behavior, identify the single gesture owner and its capture level. Do not stack independent raw-pointer owners for the same gesture.
+- The v0.36.18.592 Rotate floating-type-in fix is the reference case: `transform-upgrade.js` consumed document-capture `pointerup`; moving Total Gizmo completion to window capture restored reliable release detection.
+
