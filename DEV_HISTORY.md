@@ -3249,3 +3249,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Share/Open In unchanged.
 - Prepublish syntax/static regression 9/9 PASS.
 
+## 2026-09-29 — v0.36.18.586 one authoritative transform type-in system
+- Removed floating gizmo numeric input after repeated iPad focus failures.
+- Added transform-upgrade setContext(tool,constraint) API.
+- Gizmo now synchronizes the persistent left transform strip and exact-value field.
+- Transform polish refreshes on boxlab-transform-context.
+- Focus top-row placement retained.
+- Prepublish syntax/static regression 8/8 PASS.
+
