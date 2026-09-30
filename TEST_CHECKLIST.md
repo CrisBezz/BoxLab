@@ -2200,3 +2200,18 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .619: Edge long-press/scrub unchanged
 - [x] Protection .619: no gizmo visibility delay introduced
 - [x] Protection .619: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .620: Face long-press enters selection browser
+- [ ] Workflow .620: first valid Face candidate previews on hold
+- [ ] Workflow .620: horizontal scrub browses Face candidates
+- [ ] Workflow .620: release commits visible Face candidate
+- [ ] Workflow .620: invalid Loop/Ring candidates are skipped
+- [ ] Workflow .620: additive existing Face selection survives browser
+- [ ] Regression .620: Face single tap select/deselect unchanged
+- [ ] Regression .620: deliberate Face component drag still transforms
+- [ ] Regression .620: Edge long-press/scrub unchanged
+- [ ] Regression .620: unified gizmo baseline unchanged
+- [ ] Regression .620: Group/Multi routing unchanged
+- [x] Protection .620: failed multi-tap experiment fully removed
+- [x] Protection .620: no new topology solver
+- [x] Protection .620: src/multi-object-transform.js?v=0.36.1.0 unchanged
