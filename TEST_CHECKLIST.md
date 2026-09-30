@@ -2123,3 +2123,16 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .613: .612 component Total Gizmo remains fully working
 - [ ] Regression .613: .606 Edge hold/scrub remains working
 - [x] Protection .613: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .614: tapping selected Face removes only that face from multi-selection
+- [ ] Workflow .614: tapping last selected Face clears selection
+- [ ] Workflow .614: deliberate Face component drag still transforms
+- [ ] Workflow .614: selected Edge / Vertex tap-to-remove works
+- [ ] Workflow .614: Plane Move XY keeps Z fixed
+- [ ] Workflow .614: Plane Move XZ keeps Y fixed
+- [ ] Workflow .614: Plane Move YZ keeps X fixed
+- [ ] Regression .614: Axis Move unchanged
+- [ ] Regression .614: Free Move unchanged
+- [ ] Regression .614: Scale / Rotate unchanged
+- [x] Protection .614: .612 direct component gizmo architecture preserved
+- [x] Protection .614: src/multi-object-transform.js?v=0.36.1.0 unchanged
