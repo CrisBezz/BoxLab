@@ -96,11 +96,6 @@ function handleSpec(el){
 function onHandleDown(event){
   const mode=currentMode(),mesh=state()?.mesh;
   if(!selectionAvailable(mesh,mode))return;
-  if(mode!=='object'&&globalThis.__boxlabModelessTap?.claimGizmoPointerDown?.(event)){
-    event.preventDefault();
-    event.stopPropagation();
-    return;
-  }
   hideFloatInput();
   const el=event.currentTarget,spec=handleSpec(el);
   if(!arm(spec.tool,spec.constraint))return;
@@ -503,5 +498,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.619'
+  version:'0.36.18.620'
 };
