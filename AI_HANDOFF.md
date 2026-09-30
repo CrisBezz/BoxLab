@@ -1,34 +1,49 @@
-## v0.36.18.613 — remove gizmo diagnostics + robust component tap deselect
+## v0.36.18.614 — selected-component tap owner + true plane Move
 
-- .612 hands-on PASS and protected component-gizmo baseline.
-- Removed the temporary GIZMO DEBUG overlay and runtime trace calls.
-- Preserved the proven direct Vertex / Edge / Face Total Gizmo handoff exactly.
-- User noted a selection regression:
-  - additive Face multi-select works
-  - tapping an already-selected face does not reliably remove it
-  - tapping background still clears all
-- Root cause is Pencil jitter crossing the 8 px transform-arm threshold before pointerup.
-- .613 makes quick component taps tolerant of small Pencil movement:
-  - component drag records startTime
-  - on pointerup, if duration <= TAP_MAX_MS and movement <= TAP_MAX_MOVE, treat it as a selection tap
-  - if a tiny transform had already armed within that tap envelope, restore the pre-drag mesh before toggling selection
-  - deliberate drags outside the tap envelope still transform normally
-- This applies consistently to Face / Edge / Vertex selected-component taps.
+- .613 hands-on:
+  - component Total Gizmo remained good
+  - Face additive selection still could not reliably remove a selected face by tapping it
+  - Plane Move did not constrain motion to the selected XY/XZ/YZ plane
+- .614 fixes both as ownership issues.
+
+Selection:
+- Added a dedicated selected-component tap intent in main.js.
+- On pointerdown over an already-selected Face/Edge/Vertex:
+  - record tap candidate independently of transform drag
+  - normal transform drag may still prepare
+- If Pencil movement exceeds TAP_MAX_MOVE, tap intent cancels and transform proceeds normally.
+- If pointerup remains within TAP_MAX_MS + TAP_MAX_MOVE:
+  - cancel/rollback any tiny component transform
+  - toggle only that selected component off
+  - leave the rest of the multi-selection intact
+- This no longer depends on endDrag() being the selection owner.
 - Background deselect remains unchanged.
-- Additive selection remains unchanged.
-- HTML shell, main.js, total-gizmo.js, transform-upgrade.js and version.json synced to 0.36.18.613.
-- Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
+- Additive component selection remains unchanged.
+
+Plane Move:
+- Total Gizmo already supplied xy/xz/yz correctly.
+- transform-upgrade previously treated every non-axis Move as camera-facing Free Move.
+- Direct component gizmo owner now builds the actual world plane through the selection pivot:
+  - XY -> normal Z
+  - XZ -> normal Y
+  - YZ -> normal X
+- Pointer movement is ray/plane-intersected on that selected world plane.
+- Axis Move and Free Move remain unchanged.
+- Plane Move status now reports XY/XZ/YZ.
+
+Protected:
+- .612 direct component-gizmo handoff preserved.
+- .606 Edge hold/scrub preserved.
+- src/multi-object-transform.js?v=0.36.1.0 unchanged.
+- HTML shell, main.js, transform-upgrade.js and version.json synced to 0.36.18.614.
 
 Hands-on check:
-1. Confirm .613 loads and stays .613.
-2. Face mode: tap face A, tap face B -> both selected.
-3. Tap selected face A -> A deselects, B remains.
-4. Tap selected face B -> selection clears.
-5. Background tap still clears all.
-6. Deliberate direct component drag still transforms.
-7. Vertex / Edge selected-component tap-to-remove quick regression.
-8. Total Gizmo Move / Scale / Rotate regression from .612.
-9. .606 Edge hold/scrub regression.
-
-Next:
-- If .613 passes, continue component-gizmo polish from the .612/.613 baseline.
+1. Face: select A + B; tap A -> only B remains.
+2. Tap B -> no face selected.
+3. Background tap still clears all.
+4. Deliberate Face drag still transforms instead of deselecting.
+5. Quick Edge / Vertex tap-to-remove regression.
+6. Plane Move XY -> Z coordinate must remain unchanged.
+7. Plane Move XZ -> Y coordinate must remain unchanged.
+8. Plane Move YZ -> X coordinate must remain unchanged.
+9. Axis Move / Free Move / Scale / Rotate quick regression.
