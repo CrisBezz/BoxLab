@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.605 additive modeless Loop/Ring selection
+
+- Extended .604 modeless Loop/Ring hold cycling into additive selection sessions.
+- Each new seed snapshots the current Edge selection as its base, runs the existing Loop/Ring selector on the seed, then merges the result back into the base.
+- Same-seed Loop ↔ Ring cycling replaces only that seed's contribution; earlier accumulated selections remain intact.
+- Failed/ambiguous selectors restore the base instead of clearing it.
+- Background deselect still clears the full session.
+- Existing Loop/Ring topology logic remains authoritative.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.604 modeless Loop ↔ Ring hold cycling
 
 - Extended the proven .603 Edge long-press owner instead of adding a second gesture listener.
