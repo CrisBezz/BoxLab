@@ -1,25 +1,33 @@
-## v0.36.18.603 — first modeless gesture: Edge long-press selects Loop
+## v0.36.18.604 — modeless Edge Loop ↔ Ring hold cycling
 
-- .602 hands-on PASS for stronger Rotate/Scale gizmo soft catches.
-- Modeless/contextual gesture phase has started.
-- Existing background-tap deselect in `main.js` was audited and retained as the first proven modeless primitive.
-- .603 adds the first new gesture:
-  - in Edge mode, Pencil/mouse long-press on an edge selects that edge's Loop
-  - uses the existing proven Loop command rather than duplicating topology logic
-  - touch/finger input is excluded so one-finger orbit remains protected
-  - movement beyond a small threshold cancels the hold immediately
-  - if a component transform drag was only prepared but not yet armed, the hold cancels that pending drag before invoking Loop
-- Ordinary tap selection/deselection behavior remains unchanged.
-- Ring cycling is intentionally NOT included yet; prove Loop hold first, then extend the same owner.
-- .601 Save GLB to Files workflow remains unchanged.
-- HTML shell, main.js pin and `version.json` are synced to `0.36.18.603`.
-- Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
+- .603 hands-on PASS:
+  - Edge Pencil long-press Loop selection works well.
+  - strict refusal-to-guess behavior is approved and protected.
+- .604 extends the SAME Edge hold owner:
+  - first long-press on an edge → Loop
+  - repeat long-press on the same seed edge, while the previous modeless result is still the active selection → Ring
+  - repeat again on the same seed/result session → Loop
+- Ordinary tap is NOT used for cycling, so existing Edge tap select/deselect behavior remains intact.
+- Changing seed edge, background-deselecting, transforming, or changing selection mode resets the cycle to Loop-first.
+- Loop still uses the existing strict Loop selector.
+- Ring still uses the existing Ring selector.
+- No duplicate topology tracing was added in main.js.
+- Finger/touch remains excluded from Edge hold gestures, protecting one-finger orbit.
+- .602 gizmo soft-catch behavior remains unchanged.
+- .601 Files-based Nomad handoff remains unchanged.
+- HTML shell, main.js pin and version.json are synced to 0.36.18.604.
+- Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
 
-Hands-on result:
-- PASS: Edge Pencil long-press Loop selection works well.
-- Confirmed intended strictness: the gesture only selects when the loop continuation is clean and unambiguous.
-- At junctions / multiple-choice topology (for example around the top of a cube), no loop is selected rather than guessing a direction.
-- Preserve this refusal-to-guess rule in all future modeless Loop/Ring work.
+Hands-on check:
+1. Confirm .604 loads and stays .604.
+2. Edge mode: long-press a clean seed edge → Loop selects.
+3. Long-press the same seed edge again → Ring selects.
+4. Long-press the same seed edge again → Loop selects again.
+5. Change to another seed edge → first long-press must start with Loop again.
+6. Tap background to deselect, then long-press → starts with Loop again.
+7. Ordinary Edge tap select/deselect remains unchanged.
+8. Finger orbit/pan/zoom remains unchanged.
+9. Ambiguous Loop topology must still refuse rather than guess.
 
 Next:
-- Extend the same gesture owner to Loop/Ring cycling, but only when the requested path is topologically unambiguous.
+- If .604 passes, move to component Total Gizmo integration before adding more modeless transform gestures.
