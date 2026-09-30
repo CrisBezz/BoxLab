@@ -30,11 +30,27 @@ function objectSelected(){
   }
   return !!state()?.mesh;
 }
-function centerOf(mesh){
-  const c=new THREE.Vector3();
-  if(!mesh?.vertices?.length)return c;
-  for(const v of mesh.vertices)c.add(v);
-  return c.multiplyScalar(1/mesh.vertices.length);
+function componentVertexIndices(mesh,mode=currentMode()){
+  if(!mesh)return[];
+  if(mode==='object')return mesh.vertices.map((_,i)=>i);
+  const ids=[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])],out=new Set();
+  if(mode==='vertex')ids.forEach(i=>{if(mesh.vertices[i])out.add(i);});
+  else if(mode==='edge'){
+    const edges=mesh.edges();
+    ids.forEach(i=>{const e=edges[i];if(e){out.add(e.a);out.add(e.b);}});
+  }else if(mode==='face'){
+    ids.forEach(i=>(mesh.faces[i]||[]).forEach(v=>out.add(v)));
+  }
+  return [...out];
+}
+function selectionAvailable(mesh,mode=currentMode()){
+  return mode==='object'?objectSelected():componentVertexIndices(mesh,mode).length>0;
+}
+function centerOf(mesh,mode=currentMode()){
+  const indices=componentVertexIndices(mesh,mode),c=new THREE.Vector3();
+  if(!indices.length)return c;
+  indices.forEach(i=>c.add(mesh.vertices[i]));
+  return c.multiplyScalar(1/indices.length);
 }
 function screenPoint(v,camera){
   const p=v.clone().project(camera),r=canvas.getBoundingClientRect();
@@ -76,7 +92,8 @@ function handleSpec(el){
   return {tool:el.dataset.tool,constraint:el.dataset.constraint||'free',kind:el.dataset.kind||''};
 }
 function onHandleDown(event){
-  if(currentMode()!=='object')return;
+  const mode=currentMode(),mesh=state()?.mesh;
+  if(!selectionAvailable(mesh,mode))return;
   hideFloatInput();
   const el=event.currentTarget,spec=handleSpec(el);
   if(!arm(spec.tool,spec.constraint))return;
@@ -433,12 +450,11 @@ function syncAxisVisuals(center,camera){
 
 function sync(){
   raf=requestAnimationFrame(sync);
-  if(!canvas||!viewportWrap||currentMode()!=='object'||!objectSelected()){
+  const s=state(),mesh=s?.mesh,camera=s?.camera,mode=currentMode();
+  if(!canvas||!viewportWrap||!mesh?.vertices?.length||!camera||!selectionAvailable(mesh,mode)){
     root.hidden=true;hideFloatInput();return;
   }
-  const s=state(),mesh=s?.mesh,camera=s?.camera;
-  if(!mesh?.vertices?.length||!camera){root.hidden=true;hideFloatInput();return;}
-  const c=centerOf(mesh),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
+  const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
   const left=cr.left-vr.left+p.x,top=cr.top-vr.top+p.y;
   root.style.left=`${left}px`;
   root.style.top=`${top}px`;
@@ -468,5 +484,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.597'
+  version:'0.36.18.607'
 };
