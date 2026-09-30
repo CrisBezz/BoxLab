@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.607 Total Gizmo component integration phase 1
+
+- Parked the accepted .606 modeless Edge candidate browser.
+- Extended Total Gizmo visibility/pivoting into Vertex, Edge and Face selections.
+- Gizmo pivot now uses the centroid of the selected component vertex set.
+- Reused transform-upgrade.js as the existing component Move / Scale / Rotate owner.
+- Gizmo-owned component Move / Scale bypass direct-hit gating.
+- Component Rotate is allowed only for gizmo-owned gestures; direct viewport component Rotate remains blocked.
+- No parallel transform math added.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.606 hold + scrub Loop/Ring candidate browser
 
 - Added an in-gesture modeless candidate browser for Edge long-press.
