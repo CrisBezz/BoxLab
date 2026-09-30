@@ -29,6 +29,12 @@ function ensureUI(){
         <div class="viewport-menu-label">Render Look</div>
         <div id="viewportRenderLooks" class="viewport-render-grid"></div>
       </div>
+      <div class="viewport-menu-section">
+        <div class="viewport-menu-label">Diagnostics</div>
+        <div class="viewport-render-grid">
+          <button type="button" id="gestureDebugToggle">Gesture Debug</button>
+        </div>
+      </div>
 
     </div>`;
   const focusButton=document.createElement('button');
@@ -119,6 +125,21 @@ function syncFocusViewButton(){
 function toggleFocusView(){
   document.documentElement.classList.toggle('boxlab-focus-view');
   syncFocusViewButton();
+const gestureDebugButton=document.querySelector('#gestureDebugToggle');
+function syncGestureDebugButton(){
+  if(!gestureDebugButton)return;
+  const on=!!globalThis.__boxlabGestureDebug?.enabled;
+  gestureDebugButton.classList.toggle('active',on);
+  gestureDebugButton.textContent=on?'Gesture Debug • ON':'Gesture Debug';
+}
+gestureDebugButton?.addEventListener('click',event=>{
+  event.preventDefault();
+  event.stopPropagation();
+  globalThis.__boxlabGestureDebug?.toggle?.();
+  syncGestureDebugButton();
+});
+window.addEventListener('boxlab-gesture-debug-change',syncGestureDebugButton);
+syncGestureDebugButton();
   window.dispatchEvent(new Event('resize'));
 }
 
