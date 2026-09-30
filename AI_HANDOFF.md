@@ -1,3 +1,17 @@
+## HANDS-ON RESULT — v0.36.18.612 PASS
+
+- User confirmed .612 works perfectly.
+- Direct Vertex / Edge / Face Total Gizmo ownership is now proven.
+- The root blocker was the incorrect call to SweepPath.editing as a function.
+- Preserve the .612 direct semantic handoff architecture.
+- Do not revert to synthetic component pointerdown routing.
+- Next build:
+  - remove temporary GIZMO DEBUG panel
+  - keep Object gizmo behavior unchanged
+  - continue component gizmo polish only from the .612 owner path
+  - verify component exact-entry / multi-selection / pivot/orientation as needed
+- Protected src/multi-object-transform.js?v=0.36.1.0 remains unchanged.
+
 ## v0.36.18.612 — fix component gizmo owner exception
 
 - .611 diagnostic screenshot identified the exact runtime failure:
