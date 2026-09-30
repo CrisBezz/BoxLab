@@ -2164,3 +2164,18 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .616: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
 - [x] HANDS-ON .616: Group/Multi gizmo routing confirmed working perfectly
+
+- [ ] Workflow .617: Face single tap select/deselect remains correct
+- [ ] Workflow .617: Face double-tap Grow selects one adjacency step
+- [ ] Workflow .617: Face triple-tap Connected selects connected island
+- [ ] Workflow .617: Edge double-tap Grow works
+- [ ] Workflow .617: Edge triple-tap Connected works
+- [ ] Workflow .617: Vertex double-tap Grow works
+- [ ] Workflow .617: Vertex triple-tap Connected works
+- [ ] Regression .617: Edge long-press/scrub Loop/Ring unchanged
+- [ ] Regression .617: deliberate component drag breaks tap chain
+- [ ] Regression .617: background tap deselect unchanged
+- [ ] Regression .617: Vertex/Edge/Face/single Object gizmo unchanged
+- [ ] Regression .617: Group/Multi gizmo routing unchanged from .616
+- [x] Protection .617: no new topology solver
+- [x] Protection .617: src/multi-object-transform.js?v=0.36.1.0 unchanged
