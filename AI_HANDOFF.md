@@ -1,50 +1,34 @@
-## HANDS-ON RESULT — v0.36.18.612 PASS
+## v0.36.18.613 — remove gizmo diagnostics + robust component tap deselect
 
-- User confirmed .612 works perfectly.
-- Direct Vertex / Edge / Face Total Gizmo ownership is now proven.
-- The root blocker was the incorrect call to SweepPath.editing as a function.
-- Preserve the .612 direct semantic handoff architecture.
-- Do not revert to synthetic component pointerdown routing.
-- Next build:
-  - remove temporary GIZMO DEBUG panel
-  - keep Object gizmo behavior unchanged
-  - continue component gizmo polish only from the .612 owner path
-  - verify component exact-entry / multi-selection / pivot/orientation as needed
-- Protected src/multi-object-transform.js?v=0.36.1.0 remains unchanged.
-
-## v0.36.18.612 — fix component gizmo owner exception
-
-- .611 diagnostic screenshot identified the exact runtime failure:
-  - TypeError: globalThis.__boxlabSweepPath?.editing is not a function
-- Root cause:
-  - SweepPath exposes editing as a getter/boolean property.
-  - transform-upgrade incorrectly called it as editing?.().
-  - This threw during beginGizmoGesture() after OWNER REQUEST and before OWNER BEGIN.
-  - Total Gizmo then fell back to the old synthetic path, explaining why the face could move but ignored the requested X axis.
-- .612 fixes both transform entry guards to read:
-  - globalThis.__boxlabSweepPath?.editing
-  instead of calling it.
-- EdgeExtrude.isArmed remains a function and is unchanged.
-- Diagnostic panel remains for one verification build.
-- Expected successful chain:
-  - HANDLE DOWN
-  - OWNER REQUEST
-  - OWNER BEGIN
-  - HANDOFF OK
-  - MOVE
-  - OWNER FINISH
-  - GIZMO POINTERUP
-- No other transform math changed in this build.
-- HTML shell, transform-upgrade pin, Total Gizmo pin and version.json synced to 0.36.18.612.
+- .612 hands-on PASS and protected component-gizmo baseline.
+- Removed the temporary GIZMO DEBUG overlay and runtime trace calls.
+- Preserved the proven direct Vertex / Edge / Face Total Gizmo handoff exactly.
+- User noted a selection regression:
+  - additive Face multi-select works
+  - tapping an already-selected face does not reliably remove it
+  - tapping background still clears all
+- Root cause is Pencil jitter crossing the 8 px transform-arm threshold before pointerup.
+- .613 makes quick component taps tolerant of small Pencil movement:
+  - component drag records startTime
+  - on pointerup, if duration <= TAP_MAX_MS and movement <= TAP_MAX_MOVE, treat it as a selection tap
+  - if a tiny transform had already armed within that tap envelope, restore the pre-drag mesh before toggling selection
+  - deliberate drags outside the tap envelope still transform normally
+- This applies consistently to Face / Edge / Vertex selected-component taps.
+- Background deselect remains unchanged.
+- Additive selection remains unchanged.
+- HTML shell, main.js, total-gizmo.js, transform-upgrade.js and version.json synced to 0.36.18.613.
 - Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
 
 Hands-on check:
-1. Face mode -> select one face.
-2. Drag X Move arrow.
-3. Confirm face moves only on X.
-4. Confirm debug reaches OWNER BEGIN / HANDOFF OK / MOVE / OWNER FINISH.
-5. If that passes, quickly test Y/Z Move and one axis Scale.
-6. Do not yet remove diagnostics until component gizmo path is proven.
+1. Confirm .613 loads and stays .613.
+2. Face mode: tap face A, tap face B -> both selected.
+3. Tap selected face A -> A deselects, B remains.
+4. Tap selected face B -> selection clears.
+5. Background tap still clears all.
+6. Deliberate direct component drag still transforms.
+7. Vertex / Edge selected-component tap-to-remove quick regression.
+8. Total Gizmo Move / Scale / Rotate regression from .612.
+9. .606 Edge hold/scrub regression.
 
 Next:
-- If .612 reaches the direct owner, resume component transform fixes from the now-correct runtime path.
+- If .613 passes, continue component-gizmo polish from the .612/.613 baseline.
