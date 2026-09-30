@@ -1,49 +1,47 @@
-## v0.36.18.614 — selected-component tap owner + true plane Move
+## v0.36.18.615 — unify single Object with semantic Total Gizmo handoff
 
-- .613 hands-on:
-  - component Total Gizmo remained good
-  - Face additive selection still could not reliably remove a selected face by tapping it
-  - Plane Move did not constrain motion to the selected XY/XZ/YZ plane
-- .614 fixes both as ownership issues.
+- .614 hands-on PASS:
+  - Face tap-to-remove works.
+  - Component Plane Move works correctly.
+- User identified Object Plane Move still behaved differently.
+- Architecture audit confirmed:
+  - Vertex / Edge / Face use direct semantic Total Gizmo handoff.
+  - single Object previously still used the older synthetic canvas pointerdown path.
+  - true Multi-object transforms are owned by protected src/multi-object-transform.js?v=0.36.1.0.
 
-Selection:
-- Added a dedicated selected-component tap intent in main.js.
-- On pointerdown over an already-selected Face/Edge/Vertex:
-  - record tap candidate independently of transform drag
-  - normal transform drag may still prepare
-- If Pencil movement exceeds TAP_MAX_MOVE, tap intent cancels and transform proceeds normally.
-- If pointerup remains within TAP_MAX_MS + TAP_MAX_MOVE:
-  - cancel/rollback any tiny component transform
-  - toggle only that selected component off
-  - leave the rest of the multi-selection intact
-- This no longer depends on endDrag() being the selection owner.
-- Background deselect remains unchanged.
-- Additive component selection remains unchanged.
-
-Plane Move:
-- Total Gizmo already supplied xy/xz/yz correctly.
-- transform-upgrade previously treated every non-axis Move as camera-facing Free Move.
-- Direct component gizmo owner now builds the actual world plane through the selection pivot:
-  - XY -> normal Z
-  - XZ -> normal Y
-  - YZ -> normal X
-- Pointer movement is ray/plane-intersected on that selected world plane.
-- Axis Move and Free Move remain unchanged.
-- Plane Move status now reports XY/XZ/YZ.
-
-Protected:
-- .612 direct component-gizmo handoff preserved.
-- .606 Edge hold/scrub preserved.
-- src/multi-object-transform.js?v=0.36.1.0 unchanged.
-- HTML shell, main.js, transform-upgrade.js and version.json synced to 0.36.18.614.
+.615 change:
+- Single Object mode now uses the same semantic gizmo contract as components:
+  - real gizmo handle pointer event
+  - exact {tool,constraint,kind}
+  - direct call to transform-upgrade.beginGizmoGesture(spec,event)
+- This gives single Object the same real world-plane Move semantics:
+  - XY keeps Z fixed
+  - XZ keeps Y fixed
+  - YZ keeps X fixed
+- Move / Scale / Rotate continue through transform-upgrade for single Object.
+- Existing exact-entry logic remains in transform-upgrade.
+- True Multi-object selection is explicitly detected as:
+  - object mode
+  - __boxlabObjectSelection.multi
+  - selected ids.size > 1
+- True Multi keeps the previous synthetic pointerdown route so protected multi-object-transform.js remains the owner.
+- No changes to src/multi-object-transform.js?v=0.36.1.0.
+- No changes to .614 Face deselect or component Plane Move behavior.
+- HTML shell, Total Gizmo pin, transform-upgrade pin and version.json synced to 0.36.18.615.
 
 Hands-on check:
-1. Face: select A + B; tap A -> only B remains.
-2. Tap B -> no face selected.
-3. Background tap still clears all.
-4. Deliberate Face drag still transforms instead of deselecting.
-5. Quick Edge / Vertex tap-to-remove regression.
-6. Plane Move XY -> Z coordinate must remain unchanged.
-7. Plane Move XZ -> Y coordinate must remain unchanged.
-8. Plane Move YZ -> X coordinate must remain unchanged.
-9. Axis Move / Free Move / Scale / Rotate quick regression.
+1. Single Object X/Y/Z Move regression.
+2. Single Object XY Plane Move -> Z fixed.
+3. Single Object XZ Plane Move -> Y fixed.
+4. Single Object YZ Plane Move -> X fixed.
+5. Single Object Free Move regression.
+6. Single Object axis/uniform Scale regression.
+7. Single Object Rotate regression.
+8. Single Object floating exact-entry regression.
+9. Component Face/Edge/Vertex gizmo regression from .614.
+10. Face tap-to-remove regression from .614.
+11. True Multi-object Move / Scale / Rotate regression: must remain on protected owner.
+
+Architecture note:
+- Semantic gizmo front-end is now shared by Vertex / Edge / Face / single Object.
+- True Multi-object remains the one deliberate exception until/unless its protected owner gets a safe semantic entry point.
