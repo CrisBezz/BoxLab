@@ -145,6 +145,34 @@ function startGesture(event){
   event.stopImmediatePropagation();
   canvas.setPointerCapture?.(event.pointerId);
 }
+function beginGizmoGesture(spec,event){
+  if(!spec||!event||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing?.()||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return false;
+  const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected();
+  if(!['vertex','edge','face'].includes(m)||!mesh||!camera)return false;
+  const t=spec.tool,axis=['x','y','z'].includes(spec.constraint)?spec.constraint:null;
+  if(!['move','scale','rotate'].includes(t))return false;
+  const indices=selectionVertices(mesh,m,ids);
+  if(!indices.length)return false;
+  const c=center(mesh,indices),normal=new THREE.Vector3();
+  camera.getWorldDirection(normal).normalize();
+  const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,c);
+  const start=planePoint(event,plane,camera);
+  if(!start)return false;
+  const cs=screenPoint(c,camera);
+  gesture={
+    id:event.pointerId,mesh,camera,m,ids,indices,hitIndex:ids[0]??0,t,
+    center:c,centerScreen:cs,start,startX:event.clientX,startY:event.clientY,
+    startVector:new THREE.Vector2(event.clientX,event.clientY).sub(cs),
+    plane,axes:screenAxes(c,camera),axis,
+    auto:spec.constraint==='auto',
+    gizmoOwned:true,
+    gizmoConstraint:spec.constraint||'free',
+    original:new Map(indices.map(i=>[i,mesh.vertices[i].clone()])),
+    before:mesh.clone(),changed:false,snap:null
+  };
+  if(status)status.textContent=`Component Gizmo • ${t[0].toUpperCase()+t.slice(1)} • ${axis?axis.toUpperCase():spec.constraint==='free'?'Free':spec.constraint}`;
+  return true;
+}
 document.addEventListener('pointerdown',startGesture,true);
 
 document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);if(!g.changed&&d.length()<DRAG_THRESHOLD)return;if(!g.changed){g.changed=true;globalThis.__boxlabHistory?.push(g.before);if(g.auto||axisSnapOn())g.axis=chooseAxis(d,g.axes);}restore(g);if(g.t==='move'){let delta;if(g.axis)delta=axisVector(g.axis).multiplyScalar(axisAmount(g,d));else{const now=planePoint(event,g.plane,g.camera);if(!now)return;delta=now.sub(g.start);}const inferred=applyReferenceInference(g,delta,event);delta=inferred.delta;g.snap=inferred.snap;g.indices.forEach(i=>g.mesh.vertices[i].add(delta));if(status)status.textContent=`Move • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'Auto':'Free'}${g.snap?` • Reference ${g.snap.type}`:''}`;}else if(g.t==='scale'){
@@ -204,6 +232,7 @@ globalThis.__boxlabTransformUpgrade={
   ...(globalThis.__boxlabTransformUpgrade||{}),
   applyExact:(toolName,constraintName,value)=>applyExactTransform(toolName,constraintName,value),
   setContext:(toolName,constraintName)=>setTransformContext(toolName,constraintName),
+  beginGizmoGesture:(spec,event)=>beginGizmoGesture(spec,event),
   focusValue:()=>{
     if(!valueInput)return false;
     try{valueInput.focus({preventScroll:true});}catch{valueInput.focus();}
