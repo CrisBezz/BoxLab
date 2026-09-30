@@ -2087,3 +2087,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .609: Object Total Gizmo unchanged
 - [ ] Regression .609: .606 Edge hold/scrub unchanged
 - [x] Protection .609: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Diagnostic .610: Face X Move reports HANDLE DOWN
+- [ ] Diagnostic .610: Face X Move reports OWNER REQUEST
+- [ ] Diagnostic .610: owner reports OWNER BEGIN or explicit OWNER REJECT reason
+- [ ] Diagnostic .610: handoff reports OK or FAIL
+- [ ] Diagnostic .610: drag reports MOVE with matching pointerId
+- [ ] Diagnostic .610: release reports OWNER FINISH and GIZMO POINTERUP
+- [x] Protection .610: no intentional transform behavior change
+- [x] Protection .610: src/multi-object-transform.js?v=0.36.1.0 unchanged
