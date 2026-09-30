@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.616 grouped/multi gizmo ownership correction
+
+- Fixed .615 ownership regression where grouped selections could be mistaken for a single Object because object-origin intentionally masks the multi flag in some contexts.
+- Object gizmo routing now uses effective selected object count: 2+ ids always remains on established group/multi owners.
+- Single Object keeps the .615 semantic gizmo path.
+- Group/pivot transform math and protected multi-object-transform remain unchanged.
+- Planned modeless work deferred until this regression passes.
+
 ## 2026-09-30 — v0.36.18.615 HANDS-ON PASS
 
 - User confirmed the unified semantic gizmo works perfectly.
