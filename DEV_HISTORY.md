@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.624 canvas capture-owner tracer
+
+- .623 localized Face Hold failure to a canvas pointerdown capture listener after the debug sentinel.
+- Gesture Debug now wraps later canvas capture listeners and logs registration, entry, exit, and propagation state.
+- Diagnostic-only build.
+- Dormant gizmo architecture retained as a separate next-step UX experiment.
+
 ## 2026-10-01 — v0.36.18.623 canvas-boundary diagnostics
 
 - .622 proved the real Pencil pointerdown reaches canvas capture and is not swallowed as hover.
