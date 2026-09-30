@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.601 explicit Files-based Nomad handoff
+
+- Closed direct Safari/Web Share -> Nomad Sculpt as unsupported after .596-.600 testing.
+- Working path is filesystem-backed: save GLB to Files, then Share -> Nomad Sculpt from Files.
+- GLB secondary action renamed to Save GLB to Files.
+- Guidance text now explicitly describes the two-step Files workflow.
+- GLB MIME remains model/gltf-binary; export payload is unchanged.
+- OBJ Share / Open In remains unchanged.
+- HTML shell, module pin and version.json advanced together to .601.
+- Protected multi-object-transform module unchanged.
+
 ## 2026-09-30 — v0.36.18.600 Save for Nomad Files workflow
 
 - .599 hands-on FAIL for direct Safari/Web Share -> Nomad target eligibility.
