@@ -57,3 +57,23 @@ document.addEventListener('pointerdown',event=>{
     target:event.target?.id||event.target?.tagName||'unknown'
   });
 },true);
+
+const debugCanvas=document.querySelector('#viewport');
+debugCanvas?.addEventListener('pointerdown',event=>{
+  log('RAW CANVAS CAPTURE',{
+    pointer:event.pointerType,
+    pid:event.pointerId,
+    pressure:event.pressure,
+    buttons:event.buttons,
+    target:event.target?.id||event.target?.tagName||'unknown'
+  });
+},{capture:true});
+debugCanvas?.addEventListener('pointerdown',event=>{
+  log('RAW CANVAS BUBBLE',{
+    pointer:event.pointerType,
+    pid:event.pointerId,
+    pressure:event.pressure,
+    buttons:event.buttons,
+    target:event.target?.id||event.target?.tagName||'unknown'
+  });
+});
