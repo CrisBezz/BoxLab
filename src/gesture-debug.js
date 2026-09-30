@@ -77,3 +77,45 @@ debugCanvas?.addEventListener('pointerdown',event=>{
     target:event.target?.id||event.target?.tagName||'unknown'
   });
 });
+
+const captureCanvas=document.querySelector('#viewport');
+const nativeAddEventListener=EventTarget.prototype.addEventListener;
+const nativeRemoveEventListener=EventTarget.prototype.removeEventListener;
+const wrappedCaptureListeners=new WeakMap();
+let captureListenerSeq=0;
+function captureOption(options){
+  return options===true || !!(options&&typeof options==='object'&&options.capture);
+}
+EventTarget.prototype.addEventListener=function(type,listener,options){
+  if(this===captureCanvas&&type==='pointerdown'&&captureOption(options)&&listener){
+    const id=++captureListenerSeq;
+    const label=typeof listener==='function'?(listener.name||'anonymous'):(listener?.handleEvent?.name||'handleEvent');
+    let stack='';
+    try{stack=(new Error()).stack?.split('\n').slice(2,5).join(' | ')||'';}catch{}
+    log('CAPTURE LISTENER REGISTER',{id,label,stack});
+    const wrapped=typeof listener==='function'
+      ? function(event){
+          log('CAPTURE ENTER',{id,label,pid:event.pointerId,target:event.target?.id||event.target?.tagName||'unknown'});
+          const before=event.cancelBubble;
+          const result=listener.call(this,event);
+          log('CAPTURE EXIT',{id,label,cancelBefore:before,cancelAfter:event.cancelBubble});
+          return result;
+        }
+      : {
+          handleEvent(event){
+            log('CAPTURE ENTER',{id,label,pid:event.pointerId,target:event.target?.id||event.target?.tagName||'unknown'});
+            const before=event.cancelBubble;
+            const result=listener.handleEvent(event);
+            log('CAPTURE EXIT',{id,label,cancelBefore:before,cancelAfter:event.cancelBubble});
+            return result;
+          }
+        };
+    wrappedCaptureListeners.set(listener,wrapped);
+    return nativeAddEventListener.call(this,type,wrapped,options);
+  }
+  return nativeAddEventListener.call(this,type,listener,options);
+};
+EventTarget.prototype.removeEventListener=function(type,listener,options){
+  const wrapped=wrappedCaptureListeners.get(listener);
+  return nativeRemoveEventListener.call(this,type,wrapped||listener,options);
+};
