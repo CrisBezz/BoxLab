@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.603 first modeless gesture: Edge long-press Loop
+
+- .602 gizmo soft catches passed hands-on.
+- Audited existing main.js gesture ownership before adding modeless behavior.
+- Existing background-tap deselect retained; no duplicate tap owner added.
+- Added Pencil/mouse Edge long-press gesture that invokes the existing Loop selection command.
+- Finger/touch is excluded to preserve iPad navigation.
+- Pointer movement cancels the hold.
+- If a transform drag was prepared but not yet armed, long-press cancels that pending drag before Loop selection.
+- Ring cycling deliberately deferred until this primitive passes.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.602 stronger Total Gizmo soft catches
 
 - Resumed pending Rotate/Scale gizmo precision work after .601 Nomad handoff PASS.
