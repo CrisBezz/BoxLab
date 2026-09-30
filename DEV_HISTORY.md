@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.622 Pencil-gate diagnostics
+
+- .621 Face hold attempt produced only DEBUG READY.
+- Instrumented the earlier Pencil orbit capture gate and raw document pointerdown.
+- Diagnostic-only build; no behavior change.
+- Primary suspect is pressure-0 Pencil pointerdown being classified as hover and swallowed.
+
 ## 2026-09-30 — v0.36.18.621 reusable Gesture Debug layer
 
 - .620 Face long-press failed hands-on.
