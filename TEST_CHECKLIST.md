@@ -2232,3 +2232,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Diagnostic .622: determine whether FACE CANVAS DOWN is reached
 - [x] Protection .622: diagnostic-only, Face Hold behavior unchanged
 - [x] Protection .622: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Diagnostic .623: Face hold attempt logs RAW CANVAS CAPTURE
+- [ ] Diagnostic .623: determine whether RAW CANVAS BUBBLE appears
+- [ ] Diagnostic .623: compare canvas boundary traces with FACE CANVAS DOWN
+- [x] Protection .623: diagnostic-only, no gesture behavior change
+- [x] Protection .623: src/multi-object-transform.js?v=0.36.1.0 unchanged
