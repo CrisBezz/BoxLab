@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.610 component gizmo runtime diagnostics
+
+- .609 hands-on FAIL: no component gizmo transforms effectively worked.
+- Added a temporary visible runtime diagnostic panel instead of another transform rewrite.
+- Diagnostic traces handle down, direct owner request/begin/reject, handoff result, pointer move, owner finish and gizmo pointerup.
+- No intended transform behavior changes.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.609 direct component Total Gizmo handoff
 
 - .608 deployed successfully but hands-on behavior remained effectively unchanged.
