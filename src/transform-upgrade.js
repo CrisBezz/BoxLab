@@ -24,6 +24,7 @@ if(inferenceSnapToggle) inferenceSnapToggle.disabled=false;
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function mode(){return bridge()?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
+function gestureDebug(stage,detail=null){globalThis.__boxlabGestureDebug?.log?.(stage,detail);}
 function multiObjectTransformActive(){const s=globalThis.__boxlabObjectSelection;return mode()==='object'&&(s?.ids?.size||0)>1;}
 function activeToolButton(){return document.querySelector('#toolModes button.active');}
 function tool(){return globalThis.__boxlabTransformArming?.tool?.()||activeToolButton()?.dataset?.tool||null;}
@@ -147,13 +148,14 @@ function startGesture(event){
   canvas.setPointerCapture?.(event.pointerId);
 }
 function beginGizmoGesture(spec,event){
-  if(!spec||!event||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return false;
+  gestureDebug('OWNER REQUEST',{mode:mode(),tool:spec?.tool||'none',constraint:spec?.constraint||'none',pid:event?.pointerId});
+  if(!spec||!event||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active){gestureDebug('OWNER REJECT EARLY');return false;}
   const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected();
-  if(!['object','vertex','edge','face'].includes(m)||!mesh||!camera||multiObjectTransformActive()){return false;}
+  if(!['object','vertex','edge','face'].includes(m)||!mesh||!camera||multiObjectTransformActive()){gestureDebug('OWNER REJECT STATE',{mode:m,multi:multiObjectTransformActive()});return false;}
   const t=spec.tool,axis=['x','y','z'].includes(spec.constraint)?spec.constraint:null;
   if(!['move','scale','rotate'].includes(t)){return false;}
   const indices=selectionVertices(mesh,m,ids);
-  if(!indices.length){return false;}
+  if(!indices.length){gestureDebug('OWNER REJECT EMPTY',{mode:m});return false;}
   const c=center(mesh,indices),planeConstraint=['xy','xz','yz'].includes(spec.constraint)?spec.constraint:null;
   let plane;
   if(planeConstraint){
@@ -179,6 +181,7 @@ function beginGizmoGesture(spec,event){
     before:mesh.clone(),changed:false,snap:null
   };
   if(status)status.textContent=`Component Gizmo • ${t[0].toUpperCase()+t.slice(1)} • ${axis?axis.toUpperCase():spec.constraint==='free'?'Free':spec.constraint}`;
+  gestureDebug('OWNER BEGIN',{mode:m,tool:t,constraint:spec.constraint,pid:event.pointerId});
   return true;
 }
 document.addEventListener('pointerdown',startGesture,true);
