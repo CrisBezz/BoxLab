@@ -15,14 +15,11 @@
 - HTML shell, main.js pin and `version.json` are synced to `0.36.18.603`.
 - Protected `src/multi-object-transform.js?v=0.36.1.0` unchanged.
 
-Hands-on check:
-1. Confirm .603 loads and stays .603.
-2. Edge mode: Pencil long-press an unselected edge for about half a second → its Loop should select.
-3. Long-press an already-selected edge → Loop should select without starting Move.
-4. Start moving before the hold delay → the hold must cancel and normal drag behavior should continue.
-5. Finger orbit/pan/zoom must remain unchanged.
-6. Ordinary edge tap selection/deselection must remain unchanged.
-7. Background tap deselect must remain unchanged.
+Hands-on result:
+- PASS: Edge Pencil long-press Loop selection works well.
+- Confirmed intended strictness: the gesture only selects when the loop continuation is clean and unambiguous.
+- At junctions / multiple-choice topology (for example around the top of a cube), no loop is selected rather than guessing a direction.
+- Preserve this refusal-to-guess rule in all future modeless Loop/Ring work.
 
 Next:
-- If .603 passes, extend the same gesture owner to Loop/Ring cycling rather than adding another raw-pointer listener.
+- Extend the same gesture owner to Loop/Ring cycling, but only when the requested path is topologically unambiguous.
