@@ -24,7 +24,7 @@ let awaitingTransformEnd=false;
 
 function state(){return globalThis.__boxlabBridgeState||null;}
 function currentMode(){return globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
-function multiObjectTransformActive(){const s=globalThis.__boxlabObjectSelection;return currentMode()==='object'&&!!s?.multi&&(s?.ids?.size||0)>1;}
+function multiObjectTransformActive(){const s=globalThis.__boxlabObjectSelection;return currentMode()==='object'&&(s?.ids?.size||0)>1;}
 function objectSelected(){
   const mgr=globalThis.__boxlabObjectManager;
   if(mgr?.selectedObjects){
@@ -498,5 +498,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.615'
+  version:'0.36.18.616'
 };
