@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.619 modeless tap continuation through gizmo overlay
+
+- .618 failed because tap #2 often landed on the newly visible Total Gizmo instead of the canvas.
+- Added a modeless tap claim API so an active rapid tap chain can claim gizmo pointerdown before transform ownership.
+- Claimed overlay taps complete through the same modeless tap owner on global pointerup.
+- Normal gizmo behavior remains immediate outside active tap chains.
+
 ## 2026-09-30 — v0.36.18.618 single owner for component taps
 
 - .617 double/triple tap failed because modeless tap handling and legacy endDrag tap handling both owned the same release.
