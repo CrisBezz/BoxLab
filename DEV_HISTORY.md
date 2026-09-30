@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.613 remove diagnostics + robust component tap deselect
+
+- Removed temporary .612 gizmo runtime diagnostics after hands-on PASS.
+- Preserved direct component Total Gizmo ownership.
+- Fixed selected component tap-to-remove reliability by adding a tap envelope tolerant of Pencil jitter.
+- Tiny accidental component transforms within the tap envelope are rolled back before toggling selection.
+- Applies to Face / Edge / Vertex.
+- Background deselect and additive selection unchanged.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.612 HANDS-ON PASS
 
 - User confirmed component Total Gizmo now works perfectly.
