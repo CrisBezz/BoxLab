@@ -24,7 +24,7 @@ let awaitingTransformEnd=false;
 const gizmoDebug=document.createElement('div');
 gizmoDebug.id='gizmoRuntimeDebug';
 gizmoDebug.style.cssText='position:absolute;right:10px;bottom:46px;z-index:12000;max-width:320px;padding:7px 9px;border-radius:8px;background:#111d;color:#fff;font:11px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;pointer-events:none;white-space:pre-wrap;box-shadow:0 2px 10px #0008';
-gizmoDebug.textContent='GIZMO DEBUG .611 • waiting';
+gizmoDebug.textContent='GIZMO DEBUG .612 • waiting';
 viewportWrap?.append(gizmoDebug);
 function debugGizmo(stage,detail=''){
   const stamp=new Date().toLocaleTimeString([], {hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
@@ -510,5 +510,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.611'
+  version:'0.36.18.612'
 };
