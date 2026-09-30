@@ -24,7 +24,7 @@ if(inferenceSnapToggle) inferenceSnapToggle.disabled=false;
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function mode(){return bridge()?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
-function multiObjectTransformActive(){const s=globalThis.__boxlabObjectSelection;return mode()==='object'&&!!s?.multi&&(s?.ids?.size||0)>1;}
+function multiObjectTransformActive(){const s=globalThis.__boxlabObjectSelection;return mode()==='object'&&(s?.ids?.size||0)>1;}
 function activeToolButton(){return document.querySelector('#toolModes button.active');}
 function tool(){return globalThis.__boxlabTransformArming?.tool?.()||activeToolButton()?.dataset?.tool||null;}
 function directFaceToolActive(){return !!document.querySelector('#extrudeBtn.active,#insetBtn.active');}
