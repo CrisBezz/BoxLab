@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.614 selected-component tap owner + true plane Move
+
+- Added a dedicated selected-component tap owner so tap-to-remove no longer depends on transform endDrag.
+- Tiny component transforms inside the tap envelope are rolled back before selection toggle.
+- Added true world XY/XZ/YZ Move planes for direct component Total Gizmo gestures.
+- Preserved .612 direct component-gizmo architecture and protected multi-object transform.
+
 ## 2026-09-30 — v0.36.18.613 remove diagnostics + robust component tap deselect
 
 - Removed temporary .612 gizmo runtime diagnostics after hands-on PASS.
