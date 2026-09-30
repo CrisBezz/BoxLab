@@ -24,7 +24,7 @@ let awaitingTransformEnd=false;
 const gizmoDebug=document.createElement('div');
 gizmoDebug.id='gizmoRuntimeDebug';
 gizmoDebug.style.cssText='position:absolute;right:10px;bottom:46px;z-index:12000;max-width:320px;padding:7px 9px;border-radius:8px;background:#111d;color:#fff;font:11px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;pointer-events:none;white-space:pre-wrap;box-shadow:0 2px 10px #0008';
-gizmoDebug.textContent='GIZMO DEBUG .610 • waiting';
+gizmoDebug.textContent='GIZMO DEBUG .611 • waiting';
 viewportWrap?.append(gizmoDebug);
 function debugGizmo(stage,detail=''){
   const stamp=new Date().toLocaleTimeString([], {hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
@@ -121,8 +121,13 @@ function onHandleDown(event){
   if(status)status.textContent=`Total Gizmo • ${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;
   let directComponentHandoff=false;
   if(mode!=='object'){
-    directComponentHandoff=!!globalThis.__boxlabTransformUpgrade?.beginGizmoGesture?.(spec,event);
-    debugGizmo(directComponentHandoff?'HANDOFF OK':'HANDOFF FAIL',mode+' • '+spec.tool+' • '+spec.constraint+' • pid '+event.pointerId);
+    try{
+      directComponentHandoff=!!globalThis.__boxlabTransformUpgrade?.beginGizmoGesture?.(spec,event);
+      debugGizmo(directComponentHandoff?'HANDOFF OK':'HANDOFF FAIL',mode+' • '+spec.tool+' • '+spec.constraint+' • pid '+event.pointerId);
+    }catch(error){
+      directComponentHandoff=false;
+      debugGizmo('HANDOFF EXCEPTION',(error?.name||'Error')+': '+(error?.message||String(error)));
+    }
     if(directComponentHandoff){
       try{event.currentTarget?.setPointerCapture?.(event.pointerId);}catch{}
     }
@@ -505,5 +510,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.610'
+  version:'0.36.18.611'
 };
