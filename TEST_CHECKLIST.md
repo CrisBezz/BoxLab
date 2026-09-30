@@ -2215,3 +2215,13 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .620: failed multi-tap experiment fully removed
 - [x] Protection .620: no new topology solver
 - [x] Protection .620: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Diagnostic .621: GESTURE DEBUG panel appears
+- [ ] Diagnostic .621: Face press reports FACE CANVAS DOWN or GIZMO DOWN
+- [ ] Diagnostic .621: Face canvas path reports FACE HOLD REQUEST + ARMED
+- [ ] Diagnostic .621: stationary hold reaches FACE HOLD TIMER
+- [ ] Diagnostic .621: candidate collection reports count/kinds
+- [ ] Diagnostic .621: gizmo interception reports GIZMO DOWN + OWNER REQUEST/BEGIN
+- [x] Protection .621: diagnostic-only, no intended interaction change
+- [x] Protection .621: reusable debug module added for future gesture bugs
+- [x] Protection .621: src/multi-object-transform.js?v=0.36.1.0 unchanged
