@@ -282,7 +282,7 @@ canvas.addEventListener('pointerup',event=>{
   const intent=componentTapIntent;componentTapIntent=null;
   const elapsed=performance.now()-intent.startTime;
   const moved=Math.hypot(event.clientX-intent.startX,event.clientY-intent.startY);
-  if(intent.cancelled||elapsed>TAP_MAX_MS||moved>TAP_MAX_MOVE)return;
+  if(intent.cancelled||elapsed>TAP_MAX_MS||moved>TAP_MAX_MOVE){componentTapSeries=null;return;}
   if(drag?.pointerId===event.pointerId&&drag.kind==='component'){
     if(drag.armed)mesh=drag.startMesh;
     drag=null;controls.enabled=true;
