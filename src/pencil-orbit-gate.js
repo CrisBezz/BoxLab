@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 const canvas = document.querySelector('#viewport');
+function gestureDebug(stage,detail=null){globalThis.__boxlabGestureDebug?.log?.(stage,detail);}
 
 if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const nativeAddEventListener = canvas.addEventListener.bind(canvas);
@@ -25,6 +26,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   for (const type of ['pointerdown','pointermove','pointerover','pointerenter','pointerout','pointerleave']) {
     nativeAddEventListener(type, event => {
       if (!isPenHover(event)) return;
+      gestureDebug('PEN HOVER SWALLOW',{type:event.type,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
       event.preventDefault?.();
       event.stopImmediatePropagation?.();
     }, { capture: true, passive: false });
@@ -58,7 +60,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   }
 
   function snapshotSelection(event) {
-    if (event.pointerType !== 'pen' || isPenHover(event)) return;
+    if (event.pointerType !== 'pen') return;
+    gestureDebug('PEN CANVAS DOWN',{pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,hover:isPenHover(event)});
+    if (isPenHover(event)) return;
     const bridge = selectionBridge();
     const type = bridge?.mode?.();
     const indices = [...(bridge?.indices?.() || [])];
