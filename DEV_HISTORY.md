@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.604 modeless Loop ↔ Ring hold cycling
+
+- Extended the proven .603 Edge long-press owner instead of adding a second gesture listener.
+- First hold on a seed edge invokes strict Loop selection.
+- Repeating the hold on the same seed during the same selection session alternates Ring then Loop.
+- Ordinary tap semantics remain untouched.
+- Cycle resets after seed change, background deselect, transform, or selection-mode change.
+- Existing Loop and Ring commands remain the topology authorities.
+- .603 refusal-to-guess Loop behavior remains protected.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.603 modeless Edge long-press Loop HANDS-ON PASS
 
 - User confirmed Edge long-press Loop selection feels great.
