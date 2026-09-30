@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.623 canvas-boundary diagnostics
+
+- .622 proved the real Pencil pointerdown reaches canvas capture and is not swallowed as hover.
+- Added RAW CANVAS CAPTURE and RAW CANVAS BUBBLE sentinels to isolate where the event disappears before Face Hold.
+- Diagnostic-only build.
+
 ## 2026-09-30 — v0.36.18.622 Pencil-gate diagnostics
 
 - .621 Face hold attempt produced only DEBUG READY.
