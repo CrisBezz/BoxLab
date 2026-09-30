@@ -2225,3 +2225,10 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .621: diagnostic-only, no intended interaction change
 - [x] Protection .621: reusable debug module added for future gesture bugs
 - [x] Protection .621: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Diagnostic .622: attempted Face hold logs RAW POINTERDOWN
+- [ ] Diagnostic .622: Pencil press logs PEN CANVAS DOWN
+- [ ] Diagnostic .622: determine whether PEN HOVER SWALLOW occurs on pointerdown
+- [ ] Diagnostic .622: determine whether FACE CANVAS DOWN is reached
+- [x] Protection .622: diagnostic-only, Face Hold behavior unchanged
+- [x] Protection .622: src/multi-object-transform.js?v=0.36.1.0 unchanged
