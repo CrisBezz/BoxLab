@@ -2238,3 +2238,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Diagnostic .623: compare canvas boundary traces with FACE CANVAS DOWN
 - [x] Protection .623: diagnostic-only, no gesture behavior change
 - [x] Protection .623: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Diagnostic .624: capture listeners register with ids/labels
+- [ ] Diagnostic .624: Face press logs CAPTURE ENTER/EXIT sequence
+- [ ] Diagnostic .624: identify listener where cancelAfter becomes true
+- [ ] Diagnostic .624: registration stack identifies owning module where possible
+- [x] Protection .624: diagnostic-only, no interaction behavior change
+- [x] Protection .624: dormant gizmo change deferred
+- [x] Protection .624: src/multi-object-transform.js?v=0.36.1.0 unchanged
