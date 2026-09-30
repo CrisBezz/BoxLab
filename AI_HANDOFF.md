@@ -1,38 +1,40 @@
-## v0.36.18.607 — Total Gizmo component integration, phase 1
+## v0.36.18.608 — component gizmo ownership correction
 
-- .606 hold/scrub Loop/Ring candidate browser is accepted for now and parked.
-- Began the next major phase: Total Gizmo for Vertex / Edge / Face selections.
-- Existing component transform owner in transform-upgrade.js already supports selected component vertex sets for Move / Scale / Rotate math.
-- .607 opens only the gates needed for gizmo-owned component transforms:
-  - Total Gizmo now appears for non-empty Vertex, Edge and Face selections.
-  - Gizmo pivot is the centroid of the selected component vertices, not the whole object.
-  - Object mode keeps the existing whole-object pivot behavior.
-  - Gizmo-owned component Move / Scale bypass the direct viewport "must hit selected geometry" gate.
-  - Component Rotate is now allowed only when the gesture came from Total Gizmo.
-  - Direct viewport component Rotate remains blocked for now.
-- Component vertex mapping:
-  - Vertex mode -> selected vertices
-  - Edge mode -> unique vertices of selected edges
-  - Face mode -> unique vertices of selected faces
-- Existing component selection is preserved during gizmo transforms.
-- Existing soft catches / floating exact entry remain routed through the existing transform owner.
-- No second transform system was added.
-- .601 Files-based Nomad handoff and .606 modeless Edge selection remain unchanged.
-- HTML shell, total-gizmo pin, transform-upgrade pin and version.json are synced to 0.36.18.607.
+- .607 hands-on findings:
+  - Face: axis Move dragged like Free; axis Scale drag failed while exact entry worked; Rotate good.
+  - Edge: Move constrained incorrectly; Free Move failed on multi-edge selection; axis Scale drag/type-in inconsistent.
+  - Vertex: only Free Move dragged reliably; selection felt harder because transform capture competed with selection; gizmo misses near mesh edges could fall through to orbit.
+- Root causes identified:
+  1. transform-upgrade still derived component gizmo drag tool/constraint through UI arming state instead of treating the active gizmo handle spec as authoritative.
+  2. transform-upgrade was also capturing ordinary component viewport drags, duplicating main.js ownership and interfering with selection.
+  3. a no-drag gizmo click on components could be treated as a component selection toggle just before floating exact entry.
+  4. axis Scale used the generic diagonal Scale gesture instead of motion projected along the selected gizmo axis.
+- .608 changes:
+  - Vertex/Edge/Face transform-upgrade gestures are now gizmo-owned only.
+  - Ordinary component viewport drag remains owned by main.js.
+  - Active Total Gizmo {tool,constraint} is authoritative for component gizmo gestures.
+  - Axis Move uses the gizmo axis directly.
+  - Axis Scale measures Pencil motion projected along the selected axis.
+  - Uniform Scale keeps the existing free-scale gesture.
+  - No-drag gizmo clicks no longer toggle component selection.
+  - Invisible hit targets widened, especially Scale nodes, to reduce orbit fall-through near mesh edges.
+- Existing exact transform math remains unchanged.
+- Component Rotate remains on transform-upgrade and was already hands-on good.
+- .606 modeless Edge selection and .601 Files-based Nomad handoff remain unchanged.
+- HTML shell, Total Gizmo pin, transform-upgrade pin and version.json are synced to 0.36.18.608.
 - Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
 
 Hands-on check:
-1. Confirm .607 loads and stays .607.
-2. Vertex mode: select one vertex -> gizmo appears centred on that vertex.
-3. Vertex mode: select several vertices -> gizmo centres on their centroid.
-4. Edge mode: select one/more edges -> gizmo centres on the selected edge vertex set.
-5. Face mode: select one/more faces -> gizmo centres on the selected face vertex set.
-6. Move using gizmo axis handles in Vertex / Edge / Face.
-7. Scale using gizmo axis/uniform handles in Vertex / Edge / Face.
-8. Rotate using gizmo rings in Vertex / Edge / Face.
-9. Selection should remain selected after each transform.
-10. Object-mode gizmo must remain unchanged.
-11. Finger orbit/pan/zoom and .606 Edge hold/scrub selection must remain unchanged.
+1. Face: X/Y/Z Move follows the selected arrow; Free Move remains free.
+2. Face: X/Y/Z Scale drags correctly; Uniform Scale remains good.
+3. Face: Rotate regression check.
+4. Edge: axis Move follows selected arrow for single and multiple edges.
+5. Edge: Free Move works for multi-edge selections.
+6. Edge: axis Scale drag works; click-release then floating exact entry preserves selection and applies.
+7. Vertex: select several vertices without Move capture stealing the second tap.
+8. Vertex: axis Move / Scale / Rotate work from gizmo.
+9. Gizmo handles near mesh edges are easier to acquire and do not unexpectedly orbit.
+10. Object gizmo and .606 Edge hold/scrub remain unchanged.
 
 Next:
-- If .607 passes, fix any component-specific pivot/axis/exact-entry issues, then make component gizmo behavior the unified transform baseline.
+- If .608 passes, make component Total Gizmo the unified precision transform baseline and then polish component-specific pivot/orientation behavior.
