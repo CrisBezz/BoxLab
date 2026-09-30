@@ -111,11 +111,63 @@ valueInput?.addEventListener('touchstart',event=>{
 valueInput?.addEventListener('click',event=>{event.stopPropagation();focusTransformValue();});
 
 
-function startGesture(event){if(event.target!==canvas||!event.isPrimary||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing?.()||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return;const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected(),t=tool(),gizmo=activeGizmoSpec();if(t==='rotate'&&['vertex','edge','face'].includes(m)&&!gizmo)return;if(!mesh||!camera||!['move','scale','rotate'].includes(t))return;const indices=selectionVertices(mesh,m,ids),hitIndex=gizmo?(ids[0]??0):(t==='rotate'?ids[0]??0:hitSelectedIndex(event,m,ids));if(!indices.length||(!gizmo&&t!=='rotate'&&m!=='object'&&!Number.isInteger(hitIndex)))return;const c=center(mesh,indices),normal=new THREE.Vector3();camera.getWorldDirection(normal).normalize();const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,c),start=planePoint(event,plane,camera);if(!start)return;const cs=screenPoint(c,camera);gesture={id:event.pointerId,mesh,camera,m,ids,indices,hitIndex,t,center:c,centerScreen:cs,start,startX:event.clientX,startY:event.clientY,startVector:new THREE.Vector2(event.clientX,event.clientY).sub(cs),plane,axes:screenAxes(c,camera),axis:explicitAxis(),auto:constraint==='auto',original:new Map(indices.map(i=>[i,mesh.vertices[i].clone()])),before:mesh.clone(),changed:false,snap:null};event.preventDefault();event.stopImmediatePropagation();canvas.setPointerCapture?.(event.pointerId);}
+function startGesture(event){
+  if(event.target!==canvas||!event.isPrimary||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing?.()||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return;
+  const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected(),gizmo=activeGizmoSpec();
+  // Component viewport drags remain owned by main.js. transform-upgrade owns
+  // component transforms only when Total Gizmo explicitly launched the gesture.
+  if(['vertex','edge','face'].includes(m)&&!gizmo)return;
+  const t=gizmo?.tool||tool();
+  if(!mesh||!camera||!['move','scale','rotate'].includes(t))return;
+  const indices=selectionVertices(mesh,m,ids);
+  if(!indices.length)return;
+  const gizmoConstraint=gizmo?.constraint||null;
+  const axis=['x','y','z'].includes(gizmoConstraint)?gizmoConstraint:explicitAxis();
+  const hitIndex=gizmo?(ids[0]??0):(t==='rotate'?ids[0]??0:hitSelectedIndex(event,m,ids));
+  if(!gizmo&&t!=='rotate'&&m!=='object'&&!Number.isInteger(hitIndex))return;
+  const c=center(mesh,indices),normal=new THREE.Vector3();
+  camera.getWorldDirection(normal).normalize();
+  const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,c),start=planePoint(event,plane,camera);
+  if(!start)return;
+  const cs=screenPoint(c,camera);
+  gesture={
+    id:event.pointerId,mesh,camera,m,ids,indices,hitIndex,t,
+    center:c,centerScreen:cs,start,startX:event.clientX,startY:event.clientY,
+    startVector:new THREE.Vector2(event.clientX,event.clientY).sub(cs),
+    plane,axes:screenAxes(c,camera),axis,
+    auto:gizmoConstraint==='auto'||(!gizmo&&constraint==='auto'),
+    gizmoOwned:!!gizmo,
+    gizmoConstraint:gizmoConstraint||null,
+    original:new Map(indices.map(i=>[i,mesh.vertices[i].clone()])),
+    before:mesh.clone(),changed:false,snap:null
+  };
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  canvas.setPointerCapture?.(event.pointerId);
+}
 document.addEventListener('pointerdown',startGesture,true);
 
-document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);if(!g.changed&&d.length()<DRAG_THRESHOLD)return;if(!g.changed){g.changed=true;globalThis.__boxlabHistory?.push(g.before);if(g.auto||axisSnapOn())g.axis=chooseAxis(d,g.axes);}restore(g);if(g.t==='move'){let delta;if(g.axis)delta=axisVector(g.axis).multiplyScalar(axisAmount(g,d));else{const now=planePoint(event,g.plane,g.camera);if(!now)return;delta=now.sub(g.start);}const inferred=applyReferenceInference(g,delta,event);delta=inferred.delta;g.snap=inferred.snap;g.indices.forEach(i=>g.mesh.vertices[i].add(delta));if(status)status.textContent=`Move • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'Auto':'Free'}${g.snap?` • Reference ${g.snap.type}`:''}`;}else if(g.t==='scale'){clearRefVisual();let factor=THREE.MathUtils.clamp(Math.exp((dx-dy)*.006),.05,20);const giz=activeGizmoSpec();const detent=giz?.tool==='scale'?softScaleDetent(factor):{value:factor,snapped:false};factor=detent.value;g.indices.forEach(i=>{const p=g.mesh.vertices[i].sub(g.center);if(g.axis)p[g.axis]*=factor;else p.multiplyScalar(factor);g.mesh.vertices[i].add(g.center);});if(status)status.textContent=`Scale • ${g.axis?g.axis.toUpperCase():g.auto?'Auto → Uniform':'Uniform'} • ${factor.toFixed(2)}×${detent.snapped?' • detent':''}`;}else{clearRefVisual();const cv=new THREE.Vector2(event.clientX,event.clientY).sub(g.centerScreen);let angle;if(g.startVector.length()>18&&cv.length()>18){const a=g.startVector.clone().normalize(),b=cv.clone().normalize();angle=Math.atan2(a.x*b.y-a.y*b.x,THREE.MathUtils.clamp(a.dot(b),-1,1));}else angle=dx*.012;const giz=activeGizmoSpec();let deg=THREE.MathUtils.radToDeg(angle),detent={value:deg,snapped:false};if(giz?.tool==='rotate'){detent=softAngleDetent(deg);deg=detent.value;angle=THREE.MathUtils.degToRad(deg);}else if(angleSnap){deg=Math.round(deg/15)*15;angle=THREE.MathUtils.degToRad(deg);}const av=g.axis?axisVector(g.axis):(()=>{const a=new THREE.Vector3();g.camera.getWorldDirection(a);return a.normalize();})(),q=new THREE.Quaternion().setFromAxisAngle(av,angle);g.indices.forEach(i=>g.mesh.vertices[i].sub(g.center).applyQuaternion(q).add(g.center));if(status)status.textContent=`Rotate • ${g.axis?g.axis.toUpperCase():g.auto?'Auto → View':'View'} • ${deg.toFixed(1)}°${detent.snapped?' • detent':''}`;}render();},true);
-function finish(event){const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();clearRefVisual();if(event.type==='pointercancel'&&g.changed){restore(g);render();}else if(event.type==='pointerup'&&!g.changed&&g.m!=='object'&&Number.isInteger(g.hitIndex)){const current=selected();bridge()?.set?.(g.m,current.filter(i=>i!==g.hitIndex));if(status)status.textContent=`${g.m[0].toUpperCase()+g.m.slice(1)} selection toggled • ${g.t[0].toUpperCase()+g.t.slice(1)} still armed`;}gesture=null;if(g.changed&&status)status.textContent=`${g.t[0].toUpperCase()+g.t.slice(1)} committed${g.snap?` • reference ${g.snap.type}`:''} • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'auto':'free'} • selection preserved`;if(g.changed&&event.type==='pointerup'){
+document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);if(!g.changed&&d.length()<DRAG_THRESHOLD)return;if(!g.changed){g.changed=true;globalThis.__boxlabHistory?.push(g.before);if(g.auto||axisSnapOn())g.axis=chooseAxis(d,g.axes);}restore(g);if(g.t==='move'){let delta;if(g.axis)delta=axisVector(g.axis).multiplyScalar(axisAmount(g,d));else{const now=planePoint(event,g.plane,g.camera);if(!now)return;delta=now.sub(g.start);}const inferred=applyReferenceInference(g,delta,event);delta=inferred.delta;g.snap=inferred.snap;g.indices.forEach(i=>g.mesh.vertices[i].add(delta));if(status)status.textContent=`Move • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'Auto':'Free'}${g.snap?` • Reference ${g.snap.type}`:''}`;}else if(g.t==='scale'){
+  clearRefVisual();
+  let gestureAmount;
+  if(g.gizmoOwned&&g.axis){
+    const rail=g.axes[g.axis];
+    const unit=rail?.lengthSq()>=4?rail.clone().normalize():new THREE.Vector2(1,0);
+    gestureAmount=d.dot(unit);
+  }else{
+    gestureAmount=dx-dy;
+  }
+  let factor=THREE.MathUtils.clamp(Math.exp(gestureAmount*(g.gizmoOwned&&g.axis?0.012:0.006)),.05,20);
+  const detent=g.gizmoOwned?softScaleDetent(factor):{value:factor,snapped:false};
+  factor=detent.value;
+  g.indices.forEach(i=>{
+    const p=g.mesh.vertices[i].sub(g.center);
+    if(g.axis)p[g.axis]*=factor;else p.multiplyScalar(factor);
+    g.mesh.vertices[i].add(g.center);
+  });
+  if(status)status.textContent=`Scale • ${g.axis?g.axis.toUpperCase():g.auto?'Auto → Uniform':'Uniform'} • ${factor.toFixed(2)}×${detent.snapped?' • detent':''}`;
+}else{clearRefVisual();const cv=new THREE.Vector2(event.clientX,event.clientY).sub(g.centerScreen);let angle;if(g.startVector.length()>18&&cv.length()>18){const a=g.startVector.clone().normalize(),b=cv.clone().normalize();angle=Math.atan2(a.x*b.y-a.y*b.x,THREE.MathUtils.clamp(a.dot(b),-1,1));}else angle=dx*.012;const giz=activeGizmoSpec();let deg=THREE.MathUtils.radToDeg(angle),detent={value:deg,snapped:false};if(giz?.tool==='rotate'){detent=softAngleDetent(deg);deg=detent.value;angle=THREE.MathUtils.degToRad(deg);}else if(angleSnap){deg=Math.round(deg/15)*15;angle=THREE.MathUtils.degToRad(deg);}const av=g.axis?axisVector(g.axis):(()=>{const a=new THREE.Vector3();g.camera.getWorldDirection(a);return a.normalize();})(),q=new THREE.Quaternion().setFromAxisAngle(av,angle);g.indices.forEach(i=>g.mesh.vertices[i].sub(g.center).applyQuaternion(q).add(g.center));if(status)status.textContent=`Rotate • ${g.axis?g.axis.toUpperCase():g.auto?'Auto → View':'View'} • ${deg.toFixed(1)}°${detent.snapped?' • detent':''}`;}render();},true);
+function finish(event){const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();clearRefVisual();if(event.type==='pointercancel'&&g.changed){restore(g);render();}else if(event.type==='pointerup'&&!g.changed&&!g.gizmoOwned&&g.m!=='object'&&Number.isInteger(g.hitIndex)){const current=selected();bridge()?.set?.(g.m,current.filter(i=>i!==g.hitIndex));if(status)status.textContent=`${g.m[0].toUpperCase()+g.m.slice(1)} selection toggled • ${g.t[0].toUpperCase()+g.t.slice(1)} still armed`;}gesture=null;if(g.changed&&status)status.textContent=`${g.t[0].toUpperCase()+g.t.slice(1)} committed${g.snap?` • reference ${g.snap.type}`:''} • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'auto':'free'} • selection preserved`;if(g.changed&&event.type==='pointerup'){
   if(g.t==='rotate'&&g.m==='object'){
     globalThis.__boxlabTotalGizmo?.completeExactEntry?.({
       tool:'rotate',
