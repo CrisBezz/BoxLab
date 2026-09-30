@@ -2060,3 +2060,17 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .607: .606 Edge hold/scrub Loop/Ring unchanged
 - [ ] Protection .607: finger orbit/pan/zoom unchanged
 - [x] Protection .607: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .608: Face axis Move follows selected gizmo arrow
+- [ ] Workflow .608: Face axis Scale drag works; Uniform Scale remains good
+- [ ] Workflow .608: Edge axis Move works for single and multi-edge selections
+- [ ] Workflow .608: Edge Free Move works for multi-edge selections
+- [ ] Workflow .608: Edge axis Scale drag and floating exact entry work without selection loss
+- [ ] Workflow .608: Vertex multi-selection is not intercepted by transform-upgrade direct drag capture
+- [ ] Workflow .608: Vertex axis Move / Scale / Rotate work from Total Gizmo
+- [ ] Workflow .608: component gizmo click-release preserves selection before exact entry
+- [ ] Workflow .608: gizmo hit targets reduce orbit fall-through near mesh edges
+- [ ] Regression .608: Face/Edge/Vertex Rotate remains correct
+- [ ] Regression .608: Object Total Gizmo unchanged
+- [ ] Regression .608: .606 Edge hold/scrub Loop/Ring unchanged
+- [x] Protection .608: src/multi-object-transform.js?v=0.36.1.0 unchanged
