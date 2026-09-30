@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.615 HANDS-ON PASS
+
+- User confirmed the unified semantic gizmo works perfectly.
+- Vertex / Edge / Face / single Object now share one gizmo contract.
+- Plane Move semantics are consistent across these modes.
+- True Multi-object remains deliberately on protected v0.36.1.0 owner.
+- .615 is the new unified gizmo baseline.
+
 ## 2026-09-30 — v0.36.18.615 single Object semantic gizmo handoff
 
 - Unified single Object mode with the direct semantic Total Gizmo contract already proven for Vertex / Edge / Face.
