@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.603 modeless Edge long-press Loop HANDS-ON PASS
+
+- User confirmed Edge long-press Loop selection feels great.
+- Confirmed strict-loop behavior is desirable:
+  - clean, single-continuation loops select
+  - ambiguous junctions / multiple possible continuations do not select
+  - example: around the top of a cube, selection intentionally refuses rather than guessing
+- This refusal-to-guess rule is now protected for future Loop/Ring modeless gestures.
+
 ## 2026-09-30 — v0.36.18.603 first modeless gesture: Edge long-press Loop
 
 - .602 gizmo soft catches passed hands-on.
