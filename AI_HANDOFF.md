@@ -1,25 +1,36 @@
-## v0.36.18.611 — expose component gizmo handoff exception
+## v0.36.18.612 — fix component gizmo owner exception
 
-- .610 diagnostic result from iPad:
-  - Face X Move press reached OWNER REQUEST.
-  - It never reached OWNER BEGIN, HANDOFF OK, HANDOFF FAIL or MOVE.
-  - Release only showed GIZMO POINTERUP.
-- Conclusion: beginGizmoGesture() is throwing before it can return.
-- .611 adds a try/catch around the direct component handoff in Total Gizmo.
-- The debug panel now reports:
-  - HANDOFF EXCEPTION • <ErrorName>: <message>
-- No transform behavior changes in .611.
-- Purpose: reveal the exact runtime exception before changing owner setup.
-- HTML shell, Total Gizmo pin and version.json synced to 0.36.18.611.
-- transform-upgrade remains pinned at .610 because its behavior did not change.
+- .611 diagnostic screenshot identified the exact runtime failure:
+  - TypeError: globalThis.__boxlabSweepPath?.editing is not a function
+- Root cause:
+  - SweepPath exposes editing as a getter/boolean property.
+  - transform-upgrade incorrectly called it as editing?.().
+  - This threw during beginGizmoGesture() after OWNER REQUEST and before OWNER BEGIN.
+  - Total Gizmo then fell back to the old synthetic path, explaining why the face could move but ignored the requested X axis.
+- .612 fixes both transform entry guards to read:
+  - globalThis.__boxlabSweepPath?.editing
+  instead of calling it.
+- EdgeExtrude.isArmed remains a function and is unchanged.
+- Diagnostic panel remains for one verification build.
+- Expected successful chain:
+  - HANDLE DOWN
+  - OWNER REQUEST
+  - OWNER BEGIN
+  - HANDOFF OK
+  - MOVE
+  - OWNER FINISH
+  - GIZMO POINTERUP
+- No other transform math changed in this build.
+- HTML shell, transform-upgrade pin, Total Gizmo pin and version.json synced to 0.36.18.612.
 - Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
 
-Hands-on diagnostic:
-1. Load .611.
-2. Face mode -> select one face.
-3. Press the X Move gizmo arrow once.
-4. Read/send the GIZMO DEBUG .611 line.
-5. Expected useful output: HANDOFF EXCEPTION with the exact JavaScript error.
+Hands-on check:
+1. Face mode -> select one face.
+2. Drag X Move arrow.
+3. Confirm face moves only on X.
+4. Confirm debug reaches OWNER BEGIN / HANDOFF OK / MOVE / OWNER FINISH.
+5. If that passes, quickly test Y/Z Move and one axis Scale.
+6. Do not yet remove diagnostics until component gizmo path is proven.
 
 Next:
-- Fix only the exact exception reported by .611.
+- If .612 reaches the direct owner, resume component transform fixes from the now-correct runtime path.
