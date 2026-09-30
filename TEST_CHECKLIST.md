@@ -1987,3 +1987,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .600: OBJ secondary action remains Share / Open In…
 - [ ] Regression .600: normal Export / Save remains functional
 - [x] Protection .600: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [x] Finding .601: direct Safari/Web Share -> Nomad closed as unsupported
+- [ ] Workflow .601: GLB secondary action reads Save GLB to Files…
+- [ ] Workflow .601: GLB note explains Files -> Share -> Nomad Sculpt
+- [ ] Workflow .601: saved GLB opens in Nomad from Files
+- [ ] Regression .601: OBJ secondary action remains Share / Open In…
+- [ ] Regression .601: normal Export / Save remains functional
+- [x] Protection .601: src/multi-object-transform.js?v=0.36.1.0 unchanged
