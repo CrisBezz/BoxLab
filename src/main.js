@@ -25,8 +25,8 @@ const vertexMaterial=new THREE.MeshBasicMaterial({color:0xf2f5fa}),selectedVerte
 const axisLineMaterials={x:new THREE.LineBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.LineBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.LineBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.LineBasicMaterial({color:0xffffff,depthTest:false})};
 const axisOverlayMaterials={x:new THREE.MeshBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.MeshBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.MeshBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false})};
 const activeLoopMaterial=new THREE.LineBasicMaterial({color:0x62d8ff,transparent:true,opacity:1,depthTest:false}),currentLoopMaterial=new THREE.LineBasicMaterial({color:0xffe14a,transparent:true,opacity:1,depthTest:false}),creaseEdgeMaterial=new THREE.LineBasicMaterial({color:0xffb65c,transparent:true,opacity:1}),mirrorEdgeMaterial=new THREE.LineBasicMaterial({color:0x8791a2,transparent:true,opacity:.32});
-const raycaster=new THREE.Raycaster();raycaster.params.Line.threshold=.09;const pointer=new THREE.Vector2();let drag=null,backgroundTap=null,edgeHold=null,edgeHoldCycle=null,componentTapIntent=null,componentTapSeries=null,overlayTapIntent=null;
-const EDIT_DRAG_THRESHOLD=8,INFERENCE_SNAP_PX=10,PLANE_EPSILON=1e-5,TAP_MAX_MS=320,TAP_MAX_MOVE=12,TAP_CHAIN_MS=360,TAP_CHAIN_MOVE=22,EDGE_HOLD_MS=420,EDGE_HOLD_MOVE=7,EDGE_SCRUB_STEP=32,WORLD_AXES={x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)};
+const raycaster=new THREE.Raycaster();raycaster.params.Line.threshold=.09;const pointer=new THREE.Vector2();let drag=null,backgroundTap=null,edgeHold=null,edgeHoldCycle=null,faceHold=null,componentTapIntent=null;
+const EDIT_DRAG_THRESHOLD=8,INFERENCE_SNAP_PX=10,PLANE_EPSILON=1e-5,TAP_MAX_MS=320,TAP_MAX_MOVE=12,EDGE_HOLD_MS=420,EDGE_HOLD_MOVE=7,EDGE_SCRUB_STEP=32,WORLD_AXES={x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)};
 const gesture={active:false,maxTouches:0,startedAt:0,starts:new Map(),moved:false};
 
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
@@ -40,57 +40,6 @@ function cancelEdgeHold(pointerId=null){
   edgeHold=null;
 }
 function resetEdgeHoldCycle(){edgeHoldCycle=null;}
-function sameComponentHit(a,b){return !!a&&!!b&&a.type===b.type&&a.index===b.index;}
-function nextComponentTapCount(hit,event){
-  const now=performance.now(),prior=componentTapSeries;
-  const same=prior&&sameComponentHit(prior.hit,hit)&&now-prior.at<=TAP_CHAIN_MS&&Math.hypot(event.clientX-prior.x,event.clientY-prior.y)<=TAP_CHAIN_MOVE;
-  const count=same?Math.min(3,prior.count+1):1;
-  componentTapSeries={hit:{...hit},count,at:now,x:event.clientX,y:event.clientY};
-  return count;
-}
-function invokeModelessSelectionExpansion(kind,hit){
-  if(!hit||selectionMode==='object')return false;
-  if(!selectionHas(hit.type,hit.index)){
-    const current=selection?.type===hit.type?selectionIndices():[];
-    selection=makeSelection(hit.type,[...current,hit.index],hit.index);
-    renderMesh();
-  }
-  const button=document.querySelector(kind==='connected'?'#connectedSelectionBtn':'#growSelectionBtn');
-  if(!button||button.disabled)return false;
-  button.click();
-  return true;
-}
-function completeModelessComponentTap(intent,event){
-  if(!intent||!event)return false;
-  const elapsed=performance.now()-intent.startTime,moved=Math.hypot(event.clientX-intent.startX,event.clientY-intent.startY);
-  if(intent.cancelled||elapsed>TAP_MAX_MS||moved>TAP_MAX_MOVE){componentTapSeries=null;return false;}
-  resetEdgeHoldCycle();
-  const taps=nextComponentTapCount(intent.hit,event);
-  if(taps===1){
-    if(intent.wasSelected){
-      toggleSelection(intent.hit);
-      if(intent.hit.type==='edge')selectedEdgeCutT=.5;
-      renderMesh();
-    }
-    return true;
-  }
-  if(taps===2){
-    invokeModelessSelectionExpansion('grow',intent.hit);
-    return true;
-  }
-  invokeModelessSelectionExpansion('connected',intent.hit);
-  componentTapSeries=null;
-  return true;
-}
-function claimModelessGizmoTap(event){
-  const prior=componentTapSeries;
-  if(!prior||selectionMode==='object'||!event?.isPrimary)return false;
-  const age=performance.now()-prior.at,dist=Math.hypot(event.clientX-prior.x,event.clientY-prior.y);
-  if(age>TAP_CHAIN_MS||dist>TAP_CHAIN_MOVE)return false;
-  overlayTapIntent={pointerId:event.pointerId,hit:{...prior.hit},wasSelected:selectionHas(prior.hit.type,prior.hit.index),startX:event.clientX,startY:event.clientY,startTime:performance.now(),cancelled:false};
-  return true;
-}
-globalThis.__boxlabModelessTap={claimGizmoPointerDown:claimModelessGizmoTap};
 function sameEdgeSelectionSignature(indices){
   return [...new Set(indices||[])].sort((a,b)=>a-b).join(',');
 }
@@ -273,8 +222,8 @@ canvas.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse'&&ev
  if(directTool==='loopCut'&&event.isPrimary){const hit=pickKind(event,'edge');if(!hit)return;const before=mesh.clone(),seed=before.edges()[hit.index];if(!seed)return;const cutT=edgeTapFraction(hit.index,event),count=Number(document.querySelector('#loopCutCount').value||1),result=count===1?mesh.loopCut(hit.index,cutT):mesh.loopCuts(hit.index,count);if(!result)return;history.push(before);activeLoopSlides=result.slideGroups||[result.slideData];const target=activeLoopSlides.reduce((best,g)=>{if(!g?.length)return best;const d=Math.abs((g[0].position??.5)-cutT);return!best||d<best.distance?{group:g,distance:d}:best;},null)?.group||activeLoopSlides[0]||null;setActiveLoopGroup(target);clearSelection();const rail=worldToScreen(before.vertices[seed.b]).sub(worldToScreen(before.vertices[seed.a])),startPct=target?.[0]?.position??cutT;renderMesh();drag={kind:'loopSlide',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPct,rail,group:target,armed:false};controls.enabled=false;canvas.setPointerCapture(event.pointerId);return;}
  if((directTool==='extrude'||directTool==='inset')&&event.isPrimary){const hit=pickKind(event,'face');if(!hit)return;const before=mesh.clone(),center=before.faceCenter(hit.index),screenCenter=worldToScreen(center),startPointer=new THREE.Vector2(event.clientX,event.clientY);let insetRail=screenCenter.clone().sub(startPointer),insetScale=insetRail.length();if(insetScale<20){insetRail.set(0,-1);insetScale=120;}else insetRail.normalize();clearSelection();drag={kind:'faceTool',faceTool:directTool,pointerId:event.pointerId,faceIndex:hit.index,startMesh:before,startX:event.clientX,startY:event.clientY,normal2D:projectedFaceNormal2D(before,hit.index),insetRail,insetScale,armed:false,changed:false,liveValue:0};controls.enabled=false;canvas.setPointerCapture(event.pointerId);renderMesh();return;}
  const loopHit=pickLoopSlide(event);if(loopHit&&event.isPrimary){const{item,group}=loopHit;setActiveLoopGroup(group);renderMesh();const a=worldToScreen(new THREE.Vector3(...item.start)),b=worldToScreen(new THREE.Vector3(...item.end));let rail=b.clone().sub(a);if(rail.lengthSq()<25){let best=null,bestLen=0;for(const ci of group){const candidate=worldToScreen(new THREE.Vector3(...ci.end)).sub(worldToScreen(new THREE.Vector3(...ci.start))),len=candidate.lengthSq();if(len>bestLen){bestLen=len;best=candidate;}}if(best)rail=best;}drag={kind:'loopSlide',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPct:Number(document.querySelector('#loopSlide').value)/100,rail,group,armed:false};controls.enabled=false;canvas.setPointerCapture(event.pointerId);return;}
- const hit=pick(event);if(!hit){if(event.isPrimary)backgroundTap={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,moved:false,cancelled:false};componentTapSeries=null;return;}backgroundTap=null;if(hit.type==='edge')armEdgeHold(event,hit.index);const alreadySelected=hit.type==='object'?selection?.type==='object':selectionHas(hit.type,hit.index);if(selectionMode!=='object'&&event.isPrimary)componentTapIntent={pointerId:event.pointerId,hit:{type:hit.type,index:hit.index},wasSelected:alreadySelected,startX:event.clientX,startY:event.clientY,startTime:performance.now(),cancelled:false};if(selectionMode!=='object'&&!alreadySelected){toggleSelection(hit);if(hit.type==='edge'&&selectionHas('edge',hit.index))selectedEdgeCutT=edgeTapFraction(hit.index,event);renderMesh();return;}
- if(!alreadySelected){selection=hit.type==='object'?hit:makeSelection(hit.type,[hit.index],hit.index);if(hit.type==='edge')selectedEdgeCutT=edgeTapFraction(hit.index,event);renderMesh();return;}if(hit.type==='edge')selectedEdgeCutT=edgeTapFraction(hit.index,event);if(!event.isPrimary)return;const center=componentCenter(selection);{const gizmoConstraint=globalThis.__boxlabTotalGizmo?.activeConstraint?.(),uiAxis=document.querySelector('#transformPrecision [data-constraint].active')?.dataset?.constraint,explicitAxis=['x','y','z'].includes(gizmoConstraint)?gizmoConstraint:['x','y','z'].includes(uiAxis)?uiAxis:null,explicitPlane=['xy','xz','yz'].includes(gizmoConstraint)?gizmoConstraint:null,planeNormal=explicitPlane==='xy'?WORLD_AXES.z:explicitPlane==='xz'?WORLD_AXES.y:explicitPlane==='yz'?WORLD_AXES.x:null,plane=planeNormal?new THREE.Plane().setFromNormalAndCoplanarPoint(planeNormal,center):screenPlaneAt(center),start=rayPlanePoint(event,plane);drag={kind:'component',pointerId:event.pointerId,selection:selection?.type==='object'?{type:'object',index:0}:{type:selection.type,index:selection.index,indices:[...selectionIndices()]},tapHit:selectionMode==='object'?null:{type:hit.type,index:hit.index},start,last:start?.clone(),plane,startMesh:mesh.clone(),center:center.clone(),axisScreens:projectedWorldAxes(center),axisLock:explicitAxis,planeLock:explicitPlane,gizmoConstraint:gizmoConstraint||null,inferenceSnap:null,softSnap:null,liveDelta:new THREE.Vector3(),startX:event.clientX,startY:event.clientY,startTime:performance.now(),changed:false,armed:false};}controls.enabled=false;canvas.setPointerCapture(event.pointerId);
+ const hit=pick(event);if(!hit){if(event.isPrimary)backgroundTap={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,moved:false,cancelled:false};return;}backgroundTap=null;if(hit.type==='edge')armEdgeHold(event,hit.index);if(hit.type==='face')armFaceHold(event,hit.index);const alreadySelected=hit.type==='object'?selection?.type==='object':selectionHas(hit.type,hit.index);if(selectionMode!=='object'&&!alreadySelected){toggleSelection(hit);if(hit.type==='edge'&&selectionHas('edge',hit.index))selectedEdgeCutT=edgeTapFraction(hit.index,event);renderMesh();return;}
+ if(!alreadySelected){selection=hit.type==='object'?hit:makeSelection(hit.type,[hit.index],hit.index);if(hit.type==='edge')selectedEdgeCutT=edgeTapFraction(hit.index,event);renderMesh();return;}if(hit.type==='edge')selectedEdgeCutT=edgeTapFraction(hit.index,event);if(!event.isPrimary)return;if(selectionMode!=='object')componentTapIntent={pointerId:event.pointerId,hit:{type:hit.type,index:hit.index},startX:event.clientX,startY:event.clientY,startTime:performance.now(),cancelled:false};const center=componentCenter(selection);{const gizmoConstraint=globalThis.__boxlabTotalGizmo?.activeConstraint?.(),uiAxis=document.querySelector('#transformPrecision [data-constraint].active')?.dataset?.constraint,explicitAxis=['x','y','z'].includes(gizmoConstraint)?gizmoConstraint:['x','y','z'].includes(uiAxis)?uiAxis:null,explicitPlane=['xy','xz','yz'].includes(gizmoConstraint)?gizmoConstraint:null,planeNormal=explicitPlane==='xy'?WORLD_AXES.z:explicitPlane==='xz'?WORLD_AXES.y:explicitPlane==='yz'?WORLD_AXES.x:null,plane=planeNormal?new THREE.Plane().setFromNormalAndCoplanarPoint(planeNormal,center):screenPlaneAt(center),start=rayPlanePoint(event,plane);drag={kind:'component',pointerId:event.pointerId,selection:selection?.type==='object'?{type:'object',index:0}:{type:selection.type,index:selection.index,indices:[...selectionIndices()]},tapHit:selectionMode==='object'?null:{type:hit.type,index:hit.index},start,last:start?.clone(),plane,startMesh:mesh.clone(),center:center.clone(),axisScreens:projectedWorldAxes(center),axisLock:explicitAxis,planeLock:explicitPlane,gizmoConstraint:gizmoConstraint||null,inferenceSnap:null,softSnap:null,liveDelta:new THREE.Vector3(),startX:event.clientX,startY:event.clientY,startTime:performance.now(),changed:false,armed:false};}controls.enabled=false;canvas.setPointerCapture(event.pointerId);
 });
 canvas.addEventListener('pointermove',event=>{if(!backgroundTap||backgroundTap.pointerId!==event.pointerId)return;if(Math.hypot(event.clientX-backgroundTap.startX,event.clientY-backgroundTap.startY)>=EDIT_DRAG_THRESHOLD)backgroundTap.moved=true;});
 canvas.addEventListener('pointermove',event=>{if(!componentTapIntent||componentTapIntent.pointerId!==event.pointerId||componentTapIntent.cancelled)return;if(Math.hypot(event.clientX-componentTapIntent.startX,event.clientY-componentTapIntent.startY)>TAP_MAX_MOVE)componentTapIntent.cancelled=true;});
@@ -304,28 +253,31 @@ canvas.addEventListener('pointerup',event=>{
   if(!backgroundTap||backgroundTap.pointerId!==event.pointerId)return;
   const tap=backgroundTap;backgroundTap=null;
   const moved=tap.moved||Math.hypot(event.clientX-tap.startX,event.clientY-tap.startY)>=EDIT_DRAG_THRESHOLD;
-  if(!tap.cancelled&&!moved){resetEdgeHoldCycle();componentTapSeries=null;clearSelection();renderMesh();}
+  if(!tap.cancelled&&!moved){resetEdgeHoldCycle();clearSelection();renderMesh();}
 });
 canvas.addEventListener('pointercancel',event=>{if(edgeHold?.pointerId===event.pointerId)cancelEdgeHold(event.pointerId);if(backgroundTap?.pointerId===event.pointerId)backgroundTap=null;});
 canvas.addEventListener('pointermove',event=>{if(!drag||drag.pointerId!==event.pointerId)return;const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;if(!drag.armed){if(Math.hypot(dx,dy)<EDIT_DRAG_THRESHOLD)return;drag.armed=true;if(drag.kind==='faceTool'){clearLoopSlide();history.push(drag.startMesh);drag.changed=true;}else if(drag.kind==='component'&&toolMode==='move'&&axisSnapEnabled&&!drag.axisLock)drag.axisLock=chooseAxisLock(new THREE.Vector2(dx,dy),drag.axisScreens);}if(drag.kind==='vertexBevel'){const amount=Math.round(THREE.MathUtils.clamp(drag.width+dx*.25,2,49));document.querySelector('#vertexBevelWidth').value=String(amount);document.querySelector('#vertexBevelWidthOut').textContent=`${amount}%`;mesh=drag.startMesh.clone();drag.preview=!!mesh.bevelVertex?.(drag.vertexIndex,amount/100);if(!drag.preview)mesh=drag.startMesh.clone();renderMesh();return;}if(drag.kind==='loopSlide'){const lenSq=drag.rail.lengthSq();if(lenSq<1)return;const amount=THREE.MathUtils.clamp(drag.startPct+new THREE.Vector2(dx,dy).dot(drag.rail)/lenSq,.05,.95);if(mesh.loopSlide(drag.group,amount)){setActiveLoopGroup(drag.group);renderMesh();}return;}if(drag.kind==='faceTool'){mesh=drag.startMesh.clone();if(drag.faceTool==='extrude'){const fi=drag.faceIndex,normal=drag.startMesh.faceNormal(fi),center=drag.startMesh.faceCenter(fi),facing=Math.max(.2,Math.abs(normal.dot(new THREE.Vector3().subVectors(camera.position,center).normalize()))),amount=new THREE.Vector2(dx,dy).dot(drag.normal2D)*.006/facing;drag.liveValue=amount;const result=mesh.extrudeFace(fi,amount);selection=result?makeSelection('face',[result.index??result],result.index??result):null;}else{const amount=THREE.MathUtils.clamp(new THREE.Vector2(dx,dy).dot(drag.insetRail)/Math.max(30,drag.insetScale),.01,.95);drag.liveValue=amount;const result=mesh.insetFace(drag.faceIndex,amount);selection=result?makeSelection('face',[result.index??result],result.index??result):null;}renderMesh();return;}const now=rayPlanePoint(event,drag.plane);if(!now||!drag.last||!drag.start)return;beginDragChange();mesh=drag.startMesh.clone();drag.inferenceSnap=null;if(toolMode==='move'){let total;if(drag.axisLock&&drag.axisScreens[drag.axisLock]){const rail=drag.axisScreens[drag.axisLock];let amount=new THREE.Vector2(dx,dy).dot(rail)/rail.lengthSq();drag.softSnap=null;if(['x','y','z'].includes(drag.gizmoConstraint)){const snap=softDetent(amount,adaptiveMoveStep(rail.length()),rail.length());amount=snap.value;if(snap.snapped)drag.softSnap=snap;}if(axisSnapEnabled&&inferenceSnapEnabled){const inferred=inferAxisSnap(drag.startMesh,drag.selection,drag.axisLock,amount,rail.length());if(inferred){amount=inferred.delta;drag.inferenceSnap=inferred;}else{const cross=crossObjectMoveSnap(event,drag.startMesh,drag.selection,drag.axisLock);if(cross){total=cross.delta;drag.inferenceSnap={type:cross.type};}}}if(!total)total=WORLD_AXES[drag.axisLock].clone().multiplyScalar(amount);}else{total=now.clone().sub(drag.start);const cross=crossObjectMoveSnap(event,drag.startMesh,drag.selection,null);if(cross){total=cross.delta;drag.inferenceSnap={type:cross.type};}}drag.liveDelta.copy(total);moveSelection(drag.selection,total);}else if(toolMode==='scale'){let factor=THREE.MathUtils.clamp(Math.exp((dx-dy)*.006),.1,5);const giz=globalThis.__boxlabActiveGizmoDrag;if(giz?.tool==='scale'){const snap=softScaleDetent(factor);factor=snap.value;drag.softScaleSnap=snap.snapped?snap:null;}scaleSelection(drag.selection,factor);if(status&&giz?.tool==='scale')status.textContent=`Scale • ${drag.axisLock?drag.axisLock.toUpperCase():'Uniform'} • ${factor.toFixed(2)}×${drag.softScaleSnap?' • detent':''}`;}drag.last=now;renderMesh();});
 canvas.addEventListener('pointerup',event=>{
   if(!componentTapIntent||componentTapIntent.pointerId!==event.pointerId)return;
   const intent=componentTapIntent;componentTapIntent=null;
+  const elapsed=performance.now()-intent.startTime;
+  const moved=Math.hypot(event.clientX-intent.startX,event.clientY-intent.startY);
+  if(intent.cancelled||elapsed>TAP_MAX_MS||moved>TAP_MAX_MOVE)return;
   if(drag?.pointerId===event.pointerId&&drag.kind==='component'){
     if(drag.armed)mesh=drag.startMesh;
     drag=null;controls.enabled=true;
     try{canvas.releasePointerCapture?.(event.pointerId);}catch{}
   }
-  completeModelessComponentTap(intent,event);
+  resetEdgeHoldCycle();
+  toggleSelection(intent.hit);
+  if(intent.hit.type==='edge')selectedEdgeCutT=.5;
+  renderMesh();
 });
 canvas.addEventListener('pointercancel',event=>{if(componentTapIntent?.pointerId===event.pointerId)componentTapIntent=null;});
-window.addEventListener('pointermove',event=>{if(!overlayTapIntent||overlayTapIntent.pointerId!==event.pointerId||overlayTapIntent.cancelled)return;if(Math.hypot(event.clientX-overlayTapIntent.startX,event.clientY-overlayTapIntent.startY)>TAP_MAX_MOVE)overlayTapIntent.cancelled=true;},true);
-window.addEventListener('pointerup',event=>{if(!overlayTapIntent||overlayTapIntent.pointerId!==event.pointerId)return;const intent=overlayTapIntent;overlayTapIntent=null;completeModelessComponentTap(intent,event);},true);
-window.addEventListener('pointercancel',event=>{if(overlayTapIntent?.pointerId===event.pointerId){overlayTapIntent=null;componentTapSeries=null;}},true);
 function endDrag(event){if(!drag||drag.pointerId!==event.pointerId)return;const current=drag;globalThis.__boxlabLastTransformFeedback=current?.kind==='component'?{tool:toolMode,axis:current.axisLock||null,plane:current.planeLock||null,delta:current.liveDelta?.clone?.()||null,softSnap:current.softSnap||null}:null;drag=null;controls.enabled=true;if(current.kind==='vertexBevel'){if(current.preview&&event.type==='pointerup'){history.push(current.startMesh);clearSelection();}else mesh=current.startMesh;}else if(current.kind==='component'&&current.armed){resetEdgeHoldCycle();}renderMesh();if(current.kind==='component'&&current.armed&&event.type==='pointerup'){window.dispatchEvent(new CustomEvent('boxlab-transform-end',{detail:{tool:toolMode,constraint:current.axisLock||current.planeLock||current.gizmoConstraint||'free',pointerId:event.pointerId,owner:'main'}}));}}canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercancel',endDrag);
 
 function transferSelection(nextMode){if(selection?.type==='face'&&nextMode==='edge'){const edgeByKey=new Map(mesh.edges().map((edge,index)=>[mesh.edgeKey(edge.a,edge.b),index])),ids=new Set();selectionIndices().forEach(faceIndex=>{const face=mesh.faces[faceIndex]||[];for(let i=0;i<face.length;i++){const edgeIndex=edgeByKey.get(mesh.edgeKey(face[i],face[(i+1)%face.length]));if(Number.isInteger(edgeIndex))ids.add(edgeIndex);}});return makeSelection('edge',[...ids]);}if(selection?.type==='edge'&&nextMode==='vertex'){const ids=new Set(),edges=mesh.edges();selectionIndices().forEach(edgeIndex=>{const edge=edges[edgeIndex];if(edge){ids.add(edge.a);ids.add(edge.b);}});return makeSelection('vertex',[...ids]);}return null;}
-document.querySelectorAll('#selectionModes button').forEach(btn=>btn.addEventListener('click',()=>{resetEdgeHoldCycle();componentTapSeries=null;const nextMode=btn.dataset.mode,transferred=transferSelection(nextMode);setDirectTool(null);selectionMode=nextMode;selection=selectionMode==='object'?{type:'object',index:0}:transferred;if(selectionMode==='object'){multiSelectEnabled=false;document.querySelector('#multiSelectToggle').checked=false;}selectedEdgeCutT=.5;renderMesh();}));
+document.querySelectorAll('#selectionModes button').forEach(btn=>btn.addEventListener('click',()=>{resetEdgeHoldCycle();cancelFaceHold();const nextMode=btn.dataset.mode,transferred=transferSelection(nextMode);setDirectTool(null);selectionMode=nextMode;selection=selectionMode==='object'?{type:'object',index:0}:transferred;if(selectionMode==='object'){multiSelectEnabled=false;document.querySelector('#multiSelectToggle').checked=false;}selectedEdgeCutT=.5;renderMesh();}));
 document.querySelectorAll('#toolModes button').forEach(btn=>btn.addEventListener('click',()=>{setDirectTool(null);toolMode=btn.dataset.tool;renderMesh();}));
 document.querySelector('#multiSelectToggle').addEventListener('change',e=>{multiSelectEnabled=e.target.checked&&selectionMode!=='object';renderMesh();});document.querySelector('#selectAllBtn').addEventListener('click',selectAllCurrent);document.querySelector('#deselectAllBtn').addEventListener('click',()=>{clearSelection();renderMesh();});
 function withFaceEdit(action){if(selection?.type!=='face'||!selectionCount())return;setDirectTool(null);clearLoopSlide();history.push(mesh);action();renderMesh();}
