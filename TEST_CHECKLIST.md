@@ -2035,3 +2035,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .605: ordinary Edge tap selection/deselection unchanged
 - [ ] Protection .605: finger orbit/pan/zoom unchanged
 - [x] Protection .605: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .606: Edge long-press enters candidate browser
+- [ ] Workflow .606: horizontal scrub advances through Loop candidates
+- [ ] Workflow .606: after Loop candidates, scrub advances into Ring candidates
+- [ ] Workflow .606: reverse scrub returns to earlier candidates before release
+- [ ] Workflow .606: release commits visible candidate
+- [ ] Workflow .606: ambiguous cube-top Loop possibilities are browseable
+- [ ] Workflow .606: Ring appears first when no Loop candidate exists
+- [ ] Workflow .606: additive base selection remains intact while browsing another seed
+- [ ] Regression .606: ordinary Edge tap selection/deselection unchanged
+- [ ] Protection .606: finger orbit/pan/zoom unchanged
+- [x] Protection .606: src/multi-object-transform.js?v=0.36.1.0 unchanged
