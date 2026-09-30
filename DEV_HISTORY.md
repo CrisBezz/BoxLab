@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.608 component gizmo ownership correction
+
+- Fixed component gizmo drag routing after .607 hands-on testing.
+- transform-upgrade now owns Vertex/Edge/Face transforms only when launched by Total Gizmo.
+- Ordinary component viewport drags remain with main.js, removing duplicate gesture ownership.
+- Gizmo handle tool/constraint is authoritative for component gestures.
+- Axis Scale now uses motion projected along the selected gizmo axis.
+- No-drag gizmo clicks no longer toggle component selection before exact entry.
+- Increased invisible gizmo handle hit widths to reduce orbit fall-through.
+- Object gizmo, modeless Edge selection, and protected multi-object-transform remain unchanged.
+
 ## 2026-09-30 — v0.36.18.607 Total Gizmo component integration phase 1
 
 - Parked the accepted .606 modeless Edge candidate browser.
