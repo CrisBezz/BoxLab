@@ -2246,3 +2246,17 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .624: diagnostic-only, no interaction behavior change
 - [x] Protection .624: dormant gizmo change deferred
 - [x] Protection .624: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .625: Vertex Circle appears on initial load
+- [ ] Workflow .625: first Repair/Inspect click performs intended action
+- [ ] Workflow .625: mode switch away/back preserves Circle layout
+- [ ] Workflow .625: Viewport menu includes Gesture Debug toggle
+- [ ] Workflow .625: Gesture Debug defaults OFF
+- [ ] Workflow .625: Gesture Debug ON shows panel
+- [ ] Workflow .625: Gesture Debug OFF hides panel
+- [ ] Workflow .625: Gesture Debug preference survives reload
+- [ ] Regression .625: Vertex/Edge/Face/single Object gizmo unchanged
+- [ ] Regression .625: Group/Multi routing unchanged
+- [x] Protection .625: Circle load order is deterministic
+- [x] Protection .625: permanent debug layer has no EventTarget monkeypatch
+- [x] Protection .625: src/multi-object-transform.js?v=0.36.1.0 unchanged
