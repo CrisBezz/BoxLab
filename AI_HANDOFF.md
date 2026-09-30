@@ -1,56 +1,28 @@
-## v0.36.18.621 — reusable Gesture Debug diagnostic build
+## v0.36.18.622 — lower-level Pencil gesture diagnostics
 
-- .620 hands-on FAIL: Face long-press selection browser did not start.
-- User requested that interaction bugs jump directly to diagnostics rather than repeated speculative fixes.
-- Added reusable src/gesture-debug.js.
-- Debug module exposes:
-  - globalThis.__boxlabGestureDebug.log(stage,detail)
-  - clear()
-  - enable()
-  - disable()
-  - enabled getter
-- .621 enables the overlay visibly for diagnostics.
-- This is a diagnostic-only build: no intended Face Hold or gizmo behavior change.
+- .621 screenshot showed only DEBUG READY after attempted Face hold.
+- Therefore Face press did not reach main.js Face Hold instrumentation or Total Gizmo instrumentation.
+- Capture-listener audit identified pencil-orbit-gate.js as an earlier possible interceptor.
+- Pencil orbit gate treats pressure <= 0 as Pencil hover and stopImmediatePropagation()s pointerdown/move/hover events.
+- On iPad, initial Pencil pointerdown may report pressure 0, so this is a strong suspect.
+- .622 is diagnostic-only; no interaction behavior changed.
 
-Current instrumentation:
-Face Hold in main.js:
-- FACE CANVAS DOWN
-- FACE HOLD REQUEST
-- FACE HOLD REJECT
-- FACE HOLD ARMED
-- FACE HOLD CANCEL MOVE
-- FACE HOLD TIMER
-- FACE HOLD LOST TO DRAG
-- FACE CANDIDATES START
-- FACE CANDIDATES count/kinds
-- FACE HOLD FIRED
-- FACE PREVIEW
-- FACE HOLD POINTERUP
+New diagnostics:
+- gesture-debug.js logs RAW POINTERDOWN at document capture.
+- pencil-orbit-gate.js logs:
+  - PEN HOVER SWALLOW
+  - PEN CANVAS DOWN with pressure/buttons/hover state
 
-Total Gizmo:
-- GIZMO DOWN
-- GIZMO HANDOFF OK / FALLBACK
-- GIZMO FINISH
+Interpretation:
+- RAW POINTERDOWN + PEN HOVER SWALLOW, but no FACE CANVAS DOWN -> Pencil gate is swallowing the press.
+- RAW POINTERDOWN + PEN CANVAS DOWN + FACE CANVAS DOWN -> press reaches Face Hold; investigate timer/candidates.
+- RAW POINTERDOWN targeting gizmo + GIZMO DOWN -> gizmo interception.
+- no RAW POINTERDOWN -> browser/iPad event path issue outside current listeners.
 
-Semantic transform owner:
-- OWNER REQUEST
-- OWNER REJECT EARLY / STATE / EMPTY
-- OWNER BEGIN
-
-Hands-on diagnostic:
-1. Load .621 and confirm GESTURE DEBUG .621 panel appears.
-2. In Face mode, select a face if needed.
-3. Press and hold the face where Face Hold is expected.
-4. Report the last visible lines in the panel or send a screenshot.
-5. Especially note whether trace starts with FACE CANVAS DOWN or GIZMO DOWN.
-6. Do not change gesture timing until trace identifies the owner.
-
-Workflow rule going forward:
-- For interaction/gesture bugs that survive one straightforward correction, add/use Gesture Debug before further behavioral changes.
-- Keep diagnostics reusable rather than creating one-off debug panels.
+Workflow rule retained:
+- interaction bug survives one straightforward fix -> instrument first, change behavior second.
 
 Protected:
-- .615 unified gizmo baseline unchanged.
-- .616 Group/Multi routing unchanged.
-- Edge long-press browser unchanged.
+- .620 Face Hold implementation unchanged.
+- .615/.616 gizmo and Group/Multi baselines unchanged.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
