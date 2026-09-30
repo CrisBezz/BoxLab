@@ -24,6 +24,7 @@ let awaitingTransformEnd=false;
 
 function state(){return globalThis.__boxlabBridgeState||null;}
 function currentMode(){return globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
+function multiObjectTransformActive(){const s=globalThis.__boxlabObjectSelection;return currentMode()==='object'&&!!s?.multi&&(s?.ids?.size||0)>1;}
 function objectSelected(){
   const mgr=globalThis.__boxlabObjectManager;
   if(mgr?.selectedObjects){
@@ -108,18 +109,19 @@ function onHandleDown(event){
   if(hud){clearTimeout(hudHideTimer);hud.hidden=false;hudText.hidden=false;hudText.textContent=`${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;lastSpec=spec;}
   root.querySelectorAll('.tg-handle').forEach(h=>{if(h!==visual)h.classList.add('muted');});
   if(status)status.textContent=`Total Gizmo • ${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;
-  let directComponentHandoff=false;
-  if(mode!=='object'){
+  let directSemanticHandoff=false;
+  if(mode!=='object'||!multiObjectTransformActive()){
     try{
-      directComponentHandoff=!!globalThis.__boxlabTransformUpgrade?.beginGizmoGesture?.(spec,event);
+      directSemanticHandoff=!!globalThis.__boxlabTransformUpgrade?.beginGizmoGesture?.(spec,event);
     }catch(error){
-      directComponentHandoff=false;
+      directSemanticHandoff=false;
     }
-    if(directComponentHandoff){
+    if(directSemanticHandoff){
       try{event.currentTarget?.setPointerCapture?.(event.pointerId);}catch{}
     }
   }
-  if(!directComponentHandoff)syntheticDown(event);
+  // True Multi-object transforms remain on the protected v0.36.1.0 owner.
+  if(!directSemanticHandoff)syntheticDown(event);
   event.preventDefault();
   event.stopPropagation();
 }
@@ -496,5 +498,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.613'
+  version:'0.36.18.615'
 };
