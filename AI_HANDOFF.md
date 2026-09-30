@@ -1,3 +1,15 @@
+## HANDS-ON RESULT — v0.36.18.616 PASS
+
+- User confirmed grouped Object gizmo transforms now work perfectly.
+- .616 becomes the protected Group/Multi gizmo routing baseline.
+- Ownership contract:
+  - 1 effective Object -> .615 semantic single-Object owner
+  - 2+ effective Objects -> established Group/Multi transform owners
+- Group-aware transform logic in object-origin.js remains authoritative.
+- Protected src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+- Preserve .615 unified gizmo behavior for Vertex / Edge / Face / single Object.
+- Resume parked modeless interaction roadmap next.
+
 ## v0.36.18.616 — grouped / multi Object gizmo ownership correction
 
 - .615 unified Vertex / Edge / Face / single Object semantic gizmo ownership and passed hands-on.
