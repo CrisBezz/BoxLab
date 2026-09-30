@@ -1,3 +1,21 @@
+## HANDS-ON RESULT — v0.36.18.615 PASS
+
+- User confirmed .615 works perfectly.
+- .615 becomes the unified semantic gizmo baseline for:
+  - Vertex
+  - Edge
+  - Face
+  - single Object
+- Shared contract is now:
+  - real gizmo pointer event
+  - exact {tool,constraint,kind}
+  - semantic transform owner
+- X/Y/Z, XY/XZ/YZ Plane Move, Free Move, Scale, Rotate and exact entry are now consistent across those modes.
+- True Multi-object transforms intentionally remain on protected src/multi-object-transform.js?v=0.36.1.0.
+- Preserve .614 Face tap-to-remove.
+- Preserve .606 Edge hold/scrub.
+- Do not reintroduce synthetic pointerdown for Vertex/Edge/Face/single Object.
+
 ## v0.36.18.615 — unify single Object with semantic Total Gizmo handoff
 
 - .614 hands-on PASS:
