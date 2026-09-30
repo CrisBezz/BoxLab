@@ -2151,3 +2151,14 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .615: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
 - [x] HANDS-ON .615: unified semantic gizmo confirmed working perfectly
+
+- [ ] Workflow .616: whole Group gizmo Move transforms all members together
+- [ ] Workflow .616: whole Group gizmo Scale transforms all members with existing pivot rules
+- [ ] Workflow .616: whole Group gizmo Rotate transforms all members with existing pivot rules
+- [ ] Workflow .616: Group X/Y/Z Move works
+- [ ] Workflow .616: Group Free Move works
+- [ ] Regression .616: single Object semantic gizmo remains correct from .615
+- [ ] Regression .616: Vertex / Edge / Face gizmo remains correct from .615
+- [ ] Regression .616: ordinary Multi-object Move / Scale / Rotate remains working
+- [x] Protection .616: group transform maths unchanged
+- [x] Protection .616: src/multi-object-transform.js?v=0.36.1.0 unchanged
