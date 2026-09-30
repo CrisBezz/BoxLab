@@ -2101,3 +2101,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Diagnostic .611: .610 established OWNER REQUEST is reached before failure
 - [x] Protection .611: no intentional transform behavior change
 - [x] Protection .611: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Diagnostic .612: Face X Move reaches OWNER BEGIN
+- [ ] Diagnostic .612: Face X Move reports HANDOFF OK
+- [ ] Diagnostic .612: Face X Move reports MOVE and OWNER FINISH
+- [ ] Workflow .612: Face X Move follows X axis rather than fallback free move
+- [ ] Workflow .612: Y/Z Move quick regression
+- [ ] Workflow .612: one component axis Scale quick check
+- [x] Fix .612: SweepPath.editing treated as boolean property
+- [x] Protection .612: src/multi-object-transform.js?v=0.36.1.0 unchanged
