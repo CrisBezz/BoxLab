@@ -1,33 +1,37 @@
-## v0.36.18.604 — modeless Edge Loop ↔ Ring hold cycling
+## v0.36.18.605 — additive modeless Loop/Ring selection sessions
 
-- .603 hands-on PASS:
-  - Edge Pencil long-press Loop selection works well.
-  - strict refusal-to-guess behavior is approved and protected.
-- .604 extends the SAME Edge hold owner:
-  - first long-press on an edge → Loop
-  - repeat long-press on the same seed edge, while the previous modeless result is still the active selection → Ring
-  - repeat again on the same seed/result session → Loop
-- Ordinary tap is NOT used for cycling, so existing Edge tap select/deselect behavior remains intact.
-- Changing seed edge, background-deselecting, transforming, or changing selection mode resets the cycle to Loop-first.
-- Loop still uses the existing strict Loop selector.
-- Ring still uses the existing Ring selector.
-- No duplicate topology tracing was added in main.js.
-- Finger/touch remains excluded from Edge hold gestures, protecting one-finger orbit.
-- .602 gizmo soft-catch behavior remains unchanged.
-- .601 Files-based Nomad handoff remains unchanged.
-- HTML shell, main.js pin and version.json are synced to 0.36.18.604.
+- .604 hands-on PASS for Loop ↔ Ring cycling on the same seed.
+- User identified the missing interaction: adding additional modeless Loop/Ring results to the current selection.
+- .605 makes Edge hold selection additive:
+  - long-press seed A → Loop A
+  - long-press seed B → existing selection + Loop B
+  - long-press seed C → existing selection + Loop C
+- Same-seed cycling remains local to that seed contribution:
+  - if seed B was last added as Loop B, repeat hold B replaces only B's contribution with Ring B
+  - repeat again replaces only B's contribution with Loop B
+  - the previously accumulated base selection remains intact
+- The hold owner snapshots the base selection before invoking the existing Loop/Ring selector, then merges the proven selector result back into the base.
+- Ambiguous / failed Loop or Ring selection:
+  - does not erase the existing base selection
+  - resets the cycle rather than guessing
+- Background tap still clears the entire selection/session.
+- Ordinary Edge tap select/deselect remains unchanged.
+- Finger/touch remains excluded from hold gestures.
+- Existing Loop and Ring commands remain the topology authorities; no duplicate tracing logic added.
+- .602 gizmo soft catches and .601 Files-based Nomad handoff remain unchanged.
+- HTML shell, main.js pin and version.json are synced to 0.36.18.605.
 - Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
 
 Hands-on check:
-1. Confirm .604 loads and stays .604.
-2. Edge mode: long-press a clean seed edge → Loop selects.
-3. Long-press the same seed edge again → Ring selects.
-4. Long-press the same seed edge again → Loop selects again.
-5. Change to another seed edge → first long-press must start with Loop again.
-6. Tap background to deselect, then long-press → starts with Loop again.
-7. Ordinary Edge tap select/deselect remains unchanged.
-8. Finger orbit/pan/zoom remains unchanged.
-9. Ambiguous Loop topology must still refuse rather than guess.
+1. Confirm .605 loads and stays .605.
+2. Long-press seed A → Loop A.
+3. Long-press a different seed B → Loop A + Loop B.
+4. Long-press seed B again → Loop A + Ring B.
+5. Long-press seed B again → Loop A + Loop B.
+6. Add a third seed C and confirm all accumulated selections remain.
+7. Try an ambiguous seed: existing selection should remain untouched.
+8. Background tap clears everything.
+9. Ordinary Edge tap and finger navigation remain unchanged.
 
 Next:
-- If .604 passes, move to component Total Gizmo integration before adding more modeless transform gestures.
+- If .605 passes, park modeless Edge selection and begin Vertex / Edge / Face Total Gizmo integration.
