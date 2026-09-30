@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.606 hold + scrub Loop/Ring candidate browser
+
+- Added an in-gesture modeless candidate browser for Edge long-press.
+- Long-press enters candidate mode; horizontal Pencil scrub advances through valid Loop candidates, then Ring candidates; release commits.
+- Ambiguous Loop topology is no longer refused outright: directed candidates are enumerated by feeding seed + neighbouring hint edges through the existing two-edge Loop resolver.
+- Strict single-seed Loop remains first when valid.
+- Ring is used automatically when no Loop candidate exists.
+- Candidate results are deduplicated.
+- Additive base selection survives while the held seed contribution is previewed/replaced.
+- No new topology solver was added; existing strict Loop, directed Loop, and Ring commands remain authoritative.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.605 additive modeless Loop/Ring selection
 
 - Extended .604 modeless Loop/Ring hold cycling into additive selection sessions.
