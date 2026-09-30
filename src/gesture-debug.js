@@ -1,6 +1,7 @@
-const MAX_LINES=14;
-let enabled=true;
+const MAX_LINES=18;
+let enabled=false;
 let panel=null,body=null,seq=0;
+const PREF_KEY='boxlab-gesture-debug';
 
 function ensurePanel(){
   if(panel||!enabled)return;
@@ -15,7 +16,7 @@ function ensurePanel(){
     'pointer-events:none','box-shadow:0 8px 24px rgba(0,0,0,.35)'
   ].join(';');
   const title=document.createElement('div');
-  title.textContent='GESTURE DEBUG .621';
+  title.textContent='GESTURE DEBUG';
   title.style.cssText='font-weight:800;margin-bottom:5px;opacity:.9';
   body=document.createElement('div');
   panel.append(title,body);
@@ -43,79 +44,28 @@ function log(stage,detail=null){
   while(body?.children.length>MAX_LINES)body.lastElementChild?.remove();
 }
 function clear(){if(body)body.textContent='';seq=0;}
-function enable(){enabled=true;ensurePanel();log('DEBUG ENABLED');}
-function disable(){enabled=false;panel?.remove();panel=null;body=null;}
-globalThis.__boxlabGestureDebug={log,clear,enable,disable,get enabled(){return enabled;}};
-queueMicrotask(()=>{ensurePanel();log('DEBUG READY');});
+function setEnabled(next,{persist=true}={}){
+  enabled=!!next;
+  if(persist){try{localStorage.setItem(PREF_KEY,enabled?'1':'0');}catch{}}
+  if(enabled){ensurePanel();log('DEBUG ENABLED');}
+  else{panel?.remove();panel=null;body=null;seq=0;}
+  window.dispatchEvent(new CustomEvent('boxlab-gesture-debug-change',{detail:{enabled}}));
+  return enabled;
+}
+function enable(){return setEnabled(true);}
+function disable(){return setEnabled(false);}
+function toggle(){return setEnabled(!enabled);}
+try{enabled=localStorage.getItem(PREF_KEY)==='1';}catch{}
+globalThis.__boxlabGestureDebug={log,clear,enable,disable,toggle,setEnabled,get enabled(){return enabled;}};
+queueMicrotask(()=>{if(enabled){ensurePanel();log('DEBUG READY');}});
 
 document.addEventListener('pointerdown',event=>{
-  log('RAW POINTERDOWN',{
-    pointer:event.pointerType,
-    pid:event.pointerId,
-    pressure:event.pressure,
-    buttons:event.buttons,
-    target:event.target?.id||event.target?.tagName||'unknown'
-  });
+  log('RAW POINTERDOWN',{pointer:event.pointerType,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
 },true);
-
 const debugCanvas=document.querySelector('#viewport');
 debugCanvas?.addEventListener('pointerdown',event=>{
-  log('RAW CANVAS CAPTURE',{
-    pointer:event.pointerType,
-    pid:event.pointerId,
-    pressure:event.pressure,
-    buttons:event.buttons,
-    target:event.target?.id||event.target?.tagName||'unknown'
-  });
+  log('RAW CANVAS CAPTURE',{pointer:event.pointerType,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
 },{capture:true});
 debugCanvas?.addEventListener('pointerdown',event=>{
-  log('RAW CANVAS BUBBLE',{
-    pointer:event.pointerType,
-    pid:event.pointerId,
-    pressure:event.pressure,
-    buttons:event.buttons,
-    target:event.target?.id||event.target?.tagName||'unknown'
-  });
+  log('RAW CANVAS BUBBLE',{pointer:event.pointerType,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
 });
-
-const captureCanvas=document.querySelector('#viewport');
-const nativeAddEventListener=EventTarget.prototype.addEventListener;
-const nativeRemoveEventListener=EventTarget.prototype.removeEventListener;
-const wrappedCaptureListeners=new WeakMap();
-let captureListenerSeq=0;
-function captureOption(options){
-  return options===true || !!(options&&typeof options==='object'&&options.capture);
-}
-EventTarget.prototype.addEventListener=function(type,listener,options){
-  if(this===captureCanvas&&type==='pointerdown'&&captureOption(options)&&listener){
-    const id=++captureListenerSeq;
-    const label=typeof listener==='function'?(listener.name||'anonymous'):(listener?.handleEvent?.name||'handleEvent');
-    let stack='';
-    try{stack=(new Error()).stack?.split('\n').slice(2,5).join(' | ')||'';}catch{}
-    log('CAPTURE LISTENER REGISTER',{id,label,stack});
-    const wrapped=typeof listener==='function'
-      ? function(event){
-          log('CAPTURE ENTER',{id,label,pid:event.pointerId,target:event.target?.id||event.target?.tagName||'unknown'});
-          const before=event.cancelBubble;
-          const result=listener.call(this,event);
-          log('CAPTURE EXIT',{id,label,cancelBefore:before,cancelAfter:event.cancelBubble});
-          return result;
-        }
-      : {
-          handleEvent(event){
-            log('CAPTURE ENTER',{id,label,pid:event.pointerId,target:event.target?.id||event.target?.tagName||'unknown'});
-            const before=event.cancelBubble;
-            const result=listener.handleEvent(event);
-            log('CAPTURE EXIT',{id,label,cancelBefore:before,cancelAfter:event.cancelBubble});
-            return result;
-          }
-        };
-    wrappedCaptureListeners.set(listener,wrapped);
-    return nativeAddEventListener.call(this,type,wrapped,options);
-  }
-  return nativeAddEventListener.call(this,type,listener,options);
-};
-EventTarget.prototype.removeEventListener=function(type,listener,options){
-  const wrapped=wrappedCaptureListeners.get(listener);
-  return nativeRemoveEventListener.call(this,type,wrapped||listener,options);
-};
