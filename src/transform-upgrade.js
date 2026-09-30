@@ -32,7 +32,6 @@ function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event
 function axisVector(axis){return new THREE.Vector3(axis==='x'?1:0,axis==='y'?1:0,axis==='z'?1:0);}
 function explicitAxis(){const gizmo=globalThis.__boxlabTotalGizmo?.activeConstraint?.();if(['x','y','z'].includes(gizmo))return gizmo;return ['x','y','z'].includes(constraint)?constraint:null;}
 function activeGizmoSpec(){return globalThis.__boxlabActiveGizmoDrag||globalThis.__boxlabTotalGizmo?.activeDragSpec?.()||null;}
-function gizmoDebug(stage,detail=''){globalThis.__boxlabGizmoDebug?.(stage,detail);}
 function softAngleDetent(deg){
   const targets=[0,5,15,30,45,60,90,120,135,180];
   const sign=deg<0?-1:1,abs=Math.abs(deg);
@@ -147,19 +146,18 @@ function startGesture(event){
   canvas.setPointerCapture?.(event.pointerId);
 }
 function beginGizmoGesture(spec,event){
-  gizmoDebug('OWNER REQUEST',mode()+' • '+(spec?.tool||'?')+' • '+(spec?.constraint||'?')+' • pid '+event?.pointerId);
   if(!spec||!event||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return false;
   const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected();
-  if(!['vertex','edge','face'].includes(m)||!mesh||!camera){gizmoDebug('OWNER REJECT','mode='+m+' mesh='+!!mesh+' camera='+!!camera);return false;}
+  if(!['vertex','edge','face'].includes(m)||!mesh||!camera){return false;}
   const t=spec.tool,axis=['x','y','z'].includes(spec.constraint)?spec.constraint:null;
-  if(!['move','scale','rotate'].includes(t)){gizmoDebug('OWNER REJECT','bad tool '+t);return false;}
+  if(!['move','scale','rotate'].includes(t)){return false;}
   const indices=selectionVertices(mesh,m,ids);
-  if(!indices.length){gizmoDebug('OWNER REJECT','no component verts • ids '+ids.length);return false;}
+  if(!indices.length){return false;}
   const c=center(mesh,indices),normal=new THREE.Vector3();
   camera.getWorldDirection(normal).normalize();
   const plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,c);
   const start=planePoint(event,plane,camera);
-  if(!start){gizmoDebug('OWNER REJECT','no start plane hit');return false;}
+  if(!start){return false;}
   const cs=screenPoint(c,camera);
   gesture={
     id:event.pointerId,mesh,camera,m,ids,indices,hitIndex:ids[0]??0,t,
@@ -172,13 +170,12 @@ function beginGizmoGesture(spec,event){
     original:new Map(indices.map(i=>[i,mesh.vertices[i].clone()])),
     before:mesh.clone(),changed:false,snap:null
   };
-  gizmoDebug('OWNER BEGIN',m+' • '+t+' • '+(axis||spec.constraint||'free')+' • verts '+indices.length+' • pid '+event.pointerId);
   if(status)status.textContent=`Component Gizmo • ${t[0].toUpperCase()+t.slice(1)} • ${axis?axis.toUpperCase():spec.constraint==='free'?'Free':spec.constraint}`;
   return true;
 }
 document.addEventListener('pointerdown',startGesture,true);
 
-document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==event.pointerId)return;gizmoDebug('MOVE',g.m+' • '+g.t+' • '+(g.axis||g.gizmoConstraint||'free')+' • dx '+(event.clientX-g.startX).toFixed(0)+' dy '+(event.clientY-g.startY).toFixed(0)+' • pid '+event.pointerId);event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);if(!g.changed&&d.length()<DRAG_THRESHOLD)return;if(!g.changed){g.changed=true;globalThis.__boxlabHistory?.push(g.before);if(g.auto||axisSnapOn())g.axis=chooseAxis(d,g.axes);}restore(g);if(g.t==='move'){let delta;if(g.axis)delta=axisVector(g.axis).multiplyScalar(axisAmount(g,d));else{const now=planePoint(event,g.plane,g.camera);if(!now)return;delta=now.sub(g.start);}const inferred=applyReferenceInference(g,delta,event);delta=inferred.delta;g.snap=inferred.snap;g.indices.forEach(i=>g.mesh.vertices[i].add(delta));if(status)status.textContent=`Move • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'Auto':'Free'}${g.snap?` • Reference ${g.snap.type}`:''}`;}else if(g.t==='scale'){
+document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-g.startX,dy=event.clientY-g.startY,d=new THREE.Vector2(dx,dy);if(!g.changed&&d.length()<DRAG_THRESHOLD)return;if(!g.changed){g.changed=true;globalThis.__boxlabHistory?.push(g.before);if(g.auto||axisSnapOn())g.axis=chooseAxis(d,g.axes);}restore(g);if(g.t==='move'){let delta;if(g.axis)delta=axisVector(g.axis).multiplyScalar(axisAmount(g,d));else{const now=planePoint(event,g.plane,g.camera);if(!now)return;delta=now.sub(g.start);}const inferred=applyReferenceInference(g,delta,event);delta=inferred.delta;g.snap=inferred.snap;g.indices.forEach(i=>g.mesh.vertices[i].add(delta));if(status)status.textContent=`Move • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'Auto':'Free'}${g.snap?` • Reference ${g.snap.type}`:''}`;}else if(g.t==='scale'){
   clearRefVisual();
   let gestureAmount;
   if(g.gizmoOwned&&g.axis){
@@ -198,7 +195,7 @@ document.addEventListener('pointermove',event=>{const g=gesture;if(!g||g.id!==ev
   });
   if(status)status.textContent=`Scale • ${g.axis?g.axis.toUpperCase():g.auto?'Auto → Uniform':'Uniform'} • ${factor.toFixed(2)}×${detent.snapped?' • detent':''}`;
 }else{clearRefVisual();const cv=new THREE.Vector2(event.clientX,event.clientY).sub(g.centerScreen);let angle;if(g.startVector.length()>18&&cv.length()>18){const a=g.startVector.clone().normalize(),b=cv.clone().normalize();angle=Math.atan2(a.x*b.y-a.y*b.x,THREE.MathUtils.clamp(a.dot(b),-1,1));}else angle=dx*.012;const giz=activeGizmoSpec();let deg=THREE.MathUtils.radToDeg(angle),detent={value:deg,snapped:false};if(giz?.tool==='rotate'){detent=softAngleDetent(deg);deg=detent.value;angle=THREE.MathUtils.degToRad(deg);}else if(angleSnap){deg=Math.round(deg/15)*15;angle=THREE.MathUtils.degToRad(deg);}const av=g.axis?axisVector(g.axis):(()=>{const a=new THREE.Vector3();g.camera.getWorldDirection(a);return a.normalize();})(),q=new THREE.Quaternion().setFromAxisAngle(av,angle);g.indices.forEach(i=>g.mesh.vertices[i].sub(g.center).applyQuaternion(q).add(g.center));if(status)status.textContent=`Rotate • ${g.axis?g.axis.toUpperCase():g.auto?'Auto → View':'View'} • ${deg.toFixed(1)}°${detent.snapped?' • detent':''}`;}render();},true);
-function finish(event){const g=gesture;if(!g||g.id!==event.pointerId)return;gizmoDebug('OWNER FINISH',g.m+' • '+g.t+' • changed '+g.changed+' • '+event.type+' • pid '+event.pointerId);event.preventDefault();event.stopImmediatePropagation();clearRefVisual();if(event.type==='pointercancel'&&g.changed){restore(g);render();}else if(event.type==='pointerup'&&!g.changed&&!g.gizmoOwned&&g.m!=='object'&&Number.isInteger(g.hitIndex)){const current=selected();bridge()?.set?.(g.m,current.filter(i=>i!==g.hitIndex));if(status)status.textContent=`${g.m[0].toUpperCase()+g.m.slice(1)} selection toggled • ${g.t[0].toUpperCase()+g.t.slice(1)} still armed`;}gesture=null;if(g.changed&&status)status.textContent=`${g.t[0].toUpperCase()+g.t.slice(1)} committed${g.snap?` • reference ${g.snap.type}`:''} • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'auto':'free'} • selection preserved`;if(g.changed&&event.type==='pointerup'){
+function finish(event){const g=gesture;if(!g||g.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();clearRefVisual();if(event.type==='pointercancel'&&g.changed){restore(g);render();}else if(event.type==='pointerup'&&!g.changed&&!g.gizmoOwned&&g.m!=='object'&&Number.isInteger(g.hitIndex)){const current=selected();bridge()?.set?.(g.m,current.filter(i=>i!==g.hitIndex));if(status)status.textContent=`${g.m[0].toUpperCase()+g.m.slice(1)} selection toggled • ${g.t[0].toUpperCase()+g.t.slice(1)} still armed`;}gesture=null;if(g.changed&&status)status.textContent=`${g.t[0].toUpperCase()+g.t.slice(1)} committed${g.snap?` • reference ${g.snap.type}`:''} • ${g.axis?g.axis.toUpperCase():g.auto||axisSnapOn()?'auto':'free'} • selection preserved`;if(g.changed&&event.type==='pointerup'){
   if(g.t==='rotate'&&g.m==='object'){
     globalThis.__boxlabTotalGizmo?.completeExactEntry?.({
       tool:'rotate',
