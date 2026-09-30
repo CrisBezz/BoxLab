@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.620 Face long-press selection browser
+
+- Abandoned and fully removed the failed .617-.619 double/triple-tap experiment.
+- Restored clean single-tap component selection behavior.
+- Added Face long-press + horizontal scrub selection browser using the proven Edge hold architecture.
+- Candidate selectors are existing Face Loop, Face Ring, Coplanar Region and Connected Shell tools.
+- Invalid and duplicate candidates are skipped.
+- Existing selection is preserved additively while browsing.
+- Gizmo and Group/Multi baselines unchanged.
+
 ## 2026-09-30 — v0.36.18.619 modeless tap continuation through gizmo overlay
 
 - .618 failed because tap #2 often landed on the newly visible Total Gizmo instead of the canvas.
