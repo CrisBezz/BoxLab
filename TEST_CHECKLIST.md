@@ -2015,3 +2015,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Protection .603: finger orbit/pan/zoom unchanged
 - [x] Protection .603: src/multi-object-transform.js?v=0.36.1.0 unchanged
 - [x] Behavior .603: ambiguous Loop continuation refuses selection rather than guessing
+
+- [ ] Workflow .604: first Edge long-press selects Loop
+- [ ] Workflow .604: repeat long-press same seed selects Ring
+- [ ] Workflow .604: third long-press same seed cycles back to Loop
+- [ ] Workflow .604: changing seed resets cycle to Loop-first
+- [ ] Workflow .604: background deselect resets cycle to Loop-first
+- [ ] Regression .604: ordinary Edge tap selection/deselection unchanged
+- [ ] Regression .604: ambiguous Loop still refuses rather than guesses
+- [ ] Protection .604: finger orbit/pan/zoom unchanged
+- [x] Protection .604: src/multi-object-transform.js?v=0.36.1.0 unchanged
