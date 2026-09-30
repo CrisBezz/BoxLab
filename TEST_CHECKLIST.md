@@ -2179,3 +2179,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .617: Group/Multi gizmo routing unchanged from .616
 - [x] Protection .617: no new topology solver
 - [x] Protection .617: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .618: Face double-tap Grow works
+- [ ] Workflow .618: Face triple-tap Connected works
+- [ ] Workflow .618: Edge double/triple tap works
+- [ ] Workflow .618: Vertex double/triple tap works
+- [ ] Regression .618: single-tap selected component still removes
+- [ ] Regression .618: deliberate component drag transforms without selection toggle
+- [ ] Regression .618: Edge long-press/scrub unchanged
+- [ ] Regression .618: gizmo and Group/Multi routing unchanged
+- [x] Protection .618: one owner for component tap semantics
+- [x] Protection .618: src/multi-object-transform.js?v=0.36.1.0 unchanged
