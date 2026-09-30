@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.621 reusable Gesture Debug layer
+
+- .620 Face long-press failed hands-on.
+- Added reusable gesture-debug.js instead of another speculative gesture change.
+- Instrumented Face Hold, Total Gizmo and semantic transform ownership.
+- Diagnostic-only build; no intended interaction behavior change.
+- New workflow rule: after one failed straightforward interaction fix, use Gesture Debug before further behavioral changes.
+
 ## 2026-09-30 — v0.36.18.620 Face long-press selection browser
 
 - Abandoned and fully removed the failed .617-.619 double/triple-tap experiment.
