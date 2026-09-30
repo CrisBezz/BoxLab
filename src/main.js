@@ -25,7 +25,7 @@ const vertexMaterial=new THREE.MeshBasicMaterial({color:0xf2f5fa}),selectedVerte
 const axisLineMaterials={x:new THREE.LineBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.LineBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.LineBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.LineBasicMaterial({color:0xffffff,depthTest:false})};
 const axisOverlayMaterials={x:new THREE.MeshBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.MeshBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.MeshBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false})};
 const activeLoopMaterial=new THREE.LineBasicMaterial({color:0x62d8ff,transparent:true,opacity:1,depthTest:false}),currentLoopMaterial=new THREE.LineBasicMaterial({color:0xffe14a,transparent:true,opacity:1,depthTest:false}),creaseEdgeMaterial=new THREE.LineBasicMaterial({color:0xffb65c,transparent:true,opacity:1}),mirrorEdgeMaterial=new THREE.LineBasicMaterial({color:0x8791a2,transparent:true,opacity:.32});
-const raycaster=new THREE.Raycaster();raycaster.params.Line.threshold=.09;const pointer=new THREE.Vector2();let drag=null,backgroundTap=null,edgeHold=null,edgeHoldCycle=null,componentTapIntent=null,componentTapSeries=null;
+const raycaster=new THREE.Raycaster();raycaster.params.Line.threshold=.09;const pointer=new THREE.Vector2();let drag=null,backgroundTap=null,edgeHold=null,edgeHoldCycle=null,componentTapIntent=null,componentTapSeries=null,overlayTapIntent=null;
 const EDIT_DRAG_THRESHOLD=8,INFERENCE_SNAP_PX=10,PLANE_EPSILON=1e-5,TAP_MAX_MS=320,TAP_MAX_MOVE=12,TAP_CHAIN_MS=360,TAP_CHAIN_MOVE=22,EDGE_HOLD_MS=420,EDGE_HOLD_MOVE=7,EDGE_SCRUB_STEP=32,WORLD_AXES={x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)};
 const gesture={active:false,maxTouches:0,startedAt:0,starts:new Map(),moved:false};
 
@@ -60,6 +60,37 @@ function invokeModelessSelectionExpansion(kind,hit){
   button.click();
   return true;
 }
+function completeModelessComponentTap(intent,event){
+  if(!intent||!event)return false;
+  const elapsed=performance.now()-intent.startTime,moved=Math.hypot(event.clientX-intent.startX,event.clientY-intent.startY);
+  if(intent.cancelled||elapsed>TAP_MAX_MS||moved>TAP_MAX_MOVE){componentTapSeries=null;return false;}
+  resetEdgeHoldCycle();
+  const taps=nextComponentTapCount(intent.hit,event);
+  if(taps===1){
+    if(intent.wasSelected){
+      toggleSelection(intent.hit);
+      if(intent.hit.type==='edge')selectedEdgeCutT=.5;
+      renderMesh();
+    }
+    return true;
+  }
+  if(taps===2){
+    invokeModelessSelectionExpansion('grow',intent.hit);
+    return true;
+  }
+  invokeModelessSelectionExpansion('connected',intent.hit);
+  componentTapSeries=null;
+  return true;
+}
+function claimModelessGizmoTap(event){
+  const prior=componentTapSeries;
+  if(!prior||selectionMode==='object'||!event?.isPrimary)return false;
+  const age=performance.now()-prior.at,dist=Math.hypot(event.clientX-prior.x,event.clientY-prior.y);
+  if(age>TAP_CHAIN_MS||dist>TAP_CHAIN_MOVE)return false;
+  overlayTapIntent={pointerId:event.pointerId,hit:{...prior.hit},wasSelected:selectionHas(prior.hit.type,prior.hit.index),startX:event.clientX,startY:event.clientY,startTime:performance.now(),cancelled:false};
+  return true;
+}
+globalThis.__boxlabModelessTap={claimGizmoPointerDown:claimModelessGizmoTap};
 function sameEdgeSelectionSignature(indices){
   return [...new Set(indices||[])].sort((a,b)=>a-b).join(',');
 }
@@ -280,32 +311,17 @@ canvas.addEventListener('pointermove',event=>{if(!drag||drag.pointerId!==event.p
 canvas.addEventListener('pointerup',event=>{
   if(!componentTapIntent||componentTapIntent.pointerId!==event.pointerId)return;
   const intent=componentTapIntent;componentTapIntent=null;
-  const elapsed=performance.now()-intent.startTime;
-  const moved=Math.hypot(event.clientX-intent.startX,event.clientY-intent.startY);
-  if(intent.cancelled||elapsed>TAP_MAX_MS||moved>TAP_MAX_MOVE){componentTapSeries=null;return;}
   if(drag?.pointerId===event.pointerId&&drag.kind==='component'){
     if(drag.armed)mesh=drag.startMesh;
     drag=null;controls.enabled=true;
     try{canvas.releasePointerCapture?.(event.pointerId);}catch{}
   }
-  resetEdgeHoldCycle();
-  const taps=nextComponentTapCount(intent.hit,event);
-  if(taps===1){
-    if(intent.wasSelected){
-      toggleSelection(intent.hit);
-      if(intent.hit.type==='edge')selectedEdgeCutT=.5;
-      renderMesh();
-    }
-    return;
-  }
-  if(taps===2){
-    invokeModelessSelectionExpansion('grow',intent.hit);
-    return;
-  }
-  invokeModelessSelectionExpansion('connected',intent.hit);
-  componentTapSeries=null;
+  completeModelessComponentTap(intent,event);
 });
 canvas.addEventListener('pointercancel',event=>{if(componentTapIntent?.pointerId===event.pointerId)componentTapIntent=null;});
+window.addEventListener('pointermove',event=>{if(!overlayTapIntent||overlayTapIntent.pointerId!==event.pointerId||overlayTapIntent.cancelled)return;if(Math.hypot(event.clientX-overlayTapIntent.startX,event.clientY-overlayTapIntent.startY)>TAP_MAX_MOVE)overlayTapIntent.cancelled=true;},true);
+window.addEventListener('pointerup',event=>{if(!overlayTapIntent||overlayTapIntent.pointerId!==event.pointerId)return;const intent=overlayTapIntent;overlayTapIntent=null;completeModelessComponentTap(intent,event);},true);
+window.addEventListener('pointercancel',event=>{if(overlayTapIntent?.pointerId===event.pointerId){overlayTapIntent=null;componentTapSeries=null;}},true);
 function endDrag(event){if(!drag||drag.pointerId!==event.pointerId)return;const current=drag;globalThis.__boxlabLastTransformFeedback=current?.kind==='component'?{tool:toolMode,axis:current.axisLock||null,plane:current.planeLock||null,delta:current.liveDelta?.clone?.()||null,softSnap:current.softSnap||null}:null;drag=null;controls.enabled=true;if(current.kind==='vertexBevel'){if(current.preview&&event.type==='pointerup'){history.push(current.startMesh);clearSelection();}else mesh=current.startMesh;}else if(current.kind==='component'&&current.armed){resetEdgeHoldCycle();}renderMesh();if(current.kind==='component'&&current.armed&&event.type==='pointerup'){window.dispatchEvent(new CustomEvent('boxlab-transform-end',{detail:{tool:toolMode,constraint:current.axisLock||current.planeLock||current.gizmoConstraint||'free',pointerId:event.pointerId,owner:'main'}}));}}canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercancel',endDrag);
 
 function transferSelection(nextMode){if(selection?.type==='face'&&nextMode==='edge'){const edgeByKey=new Map(mesh.edges().map((edge,index)=>[mesh.edgeKey(edge.a,edge.b),index])),ids=new Set();selectionIndices().forEach(faceIndex=>{const face=mesh.faces[faceIndex]||[];for(let i=0;i<face.length;i++){const edgeIndex=edgeByKey.get(mesh.edgeKey(face[i],face[(i+1)%face.length]));if(Number.isInteger(edgeIndex))ids.add(edgeIndex);}});return makeSelection('edge',[...ids]);}if(selection?.type==='edge'&&nextMode==='vertex'){const ids=new Set(),edges=mesh.edges();selectionIndices().forEach(edgeIndex=>{const edge=edges[edgeIndex];if(edge){ids.add(edge.a);ids.add(edge.b);}});return makeSelection('vertex',[...ids]);}return null;}
