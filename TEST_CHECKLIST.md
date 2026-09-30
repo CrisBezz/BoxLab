@@ -2096,3 +2096,8 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Diagnostic .610: release reports OWNER FINISH and GIZMO POINTERUP
 - [x] Protection .610: no intentional transform behavior change
 - [x] Protection .610: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Diagnostic .611: Face X Move reports HANDOFF EXCEPTION with exact error text
+- [x] Diagnostic .611: .610 established OWNER REQUEST is reached before failure
+- [x] Protection .611: no intentional transform behavior change
+- [x] Protection .611: src/multi-object-transform.js?v=0.36.1.0 unchanged
