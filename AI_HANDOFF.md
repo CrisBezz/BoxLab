@@ -1,65 +1,34 @@
-## HANDS-ON RESULT — v0.36.18.615 PASS
+## v0.36.18.616 — grouped / multi Object gizmo ownership correction
 
-- User confirmed .615 works perfectly.
-- .615 becomes the unified semantic gizmo baseline for:
-  - Vertex
-  - Edge
-  - Face
-  - single Object
-- Shared contract is now:
-  - real gizmo pointer event
-  - exact {tool,constraint,kind}
-  - semantic transform owner
-- X/Y/Z, XY/XZ/YZ Plane Move, Free Move, Scale, Rotate and exact entry are now consistent across those modes.
-- True Multi-object transforms intentionally remain on protected src/multi-object-transform.js?v=0.36.1.0.
-- Preserve .614 Face tap-to-remove.
-- Preserve .606 Edge hold/scrub.
-- Do not reintroduce synthetic pointerdown for Vertex/Edge/Face/single Object.
+- .615 unified Vertex / Edge / Face / single Object semantic gizmo ownership and passed hands-on.
+- New hands-on issue:
+  - when a GROUP is selected, the gizmo acts only on the active object instead of the whole group.
+- Root cause:
+  - .615 classified multi-object ownership using __boxlabObjectSelection.multi.
+  - object-origin.js intentionally masks .multi in some group/pivot transform contexts.
+  - grouped selections can therefore expose multiple effective object ids while .multi is false.
+  - .615 then incorrectly routed them into the single-Object semantic owner.
+- .616 changes ownership classification only:
+  - Object mode is "single Object" only when effective selection ids.size <= 1.
+  - Any Object selection with ids.size > 1 is routed away from transform-upgrade's single-object owner and back through the established synthetic canvas route.
+  - This includes ordinary Multi and Group-expanded selection.
+- Existing group-aware transform owner in object-origin.js remains authoritative.
+- Existing protected src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+- No group transform maths, origin maths or pivot rules changed.
+- .615 single Object semantic gizmo path remains unchanged.
+- .614 Face deselect and component Plane Move remain unchanged.
+- Planned modeless .616 work was deferred; this bugfix owns the .616 version.
 
-## v0.36.18.615 — unify single Object with semantic Total Gizmo handoff
+Hands-on checks:
+1. Select a whole Group -> gizmo Move should move all group members together.
+2. Group Scale should affect all members using existing group pivot rules.
+3. Group Rotate should affect all members using existing group pivot rules.
+4. Group X/Y/Z Move regression.
+5. Group Free Move regression.
+6. Single Object gizmo remains exactly as .615.
+7. Vertex/Edge/Face gizmo remains exactly as .615.
+8. Ordinary Multi-object Move/Scale/Rotate regression.
+9. Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
 
-- .614 hands-on PASS:
-  - Face tap-to-remove works.
-  - Component Plane Move works correctly.
-- User identified Object Plane Move still behaved differently.
-- Architecture audit confirmed:
-  - Vertex / Edge / Face use direct semantic Total Gizmo handoff.
-  - single Object previously still used the older synthetic canvas pointerdown path.
-  - true Multi-object transforms are owned by protected src/multi-object-transform.js?v=0.36.1.0.
-
-.615 change:
-- Single Object mode now uses the same semantic gizmo contract as components:
-  - real gizmo handle pointer event
-  - exact {tool,constraint,kind}
-  - direct call to transform-upgrade.beginGizmoGesture(spec,event)
-- This gives single Object the same real world-plane Move semantics:
-  - XY keeps Z fixed
-  - XZ keeps Y fixed
-  - YZ keeps X fixed
-- Move / Scale / Rotate continue through transform-upgrade for single Object.
-- Existing exact-entry logic remains in transform-upgrade.
-- True Multi-object selection is explicitly detected as:
-  - object mode
-  - __boxlabObjectSelection.multi
-  - selected ids.size > 1
-- True Multi keeps the previous synthetic pointerdown route so protected multi-object-transform.js remains the owner.
-- No changes to src/multi-object-transform.js?v=0.36.1.0.
-- No changes to .614 Face deselect or component Plane Move behavior.
-- HTML shell, Total Gizmo pin, transform-upgrade pin and version.json synced to 0.36.18.615.
-
-Hands-on check:
-1. Single Object X/Y/Z Move regression.
-2. Single Object XY Plane Move -> Z fixed.
-3. Single Object XZ Plane Move -> Y fixed.
-4. Single Object YZ Plane Move -> X fixed.
-5. Single Object Free Move regression.
-6. Single Object axis/uniform Scale regression.
-7. Single Object Rotate regression.
-8. Single Object floating exact-entry regression.
-9. Component Face/Edge/Vertex gizmo regression from .614.
-10. Face tap-to-remove regression from .614.
-11. True Multi-object Move / Scale / Rotate regression: must remain on protected owner.
-
-Architecture note:
-- Semantic gizmo front-end is now shared by Vertex / Edge / Face / single Object.
-- True Multi-object remains the one deliberate exception until/unless its protected owner gets a safe semantic entry point.
+Next after PASS:
+- Resume parked modeless interaction roadmap.
