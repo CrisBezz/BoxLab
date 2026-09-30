@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.612 component gizmo owner exception fix
+
+- .611 diagnostics revealed transform-upgrade called SweepPath.editing as a function even though it is a boolean getter.
+- Fixed both transform entry guards to read SweepPath.editing as a property.
+- This removes the exception that prevented direct component gizmo ownership from reaching OWNER BEGIN.
+- Diagnostic panel retained for verification.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.611 component gizmo exception capture
 
 - .610 proved the gizmo handle reaches transform-upgrade OWNER REQUEST, but the owner throws before OWNER BEGIN/return.
