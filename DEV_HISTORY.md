@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.611 component gizmo exception capture
+
+- .610 proved the gizmo handle reaches transform-upgrade OWNER REQUEST, but the owner throws before OWNER BEGIN/return.
+- Added visible HANDOFF EXCEPTION reporting around the direct component handoff.
+- No transform behavior changes.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.610 component gizmo runtime diagnostics
 
 - .609 hands-on FAIL: no component gizmo transforms effectively worked.
