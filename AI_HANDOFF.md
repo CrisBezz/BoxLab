@@ -1,46 +1,40 @@
-## HANDS-ON RESULT — v0.36.18.616 PASS
+## v0.36.18.617 — modeless double/triple-tap selection expansion
 
-- User confirmed grouped Object gizmo transforms now work perfectly.
-- .616 becomes the protected Group/Multi gizmo routing baseline.
-- Ownership contract:
-  - 1 effective Object -> .615 semantic single-Object owner
-  - 2+ effective Objects -> established Group/Multi transform owners
-- Group-aware transform logic in object-origin.js remains authoritative.
-- Protected src/multi-object-transform.js?v=0.36.1.0 remains untouched.
-- Preserve .615 unified gizmo behavior for Vertex / Edge / Face / single Object.
-- Resume parked modeless interaction roadmap next.
-
-## v0.36.18.616 — grouped / multi Object gizmo ownership correction
-
-- .615 unified Vertex / Edge / Face / single Object semantic gizmo ownership and passed hands-on.
-- New hands-on issue:
-  - when a GROUP is selected, the gizmo acts only on the active object instead of the whole group.
-- Root cause:
-  - .615 classified multi-object ownership using __boxlabObjectSelection.multi.
-  - object-origin.js intentionally masks .multi in some group/pivot transform contexts.
-  - grouped selections can therefore expose multiple effective object ids while .multi is false.
-  - .615 then incorrectly routed them into the single-Object semantic owner.
-- .616 changes ownership classification only:
-  - Object mode is "single Object" only when effective selection ids.size <= 1.
-  - Any Object selection with ids.size > 1 is routed away from transform-upgrade's single-object owner and back through the established synthetic canvas route.
-  - This includes ordinary Multi and Group-expanded selection.
-- Existing group-aware transform owner in object-origin.js remains authoritative.
-- Existing protected src/multi-object-transform.js?v=0.36.1.0 remains untouched.
-- No group transform maths, origin maths or pivot rules changed.
-- .615 single Object semantic gizmo path remains unchanged.
-- .614 Face deselect and component Plane Move remain unchanged.
-- Planned modeless .616 work was deferred; this bugfix owns the .616 version.
+- .616 hands-on PASS and protected Group/Multi gizmo routing baseline.
+- Resumed the parked modeless interaction roadmap.
+- .617 adds one shared multi-tap primitive for Vertex / Edge / Face using the existing component tap owner.
+- Gesture semantics:
+  - single tap on unselected component: existing additive select
+  - single tap on selected component: existing tap-to-remove
+  - double-tap same component: invoke existing Grow selection command
+  - triple-tap same component: invoke existing Connected selection command
+- No new topology solver was added.
+- Grow / Connected buttons remain the authoritative selection operations.
+- Tap chain requirements:
+  - same component
+  - within 360 ms between taps
+  - within 22 px
+- Drag, long-hold, timeout, background tap, or mode change breaks the tap chain.
+- Edge long-press + horizontal scrub Loop/Ring remains unchanged and authoritative.
+- Background deselect remains unchanged.
+- Object / Group / Multi selection and gizmo ownership remain unchanged.
+- .615/.616 gizmo architecture untouched.
+- Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
+- HTML shell, main.js pin and version.json synced to 0.36.18.617.
 
 Hands-on checks:
-1. Select a whole Group -> gizmo Move should move all group members together.
-2. Group Scale should affect all members using existing group pivot rules.
-3. Group Rotate should affect all members using existing group pivot rules.
-4. Group X/Y/Z Move regression.
-5. Group Free Move regression.
-6. Single Object gizmo remains exactly as .615.
-7. Vertex/Edge/Face gizmo remains exactly as .615.
-8. Ordinary Multi-object Move/Scale/Rotate regression.
-9. Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
+1. Face single tap selects; selected Face single tap removes.
+2. Face double-tap grows one adjacency step.
+3. Face triple-tap selects the connected face island.
+4. Edge double-tap grows adjacent edges.
+5. Edge triple-tap selects connected edge structure.
+6. Vertex double-tap grows adjacent vertices.
+7. Vertex triple-tap selects connected vertex structure.
+8. Edge long-press/scrub still enters Loop/Ring candidate browser rather than multi-tap.
+9. Deliberate component drag does not trigger Grow/Connected afterward.
+10. Background tap still deselects all.
+11. Gizmo regression: Vertex/Edge/Face/single Object unchanged.
+12. Group/Multi gizmo regression from .616 unchanged.
 
-Next after PASS:
-- Resume parked modeless interaction roadmap.
+Next if PASS:
+- continue modeless interaction roadmap with tap-drag selection / contextual gesture work.
