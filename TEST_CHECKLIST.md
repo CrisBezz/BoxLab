@@ -2007,10 +2007,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .602: Scale floating exact-entry remains working
 - [x] Protection .602: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
-- [ ] Workflow .603: Edge Pencil long-press selects Loop
-- [ ] Workflow .603: long-press works from an already-selected edge without starting Move
+- [x] Workflow .603: Edge Pencil long-press selects Loop
+- [x] Workflow .603: long-press works from an already-selected edge without starting Move
 - [ ] Workflow .603: moving before hold delay cancels Loop hold and preserves normal drag
 - [ ] Regression .603: ordinary Edge tap selection/deselection unchanged
 - [ ] Regression .603: background tap deselect unchanged
 - [ ] Protection .603: finger orbit/pan/zoom unchanged
 - [x] Protection .603: src/multi-object-transform.js?v=0.36.1.0 unchanged
+- [x] Behavior .603: ambiguous Loop continuation refuses selection rather than guessing
