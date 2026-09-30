@@ -366,7 +366,7 @@ for(const el of [...root.querySelectorAll('.tg-handle:not(.tg-center):not(.tg-pl
   hit.style.fill='none';
   hit.setAttribute('fill','none');
   hit.style.stroke='transparent';
-  const hitWidth=el.classList.contains('tg-arc')?12:el.classList.contains('tg-screen-ring')||el.classList.contains('tg-scale-ring')?13:16;
+  const hitWidth=el.classList.contains('tg-scale-node')?22:el.classList.contains('tg-arc')?14:el.classList.contains('tg-screen-ring')||el.classList.contains('tg-scale-ring')?15:18;
   hit.style.strokeWidth=String(hitWidth);
   hit.__visual=el;
   el.__hitProxy=hit;
@@ -484,5 +484,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.607'
+  version:'0.36.18.608'
 };
