@@ -47,3 +47,13 @@ function enable(){enabled=true;ensurePanel();log('DEBUG ENABLED');}
 function disable(){enabled=false;panel?.remove();panel=null;body=null;}
 globalThis.__boxlabGestureDebug={log,clear,enable,disable,get enabled(){return enabled;}};
 queueMicrotask(()=>{ensurePanel();log('DEBUG READY');});
+
+document.addEventListener('pointerdown',event=>{
+  log('RAW POINTERDOWN',{
+    pointer:event.pointerType,
+    pid:event.pointerId,
+    pressure:event.pressure,
+    buttons:event.buttons,
+    target:event.target?.id||event.target?.tagName||'unknown'
+  });
+},true);
