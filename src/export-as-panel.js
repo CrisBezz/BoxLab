@@ -1,11 +1,11 @@
-// BoxLab v0.36.18.600 — explicit Save for Nomad workflow after Web Share target limitation.
+// BoxLab v0.36.18.601 — explicit Save GLB to Files workflow for Nomad handoff.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.600';
+const VERSION='0.36.18.601';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -14,7 +14,7 @@ const exportButton=document.querySelector('#exportAsBtn');
 const shareButton=document.createElement('button');
 shareButton.type='button';
 shareButton.id='exportShareBtn';
-shareButton.textContent='Save for Nomad…';
+shareButton.textContent='Save GLB to Files…';
 shareButton.className='export-secondary';
 exportButton?.insertAdjacentElement('afterend',shareButton);
 const note=document.querySelector('#exportDestinationNote');
@@ -38,9 +38,9 @@ function setActive(buttons,key,value){
 }
 function updateNote(){
   if(format==='glb'){
-    shareButton.textContent='Save for Nomad…';
+    shareButton.textContent='Save GLB to Files…';
     if(!note)return;
-    if(navigator.share&&typeof File!=='undefined')note.textContent='Nomad handoff: Save to Files here, then in Files use Share → Nomad Sculpt.';
+    if(navigator.share&&typeof File!=='undefined')note.textContent='Save the GLB to Files. Then open Files and use Share → Nomad Sculpt.';
     else if(typeof window.showSaveFilePicker==='function')note.textContent='Save the GLB, then open it in Nomad Sculpt.';
     else note.textContent='Save the GLB, then open it in Nomad Sculpt.';
     return;
@@ -584,7 +584,7 @@ async function shareOpenIn(){
       downloadBlob(blob,fileName);
       if(status)status.textContent='Share unavailable • file downloaded instead';
     }else if(status&&outcome!=='cancelled'){
-      status.textContent=format==='glb'?'GLB ready • saved/shared via iPad sheet • open from Files in Nomad':`${format.toUpperCase()} • Share / Open In complete`;
+      status.textContent=format==='glb'?'GLB ready • save to Files, then Share → Nomad Sculpt from Files':`${format.toUpperCase()} • Share / Open In complete`;
     }
   }catch(error){
     console.error('BoxLab Share / Open In failed',error);
