@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.609 direct component Total Gizmo handoff
+
+- .608 deployed successfully but hands-on behavior remained effectively unchanged.
+- Removed the synthetic canvas pointerdown bridge for Vertex / Edge / Face Total Gizmo gestures.
+- Total Gizmo now calls transform-upgrade.beginGizmoGesture(spec,event) directly with the real SVG pointer event and exact handle spec.
+- Component gizmo handle captures the real pointer for the drag.
+- Object mode keeps the proven legacy synthetic handoff.
+- This is an ownership/transport correction; transform math and exact-entry math are otherwise unchanged.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.608 component gizmo ownership correction
 
 - Fixed component gizmo drag routing after .607 hands-on testing.
