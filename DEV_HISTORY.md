@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.616 HANDS-ON PASS
+
+- User confirmed grouped Object gizmo transforms work perfectly.
+- Effective-object-count routing is validated.
+- Single Object remains on semantic gizmo owner; Group/Multi remain on established owners.
+- .616 is the protected Group/Multi routing baseline.
+
 ## 2026-09-30 — v0.36.18.616 grouped/multi gizmo ownership correction
 
 - Fixed .615 ownership regression where grouped selections could be mistaken for a single Object because object-origin intentionally masks the multi flag in some contexts.
