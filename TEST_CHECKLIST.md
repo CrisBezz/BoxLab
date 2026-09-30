@@ -2025,3 +2025,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .604: ambiguous Loop still refuses rather than guesses
 - [ ] Protection .604: finger orbit/pan/zoom unchanged
 - [x] Protection .604: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .605: second Edge hold adds its Loop to the existing selection
+- [ ] Workflow .605: third Edge hold adds again without losing earlier selections
+- [ ] Workflow .605: repeated hold on last seed cycles only that seed Loop ↔ Ring
+- [ ] Workflow .605: prior accumulated selection survives same-seed cycling
+- [ ] Workflow .605: ambiguous/failed new seed leaves existing selection untouched
+- [ ] Workflow .605: background tap clears the additive session
+- [ ] Regression .605: ordinary Edge tap selection/deselection unchanged
+- [ ] Protection .605: finger orbit/pan/zoom unchanged
+- [x] Protection .605: src/multi-object-transform.js?v=0.36.1.0 unchanged
