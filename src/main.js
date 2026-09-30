@@ -93,7 +93,7 @@ function softScaleDetent(factor){
   const targets=[.25,.5,.75,1,1.25,1.5,2,3,4];
   let best=targets[0];
   for(const target of targets)if(Math.abs(Math.log(target/factor))<Math.abs(Math.log(best/factor)))best=target;
-  return Math.abs(Math.log(best/factor))<=.035?{value:best,snapped:true,target:best}:{value:factor,snapped:false,target:null};
+  return Math.abs(Math.log(best/factor))<=.065?{value:best,snapped:true,target:best}:{value:factor,snapped:false,target:null};
 }
 function movingReferenceValue(sourceMesh,sel,axis){if(sel?.type==='vertex'&&selectionIndices(sel).length===1)return sourceMesh.vertices[sel.index]?.[axis]??0;return componentCenterOn(sourceMesh,sel)[axis];}
 function inferenceTargets(sourceMesh,sel,axis){const selectedIds=new Set(componentVertexIndicesOn(sourceMesh,sel));if(sel?.type==='object')return[];const targets=[];sourceMesh.vertices.forEach((v,i)=>{if(!selectedIds.has(i))targets.push({value:v[axis],type:'vertex'});});sourceMesh.faces.forEach(face=>{if(face.some(i=>selectedIds.has(i)))return;const vals=face.map(i=>sourceMesh.vertices[i][axis]),min=Math.min(...vals),max=Math.max(...vals);if(max-min<=PLANE_EPSILON)targets.push({value:(min+max)*.5,type:'face'});});return targets;}
