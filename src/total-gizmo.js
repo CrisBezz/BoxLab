@@ -90,6 +90,7 @@ function syntheticDown(event){
   });
   canvas.dispatchEvent(ev);
 }
+function gestureDebug(stage,detail=null){globalThis.__boxlabGestureDebug?.log?.(stage,detail);}
 function handleSpec(el){
   return {tool:el.dataset.tool,constraint:el.dataset.constraint||'free',kind:el.dataset.kind||''};
 }
@@ -98,6 +99,7 @@ function onHandleDown(event){
   if(!selectionAvailable(mesh,mode))return;
   hideFloatInput();
   const el=event.currentTarget,spec=handleSpec(el);
+  gestureDebug('GIZMO DOWN',{mode,tool:spec.tool,constraint:spec.constraint,pid:event.pointerId,pointer:event.pointerType});
   if(!arm(spec.tool,spec.constraint))return;
   const visual=el.__visual||el;
   activeHandle=visual;pointerId=event.pointerId;
@@ -121,6 +123,7 @@ function onHandleDown(event){
     }
   }
   // True Multi-object transforms remain on the protected v0.36.1.0 owner.
+  gestureDebug(directSemanticHandoff?'GIZMO HANDOFF OK':'GIZMO HANDOFF FALLBACK',{mode,tool:spec.tool,constraint:spec.constraint,pid:event.pointerId});
   if(!directSemanticHandoff)syntheticDown(event);
   event.preventDefault();
   event.stopPropagation();
@@ -143,6 +146,7 @@ function resetTransientState({hideFloat=false}={}){
 }
 function finish(event){
   if(pointerId!==event.pointerId)return;
+  gestureDebug('GIZMO FINISH',{pid:event.pointerId,type:event.type});
   const finishedSpec=lastSpec;
   clearTransientHandleState();
   root.dataset.dragging='false';
