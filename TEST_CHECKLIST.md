@@ -2047,3 +2047,16 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .606: ordinary Edge tap selection/deselection unchanged
 - [ ] Protection .606: finger orbit/pan/zoom unchanged
 - [x] Protection .606: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .607: Total Gizmo appears on selected Vertex geometry
+- [ ] Workflow .607: Total Gizmo appears on selected Edge geometry
+- [ ] Workflow .607: Total Gizmo appears on selected Face geometry
+- [ ] Workflow .607: component gizmo pivot is selection centroid
+- [ ] Workflow .607: component gizmo Move works in Vertex / Edge / Face
+- [ ] Workflow .607: component gizmo Scale works in Vertex / Edge / Face
+- [ ] Workflow .607: component gizmo Rotate works in Vertex / Edge / Face
+- [ ] Workflow .607: component selection remains selected after gizmo transform
+- [ ] Regression .607: Object Total Gizmo unchanged
+- [ ] Regression .607: .606 Edge hold/scrub Loop/Ring unchanged
+- [ ] Protection .607: finger orbit/pan/zoom unchanged
+- [x] Protection .607: src/multi-object-transform.js?v=0.36.1.0 unchanged
