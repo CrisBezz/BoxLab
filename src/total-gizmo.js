@@ -107,7 +107,14 @@ function onHandleDown(event){
   if(hud){clearTimeout(hudHideTimer);hud.hidden=false;hudText.hidden=false;hudText.textContent=`${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;lastSpec=spec;}
   root.querySelectorAll('.tg-handle').forEach(h=>{if(h!==visual)h.classList.add('muted');});
   if(status)status.textContent=`Total Gizmo • ${spec.tool[0].toUpperCase()+spec.tool.slice(1)} • ${spec.constraint==='free'?(spec.kind==='screen'?'Screen':'Free'):spec.constraint.toUpperCase()}`;
-  syntheticDown(event);
+  let directComponentHandoff=false;
+  if(mode!=='object'){
+    directComponentHandoff=!!globalThis.__boxlabTransformUpgrade?.beginGizmoGesture?.(spec,event);
+    if(directComponentHandoff){
+      try{event.currentTarget?.setPointerCapture?.(event.pointerId);}catch{}
+    }
+  }
+  if(!directComponentHandoff)syntheticDown(event);
   event.preventDefault();
   event.stopPropagation();
 }
@@ -484,5 +491,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.608'
+  version:'0.36.18.609'
 };
