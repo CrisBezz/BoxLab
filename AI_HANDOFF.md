@@ -1,31 +1,25 @@
-## v0.36.18.610 — component Total Gizmo runtime diagnostics
+## v0.36.18.611 — expose component gizmo handoff exception
 
-- .609 hands-on FAIL: effectively no component gizmo transforms worked.
-- Stopped transform rewrites. .610 is diagnostic-only.
-- Added a temporary on-screen `GIZMO DEBUG .610` panel in the viewport.
-- Runtime stages:
-  - HANDLE DOWN
-  - OWNER REQUEST
-  - OWNER REJECT (with reason), or OWNER BEGIN
-  - HANDOFF OK / HANDOFF FAIL
-  - MOVE with mode/tool/axis/dx/dy/pointerId
-  - OWNER FINISH with changed true/false
-  - GIZMO POINTERUP
-- No intended transform behavior changes in .610.
-- Purpose: identify the first broken link in the live iPad event chain before any further transform change.
-- Component direct handoff from .609 remains in place.
-- Object gizmo remains untouched.
-- .606 modeless Edge selection remains untouched.
-- HTML shell, Total Gizmo pin, transform-upgrade pin and version.json synced to 0.36.18.610.
+- .610 diagnostic result from iPad:
+  - Face X Move press reached OWNER REQUEST.
+  - It never reached OWNER BEGIN, HANDOFF OK, HANDOFF FAIL or MOVE.
+  - Release only showed GIZMO POINTERUP.
+- Conclusion: beginGizmoGesture() is throwing before it can return.
+- .611 adds a try/catch around the direct component handoff in Total Gizmo.
+- The debug panel now reports:
+  - HANDOFF EXCEPTION • <ErrorName>: <message>
+- No transform behavior changes in .611.
+- Purpose: reveal the exact runtime exception before changing owner setup.
+- HTML shell, Total Gizmo pin and version.json synced to 0.36.18.611.
+- transform-upgrade remains pinned at .610 because its behavior did not change.
 - Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
 
 Hands-on diagnostic:
-1. Load .610.
+1. Load .611.
 2. Face mode -> select one face.
-3. Press and drag ONE gizmo X Move arrow.
-4. Read the final text in the GIZMO DEBUG .610 panel.
-5. Report the exact last stage/text shown. A screenshot is ideal.
-6. Do not spend time testing every transform yet; one gesture should identify the broken stage.
+3. Press the X Move gizmo arrow once.
+4. Read/send the GIZMO DEBUG .611 line.
+5. Expected useful output: HANDOFF EXCEPTION with the exact JavaScript error.
 
 Next:
-- Fix only the first broken runtime stage shown by .610.
+- Fix only the exact exception reported by .611.
