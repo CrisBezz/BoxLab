@@ -1,40 +1,31 @@
-## v0.36.18.617 — modeless double/triple-tap selection expansion
+## v0.36.18.618 — single owner for component taps
 
-- .616 hands-on PASS and protected Group/Multi gizmo routing baseline.
-- Resumed the parked modeless interaction roadmap.
-- .617 adds one shared multi-tap primitive for Vertex / Edge / Face using the existing component tap owner.
-- Gesture semantics:
-  - single tap on unselected component: existing additive select
-  - single tap on selected component: existing tap-to-remove
-  - double-tap same component: invoke existing Grow selection command
-  - triple-tap same component: invoke existing Connected selection command
-- No new topology solver was added.
-- Grow / Connected buttons remain the authoritative selection operations.
-- Tap chain requirements:
-  - same component
-  - within 360 ms between taps
-  - within 22 px
-- Drag, long-hold, timeout, background tap, or mode change breaks the tap chain.
-- Edge long-press + horizontal scrub Loop/Ring remains unchanged and authoritative.
-- Background deselect remains unchanged.
-- Object / Group / Multi selection and gizmo ownership remain unchanged.
-- .615/.616 gizmo architecture untouched.
+- .617 hands-on FAIL: double-tap / triple-tap did not work.
+- Root cause confirmed in main.js:
+  - .617 added a dedicated modeless component tap pointerup owner.
+  - legacy endDrag() still also interpreted component pointerup as tap deselect.
+  - the same release could therefore be processed twice.
+- .618 ownership cleanup:
+  - component tap selection / deselection / multi-tap expansion is owned only by the modeless tap handler.
+  - endDrag() no longer toggles component selection.
+  - endDrag() now owns only actual component transform completion.
+- Intended gesture semantics remain:
+  - single tap unselected -> additive select
+  - single tap selected -> remove
+  - double-tap same component -> existing Grow command
+  - triple-tap same component -> existing Connected command
+- Drag/hold/timeout/background/mode change still break the tap chain.
+- Edge long-press/scrub Loop/Ring untouched.
+- .615/.616 gizmo and Group/Multi routing untouched.
 - Protected src/multi-object-transform.js?v=0.36.1.0 unchanged.
-- HTML shell, main.js pin and version.json synced to 0.36.18.617.
+- HTML shell, main.js pin and version.json synced to 0.36.18.618.
 
 Hands-on checks:
-1. Face single tap selects; selected Face single tap removes.
-2. Face double-tap grows one adjacency step.
-3. Face triple-tap selects the connected face island.
-4. Edge double-tap grows adjacent edges.
-5. Edge triple-tap selects connected edge structure.
-6. Vertex double-tap grows adjacent vertices.
-7. Vertex triple-tap selects connected vertex structure.
-8. Edge long-press/scrub still enters Loop/Ring candidate browser rather than multi-tap.
-9. Deliberate component drag does not trigger Grow/Connected afterward.
-10. Background tap still deselects all.
-11. Gizmo regression: Vertex/Edge/Face/single Object unchanged.
-12. Group/Multi gizmo regression from .616 unchanged.
-
-Next if PASS:
-- continue modeless interaction roadmap with tap-drag selection / contextual gesture work.
+1. Face double-tap -> Grow.
+2. Face triple-tap -> Connected.
+3. Edge double/triple tap.
+4. Vertex double/triple tap.
+5. Single tap selected component still removes.
+6. Deliberate component drag still transforms and does not toggle selection.
+7. Edge long-hold/scrub regression.
+8. Gizmo and Group/Multi regression.
