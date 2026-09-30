@@ -1995,3 +1995,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .601: OBJ secondary action remains Share / Open In…
 - [ ] Regression .601: normal Export / Save remains functional
 - [x] Protection .601: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .602: gizmo Rotate has clearly noticeable soft catches
+- [ ] Workflow .602: gizmo Rotate soft catches remain with legacy 15° snap OFF
+- [ ] Workflow .602: gizmo Rotate does not revert to rigid 15° stepping when legacy snap is ON
+- [ ] Workflow .602: Rotate catches release when drag continues beyond catch window
+- [ ] Workflow .602: gizmo Scale clearly catches at 0.5x / 0.75x / 1x / 1.25x / 1.5x / 2x
+- [ ] Workflow .602: Scale catches release when drag continues beyond catch window
+- [ ] Regression .602: Move floating exact-entry remains working
+- [ ] Regression .602: Rotate floating exact-entry remains working
+- [ ] Regression .602: Scale floating exact-entry remains working
+- [x] Protection .602: src/multi-object-transform.js?v=0.36.1.0 unchanged
