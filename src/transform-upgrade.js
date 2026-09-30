@@ -37,13 +37,13 @@ function softAngleDetent(deg){
   const sign=deg<0?-1:1,abs=Math.abs(deg);
   let best=targets[0];
   for(const target of targets)if(Math.abs(target-abs)<Math.abs(best-abs))best=target;
-  return Math.abs(best-abs)<=3.5?{value:sign*best,snapped:true,target:best}:{value:deg,snapped:false,target:null};
+  return Math.abs(best-abs)<=5?{value:sign*best,snapped:true,target:best}:{value:deg,snapped:false,target:null};
 }
 function softScaleDetent(factor){
   const targets=[.25,.5,.75,1,1.25,1.5,2,3,4];
   let best=targets[0];
   for(const target of targets)if(Math.abs(Math.log(target/factor))<Math.abs(Math.log(best/factor)))best=target;
-  return Math.abs(Math.log(best/factor))<=.035?{value:best,snapped:true,target:best}:{value:factor,snapped:false,target:null};
+  return Math.abs(Math.log(best/factor))<=.065?{value:best,snapped:true,target:best}:{value:factor,snapped:false,target:null};
 }
 function constraintLabel(){return constraint==='free'?'Free':constraint==='auto'?'Auto':constraint.toUpperCase();}
 function axisSnapOn(){return !!axisSnapToggle?.checked;}
