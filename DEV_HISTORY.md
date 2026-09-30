@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.602 stronger Total Gizmo soft catches
+
+- Resumed pending Rotate/Scale gizmo precision work after .601 Nomad handoff PASS.
+- Re-audited real gesture ownership before changing behavior.
+- Widened gizmo Rotate soft-catch window from 3.5° to 5° in transform-upgrade.js.
+- Widened Scale soft-catch threshold from 0.035 to 0.065 in main.js, the actual Object Scale owner.
+- Kept transform-upgrade Scale helper in parity for its owned paths.
+- Legacy non-gizmo 15° Rotate snap remains unchanged.
+- Catches remain releasable by continuing the drag beyond the window.
+- No change to Move detents, exact type-in or protected multi-object-transform.
+
 ## 2026-09-30 — v0.36.18.601 explicit Files-based Nomad handoff
 
 - Closed direct Safari/Web Share -> Nomad Sculpt as unsupported after .596-.600 testing.
