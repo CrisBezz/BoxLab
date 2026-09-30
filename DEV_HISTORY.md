@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.612 HANDS-ON PASS
+
+- User confirmed component Total Gizmo now works perfectly.
+- Direct semantic gizmo handoff is validated for component transforms.
+- SweepPath.editing getter/function bug was the actual blocker.
+- .612 becomes the protected component-gizmo baseline.
+- Temporary runtime diagnostics can be removed in the next build.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.612 component gizmo owner exception fix
 
 - .611 diagnostics revealed transform-upgrade called SweepPath.editing as a function even though it is a boolean getter.
