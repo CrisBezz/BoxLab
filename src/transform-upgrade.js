@@ -113,7 +113,7 @@ valueInput?.addEventListener('click',event=>{event.stopPropagation();focusTransf
 
 
 function startGesture(event){
-  if(event.target!==canvas||!event.isPrimary||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing?.()||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return;
+  if(event.target!==canvas||!event.isPrimary||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return;
   const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected(),gizmo=activeGizmoSpec();
   // Component viewport drags remain owned by main.js. transform-upgrade owns
   // component transforms only when Total Gizmo explicitly launched the gesture.
@@ -148,7 +148,7 @@ function startGesture(event){
 }
 function beginGizmoGesture(spec,event){
   gizmoDebug('OWNER REQUEST',mode()+' • '+(spec?.tool||'?')+' • '+(spec?.constraint||'?')+' • pid '+event?.pointerId);
-  if(!spec||!event||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing?.()||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return false;
+  if(!spec||!event||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return false;
   const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected();
   if(!['vertex','edge','face'].includes(m)||!mesh||!camera){gizmoDebug('OWNER REJECT','mode='+m+' mesh='+!!mesh+' camera='+!!camera);return false;}
   const t=spec.tool,axis=['x','y','z'].includes(spec.constraint)?spec.constraint:null;
