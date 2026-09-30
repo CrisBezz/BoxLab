@@ -40,6 +40,26 @@ function cancelEdgeHold(pointerId=null){
   edgeHold=null;
 }
 function resetEdgeHoldCycle(){edgeHoldCycle=null;}
+function sameComponentHit(a,b){return !!a&&!!b&&a.type===b.type&&a.index===b.index;}
+function nextComponentTapCount(hit,event){
+  const now=performance.now(),prior=componentTapSeries;
+  const same=prior&&sameComponentHit(prior.hit,hit)&&now-prior.at<=TAP_CHAIN_MS&&Math.hypot(event.clientX-prior.x,event.clientY-prior.y)<=TAP_CHAIN_MOVE;
+  const count=same?Math.min(3,prior.count+1):1;
+  componentTapSeries={hit:{...hit},count,at:now,x:event.clientX,y:event.clientY};
+  return count;
+}
+function invokeModelessSelectionExpansion(kind,hit){
+  if(!hit||selectionMode==='object')return false;
+  if(!selectionHas(hit.type,hit.index)){
+    const current=selection?.type===hit.type?selectionIndices():[];
+    selection=makeSelection(hit.type,[...current,hit.index],hit.index);
+    renderMesh();
+  }
+  const button=document.querySelector(kind==='connected'?'#connectedSelectionBtn':'#growSelectionBtn');
+  if(!button||button.disabled)return false;
+  button.click();
+  return true;
+}
 function sameEdgeSelectionSignature(indices){
   return [...new Set(indices||[])].sort((a,b)=>a-b).join(',');
 }
