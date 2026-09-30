@@ -2190,3 +2190,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .618: gizmo and Group/Multi routing unchanged
 - [x] Protection .618: one owner for component tap semantics
 - [x] Protection .618: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .619: Face double-tap works even when tap #2 lands on gizmo
+- [ ] Workflow .619: Face triple-tap Connected works
+- [ ] Workflow .619: Edge double/triple tap works through gizmo overlap
+- [ ] Workflow .619: Vertex double/triple tap works through gizmo overlap
+- [ ] Regression .619: normal gizmo drag starts immediately outside active tap chain
+- [ ] Regression .619: single-tap selected component still removes
+- [ ] Regression .619: Edge long-press/scrub unchanged
+- [x] Protection .619: no gizmo visibility delay introduced
+- [x] Protection .619: src/multi-object-transform.js?v=0.36.1.0 unchanged
