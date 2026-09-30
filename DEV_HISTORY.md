@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.615 single Object semantic gizmo handoff
+
+- Unified single Object mode with the direct semantic Total Gizmo contract already proven for Vertex / Edge / Face.
+- Single Object now receives the real gizmo pointer event and exact tool/constraint directly through transform-upgrade.
+- Object XY/XZ/YZ Plane Move now uses the same true world-plane logic as components.
+- True Multi-object selection deliberately remains on protected multi-object-transform.js?v=0.36.1.0.
+- Protected multi-object transform file unchanged.
+
 ## 2026-09-30 — v0.36.18.614 selected-component tap owner + true plane Move
 
 - Added a dedicated selected-component tap owner so tap-to-remove no longer depends on transform endDrag.
