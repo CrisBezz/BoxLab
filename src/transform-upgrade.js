@@ -24,6 +24,7 @@ if(inferenceSnapToggle) inferenceSnapToggle.disabled=false;
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function mode(){return bridge()?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
+function multiObjectTransformActive(){const s=globalThis.__boxlabObjectSelection;return mode()==='object'&&!!s?.multi&&(s?.ids?.size||0)>1;}
 function activeToolButton(){return document.querySelector('#toolModes button.active');}
 function tool(){return globalThis.__boxlabTransformArming?.tool?.()||activeToolButton()?.dataset?.tool||null;}
 function directFaceToolActive(){return !!document.querySelector('#extrudeBtn.active,#insetBtn.active');}
@@ -148,7 +149,7 @@ function startGesture(event){
 function beginGizmoGesture(spec,event){
   if(!spec||!event||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return false;
   const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected();
-  if(!['vertex','edge','face'].includes(m)||!mesh||!camera){return false;}
+  if(!['object','vertex','edge','face'].includes(m)||!mesh||!camera||multiObjectTransformActive()){return false;}
   const t=spec.tool,axis=['x','y','z'].includes(spec.constraint)?spec.constraint:null;
   if(!['move','scale','rotate'].includes(t)){return false;}
   const indices=selectionVertices(mesh,m,ids);
