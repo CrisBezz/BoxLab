@@ -2137,15 +2137,17 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .614: .612 direct component gizmo architecture preserved
 - [x] Protection .614: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
-- [ ] Workflow .615: single Object X/Y/Z Move works
-- [ ] Workflow .615: single Object XY Plane Move keeps Z fixed
-- [ ] Workflow .615: single Object XZ Plane Move keeps Y fixed
-- [ ] Workflow .615: single Object YZ Plane Move keeps X fixed
-- [ ] Workflow .615: single Object Free Move works
-- [ ] Regression .615: single Object Scale works
-- [ ] Regression .615: single Object Rotate works
-- [ ] Regression .615: single Object exact-entry works
-- [ ] Regression .615: component gizmo remains correct from .614
-- [ ] Regression .615: Face tap-to-remove remains correct from .614
-- [ ] Regression .615: true Multi-object transforms remain working
+- [x] Workflow .615: single Object X/Y/Z Move works
+- [x] Workflow .615: single Object XY Plane Move keeps Z fixed
+- [x] Workflow .615: single Object XZ Plane Move keeps Y fixed
+- [x] Workflow .615: single Object YZ Plane Move keeps X fixed
+- [x] Workflow .615: single Object Free Move works
+- [x] Regression .615: single Object Scale works
+- [x] Regression .615: single Object Rotate works
+- [x] Regression .615: single Object exact-entry works
+- [x] Regression .615: component gizmo remains correct from .614
+- [x] Regression .615: Face tap-to-remove remains correct from .614
+- [x] Regression .615: true Multi-object transforms remain working
 - [x] Protection .615: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [x] HANDS-ON .615: unified semantic gizmo confirmed working perfectly
