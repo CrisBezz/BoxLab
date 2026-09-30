@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.618 single owner for component taps
+
+- .617 double/triple tap failed because modeless tap handling and legacy endDrag tap handling both owned the same release.
+- Removed component selection toggling from endDrag.
+- Modeless tap handler is now the sole owner of component single/double/triple tap semantics.
+- Component drag transform completion remains in endDrag.
+- Edge hold and gizmo ownership unchanged.
+
 ## 2026-09-30 — v0.36.18.617 modeless double/triple-tap selection
 
 - Added modeless multi-tap selection to Vertex / Edge / Face using the existing component tap owner.
