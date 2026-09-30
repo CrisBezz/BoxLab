@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.625 deterministic Circle startup + permanent Gesture Debug
+
+- Fixed Vertex Circle startup race by sequencing component-circle after face-reconstruct / Vertex layout ownership.
+- Removed concurrent standalone Circle import.
+- Added permanent Viewport -> Gesture Debug toggle.
+- Gesture Debug is off by default, persisted, lightweight when disabled, and reusable for future interaction debugging.
+- Temporary deep EventTarget capture monkeypatch removed from normal infrastructure.
+
 ## 2026-10-01 — v0.36.18.624 canvas capture-owner tracer
 
 - .623 localized Face Hold failure to a canvas pointerdown capture listener after the debug sentinel.
