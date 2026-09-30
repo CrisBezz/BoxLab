@@ -2112,3 +2112,14 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .612: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
 - [x] HANDS-ON .612: component Total Gizmo confirmed working perfectly
+
+- [ ] Workflow .613: Face additive multi-select still works
+- [ ] Workflow .613: tapping an already-selected face removes only that face
+- [ ] Workflow .613: tapping last selected face clears selection
+- [ ] Workflow .613: background tap still clears all
+- [ ] Workflow .613: tiny Pencil jitter does not turn deselect tap into transform
+- [ ] Regression .613: deliberate direct component drag still transforms
+- [ ] Regression .613: Vertex / Edge tap-to-remove works
+- [ ] Regression .613: .612 component Total Gizmo remains fully working
+- [ ] Regression .613: .606 Edge hold/scrub remains working
+- [x] Protection .613: src/multi-object-transform.js?v=0.36.1.0 unchanged
