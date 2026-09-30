@@ -46,7 +46,8 @@ function sameEdgeSelectionSignature(indices){
 function armEdgeHold(event,edgeIndex){
   if(selectionMode!=='edge'||directTool||event.pointerType==='touch'||!event.isPrimary||!Number.isInteger(edgeIndex))return;
   cancelEdgeHold();
-  const hold={pointerId:event.pointerId,edgeIndex,startX:event.clientX,startY:event.clientY,fired:false,timer:null};
+  const baseAtPointerDown=selection?.type==='edge'?[...selectionIndices()]:[];
+  const hold={pointerId:event.pointerId,edgeIndex,startX:event.clientX,startY:event.clientY,fired:false,timer:null,baseAtPointerDown};
   hold.timer=setTimeout(()=>{
     if(edgeHold!==hold)return;
     if(drag?.pointerId===hold.pointerId){
@@ -58,6 +59,7 @@ function armEdgeHold(event,edgeIndex){
     const currentSignature=sameEdgeSelectionSignature(selection?.type==='edge'?selectionIndices():[]);
     const continueCycle=edgeHoldCycle?.seedIndex===hold.edgeIndex&&edgeHoldCycle?.resultSignature===currentSignature;
     const action=continueCycle&&edgeHoldCycle?.lastAction==='loop'?'ring':'loop';
+    const baseIndices=continueCycle?[...edgeHoldCycle.baseIndices]:[...hold.baseAtPointerDown];
     selection=makeSelection('edge',[hold.edgeIndex],hold.edgeIndex);
     renderMesh();
     hold.fired=true;
@@ -65,12 +67,27 @@ function armEdgeHold(event,edgeIndex){
       const button=document.querySelector(action==='ring'?'#selectRingBtn':'#selectLoopBtn');
       button?.click();
       queueMicrotask(()=>{
-        const resultSignature=sameEdgeSelectionSignature(selection?.type==='edge'?selectionIndices():[]);
-        if(resultSignature&&resultSignature!==String(hold.edgeIndex)){
-          edgeHoldCycle={seedIndex:hold.edgeIndex,lastAction:action,resultSignature};
-        }else{
+        const contribution=selection?.type==='edge'?[...selectionIndices()]:[];
+        const succeeded=contribution.length>1||(
+          contribution.length===1&&contribution[0]!==hold.edgeIndex
+        );
+        if(!succeeded){
+          selection=makeSelection('edge',baseIndices,baseIndices.at(-1)??null);
+          renderMesh();
           resetEdgeHoldCycle();
+          return;
         }
+        const merged=[...new Set([...baseIndices,...contribution])];
+        selection=makeSelection('edge',merged,hold.edgeIndex);
+        renderMesh();
+        const resultSignature=sameEdgeSelectionSignature(merged);
+        edgeHoldCycle={
+          seedIndex:hold.edgeIndex,
+          lastAction:action,
+          baseIndices:[...baseIndices],
+          contributionIndices:[...contribution],
+          resultSignature
+        };
       });
     });
   },EDGE_HOLD_MS);
