@@ -25,8 +25,8 @@ const vertexMaterial=new THREE.MeshBasicMaterial({color:0xf2f5fa}),selectedVerte
 const axisLineMaterials={x:new THREE.LineBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.LineBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.LineBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.LineBasicMaterial({color:0xffffff,depthTest:false})};
 const axisOverlayMaterials={x:new THREE.MeshBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.MeshBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.MeshBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false})};
 const activeLoopMaterial=new THREE.LineBasicMaterial({color:0x62d8ff,transparent:true,opacity:1,depthTest:false}),currentLoopMaterial=new THREE.LineBasicMaterial({color:0xffe14a,transparent:true,opacity:1,depthTest:false}),creaseEdgeMaterial=new THREE.LineBasicMaterial({color:0xffb65c,transparent:true,opacity:1}),mirrorEdgeMaterial=new THREE.LineBasicMaterial({color:0x8791a2,transparent:true,opacity:.32});
-const raycaster=new THREE.Raycaster();raycaster.params.Line.threshold=.09;const pointer=new THREE.Vector2();let drag=null,backgroundTap=null,edgeHold=null,edgeHoldCycle=null,componentTapIntent=null;
-const EDIT_DRAG_THRESHOLD=8,INFERENCE_SNAP_PX=10,PLANE_EPSILON=1e-5,TAP_MAX_MS=320,TAP_MAX_MOVE=12,EDGE_HOLD_MS=420,EDGE_HOLD_MOVE=7,EDGE_SCRUB_STEP=32,WORLD_AXES={x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)};
+const raycaster=new THREE.Raycaster();raycaster.params.Line.threshold=.09;const pointer=new THREE.Vector2();let drag=null,backgroundTap=null,edgeHold=null,edgeHoldCycle=null,componentTapIntent=null,componentTapSeries=null;
+const EDIT_DRAG_THRESHOLD=8,INFERENCE_SNAP_PX=10,PLANE_EPSILON=1e-5,TAP_MAX_MS=320,TAP_MAX_MOVE=12,TAP_CHAIN_MS=360,TAP_CHAIN_MOVE=22,EDGE_HOLD_MS=420,EDGE_HOLD_MOVE=7,EDGE_SCRUB_STEP=32,WORLD_AXES={x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)};
 const gesture={active:false,maxTouches:0,startedAt:0,starts:new Map(),moved:false};
 
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
