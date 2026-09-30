@@ -21,6 +21,17 @@ let raf=0;
 let explicitGizmoConstraint=null;
 let awaitingTransformEnd=false;
 
+const gizmoDebug=document.createElement('div');
+gizmoDebug.id='gizmoRuntimeDebug';
+gizmoDebug.style.cssText='position:absolute;right:10px;bottom:46px;z-index:12000;max-width:320px;padding:7px 9px;border-radius:8px;background:#111d;color:#fff;font:11px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;pointer-events:none;white-space:pre-wrap;box-shadow:0 2px 10px #0008';
+gizmoDebug.textContent='GIZMO DEBUG .610 • waiting';
+viewportWrap?.append(gizmoDebug);
+function debugGizmo(stage,detail=''){
+  const stamp=new Date().toLocaleTimeString([], {hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  gizmoDebug.textContent='GIZMO DEBUG .610\n'+stamp+' • '+stage+(detail?' • '+detail:'');
+}
+globalThis.__boxlabGizmoDebug=debugGizmo;
+
 function state(){return globalThis.__boxlabBridgeState||null;}
 function currentMode(){return globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
 function objectSelected(){
@@ -96,6 +107,7 @@ function onHandleDown(event){
   if(!selectionAvailable(mesh,mode))return;
   hideFloatInput();
   const el=event.currentTarget,spec=handleSpec(el);
+  debugGizmo('HANDLE DOWN',mode+' • '+spec.tool+' • '+spec.constraint+' • pid '+event.pointerId);
   if(!arm(spec.tool,spec.constraint))return;
   const visual=el.__visual||el;
   activeHandle=visual;pointerId=event.pointerId;
@@ -110,6 +122,7 @@ function onHandleDown(event){
   let directComponentHandoff=false;
   if(mode!=='object'){
     directComponentHandoff=!!globalThis.__boxlabTransformUpgrade?.beginGizmoGesture?.(spec,event);
+    debugGizmo(directComponentHandoff?'HANDOFF OK':'HANDOFF FAIL',mode+' • '+spec.tool+' • '+spec.constraint+' • pid '+event.pointerId);
     if(directComponentHandoff){
       try{event.currentTarget?.setPointerCapture?.(event.pointerId);}catch{}
     }
@@ -135,6 +148,7 @@ function resetTransientState({hideFloat=false}={}){
   if(hideFloat)hideFloatInput();
 }
 function finish(event){
+  if(pointerId===event.pointerId)debugGizmo('GIZMO POINTERUP',(lastSpec?.tool||'?')+' • '+(lastSpec?.constraint||'?')+' • pid '+event.pointerId);
   if(pointerId!==event.pointerId)return;
   const finishedSpec=lastSpec;
   clearTransientHandleState();
@@ -491,5 +505,5 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.609'
+  version:'0.36.18.610'
 };
