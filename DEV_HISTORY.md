@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-09-30 — v0.36.18.617 modeless double/triple-tap selection
+
+- Added modeless multi-tap selection to Vertex / Edge / Face using the existing component tap owner.
+- Double-tap invokes existing Grow selection.
+- Triple-tap invokes existing Connected selection.
+- Single-tap select/deselect remains immediate.
+- Tap chain is cancelled by drag, hold, timeout, background tap, or mode change.
+- Edge long-press/scrub Loop/Ring remains untouched.
+- Object/Group/Multi transform ownership unchanged.
+- Protected multi-object-transform unchanged.
+
 ## 2026-09-30 — v0.36.18.616 HANDS-ON PASS
 
 - User confirmed grouped Object gizmo transforms work perfectly.
