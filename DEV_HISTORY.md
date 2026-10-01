@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.645 explicit Face-direct Pencil capture release
+
+- .644 FAIL for the reported post-Through Pencil-orbit regression; disarming Extrude alone was insufficient.
+- Deeper ownership audit found multi-face-direct captures the Pencil on canvas pointerdown but its window-capture finish consumes pointerup before canvas-level Pencil/orbit cleanup can observe it.
+- multi-face-direct now explicitly releases its own canvas pointer capture before stopImmediatePropagation on every owned completion path: background press, Face press and direct Extrude/Inset drag.
+- This follows the ownership rule that the subsystem acquiring pointer capture is responsible for releasing it when global capture completion prevents downstream listeners from seeing pointerup.
+- Successful Through still disarms Extrude as introduced in .644.
+- Added post-release pointerCapture state to FACE DIRECT THROUGH RELEASE diagnostics.
+- No Through topology, selection gesture, Sweep session or gizmo code changed.
+
 ## 2026-10-01 — v0.36.18.644 release Pencil orbit after successful Extrude Through
 
 - .643 Sweep viewport session is hands-on AWESOME / PASS.

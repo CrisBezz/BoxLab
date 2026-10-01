@@ -2456,7 +2456,7 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .643: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
 - [ ] Workflow .644: successful Extrude Through completes and clears Face selection
-- [ ] Workflow .644: successful Through immediately restores Pencil orbit on the next gesture
+- [x] Static .644: successful Through disarms Extrude, but hands-on Pencil orbit still FAIL
 - [ ] Workflow .644: Extrude is visibly disarmed after successful Through
 - [ ] Workflow .644: selecting a new Face after Through starts from normal selection state
 - [ ] Regression .644: normal outward/inward Extrude remains armed/persistent as before
@@ -2466,4 +2466,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .644: successful Through clears direct Face ownership and emits tool:none
 - [x] Protection .644: Through kernel/gate maths unchanged
 - [x] Protection .644: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .645: successful Through releases canvas Pencil capture on pointerup
+- [ ] Workflow .645: Pencil orbit works on the immediately following gesture
+- [ ] Workflow .645: normal Extrude completion does not leave stale Pencil capture
+- [ ] Workflow .645: Inset completion does not leave stale Pencil capture
+- [ ] Workflow .645: background deselect while Face tool armed does not leave stale Pencil capture
+- [ ] Workflow .645: quick Face tap while tool armed does not leave stale Pencil capture
+- [ ] Regression .645: .644 successful Through still disarms Extrude
+- [ ] Regression .645: .643 Sweep viewport session remains PASS
+- [x] Static .645: every Face-direct owned finish path calls releaseDirectPointer before stopImmediatePropagation
+- [x] Protection .645: Through kernel/gate unchanged
+- [x] Protection .645: src/multi-object-transform.js?v=0.36.1.0 unchanged
 

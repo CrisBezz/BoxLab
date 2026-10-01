@@ -223,6 +223,13 @@ document.addEventListener('pointermove',event=>{
     }
   }
   if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){drag.changed=true;}restore(drag.m,drag.before);if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?referenceUnderPointer(event,drag):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}const contact=drag.faces.length===1?classifySingleFaceContact(drag.before,drag.faces[0],distance,drag.preparedThrough):{mode:'extrude',throughPlan:null,shellHit:null};drag.throughPlan=contact.throughPlan;drag.shellHit=contact.shellHit;drag.blocked=contact.mode==='blocked';drag.failureReason=contact.reason;if(drag.blocked){drag.preview=false;clearRefVisual();drag.snap=null;if(status)status.textContent=`Extrude In • BLOCKED — ${contact.reason||'unsupported shell contact'}${drag.shellHit?` • ${drag.shellHit.distance.toFixed(2)}`:''}`;}else{if(drag.throughPlan){distance=drag.throughPlan.distance;clearRefVisual();drag.snap=null;}drag.lastValue=distance;const result=drag.faces.length===1?drag.m.extrudeFace?.(drag.faces[0],distance):extrudeConnectedFaceSelection(drag.m,drag.faces,distance);drag.preview=!!result;if(result&&status){const mode=drag.throughPlan?'THROUGH READY':distance<0?'Extrude In':'Extrude';status.textContent=`${mode} • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${distance>=0?'+':''}${distance.toFixed(2)}${result.mode==='connected-miter'&&drag.faces.length>1?' • Connected band':''}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}}else{drag.throughPlan=null;drag.blocked=false;drag.shellHit=null;let amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));const ref=referenceUnderPointer(event,drag),inferred=ref?insetReference(drag,ref):null;if(ref&&inferred){amount=inferred.amount;showRefVisual(ref,inferred.boundaryPoint,drag.camera);drag.snap={...ref,insetDistance:inferred.distance};}else{clearRefVisual();drag.snap=null;}const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;if(result&&status){const distances=(result.regions||[]).map(r=>r.distance).filter(Number.isFinite),d=distances.length?Math.min(...distances):0;status.textContent=`Uniform Inset • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${d.toFixed(3)}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}render();syncButtons();},true);
+function releaseDirectPointer(pointerId){
+  if(!Number.isInteger(pointerId))return false;
+  try{
+    if(canvas.hasPointerCapture?.(pointerId))canvas.releasePointerCapture(pointerId);
+    return true;
+  }catch{return false;}
+}
 function finish(event){
   if((pendingBackgroundPress?.id===event.pointerId)||(pendingFacePress?.id===event.pointerId)||(drag?.id===event.pointerId)){
     globalThis.__boxlabGestureDebug?.log?.('FACE DIRECT FINISH',{
@@ -240,6 +247,7 @@ function finish(event){
   if(pendingBackgroundPress?.id===event.pointerId){
     const p=pendingBackgroundPress;
     pendingBackgroundPress=null;
+    releaseDirectPointer(event.pointerId);
     event.preventDefault();event.stopImmediatePropagation();
     if(event.type==='pointerup'&&!p.moved){
       bridge()?.set?.('face',[]);
@@ -252,6 +260,7 @@ function finish(event){
   if(pendingFacePress?.id===event.pointerId){
     const p=pendingFacePress;
     pendingFacePress=null;
+    releaseDirectPointer(event.pointerId);
     event.preventDefault();event.stopImmediatePropagation();
     if(p.provisionalSelection)bridge()?.set?.('face',p.selectionBefore);
     if(event.type==='pointerup'){
@@ -263,6 +272,7 @@ function finish(event){
     return;
   }
   if(!drag||drag.id!==event.pointerId)return;
+  releaseDirectPointer(event.pointerId);
   event.preventDefault();event.stopImmediatePropagation();clearRefVisual();
   const d=drag;drag=null;
   if(event.type==='pointerup'&&d.changed&&d.preview&&!d.blocked){
@@ -279,7 +289,7 @@ function finish(event){
           pendingBackgroundPress=null;
           syncButtons();
           document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none',reason:'through-complete'}}));
-          globalThis.__boxlabGestureDebug?.log?.('FACE DIRECT THROUGH RELEASE',{pid:event.pointerId,tool:'extrude',selectionCleared:true});
+          globalThis.__boxlabGestureDebug?.log?.('FACE DIRECT THROUGH RELEASE',{pid:event.pointerId,tool:'extrude',selectionCleared:true,pointerCapture:canvas.hasPointerCapture?.(event.pointerId)||false});
           if(status)status.textContent=gated.repaired?`Extrude Through • seam conformance • ${gated.splits} split${gated.splits===1?'':'s'} • CLOSED`:'Extrude Through • validated prism cut • CLOSED';
         }else{
           restore(d.m,d.before);bridge()?.set?.('face',d.faces);if(status)status.textContent='Extrude Through • rollback • open topology refused';

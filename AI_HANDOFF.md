@@ -1,41 +1,44 @@
-## v0.36.18.644 — post-Through Pencil orbit release
+## v0.36.18.645 — explicit Face-direct Pencil capture release
 
 Current release:
-- Visible/app version: v0.36.18.644
-- version.json and HTML shell title are synced to .644.
+- Visible/app version: v0.36.18.645
+- version.json and HTML shell title synced.
 
-Hands-on status:
-- .642 Selection Hub direct Face tools: BIG PASS.
+Hands-on:
 - .643 Sweep viewport session: AWESOME / PASS.
-- New regression found after Extrude Through: Apple Pencil could not orbit immediately after a successful Through.
+- .644 attempted post-Through Pencil-orbit fix: FAIL. Extrude disarmed, but Pencil still would not rotate/orbit viewport.
 
-Root cause:
-- Successful Through clears Face selection by design.
-- Extrude remained armed.
-- With no selected Face, the armed Face-direct owner still captured the next background Pencil pointerdown, preventing Pencil-orbit from starting.
+Deeper diagnosis:
+- Face-direct pointerdown calls canvas.setPointerCapture(pointerId).
+- Since .640, Face-direct completion correctly lives on window capture so it cannot miss pointerup.
+- But finish then calls stopImmediatePropagation.
+- Therefore canvas-level release/orbit listeners do not necessarily observe the same pointerup.
+- Face-direct was relying on downstream/browser cleanup despite being the subsystem that acquired pointer capture.
 
-.644 fix:
-- Only after SUCCESSFUL Through:
-  - keep the existing committed Through mesh
-  - clear Face selection as before
-  - clear sequential/pending Face-direct state
-  - disarm Extrude
-  - sync direct-tool UI
-  - emit boxlab-direct-tool-exclusive { tool:'none', reason:'through-complete' }
-  - log FACE DIRECT THROUGH RELEASE
-- Normal Extrude persistence is unchanged.
-- Inset persistence is unchanged.
-- Through kernel, seam-conformance gate and topology validation are unchanged.
+.645:
+- Adds releaseDirectPointer(pointerId).
+- Every Face-direct owned completion explicitly releases canvas pointer capture BEFORE consuming pointerup/pointercancel:
+  - armed-tool background press
+  - armed-tool Face tap
+  - Extrude / Inset drag finish
+  - therefore successful Through as part of Extrude finish
+- .644 post-Through disarm remains.
+- FACE DIRECT THROUGH RELEASE debug now reports remaining pointerCapture state.
 
 Immediate hands-on:
-1. Select a Face and perform Extrude Through.
-2. Confirm Through result is correct/CLOSED.
-3. Immediately use Apple Pencil on viewport background to orbit.
-4. Orbit must start normally on that very next gesture.
-5. Confirm Extrude button is no longer armed after Through.
-6. Select another Face normally.
-7. Quick normal Extrude: it should still remain armed/persistent as before.
-8. Quick Sweep launch to confirm .643 is unaffected.
+1. Select Face -> Extrude -> perform successful Through.
+2. Lift Pencil.
+3. Immediately Pencil-orbit the viewport.
+4. Must rotate on the next gesture.
+5. Quick normal Extrude, then orbit.
+6. Quick Inset, then orbit.
+7. Confirm Sweep viewport session remains unchanged.
+
+If still failing:
+- turn Gesture Debug on
+- repeat Through once
+- send FACE DIRECT FINISH and FACE DIRECT THROUGH RELEASE lines
+- .645 release line should show pointerCapture=false.
 
 Protected:
 - .640 interaction checkpoint.
