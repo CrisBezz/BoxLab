@@ -22,6 +22,7 @@ let explicitGizmoConstraint=null;
 let awaitingTransformEnd=false;
 let expanded=false;
 let lastSelectionKey='';
+let suspendedFaceTool=false;
 
 
 function state(){return globalThis.__boxlabBridgeState||null;}
@@ -56,8 +57,18 @@ function selectionKey(mesh,mode=currentMode()){
 }
 function setExpanded(next,{reason=''}={}){
   const mode=currentMode();
-  expanded=mode==='object'?true:!!next;
+  const requested=mode==='object'?true:!!next;
+  if(requested&&!expanded&&mode==='face'){
+    suspendedFaceTool=!!globalThis.__boxlabFaceDirect?.suspendForTransform?.();
+    if(suspendedFaceTool)gestureDebug('GIZMO SUSPEND FACE TOOL',{tool:globalThis.__boxlabFaceDirect?.tool?.()||'suspended',reason});
+  }
+  expanded=requested;
   root.dataset.expanded=expanded?'true':'false';
+  if(!expanded&&suspendedFaceTool){
+    const resumed=!!globalThis.__boxlabFaceDirect?.resumeAfterTransform?.();
+    gestureDebug('GIZMO RESUME FACE TOOL',{resumed,reason});
+    suspendedFaceTool=false;
+  }
   if(reason)gestureDebug(expanded?'GIZMO EXPAND':'GIZMO COLLAPSE',{mode,reason});
   return expanded;
 }
@@ -135,7 +146,20 @@ function onHandleDown(event){
       try{event.currentTarget?.setPointerCapture?.(event.pointerId);}catch{}
     }
   }
-  // True Multi-object transforms remain on the protected v0.36.1.0 owner.
+  // Component gizmos are semantic-only. Never replay a component handle press
+  // onto the canvas: that can leak through into selection or an armed topology tool.
+  if(!directSemanticHandoff&&mode!=='object'){
+    gestureDebug('GIZMO HANDOFF BLOCKED',{mode,tool:spec.tool,constraint:spec.constraint,pid:event.pointerId});
+    awaitingTransformEnd=false;
+    clearTransientHandleState();
+    root.dataset.dragging='false';
+    activeHandle=null;pointerId=null;explicitGizmoConstraint=null;
+    globalThis.__boxlabActiveGizmoDrag=null;
+    event.preventDefault();
+    event.stopPropagation();
+    return;
+  }
+  // True Object/Multi fallback remains on the protected object transform route.
   gestureDebug(directSemanticHandoff?'GIZMO HANDOFF OK':'GIZMO HANDOFF FALLBACK',{mode,tool:spec.tool,constraint:spec.constraint,pid:event.pointerId});
   if(!directSemanticHandoff)syntheticDown(event);
   event.preventDefault();
@@ -554,5 +578,5 @@ globalThis.__boxlabTotalGizmo={
   },
   expanded:()=>expanded,
   setExpanded:(next,options={})=>setExpanded(next,options),
-  version:'0.36.18.634'
+  version:'0.36.18.636'
 };

@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.636 gizmo owns explicit transform over armed Face tools
+
+- Video review of .635 showed component Face selection gestures and multi-Extrude working, plus outer-ring scale, but axis/handle presses could select geometry through the gizmo.
+- Gesture Debug showed the exact path: GIZMO DOWN -> OWNER REJECT EARLY -> GIZMO HANDOFF FALLBACK. transform-upgrade rejected because Extrude remained armed, then total-gizmo replayed the handle press as a synthetic canvas pointerdown, allowing Extrude/selection to own geometry beneath the gizmo.
+- Explicit expansion of the Face component gizmo now suspends an armed Extrude/Inset tool while the gizmo is expanded, and resumes that tool when the gizmo collapses back to the puck.
+- Vertex/Edge/Face gizmo handles are now semantic-only: if modern transform ownership rejects a handle, the press is blocked rather than synthetically replayed to the canvas.
+- Object/Multi fallback remains unchanged for the protected object transform route.
+- No transform maths, Extrude/Inset topology maths, Group/Multi routing, or protected multi-object-transform code changed.
+
 ## 2026-10-01 — v0.36.18.635 selection remains modeless while tools are armed
 
 - Hands-on .634 exposed two selection ownership regressions: background deselect was unavailable while Extrude/Inset was armed, and legacy component transform listeners consumed face/background taps while Move/Scale/Rotate was armed.

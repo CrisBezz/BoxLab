@@ -2346,3 +2346,17 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Protection .635: touch navigation remains excluded from armed-tool background tap owner
 - [x] Protection .635: legacy direct component transform owners stand down when Total Gizmo is visible
 - [x] Protection .635: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .636: Extrude armed -> activate gizmo -> Extrude visually/behaviorally suspends
+- [ ] Workflow .636: expanded gizmo axis Move handle transforms selection without selecting through geometry
+- [ ] Workflow .636: expanded gizmo Scale handles transform selection without selecting through geometry
+- [ ] Workflow .636: expanded gizmo Rotate handles transform selection without selecting through geometry
+- [ ] Workflow .636: collapse gizmo -> previously armed Extrude resumes
+- [ ] Workflow .636: repeat suspend/resume path with Inset
+- [ ] Regression .636: outer Scale ring still transforms all selected faces
+- [ ] Regression .636: Face selection gestures remain correct before gizmo activation
+- [ ] Regression .636: component gizmo rejection never synthetic-clicks the canvas
+- [ ] Regression .636: Object / Group / Multi gizmo behavior remains unchanged
+- [x] Static .636: Face direct API exposes suspendForTransform/resumeAfterTransform
+- [x] Static .636: Vertex/Edge/Face failed gizmo handoff is blocked, not syntheticDown
+- [x] Protection .636: src/multi-object-transform.js?v=0.36.1.0 unchanged

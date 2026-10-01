@@ -20,6 +20,7 @@ let pendingBackgroundPress = null;
 let preferSequentialUnselected = false;
 let sequentialSelectionKey = null;
 let refMarker=null,refGuide=null;
+let transformSuspendedTool=null;
 
 if(!document.querySelector('#boxlabDirectStableStyle')){
   const style=document.createElement('style');
@@ -341,6 +342,32 @@ globalThis.__boxlabFaceDirect={
   active:()=>!!armed,
   tool:()=>armed,
   dragging:()=>!!drag,
+  suspendForTransform:()=>{
+    if(transformSuspendedTool)return transformSuspendedTool;
+    if(!armed)return null;
+    transformSuspendedTool=armed;
+    pendingSelection=null;
+    pendingFacePress=null;
+    pendingBackgroundPress=null;
+    drag=null;
+    clearSequentialPreference();
+    clearRefVisual();
+    armed=null;
+    syncButtons();
+    updateStatus();
+    return transformSuspendedTool;
+  },
+  resumeAfterTransform:()=>{
+    if(!transformSuspendedTool||armed)return false;
+    const mode=bridge()?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode;
+    if(mode!=='face'){transformSuspendedTool=null;return false;}
+    armed=transformSuspendedTool;
+    transformSuspendedTool=null;
+    syncButtons();
+    updateStatus();
+    return true;
+  },
+  clearTransformSuspension:()=>{transformSuspendedTool=null;},
   replay:replayFaceOperation,
   pending:()=>pendingFacePress?{
     pointerId:pendingFacePress.id,
