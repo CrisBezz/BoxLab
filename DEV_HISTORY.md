@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.633 dormant component gizmo + browser ownership
+
+- Hands-on .632 confirmed Loop Cut fixed, then exposed Face hold browsing conflict and selection clutter from the full Total Gizmo.
+- Face/Edge hold browser reached its first candidate, but sideways scrub was being claimed by Paint Select at 6 px before the modeless browser could cycle candidates.
+- Added explicit modeless selection ownership state from main.js; edge-paint-select now yields pending Paint Select when an Edge/Face hold browser has actually fired.
+- Vertex/Edge/Face selections now show a small dormant transform puck instead of the full Total Gizmo by default.
+- Tapping the puck, or using Move/Scale/Rotate transform controls, expands the existing proven Total Gizmo.
+- Any component selection change collapses the gizmo back to the puck.
+- Object/Group/Multi keep the full gizmo behavior to preserve .615/.616 transform baselines.
+- No transform maths, loop/ring candidate maths, or protected multi-object-transform code changed.
+- Added tests/dormant-gizmo-browser-633.test.mjs and verified published .633 pins/version.
+
 ## 2026-10-01 — v0.36.18.632 Loop Cut commit cleanup
 
 - Hands-on testing exposed repeated/random extra loop cuts when creating a simple Loop Cut.
