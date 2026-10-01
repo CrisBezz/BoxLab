@@ -475,6 +475,29 @@ canvas.addEventListener('pointerup',event=>{
   renderMesh();
 });
 canvas.addEventListener('pointercancel',event=>{if(componentTapIntent?.pointerId===event.pointerId)componentTapIntent=null;});
+
+window.addEventListener('boxlab-pencil-orbit-claim',event=>{
+  const pointerId=event.detail?.pointerId;
+  if(!Number.isInteger(pointerId))return;
+  cancelVertexHold(pointerId);
+  cancelFaceHold(pointerId);
+  cancelEdgeHold(pointerId);
+  if(componentTapIntent?.pointerId===pointerId)componentTapIntent=null;
+  if(backgroundTap?.pointerId===pointerId)backgroundTap=null;
+  if(drag?.pointerId===pointerId){
+    const current=drag;
+    if(current.startMesh&&!current.changed)mesh=current.startMesh;
+    drag=null;
+    controls.enabled=true;
+    try{canvas.releasePointerCapture?.(pointerId);}catch{}
+    renderMesh();
+  }else{
+    controls.enabled=true;
+    try{canvas.releasePointerCapture?.(pointerId);}catch{}
+  }
+  gestureDebug('PEN ORBIT MAIN YIELD',{pid:pointerId});
+});
+
 function endDrag(event){if(!drag||drag.pointerId!==event.pointerId)return;const current=drag;globalThis.__boxlabLastTransformFeedback=current?.kind==='component'?{tool:toolMode,axis:current.axisLock||null,plane:current.planeLock||null,delta:current.liveDelta?.clone?.()||null,softSnap:current.softSnap||null}:null;drag=null;controls.enabled=true;if(current.kind==='vertexBevel'){if(current.preview&&event.type==='pointerup'){history.push(current.startMesh);clearSelection();}else mesh=current.startMesh;}else if(current.kind==='component'&&current.armed){resetEdgeHoldCycle();}renderMesh();if(current.kind==='component'&&current.armed&&event.type==='pointerup'){window.dispatchEvent(new CustomEvent('boxlab-transform-end',{detail:{tool:toolMode,constraint:current.axisLock||current.planeLock||current.gizmoConstraint||'free',pointerId:event.pointerId,owner:'main'}}));}}canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercancel',endDrag);
 
 function transferSelection(nextMode){if(selection?.type==='face'&&nextMode==='edge'){const edgeByKey=new Map(mesh.edges().map((edge,index)=>[mesh.edgeKey(edge.a,edge.b),index])),ids=new Set();selectionIndices().forEach(faceIndex=>{const face=mesh.faces[faceIndex]||[];for(let i=0;i<face.length;i++){const edgeIndex=edgeByKey.get(mesh.edgeKey(face[i],face[(i+1)%face.length]));if(Number.isInteger(edgeIndex))ids.add(edgeIndex);}});return makeSelection('edge',[...ids]);}if(selection?.type==='edge'&&nextMode==='vertex'){const ids=new Set(),edges=mesh.edges();selectionIndices().forEach(edgeIndex=>{const edge=edges[edgeIndex];if(edge){ids.add(edge.a);ids.add(edge.b);}});return makeSelection('vertex',[...ids]);}return null;}

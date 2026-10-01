@@ -2534,3 +2534,18 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .650: selection-vs-orbit mesh-hit policy unchanged
 - [x] Protection .650: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .651: Pencil tap on mesh remains selection/deselection
+- [ ] Workflow .651: Pencil hold on mesh still enters existing Loop/Ring/Grow/Shrink browser
+- [ ] Workflow .651: Pencil drag >=8px starting on mesh claims orbit
+- [ ] Workflow .651: orbit claim restores pre-down component selection
+- [ ] Workflow .651: PEN ORBIT DEFER CLAIM appears and subsequent move shows tracked=true
+- [ ] Workflow .651: camera rotates when Pencil drag starts on model after Through
+- [ ] Workflow .651: paint selection yields cleanly when orbit claims
+- [ ] Workflow .651: component transform/tap intent yields cleanly when orbit claims
+- [ ] Regression .651: active Extrude/Inset still own Pencil drag over selected Face
+- [ ] Regression .651: finger orbit unchanged
+- [ ] Regression .651: .643 Sweep viewport session remains PASS
+- [x] Static .651: deferred orbit uses actual wrapped OrbitControls pointerdown listener
+- [x] Protection .651: no modelling geometry kernels changed
+- [x] Protection .651: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

@@ -107,6 +107,16 @@ window.addEventListener('pointercancel', event=>{
   endPaint(event);
 }, true);
 
+window.addEventListener('boxlab-pencil-orbit-claim',event=>{
+  const pointerId=event.detail?.pointerId;
+  if(pendingPaint?.pointerId===pointerId)pendingPaint=null;
+  if(paint?.pointerId===pointerId){
+    paint=null;
+    try{canvas.releasePointerCapture?.(pointerId);}catch{}
+  }
+  globalThis.__boxlabGestureDebug?.log?.('PAINT YIELD TO ORBIT',{pid:pointerId});
+});
+
 
 globalThis.__boxlabPaintSelectDebug={
   pending:()=>pendingPaint?{pointerId:pendingPaint.pointerId,type:pendingPaint.type}:null,

@@ -1,5 +1,27 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.651 deferred Pencil mesh-intent -> orbit handoff
+
+- .650 debug screenshot finally isolated the remaining Pencil orbit failure:
+  - PEN ORBIT MOVE FORWARD appears,
+  - but tracked=false,
+  - proving OrbitControls receives move events without ever receiving the initial down.
+- Cause: existing Pencil policy permanently blocked OrbitControls pointerdown whenever Pencil started over editable mesh.
+- Replaced that permanent mesh-hit block in idle component selection with deferred intent resolution:
+  - Pencil down on mesh is held as DEFER_MESH_INTENT.
+  - Tap/release remains normal selection.
+  - Existing fired long-hold browser wins and cancels deferred orbit.
+  - Deliberate Pencil movement >= 8 px claims navigation.
+- On navigation claim:
+  - cancel pending Vertex/Edge/Face hold ownership,
+  - cancel component transform/tap intent,
+  - cancel paint-select pending/active ownership,
+  - restore the pre-down component selection,
+  - replay the original Pencil down into the real OrbitControls pointerdown listener,
+  - subsequent real Pencil moves continue through OrbitControls.
+- Active Face direct tools still block OrbitControls over mesh; modelling tool ownership remains stronger than navigation.
+- This is the intended modeless grammar: tap = select, hold = contextual selection gesture, drag = orbit.
+
 ## 2026-10-01 — v0.36.18.650 lifecycle-tracked Pencil contact
 
 - .648 still failed Pencil orbit while one-finger touch orbit continued to work.

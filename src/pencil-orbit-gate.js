@@ -12,6 +12,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const orbitListeners = new Map();
   const penOrbitPointers = new Set();
   const activePenContacts = new Set();
+  const DEFERRED_ORBIT_PX = 8;
+  let pendingMeshOrbit = null;
+  let orbitPointerDownListener = null;
   let orbitRegistrationDepth = 0;
 
   function isPenContact(event) {
@@ -33,6 +36,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   function endPenContact(event){
     if(event.pointerType!=='pen')return;
     activePenContacts.delete(event.pointerId);
+    if(pendingMeshOrbit?.pointerId===event.pointerId)pendingMeshOrbit=null;
   }
 
   window.addEventListener('pointerup',endPenContact,true);
@@ -103,6 +107,67 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   nativeAddEventListener('pointerdown', snapshotSelection, { capture: true, passive: true });
   nativeAddEventListener('pointermove', restoreSelectionForNavigation, { capture: true, passive: true });
 
+  nativeAddEventListener('pointermove',event=>{
+    if(event.pointerType!=='pen'||!pendingMeshOrbit||pendingMeshOrbit.pointerId!==event.pointerId)return;
+    if(globalThis.__boxlabModelessSelection?.browsing?.(event.pointerId)){
+      gestureDebug('PEN ORBIT DEFER YIELD HOLD',{pid:event.pointerId});
+      pendingMeshOrbit=null;
+      return;
+    }
+    const dx=event.clientX-pendingMeshOrbit.x,dy=event.clientY-pendingMeshOrbit.y;
+    if(Math.hypot(dx,dy)<DEFERRED_ORBIT_PX)return;
+    const pending=pendingMeshOrbit;
+    pendingMeshOrbit=null;
+
+    window.dispatchEvent(new CustomEvent('boxlab-pencil-orbit-claim',{detail:{pointerId:event.pointerId}}));
+
+    const bridge=selectionBridge();
+    if(bridge?.mode?.()===pending.selectionMode)bridge.set?.(pending.selectionMode,pending.selectionIndices);
+
+    if(typeof orbitPointerDownListener!=='function'){
+      gestureDebug('PEN ORBIT DEFER FAIL',{pid:event.pointerId,reason:'no-down-listener'});
+      return;
+    }
+
+    const downEvent={
+      pointerId:event.pointerId,
+      pointerType:'pen',
+      isPrimary:event.isPrimary,
+      button:pending.button,
+      buttons:pending.buttons||1,
+      pressure:pending.pressure,
+      clientX:pending.x,
+      clientY:pending.y,
+      pageX:pending.pageX,
+      pageY:pending.pageY,
+      ctrlKey:pending.ctrlKey,
+      metaKey:pending.metaKey,
+      shiftKey:pending.shiftKey,
+      altKey:pending.altKey,
+      preventDefault:()=>{},
+      stopPropagation:()=>{},
+      stopImmediatePropagation:()=>{}
+    };
+
+    activePenContacts.add(event.pointerId);
+    penOrbitPointers.add(event.pointerId);
+    orbitPointerDownListener.call(canvas,downEvent);
+    gestureDebug('PEN ORBIT DEFER CLAIM',{
+      pid:event.pointerId,
+      dx:Math.round(dx),
+      dy:Math.round(dy),
+      restored:pendedSelectionCount(pending),
+      controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled!==false
+    });
+
+    event.preventDefault?.();
+    event.stopImmediatePropagation?.();
+  },{capture:true,passive:false});
+
+  function pendedSelectionCount(pending){
+    return Array.isArray(pending?.selectionIndices)?pending.selectionIndices.length:0;
+  }
+
   function endPenNavigation(event) {
     if (event.pointerType !== 'pen') return;
     navigationSnapshots.delete(event.pointerId);
@@ -136,6 +201,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
       explicit:explicitOrbitPointer,
       depth:orbitRegistrationDepth
     });
+    if(type==='pointerdown')orbitPointerDownListener=listener;
 
     const wrapped = function (event) {
       if (event.pointerType !== 'pen') return listener.call(this, event);
@@ -156,6 +222,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         const multiEnabled=paintState?.multiEnabled?.()??null;
         const controlsEnabled=globalThis.__boxlabBridgeState?.controls?.enabled!==false;
         const blocked=!!meshHit;
+        const deferred=blocked&&!faceToolActive;
         gestureDebug('PEN ORBIT ROUTE',{
           pid:event.pointerId,
           pressure:event.pressure,
@@ -168,9 +235,28 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
           paintPending,
           paintActive,
           controlsEnabled,
-          route:blocked?'BLOCK_MESH_HIT':'FORWARD_ORBIT'
+          route:deferred?'DEFER_MESH_INTENT':blocked?'BLOCK_ACTIVE_TOOL':'FORWARD_ORBIT'
         });
-        if (blocked) return;
+        if(deferred){
+          pendingMeshOrbit={
+            pointerId:event.pointerId,
+            x:event.clientX,
+            y:event.clientY,
+            pageX:event.pageX,
+            pageY:event.pageY,
+            button:event.button,
+            buttons:event.buttons,
+            pressure:event.pressure,
+            ctrlKey:event.ctrlKey,
+            metaKey:event.metaKey,
+            shiftKey:event.shiftKey,
+            altKey:event.altKey,
+            selectionMode,
+            selectionIndices:[...(bridge?.indices?.()||[])]
+          };
+          return;
+        }
+        if(blocked)return;
         penOrbitPointers.add(event.pointerId);
       }
       const result = listener.call(this, event);
@@ -201,6 +287,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
       navigationPointers:[...navigationSnapshots.keys()],
       orbitPointers:[...penOrbitPointers],
       contactPointers:[...activePenContacts],
+      pendingMeshOrbit:pendingMeshOrbit?{pointerId:pendingMeshOrbit.pointerId,selectionMode:pendingMeshOrbit.selectionMode,selectionCount:pendingMeshOrbit.selectionIndices.length}:null,
       controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled!==false
     })
   };
