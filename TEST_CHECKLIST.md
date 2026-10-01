@@ -2260,3 +2260,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .625: Circle load order is deterministic
 - [x] Protection .625: permanent debug layer has no EventTarget monkeypatch
 - [x] Protection .625: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .627: Gesture Debug button works before Focus View is ever used
+- [ ] Workflow .627: Gesture Debug ON shows panel
+- [ ] Workflow .627: Gesture Debug OFF hides panel
+- [ ] Workflow .627: Gesture Debug persistence survives reload
+- [ ] Workflow .627: Vertex Circle present immediately on fresh load
+- [ ] Workflow .627: Vertex Circle remains after late Inspect/Repair sync
+- [ ] Workflow .627: first Repair/Inspect click performs intended action
+- [ ] Regression .627: Focus View unchanged
+- [ ] Regression .627: mode switching preserves Circle layout
+- [x] Protection .627: permanent Gesture Debug has no deep EventTarget monkeypatch
+- [x] Protection .627: src/multi-object-transform.js?v=0.36.1.0 unchanged
