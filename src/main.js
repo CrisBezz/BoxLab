@@ -196,6 +196,10 @@ function armEdgeHold(event,edgeIndex){
   edgeHold=hold;
 }
 function selectionCount(){return selection?.type==='object'?1:selectionIndices().length;}
+globalThis.__boxlabModelessSelection={
+  ownsPointer:(pointerId)=>faceHold?.pointerId===pointerId||edgeHold?.pointerId===pointerId,
+  browsing:(pointerId)=>(faceHold?.pointerId===pointerId&&!!faceHold.fired)||(edgeHold?.pointerId===pointerId&&!!edgeHold.fired)
+};
 function clearSelection(){selection=null;selectedEdgeCutT=.5;}
 function toggleSelection(hit){if(!hit||hit.type==='object'){selection=hit;return;}const current=selection?.type===hit.type?selectionIndices():[],set=new Set(current);if(set.has(hit.index))set.delete(hit.index);else set.add(hit.index);selection=makeSelection(hit.type,[...set],hit.index);}
 function selectAllCurrent(){setDirectTool(null);if(selectionMode==='object')selection={type:'object',index:0};else{const n=selectionMode==='vertex'?mesh.vertices.length:selectionMode==='edge'?mesh.edges().length:mesh.faces.length;selection=makeSelection(selectionMode,Array.from({length:n},(_,i)=>i),n?0:null);}renderMesh();}
