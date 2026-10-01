@@ -188,6 +188,8 @@ function sync(){
     if(host&&repair)host.appendChild(repair);
     if(health?.open)syncHealth(mode,true);
   }
+  globalThis.__boxlabVertexToolLayout?.sync?.();
+  globalThis.__boxlabComponentCircle?.sync?.();
 }
 
 // Let legacy feature modules finish their own startup placement, then contain once.
