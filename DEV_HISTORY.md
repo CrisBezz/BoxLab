@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.639 collapsed gizmo is physically non-interactive
+
+- Hands-on .638 exposed that dormant Total Gizmo handles were visually hidden but still hittable in Safari.
+- Root cause: generated SVG hit proxies carry inline pointer-events:stroke, so the old transparent/pointer-events-none SVG container was not a sufficiently hard interaction boundary.
+- Collapsed component gizmo now removes the entire SVG handle subtree from hit testing with display:none; only the dormant puck remains interactive.
+- Added a runtime onHandleDown guard that rejects any component handle event while expanded=false, protecting against stale/race events even if browser hit-testing changes.
+- Expanded gizmo behavior, transform maths, Vertex puck offset, selection gestures and protected multi-object transform are unchanged.
+
 ## 2026-10-01 — v0.36.18.638 vertical Grow/Shrink gestures + Vertex hold access
 
 - .637 hands-on PASS.

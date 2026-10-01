@@ -2387,3 +2387,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .638: release keeps current Grow/Shrink preview
 - [x] Static .638: Grow/Shrink gesture reuses existing authoritative buttons
 - [x] Protection .638: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .639: collapsed puck leaves no invisible Move/Scale/Rotate handles hittable
+- [ ] Workflow .639: click/drag through former gizmo handle locations performs normal Face selection/gesture behavior
+- [ ] Workflow .639: single Vertex hold remains available while puck is offset
+- [ ] Workflow .639: tapping puck expands full gizmo and handles become interactive normally
+- [ ] Workflow .639: collapsing full gizmo immediately returns all former handle areas to viewport selection
+- [ ] Regression .639: Face/Edge/Vertex Grow/Shrink gestures from .638 remain intact
+- [ ] Regression .639: expanded gizmo Move/Scale/Rotate remains intact
+- [x] Static .639: collapsed SVG subtree uses display:none
+- [x] Static .639: onHandleDown rejects collapsed component gizmo events
+- [x] Protection .639: src/multi-object-transform.js?v=0.36.1.0 unchanged

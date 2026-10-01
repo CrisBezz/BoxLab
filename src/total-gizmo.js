@@ -120,6 +120,12 @@ function handleSpec(el){
 }
 function onHandleDown(event){
   const mode=currentMode(),mesh=state()?.mesh;
+  if(mode!=='object'&&!expanded){
+    gestureDebug('GIZMO HANDLE REJECT COLLAPSED',{mode,pid:event.pointerId});
+    event.preventDefault();
+    event.stopPropagation();
+    return;
+  }
   if(!selectionAvailable(mesh,mode))return;
   hideFloatInput();
   const el=event.currentTarget,spec=handleSpec(el);
@@ -354,8 +360,8 @@ style.textContent=`
 #totalGizmo .tg-activator::after{width:1px;height:14px}
 #totalGizmo[data-expanded="true"] .tg-activator{display:none}
 #totalGizmo[data-expanded="false"][data-mode="vertex"][data-single-component="true"] .tg-activator{transform:translate(calc(-50% + 34px),calc(-50% - 34px))}
-#totalGizmo[data-expanded="false"] svg{opacity:0;pointer-events:none}
-#totalGizmo svg{width:100%;height:100%;overflow:visible;transition:opacity .09s}
+#totalGizmo[data-expanded="false"] svg{display:none!important}
+#totalGizmo svg{width:100%;height:100%;overflow:visible}
 #totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
 #totalGizmo .tg-axis{stroke-width:1.35;pointer-events:stroke}
 #totalGizmo .tg-head{pointer-events:none;opacity:.92}
@@ -581,5 +587,5 @@ globalThis.__boxlabTotalGizmo={
   },
   expanded:()=>expanded,
   setExpanded:(next,options={})=>setExpanded(next,options),
-  version:'0.36.18.638'
+  version:'0.36.18.639'
 };
