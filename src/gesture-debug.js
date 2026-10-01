@@ -47,7 +47,7 @@ function clear(){if(body)body.textContent='';seq=0;}
 function setEnabled(next,{persist=true}={}){
   enabled=!!next;
   if(persist){try{localStorage.setItem(PREF_KEY,enabled?'1':'0');}catch{}}
-  if(enabled){ensurePanel();log('DEBUG ENABLED');}
+  if(enabled){ensurePanel();log('DEBUG ENABLED');installDeepCaptureTrace();}
   else{panel?.remove();panel=null;body=null;seq=0;}
   window.dispatchEvent(new CustomEvent('boxlab-gesture-debug-change',{detail:{enabled}}));
   return enabled;
@@ -57,7 +57,7 @@ function disable(){return setEnabled(false);}
 function toggle(){return setEnabled(!enabled);}
 try{enabled=localStorage.getItem(PREF_KEY)==='1';}catch{}
 globalThis.__boxlabGestureDebug={log,clear,enable,disable,toggle,setEnabled,get enabled(){return enabled;}};
-queueMicrotask(()=>{if(enabled){ensurePanel();log('DEBUG READY');}});
+queueMicrotask(()=>{if(enabled){ensurePanel();installDeepCaptureTrace();log('DEBUG READY');}});
 
 document.addEventListener('pointerdown',event=>{
   log('RAW POINTERDOWN',{pointer:event.pointerType,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
@@ -69,3 +69,48 @@ debugCanvas?.addEventListener('pointerdown',event=>{
 debugCanvas?.addEventListener('pointerdown',event=>{
   log('RAW CANVAS BUBBLE',{pointer:event.pointerType,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
 });
+
+let deepTraceInstalled=false;
+function installDeepCaptureTrace(){
+  if(deepTraceInstalled)return true;
+  const canvas=document.querySelector('#viewport');
+  if(!canvas)return false;
+  const priorAdd=canvas.addEventListener.bind(canvas);
+  const priorRemove=canvas.removeEventListener.bind(canvas);
+  const wrapped=new WeakMap();
+  let seq=0;
+  function isCapture(options){return options===true||!!(options&&typeof options==='object'&&options.capture);}
+  canvas.addEventListener=function(type,listener,options){
+    if(type==='pointerdown'&&isCapture(options)&&listener){
+      const id=++seq;
+      const label=typeof listener==='function'?(listener.name||'anonymous'):(listener?.handleEvent?.name||'handleEvent');
+      let stack='';
+      try{stack=(new Error()).stack?.split('\n').slice(2,5).join(' | ')||'';}catch{}
+      const fn=typeof listener==='function'
+        ? function(event){
+            log('CAPTURE ENTER',{id,label,pid:event.pointerId});
+            const before=event.cancelBubble;
+            try{return listener.call(this,event);}
+            finally{log('CAPTURE EXIT',{id,label,before,after:event.cancelBubble});}
+          }
+        : {
+            handleEvent(event){
+              log('CAPTURE ENTER',{id,label,pid:event.pointerId});
+              const before=event.cancelBubble;
+              try{return listener.handleEvent(event);}
+              finally{log('CAPTURE EXIT',{id,label,before,after:event.cancelBubble});}
+            }
+          };
+      wrapped.set(listener,fn);
+      log('CAPTURE REGISTER',{id,label,stack});
+      return priorAdd(type,fn,options);
+    }
+    return priorAdd(type,listener,options);
+  };
+  canvas.removeEventListener=function(type,listener,options){
+    return priorRemove(type,wrapped.get(listener)||listener,options);
+  };
+  deepTraceInstalled=true;
+  log('DEEP CAPTURE TRACE INSTALLED');
+  return true;
+}
