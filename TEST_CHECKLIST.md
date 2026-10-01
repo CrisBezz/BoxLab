@@ -2549,3 +2549,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .651: no modelling geometry kernels changed
 - [x] Protection .651: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .652: arm Extrude, Pencil-down on empty background immediately disarms Extrude
+- [ ] Workflow .652: same Pencil-down continues into orbit without lifting/restarting
+- [ ] Workflow .652: arm Inset, Pencil-down on empty background immediately disarms Inset and orbits
+- [ ] Workflow .652: Pencil-down on another Face while Extrude armed still starts repeat Extrude
+- [ ] Workflow .652: Pencil-down on another Face while Inset armed still starts repeat Inset
+- [ ] Workflow .652: background navigation does not clear the current Face selection merely from pointerdown
+- [ ] Regression .652: finger orbit unchanged
+- [ ] Regression .652: .643 Sweep viewport session remains PASS
+- [ ] Regression .652: .649 puck restore after Extrude/Inset remains intact
+- [x] Static .652: Pencil background-yield path contains no preventDefault / stopImmediatePropagation / setPointerCapture
+- [x] Protection .652: Face geometry kernels unchanged
+- [x] Protection .652: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

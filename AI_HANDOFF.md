@@ -1,56 +1,51 @@
-## v0.36.18.651 — deferred Pencil mesh-intent to OrbitControls
+## v0.36.18.652 — armed Extrude/Inset yields background Pencil to orbit
 
 Current release:
-- v0.36.18.651
+- v0.36.18.652
 
-Confirmed evidence from .650:
-- Pencil move reaches OrbitControls: PEN ORBIT MOVE FORWARD.
-- tracked=false during every move.
-- Therefore OrbitControls never got the matching pointerdown.
-- Finger orbit works.
+Confirmed user diagnosis:
+- Post-tool Pencil orbit still FAIL while Extrude/Inset remains armed.
+- Manually deselecting Extrude/Inset from left toolbar immediately restores Pencil orbit.
+- Therefore Face-direct tool ownership is the blocker.
 
 Root cause:
-- Pencil orbit gate permanently withheld pointerdown whenever Pencil started over editable mesh.
-- That policy made model-started Pencil orbit impossible even though later moves were forwarded.
+- multi-face-direct document capture sees armed-tool background Pencil-down before OrbitControls.
+- Previous no-hit branch:
+  - created pendingBackgroundPress
+  - preventDefault()
+  - stopImmediatePropagation()
+  - canvas.setPointerCapture()
+- So the tool retained ownership and OrbitControls never received that Pencil-down.
 
-.651 modeless intent resolver:
-- Pencil DOWN on editable mesh, with no active Face direct tool:
-  - do not immediately forward to OrbitControls,
-  - store DEFER_MESH_INTENT plus the pre-down selection.
-- Release without deliberate movement:
-  - normal component tap selection continues.
-- Existing fired hold browser:
-  - wins over orbit.
-- Move >= 8 px:
-  - dispatch boxlab-pencil-orbit-claim,
-  - main cancels pending component tap/drag/hold ownership,
-  - paint select cancels pending/active paint ownership,
-  - gate restores the pre-down selection,
-  - gate replays the original down into the actual OrbitControls down listener,
-  - subsequent real moves rotate normally.
-
-Ownership priority:
-1. active modelling tool
-2. fired hold/browser gesture
-3. deliberate Pencil navigation drag
-4. tap selection
+.652 ownership rule:
+- When Extrude or Inset is armed:
+  - Pencil DOWN on a Face -> tool keeps ownership for repeat modelling.
+  - Pencil DOWN on empty background -> tool is finished/disarmed and yields the SAME event to navigation.
+- Background-yield path:
+  - clear pending Face/background/selection state
+  - clear sequential preference/reference visuals
+  - armed=null
+  - sync direct-tool UI/status
+  - emit boxlab-direct-tool-exclusive {tool:'none', reason:'background-navigation'}
+  - no preventDefault
+  - no stopPropagation/stopImmediatePropagation
+  - no pointer capture
+- Therefore the same original event can reach Pencil orbit gate / OrbitControls naturally.
 
 Immediate hands-on:
-1. After Through, put Pencil directly on the model and drag >=8 px.
-2. Camera should rotate.
-3. Existing Face selection should remain unchanged during orbit.
-4. Gesture Debug should show PEN ORBIT DEFER CLAIM.
-5. Following moves should show tracked=true.
-6. Pencil TAP a Face: still select/deselect, no orbit.
-7. Pencil HOLD a Face: contextual hold browser still works.
-8. Quick Extrude/Inset drag: modelling tool still owns it.
-9. Finger orbit unchanged.
-10. Sweep remains PASS.
+1. Select Face -> radial Extrude -> perform normal Extrude.
+2. Extrude remains armed for repeat.
+3. Put Pencil on clear background and drag WITHOUT manually touching the left toolbar.
+4. Extrude should visibly disarm and camera should orbit on that same drag.
+5. Repeat with Inset.
+6. Confirm Pencil-down on another Face while tool remains armed still begins another Extrude/Inset.
+7. Finger orbit unchanged.
+8. Sweep remains PASS.
 
 Protected:
+- Face geometry unchanged.
 - .640 modeless selection checkpoint.
 - .642 Selection Hub.
 - .643 Sweep viewport session.
 - .649 puck restore.
-- Through geometry/gate.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.

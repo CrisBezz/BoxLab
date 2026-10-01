@@ -168,6 +168,20 @@ document.addEventListener('pointerdown',event=>{
   }
   if(!Number.isInteger(hit)){
     if(event.pointerType==='touch')return;
+    if(event.pointerType==='pen'&&!synthetic){
+      const releasedTool=armed;
+      pendingBackgroundPress=null;
+      pendingFacePress=null;
+      pendingSelection=null;
+      clearSequentialPreference();
+      clearRefVisual();
+      armed=null;
+      syncButtons();
+      updateStatus();
+      document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none',reason:'background-navigation'}}));
+      globalThis.__boxlabGestureDebug?.log?.('FACE DIRECT BACKGROUND YIELD',{pid:event.pointerId,tool:releasedTool,pointer:event.pointerType});
+      return;
+    }
     pendingBackgroundPress={id:event.pointerId,x:event.clientX,y:event.clientY,moved:false};
     event.preventDefault();
     event.stopImmediatePropagation();

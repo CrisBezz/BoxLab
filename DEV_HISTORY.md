@@ -1,5 +1,28 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.652 armed Face tool yields background Pencil-down to navigation
+
+- User isolated the real remaining orbit blocker:
+  - Pencil orbit works immediately after manually disarming Extrude/Inset.
+  - therefore armed Face-direct ownership, not OrbitControls internals, is the blocker.
+- Audit confirmed multi-face-direct handled empty-background non-touch pointerdown by:
+  - creating pendingBackgroundPress
+  - preventDefault
+  - stopImmediatePropagation
+  - setPointerCapture
+- That prevented the same Pencil-down from ever reaching OrbitControls.
+- New ownership rule for Apple Pencil only:
+  - if Extrude/Inset is armed and Pencil-down hits no Face,
+  - disarm the Face-direct tool immediately,
+  - clear pending/sequential direct-tool state,
+  - emit boxlab-direct-tool-exclusive tool:none reason:background-navigation,
+  - DO NOT preventDefault,
+  - DO NOT stop propagation,
+  - DO NOT capture the pointer.
+- The same original Pencil-down therefore continues naturally into viewport navigation.
+- Pencil-down on a Face still belongs to armed Extrude/Inset for repeat operations.
+- Touch behaviour and mouse/background legacy behaviour are unchanged.
+
 ## 2026-10-01 — v0.36.18.651 deferred Pencil mesh-intent -> orbit handoff
 
 - .650 debug screenshot finally isolated the remaining Pencil orbit failure:
