@@ -7,7 +7,9 @@ const raycaster = new THREE.Raycaster();
 raycaster.params.Line.threshold = 0.09;
 const pointer = new THREE.Vector2();
 let paint = null;
+let pendingPaint = null;
 let paintDepth = 'visible';
+const PAINT_DRAG_PX = 6;
 
 function state() { return globalThis.__boxlabBridgeState; }
 function selection() { return globalThis.__boxlabSelectionBridge; }
@@ -56,14 +58,23 @@ canvas?.addEventListener('pointerdown', event => {
   if (!event.isPrimary || !multiToggle?.checked || !['vertex', 'edge', 'face'].includes(type)) return;
   const first = hitIndices(event, type)[0];
   if (!Number.isInteger(first) || bridge?.has?.(type, first)) return;
-  event.preventDefault();
-  event.stopImmediatePropagation();
-  paint = { pointerId:event.pointerId, type };
-  canvas.setPointerCapture?.(event.pointerId);
-  addHits(event, type);
+  pendingPaint = { pointerId:event.pointerId, type, x:event.clientX, y:event.clientY };
+  globalThis.__boxlabGestureDebug?.log?.('PAINT PENDING',{type,index:first,pid:event.pointerId});
 }, true);
 
 canvas?.addEventListener('pointermove', event => {
+  if (pendingPaint && pendingPaint.pointerId === event.pointerId && !paint) {
+    const dx=event.clientX-pendingPaint.x,dy=event.clientY-pendingPaint.y;
+    if(dx*dx+dy*dy < PAINT_DRAG_PX*PAINT_DRAG_PX) return;
+    paint={pointerId:event.pointerId,type:pendingPaint.type};
+    pendingPaint=null;
+    globalThis.__boxlabGestureDebug?.log?.('PAINT CLAIM',{type:paint.type,pid:event.pointerId});
+    canvas.setPointerCapture?.(event.pointerId);
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    addHits(event,paint.type);
+    return;
+  }
   if (!paint || paint.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
@@ -71,6 +82,10 @@ canvas?.addEventListener('pointermove', event => {
 }, true);
 
 function endPaint(event) {
+  if (pendingPaint?.pointerId === event.pointerId) {
+    pendingPaint=null;
+    return;
+  }
   if (!paint || paint.pointerId !== event.pointerId) return;
   event.preventDefault();
   event.stopImmediatePropagation();
@@ -78,4 +93,7 @@ function endPaint(event) {
 }
 
 canvas?.addEventListener('pointerup', endPaint, true);
-canvas?.addEventListener('pointercancel', endPaint, true);
+canvas?.addEventListener('pointercancel', event=>{
+  if(pendingPaint?.pointerId===event.pointerId)pendingPaint=null;
+  endPaint(event);
+}, true);
