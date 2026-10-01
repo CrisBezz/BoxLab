@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.633 shell refresh marker repair
+
+- .633 repo contents were correct, but the HTML <title> still reported v0.36.18.538.
+- release-bootstrap.js uses the title as its initial running-version marker, so the stale shell marker could confuse refresh/deploy behavior.
+- Synced the title to v0.36.18.633 without changing app behavior or module code.
+- This commit also triggers a fresh GitHub Pages deployment for the existing .633 release.
+
 ## 2026-10-01 — v0.36.18.633 dormant component gizmo + browser ownership
 
 - Hands-on .632 confirmed Loop Cut fixed, then exposed Face hold browsing conflict and selection clutter from the full Total Gizmo.
