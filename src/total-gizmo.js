@@ -353,6 +353,7 @@ style.textContent=`
 #totalGizmo .tg-activator::before{width:14px;height:1px}
 #totalGizmo .tg-activator::after{width:1px;height:14px}
 #totalGizmo[data-expanded="true"] .tg-activator{display:none}
+#totalGizmo[data-expanded="false"][data-mode="vertex"][data-single-component="true"] .tg-activator{transform:translate(calc(-50% + 34px),calc(-50% - 34px))}
 #totalGizmo[data-expanded="false"] svg{opacity:0;pointer-events:none}
 #totalGizmo svg{width:100%;height:100%;overflow:visible;transition:opacity .09s}
 #totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
@@ -553,6 +554,8 @@ function sync(){
   floatPalette.style.top=`${top}px`;
   root.hidden=false;
   root.dataset.expanded=expanded?'true':'false';
+  root.dataset.mode=mode;
+  root.dataset.singleComponent=mode!=='object'&&selectionKey(mesh,mode).split(':')[1]?.split(',').filter(Boolean).length===1?'true':'false';
   if(expanded||mode==='object')syncAxisVisuals(c,camera);
 }
 sync();
@@ -578,5 +581,5 @@ globalThis.__boxlabTotalGizmo={
   },
   expanded:()=>expanded,
   setExpanded:(next,options={})=>setExpanded(next,options),
-  version:'0.36.18.637'
+  version:'0.36.18.638'
 };

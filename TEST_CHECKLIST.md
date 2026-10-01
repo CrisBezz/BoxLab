@@ -2370,3 +2370,20 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .637: resume path disarms transform arming before restoring Face direct tool
 - [x] Protection .637: transform maths unchanged
 - [x] Protection .637: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .638: Face long-hold + drag UP grows selection
+- [ ] Workflow .638: Face long-hold + drag DOWN shrinks selection
+- [ ] Workflow .638: Edge long-hold + drag UP grows selection
+- [ ] Workflow .638: Edge long-hold + drag DOWN shrinks selection
+- [ ] Workflow .638: Vertex long-hold + drag UP grows selection
+- [ ] Workflow .638: Vertex long-hold + drag DOWN shrinks selection
+- [ ] Workflow .638: single selected Vertex puck is visibly offset and does not cover the vertex
+- [ ] Workflow .638: multi-vertex selection puck remains at centroid
+- [ ] Workflow .638: larger vertical drag produces multiple Grow/Shrink steps predictably
+- [ ] Workflow .638: moving back toward hold point reduces preview step count instead of accumulating operations
+- [ ] Regression .638: Face horizontal scrub still browses Loop/Ring/Coplanar/Connected
+- [ ] Regression .638: Edge horizontal scrub still browses Loop/Ring
+- [ ] Regression .638: Paint Select yields to fired Vertex/Edge/Face hold
+- [ ] Regression .638: release keeps current Grow/Shrink preview
+- [x] Static .638: Grow/Shrink gesture reuses existing authoritative buttons
+- [x] Protection .638: src/multi-object-transform.js?v=0.36.1.0 unchanged

@@ -25,8 +25,8 @@ const vertexMaterial=new THREE.MeshBasicMaterial({color:0xf2f5fa}),selectedVerte
 const axisLineMaterials={x:new THREE.LineBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.LineBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.LineBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.LineBasicMaterial({color:0xffffff,depthTest:false})};
 const axisOverlayMaterials={x:new THREE.MeshBasicMaterial({color:0xff4a45,depthTest:false}),y:new THREE.MeshBasicMaterial({color:0x55d66b,depthTest:false}),z:new THREE.MeshBasicMaterial({color:0x4f86ff,depthTest:false}),neutral:new THREE.MeshBasicMaterial({color:0xffffff,depthTest:false})};
 const activeLoopMaterial=new THREE.LineBasicMaterial({color:0x62d8ff,transparent:true,opacity:1,depthTest:false}),currentLoopMaterial=new THREE.LineBasicMaterial({color:0xffe14a,transparent:true,opacity:1,depthTest:false}),creaseEdgeMaterial=new THREE.LineBasicMaterial({color:0xffb65c,transparent:true,opacity:1}),mirrorEdgeMaterial=new THREE.LineBasicMaterial({color:0x8791a2,transparent:true,opacity:.32});
-const raycaster=new THREE.Raycaster();raycaster.params.Line.threshold=.09;const pointer=new THREE.Vector2();let drag=null,backgroundTap=null,edgeHold=null,edgeHoldCycle=null,faceHold=null,componentTapIntent=null;
-const EDIT_DRAG_THRESHOLD=8,INFERENCE_SNAP_PX=10,PLANE_EPSILON=1e-5,TAP_MAX_MS=320,TAP_MAX_MOVE=12,EDGE_HOLD_MS=420,EDGE_HOLD_MOVE=7,EDGE_SCRUB_STEP=32,WORLD_AXES={x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)};
+const raycaster=new THREE.Raycaster();raycaster.params.Line.threshold=.09;const pointer=new THREE.Vector2();let drag=null,backgroundTap=null,vertexHold=null,edgeHold=null,edgeHoldCycle=null,faceHold=null,componentTapIntent=null;
+const EDIT_DRAG_THRESHOLD=8,INFERENCE_SNAP_PX=10,PLANE_EPSILON=1e-5,TAP_MAX_MS=320,TAP_MAX_MOVE=12,EDGE_HOLD_MS=420,EDGE_HOLD_MOVE=7,EDGE_SCRUB_STEP=32,SELECTION_SCRUB_LOCK=18,SELECTION_VERTICAL_STEP=30,WORLD_AXES={x:new THREE.Vector3(1,0,0),y:new THREE.Vector3(0,1,0),z:new THREE.Vector3(0,0,1)};
 const gesture={active:false,maxTouches:0,startedAt:0,starts:new Map(),moved:false};
 
 const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
@@ -133,12 +133,64 @@ function applyFaceHoldCandidate(hold,index){
   gestureDebug('FACE PREVIEW',{kind:candidate.kind,index:next+1,total:hold.candidates.length});
   return true;
 }
+
+function applyVerticalSelectionScrub(hold,dy){
+  const type=hold?.type||selectionMode;
+  const base=[...new Set(hold?.gestureBaseIndices||[])].filter(Number.isInteger);
+  if(!['vertex','edge','face'].includes(type)||!base.length)return false;
+  const direction=dy<0?'grow':'shrink';
+  const steps=Math.max(1,Math.round(Math.abs(dy)/SELECTION_VERTICAL_STEP));
+  if(hold.verticalDirection===direction&&hold.verticalSteps===steps)return true;
+  selection=makeSelection(type,base,base.at(-1)??null);
+  renderMesh();
+  const button=document.querySelector(direction==='grow'?'#growSelectionBtn':'#shrinkSelectionBtn');
+  if(!button)return false;
+  for(let i=0;i<steps;i++)button.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+  hold.verticalDirection=direction;
+  hold.verticalSteps=steps;
+  const status=document.querySelector('#selectionStatus');
+  if(status)status.textContent=`${direction==='grow'?'Grow':'Shrink'} ×${steps} • drag vertically • release to keep`;
+  gestureDebug('SELECTION VERTICAL SCRUB',{type,direction,steps,pid:hold.pointerId});
+  return true;
+}
+function cancelVertexHold(pointerId=null){
+  if(!vertexHold)return;
+  if(pointerId!==null&&vertexHold.pointerId!==pointerId)return;
+  clearTimeout(vertexHold.timer);
+  vertexHold=null;
+}
+function armVertexHold(event,vertexIndex){
+  if(selectionMode!=='vertex'||directTool||event.pointerType==='touch'||!event.isPrimary||!Number.isInteger(vertexIndex))return;
+  cancelVertexHold();
+  const hold={
+    type:'vertex',pointerId:event.pointerId,vertexIndex,startX:event.clientX,startY:event.clientY,
+    fired:false,timer:null,gestureBaseIndices:[],verticalDirection:null,verticalSteps:0
+  };
+  hold.timer=setTimeout(()=>{
+    if(vertexHold!==hold)return;
+    if(drag?.pointerId===hold.pointerId){
+      if(drag.armed){cancelVertexHold(hold.pointerId);return;}
+      drag=null;controls.enabled=true;
+      try{canvas.releasePointerCapture?.(hold.pointerId);}catch{}
+    }
+    if(componentTapIntent?.pointerId===hold.pointerId)componentTapIntent=null;
+    hold.gestureBaseIndices=selection?.type==='vertex'?[...selectionIndices()]:[hold.vertexIndex];
+    if(!hold.gestureBaseIndices.length)hold.gestureBaseIndices=[hold.vertexIndex];
+    hold.fired=true;
+    const status=document.querySelector('#selectionStatus');
+    if(status)status.textContent='Vertex Grow / Shrink • drag UP / DOWN • release to keep';
+    gestureDebug('VERTEX HOLD FIRED',{vertex:hold.vertexIndex,pid:hold.pointerId,count:hold.gestureBaseIndices.length});
+  },EDGE_HOLD_MS);
+  vertexHold=hold;
+  gestureDebug('VERTEX HOLD ARMED',{vertex:vertexIndex,pid:event.pointerId});
+}
+
 function armFaceHold(event,faceIndex){
   gestureDebug('FACE HOLD REQUEST',{mode:selectionMode,direct:directTool||'none',pointer:event.pointerType,primary:event.isPrimary,face:faceIndex,pid:event.pointerId});
   if(selectionMode!=='face'||directTool||event.pointerType==='touch'||!event.isPrimary||!Number.isInteger(faceIndex)){gestureDebug('FACE HOLD REJECT');return;}
   cancelFaceHold();
   const base=selection?.type==='face'?[...selectionIndices()]:[];
-  const hold={pointerId:event.pointerId,faceIndex,startX:event.clientX,startY:event.clientY,fired:false,timer:null,baseIndices:base,candidates:[],candidateIndex:0};
+  const hold={type:'face',pointerId:event.pointerId,faceIndex,startX:event.clientX,startY:event.clientY,fired:false,timer:null,baseIndices:base,candidates:[],candidateIndex:0,gestureBaseIndices:[],scrubAxis:null,verticalDirection:null,verticalSteps:0};
   hold.timer=setTimeout(()=>{
     if(faceHold!==hold)return;
     gestureDebug('FACE HOLD TIMER',{face:hold.faceIndex,pid:hold.pointerId,drag:drag?.kind||'none',armed:!!drag?.armed});
@@ -152,17 +204,17 @@ function armFaceHold(event,faceIndex){
     gestureDebug('FACE CANDIDATES START',{face:hold.faceIndex});
     hold.candidates=collectFaceHoldCandidates(hold.faceIndex);
     gestureDebug('FACE CANDIDATES',{count:hold.candidates.length,kinds:hold.candidates.map(x=>x.kind)});
-    if(!hold.candidates.length){
+    hold.gestureBaseIndices=[...original];
+    hold.fired=true;
+    gestureDebug('FACE HOLD FIRED',{face:hold.faceIndex,candidates:hold.candidates.length});
+    if(hold.candidates.length){
+      applyFaceHoldCandidate(hold,0);
+    }else{
       selection=makeSelection('face',original,original.at(-1)??null);
       renderMesh();
       const status=document.querySelector('#selectionStatus');
-      if(status)status.textContent='Face Browser • no valid selection candidates';
-      cancelFaceHold(hold.pointerId);
-      return;
+      if(status)status.textContent='Face Grow / Shrink • drag UP / DOWN • release to keep';
     }
-    hold.fired=true;
-    gestureDebug('FACE HOLD FIRED',{face:hold.faceIndex,candidates:hold.candidates.length});
-    applyFaceHoldCandidate(hold,0);
   },EDGE_HOLD_MS);
   faceHold=hold;
   gestureDebug('FACE HOLD ARMED',{face:faceIndex,pid:event.pointerId});
@@ -173,7 +225,7 @@ function armEdgeHold(event,edgeIndex){
   const currentSignature=sameEdgeSelectionSignature(selection?.type==='edge'?selectionIndices():[]);
   const continueSession=edgeHoldCycle?.seedIndex===edgeIndex&&edgeHoldCycle?.resultSignature===currentSignature;
   const baseAtPointerDown=continueSession?[...edgeHoldCycle.baseIndices]:(selection?.type==='edge'?[...selectionIndices()]:[]);
-  const hold={pointerId:event.pointerId,edgeIndex,startX:event.clientX,startY:event.clientY,fired:false,timer:null,baseIndices:baseAtPointerDown,candidates:[],candidateIndex:0};
+  const hold={type:'edge',pointerId:event.pointerId,edgeIndex,startX:event.clientX,startY:event.clientY,fired:false,timer:null,baseIndices:baseAtPointerDown,candidates:[],candidateIndex:0,gestureBaseIndices:[],scrubAxis:null,verticalDirection:null,verticalSteps:0};
   hold.timer=setTimeout(()=>{
     if(edgeHold!==hold)return;
     if(drag?.pointerId===hold.pointerId){
@@ -183,22 +235,23 @@ function armEdgeHold(event,edgeIndex){
     }
     const original=selection?.type==='edge'?[...selectionIndices()]:[];
     hold.candidates=collectEdgeHoldCandidates(hold.edgeIndex);
-    if(!hold.candidates.length){
+    hold.gestureBaseIndices=[...original];
+    hold.fired=true;
+    if(hold.candidates.length){
+      applyEdgeHoldCandidate(hold,0);
+    }else{
       selection=makeSelection('edge',original,original.at(-1)??null);
       renderMesh();
       const status=document.querySelector('#selectionStatus');
-      if(status)status.textContent='Loop / Ring • no valid candidates from this edge';
-      resetEdgeHoldCycle();cancelEdgeHold(hold.pointerId);return;
+      if(status)status.textContent='Edge Grow / Shrink • drag UP / DOWN • release to keep';
     }
-    hold.fired=true;
-    applyEdgeHoldCandidate(hold,0);
   },EDGE_HOLD_MS);
   edgeHold=hold;
 }
 function selectionCount(){return selection?.type==='object'?1:selectionIndices().length;}
 globalThis.__boxlabModelessSelection={
-  ownsPointer:(pointerId)=>faceHold?.pointerId===pointerId||edgeHold?.pointerId===pointerId,
-  browsing:(pointerId)=>(faceHold?.pointerId===pointerId&&!!faceHold.fired)||(edgeHold?.pointerId===pointerId&&!!edgeHold.fired)
+  ownsPointer:(pointerId)=>vertexHold?.pointerId===pointerId||faceHold?.pointerId===pointerId||edgeHold?.pointerId===pointerId,
+  browsing:(pointerId)=>(vertexHold?.pointerId===pointerId&&!!vertexHold.fired)||(faceHold?.pointerId===pointerId&&!!faceHold.fired)||(edgeHold?.pointerId===pointerId&&!!edgeHold.fired)
 };
 function clearSelection(){selection=null;selectedEdgeCutT=.5;}
 function toggleSelection(hit){if(!hit||hit.type==='object'){selection=hit;return;}const current=selection?.type===hit.type?selectionIndices():[],set=new Set(current);if(set.has(hit.index))set.delete(hit.index);else set.add(hit.index);selection=makeSelection(hit.type,[...set],hit.index);}
@@ -307,19 +360,38 @@ canvas.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse'&&ev
  if(directTool==='loopCut'&&event.isPrimary){const hit=pickKind(event,'edge');if(!hit)return;const before=mesh.clone(),seed=before.edges()[hit.index];if(!seed)return;const cutT=edgeTapFraction(hit.index,event),count=Number(document.querySelector('#loopCutCount').value||1),result=count===1?mesh.loopCut(hit.index,cutT):mesh.loopCuts(hit.index,count);if(!result)return;history.push(before);activeLoopSlides=result.slideGroups||[result.slideData];const target=activeLoopSlides.reduce((best,g)=>{if(!g?.length)return best;const d=Math.abs((g[0].position??.5)-cutT);return!best||d<best.distance?{group:g,distance:d}:best;},null)?.group||activeLoopSlides[0]||null;setActiveLoopGroup(target);clearSelection();const rail=worldToScreen(before.vertices[seed.b]).sub(worldToScreen(before.vertices[seed.a])),startPct=target?.[0]?.position??cutT;renderMesh();drag={kind:'loopSlide',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPct,rail,group:target,armed:false};controls.enabled=false;canvas.setPointerCapture(event.pointerId);return;}
  if((directTool==='extrude'||directTool==='inset')&&event.isPrimary){const hit=pickKind(event,'face');if(!hit)return;const before=mesh.clone(),center=before.faceCenter(hit.index),screenCenter=worldToScreen(center),startPointer=new THREE.Vector2(event.clientX,event.clientY);let insetRail=screenCenter.clone().sub(startPointer),insetScale=insetRail.length();if(insetScale<20){insetRail.set(0,-1);insetScale=120;}else insetRail.normalize();clearSelection();drag={kind:'faceTool',faceTool:directTool,pointerId:event.pointerId,faceIndex:hit.index,startMesh:before,startX:event.clientX,startY:event.clientY,normal2D:projectedFaceNormal2D(before,hit.index),insetRail,insetScale,armed:false,changed:false,liveValue:0};controls.enabled=false;canvas.setPointerCapture(event.pointerId);renderMesh();return;}
  const loopHit=pickLoopSlide(event);if(loopHit&&event.isPrimary){const{item,group}=loopHit;setActiveLoopGroup(group);renderMesh();const a=worldToScreen(new THREE.Vector3(...item.start)),b=worldToScreen(new THREE.Vector3(...item.end));let rail=b.clone().sub(a);if(rail.lengthSq()<25){let best=null,bestLen=0;for(const ci of group){const candidate=worldToScreen(new THREE.Vector3(...ci.end)).sub(worldToScreen(new THREE.Vector3(...ci.start))),len=candidate.lengthSq();if(len>bestLen){bestLen=len;best=candidate;}}if(best)rail=best;}drag={kind:'loopSlide',pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startPct:Number(document.querySelector('#loopSlide').value)/100,rail,group,armed:false};controls.enabled=false;canvas.setPointerCapture(event.pointerId);return;}
- const hit=pick(event);if(!hit){if(event.isPrimary)backgroundTap={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,moved:false,cancelled:false};return;}backgroundTap=null;if(hit.type==='edge')armEdgeHold(event,hit.index);if(hit.type==='face'){gestureDebug('FACE CANVAS DOWN',{face:hit.index,pid:event.pointerId,pointer:event.pointerType});armFaceHold(event,hit.index);}const alreadySelected=hit.type==='object'?selection?.type==='object':selectionHas(hit.type,hit.index);if(selectionMode!=='object'&&!alreadySelected){toggleSelection(hit);if(hit.type==='edge'&&selectionHas('edge',hit.index))selectedEdgeCutT=edgeTapFraction(hit.index,event);renderMesh();return;}
+ const hit=pick(event);if(!hit){if(event.isPrimary)backgroundTap={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,moved:false,cancelled:false};return;}backgroundTap=null;if(hit.type==='vertex')armVertexHold(event,hit.index);if(hit.type==='edge')armEdgeHold(event,hit.index);if(hit.type==='face'){gestureDebug('FACE CANVAS DOWN',{face:hit.index,pid:event.pointerId,pointer:event.pointerType});armFaceHold(event,hit.index);}const alreadySelected=hit.type==='object'?selection?.type==='object':selectionHas(hit.type,hit.index);if(selectionMode!=='object'&&!alreadySelected){toggleSelection(hit);if(hit.type==='edge'&&selectionHas('edge',hit.index))selectedEdgeCutT=edgeTapFraction(hit.index,event);renderMesh();return;}
  if(!alreadySelected){selection=hit.type==='object'?hit:makeSelection(hit.type,[hit.index],hit.index);if(hit.type==='edge')selectedEdgeCutT=edgeTapFraction(hit.index,event);renderMesh();return;}if(hit.type==='edge')selectedEdgeCutT=edgeTapFraction(hit.index,event);if(!event.isPrimary)return;if(selectionMode!=='object')componentTapIntent={pointerId:event.pointerId,hit:{type:hit.type,index:hit.index},startX:event.clientX,startY:event.clientY,startTime:performance.now(),cancelled:false};const center=componentCenter(selection);{const gizmoConstraint=globalThis.__boxlabTotalGizmo?.activeConstraint?.(),uiAxis=document.querySelector('#transformPrecision [data-constraint].active')?.dataset?.constraint,explicitAxis=['x','y','z'].includes(gizmoConstraint)?gizmoConstraint:['x','y','z'].includes(uiAxis)?uiAxis:null,explicitPlane=['xy','xz','yz'].includes(gizmoConstraint)?gizmoConstraint:null,planeNormal=explicitPlane==='xy'?WORLD_AXES.z:explicitPlane==='xz'?WORLD_AXES.y:explicitPlane==='yz'?WORLD_AXES.x:null,plane=planeNormal?new THREE.Plane().setFromNormalAndCoplanarPoint(planeNormal,center):screenPlaneAt(center),start=rayPlanePoint(event,plane);drag={kind:'component',pointerId:event.pointerId,selection:selection?.type==='object'?{type:'object',index:0}:{type:selection.type,index:selection.index,indices:[...selectionIndices()]},tapHit:selectionMode==='object'?null:{type:hit.type,index:hit.index},start,last:start?.clone(),plane,startMesh:mesh.clone(),center:center.clone(),axisScreens:projectedWorldAxes(center),axisLock:explicitAxis,planeLock:explicitPlane,gizmoConstraint:gizmoConstraint||null,inferenceSnap:null,softSnap:null,liveDelta:new THREE.Vector3(),startX:event.clientX,startY:event.clientY,startTime:performance.now(),changed:false,armed:false};}controls.enabled=false;canvas.setPointerCapture(event.pointerId);
 });
 canvas.addEventListener('pointermove',event=>{if(!backgroundTap||backgroundTap.pointerId!==event.pointerId)return;if(Math.hypot(event.clientX-backgroundTap.startX,event.clientY-backgroundTap.startY)>=EDIT_DRAG_THRESHOLD)backgroundTap.moved=true;});
 canvas.addEventListener('pointermove',event=>{if(!componentTapIntent||componentTapIntent.pointerId!==event.pointerId||componentTapIntent.cancelled)return;if(Math.hypot(event.clientX-componentTapIntent.startX,event.clientY-componentTapIntent.startY)>TAP_MAX_MOVE)componentTapIntent.cancelled=true;});
+canvas.addEventListener('pointermove',event=>{
+  if(!vertexHold||vertexHold.pointerId!==event.pointerId)return;
+  if(!vertexHold.fired){
+    if(Math.hypot(event.clientX-vertexHold.startX,event.clientY-vertexHold.startY)>=EDGE_HOLD_MOVE)cancelVertexHold(event.pointerId);
+    return;
+  }
+  const dy=event.clientY-vertexHold.startY;
+  if(Math.abs(dy)>=SELECTION_SCRUB_LOCK)applyVerticalSelectionScrub(vertexHold,dy);
+  event.preventDefault();
+});
 canvas.addEventListener('pointermove',event=>{
   if(!faceHold||faceHold.pointerId!==event.pointerId)return;
   if(!faceHold.fired){
     if(Math.hypot(event.clientX-faceHold.startX,event.clientY-faceHold.startY)>=EDGE_HOLD_MOVE){gestureDebug('FACE HOLD CANCEL MOVE',{pid:event.pointerId});cancelFaceHold(event.pointerId);}
     return;
   }
-  const step=Math.max(0,Math.round((event.clientX-faceHold.startX)/EDGE_SCRUB_STEP));
-  applyFaceHoldCandidate(faceHold,step);
+  const dx=event.clientX-faceHold.startX,dy=event.clientY-faceHold.startY;
+  if(!faceHold.scrubAxis&&Math.max(Math.abs(dx),Math.abs(dy))>=SELECTION_SCRUB_LOCK){
+    faceHold.scrubAxis=Math.abs(dy)>Math.abs(dx)*1.15?'vertical':'horizontal';
+    gestureDebug('FACE SCRUB AXIS',{axis:faceHold.scrubAxis,dx:Math.round(dx),dy:Math.round(dy),pid:event.pointerId});
+  }
+  if(faceHold.scrubAxis==='vertical'){
+    applyVerticalSelectionScrub(faceHold,dy);
+  }else if(faceHold.candidates.length){
+    const step=Math.max(0,Math.round(dx/EDGE_SCRUB_STEP));
+    applyFaceHoldCandidate(faceHold,step);
+  }
   event.preventDefault();
 });
 canvas.addEventListener('pointermove',event=>{
@@ -328,8 +400,17 @@ canvas.addEventListener('pointermove',event=>{
     if(Math.hypot(event.clientX-edgeHold.startX,event.clientY-edgeHold.startY)>=EDGE_HOLD_MOVE)cancelEdgeHold(event.pointerId);
     return;
   }
-  const step=Math.max(0,Math.round((event.clientX-edgeHold.startX)/EDGE_SCRUB_STEP));
-  applyEdgeHoldCandidate(edgeHold,step);
+  const dx=event.clientX-edgeHold.startX,dy=event.clientY-edgeHold.startY;
+  if(!edgeHold.scrubAxis&&Math.max(Math.abs(dx),Math.abs(dy))>=SELECTION_SCRUB_LOCK){
+    edgeHold.scrubAxis=Math.abs(dy)>Math.abs(dx)*1.15?'vertical':'horizontal';
+    gestureDebug('EDGE SCRUB AXIS',{axis:edgeHold.scrubAxis,dx:Math.round(dx),dy:Math.round(dy),pid:event.pointerId});
+  }
+  if(edgeHold.scrubAxis==='vertical'){
+    applyVerticalSelectionScrub(edgeHold,dy);
+  }else if(edgeHold.candidates.length){
+    const step=Math.max(0,Math.round(dx/EDGE_SCRUB_STEP));
+    applyEdgeHoldCandidate(edgeHold,step);
+  }
   event.preventDefault();
 });
 function finishFaceHold(event){
@@ -355,8 +436,13 @@ function finishEdgeHold(event){
 // Component holds must finish above canvas/document owners because the Total Gizmo can
 // appear after pointerdown and become the pointerup target. Window capture guarantees
 // that a released tap cannot leave a latent Face/Edge hold timer behind.
-window.addEventListener('pointerup',event=>{finishFaceHold(event);finishEdgeHold(event);},true);
-window.addEventListener('pointercancel',event=>{finishFaceHold(event);finishEdgeHold(event);},true);
+function finishVertexHold(event){
+  if(vertexHold?.pointerId!==event.pointerId)return false;
+  cancelVertexHold(event.pointerId);
+  return true;
+}
+window.addEventListener('pointerup',event=>{finishVertexHold(event);finishFaceHold(event);finishEdgeHold(event);},true);
+window.addEventListener('pointercancel',event=>{finishVertexHold(event);finishFaceHold(event);finishEdgeHold(event);},true);
 canvas.addEventListener('pointerup',event=>{
   if(!backgroundTap||backgroundTap.pointerId!==event.pointerId)return;
   const tap=backgroundTap;backgroundTap=null;

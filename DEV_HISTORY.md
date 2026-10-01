@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.638 vertical Grow/Shrink gestures + Vertex hold access
+
+- .637 hands-on PASS.
+- Added the completion gesture for dense component selections: after long-hold, drag UP to Grow and DOWN to Shrink.
+- Face and Edge keep their existing horizontal candidate browsers; once scrub intent is clear, the gesture axis locks horizontal or vertical so the two behaviours cannot fight.
+- Vertical preview is deterministic: each pointer position restores the selection snapshot from hold-fire time, then applies exactly N authoritative Grow/Shrink button operations. Moving back toward the hold point therefore reduces steps instead of accumulating runaway changes.
+- Vertex now participates in modeless hold gestures with vertical Grow/Shrink only; no artificial Vertex Loop/Ring concept was introduced.
+- The dormant gizmo puck is offset up/right for a single selected Vertex so the seed vertex itself remains available for press-and-hold. Multi-vertex puck placement remains at the selection centroid.
+- Paint Select yields once any Vertex/Edge/Face hold gesture has fired.
+- Existing advanced-selection.js Grow/Shrink logic remains authoritative; no duplicate adjacency solver was added.
+- No transform maths, Face topology maths, Group/Multi routing or protected multi-object-transform code changed.
+
 ## 2026-10-01 — v0.36.18.637 single-owner restore after gizmo collapse
 
 - .636 hands-on PASS: explicit Face gizmo transforms now work over previously armed Extrude without click-through.
