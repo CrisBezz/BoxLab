@@ -1,5 +1,21 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.653 Selection Hub Shell viewport session
+
+- .652 hands-on PERFECT / PASS and is now the protected Face-direct background-yield checkpoint.
+- Added Shell as the second Selection Hub viewport-session tool after Sweep.
+- Shell continues to use src/shell.js as the sole authoritative session and geometry owner.
+- New selection-hub-shell-session.js appears only when Shell was launched from the Face radial Selection Hub.
+- Viewport palette mirrors:
+  - Shell Thickness slider
+  - current Shell Thickness output
+  - Cancel
+  - Apply Shell
+- Thickness proxy forwards input/change to the existing #shellThickness control, so the established live preview remains authoritative.
+- Apply / Cancel proxy the existing #shellApplyBtn / #shellCancelBtn.
+- Palette tracks the existing boxlab-tool-session-change lifecycle and disappears on Apply/Cancel/session end.
+- Ordinary left-toolbar Shell remains unchanged.
+
 ## 2026-10-01 — v0.36.18.652 armed Face tool yields background Pencil-down to navigation
 
 - User isolated the real remaining orbit blocker:

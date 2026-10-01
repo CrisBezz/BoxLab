@@ -2562,3 +2562,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .652: Face geometry kernels unchanged
 - [x] Protection .652: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [x] Hands-on .652: armed Extrude/Inset + Pencil background-down disarms tool and same gesture orbits — PERFECT / PASS
+- [ ] Workflow .653: radial Shell opens compact viewport Shell palette beside selection
+- [ ] Workflow .653: viewport Thickness slider updates live Shell preview
+- [ ] Workflow .653: viewport Thickness output mirrors authoritative Shell value
+- [ ] Workflow .653: Apply Shell commits through existing Shell owner and palette disappears
+- [ ] Workflow .653: Cancel restores/cancels through existing Shell owner and palette disappears
+- [ ] Regression .653: ordinary left-toolbar Shell remains unchanged
+- [ ] Regression .653: .643 Sweep viewport session remains PASS
+- [ ] Regression .653: .652 Face-direct background-yield remains PASS
+- [x] Static .653: Shell viewport controls proxy existing #shell* owners; no Shell kernel duplicated
+- [x] Protection .653: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

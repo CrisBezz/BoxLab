@@ -1,51 +1,50 @@
-## v0.36.18.652 — armed Extrude/Inset yields background Pencil to orbit
+## v0.36.18.653 — Selection Hub Shell viewport session
 
 Current release:
-- v0.36.18.652
+- v0.36.18.653
 
-Confirmed user diagnosis:
-- Post-tool Pencil orbit still FAIL while Extrude/Inset remains armed.
-- Manually deselecting Extrude/Inset from left toolbar immediately restores Pencil orbit.
-- Therefore Face-direct tool ownership is the blocker.
+Hands-on protected checkpoints:
+- .643 Sweep viewport session: AWESOME / PASS.
+- .652 Face-direct background Pencil yield: PERFECT / PASS.
+  - armed Extrude/Inset + Face hit = repeat modelling.
+  - armed Extrude/Inset + Pencil background-down = disarm and same gesture orbits.
 
-Root cause:
-- multi-face-direct document capture sees armed-tool background Pencil-down before OrbitControls.
-- Previous no-hit branch:
-  - created pendingBackgroundPress
-  - preventDefault()
-  - stopImmediatePropagation()
-  - canvas.setPointerCapture()
-- So the tool retained ownership and OrbitControls never received that Pencil-down.
+.653 scope:
+- Shell is now the second Selection Hub session-tool prototype.
+- src/shell.js remains authoritative.
+- selection-hub-shell-session.js is UI-only proxy/state mirroring.
 
-.652 ownership rule:
-- When Extrude or Inset is armed:
-  - Pencil DOWN on a Face -> tool keeps ownership for repeat modelling.
-  - Pencil DOWN on empty background -> tool is finished/disarmed and yields the SAME event to navigation.
-- Background-yield path:
-  - clear pending Face/background/selection state
-  - clear sequential preference/reference visuals
-  - armed=null
-  - sync direct-tool UI/status
-  - emit boxlab-direct-tool-exclusive {tool:'none', reason:'background-navigation'}
-  - no preventDefault
-  - no stopPropagation/stopImmediatePropagation
-  - no pointer capture
-- Therefore the same original event can reach Pencil orbit gate / OrbitControls naturally.
+Radial Shell flow:
+1. Face selection -> puck -> gizmo -> tools ring.
+2. Choose Shell.
+3. Selection Hub hides.
+4. Existing #shellFacesBtn launches the real Shell preview/session.
+5. Compact Shell palette appears beside selection.
+
+Viewport Shell palette:
+- Thickness slider -> proxies #shellThickness input/change.
+- Thickness readout -> mirrors #shellThicknessOut.
+- Cancel -> proxies #shellCancelBtn.
+- Apply Shell -> proxies #shellApplyBtn.
+- Existing Shell preview remains the real preview.
+- Existing Shell Apply/Cancel/history/session logic remains the owner.
+- Palette appears only for radial Shell launches.
+- boxlab-tool-session-change shell end hides palette.
+- Ordinary left-toolbar Shell remains unchanged.
 
 Immediate hands-on:
-1. Select Face -> radial Extrude -> perform normal Extrude.
-2. Extrude remains armed for repeat.
-3. Put Pencil on clear background and drag WITHOUT manually touching the left toolbar.
-4. Extrude should visibly disarm and camera should orbit on that same drag.
-5. Repeat with Inset.
-6. Confirm Pencil-down on another Face while tool remains armed still begins another Extrude/Inset.
-7. Finger orbit unchanged.
-8. Sweep remains PASS.
+1. Select Face -> Selection Hub -> Shell.
+2. Expect live Shell preview plus compact viewport palette.
+3. Drag Thickness with Pencil; preview should update continuously.
+4. Apply Shell without touching left drawer; result should commit and palette disappear.
+5. Repeat and Cancel; original should restore and palette disappear.
+6. Quick Sweep check if desired.
+7. Confirm .652 background-Pencil orbit remains intact after Extrude/Inset.
 
 Protected:
-- Face geometry unchanged.
 - .640 modeless selection checkpoint.
 - .642 Selection Hub.
 - .643 Sweep viewport session.
-- .649 puck restore.
+- .652 Face-direct background-yield.
+- Shell geometry/session owner untouched.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
