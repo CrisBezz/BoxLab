@@ -69,3 +69,43 @@ debugCanvas?.addEventListener('pointerdown',event=>{
 debugCanvas?.addEventListener('pointerdown',event=>{
   log('RAW CANVAS BUBBLE',{pointer:event.pointerType,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
 });
+
+const ownerTraceCanvas=document.querySelector('#viewport');
+if(ownerTraceCanvas&&!ownerTraceCanvas.__boxlabGestureOwnerTraceInstalled){
+  const priorAdd=ownerTraceCanvas.addEventListener.bind(ownerTraceCanvas);
+  const priorRemove=ownerTraceCanvas.removeEventListener.bind(ownerTraceCanvas);
+  const wrapped=new WeakMap();
+  let ownerSeq=0;
+  function isCapture(options){return options===true||!!(options&&typeof options==='object'&&options.capture);}
+  ownerTraceCanvas.addEventListener=function(type,listener,options){
+    if(type==='pointerdown'&&isCapture(options)&&listener){
+      const id=++ownerSeq;
+      const label=typeof listener==='function'?(listener.name||'anonymous'):(listener?.handleEvent?.name||'handleEvent');
+      let stack='';
+      try{stack=(new Error()).stack?.split('\n').slice(2,5).join(' | ')||'';}catch{}
+      log('CAPTURE OWNER REGISTER',{id,label,stack});
+      const fn=typeof listener==='function'
+        ? function(event){
+            log('CAPTURE OWNER ENTER',{id,label,pid:event.pointerId});
+            const before=event.cancelBubble;
+            try{return listener.call(this,event);}
+            finally{log('CAPTURE OWNER EXIT',{id,label,before,after:event.cancelBubble});}
+          }
+        : {
+            handleEvent(event){
+              log('CAPTURE OWNER ENTER',{id,label,pid:event.pointerId});
+              const before=event.cancelBubble;
+              try{return listener.handleEvent(event);}
+              finally{log('CAPTURE OWNER EXIT',{id,label,before,after:event.cancelBubble});}
+            }
+          };
+      wrapped.set(listener,fn);
+      return priorAdd(type,fn,options);
+    }
+    return priorAdd(type,listener,options);
+  };
+  ownerTraceCanvas.removeEventListener=function(type,listener,options){
+    return priorRemove(type,wrapped.get(listener)||listener,options);
+  };
+  ownerTraceCanvas.__boxlabGestureOwnerTraceInstalled=true;
+}
