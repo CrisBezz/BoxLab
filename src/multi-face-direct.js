@@ -272,6 +272,14 @@ function finish(event){
         const gated=gateClosedEdit(d.before,built.mesh);
         if(gated.ok){
           globalThis.__boxlabHistory?.push(d.before);restore(d.m,gated.mesh);bridge()?.set?.('face',[]);
+          clearSequentialPreference();
+          armed=null;
+          pendingSelection=null;
+          pendingFacePress=null;
+          pendingBackgroundPress=null;
+          syncButtons();
+          document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none',reason:'through-complete'}}));
+          globalThis.__boxlabGestureDebug?.log?.('FACE DIRECT THROUGH RELEASE',{pid:event.pointerId,tool:'extrude',selectionCleared:true});
           if(status)status.textContent=gated.repaired?`Extrude Through • seam conformance • ${gated.splits} split${gated.splits===1?'':'s'} • CLOSED`:'Extrude Through • validated prism cut • CLOSED';
         }else{
           restore(d.m,d.before);bridge()?.set?.('face',d.faces);if(status)status.textContent='Extrude Through • rollback • open topology refused';

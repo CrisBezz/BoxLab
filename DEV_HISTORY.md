@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.644 release Pencil orbit after successful Extrude Through
+
+- .643 Sweep viewport session is hands-on AWESOME / PASS.
+- Hands-on exposed a navigation regression specifically after successful Extrude Through: Apple Pencil could no longer orbit the viewport.
+- Root cause: successful Through intentionally cleared Face selection but left Extrude armed. With no selected Face, the still-armed direct Face owner captured the next background Pencil pointerdown before Pencil-orbit could begin.
+- Successful Through now completes the direct-tool session: clears selection as before, clears sequential state, disarms Extrude, clears pending Face/background ownership, syncs the UI, and emits tool-exclusive none.
+- Added FACE DIRECT THROUGH RELEASE debug marker.
+- Normal Extrude and Inset persistence are unchanged; only successful Through completion disarms the direct tool.
+- Through topology/build/gate logic is untouched.
+
 ## 2026-10-01 — v0.36.18.643 Selection Hub Sweep viewport session
 
 - .642 Face Selection Hub v1 hands-on BIG PASS for Extrude, Inset, Knife, Delete, Duplicate and Extract.

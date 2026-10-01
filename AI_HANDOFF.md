@@ -1,51 +1,45 @@
-## v0.36.18.643 — Selection Hub Sweep viewport session
+## v0.36.18.644 — post-Through Pencil orbit release
 
 Current release:
-- Visible/app version: v0.36.18.643
-- version.json and HTML shell title are synced to .643.
+- Visible/app version: v0.36.18.644
+- version.json and HTML shell title are synced to .644.
 
 Hands-on status:
-- .642 Face Selection Hub v1:
-  - Extrude / Inset / Knife: BIG PASS
-  - Delete / Duplicate / Extract: BIG PASS
-  - Shell / Sweep launch and work, but need their extra session controls moved toward viewport workflow.
+- .642 Selection Hub direct Face tools: BIG PASS.
+- .643 Sweep viewport session: AWESOME / PASS.
+- New regression found after Extrude Through: Apple Pencil could not orbit immediately after a successful Through.
 
-.643 scope:
-- Sweep is the first Selection Hub session-tool prototype.
-- sweep-path.js remains the only authoritative Sweep implementation.
-- New selection-hub-sweep-session.js is UI-only proxy/state mirroring.
+Root cause:
+- Successful Through clears Face selection by design.
+- Extrude remained armed.
+- With no selected Face, the armed Face-direct owner still captured the next background Pencil pointerdown, preventing Pencil-orbit from starting.
 
-Radial Sweep flow:
-1. Face selection -> puck -> gizmo -> tools ring.
-2. Choose Sweep.
-3. Selection Hub hides exactly as in .642.
-4. Existing Face Sweep launcher starts the real Sweep session.
-5. Floating Sweep palette appears beside the selection.
-
-Viewport palette:
-- Tabs: Profile / Path / Finish
-- Profile: Circle, Rectangle, Draw, Use Selection, Size, Sides, Edit, Closed, Undo, Clear
-- Path: Follow Edges, Draw Path, Edit, Undo, Delete, Clear
-- Finish: Caps, Apply Sweep
-- Cancel Sweep always available
-- Buttons proxy the existing #sweep* controls.
-- Range values/events forward to existing #sweepProfileSize / #sweepProfileSides.
-- Palette mirrors active/disabled/stage/output state from the original Sweep controls.
-- Apply/Cancel ending the authoritative session hides the viewport palette.
-- Sweep launched normally from the left toolbar does not force the viewport palette open.
+.644 fix:
+- Only after SUCCESSFUL Through:
+  - keep the existing committed Through mesh
+  - clear Face selection as before
+  - clear sequential/pending Face-direct state
+  - disarm Extrude
+  - sync direct-tool UI
+  - emit boxlab-direct-tool-exclusive { tool:'none', reason:'through-complete' }
+  - log FACE DIRECT THROUGH RELEASE
+- Normal Extrude persistence is unchanged.
+- Inset persistence is unchanged.
+- Through kernel, seam-conformance gate and topology validation are unchanged.
 
 Immediate hands-on:
-1. Face -> Selection Hub -> Sweep.
-2. Expect hub to disappear and compact Sweep palette to appear beside selection.
-3. Profile: choose Circle; drag Size and Sides sliders. Live profile should update.
-4. Switch Path; use Follow Edges and create a short path without touching left drawer.
-5. Switch Finish; toggle Caps if desired and Apply.
-6. Confirm palette disappears and finished Sweep remains.
-7. Repeat once and Cancel; scene should restore through existing Sweep cancellation.
-8. Check ordinary left-toolbar Sweep still works as before.
+1. Select a Face and perform Extrude Through.
+2. Confirm Through result is correct/CLOSED.
+3. Immediately use Apple Pencil on viewport background to orbit.
+4. Orbit must start normally on that very next gesture.
+5. Confirm Extrude button is no longer armed after Through.
+6. Select another Face normally.
+7. Quick normal Extrude: it should still remain armed/persistent as before.
+8. Quick Sweep launch to confirm .643 is unaffected.
 
 Protected:
 - .640 interaction checkpoint.
-- .642 Selection Hub direct-tool behavior.
-- sweep-path.js geometry/session owner unchanged.
+- .642 Selection Hub.
+- .643 Sweep viewport session.
+- Through topology/build/gate logic.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
