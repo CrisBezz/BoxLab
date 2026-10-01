@@ -1,23 +1,33 @@
-## v0.36.18.628 — Gesture Debug binding order fix
+## v0.36.18.629 — deep capture-owner tracing when Gesture Debug is ON
 
-- .627 hands-on FAIL: Gesture Debug button still did not work.
-- Root cause confirmed in src/view-modes.js:
-  - Gesture Debug button is created by ensureUI().
-  - .627 queried #gestureDebugToggle before calling ensureUI().
-  - gestureDebugButton was therefore null at binding time.
-  - ensureUI() then created the visible button afterward, but it had no listener.
-- .628 fix:
-  - call ensureUI() before querying/binding #gestureDebugToggle.
-  - remove later duplicate ensureUI() declaration.
-- No Gesture Debug API changes.
-- No Face Hold, gizmo, Group/Multi, or Circle behavior changes in this build.
+- .628 permanent Gesture Debug toggle works hands-on.
+- Repeated Face-hold diagnostic still shows:
+  - RAW POINTERDOWN
+  - PEN CANVAS DOWN
+  - RAW CANVAS CAPTURE
+  - no RAW CANVAS BUBBLE
+  - no FACE CANVAS DOWN
+- This confirms a canvas pointerdown capture listener is stopping propagation before main.js normal canvas handling.
+
+.629 adds optional deep capture-owner tracing:
+- only installed when Gesture Debug is enabled.
+- wraps later canvas pointerdown capture listeners.
+- logs:
+  - CAPTURE REGISTER
+  - CAPTURE ENTER
+  - CAPTURE EXIT
+  - cancelBubble before/after
+  - listener label/registration stack where available.
+- normal use with Gesture Debug OFF remains clean.
+- no selection, Face Hold, gizmo, Circle, or transform behavior changes.
 
 Hands-on:
-1. Load .628.
-2. Open Viewport -> Diagnostics.
-3. Tap Gesture Debug once -> panel should appear immediately and button reads ON.
-4. Tap again -> panel disappears.
-5. Reload and verify persisted state.
+1. Load .629.
+2. Turn Gesture Debug ON.
+3. Reload once with it still ON so deep trace installs before later modules register.
+4. Press-and-hold a Face without moving.
+5. Send screenshot showing CAPTURE REGISTER / ENTER / EXIT lines.
+6. Identify first listener where after=true or last ENTER with no EXIT.
 
 Protected:
 - .615 unified gizmo baseline unchanged.
