@@ -20,6 +20,8 @@ let pointerId=null;
 let raf=0;
 let explicitGizmoConstraint=null;
 let awaitingTransformEnd=false;
+let expanded=false;
+let lastSelectionKey='';
 
 
 function state(){return globalThis.__boxlabBridgeState||null;}
@@ -47,6 +49,17 @@ function componentVertexIndices(mesh,mode=currentMode()){
 }
 function selectionAvailable(mesh,mode=currentMode()){
   return mode==='object'?objectSelected():componentVertexIndices(mesh,mode).length>0;
+}
+function selectionKey(mesh,mode=currentMode()){
+  if(mode==='object')return 'object';
+  return `${mode}:${[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])].sort((a,b)=>a-b).join(',')}`;
+}
+function setExpanded(next,{reason=''}={}){
+  const mode=currentMode();
+  expanded=mode==='object'?true:!!next;
+  root.dataset.expanded=expanded?'true':'false';
+  if(reason)gestureDebug(expanded?'GIZMO EXPAND':'GIZMO COLLAPSE',{mode,reason});
+  return expanded;
 }
 function centerOf(mesh,mode=currentMode()){
   const indices=componentVertexIndices(mesh,mode),c=new THREE.Vector3();
@@ -181,6 +194,7 @@ const root=document.createElement('div');
 root.id='totalGizmo';
 root.hidden=true;
 root.innerHTML=`
+<button type="button" class="tg-activator" aria-label="Activate transform gizmo" title="Activate transform gizmo"><span></span></button>
 <svg viewBox="0 0 ${SIZE} ${SIZE}" aria-label="BoxLab Total Gizmo">
   <g class="tg-rotate tg-axis-rotate">
     <path class="tg-handle tg-arc tg-x" data-tool="rotate" data-constraint="x" data-ring-axis="x" d=""/>
@@ -214,7 +228,18 @@ root.innerHTML=`
   <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="10"/>
 </svg><div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
+const activator=root.querySelector('.tg-activator');
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
+activator?.addEventListener('pointerdown',event=>{
+  if(currentMode()==='object')return;
+  event.preventDefault();
+  event.stopPropagation();
+  setExpanded(true,{reason:'puck'});
+});
+toolButtons.forEach(button=>button.addEventListener('click',()=>{
+  const s=state(),mesh=s?.mesh,mode=currentMode();
+  if(mode!=='object'&&selectionAvailable(mesh,mode))setExpanded(true,{reason:'transform-control'});
+}));
 let hudHideTimer=null,lastSpec=null;
 
 const floatPalette=document.createElement('div');
@@ -288,7 +313,14 @@ const style=document.createElement('style');
 style.textContent=`
 #totalGizmo{position:absolute;z-index:115;width:${SIZE}px;height:${SIZE}px;transform:translate(-50%,-50%);pointer-events:none;touch-action:none;filter:drop-shadow(0 2px 4px #0009)}
 #totalGizmo[hidden]{display:none}
-#totalGizmo svg{width:100%;height:100%;overflow:visible}
+#totalGizmo .tg-activator{position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.72);border-radius:50%;background:rgba(12,14,18,.78);box-shadow:0 2px 8px rgba(0,0,0,.35);pointer-events:auto;touch-action:none;padding:0;z-index:3}
+#totalGizmo .tg-activator span{position:absolute;left:50%;top:50%;width:6px;height:6px;transform:translate(-50%,-50%);border-radius:50%;background:#eef2f7;opacity:.92}
+#totalGizmo .tg-activator::before,#totalGizmo .tg-activator::after{content:'';position:absolute;left:50%;top:50%;background:rgba(238,242,247,.62);transform:translate(-50%,-50%)}
+#totalGizmo .tg-activator::before{width:14px;height:1px}
+#totalGizmo .tg-activator::after{width:1px;height:14px}
+#totalGizmo[data-expanded="true"] .tg-activator{display:none}
+#totalGizmo[data-expanded="false"] svg{opacity:0;pointer-events:none}
+#totalGizmo svg{width:100%;height:100%;overflow:visible;transition:opacity .09s}
 #totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
 #totalGizmo .tg-axis{stroke-width:1.35;pointer-events:stroke}
 #totalGizmo .tg-head{pointer-events:none;opacity:.92}
@@ -470,8 +502,13 @@ function sync(){
   raf=requestAnimationFrame(sync);
   const s=state(),mesh=s?.mesh,camera=s?.camera,mode=currentMode();
   if(!canvas||!viewportWrap||!mesh?.vertices?.length||!camera||!selectionAvailable(mesh,mode)){
-    root.hidden=true;hideFloatInput();return;
+    root.hidden=true;hideFloatInput();lastSelectionKey='';return;
   }
+  const key=selectionKey(mesh,mode);
+  if(key!==lastSelectionKey){
+    lastSelectionKey=key;
+    setExpanded(mode==='object',{reason:'selection-change'});
+  }else if(mode==='object'&&!expanded)setExpanded(true);
   const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
   const left=cr.left-vr.left+p.x,top=cr.top-vr.top+p.y;
   root.style.left=`${left}px`;
@@ -479,7 +516,8 @@ function sync(){
   floatPalette.style.left=`${left}px`;
   floatPalette.style.top=`${top}px`;
   root.hidden=false;
-  syncAxisVisuals(c,camera);
+  root.dataset.expanded=expanded?'true':'false';
+  if(expanded||mode==='object')syncAxisVisuals(c,camera);
 }
 sync();
 
@@ -502,5 +540,7 @@ globalThis.__boxlabTotalGizmo={
     showFloatInput(spec);
     return true;
   },
-  version:'0.36.18.620'
+  expanded:()=>expanded,
+  setExpanded:(next,options={})=>setExpanded(next,options),
+  version:'0.36.18.633'
 };
