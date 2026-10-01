@@ -77,6 +77,7 @@ function forceRender() {
 
 document.addEventListener('pointerdown', event => {
   if (event.target!==canvas || !event.isPrimary || !rotateActive() || event.pointerType === 'touch') return;
+  if (globalThis.__boxlabTotalGizmo?.visible?.()) return;
   const mesh = state()?.mesh, camera = state()?.camera, mode = currentMode();
   const indices = selectionVertices(mode, mesh);
   if (!mesh || !camera || !['vertex','edge','face'].includes(mode) || !indices.length) return;

@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.635 selection remains modeless while tools are armed
+
+- Hands-on .634 exposed two selection ownership regressions: background deselect was unavailable while Extrude/Inset was armed, and legacy component transform listeners consumed face/background taps while Move/Scale/Rotate was armed.
+- multi-face-direct now owns a quick background Pencil/mouse tap while Extrude/Inset is armed and clears Face selection without disarming the tool. Movement cancels that tap path so drag-edit behavior remains unchanged; touch remains reserved for navigation.
+- Legacy face-transform.js and rotate-transform.js now stand down whenever the modern Total Gizmo/puck is present, preventing pre-.615 direct transform owners from stealing component selection taps.
+- Modern selection-first behavior is now authoritative: tap selects/deselects, background tap clears, deliberate transform uses the modern gizmo path, and armed tools remain armed.
+- No transform maths, topology maths, Group/Multi routing, or protected multi-object-transform code changed.
+
 ## 2026-10-01 — v0.36.18.633 shell refresh marker repair
 
 - .633 repo contents were correct, but the HTML <title> still reported v0.36.18.538.

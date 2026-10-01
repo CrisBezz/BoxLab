@@ -1,38 +1,39 @@
-## v0.36.18.633 — dormant component gizmo + modeless browser ownership
+## v0.36.18.635 — selection stays available while tools are armed
 
 Current release:
-- Visible/app version: v0.36.18.633
-- Release manifest: version.json = 0.36.18.633
-- HTML shell title is also synced to v0.36.18.633 so release-bootstrap sees the correct running version.
+- Visible/app version: v0.36.18.635
+- Release manifest: version.json = 0.36.18.635
+- HTML shell title is synced to v0.36.18.635.
 
-Why .633 exists:
-- .632 Loop Cut fix passed hands-on.
-- Face hold browser then exposed two UX conflicts:
-  1. sideways scrub was being claimed by Paint Select before candidate cycling;
-  2. the full Total Gizmo created visual/interaction clutter during selection.
+Why .635 exists:
+- .634 added explicit component gizmo collapse.
+- Hands-on then showed basic deselection was still blocked in two armed-tool states:
+  1. Extrude/Inset bypassed main.js, so background taps had no deselect owner.
+  2. legacy pre-.615 face/rotate transform listeners still consumed component taps while Move/Scale/Rotate was armed.
 
-.633 behavior:
-- Vertex / Edge / Face selection now displays a compact dormant transform puck at the selection centroid.
-- Tap the puck to expand the existing Total Gizmo.
-- Clicking Move / Scale / Rotate in the transform controls also expands it.
-- Any component selection change collapses back to the puck.
-- Object mode, grouped Object selection and Multi keep the existing full gizmo behavior.
-- main.js exposes modeless Face/Edge browser ownership.
-- edge-paint-select.js yields pending Paint Select once a hold browser has fired, so horizontal scrub belongs to the browser rather than paint selection.
-- Ordinary Paint Select remains available when no hold browser is active.
+.635 behavior:
+- Extrude/Inset remain armed while a quick Pencil/mouse background tap clears Face selection.
+- A quick selected-Face tap under Extrude/Inset still toggles that Face without disarming the tool.
+- Movement beyond the tap threshold cancels background deselect and preserves direct drag editing.
+- Touch background gestures are not claimed, preserving iPad navigation.
+- Legacy face-transform.js and rotate-transform.js stand down whenever the modern Total Gizmo/puck is visible.
+- Therefore component selection/deselection returns to the modern main.js selection owner while Move/Scale/Rotate is armed.
+- Modern gizmo transforms remain the authoritative transform path.
 
 Immediate hands-on:
-1. Face mode: select a face. Expect only the small transform puck, not the full gizmo.
-2. Tap the puck. Expect the full .615-style gizmo and confirm one Move handle quickly.
-3. Select a different face. Expect the gizmo to collapse back to the puck.
-4. Face long-press until first candidate appears, then scrub sideways. Expect multiple Face Loop/Ring/Coplanar/Connected candidates to cycle instead of painting adjacent faces.
-5. Edge long-press and scrub Loop/Ring; verify the same ownership behavior.
-6. Deliberately drag across unselected faces/edges without waiting for hold. Paint Select should still work.
-7. Quick Object and Group/Multi gizmo regression only if 1–6 pass.
+1. Face -> Extrude armed -> background tap. Selection should clear; Extrude stays lit.
+2. Face -> Extrude armed -> tap selected face. That face should deselect; Extrude stays lit.
+3. Repeat 1–2 with Inset.
+4. Select Face -> activate Move. Tap selected face to remove it; reselect then background tap to clear.
+5. Repeat with Scale and Rotate.
+6. Confirm a deliberate Extrude/Inset drag still edits geometry.
+7. Confirm expanded gizmo Move/Scale/Rotate still works, and centre-dot collapse still returns to puck.
 
 Protected:
 - .615 unified semantic gizmo transform maths unchanged.
 - .616 Group/Multi routing unchanged.
 - .631 global release ownership unchanged.
-- .632 Loop Cut commit fix unchanged.
+- .632 Loop Cut fix unchanged.
+- .633 dormant component gizmo/browser ownership unchanged.
+- .634 explicit gizmo collapse unchanged.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.

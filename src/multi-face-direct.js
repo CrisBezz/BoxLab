@@ -16,6 +16,7 @@ let armed = null;
 let drag = null;
 let pendingSelection = null;
 let pendingFacePress = null;
+let pendingBackgroundPress = null;
 let preferSequentialUnselected = false;
 let sequentialSelectionKey = null;
 let refMarker=null,refGuide=null;
@@ -164,7 +165,14 @@ document.addEventListener('pointerdown',event=>{
   }else if(armed==='extrude'&&sequentialValid&&selectionBefore.length===1&&Number.isInteger(primary)&&selected.has(primary)&&Number.isInteger(firstUnselected)){
     hit=firstUnselected;
   }
-  if(!Number.isInteger(hit))return;
+  if(!Number.isInteger(hit)){
+    if(event.pointerType==='touch')return;
+    pendingBackgroundPress={id:event.pointerId,x:event.clientX,y:event.clientY,moved:false};
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    canvas.setPointerCapture?.(event.pointerId);
+    return;
+  }
   const workingFaces=synthetic&&selectionBefore.length?[...selectionBefore]:(selectionBefore.includes(hit)?[...selectionBefore]:[hit]);
   const provisionalSelection=!selectionBefore.includes(hit);
   if(provisionalSelection)b.set?.('face',[hit]);
@@ -192,6 +200,16 @@ document.addEventListener('pointerdown',event=>{
   canvas.setPointerCapture?.(event.pointerId);
 },true);
 document.addEventListener('pointermove',event=>{
+  if(pendingBackgroundPress?.id===event.pointerId){
+    if(Math.hypot(event.clientX-pendingBackgroundPress.x,event.clientY-pendingBackgroundPress.y)>=8){
+      pendingBackgroundPress.moved=true;
+      pendingBackgroundPress=null;
+    }else{
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      return;
+    }
+  }
   if(!drag&&pendingFacePress?.id===event.pointerId){
     const p=pendingFacePress,dx=event.clientX-p.x,dy=event.clientY-p.y;
     if(Math.hypot(dx,dy)<8)return;
@@ -205,6 +223,18 @@ document.addEventListener('pointermove',event=>{
   }
   if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){drag.changed=true;}restore(drag.m,drag.before);if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?referenceUnderPointer(event,drag):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}const contact=drag.faces.length===1?classifySingleFaceContact(drag.before,drag.faces[0],distance,drag.preparedThrough):{mode:'extrude',throughPlan:null,shellHit:null};drag.throughPlan=contact.throughPlan;drag.shellHit=contact.shellHit;drag.blocked=contact.mode==='blocked';drag.failureReason=contact.reason;if(drag.blocked){drag.preview=false;clearRefVisual();drag.snap=null;if(status)status.textContent=`Extrude In • BLOCKED — ${contact.reason||'unsupported shell contact'}${drag.shellHit?` • ${drag.shellHit.distance.toFixed(2)}`:''}`;}else{if(drag.throughPlan){distance=drag.throughPlan.distance;clearRefVisual();drag.snap=null;}drag.lastValue=distance;const result=drag.faces.length===1?drag.m.extrudeFace?.(drag.faces[0],distance):extrudeConnectedFaceSelection(drag.m,drag.faces,distance);drag.preview=!!result;if(result&&status){const mode=drag.throughPlan?'THROUGH READY':distance<0?'Extrude In':'Extrude';status.textContent=`${mode} • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${distance>=0?'+':''}${distance.toFixed(2)}${result.mode==='connected-miter'&&drag.faces.length>1?' • Connected band':''}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}}else{drag.throughPlan=null;drag.blocked=false;drag.shellHit=null;let amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));const ref=referenceUnderPointer(event,drag),inferred=ref?insetReference(drag,ref):null;if(ref&&inferred){amount=inferred.amount;showRefVisual(ref,inferred.boundaryPoint,drag.camera);drag.snap={...ref,insetDistance:inferred.distance};}else{clearRefVisual();drag.snap=null;}const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;if(result&&status){const distances=(result.regions||[]).map(r=>r.distance).filter(Number.isFinite),d=distances.length?Math.min(...distances):0;status.textContent=`Uniform Inset • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${d.toFixed(3)}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}render();syncButtons();},true);
 function finish(event){
+  if(pendingBackgroundPress?.id===event.pointerId){
+    const p=pendingBackgroundPress;
+    pendingBackgroundPress=null;
+    event.preventDefault();event.stopImmediatePropagation();
+    if(event.type==='pointerup'&&!p.moved){
+      bridge()?.set?.('face',[]);
+      clearSequentialPreference();
+      updateStatus();
+      syncButtons();
+    }
+    return;
+  }
   if(pendingFacePress?.id===event.pointerId){
     const p=pendingFacePress;
     pendingFacePress=null;

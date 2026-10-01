@@ -2334,3 +2334,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .633: transform maths unchanged
 - [x] Protection .633: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .635: Face background tap clears selection while Extrude remains armed
+- [ ] Workflow .635: Face background tap clears selection while Inset remains armed
+- [ ] Workflow .635: tapping a selected Face removes it while Extrude/Inset remains armed
+- [ ] Workflow .635: with Move armed, selected Face tap can deselect and background tap clears selection
+- [ ] Workflow .635: with Scale armed, selected Face tap can deselect and background tap clears selection
+- [ ] Workflow .635: with Rotate armed, selected Face tap can deselect and background tap clears selection
+- [ ] Regression .635: deliberate Extrude/Inset drag still begins only after movement threshold
+- [ ] Regression .635: modern Total Gizmo Move/Scale/Rotate remains unchanged
+- [ ] Regression .635: dormant puck / expand / collapse behavior from .633/.634 remains unchanged
+- [ ] Protection .635: touch navigation remains excluded from armed-tool background tap owner
+- [x] Protection .635: legacy direct component transform owners stand down when Total Gizmo is visible
+- [x] Protection .635: src/multi-object-transform.js?v=0.36.1.0 unchanged

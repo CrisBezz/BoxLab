@@ -154,6 +154,7 @@ export function installFaceTransform() {
 
   canvas?.addEventListener('pointerdown', event => {
     if (!event.isPrimary || !faceMode() || directFaceToolActive()) return;
+    if (globalThis.__boxlabTotalGizmo?.visible?.()) return;
     const mesh = currentMesh(), faces = selectedFaces(), camera = state()?.camera;
     if (!mesh || !faces.length || !camera) return;
     if (!selectedFaceHit(event, mesh, faces, camera)) return;
