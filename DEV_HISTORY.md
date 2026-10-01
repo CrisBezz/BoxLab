@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.642 Selection Hub v1 — Face contextual tool ring
+
+- Added first viewport-first Selection Hub prototype on top of the protected .640 interaction checkpoint.
+- Face selection hub has three mutually exclusive states: closed puck -> transform gizmo -> contextual tools ring -> closed puck.
+- Transform and Tools states never coexist; the gizmo SVG is physically absent from hit testing while the tool ring is open.
+- Face tool ring v1 proxies existing authoritative actions: Extrude, Inset, Knife, Duplicate, Extract, Shell, Sweep and Delete.
+- No modelling kernel is duplicated; tool sectors trigger the existing buttons at click time.
+- Choosing a tool immediately hides/suppresses the whole hub for the current selection so the launched tool owns the viewport without clutter or competing hit targets.
+- The hub restarts at the closed puck only when the component selection changes.
+- Existing suspended Face-tool ownership is preserved across Transform -> Tools -> Closed cycling; choosing a new tool clears any suspended old Face tool before launching the new owner.
+- Edge/Vertex contextual rings are intentionally deferred until Face v1 is hands-on proven.
+
 ## 2026-10-01 — v0.36.18.641 Make Unique authoritative materialization
 
 - .640 hands-on PASS; freeze .640 as the protected modeless-selection / dormant-gizmo / Face-direct interaction checkpoint.

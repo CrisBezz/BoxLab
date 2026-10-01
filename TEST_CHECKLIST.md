@@ -2421,3 +2421,21 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .641: ordinary Duplicate remains independent
 - [x] Static .641: detachment materializes source mesh + instanceMatrix before deleting link metadata
 - [x] Protection .641: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .642: Face selection shows closed Selection Hub puck
+- [ ] Workflow .642: tap puck -> full transform gizmo only
+- [ ] Workflow .642: tap transform centre -> gizmo disappears and Face contextual tool ring appears
+- [ ] Workflow .642: tap tool-ring centre -> tool ring closes and closed puck returns
+- [ ] Workflow .642: closed puck can immediately reopen transform gizmo
+- [ ] Workflow .642: tool ring preserves Face selection while cycling states
+- [ ] Workflow .642: Extrude sector arms existing Extrude and entire hub disappears
+- [ ] Workflow .642: Inset sector arms existing Inset and entire hub disappears
+- [ ] Workflow .642: Knife / Duplicate / Extract / Shell / Sweep / Delete proxy existing authoritative actions
+- [ ] Workflow .642: after tool launch, hub stays suppressed until Face selection changes
+- [ ] Workflow .642: new Face selection restarts hub at closed puck
+- [ ] Regression .642: no gizmo hit targets exist while Tools ring is visible
+- [ ] Regression .642: no tool-ring hit targets exist while Transform gizmo is visible
+- [ ] Regression .642: Face gestures and armed-tool deselection remain intact outside hub controls
+- [x] Static .642: contextual sectors proxy existing buttons rather than duplicate modelling kernels
+- [x] Protection .642: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

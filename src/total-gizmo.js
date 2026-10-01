@@ -21,6 +21,8 @@ let raf=0;
 let explicitGizmoConstraint=null;
 let awaitingTransformEnd=false;
 let expanded=false;
+let hubState='closed';
+let hubSuppressedKey='';
 let lastSelectionKey='';
 let suspendedFaceTool=false;
 
@@ -55,21 +57,36 @@ function selectionKey(mesh,mode=currentMode()){
   if(mode==='object')return 'object';
   return `${mode}:${[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])].sort((a,b)=>a-b).join(',')}`;
 }
-function setExpanded(next,{reason=''}={}){
+function setHubState(next,{reason='',resumeSuspended=true}={}){
   const mode=currentMode();
-  const requested=mode==='object'?true:!!next;
-  if(requested&&!expanded&&mode==='face'){
+  let requested=mode==='object'?'transform':next;
+  if(!['closed','transform','tools'].includes(requested))requested='closed';
+  if(requested==='tools'&&mode!=='face')requested='closed';
+
+  const wasTransform=hubState==='transform';
+  const willTransform=requested==='transform';
+
+  if(willTransform&&!wasTransform&&mode==='face'&&!suspendedFaceTool){
     suspendedFaceTool=!!globalThis.__boxlabFaceDirect?.suspendForTransform?.();
-    if(suspendedFaceTool)gestureDebug('GIZMO SUSPEND FACE TOOL',{tool:globalThis.__boxlabFaceDirect?.tool?.()||'suspended',reason});
+    if(suspendedFaceTool)gestureDebug('GIZMO SUSPEND FACE TOOL',{reason});
   }
-  expanded=requested;
+
+  hubState=requested;
+  expanded=hubState==='transform';
+  root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
-  if(!expanded&&suspendedFaceTool){
+
+  if(hubState==='closed'&&suspendedFaceTool&&resumeSuspended){
     const resumed=!!globalThis.__boxlabFaceDirect?.resumeAfterTransform?.();
     gestureDebug('GIZMO RESUME FACE TOOL',{resumed,reason});
     suspendedFaceTool=false;
   }
-  if(reason)gestureDebug(expanded?'GIZMO EXPAND':'GIZMO COLLAPSE',{mode,reason});
+
+  if(reason)gestureDebug('SELECTION HUB STATE',{mode,state:hubState,reason});
+  return hubState;
+}
+function setExpanded(next,options={}){
+  setHubState(next?'transform':'closed',options);
   return expanded;
 }
 function centerOf(mesh,mode=currentMode()){
@@ -256,29 +273,84 @@ root.innerHTML=`
     </g>
   </g>
   <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="10"/>
-  <circle class="tg-collapse" cx="${HALF}" cy="${HALF}" r="4" aria-label="Collapse transform gizmo"/>
-</svg><div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
+  <circle class="tg-collapse" cx="${HALF}" cy="${HALF}" r="4" aria-label="Open contextual tools"/>
+</svg>
+<div class="tg-tool-ring" aria-label="Face contextual tools">
+  <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#extrudeBtn">Extrude</button>
+  <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#insetBtn">Inset</button>
+  <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#knifeBtn">Knife</button>
+  <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#duplicateFacesBtn">Duplicate</button>
+  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#extractFacesBtn">Extract</button>
+  <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#shellFacesBtn">Shell</button>
+  <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target=".sweep-selection-launch[data-sweep-selection-mode='face']">Sweep</button>
+  <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteFaceBtn">Delete</button>
+  <button type="button" class="tg-tool-center" aria-label="Close contextual tools" title="Close tools">×</button>
+</div>
+<div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
 const activator=root.querySelector('.tg-activator');
 const collapseControl=root.querySelector('.tg-collapse');
+const toolRing=root.querySelector('.tg-tool-ring');
+const toolCenter=root.querySelector('.tg-tool-center');
+const toolSectors=[...root.querySelectorAll('.tg-tool-sector')];
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
+
 activator?.addEventListener('pointerdown',event=>{
   if(currentMode()==='object')return;
   event.preventDefault();
   event.stopPropagation();
-  setExpanded(true,{reason:'puck'});
+  setHubState('transform',{reason:'puck'});
 });
+
 collapseControl?.addEventListener('pointerdown',event=>{
   if(currentMode()==='object')return;
   event.preventDefault();
   event.stopPropagation();
   hideFloatInput();
   resetTransientState({hideFloat:true});
-  setExpanded(false,{reason:'centre-dot'});
+  setHubState(currentMode()==='face'?'tools':'closed',{reason:'transform-centre'});
 });
+
+toolCenter?.addEventListener('pointerdown',event=>{
+  event.preventDefault();
+  event.stopPropagation();
+  setHubState('closed',{reason:'tools-centre'});
+});
+
+toolSectors.forEach(button=>{
+  button.addEventListener('pointerdown',event=>{
+    event.preventDefault();
+    event.stopPropagation();
+  });
+  button.addEventListener('click',event=>{
+    event.preventDefault();
+    event.stopPropagation();
+    const mode=currentMode();
+    if(mode!=='face')return;
+    const selector=button.dataset.toolTarget;
+    const target=selector?document.querySelector(selector):null;
+    if(!target||target.disabled){
+      if(status)status.textContent=`${button.textContent?.trim()||'Tool'} unavailable for current selection`;
+      return;
+    }
+    if(suspendedFaceTool){
+      globalThis.__boxlabFaceDirect?.clearTransformSuspension?.();
+      suspendedFaceTool=false;
+    }
+    hubSuppressedKey=lastSelectionKey;
+    setHubState('closed',{reason:`tool:${button.textContent?.trim()||'unknown'}`,resumeSuspended:false});
+    root.hidden=true;
+    gestureDebug('SELECTION HUB TOOL',{tool:button.textContent?.trim(),selector});
+    target.click();
+  });
+});
+
 toolButtons.forEach(button=>button.addEventListener('click',()=>{
   const s=state(),mesh=s?.mesh,mode=currentMode();
-  if(mode!=='object'&&selectionAvailable(mesh,mode))setExpanded(true,{reason:'transform-control'});
+  if(mode!=='object'&&selectionAvailable(mesh,mode)){
+    hubSuppressedKey='';
+    setHubState('transform',{reason:'transform-control'});
+  }
 }));
 let hudHideTimer=null,lastSpec=null;
 
@@ -358,10 +430,16 @@ style.textContent=`
 #totalGizmo .tg-activator::before,#totalGizmo .tg-activator::after{content:'';position:absolute;left:50%;top:50%;background:rgba(238,242,247,.62);transform:translate(-50%,-50%)}
 #totalGizmo .tg-activator::before{width:14px;height:1px}
 #totalGizmo .tg-activator::after{width:1px;height:14px}
-#totalGizmo[data-expanded="true"] .tg-activator{display:none}
-#totalGizmo[data-expanded="false"][data-mode="vertex"][data-single-component="true"] .tg-activator{transform:translate(calc(-50% + 34px),calc(-50% - 34px))}
-#totalGizmo[data-expanded="false"] svg{display:none!important}
+#totalGizmo:not([data-hub-state="closed"]) .tg-activator{display:none}
+#totalGizmo[data-hub-state="closed"][data-mode="vertex"][data-single-component="true"] .tg-activator{transform:translate(calc(-50% + 34px),calc(-50% - 34px))}
+#totalGizmo:not([data-hub-state="transform"]) svg{display:none!important}
 #totalGizmo svg{width:100%;height:100%;overflow:visible}
+#totalGizmo .tg-tool-ring{position:absolute;inset:0;display:none;pointer-events:none}
+#totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring{display:block}
+#totalGizmo .tg-tool-sector{position:absolute;left:50%;top:50%;width:68px;height:34px;margin:-17px -34px;padding:3px 5px;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(18,21,27,.96);color:#eef2f7;font-size:10px;font-weight:700;line-height:1;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.34);pointer-events:auto;touch-action:none;transform:rotate(var(--a)) translateY(-82px) rotate(calc(-1 * var(--a)))}
+#totalGizmo .tg-tool-sector:active{background:rgba(238,242,247,.92);color:#111318}
+#totalGizmo .tg-tool-danger{border-color:rgba(255,110,110,.48)}
+#totalGizmo .tg-tool-center{position:absolute;left:50%;top:50%;width:30px;height:30px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.7);border-radius:50%;background:rgba(12,14,18,.96);color:#eef2f7;font-size:18px;line-height:1;pointer-events:auto;touch-action:none}
 #totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
 #totalGizmo .tg-axis{stroke-width:1.35;pointer-events:stroke}
 #totalGizmo .tg-head{pointer-events:none;opacity:.92}
@@ -372,7 +450,7 @@ style.textContent=`
 #totalGizmo .tg-scale-ring{stroke:#ff9a66;stroke-width:1.1;opacity:.66}
 #totalGizmo .tg-center{fill:rgba(238,242,247,.16);stroke:#f1f4f8;stroke-width:1.1;pointer-events:all}
 #totalGizmo .tg-collapse{fill:#eef2f7;stroke:#111318;stroke-width:1.25;pointer-events:all;cursor:pointer;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
-#totalGizmo[data-expanded="false"] .tg-collapse{display:none}
+#totalGizmo:not([data-hub-state="transform"]) .tg-collapse{display:none}
 #totalGizmo .tg-scale-node{fill:rgba(17,19,24,.78);stroke-width:1.25;pointer-events:all}
 #totalGizmo .tg-plane{pointer-events:all;stroke-width:1;opacity:.5;transition:opacity .09s,stroke-width .09s,fill .09s,filter .09s}
 #totalGizmo .tg-plane-xy{stroke:#ffd86a;fill:rgba(255,216,106,.07)}
@@ -550,19 +628,24 @@ function sync(){
   const key=selectionKey(mesh,mode);
   if(key!==lastSelectionKey){
     lastSelectionKey=key;
-    setExpanded(mode==='object',{reason:'selection-change'});
-  }else if(mode==='object'&&!expanded)setExpanded(true);
+    hubSuppressedKey='';
+    setHubState(mode==='object'?'transform':'closed',{reason:'selection-change'});
+  }else if(mode==='object'&&hubState!=='transform'){
+    setHubState('transform',{reason:'object-mode'});
+  }
   const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
   const left=cr.left-vr.left+p.x,top=cr.top-vr.top+p.y;
   root.style.left=`${left}px`;
   root.style.top=`${top}px`;
   floatPalette.style.left=`${left}px`;
   floatPalette.style.top=`${top}px`;
-  root.hidden=false;
+  const suppressed=mode==='face'&&hubSuppressedKey===key;
+  root.hidden=suppressed;
+  root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;
   root.dataset.singleComponent=mode!=='object'&&selectionKey(mesh,mode).split(':')[1]?.split(',').filter(Boolean).length===1?'true':'false';
-  if(expanded||mode==='object')syncAxisVisuals(c,camera);
+  if(!suppressed&&(hubState==='transform'||mode==='object'))syncAxisVisuals(c,camera);
 }
 sync();
 
@@ -586,6 +669,8 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   expanded:()=>expanded,
+  hubState:()=>hubState,
   setExpanded:(next,options={})=>setExpanded(next,options),
-  version:'0.36.18.639'
+  setHubState:(next,options={})=>setHubState(next,options),
+  version:'0.36.18.642'
 };

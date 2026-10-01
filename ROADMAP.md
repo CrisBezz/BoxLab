@@ -113,6 +113,7 @@ Only add focused tools that suit BoxLab:
 - browser-selection interaction guard — **native Safari selection/callout suppressed across BoxLab UI while editable fields remain exempt in v0.36.18.345**
 - **Solidify/Shell migrated in .421; Revolve Profile migrated in .422**
 - persistent tool modes
+- viewport contextual Selection Hub — **Face-mode v1 added in v0.36.18.642: closed puck -> transform gizmo -> contextual tool ring -> closed puck; tool sectors proxy existing authoritative actions and hide during active modelling**
 - left-hand access
 - reduced tap count — **v0.36.18.406 makes Face/Edge → Sweep jump directly to PATH/Follow Edges and removes the need to hunt through Object Active Tools**
 - consistent Pencil drag behaviour
