@@ -1,58 +1,45 @@
-## v0.36.18.625 — deterministic Circle startup + permanent Gesture Debug toggle
+## v0.36.18.627 — fix Gesture Debug startup + Vertex Circle lifecycle
 
-- User reported:
-  - Vertex Circle missing by default.
-  - First click on Repair (example) only caused Circle/UI to appear; second click actually activated the tool.
-  - Requested a permanent switchable debug listener for future interaction issues.
-- Root cause of Circle issue:
-  - drawer-ui.js dynamically imported face-reconstruct.js and component-circle.js concurrently.
-  - face-reconstruct.js owns __boxlabVertexToolLayout.
-  - component-circle.js depends on that layout owner when placing Circle.
-  - load order was therefore race-dependent.
-- .625 fix:
-  - drawer-ui now loads face-reconstruct first.
-  - component-circle loads immediately afterward in the same promise chain.
-  - the later standalone concurrent component-circle import was removed.
-  - Circle now asks the already-established Vertex layout owner to place it.
-- Expected result:
-  - Circle is present on first Vertex drawer render.
-  - Repair/Inspect/other first clicks are no longer consumed by late Circle/layout reconciliation.
+User reported after .625/.626:
+- Viewport -> Gesture Debug button appeared but did not work.
+- debug panel no longer appeared.
+- Vertex Circle startup/UI issue still not fixed.
 
-Permanent Gesture Debug:
-- src/gesture-debug.js is now permanent infrastructure.
-- OFF by default.
-- state persists in localStorage.
-- API retained:
-  - __boxlabGestureDebug.log(...)
-  - clear()
-  - enable()
-  - disable()
-  - toggle()
-  - setEnabled()
-  - enabled
-- Added Viewport -> Diagnostics -> Gesture Debug toggle.
-- When enabled, panel appears and existing gesture instrumentation becomes visible.
-- When disabled, log() is a no-op and panel is absent.
-- Temporary EventTarget monkeypatch/deep capture tracer was removed from the permanent layer.
-- Raw document/canvas capture/bubble traces remain available while debug is enabled.
+Gesture Debug root cause:
+- .625 insertion accidentally placed Gesture Debug button setup inside toggleFocusView().
+- Result: button existed in DOM, but its click listener was not installed until Focus View was toggled.
+- .627 moves Gesture Debug setup to module startup scope.
+- Viewport -> Diagnostics -> Gesture Debug now binds immediately.
+- Permanent debug layer remains OFF by default and persisted via localStorage.
+- Temporary deep capture-owner monkeypatch removed from permanent gesture-debug.js.
+- Existing lightweight raw document/canvas traces remain available only while debug is enabled.
 
-Protected:
-- .615 unified gizmo baseline unchanged.
-- .616 Group/Multi ownership unchanged.
-- .620 Face Hold code unchanged.
-- src/multi-object-transform.js?v=0.36.1.0 unchanged.
+Vertex Circle lifecycle root cause:
+- Circle load ordering was improved in .625, but later component Inspect/Repair UI reconciliation can still rebuild/reparent Vertex drawer content after Circle placement.
+- component-inspect-repair-drawers.js now explicitly re-syncs:
+  - __boxlabVertexToolLayout.sync()
+  - __boxlabComponentCircle.sync()
+  after its own UI sync.
+- component-circle remains loaded after face-reconstruct establishes the Vertex layout owner.
+- drawer-ui pins component-circle and component-inspect-repair-drawers to .627.
 
 Hands-on checks:
-1. Load .625 fresh in Vertex mode.
-2. Circle is present immediately without any first interaction.
-3. Open Repair/Inspect once -> first click performs intended action.
-4. Switch modes and back to Vertex -> Circle remains in correct position.
-5. Viewport menu contains Gesture Debug.
-6. Gesture Debug is OFF by default.
-7. Toggle ON -> debug panel appears.
-8. Toggle OFF -> panel disappears.
-9. Toggle ON, reload -> preference persists.
-10. Gizmo / Group / Multi regressions remain clean.
+1. Fresh .627 load: Gesture Debug button works immediately without touching Focus View.
+2. Toggle ON -> panel appears.
+3. Toggle OFF -> panel disappears.
+4. Reload with ON -> persisted ON.
+5. Vertex mode fresh load -> Circle present immediately.
+6. Wait >2 seconds -> Circle still present after late Inspect/Repair reconciliation.
+7. First click on Repair/Inspect performs the action; it does not merely fix layout.
+8. Switch Vertex -> Face/Edge -> Vertex -> Circle remains correctly placed.
+9. Focus View behavior unchanged.
+10. Gizmo / Group / Multi baselines unchanged.
+
+Protected:
+- .615 unified gizmo baseline.
+- .616 Group/Multi routing baseline.
+- .620 Face Hold implementation unchanged.
+- src/multi-object-transform.js?v=0.36.1.0 unchanged.
 
 Next:
-- After this UI/debug infrastructure passes, return to Face Hold using permanent Gesture Debug rather than one-off diagnostic builds.
+- Once .627 UI/debug infrastructure passes, resume Face Hold investigation with permanent Gesture Debug.
