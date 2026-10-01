@@ -1,36 +1,45 @@
-## v0.36.18.629 — deep capture-owner tracing when Gesture Debug is ON
+## v0.36.18.630 — defer Paint Select ownership until drag
 
-- .628 permanent Gesture Debug toggle works hands-on.
-- Repeated Face-hold diagnostic still shows:
+- Repeated diagnostics showed:
   - RAW POINTERDOWN
   - PEN CANVAS DOWN
   - RAW CANVAS CAPTURE
   - no RAW CANVAS BUBBLE
   - no FACE CANVAS DOWN
-- This confirms a canvas pointerdown capture listener is stopping propagation before main.js normal canvas handling.
+- Static audit identified edge-paint-select.js as a capture-phase component selection owner active whenever hidden component Multi is enabled.
+- component-multi-init intentionally forces Multi ON in Vertex / Edge / Face.
+- Previous Paint Select behavior:
+  - on pointerdown over an unselected component
+  - immediately preventDefault + stopImmediatePropagation
+  - begin paint ownership
+- This is incompatible with modeless tap/hold gestures because Paint Select owns the press before main.js can interpret tap or hold.
 
-.629 adds optional deep capture-owner tracing:
-- only installed when Gesture Debug is enabled.
-- wraps later canvas pointerdown capture listeners.
-- logs:
-  - CAPTURE REGISTER
-  - CAPTURE ENTER
-  - CAPTURE EXIT
-  - cancelBubble before/after
-  - listener label/registration stack where available.
-- normal use with Gesture Debug OFF remains clean.
-- no selection, Face Hold, gizmo, Circle, or transform behavior changes.
+.630 ownership change:
+- pointerdown on unselected Vertex / Edge / Face now creates pendingPaint only.
+- pointerdown does NOT preventDefault or stop propagation.
+- ordinary tap proceeds to main selection.
+- stationary hold remains available to Face/Edge hold logic.
+- Paint Select claims the gesture only after >=6 px movement.
+- on claim:
+  - pointer capture begins
+  - move stream is prevented/stopped
+  - paint selection continues as before.
+- already-selected components do not enter pending Paint Select.
+- Gesture Debug logs PAINT PENDING / PAINT CLAIM when enabled.
 
 Hands-on:
-1. Load .629.
-2. Turn Gesture Debug ON.
-3. Reload once with it still ON so deep trace installs before later modules register.
-4. Press-and-hold a Face without moving.
-5. Send screenshot showing CAPTURE REGISTER / ENTER / EXIT lines.
-6. Identify first listener where after=true or last ENTER with no EXIT.
+1. Enable Gesture Debug.
+2. Face mode: select one face.
+3. Press-and-hold selected face without moving.
+4. Expected trace now includes FACE CANVAS DOWN -> FACE HOLD REQUEST -> FACE HOLD ARMED -> FACE HOLD TIMER.
+5. If candidates exist, FACE CANDIDATES / FACE HOLD FIRED should follow.
+6. Verify ordinary component tap select/deselect still works.
+7. Verify drag-paint selection still works by dragging across unselected components.
+8. Edge long-press/scrub regression.
+9. Gizmo / Group / Multi regression.
 
 Protected:
 - .615 unified gizmo baseline unchanged.
 - .616 Group/Multi routing unchanged.
-- .620 Face Hold unchanged.
+- Face Hold candidate logic unchanged.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
