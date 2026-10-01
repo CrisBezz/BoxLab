@@ -64,6 +64,11 @@ canvas?.addEventListener('pointerdown', event => {
 
 canvas?.addEventListener('pointermove', event => {
   if (pendingPaint && pendingPaint.pointerId === event.pointerId && !paint) {
+    if(globalThis.__boxlabModelessSelection?.browsing?.(event.pointerId)){
+      globalThis.__boxlabGestureDebug?.log?.('PAINT YIELD TO BROWSER',{type:pendingPaint.type,pid:event.pointerId});
+      pendingPaint=null;
+      return;
+    }
     const dx=event.clientX-pendingPaint.x,dy=event.clientY-pendingPaint.y;
     if(dx*dx+dy*dy < PAINT_DRAG_PX*PAINT_DRAG_PX) return;
     paint={pointerId:event.pointerId,type:pendingPaint.type};
