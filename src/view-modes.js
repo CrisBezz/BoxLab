@@ -125,6 +125,9 @@ function syncFocusViewButton(){
 function toggleFocusView(){
   document.documentElement.classList.toggle('boxlab-focus-view');
   syncFocusViewButton();
+  window.dispatchEvent(new Event('resize'));
+}
+
 const gestureDebugButton=document.querySelector('#gestureDebugToggle');
 function syncGestureDebugButton(){
   if(!gestureDebugButton)return;
@@ -140,8 +143,6 @@ gestureDebugButton?.addEventListener('click',event=>{
 });
 window.addEventListener('boxlab-gesture-debug-change',syncGestureDebugButton);
 syncGestureDebugButton();
-  window.dispatchEvent(new Event('resize'));
-}
 
 function activateButton(button){
   if(!button)return false;
