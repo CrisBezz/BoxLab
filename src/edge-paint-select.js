@@ -106,3 +106,11 @@ window.addEventListener('pointercancel', event=>{
   if(pendingPaint?.pointerId===event.pointerId)pendingPaint=null;
   endPaint(event);
 }, true);
+
+
+globalThis.__boxlabPaintSelectDebug={
+  pending:()=>pendingPaint?{pointerId:pendingPaint.pointerId,type:pendingPaint.type}:null,
+  active:()=>paint?{pointerId:paint.pointerId,type:paint.type}:null,
+  depth:()=>paintDepth,
+  multiEnabled:()=>!!multiToggle?.checked
+};

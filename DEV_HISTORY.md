@@ -1,5 +1,23 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.646 Pencil orbit arbitration diagnostics
+
+- .645 hands-on FAIL for post-Through Pencil orbit despite explicit Face-direct pointer capture release.
+- Screenshot evidence showed the next Pencil pointerdown reaches #viewport, so stale capture is no longer the primary blocker.
+- Added diagnostic-only route tracing to pencil-orbit-gate.js; no orbit/selection behaviour changed.
+- Each Pencil OrbitControls pointerdown now logs PEN ORBIT ROUTE with:
+  - meshHit
+  - selection mode/count
+  - Face-direct active
+  - component multi enabled
+  - paint pending/active state
+  - OrbitControls enabled state
+  - routing decision: BLOCK_MESH_HIT or FORWARD_ORBIT
+- Forwarded Pencil pointerdown also logs PEN ORBIT FORWARDED.
+- edge-paint-select.js exposes a read-only diagnostic snapshot of pending/active paint state.
+- Added read-only __boxlabPencilOrbitDebug snapshot for current navigation/orbit pointer sets.
+- .643 Sweep viewport session remains hands-on PASS and is unchanged.
+
 ## 2026-10-01 — v0.36.18.645 explicit Face-direct Pencil capture release
 
 - .644 FAIL for the reported post-Through Pencil-orbit regression; disarming Extrude alone was insufficient.

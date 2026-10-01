@@ -1,48 +1,57 @@
-## v0.36.18.645 — explicit Face-direct Pencil capture release
+## v0.36.18.646 — Pencil orbit arbitration diagnostic build
 
 Current release:
-- Visible/app version: v0.36.18.645
+- Visible/app version: v0.36.18.646
 - version.json and HTML shell title synced.
 
-Hands-on:
+Hands-on status:
+- .642 Selection Hub direct tools: BIG PASS.
 - .643 Sweep viewport session: AWESOME / PASS.
-- .644 attempted post-Through Pencil-orbit fix: FAIL. Extrude disarmed, but Pencil still would not rotate/orbit viewport.
+- .644 post-Through disarm fix: FAIL for Pencil orbit.
+- .645 explicit Face-direct pointer-capture release: FAIL for Pencil orbit.
+- Screenshot on .645 proves next Pencil RAW POINTERDOWN reaches #viewport.
 
-Deeper diagnosis:
-- Face-direct pointerdown calls canvas.setPointerCapture(pointerId).
-- Since .640, Face-direct completion correctly lives on window capture so it cannot miss pointerup.
-- But finish then calls stopImmediatePropagation.
-- Therefore canvas-level release/orbit listeners do not necessarily observe the same pointerup.
-- Face-direct was relying on downstream/browser cleanup despite being the subsystem that acquired pointer capture.
+.646 purpose:
+- Diagnostic only. Do not change orbit/selection ownership yet.
+- Determine why the next Pencil contact is not reaching OrbitControls.
 
-.645:
-- Adds releaseDirectPointer(pointerId).
-- Every Face-direct owned completion explicitly releases canvas pointer capture BEFORE consuming pointerup/pointercancel:
-  - armed-tool background press
-  - armed-tool Face tap
-  - Extrude / Inset drag finish
-  - therefore successful Through as part of Extrude finish
-- .644 post-Through disarm remains.
-- FACE DIRECT THROUGH RELEASE debug now reports remaining pointerCapture state.
+New Gesture Debug lines:
+- PEN ORBIT ROUTE
+  - pid
+  - pressure / buttons
+  - meshHit
+  - selectionMode
+  - selectionCount
+  - faceToolActive
+  - multiEnabled
+  - paintPending
+  - paintActive
+  - controlsEnabled
+  - route = BLOCK_MESH_HIT or FORWARD_ORBIT
+- PEN ORBIT FORWARDED
+  - appears only if OrbitControls pointerdown is actually invoked.
+
+Read-only diagnostics:
+- __boxlabPaintSelectDebug
+- __boxlabPencilOrbitDebug
 
 Immediate hands-on:
-1. Select Face -> Extrude -> perform successful Through.
-2. Lift Pencil.
-3. Immediately Pencil-orbit the viewport.
-4. Must rotate on the next gesture.
-5. Quick normal Extrude, then orbit.
-6. Quick Inset, then orbit.
-7. Confirm Sweep viewport session remains unchanged.
+1. Gesture Debug ON.
+2. Select one Face.
+3. Extrude Through.
+4. Lift Pencil.
+5. Immediately attempt Pencil orbit.
+6. Send screenshot containing PEN ORBIT ROUTE and, if present, PEN ORBIT FORWARDED.
 
-If still failing:
-- turn Gesture Debug on
-- repeat Through once
-- send FACE DIRECT FINISH and FACE DIRECT THROUGH RELEASE lines
-- .645 release line should show pointerCapture=false.
+Interpretation:
+- BLOCK_MESH_HIT + selectionCount 0 = gate is blocking orbit over mesh after Through.
+- FORWARD_ORBIT but no camera movement = inspect controls.enabled / OrbitControls internal pointer lifecycle next.
+- PAINT PENDING/CLAIM around same pointer = paint selection is winning after gate handoff.
 
 Protected:
+- No behaviour changes in .646.
 - .640 interaction checkpoint.
 - .642 Selection Hub.
 - .643 Sweep viewport session.
-- Through topology/build/gate logic.
+- Through topology/build/gate.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.

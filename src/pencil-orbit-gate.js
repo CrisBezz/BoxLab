@@ -105,10 +105,42 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
       if (event.pointerType !== 'pen') return listener.call(this, event);
       if ((type !== 'pointerup' && type !== 'pointercancel') && isPenHover(event)) return;
       if (type === 'pointerdown') {
-        if (pencilHitsEditableMesh(event)) return;
+        const bridge=selectionBridge();
+        const selectionMode=bridge?.mode?.()||null;
+        const selectionCount=[...(bridge?.indices?.()||[])].length;
+        const meshHit=pencilHitsEditableMesh(event);
+        const faceToolActive=!!globalThis.__boxlabFaceDirect?.active?.();
+        const paintState=globalThis.__boxlabPaintSelectDebug;
+        const paintPending=paintState?.pending?.()||null;
+        const paintActive=paintState?.active?.()||null;
+        const multiEnabled=paintState?.multiEnabled?.()??null;
+        const controlsEnabled=globalThis.__boxlabBridgeState?.controls?.enabled!==false;
+        const blocked=!!meshHit;
+        gestureDebug('PEN ORBIT ROUTE',{
+          pid:event.pointerId,
+          pressure:event.pressure,
+          buttons:event.buttons,
+          meshHit,
+          selectionMode,
+          selectionCount,
+          faceToolActive,
+          multiEnabled,
+          paintPending,
+          paintActive,
+          controlsEnabled,
+          route:blocked?'BLOCK_MESH_HIT':'FORWARD_ORBIT'
+        });
+        if (blocked) return;
         penOrbitPointers.add(event.pointerId);
       }
       const result = listener.call(this, event);
+      if(type==='pointerdown'&&event.pointerType==='pen'){
+        gestureDebug('PEN ORBIT FORWARDED',{
+          pid:event.pointerId,
+          controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled!==false,
+          tracked:penOrbitPointers.has(event.pointerId)
+        });
+      }
       if ((type === 'pointerup' || type === 'pointercancel') && penOrbitPointers.has(event.pointerId)) {
         endPenNavigation(event);
       }
@@ -116,6 +148,14 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     };
     orbitListeners.set(listener, wrapped);
     return nativeAddEventListener(type, wrapped, options);
+  };
+
+  globalThis.__boxlabPencilOrbitDebug={
+    snapshot:()=>({
+      navigationPointers:[...navigationSnapshots.keys()],
+      orbitPointers:[...penOrbitPointers],
+      controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled!==false
+    })
   };
 
   canvas.__boxlabPencilOrbitGateInstalled = true;

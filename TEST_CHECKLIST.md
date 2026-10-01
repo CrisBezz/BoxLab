@@ -2479,3 +2479,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .645: Through kernel/gate unchanged
 - [x] Protection .645: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Diagnostic .646: after Through, failed Pencil orbit produces PEN ORBIT ROUTE
+- [ ] Diagnostic .646: capture meshHit / selectionCount / faceToolActive / multiEnabled / paintPending / paintActive / controlsEnabled / route
+- [ ] Diagnostic .646: if route is FORWARD_ORBIT, PEN ORBIT FORWARDED also appears
+- [ ] Regression .646: no change to Face selection, paint selection or Pencil orbit behaviour
+- [ ] Regression .646: .643 Sweep viewport session remains PASS
+- [x] Static .646: Pencil route logging is diagnostic-only; no routing condition changed
+- [x] Static .646: paint debug API is read-only
+- [x] Protection .646: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
