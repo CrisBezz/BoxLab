@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.629 deep capture diagnostics
+
+- Permanent Gesture Debug is now proven working.
+- Added deep canvas capture-owner tracing only while Gesture Debug is enabled.
+- Diagnostic-only build to identify the listener suppressing Face pointerdown before normal canvas handling.
+
 ## 2026-10-01 — v0.36.18.628 Gesture Debug binding order fix
 
 - Fixed Viewport Gesture Debug button binding order.
