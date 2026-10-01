@@ -2399,7 +2399,7 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .639: onHandleDown rejects collapsed component gizmo events
 - [x] Protection .639: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
-- [ ] Workflow .640: multi-face Extrude preview survives Pencil release and commits
+- [x] Workflow .640: multi-face Extrude preview survives Pencil release and commits
 - [ ] Workflow .640: single-face Extrude preview survives Pencil release and commits
 - [ ] Workflow .640: Inset preview survives Pencil release and commits
 - [ ] Workflow .640: FACE DIRECT FINISH debug reports type=pointerup on normal Pencil lift
@@ -2409,3 +2409,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .640: multi-face-direct completion is owned at window capture
 - [x] Protection .640: Extrude/Inset topology maths unchanged
 - [x] Protection .640: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .641: Make Unique preserves active linked-instance world placement exactly
+- [ ] Workflow .641: Make Unique preserves inactive linked-instance world placement exactly
+- [ ] Workflow .641: editing detached object no longer propagates to former linked peers
+- [ ] Workflow .641: editing remaining linked peer still propagates to its other linked peers
+- [ ] Workflow .641: Multi Make Unique detaches all selected linked instances in one Undo step
+- [ ] Workflow .641: Undo restores link metadata and shared editing
+- [ ] Workflow .641: Redo restores unique independent meshes at the same placements
+- [ ] Regression .641: Linked Duplicate still creates shared geometry with independent placement
+- [ ] Regression .641: ordinary Duplicate remains independent
+- [x] Static .641: detachment materializes source mesh + instanceMatrix before deleting link metadata
+- [x] Protection .641: src/multi-object-transform.js?v=0.36.1.0 unchanged

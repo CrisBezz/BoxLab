@@ -180,6 +180,19 @@ function syncLinkedPeers(sourceId, activeObjectId=null) {
     if(evaluated)peer.mesh=evaluated;
   }
 }
+function evaluatedLinkedMesh(object){
+  if(!object?.sourceId)return object?.mesh?.clone?.()||null;
+  const source=linkedSources.get(object.sourceId);
+  if(!source)return object?.mesh?.clone?.()||null;
+  return transformEditableMesh(source.mesh,matrixForInstance(object))||object?.mesh?.clone?.()||null;
+}
+function materializeLinkedObject(object){
+  if(!object?.sourceId)return object?.mesh?.clone?.()||null;
+  const evaluated=evaluatedLinkedMesh(object);
+  if(!evaluated)return null;
+  object.mesh=evaluated.clone();
+  return evaluated;
+}
 function detachLinkedObject(object) {
   if(!object?.sourceId)return false;
   delete object.sourceId;
@@ -528,11 +541,16 @@ function makeObjectsUnique(ids=[],checkpoint=true) {
   if(checkpoint)globalThis.__boxlabObjectHistory?.checkpoint?.();
   saveActive();
   const detached=[];
+  const live=state()?.mesh||null;
   for(const object of chosen){
-    if(object.id===activeId)object.mesh=state()?.mesh?.clone?.()||object.mesh.clone();
+    const evaluated=materializeLinkedObject(object);
+    if(!evaluated)continue;
+    if(object.id===activeId&&live)replaceMeshInPlace(live,evaluated);
     if(detachLinkedObject(object))detached.push(object.id);
   }
+  forceRender();
   renderOutliner();
+  globalThis.__boxlabObjectSelection?.refresh?.();
   return detached;
 }
 function makeActiveUnique() {

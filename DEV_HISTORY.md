@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.641 Make Unique authoritative materialization
+
+- .640 hands-on PASS; freeze .640 as the protected modeless-selection / dormant-gizmo / Face-direct interaction checkpoint.
+- Audited the remaining Phase C Make Unique robustness item.
+- Previous Make Unique detached linked metadata from inactive objects while trusting object.mesh to already be the current evaluated world mesh.
+- Added authoritative linked-instance materialization from source mesh + instanceMatrix immediately before detaching.
+- Active and inactive instances now become standalone meshes at their exact current world placement; active live mesh is refreshed from that same materialized result.
+- Multi Make Unique keeps one existing Object-scene history checkpoint and refreshes Object selection/render after detaching.
+- Linked source geometry, instance placement, grouping and naming remain unchanged for peers that stay linked.
+- Protected multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-01 — v0.36.18.640 global Face-direct release ownership
 
 - Hands-on .639 exposed Extrude preview snapping back when Apple Pencil lifted.
