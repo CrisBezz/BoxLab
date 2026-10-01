@@ -86,6 +86,7 @@ function sync(){
 
 button.addEventListener('click',apply);
 window.addEventListener('boxlab-bridge-state',sync);
+window.addEventListener('boxlab-component-layout-sync',sync);
 document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMicrotask(sync),true);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 [0,60,180,500].forEach(delay=>setTimeout(sync,delay));
