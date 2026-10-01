@@ -2272,3 +2272,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .627: mode switching preserves Circle layout
 - [x] Protection .627: permanent Gesture Debug has no deep EventTarget monkeypatch
 - [x] Protection .627: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .628: Gesture Debug button works on first tap
+- [ ] Workflow .628: Gesture Debug ON shows panel
+- [ ] Workflow .628: Gesture Debug OFF hides panel
+- [ ] Workflow .628: persisted state survives reload
+- [x] Protection .628: no transform/selection behavior change
