@@ -92,8 +92,12 @@ function endPaint(event) {
   paint = null;
 }
 
-canvas?.addEventListener('pointerup', endPaint, true);
-canvas?.addEventListener('pointercancel', event=>{
+// Pending paint must also terminate above canvas owners. A component tap can make
+// the Total Gizmo appear between pointerdown and pointerup, so the release target
+// may no longer be the canvas. Window capture prevents stale pendingPaint from
+// surviving into a later Pencil gesture with a reused pointerId.
+window.addEventListener('pointerup', endPaint, true);
+window.addEventListener('pointercancel', event=>{
   if(pendingPaint?.pointerId===event.pointerId)pendingPaint=null;
   endPaint(event);
 }, true);
