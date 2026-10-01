@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.650 lifecycle-tracked Pencil contact
+
+- .648 still failed Pencil orbit while one-finger touch orbit continued to work.
+- Conclusion: iPad Pencil can emit contact pointermove events with pressure=0 and buttons=0, so per-event pressure/buttons hover inference remains unreliable.
+- Pencil contact is now tracked by pointer lifecycle:
+  - qualifying Pencil pointerdown adds pointerId to activePenContacts
+  - all subsequent moves for that pointerId are treated as contact
+  - window-capture pointerup/pointercancel always clears the contact
+- Window release cleanup is used so contact state clears even if another canvas owner consumes the release event.
+- Per-event pressure/buttons remains only as fallback for untracked events.
+- Added contactTracked to Pencil move diagnostics and contactPointers to the debug snapshot.
+- No selection, Through, gizmo, Sweep, or geometry behaviour changed.
+
 ## 2026-10-01 — v0.36.18.649 restore Selection Hub puck after direct Face commit
 
 - Hands-on: after Extrude the Selection Hub puck reappeared, but after Inset it stayed suppressed.

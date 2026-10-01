@@ -2521,3 +2521,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .649: no Extrude/Inset geometry code changed
 - [x] Protection .649: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .650: Pencil pointerdown starts tracked contact
+- [ ] Workflow .650: Pencil contact remains active across zero-pressure/zero-buttons move
+- [ ] Workflow .650: Pencil orbit works after Through
+- [ ] Workflow .650: PEN ORBIT MOVE FORWARD shows contactTracked=true during orbit
+- [ ] Workflow .650: pointerup/cancel clears tracked Pencil contact
+- [ ] Regression .650: true Pencil hover after lift is swallowed normally
+- [ ] Regression .650: finger orbit unchanged
+- [ ] Regression .650: Face Pencil tap selection unchanged
+- [ ] Regression .650: .643 Sweep viewport session remains PASS
+- [x] Static .650: contact lifecycle clears from window capture
+- [x] Protection .650: selection-vs-orbit mesh-hit policy unchanged
+- [x] Protection .650: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

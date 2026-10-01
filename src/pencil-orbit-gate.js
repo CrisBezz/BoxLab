@@ -11,17 +11,32 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const NAV_RESTORE_PX = 4;
   const orbitListeners = new Map();
   const penOrbitPointers = new Set();
+  const activePenContacts = new Set();
   let orbitRegistrationDepth = 0;
 
   function isPenContact(event) {
     if(event.pointerType!=='pen')return false;
     if(event.type==='pointerup'||event.type==='pointercancel')return false;
+    if(event.type==='pointerdown'){
+      const contact=(event.buttons & 1)===1 || event.pressure>0;
+      if(contact)activePenContacts.add(event.pointerId);
+      return contact;
+    }
+    if(activePenContacts.has(event.pointerId))return true;
     return (event.buttons & 1)===1 || event.pressure>0;
   }
 
   function isPenHover(event) {
     return event.pointerType==='pen'&&!isPenContact(event);
   }
+
+  function endPenContact(event){
+    if(event.pointerType!=='pen')return;
+    activePenContacts.delete(event.pointerId);
+  }
+
+  window.addEventListener('pointerup',endPenContact,true);
+  window.addEventListener('pointercancel',endPenContact,true);
 
   // Important: Pencil pointerup normally reports pressure=0 on iPad. Never
   // swallow pointerup/pointercancel as "hover" or OrbitControls will retain
@@ -125,10 +140,10 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     const wrapped = function (event) {
       if (event.pointerType !== 'pen') return listener.call(this, event);
       if ((type !== 'pointerup' && type !== 'pointercancel') && isPenHover(event)) {
-        if(type==='pointermove')gestureDebug('PEN ORBIT MOVE HOVER BLOCK',{pid:event.pointerId,pressure:event.pressure,buttons:event.buttons});
+        if(type==='pointermove')gestureDebug('PEN ORBIT MOVE HOVER BLOCK',{pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,contactTracked:activePenContacts.has(event.pointerId)});
         return;
       }
-      if(type==='pointermove')gestureDebug('PEN ORBIT MOVE FORWARD',{pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,tracked:penOrbitPointers.has(event.pointerId)});
+      if(type==='pointermove')gestureDebug('PEN ORBIT MOVE FORWARD',{pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,tracked:penOrbitPointers.has(event.pointerId),contactTracked:activePenContacts.has(event.pointerId)});
       if (type === 'pointerdown') {
         const bridge=selectionBridge();
         const selectionMode=bridge?.mode?.()||null;
@@ -185,6 +200,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     snapshot:()=>({
       navigationPointers:[...navigationSnapshots.keys()],
       orbitPointers:[...penOrbitPointers],
+      contactPointers:[...activePenContacts],
       controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled!==false
     })
   };
