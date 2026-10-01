@@ -1,5 +1,11 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.628 Gesture Debug binding order fix
+
+- Fixed Viewport Gesture Debug button binding order.
+- ensureUI() now creates the button before querySelector/listener binding.
+- Diagnostic infrastructure only; no transform/selection behavior changed.
+
 ## 2026-10-01 — v0.36.18.627 Gesture Debug startup + Vertex Circle lifecycle
 
 - Fixed Gesture Debug toggle binding accidentally nested inside Focus View toggle.
