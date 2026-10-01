@@ -2574,3 +2574,21 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .653: Shell viewport controls proxy existing #shell* owners; no Shell kernel duplicated
 - [x] Protection .653: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [x] Hands-on .653: radial Shell viewport session PASS
+- [ ] Workflow .654: Edge selection shows closed Selection Hub puck
+- [ ] Workflow .654: Edge puck -> gizmo -> centre -> Edge tool ring -> centre -> puck
+- [ ] Workflow .654: Face ring never appears in Edge mode
+- [ ] Workflow .654: Edge Extrude radial sector arms existing Edge Extrude
+- [ ] Workflow .654: Bevel radial sector arms existing Bevel
+- [ ] Workflow .654: Crease radial sector uses existing Crease owner
+- [ ] Workflow .654: Slide radial sector uses existing Edge Slide owner
+- [ ] Workflow .654: Offset radial sector uses existing Offset Loop owner
+- [ ] Workflow .654: Bridge radial sector respects existing validity/disabled state
+- [ ] Workflow .654: Dissolve radial sector uses existing Dissolve Edge owner
+- [ ] Workflow .654: Delete radial sector uses existing Delete Edge owner
+- [ ] Regression .654: Face Selection Hub remains unchanged
+- [ ] Regression .654: .643 Sweep and .653 Shell viewport sessions remain PASS
+- [ ] Regression .654: .652 Face-direct background-yield remains PASS
+- [x] Static .654: Edge ring proxies existing authoritative buttons; no Edge kernel duplicated
+- [x] Protection .654: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

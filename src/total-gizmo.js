@@ -61,7 +61,7 @@ function setHubState(next,{reason='',resumeSuspended=true}={}){
   const mode=currentMode();
   let requested=mode==='object'?'transform':next;
   if(!['closed','transform','tools'].includes(requested))requested='closed';
-  if(requested==='tools'&&mode!=='face')requested='closed';
+  if(requested==='tools'&&!['face','edge'].includes(mode))requested='closed';
 
   const wasTransform=hubState==='transform';
   const willTransform=requested==='transform';
@@ -275,7 +275,7 @@ root.innerHTML=`
   <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="10"/>
   <circle class="tg-collapse" cx="${HALF}" cy="${HALF}" r="4" aria-label="Open contextual tools"/>
 </svg>
-<div class="tg-tool-ring" aria-label="Face contextual tools">
+<div class="tg-tool-ring" data-ring-mode="face" aria-label="Face contextual tools">
   <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#extrudeBtn">Extrude</button>
   <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#insetBtn">Inset</button>
   <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#knifeBtn">Knife</button>
@@ -284,14 +284,25 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#shellFacesBtn">Shell</button>
   <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target=".sweep-selection-launch[data-sweep-selection-mode='face']">Sweep</button>
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteFaceBtn">Delete</button>
-  <button type="button" class="tg-tool-center" aria-label="Close contextual tools" title="Close tools">×</button>
+  <button type="button" class="tg-tool-center" aria-label="Close Face contextual tools" title="Close tools">×</button>
+</div>
+<div class="tg-tool-ring" data-ring-mode="edge" aria-label="Edge contextual tools">
+  <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#edgeExtrudeBtn">Extrude</button>
+  <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#bevelBtn">Bevel</button>
+  <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#applyCreaseBtn">Crease</button>
+  <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#edgeSlideBtn">Slide</button>
+  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#offsetLoopBtn">Offset</button>
+  <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#bridgeEdgesBtn">Bridge</button>
+  <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target="#dissolveEdgeBtn">Dissolve</button>
+  <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteEdgeBtn">Delete</button>
+  <button type="button" class="tg-tool-center" aria-label="Close Edge contextual tools" title="Close tools">×</button>
 </div>
 <div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
 const activator=root.querySelector('.tg-activator');
 const collapseControl=root.querySelector('.tg-collapse');
-const toolRing=root.querySelector('.tg-tool-ring');
-const toolCenter=root.querySelector('.tg-tool-center');
+const toolRings=[...root.querySelectorAll('.tg-tool-ring')];
+const toolCenters=[...root.querySelectorAll('.tg-tool-center')];
 const toolSectors=[...root.querySelectorAll('.tg-tool-sector')];
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
 
@@ -308,14 +319,14 @@ collapseControl?.addEventListener('pointerdown',event=>{
   event.stopPropagation();
   hideFloatInput();
   resetTransientState({hideFloat:true});
-  setHubState(currentMode()==='face'?'tools':'closed',{reason:'transform-centre'});
+  setHubState(['face','edge'].includes(currentMode())?'tools':'closed',{reason:'transform-centre'});
 });
 
-toolCenter?.addEventListener('pointerdown',event=>{
+toolCenters.forEach(toolCenter=>toolCenter.addEventListener('pointerdown',event=>{
   event.preventDefault();
   event.stopPropagation();
   setHubState('closed',{reason:'tools-centre'});
-});
+}));
 
 toolSectors.forEach(button=>{
   button.addEventListener('pointerdown',event=>{
@@ -326,14 +337,15 @@ toolSectors.forEach(button=>{
     event.preventDefault();
     event.stopPropagation();
     const mode=currentMode();
-    if(mode!=='face')return;
+    const ringMode=button.closest('.tg-tool-ring')?.dataset.ringMode||'';
+    if(mode!==ringMode)return;
     const selector=button.dataset.toolTarget;
     const target=selector?document.querySelector(selector):null;
     if(!target||target.disabled){
       if(status)status.textContent=`${button.textContent?.trim()||'Tool'} unavailable for current selection`;
       return;
     }
-    if(suspendedFaceTool){
+    if(mode==='face'&&suspendedFaceTool){
       globalThis.__boxlabFaceDirect?.clearTransformSuspension?.();
       suspendedFaceTool=false;
     }
@@ -449,7 +461,8 @@ style.textContent=`
 #totalGizmo:not([data-hub-state="transform"]) svg{display:none!important}
 #totalGizmo svg{width:100%;height:100%;overflow:visible}
 #totalGizmo .tg-tool-ring{position:absolute;inset:0;display:none;pointer-events:none}
-#totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring{display:block}
+#totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring[data-ring-mode="face"]{display:block}
+#totalGizmo[data-hub-state="tools"][data-mode="edge"] .tg-tool-ring[data-ring-mode="edge"]{display:block}
 #totalGizmo .tg-tool-sector{position:absolute;left:50%;top:50%;width:68px;height:34px;margin:-17px -34px;padding:3px 5px;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(18,21,27,.96);color:#eef2f7;font-size:10px;font-weight:700;line-height:1;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.34);pointer-events:auto;touch-action:none;transform:rotate(var(--a)) translateY(-82px) rotate(calc(-1 * var(--a)))}
 #totalGizmo .tg-tool-sector:active{background:rgba(238,242,247,.92);color:#111318}
 #totalGizmo .tg-tool-danger{border-color:rgba(255,110,110,.48)}
@@ -653,7 +666,7 @@ function sync(){
   root.style.top=`${top}px`;
   floatPalette.style.left=`${left}px`;
   floatPalette.style.top=`${top}px`;
-  const suppressed=mode==='face'&&hubSuppressedKey===key;
+  const suppressed=['face','edge'].includes(mode)&&hubSuppressedKey===key;
   root.hidden=suppressed;
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
@@ -686,5 +699,5 @@ globalThis.__boxlabTotalGizmo={
   hubState:()=>hubState,
   setExpanded:(next,options={})=>setExpanded(next,options),
   setHubState:(next,options={})=>setHubState(next,options),
-  version:'0.36.18.649'
+  version:'0.36.18.654'
 };

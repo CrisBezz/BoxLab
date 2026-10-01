@@ -1,5 +1,25 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.654 Edge Selection Hub v1
+
+- .653 Shell viewport session hands-on PASS.
+- Selection Hub Tools state is no longer Face-only; Edge mode now has its own contextual radial ring.
+- Three-state interaction remains unchanged:
+  - closed puck -> transform gizmo -> contextual tools ring -> closed puck.
+- Edge ring v1 proxies existing authoritative tools:
+  - Edge Extrude
+  - Bevel
+  - Crease
+  - Edge Slide
+  - Offset Loop
+  - Bridge
+  - Dissolve Edge
+  - Delete Edge
+- Tool availability still comes from each existing authoritative button; disabled/invalid tools remain unavailable.
+- Face ring remains unchanged.
+- Face and Edge rings are mutually exclusive by current selection mode; only the matching ring is interactive/visible.
+- No Edge modelling kernels changed.
+
 ## 2026-10-01 — v0.36.18.653 Selection Hub Shell viewport session
 
 - .652 hands-on PERFECT / PASS and is now the protected Face-direct background-yield checkpoint.

@@ -1,50 +1,55 @@
-## v0.36.18.653 — Selection Hub Shell viewport session
+## v0.36.18.654 — Edge Selection Hub v1
 
 Current release:
-- v0.36.18.653
+- v0.36.18.654
 
-Hands-on protected checkpoints:
-- .643 Sweep viewport session: AWESOME / PASS.
-- .652 Face-direct background Pencil yield: PERFECT / PASS.
-  - armed Extrude/Inset + Face hit = repeat modelling.
-  - armed Extrude/Inset + Pencil background-down = disarm and same gesture orbits.
+Hands-on protected:
+- .643 Sweep viewport session: PASS.
+- .652 armed Extrude/Inset background Pencil-yield: PERFECT / PASS.
+- .653 Shell viewport session: PASS.
 
-.653 scope:
-- Shell is now the second Selection Hub session-tool prototype.
-- src/shell.js remains authoritative.
-- selection-hub-shell-session.js is UI-only proxy/state mirroring.
+Selection Hub:
+- Face and Edge now both use the three-state cycle:
+  CLOSED PUCK -> TRANSFORM GIZMO -> CONTEXTUAL TOOLS -> CLOSED PUCK
+- Tools state is mode-specific; only one ring exists interactively at a time.
 
-Radial Shell flow:
-1. Face selection -> puck -> gizmo -> tools ring.
-2. Choose Shell.
-3. Selection Hub hides.
-4. Existing #shellFacesBtn launches the real Shell preview/session.
-5. Compact Shell palette appears beside selection.
+Face ring unchanged:
+- Extrude, Inset, Knife, Duplicate, Extract, Shell, Sweep, Delete.
 
-Viewport Shell palette:
-- Thickness slider -> proxies #shellThickness input/change.
-- Thickness readout -> mirrors #shellThicknessOut.
-- Cancel -> proxies #shellCancelBtn.
-- Apply Shell -> proxies #shellApplyBtn.
-- Existing Shell preview remains the real preview.
-- Existing Shell Apply/Cancel/history/session logic remains the owner.
-- Palette appears only for radial Shell launches.
-- boxlab-tool-session-change shell end hides palette.
-- Ordinary left-toolbar Shell remains unchanged.
+New Edge ring v1:
+- Extrude -> #edgeExtrudeBtn
+- Bevel -> #bevelBtn
+- Crease -> #applyCreaseBtn
+- Slide -> #edgeSlideBtn
+- Offset -> #offsetLoopBtn
+- Bridge -> #bridgeEdgesBtn
+- Dissolve -> #dissolveEdgeBtn
+- Delete -> #deleteEdgeBtn
+
+Architecture:
+- All Edge sectors proxy existing authoritative buttons at click time.
+- No Edge geometry/tool implementation duplicated.
+- Existing disabled state decides whether a radial tool is available.
+- Ring launch suppresses hub for the current Edge selection exactly like Face.
+- Changing Edge selection resets hub to CLOSED.
+- Face ring behaviour unchanged.
 
 Immediate hands-on:
-1. Select Face -> Selection Hub -> Shell.
-2. Expect live Shell preview plus compact viewport palette.
-3. Drag Thickness with Pencil; preview should update continuously.
-4. Apply Shell without touching left drawer; result should commit and palette disappear.
-5. Repeat and Cancel; original should restore and palette disappear.
-6. Quick Sweep check if desired.
-7. Confirm .652 background-Pencil orbit remains intact after Extrude/Inset.
+1. Select an Edge -> expect closed puck.
+2. Tap puck -> gizmo.
+3. Tap centre -> Edge ring.
+4. Confirm ring labels: Extrude / Bevel / Crease / Slide / Offset / Bridge / Dissolve / Delete.
+5. Centre -> closed puck.
+6. Reopen and test Edge Extrude.
+7. Test Bevel.
+8. Test Slide or Offset.
+9. Confirm unavailable Bridge stays unavailable unless selection is valid.
+10. Return to Face mode and confirm original Face ring still works.
 
 Protected:
 - .640 modeless selection checkpoint.
-- .642 Selection Hub.
+- .642 Face Selection Hub.
 - .643 Sweep viewport session.
 - .652 Face-direct background-yield.
-- Shell geometry/session owner untouched.
+- .653 Shell viewport session.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
