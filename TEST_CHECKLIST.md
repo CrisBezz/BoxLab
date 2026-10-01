@@ -2500,3 +2500,14 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .647: routing policy BLOCK_MESH_HIT/FORWARD_ORBIT unchanged
 - [x] Protection .647: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .648: Pencil contact move with buttons=1 is not classified as hover even if pressure=0
+- [ ] Workflow .648: background Pencil orbit rotates camera after Through
+- [ ] Workflow .648: Gesture Debug shows PEN ORBIT MOVE FORWARD during Pencil drag
+- [ ] Workflow .648: true hover with buttons=0/pressure=0 remains swallowed
+- [ ] Regression .648: one-finger touch orbit remains unchanged
+- [ ] Regression .648: Pencil tap selection remains unchanged
+- [ ] Regression .648: .643 Sweep viewport session remains PASS
+- [x] Static .648: pen contact classifier uses buttons OR pressure
+- [x] Protection .648: selection-vs-orbit mesh-hit policy unchanged
+- [x] Protection .648: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

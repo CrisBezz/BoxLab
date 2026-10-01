@@ -13,12 +13,14 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const penOrbitPointers = new Set();
   let orbitRegistrationDepth = 0;
 
-  function isPenHover(event) {
-    return event.pointerType === 'pen' && !(event.pressure > 0);
+  function isPenContact(event) {
+    if(event.pointerType!=='pen')return false;
+    if(event.type==='pointerup'||event.type==='pointercancel')return false;
+    return (event.buttons & 1)===1 || event.pressure>0;
   }
 
-  function isPenContact(event) {
-    return event.pointerType === 'pen' && event.pressure > 0;
+  function isPenHover(event) {
+    return event.pointerType==='pen'&&!isPenContact(event);
   }
 
   // Important: Pencil pointerup normally reports pressure=0 on iPad. Never
@@ -122,7 +124,11 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
     const wrapped = function (event) {
       if (event.pointerType !== 'pen') return listener.call(this, event);
-      if ((type !== 'pointerup' && type !== 'pointercancel') && isPenHover(event)) return;
+      if ((type !== 'pointerup' && type !== 'pointercancel') && isPenHover(event)) {
+        if(type==='pointermove')gestureDebug('PEN ORBIT MOVE HOVER BLOCK',{pid:event.pointerId,pressure:event.pressure,buttons:event.buttons});
+        return;
+      }
+      if(type==='pointermove')gestureDebug('PEN ORBIT MOVE FORWARD',{pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,tracked:penOrbitPointers.has(event.pointerId)});
       if (type === 'pointerdown') {
         const bridge=selectionBridge();
         const selectionMode=bridge?.mode?.()||null;

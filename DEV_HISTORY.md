@@ -1,5 +1,20 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.648 Pencil contact classification fix
+
+- .647 still failed Pencil orbit, while one-finger touch orbit worked.
+- Exact Three.js r179 OrbitControls source audit confirms non-touch pointers, including pointerType='pen', use the mouse rotation path.
+- BoxLab's Pencil gate classified hover using pressure alone: pen + pressure<=0.
+- On iPad Pencil move streams can transiently report zero pressure while contact remains active; swallowing those moves prevents OrbitControls from receiving rotation deltas even though pointerdown succeeded.
+- Hover/contact classification now treats Pencil as contact when either:
+  - primary contact button bit is set (buttons & 1), OR
+  - pressure > 0.
+- pointerup/pointercancel are never considered contact.
+- Added PEN ORBIT MOVE FORWARD / PEN ORBIT MOVE HOVER BLOCK diagnostics.
+- .647 explicit OrbitControls registration handoff is retained.
+- Selection-vs-orbit mesh-hit policy is unchanged.
+- Through, Face-direct, Selection Hub and Sweep code unchanged.
+
 ## 2026-10-01 — v0.36.18.647 explicit OrbitControls registration handoff
 
 - .646 diagnostics showed RAW Pencil pointerdown reaches #viewport but PEN ORBIT ROUTE never fires.
