@@ -361,6 +361,8 @@ globalThis.__boxlabFaceDirect={
     if(!transformSuspendedTool||armed)return false;
     const mode=bridge()?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode;
     if(mode!=='face'){transformSuspendedTool=null;return false;}
+    disarmTransforms();
+    globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});
     armed=transformSuspendedTool;
     transformSuspendedTool=null;
     syncButtons();

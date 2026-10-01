@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.637 single-owner restore after gizmo collapse
+
+- .636 hands-on PASS: explicit Face gizmo transforms now work over previously armed Extrude without click-through.
+- Hardened the collapse path so a suspended Extrude/Inset resumes only after Move/Scale/Rotate transform arming has been fully disarmed and transient gizmo state cleared.
+- Prevents a latent two-owner state where a Face direct tool and transform tool could both remain logically armed after closing the gizmo.
+- No gesture semantics, transform maths, Face topology maths, Group/Multi routing, or protected multi-object-transform code changed.
+
 ## 2026-10-01 — v0.36.18.636 gizmo owns explicit transform over armed Face tools
 
 - Video review of .635 showed component Face selection gestures and multi-Extrude working, plus outer-ring scale, but axis/handle presses could select geometry through the gizmo.

@@ -578,5 +578,5 @@ globalThis.__boxlabTotalGizmo={
   },
   expanded:()=>expanded,
   setExpanded:(next,options={})=>setExpanded(next,options),
-  version:'0.36.18.636'
+  version:'0.36.18.637'
 };

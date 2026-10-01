@@ -2360,3 +2360,13 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .636: Face direct API exposes suspendForTransform/resumeAfterTransform
 - [x] Static .636: Vertex/Edge/Face failed gizmo handoff is blocked, not syntheticDown
 - [x] Protection .636: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .637: Extrude armed -> gizmo -> Move -> collapse -> only Extrude remains active
+- [ ] Workflow .637: Extrude armed -> gizmo -> Scale -> collapse -> only Extrude remains active
+- [ ] Workflow .637: Extrude armed -> gizmo -> Rotate -> collapse -> only Extrude remains active
+- [ ] Workflow .637: Inset follows the same suspend/transform/collapse/resume ownership
+- [ ] Regression .637: resumed Face tool performs normal direct drag immediately after collapse
+- [ ] Regression .637: reopening gizmo after resumed Face tool suspends it cleanly again
+- [x] Static .637: resume path disarms transform arming before restoring Face direct tool
+- [x] Protection .637: transform maths unchanged
+- [x] Protection .637: src/multi-object-transform.js?v=0.36.1.0 unchanged
