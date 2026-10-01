@@ -2439,3 +2439,19 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .642: contextual sectors proxy existing buttons rather than duplicate modelling kernels
 - [x] Protection .642: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .643: radial Sweep opens viewport Sweep session palette beside selection
+- [ ] Workflow .643: Profile / Path / Finish viewport tabs drive the existing Sweep session stages
+- [ ] Workflow .643: Circle / Rectangle / Draw / Use Selection proxy the existing Sweep controls
+- [ ] Workflow .643: viewport Profile Size slider updates live Sweep profile
+- [ ] Workflow .643: viewport Circle Sides slider updates live Sweep profile
+- [ ] Workflow .643: viewport Edit / Closed / Undo / Clear mirror Profile state
+- [ ] Workflow .643: Follow Edges / Draw Path proxy existing path modes
+- [ ] Workflow .643: viewport Path Edit / Undo / Delete / Clear work without left-toolbar interaction
+- [ ] Workflow .643: Caps mirrors existing state and Apply Sweep completes session
+- [ ] Workflow .643: Cancel Sweep cancels/restores through existing Sweep owner
+- [ ] Workflow .643: palette disappears after Apply or Cancel
+- [ ] Regression .643: ordinary left-toolbar Sweep workflow remains unchanged
+- [ ] Regression .643: Face Selection Hub direct-tool BIG PASS set remains intact
+- [x] Static .643: viewport Sweep controls proxy existing #sweep* owners; no Sweep geometry kernel duplicated
+- [x] Protection .643: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

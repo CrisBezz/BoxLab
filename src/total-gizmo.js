@@ -340,8 +340,10 @@ toolSectors.forEach(button=>{
     hubSuppressedKey=lastSelectionKey;
     setHubState('closed',{reason:`tool:${button.textContent?.trim()||'unknown'}`,resumeSuspended:false});
     root.hidden=true;
-    gestureDebug('SELECTION HUB TOOL',{tool:button.textContent?.trim(),selector});
+    const toolLabel=button.textContent?.trim()||'Tool';
+    gestureDebug('SELECTION HUB TOOL',{tool:toolLabel,selector});
     target.click();
+    window.dispatchEvent(new CustomEvent('boxlab-selection-hub-tool',{detail:{mode,tool:toolLabel,selector,selectionKey:lastSelectionKey}}));
   });
 });
 
@@ -672,5 +674,5 @@ globalThis.__boxlabTotalGizmo={
   hubState:()=>hubState,
   setExpanded:(next,options={})=>setExpanded(next,options),
   setHubState:(next,options={})=>setHubState(next,options),
-  version:'0.36.18.642'
+  version:'0.36.18.643'
 };

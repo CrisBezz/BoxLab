@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.643 Selection Hub Sweep viewport session
+
+- .642 Face Selection Hub v1 hands-on BIG PASS for Extrude, Inset, Knife, Delete, Duplicate and Extract.
+- Shell and Sweep launched correctly but still required travel back to the left tool session UI.
+- Added the first viewport-session proxy for Sweep while preserving sweep-path.js as the sole authoritative Sweep owner.
+- Launching Sweep from the Face radial ring opens a compact floating palette beside the selection with Profile / Path / Finish tabs.
+- Profile proxies: Circle, Rectangle, Draw, Use Selection, Profile Size, Circle Sides, Edit, Closed, Undo, Clear.
+- Path proxies: Follow Edges, Draw Path, Edit, Undo, Delete Point, Clear.
+- Finish proxies: Caps and Apply Sweep; Cancel Sweep remains always available.
+- Proxy buttons click the existing Sweep controls; proxy ranges forward values/events to the existing authoritative sliders.
+- Palette mirrors active/disabled/stage/value state from the original session rather than maintaining a second Sweep state machine.
+- Palette appears only when Sweep was launched from Selection Hub; ordinary left-toolbar Sweep remains unchanged.
+
 ## 2026-10-01 — v0.36.18.642 Selection Hub v1 — Face contextual tool ring
 
 - Added first viewport-first Selection Hub prototype on top of the protected .640 interaction checkpoint.
