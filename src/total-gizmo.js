@@ -226,15 +226,25 @@ root.innerHTML=`
     </g>
   </g>
   <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="10"/>
+  <circle class="tg-collapse" cx="${HALF}" cy="${HALF}" r="4" aria-label="Collapse transform gizmo"/>
 </svg><div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
 const activator=root.querySelector('.tg-activator');
+const collapseControl=root.querySelector('.tg-collapse');
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
 activator?.addEventListener('pointerdown',event=>{
   if(currentMode()==='object')return;
   event.preventDefault();
   event.stopPropagation();
   setExpanded(true,{reason:'puck'});
+});
+collapseControl?.addEventListener('pointerdown',event=>{
+  if(currentMode()==='object')return;
+  event.preventDefault();
+  event.stopPropagation();
+  hideFloatInput();
+  resetTransientState({hideFloat:true});
+  setExpanded(false,{reason:'centre-dot'});
 });
 toolButtons.forEach(button=>button.addEventListener('click',()=>{
   const s=state(),mesh=s?.mesh,mode=currentMode();
@@ -330,6 +340,8 @@ style.textContent=`
 #totalGizmo .tg-screen-ring{stroke:#eef2f7;stroke-width:1.05;opacity:.58}
 #totalGizmo .tg-scale-ring{stroke:#ff9a66;stroke-width:1.1;opacity:.66}
 #totalGizmo .tg-center{fill:rgba(238,242,247,.16);stroke:#f1f4f8;stroke-width:1.1;pointer-events:all}
+#totalGizmo .tg-collapse{fill:#eef2f7;stroke:#111318;stroke-width:1.25;pointer-events:all;cursor:pointer;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+#totalGizmo[data-expanded="false"] .tg-collapse{display:none}
 #totalGizmo .tg-scale-node{fill:rgba(17,19,24,.78);stroke-width:1.25;pointer-events:all}
 #totalGizmo .tg-plane{pointer-events:all;stroke-width:1;opacity:.5;transition:opacity .09s,stroke-width .09s,fill .09s,filter .09s}
 #totalGizmo .tg-plane-xy{stroke:#ffd86a;fill:rgba(255,216,106,.07)}
@@ -542,5 +554,5 @@ globalThis.__boxlabTotalGizmo={
   },
   expanded:()=>expanded,
   setExpanded:(next,options={})=>setExpanded(next,options),
-  version:'0.36.18.633'
+  version:'0.36.18.634'
 };
