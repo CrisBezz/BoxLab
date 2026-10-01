@@ -2284,3 +2284,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Diagnostic .629: identify listener where cancelBubble becomes true
 - [x] Protection .629: deep trace only active while Gesture Debug is ON
 - [x] Protection .629: no interaction behavior change
+
+- [ ] Workflow .630: selected Face hold reaches FACE CANVAS DOWN
+- [ ] Workflow .630: Face Hold arms and timer fires
+- [ ] Workflow .630: Face Hold candidate browser previews valid candidate
+- [ ] Regression .630: ordinary component tap selection works
+- [ ] Regression .630: selected component tap-to-remove works
+- [ ] Regression .630: component paint drag still works after 6 px
+- [ ] Regression .630: Edge hold/scrub unchanged
+- [ ] Regression .630: gizmo / Group / Multi unchanged
+- [x] Protection .630: Paint Select no longer owns pointerdown
+- [x] Protection .630: src/multi-object-transform.js?v=0.36.1.0 unchanged
