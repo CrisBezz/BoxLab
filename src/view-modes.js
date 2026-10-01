@@ -128,6 +128,7 @@ function toggleFocusView(){
   window.dispatchEvent(new Event('resize'));
 }
 
+const ui=ensureUI();
 const gestureDebugButton=document.querySelector('#gestureDebugToggle');
 function syncGestureDebugButton(){
   if(!gestureDebugButton)return;
@@ -152,7 +153,6 @@ function activateButton(button){
   return false;
 }
 
-const ui=ensureUI();
 const focusTopButton=document.querySelector('#focusViewBtn');
 focusTopButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleFocusView();});
 let suppressSyntheticClickUntil=0;
