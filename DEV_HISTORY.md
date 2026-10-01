@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.647 explicit OrbitControls registration handoff
+
+- .646 diagnostics showed RAW Pencil pointerdown reaches #viewport but PEN ORBIT ROUTE never fires.
+- Therefore pencil-orbit-gate was not wrapping the actual OrbitControls pointer handler.
+- Root cause: gate identified OrbitControls listeners by listener function name matching /onPointer/i; current Three.js registration does not reliably satisfy that assumption.
+- Added an explicit registration handshake:
+  - pencil-orbit-gate exposes beginOrbitRegistration()/endOrbitRegistration().
+  - main.js brackets only new OrbitControls(camera, canvas) with that registration window.
+  - every pointerdown/move/up/cancel listener added to canvas during that window is wrapped as OrbitControls-owned regardless of listener.name.
+- Existing name-based detection remains only as fallback.
+- Existing Pencil routing policy is unchanged: editable-mesh hit is withheld from OrbitControls; background Pencil contact is forwarded to OrbitControls.
+- Existing PEN ORBIT ROUTE / PEN ORBIT FORWARDED diagnostics retained.
+- No Through topology, Face-direct, Selection Hub, Sweep, or multi-object transform logic changed.
+
 ## 2026-10-01 — v0.36.18.646 Pencil orbit arbitration diagnostics
 
 - .645 hands-on FAIL for post-Through Pencil orbit despite explicit Face-direct pointer capture release.

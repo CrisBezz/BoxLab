@@ -11,6 +11,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const NAV_RESTORE_PX = 4;
   const orbitListeners = new Map();
   const penOrbitPointers = new Set();
+  let orbitRegistrationDepth = 0;
 
   function isPenHover(event) {
     return event.pointerType === 'pen' && !(event.pressure > 0);
@@ -96,10 +97,28 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   nativeAddEventListener('pointerup', endPenNavigation, { capture: false, passive: true });
   nativeAddEventListener('pointercancel', endPenNavigation, { capture: false, passive: true });
 
+  function beginOrbitRegistration(){
+    orbitRegistrationDepth++;
+    gestureDebug('PEN ORBIT REGISTER BEGIN',{depth:orbitRegistrationDepth});
+  }
+  function endOrbitRegistration(){
+    orbitRegistrationDepth=Math.max(0,orbitRegistrationDepth-1);
+    gestureDebug('PEN ORBIT REGISTER END',{depth:orbitRegistrationDepth});
+  }
+
   canvas.addEventListener = function (type, listener, options) {
     const name = typeof listener === 'function' ? listener.name || '' : '';
-    const orbitPointer = /^pointer/.test(type) && /onPointer/i.test(name);
+    const pointerEvent = /^pointer(?:down|move|up|cancel)$/.test(type);
+    const explicitOrbitPointer = pointerEvent && orbitRegistrationDepth>0;
+    const namedOrbitPointer = pointerEvent && /onPointer/i.test(name);
+    const orbitPointer = explicitOrbitPointer || namedOrbitPointer;
     if (!orbitPointer) return nativeAddEventListener(type, listener, options);
+    gestureDebug('PEN ORBIT LISTENER WRAPPED',{
+      type,
+      name:name||'anonymous',
+      explicit:explicitOrbitPointer,
+      depth:orbitRegistrationDepth
+    });
 
     const wrapped = function (event) {
       if (event.pointerType !== 'pen') return listener.call(this, event);
@@ -148,6 +167,12 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     };
     orbitListeners.set(listener, wrapped);
     return nativeAddEventListener(type, wrapped, options);
+  };
+
+  globalThis.__boxlabPencilOrbitGate={
+    beginOrbitRegistration,
+    endOrbitRegistration,
+    registrationDepth:()=>orbitRegistrationDepth
   };
 
   globalThis.__boxlabPencilOrbitDebug={

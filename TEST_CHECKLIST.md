@@ -2488,3 +2488,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .646: paint debug API is read-only
 - [x] Protection .646: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .647: page load Gesture Debug shows PEN ORBIT LISTENER WRAPPED for OrbitControls pointer handlers
+- [ ] Workflow .647: after Through, background Pencil-down produces PEN ORBIT ROUTE
+- [ ] Workflow .647: background Pencil-down route is FORWARD_ORBIT and camera rotates
+- [ ] Workflow .647: PEN ORBIT FORWARDED appears for successful Pencil orbit start
+- [ ] Workflow .647: Pencil contact on editable geometry still follows existing selection policy
+- [ ] Regression .647: Face tap/hold/paint selection remains intact
+- [ ] Regression .647: successful Through remains correct and Extrude disarms
+- [ ] Regression .647: .643 Sweep viewport session remains PASS
+- [x] Static .647: OrbitControls constructor alone is bracketed by gate registration window
+- [x] Static .647: routing policy BLOCK_MESH_HIT/FORWARD_ORBIT unchanged
+- [x] Protection .647: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
