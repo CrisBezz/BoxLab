@@ -2592,3 +2592,19 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .654: Edge ring proxies existing authoritative buttons; no Edge kernel duplicated
 - [x] Protection .654: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .655: hold an Edge until candidate browser fires
+- [ ] Workflow .655: first candidate previews alone, not original + candidate
+- [ ] Workflow .655: horizontal scrub replaces candidate A with B; A is fully removed
+- [ ] Workflow .655: scrub through all offered candidates; no accumulation
+- [ ] Workflow .655: branching seed exposes all distinct one-ended/two-ended Loop possibilities found by existing selector
+- [ ] Workflow .655: boundary seed offers Boundary candidate when valid
+- [ ] Workflow .655: quad seed offers Ring candidate when valid
+- [ ] Workflow .655: release commits only currently visible candidate
+- [ ] Workflow .655: pointercancel restores pre-hold selection
+- [ ] Regression .655: vertical Grow/Shrink scrub still works
+- [ ] Regression .655: normal Edge tap selection unchanged
+- [ ] Regression .655: .654 Edge Selection Hub remains available after committed selection
+- [x] Static .655: candidate probes restore original selection
+- [x] Static .655: candidate preview uses candidate.indices without base merge
+- [x] Protection .655: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

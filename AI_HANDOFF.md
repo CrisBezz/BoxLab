@@ -1,55 +1,64 @@
-## v0.36.18.654 — Edge Selection Hub v1
+## v0.36.18.655 — Edge hold-browser selection cleanup
 
 Current release:
-- v0.36.18.654
+- v0.36.18.655
 
 Hands-on protected:
-- .643 Sweep viewport session: PASS.
-- .652 armed Extrude/Inset background Pencil-yield: PERFECT / PASS.
+- .652 Face-direct background Pencil yield: PERFECT / PASS.
 - .653 Shell viewport session: PASS.
+- .654 Edge Selection Hub:
+  - Edge Extrude works but needs future gizmo-assisted constraint UX.
+  - Slide PASS.
+  - Bevel PASS; future viewport Bevel settings requested.
+  - radial availability feedback requested for Face + Edge.
+- Before tool UX expansion, user requested Edge hold selection browser correctness.
 
-Selection Hub:
-- Face and Edge now both use the three-state cycle:
-  CLOSED PUCK -> TRANSFORM GIZMO -> CONTEXTUAL TOOLS -> CLOSED PUCK
-- Tools state is mode-specific; only one ring exists interactively at a time.
+.655 Edge hold-browser:
+- Candidate probing is transactional.
+- invokeEdgeSelector now:
+  1. saves live Edge selection,
+  2. seeds the existing authoritative selector,
+  3. captures its result,
+  4. restores the saved selection.
+- Candidate preview is REPLACEMENT, not additive.
+- Each horizontal scrub candidate sets exactly candidate.indices.
+- Previous preview disappears completely.
 
-Face ring unchanged:
-- Extrude, Inset, Knife, Duplicate, Extract, Shell, Sweep, Delete.
+Candidate enumeration:
+- Loop from seed alone.
+- Loop from each neighbour at seed endpoint A.
+- Loop from each neighbour at seed endpoint B.
+- Loop from every A/B neighbour pair through the seed.
+- Boundary using #selectBoundaryBtn.
+- Ring using #selectRingBtn.
+- Duplicate signatures removed.
+- Existing selectors remain authoritative; no new loop/ring topology kernel.
 
-New Edge ring v1:
-- Extrude -> #edgeExtrudeBtn
-- Bevel -> #bevelBtn
-- Crease -> #applyCreaseBtn
-- Slide -> #edgeSlideBtn
-- Offset -> #offsetLoopBtn
-- Bridge -> #bridgeEdgesBtn
-- Dissolve -> #dissolveEdgeBtn
-- Delete -> #deleteEdgeBtn
-
-Architecture:
-- All Edge sectors proxy existing authoritative buttons at click time.
-- No Edge geometry/tool implementation duplicated.
-- Existing disabled state decides whether a radial tool is available.
-- Ring launch suppresses hub for the current Edge selection exactly like Face.
-- Changing Edge selection resets hub to CLOSED.
-- Face ring behaviour unchanged.
+Commit/cancel:
+- pointerup keeps current candidate only.
+- pointercancel restores the selection that existed before hold.
+- vertical Grow/Shrink path remains based on the selection present when the hold fired.
 
 Immediate hands-on:
-1. Select an Edge -> expect closed puck.
-2. Tap puck -> gizmo.
-3. Tap centre -> Edge ring.
-4. Confirm ring labels: Extrude / Bevel / Crease / Slide / Offset / Bridge / Dissolve / Delete.
-5. Centre -> closed puck.
-6. Reopen and test Edge Extrude.
-7. Test Bevel.
-8. Test Slide or Offset.
-9. Confirm unavailable Bridge stays unavailable unless selection is valid.
-10. Return to Face mode and confirm original Face ring still works.
+1. Edge mode, choose a mesh area with several possible loops.
+2. Hold seed Edge until first candidate appears.
+3. Scrub horizontally.
+4. Confirm candidate A is removed completely when B appears.
+5. Confirm more distinct possibilities are offered than before, especially at branching/irregular seed positions.
+6. Release on a candidate: only it remains selected.
+7. Cancel a hold: pre-hold selection returns.
+8. Vertical Grow/Shrink quick regression.
+9. Edge Selection Hub should return from the resulting selection.
+
+Deferred until selection PASS:
+- radial unavailable/disabled visual state.
+- Edge Extrude gizmo-assisted Plane/Axis control.
+- Bevel viewport settings palette.
 
 Protected:
 - .640 modeless selection checkpoint.
-- .642 Face Selection Hub.
 - .643 Sweep viewport session.
 - .652 Face-direct background-yield.
 - .653 Shell viewport session.
+- .654 Edge Selection Hub structure.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.

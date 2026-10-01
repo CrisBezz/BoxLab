@@ -51,47 +51,62 @@ function resetEdgeHoldCycle(){edgeHoldCycle=null;}
 function sameEdgeSelectionSignature(indices){
   return [...new Set(indices||[])].sort((a,b)=>a-b).join(',');
 }
-function edgeNeighbourHints(seedIndex){
-  const edges=mesh.edges(),seed=edges[seedIndex];if(!seed)return[];
-  const out=[];
+function edgeEndpointHints(seedIndex,vertex){
+  const edges=mesh.edges(),out=[];
   edges.forEach((edge,index)=>{
     if(index===seedIndex||!edge)return;
-    if(edge.a===seed.a||edge.b===seed.a||edge.a===seed.b||edge.b===seed.b)out.push(index);
+    if(edge.a===vertex||edge.b===vertex)out.push(index);
   });
   return out;
 }
 function invokeEdgeSelector(buttonId,seedIndices){
+  const original=selection?.type==='edge'?[...selectionIndices()]:[];
   selection=makeSelection('edge',seedIndices,seedIndices.at(-1)??null);
   renderMesh();
-  document.querySelector(buttonId)?.click();
-  return selection?.type==='edge'?[...selectionIndices()]:[];
+  const button=document.querySelector(buttonId);
+  if(button)button.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
+  const result=selection?.type==='edge'?[...selectionIndices()]:[];
+  selection=makeSelection('edge',original,original.at(-1)??null);
+  renderMesh();
+  return result;
 }
 function collectEdgeHoldCandidates(seedIndex){
-  const candidates=[],seen=new Set();
+  const candidates=[],seen=new Set(),edges=mesh.edges(),seed=edges[seedIndex];
+  if(!seed)return candidates;
   const add=(kind,indices)=>{
-    const clean=[...new Set(indices||[])].sort((a,b)=>a-b);
+    const clean=[...new Set(indices||[])].filter(Number.isInteger).sort((a,b)=>a-b);
     if(clean.length<=1||!clean.includes(seedIndex))return;
     const signature=sameEdgeSelectionSignature(clean);
     if(seen.has(signature))return;
     seen.add(signature);candidates.push({kind,indices:clean});
   };
-  add('loop',invokeEdgeSelector('#selectLoopBtn',[seedIndex]));
-  for(const hint of edgeNeighbourHints(seedIndex))add('loop',invokeEdgeSelector('#selectLoopBtn',[seedIndex,hint]));
-  add('ring',invokeEdgeSelector('#selectRingBtn',[seedIndex]));
+
+  add('Loop',invokeEdgeSelector('#selectLoopBtn',[seedIndex]));
+
+  const hintsA=edgeEndpointHints(seedIndex,seed.a);
+  const hintsB=edgeEndpointHints(seedIndex,seed.b);
+  for(const hint of hintsA)add('Loop',invokeEdgeSelector('#selectLoopBtn',[hint,seedIndex]));
+  for(const hint of hintsB)add('Loop',invokeEdgeSelector('#selectLoopBtn',[seedIndex,hint]));
+  for(const a of hintsA)for(const b of hintsB){
+    add('Loop',invokeEdgeSelector('#selectLoopBtn',[a,seedIndex,b]));
+  }
+
+  add('Boundary',invokeEdgeSelector('#selectBoundaryBtn',[seedIndex]));
+  add('Ring',invokeEdgeSelector('#selectRingBtn',[seedIndex]));
   return candidates;
 }
 function applyEdgeHoldCandidate(hold,index){
   if(!hold?.candidates?.length)return false;
   const next=THREE.MathUtils.clamp(index,0,hold.candidates.length-1);
   hold.candidateIndex=next;
-  const candidate=hold.candidates[next],merged=[...new Set([...hold.baseIndices,...candidate.indices])];
-  selection=makeSelection('edge',merged,hold.edgeIndex);
+  const candidate=hold.candidates[next];
+  selection=makeSelection('edge',candidate.indices,hold.edgeIndex);
   renderMesh();
-  const kind=candidate.kind==='ring'?'Ring':'Loop';
+  const sameKind=hold.candidates.filter(item=>item.kind===candidate.kind);
   const number=hold.candidates.slice(0,next+1).filter(item=>item.kind===candidate.kind).length;
-  const total=hold.candidates.filter(item=>item.kind===candidate.kind).length;
   const status=document.querySelector('#selectionStatus');
-  if(status)status.textContent=`${kind} ${number}/${total} • hold + drag sideways to browse • release to keep`;
+  if(status)status.textContent=`${candidate.kind} ${number}/${sameKind.length} • ${next+1}/${hold.candidates.length} candidates • release to keep`;
+  gestureDebug('EDGE PREVIEW',{kind:candidate.kind,index:next+1,total:hold.candidates.length,count:candidate.indices.length});
   return true;
 }
 function cancelFaceHold(pointerId=null){
@@ -229,10 +244,8 @@ function armFaceHold(event,faceIndex){
 function armEdgeHold(event,edgeIndex){
   if(selectionMode!=='edge'||directTool||event.pointerType==='touch'||!event.isPrimary||!Number.isInteger(edgeIndex))return;
   cancelEdgeHold();
-  const currentSignature=sameEdgeSelectionSignature(selection?.type==='edge'?selectionIndices():[]);
-  const continueSession=edgeHoldCycle?.seedIndex===edgeIndex&&edgeHoldCycle?.resultSignature===currentSignature;
-  const baseAtPointerDown=continueSession?[...edgeHoldCycle.baseIndices]:(selection?.type==='edge'?[...selectionIndices()]:[]);
-  const hold={type:'edge',pointerId:event.pointerId,edgeIndex,startX:event.clientX,startY:event.clientY,fired:false,timer:null,baseIndices:baseAtPointerDown,candidates:[],candidateIndex:0,gestureBaseIndices:[],scrubAxis:null,verticalDirection:null,verticalSteps:0};
+  const baseAtPointerDown=selection?.type==='edge'?[...selectionIndices()]:[];
+  const hold={type:'edge',pointerId:event.pointerId,edgeIndex,startX:event.clientX,startY:event.clientY,fired:false,timer:null,baseIndices:baseAtPointerDown,restoreIndices:[...baseAtPointerDown],candidates:[],candidateIndex:0,gestureBaseIndices:[],scrubAxis:null,verticalDirection:null,verticalSteps:0};
   hold.timer=setTimeout(()=>{
     if(edgeHold!==hold)return;
     if(drag?.pointerId===hold.pointerId){
@@ -241,7 +254,11 @@ function armEdgeHold(event,edgeIndex){
       try{canvas.releasePointerCapture?.(hold.pointerId);}catch{}
     }
     const original=selection?.type==='edge'?[...selectionIndices()]:[];
+    gestureDebug('EDGE CANDIDATES START',{edge:hold.edgeIndex,pid:hold.pointerId,original:[...original]});
     hold.candidates=collectEdgeHoldCandidates(hold.edgeIndex);
+    selection=makeSelection('edge',original,original.at(-1)??null);
+    renderMesh();
+    gestureDebug('EDGE CANDIDATES',{count:hold.candidates.length,kinds:hold.candidates.map(x=>x.kind),sizes:hold.candidates.map(x=>x.indices.length)});
     hold.gestureBaseIndices=[...original];
     hold.fired=true;
     if(hold.candidates.length){
@@ -428,14 +445,22 @@ function finishFaceHold(event){
 }
 function finishEdgeHold(event){
   if(edgeHold?.pointerId!==event.pointerId)return false;
-  if(edgeHold.fired&&edgeHold.candidates?.length){
-    const candidate=edgeHold.candidates[edgeHold.candidateIndex];
+  const hold=edgeHold;
+  if(event.type==='pointercancel'){
+    const restore=[...new Set(hold.restoreIndices||[])];
+    selection=makeSelection('edge',restore,restore.at(-1)??null);
+    renderMesh();
+    resetEdgeHoldCycle();
+    gestureDebug('EDGE HOLD CANCEL RESTORE',{pid:event.pointerId,count:restore.length});
+  }else if(hold.fired&&hold.candidates?.length){
+    const candidate=hold.candidates[hold.candidateIndex];
     edgeHoldCycle={
-      seedIndex:edgeHold.edgeIndex,
-      baseIndices:[...edgeHold.baseIndices],
+      seedIndex:hold.edgeIndex,
+      baseIndices:[],
       contributionIndices:[...candidate.indices],
-      resultSignature:sameEdgeSelectionSignature(selection?.type==='edge'?selectionIndices():[])
+      resultSignature:sameEdgeSelectionSignature(candidate.indices)
     };
+    gestureDebug('EDGE HOLD COMMIT',{pid:event.pointerId,kind:candidate.kind,count:candidate.indices.length});
   }
   cancelEdgeHold(event.pointerId);
   return true;

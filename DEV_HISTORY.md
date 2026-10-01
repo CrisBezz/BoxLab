@@ -1,5 +1,29 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.655 Edge hold-browser transactional selection cleanup
+
+- User found Edge hold+drag candidate browsing incomplete and additive: the first offered loop remained selected when browsing later candidates.
+- Root cause 1: invokeEdgeSelector mutated the live selection while probing candidates and never restored it.
+- Root cause 2: applyEdgeHoldCandidate merged baseIndices + candidate.indices, so previews accumulated instead of replacing one another.
+- Root cause 3: loop probing constrained only one seed endpoint at a time, missing valid two-ended directed continuations on branching/irregular topology.
+- Edge candidate probing is now transactional:
+  - save original selection
+  - temporarily seed authoritative selector
+  - capture selector result
+  - restore original selection immediately
+- Horizontal preview is candidate-only: each preview replaces the previous preview.
+- Candidate enumeration now includes:
+  - seed-only Loop
+  - every one-ended neighbour-directed Loop from endpoint A
+  - every one-ended neighbour-directed Loop from endpoint B
+  - every valid two-ended neighbour-pair Loop through the seed
+  - Boundary via existing #selectBoundaryBtn
+  - Ring via existing #selectRingBtn
+- Duplicate result signatures are removed.
+- pointercancel restores the selection that existed before the hold.
+- pointerup commits only the currently previewed candidate.
+- No topology/editing kernels changed.
+
 ## 2026-10-02 — v0.36.18.654 Edge Selection Hub v1
 
 - .653 Shell viewport session hands-on PASS.
