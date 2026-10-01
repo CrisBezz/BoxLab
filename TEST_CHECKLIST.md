@@ -2320,3 +2320,17 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .632: .631 Face/Edge global release ownership unchanged
 - [x] Protection .632: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .633: Vertex/Edge/Face selection shows only compact transform puck, not full gizmo
+- [ ] Workflow .633: tapping transform puck expands full proven Total Gizmo
+- [ ] Workflow .633: Move/Scale/Rotate transform control expands full gizmo for component selection
+- [ ] Workflow .633: changing component selection collapses full gizmo back to compact puck
+- [ ] Workflow .633: Face long-hold browser scrubs through multiple candidates without Paint Select taking over
+- [ ] Workflow .633: Edge long-hold Loop/Ring browser scrubs without Paint Select taking over
+- [ ] Regression .633: ordinary drag-paint selection still claims when no hold browser has fired
+- [ ] Regression .633: Object full gizmo remains immediately available
+- [ ] Regression .633: Group/Multi gizmo routing remains correct from .616
+- [x] Static .633: Paint Select yields to active modeless browser
+- [x] Static .633: Object mode forces full gizmo while component modes default dormant
+- [x] Protection .633: transform maths unchanged
+- [x] Protection .633: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
