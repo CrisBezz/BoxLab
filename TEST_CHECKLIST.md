@@ -2398,3 +2398,14 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .639: collapsed SVG subtree uses display:none
 - [x] Static .639: onHandleDown rejects collapsed component gizmo events
 - [x] Protection .639: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .640: multi-face Extrude preview survives Pencil release and commits
+- [ ] Workflow .640: single-face Extrude preview survives Pencil release and commits
+- [ ] Workflow .640: Inset preview survives Pencil release and commits
+- [ ] Workflow .640: FACE DIRECT FINISH debug reports type=pointerup on normal Pencil lift
+- [ ] Regression .640: pointercancel still rolls back an interrupted direct Face gesture
+- [ ] Regression .640: Through/blocked Extrude commit/rollback behavior unchanged
+- [ ] Regression .640: armed Face selection/deselection remains modeless
+- [x] Static .640: multi-face-direct completion is owned at window capture
+- [x] Protection .640: Extrude/Inset topology maths unchanged
+- [x] Protection .640: src/multi-object-transform.js?v=0.36.1.0 unchanged

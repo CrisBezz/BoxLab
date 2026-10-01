@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.640 global Face-direct release ownership
+
+- Hands-on .639 exposed Extrude preview snapping back when Apple Pencil lifted.
+- Preview topology was visibly correct during drag; release returned to the pre-drag mesh without a topology-gate rollback message.
+- multi-face-direct still completed Extrude/Inset at document capture, despite the repo's established interaction rule that critical completion must run at window capture to survive lower-level owners and overlays.
+- Moved Face-direct pointerup/pointercancel completion to window capture.
+- Added FACE DIRECT FINISH Gesture Debug marker including event type, drag/preview/blocked state and pointer id so any Safari pointercancel is immediately visible.
+- No Extrude/Inset topology maths, Through logic, selection gestures, gizmo maths or protected multi-object-transform code changed.
+
 ## 2026-10-01 — v0.36.18.639 collapsed gizmo is physically non-interactive
 
 - Hands-on .638 exposed that dormant Total Gizmo handles were visually hidden but still hittable in Safari.
