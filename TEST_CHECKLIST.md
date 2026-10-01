@@ -2295,3 +2295,18 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .630: gizmo / Group / Multi unchanged
 - [x] Protection .630: Paint Select no longer owns pointerdown
 - [x] Protection .630: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [ ] Workflow .631: ordinary Face tap selects one face only; no delayed Face Loop after release
+- [ ] Workflow .631: ordinary Edge tap selects one edge only; no delayed Loop/Ring after release
+- [ ] Workflow .631: genuine Face long-press still reaches candidate browser and release keeps the visible candidate
+- [ ] Workflow .631: genuine Edge long-press/scrub still browses Loop/Ring candidates and release keeps the visible candidate
+- [ ] Regression .631: pending Paint Select is cleared even when a newly appearing gizmo becomes the pointerup target
+- [ ] Regression .631: component paint drag still claims after intentional drag
+- [ ] Regression .631: selected component tap-to-remove remains correct
+- [ ] Regression .631: Vertex / Edge / Face / single Object gizmo remains correct
+- [ ] Regression .631: Group/Multi gizmo routing remains correct from .616
+- [x] Static .631: global Face/Edge hold release uses window capture
+- [x] Static .631: pending Paint Select release uses window capture
+- [x] Protection .631: loop/ring candidate algorithms unchanged
+- [x] Protection .631: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
