@@ -3,6 +3,7 @@
 Current release:
 - Visible/app version: v0.36.18.633
 - Release manifest: version.json = 0.36.18.633
+- HTML shell title is also synced to v0.36.18.633 so release-bootstrap sees the correct running version.
 
 Why .633 exists:
 - .632 Loop Cut fix passed hands-on.
