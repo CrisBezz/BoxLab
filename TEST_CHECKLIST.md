@@ -2310,3 +2310,13 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .631: loop/ring candidate algorithms unchanged
 - [x] Protection .631: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .632: Loop tool with Loops=1 adds exactly one clean loop
+- [ ] Workflow .632: finished loop becomes normal edge selection without adding extra topology
+- [ ] Workflow .632: Loop Slide still works before release/commit
+- [ ] Regression .632: second intentional Loop Cut adds only the requested second loop
+- [ ] Regression .632: Edge long-press Loop/Ring browser remains separate from Loop Cut tool
+- [x] Static .632: no synthetic pointer replay remains in loop-cut-commit.js
+- [x] Static .632: finished loop selection uses __boxlabSelectionBridge.set
+- [x] Protection .632: .631 Face/Edge global release ownership unchanged
+- [x] Protection .632: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
