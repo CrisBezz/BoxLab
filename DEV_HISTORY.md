@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.649 restore Selection Hub puck after direct Face commit
+
+- Hands-on: after Extrude the Selection Hub puck reappeared, but after Inset it stayed suppressed.
+- Root cause: Selection Hub suppression was released only when the Face selection key changed. Inset can commit while preserving the exact same Face selection key.
+- total-gizmo.js now listens for the existing semantic boxlab-face-direct-committed event.
+- On committed Extrude or Inset with a valid Face selection:
+  - clear hubSuppressedKey
+  - return hub to CLOSED state
+  - make the puck visible immediately
+- Direct tool arming/persistence is unchanged.
+- No Extrude/Inset geometry code changed.
+- .643 Sweep viewport session and .648 Pencil-orbit work remain untouched.
+
 ## 2026-10-01 — v0.36.18.648 Pencil contact classification fix
 
 - .647 still failed Pencil orbit, while one-finger touch orbit worked.

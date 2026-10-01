@@ -1,44 +1,39 @@
-## v0.36.18.648 — Pencil contact classification fix
+## v0.36.18.649 — restore Selection Hub puck after direct Face tools
 
 Current release:
-- v0.36.18.648
+- v0.36.18.649
 
-Hands-on:
-- .643 Sweep viewport session: AWESOME / PASS.
-- .647 Pencil orbit still FAIL.
-- User confirms finger orbit works normally.
+Hands-on finding:
+- Extrude -> puck reappears.
+- Inset -> puck did not reappear.
 
-New evidence / exact Three.js r179 audit:
-- OrbitControls onPointerDown treats pointerType='touch' as touch.
-- All other pointer types, including 'pen', go through _onMouseDown/_onMouseMove.
-- Therefore Pen orbit is supported by the same pointer stream if BoxLab lets it through.
-- BoxLab was classifying Pencil hover solely from pressure==0.
-- This can swallow contact pointermove events when iPad reports transient pressure=0.
+Root cause:
+- radial launch sets hubSuppressedKey to the current selection key.
+- Hub suppression previously cleared only when selectionKey changed.
+- Inset can complete while keeping the exact same Face selection, so suppression survived.
 
-.648 fix:
-- isPenContact(event):
-  - false for pointerup/pointercancel
-  - true when pointerType='pen' AND ((buttons & 1)===1 OR pressure>0)
-- isPenHover = pen && !isPenContact
-- True hover remains swallowed.
-- Contact moves are allowed through.
-- Added PEN ORBIT MOVE FORWARD and PEN ORBIT MOVE HOVER BLOCK diagnostics.
-- .647 explicit OrbitControls registration remains.
-- No selection arbitration policy changed.
+.649:
+- total-gizmo listens to existing boxlab-face-direct-committed.
+- For tool=extrude or tool=inset:
+  - if current mode is Face and a valid selection remains,
+  - clear hubSuppressedKey,
+  - set hub state CLOSED,
+  - show puck immediately.
+- Direct tool remains authoritative and may remain armed.
+- No modelling geometry code changed.
 
 Immediate hands-on:
-1. Gesture Debug ON.
-2. Successful Through.
-3. Start Pencil orbit on clear viewport background.
-4. Camera should rotate.
-5. During drag expect PEN ORBIT MOVE FORWARD.
-6. Hover after lift may show PEN ORBIT MOVE HOVER BLOCK / PEN HOVER SWALLOW.
-7. Confirm finger orbit still works.
-8. Confirm Face Pencil tap selection still works.
+1. Face -> radial Tools -> Inset.
+2. Perform Inset.
+3. Closed puck must reappear immediately.
+4. Tap puck -> Gizmo -> centre -> Tools to confirm normal cycle.
+5. Repeat with Extrude; same result.
+6. Confirm Face selection remains intact.
+7. Sweep remains unchanged.
 
 Protected:
-- .640 selection interaction checkpoint.
-- .642 Selection Hub.
+- .640 interaction checkpoint.
+- .642 Selection Hub state model.
 - .643 Sweep viewport session.
-- Through topology.
+- .648 Pencil-orbit work.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.

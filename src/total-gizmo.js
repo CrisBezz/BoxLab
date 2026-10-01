@@ -354,6 +354,18 @@ toolButtons.forEach(button=>button.addEventListener('click',()=>{
     setHubState('transform',{reason:'transform-control'});
   }
 }));
+
+document.addEventListener('boxlab-face-direct-committed',event=>{
+  const tool=event.detail?.tool;
+  if(tool!=='extrude'&&tool!=='inset')return;
+  const s=state(),mesh=s?.mesh,mode=currentMode();
+  if(mode!=='face'||!selectionAvailable(mesh,mode))return;
+  hubSuppressedKey='';
+  setHubState('closed',{reason:'direct-complete:'+tool});
+  root.hidden=false;
+  gestureDebug('SELECTION HUB RESTORE',{tool,key:selectionKey(mesh,mode)});
+});
+
 let hudHideTimer=null,lastSpec=null;
 
 const floatPalette=document.createElement('div');
@@ -674,5 +686,5 @@ globalThis.__boxlabTotalGizmo={
   hubState:()=>hubState,
   setExpanded:(next,options={})=>setExpanded(next,options),
   setHubState:(next,options={})=>setHubState(next,options),
-  version:'0.36.18.643'
+  version:'0.36.18.649'
 };

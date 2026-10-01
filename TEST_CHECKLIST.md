@@ -2511,3 +2511,13 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .648: selection-vs-orbit mesh-hit policy unchanged
 - [x] Protection .648: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .649: launch Inset from radial ring, perform Inset, closed puck reappears immediately
+- [ ] Workflow .649: launch Extrude from radial ring, perform Extrude, closed puck reappears immediately
+- [ ] Workflow .649: direct tool may remain armed while puck is visible
+- [ ] Workflow .649: restored puck cycles normally to Gizmo -> Tools -> Puck
+- [ ] Regression .649: Face selection remains intact after Inset
+- [ ] Regression .649: .643 Sweep viewport session remains PASS
+- [x] Static .649: hub restoration uses existing boxlab-face-direct-committed semantic event
+- [x] Protection .649: no Extrude/Inset geometry code changed
+- [x] Protection .649: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
