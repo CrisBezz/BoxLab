@@ -1,29 +1,37 @@
-## v0.36.18.632 — Loop Cut commit cleanup
+## v0.36.18.633 — dormant component gizmo + modeless browser ownership
 
 Current release:
-- Visible/app version: v0.36.18.632
-- Release manifest: version.json = 0.36.18.632
+- Visible/app version: v0.36.18.633
+- Release manifest: version.json = 0.36.18.633
 
-Current focus:
-- Resume testing the .631 modeless Face/Edge hold ownership fix after verifying Loop Cut is clean enough to build a subdivided test mesh.
+Why .633 exists:
+- .632 Loop Cut fix passed hands-on.
+- Face hold browser then exposed two UX conflicts:
+  1. sideways scrub was being claimed by Paint Select before candidate cycling;
+  2. the full Total Gizmo created visual/interaction clutter during selection.
 
-What changed in .632:
-- Fixed repeated/random extra Loop Cuts caused by legacy src/loop-cut-commit.js.
-- The old module replayed synthetic pointer taps over the finished yellow loop to convert it into edge selection.
-- Under the current persistent direct Loop Cut owner, those synthetic taps were interpreted as more Loop Cut commands and created extra topology.
-- The commit module now maps the finished yellow loop back to edge indices and selects them directly with __boxlabSelectionBridge.set('edge', indices).
-- Existing Undo/Redo commit step remains in place to clear the temporary Loop Slide session while retaining the finished cut.
-- No Loop Cut topology solver, Edge hold candidate solver, gizmo transform maths, or Group/Multi code changed.
+.633 behavior:
+- Vertex / Edge / Face selection now displays a compact dormant transform puck at the selection centroid.
+- Tap the puck to expand the existing Total Gizmo.
+- Clicking Move / Scale / Rotate in the transform controls also expands it.
+- Any component selection change collapses back to the puck.
+- Object mode, grouped Object selection and Multi keep the existing full gizmo behavior.
+- main.js exposes modeless Face/Edge browser ownership.
+- edge-paint-select.js yields pending Paint Select once a hold browser has fired, so horizontal scrub belongs to the browser rather than paint selection.
+- Ordinary Paint Select remains available when no hold browser is active.
 
 Immediate hands-on:
-1. Fresh cube -> Edge -> Loop -> Loops=1 -> tap one edge once.
-2. Expect exactly one clean loop, not multiple/random extra loops.
-3. Confirm Loop Slide still moves that one loop.
-4. Add a second intentional loop and confirm only one additional loop is created.
-5. If .632 passes, resume .631 Face/Edge hold tests on the subdivided mesh.
+1. Face mode: select a face. Expect only the small transform puck, not the full gizmo.
+2. Tap the puck. Expect the full .615-style gizmo and confirm one Move handle quickly.
+3. Select a different face. Expect the gizmo to collapse back to the puck.
+4. Face long-press until first candidate appears, then scrub sideways. Expect multiple Face Loop/Ring/Coplanar/Connected candidates to cycle instead of painting adjacent faces.
+5. Edge long-press and scrub Loop/Ring; verify the same ownership behavior.
+6. Deliberately drag across unselected faces/edges without waiting for hold. Paint Select should still work.
+7. Quick Object and Group/Multi gizmo regression only if 1–6 pass.
 
 Protected:
-- .631 global Face/Edge/pending-Paint release ownership via window capture remains unchanged.
-- .615 unified semantic gizmo baseline remains protected.
-- .616 Group/Multi routing remains protected.
-- src/multi-object-transform.js?v=0.36.1.0 remains unchanged.
+- .615 unified semantic gizmo transform maths unchanged.
+- .616 Group/Multi routing unchanged.
+- .631 global release ownership unchanged.
+- .632 Loop Cut commit fix unchanged.
+- src/multi-object-transform.js?v=0.36.1.0 unchanged.
