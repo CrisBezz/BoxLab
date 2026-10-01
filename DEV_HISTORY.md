@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.627 Gesture Debug startup + Vertex Circle lifecycle
+
+- Fixed Gesture Debug toggle binding accidentally nested inside Focus View toggle.
+- Permanent Gesture Debug now initializes normally and remains off by default.
+- Removed temporary deep capture monkeypatch from permanent debug infrastructure.
+- Fixed Vertex Circle lifecycle by re-syncing Vertex layout/Circle after late Inspect/Repair drawer reconciliation.
+- Bumped affected module pins to avoid stale-cache ambiguity.
+
 ## 2026-10-01 — v0.36.18.625 deterministic Circle startup + permanent Gesture Debug
 
 - Fixed Vertex Circle startup race by sequencing component-circle after face-reconstruct / Vertex layout ownership.
