@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.631 global component release ownership
+
+- Hands-on .630 exposed a second ownership failure: selecting a Face/Edge can make the Total Gizmo appear between pointerdown and pointerup, so release is not guaranteed to return to the canvas.
+- This left Face/Edge hold timers alive after an ordinary tap, causing delayed Loop / Face Loop selection; pending Paint Select could likewise survive into a later Pencil gesture.
+- Moved Face Hold and Edge Hold completion/cancellation to window capture pointerup/pointercancel, matching the established global gesture-completion rule.
+- Moved pending Paint Select release cleanup to window capture so gizmo overlays cannot strand pending state.
+- No loop/ring candidate maths, gizmo transform maths, Group/Multi routing, or protected multi-object transform code changed.
+- Added tests/global-component-release-631.test.mjs and verified the published .631 wiring/static regression checks.
+
 ## 2026-10-01 — v0.36.18.630 defer Paint Select ownership until drag
 
 - Identified component Paint Select as a capture-phase owner that immediately stopped unselected component pointerdown while hidden Multi was enabled.
