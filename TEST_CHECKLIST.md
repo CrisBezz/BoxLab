@@ -2278,3 +2278,9 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .628: Gesture Debug OFF hides panel
 - [ ] Workflow .628: persisted state survives reload
 - [x] Protection .628: no transform/selection behavior change
+
+- [ ] Diagnostic .629: Gesture Debug ON logs CAPTURE REGISTER lines after reload
+- [ ] Diagnostic .629: Face hold logs CAPTURE ENTER/EXIT sequence
+- [ ] Diagnostic .629: identify listener where cancelBubble becomes true
+- [x] Protection .629: deep trace only active while Gesture Debug is ON
+- [x] Protection .629: no interaction behavior change
