@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.632 Loop Cut commit cleanup
+
+- Hands-on testing exposed repeated/random extra loop cuts when creating a simple Loop Cut.
+- Root cause was legacy src/loop-cut-commit.js from the v0.16 workflow: after a real Loop Cut it replayed synthetic pointer taps over the yellow loop to convert it to edge selection.
+- With the modern persistent direct Loop Cut owner, those synthetic taps re-entered Loop Cut and created additional topology.
+- Removed synthetic pointer replay and now select the finished loop directly through __boxlabSelectionBridge.set('edge', indices).
+- Preserved the existing Undo/Redo commit step that clears the temporary Loop Slide session while retaining the finished topology.
+- Added tests/loop-cut-commit-632.test.mjs.
+- .631 global release ownership fix remains unchanged.
+
 ## 2026-10-01 — v0.36.18.631 global component release ownership
 
 - Hands-on .630 exposed a second ownership failure: selecting a Face/Edge can make the Total Gizmo appear between pointerdown and pointerup, so release is not guaranteed to return to the canvas.
