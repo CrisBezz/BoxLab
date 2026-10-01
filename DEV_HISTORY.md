@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-10-01 — v0.36.18.630 defer Paint Select ownership until drag
+
+- Identified component Paint Select as a capture-phase owner that immediately stopped unselected component pointerdown while hidden Multi was enabled.
+- Changed Paint Select to pending-on-down, claim-on-drag after 6 px.
+- Tap and hold gestures now retain pointerdown ownership until an actual paint drag occurs.
+- Added PAINT PENDING / PAINT CLAIM Gesture Debug markers.
+
 ## 2026-10-01 — v0.36.18.629 deep capture diagnostics
 
 - Permanent Gesture Debug is now proven working.
