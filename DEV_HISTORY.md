@@ -1,5 +1,22 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.666 Edge Extrude exit returns to puck
+
+- User confirmed Edge Extrude works really well; geometry/drag workflow is now protected.
+- User reported two remaining state/UI issues:
+  - visible version flashed .664 then reverted to .662
+  - closing the Extrude constraint UI hid the gizmo/selection affordance but left Edge Extrude armed
+- Version root cause: version.json was still 0.36.18.662; release-version.js correctly treated it as source of truth and overwrote the shell label.
+- Updated version.json to current release and republished shell/version pins.
+- Edge Extrude session exit now:
+  - disarms existing Edge Extrude owner
+  - preserves current Edge selection
+  - clears Selection Hub suppression
+  - forces CLOSED hub state
+  - returns the puck on the selected outer rail
+- No Edge Extrude geometry/topology code changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.664 Edge Extrude side constraint palette
 
 - .663 Edge Extrude itself works hands-on.
