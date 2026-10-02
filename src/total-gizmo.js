@@ -64,6 +64,14 @@ function setHubState(next,{reason='',resumeSuspended=true}={}){
   if(!['closed','transform','tools'].includes(requested))requested='closed';
   if(requested==='tools'&&!['face','edge'].includes(mode))requested='closed';
 
+  if(edgeExtrudeConstraintSession&&mode==='edge'&&requested!=='transform'){
+    edgeExtrudeConstraintSession=false;
+    syncEdgeExtrudeConstraintVisuals?.();
+    resetTransientState?.({hideFloat:true});
+    queueMicrotask(()=>globalThis.__boxlabEdgeExtrude?.setArmed?.(false));
+    gestureDebug('EDGE EXTRUDE SESSION CLOSE',{reason:reason||requested});
+  }
+
   const wasTransform=hubState==='transform';
   const willTransform=requested==='transform';
 
@@ -736,6 +744,13 @@ function sync(){
   raf=requestAnimationFrame(sync);
   const s=state(),mesh=s?.mesh,camera=s?.camera,mode=currentMode();
   if(!canvas||!viewportWrap||!mesh?.vertices?.length||!camera||!selectionAvailable(mesh,mode)){
+    if(edgeExtrudeConstraintSession&&mode==='edge'){
+      edgeExtrudeConstraintSession=false;
+      syncEdgeExtrudeConstraintVisuals?.();
+      resetTransientState?.({hideFloat:true});
+      queueMicrotask(()=>globalThis.__boxlabEdgeExtrude?.setArmed?.(false));
+      gestureDebug('EDGE EXTRUDE SESSION CLOSE',{reason:'selection-lost'});
+    }
     root.hidden=true;hideFloatInput();lastSelectionKey='';return;
   }
   const key=selectionKey(mesh,mode);
@@ -807,5 +822,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.664'
+  version:'0.36.18.665'
 };
