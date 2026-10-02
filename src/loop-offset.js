@@ -270,11 +270,13 @@ function finish(event){
   globalThis.__boxlabHistory?.push(current.before);
   pendingHighlight=current.preview;
   forceRender();
+  const created=[...new Set([...current.preview.leftEdges,...current.preview.rightEdges])];
   requestAnimationFrame(()=>{
-    selectCreatedLoops(current.mesh,[...current.preview.leftEdges,...current.preview.rightEdges]);
+    selectCreatedLoops(current.mesh,created);
     forceRender();
     requestAnimationFrame(applyPendingHighlight);
   });
+  window.dispatchEvent(new CustomEvent('boxlab-offset-loop-complete',{detail:{created:[...created],spacing:current.preview.spacing,distance:current.preview.distance,source:'drag'}}));
   disarm('Offset Loop committed');
 }
 canvas?.addEventListener('pointerup',finish,true);
@@ -283,4 +285,4 @@ window.addEventListener('boxlab-bridge-state',()=>{sync();applyPendingHighlight(
 sync();
 
 
-globalThis.__boxlabOffsetLoop={version:'0.36.18.514',isArmed:()=>armed,disarm,info};
+globalThis.__boxlabOffsetLoop={version:'0.36.18.671',isArmed:()=>armed,disarm,info};
