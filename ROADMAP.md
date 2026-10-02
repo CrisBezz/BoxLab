@@ -131,6 +131,12 @@ Only add focused tools that suit BoxLab:
 - landscape-first layout
 - selection visibility at all zoom levels
 
+## Strengthening list
+
+Concrete modelling cases to strengthen after the current Selection Hub / gizmo UX pass:
+
+- **Connected-chain Edge Bevel through ordinary quad valence** — current multi-edge chamfer routing rejects some open connected chains when affected vertices are normal 4-valence quad-mesh vertices. Example captured 2026-10-02: a continuous top-profile edge chain across a subdivided/reshaped quad strip should bevel as one connected chain. Treat this as a Bevel capability gap, not invalid user topology. Preserve existing single-edge, loop/perimeter and already-working connected bevel paths while extending support.
+
 ## Protected product behaviour
 
 Preserve:
