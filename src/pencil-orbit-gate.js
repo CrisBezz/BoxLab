@@ -28,7 +28,10 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     if(event.type==='pointerup'||event.type==='pointercancel')return false;
     if(event.type==='pointerdown'){
       const contact=(event.buttons & 1)===1 || event.pressure>0;
-      if(contact)activePenContacts.add(event.pointerId);
+      if(contact){
+        if(activePenContacts.size===0&&physicalTouchContacts.size===0)restoreStaleControls('fresh-pen');
+        activePenContacts.add(event.pointerId);
+      }
       return contact;
     }
     if(activePenContacts.has(event.pointerId))return true;
@@ -157,12 +160,23 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     gestureDebug('ORBIT TOUCH RECONCILE',{ended:[...recentlyEndedTouchIds]});
   }
 
+  function restoreStaleControls(reason){
+    const controls=globalThis.__boxlabBridgeState?.controls;
+    if(!controls||controls.enabled!==false)return false;
+    controls.enabled=true;
+    gestureDebug('NAV CONTROLS RECOVER',{reason});
+    return true;
+  }
+
   function trackPhysicalTouchDown(event){
     if(event.pointerType!=='touch')return;
     const fresh=physicalTouchContacts.size===0;
-    if(fresh)reconcileFreshTouch();
+    if(fresh){
+      reconcileFreshTouch();
+      restoreStaleControls('fresh-touch');
+    }
     physicalTouchContacts.add(event.pointerId);
-    gestureDebug('PHYSICAL TOUCH DOWN',{pid:event.pointerId,count:physicalTouchContacts.size,fresh});
+    gestureDebug('PHYSICAL TOUCH DOWN',{pid:event.pointerId,count:physicalTouchContacts.size,fresh,controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled!==false});
   }
 
   function feedOrbitReleaseEarly(event){
@@ -172,15 +186,19 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
       rememberEndedTouch(event.pointerId);
     }
     const listener=event.type==='pointercancel'?orbitPointerCancelListener:orbitPointerUpListener;
-    if(typeof listener!=='function')return;
-    earlyReleasedPointers.add(event.pointerId);
-    queueMicrotask(()=>earlyReleasedPointers.delete(event.pointerId));
-    try{
-      listener.call(canvas,event);
-      gestureDebug('ORBIT RELEASE EARLY WINDOW',{type:event.type,pointer:event.pointerType,pid:event.pointerId,touches:physicalTouchContacts.size});
-    }catch(error){
-      gestureDebug('ORBIT RELEASE EARLY FAIL',{type:event.type,pointer:event.pointerType,pid:event.pointerId,message:error?.message||String(error)});
+    if(typeof listener==='function'){
+      earlyReleasedPointers.add(event.pointerId);
+      queueMicrotask(()=>earlyReleasedPointers.delete(event.pointerId));
+      try{
+        listener.call(canvas,event);
+        gestureDebug('ORBIT RELEASE EARLY WINDOW',{type:event.type,pointer:event.pointerType,pid:event.pointerId,touches:physicalTouchContacts.size});
+      }catch(error){
+        gestureDebug('ORBIT RELEASE EARLY FAIL',{type:event.type,pointer:event.pointerType,pid:event.pointerId,message:error?.message||String(error)});
+      }
     }
+    queueMicrotask(()=>{
+      if(physicalTouchContacts.size===0&&!activePenContacts.size)restoreStaleControls('last-contact-ended');
+    });
   }
 
   window.addEventListener('pointerdown',trackPhysicalTouchDown,{capture:true,passive:true});
@@ -368,7 +386,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   };
 
   globalThis.__boxlabPencilOrbitGate={
-    version:'0.36.18.674',
+    version:'0.36.18.675',
     beginOrbitRegistration,
     endOrbitRegistration,
     registrationDepth:()=>orbitRegistrationDepth
