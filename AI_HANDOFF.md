@@ -1,7 +1,7 @@
-## v0.36.18.664 — Edge Extrude side constraint palette
+## v0.36.18.666 — Edge Extrude exit returns to puck
 
 Current release:
-- v0.36.18.664
+- v0.36.18.666
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
@@ -9,34 +9,32 @@ Hands-on protected:
 - .657 closed Face Boundary candidates: AWESOME / PASS.
 - .661 Loop Cut slide ownership + Bevel reset: PASS.
 - .662 radial Bevel viewport session: PASS.
-- .663 Edge Extrude radial workflow: extrusion works.
+- .663/.664 Edge Extrude radial workflow: works really well.
 
-.664:
-- Refines the .663 Edge Extrude radial constraint UX only.
-- Existing drag-on-edge Edge Extrude interaction is preserved unchanged.
-- The temporary Extrude constraint gizmo is now offset beside the selected Edge/chain instead of sitting directly on top of it.
-- Offset automatically chooses the side with room in the viewport.
-- Purpose is to read as a nearby constraint palette, not as a drag handle for the extrusion itself.
-- Added compact contextual badge:
-  - Extrude
-  - current constraint (Plane ⟂ edge or X/Y/Z axis)
-  - “Choose constraint • drag edge”
-- Active constraint is highlighted on the mini gizmo.
-- X/Y/Z and centre still only select constraint; they do not transform geometry.
-- Actual ribbon preview/commit remains owned entirely by src/edge-extrude.js and begins by dragging the selected boundary Edge(s).
-- Successful pulls continue to select the new outer rail; the side palette follows that new selection.
-- No Edge Extrude topology, projection, validation, rollback, history or repeat-pull logic changed.
+.665/.666 fixes:
+- Root cause of visible version reverting from .664 to .662 was stale version.json.
+- version.json is now republished with the current release and must be kept in sync with index.html.
+- Closing the radial Edge Extrude constraint session now completes the tool session rather than merely hiding its UI.
+- On intentional Edge Extrude session exit:
+  - Edge Extrude disarms through existing __boxlabEdgeExtrude.setArmed(false)
+  - current Edge selection is preserved
+  - hub suppression is cleared
+  - Selection Hub returns to CLOSED state
+  - puck reappears on the currently selected Edge/outer rail
+- This makes post-Extrude flow modeless: finish Extrude -> same Edge selection -> puck -> next action.
+- Actual Edge Extrude geometry remains unchanged and protected.
+- Selection loss still closes the session normally; no puck is shown when there is no valid selection.
 
 Immediate hands-on:
-1. Select a valid boundary Edge/chain -> radial Extrude.
-2. Expect the simplified constraint control offset beside the selection, not centred on it.
-3. Default Plane should be clearly identified/highlighted.
-4. Tap X/Y/Z; active constraint label/highlight should change without moving geometry.
-5. Drag the Edge itself to Extrude; new outer rail should remain selected and the palette should follow it.
-6. Near the right side of the viewport, palette should flip to the left rather than run off-screen.
+1. Confirm visible version remains v0.36.18.666 after page load settles.
+2. Perform radial Edge Extrude and confirm extrusion still behaves exactly as the prior working build.
+3. Finish/exit the Extrude constraint session.
+4. Confirm Extrude is no longer armed in the left menu.
+5. Confirm the resulting outer Edge selection remains selected.
+6. Confirm the closed Selection Hub puck reappears on that selection.
 
 Next after PASS:
-- Continue Edge tool viewport-session centralisation with the next Edge tool that still depends on left-panel settings.
+- Continue Edge tool viewport-session centralisation with the next Edge tool still dependent on the left panel.
 
 Protected:
 - .657 Edge candidate selection.
@@ -44,6 +42,6 @@ Protected:
 - .661 Loop Cut ownership + Bevel reset.
 - .662 Bevel viewport session.
 - .658 radial availability.
-- existing Edge Extrude topology/ribbon engine.
-- drag-on-edge Edge Extrude interaction.
+- .664 side-mounted Edge Extrude constraint palette.
+- existing Edge Extrude topology/ribbon engine and drag-on-edge interaction.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
