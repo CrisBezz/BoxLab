@@ -73,7 +73,7 @@ import('./repeat-face-previous.js?v=0.36.18.533').catch(error => console.warn('B
 import('./sequential-through-fallback.js?v=0.36.18.528').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
 import('./precision-transform.js?v=0.36.18.14').catch(error => console.warn('BoxLab precision Transform failed to load', error));
 import('./precision-bevel.js?v=0.36.18.513').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
-import('./precision-edge-slide.js?v=0.36.18.514').catch(error => console.warn('BoxLab precision Edge Slide failed to load', error));
+import('./precision-edge-slide.js?v=0.36.18.672').catch(error => console.warn('BoxLab precision Edge Slide failed to load', error));
 import('./loop-offset.js?v=0.36.18.671').catch(error => console.warn('BoxLab Offset Loop failed to load', error));
 import('./precision-offset-loop.js?v=0.36.18.671').catch(error => console.warn('BoxLab precision Offset Loop failed to load', error));
 import('./edge-context-ui.js?v=0.36.18.35').catch(error => console.warn('BoxLab contextual Edge controls failed to load', error));
