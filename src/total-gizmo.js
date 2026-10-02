@@ -25,6 +25,7 @@ let hubState='closed';
 let hubSuppressedKey='';
 let lastSelectionKey='';
 let suspendedFaceTool=false;
+let edgeExtrudeConstraintSession=false;
 
 
 function state(){return globalThis.__boxlabBridgeState||null;}
@@ -146,6 +147,19 @@ function onHandleDown(event){
   if(!selectionAvailable(mesh,mode))return;
   hideFloatInput();
   const el=event.currentTarget,spec=handleSpec(el);
+  if(edgeExtrudeConstraintSession&&mode==='edge'){
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    if(spec.tool!=='move')return;
+    const constraint=['x','y','z'].includes(spec.constraint)?spec.constraint:'plane';
+    const arming=globalThis.__boxlabTransformArming;
+    if(!arming?.active?.())arming?.activateRealMove?.();
+    arming?.setConstraint?.(constraint);
+    gestureDebug('EDGE EXTRUDE GIZMO CONSTRAINT',{constraint,kind:spec.kind||'',pid:event.pointerId});
+    window.dispatchEvent(new CustomEvent('boxlab-edge-extrude-gizmo-constraint',{detail:{constraint,kind:spec.kind||''}}));
+    if(status)status.textContent=`Edge Extrude • ${constraint==='plane'?'Plane ⟂ edge':constraint.toUpperCase()+' axis'} • drag selected boundary edge(s)`;
+    return;
+  }
   gestureDebug('GIZMO DOWN',{mode,tool:spec.tool,constraint:spec.constraint,pid:event.pointerId,pointer:event.pointerType});
   if(!arm(spec.tool,spec.constraint))return;
   const visual=el.__visual||el;
@@ -305,6 +319,14 @@ const toolRings=[...root.querySelectorAll('.tg-tool-ring')];
 const toolCenters=[...root.querySelectorAll('.tg-tool-center')];
 const toolSectors=[...root.querySelectorAll('.tg-tool-sector')];
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
+
+function syncEdgeExtrudeConstraintVisuals(){
+  const active=edgeExtrudeConstraintSession;
+  root.dataset.edgeExtrudeConstraint=active?'true':'false';
+  const hideSelectors=['.tg-rotate','.tg-screen-ring','.tg-scale-ring','.tg-scale-node','.tg-plane-handles','.tg-collapse'];
+  hideSelectors.forEach(selector=>root.querySelectorAll(selector).forEach(el=>{el.style.display=active?'none':'';}));
+  root.querySelectorAll('.tg-move-axes,.tg-center').forEach(el=>{el.style.display='';});
+}
 
 function syncContextToolAvailability(){
   for(const sector of toolSectors){
@@ -689,7 +711,7 @@ function sync(){
   if(key!==lastSelectionKey){
     lastSelectionKey=key;
     hubSuppressedKey='';
-    setHubState(mode==='object'?'transform':'closed',{reason:'selection-change'});
+    setHubState(edgeExtrudeConstraintSession&&mode==='edge'?'transform':(mode==='object'?'transform':'closed'),{reason:'selection-change'});
   }else if(mode==='object'&&hubState!=='transform'){
     setHubState('transform',{reason:'object-mode'});
   }
@@ -699,7 +721,7 @@ function sync(){
   root.style.top=`${top}px`;
   floatPalette.style.left=`${left}px`;
   floatPalette.style.top=`${top}px`;
-  const suppressed=['face','edge'].includes(mode)&&hubSuppressedKey===key;
+  const suppressed=['face','edge'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
   root.hidden=suppressed;
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
@@ -732,5 +754,19 @@ globalThis.__boxlabTotalGizmo={
   hubState:()=>hubState,
   setExpanded:(next,options={})=>setExpanded(next,options),
   setHubState:(next,options={})=>setHubState(next,options),
-  version:'0.36.18.658'
+  beginEdgeExtrudeConstraintSession:()=>{
+    edgeExtrudeConstraintSession=true;
+    hubSuppressedKey='';
+    setHubState('transform',{reason:'edge-extrude-constraint',resumeSuspended:false});
+    syncEdgeExtrudeConstraintVisuals();
+    return true;
+  },
+  endEdgeExtrudeConstraintSession:()=>{
+    edgeExtrudeConstraintSession=false;
+    syncEdgeExtrudeConstraintVisuals();
+    resetTransientState({hideFloat:true});
+    return true;
+  },
+  edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
+  version:'0.36.18.663'
 };
