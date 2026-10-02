@@ -97,4 +97,4 @@ function applyExact(value,selectionOverride=null){
   const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Bevel committed • ${valid.ids.length} edge${valid.ids.length===1?'':'s'} • ${amount}% • Edge selection ready`;
   return{ok:true,ids:[...valid.ids],percent:amount,segments:bevelSegments()};
 }
-globalThis.__boxlabDirectBevel={version:'0.36.18.660',applyExact,disarm,active:()=>armed};
+globalThis.__boxlabDirectBevel={version:'0.36.18.662',applyExact,disarm,active:()=>armed};

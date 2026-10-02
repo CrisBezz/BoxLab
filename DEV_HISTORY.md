@@ -1,5 +1,24 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.662 Bevel viewport session
+
+- .661 Loop Cut ownership + Bevel reset hands-on PASS.
+- Added Selection Hub-only Bevel viewport palette.
+- Launch path: Edge radial ring -> Bevel.
+- Palette mirrors existing authoritative controls:
+  - #bevelWidth
+  - #bevelSegments
+  - #bevelWidthOut
+  - #bevelSegmentsOut
+- Normal Pencil-drag Bevel remains authoritative and unchanged.
+- Added viewport actions:
+  - Apply Exact -> existing __boxlabDirectBevel.applyExact(width, launchSelection)
+  - Cancel -> existing __boxlabDirectBevel.disarm(), restoring launch selection
+- Palette captures the Edge selection present when radial Bevel launches so Apply Exact is stable even if UI ownership changes.
+- Bevel completion/cancel semantic events hide the palette.
+- Left-toolbar Bevel does not open the viewport palette.
+- No Bevel topology kernel changed.
+
 ## 2026-10-02 — v0.36.18.661 publish pin correction for .660 ownership fixes
 
 - .660 source changes landed correctly.

@@ -2674,3 +2674,20 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Hands-on .661: Loop Cut insert+drag slides, not orbits
 - [ ] Hands-on .661: Bevel disarms after commit and next Edge tap selects
 
+- [x] Hands-on .661: Loop Cut slide ownership PASS
+- [x] Hands-on .661: Bevel post-commit reset PASS
+- [ ] Workflow .662: radial Edge Bevel opens viewport palette
+- [ ] Workflow .662: palette Width mirrors left #bevelWidth
+- [ ] Workflow .662: palette Segments mirrors left #bevelSegments
+- [ ] Workflow .662: Pencil-drag selected Edge still performs normal Bevel
+- [ ] Workflow .662: Pencil-drag commit hides palette and disarms Bevel
+- [ ] Workflow .662: Apply Exact commits captured radial launch selection using displayed Width/Segments
+- [ ] Workflow .662: Apply Exact hides palette and returns to Edge selection
+- [ ] Workflow .662: Cancel restores launch selection and disarms Bevel
+- [ ] Workflow .662: ordinary left-toolbar Bevel does NOT open viewport palette
+- [ ] Regression .662: .659 additive Edge hold remains PASS
+- [ ] Regression .662: .658 radial availability remains intact
+- [x] Static .662: viewport palette proxies existing Bevel controls/owner only
+- [x] Protection .662: no Bevel topology kernel changed
+- [x] Protection .662: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

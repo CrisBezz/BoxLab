@@ -1,69 +1,45 @@
-## v0.36.18.661 — Loop Cut drag ownership + Bevel reset
+## v0.36.18.662 — Bevel viewport session
 
 Current release:
-- v0.36.18.661
+- v0.36.18.662
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
 - .653 Shell viewport session: PASS.
-- .657 closed Face Boundary selection: AWESOME / PASS.
-- .659 additive Edge hold browser implemented; awaiting hands-on confirmation.
+- .657 closed Face Boundary candidates: AWESOME / PASS.
+- .661 Loop Cut slide ownership + Bevel reset: PASS.
 
-User findings before .660:
-1. Loop Cut:
-   - loop topology inserts,
-   - Pencil drag rotates model instead of sliding inserted loop.
-2. Edge Bevel:
-   - bevel completes,
-   - Bevel remains armed in left menu,
-   - subsequent Edge taps bevel rather than select.
-
-.660 Loop Cut ownership:
-- main.js exposes __boxlabMainDirectTool.active() / ownsModellingGesture().
-- pencil-orbit-gate checks this in addition to Face-direct.
-- Any active main direct modelling tool blocks deferred Pencil orbit on mesh.
-- Loop Cut therefore keeps the Pencil from pointerdown through its loop-slide drag.
-- Orbit still works normally when no modelling owner is active.
-
-.660 Bevel reset:
-- direct-bevel pointerup:
-  - commit/restore
-  - release pointer capture
-  - clear Edge selection
-  - disarm Bevel
-  - semantic tool:none
-  - Edge selection ready
-- pointercancel restores and disarms.
-- applyExact also disarms.
-- __boxlabDirectBevel now exposes disarm / active for future Selection Hub session work.
+.662:
+- New src/selection-hub-bevel-session.js.
+- Appears ONLY when Bevel launched from Edge Selection Hub semantic event.
+- Captures Edge selection at radial launch.
+- Mirrors authoritative controls:
+  - Width -> #bevelWidth
+  - Segments -> #bevelSegments
+  - readouts -> #bevelWidthOut / #bevelSegmentsOut
+- Pencil-drag Bevel remains unchanged.
+- Apply Exact delegates to __boxlabDirectBevel.applyExact(width, capturedSelection).
+- Cancel delegates to direct Bevel disarm and restores captured selection.
+- Existing .661 bevel completion semantic events hide palette automatically.
+- Left-toolbar Bevel stays unchanged and does not open palette.
+- No Bevel topology code duplicated.
 
 Immediate hands-on:
-1. Edge mode -> Loop Cut.
-2. Pencil down on valid edge and drag immediately.
-3. Inserted loop must slide; camera must NOT rotate.
-4. Release and confirm topology.
-5. Bevel an Edge with Pencil.
-6. On release, left Bevel button must switch off.
-7. Tap another Edge: it must select, not bevel.
-8. Quick .659 additive Edge hold test.
-9. Quick Face Extrude background-orbit test if desired.
+1. Select Edge(s).
+2. Puck -> gizmo -> Edge ring -> Bevel.
+3. Expect compact Bevel palette beside selection.
+4. Change Width and Segments; left values/readouts should mirror.
+5. Option A: Pencil-drag selected Edge -> normal live Bevel -> release -> palette disappears / Bevel off.
+6. Option B: reopen, set Width + Segments, tap Apply Exact -> commit -> palette disappears / Bevel off.
+7. Option C: reopen, adjust values, Cancel -> no geometry change; launch selection restored.
+8. Launch Bevel from left panel -> no viewport palette.
 
 Next after PASS:
-- Bevel viewport settings palette.
 - Edge Extrude gizmo-assisted plane/axis workflow.
-- continue radial availability polish if needed.
 
 Protected:
-- .652 background-yield rule.
-- .657 Face Boundary candidates.
+- .657 Edge candidate selection.
 - .659 additive Edge hold semantics.
+- .661 Loop Cut ownership + Bevel reset.
 - .658 radial availability.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
-
-
-Publish correction:
-- .660 source was correct, but direct-bevel.js remained cache-pinned to .253.
-- .661 is the build to hands-on test; all three touched owners are repinned:
-  - main.js
-  - pencil-orbit-gate.js
-  - direct-bevel.js
