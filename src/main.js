@@ -130,13 +130,14 @@ function applyEdgeHoldCandidate(hold,index){
   const next=THREE.MathUtils.clamp(index,0,hold.candidates.length-1);
   hold.candidateIndex=next;
   const candidate=hold.candidates[next];
-  selection=makeSelection('edge',candidate.indices,hold.edgeIndex);
+  const merged=[...new Set([...(hold.baseIndices||[]),...candidate.indices])];
+  selection=makeSelection('edge',merged,hold.edgeIndex);
   renderMesh();
   const sameKind=hold.candidates.filter(item=>item.kind===candidate.kind);
   const number=hold.candidates.slice(0,next+1).filter(item=>item.kind===candidate.kind).length;
   const status=document.querySelector('#selectionStatus');
-  if(status)status.textContent=`${candidate.kind} ${number}/${sameKind.length} • ${next+1}/${hold.candidates.length} candidates • release to keep`;
-  gestureDebug('EDGE PREVIEW',{kind:candidate.kind,index:next+1,total:hold.candidates.length,count:candidate.indices.length});
+  if(status)status.textContent=`${candidate.kind} ${number}/${sameKind.length} • ${next+1}/${hold.candidates.length} candidates • + ${hold.baseIndices?.length||0} kept • release to keep`;
+  gestureDebug('EDGE PREVIEW',{kind:candidate.kind,index:next+1,total:hold.candidates.length,candidateCount:candidate.indices.length,baseCount:hold.baseIndices?.length||0,resultCount:merged.length});
   return true;
 }
 function cancelFaceHold(pointerId=null){
@@ -484,13 +485,16 @@ function finishEdgeHold(event){
     gestureDebug('EDGE HOLD CANCEL RESTORE',{pid:event.pointerId,count:restore.length});
   }else if(hold.fired&&hold.candidates?.length){
     const candidate=hold.candidates[hold.candidateIndex];
+    const result=[...new Set([...(hold.baseIndices||[]),...candidate.indices])];
+    selection=makeSelection('edge',result,hold.edgeIndex);
+    renderMesh();
     edgeHoldCycle={
       seedIndex:hold.edgeIndex,
-      baseIndices:[],
+      baseIndices:[...(hold.baseIndices||[])],
       contributionIndices:[...candidate.indices],
-      resultSignature:sameEdgeSelectionSignature(candidate.indices)
+      resultSignature:sameEdgeSelectionSignature(result)
     };
-    gestureDebug('EDGE HOLD COMMIT',{pid:event.pointerId,kind:candidate.kind,count:candidate.indices.length});
+    gestureDebug('EDGE HOLD COMMIT',{pid:event.pointerId,kind:candidate.kind,baseCount:hold.baseIndices?.length||0,candidateCount:candidate.indices.length,resultCount:result.length});
   }
   cancelEdgeHold(event.pointerId);
   return true;

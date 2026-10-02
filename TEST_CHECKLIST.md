@@ -2640,3 +2640,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .658: no modelling kernels changed
 - [x] Protection .658: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .659: select one complete Edge loop/perimeter
+- [ ] Workflow .659: long-press another Edge; first candidate previews as existing selection + candidate
+- [ ] Workflow .659: scrub candidate A -> B; existing selection remains, A disappears, B appears
+- [ ] Workflow .659: no candidate-to-candidate accumulation
+- [ ] Workflow .659: release commits existing selection + current candidate
+- [ ] Workflow .659: pointercancel restores exact pre-hold selection
+- [ ] Workflow .659: Face Boundary candidates from .657 still browse correctly
+- [ ] Regression .659: starting with no prior selection behaves like candidate-only browser
+- [ ] Regression .659: vertical Grow/Shrink remains functional
+- [x] Static .659: preview recomputes from fixed hold.baseIndices + current candidate
+- [x] Static .659: commit recomputes the same fixed-base result
+- [x] Protection .659: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

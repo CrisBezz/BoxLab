@@ -1,50 +1,52 @@
-## v0.36.18.658 — contextual radial availability
+## v0.36.18.659 — additive Edge hold selection with clean replacement browsing
 
 Current release:
-- v0.36.18.658
+- v0.36.18.659
 
-Hands-on protected:
-- .652 Face-direct background Pencil yield: PERFECT / PASS.
+Protected hands-on:
+- .652 background Pencil yield: PERFECT / PASS.
 - .653 Shell viewport session: PASS.
-- .657 Edge hold closed Face Boundary candidates: AWESOME / PASS.
+- .657 closed Face Boundary candidates: AWESOME / PASS.
 
-Why .658:
-- User noted radial tool rings gave no indication whether a tool was unavailable for the current selection.
-- This affected both Edge and Face rings.
+Context:
+- .655 fixed candidate contamination and candidate-to-candidate accumulation.
+- That made browser previews candidate-only.
+- User correctly noted long-press could therefore no longer ADD another loop/ring to an existing Edge selection.
 
-.658:
-- Every radial sector mirrors the authoritative DOM target at runtime.
-- State mapping:
-  - enabled target => normal radial sector
-  - disabled or missing target => disabled radial sector, reduced opacity/saturation, × marker
-  - target .active or aria-pressed=true => radial active highlight
-- Disabled sectors remain in-place to preserve radial muscle memory.
-- Disabled sector cannot dispatch target click.
-- State resync occurs on:
-  - tools-ring open
-  - boxlab-bridge-state
-  - click
-  - pointerup
-  - transform-tool changes
+.659 model:
+- hold.baseIndices = Edge selection that existed before this hold began.
+- Every candidate preview is recomputed as:
+  fixed baseIndices + CURRENT candidate.indices
+- Scrubbing A -> B:
+  base + A
+  becomes
+  base + B
+- Candidate A is fully removed; base remains untouched.
+- No A+B accumulation.
+- Release commits base + current candidate.
+- Cancel restores the exact pre-hold selection.
+
+This restores additive multi-loop selection without reintroducing the .655 bug because candidate probing itself is now transactional.
 
 Immediate hands-on:
-1. Face mode: open radial ring with a selection where some tools are invalid.
-2. Confirm invalid sectors are visibly dimmed/× but stay in their positions.
-3. Tap invalid sector: nothing should launch.
-4. Change to a selection where that tool becomes valid; reopen ring and confirm it becomes normal.
-5. Edge mode: repeat with Bridge / Offset / Extrude or another selection-sensitive tool.
-6. Confirm valid tools still launch normally.
-7. If a tool is armed/active, matching radial sector should highlight.
+1. Select a complete loop or Face Boundary.
+2. Long-press an Edge elsewhere.
+3. First candidate should be ADDED to the existing selection.
+4. Scrub to another candidate.
+5. Existing first selection must remain.
+6. Previous candidate must disappear completely.
+7. Release: existing selection + current candidate remain.
+8. Repeat again to add a third distinct loop if desired.
+9. Cancel test: pre-hold selection must restore exactly.
 
-Next after PASS:
-- Edge Extrude gizmo-assisted axis/plane control.
-- Bevel viewport settings palette.
+Still next after selection PASS:
+- verify .658 radial availability UI hands-on.
+- Edge Extrude gizmo-assisted axis/plane workflow.
+- Bevel viewport settings.
 
 Protected:
-- .640 modeless selection checkpoint.
-- .643 Sweep viewport session.
+- .655 transactional probing.
+- .657 Face Boundary candidate generation.
+- .658 radial availability.
 - .652 Face-direct background-yield.
-- .653 Shell viewport session.
-- .654 Edge Selection Hub structure.
-- .657 Edge hold browser.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.

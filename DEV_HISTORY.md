@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.659 additive Edge hold selection with replacement browsing
+
+- User found that after the .655 transactional browser cleanup, long-press could no longer ADD a second loop/ring to an existing Edge selection.
+- Correct interaction model:
+  - selection present before hold = fixed base
+  - currently browsed candidate = temporary contribution
+  - preview = fixed base + current candidate
+  - candidate A -> B replaces only the contribution; A never remains underneath B
+- applyEdgeHoldCandidate now recomputes the preview from hold.baseIndices + current candidate every time.
+- pointerup commits exactly fixed base + current candidate.
+- pointercancel still restores the original pre-hold selection.
+- Candidate probing remains transactional from .655.
+- Face Boundary candidates from .657 remain available.
+
 ## 2026-10-02 — v0.36.18.658 contextual radial availability mirroring
 
 - .657 closed Face Boundary candidate selection hands-on AWESOME / PASS.
