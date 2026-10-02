@@ -2735,3 +2735,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .666: version.json and index.html release version match
 - [x] Static .666: Extrude exit calls existing setArmed(false); no geometry kernel change
 - [x] Protection .666: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .667: Edge Extrude exit preserves current outer Edge selection
+- [ ] Workflow .667: Edge Extrude exit leaves left-panel Extrude OFF
+- [ ] Workflow .667: Edge Extrude exit leaves Move transform OFF
+- [ ] Workflow .667: closed puck returns on preserved Edge selection
+- [ ] Regression .667: Edge Extrude ribbon/constraint behaviour unchanged
+- [x] Static .667: exit snapshots/restores Edge IDs and disarms existing transform owner
+- [x] Protection .667: src/multi-object-transform.js?v=0.36.1.0 unchanged
