@@ -1,5 +1,24 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.671 Offset Loop viewport session
+
+- .670 radial Crease selection-first workflow hands-on PERFECT / PASS.
+- Audited Slide vs Offset for the next gizmo-related tool.
+- Edge Slide is already mostly viewport-native; Offset Loop still required left-panel Support Spacing / exact controls.
+- Added radial-only Offset Loop viewport session with:
+  - mirrored Support Spacing slider
+  - exact percentage input
+  - Apply Exact
+  - Done
+- Existing loop-offset.js remains authoritative for live Pencil drag, topology, validation, rollback and history.
+- Existing precision-offset-loop.js remains authoritative for exact Apply.
+- Added boxlab-offset-loop-complete semantic event for both drag and exact success paths.
+- Radial session uses completion event to preserve created support-loop selection and return the closed puck.
+- Updated drawer-ui cache pins for modified Offset owners.
+- Left-panel Offset remains unchanged.
+- No duplicate Offset topology kernel added.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.670 selection-first radial Crease
 
 - Hands-on exposed the true .668/.669 issue: radial Crease inherited legacy paint-tool arming, which intentionally clears Edge selection.
