@@ -1,5 +1,22 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.672 Edge Slide viewport session
+
+- Advanced from .671 via /nextbuild.
+- Audited Edge Slide and confirmed direct drag was already viewport-native.
+- Remaining UI gap was signed exact Slide %, which lived only in the left drawer.
+- Added radial-only Edge Slide viewport session with:
+  - signed exact percentage input
+  - Apply Exact
+  - Done
+- Existing component-slide.js remains authoritative for live Pencil drag.
+- Added component-slide semantic completion event and minimal disarmEdge bridge.
+- Existing precision-edge-slide.js remains authoritative for exact Apply; now returns success and emits the same completion event.
+- Successful radial Slide closes session, preserves Edge selection and returns puck.
+- Left-panel Slide remains unchanged.
+- No duplicate Slide geometry solver added.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.671 Offset Loop viewport session
 
 - .670 radial Crease selection-first workflow hands-on PERFECT / PASS.
