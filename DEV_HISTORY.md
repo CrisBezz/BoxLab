@@ -1,5 +1,20 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.667 transactional Edge Extrude exit
+
+- Edge Extrude geometry remained hands-on good.
+- Exit still dropped selected Edge(s) and left Move visibly armed.
+- Added transactional Selection Hub teardown:
+  - snapshot selected Edge IDs before owners disarm
+  - disarm Edge Extrude
+  - disarm transform arming / Move constraint state
+  - restore exact Edge selection
+  - clear hub suppression
+  - return hub to CLOSED puck state
+  - repeat transform disarm next animation frame to win against delayed render/button sync
+- No extrusion topology, projection, history or repeat-pull logic changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.666 Edge Extrude exit returns to puck
 
 - User confirmed Edge Extrude works really well; geometry/drag workflow is now protected.
