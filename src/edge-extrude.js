@@ -6,7 +6,7 @@ import * as THREE from 'three';
 // Pencil/mouse/touch-drag a selected edge. The newly-created outer rail
 // remains selected and Extrude stays armed for rapid repeated pulls.
 
-const VERSION='0.36.18.514';
+const VERSION='0.36.18.663';
 const canvas=document.querySelector('#viewport');
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const moveRow=edgeTools?.querySelector('.edge-move-actions');
@@ -26,6 +26,7 @@ planeButton.hidden=true;
 precision?.insertBefore(planeButton,precision.querySelector('[data-constraint="auto"]')||null);
 let armed=false;
 let drag=null;
+let launchedFromHub=false;
 
 if(!canvas||!edgeTools||!moveRow)throw new Error('Edge Extrude UI dependencies missing');
 
@@ -199,6 +200,10 @@ function applyPlaneDefault(){
 function setArmed(next){
   const wasArmed=armed;
   armed=!!next;
+  if(!armed&&launchedFromHub){
+    launchedFromHub=false;
+    globalThis.__boxlabTotalGizmo?.endEdgeExtrudeConstraintSession?.();
+  }
   if(armed&&!wasArmed){
     applyPlaneDefault();
     queueMicrotask(()=>{if(armed)applyPlaneDefault();});
@@ -230,6 +235,18 @@ document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListene
 })));
 window.addEventListener('boxlab-bridge-state',syncButton);
 window.addEventListener('boxlab-transform-constraint',syncPlaneButton);
+window.addEventListener('boxlab-edge-extrude-gizmo-constraint',event=>{
+  if(!armed||!launchedFromHub)return;
+  syncPlaneButton();
+  const constraint=event.detail?.constraint||transformConstraint();
+  if(status)status.textContent=`Edge Extrude • ${constraint==='plane'?'Plane ⟂ edge':String(constraint).toUpperCase()+' axis'} • drag selected boundary edge(s)`;
+});
+window.addEventListener('boxlab-selection-hub-tool',event=>{
+  if(event.detail?.mode!=='edge'||event.detail?.tool!=='Extrude')return;
+  if(!armed)return;
+  launchedFromHub=true;
+  requestAnimationFrame(()=>globalThis.__boxlabTotalGizmo?.beginEdgeExtrudeConstraintSession?.());
+});
 document.addEventListener('click',event=>{
   if(!armed||event.target===button||event.target?.closest?.('#edgeExtrudeBtn'))return;
   if(event.target?.closest?.('#transformPrecision,#toolModes,.quick-snap'))return;
@@ -336,4 +353,4 @@ canvas.addEventListener('pointerup',event=>finish(event,false),true);
 canvas.addEventListener('pointercancel',event=>finish(event,true),true);
 
 syncButton();
-globalThis.__boxlabEdgeExtrude={version:VERSION,isArmed:()=>armed,setArmed,boundarySelectionInfo,extrudeBoundaryEdges};
+globalThis.__boxlabEdgeExtrude={version:VERSION,isArmed:()=>armed,setArmed,boundarySelectionInfo,extrudeBoundaryEdges,launchedFromHub:()=>launchedFromHub};
