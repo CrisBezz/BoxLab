@@ -2819,3 +2819,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .673: duplicate Orbit release delivery suppressed
 - [x] Protection .673: modelling pointerdown/move ownership unchanged
 - [x] Protection .673: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Regression .675: one finger orbits only after fresh load
+- [ ] Regression .675: two-finger drag pans
+- [ ] Regression .675: pinch zooms
+- [ ] Regression .675: Pencil orbits
+- [ ] Regression .675: touch navigation remains responsive after prolonged modelling
+- [ ] Recovery .675: stale controls.enabled=false self-recovers on fresh first touch
+- [ ] Recovery .675: stale controls.enabled=false self-recovers after last contact ends
+- [x] Static .675: NAV CONTROLS RECOVER markers added
+- [x] Protection .675: modelling pointerdown/move ownership unchanged
+- [x] Protection .675: src/multi-object-transform.js?v=0.36.1.0 unchanged
