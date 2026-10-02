@@ -2756,3 +2756,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .668: Edge Extrude radial workflow unchanged
 - [x] Static .668: no duplicate Crease kernel/history path added
 - [x] Protection .668: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .669: radial Edge Crease reliably opens viewport panel
+- [ ] Workflow .669: panel survives immediate radial launch/render sync
+- [ ] Workflow .669: Strength mirrors left control
+- [ ] Workflow .669: Done preserves Edge selection and returns puck
+- [ ] Regression .669: left-panel Crease does not open viewport panel
+- [x] Static .669: Total Gizmo directly calls Crease session openFromHub after authoritative Crease click
+- [x] Protection .669: src/multi-object-transform.js?v=0.36.1.0 unchanged
