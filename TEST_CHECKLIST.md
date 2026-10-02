@@ -2710,3 +2710,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .663: Edge Extrude topology/ribbon owner remains src/edge-extrude.js; no duplicate kernel added
 - [x] Static .663: radial gizmo session maps constraint only and does not begin component transform
 - [x] Protection .663: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Hands-on .663: radial Edge Extrude ribbon workflow works
+- [ ] Workflow .664: radial Edge Extrude constraint control is offset beside selected Edge/chain
+- [ ] Workflow .664: side placement flips near viewport edge to avoid running off-screen
+- [ ] Workflow .664: default Plane constraint is visibly identified/highlighted
+- [ ] Workflow .664: tapping X/Y/Z changes active constraint label/highlight without moving geometry
+- [ ] Workflow .664: dragging selected Edge still owns ribbon preview/commit
+- [ ] Workflow .664: successful pull selects new outer rail and side palette follows it
+- [ ] Regression .664: left-toolbar Edge Extrude remains unchanged
+- [ ] Regression .664: .662 Bevel viewport session remains PASS
+- [x] Static .664: no Edge Extrude topology/projection/history code changed
+- [x] Protection .664: src/multi-object-transform.js?v=0.36.1.0 unchanged
