@@ -1,7 +1,7 @@
-## v0.36.18.672 — Edge Slide viewport session
+## v0.36.18.673 — touch navigation stale-pointer fix
 
 Current release:
-- v0.36.18.672
+- v0.36.18.673
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
@@ -11,48 +11,42 @@ Hands-on protected:
 - .662 radial Bevel viewport session: PASS.
 - .663/.664 Edge Extrude radial workflow: works really well.
 - .670 radial Crease selection-first workflow: PERFECT / PASS.
-- .671 radial Offset viewport session advanced by /nextbuild.
+- .671/.672 radial Offset / Edge Slide viewport-session work in progress.
 
-Strengthening list:
-- Connected-chain Edge Bevel through ordinary 4-valence quad vertices remains recorded in ROADMAP.md.
+User-reported regression at .672:
+- Pencil can orbit.
+- Two-finger pan and pinch zoom fail.
+- Single finger pans/zooms simultaneously.
+- Gesture Debug shows multiple touch pointerdowns reaching the viewport.
 
-.672:
-- Continues gizmo-related Edge tool centralisation with Edge Slide.
-- Audit confirmed direct Edge Slide drag was already viewport-native; the remaining drawer dependency was signed exact Slide %.
-- New src/selection-hub-slide-session.js.
-- Radial Slide:
-  - activates the existing authoritative #edgeSlideBtn owner
-  - opens compact viewport panel beside selected Edge(s)
-  - signed exact input supports -98% to +98%
-  - Apply Exact delegates to existing __boxlabPrecisionEdgeSlide.apply()
-  - Done disarms Slide and returns puck without changing geometry
-- Existing component-slide.js remains authoritative for direct Pencil drag.
-- component-slide.js now exposes __boxlabComponentSlide.disarmEdge() and emits boxlab-edge-slide-complete after successful Edge drag.
-- precision-edge-slide.js now returns success and emits same completion semantic after exact Apply.
-- Successful drag or exact Slide:
-  - preserves selected Edge(s)
-  - disarms Edge Slide
-  - closes viewport panel
-  - returns Selection Hub closed puck
-- Left-panel Edge Slide remains unchanged and does not open viewport panel.
-- No Slide geometry solver duplicated.
+Root cause hypothesis addressed in .673:
+- Some modelling tools stopImmediatePropagation on pointerup/pointercancel.
+- OrbitControls can therefore miss a touch release and retain a stale pointer internally.
+- Next single touch is then interpreted as part of a multi-touch DOLLY_PAN gesture, matching the observed single-finger pan/zoom behaviour.
+
+.673:
+- pencil-orbit-gate now captures OrbitControls pointerup and pointercancel listeners during registration.
+- Adds an early capture-phase release feed for touch and pen pointerup/pointercancel, installed before modelling tools.
+- OrbitControls therefore receives release before later modelling capture handlers can swallow it.
+- Wrapped Orbit release listener skips duplicate delivery when early-fed.
+- Pencil navigation cleanup still runs.
+- No modelling tool pointerdown/move ownership changed.
+- Protected navigation mapping remains:
+  - ONE = ROTATE
+  - TWO = DOLLY_PAN
+  - Pencil orbit preserved.
 
 Immediate hands-on:
-1. Select a Slide-compatible Edge or connected Edge set.
-2. Puck -> Edge tools -> Slide.
-3. Expect compact Edge Slide panel beside selection with signed exact field, Apply Exact, Done.
-4. Option A: drag selected Edge(s) normally -> live Slide -> release -> selection remains and puck returns.
-5. Option B: relaunch -> enter +25 or -25 -> Apply Exact -> Edge(s) slide to corresponding side -> selection remains and puck returns.
-6. Done without moving/applying -> no geometry change; selection remains; puck returns.
-7. Left-panel Edge Slide -> no viewport panel.
-8. Regression: radial Crease / Offset / Edge Extrude unchanged.
-
-Next after PASS:
-- Continue remaining Edge Selection Hub tool polish only where contextual settings or session cleanup are genuinely missing.
+1. Fresh load .673.
+2. One finger: orbit only.
+3. Two fingers drag together: pan.
+4. Two-finger pinch: zoom.
+5. Pencil: orbit.
+6. Exercise several modelling tools that capture pointerup, then retest 1-5.
+7. Confirm no single-finger combined pan/zoom after tool use.
+8. Gesture Debug may remain enabled for this retest.
 
 Protected:
-- .670 radial Crease.
-- .671 Offset Loop viewport session.
-- working Edge Extrude workflow.
-- existing Edge Slide drag solver / exact solver.
+- all current modelling tool gesture ownership.
+- .670 Crease, .671 Offset, .672 Slide viewport sessions.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
