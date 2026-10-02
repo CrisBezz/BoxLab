@@ -2808,3 +2808,14 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .672: existing component-slide + precision-edge-slide remain authoritative
 - [x] Static .672: no duplicate Slide solver added
 - [x] Protection .672: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Regression .673: one finger orbits only
+- [ ] Regression .673: two-finger drag pans
+- [ ] Regression .673: pinch zooms
+- [ ] Regression .673: Pencil orbits
+- [ ] Regression .673: after tool interactions, no single-finger pan+zoom corruption
+- [x] Static .673: OrbitControls gets touch/pen pointerup/cancel in early capture phase
+- [x] Static .673: duplicate Orbit release delivery suppressed
+- [x] Protection .673: modelling pointerdown/move ownership unchanged
+- [x] Protection .673: src/multi-object-transform.js?v=0.36.1.0 unchanged
