@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.673 touch navigation stale-pointer fix
+
+- User reported Pencil orbit still worked, but two-finger pan/pinch failed and one finger started pan+zoom simultaneously.
+- Gesture Debug showed touch pointerdowns reaching the viewport.
+- Diagnosed likely OrbitControls stale-pointer state caused by modelling capture handlers swallowing pointerup/pointercancel with stopImmediatePropagation.
+- pencil-orbit-gate now:
+  - captures OrbitControls pointerup/pointercancel listener references
+  - feeds touch/pen releases to OrbitControls in an earlier capture listener
+  - suppresses duplicate release when the ordinary Orbit listener later receives the same event
+  - preserves Pencil cleanup
+- No tool drag ownership or Orbit touch mapping changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.672 Edge Slide viewport session
 
 - Advanced from .671 via /nextbuild.
