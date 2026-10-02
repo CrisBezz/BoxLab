@@ -68,8 +68,10 @@ function setHubState(next,{reason='',resumeSuspended=true}={}){
     edgeExtrudeConstraintSession=false;
     syncEdgeExtrudeConstraintVisuals?.();
     resetTransientState?.({hideFloat:true});
+    hubSuppressedKey='';
+    requested='closed';
     queueMicrotask(()=>globalThis.__boxlabEdgeExtrude?.setArmed?.(false));
-    gestureDebug('EDGE EXTRUDE SESSION CLOSE',{reason:reason||requested});
+    gestureDebug('EDGE EXTRUDE SESSION CLOSE',{reason:reason||'return-to-puck',selectionPreserved:true});
   }
 
   const wasTransform=hubState==='transform';
@@ -822,5 +824,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.665'
+  version:'0.36.18.666'
 };
