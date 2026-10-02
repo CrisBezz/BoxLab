@@ -2608,3 +2608,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .655: candidate preview uses candidate.indices without base merge
 - [x] Protection .655: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .656: hold a cube Edge and browse candidates
+- [ ] Workflow .656: each adjacent Face can appear as a complete Face Boundary candidate
+- [ ] Workflow .656: front Face candidate contains all 4 perimeter edges, including the previously missing side edge
+- [ ] Workflow .656: opposite adjacent Face perimeter can also appear as a separate Face Boundary candidate
+- [ ] Workflow .656: Face Boundary preview replaces prior candidate rather than accumulating
+- [ ] Workflow .656: release commits only the complete currently visible perimeter
+- [ ] Regression .656: .655 Loop candidates still browse correctly
+- [ ] Regression .656: generic Boundary and Ring candidates still appear when valid
+- [ ] Regression .656: vertical Grow/Shrink still works
+- [x] Static .656: Face perimeter candidate maps mesh Face boundary segments to current edge indices
+- [x] Protection .656: no Loop/Ring/Boundary selector kernel changed
+- [x] Protection .656: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.656 Edge hold adds closed Face Boundary candidates
+
+- .655 improved transactional Edge hold browsing, but a cube test exposed an obvious omission:
+  - browser could offer a three-edge open path around a Face,
+  - but not the complete four-edge closed perimeter of that Face.
+- Cause: existing Loop continuation heuristics reason through edge topology and can stop at corner ambiguity; they do not explicitly recognize a Face perimeter as a closed candidate.
+- Added faceBoundaryCandidatesForEdge(seedIndex):
+  - inspect every Face incident to the held Edge,
+  - map each Face perimeter segment back to current mesh edge indices,
+  - add the complete perimeter as a Face Boundary candidate when valid.
+- On a normal manifold cube edge, this yields up to two Face Boundary candidates: one for each adjacent Face.
+- Candidate dedup remains signature-based, so identical results are not repeated.
+- Existing Loop / Boundary / Ring logic remains unchanged.
+
 ## 2026-10-02 — v0.36.18.655 Edge hold-browser transactional selection cleanup
 
 - User found Edge hold+drag candidate browsing incomplete and additive: the first offered loop remained selected when browsing later candidates.

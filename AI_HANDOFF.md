@@ -1,59 +1,42 @@
-## v0.36.18.655 — Edge hold-browser selection cleanup
+## v0.36.18.656 — Edge hold closed Face Boundary candidates
 
 Current release:
-- v0.36.18.655
+- v0.36.18.656
 
-Hands-on protected:
-- .652 Face-direct background Pencil yield: PERFECT / PASS.
+Protected hands-on:
+- .652 background Pencil yield: PERFECT / PASS.
 - .653 Shell viewport session: PASS.
-- .654 Edge Selection Hub:
-  - Edge Extrude works but needs future gizmo-assisted constraint UX.
-  - Slide PASS.
-  - Bevel PASS; future viewport Bevel settings requested.
-  - radial availability feedback requested for Face + Edge.
-- Before tool UX expansion, user requested Edge hold selection browser correctness.
+- .655 Edge hold browsing: much better selections; replacement behaviour improved.
 
-.655 Edge hold-browser:
-- Candidate probing is transactional.
-- invokeEdgeSelector now:
-  1. saves live Edge selection,
-  2. seeds the existing authoritative selector,
-  3. captures its result,
-  4. restores the saved selection.
-- Candidate preview is REPLACEMENT, not additive.
-- Each horizontal scrub candidate sets exactly candidate.indices.
-- Previous preview disappears completely.
+User screenshot / remaining selection gap:
+- On a cube Face, the browser offered a three-edge path but omitted the obvious fourth side needed to close the Face perimeter.
+- User expects complete loops around Faces to be offered.
 
-Candidate enumeration:
-- Loop from seed alone.
-- Loop from each neighbour at seed endpoint A.
-- Loop from each neighbour at seed endpoint B.
-- Loop from every A/B neighbour pair through the seed.
-- Boundary using #selectBoundaryBtn.
-- Ring using #selectRingBtn.
-- Duplicate signatures removed.
-- Existing selectors remain authoritative; no new loop/ring topology kernel.
-
-Commit/cancel:
-- pointerup keeps current candidate only.
-- pointercancel restores the selection that existed before hold.
-- vertical Grow/Shrink path remains based on the selection present when the hold fired.
+.656:
+- Added Face Boundary candidate generation independent of continuation heuristics.
+- For the held Edge:
+  - inspect every incident Face,
+  - enumerate the Face vertex perimeter,
+  - resolve each perimeter segment to the corresponding current edge index,
+  - add full perimeter as candidate kind "Face Boundary".
+- On a cube edge, normally two adjacent Face perimeters are available.
+- Candidate signatures are deduplicated against all other candidates.
+- Existing Loop/Boundary/Ring selector logic is untouched.
+- Preview/commit semantics remain .655 candidate-only replacement.
 
 Immediate hands-on:
-1. Edge mode, choose a mesh area with several possible loops.
-2. Hold seed Edge until first candidate appears.
-3. Scrub horizontally.
-4. Confirm candidate A is removed completely when B appears.
-5. Confirm more distinct possibilities are offered than before, especially at branching/irregular seed positions.
-6. Release on a candidate: only it remains selected.
-7. Cancel a hold: pre-hold selection returns.
-8. Vertical Grow/Shrink quick regression.
-9. Edge Selection Hub should return from the resulting selection.
+1. Use the same cube case from the screenshot.
+2. Hold the seed Edge.
+3. Scrub horizontally through candidates.
+4. Expect a Face Boundary candidate selecting all four edges of the front Face, including the previously missing vertical side.
+5. Continue scrub; expect the other adjacent Face perimeter too.
+6. Release on one; only that full perimeter should remain selected.
+7. Quick check Loop/Ring still appear.
 
-Deferred until selection PASS:
-- radial unavailable/disabled visual state.
-- Edge Extrude gizmo-assisted Plane/Axis control.
-- Bevel viewport settings palette.
+Deferred until selection feels right:
+- radial disabled/unavailable visual states.
+- Edge Extrude gizmo-assist.
+- Bevel viewport settings.
 
 Protected:
 - .640 modeless selection checkpoint.
@@ -61,4 +44,5 @@ Protected:
 - .652 Face-direct background-yield.
 - .653 Shell viewport session.
 - .654 Edge Selection Hub structure.
+- .655 transactional Edge candidate preview.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
