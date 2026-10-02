@@ -2793,3 +2793,18 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .671: loop-offset + precision-offset emit shared completion semantic
 - [x] Static .671: no duplicate Offset topology kernel added
 - [x] Protection .671: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .672: radial Edge Slide opens contextual viewport panel
+- [ ] Workflow .672: existing direct drag Slide remains unchanged
+- [ ] Workflow .672: successful drag preserves Edge selection and returns puck
+- [ ] Workflow .672: + exact percentage slides toward one side
+- [ ] Workflow .672: - exact percentage slides toward opposite side
+- [ ] Workflow .672: exact completion preserves Edge selection and returns puck
+- [ ] Workflow .672: Done without action leaves geometry unchanged, preserves selection and returns puck
+- [ ] Regression .672: left-panel Edge Slide does not open viewport panel
+- [ ] Regression .672: radial Crease remains PASS
+- [ ] Regression .672: radial Offset and Edge Extrude unchanged
+- [x] Static .672: existing component-slide + precision-edge-slide remain authoritative
+- [x] Static .672: no duplicate Slide solver added
+- [x] Protection .672: src/multi-object-transform.js?v=0.36.1.0 unchanged
