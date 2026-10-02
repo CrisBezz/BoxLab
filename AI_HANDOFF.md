@@ -1,7 +1,7 @@
-## v0.36.18.673 — touch navigation stale-pointer fix
+## v0.36.18.675 — recover stale camera disable
 
 Current release:
-- v0.36.18.673
+- v0.36.18.675
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
@@ -11,42 +11,33 @@ Hands-on protected:
 - .662 radial Bevel viewport session: PASS.
 - .663/.664 Edge Extrude radial workflow: works really well.
 - .670 radial Crease selection-first workflow: PERFECT / PASS.
-- .671/.672 radial Offset / Edge Slide viewport-session work in progress.
 
-User-reported regression at .672:
-- Pencil can orbit.
-- Two-finger pan and pinch zoom fail.
-- Single finger pans/zooms simultaneously.
-- Gesture Debug shows multiple touch pointerdowns reaching the viewport.
+Navigation regression:
+- .672/.673/.674: intermittent touch navigation corruption persisted.
+- User now reports finger input eventually becomes completely inert, while pointer events still reach viewport.
+- This indicates a second failure mode beyond stale OrbitControls pointer state: controls.enabled can remain false after a modelling gesture if its normal endDrag recovery is bypassed by capture-phase ownership.
 
-Root cause hypothesis addressed in .673:
-- Some modelling tools stopImmediatePropagation on pointerup/pointercancel.
-- OrbitControls can therefore miss a touch release and retain a stale pointer internally.
-- Next single touch is then interpreted as part of a multi-touch DOLLY_PAN gesture, matching the observed single-finger pan/zoom behaviour.
-
-.673:
-- pencil-orbit-gate now captures OrbitControls pointerup and pointercancel listeners during registration.
-- Adds an early capture-phase release feed for touch and pen pointerup/pointercancel, installed before modelling tools.
-- OrbitControls therefore receives release before later modelling capture handlers can swallow it.
-- Wrapped Orbit release listener skips duplicate delivery when early-fed.
-- Pencil navigation cleanup still runs.
-- No modelling tool pointerdown/move ownership changed.
-- Protected navigation mapping remains:
-  - ONE = ROTATE
-  - TWO = DOLLY_PAN
-  - Pencil orbit preserved.
+.675:
+- Keeps .674 window-level Orbit release reconciliation.
+- Adds stale camera-control recovery in pencil-orbit-gate:
+  - on a fresh first touch, if controls.enabled is still false from a prior gesture, restore it before routing the new gesture.
+  - on a fresh Pencil contact, same recovery applies.
+  - after the last physical touch/Pencil contact ends, queue a recovery check and restore controls.enabled if still false.
+- This does not interfere with an active new modelling drag:
+  - fresh-touch recovery happens before downstream pointerdown owners
+  - a tool can still legitimately set controls.enabled=false later in that same pointerdown
+  - last-contact recovery occurs after release handlers have had their turn.
+- Adds NAV CONTROLS RECOVER debug markers.
+- No selection/tool geometry ownership changed.
 
 Immediate hands-on:
-1. Fresh load .673.
-2. One finger: orbit only.
-3. Two fingers drag together: pan.
-4. Two-finger pinch: zoom.
-5. Pencil: orbit.
-6. Exercise several modelling tools that capture pointerup, then retest 1-5.
-7. Confirm no single-finger combined pan/zoom after tool use.
-8. Gesture Debug may remain enabled for this retest.
+1. Fresh load .675.
+2. Confirm one-finger orbit, two-finger pan, pinch zoom, Pencil orbit.
+3. Work normally through multiple tools for several minutes.
+4. If touch becomes inert, try a completely fresh first finger contact; .675 should self-recover navigation.
+5. With Gesture Debug on, look for NAV CONTROLS RECOVER and ORBIT TOUCH RECONCILE markers.
 
 Protected:
-- all current modelling tool gesture ownership.
-- .670 Crease, .671 Offset, .672 Slide viewport sessions.
+- modelling pointerdown/move ownership.
+- .670 Crease, .671 Offset, .672 Slide sessions.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
