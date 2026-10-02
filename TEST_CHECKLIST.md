@@ -2744,3 +2744,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .667: Edge Extrude ribbon/constraint behaviour unchanged
 - [x] Static .667: exit snapshots/restores Edge IDs and disarms existing transform owner
 - [x] Protection .667: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Strengthening .668: connected-chain Edge Bevel / 4-valence quad case recorded in ROADMAP.md
+- [ ] Workflow .668: radial Edge Crease opens contextual viewport panel
+- [ ] Workflow .668: viewport Strength mirrors authoritative left #creaseStrength control
+- [ ] Workflow .668: tapping Edge applies Crease through existing main.js owner
+- [ ] Workflow .668: viewport Uncrease delegates to existing selected-edge Uncrease
+- [ ] Workflow .668: Done disarms Crease, preserves Edge selection and returns puck
+- [ ] Regression .668: left-toolbar Crease does not open viewport panel
+- [ ] Regression .668: Edge Extrude radial workflow unchanged
+- [x] Static .668: no duplicate Crease kernel/history path added
+- [x] Protection .668: src/multi-object-transform.js?v=0.36.1.0 unchanged
