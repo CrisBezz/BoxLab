@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.669 hardened radial Crease viewport launch
+
+- .668 Crease viewport panel did not appear hands-on.
+- Audited Total Gizmo radial order: target click occurs before semantic event dispatch.
+- Replaced listener-only launch dependence with explicit Total Gizmo -> Crease session openFromHub() handshake after the real Crease button is activated.
+- Kept semantic event listener as fallback.
+- Reasserts panel visibility next animation frame to survive immediate UI/render sync.
+- No Crease topology/history implementation changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.668 Crease viewport session
 
 - Logged connected-chain Edge Bevel through ordinary 4-valence quad vertices in ROADMAP.md strengthening list.
