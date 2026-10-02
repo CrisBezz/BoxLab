@@ -15,6 +15,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const DEFERRED_ORBIT_PX = 8;
   let pendingMeshOrbit = null;
   let orbitPointerDownListener = null;
+  let orbitPointerUpListener = null;
+  let orbitPointerCancelListener = null;
+  const earlyReleasedPointers = new Set();
   let orbitRegistrationDepth = 0;
 
   function isPenContact(event) {
@@ -106,6 +109,25 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
   nativeAddEventListener('pointerdown', snapshotSelection, { capture: true, passive: true });
   nativeAddEventListener('pointermove', restoreSelectionForNavigation, { capture: true, passive: true });
+
+  // OrbitControls must always see pointer release before modelling capture
+  // handlers can stop propagation. Missing one release leaves a stale touch
+  // pointer inside OrbitControls, making the next single finger behave like
+  // a two-finger dolly/pan gesture.
+  function feedOrbitReleaseEarly(event){
+    if(event.pointerType!=='touch'&&event.pointerType!=='pen')return;
+    const listener=event.type==='pointercancel'?orbitPointerCancelListener:orbitPointerUpListener;
+    if(typeof listener!=='function')return;
+    earlyReleasedPointers.add(event.pointerId);
+    try{
+      listener.call(canvas,event);
+      gestureDebug('ORBIT RELEASE EARLY',{type:event.type,pointer:event.pointerType,pid:event.pointerId});
+    }catch(error){
+      gestureDebug('ORBIT RELEASE EARLY FAIL',{type:event.type,pointer:event.pointerType,pid:event.pointerId,message:error?.message||String(error)});
+    }
+  }
+  nativeAddEventListener('pointerup',feedOrbitReleaseEarly,{capture:true,passive:true});
+  nativeAddEventListener('pointercancel',feedOrbitReleaseEarly,{capture:true,passive:true});
 
   nativeAddEventListener('pointermove',event=>{
     if(event.pointerType!=='pen'||!pendingMeshOrbit||pendingMeshOrbit.pointerId!==event.pointerId)return;
@@ -202,8 +224,15 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
       depth:orbitRegistrationDepth
     });
     if(type==='pointerdown')orbitPointerDownListener=listener;
+    else if(type==='pointerup')orbitPointerUpListener=listener;
+    else if(type==='pointercancel')orbitPointerCancelListener=listener;
 
     const wrapped = function (event) {
+      if((type==='pointerup'||type==='pointercancel')&&earlyReleasedPointers.has(event.pointerId)){
+        earlyReleasedPointers.delete(event.pointerId);
+        if(event.pointerType==='pen')endPenNavigation(event);
+        return;
+      }
       if (event.pointerType !== 'pen') return listener.call(this, event);
       if ((type !== 'pointerup' && type !== 'pointercancel') && isPenHover(event)) {
         if(type==='pointermove')gestureDebug('PEN ORBIT MOVE HOVER BLOCK',{pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,contactTracked:activePenContacts.has(event.pointerId)});
@@ -282,6 +311,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   };
 
   globalThis.__boxlabPencilOrbitGate={
+    version:'0.36.18.673',
     beginOrbitRegistration,
     endOrbitRegistration,
     registrationDepth:()=>orbitRegistrationDepth
