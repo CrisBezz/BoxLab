@@ -320,7 +320,17 @@ function syncTransformButtons(){document.querySelectorAll('#toolModes button').f
 function setDirectTool(tool){directTool=tool||null;if(directTool){multiSelectEnabled=false;const toggle=document.querySelector('#multiSelectToggle');if(toggle)toggle.checked=false;}if(directTool==='loopCut'||directTool==='crease'){selectionMode='edge';clearSelection();}else if(directTool==='extrude'||directTool==='inset'){selectionMode='face';clearSelection();}else if(directTool==='addVertex'||directTool==='vertexBevel'){selectionMode='vertex';clearSelection();}syncSelectionModeButtons();syncTransformButtons();syncDirectToolControls();updateStatus();}
 globalThis.__boxlabMainDirectTool={
   active:()=>directTool,
-  ownsModellingGesture:()=>!!directTool
+  ownsModellingGesture:()=>!!directTool,
+  applyCreaseSelection:(ids,value,{pushHistory=true}={})=>{
+    const edgeIds=[...new Set(ids||[])].filter(i=>Number.isInteger(i)&&mesh.edges()[i]);
+    const amount=Math.max(0,Math.min(1,Number(value)||0));
+    if(selectionMode!=='edge'||!edgeIds.length)return false;
+    if(pushHistory)history.push(mesh);
+    edgeIds.forEach(i=>mesh.setEdgeCrease(i,amount));
+    selection=makeSelection('edge',edgeIds,edgeIds[0]??null);
+    renderMesh();
+    return true;
+  }
 };
 function edgeAxis(a,b){const start=mesh.vertices[a],end=mesh.vertices[b];if(!start||!end)return'neutral';const d=new THREE.Vector3().subVectors(end,start);if(d.lengthSq()<1e-10)return'neutral';d.normalize();const ax=Math.abs(d.x),ay=Math.abs(d.y),az=Math.abs(d.z),m=Math.max(ax,ay,az);if(m<.995)return'neutral';return m===ax?'x':m===ay?'y':'z';}
 function addSelectedEdgeOverlay(a,b,axis){const start=mesh.vertices[a],end=mesh.vertices[b];if(!start||!end)return;const delta=new THREE.Vector3().subVectors(end,start),length=delta.length();if(length<1e-6)return;const geometry=new THREE.CylinderGeometry(1,1,length,10,1,false),overlay=new THREE.Mesh(geometry,axisOverlayMaterials[axis]||axisOverlayMaterials.neutral);overlay.position.copy(start).add(end).multiplyScalar(.5);overlay.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),delta.normalize());overlay.renderOrder=30;overlay.userData={kind:'edge-selection-overlay',screenPixels:2.2,screenShape:'edge'};root.add(overlay);}
