@@ -1,5 +1,21 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.664 Edge Extrude side constraint palette
+
+- .663 Edge Extrude itself works hands-on.
+- UX feedback: centred mini gizmo implied that arrows should be dragged to extrude, even though the preferred interaction remains drag-the-edge.
+- Preserved the existing drag-on-edge extrusion owner and moved only the contextual constraint UI.
+- Extrude constraint gizmo now sits offset beside the selected boundary Edge/chain and flips sides near the viewport edge.
+- Added compact contextual badge showing:
+  - Extrude
+  - active Plane/X/Y/Z constraint
+  - “Choose constraint • drag edge”
+- Active constraint handle is highlighted.
+- X/Y/Z and centre remain selector-only; they do not transform geometry.
+- Palette follows the newly selected outer rail after a successful repeat pull.
+- No Edge Extrude topology or history logic changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.663 Edge Extrude gizmo constraint session
 
 - .662 radial Bevel viewport session hands-on PASS.
