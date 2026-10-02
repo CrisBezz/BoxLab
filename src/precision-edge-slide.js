@@ -71,18 +71,20 @@ function solveAssignments(infos,positive){
   return{assignments,vertexTargets};
 }
 function applyExact(){
-  const m=mesh(),ids=selectedEdges(),raw=Number(input.value);if(!m||!ids.length){readout.textContent='Select a slide-compatible edge or edge set first';return;}if(!Number.isFinite(raw)||input.value.trim()===''){readout.textContent='Enter a signed slide percentage';return;}if(Math.abs(raw)<1e-6){readout.textContent='Enter a non-zero slide percentage';return;}
-  const percent=Math.max(-98,Math.min(98,raw)),infos=ids.map(i=>sideTargets(m,i));if(infos.some(x=>!x)){readout.textContent='Selected edges are not compatible with Edge Slide';return;}
-  const solved=solveAssignments(infos,percent>0);if(!solved){readout.textContent='Selected edges do not form a compatible slide set';return;}
+  const m=mesh(),ids=selectedEdges(),raw=Number(input.value);if(!m||!ids.length){readout.textContent='Select a slide-compatible edge or edge set first';return false;}if(!Number.isFinite(raw)||input.value.trim()===''){readout.textContent='Enter a signed slide percentage';return false;}if(Math.abs(raw)<1e-6){readout.textContent='Enter a non-zero slide percentage';return false;}
+  const percent=Math.max(-98,Math.min(98,raw)),infos=ids.map(i=>sideTargets(m,i));if(infos.some(x=>!x)){readout.textContent='Selected edges are not compatible with Edge Slide';return false;}
+  const solved=solveAssignments(infos,percent>0);if(!solved){readout.textContent='Selected edges do not form a compatible slide set';return false;}
   const before=m.clone(),t=Math.abs(percent)/100;globalThis.__boxlabHistory?.push(before);
   for(const[vertex,target]of solved.vertexTargets)m.vertices[vertex].copy(before.vertices[vertex]).lerp(before.vertices[target],t);
   render();bridge()?.set?.('edge',ids);
   const text=`Exact Edge Slide • ${percent>0?'+':''}${percent.toFixed(1)}%`;
   readout.textContent=text;if(status)status.textContent=text;
+  window.dispatchEvent(new CustomEvent('boxlab-edge-slide-complete',{detail:{ids:[...ids],percent,source:'exact'}}));
+  return true;
 }
 apply.addEventListener('click',applyExact);
 input.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();applyExact();input.blur();}});
 
 new MutationObserver(()=>{const text=status?.textContent||'',m=text.match(/(?:Multi Edge|Edge) Slide.*?([0-9]+)%/i);if(m)readout.textContent=`Live Edge Slide • ${Number(m[1]).toFixed(1)}%`;}).observe(status,{childList:true,characterData:true,subtree:true});
 
-globalThis.__boxlabPrecisionEdgeSlide={version:'0.36.18.514',apply:value=>{input.value=String(value);applyExact();}};
+globalThis.__boxlabPrecisionEdgeSlide={version:'0.36.18.672',apply:value=>{input.value=String(value);return applyExact();}};
