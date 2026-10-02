@@ -18,6 +18,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   let orbitPointerUpListener = null;
   let orbitPointerCancelListener = null;
   const earlyReleasedPointers = new Set();
+  const physicalTouchContacts = new Set();
+  const recentlyEndedTouchIds = [];
+  const RECENT_TOUCH_LIMIT = 12;
   let orbitRegistrationDepth = 0;
 
   function isPenContact(event) {
@@ -111,23 +114,78 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   nativeAddEventListener('pointermove', restoreSelectionForNavigation, { capture: true, passive: true });
 
   // OrbitControls must always see pointer release before modelling capture
-  // handlers can stop propagation. Missing one release leaves a stale touch
-  // pointer inside OrbitControls, making the next single finger behave like
-  // a two-finger dolly/pan gesture.
+  // handlers can stop propagation or pointer capture can retarget the release.
+  // Install this at WINDOW capture so it runs before canvas/tool listeners.
+  function rememberEndedTouch(pointerId){
+    const id=Number(pointerId);
+    if(!Number.isInteger(id))return;
+    const existing=recentlyEndedTouchIds.indexOf(id);
+    if(existing>=0)recentlyEndedTouchIds.splice(existing,1);
+    recentlyEndedTouchIds.push(id);
+    if(recentlyEndedTouchIds.length>RECENT_TOUCH_LIMIT)recentlyEndedTouchIds.splice(0,recentlyEndedTouchIds.length-RECENT_TOUCH_LIMIT);
+  }
+
+  function replayOrbitRelease(pointerId,reason='reconcile'){
+    const listener=orbitPointerCancelListener||orbitPointerUpListener;
+    if(typeof listener!=='function')return false;
+    const synthetic={
+      pointerId,
+      pointerType:'touch',
+      isPrimary:false,
+      button:0,
+      buttons:0,
+      pressure:0,
+      target:canvas,
+      currentTarget:canvas,
+      preventDefault:()=>{},
+      stopPropagation:()=>{},
+      stopImmediatePropagation:()=>{}
+    };
+    try{
+      listener.call(canvas,synthetic);
+      gestureDebug('ORBIT RELEASE REPLAY',{pid:pointerId,reason});
+      return true;
+    }catch(error){
+      gestureDebug('ORBIT RELEASE REPLAY FAIL',{pid:pointerId,reason,message:error?.message||String(error)});
+      return false;
+    }
+  }
+
+  function reconcileFreshTouch(){
+    if(!recentlyEndedTouchIds.length)return;
+    for(const pointerId of [...recentlyEndedTouchIds])replayOrbitRelease(pointerId,'fresh-first-touch');
+    gestureDebug('ORBIT TOUCH RECONCILE',{ended:[...recentlyEndedTouchIds]});
+  }
+
+  function trackPhysicalTouchDown(event){
+    if(event.pointerType!=='touch')return;
+    const fresh=physicalTouchContacts.size===0;
+    if(fresh)reconcileFreshTouch();
+    physicalTouchContacts.add(event.pointerId);
+    gestureDebug('PHYSICAL TOUCH DOWN',{pid:event.pointerId,count:physicalTouchContacts.size,fresh});
+  }
+
   function feedOrbitReleaseEarly(event){
     if(event.pointerType!=='touch'&&event.pointerType!=='pen')return;
+    if(event.pointerType==='touch'){
+      physicalTouchContacts.delete(event.pointerId);
+      rememberEndedTouch(event.pointerId);
+    }
     const listener=event.type==='pointercancel'?orbitPointerCancelListener:orbitPointerUpListener;
     if(typeof listener!=='function')return;
     earlyReleasedPointers.add(event.pointerId);
+    queueMicrotask(()=>earlyReleasedPointers.delete(event.pointerId));
     try{
       listener.call(canvas,event);
-      gestureDebug('ORBIT RELEASE EARLY',{type:event.type,pointer:event.pointerType,pid:event.pointerId});
+      gestureDebug('ORBIT RELEASE EARLY WINDOW',{type:event.type,pointer:event.pointerType,pid:event.pointerId,touches:physicalTouchContacts.size});
     }catch(error){
       gestureDebug('ORBIT RELEASE EARLY FAIL',{type:event.type,pointer:event.pointerType,pid:event.pointerId,message:error?.message||String(error)});
     }
   }
-  nativeAddEventListener('pointerup',feedOrbitReleaseEarly,{capture:true,passive:true});
-  nativeAddEventListener('pointercancel',feedOrbitReleaseEarly,{capture:true,passive:true});
+
+  window.addEventListener('pointerdown',trackPhysicalTouchDown,{capture:true,passive:true});
+  window.addEventListener('pointerup',feedOrbitReleaseEarly,{capture:true,passive:true});
+  window.addEventListener('pointercancel',feedOrbitReleaseEarly,{capture:true,passive:true});
 
   nativeAddEventListener('pointermove',event=>{
     if(event.pointerType!=='pen'||!pendingMeshOrbit||pendingMeshOrbit.pointerId!==event.pointerId)return;
@@ -229,7 +287,6 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
     const wrapped = function (event) {
       if((type==='pointerup'||type==='pointercancel')&&earlyReleasedPointers.has(event.pointerId)){
-        earlyReleasedPointers.delete(event.pointerId);
         if(event.pointerType==='pen')endPenNavigation(event);
         return;
       }
@@ -311,7 +368,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   };
 
   globalThis.__boxlabPencilOrbitGate={
-    version:'0.36.18.673',
+    version:'0.36.18.674',
     beginOrbitRegistration,
     endOrbitRegistration,
     registrationDepth:()=>orbitRegistrationDepth
@@ -322,6 +379,8 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
       navigationPointers:[...navigationSnapshots.keys()],
       orbitPointers:[...penOrbitPointers],
       contactPointers:[...activePenContacts],
+      physicalTouchPointers:[...physicalTouchContacts],
+      recentlyEndedTouchIds:[...recentlyEndedTouchIds],
       pendingMeshOrbit:pendingMeshOrbit?{pointerId:pendingMeshOrbit.pointerId,selectionMode:pendingMeshOrbit.selectionMode,selectionCount:pendingMeshOrbit.selectionIndices.length}:null,
       controlsEnabled:globalThis.__boxlabBridgeState?.controls?.enabled!==false
     })
