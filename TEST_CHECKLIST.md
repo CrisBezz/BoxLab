@@ -2691,3 +2691,22 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .662: no Bevel topology kernel changed
 - [x] Protection .662: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+
+
+- [x] Hands-on .662: radial Bevel viewport session PASS
+- [ ] Workflow .663: radial Edge Extrude opens simplified Total Gizmo constraint session
+- [ ] Workflow .663: simplified gizmo shows Move X/Y/Z axes + centre only
+- [ ] Workflow .663: centre selects local Plane constraint without transforming selected Edge
+- [ ] Workflow .663: X/Y/Z axis tap changes Edge Extrude constraint without transforming selected Edge
+- [ ] Workflow .663: dragging selected boundary Edge after constraint choice creates normal ribbon preview/commit
+- [ ] Workflow .663: default radial Edge Extrude constraint remains Plane
+- [ ] Workflow .663: successful pull selects new outer rail and gizmo follows it for repeat pull
+- [ ] Workflow .663: disarming Edge Extrude restores normal Total Gizmo controls
+- [ ] Workflow .663: changing away from Edge mode ends Extrude gizmo constraint session
+- [ ] Regression .663: left-toolbar Edge Extrude remains unchanged and does not open simplified gizmo session
+- [ ] Regression .663: .662 Bevel viewport session remains PASS
+- [ ] Regression .663: .661 Loop Cut ownership + Bevel reset remain PASS
+- [ ] Regression .663: .659 additive Edge hold selection remains PASS
+- [x] Static .663: Edge Extrude topology/ribbon owner remains src/edge-extrude.js; no duplicate kernel added
+- [x] Static .663: radial gizmo session maps constraint only and does not begin component transform
+- [x] Protection .663: src/multi-object-transform.js?v=0.36.1.0 unchanged
