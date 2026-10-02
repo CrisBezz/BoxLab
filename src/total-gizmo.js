@@ -306,6 +306,26 @@ const toolCenters=[...root.querySelectorAll('.tg-tool-center')];
 const toolSectors=[...root.querySelectorAll('.tg-tool-sector')];
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
 
+function syncContextToolAvailability(){
+  for(const sector of toolSectors){
+    const selector=sector.dataset.toolTarget;
+    const target=selector?document.querySelector(selector):null;
+    const unavailable=!target||!!target.disabled;
+    const active=!!target&&(target.classList.contains('active')||target.getAttribute('aria-pressed')==='true');
+    sector.disabled=unavailable;
+    sector.classList.toggle('tg-tool-unavailable',unavailable);
+    sector.classList.toggle('tg-tool-active',active&&!unavailable);
+    sector.setAttribute('aria-disabled',unavailable?'true':'false');
+    if(unavailable){
+      sector.title=`${sector.textContent?.trim()||'Tool'} unavailable for current selection`;
+    }else if(active){
+      sector.title=`${sector.textContent?.trim()||'Tool'} active`;
+    }else{
+      sector.removeAttribute('title');
+    }
+  }
+}
+
 activator?.addEventListener('pointerdown',event=>{
   if(currentMode()==='object')return;
   event.preventDefault();
@@ -319,7 +339,9 @@ collapseControl?.addEventListener('pointerdown',event=>{
   event.stopPropagation();
   hideFloatInput();
   resetTransientState({hideFloat:true});
-  setHubState(['face','edge'].includes(currentMode())?'tools':'closed',{reason:'transform-centre'});
+  const next=['face','edge'].includes(currentMode())?'tools':'closed';
+  setHubState(next,{reason:'transform-centre'});
+  if(next==='tools')syncContextToolAvailability();
 });
 
 toolCenters.forEach(toolCenter=>toolCenter.addEventListener('pointerdown',event=>{
@@ -336,6 +358,8 @@ toolSectors.forEach(button=>{
   button.addEventListener('click',event=>{
     event.preventDefault();
     event.stopPropagation();
+    syncContextToolAvailability();
+    if(button.disabled)return;
     const mode=currentMode();
     const ringMode=button.closest('.tg-tool-ring')?.dataset.ringMode||'';
     if(mode!==ringMode)return;
@@ -365,7 +389,12 @@ toolButtons.forEach(button=>button.addEventListener('click',()=>{
     hubSuppressedKey='';
     setHubState('transform',{reason:'transform-control'});
   }
+  queueMicrotask(syncContextToolAvailability);
 }));
+window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(syncContextToolAvailability));
+document.addEventListener('click',()=>queueMicrotask(syncContextToolAvailability),true);
+document.addEventListener('pointerup',()=>queueMicrotask(syncContextToolAvailability),true);
+syncContextToolAvailability();
 
 document.addEventListener('boxlab-face-direct-committed',event=>{
   const tool=event.detail?.tool;
@@ -550,6 +579,10 @@ style.textContent=`
 #totalGizmo .tg-axis{stroke-width:1.35}
 #totalGizmo .tg-hit{fill:none!important;stroke:transparent!important;stroke-width:16!important}
 @media(max-width:900px){#totalGizmo{width:184px;height:184px}}
+
+#totalGizmo .tg-tool-sector.tg-tool-unavailable{opacity:.28;filter:saturate(.25);cursor:not-allowed}
+#totalGizmo .tg-tool-sector.tg-tool-unavailable::after{content:'×';position:absolute;right:5px;top:3px;font-size:9px;opacity:.7}
+#totalGizmo .tg-tool-sector.tg-tool-active{box-shadow:inset 0 0 0 1px rgba(238,242,247,.8);background:rgba(238,242,247,.16)}
 `;
 document.head.append(style);
 
@@ -699,5 +732,5 @@ globalThis.__boxlabTotalGizmo={
   hubState:()=>hubState,
   setExpanded:(next,options={})=>setExpanded(next,options),
   setHubState:(next,options={})=>setHubState(next,options),
-  version:'0.36.18.654'
+  version:'0.36.18.658'
 };

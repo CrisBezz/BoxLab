@@ -2625,3 +2625,18 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .657: collectEdgeHoldCandidates adds Face Boundary candidates
 - [ ] Hands-on .657: cube front Face offers full 4-edge perimeter candidate
 
+- [x] Hands-on .657: closed Face Boundary candidates AWESOME / PASS
+- [ ] Workflow .658: unavailable radial tools are visibly dimmed and marked ×
+- [ ] Workflow .658: unavailable sector remains visible but cannot launch tool
+- [ ] Workflow .658: changing selection updates radial availability
+- [ ] Workflow .658: active/armed authoritative tool highlights matching radial sector
+- [ ] Workflow .658: Face Shell/Sweep availability mirrors underlying buttons
+- [ ] Workflow .658: Edge Bridge/Offset/etc availability mirrors underlying buttons
+- [ ] Regression .658: available Face tools launch exactly as before
+- [ ] Regression .658: available Edge tools launch exactly as before
+- [ ] Regression .658: .653 Shell viewport session remains PASS
+- [ ] Regression .658: .657 Edge hold browser remains PASS
+- [x] Static .658: radial disabled state derives only from authoritative target.disabled
+- [x] Protection .658: no modelling kernels changed
+- [x] Protection .658: src/multi-object-transform.js?v=0.36.1.0 unchanged
+

@@ -1,5 +1,22 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.658 contextual radial availability mirroring
+
+- .657 closed Face Boundary candidate selection hands-on AWESOME / PASS.
+- Added truthful availability state to Face + Edge Selection Hub radial sectors.
+- Each radial sector now mirrors its authoritative target button:
+  - target enabled -> normal sector
+  - target disabled/missing -> sector disabled + visibly dimmed + × marker
+  - target active/aria-pressed -> active highlight
+- Disabled sectors remain visible so the user can learn which tools exist, but cannot be activated.
+- Availability sync runs:
+  - when tools ring opens,
+  - after bridge-state changes,
+  - after click/pointerup UI state changes,
+  - after transform tool button changes.
+- Click path re-syncs before dispatching and exits immediately if sector is disabled.
+- No modelling tool owner or geometry logic changed.
+
 ## 2026-10-02 — v0.36.18.657 actual closed Face Boundary candidate implementation
 
 - Corrects the incomplete .656 publish where version/docs landed but the helper insertion into main.js did not.
