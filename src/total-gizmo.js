@@ -458,13 +458,15 @@ toolSectors.forEach(button=>{
     gestureDebug('SELECTION HUB TOOL',{tool:toolLabel,selector});
     const radialCrease=mode==='edge'&&toolLabel==='Crease';
     const radialOffset=mode==='edge'&&toolLabel==='Offset';
-    const radialSession=radialCrease||radialOffset;
+    const radialSlide=mode==='edge'&&toolLabel==='Slide';
+    const radialSession=radialCrease||radialOffset||radialSlide;
     const launchIds=radialSession?[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]:null;
     if(radialCrease){
       globalThis.__boxlabCreaseViewportSession?.openFromHub?.({ids:launchIds});
     }else{
       target.click();
       if(radialOffset)globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
+      if(radialSlide)globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
     }
     window.dispatchEvent(new CustomEvent('boxlab-selection-hub-tool',{detail:{mode,tool:toolLabel,selector,selectionKey:lastSelectionKey,radialSession}}));
   });
@@ -848,5 +850,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.671'
+  version:'0.36.18.672'
 };
