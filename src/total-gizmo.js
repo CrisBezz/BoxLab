@@ -155,6 +155,7 @@ function onHandleDown(event){
     const arming=globalThis.__boxlabTransformArming;
     if(!arming?.active?.())arming?.activateRealMove?.();
     arming?.setConstraint?.(constraint);
+    syncEdgeExtrudeConstraintVisuals();
     gestureDebug('EDGE EXTRUDE GIZMO CONSTRAINT',{constraint,kind:spec.kind||'',pid:event.pointerId});
     window.dispatchEvent(new CustomEvent('boxlab-edge-extrude-gizmo-constraint',{detail:{constraint,kind:spec.kind||''}}));
     if(status)status.textContent=`Edge Extrude • ${constraint==='plane'?'Plane ⟂ edge':constraint.toUpperCase()+' axis'} • drag selected boundary edge(s)`;
@@ -311,6 +312,7 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteEdgeBtn">Delete</button>
   <button type="button" class="tg-tool-center" aria-label="Close Edge contextual tools" title="Close tools">×</button>
 </div>
+<div class="tg-edge-extrude-badge" hidden><strong>Extrude</strong><span>Plane ⟂ edge</span><small>Choose constraint • drag edge</small></div>
 <div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
 const activator=root.querySelector('.tg-activator');
@@ -319,6 +321,24 @@ const toolRings=[...root.querySelectorAll('.tg-tool-ring')];
 const toolCenters=[...root.querySelectorAll('.tg-tool-center')];
 const toolSectors=[...root.querySelectorAll('.tg-tool-sector')];
 const hud=root.querySelector('.tg-hud'),hudText=root.querySelector('.tg-hud-text');
+const edgeExtrudeBadge=root.querySelector('.tg-edge-extrude-badge');
+
+const edgeExtrudeStyle=document.createElement('style');
+edgeExtrudeStyle.textContent=`
+#totalGizmo[data-edge-extrude-constraint="true"] .tg-edge-extrude-badge{
+  display:flex;position:absolute;left:50%;top:calc(50% + 58px);transform:translateX(-50%);
+  min-width:128px;padding:5px 8px;border-radius:8px;background:rgba(18,20,24,.88);
+  border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(8px);
+  flex-direction:column;align-items:center;gap:1px;pointer-events:none;white-space:nowrap;
+  font-size:11px;line-height:1.15;color:#f5f7fa;
+}
+#totalGizmo[data-edge-extrude-constraint="true"] .tg-edge-extrude-badge strong{font-size:11px}
+#totalGizmo[data-edge-extrude-constraint="true"] .tg-edge-extrude-badge span{font-weight:750}
+#totalGizmo[data-edge-extrude-constraint="true"] .tg-edge-extrude-badge small{font-size:9px;opacity:.68}
+#totalGizmo[data-edge-extrude-constraint="true"] .tg-handle.edge-extrude-active{filter:brightness(1.55);stroke-width:4}
+#totalGizmo[data-edge-extrude-constraint="true"] .tg-center.edge-extrude-active{stroke-width:4}
+`;
+document.head.appendChild(edgeExtrudeStyle);
 
 function syncEdgeExtrudeConstraintVisuals(){
   const active=edgeExtrudeConstraintSession;
@@ -326,6 +346,17 @@ function syncEdgeExtrudeConstraintVisuals(){
   const hideSelectors=['.tg-rotate','.tg-screen-ring','.tg-scale-ring','.tg-scale-node','.tg-plane-handles','.tg-collapse'];
   hideSelectors.forEach(selector=>root.querySelectorAll(selector).forEach(el=>{el.style.display=active?'none':'';}));
   root.querySelectorAll('.tg-move-axes,.tg-center').forEach(el=>{el.style.display='';});
+  if(edgeExtrudeBadge)edgeExtrudeBadge.hidden=!active;
+  root.querySelectorAll('.tg-handle').forEach(el=>el.classList.remove('edge-extrude-active'));
+  if(!active)return;
+  const constraint=globalThis.__boxlabTransformArming?.constraint?.()||'plane';
+  if(['x','y','z'].includes(constraint)){
+    root.querySelectorAll(`.tg-handle[data-tool="move"][data-constraint="${constraint}"]`).forEach(el=>el.classList.add('edge-extrude-active'));
+  }else{
+    root.querySelector('.tg-center[data-tool="move"]')?.classList.add('edge-extrude-active');
+  }
+  const label=constraint==='plane'?'Plane ⟂ edge':String(constraint).toUpperCase()+' axis';
+  edgeExtrudeBadge?.querySelector('span')?.replaceChildren(document.createTextNode(label));
 }
 
 function syncContextToolAvailability(){
@@ -716,11 +747,18 @@ function sync(){
     setHubState('transform',{reason:'object-mode'});
   }
   const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
-  const left=cr.left-vr.left+p.x,top=cr.top-vr.top+p.y;
+  const selectionLeft=cr.left-vr.left+p.x,selectionTop=cr.top-vr.top+p.y;
+  let left=selectionLeft,top=selectionTop;
+  if(edgeExtrudeConstraintSession&&mode==='edge'){
+    const offset=122;
+    const roomRight=vr.width-selectionLeft;
+    const side=roomRight>offset+HALF+18?1:-1;
+    left=selectionLeft+(offset*side);
+  }
   root.style.left=`${left}px`;
   root.style.top=`${top}px`;
-  floatPalette.style.left=`${left}px`;
-  floatPalette.style.top=`${top}px`;
+  floatPalette.style.left=`${selectionLeft}px`;
+  floatPalette.style.top=`${selectionTop}px`;
   const suppressed=['face','edge'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
   root.hidden=suppressed;
   root.dataset.hubState=hubState;
@@ -728,6 +766,7 @@ function sync(){
   root.dataset.mode=mode;
   root.dataset.singleComponent=mode!=='object'&&selectionKey(mesh,mode).split(':')[1]?.split(',').filter(Boolean).length===1?'true':'false';
   if(!suppressed&&(hubState==='transform'||mode==='object'))syncAxisVisuals(c,camera);
+  if(edgeExtrudeConstraintSession)syncEdgeExtrudeConstraintVisuals();
 }
 sync();
 
@@ -768,5 +807,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.663'
+  version:'0.36.18.664'
 };
