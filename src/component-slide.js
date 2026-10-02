@@ -108,6 +108,13 @@ function clearForExclusive(tool){
   activeTool=null;
   edgeButton?.classList.remove('active');
 }
+function disarmEdge(message='Edge Slide off'){
+  if(activeTool==='edge'){
+    activeTool=null;
+    edgeButton?.classList.remove('active');
+    if(status)status.textContent=message;
+  }
+}
 vertexButton?.addEventListener('click', () => setTool('vertex'));
 edgeButton?.addEventListener('click', () => setTool('edge'));
 document.addEventListener('boxlab-direct-tool-exclusive',event=>clearForExclusive(event.detail?.tool));
@@ -295,6 +302,9 @@ function finish(event) {
   render();
   setTimeout(() => {
     if (status) status.textContent = changed ? `${kind === 'vertex' ? 'Vertex' : count > 1 ? `Multi Edge (${count})` : 'Edge'} Slide committed` : `${kind === 'vertex' ? 'Vertex' : 'Edge'} Slide cancelled`;
+    if(kind==='edge'&&changed){
+      window.dispatchEvent(new CustomEvent('boxlab-edge-slide-complete',{detail:{ids:[...selectedEdges()],source:'drag'}}));
+    }
     syncButtons();
   }, 0);
 }
@@ -303,3 +313,10 @@ canvas?.addEventListener('pointercancel', finish, true);
 
 // Force one render after the observer is installed so current vertex selection is visible.
 setTimeout(() => { render(); syncButtons(); }, 0);
+
+
+globalThis.__boxlabComponentSlide={
+  version:'0.36.18.672',
+  edgeArmed:()=>activeTool==='edge',
+  disarmEdge
+};
