@@ -33,12 +33,12 @@ function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event
 
 function applyExact(){
   const m=mesh(),ids=selectedEdges(),raw=Number(input.value);
-  if(!m||!ids.length){readout.textContent='Select a valid closed edge loop first';return;}
-  if(!Number.isFinite(raw)||input.value.trim()===''){readout.textContent='Enter an Offset Loop percentage';return;}
+  if(!m||!ids.length){readout.textContent='Select a valid closed edge loop first';return false;}
+  if(!Number.isFinite(raw)||input.value.trim()===''){readout.textContent='Enter an Offset Loop percentage';return false;}
   const percent=Math.max(2,Math.min(45,raw));
-  const valid=m.offsetEdgeLoopInfo?.(ids);if(!valid){readout.textContent='Selection is not a valid Offset Loop';return;}
+  const valid=m.offsetEdgeLoopInfo?.(ids);if(!valid){readout.textContent='Selection is not a valid Offset Loop';return false;}
   const before=m.clone(),result=m.offsetEdgeLoop?.(ids,percent/100);
-  if(!result){readout.textContent='Offset Loop could not be created from this selection';return;}
+  if(!result){readout.textContent='Offset Loop could not be created from this selection';return false;}
   const topology=globalThis.__boxlabTopology,gate=globalThis.__boxlabTopologyGate;
   const topoValidation=topology?.validateTopology?.(m,{allowBoundary:true})||null;
   const gateValidation=gate?.validate?.(m)||null;
@@ -51,7 +51,7 @@ function applyExact(){
     m.edges?.();render();
     readout.textContent='Offset Loop exact • validation failed • rolled back';
     if(status)status.textContent=readout.textContent;
-    return;
+    return false;
   }
   globalThis.__boxlabHistory?.push(before);
   if(slider)slider.value=String(Math.round(percent));if(sliderOut)sliderOut.textContent=`${Math.round(percent)}%`;
@@ -60,6 +60,8 @@ function applyExact(){
   bridge()?.set?.('edge',created);
   const text=`Offset Loop exact • ${percent.toFixed(1)}% • ${Number(result.distance||0).toFixed(3)}`;
   readout.textContent=text;if(status)status.textContent=text;
+  window.dispatchEvent(new CustomEvent('boxlab-offset-loop-complete',{detail:{created:[...created],spacing:percent/100,distance:Number(result.distance||0),source:'exact'}}));
+  return true;
 }
 
 apply.addEventListener('click',applyExact);
@@ -70,4 +72,4 @@ new MutationObserver(()=>{
   if(m)readout.textContent=`Live Offset Loop • ${Number(m[1]).toFixed(1)}%`;
 }).observe(status,{childList:true,characterData:true,subtree:true});
 
-globalThis.__boxlabPrecisionOffsetLoop={version:'0.36.18.340',apply:value=>{input.value=String(value);applyExact();}};
+globalThis.__boxlabPrecisionOffsetLoop={version:'0.36.18.671',apply:value=>{input.value=String(value);return applyExact();}};
