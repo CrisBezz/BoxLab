@@ -13,6 +13,8 @@ const status=document.querySelector('#selectionStatus');
 
 let launchedFromHub=false;
 let launchSelection=[];
+let beforeSnapshot=null;
+let changed=false;
 
 const panel=document.createElement('div');
 panel.id='selectionHubCreaseSession';
@@ -87,11 +89,24 @@ function sync(){
   if(strengthOut&&strengthOut.textContent!==`${value}%`)strengthOut.textContent=`${value}%`;
   place();
 }
-function close({disarm=true}={}){
-  const preserved=selectedEdges().length?selectedEdges():[...launchSelection];
+function applyPreview(percent){
+  const ids=[...launchSelection];
+  if(!ids.length)return false;
+  const ok=globalThis.__boxlabMainDirectTool?.applyCreaseSelection?.(ids,Number(percent)/100,{pushHistory:false});
+  if(ok){
+    changed=true;
+    bridge()?.set?.('edge',ids);
+    sync();
+  }
+  return !!ok;
+}
+function close({commit=true}={}){
+  const preserved=[...launchSelection];
+  if(commit&&changed&&beforeSnapshot)globalThis.__boxlabHistory?.push?.(beforeSnapshot);
   panel.hidden=true;
   launchedFromHub=false;
-  if(disarm&&crease?.classList.contains('active'))crease.click();
+  changed=false;
+  beforeSnapshot=null;
   globalThis.__boxlabTransformArming?.disarm?.();
   if(preserved.length&&bridge()?.mode?.()==='edge')queueMicrotask(()=>{
     bridge()?.set?.('edge',preserved);
@@ -105,47 +120,56 @@ localStrength.addEventListener('input',()=>{
     strength.value=localStrength.value;
     strength.dispatchEvent(new Event('input',{bubbles:true}));
   }
-  sync();
+  applyPreview(localStrength.value);
 });
 uncreaseLocal.addEventListener('click',event=>{
   event.preventDefault();event.stopPropagation();
-  if(!selectedEdges().length)return;
-  uncrease?.click();
-  sync();
+  localStrength.value='0';
+  if(strength){
+    strength.value='0';
+    strength.dispatchEvent(new Event('input',{bubbles:true}));
+  }
+  applyPreview(0);
 });
 done.addEventListener('click',event=>{
   event.preventDefault();event.stopPropagation();
-  close({disarm:true});
+  close({commit:true});
 });
 
-function openFromHub(){
+function openFromHub(options={}){
+  if(launchedFromHub)return true;
   if(bridge()?.mode?.()!=='edge')return false;
-  const ids=selectedEdges();
-  if(!ids.length)return false;
+  const ids=[...new Set(options.ids||selectedEdges())].filter(Number.isInteger);
+  const mesh=globalThis.__boxlabBridgeState?.mesh;
+  if(!ids.length||!mesh)return false;
   launchedFromHub=true;
   launchSelection=[...ids];
+  beforeSnapshot=mesh.clone?.()||null;
+  changed=false;
+  bridge()?.set?.('edge',launchSelection);
   panel.hidden=false;
   sync();
-  requestAnimationFrame(()=>{if(launchedFromHub){panel.hidden=false;sync();}});
-  if(status)status.textContent='Crease • set Strength here • tap Edge(s) to apply • Done returns to puck';
+  applyPreview(Number(strength?.value||100));
+  requestAnimationFrame(()=>{if(launchedFromHub){panel.hidden=false;bridge()?.set?.('edge',launchSelection);sync();}});
+  if(status)status.textContent='Crease • selected Edge(s) • adjust Strength or Uncrease • Done';
   return true;
 }
 window.addEventListener('boxlab-selection-hub-tool',event=>{
-  if(event.detail?.mode!=='edge'||event.detail?.tool!=='Crease')return;
+  if(event.detail?.mode!=='edge'||event.detail?.tool!=='Crease'||event.detail?.radialSession)return;
   openFromHub();
 });
 window.addEventListener('boxlab-bridge-state',()=>{if(launchedFromHub)requestAnimationFrame(sync);});
 document.querySelectorAll('#selectionModes button[data-mode]').forEach(button=>button.addEventListener('click',()=>{
-  if(launchedFromHub&&button.dataset.mode!=='edge')close({disarm:true});
+  if(launchedFromHub&&button.dataset.mode!=='edge')close({commit:true});
 },true));
 document.addEventListener('boxlab-direct-tool-exclusive',event=>{
   if(!launchedFromHub)return;
   const tool=event.detail?.tool;
-  if(tool&&tool!=='none'&&tool!=='crease')close({disarm:false});
+  if(tool&&tool!=='none'&&tool!=='crease')close({commit:true});
 });
 
 globalThis.__boxlabCreaseViewportSession={
-  version:'0.36.18.669',
+  version:'0.36.18.670',
   active:()=>launchedFromHub,
   openFromHub,
   close,
