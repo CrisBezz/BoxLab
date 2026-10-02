@@ -1,52 +1,61 @@
-## v0.36.18.659 — additive Edge hold selection with clean replacement browsing
+## v0.36.18.660 — Loop Cut drag ownership + Bevel reset
 
 Current release:
-- v0.36.18.659
+- v0.36.18.660
 
-Protected hands-on:
-- .652 background Pencil yield: PERFECT / PASS.
+Hands-on protected:
+- .652 Face-direct background Pencil yield: PERFECT / PASS.
 - .653 Shell viewport session: PASS.
-- .657 closed Face Boundary candidates: AWESOME / PASS.
+- .657 closed Face Boundary selection: AWESOME / PASS.
+- .659 additive Edge hold browser implemented; awaiting hands-on confirmation.
 
-Context:
-- .655 fixed candidate contamination and candidate-to-candidate accumulation.
-- That made browser previews candidate-only.
-- User correctly noted long-press could therefore no longer ADD another loop/ring to an existing Edge selection.
+User findings before .660:
+1. Loop Cut:
+   - loop topology inserts,
+   - Pencil drag rotates model instead of sliding inserted loop.
+2. Edge Bevel:
+   - bevel completes,
+   - Bevel remains armed in left menu,
+   - subsequent Edge taps bevel rather than select.
 
-.659 model:
-- hold.baseIndices = Edge selection that existed before this hold began.
-- Every candidate preview is recomputed as:
-  fixed baseIndices + CURRENT candidate.indices
-- Scrubbing A -> B:
-  base + A
-  becomes
-  base + B
-- Candidate A is fully removed; base remains untouched.
-- No A+B accumulation.
-- Release commits base + current candidate.
-- Cancel restores the exact pre-hold selection.
+.660 Loop Cut ownership:
+- main.js exposes __boxlabMainDirectTool.active() / ownsModellingGesture().
+- pencil-orbit-gate checks this in addition to Face-direct.
+- Any active main direct modelling tool blocks deferred Pencil orbit on mesh.
+- Loop Cut therefore keeps the Pencil from pointerdown through its loop-slide drag.
+- Orbit still works normally when no modelling owner is active.
 
-This restores additive multi-loop selection without reintroducing the .655 bug because candidate probing itself is now transactional.
+.660 Bevel reset:
+- direct-bevel pointerup:
+  - commit/restore
+  - release pointer capture
+  - clear Edge selection
+  - disarm Bevel
+  - semantic tool:none
+  - Edge selection ready
+- pointercancel restores and disarms.
+- applyExact also disarms.
+- __boxlabDirectBevel now exposes disarm / active for future Selection Hub session work.
 
 Immediate hands-on:
-1. Select a complete loop or Face Boundary.
-2. Long-press an Edge elsewhere.
-3. First candidate should be ADDED to the existing selection.
-4. Scrub to another candidate.
-5. Existing first selection must remain.
-6. Previous candidate must disappear completely.
-7. Release: existing selection + current candidate remain.
-8. Repeat again to add a third distinct loop if desired.
-9. Cancel test: pre-hold selection must restore exactly.
+1. Edge mode -> Loop Cut.
+2. Pencil down on valid edge and drag immediately.
+3. Inserted loop must slide; camera must NOT rotate.
+4. Release and confirm topology.
+5. Bevel an Edge with Pencil.
+6. On release, left Bevel button must switch off.
+7. Tap another Edge: it must select, not bevel.
+8. Quick .659 additive Edge hold test.
+9. Quick Face Extrude background-orbit test if desired.
 
-Still next after selection PASS:
-- verify .658 radial availability UI hands-on.
-- Edge Extrude gizmo-assisted axis/plane workflow.
-- Bevel viewport settings.
+Next after PASS:
+- Bevel viewport settings palette.
+- Edge Extrude gizmo-assisted plane/axis workflow.
+- continue radial availability polish if needed.
 
 Protected:
-- .655 transactional probing.
-- .657 Face Boundary candidate generation.
+- .652 background-yield rule.
+- .657 Face Boundary candidates.
+- .659 additive Edge hold semantics.
 - .658 radial availability.
-- .652 Face-direct background-yield.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.

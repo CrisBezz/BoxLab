@@ -52,7 +52,30 @@ function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone()
 function bevelSegments(){return Math.max(1,Number(document.querySelector('#bevelSegments')?.value||1));}
 canvas?.addEventListener('pointerdown',e=>{if(!armed||!e.isPrimary)return;const i=hit(e),mesh=state()?.mesh;if(!Number.isInteger(i)||!mesh)return;e.preventDefault();e.stopImmediatePropagation();const existing=selectedEdgeIds(),useMulti=!!multiToggle?.checked&&existing.length>1&&existing.includes(i),ids=useMulti?existing:[i];if(!useMulti)bridge()?.set?.('edge',[i]);const valid=mesh.generalBevelSelectionInfo?.(ids);if(!valid){document.querySelector('#selectionStatus').textContent=ids.length>1?(mesh.__lastBevelError||'Selected edges cannot be bevelled together'):(mesh.__lastBevelError||'This edge cannot be bevelled');return;}drag={id:e.pointerId,x:e.clientX,width:Number(width.value||20),mesh,before:mesh.clone(),ids:[...valid.ids],mode:valid.mode,preview:false};canvas.setPointerCapture?.(e.pointerId)},true);
 canvas?.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;const value=Math.max(2,Math.min(49,drag.width+(e.clientX-drag.x)*.25)),amount=Math.round(value);width.value=String(amount);out.textContent=`${amount}%`;restore(drag.mesh,drag.before);drag.preview=!!drag.mesh.generalBevelSelection?.(drag.ids,amount/100,bevelSegments());if(!drag.preview&&drag.mesh.__lastBevelError)document.querySelector('#selectionStatus').textContent=drag.mesh.__lastBevelError;render()},true);
-canvas?.addEventListener('pointerup',e=>{if(!drag||drag.id!==e.pointerId)return;const current=drag;drag=null;if(current.preview)globalThis.__boxlabHistory?.push(current.before);else restore(current.mesh,current.before);bridge()?.set?.('edge',[]);render()},true);
+canvas?.addEventListener('pointerup',e=>{
+  if(!drag||drag.id!==e.pointerId)return;
+  const current=drag;
+  drag=null;
+  if(current.preview)globalThis.__boxlabHistory?.push(current.before);else restore(current.mesh,current.before);
+  bridge()?.set?.('edge',[]);
+  try{canvas.releasePointerCapture?.(e.pointerId);}catch{}
+  disarm();
+  document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none',reason:current.preview?'bevel-complete':'bevel-cancel'}}));
+  render();
+  const status=document.querySelector('#selectionStatus');
+  if(status)status.textContent=current.preview?'Bevel committed • select Edge(s) for next action':'Bevel cancelled • Edge selection ready';
+},true);
+canvas?.addEventListener('pointercancel',e=>{
+  if(!drag||drag.id!==e.pointerId)return;
+  const current=drag;
+  drag=null;
+  restore(current.mesh,current.before);
+  try{canvas.releasePointerCapture?.(e.pointerId);}catch{}
+  disarm();
+  bridge()?.set?.('edge',[]);
+  document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none',reason:'bevel-cancel'}}));
+  render();
+},true);
 
 // v0.36.18.32 — exact Edge Bevel is owned by this same controller rather than
 // duplicating bevel execution in precision-bevel.js.
@@ -67,8 +90,11 @@ function applyExact(value,selectionOverride=null){
   if(!result){restore(mesh,before);render();return{ok:false,reason:mesh.__lastBevelError||'Bevel failed'};}
   globalThis.__boxlabHistory?.push(before);
   if(width)width.value=String(amount);if(out)out.textContent=`${amount}%`;
-  bridge()?.set?.('edge',[]);render();
-  const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Bevel committed • ${valid.ids.length} edge${valid.ids.length===1?'':'s'} • ${amount}%`;
+  bridge()?.set?.('edge',[]);
+  disarm();
+  document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none',reason:'bevel-exact-complete'}}));
+  render();
+  const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Bevel committed • ${valid.ids.length} edge${valid.ids.length===1?'':'s'} • ${amount}% • Edge selection ready`;
   return{ok:true,ids:[...valid.ids],percent:amount,segments:bevelSegments()};
 }
-globalThis.__boxlabDirectBevel={version:'0.36.18.32',applyExact};
+globalThis.__boxlabDirectBevel={version:'0.36.18.660',applyExact,disarm,active:()=>armed};

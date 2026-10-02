@@ -1,5 +1,32 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.660 Loop Cut drag ownership + Bevel post-commit reset
+
+- User reported two ownership regressions:
+  - Loop Cut inserts topology but Pencil drag rotates the model instead of sliding the inserted loop.
+  - Edge Bevel remains armed after completion, preventing normal Edge selection.
+- Loop Cut root cause:
+  - Pencil orbit gate only knew about Face-direct ownership.
+  - main.js directTool='loopCut' was invisible to the gate.
+  - mesh Pencil-down could therefore enter deferred orbit and steal the drag after the cut was created.
+- main.js now exposes read-only __boxlabMainDirectTool:
+  - active()
+  - ownsModellingGesture()
+- pencil-orbit-gate now treats main direct tools as modelling owners.
+  - when Loop Cut / Crease / Add Vertex / Vertex Bevel / legacy direct Face tool owns the gesture, mesh Pencil-down is BLOCK_MODELLING_TOOL, never deferred orbit.
+  - background navigation behaviour is unchanged.
+- Bevel root cause:
+  - direct-bevel.js had disarm() but pointerup commit never called it.
+- Bevel pointerup now:
+  - commits/restores,
+  - releases capture,
+  - clears selection,
+  - disarms,
+  - emits semantic tool:none completion,
+  - returns to Edge selection-ready state.
+- Bevel pointercancel also restores and disarms.
+- Exact Bevel completion now disarms too.
+
 ## 2026-10-02 — v0.36.18.659 additive Edge hold selection with replacement browsing
 
 - User found that after the .655 transactional browser cleanup, long-press could no longer ADD a second loop/ring to an existing Edge selection.

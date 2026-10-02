@@ -216,13 +216,16 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         const selectionCount=[...(bridge?.indices?.()||[])].length;
         const meshHit=pencilHitsEditableMesh(event);
         const faceToolActive=!!globalThis.__boxlabFaceDirect?.active?.();
+        const mainDirectTool=globalThis.__boxlabMainDirectTool?.active?.()||null;
+        const mainDirectActive=!!globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.();
         const paintState=globalThis.__boxlabPaintSelectDebug;
         const paintPending=paintState?.pending?.()||null;
         const paintActive=paintState?.active?.()||null;
         const multiEnabled=paintState?.multiEnabled?.()??null;
         const controlsEnabled=globalThis.__boxlabBridgeState?.controls?.enabled!==false;
         const blocked=!!meshHit;
-        const deferred=blocked&&!faceToolActive;
+        const modellingToolActive=faceToolActive||mainDirectActive;
+        const deferred=blocked&&!modellingToolActive;
         gestureDebug('PEN ORBIT ROUTE',{
           pid:event.pointerId,
           pressure:event.pressure,
@@ -231,11 +234,13 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
           selectionMode,
           selectionCount,
           faceToolActive,
+          mainDirectTool,
+          mainDirectActive,
           multiEnabled,
           paintPending,
           paintActive,
           controlsEnabled,
-          route:deferred?'DEFER_MESH_INTENT':blocked?'BLOCK_ACTIVE_TOOL':'FORWARD_ORBIT'
+          route:deferred?'DEFER_MESH_INTENT':blocked&&modellingToolActive?'BLOCK_MODELLING_TOOL':blocked?'BLOCK_MESH_HIT':'FORWARD_ORBIT'
         });
         if(deferred){
           pendingMeshOrbit={

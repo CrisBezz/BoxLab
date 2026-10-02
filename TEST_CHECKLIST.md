@@ -2653,3 +2653,19 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .659: commit recomputes the same fixed-base result
 - [x] Protection .659: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [ ] Workflow .660: arm Loop Cut and Pencil-down on valid Edge
+- [ ] Workflow .660: cut topology appears and same Pencil drag slides inserted loop
+- [ ] Workflow .660: camera does not orbit during Loop Cut slide drag
+- [ ] Workflow .660: release commits cut/slide normally
+- [ ] Workflow .660: after Loop Cut is manually disarmed, Pencil navigation works normally
+- [ ] Workflow .660: perform Edge Bevel by Pencil drag
+- [ ] Workflow .660: after Bevel release, Bevel button is no longer active
+- [ ] Workflow .660: next Edge tap selects normally instead of immediately bevelling
+- [ ] Workflow .660: Bevel pointercancel restores mesh and disarms
+- [ ] Workflow .660: exact Bevel completion also disarms
+- [ ] Regression .660: .652 Face Extrude/Inset background-yield still works
+- [ ] Regression .660: .659 additive Edge hold selection still works
+- [x] Static .660: Pencil gate recognizes main direct modelling owner
+- [x] Static .660: direct Bevel pointerup/pointercancel call disarm
+- [x] Protection .660: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
