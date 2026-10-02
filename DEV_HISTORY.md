@@ -1,5 +1,23 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.670 selection-first radial Crease
+
+- Hands-on exposed the true .668/.669 issue: radial Crease inherited legacy paint-tool arming, which intentionally clears Edge selection.
+- Reworked radial Crease UX around the preselected Edge(s) rather than the legacy paint workflow.
+- Total Gizmo now captures radial Crease selection and bypasses #applyCreaseBtn for radial launches only.
+- Added main.js authoritative applyCreaseSelection(ids,value,{pushHistory}) bridge.
+- Radial Crease now:
+  - keeps launch selection
+  - opens panel immediately
+  - applies current Strength immediately
+  - previews Strength changes live on the same selection
+  - previews Uncrease on the same selection
+  - pushes one history snapshot on Done
+  - preserves selection and returns puck
+- Left-panel Crease remains unchanged.
+- No duplicate crease topology/data implementation added.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.669 hardened radial Crease viewport launch
 
 - .668 Crease viewport panel did not appear hands-on.
