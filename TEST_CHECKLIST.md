@@ -2723,3 +2723,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .664: .662 Bevel viewport session remains PASS
 - [x] Static .664: no Edge Extrude topology/projection/history code changed
 - [x] Protection .664: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Hands-on .664: Edge Extrude radial workflow / drag-on-edge extrusion works really well
+- [ ] Workflow .666: visible release remains v0.36.18.666 after release-version refresh
+- [ ] Workflow .666: intentional Edge Extrude session exit disarms left-panel Extrude
+- [ ] Workflow .666: Edge selection is preserved on Extrude session exit
+- [ ] Workflow .666: closed Selection Hub puck reappears on preserved Edge selection
+- [ ] Workflow .666: resulting outer rail remains immediately available for next Edge action
+- [ ] Regression .666: radial Edge Extrude geometry/drag behaviour remains unchanged
+- [x] Static .666: version.json and index.html release version match
+- [x] Static .666: Extrude exit calls existing setArmed(false); no geometry kernel change
+- [x] Protection .666: src/multi-object-transform.js?v=0.36.1.0 unchanged
