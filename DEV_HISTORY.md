@@ -1,5 +1,23 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.663 Edge Extrude gizmo constraint session
+
+- .662 radial Bevel viewport session hands-on PASS.
+- Audited current Edge Extrude before implementation and confirmed the required Plane / X / Y / Z constraint maths, ribbon preview, repeat-pull selection, validation and rollback already existed.
+- Did not create a second Edge Extrude implementation.
+- Radial Edge Extrude now opens a temporary Total Gizmo constraint-selection session.
+- During that session:
+  - X / Y / Z Move axes select the existing Edge Extrude axis constraint.
+  - the centre Move handle selects the existing local Plane constraint.
+  - Rotate / Scale / world-plane handles and the contextual-ring centre are hidden.
+  - gizmo interaction changes constraint only; it never directly transforms the selected Edge.
+- Actual extrusion remains owned by src/edge-extrude.js and still begins by dragging the selected boundary Edge(s).
+- Successful repeated pulls keep the temporary gizmo active and follow the newly selected outer rail.
+- Disarming Edge Extrude restores normal Total Gizmo visuals and behaviour.
+- Left-toolbar Edge Extrude remains unchanged and does not open the special gizmo session.
+- Repinned total-gizmo.js and edge-extrude.js to .663.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.662 Bevel viewport session
 
 - .661 Loop Cut ownership + Bevel reset hands-on PASS.
