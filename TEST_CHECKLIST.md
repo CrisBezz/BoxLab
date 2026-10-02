@@ -2765,3 +2765,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .669: left-panel Crease does not open viewport panel
 - [x] Static .669: Total Gizmo directly calls Crease session openFromHub after authoritative Crease click
 - [x] Protection .669: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .670: radial Crease preserves preselected Edge(s)
+- [ ] Workflow .670: radial Crease does not enter legacy blank paint-selection mode
+- [ ] Workflow .670: viewport Crease panel opens immediately beside preserved selection
+- [ ] Workflow .670: current Strength applies immediately to captured selection
+- [ ] Workflow .670: Strength slider updates same captured selection live
+- [ ] Workflow .670: Uncrease sets captured selection to 0
+- [ ] Workflow .670: Done commits once, preserves selection and returns puck
+- [ ] Regression .670: left-panel Crease retains legacy tap-edge paint workflow
+- [x] Static .670: radial session uses main.js authoritative applyCreaseSelection bridge
+- [x] Protection .670: src/multi-object-transform.js?v=0.36.1.0 unchanged
