@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.675 recover stale camera disable
+
+- User reported finger navigation eventually becomes completely inert, not merely misclassified as multi-touch.
+- Pointer events still reached viewport, suggesting camera controls themselves remained disabled.
+- main.js and several tool owners legitimately set controls.enabled=false during drags; if their normal release path is swallowed, controls can remain false.
+- Added navigation safety recovery:
+  - fresh first touch restores stale controls.enabled=false before downstream routing
+  - fresh Pencil contact does the same
+  - last physical contact end checks again after release handlers
+- Kept .674 OrbitControls stale-pointer reconciliation.
+- Added NAV CONTROLS RECOVER debug markers.
+- No modelling drag geometry or selection semantics changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.673 touch navigation stale-pointer fix
 
 - User reported Pencil orbit still worked, but two-finger pan/pinch failed and one finger started pan+zoom simultaneously.
