@@ -1,7 +1,7 @@
-## v0.36.18.666 — Edge Extrude exit returns to puck
+## v0.36.18.667 — transactional Edge Extrude exit
 
 Current release:
-- v0.36.18.666
+- v0.36.18.667
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
@@ -11,37 +11,32 @@ Hands-on protected:
 - .662 radial Bevel viewport session: PASS.
 - .663/.664 Edge Extrude radial workflow: works really well.
 
-.665/.666 fixes:
-- Root cause of visible version reverting from .664 to .662 was stale version.json.
-- version.json is now republished with the current release and must be kept in sync with index.html.
-- Closing the radial Edge Extrude constraint session now completes the tool session rather than merely hiding its UI.
-- On intentional Edge Extrude session exit:
-  - Edge Extrude disarms through existing __boxlabEdgeExtrude.setArmed(false)
-  - current Edge selection is preserved
-  - hub suppression is cleared
-  - Selection Hub returns to CLOSED state
-  - puck reappears on the currently selected Edge/outer rail
-- This makes post-Extrude flow modeless: finish Extrude -> same Edge selection -> puck -> next action.
-- Actual Edge Extrude geometry remains unchanged and protected.
-- Selection loss still closes the session normally; no puck is shown when there is no valid selection.
+.667:
+- Fixes the remaining Edge Extrude exit-state bug only.
+- User reported exit dropped Edge selection and left Move active in the left transform menu.
+- Root cause: Edge Extrude Plane setup activates the real Move transform state; prior teardown disarmed Extrude but did not atomically preserve selection and disarm transform arming.
+- Exit is now transactional:
+  1. capture current selected Edge IDs
+  2. end temporary Extrude gizmo session
+  3. disarm existing Edge Extrude owner
+  4. disarm transform arming / Move constraint state
+  5. restore the exact captured Edge selection
+  6. clear hub suppression
+  7. force Selection Hub CLOSED state and show puck
+  8. re-assert transform disarm on next animation frame so later render sync cannot visually re-arm Move
+- No Edge Extrude geometry/topology/history code changed.
+- Current outer rail should remain selected after exit.
 
 Immediate hands-on:
-1. Confirm visible version remains v0.36.18.666 after page load settles.
-2. Perform radial Edge Extrude and confirm extrusion still behaves exactly as the prior working build.
-3. Finish/exit the Extrude constraint session.
-4. Confirm Extrude is no longer armed in the left menu.
-5. Confirm the resulting outer Edge selection remains selected.
-6. Confirm the closed Selection Hub puck reappears on that selection.
-
-Next after PASS:
-- Continue Edge tool viewport-session centralisation with the next Edge tool still dependent on the left panel.
+1. Confirm v0.36.18.667 remains visible after load settles.
+2. Perform radial Edge Extrude.
+3. Exit the Extrude session.
+4. Confirm Extrude is OFF.
+5. Confirm Move is NOT active in the left transform menu.
+6. Confirm the current outer Edge selection remains selected.
+7. Confirm the closed puck appears on that selection.
 
 Protected:
-- .657 Edge candidate selection.
-- .659 additive Edge hold semantics.
-- .661 Loop Cut ownership + Bevel reset.
-- .662 Bevel viewport session.
-- .658 radial availability.
-- .664 side-mounted Edge Extrude constraint palette.
-- existing Edge Extrude topology/ribbon engine and drag-on-edge interaction.
+- working Edge Extrude ribbon workflow and drag-on-edge interaction.
+- .664 side constraint palette.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
