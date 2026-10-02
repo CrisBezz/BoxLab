@@ -457,6 +457,7 @@ toolSectors.forEach(button=>{
     const toolLabel=button.textContent?.trim()||'Tool';
     gestureDebug('SELECTION HUB TOOL',{tool:toolLabel,selector});
     target.click();
+    if(mode==='edge'&&toolLabel==='Crease')globalThis.__boxlabCreaseViewportSession?.openFromHub?.();
     window.dispatchEvent(new CustomEvent('boxlab-selection-hub-tool',{detail:{mode,tool:toolLabel,selector,selectionKey:lastSelectionKey}}));
   });
 });
@@ -839,5 +840,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.667'
+  version:'0.36.18.669'
 };
