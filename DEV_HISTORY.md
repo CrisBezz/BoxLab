@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.657 actual closed Face Boundary candidate implementation
+
+- Corrects the incomplete .656 publish where version/docs landed but the helper insertion into main.js did not.
+- Added edgeIndexByVertices(a,b).
+- Added faceBoundaryCandidatesForEdge(seedIndex).
+- collectEdgeHoldCandidates now adds every valid incident Face perimeter as kind "Face Boundary" before generic Boundary/Ring.
+- .655 candidate replacement semantics remain unchanged.
+
 ## 2026-10-02 — v0.36.18.656 Edge hold adds closed Face Boundary candidates
 
 - .655 improved transactional Edge hold browsing, but a cube test exposed an obvious omission:

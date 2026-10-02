@@ -2621,3 +2621,7 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .656: no Loop/Ring/Boundary selector kernel changed
 - [x] Protection .656: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [x] Static .657: Face Boundary helper exists in main.js
+- [x] Static .657: collectEdgeHoldCandidates adds Face Boundary candidates
+- [ ] Hands-on .657: cube front Face offers full 4-edge perimeter candidate
+

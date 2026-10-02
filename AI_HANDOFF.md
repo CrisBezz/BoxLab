@@ -1,7 +1,7 @@
-## v0.36.18.656 — Edge hold closed Face Boundary candidates
+## v0.36.18.657 — Edge hold closed Face Boundary candidates (actual implementation)
 
 Current release:
-- v0.36.18.656
+- v0.36.18.657
 
 Protected hands-on:
 - .652 background Pencil yield: PERFECT / PASS.
@@ -46,3 +46,8 @@ Protected:
 - .654 Edge Selection Hub structure.
 - .655 transactional Edge candidate preview.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
+
+
+Correction note:
+- .656 release shell/docs published, but the Face Boundary helper did not land in main.js.
+- .657 is the actual code implementation and should be the build tested.

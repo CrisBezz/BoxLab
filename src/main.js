@@ -70,6 +70,32 @@ function invokeEdgeSelector(buttonId,seedIndices){
   renderMesh();
   return result;
 }
+function edgeIndexByVertices(a,b){
+  const edges=mesh.edges(),key=mesh.edgeKey(a,b);
+  for(let i=0;i<edges.length;i++){
+    const edge=edges[i];
+    if(edge&&mesh.edgeKey(edge.a,edge.b)===key)return i;
+  }
+  return null;
+}
+function faceBoundaryCandidatesForEdge(seedIndex){
+  const edges=mesh.edges(),seed=edges[seedIndex];
+  if(!seed)return[];
+  const out=[];
+  for(const faceIndex of seed.faces||[]){
+    const face=mesh.faces[faceIndex];
+    if(!Array.isArray(face)||face.length<3)continue;
+    const indices=[];
+    let valid=true;
+    for(let i=0;i<face.length;i++){
+      const edgeIndex=edgeIndexByVertices(face[i],face[(i+1)%face.length]);
+      if(!Number.isInteger(edgeIndex)){valid=false;break;}
+      indices.push(edgeIndex);
+    }
+    if(valid&&indices.includes(seedIndex)&&indices.length>=3)out.push(indices);
+  }
+  return out;
+}
 function collectEdgeHoldCandidates(seedIndex){
   const candidates=[],seen=new Set(),edges=mesh.edges(),seed=edges[seedIndex];
   if(!seed)return candidates;
@@ -89,6 +115,10 @@ function collectEdgeHoldCandidates(seedIndex){
   for(const hint of hintsB)add('Loop',invokeEdgeSelector('#selectLoopBtn',[seedIndex,hint]));
   for(const a of hintsA)for(const b of hintsB){
     add('Loop',invokeEdgeSelector('#selectLoopBtn',[a,seedIndex,b]));
+  }
+
+  for(const perimeter of faceBoundaryCandidatesForEdge(seedIndex)){
+    add('Face Boundary',perimeter);
   }
 
   add('Boundary',invokeEdgeSelector('#selectBoundaryBtn',[seedIndex]));
