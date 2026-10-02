@@ -2669,3 +2669,8 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .660: direct Bevel pointerup/pointercancel call disarm
 - [x] Protection .660: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
+- [x] Static .661: direct-bevel cache pin matches release
+- [x] Static .661: main/pencil gate pins match release
+- [ ] Hands-on .661: Loop Cut insert+drag slides, not orbits
+- [ ] Hands-on .661: Bevel disarms after commit and next Edge tap selects
+

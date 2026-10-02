@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.661 publish pin correction for .660 ownership fixes
+
+- .660 source changes landed correctly.
+- Static audit found index.html still loaded direct-bevel.js?v=0.36.18.253.
+- Therefore the Bevel post-commit disarm fix would not reliably reach the browser.
+- .661 repins direct-bevel.js, main.js, and pencil-orbit-gate.js to the current release so the complete ownership fix is actually loaded.
+- No behaviour/code logic changed from .660.
+
 ## 2026-10-02 — v0.36.18.660 Loop Cut drag ownership + Bevel post-commit reset
 
 - User reported two ownership regressions:

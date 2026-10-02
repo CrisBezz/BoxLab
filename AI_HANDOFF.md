@@ -1,7 +1,7 @@
-## v0.36.18.660 — Loop Cut drag ownership + Bevel reset
+## v0.36.18.661 — Loop Cut drag ownership + Bevel reset
 
 Current release:
-- v0.36.18.660
+- v0.36.18.661
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
@@ -59,3 +59,11 @@ Protected:
 - .659 additive Edge hold semantics.
 - .658 radial availability.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
+
+
+Publish correction:
+- .660 source was correct, but direct-bevel.js remained cache-pinned to .253.
+- .661 is the build to hands-on test; all three touched owners are repinned:
+  - main.js
+  - pencil-orbit-gate.js
+  - direct-bevel.js
