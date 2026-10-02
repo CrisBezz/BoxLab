@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-10-02 — v0.36.18.668 Crease viewport session
+
+- Logged connected-chain Edge Bevel through ordinary 4-valence quad vertices in ROADMAP.md strengthening list.
+- Continued Selection Hub/gizmo UX rather than expanding Bevel topology now.
+- Added radial-only Crease viewport session:
+  - contextual Strength slider mirrors existing #creaseStrength
+  - existing main.js Crease remains authoritative
+  - tapping Edge(s) still applies Crease through the established direct-tool path
+  - Uncrease delegates to existing #clearCreaseBtn
+  - Done disarms Crease, preserves Edge selection and returns to closed puck
+- Left-toolbar Crease behaviour remains unchanged.
+- No crease topology/history implementation duplicated.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.667 transactional Edge Extrude exit
 
 - Edge Extrude geometry remained hands-on good.
