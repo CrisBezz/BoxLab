@@ -1,7 +1,7 @@
-## v0.36.18.670 — selection-first radial Crease
+## v0.36.18.671 — Offset Loop viewport session
 
 Current release:
-- v0.36.18.670
+- v0.36.18.671
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
@@ -10,42 +10,50 @@ Hands-on protected:
 - .661 Loop Cut slide ownership + Bevel reset: PASS.
 - .662 radial Bevel viewport session: PASS.
 - .663/.664 Edge Extrude radial workflow: works really well.
-- .667 transactional Edge Extrude exit still awaiting hands-on retest.
+- .670 radial Crease selection-first workflow: PERFECT / PASS.
 
 Strengthening list:
-- Connected-chain Edge Bevel through ordinary 4-valence quad vertices is recorded in ROADMAP.md for later strengthening.
+- Connected-chain Edge Bevel through ordinary 4-valence quad vertices remains recorded in ROADMAP.md.
 
-.670:
-- Fixes the confusing radial Crease behaviour revealed hands-on in .668/.669.
-- Root cause: the legacy left-panel Crease owner intentionally clears Edge selection when armed, so proxying its button destroyed the radial launch selection before the viewport panel could open.
-- Radial Crease now has a distinct selection-first UX:
-  - selected Edge IDs are captured before any action
-  - radial Crease does NOT click/arm the legacy paint-Crease button
-  - the selected Edge(s) remain selected
-  - Crease panel opens immediately beside that selection
-  - current Strength is applied immediately to the captured selection
-  - Strength slider updates the same captured Edge(s) live
-  - Uncrease previews 0 strength on that same captured selection
-  - Done commits one history snapshot and returns to the closed puck
-- main.js now exposes applyCreaseSelection(ids,value,{pushHistory}) so the authoritative mesh/history owner performs the mutation; the viewport session does not duplicate the crease data implementation.
-- Left-panel Crease remains unchanged and retains its old paint-style "tap edges to crease" workflow.
-- Semantic Selection Hub tool event remains emitted; the radial session flag prevents duplicate opening.
+.671:
+- Continues gizmo-related Edge tool centralisation with Offset Loop.
+- Slide audit: current Edge Slide is already largely viewport-native (arm + direct drag), so Offset Loop was the stronger target.
+- New src/selection-hub-offset-session.js.
+- Radial Offset:
+  - activates the existing authoritative #offsetLoopBtn drag owner
+  - opens a compact viewport panel beside the selected loop
+  - Support Spacing slider mirrors existing #offsetLoopSpacing
+  - exact numeric field delegates to existing __boxlabPrecisionOffsetLoop.apply()
+  - Done exits the session and returns the closed puck
+- Existing drag Offset remains authoritative:
+  - Pencil-drag selected loop Edge
+  - live topology preview
+  - validation / rollback
+  - history push
+  - created left/right support loops selected after commit
+- loop-offset.js now emits boxlab-offset-loop-complete after successful drag commit.
+- precision-offset-loop.js now returns success and emits the same semantic completion for exact Apply.
+- Radial session listens to that semantic event and closes cleanly onto the created support-loop selection.
+- Left-panel Offset remains unchanged and does not open the viewport panel.
+- drawer-ui dynamic import pins updated for both modified Offset owners.
+- No Offset topology kernel duplicated.
 
 Immediate hands-on:
-1. Select one or more Edge(s).
-2. Puck -> Edge tools -> Crease.
-3. Existing selection must remain selected; do NOT enter blank paint-Crease selection mode.
-4. Crease panel must appear immediately beside that selection.
-5. Selected Edge(s) should take the current Strength immediately.
-6. Drag Strength; same selected Edge(s) update live.
-7. Tap Uncrease; same selected Edge(s) go to 0.
-8. Tap Done; one commit, selection preserved, puck returns.
-9. Left-panel Crease still uses legacy tap-edge paint workflow and does not open this panel.
+1. Select a valid closed Edge loop.
+2. Puck -> Edge tools -> Offset.
+3. Expect Offset Loop panel beside selection with Spacing, exact value, Apply Exact, Done.
+4. Move Spacing slider; left Support Spacing should mirror.
+5. Option A: drag selected loop Edge -> normal live Offset -> commit -> created support loops stay selected and puck returns.
+6. Option B: relaunch -> enter exact % -> Apply Exact -> created support loops stay selected and puck returns.
+7. Done without applying -> original loop selection remains and puck returns.
+8. Left-panel Offset -> no viewport panel.
+9. Regression: radial Crease and Edge Extrude remain unchanged.
 
 Next after PASS:
-- Continue gizmo-related Edge tools: audit Slide / Offset viewport-session needs.
+- Continue gizmo-related Edge tools with Slide viewport-session polish only if a concrete missing control remains; otherwise move to the next radial Edge tool with meaningful contextual settings.
 
 Protected:
+- .670 radial Crease.
 - working Edge Extrude workflow.
-- left-panel legacy Crease workflow.
+- existing Offset Loop drag/topology/validation/history owner.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
