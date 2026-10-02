@@ -2777,3 +2777,19 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .670: left-panel Crease retains legacy tap-edge paint workflow
 - [x] Static .670: radial session uses main.js authoritative applyCreaseSelection bridge
 - [x] Protection .670: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Hands-on .670: radial Crease selection-first workflow PERFECT / PASS
+- [ ] Workflow .671: radial Offset opens contextual viewport panel
+- [ ] Workflow .671: Support Spacing slider mirrors left #offsetLoopSpacing
+- [ ] Workflow .671: drag selected loop uses existing live Offset preview/commit
+- [ ] Workflow .671: drag commit selects created support loops and returns puck
+- [ ] Workflow .671: Apply Exact delegates to existing precision Offset owner
+- [ ] Workflow .671: exact commit selects created support loops and returns puck
+- [ ] Workflow .671: Done without applying preserves original loop selection and returns puck
+- [ ] Regression .671: left-panel Offset does not open viewport panel
+- [ ] Regression .671: .670 radial Crease remains PASS
+- [ ] Regression .671: Edge Extrude remains unchanged
+- [x] Static .671: loop-offset + precision-offset emit shared completion semantic
+- [x] Static .671: no duplicate Offset topology kernel added
+- [x] Protection .671: src/multi-object-transform.js?v=0.36.1.0 unchanged
