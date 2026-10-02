@@ -456,9 +456,14 @@ toolSectors.forEach(button=>{
     root.hidden=true;
     const toolLabel=button.textContent?.trim()||'Tool';
     gestureDebug('SELECTION HUB TOOL',{tool:toolLabel,selector});
-    target.click();
-    if(mode==='edge'&&toolLabel==='Crease')globalThis.__boxlabCreaseViewportSession?.openFromHub?.();
-    window.dispatchEvent(new CustomEvent('boxlab-selection-hub-tool',{detail:{mode,tool:toolLabel,selector,selectionKey:lastSelectionKey}}));
+    const radialCrease=mode==='edge'&&toolLabel==='Crease';
+    const launchIds=radialCrease?[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]:null;
+    if(radialCrease){
+      globalThis.__boxlabCreaseViewportSession?.openFromHub?.({ids:launchIds});
+    }else{
+      target.click();
+    }
+    window.dispatchEvent(new CustomEvent('boxlab-selection-hub-tool',{detail:{mode,tool:toolLabel,selector,selectionKey:lastSelectionKey,radialSession:radialCrease}}));
   });
 });
 
@@ -840,5 +845,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.669'
+  version:'0.36.18.670'
 };
