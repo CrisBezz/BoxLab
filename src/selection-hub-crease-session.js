@@ -118,13 +118,21 @@ done.addEventListener('click',event=>{
   close({disarm:true});
 });
 
-window.addEventListener('boxlab-selection-hub-tool',event=>{
-  if(event.detail?.mode!=='edge'||event.detail?.tool!=='Crease')return;
+function openFromHub(){
+  if(bridge()?.mode?.()!=='edge')return false;
+  const ids=selectedEdges();
+  if(!ids.length)return false;
   launchedFromHub=true;
-  launchSelection=selectedEdges();
+  launchSelection=[...ids];
   panel.hidden=false;
   sync();
+  requestAnimationFrame(()=>{if(launchedFromHub){panel.hidden=false;sync();}});
   if(status)status.textContent='Crease • set Strength here • tap Edge(s) to apply • Done returns to puck';
+  return true;
+}
+window.addEventListener('boxlab-selection-hub-tool',event=>{
+  if(event.detail?.mode!=='edge'||event.detail?.tool!=='Crease')return;
+  openFromHub();
 });
 window.addEventListener('boxlab-bridge-state',()=>{if(launchedFromHub)requestAnimationFrame(sync);});
 document.querySelectorAll('#selectionModes button[data-mode]').forEach(button=>button.addEventListener('click',()=>{
@@ -137,7 +145,9 @@ document.addEventListener('boxlab-direct-tool-exclusive',event=>{
 });
 
 globalThis.__boxlabCreaseViewportSession={
-  version:'0.36.18.668',
+  version:'0.36.18.669',
   active:()=>launchedFromHub,
-  close
+  openFromHub,
+  close,
+  element:panel
 };
