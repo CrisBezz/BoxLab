@@ -65,13 +65,28 @@ function setHubState(next,{reason='',resumeSuspended=true}={}){
   if(requested==='tools'&&!['face','edge'].includes(mode))requested='closed';
 
   if(edgeExtrudeConstraintSession&&mode==='edge'&&requested!=='transform'){
+    const preservedEdges=[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])];
     edgeExtrudeConstraintSession=false;
     syncEdgeExtrudeConstraintVisuals?.();
     resetTransientState?.({hideFloat:true});
     hubSuppressedKey='';
     requested='closed';
-    queueMicrotask(()=>globalThis.__boxlabEdgeExtrude?.setArmed?.(false));
-    gestureDebug('EDGE EXTRUDE SESSION CLOSE',{reason:reason||'return-to-puck',selectionPreserved:true});
+    queueMicrotask(()=>{
+      globalThis.__boxlabEdgeExtrude?.setArmed?.(false);
+      globalThis.__boxlabTransformArming?.disarm?.();
+      if(currentMode()==='edge'&&preservedEdges.length){
+        globalThis.__boxlabSelectionBridge?.set?.('edge',preservedEdges);
+        hubSuppressedKey='';
+        lastSelectionKey=selectionKey(state()?.mesh,'edge');
+        hubState='closed';
+        expanded=false;
+        root.dataset.hubState='closed';
+        root.dataset.expanded='false';
+        root.hidden=false;
+        requestAnimationFrame(()=>globalThis.__boxlabTransformArming?.disarm?.());
+      }
+    });
+    gestureDebug('EDGE EXTRUDE SESSION CLOSE',{reason:reason||'return-to-puck',selectionPreserved:true,edges:preservedEdges.length});
   }
 
   const wasTransform=hubState==='transform';
@@ -824,5 +839,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.666'
+  version:'0.36.18.667'
 };
