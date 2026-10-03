@@ -2965,3 +2965,14 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .685: physical boundary chains retained during reconstruction
 - [x] Static .685: existing logical-quad owner strengthened rather than duplicated
 - [x] Protection .685: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .686: screenshot case still accepts Loop Cut
+- [ ] Workflow .686: no long diagonal/sliver faces after generalized cut
+- [ ] Workflow .686: outer boundary detail around opening remains intact
+- [ ] Workflow .686: live Loop Slide works after cut
+- [ ] Workflow .686: Loop count >1 creates clean bands
+- [ ] Regression .686: ordinary cube Loop Cut unchanged
+- [x] Static .686: only untouched logical sides used as outer connectors
+- [x] Static .686: interior bands reconstructed deterministically
+- [x] Protection .686: src/multi-object-transform.js?v=0.36.1.0 unchanged
