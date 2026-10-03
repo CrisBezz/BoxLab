@@ -3145,8 +3145,19 @@ Add new permanent regression checks below when future features need protection.
 
 - [x] .699 Exact/Repeat/Done confirmed perfect by user.
 - [x] Automated: all ten viewport panels/numeric entry use shared dock; contextual background taps preserve selection and complete; drags/cancelled multi-touch bypass completion.
-- [ ] Visible .700; all Face/Edge session panels and numeric popups top centre, stable during navigation.
-- [ ] Finger/Pencil background tap ends radial Extrude/Inset settings like Done, keeps surviving selection/puck, disarms Repeat/tool.
-- [ ] Background drag orbits; pan/pinch and two/three-finger Undo/Redo do not dismiss settings.
-- [ ] Face taps, Exact/Repeat and explicit Done remain correct.
-- [ ] Knife/Shell/Sweep/Face Bridge and protected Edge session completions work unchanged; gizmo/ring stay on selection.
+- [x] Visible .700; all Face/Edge session panels and numeric popups top centre, stable during navigation.
+- [x] Finger/Pencil background tap ends radial Extrude/Inset settings like Done, keeps surviving selection/puck, disarms Repeat/tool.
+- [x] Background drag orbits; pan/pinch and two/three-finger Undo/Redo do not dismiss settings.
+- [x] Face taps, Exact/Repeat and explicit Done remain correct.
+- [x] Knife/Shell/Sweep/Face Bridge and protected Edge session completions work unchanged; gizmo/ring stay on selection.
+
+
+## v0.36.18.701 — radial Face Coplanar / Connected selection
+
+- [x] .700 full manual list PASS; top-centre popup placement and background Done protected.
+- [x] Static: existing loaded button owners/validation reused; all previous targets retained; outer buttons have no overlap with each other/inner buttons.
+- [ ] Visible .701; eleven outer tools usable and previous eight inner tools unchanged.
+- [ ] One triangle of a triangulated quad → Coplanar selects flat connected region, preserves geometry and returns puck.
+- [ ] One cube Face → Connected selects complete shell, excludes disconnected components and returns puck.
+- [ ] Multi-Face selection disables both seed-based helpers.
+- [ ] Ring close, previous tools, top-centre panels, background Done/navigation and viewport-edge layout remain intact.

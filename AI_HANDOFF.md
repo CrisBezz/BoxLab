@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.700**.
+Current release: **v0.36.18.701**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -36,44 +36,41 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.700.
-- Parent checkpoint before .700: da74eb7e0298a6070d77044c925eb31a8d87bd4d.
-- Find the .700 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed owners: shared panel position helper, ten session proxies, main.js, multi-face-direct.js and total-gizmo.js pinned to .700.
-- Release bootstrap/version logic unchanged; both repinned to .700 to satisfy the current release-owner contract.
+- Release: v0.36.18.701.
+- Parent checkpoint before .701: a04fd005930bd39d6e6592bef8aba494ffb1e50f.
+- Find the .701 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owner: total-gizmo.js pinned .701. main.js code unchanged but repinned .701; panel/shared dock imports retain .700.
+- Release bootstrap/version logic unchanged; both repinned to .701 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .700
+## Immediate hands-on checks — .701
 
-Confirm iPad visibly shows v0.36.18.700.
-1. Radial Extrude/Inset: settings sit at viewport top centre. Finger and Pencil background taps close them like Done, end Repeat/tool arming and preserve surviving Face selection/puck.
-2. Background Pencil/finger drag still orbits; two-finger pan/pinch and two/three-finger Undo/Redo do not accidentally close settings.
-3. Exact value and Repeat still work; Done remains available. A Face tap does not dismiss settings.
-4. Face Knife, Shell, Sweep and Bridge panels stay top centre during navigation; their completion/Apply/Cancel behavior remains protected.
-5. Edge Bevel, Crease, Slide, Offset and Bridge panels, plus floating Move/Rotate/Scale numeric entry, appear top centre. Gizmo/rings stay at selection.
+Confirm iPad visibly shows v0.36.18.701.
+1. Face ring: Coplanar / Connected added; eleven outer sectors at 170 px radius with even spacing. Previous targets and eight inner positions retained.
+2. Triangulate one cube quad, then select only one of those triangles: Coplanar selects both triangles on the flat side and returns puck. Geometry unchanged.
+3. Select one cube Face: Connected selects all Faces in its edge-connected shell and returns puck. A disconnected component in the same mesh stays unselected.
+4. Selecting multiple Faces disables both seed-based helpers. Normal Face selection, ring close and existing tools remain intact.
+5. Top-centre panels and background Done for Extrude/Inset remain protected; inspect larger outer-ring spacing near viewport edges.
 
-.700 awaits hands-on PASS. User confirmed .699 perfect; protect Exact/Repeat/Done
-behavior. New user-wide UX rule: every tool-session viewport popup is top centre,
-not beside the work. Use the shared placement owner for every future popup.
+.701 awaits hands-on PASS. User confirmed .700 PASS; protect top-centre popup
+placement, finger/Pencil background Done, preserved Face selection and navigation.
+All future session popups use the shared top-centre placement owner.
 
-## .700 ownership audit / changes
+## .701 selection-helper owner audit
 
-Added tool-session-panel-position.js shared placement for ten selection-hub session
-proxies plus floating numeric entry. Top 12 px, viewport-relative horizontal centre;
-height/width bounded and tall panels scroll. Gizmo and radial positions unchanged.
-Background tap remains owned by main.js / multi-face-direct.js / pencil-orbit-gate.js.
-main and direct owner now emit boxlab-viewport-background-tap for eligible active
-Extrude/Inset settings; the existing Pencil semantic distinguishes tap from orbit.
-The settings proxy listens to that semantic and uses its existing Done close path.
-No new raw-pointer listener, modelling kernel or navigation owner. Main allows only
-background hits through its armed-Face guard while these settings are active and
-cancels pending single taps when a second pointer arrives. Ordinary background
-selection behavior outside this session is unchanged. Pencil gate untouched.
-15 targeted dock/background/proxy/Bridge/release checks PASS. The two old .520
-guard assertions are updated to executable checks: armed Face hits still yield,
-only active-session backgrounds pass through, and second contacts cancel taps. All changed session
-modules and main/direct/gizmo plus refresh owners pinned .700; shared import .700.
-Protected multi-object-transform v0.36.1.0, Loop Cut and geometry owners untouched.
-Continue remaining Face helper/repair/settings audit before Vertex/Object/final Edge.
+select-coplanar-region.js and select-connected-shell.js already load via drawer-ui.
+Added outer Coplanar (#selectCoplanarRegionBtn) and Connected
+(#selectConnectedShellBtn), proxying their existing buttons/enabled state and shared
+one-shot puck cleanup. Both require exactly one valid selected Face. Coplanar finds
+edge-connected Faces on the same geometric plane; Connected crosses bends and
+selects the seed's entire edge-connected component. Existing Multi checkbox state
+and selection replacement stay authoritative. No geometry/history/pointer owner changed.
+Eleven outer targets evenly spaced at 170 px; guide diameter 340 px. All previous
+targets retained, inner positions unchanged, outer/outer and outer/inner rectangle
+spacing audited. Assignments remain provisional pending complete Face coverage.
+15 targeted protected dock/background/proxy/Bridge/release checks PASS; syntax PASS.
+Remaining Face coverage: Detached Islands, Inspect/Repair/topology controls and any
+remaining contextual settings, followed by Vertex/Object/final Edge. Whole-mesh
+repair commands require clear scope; do not pretend they operate on selected Faces.
 
 ## Two-ring design direction / .694 audit
 
@@ -131,6 +128,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .700 top-centre viewport popups/numeric entry and finger/Pencil background Done for Extrude/Inset, preserved selection/navigation: PASS.
 
 - .699 radial Extrude/Inset Exact/Repeat/Done controls: PASS.
 
