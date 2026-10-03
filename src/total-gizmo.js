@@ -621,7 +621,10 @@ document.addEventListener('pointerdown',event=>{
 
 function objectHitAt(event){
   if(currentMode()!=='object')return false;
-  try{return !!globalThis.__boxlabSelectionBridge?.pick?.('object',event);}catch{return false;}
+  try{
+    const picker=globalThis.__boxlabSelectionBridge?.pickObject;
+    return !!(typeof picker==='function'?picker(event):globalThis.__boxlabSelectionBridge?.pick?.('object',event));
+  }catch{return false;}
 }
 
 canvas?.addEventListener('pointerdown',event=>{
@@ -960,5 +963,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.681'
+  version:'0.36.18.682'
 };
