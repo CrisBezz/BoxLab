@@ -2999,10 +2999,21 @@ Add new permanent regression checks below when future features need protection.
 
 
 - [x] Hands-on .688: Loop Cut / Loop Slide old feel PASS
-- [ ] Workflow .689: radial Face Delete executes once with no extra panel
-- [ ] Workflow .689: next surviving Face selection gets puck immediately
+- [x] Workflow .689: radial Face Delete executes once with no extra panel
+- [x] Workflow .689: next surviving Face selection gets puck immediately
 - [ ] Workflow .689: valid surviving Face selection returns puck automatically
 - [ ] Regression .689: .688 Loop Cut remains PASS
 - [x] Static .689: stale Face hubSuppressedKey cleared after radial Delete
 - [x] Static .689: Face Delete topology/history owner unchanged
 - [x] Protection .689: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .690: radial Shell Cancel restores Face puck when selection survives
+- [ ] Workflow .690: radial Shell Apply closes cleanly and restores puck when selection survives
+- [ ] Workflow .690: radial Sweep Cancel restores Face puck when selection survives
+- [ ] Workflow .690: radial Sweep Apply closes cleanly with no stale suppression
+- [ ] Workflow .690: next Face selection gets fresh puck when session ends with no selection
+- [ ] Regression .690: Knife Done remains PASS
+- [x] Static .690: Shell/Sweep geometry/history owners unchanged
+- [x] Static .690: Knife/Shell/Sweep share one Face session completion path
+- [x] Protection .690: src/multi-object-transform.js?v=0.36.1.0 unchanged
