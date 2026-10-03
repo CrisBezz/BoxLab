@@ -1,7 +1,7 @@
-## v0.36.18.677 — radial Edge one-shot hub cleanup
+## v0.36.18.678 — radial Duplicate Faces restored
 
 Current release:
-- v0.36.18.677
+- v0.36.18.678
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
@@ -13,40 +13,42 @@ Hands-on protected:
 - .670 radial Crease selection-first workflow: PERFECT / PASS.
 - .675 navigation recovery: good for now / provisional PASS.
 - .676 guided radial Edge Bridge: PASS.
+- .677 Edge radial one-shot cleanup: PASS.
 
 Strengthening list:
 - Connected-chain Edge Bevel through ordinary 4-valence quad vertices remains recorded in ROADMAP.md.
 
-.677:
-- Final Edge-ring polish for one-shot radial tools Dissolve and Delete.
-- No new panels added; both remain direct one-shot actions.
-- Root issue: Selection Hub suppresses the launch selection while a radial tool runs. Dissolve/Delete can remove that topology and clear selection, but the old suppressed selection key could remain cached.
-- Because topology edge indices may later be reused, a future Edge selection could accidentally match that stale key and fail to show its puck.
-- After radial Edge Dissolve/Delete completes:
-  - clear hubSuppressedKey
-  - if a valid Edge selection remains, return the closed puck immediately
-  - if no selection remains, keep the hub hidden
-  - the next Edge selection is therefore fresh and gets the puck normally
-- Existing Dissolve/Delete topology/history/selection behaviour remains authoritative and unchanged.
+.678:
+- Begins Face-ring/modeless polish with Duplicate Faces.
+- Audit found the radial Face ring already exposed Duplicate, but its existing authoritative owner src/duplicate-faces.js was not loaded by index.html.
+- Reused and upgraded the existing Duplicate owner rather than creating a new kernel.
+- Existing Duplicate semantics are preserved:
+  - selected Faces are copied into a new object
+  - source object remains unchanged
+  - copied facegroups/creases are preserved by existing compactSelection path
+  - new duplicate object enters Object mode
+- duplicate-faces.js now emits boxlab-face-duplicate-complete and returns success.
+- Total Gizmo listens for successful Duplicate completion and immediately opens Object transform gizmo on the newly created duplicate.
+- This makes the radial flow:
+  Face selection -> Duplicate -> new object selected -> Object transform gizmo ready.
+- No new face topology/duplication implementation added.
 
 Immediate hands-on:
-1. Select dissolvable Edge(s) -> puck -> Dissolve.
-2. Dissolve should happen once; no extra panel.
-3. If selection clears, select any surviving Edge: puck should appear immediately.
-4. Select Edge(s) -> puck -> Delete.
-5. Delete should happen once; if selection clears, select any surviving Edge: puck should appear immediately.
-6. If either operation leaves a valid Edge selection, puck should return on it.
-7. Regression: .676 Bridge still PASS.
+1. Select one or more Faces.
+2. Puck -> Face tools -> Duplicate.
+3. Duplicate should now be available and execute.
+4. Source remains unchanged.
+5. New object should be selected and BoxLab should enter Object mode.
+6. Transform gizmo should appear immediately on the duplicate.
+7. Move/Rotate/Scale the duplicate to confirm clean handoff.
+8. Undo should restore the scene transaction according to the existing Duplicate/Object history owner.
+9. Regression: Extract remains unchanged.
 
 Next after PASS:
-- Edge radial ring contextualisation is effectively complete. Move to Face-ring gaps / modeless interaction polish rather than adding UI to already-direct Edge tools.
+- Continue Face-ring gaps: likely Extract handoff polish or Knife contextual lifecycle, depending on audit.
 
 Protected:
-- .676 Bridge.
+- .677 complete Edge radial workflow.
 - .675 navigation recovery.
-- .670 Crease.
-- .671 Offset.
-- .672 Slide.
-- working Edge Extrude.
-- authoritative Dissolve/Delete owners.
+- existing Duplicate Faces owner semantics.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
