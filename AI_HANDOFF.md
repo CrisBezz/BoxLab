@@ -1,40 +1,38 @@
-## v0.36.18.686 — logical-quad Loop Cut strip reconstruction fix
+## v0.36.18.687 — restore clicked-edge Loop Slide direction
 
 Current release:
-- v0.36.18.686
+- v0.36.18.687
 
 Hands-on protected:
 - .684 radial Knife viewport session: PASS.
 - .682 Pencil/Object routing reliability: PERFECT / PASS.
 
-.685 result:
-- Previously failing Loop Cut path now traverses the logical quad corridor.
-- User reported bad long/sliver/diagonal faces after cut.
+Recent Loop Cut strengthening:
+- .685 restored traversal through generalized logical quads but produced malformed strips.
+- .686 fixed strip reconstruction, but user reported Loop Slide direction felt reversed compared with original behaviour.
 
 Root cause:
-- .685 traversal was correct, but splitLogicalFace() could choose the wrong outer boundary connector between the two cut sides.
-- That paired endpoints across the face incorrectly and created malformed polygons.
+- generalized logical-quad traversal seeded direction from the logical face edge ordering.
+- original Loop Cut behaviour derives direction from the actual physical edge the user touched.
+- when a touched edge is only one segment of a promoted logical side, logical face ordering may be opposite to the physical touched-edge direction, effectively mapping t to 1-t.
 
-.686:
-- Keeps .685 generalized logical-quad recognition.
-- Replaces ambiguous connector reconstruction with deterministic logical-quad strip rebuilding.
-- The two cut sides must be opposite logical sides.
-- The two untouched sides are the only valid outer connectors.
-- First strip inherits one untouched boundary chain.
-- Last strip inherits the other untouched boundary chain.
-- Interior strips are clean bands between corresponding cut points.
-- Existing collinear detail along the two cut sides is preserved inside the appropriate strip.
-- Genuine ngons/poles remain stops.
-- No second Loop Cut kernel added.
+.687:
+- Adds logicalSeedDirection().
+- The actual touched physical edge segment now determines logical seed direction.
+- For promoted sides with collinear intermediate vertices:
+  - locate the touched segment in the physical boundary chain
+  - project that segment direction onto the logical side endpoints
+- Propagation through subsequent quads inherits this restored direction.
+- .686 deterministic strip reconstruction remains unchanged.
+- No change to ordinary base Loop Cut fallback.
 
 Immediate hands-on:
-1. Retry exact screenshot model/case.
-2. Loop Cut should still traverse the corridor.
-3. New faces should be clean strips — no long diagonal/sliver faces.
-4. Slide the loop and release.
-5. Inspect the opening/detail side carefully.
-6. Try Loop count >1.
-7. Simple cube Loop Cut remains unchanged.
+1. Retry exact .686 model/case.
+2. Loop Cut should still traverse the strengthened logical-quad corridor.
+3. Drag/slide direction should now match the direction expected from the touched edge, as before strengthening.
+4. Reverse drag should reverse slide normally.
+5. Confirm no malformed diagonal/sliver faces return.
+6. Simple cube Loop Cut regression.
 
 Protected:
 - .684 Knife session.
