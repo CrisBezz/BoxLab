@@ -1,5 +1,22 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.676 guided radial Edge Bridge
+
+- .675 navigation recovery is provisionally good hands-on.
+- Audited remaining radial Edge tools; Dissolve/Delete are one-shot, while Bridge had a real workflow gap.
+- Legacy Edge Bridge only enabled after both compatible boundary loops were already selected.
+- Added guided radial Bridge session:
+  - can launch from one valid complete boundary loop
+  - keeps first loop selected
+  - guides user to add matching second boundary loop
+  - enables Apply only when authoritative bridgeEdgeSelectionInfo() accepts the combined selection
+  - delegates Apply to bridge-ui.js / bridgeSelectedEdges()
+  - created bridge faces are selected after Selection Hub Bridge
+  - Cancel restores first boundary and returns puck
+- Total Gizmo availability now special-cases guided Bridge start without changing legacy drawer availability.
+- Existing Bridge topology/history implementation remains authoritative.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.676 modeless radial Bridge completion
 
 - .675 touch navigation reported good for now; monitoring continues.
