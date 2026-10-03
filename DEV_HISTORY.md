@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.690 unified radial Face session completion
+
+- .689 radial Face Delete hands-on PASS.
+- Final Face-ring lifecycle audit found Shell/Sweep lacked explicit Selection Hub completion semantics.
+- Radial Shell now reports completion when its session becomes inactive.
+- Radial Sweep now reports completion when its tool session ends.
+- Total Gizmo handles Knife/Shell/Sweep through one completion path:
+  - clears stale suppression
+  - returns puck when Face selection survives
+  - otherwise waits for next Face selection
+- No Shell/Sweep modelling logic changed.
+- Face radial lifecycle is effectively complete after hands-on confirmation.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.689 radial Face Delete hub cleanup
 
 - .688 restored known-good Loop Cut / Loop Slide feel hands-on PASS.
