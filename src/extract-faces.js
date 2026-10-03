@@ -1,5 +1,6 @@
 import { EditableMesh } from './mesh.js';
 
+// BoxLab v0.36.18.683 — Extract Faces completion handoff.
 const button = document.querySelector('#extractFacesBtn');
 const status = document.querySelector('#selectionStatus');
 
@@ -78,7 +79,13 @@ function extractFaces() {
     return;
   }
   render();
-  if (status) status.textContent = remainingFaces.length ? `${object.name} created • source faces removed • Undo restores scene` : `${object.name} created • source kept intact • Undo restores scene`;
-}
+  if (status) status.textContent = remainingFaces.length ? `${object.name} created • source faces removed • ready to transform • Undo restores scene` : `${object.name} created • source kept intact • ready to transform • Undo restores scene`;
+  window.dispatchEvent(new CustomEvent('boxlab-face-extract-complete',{detail:{
+    name:object.name,
+    id:object.id??null,
+    sourceFaces:[...selected],
+    sourceChanged:remainingFaces.length>0
+  }}));
+
 
 button?.addEventListener('click', extractFaces);
