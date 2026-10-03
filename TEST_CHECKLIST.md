@@ -2938,3 +2938,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .683: existing Extract owner reused
 - [x] Static .683: no duplicate Extract topology kernel added
 - [x] Protection .683: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .684: radial Knife opens compact viewport session
+- [ ] Workflow .684: first Knife cut uses existing snapping/preview and commits normally
+- [ ] Workflow .684: Knife remains active after cut for repeated cuts
+- [ ] Workflow .684: second cut can be made without relaunching Knife
+- [ ] Workflow .684: Done disarms Knife and hides viewport session
+- [ ] Workflow .684: next Face selection gets fresh puck immediately
+- [ ] Regression .684: left-panel Knife does not open radial session
+- [ ] Regression .684: Pencil orbit/navigation unchanged
+- [x] Static .684: existing Knife geometry/snap/history owner retained
+- [x] Static .684: no duplicate Knife topology implementation added
+- [x] Protection .684: src/multi-object-transform.js?v=0.36.1.0 unchanged
