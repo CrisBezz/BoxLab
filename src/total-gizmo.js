@@ -26,6 +26,8 @@ let hubSuppressedKey='';
 let lastSelectionKey='';
 let suspendedFaceTool=false;
 let edgeExtrudeConstraintSession=false;
+let objectTransformDismissed=false;
+let objectBackgroundTap=null;
 
 
 function state(){return globalThis.__boxlabBridgeState||null;}
@@ -55,12 +57,18 @@ function selectionAvailable(mesh,mode=currentMode()){
   return mode==='object'?objectSelected():componentVertexIndices(mesh,mode).length>0;
 }
 function selectionKey(mesh,mode=currentMode()){
-  if(mode==='object')return 'object';
+  if(mode==='object'){
+    const mgr=globalThis.__boxlabObjectManager;
+    let ids=[];
+    try{ids=(mgr?.selectedObjects?.()||[]).map(o=>o?.id).filter(Boolean).sort();}catch{}
+    const active=mgr?.activeId||ids[0]||'active';
+    return `object:${active}:${ids.join(',')}`;
+  }
   return `${mode}:${[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])].sort((a,b)=>a-b).join(',')}`;
 }
 function setHubState(next,{reason='',resumeSuspended=true}={}){
   const mode=currentMode();
-  let requested=mode==='object'?'transform':next;
+  let requested=mode==='object'&&!objectTransformDismissed?'transform':next;
   if(!['closed','transform','tools'].includes(requested))requested='closed';
   if(requested==='tools'&&!['face','edge'].includes(mode))requested='closed';
 
@@ -519,6 +527,7 @@ window.addEventListener('boxlab-bridge-complete',event=>{
 });
 
 window.addEventListener('boxlab-face-duplicate-complete',event=>{
+  objectTransformDismissed=false;
   requestAnimationFrame(()=>{
     const s=state(),mesh=s?.mesh,mode=currentMode();
     if(mode!=='object'||!objectSelected())return;
@@ -609,6 +618,50 @@ document.addEventListener('pointerdown',event=>{
   if(floatPalette.hidden||event.target?.closest?.('#transformFloatInput'))return;
   hideFloatInput();
 },true);
+
+const canvas=document.querySelector('#viewport');
+
+function objectHitAt(event){
+  if(currentMode()!=='object')return false;
+  try{return !!globalThis.__boxlabSelectionBridge?.pick?.('object',event);}catch{return false;}
+}
+
+canvas?.addEventListener('pointerdown',event=>{
+  if(currentMode()!=='object'||!event.isPrimary)return;
+  const hit=objectHitAt(event);
+  if(objectTransformDismissed&&hit){
+    objectTransformDismissed=false;
+    hubSuppressedKey='';
+    setHubState('transform',{reason:'object-reselect'});
+    root.hidden=false;
+    gestureDebug('OBJECT TRANSFORM REOPEN',{pid:event.pointerId});
+    return;
+  }
+  if(hubState!=='transform'||hit)return;
+  objectBackgroundTap={pointerId:event.pointerId,x:event.clientX,y:event.clientY,moved:false};
+},true);
+
+canvas?.addEventListener('pointermove',event=>{
+  if(!objectBackgroundTap||objectBackgroundTap.pointerId!==event.pointerId)return;
+  if(Math.hypot(event.clientX-objectBackgroundTap.x,event.clientY-objectBackgroundTap.y)>=8)objectBackgroundTap.moved=true;
+},true);
+
+function finishObjectBackgroundTap(event){
+  if(!objectBackgroundTap||objectBackgroundTap.pointerId!==event.pointerId)return;
+  const tap=objectBackgroundTap;objectBackgroundTap=null;
+  if(event.type!=='pointerup'||tap.moved)return;
+  objectTransformDismissed=true;
+  globalThis.__boxlabTransformArming?.disarm?.();
+  resetTransientState?.({hideFloat:true});
+  hubState='closed';
+  expanded=false;
+  root.dataset.hubState='closed';
+  root.dataset.expanded='false';
+  root.hidden=true;
+  gestureDebug('OBJECT TRANSFORM DISMISS',{pid:event.pointerId});
+}
+canvas?.addEventListener('pointerup',finishObjectBackgroundTap,true);
+canvas?.addEventListener('pointercancel',finishObjectBackgroundTap,true);
 
 const style=document.createElement('style');
 style.textContent=`
@@ -830,8 +883,9 @@ function sync(){
   if(key!==lastSelectionKey){
     lastSelectionKey=key;
     hubSuppressedKey='';
+    if(mode==='object')objectTransformDismissed=false;
     setHubState(edgeExtrudeConstraintSession&&mode==='edge'?'transform':(mode==='object'?'transform':'closed'),{reason:'selection-change'});
-  }else if(mode==='object'&&hubState!=='transform'){
+  }else if(mode==='object'&&!objectTransformDismissed&&hubState!=='transform'){
     setHubState('transform',{reason:'object-mode'});
   }
   const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
@@ -848,12 +902,12 @@ function sync(){
   floatPalette.style.left=`${selectionLeft}px`;
   floatPalette.style.top=`${selectionTop}px`;
   const suppressed=['face','edge'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
-  root.hidden=suppressed;
+  root.hidden=suppressed||(mode==='object'&&objectTransformDismissed);
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;
   root.dataset.singleComponent=mode!=='object'&&selectionKey(mesh,mode).split(':')[1]?.split(',').filter(Boolean).length===1?'true':'false';
-  if(!suppressed&&(hubState==='transform'||mode==='object'))syncAxisVisuals(c,camera);
+  if(!suppressed&&!objectTransformDismissed&&(hubState==='transform'||mode==='object'))syncAxisVisuals(c,camera);
   if(edgeExtrudeConstraintSession)syncEdgeExtrudeConstraintVisuals();
 }
 sync();
@@ -895,5 +949,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.678'
+  version:'0.36.18.679'
 };
