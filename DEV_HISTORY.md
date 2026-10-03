@@ -1,6 +1,16 @@
 # BoxLab Development History
 
 
+## 2026-10-04 — v0.36.18.704 Face radial Clean Vertices / Align
+
+- /nextbuild continues radial completion only; no explicit .703 PASS received. .702/.703 hands-on remain pending.
+- Audited existing safe Clean Vertices owner and Face Repair proxy. Added outer Clean Vertices plus existing whole-object scope panel access. Owner plan/cleanup/history unchanged; apply now returns explicit result and exposes syncUI for contextual availability. Success clears stale Face IDs; Cancel preserves them.
+- Audited existing component Align .330 anchor owner/core. Added one Align sector and top-centre X/Y/Z/Cancel proxy. Axis selection arms existing owner; selected Face anchor remains fixed, other selected vertices align on that axis, same one-step history/selection. Owner emits semantic arm/disarm/apply change and exposes axis; proxy completion clears hub suppression without another viewport pointer owner.
+- Eight inner unchanged, fourteen outer at 205px; all previous targets retained and outer/outer + outer/inner rectangle spacing PASS. Centre × unchanged. Selection helpers remain outside rings.
+- 36 targeted owner/core/proxy/repair/dock/background/Bridge/value/release checks PASS; syntax PASS. Full suite: 1120 tests, 835 PASS, same 285 failure names as .703. Two Align tests now verify a single versioned loader rather than the old .330 pin.
+- .704 release markers, changed modules and drawer dynamic parent/child pins updated; protected transform/.162 Loop Cut/Through and modelling kernels unchanged. Workflow priority unchanged: finish Face (remaining repair/parameter audit), then Vertex → Object → final Edge. Hands-on pending.
+
+
 ## 2026-10-04 — v0.36.18.703 radial Face repair batch
 
 - User directs all development moving forward at finalizing radial menus/settings: Face → Vertex → Object → final Edge; unrelated gesture/topology/feature work deferred. .702 hands-on remains pending.

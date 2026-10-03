@@ -136,14 +136,15 @@ function restore(target,source){
   if(source.looseEdges instanceof Set)target.looseEdges=new Set(source.looseEdges);if(source.looseVertices instanceof Set)target.looseVertices=new Set(source.looseVertices);target.edges();
 }
 function applyCleanup(){
-  const m=mesh(),history=globalThis.__boxlabHistory;if(!m||!history)return;
-  const plan=cleanupPlan(m);if(!plan){if(status)status.textContent='Clean Vertices • nothing safe to remove';sync();return;}
+  const m=mesh(),history=globalThis.__boxlabHistory;if(!m||!history)return{ok:false,reason:'No editable mesh or history'};
+  const plan=cleanupPlan(m);if(!plan){if(status)status.textContent='Clean Vertices • nothing safe to remove';sync();return{ok:false,reason:'Nothing safe to remove'};}
   const before=m.clone();history.push(before);
   restore(m,plan.mesh);
   bridge()?.set?.('vertex',[]);
   if(multiToggle?.checked){multiToggle.checked=false;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}
   render();sync();
   if(status)status.textContent=`Clean Vertices • removed ${plan.totalRemoved} redundant vertex${plan.totalRemoved===1?'':'es'}`;
+  return{ok:true,removed:plan.totalRemoved};
 }
 function sync(){
   const plan=cleanupPlan(mesh());button.disabled=!plan;
@@ -154,4 +155,4 @@ window.addEventListener('boxlab-bridge-state',sync);
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 setTimeout(sync,0);
 
-globalThis.__boxlabCleanVertices={version:'0.36.18.39',plan:cleanupPlan,apply:applyCleanup};
+globalThis.__boxlabCleanVertices={version:'0.36.18.704',plan:cleanupPlan,apply:applyCleanup,syncUI:sync};

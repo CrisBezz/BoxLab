@@ -79,6 +79,7 @@ function paintButtons(){
 function disarm(message){
   armedAxis=null;paintButtons();
   if(message&&status)status.textContent=message;
+  window.dispatchEvent(new CustomEvent('boxlab-component-align-change',{detail:{axis:null,reason:'disarm'}}));
 }
 function arm(axis){
   const {md,ids,vertices}=info();
@@ -86,6 +87,7 @@ function arm(axis){
   if(armedAxis===axis){disarm(`Align ${axis.toUpperCase()} • cancelled`);return false;}
   armedAxis=axis;paintButtons();
   if(status)status.textContent=`Align ${axis.toUpperCase()} • tap one selected ${md} to keep fixed`;
+  window.dispatchEvent(new CustomEvent('boxlab-component-align-change',{detail:{axis,reason:'arm'}}));
   return true;
 }
 
@@ -148,6 +150,7 @@ function applyAnchor(anchorIndex,event){
   armedAxis=null;paintButtons();
   if(status)status.textContent=`Align ${axis.toUpperCase()} • anchor ${md} kept fixed • moved ${result.moved} verts • target ${target.toFixed(3)}`;
   queueMicrotask(sync);
+  window.dispatchEvent(new CustomEvent('boxlab-component-align-change',{detail:{axis:null,reason:'apply',mode:md}}));
   return true;
 }
 
@@ -194,4 +197,4 @@ document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMic
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 [0,60,180,500].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabComponentAlign={version:'0.36.18.330',arm,disarm,applyAnchor,sync,isArmed:()=>!!armedAxis};
+globalThis.__boxlabComponentAlign={version:'0.36.18.704',arm,disarm,applyAnchor,sync,isArmed:()=>!!armedAxis,axis:()=>armedAxis};

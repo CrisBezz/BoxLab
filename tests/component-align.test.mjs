@@ -40,7 +40,7 @@ test('329 Align X flattens only X and preserves other coordinates',()=>{
 test('330 component Align UI has one authoritative drawer loader',()=>{
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.equal((drawer.match(/component-align\.js\?v=0\.36\.18\.330/g)||[]).length,1);
+  assert.equal((drawer.match(/component-align\.js\?v=[0-9.]+/g)||[]).length,1);
   assert.doesNotMatch(index,/component-align\.js\?v=/);
 });
 
@@ -76,5 +76,5 @@ test('330 component Align UI is arm-then-pick and uses amber anchor cue',()=>{
   assert.match(ui,/#f3b34a/);
   assert.match(ui,/window\.addEventListener\('pointerdown'/);
   assert.match(ui,/applyAnchor\(hit,event\)/);
-  assert.equal((drawer.match(/component-align\.js\?v=0\.36\.18\.330/g)||[]).length,1);
+  assert.equal((drawer.match(/component-align\.js\?v=[0-9.]+/g)||[]).length,1);
 });

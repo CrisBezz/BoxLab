@@ -8,15 +8,15 @@ function fixture(){
   let mode='face',ids=[2],locked=false,result={ok:true},disabled=false;
   const el=()=>({style:{},hidden:true,textContent:'',listeners:{},appendChild(){},addEventListener(t,f){this.listeners[t]=f;},querySelector(s){if(!fields.has(s))fields.set(s,el());return fields.get(s);}});
   const target={get disabled(){return disabled;}},panelHost=el();
-  const context={placeToolSessionPanel:p=>{p.style.top='12px';p.style.left='50%';},document:{createElement:el,head:el(),querySelector:s=>s==='#viewportWrap'?panelHost:s==='#app'?{classList:{contains:()=>locked}}:s==='#selectionStatus'?el():target},window:{addEventListener:(t,f)=>handlers.set(t,f),dispatchEvent:e=>events.push(e)},CustomEvent:class{constructor(type,{detail}){Object.assign(this,{type,detail});}},queueMicrotask:f=>f(),requestAnimationFrame:()=>1,cancelAnimationFrame(){},__boxlabBridgeState:{mesh:{}},__boxlabSelectionBridge:{mode:()=>mode,set:(m,next)=>{calls.push(['selection',m,next]);ids=next;}}};
-  for(const [name,method] of [['__boxlabCloseHoles','closeHoles'],['__boxlabQuadPairCleanup','apply'],['__boxlabQuadifyNgons','apply']])context[name]={syncUI(){},[method](){calls.push(name);return result;}};
+  const context={placeToolSessionPanel:p=>{p.style.top='12px';p.style.left='50%';},document:{createElement:el,head:el(),querySelector:s=>s==='#viewportWrap'?panelHost:s==='#app'?{classList:{contains:()=>locked}}:s==='#selectionStatus'?el():target},window:{addEventListener:(t,f)=>handlers.set(t,f),dispatchEvent:e=>events.push(e)},CustomEvent:class{constructor(type,{detail}){Object.assign(this,{type,detail});}},queueMicrotask:f=>f(),requestAnimationFrame:()=>1,cancelAnimationFrame(){},__boxlabHistory:{},__boxlabBridgeState:{mesh:{}},__boxlabSelectionBridge:{mode:()=>mode,set:(m,next)=>{calls.push(['selection',m,next]);ids=next;}}};
+  for(const [name,method] of [['__boxlabCloseHoles','closeHoles'],['__boxlabQuadPairCleanup','apply'],['__boxlabQuadifyNgons','apply'],['__boxlabCleanVertices','apply']])context[name]={syncUI(){},[method](){calls.push(name);return result;}};
   vm.runInNewContext(fs.readFileSync(new URL('../src/face-repair-viewport.js',import.meta.url),'utf8').replace(/^import .*;\n/,''),context);
   const api=context.__boxlabFaceRepairViewportSession;
   const click=s=>fields.get(s).listeners.click({preventDefault(){},stopPropagation(){}});
   return{api,context,fields,calls,events,handlers,click,ids:()=>ids,setResult:r=>{result=r;},setDisabled:d=>{disabled=d;},setLocked:l=>{locked=l;},setMode:m=>{mode=m;}};
 }
-test('all three launchers dock scope controls without applying; Cancel keeps selection',()=>{
-  for(const tool of ['Close Holes','Quad Cleanup','Quadify N-gons']){
+test('all repair launchers dock scope controls without applying; Cancel keeps selection',()=>{
+  for(const tool of ['Close Holes','Quad Cleanup','Quadify N-gons','Clean Vertices']){
     const f=fixture();assert.equal(f.api.openFromHub({tool}),true);
     assert.equal(f.calls.length,0);assert.equal(f.api.element.style.left,'50%');
     assert.equal(f.fields.get('strong').textContent,tool);
@@ -25,7 +25,7 @@ test('all three launchers dock scope controls without applying; Cancel keeps sel
   }
 });
 test('Apply delegates once to each authoritative owner and clears rebuilt Face IDs',()=>{
-  for(const [tool,owner] of [['Close Holes','__boxlabCloseHoles'],['Quad Cleanup','__boxlabQuadPairCleanup'],['Quadify N-gons','__boxlabQuadifyNgons']]){
+  for(const [tool,owner] of [['Close Holes','__boxlabCloseHoles'],['Quad Cleanup','__boxlabQuadPairCleanup'],['Quadify N-gons','__boxlabQuadifyNgons'],['Clean Vertices','__boxlabCleanVertices']]){
     const f=fixture();f.api.openFromHub({tool});f.click('.fr-apply');f.click('.fr-apply');
     assert.equal(f.calls.filter(c=>c===owner).length,1);
     assert.equal(f.ids().length,0);assert.equal(f.api.active(),false);

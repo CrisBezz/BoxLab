@@ -3182,3 +3182,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Apply on suitable ordinary meshes repairs whole active object once; one Undo restores geometry. Successful Apply clears Face selection; next Face tap gets fresh puck.
 - [ ] No eligible candidates disable corresponding tools; owner rollback reports reason and retains selection.
 - [ ] Existing Face/Edge sessions, background Done, navigation and long-press selection remain protected.
+
+
+## v0.36.18.704 — Face radial Clean Vertices / Align
+
+- [x] Automated: all four repair launchers delegate existing APIs; cleanup actual owner returns safe success/failure with one history step and no-op cube protection; Align proxy axis delegation/Cancel/context changes/semantic completion/superseding tool; actual Align owner preserves anchor and commits once; existing core/dock/background/Bridge/value/release checks.
+- [x] Static: all twenty previous targets retained; 22 active targets with no selection proxies; outer/outer and outer/inner spacing PASS; original inner positions/centre × and protected cores unchanged. Dynamic owner and parent-loader pins current.
+- [ ] Visible .704; fourteen outer/eight inner buttons usable and centre close works.
+- [ ] Two or more selected Faces → Align → X/Y/Z → tap selected anchor Face: anchor stays fixed, other selected vertices align on chosen axis, selection/puck returns, one Undo restores geometry.
+- [ ] Align Cancel before/after axis arming leaves mesh/selection unchanged; one selected Face disables Align; navigation/selection remain correct.
+- [ ] Clean Vertices top-centre whole-object panel Cancel preserves mesh/selection; Apply on eligible mesh removes safe redundant vertices once; Face selection clears, next tap gets fresh puck, one Undo restores geometry. Healthy cube disables cleanup.
+- [ ] .703 repairs, Face/Edge sessions, Extrude/Inset background Done and protected navigation remain intact.

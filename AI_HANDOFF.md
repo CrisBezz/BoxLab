@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.703**.
+Current release: **v0.36.18.704**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -42,25 +42,59 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.703.
-- Parent checkpoint before .703: c8afece9 (find full SHA in history).
-- Find the .703 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owners: total-gizmo.js and new face-repair-viewport.js pinned .703. main.js code unchanged but repinned .703; shared dock/session imports retain .700.
-- Release bootstrap/version logic unchanged; both repinned to .703 to satisfy the current release-owner contract.
+- Release: v0.36.18.704.
+- Parent checkpoint before .704: 69c699e0 (find full SHA in history).
+- Find the .704 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed owners: total-gizmo.js, face-repair-viewport.js, new face-align-viewport.js, clean-vertices.js and component-align.js .704. drawer-ui loader/child pins .704; main.js code unchanged but shell pin .704. Shared dock and previous sessions retain .700.
+- Release bootstrap/version logic unchanged; both repinned to .704 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .703
+## Immediate hands-on checks — .704
 
-Confirm iPad visibly shows v0.36.18.703.
-1. Face ring has eight inner/twelve outer active tools. Existing centre close and tools remain usable; no selection sectors.
-2. Close Holes, Quad Cleanup and Quadify N-gons open top-centre panels labelled whole active object. Cancel changes neither geometry nor Face selection and returns puck.
-3. On suitable ordinary meshes, Apply performs the existing repair once; one Undo restores geometry. Successful Apply clears Face selection; the next Face tap gets a fresh puck.
-4. Closed cube disables Close Holes; no triangles disables Quad Cleanup; no eligible even-sided n-gons disables Quadify. Previous Extrude/Inset, background Done and navigation remain intact.
+Confirm iPad visibly shows v0.36.18.704.
+1. Face outer ring now includes Clean Vertices and Align; old tools and centre × remain accessible. Eight inner/fourteen outer tools, provisional placement.
+2. Two or more Faces selected → Align → choose X/Y/Z → tap a selected Face as anchor. That Face stays fixed; other selected vertices align on the chosen axis. Selection/puck returns; one Undo restores geometry.
+3. Align Cancel (before or after choosing an axis) changes no geometry and returns the selected puck. Single-Face selection disables Align.
+4. Eligible mesh → Clean Vertices shows whole-active-object scope at top centre. Cancel preserves mesh/selection; Apply performs safe cleanup once, clears Face IDs; next Face tap gets fresh puck. Healthy cube disables cleanup.
+5. .703 repairs, existing Face/Edge sessions, Extrude/Inset background Done, selection and navigation stay intact.
 
-.703 awaits hands-on PASS. .702 removal/layout checks also remain pending; the user
-requested the next build without claiming .702 PASS. .701 commands were PASS but
-radial selection placement was explicitly retired. Detached/Quads was never released.
+.704 awaits hands-on PASS. .702/.703 checks also remain pending; user requested
+/nextbuild without claiming a PASS. Do not record implied PASS. .701 selection
+commands passed, but radial selection placement was explicitly retired.
 
-## .703 owner audit / implementation
+## .704 owner audit / implementation
+
+Clean Vertices already exists in clean-vertices.js, loaded by drawer-ui. Face Repair
+also already proxies it. Added to the existing whole-object scope panel/ring, using
+its unchanged plan/apply kernel and history. Owner now returns explicit success or
+failure and exposes syncUI; this prevents a void result from being treated as failure
+by contextual panels. Other callers ignore the return as before. No cleanup maths changed.
+
+Align/Flatten already exists for Vertex/Edge/Face in component-align.js/core .330.
+Added one Face Align launcher and top-centre X/Y/Z/Cancel settings. No geometry on
+launch/axis choice; existing early window owner still picks the selected anchor and
+commits history. It now emits boxlab-component-align-change on arm/disarm/apply and
+exposes axis state. The proxy reacts to owner completion, then emits the shared Face
+session completion; no additional viewport pointer listener. Cancel/context changes
+end arming; other tools hide settings without resetting their hub. Hub remains hidden
+during Align controls. Clean cleanup clears stale Face indices; Align keeps selection.
+Single Face disables Align; locked/reference context blocked. Existing Vertex/Edge
+Align geometry/gesture behavior and the .330 core remain unchanged.
+
+Current ring: eight inner unchanged, fourteen outer evenly spaced at 205px; guide 410px.
+Outer/outer and outer/inner button rectangle spacing PASS; placement remains provisional.
+36 targeted Align owner/core/proxy, cleanup owner/repair, dock/background/Bridge/value
+and release checks PASS; syntax PASS. Full suite: 1120 tests, 835 PASS, same 285 failure
+names as .703; no new failures. Two legacy Align loader tests now assert one loader
+with a versioned URL rather than the retired .330 cache pin.
+
+Next: hands-on confirmation, then finish the Face active-tool/settings audit (especially
+existing Face Repair Merge by Distance scope/parameter workflow). Through already lives
+in Extrude, so do not create a parallel Through tool. Do not declare Face complete
+until every applicable existing owner/settings path is accounted for. Then Vertex →
+Object → final Edge; no unrelated development. Keep drawer fallbacks until replacements
+pass. Choose inner/main versus outer/secondary with user after coverage is populated.
+
+## .703 owner audit / implementation — retained checkpoint
 
 Three existing whole-active-mesh repair owners were already loaded by
 face-workflow-layout.js: close-holes .201, quad-pair-cleanup .205, quadify-ngons .203.
@@ -74,10 +108,9 @@ close the scope panel; locked/reference active objects cannot apply. No raw view
 pointer owner added. Outer ring: twelve 30-degree sectors at 175px, guide 350px; all
 prior targets retained; outer/outer and outer/inner rectangle spacing audited. Inner
 positions unchanged. 21 targeted repair/dock/background/Bridge/value/release checks PASS. Full suite: 1112 tests, 827 PASS, same 285 failures as .702; failure names compared, no new failures.
-Next: confirm this batch, audit remaining Face active-tool/settings gaps (including
-Clean Vertices and applicable alignment/precision controls), then Vertex → Object →
-final Edge. Whole-object scope stays explicit; no selection-only ring entries. Drawer
-fallbacks remain until contextual replacements pass; do not remove panels wholesale.
+At .703, the next audited gaps were Clean Vertices and component Align, now added
+in .704 above. Whole-object scope stays explicit; no selection-only ring entries.
+Drawer fallbacks remain until contextual replacements pass; do not remove panels wholesale.
 
 ## .702 scope correction / next build rule
 

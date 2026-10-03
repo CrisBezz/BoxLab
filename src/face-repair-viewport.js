@@ -3,7 +3,8 @@ import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.1
 const repairs={
   'Close Holes':{selector:'#closeHolesBtn',owner:'__boxlabCloseHoles',method:'closeHoles',description:'Fill all simple closed boundary loops.'},
   'Quad Cleanup':{selector:'#quadPairCleanupBtn',owner:'__boxlabQuadPairCleanup',method:'apply',description:'Merge safe planar triangle pairs into quads.'},
-  'Quadify N-gons':{selector:'#quadifyNgonsBtn',owner:'__boxlabQuadifyNgons',method:'apply',description:'Split eligible planar, convex, even-sided n-gons into quads.'}
+  'Quadify N-gons':{selector:'#quadifyNgonsBtn',owner:'__boxlabQuadifyNgons',method:'apply',description:'Split eligible planar, convex, even-sided n-gons into quads.'},
+  'Clean Vertices':{selector:'#cleanVerticesBtn',owner:'__boxlabCleanVertices',method:'apply',description:'Remove safe redundant and orphan vertices. Keep intentional loose geometry.'}
 };
 const panel=document.createElement('div');
 panel.id='faceRepairViewport';panel.hidden=true;
@@ -23,7 +24,7 @@ function available(tool){
   const spec=repairs[tool],owner=spec&&globalThis[spec.owner];
   owner?.syncUI?.();
   const target=spec&&document.querySelector(spec.selector);
-  return !!(editable()&&owner?.[spec.method]&&target&&!target.disabled);
+  return !!(editable()&&owner?.[spec.method]&&target&&!target.disabled&&(tool!=='Clean Vertices'||globalThis.__boxlabHistory));
 }
 function hide(){session=null;panel.hidden=true;cancelAnimationFrame(raf);}
 function close(){
