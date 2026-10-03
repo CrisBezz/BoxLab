@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.685 — logical-quad Loop Cut through collinear boundary detail.
+// BoxLab v0.36.18.686 — logical-quad Loop Cut through collinear boundary detail.
 // Faces with four genuine corners plus any number of collinear boundary vertices
 // are treated as logical quads. Genuine ngons / poles remain hard stops.
 
@@ -171,44 +171,75 @@ function augmentedChain(mesh,info,slot,ring,cutVertices){
   });
   return unique;
 }
-function boundaryConnector(info,cutSlots,from,to){
-  for(let slot=0;slot<4;slot++){
-    if(cutSlots.includes(slot))continue;
-    const p=orientPath(info.chains[slot],from,to);
-    if(p)return p;
-  }
-  return[from,to];
-}
 function segmentInclusive(chain,from,to){
   const a=chain.indexOf(from),b=chain.indexOf(to);
   if(a<0||b<0)return null;
   return a<=b?chain.slice(a,b+1):chain.slice(b,a+1).reverse();
 }
+function untouchedSlots(cutSlots){
+  const set=new Set(cutSlots);
+  return[0,1,2,3].filter(i=>!set.has(i));
+}
+function connectorForEndpoints(info,cutSlots,from,to){
+  // For opposite cut sides in a logical quad there are exactly two untouched
+  // boundary sides. One connects the "start" endpoints; the other connects
+  // the "end" endpoints. Choose only a chain whose actual endpoints match.
+  for(const slot of untouchedSlots(cutSlots)){
+    const path=orientPath(info.chains[slot],from,to);
+    if(path)return path;
+  }
+  return null;
+}
 function splitLogicalFace(mesh,info,slots,ring,cutVertices,amounts){
-  const s0=slots[0],s1=slots[1],key0=edgeKey(mesh,info.face[s0],info.face[(s0+1)%4]),key1=edgeKey(mesh,info.face[s1],info.face[(s1+1)%4]);
+  if(!info||slots.length!==2)return null;
+  const s0=slots[0],s1=slots[1];
+  if((s0+2)%4!==s1&&(s1+2)%4!==s0)return null;
+
+  const key0=edgeKey(mesh,info.face[s0],info.face[(s0+1)%4]);
+  const key1=edgeKey(mesh,info.face[s1],info.face[(s1+1)%4]);
   const dir0=ring.directed.get(key0),dir1=ring.directed.get(key1);
   if(!dir0||!dir1)return null;
-  let p=augmentedChain(mesh,info,s0,ring,cutVertices),q=augmentedChain(mesh,info,s1,ring,cutVertices);
-  p=orientPath(p,dir0.a,dir0.b);q=orientPath(q,dir1.a,dir1.b);
+
+  let p=orientPath(augmentedChain(mesh,info,s0,ring,cutVertices),dir0.a,dir0.b);
+  let q=orientPath(augmentedChain(mesh,info,s1,ring,cutVertices),dir1.a,dir1.b);
   if(!p||!q)return null;
-  const pCuts=cutVertices.get(key0)||[],qCuts=cutVertices.get(key1)||[];
+
+  let pCuts=[...(cutVertices.get(key0)||[])];
+  let qCuts=[...(cutVertices.get(key1)||[])];
   if(pCuts.length!==amounts.length||qCuts.length!==amounts.length)return null;
-  const pBounds=[p[0],...pCuts,p[p.length-1]],qBounds=[q[0],...qCuts,q[q.length-1]];
+
+  // Order cut vertices along the actual directed side, not insertion order.
+  pCuts.sort((a,b)=>p.indexOf(a)-p.indexOf(b));
+  qCuts.sort((a,b)=>q.indexOf(a)-q.indexOf(b));
+
+  const pBounds=[p[0],...pCuts,p[p.length-1]];
+  const qBounds=[q[0],...qCuts,q[q.length-1]];
+  const startConnector=connectorForEndpoints(info,slots,qBounds[0],pBounds[0]);
+  const endConnector=connectorForEndpoints(info,slots,pBounds[pBounds.length-1],qBounds[qBounds.length-1]);
+  if(!startConnector||!endConnector)return null;
+
   const polys=[];
-  for(let i=0;i<pBounds.length-1;i++){
-    const ps=segmentInclusive(p,pBounds[i],pBounds[i+1]),qs=segmentInclusive(q,qBounds[i],qBounds[i+1]);
+  const bands=pBounds.length-1;
+  for(let i=0;i<bands;i++){
+    const ps=segmentInclusive(p,pBounds[i],pBounds[i+1]);
+    const qs=segmentInclusive(q,qBounds[i],qBounds[i+1]);
     if(!ps||!qs)return null;
+
     const poly=[...ps];
-    if(i===pBounds.length-2){
-      const endPath=boundaryConnector(info,slots,pBounds[i+1],qBounds[i+1]);
-      poly.push(...endPath.slice(1));
-    }else poly.push(qBounds[i+1]);
+
+    // Interior boundary between bands is the Loop Cut chord.
+    if(i===bands-1) poly.push(...endConnector.slice(1));
+    else poly.push(qBounds[i+1]);
+
+    // Walk back down the opposite cut side, preserving any pre-existing
+    // collinear detail that belongs inside this band.
     poly.push(...qs.slice(0,-1).reverse());
-    if(i===0){
-      const startPath=boundaryConnector(info,slots,qBounds[i],pBounds[i]);
-      poly.push(...startPath.slice(1));
-    }else poly.push(pBounds[i]);
-    const clean=normalizePoly(poly);if(!clean)return null;
+
+    if(i===0) poly.push(...startConnector.slice(1));
+    else poly.push(pBounds[i]);
+
+    const clean=normalizePoly(poly);
+    if(!clean)return null;
     polys.push(clean);
   }
   return polys;
@@ -264,5 +295,5 @@ LiveEditableMesh.prototype.loopCuts=function(edgeIndex,count=2){
   return{cutCount:result.amounts.length,cutEdges:result.ring.cutKeys.size,splitFaces:result.ring.splitFaces.length,slideGroups:result.slideGroups,positions:result.amounts,promotedLogicalQuad:true};
 };
 
-LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.685';
-globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.685'};
+LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.686';
+globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.686'};
