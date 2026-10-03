@@ -215,7 +215,22 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     });
   }
 
+  function trackPenBackgroundTapDown(event){
+    if(event.pointerType!=='pen'||event.target!==canvas)return;
+    const contact=(event.buttons&1)===1||event.pressure>0;
+    if(!contact)return;
+    const meshHit=pencilHitsEditableMesh(event);
+    const modellingToolActive=!!globalThis.__boxlabFaceDirect?.active?.()||!!globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.();
+    if(meshHit||modellingToolActive){
+      penBackgroundTaps.delete(event.pointerId);
+      return;
+    }
+    penBackgroundTaps.set(event.pointerId,{x:event.clientX,y:event.clientY,orbitClaimed:false});
+    gestureDebug('PEN BACKGROUND CANDIDATE',{pid:event.pointerId,x:Math.round(event.clientX),y:Math.round(event.clientY)});
+  }
+
   window.addEventListener('pointerdown',trackPhysicalTouchDown,{capture:true,passive:true});
+  window.addEventListener('pointerdown',trackPenBackgroundTapDown,{capture:true,passive:true});
   window.addEventListener('pointerup',feedOrbitReleaseEarly,{capture:true,passive:true});
   window.addEventListener('pointercancel',feedOrbitReleaseEarly,{capture:true,passive:true});
 
@@ -344,9 +359,8 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         const blocked=!!meshHit;
         const modellingToolActive=faceToolActive||mainDirectActive;
         const deferred=blocked&&!modellingToolActive;
-        if(!blocked&&!modellingToolActive){
-          penBackgroundTaps.set(event.pointerId,{x:event.clientX,y:event.clientY,orbitClaimed:false});
-        }
+        // Background Pencil tap candidacy is owned by window-capture tracking,
+        // independent of whether OrbitControls receives this pointerdown.
         gestureDebug('PEN ORBIT ROUTE',{
           pid:event.pointerId,
           pressure:event.pressure,
@@ -403,7 +417,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   };
 
   globalThis.__boxlabPencilOrbitGate={
-    version:'0.36.18.681',
+    version:'0.36.18.682',
     beginOrbitRegistration,
     endOrbitRegistration,
     registrationDepth:()=>orbitRegistrationDepth
