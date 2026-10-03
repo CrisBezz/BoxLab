@@ -1,45 +1,40 @@
-## v0.36.18.685 — Loop Cut through generalized logical quads
+## v0.36.18.686 — logical-quad Loop Cut strip reconstruction fix
 
 Current release:
-- v0.36.18.685
+- v0.36.18.686
 
 Hands-on protected:
-- .676 guided radial Edge Bridge: PASS.
-- .677 Edge radial one-shot cleanup: PASS.
-- .678 Duplicate Faces: works great.
-- .682 Pencil/Object routing reliability: PERFECT / PASS.
 - .684 radial Knife viewport session: PASS.
+- .682 Pencil/Object routing reliability: PERFECT / PASS.
 
-User-reported strengthening case:
-- Loop Cut reported “no continuous quad path from this edge” on a face that is visually quad-like but contains multiple collinear boundary vertices from prior modelling.
-- Existing loop-cut-added-vertex.js only promoted a 5-gon containing exactly one collinear added vertex.
+.685 result:
+- Previously failing Loop Cut path now traverses the logical quad corridor.
+- User reported bad long/sliver/diagonal faces after cut.
 
-.685:
-- Generalizes the existing logical-quad Loop Cut owner; no second Loop Cut kernel added.
-- A face is now eligible when it has:
-  - exactly four genuine non-collinear corners
-  - any number of intermediate collinear vertices distributed along its four boundary sides
-- Genuine ngons / extra non-collinear corners / branched or ambiguous topology remain hard stops.
-- Logical ring traversal uses those four corners.
-- Physical boundary chains are preserved during face splitting:
-  - existing collinear boundary vertices are retained
-  - requested Loop Cut vertices are inserted/reused at the requested fraction
-  - resulting polygons preserve original boundary detail
-- Works for single and multi Loop Cut paths.
-- Facegroups are preserved on generated strips.
-- Existing base mesh.loopCut / loopCuts remain fallback for ordinary pure quads.
-- drawer-ui dynamic import repinned to loop-cut-added-vertex.js?v=0.36.18.685.
+Root cause:
+- .685 traversal was correct, but splitLogicalFace() could choose the wrong outer boundary connector between the two cut sides.
+- That paired endpoints across the face incorrectly and created malformed polygons.
+
+.686:
+- Keeps .685 generalized logical-quad recognition.
+- Replaces ambiguous connector reconstruction with deterministic logical-quad strip rebuilding.
+- The two cut sides must be opposite logical sides.
+- The two untouched sides are the only valid outer connectors.
+- First strip inherits one untouched boundary chain.
+- Last strip inherits the other untouched boundary chain.
+- Interior strips are clean bands between corresponding cut points.
+- Existing collinear detail along the two cut sides is preserved inside the appropriate strip.
+- Genuine ngons/poles remain stops.
+- No second Loop Cut kernel added.
 
 Immediate hands-on:
-1. Reopen the exact model/case from the screenshot.
-2. Arm Loop Cut and drag on the previously failing edge.
-3. Expected: cut propagates across the valid quad-like corridor instead of reporting unavailable.
-4. It should stop cleanly when it reaches genuine non-quad/pole topology.
-5. Slide the inserted loop and release.
-6. Check existing collinear boundary vertices remain present.
-7. Try Loop count >1 on same corridor.
-8. Regression: simple cube Loop Cut remains unchanged.
-9. Regression: .684 Knife remains PASS.
+1. Retry exact screenshot model/case.
+2. Loop Cut should still traverse the corridor.
+3. New faces should be clean strips — no long diagonal/sliver faces.
+4. Slide the loop and release.
+5. Inspect the opening/detail side carefully.
+6. Try Loop count >1.
+7. Simple cube Loop Cut remains unchanged.
 
 Protected:
 - .684 Knife session.
