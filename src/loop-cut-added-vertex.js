@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.686 — logical-quad Loop Cut through collinear boundary detail.
+// BoxLab v0.36.18.687 — logical-quad Loop Cut through collinear boundary detail.
 // Faces with four genuine corners plus any number of collinear boundary vertices
 // are treated as logical quads. Genuine ngons / poles remain hard stops.
 
@@ -99,11 +99,39 @@ function logicalSeedKey(mesh,seed,topology,edgeMap){
   if(edgeMap.has(physical))return physical;
   return null;
 }
+function logicalSeedDirection(mesh,seed,topology,seedKey,edgeMap){
+  // Preserve the exact direction of the physical edge the user touched.
+  // When that physical edge is only one segment of a promoted logical side,
+  // project its direction onto the logical side endpoints.
+  for(const info of topology.faceInfos||[]){
+    if(!info)continue;
+    for(let slot=0;slot<4;slot++){
+      const logicalA=info.face[slot],logicalB=info.face[(slot+1)%4];
+      if(edgeKey(mesh,logicalA,logicalB)!==seedKey)continue;
+      const chain=info.chains?.[slot]||[];
+      for(let i=0;i<chain.length-1;i++){
+        const a=chain[i],b=chain[i+1];
+        if(a===seed.a&&b===seed.b)return{a:logicalA,b:logicalB};
+        if(a===seed.b&&b===seed.a)return{a:logicalB,b:logicalA};
+      }
+    }
+  }
+
+  // Ordinary physical edge / pure quad fallback: use the touched edge's
+  // own orientation whenever it matches the logical endpoints.
+  const logical=edgeMap.get(seedKey);
+  if(!logical)return null;
+  if(seed.a===logical.a&&seed.b===logical.b)return{a:logical.a,b:logical.b};
+  if(seed.a===logical.b&&seed.b===logical.a)return{a:logical.b,b:logical.a};
+  return{a:logical.a,b:logical.b};
+}
 function logicalRing(mesh,edgeIndex,topology){
   const seed=mesh.edges()[edgeIndex];if(!seed)return null;
   const {logicalFaces}=topology,edgeMap=buildEdges(mesh,logicalFaces),seedKey=logicalSeedKey(mesh,seed,topology,edgeMap);
   if(!seedKey)return null;
-  const logicalSeed=edgeMap.get(seedKey),cutKeys=new Set([seedKey]),directed=new Map([[seedKey,{a:logicalSeed.a,b:logicalSeed.b}]]),queue=[seedKey];
+  const seedDir=logicalSeedDirection(mesh,seed,topology,seedKey,edgeMap);
+  if(!seedDir)return null;
+  const cutKeys=new Set([seedKey]),directed=new Map([[seedKey,seedDir]]),queue=[seedKey];
   while(queue.length){
     const currentKey=queue.shift(),current=edgeMap.get(currentKey),currentDir=directed.get(currentKey);
     if(!current||!currentDir)continue;
@@ -295,5 +323,5 @@ LiveEditableMesh.prototype.loopCuts=function(edgeIndex,count=2){
   return{cutCount:result.amounts.length,cutEdges:result.ring.cutKeys.size,splitFaces:result.ring.splitFaces.length,slideGroups:result.slideGroups,positions:result.amounts,promotedLogicalQuad:true};
 };
 
-LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.686';
-globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.686'};
+LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.687';
+globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.687'};
