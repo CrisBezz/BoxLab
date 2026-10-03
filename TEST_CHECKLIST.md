@@ -2925,3 +2925,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .682: Object picker routes through authoritative body raycast
 - [x] Static .682: Pencil background candidacy begins at window capture
 - [x] Protection .682: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .683: radial Extract executes from Face ring
+- [ ] Workflow .683: source Faces removed unless whole source would become empty
+- [ ] Workflow .683: new Extracted Faces object becomes active
+- [ ] Workflow .683: Object gizmo appears immediately on extracted object
+- [ ] Workflow .683: Move works immediately
+- [ ] Workflow .683: finger/Pencil background dismiss still works
+- [ ] Workflow .683: tapping extracted object restores gizmo
+- [ ] Workflow .683: Undo restores scene transaction
+- [x] Static .683: existing Extract owner reused
+- [x] Static .683: no duplicate Extract topology kernel added
+- [x] Protection .683: src/multi-object-transform.js?v=0.36.1.0 unchanged
