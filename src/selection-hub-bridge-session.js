@@ -144,8 +144,15 @@ function openFromHub(options={}){
 apply.addEventListener('click',event=>{
   event.preventDefault();event.stopPropagation();
   if(!active||!combinedValid())return;
+  const ids=selectedEdges();
   active=false;panel.hidden=true;
-  bridgeButton?.click();
+  const ok=!!globalThis.__boxlabBridgeUI?.bridgeEdgesFromHub?.({ids});
+  if(!ok){
+    active=true;panel.hidden=false;
+    if(status)status.textContent='Bridge • selected boundaries are not compatible';
+    sync();
+    return;
+  }
   firstIds=[];
 });
 
