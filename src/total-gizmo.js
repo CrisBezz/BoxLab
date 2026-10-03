@@ -509,6 +509,19 @@ toolButtons.forEach(button=>button.addEventListener('click',()=>{
   }
   queueMicrotask(syncContextToolAvailability);
 }));
+window.addEventListener('boxlab-selection-hub-session-complete',event=>{
+  if(event.detail?.tool!=='Knife'||event.detail?.mode!=='face')return;
+  hubSuppressedKey='';
+  lastSelectionKey='';
+  resetTransientState?.({hideFloat:true});
+  hubState='closed';
+  expanded=false;
+  root.dataset.hubState='closed';
+  root.dataset.expanded='false';
+  root.hidden=true;
+  gestureDebug('SELECTION HUB SESSION COMPLETE',{tool:'Knife',mode:'face'});
+});
+
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(syncContextToolAvailability));
 document.addEventListener('click',()=>queueMicrotask(syncContextToolAvailability),true);
 document.addEventListener('pointerup',()=>queueMicrotask(syncContextToolAvailability),true);
@@ -976,5 +989,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.683'
+  version:'0.36.18.684'
 };
