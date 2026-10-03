@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.684 radial Knife viewport session
+
+- Continued Face-ring/modeless polish with Knife.
+- Existing Knife topology/snap/history implementation retained.
+- Added minimal Knife lifecycle API/events.
+- Radial Knife now opens a compact “Knife active / Done” viewport session.
+- Knife remains armed after each cut for repeated cuts.
+- Done disarms Knife, clears stale Selection Hub suppression, and leaves the next Face selection ready for a fresh puck.
+- Left-panel Knife remains unchanged.
+- No Knife geometry kernel changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.683 radial Extract Faces Object handoff
 
 - Continued Face-ring polish after .682 PERFECT PASS.
