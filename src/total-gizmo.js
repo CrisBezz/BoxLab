@@ -619,8 +619,6 @@ document.addEventListener('pointerdown',event=>{
   hideFloatInput();
 },true);
 
-const canvas=document.querySelector('#viewport');
-
 function objectHitAt(event){
   if(currentMode()!=='object')return false;
   try{return !!globalThis.__boxlabSelectionBridge?.pick?.('object',event);}catch{return false;}
@@ -949,5 +947,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.679'
+  version:'0.36.18.680'
 };
