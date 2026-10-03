@@ -473,6 +473,21 @@ toolSectors.forEach(button=>{
       target.click();
       if(radialOffset)globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
       if(radialSlide)globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
+      if(mode==='edge'&&(toolLabel==='Dissolve'||toolLabel==='Delete')){
+        queueMicrotask(()=>{
+          hubSuppressedKey='';
+          const mesh=state()?.mesh,current=currentMode();
+          if(current==='edge'&&selectionAvailable(mesh,'edge')){
+            lastSelectionKey=selectionKey(mesh,'edge');
+            setHubState('closed',{reason:'edge-one-shot-complete'});
+            root.hidden=false;
+          }else{
+            lastSelectionKey='';
+            root.hidden=true;
+          }
+          gestureDebug('SELECTION HUB ONE SHOT COMPLETE',{tool:toolLabel,mode:current,selection:globalThis.__boxlabSelectionBridge?.indices?.()?.length||0});
+        });
+      }
     }
     window.dispatchEvent(new CustomEvent('boxlab-selection-hub-tool',{detail:{mode,tool:toolLabel,selector,selectionKey:lastSelectionKey,radialSession}}));
   });
@@ -868,5 +883,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.676'
+  version:'0.36.18.677'
 };
