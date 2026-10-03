@@ -526,6 +526,19 @@ window.addEventListener('boxlab-bridge-complete',event=>{
   });
 });
 
+window.addEventListener('boxlab-face-extract-complete',event=>{
+  objectTransformDismissed=false;
+  requestAnimationFrame(()=>{
+    const s=state(),mesh=s?.mesh,mode=currentMode();
+    if(mode!=='object'||!objectSelected())return;
+    hubSuppressedKey='';
+    lastSelectionKey=selectionKey(mesh,'object');
+    setHubState('transform',{reason:'face-extract-complete'});
+    root.hidden=false;
+    gestureDebug('SELECTION HUB RESTORE',{tool:'Extract',mode:'object',name:event.detail?.name||''});
+  });
+});
+
 window.addEventListener('boxlab-face-duplicate-complete',event=>{
   objectTransformDismissed=false;
   requestAnimationFrame(()=>{
@@ -963,5 +976,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.682'
+  version:'0.36.18.683'
 };
