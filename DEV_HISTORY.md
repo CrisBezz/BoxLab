@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.683 radial Extract Faces Object handoff
+
+- Continued Face-ring polish after .682 PERFECT PASS.
+- Existing Extract Faces topology/object implementation retained.
+- Added semantic completion event after successful Extract.
+- Total Gizmo now hands the new Extracted Faces object directly into Object transform mode.
+- Background dismiss / Pencil orbit / object reselect all reuse the protected .682 lifecycle.
+- No Extract geometry or history implementation changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.682 hands-on PERFECT PASS
 
 - Pencil background tap dismissal reliable.
