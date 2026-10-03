@@ -6,6 +6,7 @@ Current release:
 Hands-on protected:
 - .684 radial Knife viewport session: PASS.
 - .682 Pencil/Object routing reliability: PERFECT / PASS.
+- .688 restored known-good Loop Cut / Loop Slide feel: PASS.
 
 Loop Cut incident:
 - User found topology where Loop Cut refused a visually quad-like area.
