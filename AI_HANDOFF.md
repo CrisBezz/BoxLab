@@ -6,7 +6,8 @@ Current release:
 Hands-on protected:
 - .678 Duplicate Faces works great.
 - .680 Total Gizmo loads again.
-- Finger background tap dismisses Object transform correctly.
+- .682 Pencil/Object routing reliability: PERFECT / PASS.
+- Protected Object contract: finger/Pencil background tap dismisses gizmo; Pencil drag orbits; object tap restores gizmo.
 
 User-reported .681 issues:
 - Pencil background tap only dismisses gizmo sometimes.
