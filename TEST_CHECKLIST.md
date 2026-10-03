@@ -3156,8 +3156,18 @@ Add new permanent regression checks below when future features need protection.
 
 - [x] .700 full manual list PASS; top-centre popup placement and background Done protected.
 - [x] Static: existing loaded button owners/validation reused; all previous targets retained; outer buttons have no overlap with each other/inner buttons.
-- [ ] Visible .701; eleven outer tools usable and previous eight inner tools unchanged.
-- [ ] One triangle of a triangulated quad → Coplanar selects flat connected region, preserves geometry and returns puck.
-- [ ] One cube Face → Connected selects complete shell, excludes disconnected components and returns puck.
-- [ ] Multi-Face selection disables both seed-based helpers.
-- [ ] Ring close, previous tools, top-centre panels, background Done/navigation and viewport-edge layout remain intact.
+- [x] Visible .701; eleven outer tools usable and previous eight inner tools unchanged.
+- [x] One triangle of a triangulated quad → Coplanar selects flat connected region, preserves geometry and returns puck.
+- [x] One cube Face → Connected selects complete shell, excludes disconnected components and returns puck.
+- [x] Multi-Face selection disables both seed-based helpers.
+- [x] Ring close, previous tools, top-centre panels, background Done/navigation and viewport-edge layout remain intact.
+
+
+## v0.36.18.702 — active-tool-only radial correction
+
+- [x] .701 selection command behavior PASS; user explicitly retires radial selection access.
+- [x] Static: no selection button proxies remain on Face ring; all seventeen active tool targets retained.
+- [ ] Visible .702; eight inner/nine outer active tools, Coplanar/Connected removed.
+- [ ] Existing modelling sectors and centre close work.
+- [ ] Normal/long-press selection browsing unchanged.
+- [ ] Top-centre session panels and background Done remain correct.

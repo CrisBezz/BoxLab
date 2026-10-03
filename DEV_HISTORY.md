@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-10-04 — v0.36.18.702 active-tool-only radial correction
+
+- User confirmed .701 PASS, then corrected product scope: radial menus are for active tools; selections belong to long press/gestures.
+- Removed Coplanar/Connected radial sectors and selection-only completion labels; restored eight inner/nine outer active tools at 82/145 px. Authoritative selection commands and gesture owners untouched.
+- Detached/Quads additions were only a local draft and were discarded before publishing. Failed direction recorded: do not equate every drawer command with an active radial tool.
+- All seventeen active targets retained. Top-centre popup/background Done behavior protected. 15 targeted dock/background/proxy/Bridge/release checks PASS; syntax PASS.
+- Updated .702 markers, gizmo/main-loader/refresh pins and workflow/roadmap/handoff. Next audit remaining Face active modelling/repair settings, then Vertex/Object/final Edge. Hands-on confirmation pending.
+
+
 ## 2026-10-03 — v0.36.18.701 radial Coplanar / Connected Face selection
 
 - User confirmed .700 PASS; top-centre panels, background Done and protected navigation recorded.

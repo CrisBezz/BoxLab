@@ -4,7 +4,10 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## User-directed priority — 2026-10-03
+## User-directed priority — updated 2026-10-04
+
+Radial menus contain active modelling/repair tools only. Selection is handled by
+long press and gestures. Do not add selection filters/helpers to contextual rings.
 
 Primary goal: finish contextual radial menus and top-centre pop-out settings so routine
 modelling needs as little left-drawer interaction as possible.
@@ -164,7 +167,7 @@ Only add focused tools that suit BoxLab:
   - tapping the object restores the gizmo reliably
 - Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
-### Face contextual gap completion — .701
+### Face contextual gap completion — .702
 
 - .694 outer-ring Join/Circle and existing eight inner sectors are hands-on PASS and protected.
 - .695 Poke/Make Planar are hands-on PASS and protected.
@@ -173,9 +176,10 @@ Only add focused tools that suit BoxLab:
 - .698 Face Bridge viewport preview and centred × are hands-on PASS and protected.
 - .699 Extrude/Inset Exact/Repeat/Done are hands-on PASS and protected.
 - .700 shared top-centre session dock and Extrude/Inset background Done are hands-on PASS and protected.
-- .701 exposes existing Coplanar/Connected Face selection helpers on eleven-sector outer ring; awaiting hands-on PASS.
+- .701 selection owners passed hands-on, but user clarified that radial menus are active tools only.
+- .702 removes Coplanar/Connected radial access and restores nine outer active tools; awaiting hands-on PASS.
 - Populate complete Face tool coverage before deciding inner/main vs outer/secondary placement. More is an accepted fallback if the completed two-ring layout is crowded.
-- Continue auditing remaining Face settings/selection/repair access for contextual access/pop-outs before moving to Vertex, Object and final Edge.
+- Continue auditing remaining Face active-tool settings/repair access for contextual access/pop-outs before moving to Vertex, Object and final Edge.
 
 ## Strengthening list
 

@@ -9,13 +9,16 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.701**.
+Current release: **v0.36.18.702**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
 is still the priority. Follow Face → Vertex → Object → final Edge, not broad gestures.
 
-## User-directed priority — 2026-10-03
+## User-directed priority — updated 2026-10-04
+
+Radial menus contain ACTIVE modelling/repair tools only. Selections belong to
+long press and gestures. .701 selection sectors were a scope mistake, removed .702.
 
 Primary goal: finish contextual radial menus and top-centre pop-out settings so routine
 modelling needs as little left-drawer interaction as possible.
@@ -36,41 +39,37 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.701.
-- Parent checkpoint before .701: a04fd005930bd39d6e6592bef8aba494ffb1e50f.
-- Find the .701 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owner: total-gizmo.js pinned .701. main.js code unchanged but repinned .701; panel/shared dock imports retain .700.
-- Release bootstrap/version logic unchanged; both repinned to .701 to satisfy the current release-owner contract.
+- Release: v0.36.18.702.
+- Parent checkpoint before .702: 81743794904e8630d7418c4248762f6ff4420fa8.
+- Find the .702 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owner: total-gizmo.js pinned .702. main.js code unchanged but repinned .702; panel/shared dock imports retain .700.
+- Release bootstrap/version logic unchanged; both repinned to .702 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .701
+## Immediate hands-on checks — .702
 
-Confirm iPad visibly shows v0.36.18.701.
-1. Face ring: Coplanar / Connected added; eleven outer sectors at 170 px radius with even spacing. Previous targets and eight inner positions retained.
-2. Triangulate one cube quad, then select only one of those triangles: Coplanar selects both triangles on the flat side and returns puck. Geometry unchanged.
-3. Select one cube Face: Connected selects all Faces in its edge-connected shell and returns puck. A disconnected component in the same mesh stays unselected.
-4. Selecting multiple Faces disables both seed-based helpers. Normal Face selection, ring close and existing tools remain intact.
-5. Top-centre panels and background Done for Extrude/Inset remain protected; inspect larger outer-ring spacing near viewport edges.
+Confirm iPad visibly shows v0.36.18.702.
+1. Face ring contains active tools only: Coplanar/Connected selection sectors removed. Eight inner/nine outer tools restored at 82/145 px radii.
+2. Existing inner modelling tools and outer Join/Circle/Poke/Planar/Triangulate/Flip/Orient/Outward/Bridge remain accessible; centre × closes correctly.
+3. Long-press selection browsing and normal Face selection still work. No gesture owner changed.
+4. Top-centre session panels and Extrude/Inset background Done remain intact.
 
-.701 awaits hands-on PASS. User confirmed .700 PASS; protect top-centre popup
-placement, finger/Pencil background Done, preserved Face selection and navigation.
-All future session popups use the shared top-centre placement owner.
+.702 awaits hands-on PASS. User confirmed .701 commands PASS, then explicitly
+corrected their placement: radial menus are NOT for selection. Selection belongs to
+long press and gestures. .701 radial helper placement is retired despite its PASS.
+No Detached/Quads release was published; their local draft was discarded.
 
-## .701 selection-helper owner audit
+## .702 scope correction / next build rule
 
-select-coplanar-region.js and select-connected-shell.js already load via drawer-ui.
-Added outer Coplanar (#selectCoplanarRegionBtn) and Connected
-(#selectConnectedShellBtn), proxying their existing buttons/enabled state and shared
-one-shot puck cleanup. Both require exactly one valid selected Face. Coplanar finds
-edge-connected Faces on the same geometric plane; Connected crosses bends and
-selects the seed's entire edge-connected component. Existing Multi checkbox state
-and selection replacement stay authoritative. No geometry/history/pointer owner changed.
-Eleven outer targets evenly spaced at 170 px; guide diameter 340 px. All previous
-targets retained, inner positions unchanged, outer/outer and outer/inner rectangle
-spacing audited. Assignments remain provisional pending complete Face coverage.
+Removed Coplanar/Connected from the Face ring and their shared one-shot label list;
+restored the compact .700 active-tool layout. Their authoritative selection owners
+and existing drawer/gesture workflows are untouched. No modelling kernel or pointer
+owner changed. Existing top-centre placement and background Done stay protected.
 15 targeted protected dock/background/proxy/Bridge/release checks PASS; syntax PASS.
-Remaining Face coverage: Detached Islands, Inspect/Repair/topology controls and any
-remaining contextual settings, followed by Vertex/Object/final Edge. Whole-mesh
-repair commands require clear scope; do not pretend they operate on selected Faces.
+Primary sequence remains Face active-tool/settings gaps → Vertex → Object → final
+Edge. Audit remaining active modelling/repair commands and their parameter controls.
+Do NOT add selection helpers, filters or selection-only diagnostics to the rings.
+Whole-mesh repair commands need explicit scope and existing owners; distinguish them
+from selected-Face tools. Do not grow rings simply to mirror every drawer button.
 
 ## Two-ring design direction / .694 audit
 
@@ -83,8 +82,8 @@ an explicitly accepted fallback; do not choose it prematurely.
 The existing eight inner sectors remain at 82 px. Current outer assignments are
 provisional. Both actions use current button validation/history and shared one-shot
 puck cleanup. No modelling owner changed; no new raw-pointer gesture owner.
-Continue auditing Face Bridge, Poke and repair/topology actions one safe batch at a
-time. Pop-out settings remain appropriate for tools with parameters.
+Continue auditing remaining active repair/topology actions and tool settings one
+safe batch at a time. Selection-only commands stay outside rings. Pop-out settings remain appropriate for tools with parameters.
 
 ## Retained hands-on checks — .692
 
@@ -128,6 +127,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .701 Coplanar/Connected owner behavior PASS; radial access retired by user scope correction in .702.
 
 - .700 top-centre viewport popups/numeric entry and finger/Pencil background Done for Extrude/Inset, preserved selection/navigation: PASS.
 

@@ -145,6 +145,13 @@ Before ending a session, ask:
 
 If not, improve the handoff first.
 
+## Radial menu scope
+
+User-directed rule (2026-10-04): contextual radial menus contain active modelling
+and repair tools only. Selection commands belong to long-press/gesture workflows.
+Do not populate radial rings with selection helpers, filters or diagnostics that
+only change selection. Audit actual Active Tools ownership before choosing builds.
+
 ## Tool-session popup placement
 
 User-directed UX rule (2026-10-03): every viewport tool-session popup appears at
