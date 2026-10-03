@@ -2896,3 +2896,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .679: Object mode no longer force-reopens gizmo when dismissed
 - [x] Protection .679: transform geometry owners unchanged
 - [x] Protection .679: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Regression .680: Total Gizmo loads again
+- [ ] Workflow .680: Duplicate Faces opens Object gizmo immediately
+- [ ] Workflow .680: background tap dismisses gizmo
+- [ ] Workflow .680: object remains selected after dismiss
+- [ ] Workflow .680: tapping object restores gizmo
+- [x] Static .680: duplicate top-level canvas declaration removed
+- [x] Protection .680: src/multi-object-transform.js?v=0.36.1.0 unchanged
