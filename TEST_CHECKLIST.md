@@ -2976,3 +2976,13 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .686: only untouched logical sides used as outer connectors
 - [x] Static .686: interior bands reconstructed deterministically
 - [x] Protection .686: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .687: strengthened Loop Cut still traverses screenshot case
+- [ ] Workflow .687: Loop Slide moves in expected direction from touched edge
+- [ ] Workflow .687: reversing drag reverses slide
+- [ ] Regression .687: .686 clean strip reconstruction remains intact
+- [ ] Regression .687: ordinary cube Loop Cut unchanged
+- [x] Static .687: logical seed direction derived from clicked physical edge
+- [x] Static .687: promoted collinear-side segment direction projects to logical side
+- [x] Protection .687: src/multi-object-transform.js?v=0.36.1.0 unchanged
