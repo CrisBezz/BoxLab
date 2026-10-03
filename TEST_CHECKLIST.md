@@ -2986,3 +2986,13 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .687: logical seed direction derived from clicked physical edge
 - [x] Static .687: promoted collinear-side segment direction projects to logical side
 - [x] Protection .687: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .688: ordinary quad Loop Cut matches pre-.685 behaviour
+- [ ] Workflow .688: Loop Slide direction/feel matches pre-.685 behaviour
+- [ ] Workflow .688: multi-loop count remains correct
+- [ ] Workflow .688: single Add-vertex logical quad remains supported
+- [ ] Safety .688: unsupported complex screenshot topology refuses cleanly rather than creating malformed faces
+- [x] Static .688: loop-cut-added-vertex.js restored from known-good v0.36.18.162
+- [x] Static .688: .685-.687 generalized reconstruction removed from live core
+- [x] Protection .688: src/multi-object-transform.js?v=0.36.1.0 unchanged
