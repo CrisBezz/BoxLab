@@ -1,5 +1,20 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.676 modeless radial Bridge completion
+
+- .675 touch navigation reported good for now; monitoring continues.
+- Audited remaining radial Edge one-shot actions.
+- Edge Bridge had the strongest modeless mismatch: successful Bridge switched to Face mode and then cleared the newly created faces.
+- Added radial-only Bridge completion path in bridge-ui.js:
+  - existing Bridge topology and history remain authoritative
+  - radial Edge Bridge selects created bridge faces after switching to Face mode
+  - emits semantic completion event
+  - Total Gizmo restores closed Face puck on created faces
+- Left-panel Edge Bridge retains legacy selection-clearing behaviour.
+- Face Bridge unchanged.
+- No Bridge topology duplication.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-02 — v0.36.18.675 recover stale camera disable
 
 - User reported finger navigation eventually becomes completely inert, not merely misclassified as multi-touch.
