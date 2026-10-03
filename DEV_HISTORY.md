@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.677 radial Edge one-shot hub cleanup
+
+- .676 guided radial Edge Bridge hands-on PASS.
+- Audited remaining Edge radial one-shots Dissolve / Delete.
+- Both are already appropriately direct and do not need viewport panels.
+- Fixed stale Selection Hub suppression after radial one-shot topology removal:
+  - clears hubSuppressedKey after authoritative action
+  - returns puck if a valid Edge selection remains
+  - otherwise stays hidden until next selection
+  - prevents reused topology indices from accidentally inheriting old suppression
+- No Dissolve/Delete topology/history implementation changed.
+- Edge radial contextualisation is now effectively complete.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.676 guided radial Edge Bridge
 
 - .675 navigation recovery is provisionally good hands-on.
