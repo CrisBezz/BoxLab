@@ -131,6 +131,16 @@ Only add focused tools that suit BoxLab:
 - landscape-first layout
 - selection visibility at all zoom levels
 
+### Selection Hub / modeless UX checkpoint — v0.36.18.690
+
+- Edge radial lifecycle is complete and hands-on protected through .677.
+- Face radial lifecycle implementation is complete through .690, pending final hands-on Shell/Sweep exit confirmation once the refreshed .690 shell is loaded.
+- Protected Object-mode contract from .682:
+  - finger/Pencil background tap dismisses Object gizmo
+  - Pencil background drag still orbits
+  - tapping the object restores the gizmo reliably
+- After .690 hands-on PASS, stop adding radial-ring glue and move into the broader modeless interaction phase (tap/hold/cycle/direct workflows) one narrow gesture at a time.
+
 ## Strengthening list
 
 Concrete modelling cases to strengthen after the current Selection Hub / gizmo UX pass:
