@@ -119,7 +119,7 @@ import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('Bo
 import('./vertex-slide-polish.js?v=0.36.18.162').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
 import('./dissolve-selection-polish.js?v=0.36.18.28').catch(error => console.warn('BoxLab Dissolve selection polish failed to load', error));
 import('./selection-history-safe.js?v=0.36.18.34').catch(error => console.warn('BoxLab selection-aware history failed to load', error));
-import('./loop-cut-added-vertex.js?v=0.36.18.687').catch(error => console.warn('BoxLab Add-vertex Loop promotion failed to load', error));
+import('./loop-cut-added-vertex.js?v=0.36.18.688').catch(error => console.warn('BoxLab Add-vertex Loop promotion failed to load', error));
 // Normal Through remains owned by multi-face-direct + through-kernel; fallback only wakes when kernel planning fails.
 import('./object-origin.js?v=0.36.18.355').then(() => {
   installGroupUiPolish();
