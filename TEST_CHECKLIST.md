@@ -2831,3 +2831,17 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .675: NAV CONTROLS RECOVER markers added
 - [x] Protection .675: modelling pointerdown/move ownership unchanged
 - [x] Protection .675: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .676: radial Edge Bridge completes using existing topology owner
+- [ ] Workflow .676: successful radial Bridge switches to Face mode
+- [ ] Workflow .676: created bridge face(s) remain selected
+- [ ] Workflow .676: closed Face puck appears on created bridge face selection
+- [ ] Workflow .676: Undo removes Bridge in one step
+- [ ] Regression .676: left-panel Edge Bridge retains legacy completion behaviour
+- [ ] Regression .676: Face Bridge unchanged
+- [ ] Regression .676: Edge Extrude / Bevel / Crease / Offset / Slide radial flows unchanged
+- [ ] Monitoring .676: .675 touch navigation remains good during normal modelling
+- [x] Static .676: existing bridge-ui topology/history owner retained
+- [x] Static .676: no Bridge topology kernel duplicated
+- [x] Protection .676: src/multi-object-transform.js?v=0.36.1.0 unchanged
