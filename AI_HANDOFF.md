@@ -1,48 +1,47 @@
-## v0.36.18.684 — radial Knife viewport session
+## v0.36.18.685 — Loop Cut through generalized logical quads
 
 Current release:
-- v0.36.18.684
+- v0.36.18.685
 
 Hands-on protected:
 - .676 guided radial Edge Bridge: PASS.
 - .677 Edge radial one-shot cleanup: PASS.
 - .678 Duplicate Faces: works great.
 - .682 Pencil/Object routing reliability: PERFECT / PASS.
-- .683 Extract Faces handoff advanced to next build; no explicit PASS recorded yet.
+- .684 radial Knife viewport session: PASS.
 
-.684:
-- Continues Face-ring/modeless polish with Knife.
-- Existing knife-tool.js remains authoritative for all Knife geometry, snapping, preview, history, and repeated-cut behaviour.
-- Radial Knife now opens a compact viewport session:
-  - “Knife active”
-  - reminder: drag boundary -> boundary
-  - Done button
-- Knife remains armed after each successful cut exactly as before, allowing repeated cuts.
-- Done:
-  - disarms existing Knife owner
-  - clears preview/armed state
-  - clears Selection Hub suppression
-  - keeps hub hidden while no Face is selected
-  - next Face selection receives a fresh puck immediately
-- Added minimal __boxlabKnifeTool lifecycle bridge and semantic armed/disarmed events.
-- Left-panel Knife remains unchanged and does not open the radial viewport session.
-- No Knife topology or snap algorithm changed.
+User-reported strengthening case:
+- Loop Cut reported “no continuous quad path from this edge” on a face that is visually quad-like but contains multiple collinear boundary vertices from prior modelling.
+- Existing loop-cut-added-vertex.js only promoted a 5-gon containing exactly one collinear added vertex.
+
+.685:
+- Generalizes the existing logical-quad Loop Cut owner; no second Loop Cut kernel added.
+- A face is now eligible when it has:
+  - exactly four genuine non-collinear corners
+  - any number of intermediate collinear vertices distributed along its four boundary sides
+- Genuine ngons / extra non-collinear corners / branched or ambiguous topology remain hard stops.
+- Logical ring traversal uses those four corners.
+- Physical boundary chains are preserved during face splitting:
+  - existing collinear boundary vertices are retained
+  - requested Loop Cut vertices are inserted/reused at the requested fraction
+  - resulting polygons preserve original boundary detail
+- Works for single and multi Loop Cut paths.
+- Facegroups are preserved on generated strips.
+- Existing base mesh.loopCut / loopCuts remain fallback for ordinary pure quads.
+- drawer-ui dynamic import repinned to loop-cut-added-vertex.js?v=0.36.18.685.
 
 Immediate hands-on:
-1. Select a Face -> puck -> Face tools -> Knife.
-2. Knife active badge with Done should appear.
-3. Make one boundary-to-boundary cut.
-4. Knife should remain active; make a second cut.
-5. Tap Done.
-6. Knife left-panel active state should turn off; badge disappears.
-7. Tap/select any Face -> fresh puck appears immediately.
-8. Left-panel Knife should still work normally without the viewport badge.
-9. Regression: Pencil orbit/navigation remains correct.
-
-Next after PASS:
-- Face Delete one-shot hub cleanup, then reassess remaining Face-ring gaps.
+1. Reopen the exact model/case from the screenshot.
+2. Arm Loop Cut and drag on the previously failing edge.
+3. Expected: cut propagates across the valid quad-like corridor instead of reporting unavailable.
+4. It should stop cleanly when it reaches genuine non-quad/pole topology.
+5. Slide the inserted loop and release.
+6. Check existing collinear boundary vertices remain present.
+7. Try Loop count >1 on same corridor.
+8. Regression: simple cube Loop Cut remains unchanged.
+9. Regression: .684 Knife remains PASS.
 
 Protected:
+- .684 Knife session.
 - .682 Object/Pencil contract.
-- existing Knife topology/snap/history owner.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
