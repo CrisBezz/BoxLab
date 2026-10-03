@@ -1,7 +1,7 @@
-## v0.36.18.676 — guided radial Edge Bridge
+## v0.36.18.677 — radial Edge one-shot hub cleanup
 
 Current release:
-- v0.36.18.676
+- v0.36.18.677
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
@@ -11,49 +11,42 @@ Hands-on protected:
 - .662 radial Bevel viewport session: PASS.
 - .663/.664 Edge Extrude radial workflow: works really well.
 - .670 radial Crease selection-first workflow: PERFECT / PASS.
-- .675 navigation recovery: good for now / provisionally protected.
+- .675 navigation recovery: good for now / provisional PASS.
+- .676 guided radial Edge Bridge: PASS.
 
 Strengthening list:
 - Connected-chain Edge Bevel through ordinary 4-valence quad vertices remains recorded in ROADMAP.md.
 
-.676:
-- Continues gizmo-related Edge tool centralisation with Bridge.
-- Legacy Bridge only enabled after two complete compatible boundary loops were already selected, which did not fit the radial puck workflow.
-- Added src/selection-hub-bridge-session.js.
-- Radial Bridge can now START from one complete boundary loop even though the legacy drawer button is still disabled at that stage.
-- Workflow:
-  1. select first complete boundary loop
-  2. puck -> Edge tools -> Bridge
-  3. first boundary stays selected
-  4. add/select the second matching boundary loop in viewport
-  5. panel changes to “Two compatible boundaries ready”
-  6. Apply Bridge delegates to authoritative bridge-ui.js / bridge-topology.js
-  7. created bridge faces become selected
-- The panel suggests hold Edge -> Boundary for selecting the second loop.
-- Cancel restores the original first boundary and returns the puck.
-- bridge-ui.js exposes bridgeEdgesFromHub() and selects created faces for Selection Hub launches.
-- Existing legacy Edge Bridge and Face Bridge behaviour remain unchanged.
-- No Bridge topology kernel duplicated.
+.677:
+- Final Edge-ring polish for one-shot radial tools Dissolve and Delete.
+- No new panels added; both remain direct one-shot actions.
+- Root issue: Selection Hub suppresses the launch selection while a radial tool runs. Dissolve/Delete can remove that topology and clear selection, but the old suppressed selection key could remain cached.
+- Because topology edge indices may later be reused, a future Edge selection could accidentally match that stale key and fail to show its puck.
+- After radial Edge Dissolve/Delete completes:
+  - clear hubSuppressedKey
+  - if a valid Edge selection remains, return the closed puck immediately
+  - if no selection remains, keep the hub hidden
+  - the next Edge selection is therefore fresh and gets the puck normally
+- Existing Dissolve/Delete topology/history/selection behaviour remains authoritative and unchanged.
 
 Immediate hands-on:
-1. Make two open boundary loops with matching edge counts.
-2. Select ONLY the first boundary loop.
-3. Puck -> Edge tools: Bridge should be available even though left drawer Bridge is disabled.
-4. Tap Bridge: guided panel should appear beside the first loop.
-5. Add the second boundary loop to selection; easiest route is hold an Edge -> Boundary while preserving the first selection.
-6. Panel should say “Two compatible boundaries ready”; Apply Bridge enables.
-7. Apply Bridge: bridge is created through existing owner, Face mode becomes active, new bridge faces are selected.
-8. Cancel before Apply: original first boundary remains selected and puck returns.
-9. Regression: legacy left-panel Bridge still requires both loops and behaves as before.
+1. Select dissolvable Edge(s) -> puck -> Dissolve.
+2. Dissolve should happen once; no extra panel.
+3. If selection clears, select any surviving Edge: puck should appear immediately.
+4. Select Edge(s) -> puck -> Delete.
+5. Delete should happen once; if selection clears, select any surviving Edge: puck should appear immediately.
+6. If either operation leaves a valid Edge selection, puck should return on it.
+7. Regression: .676 Bridge still PASS.
 
 Next after PASS:
-- Continue remaining Edge radial tools only where there is a meaningful contextual workflow gap; Dissolve/Delete are likely already sufficient as one-shot actions.
+- Edge radial ring contextualisation is effectively complete. Move to Face-ring gaps / modeless interaction polish rather than adding UI to already-direct Edge tools.
 
 Protected:
+- .676 Bridge.
 - .675 navigation recovery.
 - .670 Crease.
 - .671 Offset.
 - .672 Slide.
 - working Edge Extrude.
-- existing Bridge topology/history owner.
+- authoritative Dissolve/Delete owners.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
