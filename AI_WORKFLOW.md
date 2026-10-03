@@ -76,6 +76,35 @@ For each change:
 3. Use `TEST_CHECKLIST.md` as the regression baseline.
 4. Add a new checklist item whenever a newly stable behaviour becomes worth protecting.
 
+
+## Release publication / cache refresh protocol
+
+GitHub Pages + iPad/Safari caching is part of the release surface. A code commit is not considered published until the shell and relevant module cache keys are verified.
+
+For every numbered build:
+
+1. Update all release markers together:
+   - `version.json`
+   - HTML `<title>`
+   - `#appVersion[data-release-version]`
+   - visible `vX.Y...` label
+2. Repin every directly changed module in `index.html`, or its dynamic-import owner when the module is loaded indirectly.
+3. If a dynamically imported child changes, repin the parent loader URL if Safari could otherwise retain the old loader graph.
+4. Verify `src/multi-object-transform.js?v=0.36.1.0` remains untouched unless the task explicitly requires changing it.
+5. Verify the release-refresh owners are not left on stale pins when refresh logic changes:
+   - `src/release-bootstrap.js`
+   - `src/release-version.js`
+6. Fetch current `main` after publication and explicitly verify the release markers / pins from the repository.
+7. If the user reports that a build is not refreshing:
+   - first inspect the version visible in their screenshot
+   - compare it with `version.json` and the HTML shell on `main`
+   - do not make modelling changes until it is confirmed the user is actually running the intended build
+   - audit the release bootstrap before asking for repeated manual cache-clearing
+8. Never permanently stop automatic stale-shell recovery after a small fixed number of retries. GitHub Pages can briefly serve an older HTML shell after `version.json` has advanced; retry logic must remain able to recover later in the same Safari session.
+
+Reference incident:
+- v0.36.18.690: `version.json` and the new shell were correct on `main`, but an earlier `release-bootstrap.js` stopped after three stale-shell responses. The guard was hardened and both release-refresh owners were repinned to the current build.
+
 ## End of every successful development session — mandatory
 
 Before finishing a session that changes BoxLab:
