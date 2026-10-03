@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.680 Total Gizmo parse regression fix
+
+- .679 caused the gizmo to disappear completely.
+- Root cause was a duplicate top-level const canvas declaration introduced by the Object background-dismiss patch.
+- JavaScript module failed to parse, so Total Gizmo never initialised.
+- Removed the duplicate declaration and reused the existing canvas owner.
+- .679 background-dismiss lifecycle logic is otherwise preserved.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.679 Object transform background dismiss
 
 - .678 Duplicate Faces works and hands off correctly to Object gizmo.
