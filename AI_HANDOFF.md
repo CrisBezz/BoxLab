@@ -10,7 +10,7 @@ Inspect main, recent commits, live release markers and script pins. Audit existi
 functionality and authoritative owners before implementing anything new.
 
 Current release: **v0.36.18.704**.
-Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
+Current focus: next runtime build adds Align to Face in the existing Align pop-out; then finish Face gaps → Vertex → Object → final Edge.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
 is still the priority. Follow Face → Vertex → Object → final Edge, not broad gestures.
@@ -47,6 +47,19 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 - Find the .704 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
 - Changed owners: total-gizmo.js, face-repair-viewport.js, new face-align-viewport.js, clean-vertices.js and component-align.js .704. drawer-ui loader/child pins .704; main.js code unchanged but shell pin .704. Shared dock and previous sessions retain .700.
 - Release bootstrap/version logic unchanged; both repinned to .704 to satisfy the current release-owner contract.
+
+## Next /nextbuild — Align to Face (queued 2026-10-04)
+
+User requested this as the next runtime build's content. It is planned, not yet
+implemented; current live release remains .704 and its hands-on checks remain pending.
+
+- Add **Align to Face** beside X/Y/Z inside the existing top-centre Align pop-out; no additional radial sector.
+- Select the moving Face(s) plus the intended fixed Face, choose Align to Face, then tap the selected Face that must stay fixed.
+- Support arbitrary Face orientation: rotate the remaining selected planar group together, then translate along the fixed Face's normal until coplanar with its plane. Preserve the moved group's shape; do not recenter tangentially or flatten a bent group.
+- Keep the fixed Face and its vertices unchanged. Start with a single moving planar Face or a coplanar moving group; reject unsupported/nonplanar cases with clear feedback and no geometry/history change.
+- One successful operation = one Undo. Preserve Face selection and return the puck through the existing completion semantic. Cancel performs no modelling operation; existing X/Y/Z behavior stays intact.
+- Before implementation, audit component-align/core and existing surface-transform/face-to-face owners. Reuse suitable authoritative maths and the existing anchor gesture owner; add no parallel viewport pointer listener. Audit shared-vertex conflicts and transactional validity before committing.
+- Keep scope narrow: this requested Face Align option takes priority over the remaining Face repair/settings audit. Resume Face → Vertex → Object → final Edge afterwards.
 
 ## Immediate hands-on checks — .704
 
@@ -87,7 +100,8 @@ and release checks PASS; syntax PASS. Full suite: 1120 tests, 835 PASS, same 285
 names as .703; no new failures. Two legacy Align loader tests now assert one loader
 with a versioned URL rather than the retired .330 cache pin.
 
-Next: hands-on confirmation, then finish the Face active-tool/settings audit (especially
+Next: implement the queued Align to Face option above; retain pending hands-on checks.
+After that, finish the Face active-tool/settings audit (especially
 existing Face Repair Merge by Distance scope/parameter workflow). Through already lives
 in Extrude, so do not create a parallel Through tool. Do not declare Face complete
 until every applicable existing owner/settings path is accounted for. Then Vertex →

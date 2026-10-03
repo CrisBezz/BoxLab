@@ -3193,3 +3193,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Align Cancel before/after axis arming leaves mesh/selection unchanged; one selected Face disables Align; navigation/selection remain correct.
 - [ ] Clean Vertices top-centre whole-object panel Cancel preserves mesh/selection; Apply on eligible mesh removes safe redundant vertices once; Face selection clears, next tap gets fresh puck, one Undo restores geometry. Healthy cube disables cleanup.
 - [ ] .703 repairs, Face/Edge sessions, Extrude/Inset background Done and protected navigation remain intact.
+
+
+## Planned next build — Align to Face (not implemented)
+
+- [ ] Existing Align pop-out exposes Align to Face beside X/Y/Z at top centre.
+- [ ] Selected moving planar Face(s) + tapped fixed selected Face → arbitrary-plane rotation and translation along anchor normal; fixed Face/vertices unchanged, moved group shape preserved, no tangential recentering.
+- [ ] Bent moving groups, invalid anchors/shared-vertex conflicts and unsafe results reject without changing geometry/history; clear feedback.
+- [ ] Success preserves Face selection, closes settings/returns puck, commits one Undo; Cancel changes neither geometry nor history.
+- [ ] Existing X/Y/Z Align, other radial tools, selection/navigation and protected transform/Loop Cut remain intact.

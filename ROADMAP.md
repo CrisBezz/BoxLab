@@ -27,6 +27,19 @@ Face contextual batch. Preserve current passes. Add contextual access/pop-outs b
 reusing owners; remove redundant drawer UI only after its replacement passes.
 Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
+## Next /nextbuild — Align to Face (queued 2026-10-04)
+
+User requested this as the next runtime build's content. It is planned, not yet
+implemented; current live release remains .704 and its hands-on checks remain pending.
+
+- Add **Align to Face** beside X/Y/Z inside the existing top-centre Align pop-out; no additional radial sector.
+- Select the moving Face(s) plus the intended fixed Face, choose Align to Face, then tap the selected Face that must stay fixed.
+- Support arbitrary Face orientation: rotate the remaining selected planar group together, then translate along the fixed Face's normal until coplanar with its plane. Preserve the moved group's shape; do not recenter tangentially or flatten a bent group.
+- Keep the fixed Face and its vertices unchanged. Start with a single moving planar Face or a coplanar moving group; reject unsupported/nonplanar cases with clear feedback and no geometry/history change.
+- One successful operation = one Undo. Preserve Face selection and return the puck through the existing completion semantic. Cancel performs no modelling operation; existing X/Y/Z behavior stays intact.
+- Before implementation, audit component-align/core and existing surface-transform/face-to-face owners. Reuse suitable authoritative maths and the existing anchor gesture owner; add no parallel viewport pointer listener. Audit shared-vertex conflicts and transactional validity before committing.
+- Keep scope narrow: this requested Face Align option takes priority over the remaining Face repair/settings audit. Resume Face → Vertex → Object → final Edge afterwards.
+
 ## Tool-session popup placement
 
 All viewport tool-session popups appear at the top centre, using the shared

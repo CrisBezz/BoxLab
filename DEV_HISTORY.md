@@ -1,6 +1,14 @@
 # BoxLab Development History
 
 
+## 2026-10-04 — Align to Face queued for next /nextbuild
+
+- User approved adding arbitrary-plane Align to Face to the next build's content, beside X/Y/Z in the existing Align pop-out.
+- Workflow: select moving planar Face(s) plus anchor, choose Align to Face, tap selected fixed Face. Rotate moving group rigidly and translate along anchor normal onto its plane; preserve group shape and anchor vertices; reject bent/unsupported groups with no mutation.
+- Existing anchor owner/face-to-face maths must be audited before implementation; shared-vertex/validity guards, one-step Undo, selection/puck completion and unchanged X/Y/Z required. Top-centre settings; no extra radial sector or pointer owner.
+- Documentation-only queue update; runtime/release markers remain v0.36.18.704. No new PASS recorded and no new hands-on test needed for this planning update. Next runtime build implements this option before resuming other Face gaps.
+
+
 ## 2026-10-04 — v0.36.18.704 Face radial Clean Vertices / Align
 
 - /nextbuild continues radial completion only; no explicit .703 PASS received. .702/.703 hands-on remain pending.
