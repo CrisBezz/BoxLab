@@ -3101,8 +3101,19 @@ Add new permanent regression checks below when future features need protection.
 ## v0.36.18.696 — outer Face Triangulate / Flip Faces
 
 - [x] .695 full manual list confirmed PASS by user; protect Poke/Make Planar validation, selection, puck return and one-step Undo.
-- [ ] iPad visibly shows v0.36.18.696 before judging.
-- [ ] Triangulate/Flip Faces appear on outer ring; previous sectors remain accessible.
-- [ ] Quad Triangulate produces two selected triangles, restores puck and undoes in one step; multi-Face works and triangle-only selection disables action.
-- [ ] Flip Faces reverses selected winding, preserves selection, restores puck and undoes in one step.
-- [ ] Poke/Make Planar, close and persistent selection/navigation remain intact.
+- [x] iPad visibly shows v0.36.18.696 before judging.
+- [x] Triangulate/Flip Faces appear on outer ring; previous sectors remain accessible.
+- [x] Quad Triangulate produces two selected triangles, restores puck and undoes in one step; multi-Face works and triangle-only selection disables action.
+- [x] Flip Faces reverses selected winding, preserves selection, restores puck and undoes in one step.
+- [x] Poke/Make Planar, close and persistent selection/navigation remain intact.
+
+
+## v0.36.18.697 — outer Face orientation tools
+
+- [x] .696 full hands-on list PASS; protect Triangulate/Flip Faces.
+- [ ] iPad visibly shows .697; Orient Faces/Orient Outward and previous sectors accessible.
+- [ ] Connected patch with mixed winding becomes consistent; selection/puck return; one Undo restores mismatch.
+- [ ] Complete closed shell with mixed winding becomes outward; selection/puck return; one Undo restores mismatch.
+- [ ] Single Face / incomplete shell correctly disable the respective tools.
+- [ ] Already-correct eligible actions report no change, return puck and add no history.
+- [ ] Ring close, prior tools, navigation and viewport-edge spacing remain intact.

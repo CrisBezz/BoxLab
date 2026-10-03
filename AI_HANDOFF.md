@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.696**.
+Current release: **v0.36.18.697**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -27,8 +27,8 @@ be finalized after Vertex and Object. Stop broad gesture expansion while this
 radial-menu work is the priority. .691 remains protected; .692 is already published
 and its Edge neutral-return hands-on checks remain pending.
 Before the next runtime build, compare the full Face drawer against the current
-8-sector ring, audit existing action/settings owners, and choose one remaining
-Face contextual gap. Preserve current passes. Add contextual access/pop-outs by
+Face rings, audit existing action/settings owners, and choose the next related
+Face contextual batch. Preserve current passes. Add contextual access/pop-outs by
 reusing owners; remove redundant drawer UI only after its replacement passes.
 Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
@@ -36,36 +36,39 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.696.
-- Parent checkpoint before .696: ed9c37900c930c7b9785aeeb9a333f3348fe033a.
-- Find the .696 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owner: src/total-gizmo.js, repinned to .696; main.js code unchanged.
-- Release bootstrap/version logic unchanged; both repinned to .696 to satisfy the current release-owner contract.
+- Release: v0.36.18.697.
+- Parent checkpoint before .697: a1d8f65a99452feea7df20605fc64982a5c7a19f.
+- Find the .697 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owner: src/total-gizmo.js, repinned to .697; main.js code unchanged.
+- Release bootstrap/version logic unchanged; both repinned to .697 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .696
+## Immediate hands-on checks — .697
 
-Confirm iPad visibly shows v0.36.18.696.
-1. Face tools: outer Triangulate and Flip Faces added; all previous sectors retained.
-2. Select a quad; Triangulate makes two selected triangles and returns puck. One Undo restores the quad.
-3. Select several quads; Triangulate affects selected Faces in one Undo step. Already-triangle selection disables it.
-4. Flip Faces reverses selected Face winding, preserves selection and returns puck; one Undo restores winding. Use the status readout / visible shading to confirm.
-5. Poke/Make Planar, ring close and navigation remain intact.
+Confirm iPad visibly shows v0.36.18.697.
+1. Face tools: outer Orient Faces / Orient Outward added; previous fourteen sectors retained.
+2. Flip one cube Face, select that Face and a neighbouring correctly wound Face; Orient Faces makes the patch consistent, keeps selection and returns puck. One Undo restores the mismatch. The existing owner uses the lowest Face index as the winding seed.
+3. Select all cube Faces after flipping one; Orient Outward restores an outward closed shell, keeps selection and returns puck. One Undo restores the mismatch.
+4. One Face disables Orient Faces; an incomplete/open shell disables Orient Outward. Already-correct eligible selections report no change without adding history and return puck.
+5. Triangulate/Flip Faces, ring close and navigation remain intact; inspect spacing near viewport edges.
 
-.696 awaits hands-on PASS. The user confirmed the complete .695 list PASS;
-protect Poke/Make Planar, their validation, selection, puck return and Undo.
-.694 two-ring Join/Circle remains protected; .692 checks remain pending.
+.697 awaits hands-on PASS. User confirmed the complete .696 list PASS; protect
+Triangulate/Flip Faces, disabled-state rules, selection, puck return and Undo.
+.695 and .694 remain protected; .692 checks remain pending.
 User authorized two related additions per build with one release/test list.
 
-## .696 action owner audit
+## .697 action owner audit
 
-Triangulate (#triangulateFacesBtn, triangulate-faces.js) and Flip Faces
-(#flipFacesBtn, flip-faces.js) already load through face-workflow-layout.js.
-Outer sectors at 180/225 degrees proxy those buttons and extend existing one-shot
-puck cleanup. Triangulate preserves winding and selects result triangles; all-triangle
-selection is disabled. Flip Faces reverses selected winding and retains selection.
-Both retain authoritative validation and one-step history. No modelling owner,
-settings panel or pointer owner added. Remaining Face Bridge and orientation/repair
-controls still need contextual batches before Vertex, Object and final Edge.
+Orient Faces (#orientFacesBtn, orient-faces.js) and Orient Outward
+(#orientShellOutwardBtn, orient-shell-outward.js) already load through
+face-workflow-layout.js. Outer sectors at 270/315 degrees proxy those buttons and
+extend shared one-shot puck cleanup, including eligible no-change actions.
+Orient Faces requires one connected patch of at least two Faces and preserves the
+lowest-index seed winding; it does not promise outward winding. Orient Outward
+requires every Face of one closed manifold shell and uses signed volume.
+Both retain owner validation, selected Face ids and one-step history for changes.
+No modelling/session/pointer owner changed. Eight inner and eight outer tools are
+now present; assignments remain provisional. Bridge preview and remaining Face
+settings/selection/repair access still need an audit before declaring Face complete.
 
 ## Two-ring design direction / .694 audit
 
@@ -123,6 +126,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .696 outer Triangulate/Flip Faces, selection, triangle-only disabled state, puck return and one-step Undo: PASS.
 
 - .695 outer Poke/Make Planar, selection, disabled-state rules, puck return and one-step Undo: PASS.
 

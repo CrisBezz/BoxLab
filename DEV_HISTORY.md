@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.697 outer Face orientation tools
+
+- User confirmed .696 full manual list PASS; Triangulate/Flip Faces selection, disabled state, puck return and Undo protected.
+- Audited existing orient-faces.js / orient-shell-outward.js owners and their face-workflow-layout loader. Added Orient Faces (270°) and Orient Outward (315°) proxies plus shared one-shot cleanup.
+- Connected patch orientation preserves the lowest-index seed; closed-shell orientation uses signed volume. Existing validation, selection and history remain authoritative; eligible no-change actions return puck without history.
+- All fourteen previous sectors preserved; eight inner/eight outer positions are populated but Face coverage is not yet complete. Bridge preview and remaining settings/selection/repair access require audit.
+- Release markers and gizmo/refresh pins updated to .697; syntax/release checks PASS. Hands-on confirmation pending. No modelling kernel or pointer owner changed.
+
+
 ## 2026-10-03 — v0.36.18.696 outer Face Triangulate / Flip Faces
 
 - User confirmed the full .695 list PASS; Poke/Make Planar validation, selection, puck return and Undo are protected.

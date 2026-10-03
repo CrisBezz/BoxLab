@@ -16,8 +16,8 @@ be finalized after Vertex and Object. Stop broad gesture expansion while this
 radial-menu work is the priority. .691 remains protected; .692 is already published
 and its Edge neutral-return hands-on checks remain pending.
 Before the next runtime build, compare the full Face drawer against the current
-8-sector ring, audit existing action/settings owners, and choose one remaining
-Face contextual gap. Preserve current passes. Add contextual access/pop-outs by
+Face rings, audit existing action/settings owners, and choose the next related
+Face contextual batch. Preserve current passes. Add contextual access/pop-outs by
 reusing owners; remove redundant drawer UI only after its replacement passes.
 Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
@@ -158,11 +158,12 @@ Only add focused tools that suit BoxLab:
   - tapping the object restores the gizmo reliably
 - Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
-### Face contextual gap completion — .696
+### Face contextual gap completion — .697
 
 - .694 outer-ring Join/Circle and existing eight inner sectors are hands-on PASS and protected.
 - .695 Poke/Make Planar are hands-on PASS and protected.
-- .696 adds existing Triangulate and Flip Faces to the outer ring; awaiting hands-on PASS. User authorized two related additions per build.
+- .696 Triangulate/Flip Faces are hands-on PASS and protected.
+- .697 adds existing Orient Faces/Orient Outward to the two remaining outer slots; awaiting hands-on PASS. User authorized two related additions per build.
 - Populate complete Face tool coverage before deciding inner/main vs outer/secondary placement. More is an accepted fallback if the completed two-ring layout is crowded.
 - Continue auditing Face Bridge and remaining orientation/repair actions for contextual access/pop-outs before moving to Vertex, Object and final Edge.
 
