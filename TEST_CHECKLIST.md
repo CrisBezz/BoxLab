@@ -2885,3 +2885,14 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .678: existing duplicate-faces.js owner reused
 - [x] Static .678: no duplicate Face duplication kernel added
 - [x] Protection .678: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Hands-on .678: Duplicate Faces works and moves with Object gizmo
+- [ ] Workflow .679: background tap dismisses active Object gizmo
+- [ ] Workflow .679: background dismiss keeps object selected
+- [ ] Workflow .679: tapping object again restores gizmo
+- [ ] Workflow .679: selecting a different object restores gizmo automatically
+- [ ] Regression .679: Duplicate completion still opens gizmo immediately
+- [x] Static .679: Object mode no longer force-reopens gizmo when dismissed
+- [x] Protection .679: transform geometry owners unchanged
+- [x] Protection .679: src/multi-object-transform.js?v=0.36.1.0 unchanged
