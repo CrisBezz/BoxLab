@@ -661,6 +661,19 @@ function finishObjectBackgroundTap(event){
 canvas?.addEventListener('pointerup',finishObjectBackgroundTap,true);
 canvas?.addEventListener('pointercancel',finishObjectBackgroundTap,true);
 
+window.addEventListener('boxlab-pencil-background-tap',event=>{
+  if(currentMode()!=='object'||hubState!=='transform'||objectTransformDismissed)return;
+  objectTransformDismissed=true;
+  globalThis.__boxlabTransformArming?.disarm?.();
+  resetTransientState?.({hideFloat:true});
+  hubState='closed';
+  expanded=false;
+  root.dataset.hubState='closed';
+  root.dataset.expanded='false';
+  root.hidden=true;
+  gestureDebug('OBJECT TRANSFORM DISMISS',{pid:event.detail?.pointerId,pointer:'pen',source:'pencil-background-tap'});
+});
+
 const style=document.createElement('style');
 style.textContent=`
 #totalGizmo{position:absolute;z-index:115;width:${SIZE}px;height:${SIZE}px;transform:translate(-50%,-50%);pointer-events:none;touch-action:none;filter:drop-shadow(0 2px 4px #0009)}
@@ -947,5 +960,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.680'
+  version:'0.36.18.681'
 };
