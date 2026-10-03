@@ -71,3 +71,17 @@ Loop-slide positioning, bridge/weld, multi-object support, GLB export and a true
 - Auto Close / Make Watertight: detect open boundaries and repair/close an object into a watertight mesh where topology can be resolved safely.
 - Direct Pencil Bevel / Chamfer Width: select one or more bevel-capable edges and Pencil-drag directly on the selection to control bevel width live; Pencil lift commits the result. Segments remain independently adjustable.
 - Connected Edge-Chain Bevel Corner Solver: continuous bevel/chamfer across touching selected edges using a shared miter/corner patch instead of overlapping sequential bevels.
+
+
+## AI development handoff
+
+Active development state is intentionally documented in the repository rather than in this README.
+
+Before continuing BoxLab development, read in this order:
+1. `AI_WORKFLOW.md`
+2. `AI_HANDOFF.md`
+3. `TEST_CHECKLIST.md`
+4. recent entries in `DEV_HISTORY.md`
+5. `ROADMAP.md`
+
+The repository is the source of truth. Do not infer the current build from this README's historical product-version heading.
