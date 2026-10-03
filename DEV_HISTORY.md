@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.682 hands-on PERFECT PASS
+
+- Pencil background tap dismissal reliable.
+- Pencil object tap reliably restores Object gizmo.
+- Pencil drag on background still orbits.
+- Finger background dismiss remains correct.
+- Object-mode gizmo lifecycle is now protected.
+
 ## 2026-10-03 — v0.36.18.682 Pencil/Object routing reliability
 
 - .681 Pencil background dismiss was intermittent and Pencil object taps could select without restoring gizmo.
