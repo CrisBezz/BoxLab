@@ -2951,3 +2951,17 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .684: existing Knife geometry/snap/history owner retained
 - [x] Static .684: no duplicate Knife topology implementation added
 - [x] Protection .684: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Hands-on .684: radial Knife viewport session PASS
+- [ ] Workflow .685: screenshot case accepts Loop Cut across logical quad corridor
+- [ ] Workflow .685: Loop Cut stops at genuine non-quad / pole topology
+- [ ] Workflow .685: existing collinear boundary vertices are preserved
+- [ ] Workflow .685: live Loop Slide still works after generalized cut
+- [ ] Workflow .685: Loop count >1 works on generalized corridor
+- [ ] Regression .685: ordinary cube Loop Cut unchanged
+- [ ] Regression .685: .684 Knife remains PASS
+- [x] Static .685: logical quad requires exactly four genuine corners
+- [x] Static .685: physical boundary chains retained during reconstruction
+- [x] Static .685: existing logical-quad owner strengthened rather than duplicated
+- [x] Protection .685: src/multi-object-transform.js?v=0.36.1.0 unchanged
