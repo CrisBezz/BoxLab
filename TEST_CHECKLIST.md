@@ -2905,3 +2905,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Workflow .680: tapping object restores gizmo
 - [x] Static .680: duplicate top-level canvas declaration removed
 - [x] Protection .680: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .681: Pencil tap empty background dismisses Object gizmo
+- [ ] Workflow .681: object remains selected after Pencil dismiss
+- [ ] Workflow .681: tapping object restores gizmo
+- [ ] Regression .681: finger background dismiss remains PASS
+- [ ] Regression .681: Pencil drag on empty background still orbits
+- [ ] Regression .681: Pencil orbit drag does not fire background-tap dismiss
+- [x] Static .681: semantic boxlab-pencil-background-tap added
+- [x] Protection .681: src/multi-object-transform.js?v=0.36.1.0 unchanged
