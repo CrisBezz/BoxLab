@@ -3017,3 +3017,18 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .690: Shell/Sweep geometry/history owners unchanged
 - [x] Static .690: Knife/Shell/Sweep share one Face session completion path
 - [x] Protection .690: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+## Release / handoff checks — v0.36.18.690
+
+- [x] Static .690: HTML title / data-release-version / version.json all agree on 0.36.18.690
+- [x] Static .690: total-gizmo / Shell session / Sweep session are pinned to .690
+- [x] Static .690: release-bootstrap.js and release-version.js repinned to .690 after refresh hardening
+- [x] Release .690: stale-shell recovery remains live after repeated stale responses instead of stopping permanently after three attempts
+- [ ] Hands-on .690: iPad actually displays v0.36.18.690 after refresh hardening
+- [ ] Hands-on .690: Shell Cancel / Apply restore Face puck correctly
+- [ ] Hands-on .690: Sweep Cancel / Apply leave no stale Selection Hub suppression
+- [ ] Regression .690: Knife Done remains PASS
+- [x] Handoff .690: AI_WORKFLOW release/cache protocol updated
+- [x] Protection .690: v0.36.18.162 Loop Cut behaviour remains the protected live core
+- [x] Protection .690: src/multi-object-transform.js?v=0.36.1.0 unchanged
