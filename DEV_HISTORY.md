@@ -1,5 +1,12 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.688 hands-on PASS
+
+- Restored known-good Loop Cut behaviour confirmed.
+- Loop Slide old feel confirmed PASS.
+- Treat the v0.36.18.162 logical-quad path as protected.
+- Complex multi-collinear logical-quad traversal remains a separate strengthening item.
+
 ## 2026-10-03 — v0.36.18.688 restore known-good Loop Cut core
 
 - .685-.687 generalized logical-quad work did not preserve the previous Loop Cut quality.
