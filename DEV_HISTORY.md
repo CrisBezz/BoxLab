@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.681 Pencil background tap dismiss
+
+- Finger background tap correctly dismissed Object transform after .680.
+- Pencil background tap did not because Pencil navigation is owned by pencil-orbit-gate.
+- Added background Pencil tap recognition in pencil-orbit-gate.
+- Stationary Pencil contact under 8 px emits boxlab-pencil-background-tap.
+- Orbit-claimed Pencil drags do not emit tap event.
+- Total Gizmo consumes that semantic event to dismiss Object transform.
+- Pencil orbit remains unchanged for actual drag gestures.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.680 Total Gizmo parse regression fix
 
 - .679 caused the gizmo to disappear completely.
