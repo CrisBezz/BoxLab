@@ -173,10 +173,15 @@ window.addEventListener('boxlab-selection-hub-tool',event=>{
 });
 
 window.addEventListener('boxlab-tool-session-end',event=>{
-  if(event.detail?.id==='sweep'){launchedFromHub=false;palette.hidden=true;}
+  if(event.detail?.id!=='sweep')return;
+  const wasHub=launchedFromHub;
+  launchedFromHub=false;
+  palette.hidden=true;
+  if(wasHub)window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{tool:'Sweep',mode:'face'}}));
 });
 
 globalThis.__boxlabSweepViewportSession={
+  version:'0.36.18.690',
   element:palette,
   active:()=>launchedFromHub&&!palette.hidden,
   sync
