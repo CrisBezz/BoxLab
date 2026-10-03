@@ -2996,3 +2996,13 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .688: loop-cut-added-vertex.js restored from known-good v0.36.18.162
 - [x] Static .688: .685-.687 generalized reconstruction removed from live core
 - [x] Protection .688: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Hands-on .688: Loop Cut / Loop Slide old feel PASS
+- [ ] Workflow .689: radial Face Delete executes once with no extra panel
+- [ ] Workflow .689: next surviving Face selection gets puck immediately
+- [ ] Workflow .689: valid surviving Face selection returns puck automatically
+- [ ] Regression .689: .688 Loop Cut remains PASS
+- [x] Static .689: stale Face hubSuppressedKey cleared after radial Delete
+- [x] Static .689: Face Delete topology/history owner unchanged
+- [x] Protection .689: src/multi-object-transform.js?v=0.36.1.0 unchanged
