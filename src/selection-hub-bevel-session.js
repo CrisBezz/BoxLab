@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 const viewportWrap=document.querySelector('#viewportWrap');
 const gizmo=()=>document.querySelector('#totalGizmo');
 
@@ -86,11 +87,7 @@ function sync(){
   const apply=palette.querySelector('[data-action="apply"]');
   if(apply)apply.disabled=!launchSelection.length||!globalThis.__boxlabDirectBevel?.applyExact;
 
-  const tg=gizmo();
-  if(tg){
-    palette.style.left=tg.style.left||'50%';
-    palette.style.top=tg.style.top||'50%';
-  }
+  placeToolSessionPanel(palette);
   raf=requestAnimationFrame(sync);
 }
 

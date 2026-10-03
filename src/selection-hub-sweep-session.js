@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 const viewportWrap=document.querySelector('#viewportWrap');
 const gizmo=()=>document.querySelector('#totalGizmo');
 const source=()=>document.querySelector('#sweepPathControls');
@@ -129,11 +130,7 @@ function sync(){
     if(target)output.textContent=target.textContent||target.value||'';
   }
 
-  const tg=gizmo();
-  if(tg){
-    palette.style.left=tg.style.left||'50%';
-    palette.style.top=tg.style.top||'50%';
-  }
+  placeToolSessionPanel(palette);
   raf=requestAnimationFrame(sync);
 }
 

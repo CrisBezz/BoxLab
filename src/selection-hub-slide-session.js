@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.672 — radial Edge Slide viewport session.
@@ -62,13 +63,7 @@ function centerScreen(ids=selectedEdges()){
   };
 }
 function place(){
-  const ids=selectedEdges().length?selectedEdges():launchSelection;
-  const p=centerScreen(ids);if(!p)return;
-  const width=viewportWrap?.clientWidth||0;
-  const offset=145,side=(width-p.x)>390?1:-1;
-  panel.style.left=`${p.x+offset*side}px`;
-  panel.style.top=`${p.y}px`;
-  panel.style.transform='translate(-50%,-50%)';
+  placeToolSessionPanel(panel);
 }
 function returnToPuck(ids){
   const keep=[...new Set(ids||[])].filter(Number.isInteger);

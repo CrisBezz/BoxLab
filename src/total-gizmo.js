@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.595 — Total Gizmo v1.
@@ -961,8 +962,7 @@ function sync(){
   }
   root.style.left=`${left}px`;
   root.style.top=`${top}px`;
-  floatPalette.style.left=`${selectionLeft}px`;
-  floatPalette.style.top=`${selectionTop}px`;
+  placeToolSessionPanel(floatPalette);
   const suppressed=['face','edge'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
   root.hidden=suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&!!globalThis.__boxlabFaceBridgePreview?.active?.());
   root.dataset.hubState=hubState;

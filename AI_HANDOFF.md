@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.699**.
+Current release: **v0.36.18.700**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -17,7 +17,7 @@ is still the priority. Follow Face → Vertex → Object → final Edge, not bro
 
 ## User-directed priority — 2026-10-03
 
-Primary goal: finish contextual radial menus and nearby pop-out settings so routine
+Primary goal: finish contextual radial menus and top-centre pop-out settings so routine
 modelling needs as little left-drawer interaction as possible.
 Required order: **Face gaps → Vertex → Object → final Edge completeness pass**.
 The .690 PASS completed the lifecycle of the existing Face ring; it did NOT prove
@@ -36,40 +36,42 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.699.
-- Parent checkpoint before .699: f5e27b9c531fbe4108c7b6d9180b0eb4dfe99200.
-- Find the .699 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed owners: total-gizmo.js and new selection-hub-face-value-session.js pinned to .699; Bridge owner/proxy retain .698. main.js code unchanged.
-- Release bootstrap/version logic unchanged; both repinned to .699 to satisfy the current release-owner contract.
+- Release: v0.36.18.700.
+- Parent checkpoint before .700: da74eb7e0298a6070d77044c925eb31a8d87bd4d.
+- Find the .700 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed owners: shared panel position helper, ten session proxies, main.js, multi-face-direct.js and total-gizmo.js pinned to .700.
+- Release bootstrap/version logic unchanged; both repinned to .700 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .699
+## Immediate hands-on checks — .700
 
-Confirm iPad visibly shows v0.36.18.699.
-1. Radial Extrude opens nearby Exact / Repeat / Done controls. Apply a small positive model-unit value; selected Faces extrude and one Undo restores geometry.
-2. Radial Inset opens the same controls labelled Inset. Apply a small positive value; inset works and one Undo restores geometry.
-3. Drag normally; last-value readout updates. Repeat toggles the existing repeat workflow; Face taps repeat the captured operation. Tap Repeat again to turn it off.
-4. Done closes the panel, disarms Repeat/current Face tool and returns puck if selected Faces survive. Normal Face taps/navigation work again.
-5. Switching to another radial tool closes settings without disturbing that tool; Bridge, Shell/Sweep, centred × and prior sectors remain intact.
+Confirm iPad visibly shows v0.36.18.700.
+1. Radial Extrude/Inset: settings sit at viewport top centre. Finger and Pencil background taps close them like Done, end Repeat/tool arming and preserve surviving Face selection/puck.
+2. Background Pencil/finger drag still orbits; two-finger pan/pinch and two/three-finger Undo/Redo do not accidentally close settings.
+3. Exact value and Repeat still work; Done remains available. A Face tap does not dismiss settings.
+4. Face Knife, Shell, Sweep and Bridge panels stay top centre during navigation; their completion/Apply/Cancel behavior remains protected.
+5. Edge Bevel, Crease, Slide, Offset and Bridge panels, plus floating Move/Rotate/Scale numeric entry, appear top centre. Gizmo/rings stay at selection.
 
-.699 awaits hands-on PASS. User confirmed the complete .698 list PASS;
-protect Face Bridge Next/Use/Cancel, Undo, fresh puck, nine-sector spacing and centred ×.
-.697/.696/.695/.694 remain protected; .692 checks remain pending.
+.700 awaits hands-on PASS. User confirmed .699 perfect; protect Exact/Repeat/Done
+behavior. New user-wide UX rule: every tool-session viewport popup is top centre,
+not beside the work. Use the shared placement owner for every future popup.
 
-## .699 precision/settings owner audit
+## .700 ownership audit / changes
 
-precision-face.js (loaded by drawer-ui.js) already owns exact values and committed
-readback; repeat-face-previous.js already owns repeat arming and Face-tap replay.
-New selection-hub-face-value-session.js opens only from radial Extrude/Inset and
-calls their existing applyFor/arm/disarm APIs. Its readout/repeat availability mirrors
-the drawer controls. Done clicks the current authoritative tool off, clears suspended
-arming and emits the shared Face completion semantic. No geometry, precision maths,
-history kernel or viewport pointer owner added. Ring assignments unchanged.
-10 targeted proxy/lifecycle/release tests PASS. Proxy tests verify tool/value delegation,
-Done disarming and completion, disabled exact with no selection, and hiding on another
-radial command without resetting that command. Existing Bridge tests remain PASS.
-Remaining Face coverage: audit selection helpers, Inspect/Repair/topology commands
-and contextual transform/settings coverage; then Vertex, Object, final Edge.
-Keep existing drawer controls until their contextual replacements pass hands-on.
+Added tool-session-panel-position.js shared placement for ten selection-hub session
+proxies plus floating numeric entry. Top 12 px, viewport-relative horizontal centre;
+height/width bounded and tall panels scroll. Gizmo and radial positions unchanged.
+Background tap remains owned by main.js / multi-face-direct.js / pencil-orbit-gate.js.
+main and direct owner now emit boxlab-viewport-background-tap for eligible active
+Extrude/Inset settings; the existing Pencil semantic distinguishes tap from orbit.
+The settings proxy listens to that semantic and uses its existing Done close path.
+No new raw-pointer listener, modelling kernel or navigation owner. Main allows only
+background hits through its armed-Face guard while these settings are active and
+cancels pending single taps when a second pointer arrives. Ordinary background
+selection behavior outside this session is unchanged. Pencil gate untouched.
+15 targeted dock/background/proxy/Bridge/release checks PASS. All changed session
+modules and main/direct/gizmo plus refresh owners pinned .700; shared import .700.
+Protected multi-object-transform .0.36.1.0, Loop Cut and geometry owners untouched.
+Continue remaining Face helper/repair/settings audit before Vertex/Object/final Edge.
 
 ## Two-ring design direction / .694 audit
 
@@ -127,6 +129,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .699 radial Extrude/Inset Exact/Repeat/Done controls: PASS.
 
 - .698 Face Bridge viewport preview/Next/Use/Cancel, Undo, fresh puck and centred ×: PASS.
 

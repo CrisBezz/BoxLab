@@ -264,6 +264,10 @@ function finish(event){
     releaseDirectPointer(event.pointerId);
     event.preventDefault();event.stopImmediatePropagation();
     if(event.type==='pointerup'&&!p.moved){
+      if(globalThis.__boxlabFaceValueViewportSession?.active?.()){
+        window.dispatchEvent(new CustomEvent('boxlab-viewport-background-tap',{detail:{pointerId:event.pointerId}}));
+        return;
+      }
       bridge()?.set?.('face',[]);
       clearSequentialPreference();
       updateStatus();

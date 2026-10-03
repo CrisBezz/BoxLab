@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.668 — Selection Hub Crease viewport session.
@@ -75,12 +76,7 @@ function centerScreen(){
   };
 }
 function place(){
-  const p=centerScreen();if(!p)return;
-  const width=viewportWrap?.clientWidth||0;
-  const offset=128,side=(width-p.x)>350?1:-1;
-  panel.style.left=`${p.x+offset*side}px`;
-  panel.style.top=`${p.y}px`;
-  panel.style.transform='translate(-50%,-50%)';
+  placeToolSessionPanel(panel);
 }
 function sync(){
   const value=Number(strength?.value||100);

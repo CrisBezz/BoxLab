@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 // Contextual settings proxy; precision-face and repeat-face-previous own operations.
 const wrap=document.querySelector('#viewportWrap');
 let tool=null,raf=0;
@@ -23,11 +24,7 @@ function sync(){
   repeat.classList.toggle('active',!!globalThis.__boxlabRepeatFacePrevious?.isArmed?.());
   repeat.setAttribute('aria-pressed',String(!!globalThis.__boxlabRepeatFacePrevious?.isArmed?.()));
   panel.querySelector('.shfv-readout').textContent=document.querySelector('#precisionFaceReadout')?.textContent||'Drag Faces or enter a value in model units';
-  const g=globalThis.__boxlabTotalGizmo?.element;
-  const x=parseFloat(g?.style.left)||wrap.clientWidth/2,y=parseFloat(g?.style.top)||wrap.clientHeight/2;
-  const left=x+115+246<wrap.clientWidth?x+115:x-115-246;
-  panel.style.left=`${Math.max(8,Math.min(wrap.clientWidth-254,left))}px`;
-  panel.style.top=`${Math.max(8,Math.min(wrap.clientHeight-panel.offsetHeight-8,y-panel.offsetHeight/2))}px`;
+  placeToolSessionPanel(panel);
   raf=requestAnimationFrame(sync);
 }
 function close(){
@@ -65,4 +62,6 @@ window.addEventListener('boxlab-selection-hub-tool',event=>{
   sync();
 });
 window.addEventListener('boxlab-bridge-state',()=>{if(tool)sync();});
+window.addEventListener('boxlab-viewport-background-tap',()=>{if(tool)close();});
+
 globalThis.__boxlabFaceValueViewportSession={active:()=>!!tool,element:panel,close,sync};

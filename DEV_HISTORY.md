@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.700 top-centre session popups / background Done
+
+- User confirmed .699 perfect and directed every tool-session popup to top centre; background tap should replace needing Done for Extrude/Inset.
+- Audited ten selection-hub session panels and floating numeric entry. Shared dock helper replaces selection-relative placement; viewport bounded/scrollable. Radial/gizmo positions untouched.
+- Existing main/direct tap owners emit a semantic background completion; existing Pencil orbit tap semantic reused. Settings proxy calls its existing Done path, preserves selection, disarms Repeat/tool. No parallel pointer owner.
+- Armed Face main guard admits only contextual background input; second pointer cancels a pending single tap. Drags/multi-touch bypass dismissal; ordinary background behavior retained outside settings.
+- 15 targeted dock/background/proxy/Bridge/release tests PASS. Changed module/loader/refresh pins .700; protected transform, Loop Cut and modelling kernels unchanged. Hands-on confirmation pending.
+- Workflow/roadmap record top-centre placement as the rule for every future session popup.
+
+
 ## 2026-10-03 — v0.36.18.699 contextual Extrude / Inset settings
 
 - User confirmed .698 full list PASS; Face Bridge session, fresh puck, ring spacing and centred × protected.

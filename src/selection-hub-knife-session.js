@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 // BoxLab v0.36.18.684 — radial Knife viewport session.
 // UX/session proxy only. knife-tool.js remains the authoritative Knife owner.
 
@@ -28,18 +29,7 @@ document.head.appendChild(style);
 const done=panel.querySelector('.shk-done');
 
 function place(){
-  const gizmo=globalThis.__boxlabTotalGizmo?.element;
-  const wrapRect=viewportWrap?.getBoundingClientRect();
-  if(!gizmo||!wrapRect)return;
-  const r=gizmo.getBoundingClientRect();
-  let left=(r.left-wrapRect.left)+(r.width/2)+128;
-  let top=(r.top-wrapRect.top)+(r.height/2);
-  if(left>wrapRect.width-130)left=(r.left-wrapRect.left)+(r.width/2)-128;
-  left=Math.max(120,Math.min(wrapRect.width-120,left));
-  top=Math.max(52,Math.min(wrapRect.height-52,top));
-  panel.style.left=left+'px';
-  panel.style.top=top+'px';
-  panel.style.transform='translate(-50%,-50%)';
+  placeToolSessionPanel(panel);
 }
 
 function openFromHub(){

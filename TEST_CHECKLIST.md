@@ -3134,8 +3134,19 @@ Add new permanent regression checks below when future features need protection.
 
 - [x] .698 full hands-on list PASS; Face Bridge lifecycle and centred × protected.
 - [x] Automated: exact tool/value delegates to existing owner; no-selection disables exact; Repeat/Done delegate/disarm; another radial tool keeps its lifecycle.
-- [ ] Visible .699; radial Extrude/Inset each open correctly labelled nearby settings.
-- [ ] Small exact Extrude and Inset values affect selected Faces and each Undo in one step.
-- [ ] Normal drag updates last-value readout; Repeat toggles and replays existing Face-tap operation.
-- [ ] Done closes settings, disarms Repeat/tool, returns surviving-selection puck; normal selection/navigation work.
-- [ ] Other radial tools close settings; Bridge, Shell/Sweep, prior sectors and centred × remain intact.
+- [x] Visible .699; radial Extrude/Inset each open correctly labelled nearby settings.
+- [x] Small exact Extrude and Inset values affect selected Faces and each Undo in one step.
+- [x] Normal drag updates last-value readout; Repeat toggles and replays existing Face-tap operation.
+- [x] Done closes settings, disarms Repeat/tool, returns surviving-selection puck; normal selection/navigation work.
+- [x] Other radial tools close settings; Bridge, Shell/Sweep, prior sectors and centred × remain intact.
+
+
+## v0.36.18.700 — top-centre session dock / background Done
+
+- [x] .699 Exact/Repeat/Done confirmed perfect by user.
+- [x] Automated: all ten viewport panels/numeric entry use shared dock; contextual background taps preserve selection and complete; drags/cancelled multi-touch bypass completion.
+- [ ] Visible .700; all Face/Edge session panels and numeric popups top centre, stable during navigation.
+- [ ] Finger/Pencil background tap ends radial Extrude/Inset settings like Done, keeps surviving selection/puck, disarms Repeat/tool.
+- [ ] Background drag orbits; pan/pinch and two/three-finger Undo/Redo do not dismiss settings.
+- [ ] Face taps, Exact/Repeat and explicit Done remain correct.
+- [ ] Knife/Shell/Sweep/Face Bridge and protected Edge session completions work unchanged; gizmo/ring stay on selection.

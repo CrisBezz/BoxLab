@@ -6,7 +6,7 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 
 ## User-directed priority — 2026-10-03
 
-Primary goal: finish contextual radial menus and nearby pop-out settings so routine
+Primary goal: finish contextual radial menus and top-centre pop-out settings so routine
 modelling needs as little left-drawer interaction as possible.
 Required order: **Face gaps → Vertex → Object → final Edge completeness pass**.
 The .690 PASS completed the lifecycle of the existing Face ring; it did NOT prove
@@ -20,6 +20,12 @@ Face rings, audit existing action/settings owners, and choose the next related
 Face contextual batch. Preserve current passes. Add contextual access/pop-outs by
 reusing owners; remove redundant drawer UI only after its replacement passes.
 Do not mistake a working ring lifecycle for complete contextual tool coverage.
+
+## Tool-session popup placement
+
+All viewport tool-session popups appear at the top centre, using the shared
+placement owner. Preserve selection-relative gizmo/rings. This applies to future
+Face, Vertex, Object and Edge session controls and floating numeric entry.
 
 ## Product direction
 
@@ -158,14 +164,15 @@ Only add focused tools that suit BoxLab:
   - tapping the object restores the gizmo reliably
 - Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
-### Face contextual gap completion — .699
+### Face contextual gap completion — .700
 
 - .694 outer-ring Join/Circle and existing eight inner sectors are hands-on PASS and protected.
 - .695 Poke/Make Planar are hands-on PASS and protected.
 - .696 Triangulate/Flip Faces are hands-on PASS and protected.
 - .697 Orient Faces/Orient Outward are hands-on PASS and protected.
 - .698 Face Bridge viewport preview and centred × are hands-on PASS and protected.
-- .699 adds viewport Exact/Repeat/Done controls for existing radial Extrude/Inset; awaiting hands-on PASS.
+- .699 Extrude/Inset Exact/Repeat/Done are hands-on PASS and protected.
+- .700 moves all viewport session popups/numeric entry to shared top-centre dock; background taps finish Extrude/Inset settings. Awaiting hands-on PASS.
 - Populate complete Face tool coverage before deciding inner/main vs outer/secondary placement. More is an accepted fallback if the completed two-ring layout is crowded.
 - Continue auditing remaining Face settings/selection/repair access for contextual access/pop-outs before moving to Vertex, Object and final Edge.
 

@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 // Viewport proxy for the existing Face Bridge preview owner.
 const wrap=document.querySelector('#viewportWrap');
 let launched=false,raf=0;
@@ -15,12 +16,7 @@ function sync(){
   panel.hidden=!(launched&&info?.active);
   if(panel.hidden)return;
   panel.querySelector('.shfb-state').textContent=`Preview ${info.index+1} / ${info.count}`;
-  const gizmo=document.querySelector('#totalGizmo');
-  const x=parseFloat(gizmo?.style.left)||wrap.clientWidth/2;
-  const y=parseFloat(gizmo?.style.top)||wrap.clientHeight/2;
-  const left=x+115+246<wrap.clientWidth?x+115:x-115-246;
-  panel.style.left=`${Math.max(8,Math.min(wrap.clientWidth-254,left))}px`;
-  panel.style.top=`${Math.max(8,Math.min(wrap.clientHeight-panel.offsetHeight-8,y-panel.offsetHeight/2))}px`;
+  placeToolSessionPanel(panel);
   raf=requestAnimationFrame(sync);
 }
 panel.addEventListener('pointerdown',event=>event.stopPropagation(),true);

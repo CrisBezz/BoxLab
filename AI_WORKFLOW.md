@@ -145,6 +145,14 @@ Before ending a session, ask:
 
 If not, improve the handoff first.
 
+## Tool-session popup placement
+
+User-directed UX rule (2026-10-03): every viewport tool-session popup appears at
+the top centre of #viewportWrap, not beside the working selection. Use
+src/tool-session-panel-position.js and the current shared import pin. Includes
+contextual session panels and floating numeric-entry popups; preserve gizmo/radial
+selection positions. Keep taller panels bounded and scrollable.
+
 ## Interaction event ownership
 
 Protected rule for iPad/browser interaction work:

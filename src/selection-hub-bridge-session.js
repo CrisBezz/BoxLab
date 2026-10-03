@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 // BoxLab v0.36.18.676 — radial Edge Bridge guided selection session.
 // UX proxy only. bridge-ui.js + bridge-topology.js remain authoritative.
 
@@ -84,12 +85,7 @@ function selectionCenterScreen(ids=selectedEdges()){
 }
 
 function place(){
-  const ids=selectedEdges().length?selectedEdges():firstIds;
-  const p=selectionCenterScreen(ids);if(!p||!viewportWrap)return;
-  const side=(viewportWrap.clientWidth-p.x)>390?1:-1;
-  panel.style.left=`${p.x+150*side}px`;
-  panel.style.top=`${p.y}px`;
-  panel.style.transform='translate(-50%,-50%)';
+  placeToolSessionPanel(panel);
 }
 
 function sync(){
