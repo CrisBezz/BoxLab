@@ -481,13 +481,14 @@ toolSectors.forEach(button=>{
       target.click();
       if(radialOffset)globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
       if(radialSlide)globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
-      if(mode==='edge'&&(toolLabel==='Dissolve'||toolLabel==='Delete')){
+      if((mode==='edge'&&(toolLabel==='Dissolve'||toolLabel==='Delete'))||(mode==='face'&&toolLabel==='Delete')){
         queueMicrotask(()=>{
           hubSuppressedKey='';
           const mesh=state()?.mesh,current=currentMode();
-          if(current==='edge'&&selectionAvailable(mesh,'edge')){
-            lastSelectionKey=selectionKey(mesh,'edge');
-            setHubState('closed',{reason:'edge-one-shot-complete'});
+          const expectedMode=mode==='face'?'face':'edge';
+          if(current===expectedMode&&selectionAvailable(mesh,expectedMode)){
+            lastSelectionKey=selectionKey(mesh,expectedMode);
+            setHubState('closed',{reason:expectedMode+'-one-shot-complete'});
             root.hidden=false;
           }else{
             lastSelectionKey='';
@@ -989,5 +990,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.684'
+  version:'0.36.18.689'
 };
