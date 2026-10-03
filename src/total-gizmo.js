@@ -511,16 +511,25 @@ toolButtons.forEach(button=>button.addEventListener('click',()=>{
   queueMicrotask(syncContextToolAvailability);
 }));
 window.addEventListener('boxlab-selection-hub-session-complete',event=>{
-  if(event.detail?.tool!=='Knife'||event.detail?.mode!=='face')return;
+  if(event.detail?.mode!=='face')return;
+  const tool=event.detail?.tool;
+  if(!['Knife','Shell','Sweep'].includes(tool))return;
   hubSuppressedKey='';
-  lastSelectionKey='';
   resetTransientState?.({hideFloat:true});
-  hubState='closed';
-  expanded=false;
-  root.dataset.hubState='closed';
-  root.dataset.expanded='false';
-  root.hidden=true;
-  gestureDebug('SELECTION HUB SESSION COMPLETE',{tool:'Knife',mode:'face'});
+  const mesh=state()?.mesh,current=currentMode();
+  if(current==='face'&&selectionAvailable(mesh,'face')){
+    lastSelectionKey=selectionKey(mesh,'face');
+    setHubState('closed',{reason:'face-session-complete:'+tool.toLowerCase()});
+    root.hidden=false;
+  }else{
+    lastSelectionKey='';
+    hubState='closed';
+    expanded=false;
+    root.dataset.hubState='closed';
+    root.dataset.expanded='false';
+    root.hidden=true;
+  }
+  gestureDebug('SELECTION HUB SESSION COMPLETE',{tool,mode:current,selection:globalThis.__boxlabSelectionBridge?.indices?.()?.length||0});
 });
 
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(syncContextToolAvailability));
@@ -990,5 +999,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.689'
+  version:'0.36.18.690'
 };
