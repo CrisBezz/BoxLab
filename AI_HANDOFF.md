@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.692**.
+Current release: **v0.36.18.693**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -36,13 +36,39 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.692.
-- Parent checkpoint before .692: a43e06aba2d154e9c8cd7b91865ec6e784dc8f90.
-- Find the .692 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owner: src/main.js, repinned to .692.
-- Release bootstrap/version logic unchanged; both repinned to .692 to satisfy the current release-owner contract.
+- Release: v0.36.18.693.
+- Parent checkpoint before .693: aee6a66a3f38a40be4c6f8ae6f22e35b69759cf7.
+- Find the .693 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owner: src/total-gizmo.js, repinned to .693; main.js code unchanged.
+- Release bootstrap/version logic unchanged; both repinned to .693 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .692
+## Immediate hands-on checks — .693
+
+Confirm the iPad visibly shows v0.36.18.693.
+1. Select two or more adjacent coplanar Faces (e.g. a subdivided flat surface).
+2. Face puck → gizmo centre → Face ring → More…: nearby pop-out shows Join Coplanar.
+3. Join Coplanar merges through the existing owner and returns a puck on the selected result.
+4. One Undo restores the separate Faces. Select one Face or non-coplanar Faces: Join is disabled.
+5. More… toggles closed; ring centre closes normally. Primary sectors/Shell/Sweep remain intact.
+
+.693 awaits hands-on confirmation. .692 Edge neutral-return checks are still pending;
+no PASS was supplied for .692. Priority remains Face gaps → Vertex → Object → final Edge.
+
+## .693 Face contextual gap audit
+
+Existing ring has Extrude, Inset, Knife, Duplicate, Extract, Shell, Sweep and Delete.
+Join Coplanar Faces existed only in the drawer (#joinSelectedCoplanarFacesBtn,
+loaded by drawer-ui.js). .693 adds a More… pop-out alongside the unchanged eight
+primary sectors, exposing this authoritative one-shot action. Disabled state mirrors
+the underlying button; common one-shot completion restores selected-result puck.
+Pop-out closes on hub transitions and flips beside the ring near the right viewport edge.
+Join topology/history owner is unchanged; no new geometry algorithm or pointer owner.
+Remaining Face drawer gaps (including Bridge, Poke, Circle and repair/topology actions)
+need an owner/availability/settings audit before each next narrow build. Do not declare
+complete Face coverage from the successful lifecycle of the first eight sectors.
+Syntax/release tests pass; full CI has an existing 285-failure baseline.
+
+## Retained hands-on checks — .692
 
 Confirm the iPad visibly shows v0.36.18.692 before judging behaviour.
 1. Edge mode, no direct tool armed: Pencil hold a selected Edge, then drag UP to Grow.

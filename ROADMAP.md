@@ -158,6 +158,11 @@ Only add focused tools that suit BoxLab:
   - tapping the object restores the gizmo reliably
 - Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
+### Face contextual gap completion — .693
+
+- .693 adds Face ring More… → Join Coplanar through the existing drawer owner; awaiting hands-on PASS. Primary eight sectors unchanged.
+- Continue auditing Face Bridge, Poke, Circle and repair/topology actions for contextual access/pop-outs before moving to Vertex, Object and final Edge.
+
 ## Strengthening list
 
 Concrete modelling cases to strengthen after the current Selection Hub / gizmo UX pass:

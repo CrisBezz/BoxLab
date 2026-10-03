@@ -97,6 +97,8 @@ function setHubState(next,{reason='',resumeSuspended=true}={}){
     gestureDebug('EDGE EXTRUDE SESSION CLOSE',{reason:reason||'return-to-puck',selectionPreserved:true,edges:preservedEdges.length});
   }
 
+  root.dataset.faceMore='false';
+  root.querySelector('.tg-face-more-toggle')?.setAttribute('aria-expanded','false');
   const wasTransform=hubState==='transform';
   const willTransform=requested==='transform';
 
@@ -332,6 +334,11 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#shellFacesBtn">Shell</button>
   <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target=".sweep-selection-launch[data-sweep-selection-mode='face']">Sweep</button>
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteFaceBtn">Delete</button>
+  <button type="button" class="tg-face-more-toggle" aria-expanded="false">More…</button>
+  <div class="tg-face-more-panel" aria-label="More Face tools">
+    <strong>More Face tools</strong>
+    <button type="button" class="tg-tool-sector tg-face-more-action" data-tool-target="#joinSelectedCoplanarFacesBtn">Join Coplanar</button>
+  </div>
   <button type="button" class="tg-tool-center" aria-label="Close Face contextual tools" title="Close tools">×</button>
 </div>
 <div class="tg-tool-ring" data-ring-mode="edge" aria-label="Edge contextual tools">
@@ -392,7 +399,28 @@ function syncEdgeExtrudeConstraintVisuals(){
   edgeExtrudeBadge?.querySelector('span')?.replaceChildren(document.createTextNode(label));
 }
 
+function positionFaceMore(){
+  if(root.dataset.faceMore!=='true')return;
+  const panel=root.querySelector('.tg-face-more-panel');
+  const bounds=viewportWrap.getBoundingClientRect(),gizmoBounds=root.getBoundingClientRect();
+  const width=155,height=panel.offsetHeight||82;
+  const right=HALF+122,left=HALF-122-width;
+  panel.style.left=(gizmoBounds.left+right+width<=bounds.right-8?right:left)+'px';
+  panel.style.top=Math.max(bounds.top+8-gizmoBounds.top,Math.min(HALF-30,bounds.bottom-8-height-gizmoBounds.top))+'px';
+}
+const faceMoreToggle=root.querySelector('.tg-face-more-toggle');
+faceMoreToggle.addEventListener('pointerdown',event=>{event.preventDefault();event.stopPropagation();});
+faceMoreToggle.addEventListener('click',event=>{
+  event.preventDefault();event.stopPropagation();
+  if(currentMode()!=='face'||hubState!=='tools')return;
+  const open=root.dataset.faceMore!=='true';
+  root.dataset.faceMore=open?'true':'false';
+  faceMoreToggle.setAttribute('aria-expanded',String(open));
+  syncContextToolAvailability();
+});
+
 function syncContextToolAvailability(){
+  positionFaceMore();
   for(const sector of toolSectors){
     const selector=sector.dataset.toolTarget;
     const target=selector?document.querySelector(selector):null;
@@ -481,7 +509,7 @@ toolSectors.forEach(button=>{
       target.click();
       if(radialOffset)globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
       if(radialSlide)globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
-      if((mode==='edge'&&(toolLabel==='Dissolve'||toolLabel==='Delete'))||(mode==='face'&&toolLabel==='Delete')){
+      if((mode==='edge'&&(toolLabel==='Dissolve'||toolLabel==='Delete'))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'))){
         queueMicrotask(()=>{
           hubSuppressedKey='';
           const mesh=state()?.mesh,current=currentMode();
@@ -730,6 +758,11 @@ style.textContent=`
 #totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring[data-ring-mode="face"]{display:block}
 #totalGizmo[data-hub-state="tools"][data-mode="edge"] .tg-tool-ring[data-ring-mode="edge"]{display:block}
 #totalGizmo .tg-tool-sector{position:absolute;left:50%;top:50%;width:68px;height:34px;margin:-17px -34px;padding:3px 5px;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(18,21,27,.96);color:#eef2f7;font-size:10px;font-weight:700;line-height:1;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.34);pointer-events:auto;touch-action:none;transform:rotate(var(--a)) translateY(-82px) rotate(calc(-1 * var(--a)))}
+#totalGizmo .tg-face-more-toggle{position:absolute;left:50%;top:calc(50% + 22px);transform:translateX(-50%);height:25px;padding:3px 8px;border:1px solid rgba(255,255,255,.3);border-radius:8px;background:rgba(18,21,27,.96);color:#eef2f7;font-size:10px;pointer-events:auto;touch-action:none}
+#totalGizmo .tg-face-more-panel{display:none;position:absolute;width:155px;padding:8px;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(18,21,27,.98);box-sizing:border-box;pointer-events:auto;touch-action:none}
+#totalGizmo[data-face-more="true"] .tg-face-more-panel{display:block}
+#totalGizmo .tg-face-more-panel strong{display:block;margin-bottom:7px;color:#eef2f7;font-size:10px}
+#totalGizmo .tg-face-more-panel .tg-face-more-action{position:static;width:100%;height:35px;margin:0;padding:5px;transform:none;white-space:normal}
 #totalGizmo .tg-tool-sector:active{background:rgba(238,242,247,.92);color:#111318}
 #totalGizmo .tg-tool-danger{border-color:rgba(255,110,110,.48)}
 #totalGizmo .tg-tool-center{position:absolute;left:50%;top:50%;width:30px;height:30px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.7);border-radius:50%;background:rgba(12,14,18,.96);color:#eef2f7;font-size:18px;line-height:1;pointer-events:auto;touch-action:none}

@@ -3063,3 +3063,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .692: sideways Edge Loop/Ring/Boundary browsing and additive base intact
 - [ ] Regression .692: Face .691 neutral return remains PASS
 - [x] Protection .692: Loop Cut, radial tool owners and protected multi-object-transform unchanged
+
+## Face radial gaps — v0.36.18.693
+
+- [x] Static .693: primary eight Face sectors retain their labels/positions
+- [x] Static .693: More pop-out Join proxies existing #joinSelectedCoplanarFacesBtn
+- [x] Static .693: existing disabled-state and one-shot puck restoration paths reused
+- [x] Protection .693: Join topology/history, Loop Cut and protected multi-object transform unchanged
+- [ ] Hands-on .693: visible release .693; Face More pop-out opens beside ring and toggles closed
+- [ ] Hands-on .693: selected adjacent coplanar Faces Join into one selected Face with puck
+- [ ] Hands-on .693: one Undo restores separate Faces
+- [ ] Hands-on .693: one Face/non-coplanar selection disables Join
+- [ ] Regression .693: primary Face tools, Shell/Sweep exits and ring centre close remain intact
