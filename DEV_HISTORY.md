@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.687 restore clicked-edge Loop Slide direction
+
+- .686 kept strengthened Loop Cut traversal and fixed malformed strip reconstruction.
+- User reported live Loop Slide moved opposite to the expected direction.
+- Root cause: promoted logical side direction came from face ordering instead of the physical edge segment actually touched.
+- Added logicalSeedDirection() to map clicked physical edge direction onto the logical side.
+- Ring propagation now inherits that original physical direction.
+- .686 reconstruction remains unchanged.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.686 Loop Cut strip reconstruction fix
 
 - .685 restored traversal through generalized logical quads, but created malformed long/sliver faces in the user screenshot case.
