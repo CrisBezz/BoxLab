@@ -518,6 +518,18 @@ window.addEventListener('boxlab-bridge-complete',event=>{
   });
 });
 
+window.addEventListener('boxlab-face-duplicate-complete',event=>{
+  requestAnimationFrame(()=>{
+    const s=state(),mesh=s?.mesh,mode=currentMode();
+    if(mode!=='object'||!objectSelected())return;
+    hubSuppressedKey='';
+    lastSelectionKey='object';
+    setHubState('transform',{reason:'face-duplicate-complete'});
+    root.hidden=false;
+    gestureDebug('SELECTION HUB RESTORE',{tool:'Duplicate',mode:'object',name:event.detail?.name||''});
+  });
+});
+
 document.addEventListener('boxlab-face-direct-committed',event=>{
   const tool=event.detail?.tool;
   if(tool!=='extrude'&&tool!=='inset')return;
@@ -883,5 +895,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.677'
+  version:'0.36.18.678'
 };
