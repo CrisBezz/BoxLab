@@ -1,6 +1,6 @@
 import { EditableMesh } from './mesh.js';
 
-// BoxLab v0.36.18.89 — non-destructive Duplicate Faces.
+// BoxLab v0.36.18.678 — non-destructive Duplicate Faces.
 // Copies the current Face selection into a new object while leaving the source untouched.
 
 const extractButton=document.querySelector('#extractFacesBtn');
@@ -53,13 +53,15 @@ function place(){
 
 function duplicateFaces(){
   const mesh=state()?.mesh,ids=selectedFaces(),m=manager();
-  if(!mesh||!ids.length||!m?.addMesh)return;
+  if(!mesh||!ids.length||!m?.addMesh)return false;
   const copy=compactSelection(mesh,ids);
-  if(!copy.faces.length)return;
+  if(!copy.faces.length)return false;
   const object=m.addMesh(copy,ids.length===1?'Duplicated Face':'Duplicated Faces',{enterObjectMode:true});
-  if(!object){if(status)status.textContent='Duplicate Faces unavailable • Outliner is still loading';return;}
+  if(!object){if(status)status.textContent='Duplicate Faces unavailable • Outliner is still loading';return false;}
   render();
-  if(status)status.textContent=`${object.name} created • source unchanged`;
+  if(status)status.textContent=`${object.name} created • source unchanged • ready to transform`;
+  window.dispatchEvent(new CustomEvent('boxlab-face-duplicate-complete',{detail:{name:object.name,id:object.id??null,sourceFaces:[...ids]}}));
+  return true;
 }
 
 function sync(){
@@ -75,4 +77,4 @@ document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(sync)));
 [0,40,120,300,700].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabDuplicateFaces={version:'0.36.18.89',duplicate:duplicateFaces};
+globalThis.__boxlabDuplicateFaces={version:'0.36.18.678',duplicate:duplicateFaces,available:()=>selectedFaces().length>0&&!!manager()?.addMesh};
