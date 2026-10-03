@@ -1,5 +1,16 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.688 restore known-good Loop Cut core
+
+- .685-.687 generalized logical-quad work did not preserve the previous Loop Cut quality.
+- User confirmed .687 still felt wrong.
+- Compared current code against the actual known-good v0.36.18.161/.162 history.
+- Restored src/loop-cut-added-vertex.js from v0.36.18.162.
+- This restores the original logical Add-vertex traversal/reconstruction/slide contract.
+- Removed generalized arbitrary-collinear-face behaviour from the live core.
+- Complex screenshot topology is moved to strengthening rather than risking the protected Loop Cut path.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.687 restore clicked-edge Loop Slide direction
 
 - .686 kept strengthened Loop Cut traversal and fixed malformed strip reconstruction.
