@@ -1,32 +1,37 @@
-## v0.36.18.681 — Pencil background tap dismisses Object transform
+## v0.36.18.682 — Pencil/Object routing reliability
 
 Current release:
-- v0.36.18.681
+- v0.36.18.682
 
 Hands-on protected:
-- .678 Duplicate Faces works great and hands off to Object gizmo.
-- .680 restored Total Gizmo after .679 parse regression.
-- Finger background tap successfully dismisses Object transform gizmo.
+- .678 Duplicate Faces works great.
+- .680 Total Gizmo loads again.
+- Finger background tap dismisses Object transform correctly.
 
-.681:
-- Fixes Pencil parity for Object transform dismissal.
-- Finger background tap already worked; Pencil background tap did not because Pencil contact is owned by pencil-orbit-gate for navigation.
-- pencil-orbit-gate now tracks background Pencil contacts and distinguishes stationary tap from orbit drag.
-- On Pencil release:
-  - if movement stayed under 8 px
-  - and no deferred orbit claim occurred
-  - emits boxlab-pencil-background-tap
-- Total Gizmo listens for that semantic event and dismisses Object transform exactly like finger background tap.
-- Pencil drag/orbit behavior remains intact.
-- No transform geometry code changed.
+User-reported .681 issues:
+- Pencil background tap only dismisses gizmo sometimes.
+- Pencil tap on object can select object but fail to restore gizmo.
+- Gesture Debug showed raw Pencil down / hover swallow without reliable background-tap completion.
+
+Root causes:
+1. .681 background Pencil tap candidacy was created inside OrbitControls wrapped pointerdown, so it depended on OrbitControls receiving that down event.
+2. Total Gizmo object re-open check used SelectionBridge.pick('object'), but the bridge picker historically mapped to component pickKind(); authoritative Object picking in main.js raycasts rendered body meshes.
+
+.682:
+- main.js now exposes authoritative pickObject(event) through __boxlabSelectionBridge.
+- generic bridge pick('object',event) also routes to that same Object body picker.
+- Total Gizmo objectHitAt() prefers pickObject().
+- pencil-orbit-gate now starts background Pencil tap candidacy from window capture, independent of OrbitControls.
+- candidate is only created for Pencil contact on viewport background with no modelling owner.
+- Pencil orbit claim marks candidate as orbitClaimed, so drag/orbit still does not dismiss.
+- stationary release emits boxlab-pencil-background-tap reliably.
 
 Immediate hands-on:
-1. Duplicate Face(s) -> Object gizmo appears.
-2. Finger tap empty background -> gizmo hides.
-3. Tap object -> gizmo returns.
-4. Pencil tap empty background -> gizmo hides.
-5. Tap object -> gizmo returns.
-6. Pencil drag on empty background -> orbit still works and must NOT dismiss gizmo as a tap.
+1. Object gizmo active -> Pencil tap empty background repeatedly (5-10 times): should dismiss every time.
+2. Tap object with Pencil -> gizmo should appear/reappear every time.
+3. Repeat object/background alternation several times.
+4. Pencil drag empty background -> orbit, not dismiss.
+5. Finger behavior remains unchanged.
 
 Protected:
 - .678 Duplicate semantics.
