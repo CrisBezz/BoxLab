@@ -388,7 +388,8 @@ function syncContextToolAvailability(){
   for(const sector of toolSectors){
     const selector=sector.dataset.toolTarget;
     const target=selector?document.querySelector(selector):null;
-    const unavailable=!target||!!target.disabled;
+    const bridgeStart=sector.closest('.tg-tool-ring')?.dataset.ringMode==='edge'&&sector.textContent?.trim()==='Bridge'&&!!globalThis.__boxlabBridgeViewportSession?.canStart?.([...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]);
+    const unavailable=!target||(!bridgeStart&&!!target.disabled);
     const active=!!target&&(target.classList.contains('active')||target.getAttribute('aria-pressed')==='true');
     sector.disabled=unavailable;
     sector.classList.toggle('tg-tool-unavailable',unavailable);
@@ -443,8 +444,10 @@ toolSectors.forEach(button=>{
     if(mode!==ringMode)return;
     const selector=button.dataset.toolTarget;
     const target=selector?document.querySelector(selector):null;
-    if(!target||target.disabled){
-      if(status)status.textContent=`${button.textContent?.trim()||'Tool'} unavailable for current selection`;
+    const pendingLabel=button.textContent?.trim()||'Tool';
+    const guidedBridge=mode==='edge'&&pendingLabel==='Bridge'&&!!globalThis.__boxlabBridgeViewportSession?.canStart?.([...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]);
+    if(!target||(!guidedBridge&&target.disabled)){
+      if(status)status.textContent=pendingLabel+' unavailable for current selection';
       return;
     }
     if(mode==='face'&&suspendedFaceTool){
@@ -465,7 +468,7 @@ toolSectors.forEach(button=>{
     if(radialCrease){
       globalThis.__boxlabCreaseViewportSession?.openFromHub?.({ids:launchIds});
     }else if(radialBridge){
-      globalThis.__boxlabBridgeUI?.bridgeEdgesFromHub?.({ids:launchIds});
+      globalThis.__boxlabBridgeViewportSession?.openFromHub?.({ids:launchIds});
     }else{
       target.click();
       if(radialOffset)globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
