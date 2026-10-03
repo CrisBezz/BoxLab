@@ -3171,3 +3171,14 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Existing modelling sectors and centre close work.
 - [ ] Normal/long-press selection browsing unchanged.
 - [ ] Top-centre session panels and background Done remain correct.
+
+
+## v0.36.18.703 — Face radial whole-object repair batch
+
+- [x] Automated: three launches do not apply; top-centre scope controls; Cancel preserves selection and completes; Apply delegates once and clears stale Face IDs; owner failure preserves selection/reports reason; disabled/locked/context changes and superseding radial tools handled.
+- [x] Static: twenty active targets, no selection helpers, no outer/outer or outer/inner button rectangle overlap; protected inner positions/modelling owners/transform/Loop Cut unchanged.
+- [ ] Visible .703; eight inner/twelve outer tools and centre close remain usable.
+- [ ] Close Holes / Quad Cleanup / Quadify N-gons show whole-active-object scope at top centre; Cancel returns original selected puck with no geometry/history change.
+- [ ] Apply on suitable ordinary meshes repairs whole active object once; one Undo restores geometry. Successful Apply clears Face selection; next Face tap gets fresh puck.
+- [ ] No eligible candidates disable corresponding tools; owner rollback reports reason and retains selection.
+- [ ] Existing Face/Edge sessions, background Done, navigation and long-press selection remain protected.

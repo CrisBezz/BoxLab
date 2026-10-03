@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.702**.
+Current release: **v0.36.18.703**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -19,6 +19,9 @@ is still the priority. Follow Face → Vertex → Object → final Edge, not bro
 
 Radial menus contain ACTIVE modelling/repair tools only. Selections belong to
 long press and gestures. .701 selection sectors were a scope mistake, removed .702.
+
+All development moving forward must finalize radial menus and contextual settings.
+No unrelated gestures/features/strengthening before this sequence is complete.
 
 Primary goal: finish contextual radial menus and top-centre pop-out settings so routine
 modelling needs as little left-drawer interaction as possible.
@@ -39,24 +42,42 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.702.
-- Parent checkpoint before .702: 81743794904e8630d7418c4248762f6ff4420fa8.
-- Find the .702 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owner: total-gizmo.js pinned .702. main.js code unchanged but repinned .702; panel/shared dock imports retain .700.
-- Release bootstrap/version logic unchanged; both repinned to .702 to satisfy the current release-owner contract.
+- Release: v0.36.18.703.
+- Parent checkpoint before .703: c8afece9 (find full SHA in history).
+- Find the .703 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owners: total-gizmo.js and new face-repair-viewport.js pinned .703. main.js code unchanged but repinned .703; shared dock/session imports retain .700.
+- Release bootstrap/version logic unchanged; both repinned to .703 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .702
+## Immediate hands-on checks — .703
 
-Confirm iPad visibly shows v0.36.18.702.
-1. Face ring contains active tools only: Coplanar/Connected selection sectors removed. Eight inner/nine outer tools restored at 82/145 px radii.
-2. Existing inner modelling tools and outer Join/Circle/Poke/Planar/Triangulate/Flip/Orient/Outward/Bridge remain accessible; centre × closes correctly.
-3. Long-press selection browsing and normal Face selection still work. No gesture owner changed.
-4. Top-centre session panels and Extrude/Inset background Done remain intact.
+Confirm iPad visibly shows v0.36.18.703.
+1. Face ring has eight inner/twelve outer active tools. Existing centre close and tools remain usable; no selection sectors.
+2. Close Holes, Quad Cleanup and Quadify N-gons open top-centre panels labelled whole active object. Cancel changes neither geometry nor Face selection and returns puck.
+3. On suitable ordinary meshes, Apply performs the existing repair once; one Undo restores geometry. Successful Apply clears Face selection; the next Face tap gets a fresh puck.
+4. Closed cube disables Close Holes; no triangles disables Quad Cleanup; no eligible even-sided n-gons disables Quadify. Previous Extrude/Inset, background Done and navigation remain intact.
 
-.702 awaits hands-on PASS. User confirmed .701 commands PASS, then explicitly
-corrected their placement: radial menus are NOT for selection. Selection belongs to
-long press and gestures. .701 radial helper placement is retired despite its PASS.
-No Detached/Quads release was published; their local draft was discarded.
+.703 awaits hands-on PASS. .702 removal/layout checks also remain pending; the user
+requested the next build without claiming .702 PASS. .701 commands were PASS but
+radial selection placement was explicitly retired. Detached/Quads was never released.
+
+## .703 owner audit / implementation
+
+Three existing whole-active-mesh repair owners were already loaded by
+face-workflow-layout.js: close-holes .201, quad-pair-cleanup .205, quadify-ngons .203.
+Their kernels, validation, rollback and history are unchanged. New face-repair-viewport
+uses their public APIs and syncUI availability; explicit scope + Apply/Cancel dock at
+top centre. No geometry mutation on launch/Cancel; failed repairs keep selection and
+show the existing owner reason. Successful rebuilding clears stale Face indices via
+the existing selection bridge and emits shared Face session completion. The hub stays
+hidden while the scope panel is active, even if selection changes. Mesh/mode changes
+close the scope panel; locked/reference active objects cannot apply. No raw viewport
+pointer owner added. Outer ring: twelve 30-degree sectors at 175px, guide 350px; all
+prior targets retained; outer/outer and outer/inner rectangle spacing audited. Inner
+positions unchanged. 21 targeted repair/dock/background/Bridge/value/release checks PASS. Full suite: 1112 tests, 827 PASS, same 285 failures as .702; failure names compared, no new failures.
+Next: confirm this batch, audit remaining Face active-tool/settings gaps (including
+Clean Vertices and applicable alignment/precision controls), then Vertex → Object →
+final Edge. Whole-object scope stays explicit; no selection-only ring entries. Drawer
+fallbacks remain until contextual replacements pass; do not remove panels wholesale.
 
 ## .702 scope correction / next build rule
 

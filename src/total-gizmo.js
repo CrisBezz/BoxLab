@@ -334,15 +334,18 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target=".sweep-selection-launch[data-sweep-selection-mode='face']">Sweep</button>
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteFaceBtn">Delete</button>
   <div class="tg-face-outer-guide" aria-hidden="true"></div>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:145px" data-tool-target="#joinSelectedCoplanarFacesBtn">Join Coplanar</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:40deg;--r:145px" data-tool-target="#componentCircleBtn">Circle</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:80deg;--r:145px" data-tool-target="#pokeFacesBtn">Poke</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:120deg;--r:145px" data-tool-target="#makePlanarBtn">Make Planar</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:160deg;--r:145px" data-tool-target="#triangulateFacesBtn">Triangulate</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:200deg;--r:145px" data-tool-target="#flipFacesBtn">Flip Faces</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:240deg;--r:145px" data-tool-target="#orientFacesBtn">Orient Faces</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:280deg;--r:145px" data-tool-target="#orientShellOutwardBtn">Orient Outward</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:320deg;--r:145px" data-tool-target="#bridgeFacesBtn">Bridge</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:175px" data-tool-target="#joinSelectedCoplanarFacesBtn">Join Coplanar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:30deg;--r:175px" data-tool-target="#componentCircleBtn">Circle</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:60deg;--r:175px" data-tool-target="#pokeFacesBtn">Poke</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90deg;--r:175px" data-tool-target="#makePlanarBtn">Make Planar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:120deg;--r:175px" data-tool-target="#triangulateFacesBtn">Triangulate</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:150deg;--r:175px" data-tool-target="#flipFacesBtn">Flip Faces</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180deg;--r:175px" data-tool-target="#orientFacesBtn">Orient Faces</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:210deg;--r:175px" data-tool-target="#orientShellOutwardBtn">Orient Outward</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:240deg;--r:175px" data-tool-target="#bridgeFacesBtn">Bridge</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270deg;--r:175px" data-tool-target="#closeHolesBtn">Close Holes</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:300deg;--r:175px" data-tool-target="#quadPairCleanupBtn">Quad Cleanup</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:330deg;--r:175px" data-tool-target="#quadifyNgonsBtn">Quadify N-gons</button>
   <button type="button" class="tg-tool-center" aria-label="Close Face contextual tools" title="Close tools">×</button>
 </div>
 <div class="tg-tool-ring" data-ring-mode="edge" aria-label="Edge contextual tools">
@@ -408,7 +411,8 @@ function syncContextToolAvailability(){
     const selector=sector.dataset.toolTarget;
     const target=selector?document.querySelector(selector):null;
     const bridgeStart=sector.closest('.tg-tool-ring')?.dataset.ringMode==='edge'&&sector.textContent?.trim()==='Bridge'&&!!globalThis.__boxlabBridgeViewportSession?.canStart?.([...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]);
-    const unavailable=!target||(!bridgeStart&&!!target.disabled);
+    const faceRepair=sector.closest('.tg-tool-ring')?.dataset.ringMode==='face'&&['Close Holes','Quad Cleanup','Quadify N-gons'].includes(sector.textContent?.trim());
+    const unavailable=faceRepair?!globalThis.__boxlabFaceRepairViewportSession?.available?.(sector.textContent.trim()):!target||(!bridgeStart&&!!target.disabled);
     const active=!!target&&(target.classList.contains('active')||target.getAttribute('aria-pressed')==='true');
     sector.disabled=unavailable;
     sector.classList.toggle('tg-tool-unavailable',unavailable);
@@ -484,7 +488,10 @@ toolSectors.forEach(button=>{
     const radialBridge=mode==='edge'&&toolLabel==='Bridge';
     const radialSession=radialCrease||radialOffset||radialSlide||radialBridge;
     const launchIds=radialSession?[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]:null;
-    if(radialCrease){
+    const radialFaceRepair=mode==='face'&&['Close Holes','Quad Cleanup','Quadify N-gons'].includes(toolLabel);
+    if(radialFaceRepair){
+      globalThis.__boxlabFaceRepairViewportSession?.openFromHub?.({tool:toolLabel});
+    }else if(radialCrease){
       globalThis.__boxlabCreaseViewportSession?.openFromHub?.({ids:launchIds});
     }else if(radialBridge){
       globalThis.__boxlabBridgeViewportSession?.openFromHub?.({ids:launchIds});
@@ -524,7 +531,7 @@ toolButtons.forEach(button=>button.addEventListener('click',()=>{
 window.addEventListener('boxlab-selection-hub-session-complete',event=>{
   if(event.detail?.mode!=='face')return;
   const tool=event.detail?.tool;
-  if(!['Knife','Shell','Sweep','Bridge','Extrude','Inset'].includes(tool))return;
+  if(!['Knife','Shell','Sweep','Bridge','Extrude','Inset','Close Holes','Quad Cleanup','Quadify N-gons'].includes(tool))return;
   hubSuppressedKey='';
   resetTransientState?.({hideFloat:true});
   const mesh=state()?.mesh,current=currentMode();
@@ -741,7 +748,7 @@ style.textContent=`
 #totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring[data-ring-mode="face"]{display:block}
 #totalGizmo[data-hub-state="tools"][data-mode="edge"] .tg-tool-ring[data-ring-mode="edge"]{display:block}
 #totalGizmo .tg-tool-sector{position:absolute;left:50%;top:50%;width:68px;height:34px;margin:-17px -34px;padding:3px 5px;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(18,21,27,.96);color:#eef2f7;font-size:10px;font-weight:700;line-height:1;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.34);pointer-events:auto;touch-action:none;transform:rotate(var(--a)) translateY(-82px) rotate(calc(-1 * var(--a)))}
-#totalGizmo .tg-face-outer-guide{position:absolute;left:50%;top:50%;width:290px;height:290px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.15);border-radius:50%;pointer-events:none}
+#totalGizmo .tg-face-outer-guide{position:absolute;left:50%;top:50%;width:350px;height:350px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.15);border-radius:50%;pointer-events:none}
 #totalGizmo .tg-tool-outer{width:86px;margin-left:-43px;transform:rotate(var(--a)) translateY(calc(-1 * var(--r))) rotate(calc(-1 * var(--a)))}
 #totalGizmo .tg-tool-sector:active{background:rgba(238,242,247,.92);color:#111318}
 #totalGizmo .tg-tool-danger{border-color:rgba(255,110,110,.48)}
@@ -964,7 +971,7 @@ function sync(){
   root.style.top=`${top}px`;
   placeToolSessionPanel(floatPalette);
   const suppressed=['face','edge'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
-  root.hidden=suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&!!globalThis.__boxlabFaceBridgePreview?.active?.());
+  root.hidden=suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()));
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;

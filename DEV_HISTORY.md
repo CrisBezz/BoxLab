@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+
+## 2026-10-04 — v0.36.18.703 radial Face repair batch
+
+- User directs all development moving forward at finalizing radial menus/settings: Face → Vertex → Object → final Edge; unrelated gesture/topology/feature work deferred. .702 hands-on remains pending.
+- Audited existing Close Holes .201, Quad Cleanup .205 and Quadify N-gons .203 owners, already loaded by face-workflow-layout. Added three active outer sectors; kernels, transaction gates/history and legacy pins unchanged.
+- Shared top-centre whole-active-object scope panel delegates existing APIs on Apply only. Cancel preserves original geometry/selection; failure shows owner reason without clearing selection. Success clears stale Face indices and emits shared session completion; next Face tap gets fresh puck. Mode/mesh changes close; locked/reference active objects blocked.
+- Eight inner/twelve outer tools, outer175px/30-degree spacing; all prior targets retained, outer/outer and outer/inner rectangle spacing PASS. Protected inner positions unchanged. No selection helpers or new viewport pointer owner.
+- 21 targeted lifecycle/dock/background/Bridge/value/release checks PASS; syntax PASS. Full suite: 1112 tests, 827 PASS, same 285 failures as .702; failure names compared, no new failures. .703 markers/gizmo/new-panel/main-loader/refresh pins updated. Protected transform and .162 Loop Cut untouched. Hands-on pending.
+
 ## 2026-10-04 — v0.36.18.702 active-tool-only radial correction
 
 - User confirmed .701 PASS, then corrected product scope: radial menus are for active tools; selections belong to long press/gestures.

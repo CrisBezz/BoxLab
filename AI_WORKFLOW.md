@@ -147,6 +147,11 @@ If not, improve the handoff first.
 
 ## Radial menu scope
 
+User-directed priority (2026-10-04): all development moving forward is to finish
+radial menus and their contextual settings. Follow Face → Vertex → Object → final
+Edge coverage. Defer broader gestures, topology strengthening and unrelated UI work
+until the radial menus are finalized, except fixes required by this work.
+
 User-directed rule (2026-10-04): contextual radial menus contain active modelling
 and repair tools only. Selection commands belong to long-press/gesture workflows.
 Do not populate radial rings with selection helpers, filters or diagnostics that
