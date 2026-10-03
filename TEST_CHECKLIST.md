@@ -2915,3 +2915,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .681: Pencil orbit drag does not fire background-tap dismiss
 - [x] Static .681: semantic boxlab-pencil-background-tap added
 - [x] Protection .681: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [ ] Workflow .682: repeated Pencil background taps dismiss Object gizmo reliably
+- [ ] Workflow .682: repeated Pencil object taps restore Object gizmo reliably
+- [ ] Workflow .682: object/background alternation remains stable
+- [ ] Regression .682: Pencil drag on background still orbits
+- [ ] Regression .682: finger background dismiss remains PASS
+- [x] Static .682: Object picker routes through authoritative body raycast
+- [x] Static .682: Pencil background candidacy begins at window capture
+- [x] Protection .682: src/multi-object-transform.js?v=0.36.1.0 unchanged
