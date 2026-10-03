@@ -1,47 +1,48 @@
-## v0.36.18.683 — radial Extract Faces Object handoff
+## v0.36.18.684 — radial Knife viewport session
 
 Current release:
-- v0.36.18.683
+- v0.36.18.684
 
 Hands-on protected:
 - .676 guided radial Edge Bridge: PASS.
 - .677 Edge radial one-shot cleanup: PASS.
 - .678 Duplicate Faces: works great.
 - .682 Pencil/Object routing reliability: PERFECT / PASS.
+- .683 Extract Faces handoff advanced to next build; no explicit PASS recorded yet.
 
-.683:
-- Continues Face-ring/modeless polish with Extract Faces.
-- Existing extract-faces.js remains authoritative for:
-  - removing selected Faces from source when possible
-  - preserving source object when extracting all Faces
-  - compacting extracted mesh
-  - preserving facegroups/creases
-  - creating Extracted Faces as a new object
-  - scene-level undo transaction
-- Added boxlab-face-extract-complete semantic event after successful Extract.
-- Total Gizmo consumes the event and immediately activates Object transform on the new extracted object.
-- .682 Object lifecycle remains in force:
-  - finger/Pencil background tap dismisses gizmo
-  - Pencil drag orbits
-  - object remains selected
-  - tapping object restores gizmo
-- No Extract topology kernel duplicated or changed.
+.684:
+- Continues Face-ring/modeless polish with Knife.
+- Existing knife-tool.js remains authoritative for all Knife geometry, snapping, preview, history, and repeated-cut behaviour.
+- Radial Knife now opens a compact viewport session:
+  - “Knife active”
+  - reminder: drag boundary -> boundary
+  - Done button
+- Knife remains armed after each successful cut exactly as before, allowing repeated cuts.
+- Done:
+  - disarms existing Knife owner
+  - clears preview/armed state
+  - clears Selection Hub suppression
+  - keeps hub hidden while no Face is selected
+  - next Face selection receives a fresh puck immediately
+- Added minimal __boxlabKnifeTool lifecycle bridge and semantic armed/disarmed events.
+- Left-panel Knife remains unchanged and does not open the radial viewport session.
+- No Knife topology or snap algorithm changed.
 
 Immediate hands-on:
-1. Select one or more Faces.
-2. Puck -> Face tools -> Extract.
-3. Source selected Faces should be removed (unless all Faces were selected, in which case source remains intact by design).
-4. New Extracted Faces object becomes active in Object mode.
-5. Object gizmo appears immediately.
-6. Move extracted object away.
-7. Finger/Pencil tap background -> gizmo dismisses.
-8. Tap extracted object -> gizmo returns.
-9. Undo -> source/new-object transaction restores together.
+1. Select a Face -> puck -> Face tools -> Knife.
+2. Knife active badge with Done should appear.
+3. Make one boundary-to-boundary cut.
+4. Knife should remain active; make a second cut.
+5. Tap Done.
+6. Knife left-panel active state should turn off; badge disappears.
+7. Tap/select any Face -> fresh puck appears immediately.
+8. Left-panel Knife should still work normally without the viewport badge.
+9. Regression: Pencil orbit/navigation remains correct.
 
 Next after PASS:
-- Audit Knife session completion/cancel interaction for radial launch, then Face Delete one-shot cleanup if needed.
+- Face Delete one-shot hub cleanup, then reassess remaining Face-ring gaps.
 
 Protected:
 - .682 Object/Pencil contract.
-- existing Extract topology/history owner.
+- existing Knife topology/snap/history owner.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
