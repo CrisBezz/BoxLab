@@ -2845,3 +2845,18 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .676: existing bridge-ui topology/history owner retained
 - [x] Static .676: no Bridge topology kernel duplicated
 - [x] Protection .676: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Hands-on .675: navigation recovery good for now / provisional PASS
+- [ ] Workflow .676: radial Bridge is available from one complete boundary loop
+- [ ] Workflow .676: radial Bridge panel opens while legacy drawer Bridge remains disabled
+- [ ] Workflow .676: first boundary remains selected during second-boundary acquisition
+- [ ] Workflow .676: adding compatible second boundary enables Apply Bridge
+- [ ] Workflow .676: Apply delegates to existing bridge owner and creates bridge
+- [ ] Workflow .676: created bridge faces become selected in Face mode
+- [ ] Workflow .676: Cancel restores first boundary and puck
+- [ ] Regression .676: legacy left-panel Edge Bridge still requires complete two-loop selection
+- [ ] Regression .676: Face Bridge unchanged
+- [x] Static .676: guided session validates combined selection via bridgeEdgeSelectionInfo()
+- [x] Static .676: no duplicate Bridge topology kernel added
+- [x] Protection .676: src/multi-object-transform.js?v=0.36.1.0 unchanged
