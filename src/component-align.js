@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import {componentVertexIndices,componentAnchorVertexIndices,componentAnchorCoordinate,alignComponentAxisToAnchor} from './component-align-core.js?v=0.36.18.330';
+import {componentVertexIndices,componentAnchorVertexIndices,componentAnchorCoordinate,alignComponentAxisToAnchor,planFaceAlignment} from './component-align-core.js?v=0.36.18.705';
+import {analyzeMeshHealth} from './mesh-health-core.js?v=0.36.18.443';
 
 const canvas=document.querySelector('#viewport');
 const selectionTools=document.querySelector('#componentSelectionTools');
@@ -84,9 +85,10 @@ function disarm(message){
 function arm(axis){
   const {md,ids,vertices}=info();
   if(!['vertex','edge','face'].includes(md)||ids.length<2||vertices.length<2)return false;
+  if(!['x','y','z','face'].includes(axis)||(axis==='face'&&md!=='face'))return false;
   if(armedAxis===axis){disarm(`Align ${axis.toUpperCase()} • cancelled`);return false;}
   armedAxis=axis;paintButtons();
-  if(status)status.textContent=`Align ${axis.toUpperCase()} • tap one selected ${md} to keep fixed`;
+  if(status)status.textContent=`${axis==='face'?'Align to Face':'Align '+axis.toUpperCase()} • tap one selected ${md} to keep fixed`;
   window.dispatchEvent(new CustomEvent('boxlab-component-align-change',{detail:{axis,reason:'arm'}}));
   return true;
 }
@@ -137,6 +139,30 @@ function pickSelectedComponent(event,md,ids,m,camera){
 function applyAnchor(anchorIndex,event){
   const axis=armedAxis,{m,md,ids,vertices}=info(),history=globalThis.__boxlabHistory;
   if(!axis||!m||!history||!ids.includes(anchorIndex))return false;
+  if(axis==='face'){
+    const reject=message=>{
+      if(status)status.textContent='Align to Face • '+message;
+      window.dispatchEvent(new CustomEvent('boxlab-component-align-change',{detail:{axis:'face',reason:'reject',message}}));
+      return false;
+    };
+    if(md!=='face')return reject('Face selection required');
+    const gate=globalThis.__boxlabTopologyGate;
+    if(gate?.validate?.(m)?.valid===false)return reject('Repair existing topology issues first');
+    const plan=planFaceAlignment(m,ids,anchorIndex);
+    if(!plan.ok)return reject(plan.reason);
+    if(gate?.validate?.(plan.candidate)?.valid===false||analyzeMeshHealth(plan.candidate).zeroAreaFaces>analyzeMeshHealth(m).zeroAreaFaces)return reject('Alignment would collapse or invalidate surrounding geometry');
+    if(plan.changed){
+      history.push(m.clone());
+      for(const i of plan.moving)m.vertices[i].copy(plan.candidate.vertices[i]);
+      m.edges?.();
+    }
+    bridge()?.set?.('face',ids);showMarker(event.clientX,event.clientY);render();
+    armedAxis=null;paintButtons();
+    if(status)status.textContent=plan.changed?'Align to Face • fixed Face unchanged • moving group coplanar':'Align to Face • already coplanar';
+    queueMicrotask(sync);
+    window.dispatchEvent(new CustomEvent('boxlab-component-align-change',{detail:{axis:null,reason:'apply',mode:md}}));
+    return true;
+  }
   const fixed=componentAnchorVertexIndices(m,md,anchorIndex);
   const target=componentAnchorCoordinate(m,md,anchorIndex,axis);
   if(!fixed.length||target===null)return false;
@@ -158,7 +184,7 @@ function sync(){
   place();
   const {md,ids,vertices}=info(),enabled=['vertex','edge','face'].includes(md)&&ids.length>=2&&vertices.length>=2&&!!globalThis.__boxlabHistory;
   row.style.display=md==='object'?'none':'';
-  if(!enabled&&armedAxis)disarm();
+  if((!enabled||(armedAxis==='face'&&md!=='face'))&&armedAxis)disarm();
   buttons.querySelectorAll('button').forEach(b=>{
     b.disabled=!enabled;
     b.title=enabled
@@ -197,4 +223,4 @@ document.querySelector('#selectionModes')?.addEventListener('click',()=>queueMic
 document.addEventListener('pointerup',()=>queueMicrotask(sync),true);
 [0,60,180,500].forEach(delay=>setTimeout(sync,delay));
 
-globalThis.__boxlabComponentAlign={version:'0.36.18.704',arm,disarm,applyAnchor,sync,isArmed:()=>!!armedAxis,axis:()=>armedAxis};
+globalThis.__boxlabComponentAlign={version:'0.36.18.705',arm,disarm,applyAnchor,sync,isArmed:()=>!!armedAxis,axis:()=>armedAxis};

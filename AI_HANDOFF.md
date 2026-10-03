@@ -9,8 +9,8 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.704**.
-Current focus: next runtime build adds Align to Face in the existing Align pop-out; then finish Face gaps → Vertex → Object → final Edge.
+Current release: **v0.36.18.705**.
+Current focus: hands-on Align to Face confirmation; then finish Face gaps → Vertex → Object → final Edge.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
 is still the priority. Follow Face → Vertex → Object → final Edge, not broad gestures.
@@ -42,39 +42,55 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.704.
-- Parent checkpoint before .704: 69c699e0 (find full SHA in history).
-- Find the .704 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed owners: total-gizmo.js, face-repair-viewport.js, new face-align-viewport.js, clean-vertices.js and component-align.js .704. drawer-ui loader/child pins .704; main.js code unchanged but shell pin .704. Shared dock and previous sessions retain .700.
-- Release bootstrap/version logic unchanged; both repinned to .704 to satisfy the current release-owner contract.
+- Release: v0.36.18.705.
+- Parent checkpoint before .705: e68b7145 (queued-plan documentation; runtime .704 was d89d7954).
+- Find the .705 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed owners: component-align/core, face-align-viewport and drawer-ui parent/child pins .705. main.js unchanged but pin .705. Ring/repair/cleanup retain .704; dock/previous session imports retain .700. Existing surface-transform-core .442 quaternion and mesh-health-core .443 audits reused.
+- Release bootstrap/version logic unchanged; both repinned to .705 to satisfy the current release-owner contract.
 
-## Next /nextbuild — Align to Face (queued 2026-10-04)
+## Immediate hands-on checks — .705
 
-User requested this as the next runtime build's content. It is planned, not yet
-implemented; current live release remains .704 and its hands-on checks remain pending.
+Confirm iPad visibly shows v0.36.18.705.
+1. Select moving planar Face(s) plus the fixed Face → radial Align → Align to Face → tap selected fixed Face. On arbitrary orientations, moving group rotates and translates along anchor normal onto its plane; fixed Face unchanged, moving shape preserved.
+2. Selection/puck returns; one Undo restores geometry and Redo repeats it. Already coplanar groups complete without a redundant history step.
+3. Cancel before/after arming changes no geometry. Bent moving groups, warped anchors or collapsing surrounding geometry reject with a reason in the top-centre panel; selection/history stay unchanged.
+4. Existing X/Y/Z Align and previous radial tools/background Done/navigation remain correct; ring positions unchanged.
 
-- Add **Align to Face** beside X/Y/Z inside the existing top-centre Align pop-out; no additional radial sector.
-- Select the moving Face(s) plus the intended fixed Face, choose Align to Face, then tap the selected Face that must stay fixed.
-- Support arbitrary Face orientation: rotate the remaining selected planar group together, then translate along the fixed Face's normal until coplanar with its plane. Preserve the moved group's shape; do not recenter tangentially or flatten a bent group.
-- Keep the fixed Face and its vertices unchanged. Start with a single moving planar Face or a coplanar moving group; reject unsupported/nonplanar cases with clear feedback and no geometry/history change.
-- One successful operation = one Undo. Preserve Face selection and return the puck through the existing completion semantic. Cancel performs no modelling operation; existing X/Y/Z behavior stays intact.
-- Before implementation, audit component-align/core and existing surface-transform/face-to-face owners. Reuse suitable authoritative maths and the existing anchor gesture owner; add no parallel viewport pointer listener. Audit shared-vertex conflicts and transactional validity before committing.
-- Keep scope narrow: this requested Face Align option takes priority over the remaining Face repair/settings audit. Resume Face → Vertex → Object → final Edge afterwards.
+.705 awaits hands-on PASS. .702/.703/.704 checks also remain pending; no explicit
+PASS was received. /nextbuild is not a PASS. All earlier protected checks remain.
 
-## Immediate hands-on checks — .704
+## .705 Align to Face owner audit / implementation
 
-Confirm iPad visibly shows v0.36.18.704.
-1. Face outer ring now includes Clean Vertices and Align; old tools and centre × remain accessible. Eight inner/fourteen outer tools, provisional placement.
-2. Two or more Faces selected → Align → choose X/Y/Z → tap a selected Face as anchor. That Face stays fixed; other selected vertices align on the chosen axis. Selection/puck returns; one Undo restores geometry.
-3. Align Cancel (before or after choosing an axis) changes no geometry and returns the selected puck. Single-Face selection disables Align.
-4. Eligible mesh → Clean Vertices shows whole-active-object scope at top centre. Cancel preserves mesh/selection; Apply performs safe cleanup once, clears Face IDs; next Face tap gets fresh puck. Healthy cube disables cleanup.
-5. .703 repairs, existing Face/Edge sessions, Extrude/Inset background Done, selection and navigation stay intact.
+User-requested arbitrary-plane alignment is implemented beside X/Y/Z in the existing
+Face Align pop-out, with no additional ring sector or viewport pointer owner.
+component-align owns the same early window anchor pick/commit/completion; its core
+now plans Face-group placement by reusing surface-transform-core's quaternion helper.
+Existing Make Planar was audited: it projects a Face onto its own plane and is a
+distinct capability, not rigid placement onto another Face. Existing XYZ paths stay intact.
 
-.704 awaits hands-on PASS. .702/.703 checks also remain pending; user requested
-/nextbuild without claiming a PASS. Do not record implied PASS. .701 selection
-commands passed, but radial selection placement was explicitly retired.
+Moving group must be planar; rotation keeps its shape. With disjoint Faces the pivot
+is the moving group's centre, followed only by anchor-normal translation (no tangential
+recentering). Shared vertices use a hinge pivot and must stay fixed under the rigid
+transform; conflicting cases reject. Fixed Face coordinates are never assigned.
+Closest coplanar orientation is used without forcing opposite winding to flip.
+Plans use a candidate mesh first. Invalid/warped source or anchor, bent groups,
+coincident vertices/zero signed area in affected neighbours, topology-gate failures
+and increased Mesh Health zero-area count reject before live geometry/history changes.
+Successful changes commit one history step; no-op coplanarity adds none. Selection is
+preserved; owner completion returns puck. Rejection retains arming/settings and shows
+its reason, allowing another anchor or Cancel. No independent raw-pointer listener.
 
-## .704 owner audit / implementation
+48 targeted plane/group/hinge/shape/tangential-position/owner/Undo/Redo/rejection,
+XYZ/core/proxy/repair/dock/background/Bridge/value/release checks PASS; syntax PASS.
+Ring layout and protected modelling kernels remain unchanged. Full regression: 1132 tests, 847 PASS,
+same 285 failure names as .704, no new failures.
+
+Next: hands-on confirmation; finish remaining Face active-tool/settings audit,
+particularly Face Repair Merge by Distance scope/parameters, then Vertex → Object →
+final Edge. Through already belongs to Extrude. No unrelated development, no selection
+helpers in rings, no premature Face-complete claim or bulk drawer removal.
+
+## .704 owner audit / implementation — retained checkpoint
 
 Clean Vertices already exists in clean-vertices.js, loaded by drawer-ui. Face Repair
 also already proxies it. Added to the existing whole-object scope panel/ring, using
@@ -100,8 +116,8 @@ and release checks PASS; syntax PASS. Full suite: 1120 tests, 835 PASS, same 285
 names as .703; no new failures. Two legacy Align loader tests now assert one loader
 with a versioned URL rather than the retired .330 cache pin.
 
-Next: implement the queued Align to Face option above; retain pending hands-on checks.
-After that, finish the Face active-tool/settings audit (especially
+The requested Align to Face extension is now implemented in .705 above.
+Next, finish the Face active-tool/settings audit (especially
 existing Face Repair Merge by Distance scope/parameter workflow). Through already lives
 in Extrude, so do not create a parallel Through tool. Do not declare Face complete
 until every applicable existing owner/settings path is accounted for. Then Vertex →

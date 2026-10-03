@@ -3195,10 +3195,11 @@ Add new permanent regression checks below when future features need protection.
 - [ ] .703 repairs, Face/Edge sessions, Extrude/Inset background Done and protected navigation remain intact.
 
 
-## Planned next build — Align to Face (not implemented)
+## v0.36.18.705 — Align to Face
 
-- [ ] Existing Align pop-out exposes Align to Face beside X/Y/Z at top centre.
+- [x] Automated: arbitrary plane/group shape/fixed anchor/tangential positioning/shared hinge/bent and warped rejection, actual owner commit/Undo/Redo/no-op/topology rejection, popup delegation/feedback/Cancel and protected nearby checks.
+- [ ] Visible .705; existing Align pop-out exposes Align to Face beside X/Y/Z at top centre.
 - [ ] Selected moving planar Face(s) + tapped fixed selected Face → arbitrary-plane rotation and translation along anchor normal; fixed Face/vertices unchanged, moved group shape preserved, no tangential recentering.
-- [ ] Bent moving groups, invalid anchors/shared-vertex conflicts and unsafe results reject without changing geometry/history; clear feedback.
+- [ ] Bent moving groups, warped anchors/shared-vertex conflicts and collapsing neighbours reject without changing geometry/history; reason stays visible. Shared boundary hinge works when fixed vertices can remain unchanged.
 - [ ] Success preserves Face selection, closes settings/returns puck, commits one Undo; Cancel changes neither geometry nor history.
 - [ ] Existing X/Y/Z Align, other radial tools, selection/navigation and protected transform/Loop Cut remain intact.

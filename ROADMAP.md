@@ -27,18 +27,16 @@ Face contextual batch. Preserve current passes. Add contextual access/pop-outs b
 reusing owners; remove redundant drawer UI only after its replacement passes.
 Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
-## Next /nextbuild — Align to Face (queued 2026-10-04)
+## Align to Face — v0.36.18.705
 
-User requested this as the next runtime build's content. It is planned, not yet
-implemented; current live release remains .704 and its hands-on checks remain pending.
-
-- Add **Align to Face** beside X/Y/Z inside the existing top-centre Align pop-out; no additional radial sector.
-- Select the moving Face(s) plus the intended fixed Face, choose Align to Face, then tap the selected Face that must stay fixed.
-- Support arbitrary Face orientation: rotate the remaining selected planar group together, then translate along the fixed Face's normal until coplanar with its plane. Preserve the moved group's shape; do not recenter tangentially or flatten a bent group.
-- Keep the fixed Face and its vertices unchanged. Start with a single moving planar Face or a coplanar moving group; reject unsupported/nonplanar cases with clear feedback and no geometry/history change.
-- One successful operation = one Undo. Preserve Face selection and return the puck through the existing completion semantic. Cancel performs no modelling operation; existing X/Y/Z behavior stays intact.
-- Before implementation, audit component-align/core and existing surface-transform/face-to-face owners. Reuse suitable authoritative maths and the existing anchor gesture owner; add no parallel viewport pointer listener. Audit shared-vertex conflicts and transactional validity before committing.
-- Keep scope narrow: this requested Face Align option takes priority over the remaining Face repair/settings audit. Resume Face → Vertex → Object → final Edge afterwards.
+Implemented in the existing top-centre Align pop-out beside X/Y/Z. Select moving
+planar Faces plus the fixed Face, choose Align to Face, then tap the selected fixed
+Face. Moving group rotates rigidly and translates along anchor normal; shared hinges
+work where anchor vertices remain fixed. Bent groups, warped anchors and unsafe
+surrounding geometry reject without mutation. Selection/puck and one-step Undo/Redo;
+no-op adds no history. Existing anchor owner/quaternion/health audit reused; no new
+radial sector or pointer owner. Hands-on pending. Resume Face gaps → Vertex → Object
+→ final Edge after this confirmation.
 
 ## Tool-session popup placement
 
@@ -183,7 +181,7 @@ Only add focused tools that suit BoxLab:
   - tapping the object restores the gizmo reliably
 - Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
-### Face contextual gap completion — .704
+### Face contextual gap completion — .705
 
 - .694 outer-ring Join/Circle and existing eight inner sectors are hands-on PASS and protected.
 - .695 Poke/Make Planar are hands-on PASS and protected.
@@ -196,6 +194,7 @@ Only add focused tools that suit BoxLab:
 - .702 removes Coplanar/Connected radial access and restores nine outer active tools; awaiting hands-on PASS.
 - .703 adds Close Holes / Quad Cleanup / Quadify N-gons through a top-centre whole-active-object Apply/Cancel panel, reusing existing owners. Successful rebuilding clears stale Face IDs; Cancel preserves selection. Hands-on pending.
 - .704 adds Clean Vertices to whole-object repair controls and Align to X/Y/Z anchor settings at top centre. Existing kernels reused; eight inner/fourteen outer tools. Hands-on pending; .702/.703 also remain pending.
+- .705 adds arbitrary-plane Align to Face in the existing Align pop-out; rigid planar group placement, fixed anchor, guarded candidate commit, one-step history. Hands-on pending.
 - Populate complete Face tool coverage before deciding inner/main vs outer/secondary placement. More is an accepted fallback if the completed two-ring layout is crowded.
 - Continue auditing remaining Face active-tool settings/repair access for contextual access/pop-outs before moving to Vertex, Object and final Edge.
 
