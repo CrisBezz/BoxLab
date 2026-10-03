@@ -2988,8 +2988,8 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .687: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
 
-- [ ] Workflow .688: ordinary quad Loop Cut matches pre-.685 behaviour
-- [ ] Workflow .688: Loop Slide direction/feel matches pre-.685 behaviour
+- [x] Workflow .688: ordinary quad Loop Cut matches pre-.685 behaviour
+- [x] Workflow .688: Loop Slide direction/feel matches pre-.685 behaviour
 - [ ] Workflow .688: multi-loop count remains correct
 - [ ] Workflow .688: single Add-vertex logical quad remains supported
 - [ ] Safety .688: unsupported complex screenshot topology refuses cleanly rather than creating malformed faces
