@@ -1,5 +1,20 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.678 radial Duplicate Faces restored
+
+- .677 Edge radial one-shot cleanup hands-on PASS.
+- Started Face-ring audit.
+- Extrude/Inset already return to puck; Shell/Sweep already have viewport sessions; Delete is a one-shot.
+- Found radial Duplicate sector pointing at #duplicateFacesBtn while the existing duplicate-faces.js owner was not loaded by index.html.
+- Restored the existing Duplicate owner instead of adding a new implementation.
+- Duplicate Faces retains existing semantics:
+  - copies selected Faces into a new object
+  - source unchanged
+  - enters Object mode
+- Added semantic completion event and Selection Hub handoff so the Object transform gizmo appears immediately on the new duplicate.
+- No duplicate topology kernel added.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.677 radial Edge one-shot hub cleanup
 
 - .676 guided radial Edge Bridge hands-on PASS.
