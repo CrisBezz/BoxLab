@@ -337,6 +337,8 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:45deg;--r:145px" data-tool-target="#componentCircleBtn">Circle</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90deg;--r:145px" data-tool-target="#pokeFacesBtn">Poke</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:135deg;--r:145px" data-tool-target="#makePlanarBtn">Make Planar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180deg;--r:145px" data-tool-target="#triangulateFacesBtn">Triangulate</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225deg;--r:145px" data-tool-target="#flipFacesBtn">Flip Faces</button>
   <button type="button" class="tg-tool-center" aria-label="Close Face contextual tools" title="Close tools">×</button>
 </div>
 <div class="tg-tool-ring" data-ring-mode="edge" aria-label="Edge contextual tools">
@@ -486,7 +488,7 @@ toolSectors.forEach(button=>{
       target.click();
       if(radialOffset)globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
       if(radialSlide)globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
-      if((mode==='edge'&&(toolLabel==='Dissolve'||toolLabel==='Delete'))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'))){
+      if((mode==='edge'&&(toolLabel==='Dissolve'||toolLabel==='Delete'))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'||toolLabel==='Triangulate'||toolLabel==='Flip Faces'))){
         queueMicrotask(()=>{
           hubSuppressedKey='';
           const mesh=state()?.mesh,current=currentMode();

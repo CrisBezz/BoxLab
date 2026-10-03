@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.695**.
+Current release: **v0.36.18.696**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -36,35 +36,36 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.695.
-- Parent checkpoint before .695: de5a42dc8a7edef27a8236137c5f2a90ce611657.
-- Find the .695 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owner: src/total-gizmo.js, repinned to .695; main.js code unchanged.
-- Release bootstrap/version logic unchanged; both repinned to .695 to satisfy the current release-owner contract.
+- Release: v0.36.18.696.
+- Parent checkpoint before .696: ed9c37900c930c7b9785aeeb9a333f3348fe033a.
+- Find the .696 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owner: src/total-gizmo.js, repinned to .696; main.js code unchanged.
+- Release bootstrap/version logic unchanged; both repinned to .696 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .695
+## Immediate hands-on checks — .696
 
-Confirm iPad visibly shows v0.36.18.695.
-1. Face puck → gizmo centre → tools: outer Poke and Make Planar added; previous sectors unchanged.
-2. Select a quad; Poke creates four selected triangles with a centre vertex and returns puck. One Undo restores the quad.
-3. Select several suitable Faces; Poke applies to the selection; one Undo restores it.
-4. Warp a quad by moving one Vertex, then select that Face: Make Planar flattens it and returns puck; one Undo restores the warp.
-5. Already planar/multiple Faces disable Make Planar. Join/Circle, centre close and selection/navigation remain intact.
+Confirm iPad visibly shows v0.36.18.696.
+1. Face tools: outer Triangulate and Flip Faces added; all previous sectors retained.
+2. Select a quad; Triangulate makes two selected triangles and returns puck. One Undo restores the quad.
+3. Select several quads; Triangulate affects selected Faces in one Undo step. Already-triangle selection disables it.
+4. Flip Faces reverses selected Face winding, preserves selection and returns puck; one Undo restores winding. Use the status readout / visible shading to confirm.
+5. Poke/Make Planar, ring close and navigation remain intact.
 
-.695 awaits hands-on PASS. User confirmed the complete .694 list PASS; protect the
-two-ring layout, Join/Circle one-shot completion and Undo. .692 checks remain pending.
-Primary sequence remains Face gaps → Vertex → Object → final Edge. User authorized
-two related additions per build; combine safely into one version with one test list.
+.696 awaits hands-on PASS. The user confirmed the complete .695 list PASS;
+protect Poke/Make Planar, their validation, selection, puck return and Undo.
+.694 two-ring Join/Circle remains protected; .692 checks remain pending.
+User authorized two related additions per build with one release/test list.
 
-## .695 action owner audit
+## .696 action owner audit
 
-Poke (#pokeFacesBtn, poke-faces.js) and Make Planar (#makePlanarBtn, make-planar.js)
-already load through face-workflow-layout.js. This build exposes those owners as
-outer-ring sectors at 90/135 degrees and extends existing one-shot puck cleanup.
-Existing validator/enabled state, topology/vertex edits, history and selection remain
-authoritative. No modelling kernel, tool session, settings panel or pointer owner
-added. Make Planar accepts one warped Face only; planar Faces are correctly disabled.
-Remaining Face Bridge and topology/repair actions still need narrow contextual batches.
+Triangulate (#triangulateFacesBtn, triangulate-faces.js) and Flip Faces
+(#flipFacesBtn, flip-faces.js) already load through face-workflow-layout.js.
+Outer sectors at 180/225 degrees proxy those buttons and extend existing one-shot
+puck cleanup. Triangulate preserves winding and selects result triangles; all-triangle
+selection is disabled. Flip Faces reverses selected winding and retains selection.
+Both retain authoritative validation and one-step history. No modelling owner,
+settings panel or pointer owner added. Remaining Face Bridge and orientation/repair
+controls still need contextual batches before Vertex, Object and final Edge.
 
 ## Two-ring design direction / .694 audit
 
@@ -122,6 +123,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .695 outer Poke/Make Planar, selection, disabled-state rules, puck return and one-step Undo: PASS.
 
 - .694 two-ring Face layout, direct Join/Circle, one-step Undo, disabled actions and ring close: PASS.
 

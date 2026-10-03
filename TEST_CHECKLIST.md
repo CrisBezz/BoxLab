@@ -3091,8 +3091,18 @@ Add new permanent regression checks below when future features need protection.
 - [x] Hands-on .694: full manual list PASS; protected two-ring Join/Circle workflow
 - [x] Static .695: Poke/Make Planar proxy existing loaded owners; previous sectors unchanged
 - [x] Protection .695: modelling/Undo owners and protected transform unchanged
-- [ ] Hands-on .695: visible .695; both additional outer buttons usable
-- [ ] Hands-on .695: single/multi-face Poke returns selected-result puck and one-step Undo
-- [ ] Hands-on .695: one warped Face Make Planar returns puck; one Undo restores warp
-- [ ] Hands-on .695: planar/multiple Faces disable Make Planar
-- [ ] Regression .695: Join/Circle, centre close and protected navigation remain intact
+- [x] Hands-on .695: visible .695; both additional outer buttons usable
+- [x] Hands-on .695: single/multi-face Poke returns selected-result puck and one-step Undo
+- [x] Hands-on .695: one warped Face Make Planar returns puck; one Undo restores warp
+- [x] Hands-on .695: planar/multiple Faces disable Make Planar
+- [x] Regression .695: Join/Circle, centre close and protected navigation remain intact
+
+
+## v0.36.18.696 — outer Face Triangulate / Flip Faces
+
+- [x] .695 full manual list confirmed PASS by user; protect Poke/Make Planar validation, selection, puck return and one-step Undo.
+- [ ] iPad visibly shows v0.36.18.696 before judging.
+- [ ] Triangulate/Flip Faces appear on outer ring; previous sectors remain accessible.
+- [ ] Quad Triangulate produces two selected triangles, restores puck and undoes in one step; multi-Face works and triangle-only selection disables action.
+- [ ] Flip Faces reverses selected winding, preserves selection, restores puck and undoes in one step.
+- [ ] Poke/Make Planar, close and persistent selection/navigation remain intact.

@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.696 outer Face Triangulate / Flip Faces
+
+- User confirmed the full .695 list PASS; Poke/Make Planar validation, selection, puck return and Undo are protected.
+- Audited existing triangulate-faces.js and flip-faces.js owners loaded by face-workflow-layout.js. Added outer sectors at 180/225 degrees, proxying their buttons and shared one-shot cleanup.
+- Triangulate selects result triangles and preserves winding; triangle-only selections remain disabled. Flip Faces reverses selected winding and preserves selection. Each uses existing one-step history.
+- No modelling kernels or pointer owners changed; all twelve prior Face sectors retained. Release markers and gizmo/refresh pins updated to .696.
+- Syntax and release-contract checks PASS; hands-on confirmation pending. Continue Face Bridge/orientation gaps before Vertex, Object and final Edge.
+
 ## 2026-10-03 — v0.36.18.695 outer Face Poke / Make Planar
 
 - User confirmed .694 full hands-on list PASS; two-ring Join/Circle layout and one-shot lifecycles protected. User requested continuing two additions per build.
