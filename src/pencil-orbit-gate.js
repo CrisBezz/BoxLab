@@ -20,6 +20,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   const earlyReleasedPointers = new Set();
   const physicalTouchContacts = new Set();
   const recentlyEndedTouchIds = [];
+  const penBackgroundTaps = new Map();
   const RECENT_TOUCH_LIMIT = 12;
   let orbitRegistrationDepth = 0;
 
@@ -44,6 +45,19 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
   function endPenContact(event){
     if(event.pointerType!=='pen')return;
+    const tap=penBackgroundTaps.get(event.pointerId);
+    if(tap){
+      penBackgroundTaps.delete(event.pointerId);
+      const moved=Math.hypot((event.clientX??tap.x)-tap.x,(event.clientY??tap.y)-tap.y);
+      if(event.type==='pointerup'&&!tap.orbitClaimed&&moved<8){
+        window.dispatchEvent(new CustomEvent('boxlab-pencil-background-tap',{detail:{
+          pointerId:event.pointerId,
+          clientX:event.clientX??tap.x,
+          clientY:event.clientY??tap.y
+        }}));
+        gestureDebug('PEN BACKGROUND TAP',{pid:event.pointerId,moved:Math.round(moved)});
+      }
+    }
     activePenContacts.delete(event.pointerId);
     if(pendingMeshOrbit?.pointerId===event.pointerId)pendingMeshOrbit=null;
   }
@@ -330,6 +344,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         const blocked=!!meshHit;
         const modellingToolActive=faceToolActive||mainDirectActive;
         const deferred=blocked&&!modellingToolActive;
+        if(!blocked&&!modellingToolActive){
+          penBackgroundTaps.set(event.pointerId,{x:event.clientX,y:event.clientY,orbitClaimed:false});
+        }
         gestureDebug('PEN ORBIT ROUTE',{
           pid:event.pointerId,
           pressure:event.pressure,
@@ -386,7 +403,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
   };
 
   globalThis.__boxlabPencilOrbitGate={
-    version:'0.36.18.675',
+    version:'0.36.18.681',
     beginOrbitRegistration,
     endOrbitRegistration,
     registrationDepth:()=>orbitRegistrationDepth
