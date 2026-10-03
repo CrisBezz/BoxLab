@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.699 contextual Extrude / Inset settings
+
+- User confirmed .698 full list PASS; Face Bridge session, fresh puck, ring spacing and centred × protected.
+- Audited precision-face and repeat-face-previous owners. New viewport settings proxy exposes Exact/Repeat/Done from radial Extrude/Inset; delegates existing APIs and mirrors readout/availability.
+- Done ends existing Repeat/direct arming and uses shared Face completion; another radial command hides settings without resetting its lifecycle. No geometry/history/precision kernel or viewport pointer owner changed.
+- Ring layout unchanged; drawer controls retained until hands-on PASS. 10 targeted proxy/Bridge lifecycle/release checks PASS.
+- Release .699 markers, gizmo/new proxy and refresh pins updated; Bridge pins retained .698. Continue remaining Face helper/repair/settings audit before Vertex, Object and final Edge.
+
+
 ## 2026-10-03 — v0.36.18.698 radial Face Bridge preview and centred close
 
 - User confirmed .697 full list PASS; orientation workflows protected. Requested centre × alignment included.

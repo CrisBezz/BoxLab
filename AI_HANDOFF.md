@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.698**.
+Current release: **v0.36.18.699**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -36,41 +36,40 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.698.
-- Parent checkpoint before .698: b3e4e376ddbb643072d839db6339288d655846c3.
-- Find the .698 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed owners: total-gizmo.js, face-bridge-preview.js and new selection-hub-face-bridge-session.js; all pinned to .698. main.js code unchanged.
-- Release bootstrap/version logic unchanged; both repinned to .698 to satisfy the current release-owner contract.
+- Release: v0.36.18.699.
+- Parent checkpoint before .699: f5e27b9c531fbe4108c7b6d9180b0eb4dfe99200.
+- Find the .699 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed owners: total-gizmo.js and new selection-hub-face-value-session.js pinned to .699; Bridge owner/proxy retain .698. main.js code unchanged.
+- Release bootstrap/version logic unchanged; both repinned to .699 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .698
+## Immediate hands-on checks — .699
 
-Confirm iPad visibly shows v0.36.18.698.
-1. Face ring: Bridge appears on the outer ring; nine outer sectors now use 40° spacing. Eight inner positions unchanged. Centre × is centred with explicit sizing/padding.
-2. On one mesh select two separate, equal-sided Faces suitable for Bridge (for example opposite cube Faces); radial Bridge opens a viewport preview panel with Next / Use Bridge / Cancel.
-3. Next cycles previews without committing. Cancel restores the original Faces and selection and returns puck.
-4. Use Bridge commits once, clears selection and closes the panel; one Undo restores original geometry. A fresh Face tap gets a fresh puck.
-5. Invalid/adjacent Face selections disable Bridge. Close × alignment, previous Face tools, protected Edge Bridge and navigation remain intact.
+Confirm iPad visibly shows v0.36.18.699.
+1. Radial Extrude opens nearby Exact / Repeat / Done controls. Apply a small positive model-unit value; selected Faces extrude and one Undo restores geometry.
+2. Radial Inset opens the same controls labelled Inset. Apply a small positive value; inset works and one Undo restores geometry.
+3. Drag normally; last-value readout updates. Repeat toggles the existing repeat workflow; Face taps repeat the captured operation. Tap Repeat again to turn it off.
+4. Done closes the panel, disarms Repeat/current Face tool and returns puck if selected Faces survive. Normal Face taps/navigation work again.
+5. Switching to another radial tool closes settings without disturbing that tool; Bridge, Shell/Sweep, centred × and prior sectors remain intact.
 
-.698 awaits hands-on PASS. User confirmed the complete .697 list PASS;
-protect Orient Faces/Outward, enabled-state rules, no-change feedback, puck and Undo.
-.696/.695/.694 remain protected; .692 checks remain pending.
+.699 awaits hands-on PASS. User confirmed the complete .698 list PASS;
+protect Face Bridge Next/Use/Cancel, Undo, fresh puck, nine-sector spacing and centred ×.
+.697/.696/.695/.694 remain protected; .692 checks remain pending.
 
-## .698 Face Bridge owner audit
+## .699 precision/settings owner audit
 
-face-bridge-preview.js already owns preview creation/cycling/restore/history.
-Added a read-only state API and semantic preview-change/completion events to that
-owner. New selection-hub-face-bridge-session.js only proxies its existing Next,
-Use and Cancel controls. Completion is emitted after final selection cleanup so
-stopImmediatePropagation cannot hide it. Total Gizmo consumes shared Face completion,
-keeps the hub hidden during active previews and adds the Bridge sector.
-All previous targets/labels retained; outer ring redistributed to nine 40° sectors.
-Inner ring and Edge owners unchanged. Centre close button uses zero padding/margin,
-explicit minimum height and flex centring per user observation.
-7 targeted lifecycle/release tests PASS: cycle/cancel rollback, single-history commit,
-completion after selection cleanup and release contracts. No modelling kernel changed.
-Face coverage still requires remaining settings/selection/repair audit before moving
-to Vertex, Object and final Edge. User permits paired additions, but Bridge plus its
-preview controls are one focused session build.
+precision-face.js (loaded by drawer-ui.js) already owns exact values and committed
+readback; repeat-face-previous.js already owns repeat arming and Face-tap replay.
+New selection-hub-face-value-session.js opens only from radial Extrude/Inset and
+calls their existing applyFor/arm/disarm APIs. Its readout/repeat availability mirrors
+the drawer controls. Done clicks the current authoritative tool off, clears suspended
+arming and emits the shared Face completion semantic. No geometry, precision maths,
+history kernel or viewport pointer owner added. Ring assignments unchanged.
+10 targeted proxy/lifecycle/release tests PASS. Proxy tests verify tool/value delegation,
+Done disarming and completion, disabled exact with no selection, and hiding on another
+radial command without resetting that command. Existing Bridge tests remain PASS.
+Remaining Face coverage: audit selection helpers, Inspect/Repair/topology commands
+and contextual transform/settings coverage; then Vertex, Object, final Edge.
+Keep existing drawer controls until their contextual replacements pass hands-on.
 
 ## Two-ring design direction / .694 audit
 
@@ -128,6 +127,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .698 Face Bridge viewport preview/Next/Use/Cancel, Undo, fresh puck and centred ×: PASS.
 
 - .697 Orient Faces/Orient Outward, validation, no-change feedback, selection/puck and one-step Undo: PASS.
 

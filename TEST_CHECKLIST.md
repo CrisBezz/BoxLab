@@ -3123,8 +3123,19 @@ Add new permanent regression checks below when future features need protection.
 
 - [x] .697 full manual list PASS; orientation tools protected.
 - [x] Automated: cycling adds no history; cancel restores mesh/selection; commit adds one history and emits completion after selection cleanup.
-- [ ] Visible .698; nine outer tools accessible; centre × aligned on puck.
-- [ ] Compatible two-Face Bridge opens nearby Next/Use Bridge/Cancel controls; Next cycles.
-- [ ] Cancel restores original Faces/selection and puck without history.
-- [ ] Use commits once, closes panel and clears selection; Undo restores; next Face tap gets puck.
-- [ ] Invalid selections disable Bridge; prior Face tools, protected Edge Bridge and navigation intact.
+- [x] Visible .698; nine outer tools accessible; centre × aligned on puck.
+- [x] Compatible two-Face Bridge opens nearby Next/Use Bridge/Cancel controls; Next cycles.
+- [x] Cancel restores original Faces/selection and puck without history.
+- [x] Use commits once, closes panel and clears selection; Undo restores; next Face tap gets puck.
+- [x] Invalid selections disable Bridge; prior Face tools, protected Edge Bridge and navigation intact.
+
+
+## v0.36.18.699 — radial Extrude / Inset exact and repeat controls
+
+- [x] .698 full hands-on list PASS; Face Bridge lifecycle and centred × protected.
+- [x] Automated: exact tool/value delegates to existing owner; no-selection disables exact; Repeat/Done delegate/disarm; another radial tool keeps its lifecycle.
+- [ ] Visible .699; radial Extrude/Inset each open correctly labelled nearby settings.
+- [ ] Small exact Extrude and Inset values affect selected Faces and each Undo in one step.
+- [ ] Normal drag updates last-value readout; Repeat toggles and replays existing Face-tap operation.
+- [ ] Done closes settings, disarms Repeat/tool, returns surviving-selection puck; normal selection/navigation work.
+- [ ] Other radial tools close settings; Bridge, Shell/Sweep, prior sectors and centred × remain intact.

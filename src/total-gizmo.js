@@ -523,7 +523,7 @@ toolButtons.forEach(button=>button.addEventListener('click',()=>{
 window.addEventListener('boxlab-selection-hub-session-complete',event=>{
   if(event.detail?.mode!=='face')return;
   const tool=event.detail?.tool;
-  if(!['Knife','Shell','Sweep','Bridge'].includes(tool))return;
+  if(!['Knife','Shell','Sweep','Bridge','Extrude','Inset'].includes(tool))return;
   hubSuppressedKey='';
   resetTransientState?.({hideFloat:true});
   const mesh=state()?.mesh,current=currentMode();
