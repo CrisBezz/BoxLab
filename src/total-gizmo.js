@@ -459,10 +459,13 @@ toolSectors.forEach(button=>{
     const radialCrease=mode==='edge'&&toolLabel==='Crease';
     const radialOffset=mode==='edge'&&toolLabel==='Offset';
     const radialSlide=mode==='edge'&&toolLabel==='Slide';
-    const radialSession=radialCrease||radialOffset||radialSlide;
+    const radialBridge=mode==='edge'&&toolLabel==='Bridge';
+    const radialSession=radialCrease||radialOffset||radialSlide||radialBridge;
     const launchIds=radialSession?[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]:null;
     if(radialCrease){
       globalThis.__boxlabCreaseViewportSession?.openFromHub?.({ids:launchIds});
+    }else if(radialBridge){
+      globalThis.__boxlabBridgeUI?.bridgeEdgesFromHub?.({ids:launchIds});
     }else{
       target.click();
       if(radialOffset)globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
@@ -484,6 +487,18 @@ window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(syncContextTool
 document.addEventListener('click',()=>queueMicrotask(syncContextToolAvailability),true);
 document.addEventListener('pointerup',()=>queueMicrotask(syncContextToolAvailability),true);
 syncContextToolAvailability();
+
+window.addEventListener('boxlab-bridge-complete',event=>{
+  if(event.detail?.source!=='selection-hub-edge'||!event.detail?.selected)return;
+  requestAnimationFrame(()=>{
+    const s=state(),mesh=s?.mesh,mode=currentMode();
+    if(mode!=='face'||!selectionAvailable(mesh,mode))return;
+    hubSuppressedKey='';
+    setHubState('closed',{reason:'bridge-complete'});
+    root.hidden=false;
+    gestureDebug('SELECTION HUB RESTORE',{tool:'Bridge',mode:'face',count:event.detail?.created?.length||0});
+  });
+});
 
 document.addEventListener('boxlab-face-direct-committed',event=>{
   const tool=event.detail?.tool;
@@ -850,5 +865,5 @@ globalThis.__boxlabTotalGizmo={
     return true;
   },
   edgeExtrudeConstraintSession:()=>edgeExtrudeConstraintSession,
-  version:'0.36.18.672'
+  version:'0.36.18.676'
 };
