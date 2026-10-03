@@ -65,6 +65,13 @@ function controls(){
   ok.addEventListener('click',confirmPreview,true);cancel.addEventListener('click',cancelPreview,true);
   return wrap;
 }
+function notifyPreview(){
+  window.dispatchEvent(new CustomEvent('boxlab-face-bridge-preview-change',{detail:{active:!!session,index:session?.index??0,count:session?.plans?.length||0}}));
+}
+function completePreview(){
+  notifyPreview();
+  window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{tool:'Bridge',mode:'face'}}));
+}
 function showControls(show){const w=controls();if(w)w.style.display=show?'grid':'none';}
 function applyPreview(index){
   if(!session)return false;
@@ -77,6 +84,7 @@ function applyPreview(index){
   selection()?.set?.('face',session.previewFaceIndices);
   bridgeButton.textContent='Next';bridgeButton.classList.add('active');showControls(true);render();
   if(status)status.textContent=`Bridge preview ${index+1}/${plans.length} • tap Next to cycle • ✓ Use to commit`;
+  notifyPreview();
   return true;
 }
 function startPreview(event){
@@ -101,13 +109,14 @@ function confirmPreview(event){
   selection()?.set?.('face',[]);
   document.querySelector('#deselectAllBtn')?.click();
   render();
-  queueMicrotask(()=>selection()?.set?.('face',[]));
+  queueMicrotask(()=>{selection()?.set?.('face',[]);completePreview();});
   if(status)status.textContent=`Bridge created • ${count} quads • selection cleared`;
 }
 function cancelPreview(event){
   if(!session)return;event?.preventDefault?.();event?.stopImmediatePropagation?.();
   const {m,before,faceIndices}=session;restore(m,before);session=null;selection()?.set?.('face',faceIndices);finishUI();render();
   if(status)status.textContent='Bridge preview cancelled';
+  completePreview();
 }
 
 document.addEventListener('click',event=>{
@@ -120,3 +129,9 @@ document.addEventListener('click',event=>{
   if(!session||event.target?.closest?.('#bridgeFacesBtn,#bridgePreviewControls'))return;
   if(event.target?.closest?.('#deselectAllBtn,#selectionModes,#deleteFaceBtn,#extractFacesBtn'))cancelPreview(event);
 },true);
+
+// Expose lifecycle state only; the existing preview/history owner remains authoritative.
+globalThis.__boxlabFaceBridgePreview={
+  active:()=>!!session,
+  state:()=>({active:!!session,index:session?.index??0,count:session?.plans?.length||0})
+};

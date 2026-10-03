@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.697**.
+Current release: **v0.36.18.698**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -36,39 +36,41 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.697.
-- Parent checkpoint before .697: a1d8f65a99452feea7df20605fc64982a5c7a19f.
-- Find the .697 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owner: src/total-gizmo.js, repinned to .697; main.js code unchanged.
-- Release bootstrap/version logic unchanged; both repinned to .697 to satisfy the current release-owner contract.
+- Release: v0.36.18.698.
+- Parent checkpoint before .698: b3e4e376ddbb643072d839db6339288d655846c3.
+- Find the .698 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed owners: total-gizmo.js, face-bridge-preview.js and new selection-hub-face-bridge-session.js; all pinned to .698. main.js code unchanged.
+- Release bootstrap/version logic unchanged; both repinned to .698 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .697
+## Immediate hands-on checks — .698
 
-Confirm iPad visibly shows v0.36.18.697.
-1. Face tools: outer Orient Faces / Orient Outward added; previous fourteen sectors retained.
-2. Flip one cube Face, select that Face and a neighbouring correctly wound Face; Orient Faces makes the patch consistent, keeps selection and returns puck. One Undo restores the mismatch. The existing owner uses the lowest Face index as the winding seed.
-3. Select all cube Faces after flipping one; Orient Outward restores an outward closed shell, keeps selection and returns puck. One Undo restores the mismatch.
-4. One Face disables Orient Faces; an incomplete/open shell disables Orient Outward. Already-correct eligible selections report no change without adding history and return puck.
-5. Triangulate/Flip Faces, ring close and navigation remain intact; inspect spacing near viewport edges.
+Confirm iPad visibly shows v0.36.18.698.
+1. Face ring: Bridge appears on the outer ring; nine outer sectors now use 40° spacing. Eight inner positions unchanged. Centre × is centred with explicit sizing/padding.
+2. On one mesh select two separate, equal-sided Faces suitable for Bridge (for example opposite cube Faces); radial Bridge opens a viewport preview panel with Next / Use Bridge / Cancel.
+3. Next cycles previews without committing. Cancel restores the original Faces and selection and returns puck.
+4. Use Bridge commits once, clears selection and closes the panel; one Undo restores original geometry. A fresh Face tap gets a fresh puck.
+5. Invalid/adjacent Face selections disable Bridge. Close × alignment, previous Face tools, protected Edge Bridge and navigation remain intact.
 
-.697 awaits hands-on PASS. User confirmed the complete .696 list PASS; protect
-Triangulate/Flip Faces, disabled-state rules, selection, puck return and Undo.
-.695 and .694 remain protected; .692 checks remain pending.
-User authorized two related additions per build with one release/test list.
+.698 awaits hands-on PASS. User confirmed the complete .697 list PASS;
+protect Orient Faces/Outward, enabled-state rules, no-change feedback, puck and Undo.
+.696/.695/.694 remain protected; .692 checks remain pending.
 
-## .697 action owner audit
+## .698 Face Bridge owner audit
 
-Orient Faces (#orientFacesBtn, orient-faces.js) and Orient Outward
-(#orientShellOutwardBtn, orient-shell-outward.js) already load through
-face-workflow-layout.js. Outer sectors at 270/315 degrees proxy those buttons and
-extend shared one-shot puck cleanup, including eligible no-change actions.
-Orient Faces requires one connected patch of at least two Faces and preserves the
-lowest-index seed winding; it does not promise outward winding. Orient Outward
-requires every Face of one closed manifold shell and uses signed volume.
-Both retain owner validation, selected Face ids and one-step history for changes.
-No modelling/session/pointer owner changed. Eight inner and eight outer tools are
-now present; assignments remain provisional. Bridge preview and remaining Face
-settings/selection/repair access still need an audit before declaring Face complete.
+face-bridge-preview.js already owns preview creation/cycling/restore/history.
+Added a read-only state API and semantic preview-change/completion events to that
+owner. New selection-hub-face-bridge-session.js only proxies its existing Next,
+Use and Cancel controls. Completion is emitted after final selection cleanup so
+stopImmediatePropagation cannot hide it. Total Gizmo consumes shared Face completion,
+keeps the hub hidden during active previews and adds the Bridge sector.
+All previous targets/labels retained; outer ring redistributed to nine 40° sectors.
+Inner ring and Edge owners unchanged. Centre close button uses zero padding/margin,
+explicit minimum height and flex centring per user observation.
+7 targeted lifecycle/release tests PASS: cycle/cancel rollback, single-history commit,
+completion after selection cleanup and release contracts. No modelling kernel changed.
+Face coverage still requires remaining settings/selection/repair audit before moving
+to Vertex, Object and final Edge. User permits paired additions, but Bridge plus its
+preview controls are one focused session build.
 
 ## Two-ring design direction / .694 audit
 
@@ -126,6 +128,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .697 Orient Faces/Orient Outward, validation, no-change feedback, selection/puck and one-step Undo: PASS.
 
 - .696 outer Triangulate/Flip Faces, selection, triangle-only disabled state, puck return and one-step Undo: PASS.
 

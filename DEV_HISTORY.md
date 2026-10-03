@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.698 radial Face Bridge preview and centred close
+
+- User confirmed .697 full list PASS; orientation workflows protected. Requested centre × alignment included.
+- Audited existing Face Bridge preview owner. Added state API and semantic lifecycle events; viewport proxy forwards existing Next/Use/Cancel without another modelling kernel.
+- Radial Bridge extends outer ring to nine evenly spaced sectors; inner eight and all previous tool targets retained. Hub stays hidden during preview; Cancel returns selected original puck; Use clears selection, completion clears stale suppression.
+- Centre × overrides inherited generic button padding/min-height and flex-centres content.
+- 7 targeted lifecycle/release tests PASS. Release markers and changed owner/proxy/refresh pins updated to .698. Protected Edge Bridge, transform and Loop Cut owners untouched. Hands-on checks pending.
+
+
 ## 2026-10-03 — v0.36.18.697 outer Face orientation tools
 
 - User confirmed .696 full manual list PASS; Triangulate/Flip Faces selection, disabled state, puck return and Undo protected.

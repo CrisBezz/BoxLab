@@ -3111,9 +3111,20 @@ Add new permanent regression checks below when future features need protection.
 ## v0.36.18.697 — outer Face orientation tools
 
 - [x] .696 full hands-on list PASS; protect Triangulate/Flip Faces.
-- [ ] iPad visibly shows .697; Orient Faces/Orient Outward and previous sectors accessible.
-- [ ] Connected patch with mixed winding becomes consistent; selection/puck return; one Undo restores mismatch.
-- [ ] Complete closed shell with mixed winding becomes outward; selection/puck return; one Undo restores mismatch.
-- [ ] Single Face / incomplete shell correctly disable the respective tools.
-- [ ] Already-correct eligible actions report no change, return puck and add no history.
-- [ ] Ring close, prior tools, navigation and viewport-edge spacing remain intact.
+- [x] iPad visibly shows .697; Orient Faces/Orient Outward and previous sectors accessible.
+- [x] Connected patch with mixed winding becomes consistent; selection/puck return; one Undo restores mismatch.
+- [x] Complete closed shell with mixed winding becomes outward; selection/puck return; one Undo restores mismatch.
+- [x] Single Face / incomplete shell correctly disable the respective tools.
+- [x] Already-correct eligible actions report no change, return puck and add no history.
+- [x] Ring close, prior tools, navigation and viewport-edge spacing remain intact.
+
+
+## v0.36.18.698 — radial Face Bridge preview / centre close
+
+- [x] .697 full manual list PASS; orientation tools protected.
+- [x] Automated: cycling adds no history; cancel restores mesh/selection; commit adds one history and emits completion after selection cleanup.
+- [ ] Visible .698; nine outer tools accessible; centre × aligned on puck.
+- [ ] Compatible two-Face Bridge opens nearby Next/Use Bridge/Cancel controls; Next cycles.
+- [ ] Cancel restores original Faces/selection and puck without history.
+- [ ] Use commits once, closes panel and clears selection; Undo restores; next Face tap gets puck.
+- [ ] Invalid selections disable Bridge; prior Face tools, protected Edge Bridge and navigation intact.

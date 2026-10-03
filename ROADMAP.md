@@ -158,14 +158,15 @@ Only add focused tools that suit BoxLab:
   - tapping the object restores the gizmo reliably
 - Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
-### Face contextual gap completion — .697
+### Face contextual gap completion — .698
 
 - .694 outer-ring Join/Circle and existing eight inner sectors are hands-on PASS and protected.
 - .695 Poke/Make Planar are hands-on PASS and protected.
 - .696 Triangulate/Flip Faces are hands-on PASS and protected.
-- .697 adds existing Orient Faces/Orient Outward to the two remaining outer slots; awaiting hands-on PASS. User authorized two related additions per build.
+- .697 Orient Faces/Orient Outward are hands-on PASS and protected.
+- .698 adds radial Face Bridge and viewport Next/Use/Cancel proxy, nine-sector outer spacing and requested centre × alignment; awaiting hands-on PASS.
 - Populate complete Face tool coverage before deciding inner/main vs outer/secondary placement. More is an accepted fallback if the completed two-ring layout is crowded.
-- Continue auditing Face Bridge and remaining orientation/repair actions for contextual access/pop-outs before moving to Vertex, Object and final Edge.
+- Continue auditing remaining Face settings/selection/repair access for contextual access/pop-outs before moving to Vertex, Object and final Edge.
 
 ## Strengthening list
 

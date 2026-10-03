@@ -334,13 +334,14 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteFaceBtn">Delete</button>
   <div class="tg-face-outer-guide" aria-hidden="true"></div>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:145px" data-tool-target="#joinSelectedCoplanarFacesBtn">Join Coplanar</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:45deg;--r:145px" data-tool-target="#componentCircleBtn">Circle</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90deg;--r:145px" data-tool-target="#pokeFacesBtn">Poke</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:135deg;--r:145px" data-tool-target="#makePlanarBtn">Make Planar</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180deg;--r:145px" data-tool-target="#triangulateFacesBtn">Triangulate</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225deg;--r:145px" data-tool-target="#flipFacesBtn">Flip Faces</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270deg;--r:145px" data-tool-target="#orientFacesBtn">Orient Faces</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:315deg;--r:145px" data-tool-target="#orientShellOutwardBtn">Orient Outward</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:40deg;--r:145px" data-tool-target="#componentCircleBtn">Circle</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:80deg;--r:145px" data-tool-target="#pokeFacesBtn">Poke</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:120deg;--r:145px" data-tool-target="#makePlanarBtn">Make Planar</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:160deg;--r:145px" data-tool-target="#triangulateFacesBtn">Triangulate</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:200deg;--r:145px" data-tool-target="#flipFacesBtn">Flip Faces</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:240deg;--r:145px" data-tool-target="#orientFacesBtn">Orient Faces</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:280deg;--r:145px" data-tool-target="#orientShellOutwardBtn">Orient Outward</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:320deg;--r:145px" data-tool-target="#bridgeFacesBtn">Bridge</button>
   <button type="button" class="tg-tool-center" aria-label="Close Face contextual tools" title="Close tools">×</button>
 </div>
 <div class="tg-tool-ring" data-ring-mode="edge" aria-label="Edge contextual tools">
@@ -522,7 +523,7 @@ toolButtons.forEach(button=>button.addEventListener('click',()=>{
 window.addEventListener('boxlab-selection-hub-session-complete',event=>{
   if(event.detail?.mode!=='face')return;
   const tool=event.detail?.tool;
-  if(!['Knife','Shell','Sweep'].includes(tool))return;
+  if(!['Knife','Shell','Sweep','Bridge'].includes(tool))return;
   hubSuppressedKey='';
   resetTransientState?.({hideFloat:true});
   const mesh=state()?.mesh,current=currentMode();
@@ -743,7 +744,7 @@ style.textContent=`
 #totalGizmo .tg-tool-outer{width:86px;margin-left:-43px;transform:rotate(var(--a)) translateY(calc(-1 * var(--r))) rotate(calc(-1 * var(--a)))}
 #totalGizmo .tg-tool-sector:active{background:rgba(238,242,247,.92);color:#111318}
 #totalGizmo .tg-tool-danger{border-color:rgba(255,110,110,.48)}
-#totalGizmo .tg-tool-center{position:absolute;left:50%;top:50%;width:30px;height:30px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.7);border-radius:50%;background:rgba(12,14,18,.96);color:#eef2f7;font-size:18px;line-height:1;pointer-events:auto;touch-action:none}
+#totalGizmo .tg-tool-center{position:absolute;left:50%;top:50%;width:30px;height:30px;min-height:30px;margin:0;padding:0;display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.7);border-radius:50%;background:rgba(12,14,18,.96);color:#eef2f7;font-size:18px;line-height:1;pointer-events:auto;touch-action:none}
 #totalGizmo .tg-handle{pointer-events:stroke;fill:none;stroke-width:1.15;vector-effect:non-scaling-stroke;transition:opacity .09s,stroke-width .09s,filter .09s}
 #totalGizmo .tg-axis{stroke-width:1.35;pointer-events:stroke}
 #totalGizmo .tg-head{pointer-events:none;opacity:.92}
@@ -963,7 +964,7 @@ function sync(){
   floatPalette.style.left=`${selectionLeft}px`;
   floatPalette.style.top=`${selectionTop}px`;
   const suppressed=['face','edge'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
-  root.hidden=suppressed||(mode==='object'&&objectTransformDismissed);
+  root.hidden=suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&!!globalThis.__boxlabFaceBridgePreview?.active?.());
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;
