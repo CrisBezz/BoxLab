@@ -4670,3 +4670,13 @@ For exact implementation state, always inspect current `main`; this history is c
 - Eight inner unchanged; fifteen outer at 220px/24 degrees; no outer/outer or outer/inner rectangle overlap. Fixed disabled-Vertex-target dispatch for scoped Face Merge so launch can edit tolerance with no current candidates. Protected Align/transform/Loop Cut untouched.
 - 55 targeted checks PASS; full suite 1139 tests, 854 PASS, identical 285 failure names to .705, no new failures. Syntax/diff checks PASS. All .706 markers and changed dynamic child/parent pins updated.
 - Next: .706 hands-on confirmation, finish Face active-tool/settings inventory, then Vertex → Object → final Edge. No selection commands, broad gestures, strengthening or wholesale drawer removal.
+
+
+## 2026-10-04 — v0.36.18.707 Face radial Bevel
+
+- User requests Edge Bevel from Face selection; .706 hands-on remains pending, no implied PASS.
+- Audited direct-bevel/selection-hub-bevel-session and existing bevel selection/perimeter routing/face-region boundary owner. Added Face Bevel sector and shared top-centre Width/Segments/Apply Exact/Cancel; no duplicate kernel, new pointer owner or mode hop.
+- One Face boundary or simple connected selected region outside boundary maps to existing Edge IDs; excludes internal shared edges and validates through existing engine. Current topology limits retained; disconnected/no-boundary/open/unsupported sets unavailable.
+- Existing direct controller's capture handlers now own Face picking/preview/commit/cancel; same horizontal width/segments maths and generalBevelSelection. Face context/lock guards, snapshot rollback, restored capture/navigation controls, one successful History step, cleared stale Face IDs and semantic completion/fresh puck. Cancel preserves original selected Faces; popup capture cannot prematurely disarm Face exact apply. Protected Edge paths covered with actual integration tests.
+- Eight inner unchanged, sixteen outer at230px/22.5°; no button rectangle overlap. 56 targeted tests PASS; full suite1149 tests/864 PASS, identical285 failure names to .706; no new failures. Syntax/diff PASS. Release/changed owner/session/gizmo pins .707; protected topology/transform/frozen betas unchanged.
+- Next: hands-on .707/pending .706; finish Face inventory/settings → Vertex → Object → final Edge. No unrelated work or selection helpers in rings.

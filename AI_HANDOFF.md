@@ -9,8 +9,8 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.706**.
-Current focus: hands-on Face radial Merge by Distance confirmation; then finish Face audit → Vertex → Object → final Edge.
+Current release: **v0.36.18.707**.
+Current focus: hands-on Face radial Bevel confirmation; then finish Face audit → Vertex → Object → final Edge.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
 is still the priority. Follow Face → Vertex → Object → final Edge, not broad gestures.
@@ -40,16 +40,65 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 ## Current repository state
 
-- Repository: CrisBezz/BoxLab, branch main.
-- Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.706; parent .705 checkpoint c4931014.
-- Find the .706 runtime/documentation commit in main history; no self-referential SHA.
-- Changed modules/pins: total-gizmo, face-repair-viewport, merge-by-distance,
-  select-mergeable-verts, face-workflow-layout and drawer-ui .706.
-- Release markers and main-loader/refresh pins .706; refresh logic unchanged.
-- Align owners/pins remain .705; dock/session helper .700; protected transform .1.0.
+- Repository: CrisBezz/BoxLab, branch main; live https://crisbezz.github.io/BoxLab/.
+- Release: v0.36.18.707; parent .706 checkpoint aef2bcb5.
+- Find .707 runtime/documentation commit in main history; no self-referential SHA.
+- Changed modules/pins: direct-bevel, selection-hub-bevel-session, total-gizmo .707.
+- Release markers/main-loader/refresh pins .707; refresh logic unchanged.
+- Repair/drawer/dynamic loader pins .706; Align .705; shared dock .700.
+- Protected multi-object-transform .1.0 and topology kernels untouched.
 
-## Immediate hands-on checks — .706
+## Immediate hands-on checks — .707
+
+1. Confirm iPad visibly shows v0.36.18.707. Select a cube Face → radial Bevel; Face Bevel Width/Segments/Apply Exact/Cancel at top centre, stay Face mode.
+2. Pencil-drag selected Face horizontally: perimeter previews/commits; one Undo/Redo restores/repeats. Segments 1 chamfers; multiple segments round as existing Edge Bevel.
+3. Apply Exact gives same perimeter bevel; selection clears, next Face tap gets fresh puck. One Undo restores.
+4. Cancel before applying preserves original geometry/Face selection/puck; cancelled preview restores original mesh with no history. Background orbit/pan/zoom work.
+5. Connected selected Faces bevel only their outside boundary where existing Edge engine supports it. Protected Edge Bevel drag/exact/Cancel and previous Face tools remain correct; sixteen outer sectors/centre close usable.
+
+.707 awaits hands-on PASS. .706 also remains pending: no explicit PASS received.
+.702/.703/.704 pending checks retained; .705 full manual list remains protected PASS.
+
+## .707 Face Bevel owner audit / implementation
+
+User requested same Edge bevel from Face selection. Existing bevel-selection and
+perimeter routing already handle cube-Face boundary cycles; face-region already
+owns connected region boundary enumeration. No bevel kernel changes or new raw
+pointer owner. Direct Bevel now resolves one Face boundary, or faceRegionInfo's
+simple connected region outer boundary, to authoritative Edge IDs and validates
+through generalBevelSelectionInfo. Internal shared selected edges are excluded.
+Disconnected regions, complete shells/no boundary, open or unsupported perimeter
+sets stay unavailable according to the current Edge engine; strengthening deferred.
+
+Face radial sector dispatches semantic Bevel launch, without clicking Edge-mode
+button. Shared Bevel viewport session arms new Face context in same direct controller,
+uses existing Width/Segments proxies and exact commit, and prompts dragging a selected
+Face. Existing four canvas handlers own Face picking/preview/commit/cancel. Face mode
+and selection remain during session; no Multi changes on launch. Transform/Face direct
+suspension/exclusivity reused. Popup button capture explicitly preserves Face owner
+until Apply/Cancel, avoiding document-capture disarm before exact execution.
+
+Face preview recomputes from snapshot using unchanged generalBevelSelection. Owner
+restores failed/cancelled preview, controls enabled state and pointer capture; no
+history until successful release/exact. One successful history step, stale Face IDs
+cleared and shared completion emitted so next tap gets puck. Cancel preserves Face
+selection. Mesh/mode/selection/lock guards block wrong-context apply; new radial tool
+hides old controls without completing new tool lifecycle. Edge branch retains existing
+selection/geometry/history behavior, covered with actual drag/exact integration tests.
+
+Ring: eight inner unchanged; sixteen outer at 230px/22.5 degrees, guide460px.
+No outer/outer or outer/inner rectangle overlap. 56 targeted checks PASS, including
+actual installed bevel stack, region boundary, chamfer/rounded Edge-geometry parity,
+preview rollback, one Undo/Redo, cancelled/locked/changed context, semantic dispatch,
+protected Edge drag/exact and nearby Face/repair/dock/session/release checks. Full
+suite 1149 tests, 864 PASS, identical 285 failure names to .706; no new failures.
+Syntax/diff checks PASS. Protected topology, transform and frozen betas unchanged.
+
+Next: .707 and pending .706 hands-on confirmation; finish Face inventory/settings
+before claiming completion, then Vertex → Object → final Edge. No radial selection
+helpers, broader gestures, topology strengthening or bulk drawer removal.
+
+## Retained hands-on checks — .706
 
 1. Confirm iPad visibly shows v0.36.18.706. Face ring has Merge Dist; prior tools and centred × usable.
 2. Merge Dist opens top-centre Merge by Distance controls with whole-active-object scope and exact model-unit distance. Adjusting distance changes readiness; no geometry on launch/edit.

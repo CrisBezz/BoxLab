@@ -3215,3 +3215,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Cancel retains original Face selection/puck and geometry/history.
 - [ ] Apply on eligible ordinary mesh welds once without mode hop; clears stale Face IDs, next tap fresh puck; one Undo/Redo restores/repeats geometry.
 - [ ] Invalid distance/no safe clusters disables Apply; Align to Face, prior repairs, background Done and navigation protected.
+
+
+## v0.36.18.707 — Face radial Bevel
+
+- [x] Automated: existing installed Edge bevel stack reused, Face/perimeter resolution through face-region, internal selected edges excluded, exact chamfer/rounded geometry matches Edge engine, one History Undo/Redo, actual Pencil preview/commit/cancel, failures rollback, lock/mesh/mode/selection guards, semantic Face dispatch without Edge button click, protected Edge drag/exact; nearby Face/dock/release checks.
+- [x] Static: eight inner unchanged, sixteen active outer tools at 230px/22.5° with no outer/outer or outer/inner rectangle overlap; all previous targets retained; no additional raw-pointer owner or kernel edit; changed modules and release pins updated; protected transform/Loop Cut unchanged.
+- [ ] Visible .707; select ordinary cube Face → radial Bevel opens top-centre Width/Segments/Apply Exact/Cancel, stays Face mode.
+- [ ] Pencil-drag selected Face horizontally bevels entire perimeter; one Undo/Redo; segments 1 chamfer / multiple segments rounded.
+- [ ] Apply Exact matches perimeter bevel, closes cleanly, clears stale selection; next Face tap fresh puck, one Undo restores.
+- [ ] Cancel before apply and cancelled previews preserve original geometry/Face selection/history; puck returns and background orbit/pan/zoom work.
+- [ ] Connected selected Faces bevel outside boundary only when current Edge engine supports it; unsupported/disconnected/no-boundary selections disabled.
+- [ ] Protected Edge Bevel drag/exact/Cancel, prior Face tools, centre × and ring spacing remain correct. .706 pending checks retained.

@@ -1,0 +1,81 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import * as THREE from 'three';
+import {EditableMesh} from '../src/mesh.js';
+import {installLooseTopology} from '../src/loose-topology.js';
+import {installFaceRegion} from '../src/face-region.js';
+import {installBevelTopology} from '../src/bevel-topology.js';
+import {installRoundedLoopBevel} from '../src/rounded-loop-bevel.js';
+import {installGeneralEdgeBevelTopology} from '../src/general-edge-bevel-topology.js';
+import {installMultiEdgeChamferTopology} from '../src/multi-edge-chamfer-topology.js';
+import {installPerimeterFanBevel} from '../src/perimeter-fan-bevel.js';
+import {installGeneralizedEdgeFanBevel} from '../src/generalized-edge-fan-bevel.js';
+import {installBevelSelection} from '../src/bevel-selection.js';
+import {installPerimeterBevelRouting} from '../src/perimeter-bevel-routing.js';
+import {installBevelWatertightGuard} from '../src/bevel-watertight-guard.js';
+import {History} from '../src/history.js';
+globalThis.document={querySelector:()=>null,addEventListener(){}};
+for(const install of [installLooseTopology,installFaceRegion,installBevelTopology,installRoundedLoopBevel,installGeneralEdgeBevelTopology,installMultiEdgeChamferTopology,installPerimeterFanBevel,installGeneralizedEdgeFanBevel,installBevelSelection,installPerimeterBevelRouting,installBevelWatertightGuard])install(EditableMesh);
+delete globalThis.document;
+const geometry=m=>({vertices:m.vertices.map(v=>v.toArray()),faces:m.faces.map(f=>[...f]),creases:[...m.creases]});
+function fixture(m=EditableMesh.cube()){
+ const nodes=new Map(),docHandlers=new Map(),winHandlers=new Map(),events=[];let mode='face',ids=[0],locked=false;
+ const el=()=>({style:{},value:'',disabled:false,hidden:true,textContent:'',listeners:new Map(),dataset:{},classList:{add(){},remove(){},toggle(){},contains(){return false;}},appendChild(){},setAttribute(){},getAttribute(){return ''},querySelector:s=>node(s),querySelectorAll(){return []},addEventListener(t,f){this.listeners.set(t,f)},getBoundingClientRect(){return{left:0,top:0,width:400,height:400}},setPointerCapture(){},releasePointerCapture(){},dispatchEvent(){}});
+ const node=s=>{if(!nodes.has(s))nodes.set(s,el());return nodes.get(s)};
+ node('#bevelWidth').value='20';node('#bevelSegments').value='1';
+ const context={THREE:{...THREE,Raycaster:class extends THREE.Raycaster{setFromCamera(){}intersectObjects(){return[{object:{userData:{index:ids[0]}}}]} }},Map,Set,placeToolSessionPanel:p=>{p.style.left='50%';},document:{createElement:el,querySelector:s=>s==='#frameAllBtn'?{}:s==='#app'?{classList:{contains:()=>locked}}:node(s),querySelectorAll:()=>[],head:el(),addEventListener:(t,f)=>{if(!docHandlers.has(t))docHandlers.set(t,[]);docHandlers.get(t).push(f)},dispatchEvent:e=>{events.push(e);for(const f of docHandlers.get(e.type)||[])f(e)}},window:{addEventListener:(t,f)=>winHandlers.set(t,f),dispatchEvent:e=>events.push(e)},CustomEvent:class{constructor(type,{detail}){Object.assign(this,{type,detail});}},Event:class{},queueMicrotask:f=>f(),requestAnimationFrame:()=>1,cancelAnimationFrame(){},__boxlabBridgeState:{mesh:m,camera:{},controls:{enabled:true}},__boxlabHistory:new History(),__boxlabSelectionBridge:{mode:()=>mode,indices:()=>ids,set:(md,next)=>{assert.equal(md,mode);ids=next},pick:()=>({type:'face',index:ids[0]})}};
+ const load=name=>vm.runInNewContext('{'+fs.readFileSync(new URL('../src/'+name,import.meta.url),'utf8').replace(/^import .*;\n/gm,'')+'}',context);
+ load('direct-bevel.js');load('selection-hub-bevel-session.js');
+ const owner=context.__boxlabDirectBevel,panel=context.__boxlabBevelViewportSession;
+ const event=(x=0)=>({pointerId:1,isPrimary:true,clientX:x,clientY:0,preventDefault(){},stopImmediatePropagation(){},stopPropagation(){}});
+ const pointer=(type,x=0)=>node('#viewport').listeners.get(type)(event(x));
+ const launch=()=>winHandlers.get('boxlab-selection-hub-tool')({detail:{mode,tool:'Bevel'}});
+ const action=which=>panel.element.listeners.get('click')({...event(),target:{closest:()=>({dataset:{action:which}})}});
+ return{context,owner,panel,nodes,node,events,pointer,launch,action,ids:()=>ids,setIds:v=>{ids=v},setMode:v=>{mode=v},setLocked:v=>{locked=v},mode:()=>mode};
+}
+test('Face boundary resolves through existing region/Edge Bevel routing; shared selected edges excluded',()=>{
+ const m=EditableMesh.cube(),f=fixture(m);assert.equal(f.owner.faceBevelInfo([0]).ok,true);assert.equal(f.owner.faceBevelInfo([0]).ids.length,4);
+ const faces=[0,2],info=f.owner.faceBevelInfo(faces);assert.equal(info.ok,true);assert.equal(info.ids.length,6);
+ const shared=m.edges().findIndex(e=>e.faces.includes(0)&&e.faces.includes(2));assert.equal(info.ids.includes(shared),false);
+ assert.equal(f.owner.faceBevelInfo([0,1]).ok,false);assert.equal(f.owner.faceBevelInfo([0,1,2,3,4,5]).ok,false);assert.equal(f.owner.faceBevelInfo([999]).ok,false);
+});
+test('Face launch and Cancel preserve geometry/selection/history and dock shared settings',()=>{
+ const m=EditableMesh.cube(),before=geometry(m),f=fixture(m);f.launch();f.panel.sync();assert.equal(f.owner.faceActive(),true);assert.equal(f.panel.active(),true);assert.equal(f.panel.element.style.left,'50%');assert.equal(f.node('.shbs-head strong').textContent,'Face Bevel');assert.deepEqual(geometry(m),before);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
+ f.action('cancel');assert.equal(f.owner.active(),false);assert.deepEqual(Array.from(f.ids()),[0]);assert.deepEqual(geometry(m),before);assert.equal(f.events.at(-1).detail.tool,'Bevel');assert.ok(f.events.some(e=>e.type==='boxlab-selection-hub-session-complete'&&e.detail.mode==='face'));
+});
+test('Face Apply Exact matches Edge kernel geometry and has one Undo/Redo',()=>{
+ for(const segments of [1,3]){
+  const m=EditableMesh.cube(),before=geometry(m),f=fixture(m);f.node('#bevelSegments').value=String(segments);const info=f.owner.faceBevelInfo([0]),expected=m.clone();assert.ok(expected.generalBevelSelection(info.ids,.2,segments));
+  f.launch();f.action('apply');assert.deepEqual(geometry(m),geometry(expected));assert.equal(f.mode(),'face');assert.equal(f.ids().length,0);assert.equal(f.owner.active(),false);assert.equal(f.panel.active(),false);assert.equal(f.context.__boxlabHistory.undoStack.length,1);
+  const undone=f.context.__boxlabHistory.undo(m);assert.deepEqual(geometry(undone),before);assert.deepEqual(geometry(f.context.__boxlabHistory.redo(undone)),geometry(m));
+ }
+});
+test('connected Face region commits its six outer edges through existing owner',()=>{
+ const m=EditableMesh.cube(),f=fixture(m);f.setIds([0,2]);f.launch();f.action('apply');assert.equal(f.context.__boxlabHistory.undoStack.length,1);assert.equal(f.ids().length,0);assert.equal(f.mode(),'face');assert.equal(m.faces.length>6,true);
+});
+test('Face Pencil drag previews from snapshot, commits once and restores navigation',()=>{
+ const m=EditableMesh.cube(),before=geometry(m),f=fixture(m);f.launch();f.pointer('pointerdown');assert.equal(f.context.__boxlabBridgeState.controls.enabled,false);f.pointer('pointermove',40);assert.notDeepEqual(geometry(m),before);assert.equal(f.context.__boxlabHistory.undoStack.length,0);f.pointer('pointermove',60);f.pointer('pointerup',60);assert.equal(f.context.__boxlabHistory.undoStack.length,1);assert.equal(f.context.__boxlabBridgeState.controls.enabled,true);assert.equal(f.ids().length,0);assert.equal(f.owner.active(),false);
+});
+test('Face pointer cancel restores preview and original selection with no history',()=>{
+ const m=EditableMesh.cube(),before=geometry(m),f=fixture(m);f.launch();f.pointer('pointerdown');f.pointer('pointermove',40);f.pointer('pointercancel');assert.deepEqual(geometry(m),before);assert.deepEqual(Array.from(f.ids()),[0]);assert.equal(f.context.__boxlabHistory.undoStack.length,0);assert.equal(f.context.__boxlabBridgeState.controls.enabled,true);
+});
+test('owner failure rolls back; read-only and changed selection/mode/mesh block Face apply',()=>{
+ const m=EditableMesh.cube(),before=geometry(m),f=fixture(m);f.launch();m.generalBevelSelection=function(){this.vertices[0].x=77;return null};assert.equal(f.owner.applyExact(20).ok,false);assert.deepEqual(geometry(m),before);assert.equal(f.ids().length,1);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
+ f.setLocked(true);assert.equal(f.owner.faceBevelInfo([0]).ok,false);assert.equal(f.owner.applyExact(20).ok,false);
+ for(const change of [g=>g.setIds([2]),g=>g.setMode('edge'),g=>{g.context.__boxlabBridgeState.mesh=EditableMesh.cube()}]){const g=fixture();g.launch();change(g);assert.equal(g.owner.applyExact(20).ok,false);g.panel.sync();assert.equal(g.owner.active(),false);assert.equal(g.context.__boxlabHistory.undoStack.length,0);}
+});
+test('Edge radial Apply remains the existing selected-edge exact workflow',()=>{
+ const m=EditableMesh.cube(),f=fixture(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.panel.sync();assert.equal(f.owner.faceActive(),false);assert.equal(f.node('.shbs-head strong').textContent,'Bevel');f.action('apply');assert.equal(f.context.__boxlabHistory.undoStack.length,1);assert.equal(f.ids().length,0);assert.equal(f.mode(),'edge');assert.equal(f.owner.active(),false);
+});
+
+test('protected Edge Pencil drag still previews/commits once and clears Edge selection',()=>{
+ const m=EditableMesh.cube(),before=geometry(m),f=fixture(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.pointer('pointerdown');f.pointer('pointermove',40);assert.notDeepEqual(geometry(m),before);f.pointer('pointerup',40);assert.equal(f.context.__boxlabHistory.undoStack.length,1);assert.equal(f.mode(),'edge');assert.equal(f.ids().length,0);assert.equal(f.owner.active(),false);
+});
+test('Face radial Bevel dispatch launches semantically without clicking the Edge mode button',()=>{
+ const s=fs.readFileSync(new URL('../src/total-gizmo.js',import.meta.url),'utf8');
+ const start=s.indexOf("  button.addEventListener('click',event=>{",s.indexOf('toolSectors.forEach(button=>')),end=s.indexOf('\n  });',start);let callback;const events=[];
+ const context={button:{disabled:false,textContent:'Bevel',dataset:{toolTarget:'#bevelBtn'},closest:()=>({dataset:{ringMode:'face'}}),addEventListener:(t,f)=>{callback=f}},syncContextToolAvailability(){},currentMode:()=> 'face',document:{querySelector:()=>({disabled:false,click(){throw Error('Edge Bevel button clicked')}})},suspendedFaceTool:false,hubSuppressedKey:'',lastSelectionKey:'key',setHubState(){},root:{},gestureDebug(){},window:{dispatchEvent:e=>events.push(e)},CustomEvent:class{constructor(type,{detail}){Object.assign(this,{type,detail})}}};
+ vm.runInNewContext(s.slice(start,end)+'\n  });',context);callback({preventDefault(){},stopPropagation(){}});assert.equal(events.length,1);assert.equal(events[0].detail.mode,'face');assert.equal(events[0].detail.tool,'Bevel');
+});

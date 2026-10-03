@@ -45,6 +45,7 @@ document.head.appendChild(style);
 
 let launchedFromHub=false;
 let launchSelection=[];
+let launchMode='edge';
 let raf=0;
 
 function src(selector){return document.querySelector(selector);}
@@ -62,6 +63,7 @@ function closeSession({restoreSelection=false}={}){
   launchedFromHub=false;
   palette.hidden=true;
   cancelAnimationFrame(raf);
+  if(launchMode==='face'){globalThis.__boxlabDirectBevel?.cancelFaces?.({restoreSelection});return;}
   globalThis.__boxlabDirectBevel?.disarm?.();
   if(restoreSelection&&launchSelection.length&&globalThis.__boxlabSelectionBridge?.mode?.()==='edge'){
     globalThis.__boxlabSelectionBridge.set?.('edge',launchSelection);
@@ -69,6 +71,7 @@ function closeSession({restoreSelection=false}={}){
 }
 function sync(){
   cancelAnimationFrame(raf);
+  if(launchedFromHub&&launchMode==='face'&&!globalThis.__boxlabDirectBevel?.faceContextValid?.()){closeSession();return;}
   const active=launchedFromHub&&!!globalThis.__boxlabDirectBevel?.active?.();
   palette.hidden=!active;
   if(!active){
@@ -85,7 +88,7 @@ function sync(){
   }
 
   const apply=palette.querySelector('[data-action="apply"]');
-  if(apply)apply.disabled=!launchSelection.length||!globalThis.__boxlabDirectBevel?.applyExact;
+  if(apply)apply.disabled=!launchSelection.length||!globalThis.__boxlabDirectBevel?.applyExact||!!globalThis.__boxlabDirectBevel?.busy?.();
 
   placeToolSessionPanel(palette);
   raf=requestAnimationFrame(sync);
@@ -117,7 +120,7 @@ palette.addEventListener('click',event=>{
   if(button.dataset.action==='cancel'){
     closeSession({restoreSelection:true});
     const status=document.querySelector('#selectionStatus');
-    if(status)status.textContent='Bevel cancelled • Edge selection ready';
+    if(status)status.textContent=`Bevel cancelled • ${launchMode==='face'?'Face':'Edge'} selection ready`;
     return;
   }
   if(button.dataset.action==='apply'){
@@ -136,8 +139,17 @@ palette.addEventListener('click',event=>{
 });
 
 window.addEventListener('boxlab-selection-hub-tool',event=>{
-  if(event.detail?.tool!=='Bevel'||event.detail?.mode!=='edge')return;
-  launchSelection=currentEdgeSelection();
+  if(launchedFromHub&&(event.detail?.tool!=='Bevel'||event.detail?.mode!==launchMode)){launchedFromHub=false;palette.hidden=true;cancelAnimationFrame(raf);globalThis.__boxlabDirectBevel?.disarm?.();}
+
+  if(event.detail?.tool!=='Bevel')return;
+  launchMode=event.detail.mode;
+  if(launchMode==='face'){
+    const result=globalThis.__boxlabDirectBevel?.armFaces?.(globalThis.__boxlabSelectionBridge?.indices?.()||[]);
+    if(!result?.ok){window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'face',tool:'Bevel'}}));return;}
+    launchSelection=result.ids;
+  }else if(launchMode==='edge')launchSelection=currentEdgeSelection();else return;
+  palette.querySelector('.shbs-head strong').textContent=launchMode==='face'?'Face Bevel':'Bevel';
+  palette.querySelector('.shbs-note').textContent=launchMode==='face'?'Bevel the outside boundary. Pencil-drag a selected Face, or Apply Exact.':'Pencil-drag selected edge(s), or apply the exact values above.';
   launchedFromHub=true;
   requestAnimationFrame(()=>{
     sync();
@@ -156,7 +168,7 @@ document.addEventListener('boxlab-direct-tool-exclusive',event=>{
 });
 
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{
-  if(launchedFromHub&&button.dataset.mode!=='edge')closeSession();
+  if(launchedFromHub&&button.dataset.mode!==launchMode)closeSession();
 }));
 
 globalThis.__boxlabBevelViewportSession={
