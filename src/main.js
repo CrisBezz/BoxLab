@@ -191,18 +191,21 @@ function applyVerticalSelectionScrub(hold,dy){
   const type=hold?.type||selectionMode;
   const base=[...new Set(hold?.gestureBaseIndices||[])].filter(Number.isInteger);
   if(!['vertex','edge','face'].includes(type)||!base.length)return false;
-  const direction=dy<0?'grow':'shrink';
-  const steps=Math.max(1,Math.round(Math.abs(dy)/SELECTION_VERTICAL_STEP));
+  // Face vertical browsing has a neutral band so reversing to the hold
+  // point restores its fixed base; Edge/Vertex retain their protected feel.
+  const neutral=type==='face'&&Math.abs(dy)<SELECTION_SCRUB_LOCK;
+  const direction=neutral?'base':dy<0?'grow':'shrink';
+  const steps=neutral?0:Math.max(1,Math.round(Math.abs(dy)/SELECTION_VERTICAL_STEP));
   if(hold.verticalDirection===direction&&hold.verticalSteps===steps)return true;
   selection=makeSelection(type,base,base.at(-1)??null);
   renderMesh();
-  const button=document.querySelector(direction==='grow'?'#growSelectionBtn':'#shrinkSelectionBtn');
-  if(!button)return false;
+  const button=steps?document.querySelector(direction==='grow'?'#growSelectionBtn':'#shrinkSelectionBtn'):null;
+  if(steps&&!button)return false;
   for(let i=0;i<steps;i++)button.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true}));
   hold.verticalDirection=direction;
   hold.verticalSteps=steps;
   const status=document.querySelector('#selectionStatus');
-  if(status)status.textContent=`${direction==='grow'?'Grow':'Shrink'} ×${steps} • drag vertically • release to keep`;
+  if(status)status.textContent=neutral?'Starting selection • drag UP / DOWN • release to keep':`${direction==='grow'?'Grow':'Shrink'} ×${steps} • drag vertically • release to keep`;
   gestureDebug('SELECTION VERTICAL SCRUB',{type,direction,steps,pid:hold.pointerId});
   return true;
 }

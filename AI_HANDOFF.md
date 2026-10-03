@@ -2,178 +2,118 @@
 
 ## New-chat starter prompt
 
-Copy/paste this into a fresh ChatGPT development chat:
+Continue BoxLab development from current `main` of `CrisBezz/BoxLab`.
+The repository is the source of truth; do not use remembered chat state against it.
+Before code changes read AI_WORKFLOW.md completely, this file completely,
+TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
+Inspect main, recent commits, live release markers and script pins. Audit existing
+functionality and authoritative owners before implementing anything new.
 
-> Continue development of **BoxLab** from the current `main` branch of `CrisBezz/BoxLab`.
->
-> **Repository is the source of truth. Do not rely on remembered chat state if it conflicts with the repo.**
->
-> Before changing code:
-> 1. Read `AI_WORKFLOW.md` completely.
-> 2. Read `AI_HANDOFF.md` completely.
-> 3. Read `TEST_CHECKLIST.md`.
-> 4. Read the recent relevant entries in `DEV_HISTORY.md`.
-> 5. Read `ROADMAP.md`.
-> 6. Inspect current `main`, the live release markers, current script pins, and recent commits.
-> 7. Audit for existing functionality before adding anything new. Prefer reconnecting/repairing existing owners over creating parallel implementations.
->
-> **Current release:** v0.36.18.690
->
-> **Current live-development focus:** finish hands-on confirmation of the v0.36.18.690 Face-session exit cleanup after the refreshed shell actually loads. If .690 passes, stop adding Face/Edge radial glue and move into the broader modeless interaction phase one narrow gesture at a time.
->
-> **Current .690 manual checks:**
-> - Face -> puck -> Shell -> Cancel: original Face selection should return with puck.
-> - Shell -> Apply: session closes cleanly; puck returns if Face selection survives.
-> - Face -> puck -> Sweep -> Cancel: puck returns if Face selection survives.
-> - Sweep -> Apply: no stale Selection Hub suppression; if selection clears, next Face tap gets a fresh puck.
-> - Knife -> Done remains PASS.
-> - Confirm the iPad is genuinely showing **v0.36.18.690** before judging .690 behaviour.
->
-> **Important release/cache state:**
-> - .690 initially failed to refresh on iPad even though `main` was correct.
-> - Root cause: `release-bootstrap.js` stopped retrying after 3 stale-shell responses.
-> - That guard has now been hardened so stale-shell recovery does not permanently stop.
-> - `release-bootstrap.js` and `release-version.js` were repinned to .690.
-> - Before changing modelling code because a user reports an old bug/build, first verify which version is actually visible in their screenshot and compare it with `version.json` and the HTML shell on `main`.
->
-> **Protected hands-on behaviour:**
-> - v0.36.18.682 Pencil/Object routing reliability: PERFECT / PASS.
->   - finger or Pencil background tap dismisses Object gizmo
->   - Pencil drag on background orbits
->   - object remains selected
->   - tapping object reliably restores gizmo
-> - v0.36.18.684 radial Knife viewport session: PASS.
-> - v0.36.18.688 restored known-good Loop Cut / Loop Slide feel: PASS.
->   - this is the old v0.36.18.162 logical-quad compatibility path restored intact
->   - do not re-generalize this core casually
-> - v0.36.18.689 radial Face Delete hub cleanup: PASS.
-> - v0.36.18.676 guided radial Edge Bridge: PASS.
-> - v0.36.18.677 Edge radial one-shot cleanup: PASS.
-> - v0.36.18.670 radial Crease selection-first workflow: PERFECT / PASS.
-> - Edge Extrude radial workflow from .663/.664 works really well and is protected.
->
-> **Protected navigation baseline:**
-> - one-finger orbit
-> - two-finger pan
-> - pinch zoom
-> - two-finger tap Undo
-> - three-finger tap Redo
-> - no-jump orbit pivot
-> - persistent selections during navigation
-> - Studio realtime default
-> - current snapping
-> - object-management / Multi behaviour
->
-> **Special protected file:**
-> - `src/multi-object-transform.js?v=0.36.1.0`
-> - Do not change this unless the task explicitly requires it.
->
-> **Selection Hub / radial status:**
-> - Edge radial lifecycle is effectively complete and protected.
-> - Face radial lifecycle implementation is complete through .690, pending final Shell/Sweep exit hands-on confirmation.
-> - Extrude / Inset already restore the puck.
-> - Knife has a viewport Done session.
-> - Duplicate Faces creates a new object and hands directly to Object gizmo.
-> - Extract Faces creates a new object and hands directly to Object gizmo.
-> - Shell and Sweep have viewport panels and now emit a shared Face-session completion semantic in .690.
-> - Face Delete is a direct one-shot and stale hub suppression is cleaned.
->
-> **Strengthening list — do not mix these into unrelated work:**
-> 1. Connected-chain Edge Bevel through ordinary quad valence.
-> 2. Complex logical-quad Loop Cut through multiple collinear boundary vertices.
->    - The .685-.687 attempt degraded Loop Cut topology/slide feel.
->    - .688 restored the trusted v0.36.18.162 behaviour.
->    - Future work on this case must be isolated and must not alter the protected core unless it can prove identical behaviour on ordinary Loop Cut.
->
-> **Gesture/event ownership rules:**
-> - Tool-specific modules may call `stopImmediatePropagation()`.
-> - A later document listener may never see completion.
-> - Prefer semantic owner events or early window-capture listeners for global lifecycle.
-> - Do not stack multiple raw-pointer owners for the same gesture.
-> - Precision behaviour must live with the actual gesture owner.
->
-> **Version / publishing rules for every build:**
-> - Update `version.json`, HTML `<title>`, `data-release-version`, visible version label, and every changed module cache pin.
-> - For dynamically imported modules, repin the parent loader if needed.
-> - If refresh logic changes, repin `release-bootstrap.js` / `release-version.js`.
-> - Verify current `main` after publishing.
-> - Do not assume a user test is valid until the intended version is visible on their iPad.
->
-> **Development workflow:**
-> - User says `/nextbuild` = audit current repo first, then implement the next narrow build directly on `main`, update release markers, update handoff/history/checklist, and give a short hands-on test list.
-> - User replies PASS/FAIL; record PASSes as protected.
-> - Keep changes narrow and modular.
-> - Do not reapply large UI cleanups wholesale.
-> - Prefer authoritative owners; never add a duplicate modelling kernel if one already exists.
->
-> **For the next build after .690 PASS:**
-> - Move into broader modeless gesture work rather than more radial UI glue.
-> - Implement one narrow gesture at a time and protect each hands-on PASS before continuing.
-> - Re-audit the repo before choosing the exact first modeless gesture.
+Current release: **v0.36.18.691**.
+Current focus: hands-on confirmation of Face hold vertical Grow/Shrink neutral return.
+The user confirmed the full .690 manual list PASS on 2026-10-03.
+Face and Edge radial lifecycle work is complete and protected; continue broader
+modeless interaction work one narrow gesture at a time, rather than adding radial glue.
 
 ## Current repository state
 
-- Release: **v0.36.18.690**
-- Live app: `https://crisbezz.github.io/BoxLab/`
-- Repo: `CrisBezz/BoxLab`
-- Runtime release baseline before documentation-only handoff commits: `8efc9589423039927bfdb9da9da6710cdb311407`
-- Documentation has been updated after that runtime commit; current `main` is newer because of handoff/workflow documentation commits.
+- Repository: CrisBezz/BoxLab, branch main.
+- Live app: https://crisbezz.github.io/BoxLab/
+- Release: v0.36.18.691.
+- Parent checkpoint before .691: f298c22da26f03e191d5e0c740ab1ac1f2d8b2fd.
+- Find the .691 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owner: src/main.js, repinned to .691.
+- Release bootstrap/version logic unchanged; both remain intentionally pinned to .690.
 
-## Immediate status
+## Immediate hands-on checks — .691
 
-v0.36.18.690 implemented unified Face-session completion for radial Knife / Shell / Sweep.
+Confirm the iPad visibly shows v0.36.18.691 before judging behaviour.
+1. Face mode, no direct tool armed: Pencil hold a selected Face, then drag UP to Grow.
+2. Keep holding; drag back to the starting point: starting Face selection returns.
+3. Drag farther up, then back: preview reduces steps instead of accumulating.
+4. With several adjacent Faces selected, hold and drag DOWN to Shrink, then return to start: original selection returns. Release keeps the displayed selection.
+5. Face hold sideways candidate browsing and normal tap select/deselect remain unchanged.
 
-Still awaiting hands-on confirmation after the refresh issue:
-- Shell Cancel / Apply
-- Sweep Cancel / Apply
-- Knife regression
-- verify iPad visibly loads .690
+.691 is awaiting hands-on PASS. Do not mark it protected until the user confirms.
+After PASS, record it and re-audit before choosing the next narrow modeless gesture.
 
-If .690 passes:
-- mark .690 protected
-- declare Face radial lifecycle complete
-- move to broader modeless gesture work
+## .691 implementation / owner audit
 
-## Release refresh incident at .690
+Grow/Shrink hold gestures already existed in main.js from .638.
+The existing vertical scrub always applied at least one step, even at the hold point.
+Face-only neutral band (absolute vertical distance below 18 px) now restores the
+fixed gesture starting selection and invokes no Grow/Shrink operation.
+Outside the band the existing 30 px step scaling and authoritative
+advanced-selection.js Grow/Shrink button owners remain unchanged.
+Edge and Vertex retain their previous behavior. No new raw-pointer listener,
+selection kernel, modelling kernel or radial UI was introduced.
+Automated owner integration checks cover grow/reverse/neutral, shrink/neutral,
+the neutral boundary and unchanged Edge/Vertex behavior.
 
-The .690 runtime was correct on `main`, but iPad/Safari could remain on .689 because the old release bootstrap stopped after three stale-shell responses.
+## Protected hands-on behaviour
 
-Fixed:
-- stale-shell recovery no longer permanently stops after three attempts
-- cache-buster escalates
-- attempt counter resets instead of abandoning recovery
-- `release-bootstrap.js` repinned to .690
-- `release-version.js` repinned to .690
+- .690: iPad refreshed version confirmed; Shell Cancel/Apply, Sweep Cancel/Apply,
+  fresh Face puck after cleared selection, and Knife Done regression all PASS.
+- .682 Pencil/Object routing PERFECT / PASS:
+  finger/Pencil background tap dismisses Object gizmo; object stays selected;
+  Pencil background drag orbits; tapping the object reliably restores gizmo.
+- .684 radial Knife viewport Done session PASS.
+- .688 Loop Cut / Loop Slide old feel PASS. The known-good .162
+  logical-quad compatibility core is restored intact; do not casually generalize it.
+- .689 Face Delete one-shot hub cleanup PASS.
+- .676 guided radial Edge Bridge PASS.
+- .677 Edge radial one-shot cleanup PASS.
+- .670 selection-first radial Crease PERFECT / PASS.
+- .663/.664 Edge Extrude radial ribbons work really well and are protected.
 
-This is now part of `AI_WORKFLOW.md` and must be followed on future releases.
+## Protected navigation / files
 
-## Protected current behaviour
+Preserve one-finger orbit, two-finger pan, pinch zoom, two-finger tap Undo,
+three-finger tap Redo, no-jump orbit pivot, persistent selections during navigation,
+Studio realtime default, current snapping and object management / Multi.
+`src/multi-object-transform.js?v=0.36.1.0` is protected: do not change it unless the
+requested task explicitly requires it. Frozen betas remain immutable.
 
-Do not disturb without explicit need:
-- .682 Object/Pencil interaction contract
-- .684 Knife viewport session
-- .688 Loop Cut / Loop Slide known-good feel
-- .689 Face Delete cleanup
-- .676/.677 Edge radial completion
-- .670 Crease radial session
-- Edge Extrude workflow
-- protected iPad navigation baseline
-- `src/multi-object-transform.js?v=0.36.1.0`
+## Selection Hub status
 
-## Strengthening backlog
+Edge radial lifecycle complete and protected.
+Face radial lifecycle complete and protected through .690.
+Extrude/Inset restore puck; Knife has viewport Done; Duplicate/Extract Faces create
+objects and hand directly to Object gizmo. Shell/Sweep viewport proxies use the
+shared Face-session completion semantic. Face Delete clears stale suppression.
+Do not add further lifecycle glue without a concrete regression.
 
-Keep separate from normal UX builds:
-- Connected-chain Edge Bevel through ordinary quad valence
-- Complex logical-quad Loop Cut through multiple collinear boundary vertices
+## Strengthening backlog — keep separate
 
-## Handoff completion rule
+1. Connected-chain Edge Bevel through ordinary quad valence.
+2. Complex logical-quad Loop Cut with multiple collinear boundary vertices.
+   .685–.687 degraded topology/slide feel; .688 restored trusted .162 behavior.
+   Future strengthening must be isolated and preserve ordinary Loop Cut identically.
 
-A new chat should be able to continue by reading:
-- `AI_WORKFLOW.md`
-- `AI_HANDOFF.md`
-- `TEST_CHECKLIST.md`
-- recent `DEV_HISTORY.md`
-- `ROADMAP.md`
-- current `main`
+## Gesture / event ownership
 
-If any of those conflict, current repository code and current release markers win.
+Tool owners may call stopImmediatePropagation; later document listeners may not see
+completion. Prefer semantic owner events or early window capture for global lifecycle.
+Do not stack raw-pointer owners. Precision belongs to the actual active gesture owner.
+The .617–.619 double/triple-tap experiment failed due to competing release owners and
+gizmo interception; it was removed in .620. Do not casually reinstate it.
+
+## Release / cache protocol
+
+Each build updates version.json, HTML title, data-release-version, visible label and
+all changed module pins. Repin dynamic-import parent loaders when necessary.
+Repin release-bootstrap/release-version if refresh logic changes. Verify published
+main and live shell. If the iPad looks stale, compare its visible version against
+manifest and HTML before changing modelling code.
+.690 refresh incident: bootstrap previously stopped after three stale-shell responses;
+recovery now continues with escalating cache-busters and bounded retry counter.
+
+## Development workflow
+
+/nextbuild: audit first, implement one narrow build directly on main, update release
+markers and handoff/history/checklist, publish and verify, then give 3–6 short manual
+checks. Record user PASSes as protected. Keep changes modular; reconnect authoritative
+owners instead of parallel implementations. Never reapply bulk .450 UI cleanup.
+If a straightforward gesture fix fails, use Gesture Debug before more speculation.
+End each changed session with current AI_HANDOFF.md, DEV_HISTORY.md and
+TEST_CHECKLIST.md so a fresh chat can continue from the repo alone.

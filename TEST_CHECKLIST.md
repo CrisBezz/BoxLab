@@ -3008,12 +3008,12 @@ Add new permanent regression checks below when future features need protection.
 - [x] Protection .689: src/multi-object-transform.js?v=0.36.1.0 unchanged
 
 
-- [ ] Workflow .690: radial Shell Cancel restores Face puck when selection survives
-- [ ] Workflow .690: radial Shell Apply closes cleanly and restores puck when selection survives
-- [ ] Workflow .690: radial Sweep Cancel restores Face puck when selection survives
-- [ ] Workflow .690: radial Sweep Apply closes cleanly with no stale suppression
-- [ ] Workflow .690: next Face selection gets fresh puck when session ends with no selection
-- [ ] Regression .690: Knife Done remains PASS
+- [x] Workflow .690: radial Shell Cancel restores Face puck when selection survives
+- [x] Workflow .690: radial Shell Apply closes cleanly and restores puck when selection survives
+- [x] Workflow .690: radial Sweep Cancel restores Face puck when selection survives
+- [x] Workflow .690: radial Sweep Apply closes cleanly with no stale suppression
+- [x] Workflow .690: next Face selection gets fresh puck when session ends with no selection
+- [x] Regression .690: Knife Done remains PASS
 - [x] Static .690: Shell/Sweep geometry/history owners unchanged
 - [x] Static .690: Knife/Shell/Sweep share one Face session completion path
 - [x] Protection .690: src/multi-object-transform.js?v=0.36.1.0 unchanged
@@ -3025,10 +3025,24 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .690: total-gizmo / Shell session / Sweep session are pinned to .690
 - [x] Static .690: release-bootstrap.js and release-version.js repinned to .690 after refresh hardening
 - [x] Release .690: stale-shell recovery remains live after repeated stale responses instead of stopping permanently after three attempts
-- [ ] Hands-on .690: iPad actually displays v0.36.18.690 after refresh hardening
-- [ ] Hands-on .690: Shell Cancel / Apply restore Face puck correctly
-- [ ] Hands-on .690: Sweep Cancel / Apply leave no stale Selection Hub suppression
-- [ ] Regression .690: Knife Done remains PASS
+- [x] Hands-on .690: iPad actually displays v0.36.18.690 after refresh hardening
+- [x] Hands-on .690: Shell Cancel / Apply restore Face puck correctly
+- [x] Hands-on .690: Sweep Cancel / Apply leave no stale Selection Hub suppression
+- [x] Regression .690: Knife Done remains PASS
 - [x] Handoff .690: AI_WORKFLOW release/cache protocol updated
 - [x] Protection .690: v0.36.18.162 Loop Cut behaviour remains the protected live core
 - [x] Protection .690: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+## Modeless Face vertical scrub — v0.36.18.691
+
+- [x] Hands-on .690: complete refreshed-shell Face-session exit check list PASS; Face radial lifecycle protected
+- [x] Automated .691: Face Grow previews recompute from fixed base and return to neutral
+- [x] Automated .691: Face Shrink/reversal restores the same starting selection
+- [x] Automated .691: neutral band boundary tested; Edge/Vertex behavior unchanged
+- [ ] Hands-on .691: visibly loads v0.36.18.691
+- [ ] Hands-on .691: Face hold then UP grows; returning to start restores initial selection
+- [ ] Hands-on .691: farther UP then back reduces steps rather than accumulating
+- [ ] Hands-on .691: DOWN shrinks; returning to start restores initial selection; release keeps preview
+- [ ] Regression .691: Face sideways hold browser and tap select/deselect unchanged
+- [x] Protection .691: .690 Shell/Sweep/Knife and .682 Pencil/Object owners unchanged
+- [x] Protection .691: .688 Loop Cut core and multi-object-transform.js?v=0.36.1.0 unchanged

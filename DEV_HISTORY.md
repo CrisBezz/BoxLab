@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.691 Face vertical scrub neutral return
+
+- User confirmed the full .690 refreshed-shell manual checks PASS. Face radial lifecycle is complete and protected, including Shell/Sweep exit cleanup and Knife Done.
+- Re-audited current main and modeless gesture history. Grow/Shrink hold gestures already existed in main.js; .617–.619 multi-tap experiments had been abandoned.
+- Repaired one existing gesture: Face vertical hold scrub now returns to its fixed starting selection within an 18 px neutral band instead of applying an unwanted one-step Shrink/Grow.
+- Existing authoritative Grow/Shrink buttons and 30 px scaling retained; no new raw-pointer owner or selection kernel.
+- Edge/Vertex behavior, radial sessions, Pencil/Object routing, Loop Cut core and protected multi-object-transform remain untouched.
+- Behavioral integration tests exercise actual main scrub + advanced-selection owners: Grow/reverse/neutral, Shrink/neutral, band boundary, unchanged Edge/Vertex. Release-version contract checked.
+- .691 awaits hands-on confirmation; release markers and main.js pin updated together.
+
 ## 2026-10-03 — v0.36.18.690 stale-shell refresh hardening / handoff prep
 
 - User reported .690 was not refreshing on iPad.

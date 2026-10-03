@@ -134,12 +134,12 @@ Only add focused tools that suit BoxLab:
 ### Selection Hub / modeless UX checkpoint — v0.36.18.690
 
 - Edge radial lifecycle is complete and hands-on protected through .677.
-- Face radial lifecycle implementation is complete through .690, pending final hands-on Shell/Sweep exit confirmation once the refreshed .690 shell is loaded.
+- Face radial lifecycle is complete and hands-on protected through .690; refreshed-shell Shell/Sweep exits and Knife regression confirmed PASS on 2026-10-03.
 - Protected Object-mode contract from .682:
   - finger/Pencil background tap dismisses Object gizmo
   - Pencil background drag still orbits
   - tapping the object restores the gizmo reliably
-- After .690 hands-on PASS, stop adding radial-ring glue and move into the broader modeless interaction phase (tap/hold/cycle/direct workflows) one narrow gesture at a time.
+- Broader modeless interaction phase is active. .691 repairs the existing Face hold vertical Grow/Shrink gesture with a neutral return to starting selection; awaiting hands-on PASS. Continue one narrow gesture at a time.
 
 ## Strengthening list
 
