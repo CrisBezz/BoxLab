@@ -119,15 +119,18 @@ window.addEventListener('boxlab-tool-session-change',event=>{
   const detail=event.detail||{};
   if(detail.id!=='shell')return;
   if(detail.active===false){
+    const wasHub=launchedFromHub;
     launchedFromHub=false;
     palette.hidden=true;
     cancelAnimationFrame(raf);
+    if(wasHub)window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{tool:'Shell',mode:'face'}}));
   }else if(launchedFromHub){
     requestAnimationFrame(sync);
   }
 });
 
 globalThis.__boxlabShellViewportSession={
+  version:'0.36.18.690',
   element:palette,
   active:()=>launchedFromHub&&!palette.hidden,
   sync
