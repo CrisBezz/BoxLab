@@ -170,3 +170,5 @@ Preserve:
 - Reintroduce UI/UX cleanup one narrow slice at a time.
 - Each slice must pass hands-on interaction checks before the next UI slice begins.
 - Do not reapply the v0.36.18.450 bulk consolidation wholesale.
+
+- [ ] Complex logical-quad Loop Cut through multiple collinear boundary vertices — strengthen separately without changing protected v0.36.18.162 Loop Cut reconstruction / slide behaviour.
