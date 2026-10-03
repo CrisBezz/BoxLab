@@ -1,5 +1,17 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.689 radial Face Delete hub cleanup
+
+- .688 restored known-good Loop Cut / Loop Slide feel hands-on PASS.
+- Audited radial Face Delete.
+- Delete topology/history owner already correct; no panel needed.
+- Added post-action Selection Hub cleanup:
+  - clears stale suppressed Face key
+  - restores puck if a valid Face selection survives
+  - otherwise waits hidden for the next Face selection
+- Prevents future Face selections from inheriting stale suppression.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.688 hands-on PASS
 
 - Restored known-good Loop Cut behaviour confirmed.
