@@ -4,6 +4,23 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## User-directed priority — 2026-10-03
+
+Primary goal: finish contextual radial menus and nearby pop-out settings so routine
+modelling needs as little left-drawer interaction as possible.
+Required order: **Face gaps → Vertex → Object → final Edge completeness pass**.
+The .690 PASS completed the lifecycle of the existing Face ring; it did NOT prove
+that all Face drawer actions/settings had migrated into the contextual workflow.
+Edge's existing radial lifecycle is protected, but overall Edge completeness must
+be finalized after Vertex and Object. Stop broad gesture expansion while this
+radial-menu work is the priority. .691 remains protected; .692 is already published
+and its Edge neutral-return hands-on checks remain pending.
+Before the next runtime build, compare the full Face drawer against the current
+8-sector ring, audit existing action/settings owners, and choose one remaining
+Face contextual gap. Preserve current passes. Add contextual access/pop-outs by
+reusing owners; remove redundant drawer UI only after its replacement passes.
+Do not mistake a working ring lifecycle for complete contextual tool coverage.
+
 ## Product direction
 
 BoxLab is an **iPad-first touch/Pencil polygon modeller and Nomad Sculpt companion**.
@@ -139,7 +156,7 @@ Only add focused tools that suit BoxLab:
   - finger/Pencil background tap dismisses Object gizmo
   - Pencil background drag still orbits
   - tapping the object restores the gizmo reliably
-- Broader modeless interaction phase is active. .691 Face hold vertical Grow/Shrink neutral return is hands-on PASS and protected. .692 extends the same existing owner to Edge neutral return; awaiting hands-on PASS. Continue one narrow gesture at a time.
+- Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
 ## Strengthening list
 

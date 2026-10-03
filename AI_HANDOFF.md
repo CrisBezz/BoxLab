@@ -10,10 +10,27 @@ Inspect main, recent commits, live release markers and script pins. Audit existi
 functionality and authoritative owners before implementing anything new.
 
 Current release: **v0.36.18.692**.
-Current focus: hands-on confirmation of Edge hold vertical Grow/Shrink neutral return.
+Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
-Face and Edge radial lifecycle work is complete and protected; continue broader
-modeless interaction work one narrow gesture at a time, rather than adding radial glue.
+Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
+is still the priority. Follow Face → Vertex → Object → final Edge, not broad gestures.
+
+## User-directed priority — 2026-10-03
+
+Primary goal: finish contextual radial menus and nearby pop-out settings so routine
+modelling needs as little left-drawer interaction as possible.
+Required order: **Face gaps → Vertex → Object → final Edge completeness pass**.
+The .690 PASS completed the lifecycle of the existing Face ring; it did NOT prove
+that all Face drawer actions/settings had migrated into the contextual workflow.
+Edge's existing radial lifecycle is protected, but overall Edge completeness must
+be finalized after Vertex and Object. Stop broad gesture expansion while this
+radial-menu work is the priority. .691 remains protected; .692 is already published
+and its Edge neutral-return hands-on checks remain pending.
+Before the next runtime build, compare the full Face drawer against the current
+8-sector ring, audit existing action/settings owners, and choose one remaining
+Face contextual gap. Preserve current passes. Add contextual access/pop-outs by
+reusing owners; remove redundant drawer UI only after its replacement passes.
+Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 ## Current repository state
 
@@ -35,7 +52,7 @@ Confirm the iPad visibly shows v0.36.18.692 before judging behaviour.
 5. Sideways Edge Loop/Ring/Boundary browsing, additive base selection and Face .691 neutral return remain intact.
 
 .692 is awaiting hands-on PASS. .691 is now confirmed PASS and protected.
-After PASS, record it and re-audit before choosing the next narrow modeless gesture.
+Record any .692 PASS without changing the primary radial-menu sequence above.
 
 ## .692 implementation / owner audit
 
@@ -94,12 +111,13 @@ requested task explicitly requires it. Frozen betas remain immutable.
 
 ## Selection Hub status
 
-Edge radial lifecycle complete and protected.
-Face radial lifecycle complete and protected through .690.
+Existing Edge radial lifecycle protected; full coverage gets a final pass after Object.
+Existing Face 8-sector lifecycle protected through .690; audit remaining drawer gaps.
 Extrude/Inset restore puck; Knife has viewport Done; Duplicate/Extract Faces create
 objects and hand directly to Object gizmo. Shell/Sweep viewport proxies use the
 shared Face-session completion semantic. Face Delete clears stale suppression.
-Do not add further lifecycle glue without a concrete regression.
+Existing lifecycle glue needs no further work without a regression. Complete missing
+Face contextual actions/settings before moving to Vertex and Object.
 
 ## Strengthening backlog — keep separate
 

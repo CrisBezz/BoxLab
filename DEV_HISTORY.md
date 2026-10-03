@@ -1,5 +1,13 @@
 # BoxLab Development History
 
+## 2026-10-03 — radial completion priority clarified
+
+- User clarified that the primary push is contextual radial menus plus nearby pop-out settings, reducing routine left-drawer dependency.
+- Required order: finish Face gaps, then Vertex, Object, and finally Edge completeness.
+- .690 completed the existing Face ring lifecycle, not all Face contextual tool/settings coverage. Previous broader-modeless wording overstated overall completion and redirected development prematurely.
+- Existing protected Face/Edge flows remain intact. .691 PASS remains protected; published .692 Edge parity checks remain pending. No new runtime build in this priority correction.
+- Next step: audit full Face drawer against the current 8-sector ring and repair/expose existing action/settings owners one gap at a time. No parallel kernels or bulk drawer removal.
+
 ## 2026-10-03 — v0.36.18.692 Edge vertical scrub neutral return
 
 - User confirmed .691 Face Grow/Shrink neutral return manual list PASS; now protected.
