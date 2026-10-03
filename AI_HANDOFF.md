@@ -1,7 +1,7 @@
-## v0.36.18.678 — radial Duplicate Faces restored
+## v0.36.18.679 — Object transform background dismiss
 
 Current release:
-- v0.36.18.678
+- v0.36.18.679
 
 Hands-on protected:
 - .652 Face-direct background Pencil yield: PERFECT / PASS.
@@ -14,41 +14,32 @@ Hands-on protected:
 - .675 navigation recovery: good for now / provisional PASS.
 - .676 guided radial Edge Bridge: PASS.
 - .677 Edge radial one-shot cleanup: PASS.
+- .678 Duplicate Faces: Duplicate works great and hands off to Object gizmo.
 
-Strengthening list:
-- Connected-chain Edge Bevel through ordinary 4-valence quad vertices remains recorded in ROADMAP.md.
-
-.678:
-- Begins Face-ring/modeless polish with Duplicate Faces.
-- Audit found the radial Face ring already exposed Duplicate, but its existing authoritative owner src/duplicate-faces.js was not loaded by index.html.
-- Reused and upgraded the existing Duplicate owner rather than creating a new kernel.
-- Existing Duplicate semantics are preserved:
-  - selected Faces are copied into a new object
-  - source object remains unchanged
-  - copied facegroups/creases are preserved by existing compactSelection path
-  - new duplicate object enters Object mode
-- duplicate-faces.js now emits boxlab-face-duplicate-complete and returns success.
-- Total Gizmo listens for successful Duplicate completion and immediately opens Object transform gizmo on the newly created duplicate.
-- This makes the radial flow:
-  Face selection -> Duplicate -> new object selected -> Object transform gizmo ready.
-- No new face topology/duplication implementation added.
+.679:
+- Fixes Object transform lifecycle after Duplicate Faces and generally in Object mode.
+- Root cause: Total Gizmo forced Object mode back to transform every sync frame, so background tap could never actually dismiss the gizmo.
+- Added explicit objectTransformDismissed state.
+- Empty-background tap while Object transform gizmo is active:
+  - disarms transform arming
+  - clears transient gizmo state
+  - hides Object gizmo
+  - keeps the object selected
+- Tapping the object again reactivates the transform gizmo.
+- Object selection key now includes active/selected object IDs so selecting a different object naturally resets dismissed state.
+- Duplicate completion explicitly clears dismissed state so the new duplicate still receives the gizmo immediately.
+- No transform geometry code changed.
 
 Immediate hands-on:
-1. Select one or more Faces.
-2. Puck -> Face tools -> Duplicate.
-3. Duplicate should now be available and execute.
-4. Source remains unchanged.
-5. New object should be selected and BoxLab should enter Object mode.
-6. Transform gizmo should appear immediately on the duplicate.
-7. Move/Rotate/Scale the duplicate to confirm clean handoff.
-8. Undo should restore the scene transaction according to the existing Duplicate/Object history owner.
-9. Regression: Extract remains unchanged.
-
-Next after PASS:
-- Continue Face-ring gaps: likely Extract handoff polish or Knife contextual lifecycle, depending on audit.
+1. Duplicate Face(s) and move the duplicate with gizmo.
+2. Tap empty background.
+3. Gizmo should disappear / transform mode should cancel.
+4. Duplicate should remain selected.
+5. Tap duplicate object again.
+6. Gizmo should reappear and transform should work again.
+7. Select another object; gizmo should appear for that object normally.
 
 Protected:
-- .677 complete Edge radial workflow.
+- .678 Duplicate Faces semantics.
 - .675 navigation recovery.
-- existing Duplicate Faces owner semantics.
 - src/multi-object-transform.js?v=0.36.1.0 unchanged.
