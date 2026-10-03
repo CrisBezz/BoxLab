@@ -1,5 +1,18 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.679 Object transform background dismiss
+
+- .678 Duplicate Faces works and hands off correctly to Object gizmo.
+- User reported Object transform could not be cancelled by tapping background.
+- Root cause: Total Gizmo hard-forced Object mode to transform every sync cycle.
+- Added explicit dismissed Object-transform state.
+- Empty-background tap now hides/disarms Object transform without deselecting object.
+- Tapping object again reopens gizmo.
+- Object selection key now includes object IDs so changing selection reactivates normally.
+- Duplicate completion always clears dismissed state for immediate transform handoff.
+- No transform geometry code changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.678 radial Duplicate Faces restored
 
 - .677 Edge radial one-shot cleanup hands-on PASS.
