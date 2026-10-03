@@ -3046,3 +3046,6 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Regression .691: Face sideways hold browser and tap select/deselect unchanged
 - [x] Protection .691: .690 Shell/Sweep/Knife and .682 Pencil/Object owners unchanged
 - [x] Protection .691: .688 Loop Cut core and multi-object-transform.js?v=0.36.1.0 unchanged
+
+- [x] Release .691: release-version and release-bootstrap pins updated to .691; targeted behavioral/release tests 9/9 PASS
+- [x] Audit .691: full CI compared with .690 runtime; 285 existing failures, additional release pin mismatch corrected

@@ -23,7 +23,7 @@ modeless interaction work one narrow gesture at a time, rather than adding radia
 - Parent checkpoint before .691: f298c22da26f03e191d5e0c740ab1ac1f2d8b2fd.
 - Find the .691 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
 - Changed runtime owner: src/main.js, repinned to .691.
-- Release bootstrap/version logic unchanged; both remain intentionally pinned to .690.
+- Release bootstrap/version logic unchanged; both repinned to .691 to satisfy the current release-owner contract.
 
 ## Immediate hands-on checks — .691
 
@@ -48,7 +48,11 @@ advanced-selection.js Grow/Shrink button owners remain unchanged.
 Edge and Vertex retain their previous behavior. No new raw-pointer listener,
 selection kernel, modelling kernel or radial UI was introduced.
 Automated owner integration checks cover grow/reverse/neutral, shrink/neutral,
-the neutral boundary and unchanged Edge/Vertex behavior.
+the neutral boundary and unchanged Edge/Vertex behavior. Targeted tests: 9/9 PASS.
+Full CI has 285 pre-existing failures (verified against .690 runtime CI). The only
+additional .691 failure was a stale release-version pin; both refresh pins were corrected.
+Historical snapshot-marker assertions remain in the full suite; do not widen this
+gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
 
