@@ -1,5 +1,14 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.695 outer Face Poke / Make Planar
+
+- User confirmed .694 full hands-on list PASS; two-ring Join/Circle layout and one-shot lifecycles protected. User requested continuing two additions per build.
+- Audited Poke and Make Planar: existing owners already load through face-workflow-layout.js; preserve their validators, geometry/history and selection semantics.
+- Added direct outer-ring Poke (90°) and Make Planar (135°), reusing shared disabled-state feedback and one-shot puck cleanup.
+- Poke adds centre-vertex triangle fans to selected suitable Faces. Make Planar enables for exactly one warped Face; already planar/multiple Faces are disabled by the authoritative owner.
+- No modelling owner, settings panel or raw-pointer gesture owner changed. Previous ten sectors remain intact.
+- .695 shell/manifest/gizmo/refresh pins updated; syntax/release tests PASS. Hands-on checks pending. Continue Face gaps before Vertex, Object and final Edge.
+
 ## 2026-10-03 — v0.36.18.694 Face outer ring / Circle
 
 - User requested concentric tool rings; populate Face tools before jointly assigning inner/main versus outer/secondary. More remains an accepted fallback if the complete layout is crowded.

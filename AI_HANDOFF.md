@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.694**.
+Current release: **v0.36.18.695**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -36,23 +36,35 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.694.
-- Parent checkpoint before .694: beb42f187b0789049c87a81608628220e4cb734f.
-- Find the .694 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owner: src/total-gizmo.js, repinned to .694; main.js code unchanged.
-- Release bootstrap/version logic unchanged; both repinned to .694 to satisfy the current release-owner contract.
+- Release: v0.36.18.695.
+- Parent checkpoint before .695: de5a42dc8a7edef27a8236137c5f2a90ce611657.
+- Find the .695 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owner: src/total-gizmo.js, repinned to .695; main.js code unchanged.
+- Release bootstrap/version logic unchanged; both repinned to .695 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .694
+## Immediate hands-on checks — .695
 
-Confirm iPad visibly shows v0.36.18.694.
-1. Face puck → gizmo centre → tools: eight inner sectors plus outer Join Coplanar and Circle; no More button.
-2. Select adjacent coplanar Faces; outer Join merges and returns selected-result puck; one Undo restores Faces.
-3. Select one planar Face; outer Circle circularizes its boundary and returns puck; one Undo restores the original shape.
-4. Invalid selection disables the respective action; centre closes both rings; inner tools still work.
-5. Check spacing with Pencil/touch and after orbit/zoom, especially near viewport edges.
+Confirm iPad visibly shows v0.36.18.695.
+1. Face puck → gizmo centre → tools: outer Poke and Make Planar added; previous sectors unchanged.
+2. Select a quad; Poke creates four selected triangles with a centre vertex and returns puck. One Undo restores the quad.
+3. Select several suitable Faces; Poke applies to the selection; one Undo restores it.
+4. Warp a quad by moving one Vertex, then select that Face: Make Planar flattens it and returns puck; one Undo restores the warp.
+5. Already planar/multiple Faces disable Make Planar. Join/Circle, centre close and selection/navigation remain intact.
 
-.694 awaits hands-on PASS. .693 was superseded before an explicit PASS; .692 checks
-remain pending. Face gaps → Vertex → Object → final Edge remains the priority.
+.695 awaits hands-on PASS. User confirmed the complete .694 list PASS; protect the
+two-ring layout, Join/Circle one-shot completion and Undo. .692 checks remain pending.
+Primary sequence remains Face gaps → Vertex → Object → final Edge. User authorized
+two related additions per build; combine safely into one version with one test list.
+
+## .695 action owner audit
+
+Poke (#pokeFacesBtn, poke-faces.js) and Make Planar (#makePlanarBtn, make-planar.js)
+already load through face-workflow-layout.js. This build exposes those owners as
+outer-ring sectors at 90/135 degrees and extends existing one-shot puck cleanup.
+Existing validator/enabled state, topology/vertex edits, history and selection remain
+authoritative. No modelling kernel, tool session, settings panel or pointer owner
+added. Make Planar accepts one warped Face only; planar Faces are correctly disabled.
+Remaining Face Bridge and topology/repair actions still need narrow contextual batches.
 
 ## Two-ring design direction / .694 audit
 
@@ -110,6 +122,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .694 two-ring Face layout, direct Join/Circle, one-step Undo, disabled actions and ring close: PASS.
 
 - .691 Face hold vertical Grow/Shrink neutral return PASS, including step reversal, sideways browsing and normal taps.
 

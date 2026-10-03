@@ -3080,8 +3080,19 @@ Add new permanent regression checks below when future features need protection.
 
 - [x] Static .694: More UI removed; eight inner sectors unchanged; outer Join/Circle use existing owners
 - [x] Protection .694: modelling kernels/Undo owners and protected transform untouched
-- [ ] Hands-on .694: visible .694; two rings readable and selectable with Pencil/touch
-- [ ] Hands-on .694: outer Join returns selected-result puck and undoes in one step
-- [ ] Hands-on .694: outer Circle returns puck and undoes in one step
-- [ ] Regression .694: disabled actions, ring-centre close and inner tools remain correct
-- [ ] Layout .694: spacing inspected near viewport edges and at different zooms
+- [x] Hands-on .694: visible .694; two rings readable and selectable with Pencil/touch
+- [x] Hands-on .694: outer Join returns selected-result puck and undoes in one step
+- [x] Hands-on .694: outer Circle returns puck and undoes in one step
+- [x] Regression .694: disabled actions, ring-centre close and inner tools remain correct
+- [x] Layout .694: spacing inspected near viewport edges and at different zooms
+
+## Face outer Poke / Make Planar — v0.36.18.695
+
+- [x] Hands-on .694: full manual list PASS; protected two-ring Join/Circle workflow
+- [x] Static .695: Poke/Make Planar proxy existing loaded owners; previous sectors unchanged
+- [x] Protection .695: modelling/Undo owners and protected transform unchanged
+- [ ] Hands-on .695: visible .695; both additional outer buttons usable
+- [ ] Hands-on .695: single/multi-face Poke returns selected-result puck and one-step Undo
+- [ ] Hands-on .695: one warped Face Make Planar returns puck; one Undo restores warp
+- [ ] Hands-on .695: planar/multiple Faces disable Make Planar
+- [ ] Regression .695: Join/Circle, centre close and protected navigation remain intact
