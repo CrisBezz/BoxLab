@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-// BoxLab v0.36.18.41 — conservative selected-vertex Merge by Distance.
+// BoxLab v0.36.18.706 — conservative selected-vertex Merge by Distance.
 // Batch-welds only selected regular mesh vertices within an exact model-unit tolerance.
 
 const status=document.querySelector('#selectionStatus');
@@ -82,10 +82,12 @@ function plan(m,ids,tolerance){
   return{ok:true,tolerance:tol,clusters,representative,positions,nextFaces};
 }
 function restore(target,source){target.vertices=source.vertices.map(v=>v.clone());target.faces=source.faces.map(f=>[...f]);target.creases=new Map(source.creases);if(source.looseEdges instanceof Set)target.looseEdges=new Set(source.looseEdges);if(source.looseVertices instanceof Set)target.looseVertices=new Set(source.looseVertices);target.edges();}
-function apply(){
-  const m=mesh(),history=globalThis.__boxlabHistory,ids=selectedVertices();if(!m||!history)return;
-  const p=plan(m,ids,input.value);if(!p.ok){if(status)status.textContent=`Merge by Distance • ${p.reason}`;sync();return;}
-  const before=m.clone();history.push(before);
+function applyFor({ids,tolerance,expectedMesh,selectResults=false}={}){
+  const m=mesh(),history=globalThis.__boxlabHistory;
+  if(!m||!history||m!==expectedMesh)return{ok:false,reason:'Active mesh changed or history unavailable'};
+  if(document.querySelector('#app')?.classList?.contains('boxlab-active-locked'))return{ok:false,reason:'Active object is read-only'};
+  const p=plan(m,ids,tolerance);if(!p.ok){if(status)status.textContent=`Merge by Distance • ${p.reason}`;sync();return p;}
+  const before=m.clone();
   for(const [keep,pos] of p.positions)m.vertices[keep].copy(pos);
   m.faces=p.nextFaces.map(f=>[...f]);
 
@@ -104,11 +106,15 @@ function apply(){
   const creases=new Map();for(const[k,value]of m.creases){const[a,b]=String(k).split(':').map(Number);if(map.has(a)&&map.has(b)&&map.get(a)!==map.get(b))creases.set(key(m,map.get(a),map.get(b)),value);}m.creases=creases;m.remapLooseTopology?.(map);m.edges();
 
   const results=[...p.positions.keys()].map(v=>map.get(v)).filter(Number.isInteger);
-  if(!results.length){restore(m,before);render();if(status)status.textContent='Merge by Distance • rollback';return;}
-  if(multiToggle){const wanted=results.length>1;if(multiToggle.checked!==wanted){multiToggle.checked=wanted;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}}
-  bridge()?.set?.('vertex',results);render();sync();if(status)status.textContent=`Merge by Distance • ${p.clusters.length} cluster${p.clusters.length===1?'':'s'} merged • ${results.length} result${results.length===1?'':'s'} selected`;
+  if(!results.length){restore(m,before);render();return{ok:false,reason:'Merge by Distance rollback'};}
+  history.push(before);
+  if(selectResults&&multiToggle){const wanted=results.length>1;if(multiToggle.checked!==wanted){multiToggle.checked=wanted;multiToggle.dispatchEvent(new Event('change',{bubbles:true}));}}
+  if(selectResults)bridge()?.set?.('vertex',results);
+  render();sync();if(status)status.textContent=`Merge by Distance • ${p.clusters.length} cluster${p.clusters.length===1?'':'s'} merged`;
+  return{ok:true,clusters:p.clusters.length,results};
 }
+function apply(){return applyFor({ids:selectedVertices(),tolerance:input.value,expectedMesh:mesh(),selectResults:true});}
 function sync(){const p=plan(mesh(),selectedVertices(),input.value);button.disabled=!p.ok;button.title=p.ok?`Merge ${p.clusters.length} nearby selected cluster${p.clusters.length===1?'':'s'}`:(p.reason||'Select nearby vertices');}
 button.addEventListener('click',apply);input.addEventListener('input',sync);input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!button.disabled)apply();});window.addEventListener('boxlab-bridge-state',sync);document.addEventListener('pointerup',()=>queueMicrotask(sync),true);setTimeout(sync,0);
 
-globalThis.__boxlabMergeByDistance={version:'0.36.18.41',plan,apply};
+globalThis.__boxlabMergeByDistance={version:'0.36.18.706',plan,apply,applyFor};

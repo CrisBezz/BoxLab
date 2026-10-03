@@ -9,8 +9,8 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.705**.
-Current focus: hands-on Align to Face confirmation; then finish Face gaps → Vertex → Object → final Edge.
+Current release: **v0.36.18.706**.
+Current focus: hands-on Face radial Merge by Distance confirmation; then finish Face audit → Vertex → Object → final Edge.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
 is still the priority. Follow Face → Vertex → Object → final Edge, not broad gestures.
@@ -42,22 +42,57 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.705.
-- Parent checkpoint before .705: e68b7145 (queued-plan documentation; runtime .704 was d89d7954).
-- Find the .705 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed owners: component-align/core, face-align-viewport and drawer-ui parent/child pins .705. main.js unchanged but pin .705. Ring/repair/cleanup retain .704; dock/previous session imports retain .700. Existing surface-transform-core .442 quaternion and mesh-health-core .443 audits reused.
-- Release bootstrap/version logic unchanged; both repinned to .705 to satisfy the current release-owner contract.
+- Release: v0.36.18.706; parent .705 checkpoint c4931014.
+- Find the .706 runtime/documentation commit in main history; no self-referential SHA.
+- Changed modules/pins: total-gizmo, face-repair-viewport, merge-by-distance,
+  select-mergeable-verts, face-workflow-layout and drawer-ui .706.
+- Release markers and main-loader/refresh pins .706; refresh logic unchanged.
+- Align owners/pins remain .705; dock/session helper .700; protected transform .1.0.
 
-## Immediate hands-on checks — .705
+## Immediate hands-on checks — .706
 
-Confirm iPad visibly shows v0.36.18.705.
-1. Select moving planar Face(s) plus the fixed Face → radial Align → Align to Face → tap selected fixed Face. On arbitrary orientations, moving group rotates and translates along anchor normal onto its plane; fixed Face unchanged, moving shape preserved.
-2. Selection/puck returns; one Undo restores geometry and Redo repeats it. Already coplanar groups complete without a redundant history step.
-3. Cancel before/after arming changes no geometry. Bent moving groups, warped anchors or collapsing surrounding geometry reject with a reason in the top-centre panel; selection/history stay unchanged.
-4. Existing X/Y/Z Align and previous radial tools/background Done/navigation remain correct; ring positions unchanged.
+1. Confirm iPad visibly shows v0.36.18.706. Face ring has Merge Dist; prior tools and centred × usable.
+2. Merge Dist opens top-centre Merge by Distance controls with whole-active-object scope and exact model-unit distance. Adjusting distance changes readiness; no geometry on launch/edit.
+3. Cancel restores original selected Face/puck without geometry/history changes.
+4. On an ordinary mesh with eligible nearby duplicate vertices, Apply welds once, stays Face mode, clears stale selection; next Face tap gets fresh puck. One Undo restores geometry; Redo repeats.
+5. Healthy mesh/no safe nearby clusters or invalid distance disables Apply. Previous Align to Face, repair controls, background Done/navigation remain intact.
 
-.705 awaits hands-on PASS. .702/.703/.704 checks also remain pending; no explicit
-PASS was received. /nextbuild is not a PASS. All earlier protected checks remain.
+.705 full manual list confirmed PASS by user; protect arbitrary-plane Align, fixed
+anchor/rigid shape, Cancel/rejection, selection/puck, one Undo/Redo and XYZ/navigation.
+.702/.703/.704 retain their pending checks; no explicit PASS was received for those.
+.706 awaits hands-on PASS. All previous protected checks remain.
+
+## .706 Merge by Distance owner audit / implementation
+
+Merge already exists: merge-by-distance .41 owns the conservative selected-Vertex
+planner/commit; select-mergeable-verts .135/.137 scans whole-object safe clusters;
+Face Repair .145 proxies those by switching Vertex mode. New Face radial Merge Dist
+uses existing whole-object repair panel and owners without that mode hop.
+Explicit model-unit tolerance and Apply/Cancel at top centre. Scans only on launch,
+input/context change and Apply, not every positioning frame. No geometry/history on
+launch, tolerance edit or Cancel. Each individually safe cluster is inspected through
+existing planner; the combined batch is also validated, rejecting interacting clusters
+that would create duplicate/collapsed/nonmanifold geometry. No duplicate welding kernel.
+
+Owner now exposes applyFor with explicit IDs/tolerance/expected mesh and result; same
+commit/remapping maths. Default Vertex apply still selects welded results and adjusts
+Multi. Face contextual call preserves mode/Multi until proxy clears stale Face IDs
+on success. History pushed once after successful result, not on rollback/no-op.
+Locked/reference and changed mesh contexts blocked. Cancel preserves selection and
+semantic completion returns puck; successful apply clears suppression for next tap.
+Merge launcher allows editing distance even if current distance yields no candidates;
+it does not inherit disabled Vertex selection or closed Repair drawer state.
+
+Ring: eight inner unchanged; fifteen outer at 220px/24 degrees, guide 440px. Outer
+button spacing audited; placement remains provisional until full coverage decisions.
+55 targeted owner/panel/whole-object scope/invalid and joint-unsafe rejection/Vertex
+loose topology/disabled-target radial dispatch/protected Align/repair/dock/session/
+release checks PASS. Full suite 1139 tests, 854 PASS; same 285 failure names as .705,
+no new failures. Syntax and diff checks PASS.
+
+Next: confirm .706; finish Face owner/settings inventory before declaring Face
+complete, then Vertex → Object → final Edge. Through already lives in Extrude.
+Keep drawer fallbacks, no selection-only radial helpers or unrelated strengthening.
 
 ## .705 Align to Face owner audit / implementation
 
@@ -85,9 +120,8 @@ XYZ/core/proxy/repair/dock/background/Bridge/value/release checks PASS; syntax P
 Ring layout and protected modelling kernels remain unchanged. Full regression: 1132 tests, 847 PASS,
 same 285 failure names as .704, no new failures.
 
-Next: hands-on confirmation; finish remaining Face active-tool/settings audit,
-particularly Face Repair Merge by Distance scope/parameters, then Vertex → Object →
-final Edge. Through already belongs to Extrude. No unrelated development, no selection
+Hands-on .705 confirmed PASS; Merge by Distance contextual scope/parameters now
+implemented in .706 above. Continue Face audit → Vertex → Object → final Edge. Through already belongs to Extrude. No unrelated development, no selection
 helpers in rings, no premature Face-complete claim or bulk drawer removal.
 
 ## .704 owner audit / implementation — retained checkpoint
@@ -211,6 +245,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .705 Align to Face full manual list PASS: arbitrary-plane placement, fixed anchor, rigid group, guarded rejection/Cancel, selection/puck, one-step Undo/Redo and XYZ/navigation.
 
 - .701 Coplanar/Connected owner behavior PASS; radial access retired by user scope correction in .702.
 

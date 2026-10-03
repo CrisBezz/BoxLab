@@ -4660,3 +4660,13 @@ For exact implementation state, always inspect current `main`; this history is c
 - Move and .593 exact-entry paths unchanged.
 - Prepublish syntax/static regression 9/9 PASS.
 
+
+
+## 2026-10-04 — v0.36.18.706 Face radial Merge by Distance
+
+- User confirms .705 full manual list PASS; arbitrary-plane Align now protected. .702/.703/.704 pending checks retained.
+- Audited existing .41 welding owner, .135/.137 whole-object safe-cluster scanner and .145 Face Repair proxy. Added one active outer Merge Dist sector and top-centre distance/whole-object Apply/Cancel settings through existing repair panel; no mode hop or parallel kernel.
+- Scanner accepts optional exact tolerance, old selection-only caller unchanged. Existing owner exposes explicit applyFor/result/mesh guard; default Vertex results/Multi retained. Combined individually safe clusters are validated together before mutation. History adds one successful snapshot, none on rejection/rollback. Face success clears stale IDs and returns fresh-puck lifecycle; Cancel preserves geometry/selection.
+- Eight inner unchanged; fifteen outer at 220px/24 degrees; no outer/outer or outer/inner rectangle overlap. Fixed disabled-Vertex-target dispatch for scoped Face Merge so launch can edit tolerance with no current candidates. Protected Align/transform/Loop Cut untouched.
+- 55 targeted checks PASS; full suite 1139 tests, 854 PASS, identical 285 failure names to .705, no new failures. Syntax/diff checks PASS. All .706 markers and changed dynamic child/parent pins updated.
+- Next: .706 hands-on confirmation, finish Face active-tool/settings inventory, then Vertex → Object → final Edge. No selection commands, broad gestures, strengthening or wholesale drawer removal.

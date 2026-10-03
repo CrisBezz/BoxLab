@@ -35,7 +35,7 @@ Face. Moving group rotates rigidly and translates along anchor normal; shared hi
 work where anchor vertices remain fixed. Bent groups, warped anchors and unsafe
 surrounding geometry reject without mutation. Selection/puck and one-step Undo/Redo;
 no-op adds no history. Existing anchor owner/quaternion/health audit reused; no new
-radial sector or pointer owner. Hands-on pending. Resume Face gaps → Vertex → Object
+radial sector or pointer owner. Hands-on PASS. Resume Face gaps → Vertex → Object
 → final Edge after this confirmation.
 
 ## Tool-session popup placement
@@ -181,7 +181,7 @@ Only add focused tools that suit BoxLab:
   - tapping the object restores the gizmo reliably
 - Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
-### Face contextual gap completion — .705
+### Face contextual gap completion — .706
 
 - .694 outer-ring Join/Circle and existing eight inner sectors are hands-on PASS and protected.
 - .695 Poke/Make Planar are hands-on PASS and protected.
@@ -194,7 +194,8 @@ Only add focused tools that suit BoxLab:
 - .702 removes Coplanar/Connected radial access and restores nine outer active tools; awaiting hands-on PASS.
 - .703 adds Close Holes / Quad Cleanup / Quadify N-gons through a top-centre whole-active-object Apply/Cancel panel, reusing existing owners. Successful rebuilding clears stale Face IDs; Cancel preserves selection. Hands-on pending.
 - .704 adds Clean Vertices to whole-object repair controls and Align to X/Y/Z anchor settings at top centre. Existing kernels reused; eight inner/fourteen outer tools. Hands-on pending; .702/.703 also remain pending.
-- .705 adds arbitrary-plane Align to Face in the existing Align pop-out; rigid planar group placement, fixed anchor, guarded candidate commit, one-step history. Hands-on pending.
+- .705 adds arbitrary-plane Align to Face in the existing Align pop-out; rigid planar group placement, fixed anchor, guarded candidate commit, one-step history. Hands-on PASS.
+- .706 exposes existing Merge by Distance through whole-object top-centre exact tolerance/Apply/Cancel, preserving Face mode and using existing safe scanner/weld owner. Fifteen outer tools; combined cluster validation, one history step and stale-ID cleanup. Hands-on pending.
 - Populate complete Face tool coverage before deciding inner/main vs outer/secondary placement. More is an accepted fallback if the completed two-ring layout is crowded.
 - Continue auditing remaining Face active-tool settings/repair access for contextual access/pop-outs before moving to Vertex, Object and final Edge.
 
