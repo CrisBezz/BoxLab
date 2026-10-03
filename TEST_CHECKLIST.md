@@ -2872,3 +2872,16 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .677: stale hubSuppressedKey cleared after radial Edge one-shot completion
 - [x] Static .677: Dissolve/Delete topology/history owners unchanged
 - [x] Protection .677: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Hands-on .677: Edge radial one-shot cleanup PASS
+- [ ] Workflow .678: radial Face Duplicate is available
+- [ ] Workflow .678: selected Face(s) duplicate into a new object
+- [ ] Workflow .678: source object remains unchanged
+- [ ] Workflow .678: duplicate becomes selected and Object mode activates
+- [ ] Workflow .678: Object transform gizmo appears immediately on duplicate
+- [ ] Workflow .678: Move/Rotate/Scale work immediately on duplicate
+- [ ] Regression .678: Extract Faces unchanged
+- [x] Static .678: existing duplicate-faces.js owner reused
+- [x] Static .678: no duplicate Face duplication kernel added
+- [x] Protection .678: src/multi-object-transform.js?v=0.36.1.0 unchanged
