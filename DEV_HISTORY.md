@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.682 Pencil/Object routing reliability
+
+- .681 Pencil background dismiss was intermittent and Pencil object taps could select without restoring gizmo.
+- Exposed the authoritative Object body picker from main.js via __boxlabSelectionBridge.pickObject().
+- Total Gizmo now uses that picker for Object gizmo re-open detection.
+- Pencil background tap candidate now starts at window capture rather than inside OrbitControls wrapper.
+- Orbit drag still marks candidate as claimed and suppresses tap completion.
+- No transform geometry implementation changed.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.681 Pencil background tap dismiss
 
 - Finger background tap correctly dismissed Object transform after .680.
