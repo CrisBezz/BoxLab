@@ -3075,3 +3075,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Hands-on .693: one Undo restores separate Faces
 - [ ] Hands-on .693: one Face/non-coplanar selection disables Join
 - [ ] Regression .693: primary Face tools, Shell/Sweep exits and ring centre close remain intact
+
+## Face two-ring batch — v0.36.18.694
+
+- [x] Static .694: More UI removed; eight inner sectors unchanged; outer Join/Circle use existing owners
+- [x] Protection .694: modelling kernels/Undo owners and protected transform untouched
+- [ ] Hands-on .694: visible .694; two rings readable and selectable with Pencil/touch
+- [ ] Hands-on .694: outer Join returns selected-result puck and undoes in one step
+- [ ] Hands-on .694: outer Circle returns puck and undoes in one step
+- [ ] Regression .694: disabled actions, ring-centre close and inner tools remain correct
+- [ ] Layout .694: spacing inspected near viewport edges and at different zooms

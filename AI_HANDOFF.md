@@ -9,7 +9,7 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.693**.
+Current release: **v0.36.18.694**.
 Current focus: finish Face radial tool/settings gaps, then Vertex, Object and final Edge completeness.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
@@ -36,37 +36,37 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.693.
-- Parent checkpoint before .693: aee6a66a3f38a40be4c6f8ae6f22e35b69759cf7.
-- Find the .693 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owner: src/total-gizmo.js, repinned to .693; main.js code unchanged.
-- Release bootstrap/version logic unchanged; both repinned to .693 to satisfy the current release-owner contract.
+- Release: v0.36.18.694.
+- Parent checkpoint before .694: beb42f187b0789049c87a81608628220e4cb734f.
+- Find the .694 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owner: src/total-gizmo.js, repinned to .694; main.js code unchanged.
+- Release bootstrap/version logic unchanged; both repinned to .694 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .693
+## Immediate hands-on checks — .694
 
-Confirm the iPad visibly shows v0.36.18.693.
-1. Select two or more adjacent coplanar Faces (e.g. a subdivided flat surface).
-2. Face puck → gizmo centre → Face ring → More…: nearby pop-out shows Join Coplanar.
-3. Join Coplanar merges through the existing owner and returns a puck on the selected result.
-4. One Undo restores the separate Faces. Select one Face or non-coplanar Faces: Join is disabled.
-5. More… toggles closed; ring centre closes normally. Primary sectors/Shell/Sweep remain intact.
+Confirm iPad visibly shows v0.36.18.694.
+1. Face puck → gizmo centre → tools: eight inner sectors plus outer Join Coplanar and Circle; no More button.
+2. Select adjacent coplanar Faces; outer Join merges and returns selected-result puck; one Undo restores Faces.
+3. Select one planar Face; outer Circle circularizes its boundary and returns puck; one Undo restores the original shape.
+4. Invalid selection disables the respective action; centre closes both rings; inner tools still work.
+5. Check spacing with Pencil/touch and after orbit/zoom, especially near viewport edges.
 
-.693 awaits hands-on confirmation. .692 Edge neutral-return checks are still pending;
-no PASS was supplied for .692. Priority remains Face gaps → Vertex → Object → final Edge.
+.694 awaits hands-on PASS. .693 was superseded before an explicit PASS; .692 checks
+remain pending. Face gaps → Vertex → Object → final Edge remains the priority.
 
-## .693 Face contextual gap audit
+## Two-ring design direction / .694 audit
 
-Existing ring has Extrude, Inset, Knife, Duplicate, Extract, Shell, Sweep and Delete.
-Join Coplanar Faces existed only in the drawer (#joinSelectedCoplanarFacesBtn,
-loaded by drawer-ui.js). .693 adds a More… pop-out alongside the unchanged eight
-primary sectors, exposing this authoritative one-shot action. Disabled state mirrors
-the underlying button; common one-shot completion restores selected-result puck.
-Pop-out closes on hub transitions and flips beside the ring near the right viewport edge.
-Join topology/history owner is unchanged; no new geometry algorithm or pointer owner.
-Remaining Face drawer gaps (including Bridge, Poke, Circle and repair/topology actions)
-need an owner/availability/settings audit before each next narrow build. Do not declare
-complete Face coverage from the successful lifecycle of the first eight sectors.
-Syntax/release tests pass; full CI has an existing 285-failure baseline.
+User requested two concentric Face tool rings instead of More. Populate remaining
+Face tools first, then decide main/frequently-used inner versus secondary outer
+placement together. If the completed layout is too crowded, a More pop-out remains
+an explicitly accepted fallback; do not choose it prematurely.
+.694 removes the .693 More UI and puts Join Coplanar (existing owner) plus Circle
+(existing #componentCircleBtn owner) directly on an outer ring at 145 px radius.
+The existing eight inner sectors remain at 82 px. Current outer assignments are
+provisional. Both actions use current button validation/history and shared one-shot
+puck cleanup. No modelling owner changed; no new raw-pointer gesture owner.
+Continue auditing Face Bridge, Poke and repair/topology actions one safe batch at a
+time. Pop-out settings remain appropriate for tools with parameters.
 
 ## Retained hands-on checks — .692
 
