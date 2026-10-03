@@ -68,9 +68,11 @@ No new raw-pointer listener, modelling kernel or navigation owner. Main allows o
 background hits through its armed-Face guard while these settings are active and
 cancels pending single taps when a second pointer arrives. Ordinary background
 selection behavior outside this session is unchanged. Pencil gate untouched.
-15 targeted dock/background/proxy/Bridge/release checks PASS. All changed session
+15 targeted dock/background/proxy/Bridge/release checks PASS. The two old .520
+guard assertions are updated to executable checks: armed Face hits still yield,
+only active-session backgrounds pass through, and second contacts cancel taps. All changed session
 modules and main/direct/gizmo plus refresh owners pinned .700; shared import .700.
-Protected multi-object-transform .0.36.1.0, Loop Cut and geometry owners untouched.
+Protected multi-object-transform v0.36.1.0, Loop Cut and geometry owners untouched.
 Continue remaining Face helper/repair/settings audit before Vertex/Object/final Edge.
 
 ## Two-ring design direction / .694 audit

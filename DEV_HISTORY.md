@@ -8,6 +8,7 @@
 - Armed Face main guard admits only contextual background input; second pointer cancels a pending single tap. Drags/multi-touch bypass dismissal; ordinary background behavior retained outside settings.
 - 15 targeted dock/background/proxy/Bridge/release tests PASS. Changed module/loader/refresh pins .700; protected transform, Loop Cut and modelling kernels unchanged. Hands-on confirmation pending.
 - Workflow/roadmap record top-centre placement as the rule for every future session popup.
+- CI exposed two .520 static guard assertions made obsolete by the scoped background exception; replaced only those with executable owner-guard checks. Historic release-pin assertion remains in the existing failure baseline.
 
 
 ## 2026-10-03 — v0.36.18.699 contextual Extrude / Inset settings
