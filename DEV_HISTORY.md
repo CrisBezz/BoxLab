@@ -1,5 +1,19 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.685 generalized logical-quad Loop Cut
+
+- .684 radial Knife viewport session hands-on PASS.
+- User found a Loop Cut refusal on visually quad topology containing multiple collinear boundary vertices.
+- Existing logical-quad compatibility only supported a 5-gon with exactly one added collinear vertex.
+- Generalized the same owner to faces with four genuine corners plus arbitrary collinear boundary detail.
+- Ring traversal operates on logical four-corner topology.
+- Split reconstruction preserves all physical boundary-chain vertices.
+- Genuine ngons/poles remain stops.
+- Single and multi Loop Cut use the same generalized path.
+- Facegroups preserved on generated strips.
+- Base Loop Cut remains fallback for ordinary quads.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.684 radial Knife viewport session
 
 - Continued Face-ring/modeless polish with Knife.
