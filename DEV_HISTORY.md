@@ -1,5 +1,20 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.686 Loop Cut strip reconstruction fix
+
+- .685 restored traversal through generalized logical quads, but created malformed long/sliver faces in the user screenshot case.
+- Root cause was ambiguous outer boundary connector selection in splitLogicalFace().
+- Rebuilt split reconstruction deterministically:
+  - cut sides must be opposite logical sides
+  - untouched sides are the exact outer connectors
+  - outer strips inherit those physical boundary chains
+  - interior strips are clean bands
+  - collinear detail on cut sides remains preserved
+- Generalized traversal retained.
+- Genuine ngons/poles still stop propagation.
+- No duplicate Loop Cut kernel added.
+- src/multi-object-transform.js?v=0.36.1.0 remains untouched.
+
 ## 2026-10-03 — v0.36.18.685 generalized logical-quad Loop Cut
 
 - .684 radial Knife viewport session hands-on PASS.
