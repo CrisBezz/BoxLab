@@ -1,5 +1,25 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.690 stale-shell refresh hardening / handoff prep
+
+- User reported .690 was not refreshing on iPad.
+- Repository verification confirmed:
+  - HTML title = v0.36.18.690
+  - data-release-version = 0.36.18.690
+  - version.json = 0.36.18.690
+  - Total Gizmo / Shell session / Sweep session pinned to .690
+- Root cause found in release-bootstrap.js:
+  - after three stale-shell responses in one Safari session it stopped attempting refresh permanently
+  - GitHub Pages can briefly serve an older HTML shell after version.json has advanced, so that guard could strand the user on .689
+- Hardened release-bootstrap stale-shell recovery:
+  - no permanent three-attempt stop
+  - escalating cache-buster / attempt marker
+  - retry counter resets after repeated attempts instead of abandoning recovery
+- Repinned release-bootstrap.js and release-version.js to .690.
+- Updated AI development workflow to make release-shell/cache verification mandatory before modelling changes.
+- Runtime release baseline before documentation-only handoff commits: 8efc9589423039927bfdb9da9da6710cdb311407.
+- .690 Shell/Sweep lifecycle still needs hands-on confirmation after the refreshed shell actually loads.
+
 ## 2026-10-03 — v0.36.18.690 unified radial Face session completion
 
 - .689 radial Face Delete hands-on PASS.
