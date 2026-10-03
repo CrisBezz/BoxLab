@@ -2860,3 +2860,15 @@ Add new permanent regression checks below when future features need protection.
 - [x] Static .676: guided session validates combined selection via bridgeEdgeSelectionInfo()
 - [x] Static .676: no duplicate Bridge topology kernel added
 - [x] Protection .676: src/multi-object-transform.js?v=0.36.1.0 unchanged
+
+
+- [x] Hands-on .676: guided radial Edge Bridge PASS
+- [ ] Workflow .677: radial Dissolve executes once with no extra panel
+- [ ] Workflow .677: next surviving Edge selection gets puck immediately after Dissolve
+- [ ] Workflow .677: radial Delete executes once with no extra panel
+- [ ] Workflow .677: next surviving Edge selection gets puck immediately after Delete
+- [ ] Workflow .677: if valid Edge selection survives either action, closed puck returns on it
+- [ ] Regression .677: .676 guided Bridge remains PASS
+- [x] Static .677: stale hubSuppressedKey cleared after radial Edge one-shot completion
+- [x] Static .677: Dissolve/Delete topology/history owners unchanged
+- [x] Protection .677: src/multi-object-transform.js?v=0.36.1.0 unchanged
