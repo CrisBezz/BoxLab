@@ -19,15 +19,20 @@
         ? Number(sessionStorage.getItem('boxlab-refresh-attempts') || 0)
         : 0;
 
-      if (attempts >= 3) {
-        console.warn('BoxLab release refresh stopped after repeated stale-shell responses', { running, latest });
-        return;
-      }
-
+      // Safari/GitHub Pages can briefly serve a stale HTML shell even after
+      // version.json has advanced. Do not permanently strand the session after
+      // three retries. Escalate the cache-buster instead, then keep retry state
+      // bounded per page load.
+      const nextAttempt = attempts + 1;
       sessionStorage.setItem('boxlab-refresh-latest', latest);
-      sessionStorage.setItem('boxlab-refresh-attempts', String(attempts + 1));
+      sessionStorage.setItem('boxlab-refresh-attempts', String(nextAttempt));
       target.searchParams.set('build', latest);
       target.searchParams.set('_reload', String(Date.now()));
+      target.searchParams.set('_attempt', String(nextAttempt));
+      if (nextAttempt > 6) {
+        sessionStorage.setItem('boxlab-refresh-attempts', '0');
+        target.searchParams.set('_fresh', String(Date.now()));
+      }
       window.location.replace(target.href);
     })
     .catch(error => console.warn('BoxLab release check failed', error));
