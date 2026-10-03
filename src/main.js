@@ -191,9 +191,9 @@ function applyVerticalSelectionScrub(hold,dy){
   const type=hold?.type||selectionMode;
   const base=[...new Set(hold?.gestureBaseIndices||[])].filter(Number.isInteger);
   if(!['vertex','edge','face'].includes(type)||!base.length)return false;
-  // Face vertical browsing has a neutral band so reversing to the hold
-  // point restores its fixed base; Edge/Vertex retain their protected feel.
-  const neutral=type==='face'&&Math.abs(dy)<SELECTION_SCRUB_LOCK;
+  // Face/Edge vertical browsing has a neutral band so reversing to the hold
+  // point restores its fixed base; Vertex retains its existing feel.
+  const neutral=(type==='face'||type==='edge')&&Math.abs(dy)<SELECTION_SCRUB_LOCK;
   const direction=neutral?'base':dy<0?'grow':'shrink';
   const steps=neutral?0:Math.max(1,Math.round(Math.abs(dy)/SELECTION_VERTICAL_STEP));
   if(hold.verticalDirection===direction&&hold.verticalSteps===steps)return true;

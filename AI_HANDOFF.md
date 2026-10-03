@@ -9,9 +9,9 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.691**.
-Current focus: hands-on confirmation of Face hold vertical Grow/Shrink neutral return.
-The user confirmed the full .690 manual list PASS on 2026-10-03.
+Current release: **v0.36.18.692**.
+Current focus: hands-on confirmation of Edge hold vertical Grow/Shrink neutral return.
+The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Face and Edge radial lifecycle work is complete and protected; continue broader
 modeless interaction work one narrow gesture at a time, rather than adding radial glue.
 
@@ -19,23 +19,35 @@ modeless interaction work one narrow gesture at a time, rather than adding radia
 
 - Repository: CrisBezz/BoxLab, branch main.
 - Live app: https://crisbezz.github.io/BoxLab/
-- Release: v0.36.18.691.
-- Parent checkpoint before .691: f298c22da26f03e191d5e0c740ab1ac1f2d8b2fd.
-- Find the .691 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
-- Changed runtime owner: src/main.js, repinned to .691.
-- Release bootstrap/version logic unchanged; both repinned to .691 to satisfy the current release-owner contract.
+- Release: v0.36.18.692.
+- Parent checkpoint before .692: a43e06aba2d154e9c8cd7b91865ec6e784dc8f90.
+- Find the .692 runtime/documentation commit in current main history; no self-referential commit SHA is embedded here.
+- Changed runtime owner: src/main.js, repinned to .692.
+- Release bootstrap/version logic unchanged; both repinned to .692 to satisfy the current release-owner contract.
 
-## Immediate hands-on checks — .691
+## Immediate hands-on checks — .692
 
-Confirm the iPad visibly shows v0.36.18.691 before judging behaviour.
-1. Face mode, no direct tool armed: Pencil hold a selected Face, then drag UP to Grow.
-2. Keep holding; drag back to the starting point: starting Face selection returns.
+Confirm the iPad visibly shows v0.36.18.692 before judging behaviour.
+1. Edge mode, no direct tool armed: Pencil hold a selected Edge, then drag UP to Grow.
+2. Keep holding; return to the starting point: initial Edge selection returns.
 3. Drag farther up, then back: preview reduces steps instead of accumulating.
-4. With several adjacent Faces selected, hold and drag DOWN to Shrink, then return to start: original selection returns. Release keeps the displayed selection.
-5. Face hold sideways candidate browsing and normal tap select/deselect remain unchanged.
+4. With several adjacent Edges selected, hold and drag DOWN to Shrink, then return to start: original selection returns. Release keeps the displayed selection.
+5. Sideways Edge Loop/Ring/Boundary browsing, additive base selection and Face .691 neutral return remain intact.
 
-.691 is awaiting hands-on PASS. Do not mark it protected until the user confirms.
+.692 is awaiting hands-on PASS. .691 is now confirmed PASS and protected.
 After PASS, record it and re-audit before choosing the next narrow modeless gesture.
+
+## .692 implementation / owner audit
+
+Extended the already-tested Face neutral return to the existing Edge vertical scrub.
+Only the type gate in applyVerticalSelectionScrub changed. The shared main.js owner
+still recomputes previews from the fixed base and invokes existing Grow/Shrink buttons.
+Edge horizontal candidate enumeration, additive merge, release/cancel ownership,
+Loop Cut and all radial tools are untouched. Vertex behavior is unchanged.
+12/12 targeted behavioral/release tests PASS: Edge Grow/reverse/neutral,
+multi-edge Shrink/neutral, band boundary, Face .691 regressions and release contracts.
+The full-suite baseline is still 285 existing failures; compare CI before claiming
+any new failures. Keep historical test cleanup separate from this gesture build.
 
 ## .691 implementation / owner audit
 
@@ -45,7 +57,7 @@ Face-only neutral band (absolute vertical distance below 18 px) now restores the
 fixed gesture starting selection and invokes no Grow/Shrink operation.
 Outside the band the existing 30 px step scaling and authoritative
 advanced-selection.js Grow/Shrink button owners remain unchanged.
-Edge and Vertex retain their previous behavior. No new raw-pointer listener,
+At .691, Edge and Vertex retained previous behavior; .692 extends neutral return to Edge only. No new raw-pointer listener,
 selection kernel, modelling kernel or radial UI was introduced.
 Automated owner integration checks cover grow/reverse/neutral, shrink/neutral,
 the neutral boundary and unchanged Edge/Vertex behavior. Targeted tests: 9/9 PASS.
@@ -55,6 +67,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .691 Face hold vertical Grow/Shrink neutral return PASS, including step reversal, sideways browsing and normal taps.
 
 - .690: iPad refreshed version confirmed; Shell Cancel/Apply, Sweep Cancel/Apply,
   fresh Face puck after cleared selection, and Knife Done regression all PASS.

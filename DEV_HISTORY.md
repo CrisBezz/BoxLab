@@ -1,5 +1,15 @@
 # BoxLab Development History
 
+## 2026-10-03 — v0.36.18.692 Edge vertical scrub neutral return
+
+- User confirmed .691 Face Grow/Shrink neutral return manual list PASS; now protected.
+- Re-audited main a43e06ab. Edge vertical Grow/Shrink uses the same existing main.js scrub owner; no separate implementation is needed.
+- Extended the neutral-band type gate from Face to Face/Edge. Returning within 18 px of the hold origin restores the fixed starting Edge selection without applying Grow/Shrink.
+- Existing 30 px step scaling, sideways Loop/Ring/Boundary enumeration, additive base merge, release/cancel owners, radial tools and Loop Cut remain unchanged. Vertex unchanged.
+- 12/12 targeted behavioral/release tests PASS, covering Edge Grow/reversal/neutral, multi-edge Shrink/neutral, band boundary and protected Face .691 behavior.
+- Updated all release markers plus main.js / release-bootstrap.js / release-version.js pins to .692; protected multi-object-transform.js?v=0.36.1.0 unchanged.
+- .692 awaits hands-on confirmation. The full CI baseline has 285 existing failures; historical test cleanup remains separate.
+
 ## 2026-10-03 — v0.36.18.691 Face vertical scrub neutral return
 
 - User confirmed the full .690 refreshed-shell manual checks PASS. Face radial lifecycle is complete and protected, including Shell/Sweep exit cleanup and Knife Done.

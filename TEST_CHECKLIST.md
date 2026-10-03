@@ -3039,13 +3039,27 @@ Add new permanent regression checks below when future features need protection.
 - [x] Automated .691: Face Grow previews recompute from fixed base and return to neutral
 - [x] Automated .691: Face Shrink/reversal restores the same starting selection
 - [x] Automated .691: neutral band boundary tested; Edge/Vertex behavior unchanged
-- [ ] Hands-on .691: visibly loads v0.36.18.691
-- [ ] Hands-on .691: Face hold then UP grows; returning to start restores initial selection
-- [ ] Hands-on .691: farther UP then back reduces steps rather than accumulating
-- [ ] Hands-on .691: DOWN shrinks; returning to start restores initial selection; release keeps preview
-- [ ] Regression .691: Face sideways hold browser and tap select/deselect unchanged
+- [x] Hands-on .691: visibly loads v0.36.18.691
+- [x] Hands-on .691: Face hold then UP grows; returning to start restores initial selection
+- [x] Hands-on .691: farther UP then back reduces steps rather than accumulating
+- [x] Hands-on .691: DOWN shrinks; returning to start restores initial selection; release keeps preview
+- [x] Regression .691: Face sideways hold browser and tap select/deselect unchanged
 - [x] Protection .691: .690 Shell/Sweep/Knife and .682 Pencil/Object owners unchanged
 - [x] Protection .691: .688 Loop Cut core and multi-object-transform.js?v=0.36.1.0 unchanged
 
 - [x] Release .691: release-version and release-bootstrap pins updated to .691; targeted behavioral/release tests 9/9 PASS
 - [x] Audit .691: full CI compared with .690 runtime; 285 existing failures, additional release pin mismatch corrected
+
+## Modeless Edge vertical scrub — v0.36.18.692
+
+- [x] Hands-on .691: Face neutral return complete manual list PASS and protected
+- [x] Automated .692: Edge Grow/reversal/neutral and multi-edge Shrink/neutral restore fixed base
+- [x] Automated .692: neutral boundary, protected Face behavior and Vertex baseline tested
+- [x] Release .692: shell/manifest/main/refresh pins agree; targeted tests 12/12 PASS
+- [ ] Hands-on .692: visibly loads v0.36.18.692
+- [ ] Hands-on .692: Edge hold UP grows; return to origin restores starting selection
+- [ ] Hands-on .692: farther UP and back reduces steps without accumulation
+- [ ] Hands-on .692: DOWN shrinks; neutral restores initial selection; release keeps preview
+- [ ] Regression .692: sideways Edge Loop/Ring/Boundary browsing and additive base intact
+- [ ] Regression .692: Face .691 neutral return remains PASS
+- [x] Protection .692: Loop Cut, radial tool owners and protected multi-object-transform unchanged

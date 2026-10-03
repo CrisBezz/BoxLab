@@ -139,7 +139,7 @@ Only add focused tools that suit BoxLab:
   - finger/Pencil background tap dismisses Object gizmo
   - Pencil background drag still orbits
   - tapping the object restores the gizmo reliably
-- Broader modeless interaction phase is active. .691 repairs the existing Face hold vertical Grow/Shrink gesture with a neutral return to starting selection; awaiting hands-on PASS. Continue one narrow gesture at a time.
+- Broader modeless interaction phase is active. .691 Face hold vertical Grow/Shrink neutral return is hands-on PASS and protected. .692 extends the same existing owner to Edge neutral return; awaiting hands-on PASS. Continue one narrow gesture at a time.
 
 ## Strengthening list
 
