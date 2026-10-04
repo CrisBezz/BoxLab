@@ -13,7 +13,7 @@ test('364-367 touch object activation now allows OrbitControls pointerup cleanup
 test('364 activation helper can still consume events for callers that explicitly request it',()=>{
   const src=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
   const block=src.slice(src.indexOf('function handleViewportActivation'),src.indexOf('function installViewportActivation'));
-  assert.match(block,/if \(inactiveIsCloser\) \{/);
+  assert.match(block,/if \(objectHit\?\.inactive\) \{/);
   assert.match(block,/if \(stopEvent\) \{\s*event\.preventDefault\(\);\s*event\.stopImmediatePropagation\(\);/s);
   assert.match(block,/return true/);
   assert.match(block,/return false/);

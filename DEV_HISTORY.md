@@ -4768,3 +4768,12 @@ For exact implementation state, always inspect current `main`; this history is c
 - Boolean-specific shared presentation CSS arranges original A/B/Swap above original Union/Cut/Intersect, Close right; compact padding/title, operand truncation and lazy insertion order. No node replacement/handler/operation/selection changes; other panel styles preserved.
 - 51 targeted PASS including actual Face preview excluding remote shell/unchanged source/no history, existing Face/Edge repeat sessions and original dock/Boolean controls. Full1205/921/284, identical failure names versus .7151204/920/284. Syntax/diff PASS; protected modeling/Loop/multi-object-transform/frozen betas unchanged.
 - .716 shell/manifest/helper/direct parent/shared import graph/main/refresh pins updated. Next visible .716 affected-region preview and Boolean compact hand checks; keep other Edge pending checks/drawer fallbacks.
+
+
+## 2026-10-04 — v0.36.18.717 first-selected Object Multi gizmo
+
+- User requests retaining gizmo on first selected object for radial Boolean access. Audit found Total Gizmo's membership read targeted a nonexistent manager selectedObjects API; active-mesh-only hit test misclassified inactive operands as background.
+- Presentation uses authoritative ordered selection Set; active anchor uses live mesh, inactive anchor uses original object mesh; removal falls to next surviving visible selection. Empty Multi hides gizmo, membership changes restore access. No duplicate selection state or transform/pivot changes.
+- Extracted existing nearest visible Object scene picker into reusable manager API; activation retains tolerance/stopEvent behavior. Gizmo hit checks and Pencil background semantic use it so inactive operand taps retain tools, genuine background still dismisses/re-tap restores. No new pointer owner.
+- 33 targeted PASS; full1210/926/284, identical failure names versus .7161205/921/284. Updated existing touch activation/cache tests for shared picker/current gizmo pin. Protected multi-object-transform1.0 and modelling/Boolean/frozen-beta owners untouched.
+- .717 markers/main/refresh/gizmo/Object manager pins updated; .716 preview/layout included and still pending manual PASS. Next visible .717 Multi first-object retention, radial Boolean/Swap/results/history, Focus list/background/navigation and .716 visuals.

@@ -7,8 +7,21 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.716**.
-Current focus: scoped Face Bevel preview and compact Object Boolean popup, pending hands-on.
+Current release: **v0.36.18.717**.
+Current focus: Object Multi gizmo retention/first-selected anchoring for radial Boolean access, pending hands-on.
+.717 uses authoritative Object Selection Set insertion order for the presentation
+anchor and membership key. Empty Multi hides gizmo; adding/removing operands restores
+it. First surviving visible selected object is the anchor, active object uses live mesh.
+Object manager exposes its existing nearest visible scene picker; activation and
+Total Gizmo share it, so inactive operands are not misclassified as background.
+Pencil background semantic rechecks this picker before dismissing. Genuine background
+still dismisses/re-tap restores as protected .682; navigation unchanged.
+Protected multi-object-transform1.0, pivot math, selection state and Boolean owners
+untouched. .716 refinements included, still pending hands-on, no new PASS inferred.
+33 targeted PASS; full1210/926/284, no new failure names versus .7161205/921/284.
+Next visible .717: Multi add/remove retains first-object gizmo and radial Boolean;
+Focus/Object List, background dismissal/re-tap, Boolean Swap/results/history, .716 visuals.
+Release parent .716 75bc6cb5; find .717 release commit in main history.
 User confirms **.715 PASS**: repeated radial Loop slide/EXACT/cuts and Edge Bevel
 repeat drag/exact/background exits protected. Screenshot for new Boolean layout
 visibly shows .714; treated as layout reference, no new testing state inferred.
@@ -91,7 +104,7 @@ Edge and Vertex**. Preserve this across future ring refinements.
   protected Face/Edge/Vertex session proxies apart from shared Object host ordering.
 - object-radial-session stays .711; Vertex modelling owners/drawer loader .710;
   .708 Face Bevel kernel/direct owner unchanged. multi-object-transform stays .1.0.
-- Manifest/title/data-release-version/visible label/main/refresh pins .716;
+- Manifest/title/data-release-version/visible label/main/refresh pins .717;
   main and refresh logic unchanged. Loop Cut, modelling kernels, frozen betas untouched.
 
 ## .712 wide popouts / gizmo redesign
@@ -338,4 +351,4 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next .715 repeated Loop/Bevel confirmation plus remaining .713 Edge checks.
+and give a short realistic manual list after publishing. Next .717 Multi/Boolean and .716 visual confirmation plus remaining .713 Edge checks.

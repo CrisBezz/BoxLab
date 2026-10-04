@@ -36,6 +36,8 @@ function state(){return globalThis.__boxlabBridgeState||null;}
 function currentMode(){return globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
 function multiObjectTransformActive(){const s=globalThis.__boxlabObjectSelection;return currentMode()==='object'&&(s?.ids?.size||0)>1;}
 function objectSelected(){
+  const selected=globalThis.__boxlabObjectSelection;
+  if(selected?.multi)return selected.ids.size>0;
   const mgr=globalThis.__boxlabObjectManager;
   if(mgr?.selectedObjects){
     try{return (mgr.selectedObjects()||[]).length>0;}catch{}
@@ -62,7 +64,7 @@ function selectionKey(mesh,mode=currentMode()){
   if(mode==='object'){
     const mgr=globalThis.__boxlabObjectManager;
     let ids=[];
-    try{ids=(mgr?.selectedObjects?.()||[]).map(o=>o?.id).filter(Boolean).sort();}catch{}
+    try{ids=[...(globalThis.__boxlabObjectSelection?.ids||[])];}catch{}
     const active=mgr?.activeId||ids[0]||'active';
     return `object:${active}:${ids.join(',')}`;
   }
@@ -126,6 +128,16 @@ function setExpanded(next,options={}){
   return expanded;
 }
 function centerOf(mesh,mode=currentMode()){
+  // Presentation anchor only: Multi's protected transform/pivot owner is unchanged.
+  const selected=globalThis.__boxlabObjectSelection,mgr=globalThis.__boxlabObjectManager;
+  if(mode==='object'&&selected?.multi){
+    const objects=mgr?.objects||[];
+    for(const id of selected.ids){
+      const object=objects.find(o=>o.id===id&&o.visible!==false);
+      const anchorMesh=id===mgr?.activeId?mesh:object?.mesh;
+      if(object&&anchorMesh?.vertices?.length){mesh=anchorMesh;break;}
+    }
+  }
   const indices=componentVertexIndices(mesh,mode),c=new THREE.Vector3();
   if(!indices.length)return c;
   indices.forEach(i=>c.add(mesh.vertices[i]));
@@ -764,6 +776,8 @@ document.addEventListener('pointerdown',event=>{
 function objectHitAt(event){
   if(currentMode()!=='object')return false;
   try{
+    const scenePicker=globalThis.__boxlabObjectManager?.pickObject;
+    if(typeof scenePicker==='function')return !!scenePicker(event);
     const picker=globalThis.__boxlabSelectionBridge?.pickObject;
     return !!(typeof picker==='function'?picker(event):globalThis.__boxlabSelectionBridge?.pick?.('object',event));
   }catch{return false;}
@@ -808,6 +822,8 @@ canvas?.addEventListener('pointercancel',finishObjectBackgroundTap,true);
 
 window.addEventListener('boxlab-pencil-background-tap',event=>{
   if(currentMode()!=='object'||hubState!=='transform'||objectTransformDismissed)return;
+  // The Pencil gate tests the active mesh; an inactive Multi operand is still an object hit.
+  if(objectHitAt(event.detail||{}))return;
   objectTransformDismissed=true;
   globalThis.__boxlabTransformArming?.disarm?.();
   resetTransientState?.({hideFloat:true});

@@ -674,20 +674,29 @@ function hitObject(event, object) {
   return raycaster.intersectObject(object, false).length > 0;
 }
 
-function handleViewportActivation(event, stopEvent = true) {
+// The same scene picker serves activation and Object gizmo hit classification.
+function pickViewportObject(event) {
   const camera = state()?.camera;
-  if (currentMode() === 'object' && inactiveBodies.length && camera) {
-    setPointer(event);
-    raycaster.setFromCamera(pointer, camera);
-    const activeHit = activeBody?.visible ? raycaster.intersectObject(activeBody, false)[0] : null;
-    const inactiveHit = raycaster.intersectObjects(inactiveBodies.filter(body => body.visible), false)[0];
-    const inactiveIsCloser = inactiveHit && (!activeHit || inactiveHit.distance < activeHit.distance - OBJECT_HIT_EPSILON);
-    if (inactiveIsCloser) {
+  if (currentMode() !== 'object' || !camera) return null;
+  setPointer(event);
+  raycaster.setFromCamera(pointer, camera);
+  const activeHit = activeBody?.visible ? raycaster.intersectObject(activeBody, false)[0] : null;
+  const inactiveHit = raycaster.intersectObjects(inactiveBodies.filter(body => body.visible), false)[0];
+  if (inactiveHit && (!activeHit || inactiveHit.distance < activeHit.distance - OBJECT_HIT_EPSILON)) {
+    return { id:Number(inactiveHit.object.userData.objectId), inactive:true };
+  }
+  return activeHit ? { id:activeId, inactive:false } : null;
+}
+
+function handleViewportActivation(event, stopEvent = true) {
+  if (currentMode() === 'object') {
+    const objectHit = pickViewportObject(event);
+    if (objectHit?.inactive) {
       if (stopEvent) {
         event.preventDefault();
         event.stopImmediatePropagation();
       }
-      const id = Number(inactiveHit.object.userData.objectId);
+      const id = objectHit.id;
       const objectSelection = globalThis.__boxlabObjectSelection;
       if (objectSelection?.multi) {
         const ids = objectSelection.ids;
@@ -905,6 +914,7 @@ function initialize() {
   globalThis.__boxlabObjectManager = {
     addMesh(mesh, name = 'Object', options = {}) { return addObject(mesh, name, options); },
     activate(id) { return activateObject(id); },
+    pickObject(event) { return pickViewportObject(event); },
     joinObjects(ids) { return joinObjects(ids); },
     linkedDuplicate() { return linkedDuplicateActive(); },
     linkedDuplicateObject(id, options={}) { return linkedDuplicateObject(objects.find(item=>item.id===id),options); },
