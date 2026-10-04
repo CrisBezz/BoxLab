@@ -1,4 +1,4 @@
-import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.712';
+import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.714';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.712';
 import * as THREE from 'three';
 

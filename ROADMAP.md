@@ -288,3 +288,11 @@ One-shot handoffs and shared angular/tier slots aligned across component modes.
 No new kernel or protected Loop core changes. 46 targeted PASS; full1195/911/284,
 no new failures. Next combined .713 hands-on/refinement; retain drawer fallbacks
 until approved. No unrelated gesture/topology expansion.
+
+
+### Object List access in Focus — .714
+
+Object gizmo gets list icon beside Multi, reusing original Objects disclosure and
+Focus owner. Focus reveals only Objects, keeps Focus active, restores state on close
+or mode/Focus exit. No parallel outliner/selection owner. 29 targeted PASS; no new
+full-suite failure names. Next .714 hands-on plus pending .713 Edge combined checks.

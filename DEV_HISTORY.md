@@ -4741,3 +4741,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Edge Sweep reuses existing staged proxy and launch-mode semantic completion, preserving Face behavior. Shared angular/tier placement aligned across modes (Circle0 outer, Join Coplanar22.5 outer, Slide45 inner, Bevel90 inner, Bridge225 inner, Sweep270 inner, Clean270 outer, MergeDist315 outer). Face Shell moves outer225/Quad Cleanup180; Vertex Build135 and larger230 outer radius avoids Clean overlap. Object ring unchanged.
 - 46 targeted PASS for complete inventories/placement/lifecycle and protected nearby Vertex/Object/Face. Full1195/911/284, same failure names as .7121190/906/284. Historical inventory/shared graph assertions updated for requested layout; stale Solidify session release-number assertion now checks retained actual .712 session owner. Syntax/diff PASS; protected kernel/transform/frozen beta files unchanged.
 - .713 markers and changed module/parent/main/refresh pins updated; unchanged owners retain protected pins. Next visible .713 combined Edge hands-on test; no PASS inferred, keep drawer fallbacks and earlier pending repair checks.
+
+
+## 2026-10-04 — v0.36.18.714 Object List gizmo shortcut in Focus view
+
+- User requests Object List on/off beside Multi, especially with Focus drawer hidden. Audited original Objects details/outliner/retain and Focus owner. Reuses original node, controls/listeners/delegation; no cloned outliner or new selection/history/Multi owner.
+- Object-only bottom-left list icon with pressed/busy state next to Multi. view-modes owns temporary Focus Objects-only reveal; Focus stays active, other drawer sections remain hidden. Second tap hides/reinstates prior disclosure state; leaving Object mode or toggling Focus clears reveal. Non-Focus toggles original Objects disclosure.
+- 29 targeted PASS for actual Focus/list owner toggle/restoration/mode transitions, shortcut position/state/cache graph and nearby protected radials. Full1198/914/284, same failure names as .7131195/911/284. Syntax/diff PASS. No modelling/protected transform/Loop/frozen-beta changes.
+- .714 release markers/direct view-modes/helper/parent gizmo/main/refresh pins updated. .713 Edge hands-on still pending; no PASS inferred. Next confirm visible .714, test list in Focus, existing list actions/Multi and exit cleanup, then pending Edge checks.

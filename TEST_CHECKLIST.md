@@ -3302,3 +3302,13 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Fill Face / Grid Fill / Join Coplanar hand result to Face puck; Collapse hands result to Vertex puck; Undo/Redo restores source/result safely.
 - [ ] Protected Extrude/Bevel/Crease/Slide/Offset/Bridge still work with clean exits; all navigation/.682 Object behaviour unchanged.
 - [ ] Circle outer top and Bevel inner right across Face/Edge/Vertex; Slide/Bridge/Sweep/Join Coplanar/Clean/Merge shared slots; Face Shell outer225 and expanded Vertex outer ring remain comfortable.
+
+
+## v0.36.18.714 — Object List beside Multi
+
+- [x] Original Objects node/actions retained; Focus owner reveals Objects only; toggle/previous disclosure/mode and Focus exit tested. Object-only shortcut/pressed/busy guards and nearby radial checks: 29 PASS.
+- [x] Full1198/914/284, no new failure names versus .713. Protected modelling/transform/Loop owners unchanged; release/direct/helper/parent pins current.
+- [ ] Confirm visible .714; Object gizmo bottom-left has Object List icon beside Multi.
+- [ ] Focus View → Object List: original list appears, Focus remains on and other drawer controls stay hidden; second tap hides list and icon unhighlights.
+- [ ] Use object rows/visibility/lock/rename and Multi in revealed list; original selection/gizmo and navigation preserved.
+- [ ] Leave Object mode or exit Focus: temporary reveal cleared; normal drawer behavior restored. Normal-view icon opens/closes Objects disclosure. .713 Edge checks remain pending.

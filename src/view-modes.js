@@ -122,7 +122,35 @@ function syncFocusViewButton(){
   if(!button)return;
   button.textContent=focusViewOn()?'Exit Focus View':'Focus View';
 }
+// Reuse the original Objects drawer; Focus reveals only this child of the drawer.
+let focusObjectListOpen=false,objectsDrawerWasOpen=false;
+function objectMode(){return document.querySelector('#selectionModes button.active')?.dataset.mode==='object';}
+function closeFocusObjectList(){
+  document.documentElement.classList.remove('boxlab-focus-object-list');
+  if(focusObjectListOpen){const drawer=document.querySelector('#objectsDrawer');if(drawer)drawer.open=objectsDrawerWasOpen;}
+  focusObjectListOpen=false;
+}
+function toggleObjectList(){
+  const drawer=document.querySelector('#objectsDrawer');
+  if(!objectMode()||!drawer)return false;
+  if(!focusViewOn()){drawer.open=!drawer.open;return true;}
+  if(focusObjectListOpen){closeFocusObjectList();return true;}
+  objectsDrawerWasOpen=drawer.open;
+  focusObjectListOpen=true;drawer.open=true;
+  document.documentElement.classList.add('boxlab-focus-object-list');
+  return true;
+}
+globalThis.__boxlabObjectListViewport={
+  toggle:toggleObjectList,
+  visible:()=>objectMode()&&(focusViewOn()?focusObjectListOpen:!!document.querySelector('#objectsDrawer')?.open),
+  available:()=>!!document.querySelector('#objectsDrawer'),
+  close:closeFocusObjectList
+};
+document.querySelectorAll('#selectionModes button[data-mode]').forEach(button=>button.addEventListener('click',()=>{
+  if(button.dataset.mode!=='object')closeFocusObjectList();
+}));
 function toggleFocusView(){
+  closeFocusObjectList();
   document.documentElement.classList.toggle('boxlab-focus-view');
   syncFocusViewButton();
   window.dispatchEvent(new Event('resize'));
@@ -186,6 +214,9 @@ document.addEventListener('pointerdown',event=>{
 const focusViewStyle=document.createElement('style');
 focusViewStyle.textContent=`
 html.boxlab-focus-view #viewportWrap > .floating-panel.left-panel{display:none!important}
+html.boxlab-focus-view.boxlab-focus-object-list #viewportWrap > .floating-panel.left-panel{display:block!important}
+html.boxlab-focus-view.boxlab-focus-object-list #viewportWrap > .floating-panel.left-panel > :not(#objectsDrawer){display:none!important}
+html.boxlab-focus-view.boxlab-focus-object-list #objectsDrawer{margin:0}
 html.boxlab-focus-view #viewportWrap > #selectionModes{left:max(8px,env(safe-area-inset-left))!important}
 html.boxlab-focus-view .statusbar{left:10px!important}
 `;

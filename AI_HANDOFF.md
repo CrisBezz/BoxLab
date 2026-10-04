@@ -7,8 +7,16 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.713**.
-Current focus: complete Edge Active Tools coverage now published for combined hands-on testing.
+Current release: **v0.36.18.714**.
+Current focus: Object List shortcut beside Multi for Focus view, pending hands-on.
+.713 Edge combined checks remain pending; no new PASS inferred.
+.714 uses original Objects drawer unchanged: Focus stays on, only Objects is revealed
+when toggled; second tap hides it and restores prior disclosure state. Non-Focus uses
+original Objects disclosure. Object-only icon/pressed state/busy guard. Focus owner
+view-modes exposes list visibility/toggle; mode/Focus exit clears temporary reveal.
+No cloned outliner, geometry/history/Multi/raw-pointer owner changes. 29 targeted
+PASS; full1198/914/284, same failure names as .713. view-modes, corner helper and
+parent gizmo/HTML/main/refresh pins current; all modelling owners unchanged.
 User confirms **.712 AWESOME PASS**: gizmo centre/corner shortcuts, wide top-centre
 popouts and additional Object tools are protected. Earlier pending individual repair
 checks are not implicitly passed.
@@ -59,7 +67,7 @@ Edge and Vertex**. Preserve this across future ring refinements.
   protected Face/Edge/Vertex session proxies apart from shared Object host ordering.
 - object-radial-session stays .711; Vertex modelling owners/drawer loader .710;
   .708 Face Bevel kernel/direct owner unchanged. multi-object-transform stays .1.0.
-- Manifest/title/data-release-version/visible label/main/refresh pins .712;
+- Manifest/title/data-release-version/visible label/main/refresh pins .714;
   main and refresh logic unchanged. Loop Cut, modelling kernels, frozen betas untouched.
 
 ## .712 wide popouts / gizmo redesign
@@ -96,7 +104,7 @@ stage Apply visibility, lazy content/hidden roots, six shortcuts/actions/guards,
 viewport corner bounds, centre/rotation owner wiring, full cache graph and protected
 Object/Vertex/Face sessions. Full1190 tests/906 PASS/284 identical failure names
 versus clean .711 (1181/897/284); no new failures. Syntax/diff/protected files PASS.
-These are automated integration/layout checks; iPad tactile/visual PASS still pending.
+User .712 AWESOME PASS protects the combined gizmo/wide-panel behavior.
 
 Combined .712 manual checks:
 1. Confirm visible .712; centre free Move/nearby free Rotate; top-left opens current
@@ -109,8 +117,7 @@ Combined .712 manual checks:
    and exact values: same wide/action rule, visibility and clean completion/selection.
 5. Object Transform/Insert, Solidify, Revolve and Boolean panels/actions/history;
    navigation and .682 finger/Pencil background dismissal/re-tap remain protected.
-Collect .712 refinements before final Edge inventory/settings audit. Do not remove
-whole drawer menus or infer .711/.712 manual PASS from automated checks.
+User .712 PASS recorded; .713 Edge and .714 Object List hands-on pending. Keep drawer fallbacks.
 
 ## .711 Object radial inventory / session dock
 
@@ -307,5 +314,5 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next is combined .712 popout/gizmo
-hands-on test/refinement; then final Edge inventory/settings pass.
+and give a short realistic manual list after publishing. Next .714 Object List/Focus
+confirmation plus pending .713 Edge combined checks.
