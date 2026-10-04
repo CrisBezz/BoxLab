@@ -7,18 +7,26 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.725**. Parent .724 `23b3263f`.
-Current .725: GEO snap icon is left-to-right solid vertex dot / separate diagonal
-edge / lightly filled rectangular face. Original checkbox, snapping owner,
-active state and tooltip retained. Changed toolbar child and topbar parent pins
-refreshed; shell/manifest/refresh .725, main remains .724. Five existing viewport
-controls tests PASS; syntax/diff checks pass. No gesture or modelling changes.
-User explicitly confirmed .724 PERFECT/PASS (2026-10-04). Background tap/hold
-behavior is now a protected baseline; do not resume double-tap diagnosis. Previous
-release validation full1237/954/283 (existing failures); no full rerun needed for
-icon-only edit. Next .725 visual/toggle sanity check, then original Modifiers
-manual check and remaining drawer/radial audit towards Beta6. Slight Lasso tightening
-still deferred MUCH LATER.
+Current release: **v0.36.18.726**. Parent .725 `e6d0fb8e`.
+Current focus: Beta6 drawer-access closure. .726 adds VIEW → Object List under
+Objects & Modifiers, so empty Object selection/hidden gizmo no longer blocks original
+Objects + collapsed Modifiers access in Focus. Reuses __boxlabObjectListViewport;
+from component mode clicks original Object mode button before original list toggle.
+Successful action closes VIEW; active sessions/direct tools or missing drawer/mode
+button prevent changes. Existing pointerup/synthetic-click suppression handles
+finger/Pencil once; mouse click uses same action. Original drawers/restore behavior,
+controls/listeners/modelling/history unchanged. No new object-list implementation.
+12 targeted PASS; full1240/957/283 vs clean .7251237/954/283, same failure names.
+Changed view-modes and shell/manifest/refresh pins .726; toolbar/topbar stay .725,
+main remains passed .724. Protected modelling/gesture/Loop/frozen files unchanged.
+Next: Focus + empty Object selection → VIEW Object List, Modifiers collapsed below;
+from Face mode enters Object once; original row/actions/Modifiers work; close/reopen
+and active-session guard. .725 GEO icon device check still pending, no PASS inferred.
+User .724 PERFECT/PASS protected. Remaining Beta6 access audit: Visible/Through and
+advanced selection/filter controls still drawer-dependent; bulk Object selection
+controls require review. Do not default-hide/remove drawer yet. Then combined radial
+session/Apply/Cancel/return-to-puck and pending .716/.713 tests before Beta6 freeze.
+Slight Lasso tightening deferred MUCH LATER; double-tap retired permanently.
 
 ## Protected .724 background hold — user PASS
 Previous implementation: user-requested background LONG PRESS Invert, replacing failed
@@ -201,8 +209,8 @@ commands remain outside radials. With drawer minimized, remaining dependencies:
   boundary/loop/ring variants and residual selection controls remain in drawer.
 - Object selection All/Clear and bulk Hide/Lock still have drawer controls; per-row
   visibility/lock and Add/Duplicate/rename/delete/Groups/Origin/Pivot remain available
-  via ORIGINAL Object List reveal. Empty Multi hides gizmo, so Object List currently
-  has no viewport shortcut without an Object selection — a remaining access gap.
+  via ORIGINAL Object List reveal. .726 VIEW Object List now also works with empty
+  Object selection and from component modes via original Object mode switch.
 - File/import/export/reset and VIEW/camera/look/Focus/history stay accessible above.
 Do not remove drawer or start minimized by default yet. User asked for audit, not
 speculative new radial items/modifier UI. Finish current hands-on refinement first.

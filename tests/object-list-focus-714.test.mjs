@@ -21,9 +21,29 @@ test('mode exit and Focus exit remove temporary list, normal view toggles existi
 test('Focus reveal targets original Objects and collapsed Modifiers, shortcut stays beside Multi and imports cache-hop',()=>{
  const corners=fs.readFileSync(new URL('../src/gizmo-corner-controls.js',import.meta.url),'utf8'),index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
  assert.match(source,/boxlab-focus-object-list.*left-panel\{display:block!important/);assert.match(source,/left-panel > :not\(#objectsDrawer\):not\(#modifiersDrawer\)\{display:none!important/);assert.doesNotMatch(source,/cloneNode|objectsDrawer.*innerHTML/);
- assert.match(corners,/\['multi','Object multi-select'\],\['objects','Object list'\]/);assert.match(corners,/__boxlabObjectListViewport\?\.toggle/);assert.match(corners,/__boxlabObjectListViewport\?\.visible/);assert.match(index,/view-modes\.js\?v=0\.36\.18\.721/);
+ assert.match(corners,/\['multi','Object multi-select'\],\['objects','Object list'\]/);assert.match(corners,/__boxlabObjectListViewport\?\.toggle/);assert.match(corners,/__boxlabObjectListViewport\?\.visible/);assert.match(index,/view-modes\.js\?v=0\.36\.18\.726/);
 });
 
 test('Modifiers starts closed on every list reveal, remains original node and restores on exit',()=>{
  const f=fixture(),node=f.modifiers;f.api.toggle();assert.equal(f.modifiers,node);assert.equal(f.modifiers.open,false);f.modifiers.open=true;f.api.toggle();assert.equal(f.modifiers.open,true);f.api.toggle();assert.equal(f.modifiers.open,false);f.mode('face');assert.equal(f.modifiers.open,true);f.mode('object');f.ctx.toggleFocusView();f.api.toggle();assert.equal(f.modifiers.open,false,'normal list open also collapses Modifiers');
+});
+
+function viewShortcut({mode='object',busy=false,available=true}={}){
+ let toggles=0,modeClicks=0;const menu={open:true},status={};
+ const c={ui:menu,status,objectMode:()=>mode==='object',document:{querySelector:()=>({disabled:false,click(){mode='object';modeClicks++;}})},__boxlabToolSession:{isActive:()=>busy},__boxlabObjectListViewport:{available:()=>available,toggle(){toggles++;return true;}}};
+ vm.createContext(c);vm.runInContext(source.slice(source.indexOf('function activateObjectListFromView'),source.indexOf('function activateButton')),c);
+ return {c,menu,status,run:()=>c.activateObjectListFromView(),get toggles(){return toggles;},get modeClicks(){return modeClicks;}};
+}
+test('VIEW Object List works with empty selection, reuses owner and closes menu',()=>{
+ const f=viewShortcut();assert.equal(f.run(),true);assert.equal(f.toggles,1);assert.equal(f.modeClicks,0);assert.equal(f.menu.open,false);
+ const other=viewShortcut({mode:'face'});assert.equal(other.run(),true);assert.equal(other.modeClicks,1);assert.equal(other.toggles,1);
+});
+test('VIEW shortcut protects active tools and unavailable drawer without changing modes',()=>{
+ for(const options of [{busy:true},{available:false}]){const f=viewShortcut({...options,mode:'face'});assert.equal(f.run(),false);assert.equal(f.modeClicks,0);assert.equal(f.toggles,0);assert.equal(f.menu.open,true);}
+});
+test('VIEW Object List uses existing iPad pointerup/synthetic-click suppression',()=>{
+ const events={},button={id:'viewObjectListBtn'},c={ui:{addEventListener:(type,fn)=>events[type]=fn},performance:{now:()=>100},activateButton(){c.calls++;},calls:0,document:{addEventListener(){}}};
+ vm.createContext(c);vm.runInContext(source.slice(source.indexOf('let suppressSyntheticClickUntil'),source.indexOf("document.addEventListener('pointerdown'",source.indexOf('let suppressSyntheticClickUntil'))),c);
+ const event={pointerType:'pen',target:{closest:()=>button},preventDefault(){},stopPropagation(){}};events.pointerup(event);events.click(event);assert.equal(c.calls,1);
+ assert.match(source,/closest\('button\[data-view\],#viewObjectListBtn'\)/);assert.match(source,/closest\('button\[data-view\],button\[data-render\],#viewObjectListBtn'\)/);
 });

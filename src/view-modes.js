@@ -30,6 +30,12 @@ function ensureUI(){
         <div id="viewportRenderLooks" class="viewport-render-grid"></div>
       </div>
       <div class="viewport-menu-section">
+        <div class="viewport-menu-label">Objects &amp; Modifiers</div>
+        <div class="viewport-render-grid">
+          <button type="button" id="viewObjectListBtn" style="grid-column:span 2" title="Open Object mode and the object list">Object List</button>
+        </div>
+      </div>
+      <div class="viewport-menu-section">
         <div class="viewport-menu-label">Diagnostics</div>
         <div class="viewport-render-grid">
           <button type="button" id="gestureDebugToggle">Gesture Debug</button>
@@ -182,8 +188,25 @@ gestureDebugButton?.addEventListener('click',event=>{
 window.addEventListener('boxlab-gesture-debug-change',syncGestureDebugButton);
 syncGestureDebugButton();
 
+function activateObjectListFromView(){
+  if(globalThis.__boxlabToolSession?.isActive?.()||globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.()||globalThis.__boxlabFaceDirect?.active?.()){
+    if(status)status.textContent='Finish the active tool before opening Object List';
+    return false;
+  }
+  const api=globalThis.__boxlabObjectListViewport;
+  if(!api?.available?.())return false;
+  if(!objectMode()){
+    const modeButton=document.querySelector('#selectionModes button[data-mode="object"]');
+    if(!modeButton||modeButton.disabled)return false;
+    modeButton.click();
+  }
+  if(!objectMode()||!api.toggle())return false;
+  if(ui)ui.open=false;
+  return true;
+}
 function activateButton(button){
   if(!button)return false;
+  if(button.id==='viewObjectListBtn')return activateObjectListFromView();
   if(button.dataset.view){setView(button.dataset.view);return true;}
   if(button.dataset.render){button.click();return true;}
   if(button.id==='focusViewBtn'){toggleFocusView();return true;}
@@ -194,7 +217,7 @@ const focusTopButton=document.querySelector('#focusViewBtn');
 focusTopButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleFocusView();});
 let suppressSyntheticClickUntil=0;
 ui?.addEventListener('click',event=>{
-  const button=event.target.closest('button[data-view]');
+  const button=event.target.closest('button[data-view],#viewObjectListBtn');
   if(!button)return;
   if(performance.now()<suppressSyntheticClickUntil){event.preventDefault();event.stopPropagation();return;}
   event.preventDefault();event.stopPropagation();activateButton(button);
@@ -204,7 +227,7 @@ ui?.addEventListener('click',event=>{
 // on pointerup. Suppress the following synthetic click so toggles fire only once.
 ui?.addEventListener('pointerup',event=>{
   if(event.pointerType==='mouse')return;
-  const button=event.target.closest('button[data-view],button[data-render]');
+  const button=event.target.closest('button[data-view],button[data-render],#viewObjectListBtn');
   if(!button)return;
   suppressSyntheticClickUntil=performance.now()+700;
   event.preventDefault();event.stopPropagation();activateButton(button);

@@ -388,3 +388,12 @@ clears/exits Lasso, hold retains Lasso and survives release. Existing owner and
 original selection APIs, guarded against navigation/multiple contact/context/session
 changes. Double-tap retired.24 targeted PASS; full1237/954/283, same failures. Next
 iPad hold/tap/release/Lasso/navigation tests, then pending Modifiers/radial refinement.
+
+
+### Beta6 drawer access — .726
+
+VIEW Object List closes empty-selection/hidden-gizmo Focus access gap by reusing
+original mode/list owners. Original collapsed Modifiers included; busy tools guarded.
+12 targeted PASS; full1240/957/283, same failures. Next iPad list/Modifiers checks,
+remaining selection-depth/filter/bulk Object access audit, combined radial/session
+regression before Beta6 freeze. Keep drawer fallback and passed .724 interactions.
