@@ -1,4 +1,4 @@
-import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.716';
+import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.729';
 // Presentation only: move the original selection host, including late Object controls.
 export function installViewportSelectionPanel(doc=document){
  const wrap=doc.querySelector('#viewportWrap'),bar=doc.querySelector('#viewportSelectionControls'),drawer=doc.querySelector('#selectionDrawer');

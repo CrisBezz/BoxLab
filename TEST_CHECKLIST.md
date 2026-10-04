@@ -3443,3 +3443,13 @@ Add new permanent regression checks below when future features need protection.
 - Object: original Multi/All/Clear/count, Hide/Show and Lock/Unlock update correctly; switch modes and reopen for correct contextual controls.
 - Visible/Through, Lasso, .724 short-tap clear/disarm and 500ms hold Invert/retained release; finger navigation/history stay protected.
 - Automated:27 targeted PASS; full1244/960/284 vs fresh .7271240/956/284, identical failures. Four new panel/owner tests pass.
+
+
+## v0.36.18.729 — radial/session polish (device checks pending)
+- [x] 62 focused tests pass across all four modes, original controls/stages, real nearby owners and new context/drag/exit cases. Full1259/976/283; no new failures vs fresh .7281244/960/284, old loader-pin fixture repaired. Broader112/108/4 existing failures retained.
+- [ ] Face: Extrude/Inset Exact and Repeat remain available after operations; Done/background exits cleanly. Bevel/Shell/Sweep Cancel/Apply retains expected selection/puck, original blue-preview navigation.
+- [ ] Vertex: Bevel/Slide and Merge/Clean settings/exits remain top-centre and return to selection/puck. No accidental Apply when input unavailable; original Add/Build Edge still exit cleanly.
+- [ ] Object: Array/Solidify Cancel then Apply; Boolean Close/operation and one Undo; original full gizmo returns. Symmetry/Revolve retain their plane gizmos and staged Apply visibility.
+- [ ] Edge: Slide/Offset exact or drag exits to puck; Crease strength/Uncrease/Done is one Undo. Switch tool/object/mode with settings open: old panel/selection never returns. Loop/Bevel EXACT remains repeatable; background exits; Split Done keeps completed edits.
+- [ ] .728 SELECT in normal/Focus and original depth/Lasso; .724 finger/Pencil short tap and500ms hold, orbit/pan/pinch/two-finger Undo/three-finger Redo protected.
+- [x] Crease history entry belongs to original owner on FIRST successful preview; Done adds none. Do not defer push across object history-stack swaps or rely only on mesh/reference identity.

@@ -17,15 +17,17 @@ function installStyle(doc){
 #viewportWrap [data-wide-tool-layout="true"]{display:grid!important;grid-template-columns:minmax(0,1fr) 104px!important;gap:12px!important;align-items:start!important}
 #viewportWrap [data-wide-tool-layout="true"]>.ts-wide-body{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 12px;min-width:0;align-items:center}
 #viewportWrap [data-wide-tool-layout="true"]>.ts-wide-actions{display:flex!important;flex-direction:column!important;gap:6px!important;align-self:stretch;border-left:1px solid #ffffff24;padding-left:10px;min-width:0}
+#viewportWrap .ts-wide-actions [hidden]{display:none!important}
 #viewportWrap .ts-wide-actions>button{width:100%!important;min-height:36px!important;margin:0!important;flex:none!important;white-space:normal!important}
 #viewportWrap .ts-wide-body>strong,#viewportWrap .ts-wide-body>.boxlab-tool-session-title,#viewportWrap .ts-wide-body>[class$="-head"],#viewportWrap .ts-wide-body>[class$="-title"],#viewportWrap .ts-wide-body>.shs-tabs,#viewportWrap .ts-wide-body>.shs-panel,#viewportWrap .ts-wide-body>.boxlab-tool-session-tabs,#viewportWrap .ts-wide-body>.boxlab-tool-session-panel{grid-column:1/-1}
 #viewportWrap .ts-wide-body .boxlab-tool-session-title{margin:0!important;padding:0!important;flex-wrap:wrap}
 #viewportWrap .ts-wide-body>.boxlab-tool-session-section{display:none!important}
 #viewportWrap .ts-wide-body>.outliner-actions{margin:0!important;min-width:0;gap:5px!important}
 #viewportWrap .ts-wide-body>.outliner-actions:empty,#viewportWrap .ts-wide-body>div:empty{display:none!important}
+#viewportWrap .ts-wide-body>.shss-row,#viewportWrap .ts-wide-body>.shos-exact{display:block!important}
 #viewportWrap .ts-wide-body label{min-width:0;margin:0!important}
 #viewportWrap .ts-wide-body input{min-width:0;max-width:100%}
-#viewportWrap .ts-wide-body .drawer-hint,#viewportWrap .ts-wide-body>[class$="-note"],#viewportWrap .ts-wide-body>[role="status"]{grid-column:1/-1;margin:0!important;font-size:10px!important;line-height:1.3!important}
+#viewportWrap .ts-wide-body>small,#viewportWrap .ts-wide-body .drawer-hint,#viewportWrap .ts-wide-body>[class$="-note"],#viewportWrap .ts-wide-body>[role="status"]{grid-column:1/-1;margin:0!important;font-size:10px!important;line-height:1.3!important}
 #viewportWrap .ts-wide-body .shs-panel:not([hidden]),#viewportWrap .ts-wide-body .boxlab-tool-session-panel:not([hidden]){display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 10px}
 #viewportWrap .ts-wide-body [hidden]{display:none!important}
 #viewportWrap .ts-wide-body #meshHealthFindings{max-height:100px;overflow-y:auto}

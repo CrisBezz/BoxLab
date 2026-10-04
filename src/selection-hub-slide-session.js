@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.716';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.672 — radial Edge Slide viewport session.
@@ -10,6 +10,7 @@ const status=document.querySelector('#selectionStatus');
 
 let launchedFromHub=false;
 let launchSelection=[];
+let launchMesh=null,launchObject=null,returnGeneration=0;
 
 const panel=document.createElement('div');
 panel.id='selectionHubSlideSession';
@@ -65,46 +66,54 @@ function centerScreen(ids=selectedEdges()){
 function place(){
   placeToolSessionPanel(panel);
 }
-function returnToPuck(ids){
-  const keep=[...new Set(ids||[])].filter(Number.isInteger);
-  requestAnimationFrame(()=>{
-    if(keep.length&&bridge()?.mode?.()==='edge')bridge()?.set?.('edge',keep);
-    globalThis.__boxlabTransformArming?.disarm?.();
-    globalThis.__boxlabTotalGizmo?.setHubState?.('closed',{reason:'slide-session-done'});
-  });
+function contextValid(){
+  return bridge()?.mode?.()==='edge'&&globalThis.__boxlabBridgeState?.mesh===launchMesh&&globalThis.__boxlabObjectManager?.activeId===launchObject&&!document.querySelector('#app')?.classList?.contains('boxlab-active-locked');
 }
-function close({selection=null,disarm=true}={}){
-  const keep=selection?.length?selection:(selectedEdges().length?selectedEdges():launchSelection);
-  panel.hidden=true;
-  launchedFromHub=false;
-  if(disarm)globalThis.__boxlabComponentSlide?.disarmEdge?.('Edge Slide done');
-  returnToPuck(keep);
-  launchSelection=[];
+function close({selection=null,disarm=true,complete=true}={}){
+  if(!launchedFromHub)return false;
+  const valid=contextValid(),keep=selection??selectedEdges(),mesh=launchMesh,object=launchObject,generation=++returnGeneration;
+  panel.hidden=true;launchedFromHub=false;launchSelection=[];
+  if(disarm){globalThis.__boxlabComponentSlide?.disarmEdge?.('Edge Slide done');}
+  if(complete&&valid)requestAnimationFrame(()=>{
+    if(generation!==returnGeneration||launchedFromHub||bridge()?.mode?.()!=='edge'||globalThis.__boxlabBridgeState?.mesh!==mesh||globalThis.__boxlabObjectManager?.activeId!==object)return;
+    if(keep.length)bridge()?.set?.('edge',[...new Set(keep)].filter(Number.isInteger));
+    globalThis.__boxlabTransformArming?.disarm?.();
+    window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'edge',tool:'Slide'}}));
+  });
+  return true;
+}
+function syncContext(){
+  if(!launchedFromHub)return false;
+  if(!contextValid()){close({complete:false});return false;}
+  return true;
 }
 function openFromHub(options={}){
-  if(bridge()?.mode?.()!=='edge')return false;
+  if(bridge()?.mode?.()!=='edge'||document.querySelector('#app')?.classList?.contains('boxlab-active-locked'))return false;
   const ids=[...new Set(options.ids||selectedEdges())].filter(Number.isInteger);
-  if(!ids.length)return false;
+  if(!ids.length||!globalThis.__boxlabBridgeState?.mesh)return false;
+  returnGeneration++;launchMesh=globalThis.__boxlabBridgeState?.mesh;launchObject=globalThis.__boxlabObjectManager?.activeId;
   launchedFromHub=true;
   launchSelection=[...ids];
   bridge()?.set?.('edge',ids);
   panel.hidden=false;
-  exact.value='';
+  exact.value='';apply.disabled=true;
   place();
-  requestAnimationFrame(()=>{if(launchedFromHub){panel.hidden=false;place();}});
+  requestAnimationFrame(()=>{if(syncContext()){panel.hidden=false;place();}});
   if(status)status.textContent='Edge Slide • drag selected Edge(s) or enter exact ±% here';
   return true;
 }
 
 apply.addEventListener('click',event=>{
   event.preventDefault();event.stopPropagation();
+  if(!syncContext())return;
   const value=Number(exact.value);
-  if(!Number.isFinite(value)||Math.abs(value)<1e-6){
+  if(exact.value.trim()===''||!Number.isFinite(value)||Math.abs(value)<1e-6||Math.abs(value)>98){
     if(status)status.textContent='Edge Slide • enter a non-zero signed percentage';
     return;
   }
   globalThis.__boxlabPrecisionEdgeSlide?.apply?.(value);
 });
+exact.addEventListener('input',()=>{const v=Number(exact.value);apply.disabled=exact.value.trim()===''||!Number.isFinite(v)||Math.abs(v)<1e-6||Math.abs(v)>98;});
 exact.addEventListener('keydown',event=>{
   if(event.key!=='Enter')return;
   event.preventDefault();
@@ -117,17 +126,18 @@ done.addEventListener('click',event=>{
 });
 
 window.addEventListener('boxlab-selection-hub-tool',event=>{
+  if(launchedFromHub&&(event.detail?.mode!=='edge'||event.detail?.tool!=='Slide'))close({complete:false});
   if(event.detail?.mode!=='edge'||event.detail?.tool!=='Slide'||event.detail?.radialSession)return;
   openFromHub();
 });
 window.addEventListener('boxlab-edge-slide-complete',event=>{
-  if(!launchedFromHub)return;
+  if(!syncContext())return;
   const ids=[...new Set(event.detail?.ids||launchSelection)].filter(Number.isInteger);
   close({selection:ids,disarm:true});
 });
-window.addEventListener('boxlab-bridge-state',()=>{if(launchedFromHub)requestAnimationFrame(place);});
+window.addEventListener('boxlab-bridge-state',()=>{if(syncContext())requestAnimationFrame(()=>{if(syncContext())place();});});
 document.querySelectorAll('#selectionModes button[data-mode]').forEach(button=>button.addEventListener('click',()=>{
-  if(launchedFromHub&&button.dataset.mode!=='edge')close({disarm:true});
+  if(launchedFromHub&&button.dataset.mode!=='edge')close({disarm:true,complete:false});
 },true));
 
 globalThis.__boxlabSlideViewportSession={

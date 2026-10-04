@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.716';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
 // Settings proxy only. component-align owns anchor picking, geometry and history.
 const panel=document.createElement('div');
 panel.id='faceAlignViewport';panel.hidden=true;

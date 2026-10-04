@@ -1,5 +1,5 @@
 import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.718';
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.716';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.595 — Total Gizmo v1.
@@ -486,6 +486,7 @@ function syncContextToolAvailability(){
     if(vertexSession)unavailable=!globalThis.__boxlabVertexViewportSession?.available?.(sector.textContent.trim());
     unavailable=unavailable||vertexReadOnly;
     if(sector.closest('.tg-tool-ring')?.dataset.ringMode==='object')unavailable=!globalThis.__boxlabObjectRadialSession?.available?.(sector.textContent.trim());
+    unavailable=unavailable||!!document.querySelector('#app')?.classList?.contains('boxlab-active-locked');
     sector.disabled=unavailable;
     sector.classList.toggle('tg-tool-unavailable',unavailable);
     sector.classList.toggle('tg-tool-active',active&&!unavailable);
@@ -553,27 +554,28 @@ toolSectors.forEach(button=>{
     const radialBridge=mode==='edge'&&toolLabel==='Bridge';
     const radialSession=radialCrease||radialOffset||radialSlide||radialBridge;
     const launchIds=radialSession?[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]:null;
+    let launchAccepted=true;
     const radialFaceRepair=mode==='face'&&['Close Holes','Quad Cleanup','Quadify N-gons','Clean Vertices','Merge Dist'].includes(toolLabel);
     if(mode==='object'){
       resetTransientState({hideFloat:true});
-      globalThis.__boxlabObjectRadialSession?.launch?.(toolLabel);
+      launchAccepted=!!globalThis.__boxlabObjectRadialSession?.launch?.(toolLabel);
     }else if(mode==='vertex'&&contextualVertex){
-      globalThis.__boxlabVertexViewportSession?.openFromHub?.({tool:toolLabel});
+      launchAccepted=!!globalThis.__boxlabVertexViewportSession?.openFromHub?.({tool:toolLabel});
     }else if(mode==='face'&&toolLabel==='Bevel'){
       // Semantic launch below arms the existing Bevel owner without switching modes.
     }else if(mode==='face'&&toolLabel==='Align'){
-      globalThis.__boxlabFaceAlignViewportSession?.openFromHub?.();
+      launchAccepted=!!globalThis.__boxlabFaceAlignViewportSession?.openFromHub?.();
     }else if(radialFaceRepair){
-      globalThis.__boxlabFaceRepairViewportSession?.openFromHub?.({tool:toolLabel});
+      launchAccepted=!!globalThis.__boxlabFaceRepairViewportSession?.openFromHub?.({tool:toolLabel});
     }else if(radialCrease){
-      globalThis.__boxlabCreaseViewportSession?.openFromHub?.({ids:launchIds});
+      launchAccepted=!!globalThis.__boxlabCreaseViewportSession?.openFromHub?.({ids:launchIds});
     }else if(radialBridge){
-      globalThis.__boxlabBridgeViewportSession?.openFromHub?.({ids:launchIds});
+      launchAccepted=!!globalThis.__boxlabBridgeViewportSession?.openFromHub?.({ids:launchIds});
     }else{
       if(mode==='vertex')globalThis.__boxlabVertexViewportSession?.close?.({complete:false});
       target.click();
-      if(radialOffset)globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
-      if(radialSlide)globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
+      if(radialOffset)launchAccepted=!!globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
+      if(radialSlide)launchAccepted=!!globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
       if((mode==='vertex'&&['Join','Weld','Create Face','Delete','Circle','Merge Center','Merge First'].includes(toolLabel))||(mode==='edge'&&['Dissolve','Delete','Uncrease','Fill Face','Grid Fill','Dissolve Loop','Join Coplanar','Flip Edge','Collapse','Circle'].includes(toolLabel))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'||toolLabel==='Triangulate'||toolLabel==='Flip Faces'||toolLabel==='Orient Faces'||toolLabel==='Orient Outward'))){
         queueMicrotask(()=>{
           hubSuppressedKey='';
@@ -590,6 +592,14 @@ toolSectors.forEach(button=>{
           gestureDebug('SELECTION HUB ONE SHOT COMPLETE',{tool:toolLabel,mode:current,selection:globalThis.__boxlabSelectionBridge?.indices?.()?.length||0});
         });
       }
+    }
+    if(!launchAccepted){
+      hubSuppressedKey='';
+      lastSelectionKey=selectionKey(state()?.mesh,currentMode());
+      setHubState('closed',{reason:'tool-launch-rejected'});
+      root.hidden=!selectionAvailable(state()?.mesh,currentMode());
+      if(status)status.textContent=toolLabel+' unavailable for current selection';
+      return;
     }
     window.dispatchEvent(new CustomEvent('boxlab-selection-hub-tool',{detail:{mode,tool:toolLabel,selector,selectionKey:lastSelectionKey,radialSession}}));
   });
@@ -622,7 +632,7 @@ window.addEventListener('boxlab-selection-hub-session-complete',event=>{
     }else{lastSelectionKey='';root.hidden=true;}
     return;
   }
-  if(event.detail?.mode==='edge'&&['Loop','Split','Sweep','Bevel'].includes(event.detail?.tool)){
+  if(event.detail?.mode==='edge'&&['Loop','Split','Sweep','Bevel','Slide','Offset','Crease'].includes(event.detail?.tool)){
     hubSuppressedKey='';resetTransientState({hideFloat:true});
     lastSelectionKey=selectionKey(state()?.mesh,currentMode());
     setHubState('closed',{reason:'edge-session-complete'});

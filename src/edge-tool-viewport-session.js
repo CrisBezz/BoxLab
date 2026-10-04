@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.716';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
 
 // Presentation only: persistent Loop/Split stay with their existing gesture owners.
 const panel=document.createElement('div');

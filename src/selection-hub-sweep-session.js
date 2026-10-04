@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.716';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
 const viewportWrap=document.querySelector('#viewportWrap');
 const gizmo=()=>document.querySelector('#totalGizmo');
 const source=()=>document.querySelector('#sweepPathControls');

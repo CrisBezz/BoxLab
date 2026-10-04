@@ -409,3 +409,7 @@ layout sanity check, remaining advanced filters/bulk Object audit and release re
 
 ### .728 Beta6 grouped build progress
 Selection-access batch implemented: viewport SELECT exposes complete original component filters/commands and contextual Object bulk controls; manual validation pending. Next batch: radial/session polish across all modes, then release-candidate navigation/transform/Multi/Boolean/history/object/file/Nomad regressions, then Beta6 freeze. Lasso tightening remains deferred until final polish.
+
+
+### .729 Beta6 grouped radial/session audit
+Batch2 implemented and automated: all modes' original inventory/availability/settings/lifecycle reviewed; fixed Face drag guards, Edge context/queued exits and puck suppression, Crease single Undo ownership, rejected launches/read-only actions and shared wide-panel spacing/hidden stages. Device acceptance pending. Next /nextbuild 3: release-candidate regression across navigation/transforms/type-in/Multi/Boolean/history/object management/files/Nomad; then combined passes and Beta6 freeze. .728 manual acceptance still pending; Lasso tightening deferred.

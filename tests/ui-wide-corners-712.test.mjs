@@ -45,8 +45,8 @@ test('Gizmo centre remains a free Move handle, free Rotate ring retains owner an
  const s=source('total-gizmo.js');assert.match(s,/class="tg-handle tg-center" data-tool="move" data-constraint="free"[^\n]+r="14"/);assert.match(s,/tg-screen-ring" data-tool="rotate" data-constraint="free"/);assert.doesNotMatch(s,/class="tg-collapse"|collapseControl/);assert.match(s,/mountGizmoCornerControls\(root/);assert.match(s,/reason:'corner-radial-tools'/);assert.match(s,/cornerControls.sync\(\)/);assert.match(s,/beginGizmoGesture\?\.\(spec,event\)/);
 });
 test('Every changed shared-dock client repinned from shell; protected transform module stays frozen',()=>{
- const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');for(const file of fs.readdirSync(new URL('../src/',import.meta.url))){if(!file.endsWith('.js'))continue;const s=source(file);if(s.includes('tool-session-panel-position.js?v=')){assert.match(s,/tool-session-panel-position\.js\?v=0\.36\.18\.716/);const release=file==='total-gizmo.js'?'718':'716';assert.ok(index.includes('src/'+file+'?v=0.36.18.'+release));}}
- assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);assert.match(source('tool-session-panel-position.js'),/tool-session-wide-layout\.js\?v=0\.36\.18\.716/);assert.match(source('total-gizmo.js'),/gizmo-corner-controls\.js\?v=0\.36\.18\.718/);
+ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');for(const file of fs.readdirSync(new URL('../src/',import.meta.url))){if(!file.endsWith('.js'))continue;const s=source(file);if(s.includes('tool-session-panel-position.js?v=')){assert.match(s,/tool-session-panel-position\.js\?v=0\.36\.18\.729/);if(file==='viewport-selection-panel.js')assert.ok(source('topbar-layout.js').includes('viewport-selection-panel.js?v=0.36.18.729'));else assert.ok(index.includes('src/'+file+'?v=0.36.18.729'),file);}}
+ assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);assert.match(source('tool-session-panel-position.js'),/tool-session-wide-layout\.js\?v=0\.36\.18\.729/);assert.match(source('total-gizmo.js'),/gizmo-corner-controls\.js\?v=0\.36\.18\.718/);
 });
 
 test('Corner shortcut groups remain inside viewport without moving the gizmo selection pivot',()=>{
@@ -56,4 +56,15 @@ test('Corner shortcut groups remain inside viewport without moving the gizmo sel
 
 test('EXACT stays in right action rail for repeatable Edge sessions',()=>{
  const f=dom(),panel=f.doc.createElement('div');f.parse('<strong>Loop Cut</strong><label>Loop Slide</label><button>EXACT</button>',panel);layoutWideToolPanel(panel);assert.equal(panel.children[1].className,'ts-wide-actions');assert.equal(panel.children[1].children[0].textContent,'EXACT');
+});
+
+
+test('Actual Face, Vertex and Edge markup retains controls in shared wide layout and hidden actions remain hidden',()=>{
+ for(const module of ['selection-hub-face-value-session.js','vertex-tool-viewport-session.js','edge-tool-viewport-session.js']){
+  const f=dom(),panel=f.doc.createElement('div');f.doc.body.appendChild(panel);
+  const html=source(module).match(/panel.innerHTML=(?:'([^']*)'|`([\s\S]*?)`);/);assert.ok(html,module);f.parse(html[1]||html[2],panel);
+  const original=panel.querySelectorAll('button'),calls=[];original.forEach(b=>b.addEventListener('click',()=>calls.push(b)));layoutWideToolPanel(panel);
+  assert.equal(panel.children[1].className,'ts-wide-actions');assert.deepEqual(new Set(panel.querySelectorAll('button')),new Set(original));original.forEach(b=>b.click());assert.equal(calls.length,original.length);
+  assert.ok(f.doc.getElementById('toolSessionWideStyle').textContent.includes('.ts-wide-actions [hidden]{display:none!important}'));
+ }
 });

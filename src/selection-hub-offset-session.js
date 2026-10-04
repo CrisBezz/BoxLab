@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.716';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.671 — radial Offset Loop viewport session.
@@ -12,6 +12,7 @@ const status=document.querySelector('#selectionStatus');
 
 let launchedFromHub=false;
 let launchSelection=[];
+let launchMesh=null,launchObject=null,returnGeneration=0;
 
 const panel=document.createElement('div');
 panel.id='selectionHubOffsetSession';
@@ -82,7 +83,7 @@ function authoritativeValue(){
 function sync(value=authoritativeValue()){
   const v=Math.max(2,Math.min(45,Number(value)||20));
   localRange.value=String(Math.round(v));
-  localNumber.value=String(v);
+  localNumber.value=String(v);apply.disabled=false;
   localOut.textContent=`${Math.round(v)}%`;
   if(spacing){
     spacing.value=String(Math.round(v));
@@ -90,48 +91,57 @@ function sync(value=authoritativeValue()){
   }
   place();
 }
-function returnToPuck(ids){
-  const keep=[...new Set(ids||[])].filter(Number.isInteger);
-  requestAnimationFrame(()=>{
-    if(keep.length&&bridge()?.mode?.()==='edge')bridge()?.set?.('edge',keep);
-    globalThis.__boxlabTransformArming?.disarm?.();
-    globalThis.__boxlabTotalGizmo?.setHubState?.('closed',{reason:'offset-session-done'});
-  });
+function contextValid(){
+  return bridge()?.mode?.()==='edge'&&globalThis.__boxlabBridgeState?.mesh===launchMesh&&globalThis.__boxlabObjectManager?.activeId===launchObject&&!document.querySelector('#app')?.classList?.contains('boxlab-active-locked');
 }
-function close({selection=null,disarm=true}={}){
-  const keep=selection?.length?selection:(selectedEdges().length?selectedEdges():launchSelection);
-  panel.hidden=true;
-  launchedFromHub=false;
-  if(disarm&&globalThis.__boxlabOffsetLoop?.isArmed?.())globalThis.__boxlabOffsetLoop?.disarm?.('Offset Loop done');
-  returnToPuck(keep);
-  launchSelection=[];
+function close({selection=null,disarm=true,complete=true}={}){
+  if(!launchedFromHub)return false;
+  const valid=contextValid(),keep=selection??selectedEdges(),mesh=launchMesh,object=launchObject,generation=++returnGeneration;
+  panel.hidden=true;launchedFromHub=false;launchSelection=[];
+  if(disarm){if(globalThis.__boxlabOffsetLoop?.isArmed?.())globalThis.__boxlabOffsetLoop?.disarm?.('Offset Loop done');}
+  if(complete&&valid)requestAnimationFrame(()=>{
+    if(generation!==returnGeneration||launchedFromHub||bridge()?.mode?.()!=='edge'||globalThis.__boxlabBridgeState?.mesh!==mesh||globalThis.__boxlabObjectManager?.activeId!==object)return;
+    if(keep.length)bridge()?.set?.('edge',[...new Set(keep)].filter(Number.isInteger));
+    globalThis.__boxlabTransformArming?.disarm?.();
+    window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'edge',tool:'Offset'}}));
+  });
+  return true;
+}
+function syncContext(){
+  if(!launchedFromHub)return false;
+  if(!contextValid()){close({complete:false});return false;}
+  return true;
 }
 function openFromHub(options={}){
-  if(bridge()?.mode?.()!=='edge')return false;
+  if(bridge()?.mode?.()!=='edge'||document.querySelector('#app')?.classList?.contains('boxlab-active-locked'))return false;
   const ids=[...new Set(options.ids||selectedEdges())].filter(Number.isInteger);
   const mesh=globalThis.__boxlabBridgeState?.mesh;
   if(!ids.length||!mesh?.offsetEdgeLoopInfo?.(ids))return false;
+  returnGeneration++;launchMesh=globalThis.__boxlabBridgeState?.mesh;launchObject=globalThis.__boxlabObjectManager?.activeId;
   launchedFromHub=true;
   launchSelection=[...ids];
   bridge()?.set?.('edge',ids);
   panel.hidden=false;
   sync();
-  requestAnimationFrame(()=>{if(launchedFromHub){panel.hidden=false;place();}});
+  requestAnimationFrame(()=>{if(syncContext()){panel.hidden=false;place();}});
   if(status)status.textContent='Offset Loop • drag selected loop or set exact Support Spacing here';
   return true;
 }
 
 localRange.addEventListener('input',()=>{
+  if(!syncContext())return;
   const value=Number(localRange.value);
   if(spacing){
     spacing.value=String(value);
     spacing.dispatchEvent(new Event('input',{bubbles:true}));
   }
-  localNumber.value=String(value);
+  localNumber.value=String(value);apply.disabled=false;
   localOut.textContent=`${Math.round(value)}%`;
 });
 localNumber.addEventListener('input',()=>{
+  if(!syncContext())return;
   const raw=Number(localNumber.value);
+  apply.disabled=localNumber.value.trim()===''||!Number.isFinite(raw)||raw<2||raw>45;
   if(!Number.isFinite(raw))return;
   const value=Math.max(2,Math.min(45,raw));
   localRange.value=String(Math.round(value));
@@ -143,7 +153,9 @@ localNumber.addEventListener('input',()=>{
 });
 apply.addEventListener('click',event=>{
   event.preventDefault();event.stopPropagation();
-  const value=Math.max(2,Math.min(45,Number(localNumber.value)||authoritativeValue()));
+  if(!syncContext()||apply.disabled)return;
+  const raw=Number(localNumber.value);if(localNumber.value.trim()===''||!Number.isFinite(raw)||raw<2||raw>45)return;
+  const value=raw;
   globalThis.__boxlabPrecisionOffsetLoop?.apply?.(value);
 });
 done.addEventListener('click',event=>{
@@ -152,17 +164,18 @@ done.addEventListener('click',event=>{
 });
 
 window.addEventListener('boxlab-selection-hub-tool',event=>{
+  if(launchedFromHub&&(event.detail?.mode!=='edge'||event.detail?.tool!=='Offset'))close({complete:false});
   if(event.detail?.mode!=='edge'||event.detail?.tool!=='Offset'||event.detail?.radialSession)return;
   openFromHub();
 });
 window.addEventListener('boxlab-offset-loop-complete',event=>{
-  if(!launchedFromHub)return;
+  if(!syncContext())return;
   const created=[...new Set(event.detail?.created||[])].filter(Number.isInteger);
   close({selection:created,disarm:true});
 });
-window.addEventListener('boxlab-bridge-state',()=>{if(launchedFromHub)requestAnimationFrame(place);});
+window.addEventListener('boxlab-bridge-state',()=>{if(syncContext())requestAnimationFrame(()=>{if(syncContext())place();});});
 document.querySelectorAll('#selectionModes button[data-mode]').forEach(button=>button.addEventListener('click',()=>{
-  if(launchedFromHub&&button.dataset.mode!=='edge')close({disarm:true});
+  if(launchedFromHub&&button.dataset.mode!=='edge')close({disarm:true,complete:false});
 },true));
 
 globalThis.__boxlabOffsetViewportSession={

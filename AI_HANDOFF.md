@@ -7,29 +7,52 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.728**. Parent .727 `3f0275ec`.
-User .726 PASS and .724 PERFECT/PASS remain protected. No separate .725/.727
-visual/depth PASS inferred. This build completes the selection-access batch:
-viewport SELECT opens the original #selectionDrawer in a bounded top-centre popout
-in normal and Focus view. All original component All/Deselect/Invert, Grow/Shrink,
-Connected, Loop/Ring/Boundary, Angle/Normal threshold and alignment controls retain
-nodes/listeners/owners. Late original Object Multi/All/Clear/Hide/Show/Lock/Unlock
-controls remain contextual within the same host. Visible/Through and Lasso retain
-their .727 bottom-strip placement. Close/SELECT/Escape/background dismiss the popout;
-background pointer events are not consumed. Active tool sessions block opening and
-close it. Shared .716 placement helper runs before original controls are appended.
-27 targeted PASS. Full1244/960/284 vs fresh clean .7271240/956/284: identical failure
-names, four additional passing checks. Previous recorded .726957/283 counts differ
-from this fresh baseline; do not claim an extra regression. Syntax/diff pass.
-Shell/topbar/manifest/refresh .728; toolbar child .727, view-modes .726, main .724,
-Multi transform .1.0 remain pinned. New selection-panel child .728.
-Next iPad normal/Focus SELECT, all component modes and Object bulk controls, plus
-retained depth/Lasso/background hold/navigation. Larger Beta6 batches next: complete
-radial/session polish across all four modes (availability/settings/Apply/Cancel/
-repeat/reset/puck and pending .716/.713), then release-candidate regression covering
-navigation, transforms/type-in, Multi/Boolean/Undo, object management and save/import/
-export/Nomad. Freeze Beta6 only after those passes. Existing drawer content remains
-available through SELECT. Slight Lasso tightening deferred MUCH LATER.
+Current release: **v0.36.18.729**. Parent .728 `f2dcce30`.
+User /nextbuild 2 authorizes the complete radial/session audit and polish batch.
+.724 PERFECT/PASS and .726 list PASS remain protected. No new manual PASS inferred
+for .725/.727/.728 or this build. Existing Face/Vertex/Object/Edge tool inventories,
+original actions and owners remain intact; no additional tools or selection sectors.
+
+.729 repairs actual session gaps found in that audit:
+- Face Extrude/Inset Exact/Repeat/input/Done disable while the original owner drags;
+  action handlers recheck context/busy state. Mode/mesh/active-object/lock loss closes
+  old settings. Successful Exact/Repeat retain the existing persistent workflow.
+- Edge Slide/Offset/Crease validate mode/mesh AND active-object identity (Object
+  manager replaces the live mesh in place). Context loss/superseding tools close old
+  settings; queued exits cannot restore old IDs after another object/session opens.
+  Empty selection never falls back to launch IDs. Invalid exact input is disabled.
+- Slide/Offset/Crease exits now emit the established session-complete semantic;
+  Total Gizmo clears radial suppression and returns surviving selection to the puck.
+- Crease records exactly one Undo entry through the existing main owner on the
+  first successful live preview, rather than postponing it until Done. Further
+  strength changes and Done add no entry. Essential: Object manager swaps stacks in
+  the SAME global History instance, so retaining a History reference cannot safely
+  commit an old object's deferred snapshot. Never reinstate that failed assumption.
+- All four radial modes reject a read-only active object even if original buttons
+  have stale enabled state. A contextual launch returning false restores access and
+  does not broadcast a tool launch. Original Object return-to-gizmo and Symmetry/
+  Revolve plane gizmos remain intentionally protected.
+- Shared wide layout enforces hidden actions in the right rail, gives notes full
+  width and removes empty action columns around Edge exact fields; original nodes,
+  listeners, delegated ancestry and stage visibility retained.
+
+62 focused radial/session PASS. Broader112/108/4 has only existing baseline failures.
+Full1259/976/283 vs fresh .7281244/960/284: no new failures; one old shared-dock pin
+fixture now passes after verifying the actual dynamic loader path for SELECT.
+Updated release-pin fixtures only, not modelling expectations. Syntax/diff pass.
+Shell/manifest/refresh/topbar/Total Gizmo/shared dock+wide helper and all dock-client
+cache URLs .729; toolbar child .727, view-modes .726, main .724, corner controls .718,
+Loop commit .715 and protected Multi transform .1.0 remain frozen. Client source
+changes beyond named repairs are import/cache updates only.
+
+Next manual grouped checks: Face Exact/Repeat/Done and preview Cancel/Apply; Vertex
+settings/exits; Object Array/Solidify/Boolean exits and plane editors; Edge Slide/
+Offset/Crease puck/Undo plus persistent Loop/Bevel EXACT/background exit. Normal and
+Focus, finger/Pencil, .728 SELECT and .724 tap/hold/navigation remain in regression.
+Then /nextbuild 3 is the Beta6 release-candidate batch: navigation/transforms/type-in,
+Multi/Boolean/history/object management and save/import/export/Nomad. Freeze Beta6
+only after combined device passes; do not hide the remaining drawer by default yet.
+Slight Lasso selection tightening remains deferred MUCH LATER.
 
 ## Protected .724 background hold — user PASS
 Previous implementation: user-requested background LONG PRESS Invert, replacing failed
@@ -487,7 +510,7 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next .721 Modifiers access and double-tap debug capture, plus .718 UI/Multi confirmation, .716 visuals and remaining .713 Edge checks.
+and give a short realistic manual list after publishing. Next is the grouped Beta6 release-candidate audit, retaining pending device checks and drawer fallbacks.
 
 ## User build shortcut / finish contract
 

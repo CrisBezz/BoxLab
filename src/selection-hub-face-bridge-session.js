@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.716';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
 // Viewport proxy for the existing Face Bridge preview owner.
 const wrap=document.querySelector('#viewportWrap');
 let launched=false,raf=0;
