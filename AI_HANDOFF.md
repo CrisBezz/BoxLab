@@ -7,15 +7,20 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.722**.
-Current .722 is diagnostic-only: .721 screenshot was flooded by Pencil hover/orbit
-move logs and did not show the double-tap decision. Gesture Debug now pins the last
-six BACKGROUND entries in a blue section and suppresses repetitive hover/move logs.
-Real contact/ownership logs remain. Invert still unresolved; matcher and gesture
-owners unchanged. Parent .721 `e1dfd959`. 8 targeted PASS; full1231/948/283,
-same failure names as .721. Next: select two edges, make two quick taps on true
-background with ONE finger, screenshot the blue section; repeat Pencil separately.
-Modifiers device checks remain pending. Handoff/history updated before publication.
+Current release: **v0.36.18.723**. Parent .722 `30a70bc4`.
+Diagnostic-only: .722 device screenshots show first/clear with seed2/current2,
+mesh-hit reset from intervening selection, one earlier1030ms time rejection.
+They do NOT establish why the user's second screen tap fails; do not attribute it
+to user technique or Pencil side tapping. DOUBLE TAP is detector label, not proof
+of a matched pair. Actual main threshold is8px, same as Pencil; no6px mismatch.
+.723 adds read-only early window contact observation, pinned last four down/up/
+cancel records in amber above last six blue BACKGROUND decisions. Native stamp,
+coordinates, primary/buttons/pressure identify delivery/classification issues.
+Does not consume/claim contacts; disabled observer does nothing. Matcher/gesture
+owners unchanged.10 targeted PASS; full1233/950/283 versus .7221231/948/283,
+same failure names. Next: select two components, double true-background tap and
+screenshot amber+blue immediately. Diagnose physical pair and resets before fix.
+Invert unresolved; Modifiers device checks pending. Working .720 Lasso protected.
 Current focus: Object List + collapsed original Modifiers access, and diagnostic
 capture for unresolved double-background Invert. Parent .720 `11f506b1`.
 User .720 checks1/3 PASS: background clears Edge selection/turns Lasso off; drawing

@@ -371,3 +371,11 @@ and double-tap debug capture. Keep other pending checks/drawer fallbacks.
 Pin last six BACKGROUND diagnostics and quiet repetitive logs, without gesture
 changes. 8 targeted PASS; full1231/948/283, same failures. Next one-finger then
 Pencil double-background trace; Invert and Modifiers device checks still pending.
+
+
+### Physical double-tap evidence — .723
+
+.722 screenshots do not identify second-contact failure. Preserve read-only
+physical down/up/cancel evidence alongside semantic decisions; no gesture change.
+10 targeted PASS; full1233/950/283, same failures. Invert and Modifiers device
+checks pending. Main/Pencil movement thresholds both8px; do not repeat mismatch claim.

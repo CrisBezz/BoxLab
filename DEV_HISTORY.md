@@ -4824,3 +4824,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Existing debug panel pins last six BACKGROUND entries in a blue section, suppresses repetitive PEN HOVER SWALLOW / PEN ORBIT MOVE FORWARD, retains contact/ownership logs. Clear and disable/re-enable reset both sections. Diagnostic presentation only; matcher/main/Lasso/Edge Paint/Pencil/Multi owners unchanged.
 - 8 targeted PASS including 1500 noisy events, bounded/reset panel and retained contact logs. Full1231/948/283 versus .7211228/945/283: same failure names, no new failures. Syntax/diff checks pass. Protected transform1.0/Loop/frozen betas untouched.
 - .722 shell/manifest/debug/refresh pins current. Next: select two edges, two quick true-background taps with one finger, screenshot blue BACKGROUND section; repeat Pencil separately. Original Modifiers hands-on checks remain pending.
+
+
+## 2026-10-04 — v0.36.18.723 retain physical double-tap contact evidence
+
+- .722 screenshots show first/clear with original two-face seed and intervening mesh-hit resets, but do not establish why second tap fails. DOUBLE TAP is a detector label; reason=first means unmatched contact. Earlier time rejection was1030ms. Do not blame user technique or assume Pencil side tapping. Audit corrected mistaken6px threshold claim: main is8px, consistent with Pencil. No timing/movement change justified yet.
+- Read-only window-capture debug observer pins four physical viewport down/up/cancel records in amber above existing six blue background decisions. Native timestamp/coordinates/primary/buttons/pressure survive noisy logs and reveal whether both contacts arrive. No consuming methods, capture claims, selection or navigation mutation; disabled observer returns. Existing gesture/matcher owners unchanged.
+- 10 targeted PASS, including bounded/reset evidence and actual passive early observer behavior/target filtering/disabled no-op. Full1233/950/283 versus clean .7221231/948/283: identical failure names, no new failures. Syntax/diff/protected owner checks pass.
+- .723 shell/manifest/debug/refresh pins current. Handoff/checklist/roadmap updated. Next immediate amber+blue screenshot after two screen taps on background; Invert remains unresolved, original Modifiers device checks pending.

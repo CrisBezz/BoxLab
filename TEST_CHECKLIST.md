@@ -3393,3 +3393,11 @@ Add new permanent regression checks below when future features need protection.
 - [x] Full1231/948/283; same failure names as .721. Gesture/matcher/modelling owners unchanged.
 - [ ] Visible .722 → VIEW Gesture Debug → select two edges → two quick taps on true background with ONE finger. Screenshot blue BACKGROUND section immediately; repeat separately with Pencil. Invert remains unresolved until evidence identifies rejection.
 - [ ] Confirm original Modifiers under Object List collapsed on opening and original actions work; previous .721 checks remain pending.
+
+
+## v0.36.18.723 — physical contacts alongside tap decisions
+
+- [x] Passive window observer records viewport down/up/cancel with native timing/coordinates, never consumes events; ignores nonviewport and disabled debug. Four amber records bounded/reset separately from blue tap decisions.10 targeted PASS.
+- [x] Full1233/950/283 vs clean .7221231/948/283: identical failure names; actual gesture/matcher owners untouched.
+- [ ] Visible .723 → enable Gesture Debug → select two components → two quick screen taps on blank background. Immediately screenshot amber physical contacts AND blue decisions. Try finger/Pencil separately; diagnose delivery/reset before changing matcher.
+- [ ] Original Modifiers under Objects remains closed on opening and actions work; prior pending checks retained.

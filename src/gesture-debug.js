@@ -2,7 +2,7 @@ const MAX_LINES=12;
 const MAX_BACKGROUND_LINES=6;
 const QUIET_STAGES=new Set(['PEN HOVER SWALLOW','PEN ORBIT MOVE FORWARD']);
 let enabled=false;
-let panel=null,body=null,backgroundBody=null,seq=0;
+let panel=null,body=null,backgroundBody=null,contactBody=null,seq=0;
 const PREF_KEY='boxlab-gesture-debug';
 
 function ensurePanel(){
@@ -23,8 +23,10 @@ function ensurePanel(){
   backgroundBody=document.createElement('div');
   backgroundBody.style.cssText='border-bottom:1px solid #ffffff35;padding-bottom:5px;margin-bottom:5px;color:#a9d7ff';
   backgroundBody.textContent='BACKGROUND TAP — waiting for test';
+  contactBody=document.createElement('div');
+  contactBody.style.cssText='color:#ffd69c;border-bottom:1px solid #ffffff35;margin-bottom:5px';
   body=document.createElement('div');
-  panel.append(title,backgroundBody,body);
+  panel.append(title,contactBody,backgroundBody,body);
   document.body.appendChild(panel);
 }
 function compact(detail){
@@ -45,6 +47,11 @@ function log(stage,detail=null){
   const line=document.createElement('div');
   const n=String(++seq).padStart(2,'0');
   line.textContent=`${n} ${stage}${detail==null?'':` • ${compact(detail)}`}`;
+  if(stage==='PHYSICAL CONTACT'){
+    const summary=document.createElement('div');summary.textContent=line.textContent;
+    contactBody.prepend(summary);
+    while(contactBody.children.length>4)contactBody.lastElementChild.remove();
+  }
   if(stage.startsWith('BACKGROUND ')){
     if(!backgroundBody.children.length)backgroundBody.textContent='';
     const summary=document.createElement('div');summary.textContent=line.textContent;
@@ -54,12 +61,12 @@ function log(stage,detail=null){
   body?.prepend(line);
   while(body?.children.length>MAX_LINES)body.lastElementChild?.remove();
 }
-function clear(){if(body)body.textContent='';if(backgroundBody)backgroundBody.textContent='BACKGROUND TAP — waiting for test';seq=0;}
+function clear(){if(contactBody)contactBody.textContent='';if(body)body.textContent='';if(backgroundBody)backgroundBody.textContent='BACKGROUND TAP — waiting for test';seq=0;}
 function setEnabled(next,{persist=true}={}){
   enabled=!!next;
   if(persist){try{localStorage.setItem(PREF_KEY,enabled?'1':'0');}catch{}}
   if(enabled){ensurePanel();log('DEBUG ENABLED');installDeepCaptureTrace();}
-  else{panel?.remove();panel=null;body=null;backgroundBody=null;seq=0;}
+  else{panel?.remove();panel=null;body=null;backgroundBody=null;contactBody=null;seq=0;}
   window.dispatchEvent(new CustomEvent('boxlab-gesture-debug-change',{detail:{enabled}}));
   return enabled;
 }
@@ -124,4 +131,12 @@ function installDeepCaptureTrace(){
   deepTraceInstalled=true;
   log('DEEP CAPTURE TRACE INSTALLED');
   return true;
+}
+
+// Read-only early contact evidence; never consumes or claims a gesture.
+for(const type of ['pointerdown','pointerup','pointercancel']){
+  window.addEventListener(type,event=>{
+    if(!enabled||event.target?.id!=='viewport')return;
+    log('PHYSICAL CONTACT',{event:type,pointer:event.pointerType,pid:event.pointerId,stamp:Math.round(event.timeStamp),x:Math.round(event.clientX),y:Math.round(event.clientY),primary:event.isPrimary,buttons:event.buttons,pressure:event.pressure});
+  },{capture:true,passive:true});
 }

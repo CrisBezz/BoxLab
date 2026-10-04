@@ -12,8 +12,8 @@ function fixture(){
   get lastElementChild(){return this.children.at(-1);}
   remove(){if(this.parent)this.parent.children=this.parent.children.filter(n=>n!==this);}
  }
- const root=new Node(),c={document:{createElement:()=>new Node(),body:root,addEventListener(){},querySelector:()=>null},window:{dispatchEvent(){}},localStorage:{getItem:()=>null,setItem(){}},CustomEvent:class{},queueMicrotask(){},Set};vm.createContext(c);vm.runInContext(fs.readFileSync(new URL('../src/gesture-debug.js',import.meta.url),'utf8'),c);c.__boxlabGestureDebug.enable();
- return {api:c.__boxlabGestureDebug,root,get summary(){return root.children[0].children[1];},get body(){return root.children[0].children[2];}};
+ const events=new Map();const root=new Node(),c={document:{createElement:()=>new Node(),body:root,addEventListener(){},querySelector:()=>null},window:{dispatchEvent(){},addEventListener(type,fn,options){events.set(type,{fn,options});}},localStorage:{getItem:()=>null,setItem(){}},CustomEvent:class{},queueMicrotask(){},Set};vm.createContext(c);vm.runInContext(fs.readFileSync(new URL('../src/gesture-debug.js',import.meta.url),'utf8'),c);c.__boxlabGestureDebug.enable();
+ return {api:c.__boxlabGestureDebug,root,events,get summary(){return root.children[0].children[2];},get body(){return root.children[0].children[3];}};
 }
 test('Background decision remains pinned after unrelated logs and Pencil hover flood',()=>{
  const f=fixture();f.api.log('BACKGROUND DOUBLE TAP',{action:'clear',reason:'time',dt:710});f.api.log('BACKGROUND TAP COMPLETE',{result:'clear'});
@@ -25,4 +25,17 @@ test('Pinned history is bounded and clear/disable/re-enable cannot show stale ev
 });
 test('Quiet stage filtering retains actual contact and ownership diagnostics',()=>{
  const f=fixture();f.api.log('PEN ORBIT ROUTE',{route:'FORWARD_ORBIT'});f.api.log('RAW POINTERDOWN',{pressure:.5});assert.ok(f.body.children.some(n=>n.textContent.includes('PEN ORBIT ROUTE')));assert.ok(f.body.children.some(n=>n.textContent.includes('pressure=0.5')));
+});
+
+test('Physical contact evidence remains bounded and clears independently of tap decisions',()=>{
+ const f=fixture();for(let i=0;i<10;i++)f.api.log('PHYSICAL CONTACT',{event:i%2?'pointerup':'pointerdown',stamp:i});
+ const contacts=f.root.children[0].children[1];assert.equal(contacts.children.length,4);assert.match(contacts.children[0].textContent,/stamp=9/);
+ f.api.log('BACKGROUND DOUBLE TAP',{reason:'first'});assert.equal(f.summary.children.length,1);f.api.clear();assert.equal(contacts.children.length,0);
+});
+
+test('Early physical observer records viewport contacts without consuming events',()=>{
+ const f=fixture(),entry=f.events.get('pointerdown');assert.equal(entry.options.capture,true);assert.equal(entry.options.passive,true);
+ const event={target:{id:'viewport'},pointerType:'pen',pointerId:7,timeStamp:1234,clientX:100,clientY:200,isPrimary:true,buttons:1,pressure:.5,preventDefault(){throw Error('consumed');},stopImmediatePropagation(){throw Error('consumed');}};
+ entry.fn(event);const contacts=f.root.children[0].children[1];assert.match(contacts.children[0].textContent,/pointer=pen pid=7 stamp=1234/);entry.fn({...event,target:{id:'button'}});assert.equal(contacts.children.length,1);
+ f.api.disable();entry.fn(event);assert.equal(f.root.children.length,0);
 });
