@@ -3385,3 +3385,11 @@ Add new permanent regression checks below when future features need protection.
 - [x] Existing matcher trace reports rejection/reset reasons and dt/px/counts without altering results.21 targeted PASS; full1228/945/283, no new failure names versus .7201226/943/283.
 - [ ] Visible .721, Focus → Object List: original Objects and collapsed Modifiers below. Expand and use Mirror/SubD/Cage; same controls and behavior. Reopen starts collapsed; list closes/Focus remains active; mode/Focus exits restore prior normal drawer state.
 - [ ] VIEW → Gesture Debug: select some Edge/Face components, double-tap true background once and screenshot BACKGROUND DOUBLE TAP / COMPLETE entries. Diagnose actual rejection before next gesture fix.
+
+
+## v0.36.18.722 — readable background-tap evidence
+
+- [x] Background entries stay pinned through 1500 hover/move/unrelated logs; bounded to six, clear/disable/re-enable reset, actual contact/routing logs retained. 8 targeted PASS.
+- [x] Full1231/948/283; same failure names as .721. Gesture/matcher/modelling owners unchanged.
+- [ ] Visible .722 → VIEW Gesture Debug → select two edges → two quick taps on true background with ONE finger. Screenshot blue BACKGROUND section immediately; repeat separately with Pencil. Invert remains unresolved until evidence identifies rejection.
+- [ ] Confirm original Modifiers under Object List collapsed on opening and original actions work; previous .721 checks remain pending.

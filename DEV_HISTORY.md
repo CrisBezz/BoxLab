@@ -4816,3 +4816,11 @@ For exact implementation state, always inspect current `main`; this history is c
 - Invert behavior deliberately unchanged pending device evidence. Existing matcher adds optional diagnostic-only trace with first/match/time/distance/context/mesh/selection rejection and timing/counts; existing main resets are labeled. Gesture Debug BACKGROUND DOUBLE TAP plus DOWN/BLOCKED/COMPLETE will identify why the real second tap is rejected. No new pointer listeners/selection state/timing changes. Next user action: enable VIEW Gesture Debug, double true-background tap after component selection and capture screenshot before choosing next fix.
 - 21 targeted PASS including original Modifiers disclosure/restoration, matcher trace invariance and working .720/.719 owners. Full1228/945/283 versus .7201226/943/283, identical failure names/no new failures. Syntax/diff/protected-file checks pass. Working Lasso/Edge Paint/Pencil/Multi/Loop/frozen beta files unchanged.
 - .721 shell/manifest/main/helper/view-modes/release pins current. Handoff/checklist/roadmap updated; next visible .721 Modifiers controls and debug screenshot. Keep pending .716/.713 checks and drawer fallbacks.
+
+
+## 2026-10-04 — v0.36.18.722 persistent background-tap diagnostics
+
+- User .721 screenshot shows Pencil orbit/hover activity flooding Gesture Debug; no visible double-tap decision, so it cannot establish the Invert rejection reason. Invert remains unresolved; .720 working Lasso cancellation/drawing/finger navigation protected.
+- Existing debug panel pins last six BACKGROUND entries in a blue section, suppresses repetitive PEN HOVER SWALLOW / PEN ORBIT MOVE FORWARD, retains contact/ownership logs. Clear and disable/re-enable reset both sections. Diagnostic presentation only; matcher/main/Lasso/Edge Paint/Pencil/Multi owners unchanged.
+- 8 targeted PASS including 1500 noisy events, bounded/reset panel and retained contact logs. Full1231/948/283 versus .7211228/945/283: same failure names, no new failures. Syntax/diff checks pass. Protected transform1.0/Loop/frozen betas untouched.
+- .722 shell/manifest/debug/refresh pins current. Next: select two edges, two quick true-background taps with one finger, screenshot blue BACKGROUND section; repeat Pencil separately. Original Modifiers hands-on checks remain pending.

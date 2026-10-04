@@ -1,6 +1,8 @@
-const MAX_LINES=18;
+const MAX_LINES=12;
+const MAX_BACKGROUND_LINES=6;
+const QUIET_STAGES=new Set(['PEN HOVER SWALLOW','PEN ORBIT MOVE FORWARD']);
 let enabled=false;
-let panel=null,body=null,seq=0;
+let panel=null,body=null,backgroundBody=null,seq=0;
 const PREF_KEY='boxlab-gesture-debug';
 
 function ensurePanel(){
@@ -18,8 +20,11 @@ function ensurePanel(){
   const title=document.createElement('div');
   title.textContent='GESTURE DEBUG';
   title.style.cssText='font-weight:800;margin-bottom:5px;opacity:.9';
+  backgroundBody=document.createElement('div');
+  backgroundBody.style.cssText='border-bottom:1px solid #ffffff35;padding-bottom:5px;margin-bottom:5px;color:#a9d7ff';
+  backgroundBody.textContent='BACKGROUND TAP — waiting for test';
   body=document.createElement('div');
-  panel.append(title,body);
+  panel.append(title,backgroundBody,body);
   document.body.appendChild(panel);
 }
 function compact(detail){
@@ -35,20 +40,26 @@ function compact(detail){
   }catch{return String(detail);}
 }
 function log(stage,detail=null){
-  if(!enabled)return;
+  if(!enabled||QUIET_STAGES.has(stage))return;
   ensurePanel();
   const line=document.createElement('div');
   const n=String(++seq).padStart(2,'0');
   line.textContent=`${n} ${stage}${detail==null?'':` • ${compact(detail)}`}`;
+  if(stage.startsWith('BACKGROUND ')){
+    if(!backgroundBody.children.length)backgroundBody.textContent='';
+    const summary=document.createElement('div');summary.textContent=line.textContent;
+    backgroundBody.prepend(summary);
+    while(backgroundBody.children.length>MAX_BACKGROUND_LINES)backgroundBody.lastElementChild.remove();
+  }
   body?.prepend(line);
   while(body?.children.length>MAX_LINES)body.lastElementChild?.remove();
 }
-function clear(){if(body)body.textContent='';seq=0;}
+function clear(){if(body)body.textContent='';if(backgroundBody)backgroundBody.textContent='BACKGROUND TAP — waiting for test';seq=0;}
 function setEnabled(next,{persist=true}={}){
   enabled=!!next;
   if(persist){try{localStorage.setItem(PREF_KEY,enabled?'1':'0');}catch{}}
   if(enabled){ensurePanel();log('DEBUG ENABLED');installDeepCaptureTrace();}
-  else{panel?.remove();panel=null;body=null;seq=0;}
+  else{panel?.remove();panel=null;body=null;backgroundBody=null;seq=0;}
   window.dispatchEvent(new CustomEvent('boxlab-gesture-debug-change',{detail:{enabled}}));
   return enabled;
 }
