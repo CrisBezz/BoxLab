@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.712';
 // BoxLab v0.36.18.684 — radial Knife viewport session.
 // UX/session proxy only. knife-tool.js remains the authoritative Knife owner.
 

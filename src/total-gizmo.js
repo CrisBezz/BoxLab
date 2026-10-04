@@ -1,4 +1,5 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
+import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.712';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.712';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.595 — Total Gizmo v1.
@@ -321,8 +322,8 @@ root.innerHTML=`
       <polygon class="tg-head tg-z-fill" points="${HALF+67},${HALF} ${HALF+55},${HALF-6} ${HALF+55},${HALF+6}"/>
     </g>
   </g>
-  <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="10"/>
-  <circle class="tg-collapse" cx="${HALF}" cy="${HALF}" r="4" aria-label="Open contextual tools"/>
+  <circle class="tg-handle tg-center" data-tool="move" data-constraint="free" data-kind="free" cx="${HALF}" cy="${HALF}" r="14"/>
+  <circle class="tg-center-dot" cx="${HALF}" cy="${HALF}" r="3"/>
 </svg>
 <div class="tg-tool-ring" data-ring-mode="face" aria-label="Face contextual tools">
   <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#extrudeBtn">Extrude</button>
@@ -398,7 +399,12 @@ root.innerHTML=`
 <div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
 const activator=root.querySelector('.tg-activator');
-const collapseControl=root.querySelector('.tg-collapse');
+const cornerControls=mountGizmoCornerControls(root,{currentMode,isBusy:()=>pointerId!==null,openTools:()=>{
+  hideFloatInput();resetTransientState({hideFloat:true});
+  const next=['face','edge','vertex','object'].includes(currentMode())?'tools':'closed';
+  setHubState(next,{reason:'corner-radial-tools'});
+  if(next==='tools')syncContextToolAvailability();
+}});
 const toolRings=[...root.querySelectorAll('.tg-tool-ring')];
 const toolCenters=[...root.querySelectorAll('.tg-tool-center')];
 const toolSectors=[...root.querySelectorAll('.tg-tool-sector')];
@@ -425,7 +431,7 @@ document.head.appendChild(edgeExtrudeStyle);
 function syncEdgeExtrudeConstraintVisuals(){
   const active=edgeExtrudeConstraintSession;
   root.dataset.edgeExtrudeConstraint=active?'true':'false';
-  const hideSelectors=['.tg-rotate','.tg-screen-ring','.tg-scale-ring','.tg-scale-node','.tg-plane-handles','.tg-collapse'];
+  const hideSelectors=['.tg-rotate','.tg-screen-ring','.tg-scale-ring','.tg-scale-node','.tg-plane-handles'];
   hideSelectors.forEach(selector=>root.querySelectorAll(selector).forEach(el=>{el.style.display=active?'none':'';}));
   root.querySelectorAll('.tg-move-axes,.tg-center').forEach(el=>{el.style.display='';});
   if(edgeExtrudeBadge)edgeExtrudeBadge.hidden=!active;
@@ -477,15 +483,6 @@ activator?.addEventListener('pointerdown',event=>{
   setHubState('transform',{reason:'puck'});
 });
 
-collapseControl?.addEventListener('pointerdown',event=>{
-  event.preventDefault();
-  event.stopPropagation();
-  hideFloatInput();
-  resetTransientState({hideFloat:true});
-  const next=['face','edge','vertex','object'].includes(currentMode())?'tools':'closed';
-  setHubState(next,{reason:'transform-centre'});
-  if(next==='tools')syncContextToolAvailability();
-});
 
 toolCenters.forEach(toolCenter=>toolCenter.addEventListener('pointerdown',event=>{
   event.preventDefault();
@@ -840,8 +837,18 @@ style.textContent=`
 #totalGizmo .tg-screen-ring{stroke:#eef2f7;stroke-width:1.05;opacity:.58}
 #totalGizmo .tg-scale-ring{stroke:#ff9a66;stroke-width:1.1;opacity:.66}
 #totalGizmo .tg-center{fill:rgba(238,242,247,.16);stroke:#f1f4f8;stroke-width:1.1;pointer-events:all}
-#totalGizmo .tg-collapse{fill:#eef2f7;stroke:#111318;stroke-width:1.25;pointer-events:all;cursor:pointer;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
-#totalGizmo:not([data-hub-state="transform"]) .tg-collapse{display:none}
+#totalGizmo .tg-center-dot{fill:#eef2f7;pointer-events:none}
+#totalGizmo .tg-corner{position:absolute;display:flex;gap:4px;transform:translate(-50%,-50%);pointer-events:auto}
+#totalGizmo .tg-corner-tl{left:calc(50% - 96px);top:calc(50% - 96px)}
+#totalGizmo .tg-corner-tr{left:calc(50% + 104px);top:calc(50% - 96px)}
+#totalGizmo .tg-corner-br{left:calc(50% + 104px);top:calc(50% + 96px)}
+#totalGizmo .tg-corner-bl{left:calc(50% - 96px);top:calc(50% + 96px)}
+#totalGizmo:not([data-hub-state="transform"]) .tg-corner,#totalGizmo .tg-corner[hidden]{display:none!important}
+#totalGizmo .tg-shortcut{width:40px;height:40px;min-height:40px;padding:8px;border:1px solid #ffffff45;border-radius:10px;background:rgba(18,21,27,.92);color:#edf2f8;touch-action:none;box-shadow:0 3px 10px #0005}
+#totalGizmo .tg-shortcut svg{display:block!important;width:24px;height:24px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#totalGizmo .tg-shortcut[aria-pressed="true"]{background:#edf2f8;color:#141820}
+#totalGizmo .tg-shortcut:disabled{opacity:.3}
+
 #totalGizmo .tg-scale-node{fill:rgba(17,19,24,.78);stroke-width:1.25;pointer-events:all}
 #totalGizmo .tg-plane{pointer-events:all;stroke-width:1;opacity:.5;transition:opacity .09s,stroke-width .09s,fill .09s,filter .09s}
 #totalGizmo .tg-plane-xy{stroke:#ffd86a;fill:rgba(255,216,106,.07)}
@@ -1053,6 +1060,8 @@ function sync(){
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;
+  cornerControls.sync();
+  cornerControls.position(left,top,vr);
   root.dataset.singleComponent=mode!=='object'&&selectionKey(mesh,mode).split(':')[1]?.split(',').filter(Boolean).length===1?'true':'false';
   if(!suppressed&&!objectTransformDismissed&&(hubState==='transform'||mode==='object'))syncAxisVisuals(c,camera);
   if(edgeExtrudeConstraintSession)syncEdgeExtrudeConstraintVisuals();

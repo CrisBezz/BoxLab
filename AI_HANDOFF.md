@@ -7,10 +7,11 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.711**.
-Current focus: ALL ten existing Object Active Tool launchers now in contextual
-rings, with original Object session controls docked at the top centre. Await the
-user's combined Object test/refinement session before final Edge coverage.
+Current release: **v0.36.18.712**.
+Current focus: user-requested coordinated wide tool popouts and gizmo corner
+shortcuts. Await .712 combined hands-on test/refinement. .711 is visibly confirmed
+in the user's screenshots, but has not received a full PASS. No Object PASS inferred.
+
 User confirms **.710 Vertex radial AWESOME / PASS**; all thirteen tools and shared
 Face/Edge/Vertex Bevel placement are protected. .708 Face Bevel remains protected.
 
@@ -28,13 +29,65 @@ Edge and Vertex**. Preserve this across future ring refinements.
 ## Repository / cache state
 
 - Main CrisBezz/BoxLab; live https://crisbezz.github.io/BoxLab/.
-- .711 parent .710 b9b3548d; find release commit in main history.
-- New object-radial-session .711, total-gizmo .711, tool-session-ui .711.
-- Manifest/title/data-release-version/visible label/main/refresh pins .711;
-  main and refresh logic unchanged. Existing Object modelling owners unchanged.
-- Vertex owner/session/drawer loader pins remain .710; .708 Face Bevel and shared
-  panel-position .700 remain unchanged. multi-object-transform remains .1.0.
-- Loop Cut/Slide compatibility, modelling kernels and frozen beta dirs unchanged.
+- .712 parent .711 3b332f3b; find release commit in main history.
+- New UI-only tool-session-wide-layout and gizmo-corner-controls .712.
+- Shared tool-session-panel-position .712; every importing viewport session client
+  and total-gizmo/tool-session-ui repinned .712. Imports are the only changes to
+  protected Face/Edge/Vertex session proxies apart from shared Object host ordering.
+- object-radial-session stays .711; Vertex modelling owners/drawer loader .710;
+  .708 Face Bevel kernel/direct owner unchanged. multi-object-transform stays .1.0.
+- Manifest/title/data-release-version/visible label/main/refresh pins .712;
+  main and refresh logic unchanged. Loop Cut, modelling kernels, frozen betas untouched.
+
+## .712 wide popouts / gizmo redesign
+
+User explicitly requests coordinated UI changes across modes, superseding the old
+centre-to-radial access. Shared top-centre panels now wide (up to720px, viewport
+bounded) with two-column settings and a right action rail: Cancel/Done/Close above
+Apply, auxiliary Bisect Only retained. Symmetry plane controls use a compact row;
+Array direction/count side by side. Small screens wrap settings while keeping rail
+on the right. Mesh Health findings remain scrollable. Titles/readouts/options retained.
+
+UI-only layout reuses ORIGINAL nodes/listeners inside the same panel, with unchanged
+IDs/delegated ancestry. It runs only after owner bindings/control creation and is
+idempotent; no cloned controls, parameter/history/modelling/pointer implementation.
+Staged Sweep Apply mirrors original hidden ancestors via a DOM visibility observer.
+Lazy Boolean operands/report additions go into the settings body. Hidden layout
+roots remain hidden, so Cancel does not reveal stale settings in the drawer.
+Object host lays out after insertion, restores originals as before; Face source
+hosts remain in drawer for their protected viewport proxies, avoiding duplicate docks.
+
+Gizmo centre is now the existing FREE MOVE handle with larger14px radius and
+non-interactive centre dot. Existing free ROTATE screen ring remains nearby. No
+centre menu hotspot. Top-left radial icon opens the current-mode rings. Top-right
+has separate Focus View toggle + Frame All buttons; bottom-right separate Undo/Redo
+arrows; bottom-left Object Multi toggle (only Object). Forty-pixel targets with titles/
+accessible labels and visible Focus/Multi pressed state. Actual toolbar button owners
+are invoked; Multi uses authoritative object-management button, not a second state.
+Unavailable/busy controls disabled. Corner groups clamp to viewport bounds without
+moving the selection pivot. No new raw viewport pointer listeners or transform math.
+Centre/corner redesign applies across modes while existing session visibility stays.
+
+41 targeted checks PASS: actual Symmetry/Array control markup identities/listeners,
+stage Apply visibility, lazy content/hidden roots, six shortcuts/actions/guards,
+viewport corner bounds, centre/rotation owner wiring, full cache graph and protected
+Object/Vertex/Face sessions. Full1190 tests/906 PASS/284 identical failure names
+versus clean .711 (1181/897/284); no new failures. Syntax/diff/protected files PASS.
+These are automated integration/layout checks; iPad tactile/visual PASS still pending.
+
+Combined .712 manual checks:
+1. Confirm visible .712; centre free Move/nearby free Rotate; top-left opens current
+   Face/Edge/Vertex/Object rings, centre × closes; shared component Bevel90° unchanged.
+2. Top-right Focus/Frame All, bottom-right Undo/Redo; bottom-left Object Multi toggles,
+   highlights correctly and permits adding objects; original Multi transforms remain.
+3. Symmetry/Bisect and Array panels wide/shallow, every setting retained, actions
+   stacked on right, original previews/gestures/Apply/Cancel.
+4. Face/Edge/Vertex popouts including blue Face Bevel, Shell, staged Sweep, repair
+   and exact values: same wide/action rule, visibility and clean completion/selection.
+5. Object Transform/Insert, Solidify, Revolve and Boolean panels/actions/history;
+   navigation and .682 finger/Pencil background dismissal/re-tap remain protected.
+Collect .712 refinements before final Edge inventory/settings audit. Do not remove
+whole drawer menus or infer .711/.712 manual PASS from automated checks.
 
 ## .711 Object radial inventory / session dock
 
@@ -43,7 +96,7 @@ inner clockwise from top: Transform, Insert, Solidify, Array, Boolean, Join,
 Symmetry / Bisect, Mesh Health (eight sectors,120px radius,86px width).
 Outer: Revolve Profile at0°, Clean for SubD at180° (195px radius).
 All rectangle spacing checked. No Object Bevel exists; shared component Bevel90°
-placement is untouched. Object gizmo centre opens rings; centre × returns gizmo.
+placement is untouched. Top-left gizmo shortcut opens rings; centre × returns gizmo (.712 user redesign).
 Object selection still immediately shows its protected transform gizmo; background
 finger/Pencil dismissal and object re-tap restoration remain original owners.
 
@@ -81,7 +134,7 @@ Full1181 tests/897 PASS/284 failures; no new failure names versus clean .710
 (1169/884/285). Historical376 Solidify session-pin test now passes. Suite is not
 all green. Syntax/diff/protected-file checks PASS. Verify main/live after publishing.
 
-1. Confirm visibly .711. Object gizmo centre opens all ten; × returns gizmo.
+1. Test on current .712 using top-left radial shortcut; × returns gizmo.
 2. Solidify/Array: top-centre settings, original live previews/gestures, Apply/Cancel.
 3. Transform/Insert and Symmetry/Bisect: original surface/plane interaction,
    settings all top centre; plane gizmo available; Apply/Cancel clean.
@@ -231,5 +284,5 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next is combined .711 Object
+and give a short realistic manual list after publishing. Next is combined .712 popout/gizmo
 hands-on test/refinement; then final Edge inventory/settings pass.

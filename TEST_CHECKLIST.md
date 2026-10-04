@@ -3275,3 +3275,15 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Boolean operand selection/Swap/Union/Cut/Intersect/Close, one Undo/Redo, no stale suppression.
 - [ ] Revolve Profile full editing/segments/Apply/Cancel; Mesh Health report/repair controls; Join/Clean existing results/history.
 - [ ] Navigation and .682 Object finger/Pencil background dismissal/re-tap; Face/Edge/Vertex protected behavior.
+
+
+## v0.36.18.712 — wide popouts / gizmo corner shortcuts
+
+- [x] Screenshots visibly confirm .711 loaded; requested refinements, no full Object PASS.
+- [x] 41 targeted: actual Symmetry/Array control identities/listeners; right action rail/staged Apply/hidden roots/lazy operands; all six shortcut actions/mode/disabled/busy guards; corner bounds/centre Move + Rotate wiring; full import/pin graph and nearby Object/Vertex/Face owners.
+- [x] Full1190/906/284, identical failure names to clean .711; no new failures. Syntax/diff/protected modelling/multi-object-transform checks PASS.
+- [ ] Visible .712; centre free Move and free Rotate ring, top-left radial in every mode, correct close/Bevel slot.
+- [ ] Focus/Frame All, Undo/Redo corner shortcuts; Object Multi on/off/pressed state/additive object selection and transforms.
+- [ ] Symmetry/Bisect + Array wide/shallow, all settings retained, right Cancel/Apply, original preview/Apply/Cancel/history.
+- [ ] Other Face/Edge/Vertex settings wide and complete; blue Bevel/Shell/staged Sweep/repair/exact values retain clean completion/selection.
+- [ ] Object Transform/Insert/Solidify/Revolve/Boolean complete controls/Cancel/Apply/history; navigation and .682 Pencil/finger background dismiss/re-tap protected.

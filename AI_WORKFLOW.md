@@ -190,3 +190,14 @@ slot in Face, Edge and Vertex. Keep this shared placement during future refineme
 .710 user explicitly requested all currently existing Vertex Active Tools as one
 batch, followed by combined hands-on testing/refinement. Do not invent new Vertex
 capabilities or include selection helpers under that request.
+
+
+## Wide popout / gizmo shortcut rule
+
+User-directed UX refinement (2026-10-04, .712): all top tool panels with terminal
+Cancel/Apply controls are wide, with settings across the body and terminal actions
+stacked on the right. Use shared tool-session-wide-layout through the top-centre
+positioning owner; preserve original nodes/listeners/IDs and staged visibility.
+Gizmo centre belongs to free transforms. Radial access is the top-left shortcut;
+top-right Focus/Frame All, bottom-right Undo/Redo, bottom-left Object Multi. Reuse
+actual action owners; never implement duplicate history or Multi state.

@@ -267,3 +267,13 @@ controls/Apply/Cancel. Authoritative owner cancellation and completion/gizmo ret
 No parallel kernel/pointer owner; protected .710 Vertex and component Bevel positions.
 32 targeted PASS; full1181/897/284, no new failures versus .710. Hands-on pending.
 Next combined Object test/refine → final Edge inventory/settings audit.
+
+
+### Coordinated popout / gizmo refinement — .712
+
+User sketches supersede centre-to-radial access: centre free transforms; corner
+shortcuts for Radial/Focus+Frame/Undo+Redo/Object Multi. All top tool popouts use
+wide settings + stacked right terminal actions through shared presentation owner.
+Original controls/geometry/history/gesture owners retained. .711 screenshots confirm
+load, but no full Object PASS. 41 targeted PASS; full1190/906/284, no new failures.
+Next .712 combined visual/tactile refinement before final Edge inventory/settings.

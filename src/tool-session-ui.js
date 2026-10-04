@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.712';
 const drawer=document.querySelector('#editDrawer');
 const contentRoot=drawer?.querySelector(':scope > .drawer-content')||drawer?.querySelector('.drawer-content');
 const summary=drawer?.querySelector(':scope > summary')||drawer?.querySelector('summary');
@@ -290,9 +290,10 @@ function begin({id,title,node,subtitle=''}={}){
   }
   const dock=(globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset.mode)==='object';
   host.dataset.viewportDock=String(dock);
-  if(dock){document.querySelector('#viewportWrap')?.appendChild(host);placeToolSessionPanel(host);}
-  else{contentRoot?.prepend(host);host.removeAttribute('style');}
+  if(dock){document.querySelector('#viewportWrap')?.appendChild(host);}
+  else{contentRoot?.prepend(host);host.removeAttribute('style');delete host.dataset.wideToolPanel;}
   host.replaceChildren(node);
+  if(dock)placeToolSessionPanel(host);
   host.hidden=false;
   drawer.dataset.toolSessionActive='true';
   drawer.dataset.keepOpen='true';
