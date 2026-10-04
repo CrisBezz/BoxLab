@@ -46,7 +46,7 @@ document.head.appendChild(style);
 let launchedFromHub=false;
 let launchSelection=[];
 let launchMode='edge';
-let launchMesh=null;
+let launchMesh=null,launchObject=null;
 let raf=0;
 
 function src(selector){return document.querySelector(selector);}
@@ -73,7 +73,7 @@ function closeSession({restoreSelection=false}={}){
 }
 function sync(){
   cancelAnimationFrame(raf);
-  if(launchedFromHub&&launchMode==='edge'){if(globalThis.__boxlabSelectionBridge?.mode?.()!=='edge'||globalThis.__boxlabBridgeState?.mesh!==launchMesh||document.querySelector('#app')?.classList.contains('boxlab-active-locked')){closeSession();return;}launchSelection=currentEdgeSelection();globalThis.__boxlabDirectBevel?.syncEdgePreview?.();}
+  if(launchedFromHub&&launchMode==='edge'){if(globalThis.__boxlabSelectionBridge?.mode?.()!=='edge'||globalThis.__boxlabBridgeState?.mesh!==launchMesh||globalThis.__boxlabObjectManager?.activeId!==launchObject||document.querySelector('#app')?.classList.contains('boxlab-active-locked')){closeSession();return;}launchSelection=currentEdgeSelection();globalThis.__boxlabDirectBevel?.syncEdgePreview?.();}
   if(launchedFromHub&&launchMode==='face'&&!globalThis.__boxlabDirectBevel?.faceContextValid?.()){closeSession();return;}
   const active=launchedFromHub&&!!globalThis.__boxlabDirectBevel?.active?.();
   palette.hidden=!active;
@@ -151,7 +151,7 @@ window.addEventListener('boxlab-selection-hub-tool',event=>{
     const result=globalThis.__boxlabDirectBevel?.armFaces?.(globalThis.__boxlabSelectionBridge?.indices?.()||[]);
     if(!result?.ok){window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'face',tool:'Bevel'}}));return;}
     launchSelection=result.ids;
-  }else if(launchMode==='edge'){launchSelection=currentEdgeSelection();globalThis.__boxlabDirectBevel?.setPersistentEdge?.(true);launchMesh=globalThis.__boxlabBridgeState?.mesh;}else return;
+  }else if(launchMode==='edge'){launchSelection=currentEdgeSelection();globalThis.__boxlabDirectBevel?.setPersistentEdge?.(true);launchMesh=globalThis.__boxlabBridgeState?.mesh;launchObject=globalThis.__boxlabObjectManager?.activeId;}else return;
   palette.querySelector('[data-action="apply"]').textContent='Apply Bevel';
   palette.querySelector('.shbs-head strong').textContent=launchMode==='face'?'Face Bevel':'Bevel';
   palette.querySelector('.shbs-note').textContent=launchMode==='face'?'Blue preview only. Adjust Width/Segments or Pencil-drag a selected Face, then Apply.':'Blue slider preview • Apply Bevel commits. Drag an edge for the existing direct bevel; background tap exits.';

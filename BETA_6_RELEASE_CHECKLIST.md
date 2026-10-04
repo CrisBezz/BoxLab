@@ -22,6 +22,6 @@ Release gate: resolve device failures, review pending checks and historical test
 
 
 .731 follow-up: Sweep popup, persistent Edge Slide and Edge/Vertex Bevel copy preview
-covered by85 focused passing checks and all279 module syntax checks. Full1273/993/280
+covered by86 focused passing checks and all279 module syntax checks. Full1274/994/280
 (no new failures vs .730). Device acceptance remains pending; test these plus remaining
 .730 release checks before freezing Beta6.

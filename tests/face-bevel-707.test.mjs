@@ -132,3 +132,7 @@ test('731 Edge Cancel/context mutation disposes preview without history or stale
  const f=fixture();f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.panel.sync();const before=geometry(f.context.__boxlabBridgeState.mesh);f.action('cancel');assert.equal(f.context.__boxlabBridgeState.scene.children.length,0);assert.deepEqual(geometry(f.context.__boxlabBridgeState.mesh),before);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
  f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.panel.sync();f.context.__boxlabBridgeState.mesh.vertices[0].x=77;assert.equal(f.owner.applyExact(20,[0]).ok,false);assert.equal(f.context.__boxlabBridgeState.mesh.vertices[0].x,77);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
 });
+
+test('731 Edge popup closes on active-object change even when live mesh is reused',()=>{
+ const f=fixture();f.context.__boxlabObjectManager={activeId:1};f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.panel.sync();f.context.__boxlabObjectManager.activeId=2;f.panel.sync();assert.equal(f.panel.active(),false);assert.equal(f.owner.active(),false);assert.equal(f.context.__boxlabBridgeState.scene.children.length,0);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
+});

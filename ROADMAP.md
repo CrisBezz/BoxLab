@@ -423,6 +423,6 @@ User supersedes fixed-width popouts and removes Visible/Through UI (retain Lasso
 
 Sweep Face/Edge uses one original staged viewport dock; Edge Slide persists until
 Done/background; Edge/Vertex popup blue bevel preview added through original owners,
-retaining viewport drag bevel. 85 focused PASS; no new full-suite failure names.
+retaining viewport drag bevel. 86 focused PASS; no new full-suite failure names.
 Continue .730/.731 grouped iPad checks and Files/Nomad export acceptance; freeze Beta6
 only after user feedback and blocker review. Slight Lasso tightening deferred.

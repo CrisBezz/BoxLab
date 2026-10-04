@@ -37,12 +37,12 @@ no .730/.731 PASS or Beta6 release acceptance inferred.
   kernel has Width only; no artificial Segments control or new geometry added.
   Mode/mesh/active-object/lock guards and preview disposal protected.
 
-Validation: **85 focused PASS**, including actual Sweep Face/Edge launch and staged
+Validation: **86 focused PASS**, including actual Sweep Face/Edge launch and staged
 control docking, Edge/Vertex blue copy/commit/Cancel/UndoRedo, retained direct
 Edge gestures, Slide repetition and touch/Pencil background routing, protected Face
 preview, Object sessions and shared layout. All279 src modules syntax PASS.
-Full1273/993/280 vs fresh .7301265/982/283: no new failure names; three historical
-Sweep release-pin fixtures now pass. Eight added tests pass; suite not all-green.
+Full1274/994/280 vs fresh .7301265/982/283: no new failure names; three historical
+Sweep release-pin fixtures now pass. Nine added tests pass; suite not all-green.
 Shared layout remains .730, unrelated client pins stay .730; edited owners and
 main/Bevel/Sweep/session/gizmo plus release refresh pins .731. Protected Multi1.0,
 Loop commit .715, view .726, corner .718 and frozen betas untouched.
