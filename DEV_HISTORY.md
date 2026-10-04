@@ -4690,3 +4690,12 @@ For exact implementation state, always inspect current `main`; this history is c
 - Preview geometry/material disposal tested; slider updates only on input/change, no per-frame regeneration. Existing Shell/Solidify owners, bevel kernels, ring/layout, protected transform/Loop Cut unchanged. .707 Face drag tests updated for revised explicit-Apply UX.
 - 60 targeted tests PASS; full suite1153 tests/868 PASS, identical285 failures by name to .707. Syntax/diff PASS. .708 markers and changed direct/helper parent/main/session/refresh pins updated.
 - Next hands-on .708; if drag still fails on confirmed version, Gesture Debug before speculation. Pending .706 and radial Face → Vertex → Object → final Edge sequence retained.
+
+
+## 2026-10-04 — v0.36.18.709 first Vertex radial pair
+
+- User confirms .708 full manual list PASS; Face Bevel blue slider/Pencil preview, explicit Apply/Cancel, puck/history/navigation protected. Older pending repair builds not implicitly passed.
+- Audited Face action/settings inventory: 24 modelling/repair tools exposed, contextual parameters present; Through is already automatic single-Face inward Extrude, no separate settings or new sector. Inspect/selection/appearance excluded. Drawer fallbacks/pending repairs/final ring placement retained.
+- Started Vertex with existing .513 Merge to Center / Merge to First. Same authoritative button validation, chronological selection, geometry/compaction/Multi/history; no duplicate modelling or pointer owner. Vertex puck/transform-centre now opens two-sector ring and centred ×. Read-only guard, disabled state and mode guards; one-shot suppression cleanup returns selected result puck. Existing Face/Edge ring markup unchanged.
+- 30 targeted PASS; full1158 tests/873 PASS, identical285 failure names to .708, no new failures. Syntax/diff PASS. .709 shell/manifest/main/refresh/gizmo pins current; protected files/kernels/frozen betas untouched.
+- Next confirm .709 and audit next Vertex active-tool pair/settings, then Object → final Edge. No selection proxies, unrelated gestures or bulk drawer removal.

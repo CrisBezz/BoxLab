@@ -71,7 +71,7 @@ function setHubState(next,{reason='',resumeSuspended=true}={}){
   const mode=currentMode();
   let requested=mode==='object'&&!objectTransformDismissed?'transform':next;
   if(!['closed','transform','tools'].includes(requested))requested='closed';
-  if(requested==='tools'&&!['face','edge'].includes(mode))requested='closed';
+  if(requested==='tools'&&!['face','edge','vertex'].includes(mode))requested='closed';
 
   if(edgeExtrudeConstraintSession&&mode==='edge'&&requested!=='transform'){
     const preservedEdges=[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])];
@@ -363,6 +363,11 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteEdgeBtn">Delete</button>
   <button type="button" class="tg-tool-center" aria-label="Close Edge contextual tools" title="Close tools">×</button>
 </div>
+<div class="tg-tool-ring" data-ring-mode="vertex" aria-label="Vertex contextual tools">
+  <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#mergeVerticesCenterBtn">Merge Center</button>
+  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#mergeVerticesFirstBtn">Merge First</button>
+  <button type="button" class="tg-tool-center" aria-label="Close Vertex contextual tools" title="Close tools">×</button>
+</div>
 <div class="tg-edge-extrude-badge" hidden><strong>Extrude</strong><span>Plane ⟂ edge</span><small>Choose constraint • drag edge</small></div>
 <div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
@@ -418,8 +423,10 @@ function syncContextToolAvailability(){
     const faceRepair=sector.closest('.tg-tool-ring')?.dataset.ringMode==='face'&&['Close Holes','Quad Cleanup','Quadify N-gons','Clean Vertices','Merge Dist'].includes(sector.textContent?.trim());
     const faceAlign=sector.closest('.tg-tool-ring')?.dataset.ringMode==='face'&&sector.textContent?.trim()==='Align';
     const faceBevel=sector.closest('.tg-tool-ring')?.dataset.ringMode==='face'&&sector.textContent?.trim()==='Bevel';
-    const unavailable=faceBevel?!globalThis.__boxlabDirectBevel?.faceBevelInfo?.()?.ok:faceAlign?!globalThis.__boxlabFaceAlignViewportSession?.available?.():faceRepair?!globalThis.__boxlabFaceRepairViewportSession?.available?.(sector.textContent.trim()):!target||(!bridgeStart&&!!target.disabled);
+    let unavailable=faceBevel?!globalThis.__boxlabDirectBevel?.faceBevelInfo?.()?.ok:faceAlign?!globalThis.__boxlabFaceAlignViewportSession?.available?.():faceRepair?!globalThis.__boxlabFaceRepairViewportSession?.available?.(sector.textContent.trim()):!target||(!bridgeStart&&!!target.disabled);
     const active=!!target&&(target.classList.contains('active')||target.getAttribute('aria-pressed')==='true');
+    const vertexReadOnly=sector.closest('.tg-tool-ring')?.dataset.ringMode==='vertex'&&!!document.querySelector('#app')?.classList?.contains('boxlab-active-locked');
+    unavailable=unavailable||vertexReadOnly;
     sector.disabled=unavailable;
     sector.classList.toggle('tg-tool-unavailable',unavailable);
     sector.classList.toggle('tg-tool-active',active&&!unavailable);
@@ -447,7 +454,7 @@ collapseControl?.addEventListener('pointerdown',event=>{
   event.stopPropagation();
   hideFloatInput();
   resetTransientState({hideFloat:true});
-  const next=['face','edge'].includes(currentMode())?'tools':'closed';
+  const next=['face','edge','vertex'].includes(currentMode())?'tools':'closed';
   setHubState(next,{reason:'transform-centre'});
   if(next==='tools')syncContextToolAvailability();
 });
@@ -471,6 +478,7 @@ toolSectors.forEach(button=>{
     const mode=currentMode();
     const ringMode=button.closest('.tg-tool-ring')?.dataset.ringMode||'';
     if(mode!==ringMode)return;
+    if(mode==='vertex'&&document.querySelector('#app')?.classList?.contains('boxlab-active-locked'))return;
     const selector=button.dataset.toolTarget;
     const target=selector?document.querySelector(selector):null;
     const pendingLabel=button.textContent?.trim()||'Tool';
@@ -510,11 +518,11 @@ toolSectors.forEach(button=>{
       target.click();
       if(radialOffset)globalThis.__boxlabOffsetViewportSession?.openFromHub?.({ids:launchIds});
       if(radialSlide)globalThis.__boxlabSlideViewportSession?.openFromHub?.({ids:launchIds});
-      if((mode==='edge'&&(toolLabel==='Dissolve'||toolLabel==='Delete'))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'||toolLabel==='Triangulate'||toolLabel==='Flip Faces'||toolLabel==='Orient Faces'||toolLabel==='Orient Outward'))){
+      if((mode==='vertex'&&['Merge Center','Merge First'].includes(toolLabel))||(mode==='edge'&&(toolLabel==='Dissolve'||toolLabel==='Delete'))||(mode==='face'&&(toolLabel==='Delete'||toolLabel==='Join Coplanar'||toolLabel==='Circle'||toolLabel==='Poke'||toolLabel==='Make Planar'||toolLabel==='Triangulate'||toolLabel==='Flip Faces'||toolLabel==='Orient Faces'||toolLabel==='Orient Outward'))){
         queueMicrotask(()=>{
           hubSuppressedKey='';
           const mesh=state()?.mesh,current=currentMode();
-          const expectedMode=mode==='face'?'face':'edge';
+          const expectedMode=mode;
           if(current===expectedMode&&selectionAvailable(mesh,expectedMode)){
             lastSelectionKey=selectionKey(mesh,expectedMode);
             setHubState('closed',{reason:expectedMode+'-one-shot-complete'});
@@ -758,6 +766,7 @@ style.textContent=`
 #totalGizmo .tg-tool-ring{position:absolute;inset:0;display:none;pointer-events:none}
 #totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring[data-ring-mode="face"]{display:block}
 #totalGizmo[data-hub-state="tools"][data-mode="edge"] .tg-tool-ring[data-ring-mode="edge"]{display:block}
+#totalGizmo[data-hub-state="tools"][data-mode="vertex"] .tg-tool-ring[data-ring-mode="vertex"]{display:block}
 #totalGizmo .tg-tool-sector{position:absolute;left:50%;top:50%;width:68px;height:34px;margin:-17px -34px;padding:3px 5px;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(18,21,27,.96);color:#eef2f7;font-size:10px;font-weight:700;line-height:1;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.34);pointer-events:auto;touch-action:none;transform:rotate(var(--a)) translateY(-82px) rotate(calc(-1 * var(--a)))}
 #totalGizmo .tg-face-outer-guide{position:absolute;left:50%;top:50%;width:460px;height:460px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.15);border-radius:50%;pointer-events:none}
 #totalGizmo .tg-tool-outer{width:86px;margin-left:-43px;transform:rotate(var(--a)) translateY(calc(-1 * var(--r))) rotate(calc(-1 * var(--a)))}
@@ -981,7 +990,7 @@ function sync(){
   root.style.left=`${left}px`;
   root.style.top=`${top}px`;
   placeToolSessionPanel(floatPalette);
-  const suppressed=['face','edge'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
+  const suppressed=['face','edge','vertex'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
   root.hidden=suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';

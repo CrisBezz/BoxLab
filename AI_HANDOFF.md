@@ -9,8 +9,8 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.708**.
-Current focus: hands-on Face Bevel blue slider preview / early gesture ownership confirmation; then finish Face audit → Vertex → Object → final Edge.
+Current release: **v0.36.18.709**.
+Current focus: first Vertex radial pair hands-on confirmation; .708 Face Bevel full manual list PASS and protected. Continue Vertex → Object → final Edge, retaining pending Face repair checks.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
 is still the priority. Follow Face → Vertex → Object → final Edge, not broad gestures.
@@ -41,27 +41,55 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 ## Current repository state
 
 - Main CrisBezz/BoxLab; live https://crisbezz.github.io/BoxLab/.
-- Release v0.36.18.708; parent .707 checkpoint 42567a1b.
-- Find .708 runtime/documentation commit in main history; no self-referential SHA.
-- Changed modules: direct-bevel, selection-hub-bevel-session and narrow main guard .708;
-  new rendering-only bevel-face-preview imported by direct-bevel with .708 pin.
-- Release markers/main-loader/refresh pins .708; refresh logic unchanged.
-- total-gizmo/ring .707 unchanged; repair/drawer .706, Align .705, shared dock .700.
-- Protected multi-object-transform .1.0, bevel kernels, Shell/Solidify and frozen betas untouched.
+- Release v0.36.18.709; parent .708 checkpoint c0db70e4.
+- Find .709 runtime/documentation commit in main history; no self-referential SHA.
+- Changed runtime: total-gizmo only, .709 direct loader pin. Main/refresh pins .709,
+  logic unchanged. Vertex merge owner remains .513, geometry/history unchanged.
+- Face Bevel direct/helper/session .708, repair/drawer .706, Align .705, dock .700.
+- Protected multi-object-transform .1.0, bevel kernels, Face/Edge rings and frozen betas untouched.
 
-## Immediate hands-on checks — .708
+## Immediate hands-on checks — .709
 
-1. Confirm iPad visibly shows v0.36.18.708. Cube Face → radial Bevel opens top-centre settings and Shell-like blue translucent fill/wire preview.
-2. Width and Segments sliders update blue preview live; original mesh/selection remain unchanged until Apply Bevel.
-3. Pencil horizontal drag on selected Face adjusts the same preview instead of moving geometry. Release keeps preview/settings; explicitly Apply Bevel to commit.
-4. Cancel after sliders/drag removes blue preview and returns original Face puck, no geometry/history change. Background orbit and finger pan/pinch work during settings.
-5. Apply commits once, clears stale Face IDs/preview/settings; next Face tap gets fresh puck. One Undo/Redo restores/repeats. Edge Bevel drag/exact and previous Face tools remain protected.
+1. Confirm iPad visibly shows v0.36.18.709. Vertex selection → puck → transform centre
+   opens Merge Center / Merge First and centred ×. Closing preserves selection.
+2. Multi-select two adjacent cube vertices → Merge Center. Result goes to midpoint,
+   stays selected with puck; one Undo/Redo restores/repeats geometry.
+3. Undo, select one vertex first then its adjacent neighbour → Merge First. Result
+   stays at first selected position, retains puck; one Undo/Redo.
+4. One selected vertex disables both; unsafe selections reject. Vertex taps,
+   long-press selection, orbit/pan/pinch and protected Face/Edge tools remain intact.
 
-.707 Face drag reported FAIL (moves Face); no screenshot/version stamp supplied.
-Main and live manifest/shell/pins were verified .707 before implementation. .707 is
-not protected PASS. .706/.702/.703/.704 remain pending; .705 remains protected PASS.
-.708 awaits hands-on confirmation. If direct drag still fails on visibly .708,
-use Gesture Debug trace rather than further speculative pointer layers.
+.708 full manual list confirmed PASS by user: blue Width/Segments/Pencil preview,
+explicit Apply, Cancel/puck, one Undo/Redo, navigation and protected Edge behavior.
+.707 drag FAIL superseded by .708; no PASS inferred for .706/.702/.703/.704/.692.
+
+## .709 owner audit / implementation
+
+Face inventory: original eight tools plus Join/Circle/Poke/Planar/Triangulate/Flip/
+Orient/Outward/Bridge/five scoped repairs/Align/Bevel are all exposed. Exact/Repeat
+Extrude/Inset, Shell thickness, staged Sweep, Bevel Width/Segments, Align XYZ/Face
+and repair tolerance/scope settings have contextual controls. Through is automatic
+inward single-Face Extrude in multi-face-direct and precision-face, not a separate
+button/settings owner. Inspect/selection/appearance helpers are excluded by scope.
+Pending repair hands-on checks and final inner/outer placement remain; do not claim
+all Face workflows manually passed or remove drawer fallbacks.
+
+Vertex merge .513 already owns Center/First validation, chronological first vertex,
+compaction, selection/Multi and history. Two direct sectors proxy those buttons;
+no new kernel or viewport pointer listener, no new popup required. Same puck →
+transform → tools path now permits Vertex, same centred × closes it. Availability
+mirrors owner buttons; read-only radial access is blocked. Same one-shot completion
+clears stale hub suppression and returns puck on merged result (or surviving selection
+on rejection). Mode guards retain Face/Edge/Object routing; their ring markup is unchanged.
+30 targeted tests PASS including actual owner geometry/chronology/history Undo/Redo,
+selection/puck, invalid/read-only/mode rejection and protected nearby Face sessions.
+Full1158 tests/873 PASS, identical285 failure names to .708; no new failures.
+Syntax/diff PASS. No topology or protected navigation owner edits.
+
+Next: confirm .709; audit next Vertex active pair (existing Add/Bevel/Connect/Weld,
+Merge by Distance, Clean, Slide, Circle/Align/Delete owners/settings). Selection
+helpers stay outside radials. Finish Vertex coverage, then Object, then final Edge;
+keep pending Face repair checks and final two-ring placement review visible.
 
 ## .708 Face Bevel blue preview / ownership repair
 
@@ -96,8 +124,7 @@ main guard with touch/fallback, source-change rejection and protected Edge/nearb
 Full suite1153 tests/868 PASS, same285 failure names as .707; no new failures. Syntax/diff PASS.
 Ring remains eight inner/sixteen outer at230px; no layout changes.
 
-Next: hands-on .708; pending .706 confirmation, then Face inventory/settings → Vertex →
-Object → final Edge. No unrelated gestures/strengthening or radial selection helpers.
+Historical next step completed: .708 hands-on PASS; .709 begins Vertex after Face owner/settings inventory. Pending .706 checks retained; Vertex → Object → final Edge. No unrelated gestures/strengthening or radial selection helpers.
 
 ## .707 Face Bevel owner audit / implementation
 
@@ -334,6 +361,8 @@ Historical snapshot-marker assertions remain in the full suite; do not widen thi
 gesture build into a wholesale test cleanup.
 
 ## Protected hands-on behaviour
+
+- .708 Face Bevel blue Width/Segments/Pencil preview, explicit Apply/Cancel, original puck, one Undo/Redo and navigation/Edge regression full manual list PASS.
 
 - .705 Align to Face full manual list PASS: arbitrary-plane placement, fixed anchor, rigid group, guarded rejection/Cancel, selection/puck, one-step Undo/Redo and XYZ/navigation.
 
