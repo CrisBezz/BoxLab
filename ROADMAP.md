@@ -181,7 +181,7 @@ Only add focused tools that suit BoxLab:
   - tapping the object restores the gizmo reliably
 - Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
-### Face contextual gap completion — .707
+### Face contextual gap completion — .708
 
 - .694 outer-ring Join/Circle and existing eight inner sectors are hands-on PASS and protected.
 - .695 Poke/Make Planar are hands-on PASS and protected.
@@ -197,6 +197,7 @@ Only add focused tools that suit BoxLab:
 - .705 adds arbitrary-plane Align to Face in the existing Align pop-out; rigid planar group placement, fixed anchor, guarded candidate commit, one-step history. Hands-on PASS.
 - .706 exposes existing Merge by Distance through whole-object top-centre exact tolerance/Apply/Cancel, preserving Face mode and using existing safe scanner/weld owner. Fifteen outer tools; combined cluster validation, one history step and stale-ID cleanup. Hands-on pending.
 - .707 adds Face Bevel using existing Edge bevel controller/kernel and shared top-centre Width/Segments settings. Single Face or connected region outside boundary, same Pencil drag/exact, Face mode retained, one Undo and guarded cancellation. Sixteen outer tools; hands-on pending.
+- .708 responds to .707 Face drag FAIL: early owner dispatch/main fallback guard and Shell-like blue snapshot preview for Width/Segments/Pencil. Release retains preview; explicit Apply commits once, Cancel discards. Existing Edge/kernel/ring preserved; hands-on pending.
 - Populate complete Face tool coverage before deciding inner/main vs outer/secondary placement. More is an accepted fallback if the completed two-ring layout is crowded.
 - Continue auditing remaining Face active-tool settings/repair access for contextual access/pop-outs before moving to Vertex, Object and final Edge.
 

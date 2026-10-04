@@ -3227,3 +3227,16 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Cancel before apply and cancelled previews preserve original geometry/Face selection/history; puck returns and background orbit/pan/zoom work.
 - [ ] Connected selected Faces bevel outside boundary only when current Edge engine supports it; unsupported/disconnected/no-boundary selections disabled.
 - [ ] Protected Edge Bevel drag/exact/Cancel, prior Face tools, centre × and ring spacing remain correct. .706 pending checks retained.
+
+
+## v0.36.18.708 — Face Bevel blue preview / ownership
+
+- [x] .707 drag reported FAIL; no PASS recorded. Source/live release audit verified .707; exact screenshot stamp absent.
+- [x] Automated: snapshot candidate slider preview does not mutate live geometry/history, Shell-blue fill/wire style and unique disposal, Window Face owner precedes consuming document Move handler, actual main fallback guard only during Face session, touch navigation passes, Pencil release retains preview until explicit Apply, one Undo/Redo, cancellation and external-source rejection, protected Edge drag/exact and nearby Face/dock/release checks.
+- [x] Static: Edge exclusively canvas / Face exclusively window capture, same handler functions and kernel; direct helper/parent/main/session/release pins .708; ring/blue Shell-Solidify/protected transform/Loop Cut unchanged.
+- [ ] Visible .708; Face Bevel opens blue fill/wire preview and top-centre Width/Segments/Apply Bevel/Cancel.
+- [ ] Width/Segments update preview live without modifying original mesh/selection/history.
+- [ ] Pencil horizontal selected-Face drag adjusts preview without Move; release keeps it ready for explicit Apply.
+- [ ] Cancel removes preview, restores original selected puck with no geometry/history; background orbit/finger pan/pinch stay functional.
+- [ ] Apply commits once, removes preview/settings and clears stale Face selection; next Face tap gets puck; one Undo/Redo.
+- [ ] Protected Edge Bevel drag/exact/Cancel, prior Face tools/navigation remain correct. Pending .706 checks retained.

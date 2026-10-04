@@ -9,8 +9,8 @@ TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
 Inspect main, recent commits, live release markers and script pins. Audit existing
 functionality and authoritative owners before implementing anything new.
 
-Current release: **v0.36.18.707**.
-Current focus: hands-on Face radial Bevel confirmation; then finish Face audit → Vertex → Object → final Edge.
+Current release: **v0.36.18.708**.
+Current focus: hands-on Face Bevel blue slider preview / early gesture ownership confirmation; then finish Face audit → Vertex → Object → final Edge.
 The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
 Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
 is still the priority. Follow Face → Vertex → Object → final Edge, not broad gestures.
@@ -40,24 +40,64 @@ Do not mistake a working ring lifecycle for complete contextual tool coverage.
 
 ## Current repository state
 
-- Repository: CrisBezz/BoxLab, branch main; live https://crisbezz.github.io/BoxLab/.
-- Release: v0.36.18.707; parent .706 checkpoint aef2bcb5.
-- Find .707 runtime/documentation commit in main history; no self-referential SHA.
-- Changed modules/pins: direct-bevel, selection-hub-bevel-session, total-gizmo .707.
-- Release markers/main-loader/refresh pins .707; refresh logic unchanged.
-- Repair/drawer/dynamic loader pins .706; Align .705; shared dock .700.
-- Protected multi-object-transform .1.0 and topology kernels untouched.
+- Main CrisBezz/BoxLab; live https://crisbezz.github.io/BoxLab/.
+- Release v0.36.18.708; parent .707 checkpoint 42567a1b.
+- Find .708 runtime/documentation commit in main history; no self-referential SHA.
+- Changed modules: direct-bevel, selection-hub-bevel-session and narrow main guard .708;
+  new rendering-only bevel-face-preview imported by direct-bevel with .708 pin.
+- Release markers/main-loader/refresh pins .708; refresh logic unchanged.
+- total-gizmo/ring .707 unchanged; repair/drawer .706, Align .705, shared dock .700.
+- Protected multi-object-transform .1.0, bevel kernels, Shell/Solidify and frozen betas untouched.
 
-## Immediate hands-on checks — .707
+## Immediate hands-on checks — .708
 
-1. Confirm iPad visibly shows v0.36.18.707. Select a cube Face → radial Bevel; Face Bevel Width/Segments/Apply Exact/Cancel at top centre, stay Face mode.
-2. Pencil-drag selected Face horizontally: perimeter previews/commits; one Undo/Redo restores/repeats. Segments 1 chamfers; multiple segments round as existing Edge Bevel.
-3. Apply Exact gives same perimeter bevel; selection clears, next Face tap gets fresh puck. One Undo restores.
-4. Cancel before applying preserves original geometry/Face selection/puck; cancelled preview restores original mesh with no history. Background orbit/pan/zoom work.
-5. Connected selected Faces bevel only their outside boundary where existing Edge engine supports it. Protected Edge Bevel drag/exact/Cancel and previous Face tools remain correct; sixteen outer sectors/centre close usable.
+1. Confirm iPad visibly shows v0.36.18.708. Cube Face → radial Bevel opens top-centre settings and Shell-like blue translucent fill/wire preview.
+2. Width and Segments sliders update blue preview live; original mesh/selection remain unchanged until Apply Bevel.
+3. Pencil horizontal drag on selected Face adjusts the same preview instead of moving geometry. Release keeps preview/settings; explicitly Apply Bevel to commit.
+4. Cancel after sliders/drag removes blue preview and returns original Face puck, no geometry/history change. Background orbit and finger pan/pinch work during settings.
+5. Apply commits once, clears stale Face IDs/preview/settings; next Face tap gets fresh puck. One Undo/Redo restores/repeats. Edge Bevel drag/exact and previous Face tools remain protected.
 
-.707 awaits hands-on PASS. .706 also remains pending: no explicit PASS received.
-.702/.703/.704 pending checks retained; .705 full manual list remains protected PASS.
+.707 Face drag reported FAIL (moves Face); no screenshot/version stamp supplied.
+Main and live manifest/shell/pins were verified .707 before implementation. .707 is
+not protected PASS. .706/.702/.703/.704 remain pending; .705 remains protected PASS.
+.708 awaits hands-on confirmation. If direct drag still fails on visibly .708,
+use Gesture Debug trace rather than further speculative pointer layers.
+
+## .708 Face Bevel blue preview / ownership repair
+
+Audit: .707 Face drag was at canvas capture, vulnerable to earlier document capture
+owners. Disarming cosmetic transform arming does not remove main's component Move
+fallback. Face-only registrations now dispatch the SAME direct-bevel handler functions
+at window capture, before document handlers. Edge continues exclusively at canvas
+capture; no parallel owner or new modelling kernel. Main has one explicit Face Bevel
+active guard to yield its fallback, letting touch/background navigation continue.
+Touch and Pencil hover do not start Face bevel; selected Pencil contact does. Existing
+pointer capture and controls restoration retained; release ends drag but keeps preview.
+
+Slider/Pencil preview now clones the session snapshot, calls unchanged Edge bevel kernel
+and renders candidate through new rendering-only bevel-face-preview. Blue color0x62d8ff,
+fill opacity.18 / wire.72, DoubleSide/depthTestfalse/depthWritefalse and renderOrder13/14
+match Shell/Solidify; those owners remain untouched. Full candidate rendered as separate
+scene group, never promoted as cage/editable mesh or added to object manager.
+Source vertices/faces/creases/loose topology are checked before rebuild/apply to prevent
+clobbering an external edit. Invalid candidate removes stale preview, disables Apply and
+reports reason in panel. Rebuild/disarm/Cancel/Apply/context change dispose shared geometry
+once and both materials. Width/Segments input/change updates only this Face session;
+no preview rebuild in positioning RAF. Popup stays top centre.
+
+Launch, sliders and Pencil drags leave live geometry/history/selection unchanged.
+Release retains preview, explicit Apply Bevel rebuilds/validates and commits candidate
+with one history step, then clears stale IDs and shared completion. Cancel discards
+candidate and preserves original selected Faces. Edge commit-on-release/exact path remains
+unchanged. .707 tests now assert explicit Face Apply after preview release (superseded UX).
+60 targeted tests PASS, including real installed kernel geometry/Undo/Redo, blue style,
+slider rebuild/resource disposal, early capture ahead of consuming document owner, actual
+main guard with touch/fallback, source-change rejection and protected Edge/nearby tools.
+Full suite1153 tests/868 PASS, same285 failure names as .707; no new failures. Syntax/diff PASS.
+Ring remains eight inner/sixteen outer at230px; no layout changes.
+
+Next: hands-on .708; pending .706 confirmation, then Face inventory/settings → Vertex →
+Object → final Edge. No unrelated gestures/strengthening or radial selection helpers.
 
 ## .707 Face Bevel owner audit / implementation
 
