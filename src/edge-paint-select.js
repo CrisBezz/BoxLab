@@ -51,6 +51,7 @@ depthButtons.forEach(button => button.addEventListener('click', () => {
 }));
 
 canvas?.addEventListener('pointerdown', event => {
+  if(globalThis.__boxlabLasso?.isArmed?.()){pendingPaint=null;return;}
   if(globalThis.__boxlabFaceSplit?.isArmed?.()||globalThis.__boxlabOffsetLoop?.isArmed?.()) return;
   const type = mode();
   if(type==='face'&&globalThis.__boxlabFaceDirect?.active?.()) return;
@@ -63,6 +64,7 @@ canvas?.addEventListener('pointerdown', event => {
 }, true);
 
 canvas?.addEventListener('pointermove', event => {
+  if(globalThis.__boxlabLasso?.isArmed?.()&&!paint){pendingPaint=null;return;}
   if (pendingPaint && pendingPaint.pointerId === event.pointerId && !paint) {
     if(globalThis.__boxlabModelessSelection?.browsing?.(event.pointerId)){
       globalThis.__boxlabGestureDebug?.log?.('PAINT YIELD TO BROWSER',{type:pendingPaint.type,pid:event.pointerId});

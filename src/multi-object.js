@@ -762,7 +762,7 @@ function installViewportActivation() {
     const candidate=touchTap;touchTap=null;
     if (candidate.cancelled || !candidate.objectMode || currentMode() !== 'object') return;
     if(performance.now()-candidate.startedAt>350)return;
-    if(!pickViewportObject(event)){window.dispatchEvent(new CustomEvent('boxlab-pencil-background-tap',{detail:{pointerId:event.pointerId,clientX:event.clientX,clientY:event.clientY,source:'object-activation'}}));return;}
+    if(!pickViewportObject(event)){window.dispatchEvent(new CustomEvent('boxlab-pencil-background-tap',{detail:{pointerId:event.pointerId,timeStamp:event.timeStamp,clientX:event.clientX,clientY:event.clientY,source:'object-activation'}}));return;}
     handleViewportActivation(event, false);
   }, true);
 

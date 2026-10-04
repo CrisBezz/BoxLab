@@ -52,6 +52,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
       if(event.type==='pointerup'&&!tap.orbitClaimed&&moved<8){
         window.dispatchEvent(new CustomEvent('boxlab-pencil-background-tap',{detail:{
           pointerId:event.pointerId,
+          timeStamp:event.timeStamp,
           clientX:event.clientX??tap.x,
           clientY:event.clientY??tap.y
         }}));

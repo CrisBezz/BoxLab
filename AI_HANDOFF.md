@@ -7,7 +7,30 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.719**.
+Current release: **v0.36.18.720**.
+Current focus: .720 Edge/Lasso completion and double-background timing refinement;
+pending iPad test. Parent .719 release `7d1f8753`. User reports .719 Edge background
+clear/Lasso cancellation still FAIL and double-tap timing wrong; .719 is not passed.
+Actual Edge Paint owner was allowed to arm before Lasso and consume move events,
+leaving Lasso's gesture unfinished. It now defers pending paint to armed Lasso.
+No new raw-pointer owners: main's existing background tracker/completion moved to
+window capture (non-consuming), with primary/contact/movement/duration/cancel guards.
+Main Face Bevel ownership remains excluded, so blue-preview navigation is protected.
+Lasso arming clears idle main direct-tool ownership through guarded public UI API;
+busy drags stay protected. Stationary Lasso completion retains original semantic.
+Native pointerup timestamps propagate through Pencil/Object/Lasso semantics. Main
+now deduplicates by pointerId + native release stamp without expiry timers; native
+timestamps also drive the 500ms release-to-release Invert interval (32px radius).
+Context/mesh/selection guards and original-seed complement remain intact. Main's
+BACKGROUND TAP DOWN / BLOCKED / COMPLETE entries are available in Gesture Debug.
+Existing active-mesh picker now supplements mode-scoped Object picker for Lasso hits.
+38 targeted PASS; full1226/943/283 versus .7191219/936/283: same failure names.
+Protected Multi transform1.0, Loop topology/slide/commit, frozen betas unchanged.
+Next: visible .720 Edge/Lasso single finger/Pencil background clear/disarm, normal
+quick double Invert (500ms window), then Lasso drawing + navigation/Multi/history.
+If it fails again, obtain Gesture Debug BACKGROUND TAP entries before more changes.
+
+## Previous .719 refinement — superseded by .720
 Find the .719 release commit in current main history. User explicitly grants standing authorization to publish
 BoxLab builds (2026-10-04); see AI_WORKFLOW.md. Do not ask again for routine releases.
 Current focus: latest Lasso cancellation / double-background Invert refinement,
@@ -122,7 +145,7 @@ Lasso/Pencil and finger navigation behavior remain existing owner semantics.
 
 Background-selection-tap helper has NO pointer listeners. Receives confirmed taps
 from main/Pencil/Object owners, remembers selection before immediate existing single
-clear. Second nearby tap within360ms calls original component Invert with seed;
+clear. Second nearby tap within500ms calls original component Invert with seed;
 Object Selection owner adds visible-object complement with original seed. Same
 mode/active/context/mesh and unchanged post-first selection required. Session tools remain excluded; .719 stationary Lasso background taps disarm it
 before passing through the same completion flow; existing session background completion unchanged.
@@ -163,7 +186,7 @@ Edge and Vertex**. Preserve this across future ring refinements.
   protected Face/Edge/Vertex session proxies apart from shared Object host ordering.
 - object-radial-session stays .711; Vertex modelling owners/drawer loader .710;
   .708 Face Bevel kernel/direct owner unchanged. multi-object-transform stays .1.0.
-- Manifest/title/data-release-version/visible label/main/refresh pins .719;
+- Manifest/title/data-release-version/visible label/main/refresh pins .720;
   release-refresh logic unchanged; main has the scoped .719 completion repair. Loop Cut, modelling kernels, frozen betas untouched.
 
 ## .712 wide popouts / gizmo redesign
@@ -410,7 +433,7 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next .719 Lasso/Invert and .718 UI/Multi confirmation, .716 visuals and remaining .713 Edge checks.
+and give a short realistic manual list after publishing. Next .720 Edge/Lasso/Invert and .718 UI/Multi confirmation, .716 visuals and remaining .713 Edge checks.
 
 ## User build shortcut / finish contract
 

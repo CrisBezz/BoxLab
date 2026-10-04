@@ -4,7 +4,7 @@ import * as THREE from 'three';
 // This keeps newly added loose vertices selectable even when a bridge mesh snapshot
 // has not yet caught up. Edge / Face / Object Lasso behavior is unchanged.
 
-const VERSION='0.36.18.719';
+const VERSION='0.36.18.720';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const dock=document.querySelector('#componentSelectionTools .selection-dock');
@@ -19,6 +19,7 @@ function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
 function manager(){return globalThis.__boxlabObjectManager;}
 function objectSelection(){return globalThis.__boxlabObjectSelection;}
+function meshHit(event){return manager()?.pickObject?.(event)||bridge()?.pickObject?.(event);}
 function mode(){return bridge()?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset?.mode||'face';}
 function depth(){return document.querySelector('#paintSelectDepth [data-paint-depth].active')?.dataset?.paintDepth||'visible';}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
@@ -43,6 +44,8 @@ function clearDraw(){polyline?.setAttribute('points','');}
 function publish(){globalThis.__boxlabLasso={version:VERSION,armed,isArmed:()=>armed,isDrawing:()=>!!gesture,setArmed};}
 function setArmed(next){
   next=!!next;
+  if(next&&globalThis.__boxlabMainDirectTool?.busy?.())return;
+  if(next)globalThis.__boxlabMainDirectTool?.disarmForSelection?.();
   if(next)globalThis.__boxlabTransformArming?.disarm?.();
   if(next&&globalThis.__boxlabAddVertex?.sessionActive?.())globalThis.__boxlabAddVertex.stop?.(false);
   armed=next;button?.classList.toggle('active',armed);clearDraw();gesture=null;touchNavSnapshots.clear();publish();
@@ -72,7 +75,7 @@ function finish(event,cancel=false){
   // Forward it through the existing background semantic after releasing our claim.
   const moved=Math.max(...g.points.map(p=>Math.hypot(p.x-g.start.x,p.y-g.start.y)),Math.hypot(event.clientX-g.start.x,event.clientY-g.start.y));
   if(moved<8){
-    if(!manager()?.pickObject?.(event))window.dispatchEvent(new CustomEvent('boxlab-pencil-background-tap',{detail:{pointerId:event.pointerId,clientX:event.clientX,clientY:event.clientY,source:'lasso'}}));
+    if(!meshHit(event))window.dispatchEvent(new CustomEvent('boxlab-pencil-background-tap',{detail:{pointerId:event.pointerId,timeStamp:event.timeStamp,clientX:event.clientX,clientY:event.clientY,source:'lasso'}}));
     return;
   }
   if(g.points.length<3||Math.hypot(event.clientX-g.start.x,event.clientY-g.start.y)<10)return;

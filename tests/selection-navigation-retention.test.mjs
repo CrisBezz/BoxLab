@@ -6,7 +6,10 @@ const main=readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 const index=readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
 test('blank pointer-down arms deselect instead of clearing immediately',()=>{
-  assert.match(main,/if\(!hit\)\{if\(event\.isPrimary\)backgroundTap=\{pointerId:event\.pointerId,startX:event\.clientX,startY:event\.clientY,moved:false,cancelled:false\};return;\}backgroundTap=null;/);
+  const begin=main.slice(main.indexOf('function beginBackgroundTap('),main.indexOf("canvas.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse'"));
+  assert.match(begin,/backgroundTap=\{pointerId:event\.pointerId/);
+  assert.match(begin,/window\.addEventListener\('pointerdown',beginBackgroundTap,true\)/);
+  assert.doesNotMatch(begin,/clearSelection\(\)/);
   assert.doesNotMatch(main,/if\(!hit\)\{clearSelection\(\);renderMesh\(\);return;\}/);
 });
 

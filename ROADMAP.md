@@ -343,3 +343,12 @@ and existing main completion; semantic/canvas delivery is deduplicated per relea
 No new raw-pointer owner or modelling/history changes. Full regression has identical
 283 failure names to .718 (1219/936/283). Next iPad Lasso/Invert/Multi/navigation
 confirmation and pending .716/.713 checks; retain drawer fallbacks.
+
+### Edge Lasso / double-background timing refinement — .720
+
+.719 Edge/Lasso and timing FAIL recorded. Existing Edge Paint yields to Lasso;
+main background owner uses early window capture; native release timestamps replace
+Safari timer-based deduplication and drive500ms Invert. No new gesture owner or
+modelling kernel. Seven new regressions,38 targeted PASS; full1226/943/283, same
+failure names as .719. Next iPad Edge/Lasso/Invert/navigation confirmation; use
+Gesture Debug if still failing. Keep drawer and prior pending checks.
