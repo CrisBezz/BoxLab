@@ -114,3 +114,9 @@ test('Edge stationary tap selects for EXACT; cancelled drag rolls back and navig
 test('closing persistent Edge Bevel during preview discards unfinished changes and releases navigation',()=>{
  const f=fixture(),m=f.context.__boxlabBridgeState.mesh,before=geometry(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.pointer('pointerdown');f.pointer('pointermove',30);f.owner.disarm();assert.deepEqual(geometry(m),before);assert.equal(f.owner.busy(),false);assert.equal(f.context.__boxlabBridgeState.controls.enabled,true);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
 });
+
+
+test('Face blue preview covers changed bevel polygons only, leaving unrelated shell normally rendered',()=>{
+ const m=EditableMesh.cube(),other=EditableMesh.cube();const offset=m.vertices.length;m.vertices.push(...other.vertices.map(v=>v.clone().addScalar(50)));m.faces.push(...other.faces.map(face=>face.map(i=>i+offset)));
+ const before=geometry(m),f=fixture(m);f.launch();const rendered=f.context.__boxlabBridgeState.scene.children[0].children[0].geometry;rendered.computeBoundingBox();assert.ok(rendered.boundingBox.max.x<5);assert.ok(rendered.getAttribute('position').count>0);assert.deepEqual(geometry(m),before);assert.equal(f.context.__boxlabHistory.undoStack.length,0);f.action('cancel');assert.equal(f.context.__boxlabBridgeState.scene.children.length,0);
+});

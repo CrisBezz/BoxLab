@@ -18,7 +18,7 @@ test('all viewport session proxies and floating numeric popup use the shared doc
   assert.equal(files.length,10);
   for(const name of [...files,'total-gizmo.js']){
     const text=fs.readFileSync(new URL(name,src),'utf8');
-    assert.match(text,/import \{ placeToolSessionPanel \} from '\.\/tool-session-panel-position\.js\?v=0\.36\.18\.715'/);
+    assert.match(text,/import \{ placeToolSessionPanel \} from '\.\/tool-session-panel-position\.js\?v=0\.36\.18\.716'/);
     assert.match(text,/placeToolSessionPanel\((?:panel|palette|floatPalette)\)/);
   }
 });

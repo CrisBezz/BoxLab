@@ -306,3 +306,11 @@ ready for new selections. Background tap exits both; original navigation owner,
 kernels/history retained. .688/.162 Loop core and Face blue Bevel unchanged.
 50 targeted PASS; no new full-suite failure names. Next .715 hands-on and remaining
 Edge refinement, retaining drawer fallbacks.
+
+
+### Face preview / Boolean compact refinement — .716
+
+.715 repeat Edge sessions PASS protected. Blue Face Bevel render overlay now excludes
+unchanged polygons/other shells; original candidate and history remain unchanged.
+Boolean two-row operands/operations with Close right, original controls retained.
+51 targeted PASS; no new full-suite failure names. Next .716 visual/tactile checks.

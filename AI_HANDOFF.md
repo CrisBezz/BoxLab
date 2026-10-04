@@ -7,8 +7,20 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.715**.
-Current focus: persistent radial Edge Loop / Bevel EXACT and background exit, pending hands-on.
+Current release: **v0.36.18.716**.
+Current focus: scoped Face Bevel preview and compact Object Boolean popup, pending hands-on.
+User confirms **.715 PASS**: repeated radial Loop slide/EXACT/cuts and Edge Bevel
+repeat drag/exact/background exits protected. Screenshot for new Boolean layout
+visibly shows .714; treated as layout reference, no new testing state inferred.
+.716 rendering helper compares candidate polygons with original source by coordinate
+signature: unchanged polygons/other shells stay normally shaded, only bevel-changed
+region gets blue fill/wire. No candidate geometry, kernel, Apply/Cancel/history change.
+Object Boolean CSS-only two rows: A/B/Swap then Union/Cut/Intersect, Close right.
+Original controls/labels/Swap/operations/Close and lazy operand insertion retained;
+small redundant title hidden only in Boolean dock. Other popouts untouched.
+51 targeted PASS; full1205/921/284, same failure names versus .7151204/920/284.
+Next visible .716: affected-only blue on single/connected Faces, preview sliders,
+Apply/Cancel/history; Boolean compact controls/Swap/results/Close; .715 regressions.
 User confirms **.714 PASS**: Object List beside Multi, Focus-only list reveal/toggle
 and mode/Focus exit cleanup are protected. .713 other Edge combined checks pending.
 .715 Loop keeps latest rail after release so Loop Slide takes over; count controls
@@ -27,9 +39,7 @@ Edge lifecycle unchanged. No new kernel or raw background-pointer owner: main an
 Pencil tap semantic are reused, navigation/multi-touch cancelled taps do not exit.
 Shared wide layout recognizes EXACT as right-rail Apply; shared import graph .715.
 50 targeted PASS; full1204/920/284, same failure names versus .7141198/914/284.
-Next confirm visible .715, repeat Loop slide/EXACT/new cut and Bevel drag/EXACT/new
-selection, background finger/Pencil exit versus orbit/pan/pinch, one-step Undo/Redo
-and Face Bevel/Object List regression. Keep drawer fallbacks/other pending checks.
+User .715 PASS protects these sessions; preserve them during .716 visual refinement.
 
 User confirms **.712 AWESOME PASS**: gizmo centre/corner shortcuts, wide top-centre
 popouts and additional Object tools are protected. Earlier pending individual repair
@@ -81,7 +91,7 @@ Edge and Vertex**. Preserve this across future ring refinements.
   protected Face/Edge/Vertex session proxies apart from shared Object host ordering.
 - object-radial-session stays .711; Vertex modelling owners/drawer loader .710;
   .708 Face Bevel kernel/direct owner unchanged. multi-object-transform stays .1.0.
-- Manifest/title/data-release-version/visible label/main/refresh pins .715;
+- Manifest/title/data-release-version/visible label/main/refresh pins .716;
   main and refresh logic unchanged. Loop Cut, modelling kernels, frozen betas untouched.
 
 ## .712 wide popouts / gizmo redesign

@@ -4759,3 +4759,12 @@ For exact implementation state, always inspect current `main`; this history is c
 - Main background/Pencil semantic routing reused; Loop miss participates in existing tap-vs-navigation tracker. Bevel/Loop completion resets hub and hides competing gizmo while sessions active. Shared presentation recognizes EXACT in right action rail; import-only cache graph repinned .715.
 - 50 targeted PASS including real Loop commit/history fixture and actual Edge Bevel repeat/drag/cancel/stationary/history, Face regression and shared dock/nearby radial checks. Full1204/920/284, identical failure names versus .7141198/914/284. Earlier two radial bevel completion expectations updated for explicitly requested persistence. Syntax/diff PASS; protected multi-object-transform/Loop topology/frozen betas unchanged.
 - All release markers/direct/dynamic-parent/shared/main/refresh pins current. Next visible .715 manual repeat and background exit, navigation/history and Face/Object regressions; no broader Edge PASS inferred, drawer fallbacks retained.
+
+
+## 2026-10-04 — v0.36.18.716 scoped Face blue preview / compact Boolean
+
+- User .715 PASS recorded/protected. Requests blue only around affected connected Faces and compact Object popup matching sketch. Screenshot visibly .714 treated as layout reference.
+- Existing rendering-only Face bevel helper compares candidate/source polygon coordinate signatures; unchanged polygons/other shells excluded from blue fill/wire. Lightweight render view, same candidate geometry/kernel/Apply/Cancel/history, original resources disposed. No preview geometry mutation or new modeling owner.
+- Boolean-specific shared presentation CSS arranges original A/B/Swap above original Union/Cut/Intersect, Close right; compact padding/title, operand truncation and lazy insertion order. No node replacement/handler/operation/selection changes; other panel styles preserved.
+- 51 targeted PASS including actual Face preview excluding remote shell/unchanged source/no history, existing Face/Edge repeat sessions and original dock/Boolean controls. Full1205/921/284, identical failure names versus .7151204/920/284. Syntax/diff PASS; protected modeling/Loop/multi-object-transform/frozen betas unchanged.
+- .716 shell/manifest/helper/direct parent/shared import graph/main/refresh pins updated. Next visible .716 affected-region preview and Boolean compact hand checks; keep other Edge pending checks/drawer fallbacks.

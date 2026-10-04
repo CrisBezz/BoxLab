@@ -31,6 +31,16 @@ function installStyle(doc){
 #viewportWrap .ts-wide-body #meshHealthFindings{max-height:100px;overflow-y:auto}
 #viewportWrap .ts-wide-body #meshHealthTopology{font-size:10px!important}
 #viewportWrap .ts-wide-body #booleanOperand218{grid-column:1/-1}
+/* Boolean: operands/Swap above operations, Close at the right; original nodes retained. */
+#viewportWrap #booleanPrototype217 .ts-wide-body{grid-template-columns:minmax(0,1fr)!important;gap:5px!important}
+#viewportWrap #booleanPrototype217 .ts-wide-body>.drawer-subtitle{display:none!important}
+#viewportWrap #booleanPrototype217 #booleanOperand218{order:1;margin:0!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(64px,.65fr)!important;gap:5px!important}
+#viewportWrap #booleanPrototype217 .ts-wide-body>.outliner-actions{order:2;grid-template-columns:repeat(3,minmax(0,1fr))!important;margin:0!important}
+#viewportWrap #booleanPrototype217 .boolean-session-close{display:none!important}
+#viewportWrap #booleanPrototype217 .ts-wide-actions{justify-content:center}
+#viewportWrap #booleanPrototype217 .bool-op{padding:5px 7px!important;min-height:36px;display:flex;flex-direction:column;justify-content:center}
+#viewportWrap #booleanPrototype217 .bool-op span{overflow:hidden;text-overflow:ellipsis}
+#viewportWrap #booleanPrototype217 button{min-height:36px!important;margin:0!important}
 #viewportWrap #symmetryBisectSession .ts-wide-body>.symmetry-axis{order:1}
 #viewportWrap #symmetryBisectSession .ts-wide-body>.symmetry-keep{order:2}
 #viewportWrap #symmetryBisectSession .ts-wide-body>.outliner-actions:not(.symmetry-axis):not(.symmetry-keep){grid-column:1/-1;grid-template-columns:repeat(4,minmax(0,1fr))!important;order:3}

@@ -6,7 +6,7 @@ import './dissolve-ui.js?v=0.32.22';
 import './transform-arming.js?v=0.36.18.253';
 import './component-tap-toggle.js?v=0.32.21';
 import * as THREE from 'three';
-import {createFaceBevelPreview,disposeFaceBevelPreview} from './bevel-face-preview.js?v=0.36.18.708';
+import {createFaceBevelPreview,disposeFaceBevelPreview} from './bevel-face-preview.js?v=0.36.18.716';
 const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('#viewport'),width=document.querySelector('#bevelWidth'),out=document.querySelector('#bevelWidthOut'),multiToggle=document.querySelector('#multiSelectToggle'),ray=new THREE.Raycaster(),pointer=new THREE.Vector2();ray.params.Line.threshold=.09;let armed=false,drag=null,faceSession=null,facePreview=null,persistentEdge=false;
 function state(){return globalThis.__boxlabBridgeState}function bridge(){return globalThis.__boxlabSelectionBridge}function hit(e){const s=state(),r=canvas.getBoundingClientRect();if(!s?.camera)return null;pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(pointer,s.camera);const h=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(h?.object?.userData?.index)?h.object.userData.index:null}
 function disarm(){
@@ -75,7 +75,7 @@ function previewFaces(value=Number(width?.value||20)){
     if(!applied)result={ok:false,reason:working.__lastBevelError||'Bevel preview unavailable'};
     else{
       faceSession.candidate=working;
-      facePreview=createFaceBevelPreview(state()?.scene,working);
+      facePreview=createFaceBevelPreview(state()?.scene,working,faceSession.before);
       result={ok:true,percent,segments:bevelSegments()};
     }
   }

@@ -1,8 +1,13 @@
 import * as THREE from 'three';
 // Rendering only. Match Shell/Solidify's blue translucent fill and wire preview.
-export function createFaceBevelPreview(scene,mesh){
+function polygonKey(mesh,face){return face.map(i=>mesh.vertices[i].toArray().join(',')).sort().join('|');}
+export function createFaceBevelPreview(scene,mesh,before=null){
   if(!scene?.add)return null;
-  const geometry=mesh.triangulatedGeometry();
+  // Unchanged polygons stay with the normal object renderer, including other shells.
+  const unchanged=before?new Set(before.faces.map(face=>polygonKey(before,face))):null;
+  const faces=unchanged?mesh.faces.filter(face=>!unchanged.has(polygonKey(mesh,face))):mesh.faces;
+  const preview=Object.create(mesh);preview.faces=faces;
+  const geometry=preview.triangulatedGeometry();
   const group=new THREE.Group();
   const fill=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.18,side:THREE.DoubleSide,depthTest:false,depthWrite:false}));
   const wire=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:0x62d8ff,transparent:true,opacity:.72,side:THREE.DoubleSide,wireframe:true,depthTest:false,depthWrite:false}));
