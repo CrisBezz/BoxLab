@@ -324,3 +324,14 @@ from dismissing gizmo, including Pencil semantic guard. Genuine background dismi
 and existing Multi transforms/pivots preserved; protected transform1.0 untouched.
 33 targeted PASS; full1210/926/284, no new failure names. .716 visuals remain pending.
 Next .717 iPad Multi/Boolean access checks, then radial refinement.
+
+
+### Combined viewport UI refinement — .718
+
+Viewport Multi repair stays in actual early activation owner; original transform
+file1.0 unchanged. Top icons share gizmo shapes, VIEW retained; original Snap/Lasso
+controls above mode buttons. Confirmed double-background tap inverts original set
+through selection owners with context guards. 61 targeted PASS; no new failures.
+Minimal-drawer audit in handoff: modifiers, selection depth/filters/bulk controls and
+Object List access with empty selection remain. Keep drawer available; user chooses
+remaining homes after .718 hands-on, no unsolicited radial selection items.

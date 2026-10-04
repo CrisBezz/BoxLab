@@ -116,6 +116,8 @@ valueInput?.addEventListener('click',event=>{event.stopPropagation();focusTransf
 function startGesture(event){
   if(event.target!==canvas||!event.isPrimary||event.pointerType==='touch'||directFaceToolActive()||globalThis.__boxlabSweepPath?.editing||globalThis.__boxlabEdgeExtrude?.isArmed?.()||globalThis.__boxlabSymmetryBisect?.active)return;
   const s=state(),mesh=s?.mesh,camera=s?.camera,m=mode(),ids=selected(),gizmo=activeGizmoSpec();
+  if(m==='object'&&!gizmo&&globalThis.__boxlabObjectSelection?.multi)return;
+  if(m==='object'&&!gizmo&&!globalThis.__boxlabObjectManager?.pickObject?.(event))return;
   // Component viewport drags remain owned by main.js. transform-upgrade owns
   // component transforms only when Total Gizmo explicitly launched the gesture.
   if(['vertex','edge','face'].includes(m)&&!gizmo)return;

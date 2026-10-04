@@ -725,8 +725,11 @@ function handleViewportActivation(event, stopEvent = true) {
 }
 
 function installViewportActivation() {
-  canvas?.addEventListener('pointerdown', event => {
-    if (event.pointerType === 'touch') {
+  const beginActivation = event => {
+    if(event.target!==canvas)return;
+    if(event.pointerType!=='touch'&&globalThis.__boxlabLasso?.isArmed?.())return;
+    if(currentMode()==='object'&&pickViewportObject(event))window.dispatchEvent(new CustomEvent('boxlab-background-tap-cancelled'));
+    if (event.pointerType === 'touch'||(globalThis.__boxlabObjectSelection?.multi&&!pickViewportObject(event))) {
       if (!event.isPrimary) {
         if (touchTap) touchTap.cancelled = true;
         return;
@@ -736,29 +739,35 @@ function installViewportActivation() {
         x:event.clientX,
         y:event.clientY,
         cancelled:false,
-        objectMode:currentMode() === 'object'
+        objectMode:currentMode() === 'object',
+        startedAt:performance.now()
       };
       return;
     }
     if (!event.isPrimary) return;
     handleViewportActivation(event, true);
-  }, true);
+  };
+  // Multi activation must precede transform document/window consumers.
+  window.addEventListener('pointerdown',event=>{if(globalThis.__boxlabObjectSelection?.multi)beginActivation(event);},true);
+  canvas?.addEventListener('pointerdown',event=>{if(!globalThis.__boxlabObjectSelection?.multi)beginActivation(event);},true);
 
-  canvas?.addEventListener('pointermove', event => {
-    if (event.pointerType !== 'touch' || !touchTap || event.pointerId !== touchTap.pointerId) return;
+  window.addEventListener('pointermove', event => {
+    if (!touchTap || event.pointerId !== touchTap.pointerId) return;
     const dx=event.clientX-touchTap.x,dy=event.clientY-touchTap.y;
-    if (dx*dx+dy*dy > TOUCH_TAP_MOVE_PX*TOUCH_TAP_MOVE_PX) touchTap.cancelled=true;
+    if (!touchTap.cancelled&&dx*dx+dy*dy > TOUCH_TAP_MOVE_PX*TOUCH_TAP_MOVE_PX){touchTap.cancelled=true;window.dispatchEvent(new CustomEvent('boxlab-background-tap-cancelled'));}
   }, true);
 
-  canvas?.addEventListener('pointerup', event => {
-    if (event.pointerType !== 'touch' || !touchTap || event.pointerId !== touchTap.pointerId) return;
+  window.addEventListener('pointerup', event => {
+    if (!touchTap || event.pointerId !== touchTap.pointerId) return;
     const candidate=touchTap;touchTap=null;
     if (candidate.cancelled || !candidate.objectMode || currentMode() !== 'object') return;
+    if(performance.now()-candidate.startedAt>350)return;
+    if(!pickViewportObject(event)){window.dispatchEvent(new CustomEvent('boxlab-pencil-background-tap',{detail:{pointerId:event.pointerId,clientX:event.clientX,clientY:event.clientY,source:'object-activation'}}));return;}
     handleViewportActivation(event, false);
   }, true);
 
-  canvas?.addEventListener('pointercancel', event => {
-    if (event.pointerType === 'touch' && touchTap && event.pointerId === touchTap.pointerId) touchTap=null;
+  window.addEventListener('pointercancel', event => {
+    if (touchTap && event.pointerId === touchTap.pointerId) touchTap=null;
   }, true);
 }
 
@@ -899,7 +908,6 @@ function initialize() {
   objects = [initial];
   activeId = initial.id;
   installRenderObserver();
-  installViewportActivation();
   installUI();
   window.addEventListener('keydown', event => {
     if (currentMode() !== 'object') return;
@@ -936,6 +944,7 @@ function initialize() {
   return true;
 }
 
+installViewportActivation();
 if (!initialize()) {
   const tryInit = () => { if (initialize()) window.removeEventListener('boxlab-bridge-state', tryInit); };
   window.addEventListener('boxlab-bridge-state', tryInit);

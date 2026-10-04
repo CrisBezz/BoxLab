@@ -4,7 +4,7 @@ import fs from 'node:fs';
 
 test('367 touch activation allows OrbitControls pointerup cleanup',()=>{
   const src=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
-  const block=src.slice(src.indexOf("canvas?.addEventListener('pointerup'"),src.indexOf("canvas?.addEventListener('pointercancel'"));
+  const block=src.slice(src.indexOf("window.addEventListener('pointerup'"),src.indexOf("window.addEventListener('pointercancel'"));
   assert.match(block,/handleViewportActivation\(event, false\)/);
   assert.doesNotMatch(block,/handleViewportActivation\(event, true\)/);
 });

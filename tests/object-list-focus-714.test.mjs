@@ -21,5 +21,5 @@ test('mode exit and Focus exit remove temporary list, normal view toggles existi
 test('Focus reveal targets original Objects only, shortcut stays beside Multi and imports cache-hop',()=>{
  const corners=fs.readFileSync(new URL('../src/gizmo-corner-controls.js',import.meta.url),'utf8'),index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
  assert.match(source,/boxlab-focus-object-list.*left-panel\{display:block!important/);assert.match(source,/left-panel > :not\(#objectsDrawer\)\{display:none!important/);assert.doesNotMatch(source,/cloneNode|objectsDrawer.*innerHTML/);
- assert.match(corners,/\['multi','Object multi-select'\],\['objects','Object list'\]/);assert.match(corners,/__boxlabObjectListViewport\?\.toggle/);assert.match(corners,/__boxlabObjectListViewport\?\.visible/);assert.match(index,/view-modes\.js\?v=0\.36\.18\.714/);
+ assert.match(corners,/\['multi','Object multi-select'\],\['objects','Object list'\]/);assert.match(corners,/__boxlabObjectListViewport\?\.toggle/);assert.match(corners,/__boxlabObjectListViewport\?\.visible/);assert.match(index,/view-modes\.js\?v=0\.36\.18\.718/);
 });

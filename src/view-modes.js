@@ -11,7 +11,7 @@ function ensureUI(){
   wrap.id='viewModes';
   wrap.className='viewport-menu';
   wrap.innerHTML=`
-    <summary><span class="viewport-menu-icon">◈</span><span>Viewport</span><span class="viewport-menu-caret">▾</span></summary>
+    <summary title="View settings" aria-label="View settings"><span class="viewport-menu-icon">◈</span><span>VIEW</span><span class="viewport-menu-caret">▾</span></summary>
     <div class="viewport-menu-panel">
       <div class="viewport-menu-section">
         <div class="viewport-menu-label">View Direction</div>
@@ -120,7 +120,10 @@ function focusViewOn(){return document.documentElement.classList.contains('boxla
 function syncFocusViewButton(){
   const button=document.querySelector('#focusViewBtn');
   if(!button)return;
-  button.textContent=focusViewOn()?'Exit Focus View':'Focus View';
+  const label=focusViewOn()?'Exit Focus View':'Focus View';
+  button.title=label;button.setAttribute('aria-label',label);
+  if(!button.dataset.iconAction)button.textContent=label;
+  button.setAttribute('aria-pressed',focusViewOn()?'true':'false');
 }
 // Reuse the original Objects drawer; Focus reveals only this child of the drawer.
 let focusObjectListOpen=false,objectsDrawerWasOpen=false;

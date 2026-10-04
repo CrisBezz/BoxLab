@@ -38,9 +38,9 @@ function deselectAll(){
   const m=mode(),before=selected().length;
   return setSelection([],`${label(m)} Deselect • ${before} → 0 selected`);
 }
-function invert(){
+function invert(seed=selected()){
   if(!componentMode())return;
-  const m=mode(),mesh=state()?.mesh,total=totalFor(m,mesh),before=selected(),have=new Set(before),result=[];
+  const m=mode(),mesh=state()?.mesh,total=totalFor(m,mesh),before=seed,have=new Set(before),result=[];
   for(let i=0;i<total;i++)if(!have.has(i))result.push(i);
   setSelection(result,`${label(m)} Invert • ${before.length} → ${result.length} selected`);
 }

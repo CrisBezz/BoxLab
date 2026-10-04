@@ -1,5 +1,5 @@
 // Local gizmo shortcuts reuse the authoritative toolbar actions.
-const icons={
+export const gizmoIcons={
  tools:'<circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M2 12h4m12 0h4M5 5l3 3m8 8 3 3M5 19l3-3m8-8 3-3"/><circle cx="12" cy="2" r="1"/><circle cx="22" cy="12" r="1"/><circle cx="12" cy="22" r="1"/><circle cx="2" cy="12" r="1"/>',
  focus:'<path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/><rect x="8" y="8" width="8" height="8" rx="2"/>',
  frame:'<path d="M3 8V3h5m8 0h5v5M3 16v5h5m13-5v5h-5M9 9 4 4m11 5 5-5M9 15l-5 5m11-5 5 5"/>',
@@ -13,7 +13,7 @@ export function mountGizmoCornerControls(root,{openTools,currentMode,isBusy=()=>
  const clusters=[['tl',[['tools','Radial tools']]],['tr',[['focus','Focus view'],['frame','Frame all']]],['br',[['undo','Undo'],['redo','Redo']]],['bl',[['multi','Object multi-select'],['objects','Object list']]]];
  for(const [corner,items] of clusters){
   const group=doc.createElement('div');group.className='tg-corner tg-corner-'+corner;group.dataset.corner=corner;
-  for(const [action,label] of items){const b=doc.createElement('button');b.type='button';b.className='tg-shortcut';b.dataset.gizmoAction=action;b.title=label;b.setAttribute('aria-label',label);b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+icons[action]+'</svg>';group.appendChild(b);controls.set(action,b);
+  for(const [action,label] of items){const b=doc.createElement('button');b.type='button';b.className='tg-shortcut';b.dataset.gizmoAction=action;b.title=label;b.setAttribute('aria-label',label);b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+gizmoIcons[action]+'</svg>';group.appendChild(b);controls.set(action,b);
    b.addEventListener('pointerdown',e=>{e.stopPropagation();if(action==='tools'){e.preventDefault();if(!b.disabled&&!isBusy())openTools?.();}});
    if(action==='tools')b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(e.detail===0&&!b.disabled&&!isBusy())openTools?.();});
    if(action!=='tools')b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();if(b.disabled||isBusy())return;if(action==='objects'){globalThis.__boxlabObjectListViewport?.toggle?.();sync();return;}const target=resolve(action);if(target&&!target.disabled)target.click();sync();});

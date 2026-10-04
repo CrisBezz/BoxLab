@@ -7,21 +7,24 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.717**.
-Current focus: Object Multi gizmo retention/first-selected anchoring for radial Boolean access, pending hands-on.
-.717 uses authoritative Object Selection Set insertion order for the presentation
-anchor and membership key. Empty Multi hides gizmo; adding/removing operands restores
-it. First surviving visible selected object is the anchor, active object uses live mesh.
-Object manager exposes its existing nearest visible scene picker; activation and
-Total Gizmo share it, so inactive operands are not misclassified as background.
-Pencil background semantic rechecks this picker before dismissing. Genuine background
-still dismisses/re-tap restores as protected .682; navigation unchanged.
-Protected multi-object-transform1.0, pivot math, selection state and Boolean owners
-untouched. .716 refinements included, still pending hands-on, no new PASS inferred.
-33 targeted PASS; full1210/926/284, no new failure names versus .7161205/921/284.
-Next visible .717: Multi add/remove retains first-object gizmo and radial Boolean;
-Focus/Object List, background dismissal/re-tap, Boolean Swap/results/history, .716 visuals.
-Release parent .716 75bc6cb5; find .717 release commit in main history.
+Current release: **v0.36.18.718**.
+Current focus: .718 combined UI pass and viewport Multi repair, pending hands-on.
+User reports viewport Multi FAIL while Object Browser works after .717. .717 was
+not hands-on passed. Object selection listener lost taps to transform consumers.
+.718 registers the actual Object activation owner before initialization at window
+capture for Multi; normal mode keeps its canvas activation, touch completion is
+window capture without propagation suppression so OrbitControls can release.
+Nearest scene picker/selection Set remain authoritative. Pen inactive operands
+select before transform consumers; transform-upgrade now rejects raw Multi and
+true background gestures. Protected multi-object-transform1.0 unchanged.
+Existing activation tap tracker uses confirmed background semantic for Object taps,
+with movement/multi-contact/cancel/duration guards; no duplicate raw pointer owner.
+61 targeted PASS; full1215/932/283, no new failure names versus .7171210/926/284.
+Existing historical425 Edge Extrude pin assertion now passes through drawer repin.
+Next visible .718: finger/Pencil viewport Multi add/remove/Boolean; top icons/VIEW;
+Snap/Lasso; single clear versus double-background Invert; protected navigation/history.
+.716 scoped Face preview/compact Boolean included and still pending hands-on.
+Release parent .717 078d2bb6; find .718 release commit in main history.
 User confirms **.715 PASS**: repeated radial Loop slide/EXACT/cuts and Edge Bevel
 repeat drag/exact/background exits protected. Screenshot for new Boolean layout
 visibly shows .714; treated as layout reference, no new testing state inferred.
@@ -83,6 +86,40 @@ protected Loop feel and shared placement; collect refinements before drawer remo
 User confirms **.710 Vertex radial AWESOME / PASS**; all thirteen tools and shared
 Face/Edge/Vertex Bevel placement are protected. .708 Face Bevel remains protected.
 
+## .718 viewport controls / minimal-drawer audit
+
+Top Undo/Redo/Frame All/Focus buttons keep original nodes/listeners and use the same
+exported icons as gizmo. Focus owner retains icon while updating title/aria-pressed;
+VIEW keeps original view menu with tooltip. Topbar imports viewport-toolbar-controls
+.718; original Axis/Geometry checkbox LABELS move above untouched bottom mode buttons,
+SNAP + RGB axis arrows + dot/line/face GEO icon. Lazy ORIGINAL Lasso button moves
+there, no proxy selection implementation; active styling and listeners retained.
+Empty old Snap wrapper removed; drawer bounds end above controls. Focus still works.
+Lasso actual owner disarms transforms on arming; Multi activation defers to Lasso.
+Lasso/Pencil and finger navigation behavior remain existing owner semantics.
+
+Background-selection-tap helper has NO pointer listeners. Receives confirmed taps
+from main/Pencil/Object owners, remembers selection before immediate existing single
+clear. Second nearby tap within360ms calls original component Invert with seed;
+Object Selection owner adds visible-object complement with original seed. Same
+mode/active/context/mesh and unchanged post-first selection required. Session tools
+and armed Lasso are excluded; existing session background completion unchanged.
+Object single background keeps actual Object selection but dismisses gizmo as .682;
+component single tap clears; double inverts original set, not cleared set. No history.
+
+Audit: active modelling inventories Face/Vertex/Object/Edge are covered. Selection
+commands remain outside radials. With drawer minimized, remaining dependencies:
+- Modifiers: Mirror axes/Align to Mirror, SubD on/level and Cage; not yet exposed.
+- Advanced selection: Visible/Through paint/lasso depth, Connected/Angle/Normal,
+  boundary/loop/ring variants and residual selection controls remain in drawer.
+- Object selection All/Clear and bulk Hide/Lock still have drawer controls; per-row
+  visibility/lock and Add/Duplicate/rename/delete/Groups/Origin/Pivot remain available
+  via ORIGINAL Object List reveal. Empty Multi hides gizmo, so Object List currently
+  has no viewport shortcut without an Object selection — a remaining access gap.
+- File/import/export/reset and VIEW/camera/look/Focus/history stay accessible above.
+Do not remove drawer or start minimized by default yet. User asked for audit, not
+speculative new radial items/modifier UI. Finish current hands-on refinement first.
+
 ## Priority and scope
 
 Finish contextual radial menus/settings so routine modelling needs little drawer
@@ -104,7 +141,7 @@ Edge and Vertex**. Preserve this across future ring refinements.
   protected Face/Edge/Vertex session proxies apart from shared Object host ordering.
 - object-radial-session stays .711; Vertex modelling owners/drawer loader .710;
   .708 Face Bevel kernel/direct owner unchanged. multi-object-transform stays .1.0.
-- Manifest/title/data-release-version/visible label/main/refresh pins .717;
+- Manifest/title/data-release-version/visible label/main/refresh pins .718;
   main and refresh logic unchanged. Loop Cut, modelling kernels, frozen betas untouched.
 
 ## .712 wide popouts / gizmo redesign
@@ -351,4 +388,4 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next .717 Multi/Boolean and .716 visual confirmation plus remaining .713 Edge checks.
+and give a short realistic manual list after publishing. Next .718 UI/Multi and .716 visual confirmation plus remaining .713 Edge checks.

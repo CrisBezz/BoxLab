@@ -28,7 +28,7 @@ function runTap({moved=false,cancelled=false,active=true}={}){
   const start=main.indexOf("canvas.addEventListener('pointerup',event=>{\n  if(!backgroundTap");
   const end=main.indexOf("canvas.addEventListener('pointercancel'",start);
   const calls=[];
-  const context={canvas:{addEventListener(type,fn){fn({pointerId:1,clientX:moved?40:0,clientY:0});}},backgroundTap:{pointerId:1,startX:0,startY:0,moved,cancelled},EDIT_DRAG_THRESHOLD:8,__boxlabFaceValueViewportSession:{active:()=>active},window:{dispatchEvent:e=>calls.push(e.type)},CustomEvent:class{constructor(type){this.type=type;}},resetEdgeHoldCycle(){},clearSelection:()=>calls.push('clear'),renderMesh(){}};
+  const context={canvas:{addEventListener(type,fn){fn({pointerId:1,clientX:moved?40:0,clientY:0});}},backgroundTap:{pointerId:1,startX:0,startY:0,moved,cancelled},EDIT_DRAG_THRESHOLD:8,__boxlabFaceValueViewportSession:{active:()=>active},window:{dispatchEvent:e=>calls.push(e.type)},CustomEvent:class{constructor(type){this.type=type;}},resetEdgeHoldCycle(){},completeBackgroundSelectionTap:()=>calls.push('clear'),clearSelection:()=>calls.push('clear'),renderMesh(){}};
   vm.runInNewContext(main.slice(start,end),context);
   return calls;
 }

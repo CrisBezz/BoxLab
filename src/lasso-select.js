@@ -43,6 +43,7 @@ function clearDraw(){polyline?.setAttribute('points','');}
 function publish(){globalThis.__boxlabLasso={version:VERSION,armed,isArmed:()=>armed,setArmed};}
 function setArmed(next){
   next=!!next;
+  if(next)globalThis.__boxlabTransformArming?.disarm?.();
   if(next&&globalThis.__boxlabAddVertex?.sessionActive?.())globalThis.__boxlabAddVertex.stop?.(false);
   armed=next;button?.classList.toggle('active',armed);clearDraw();gesture=null;touchNavSnapshots.clear();publish();
   if(status)status.textContent=armed?`Lasso • Pencil draw around ${mode()} • finger orbits • ${depth()}`:`${mode().charAt(0).toUpperCase()+mode().slice(1)} mode`;
