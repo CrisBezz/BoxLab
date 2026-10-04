@@ -223,3 +223,11 @@ with Modifiers initially collapsed. This browser is the user-directed exception 
 top-centre tool popup placement. Use existing session exit owners through semantic
 background taps; preserve placement/drawing tools' empty-space input. Audit policy
 and protected .724 tap/hold behavior are recorded in current AI_HANDOFF.md.
+
+## Beta 6 launch baseline — .733
+
+User PASS .732 and requested Focus on every launch. Shell starts in Focus; existing
+Focus toggle must visibly show its active state, expose the left list when disabled
+and retain the right Object Browser. No further feature work before Beta6 freeze;
+follow current BETA_6_RELEASE_CHECKLIST.md for remaining device gates and freeze
+verification. Publishing is already authorized; device acceptance is not permission.

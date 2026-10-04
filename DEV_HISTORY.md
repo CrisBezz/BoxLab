@@ -4965,3 +4965,43 @@ For exact implementation state, always inspect current `main`; this history is c
 - Edge Width/Segments and Vertex Width/exact preview copy existing bevel kernels into shared Face-blue renderer. No live mutation/history on sliders; explicit Apply one history step, Cancel disposes. Edge repeat/direct Pencil release behavior retained; Vertex explicit Apply closes as Face does, existing direct Vertex drag preserved. Stale geometry/object/mode/lock guards added; no new Vertex Segments kernel.
 - 86 focused PASS; all279 source syntax PASS. Full1274/994/280 vs fresh .7301265/982/283: no new failure names; three old Sweep release-pin fixtures now pass, nine added runtime checks pass. VM fixture supplied shared renderer and normalized cross-realm face arrays; Slide test updated to requested persistent policy, not weakened history/selection expectations.
 - Edited owner/shell/refresh pins .731; main .731 has only three Slide checks. Shared placement/layout/unrelated clients .730, Multi1.0/Loop .715/view .726/corner .718/frozen betas protected. Handoff/checklist/roadmap/Beta6 checklist current. Next user device checks and remaining .730 grouped release acceptance before freezing.
+
+## 2026-10-05 — .732 PASS; .733 final Focus-default candidate for Beta 6
+
+Current release **v0.36.18.733**; parent main
+`24c586cda1cdcc9393be5ac873dd0ea25ca7044a`. User explicitly **PASS .732** and asks
+for Beta 6 freeze/release, with Focus enabled on every launch and its icon armed.
+
+- Shell starts with `boxlab-focus-view` before modules run. Existing Focus toggle
+  remains the only owner; no persisted preference or new gesture. Launch hides the
+  large left list; toolbar/radials and right Object Browser remain available.
+- Focus sync sets active class plus aria-pressed, with explicit high-contrast armed
+  styling. Action labels say Show left tool list (exit Focus) / Hide left tool list
+  (Focus). Original icon SVG is retained and both directions dispatch existing resize.
+- Only view-modes runtime changed; shell/recovery markers .733. Unchanged .732
+  Array/session/layout and protected Multi/Loop/navigation pins remain intact.
+  Historical version-coupled fixtures now check the unchanged owners' actual pins.
+- 44 focused Focus/browser/corners/background/Sweep checks PASS. Full1287/1010 PASS/
+  277 FAIL, identical failure names to .732; no runtime regression. Modified source
+  syntax and diff whitespace PASS. Existing full-suite source/pin/VM test debt remains
+  explicit, so overall CI is not advertised as green.
+
+Release state: .731 and .732 user accepted. No new feature work planned. .733 launch
+UX is the last candidate change. `BETA6_RELEASE_NOTES.md` prepared as a draft;
+`BETA_6_RELEASE_CHECKLIST.md` now records accepted work and exact remaining checks.
+Do not claim Beta6 released or create an accepted freeze before device outcomes:
+1. .733 launch armed Focus, show/hide left list, browser in both views.
+2. Final short Pencil/finger navigation, selection/Lasso/hold, history, Multi and
+   Boolean/Extract smoke on the intended release candidate.
+3. Export/Save GLB to iPad Files, import into Nomad, reimport to BoxLab; confirm
+   expected geometry/scale/colour/groups. This older release gate is not explicitly
+   accepted by PASS .732 alone.
+
+After device checks pass: snapshot the accepted candidate into `/beta-6/` using
+existing frozen-beta conventions; audit relative/runtime/import/recovery/manifest
+paths so frozen app stays isolated from live main; record exact source commit;
+finalize release notes and acceptance checklist; publish, verify live and frozen
+versions/assets/links, then record immutable Beta6 and resume normal development.
+Prior frozen Beta3/4/5 stay unchanged. Publication remains authorized. Further
+changes before freeze are reproducible release blockers only; slight Lasso
+selection tightening remains deferred.

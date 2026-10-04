@@ -4,6 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## Beta 6 final candidate — .733, 2026-10-05
+
+.732 user PASS. Default-launch Focus and armed toolbar icon implemented in .733.
+No further feature work before Beta6 freeze. Release notes draft prepared. Remaining
+checks: .733 Focus toggle/browser, final iPad navigation/history/Multi/Boolean/
+Extract smoke, Files/Nomad round-trip. After those pass, freeze exact accepted
+source into /beta-6/, finalize notes, publish and verify immutable frozen URL.
+Existing full-suite test debt is documented, not claimed green.
+
 ## Current bundled refinement — .732, 2026-10-05
 
 .731 explicitly PASS. .732 implements popup packing, audited background exits,

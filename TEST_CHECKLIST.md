@@ -3500,3 +3500,13 @@ failure names versus .731; all280 module syntax pass. No .732 device PASS inferr
    Loop Cut, Multi Move/Rotate/Scale, .731 Sweep and Bevel previews.
 
 Background policy/exceptions and owner audit are recorded in AI_HANDOFF.md.
+
+## .733 — Focus launch and Beta 6 final smoke
+
+User PASS .732 recorded. 44 focused pass; full1287/1010/277, same failure names
+as .732. Focus starts on each new launch; icon active/aria-pressed true and bright.
+Test toggle shows left tool list and removes active state, toggle again hides it;
+original icon, right browser and Modifiers remain functional in both views.
+Remaining final device gates: Focus check, short navigation/history/Multi/Boolean/
+Extract smoke, and Files→Nomad→BoxLab GLB round-trip. Then freeze/publish Beta6;
+see BETA_6_RELEASE_CHECKLIST.md. No device PASS inferred for .733.

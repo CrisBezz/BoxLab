@@ -8,7 +8,7 @@ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
 test('406 Tool Session module loads before Sweep',()=>{
-  const tool=index.indexOf('src/tool-session-ui.js?v='+version);
+  const tool=index.indexOf('src/tool-session-ui.js?v=0.36.18.732');
   const sweepIndex=index.indexOf('src/sweep-path.js?v=');
   assert.ok(tool>=0&&sweepIndex>tool);
 });

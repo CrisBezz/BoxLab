@@ -1,32 +1,24 @@
-# Beta 6 release-candidate checklist — .732
+# Beta 6 release-candidate checklist — .733
 
-Status: .731 user PASS; .732 bundled refinements await grouped iPad acceptance. No Beta6 freeze yet.
+Status: .731 and .732 explicitly user PASS. Final default-Focus refinement .733
+published for testing. Beta 6 is not frozen/released yet. No further feature work
+planned; only reproducible release-blocking fixes before freeze.
 
-Current candidate: popup comfort, background exit policy, Array axis/Free ghost handles,
-Inset Repeat correctness, right-side top-bar Object Browser. See the .732 test block
-in TEST_CHECKLIST.md. 133 focused pass; full1285/1008/277 with no new failure names
-versus .731; all280 source modules syntax pass. Historical failures remain documented.
-
-| Area | Automated evidence | Remaining device check |
+| Gate | Status / evidence | Remaining action |
 | --- | --- | --- |
-| UI access/layout | Original Lasso/SELECT identities retained; depth controls hidden; shared layout retains actions/stages | Normal/Focus compact sparse and larger panels |
-| Radial sessions | .729 guarded context/drag/exit tests retained | Face/Vertex/Object/Edge Apply/Cancel/Done and puck/gizmo return |
-| Navigation/Pencil | Protected owners unchanged; historical navigation/Pencil suite has obsolete pins/VM fixtures | Finger orbit/pan/pinch, Pencil selection, background tap/hold, two-/three-finger Undo/Redo |
-| Numeric transforms | Actual floating Move/Rotate/Scale → exact owner and geometry; one History Undo/Redo pass | iPad entry/focus and Multi transforms |
-| Object/Boolean/history | Current Multi hit/membership and Boolean checkpoint-owner tests pass | Multi selection, Boolean one Undo, management/modifiers |
-| Extract | Actual module loads; partial/all/empty selections, groups, source retention, one scene checkpoint pass | New object selection/transform and scene Undo/Redo |
-| Files/Nomad | Actual indexed geometry UV/tangent/colour/morph/Facegroups/import-fit pass; existing file-domain tests reviewed | Export/Save GLB to Files, Nomad import and unchanged reimport |
+| Popup/radial sessions, background exits, Array, Inset Repeat, Object Browser | .732 user PASS; 133 focused checks passed | Accepted; retain regression coverage |
+| Default Focus / armed icon | .733 shell launches Focus; actual toggle sync checks pass | iPad fresh launch, show/hide left list, browser in both views |
+| Final navigation and editing smoke | Existing protected owners retained; relevant runtime checks pass | Short Pencil/finger orbit/pan/pinch, lasso/hold, Undo/Redo, Multi transform, Boolean and Extract |
+| Export / Files / Nomad | .730 actual GLB attributes/import tests passed | Save GLB to Files, import in Nomad, reimport in BoxLab; confirm geometry, scale, colour/groups |
+| Automated regression / known debt | .733 44 focused PASS; full1287/1010/277, identical failure names to .732 | Historical full-suite source/pin/VM failures stay explicitly documented; not all-green CI |
+| Freeze, notes and publication | BETA6_RELEASE_NOTES.md draft prepared; publishing authorized | Snapshot accepted source commit into /beta-6/, audit isolated paths, finalize notes, publish and verify frozen/live links |
 
-Validation:53 focused tests pass; all279 source modules pass syntax checks. Full1265 tests/982 pass/283 fail versus fresh .7291259/976/283: identical failure names. Broader release-domain113/97/16 has existing historical pin/source-shape/VM failures; these have not been masked or presented as green.
+Cloud WebGL cannot prove iPad/Pencil behavior; no missing device outcome inferred.
+Save remains existing Export/Save-to-Files, not a newly claimed native scene format.
 
-Fixed actual audit blocker: Extract Faces .683 had a missing function closing brace and could not load. .730 restores it without changing geometry/history ownership.
-
-Cloud-browser WebGL is disabled, preventing rendered 3D/Pencil smoke testing. Unit/runtime checks do not substitute for actual iPad and Nomad acceptance. Save means the existing Export/Save-to-Files workflow; no new native scene persistence is claimed.
-
-Release gate: resolve device failures, review pending checks and historical test debt, verify Pages/current pins, then freeze Beta6 and publish release notes. Protect main .724 background hold/tap, Multi transform1.0, trusted Loop insertion/slide, Studio, selection retention and frozen betas. Defer slight Lasso tightening until final polish.
-
-
-.731 follow-up: Sweep popup, persistent Edge Slide and Edge/Vertex Bevel copy preview
-covered by86 focused passing checks and all279 module syntax checks. Full1274/994/280
-(no new failures vs .730). Device acceptance remains pending; test these plus remaining
-.730 release checks before freezing Beta6.
+Freeze must copy the accepted source and supporting assets using the existing beta
+convention. Inspect import maps, dynamically loaded module pins, bootstrap/version
+URLs, manifest/service-worker paths and relative links; frozen launch must stay
+inside /beta-6/ and must not recover into live main. Record source commit and release
+acceptance. Verify both live and frozen manifests/shell/pins after Pages success.
+Prior Beta 3/4/5 remain immutable. Lasso tightening stays deferred to later polish.

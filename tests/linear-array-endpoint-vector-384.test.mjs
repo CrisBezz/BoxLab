@@ -8,7 +8,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 
 test('Endpoint-vector Array runtime follows current app build',()=>{
   const wrapper=index.match(/linear-array\.js\?v=([^"]+)/)?.[1];
-  assert.equal(wrapper,version);
+  assert.equal(wrapper,'0.36.18.732'); // Array owner is unchanged in the Focus-only .733 build.
 });
 
 test('384 starts with source plus one END copy and no spacing slider',()=>{

@@ -17,8 +17,8 @@ test('418 active Tool Session reopens Active Tools if another handler collapses 
 test('418 Array remains a Tool Session client and current runtime is wired',()=>{
   assert.ok(array.includes("toolSession()?.begin?.({id:'array'"));
   assert.ok(array.includes("if(!toolSession()?.isActive?.('array'))beginArraySession()"));
-  assert.ok(index.includes('src/tool-session-ui.js?v='+version));
-  assert.ok(index.includes('src/linear-array.js?v='+version));
+  assert.ok(index.includes('src/tool-session-ui.js?v=0.36.18.732'));
+  assert.ok(index.includes('src/linear-array.js?v=0.36.18.732'));
 });
 
 test('418 protected multi-object transform pin remains untouched',()=>{

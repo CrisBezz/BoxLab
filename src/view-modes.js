@@ -123,10 +123,11 @@ function focusViewOn(){return document.documentElement.classList.contains('boxla
 function syncFocusViewButton(){
   const button=document.querySelector('#focusViewBtn');
   if(!button)return;
-  const label=focusViewOn()?'Exit Focus View':'Focus View';
+  const label=focusViewOn()?'Show left tool list (exit Focus)':'Hide left tool list (Focus)';
   button.title=label;button.setAttribute('aria-label',label);
   if(!button.dataset.iconAction)button.textContent=label;
   button.setAttribute('aria-pressed',focusViewOn()?'true':'false');
+  button.classList.toggle('active',focusViewOn());
 }
 // Move the original Objects and Modifiers nodes into a right viewport panel.
 let focusObjectListOpen=false,objectsDrawerWasOpen=false,modifiersDrawerWasOpen=false;
@@ -238,6 +239,7 @@ document.addEventListener('pointerdown',event=>{
 
 const focusViewStyle=document.createElement('style');
 focusViewStyle.textContent=`
+#focusViewBtn[aria-pressed="true"]{background:#f2f5fa!important;color:#111318!important;border-color:#f2f5fa!important}
 html.boxlab-focus-view #viewportWrap > .floating-panel.left-panel{display:none!important}
 #objectBrowserPanel[hidden]{display:none!important}
 #objectBrowserPanel{position:absolute;right:max(8px,env(safe-area-inset-right));top:8px;z-index:133;width:min(340px,calc(100% - 16px));max-height:calc(100% - 24px);overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;padding:8px;box-sizing:border-box;background:rgba(20,23,30,.98);border:1px solid #ffffff30;border-radius:12px;box-shadow:0 10px 28px #0006}
