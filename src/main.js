@@ -323,6 +323,8 @@ function syncTransformButtons(){document.querySelectorAll('#toolModes button').f
 function setDirectTool(tool){directTool=tool||null;if(directTool){multiSelectEnabled=false;const toggle=document.querySelector('#multiSelectToggle');if(toggle)toggle.checked=false;}if(directTool==='loopCut'||directTool==='crease'){selectionMode='edge';clearSelection();}else if(directTool==='extrude'||directTool==='inset'){selectionMode='face';clearSelection();}else if(directTool==='addVertex'||directTool==='vertexBevel'){selectionMode='vertex';clearSelection();}syncSelectionModeButtons();syncTransformButtons();syncDirectToolControls();updateStatus();}
 globalThis.__boxlabMainDirectTool={
   active:()=>directTool,
+  busy:()=>!!drag,
+  finishLoopCut:()=>{if(drag||directTool!=='loopCut')return false;setDirectTool(null);renderMesh();return true;},
   ownsModellingGesture:()=>!!directTool,
   applyCreaseSelection:(ids,value,{pushHistory=true}={})=>{
     const edgeIds=[...new Set(ids||[])].filter(i=>Number.isInteger(i)&&mesh.edges()[i]);

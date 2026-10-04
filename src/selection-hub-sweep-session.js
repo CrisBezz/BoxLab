@@ -73,6 +73,7 @@ style.textContent=`
 document.head.appendChild(style);
 
 let launchedFromHub=false;
+let launchMode='face';
 let raf=0;
 
 function src(selector){return document.querySelector(selector);}
@@ -161,7 +162,8 @@ for(const proxy of palette.querySelectorAll('[data-proxy-range]')){
 }
 
 window.addEventListener('boxlab-selection-hub-tool',event=>{
-  if(event.detail?.tool!=='Sweep'||event.detail?.mode!=='face')return;
+  if(event.detail?.tool!=='Sweep'||!['face','edge'].includes(event.detail?.mode))return;
+  launchMode=event.detail.mode;
   launchedFromHub=true;
   requestAnimationFrame(()=>{
     sync();
@@ -174,7 +176,7 @@ window.addEventListener('boxlab-tool-session-end',event=>{
   const wasHub=launchedFromHub;
   launchedFromHub=false;
   palette.hidden=true;
-  if(wasHub)window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{tool:'Sweep',mode:'face'}}));
+  if(wasHub)window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{tool:'Sweep',mode:launchMode}}));
 });
 
 globalThis.__boxlabSweepViewportSession={

@@ -7,10 +7,33 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.712**.
-Current focus: user-requested coordinated wide tool popouts and gizmo corner
-shortcuts. Await .712 combined hands-on test/refinement. .711 is visibly confirmed
-in the user's screenshots, but has not received a full PASS. No Object PASS inferred.
+Current release: **v0.36.18.713**.
+Current focus: complete Edge Active Tools coverage now published for combined hands-on testing.
+User confirms **.712 AWESOME PASS**: gizmo centre/corner shortcuts, wide top-centre
+popouts and additional Object tools are protected. Earlier pending individual repair
+checks are not implicitly passed.
+
+.713 audits nineteen existing Edge Active Tools and reconnects all eleven missing
+launchers: Loop, Split, Sweep, Uncrease, Fill Face, Grid Fill, Dissolve Loop,
+Join Coplanar, Flip Edge, Collapse, Circle. Original buttons/controllers/history
+and kernels remain authoritative. Loop/Split get wide top-centre persistent-session
+controls/Done; Loop count and slide forward to original controls. Done preserves
+completed work, does not mean rollback. Main exposes only busy/finishLoopCut UI
+lifecycle APIs; .688 logical-quad/.162 core and .632 commit owner/pins unchanged.
+Edge Sweep reuses existing staged viewport proxy and semantic completion with launch
+mode retained. One-shots clear suppression, including Face/Vertex result handoffs.
+
+Shared radial direction/tier: Circle outer0°, Join Coplanar outer22.5°, Slide inner45°,
+Bevel inner90°, Bridge inner225°, Sweep inner270°, Delete inner315°, Clean Vertices
+outer270° and Merge Dist outer315°. Face Bridge moves inward, Shell outward225°,
+Quad Cleanup outer180°. Vertex Build Edge moves135°, Slide45°; outer ring expands
+230px to avoid inner overlap with shared Clean/Merge positions. Edge Dissolve now
+outer270°, Sweep takes former inner slot. All original tools retained, no selection
+commands. Object slots/owners and protected multi-object-transform untouched.
+
+46 targeted PASS; full1195/911/284, no new failures by name versus .712.
+Next: confirm visibly .713, test all19 Edge tools/settings/result handoffs/history,
+protected Loop feel and shared placement; collect refinements before drawer removal.
 
 User confirms **.710 Vertex radial AWESOME / PASS**; all thirteen tools and shared
 Face/Edge/Vertex Bevel placement are protected. .708 Face Bevel remains protected.

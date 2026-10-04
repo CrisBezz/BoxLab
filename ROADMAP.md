@@ -277,3 +277,14 @@ wide settings + stacked right terminal actions through shared presentation owner
 Original controls/geometry/history/gesture owners retained. .711 screenshots confirm
 load, but no full Object PASS. 41 targeted PASS; full1190/906/284, no new failures.
 Next .712 combined visual/tactile refinement before final Edge inventory/settings.
+
+
+### Final Edge Active Tools coverage — .713
+
+User .712 AWESOME PASS protects wide popouts/gizmo shortcuts/Object coverage.
+All nineteen existing Edge tools exposed, including eleven reported gaps. Loop/Split
+settings and Done reuse original owners; Edge Sweep uses existing staged proxy.
+One-shot handoffs and shared angular/tier slots aligned across component modes.
+No new kernel or protected Loop core changes. 46 targeted PASS; full1195/911/284,
+no new failures. Next combined .713 hands-on/refinement; retain drawer fallbacks
+until approved. No unrelated gesture/topology expansion.
