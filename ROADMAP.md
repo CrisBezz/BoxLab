@@ -405,3 +405,7 @@ regression before Beta6 freeze. Keep drawer fallback and passed .724 interaction
 viewport strip for normal/Focus access. Original owners/listeners and geometry math
 retained.27 targeted PASS; .726 full baseline1240/957/283 retained. Next iPad depth/
 layout sanity check, remaining advanced filters/bulk Object audit and release regression.
+
+
+### .728 Beta6 grouped build progress
+Selection-access batch implemented: viewport SELECT exposes complete original component filters/commands and contextual Object bulk controls; manual validation pending. Next batch: radial/session polish across all modes, then release-candidate navigation/transform/Multi/Boolean/history/object/file/Nomad regressions, then Beta6 freeze. Lasso tightening remains deferred until final polish.

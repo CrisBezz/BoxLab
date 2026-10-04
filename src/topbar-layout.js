@@ -1,3 +1,4 @@
+import {installViewportSelectionPanel} from './viewport-selection-panel.js?v=0.36.18.728';
 import {installViewportToolbarControls} from './viewport-toolbar-controls.js?v=0.36.18.727';
 const topbar=document.querySelector('.topbar');
 const selectionModes=document.querySelector('#selectionModes');
@@ -115,3 +116,4 @@ statusLaneStyle.textContent=`
 document.head.append(statusLaneStyle);
 
 installViewportToolbarControls();
+installViewportSelectionPanel();

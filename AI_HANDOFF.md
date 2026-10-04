@@ -7,27 +7,29 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.727**. Parent .726 `0c6e17a0`.
-User .726 PASS recorded for VIEW Object List/Focus/empty selection access and panel
-reopening. Preserve original list owner; individual modifier modelling actions
-still part of Beta6 regression, not independently asserted by this PASS.
-Current .727: original #paintSelectDepth Visible/Through button group moves into
-bottom viewport SNAP/selection strip beside original Lasso. Same IDs/nodes/listeners,
-active state and paint/Lasso depth owners; no duplicate depth state or proxy controls.
-Scoped CSS overrides old display:contents and provides compact text buttons/separator.
-Available in Focus and normal view. Original drawer loses only this moved group;
-advanced filters/commands still there. No changes to selection/depth mathematics.
-27 targeted PASS: original buttons and handlers retained, existing Lasso/background
-hold/Edge Paint/Object List checks. Syntax/diff pass. No full rerun for presentation
-relocation; .726 full1240/957/283 remains baseline. Changed toolbar child/topbar
-parent pins .727; shell/manifest/refresh .727, view-modes .726/main .724 retained.
-Next iPad normal/Focus Visible vs Through with Lasso/paint, state retained across
-Focus/mode changes; compact layout alongside GEO/Lasso/mode bar. .724 hold/tap PASS
-and .726 list PASS protected. .725 GEO readability still no separate PASS inferred.
-Remaining Beta6 drawer audit: Connected/Angle/Normal and boundary/loop/ring variants,
-residual/bulk Object selection controls; then combined radial session/Apply/Cancel/
-puck and pending .716/.713 checks, import/export/Nomad regression before freeze.
-Do not default-hide/remove drawer yet. Slight Lasso tightening deferred MUCH LATER.
+Current release: **v0.36.18.728**. Parent .727 `3f0275ec`.
+User .726 PASS and .724 PERFECT/PASS remain protected. No separate .725/.727
+visual/depth PASS inferred. This build completes the selection-access batch:
+viewport SELECT opens the original #selectionDrawer in a bounded top-centre popout
+in normal and Focus view. All original component All/Deselect/Invert, Grow/Shrink,
+Connected, Loop/Ring/Boundary, Angle/Normal threshold and alignment controls retain
+nodes/listeners/owners. Late original Object Multi/All/Clear/Hide/Show/Lock/Unlock
+controls remain contextual within the same host. Visible/Through and Lasso retain
+their .727 bottom-strip placement. Close/SELECT/Escape/background dismiss the popout;
+background pointer events are not consumed. Active tool sessions block opening and
+close it. Shared .716 placement helper runs before original controls are appended.
+27 targeted PASS. Full1244/960/284 vs fresh clean .7271240/956/284: identical failure
+names, four additional passing checks. Previous recorded .726957/283 counts differ
+from this fresh baseline; do not claim an extra regression. Syntax/diff pass.
+Shell/topbar/manifest/refresh .728; toolbar child .727, view-modes .726, main .724,
+Multi transform .1.0 remain pinned. New selection-panel child .728.
+Next iPad normal/Focus SELECT, all component modes and Object bulk controls, plus
+retained depth/Lasso/background hold/navigation. Larger Beta6 batches next: complete
+radial/session polish across all four modes (availability/settings/Apply/Cancel/
+repeat/reset/puck and pending .716/.713), then release-candidate regression covering
+navigation, transforms/type-in, Multi/Boolean/Undo, object management and save/import/
+export/Nomad. Freeze Beta6 only after those passes. Existing drawer content remains
+available through SELECT. Slight Lasso tightening deferred MUCH LATER.
 
 ## Protected .724 background hold — user PASS
 Previous implementation: user-requested background LONG PRESS Invert, replacing failed
