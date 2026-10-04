@@ -60,17 +60,19 @@ function applyEdge(selectionOverride=null){
 
 function applyVertex(selectionOverride=null){
   const mesh=state()?.mesh,ids=[...new Set(selectionOverride||selected('vertex'))],raw=Number(vertexUi?.input.value);
-  if(!mesh||!ids.length){if(vertexUi)vertexUi.readout.textContent='Select vertex/vertices first';return;}
-  if(!Number.isFinite(raw)){if(vertexUi)vertexUi.readout.textContent='Enter a bevel percentage';return;}
+  if(document.querySelector('#app')?.classList?.contains('boxlab-active-locked'))return {ok:false};
+  if(!mesh||!ids.length){if(vertexUi)vertexUi.readout.textContent='Select vertex/vertices first';return {ok:false};}
+  if(!Number.isFinite(raw)){if(vertexUi)vertexUi.readout.textContent='Enter a bevel percentage';return {ok:false};}
   const valid=mesh.multiVertexBevelInfo?.(ids);
-  if(!valid){if(vertexUi)vertexUi.readout.textContent='Selection cannot be bevelled';return;}
+  if(!valid){if(vertexUi)vertexUi.readout.textContent='Selection cannot be bevelled';return {ok:false};}
   const pct=clampPercent(raw),before=mesh.clone(),ok=mesh.bevelVertices?.(valid.ids,pct/100);
-  if(!ok){restore(mesh,before);if(vertexUi)vertexUi.readout.textContent='Vertex bevel failed';return;}
+  if(!ok){restore(mesh,before);if(vertexUi)vertexUi.readout.textContent='Vertex bevel failed';return {ok:false};}
   globalThis.__boxlabHistory?.push(before);
   if(vertexWidth)vertexWidth.value=String(Math.round(pct));if(vertexOut)vertexOut.textContent=`${pct.toFixed(1)}%`;
   clearSelection('vertex');render();
   if(vertexUi)vertexUi.readout.textContent=`Vertex Bevel exact • ${pct.toFixed(1)}%`;
   if(status)status.textContent=`Vertex Bevel committed • ${pct.toFixed(1)}%`;
+  return {ok:true,percent:pct};
 }
 
 document.addEventListener('pointerdown',event=>{
@@ -96,4 +98,4 @@ vertexButton?.addEventListener('click',()=>queueMicrotask(()=>{if(vertexUi)verte
 if(edgeUi)edgeUi.readout.textContent='Edge Bevel • drag normally or enter Exact %';
 if(vertexUi)vertexUi.readout.textContent='Vertex Bevel • drag normally or enter Exact %';
 
-globalThis.__boxlabPrecisionBevel={version:'0.36.18.513',edge:value=>{if(edgeUi){edgeUi.input.value=String(value);applyEdge();}},vertex:value=>{if(vertexUi){vertexUi.input.value=String(value);applyVertex();}}};
+globalThis.__boxlabPrecisionBevel={version:'0.36.18.710',edge:value=>{if(edgeUi){edgeUi.input.value=String(value);applyEdge();}},vertex:value=>{if(vertexUi){vertexUi.input.value=String(value);return applyVertex();}}};

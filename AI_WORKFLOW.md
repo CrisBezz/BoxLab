@@ -182,3 +182,11 @@ Protected rule for iPad/browser interaction work:
 - v0.36.18.594 demonstrated the failure mode: Scale detents were added to transform-upgrade while Object Scale was actually owned by main.js, so the feature could not affect the live drag.
 - Total Gizmo now exposes explicit active-drag ownership state so owner modules can distinguish gizmo gestures from legacy transform-strip gestures without inference.
 
+
+## Cross-mode radial consistency
+
+User-directed UX rule (2026-10-04): Bevel occupies the inner-ring 90-degree / 3-o'clock
+slot in Face, Edge and Vertex. Keep this shared placement during future refinements.
+.710 user explicitly requested all currently existing Vertex Active Tools as one
+batch, followed by combined hands-on testing/refinement. Do not invent new Vertex
+capabilities or include selection helpers under that request.

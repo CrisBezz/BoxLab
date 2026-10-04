@@ -76,6 +76,7 @@ function showBuildPreview(start,end,endHit){
   }
 }
 function disarmBuildEdge(){
+  if(buildDrag){try{canvas.releasePointerCapture?.(buildDrag.id);}catch{}}
   buildArmed=false; buildDrag=null; clearBuildPreview();
   buildEdgeBtn?.classList.remove('active');
 }
@@ -190,3 +191,6 @@ canvas?.addEventListener('pointercancel',event=>{
   buildDrag=null; clearBuildPreview();
   if(selectionStatus&&buildArmed)selectionStatus.textContent='Build Edge • drag vertex → vertex';
 },true);
+
+// Contextual settings use the existing Build Edge owner.
+globalThis.__boxlabBuildEdge={version:'0.36.18.710',isArmed:()=>buildArmed,disarm:disarmBuildEdge,busy:()=>!!buildDrag};

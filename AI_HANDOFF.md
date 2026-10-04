@@ -2,451 +2,182 @@
 
 ## New-chat starter prompt
 
-Continue BoxLab development from current `main` of `CrisBezz/BoxLab`.
-The repository is the source of truth; do not use remembered chat state against it.
-Before code changes read AI_WORKFLOW.md completely, this file completely,
-TEST_CHECKLIST.md, recent relevant DEV_HISTORY.md entries and ROADMAP.md.
-Inspect main, recent commits, live release markers and script pins. Audit existing
-functionality and authoritative owners before implementing anything new.
+Continue current main of CrisBezz/BoxLab. Repository is the source of truth.
+Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
+relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
+main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.709**.
-Current focus: first Vertex radial pair hands-on confirmation; .708 Face Bevel full manual list PASS and protected. Continue Vertex → Object → final Edge, retaining pending Face repair checks.
-The user confirmed the full .690 and .691 manual lists PASS on 2026-10-03.
-Existing Face/Edge ring lifecycles are protected; full radial tool/settings coverage
-is still the priority. Follow Face → Vertex → Object → final Edge, not broad gestures.
+Current release: **v0.36.18.710**.
+Current focus: user-requested ALL existing Vertex Active Tools now exposed in the
+radial workflow, plus consistent Bevel positions in Face/Edge/Vertex. Await one
+combined hands-on test/refinement session before proceeding to Object.
+User expressly requested this complete Vertex batch rather than two tools per build.
+.708 full Face Bevel manual list PASS and protected. .709 was NOT confirmed PASS;
+its Merge pair is included in the .710 combined checks. No new PASS is inferred.
 
-## User-directed priority — updated 2026-10-04
+## Priority and scope
 
-Radial menus contain ACTIVE modelling/repair tools only. Selections belong to
-long press and gestures. .701 selection sectors were a scope mistake, removed .702.
+Finish contextual radial menus/settings so routine modelling needs little drawer
+interaction: Face coverage → Vertex → Object → final Edge completeness pass.
+Radials contain active modelling/repair tools only; selections remain long press/
+gestures. No unrelated gesture expansion, topology strengthening or wholesale UI
+cleanup. Keep authoritative drawer fallbacks until replacements pass.
+All session popups/numeric entry use shared top-centre viewport placement owner.
+User's consistency rule: **Bevel is inner-ring 90 degrees / 3 o'clock in Face,
+Edge and Vertex**. Preserve this across future ring refinements.
 
-All development moving forward must finalize radial menus and contextual settings.
-No unrelated gestures/features/strengthening before this sequence is complete.
-
-Primary goal: finish contextual radial menus and top-centre pop-out settings so routine
-modelling needs as little left-drawer interaction as possible.
-Required order: **Face gaps → Vertex → Object → final Edge completeness pass**.
-The .690 PASS completed the lifecycle of the existing Face ring; it did NOT prove
-that all Face drawer actions/settings had migrated into the contextual workflow.
-Edge's existing radial lifecycle is protected, but overall Edge completeness must
-be finalized after Vertex and Object. Stop broad gesture expansion while this
-radial-menu work is the priority. .691 remains protected; .692 is already published
-and its Edge neutral-return hands-on checks remain pending.
-Before the next runtime build, compare the full Face drawer against the current
-Face rings, audit existing action/settings owners, and choose the next related
-Face contextual batch. Preserve current passes. Add contextual access/pop-outs by
-reusing owners; remove redundant drawer UI only after its replacement passes.
-Do not mistake a working ring lifecycle for complete contextual tool coverage.
-
-## Current repository state
+## Repository / cache state
 
 - Main CrisBezz/BoxLab; live https://crisbezz.github.io/BoxLab/.
-- Release v0.36.18.709; parent .708 checkpoint c0db70e4.
-- Find .709 runtime/documentation commit in main history; no self-referential SHA.
-- Changed runtime: total-gizmo only, .709 direct loader pin. Main/refresh pins .709,
-  logic unchanged. Vertex merge owner remains .513, geometry/history unchanged.
-- Face Bevel direct/helper/session .708, repair/drawer .706, Align .705, dock .700.
-- Protected multi-object-transform .1.0, bevel kernels, Face/Edge rings and frozen betas untouched.
-
-## Immediate hands-on checks — .709
-
-1. Confirm iPad visibly shows v0.36.18.709. Vertex selection → puck → transform centre
-   opens Merge Center / Merge First and centred ×. Closing preserves selection.
-2. Multi-select two adjacent cube vertices → Merge Center. Result goes to midpoint,
-   stays selected with puck; one Undo/Redo restores/repeats geometry.
-3. Undo, select one vertex first then its adjacent neighbour → Merge First. Result
-   stays at first selected position, retains puck; one Undo/Redo.
-4. One selected vertex disables both; unsafe selections reject. Vertex taps,
-   long-press selection, orbit/pan/pinch and protected Face/Edge tools remain intact.
-
-.708 full manual list confirmed PASS by user: blue Width/Segments/Pencil preview,
-explicit Apply, Cancel/puck, one Undo/Redo, navigation and protected Edge behavior.
-.707 drag FAIL superseded by .708; no PASS inferred for .706/.702/.703/.704/.692.
-
-## .709 owner audit / implementation
-
-Face inventory: original eight tools plus Join/Circle/Poke/Planar/Triangulate/Flip/
-Orient/Outward/Bridge/five scoped repairs/Align/Bevel are all exposed. Exact/Repeat
-Extrude/Inset, Shell thickness, staged Sweep, Bevel Width/Segments, Align XYZ/Face
-and repair tolerance/scope settings have contextual controls. Through is automatic
-inward single-Face Extrude in multi-face-direct and precision-face, not a separate
-button/settings owner. Inspect/selection/appearance helpers are excluded by scope.
-Pending repair hands-on checks and final inner/outer placement remain; do not claim
-all Face workflows manually passed or remove drawer fallbacks.
-
-Vertex merge .513 already owns Center/First validation, chronological first vertex,
-compaction, selection/Multi and history. Two direct sectors proxy those buttons;
-no new kernel or viewport pointer listener, no new popup required. Same puck →
-transform → tools path now permits Vertex, same centred × closes it. Availability
-mirrors owner buttons; read-only radial access is blocked. Same one-shot completion
-clears stale hub suppression and returns puck on merged result (or surviving selection
-on rejection). Mode guards retain Face/Edge/Object routing; their ring markup is unchanged.
-30 targeted tests PASS including actual owner geometry/chronology/history Undo/Redo,
-selection/puck, invalid/read-only/mode rejection and protected nearby Face sessions.
-Full1158 tests/873 PASS, identical285 failure names to .708; no new failures.
-Syntax/diff PASS. No topology or protected navigation owner edits.
-
-Next: confirm .709; audit next Vertex active pair (existing Add/Bevel/Connect/Weld,
-Merge by Distance, Clean, Slide, Circle/Align/Delete owners/settings). Selection
-helpers stay outside radials. Finish Vertex coverage, then Object, then final Edge;
-keep pending Face repair checks and final two-ring placement review visible.
-
-## .708 Face Bevel blue preview / ownership repair
-
-Audit: .707 Face drag was at canvas capture, vulnerable to earlier document capture
-owners. Disarming cosmetic transform arming does not remove main's component Move
-fallback. Face-only registrations now dispatch the SAME direct-bevel handler functions
-at window capture, before document handlers. Edge continues exclusively at canvas
-capture; no parallel owner or new modelling kernel. Main has one explicit Face Bevel
-active guard to yield its fallback, letting touch/background navigation continue.
-Touch and Pencil hover do not start Face bevel; selected Pencil contact does. Existing
-pointer capture and controls restoration retained; release ends drag but keeps preview.
-
-Slider/Pencil preview now clones the session snapshot, calls unchanged Edge bevel kernel
-and renders candidate through new rendering-only bevel-face-preview. Blue color0x62d8ff,
-fill opacity.18 / wire.72, DoubleSide/depthTestfalse/depthWritefalse and renderOrder13/14
-match Shell/Solidify; those owners remain untouched. Full candidate rendered as separate
-scene group, never promoted as cage/editable mesh or added to object manager.
-Source vertices/faces/creases/loose topology are checked before rebuild/apply to prevent
-clobbering an external edit. Invalid candidate removes stale preview, disables Apply and
-reports reason in panel. Rebuild/disarm/Cancel/Apply/context change dispose shared geometry
-once and both materials. Width/Segments input/change updates only this Face session;
-no preview rebuild in positioning RAF. Popup stays top centre.
-
-Launch, sliders and Pencil drags leave live geometry/history/selection unchanged.
-Release retains preview, explicit Apply Bevel rebuilds/validates and commits candidate
-with one history step, then clears stale IDs and shared completion. Cancel discards
-candidate and preserves original selected Faces. Edge commit-on-release/exact path remains
-unchanged. .707 tests now assert explicit Face Apply after preview release (superseded UX).
-60 targeted tests PASS, including real installed kernel geometry/Undo/Redo, blue style,
-slider rebuild/resource disposal, early capture ahead of consuming document owner, actual
-main guard with touch/fallback, source-change rejection and protected Edge/nearby tools.
-Full suite1153 tests/868 PASS, same285 failure names as .707; no new failures. Syntax/diff PASS.
-Ring remains eight inner/sixteen outer at230px; no layout changes.
-
-Historical next step completed: .708 hands-on PASS; .709 begins Vertex after Face owner/settings inventory. Pending .706 checks retained; Vertex → Object → final Edge. No unrelated gestures/strengthening or radial selection helpers.
-
-## .707 Face Bevel owner audit / implementation
-
-User requested same Edge bevel from Face selection. Existing bevel-selection and
-perimeter routing already handle cube-Face boundary cycles; face-region already
-owns connected region boundary enumeration. No bevel kernel changes or new raw
-pointer owner. Direct Bevel now resolves one Face boundary, or faceRegionInfo's
-simple connected region outer boundary, to authoritative Edge IDs and validates
-through generalBevelSelectionInfo. Internal shared selected edges are excluded.
-Disconnected regions, complete shells/no boundary, open or unsupported perimeter
-sets stay unavailable according to the current Edge engine; strengthening deferred.
-
-Face radial sector dispatches semantic Bevel launch, without clicking Edge-mode
-button. Shared Bevel viewport session arms new Face context in same direct controller,
-uses existing Width/Segments proxies and exact commit, and prompts dragging a selected
-Face. Existing four canvas handlers own Face picking/preview/commit/cancel. Face mode
-and selection remain during session; no Multi changes on launch. Transform/Face direct
-suspension/exclusivity reused. Popup button capture explicitly preserves Face owner
-until Apply/Cancel, avoiding document-capture disarm before exact execution.
-
-Face preview recomputes from snapshot using unchanged generalBevelSelection. Owner
-restores failed/cancelled preview, controls enabled state and pointer capture; no
-history until successful release/exact. One successful history step, stale Face IDs
-cleared and shared completion emitted so next tap gets puck. Cancel preserves Face
-selection. Mesh/mode/selection/lock guards block wrong-context apply; new radial tool
-hides old controls without completing new tool lifecycle. Edge branch retains existing
-selection/geometry/history behavior, covered with actual drag/exact integration tests.
-
-Ring: eight inner unchanged; sixteen outer at 230px/22.5 degrees, guide460px.
-No outer/outer or outer/inner rectangle overlap. 56 targeted checks PASS, including
-actual installed bevel stack, region boundary, chamfer/rounded Edge-geometry parity,
-preview rollback, one Undo/Redo, cancelled/locked/changed context, semantic dispatch,
-protected Edge drag/exact and nearby Face/repair/dock/session/release checks. Full
-suite 1149 tests, 864 PASS, identical 285 failure names to .706; no new failures.
-Syntax/diff checks PASS. Protected topology, transform and frozen betas unchanged.
-
-Next: .707 and pending .706 hands-on confirmation; finish Face inventory/settings
-before claiming completion, then Vertex → Object → final Edge. No radial selection
-helpers, broader gestures, topology strengthening or bulk drawer removal.
-
-## Retained hands-on checks — .706
-
-1. Confirm iPad visibly shows v0.36.18.706. Face ring has Merge Dist; prior tools and centred × usable.
-2. Merge Dist opens top-centre Merge by Distance controls with whole-active-object scope and exact model-unit distance. Adjusting distance changes readiness; no geometry on launch/edit.
-3. Cancel restores original selected Face/puck without geometry/history changes.
-4. On an ordinary mesh with eligible nearby duplicate vertices, Apply welds once, stays Face mode, clears stale selection; next Face tap gets fresh puck. One Undo restores geometry; Redo repeats.
-5. Healthy mesh/no safe nearby clusters or invalid distance disables Apply. Previous Align to Face, repair controls, background Done/navigation remain intact.
-
-.705 full manual list confirmed PASS by user; protect arbitrary-plane Align, fixed
-anchor/rigid shape, Cancel/rejection, selection/puck, one Undo/Redo and XYZ/navigation.
-.702/.703/.704 retain their pending checks; no explicit PASS was received for those.
-.706 awaits hands-on PASS. All previous protected checks remain.
-
-## .706 Merge by Distance owner audit / implementation
-
-Merge already exists: merge-by-distance .41 owns the conservative selected-Vertex
-planner/commit; select-mergeable-verts .135/.137 scans whole-object safe clusters;
-Face Repair .145 proxies those by switching Vertex mode. New Face radial Merge Dist
-uses existing whole-object repair panel and owners without that mode hop.
-Explicit model-unit tolerance and Apply/Cancel at top centre. Scans only on launch,
-input/context change and Apply, not every positioning frame. No geometry/history on
-launch, tolerance edit or Cancel. Each individually safe cluster is inspected through
-existing planner; the combined batch is also validated, rejecting interacting clusters
-that would create duplicate/collapsed/nonmanifold geometry. No duplicate welding kernel.
-
-Owner now exposes applyFor with explicit IDs/tolerance/expected mesh and result; same
-commit/remapping maths. Default Vertex apply still selects welded results and adjusts
-Multi. Face contextual call preserves mode/Multi until proxy clears stale Face IDs
-on success. History pushed once after successful result, not on rollback/no-op.
-Locked/reference and changed mesh contexts blocked. Cancel preserves selection and
-semantic completion returns puck; successful apply clears suppression for next tap.
-Merge launcher allows editing distance even if current distance yields no candidates;
-it does not inherit disabled Vertex selection or closed Repair drawer state.
-
-Ring: eight inner unchanged; fifteen outer at 220px/24 degrees, guide 440px. Outer
-button spacing audited; placement remains provisional until full coverage decisions.
-55 targeted owner/panel/whole-object scope/invalid and joint-unsafe rejection/Vertex
-loose topology/disabled-target radial dispatch/protected Align/repair/dock/session/
-release checks PASS. Full suite 1139 tests, 854 PASS; same 285 failure names as .705,
-no new failures. Syntax and diff checks PASS.
-
-Next: confirm .706; finish Face owner/settings inventory before declaring Face
-complete, then Vertex → Object → final Edge. Through already lives in Extrude.
-Keep drawer fallbacks, no selection-only radial helpers or unrelated strengthening.
-
-## .705 Align to Face owner audit / implementation
-
-User-requested arbitrary-plane alignment is implemented beside X/Y/Z in the existing
-Face Align pop-out, with no additional ring sector or viewport pointer owner.
-component-align owns the same early window anchor pick/commit/completion; its core
-now plans Face-group placement by reusing surface-transform-core's quaternion helper.
-Existing Make Planar was audited: it projects a Face onto its own plane and is a
-distinct capability, not rigid placement onto another Face. Existing XYZ paths stay intact.
-
-Moving group must be planar; rotation keeps its shape. With disjoint Faces the pivot
-is the moving group's centre, followed only by anchor-normal translation (no tangential
-recentering). Shared vertices use a hinge pivot and must stay fixed under the rigid
-transform; conflicting cases reject. Fixed Face coordinates are never assigned.
-Closest coplanar orientation is used without forcing opposite winding to flip.
-Plans use a candidate mesh first. Invalid/warped source or anchor, bent groups,
-coincident vertices/zero signed area in affected neighbours, topology-gate failures
-and increased Mesh Health zero-area count reject before live geometry/history changes.
-Successful changes commit one history step; no-op coplanarity adds none. Selection is
-preserved; owner completion returns puck. Rejection retains arming/settings and shows
-its reason, allowing another anchor or Cancel. No independent raw-pointer listener.
-
-48 targeted plane/group/hinge/shape/tangential-position/owner/Undo/Redo/rejection,
-XYZ/core/proxy/repair/dock/background/Bridge/value/release checks PASS; syntax PASS.
-Ring layout and protected modelling kernels remain unchanged. Full regression: 1132 tests, 847 PASS,
-same 285 failure names as .704, no new failures.
-
-Hands-on .705 confirmed PASS; Merge by Distance contextual scope/parameters now
-implemented in .706 above. Continue Face audit → Vertex → Object → final Edge. Through already belongs to Extrude. No unrelated development, no selection
-helpers in rings, no premature Face-complete claim or bulk drawer removal.
-
-## .704 owner audit / implementation — retained checkpoint
-
-Clean Vertices already exists in clean-vertices.js, loaded by drawer-ui. Face Repair
-also already proxies it. Added to the existing whole-object scope panel/ring, using
-its unchanged plan/apply kernel and history. Owner now returns explicit success or
-failure and exposes syncUI; this prevents a void result from being treated as failure
-by contextual panels. Other callers ignore the return as before. No cleanup maths changed.
-
-Align/Flatten already exists for Vertex/Edge/Face in component-align.js/core .330.
-Added one Face Align launcher and top-centre X/Y/Z/Cancel settings. No geometry on
-launch/axis choice; existing early window owner still picks the selected anchor and
-commits history. It now emits boxlab-component-align-change on arm/disarm/apply and
-exposes axis state. The proxy reacts to owner completion, then emits the shared Face
-session completion; no additional viewport pointer listener. Cancel/context changes
-end arming; other tools hide settings without resetting their hub. Hub remains hidden
-during Align controls. Clean cleanup clears stale Face indices; Align keeps selection.
-Single Face disables Align; locked/reference context blocked. Existing Vertex/Edge
-Align geometry/gesture behavior and the .330 core remain unchanged.
-
-Current ring: eight inner unchanged, fourteen outer evenly spaced at 205px; guide 410px.
-Outer/outer and outer/inner button rectangle spacing PASS; placement remains provisional.
-36 targeted Align owner/core/proxy, cleanup owner/repair, dock/background/Bridge/value
-and release checks PASS; syntax PASS. Full suite: 1120 tests, 835 PASS, same 285 failure
-names as .703; no new failures. Two legacy Align loader tests now assert one loader
-with a versioned URL rather than the retired .330 cache pin.
-
-The requested Align to Face extension is now implemented in .705 above.
-Next, finish the Face active-tool/settings audit (especially
-existing Face Repair Merge by Distance scope/parameter workflow). Through already lives
-in Extrude, so do not create a parallel Through tool. Do not declare Face complete
-until every applicable existing owner/settings path is accounted for. Then Vertex →
-Object → final Edge; no unrelated development. Keep drawer fallbacks until replacements
-pass. Choose inner/main versus outer/secondary with user after coverage is populated.
-
-## .703 owner audit / implementation — retained checkpoint
-
-Three existing whole-active-mesh repair owners were already loaded by
-face-workflow-layout.js: close-holes .201, quad-pair-cleanup .205, quadify-ngons .203.
-Their kernels, validation, rollback and history are unchanged. New face-repair-viewport
-uses their public APIs and syncUI availability; explicit scope + Apply/Cancel dock at
-top centre. No geometry mutation on launch/Cancel; failed repairs keep selection and
-show the existing owner reason. Successful rebuilding clears stale Face indices via
-the existing selection bridge and emits shared Face session completion. The hub stays
-hidden while the scope panel is active, even if selection changes. Mesh/mode changes
-close the scope panel; locked/reference active objects cannot apply. No raw viewport
-pointer owner added. Outer ring: twelve 30-degree sectors at 175px, guide 350px; all
-prior targets retained; outer/outer and outer/inner rectangle spacing audited. Inner
-positions unchanged. 21 targeted repair/dock/background/Bridge/value/release checks PASS. Full suite: 1112 tests, 827 PASS, same 285 failures as .702; failure names compared, no new failures.
-At .703, the next audited gaps were Clean Vertices and component Align, now added
-in .704 above. Whole-object scope stays explicit; no selection-only ring entries.
-Drawer fallbacks remain until contextual replacements pass; do not remove panels wholesale.
-
-## .702 scope correction / next build rule
-
-Removed Coplanar/Connected from the Face ring and their shared one-shot label list;
-restored the compact .700 active-tool layout. Their authoritative selection owners
-and existing drawer/gesture workflows are untouched. No modelling kernel or pointer
-owner changed. Existing top-centre placement and background Done stay protected.
-15 targeted protected dock/background/proxy/Bridge/release checks PASS; syntax PASS.
-Primary sequence remains Face active-tool/settings gaps → Vertex → Object → final
-Edge. Audit remaining active modelling/repair commands and their parameter controls.
-Do NOT add selection helpers, filters or selection-only diagnostics to the rings.
-Whole-mesh repair commands need explicit scope and existing owners; distinguish them
-from selected-Face tools. Do not grow rings simply to mirror every drawer button.
-
-## Two-ring design direction / .694 audit
-
-User requested two concentric Face tool rings instead of More. Populate remaining
-Face tools first, then decide main/frequently-used inner versus secondary outer
-placement together. If the completed layout is too crowded, a More pop-out remains
-an explicitly accepted fallback; do not choose it prematurely.
-.694 removes the .693 More UI and puts Join Coplanar (existing owner) plus Circle
-(existing #componentCircleBtn owner) directly on an outer ring at 145 px radius.
-The existing eight inner sectors remain at 82 px. Current outer assignments are
-provisional. Both actions use current button validation/history and shared one-shot
-puck cleanup. No modelling owner changed; no new raw-pointer gesture owner.
-Continue auditing remaining active repair/topology actions and tool settings one
-safe batch at a time. Selection-only commands stay outside rings. Pop-out settings remain appropriate for tools with parameters.
-
-## Retained hands-on checks — .692
-
-Confirm the iPad visibly shows v0.36.18.692 before judging behaviour.
-1. Edge mode, no direct tool armed: Pencil hold a selected Edge, then drag UP to Grow.
-2. Keep holding; return to the starting point: initial Edge selection returns.
-3. Drag farther up, then back: preview reduces steps instead of accumulating.
-4. With several adjacent Edges selected, hold and drag DOWN to Shrink, then return to start: original selection returns. Release keeps the displayed selection.
-5. Sideways Edge Loop/Ring/Boundary browsing, additive base selection and Face .691 neutral return remain intact.
-
-.692 is awaiting hands-on PASS. .691 is now confirmed PASS and protected.
-Record any .692 PASS without changing the primary radial-menu sequence above.
-
-## .692 implementation / owner audit
-
-Extended the already-tested Face neutral return to the existing Edge vertical scrub.
-Only the type gate in applyVerticalSelectionScrub changed. The shared main.js owner
-still recomputes previews from the fixed base and invokes existing Grow/Shrink buttons.
-Edge horizontal candidate enumeration, additive merge, release/cancel ownership,
-Loop Cut and all radial tools are untouched. Vertex behavior is unchanged.
-12/12 targeted behavioral/release tests PASS: Edge Grow/reverse/neutral,
-multi-edge Shrink/neutral, band boundary, Face .691 regressions and release contracts.
-The full-suite baseline is still 285 existing failures; compare CI before claiming
-any new failures. Keep historical test cleanup separate from this gesture build.
-
-## .691 implementation / owner audit
-
-Grow/Shrink hold gestures already existed in main.js from .638.
-The existing vertical scrub always applied at least one step, even at the hold point.
-Face-only neutral band (absolute vertical distance below 18 px) now restores the
-fixed gesture starting selection and invokes no Grow/Shrink operation.
-Outside the band the existing 30 px step scaling and authoritative
-advanced-selection.js Grow/Shrink button owners remain unchanged.
-At .691, Edge and Vertex retained previous behavior; .692 extends neutral return to Edge only. No new raw-pointer listener,
-selection kernel, modelling kernel or radial UI was introduced.
-Automated owner integration checks cover grow/reverse/neutral, shrink/neutral,
-the neutral boundary and unchanged Edge/Vertex behavior. Targeted tests: 9/9 PASS.
-Full CI has 285 pre-existing failures (verified against .690 runtime CI). The only
-additional .691 failure was a stale release-version pin; both refresh pins were corrected.
-Historical snapshot-marker assertions remain in the full suite; do not widen this
-gesture build into a wholesale test cleanup.
-
-## Protected hands-on behaviour
-
-- .708 Face Bevel blue Width/Segments/Pencil preview, explicit Apply/Cancel, original puck, one Undo/Redo and navigation/Edge regression full manual list PASS.
-
-- .705 Align to Face full manual list PASS: arbitrary-plane placement, fixed anchor, rigid group, guarded rejection/Cancel, selection/puck, one-step Undo/Redo and XYZ/navigation.
-
-- .701 Coplanar/Connected owner behavior PASS; radial access retired by user scope correction in .702.
-
-- .700 top-centre viewport popups/numeric entry and finger/Pencil background Done for Extrude/Inset, preserved selection/navigation: PASS.
-
-- .699 radial Extrude/Inset Exact/Repeat/Done controls: PASS.
-
-- .698 Face Bridge viewport preview/Next/Use/Cancel, Undo, fresh puck and centred ×: PASS.
-
-- .697 Orient Faces/Orient Outward, validation, no-change feedback, selection/puck and one-step Undo: PASS.
-
-- .696 outer Triangulate/Flip Faces, selection, triangle-only disabled state, puck return and one-step Undo: PASS.
-
-- .695 outer Poke/Make Planar, selection, disabled-state rules, puck return and one-step Undo: PASS.
-
-- .694 two-ring Face layout, direct Join/Circle, one-step Undo, disabled actions and ring close: PASS.
-
-- .691 Face hold vertical Grow/Shrink neutral return PASS, including step reversal, sideways browsing and normal taps.
-
-- .690: iPad refreshed version confirmed; Shell Cancel/Apply, Sweep Cancel/Apply,
-  fresh Face puck after cleared selection, and Knife Done regression all PASS.
-- .682 Pencil/Object routing PERFECT / PASS:
-  finger/Pencil background tap dismisses Object gizmo; object stays selected;
-  Pencil background drag orbits; tapping the object reliably restores gizmo.
-- .684 radial Knife viewport Done session PASS.
-- .688 Loop Cut / Loop Slide old feel PASS. The known-good .162
-  logical-quad compatibility core is restored intact; do not casually generalize it.
-- .689 Face Delete one-shot hub cleanup PASS.
-- .676 guided radial Edge Bridge PASS.
-- .677 Edge radial one-shot cleanup PASS.
-- .670 selection-first radial Crease PERFECT / PASS.
-- .663/.664 Edge Extrude radial ribbons work really well and are protected.
-
-## Protected navigation / files
-
-Preserve one-finger orbit, two-finger pan, pinch zoom, two-finger tap Undo,
-three-finger tap Redo, no-jump orbit pivot, persistent selections during navigation,
-Studio realtime default, current snapping and object management / Multi.
-`src/multi-object-transform.js?v=0.36.1.0` is protected: do not change it unless the
-requested task explicitly requires it. Frozen betas remain immutable.
-
-## Selection Hub status
-
-Existing Edge radial lifecycle protected; full coverage gets a final pass after Object.
-Existing Face 8-sector lifecycle protected through .690; audit remaining drawer gaps.
-Extrude/Inset restore puck; Knife has viewport Done; Duplicate/Extract Faces create
-objects and hand directly to Object gizmo. Shell/Sweep viewport proxies use the
-shared Face-session completion semantic. Face Delete clears stale suppression.
-Existing lifecycle glue needs no further work without a regression. Complete missing
-Face contextual actions/settings before moving to Vertex and Object.
-
-## Strengthening backlog — keep separate
-
-1. Connected-chain Edge Bevel through ordinary quad valence.
-2. Complex logical-quad Loop Cut with multiple collinear boundary vertices.
-   .685–.687 degraded topology/slide feel; .688 restored trusted .162 behavior.
-   Future strengthening must be isolated and preserve ordinary Loop Cut identically.
-
-## Gesture / event ownership
-
-Tool owners may call stopImmediatePropagation; later document listeners may not see
-completion. Prefer semantic owner events or early window capture for global lifecycle.
-Do not stack raw-pointer owners. Precision belongs to the actual active gesture owner.
-The .617–.619 double/triple-tap experiment failed due to competing release owners and
-gizmo interception; it was removed in .620. Do not casually reinstate it.
-
-## Release / cache protocol
-
-Each build updates version.json, HTML title, data-release-version, visible label and
-all changed module pins. Repin dynamic-import parent loaders when necessary.
-Repin release-bootstrap/release-version if refresh logic changes. Verify published
-main and live shell. If the iPad looks stale, compare its visible version against
-manifest and HTML before changing modelling code.
-.690 refresh incident: bootstrap previously stopped after three stale-shell responses;
-recovery now continues with escalating cache-busters and bounded retry counter.
-
-## Development workflow
-
-/nextbuild: audit first, implement one narrow build directly on main, update release
-markers and handoff/history/checklist, publish and verify, then give 3–6 short manual
-checks. Record user PASSes as protected. Keep changes modular; reconnect authoritative
-owners instead of parallel implementations. Never reapply bulk .450 UI cleanup.
-If a straightforward gesture fix fails, use Gesture Debug before more speculation.
-End each changed session with current AI_HANDOFF.md, DEV_HISTORY.md and
-TEST_CHECKLIST.md so a fresh chat can continue from the repo alone.
+- .710 parent .709 checkpoint a8e90f86. Find release commit in main history;
+  avoid self-referential SHA in this file.
+- New vertex-tool-viewport-session direct loader .710; total-gizmo .710.
+- Add/build/direct Vertex Bevel owner loaders .710. drawer-ui .710 dynamically
+  imports precision-bevel and vertex-slide-polish .710. Their kernels/math unchanged.
+- Shell markers, main loader, release-bootstrap and release-version pins .710;
+  main and refresh logic unchanged.
+- Protected Face Bevel direct/helper/session .708 unchanged; repair .706,
+  Face Align .705 (existing shell pin .708), shared session dock .700.
+- Protected multi-object-transform .1.0, Loop Cut/Slide compatibility, modelling
+  kernels and all frozen beta directories unchanged.
+
+## .710 audited Vertex inventory / ring layout
+
+Only existing Vertex Active Tools were included. Base index + face-reconstruct /
+component-circle provide six primary tools, native Join/Weld/Delete provide three,
+vertex-merge provides Center/First, Vertex Repair contains Clean/Merge by Distance.
+Selection helpers/diagnostics are excluded. Align's componentAlignRow belongs to
+Selection controls, not Vertex Active Tools, so it was not added under this request.
+No Vertex Extrude or other new modelling capability introduced.
+
+| Clockwise inner ring from top | Owner |
+| --- | --- |
+| Add (0°) | add-vertex-edge-snap / original Add launch |
+| Build Edge (45°) | add-edge-ui |
+| Bevel (90°) | direct-multi-vertex-bevel + precision-bevel |
+| Slide (135°) | vertex-slide-polish |
+| Join (180°) | main connectSelectedVertices |
+| Weld (225°) | main weldSelectedVertices |
+| Create Face (270°) | face-reconstruct |
+| Delete (315°) | main + safe-loose-vertex-delete interception |
+
+Outer ring at145px, five72° sectors: Circle (0°), Merge Center (72°), Merge First
+(144°), Merge Dist (216°), Clean Vertices (288°). Shared centred × preserved.
+Outer/outer and outer/inner rectangle spacing verified; original inner radius82px.
+
+Face remains eight inner/sixteen outer: Bevel replaces Knife at90°, Knife moves
+135°, Duplicate moves180°, Extract replaces previous outer Bevel at337.5°.
+Edge: Slide moves45°, Bevel90°, Crease135°; all other assignments unchanged.
+Only layout changes to protected Face/Edge; their session owners/kernels unchanged.
+
+## .710 contextual owners / lifecycle
+
+New top-centre Vertex panel is a UI proxy, not a modelling/pointer owner:
+- Add and Build Edge: instructions + Done; existing repeated placement/build behavior.
+  Add Done uses existing stop(true), selecting last Added vertex. Superseding tools
+  stop(false), preserving current selection. Build retains original creation behavior.
+- Bevel: existing Width slider + Exact % / Apply Exact / Cancel. Slider sets next
+  operation width; same existing Vertex bevel drag/kernel (no new blue preview or
+  invented Segments). Owner completion closes/disarms contextual session. Exact is
+  one existing history step; Cancel before Apply does not mutate or add history.
+- Slide: signed exact percentage / Apply Exact / Done. Existing .162 rail selection,
+  eligibility and math preserved intact; drag and exact use actual owner. Completion
+  semantic returns selected result puck and disarms only radial session.
+- Merge by Distance: explicitly SELECTED vertices only, model-unit tolerance,
+  Apply/Cancel via existing .706 applyFor(selectResults:true). Launcher accepts two
+  selected vertices even when current default distance has no candidates; readiness
+  follows existing planner. No mode hop/whole-object widening or duplicate weld kernel.
+- Clean Vertices: explicitly WHOLE active object, Apply/Cancel through existing
+  cleanup owner. Success clears stale IDs; next Vertex tap gets fresh puck.
+
+Join/Weld/Create Face/Delete/Circle/Center/First call existing buttons, then clear
+hub suppression. Weld/merges/Circle return result selection puck. Join hands to Edge;
+Create Face hands to Face; queued owner result selection is retained. Delete can clear
+selection; next tap is fresh. Disabled targets/read-only objects/mode guards preserved.
+
+Existing owners gained only public busy/disarm/result/completion hooks needed by UI.
+No new viewport raw-pointer listeners. Semantic boxlab-vertex-tool-complete survives
+stopImmediatePropagation; shared boxlab-selection-hub-session-complete resets hub.
+Add/Build stop release existing capture. Vertex Bevel disarm rolls back unfinished
+preview and cancelled drag preserves its selection. Slide contextual teardown can
+restore in-flight positions/release capture on context loss; its pre-existing drag
+history timing (push at first movement) remains, so do not claim zero history for an
+interrupted in-flight Slide. Apply/Done controls are disabled while an owner is busy.
+Mesh/mode/lock changes close settings; another radial tool closes without completing
+that new tool's lifecycle. Geometry/scene rebuilding checks remain with original owners.
+
+## Validation / combined hands-on checks — .710
+
+41 targeted tests PASS: actual Vertex bevel kernel/exact/gesture, Slide rail/exact/
+gesture, Merge/Clean scope/history, native Join/Weld/Delete, Create Face/Circle,
+chronological First/midpoint/history, lifecycle/disabled/lock/context handoffs, ring
+inventory/outer spacing/Bevel locations and nearby protected Face sessions.
+Full1169 tests/884 PASS, identical285 failure names to clean .709 baseline;
+no new failures. Historical marker failures remain separate; not an all-green suite.
+Syntax/diff checks PASS. Release/pin/main/live verification required after publishing.
+
+1. Confirm visibly v0.36.18.710. Vertex ring has all thirteen tools and centred ×.
+   Bevel is 3 o'clock in all modes; Face Knife clockwise/Duplicate next/Extract outer,
+   Edge Slide at former Bevel slot/Crease at former Slide slot.
+2. Add + Build Edge: original creation/navigation, top-centre Done, no stale arming.
+   Bevel + Slide: existing Pencil drag plus top-centre numeric controls, clean exit;
+   Cancel/Done selection/puck and one Undo/Redo for successful operations.
+3. Join/Weld/Create Face/Delete/Circle: existing results, proper result mode/selection,
+   puck or fresh next tap, one Undo. Check ordinary and genuinely loose selections.
+4. Merge Center/First: midpoint/first-selection chronology, result puck, Undo/Redo.
+   Merge Dist only selected vertices with editable tolerance; Clean whole active object.
+   Apply/Cancel scopes and unavailable actions behave as labelled.
+5. Protected Face Bevel preview, Edge sessions, selection/long press and navigation
+   remain intact. Collect refinement feedback before adding Object tools.
+
+## Earlier pending checks / protected passes
+
+Pending .692 Edge neutral return, .702 active-only correction, .703 scoped repairs,
+.704 Clean/XYZ Align and .706 Face Merge checks remain in TEST_CHECKLIST.md.
+Test their behavior on CURRENT release; do not imply .709/.710 proves prior manual
+PASS or ask to load old releases. .707 Face drag FAIL superseded by .708 PASS.
+
+Protected hands-on:
+- .708 Face Bevel blue Width/Segments/Pencil preview; release retains candidate;
+  explicit Apply once, Cancel original puck, Undo/Redo, navigation and Edge regression.
+- .705 Align to Face arbitrary plane, fixed anchor, rigid group, safe rejection/Cancel,
+  selection/puck, one Undo/Redo, existing XYZ/navigation.
+- .700 all viewport session/numeric popups top centre; Extrude/Inset background Done.
+- .699 Extrude/Inset Exact/Repeat/Done; .698 Face Bridge + centred ×;
+  .697 orientation; .696 Triangulate/Flip; .695 Poke/Planar; .694 Join/Circle.
+- .701 selection owner behavior PASS, radial access explicitly retired by user .702.
+- .691 Face hold Grow/Shrink neutral return; .690 refreshed Shell/Sweep exits/Knife.
+- .682 Pencil/Object routing PERFECT: background tap dismisses gizmo but keeps
+  selection; Pencil background drag orbits; object re-tap restores gizmo.
+- .684 radial Knife Done; .688 trusted old .162 Loop Cut/Slide feel;
+  .689 Face Delete; .676 Edge Bridge; .677 Edge one-shot cleanup;
+  .670 selection-first Crease PERFECT; .663/.664 Edge Extrude protected.
+
+## Navigation / files / topology backlog
+
+Protect one-finger orbit, two-finger pan, pinch zoom, two-finger Undo/three-finger
+Redo, no-jump pivot, persistent selections, Studio realtime, snapping, Object/Multi.
+Never change src/multi-object-transform.js?v=0.36.1.0 without explicit need.
+Frozen Beta3 .371, Beta4 .427 and Beta5 .538 directories remain immutable.
+Do not reapply bulk .450 UI cleanup. .685-.687 degraded Loop Cut/slide; .688 restored
+trusted .162 compatibility intact. Defer connected-chain Edge Bevel and complex
+logical-quad Loop Cut strengthening until radial completion, isolated from that core.
+
+## Event / release / handover rules
+
+Tool-specific document listeners can stopImmediatePropagation. Prefer actual owner
+semantic completion or early window capture; never stack raw-pointer owners for a
+single gesture. Precision belongs to actual owner. If a straightforward gesture
+fix fails, use Gesture Debug before more speculative layers. .617-.619 competing
+multi-tap owners failed and were removed .620; don't casually reinstate them.
+.707 Face Bevel late canvas capture lost to Move; .708 protected fix uses same
+handlers at window capture plus narrow main fallback guard, not another bevel kernel.
+
+Every build updates manifest/title/data-release-version/visible label/changed module
+pins, dynamically imported parents as needed, then verifies main and live shell.
+If iPad looks stale, compare visible version to manifest and HTML BEFORE modelling
+changes. .690 bootstrap stopped after three stale-shell responses; recovery was
+hardened to keep retrying. Do not regress it.
+Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
+and give a short realistic manual list after publishing. Next is combined .710
+hands-on refinement; then Object, then final Edge inventory/settings pass.

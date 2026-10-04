@@ -197,6 +197,7 @@ function startSession(){
 function stopSession(selectLast=true){
   if(!sessionActive)return;
   sessionActive=false;
+  if(edgeDrag){try{canvas.releasePointerCapture?.(edgeDrag.pointerId);}catch{}}
   tapCandidate=null;
   edgeDrag=null;
   activePointers.clear();
@@ -334,4 +335,4 @@ document.addEventListener('pointercancel',event=>{
   if(tapCandidate?.pointerId===event.pointerId)tapCandidate=null;
 },true);
 
-globalThis.__boxlabAddVertex={version:VERSION,isActive,sessionActive:()=>sessionActive,stop:stopSession,nearestEdge,nearestOtherObjectSnap,splitEdge,freeSpacePoint};
+globalThis.__boxlabAddVertex={version:VERSION,isActive,busy:()=>!!edgeDrag||!!tapCandidate,sessionActive:()=>sessionActive,stop:stopSession,nearestEdge,nearestOtherObjectSnap,splitEdge,freeSpacePoint};

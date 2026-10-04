@@ -72,7 +72,7 @@ import('./precision-face.js?v=0.36.18.532').catch(error => console.warn('BoxLab 
 import('./repeat-face-previous.js?v=0.36.18.533').catch(error => console.warn('BoxLab Repeat Previous Face failed to load', error));
 import('./sequential-through-fallback.js?v=0.36.18.528').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
 import('./precision-transform.js?v=0.36.18.14').catch(error => console.warn('BoxLab precision Transform failed to load', error));
-import('./precision-bevel.js?v=0.36.18.513').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
+import('./precision-bevel.js?v=0.36.18.710').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
 import('./precision-edge-slide.js?v=0.36.18.672').catch(error => console.warn('BoxLab precision Edge Slide failed to load', error));
 import('./loop-offset.js?v=0.36.18.671').catch(error => console.warn('BoxLab Offset Loop failed to load', error));
 import('./precision-offset-loop.js?v=0.36.18.671').catch(error => console.warn('BoxLab precision Offset Loop failed to load', error));
@@ -116,7 +116,7 @@ import('./component-align.js?v=0.36.18.705').catch(error => console.warn('BoxLab
 import('./grid-fill.js?v=0.36.18.338').catch(error => console.warn('BoxLab Grid Fill failed to load', error));
 import('./selection-conversion-polish.js?v=0.36.18.20').catch(error => console.warn('BoxLab selection conversion polish failed to load', error));
 import('./selection-set-polish.js?v=0.36.18.21').catch(error => console.warn('BoxLab selection set polish failed to load', error));
-import('./vertex-slide-polish.js?v=0.36.18.162').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
+import('./vertex-slide-polish.js?v=0.36.18.710').catch(error => console.warn('BoxLab Vertex Slide polish failed to load', error));
 import('./dissolve-selection-polish.js?v=0.36.18.28').catch(error => console.warn('BoxLab Dissolve selection polish failed to load', error));
 import('./selection-history-safe.js?v=0.36.18.34').catch(error => console.warn('BoxLab selection-aware history failed to load', error));
 import('./loop-cut-added-vertex.js?v=0.36.18.688').catch(error => console.warn('BoxLab Add-vertex Loop promotion failed to load', error));

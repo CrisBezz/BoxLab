@@ -12,7 +12,10 @@ function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event
 function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices);mesh.edges?.();}
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
 function hitVertex(event){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const p=new THREE.Vector2(event.clientX,event.clientY);let best=null;mesh.vertices.forEach((v,index)=>{const q=screenPoint(v,camera),d=q.distanceTo(p);if(d<=PICK_PX&&(!best||d<best.distance))best={index,distance:d};});return best?.index??null;}
-function disarm(){armed=false;drag=null;syncButton();}
+function disarm(){
+  if(drag){const d=drag;drag=null;restore(d.mesh,d.before);try{canvas.releasePointerCapture?.(d.pointerId);}catch{}render();}
+  armed=false;syncButton();
+}
 function updateStatus(){const count=selectedVertexIds().length,useMulti=!!multiToggle?.checked&&count>1;if(status)status.textContent=armed?(useMulti?`Bevel ${count} vertices • drag any selected vertex`:'Bevel Vertex • drag a vertex'):'Vertex mode';}
 
 // Capture at document level so the legacy main.js button handler never gets a
@@ -26,6 +29,7 @@ document.addEventListener('click',event=>{
     return;
   }
   if(!armed||!event.isTrusted)return;
+  if(event.target?.closest?.('#vertexToolViewportSession'))return;
   if(event.target?.closest?.('button'))disarm();
 },true);
 
@@ -57,7 +61,11 @@ function end(event){
   event.preventDefault();event.stopImmediatePropagation();
   const current=drag;drag=null;
   if(current.preview&&event.type==='pointerup')globalThis.__boxlabHistory?.push(current.before);else restore(current.mesh,current.before);
-  bridge()?.set?.('vertex',[]);
+  bridge()?.set?.('vertex',event.type==='pointerup'&&current.preview?[]:current.ids);
   updateStatus();render();
+  window.dispatchEvent(new CustomEvent('boxlab-vertex-tool-complete',{detail:{tool:'Bevel',committed:current.preview&&event.type==='pointerup'}}));
 }
 canvas?.addEventListener('pointerup',end,true);canvas?.addEventListener('pointercancel',end,true);
+
+// Public lifecycle used by contextual controls; this remains the drag owner.
+globalThis.__boxlabDirectVertexBevel={version:'0.36.18.710',isArmed:()=>armed,busy:()=>!!drag,disarm,info:()=>state()?.mesh?.multiVertexBevelInfo?.(selectedVertexIds())};

@@ -181,7 +181,7 @@ Only add focused tools that suit BoxLab:
   - tapping the object restores the gizmo reliably
 - Radial menu completion is the active priority: Face gaps → Vertex → Object → final Edge. .691 Face neutral return is protected; .692 Edge parity is published with hands-on checks pending. Broader gestures are secondary.
 
-### Face contextual coverage / Vertex start — .709
+### Face contextual coverage / Vertex completion batch — .710
 
 - .694 outer-ring Join/Circle and existing eight inner sectors are hands-on PASS and protected.
 - .695 Poke/Make Planar are hands-on PASS and protected.
@@ -199,7 +199,22 @@ Only add focused tools that suit BoxLab:
 - .707 adds Face Bevel using existing Edge bevel controller/kernel and shared top-centre Width/Segments settings. Single Face or connected region outside boundary, same Pencil drag/exact, Face mode retained, one Undo and guarded cancellation. Sixteen outer tools; hands-on pending.
 - .708 responds to .707 Face drag FAIL: early owner dispatch/main fallback guard and Shell-like blue snapshot preview for Width/Segments/Pencil. Release retains preview; explicit Apply commits once, Cancel discards. Existing Edge/kernel/ring preserved; full manual list hands-on PASS and protected.
 - Populate complete Face tool coverage before deciding inner/main vs outer/secondary placement. More is an accepted fallback if the completed two-ring layout is crowded.
-- .709 Face owner/settings inventory accounted for all 24 active tools; Through already lives in inward Extrude. Pending Face repair confirmations and final placement review remain. Vertex starts with existing Merge Center / Merge First, same owner/history/chronology and puck lifecycle; hands-on pending. Next audit Vertex Add/Bevel/Connect/Weld/Merge Dist/Clean/Slide/Circle/Align/Delete settings, then Object → final Edge.
+- .709 Face owner/settings inventory accounted for all 24 active tools; Through already lives in inward Extrude. Pending Face repair confirmations and final placement review remain. Vertex starts with existing Merge Center / Merge First, same owner/history/chronology and puck lifecycle; hands-on pending. User requests all existing Vertex Active Tools in .710, followed by combined testing/refinement.
+
+### Vertex Active Tools radial coverage — .710
+
+All thirteen existing tools exposed: inner Add/Build Edge/Bevel/Slide/Join/Weld/
+Create Face/Delete; outer Circle/Merge Center/Merge First/Merge Dist/Clean Vertices.
+Existing owners/settings/history reused. Add/Build Done, Bevel Width/Exact/Cancel,
+Slide signed exact/Done, selected-only Merge tolerance/Apply/Cancel and whole-object
+Clean Apply/Cancel appear at top centre. No new modelling or pointer kernel.
+Align is in Selection controls, outside this explicitly Active-Tools-only batch.
+
+Bevel's inner90° /3-o'clock position is now consistent across Face, Edge and Vertex.
+Face Knife135°, Duplicate180°, Extract moves outer337.5°; Edge Slide45°/Crease135°.
+41 targeted PASS; full1169 tests/884 PASS and same285 failure names as .709.
+Hands-on pending: perform combined test/refinement session before Object → final
+Edge. Keep drawer fallbacks, .708 protected Face Bevel and earlier pending checks.
 
 ## Strengthening list
 
