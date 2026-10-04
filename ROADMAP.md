@@ -397,3 +397,11 @@ original mode/list owners. Original collapsed Modifiers included; busy tools gua
 12 targeted PASS; full1240/957/283, same failures. Next iPad list/Modifiers checks,
 remaining selection-depth/filter/bulk Object access audit, combined radial/session
 regression before Beta6 freeze. Keep drawer fallback and passed .724 interactions.
+
+
+### Beta6 viewport selection depth — .727
+
+.726 Object List access user PASS. Move original Visible/Through depth controls to
+viewport strip for normal/Focus access. Original owners/listeners and geometry math
+retained.27 targeted PASS; .726 full baseline1240/957/283 retained. Next iPad depth/
+layout sanity check, remaining advanced filters/bulk Object audit and release regression.

@@ -10,6 +10,8 @@ export function installViewportToolbarControls(doc=document){
   const input=doc.querySelector('#'+id),control=input?.closest('label');if(!control)continue;
   control.title=title;input.setAttribute('aria-label',title);control.querySelector('span').innerHTML=svg(paths[icon]);bar.append(control);
  }
+ const depth=doc.querySelector('#paintSelectDepth');
+ if(depth){depth.setAttribute('aria-label','Selection depth');depth.title='Selection depth — Visible or Through';bar.append(depth);}
  wrap.append(bar);
  const oldSnap=doc.querySelector('.quick-snap');if(oldSnap&&!oldSnap.querySelector('input'))oldSnap.remove();
  function decorate(){
@@ -23,6 +25,8 @@ export function installViewportToolbarControls(doc=document){
 .top-actions>button[data-icon-action]{width:40px;min-width:40px;padding:7px!important;display:grid;place-items:center}
 .top-actions>button[data-icon-action] svg,#viewportSelectionControls svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 #viewportSelectionControls{position:absolute;z-index:120;left:max(16px,env(safe-area-inset-left));bottom:max(82px,calc(env(safe-area-inset-bottom) + 68px));display:flex;align-items:center;gap:5px;padding:4px 8px;border:1px solid rgba(255,255,255,.14);border-radius:11px;background:rgba(18,21,27,.94)}
+#viewportSelectionControls #paintSelectDepth{display:flex!important;align-items:center;gap:3px;padding-left:7px;margin-left:3px;border-left:1px solid rgba(255,255,255,.18);flex:0 0 auto}
+#viewportSelectionControls #paintSelectDepth button{width:auto;min-width:55px;height:34px;margin:0;padding:5px 7px;font-size:11px;white-space:nowrap;border-radius:7px}
 #viewportSelectionControls>span{font-size:11px;letter-spacing:.05em;margin-right:2px}
 #viewportSelectionControls label{position:relative;display:flex;align-items:center;justify-content:center;width:40px;height:40px;cursor:pointer;border-radius:8px}
 #viewportSelectionControls input{position:absolute;opacity:0;width:100%;height:100%;margin:0;cursor:pointer}

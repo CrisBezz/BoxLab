@@ -7,26 +7,27 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.726**. Parent .725 `e6d0fb8e`.
-Current focus: Beta6 drawer-access closure. .726 adds VIEW → Object List under
-Objects & Modifiers, so empty Object selection/hidden gizmo no longer blocks original
-Objects + collapsed Modifiers access in Focus. Reuses __boxlabObjectListViewport;
-from component mode clicks original Object mode button before original list toggle.
-Successful action closes VIEW; active sessions/direct tools or missing drawer/mode
-button prevent changes. Existing pointerup/synthetic-click suppression handles
-finger/Pencil once; mouse click uses same action. Original drawers/restore behavior,
-controls/listeners/modelling/history unchanged. No new object-list implementation.
-12 targeted PASS; full1240/957/283 vs clean .7251237/954/283, same failure names.
-Changed view-modes and shell/manifest/refresh pins .726; toolbar/topbar stay .725,
-main remains passed .724. Protected modelling/gesture/Loop/frozen files unchanged.
-Next: Focus + empty Object selection → VIEW Object List, Modifiers collapsed below;
-from Face mode enters Object once; original row/actions/Modifiers work; close/reopen
-and active-session guard. .725 GEO icon device check still pending, no PASS inferred.
-User .724 PERFECT/PASS protected. Remaining Beta6 access audit: Visible/Through and
-advanced selection/filter controls still drawer-dependent; bulk Object selection
-controls require review. Do not default-hide/remove drawer yet. Then combined radial
-session/Apply/Cancel/return-to-puck and pending .716/.713 tests before Beta6 freeze.
-Slight Lasso tightening deferred MUCH LATER; double-tap retired permanently.
+Current release: **v0.36.18.727**. Parent .726 `0c6e17a0`.
+User .726 PASS recorded for VIEW Object List/Focus/empty selection access and panel
+reopening. Preserve original list owner; individual modifier modelling actions
+still part of Beta6 regression, not independently asserted by this PASS.
+Current .727: original #paintSelectDepth Visible/Through button group moves into
+bottom viewport SNAP/selection strip beside original Lasso. Same IDs/nodes/listeners,
+active state and paint/Lasso depth owners; no duplicate depth state or proxy controls.
+Scoped CSS overrides old display:contents and provides compact text buttons/separator.
+Available in Focus and normal view. Original drawer loses only this moved group;
+advanced filters/commands still there. No changes to selection/depth mathematics.
+27 targeted PASS: original buttons and handlers retained, existing Lasso/background
+hold/Edge Paint/Object List checks. Syntax/diff pass. No full rerun for presentation
+relocation; .726 full1240/957/283 remains baseline. Changed toolbar child/topbar
+parent pins .727; shell/manifest/refresh .727, view-modes .726/main .724 retained.
+Next iPad normal/Focus Visible vs Through with Lasso/paint, state retained across
+Focus/mode changes; compact layout alongside GEO/Lasso/mode bar. .724 hold/tap PASS
+and .726 list PASS protected. .725 GEO readability still no separate PASS inferred.
+Remaining Beta6 drawer audit: Connected/Angle/Normal and boundary/loop/ring variants,
+residual/bulk Object selection controls; then combined radial session/Apply/Cancel/
+puck and pending .716/.713 checks, import/export/Nomad regression before freeze.
+Do not default-hide/remove drawer yet. Slight Lasso tightening deferred MUCH LATER.
 
 ## Protected .724 background hold — user PASS
 Previous implementation: user-requested background LONG PRESS Invert, replacing failed
@@ -205,8 +206,9 @@ component single tap clears; double inverts original set, not cleared set. No hi
 Audit: active modelling inventories Face/Vertex/Object/Edge are covered. Selection
 commands remain outside radials. With drawer minimized, remaining dependencies:
 - Modifiers: .721 exposes original collapsed Modifiers below Objects via the Object List shortcut, including Mirror axes/Align, SubD on/level and Cage.
-- Advanced selection: Visible/Through paint/lasso depth, Connected/Angle/Normal,
-  boundary/loop/ring variants and residual selection controls remain in drawer.
+- Selection depth: .727 original Visible/Through buttons now live in viewport strip.
+- Advanced selection: Connected/Angle/Normal, boundary/loop/ring variants and
+  residual selection controls remain in drawer.
 - Object selection All/Clear and bulk Hide/Lock still have drawer controls; per-row
   visibility/lock and Add/Duplicate/rename/delete/Groups/Origin/Pivot remain available
   via ORIGINAL Object List reveal. .726 VIEW Object List now also works with empty
