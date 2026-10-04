@@ -7,44 +7,34 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.723**. Parent .722 `30a70bc4`.
-Diagnostic-only: .722 device screenshots show first/clear with seed2/current2,
-mesh-hit reset from intervening selection, one earlier1030ms time rejection.
-They do NOT establish why the user's second screen tap fails; do not attribute it
-to user technique or Pencil side tapping. DOUBLE TAP is detector label, not proof
-of a matched pair. Actual main threshold is8px, same as Pencil; no6px mismatch.
-.723 adds read-only early window contact observation, pinned last four down/up/
-cancel records in amber above last six blue BACKGROUND decisions. Native stamp,
-coordinates, primary/buttons/pressure identify delivery/classification issues.
-Does not consume/claim contacts; disabled observer does nothing. Matcher/gesture
-owners unchanged.10 targeted PASS; full1233/950/283 versus .7221231/948/283,
-same failure names. Next: select two components, double true-background tap and
-screenshot amber+blue immediately. Diagnose physical pair and resets before fix.
-Invert unresolved; Modifiers device checks pending. Working .720 Lasso protected.
-Current focus: Object List + collapsed original Modifiers access, and diagnostic
-capture for unresolved double-background Invert. Parent .720 `11f506b1`.
-User .720 checks1/3 PASS: background clears Edge selection/turns Lasso off; drawing
-and finger navigation work. Pencil draws while Lasso armed, fingers navigate: expected.
-Protect this working ownership. Slight Lasso hit tightening deferred MUCH LATER,
-at final perfection; do not change its selection/depth mathematics now.
-User .720 check2 FAIL: double-background Invert still does not work on device.
-.721 does NOT claim to fix it. Per handoff, collect Gesture Debug evidence before
-changing gesture behavior again. Existing helper adds diagnostic-only trace:
-BACKGROUND DOUBLE TAP shows action/reason/dt/px/original seed/current counts;
-reset reasons distinguish mesh-hit, navigation, secondary contact, cancel and
-Pencil orbit. Same500ms/32px matcher/context/mesh/selection rules; no new pointer owner.
-Next test: VIEW → Gesture Debug, select some Edge/Face components, double-tap true
-background once, obtain screenshot showing BACKGROUND DOUBLE TAP and COMPLETE.
-Use that rejection reason to choose next narrow fix; never just widen time again.
-Object List original Focus owner reveals BOTH original Objects and Modifiers,
-with Modifiers below Objects and closed on each reveal. Original controls/listeners/
-IDs retained. Focus close/mode exit/Focus exit restores prior Objects/Modifiers
-open states; normal-view list opening also collapses Modifiers. No modelling state,
-mirror/SubD/cage/scene history changes. Other drawer sections stay hidden in Focus.
-21 targeted PASS; full1228/945/283 versus .7201226/943/283: same failure names.
-.721 markers/main/helper/view-modes/release pins updated. Working Lasso/Edge Paint,
-Pencil/Multi owners, protected transform1.0/Loop kernels/frozen betas untouched.
-Next: confirm original Modifiers access/actions, collect double-tap debug screenshot.
+Current release: **v0.36.18.724**. Parent .723 `f2898db2`.
+Current task: user-requested background LONG PRESS Invert test, replacing failed
+DOUBLE TAP. Single short background tap still clears component selection and turns
+Lasso off. Object short-tap contract still retains actual Object selection and
+hides gizmo. Stationary background hold500ms complements CURRENT selection once
+through original component/Object Invert owners. It leaves Lasso armed; release
+and duplicate semantic delivery cannot clear/disarm the result. No tap pairing or
+pre-clear seed anymore. Old background-selection-tap module is historical only,
+not imported by live main. Do not reintroduce double-tap through it.
+Existing main background window owner starts/cancels hold; no additional gesture
+owner. Existing8px movement guard, secondary/multitouch, pointercancel, navigation
+and blur cancel pending hold. Pen requires actual contact. Mode/active-object/mesh/
+selection changes and tool sessions prevent firing. Stationary holds add no
+history entries. Tool background Done/blue Bevel ownership remains protected.
+24 targeted PASS; full1237/954/283 vs clean .7231233/950/283: same failure names.
+Existing actual-owner fixtures updated for deliberately retired double-tap and
+changed release prefix, not weakened modelling/session expectations. Main and
+shell/manifest/debug/refresh pins .724. Protected transform1.0/Loop/Lasso/Edge Paint/
+Pencil/Multi/frozen beta files untouched. Diagnostics keep amber physical contacts
+and blue BACKGROUND HOLD INVERT/CANCEL or TAP COMPLETE evidence.
+Next manual: finger/Pencil shorttap clears/disarms Lasso; hold500ms inverts once
+and release retains result; hold while Lasso armed retains it; orbit/pan/pinch and
+Undo/Redo remain intact. Test Face/Edge/Vertex and Object complement. Pending .721
+original Modifiers below Objects starts collapsed; original actions still pending.
+.720 user PASS: background clear/Lasso off, drawing/finger nav; preserve. Slight
+Lasso hit tightening deferred MUCH LATER at final perfection. .723 traces showed
+natural movement rejection but did not conclusively capture failed double pair;
+user chose hold instead. DOUBLE TAP debug label never proved a matched pair.
 
 ## .720 ownership baseline — Lasso checks1/3 passed; Invert check2 failed
 Current focus: .720 Edge/Lasso completion and double-background timing refinement;

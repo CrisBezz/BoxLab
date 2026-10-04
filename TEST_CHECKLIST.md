@@ -3401,3 +3401,13 @@ Add new permanent regression checks below when future features need protection.
 - [x] Full1233/950/283 vs clean .7221231/948/283: identical failure names; actual gesture/matcher owners untouched.
 - [ ] Visible .723 → enable Gesture Debug → select two components → two quick screen taps on blank background. Immediately screenshot amber physical contacts AND blue decisions. Try finger/Pencil separately; diagnose delivery/reset before changing matcher.
 - [ ] Original Modifiers under Objects remains closed on opening and actions work; prior pending checks retained.
+
+
+## v0.36.18.724 — background hold Invert (supersedes double-tap checks)
+
+- [x] Existing owner500ms hold complements current component/Object set once. Both native/semantic release orders retain result and Lasso; quick taps clear, never invert.24 targeted PASS.
+- [x] Movement/secondary contact/cancel/context/mesh/selection/session/blur guards; actual Pencil contact required. Nearby Lasso/Edge Paint/tool background completion retained. Full1237/954/283, identical failure names to .723. Protected owners unchanged.
+- [ ] Face/Edge/Vertex select some → short background tap clears and Lasso off; select again → stationary hold about half a second inverts once, release retains. Finger and Pencil separately. Double tap no longer inverts.
+- [ ] Arm Lasso → stationary background hold inverts and keeps Lasso armed; release retains result; subsequent drawing still works. Short background tap exits Lasso.
+- [ ] Background drag/orbit, two-finger pan/pinch cancel hold without inversion; two-finger Undo/three-finger Redo retain behavior. Active modelling sessions keep original background Done/exit semantics.
+- [ ] Object hold complements visible objects using original owner; original Modifiers collapsed below Objects remains accessible.

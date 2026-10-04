@@ -379,3 +379,12 @@ Pencil double-background trace; Invert and Modifiers device checks still pending
 physical down/up/cancel evidence alongside semantic decisions; no gesture change.
 10 targeted PASS; full1233/950/283, same failures. Invert and Modifiers device
 checks pending. Main/Pencil movement thresholds both8px; do not repeat mismatch claim.
+
+
+### Background hold replaces double-tap Invert — .724
+
+User chose500ms stationary background hold for current-selection Invert; short tap
+clears/exits Lasso, hold retains Lasso and survives release. Existing owner and
+original selection APIs, guarded against navigation/multiple contact/context/session
+changes. Double-tap retired.24 targeted PASS; full1237/954/283, same failures. Next
+iPad hold/tap/release/Lasso/navigation tests, then pending Modifiers/radial refinement.

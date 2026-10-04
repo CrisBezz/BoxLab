@@ -18,20 +18,20 @@ test('Older timestamps cannot invert a newer tap',()=>{
  owner.tap({timeStamp:1000,clientX:0,clientY:0},opts);owner.tap({timeStamp:900,clientX:0,clientY:0},opts);assert.equal(inversions,0);
 });
 function nativeOwner(){
- const s=read('main.js'),windowHandlers={},canvas={},logs=[];let ids=[1,3],armed=true,hit=false,wall=100000;
- const c={canvas,window:{addEventListener:(t,f)=>{(windowHandlers[t]??=[]).push(f);},dispatchEvent(){}},createBackgroundSelectionTap:()=>createBackgroundSelectionTap({now:()=>wall}),backgroundTap:null,selectionMode:'edge',directTool:null,mesh:{},EDIT_DRAG_THRESHOLD:8,TAP_MAX_MS:320,performance:{now:()=>wall},gestureDebug:(stage,detail)=>logs.push({stage,detail}),pick:()=>hit,selectionIndices:()=>ids,resetEdgeHoldCycle(){},clearSelection(){ids=[];},renderMesh(){},__boxlabLasso:{isArmed:()=>armed,isDrawing:()=>false,setArmed:v=>armed=v},__boxlabSelectionSetPolish:{invert:seed=>ids=[0,1,2,3].filter(i=>!seed.includes(i))}};
+ const s=read('main.js'),windowHandlers={},canvas={},logs=[],timers=new Map();let timerId=0;let ids=[1,3],armed=true,hit=false,wall=100000;
+ const c={setTimeout:(fn,ms)=>{timers.set(++timerId,{fn,ms});return timerId;},clearTimeout:id=>timers.delete(id),canvas,window:{addEventListener:(t,f)=>{(windowHandlers[t]??=[]).push(f);},dispatchEvent(){}},createBackgroundSelectionTap:()=>createBackgroundSelectionTap({now:()=>wall}),backgroundTap:null,selectionMode:'edge',directTool:null,mesh:{},EDIT_DRAG_THRESHOLD:8,TAP_MAX_MS:320,performance:{now:()=>wall},gestureDebug:(stage,detail)=>logs.push({stage,detail}),pick:()=>hit,selectionIndices:()=>ids,resetEdgeHoldCycle(){},clearSelection(){ids=[];},renderMesh(){},__boxlabLasso:{isArmed:()=>armed,isDrawing:()=>false,setArmed:v=>armed=v},__boxlabSelectionSetPolish:{invert:seed=>ids=[0,1,2,3].filter(i=>!seed.includes(i))}};
  vm.createContext(c);
  const begin=s.slice(s.indexOf('function beginBackgroundTap('),s.indexOf("canvas.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse'"));
- const helper=s.slice(s.indexOf('const backgroundSelectionTap='),s.indexOf("window.addEventListener('pointerup',event=>{\n  if(!backgroundTap"));
- const finish=s.slice(s.indexOf("window.addEventListener('pointerup',event=>{\n  if(!backgroundTap"),s.indexOf('// Pencil orbit owner'));
+ const helper=s.slice(s.indexOf('const backgroundSelectionTap='),s.indexOf("window.addEventListener('pointerup',event=>{\n  if(backgroundHold"));
+ const finish=s.slice(s.indexOf("window.addEventListener('pointerup',event=>{\n  if(backgroundHold"),s.indexOf('// Pencil orbit owner'));
  const move="window.addEventListener('pointermove',event=>{if(!backgroundTap||backgroundTap.pointerId!==event.pointerId)return;if(Math.hypot(event.clientX-backgroundTap.startX,event.clientY-backgroundTap.startY)>=EDIT_DRAG_THRESHOLD){backgroundTap.moved=true;backgroundSelectionTap.reset();}},true);";
  vm.runInContext(begin+helper+move+finish,c);
- return {c,logs,get ids(){return ids;},get armed(){return armed;},set hit(v){hit=v;},send(type,timeStamp,x=10,extra={}){const e={type,timeStamp,clientX:x,clientY:20,pointerId:1,pointerType:'touch',isPrimary:true,target:canvas,button:0,...extra};for(const f of windowHandlers[type]||[])f(e);},semantic(timeStamp){c.completeBackgroundSelectionTap({pointerId:1,timeStamp,clientX:10,clientY:20});}};
+ return {c,logs,fireHold(){for(const [id,t] of [...timers]){timers.delete(id);assert.equal(t.ms,500);t.fn();}},get ids(){return ids;},get armed(){return armed;},set hit(v){hit=v;},send(type,timeStamp,x=10,extra={}){const e={type,timeStamp,clientX:x,clientY:20,pointerId:1,pointerType:'touch',isPrimary:true,target:canvas,button:0,...extra};for(const f of windowHandlers[type]||[])f(e);},semantic(timeStamp){c.completeBackgroundSelectionTap({pointerId:1,timeStamp,clientX:10,clientY:20});}};
 }
 test('Actual window owner clears Edge/Lasso despite unavailable canvas delivery and delayed Safari timers',()=>{
  const h=nativeOwner();h.send('pointerdown',1000);h.send('pointerup',1070);assert.deepEqual(h.ids,[]);assert.equal(h.armed,false);h.semantic(1070);assert.deepEqual(h.ids,[],'duplicate semantic release cannot invert');
- h.send('pointerdown',1400);h.send('pointerup',1470);assert.deepEqual(h.ids,[0,2],'440? 400ms release interval inverts original');h.semantic(1470);assert.deepEqual(h.ids,[0,2],'duplicate cannot clear');
- assert.deepEqual(h.logs.filter(x=>x.stage==='BACKGROUND TAP COMPLETE').map(x=>x.detail.result),['clear','invert']);
+ h.send('pointerdown',1400);h.send('pointerup',1470);assert.deepEqual(h.ids,[],'second short tap also clears; double-tap Invert retired');h.semantic(1470);assert.deepEqual(h.ids,[],'duplicate remains harmless');
+ assert.deepEqual(h.logs.filter(x=>x.stage==='BACKGROUND TAP COMPLETE').map(x=>x.detail.result),['clear','clear']);
 });
 test('Window owner rejects navigation, cancellation, secondary contact and long hold',()=>{
  for(const kind of ['move','cancel','secondary','hold']){
@@ -58,4 +58,32 @@ test('Edge Paint defers its existing claim to armed Lasso instead of consuming i
  const e={isPrimary:true,pointerId:1,clientX:10,clientY:20,preventDefault(){},stopImmediatePropagation(){stopped++;}};
  handlers.pointerdown(e);assert.equal(c.__boxlabPaintSelectDebug.pending().type,'edge');armed=true;handlers.pointermove({...e,clientX:40});assert.equal(c.__boxlabPaintSelectDebug.pending(),null);assert.equal(stopped,0);
  handlers.pointerdown(e);assert.equal(c.__boxlabPaintSelectDebug.pending(),null);handlers.pointermove({...e,clientX:40});assert.equal(c.__boxlabPaintSelectDebug.active(),null);assert.equal(stopped,0);
+});
+
+test('Background hold inverts original seed once at500ms, keeps Lasso armed and release cannot clear',()=>{
+ for(const semanticFirst of [false,true]){
+  const h=nativeOwner();h.send('pointerdown',1000);assert.deepEqual(h.ids,[1,3]);h.fireHold();assert.deepEqual(h.ids,[0,2]);assert.equal(h.armed,true);
+  if(semanticFirst)h.semantic(1550);h.send('pointerup',1550);h.semantic(1550);assert.deepEqual(h.ids,[0,2]);assert.equal(h.armed,true);assert.equal(h.logs.filter(x=>x.stage==='BACKGROUND HOLD INVERT').length,1);
+ }
+});
+test('Hold cancels on movement, secondary contact, cancel, changed selection/mode/mesh or active session',()=>{
+ for(const kind of ['move','secondary','cancel','mode','mesh','selection','session','direct']){
+  const h=nativeOwner();h.send('pointerdown',1000);
+  if(kind==='move')h.send('pointermove',1100,30);
+  if(kind==='secondary')h.send('pointerdown',1100,10,{pointerId:2,isPrimary:false});
+  if(kind==='cancel')h.send('pointercancel',1100);
+  if(kind==='mode')h.c.selectionMode='vertex';if(kind==='mesh')h.c.mesh={};
+  if(kind==='selection')h.c.selectionIndices=()=>[2];if(kind==='session')h.c.__boxlabToolSession={isActive:()=>true};if(kind==='direct')h.c.directTool='loopCut';
+  h.fireHold();assert.deepEqual(h.ids,[1,3],kind);
+ }
+});
+test('Hold in Object mode invokes original Object complement owner and keeps release harmless',()=>{
+ const h=nativeOwner();let ids=[1,3];h.c.selectionMode='object';h.c.__boxlabObjectSelection={get ids(){return ids;},invert:seed=>ids=[1,2,3,4].filter(x=>!seed.includes(x))};
+ h.send('pointerdown',1000);h.fireHold();assert.deepEqual(ids,[2,4]);h.send('pointerup',1600);h.semantic(1600);assert.deepEqual(ids,[2,4]);
+});
+
+test('Pencil hold requires real contact; real pen hold fires; blur prevents delayed inversion',()=>{
+ const hover=nativeOwner();hover.send('pointerdown',1000,10,{pointerType:'pen',buttons:0,pressure:0});hover.fireHold();assert.deepEqual(hover.ids,[1,3]);
+ const pen=nativeOwner();pen.send('pointerdown',1000,10,{pointerType:'pen',buttons:1,pressure:.1});pen.fireHold();assert.deepEqual(pen.ids,[0,2]);pen.send('pointerup',1600,10,{pointerType:'pen'});assert.deepEqual(pen.ids,[0,2]);
+ const blurred=nativeOwner();blurred.send('pointerdown',1000);blurred.send('blur',1100);blurred.fireHold();assert.deepEqual(blurred.ids,[1,3]);
 });

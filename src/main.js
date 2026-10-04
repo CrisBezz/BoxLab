@@ -1,4 +1,3 @@
-import {createBackgroundSelectionTap} from './background-selection-tap.js?v=0.36.18.721';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EditableMesh } from './mesh.js?v=0.12';
@@ -427,16 +426,18 @@ function weldSelectedVertices(){if(selection?.type!=='vertex'||selectionCount()!
 function deleteSelectedEdges(){if(selection?.type!=='edge'||!selectionCount())return;setDirectTool(null);clearLoopSlide();history.push(mesh);const edges=mesh.edges(),faces=new Set();selectionIndices().forEach(i=>(edges[i]?.faces||[]).forEach(fi=>faces.add(fi)));mesh.faces=mesh.faces.filter((_,fi)=>!faces.has(fi));compactOrphanVertices();clearSelection();renderMesh();}
 function alignObjectToMirrorPlanes(){const axes=activeMirrorAxes();if(!axes.length||!mesh.vertices.length)return;setDirectTool(null);clearLoopSlide();history.push(mesh);const delta=new THREE.Vector3();axes.forEach(axis=>{const vals=mesh.vertices.map(v=>v[axis]),min=Math.min(...vals),max=Math.max(...vals),bound=Math.abs(min)<=Math.abs(max)?min:max;delta[axis]=-bound;});mesh.vertices.forEach(v=>v.add(delta));selectionMode='object';toolMode='move';selection={type:'object',index:0};renderMesh();}
 function doUndo(){const prev=history.undo(mesh);if(!prev)return false;mesh=prev;clearSelection();clearLoopSlide();renderMesh();return true;}function doRedo(){const next=history.redo(mesh);if(!next)return false;mesh=next;clearSelection();clearLoopSlide();renderMesh();return true;}
-function beginGesture(event){if(!gesture.active){gesture.active=true;gesture.maxTouches=event.touches.length;gesture.startedAt=performance.now();gesture.starts.clear();gesture.moved=false;}gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);for(const t of event.touches)if(!gesture.starts.has(t.identifier))gesture.starts.set(t.identifier,{x:t.clientX,y:t.clientY});}function trackGesture(event){if(!gesture.active)return;if(event.touches.length>1)backgroundSelectionTap.reset('multi-touch');gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);for(const t of event.touches){const s=gesture.starts.get(t.identifier);if(s&&Math.hypot(t.clientX-s.x,t.clientY-s.y)>TAP_MAX_MOVE){gesture.moved=true;backgroundSelectionTap.reset('touch-navigation');break;}}}function endGesture(event){if(!gesture.active||event.touches.length!==0)return;const tap=!gesture.moved&&performance.now()-gesture.startedAt<=TAP_MAX_MS,fingers=gesture.maxTouches;gesture.active=false;gesture.maxTouches=0;gesture.starts.clear();gesture.moved=false;if(tap){if(fingers===2)doUndo();else if(fingers===3)doRedo();}}
+function beginGesture(event){if(event.touches.length>1)backgroundSelectionTap.reset('multi-touch');if(!gesture.active){gesture.active=true;gesture.maxTouches=event.touches.length;gesture.startedAt=performance.now();gesture.starts.clear();gesture.moved=false;}gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);for(const t of event.touches)if(!gesture.starts.has(t.identifier))gesture.starts.set(t.identifier,{x:t.clientX,y:t.clientY});}function trackGesture(event){if(!gesture.active)return;if(event.touches.length>1)backgroundSelectionTap.reset('multi-touch');gesture.maxTouches=Math.max(gesture.maxTouches,event.touches.length);for(const t of event.touches){const s=gesture.starts.get(t.identifier);if(s&&Math.hypot(t.clientX-s.x,t.clientY-s.y)>TAP_MAX_MOVE){gesture.moved=true;backgroundSelectionTap.reset('touch-navigation');break;}}}function endGesture(event){if(!gesture.active||event.touches.length!==0)return;const tap=!gesture.moved&&performance.now()-gesture.startedAt<=TAP_MAX_MS,fingers=gesture.maxTouches;gesture.active=false;gesture.maxTouches=0;gesture.starts.clear();gesture.moved=false;if(tap){if(fingers===2)doUndo();else if(fingers===3)doRedo();}}
 canvas.addEventListener('touchstart',beginGesture,{passive:true});canvas.addEventListener('touchmove',trackGesture,{passive:true});canvas.addEventListener('touchend',endGesture,{passive:true});canvas.addEventListener('touchcancel',()=>{gesture.active=false;gesture.maxTouches=0;gesture.starts.clear();gesture.moved=false;},{passive:true});
 
 // Existing background tap owner runs before canvas consumers, without consuming events.
 function beginBackgroundTap(event){
+  if(backgroundHold&&backgroundHold.pointerId!==event.pointerId)cancelBackgroundHold('secondary-contact');
   if(event.target!==canvas||(event.pointerType==='mouse'&&event.button!==0))return;
   if(backgroundTap&&backgroundTap.pointerId!==event.pointerId){backgroundTap.cancelled=true;backgroundSelectionTap.reset('secondary-contact');return;}
   if(!event.isPrimary||globalThis.__boxlabDirectBevel?.faceActive?.())return;
   if(pick(event)){backgroundSelectionTap.reset('mesh-hit');backgroundTap=null;return;}
   backgroundTap={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startedAt:event.timeStamp,moved:false,cancelled:false};
+  beginBackgroundHold(event);
   gestureDebug('BACKGROUND TAP DOWN',{pid:event.pointerId,pointer:event.pointerType,mode:selectionMode,lasso:!!globalThis.__boxlabLasso?.isArmed?.(),direct:directTool});
 }
 window.addEventListener('pointerdown',beginBackgroundTap,true);
@@ -542,11 +543,44 @@ function finishVertexHold(event){
 }
 window.addEventListener('pointerup',event=>{finishVertexHold(event);finishFaceHold(event);finishEdgeHold(event);},true);
 window.addEventListener('pointercancel',event=>{finishVertexHold(event);finishFaceHold(event);finishEdgeHold(event);},true);
-const backgroundSelectionTap=createBackgroundSelectionTap({trace:detail=>gestureDebug('BACKGROUND DOUBLE TAP',detail)});
+// Existing background owner manages tap-clear and hold-invert; no tap pairing.
+const backgroundSelectionTap={reset:reason=>cancelBackgroundHold(reason||'cancel')};
+let backgroundHold=null;
+function cancelBackgroundHold(reason){
+  if(!backgroundHold)return;
+  clearTimeout(backgroundHold.timer);backgroundHold.cancelled=true;
+  gestureDebug('BACKGROUND HOLD CANCEL',{reason,pid:backgroundHold.pointerId});
+}
+function backgroundSelectionContext(){return selectionMode+':'+(globalThis.__boxlabObjectManager?.activeId||'active');}
+function readBackgroundSelection(){return selectionMode==='object'?[...(globalThis.__boxlabObjectSelection?.ids||[])]:selectionIndices();}
+function backgroundHoldBlocked(){return !!directTool||!!globalThis.__boxlabToolSession?.isActive?.()||!!globalThis.__boxlabFaceValueViewportSession?.active?.()||!!globalThis.__boxlabEdgeViewportSession?.loopActive?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.();}
+function beginBackgroundHold(event){
+  if(backgroundHold)clearTimeout(backgroundHold.timer);
+  backgroundHold=null;
+  if(event.pointerType==='pen'&&!(event.buttons&1)&&!(event.pressure>0))return;
+  if(backgroundHoldBlocked()||globalThis.__boxlabObjectManager?.pickObject?.(event)||globalThis.__boxlabSelectionBridge?.pickObject?.(event))return;
+  const hold={pointerId:event.pointerId,context:backgroundSelectionContext(),mesh,seed:[...readBackgroundSelection()],fired:false,cancelled:false,timer:null};
+  backgroundHold=hold;
+  hold.timer=setTimeout(()=>{
+    if(backgroundHold!==hold||hold.cancelled||backgroundTap?.pointerId!==hold.pointerId||backgroundTap.moved||backgroundTap.cancelled)return;
+    if(backgroundHoldBlocked()||hold.context!==backgroundSelectionContext()||hold.mesh!==mesh||JSON.stringify(hold.seed)!==JSON.stringify(readBackgroundSelection())){cancelBackgroundHold('context-selection-session');return;}
+    hold.fired=true;
+    resetEdgeHoldCycle();
+    if(selectionMode==='object')globalThis.__boxlabObjectSelection?.invert?.(hold.seed);
+    else globalThis.__boxlabSelectionSetPolish?.invert?.(hold.seed);
+    gestureDebug('BACKGROUND HOLD INVERT',{pid:hold.pointerId,mode:selectionMode,seed:hold.seed.length,count:readBackgroundSelection().length});
+  },500);
+}
 // Native release timestamp identifies duplicate delivery without Safari timers.
 let completedBackgroundRelease=null;
 window.addEventListener('boxlab-background-tap-cancelled',()=>backgroundSelectionTap.reset('object-activation-navigation'));
+window.addEventListener('blur',()=>backgroundSelectionTap.reset('window-blur'));
 function completeBackgroundSelectionTap(point){
+  if(completedBackgroundRelease?.pointerId===point.pointerId&&completedBackgroundRelease.timeStamp===point.timeStamp)return;
+  if(backgroundHold?.pointerId===point.pointerId){
+    clearTimeout(backgroundHold.timer);
+    if(backgroundHold.fired){completedBackgroundRelease={pointerId:point.pointerId,timeStamp:point.timeStamp};return;}
+  }
   if(directTool||globalThis.__boxlabToolSession?.isActive?.()){gestureDebug('BACKGROUND TAP BLOCKED',{pid:point.pointerId,mode:selectionMode,direct:directTool,session:globalThis.__boxlabToolSession?.current?.()?.id||null});return;}
   const lasso=globalThis.__boxlabLasso;
   if(lasso?.isArmed?.()){
@@ -560,14 +594,16 @@ function completeBackgroundSelectionTap(point){
   const objectMode=selectionMode==='object',objectSelection=globalThis.__boxlabObjectSelection;
   if(objectMode&&globalThis.__boxlabObjectManager?.pickObject?.(point))return;
   const read=()=>objectMode?[...(objectSelection?.ids||[])]:selectionIndices();
-  const context=selectionMode+':'+(globalThis.__boxlabObjectManager?.activeId||'active');
-  const result=backgroundSelectionTap.tap(point,{context,mesh,read,
-    clear:()=>{resetEdgeHoldCycle();clearSelection();renderMesh();},
-    invert:seed=>{if(objectMode)objectSelection?.invert?.(seed);else globalThis.__boxlabSelectionSetPolish?.invert?.(seed);}
-  });
+  resetEdgeHoldCycle();clearSelection();renderMesh();
+  const result='clear';
   gestureDebug('BACKGROUND TAP COMPLETE',{pid:point.pointerId,mode:selectionMode,result,count:read().length,stamp:point.timeStamp});
 }
 window.addEventListener('pointerup',event=>{
+  if(backgroundHold?.pointerId===event.pointerId){
+    clearTimeout(backgroundHold.timer);
+    if(backgroundHold.fired)completedBackgroundRelease={pointerId:event.pointerId,timeStamp:event.timeStamp};
+    backgroundHold=null;
+  }
   if(!backgroundTap||backgroundTap.pointerId!==event.pointerId)return;
   const tap=backgroundTap;backgroundTap=null;
   const moved=tap.moved||Math.hypot(event.clientX-tap.startX,event.clientY-tap.startY)>=EDIT_DRAG_THRESHOLD;
@@ -577,7 +613,7 @@ window.addEventListener('pointerup',event=>{
     }else{completeBackgroundSelectionTap(event);}
   }
 },true);
-window.addEventListener('pointercancel',event=>{if(backgroundTap?.pointerId===event.pointerId)backgroundTap=null;backgroundSelectionTap.reset('pointer-cancel');},true);
+window.addEventListener('pointercancel',event=>{if(backgroundHold?.pointerId===event.pointerId){clearTimeout(backgroundHold.timer);backgroundHold=null;}if(backgroundTap?.pointerId===event.pointerId)backgroundTap=null;backgroundSelectionTap.reset('pointer-cancel');},true);
 // Pencil orbit owner already distinguishes taps from navigation drags.
 window.addEventListener('boxlab-pencil-background-tap',event=>{
   if(!globalThis.__boxlabFaceValueViewportSession?.active?.()&&!globalThis.__boxlabEdgeViewportSession?.loopActive?.()&&!globalThis.__boxlabBevelViewportSession?.edgeActive?.()){backgroundTap=null;completeBackgroundSelectionTap(event.detail||{});return;}
