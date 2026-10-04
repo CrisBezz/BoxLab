@@ -7,13 +7,12 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.710**.
-Current focus: user-requested ALL existing Vertex Active Tools now exposed in the
-radial workflow, plus consistent Bevel positions in Face/Edge/Vertex. Await one
-combined hands-on test/refinement session before proceeding to Object.
-User expressly requested this complete Vertex batch rather than two tools per build.
-.708 full Face Bevel manual list PASS and protected. .709 was NOT confirmed PASS;
-its Merge pair is included in the .710 combined checks. No new PASS is inferred.
+Current release: **v0.36.18.711**.
+Current focus: ALL ten existing Object Active Tool launchers now in contextual
+rings, with original Object session controls docked at the top centre. Await the
+user's combined Object test/refinement session before final Edge coverage.
+User confirms **.710 Vertex radial AWESOME / PASS**; all thirteen tools and shared
+Face/Edge/Vertex Bevel placement are protected. .708 Face Bevel remains protected.
 
 ## Priority and scope
 
@@ -29,17 +28,68 @@ Edge and Vertex**. Preserve this across future ring refinements.
 ## Repository / cache state
 
 - Main CrisBezz/BoxLab; live https://crisbezz.github.io/BoxLab/.
-- .710 parent .709 checkpoint a8e90f86. Find release commit in main history;
-  avoid self-referential SHA in this file.
-- New vertex-tool-viewport-session direct loader .710; total-gizmo .710.
-- Add/build/direct Vertex Bevel owner loaders .710. drawer-ui .710 dynamically
-  imports precision-bevel and vertex-slide-polish .710. Their kernels/math unchanged.
-- Shell markers, main loader, release-bootstrap and release-version pins .710;
-  main and refresh logic unchanged.
-- Protected Face Bevel direct/helper/session .708 unchanged; repair .706,
-  Face Align .705 (existing shell pin .708), shared session dock .700.
-- Protected multi-object-transform .1.0, Loop Cut/Slide compatibility, modelling
-  kernels and all frozen beta directories unchanged.
+- .711 parent .710 b9b3548d; find release commit in main history.
+- New object-radial-session .711, total-gizmo .711, tool-session-ui .711.
+- Manifest/title/data-release-version/visible label/main/refresh pins .711;
+  main and refresh logic unchanged. Existing Object modelling owners unchanged.
+- Vertex owner/session/drawer loader pins remain .710; .708 Face Bevel and shared
+  panel-position .700 remain unchanged. multi-object-transform remains .1.0.
+- Loop Cut/Slide compatibility, modelling kernels and frozen beta dirs unchanged.
+
+## .711 Object radial inventory / session dock
+
+Audited base index plus late Object Active Tools modules. Ten existing launchers:
+inner clockwise from top: Transform, Insert, Solidify, Array, Boolean, Join,
+Symmetry / Bisect, Mesh Health (eight sectors,120px radius,86px width).
+Outer: Revolve Profile at0°, Clean for SubD at180° (195px radius).
+All rectangle spacing checked. No Object Bevel exists; shared component Bevel90°
+placement is untouched. Object gizmo centre opens rings; centre × returns gizmo.
+Object selection still immediately shows its protected transform gizmo; background
+finger/Pencil dismissal and object re-tap restoration remain original owners.
+
+Original launcher buttons and owner controls reused intact. UI adapter cancels
+previous owner through existing APIs before launching next. Join and Clean remain
+one-shots and clear lifecycle suppression; no new modelling/history/pointer kernel.
+Boolean retains operand labels/Swap/Union/Cut/Intersect/Close and authoritative Multi.
+Transform/Insert retain face-to-face Move/Rotate/Scale, Apply/Cancel. Solidify keeps
+Thickness preview; Array keeps endpoint/direction/count; Symmetry keeps presets,
+plane Move/Rotate/Align/Flip/Reset/Keep/Mirror/Bisect Only; Mesh Health keeps full
+report/repair controls; Revolve keeps edit/segments/profile controls/Apply/Cancel.
+
+Shared tool-session-ui moves ORIGINAL node to top-centre viewport host only in
+Object mode, bounded/scrollable. Restores original parent on end. Other modes keep
+existing drawer host for their already-protected viewport proxies (avoid duplicate
+Shell/Sweep overlays). Conditional Object Sweep editor also gets this dock; Sweep
+creation remains Add, since it has no Object Active Tools launcher. Outliner Add/
+Duplicate/Rename/Delete, Origins/Pivots/Groups, Selection and Modifiers are outside
+this explicitly Active-Tools-only batch. No speculative new launchers introduced.
+
+Gizmo hidden during Object sessions except Symmetry/Revolve plane placement.
+Completion returns selected Object gizmo, or correct new component-mode puck.
+Existing controls retain owner event listeners, child popups and history. Boolean
+also closes on mode exit. Locked/reference radial writes blocked; Transform/Insert
+require one object. Owner validation/history/snapping/navigation remain unchanged.
+Keep drawer fallbacks until user tests PASS. Do not remove menus wholesale.
+
+## .711 validation / combined manual test
+
+32 targeted checks PASS: exact inventory/layout, original-node dock/restoration,
+all eight session clients, authoritative cancellation/handoffs, actual Solidify /
+Array preview launch + cleanup with source unchanged, one-shots, locked/reference/
+Multi/mode guards, gizmo transitions and protected Face/Vertex sessions.
+Full1181 tests/897 PASS/284 failures; no new failure names versus clean .710
+(1169/884/285). Historical376 Solidify session-pin test now passes. Suite is not
+all green. Syntax/diff/protected-file checks PASS. Verify main/live after publishing.
+
+1. Confirm visibly .711. Object gizmo centre opens all ten; × returns gizmo.
+2. Solidify/Array: top-centre settings, original live previews/gestures, Apply/Cancel.
+3. Transform/Insert and Symmetry/Bisect: original surface/plane interaction,
+   settings all top centre; plane gizmo available; Apply/Cancel clean.
+4. Boolean: choose operands in Multi, Swap, Union/Cut/Intersect, Close, one Undo.
+5. Revolve Profile, Mesh Health, Join and Clean for SubD: correct original results,
+   full top-centre panels, cancellation, Undo/Redo and returned selection/gizmo.
+6. Navigation, .682 background finger/Pencil dismissal/re-tap and protected
+   Face/Edge/Vertex radial behavior remain intact. Collect Object refinements next.
 
 ## .710 audited Vertex inventory / ring layout
 
@@ -106,7 +156,7 @@ interrupted in-flight Slide. Apply/Done controls are disabled while an owner is 
 Mesh/mode/lock changes close settings; another radial tool closes without completing
 that new tool's lifecycle. Geometry/scene rebuilding checks remain with original owners.
 
-## Validation / combined hands-on checks — .710
+## Protected .710 validation / hands-on PASS
 
 41 targeted tests PASS: actual Vertex bevel kernel/exact/gesture, Slide rail/exact/
 gesture, Merge/Clean scope/history, native Join/Weld/Delete, Create Face/Circle,
@@ -128,7 +178,7 @@ Syntax/diff checks PASS. Release/pin/main/live verification required after publi
    Merge Dist only selected vertices with editable tolerance; Clean whole active object.
    Apply/Cancel scopes and unavailable actions behave as labelled.
 5. Protected Face Bevel preview, Edge sessions, selection/long press and navigation
-   remain intact. Collect refinement feedback before adding Object tools.
+   remain intact. User confirms this complete Vertex batch AWESOME / PASS.
 
 ## Earlier pending checks / protected passes
 
@@ -138,6 +188,8 @@ Test their behavior on CURRENT release; do not imply .709/.710 proves prior manu
 PASS or ask to load old releases. .707 Face drag FAIL superseded by .708 PASS.
 
 Protected hands-on:
+- .710 ALL Vertex radial tools AWESOME / PASS, contextual controls and shared
+  Face/Edge/Vertex Bevel inner90° placement.
 - .708 Face Bevel blue Width/Segments/Pencil preview; release retains candidate;
   explicit Apply once, Cancel original puck, Undo/Redo, navigation and Edge regression.
 - .705 Align to Face arbitrary plane, fixed anchor, rigid group, safe rejection/Cancel,
@@ -179,5 +231,5 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next is combined .710
-hands-on refinement; then Object, then final Edge inventory/settings pass.
+and give a short realistic manual list after publishing. Next is combined .711 Object
+hands-on test/refinement; then final Edge inventory/settings pass.

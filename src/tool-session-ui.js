@@ -1,3 +1,4 @@
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.700';
 const drawer=document.querySelector('#editDrawer');
 const contentRoot=drawer?.querySelector(':scope > .drawer-content')||drawer?.querySelector('.drawer-content');
 const summary=drawer?.querySelector(':scope > summary')||drawer?.querySelector('summary');
@@ -14,6 +15,10 @@ style.textContent=`
 #editDrawer[data-tool-session-active="true"]>.drawer-content>:not(#boxlabToolSessionHost){display:none!important}
 #boxlabToolSessionHost[hidden]{display:none!important}
 #boxlabToolSessionHost{display:block!important}
+#boxlabToolSessionHost[data-viewport-dock="true"]{width:310px;padding:12px;border-radius:12px;background:rgba(22,25,31,.96);border:1px solid rgba(255,255,255,.2);box-shadow:0 8px 28px #0005;pointer-events:auto}
+#boxlabToolSessionHost[data-viewport-dock="true"] .outliner-actions{display:grid;gap:5px}
+#boxlabToolSessionHost[data-viewport-dock="true"] button{min-height:34px}
+#boxlabToolSessionHost[data-viewport-dock="true"] .range-row{display:grid;grid-template-columns:70px 1fr 42px;gap:5px;align-items:center}
 .boxlab-tool-session-shell[hidden]{display:none!important}
 .boxlab-tool-session-shell{display:flex;flex-direction:column;gap:7px}
 .boxlab-tool-session-title{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:1px 1px 3px}
@@ -273,13 +278,20 @@ function restore(entry){
 }
 function begin({id,title,node,subtitle=''}={}){
   if(!drawer||!host||!node||!id)return false;
-  if(active&&active.id!==id)end(active.id);
+  if(active&&active.id!==id){
+    globalThis.__boxlabObjectRadialSession?.cancelCurrent?.();
+    if(active)end(active.id);
+  }
   if(!active){
     active={id,title,node,subtitle,parent:node.parentNode,next:node.nextSibling,summary:summary?.textContent||'Active Tools',keepOpen:drawer.dataset.keepOpen,open:drawer.open};
   }else{
     active.title=title||active.title;
     active.subtitle=subtitle||active.subtitle;
   }
+  const dock=(globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset.mode)==='object';
+  host.dataset.viewportDock=String(dock);
+  if(dock){document.querySelector('#viewportWrap')?.appendChild(host);placeToolSessionPanel(host);}
+  else{contentRoot?.prepend(host);host.removeAttribute('style');}
   host.replaceChildren(node);
   host.hidden=false;
   drawer.dataset.toolSessionActive='true';

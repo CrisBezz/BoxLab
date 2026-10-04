@@ -69,9 +69,9 @@ function selectionKey(mesh,mode=currentMode()){
 }
 function setHubState(next,{reason='',resumeSuspended=true}={}){
   const mode=currentMode();
-  let requested=mode==='object'&&!objectTransformDismissed?'transform':next;
+  let requested=mode==='object'&&!objectTransformDismissed&&next==='closed'?'transform':next;
   if(!['closed','transform','tools'].includes(requested))requested='closed';
-  if(requested==='tools'&&!['face','edge','vertex'].includes(mode))requested='closed';
+  if(requested==='tools'&&!['face','edge','vertex','object'].includes(mode))requested='closed';
 
   if(edgeExtrudeConstraintSession&&mode==='edge'&&requested!=='transform'){
     const preservedEdges=[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])];
@@ -380,6 +380,20 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:288deg;--r:145px" data-tool-target="#cleanVerticesBtn">Clean Vertices</button>
   <button type="button" class="tg-tool-center" aria-label="Close Vertex contextual tools" title="Close tools">×</button>
 </div>
+<div class="tg-tool-ring" data-ring-mode="object" aria-label="Object contextual tools">
+  <button type="button" class="tg-tool-sector" style="--a:0deg" data-tool-target="#surfaceTransformBtn">Transform</button>
+  <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#surfaceInsertBtn">Insert</button>
+  <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#solidifyBtn">Solidify</button>
+  <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#linearArrayLaunchBtn">Array</button>
+  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#booleanLaunchBtn">Boolean</button>
+  <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#joinObjectsBtn">Join</button>
+  <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target="#symmetryBisectBtn">Symmetry / Bisect</button>
+  <button type="button" class="tg-tool-sector" style="--a:315deg" data-tool-target="#meshHealthBtn">Mesh Health</button>
+  <div class="tg-object-outer-guide" aria-hidden="true"></div>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:195px" data-tool-target="#revolveProfileLaunchBtn">Revolve Profile</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180deg;--r:195px" data-tool-target="#quadCleanBtn">Clean for SubD</button>
+  <button type="button" class="tg-tool-center" aria-label="Close Object contextual tools" title="Return to gizmo">×</button>
+</div>
 <div class="tg-edge-extrude-badge" hidden><strong>Extrude</strong><span>Plane ⟂ edge</span><small>Choose constraint • drag edge</small></div>
 <div class="tg-hud" hidden><span class="tg-hud-text"></span></div>`;
 viewportWrap?.append(root);
@@ -441,6 +455,7 @@ function syncContextToolAvailability(){
     const vertexSession=sector.closest('.tg-tool-ring')?.dataset.ringMode==='vertex'&&['Add','Build Edge','Bevel','Slide','Merge Dist','Clean Vertices'].includes(sector.textContent?.trim());
     if(vertexSession)unavailable=!globalThis.__boxlabVertexViewportSession?.available?.(sector.textContent.trim());
     unavailable=unavailable||vertexReadOnly;
+    if(sector.closest('.tg-tool-ring')?.dataset.ringMode==='object')unavailable=!globalThis.__boxlabObjectRadialSession?.available?.(sector.textContent.trim());
     sector.disabled=unavailable;
     sector.classList.toggle('tg-tool-unavailable',unavailable);
     sector.classList.toggle('tg-tool-active',active&&!unavailable);
@@ -463,12 +478,11 @@ activator?.addEventListener('pointerdown',event=>{
 });
 
 collapseControl?.addEventListener('pointerdown',event=>{
-  if(currentMode()==='object')return;
   event.preventDefault();
   event.stopPropagation();
   hideFloatInput();
   resetTransientState({hideFloat:true});
-  const next=['face','edge','vertex'].includes(currentMode())?'tools':'closed';
+  const next=['face','edge','vertex','object'].includes(currentMode())?'tools':'closed';
   setHubState(next,{reason:'transform-centre'});
   if(next==='tools')syncContextToolAvailability();
 });
@@ -519,7 +533,10 @@ toolSectors.forEach(button=>{
     const radialSession=radialCrease||radialOffset||radialSlide||radialBridge;
     const launchIds=radialSession?[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]:null;
     const radialFaceRepair=mode==='face'&&['Close Holes','Quad Cleanup','Quadify N-gons','Clean Vertices','Merge Dist'].includes(toolLabel);
-    if(mode==='vertex'&&contextualVertex){
+    if(mode==='object'){
+      resetTransientState({hideFloat:true});
+      globalThis.__boxlabObjectRadialSession?.launch?.(toolLabel);
+    }else if(mode==='vertex'&&contextualVertex){
       globalThis.__boxlabVertexViewportSession?.openFromHub?.({tool:toolLabel});
     }else if(mode==='face'&&toolLabel==='Bevel'){
       // Semantic launch below arms the existing Bevel owner without switching modes.
@@ -566,6 +583,13 @@ toolButtons.forEach(button=>button.addEventListener('click',()=>{
   queueMicrotask(syncContextToolAvailability);
 }));
 window.addEventListener('boxlab-selection-hub-session-complete',event=>{
+  if(event.detail?.mode==='object'){
+    hubSuppressedKey='';objectTransformDismissed=false;
+    resetTransientState({hideFloat:true});
+    lastSelectionKey=selectionKey(state()?.mesh,currentMode());
+    setHubState(currentMode()==='object'?'transform':'closed',{reason:'object-session-complete'});
+    return;
+  }
   if(event.detail?.mode==='vertex'){
     hubSuppressedKey='';
     resetTransientState?.({hideFloat:true});
@@ -796,6 +820,10 @@ style.textContent=`
 #totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring[data-ring-mode="face"]{display:block}
 #totalGizmo[data-hub-state="tools"][data-mode="edge"] .tg-tool-ring[data-ring-mode="edge"]{display:block}
 #totalGizmo[data-hub-state="tools"][data-mode="vertex"] .tg-tool-ring[data-ring-mode="vertex"]{display:block}
+#totalGizmo[data-hub-state="tools"][data-mode="object"] .tg-tool-ring[data-ring-mode="object"]{display:block}
+#totalGizmo[data-mode="object"] .tg-tool-sector{width:86px;margin-left:-43px;white-space:normal;transform:rotate(var(--a)) translateY(-120px) rotate(calc(-1 * var(--a)))}
+#totalGizmo[data-mode="object"] .tg-tool-outer{transform:rotate(var(--a)) translateY(calc(-1 * var(--r))) rotate(calc(-1 * var(--a)))}
+.tg-object-outer-guide{position:absolute;width:390px;height:390px;left:50%;top:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.08);border-radius:50%;pointer-events:none}
 #totalGizmo .tg-tool-sector{position:absolute;left:50%;top:50%;width:68px;height:34px;margin:-17px -34px;padding:3px 5px;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(18,21,27,.96);color:#eef2f7;font-size:10px;font-weight:700;line-height:1;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.34);pointer-events:auto;touch-action:none;transform:rotate(var(--a)) translateY(-82px) rotate(calc(-1 * var(--a)))}
 #totalGizmo .tg-face-outer-guide{position:absolute;left:50%;top:50%;width:460px;height:460px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.15);border-radius:50%;pointer-events:none}
 #totalGizmo .tg-vertex-outer-guide{position:absolute;left:50%;top:50%;width:290px;height:290px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.15);border-radius:50%;pointer-events:none}
@@ -1005,7 +1033,7 @@ function sync(){
     hubSuppressedKey='';
     if(mode==='object')objectTransformDismissed=false;
     setHubState(edgeExtrudeConstraintSession&&mode==='edge'?'transform':(mode==='object'?'transform':'closed'),{reason:'selection-change'});
-  }else if(mode==='object'&&!objectTransformDismissed&&hubState!=='transform'){
+  }else if(mode==='object'&&!objectTransformDismissed&&hubState!=='transform'&&hubState!=='tools'){
     setHubState('transform',{reason:'object-mode'});
   }
   const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
@@ -1021,7 +1049,7 @@ function sync(){
   root.style.top=`${top}px`;
   placeToolSessionPanel(floatPalette);
   const suppressed=['face','edge','vertex'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
-  root.hidden=(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.())||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
+  root.hidden=(mode==='object'&&!!globalThis.__boxlabObjectRadialSession?.hidesGizmo?.())||(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.())||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;

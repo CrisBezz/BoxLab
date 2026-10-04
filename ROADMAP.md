@@ -213,8 +213,8 @@ Align is in Selection controls, outside this explicitly Active-Tools-only batch.
 Bevel's inner90° /3-o'clock position is now consistent across Face, Edge and Vertex.
 Face Knife135°, Duplicate180°, Extract moves outer337.5°; Edge Slide45°/Crease135°.
 41 targeted PASS; full1169 tests/884 PASS and same285 failure names as .709.
-Hands-on pending: perform combined test/refinement session before Object → final
-Edge. Keep drawer fallbacks, .708 protected Face Bevel and earlier pending checks.
+Hands-on .710 AWESOME / PASS; protected. Object .711 now complete; combined
+test/refinement before final Edge. Keep drawer fallbacks, .708 protected Face Bevel and earlier pending checks.
 
 ## Strengthening list
 
@@ -257,3 +257,13 @@ Preserve:
 - Do not reapply the v0.36.18.450 bulk consolidation wholesale.
 
 - [ ] Complex logical-quad Loop Cut through multiple collinear boundary vertices — strengthen separately without changing protected v0.36.18.162 Loop Cut reconstruction / slide behaviour.
+
+### Object Active Tools radial coverage — .711
+
+All ten existing launchers now in two rings: Transform, Insert, Solidify, Array,
+Boolean, Join, Symmetry/Bisect, Mesh Health; outer Revolve Profile/Clean for SubD.
+Original owner controls docked top-centre in Object mode, intact settings/child
+controls/Apply/Cancel. Authoritative owner cancellation and completion/gizmo return.
+No parallel kernel/pointer owner; protected .710 Vertex and component Bevel positions.
+32 targeted PASS; full1181/897/284, no new failures versus .710. Hands-on pending.
+Next combined Object test/refine → final Edge inventory/settings audit.
