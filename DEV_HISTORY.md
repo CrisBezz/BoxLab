@@ -4841,3 +4841,10 @@ For exact implementation state, always inspect current `main`; this history is c
 - Existing8px movement guard, secondary contact/multitouch, pointercancel, navigation and blur cancel; context/active-object/mesh/selection/session guards protect delayed callbacks. Pencil hover excluded, busy tools/blue Bevel/contextual Done remain protected. Double short taps now just clear; Object short-tap selection contract retained.
 - 24 targeted PASS including actual hold owner, both release orders, Lasso retention, cancellation/context changes, original Object complement, real Pencil contact and blur; nearby Lasso/Edge Paint/debug/session checks pass. Full1237/954/283 vs clean .7231233/950/283: identical failure names/no new failures. Updated historical main-owner expectations for retired doubletap and session fixture release prefix. Syntax/diff/protected files checked.
 - .724 main/shell/manifest/debug/refresh pins updated. Handoff/checklist/roadmap current. Next iPad finger/Pencil tap vs hold, release retention, armed Lasso, navigation/history; Modifiers manual test and prior pending checks retained.
+
+
+## 2026-10-04 — v0.36.18.725 GEO vertex/edge/face icon
+
+- User .724 PERFECT/PASS recorded: protect background tap clear/Lasso off and500ms hold Invert/release retention; failed double-tap superseded. Next user priority before Beta6 is GEO icon clarity.
+- Existing toolbar GEO icon now shows distinct left-to-right solid dot, diagonal line and lightly filled rectangular face. Original snapping checkbox/listener/state/tooltip retained; no behaviour changes. Child toolbar and topbar parent cache keys refreshed, shell/manifest/refresh markers .725. Main stays .724; protected modelling/gesture owners untouched.
+- Five existing viewport control checks PASS; syntax/diff checks pass. Small visual edit does not justify full-suite rerun; last .724 full1237/954/283 retained as baseline. Next visual/toggle sanity check, pending Modifiers access/actions and drawer/radial audit towards Beta6. Handoff/history/checklist updated.

@@ -5,7 +5,7 @@ export function installViewportToolbarControls(doc=document){
  if(!wrap||!modes)return;
  const bar=doc.createElement('div');bar.id='viewportSelectionControls';bar.setAttribute('aria-label','Snapping and selection');
  const label=doc.createElement('span');label.textContent='SNAP';bar.append(label);
- const paths={axis:'<path stroke="#ef6b72" d="M11 15h10m-3-3 3 3-3 3"/><path stroke="#71d984" d="M11 15V3m-3 3 3-3 3 3"/><path stroke="#719eef" d="m11 15-8 6m1-4-1 4 4-1"/>',geo:'<circle cx="4" cy="7" r="2"/><path d="m4 18 7-4"/><path d="m14 7 6 2-2 9-6-2Z"/>',lasso:'<path stroke-dasharray="2 2" d="M17 17c5-2 5-10-1-12S3 5 3 11s7 10 12 7"/><path d="M16 15c-3 0-5 3-3 5s6 1 5-2l-4-2"/>'};
+ const paths={axis:'<path stroke="#ef6b72" d="M11 15h10m-3-3 3 3-3 3"/><path stroke="#71d984" d="M11 15V3m-3 3 3-3 3 3"/><path stroke="#719eef" d="m11 15-8 6m1-4-1 4 4-1"/>',geo:'<circle cx="3" cy="12" r="1.7" fill="currentColor" stroke="none"/><path d="m8 15 5-6"/><path d="M17 8h6v8h-6Z" fill="currentColor" fill-opacity=".22"/>',lasso:'<path stroke-dasharray="2 2" d="M17 17c5-2 5-10-1-12S3 5 3 11s7 10 12 7"/><path d="M16 15c-3 0-5 3-3 5s6 1 5-2l-4-2"/>'};
  for(const [id,icon,title] of [['axisSnapToggle','axis','Axis snap'],['inferenceSnapToggle','geo','GEO snap — vertices, edges and faces']]){
   const input=doc.querySelector('#'+id),control=input?.closest('label');if(!control)continue;
   control.title=title;input.setAttribute('aria-label',title);control.querySelector('span').innerHTML=svg(paths[icon]);bar.append(control);

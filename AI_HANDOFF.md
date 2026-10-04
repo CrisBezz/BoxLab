@@ -7,8 +7,21 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.724**. Parent .723 `f2898db2`.
-Current task: user-requested background LONG PRESS Invert test, replacing failed
+Current release: **v0.36.18.725**. Parent .724 `23b3263f`.
+Current .725: GEO snap icon is left-to-right solid vertex dot / separate diagonal
+edge / lightly filled rectangular face. Original checkbox, snapping owner,
+active state and tooltip retained. Changed toolbar child and topbar parent pins
+refreshed; shell/manifest/refresh .725, main remains .724. Five existing viewport
+controls tests PASS; syntax/diff checks pass. No gesture or modelling changes.
+User explicitly confirmed .724 PERFECT/PASS (2026-10-04). Background tap/hold
+behavior is now a protected baseline; do not resume double-tap diagnosis. Previous
+release validation full1237/954/283 (existing failures); no full rerun needed for
+icon-only edit. Next .725 visual/toggle sanity check, then original Modifiers
+manual check and remaining drawer/radial audit towards Beta6. Slight Lasso tightening
+still deferred MUCH LATER.
+
+## Protected .724 background hold — user PASS
+Previous implementation: user-requested background LONG PRESS Invert, replacing failed
 DOUBLE TAP. Single short background tap still clears component selection and turns
 Lasso off. Object short-tap contract still retains actual Object selection and
 hides gizmo. Stationary background hold500ms complements CURRENT selection once
@@ -27,7 +40,7 @@ changed release prefix, not weakened modelling/session expectations. Main and
 shell/manifest/debug/refresh pins .724. Protected transform1.0/Loop/Lasso/Edge Paint/
 Pencil/Multi/frozen beta files untouched. Diagnostics keep amber physical contacts
 and blue BACKGROUND HOLD INVERT/CANCEL or TAP COMPLETE evidence.
-Next manual: finger/Pencil shorttap clears/disarms Lasso; hold500ms inverts once
+User PASS .724: finger/Pencil shorttap clears/disarms Lasso; hold500ms inverts once
 and release retains result; hold while Lasso armed retains it; orbit/pan/pinch and
 Undo/Redo remain intact. Test Face/Edge/Vertex and Object complement. Pending .721
 original Modifiers below Objects starts collapsed; original actions still pending.

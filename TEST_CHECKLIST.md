@@ -3411,3 +3411,10 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Arm Lasso → stationary background hold inverts and keeps Lasso armed; release retains result; subsequent drawing still works. Short background tap exits Lasso.
 - [ ] Background drag/orbit, two-finger pan/pinch cancel hold without inversion; two-finger Undo/three-finger Redo retain behavior. Active modelling sessions keep original background Done/exit semantics.
 - [ ] Object hold complements visible objects using original owner; original Modifiers collapsed below Objects remains accessible.
+
+
+## v0.36.18.725 — GEO icon / .724 baseline PASS
+
+- [x] User .724 PERFECT/PASS: background tap/hold behavior accepted and protected. Double-tap remains retired.
+- [x] Existing viewport control tests5 PASS; original snap checkbox/listeners/labels retained. Syntax/diff and child/parent cache pins checked.
+- [ ] Visible .725: GEO clearly reads dot / line / face beside Axis; toggle retains active highlight and original geometry snapping. Tooltip still describes vertices, edges and faces.
