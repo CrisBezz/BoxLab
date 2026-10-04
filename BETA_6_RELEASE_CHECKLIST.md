@@ -1,6 +1,11 @@
-# Beta 6 release-candidate checklist — .730
+# Beta 6 release-candidate checklist — .732
 
-Status: development candidate, awaiting grouped iPad acceptance. No Beta6 freeze yet.
+Status: .731 user PASS; .732 bundled refinements await grouped iPad acceptance. No Beta6 freeze yet.
+
+Current candidate: popup comfort, background exit policy, Array axis/Free ghost handles,
+Inset Repeat correctness, right-side top-bar Object Browser. See the .732 test block
+in TEST_CHECKLIST.md. 133 focused pass; full1285/1008/277 with no new failure names
+versus .731; all280 source modules syntax pass. Historical failures remain documented.
 
 | Area | Automated evidence | Remaining device check |
 | --- | --- | --- |

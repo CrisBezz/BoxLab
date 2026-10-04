@@ -1,5 +1,68 @@
 # BoxLab AI Handoff — current development state
 
+## 2026-10-05 — v0.36.18.732: popup comfort, background exits, Array, Inset Repeat and right Object Browser
+
+User explicitly **PASS .731**. Current release **v0.36.18.732**, parent main
+`34ad8dbfd65a5dd7f1a40cfbd7b63b6c354e7a3f`. This is one bundled refinement build;
+.732 awaits iPad testing and does not freeze Beta 6.
+
+- Shared content-sized popups now have 7px vertical / 8px horizontal packing,
+  an 8px body/action gap and 6px action-divider clearance. Small panels retain
+  variable width. SELECT retains original controls; no Visible/Through restoration.
+- Split exits with Done or a stationary background tap, retaining completed edits.
+  Background exit audit reuses main's existing window-capture tap/movement owner
+  and semantic event. The new policy module adds no raw pointer listener.
+  Native/Pencil duplicate releases are marked before closing a tool, so the second
+  callback cannot clear the preserved selection. Long-hold invert remains blocked
+  while a tool owns the background. Orbit/pan/drag/cancel/secondary contact stay protected.
+- Array X/Y/Z immediately project END onto the positive chosen world axis, keeping
+  its current vector length. Actual END drags follow that axis. Free retains mixed
+  coordinates and exposes XYZ arrow handles; arrow drag changes one coordinate
+  without switching Free mode. Preview and source remain separate; Apply continues
+  through existing linked-instance/object-history owners. Ghost/arrow hits are
+  excluded from background exit.
+- Inset's actual direct owner emits the kernel-produced committed model distance
+  on release. Precision stores last values per operation as well as the original
+  global last operation. Contextual Inset/Extrude Repeat asks the existing owner
+  for its matching operation, never borrowing another tool's label/value. Legacy
+  Repeat Previous stays available. No new geometry/history kernel.
+- Object Browser uses the same icon and original Objects/Modifiers nodes, moved
+  from the Object gizmo shortcut to the top bar: Frame All / Undo / Redo / Focus /
+  Object Browser / VIEW. Opens on the right below the icons, including Focus view;
+  Objects open, Modifiers initially closed. Closing/mode exit restores original
+  nodes and disclosure states; tool start closes it. The original busy/mode-switch
+  guards remain. This user-requested browser is an exception to centred tool popups.
+
+Background exit policy:
+
+| Tool/session | Stationary background tap |
+| --- | --- |
+| Loop, Split, Face Inset/Extrude values, Edge Slide/Bevel | Existing session Done/exit owner; completed edits retained |
+| Face Bevel / Vertex contextual tools except Add | Existing Cancel/close; uncommitted blue preview discarded |
+| Face Align/Repair, Knife, Edge/Face Bridge, Offset, Crease | Existing close/cancel owner; pending preview discarded where applicable |
+| Edge Extrude | Existing hub/constraint exit; completed edits retained |
+| Object Array, Solidify, Shell, Boolean, Mesh Health | Existing idle Cancel/close owner; active drag protected |
+| Vertex Add, Surface Transform/Insert, Sweep, Revolve, Symmetry/Bisect | Background remains available for placement, drawing or mode cycling |
+| One-shot modelling/repair commands | No armed session to exit |
+
+Validation: **133 focused tests PASS**. Actual Array owner axis/Free arrow drag,
+preview/source separation and Cancel; native/Pencil duplicate exit and virtual
+preview hit protection; Inset finish's synchronous value/history event and scoped
+Repeat; original Object/Modifier node movement/restoration and disclosure; retained
+.731 Sweep/Slide/Bevel/navigation/session checks. Full suite **1285 / 1008 PASS /
+277 FAIL**, versus fresh .731 **1274 / 994 / 280**: no new failure names; three
+historical Array pin failures resolved. Existing historical source/pin/VM failures
+are not presented as green. All **280 source modules syntax PASS**, diff whitespace
+check PASS. Cloud WebGL cannot substantiate iPad/Pencil rendering; device checks below.
+
+Protect Multi transform 0.36.1.0, Loop Cut .715, frozen Beta 3/4/5, existing history
+and navigation. Main .732 only extends existing background routing; Face Direct's
+geometry remains unchanged except committed Inset value metadata. Changed shared
+layout clients/imports are .732; Sweep kernel/owner remains .731.
+
+Next: test .732 grouped changes; then resume Beta 6 device release checklist.
+No unrelated feature work or inferred release acceptance.
+
 ## New-chat starter prompt
 
 Continue current main of CrisBezz/BoxLab. Repository is the source of truth.
@@ -7,11 +70,11 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.731**. Parent .730 `12f00e4fc06b0d1fbb8ce0d8eb897c05d0e76d38`.
+Previous release: **v0.36.18.731**. Parent .730 `12f00e4fc06b0d1fbb8ce0d8eb897c05d0e76d38`.
 Quick pre-finalization build follows user's EDITED prompt: Face/Edge Sweep popup,
 persistent Edge Slide until Done/background, Edge/Vertex popup blue preview while
 retaining existing in-window direct Bevel. .730 device checks remain underway;
-no .730/.731 PASS or Beta6 release acceptance inferred.
+User subsequently PASS .731; no Beta6 release acceptance inferred.
 
 .731 changes:
 - Radial Face/Edge Sweep calls existing Sweep selection-capture owner directly;

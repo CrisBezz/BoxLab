@@ -30,12 +30,6 @@ function ensureUI(){
         <div id="viewportRenderLooks" class="viewport-render-grid"></div>
       </div>
       <div class="viewport-menu-section">
-        <div class="viewport-menu-label">Objects &amp; Modifiers</div>
-        <div class="viewport-render-grid">
-          <button type="button" id="viewObjectListBtn" style="grid-column:span 2" title="Open Object mode and the object list">Object List</button>
-        </div>
-      </div>
-      <div class="viewport-menu-section">
         <div class="viewport-menu-label">Diagnostics</div>
         <div class="viewport-render-grid">
           <button type="button" id="gestureDebugToggle">Gesture Debug</button>
@@ -48,7 +42,10 @@ function ensureUI(){
   focusButton.id='focusViewBtn';
   focusButton.textContent='Focus';
   focusButton.title='Toggle Focus View';
-  topActions?.append(focusButton);
+  const objectButton=document.createElement('button');objectButton.type='button';objectButton.id='objectBrowserBtn';
+  objectButton.title='Object Browser';objectButton.setAttribute('aria-label','Object Browser');objectButton.setAttribute('aria-expanded','false');objectButton.setAttribute('aria-controls','objectBrowserPanel');
+  objectButton.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();activateObjectListFromView();});
+  topActions?.append(focusButton,objectButton);
   topActions?.append(wrap);
   const style=document.createElement('style');
   style.textContent=`
@@ -131,41 +128,37 @@ function syncFocusViewButton(){
   if(!button.dataset.iconAction)button.textContent=label;
   button.setAttribute('aria-pressed',focusViewOn()?'true':'false');
 }
-// Reuse original Objects and Modifiers drawers; Focus reveals these two children.
+// Move the original Objects and Modifiers nodes into a right viewport panel.
 let focusObjectListOpen=false,objectsDrawerWasOpen=false,modifiersDrawerWasOpen=false;
+let objectBrowserPanel=null,drawerHomes=[];
 function objectMode(){return document.querySelector('#selectionModes button.active')?.dataset.mode==='object';}
+function browserButtonState(){const button=document.querySelector('#objectBrowserBtn');button?.setAttribute('aria-expanded',String(focusObjectListOpen));button?.classList.toggle('active',focusObjectListOpen);}
 function closeFocusObjectList(){
-  document.documentElement.classList.remove('boxlab-focus-object-list');
   if(focusObjectListOpen){
     const drawer=document.querySelector('#objectsDrawer'),modifiers=document.querySelector('#modifiersDrawer');
-    if(drawer)drawer.open=objectsDrawerWasOpen;
-    if(modifiers)modifiers.open=modifiersDrawerWasOpen;
+    if(drawer)drawer.open=objectsDrawerWasOpen;if(modifiers)modifiers.open=modifiersDrawerWasOpen;
+    for(const {node,parent,next} of drawerHomes){if(next?.parentNode===parent)parent.insertBefore(node,next);else parent?.appendChild(node);}
   }
-  focusObjectListOpen=false;
+  drawerHomes=[];focusObjectListOpen=false;if(objectBrowserPanel)objectBrowserPanel.hidden=true;browserButtonState();
 }
 function toggleObjectList(){
   const drawer=document.querySelector('#objectsDrawer'),modifiers=document.querySelector('#modifiersDrawer');
   if(!objectMode()||!drawer)return false;
-  if(!focusViewOn()){drawer.open=!drawer.open;if(drawer.open&&modifiers)modifiers.open=false;return true;}
   if(focusObjectListOpen){closeFocusObjectList();return true;}
-  objectsDrawerWasOpen=drawer.open;
-  modifiersDrawerWasOpen=!!modifiers?.open;
-  if(modifiers)modifiers.open=false;
-  focusObjectListOpen=true;drawer.open=true;
-  document.documentElement.classList.add('boxlab-focus-object-list');
-  return true;
+  if(!objectBrowserPanel){
+    objectBrowserPanel=document.createElement('section');objectBrowserPanel.id='objectBrowserPanel';objectBrowserPanel.setAttribute('aria-label','Objects and Modifiers');
+    document.querySelector('#viewportWrap')?.appendChild(objectBrowserPanel);
+  }
+  objectsDrawerWasOpen=drawer.open;modifiersDrawerWasOpen=!!modifiers?.open;
+  const nodes=[drawer,modifiers].filter(Boolean);drawerHomes=nodes.map(node=>({node,parent:node.parentNode,next:node.nextSibling}));
+  nodes.forEach(node=>objectBrowserPanel.appendChild(node));drawer.open=true;if(modifiers)modifiers.open=false;
+  focusObjectListOpen=true;objectBrowserPanel.hidden=false;browserButtonState();return true;
 }
-globalThis.__boxlabObjectListViewport={
-  toggle:toggleObjectList,
-  visible:()=>objectMode()&&(focusViewOn()?focusObjectListOpen:!!document.querySelector('#objectsDrawer')?.open),
-  available:()=>!!document.querySelector('#objectsDrawer'),
-  close:closeFocusObjectList
-};
-document.querySelectorAll('#selectionModes button[data-mode]').forEach(button=>button.addEventListener('click',()=>{
-  if(button.dataset.mode!=='object')closeFocusObjectList();
-}));
+globalThis.__boxlabObjectListViewport={toggle:toggleObjectList,visible:()=>focusObjectListOpen,available:()=>!!document.querySelector('#objectsDrawer'),close:closeFocusObjectList};
+document.querySelectorAll('#selectionModes button[data-mode]').forEach(button=>button.addEventListener('click',()=>{if(button.dataset.mode!=='object')closeFocusObjectList();}));
+document.addEventListener('keydown',event=>{if(event.key==='Escape')closeFocusObjectList();});
+window.addEventListener('boxlab-tool-session-change',event=>{if(event.detail?.active)closeFocusObjectList();});
 function toggleFocusView(){
-  closeFocusObjectList();
   document.documentElement.classList.toggle('boxlab-focus-view');
   syncFocusViewButton();
   window.dispatchEvent(new Event('resize'));
@@ -246,10 +239,10 @@ document.addEventListener('pointerdown',event=>{
 const focusViewStyle=document.createElement('style');
 focusViewStyle.textContent=`
 html.boxlab-focus-view #viewportWrap > .floating-panel.left-panel{display:none!important}
-html.boxlab-focus-view.boxlab-focus-object-list #viewportWrap > .floating-panel.left-panel{display:block!important}
-html.boxlab-focus-view.boxlab-focus-object-list #viewportWrap > .floating-panel.left-panel > :not(#objectsDrawer):not(#modifiersDrawer){display:none!important}
-html.boxlab-focus-view.boxlab-focus-object-list #objectsDrawer{margin:0 0 8px}
-html.boxlab-focus-view.boxlab-focus-object-list #modifiersDrawer{margin:0}
+#objectBrowserPanel[hidden]{display:none!important}
+#objectBrowserPanel{position:absolute;right:max(8px,env(safe-area-inset-right));top:8px;z-index:133;width:min(340px,calc(100% - 16px));max-height:calc(100% - 24px);overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y;padding:8px;box-sizing:border-box;background:rgba(20,23,30,.98);border:1px solid #ffffff30;border-radius:12px;box-shadow:0 10px 28px #0006}
+#objectBrowserPanel #objectsDrawer{margin:0 0 8px}
+#objectBrowserPanel #modifiersDrawer{margin:0}
 html.boxlab-focus-view #viewportWrap > #selectionModes{left:max(8px,env(safe-area-inset-left))!important}
 html.boxlab-focus-view .statusbar{left:10px!important}
 `;

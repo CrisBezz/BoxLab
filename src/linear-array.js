@@ -32,7 +32,7 @@ controls.innerHTML=`
     <input id="linearArrayCount" type="range" min="2" max="12" value="2" step="1"/>
     <output id="linearArrayCountOut">2</output>
   </label>
-  <div class="drawer-hint">Drag the highlighted END copy in the viewport to set the full array vector.</div>
+  <div class="drawer-hint">Drag the END copy. X/Y/Z places it on that axis; Free allows a free endpoint or arrow-constrained movement.</div>
   <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
     <button id="linearArrayCancelBtn" type="button">Cancel</button>
     <button id="linearArrayApplyBtn" class="boxlab-tool-session-primary" type="button">Apply Array</button>
@@ -128,6 +128,15 @@ function buildPreview(){
     fill.renderOrder=isEndpoint?12:10;wire.renderOrder=isEndpoint?13:11;
     group.add(fill,wire);
   }
+  const center=new THREE.Box3().setFromPoints(object.mesh.vertices).getCenter(new THREE.Vector3()).add(endpoint);
+  const length=Math.max(.2,(camera()?.position.distanceTo(center)||5)*.12);
+  for(const [axis,color] of [['x',0xef6b72],['y',0x71d984],['z',0x719eef]]){
+    if(moveMode!=='free'&&moveMode!==axis)continue;
+    const direction=new THREE.Vector3();direction[axis]=1;
+    const arrow=new THREE.ArrowHelper(direction,center,length,color,length*.24,length*.12);
+    arrow.traverse(node=>{node.userData.arrayAxis=axis;node.renderOrder=15;if(node.material){node.material.depthTest=false;node.material.depthWrite=false;}});
+    group.add(arrow);
+  }
   preview=group;
   preview.name='BoxLab Linear Array Endpoint Preview';
   preview.userData.boxlabLinearArrayPreview=true;
@@ -162,26 +171,33 @@ function worldPointOnViewPlane(event,plane){
   raycaster.setFromCamera(pointer,cam);
   return raycaster.ray.intersectPlane(plane,new THREE.Vector3());
 }
+function hitPreview(event){
+  if(!previewArmed||!preview||!camera()||!pointerNdc(event))return null;
+  raycaster.setFromCamera(pointer,camera());
+  raycaster.params.Line.threshold=Math.max(.015,(camera().position.distanceTo(new THREE.Box3().setFromPoints(activeObject().mesh.vertices).getCenter(new THREE.Vector3()).add(endpoint)))*.006);
+  preview.updateMatrixWorld(true);
+  const hits=raycaster.intersectObject(preview,true);
+  return hits.find(item=>item.object?.userData?.arrayAxis)||hits.find(item=>item.object?.userData?.arrayEndpoint===true)||null;
+}
 function beginEndpointDrag(event){
   if(event.target!==canvas||!previewArmed||!preview||endpointDrag||(event.pointerType==='mouse'&&event.button!==0))return false;
   const cam=camera();
   if(!cam||!pointerNdc(event))return false;
-  raycaster.setFromCamera(pointer,cam);
-  const hit=raycaster.intersectObject(preview,true).find(item=>item.object?.userData?.arrayEndpoint===true);
+  const hit=hitPreview(event);
   if(!hit)return false;
 
   const ctl=orbitControls();
   const drag={
     pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,
-    startEndpoint:endpoint.clone(),controlsWereEnabled:ctl?.enabled!==false,mode:moveMode
+    startEndpoint:endpoint.clone(),controlsWereEnabled:ctl?.enabled!==false,mode:hit.object?.userData?.arrayAxis||moveMode
   };
-  if(moveMode==='free'){
+  if(drag.mode==='free'){
     const normal=cam.getWorldDirection(new THREE.Vector3()).normalize();
     drag.plane=new THREE.Plane().setFromNormalAndCoplanarPoint(normal,hit.point);
     drag.startWorld=worldPointOnViewPlane(event,drag.plane);
     if(!drag.startWorld)return false;
   }else{
-    const axisVector=moveMode==='y'?new THREE.Vector3(0,1,0):moveMode==='z'?new THREE.Vector3(0,0,1):new THREE.Vector3(1,0,0);
+    const axisVector=drag.mode==='y'?new THREE.Vector3(0,1,0):drag.mode==='z'?new THREE.Vector3(0,0,1):new THREE.Vector3(1,0,0);
     const projected=screenAxis(hit.point,axisVector);
     if(!projected)return false;
     drag.axisVector=axisVector;drag.axisX=projected.x;drag.axisY=projected.y;drag.worldPerPixel=projected.worldPerPixel;
@@ -298,8 +314,11 @@ function installPenRange(input,onValue){
 }
 
 moveButtons.forEach(control=>control.addEventListener('click',()=>{
+  endEndpointDrag();
   moveMode=control.dataset.arrayMove;
+  if(moveMode!=='free'){const distance=Math.max(endpoint.length(),.01);endpoint.set(0,0,0);endpoint[moveMode]=distance;}
   moveButtons.forEach(b=>b.classList.toggle('active',b===control));
+  if(previewArmed)buildPreview();
   if(previewArmed)setStatus(`Array preview • move END copy (${moveMode.toUpperCase()}) • ${endpointText()}`);
 }));
 installPenRange(countInput,()=>{syncCount();if(previewArmed)buildPreview();});
@@ -311,6 +330,7 @@ canvas?.addEventListener('pointercancel',finishEndpointDrag,true);
 launchButton?.addEventListener('click',()=>{
   const object=activeObject();
   if(!object||mode()!=='object'||object.locked||object.kind==='reference'||previewArmed)return;
+  moveMode='free';moveButtons.forEach(b=>b.classList.toggle('active',b.dataset.arrayMove==='free'));
   endpoint.set(2.5,0,0);
   if(countInput)countInput.value='2';
   syncCount();
@@ -337,6 +357,7 @@ globalThis.__boxlabLinearArray={
   get active(){return previewArmed;},
   get dragging(){return!!endpointDrag;},
   get endpoint(){return endpoint.clone();},
+  ownsPoint:event=>!!hitPreview(event),
   rebuild:buildPreview,
   cancel:cancelPreview
 };

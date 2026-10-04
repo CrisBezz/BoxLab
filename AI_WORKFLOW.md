@@ -212,3 +212,14 @@ complete validation, update repository and publish to GitHub Pages. Always finis
 by updating handover/history documents and telling the user the build is ready for
 testing. Include a short manual test list; distinguish automated checks from iPad
 hands-on checks. Publishing is already authorized and requires no repeat question.
+
+## Accepted popup/browser/background refinement — .732
+
+User PASS .731 and requested one bundled build. Content-sized popups should have
+small comfortable packing (shared 7px/8px), retaining variable widths. Object Browser
+uses the original icon/Objects/Modifiers controls on the top bar in the order Frame
+All, Undo, Redo, Focus, Object Browser, VIEW; browser opens on the right under icons,
+with Modifiers initially collapsed. This browser is the user-directed exception to
+top-centre tool popup placement. Use existing session exit owners through semantic
+background taps; preserve placement/drawing tools' empty-space input. Audit policy
+and protected .724 tap/hold behavior are recorded in current AI_HANDOFF.md.

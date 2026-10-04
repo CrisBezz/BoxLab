@@ -133,5 +133,6 @@ document.addEventListener('click',event=>{
 // Expose lifecycle state only; the existing preview/history owner remains authoritative.
 globalThis.__boxlabFaceBridgePreview={
   active:()=>!!session,
+  cancel:()=>cancelPreview(),
   state:()=>({active:!!session,index:session?.index??0,count:session?.plans?.length||0})
 };

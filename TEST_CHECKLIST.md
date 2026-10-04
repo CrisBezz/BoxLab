@@ -3473,3 +3473,30 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Vertex Bevel Width/exact shows blue candidate; Apply commits once and closes; Cancel retains original geometry/selection; existing in-window/Pencil direct bevel still works. Vertex has Width only, no invented Segments control.
 - [ ] Bevel preview never overwrites source after geometry/active-object/mode/lock changes; preview resources dispose on exit; Undo/Redo each committed operation once.
 - [ ] Protected Face Bevel blue preview/Apply/Cancel, navigation, Lasso/shorttap/500ms hold, compact panels and Object Multi remain intact.
+
+
+## v0.36.18.732 — grouped iPad checks (awaiting device PASS)
+
+.731 user PASS recorded. Automated:133 focused pass; full1285/1008/277, no new
+failure names versus .731; all280 module syntax pass. No .732 device PASS inferred.
+
+1. Open Split and several sparse/larger tool popups in normal and Focus view:
+   small comfortable edge packing, variable width, legible hint and reachable actions.
+2. Split an edge, then background-tap: tool closes, split and selection remain;
+   Undo/Redo restores the edit. Repeat with Knife/Align/Slide/Bevel and idle preview
+   Cancel. Orbit/pan must not close a tool; Vertex Add still places a floating vertex.
+3. Array: Y puts END above source; X/Z place on their axes. Drag END on each axis,
+   change Count, Cancel (source unchanged), Apply then one scene Undo/Redo. Free
+   shows XYZ arrows; body drags freely and arrow drag changes only that coordinate.
+4. Extrude then open Inset: no Repeat Extrude/Bevel label in Inset. Complete an
+   inset: Repeat Inset enables and replays its distance on another Face. Done and
+   background close preserve committed edits and original selection/history behavior.
+5. Verify top icons Frame All / Undo / Redo / Focus / Object Browser / VIEW. Open
+   browser from Face and empty Object selection, list appears on right under icons;
+   original object selection/management work; Modifiers starts closed and expands.
+   Close/reopen, change mode, and test normal/Focus layout and scrolling.
+6. Protected regression: Pencil lasso + finger orbit/pan/pinch, short background
+   deselect/Lasso-off, stationary long-hold invert, two-/three-finger Undo/Redo,
+   Loop Cut, Multi Move/Rotate/Scale, .731 Sweep and Bevel previews.
+
+Background policy/exceptions and owner audit are recorded in AI_HANDOFF.md.

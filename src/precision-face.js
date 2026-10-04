@@ -38,6 +38,7 @@ function commitOperation(tool,value,source='drag'){
   const number=Number(value);if((tool!=='extrude'&&tool!=='inset')||!Number.isFinite(number))return null;
   const saved={tool,value:number,source,version:'0.36.18.518'};
   globalThis.__boxlabLastFaceOperation=saved;
+  (globalThis.__boxlabLastFaceOperations??={})[tool]=saved;
   input.value=number.toFixed(3);
   readout.textContent=`Last ${tool==='extrude'?'Extrude':'Inset'} • ${number>=0?'+':''}${number.toFixed(3)}`;
   document.dispatchEvent(new CustomEvent('boxlab-face-value-committed',{detail:{...saved}}));

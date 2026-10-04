@@ -1,4 +1,4 @@
-import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.718';
+import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.732';
 const svg=paths=>'<svg viewBox="0 0 24 24" aria-hidden="true">'+paths+'</svg>';
 export function installViewportToolbarControls(doc=document){
  const wrap=doc.querySelector('#viewportWrap'),modes=doc.querySelector('#selectionModes');
@@ -15,9 +15,11 @@ export function installViewportToolbarControls(doc=document){
  wrap.append(bar);
  const oldSnap=doc.querySelector('.quick-snap');if(oldSnap&&!oldSnap.querySelector('input'))oldSnap.remove();
  function decorate(){
-  for(const [id,action,title] of [['undoBtn','undo','Undo'],['redoBtn','redo','Redo'],['frameAllBtn','frame','Frame all'],['focusViewBtn','focus','Focus view']]){
+  for(const [id,action,title] of [['undoBtn','undo','Undo'],['redoBtn','redo','Redo'],['frameAllBtn','frame','Frame all'],['focusViewBtn','focus','Focus view'],['objectBrowserBtn','objects','Object Browser']]){
    const b=doc.querySelector('#'+id);if(!b||b.dataset.iconAction)continue;b.dataset.iconAction=action;b.innerHTML=svg(gizmoIcons[action]);b.title=title;b.setAttribute('aria-label',title);
   }
+  const top=doc.querySelector('.top-actions');
+  if(top){const order=['frameAllBtn','undoBtn','redoBtn','focusViewBtn','objectBrowserBtn','viewModes'];let position=0;for(const id of order){const b=doc.querySelector('#'+id);if(!b)continue;if(top.children[position]!==b)top.insertBefore(b,top.children[position]||null);b.style.order=String(position++);}}
   const lasso=doc.querySelector('#lassoSelectBtn');if(lasso&&lasso.parentElement!==bar){lasso.innerHTML=svg(paths.lasso);lasso.title='LASSO — Pencil/mouse draws, finger navigates';lasso.setAttribute('aria-label','Lasso selection');bar.append(lasso);}
  }
  decorate();const observer=new MutationObserver(decorate);observer.observe(doc.body,{childList:true,subtree:true});

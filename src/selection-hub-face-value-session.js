@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.730';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 // Contextual settings proxy; precision-face and repeat-face-previous own operations.
 const wrap=document.querySelector('#viewportWrap');
 let tool=null,raf=0,launchMesh=null,launchObject=null;
@@ -22,11 +22,13 @@ function sync(){
   input.disabled=busy();
   panel.querySelector('.shfv-done').disabled=busy();
   apply.disabled=busy()||!selected().length||!globalThis.__boxlabPrecisionFace?.applyFor||input.value.trim()===''||!Number.isFinite(Number(input.value));
-  const source=document.querySelector('#repeatFacePreviousBtn');
-  repeat.disabled=busy()||!source||source.disabled||!globalThis.__boxlabRepeatFacePrevious;
-  repeat.textContent=source?.textContent||'Repeat Previous';
-  repeat.classList.toggle('active',!!globalThis.__boxlabRepeatFacePrevious?.isArmed?.());
-  repeat.setAttribute('aria-pressed',String(!!globalThis.__boxlabRepeatFacePrevious?.isArmed?.()));
+  const owner=globalThis.__boxlabRepeatFacePrevious,op=owner?.last?.(tool);
+  const matching=op?.tool===tool;
+  repeat.disabled=busy()||!matching||!owner?.arm;
+  const on=matching&&!!owner?.isArmed?.();
+  repeat.textContent=matching?`${on?'REPEAT ON':'Repeat'} ${tool==='inset'?'Inset':'Extrude'} ${Number(op.value).toFixed(3)}`:`Repeat ${tool==='inset'?'Inset':'Extrude'}`;
+  repeat.classList.toggle('active',on);
+  repeat.setAttribute('aria-pressed',String(on));
   panel.querySelector('.shfv-readout').textContent=document.querySelector('#precisionFaceReadout')?.textContent||'Drag Faces or enter a value in model units';
   placeToolSessionPanel(panel);
   raf=requestAnimationFrame(sync);
@@ -53,7 +55,7 @@ function applyExact(){
 }
 apply.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();applyExact();});
 input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();applyExact();input.blur();}});
-repeat.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();sync();if(tool&&!repeat.disabled)globalThis.__boxlabRepeatFacePrevious?.arm?.();sync();});
+repeat.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();sync();if(tool&&!repeat.disabled)globalThis.__boxlabRepeatFacePrevious?.arm?.(tool);sync();});
 panel.querySelector('.shfv-done').addEventListener('click',event=>{event.preventDefault();event.stopPropagation();close();});
 window.addEventListener('boxlab-selection-hub-tool',event=>{
   const next=event.detail?.mode==='face'&&['Extrude','Inset'].includes(event.detail?.tool)?event.detail.tool.toLowerCase():null;

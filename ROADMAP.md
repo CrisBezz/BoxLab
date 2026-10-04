@@ -4,6 +4,14 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## Current bundled refinement — .732, 2026-10-05
+
+.731 explicitly PASS. .732 implements popup packing, audited background exits,
+Array axis/Free handles, operation-scoped Inset Repeat, and top-bar/right-side
+Object Browser with original Modifiers. Automated checks complete; grouped iPad
+acceptance pending (TEST_CHECKLIST.md). Resume Beta 6 release checks after feedback;
+no Beta 6 freeze or unrelated feature work.
+
 ## User-directed priority — updated 2026-10-04
 
 Radial menus contain active modelling/repair tools only. Selection is handled by

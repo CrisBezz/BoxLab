@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.730';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 const drawer=document.querySelector('#editDrawer');
 const contentRoot=drawer?.querySelector(':scope > .drawer-content')||drawer?.querySelector('.drawer-content');
 const summary=drawer?.querySelector(':scope > summary')||drawer?.querySelector('summary');

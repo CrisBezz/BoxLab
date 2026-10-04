@@ -8,7 +8,7 @@ function fixture(){
   const element=()=>({style:{},value:'',disabled:false,hidden:true,offsetHeight:140,textContent:'',listeners:{},classList:{toggle(){}},appendChild(){},setAttribute(){},addEventListener(type,fn){this.listeners[type]=fn;},querySelector(selector){if(!fields.has(selector))fields.set(selector,element());return fields.get(selector);},blur(){}});
   const wrap=Object.assign(element(),{clientWidth:1000,clientHeight:600});
   const source=Object.assign(element(),{textContent:'Repeat Extrude +0.200'});
-  const context={placeToolSessionPanel(){},document:{querySelector(selector){if(selector==='#viewportWrap')return wrap;if(selector==='#repeatFacePreviousBtn')return source;if(selector==='#precisionFaceReadout')return{textContent:'Last Extrude +0.200'};if(selector==='#extrudeBtn')return{click(){calls.push('disarm-extrude');direct=null;}};},createElement:element,head:element()},window:{addEventListener(type,fn){handlers.set(type,fn);},dispatchEvent:event=>events.push(event)},CustomEvent:class{constructor(type,options){Object.assign(this,{type,detail:options.detail});}},requestAnimationFrame:()=>1,cancelAnimationFrame(){},__boxlabSelectionBridge:{mode:()=>mode,indices:()=>ids},__boxlabPrecisionFace:{value:()=>.2,applyFor:(tool,value)=>calls.push(['exact',tool,value])},__boxlabRepeatFacePrevious:{isArmed:()=>armed,arm:()=>{armed=!armed;calls.push('repeat');},disarm:()=>{armed=false;calls.push('repeat-off');}},__boxlabFaceDirect:{tool:()=>direct,clearTransformSuspension:()=>calls.push('clear-suspension')},__boxlabTotalGizmo:{element:{style:{left:'500px',top:'300px'}}}};
+  const context={placeToolSessionPanel(){},document:{querySelector(selector){if(selector==='#viewportWrap')return wrap;if(selector==='#repeatFacePreviousBtn')return source;if(selector==='#precisionFaceReadout')return{textContent:'Last Extrude +0.200'};if(selector==='#extrudeBtn')return{click(){calls.push('disarm-extrude');direct=null;}};},createElement:element,head:element()},window:{addEventListener(type,fn){handlers.set(type,fn);},dispatchEvent:event=>events.push(event)},CustomEvent:class{constructor(type,options){Object.assign(this,{type,detail:options.detail});}},requestAnimationFrame:()=>1,cancelAnimationFrame(){},__boxlabSelectionBridge:{mode:()=>mode,indices:()=>ids},__boxlabPrecisionFace:{value:()=>.2,applyFor:(tool,value)=>calls.push(['exact',tool,value])},__boxlabRepeatFacePrevious:{last:tool=>({tool,value:.2}),isArmed:()=>armed,arm:()=>{armed=!armed;calls.push('repeat');},disarm:()=>{armed=false;calls.push('repeat-off');}},__boxlabFaceDirect:{tool:()=>direct,clearTransformSuspension:()=>calls.push('clear-suspension')},__boxlabTotalGizmo:{element:{style:{left:'500px',top:'300px'}}}};
   vm.runInNewContext(fs.readFileSync(new URL('../src/selection-hub-face-value-session.js',import.meta.url),'utf8').replace(/^import .*;\n/,''),context);
   const launch=tool=>handlers.get('boxlab-selection-hub-tool')({detail:{mode:'face',tool}});
   const click=selector=>fields.get(selector).listeners.click({preventDefault(){},stopPropagation(){}});
@@ -33,4 +33,11 @@ test('semantic background tap completes the session through the same Done path',
   assert.equal(f.context.__boxlabFaceValueViewportSession.active(),false);
   assert.ok(f.calls.includes('disarm-extrude'));
   assert.equal(f.events.at(-1).detail.tool,'Extrude');
+});
+
+test('Inset popup scopes Repeat to Inset even after an Extrude commit',()=>{
+ const f=fixture();f.context.__boxlabRepeatFacePrevious.last=tool=>tool==='extrude'?{tool:'extrude',value:.5}:null;f.launch('Inset');
+ assert.equal(f.fields.get('.shfv-repeat').disabled,true);assert.equal(f.fields.get('.shfv-repeat').textContent,'Repeat Inset');f.click('.shfv-repeat');assert.ok(!f.calls.includes('repeat'));
+ f.context.__boxlabRepeatFacePrevious.last=tool=>({tool,value:.125});f.context.__boxlabFaceValueViewportSession.sync();assert.equal(f.fields.get('.shfv-repeat').disabled,false);assert.equal(f.fields.get('.shfv-repeat').textContent,'Repeat Inset 0.125');
+ let requested;f.context.__boxlabRepeatFacePrevious.arm=tool=>requested=tool;f.click('.shfv-repeat');assert.equal(requested,'inset');
 });

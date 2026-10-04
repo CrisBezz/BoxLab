@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.730';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 // Viewport proxy for the existing Face Bridge preview owner.
 const wrap=document.querySelector('#viewportWrap');
 let launched=false,raf=0;
@@ -42,4 +42,4 @@ window.addEventListener('boxlab-face-bridge-preview-change',event=>{
   if(!event.detail?.active)launched=false;
   sync();
 });
-globalThis.__boxlabFaceBridgeViewportSession={active:()=>launched&&!panel.hidden,element:panel,sync};
+globalThis.__boxlabFaceBridgeViewportSession={active:()=>launched&&!panel.hidden,element:panel,cancel:()=>globalThis.__boxlabFaceBridgePreview?.cancel?.(),sync};

@@ -93,3 +93,13 @@ test('731 existing background owner routes touch and Pencil taps to armed Slide 
  h.send('pointerdown',1000);h.fireHold();assert.deepEqual(h.ids,[1,3]);h.send('pointerup',1070);assert.equal(events.length,1);assert.equal(events[0].type,'boxlab-viewport-background-tap');assert.deepEqual(h.ids,[1,3]);
  const s=read('main.js'),a=s.indexOf("window.addEventListener('boxlab-pencil-background-tap'"),b=s.indexOf("canvas.addEventListener('pointermove'",a);let pencil;h.c.window.addEventListener=(t,f)=>pencil=f;vm.runInContext(s.slice(a,b),h.c);pencil({detail:{pointerId:2,timeStamp:1400}});assert.equal(events.length,2);assert.equal(events[1].type,'boxlab-viewport-background-tap');assert.deepEqual(h.ids,[1,3]);
 });
+
+test('732 native and Pencil releases exit idle tool once and preserve selection after owner closes',()=>{
+ const h=nativeOwner();let active=true,exits=0;h.c.__boxlabToolBackgroundExit={active:()=>active,ownsPoint:()=>false};h.c.CustomEvent=class{constructor(type,{detail}){Object.assign(this,{type,detail});}};h.c.window.dispatchEvent=()=>{active=false;exits++;};
+ const s=read('main.js'),a=s.indexOf("window.addEventListener('boxlab-pencil-background-tap'"),b=s.indexOf("canvas.addEventListener('pointermove'",a);let pencil;h.c.window.addEventListener=(t,f)=>pencil=f;vm.runInContext(s.slice(a,b),h.c);
+ h.send('pointerdown',1000);h.send('pointerup',1070);pencil({detail:{pointerId:1,timeStamp:1070}});assert.equal(exits,1);assert.deepEqual(h.ids,[1,3]);assert.equal(h.armed,true);
+ active=true;h.send('pointerdown',1400);pencil({detail:{pointerId:1,timeStamp:1470}});h.send('pointerup',1470);assert.equal(exits,2);assert.deepEqual(h.ids,[1,3]);
+});
+test('732 virtual Array ghost hits and navigation never trigger background exit or deselection',()=>{
+ for(const ghost of [true,false]){const h=nativeOwner();let exits=0;h.c.__boxlabToolBackgroundExit={active:()=>true,ownsPoint:()=>ghost};h.c.CustomEvent=class{};h.c.window.dispatchEvent=()=>exits++;h.send('pointerdown',1000);if(!ghost)h.send('pointermove',1030,40);h.send('pointerup',1070);assert.equal(exits,0);assert.deepEqual(h.ids,[1,3]);}
+});

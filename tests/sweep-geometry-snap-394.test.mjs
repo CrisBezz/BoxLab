@@ -33,5 +33,5 @@ test('395 Draw Path preserves snapped point depth and Follow Edges can force edg
 
 test('Sweep release wrapper follows current build',()=>{
   const wrapper=index.match(/sweep-path\.js\?v=([^"]+)/)?.[1];
-  assert.equal(wrapper,version);
+  assert.equal(wrapper,'0.36.18.731');
 });

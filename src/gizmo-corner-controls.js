@@ -10,7 +10,7 @@ export const gizmoIcons={
 };
 export function mountGizmoCornerControls(root,{openTools,currentMode,isBusy=()=>false}={}){
  const doc=root.ownerDocument||document,controls=new Map(),groups=[];
- const clusters=[['tl',[['tools','Radial tools']]],['tr',[['focus','Focus view'],['frame','Frame all']]],['br',[['undo','Undo'],['redo','Redo']]],['bl',[['multi','Object multi-select'],['objects','Object list']]]];
+ const clusters=[['tl',[['tools','Radial tools']]],['tr',[['focus','Focus view'],['frame','Frame all']]],['br',[['undo','Undo'],['redo','Redo']]],['bl',[['multi','Object multi-select']]]];
  for(const [corner,items] of clusters){
   const group=doc.createElement('div');group.className='tg-corner tg-corner-'+corner;group.dataset.corner=corner;
   for(const [action,label] of items){const b=doc.createElement('button');b.type='button';b.className='tg-shortcut';b.dataset.gizmoAction=action;b.title=label;b.setAttribute('aria-label',label);b.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+gizmoIcons[action]+'</svg>';group.appendChild(b);controls.set(action,b);

@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.730';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 
 // Presentation only: persistent Loop/Split stay with their existing gesture owners.
 const panel=document.createElement('div');
@@ -59,9 +59,9 @@ window.addEventListener('boxlab-selection-hub-tool',event=>{
   close({disarm:false,complete:false});
   session={tool,mesh:globalThis.__boxlabBridgeState?.mesh};
   panel.querySelector('.ets-title').textContent=tool==='Loop'?'Loop Cut':'Split';
-  panel.querySelector('.ets-note').textContent=tool==='Loop'?'Tap/drag an edge, then adjust Loop Slide. EXACT confirms; tap another edge for another cut. Background tap exits.':'Tap two non-adjacent boundary edges of the same face. Done exits; completed splits are kept.';
+  panel.querySelector('.ets-note').textContent=tool==='Loop'?'Tap/drag an edge, then adjust Loop Slide. EXACT confirms; tap another edge for another cut. Background tap exits.':'Tap two non-adjacent boundary edges of the same face. Done or background tap exits; completed splits are kept.';
   sync();
 });
 globalThis.__boxlabEdgeViewportSession={active:()=>!!session,loopActive:()=>session?.tool==='Loop',close,sync,element:panel};
 
-window.addEventListener('boxlab-viewport-background-tap',()=>{if(session?.tool==='Loop'&&!main()?.busy?.()){if(globalThis.__boxlabLoopCutCommit?.pending?.())globalThis.__boxlabLoopCutCommit?.commitCurrent?.();if(session)session.mesh=globalThis.__boxlabBridgeState?.mesh;close();}});
+window.addEventListener('boxlab-viewport-background-tap',()=>{if(session&&!main()?.busy?.()){if(session.tool==='Loop'&&globalThis.__boxlabLoopCutCommit?.pending?.())globalThis.__boxlabLoopCutCommit?.commitCurrent?.();if(session)session.mesh=globalThis.__boxlabBridgeState?.mesh;close();}});

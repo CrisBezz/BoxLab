@@ -16,9 +16,10 @@ function state(){return globalThis.__boxlabBridgeState;}
 function mesh(){return state()?.mesh||null;}
 function precision(){return globalThis.__boxlabPrecisionFace;}
 function faceMode(){return document.querySelector('#selectionModes button[data-mode="face"]');}
-function lastOperation(){
-  const direct=globalThis.__boxlabLastFaceOperation||precision()?.last?.();
-  if(direct&&(direct.tool==='extrude'||direct.tool==='inset')&&Number.isFinite(Number(direct.value))&&Math.abs(Number(direct.value))>1e-9)return{tool:direct.tool,value:Number(direct.value)};
+function lastOperation(tool=null){
+  const saved=tool&&globalThis.__boxlabLastFaceOperations?.[tool];
+  const direct=saved||globalThis.__boxlabLastFaceOperation||precision()?.last?.();
+  if(direct&&(!tool||direct.tool===tool)&&(direct.tool==='extrude'||direct.tool==='inset')&&Number.isFinite(Number(direct.value))&&Math.abs(Number(direct.value))>1e-9)return{tool:direct.tool,value:Number(direct.value)};
   return null;
 }
 function shortLabel(op){return op?`${op.tool==='extrude'?'Extrude':'Inset'} ${op.value>=0?'+':''}${op.value.toFixed(3)}`:'';}
@@ -83,8 +84,8 @@ function disarm(message){
   armed=false;armedOperation=null;forcePaintBurst();
   if(message&&status)status.textContent=message;
 }
-function arm(){
-  const op=lastOperation();
+function arm(tool=null){
+  const op=lastOperation(tool);
   if(!op||!precision()?.applyFor){syncButton();return;}
   if(armed){disarm('Repeat Previous • off');return;}
   const mode=faceMode();if(mode&&!mode.classList.contains('active'))mode.click();

@@ -12,11 +12,11 @@ function installStyle(doc){
  if(doc.getElementById('toolSessionWideStyle'))return;
  const style=doc.createElement('style');style.id='toolSessionWideStyle';
  style.textContent=`
-#viewportWrap [data-wide-tool-panel="true"]{width:max-content!important;max-width:min(720px,calc(100% - 16px))!important;padding:0!important}
+#viewportWrap [data-wide-tool-panel="true"]{width:max-content!important;max-width:min(720px,calc(100% - 16px))!important;padding:7px 8px!important}
 #viewportWrap [data-wide-tool-layout="true"][hidden]{display:none!important}
-#viewportWrap [data-wide-tool-layout="true"]{display:grid!important;grid-template-columns:minmax(0,1fr) max-content!important;gap:4px!important;align-items:start!important}
+#viewportWrap [data-wide-tool-layout="true"]{display:grid!important;grid-template-columns:minmax(0,1fr) max-content!important;gap:8px!important;align-items:start!important}
 #viewportWrap [data-wide-tool-layout="true"]>.ts-wide-body{display:grid!important;grid-template-columns:minmax(0,1fr);gap:4px;min-width:min(22ch,calc(100vw - 120px));align-items:center}
-#viewportWrap [data-wide-tool-layout="true"]>.ts-wide-actions{display:flex!important;flex-direction:column!important;gap:4px!important;align-self:stretch;border-left:1px solid #ffffff24;padding-left:0;min-width:0}
+#viewportWrap [data-wide-tool-layout="true"]>.ts-wide-actions{display:flex!important;flex-direction:column!important;gap:4px!important;align-self:stretch;border-left:1px solid #ffffff24;padding-left:6px;min-width:0}
 #viewportWrap .ts-wide-actions [hidden]{display:none!important}
 #viewportWrap .ts-wide-actions>button{width:100%!important;min-height:36px!important;margin:0!important;flex:none!important;white-space:normal!important}
 #viewportWrap .ts-wide-body>strong,#viewportWrap .ts-wide-body>.boxlab-tool-session-title,#viewportWrap .ts-wide-body>[class$="-head"],#viewportWrap .ts-wide-body>[class$="-title"],#viewportWrap .ts-wide-body>.shs-tabs,#viewportWrap .ts-wide-body>.shs-panel,#viewportWrap .ts-wide-body>.boxlab-tool-session-tabs,#viewportWrap .ts-wide-body>.boxlab-tool-session-panel{grid-column:1/-1}

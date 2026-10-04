@@ -15,5 +15,5 @@ test('533 real Face commits remain sole source of armed operation replacement',(
 });
 
 test('533 runtime loads updated Repeat module',()=>{
-  assert.match(drawer,/repeat-face-previous\.js\?v=0\.36\.18\.533/);
+  assert.match(drawer,/repeat-face-previous\.js\?v=0\.36\.18\.732/);
 });
