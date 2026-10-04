@@ -335,3 +335,11 @@ through selection owners with context guards. 61 targeted PASS; no new failures.
 Minimal-drawer audit in handoff: modifiers, selection depth/filters/bulk controls and
 Object List access with empty selection remain. Keep drawer available; user chooses
 remaining homes after .718 hands-on, no unsolicited radial selection items.
+
+### Lasso / Invert completion refinement — .719
+
+Follow-up to .718: stationary background tap ends Lasso through its original owner
+and existing main completion; semantic/canvas delivery is deduplicated per release.
+No new raw-pointer owner or modelling/history changes. Full regression has identical
+283 failure names to .718 (1219/936/283). Next iPad Lasso/Invert/Multi/navigation
+confirmation and pending .716/.713 checks; retain drawer fallbacks.

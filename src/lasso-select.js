@@ -4,7 +4,7 @@ import * as THREE from 'three';
 // This keeps newly added loose vertices selectable even when a bridge mesh snapshot
 // has not yet caught up. Edge / Face / Object Lasso behavior is unchanged.
 
-const VERSION='0.36.18.152';
+const VERSION='0.36.18.719';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const dock=document.querySelector('#componentSelectionTools .selection-dock');
@@ -40,7 +40,7 @@ function applySelection(poly){const type=mode();if(type==='object'){const ids=ob
 function ensureOverlay(){if(overlay)return;overlay=document.createElementNS('http://www.w3.org/2000/svg','svg');overlay.id='boxlabLassoOverlay';overlay.style.cssText='position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9998;overflow:visible';polyline=document.createElementNS('http://www.w3.org/2000/svg','polyline');polyline.setAttribute('fill','rgba(255,255,255,.06)');polyline.setAttribute('stroke','rgba(255,255,255,.95)');polyline.setAttribute('stroke-width','2');polyline.setAttribute('stroke-linejoin','round');polyline.setAttribute('stroke-linecap','round');overlay.appendChild(polyline);document.body.appendChild(overlay);}
 function draw(points){ensureOverlay();polyline.setAttribute('points',points.map(p=>`${p.x},${p.y}`).join(' '));}
 function clearDraw(){polyline?.setAttribute('points','');}
-function publish(){globalThis.__boxlabLasso={version:VERSION,armed,isArmed:()=>armed,setArmed};}
+function publish(){globalThis.__boxlabLasso={version:VERSION,armed,isArmed:()=>armed,isDrawing:()=>!!gesture,setArmed};}
 function setArmed(next){
   next=!!next;
   if(next)globalThis.__boxlabTransformArming?.disarm?.();
@@ -62,7 +62,22 @@ canvas?.addEventListener('pointerup',endTouchNavigation,true);
 canvas?.addEventListener('pointercancel',endTouchNavigation,true);
 canvas?.addEventListener('pointerdown',event=>{if(!armed||!event.isPrimary||event.button>0||event.pointerType==='touch')return;event.preventDefault();event.stopImmediatePropagation();gesture={id:event.pointerId,points:[{x:event.clientX,y:event.clientY}],start:{x:event.clientX,y:event.clientY}};canvas.setPointerCapture?.(event.pointerId);draw(gesture.points);},true);
 canvas?.addEventListener('pointermove',event=>{if(!gesture||gesture.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const last=gesture.points.at(-1),p={x:event.clientX,y:event.clientY};if(Math.hypot(p.x-last.x,p.y-last.y)<4)return;gesture.points.push(p);draw([...gesture.points,gesture.points[0]]);},true);
-function finish(event,cancel=false){if(!gesture||gesture.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const g=gesture;gesture=null;clearDraw();if(cancel||g.points.length<3||Math.hypot(event.clientX-g.start.x,event.clientY-g.start.y)<10)return;applySelection(g.points);render();}
+function finish(event,cancel=false){
+  if(!gesture||gesture.id!==event.pointerId)return;
+  event.preventDefault();event.stopImmediatePropagation();
+  const g=gesture;gesture=null;clearDraw();
+  try{canvas.releasePointerCapture?.(event.pointerId);}catch{}
+  if(cancel)return;
+  // A stationary press is a selection tap, not an incomplete drawn polygon.
+  // Forward it through the existing background semantic after releasing our claim.
+  const moved=Math.max(...g.points.map(p=>Math.hypot(p.x-g.start.x,p.y-g.start.y)),Math.hypot(event.clientX-g.start.x,event.clientY-g.start.y));
+  if(moved<8){
+    if(!manager()?.pickObject?.(event))window.dispatchEvent(new CustomEvent('boxlab-pencil-background-tap',{detail:{pointerId:event.pointerId,clientX:event.clientX,clientY:event.clientY,source:'lasso'}}));
+    return;
+  }
+  if(g.points.length<3||Math.hypot(event.clientX-g.start.x,event.clientY-g.start.y)<10)return;
+  applySelection(g.points);render();
+}
 canvas?.addEventListener('pointerup',event=>finish(event,false),true);
 canvas?.addEventListener('pointercancel',event=>finish(event,true),true);
 publish();

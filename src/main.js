@@ -532,9 +532,22 @@ function finishVertexHold(event){
 window.addEventListener('pointerup',event=>{finishVertexHold(event);finishFaceHold(event);finishEdgeHold(event);},true);
 window.addEventListener('pointercancel',event=>{finishVertexHold(event);finishFaceHold(event);finishEdgeHold(event);},true);
 const backgroundSelectionTap=createBackgroundSelectionTap();
+// Semantic owners and canvas completion can report the same physical release.
+// Defer expiry to the next task: browsers can run microtasks between listeners.
+const completedBackgroundPointers=new Set();
 window.addEventListener('boxlab-background-tap-cancelled',()=>backgroundSelectionTap.reset());
 function completeBackgroundSelectionTap(point){
-  if(directTool||globalThis.__boxlabToolSession?.isActive?.()||globalThis.__boxlabLasso?.isArmed?.())return;
+  if(directTool||globalThis.__boxlabToolSession?.isActive?.())return;
+  const lasso=globalThis.__boxlabLasso;
+  if(lasso?.isArmed?.()){
+    if(lasso.isDrawing?.()||globalThis.__boxlabObjectManager?.pickObject?.(point))return;
+    lasso.setArmed(false);
+  }
+  if(Number.isInteger(point.pointerId)){
+    if(completedBackgroundPointers.has(point.pointerId))return;
+    completedBackgroundPointers.add(point.pointerId);
+    setTimeout(()=>completedBackgroundPointers.delete(point.pointerId),0);
+  }
   const objectMode=selectionMode==='object',objectSelection=globalThis.__boxlabObjectSelection;
   if(objectMode&&globalThis.__boxlabObjectManager?.pickObject?.(point))return;
   const read=()=>objectMode?[...(objectSelection?.ids||[])]:selectionIndices();

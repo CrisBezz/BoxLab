@@ -7,8 +7,30 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.718**.
-Current focus: .718 combined UI pass and viewport Multi repair, pending hands-on.
+Current release: **v0.36.18.719**.
+Find the .719 release commit in current main history. User explicitly grants standing authorization to publish
+BoxLab builds (2026-10-04); see AI_WORKFLOW.md. Do not ask again for routine releases.
+Current focus: latest Lasso cancellation / double-background Invert refinement,
+pending iPad hands-on. Current release parent is .718 `ad11f377`; locate .719
+release commit in main history. User reports Lasso remained armed on background
+and double-background Invert failed after .718; no .718 PASS inferred.
+.719 repairs existing main completion owner: one physical release can arrive through
+both early semantic and later canvas paths, so pointer IDs are deduplicated until
+next task (not a microtask, which browsers may run between event callbacks).
+Stationary background taps disarm Lasso and run existing clear/seeded Invert flow.
+Lasso's existing drawing owner exposes isDrawing and forwards its stationary
+background completion only after ending the claim/releasing capture. Draws, mesh
+hits and pointercancel remain excluded; no new raw-pointer listener or picker.
+Protected Object background selection retention, Multi, modelling/Loop kernels,
+Face preview and navigation owners unchanged. .719 changes only main/Lasso runtime,
+Lasso child + drawer parent/main/release pins, shell/manifest and handoff/tests.
+Automated validation and publication details are recorded in latest DEV_HISTORY.
+Next: confirm visibly .719; Lasso background finger/Pencil cancellation, single
+component clear / double complement of original set in Face/Edge/Vertex/Object,
+viewport Multi/Boolean and navigation; retain pending .716/.713 hand checks.
+
+## Previous .718 state / pending checks
+Previous .718 combined UI pass and viewport Multi repair remains pending hands-on.
 User reports viewport Multi FAIL while Object Browser works after .717. .717 was
 not hands-on passed. Object selection listener lost taps to transform consumers.
 .718 registers the actual Object activation owner before initialization at window
@@ -102,8 +124,8 @@ Background-selection-tap helper has NO pointer listeners. Receives confirmed tap
 from main/Pencil/Object owners, remembers selection before immediate existing single
 clear. Second nearby tap within360ms calls original component Invert with seed;
 Object Selection owner adds visible-object complement with original seed. Same
-mode/active/context/mesh and unchanged post-first selection required. Session tools
-and armed Lasso are excluded; existing session background completion unchanged.
+mode/active/context/mesh and unchanged post-first selection required. Session tools remain excluded; .719 stationary Lasso background taps disarm it
+before passing through the same completion flow; existing session background completion unchanged.
 Object single background keeps actual Object selection but dismisses gizmo as .682;
 component single tap clears; double inverts original set, not cleared set. No history.
 
@@ -141,8 +163,8 @@ Edge and Vertex**. Preserve this across future ring refinements.
   protected Face/Edge/Vertex session proxies apart from shared Object host ordering.
 - object-radial-session stays .711; Vertex modelling owners/drawer loader .710;
   .708 Face Bevel kernel/direct owner unchanged. multi-object-transform stays .1.0.
-- Manifest/title/data-release-version/visible label/main/refresh pins .718;
-  main and refresh logic unchanged. Loop Cut, modelling kernels, frozen betas untouched.
+- Manifest/title/data-release-version/visible label/main/refresh pins .719;
+  release-refresh logic unchanged; main has the scoped .719 completion repair. Loop Cut, modelling kernels, frozen betas untouched.
 
 ## .712 wide popouts / gizmo redesign
 
@@ -388,4 +410,11 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next .718 UI/Multi and .716 visual confirmation plus remaining .713 Edge checks.
+and give a short realistic manual list after publishing. Next .719 Lasso/Invert and .718 UI/Multi confirmation, .716 visuals and remaining .713 Edge checks.
+
+## User build shortcut / finish contract
+
+`/nextbuild` authorizes the next scoped build, repository update and GitHub Pages
+publication. Finish each build with current handover/history documents and tell
+the user it is ready for testing, with a short realistic manual test list. Standing
+publication authorization is in AI_WORKFLOW.md; do not request it again.

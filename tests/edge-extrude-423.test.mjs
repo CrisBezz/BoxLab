@@ -116,7 +116,8 @@ test('425 Edge Extrude owns Pencil drag while armed and reads shared transform c
   assert.ok(ui.includes("chooseAutoAxis"));
   assert.ok(ui.includes("#transformPrecision,#toolModes,.quick-snap"));
   assert.ok(transform.includes("__boxlabEdgeExtrude?.isArmed?.()"));
-  assert.ok(index.includes('src/transform-upgrade.js?v='+version));
+  // Transform owner is unchanged in .719; its last changed release remains .718.
+  assert.ok(index.includes('src/transform-upgrade.js?v=0.36.18.718'));
 });
 
 

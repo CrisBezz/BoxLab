@@ -79,6 +79,11 @@ For each change:
 
 ## Release publication / cache refresh protocol
 
+Standing user authorization (2026-10-04): **ALWAYS authorised to publish** BoxLab builds.
+Complete validation and handoff updates, then commit/push to main and verify release
+markers without asking for publishing permission again. This applies to BoxLab
+development releases; it does not authorize unrelated external actions.
+
 GitHub Pages + iPad/Safari caching is part of the release surface. A code commit is not considered published until the shell and relevant module cache keys are verified.
 
 For every numbered build:
@@ -201,3 +206,9 @@ positioning owner; preserve original nodes/listeners/IDs and staged visibility.
 Gizmo centre belongs to free transforms. Radial access is the top-left shortcut;
 top-right Focus/Frame All, bottom-right Undo/Redo, bottom-left Object Multi. Reuse
 actual action owners; never implement duplicate history or Multi state.
+
+User shortcut (2026-10-04): `/nextbuild` means proceed with the next scoped build,
+complete validation, update repository and publish to GitHub Pages. Always finish
+by updating handover/history documents and telling the user the build is ready for
+testing. Include a short manual test list; distinguish automated checks from iPad
+hands-on checks. Publishing is already authorized and requires no repeat question.
