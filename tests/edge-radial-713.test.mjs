@@ -9,7 +9,7 @@ test('Edge exposes every existing Active Tool and no selection actions',()=>{
  const edge=ring('edge');
  assert.equal((edge.match(/data-tool-target=/g)||[]).length,19);
  for(const id of ['edgeExtrudeBtn','edgeSlideBtn','bevelBtn','applyCreaseBtn','offsetLoopBtn','bridgeEdgesBtn','dissolveEdgeBtn','deleteEdgeBtn','loopCutBtn','faceSplitBtn','clearCreaseBtn','fillFaceBtn','gridFillBtn','dissolveLoopBtn','joinCoplanarBtn','rotateEdgeBtn','collapseEdgeBtn','componentCircleBtn'])assert.ok(edge.includes('#'+id),id);
- assert.ok(edge.includes("data-sweep-selection-mode='edge'"));assert.doesNotMatch(edge,/#select|growSelection|shrinkSelection/);
+ assert.ok(edge.includes("data-sweep-selection-mode='edge'"));assert.match(gizmo,/mode==='edge'.*__boxlabEdgeViewportSession.*active.*__boxlabSweepViewportSession/);assert.doesNotMatch(edge,/#select|growSelection|shrinkSelection/);
 });
 test('shared tools use the same radial direction and inner/outer tier',()=>{
  const sectors=mode=>[...ring(mode).matchAll(/<button[^>]+data-tool-target="([^"]+)"[^>]*>([^<]+)<\/button>/g)].map(m=>({label:m[2],outer:m[0].includes('tg-tool-outer'),a:Number(m[0].match(/--a:([\d.]+)/)[1])}));

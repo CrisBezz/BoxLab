@@ -1075,7 +1075,7 @@ function sync(){
   root.style.top=`${top}px`;
   placeToolSessionPanel(floatPalette);
   const suppressed=['face','edge','vertex'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
-  root.hidden=(mode==='object'&&!!globalThis.__boxlabObjectRadialSession?.hidesGizmo?.())||(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.())||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
+  root.hidden=(mode==='edge'&&(!!globalThis.__boxlabEdgeViewportSession?.active?.()||!!globalThis.__boxlabSweepViewportSession?.active?.()))||(mode==='object'&&!!globalThis.__boxlabObjectRadialSession?.hidesGizmo?.())||(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.())||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;
