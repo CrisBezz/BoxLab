@@ -87,5 +87,6 @@ function extractFaces() {
     sourceChanged:remainingFaces.length>0
   }}));
 
+}
 
 button?.addEventListener('click', extractFaces);

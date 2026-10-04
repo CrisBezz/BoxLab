@@ -7,51 +7,48 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.729**. Parent .728 `f2dcce30`.
-User /nextbuild 2 authorizes the complete radial/session audit and polish batch.
-.724 PERFECT/PASS and .726 list PASS remain protected. No new manual PASS inferred
-for .725/.727/.728 or this build. Existing Face/Vertex/Object/Edge tool inventories,
-original actions and owners remain intact; no additional tools or selection sectors.
+Current release: **v0.36.18.730**. Parent .729 `ecd97667`.
+User requests removal of Visible/Through UI while RETAINING Lasso and SELECT,
+compact content-sized popouts without padding, plus /nextbuild 3 release-candidate
+checks. This supersedes the fixed-width wide-popout instruction. .724/.726 PASS
+remain protected; no .728/.729 or .730 manual PASS inferred.
 
-.729 repairs actual session gaps found in that audit:
-- Face Extrude/Inset Exact/Repeat/input/Done disable while the original owner drags;
-  action handlers recheck context/busy state. Mode/mesh/active-object/lock loss closes
-  old settings. Successful Exact/Repeat retain the existing persistent workflow.
-- Edge Slide/Offset/Crease validate mode/mesh AND active-object identity (Object
-  manager replaces the live mesh in place). Context loss/superseding tools close old
-  settings; queued exits cannot restore old IDs after another object/session opens.
-  Empty selection never falls back to launch IDs. Invalid exact input is disabled.
-- Slide/Offset/Crease exits now emit the established session-complete semantic;
-  Total Gizmo clears radial suppression and returns surviving selection to the puck.
-- Crease records exactly one Undo entry through the existing main owner on the
-  first successful live preview, rather than postponing it until Done. Further
-  strength changes and Done add no entry. Essential: Object manager swaps stacks in
-  the SAME global History instance, so retaining a History reference cannot safely
-  commit an old object's deferred snapshot. Never reinstate that failed assumption.
-- All four radial modes reject a read-only active object even if original buttons
-  have stale enabled state. A contextual launch returning false restores access and
-  does not broadcast a tool launch. Original Object return-to-gizmo and Symmetry/
-  Revolve plane gizmos remain intentionally protected.
-- Shared wide layout enforces hidden actions in the right rail, gives notes full
-  width and removes empty action columns around Edge exact fields; original nodes,
-  listeners, delegated ancestry and stage visibility retained.
+.730 changes:
+- Original #paintSelectDepth stays in its original selection host, hidden and
+  aria-hidden; global scoped ID CSS keeps it hidden even if original owners change
+  styles. Visible/Through are absent from viewport and SELECT UI. Original depth
+  nodes/state/listeners are retained for paint/Lasso compatibility, not reimplemented.
+  Axis/GEO, original lazy Lasso and SELECT remain in the bottom viewport strip.
+- Shared tool layout uses width:max-content with viewport/720px MAXIMUM only;
+  no forced 720px width. Outer padding removed; compact single body column, intrinsic
+  action-rail width and4px spacing; readable22ch body minimum and wrapping notes.
+  Complex staged body controls retain their original visibility/listeners. SELECT
+  also uses content width and no outer padding. Top-centre/scroll bounds remain.
+- Release-candidate browser inspection found a real existing syntax blocker in
+  Extract Faces: .683 lacked its closing function brace, preventing module loading.
+  Restore the brace only; original compaction/facegroups/scene checkpoint/completion
+  remain unchanged. Pin Extract .730 and exercise actual loaded owner, partial/all/
+  empty selection, source retention, completion and one scene checkpoint.
 
-62 focused radial/session PASS. Broader112/108/4 has only existing baseline failures.
-Full1259/976/283 vs fresh .7281244/960/284: no new failures; one old shared-dock pin
-fixture now passes after verifying the actual dynamic loader path for SELECT.
-Updated release-pin fixtures only, not modelling expectations. Syntax/diff pass.
-Shell/manifest/refresh/topbar/Total Gizmo/shared dock+wide helper and all dock-client
-cache URLs .729; toolbar child .727, view-modes .726, main .724, corner controls .718,
-Loop commit .715 and protected Multi transform .1.0 remain frozen. Client source
-changes beyond named repairs are import/cache updates only.
+Release-candidate validation:
+53 focused PASS including actual floating Move/Rotate/Scale exact maths+one Undo/
+Redo and actual indexed exporter UV/tangent/colour/morph/groups/import-fit handling,
+plus original Object Multi/Boolean history and UI/session checks. All279 src modules
+pass node --check after Extract repair. Broader113/97/16 release-domain checks have
+only existing historical source/pin/VM failures. Full1265/982/283 vs fresh .729
+1259/976/283: identical failure names, six new passing runtime tests. Do not claim an
+all-green suite or a frozen Beta6. See BETA_6_RELEASE_CHECKLIST.md for audit limits.
+Cloud browser WebGL is disabled; cannot prove 3D/Pencil/device interaction there.
+Verify live manifest/visible version and module pins before interpreting a browser
+cache or legacy runtime-guard label. No rendering workaround or owner change made.
 
-Next manual grouped checks: Face Exact/Repeat/Done and preview Cancel/Apply; Vertex
-settings/exits; Object Array/Solidify/Boolean exits and plane editors; Edge Slide/
-Offset/Crease puck/Undo plus persistent Loop/Bevel EXACT/background exit. Normal and
-Focus, finger/Pencil, .728 SELECT and .724 tap/hold/navigation remain in regression.
-Then /nextbuild 3 is the Beta6 release-candidate batch: navigation/transforms/type-in,
-Multi/Boolean/history/object management and save/import/export/Nomad. Freeze Beta6
-only after combined device passes; do not hide the remaining drawer by default yet.
+Shell/manifest/refresh/topbar/toolbar/SELECT/shared layout+all dock clients .730;
+main .724, view-modes .726, corner controls .718, protected Multi transform .1.0,
+Loop commit .715 remain pinned. Import-only cache hops outside UI/Extract repair.
+Next: .730 normal/Focus compact panels, Lasso/SELECT with no Visible/Through, Extract
+and quick iPad modelling/navigation/type-in/Boolean/history + Save GLB→Nomad
+round-trip. Save currently means existing Export/Save to Files flow, not a new scene
+save/autosave feature. Freeze Beta6 only after grouped device checks and issue review.
 Slight Lasso selection tightening remains deferred MUCH LATER.
 
 ## Protected .724 background hold — user PASS

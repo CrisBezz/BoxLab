@@ -16,7 +16,7 @@ test('Solidify drawer-lock wrapper follows current app build',()=>{
 test('376 armed Solidify delegates drawer ownership to shared Tool Session',()=>{
   assert.match(ui,/toolSession\(\)\?\.begin\?\.\(\{id:'solidify'/);
   assert.match(ui,/toolSession\(\)\?\.end\?\.\('solidify'\)/);
-  assert.ok(index.includes('tool-session-ui.js?v=0.36.18.729'));
+  assert.ok(index.includes('tool-session-ui.js?v=0.36.18.730'));
 });
 
 test('376 Solidify reasserts its Tool Session while preview is armed',()=>{

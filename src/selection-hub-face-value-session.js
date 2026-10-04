@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.730';
 // Contextual settings proxy; precision-face and repeat-face-previous own operations.
 const wrap=document.querySelector('#viewportWrap');
 let tool=null,raf=0,launchMesh=null,launchObject=null;

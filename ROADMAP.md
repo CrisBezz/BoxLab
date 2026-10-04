@@ -413,3 +413,7 @@ Selection-access batch implemented: viewport SELECT exposes complete original co
 
 ### .729 Beta6 grouped radial/session audit
 Batch2 implemented and automated: all modes' original inventory/availability/settings/lifecycle reviewed; fixed Face drag guards, Edge context/queued exits and puck suppression, Crease single Undo ownership, rejected launches/read-only actions and shared wide-panel spacing/hidden stages. Device acceptance pending. Next /nextbuild 3: release-candidate regression across navigation/transforms/type-in/Multi/Boolean/history/object management/files/Nomad; then combined passes and Beta6 freeze. .728 manual acceptance still pending; Lasso tightening deferred.
+
+
+### .730 Beta6 release-candidate audit / compact UI
+User supersedes fixed-width popouts and removes Visible/Through UI (retain Lasso/SELECT). Compact content-sized panels implemented; RC audit restores missing Extract closing brace, validates279 source modules and actual transform/export/Extract owners.53 focused PASS; full1265/982/283 with identical existing failures. Device/WebGL/Files/Nomad checks still pending; see BETA_6_RELEASE_CHECKLIST.md. Next grouped iPad smoke test and issue review, then Beta6 freeze/notes. No Beta6 release claimed yet.

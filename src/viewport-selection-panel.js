@@ -1,4 +1,4 @@
-import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.729';
+import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.730';
 // Presentation only: move the original selection host, including late Object controls.
 export function installViewportSelectionPanel(doc=document){
  const wrap=doc.querySelector('#viewportWrap'),bar=doc.querySelector('#viewportSelectionControls'),drawer=doc.querySelector('#selectionDrawer');
@@ -21,7 +21,7 @@ export function installViewportSelectionPanel(doc=document){
  window.addEventListener('boxlab-tool-session-change',event=>{if(event.detail?.active)close();});
  const style=doc.createElement('style');style.textContent=`
 #viewportSelectionPanel[hidden]{display:none!important}
-#viewportSelectionPanel{width:min(430px,calc(100% - 16px));padding:8px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(20,23,30,.98);box-shadow:0 10px 28px #0006}
+#viewportSelectionPanel{width:max-content;max-width:calc(100% - 16px);padding:0;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(20,23,30,.98);box-shadow:0 10px 28px #0006}
 #viewportSelectionPanel #selectionDrawer{position:static;margin:0;border:0;background:transparent;box-shadow:none}
 #viewportSelectionPanel #selectionDrawer .always-selection-title{padding-right:70px}
 #viewportSelectionPanel .selection-panel-close{position:absolute;top:8px;right:8px;width:auto;min-height:30px;padding:4px 10px;margin:0}
@@ -30,8 +30,6 @@ export function installViewportSelectionPanel(doc=document){
 @media(max-width:500px){
  #viewportSelectionControls{left:8px;gap:3px;padding:4px 6px;max-width:calc(100% - 16px);box-sizing:border-box}
  #viewportSelectionControls label,#viewportSelectionControls>button{width:34px;height:38px}
- #viewportSelectionControls #paintSelectDepth{gap:2px;padding-left:4px;margin-left:0}
- #viewportSelectionControls #paintSelectDepth button{min-width:46px;padding:4px;font-size:10px}
  #viewportSelectionControls #viewportSelectionBtn{min-width:45px;padding:5px;font-size:10px}
  #viewportSelectionControls>span{font-size:10px;margin-right:0}
 }

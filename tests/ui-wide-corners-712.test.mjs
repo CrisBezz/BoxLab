@@ -22,7 +22,7 @@ function dom(){
 test('Actual Symmetry and Array markup keeps every original control and listener with Cancel/Apply stacked on right',()=>{
  for(const [module,id] of [['symmetry-bisect.js','symmetryBisectSession'],['linear-array.js','linearArraySession']]){const f=dom(),panel=f.doc.createElement('div');panel.id=id;f.doc.body.appendChild(panel);f.parse(source(module).match(/controls.innerHTML=`([\s\S]*?)`;/)[1],panel);const buttons=panel.querySelectorAll('button'),seen=[];for(const b of buttons)b.addEventListener('click',()=>seen.push(b.id||b.textContent.trim()));layoutWideToolPanel(panel);
   assert.equal(panel.dataset.wideToolPanel,'true');assert.equal(panel.children[0].className,'ts-wide-body');assert.equal(panel.children[1].className,'ts-wide-actions');assert.deepEqual(new Set(panel.querySelectorAll('button')),new Set(buttons));const rail=panel.children[1];assert.match(rail.children[0].textContent,/Cancel/);assert.match(rail.children[1].textContent,/Apply/);for(const b of buttons)b.click();assert.equal(seen.length,buttons.length);
-  const count=panel.children.length;layoutWideToolPanel(panel);assert.equal(panel.children.length,count);assert.ok(f.doc.getElementById('toolSessionWideStyle').textContent.includes('grid-template-columns:minmax(0,1fr) 104px'));
+  const count=panel.children.length;layoutWideToolPanel(panel);assert.equal(panel.children.length,count);assert.ok(f.doc.getElementById('toolSessionWideStyle').textContent.includes('grid-template-columns:minmax(0,1fr) max-content'));
  }
 });
 test('Wide layout respects hidden stage of Apply, retains button identity and delegated panel ancestry',()=>{
@@ -45,8 +45,8 @@ test('Gizmo centre remains a free Move handle, free Rotate ring retains owner an
  const s=source('total-gizmo.js');assert.match(s,/class="tg-handle tg-center" data-tool="move" data-constraint="free"[^\n]+r="14"/);assert.match(s,/tg-screen-ring" data-tool="rotate" data-constraint="free"/);assert.doesNotMatch(s,/class="tg-collapse"|collapseControl/);assert.match(s,/mountGizmoCornerControls\(root/);assert.match(s,/reason:'corner-radial-tools'/);assert.match(s,/cornerControls.sync\(\)/);assert.match(s,/beginGizmoGesture\?\.\(spec,event\)/);
 });
 test('Every changed shared-dock client repinned from shell; protected transform module stays frozen',()=>{
- const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');for(const file of fs.readdirSync(new URL('../src/',import.meta.url))){if(!file.endsWith('.js'))continue;const s=source(file);if(s.includes('tool-session-panel-position.js?v=')){assert.match(s,/tool-session-panel-position\.js\?v=0\.36\.18\.729/);if(file==='viewport-selection-panel.js')assert.ok(source('topbar-layout.js').includes('viewport-selection-panel.js?v=0.36.18.729'));else assert.ok(index.includes('src/'+file+'?v=0.36.18.729'),file);}}
- assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);assert.match(source('tool-session-panel-position.js'),/tool-session-wide-layout\.js\?v=0\.36\.18\.729/);assert.match(source('total-gizmo.js'),/gizmo-corner-controls\.js\?v=0\.36\.18\.718/);
+ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');for(const file of fs.readdirSync(new URL('../src/',import.meta.url))){if(!file.endsWith('.js'))continue;const s=source(file);if(s.includes('tool-session-panel-position.js?v=')){assert.match(s,/tool-session-panel-position\.js\?v=0\.36\.18\.730/);if(file==='viewport-selection-panel.js')assert.ok(source('topbar-layout.js').includes('viewport-selection-panel.js?v=0.36.18.730'));else assert.ok(index.includes('src/'+file+'?v=0.36.18.730'),file);}}
+ assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);assert.match(source('tool-session-panel-position.js'),/tool-session-wide-layout\.js\?v=0\.36\.18\.730/);assert.match(source('total-gizmo.js'),/gizmo-corner-controls\.js\?v=0\.36\.18\.718/);
 });
 
 test('Corner shortcut groups remain inside viewport without moving the gizmo selection pivot',()=>{

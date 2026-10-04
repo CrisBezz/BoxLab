@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.730';
 // Contextual UI only. The existing Vertex owners retain gestures, geometry and history.
 const targets={Add:'#addVertexBtn','Build Edge':'#buildEdgeBtn',Bevel:'#vertexBevelBtn',Slide:'#vertexSlideBtn','Merge Dist':'#mergeByDistanceBtn','Clean Vertices':'#cleanVerticesBtn'};
 const panel=document.createElement('div');panel.id='vertexToolViewportSession';panel.hidden=true;

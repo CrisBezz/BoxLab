@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.730';
 // BoxLab v0.36.18.676 — radial Edge Bridge guided selection session.
 // UX proxy only. bridge-ui.js + bridge-topology.js remain authoritative.
 

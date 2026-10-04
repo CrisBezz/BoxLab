@@ -1,5 +1,5 @@
 import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.718';
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.729';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.730';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.595 — Total Gizmo v1.
