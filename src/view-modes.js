@@ -125,20 +125,26 @@ function syncFocusViewButton(){
   if(!button.dataset.iconAction)button.textContent=label;
   button.setAttribute('aria-pressed',focusViewOn()?'true':'false');
 }
-// Reuse the original Objects drawer; Focus reveals only this child of the drawer.
-let focusObjectListOpen=false,objectsDrawerWasOpen=false;
+// Reuse original Objects and Modifiers drawers; Focus reveals these two children.
+let focusObjectListOpen=false,objectsDrawerWasOpen=false,modifiersDrawerWasOpen=false;
 function objectMode(){return document.querySelector('#selectionModes button.active')?.dataset.mode==='object';}
 function closeFocusObjectList(){
   document.documentElement.classList.remove('boxlab-focus-object-list');
-  if(focusObjectListOpen){const drawer=document.querySelector('#objectsDrawer');if(drawer)drawer.open=objectsDrawerWasOpen;}
+  if(focusObjectListOpen){
+    const drawer=document.querySelector('#objectsDrawer'),modifiers=document.querySelector('#modifiersDrawer');
+    if(drawer)drawer.open=objectsDrawerWasOpen;
+    if(modifiers)modifiers.open=modifiersDrawerWasOpen;
+  }
   focusObjectListOpen=false;
 }
 function toggleObjectList(){
-  const drawer=document.querySelector('#objectsDrawer');
+  const drawer=document.querySelector('#objectsDrawer'),modifiers=document.querySelector('#modifiersDrawer');
   if(!objectMode()||!drawer)return false;
-  if(!focusViewOn()){drawer.open=!drawer.open;return true;}
+  if(!focusViewOn()){drawer.open=!drawer.open;if(drawer.open&&modifiers)modifiers.open=false;return true;}
   if(focusObjectListOpen){closeFocusObjectList();return true;}
   objectsDrawerWasOpen=drawer.open;
+  modifiersDrawerWasOpen=!!modifiers?.open;
+  if(modifiers)modifiers.open=false;
   focusObjectListOpen=true;drawer.open=true;
   document.documentElement.classList.add('boxlab-focus-object-list');
   return true;
@@ -218,8 +224,9 @@ const focusViewStyle=document.createElement('style');
 focusViewStyle.textContent=`
 html.boxlab-focus-view #viewportWrap > .floating-panel.left-panel{display:none!important}
 html.boxlab-focus-view.boxlab-focus-object-list #viewportWrap > .floating-panel.left-panel{display:block!important}
-html.boxlab-focus-view.boxlab-focus-object-list #viewportWrap > .floating-panel.left-panel > :not(#objectsDrawer){display:none!important}
-html.boxlab-focus-view.boxlab-focus-object-list #objectsDrawer{margin:0}
+html.boxlab-focus-view.boxlab-focus-object-list #viewportWrap > .floating-panel.left-panel > :not(#objectsDrawer):not(#modifiersDrawer){display:none!important}
+html.boxlab-focus-view.boxlab-focus-object-list #objectsDrawer{margin:0 0 8px}
+html.boxlab-focus-view.boxlab-focus-object-list #modifiersDrawer{margin:0}
 html.boxlab-focus-view #viewportWrap > #selectionModes{left:max(8px,env(safe-area-inset-left))!important}
 html.boxlab-focus-view .statusbar{left:10px!important}
 `;

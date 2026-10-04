@@ -7,7 +7,33 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.720**.
+Current release: **v0.36.18.721**.
+Current focus: Object List + collapsed original Modifiers access, and diagnostic
+capture for unresolved double-background Invert. Parent .720 `11f506b1`.
+User .720 checks1/3 PASS: background clears Edge selection/turns Lasso off; drawing
+and finger navigation work. Pencil draws while Lasso armed, fingers navigate: expected.
+Protect this working ownership. Slight Lasso hit tightening deferred MUCH LATER,
+at final perfection; do not change its selection/depth mathematics now.
+User .720 check2 FAIL: double-background Invert still does not work on device.
+.721 does NOT claim to fix it. Per handoff, collect Gesture Debug evidence before
+changing gesture behavior again. Existing helper adds diagnostic-only trace:
+BACKGROUND DOUBLE TAP shows action/reason/dt/px/original seed/current counts;
+reset reasons distinguish mesh-hit, navigation, secondary contact, cancel and
+Pencil orbit. Same500ms/32px matcher/context/mesh/selection rules; no new pointer owner.
+Next test: VIEW → Gesture Debug, select some Edge/Face components, double-tap true
+background once, obtain screenshot showing BACKGROUND DOUBLE TAP and COMPLETE.
+Use that rejection reason to choose next narrow fix; never just widen time again.
+Object List original Focus owner reveals BOTH original Objects and Modifiers,
+with Modifiers below Objects and closed on each reveal. Original controls/listeners/
+IDs retained. Focus close/mode exit/Focus exit restores prior Objects/Modifiers
+open states; normal-view list opening also collapses Modifiers. No modelling state,
+mirror/SubD/cage/scene history changes. Other drawer sections stay hidden in Focus.
+21 targeted PASS; full1228/945/283 versus .7201226/943/283: same failure names.
+.721 markers/main/helper/view-modes/release pins updated. Working Lasso/Edge Paint,
+Pencil/Multi owners, protected transform1.0/Loop kernels/frozen betas untouched.
+Next: confirm original Modifiers access/actions, collect double-tap debug screenshot.
+
+## .720 ownership baseline — Lasso checks1/3 passed; Invert check2 failed
 Current focus: .720 Edge/Lasso completion and double-background timing refinement;
 pending iPad test. Parent .719 release `7d1f8753`. User reports .719 Edge background
 clear/Lasso cancellation still FAIL and double-tap timing wrong; .719 is not passed.
@@ -154,7 +180,7 @@ component single tap clears; double inverts original set, not cleared set. No hi
 
 Audit: active modelling inventories Face/Vertex/Object/Edge are covered. Selection
 commands remain outside radials. With drawer minimized, remaining dependencies:
-- Modifiers: Mirror axes/Align to Mirror, SubD on/level and Cage; not yet exposed.
+- Modifiers: .721 exposes original collapsed Modifiers below Objects via the Object List shortcut, including Mirror axes/Align, SubD on/level and Cage.
 - Advanced selection: Visible/Through paint/lasso depth, Connected/Angle/Normal,
   boundary/loop/ring variants and residual selection controls remain in drawer.
 - Object selection All/Clear and bulk Hide/Lock still have drawer controls; per-row
@@ -186,7 +212,7 @@ Edge and Vertex**. Preserve this across future ring refinements.
   protected Face/Edge/Vertex session proxies apart from shared Object host ordering.
 - object-radial-session stays .711; Vertex modelling owners/drawer loader .710;
   .708 Face Bevel kernel/direct owner unchanged. multi-object-transform stays .1.0.
-- Manifest/title/data-release-version/visible label/main/refresh pins .720;
+- Manifest/title/data-release-version/visible label/main/refresh pins .721;
   release-refresh logic unchanged; main has the scoped .719 completion repair. Loop Cut, modelling kernels, frozen betas untouched.
 
 ## .712 wide popouts / gizmo redesign
@@ -433,7 +459,7 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next .720 Edge/Lasso/Invert and .718 UI/Multi confirmation, .716 visuals and remaining .713 Edge checks.
+and give a short realistic manual list after publishing. Next .721 Modifiers access and double-tap debug capture, plus .718 UI/Multi confirmation, .716 visuals and remaining .713 Edge checks.
 
 ## User build shortcut / finish contract
 

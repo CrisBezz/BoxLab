@@ -352,3 +352,14 @@ Safari timer-based deduplication and drive500ms Invert. No new gesture owner or
 modelling kernel. Seven new regressions,38 targeted PASS; full1226/943/283, same
 failure names as .719. Next iPad Edge/Lasso/Invert/navigation confirmation; use
 Gesture Debug if still failing. Keep drawer and prior pending checks.
+
+### Object List Modifiers / double-tap diagnosis — .721
+
+.720 Lasso cancellation/drawing/finger navigation passed and protected. Slight
+Lasso selection tightening explicitly deferred MUCH LATER to final perfection.
+Double-background Invert still FAIL. .721 exposes original collapsed Modifiers
+below Objects in Focus Object List; original controls and disclosure restoration.
+Existing Invert matcher gains diagnostic-only reason/timing/count logs; behavior
+unchanged pending on-device Gesture Debug screenshot before further gesture fixes.
+21 targeted PASS; full1228/945/283, same failure names. Next Modifiers hand checks
+and double-tap debug capture. Keep other pending checks/drawer fallbacks.

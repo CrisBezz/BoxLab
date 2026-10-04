@@ -3376,3 +3376,12 @@ Add new permanent regression checks below when future features need protection.
 - [ ] Normal quick double-background taps invert original Edge/Face/Vertex selection once (500ms release interval); single tap clears immediately. Object complement follows original visible-object selection contract.
 - [ ] Lasso draws correctly starting over edges or empty space; finger orbit/pan/pinch retain selection, cancelled draws do not disarm. Viewport Multi/Boolean and two-finger Undo/three-finger Redo preserved.
 - [ ] .715 repeat Loop/Bevel sessions and .716 Face blue-preview/Apply/Cancel remain intact. If background failure persists, capture Gesture Debug BACKGROUND TAP DOWN/BLOCKED/COMPLETE entries; do not stack speculative gesture owners.
+
+## v0.36.18.721 — original Modifiers access / Invert diagnosis
+
+- [x] User .720 checks1/3 PASS: Edge background clear/Lasso disarm, Lasso drawing and finger navigation; preserve. Pencil draws while Lasso armed, fingers navigate: expected. Slight hit tightening deferred to final perfection MUCH LATER.
+- [x] User .720 check2 FAIL: double-background Invert. .721 adds diagnostics only; do not mark behavior fixed/passed.
+- [x] Actual Object List Focus owner reveals original Objects + Modifiers, Modifiers closed each opening; Focus/mode exits restore previous disclosure states. Normal-view opening also collapses Modifiers. Original nodes/owners retained.
+- [x] Existing matcher trace reports rejection/reset reasons and dt/px/counts without altering results.21 targeted PASS; full1228/945/283, no new failure names versus .7201226/943/283.
+- [ ] Visible .721, Focus → Object List: original Objects and collapsed Modifiers below. Expand and use Mirror/SubD/Cage; same controls and behavior. Reopen starts collapsed; list closes/Focus remains active; mode/Focus exits restore prior normal drawer state.
+- [ ] VIEW → Gesture Debug: select some Edge/Face components, double-tap true background once and screenshot BACKGROUND DOUBLE TAP / COMPLETE entries. Diagnose actual rejection before next gesture fix.
