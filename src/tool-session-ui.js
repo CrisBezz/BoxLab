@@ -288,7 +288,7 @@ function begin({id,title,node,subtitle=''}={}){
     active.title=title||active.title;
     active.subtitle=subtitle||active.subtitle;
   }
-  const dock=(globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset.mode)==='object';
+  const dock=id==='sweep'||(globalThis.__boxlabSelectionBridge?.mode?.()||document.querySelector('#selectionModes button.active')?.dataset.mode)==='object';
   host.dataset.viewportDock=String(dock);
   if(dock){document.querySelector('#viewportWrap')?.appendChild(host);}
   else{contentRoot?.prepend(host);host.removeAttribute('style');delete host.dataset.wideToolPanel;}

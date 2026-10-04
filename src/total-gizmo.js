@@ -561,6 +561,8 @@ toolSectors.forEach(button=>{
       launchAccepted=!!globalThis.__boxlabObjectRadialSession?.launch?.(toolLabel);
     }else if(mode==='vertex'&&contextualVertex){
       launchAccepted=!!globalThis.__boxlabVertexViewportSession?.openFromHub?.({tool:toolLabel});
+    }else if(['face','edge'].includes(mode)&&toolLabel==='Sweep'){
+      launchAccepted=!!globalThis.__boxlabSweepPath?.launchSelection?.();
     }else if(mode==='face'&&toolLabel==='Bevel'){
       // Semantic launch below arms the existing Bevel owner without switching modes.
     }else if(mode==='face'&&toolLabel==='Align'){

@@ -7,7 +7,55 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.730**. Parent .729 `ecd97667`.
+Current release: **v0.36.18.731**. Parent .730 `12f00e4fc06b0d1fbb8ce0d8eb897c05d0e76d38`.
+Quick pre-finalization build follows user's EDITED prompt: Face/Edge Sweep popup,
+persistent Edge Slide until Done/background, Edge/Vertex popup blue preview while
+retaining existing in-window direct Bevel. .730 device checks remain underway;
+no .730/.731 PASS or Beta6 release acceptance inferred.
+
+.731 changes:
+- Radial Face/Edge Sweep calls existing Sweep selection-capture owner directly;
+  launch returns actual success. Original Profile/Path/Finish controls dock at top
+  centre for every Sweep launch, including component mode. Existing proxy remains
+  available as fallback but is hidden when original dock is visible, avoiding two
+  popups. Stages, captured profile, Pencil editing, Apply/Cancel/scene history stay
+  with original Sweep owner; no additional Sweep geometry/gesture implementation.
+- Edge Slide operation-complete refreshes session selection without closing or
+  disarming. Done and semantic background tap close. Main's existing background
+  owner routes finger/Pencil release to Slide and blocks hold Invert during Slide;
+  normal short-tap/Lasso and .724 long-hold behavior otherwise unchanged. Main
+  .731 differs only in these three Slide-active checks; protect this new pin.
+- Edge width/segment slider blue preview clones through existing generalBevelSelection
+  kernel and shared Face preview renderer. Apply Bevel uses original exact/history
+  owner; repeatable Edge owner stays armed. Existing viewport drag bevel still
+  edits/previews/commits on release exactly as before. Cancel/background disposes
+  slider ghost; context/geometry changes cannot overwrite stale source snapshots.
+- Vertex existing contextual popup gains blue Width/exact preview using original
+  bevelVertices kernel and same rendering helper. Apply Bevel commits candidate
+  once and closes, matching Face explicit-Apply workflow; Cancel preserves source
+  and selection. Original Vertex Pencil/in-window direct bevel remains. Vertex
+  kernel has Width only; no artificial Segments control or new geometry added.
+  Mode/mesh/active-object/lock guards and preview disposal protected.
+
+Validation: **85 focused PASS**, including actual Sweep Face/Edge launch and staged
+control docking, Edge/Vertex blue copy/commit/Cancel/UndoRedo, retained direct
+Edge gestures, Slide repetition and touch/Pencil background routing, protected Face
+preview, Object sessions and shared layout. All279 src modules syntax PASS.
+Full1273/993/280 vs fresh .7301265/982/283: no new failure names; three historical
+Sweep release-pin fixtures now pass. Eight added tests pass; suite not all-green.
+Shared layout remains .730, unrelated client pins stay .730; edited owners and
+main/Bevel/Sweep/session/gizmo plus release refresh pins .731. Protected Multi1.0,
+Loop commit .715, view .726, corner .718 and frozen betas untouched.
+
+Next: test .731 Sweep Face + closed Edge loop; repeat Slide then Done/background;
+Edge/Vertex sliders + Apply/Cancel + existing viewport drag + UndoRedo. Continue
+.730 grouped Beta6 device/export/Nomad checks and fix reported blockers before
+freezing Beta6. Cloud WebGL remains disabled; no device 3D/Pencil acceptance claim.
+Lasso tightening remains deferred MUCH LATER.
+
+## .730 retained release-candidate audit
+
+Previous release: **v0.36.18.730**. Parent .729 `ecd97667`.
 User requests removal of Visible/Through UI while RETAINING Lasso and SELECT,
 compact content-sized popouts without padding, plus /nextbuild 3 release-candidate
 checks. This supersedes the fixed-width wide-popout instruction. .724/.726 PASS

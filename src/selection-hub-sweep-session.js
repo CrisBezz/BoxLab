@@ -111,7 +111,8 @@ function sync(){
   cancelAnimationFrame(raf);
   const controls=source();
   const active=launchedFromHub&&controls&&!controls.hidden;
-  palette.hidden=!active;
+  const originalDock=document.querySelector('#boxlabToolSessionHost')?.dataset.viewportDock==='true';
+  palette.hidden=!active||originalDock;
   if(!active){
     if(launchedFromHub&&controls?.hidden)launchedFromHub=false;
     return;
@@ -182,6 +183,6 @@ window.addEventListener('boxlab-tool-session-end',event=>{
 globalThis.__boxlabSweepViewportSession={
   version:'0.36.18.690',
   element:palette,
-  active:()=>launchedFromHub&&!palette.hidden,
+  active:()=>launchedFromHub&&!!source()&&!source().hidden,
   sync
 };

@@ -120,3 +120,15 @@ test('Face blue preview covers changed bevel polygons only, leaving unrelated sh
  const m=EditableMesh.cube(),other=EditableMesh.cube();const offset=m.vertices.length;m.vertices.push(...other.vertices.map(v=>v.clone().addScalar(50)));m.faces.push(...other.faces.map(face=>face.map(i=>i+offset)));
  const before=geometry(m),f=fixture(m);f.launch();const rendered=f.context.__boxlabBridgeState.scene.children[0].children[0].geometry;rendered.computeBoundingBox();assert.ok(rendered.boundingBox.max.x<5);assert.ok(rendered.getAttribute('position').count>0);assert.deepEqual(geometry(m),before);assert.equal(f.context.__boxlabHistory.undoStack.length,0);f.action('cancel');assert.equal(f.context.__boxlabBridgeState.scene.children.length,0);
 });
+
+test('731 Edge sliders preview a blue copy and Apply commits once; direct dragging still commits normally',()=>{
+ const m=EditableMesh.cube(),before=geometry(m),f=fixture(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.panel.sync();
+ const scene=f.context.__boxlabBridgeState.scene;assert.equal(scene.children.length,1);assert.deepEqual(geometry(m),before);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
+ f.node('#bevelWidth').value='35';f.node('#bevelWidth').listeners.get('input')();f.node('#bevelSegments').value='3';f.node('#bevelSegments').listeners.get('input')();assert.equal(f.owner.previewState().segments,3);assert.equal(f.owner.previewState().percent,35);assert.deepEqual(geometry(m),before);
+ const expected=m.clone();expected.generalBevelSelection([0],.35,3);f.action('apply');assert.deepEqual(geometry(m),geometry(expected));assert.equal(f.context.__boxlabHistory.undoStack.length,1);assert.equal(scene.children.length,0);assert.equal(f.owner.active(),true);
+ const undone=f.context.__boxlabHistory.undo(m);assert.deepEqual(geometry(undone),before);assert.deepEqual(geometry(f.context.__boxlabHistory.redo(undone)),geometry(m));
+});
+test('731 Edge Cancel/context mutation disposes preview without history or stale writes',()=>{
+ const f=fixture();f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.panel.sync();const before=geometry(f.context.__boxlabBridgeState.mesh);f.action('cancel');assert.equal(f.context.__boxlabBridgeState.scene.children.length,0);assert.deepEqual(geometry(f.context.__boxlabBridgeState.mesh),before);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
+ f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.panel.sync();f.context.__boxlabBridgeState.mesh.vertices[0].x=77;assert.equal(f.owner.applyExact(20,[0]).ok,false);assert.equal(f.context.__boxlabBridgeState.mesh.vertices[0].x,77);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
+});

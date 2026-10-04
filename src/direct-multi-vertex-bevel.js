@@ -1,8 +1,9 @@
 import * as THREE from 'three';
+import {createFaceBevelPreview,disposeFaceBevelPreview} from './bevel-face-preview.js?v=0.36.18.716';
 
 const button=document.querySelector('#vertexBevelBtn'), canvas=document.querySelector('#viewport'), width=document.querySelector('#vertexBevelWidth'), out=document.querySelector('#vertexBevelWidthOut'), multiToggle=document.querySelector('#multiSelectToggle'), status=document.querySelector('#selectionStatus');
 const PICK_PX=20;
-let armed=false, drag=null;
+let armed=false, drag=null, popupPreview=false, preview=null;
 
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
@@ -13,9 +14,47 @@ function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone()
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
 function hitVertex(event){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const p=new THREE.Vector2(event.clientX,event.clientY);let best=null;mesh.vertices.forEach((v,index)=>{const q=screenPoint(v,camera),d=q.distanceTo(p);if(d<=PICK_PX&&(!best||d<best.distance))best={index,distance:d};});return best?.index??null;}
 function disarm(){
+  discardPreview();popupPreview=false;
   if(drag){const d=drag;drag=null;restore(d.mesh,d.before);try{canvas.releasePointerCapture?.(d.pointerId);}catch{}render();}
   armed=false;syncButton();
 }
+// Use the existing Vertex kernel and the same blue preview renderer as Face.
+function discardPreview(){disposeFaceBevelPreview(preview?.ghost);preview=null;}
+function selectionKey(){return selectedVertexIds().slice().sort((a,b)=>a-b).join(',');}
+function unchanged(){
+  const a=preview?.before,b=preview?.mesh;
+  return !!(a&&b&&a.vertices.length===b.vertices.length&&a.faces.length===b.faces.length
+    &&a.vertices.every((v,i)=>v.equals(b.vertices[i]))
+    &&a.faces.every((f,i)=>f.length===b.faces[i]?.length&&f.every((v,j)=>v===b.faces[i][j]))
+    &&a.creases.size===b.creases.size&&[...a.creases].every(([k,v])=>b.creases.get(k)===v));
+}
+function previewWidth(value=Number(width?.value||20)){
+  discardPreview();
+  const mesh=state()?.mesh,ids=selectedVertexIds();
+  if(!popupPreview||drag||!armed||document.querySelector('#app')?.classList?.contains('boxlab-active-locked'))return{ok:false};
+  const valid=mesh?.multiVertexBevelInfo?.(ids),percent=Math.max(2,Math.min(49,Number(value)));
+  if(!valid||!Number.isFinite(percent))return{ok:false,reason:'Select valid Vertex/Vertices'};
+  const before=mesh.clone(),candidate=before.clone(),ok=!!candidate.bevelVertices?.(valid.ids,percent/100);
+  preview={mesh,before,candidate,ids:[...valid.ids],key:selectionKey(),object:globalThis.__boxlabObjectManager?.activeId,
+    result:{ok,percent,reason:ok?'':'Vertex preview unavailable'},ghost:ok?createFaceBevelPreview(state()?.scene,candidate,before):null};
+  return preview.result;
+}
+function syncPreview(){
+  if(drag)return;
+  if(preview&&(state()?.mesh!==preview.mesh||globalThis.__boxlabObjectManager?.activeId!==preview.object||!unchanged())){discardPreview();return;}
+  if(!preview||preview.key!==selectionKey())previewWidth();
+}
+function applyPreview(value){
+  if(drag)return{ok:false,reason:'Release the Pencil before applying'};
+  if(preview&&(state()?.mesh!==preview.mesh||globalThis.__boxlabObjectManager?.activeId!==preview.object||!unchanged())){discardPreview();return{ok:false,reason:'Geometry changed; preview again'};}
+  const result=previewWidth(value);
+  if(!result.ok||!globalThis.__boxlabHistory)return{ok:false,reason:result.reason||'History unavailable'};
+  const saved=preview;
+  globalThis.__boxlabHistory.push(saved.before);restore(saved.mesh,saved.candidate);
+  discardPreview();bridge()?.set?.('vertex',[]);render();
+  return result;
+}
+for(const type of ['input','change'])width?.addEventListener(type,()=>{if(popupPreview&&!drag)previewWidth();});
 function updateStatus(){const count=selectedVertexIds().length,useMulti=!!multiToggle?.checked&&count>1;if(status)status.textContent=armed?(useMulti?`Bevel ${count} vertices • drag any selected vertex`:'Bevel Vertex • drag a vertex'):'Vertex mode';}
 
 // Capture at document level so the legacy main.js button handler never gets a
@@ -41,6 +80,7 @@ canvas?.addEventListener('pointerdown',event=>{
   if(!useMulti)bridge()?.set?.('vertex',[index]);
   const valid=mesh.multiVertexBevelInfo?.(ids);
   if(!valid){if(status)status.textContent=ids.length>1?'Selected vertices cannot be bevelled together':'This vertex cannot be bevelled';return;}
+  discardPreview();
   drag={pointerId:event.pointerId,startX:event.clientX,startWidth:Number(width?.value||20),mesh,before:mesh.clone(),ids:[...valid.ids],preview:false};
   canvas.setPointerCapture?.(event.pointerId);
 },true);
@@ -68,4 +108,4 @@ function end(event){
 canvas?.addEventListener('pointerup',end,true);canvas?.addEventListener('pointercancel',end,true);
 
 // Public lifecycle used by contextual controls; this remains the drag owner.
-globalThis.__boxlabDirectVertexBevel={version:'0.36.18.710',isArmed:()=>armed,busy:()=>!!drag,disarm,info:()=>state()?.mesh?.multiVertexBevelInfo?.(selectedVertexIds())};
+globalThis.__boxlabDirectVertexBevel={version:'0.36.18.710',isArmed:()=>armed,busy:()=>!!drag,disarm,previewWidth,syncPreview,applyPreview,previewState:()=>preview?.result||null,setPopupPreview:value=>{popupPreview=!!value;if(popupPreview)previewWidth();else discardPreview();},info:()=>state()?.mesh?.multiVertexBevelInfo?.(selectedVertexIds())};

@@ -17,7 +17,7 @@ palette.innerHTML=`
     <input type="range" data-proxy-range="#bevelSegments"/>
     <output data-proxy-output="#bevelSegmentsOut"></output>
   </label>
-  <div class="shbs-note">Drag an edge, or select edges and use sliders + EXACT. Repeat on more edges; background tap exits.</div>
+  <div class="shbs-note">Blue slider preview • Apply Bevel commits. Drag an edge for the existing direct bevel; background tap exits.</div>
   <div class="shbs-actions">
     <button type="button" class="shbs-cancel" data-action="cancel">Cancel</button>
     <button type="button" class="shbs-primary" data-action="apply">Apply Exact</button>
@@ -73,7 +73,7 @@ function closeSession({restoreSelection=false}={}){
 }
 function sync(){
   cancelAnimationFrame(raf);
-  if(launchedFromHub&&launchMode==='edge'){if(globalThis.__boxlabSelectionBridge?.mode?.()!=='edge'||globalThis.__boxlabBridgeState?.mesh!==launchMesh||document.querySelector('#app')?.classList.contains('boxlab-active-locked')){closeSession();return;}launchSelection=currentEdgeSelection();}
+  if(launchedFromHub&&launchMode==='edge'){if(globalThis.__boxlabSelectionBridge?.mode?.()!=='edge'||globalThis.__boxlabBridgeState?.mesh!==launchMesh||document.querySelector('#app')?.classList.contains('boxlab-active-locked')){closeSession();return;}launchSelection=currentEdgeSelection();globalThis.__boxlabDirectBevel?.syncEdgePreview?.();}
   if(launchedFromHub&&launchMode==='face'&&!globalThis.__boxlabDirectBevel?.faceContextValid?.()){closeSession();return;}
   const active=launchedFromHub&&!!globalThis.__boxlabDirectBevel?.active?.();
   palette.hidden=!active;
@@ -91,7 +91,7 @@ function sync(){
   }
 
   const apply=palette.querySelector('[data-action="apply"]');
-  if(apply)apply.disabled=!launchSelection.length||!globalThis.__boxlabDirectBevel?.applyExact||!!globalThis.__boxlabDirectBevel?.busy?.()||(launchMode==='face'&&!globalThis.__boxlabDirectBevel?.previewState?.()?.ok);
+  if(apply)apply.disabled=!launchSelection.length||!globalThis.__boxlabDirectBevel?.applyExact||!!globalThis.__boxlabDirectBevel?.busy?.()||!globalThis.__boxlabDirectBevel?.previewState?.()?.ok;
 
   placeToolSessionPanel(palette);
   raf=requestAnimationFrame(sync);
@@ -152,9 +152,9 @@ window.addEventListener('boxlab-selection-hub-tool',event=>{
     if(!result?.ok){window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'face',tool:'Bevel'}}));return;}
     launchSelection=result.ids;
   }else if(launchMode==='edge'){launchSelection=currentEdgeSelection();globalThis.__boxlabDirectBevel?.setPersistentEdge?.(true);launchMesh=globalThis.__boxlabBridgeState?.mesh;}else return;
-  palette.querySelector('[data-action="apply"]').textContent=launchMode==='face'?'Apply Bevel':'EXACT';
+  palette.querySelector('[data-action="apply"]').textContent='Apply Bevel';
   palette.querySelector('.shbs-head strong').textContent=launchMode==='face'?'Face Bevel':'Bevel';
-  palette.querySelector('.shbs-note').textContent=launchMode==='face'?'Blue preview only. Adjust Width/Segments or Pencil-drag a selected Face, then Apply.':'Drag an edge, or select edges and use sliders + EXACT. Repeat on more edges; background tap exits.';
+  palette.querySelector('.shbs-note').textContent=launchMode==='face'?'Blue preview only. Adjust Width/Segments or Pencil-drag a selected Face, then Apply.':'Blue slider preview • Apply Bevel commits. Drag an edge for the existing direct bevel; background tap exits.';
   launchedFromHub=true;
   requestAnimationFrame(()=>{
     sync();

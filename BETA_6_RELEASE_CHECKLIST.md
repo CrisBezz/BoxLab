@@ -19,3 +19,9 @@ Fixed actual audit blocker: Extract Faces .683 had a missing function closing br
 Cloud-browser WebGL is disabled, preventing rendered 3D/Pencil smoke testing. Unit/runtime checks do not substitute for actual iPad and Nomad acceptance. Save means the existing Export/Save-to-Files workflow; no new native scene persistence is claimed.
 
 Release gate: resolve device failures, review pending checks and historical test debt, verify Pages/current pins, then freeze Beta6 and publish release notes. Protect main .724 background hold/tap, Multi transform1.0, trusted Loop insertion/slide, Studio, selection retention and frozen betas. Defer slight Lasso tightening until final polish.
+
+
+.731 follow-up: Sweep popup, persistent Edge Slide and Edge/Vertex Bevel copy preview
+covered by85 focused passing checks and all279 module syntax checks. Full1273/993/280
+(no new failures vs .730). Device acceptance remains pending; test these plus remaining
+.730 release checks before freezing Beta6.

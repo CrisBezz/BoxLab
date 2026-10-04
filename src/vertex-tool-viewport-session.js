@@ -35,7 +35,7 @@ function close({complete=true,cancelDrag=false}={}){
   if(was&&complete)queueMicrotask(()=>window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'vertex',tool:was.tool}})));
   return true;
 }
-function contextValid(){return !!(session&&mesh()===session.mesh&&bridge()?.mode?.()==='vertex'&&editable()&&(['Add','Build Edge','Clean Vertices'].includes(session.tool)||ids().length));}
+function contextValid(){return !!(session&&mesh()===session.mesh&&globalThis.__boxlabObjectManager?.activeId===session.object&&bridge()?.mode?.()==='vertex'&&editable()&&(['Add','Build Edge','Clean Vertices'].includes(session.tool)||ids().length));}
 function refreshReady(){
   if(!session)return;
   const tool=session.tool,raw=Number(value.value);
@@ -53,11 +53,13 @@ function sync(){
   if(!contextValid()){close({cancelDrag:true});return;}
   const tool=session.tool;
   if(tool==='Bevel'){
+    globalThis.__boxlabDirectVertexBevel?.syncPreview?.();
+    ready=ready&&!!globalThis.__boxlabDirectVertexBevel?.previewState?.()?.ok;
     const source=document.querySelector('#vertexBevelWidth');
     if(source&&document.activeElement!==width)width.value=source.value;
     panel.querySelector('.vts-width-out').textContent=(source?.value||width.value)+'%';
   }
-  const notes={Add:'Tap to add vertices; drag to orbit or slide along an edge. Done ends Add.', 'Build Edge':'Drag from one vertex to another; continue building, then Done.',Bevel:'Pencil-drag a vertex, or set Width / Exact % and apply. Width sets the next operation.',Slide:'Drag selected vertices along their existing rails, or apply an exact signed percentage.','Merge Dist':'Selected vertices only • enter distance in model units.','Clean Vertices':'Whole active object • removes safe redundant vertices, including outside your selection.'};
+  const notes={Add:'Tap to add vertices; drag to orbit or slide along an edge. Done ends Add.', 'Build Edge':'Drag from one vertex to another; continue building, then Done.',Bevel:'Blue Width preview • Apply Bevel commits. Pencil-drag a vertex for the existing direct bevel.',Slide:'Drag selected vertices along their existing rails, or apply an exact signed percentage.','Merge Dist':'Selected vertices only • enter distance in model units.','Clean Vertices':'Whole active object • removes safe redundant vertices, including outside your selection.'};
   panel.querySelector('.vts-note').textContent=message||notes[tool];
   apply.disabled=!ready||busy();done.disabled=busy();width.disabled=busy();value.disabled=busy();
   placeToolSessionPanel(panel);raf=requestAnimationFrame(sync);
@@ -68,11 +70,12 @@ function openFromHub({tool}={}){
   stopOwners();
   document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:tool==='Build Edge'?'build-edge':'vertex-'+tool.toLowerCase().replaceAll(' ','-')}}));
   if(['Add','Build Edge','Bevel','Slide'].includes(tool))document.querySelector(targets[tool]).click();
-  session={tool,mesh:mesh()};message='';
+  session={tool,mesh:mesh(),object:globalThis.__boxlabObjectManager?.activeId};
+  if(tool==='Bevel')globalThis.__boxlabDirectVertexBevel?.setPopupPreview?.(true);message='';
   panel.querySelector('.vts-title').textContent=tool==='Merge Dist'?'Merge by Distance':tool==='Clean Vertices'?tool:'Vertex '+tool;
   const exact=['Bevel','Slide','Merge Dist'].includes(tool);
   panel.querySelector('.vts-width-row').hidden=tool!=='Bevel';panel.querySelector('.vts-value-row').hidden=!exact;
-  apply.hidden=!exact&&tool!=='Clean Vertices';apply.textContent=tool==='Clean Vertices'?'Apply Cleanup':tool==='Merge Dist'?'Apply Merge':'Apply Exact';
+  apply.hidden=!exact&&tool!=='Clean Vertices';apply.textContent=tool==='Clean Vertices'?'Apply Cleanup':tool==='Merge Dist'?'Apply Merge':tool==='Bevel'?'Apply Bevel':'Apply Exact';
   done.textContent=['Bevel','Merge Dist','Clean Vertices'].includes(tool)?'Cancel':'Done';
   panel.querySelector('.vts-value-label').textContent=tool==='Merge Dist'?'Distance':tool==='Slide'?'Slide %':'Exact %';
   value.step=tool==='Merge Dist'?'0.001':'0.1';value.min=tool==='Slide'?'-98':tool==='Bevel'?'2':'0';
@@ -87,12 +90,12 @@ width.addEventListener('input',()=>{
   if(!session||session.tool!=='Bevel'||busy())return;
   const source=document.querySelector('#vertexBevelWidth');if(source){source.value=width.value;source.dispatchEvent(new Event('input',{bubbles:true}));}value.value=width.value;message='';refreshReady();sync();
 });
-value.addEventListener('input',()=>{message='';refreshReady();sync();});
+value.addEventListener('input',()=>{if(session?.tool==='Bevel'&&!busy()){const source=document.querySelector('#vertexBevelWidth');if(source){source.value=value.value;source.dispatchEvent(new Event('input',{bubbles:true}));}}message='';refreshReady();sync();});
 function applyCurrent(){
   if(!contextValid()||apply.disabled||busy())return;
   refreshReady();if(!ready){sync();return;}
   const tool=session.tool;let result;
-  if(tool==='Bevel')result=globalThis.__boxlabPrecisionBevel.vertex(Number(value.value));
+  if(tool==='Bevel')result=globalThis.__boxlabDirectVertexBevel.applyPreview(Number(value.value));
   else if(tool==='Slide')result=globalThis.__boxlabVertexSlidePolish.apply(Number(value.value));
   else if(tool==='Merge Dist')result=globalThis.__boxlabMergeByDistance.applyFor({ids:ids(),tolerance:Number(value.value),expectedMesh:session.mesh,selectResults:true});
   else if(tool==='Clean Vertices')result=globalThis.__boxlabCleanVertices.apply();

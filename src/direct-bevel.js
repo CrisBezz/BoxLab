@@ -7,10 +7,11 @@ import './transform-arming.js?v=0.36.18.253';
 import './component-tap-toggle.js?v=0.32.21';
 import * as THREE from 'three';
 import {createFaceBevelPreview,disposeFaceBevelPreview} from './bevel-face-preview.js?v=0.36.18.716';
-const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('#viewport'),width=document.querySelector('#bevelWidth'),out=document.querySelector('#bevelWidthOut'),multiToggle=document.querySelector('#multiSelectToggle'),ray=new THREE.Raycaster(),pointer=new THREE.Vector2();ray.params.Line.threshold=.09;let armed=false,drag=null,faceSession=null,facePreview=null,persistentEdge=false;
+const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('#viewport'),width=document.querySelector('#bevelWidth'),out=document.querySelector('#bevelWidthOut'),multiToggle=document.querySelector('#multiSelectToggle'),ray=new THREE.Raycaster(),pointer=new THREE.Vector2();ray.params.Line.threshold=.09;let armed=false,drag=null,faceSession=null,facePreview=null,persistentEdge=false,edgeSession=null;
 function state(){return globalThis.__boxlabBridgeState}function bridge(){return globalThis.__boxlabSelectionBridge}function hit(e){const s=state(),r=canvas.getBoundingClientRect();if(!s?.camera)return null;pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(pointer,s.camera);const h=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(h?.object?.userData?.index)?h.object.userData.index:null}
 function disarm(){
   if(!faceSession&&drag){const saved=drag;if(state()?.mesh===saved.mesh)restore(saved.mesh,saved.before);try{canvas.releasePointerCapture?.(saved.id);}catch{}if(persistentEdge&&state()?.controls)state().controls.enabled=saved.controlsEnabled;render();}
+  discardEdgePreview();
   disposeFaceBevelPreview(facePreview);facePreview=null;
   if(faceSession&&drag){
     try{canvas.releasePointerCapture?.(drag.id);}catch{}
@@ -54,8 +55,7 @@ function cancelFaces({restoreSelection=true}={}){
   document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none',reason:'bevel-cancel'}}));
   completeFaces();return true;
 }
-function sourceUnchanged(){
-  const a=faceSession?.before,b=faceSession?.mesh;
+function sourceUnchanged(a=faceSession?.before,b=faceSession?.mesh){
   return !!(a&&b&&a.vertices.length===b.vertices.length&&a.faces.length===b.faces.length
     &&a.vertices.every((v,i)=>v.equals(b.vertices[i]))
     &&a.faces.every((f,i)=>f.length===b.faces[i]?.length&&f.every((v,j)=>v===b.faces[i][j]))
@@ -97,8 +97,30 @@ function applyFaces(value){
   render();completeFaces();
   return{...result,ids:saved.ids};
 }
-for(const input of [width,document.querySelector('#bevelSegments')])for(const type of ['input','change'])input?.addEventListener(type,()=>{if(faceSession)previewFaces();});
+for(const input of [width,document.querySelector('#bevelSegments')])for(const type of ['input','change'])input?.addEventListener(type,()=>{if(faceSession)previewFaces();else if(persistentEdge&&!drag)previewEdges();});
 function selectedEdgeIds(){const b=bridge();return b?.mode?.()==='edge'?[...(b.indices?.()||[])]:[];}
+// Slider preview is a copy; the existing Edge gesture still edits/commits normally.
+function discardEdgePreview(){disposeFaceBevelPreview(edgeSession?.ghost);edgeSession=null;}
+function edgePreviewKey(){return selectedEdgeIds().slice().sort((a,b)=>a-b).join(',');}
+function previewEdges(value=Number(width?.value||20)){
+  discardEdgePreview();
+  if(!persistentEdge||drag||!editable()||bridge()?.mode?.()!=='edge')return{ok:false};
+  const mesh=state()?.mesh,ids=selectedEdgeIds(),valid=mesh?.generalBevelSelectionInfo?.(ids);
+  if(!valid)return{ok:false,reason:mesh?.__lastBevelError||'Select Edge(s) to preview'};
+  const percent=Math.round(Math.max(2,Math.min(49,Number(value))));
+  if(!Number.isFinite(percent))return{ok:false,reason:'Enter a bevel percentage'};
+  const before=mesh.clone(),candidate=before.clone(),segments=bevelSegments();
+  const ok=!!candidate.generalBevelSelection?.(valid.ids,percent/100,segments);
+  edgeSession={mesh,before,candidate,key:edgePreviewKey(),object:globalThis.__boxlabObjectManager?.activeId,
+    result:{ok,percent,segments,reason:ok?'':candidate.__lastBevelError||'Preview unavailable'},
+    ghost:ok?createFaceBevelPreview(state()?.scene,candidate,before):null};
+  return edgeSession.result;
+}
+function syncEdgePreview(){
+  if(drag)return;
+  if(edgeSession&&(state()?.mesh!==edgeSession.mesh||globalThis.__boxlabObjectManager?.activeId!==edgeSession.object||!sourceUnchanged(edgeSession.before,edgeSession.mesh))){discardEdgePreview();return;}
+  if(!edgeSession||edgeSession.key!==edgePreviewKey())previewEdges();
+}
 function installFrameAll(){
   if(document.querySelector('#frameAllBtn'))return;
   const host=document.querySelector('.top-actions');
@@ -157,6 +179,7 @@ function startBevelGesture(e){
   e.preventDefault();e.stopImmediatePropagation();
   const valid=mesh.generalBevelSelectionInfo?.(ids);
   if(!valid){document.querySelector('#selectionStatus').textContent=mesh.__lastBevelError||'Selected boundary cannot be bevelled';return;}
+  discardEdgePreview();
   drag={id:e.pointerId,x:e.clientX,width:Number(width.value||20),mesh,before:mesh.clone(),ids:[...valid.ids],mode:valid.mode,preview:false,face:!!faceSession,controlsEnabled:state()?.controls?.enabled};
   if((faceSession||persistentEdge)&&state()?.controls)state().controls.enabled=false;
   canvas.setPointerCapture?.(e.pointerId);
@@ -223,6 +246,8 @@ canvas?.addEventListener('pointercancel',e=>{if(!drag?.face)cancelBevelGesture(e
 // duplicating bevel execution in precision-bevel.js.
 function applyExact(value,selectionOverride=null){
   if(faceSession)return applyFaces(value);
+  if(edgeSession&&(state()?.mesh!==edgeSession.mesh||globalThis.__boxlabObjectManager?.activeId!==edgeSession.object||!sourceUnchanged(edgeSession.before,edgeSession.mesh))){discardEdgePreview();return{ok:false,reason:"Geometry changed; select edges and preview again"};}
+  discardEdgePreview();
   if(drag||!editable())return{ok:false,reason:'Release the gesture and select editable edges'};
   const mesh=state()?.mesh,raw=Number(value),ids=[...new Set(selectionOverride||selectedEdgeIds())].filter(Number.isInteger);
   if(!mesh||!ids.length)return{ok:false,reason:'Select edge(s) first'};
@@ -242,4 +267,4 @@ function applyExact(value,selectionOverride=null){
   const status=document.querySelector('#selectionStatus');if(status)status.textContent=`Bevel committed • ${valid.ids.length} edge${valid.ids.length===1?'':'s'} • ${amount}% • Edge selection ready`;
   return{ok:true,ids:[...valid.ids],percent:amount,segments:bevelSegments()};
 }
-globalThis.__boxlabDirectBevel={version:'0.36.18.708',applyExact,disarm,setPersistentEdge:value=>{if(!faceSession&&armed)persistentEdge=!!value;},active:()=>armed,faceBevelInfo,armFaces,cancelFaces,faceActive:()=>!!faceSession,faceContextValid,previewFaces,previewState:()=>faceSession?.previewResult||null,busy:()=>!!drag};
+globalThis.__boxlabDirectBevel={version:'0.36.18.708',applyExact,disarm,setPersistentEdge:value=>{if(!faceSession&&armed){persistentEdge=!!value;if(persistentEdge)previewEdges();else discardEdgePreview();}},active:()=>armed,faceBevelInfo,armFaces,cancelFaces,faceActive:()=>!!faceSession,faceContextValid,previewFaces,previewEdges,syncEdgePreview,previewState:()=>faceSession?.previewResult||edgeSession?.result||null,busy:()=>!!drag};

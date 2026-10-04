@@ -87,3 +87,9 @@ test('Pencil hold requires real contact; real pen hold fires; blur prevents dela
  const pen=nativeOwner();pen.send('pointerdown',1000,10,{pointerType:'pen',buttons:1,pressure:.1});pen.fireHold();assert.deepEqual(pen.ids,[0,2]);pen.send('pointerup',1600,10,{pointerType:'pen'});assert.deepEqual(pen.ids,[0,2]);
  const blurred=nativeOwner();blurred.send('pointerdown',1000);blurred.send('blur',1100);blurred.fireHold();assert.deepEqual(blurred.ids,[1,3]);
 });
+
+test('731 existing background owner routes touch and Pencil taps to armed Slide without clearing selection',()=>{
+ const h=nativeOwner(),events=[];h.c.__boxlabSlideViewportSession={active:()=>true};h.c.CustomEvent=class{constructor(type,{detail}){Object.assign(this,{type,detail});}};h.c.window.dispatchEvent=e=>events.push(e);
+ h.send('pointerdown',1000);h.fireHold();assert.deepEqual(h.ids,[1,3]);h.send('pointerup',1070);assert.equal(events.length,1);assert.equal(events[0].type,'boxlab-viewport-background-tap');assert.deepEqual(h.ids,[1,3]);
+ const s=read('main.js'),a=s.indexOf("window.addEventListener('boxlab-pencil-background-tap'"),b=s.indexOf("canvas.addEventListener('pointermove'",a);let pencil;h.c.window.addEventListener=(t,f)=>pencil=f;vm.runInContext(s.slice(a,b),h.c);pencil({detail:{pointerId:2,timeStamp:1400}});assert.equal(events.length,2);assert.equal(events[1].type,'boxlab-viewport-background-tap');assert.deepEqual(h.ids,[1,3]);
+});

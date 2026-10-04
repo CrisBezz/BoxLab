@@ -4,6 +4,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
 import {EditableMesh} from '../src/mesh.js';
+import {createFaceBevelPreview,disposeFaceBevelPreview} from '../src/bevel-face-preview.js';
 import {History} from '../src/history.js';
 import {circleLoopInfo,circularizeLoop} from '../src/component-circle-core.js';
 import {installLooseTopology} from '../src/loose-topology.js';
@@ -25,7 +26,7 @@ function fixture(m=EditableMesh.cube()){
  for(const s of ['#viewport','#viewportWrap','#vertexBevelBtn','#vertexBevelWidth','#vertexBevelWidthOut','#vertexSlideBtn','#selectionModes','#selectionStatus','#addVertexBtn','#buildEdgeBtn','#multiSelectToggle','[data-mode-tools="vertex"]','[data-mode-tools="edge"]'])fields.set(s,element());
  fields.get('#vertexBevelBtn').id='vertexBevelBtn';fields.get('#vertexBevelWidth').value='20';for(const [k,v] of [['min',2],['max',49],['step',1]])fields.get('#vertexBevelWidth').setAttribute(k,v);
  const history=new History(),camera=new THREE.PerspectiveCamera(45,1000/600,.1,100);camera.position.set(4,3,6);camera.lookAt(0,0,0);camera.updateMatrixWorld();
- const context={THREE,Set,Map,document,window,Event:class{constructor(type){this.type=type;}},CustomEvent:class{constructor(type,{detail}){Object.assign(this,{type,detail});}},queueMicrotask:f=>queue.push(f),setTimeout(){},requestAnimationFrame:()=>1,cancelAnimationFrame(){},placeToolSessionPanel:p=>{p.style.left='50%';p.style.top='12px';},__boxlabHistory:history,__boxlabBridgeState:{mesh:m,camera,edgeObjects:new Map()},__boxlabSelectionBridge:{mode:()=>mode,indices:()=>ids,set:(md,next)=>{mode=md;ids=next;}},__boxlabTransformArming:{disarm(){}},__boxlabAddVertex:{isActive:()=>addActive,stop:selectLast=>{addActive=false;if(selectLast)ids=[0];}}};
+ const context={THREE,createFaceBevelPreview,disposeFaceBevelPreview,Set,Map,document,window,Event:class{constructor(type){this.type=type;}},CustomEvent:class{constructor(type,{detail}){Object.assign(this,{type,detail});}},queueMicrotask:f=>queue.push(f),setTimeout(){},requestAnimationFrame:()=>1,cancelAnimationFrame(){},placeToolSessionPanel:p=>{p.style.left='50%';p.style.top='12px';},__boxlabHistory:history,__boxlabBridgeState:{mesh:m,camera,scene:new THREE.Group(),edgeObjects:new Map()},__boxlabSelectionBridge:{mode:()=>mode,indices:()=>ids,set:(md,next)=>{mode=md;ids=next;}},__boxlabTransformArming:{disarm(){}},__boxlabAddVertex:{isActive:()=>addActive,stop:selectLast=>{addActive=false;if(selectLast)ids=[0];}}};
  const oldDispatch=window.dispatchEvent.bind(window);window.dispatchEvent=e=>{events.push(e);return oldDispatch(e);};
  vm.createContext(context);for(const module of ['direct-multi-vertex-bevel.js','precision-bevel.js','vertex-slide-polish.js','merge-by-distance.js','clean-vertices.js','add-edge-ui.js','vertex-tool-viewport-session.js'])vm.runInContext('{'+source(module)+'}',context);
  fields.get('#addVertexBtn').addEventListener('click',()=>{addActive=true;ids=[];});
@@ -44,7 +45,7 @@ test('full Vertex ring covers exactly current Active Tools; Bevel shares inner 9
 test('Vertex Bevel settings delegate real exact owner/kernel with one Undo/Redo and cancellation no mutation',()=>{
  const f=fixture(),before=f.m.clone();assert.equal(f.api.openFromHub({tool:'Bevel'}),true);assert.equal(f.api.element.style.top,'12px');f.click('.vts-done');f.flush();assert.deepEqual(f.m.vertices,before.vertices);assert.equal(f.history.undoStack.length,0);assert.deepEqual(f.ids(),[0]);
  f.api.openFromHub({tool:'Bevel'});const range=f.fields.get('.vts-width');range.value='30';f.emit(range,'input');assert.equal(f.fields.get('#vertexBevelWidth').value,'30');f.click('.vts-apply');f.flush();assert.equal(f.api.active(),false);assert.equal(f.context.__boxlabDirectVertexBevel.isArmed(),false);assert.equal(f.history.undoStack.length,1);assert.equal(f.ids().length,0);
- const expected=before.clone();assert.ok(expected.bevelVertices([0],.3));assert.deepEqual(f.m.faces,expected.faces);assert.deepEqual(f.m.vertices,expected.vertices);const undo=f.history.undo(f.m);assert.deepEqual(undo.vertices,before.vertices);assert.deepEqual(f.history.redo(undo).vertices,f.m.vertices);
+ const expected=before.clone();assert.ok(expected.bevelVertices([0],.3));assert.deepEqual(JSON.parse(JSON.stringify(f.m.faces)),expected.faces);assert.deepEqual(f.m.vertices,expected.vertices);const undo=f.history.undo(f.m);assert.deepEqual(undo.vertices,before.vertices);assert.deepEqual(f.history.redo(undo).vertices,f.m.vertices);
 });
 test('Vertex Slide popup reuses actual rail owner and exact apply, then returns selected puck semantic',()=>{
  const f=fixture(inline());f.setIds([1]);assert.equal(f.api.openFromHub({tool:'Slide'}),true);const input=f.fields.get('.vts-value');input.value='25';f.emit(input,'input');f.click('.vts-apply');f.flush();assert.deepEqual(f.m.vertices[1].toArray(),[1.25,0,0]);assert.equal(f.history.undoStack.length,1);assert.deepEqual(f.ids(),[1]);assert.equal(f.api.active(),false);assert.equal(f.context.__boxlabVertexSlidePolish.isArmed(),false);assert.equal(f.events.at(-1).detail.mode,'vertex');
@@ -104,4 +105,12 @@ test('radial Join/Weld/Delete call actual native owners and clear suppression ac
 test('Create Face and Circle radial invoke existing owners; rebuilt Face selection gets fresh hub path',()=>{
  const m=EditableMesh.cube();m.faces.shift();const f=fixture(m);f.setIds([0,3,2,1]);const modeButton=f.document.createElement('button');modeButton.addEventListener('click',()=>f.setMode('face'));f.fields.set('#selectionModes button[data-mode="face"]',modeButton);vm.runInContext('{'+source('face-reconstruct.js')+';sync();}',f.context);wireRadial(f,'Create Face','#createFaceFromVerticesBtn')();f.flush();assert.equal(f.m.faces.length,6);assert.equal(f.context.__boxlabSelectionBridge.mode(),'face');assert.equal(f.ids().length,1);assert.equal(f.history.undoStack.length,1);assert.equal(f.context.hubSuppressedKey,'');
  const g=fixture(new EditableMesh([[0,0,0],[3,0,0],[3,1,0],[0,1,0]],[[0,1,2,3]]));g.setIds([0,1,2,3]);Object.assign(g.context,{circleLoopInfo,circularizeLoop});g.fields.get('#vertexBevelBtn').click();assert.equal(g.context.__boxlabDirectVertexBevel.isArmed(),true);vm.runInContext('{'+source('component-circle.js')+'}',g.context);wireRadial(g,'Circle','#componentCircleBtn')();g.flush();assert.equal(g.history.undoStack.length,1);assert.deepEqual(g.ids(),[0,1,2,3]);assert.equal(g.context.root.hidden,false);assert.equal(g.context.__boxlabDirectVertexBevel.isArmed(),false);
+});
+
+test('731 Vertex Width slider renders blue copy, Cancel disposes it; external changes cannot be overwritten',()=>{
+ const f=fixture(),before=f.m.clone(),owner=f.context.__boxlabDirectVertexBevel,scene=f.context.__boxlabBridgeState.scene;
+ f.api.openFromHub({tool:'Bevel'});assert.equal(scene.children.length,1);assert.deepEqual(f.m.vertices,before.vertices);assert.equal(f.history.undoStack.length,0);
+ const range=f.fields.get('.vts-width');range.value='35';f.emit(range,'input');assert.equal(owner.previewState().percent,35);assert.equal(scene.children.length,1);assert.deepEqual(f.m.faces,before.faces);
+ f.click('.vts-done');f.flush();assert.equal(scene.children.length,0);assert.deepEqual(f.ids(),[0]);assert.equal(f.history.undoStack.length,0);
+ f.api.openFromHub({tool:'Bevel'});f.m.vertices[0].x=77;assert.equal(owner.applyPreview(20).ok,false);assert.equal(f.m.vertices[0].x,77);assert.equal(scene.children.length,0);assert.equal(f.history.undoStack.length,0);
 });

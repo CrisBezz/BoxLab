@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 import {buildSweepProfile} from './sweep-core.js?v=0.36.18.417';
 
-const VERSION='0.36.18.469';
+const VERSION='0.36.18.731';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -578,6 +578,7 @@ function addSweepPath(selectionProfileOverride=null,autoUseSelection=false){
   setStatus(selectionProfile?'Sweep - '+selectionProfile.label+' captured':'Sweep - choose a Profile, then Path');lastSignature='';
   if(selectionProfile&&autoUseSelection)queueMicrotask(()=>applySelectionProfile({activateFollowEdges:true}));
   else requestAnimationFrame(()=>{if(manager()?.activeId===o.id)globalThis.__boxlabTransformArming?.activateRealMove?.();});
+  return true;
 }
 function cancelSweepSession({silent=false}={}){
   const active=pathObject();
@@ -613,8 +614,7 @@ function installPenRange(input,onValue){let pointerId=null,owned=null,releaseFra
 function launchSweepFromCurrentSelection(){
   const candidate=selectionProfileCandidate();
   if(!candidate){setStatus('Sweep - select one Face or one connected closed Edge loop');return false;}
-  addSweepPath(candidate,true);
-  return true;
+  return !!addSweepPath(candidate,true);
 }
 function refreshSelectionLaunchButtons(){
   const bridge=globalThis.__boxlabSelectionBridge,mode=bridge?.mode?.(),ids=bridge?.indices?.()||[];
@@ -668,4 +668,4 @@ window.addEventListener('boxlab-tool-session-change',event=>{const detail=event.
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedId=null;cachedObject=null;lastSignature='';buildOverlay();}));
 window.addEventListener('beforeunload',()=>{cancelAnimationFrame(raf);hotRailHit=null;railSnapRefs=null;disposeOverlay();unlockTools();endSweepSession();});
 tick();
-globalThis.__boxlabSweepPath={version:VERSION,add:addSweepPath,apply:applySweep,cancel:cancelSweepSession,setStage:setSweepStage,get active(){return !!pathObject()&&looksConstructionMesh(liveMesh());},get editing(){const o=pathObject(),m=o&&ensureMeta(o);return !!m&&(m.editProfile||m.editPath);},rebuild(){lastSignature='';buildOverlay();}};
+globalThis.__boxlabSweepPath={version:VERSION,add:addSweepPath,launchSelection:launchSweepFromCurrentSelection,apply:applySweep,cancel:cancelSweepSession,setStage:setSweepStage,get active(){return !!pathObject()&&looksConstructionMesh(liveMesh());},get editing(){const o=pathObject(),m=o&&ensureMeta(o);return !!m&&(m.editProfile||m.editPath);},rebuild(){lastSignature='';buildOverlay();}};

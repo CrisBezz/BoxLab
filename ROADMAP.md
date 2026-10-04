@@ -417,3 +417,12 @@ Batch2 implemented and automated: all modes' original inventory/availability/set
 
 ### .730 Beta6 release-candidate audit / compact UI
 User supersedes fixed-width popouts and removes Visible/Through UI (retain Lasso/SELECT). Compact content-sized panels implemented; RC audit restores missing Extract closing brace, validates279 source modules and actual transform/export/Extract owners.53 focused PASS; full1265/982/283 with identical existing failures. Device/WebGL/Files/Nomad checks still pending; see BETA_6_RELEASE_CHECKLIST.md. Next grouped iPad smoke test and issue review, then Beta6 freeze/notes. No Beta6 release claimed yet.
+
+
+### .731 quick pre-finalization refinement — device checks pending
+
+Sweep Face/Edge uses one original staged viewport dock; Edge Slide persists until
+Done/background; Edge/Vertex popup blue bevel preview added through original owners,
+retaining viewport drag bevel. 85 focused PASS; no new full-suite failure names.
+Continue .730/.731 grouped iPad checks and Files/Nomad export acceptance; freeze Beta6
+only after user feedback and blocker review. Slight Lasso tightening deferred.

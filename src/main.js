@@ -553,7 +553,7 @@ function cancelBackgroundHold(reason){
 }
 function backgroundSelectionContext(){return selectionMode+':'+(globalThis.__boxlabObjectManager?.activeId||'active');}
 function readBackgroundSelection(){return selectionMode==='object'?[...(globalThis.__boxlabObjectSelection?.ids||[])]:selectionIndices();}
-function backgroundHoldBlocked(){return !!directTool||!!globalThis.__boxlabToolSession?.isActive?.()||!!globalThis.__boxlabFaceValueViewportSession?.active?.()||!!globalThis.__boxlabEdgeViewportSession?.loopActive?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.();}
+function backgroundHoldBlocked(){return !!directTool||!!globalThis.__boxlabToolSession?.isActive?.()||!!globalThis.__boxlabFaceValueViewportSession?.active?.()||!!globalThis.__boxlabEdgeViewportSession?.loopActive?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()||!!globalThis.__boxlabSlideViewportSession?.active?.();}
 function beginBackgroundHold(event){
   if(backgroundHold)clearTimeout(backgroundHold.timer);
   backgroundHold=null;
@@ -608,7 +608,7 @@ window.addEventListener('pointerup',event=>{
   const tap=backgroundTap;backgroundTap=null;
   const moved=tap.moved||Math.hypot(event.clientX-tap.startX,event.clientY-tap.startY)>=EDIT_DRAG_THRESHOLD;
   if(!tap.cancelled&&!moved&&(!Number.isFinite(tap.startedAt)||event.timeStamp-tap.startedAt<=TAP_MAX_MS)){
-    if(globalThis.__boxlabFaceValueViewportSession?.active?.()||globalThis.__boxlabEdgeViewportSession?.loopActive?.()||globalThis.__boxlabBevelViewportSession?.edgeActive?.()){
+    if(globalThis.__boxlabFaceValueViewportSession?.active?.()||globalThis.__boxlabEdgeViewportSession?.loopActive?.()||globalThis.__boxlabBevelViewportSession?.edgeActive?.()||globalThis.__boxlabSlideViewportSession?.active?.()){
       window.dispatchEvent(new CustomEvent('boxlab-viewport-background-tap',{detail:{pointerId:event.pointerId,timeStamp:event.timeStamp,clientX:event.clientX,clientY:event.clientY}}));
     }else{completeBackgroundSelectionTap(event);}
   }
@@ -616,7 +616,7 @@ window.addEventListener('pointerup',event=>{
 window.addEventListener('pointercancel',event=>{if(backgroundHold?.pointerId===event.pointerId){clearTimeout(backgroundHold.timer);backgroundHold=null;}if(backgroundTap?.pointerId===event.pointerId)backgroundTap=null;backgroundSelectionTap.reset('pointer-cancel');},true);
 // Pencil orbit owner already distinguishes taps from navigation drags.
 window.addEventListener('boxlab-pencil-background-tap',event=>{
-  if(!globalThis.__boxlabFaceValueViewportSession?.active?.()&&!globalThis.__boxlabEdgeViewportSession?.loopActive?.()&&!globalThis.__boxlabBevelViewportSession?.edgeActive?.()){backgroundTap=null;completeBackgroundSelectionTap(event.detail||{});return;}
+  if(!globalThis.__boxlabFaceValueViewportSession?.active?.()&&!globalThis.__boxlabEdgeViewportSession?.loopActive?.()&&!globalThis.__boxlabBevelViewportSession?.edgeActive?.()&&!globalThis.__boxlabSlideViewportSession?.active?.()){backgroundTap=null;completeBackgroundSelectionTap(event.detail||{});return;}
   backgroundTap=null;
   window.dispatchEvent(new CustomEvent('boxlab-viewport-background-tap',{detail:event.detail}));
 });

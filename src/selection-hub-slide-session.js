@@ -133,7 +133,8 @@ window.addEventListener('boxlab-selection-hub-tool',event=>{
 window.addEventListener('boxlab-edge-slide-complete',event=>{
   if(!syncContext())return;
   const ids=[...new Set(event.detail?.ids||launchSelection)].filter(Number.isInteger);
-  close({selection:ids,disarm:true});
+  launchSelection=ids;
+  place();
 });
 window.addEventListener('boxlab-bridge-state',()=>{if(syncContext())requestAnimationFrame(()=>{if(syncContext())place();});});
 document.querySelectorAll('#selectionModes button[data-mode]').forEach(button=>button.addEventListener('click',()=>{
@@ -147,3 +148,5 @@ globalThis.__boxlabSlideViewportSession={
   close,
   element:panel
 };
+
+window.addEventListener('boxlab-viewport-background-tap',()=>{if(syncContext())close({disarm:true});});
