@@ -45,10 +45,15 @@ test('Gizmo centre remains a free Move handle, free Rotate ring retains owner an
  const s=source('total-gizmo.js');assert.match(s,/class="tg-handle tg-center" data-tool="move" data-constraint="free"[^\n]+r="14"/);assert.match(s,/tg-screen-ring" data-tool="rotate" data-constraint="free"/);assert.doesNotMatch(s,/class="tg-collapse"|collapseControl/);assert.match(s,/mountGizmoCornerControls\(root/);assert.match(s,/reason:'corner-radial-tools'/);assert.match(s,/cornerControls.sync\(\)/);assert.match(s,/beginGizmoGesture\?\.\(spec,event\)/);
 });
 test('Every changed shared-dock client repinned from shell; protected transform module stays frozen',()=>{
- const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');for(const file of fs.readdirSync(new URL('../src/',import.meta.url))){if(!file.endsWith('.js'))continue;const s=source(file);if(s.includes('tool-session-panel-position.js?v=')){assert.match(s,/tool-session-panel-position\.js\?v=0\.36\.18\.712/);const release=file==='total-gizmo.js'?'714':['selection-hub-sweep-session.js','edge-tool-viewport-session.js'].includes(file)?'713':'712';assert.ok(index.includes('src/'+file+'?v=0.36.18.'+release));}}
- assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);assert.match(source('tool-session-panel-position.js'),/tool-session-wide-layout\.js\?v=0\.36\.18\.712/);assert.match(source('total-gizmo.js'),/gizmo-corner-controls\.js\?v=0\.36\.18\.714/);
+ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');for(const file of fs.readdirSync(new URL('../src/',import.meta.url))){if(!file.endsWith('.js'))continue;const s=source(file);if(s.includes('tool-session-panel-position.js?v=')){assert.match(s,/tool-session-panel-position\.js\?v=0\.36\.18\.715/);const release='715';assert.ok(index.includes('src/'+file+'?v=0.36.18.'+release));}}
+ assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);assert.match(source('tool-session-panel-position.js'),/tool-session-wide-layout\.js\?v=0\.36\.18\.715/);assert.match(source('total-gizmo.js'),/gizmo-corner-controls\.js\?v=0\.36\.18\.714/);
 });
 
 test('Corner shortcut groups remain inside viewport without moving the gizmo selection pivot',()=>{
  const f=shortcuts();for(const [left,top] of [[500,300],[5,5],[995,595]]){f.api.position(left,top,{width:1000,height:600});for(const g of f.root.children){const w=g.children.length*40+(g.children.length-1)*4,x=left+Number.parseFloat(g.style.left)-98,y=top+Number.parseFloat(g.style.top)-98;assert.ok(x-w/2>=8&&x+w/2<=992);assert.ok(y-20>=8&&y+20<=592);}}delete globalThis.__boxlabObjectSelection;
+});
+
+
+test('EXACT stays in right action rail for repeatable Edge sessions',()=>{
+ const f=dom(),panel=f.doc.createElement('div');f.parse('<strong>Loop Cut</strong><label>Loop Slide</label><button>EXACT</button>',panel);layoutWideToolPanel(panel);assert.equal(panel.children[1].className,'ts-wide-actions');assert.equal(panel.children[1].children[0].textContent,'EXACT');
 });

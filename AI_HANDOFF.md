@@ -7,16 +7,30 @@ Read AI_WORKFLOW.md completely, this file completely, TEST_CHECKLIST.md, recent
 relevant DEV_HISTORY.md entries and ROADMAP.md before code changes. Audit current
 main/live shell/pins and authoritative owners; reconnect existing functionality.
 
-Current release: **v0.36.18.714**.
-Current focus: Object List shortcut beside Multi for Focus view, pending hands-on.
-.713 Edge combined checks remain pending; no new PASS inferred.
-.714 uses original Objects drawer unchanged: Focus stays on, only Objects is revealed
-when toggled; second tap hides it and restores prior disclosure state. Non-Focus uses
-original Objects disclosure. Object-only icon/pressed state/busy guard. Focus owner
-view-modes exposes list visibility/toggle; mode/Focus exit clears temporary reveal.
-No cloned outliner, geometry/history/Multi/raw-pointer owner changes. 29 targeted
-PASS; full1198/914/284, same failure names as .713. view-modes, corner helper and
-parent gizmo/HTML/main/refresh pins current; all modelling owners unchanged.
+Current release: **v0.36.18.715**.
+Current focus: persistent radial Edge Loop / Bevel EXACT and background exit, pending hands-on.
+User confirms **.714 PASS**: Object List beside Multi, Focus-only list reveal/toggle
+and mode/Focus exit cleanup are protected. .713 other Edge combined checks pending.
+.715 Loop keeps latest rail after release so Loop Slide takes over; count controls
+return after EXACT. EXACT uses existing commit owner (Undo/Redo internal rail cleanup)
+and stays armed/open. Another edge adds another cut retaining current placed geometry;
+background tap commits latest rail and exits. Original .688/.162 topology/slide math
+untouched. Automatic .632 commit remains for non-radial launches; changed wrapper
+pin .715. Exact's internal mesh replacement is adopted by the session, while external
+Undo/context changes close safely. Split Done unchanged.
+.715 radial Edge Bevel persists after committed Pencil drag or EXACT; current live
+selection replaces cached IDs. Stationary edge tap selects for exact; completion
+clears consumed IDs, leaves owner ready for next edge. One history step per bevel.
+Cancelled/incomplete drags roll back and release capture/navigation; background tap
+closes/disarms and clears hub suppression. Face preview/Apply/Cancel and non-radial
+Edge lifecycle unchanged. No new kernel or raw background-pointer owner: main and
+Pencil tap semantic are reused, navigation/multi-touch cancelled taps do not exit.
+Shared wide layout recognizes EXACT as right-rail Apply; shared import graph .715.
+50 targeted PASS; full1204/920/284, same failure names versus .7141198/914/284.
+Next confirm visible .715, repeat Loop slide/EXACT/new cut and Bevel drag/EXACT/new
+selection, background finger/Pencil exit versus orbit/pan/pinch, one-step Undo/Redo
+and Face Bevel/Object List regression. Keep drawer fallbacks/other pending checks.
+
 User confirms **.712 AWESOME PASS**: gizmo centre/corner shortcuts, wide top-centre
 popouts and additional Object tools are protected. Earlier pending individual repair
 checks are not implicitly passed.
@@ -67,7 +81,7 @@ Edge and Vertex**. Preserve this across future ring refinements.
   protected Face/Edge/Vertex session proxies apart from shared Object host ordering.
 - object-radial-session stays .711; Vertex modelling owners/drawer loader .710;
   .708 Face Bevel kernel/direct owner unchanged. multi-object-transform stays .1.0.
-- Manifest/title/data-release-version/visible label/main/refresh pins .714;
+- Manifest/title/data-release-version/visible label/main/refresh pins .715;
   main and refresh logic unchanged. Loop Cut, modelling kernels, frozen betas untouched.
 
 ## .712 wide popouts / gizmo redesign
@@ -117,7 +131,7 @@ Combined .712 manual checks:
    and exact values: same wide/action rule, visibility and clean completion/selection.
 5. Object Transform/Insert, Solidify, Revolve and Boolean panels/actions/history;
    navigation and .682 finger/Pencil background dismissal/re-tap remain protected.
-User .712 PASS recorded; .713 Edge and .714 Object List hands-on pending. Keep drawer fallbacks.
+User .712 and .714 PASS recorded; .715 Loop/Bevel and other .713 Edge checks pending. Keep drawer fallbacks.
 
 ## .711 Object radial inventory / session dock
 
@@ -314,5 +328,4 @@ If iPad looks stale, compare visible version to manifest and HTML BEFORE modelli
 changes. .690 bootstrap stopped after three stale-shell responses; recovery was
 hardened to keep retrying. Do not regress it.
 Update this handoff, append DEV_HISTORY.md, update TEST_CHECKLIST.md/ROADMAP.md,
-and give a short realistic manual list after publishing. Next .714 Object List/Focus
-confirmation plus pending .713 Edge combined checks.
+and give a short realistic manual list after publishing. Next .715 repeated Loop/Bevel confirmation plus remaining .713 Edge checks.

@@ -45,8 +45,12 @@ function commitLoop(keys) {
 }
 
 canvas?.addEventListener('pointerup', event => {
+  if (globalThis.__boxlabEdgeViewportSession?.loopActive?.()) return;
   if (committing || !event.isPrimary || !loopCutBtn?.classList.contains('active')) return;
   const keys = currentYellowEdgeKeys();
   if (!keys.length) return;
   queueMicrotask(() => commitLoop(keys));
 });
+
+// Radial Exact finalizes the current rail through the existing commit owner.
+globalThis.__boxlabLoopCutCommit={pending:()=>currentYellowEdgeKeys().length>0,commitCurrent:()=>{const keys=currentYellowEdgeKeys();if(committing||!keys.length||globalThis.__boxlabMainDirectTool?.busy?.())return false;commitLoop(keys);return true;}};

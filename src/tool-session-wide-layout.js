@@ -4,7 +4,7 @@ const layouts=new WeakMap();
 function actionKind(button){
  const text=(button.textContent||'').trim();
  if(/^(cancel|done|close)\b/i.test(text))return 'exit';
- if(/^(apply|use bridge|confirm)\b/i.test(text))return 'apply';
+ if(/^(apply|exact|use bridge|confirm)\b/i.test(text))return 'apply';
  if(/^bisect only$/i.test(text))return 'extra';
  return null;
 }

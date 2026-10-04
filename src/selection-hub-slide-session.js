@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.712';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.715';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.672 — radial Edge Slide viewport session.

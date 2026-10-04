@@ -3308,7 +3308,19 @@ Add new permanent regression checks below when future features need protection.
 
 - [x] Original Objects node/actions retained; Focus owner reveals Objects only; toggle/previous disclosure/mode and Focus exit tested. Object-only shortcut/pressed/busy guards and nearby radial checks: 29 PASS.
 - [x] Full1198/914/284, no new failure names versus .713. Protected modelling/transform/Loop owners unchanged; release/direct/helper/parent pins current.
-- [ ] Confirm visible .714; Object gizmo bottom-left has Object List icon beside Multi.
-- [ ] Focus View → Object List: original list appears, Focus remains on and other drawer controls stay hidden; second tap hides list and icon unhighlights.
-- [ ] Use object rows/visibility/lock/rename and Multi in revealed list; original selection/gizmo and navigation preserved.
-- [ ] Leave Object mode or exit Focus: temporary reveal cleared; normal drawer behavior restored. Normal-view icon opens/closes Objects disclosure. .713 Edge checks remain pending.
+- [x] Confirm visible .714; Object gizmo bottom-left has Object List icon beside Multi.
+- [x] Focus View → Object List: original list appears, Focus remains on and other drawer controls stay hidden; second tap hides list and icon unhighlights.
+- [x] Use object rows/visibility/lock/rename and Multi in revealed list; original selection/gizmo and navigation preserved.
+- [x] Leave Object mode or exit Focus: temporary reveal cleared; normal drawer behavior restored. Normal-view icon opens/closes Objects disclosure. .713 Edge checks remain pending.
+
+
+## v0.36.18.715 — repeated Edge Loop / Bevel EXACT sessions
+
+- [x] User .714 PASS: Object List/Multi/Focus toggle and exits protected; other .713 Edge checks remain pending.
+- [x] 50 targeted PASS: real Loop commit owner preserves slider position/deferred radial release/one Undo/Redo, persistent session Exact mesh adoption; actual Edge bevel drag/exact repeats/current IDs/history/stationary selection/cancel rollback/navigation release; Face unchanged; shared EXACT action rail and nearby sessions.
+- [x] Full1204/920/284, no new failure names versus .7141198/914/284. .688 topology/slide core and multi-object-transform untouched, shared/direct/parent/main/refresh pins current.
+- [ ] Visible .715; Loop placement/release enables Loop Slide instead of closing. Slider moves latest loop with trusted feel; EXACT finalizes but leaves panel/tool open.
+- [ ] Another edge adds another Loop with current placement retained; repeat single/multiple count. Background finger/Pencil tap closes cleanly and keeps work; orbit/pan/pinch/cancelled multi-touch do not close. Undo/Redo per cut.
+- [ ] Edge Bevel drag commits once and stays open/armed for another edge. Stationary edge tap selects for Width/Segments + EXACT; EXACT commits once, clears used IDs, stays ready. Repeat with no stale source IDs.
+- [ ] Background finger/Pencil tap closes Bevel and returns puck/fresh next tap. Cancelled drag restores source/selection/no history and navigation; unsupported selections safe.
+- [ ] Face blue Bevel preview/Apply/Cancel, non-radial Edge Bevel, Split Done, Object List/Multi, other protected navigation/tools unchanged.

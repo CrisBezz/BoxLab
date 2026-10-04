@@ -67,12 +67,12 @@ test('owner failure rolls back; read-only and changed selection/mode/mesh block 
  f.setLocked(true);assert.equal(f.owner.faceBevelInfo([0]).ok,false);assert.equal(f.owner.applyExact(20).ok,false);
  for(const change of [g=>g.setIds([2]),g=>g.setMode('edge'),g=>{g.context.__boxlabBridgeState.mesh=EditableMesh.cube()}]){const g=fixture();g.launch();change(g);assert.equal(g.owner.applyExact(20).ok,false);g.panel.sync();assert.equal(g.owner.active(),false);assert.equal(g.context.__boxlabHistory.undoStack.length,0);}
 });
-test('Edge radial Apply remains the existing selected-edge exact workflow',()=>{
- const m=EditableMesh.cube(),f=fixture(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.panel.sync();assert.equal(f.owner.faceActive(),false);assert.equal(f.node('.shbs-head strong').textContent,'Bevel');f.action('apply');assert.equal(f.context.__boxlabHistory.undoStack.length,1);assert.equal(f.ids().length,0);assert.equal(f.mode(),'edge');assert.equal(f.owner.active(),false);
+test('Edge radial Apply remains the existing selected-edge exact workflow and remains ready',()=>{
+ const m=EditableMesh.cube(),f=fixture(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.panel.sync();assert.equal(f.owner.faceActive(),false);assert.equal(f.node('.shbs-head strong').textContent,'Bevel');f.action('apply');assert.equal(f.context.__boxlabHistory.undoStack.length,1);assert.equal(f.ids().length,0);assert.equal(f.mode(),'edge');assert.equal(f.owner.active(),true);
 });
 
-test('protected Edge Pencil drag still previews/commits once and clears Edge selection',()=>{
- const m=EditableMesh.cube(),before=geometry(m),f=fixture(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.pointer('pointerdown');f.pointer('pointermove',40);assert.notDeepEqual(geometry(m),before);f.pointer('pointerup',40);assert.equal(f.context.__boxlabHistory.undoStack.length,1);assert.equal(f.mode(),'edge');assert.equal(f.ids().length,0);assert.equal(f.owner.active(),false);
+test('Edge radial Pencil drag previews/commits once, clears used IDs and remains ready',()=>{
+ const m=EditableMesh.cube(),before=geometry(m),f=fixture(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.pointer('pointerdown');f.pointer('pointermove',40);assert.notDeepEqual(geometry(m),before);f.pointer('pointerup',40);assert.equal(f.context.__boxlabHistory.undoStack.length,1);assert.equal(f.mode(),'edge');assert.equal(f.ids().length,0);assert.equal(f.owner.active(),true);
 });
 test('Face radial Bevel dispatch launches semantically without clicking the Edge mode button',()=>{
  const s=fs.readFileSync(new URL('../src/total-gizmo.js',import.meta.url),'utf8');
@@ -99,4 +99,18 @@ test('708 Face touch/background passes navigation; main Move fallback yields onl
 });
 test('708 same-object external geometry edit invalidates preview and prevents overwriting it',()=>{
  const m=EditableMesh.cube(),f=fixture(m);f.launch();m.vertices[0].x+=.1;const changed=geometry(m);assert.equal(f.owner.previewFaces().ok,false);assert.equal(f.context.__boxlabBridgeState.scene.children.length,0);assert.equal(f.owner.applyExact(20).ok,false);assert.deepEqual(geometry(m),changed);assert.equal(f.context.__boxlabHistory.undoStack.length,0);assert.match(f.node('.shbs-note').textContent,/geometry changed/);
+});
+
+
+test('persistent Edge Bevel repeats exact operations on current selection with one history step each',()=>{
+ const f=fixture();f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.action('apply');
+ const m=f.context.__boxlabBridgeState.mesh,valid=m.edges().findIndex((e,i)=>!!m.generalBevelSelectionInfo([i]));assert.ok(valid>=0);f.setIds([valid]);f.panel.sync();f.action('apply');assert.equal(f.context.__boxlabHistory.undoStack.length,2);assert.equal(f.owner.active(),true);assert.equal(f.panel.edgeActive(),true);assert.equal(f.ids().length,0);
+ f.winHandlers.get('boxlab-viewport-background-tap')({});assert.equal(f.owner.active(),false);assert.equal(f.panel.active(),false);assert.equal(f.events.at(-1).detail.tool,'Bevel');assert.equal(f.context.__boxlabHistory.undoStack.length,2);
+});
+test('Edge stationary tap selects for EXACT; cancelled drag rolls back and navigation controls restore',()=>{
+ const f=fixture(),m=f.context.__boxlabBridgeState.mesh,before=geometry(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.pointer('pointerdown');f.pointer('pointerup');assert.deepEqual(Array.from(f.ids()),[0]);assert.equal(f.context.__boxlabHistory.undoStack.length,0);assert.equal(f.owner.active(),true);
+ f.pointer('pointerdown');f.pointer('pointermove',40);assert.equal(f.context.__boxlabBridgeState.controls.enabled,false);f.pointer('pointercancel');assert.deepEqual(geometry(m),before);assert.equal(f.context.__boxlabBridgeState.controls.enabled,true);assert.equal(f.owner.active(),true);assert.deepEqual(Array.from(f.ids()),[0]);
+});
+test('closing persistent Edge Bevel during preview discards unfinished changes and releases navigation',()=>{
+ const f=fixture(),m=f.context.__boxlabBridgeState.mesh,before=geometry(m);f.setMode('edge');f.setIds([0]);f.node('#bevelBtn').listeners.get('click')({preventDefault(){},stopImmediatePropagation(){}});f.launch();f.pointer('pointerdown');f.pointer('pointermove',30);f.owner.disarm();assert.deepEqual(geometry(m),before);assert.equal(f.owner.busy(),false);assert.equal(f.context.__boxlabBridgeState.controls.enabled,true);assert.equal(f.context.__boxlabHistory.undoStack.length,0);
 });

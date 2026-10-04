@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.712';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.715';
 // Whole-object repair access; existing repair owners retain topology and history.
 const repairs={
   'Merge Dist':{selector:'#mergeByDistanceBtn',owner:'__boxlabMergeByDistance',method:'applyFor',description:'Weld safely mergeable nearby regular vertices. Preserve intentional loose geometry.'},

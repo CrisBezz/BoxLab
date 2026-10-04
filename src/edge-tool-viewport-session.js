@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.712';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.715';
 
 // Presentation only: persistent Loop/Split stay with their existing gesture owners.
 const panel=document.createElement('div');
@@ -32,10 +32,12 @@ function sync(){
   const active=session.tool==='Loop'?main()?.active?.()==='loopCut':split()?.isArmed?.();
   if(bridge()?.mode?.()!=='edge'||globalThis.__boxlabBridgeState?.mesh!==session.mesh||document.querySelector('#app')?.classList.contains('boxlab-active-locked')||!active){if(!close({disarm:active,complete:true}))raf=requestAnimationFrame(sync);return;}
   panel.hidden=false;
-  panel.querySelector('.ets-done').disabled=!!main()?.busy?.();
+  const pending=session.tool==='Loop'&&!!globalThis.__boxlabLoopCutCommit?.pending?.();
+  panel.querySelector('.ets-done').textContent=session.tool==='Loop'?'EXACT':'Done';
+  panel.querySelector('.ets-done').disabled=!!main()?.busy?.()||(session.tool==='Loop'&&!pending);
   for(const input of panel.querySelectorAll('[data-source]')){
     const source=document.querySelector(input.dataset.source);
-    input.parentElement.hidden=session.tool!=='Loop';
+    input.parentElement.hidden=session.tool!=='Loop'||(input.dataset.source==='#loopCutCount'?pending:!pending);
     if(!source)continue;
     for(const attr of ['min','max','step'])input.setAttribute(attr,source.getAttribute(attr)||'');
     if(document.activeElement!==input)input.value=source.value;
@@ -45,7 +47,7 @@ function sync(){
   placeToolSessionPanel(panel);raf=requestAnimationFrame(sync);
 }
 panel.addEventListener('pointerdown',event=>event.stopPropagation(),true);
-panel.querySelector('.ets-done').addEventListener('click',event=>{event.preventDefault();event.stopPropagation();close();});
+panel.querySelector('.ets-done').addEventListener('click',event=>{event.preventDefault();event.stopPropagation();if(session?.tool==='Loop'){if(main()?.busy?.())return;if(globalThis.__boxlabLoopCutCommit?.commitCurrent?.())session.mesh=globalThis.__boxlabBridgeState?.mesh;sync();}else close();});
 for(const input of panel.querySelectorAll('[data-source]'))for(const type of ['input','change'])input.addEventListener(type,()=>{
   if(!session||session.tool!=='Loop'||main()?.busy?.())return;
   const source=document.querySelector(input.dataset.source);if(!source||source.disabled)return;
@@ -57,7 +59,9 @@ window.addEventListener('boxlab-selection-hub-tool',event=>{
   close({disarm:false,complete:false});
   session={tool,mesh:globalThis.__boxlabBridgeState?.mesh};
   panel.querySelector('.ets-title').textContent=tool==='Loop'?'Loop Cut':'Split';
-  panel.querySelector('.ets-note').textContent=tool==='Loop'?'Tap/drag an edge to cut and slide. Done exits; completed cuts are kept.':'Tap two non-adjacent boundary edges of the same face. Done exits; completed splits are kept.';
+  panel.querySelector('.ets-note').textContent=tool==='Loop'?'Tap/drag an edge, then adjust Loop Slide. EXACT confirms; tap another edge for another cut. Background tap exits.':'Tap two non-adjacent boundary edges of the same face. Done exits; completed splits are kept.';
   sync();
 });
-globalThis.__boxlabEdgeViewportSession={active:()=>!!session,close,sync,element:panel};
+globalThis.__boxlabEdgeViewportSession={active:()=>!!session,loopActive:()=>session?.tool==='Loop',close,sync,element:panel};
+
+window.addEventListener('boxlab-viewport-background-tap',()=>{if(session?.tool==='Loop'&&!main()?.busy?.()){if(globalThis.__boxlabLoopCutCommit?.pending?.())globalThis.__boxlabLoopCutCommit?.commitCurrent?.();if(session)session.mesh=globalThis.__boxlabBridgeState?.mesh;close();}});

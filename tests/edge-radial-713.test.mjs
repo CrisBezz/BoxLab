@@ -26,7 +26,7 @@ function fixture(){
  const ctx={document,window:{addEventListener:(t,f)=>listeners[t]=f,dispatchEvent:e=>events.push(e)},CustomEvent:class{constructor(type,{detail}){this.type=type;this.detail=detail;}},Event:class{},requestAnimationFrame:fn=>{scheduled.push(fn);return scheduled.length;},cancelAnimationFrame(){},placeToolSessionPanel(){},__boxlabBridgeState:{mesh},__boxlabSelectionBridge:{mode:()=>mode},__boxlabMainDirectTool:{active:()=>active,busy:()=>busy,finishLoopCut:()=>{if(busy)return false;active=null;return true;}},__boxlabFaceSplit:{isArmed:()=>active==='split',disarm:()=>active=null}};
  vm.runInNewContext(read('src/edge-tool-viewport-session.js').replace(/^import .*\n/,''),ctx);
  const launch=tool=>{active=tool==='Loop'?'loopCut':'split';listeners['boxlab-selection-hub-tool']({detail:{mode:'edge',tool}});};
- return{ctx,launch,events,panel,fields,setBusy:v=>busy=v,setMode:v=>mode=v,active:()=>active};
+ return{ctx,launch,events,panel,fields,setBusy:v=>busy=v,setMode:v=>mode=v,active:()=>active,dispatch:t=>listeners[t]({})};
 }
 test('Loop/Split Done disarm authoritative owners, busy guard and completion survive consuming viewport listeners',()=>{
  const f=fixture();for(const tool of ['Loop','Split']){f.launch(tool);assert.equal(f.panel.hidden,false);f.setBusy(true);assert.equal(f.ctx.__boxlabEdgeViewportSession.close(),false);assert.equal(f.ctx.__boxlabEdgeViewportSession.active(),true);f.setBusy(false);assert.equal(f.ctx.__boxlabEdgeViewportSession.close(),true);assert.equal(f.active(),null);assert.equal(f.events.at(-1).detail.tool,tool);assert.equal(f.events.at(-1).detail.mode,'edge');}
@@ -38,5 +38,13 @@ test('context loss and superseding sessions hide settings without stale suppress
 test('Loop finishing changes only tool state; original cut/slide and commit owners remain intact',()=>{
  const main=read('src/main.js');const fn=main.match(/finishLoopCut:\(\)=>\{([^\n]+)\},/)[1];const calls=[];
  vm.runInNewContext('(()=>{'+fn+'})()',{drag:null,directTool:'loopCut',setDirectTool:x=>calls.push(x),renderMesh:()=>calls.push('render')});assert.deepEqual(calls,[null,'render']);assert.doesNotMatch(fn,/history|clearLoopSlide|loopCut\(/);
- assert.ok(read('index.html').includes('loop-cut-commit.js?v=0.36.18.632'));assert.ok(read('src/drawer-ui.js').includes('loop-cut-added-vertex.js?v=0.36.18.688'));
+ assert.ok(read('index.html').includes('loop-cut-commit.js?v=0.36.18.715'));assert.ok(read('src/drawer-ui.js').includes('loop-cut-added-vertex.js?v=0.36.18.688'));
+});
+
+
+test('Loop EXACT finalizes current rail, keeps owner/session and accepts commit mesh replacement',()=>{
+ const f=fixture();let pending=true,commits=0;
+ f.ctx.__boxlabLoopCutCommit={pending:()=>pending,commitCurrent:()=>{commits++;pending=false;f.ctx.__boxlabBridgeState.mesh={};return true;}};
+ f.launch('Loop');const exact=f.fields.get('.ets-done');assert.equal(exact.textContent,'EXACT');assert.equal(exact.disabled,false);exact.click({preventDefault(){},stopPropagation(){}});assert.equal(commits,1);assert.equal(f.active(),'loopCut');assert.equal(f.ctx.__boxlabEdgeViewportSession.loopActive(),true);assert.equal(f.panel.hidden,false);assert.equal(exact.disabled,true);
+ f.dispatch('boxlab-viewport-background-tap');assert.equal(f.active(),null);assert.equal(f.ctx.__boxlabEdgeViewportSession.active(),false);assert.equal(f.events.at(-1).detail.tool,'Loop');
 });

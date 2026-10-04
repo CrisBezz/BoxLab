@@ -1,4 +1,4 @@
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.712';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.715';
 const viewportWrap=document.querySelector('#viewportWrap');
 const gizmo=()=>document.querySelector('#totalGizmo');
 
@@ -17,7 +17,7 @@ palette.innerHTML=`
     <input type="range" data-proxy-range="#bevelSegments"/>
     <output data-proxy-output="#bevelSegmentsOut"></output>
   </label>
-  <div class="shbs-note">Pencil-drag selected edge(s), or apply the exact values above.</div>
+  <div class="shbs-note">Drag an edge, or select edges and use sliders + EXACT. Repeat on more edges; background tap exits.</div>
   <div class="shbs-actions">
     <button type="button" class="shbs-cancel" data-action="cancel">Cancel</button>
     <button type="button" class="shbs-primary" data-action="apply">Apply Exact</button>
@@ -46,6 +46,7 @@ document.head.appendChild(style);
 let launchedFromHub=false;
 let launchSelection=[];
 let launchMode='edge';
+let launchMesh=null;
 let raf=0;
 
 function src(selector){return document.querySelector(selector);}
@@ -65,12 +66,14 @@ function closeSession({restoreSelection=false}={}){
   cancelAnimationFrame(raf);
   if(launchMode==='face'){globalThis.__boxlabDirectBevel?.cancelFaces?.({restoreSelection});return;}
   globalThis.__boxlabDirectBevel?.disarm?.();
+  window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'edge',tool:'Bevel'}}));
   if(restoreSelection&&launchSelection.length&&globalThis.__boxlabSelectionBridge?.mode?.()==='edge'){
     globalThis.__boxlabSelectionBridge.set?.('edge',launchSelection);
   }
 }
 function sync(){
   cancelAnimationFrame(raf);
+  if(launchedFromHub&&launchMode==='edge'){if(globalThis.__boxlabSelectionBridge?.mode?.()!=='edge'||globalThis.__boxlabBridgeState?.mesh!==launchMesh||document.querySelector('#app')?.classList.contains('boxlab-active-locked')){closeSession();return;}launchSelection=currentEdgeSelection();}
   if(launchedFromHub&&launchMode==='face'&&!globalThis.__boxlabDirectBevel?.faceContextValid?.()){closeSession();return;}
   const active=launchedFromHub&&!!globalThis.__boxlabDirectBevel?.active?.();
   palette.hidden=!active;
@@ -118,7 +121,7 @@ palette.addEventListener('click',event=>{
   event.preventDefault();
   event.stopPropagation();
   if(button.dataset.action==='cancel'){
-    closeSession({restoreSelection:true});
+    closeSession({restoreSelection:launchMode==='face'});
     const status=document.querySelector('#selectionStatus');
     if(status)status.textContent=`Bevel cancelled • ${launchMode==='face'?'Face':'Edge'} selection ready`;
     return;
@@ -132,6 +135,7 @@ palette.addEventListener('click',event=>{
       requestAnimationFrame(sync);
       return;
     }
+    if(launchMode==='edge'){launchSelection=currentEdgeSelection();sync();return;}
     launchedFromHub=false;
     palette.hidden=true;
     cancelAnimationFrame(raf);
@@ -147,10 +151,10 @@ window.addEventListener('boxlab-selection-hub-tool',event=>{
     const result=globalThis.__boxlabDirectBevel?.armFaces?.(globalThis.__boxlabSelectionBridge?.indices?.()||[]);
     if(!result?.ok){window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'face',tool:'Bevel'}}));return;}
     launchSelection=result.ids;
-  }else if(launchMode==='edge')launchSelection=currentEdgeSelection();else return;
-  palette.querySelector('[data-action="apply"]').textContent=launchMode==='face'?'Apply Bevel':'Apply Exact';
+  }else if(launchMode==='edge'){launchSelection=currentEdgeSelection();globalThis.__boxlabDirectBevel?.setPersistentEdge?.(true);launchMesh=globalThis.__boxlabBridgeState?.mesh;}else return;
+  palette.querySelector('[data-action="apply"]').textContent=launchMode==='face'?'Apply Bevel':'EXACT';
   palette.querySelector('.shbs-head strong').textContent=launchMode==='face'?'Face Bevel':'Bevel';
-  palette.querySelector('.shbs-note').textContent=launchMode==='face'?'Blue preview only. Adjust Width/Segments or Pencil-drag a selected Face, then Apply.':'Pencil-drag selected edge(s), or apply the exact values above.';
+  palette.querySelector('.shbs-note').textContent=launchMode==='face'?'Blue preview only. Adjust Width/Segments or Pencil-drag a selected Face, then Apply.':'Drag an edge, or select edges and use sliders + EXACT. Repeat on more edges; background tap exits.';
   launchedFromHub=true;
   requestAnimationFrame(()=>{
     sync();
@@ -175,8 +179,12 @@ document.querySelectorAll('#selectionModes button').forEach(button=>button.addEv
 globalThis.__boxlabBevelViewportSession={
   element:palette,
   active:()=>launchedFromHub&&!palette.hidden,
+  edgeActive:()=>launchedFromHub&&launchMode==='edge',
   sync,
   cancel:()=>closeSession({restoreSelection:true})
 };
 
 window.addEventListener('boxlab-face-bevel-preview',event=>{if(launchMode==='face')palette.querySelector('.shbs-note').textContent=event.detail?.ok?'Blue preview only • Apply Bevel to commit':event.detail?.reason||'Preview unavailable';});
+
+window.addEventListener('boxlab-viewport-background-tap',()=>{if(launchedFromHub&&launchMode==='edge'&&!globalThis.__boxlabDirectBevel?.busy?.())closeSession();});
+window.addEventListener('boxlab-edge-bevel-operation-complete',()=>{if(launchedFromHub&&launchMode==='edge'){launchSelection=currentEdgeSelection();sync();}});

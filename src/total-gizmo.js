@@ -1,5 +1,5 @@
 import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.714';
-import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.712';
+import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.715';
 import * as THREE from 'three';
 
 // BoxLab v0.36.18.595 — Total Gizmo v1.
@@ -610,7 +610,7 @@ window.addEventListener('boxlab-selection-hub-session-complete',event=>{
     }else{lastSelectionKey='';root.hidden=true;}
     return;
   }
-  if(event.detail?.mode==='edge'&&['Loop','Split','Sweep'].includes(event.detail?.tool)){
+  if(event.detail?.mode==='edge'&&['Loop','Split','Sweep','Bevel'].includes(event.detail?.tool)){
     hubSuppressedKey='';resetTransientState({hideFloat:true});
     lastSelectionKey=selectionKey(state()?.mesh,currentMode());
     setHubState('closed',{reason:'edge-session-complete'});
@@ -1075,7 +1075,7 @@ function sync(){
   root.style.top=`${top}px`;
   placeToolSessionPanel(floatPalette);
   const suppressed=['face','edge','vertex'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
-  root.hidden=(mode==='edge'&&(!!globalThis.__boxlabEdgeViewportSession?.active?.()||!!globalThis.__boxlabSweepViewportSession?.active?.()))||(mode==='object'&&!!globalThis.__boxlabObjectRadialSession?.hidesGizmo?.())||(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.())||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
+  root.hidden=(mode==='edge'&&(!!globalThis.__boxlabEdgeViewportSession?.active?.()||!!globalThis.__boxlabSweepViewportSession?.active?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()))||(mode==='object'&&!!globalThis.__boxlabObjectRadialSession?.hidesGizmo?.())||(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.())||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;

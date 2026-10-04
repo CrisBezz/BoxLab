@@ -296,3 +296,13 @@ Object gizmo gets list icon beside Multi, reusing original Objects disclosure an
 Focus owner. Focus reveals only Objects, keeps Focus active, restores state on close
 or mode/Focus exit. No parallel outliner/selection owner. 29 targeted PASS; no new
 full-suite failure names. Next .714 hands-on plus pending .713 Edge combined checks.
+
+
+### Persistent Edge radial Loop / Bevel — .715
+
+.714 Object List PASS protected. Loop retains slide rail after placement; EXACT
+finalizes without closing, more cuts allowed. Radial Edge Bevel drag/exact stays
+ready for new selections. Background tap exits both; original navigation owner,
+kernels/history retained. .688/.162 Loop core and Face blue Bevel unchanged.
+50 targeted PASS; no new full-suite failure names. Next .715 hands-on and remaining
+Edge refinement, retaining drawer fallbacks.
