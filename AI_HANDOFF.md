@@ -28,8 +28,11 @@ Reviewed337 cache-reference/hash fixture tests/fixtures/runtime-asset-contract.j
 is explicit accepted source metadata, not blanket version wildcards. Update only
 after reviewing code/cache changes.12 recovery tests retain original assertions
 against exact accepted .453 archival source, separate from current Facegroups.
+Published runtime commit02666913086e27ea0d38eb9992cb99a08a1a5ae8.
+Pages success/live shell/report/frozen bytes verified. Actual Node22CI
+run37288886319 matches1610/1492/118 and all118 local failure names.
 CI path triggers cover allruntime assets; still red and Pages not yet gated.
-No automatic skips, exclusions or fake green. Node22 CI result remains separate.
+No automatic skips, exclusions or fake green. Node22 CI verified independently; no environment-specific failure names.
 
 ## Original audit findings (historical baseline)
 

@@ -727,5 +727,16 @@
   "script_internal_failures_before": 121,
   "script_internal_failures_after": 30,
   "no_new_regular_failure_names": true,
-  "classification_note": "Signatures identify remaining review work; not confirmed bug counts. All failures are active; zero skipped."
+  "classification_note": "Signatures identify remaining review work; not confirmed bug counts. All failures are active; zero skipped.",
+  "ci": {
+    "runtime": "Node22",
+    "run": 37288886319,
+    "total": 1610,
+    "passed": 1492,
+    "failed": 118,
+    "skipped": 0,
+    "all_failure_names_match_local": true,
+    "conclusion": "failure"
+  },
+  "runtime_publication_commit": "02666913086e27ea0d38eb9992cb99a08a1a5ae8"
 }

@@ -52,8 +52,10 @@ included in the total. Actual modelling source remained unchanged throughout.
 Repeat, Offset/cache ownership, exact transforms/history, GLB channels, XYZ and
 NOM. Three additionally reconciled Revolve stamp suites15PASS; full suite includes
 these. Test-module syntax347checked/0fail at this build; whitespace and protected
-source/frozen diffs pass. Local Node24; actual CI Node22 outcome must be reported
-separately. Full suite stays red with118 active unresolved checks.
+source/frozen diffs pass. Local Node24 and actual CI Node22 both1610/1492/118, with all118 failing
+names matching. CI run37288886319; Pages success/live markers and frozen
+bytes verified. Runtime publication02666913086e27ea0d38eb9992cb99a08a1a5ae8.
+Full suite stays red with118 active unresolved checks.
 
 [Complete remaining failure inventory](reliability-build-737.json).
 Remaining signatures:85source-pattern,31other behavior/source checks,1OBJ output,

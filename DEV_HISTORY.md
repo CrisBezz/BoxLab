@@ -5181,3 +5181,8 @@ and91 script subchecks reconciled; no new regular failure identities.32focusedPA
 separate. Remaining118checks stay active; noallgreen claim and no releasegateyet.
 Inventory/nextplan docs/reliability-build-737.md+JSON. Next actualowner lifecycle
 fixtures/OBJgroup contract, then reliableCI gate; no modelling algorithms changed.
+
+.737 publication verification: runtime commit02666913086e27ea0d38eb9992cb99a08a1a5ae8;
+Pages37288884811success and live .737 shell/report/recovery +frozen .736 bytes match.
+Actual Node22CI37288886319:1610/1492PASS/118FAIL/0skip, all118 failure names identical
+to local Node24. No environment-specific failures. CI remains truthfully red.

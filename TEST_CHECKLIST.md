@@ -3581,5 +3581,6 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
 - [x] Actual Repeat delegates tool/value/face to current owner; invalid/busy rejected.
 - [x] CI triggers allruntime sources/assets.
 - [ ] Reconcile118 remaining active behavior/source checks; full suite still red.
-- [ ] Verify Node22 CI; install validated release gate after reconciliation.
+- [x] Actual Node22 CI matches local1610/1492/118 and all118 failure names.
+- [ ] Install validated release gate after reconciliation.
 - [ ] iPad .737 Focus launch and normal edit/Undo smoke; modeller unchanged.
