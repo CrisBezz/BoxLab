@@ -3608,6 +3608,7 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
 - [x] Actual Bevel session closes on mode/mesh/object change; background defers while
   busy, Cancel preserves launch selection; Face invalid context cancels via owner.
 - [x] Full1653/1544/109/0 skips; seven old failures resolve, no new identities.
-- [ ] .739 Node22CI and Pages independently verified; no inferred device PASS.
+- [x] .739 Node22CI37304998451 matches1653/1544/109/0 and all109 failure names;
+  Pages37304998035success and live .739 shell byte-verified. No device PASS inferred.
 - [ ] iPad .739 Focus; Face puck/gizmo/radial/tool Cancel; Edge Bevel exit→Pencil
   orbit, ordinary edit Undo/Redo. Runtime unchanged; no broad requalification.

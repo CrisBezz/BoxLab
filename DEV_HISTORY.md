@@ -5237,3 +5237,9 @@ Node24 full1653/1544PASS/109FAIL/0skip; exactly7 old failures resolve, no new na
 Inventory/report docs/reliability-build-739. Node22CI/Pages verification pending.
 Next remaining selection/radial/Face checks and OBJ groups, then geometry fixtures
 and valid CI gate. NOM import deferred. Device smoke remains separate.
+
+.739 publication verified: runtime87e5ed46259bbab3964f8606447882d49c133a54.
+Pages37304998035success; live version .739 and byte-identical shell/recovery pins.
+Actual Node22CI37304998451:1653/1544PASS/109FAIL/0skip; all109 failures match local.
+Validated local and app-published Git trees identical; protected sources/frozenbeta
+unchanged. Await .739 iPad smoke; user .738 PASS recorded, no .739 PASS inferred.

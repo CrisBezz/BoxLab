@@ -46,7 +46,11 @@ exactly seven .738 failure identities reconcile; no new failure identities.
 release contract negative controls, Beta6 transforms/GLB and .738 Boolean history.
 Changed/helper test syntax and whitespace pass; protected runtime/frozen diff clean.
 Inventory reliability-build-739.json. CI remains truthfully red, no release gate.
-Node22CI and live Pages verification are separate evidence to record after push.
+Actual Node22CI37304998451 independently matches1653/1544/109/0 and all109
+failure names. Pages37304998035 succeeded; live version.json .739 and shell bytes
+(release markers and recovery pins included) match main. Published runtime
+87e5ed46259bbab3964f8606447882d49c133a54 has the same validated Git tree as local.
+No .739 device acceptance inferred.
 
 Next: remaining selection/radial/Face gesture owner checks, OBJ facegroup output,
 then diverse Bevel/Knife→Loop geometry fixtures and validated CI gate. Do not hide
