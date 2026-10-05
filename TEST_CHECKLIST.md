@@ -3552,3 +3552,10 @@ and MIME, keeping URL60s. It must not call save picker/Web Share first.
 - Check normal GLB/OBJ save/share and cancellation remain unchanged.
 Actual Open In/app targeting controlled by iOS/browser, not guaranteed by website;
 record device result before Beta6 freeze. No .736 device PASS inferred.
+
+## Beta 6 frozen release — 2026-10-05
+
+- [ ] /beta-6/ fresh launch shows .736, Focus armed; toggle reveals tool list.
+- [ ] Frozen navigation, selection, Undo/Redo and Multi retain accepted behavior.
+- [ ] Frozen NOMAD download opens in Nomad; regular GLB remains available.
+- [x] Runtime snapshot equals accepted .736; relative assets/recovery stay isolated.

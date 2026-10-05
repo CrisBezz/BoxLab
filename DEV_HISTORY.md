@@ -5142,3 +5142,12 @@ Next: iPad NOMAD tap starts normal browser download; open downloaded .nom previe
 and use Open In/Share to Nomad. Check name/geometry, compare normal GLB save and
 cancel behavior. Record device outcome before Beta6 freeze; .735 is accepted,
 .736 handoff delivery refinement is pending. No new native-format work planned.
+
+## 2026-10-05 — Beta 6 freeze / release
+
+User accepted current .736 and requested release. Frozen exact runtime from
+`e1551b3e9c3983c5d0fabfbe44c4ff9e760ff189` into beta-6, including NOM donor asset and relative
+refresh/version/template URLs. Finalized notes and release checklist; prior betas
+unchanged. No modelling changes. Focused14 checks and snapshot isolation validation
+pass; historical277 full-suite failures remain explicit. Final device smoke uses
+frozen URL; main remains .736.

@@ -1,4 +1,21 @@
-# BoxLab AI Handoff — current development state
+# BoxLab AI Handoff — Beta 6 released
+
+## 2026-10-05 — Beta 6 freeze
+
+User PASS current .736 (message says .636, interpreted from current build), then
+requested Beta 6 release. Accepted source `e1551b3e9c3983c5d0fabfbe44c4ff9e760ff189` frozen into `/beta-6/`.
+Live and frozen app remain v0.36.18.736; no modelling code or pins changed.
+Snapshot includes all src assets, native NOM template, shell/CSS/icon/manifest/version
+and release notes. Relative refresh/version/template URLs stay within frozen path.
+Prior betas untouched. Publishing authorized. No features added during freeze.
+
+Validation: exact runtime byte comparison and local URL dependency audit; focused
+14 checks rerun. Historical full-suite 277 failures remain known debt (1302 total,
+1025 pass at accepted source); do not describe overall CI as green.
+Next: frozen-link iPad launch/navigation/history/NOMAD smoke; only reproducible
+release-blocking fixes. Beta 6 snapshot is now immutable; later development goes
+on main, and any beta hotfix needs an explicit documented decision.
+
 
 ## 2026-10-05 — .736: restore MeshUtilz browser-download → Open In workflow
 

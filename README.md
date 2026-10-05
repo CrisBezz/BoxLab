@@ -85,3 +85,8 @@ Before continuing BoxLab development, read in this order:
 5. `ROADMAP.md`
 
 The repository is the source of truth. Do not infer the current build from this README's historical product-version heading.
+
+## Beta 6
+
+[Launch frozen Beta 6](https://crisbezz.github.io/BoxLab/beta-6/) — accepted
+v0.36.18.736, frozen 2026-10-05. See [release notes](BETA6_RELEASE_NOTES.md).

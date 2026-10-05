@@ -466,3 +466,8 @@ Done/background; Edge/Vertex popup blue bevel preview added through original own
 retaining viewport drag bevel. 86 focused PASS; no new full-suite failure names.
 Continue .730/.731 grouped iPad checks and Files/Nomad export acceptance; freeze Beta6
 only after user feedback and blocker review. Slight Lasso tightening deferred.
+
+## 2026-10-05 — Beta 6 released
+
+Accepted .736 frozen at /beta-6/. No more feature work in this snapshot.
+Next: final frozen-link device smoke, then choose post-Beta6 work separately.
