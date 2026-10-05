@@ -5292,3 +5292,8 @@ Updated guard and shell to identical .741 wrapper URL, refreshed guard shell pin
 new loader-identity fixture prevents duplicate/stale wrapper graph. Ten added cases
 in final1679/1577/102; final export-focused38PASS; unrelated historical .459 viewport
 failure remains visible in full suite. Core plus4loader parents/5hashes reviewed.
+
+.741 published runtime9bc1b3165e614173ad168ae8cf0b4f464a6aac22. Pages37307745660
+success; live shell/version/all5changed assets byte-identical to published files,
+Beta6 .736 verified. Actual Node22CI37307745974 matches1679/1577PASS/102FAIL/0skip
+and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke.

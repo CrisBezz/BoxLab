@@ -3635,7 +3635,8 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
   winding/quads/groups/names; global indices valid; empty objects do not offset.
 - [x] Sources unchanged; real facegroups retained, no synthetic object-name groups.
 - [x] Full1679/1577/102/0, no new failures; one obsolete assertion reconciled.
-- [ ] .741 Node22CI/Pages independently verified; device PASS separate.
+- [x] .741 Node22CI37307745974 matches1679/1577/102/0 and all102 failure names;
+  Pages37307745660success; live shell/version/5changed assets byte-verified.
 - [ ] Export named grouped+ungrouped objects, reimport OBJ (Base and SubD), inspect
   separation/groups; normal GLB/NOM handoff remains usable.
 

@@ -55,7 +55,10 @@ active and in full inventory. Do not claim an all-green focused/full suite.
 17 initial focused OBJ/release checks pass. Final narrowed export/release suite
 38PASS; unrelated .459 viewport suite stays active in full run. Changed source/test syntax and
 whitespace pass; protected/frozen diffs clean. Inventory reliability-build-741.json.
-Node22CI and Pages verification pending; CI stays red and Pages not yet gated.
+Actual Node22CI37307745974 matches1679/1577/102/0 and all102 failure names.
+Pages37307745660success; live shell/version and all5changed assets byte-match main;
+Beta6 .736 verified. Runtime9bc1b3165e614173ad168ae8cf0b4f464a6aac22 matches locally
+validated Git tree. CI stays red and Pages not yet gated; no .741 device PASS inferred.
 
 Next: remaining Face/selection/source-contract semantic coverage, then diverse
 Bevel/Knife→Loop geometry/history fixtures and trustworthy CI gate. NOM import

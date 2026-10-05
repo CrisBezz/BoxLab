@@ -2,13 +2,13 @@
 
 ## Current state — 2026-10-05
 
-Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Candidate
-**v0.36.18.741**. User PASS .740 then /nextbuild. OBJ reliability batch fixes
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current app
+**v0.36.18.741, published and live**. User PASS .740 then /nextbuild. OBJ reliability batch fixes
 missing explicit initial ungrouped reset and multiline facegroup records in scene
 export core, with nine new round-trip fixtures. Normal scene/Quick OBJ own path;
 no modelling or interaction algorithm changes. Frozenbeta2–6 unchanged.
 Read docs/reliability-build-741.md +JSON. Parent main
-7bbc142f42a90d488b530a18f0470aa79ac69729. Publication verification pending.
+7bbc142f42a90d488b530a18f0470aa79ac69729. Runtime9bc1b3165e614173ad168ae8cf0b4f464a6aac22 published.
 Next remaining Face/selection-owner checks, then Bevel/Knife→Loop geometry and
 trustworthy CI gate. NOM import remains future work.
 
@@ -41,7 +41,9 @@ construction unchanged; existing nativeNOM/GLB fixtures pass. Legacy export.js
 unchanged; authoritative scene document-capture path handles normal/Quick OBJ.
 Keep102 unresolved checks active, no CI gate yet. Standing GitHub/Pages publication
 approval in AI_WORKFLOW; use connected app if direct git lacks credentials.
-Current Node22CI/Pages verification pending. Historical .740 runtimeb522da13,
+Pages37307745660success; live version/shell and all5changed assets byte-match main;
+Beta6 version .736 verified. Actual Node22CI37307745974:1679/1577PASS/102FAIL/0skip;
+all102 failure names match localNode24. No .741 device acceptance inferred. Historical .740 runtimeb522da13,
 Pages37306257859success, Node22CI37306258245 matched1669/1566/103/0.
 
 ## Original audit findings (historical baseline)
