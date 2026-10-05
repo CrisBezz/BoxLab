@@ -5186,3 +5186,30 @@ fixtures/OBJgroup contract, then reliableCI gate; no modelling algorithms change
 Pages37288884811success and live .737 shell/report/recovery +frozen .736 bytes match.
 Actual Node22CI37288886319:1610/1492PASS/118FAIL/0skip, all118 failure names identical
 to local Node24. No environment-specific failures. CI remains truthfully red.
+
+## 2026-10-05 — .738: actual Boolean scene-history reliability fixtures
+
+Continue from main ab13b4f7 and .737 handoff. Two obsolete .347/.368 tests required
+pre-result checkpoint(); accepted .538 instead captures pre-mutation scene then
+checkpoints after result activation. Replaced those two expectations with actual
+Boolean apply/history bridge behavior, retaining all other checks.
+13 newfixtures exercise Object/Group Union/Cut/Intersect one-step scene Undo/Redo,
+linked/group/origin/settings/selection metadata, unique result, operand visibility,
+ineligibility/solver refusal/creation-failure rollback and both history stacks.
+Shared Join capture listener also uses actual installed bridge. DOM/manager/solver
+are doubles; no claim of real browser/solver or full Join geometry coverage.
+Node24 full1623/1507PASS/116FAIL/0skip; exactly2 old failures resolved, no new failure
+identities.35focusedPASS. Runtime src/CSS and frozen betas unchanged; shell/recovery
+URLs .738, reviewed asset hashes unchanged. Inventory docs/reliability-build-738.
+Next selection/puck/Gizmo/direct-tool owner fixtures then OBJ group contract;
+CI release gate deferred and NOM import not started. Device checks remain separate.
+
+.738 publication blocked: implementation commit f18fd3ef44f02abb91d206a07473086221036ac8
+is local. Automatic approval review rejected git push to public main as lacking
+explicit authorization in this request despite standing AI_WORKFLOW authorization.
+No alternate publication attempted. Live remains .737; Node22CI/Pages pending.
+
+2026-10-05: user explicitly grants continuing approval for GitHub commits, pushes
+and Pages publication: “I approve any commits to github repos, page pushes and so
+on - moving forward for eternity :)”. Recorded in AI_WORKFLOW; .738 publication
+block resolved, proceeding to push and verify deployment/CI.

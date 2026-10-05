@@ -1,3 +1,4 @@
+import {booleanSceneRuntime} from './helpers/boolean-scene-runtime.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -18,12 +19,14 @@ test('368 Boolean eligibility accepts exactly two complete Groups',()=>{
   assert.match(src,/originals:\[\.\.\.active\.members,\.\.\.other\.members\]/);
 });
 
-test('368 Group Boolean hides source Groups only after one scene checkpoint',()=>{
-  const src=fs.readFileSync(new URL('../src/boolean-prototype.js',import.meta.url),'utf8');
-  const block=src.slice(src.indexOf('function apply(operation)'),src.indexOf('ensureUI();',src.indexOf('function apply(operation)')));
-  assert.match(block,/__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
-  assert.match(block,/for\(const object of originals\)object\.visible=false/);
-  assert.match(block,/source Groups hidden/);
+test('368 Group Boolean captures source Groups and commits one scene checkpoint after result activation',()=>{
+  const r=booleanSceneRuntime({groups:true}),before=r.snapshot();r.events.length=0;
+  r.apply('union');
+  assert.deepEqual(r.events.filter(e=>['capture','add','checkpoint'].includes(e)),['capture','add','checkpoint']);
+  assert.equal(r.history.undoStack.length,1);
+  assert.ok(r.events.some(e=>e.includes('source Groups hidden')));
+  assert.ok(r.undo());assert.deepEqual(r.snapshot(),before);
+  assert.ok(r.redo());assert.equal(r.manager.activeId,6);
 });
 
 test('368 Boolean A/B UX understands Group members and headers',()=>{

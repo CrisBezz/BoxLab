@@ -1,3 +1,4 @@
+import {booleanSceneRuntime} from './helpers/boolean-scene-runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -7,7 +8,12 @@ test('347 Boolean and Join share the authoritative Object scene-history bridge',
   const boolean=fs.readFileSync(new URL('../src/boolean-prototype.js',import.meta.url),'utf8');
   assert.match(management,/#joinObjectsBtn/);
   assert.match(management,/checkpoint()/);
-  assert.match(boolean,/globalThis\.__boxlabObjectHistory\?\.checkpoint\?\.\(\)/);
+  // .538 captures the source scene, then checkpoints after result activation.
+  const r=booleanSceneRuntime(),before=r.snapshot();
+  r.apply('union');
+  assert.equal(r.history.undoStack.length,1);
+  assert.ok(r.undo());assert.deepEqual(r.snapshot(),before);
+  assert.ok(r.redo());assert.equal(r.manager.activeId,6);
 });
 
 test('347 Boolean UX no longer wraps the global mesh Undo Redo stack',()=>{

@@ -79,7 +79,10 @@ For each change:
 
 ## Release publication / cache refresh protocol
 
-Standing user authorization (2026-10-04): **ALWAYS authorised to publish** BoxLab builds.
+Standing user authorization reaffirmed explicitly on 2026-10-05:
+“I approve any commits to github repos, page pushes and so on - moving forward for eternity :)”
+The user grants continuing approval for GitHub commits, pushes and Pages publication.
+**ALWAYS authorised to publish** BoxLab builds.
 Complete validation and handoff updates, then commit/push to main and verify release
 markers without asking for publishing permission again. This applies to BoxLab
 development releases; it does not authorize unrelated external actions.

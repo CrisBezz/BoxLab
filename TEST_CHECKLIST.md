@@ -3584,3 +3584,16 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
 - [x] Actual Node22 CI matches local1610/1492/118 and all118 failure names.
 - [ ] Install validated release gate after reconciliation.
 - [ ] iPad .737 Focus launch and normal edit/Undo smoke; modeller unchanged.
+
+## .738 Boolean scene-history owner fixtures
+
+- [x] Actual Object/Group Boolean apply captures scene before hide/create and
+  checkpoints it after result activation; one scene Undo/Redo restores all objects.
+- [x] Geometry/facegroups, linked transforms/origin, group labels/collapse state,
+  settings, reference locks, active ID and selection survive history restoration.
+- [x] Ineligible/refused/returned creation failure preserves original visibility
+  and both history stacks (including existing Redo).
+- [x] Join capture listener uses the installed Object history bridge.
+- [x] Full1623/1507/116, zero skips; no new failure identities versus .737.
+- [ ] .738 Node22 CI independently verified; existing .737 evidence is historical.
+- [ ] .738 iPad launch/edit/Undo/Redo smoke; runtime modelling owners unchanged.

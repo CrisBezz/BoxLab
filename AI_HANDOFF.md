@@ -2,14 +2,15 @@
 
 ## Current state — 2026-10-05
 
-Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. App remains
-**v0.36.18.737**. User PASS current .736 (typed .636), requested Beta6 release,
-then reports users happy with interface and authorizes continuing development.
-Current task: first reliability batch .737 completed. Tests reconciled; modeller
-source/CSS and frozen betas unchanged. Shell markers/recovery loader keys .737.
-Read docs/reliability-build-737.md +JSON for changes and remaining failure list.
-Next: current owner behavior fixtures for remaining118 checks before algorithms.
-Baseline audit commit8cd86e04fbdff52efc64f8bf3de95a5a4b4b75b3; .737 builds on it.
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current app
+**v0.36.18.738 locally; live remains .737**. User PASS .737 in prior session; current request continues from
+repo handoff. Second reliability batch adds actual Boolean scene-history fixtures
+and reconciles two superseded .347/.368 assertions. Modeller source/CSS and frozen
+betas unchanged. Shell markers/recovery loader keys .738. Read
+ docs/reliability-build-738.md +JSON for evidence and remaining failure list.
+Next: selection/puck/Gizmo/direct-tool lifecycle fixtures for remaining116 checks,
+then OBJ group contract; no algorithm changes or NOM import in this batch.
+Parent main ab13b4f7d701b4aa5559ade730fccae5f235b2c7.
 
 Beta6 released/frozen at https://crisbezz.github.io/BoxLab/beta-6/ from accepted
 source `e1551b3e9c3983c5d0fabfbe44c4ff9e760ff189`; freeze publication commit
@@ -18,21 +19,25 @@ Frozen beta2/3/4/5/6 are immutable. Further development happens on main; no beta
 hotfix without a documented user-directed decision. Freeze was byte-verified,
 Pages successful; no separate post-freeze device result invented.
 
-## .737 current validation / mandatory next work
+## .738 current validation / mandatory next work
 
-Full1610/1492PASS/118FAIL/0skip (Node24).31 old scripts now333 named checks;
-158 former regular failures and91 hidden script subchecks reconciled, no new
-regular failure identities.32 focusedPASS; test syntax347/0; accepted source and
-frozen diffs clean.118 unresolved checks stay active, not confirmed app bugs.
-Reviewed337 cache-reference/hash fixture tests/fixtures/runtime-asset-contract.json
-is explicit accepted source metadata, not blanket version wildcards. Update only
-after reviewing code/cache changes.12 recovery tests retain original assertions
-against exact accepted .453 archival source, separate from current Facegroups.
-Published runtime commit02666913086e27ea0d38eb9992cb99a08a1a5ae8.
-Pages success/live shell/report/frozen bytes verified. Actual Node22CI
-run37288886319 matches1610/1492/118 and all118 local failure names.
-CI path triggers cover allruntime assets; still red and Pages not yet gated.
-No automatic skips, exclusions or fake green. Node22 CI verified independently; no environment-specific failure names.
+Full1623/1507PASS/116FAIL/0skip on Node24.13 new behavior fixtures pass; two
+obsolete Boolean checkpoint assertions reconciled after tracing accepted .538.
+No new failure identities versus .737.35 focusedPASS. Actual Boolean apply and
+scene-history bridge execute; DOM/manager/solver are doubles. Covers three
+operations for Object/Groups, one-step complete-scene Undo/Redo, metadata/selection,
+only selected operands hidden, refusal/creation failure preserving both stacks.
+Join listener capture uses same bridge; full Join geometry is not tested here.
+Reviewed337 cache/hash fixture changes ONLY two shell recovery URLs to .738;
+all source hashes unchanged. No skips, fake green or runtime algorithms changed.
+Implementation commit f18fd3ef44f02abb91d206a07473086221036ac8 is local only.
+Earlier push rejection is resolved by explicit user approval on 2026-10-05:
+“I approve any commits to github repos, page pushes and so on - moving forward for eternity :)”
+Standing approval is recorded in AI_WORKFLOW.md. Publication/Node22CI/Pages
+verification are in progress; do not claim completion until observed.
+Previous .737 CI run37288886319 matched1610/1492/118; this is historical evidence,
+not .738 validation. CI path triggers cover runtime assets; still red, no Pages gate.
+Keep116 unresolved checks active until semantic coverage proves accepted behavior.
 
 ## Original audit findings (historical baseline)
 
@@ -96,10 +101,10 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .737; debug/export module pins .736; native export core+axis .735,
+Current recovery pins .738; debug/export module pins .736; native export core+axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
-actual runtime builds. App .737 is a numbered test-infrastructure build; modelling code unchanged.
+actual runtime builds. App .738 is a numbered test-infrastructure build; modelling code unchanged.
 
 ## File/Nomad baseline and limitations
 
@@ -121,7 +126,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .737 just confirm current release/Focus launch and normal edit/Undo.
+For .738 just confirm current release/Focus launch and normal edit/Undo.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.
