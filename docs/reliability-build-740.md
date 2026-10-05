@@ -32,7 +32,11 @@ exactly6 old failure identities reconcile; no new failures versus .739.
 **113 focused PASS** including .739 lifecycle, background, release contracts and
 Beta6 transform/GLB. Changed/helper syntax, whitespace and protected diffs pass.
 Remaining inventory: reliability-build-740.json. CI remains red; no release gate.
-Node22CI and Pages verification pending independent evidence.
+Actual Node22CI37306258245 independently matches1669/1566/103/0 and all103
+failure names. Pages37306257859success; live version .740 and shell bytes/markers/
+recovery pins verified against published main. Runtime commit
+b522da13e5a69aad3b95545cc0de8b8dac9d51d0 has identical Git tree to local validation.
+No .740 device acceptance inferred.
 
 Next: OBJ object/facegroup output-contract fixtures, then remaining Face/selection
 owner assertions and diverse Bevel/Knife→Loop geometry coverage. Keep103 checks

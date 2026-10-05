@@ -5261,3 +5261,9 @@ Node24 full1669/1566PASS/103FAIL/0skip; six old failure identities resolve, none
 Runtime src/CSS/frozenbeta unchanged; shell/recovery .740, all asset hashes retained.
 Report/inventory docs/reliability-build-740. Node22CI/Pages verification pending.
 Next OBJ facegroup contract, remaining Face/selection checks, then geometry fixtures.
+
+.740 publication verified: runtime b522da13e5a69aad3b95545cc0de8b8dac9d51d0.
+Pages37306257859success; live version .740 and byte-identical shell/markers/pins.
+Actual Node22CI37306258245:1669/1566PASS/103FAIL/0skip; all103 failures match local.
+App-published/local validated Git trees identical; protected src/CSS/frozenbeta
+unchanged. Await .740 iPad smoke; .739 user PASS recorded.

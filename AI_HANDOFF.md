@@ -2,12 +2,12 @@
 
 ## Current state — 2026-10-05
 
-Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Candidate
-**v0.36.18.740**. User PASS .739 then /nextbuild. Fourth reliability batch adds
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current app
+**v0.36.18.740, published and live**. User PASS .739 then /nextbuild. Fourth reliability batch adds
 radial availability/shortcut and Sweep semantic routing fixtures; six obsolete
 checks reconciled. Runtime source/CSS and frozenbetas unchanged. Shell/recovery
 URLs .740. Read docs/reliability-build-740.md +JSON. Parent main
-65f985f763c40962790e736dcdbb2d0fa1a8bfd1. Publication verification pending.
+65f985f763c40962790e736dcdbb2d0fa1a8bfd1. Runtime b522da13e5a69aad3b95545cc0de8b8dac9d51d0 published.
 Next: OBJ object/facegroup contract, remaining Face/selection-owner checks, then
 Bevel/Knife→Loop geometry and reliable CI gate. NOM import remains future work.
 
@@ -34,7 +34,9 @@ Keep103 unresolved checks active. Reviewed337 asset contract changes only two
 shell recovery URLs .740; source hashes unchanged. CI remains red; no Pages gate.
 Standing continuing GitHub/Pages authorization recorded in AI_WORKFLOW.md;
 connected GitHub app available when direct git lacks credentials.
-Current Node22CI/Pages verification pending. Historical .739 runtime87e5ed46,
+Pages37306257859success; live version.json .740 and byte-identical shell/markers/
+recovery pins verified. Actual Node22CI37306258245:1669/1566PASS/103FAIL/0skip;
+all103 failure names match localNode24. No .740 device PASS inferred. Historical .739 runtime87e5ed46,
 Pages37304998035success, Node22CI37304998451 matched1653/1544/109/0.
 
 ## Original audit findings (historical baseline)

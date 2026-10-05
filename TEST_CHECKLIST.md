@@ -3622,6 +3622,7 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
 - [x] Actual Sweep semantic handlers accept Face/Edge; completion emits once with
   original mode; wrong modes/tools/unrelated end ignored; controls own visibility.
 - [x] Full1669/1566/103/0; six old failures reconcile, no new failure identities.
-- [ ] .740 Node22CI and Pages independently verified; device PASS remains separate.
+- [x] .740 Node22CI37306258245 matches1669/1566/103/0 and all103 failure names;
+  Pages37306257859success, live .740 version/shell byte-verified. Device PASS separate.
 - [ ] .740 Focus/radial feedback; Face or Edge Sweep Cancel; Pencil navigation/edit
   Undo/Redo. Runtime unchanged; no broad device requalification.
