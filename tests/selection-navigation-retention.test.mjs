@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -23,5 +24,5 @@ test('second pointer cancels pending blank deselect for pan and pinch',()=>{
 });
 
 test('current main runtime retains navigation-selection baseline',()=>{
-  assert.match(index,/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'main.js');
 });

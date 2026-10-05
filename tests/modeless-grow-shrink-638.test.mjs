@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 const gizmo=fs.readFileSync(new URL('../src/total-gizmo.js',import.meta.url),'utf8');
@@ -11,9 +14,8 @@ const checks=[
  ['modeless API includes Vertex hold',main.includes("vertexHold?.pointerId===pointerId")],
  ['single Vertex dormant puck offset',gizmo.includes('[data-mode="vertex"][data-single-component="true"] .tg-activator')],
  ['expanded gizmo root remains centred',gizmo.includes("#totalGizmo{position:absolute")&&gizmo.includes("transform:translate(-50%,-50%)")],
- ['published pins .638',index.includes('main.js?v=0.36.18.638')&&index.includes('total-gizmo.js?v=0.36.18.638')&&index.includes('edge-paint-select.js?v=0.36.18.638')],
- ['release .638',index.includes('<title>BoxLab v0.36.18.638</title>')&&version.version==='0.36.18.638'],
+ ['published pins .638',hasAssetReference(index,'main.js')&&hasAssetReference(index,'total-gizmo.js')&&hasAssetReference(index,'edge-paint-select.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
  ['protected multi unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;for(const [n,ok] of checks){if(ok)console.log('PASS',n);else{console.error('FAIL',n);failed++;}}if(failed)process.exit(1);
-console.log(`PASS: .638 Grow/Shrink + Vertex hold ${checks.length}/${checks.length}`);
+for(const [name,ok] of checks)test("modeless-grow-shrink-638.test: "+name,()=>assert.equal(ok,true,name));

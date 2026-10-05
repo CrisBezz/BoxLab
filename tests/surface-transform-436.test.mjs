@@ -1,3 +1,4 @@
+import {hasAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -52,7 +53,7 @@ test('436 UI owns a surface-relative transactional Tool Session',()=>{
   assert.ok(ui.includes('state.normal.copy(hit.normal)'));
   assert.ok(ui.includes('checkpointSnapshot?.(beforeScene)'));
   assert.ok(ui.includes("id:'surface-transform'"));
-  assert.ok(index.includes('src/surface-transform.js?v=0.36.18.442'));
+  assert.ok(hasAssetReference(index,'surface-transform.js'));
   assert.equal(beta4.version,'0.36.18.427');
 });
 

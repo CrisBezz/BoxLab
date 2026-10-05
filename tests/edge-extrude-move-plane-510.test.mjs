@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -24,9 +25,9 @@ test('510 repeated pulls preserve later user-selected constraint',()=>{
 });
 
 test('510 cache-hops only Edge Extrude and preserves protected pins',()=>{
-  assert.match(index,/src\/edge-extrude\.js\?v=0\.36\.18\.510/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(index,'edge-extrude.js');
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

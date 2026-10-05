@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -46,7 +47,7 @@ test('439 Mesh Health inspection remains read-only while current shell loads the
   assert.match(ui,/id:'mesh-health'/);
   assert.match(ui,/function renderReport\(\)/);
   assert.doesNotMatch(ui.match(/function renderReport\(\)\{[\s\S]*?\n\}/)?.[0]||'',/checkpoint|safeRepairMesh|vertices\s*=/);
-  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.442/);
+  assertAssetReference(index,'mesh-health.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });

@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
 const direct=fs.readFileSync(new URL('../src/multi-face-direct.js',import.meta.url),'utf8');
@@ -13,12 +16,9 @@ const checks=[
  ['touch background remains navigation',direct.includes("if(event.pointerType==='touch')return;")],
  ['legacy Face transform yields to Total Gizmo',face.includes('__boxlabTotalGizmo?.visible?.()')],
  ['legacy Rotate transform yields to Total Gizmo',rotate.includes('__boxlabTotalGizmo?.visible?.()')],
- ['face transform cache pin .635',loose.includes('face-transform.js?v=0.36.18.635')],
- ['published pins .635',index.includes('multi-face-direct.js?v=0.36.18.635')&&index.includes('rotate-transform.js?v=0.36.18.635')&&index.includes('loose-bootstrap.js?v=0.36.18.635')],
- ['release version .635',index.includes('data-release-version="0.36.18.635"')&&index.includes('<title>BoxLab v0.36.18.635</title>')&&version.version==='0.36.18.635'],
+ ['face transform cache reviewed cache pin',hasAssetReference(loose,'face-transform.js')],
+ ['published pins .635',hasAssetReference(index,'multi-face-direct.js')&&hasAssetReference(index,'rotate-transform.js')&&hasAssetReference(index,'loose-bootstrap.js')],
+ ['current release',shellReleaseMatches(index,version.version)&&shellReleaseMatches(index,version.version)],
  ['protected multi-object transform pin unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log(`PASS: .635 armed selection ownership ${checks.length}/${checks.length}`);
+for(const [name,ok] of checks)test("armed-selection-635.test: "+name,()=>assert.equal(ok,true,name));

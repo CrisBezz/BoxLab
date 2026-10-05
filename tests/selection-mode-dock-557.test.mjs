@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -18,7 +19,7 @@ test('557 selection modes are docked bottom-left without DOM/id changes',()=>{
 });
 
 test('557 publishes only the CSS/version path and keeps protected runtime pin',()=>{
-  assert.match(index,/styles\.css\?v=0\.36\.18\.557/);
-  assert.match(index,/data-release-version="0\.36\.18\.557"/);
+  assertAssetReference(index,'styles.css');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

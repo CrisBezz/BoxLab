@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -49,7 +50,7 @@ test('440 UI exposes Safe Repair transactionally inside Mesh Health and keeps pr
   assert.match(ui,/safeRepairMesh/);
   assert.match(ui,/checkpointSnapshot/);
   assert.match(ui,/capture\?\.\(\)/);
-  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.442/);
+  assertAssetReference(index,'mesh-health.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });

@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const gate=fs.readFileSync(new URL('../src/pencil-orbit-gate.js',import.meta.url),'utf8');
 const paint=fs.readFileSync(new URL('../src/edge-paint-select.js',import.meta.url),'utf8');
@@ -12,13 +15,10 @@ const checks=[
  ['forwarded log exists',gate.includes("gestureDebug('PEN ORBIT FORWARDED'")],
  ['routing condition unchanged',gate.includes('const blocked=!!meshHit;')&&gate.includes('if (blocked) return;')],
  ['paint diagnostic API read-only getters',paint.includes('globalThis.__boxlabPaintSelectDebug')&&paint.includes('pending:()=>')&&paint.includes('active:()=>')],
- ['published gate pin .646',index.includes('src/pencil-orbit-gate.js?v=0.36.18.646')],
- ['published paint pin .646',index.includes('src/edge-paint-select.js?v=0.36.18.646')],
- ['release .646',index.includes('<title>BoxLab v0.36.18.646</title>')&&version.version==='0.36.18.646'],
- ['Sweep proxy retained',index.includes('selection-hub-sweep-session.js?v=0.36.18.643')],
+ ['published gate reviewed cache pin',hasAssetReference(index,'pencil-orbit-gate.js')],
+ ['published paint reviewed cache pin',hasAssetReference(index,'edge-paint-select.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
+ ['Sweep proxy retained',hasAssetReference(index,'selection-hub-sweep-session.js')],
  ['protected transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log(`PASS: .646 Pencil orbit diagnostics ${checks.length}/${checks.length}`);
+for(const [name,ok] of checks)test("pencil-orbit-diagnostics-646.test: "+name,()=>assert.equal(ok,true,name));

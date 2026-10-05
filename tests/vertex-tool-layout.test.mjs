@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -28,8 +29,8 @@ test('341 Build Edge fully hands off Add Vertex before arming',()=>{
 test('341 runtime cache-hops all Vertex layout owners',()=>{
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.match(drawer,/face-reconstruct\.js\?v=0\.36\.18\.341/);
-  assert.match(drawer,/component-circle\.js\?v=0\.36\.18\.341/);
-  assert.match(index,/add-edge-ui\.js\?v=0\.36\.18\.341/);
+  assertAssetReference(drawer,'face-reconstruct.js');
+  assertAssetReference(drawer,'component-circle.js');
+  assertAssetReference(index,'add-edge-ui.js');
   assert.match(index,/drawer-ui\.js\?v=/);
 });

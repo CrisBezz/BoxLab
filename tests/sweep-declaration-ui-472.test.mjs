@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -21,7 +22,7 @@ test('472 Edge Bevel exact control is repositioned before Slide precision anchor
 });
 
 test('472 changed runtime loaders are cache-hopped',()=>{
-  assert.match(drawer,/precision-bevel\.js\?v=0\.36\.18\.472/);
-  assert.match(index,/src\/drawer-ui\.js\?v=0\.36\.18\.472/);
-  assert.match(index,/src\/sweep-path\.js\?v=0\.36\.18\.472/);
+  assertAssetReference(drawer,'precision-bevel.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(index,'sweep-path.js');
 });

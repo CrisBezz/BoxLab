@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -15,6 +16,6 @@ test('493 keeps full FaceTap trace instead of overwriting stages',()=>{
 
 test('493 is diagnostic-only over 492 behavior',()=>{
   assert.match(direct,/bridge\(\)\?\.toggle\?\.\('face',p\.hit\)/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.493/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.491/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'main.js');
 });

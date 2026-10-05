@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -24,6 +25,6 @@ test('537 Shell geometry path unchanged',()=>{
 });
 
 test('537 runtime pin current and protected transform unchanged',()=>{
-  assert.match(index,/src\/shell\.js\?v=0\.36\.18\.537/);
+  assertAssetReference(index,'shell.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

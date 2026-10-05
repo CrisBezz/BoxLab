@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -22,12 +23,12 @@ test('513 Merge to First preserves selection chronology locally',()=>{
 });
 
 test('513 cache-hops only Vertex-owned modules and preserves protected pins',()=>{
-  assert.match(drawer,/precision-bevel\.js\?v=0\.36\.18\.513/);
-  assert.match(drawer,/vertex-merge\.js\?v=0\.36\.18\.513/);
-  assert.match(index,/src\/drawer-ui\.js\?v=0\.36\.18\.513/);
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.512/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(drawer,'precision-bevel.js');
+  assertAssetReference(drawer,'vertex-merge.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

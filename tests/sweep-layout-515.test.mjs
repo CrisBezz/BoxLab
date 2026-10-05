@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -27,14 +28,14 @@ test('515 Sweep buttons use compact BoxLab sizing',()=>{
 });
 
 test('515 cache-hops only Sweep/layout presentation owners and preserves protected baselines',()=>{
-  assert.match(drawer,/component-circle\.js\?v=0\.36\.18\.515/);
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.515/);
-  assert.match(index,/src\/sweep-path\.js\?v=0\.36\.18\.515/);
-  assert.match(index,/src\/drawer-ui\.js\?v=0\.36\.18\.515/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/component-slide\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/edge-extrude\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(drawer,'component-circle.js');
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'sweep-path.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'component-slide.js');
+  assertAssetReference(index,'edge-extrude.js');
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -24,8 +25,8 @@ test('548 import status reports reconstructed quads',()=>{
 });
 
 test('548 runtime pin current and Beta 5 protected',()=>{
-  assert.match(index,/src\/import-mesh\.js\?v=0\.36\.18\.548/);
-  assert.match(index,/data-release-version="0\.36\.18\.548"/);
+  assertAssetReference(index,'import-mesh.js');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(beta5,/data-release-version="0\.36\.18\.538"/);
 });

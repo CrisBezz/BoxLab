@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -17,33 +18,33 @@ test('371 frozen Beta 3 release version is consistent',()=>{
 });
 
 test('371 protects linked-instance and navigation baseline',()=>{
-  assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
+  assertAssetReference(index,'multi-object.js');
   assert.match(multi,/inactiveLayer\.name='BoxLab Inactive Objects'/);
   assert.match(multi,/globalThis\.__boxlabSelectionBridge\?\.mode\?\.\(\)/);
   assert.match(main,/__boxlabBridgeState\.mesh=mesh;clearGroup\(root\)/);
 });
 
 test('371 protects Group transform and core transform pins',()=>{
-  assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
+  assertAssetReference(drawer,'object-origin.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
 
 test('371 protects fresh-load component Multi baseline',()=>{
-  assert.match(index,/component-multi-init\.js\?v=0\.36\.18\.314/);
+  assertAssetReference(index,'component-multi-init.js');
 });
 
 test('371 protects mature Through and Clean loaders',()=>{
-  assert.match(index,/multi-face-direct\.js\?v=0\.36\.18\.242/);
-  assert.match(index,/direct-topology-conformance-guard\.js\?v=0\.36\.18\.242/);
-  assert.match(index,/quad-clean\.js\?v=0\.36\.18\.339/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'direct-topology-conformance-guard.js');
+  assertAssetReference(index,'quad-clean.js');
 });
 
 test('371 protects Group Boolean compound solver and additive whole-Group selection',()=>{
   assert.match(booleanProto,/function buildGroupResult\(active,other,operation\)/);
   assert.match(booleanProto,/function compoundUnion\(shells\)/);
   assert.match(mgmt,/completeSelectedGroupIds:selectedCompleteGroupIds/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.369/);
-  assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.369/);
+  assertAssetReference(index,'boolean-prototype.js');
+  assertAssetReference(index,'boolean-ux-history.js');
 });
 
 test('371 keeps no-service-worker release policy',()=>{

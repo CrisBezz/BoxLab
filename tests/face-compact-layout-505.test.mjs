@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -28,13 +29,13 @@ test('505 puts diagnostics below the entire compact modelling block',()=>{
 test('505 Join Coplanar honors compact secondary row',()=>{
   assert.match(join,/const compact=document\.querySelector\('#faceSecondaryCompactRow'\)/);
   assert.match(join,/if\(button\.parentElement!==compact\)compact\.appendChild\(button\)/);
-  assert.match(faceLayout,/join-selected-coplanar-faces\.js\?v=0\.36\.18\.505/);
+  assertAssetReference(faceLayout,'join-selected-coplanar-faces.js');
 });
 
 test('505 preserves frozen interaction pins',()=>{
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.505/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

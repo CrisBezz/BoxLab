@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -20,6 +21,6 @@ test('532 armed Repeat always accepts a new real face value commit',()=>{
 });
 
 test('532 drawer pins updated state-sync modules',()=>{
-  assert.match(drawer,/precision-face\.js\?v=0\.36\.18\.532/);
-  assert.match(drawer,/repeat-face-previous\.js\?v=0\.36\.18\.532/);
+  assertAssetReference(drawer,'precision-face.js');
+  assertAssetReference(drawer,'repeat-face-previous.js');
 });

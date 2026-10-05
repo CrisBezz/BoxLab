@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -31,14 +32,14 @@ test('514 Edge Extrude reasserts Move + Plane after the arm click stack',()=>{
 });
 
 test('514 cache-hops only Edge-owned modules and preserves frozen baselines',()=>{
-  assert.match(drawer,/precision-edge-slide\.js\?v=0\.36\.18\.514/);
-  assert.match(drawer,/loop-offset\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/component-slide\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/edge-extrude\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/drawer-ui\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.512/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(drawer,'precision-edge-slide.js');
+  assertAssetReference(drawer,'loop-offset.js');
+  assertAssetReference(index,'component-slide.js');
+  assertAssetReference(index,'edge-extrude.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

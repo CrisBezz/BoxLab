@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -40,8 +41,8 @@ test('349 selected group gets explicit context readout and stronger header state
 test('349 current cache chain and protected transform remain intact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.392/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.392/);
+  assertAssetReference(index,'object-management.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(drawer,'object-management.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

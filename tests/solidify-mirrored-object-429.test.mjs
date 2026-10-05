@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -51,7 +52,7 @@ test('430 Solidify runtime preserves Mirror and mirrors only the preview display
   assert.ok(ui.includes("const result=solidifyOpenMesh(live,thickness(),{symmetryAxes:axes})"));
   assert.ok(ui.includes("Mirror-aware seam preserved"));
   assert.ok(!ui.includes("clearMirrorModifier()"));
-  assert.ok(index.includes('src/solidify.js?v='+version));
+  assertAssetReference(index,'solidify.js');
   assert.equal(beta4,'0.36.18.427');
 });
 
@@ -86,5 +87,5 @@ test('431 Solidify routes active Mirror axes into the topology core',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.ok(ui.includes("solidifyOpenMesh(working,thickness(),{symmetryAxes:axes})"));
   assert.ok(ui.includes("solidifyOpenMesh(live,thickness(),{symmetryAxes:axes})"));
-  assert.ok(index.includes('src/solidify.js?v='+version));
+  assertAssetReference(index,'solidify.js');
 });

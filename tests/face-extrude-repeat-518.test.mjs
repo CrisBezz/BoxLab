@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -20,12 +21,12 @@ test('518 ordinary Extrude emits direct committed value for Repeat',()=>{
 });
 
 test('518 preserves protected non-Face baselines',()=>{
-  assert.match(drawer,/precision-face\.js\?v=0\.36\.18\.518/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.519/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.520/);
-  assert.match(index,/src\/component-slide\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/edge-extrude\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/sweep-path\.js\?v=0\.36\.18\.515/);
-  assert.match(index,/src\/revolve-profile\.js\?v=0\.36\.18\.517/);
+  assertAssetReference(drawer,'precision-face.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'component-slide.js');
+  assertAssetReference(index,'edge-extrude.js');
+  assertAssetReference(index,'sweep-path.js');
+  assertAssetReference(index,'revolve-profile.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

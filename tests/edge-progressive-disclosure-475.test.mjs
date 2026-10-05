@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -27,7 +28,7 @@ test('475 Edge Slide and Offset Loop precision settings are contextual',()=>{
 });
 
 test('475 remains presentation-only and protected pins stay intact',()=>{
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.475/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'main.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

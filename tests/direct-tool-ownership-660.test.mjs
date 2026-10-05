@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 const gate=fs.readFileSync(new URL('../src/pencil-orbit-gate.js',import.meta.url),'utf8');
@@ -13,13 +16,10 @@ const checks=[
  ['Bevel pointercancel exists',bevel.includes("canvas?.addEventListener('pointercancel'")&&bevel.includes("reason:'bevel-cancel'")],
  ['Exact bevel disarms',bevel.includes("reason:'bevel-exact-complete'")],
  ['Bevel API exposes active/disarm',bevel.includes("globalThis.__boxlabDirectBevel={version:'0.36.18.660',applyExact,disarm,active:()=>armed};")],
- ['main pin .660',index.includes('src/main.js?v=0.36.18.660')],
- ['gate pin .660',index.includes('src/pencil-orbit-gate.js?v=0.36.18.660')],
- ['bevel pin .660',index.includes('src/direct-bevel.js?v=0.36.18.660')],
- ['release .660',index.includes('<title>BoxLab v0.36.18.660</title>')&&version.version==='0.36.18.660'],
+ ['main reviewed cache pin',hasAssetReference(index,'main.js')],
+ ['gate reviewed cache pin',hasAssetReference(index,'pencil-orbit-gate.js')],
+ ['bevel reviewed cache pin',hasAssetReference(index,'direct-bevel.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
  ['protected transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log('PASS: .660 direct-tool ownership '+checks.length+'/'+checks.length);
+for(const [name,ok] of checks)test("direct-tool-ownership-660.test: "+name,()=>assert.equal(ok,true,name));

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -27,9 +28,9 @@ test('360 Object Selection toolbar is compact five-column strip',()=>{
 test('360 protected Group transform baseline remains exact',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.392/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.361/);
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.392/);
-  assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
+  assertAssetReference(index,'object-management.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(drawer,'object-management.js');
+  assertAssetReference(drawer,'object-origin.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

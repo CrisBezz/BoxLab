@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -13,7 +14,7 @@ test('478 Loop-Bevel exclusivity happens on click capture so the target click st
 });
 
 test('478 cache-hops only the edge handoff shim',()=>{
-  assert.match(index,/src\/edge-crease-handoff\.js\?v=0\.36\.18\.478/);
-  assert.match(index,/src\/transform-upgrade\.js\?v=0\.36\.18\.477/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'edge-crease-handoff.js');
+  assertAssetReference(index,'transform-upgrade.js');
+  assertAssetReference(index,'main.js');
 });

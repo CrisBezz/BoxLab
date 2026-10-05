@@ -1,0 +1,2100 @@
+{
+  "baseline": "Accepted .736 runtime; includes declared module cache references, not an execution graph. Update only after reviewing code/pin changes.",
+  "references": [
+    {
+      "owner": "index.html",
+      "url": "./axis-colours.css?v=0.36.18.735",
+      "target": "axis-colours.css",
+      "sha256": "776ef0fba811100b65bf1fbca117d4dcc76d0d9c27ca3ed4eaab8bd2f0174b5e"
+    },
+    {
+      "owner": "index.html",
+      "url": "./icon.svg?v=0.28.3",
+      "target": "icon.svg",
+      "sha256": "e2a286547c5d4d00377608c2843cb05a03e07097b84264a93cb541aacb9dbaa3"
+    },
+    {
+      "owner": "index.html",
+      "url": "./manifest.webmanifest?v=0.28.3",
+      "target": "manifest.webmanifest",
+      "sha256": "a0939110e3aaceb3533504015c62f02e785b7bb2465bcc32c6f0b9b99f22b4d9"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/add-edge-ui.js?v=0.36.18.710",
+      "target": "src/add-edge-ui.js",
+      "sha256": "582f130be4e9f3168035896aca2fa25925c5c2b17742f570d9e08a3b2dc00c03"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/add-session-tool-handoff.js?v=0.36.18.167",
+      "target": "src/add-session-tool-handoff.js",
+      "sha256": "fb747e1387efd1fcc85b5a2890c9ff253ffeab41c07a3de997ca23a126da9864"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/add-vertex-edge-snap.js?v=0.36.18.710",
+      "target": "src/add-vertex-edge-snap.js",
+      "sha256": "de9bd614ac952b9071ef8477290436d2f0320c79f905688d149c58a56240c375",
+      "sourceVersion": "0.36.18.324"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/advanced-selection.js?v=0.24.0",
+      "target": "src/advanced-selection.js",
+      "sha256": "2556ae1c811ecc9d1adb5bb4fd329a3f038e5d7b52ce989472467531c02a3a27"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/app-interaction-guard.js?v=0.36.18.345",
+      "target": "src/app-interaction-guard.js",
+      "sha256": "7a02025d857e21a6a3c72da07db608d2e2edd31c5b839d2e30d19ba54d76c2b3"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/bevel-ui.js?v=0.28.11",
+      "target": "src/bevel-ui.js",
+      "sha256": "05f52b4497f71591f8b76a06adccf2e71221a9bf334dc975b36efc74c516fcb0"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/boolean-button-sync.js?v=0.36.18.226",
+      "target": "src/boolean-button-sync.js",
+      "sha256": "9d7a46e6cd7292d7ee9c5d5a7b048d42927f304fb43e21296e9918bcb03cc02a"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/boolean-degenerate-face-cleanup.js?v=0.36.18.234",
+      "target": "src/boolean-degenerate-face-cleanup.js",
+      "sha256": "98ab64e86e255e37081386acd2307837fb2c8f1e29463304a249399161a723cf",
+      "sourceVersion": "0.36.18.234"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/boolean-duplicate-face-cleanup.js?v=0.36.18.233",
+      "target": "src/boolean-duplicate-face-cleanup.js",
+      "sha256": "a92a24c46ae8d130b0b97068a72f7c4da08798ed948acd9f177bee3214290119",
+      "sourceVersion": "0.36.18.233"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/boolean-prototype.js?v=0.36.18.538",
+      "target": "src/boolean-prototype.js",
+      "sha256": "36de891c90cf67a9ac6655ad1794d53ad34f62dec8dec523cb898121bc15723a",
+      "sourceVersion": "0.36.18.247"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/boolean-result-cleanup.js?v=0.36.18.232",
+      "target": "src/boolean-result-cleanup.js",
+      "sha256": "e5ec9ed4ffa52ab452ed1c399c1768b393df419eb9aa5265af70b6396dc167c3",
+      "sourceVersion": "0.36.18.232"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/boolean-ux-history.js?v=0.36.18.369",
+      "target": "src/boolean-ux-history.js",
+      "sha256": "7ffaffcb3fe1b5c6c337f9bbb8e53145b305e5dc2a8727a0047587fd4298a329",
+      "sourceVersion": "0.36.18.354"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/boundary-tools.js?v=0.32.1",
+      "target": "src/boundary-tools.js",
+      "sha256": "c43d309efcd1db81b9513bc275607d5d64e082fc73e177fda7496630411ae7ad"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/bridge-ui.js?v=0.36.18.676",
+      "target": "src/bridge-ui.js",
+      "sha256": "7f1d83c36ea02a3441def933b35877e9bfe70574eaa4817238481d5d357cb27c"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/component-multi-init.js?v=0.36.18.314",
+      "target": "src/component-multi-init.js",
+      "sha256": "704af4ba843367c64372f0d5a31494e79f46b8e03c0bb53c2d6bc49fe998185e"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/component-slide.js?v=0.36.18.672",
+      "target": "src/component-slide.js",
+      "sha256": "a0879e83c56ad2622bca0a5233cc7da87e3c670401e247e935b1f50ebe35accc"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/delete-key-router.js?v=0.36.18.444",
+      "target": "src/delete-key-router.js",
+      "sha256": "b15cfd623445307c20390669b84fa9b2aa0975e245813d9783911e724b05983e",
+      "sourceVersion": "0.36.18.387"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/direct-bevel.js?v=0.36.18.731",
+      "target": "src/direct-bevel.js",
+      "sha256": "fd756913039cccc9f381a009029e4bf56e78cf5aa2006114a806814009b49b62"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/direct-multi-vertex-bevel.js?v=0.36.18.731",
+      "target": "src/direct-multi-vertex-bevel.js",
+      "sha256": "875cf18df4a9d31a75227b93867f551cf94ef8528ac3742adb31b81e25381c7a"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/direct-topology-conformance-guard.js?v=0.36.18.242",
+      "target": "src/direct-topology-conformance-guard.js",
+      "sha256": "8c6d9a17ee29a728b857bccf60580020e9580136b97f5086a467e1ecf470f5b0",
+      "sourceVersion": "0.36.18.242"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/directed-loop.js?v=0.36.10.4",
+      "target": "src/directed-loop.js",
+      "sha256": "5c6046321789ecf600f910c1255a1c57e9718cee00ebea03334dd2ea90759bbd"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/dissolve-bootstrap.js?v=0.32.4",
+      "target": "src/dissolve-bootstrap.js",
+      "sha256": "75ad2d05f0c1e81095247231edf3e022554cb24d8ffec6abb27b7d734dc66c44"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/dissolve-ui.js?v=0.32.22",
+      "target": "src/dissolve-ui.js",
+      "sha256": "241eaa18ead361faf845812ff7b761df4d447fc36b8a9b1a65a2733f491a0396"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/drawer-ui.js?v=0.36.18.732",
+      "target": "src/drawer-ui.js",
+      "sha256": "ab9cc79be8dfa95145a6c61188f95e9b5297c75257854984af99d20781e334dd"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/duplicate-faces.js?v=0.36.18.678",
+      "target": "src/duplicate-faces.js",
+      "sha256": "8c26bb0732b5fa74a6cbb6c278eef8b7c1171b4efd26367c2eb75bba279fbe21"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/edge-crease-handoff.js?v=0.36.18.478",
+      "target": "src/edge-crease-handoff.js",
+      "sha256": "3b94ddcedc12b82f75b6957c3d14b51d8e49eacf04c49954b472bc9b101b2bb8"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/edge-extrude.js?v=0.36.18.663",
+      "target": "src/edge-extrude.js",
+      "sha256": "2dfcaeb2b62ba9cfc2c9d85e0eee0f75baa673179ee8d385739b4c8a74460e8c",
+      "sourceVersion": "0.36.18.663"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/edge-object-bridge.js?v=0.32.20",
+      "target": "src/edge-object-bridge.js",
+      "sha256": "a3cad7f43ce5ef585d18bcf02528e70b92e3dd97d658a7b025a5f15d4298ae55"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/edge-paint-select.js?v=0.36.18.720",
+      "target": "src/edge-paint-select.js",
+      "sha256": "6b2c4ee4edd7d9eff97ad0ac029e4229583186473aefe1cd756c2a36f953909e"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/edge-tool-viewport-session.js?v=0.36.18.732",
+      "target": "src/edge-tool-viewport-session.js",
+      "sha256": "8a8113ab05df2a6b0c043a00e83460e10f7d78bf7a88608dd9a73454c120f09a"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/export-as-panel.js?v=0.36.18.736",
+      "target": "src/export-as-panel.js",
+      "sha256": "f34ffe58f09dcca74bb5a3e165a7168ac4771efd9e7293a23d926f7db7991eeb",
+      "sourceVersion": "0.36.18.736"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/extract-faces.js?v=0.36.18.730",
+      "target": "src/extract-faces.js",
+      "sha256": "35621d6e298abb6493224041182bf5fe56b12347b241e6978f4ba51c644131cf"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/face-align-viewport.js?v=0.36.18.734",
+      "target": "src/face-align-viewport.js",
+      "sha256": "d7e5444bc61a0e09258c82aa7bed54aff7bd2300ccb3e15b5eae12d740b40959"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/face-bridge-preview.js?v=0.36.18.732",
+      "target": "src/face-bridge-preview.js",
+      "sha256": "f1cd2558ee6b8299db1507b1f0eb5ee7798ed209dae02cef8bd19f1cc7546649"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/face-repair-viewport.js?v=0.36.18.732",
+      "target": "src/face-repair-viewport.js",
+      "sha256": "0a84ffcbc18c7a84fb34548f93dec33b25034d565c2e37c5cfb244b3b1e05508"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/face-split.js?v=0.36.18.335",
+      "target": "src/face-split.js",
+      "sha256": "9ed1f2cb40c48980bafdc208307b2829b1087d8ffea298bac951af61dd1ffe83"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/face-strip-selection.js?v=0.36.12.0",
+      "target": "src/face-strip-selection.js",
+      "sha256": "fa318ce80c482264ad0d3b31a3a8e4ca60001911a0b4cb71fe0b22fe036a90c1"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/fill-boundary-ui.js?v=0.36.10.1",
+      "target": "src/fill-boundary-ui.js",
+      "sha256": "8f37901c796ec39495bb15521926dbbd62c6811942d7dfb90746f4eba82eb86c"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/gesture-debug.js?v=0.36.18.736",
+      "target": "src/gesture-debug.js",
+      "sha256": "a178c08e00becebae3872b6bbfdd27ea424548e67bca6ec527280ce94f2fbdfe"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/import-mesh.js?v=0.36.18.556",
+      "target": "src/import-mesh.js",
+      "sha256": "c7ffac5f20bf50a80f80514a0e4800818db51e89bdefc0e999fa9831fa3945f1",
+      "sourceVersion": "0.36.18.556"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/insert-tool.js?v=0.36.18.444",
+      "target": "src/insert-tool.js",
+      "sha256": "ac9c8e25468076cf9379530fae8cd2e03be6f044ab5962766a219658a13dec48",
+      "sourceVersion": "0.36.18.438"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/knife-tool.js?v=0.36.18.684",
+      "target": "src/knife-tool.js",
+      "sha256": "f03c2a731c699a5705ec6db993c9dd33c4df641ff379331c4af941f50b5d0b1d"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/linear-array.js?v=0.36.18.732",
+      "target": "src/linear-array.js",
+      "sha256": "f616f2b363303e77d63d5f03745955eee60c80c6a58023245ed35b4af17ff655"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/loop-cut-commit.js?v=0.36.18.715",
+      "target": "src/loop-cut-commit.js",
+      "sha256": "c0408bbfd6b208609f50c01d76ae501dabaca4d8e6a95df076152078884a58b1"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/loose-bootstrap.js?v=0.36.18.635",
+      "target": "src/loose-bootstrap.js",
+      "sha256": "1ec531f41f22ab439a805be78368e9c63edf508ad5265b53e830463b14617db4"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/main.js?v=0.36.18.732",
+      "target": "src/main.js",
+      "sha256": "70871ae0f36f9f5fbaa08a29e493b57704b0b398293a0ffd189c68b3f7f38356",
+      "sourceVersion": "0.35.1"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/mesh-health.js?v=0.36.18.444",
+      "target": "src/mesh-health.js",
+      "sha256": "de3f2cce3b5d201111299eb0c420ca707f2728d776eb1617faca150a10fdbb8f",
+      "sourceVersion": "0.36.18.443"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/multi-face-direct.js?v=0.36.18.732",
+      "target": "src/multi-face-direct.js",
+      "sha256": "60d9020f6b29f0045e55772007b98a66e4f32b00e6fde31949fda40de71a0dc7"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/multi-object-transform.js?v=0.36.1.0",
+      "target": "src/multi-object-transform.js",
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/multi-object.js?v=0.36.18.720",
+      "target": "src/multi-object.js",
+      "sha256": "08cbba2954d635d059c60debf21705c136fd881190f89984a9d9fa3e02caf270"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/object-management.js?v=0.36.18.718",
+      "target": "src/object-management.js",
+      "sha256": "7ee0854db6a411cf5beebd934bbcf803e1b515fdfed29aafe7be50ff223f32c8"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/object-radial-session.js?v=0.36.18.711",
+      "target": "src/object-radial-session.js",
+      "sha256": "2c1d8d419511df70e1eefe6761cc8b2f1d14b2b6a4759a7092abf3befc56cdbd"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/object-selection-layout.js?v=0.36.18.260",
+      "target": "src/object-selection-layout.js",
+      "sha256": "16a5723cfca9a5da073c2c71e7813f20ab16cd5019925e5c555f3a506fbeb850",
+      "sourceVersion": "0.36.18.260"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/pencil-orbit-gate.js?v=0.36.18.720",
+      "target": "src/pencil-orbit-gate.js",
+      "sha256": "4b0a3a322edd21f968e54182fd4b7faa8abc0e3a4fe6d1e9d06d5d47d6cfc59e"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/primitive-ui.js?v=0.36.18.444",
+      "target": "src/primitive-ui.js",
+      "sha256": "fd75c6e187bc420619cacd2b2df2769abcc5cd0ef043843eb8c6de689d41b7c3"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/pwa-install.js?v=0.27.2",
+      "target": "src/pwa-install.js",
+      "sha256": "26bbc8f3c9a76b1168cb08e594eafc14da92c3125c2a433a60d5cbf21049fcc1"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/quad-clean.js?v=0.36.18.339",
+      "target": "src/quad-clean.js",
+      "sha256": "8c03edcfb24c5fb2de22f0536505c5e98d80d941c07a65331af79a1fcdf2d8cc"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/release-bootstrap.js?v=0.36.18.737",
+      "target": "src/release-bootstrap.js",
+      "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/release-version.js?v=0.36.18.737",
+      "target": "src/release-version.js",
+      "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/render-modes.js?v=0.36.18.568",
+      "target": "src/render-modes.js",
+      "sha256": "0e5a543fb9df275149cda62a4c831b095a2bc89db34ba1470db45aac4d6d2021"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/revolve-profile.js?v=0.36.18.517",
+      "target": "src/revolve-profile.js",
+      "sha256": "d009b8cc1d2c43bae869a434bee7b6a0e7b61af51d689f9f47fe9ee197314441",
+      "sourceVersion": "0.36.18.469"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/revolve.js?v=0.36.18.471",
+      "target": "src/revolve.js",
+      "sha256": "31a77c3f17759f62c97dbba3372b6528a84b297bf730621883bc24323e11b805"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/ring-select.js?v=0.32.0",
+      "target": "src/ring-select.js",
+      "sha256": "93dbda691b08f91c87d4af29e8064d67bbf51c1d06cf4bc0846cfa461208da87"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/rotate-transform.js?v=0.36.18.635",
+      "target": "src/rotate-transform.js",
+      "sha256": "c092c1f284ccada4c02eadb5e30f874346e988c86ae9fb60a05d74589bfcf114"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/scene-obj-export-238.js?v=0.36.18.444",
+      "target": "src/scene-obj-export-238.js",
+      "sha256": "935c1f7c7f5fc15f992101353748793baf2b926e512be5e7249abb8d59f96603",
+      "sourceVersion": "0.36.18.450"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/select-loop.js?v=0.30.5",
+      "target": "src/select-loop.js",
+      "sha256": "43918c84686b7e2933973c4fd2b4074943010e9585fe4bf5b5e23621e2ff848b"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-bevel-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-bevel-session.js",
+      "sha256": "4a325d5c9cf8a343ec745605b5be4778ee836fea83b55e6c3f2c9d4b374d5a11"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-bridge-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-bridge-session.js",
+      "sha256": "2b405526c65070a94e12424028981e8df945678371cc516124f4f205570f0e0d"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-crease-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-crease-session.js",
+      "sha256": "804cf14b6179fc8faecbe94e53e4da07487b0021f48240480dab418c3fcfc53c"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-face-bridge-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-face-bridge-session.js",
+      "sha256": "fc543f5d0dd645eca15fec30570136f23237cb9783d8faeb73ee51de2f2313c9"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-face-value-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-face-value-session.js",
+      "sha256": "a68c13dcea658eae18006bd57d594c6f59fb160f7c00864e6742bce140e69410"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-knife-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-knife-session.js",
+      "sha256": "8b0956f2384653b2ab6a52299b32fa9bb906fd1e605813287375b01a9a55a59f"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-offset-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-offset-session.js",
+      "sha256": "788ef60102878627c4f9d3dc58eb8eaec6077166ed5321df950f40073ea977de"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-shell-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-shell-session.js",
+      "sha256": "569e096c72070b96dd076f9fc5bbd4ce1ac07abb5fc10365de8bef830be5eb77"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-slide-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-slide-session.js",
+      "sha256": "87b41c75f2b707fe51ac92ab2783b961754e95fe73a0251182d948ef7ffce5fb"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/selection-hub-sweep-session.js?v=0.36.18.732",
+      "target": "src/selection-hub-sweep-session.js",
+      "sha256": "a5f10c69b91e1447d3c4663b37fadec55ca16e771587ba21be5274eac0df6801"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/shell.js?v=0.36.18.444",
+      "target": "src/shell.js",
+      "sha256": "7baee44c1c87efe07dfc1347be7f893282391f734e63600cb1a9e1edd028eec3"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/solidify.js?v=0.36.18.444",
+      "target": "src/solidify.js",
+      "sha256": "a187f5907ada610fbc8e83daf67c3d102e82ab2ede0b73bedc9d2f0103cdcb9b"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/strict-select-loop.js?v=0.36.10.4",
+      "target": "src/strict-select-loop.js",
+      "sha256": "69ce90b8ca7f851174e1651c18ff9170899ea8f964abce10b9705eb71db1f2ab"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/surface-transform.js?v=0.36.18.444",
+      "target": "src/surface-transform.js",
+      "sha256": "dc3bf43e0b62397e1b6d393a0bef8b79cacf4edfdc28f8214298052eba47e58b",
+      "sourceVersion": "0.36.18.442"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/sweep-path.js?v=0.36.18.731",
+      "target": "src/sweep-path.js",
+      "sha256": "8ffd1592365a334c38218207985afe8332e95ecb1741bbff335b29572993dbb3",
+      "sourceVersion": "0.36.18.731"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/symmetry-bisect.js?v=0.36.18.473",
+      "target": "src/symmetry-bisect.js",
+      "sha256": "1408d7657436e3a9ce24289bf7856db1fec5d9458501445ae21e097bdfea4fce",
+      "sourceVersion": "0.36.18.473"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/tool-background-exit.js?v=0.36.18.732",
+      "target": "src/tool-background-exit.js",
+      "sha256": "95feb16280f032ec28373c7dd393991840f479824b58b28618c9563bc7a261cc"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/tool-session-ui.js?v=0.36.18.732",
+      "target": "src/tool-session-ui.js",
+      "sha256": "ecade6180a8c8295bbfb37f438435b4b98fd0728f604b3baaaa9018426b49f10"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/topbar-layout.js?v=0.36.18.734",
+      "target": "src/topbar-layout.js",
+      "sha256": "4af1599a797b9f3b5537786c3b1ed9de608d09cdf768af4a2a00ba5d93283fe7"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/total-gizmo.js?v=0.36.18.734",
+      "target": "src/total-gizmo.js",
+      "sha256": "8efbb5c0c712d1fc7c295e82a337b61b8404665c6dedb661d28cbf582b75c85e"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/transform-polish.js?v=0.36.18.586",
+      "target": "src/transform-polish.js",
+      "sha256": "7e6a04aa9daa51b23a13bc77186fb44dc0405ff5921200a928ffdc086f7bde20"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/transform-upgrade.js?v=0.36.18.718",
+      "target": "src/transform-upgrade.js",
+      "sha256": "8d417d05bc3662194fa06c3d5f97aafbb9626592680fffd675526f58d6be99a0"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/vertex-pick-assist.js?v=0.36.18.444",
+      "target": "src/vertex-pick-assist.js",
+      "sha256": "725227676538ece2330d60c0ca9ae543b94a96e9ceb458be115ee5f97810e094"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/vertex-tool-viewport-session.js?v=0.36.18.732",
+      "target": "src/vertex-tool-viewport-session.js",
+      "sha256": "438f27c08da06eddeefe457442efcf716a504850c7191ca0fa27f471bfad7132"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/view-modes.js?v=0.36.18.733",
+      "target": "src/view-modes.js",
+      "sha256": "30e51cfa0d1e00b1f362055ee318ffd397e5e37440915c593965b21e954e48b5"
+    },
+    {
+      "owner": "index.html",
+      "url": "./styles.css?v=0.36.18.564",
+      "target": "styles.css",
+      "sha256": "76bf9f9c596f947569d95785d7184327da952fc5b0bcb129f15a74bfb7e8c8bc"
+    },
+    {
+      "owner": "index.html",
+      "url": "./transform-strip.css?v=0.33.2",
+      "target": "transform-strip.css",
+      "sha256": "2c9964cbd1ae9d00a76c8317f3f3c83c3797ad7a840c23f40a2645dee2980490"
+    },
+    {
+      "owner": "src/add-vertex-edge-snap.js",
+      "url": "./cross-object-snap-core.js?v=0.36.18.324",
+      "target": "src/cross-object-snap-core.js",
+      "sha256": "d107536fcb940d9c3a577f0ad581d30ebbd303a13d326c97bcb84035a6c21e45"
+    },
+    {
+      "owner": "src/beta-runtime-guard.js",
+      "url": "./src/multi-object-transform.js?v=0.36.1.0",
+      "target": "src/multi-object-transform.js",
+      "sha256": "024ec06122bb9ccfeaee53ab5da5bae520dc194db6201ba2479a376902380069"
+    },
+    {
+      "owner": "src/boolean-bsp.js",
+      "url": "./boolean-classify.js?v=0.36.18.210",
+      "target": "src/boolean-classify.js",
+      "sha256": "127e2e93096511ca6ffe35c12e1b656496f81d65fc86b4b63ef2be324648c666",
+      "sourceVersion": "0.36.18.210"
+    },
+    {
+      "owner": "src/boolean-bsp.js",
+      "url": "./boolean-intersections.js?v=0.36.18.209",
+      "target": "src/boolean-intersections.js",
+      "sha256": "2d368c52374c73e08929a3f58a08344a120898bb0c31c44a26a3d4994b1ef237",
+      "sourceVersion": "0.36.18.209"
+    },
+    {
+      "owner": "src/boolean-classify.js",
+      "url": "./boolean-intersections.js?v=0.36.18.209",
+      "target": "src/boolean-intersections.js",
+      "sha256": "2d368c52374c73e08929a3f58a08344a120898bb0c31c44a26a3d4994b1ef237",
+      "sourceVersion": "0.36.18.209"
+    },
+    {
+      "owner": "src/boolean-prototype.js",
+      "url": "./boolean-bsp.js?v=0.36.18.248",
+      "target": "src/boolean-bsp.js",
+      "sha256": "a5894143510c658aa72b512e056c30a55200305a8cfd90dfee492adb6499fbdf",
+      "sourceVersion": "0.36.18.248"
+    },
+    {
+      "owner": "src/boolean-prototype.js",
+      "url": "./boolean-classify.js?v=0.36.18.210",
+      "target": "src/boolean-classify.js",
+      "sha256": "127e2e93096511ca6ffe35c12e1b656496f81d65fc86b4b63ef2be324648c666",
+      "sourceVersion": "0.36.18.210"
+    },
+    {
+      "owner": "src/boolean-prototype.js",
+      "url": "./boolean-intersections.js?v=0.36.18.209",
+      "target": "src/boolean-intersections.js",
+      "sha256": "2d368c52374c73e08929a3f58a08344a120898bb0c31c44a26a3d4994b1ef237",
+      "sourceVersion": "0.36.18.209"
+    },
+    {
+      "owner": "src/boolean-prototype.js",
+      "url": "./object-join-core.js?v=0.36.18.277",
+      "target": "src/object-join-core.js",
+      "sha256": "b05aa3a1ba80340ae2b8706bc8c1015b56803ca7e2f3e66f48281d5c5382629c"
+    },
+    {
+      "owner": "src/bridge-all-quad.js",
+      "url": "./bridge-flow-regularity.js?v=0.36.18.289",
+      "target": "src/bridge-flow-regularity.js",
+      "sha256": "95ec3268ae7989415ea1a01b8f353a433de4480d26bff9086d2c4a618906313d"
+    },
+    {
+      "owner": "src/bridge-open-chain-all-quad.js",
+      "url": "./bridge-flow-regularity.js?v=0.36.18.289",
+      "target": "src/bridge-flow-regularity.js",
+      "sha256": "95ec3268ae7989415ea1a01b8f353a433de4480d26bff9086d2c4a618906313d"
+    },
+    {
+      "owner": "src/bridge-transactional.js",
+      "url": "./topology-foundation.js?v=0.36.18.243",
+      "target": "src/topology-foundation.js",
+      "sha256": "1c90e287f64c9a9f250db688309f3187d4e2654a85118e6c16c9a9ef1f71d644"
+    },
+    {
+      "owner": "src/component-align-core.js",
+      "url": "./surface-transform-core.js?v=0.36.18.442",
+      "target": "src/surface-transform-core.js",
+      "sha256": "3ba91f46824fd1e9714b8ccfa9177beeed18c9580b694cfb42cb141140d2b87c"
+    },
+    {
+      "owner": "src/component-align.js",
+      "url": "./component-align-core.js?v=0.36.18.705",
+      "target": "src/component-align-core.js",
+      "sha256": "0d43deca17d189d49ed4cca8090acb2705f28209a17f54830852c752de277167"
+    },
+    {
+      "owner": "src/component-align.js",
+      "url": "./mesh-health-core.js?v=0.36.18.443",
+      "target": "src/mesh-health-core.js",
+      "sha256": "8c13f9afa2517352e133105463458856dcf151a9d5f88f78b86244f51427c350"
+    },
+    {
+      "owner": "src/component-circle.js",
+      "url": "./component-circle-core.js?v=0.36.18.334",
+      "target": "src/component-circle-core.js",
+      "sha256": "24227ca0d8057dffe4027db619f7059d521195157a8c70f22519ebae517d3fdd"
+    },
+    {
+      "owner": "src/direct-bevel.js",
+      "url": "./auto-multi-transfer.js?v=0.28.10",
+      "target": "src/auto-multi-transfer.js",
+      "sha256": "09772b180fc5b8f30e84e62cb117dadacd8864903ac249de3b57c70504732a9c"
+    },
+    {
+      "owner": "src/direct-bevel.js",
+      "url": "./bevel-face-preview.js?v=0.36.18.716",
+      "target": "src/bevel-face-preview.js",
+      "sha256": "8ac38d680e72c0cd0bfd102ac7e56d2dda61b89fa67f41ff5e90d206cc9cd3a7"
+    },
+    {
+      "owner": "src/direct-bevel.js",
+      "url": "./bridge-ui.js?v=0.32.22",
+      "target": "src/bridge-ui.js",
+      "sha256": "7f1d83c36ea02a3441def933b35877e9bfe70574eaa4817238481d5d357cb27c"
+    },
+    {
+      "owner": "src/direct-bevel.js",
+      "url": "./component-tap-toggle.js?v=0.32.21",
+      "target": "src/component-tap-toggle.js",
+      "sha256": "ef61a14672fbc9fd1adcd02427adc69d73e688698dbbb378c779bb8ed144306c"
+    },
+    {
+      "owner": "src/direct-bevel.js",
+      "url": "./dissolve-bootstrap.js?v=0.32.4",
+      "target": "src/dissolve-bootstrap.js",
+      "sha256": "75ad2d05f0c1e81095247231edf3e022554cb24d8ffec6abb27b7d734dc66c44"
+    },
+    {
+      "owner": "src/direct-bevel.js",
+      "url": "./dissolve-ui.js?v=0.32.22",
+      "target": "src/dissolve-ui.js",
+      "sha256": "241eaa18ead361faf845812ff7b761df4d447fc36b8a9b1a65a2733f491a0396"
+    },
+    {
+      "owner": "src/direct-bevel.js",
+      "url": "./transform-arming.js?v=0.36.18.253",
+      "target": "src/transform-arming.js",
+      "sha256": "5990e08eb83c57415b3ab39776f83abea2331f909be2dc292e5e9ff0649443b5"
+    },
+    {
+      "owner": "src/direct-bevel.js",
+      "url": "./ui-cleanup-0322.js?v=0.32.6",
+      "target": "src/ui-cleanup-0322.js",
+      "sha256": "1e6a61a1488721709eeb48640d0c9b5ed2ffb57a786408c4ec892cdf1b52f0a4"
+    },
+    {
+      "owner": "src/direct-commit-integrity-238.js",
+      "url": "./topology-seam-conformance.js?v=0.36.18.236",
+      "target": "src/topology-seam-conformance.js",
+      "sha256": "a3e9221cbe0e879458bca2d95760c7ed76d521432f6993046ec80e58affc3cde",
+      "sourceVersion": "0.36.18.236"
+    },
+    {
+      "owner": "src/direct-commit-integrity-239.js",
+      "url": "./topology-seam-conformance.js?v=0.36.18.239",
+      "target": "src/topology-seam-conformance.js",
+      "sha256": "a3e9221cbe0e879458bca2d95760c7ed76d521432f6993046ec80e58affc3cde",
+      "sourceVersion": "0.36.18.236"
+    },
+    {
+      "owner": "src/direct-multi-vertex-bevel.js",
+      "url": "./bevel-face-preview.js?v=0.36.18.716",
+      "target": "src/bevel-face-preview.js",
+      "sha256": "8ac38d680e72c0cd0bfd102ac7e56d2dda61b89fa67f41ff5e90d206cc9cd3a7"
+    },
+    {
+      "owner": "src/direct-topology-conformance-guard.js",
+      "url": "./direct-commit-integrity-239.js?v=0.36.18.239",
+      "target": "src/direct-commit-integrity-239.js",
+      "sha256": "202e0dd0fbe2090036603443efb0ff6fca170e507248537c9003df68fcee329b",
+      "sourceVersion": "0.36.18.239"
+    },
+    {
+      "owner": "src/direct-topology-conformance-guard.js",
+      "url": "./extract-scene-history-238.js?v=0.36.18.238",
+      "target": "src/extract-scene-history-238.js",
+      "sha256": "92f9537730e216099245ee61a01bb38a6532d2fabb3662ea1d47b76e97ffbd3d",
+      "sourceVersion": "0.36.18.238"
+    },
+    {
+      "owner": "src/direct-topology-conformance-guard.js",
+      "url": "./scene-obj-export-238.js?v=0.36.18.238",
+      "target": "src/scene-obj-export-238.js",
+      "sha256": "935c1f7c7f5fc15f992101353748793baf2b926e512be5e7249abb8d59f96603",
+      "sourceVersion": "0.36.18.450"
+    },
+    {
+      "owner": "src/direct-topology-conformance-guard.js",
+      "url": "./topology-seam-conformance.js?v=0.36.18.239",
+      "target": "src/topology-seam-conformance.js",
+      "sha256": "a3e9221cbe0e879458bca2d95760c7ed76d521432f6993046ec80e58affc3cde",
+      "sourceVersion": "0.36.18.236"
+    },
+    {
+      "owner": "src/dissolve-bootstrap.js",
+      "url": "./dissolve-topology.js?v=0.32.4",
+      "target": "src/dissolve-topology.js",
+      "sha256": "499ec032baa028ec48eac9c004f80a3d80d508566d56b0fbb6199d95e648a404"
+    },
+    {
+      "owner": "src/dissolve-bootstrap.js",
+      "url": "./mesh.js?v=0.12",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./clean-vertices.js?v=0.36.18.704",
+      "target": "src/clean-vertices.js",
+      "sha256": "2fec429dbe715ee5a1dfbf632bd8e7f08a55c41248d3da725ac56243aa14a796"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./collapse-edge.js?v=0.36.18.36",
+      "target": "src/collapse-edge.js",
+      "sha256": "c80ed6482d6047aab6d63384c11e0ada2092af99165c09a0af38c8b6ae5e4863"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./component-align.js?v=0.36.18.705",
+      "target": "src/component-align.js",
+      "sha256": "fbdecd58d434a3498babeeb46328d468a9e6b26ec87d73fb8c63934fc69f6e70"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./component-circle.js?v=0.36.18.627",
+      "target": "src/component-circle.js",
+      "sha256": "710ed6bcd0751506223af3c532f29e99a730a9e88c3710704608e4db0b8a0700"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./component-inspect-repair-drawers.js?v=0.36.18.627",
+      "target": "src/component-inspect-repair-drawers.js",
+      "sha256": "63b408bdcb5642ab79f926b5443454893e49a6039c547750777021d09961e3be",
+      "sourceVersion": "0.36.18.175"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./cross-object-snap.js?v=0.36.18.6",
+      "target": "src/cross-object-snap.js",
+      "sha256": "6cb3a9b58ce0cc5162f9e74cc3d81edd96a046a9bde734105d687fb0a0d031f3"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./dissolve-selection-polish.js?v=0.36.18.28",
+      "target": "src/dissolve-selection-polish.js",
+      "sha256": "4ee8080c6965cd27b1c56af1767bbd511a1b005d99e76f21e8784cd4064802ef"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./edge-context-ui.js?v=0.36.18.35",
+      "target": "src/edge-context-ui.js",
+      "sha256": "b349ec1dd81cff719e4884e01604547589764dd71078ce2abd268ab8f47f427d"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./edge-topology-layout.js?v=0.36.18.40",
+      "target": "src/edge-topology-layout.js",
+      "sha256": "7c5a4661aed5ecf61c01c47b68a1ba490b4d2c9c3d46c056f92e927335e7d641"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./face-inspection-layout.js?v=0.36.18.49",
+      "target": "src/face-inspection-layout.js",
+      "sha256": "fe0ca7a9fe2dc19c7e26b9afc8a1fd5aadfa961bd6ff4cbea8e9e271e865752c"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./face-reconstruct.js?v=0.36.18.341",
+      "target": "src/face-reconstruct.js",
+      "sha256": "8bd4b31c6e9282486c15c9f9429cdcf7ac904f0b6d8df05196533503e081cc08"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./face-workflow-layout.js?v=0.36.18.706",
+      "target": "src/face-workflow-layout.js",
+      "sha256": "956225ac4325a4597c5bf45b51669275387c838d1877085394165c0ab8d4c94f"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./grid-fill.js?v=0.36.18.338",
+      "target": "src/grid-fill.js",
+      "sha256": "8ed7fd4f8d30941acae776f3682da9a218d5ea566a2ee5d8c92d3a0d4cbffc6a"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./join-coplanar.js?v=0.36.18.75",
+      "target": "src/join-coplanar.js",
+      "sha256": "69d393bdca351af560ba24b5bf493fccb3ff099fab1aa1eac3a787ead63b2833"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./join-selected-coplanar-faces.js?v=0.36.18.342",
+      "target": "src/join-selected-coplanar-faces.js",
+      "sha256": "a501fb82dce06f6ac31a46cd1917c1945ed1b3a1fe850fd3b59d18a66ed52671"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./lasso-select.js?v=0.36.18.720",
+      "target": "src/lasso-select.js",
+      "sha256": "0789fb59e9447811447d84438718ae910adce45d7586d6bb4aa0003e2990a688",
+      "sourceVersion": "0.36.18.720"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./loop-cut-added-vertex.js?v=0.36.18.688",
+      "target": "src/loop-cut-added-vertex.js",
+      "sha256": "d0673c5cd8951d12e069b77384a6a45445a0002d2d50212341148491cec4ce8b"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./loop-offset.js?v=0.36.18.671",
+      "target": "src/loop-offset.js",
+      "sha256": "96ad0963884f5404b054a8ba2ca527fd36b6c0c0dbf055c2fcc83a01791bf301"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./merge-by-distance.js?v=0.36.18.706",
+      "target": "src/merge-by-distance.js",
+      "sha256": "0272f30ce9500030ede84279d6bc12c3db5f1a724e42063f9416884d89692a88"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./object-drawer-retain.js?v=0.36.18.517",
+      "target": "src/object-drawer-retain.js",
+      "sha256": "d9f1572eae5621d4028ea68105afe328cb7de30c735d0d4c5be2a925214bf0b3"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./object-management.js?v=0.36.18.718",
+      "target": "src/object-management.js",
+      "sha256": "7ee0854db6a411cf5beebd934bbcf803e1b515fdfed29aafe7be50ff223f32c8"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./object-mode-retain.js?v=0.36.18.4",
+      "target": "src/object-mode-retain.js",
+      "sha256": "dbc31caa9f4a9fe73c50167f4425386235ee260e56698e84e4ce1434c0ccc030"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./object-origin.js?v=0.36.18.355",
+      "target": "src/object-origin.js",
+      "sha256": "627cf692a6caf85acb5d0b624ec935ad2d542d8dbd24bb32213df84694349f59"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./persistent-face-tool-select.js?v=0.36.18.499",
+      "target": "src/persistent-face-tool-select.js",
+      "sha256": "82761403889b3490c0c898eeec8556afa7887694d953df53e0084f21576571c2"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./precision-bevel.js?v=0.36.18.710",
+      "target": "src/precision-bevel.js",
+      "sha256": "a7cb22654e0afe5a6c256ac3645995b6aa9a2196ac9ad7ee1fea73bc1672a5de"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./precision-edge-slide.js?v=0.36.18.672",
+      "target": "src/precision-edge-slide.js",
+      "sha256": "1fea93214e3abf05bda9211cb927d9be27b4391d7321801bbe37ed6c07b20aa3"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./precision-face.js?v=0.36.18.732",
+      "target": "src/precision-face.js",
+      "sha256": "10e47be7283b46a5db3da809641ac718a79b628497d5488a897fa53ac79288ec"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./precision-offset-loop.js?v=0.36.18.671",
+      "target": "src/precision-offset-loop.js",
+      "sha256": "9de1a3653208a99e2e33f6ebe7488a10ff90a5a897b1605aca1514ccfae62a3d"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./precision-transform.js?v=0.36.18.14",
+      "target": "src/precision-transform.js",
+      "sha256": "dd660c22a50b0d847dcf7f4f972cc43c2d497ff9184932faa1f4f664e545c2dc"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./repeat-face-previous.js?v=0.36.18.732",
+      "target": "src/repeat-face-previous.js",
+      "sha256": "1136a8afeed0649912c84a00925e58b4a669294fe299379d81cb2f04d868a64a"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./safe-loose-vertex-delete.js?v=0.36.18.71",
+      "target": "src/safe-loose-vertex-delete.js",
+      "sha256": "7282af30a558ee3cf378c4d2aece06ed9d8fabec6e4b8ad9ad5eb9b09c887235"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-boundary-faces.js?v=0.36.18.61",
+      "target": "src/select-boundary-faces.js",
+      "sha256": "5f32ba5e80a3f78ed40bb075c8c3467d2ce4f143fe4fc11804ab1e3b71081854"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-concave-faces.js?v=0.36.18.66",
+      "target": "src/select-concave-faces.js",
+      "sha256": "eb7996ea49213de8c2ca5f5c7a89fb64498ac45927dae21aad5bfa920d77e2ff"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-connected-shell.js?v=0.36.18.73",
+      "target": "src/select-connected-shell.js",
+      "sha256": "de14a2709bf075bdd53472e600d8df4120ee4900779a7673e8fc17221dc6d178"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-convex-faces.js?v=0.36.18.67",
+      "target": "src/select-convex-faces.js",
+      "sha256": "80c5b84fc3ad558e06f43a77a39d05720004c50bdd667f9d6cbe9c919b96f2c2"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-coplanar-region.js?v=0.36.18.69",
+      "target": "src/select-coplanar-region.js",
+      "sha256": "4ceac86d53b4cd4e5557eb80e4def07395e5aaa7261aa7987967e8fcf498887f"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-degenerate-faces.js?v=0.36.18.58",
+      "target": "src/select-degenerate-faces.js",
+      "sha256": "5af93c3b47286a562ff7a4b4f55c4fae52dbec377de5e47ef988e3a0aac0ce46"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-duplicate-faces.js?v=0.36.18.59",
+      "target": "src/select-duplicate-faces.js",
+      "sha256": "9dc60422065782b3699bbbc3881af9b5ba4acf9e34f52abe0bae549958ba6aa5"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-face-islands.js?v=0.36.18.72",
+      "target": "src/select-face-islands.js",
+      "sha256": "83768e3e63d7be5f414836895a2dd96c95ef9b24c459c1f5c649f3f55430c8dd"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-flat-faces.js?v=0.36.18.68",
+      "target": "src/select-flat-faces.js",
+      "sha256": "4b8c1c98934b35b381027d38e67a448be75eb59cbfcbff22d556d07db783ff04"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-inconsistent-winding.js?v=0.36.18.64",
+      "target": "src/select-inconsistent-winding.js",
+      "sha256": "42240a69851e67a31f4f0aaa496b5c3b6fb27d1afc6334bce978b00f897897ce"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-interior-faces.js?v=0.36.18.62",
+      "target": "src/select-interior-faces.js",
+      "sha256": "7c10ab0a46cfaa0c6d290197c3edee0a4c99020bec898a033dc4d758db9a8f23"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-isolated-faces.js?v=0.36.18.60",
+      "target": "src/select-isolated-faces.js",
+      "sha256": "1b1d20ac9215ac9a683362b3feb63cf07711dd4913f25bc2ab41246368cad376"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-loose-edges.js?v=0.36.18.75",
+      "target": "src/select-loose-edges.js",
+      "sha256": "b0b29a85bb099c1e8bd6d6f26543ec08fc90ee6cf436f95a00a1d876afb2e466"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-loose-vertices.js?v=0.36.18.56",
+      "target": "src/select-loose-vertices.js",
+      "sha256": "ca7b662cd0ed8c35cf7feda949f1880527aac0565c37d486c9c5aef9ca6a94bf"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-ngons.js?v=0.36.18.45",
+      "target": "src/select-ngons.js",
+      "sha256": "4ad8af2b34d15cb2d8f540d27f2d2564aa1c0297d6137d34ab444823752d2742"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-non-manifold-faces.js?v=0.36.18.63",
+      "target": "src/select-non-manifold-faces.js",
+      "sha256": "8002930c49a6e51c58ddc1b308f547392741e162129dad1f5a87910fda5762c9"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-non-manifold.js?v=0.36.18.75",
+      "target": "src/select-non-manifold.js",
+      "sha256": "5c2c91544a9a082b1dc255e14085dc74873174ad64c4738d544b98ae503eb3d6"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-non-planar.js?v=0.36.18.48",
+      "target": "src/select-non-planar.js",
+      "sha256": "b3dd542005cfbf151e2c66247d6088aeb6a0386bf9d453d3c555f31f7686ccec"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-non-quads.js?v=0.36.18.47",
+      "target": "src/select-non-quads.js",
+      "sha256": "0ef4e639a529a2135887172f2886b7be1293d549f7ca763d727a08df35969adf"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-self-intersecting-faces.js?v=0.36.18.65",
+      "target": "src/select-self-intersecting-faces.js",
+      "sha256": "7169c0240dd4fa572c373eee4f756a3fe8a308679992b28c42ce495d681ebff2"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./select-triangles.js?v=0.36.18.46",
+      "target": "src/select-triangles.js",
+      "sha256": "8005ddc601b783cd5121d7f272fd685ac9460a3b6824dae86818e94a8c345aed"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./selection-conversion-polish.js?v=0.36.18.20",
+      "target": "src/selection-conversion-polish.js",
+      "sha256": "4747a58812191567e0560e35757f5cffb2e8f2062b5a9240619e703bf37a94b6"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./selection-history-safe.js?v=0.36.18.34",
+      "target": "src/selection-history-safe.js",
+      "sha256": "51819f4e8b93e9c463787778e7e2e7b08be1792d75cded329d3c6e779c8cefb0"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./selection-set-polish.js?v=0.36.18.718",
+      "target": "src/selection-set-polish.js",
+      "sha256": "ead9fca919d1e591017cc4a426ba90c77debc8cddd43c11f35d8bcce0fde5250"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./selection-workflow-polish.js?v=0.36.18.31",
+      "target": "src/selection-workflow-polish.js",
+      "sha256": "410a00c2617b76c6451a74cd5917b562f410ebec337ab967093f8fc280d7176e"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./sequential-through-fallback.js?v=0.36.18.528",
+      "target": "src/sequential-through-fallback.js",
+      "sha256": "5e677713ed80937620053bca590050255a43a14497576720ff3bb2efba36bfe1"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./studio-scene-fix.js?v=0.36.18.197",
+      "target": "src/studio-scene-fix.js",
+      "sha256": "199fa038c3d854bf50dd6bb0b09f3a2683f3b2062581c254dbff1ff689564c6f"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./transform-state-fix.js?v=0.36.18.5",
+      "target": "src/transform-state-fix.js",
+      "sha256": "312d5fbb307ce9e72bd6604c4cdde525777215e8511dc4e121b89238ad1d59ee"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./vertex-merge.js?v=0.36.18.513",
+      "target": "src/vertex-merge.js",
+      "sha256": "879f9edc369c1b599a8f4db3add6961ca3d28601d6cf96615d3d1e10b281d03f"
+    },
+    {
+      "owner": "src/drawer-ui.js",
+      "url": "./vertex-slide-polish.js?v=0.36.18.710",
+      "target": "src/vertex-slide-polish.js",
+      "sha256": "c548886bac6f4bf2df7fe011dd294d80c12288b380ccced7993b30ae7744ee51"
+    },
+    {
+      "owner": "src/edge-extrude.js",
+      "url": "./edge-extrude-core.js?v=0.36.18.426",
+      "target": "src/edge-extrude-core.js",
+      "sha256": "4ae6bb475919a4e52305f68d6b96b53ba9a93c4c299f6d8031596d195ec5711e"
+    },
+    {
+      "owner": "src/edge-tool-viewport-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/export-as-panel.js",
+      "url": "./nomad-export-core.js?v=0.36.18.735",
+      "target": "src/nomad-export-core.js",
+      "sha256": "2b05e20d2250bf0832e384b2140bd9b955c99385112cc98ac385f6909cc0fe12"
+    },
+    {
+      "owner": "src/export-as-panel.js",
+      "url": "./scene-obj-export-core.js?v=0.36.18.444",
+      "target": "src/scene-obj-export-core.js",
+      "sha256": "d2ba4fd5349b187c1177845a4a7d76e4e82fe8b9f5b6a38aa27a732685627bd5"
+    },
+    {
+      "owner": "src/extrude-through-viability.js",
+      "url": "./mesh.js?v=0.12",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/face-align-viewport.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/face-repair-viewport.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/face-split.js",
+      "url": "./topology-kernel.js?v=0.36.18.208",
+      "target": "src/topology-kernel.js",
+      "sha256": "9577c0d168cf30e73e359daf089819900cc4c8e6e719d24082cfc1ef590318c8",
+      "sourceVersion": "0.36.18.208"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./backdrop-presets.js?v=0.36.18.190",
+      "target": "src/backdrop-presets.js",
+      "sha256": "fc560619fa363539c6928ac8aefa1d37a7e7b998bf29411de673f7ab65010977",
+      "sourceVersion": "0.36.18.190"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./beta-runtime-guard.js?v=0.36.18.193",
+      "target": "src/beta-runtime-guard.js",
+      "sha256": "702ad071ae11998ec43a226687624aeeedace67d38be539dd5843fb171ffdee6",
+      "sourceVersion": "0.36.18.191"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./boolean-classify.js?v=0.36.18.210",
+      "target": "src/boolean-classify.js",
+      "sha256": "127e2e93096511ca6ffe35c12e1b656496f81d65fc86b4b63ef2be324648c666",
+      "sourceVersion": "0.36.18.210"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./cage-intensity.js?v=0.36.18.191",
+      "target": "src/cage-intensity.js",
+      "sha256": "0e6b14c9149374318fcb98418b2ea90e7d7eb59071bb97fa64a7f182ff6feb22",
+      "sourceVersion": "0.36.18.191"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./cavity-view.js?v=0.36.18.186",
+      "target": "src/cavity-view.js",
+      "sha256": "f400957f95d493b6a15264eda37c31975cc070c949109b026e549fbb19edbeaf",
+      "sourceVersion": "0.36.18.186"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./clean-view.js?v=0.36.18.179",
+      "target": "src/clean-view.js",
+      "sha256": "6178e4896a7d493593168fb9dd5d42fa60097fe4bebac7f8b3a71bb1e56ed21f",
+      "sourceVersion": "0.36.18.179"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./close-holes.js?v=0.36.18.201",
+      "target": "src/close-holes.js",
+      "sha256": "28f892102730d1517ffd0d08158952b82dfc96beea57657261ad6dea464330f0",
+      "sourceVersion": "0.36.18.201"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./diagnostic-drawer-state.js?v=0.36.18.176",
+      "target": "src/diagnostic-drawer-state.js",
+      "sha256": "6864427b8735ed5598a1bf291e9ba2b4e169118136093282daedf0cd9aa452be",
+      "sourceVersion": "0.36.18.176"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./duplicate-faces.js?v=0.36.18.342",
+      "target": "src/duplicate-faces.js",
+      "sha256": "8c26bb0732b5fa74a6cbb6c278eef8b7c1171b4efd26367c2eb75bba279fbe21"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./face-inspect-drawer.js?v=0.36.18.141",
+      "target": "src/face-inspect-drawer.js",
+      "sha256": "c284217dd69d2453d3fe6e06e33998f949e4fd902151242b60fbfe388a4e5e9e",
+      "sourceVersion": "0.36.18.141"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./face-repair-drawer.js?v=0.36.18.145",
+      "target": "src/face-repair-drawer.js",
+      "sha256": "78143fe2bf58568865528bd02786d2b40913efcfcd565efbcae97b76261ebd93",
+      "sourceVersion": "0.36.18.145"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./flip-faces.js?v=0.36.18.90",
+      "target": "src/flip-faces.js",
+      "sha256": "33f72d69ad945d0de1bb248251fbaeac905b116b849e8575b41f041fd772763b"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./ground-polish.js?v=0.36.18.188",
+      "target": "src/ground-polish.js",
+      "sha256": "7f925335af8c6bd93aae7b4b7dece751b9e888a6126a47242e6976a16e119f56",
+      "sourceVersion": "0.36.18.188"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./live-mesh-bridge.js?v=0.36.18.169",
+      "target": "src/live-mesh-bridge.js",
+      "sha256": "7ac1ff5826b1fb98a4ae5b87716b8d106870e56b3558cffef7f4bb95caf3301a"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./loop-cut-feedback.js?v=0.36.18.193",
+      "target": "src/loop-cut-feedback.js",
+      "sha256": "cf6e3bba8d414c7ed879ba8cc409fc0ac18da288b327939e4c9c583d9f997005",
+      "sourceVersion": "0.36.18.191"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./make-planar.js?v=0.36.18.93",
+      "target": "src/make-planar.js",
+      "sha256": "ef9004c53be0dd2d2f0d595e46633148c7d82459e6ee7a06618781eefa194fcd"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./mesh-health-summary.js?v=0.36.18.175",
+      "target": "src/mesh-health-summary.js",
+      "sha256": "2abaf1e9477450eb5494f7df70a7e5eb9c9316b85b7ea571cb798a2c1aade246",
+      "sourceVersion": "0.36.18.175"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./orient-faces.js?v=0.36.18.94",
+      "target": "src/orient-faces.js",
+      "sha256": "dadf193af984f3029abb32d54e866ce630389072c5ef57aa5053ab390e5ba23d"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./orient-shell-outward.js?v=0.36.18.95",
+      "target": "src/orient-shell-outward.js",
+      "sha256": "4e287740fd272f8517123fcede275aabe4c4afa8c43274802ea0ea177686e3a9"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./poke-faces.js?v=0.36.18.92",
+      "target": "src/poke-faces.js",
+      "sha256": "1803c883ff7ed189771dd1a8befc51ffdb89ce734d9b046d2c851440ad91838e"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./quad-pair-cleanup.js?v=0.36.18.205",
+      "target": "src/quad-pair-cleanup.js",
+      "sha256": "d6317c9b0eea1df038401be05c66bb88266a797620db0cf693a7416dd6c947a6",
+      "sourceVersion": "0.36.18.205"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./quadify-ngons.js?v=0.36.18.203",
+      "target": "src/quadify-ngons.js",
+      "sha256": "3e4ea441eb9be8c55b59b3a22766171637764c8058834a32ba7adbabf9c253c1",
+      "sourceVersion": "0.36.18.203"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./release-version.js?v=0.36.18.210",
+      "target": "src/release-version.js",
+      "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./rotate-edge.js?v=0.36.18.337",
+      "target": "src/rotate-edge.js",
+      "sha256": "4a059b5c8596317c5573ca2b1bc5d57bdfd73ecc5128266e8ea74a123bd18381"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./select-boundary-structure.js?v=0.36.18.131",
+      "target": "src/select-boundary-structure.js",
+      "sha256": "c680da9f21f81357ce9d4cb7c65db1a12b2bdbf176bee3e62e81636aed1bb270"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./select-cleanable-verts.js?v=0.36.18.134",
+      "target": "src/select-cleanable-verts.js",
+      "sha256": "a006689ed5d6e375d7ade511cafc0332c3aa2c0c766ef3cef150bf841aa452b4"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./select-intersecting-faces.js?v=0.36.18.209",
+      "target": "src/select-intersecting-faces.js",
+      "sha256": "19c031fd5355e2536717795f44706abb9b9256df5d0c85211b6655e37d315a44"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./select-mergeable-verts.js?v=0.36.18.706",
+      "target": "src/select-mergeable-verts.js",
+      "sha256": "19a732626e86b131801f90fcd54f700ca7259eafa3e6376dffd9b09a429022a6"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./select-quads.js?v=0.36.18.128",
+      "target": "src/select-quads.js",
+      "sha256": "5e9105cd5cc48492e45a60f3bfdab74164d8ea7404fed3f614044fa6bb6b9bee"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./select-sharp-edges.js?v=0.36.18.126",
+      "target": "src/select-sharp-edges.js",
+      "sha256": "a260a95562ba29ec30a68dd12b425437842d961670734c15063f96a0fdb877f5"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./select-tri-pairs.js?v=0.36.18.133",
+      "target": "src/select-tri-pairs.js",
+      "sha256": "6bf1afbcc7dec6c79c32083779f125e8157b693aacdbc806e430e86972866e84"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./select-vertex-classification.js?v=0.36.18.115",
+      "target": "src/select-vertex-classification.js",
+      "sha256": "acfe5a5b1cda0b1aded791e70da0f23088376ec5c26e70609280f928fab4a155"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./select-vertex-valence.js?v=0.36.18.134",
+      "target": "src/select-vertex-valence.js",
+      "sha256": "b7da3d686139c748e7ca05d9331dddaa8f4d1498974d28938d8009f3355fa902"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./silhouette-view.js?v=0.36.18.186",
+      "target": "src/silhouette-view.js",
+      "sha256": "3760f7159f85e6e6589b154dabefa3ff51ed1115462eb8b55240a6c72033d674",
+      "sourceVersion": "0.36.18.186"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./studio-atmosphere.js?v=0.36.18.189",
+      "target": "src/studio-atmosphere.js",
+      "sha256": "cca49fb489e88e287e4a738f08d1829116b99b1c110ac9ef8c8fc15e38083a22",
+      "sourceVersion": "0.36.18.189"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./studio-light-angle.js?v=0.36.18.199",
+      "target": "src/studio-light-angle.js",
+      "sha256": "ec75a89764e602b41f3fcbc33e7623b8b69de5330c1b93cf2e10183c1eac2f53",
+      "sourceVersion": "0.36.18.199"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./studio-polish.js?v=0.36.18.199",
+      "target": "src/studio-polish.js",
+      "sha256": "83696f52743dcc451f66f8ffd3d5eae6af13ec5294771baa26438c53cd01f029",
+      "sourceVersion": "0.36.18.199"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./topology-validity-gate.js?v=0.36.18.200",
+      "target": "src/topology-validity-gate.js",
+      "sha256": "278d81d067179df684ffb0bfa2cadc248c685ec62378be81ea933e1a00816221",
+      "sourceVersion": "0.36.18.200"
+    },
+    {
+      "owner": "src/face-workflow-layout.js",
+      "url": "./triangulate-faces.js?v=0.36.18.91",
+      "target": "src/triangulate-faces.js",
+      "sha256": "1e71b0f2f208845112c29e25163345c6a42cf66de28a398e29aba5b16c908005"
+    },
+    {
+      "owner": "src/grid-fill.js",
+      "url": "./grid-fill-core.js?v=0.36.18.338",
+      "target": "src/grid-fill-core.js",
+      "sha256": "744fb8bf8705919b30e9b206d1e1238ddcb78aa54405c6ed53ff206bcbd7212f"
+    },
+    {
+      "owner": "src/import-mesh.js",
+      "url": "./mesh.js?v=0.21.2",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/import-mesh.js",
+      "url": "./obj-facegroups-core.js?v=0.36.18.448",
+      "target": "src/obj-facegroups-core.js",
+      "sha256": "0d4b3d666e45098cb03fe4f40156d040f6d848500447007545eedf525936c05c"
+    },
+    {
+      "owner": "src/import-mesh.js",
+      "url": "./quad-clean-core.js?v=0.36.18.323",
+      "target": "src/quad-clean-core.js",
+      "sha256": "a2cbb4c725a78c20bfa46236c3cc81f55aff8f26c2139a6a6a706966e94ea4ad"
+    },
+    {
+      "owner": "src/insert-tool.js",
+      "url": "./surface-transform-core.js?v=0.36.18.437",
+      "target": "src/surface-transform-core.js",
+      "sha256": "3ba91f46824fd1e9714b8ccfa9177beeed18c9580b694cfb42cb141140d2b87c"
+    },
+    {
+      "owner": "src/live-mesh-bridge.js",
+      "url": "./mesh.js?v=0.12",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/loop-cut-added-vertex.js",
+      "url": "./mesh.js?v=0.12",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/loop-cut-feedback.js",
+      "url": "./mesh.js?v=0.12",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bevel-selection.js?v=0.28.9",
+      "target": "src/bevel-selection.js",
+      "sha256": "152de7fb6af36bf5570b353bebe7531a8351f4ceb27fa7820ec137b6aa7711fb"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bevel-topology.js?v=0.28.3",
+      "target": "src/bevel-topology.js",
+      "sha256": "3db0bd48c99a7bb96f12382e74b6939bf12024f2dc6273852a084669f4d1b0db"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bevel-watertight-guard.js?v=0.18.5",
+      "target": "src/bevel-watertight-guard.js",
+      "sha256": "5210197bb177f2349e4a6441694d17781237bbf56c4d5c613ded273578e93392"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bridge-all-quad.js?v=0.36.18.289",
+      "target": "src/bridge-all-quad.js",
+      "sha256": "3495cddd948d09b61d84acc47147531a81f9bd14a421c01fc9cbc611184b0e10",
+      "sourceVersion": "0.36.18.289"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bridge-open-chain-all-quad.js?v=0.36.18.289",
+      "target": "src/bridge-open-chain-all-quad.js",
+      "sha256": "b1b655a7e662404136ce1e72c0a3bc7cc0b547d3914afd31cf4a85c14fe935c1",
+      "sourceVersion": "0.36.18.289"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bridge-open-chain.js?v=0.36.18.266",
+      "target": "src/bridge-open-chain.js",
+      "sha256": "cee238624fa87574e37c2fa29276ce9277aad30ed8f8944b552d8fa2d1037304",
+      "sourceVersion": "0.36.18.266"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bridge-topology.js?v=0.36.11.1",
+      "target": "src/bridge-topology.js",
+      "sha256": "af346b3eb3477821f20bc4417ec8bfb08ebbc23ef7ed6d6ce7bea5b9ceb8e7cf"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bridge-transactional.js?v=0.36.18.243",
+      "target": "src/bridge-transactional.js",
+      "sha256": "b2f5f08714f26ece8993f517dc45c1f99d41f29083301f62ab91d271088e9afb",
+      "sourceVersion": "0.36.18.243"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bridge-unequal-alignment.js?v=0.36.18.246",
+      "target": "src/bridge-unequal-alignment.js",
+      "sha256": "6080430d84b59baebafa7f7776d976a0251c21acd801733625d50df67a762f97",
+      "sourceVersion": "0.36.18.246"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bridge-unequal-global.js?v=0.36.18.263",
+      "target": "src/bridge-unequal-global.js",
+      "sha256": "615f21b1496d01fe94c50591e00cb53081b103dc05c7818eaedf0caae7c41982",
+      "sourceVersion": "0.36.18.263"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bridge-unequal-quality.js?v=0.36.18.245",
+      "target": "src/bridge-unequal-quality.js",
+      "sha256": "847fdf97161ed73b344d87a40c00f12ca33f98cf5079261369d3cfbda53ead86",
+      "sourceVersion": "0.36.18.245"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./bridge-unequal.js?v=0.36.18.244",
+      "target": "src/bridge-unequal.js",
+      "sha256": "0f703ea7190a8afdc8497997a17e56d2a9722608c407a6687c411581d0198bb3",
+      "sourceVersion": "0.36.18.244"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./face-pick-repair.js?v=0.12",
+      "target": "src/face-pick-repair.js",
+      "sha256": "d10d308c26ef389e87b07268365893009cf51e12f020b56149e0958abf17f7a6"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./face-region.js?v=0.30.3",
+      "target": "src/face-region.js",
+      "sha256": "bcb75d9a55b7cf5e0d766407cb79ca65a30a8ee25631bf21a20f994adabbdf10"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./face-transform.js?v=0.36.18.635",
+      "target": "src/face-transform.js",
+      "sha256": "5ebf730818a18b8995471d26c13184de28f97fe1e671481e585d626c50dfcb98"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./general-edge-bevel-topology.js?v=0.28.7",
+      "target": "src/general-edge-bevel-topology.js",
+      "sha256": "10eb2a8068dd046057d6b63e6148bca474f1bed6d8e5963d9e679f940624f401"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./generalized-edge-fan-bevel.js?v=0.28.12",
+      "target": "src/generalized-edge-fan-bevel.js",
+      "sha256": "a33e9d521f496f9c67c8b7072eb5c45a0b23cdd2e768db59ec4501911f8e8711"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./loop-offset.js?v=0.32.19",
+      "target": "src/loop-offset.js",
+      "sha256": "96ad0963884f5404b054a8ba2ca527fd36b6c0c0dbf055c2fcc83a01791bf301"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./mesh.js?v=0.12",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./multi-edge-chamfer-topology.js?v=0.28.8",
+      "target": "src/multi-edge-chamfer-topology.js",
+      "sha256": "e3f3f9c5e68f33d9e6f80fe780b8ba4777221ae14595841bf9b08cd8ea303bae"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./multi-vertex-bevel-topology.js?v=0.30.0",
+      "target": "src/multi-vertex-bevel-topology.js",
+      "sha256": "872f9d569f76ca83a2845fe64bda0ef5f53f2169627e34a2ad25d368203a4c4d"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./perimeter-bevel-routing.js?v=0.28.12",
+      "target": "src/perimeter-bevel-routing.js",
+      "sha256": "0da26550735569d6b20bee3393273ef1f3225a9b60fc5b01f023bf94e485164c"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./perimeter-fan-bevel.js?v=0.28.11",
+      "target": "src/perimeter-fan-bevel.js",
+      "sha256": "d80239bfe99bbe57ad7d0ce4a2acd0fd458c3f18f2d61cacd248aa4cacd671e4"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./rounded-loop-bevel.js?v=0.28.8",
+      "target": "src/rounded-loop-bevel.js",
+      "sha256": "0ed9fa806e7c43b132c21af94cfcce39558ce3e4291b92e2cc6332a9ff46ece0"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./selection-transform-state.js?v=0.12",
+      "target": "src/selection-transform-state.js",
+      "sha256": "8720218672865559f8f2b38259243ad79be56c3f99e2a1c0818b730ee309042e"
+    },
+    {
+      "owner": "src/loose-bootstrap.js",
+      "url": "./vertex-bevel-topology.js?v=0.28.3",
+      "target": "src/vertex-bevel-topology.js",
+      "sha256": "4e8f14c89cb94da09a7951fb3cb6923f196ef0a9da5abae504ce687de067915c"
+    },
+    {
+      "owner": "src/main.js",
+      "url": "./cross-object-snap-core.js?v=0.36.18.325",
+      "target": "src/cross-object-snap-core.js",
+      "sha256": "d107536fcb940d9c3a577f0ad581d30ebbd303a13d326c97bcb84035a6c21e45"
+    },
+    {
+      "owner": "src/main.js",
+      "url": "./export.js?v=0.12",
+      "target": "src/export.js",
+      "sha256": "ec870fc6e1ab652aca1998add5cde557acd97f727fea9e2ab90968900b274ac8"
+    },
+    {
+      "owner": "src/main.js",
+      "url": "./history.js?v=0.12",
+      "target": "src/history.js",
+      "sha256": "31f3e71775ccac3b5d052c84985f64644b79b32aa1b40517b107ecaebf974402"
+    },
+    {
+      "owner": "src/main.js",
+      "url": "./mesh.js?v=0.12",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/main.js",
+      "url": "./mirror.js?v=0.12",
+      "target": "src/mirror.js",
+      "sha256": "cac5c561d71050d620f544d8d8626d950c0906d10087d8a3d2627bc6a351c1ff"
+    },
+    {
+      "owner": "src/main.js",
+      "url": "./subdivision.js?v=0.12",
+      "target": "src/subdivision.js",
+      "sha256": "d91bfaa7a91eb451ad9711c747b9631fba4e326d712c862383c730b6163aeb94"
+    },
+    {
+      "owner": "src/mesh-auto-close-core.js",
+      "url": "./mesh-health-core.js?v=0.36.18.441",
+      "target": "src/mesh-health-core.js",
+      "sha256": "8c13f9afa2517352e133105463458856dcf151a9d5f88f78b86244f51427c350"
+    },
+    {
+      "owner": "src/mesh-boundary-diagnostics-core.js",
+      "url": "./topology-seam-conformance.js?v=0.36.18.236",
+      "target": "src/topology-seam-conformance.js",
+      "sha256": "a3e9221cbe0e879458bca2d95760c7ed76d521432f6993046ec80e58affc3cde",
+      "sourceVersion": "0.36.18.236"
+    },
+    {
+      "owner": "src/mesh-health-core.js",
+      "url": "./topology-seam-conformance.js?v=0.36.18.236",
+      "target": "src/topology-seam-conformance.js",
+      "sha256": "a3e9221cbe0e879458bca2d95760c7ed76d521432f6993046ec80e58affc3cde",
+      "sourceVersion": "0.36.18.236"
+    },
+    {
+      "owner": "src/mesh-health-repair-core.js",
+      "url": "./mesh-health-core.js?v=0.36.18.440",
+      "target": "src/mesh-health-core.js",
+      "sha256": "8c13f9afa2517352e133105463458856dcf151a9d5f88f78b86244f51427c350"
+    },
+    {
+      "owner": "src/mesh-health.js",
+      "url": "./mesh-auto-close-core.js?v=0.36.18.443",
+      "target": "src/mesh-auto-close-core.js",
+      "sha256": "89a66b8ce446759d327b18597fb3f2f59c35318d650f6d8700e9b963a99984c1"
+    },
+    {
+      "owner": "src/mesh-health.js",
+      "url": "./mesh-boundary-diagnostics-core.js?v=0.36.18.443",
+      "target": "src/mesh-boundary-diagnostics-core.js",
+      "sha256": "421d8425557a7dbb53e792aab43e1da261633947867fe63b3e9d90a2418b9761"
+    },
+    {
+      "owner": "src/mesh-health.js",
+      "url": "./mesh-health-core.js?v=0.36.18.443",
+      "target": "src/mesh-health-core.js",
+      "sha256": "8c13f9afa2517352e133105463458856dcf151a9d5f88f78b86244f51427c350"
+    },
+    {
+      "owner": "src/mesh-health.js",
+      "url": "./mesh-health-repair-core.js?v=0.36.18.443",
+      "target": "src/mesh-health-repair-core.js",
+      "sha256": "130517446b7856b8c4b53382caceed3bda808374c220331ddaf93945013f1afb"
+    },
+    {
+      "owner": "src/mesh-health.js",
+      "url": "./mesh-normals-triangulate-core.js?v=0.36.18.443",
+      "target": "src/mesh-normals-triangulate-core.js",
+      "sha256": "b2591a82133332b2fc50f48854225326ed35fdc35d2e56298cd6f1791b47577a"
+    },
+    {
+      "owner": "src/mesh-normals-triangulate-core.js",
+      "url": "./mesh-health-core.js?v=0.36.18.443",
+      "target": "src/mesh-health-core.js",
+      "sha256": "8c13f9afa2517352e133105463458856dcf151a9d5f88f78b86244f51427c350"
+    },
+    {
+      "owner": "src/mesh-normals-triangulate-core.js",
+      "url": "./topology-seam-conformance.js?v=0.36.18.236",
+      "target": "src/topology-seam-conformance.js",
+      "sha256": "a3e9221cbe0e879458bca2d95760c7ed76d521432f6993046ec80e58affc3cde",
+      "sourceVersion": "0.36.18.236"
+    },
+    {
+      "owner": "src/multi-face-direct.js",
+      "url": "./through-kernel.js?v=0.36.18.242",
+      "target": "src/through-kernel.js",
+      "sha256": "904df683a86657e8e0743121102d015c52916f3c972103a38ec741ddec0fa4ab"
+    },
+    {
+      "owner": "src/multi-face-direct.js",
+      "url": "./topology-seam-conformance.js?v=0.36.18.242",
+      "target": "src/topology-seam-conformance.js",
+      "sha256": "a3e9221cbe0e879458bca2d95760c7ed76d521432f6993046ec80e58affc3cde",
+      "sourceVersion": "0.36.18.236"
+    },
+    {
+      "owner": "src/multi-face-direct.js",
+      "url": "./uniform-inset.js?v=0.32.11",
+      "target": "src/uniform-inset.js",
+      "sha256": "36b50898bb7ec5b7a11bce9ef33386b900510c04a30d5048fe14d34d78ecbc1d"
+    },
+    {
+      "owner": "src/multi-object.js",
+      "url": "./instance-core.js?v=0.36.18.343",
+      "target": "src/instance-core.js",
+      "sha256": "ab05cf3c145b4a3694318d41329391f84aaf5c83520019e9b3988f8a202994d8"
+    },
+    {
+      "owner": "src/multi-object.js",
+      "url": "./object-join-core.js?v=0.36.18.277",
+      "target": "src/object-join-core.js",
+      "sha256": "b05aa3a1ba80340ae2b8706bc8c1015b56803ca7e2f3e66f48281d5c5382629c"
+    },
+    {
+      "owner": "src/nomad-export-core.js",
+      "url": "./scene-obj-export-core.js?v=0.36.18.444",
+      "target": "src/scene-obj-export-core.js",
+      "sha256": "d2ba4fd5349b187c1177845a4a7d76e4e82fe8b9f5b6a38aa27a732685627bd5"
+    },
+    {
+      "owner": "src/obj-facegroups-core.js",
+      "url": "./mesh.js?v=0.21.2",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/primitive-ui.js",
+      "url": "./primitive-factory.js?v=0.36.18.226",
+      "target": "src/primitive-factory.js",
+      "sha256": "d821f066aacd2e9a7da854f77a8b3030e913169c3c015695e2c14f883d64f1e1"
+    },
+    {
+      "owner": "src/quad-clean.js",
+      "url": "./quad-clean-core.js?v=0.36.18.339",
+      "target": "src/quad-clean-core.js",
+      "sha256": "a2cbb4c725a78c20bfa46236c3cc81f55aff8f26c2139a6a6a706966e94ea4ad"
+    },
+    {
+      "owner": "src/render-modes.js",
+      "url": "./facegroup-colours-core.js?v=0.36.18.547",
+      "target": "src/facegroup-colours-core.js",
+      "sha256": "0dd92518a11cbdc48d8fdf5121a30203f587a42ec34fe84662227aa238aed002"
+    },
+    {
+      "owner": "src/revolve-profile.js",
+      "url": "./revolve-core.js?v=0.36.18.389",
+      "target": "src/revolve-core.js",
+      "sha256": "0d3fb5b0faeac8ec8d83fe36b211abe6771d4602f6944523741269b07aa9f8c7",
+      "sourceVersion": "0.36.18.389"
+    },
+    {
+      "owner": "src/revolve.js",
+      "url": "./revolve-core.js?v=0.36.18.386",
+      "target": "src/revolve-core.js",
+      "sha256": "0d3fb5b0faeac8ec8d83fe36b211abe6771d4602f6944523741269b07aa9f8c7",
+      "sourceVersion": "0.36.18.389"
+    },
+    {
+      "owner": "src/scene-obj-export-238.js",
+      "url": "./scene-obj-export-core.js?v=0.36.18.444",
+      "target": "src/scene-obj-export-core.js",
+      "sha256": "d2ba4fd5349b187c1177845a4a7d76e4e82fe8b9f5b6a38aa27a732685627bd5"
+    },
+    {
+      "owner": "src/scene-obj-export-core.js",
+      "url": "./mesh-health-core.js?v=0.36.18.444",
+      "target": "src/mesh-health-core.js",
+      "sha256": "8c13f9afa2517352e133105463458856dcf151a9d5f88f78b86244f51427c350"
+    },
+    {
+      "owner": "src/scene-obj-export-core.js",
+      "url": "./mirror.js?v=0.12",
+      "target": "src/mirror.js",
+      "sha256": "cac5c561d71050d620f544d8d8626d950c0906d10087d8a3d2627bc6a351c1ff"
+    },
+    {
+      "owner": "src/scene-obj-export-core.js",
+      "url": "./subdivision.js?v=0.12",
+      "target": "src/subdivision.js",
+      "sha256": "d91bfaa7a91eb451ad9711c747b9631fba4e326d712c862383c730b6163aeb94"
+    },
+    {
+      "owner": "src/select-intersecting-faces.js",
+      "url": "./boolean-intersections.js?v=0.36.18.209",
+      "target": "src/boolean-intersections.js",
+      "sha256": "2d368c52374c73e08929a3f58a08344a120898bb0c31c44a26a3d4994b1ef237",
+      "sourceVersion": "0.36.18.209"
+    },
+    {
+      "owner": "src/selection-hub-bevel-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/selection-hub-bridge-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/selection-hub-crease-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/selection-hub-face-bridge-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/selection-hub-face-value-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/selection-hub-knife-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/selection-hub-offset-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/selection-hub-shell-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/selection-hub-slide-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/selection-hub-sweep-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/sequential-through-fallback.js",
+      "url": "./through-kernel.js?v=0.36.18.242",
+      "target": "src/through-kernel.js",
+      "sha256": "904df683a86657e8e0743121102d015c52916f3c972103a38ec741ddec0fa4ab"
+    },
+    {
+      "owner": "src/sequential-through-fallback.js",
+      "url": "./topology-seam-conformance.js?v=0.36.18.242",
+      "target": "src/topology-seam-conformance.js",
+      "sha256": "a3e9221cbe0e879458bca2d95760c7ed76d521432f6993046ec80e58affc3cde",
+      "sourceVersion": "0.36.18.236"
+    },
+    {
+      "owner": "src/sequential-through-integrity.js",
+      "url": "./topology-seam-conformance.js?v=0.36.18.236",
+      "target": "src/topology-seam-conformance.js",
+      "sha256": "a3e9221cbe0e879458bca2d95760c7ed76d521432f6993046ec80e58affc3cde",
+      "sourceVersion": "0.36.18.236"
+    },
+    {
+      "owner": "src/shell-core.js",
+      "url": "./solidify-core.js?v=0.36.18.374",
+      "target": "src/solidify-core.js",
+      "sha256": "d589cd1c7942d36f8cd5f608928f0676feceb84640f5ca599bc9d57df10fadac"
+    },
+    {
+      "owner": "src/shell.js",
+      "url": "./shell-core.js?v=0.36.18.377",
+      "target": "src/shell-core.js",
+      "sha256": "d8c2ee916c9e921055bd32f0131d97d4b3cb2e9f03249e8f4cad6afe333b9790"
+    },
+    {
+      "owner": "src/solidify.js",
+      "url": "./mirror.js?v=0.12",
+      "target": "src/mirror.js",
+      "sha256": "cac5c561d71050d620f544d8d8626d950c0906d10087d8a3d2627bc6a351c1ff"
+    },
+    {
+      "owner": "src/solidify.js",
+      "url": "./solidify-core.js?v=0.36.18.374",
+      "target": "src/solidify-core.js",
+      "sha256": "d589cd1c7942d36f8cd5f608928f0676feceb84640f5ca599bc9d57df10fadac"
+    },
+    {
+      "owner": "src/surface-transform.js",
+      "url": "./surface-transform-core.js?v=0.36.18.442",
+      "target": "src/surface-transform-core.js",
+      "sha256": "3ba91f46824fd1e9714b8ccfa9177beeed18c9580b694cfb42cb141140d2b87c"
+    },
+    {
+      "owner": "src/sweep-path.js",
+      "url": "./sweep-core.js?v=0.36.18.417",
+      "target": "src/sweep-core.js",
+      "sha256": "920322b94fd6034d0769838b9b1421c6ae960bc42d4bc1f3ca40b83413c5724f",
+      "sourceVersion": "0.36.18.417"
+    },
+    {
+      "owner": "src/symmetry-bisect.js",
+      "url": "./cross-object-snap-core.js?v=0.36.18.324",
+      "target": "src/cross-object-snap-core.js",
+      "sha256": "d107536fcb940d9c3a577f0ad581d30ebbd303a13d326c97bcb84035a6c21e45"
+    },
+    {
+      "owner": "src/symmetry-bisect.js",
+      "url": "./symmetry-bisect-core.js?v=0.36.18.473",
+      "target": "src/symmetry-bisect-core.js",
+      "sha256": "00d99f4f18a209413e40b70261fb334b55275e280a782278222cc0b45d3bd6a7"
+    },
+    {
+      "owner": "src/through-kernel.js",
+      "url": "./topology-foundation.js?v=0.36.16.0",
+      "target": "src/topology-foundation.js",
+      "sha256": "1c90e287f64c9a9f250db688309f3187d4e2654a85118e6c16c9a9ef1f71d644"
+    },
+    {
+      "owner": "src/tool-session-panel-position.js",
+      "url": "./tool-session-wide-layout.js?v=0.36.18.732",
+      "target": "src/tool-session-wide-layout.js",
+      "sha256": "40863c54ffcd0b630bdc6c63b12da0f592ab4813327c4b1c4c827e21621a5cfe"
+    },
+    {
+      "owner": "src/tool-session-ui.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/topbar-layout.js",
+      "url": "./viewport-selection-panel.js?v=0.36.18.732",
+      "target": "src/viewport-selection-panel.js",
+      "sha256": "2ccc85d17a4dc5e6c32a5176311f8d0ed69f645b7ac496d37cb76cf577e5e041"
+    },
+    {
+      "owner": "src/topbar-layout.js",
+      "url": "./viewport-toolbar-controls.js?v=0.36.18.734",
+      "target": "src/viewport-toolbar-controls.js",
+      "sha256": "a9322135733b1d44a9ebd793abfea4440ecc6cfea934d9262d7cd91238f36cc5"
+    },
+    {
+      "owner": "src/total-gizmo.js",
+      "url": "./gizmo-corner-controls.js?v=0.36.18.734",
+      "target": "src/gizmo-corner-controls.js",
+      "sha256": "996dd0e954c446043038d916500eeadf97d850ffc74f5845755907b5ca3e6a5d"
+    },
+    {
+      "owner": "src/total-gizmo.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/uniform-inset.js",
+      "url": "./loose-bootstrap.js?v=0.30.3",
+      "target": "src/loose-bootstrap.js",
+      "sha256": "1ec531f41f22ab439a805be78368e9c63edf508ad5265b53e830463b14617db4"
+    },
+    {
+      "owner": "src/vertex-tool-viewport-session.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/viewport-selection-panel.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/viewport-toolbar-controls.js",
+      "url": "./gizmo-corner-controls.js?v=0.36.18.734",
+      "target": "src/gizmo-corner-controls.js",
+      "sha256": "996dd0e954c446043038d916500eeadf97d850ffc74f5845755907b5ca3e6a5d"
+    }
+  ]
+}

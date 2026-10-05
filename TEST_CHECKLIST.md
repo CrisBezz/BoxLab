@@ -3570,3 +3570,16 @@ record device result before Beta6 freeze. No .736 device PASS inferred.
 - [ ] Repeat on CI Node22; expand runtime path triggers and validated release gate.
 - [ ] Extend diverse Bevel chains, actual Knife→Loop and scene Undo/Redo fixtures.
 See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
+
+## .737 test-contract baseline
+
+- [x] Shell title/visible stamp/manifest agree; assets retain reviewed pins/bytes.
+- [x] Missing/truncated/wrong pin, changed source, wrong order, stale shell rejected.
+- [x]31 historical scripts expose333 namedcases; no original check silently removed.
+- [x] .453 historical constraints run against exact accepted archival fixture.
+- [x] Bootstrap survives10 stale reloads within frozen path; matching shell stays.
+- [x] Actual Repeat delegates tool/value/face to current owner; invalid/busy rejected.
+- [x] CI triggers allruntime sources/assets.
+- [ ] Reconcile118 remaining active behavior/source checks; full suite still red.
+- [ ] Verify Node22 CI; install validated release gate after reconciliation.
+- [ ] iPad .737 Focus launch and normal edit/Undo smoke; modeller unchanged.

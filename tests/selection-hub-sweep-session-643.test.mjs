@@ -1,3 +1,7 @@
+import {assetsOrdered} from './helpers/release-contract.mjs';
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const hub=fs.readFileSync(new URL('../src/total-gizmo.js',import.meta.url),'utf8');
 const sweep=fs.readFileSync(new URL('../src/selection-hub-sweep-session.js',import.meta.url),'utf8');
@@ -13,12 +17,9 @@ const checks=[
  ['Finish proxies authoritative Apply/Cancel',sweep.includes('#sweepApplyBtn')&&sweep.includes('#sweepCancelBtn')],
  ['range proxies forward events',sweep.includes("target.dispatchEvent(new Event('input',{bubbles:true}))")&&sweep.includes("target.dispatchEvent(new Event('change',{bubbles:true}))")],
  ['existing Sweep owner unchanged by proxy',sweepOwner.includes('function applySweep()')&&sweepOwner.includes('function cancelSweepSession')],
- ['new session module published after sweep owner',index.indexOf('sweep-path.js?v=0.36.18.515')<index.indexOf('selection-hub-sweep-session.js?v=0.36.18.643')],
- ['Total Gizmo pin .643',index.includes('total-gizmo.js?v=0.36.18.643')],
- ['release .643',index.includes('<title>BoxLab v0.36.18.643</title>')&&version.version==='0.36.18.643'],
+ ['new session module published after sweep owner',assetsOrdered(index,'sweep-path.js','selection-hub-sweep-session.js')],
+ ['Total Gizmo reviewed cache pin',hasAssetReference(index,'total-gizmo.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
  ['protected multi transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log(`PASS: .643 Sweep viewport session proxy ${checks.length}/${checks.length}`);
+for(const [name,ok] of checks)test("selection-hub-sweep-session-643.test: "+name,()=>assert.equal(ok,true,name));

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -25,9 +26,9 @@ test('508 keeps Edge options progressive and hides legacy layout chrome',()=>{
 });
 
 test('508 preserves protected interaction pins',()=>{
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.508/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

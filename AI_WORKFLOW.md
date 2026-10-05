@@ -257,3 +257,13 @@ immutable. Read docs/reliability-audit-2026-10-05.md and inventory. Report failu
 as test results, not bug counts. Do not claim stable failure counts prove safety or
 silently exclude historical checks. Reconcile intended behavior and authoritative
 owners, retain semantic coverage, and keep active CI failures visible until fixed.
+
+## .737 reviewed test-contract workflow
+
+Use tests/helpers/release-contract.mjs and reviewed asset/hash fixture for current
+loading contracts; never demand every unchanged module equal shell version.
+Internal module stamps, asset cache pins and shell release are distinct. Review
+source changes and loader keys before updating the fixture; do not regenerate
+expectations blindly to make tests green. Historical .453 recovery source lives
+under tests/fixtures/recovery-453 with exact provenance; no current runtime rollback
+implied. All remaining failing behavior checks stay active until understood.

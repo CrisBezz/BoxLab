@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -22,8 +23,8 @@ test('485 drag on unselected face includes that face in modelling selection',()=
 });
 
 test('485 cache-hops Face direct owner and preserves Rotate/main protected pins',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.485/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'rotate-transform.js');
+  assertAssetReference(index,'main.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

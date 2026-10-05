@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const giz=fs.readFileSync(new URL('../src/total-gizmo.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -13,13 +16,10 @@ const checks=[
  ['click guard',giz.includes('if(button.disabled)return;')],
  ['disabled styling',giz.includes('.tg-tool-sector.tg-tool-unavailable')],
  ['active styling',giz.includes('.tg-tool-sector.tg-tool-active')],
- ['gizmo pin .658',index.includes('src/total-gizmo.js?v=0.36.18.658')],
- ['release .658',index.includes('<title>BoxLab v0.36.18.658</title>')&&version.version==='0.36.18.658'],
- ['main .657 retained',index.includes('src/main.js?v=0.36.18.657')],
- ['Shell retained',index.includes('selection-hub-shell-session.js?v=0.36.18.653')],
+ ['gizmo reviewed cache pin',hasAssetReference(index,'total-gizmo.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
+ ['main .657 retained',hasAssetReference(index,'main.js')],
+ ['Shell retained',hasAssetReference(index,'selection-hub-shell-session.js')],
  ['protected transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log('PASS: .658 Selection Hub availability '+checks.length+'/'+checks.length);
+for(const [name,ok] of checks)test("selection-hub-availability-658.test: "+name,()=>assert.equal(ok,true,name));

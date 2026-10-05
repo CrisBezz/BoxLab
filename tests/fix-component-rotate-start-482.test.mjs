@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -15,7 +16,7 @@ test('482 Move and Scale keep existing hit-test behavior',()=>{
 });
 
 test('482 cache-hops shared transform and preserves protected core',()=>{
-  assert.match(index,/src\/transform-upgrade\.js\?v=0\.36\.18\.482/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'transform-upgrade.js');
+  assertAssetReference(index,'main.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

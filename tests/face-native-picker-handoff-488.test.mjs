@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -31,8 +32,8 @@ test('488 no duplicate live scene picker remains',()=>{
 });
 
 test('488 cache-hop and protected pins',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.488/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'rotate-transform.js');
+  assertAssetReference(index,'main.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

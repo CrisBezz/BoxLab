@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -29,9 +30,9 @@ test('342 runtime cache-hops File and Face layout owners',()=>{
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const workflow=fs.readFileSync(new URL('../src/face-workflow-layout.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.match(drawer,/join-selected-coplanar-faces\.js\?v=0\.36\.18\.342/);
-  assert.match(drawer,/face-workflow-layout\.js\?v=0\.36\.18\.342/);
-  assert.match(workflow,/duplicate-faces\.js\?v=0\.36\.18\.342/);
-  assert.match(index,/topbar-layout\.js\?v=0\.36\.18\.342/);
+  assertAssetReference(drawer,'join-selected-coplanar-faces.js');
+  assertAssetReference(drawer,'face-workflow-layout.js');
+  assertAssetReference(workflow,'duplicate-faces.js');
+  assertAssetReference(index,'topbar-layout.js');
   assert.match(index,/drawer-ui\.js\?v=/);
 });

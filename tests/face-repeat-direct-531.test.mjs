@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -32,8 +33,8 @@ test('531 direct Repeat Inset converts stored distance on target Face',()=>{
 });
 
 test('531 runtime pins current replay modules and protected transform',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.531/);
-  assert.match(index,/src\/drawer-ui\.js\?v=0\.36\.18\.531/);
-  assert.match(drawer,/repeat-face-previous\.js\?v=0\.36\.18\.531/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(drawer,'repeat-face-previous.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

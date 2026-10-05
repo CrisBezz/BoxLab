@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const direct=fs.readFileSync(new URL('../src/multi-face-direct.js',import.meta.url),'utf8');
 const gizmo=fs.readFileSync(new URL('../src/total-gizmo.js',import.meta.url),'utf8');
@@ -10,9 +13,8 @@ const checks=[
  ['gizmo resumes Face tool',gizmo.includes('__boxlabFaceDirect?.resumeAfterTransform?.()')],
  ['component failed handoff blocked',gizmo.includes("if(!directSemanticHandoff&&mode!=='object')")&&gizmo.includes("GIZMO HANDOFF BLOCKED")],
  ['component block occurs before synthetic fallback',gizmo.indexOf("GIZMO HANDOFF BLOCKED")<gizmo.indexOf("if(!directSemanticHandoff)syntheticDown(event)")],
- ['published pins .636',index.includes('multi-face-direct.js?v=0.36.18.636')&&index.includes('total-gizmo.js?v=0.36.18.636')],
- ['release .636',index.includes('<title>BoxLab v0.36.18.636</title>')&&version.version==='0.36.18.636'],
+ ['published pins .636',hasAssetReference(index,'multi-face-direct.js')&&hasAssetReference(index,'total-gizmo.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
  ['protected multi unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;for(const [n,ok] of checks){if(ok)console.log('PASS',n);else{console.error('FAIL',n);failed++;}}if(failed)process.exit(1);
-console.log(`PASS: .636 gizmo/direct-tool ownership ${checks.length}/${checks.length}`);
+for(const [name,ok] of checks)test("gizmo-direct-tool-ownership-636.test: "+name,()=>assert.equal(ok,true,name));

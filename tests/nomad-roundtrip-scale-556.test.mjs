@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -24,8 +25,8 @@ test('556 restores morph delta scale on export',()=>{
 });
 
 test('556 runtime pins current and protected transform pin stays fixed',()=>{
-  assert.match(index,/src\/import-mesh\.js\?v=0\.36\.18\.556/);
-  assert.match(index,/src\/export-as-panel\.js\?v=0\.36\.18\.556/);
-  assert.match(index,/data-release-version="0\.36\.18\.556"/);
+  assertAssetReference(index,'import-mesh.js');
+  assertAssetReference(index,'export-as-panel.js');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -23,6 +24,6 @@ test('345 editable controls remain selectable',()=>{
 test('345 interaction guard loads once from index and leaves gesture modules untouched',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.equal((index.match(/app-interaction-guard\.js\?v=0\.36\.18\.345/g)||[]).length,1);
-  assert.match(index,/pencil-orbit-gate\.js\?v=0\.32\.35/);
+  assertAssetReference(index,'pencil-orbit-gate.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

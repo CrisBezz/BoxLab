@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -7,10 +8,10 @@ const ui=fs.readFileSync(new URL('../src/revolve.js',import.meta.url),'utf8');
 const core=fs.readFileSync(new URL('../src/revolve-core.js',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('Revolve runtime follows current app build',()=>{
+test('Revolve runtime uses its reviewed runtime cache pin',()=>{
   const wrapper=index.match(/revolve\.js\?v=([^"]+)/)?.[1];
   const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
-  assert.equal(wrapper,version);
+  assertAssetReference(index,'revolve.js');
   assert.equal(stamp,version);
 });
 

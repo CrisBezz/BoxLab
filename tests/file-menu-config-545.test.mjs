@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -18,8 +19,8 @@ test('545 editable controls remain exempt from auto-close',()=>{
 });
 
 test('545 runtime pin current and Beta 5 protected',()=>{
-  assert.match(index,/src\/topbar-layout\.js\?v=0\.36\.18\.545/);
-  assert.match(index,/data-release-version="0\.36\.18\.545"/);
+  assertAssetReference(index,'topbar-layout.js');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(beta5,/data-release-version="0\.36\.18\.538"/);
 });

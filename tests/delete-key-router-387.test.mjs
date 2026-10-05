@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -6,10 +7,10 @@ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const router=fs.readFileSync(new URL('../src/delete-key-router.js',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('Delete-key router runtime follows current app build',()=>{
+test('Delete-key router runtime uses its reviewed runtime cache pin',()=>{
   const wrapper=index.match(/delete-key-router\.js\?v=([^"]+)/)?.[1];
   const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
-  assert.equal(wrapper,version);
+  assertAssetReference(index,'delete-key-router.js');
   assert.equal(stamp,version);
 });
 

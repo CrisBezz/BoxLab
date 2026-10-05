@@ -5165,3 +5165,19 @@ Added docs/reliability-audit-2026-10-05.md+JSON and reproducible inventory scrip
 No app/test expectations/frozen-beta changes. Old VM blanket diagnosis corrected.
 Next: reconcile contracts without muting suite, strengthen semantic tests and CI
 path/release gates, then varied Bevel/Knife→Loop/history reliability batch.
+
+## 2026-10-05 — .737: reconcile release tests and expose historical checks
+
+User /nextbuild accepts selected reliability methods. Modeller source/CSS and
+frozenbeta2–6 untouched; live shell/recovery pins .737. Added reviewed337 asset
+reference/content-hash contract with coherence/protected Multi/negative controls.
+Reconciled old release/pin assumptions;31 scripts→333 namedcases, allchecks retained.
+12 recovery test files scoped to exact accepted .453 source02332873 (original
+assertions/hash preserved). Actual bootstrap10 stale retries/frozen isolation and
+Repeat owner delegation verified; CI runtime path triggers broadened.
+Full1610/1492PASS/118FAIL/0skip versus audited1302/1025/277.158 oldregular failures
+and91 script subchecks reconciled; no new regular failure identities.32focusedPASS,
+347testsyntax/0fail, protected diffs/whitespacePASS. Node24 locally; CI Node22
+separate. Remaining118checks stay active; noallgreen claim and no releasegateyet.
+Inventory/nextplan docs/reliability-build-737.md+JSON. Next actualowner lifecycle
+fixtures/OBJgroup contract, then reliableCI gate; no modelling algorithms changed.

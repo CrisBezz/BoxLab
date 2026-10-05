@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -8,7 +9,7 @@ const css=fs.readFileSync(new URL('../styles.css',import.meta.url),'utf8');
 const beta5=fs.readFileSync(new URL('../beta-5/index.html',import.meta.url),'utf8');
 
 test('541 busts stale stylesheet cache',()=>{
-  assert.match(index,/styles\.css\?v=0\.36\.18\.541/);
+  assertAssetReference(index,'styles.css');
   assert.doesNotMatch(index,/styles\.css\?v=0\.36\.18\.270/);
 });
 

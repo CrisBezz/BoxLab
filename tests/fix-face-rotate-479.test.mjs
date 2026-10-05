@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -22,8 +23,8 @@ test('479 Face Rotate can use transform arming state',()=>{
 });
 
 test('479 cache-hops both Face Rotate owners and leaves protected main untouched',()=>{
-  assert.match(index,/src\/transform-upgrade\.js\?v=0\.36\.18\.479/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.479/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'transform-upgrade.js');
+  assertAssetReference(index,'rotate-transform.js');
+  assertAssetReference(index,'main.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -27,8 +28,8 @@ test('366 persistent inactive layer from 365 remains authoritative',()=>{
 test('366 live mesh and current linked runtime pins remain protected',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
-  assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
-  assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'multi-object.js');
+  assertAssetReference(drawer,'object-origin.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

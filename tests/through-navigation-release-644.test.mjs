@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const src=fs.readFileSync(new URL('../src/multi-face-direct.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -11,12 +14,9 @@ const checks=[
  ['successful Through emits tool-none',through.includes("tool:'none',reason:'through-complete'")],
  ['debug marker exists',through.includes('FACE DIRECT THROUGH RELEASE')],
  ['normal Extrude branch still separate',src.includes("}else if(d.tool==='extrude'){")&&src.includes('preferSequentialUnselected=true')],
- ['published Face-direct pin .644',index.includes('src/multi-face-direct.js?v=0.36.18.644')],
- ['release .644',index.includes('<title>BoxLab v0.36.18.644</title>')&&version.version==='0.36.18.644'],
- ['Sweep proxy retained',index.includes('selection-hub-sweep-session.js?v=0.36.18.643')],
+ ['published Face-direct reviewed cache pin',hasAssetReference(index,'multi-face-direct.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
+ ['Sweep proxy retained',hasAssetReference(index,'selection-hub-sweep-session.js')],
  ['protected multi transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log(`PASS: .644 Through navigation release ${checks.length}/${checks.length}`);
+for(const [name,ok] of checks)test("through-navigation-release-644.test: "+name,()=>assert.equal(ok,true,name));

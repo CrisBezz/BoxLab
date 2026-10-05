@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -65,7 +66,7 @@ test('443 UI exposes normals and triangulation controls and preserves frozen bas
   assert.match(ui,/flipAllFaces/);
   assert.match(ui,/triangulateMesh/);
   assert.match(ui,/checkpointSnapshot/);
-  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.443/);
+  assertAssetReference(index,'mesh-health.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });

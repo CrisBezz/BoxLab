@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -38,8 +39,8 @@ test('421 Shell keeps Pencil-owned thickness slider guard',()=>{
 
 test('421 shared Tool Session owns drawer visibility and protected multi-object transform remains pinned',()=>{
   assert.ok(toolSession.includes('enforceOpenWhileActive'));
-  assert.ok(index.includes('src/tool-session-ui.js?v='+version));
-  assert.ok(index.includes('src/solidify.js?v='+version));
-  assert.ok(index.includes('src/shell.js?v='+version));
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'solidify.js');
+  assertAssetReference(index,'shell.js');
   assert.ok(index.includes('src/multi-object-transform.js?v=0.36.1.0'));
 });

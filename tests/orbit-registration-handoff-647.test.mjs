@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const gate=fs.readFileSync(new URL('../src/pencil-orbit-gate.js',import.meta.url),'utf8');
 const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
@@ -13,13 +16,10 @@ const checks=[
  ['main ends registration after OrbitControls',main.indexOf('endOrbitRegistration?.()')>main.indexOf('new OrbitControls(camera,canvas)')],
  ['constructor protected by finally',main.includes('try{\n  controls=new OrbitControls(camera,canvas);\n}finally{')],
  ['routing policy unchanged',gate.includes("route:blocked?'BLOCK_MESH_HIT':'FORWARD_ORBIT'")&&gate.includes('if (blocked) return;')],
- ['gate pin .647',index.includes('src/pencil-orbit-gate.js?v=0.36.18.647')],
- ['main pin .647',index.includes('src/main.js?v=0.36.18.647')],
- ['release .647',index.includes('<title>BoxLab v0.36.18.647</title>')&&version.version==='0.36.18.647'],
- ['Sweep retained',index.includes('selection-hub-sweep-session.js?v=0.36.18.643')],
+ ['gate reviewed cache pin',hasAssetReference(index,'pencil-orbit-gate.js')],
+ ['main reviewed cache pin',hasAssetReference(index,'main.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
+ ['Sweep retained',hasAssetReference(index,'selection-hub-sweep-session.js')],
  ['protected multi transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log(`PASS: .647 OrbitControls registration handoff ${checks.length}/${checks.length}`);
+for(const [name,ok] of checks)test("orbit-registration-handoff-647.test: "+name,()=>assert.equal(ok,true,name));

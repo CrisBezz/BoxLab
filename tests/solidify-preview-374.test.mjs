@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -7,10 +8,10 @@ const ui=fs.readFileSync(new URL('../src/solidify.js',import.meta.url),'utf8');
 const core=fs.readFileSync(new URL('../src/solidify-core.js',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('Solidify live wrapper follows the current app build while hard-fold core stays pinned',()=>{
+test('Solidify live wrapper uses its reviewed runtime cache pin while hard-fold core stays pinned',()=>{
   const wrapper=index.match(/solidify\.js\?v=([^"]+)/)?.[1];
-  assert.equal(wrapper,version);
-  assert.match(ui,/solidify-core\.js\?v=0\.36\.18\.374/);
+  assertAssetReference(index,'solidify.js');
+  assertAssetReference(ui,'solidify-core.js');
 });
 
 test('374 Solidify uses explicit preview then apply workflow',()=>{

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -17,5 +18,5 @@ test('Selection primary controls render as requested 3 by 2 grid',()=>{
 });
 
 test('270 cache-hops stylesheet',()=>{
-  assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
+  assertAssetReference(index,'styles.css');
 });

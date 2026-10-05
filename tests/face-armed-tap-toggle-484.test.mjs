@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -22,8 +23,8 @@ test('484 drag path remains unchanged and separate from tap toggle',()=>{
 });
 
 test('484 cache-hops only Face direct interaction runtime and preserves protected core',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.484/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'main.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(index,'rotate-transform.js');
 });

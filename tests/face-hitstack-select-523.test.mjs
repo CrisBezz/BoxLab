@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -17,7 +18,7 @@ test('523 keeps current working-face handoff after hit-stack resolution',()=>{
 });
 
 test('523 current runtime pins are protected',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.523/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.520/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'main.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

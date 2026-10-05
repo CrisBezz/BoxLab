@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -14,6 +15,6 @@ test('325 component Move runtime uses shared cross-object snap core',()=>{
 
 test('326 component Move snap stays out of Object mode and keeps protected transform pin',()=>{
   assert.match(main,/sel\?\.type==='object'\)return null/);
-  assert.match(index,/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'main.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

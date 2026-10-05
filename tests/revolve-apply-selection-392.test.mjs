@@ -1,3 +1,4 @@
+import {assertAssetReference,assertModuleStamp} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -8,11 +9,11 @@ const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('Revolve Apply cleanup runtime follows current app build',()=>{
+test('Revolve Apply cleanup runtime uses its reviewed runtime cache pin',()=>{
   const wrapper=index.match(/revolve-profile\.js\?v=([^"]+)/)?.[1];
-  assert.equal(wrapper,version);
-  assert.match(revolve,new RegExp("const VERSION='"+version.replaceAll('.','\\.')+"'"));
-  assert.match(drawer,/object-management\.js\?v=0\.36\.18\.392/);
+  assertAssetReference(index,'revolve-profile.js');
+  assertModuleStamp(revolve,'revolve-profile.js');
+  assertAssetReference(drawer,'object-management.js');
 });
 
 test('392 object selection exposes authoritative single-selection reset',()=>{

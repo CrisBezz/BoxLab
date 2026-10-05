@@ -1,3 +1,4 @@
+import {assertAssetReference,hasAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -89,7 +90,7 @@ test('423/424 UI stays armed, validates the live selected edge ids, and preserve
   assert.ok(ui.includes("setArmed(true)"));
   assert.ok(ui.includes("bridge()?.set?.('edge',next)"));
   assert.ok(ui.includes("repeat(3,minmax(0,1fr))"));
-  assert.ok(index.includes('src/edge-extrude.js?v='+version));
+  assertAssetReference(index,'edge-extrude.js');
   assert.ok(index.includes('src/multi-object-transform.js?v=0.36.1.0'));
 });
 
@@ -117,7 +118,7 @@ test('425 Edge Extrude owns Pencil drag while armed and reads shared transform c
   assert.ok(ui.includes("#transformPrecision,#toolModes,.quick-snap"));
   assert.ok(transform.includes("__boxlabEdgeExtrude?.isArmed?.()"));
   // Transform owner is unchanged in .719; its last changed release remains .718.
-  assert.ok(index.includes('src/transform-upgrade.js?v=0.36.18.718'));
+  assert.ok(hasAssetReference(index,'transform-upgrade.js'));
 });
 
 

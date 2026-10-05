@@ -1,3 +1,4 @@
+import {assertAssetReference,assertModuleStamp} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -5,11 +6,11 @@ import fs from 'node:fs';
 const ui=fs.readFileSync(new URL('../src/revolve-profile.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
-test('Revolve profile editor runtime follows current app build',()=>{
+test('Revolve profile editor runtime uses its reviewed runtime cache pin',()=>{
   const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
   const wrapper=index.match(/revolve-profile\.js\?v=([^"]+)/)?.[1];
-  assert.equal(wrapper,version);
-  assert.match(ui,new RegExp("const VERSION='"+version.replaceAll('.','\\.')+"'"));
+  assertAssetReference(index,'revolve-profile.js');
+  assertModuleStamp(ui,'revolve-profile.js');
 });
 
 test('390 profile point selection has a visible selected marker',()=>{

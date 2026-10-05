@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -15,6 +16,6 @@ test('527 Inset keeps pressed selected face while still accepting unselected dir
 });
 
 test('527 runtime pins current Face direct and protected transform',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.527/);
+  assertAssetReference(index,'multi-face-direct.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -6,11 +7,11 @@ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const ui=fs.readFileSync(new URL('../src/revolve-profile.js',import.meta.url),'utf8');
 const primitive=fs.readFileSync(new URL('../src/primitive-ui.js',import.meta.url),'utf8');
 
-test('Live Revolve Profile runtime follows current app build and stays exposed from Add',()=>{
+test('Live Revolve Profile runtime uses its reviewed runtime cache pin and stays exposed from Add',()=>{
   const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
   const wrapper=index.match(/revolve-profile\.js\?v=([^"]+)/)?.[1];
   const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
-  assert.equal(wrapper,version);
+  assertAssetReference(index,'revolve-profile.js');
   assert.equal(stamp,version);
   assert.match(primitive,/Revolve Profile/);
   assert.match(primitive,/boxlab-add-revolve-profile/);

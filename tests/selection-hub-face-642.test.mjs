@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const gizmo=fs.readFileSync(new URL('../src/total-gizmo.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -13,11 +16,8 @@ const checks=[
  ['selection change clears suppression',gizmo.includes("hubSuppressedKey='';")&&gizmo.includes("reason:'selection-change'")],
  ['gizmo SVG only exists interactively in transform state',gizmo.includes('#totalGizmo:not([data-hub-state="transform"]) svg{display:none!important}')],
  ['tool ring only interactive in tools state',gizmo.includes('#totalGizmo[data-hub-state="tools"][data-mode="face"] .tg-tool-ring{display:block}')],
- ['published Total Gizmo pin .642',index.includes('src/total-gizmo.js?v=0.36.18.642')],
- ['release .642',index.includes('<title>BoxLab v0.36.18.642</title>')&&version.version==='0.36.18.642'],
+ ['published Total Gizmo reviewed cache pin',hasAssetReference(index,'total-gizmo.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
  ['protected multi transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log(`PASS: .642 Selection Hub Face v1 ${checks.length}/${checks.length}`);
+for(const [name,ok] of checks)test("selection-hub-face-642.test: "+name,()=>assert.equal(ok,true,name));

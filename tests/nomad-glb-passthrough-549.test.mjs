@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -32,10 +33,10 @@ test('549 export reattaches safe Nomad metadata and texture bytes',()=>{
 });
 
 test('549 runtime pins current and Beta 5 protected',()=>{
-  assert.match(index,/src\/multi-object\.js\?v=0\.36\.18\.549/);
-  assert.match(index,/src\/export-as-panel\.js\?v=0\.36\.18\.549/);
-  assert.match(index,/src\/import-mesh\.js\?v=0\.36\.18\.549/);
-  assert.match(index,/data-release-version="0\.36\.18\.549"/);
+  assertAssetReference(index,'multi-object.js');
+  assertAssetReference(index,'export-as-panel.js');
+  assertAssetReference(index,'import-mesh.js');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(beta5,/data-release-version="0\.36\.18\.538"/);
 });

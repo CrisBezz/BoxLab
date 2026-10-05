@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -7,17 +8,17 @@ const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8')).version;
 
-test('Inward-cut runtime follows current app build',()=>{
+test('Inward-cut runtime uses its reviewed runtime cache pin',()=>{
   const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
   assert.equal(stamp,version);
-  assert.match(drawer,/sequential-through-fallback\.js\?v=0\.36\.18\.385/);
+  assertAssetReference(drawer,'sequential-through-fallback.js');
 });
 
 test('385 inward cut reuses protected Through and topology gate',()=>{
   assert.match(ui,/planThrough,buildThrough/);
-  assert.match(ui,/through-kernel\.js\?v=0\.36\.18\.242/);
+  assertAssetReference(ui,'through-kernel.js');
   assert.match(ui,/gateClosedEdit/);
-  assert.match(ui,/topology-seam-conformance\.js\?v=0\.36\.18\.242/);
+  assertAssetReference(ui,'topology-seam-conformance.js');
 });
 
 test('385 partial inward build clips exterior slots and caps moving face',()=>{

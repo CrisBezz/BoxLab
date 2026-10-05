@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -17,7 +18,7 @@ test('546 import controls are still wired in importer module',()=>{
 });
 
 test('546 runtime pin current and Beta 5 protected',()=>{
-  assert.match(index,/src\/import-mesh\.js\?v=0\.36\.18\.546/);
-  assert.match(index,/data-release-version="0\.36\.18\.546"/);
+  assertAssetReference(index,'import-mesh.js');
+  assertShellRelease(index);
   assert.match(beta5,/data-release-version="0\.36\.18\.538"/);
 });

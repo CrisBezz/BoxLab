@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const gate=fs.readFileSync(new URL('../src/pencil-orbit-gate.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -10,12 +13,9 @@ const checks=[
  ['hover block diagnostic',gate.includes("PEN ORBIT MOVE HOVER BLOCK")],
  ['registration handoff retained',gate.includes("explicitOrbitPointer = pointerEvent && orbitRegistrationDepth>0")],
  ['mesh-hit routing retained',gate.includes("const blocked=!!meshHit;")&&gate.includes("if (blocked) return;")],
- ['gate pin .648',index.includes('src/pencil-orbit-gate.js?v=0.36.18.648')],
- ['release .648',index.includes('<title>BoxLab v0.36.18.648</title>')&&version.version==='0.36.18.648'],
- ['Sweep retained',index.includes('selection-hub-sweep-session.js?v=0.36.18.643')],
+ ['gate reviewed cache pin',hasAssetReference(index,'pencil-orbit-gate.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
+ ['Sweep retained',hasAssetReference(index,'selection-hub-sweep-session.js')],
  ['protected transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log(`PASS: .648 Pencil contact classification ${checks.length}/${checks.length}`);
+for(const [name,ok] of checks)test("pencil-contact-classification-648.test: "+name,()=>assert.equal(ok,true,name));

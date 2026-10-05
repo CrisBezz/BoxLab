@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -26,15 +27,15 @@ test('517 Boolean enables authoritative Multi selection on open',()=>{
 });
 
 test('517 cache-hops only Object-session owners and preserves protected runtimes',()=>{
-  assert.match(drawer,/object-drawer-retain\.js\?v=0\.36\.18\.517/);
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.517/);
-  assert.match(index,/src\/revolve-profile\.js\?v=0\.36\.18\.517/);
-  assert.match(index,/src\/drawer-ui\.js\?v=0\.36\.18\.517/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.516/);
-  assert.match(index,/src\/component-slide\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/edge-extrude\.js\?v=0\.36\.18\.514/);
-  assert.match(index,/src\/sweep-path\.js\?v=0\.36\.18\.515/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(drawer,'object-drawer-retain.js');
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'revolve-profile.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'component-slide.js');
+  assertAssetReference(index,'edge-extrude.js');
+  assertAssetReference(index,'sweep-path.js');
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

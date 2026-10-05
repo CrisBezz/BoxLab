@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -19,7 +20,7 @@ test('295 Clean for SubD keeps the existing Quad Clean engine and reports produc
 
 test('Clean for SubD cache-hop remains isolated from protected Selection styling',()=>{
   assert.match(index,/quad-clean\.js\?v=/);
-  assert.match(index,/styles\.css\?v=0\.36\.18\.270/);
+  assertAssetReference(index,'styles.css');
 });
 
 

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -30,7 +31,7 @@ test('498 armed pointerdown uses screen picker, not hit-stack fallback',()=>{
 test('498 preserves tap toggle, drag flow and protected pins',()=>{
   assert.match(direct,/bridge\(\)\?\.toggle\?\.\('face',p\.hit\)/);
   assert.match(direct,/beginDirectDrag\(event,p\.hit,p\.selectionBefore,workingFaces\)/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.498/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

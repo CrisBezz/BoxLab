@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -30,9 +31,9 @@ test('552 restores relative morph targets and preserved weights only on compatib
 });
 
 test('552 runtime pins current and protected baselines remain intact',()=>{
-  assert.match(index,/src\/export-as-panel\.js\?v=0\.36\.18\.552/);
-  assert.match(index,/src\/import-mesh\.js\?v=0\.36\.18\.552/);
-  assert.match(index,/data-release-version="0\.36\.18\.552"/);
+  assertAssetReference(index,'export-as-panel.js');
+  assertAssetReference(index,'import-mesh.js');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(beta5,/data-release-version="0\.36\.18\.538"/);
 });

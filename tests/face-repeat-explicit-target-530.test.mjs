@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -17,6 +18,6 @@ test('530 synthetic Repeat Exact skips live hit-stack repick',()=>{
 });
 
 test('530 runtime pin current and protected transform unchanged',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.530/);
+  assertAssetReference(index,'multi-face-direct.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

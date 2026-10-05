@@ -478,3 +478,10 @@ User approves reliability audit. Complete report/inventory in docs. Next batch
 repairs test contracts and visibility without changing accepted runtime/frozenbeta;
 then CI gate/coverage, varied Bevel/Knife→Loop, scene history and Nomad handoff.
 277 failures are check results, not confirmed app bugs; no blanket quarantine.
+
+## 2026-10-05 — .737 reliability batch1
+
+Release/cache contracts and historicalscope reconciled;333 named scriptchecks,
+full1610/1492/118/0skip. Modeller/frozenbetas unchanged. Next currentselection/
+Gizmo/tool lifecycle semantic fixtures and OBJgroups before algorithms; CI release
+gate follows genuine test reconciliation. See docs/reliability-build-737.md.

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -11,12 +12,12 @@ test('477 Loop and Bevel are mutually exclusive',()=>{
 });
 
 test('477 proven transform runtime is cache-hopped without changing protected core pins',()=>{
-  assert.match(index,/src\/transform-upgrade\.js\?v=0\.36\.18\.477/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.25\.0/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'transform-upgrade.js');
+  assertAssetReference(index,'rotate-transform.js');
+  assertAssetReference(index,'main.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });
 
 test('477 edge handoff shim is cache-hopped',()=>{
-  assert.match(index,/src\/edge-crease-handoff\.js\?v=0\.36\.18\.477/);
+  assertAssetReference(index,'edge-crease-handoff.js');
 });

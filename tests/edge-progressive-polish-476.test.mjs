@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -33,9 +34,9 @@ test('476 Crease disarms when another Edge or transform tool takes over',()=>{
 });
 
 test('476 changed UI modules are cache-hopped',()=>{
-  assert.match(index,/tool-session-ui\.js\?v=0\.36\.18\.508/);
-  assert.match(index,/drawer-ui\.js\?v=0\.36\.18\.476/);
-  assert.match(index,/edge-crease-handoff\.js\?v=0\.36\.18\.476/);
-  assert.match(drawer,/precision-bevel\.js\?v=0\.36\.18\.476/);
-  assert.match(drawer,/precision-offset-loop\.js\?v=0\.36\.18\.476/);
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(index,'edge-crease-handoff.js');
+  assertAssetReference(drawer,'precision-bevel.js');
+  assertAssetReference(drawer,'precision-offset-loop.js');
 });

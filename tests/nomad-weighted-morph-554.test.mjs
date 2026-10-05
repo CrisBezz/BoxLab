@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -25,8 +26,8 @@ test('554 reconstructs undeformed base positions before GLB morph export',()=>{
 });
 
 test('554 runtime pins current',()=>{
-  assert.match(index,/src\/import-mesh\.js\?v=0\.36\.18\.554/);
-  assert.match(index,/src\/export-as-panel\.js\?v=0\.36\.18\.554/);
-  assert.match(index,/data-release-version="0\.36\.18\.554"/);
+  assertAssetReference(index,'import-mesh.js');
+  assertAssetReference(index,'export-as-panel.js');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

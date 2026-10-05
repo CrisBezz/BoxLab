@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -35,6 +36,6 @@ test('422 Apply ends Tool Session and keeps proven Revolve geometry path',()=>{
 
 test('422 shared drawer ownership and protected transform pin remain intact',()=>{
   assert.ok(toolSession.includes('enforceOpenWhileActive'));
-  assert.ok(index.includes('src/revolve-profile.js?v='+version));
+  assertAssetReference(index,'revolve-profile.js');
   assert.ok(index.includes('src/multi-object-transform.js?v=0.36.1.0'));
 });

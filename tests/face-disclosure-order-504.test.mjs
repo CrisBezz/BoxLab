@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -28,8 +29,8 @@ test('504 orders Inspect and Repair directly above Topology Gate',()=>{
 
 test('504 waits for late Face drawer startup and preserves frozen interaction pins',()=>{
   assert.match(ui,/1800,1950,2200/);
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.504/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'rotate-transform.js');
 });

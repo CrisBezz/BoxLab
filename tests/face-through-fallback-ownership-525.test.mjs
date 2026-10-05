@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -24,8 +25,8 @@ test('525 fallback only follows resolved single-Face direct press',()=>{
 });
 
 test('525 runtime cache hops both direct Face and fallback loader',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.525/);
-  assert.match(index,/src\/drawer-ui\.js\?v=0\.36\.18\.525/);
-  assert.match(drawer,/sequential-through-fallback\.js\?v=0\.36\.18\.525/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'drawer-ui.js');
+  assertAssetReference(drawer,'sequential-through-fallback.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

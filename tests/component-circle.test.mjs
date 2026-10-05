@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -102,7 +103,7 @@ test('341 Face Circle UI and loader pins are current',()=>{
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   assert.match(ui,/\['vertex','edge','face'\]/);
-  assert.match(ui,/component-circle-core\.js\?v=0\.36\.18\.334/);
-  assert.match(drawer,/component-circle\.js\?v=0\.36\.18\.341/);
+  assertAssetReference(ui,'component-circle-core.js');
+  assertAssetReference(drawer,'component-circle.js');
   assert.match(index,/drawer-ui\.js\?v=/);
 });

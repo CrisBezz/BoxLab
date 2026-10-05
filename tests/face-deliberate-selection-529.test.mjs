@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -20,6 +21,6 @@ test('529 explicit Face tap resets sequential overlap preference',()=>{
 });
 
 test('529 runtime pin current and protected transform unchanged',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.529/);
+  assertAssetReference(index,'multi-face-direct.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

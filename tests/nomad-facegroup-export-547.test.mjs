@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -11,7 +12,7 @@ const beta5=fs.readFileSync(new URL('../beta-5/index.html',import.meta.url),'utf
 test('547 facegroup display palette deliberately spaces group hues',()=>{
   assert.match(colours,/index\*\.618033988749895/);
   assert.match(colours,/function spacedFaceGroupColours\(/);
-  assert.match(renderModes,/facegroup-colours-core\.js\?v=0\.36\.18\.547/);
+  assertAssetReference(renderModes,'facegroup-colours-core.js');
 });
 
 test('547 GLB uses one shared material across facegroup primitives',()=>{
@@ -27,9 +28,9 @@ test('547 patches Nomad group table and primitive group ids into GLB',()=>{
 });
 
 test('547 runtime pins current and frozen Beta 5 remains untouched',()=>{
-  assert.match(index,/src\/export-as-panel\.js\?v=0\.36\.18\.547/);
-  assert.match(index,/src\/render-modes\.js\?v=0\.36\.18\.547/);
-  assert.match(index,/data-release-version="0\.36\.18\.547"/);
+  assertAssetReference(index,'export-as-panel.js');
+  assertAssetReference(index,'render-modes.js');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(beta5,/data-release-version="0\.36\.18\.538"/);
 });

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -19,11 +20,11 @@ test('499 direct owner uses native visible picker and native toggle',()=>{
 });
 
 test('499 cache hops both ownership modules',()=>{
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.499/);
-  assert.match(drawer,/persistent-face-tool-select\.js\?v=0\.36\.18\.499/);
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(drawer,'persistent-face-tool-select.js');
 });
 
 test('499 preserves protected pins',()=>{
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -45,7 +46,7 @@ test('442 UI exposes boundary diagnostic selection handoff and preserves frozen 
   assert.match(ui,/meshHealthSelectNonManifold/);
   assert.match(ui,/boundaryDiagnostics/);
   assert.match(ui,/set\?\.\('edge'/);
-  assert.match(index,/src\/mesh-health\.js\?v=0\.36\.18\.442/);
+  assertAssetReference(index,'mesh-health.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });

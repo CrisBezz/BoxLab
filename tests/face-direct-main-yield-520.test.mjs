@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -27,7 +28,7 @@ test('700 second contact cancels pending background tap while Face hits still yi
 });
 
 test('520 runtime pins Face direct and guarded main together',()=>{
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.520/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.519/);
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'multi-face-direct.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

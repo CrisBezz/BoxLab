@@ -3,11 +3,13 @@
 ## Current state — 2026-10-05
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. App remains
-**v0.36.18.736**. User PASS current .736 (typed .636), requested Beta6 release,
+**v0.36.18.737**. User PASS current .736 (typed .636), requested Beta6 release,
 then reports users happy with interface and authorizes continuing development.
-Current task: reliability audit completed; next build reconciles automated test
-contracts before changing modelling algorithms. No runtime or test expectations
-were changed during this audit.
+Current task: first reliability batch .737 completed. Tests reconciled; modeller
+source/CSS and frozen betas unchanged. Shell markers/recovery loader keys .737.
+Read docs/reliability-build-737.md +JSON for changes and remaining failure list.
+Next: current owner behavior fixtures for remaining118 checks before algorithms.
+Baseline audit commit8cd86e04fbdff52efc64f8bf3de95a5a4b4b75b3; .737 builds on it.
 
 Beta6 released/frozen at https://crisbezz.github.io/BoxLab/beta-6/ from accepted
 source `e1551b3e9c3983c5d0fabfbe44c4ff9e760ff189`; freeze publication commit
@@ -16,7 +18,20 @@ Frozen beta2/3/4/5/6 are immutable. Further development happens on main; no beta
 hotfix without a documented user-directed decision. Freeze was byte-verified,
 Pages successful; no separate post-freeze device result invented.
 
-## Reliability findings / mandatory next work
+## .737 current validation / mandatory next work
+
+Full1610/1492PASS/118FAIL/0skip (Node24).31 old scripts now333 named checks;
+158 former regular failures and91 hidden script subchecks reconciled, no new
+regular failure identities.32 focusedPASS; test syntax347/0; accepted source and
+frozen diffs clean.118 unresolved checks stay active, not confirmed app bugs.
+Reviewed337 cache-reference/hash fixture tests/fixtures/runtime-asset-contract.json
+is explicit accepted source metadata, not blanket version wildcards. Update only
+after reviewing code/cache changes.12 recovery tests retain original assertions
+against exact accepted .453 archival source, separate from current Facegroups.
+CI path triggers cover allruntime assets; still red and Pages not yet gated.
+No automatic skips, exclusions or fake green. Node22 CI result remains separate.
+
+## Original audit findings (historical baseline)
 
 Read docs/reliability-audit-2026-10-05.md and the matching JSON inventory.
 Fresh full Node24 run:1302 tests /1025 pass /277 fail /0 skipped. Failure signatures:
@@ -78,10 +93,10 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery/debug/export shell pins .736; native export core+axis .735,
+Current recovery pins .737; debug/export module pins .736; native export core+axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
-actual runtime builds. Do not bump app for this docs/tooling-only audit.
+actual runtime builds. App .737 is a numbered test-infrastructure build; modelling code unchanged.
 
 ## File/Nomad baseline and limitations
 
@@ -103,6 +118,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-No new hands-on test needed for this audit; app and frozen Beta6 stay .736.
+For .737 just confirm current release/Focus launch and normal edit/Undo.
+Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

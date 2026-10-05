@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -18,7 +19,7 @@ test('474 Vertex Bevel settings are hidden at rest and shown only while Bevel is
 });
 
 test('474 disclosure is presentation-only and cache-hopped through tool-session-ui',()=>{
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.474/);
+  assertAssetReference(index,'tool-session-ui.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.366/);
+  assertAssetReference(index,'main.js');
 });

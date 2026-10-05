@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -18,6 +19,6 @@ test('471 Edge Revolve is no longer mounted in Edge Active Tools',()=>{
 });
 
 test('471 changed Sweep and Revolve modules are cache-hopped',()=>{
-  assert.match(index,/src\/sweep-path\.js\?v=0\.36\.18\.471/);
-  assert.match(index,/src\/revolve\.js\?v=0\.36\.18\.471/);
+  assertAssetReference(index,'sweep-path.js');
+  assertAssetReference(index,'revolve.js');
 });

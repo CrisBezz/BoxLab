@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -62,7 +63,7 @@ test('428 UI uses Tool Session and preserves frozen Beta 4 version',()=>{
   assert.ok(ui.includes("data-sym-keep"));
   assert.ok(ui.includes("Mirror kept half"));
   assert.ok(ui.includes("turn off the non-destructive Mirror modifier first"));
-  assert.ok(index.includes('src/symmetry-bisect.js?v='+version));
+  assertAssetReference(index,'symmetry-bisect.js');
   assert.equal(JSON.parse(beta4).version,'0.36.18.427');
 });
 
@@ -161,5 +162,5 @@ test('435 Align to Face and Flip Plane are wired into the Symmetry Tool Session'
   assert.ok(ui.includes('planeNormal.copy(hit.normal)'));
   assert.ok(ui.includes('planeNormal.negate()'));
   assert.ok(ui.includes("event.pointerType==='touch'"));
-  assert.ok(index.includes('src/symmetry-bisect.js?v='+version));
+  assertAssetReference(index,'symmetry-bisect.js');
 });

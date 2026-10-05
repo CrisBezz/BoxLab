@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -27,9 +28,9 @@ test('540 File menu sizing matches general BoxLab controls',()=>{
 });
 
 test('540 runtime pins current and Beta 5 remains frozen',()=>{
-  assert.match(index,/src\/import-mesh\.js\?v=0\.36\.18\.540/);
-  assert.match(index,/src\/export-as-panel\.js\?v=0\.36\.18\.540/);
-  assert.match(index,/data-release-version="0\.36\.18\.540"/);
+  assertAssetReference(index,'import-mesh.js');
+  assertAssetReference(index,'export-as-panel.js');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(beta5,/data-release-version="0\.36\.18\.538"/);
   assert.doesNotMatch(beta5,/export-as-panel\.js/);

@@ -1,3 +1,6 @@
+import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
+import test from 'node:test';
+import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
@@ -16,12 +19,9 @@ const checks=[
  ['cancel restore retained',main.includes('EDGE HOLD CANCEL RESTORE')&&main.includes('hold.restoreIndices')],
  ['transactional probes retained',main.includes("selection=makeSelection('edge',original,original.at(-1)??null);")],
  ['Face Boundary retained',main.includes("add('Face Boundary',perimeter)")],
- ['main pin .659',index.includes('src/main.js?v=0.36.18.659')],
- ['release .659',index.includes('<title>BoxLab v0.36.18.659</title>')&&version.version==='0.36.18.659'],
- ['radial availability .658 retained',index.includes('src/total-gizmo.js?v=0.36.18.658')],
+ ['main reviewed cache pin',hasAssetReference(index,'main.js')],
+ ['current release',shellReleaseMatches(index,version.version)],
+ ['radial availability .658 retained',hasAssetReference(index,'total-gizmo.js')],
  ['protected transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-let failed=0;
-for(const [name,ok] of checks){if(ok)console.log('PASS',name);else{console.error('FAIL',name);failed++;}}
-if(failed)process.exit(1);
-console.log('PASS: .659 additive Edge hold '+checks.length+'/'+checks.length);
+for(const [name,ok] of checks)test("edge-hold-additive-base-659.test: "+name,()=>assert.equal(ok,true,name));

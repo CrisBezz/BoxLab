@@ -1,3 +1,4 @@
+import {assertAssetReference,assetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -35,9 +36,9 @@ test('340 Offset Loop exposes one armed-state controller and current cache chain
   const loop=fs.readFileSync(new URL('../src/loop-offset.js',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
-  assert.match(loop,/__boxlabOffsetLoop=\{version:'0\.36\.18\.340',isArmed:\(\)=>armed,disarm,info\}/);
-  assert.equal((drawer.match(/loop-offset\.js\?v=0\.36\.18\.340/g)||[]).length,1);
-  assert.equal((drawer.match(/precision-offset-loop\.js\?v=0\.36\.18\.340/g)||[]).length,1);
-  assert.match(index,/edge-paint-select\.js\?v=0\.36\.18\.340/);
+  assert.match(loop,/__boxlabOffsetLoop=\{version:'\d+(?:\.\d+){2,3}',isArmed:\(\)=>armed,disarm,info\}/);
+  assert.equal(drawer.split(assetReference(drawer,'loop-offset.js')).length-1,1);
+  assert.equal(drawer.split(assetReference(drawer,'precision-offset-loop.js')).length-1,1);
+  assertAssetReference(index,'edge-paint-select.js');
   assert.match(index,/drawer-ui\.js\?v=/);
 });

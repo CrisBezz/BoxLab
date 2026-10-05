@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -26,8 +27,8 @@ test('489 contains no stale native handoff state',()=>{
 });
 
 test('489 cache-hops only intended runtimes and preserves protected multi-object pin',()=>{
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.489/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.489/);
-  assert.match(index,/src\/rotate-transform\.js\?v=0\.36\.18\.483/);
+  assertAssetReference(index,'main.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

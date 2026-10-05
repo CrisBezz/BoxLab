@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -37,10 +38,10 @@ test('368 Boolean A/B UX understands Group members and headers',()=>{
 test('368 protected linked-instance and Group transform baselines remain pinned',()=>{
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
-  assert.match(index,/object-management\.js\?v=0\.36\.18\.392/);
-  assert.match(index,/boolean-ux-history\.js\?v=0\.36\.18\.369/);
-  assert.match(index,/boolean-prototype\.js\?v=0\.36\.18\.369/);
-  assert.match(index,/multi-object\.js\?v=0\.36\.18\.367/);
-  assert.match(drawer,/object-origin\.js\?v=0\.36\.18\.355/);
+  assertAssetReference(index,'object-management.js');
+  assertAssetReference(index,'boolean-ux-history.js');
+  assertAssetReference(index,'boolean-prototype.js');
+  assertAssetReference(index,'multi-object.js');
+  assertAssetReference(drawer,'object-origin.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

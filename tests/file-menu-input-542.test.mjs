@@ -1,3 +1,4 @@
+import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -18,9 +19,9 @@ test('542 File menu still closes after button actions',()=>{
 });
 
 test('542 runtime pins updated and Beta 5 protected',()=>{
-  assert.match(index,/src\/topbar-layout\.js\?v=0\.36\.18\.542/);
-  assert.match(index,/src\/export-as-panel\.js\?v=0\.36\.18\.542/);
-  assert.match(index,/data-release-version="0\.36\.18\.542"/);
+  assertAssetReference(index,'topbar-layout.js');
+  assertAssetReference(index,'export-as-panel.js');
+  assertShellRelease(index);
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.match(beta5,/data-release-version="0\.36\.18\.538"/);
 });
