@@ -3,9 +3,9 @@
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
+import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.741';
 
-import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.735';
+import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.741';
 
 const VERSION='0.36.18.736';
 const panel=document.querySelector('#exportAsPanel');

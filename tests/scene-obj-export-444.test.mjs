@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -19,7 +20,8 @@ test('444 scene OBJ preflight reports clean closed and open export meshes',()=>{
   assert.match(result.content,/# Preflight: 1 closed clean \| 1 open clean \| 0 issues/);
   assert.match(result.content,/# BoxLab health: Closed · Clean/);
   assert.match(result.content,/# BoxLab health: Open · Clean/);
-  assert.match(result.content,/o Closed Cube\ng Closed Cube/);
+  assert.match(result.content,/o Closed Cube\n/);
+  assert.doesNotMatch(result.content,/^g Closed Cube$/m); // .449 preserves actual groups, never object-name groups.
 });
 
 test('444 export preflight runs after Mirror evaluation',()=>{
@@ -39,7 +41,7 @@ test('444 wrapper exposes preflight status and protected release pins',()=>{
   assert.match(wrapper,/buildSceneOBJ/);
   assert.match(wrapper,/open clean/);
   assert.match(wrapper,/issues/);
-  assert.match(index,/scene-obj-export-238\.js\?v=0\.36\.18\.444/);
+  assertAssetReference(index,'scene-obj-export-238.js');
   assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);
   assert.equal(beta4.version,'0.36.18.427');
 });

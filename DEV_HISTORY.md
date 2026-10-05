@@ -5267,3 +5267,28 @@ Pages37306257859success; live version .740 and byte-identical shell/markers/pins
 Actual Node22CI37306258245:1669/1566PASS/103FAIL/0skip; all103 failures match local.
 App-published/local validated Git trees identical; protected src/CSS/frozenbeta
 unchanged. Await .740 iPad smoke; .739 user PASS recorded.
+
+## 2026-10-05 — .741: OBJ facegroup isolation / newline normalization
+
+User PASS .740, /nextbuild. Parent7bbc142f. Two new fixtures failed pre-fix:
+missing initial bare g lets independent stream reader inherit prior-object group
+(BoxLab importer o reset masks it); raw multiline group labels emit extra records.
+Scene export core now emits initial null-group reset and reuses safeOBJName for
+single-line group labels. Nine actual Base/SubD/Mirror multi-object round trips
+cover topology/winding/groups/name/global indices/empty/source retention; independent
+scanner validates group state and indices. No specific Nomad bug/device PASS claimed.
+Reconciled .444 obsolete synthetic object-name group assertion; health tests kept.
+Node24 full1679/1577PASS/102FAIL/0skip; one old failure resolves, none new.
+Focused39/38PASS/1historical .459 noSubD viewport assertion still active. Initial17
+OBJ/releasePASS; source/test syntax, whitespace and protected/frozen diffs clean.
+Core plus4loader parents changed; loading URLs .741 with reviewed5hash updates;
+internal .450/.736 stamps retained. GLB/NOM builder behavior unchanged and covered.
+Legacy export.js unchanged; scene capture wrapper owns normal/Quick OBJ route.
+Report/inventory docs/reliability-build-741. Node22CI/Pages verification pending.
+Next Face/selection semantic checks then diverse Bevel/Knife→Loop/history fixtures.
+
+.741 loader audit also found integrity guard importing Quick OBJ at old .238 URL.
+Updated guard and shell to identical .741 wrapper URL, refreshed guard shell pin;
+new loader-identity fixture prevents duplicate/stale wrapper graph. Ten added cases
+in final1679/1577/102; final export-focused38PASS; unrelated historical .459 viewport
+failure remains visible in full suite. Core plus4loader parents/5hashes reviewed.

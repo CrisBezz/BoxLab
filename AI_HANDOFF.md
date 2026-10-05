@@ -2,14 +2,15 @@
 
 ## Current state — 2026-10-05
 
-Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current app
-**v0.36.18.740, published and live**. User PASS .739 then /nextbuild. Fourth reliability batch adds
-radial availability/shortcut and Sweep semantic routing fixtures; six obsolete
-checks reconciled. Runtime source/CSS and frozenbetas unchanged. Shell/recovery
-URLs .740. Read docs/reliability-build-740.md +JSON. Parent main
-65f985f763c40962790e736dcdbb2d0fa1a8bfd1. Runtime b522da13e5a69aad3b95545cc0de8b8dac9d51d0 published.
-Next: OBJ object/facegroup contract, remaining Face/selection-owner checks, then
-Bevel/Knife→Loop geometry and reliable CI gate. NOM import remains future work.
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Candidate
+**v0.36.18.741**. User PASS .740 then /nextbuild. OBJ reliability batch fixes
+missing explicit initial ungrouped reset and multiline facegroup records in scene
+export core, with nine new round-trip fixtures. Normal scene/Quick OBJ own path;
+no modelling or interaction algorithm changes. Frozenbeta2–6 unchanged.
+Read docs/reliability-build-741.md +JSON. Parent main
+7bbc142f42a90d488b530a18f0470aa79ac69729. Publication verification pending.
+Next remaining Face/selection-owner checks, then Bevel/Knife→Loop geometry and
+trustworthy CI gate. NOM import remains future work.
 
 Beta6 released/frozen at https://crisbezz.github.io/BoxLab/beta-6/ from accepted
 source `e1551b3e9c3983c5d0fabfbe44c4ff9e760ff189`; freeze publication commit
@@ -18,26 +19,30 @@ Frozen beta2/3/4/5/6 are immutable. Further development happens on main; no beta
 hotfix without a documented user-directed decision. Freeze was byte-verified,
 Pages successful; no separate post-freeze device result invented.
 
-## .740 current validation / mandatory next work
+## .741 current validation / mandatory next work
 
-Node24 full1669/1566PASS/103FAIL/0skip.16 new fixtures pass; six obsolete
-.642/.643/.654/.658 checks reconciled; no new failure identities.113focusedPASS;
-changed/helper syntax, whitespace and runtime/frozen diffs clean.
-Actual radial shortcut callback, tools-centre handler, controller/frame suppression,
-contextual availability execute. Generic target feedback, contextual owner guards,
-locked objects, guided Edge Bridge exception and radial-open refresh tested.
-Actual Sweep launch/end/API handlers execute; Face/Edge launch mode preserved on
-single completion; wrong modes/tools/session end ignored. DOM/RAF/projection and
-collaborating owner APIs are doubles. Sweep presentation sync mocked; CSS gate
-structural. No real browser/Pencil/solver/device acceptance inferred.
-Keep103 unresolved checks active. Reviewed337 asset contract changes only two
-shell recovery URLs .740; source hashes unchanged. CI remains red; no Pages gate.
-Standing continuing GitHub/Pages authorization recorded in AI_WORKFLOW.md;
-connected GitHub app available when direct git lacks credentials.
-Pages37306257859success; live version.json .740 and byte-identical shell/markers/
-recovery pins verified. Actual Node22CI37306258245:1669/1566PASS/103FAIL/0skip;
-all103 failure names match localNode24. No .740 device PASS inferred. Historical .739 runtime87e5ed46,
-Pages37304998035success, Node22CI37304998451 matched1653/1544/109/0.
+Node24 full1679/1577PASS/102FAIL/0skip. Ten new cases pass; one obsolete .444
+synthetic object-name group assertion reconciled; no new failure identities.
+Two new fixtures fail on .740 and pass after core fixes. Initial ungrouped g reset
+prevents inherited state in independent OBJ stream reader (BoxLab importer resets
+at o and masked omission). CR/LF group names now use existing safe name normalizer;
+synthetic multiline label no longer creates extra faces/objects. No Nomad defect
+or device acceptance inferred. Export→actual importer covers Base/SubD/Mirror,
+geometry/groups/names/global offsets/source retention; independent scanner validates
+indices/group transitions. Modifier expectation uses established resolver.
+Focused39/38PASS/1historicalFAIL (.459 viewport demands noSubD; .460 supersedes it);
+this unresolved check stays active. Initial17OBJ/release checks pass; final export-focused38PASS (the unrelated
+.459 viewport case remains active in full suite). Changed source/
+test syntax, whitespace and frozen/protected diffs clean.
+Changed core and4import parents only; shell/recovery .741, changed wrapper/panel
+.741, child core/NOM loader .741. Reviewed asset fixture updates only changed URLs
+and5source hashes. Internal stamps .450/.736 remain informational. GLB/NOM payload
+construction unchanged; existing nativeNOM/GLB fixtures pass. Legacy export.js
+unchanged; authoritative scene document-capture path handles normal/Quick OBJ.
+Keep102 unresolved checks active, no CI gate yet. Standing GitHub/Pages publication
+approval in AI_WORKFLOW; use connected app if direct git lacks credentials.
+Current Node22CI/Pages verification pending. Historical .740 runtimeb522da13,
+Pages37306257859success, Node22CI37306258245 matched1669/1566/103/0.
 
 ## Original audit findings (historical baseline)
 
@@ -101,10 +106,10 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .740; debug/export module pins .736; native export core+axis .735,
+Current recovery pins .741; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
-actual runtime builds. App .740 is a numbered test-infrastructure build; modelling code unchanged.
+actual runtime builds. App .741 changes scene OBJ group emission; modelling/interaction code unchanged.
 
 ## File/Nomad baseline and limitations
 
@@ -126,7 +131,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .740 just confirm current release/Focus launch and normal edit/Undo.
+For .741 check named grouped/ungrouped OBJ reimport, Base/SubD and normal GLB/NOM.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

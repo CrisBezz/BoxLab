@@ -29,10 +29,10 @@ export function buildSceneOBJ(objects,{subd=false,version='unknown'}={}){
     mesh.vertices.forEach(v=>lines.push(`v ${fmt(v.x)} ${fmt(v.y)} ${fmt(v.z)}`));
     let activeGroup=undefined;
     mesh.faces.forEach((face,faceIndex)=>{
-      const group=typeof mesh.faceGroups?.[faceIndex]==='string'&&mesh.faceGroups[faceIndex].trim()?mesh.faceGroups[faceIndex].trim():null;
+      const group=typeof mesh.faceGroups?.[faceIndex]==='string'&&mesh.faceGroups[faceIndex].trim()?safeOBJName(mesh.faceGroups[faceIndex]):null;
       if(group!==activeGroup){
         if(group)lines.push(`g ${group}`);
-        else if(activeGroup!==undefined)lines.push('g');
+        else lines.push('g'); // Explicit reset also isolates an ungrouped object's first face.
         activeGroup=group;
       }
       lines.push(`f ${face.map(i=>i+1+offset).join(' ')}`);
