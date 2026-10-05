@@ -2,15 +2,14 @@
 
 ## Current state — 2026-10-05
 
-Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current app
-**v0.36.18.738, published and live**. User PASS .737 in prior session; current request continues from
-repo handoff. Second reliability batch adds actual Boolean scene-history fixtures
-and reconciles two superseded .347/.368 assertions. Modeller source/CSS and frozen
-betas unchanged. Shell markers/recovery loader keys .738. Read
- docs/reliability-build-738.md +JSON for evidence and remaining failure list.
-Next: selection/puck/Gizmo/direct-tool lifecycle fixtures for remaining116 checks,
-then OBJ group contract; no algorithm changes or NOM import in this batch.
-Parent main ab13b4f7d701b4aa5559ade730fccae5f235b2c7.
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Candidate
+**v0.36.18.739**; user PASS .738, then /nextbuild. Third reliability batch adds
+actual selection-hub and Bevel lifecycle fixtures; seven superseded checks
+reconciled. Runtime source/CSS and frozenbetas unchanged. Shell/recovery URLs .739.
+Read docs/reliability-build-739.md +JSON. Parent main
+bc90f26082438fb6d502a5688ab7ef4230f189a2. Publication verification pending.
+Next: remaining selection/radial/Face ownership checks, OBJ group contract, then
+Bevel/Knife→Loop geometry and reliable CI gate. NOM import still future work.
 
 Beta6 released/frozen at https://crisbezz.github.io/BoxLab/beta-6/ from accepted
 source `e1551b3e9c3983c5d0fabfbe44c4ff9e760ff189`; freeze publication commit
@@ -19,28 +18,26 @@ Frozen beta2/3/4/5/6 are immutable. Further development happens on main; no beta
 hotfix without a documented user-directed decision. Freeze was byte-verified,
 Pages successful; no separate post-freeze device result invented.
 
-## .738 current validation / mandatory next work
+## .739 current validation / mandatory next work
 
-Full1623/1507PASS/116FAIL/0skip on Node24.13 new behavior fixtures pass; two
-obsolete Boolean checkpoint assertions reconciled after tracing accepted .538.
-No new failure identities versus .737.35 focusedPASS. Actual Boolean apply and
-scene-history bridge execute; DOM/manager/solver are doubles. Covers three
-operations for Object/Groups, one-step complete-scene Undo/Redo, metadata/selection,
-only selected operands hidden, refusal/creation failure preserving both stacks.
-Join listener capture uses same bridge; full Join geometry is not tested here.
-Reviewed337 cache/hash fixture changes ONLY two shell recovery URLs to .738;
-all source hashes unchanged. No skips, fake green or runtime algorithms changed.
-Published runtime commit cc1c8c257790736517d170c265d96a73f94cc2b7; local validation
-commit f18fd3ef44f02abb91d206a07473086221036ac8 has the same implementation.
-Earlier push rejection is resolved by explicit user approval on 2026-10-05:
-“I approve any commits to github repos, page pushes and so on - moving forward for eternity :)”
-Standing approval is recorded in AI_WORKFLOW.md. Pages run37303252947 succeeded;
-live version.json .738 and shell bytes/markers/recovery pins verified against main.
-Actual Node22CI run37303253624:1623/1507PASS/116FAIL/0skip; all116 failure names
-match local Node24. CI remains truthfully red; no new environment-specific failure.
-Previous .737 CI run37288886319 matched1610/1492/118; this is historical evidence,
-not .738 validation. CI path triggers cover runtime assets; still red, no Pages gate.
-Keep116 unresolved checks active until semantic coverage proves accepted behavior.
+Node24 full1653/1544PASS/109FAIL/0skip.30 new named behavior fixtures pass;
+seven obsolete .633/.639/.660/.662 checks reconciled, no new failure identities.
+99focusedPASS; changed/helper syntax/whitespace and protected runtime diffs clean.
+Actual controller/selection-key/frame sync/puck/completion handlers run; actual
+Bevel API/disarm and whole Bevel viewport-session module run. Covers component
+puck/transform/radial states, selection loss/change, session completion/hiding,
+Object full/emptyMulti, Face suspension/resume, Align, Edge Extrude close, Bevel
+mode/mesh/object stale guards, idle background exit and cancellation.
+DOM/RAF/projection/preview owners are doubles. CSS exclusion structurally checked;
+no actual browser/Pencil/solver or device PASS inferred. Semantic completion events
+in hub tests do not alone prove every tool emits them. Existing background suites
+pass; no gesture owner or runtime algorithm changed. Keep109 remaining checks
+active. Reviewed337 asset contract changes only two shell recovery URLs .739;
+all content hashes unchanged. CI stays red, Pages not gated until reconciled.
+Standing continuing GitHub/Pages approval explicitly granted 2026-10-05 and recorded
+in AI_WORKFLOW.md. Use connected GitHub app if direct git lacks credentials.
+Current Node22CI/Pages verification pending. .738 historical evidence:
+cc1c8c25 runtime, Pages37303252947success, Node22CI37303253624 matched1623/1507/116.
 
 ## Original audit findings (historical baseline)
 
@@ -104,10 +101,10 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .738; debug/export module pins .736; native export core+axis .735,
+Current recovery pins .739; debug/export module pins .736; native export core+axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
-actual runtime builds. App .738 is a numbered test-infrastructure build; modelling code unchanged.
+actual runtime builds. App .739 is a numbered test-infrastructure build; modelling code unchanged.
 
 ## File/Nomad baseline and limitations
 
@@ -129,7 +126,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .738 just confirm current release/Focus launch and normal edit/Undo.
+For .739 just confirm current release/Focus launch and normal edit/Undo.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

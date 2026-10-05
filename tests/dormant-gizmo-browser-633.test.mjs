@@ -1,3 +1,4 @@
+import {assertComponentPuck,assertSelectionCollapses,assertObjectFull,gizmoSource} from './helpers/selection-hub-runtime.mjs';
 import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -10,9 +11,9 @@ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8'));
 
 const checks=[
-  ['component gizmo has dormant activator puck',gizmo.includes('class="tg-activator"')&&gizmo.includes("data-expanded")],
-  ['selection change collapses component gizmo',gizmo.includes("setExpanded(mode==='object',{reason:'selection-change'})")],
-  ['object mode keeps full gizmo',gizmo.includes("expanded=mode==='object'?true:!!next")],
+  ['component gizmo has dormant activator puck',()=>{assert.match(gizmoSource,/<button[^>]*class="tg-activator"/);assertComponentPuck();}],
+  ['selection change collapses component gizmo',assertSelectionCollapses],
+  ['object mode keeps full gizmo',assertObjectFull],
   ['transform controls can expand component gizmo',gizmo.includes("reason:'transform-control'")],
   ['puck can expand component gizmo',gizmo.includes("reason:'puck'")],
   ['main exposes modeless browser ownership',main.includes('globalThis.__boxlabModelessSelection')&&main.includes('browsing:')],
@@ -22,4 +23,4 @@ const checks=[
   ['protected multi-object transform pin unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
 
-for(const [name,ok] of checks)test("dormant-gizmo-browser-633.test: "+name,()=>assert.equal(ok,true,name));
+for(const [name,ok] of checks)test("dormant-gizmo-browser-633.test: "+name,()=>typeof ok==='function'?ok():assert.equal(ok,true,name));

@@ -3597,3 +3597,17 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
 - [x] Full1623/1507/116, zero skips; no new failure identities versus .737.
 - [x] .738 Node22 CI37303253624 independently matches1623/1507/116/0 and all116 failure names.
 - [ ] .738 iPad launch/edit/Undo/Redo smoke; runtime modelling owners unchanged.
+
+## .739 selection hub and Bevel lifecycle fixtures
+
+- [x] Component selection starts at puck; actual controller handles transform/tools/
+  close, selection change/loss/reselection and semantic completion return.
+- [x] Object full gizmo/empty Multi and Face suspension/resume retain current owner.
+- [x] Active sessions/Align hide gizmo; lost selection stays hidden after completion.
+- [x] Edge Extrude close disarms existing owners and preserves selected edges.
+- [x] Actual Bevel session closes on mode/mesh/object change; background defers while
+  busy, Cancel preserves launch selection; Face invalid context cancels via owner.
+- [x] Full1653/1544/109/0 skips; seven old failures resolve, no new identities.
+- [ ] .739 Node22CI and Pages independently verified; no inferred device PASS.
+- [ ] iPad .739 Focus; Face puck/gizmo/radial/tool Cancel; Edge Bevel exit→Pencil
+  orbit, ordinary edit Undo/Redo. Runtime unchanged; no broad requalification.

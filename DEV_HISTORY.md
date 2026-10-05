@@ -5219,3 +5219,21 @@ Direct git push lacked credentials; app publication has identical validated tree
 Pages37303252947success; live version .738 and byte-identical shell verified.
 Node22CI37303253624:1623/1507PASS/116FAIL/0skip, all116 failures match localNode24.
 Prior publication block resolved by explicit user continuing authorization.
+
+## 2026-10-05 — .739: selection hub and Bevel lifecycle behavior fixtures
+
+User PASS .738, /nextbuild. Parent bc90f260. Accepted modeller unchanged; seven
+obsolete .633/.639/.660/.662 checks replaced with current owner execution and
+explicit CSS/markup contract.30 new named fixtures execute selection-hub controller,
+selection/frame sync/puck/completion/collapsed guard, Bevel API/disarm and entire
+Bevel session module. Component puck/transform/tools, selection loss/change,
+completion return, Object full/emptyMulti, Face suspend/resume, Align hide, Edge
+Extrude disarm/selection, Bevel mode/mesh/object stale guards, busy-background
+protection/Cancel. DOM/RAF/projection/preview/kernel collaborators are mocked;
+no real browser/Pencil/geometry/device acceptance claim. No runtime source/CSS or
+frozenbeta changes. Shell/recovery URLs .739; reviewed source hashes unchanged.
+Node24 full1653/1544PASS/109FAIL/0skip; exactly7 old failures resolve, no new names.
+99focusedPASS; changed/helper syntax/whitespace/protected diffs pass.
+Inventory/report docs/reliability-build-739. Node22CI/Pages verification pending.
+Next remaining selection/radial/Face checks and OBJ groups, then geometry fixtures
+and valid CI gate. NOM import deferred. Device smoke remains separate.
