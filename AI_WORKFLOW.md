@@ -231,3 +231,11 @@ Focus toggle must visibly show its active state, expose the left list when disab
 and retain the right Object Browser. No further feature work before Beta6 freeze;
 follow current BETA_6_RELEASE_CHECKLIST.md for remaining device gates and freeze
 verification. Publishing is already authorized; device acceptance is not permission.
+
+## Component Align access — .734
+
+User places Align on Vertex/Edge/Face gizmos, with distinct point/line/face icons,
+not radial sectors. Reuse existing component-align axis/fixed-anchor owner; only
+Face exposes Align to Face plane alignment. Hide gizmo during contextual Align
+anchor picking, preserve selection, return on completion, and retain safe background
+exit. No new vertex merge or edge-orientation interpretation implied.

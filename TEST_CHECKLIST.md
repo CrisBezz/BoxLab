@@ -3510,3 +3510,18 @@ original icon, right browser and Modifiers remain functional in both views.
 Remaining final device gates: Focus check, short navigation/history/Multi/Boolean/
 Extract smoke, and Files→Nomad→BoxLab GLB round-trip. Then freeze/publish Beta6;
 see BETA_6_RELEASE_CHECKLIST.md. No device PASS inferred for .733.
+
+## .734 — component-gizmo Align regression
+
+106 focused pass; full1292/1015/277, no new failure names vs .733; all280 syntax pass.
+- Vertex: select two or more vertices, tap point Align icon, choose X/Y/Z, then
+  tap the selected vertex that stays fixed. Other selected vertices align on that
+  coordinate. Gizmo hides during anchor picking and returns after apply. Undo/Redo.
+- Edge: repeat with two or more edges and line Align icon. Fixed edge endpoints
+  unchanged; other selected vertices use original anchor-coordinate alignment.
+- Face: face icon opens X/Y/Z and Align to Face; radial no longer contains Align.
+  Existing arbitrary-plane option keeps anchor unchanged and rejects invalid groups.
+- Cancel/background retain selection, mode/object changes cancel stale session;
+  icon is unavailable with insufficient selection or during drag; Object Multi stays.
+- Launch Focus still armed; browser and navigation/history regressions unchanged.
+Device acceptance pending; no inferred .733/.734 PASS or Beta6 freeze.

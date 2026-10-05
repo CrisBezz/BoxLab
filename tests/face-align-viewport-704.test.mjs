@@ -49,11 +49,11 @@ test('disabled Align cannot launch; another tool ends settings without resetting
   assert.equal(f.api.active(),false);assert.equal(f.events.filter(e=>e.type==='boxlab-selection-hub-session-complete').length,0);
 });
 
-function ownerFixture(){
+function ownerFixture(mode='face',selected=[0,1]){
   const events=[],histories=[],handlers=new Map();
   const el=()=>({style:{setProperty(){},removeProperty(){}},dataset:{},children:[],append(...els){this.children.push(...els);},appendChild(e){this.children.push(e);},remove(){},setAttribute(){},addEventListener(){},dispatchEvent(){},querySelector(){return null;},querySelectorAll(){return this.children.filter(c=>c.dataset.alignAxis);}});
   const m=new EditableMesh([[0,0,0],[1,0,0],[0,1,0],[3,0,0],[4,0,0],[3,1,0]],[[0,1,2],[3,4,5]]);
-  const context={...core,analyzeMeshHealth,THREE,document:{createElement:el,body:el(),querySelector:()=>el(),addEventListener(){}},window:{addEventListener:(t,f)=>handlers.set(t,f),dispatchEvent:e=>events.push(e)},CustomEvent:class{constructor(type,{detail}){Object.assign(this,{type,detail});}},Event:class{},setTimeout(){},clearTimeout(){},queueMicrotask:f=>f(),__boxlabBridgeState:{mesh:m},__boxlabHistory:{push:before=>histories.push(before)},__boxlabSelectionBridge:{mode:()=> 'face',indices:()=>[0,1],set(){}}};
+  const context={...core,analyzeMeshHealth,THREE,document:{createElement:el,body:el(),querySelector:()=>el(),addEventListener(){}},window:{addEventListener:(t,f)=>handlers.set(t,f),dispatchEvent:e=>events.push(e)},CustomEvent:class{constructor(type,{detail}){Object.assign(this,{type,detail});}},Event:class{},setTimeout(){},clearTimeout(){},queueMicrotask:f=>f(),__boxlabBridgeState:{mesh:m},__boxlabHistory:{push:before=>histories.push(before)},__boxlabSelectionBridge:{mode:()=>mode,indices:()=>selected,set(){}}};
   const source=fs.readFileSync(new URL('../src/component-align.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
   vm.runInNewContext(source,context);
   return{api:context.__boxlabComponentAlign,m,events,histories,context};
@@ -107,4 +107,19 @@ test('Face-plane collapse of opposite cube Faces rejects before history',()=>{
   f.api.arm('face');assert.equal(f.api.applyAnchor(0,{clientX:0,clientY:0}),false);
   assert.equal(f.histories.length,0);assert.deepEqual(cube.vertices,before.vertices);
   assert.equal(f.events.at(-1).detail.reason,'reject');
+});
+
+test('Same contextual Align session supports Vertex/Edge mode, hides Face-only option and completes with correct mode',()=>{
+ for(const mode of ['vertex','edge','face']){const f=fixture();f.setMode(mode);assert.equal(f.api.openFromHub(),true);assert.equal(f.context.__boxlabComponentAlignViewportSession,f.api);assert.equal(f.fields.get('[data-axis="face"]').hidden,mode!=='face');f.clickAxis('x');assert.match(f.fields.get('.fa-instruction').textContent,new RegExp(mode==='vertex'?'Vertex':mode==='edge'?'Edge':'Face'));f.cancel();assert.equal(f.events.at(-1).detail.mode,mode);}
+});
+test('Actual Vertex/Edge anchor owner preserves fixed geometry, selection and one-step Undo/Redo',()=>{
+ for(const mode of ['vertex','edge']){const f=ownerFixture(mode,mode==='vertex'?[0,3]:[0,3]),before=f.m.clone(),history=new History();f.context.__boxlabHistory=history;const fixed=core.componentAnchorVertexIndices(f.m,mode,0),target=core.componentAnchorCoordinate(f.m,mode,0,'x');
+ assert.equal(f.api.arm('x'),true);assert.equal(f.api.applyAnchor(0,{clientX:100,clientY:100}),true);for(const i of fixed)assert.deepEqual(f.m.vertices[i],before.vertices[i]);for(const i of core.componentVertexIndices(f.m,mode,[0,3]).filter(i=>!fixed.includes(i)))assert.equal(f.m.vertices[i].x,target);assert.equal(history.undoStack.length,1);const after=f.m.clone(),undo=history.undo(f.m);assert.deepEqual(undo,before);assert.deepEqual(history.redo(undo),after);assert.equal(f.events.at(-1).detail.mode,mode);}
+});
+test('Same-mesh active-object switch and busy owner cannot arm a stale Align session',()=>{
+ const f=fixture();f.context.__boxlabObjectManager={activeId:1};f.api.openFromHub();f.context.__boxlabObjectManager.activeId=2;f.api.sync();assert.equal(f.api.active(),false);f.context.__boxlabMainDirectTool={busy:()=>true};assert.equal(f.api.openFromHub(),false);
+});
+
+test('Vertex and Edge Align background exits use existing semantic policy and retain selection',()=>{
+ for(const mode of ['vertex','edge']){const f=fixture();f.setMode(mode);f.api.openFromHub();f.clickAxis('x');vm.runInNewContext(fs.readFileSync(new URL('../src/tool-background-exit.js',import.meta.url),'utf8'),f.context);f.handlers.get('boxlab-viewport-background-tap')();assert.equal(f.api.active(),false);assert.deepEqual(f.context.__boxlabSelectionBridge.indices(),[0,1]);assert.equal(f.calls.filter(x=>x==='disarm').length,1);assert.equal(f.events.at(-1).detail.mode,mode);}
 });

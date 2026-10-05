@@ -1,4 +1,4 @@
-import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.732';
+import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.734';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 import * as THREE from 'three';
 
@@ -360,7 +360,6 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180.000deg;--r:230px" data-tool-target="#quadPairCleanupBtn">Quad Cleanup</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:247.500deg;--r:230px" data-tool-target="#quadifyNgonsBtn">Quadify N-gons</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270.000deg;--r:230px" data-tool-target="#cleanVerticesBtn">Clean Vertices</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:292.500deg;--r:230px" data-tool-target="#componentAlignRow [data-align-axis='x']">Align</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:315.000deg;--r:230px" data-tool-target="#mergeByDistanceBtn">Merge Dist</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:337.500deg;--r:230px" data-tool-target="#extractFacesBtn">Extract</button>
   <button type="button" class="tg-tool-center" aria-label="Close Face contextual tools" title="Close tools">×</button>
@@ -891,6 +890,7 @@ style.textContent=`
 #totalGizmo .tg-corner-br{left:calc(50% + 104px);top:calc(50% + 96px)}
 #totalGizmo .tg-corner-bl{left:calc(50% - 96px);top:calc(50% + 96px)}
 #totalGizmo:not([data-hub-state="transform"]) .tg-corner,#totalGizmo .tg-corner[hidden]{display:none!important}
+#totalGizmo .tg-shortcut[hidden]{display:none!important}
 #totalGizmo .tg-shortcut{width:40px;height:40px;min-height:40px;padding:8px;border:1px solid #ffffff45;border-radius:10px;background:rgba(18,21,27,.92);color:#edf2f8;touch-action:none;box-shadow:0 3px 10px #0005}
 #totalGizmo .tg-shortcut svg{display:block!important;width:24px;height:24px;overflow:visible;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 #totalGizmo .tg-shortcut[aria-pressed="true"]{background:#edf2f8;color:#141820}
@@ -1103,7 +1103,7 @@ function sync(){
   root.style.top=`${top}px`;
   placeToolSessionPanel(floatPalette);
   const suppressed=['face','edge','vertex'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
-  root.hidden=(mode==='edge'&&(!!globalThis.__boxlabEdgeViewportSession?.active?.()||!!globalThis.__boxlabSweepViewportSession?.active?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()))||(mode==='object'&&!!globalThis.__boxlabObjectRadialSession?.hidesGizmo?.())||(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.())||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
+  root.hidden=(mode==='edge'&&(!!globalThis.__boxlabEdgeViewportSession?.active?.()||!!globalThis.__boxlabSweepViewportSession?.active?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()))||(mode==='object'&&!!globalThis.__boxlabObjectRadialSession?.hidesGizmo?.())||(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.())||!!globalThis.__boxlabComponentAlignViewportSession?.active?.()||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;

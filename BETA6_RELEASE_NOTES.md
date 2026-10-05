@@ -1,6 +1,6 @@
 # BoxLab Beta 6 — release notes draft
 
-Status: prepared for the Beta 6 freeze; final .733 candidate/device acceptance and
+Status: prepared for the Beta 6 freeze; final .734 candidate/device acceptance and
 frozen source commit/URL verification pending. This file is not a release claim.
 
 Beta 6 brings modelling controls into the viewport, with Face, Vertex, Object and
@@ -9,6 +9,8 @@ modelling with finger navigation on iPad.
 
 - Focus view opens by default. The highlighted Focus icon shows that the left tool
   list is hidden; tap it to reveal the list and tap again to return to Focus.
+- Vertex, Edge and Face gizmos offer distinct Align icons, sharing the original
+  axis/fixed-anchor workflow; Face retains Align to Face plane matching.
 - Content-sized tool popups use modest padding and reachable Apply/Cancel/Done controls.
 - Appropriate tools exit on a stationary background tap; drawing/placement tools
   retain empty-space input. A short background tap clears selection and Lasso;

@@ -5005,3 +5005,50 @@ versions/assets/links, then record immutable Beta6 and resume normal development
 Prior frozen Beta3/4/5 stay unchanged. Publication remains authorized. Further
 changes before freeze are reproducible release blockers only; slight Lasso
 selection tightening remains deferred.
+
+## 2026-10-05 — .734: Vertex/Edge/Face Align on component gizmos
+
+Current release **v0.36.18.734**, parent main
+`26c1983d56131098b2ef3786983a04acde3670d9`. User requests Align access on Vertex,
+Edge and Face gizmos rather than modelling radials. Beta6 freeze remains pending
+acceptance of this correction plus .733 Focus and final release-device checks.
+
+Audit: component-align .705 already supports Vertex/Edge/Face fixed-anchor X/Y/Z
+alignment in the original selection controls. Only Face had a radial Align sector;
+Vertex/Edge access was absent there. Reuse this owner and its kernels/history.
+
+- Bottom-left component-gizmo Align shortcut displays three distinct mode-specific
+  point/line/face icons (one appropriate icon per mode). Object mode retains Multi;
+  hidden shortcuts do not occupy the visible cluster. No central Move handle change.
+- Remove Face Align radial sector; other radial sectors/positions remain unchanged.
+  Shared contextual Align panel now supports all three modes and hides the gizmo
+  while open. Choose X/Y/Z, then tap a selected component to keep it fixed. Other
+  selected vertices move along that axis onto the anchor coordinate; anchor remains
+  unchanged. Edge/Face coordinate uses the original anchor vertex average; this
+  build does not invent edge orientation matching or vertex collapse/merge.
+- Face retains the existing Align to Face arbitrary-plane rigid-group option and
+  its shape/topology/rejection guards. Only Face exposes that option.
+- Reuse original component-align window-capture anchor picking and one History push,
+  selection retention and semantic completion. Existing background exit policy
+  closes Vertex/Edge/Face Align; Cancel/mode/mesh/selection loss close safely.
+- Shared session captures mode/mesh/active object; same-mesh object switch cancels.
+  Launch rejects active drags and disarms idle main/Face direct ownership through
+  their actual APIs, preserving selection. Successful apply returns the gizmo.
+- Keep original Face Align API alias for existing background/compatibility routing;
+  new ComponentAlignViewportSession is the same owner, not a competing implementation.
+
+Validation: **106 focused PASS**, including original Face plane/anchor/kernel tests,
+actual Vertex/Edge anchor geometry with real one-step History Undo/Redo, three icon
+modes/disabled/busy guards, panel mode controls/identity and semantic background
+exit, active-object protection, existing radial/Focus/browser/navigation checks.
+Full **1292 / 1015 PASS / 277 FAIL**, identical failure names to .733. All280 source
+modules syntax PASS; diff whitespace PASS. Historical full-suite debt remains
+explicit. Actual iPad/Pencil icon access and rendering still require device checks.
+
+Changed gizmo/corner/toolbar/Align UI and dynamic parent pins .734; shared layout
+.732, Focus owner .733, component-align/core .705, protected Multi1.0 and Loop.715
+unchanged. Frozen betas untouched. No Beta6 release claim.
+
+Next: .734 device checks (component Align/fixed anchor/background/Undo plus launch
+Focus), then final iPad editing and Files/Nomad smoke; accepted candidate freeze,
+release notes and isolated /beta-6/ publication per BETA_6_RELEASE_CHECKLIST.md.

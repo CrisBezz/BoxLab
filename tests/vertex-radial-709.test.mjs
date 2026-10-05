@@ -43,7 +43,7 @@ test('single vertex, unsafe selection and locked/reference radial cannot mutate 
 });
 test('wrong-mode Vertex ring cannot launch and Face/Edge tool coverage remains intact',()=>{
  const f=fixture();f.setIds([0,1]);f.setMode('face');f.click(0);f.flush();assert.equal(f.history.undoStack.length,0);
- for(const [mode,count] of [['face',24],['edge',19]]){const start=gizmo.indexOf('<div class="tg-tool-ring" data-ring-mode="'+mode+'"');const end=gizmo.indexOf('<div class="tg-tool-ring"',start+10);const ring=gizmo.slice(start,end);assert.equal((ring.match(/data-tool-target=/g)||[]).length,count);}
+ for(const [mode,count] of [['face',23],['edge',19]]){const start=gizmo.indexOf('<div class="tg-tool-ring" data-ring-mode="'+mode+'"');const end=gizmo.indexOf('<div class="tg-tool-ring"',start+10);const ring=gizmo.slice(start,end);assert.equal((ring.match(/data-tool-target=/g)||[]).length,count);}
 });
 test('Vertex puck/transform centre opens active-tool ring with centred close and no selection proxies',()=>{
  assert.match(gizmo,/requested==='tools'&&!\['face','edge','vertex','object'\]\.includes\(mode\)/);assert.match(gizmo,/const next=\['face','edge','vertex','object'\]\.includes\(currentMode\(\)\)\?'tools':'closed'/);
