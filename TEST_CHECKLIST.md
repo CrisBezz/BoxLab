@@ -3525,3 +3525,19 @@ see BETA_6_RELEASE_CHECKLIST.md. No device PASS inferred for .733.
   icon is unavailable with insufficient selection or during drag; Object Multi stays.
 - Launch Focus still armed; browser and navigation/history regressions unchanged.
 Device acceptance pending; no inferred .733/.734 PASS or Beta6 freeze.
+
+## .735 — axis colours and native NOMAD handoff
+
+.734 user PASS. 51 focused pass; full1301/1024/277, no new failure names vs .734;
+all281 source syntax pass. Native output parsed/validated locally; Nomad device
+acceptance still required. No .nom import into BoxLab is claimed.
+1. Align Vertex/Edge/Face, Move and Array buttons: X subtle red, Y green, Z blue;
+   active state clearly stronger, disabled state/selection and gestures unchanged.
+2. File NOMAD button replaces secondary Save GLB and explanatory note; filename
+   uses name field + .nom; stays NOMAD when OBJ/GLB format switches.
+3. Export a named multi-object scene with facegroups as Base, save/share to Files,
+   open in Nomad. Inspect scene names, geometry/scale/quad topology/groups. Frame All
+   if needed. Source BoxLab scene and Undo stack unchanged; hidden/reference omitted.
+4. Repeat SubD/Mirror export; check displayed result in Nomad. Cancel saving safely;
+   regular OBJ/GLB export still works. Rich GLB channels keep their previous workflow.
+After device PASS, final Beta6 release smoke/freeze gate remains in checklist.

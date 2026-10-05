@@ -1,11 +1,13 @@
-// BoxLab v0.36.18.601 — explicit Save GLB to Files workflow for Nomad handoff.
+// BoxLab .735 — native NOMAD handoff; regular OBJ/GLB exports remain available.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.444';
 
-const VERSION='0.36.18.601';
+import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.735';
+
+const VERSION='0.36.18.735';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -14,7 +16,7 @@ const exportButton=document.querySelector('#exportAsBtn');
 const shareButton=document.createElement('button');
 shareButton.type='button';
 shareButton.id='exportShareBtn';
-shareButton.textContent='Save GLB to Files…';
+shareButton.textContent='NOMAD';
 shareButton.className='export-secondary';
 exportButton?.insertAdjacentElement('afterend',shareButton);
 const note=document.querySelector('#exportDestinationNote');
@@ -37,19 +39,26 @@ function setActive(buttons,key,value){
   for(const button of buttons)button.classList.toggle('active',button.dataset[key]===value);
 }
 function updateNote(){
-  if(format==='glb'){
-    shareButton.textContent='Save GLB to Files…';
-    if(!note)return;
-    if(navigator.share&&typeof File!=='undefined')note.textContent='Save the GLB to Files. Then open Files and use Share → Nomad Sculpt.';
-    else if(typeof window.showSaveFilePicker==='function')note.textContent='Save the GLB, then open it in Nomad Sculpt.';
-    else note.textContent='Save the GLB, then open it in Nomad Sculpt.';
-    return;
-  }
-  shareButton.textContent='Share / Open In…';
-  if(!note)return;
-  if(typeof window.showSaveFilePicker==='function')note.textContent='Save location chosen when you export.';
-  else if(navigator.share&&typeof File!=='undefined')note.textContent='On iPad choose Save to Files or another compatible app.';
-  else note.textContent='Your browser will save to its normal download location.';
+  shareButton.textContent='NOMAD';
+  shareButton.title='Export native Nomad Sculpt project (.nom)';
+  if(note){note.textContent='';note.hidden=true;}
+}
+let nomadTemplatePromise=null;
+async function buildNOM(sceneObjects,subd=false){
+  if(!nomadTemplatePromise)nomadTemplatePromise=fetch(new URL('./templates/nomad-tube.nom',import.meta.url)).then(response=>{if(!response.ok)throw Error('Nomad template could not be loaded');return response.arrayBuffer();}).catch(error=>{nomadTemplatePromise=null;throw error;});
+  return buildNomadProject(sceneObjects,await nomadTemplatePromise,{subd,name:cleanName(nameInput?.value)});
+}
+async function exportNomad(){
+  if(shareButton.disabled)return;
+  const sceneObjects=objects();if(!sceneObjects.length){if(status)status.textContent='NOMAD • no visible editable objects';return;}
+  shareButton.disabled=true;
+  try{
+    if(status)status.textContent='NOMAD • building scene…';
+    const result=await buildNOM(sceneObjects,geometry==='subd'),mime='application/x-nomad-sculpt';
+    const outcome=await saveBlob(new Blob([result.bytes],{type:mime}),cleanName(nameInput?.value)+'.nom',mime,{description:'Nomad Sculpt project',suffix:'nom'});
+    if(status&&outcome!=='cancelled')status.textContent=`NOMAD • ${result.count} object${result.count===1?'':'s'} • ${result.faces} faces • ${outcome}`;
+  }catch(error){if(status)status.textContent=`NOMAD export failed • ${error?.message||error}`;}
+  finally{shareButton.disabled=false;updateNote();}
 }
 function extension(){return format==='glb'?'glb':'obj';}
 function filename(){return cleanName(nameInput?.value)+'.'+extension();}
@@ -72,12 +81,12 @@ async function shareBlob(blob,fileName,mime){
   }
 }
 
-async function saveBlob(blob,fileName,mime){
+async function saveBlob(blob,fileName,mime,{description=format==='glb'?'GLB 3D Model':'Wavefront OBJ',suffix=extension()}={}){
   if(typeof window.showSaveFilePicker==='function'){
     try{
       const handle=await window.showSaveFilePicker({
         suggestedName:fileName,
-        types:[{description:format==='glb'?'GLB 3D Model':'Wavefront OBJ',accept:{[mime]:['.'+extension()]}}]
+        types:[{description,accept:{[mime]:['.'+suffix]}}]
       });
       const writable=await handle.createWritable();
       await writable.write(blob);
@@ -654,10 +663,10 @@ nameInput?.addEventListener('focus',()=>setEditingTouchMode(true));
 nameInput?.addEventListener('blur',()=>setEditingTouchMode(false));
 nameInput?.addEventListener('input',()=>{nameInput.value=nameInput.value.replace(/\.(obj|glb)$/i,'');});
 exportButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();exportAs();});
-shareButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();shareOpenIn();});
+shareButton?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();exportNomad();});
 
 setActive(formatButtons,'exportFormat',format);
 setActive(geometryButtons,'exportGeometry',geometry);
 updateNote();
 
-globalThis.__boxlabExportAs={version:VERSION,exportAs,shareOpenIn,buildGLB,verifyGLB,patchNomadFaceGroupGLB,topologySignature,geometrySignature,get format(){return format;},get geometry(){return geometry;}};
+globalThis.__boxlabExportAs={version:VERSION,exportAs,shareOpenIn,exportNomad,buildNOM,buildGLB,verifyGLB,patchNomadFaceGroupGLB,topologySignature,geometrySignature,get format(){return format;},get geometry(){return geometry;}};

@@ -5052,3 +5052,60 @@ unchanged. Frozen betas untouched. No Beta6 release claim.
 Next: .734 device checks (component Align/fixed anchor/background/Undo plus launch
 Focus), then final iPad editing and Files/Nomad smoke; accepted candidate freeze,
 release notes and isolated /beta-6/ publication per BETA_6_RELEASE_CHECKLIST.md.
+
+## 2026-10-05 — .735: shared XYZ colours and native NOMAD export
+
+Current release **v0.36.18.735**, parent main
+`b4ebe514ff1de556400ea64cc7c01d3029ac6f48`. User explicitly **PASS .734** and
+requests subtle axis colour reminders throughout the app plus MeshUtilz native
+Nomad export, replacing Save GLB to Files and its explanation with NOMAD.
+
+- Shared axis-colours.css uses the original Move palette (X red/Y green/Z blue),
+  with lightly tinted idle buttons and stronger active feedback. Covers semantic
+  axis buttons for Align, Move constraints, Array, Revolve and Symmetry. No text
+  guessing, gesture listeners, state changes, SVG-handle or free/plane changes.
+- NOMAD button replaces the secondary File export action, independent of OBJ/GLB
+  format selection; explanatory note is cleared/hidden. Geometry selector Base/SubD
+  applies. Existing regular OBJ/GLB export and data-preservation owners remain.
+- Audited CrisBezz/MeshUtilz-Sweep-Lab. Main only has lab docs; actual native writer
+  and binary template are on balloon-v0.6 at
+  `18e72a6bf964974591038345d68c2196a18f6af2`. Read nomadBalloonExport.js,
+  nomadBalloonExport095.js/097.js and V1.1-STABLE.md. Reuse validated header/layout,
+  donor field/node conventions and name handling; no runtime source-text patching,
+  dependency on the other repo or procedural Tube implementation in BoxLab.
+- New nomad-export-core adapts visible editable BoxLab meshes via existing export
+  mesh resolver (Base/SubD/Mirror), keeping separate named objects and shared
+  vertices/quads/winding. Triangles use the validated repeated fourth index;
+  n-gons use projected earcut triangulation with original winding and inherited
+  facegroups. Names/groups stored natively. All native binary fields uncompressed;
+  header lengths/offsets/alignment and field bounds self-check before saving.
+- Original binary donor copied intact to src/templates/nomad-tube.nom, SHA256
+  `9cc56cc4fdea095ec5b8eb917e0101b0e9433f5af54dd3e554ac5b76724010d8`.
+  Relative import.meta template URL keeps future frozen beta isolated. Template
+  fetched/cached on first NOMAD request; failures retry. Uses existing save owner
+  with explicit .nom extension, application/x-nomad-sculpt MIME and description;
+  supports picker, iPad share-to-Files and download fallback/cancel. No History edit.
+- Native export scope: polygon geometry, names, groups, Base/SubD/Mirror. This
+  adapter does not promise UV/paint/material/morph/crease metadata round-trip;
+  default donor material/scene settings and header thumbnail remain. Existing GLB
+  passthrough remains available for those richer channels. NOM import into BoxLab
+  is not added or claimed. Actual Nomad first-open/schema compatibility and framing
+  still need iPad verification, despite validated MeshUtilz container provenance.
+
+Validation: **51 focused PASS**: native donor checksum/header/offsets/binary bounds,
+separate names/quad/shared-index/coordinate/winding/groups, concave n-gons,
+Base/Mirror/SubD/source retention, invalid inputs, actual NOMAD UI/cache/filename/
+MIME/save picker/cancel/failure guards; shared-axis coverage and existing Align,
+GLB attribute/transform/history/Focus/browser checks. Full **1301 / 1024 PASS /
+277 FAIL**, identical failure names to .734. All281 source syntax PASS; diff
+whitespace PASS. Historical full-suite debt remains documented, not all-green CI.
+
+Changed shell/recovery/export owner/new core/axis style pins .735; .734 Align and
+.733 default Focus remain accepted/runtime unchanged. Component geometry/history,
+protected Multi1.0/Loop.715 and frozen betas unchanged. Source repo read-only.
+
+Next device checks: axis tint/active clarity in Align/Array/Move; NOMAD Base and
+SubD export of named multi-object scene into Files, open in Nomad and inspect names,
+shape/scale/groups/quad topology (Frame All if necessary); Cancel and ordinary GLB
+regression. After .735 pass and final release smoke, freeze Beta6 per checklist.
+No native export success/device PASS or Beta6 freeze inferred yet.

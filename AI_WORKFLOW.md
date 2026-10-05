@@ -239,3 +239,12 @@ not radial sectors. Reuse existing component-align axis/fixed-anchor owner; only
 Face exposes Align to Face plane alignment. Hide gizmo during contextual Align
 anchor picking, preserve selection, return on completion, and retain safe background
 exit. No new vertex merge or edge-orientation interpretation implied.
+
+## XYZ / Nomad handoff — .735
+
+User PASS .734. Axis buttons across app use the original Move RGB palette via
+shared axis-colours.css. File NOMAD replaces secondary Save GLB and its explanatory
+note; reuse validated MeshUtilz native container/template (provenance in templates
+README), preserve existing OBJ/GLB exports and source/history. Native Nomad opening
+must be device-tested before Beta6 freeze; do not claim rich attribute round-trip
+or NOM import into BoxLab without implementation/evidence.

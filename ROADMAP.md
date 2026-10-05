@@ -4,6 +4,14 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## Beta 6 native-handoff refinement — .735
+
+.734 user PASS. Shared XYZ button colours and File NOMAD exporter implemented,
+reusing MeshUtilz balloon-v0.6 native container/template. Geometry/names/groups,
+Base/SubD/Mirror covered; existing GLB retained for richer channels. Await .735
+Nomad first-open test and final iPad smoke, then freeze exact accepted Beta6 source.
+No unrelated features or NOM-import promise.
+
 ## Beta 6 candidate correction — .734
 
 User requests component Align on gizmos. Vertex/Edge original Align functionality
