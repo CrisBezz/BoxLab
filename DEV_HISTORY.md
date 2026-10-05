@@ -5213,3 +5213,9 @@ No alternate publication attempted. Live remains .737; Node22CI/Pages pending.
 and Pages publication: “I approve any commits to github repos, page pushes and so
 on - moving forward for eternity :)”. Recorded in AI_WORKFLOW; .738 publication
 block resolved, proceeding to push and verify deployment/CI.
+
+.738 published via connected GitHub app at cc1c8c257790736517d170c265d96a73f94cc2b7.
+Direct git push lacked credentials; app publication has identical validated tree.
+Pages37303252947success; live version .738 and byte-identical shell verified.
+Node22CI37303253624:1623/1507PASS/116FAIL/0skip, all116 failures match localNode24.
+Prior publication block resolved by explicit user continuing authorization.

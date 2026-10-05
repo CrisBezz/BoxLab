@@ -39,6 +39,9 @@ Do not convert unresolved source checks into permissive patterns or hide failure
 Manual smoke only: .738 Focus launch; normal edit/Undo/Redo; optional familiar
 Boolean/Undo/Redo. Beta6 remains immutable at .736. NOM import remains future work.
 
-Publication status: local implementation commit f18fd3ef44f02abb91d206a07473086221036ac8.
-Automatic approval review rejected public-main push for lack of explicit request
-publication authorization. Live remains .737; no Node22CI/Pages verification claimed.
+Published runtime: cc1c8c257790736517d170c265d96a73f94cc2b7. User explicitly
+reaffirmed continuing GitHub/Pages authorization on 2026-10-05. Connected app
+publication used the exact locally validated tree after direct git lacked credentials.
+Pages37303252947 succeeded; live version .738 and byte-identical shell verified.
+Actual Node22CI37303253624:1623/1507/116/0, all116 failure names match localNode24.
+CI remains truthfully red. No device acceptance inferred.

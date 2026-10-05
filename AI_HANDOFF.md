@@ -3,7 +3,7 @@
 ## Current state — 2026-10-05
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current app
-**v0.36.18.738 locally; live remains .737**. User PASS .737 in prior session; current request continues from
+**v0.36.18.738, published and live**. User PASS .737 in prior session; current request continues from
 repo handoff. Second reliability batch adds actual Boolean scene-history fixtures
 and reconciles two superseded .347/.368 assertions. Modeller source/CSS and frozen
 betas unchanged. Shell markers/recovery loader keys .738. Read
@@ -30,11 +30,14 @@ only selected operands hidden, refusal/creation failure preserving both stacks.
 Join listener capture uses same bridge; full Join geometry is not tested here.
 Reviewed337 cache/hash fixture changes ONLY two shell recovery URLs to .738;
 all source hashes unchanged. No skips, fake green or runtime algorithms changed.
-Implementation commit f18fd3ef44f02abb91d206a07473086221036ac8 is local only.
+Published runtime commit cc1c8c257790736517d170c265d96a73f94cc2b7; local validation
+commit f18fd3ef44f02abb91d206a07473086221036ac8 has the same implementation.
 Earlier push rejection is resolved by explicit user approval on 2026-10-05:
 “I approve any commits to github repos, page pushes and so on - moving forward for eternity :)”
-Standing approval is recorded in AI_WORKFLOW.md. Publication/Node22CI/Pages
-verification are in progress; do not claim completion until observed.
+Standing approval is recorded in AI_WORKFLOW.md. Pages run37303252947 succeeded;
+live version.json .738 and shell bytes/markers/recovery pins verified against main.
+Actual Node22CI run37303253624:1623/1507PASS/116FAIL/0skip; all116 failure names
+match local Node24. CI remains truthfully red; no new environment-specific failure.
 Previous .737 CI run37288886319 matched1610/1492/118; this is historical evidence,
 not .738 validation. CI path triggers cover runtime assets; still red, no Pages gate.
 Keep116 unresolved checks active until semantic coverage proves accepted behavior.

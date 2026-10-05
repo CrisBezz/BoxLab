@@ -3595,5 +3595,5 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
   and both history stacks (including existing Redo).
 - [x] Join capture listener uses the installed Object history bridge.
 - [x] Full1623/1507/116, zero skips; no new failure identities versus .737.
-- [ ] .738 Node22 CI independently verified; existing .737 evidence is historical.
+- [x] .738 Node22 CI37303253624 independently matches1623/1507/116/0 and all116 failure names.
 - [ ] .738 iPad launch/edit/Undo/Redo smoke; runtime modelling owners unchanged.
