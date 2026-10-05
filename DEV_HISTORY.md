@@ -5243,3 +5243,21 @@ Pages37304998035success; live version .739 and byte-identical shell/recovery pin
 Actual Node22CI37304998451:1653/1544PASS/109FAIL/0skip; all109 failures match local.
 Validated local and app-published Git trees identical; protected sources/frozenbeta
 unchanged. Await .739 iPad smoke; user .738 PASS recorded, no .739 PASS inferred.
+
+## 2026-10-05 — .740: contextual radial and Sweep semantic-owner fixtures
+
+User PASS .739, /nextbuild. Parent65f985f7. Six obsolete .642/.643/.654/.658 checks
+reconciled using accepted corner shortcut/all-mode radial/contextual availability/
+Face+Edge Sweep behavior. Two obsolete test descriptions renamed; all cases kept.
+16 new fixtures execute shortcut callback, tools-centre/controller/frame suppression,
+availability guard/feedback and Sweep semantic launch/end/API. Generic/missing/
+active/disabled targets; contextual Face/Vertex/Object owner delegation; locked
+object guard; guided Edge Bridge exception; radial-open refresh; Sweep Face/Edge
+launch/one completion with original mode, other modes/tools/session ends ignored.
+DOM/RAF/projection/session collaborators mocked; Sweep presentation sync mocked;
+CSS gate structural. No real browser/solver/device evidence claimed.
+Node24 full1669/1566PASS/103FAIL/0skip; six old failure identities resolve, none new.
+113focusedPASS; changed/helper syntax/whitespace/protected diff clean.
+Runtime src/CSS/frozenbeta unchanged; shell/recovery .740, all asset hashes retained.
+Report/inventory docs/reliability-build-740. Node22CI/Pages verification pending.
+Next OBJ facegroup contract, remaining Face/selection checks, then geometry fixtures.

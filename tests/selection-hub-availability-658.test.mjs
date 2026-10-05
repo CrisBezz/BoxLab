@@ -1,3 +1,4 @@
+import {assertGenericAvailability} from './helpers/radial-runtime.mjs';
 import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -8,7 +9,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 
 const checks=[
  ['availability sync function',giz.includes('function syncContextToolAvailability()')],
- ['disabled derives from target.disabled',giz.includes('const unavailable=!target||!!target.disabled;')],
+ ['disabled derives from target.disabled',assertGenericAvailability],
  ['sector disabled mirrors target',giz.includes('sector.disabled=unavailable;')],
  ['unavailable class',giz.includes("sector.classList.toggle('tg-tool-unavailable',unavailable)")],
  ['active class mirrors target',giz.includes("target.classList.contains('active')")&&giz.includes("tg-tool-active")],
@@ -22,4 +23,4 @@ const checks=[
  ['Shell retained',hasAssetReference(index,'selection-hub-shell-session.js')],
  ['protected transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-for(const [name,ok] of checks)test("selection-hub-availability-658.test: "+name,()=>assert.equal(ok,true,name));
+for(const [name,ok] of checks)test("selection-hub-availability-658.test: "+name,()=>typeof ok==='function'?ok():assert.equal(ok,true,name));

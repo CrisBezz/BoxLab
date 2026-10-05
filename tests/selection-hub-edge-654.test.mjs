@@ -1,3 +1,4 @@
+import {assertAllModeRadials} from './helpers/radial-runtime.mjs';
 import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,7 +8,7 @@ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.url),'utf8'));
 
 const checks=[
- ['tools allowed in Face and Edge',giz.includes("!['face','edge'].includes(mode)")],
+ ['tools allowed in Face and Edge',assertAllModeRadials],
  ['Edge ring exists',giz.includes('data-ring-mode="edge"')&&giz.includes('aria-label="Edge contextual tools"')],
  ['Edge Extrude proxy',giz.includes('data-tool-target="#edgeExtrudeBtn">Extrude</button>')],
  ['Bevel/Crease proxies',giz.includes('data-tool-target="#bevelBtn">Bevel</button>')&&giz.includes('data-tool-target="#applyCreaseBtn">Crease</button>')],
@@ -22,4 +23,4 @@ const checks=[
  ['Face-direct .652 retained',hasAssetReference(index,'multi-face-direct.js')],
  ['protected transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
-for(const [name,ok] of checks)test("selection-hub-edge-654.test: "+name,()=>assert.equal(ok,true,name));
+for(const [name,ok] of checks)test("selection-hub-edge-654.test: "+name,()=>typeof ok==='function'?ok():assert.equal(ok,true,name));

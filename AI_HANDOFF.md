@@ -2,14 +2,14 @@
 
 ## Current state — 2026-10-05
 
-Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current app
-**v0.36.18.739, published and live**; user PASS .738, then /nextbuild. Third reliability batch adds
-actual selection-hub and Bevel lifecycle fixtures; seven superseded checks
-reconciled. Runtime source/CSS and frozenbetas unchanged. Shell/recovery URLs .739.
-Read docs/reliability-build-739.md +JSON. Parent main
-bc90f26082438fb6d502a5688ab7ef4230f189a2. Runtime commit87e5ed46259bbab3964f8606447882d49c133a54 published.
-Next: remaining selection/radial/Face ownership checks, OBJ group contract, then
-Bevel/Knife→Loop geometry and reliable CI gate. NOM import still future work.
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Candidate
+**v0.36.18.740**. User PASS .739 then /nextbuild. Fourth reliability batch adds
+radial availability/shortcut and Sweep semantic routing fixtures; six obsolete
+checks reconciled. Runtime source/CSS and frozenbetas unchanged. Shell/recovery
+URLs .740. Read docs/reliability-build-740.md +JSON. Parent main
+65f985f763c40962790e736dcdbb2d0fa1a8bfd1. Publication verification pending.
+Next: OBJ object/facegroup contract, remaining Face/selection-owner checks, then
+Bevel/Knife→Loop geometry and reliable CI gate. NOM import remains future work.
 
 Beta6 released/frozen at https://crisbezz.github.io/BoxLab/beta-6/ from accepted
 source `e1551b3e9c3983c5d0fabfbe44c4ff9e760ff189`; freeze publication commit
@@ -18,29 +18,24 @@ Frozen beta2/3/4/5/6 are immutable. Further development happens on main; no beta
 hotfix without a documented user-directed decision. Freeze was byte-verified,
 Pages successful; no separate post-freeze device result invented.
 
-## .739 current validation / mandatory next work
+## .740 current validation / mandatory next work
 
-Node24 full1653/1544PASS/109FAIL/0skip.30 new named behavior fixtures pass;
-seven obsolete .633/.639/.660/.662 checks reconciled, no new failure identities.
-99focusedPASS; changed/helper syntax/whitespace and protected runtime diffs clean.
-Actual controller/selection-key/frame sync/puck/completion handlers run; actual
-Bevel API/disarm and whole Bevel viewport-session module run. Covers component
-puck/transform/radial states, selection loss/change, session completion/hiding,
-Object full/emptyMulti, Face suspension/resume, Align, Edge Extrude close, Bevel
-mode/mesh/object stale guards, idle background exit and cancellation.
-DOM/RAF/projection/preview owners are doubles. CSS exclusion structurally checked;
-no actual browser/Pencil/solver or device PASS inferred. Semantic completion events
-in hub tests do not alone prove every tool emits them. Existing background suites
-pass; no gesture owner or runtime algorithm changed. Keep109 remaining checks
-active. Reviewed337 asset contract changes only two shell recovery URLs .739;
-all content hashes unchanged. CI stays red, Pages not gated until reconciled.
-Standing continuing GitHub/Pages approval explicitly granted 2026-10-05 and recorded
-in AI_WORKFLOW.md. Use connected GitHub app if direct git lacks credentials.
-Pages37304998035 succeeded; live version .739 and byte-identical shell/markers/
-recovery pins verified against main. Actual Node22CI37304998451:
-1653/1544PASS/109FAIL/0skip; all109 failure names match localNode24.
-No device PASS inferred for .739. .738 historical evidence:
-cc1c8c25 runtime, Pages37303252947success, Node22CI37303253624 matched1623/1507/116.
+Node24 full1669/1566PASS/103FAIL/0skip.16 new fixtures pass; six obsolete
+.642/.643/.654/.658 checks reconciled; no new failure identities.113focusedPASS;
+changed/helper syntax, whitespace and runtime/frozen diffs clean.
+Actual radial shortcut callback, tools-centre handler, controller/frame suppression,
+contextual availability execute. Generic target feedback, contextual owner guards,
+locked objects, guided Edge Bridge exception and radial-open refresh tested.
+Actual Sweep launch/end/API handlers execute; Face/Edge launch mode preserved on
+single completion; wrong modes/tools/session end ignored. DOM/RAF/projection and
+collaborating owner APIs are doubles. Sweep presentation sync mocked; CSS gate
+structural. No real browser/Pencil/solver/device acceptance inferred.
+Keep103 unresolved checks active. Reviewed337 asset contract changes only two
+shell recovery URLs .740; source hashes unchanged. CI remains red; no Pages gate.
+Standing continuing GitHub/Pages authorization recorded in AI_WORKFLOW.md;
+connected GitHub app available when direct git lacks credentials.
+Current Node22CI/Pages verification pending. Historical .739 runtime87e5ed46,
+Pages37304998035success, Node22CI37304998451 matched1653/1544/109/0.
 
 ## Original audit findings (historical baseline)
 
@@ -104,10 +99,10 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .739; debug/export module pins .736; native export core+axis .735,
+Current recovery pins .740; debug/export module pins .736; native export core+axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
-actual runtime builds. App .739 is a numbered test-infrastructure build; modelling code unchanged.
+actual runtime builds. App .740 is a numbered test-infrastructure build; modelling code unchanged.
 
 ## File/Nomad baseline and limitations
 
@@ -129,7 +124,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .739 just confirm current release/Focus launch and normal edit/Undo.
+For .740 just confirm current release/Focus launch and normal edit/Undo.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.
