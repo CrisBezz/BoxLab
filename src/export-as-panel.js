@@ -7,7 +7,7 @@ import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-co
 
 import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.735';
 
-const VERSION='0.36.18.735';
+const VERSION='0.36.18.736';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -55,17 +55,17 @@ async function exportNomad(){
   try{
     if(status)status.textContent='NOMAD • building scene…';
     const result=await buildNOM(sceneObjects,geometry==='subd'),mime='application/x-nomad-sculpt';
-    const outcome=await saveBlob(new Blob([result.bytes],{type:mime}),cleanName(nameInput?.value)+'.nom',mime,{description:'Nomad Sculpt project',suffix:'nom'});
-    if(status&&outcome!=='cancelled')status.textContent=`NOMAD • ${result.count} object${result.count===1?'':'s'} • ${result.faces} faces • ${outcome}`;
+    downloadBlob(new Blob([result.bytes],{type:mime}),cleanName(nameInput?.value)+'.nom',60000);
+    if(status)status.textContent=`NOMAD • ${result.count} object${result.count===1?'':'s'} • ${result.faces} faces • open browser download, then Open In / Share → Nomad`;
   }catch(error){if(status)status.textContent=`NOMAD export failed • ${error?.message||error}`;}
   finally{shareButton.disabled=false;updateNote();}
 }
 function extension(){return format==='glb'?'glb':'obj';}
 function filename(){return cleanName(nameInput?.value)+'.'+extension();}
-function downloadBlob(blob,fileName){
+function downloadBlob(blob,fileName,revokeAfter=1200){
   const url=URL.createObjectURL(blob),a=document.createElement('a');
   a.href=url;a.download=fileName;document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),1200);
+  setTimeout(()=>URL.revokeObjectURL(url),revokeAfter);
 }
 
 async function shareBlob(blob,fileName,mime){

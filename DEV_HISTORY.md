@@ -5109,3 +5109,36 @@ SubD export of named multi-object scene into Files, open in Nomad and inspect na
 shape/scale/groups/quad topology (Frame All if necessary); Cancel and ordinary GLB
 regression. After .735 pass and final release smoke, freeze Beta6 per checklist.
 No native export success/device PASS or Beta6 freeze inferred yet.
+
+## 2026-10-05 — .736: restore MeshUtilz browser-download → Open In workflow
+
+Current release **v0.36.18.736**, parent main
+`2ad78c345c939027a520227d7936e3ea914a9b96`. User explicitly **PASS .735**;
+requests the MeshUtilz browser download/preview/Open In workflow for native NOM.
+
+Cause: .735 NOMAD called generic saveBlob, which prefers save picker then Web Share.
+Validated MeshUtilz main.js/v110 instead initiates an anchor browser download with
+.nom filename and application/x-nomad-sculpt Blob. This is a delivery difference,
+not evidence that the already-passed native NOM bytes have the wrong format.
+
+- NOMAD now directly uses that existing browser-download helper, with identical
+  filename/MIME/native bytes. No file picker or Web Share call on NOMAD path.
+- Optional revokeAfter argument keeps NOM Blob URL alive60s for iOS preview;
+  other OBJ/GLB downloads retain original1200ms behavior. No new popup or tab.
+- Status guides user to open browser download, then Open In / Share → Nomad.
+  Website cannot force a particular iOS app target or register Nomad's file UTI;
+  browser/OS determine the download preview and available applications. Device
+  testing is required; do not claim successful app switching from automated checks.
+- Export core/template, .735 XYZ colours, regular GLB/OBJ save/share paths,
+  geometry/names/groups/history and protected interaction/frozen betas unchanged.
+
+Validation:14 focused native-format/UI/download/save/GLB/axis checks PASS;
+actual anchor href/download/click/removal,60s URL retention/revoke, and NOM path
+exclusion of picker/share verified. Full1302/1025 PASS/277 FAIL, identical failure
+names to .735. Modified source syntax and diff whitespace PASS. iPad behavior
+pending. Shell/recovery/export owner pins .736; native core/template remain .735.
+
+Next: iPad NOMAD tap starts normal browser download; open downloaded .nom preview
+and use Open In/Share to Nomad. Check name/geometry, compare normal GLB save and
+cancel behavior. Record device outcome before Beta6 freeze; .735 is accepted,
+.736 handoff delivery refinement is pending. No new native-format work planned.

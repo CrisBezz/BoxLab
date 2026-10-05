@@ -4,6 +4,13 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## Beta 6 delivery refinement — .736
+
+.735 user PASS. NOMAD now follows validated MeshUtilz browser-download/preview
+route instead of generic save/share, with longer URL lifetime. Format/geometry
+unchanged. Await iPad Download → Open In/Share → Nomad result and final release
+smoke, then accepted candidate freeze. No more native-format features queued.
+
 ## Beta 6 native-handoff refinement — .735
 
 .734 user PASS. Shared XYZ button colours and File NOMAD exporter implemented,

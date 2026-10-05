@@ -3541,3 +3541,14 @@ acceptance still required. No .nom import into BoxLab is claimed.
 4. Repeat SubD/Mirror export; check displayed result in Nomad. Cancel saving safely;
    regular OBJ/GLB export still works. Rich GLB channels keep their previous workflow.
 After device PASS, final Beta6 release smoke/freeze gate remains in checklist.
+
+## .736 — NOM browser download/Open In delivery
+
+User PASS .735.14 focused pass; full1302/1025/277 same failure names; changed syntax
+and whitespace pass. Native NOMAD now downloads via anchor, preserving .nom name
+and MIME, keeping URL60s. It must not call save picker/Web Share first.
+- In iPad browser tap NOMAD, confirm ordinary browser download/preview. Open saved
+  download then Open In/Share → Nomad; check object names, geometry/groups unchanged.
+- Check normal GLB/OBJ save/share and cancellation remain unchanged.
+Actual Open In/app targeting controlled by iOS/browser, not guaranteed by website;
+record device result before Beta6 freeze. No .736 device PASS inferred.

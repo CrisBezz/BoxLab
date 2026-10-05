@@ -1,6 +1,6 @@
 # BoxLab Beta 6 — release notes draft
 
-Status: prepared for the Beta 6 freeze; final .735 candidate/device acceptance and
+Status: prepared for the Beta 6 freeze; final .736 candidate/device acceptance and
 frozen source commit/URL verification pending. This file is not a release claim.
 
 Beta 6 brings modelling controls into the viewport, with Face, Vertex, Object and
@@ -13,7 +13,9 @@ modelling with finger navigation on iPad.
   axis/fixed-anchor workflow; Face retains Align to Face plane matching.
 - Axis buttons share subtle X red / Y green / Z blue reminders and active feedback.
 - File NOMAD exports native .nom geometry, names and facegroups, with Base/SubD
-  and Mirror support. Regular OBJ/GLB exports remain available.
+  and Mirror support. NOMAD follows the browser download/preview workflow for
+  Open In/Share to Nomad; available app targets depend on iOS. Regular OBJ/GLB
+  exports remain available.
 - Content-sized tool popups use modest padding and reachable Apply/Cancel/Done controls.
 - Appropriate tools exit on a stationary background tap; drawing/placement tools
   retain empty-space input. A short background tap clears selection and Lasso;
