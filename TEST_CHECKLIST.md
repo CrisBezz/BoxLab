@@ -3559,3 +3559,14 @@ record device result before Beta6 freeze. No .736 device PASS inferred.
 - [ ] Frozen navigation, selection, Undo/Redo and Multi retain accepted behavior.
 - [ ] Frozen NOMAD download opens in Nomad; regular GLB remains available.
 - [x] Runtime snapshot equals accepted .736; relative assets/recovery stay isolated.
+
+## Post-Beta 6 reliability audit — 2026-10-05
+
+- [x] Reproduce full suite and inventory each failure (1302/1025/277/0 skipped).
+- [x] Trace aggregate script subchecks separately (31 scripts /121 failed checks).
+- [ ] Reconcile old version pins with current shell and protected intentional pins.
+- [ ] Replace superseded source assertions with current semantic behavior coverage.
+- [ ] Scope recovery sentinels explicitly; do not blanket skip to claim green.
+- [ ] Repeat on CI Node22; expand runtime path triggers and validated release gate.
+- [ ] Extend diverse Bevel chains, actual Knife→Loop and scene Undo/Redo fixtures.
+See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.

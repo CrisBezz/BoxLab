@@ -248,3 +248,12 @@ note; reuse validated MeshUtilz native container/template (provenance in templat
 README), preserve existing OBJ/GLB exports and source/history. Native Nomad opening
 must be device-tested before Beta6 freeze; do not claim rich attribute round-trip
 or NOM import into BoxLab without implementation/evidence.
+
+## Post-Beta 6 reliability direction — 2026-10-05
+
+User authorizes continuing with reliability audit and staged improvements. Earlier
+pre-freeze restriction no longer blocks postBeta6 work on main; frozenBeta6 remains
+immutable. Read docs/reliability-audit-2026-10-05.md and inventory. Report failures
+as test results, not bug counts. Do not claim stable failure counts prove safety or
+silently exclude historical checks. Reconcile intended behavior and authoritative
+owners, retain semantic coverage, and keep active CI failures visible until fixed.

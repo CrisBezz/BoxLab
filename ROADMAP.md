@@ -471,3 +471,10 @@ only after user feedback and blocker review. Slight Lasso tightening deferred.
 
 Accepted .736 frozen at /beta-6/. No more feature work in this snapshot.
 Next: final frozen-link device smoke, then choose post-Beta6 work separately.
+
+## 2026-10-05 — Post-Beta6 reliability path
+
+User approves reliability audit. Complete report/inventory in docs. Next batch
+repairs test contracts and visibility without changing accepted runtime/frozenbeta;
+then CI gate/coverage, varied Bevel/Knife→Loop, scene history and Nomad handoff.
+277 failures are check results, not confirmed app bugs; no blanket quarantine.

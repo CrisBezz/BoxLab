@@ -1,0 +1,2021 @@
+{
+  "total": 1302,
+  "passed": 1025,
+  "failed": 277,
+  "skipped": 0,
+  "classification_counts": {
+    "source-pattern-review": 92,
+    "rollback-sentinel-review": 6,
+    "version-pin-assertion": 147,
+    "aggregate-script": 31,
+    "obj-output-contract": 1
+  },
+  "failures": [
+    {
+      "file": "tests/453-core-version-independent.test.mjs",
+      "test": "453 dormant colour core remains separate",
+      "category": "source-pattern-review",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(!r.includes('applyFaceGroupColours'))"
+    },
+    {
+      "file": "tests/453-facegroup-core-dormant.test.mjs",
+      "test": "453 facegroup colour core remains dormant",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /applyFaceGroupColours/."
+    },
+    {
+      "file": "tests/453-final-runtime-guard.test.mjs",
+      "test": "453 final runtime guard",
+      "category": "source-pattern-review",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(!s.includes('facegroupMaterial'))"
+    },
+    {
+      "file": "tests/453-load-boundary.test.mjs",
+      "test": "453 removes failed runtime import boundary",
+      "category": "rollback-sentinel-review",
+      "assertion": "Expected values to be strictly equal:\n\n4 !== 1"
+    },
+    {
+      "file": "tests/453-no-render-reformat.test.mjs",
+      "test": "453 exact proven render blob",
+      "category": "rollback-sentinel-review",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ 'c3ab8eb19a9f0d7b69d40c3af12be3b78fd23c81'\n- '977dda1ae40dd643e6fae95df075899db0191f64'"
+    },
+    {
+      "file": "tests/453-no-source-mesh-helper.test.mjs",
+      "test": "453 excludes rejected sourceMeshForBody helper",
+      "category": "rollback-sentinel-review",
+      "assertion": "Expected values to be strictly equal:\n\ntrue !== false"
+    },
+    {
+      "file": "tests/app-interaction-guard.test.mjs",
+      "test": "345 interaction guard loads once from index and leaves gesture modules untouched",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /pencil-orbit-gate\\.js\\?v=0\\.32\\.35/."
+    },
+    {
+      "file": "tests/armed-selection-635.test.mjs",
+      "test": "tests/armed-selection-635.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/beta3-release-candidate-371.test.mjs",
+      "test": "371 protects linked-instance and navigation baseline",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/beta3-release-candidate-371.test.mjs",
+      "test": "371 protects mature Through and Clean loaders",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-face-direct\\.js\\?v=0\\.36\\.18\\.242/."
+    },
+    {
+      "file": "tests/beta3-release-candidate-371.test.mjs",
+      "test": "371 protects Group Boolean compound solver and additive whole-Group selection",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /boolean-prototype\\.js\\?v=0\\.36\\.18\\.369/."
+    },
+    {
+      "file": "tests/boolean-object-history.test.mjs",
+      "test": "347 Boolean and Join share the authoritative Object scene-history bridge",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /globalThis\\.__boxlabObjectHistory\\?\\.checkpoint\\?\\.\\(\\)/."
+    },
+    {
+      "file": "tests/clean-for-subd-ui.test.mjs",
+      "test": "Clean for SubD cache-hop remains isolated from protected Selection styling",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /styles\\.css\\?v=0\\.36\\.18\\.270/."
+    },
+    {
+      "file": "tests/collapsed-gizmo-hit-isolation-639.test.mjs",
+      "test": "tests/collapsed-gizmo-hit-isolation-639.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/compact-group-tree.test.mjs",
+      "test": "350 cache chain and protected transform pin remain intact after object-management refresh",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /object-management\\.js\\?v=0\\.36\\.18\\.392/."
+    },
+    {
+      "file": "tests/compact-outliner-356.test.mjs",
+      "test": "356 release cache chain and protected Group transform baseline remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/component-circle.test.mjs",
+      "test": "341 Face Circle UI and loader pins are current",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /component-circle\\.js\\?v=0\\.36\\.18\\.341/."
+    },
+    {
+      "file": "tests/component-cross-object-snap-contract.test.mjs",
+      "test": "326 component Move snap stays out of Object mode and keeps protected transform pin",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /main\\.js\\?v=0\\.36\\.18\\.366/."
+    },
+    {
+      "file": "tests/contextual-object-controls-360.test.mjs",
+      "test": "360 protected Group transform baseline remains exact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /object-management\\.js\\?v=0\\.36\\.18\\.392/."
+    },
+    {
+      "file": "tests/delete-key-router-387.test.mjs",
+      "test": "Delete-key router runtime follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.444'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/direct-tool-ownership-660.test.mjs",
+      "test": "tests/direct-tool-ownership-660.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/dormant-gizmo-browser-633.test.mjs",
+      "test": "tests/dormant-gizmo-browser-633.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/edge-exclusive-face-rotate-477.test.mjs",
+      "test": "477 proven transform runtime is cache-hopped without changing protected core pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/transform-upgrade\\.js\\?v=0\\.36\\.18\\.477/."
+    },
+    {
+      "file": "tests/edge-exclusive-face-rotate-477.test.mjs",
+      "test": "477 edge handoff shim is cache-hopped",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/edge-crease-handoff\\.js\\?v=0\\.36\\.18\\.477/."
+    },
+    {
+      "file": "tests/edge-exclusive-single-click-478.test.mjs",
+      "test": "478 cache-hops only the edge handoff shim",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/transform-upgrade\\.js\\?v=0\\.36\\.18\\.477/."
+    },
+    {
+      "file": "tests/edge-extrude-423.test.mjs",
+      "test": "423/424 UI stays armed, validates the live selected edge ids, and preserves protected transform pin",
+      "category": "version-pin-assertion",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(index.includes('src/edge-extrude.js?v='+version))"
+    },
+    {
+      "file": "tests/edge-extrude-move-plane-510.test.mjs",
+      "test": "510 repeated pulls preserve later user-selected constraint",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(armed&&!wasArmed\\)/."
+    },
+    {
+      "file": "tests/edge-extrude-move-plane-510.test.mjs",
+      "test": "510 cache-hops only Edge Extrude and preserves protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/edge-extrude\\.js\\?v=0\\.36\\.18\\.510/."
+    },
+    {
+      "file": "tests/edge-face-boundary-candidates-656.test.mjs",
+      "test": "tests/edge-face-boundary-candidates-656.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/edge-face-boundary-candidates-657.test.mjs",
+      "test": "tests/edge-face-boundary-candidates-657.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/edge-hold-additive-base-659.test.mjs",
+      "test": "tests/edge-hold-additive-base-659.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/edge-hold-browser-655.test.mjs",
+      "test": "tests/edge-hold-browser-655.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/edge-polish-514.test.mjs",
+      "test": "514 cache-hops only Edge-owned modules and preserves frozen baselines",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /precision-edge-slide\\.js\\?v=0\\.36\\.18\\.514/."
+    },
+    {
+      "file": "tests/edge-progressive-disclosure-475.test.mjs",
+      "test": "475 remains presentation-only and protected pins stay intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.475/."
+    },
+    {
+      "file": "tests/edge-progressive-disclosure-508.test.mjs",
+      "test": "508 compacts Edge home into requested three-column rows",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /for\\(const button of \\[dissolveEdge,del\\]\\)/."
+    },
+    {
+      "file": "tests/edge-progressive-disclosure-508.test.mjs",
+      "test": "508 preserves protected interaction pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.508/."
+    },
+    {
+      "file": "tests/edge-progressive-polish-476.test.mjs",
+      "test": "476 changed UI modules are cache-hopped",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /tool-session-ui\\.js\\?v=0\\.36\\.18\\.508/."
+    },
+    {
+      "file": "tests/face-armed-drag-repeat-516.test.mjs",
+      "test": "516 dragging an unselected Face while armed operates that Face only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-armed-drag-repeat-516.test.mjs",
+      "test": "516 protected runtime pins remain unchanged outside Face owners",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /precision-face\\.js\\?v=0\\.36\\.18\\.518/."
+    },
+    {
+      "file": "tests/face-armed-full-toggle-485.test.mjs",
+      "test": "485 armed Face owner raycasts all faces rather than selected faces only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /allFaceIds=m\\.faces\\.map\\(\\(_,index\\)=>index\\)/."
+    },
+    {
+      "file": "tests/face-armed-full-toggle-485.test.mjs",
+      "test": "485 tap toggles selected state both directions",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hitWasSelected=selectionBefore\\.includes\\(hit\\)/."
+    },
+    {
+      "file": "tests/face-armed-full-toggle-485.test.mjs",
+      "test": "485 drag on unselected face includes that face in modelling selection",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=hitWasSelected\\?\\[\\.\\.\\.selectionBefore\\]:\\[\\.\\.\\.selectionBefore,hit\\]/."
+    },
+    {
+      "file": "tests/face-armed-full-toggle-485.test.mjs",
+      "test": "485 cache-hops Face direct owner and preserves Rotate/main protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.485/."
+    },
+    {
+      "file": "tests/face-armed-picker-486.test.mjs",
+      "test": "486 armed Face direct uses live viewport faceObjects picker",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /state\\(\\)\\?\\.faceObjects\\?\\.values/."
+    },
+    {
+      "file": "tests/face-armed-picker-486.test.mjs",
+      "test": "486 cache-hops both ownership modules and preserves protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.486/."
+    },
+    {
+      "file": "tests/face-armed-tap-toggle-484.test.mjs",
+      "test": "484 tap on an already-selected face removes only that face",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(event\\.type==='pointerup'&&!d\\.changed\\)/."
+    },
+    {
+      "file": "tests/face-armed-tap-toggle-484.test.mjs",
+      "test": "484 drag path remains unchanged and separate from tap toggle",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /else if\\(event\\.type==='pointerup'&&d\\.changed&&d\\.preview&&!d\\.blocked\\)/."
+    },
+    {
+      "file": "tests/face-armed-tap-toggle-484.test.mjs",
+      "test": "484 cache-hops only Face direct interaction runtime and preserves protected core",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.484/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 creates three compact Face modelling rows",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /faceSecondaryCompactRow/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 keeps armed contextual controls between primary and secondary rows",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(cursor\\.nextElementSibling!==secondary\\)cursor\\.insertAdjacentElement\\('afterend',secondary\\)/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 puts diagnostics below the entire compact modelling block",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /let tail=tertiary/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 Join Coplanar honors compact secondary row",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const compact=document\\.querySelector\\('#faceSecondaryCompactRow'\\)/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 preserves frozen interaction pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.505/."
+    },
+    {
+      "file": "tests/face-debug-cleanup-536.test.mjs",
+      "test": "536 runtime pin current and protected transform unchanged",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.536/."
+    },
+    {
+      "file": "tests/face-deliberate-selection-529.test.mjs",
+      "test": "529 deliberate preselection suppresses sequential overlap substitution",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /preferSequentialUnselected=false;disarmTransforms/."
+    },
+    {
+      "file": "tests/face-deliberate-selection-529.test.mjs",
+      "test": "529 explicit Face tap resets sequential overlap preference",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /bridge\\(\\)\\?\\.toggle\\?\\.\\('face',p\\.hit\\);\\n      preferSequentialUnselected=false;/."
+    },
+    {
+      "file": "tests/face-deliberate-selection-529.test.mjs",
+      "test": "529 runtime pin current and protected transform unchanged",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.529/."
+    },
+    {
+      "file": "tests/face-dense-grid-507.test.mjs",
+      "test": "507 preserves armed context placement and frozen interaction pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.507/."
+    },
+    {
+      "file": "tests/face-diagnostics-bottom-506.test.mjs",
+      "test": "506 keeps compact modelling rows and frozen interaction pins",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /faceSecondaryCompactRow/."
+    },
+    {
+      "file": "tests/face-direct-background-yield-652.test.mjs",
+      "test": "tests/face-direct-background-yield-652.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/face-direct-capture-release-645.test.mjs",
+      "test": "tests/face-direct-capture-release-645.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/face-direct-global-release-640.test.mjs",
+      "test": "tests/face-direct-global-release-640.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/face-direct-main-yield-520.test.mjs",
+      "test": "520 runtime pins Face direct and guarded main together",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/main\\.js\\?v=0\\.36\\.18\\.520/."
+    },
+    {
+      "file": "tests/face-disclosure-exact-502.test.mjs",
+      "test": "502 is presentation-only and preserves stable Face/Rotate pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.502/."
+    },
+    {
+      "file": "tests/face-disclosure-order-503.test.mjs",
+      "test": "503 installs Face contextual controls directly after primary Face row",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const primary=faceTools\\?\\.querySelector\\(':scope > \\.outliner-actions'\\)/."
+    },
+    {
+      "file": "tests/face-disclosure-order-503.test.mjs",
+      "test": "503 preserves frozen Face and Rotate runtime pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.503/."
+    },
+    {
+      "file": "tests/face-disclosure-order-504.test.mjs",
+      "test": "504 orders Inspect and Repair directly above Topology Gate",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /repair\\.insertAdjacentElement\\('afterend',gate\\)/."
+    },
+    {
+      "file": "tests/face-disclosure-order-504.test.mjs",
+      "test": "504 waits for late Face drawer startup and preserves frozen interaction pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.504/."
+    },
+    {
+      "file": "tests/face-empty-restart-496.test.mjs",
+      "test": "496 preserves armed Face direct state after Deselect button",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /#deselectAllBtn/."
+    },
+    {
+      "file": "tests/face-empty-restart-496.test.mjs",
+      "test": "496 cache hop and protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.496/."
+    },
+    {
+      "file": "tests/face-extrude-repeat-518.test.mjs",
+      "test": "518 armed Face drag aligns live selection to working set before modelling",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-extrude-repeat-518.test.mjs",
+      "test": "518 preserves protected non-Face baselines",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /precision-face\\.js\\?v=0\\.36\\.18\\.518/."
+    },
+    {
+      "file": "tests/face-grid-layout-507.test.mjs",
+      "test": "507 Join Coplanar targets requested row 3",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /join-selected-coplanar-faces\\.js\\?v=0\\.36\\.18\\.507/."
+    },
+    {
+      "file": "tests/face-grid-layout-507.test.mjs",
+      "test": "507 preserves frozen interaction pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.507/."
+    },
+    {
+      "file": "tests/face-hitstack-diagnostic-494.test.mjs",
+      "test": "494 FaceTap trace includes face indices and distances",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /stack=hits\\.map\\(item=>/."
+    },
+    {
+      "file": "tests/face-hitstack-diagnostic-494.test.mjs",
+      "test": "494 keeps native primary pick and toggle behavior",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-hitstack-diagnostic-494.test.mjs",
+      "test": "494 cache hops only diagnostic runtimes and protects multi-object pin",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/main\\.js\\?v=0\\.36\\.18\\.494/."
+    },
+    {
+      "file": "tests/face-hitstack-select-495.test.mjs",
+      "test": "495 prefers first unselected Face hit when primary is already selected",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /selected\\.has\\(primary\\)&&Number\\.isInteger\\(firstUnselected\\)\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-hitstack-select-495.test.mjs",
+      "test": "495 still allows deselect when no unselected overlapping hit exists",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=Number\\.isInteger\\(primary\\).*\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-hitstack-select-495.test.mjs",
+      "test": "495 trace exposes primary and chosen hit for hands-on verification",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /primary=\\$\\{primary\\}/."
+    },
+    {
+      "file": "tests/face-hitstack-select-495.test.mjs",
+      "test": "495 cache hop and protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.495/."
+    },
+    {
+      "file": "tests/face-hitstack-select-523.test.mjs",
+      "test": "523 prefers first unselected Face hit when primary is already selected",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /selected\\.has\\(primary\\)&&Number\\.isInteger\\(firstUnselected\\)\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-hitstack-select-523.test.mjs",
+      "test": "523 keeps current working-face handoff after hit-stack resolution",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-hitstack-select-523.test.mjs",
+      "test": "523 current runtime pins are protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.523/."
+    },
+    {
+      "file": "tests/face-inset-targeting-527.test.mjs",
+      "test": "527 overlap preference is Extrude-only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=armed==='extrude'&&selectionBefore\\.length===1&&Number\\.isInteger\\(primary\\)&&selected\\.has\\(primary\\)&&Number\\.isInteger\\(firstUnselected\\)\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-inset-targeting-527.test.mjs",
+      "test": "527 Inset keeps pressed selected face while still accepting unselected direct press",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /primary=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-inset-targeting-527.test.mjs",
+      "test": "527 runtime pins current Face direct and protected transform",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.527/."
+    },
+    {
+      "file": "tests/face-live-scene-picker-487.test.mjs",
+      "test": "487 armed Face picker traverses live scene face meshes",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /scene\\.traverse\\?\\.\\(object=>\\{if\\(object\\?\\.userData\\?\\.kind==='face'/."
+    },
+    {
+      "file": "tests/face-live-scene-picker-487.test.mjs",
+      "test": "487 preserves additive and subtractive tap logic",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hitWasSelected=selectionBefore\\.includes\\(hit\\)/."
+    },
+    {
+      "file": "tests/face-live-scene-picker-487.test.mjs",
+      "test": "487 cache-hops direct Face picker only and preserves protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.487/."
+    },
+    {
+      "file": "tests/face-multiselect-overlap-526.test.mjs",
+      "test": "526 overlap preference is single-selection only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=selectionBefore\\.length===1&&Number\\.isInteger\\(primary\\)&&selected\\.has\\(primary\\)&&Number\\.isInteger\\(firstUnselected\\)\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-multiselect-overlap-526.test.mjs",
+      "test": "526 multi-face press keeps existing selected set",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-multiselect-overlap-526.test.mjs",
+      "test": "526 runtime pins are current and protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.526/."
+    },
+    {
+      "file": "tests/face-native-picker-bridge-489.test.mjs",
+      "test": "489 selection bridge exposes exact native component picker",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /pick:\\(type,event\\)=>pickKind\\(event,type\\)/."
+    },
+    {
+      "file": "tests/face-native-picker-bridge-489.test.mjs",
+      "test": "489 armed Face tools call native bridge picker directly",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const m=mesh\\(\\),picker=bridge\\(\\)\\?\\.pick/."
+    },
+    {
+      "file": "tests/face-native-picker-bridge-489.test.mjs",
+      "test": "489 direct controller owns both additive and subtractive tap resolution",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=hitWasSelected\\?\\[\\.\\.\\.selectionBefore\\]:\\[\\.\\.\\.selectionBefore,hit\\]/."
+    },
+    {
+      "file": "tests/face-native-picker-bridge-489.test.mjs",
+      "test": "489 cache-hops only intended runtimes and preserves protected multi-object pin",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/main\\.js\\?v=0\\.36\\.18\\.489/."
+    },
+    {
+      "file": "tests/face-native-picker-handoff-488.test.mjs",
+      "test": "488 selected-face presses remain owned by direct tool",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /selectedHit=hitSelectedFace\\(event,m,selectionBefore,camera\\)/."
+    },
+    {
+      "file": "tests/face-native-picker-handoff-488.test.mjs",
+      "test": "488 unselected-face presses are handed to native main Face picker",
+      "category": "source-pattern-review",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(start>0)"
+    },
+    {
+      "file": "tests/face-native-picker-handoff-488.test.mjs",
+      "test": "488 native-selected face can promote into direct drag after threshold",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(!drag&&pendingNativePress\\?\\.id===event\\.pointerId\\)/."
+    },
+    {
+      "file": "tests/face-native-picker-handoff-488.test.mjs",
+      "test": "488 cache-hop and protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.488/."
+    },
+    {
+      "file": "tests/face-native-single-extrude-522.test.mjs",
+      "test": "522 runtime cache and release stamp are current",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.522/."
+    },
+    {
+      "file": "tests/face-native-toggle-491.test.mjs",
+      "test": "491 drag path still uses working selection and existing modelling flow",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=p\\.selectionBefore\\.includes\\(p\\.hit\\)\\?\\[\\.\\.\\.p\\.selectionBefore\\]:\\[\\.\\.\\.p\\.selectionBefore,p\\.hit\\]/."
+    },
+    {
+      "file": "tests/face-native-toggle-491.test.mjs",
+      "test": "491 cache hops main/direct and preserves protected multi-object pin",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/main\\.js\\?v=0\\.36\\.18\\.491/."
+    },
+    {
+      "file": "tests/face-owner-cleanup-501.test.mjs",
+      "test": "501 preserves single-owner armed Face selection fix",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-owner-cleanup-501.test.mjs",
+      "test": "501 preserves protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.519/."
+    },
+    {
+      "file": "tests/face-provisional-selection-519.test.mjs",
+      "test": "519 drag still uses authoritative one-face working set and protected pins",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-repeat-direct-531.test.mjs",
+      "test": "531 runtime pins current replay modules and protected transform",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.531/."
+    },
+    {
+      "file": "tests/face-repeat-explicit-target-530.test.mjs",
+      "test": "530 synthetic Repeat Exact skips live hit-stack repick",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=!synthetic&&armed==='extrude'/."
+    },
+    {
+      "file": "tests/face-repeat-explicit-target-530.test.mjs",
+      "test": "530 runtime pin current and protected transform unchanged",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.530/."
+    },
+    {
+      "file": "tests/face-repeat-ownership-528.test.mjs",
+      "test": "528 Repeat/Exact synthetic Extrude keeps explicit selected Face",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /event\\.pointerId!==9876&&armed==='extrude'/."
+    },
+    {
+      "file": "tests/face-repeat-ownership-528.test.mjs",
+      "test": "528 runtime pins current Repeat-safe Face ownership",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.528/."
+    },
+    {
+      "file": "tests/face-repeat-state-sync-532.test.mjs",
+      "test": "532 drawer pins updated state-sync modules",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /precision-face\\.js\\?v=0\\.36\\.18\\.532/."
+    },
+    {
+      "file": "tests/face-screen-picker-498.test.mjs",
+      "test": "498 armed Face picker uses projected face polygons",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /function pointInPolygon2D/."
+    },
+    {
+      "file": "tests/face-screen-picker-498.test.mjs",
+      "test": "498 rejects back-facing faces before choosing a hit",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /normal\\.dot\\(toCamera\\)<=1e-5/."
+    },
+    {
+      "file": "tests/face-screen-picker-498.test.mjs",
+      "test": "498 chooses nearest depth only among projected visible candidates",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /candidates\\.push\\(\\{index,distance\\}\\)/."
+    },
+    {
+      "file": "tests/face-screen-picker-498.test.mjs",
+      "test": "498 armed pointerdown uses screen picker, not hit-stack fallback",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=armedVisibleFaceHit\\(event,m,camera\\)/."
+    },
+    {
+      "file": "tests/face-screen-picker-498.test.mjs",
+      "test": "498 preserves tap toggle, drag flow and protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.498/."
+    },
+    {
+      "file": "tests/face-single-owner-499.test.mjs",
+      "test": "499 direct owner uses native visible picker and native toggle",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-single-owner-499.test.mjs",
+      "test": "499 cache hops both ownership modules",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.499/."
+    },
+    {
+      "file": "tests/face-single-owner-499.test.mjs",
+      "test": "499 preserves protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/rotate-transform\\.js\\?v=0\\.36\\.18\\.483/."
+    },
+    {
+      "file": "tests/face-tap-before-model-490.test.mjs",
+      "test": "490 pointerdown records face hit without validating modelling region",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /selectionComponentsInfo\\(|faceRegionsInfo/."
+    },
+    {
+      "file": "tests/face-tap-before-model-490.test.mjs",
+      "test": "490 tap selection resolves before modelling validation",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const next=p\\.selectionBefore\\.includes\\(p\\.hit\\)/."
+    },
+    {
+      "file": "tests/face-tap-before-model-490.test.mjs",
+      "test": "490 keeps native picker bridge and protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/main\\.js\\?v=0\\.36\\.18\\.489/."
+    },
+    {
+      "file": "tests/face-tap-diagnostic-492.test.mjs",
+      "test": "492 adds persistent FaceTap diagnostic readout",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /faceTapDebug/."
+    },
+    {
+      "file": "tests/face-tap-diagnostic-492.test.mjs",
+      "test": "492 records staged selection state around native toggle",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /up hit=\\$\\{p\\.hit\\} ok=\\$\\{ok\\} before=/."
+    },
+    {
+      "file": "tests/face-tap-diagnostic-492.test.mjs",
+      "test": "492 keeps current native picker/toggle behavior unchanged",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-tap-diagnostic-492.test.mjs",
+      "test": "492 cache hop and protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.492/."
+    },
+    {
+      "file": "tests/face-tap-trace-493.test.mjs",
+      "test": "493 keeps full FaceTap trace instead of overwriting stages",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /append&&faceTapDebug\\.textContent/."
+    },
+    {
+      "file": "tests/face-tap-trace-493.test.mjs",
+      "test": "493 is diagnostic-only over 492 behavior",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.493/."
+    },
+    {
+      "file": "tests/face-through-fallback-ownership-525.test.mjs",
+      "test": "525 runtime cache hops both direct Face and fallback loader",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.525/."
+    },
+    {
+      "file": "tests/face-visible-only-497.test.mjs",
+      "test": "497 armed Face taps use only nearest native visible hit",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const selectionBefore=faces\\(\\),hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-visible-only-497.test.mjs",
+      "test": "497 preserves drag modelling and protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-face-direct\\.js\\?v=0\\.36\\.18\\.497/."
+    },
+    {
+      "file": "tests/facegroup-colour-core-451-sentinel.test.mjs",
+      "test": "451 does not wire facegroup colours into render runtime yet",
+      "category": "rollback-sentinel-review",
+      "assertion": "Expected values to be strictly equal:\n\ntrue !== false"
+    },
+    {
+      "file": "tests/facegroup-data-connection-456.test.mjs",
+      "test": "456 restores split import control and authoritative Facegroups mesh lookup",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /return bridge\\(\\)\\?\\.mesh\\|\\|null/."
+    },
+    {
+      "file": "tests/facegroup-first-activation-457.test.mjs",
+      "test": "457 entering Facegroups rebuilds and reapplies after viewport settles",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /requestAnimationFrame\\(\\(\\)=>requestAnimationFrame/."
+    },
+    {
+      "file": "tests/facegroup-mirror-459.test.mjs",
+      "test": "459 Facegroups viewport evaluates Mirror but not SubD yet",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /applyMirror\\(source,active\\.settings\\.mirror\\)/."
+    },
+    {
+      "file": "tests/facegroup-solidify-465.test.mjs",
+      "test": "465 does not touch Shell core",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /target\\.faceGroups=/."
+    },
+    {
+      "file": "tests/file-menu-config-545.test.mjs",
+      "test": "545 runtime pin current and Beta 5 protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/topbar-layout\\.js\\?v=0\\.36\\.18\\.545/."
+    },
+    {
+      "file": "tests/file-menu-input-542.test.mjs",
+      "test": "542 File menu does not close when editing form controls",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const editable=event\\.target\\?\\.closest\\?\\('#fileMenu input,#fileMenu textarea,#fileMenu select/."
+    },
+    {
+      "file": "tests/file-menu-input-542.test.mjs",
+      "test": "542 File menu still closes after button actions",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const action=event\\.target\\?\\.closest\\?\\('#fileMenu button'\\)/."
+    },
+    {
+      "file": "tests/file-menu-input-542.test.mjs",
+      "test": "542 runtime pins updated and Beta 5 protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/topbar-layout\\.js\\?v=0\\.36\\.18\\.542/."
+    },
+    {
+      "file": "tests/file-name-refresh-541.test.mjs",
+      "test": "541 busts stale stylesheet cache",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /styles\\.css\\?v=0\\.36\\.18\\.541/."
+    },
+    {
+      "file": "tests/fix-component-rotate-start-482.test.mjs",
+      "test": "482 Rotate no longer depends on selected-component hit test",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hitIndex=t==='rotate'\\?ids\\[0\\]\\?\\?0:hitSelectedIndex/."
+    },
+    {
+      "file": "tests/fix-component-rotate-start-482.test.mjs",
+      "test": "482 cache-hops shared transform and preserves protected core",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/transform-upgrade\\.js\\?v=0\\.36\\.18\\.482/."
+    },
+    {
+      "file": "tests/fix-face-rotate-479.test.mjs",
+      "test": "479 generic transform owner yields Face Rotate",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(m==='face'&&t==='rotate'\\)return;/."
+    },
+    {
+      "file": "tests/fix-face-rotate-479.test.mjs",
+      "test": "479 dedicated Face Rotate reads selection from authoritative bridge",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /mode!=='face'/."
+    },
+    {
+      "file": "tests/fix-face-rotate-479.test.mjs",
+      "test": "479 cache-hops both Face Rotate owners and leaves protected main untouched",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/transform-upgrade\\.js\\?v=0\\.36\\.18\\.479/."
+    },
+    {
+      "file": "tests/fix-shared-component-rotate-480.test.mjs",
+      "test": "480 cache-hops shared transform and preserves protected core",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/transform-upgrade\\.js\\?v=0\\.36\\.18\\.480/."
+    },
+    {
+      "file": "tests/fix-shared-rotate-move-capture-481.test.mjs",
+      "test": "481 cache-hops shared transform and preserves protected core",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/transform-upgrade\\.js\\?v=0\\.36\\.18\\.481/."
+    },
+    {
+      "file": "tests/gizmo-direct-tool-ownership-636.test.mjs",
+      "test": "tests/gizmo-direct-tool-ownership-636.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/gizmo-face-tool-resume-637.test.mjs",
+      "test": "tests/gizmo-face-tool-resume-637.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/glb-logical-object-544.test.mjs",
+      "test": "544 runtime pin and frozen Beta 5",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/import-mesh\\.js\\?v=0\\.36\\.18\\.544/."
+    },
+    {
+      "file": "tests/glb-quad-reconstruct-548.test.mjs",
+      "test": "548 runtime pin current and Beta 5 protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/import-mesh\\.js\\?v=0\\.36\\.18\\.548/."
+    },
+    {
+      "file": "tests/global-component-release-631.test.mjs",
+      "test": "tests/global-component-release-631.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/group-boolean-368.test.mjs",
+      "test": "368 Group Boolean hides source Groups only after one scene checkpoint",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /__boxlabObjectHistory\\?\\.checkpoint\\?\\.\\(\\)/."
+    },
+    {
+      "file": "tests/group-boolean-368.test.mjs",
+      "test": "368 protected linked-instance and Group transform baselines remain pinned",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /object-management\\.js\\?v=0\\.36\\.18\\.392/."
+    },
+    {
+      "file": "tests/group-boolean-compound-369.test.mjs",
+      "test": "369 protected linked-instance and Group transform baselines remain pinned",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /boolean-prototype\\.js\\?v=0\\.36\\.18\\.369/."
+    },
+    {
+      "file": "tests/group-owner-boolean-351.test.mjs",
+      "test": "351 cache chain and protected transform pin remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /object-management\\.js\\?v=0\\.36\\.18\\.392/."
+    },
+    {
+      "file": "tests/group-persistence.test.mjs",
+      "test": "348 cache chain and protected transform pin are intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /drawer-ui\\.js\\?v=0\\.36\\.18\\.361/."
+    },
+    {
+      "file": "tests/group-selection-ux.test.mjs",
+      "test": "349 current cache chain and protected transform remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /object-management\\.js\\?v=0\\.36\\.18\\.392/."
+    },
+    {
+      "file": "tests/group-transform-context-355.test.mjs",
+      "test": "355 object-origin remains pinned while current Object UI loaders advance independently",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /object-management\\.js\\?v=0\\.36\\.18\\.392/."
+    },
+    {
+      "file": "tests/group-viewport-context-354.test.mjs",
+      "test": "354 current cache chain and protected transform pin remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/import-module-546.test.mjs",
+      "test": "546 runtime pin current and Beta 5 protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/import-mesh\\.js\\?v=0\\.36\\.18\\.546/."
+    },
+    {
+      "file": "tests/insert-tool-438.test.mjs",
+      "test": "438 shell loads Insert beside Transform and Beta 4 stays frozen",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/surface-transform\\.js\\?v=0\\.36\\.18\\.442/."
+    },
+    {
+      "file": "tests/inward-extrude-cut-385.test.mjs",
+      "test": "Inward-cut runtime follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /sequential-through-fallback\\.js\\?v=0\\.36\\.18\\.385/."
+    },
+    {
+      "file": "tests/linked-creation-atomic-363.test.mjs",
+      "test": "363 current linked runtime and protected Group transform baseline remain pinned",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/linked-instance-placement-362.test.mjs",
+      "test": "362 current linked runtime and protected Group transform baseline remain pinned",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/live-mesh-bridge-366.test.mjs",
+      "test": "366 live mesh and current linked runtime pins remain protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/main\\.js\\?v=0\\.36\\.18\\.366/."
+    },
+    {
+      "file": "tests/loop-cut-commit-632.test.mjs",
+      "test": "tests/loop-cut-commit-632.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/make-unique-materialization-641.test.mjs",
+      "test": "tests/make-unique-materialization-641.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/mesh-auto-close-441.test.mjs",
+      "test": "441 UI exposes Auto Close in Mesh Health and protects frozen baselines",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/mesh-health\\.js\\?v=0\\.36\\.18\\.442/."
+    },
+    {
+      "file": "tests/mesh-boundary-diagnostics-442.test.mjs",
+      "test": "442 UI exposes boundary diagnostic selection handoff and preserves frozen baselines",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/mesh-health\\.js\\?v=0\\.36\\.18\\.442/."
+    },
+    {
+      "file": "tests/mesh-health-439.test.mjs",
+      "test": "439 Mesh Health inspection remains read-only while current shell loads the evolved tool",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/mesh-health\\.js\\?v=0\\.36\\.18\\.442/."
+    },
+    {
+      "file": "tests/mesh-health-repair-440.test.mjs",
+      "test": "440 UI exposes Safe Repair transactionally inside Mesh Health and keeps protected baselines",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/mesh-health\\.js\\?v=0\\.36\\.18\\.442/."
+    },
+    {
+      "file": "tests/mesh-normals-triangulate-443.test.mjs",
+      "test": "443 UI exposes normals and triangulation controls and preserves frozen baselines",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/mesh-health\\.js\\?v=0\\.36\\.18\\.443/."
+    },
+    {
+      "file": "tests/modeless-grow-shrink-638.test.mjs",
+      "test": "tests/modeless-grow-shrink-638.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/no-facegroups-ui-453.test.mjs",
+      "test": "453 recovery has no Facegroups render-look button",
+      "category": "rollback-sentinel-review",
+      "assertion": "Expected values to be strictly equal:\n\ntrue !== false"
+    },
+    {
+      "file": "tests/nomad-attribute-preservation-551.test.mjs",
+      "test": "551 runtime pins current and Beta 5 remains protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/export-as-panel\\.js\\?v=0\\.36\\.18\\.551/."
+    },
+    {
+      "file": "tests/nomad-facegroup-export-547.test.mjs",
+      "test": "547 runtime pins current and frozen Beta 5 remains untouched",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/export-as-panel\\.js\\?v=0\\.36\\.18\\.547/."
+    },
+    {
+      "file": "tests/nomad-facegroups-540.test.mjs",
+      "test": "540 GLB import maps primitive/material groups to BoxLab faceGroups",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /geometry\\.groups/."
+    },
+    {
+      "file": "tests/nomad-facegroups-540.test.mjs",
+      "test": "540 GLB export emits one mesh with material groups per facegroup",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /new THREE\\.Mesh\\(geometry,materials\\.length===1\\?materials\\[0\\]:materials\\)/."
+    },
+    {
+      "file": "tests/nomad-facegroups-540.test.mjs",
+      "test": "540 runtime pins current and Beta 5 remains frozen",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/import-mesh\\.js\\?v=0\\.36\\.18\\.540/."
+    },
+    {
+      "file": "tests/nomad-glb-passthrough-549.test.mjs",
+      "test": "549 export reattaches safe Nomad metadata and texture bytes",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /passthrough:object\\.glbPassthrough\\|\\|null/."
+    },
+    {
+      "file": "tests/nomad-glb-passthrough-549.test.mjs",
+      "test": "549 runtime pins current and Beta 5 protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/multi-object\\.js\\?v=0\\.36\\.18\\.549/."
+    },
+    {
+      "file": "tests/nomad-indexed-topology-553.test.mjs",
+      "test": "553 keeps preserved corner channels in the weld key",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(uvComplete\\)parts\\.push\\('u:'/."
+    },
+    {
+      "file": "tests/nomad-indexed-topology-553.test.mjs",
+      "test": "553 runtime pins current and protected baselines remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/export-as-panel\\.js\\?v=0\\.36\\.18\\.553/."
+    },
+    {
+      "file": "tests/nomad-morph-layer-preservation-552.test.mjs",
+      "test": "552 runtime pins current and protected baselines remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/export-as-panel\\.js\\?v=0\\.36\\.18\\.552/."
+    },
+    {
+      "file": "tests/nomad-morph-weight-pole-weld-555.test.mjs",
+      "test": "555 runtime pins current",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/import-mesh\\.js\\?v=0\\.36\\.18\\.555/."
+    },
+    {
+      "file": "tests/nomad-roundtrip-543.test.mjs",
+      "test": "543 import records round-trip object and facegroup details",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /lastImport=\\{objects:meshes\\.length,faceGroups:groupCount,details:perObject\\}/."
+    },
+    {
+      "file": "tests/nomad-roundtrip-543.test.mjs",
+      "test": "543 runtime pins current and Beta 5 stays frozen",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/export-as-panel\\.js\\?v=0\\.36\\.18\\.543/."
+    },
+    {
+      "file": "tests/nomad-roundtrip-scale-556.test.mjs",
+      "test": "556 runtime pins current and protected transform pin stays fixed",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/export-as-panel\\.js\\?v=0\\.36\\.18\\.556/."
+    },
+    {
+      "file": "tests/nomad-uv-preservation-550.test.mjs",
+      "test": "550 captures GLB UVs per face corner",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /quadCornerUVs\\(/."
+    },
+    {
+      "file": "tests/nomad-uv-preservation-550.test.mjs",
+      "test": "550 restores UV attribute only when topology still matches",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /passthrough\\.uvTopologySignature===topologySignature\\(editable\\)/."
+    },
+    {
+      "file": "tests/nomad-uv-preservation-550.test.mjs",
+      "test": "550 runtime pins current and Beta 5 protected",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/export-as-panel\\.js\\?v=0\\.36\\.18\\.550/."
+    },
+    {
+      "file": "tests/nomad-weighted-morph-554.test.mjs",
+      "test": "554 runtime pins current",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/import-mesh\\.js\\?v=0\\.36\\.18\\.554/."
+    },
+    {
+      "file": "tests/object-session-defaults-517.test.mjs",
+      "test": "517 cache-hops only Object-session owners and preserves protected runtimes",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.517/."
+    },
+    {
+      "file": "tests/offset-loop-transactional.test.mjs",
+      "test": "340 Offset Loop exposes one armed-state controller and current cache chain",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /__boxlabOffsetLoop=\\{version:'0\\.36\\.18\\.340',isArmed:\\(\\)=>armed,disarm,info\\}/."
+    },
+    {
+      "file": "tests/orbit-registration-handoff-647.test.mjs",
+      "test": "tests/orbit-registration-handoff-647.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/outliner-delete-shortcut-359.test.mjs",
+      "test": "359 current linked runtime and protected Group transform baseline remain untouched",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/outliner-popover-upward-357.test.mjs",
+      "test": "357-358 current cache chain and protected Group baseline remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /object-management\\.js\\?v=0\\.36\\.18\\.392/."
+    },
+    {
+      "file": "tests/outliner-subd-toggle-361.test.mjs",
+      "test": "361 current Object runtime and protected Group transform baseline remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/pencil-contact-classification-648.test.mjs",
+      "test": "tests/pencil-contact-classification-648.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/pencil-contact-lifecycle-650.test.mjs",
+      "test": "tests/pencil-contact-lifecycle-650.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/pencil-deferred-orbit-651.test.mjs",
+      "test": "tests/pencil-deferred-orbit-651.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/pencil-orbit-diagnostics-646.test.mjs",
+      "test": "tests/pencil-orbit-diagnostics-646.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/persistent-inactive-layer-365.test.mjs",
+      "test": "365 current linked runtime and protected Group transform baseline remain untouched",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/recovery-451-runtime-marker.test.mjs",
+      "test": "451 recovery step is isolated to dormant facegroup colour core",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /facegroup-colours-core/."
+    },
+    {
+      "file": "tests/recovery-453-render-modes.test.mjs",
+      "test": "453 restores dormant facegroup core and proven 451 render runtime",
+      "category": "rollback-sentinel-review",
+      "assertion": "Expected values to be strictly equal:\n\ntrue !== false"
+    },
+    {
+      "file": "tests/rejected-452-regression.test.mjs",
+      "test": "453 does not replay rejected 452 viewport wiring",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /facegroupMaterial/."
+    },
+    {
+      "file": "tests/release-refresh-521.test.mjs",
+      "test": "521 HTML shell is stamped with the current release",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /<title>BoxLab v0\\.36\\.18\\.521<\\/title>/."
+    },
+    {
+      "file": "tests/release-refresh-521.test.mjs",
+      "test": "521 release bootstrap and release-version use fresh cache keys",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/release-bootstrap\\.js\\?v=0\\.36\\.18\\.521/."
+    },
+    {
+      "file": "tests/release-refresh-521.test.mjs",
+      "test": "521 stale shell can retry even when build query already matches latest",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /attempts >= 3/."
+    },
+    {
+      "file": "tests/rename-dialog-group-refresh-353.test.mjs",
+      "test": "353 current release cache chain and protected transform pin remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/repeat-previous-contract.test.mjs",
+      "test": "328 Repeat Previous has one authoritative loader through drawer UI",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /import\\('\\.\\/precision-face\\.js\\?v=0\\.36\\.18\\.327'\\)/."
+    },
+    {
+      "file": "tests/repeat-previous-contract.test.mjs",
+      "test": "327 precision Face exposes exact replay API and committed last operation",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /window\\.__boxlabPrecisionFace=\\{version:'0\\.36\\.18\\.327'/."
+    },
+    {
+      "file": "tests/repeat-previous-contract.test.mjs",
+      "test": "327 Repeat Previous replays only Extrude or Inset committed values",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /api\\.applyFor\\(op\\.tool,op\\.value\\)/."
+    },
+    {
+      "file": "tests/revolve-active-tools-391.test.mjs",
+      "test": "Revolve Active Tools runtime follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.517'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/revolve-apply-selection-392.test.mjs",
+      "test": "Revolve Apply cleanup runtime follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.517'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/revolve-profile-edit-390.test.mjs",
+      "test": "Revolve profile editor runtime follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.517'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/revolve-profile-runtime-388.test.mjs",
+      "test": "Live Revolve Profile runtime follows current app build and stays exposed from Add",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.517'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/revolve-profile-tool-session-422.test.mjs",
+      "test": "422 Revolve Profile exposes compact launcher before session ownership",
+      "category": "source-pattern-review",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(revolve.includes(&quot;launchRow.hidden=true&quot;))"
+    },
+    {
+      "file": "tests/revolve-profile-tool-session-422.test.mjs",
+      "test": "422 shared drawer ownership and protected transform pin remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(index.includes('src/revolve-profile.js?v='+version))"
+    },
+    {
+      "file": "tests/revolve-refine-389.test.mjs",
+      "test": "389 new construction starts positioned before profile editing",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /position\\/snap the plane first/."
+    },
+    {
+      "file": "tests/revolve-runtime-386.test.mjs",
+      "test": "Revolve runtime follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.471'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/scene-obj-export-444.test.mjs",
+      "test": "444 scene OBJ preflight reports clean closed and open export meshes",
+      "category": "obj-output-contract",
+      "assertion": "The input did not match the regular expression /o Closed Cube\\ng Closed Cube/."
+    },
+    {
+      "file": "tests/selection-button-layout.test.mjs",
+      "test": "270 cache-hops stylesheet",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /styles\\.css\\?v=0\\.36\\.18\\.270/."
+    },
+    {
+      "file": "tests/selection-hub-availability-658.test.mjs",
+      "test": "tests/selection-hub-availability-658.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/selection-hub-bevel-session-662.test.mjs",
+      "test": "tests/selection-hub-bevel-session-662.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/selection-hub-direct-restore-649.test.mjs",
+      "test": "tests/selection-hub-direct-restore-649.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/selection-hub-edge-654.test.mjs",
+      "test": "tests/selection-hub-edge-654.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/selection-hub-face-642.test.mjs",
+      "test": "tests/selection-hub-face-642.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/selection-hub-shell-session-653.test.mjs",
+      "test": "tests/selection-hub-shell-session-653.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/selection-hub-sweep-session-643.test.mjs",
+      "test": "tests/selection-hub-sweep-session-643.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/selection-mode-dock-557.test.mjs",
+      "test": "557 selection modes are docked bottom-left without DOM/id changes",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /v0\\.36\\.18\\.557 bottom-left selection mode dock/."
+    },
+    {
+      "file": "tests/selection-mode-dock-557.test.mjs",
+      "test": "557 publishes only the CSS/version path and keeps protected runtime pin",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /styles\\.css\\?v=0\\.36\\.18\\.557/."
+    },
+    {
+      "file": "tests/selection-navigation-retention.test.mjs",
+      "test": "navigation movement preserves current selection",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /Math\\.hypot\\(event\\.clientX-backgroundTap\\.startX,event\\.clientY-backgroundTap\\.startY\\)>=EDIT_DRAG_THRESHOLD\\)backgroundTap\\.moved=true/."
+    },
+    {
+      "file": "tests/selection-navigation-retention.test.mjs",
+      "test": "current main runtime retains navigation-selection baseline",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /main\\.js\\?v=0\\.36\\.18\\.366/."
+    },
+    {
+      "file": "tests/selection-tint-numbering-352.test.mjs",
+      "test": "352 current release cache chain and protected transform pin remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/shell-first-press-537.test.mjs",
+      "test": "537 runtime pin current and protected transform unchanged",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/shell\\.js\\?v=0\\.36\\.18\\.537/."
+    },
+    {
+      "file": "tests/shell-pencil-late-native-379.test.mjs",
+      "test": "Shell late-native Pencil guard follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.444'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/shell-pencil-thickness-378.test.mjs",
+      "test": "Shell Pencil thickness wrapper follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.444'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/shell-preview-visibility-380.test.mjs",
+      "test": "Shell preview visibility wrapper follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.444'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/shell-runtime-377.test.mjs",
+      "test": "Shell wrapper follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.444'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/shell-solidify-recovery-464.test.mjs",
+      "test": "464 restores .461 Shell and Solidify core contracts",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /target\\.faceGroups=/."
+    },
+    {
+      "file": "tests/solidify-direct-drag-375.test.mjs",
+      "test": "Solidify direct-drag wrapper follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.444'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/solidify-drawer-lock-376.test.mjs",
+      "test": "Solidify drawer-lock wrapper follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.444'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/solidify-drawer-lock-376.test.mjs",
+      "test": "376 does not edit global drawer owner or hard-fold core pin",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /drawer-ui\\.js\\?v=0\\.36\\.18\\.361/."
+    },
+    {
+      "file": "tests/solidify-mirrored-object-429.test.mjs",
+      "test": "430 Solidify runtime preserves Mirror and mirrors only the preview display",
+      "category": "version-pin-assertion",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(index.includes('src/solidify.js?v='+version))"
+    },
+    {
+      "file": "tests/solidify-mirrored-object-429.test.mjs",
+      "test": "431 Solidify routes active Mirror axes into the topology core",
+      "category": "version-pin-assertion",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(index.includes('src/solidify.js?v='+version))"
+    },
+    {
+      "file": "tests/solidify-preview-374.test.mjs",
+      "test": "Solidify live wrapper follows the current app build while hard-fold core stays pinned",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.444'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/solidify-preview-visibility-381.test.mjs",
+      "test": "Solidify preview visibility wrapper follows current app build",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.444'\n- '0.36.18.736'\n           ^"
+    },
+    {
+      "file": "tests/solidify-shell-tool-session-421.test.mjs",
+      "test": "421 shared Tool Session owns drawer visibility and protected multi-object transform remains pinned",
+      "category": "version-pin-assertion",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(index.includes('src/tool-session-ui.js?v='+version))"
+    },
+    {
+      "file": "tests/surface-transform-436.test.mjs",
+      "test": "436 UI owns a surface-relative transactional Tool Session",
+      "category": "version-pin-assertion",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(index.includes('src/surface-transform.js?v=0.36.18.442'))"
+    },
+    {
+      "file": "tests/sweep-add-recovery-471.test.mjs",
+      "test": "471 changed Sweep and Revolve modules are cache-hopped",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/sweep-path\\.js\\?v=0\\.36\\.18\\.471/."
+    },
+    {
+      "file": "tests/sweep-declaration-ui-472.test.mjs",
+      "test": "472 Edge Bevel exact control is repositioned before Slide precision anchor",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /edgePrecisionAnchor=document\\.querySelector\\('\\.loop-slide-option'\\)/."
+    },
+    {
+      "file": "tests/sweep-declaration-ui-472.test.mjs",
+      "test": "472 changed runtime loaders are cache-hopped",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /precision-bevel\\.js\\?v=0\\.36\\.18\\.472/."
+    },
+    {
+      "file": "tests/sweep-edit-ownership-400.test.mjs",
+      "test": "400 transform gestures yield to Sweep editing ownership",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /__boxlabSweepPath\\?\\.editing\\?\\.\\(\\)/."
+    },
+    {
+      "file": "tests/sweep-layout-515.test.mjs",
+      "test": "515 cache-hops only Sweep/layout presentation owners and preserves protected baselines",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /component-circle\\.js\\?v=0\\.36\\.18\\.515/."
+    },
+    {
+      "file": "tests/sweep-white-active-509.test.mjs",
+      "test": "509 cache-hops Sweep only and preserves protected interaction pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/sweep-path\\.js\\?v=0\\.36\\.18\\.515/."
+    },
+    {
+      "file": "tests/symmetry-bisect-428.test.mjs",
+      "test": "428 UI uses Tool Session and preserves frozen Beta 4 version",
+      "category": "version-pin-assertion",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(index.includes('src/symmetry-bisect.js?v='+version))"
+    },
+    {
+      "file": "tests/symmetry-bisect-428.test.mjs",
+      "test": "435 Align to Face and Flip Plane are wired into the Symmetry Tool Session",
+      "category": "version-pin-assertion",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(index.includes('src/symmetry-bisect.js?v='+version))"
+    },
+    {
+      "file": "tests/through-navigation-release-644.test.mjs",
+      "test": "tests/through-navigation-release-644.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/total-gizmo-570.test.mjs",
+      "test": "tests/total-gizmo-570.test.mjs",
+      "category": "aggregate-script",
+      "assertion": "test failed"
+    },
+    {
+      "file": "tests/touch-object-activation-364.test.mjs",
+      "test": "364 current linked runtime and protected Group transform baseline remain untouched",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/touch-orbit-selection-stability-367.test.mjs",
+      "test": "367 live mesh bridge and protected transform pins remain intact",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /multi-object\\.js\\?v=0\\.36\\.18\\.367/."
+    },
+    {
+      "file": "tests/ui-fit-face-layout.test.mjs",
+      "test": "342 File menu fits below command bar with internal scrolling",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /top:calc\\(100% \\+ var\\(--boxlab-commandbar-h\\) \\+ 6px\\)/."
+    },
+    {
+      "file": "tests/ui-fit-face-layout.test.mjs",
+      "test": "342 runtime cache-hops File and Face layout owners",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /face-workflow-layout\\.js\\?v=0\\.36\\.18\\.342/."
+    },
+    {
+      "file": "tests/unified-toggle-selection.test.mjs",
+      "test": "selected component tap records exact hit and toggles it off on pointer-up",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /current\\.kind==='component'&&!current\\.armed&&event\\.type==='pointerup'&&current\\.tapHit/."
+    },
+    {
+      "file": "tests/unified-toggle-selection.test.mjs",
+      "test": "blank component-area tap still clears selection, but only after tap confirmation",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(!tap\\.cancelled&&!moved\\)\\{clearSelection\\(\\);renderMesh\\(\\);\\}/."
+    },
+    {
+      "file": "tests/unify-component-rotate-483.test.mjs",
+      "test": "483 shared transform yields component Rotate only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(t==='rotate'&&\\['vertex','edge','face'\\]\\.includes\\(m\\)\\)return;/."
+    },
+    {
+      "file": "tests/unify-component-rotate-483.test.mjs",
+      "test": "483 cache-hops both Rotate owners and preserves protected core",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/transform-upgrade\\.js\\?v=0\\.36\\.18\\.483/."
+    },
+    {
+      "file": "tests/version-453.test.mjs",
+      "test": "453 version marker",
+      "category": "version-pin-assertion",
+      "assertion": "Expected values to be strictly equal:\n+ actual - expected\n\n+ '0.36.18.736'\n- '0.36.18.453'\n           ^"
+    },
+    {
+      "file": "tests/vertex-bevel-merge-first-513.test.mjs",
+      "test": "513 cache-hops only Vertex-owned modules and preserves protected pins",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /precision-bevel\\.js\\?v=0\\.36\\.18\\.513/."
+    },
+    {
+      "file": "tests/vertex-progressive-disclosure-474.test.mjs",
+      "test": "474 disclosure is presentation-only and cache-hopped through tool-session-ui",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /src\\/tool-session-ui\\.js\\?v=0\\.36\\.18\\.474/."
+    },
+    {
+      "file": "tests/vertex-tool-layout.test.mjs",
+      "test": "341 runtime cache-hops all Vertex layout owners",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /component-circle\\.js\\?v=0\\.36\\.18\\.341/."
+    },
+    {
+      "file": "tests/viewport-scroll-467.test.mjs",
+      "test": "467 Viewport menu is height-limited and vertically scrollable",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /max-height:calc\\(100dvh - 118px\\)/."
+    }
+  ],
+  "audited_commit": "acb4012f6a925244f98630dc1fc3b0a8d4be8f86",
+  "runtime": "Node v24.19.0 (CI uses Node 22; not rerun there in this audit)",
+  "date": "2026-10-05",
+  "classification_note": "Failure signatures, not confirmed defects. Source assertions may mask missing behavior; first failing assertion can hide later assertions.",
+  "aggregate_details": [
+    {
+      "file": "armed-selection-635.test.mjs",
+      "failed_checks": [
+        "FAIL published pins .635",
+        "FAIL release version .635"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "collapsed-gizmo-hit-isolation-639.test.mjs",
+      "failed_checks": [
+        "FAIL collapsed SVG removed from hit-testing",
+        "FAIL published total-gizmo pin .639",
+        "FAIL release .639"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "direct-tool-ownership-660.test.mjs",
+      "failed_checks": [
+        "FAIL Bevel API exposes active/disarm",
+        "FAIL main pin .660",
+        "FAIL gate pin .660",
+        "FAIL bevel pin .660",
+        "FAIL release .660"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "dormant-gizmo-browser-633.test.mjs",
+      "failed_checks": [
+        "FAIL component gizmo has dormant activator puck",
+        "FAIL selection change collapses component gizmo",
+        "FAIL object mode keeps full gizmo",
+        "FAIL published pins .633",
+        "FAIL release version .633"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "edge-face-boundary-candidates-656.test.mjs",
+      "failed_checks": [
+        "FAIL transactional preview retained",
+        "FAIL main pin .656",
+        "FAIL release .656",
+        "FAIL Edge Hub retained",
+        "FAIL Shell retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "edge-face-boundary-candidates-657.test.mjs",
+      "failed_checks": [
+        "FAIL candidate-only preview retained",
+        "FAIL main pin .657",
+        "FAIL release .657"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "edge-hold-additive-base-659.test.mjs",
+      "failed_checks": [
+        "FAIL main pin .659",
+        "FAIL release .659",
+        "FAIL radial availability .658 retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "edge-hold-browser-655.test.mjs",
+      "failed_checks": [
+        "FAIL candidate preview replaces selection",
+        "FAIL old additive merge removed",
+        "FAIL main pin .655",
+        "FAIL release .655",
+        "FAIL Edge Hub retained",
+        "FAIL Shell retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "face-direct-background-yield-652.test.mjs",
+      "failed_checks": [
+        "FAIL branch disarms tool",
+        "FAIL branch clears pending state",
+        "FAIL branch emits navigation yield",
+        "FAIL published Face-direct pin .652",
+        "FAIL release .652",
+        "FAIL Sweep retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "face-direct-capture-release-645.test.mjs",
+      "failed_checks": [
+        "FAIL published Face-direct pin .645",
+        "FAIL release .645",
+        "FAIL Sweep proxy retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "face-direct-global-release-640.test.mjs",
+      "failed_checks": [
+        "FAIL published Face-direct pin .640",
+        "FAIL release .640"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "gizmo-direct-tool-ownership-636.test.mjs",
+      "failed_checks": [
+        "FAIL published pins .636",
+        "FAIL release .636"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "gizmo-face-tool-resume-637.test.mjs",
+      "failed_checks": [
+        "FAIL published pins .637",
+        "FAIL release .637"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "global-component-release-631.test.mjs",
+      "failed_checks": [
+        "FAIL Face/Edge hold release uses window capture",
+        "FAIL Face/Edge hold cancel uses window capture",
+        "FAIL Main module pin .631",
+        "FAIL Paint module pin .631",
+        "FAIL Release version .631"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "loop-cut-commit-632.test.mjs",
+      "failed_checks": [
+        "FAIL published module pin .632",
+        "FAIL release version .632"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "make-unique-materialization-641.test.mjs",
+      "failed_checks": [
+        "FAIL published multi-object pin .641",
+        "FAIL release .641"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "modeless-grow-shrink-638.test.mjs",
+      "failed_checks": [
+        "FAIL published pins .638",
+        "FAIL release .638"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "orbit-registration-handoff-647.test.mjs",
+      "failed_checks": [
+        "FAIL routing policy unchanged",
+        "FAIL gate pin .647",
+        "FAIL main pin .647",
+        "FAIL release .647",
+        "FAIL Sweep retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "pencil-contact-classification-648.test.mjs",
+      "failed_checks": [
+        "FAIL mesh-hit routing retained",
+        "FAIL gate pin .648",
+        "FAIL release .648",
+        "FAIL Sweep retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "pencil-contact-lifecycle-650.test.mjs",
+      "failed_checks": [
+        "FAIL mesh routing unchanged",
+        "FAIL gate pin .650",
+        "FAIL release .650",
+        "FAIL Sweep retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "pencil-deferred-orbit-651.test.mjs",
+      "failed_checks": [
+        "FAIL mesh hit defers while idle",
+        "FAIL gate pin .651",
+        "FAIL main pin .651",
+        "FAIL paint pin .651",
+        "FAIL release .651",
+        "FAIL Sweep retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "pencil-orbit-diagnostics-646.test.mjs",
+      "failed_checks": [
+        "FAIL route captures mesh hit",
+        "FAIL routing condition unchanged",
+        "FAIL published gate pin .646",
+        "FAIL published paint pin .646",
+        "FAIL release .646",
+        "FAIL Sweep proxy retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "selection-hub-availability-658.test.mjs",
+      "failed_checks": [
+        "FAIL disabled derives from target.disabled",
+        "FAIL gizmo pin .658",
+        "FAIL release .658",
+        "FAIL main .657 retained",
+        "FAIL Shell retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "selection-hub-bevel-session-662.test.mjs",
+      "failed_checks": [
+        "FAIL radial semantic launch",
+        "FAIL direct owner active available",
+        "FAIL session loaded after direct bevel",
+        "FAIL release .662"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "selection-hub-direct-restore-649.test.mjs",
+      "failed_checks": [
+        "FAIL gizmo pin .649",
+        "FAIL release .649",
+        "FAIL Sweep retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "selection-hub-edge-654.test.mjs",
+      "failed_checks": [
+        "FAIL tools allowed in Face and Edge",
+        "FAIL gizmo pin .654",
+        "FAIL release .654",
+        "FAIL Sweep retained",
+        "FAIL Shell retained",
+        "FAIL Face-direct .652 retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "selection-hub-face-642.test.mjs",
+      "failed_checks": [
+        "FAIL transform centre opens Face tools",
+        "FAIL tool launch suppresses hub for same selection",
+        "FAIL tool ring only interactive in tools state",
+        "FAIL published Total Gizmo pin .642",
+        "FAIL release .642"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "selection-hub-shell-session-653.test.mjs",
+      "failed_checks": [
+        "FAIL proxy loads after Shell owner",
+        "FAIL release .653",
+        "FAIL Sweep proxy retained",
+        "FAIL Face-direct .652 retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "selection-hub-sweep-session-643.test.mjs",
+      "failed_checks": [
+        "FAIL Sweep proxy listens only to radial Face Sweep",
+        "FAIL new session module published after sweep owner",
+        "FAIL Total Gizmo pin .643",
+        "FAIL release .643"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "through-navigation-release-644.test.mjs",
+      "failed_checks": [
+        "FAIL published Face-direct pin .644",
+        "FAIL release .644",
+        "FAIL Sweep proxy retained"
+      ],
+      "errors": [],
+      "returncode": 1
+    },
+    {
+      "file": "total-gizmo-570.test.mjs",
+      "failed_checks": [
+        "FAIL version stamp",
+        "FAIL fat invisible hit zones",
+        "FAIL published module pin",
+        "FAIL release version"
+      ],
+      "errors": [],
+      "returncode": 1
+    }
+  ]
+}

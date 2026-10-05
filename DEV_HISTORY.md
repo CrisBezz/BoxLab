@@ -5151,3 +5151,17 @@ refresh/version/template URLs. Finalized notes and release checklist; prior beta
 unchanged. No modelling changes. Focused14 checks and snapshot isolation validation
 pass; historical277 full-suite failures remain explicit. Final device smoke uses
 frozen URL; main remains .736.
+
+## 2026-10-05 — Post-Beta 6 reliability audit
+
+User reports positive UI reception, accepts reliability direction and asks what
+277 historical failures mean. Audited main acb4012f / app .736. Fresh full run
+1302/1025PASS/277FAIL/0skip. Inventory:147 version/pin,92 source-pattern,31
+aggregate scripts(121 failed internal checks; no harness exceptions),6 recovery
+sentinels,1 obsolete OBJ output. Explicitly inspected Facegroups/Boolean/OBJ
+contradictions with later accepted implementations. Selected Bridge85/Through16/
+Bevel21/Loop1/Beta6runtime4/NOM9 pass. No confirmed new modelling defect isolated.
+Added docs/reliability-audit-2026-10-05.md+JSON and reproducible inventory script.
+No app/test expectations/frozen-beta changes. Old VM blanket diagnosis corrected.
+Next: reconcile contracts without muting suite, strengthen semantic tests and CI
+path/release gates, then varied Bevel/Knife→Loop/history reliability batch.
