@@ -5343,3 +5343,8 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
   hashes. No .743 device acceptance or automatic repair of existing triangulation.
 
 - Final localNode24:1713/1611PASS/102FAIL/0skip; same102 failure names as .742.
+
+- .743 published/runtime2a20b6026f82c6c161cf06fe42e08c79ea9ea0bf. Actual Node22CI
+  37544260019/job112544354430 matches1713/1611/102/0 and102failure names.
+  Pages37544259082success; live shell/version/3changed assets/Beta6 byte-verified.
+  .743 device testing pending.

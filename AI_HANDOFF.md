@@ -3,7 +3,7 @@
 ## Current state — 2026-10-07
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.743, prepared for publication** from parent main
+**v0.36.18.743, published and live** from parent main
 ada70806dece21dcbf33786066352ef4a8c1829f. User PASS .742 multiple-region negative
 cuts; screenshots running .742 show single-face triangulation. No .743 device PASS.
 Frozen beta2–6 immutable.
@@ -25,7 +25,10 @@ Face shell743; drawer shell743 and its fallback child743; finite kernel remains7
 Reviewed fixture changes those references and three source hashes only.
 
 Read docs/reliability-build-743.md + JSON. Seven new tests, focused64PASS. Full Node24:1713/1611PASS/102FAIL/0skip, same102 failure identities as .742.
-Publication/Node22/live evidence pending.
+Runtime2a20b6026f82c6c161cf06fe42e08c79ea9ea0bf published. Actual Node22CI
+37544260019/job112544354430:1713/1611PASS/102FAIL/0skip, all102 failure names
+match localNode24. Pages37544259082success; live shell/version/Face direct/
+fallback/drawer and frozenBeta6 version byte-match main. Device .743 pending.
 Original user OBJ plus reconstructed before/corrected fixtures remain from .742.
 Use the pre-cut fixture or Undo an old triangulated extrusion before retesting:
 this build changes future cut ownership and does not repair existing old output.

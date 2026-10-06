@@ -3681,7 +3681,9 @@ Already overlapping old output is not automatically repaired by this build.
 - [x] Single shallow/deep/Through0tris, exact volume/caps, one Undo/Redo; Cancel
   preserves source/selection/redo; Multi unchanged; ownership tool/mesh scope.
 - [x] Seven new tests and focused64PASS.
-- [ ] Full-suite/Node22/Pages/live verification (complete before handoff).
+- [x] Full1713/1611PASS/102FAIL/0skip; same102 failure identities as .742.
+- [x] Actual Node22CI37544260019/job112544354430 agrees counts/all102names;
+  Pages37544259082success; live shell/version/3changed assets/Beta6 byte-verified.
 - [ ] iPad one band shallow recess and full Through: no diagonal mesh fragments.
 - [ ] Next single cut + Undo/Redo; two selected bands remain clean.
 

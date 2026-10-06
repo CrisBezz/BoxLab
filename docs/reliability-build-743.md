@@ -27,7 +27,10 @@ latency. Screenshots alone are not treated as an exact geometry fixture; retaine
 user-supplied band OBJ is the automated reproduction source.
 
 Focused64PASS. Full Node24:1713/1611PASS/102FAIL/0skip; same102 failure names as .742,
-no new/resolved identities. Publication/Node22/live verification pending. No tests skipped;
+no new/resolved identities. Runtime2a20b6026f82c6c161cf06fe42e08c79ea9ea0bf published. Actual Node22CI
+37544260019/job112544354430:1713/1611PASS/102FAIL/0skip, all102 failure names
+match localNode24. Pages37544259082success; live shell/version/Face direct/
+fallback/drawer and frozenBeta6 version byte-match main. Device .743 pending. No tests skipped;
 old102 failure inventory remains active. No .743 device acceptance inferred.
 
 Runtime changed only multi-face-direct capability, sequential-through-fallback
