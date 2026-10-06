@@ -1,5 +1,5 @@
-import {planThrough,buildThrough,firstThroughContact} from './through-kernel.js?v=0.36.18.242';
-import {gateClosedEdit} from './topology-seam-conformance.js?v=0.36.18.242';
+import {planThrough,buildThrough,firstThroughContact,buildNegativeExtrude} from './through-kernel.js?v=0.36.18.742';
+import {gateClosedEdit,topologySummary} from './topology-seam-conformance.js?v=0.36.18.242';
 import './uniform-inset.js?v=0.32.11';
 import * as THREE from 'three';
 
@@ -36,7 +36,7 @@ function faces(){const b=bridge();return b?.mode?.()==='face'?[...new Set(b.indi
 function faceSelectionKey(ids=faces()){return [...new Set(ids||[])].filter(Number.isInteger).sort((a,b)=>a-b).join(',');}
 function clearSequentialPreference(){preferSequentialUnselected=false;sequentialSelectionKey=null;}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
-function restore(target,source){target.vertices=source.vertices.map(v=>v.clone());target.faces=source.faces.map(f=>[...f]);target.creases=new Map(source.creases);target.looseEdges=new Set(source.looseEdges||[]);target.looseVertices=new Set(source.looseVertices||[]);}
+function restore(target,source){target.vertices=source.vertices.map(v=>v.clone());target.faces=source.faces.map(f=>[...f]);target.creases=new Map(source.creases);target.faceGroups=source.faces.map((_,i)=>source.faceGroups?.[i]??null);target.looseEdges=new Set(source.looseEdges||[]);target.looseVertices=new Set(source.looseVertices||[]);}
 function disarmTransforms(){globalThis.__boxlabTransformArming?.disarm?.();transformButtons.forEach(button=>button.classList.remove('active'));}
 function syncButtons(){const extrudeOn=armed==='extrude',insetOn=armed==='inset';extrudeButton?.classList.toggle('boxlab-direct-stable',extrudeOn);insetButton?.classList.toggle('boxlab-direct-stable',insetOn);extrudeButton?.classList.toggle('active',extrudeOn);insetButton?.classList.toggle('active',insetOn);}
 function key(a,b){return a<b?`${a}:${b}`:`${b}:${a}`;}
@@ -227,16 +227,29 @@ document.addEventListener('pointermove',event=>{
   }
   if(!drag&&pendingFacePress?.id===event.pointerId){
     const p=pendingFacePress,dx=event.clientX-p.x,dy=event.clientY-p.y;
-    if(Math.hypot(dx,dy)<8)return;
+    if(event.pointerId!==9876){if(Math.hypot(dx,dy)<8)return;}
+    else if(Math.hypot(dx,dy)<1e-6){pendingFacePress=null;return;}
     const workingFaces=p.workingFaces?.length?[...p.workingFaces]:(p.selectionBefore.includes(p.hit)?[...p.selectionBefore]:[p.hit]);
     if(beginDirectDrag(event,p.hit,p.selectionBefore,workingFaces)){
+      // Exact input sends one move: measure it from its synthetic pointerdown.
+      // Physical drags retain the accepted deliberate-drag threshold/origin.
+      if(event.pointerId===9876){drag.x=p.x;drag.y=p.y;}
       pendingFacePress=null;
       drag.changed=true;
     }else{
       return;
     }
   }
-  if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){drag.changed=true;}restore(drag.m,drag.before);if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?referenceUnderPointer(event,drag):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}const contact=drag.faces.length===1?classifySingleFaceContact(drag.before,drag.faces[0],distance,drag.preparedThrough):{mode:'extrude',throughPlan:null,shellHit:null};drag.throughPlan=contact.throughPlan;drag.shellHit=contact.shellHit;drag.blocked=contact.mode==='blocked';drag.failureReason=contact.reason;if(drag.blocked){drag.preview=false;clearRefVisual();drag.snap=null;if(status)status.textContent=`Extrude In • BLOCKED — ${contact.reason||'unsupported shell contact'}${drag.shellHit?` • ${drag.shellHit.distance.toFixed(2)}`:''}`;}else{if(drag.throughPlan){distance=drag.throughPlan.distance;clearRefVisual();drag.snap=null;}drag.lastValue=distance;const result=drag.faces.length===1?drag.m.extrudeFace?.(drag.faces[0],distance):extrudeConnectedFaceSelection(drag.m,drag.faces,distance);drag.preview=!!result;if(result&&status){const mode=drag.throughPlan?'THROUGH READY':distance<0?'Extrude In':'Extrude';status.textContent=`${mode} • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${distance>=0?'+':''}${distance.toFixed(2)}${result.mode==='connected-miter'&&drag.faces.length>1?' • Connected band':''}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}}else{drag.throughPlan=null;drag.blocked=false;drag.shellHit=null;let amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));const ref=referenceUnderPointer(event,drag),inferred=ref?insetReference(drag,ref):null;if(ref&&inferred){amount=inferred.amount;showRefVisual(ref,inferred.boundaryPoint,drag.camera);drag.snap={...ref,insetDistance:inferred.distance};}else{clearRefVisual();drag.snap=null;}const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;if(result&&status){const distances=(result.regions||[]).map(r=>r.distance).filter(Number.isFinite),d=distances.length?Math.min(...distances):0;drag.lastValue=d;status.textContent=`Uniform Inset • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${d.toFixed(3)}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}render();syncButtons();},true);
+  if(!drag||drag.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-drag.x,dy=event.clientY-drag.y;if(!drag.changed&&Math.hypot(dx,dy)<8)return;if(!drag.changed){drag.changed=true;}restore(drag.m,drag.before);if(drag.tool==='extrude'){let distance=(dx*drag.normal.x+dy*drag.normal.y)*.006;const ref=drag.worldNormal?referenceUnderPointer(event,drag):null;if(ref){distance=ref.point.clone().sub(drag.regionCenter).dot(drag.worldNormal);const inferred=drag.regionCenter.clone().addScaledVector(drag.worldNormal,distance);showRefVisual(ref,inferred,drag.camera);drag.snap=ref;}else{clearRefVisual();drag.snap=null;}drag.negativeCut=false;drag.resultFaces=null;
+    if(distance<0&&topologySummary(drag.before).closed){
+      // Keep established cavity-aware Through target snapping for one source face.
+      const contact=drag.faces.length===1?classifySingleFaceContact(drag.before,drag.faces[0],distance,drag.preparedThrough):null;
+      if(contact?.throughPlan){distance=contact.throughPlan.distance;clearRefVisual();drag.snap=null;}
+      const cut=buildNegativeExtrude(drag.before,drag.faces,distance);
+      drag.throughPlan=null;drag.shellHit=null;drag.blocked=!cut.ok;drag.preview=cut.ok;drag.failureReason=cut.reason;drag.lastValue=distance;
+      if(cut.ok){restore(drag.m,cut.mesh);drag.negativeCut=true;drag.resultFaces=cut.faceIndices;bridge()?.set?.('face',cut.faceIndices);if(status)status.textContent=`Extrude Cut • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${distance.toFixed(2)} • CLOSED`;}
+      else{bridge()?.set?.('face',drag.faces);if(status)status.textContent=`Extrude Cut • BLOCKED — ${cut.reason}`;}
+    }else{bridge()?.set?.('face',drag.faces);const contact=drag.faces.length===1?classifySingleFaceContact(drag.before,drag.faces[0],distance,drag.preparedThrough):{mode:'extrude',throughPlan:null,shellHit:null};drag.throughPlan=contact.throughPlan;drag.shellHit=contact.shellHit;drag.blocked=contact.mode==='blocked';drag.failureReason=contact.reason;if(drag.blocked){drag.preview=false;clearRefVisual();drag.snap=null;if(status)status.textContent=`Extrude In • BLOCKED — ${contact.reason||'unsupported shell contact'}${drag.shellHit?` • ${drag.shellHit.distance.toFixed(2)}`:''}`;}else{if(drag.throughPlan){distance=drag.throughPlan.distance;clearRefVisual();drag.snap=null;}drag.lastValue=distance;const result=drag.faces.length===1?drag.m.extrudeFace?.(drag.faces[0],distance):extrudeConnectedFaceSelection(drag.m,drag.faces,distance);drag.preview=!!result;if(result&&status){const mode=drag.throughPlan?'THROUGH READY':distance<0?'Extrude In':'Extrude';status.textContent=`${mode} • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${distance>=0?'+':''}${distance.toFixed(2)}${result.mode==='connected-miter'&&drag.faces.length>1?' • Connected band':''}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}}}else{drag.throughPlan=null;drag.blocked=false;drag.shellHit=null;let amount=Math.max(.01,Math.min(.95,(dx-dy)*.004));const ref=referenceUnderPointer(event,drag),inferred=ref?insetReference(drag,ref):null;if(ref&&inferred){amount=inferred.amount;showRefVisual(ref,inferred.boundaryPoint,drag.camera);drag.snap={...ref,insetDistance:inferred.distance};}else{clearRefVisual();drag.snap=null;}const result=drag.m.insetFaceRegions?.(drag.faces,amount);drag.preview=!!result;if(result&&status){const distances=(result.regions||[]).map(r=>r.distance).filter(Number.isFinite),d=distances.length?Math.min(...distances):0;drag.lastValue=d;status.textContent=`Uniform Inset • ${drag.faces.length} face${drag.faces.length===1?'':'s'} • ${result.regionCount} region${result.regionCount===1?'':'s'} • ${d.toFixed(3)}${drag.snap?` • Reference ${drag.snap.type}`:''}`;}}render();syncButtons();},true);
 function releaseDirectPointer(pointerId){
   if(!Number.isInteger(pointerId))return false;
   try{
@@ -318,13 +331,15 @@ function finish(event){
       if(gated.ok){
         globalThis.__boxlabHistory?.push(d.before);
         if(gated.repaired)restore(d.m,gated.mesh);
-        bridge()?.set?.('face',d.faces);
-        preferSequentialUnselected=true;
-        sequentialSelectionKey=faceSelectionKey(d.faces);
+        bridge()?.set?.('face',d.resultFaces??d.faces);
+        if(d.negativeCut&&!d.resultFaces.length){armed=null;pendingSelection=null;pendingFacePress=null;pendingBackgroundPress=null;clearSequentialPreference();syncButtons();document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none',reason:'through-complete'}}));}
+        if(d.negativeCut)clearSequentialPreference();
+        else{preferSequentialUnselected=true;sequentialSelectionKey=faceSelectionKey(d.faces);}
         if(Number.isFinite(d.lastValue)&&Math.abs(d.lastValue)>1e-6){
-          document.dispatchEvent(new CustomEvent('boxlab-face-direct-committed',{detail:{tool:'extrude',value:d.lastValue,faces:[...d.faces],hit:d.hitFaceIndex}}));
+          document.dispatchEvent(new CustomEvent('boxlab-face-direct-committed',{detail:{tool:'extrude',value:d.lastValue,faces:[...(d.resultFaces??d.faces)],hit:d.hitFaceIndex}}));
         }
         if(status&&gated.repaired)status.textContent=`Extrude • seam conformance • ${gated.splits} split${gated.splits===1?'':'s'} • CLOSED`;
+        else if(d.negativeCut&&status)status.textContent='Extrude Cut • CLOSED';
         else updateStatus();
       }else{
         restore(d.m,d.before);
@@ -351,6 +366,14 @@ function replayFaceOperation(tool,value,faceIndex){
 
   if(tool==='extrude'){
     if(Math.abs(distance)<1e-9)return false;
+    if(distance<0&&topologySummary(before).closed){
+      const cut=buildNegativeExtrude(before,[faceIndex],distance);
+      if(!cut.ok)return false;
+      globalThis.__boxlabHistory?.push(before);restore(m,cut.mesh);bridge()?.set?.('face',cut.faceIndices);
+      clearSequentialPreference();render();syncButtons();
+      document.dispatchEvent(new CustomEvent('boxlab-face-direct-committed',{detail:{tool:'extrude',value:distance,faces:[...cut.faceIndices],hit:faceIndex,replay:true}}));
+      return true;
+    }
     if(distance<0){
       const contact=classifySingleFaceContact(before,faceIndex,distance,planThrough(before,faceIndex));
       if(contact.mode!=='extrude')return false;

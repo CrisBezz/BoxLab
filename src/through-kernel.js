@@ -69,7 +69,7 @@ function context(m,fi) {
 export function planThrough(m,fi) {try {const c=context(m,fi);return {ok:true,sourceFaceIndex:fi,distance:-c.depth,firstDistance:-c.first,targets:c.targets.map(t=>({...t}))};}catch(e){return{ok:false,reason:e.message};}}
 // Split every incident face together before replacing shell fragments. Generated seam
 // vertices are then inserted in *all* output edges, including tunnel wall edges.
-function assemble(before,polys,eps) {
+function assemble(before,polys,eps,groups=null) {
   const m=Object.create(Object.getPrototypeOf(before));Object.assign(m,topology().cloneMeshState(before));
   // Prevent EditableMesh.edges()'s UI observer from publishing the private trial mesh.
   m.edges=()=>[];
@@ -83,8 +83,64 @@ function assemble(before,polys,eps) {
   // EditableMesh.faceNormal uses its first three vertices. Canonical seam
   // subdivisions can make that triple collinear; rotate, never reverse winding.
   m.faces=m.faces.map(f=>{for(let i=0;i<f.length;i++){const a=m.vertices[f[i]],b=m.vertices[f[(i+1)%f.length]],c=m.vertices[f[(i+2)%f.length]];if(new V().crossVectors(b.clone().sub(a),c.clone().sub(a)).length()>eps*eps)return [...f.slice(i),...f.slice(0,i)];}fail('zero-area-output-face');});
+  if(groups)m.faceGroups=[...groups];
   const keys=new Set(edgeUses(m).keys());m.creases=new Map([...m.creases].filter(([k])=>keys.has(k)));
   return m;
+}
+// Finite inward prism subtraction. Reuse Through's clipping, solid classification
+// and canonical seam assembly; private trials never publish into the live scene.
+// Each source face supplies its own sweep. Shared/coplanar walls disappear when
+// subtracting the next prism, so separated bands and adjacent faces use one rule.
+export function buildNegativeExtrude(before,faceIndices,distance) {
+  try {
+    if(!Number.isFinite(distance)||distance>=0)fail('negative-distance-required');
+    const ids=[...new Set(faceIndices||[])];
+    if(!ids.length||ids.some(fi=>!Number.isInteger(fi)||!before.faces[fi]))fail('source-faces-required');
+    const scale=new THREE.Box3().setFromPoints(before.vertices).getSize(new V()).length(),eps=Math.max(scale*5e-7,1e-10),depth=-distance;
+    if(depth<=eps*32)fail('cut-too-small');
+    const input=validateThrough(before,eps);if(!input.ok)fail('input-'+input.reason);
+    const cutters=ids.map(fi=>{
+      const source=before.faces[fi].map(id=>before.vertices[id].clone()),n=areaVector(source).normalize();
+      triangles(source,eps); // Validate planarity and triangulation before any trial.
+      const sides=source.map((a,i)=>plane(new V().crossVectors(source[(i+1)%source.length].clone().sub(a),n).normalize(),a));
+      if(source.some(p=>sides.some(pl=>pl.n.dot(p)-pl.w>eps)))fail('concave-source-not-supported');
+      return {source,n,dir:n.clone().negate(),sides,group:before.faceGroups?.[fi]??null};
+    });
+    let trial=before;
+    for(const {source,n,dir,sides,group} of cutters){
+      // Earcut can emit numerical zero-area triangles along a subdivided straight
+      // boundary after rotation. They must never become arbitrary split planes.
+      const ts=trial.faces.flatMap(f=>triangles(f.map(id=>trial.vertices[id]),eps)).filter(t=>areaVector(t).length()>eps*eps),shellPlanes=[];
+      for(const t of ts){const pl=plane(areaVector(t).normalize(),t[0]);if(!shellPlanes.some(q=>q.n.distanceTo(pl.n)<1e-8&&Math.abs(q.w-pl.w)<=eps))shellPlanes.push(pl);}
+      const end=source.map(p=>p.clone().addScaledVector(dir,depth)),planes=[...sides,plane(n,source[0].clone().addScaledVector(n,eps*32)),plane(dir,end[0])],polys=[],groups=[];
+      const add=(p,g)=>{if(p.length){polys.push(p);groups.push(g);}};
+      for(let fi=0;fi<trial.faces.length;fi++){
+        const p=trial.faces[fi].map(id=>trial.vertices[id]),normal=areaVector(p).normalize();
+        const convex=p.every((a,i)=>{const side=new V().crossVectors(p[(i+1)%p.length].clone().sub(a),normal);return p.every(v=>side.dot(v.clone().sub(a))<=eps*side.length());});
+        const parts=(convex?[p]:triangles(p,eps).filter(t=>areaVector(t).length()>eps*eps)).map(t=>subtract(t,planes,eps));
+        if(parts.every(r=>!r.inside.length))add(p,trial.faceGroups?.[fi]??null);
+        else for(const r of parts)for(const piece of r.outside)add(piece,trial.faceGroups?.[fi]??null);
+      }
+      const boundary=[...source.map((a,i)=>({p:[a,source[(i+1)%source.length],end[(i+1)%source.length],end[i]],outside:sides[i].n})),{p:end,outside:dir}];
+      for(const {p,outside} of boundary){
+        let parts=[p];
+        for(const pl of shellPlanes){parts=parts.flatMap(piece=>split(piece,pl,eps).filter(q=>q.length));if(parts.length>10000)fail('intersection-complexity-limit');}
+        for(const piece of parts)if(insideSolid(center(piece).addScaledVector(outside,eps*16),ts))add(piece,group);
+      }
+      trial=assemble(trial,polys,eps,groups);
+      const valid=validateThrough(trial,eps);if(!valid.ok)fail(valid.reason);
+      if(!trial.faces.length)fail('entire-solid-removal');
+      delete trial.edges;
+    }
+    trial.compactUnusedVertices?.({preserveLoose:true});
+    // Identify surviving recessed caps geometrically, after every cutter has run.
+    const faceIndicesOut=[];
+    trial.faces.forEach((f,fi)=>{
+      const p=f.map(id=>trial.vertices[id]),normal=areaVector(p).normalize();
+      if(cutters.some(c=>normal.dot(c.n)>.999999&&p.every(v=>Math.abs(v.clone().sub(c.source[0]).dot(c.dir)-depth)<=eps*4&&c.sides.every(pl=>pl.n.dot(v)-pl.w<=eps*4))))faceIndicesOut.push(fi);
+    });
+    return {ok:true,mesh:trial,faceIndices:faceIndicesOut,distance,mode:'negative-cut'};
+  }catch(e){return {ok:false,reason:e.message};}
 }
 export function buildThrough(before,plan) {
   try {

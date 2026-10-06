@@ -317,9 +317,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.732",
+      "url": "./src/multi-face-direct.js?v=0.36.18.742",
       "target": "src/multi-face-direct.js",
-      "sha256": "60d9020f6b29f0045e55772007b98a66e4f32b00e6fde31949fda40de71a0dc7"
+      "sha256": "93617af39643128e200bce9af2f3ac5277ca221ae3adbcbcf0411af006aab92b"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.741",
+      "url": "./src/release-bootstrap.js?v=0.36.18.742",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.741",
+      "url": "./src/release-version.js?v=0.36.18.742",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1797,9 +1797,9 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./through-kernel.js?v=0.36.18.242",
+      "url": "./through-kernel.js?v=0.36.18.742",
       "target": "src/through-kernel.js",
-      "sha256": "904df683a86657e8e0743121102d015c52916f3c972103a38ec741ddec0fa4ab"
+      "sha256": "1a8230e8c5e2a21b2d8ac12960db53b8de50f693d87746e049d4ec20410c3d94"
     },
     {
       "owner": "src/multi-face-direct.js",
@@ -1965,7 +1965,7 @@
       "owner": "src/sequential-through-fallback.js",
       "url": "./through-kernel.js?v=0.36.18.242",
       "target": "src/through-kernel.js",
-      "sha256": "904df683a86657e8e0743121102d015c52916f3c972103a38ec741ddec0fa4ab"
+      "sha256": "1a8230e8c5e2a21b2d8ac12960db53b8de50f693d87746e049d4ec20410c3d94"
     },
     {
       "owner": "src/sequential-through-fallback.js",

@@ -5297,3 +5297,26 @@ failure remains visible in full suite. Core plus4loader parents/5hashes reviewed
 success; live shell/version/all5changed assets byte-identical to published files,
 Beta6 .736 verified. Actual Node22CI37307745974 matches1679/1577PASS/102FAIL/0skip
 and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke.
+
+
+## 2026-10-06 — v0.36.18.742 finite negative Extrude / preserve polygon topology
+
+- User supplied four-region already extruded OBJ; old sidewalls overlap original
+  side faces although edge-manifold health reports closed/clean. Recovered original
+  cage from sidewall endpoints; source/before/corrected fixtures retained.
+- Closed inward Extrude now subtracts finite prisms through existing Through kernel,
+  preserves convex/untouched polygons, clips side strips and selects surviving caps.
+  Exact rectangular example has34faces/25quads/9ngons/0tris, correct volume5.839164.
+  Adjacent/corner/inset/rotated fixtures and23 accepted old Through sources pass.
+- Synthetic Exact pointer9876 previously measured its only move from that move's
+  endpoint. Corrected synthetic origin/threshold only; physical gesture feel retained.
+  Facegroups restore included; one-step history/cancel/replay/redo refusal covered.
+- Avoided generic BSP triangulation/temporary scene objects. Initial triangle
+  clipping fragmentation and rotated numerical Earcut plane issue recorded in
+  docs/reliability-build-742.md; convex clipping + degenerate filtering fixed both.
+- Add Vertex actual split and independent child picking pass; reported live failure
+  unreproduced, no Add runtime fix claimed. Further snap/selection/normal audit next.
+- New27PASS; full1706/1604PASS/102FAIL/0skip, same102failure names as .741.
+  Focused53PASS. Only Face direct/Through runtime modules changed; reviewed pins/
+  hashes, shell markers .742; protected Multi/Loop/CSS/frozen betas unchanged.
+  Publication/Node22/live verification pending. No device acceptance inferred.

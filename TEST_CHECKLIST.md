@@ -3642,3 +3642,28 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
 
 - [x] Shell/integrity guard share the same refreshed Quick OBJ URL; changed parent
   pins and all five reviewed hashes verified. Final export-focused38PASS.
+
+
+## v0.36.18.742 — negative Extrude side breakout / polygon preservation
+
+- [x] Supplied four-band overlapping source reproduces despite old closed-health check.
+- [x] Recovered pre-cut cage from actual source sidewall endpoints; original retained.
+- [x] Finite prism subtraction removes side strips, preserves caps/volume/winding.
+- [x] Rectangular band/inset/corner/rotated fixtures produce0triangles; boundary
+  subdivisions retained for conformity, no arbitrary all-quad guarantee.
+- [x] Full cuts remove caps/disarm; positive connected-miter route retained.
+- [x] Actual Face preview/commit/cancel/replay/selection; one Undo/Redo; source,
+  groups/creases/loose data and refusal redo stack retention covered.
+- [x] Exact synthetic event path now uses press origin; smallnegative/positive/zero
+  covered; physical Pencil8px modelling threshold preserved.
+- [x] Accepted old corner/Loop/Knife Through source fixtures pass finite cutter.
+- [x] Add actual splitter creates two children + crease inheritance; real Three
+  boundary-line ray picking selects each child independently. User issue unconfirmed.
+- [x] New27PASS, focused53PASS, full1706/1604PASS/102FAIL/0skip; no new failures.
+- [ ] Node22CI/Pages/live byte verification (update before handoff).
+- [ ] iPad four-band inward cut: side strips disappear, clean cage/no flicker.
+- [ ] iPad shallow/full cut + Undo/Redo + negative Exact/Repeat + positive Extrude.
+- [ ] iPad Add Vertex: exit Add, Edge mode, select both halves independently.
+
+Use tests/fixtures/negative-extrude-742-before.obj or Undo the old extrusion first.
+Already overlapping old output is not automatically repaired by this build.

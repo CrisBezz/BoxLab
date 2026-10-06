@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {assertAssetReference} from './helpers/release-contract.mjs';
 
 const read = path => fs.readFileSync(new URL(path, import.meta.url), 'utf8');
 
@@ -16,7 +17,7 @@ test('v242 cavity-aware Through keeps ordered target planning', () => {
 });
 
 test('v242 drag controller can stop at each cavity exit and continue farther', () => {
-  assert.match(direct, /through-kernel\.js\?v=0\.36\.18\.242/);
+  assertAssetReference(direct, 'through-kernel.js');
   assert.match(direct, /targets=\(p\.targets\?\.length\?p\.targets:/);
   assert.match(direct, /targetDepth:target\.depth/);
   assert.match(kernel, /plan\?\.targetDepth/);
