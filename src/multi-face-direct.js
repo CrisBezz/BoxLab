@@ -412,6 +412,7 @@ function replayFaceOperation(tool,value,faceIndex){
 }
 
 globalThis.__boxlabFaceDirect={
+  ownsClosedCuts:m=>armed==='extrude'&&topologySummary(m||mesh()).closed,
   active:()=>!!armed,
   tool:()=>armed,
   dragging:()=>!!drag,

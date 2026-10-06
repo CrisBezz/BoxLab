@@ -5325,3 +5325,21 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
   actual Node22CI37463033743/job112267082488 matches1706/1604/102/0 and
   all102failure identities. Pages37463032493success; live shell/version/two
   changed modules/before+correctedOBJ/Beta6 version byte-match main. Device pending.
+
+
+## 2026-10-07 — v0.36.18.743 single-face clean-cut ownership
+
+- User PASS .742 multiple cuts; actual .742 screenshots show single cut triangulates.
+- Found legacy sequential-through-fallback arms on single resolved Face press and
+  window-capture move cancels the authoritative .742 cutter. Earlier isolated
+  controller tests missed the loaded peer; reproducing both yields52triangles.
+- Face direct declares ownsClosedCuts; fallback defers before planning/arming for
+  authoritative closed Extrude. Same finite kernel now survives single-face input.
+  Positive/open routes, Exact/cut algorithms and frozen betas unchanged.
+- Seven combined-owner tests cover shallow/deep/Through0tris, exact volume,
+  cap selection, one Undo/Redo, Cancel+redo retention, Multi and capability scope.
+  Focused64PASS; final full-suite/publication evidence pending.
+- Face/drawer/fallback cache URLs743; Through child742 retained; three reviewed
+  hashes. No .743 device acceptance or automatic repair of existing triangulation.
+
+- Final localNode24:1713/1611PASS/102FAIL/0skip; same102 failure names as .742.

@@ -24,7 +24,7 @@ export function uploadedFixture({before=false}={}){
 export const snapshot=m=>JSON.stringify({vertices:m.vertices,faces:m.faces,creases:[...m.creases],groups:m.faceGroups,looseEdges:[...(m.looseEdges||[])],looseVertices:[...(m.looseVertices||[])]});
 export function volume(m){let total=0;for(const face of m.faces)for(let i=1;i<face.length-1;i++)total+=m.vertices[face[0]].dot(m.vertices[face[i]].clone().cross(m.vertices[face[i+1]]))/6;return total;}
 
-export function faceRuntime(m,ids){
+export function faceRuntime(m,ids,{fallback=false}={}){
   const documentHandlers=new Map(),windowHandlers=new Map(),events=[],elements=new Map();
   const element=()=>({classList:{contains:()=>false,toggle(){},remove(){}},dispatchEvent(){},getBoundingClientRect:()=>({left:0,top:0,width:900,height:600}),setPointerCapture(){},hasPointerCapture:()=>false});
   const get=selector=>{if(!elements.has(selector))elements.set(selector,element());return elements.get(selector);};
@@ -42,7 +42,26 @@ export function faceRuntime(m,ids){
   vm.runInContext(source+"\n globalThis.testOwner={begin:beginDirectDrag,finish,setTool:tool=>{armed=tool;},drag:()=>drag};",context);
   const owner=context.testOwner;
   const event=(type,x=400,y=300)=>({type,target:get('#viewport'),pointerId:22,isPrimary:true,clientX:x,clientY:y,preventDefault(){},stopImmediatePropagation(){}});
+  const pointerDispatch=e=>{
+    e.target=get('#viewport');e.stopped=false;e.preventDefault=()=>{};e.stopImmediatePropagation=()=>{e.stopped=true;};
+    for(const fn of windowHandlers.get(e.type)||[]){fn(e);if(e.stopped)return;}
+    for(const fn of documentHandlers.get(e.type)||[]){fn(e);if(e.stopped)return;}
+  };
+  if(fallback){
+    get('#extrudeBtn').classList.contains=()=>context.__boxlabFaceDirect.tool()==='extrude';
+    get('#viewport').dispatchEvent=pointerDispatch;
+    context.PointerEvent=class{constructor(type,props){this.type=type;Object.assign(this,props);}};
+    const fallbackSource=fs.readFileSync(new URL('../../src/sequential-through-fallback.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
+    vm.runInContext('(function(){'+fallbackSource+'\n})()',context);
+  }
   return {history,state,events,selected:()=>selected,api:context.__boxlabFaceDirect,owner,
+    physicalCut(distance,type='pointerup'){
+      owner.setTool('extrude');pointerDispatch(event('pointerdown'));
+      const normal=context.projectedNormal(m,{normal:m.faceNormal(ids[0]),regionVertices:m.faces[ids[0]]},camera),sign=Math.sign(distance),x=400+normal.x*9*sign,y=300+normal.y*9*sign;
+      pointerDispatch(event('pointermove',x,y));
+      pointerDispatch(event('pointermove',x+normal.x*distance/.006,y+normal.y*distance/.006));
+      pointerDispatch(event(type));
+    },
     smallPhysicalMove(){owner.setTool('extrude');document.dispatchEvent(event('pointerdown'));document.dispatchEvent(event('pointermove',404,303));},
     start(){owner.setTool('extrude');return owner.begin(event('pointerdown'),ids[0],ids,ids);},
     move(distance){const d=owner.drag(),e=event('pointermove',400+d.normal.x*distance/.006,300+d.normal.y*distance/.006);for(const fn of documentHandlers.get('pointermove')||[])fn(e);},

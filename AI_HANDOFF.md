@@ -1,31 +1,39 @@
 # BoxLab AI Handoff — post-Beta 6 reliability audit
 
-## Current state — 2026-10-06
+## Current state — 2026-10-07
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.742, published and live** from parent main
-6a63d2b0cdd840aa67657831fea19711abfddda1. User redirected work to negative
-Extrude and possibly Add Vertex; supplied EXTRUDE TEST.obj and screenshot showing
-four red faces / four regions. Runtime commit85dbb83e960d06b926b071e96dfaa988b5d8ad8b.
-No .741/.742 device PASS inferred. Frozen beta2–6 immutable.
+**v0.36.18.743, prepared for publication** from parent main
+ada70806dece21dcbf33786066352ef4a8c1829f. User PASS .742 multiple-region negative
+cuts; screenshots running .742 show single-face triangulation. No .743 device PASS.
+Frozen beta2–6 immutable.
 
-Negative Extrude on closed meshes now subtracts finite swept prisms through the
-existing Through geometry kernel. It removes intersected side geometry, preserves
-untouched polygons with conforming edge subdivisions, and retains surviving caps
-for selection. Full cuts clear missing caps/disarm. Positive connected-miter and
-open-mesh extrusion keep their existing route. Single-face drag retains established
-cavity exit target snapping. Replay uses the same finite cutter. No temporary scene
-object or generic Boolean UI operation. Facegroups, surviving creases, loose geometry
-and one-step history covered. The live Face restore now includes faceGroups.
+The polygon-preserving finite cutter already supported single faces in .742, but
+sequential-through-fallback still subscribed to resolved single-Face presses and
+captured window pointermove before the authoritative controller. It cancelled the
+native drag and used its old triangular clipping. .742 isolated-controller tests
+missed this competing owner. New tests load BOTH actual modules and route window
+capture before document capture with stopImmediatePropagation/cancel semantics.
+Without the new capability, the fixture reproduces52triangles/69faces; guarded
+single shallow/deep/through cuts produce0triangles and one history step.
 
-Read docs/reliability-build-742.md + JSON. Source fixture is already extruded:
-edge-manifold validation labels it clean despite coplanar overlap. Helper recovers
-pre-extrusion cage from original sidewall endpoints. Before/corrected OBJ fixtures
-are under tests/fixtures/negative-extrude-742-{before,corrected}.obj for device checks.
-Do not claim the app repairs an already overlapping .741 model: Undo its old
-extrusion or import the recovered before fixture before retesting.
+Face direct now declares ownsClosedCuts(mesh) while Extrude is armed on a closed
+mesh. Legacy fallback defers before planning/probing when this capability is true.
+It remains available outside that ownership scope; no duplicate cut algorithm.
+Finite kernel, positive/open extrusion, Exact and repeat algorithms unchanged.
+Face shell743; drawer shell743 and its fallback child743; finite kernel remains742.
+Reviewed fixture changes those references and three source hashes only.
 
-## .742 validation and limitations
+Read docs/reliability-build-743.md + JSON. Seven new tests, focused64PASS. Full Node24:1713/1611PASS/102FAIL/0skip, same102 failure identities as .742.
+Publication/Node22/live evidence pending.
+Original user OBJ plus reconstructed before/corrected fixtures remain from .742.
+Use the pre-cut fixture or Undo an old triangulated extrusion before retesting:
+this build changes future cut ownership and does not repair existing old output.
+Next .743 single shallow/through and sequential cut device checks, then reproduce
+Add Vertex UI/snap/selection issue. Reliability inventory and NOM-import deferral
+remain active. Beta6 stays frozen .736.
+
+## .742 accepted multiple-cut baseline and limitations (historical)
 
 New tests cover uploaded four bands, shallow/through cuts, exact volume, zero
 triangles on rectangular band/inset/corner fixtures, rotated/scaled geometry,
@@ -55,9 +63,9 @@ Full Node24:1706/1604PASS/102FAIL/0skip; same102 failure identities as .741.
 Actual Node22CI37463033743/job112267082488 matches1706/1604/102/0 and
 all102 failure names. Pages37463032493success; live shell/version, two changed
 modules, before/corrected OBJ fixtures and frozenBeta6 version byte-match main.
-No device acceptance inferred.
+User PASS .742 multiple-region cuts on2026-10-07; single-face issue led to .743.
 Remaining reliability inventory stays active; no CI release gate installed.
-Next: .742 device checks, reproduce Add Vertex UI/snap/selection failure (and audit
+Next after .743 checks: reproduce Add Vertex UI/snap/selection failure (and audit
 first-three-vertex face normals after edge insertion), then resume remaining Face
 owner checks and Bevel/Knife→Loop reliability work. NOM import remains deferred.
 
@@ -127,7 +135,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .742; Face direct/Through child .742; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .743; Face direct/drawer/fallback .743; Through child .742; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -152,7 +160,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .742 check four-band side openings/clean cage, shallow/full cuts, Exact, Undo/Redo and positive Extrude. Add Vertex remains a separately unconfirmed report.
+For .743 check single-face side opening/clean cage, full Through, sequential cuts and Undo/Redo. Add Vertex remains a separately unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

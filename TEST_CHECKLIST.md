@@ -3669,3 +3669,20 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
 
 Use tests/fixtures/negative-extrude-742-before.obj or Undo the old extrusion first.
 Already overlapping old output is not automatically repaired by this build.
+
+
+## v0.36.18.743 — single Face negative-cut owner
+
+- [x] User PASS .742 multiple-region cuts; single-face screenshot issue reproduced
+  with both actual loaded handlers, not inferred from isolated-kernel tests.
+- [x] Legacy takeover without ownership capability reproduces52triangles.
+- [x] Explicit closed Extrude ownership prevents fallback planning/arming.
+- [x] Actual window-before-document capture route, cancellation and event stopping.
+- [x] Single shallow/deep/Through0tris, exact volume/caps, one Undo/Redo; Cancel
+  preserves source/selection/redo; Multi unchanged; ownership tool/mesh scope.
+- [x] Seven new tests and focused64PASS.
+- [ ] Full-suite/Node22/Pages/live verification (complete before handoff).
+- [ ] iPad one band shallow recess and full Through: no diagonal mesh fragments.
+- [ ] Next single cut + Undo/Redo; two selected bands remain clean.
+
+Undo old triangular cut or use negative-extrude-742-before.obj first.

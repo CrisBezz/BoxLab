@@ -70,7 +70,7 @@ import('./transform-state-fix.js?v=0.36.18.5').catch(error => console.warn('BoxL
 import('./persistent-face-tool-select.js?v=0.36.18.499').catch(error => console.warn('BoxLab persistent face tool selection failed to load', error));
 import('./precision-face.js?v=0.36.18.732').catch(error => console.warn('BoxLab Face precision failed to load', error));
 import('./repeat-face-previous.js?v=0.36.18.732').catch(error => console.warn('BoxLab Repeat Previous Face failed to load', error));
-import('./sequential-through-fallback.js?v=0.36.18.528').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
+import('./sequential-through-fallback.js?v=0.36.18.743').catch(error => console.warn('BoxLab sequential Through fallback failed to load', error));
 import('./precision-transform.js?v=0.36.18.14').catch(error => console.warn('BoxLab precision Transform failed to load', error));
 import('./precision-bevel.js?v=0.36.18.710').catch(error => console.warn('BoxLab precision Bevel failed to load', error));
 import('./precision-edge-slide.js?v=0.36.18.672').catch(error => console.warn('BoxLab precision Edge Slide failed to load', error));
@@ -120,7 +120,8 @@ import('./vertex-slide-polish.js?v=0.36.18.710').catch(error => console.warn('Bo
 import('./dissolve-selection-polish.js?v=0.36.18.28').catch(error => console.warn('BoxLab Dissolve selection polish failed to load', error));
 import('./selection-history-safe.js?v=0.36.18.34').catch(error => console.warn('BoxLab selection-aware history failed to load', error));
 import('./loop-cut-added-vertex.js?v=0.36.18.688').catch(error => console.warn('BoxLab Add-vertex Loop promotion failed to load', error));
-// Normal Through remains owned by multi-face-direct + through-kernel; fallback only wakes when kernel planning fails.
+// Closed cuts belong to multi-face-direct + through-kernel; the legacy fallback
+// defers through ownsClosedCuts and remains outside that ownership scope.
 import('./object-origin.js?v=0.36.18.355').then(() => {
   installGroupUiPolish();
   syncDrawerToMode();

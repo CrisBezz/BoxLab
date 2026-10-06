@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.732",
+      "url": "./src/drawer-ui.js?v=0.36.18.743",
       "target": "src/drawer-ui.js",
-      "sha256": "ab9cc79be8dfa95145a6c61188f95e9b5297c75257854984af99d20781e334dd"
+      "sha256": "586247636c71eb6da10cc8b6ec2305d4d881356e2dea6d89bb04217c95538960"
     },
     {
       "owner": "index.html",
@@ -317,9 +317,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.742",
+      "url": "./src/multi-face-direct.js?v=0.36.18.743",
       "target": "src/multi-face-direct.js",
-      "sha256": "93617af39643128e200bce9af2f3ac5277ca221ae3adbcbcf0411af006aab92b"
+      "sha256": "00ba1fd9ea3210170e21a4465de76d50fa4ec53237fa62812a176ac69a96254e"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.742",
+      "url": "./src/release-bootstrap.js?v=0.36.18.743",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.742",
+      "url": "./src/release-version.js?v=0.36.18.743",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1147,9 +1147,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./sequential-through-fallback.js?v=0.36.18.528",
+      "url": "./sequential-through-fallback.js?v=0.36.18.743",
       "target": "src/sequential-through-fallback.js",
-      "sha256": "5e677713ed80937620053bca590050255a43a14497576720ff3bb2efba36bfe1"
+      "sha256": "45b99f601d77749232335ec0e8a5efccf3b7c2cc9913ace7a4e6adf91c1be1c0"
     },
     {
       "owner": "src/drawer-ui.js",

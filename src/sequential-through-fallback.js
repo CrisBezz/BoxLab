@@ -148,6 +148,9 @@ document.addEventListener('boxlab-face-direct-press',event=>{
   if(workingFaces.length!==1||workingFaces[0]!==detail.hit)return;
   const m=mesh(),faceIndex=detail.hit,camera=state()?.camera;
   if(!m||!Number.isInteger(faceIndex)||!camera)return;
+  // Closed cuts belong to the authoritative polygon-preserving Face controller.
+  // Do not cancel it and replace its preview/commit with this triangulated path.
+  if(globalThis.__boxlabFaceDirect?.ownsClosedCuts?.(m))return;
   const throughPlan=planThrough(m,faceIndex),plan=regionPlan(m,faceIndex);
   if(!plan)return;
   const normal2d=projectedNormal(m,faceIndex,camera);if(!normal2d)return;
