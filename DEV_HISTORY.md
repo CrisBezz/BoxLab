@@ -5320,3 +5320,8 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
   Focused53PASS. Only Face direct/Through runtime modules changed; reviewed pins/
   hashes, shell markers .742; protected Multi/Loop/CSS/frozen betas unchanged.
   Publication/Node22/live verification pending. No device acceptance inferred.
+
+- .742 publication verified: runtime85dbb83e960d06b926b071e96dfaa988b5d8ad8b;
+  actual Node22CI37463033743/job112267082488 matches1706/1604/102/0 and
+  all102failure identities. Pages37463032493success; live shell/version/two
+  changed modules/before+correctedOBJ/Beta6 version byte-match main. Device pending.

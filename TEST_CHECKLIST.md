@@ -3660,7 +3660,9 @@ See docs/reliability-audit-2026-10-05.md; audit makes no runtime changes.
 - [x] Add actual splitter creates two children + crease inheritance; real Three
   boundary-line ray picking selects each child independently. User issue unconfirmed.
 - [x] New27PASS, focused53PASS, full1706/1604PASS/102FAIL/0skip; no new failures.
-- [ ] Node22CI/Pages/live byte verification (update before handoff).
+- [x] Actual Node22CI37463033743/job112267082488 matches1706/1604/102/0
+  and102failure names; Pages37463032493success; live shell/version/two changed
+  modules/before+correctedOBJ/Beta6 version byte-verified.
 - [ ] iPad four-band inward cut: side strips disappear, clean cage/no flicker.
 - [ ] iPad shallow/full cut + Undo/Redo + negative Exact/Repeat + positive Extrude.
 - [ ] iPad Add Vertex: exit Add, Edge mode, select both halves independently.

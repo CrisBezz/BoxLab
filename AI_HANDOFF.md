@@ -3,10 +3,11 @@
 ## Current state — 2026-10-06
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.742, prepared for publication** from parent main
+**v0.36.18.742, published and live** from parent main
 6a63d2b0cdd840aa67657831fea19711abfddda1. User redirected work to negative
 Extrude and possibly Add Vertex; supplied EXTRUDE TEST.obj and screenshot showing
-four red faces / four regions. No .741 device PASS inferred. Frozen beta2–6 immutable.
+four red faces / four regions. Runtime commit85dbb83e960d06b926b071e96dfaa988b5d8ad8b.
+No .741/.742 device PASS inferred. Frozen beta2–6 immutable.
 
 Negative Extrude on closed meshes now subtracts finite swept prisms through the
 existing Through geometry kernel. It removes intersected side geometry, preserves
@@ -51,7 +52,10 @@ filtered from the finite cutter's shell planes; old buildThrough algorithm uncha
 
 Full Node24:1706/1604PASS/102FAIL/0skip; same102 failure identities as .741.
 27 new tests and focused53PASS. Syntax/whitespace and protected/frozen diffs clean.
-Publication/Node22/live verification pending. No device acceptance inferred.
+Actual Node22CI37463033743/job112267082488 matches1706/1604/102/0 and
+all102 failure names. Pages37463032493success; live shell/version, two changed
+modules, before/corrected OBJ fixtures and frozenBeta6 version byte-match main.
+No device acceptance inferred.
 Remaining reliability inventory stays active; no CI release gate installed.
 Next: .742 device checks, reproduce Add Vertex UI/snap/selection failure (and audit
 first-three-vertex face normals after edge insertion), then resume remaining Face

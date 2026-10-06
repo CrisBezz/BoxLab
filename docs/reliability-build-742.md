@@ -80,7 +80,11 @@ Face controller shell pin and its Through import are .742; recovery shell pins
 .742; all release markers agree. Reviewed asset fixture updates only those URLs
 and two source hashes. Frozen beta2–6, Multi pin0.36.1.0, Loop .715 and CSS untouched.
 
-Publication/Node22/live verification pending; update before final handoff.
+Published runtime85dbb83e960d06b926b071e96dfaa988b5d8ad8b. Actual Node22CI
+37463033743/job112267082488:1706/1604PASS/102FAIL/0skip; all102 failure names
+match localNode24. Pages37463032493success. Live shell/version, both changed
+source assets, before/corrected OBJ fixtures and Beta6 version byte-match local/main.
+No .742 device acceptance inferred.
 
 ## Device checks
 
