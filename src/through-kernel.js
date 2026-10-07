@@ -86,7 +86,9 @@ function context(m,fi) {
   const box=new THREE.Box3().setFromPoints(m.vertices),scale=box.getSize(new V()).length(),eps=Math.max(scale*5e-7,1e-10);
   const valid=validateThrough(m,eps);if(!valid.ok)fail('input-'+valid.reason);
   const source=m.faces[fi].map(id=>m.vertices[id]),n=areaVector(source).normalize(),dir=n.clone().negate();
-  const ts=m.faces.flatMap((f,index)=>triangles(f.map(id=>m.vertices[id]),eps).map(p=>({p,index})));
+  triangles(source,eps); // A selected source still needs one planar sweep normal.
+  const surfaces=m.faces.map(f=>surfaceTriangles(f.map(id=>m.vertices[id]),eps));
+  const ts=surfaces.flatMap((s,index)=>s.parts.map(p=>({p,index})));
   const sides=source.map((a,i)=>plane(new V().crossVectors(source[(i+1)%source.length].clone().sub(a),n).normalize(),a));
   if(source.some(p=>sides.some(pl=>pl.n.dot(p)-pl.w>eps)))fail('concave-source-not-supported');
   const start=plane(n,source[0]);
@@ -106,7 +108,7 @@ function context(m,fi) {
     else targets.push({first:h.min,depth:h.max});
   }
   const first=targets[0].first,endDepth=targets.at(-1).depth;
-  return {source,n,dir,sides,start,eps,ts:ts.map(t=>t.p),first,depth:endDepth,targets,fi,multiExit:targets.length>1};
+  return {source,n,dir,sides,start,eps,ts:ts.map(t=>t.p),first,depth:endDepth,targets,fi,multiExit:targets.length>1,warped:surfaces.some(s=>s.warped)};
 }
 export function planThrough(m,fi) {try {const c=context(m,fi);return {ok:true,sourceFaceIndex:fi,distance:-c.depth,firstDistance:-c.first,targets:c.targets.map(t=>({...t}))};}catch(e){return{ok:false,reason:e.message};}}
 // Split every incident face together before replacing shell fragments. Generated seam
@@ -194,6 +196,13 @@ export function buildNegativeExtrude(before,faceIndices,distance) {
 export function buildThrough(before,plan) {
   try {
     const c=context(before,plan.sourceFaceIndex),{source,dir,n,sides,start,eps,ts}=c,depth=Number.isFinite(plan?.targetDepth)?Math.min(c.depth,Math.max(c.first,plan.targetDepth)):c.depth;
+    if(c.warped){
+      // Use the same represented solid and polygon-preserving finite cutter as
+      // inward extrusion. Keep the selected ordered exit, with a tiny overshoot.
+      const built=buildNegativeExtrude(before,[c.fi],-(depth+eps*32));
+      if(!built.ok)return built;
+      return {...built,validation:validateThrough(built.mesh,eps),finiteWarpedTarget:true};
+    }
     const end=plane(dir,source[0].clone().addScaledVector(dir,depth+eps*32)),planes=[...sides,start,end],polys=[];
     for(let fi=0;fi<before.faces.length;fi++) {if(fi===c.fi)continue;const p=before.faces[fi].map(id=>before.vertices[id]),tris=triangles(p,eps),pieces=tris.map(t=>subtract(t,planes,eps));if(pieces.every(r=>!r.inside.length))polys.push(p);else for(const r of pieces)polys.push(...r.outside);}
     const shellPlanes=ts.map(t=>plane(areaVector(t).normalize(),t[0]));

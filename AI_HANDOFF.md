@@ -1,45 +1,47 @@
 # BoxLab AI Handoff — post-Beta 6 reliability audit
 
-## Current state — 2026-10-07
+## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.750**, inward cut after rounded Bevel + Inset.
-User supplied BEVEL ISSUE.obj and .748 screenshot: planar inset face7 could not
-negative-extrude. .748 partial-chain Bevel tests accepted previously; .749 Knife
-has no device acceptance yet. Add Vertex and NOM import deferred. Frozen beta2–6
-immutable; main/Loop715/Multi/gestures unchanged.
+**v0.36.18.751**, warped-target Through planning / ordered exits.
+User PASS .750. .748 partial-chain tests accepted; .749 Knife has no separate device
+acceptance yet. Add Vertex and NOM import deferred. Frozen beta2–6 immutable;
+main/Loop715/Multi and gestures unchanged.
 
-Exact source retained tests/fixtures/bevel-inset-750.obj42verts36faces,30quads6ngons.
-Input closed/winding-clean, source7 atx=1 planar. Unrelated rounded end caps30/31
-are warped by~.06348; finite cutter's strict triangulation of every target face
-rejected nonplanar-input-face, for every selected face. This is not a caching issue
-or a nonplanar selected face. Export header736 is exporter stamp, not app build.
+.750 finite inward cuts work on supplied Bevel/Inset source, but legacy context
+still refused all warped targets as nonplanar-input-face. .751 context uses .750's
+surfaceTriangles for target classification, still validates the selected source
+strictly planar/convex. Exact source7 now plans first/last exit2. For a warped target,
+buildThrough delegates privately to existing finite cutter at selected targetDepth
+with existing epsilon overshoot. Planar legacy build route unchanged. Ordered exit
+planning/clamping retained; no new tool or gesture handler.
 
-Finite negative cutter now privately represents warped target polygons by the exact
-first-vertex fan used by EditableMesh.triangulatedGeometry. Planar target faces keep
-Earcut/polygon clipping; selected cutter faces still require planarity/convexity.
-If all fan pieces are untouched, retain original polygon and exact displayed fan
-anchor. If cut, clip the represented triangles. Classifier-plane cutter wall/cap
-fragments rejoin across reversed full edges; repeated-vertex/ambiguous unions stay
-separate. Optional rejoin capped at256pieces. No source flattening or wholesale
-triangulation. Legacy planThrough/buildThrough path unchanged; finite full-depth
-negative cuts work, no claim every legacy Through route supports warped targets.
+8newPASS: supplied exit and clean42face/zero-triangle result, source immutability,
+selected warped source refusal, ordinary planar Through unchanged, two separated
+warped shells targets2/5 with first-only second shell unchanged, rotated/scaled
+ordered targets/volume, actual Face+legacy fallback physical/Exact completion one
+Undo/Redo/selection cleared, shallow recess retained. Focused78PASS including
+Through12/cavity4,750new15/74227/7437 and releasecontract5. FullNode24:1820/1718PASS/
+102FAIL/0skip, identical102failure identities as750. Publication verification pending.
 
-Supplied source7 succeeds-.01/-.189/-.5/-1/-1.2/-2/-2.2: closed,zero triangle faces;
-shallow40faces/onecap, full42faces/nocap. -.189/.5 volume loss matches prism area;
-untouched cap points/anchors/groups exact. Rotated/scaled/translated covered.
-Actual Face+legacy fallback physical/Exact commit one Undo/Redo; Cancel source/redo
-retained. Selected warped source still refuses unchanged (no guessed normal).
-15newPASS; focused81PASS; fullNode24:1812/1710PASS/102FAIL/0skip, identical102failure
-identities as749. Runtime 4036c0fdf9c5cabc1173d68a3cf4281d7674b049 published. Actual Node22 CI37620905333/job112790634635:1812tests/1710PASS/102FAIL/0skip; all102failure names match baseline. Pages37620904201 success; live shell/version/kernel/Face loader/original OBJ fixture and frozenBeta6 version byte-match main. Focused81PASS. Device .750 acceptance pending.
+Only Through-kernel runtime changed; Face direct import-only/kernel/shell751.
+Recovery751; Knife749; Bevel/bootstrap/Inset748; guard747; Drawer/Loop746;
+fallback743/its legacy kernel242 retained. Two reviewed hashes and required pins.
+Read docs/reliability-build-751.md/JSON. Next device supplied object: shallow recess
+then full-depth negative cut, Cancel/Undo/Redo and ordinary cube Through/navigation.
+No arbitrary warped-source/concave-source support or self-intersection repair.
+Continue reliability audit; Add Vertex and NOM import remain deferred.
 
-Only Through-kernel runtime changed; Face direct import-only child750 and shell
-parent750. Recovery/shell750; Knife749, Bevel/bootstrap/Inset748, guard747,
-Drawer/Loop746, fallback743 retained. Two reviewed hashes/loading references.
-Read docs/reliability-build-750.md/JSON. Next device use supplied original: negative
-Exact-.189 and deeper drag/full cut, Cancel/Undo/Redo, positive Extrude/navigation.
-No arbitrary warped-source/concave-source cut or self-intersection repair guarantee.
-Add Vertex remains deferred watch list; NOM import deferred.
+.750 runtime4036c0fdf9c5cabc1173d68a3cf4281d7674b049; finalhandoff242256e6.
+Actual Node22CI37620905333/job112790634635:1812/1710/102/0 and all102names;
+Pages37620904201success; live graph/sourceOBJ/Beta6 byte-verified. User PASS .750.
+Source tests/fixtures/bevel-inset-750.obj42verts36faces; selected inset7 planarx=1,
+rounded caps30/31 warped~.06348. Finite uses exact displayed first-vertex fan for
+warped targets; uncut polygons/fan anchors/groups retained. Wall/cap fragments rejoin
+full reversed edges (bounded optional256pieces). Seven source depths -.01 to-2.2
+closed/zero triangles, shallow40faces/onecap, full42faces/nocap; exact prism volume,
+rotated source, actual owners/history/Cancel covered. Selected warped source refuses.
+Source/export header736 is exporter stamp, not app version; source fixture unchanged.
 
 .749 runtimedf89e43581f82d325d9431b31e23191cacd3489b; final handoff c5bcf1b5.
 Actual Node22CI37619318589/job112785293117:1797/1695/102/0 and all102names;
@@ -179,7 +181,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .750; Face direct/Through child .750; Knife .749; bevel bootstrap/Inset/multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .751; Face direct/Through child .751; Knife .749; bevel bootstrap/Inset/multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -204,7 +206,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .750 check supplied Bevel/Inset source7 inward/through cuts and Undo/Redo. Add Vertex remains a deferred, unconfirmed report.
+For .751 check warped-target exit planning/Through and shallow recess/history. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

@@ -3840,11 +3840,31 @@ Runtime df89e43581f82d325d9431b31e23191cacd3489b published. Actual Node22 CI3761
   two reviewed hashes. main/Loop715/Multi/frozen betas untouched.
 - Publication/Node22/live verification and device .750 acceptance pending.
 
-- [ ] .750 original BEVEL ISSUE.obj inset face negative Exact-.189/shallow drag.
-- [ ] Deeper/full cut; Cancel and Undo/Redo, positive Extrude sanity.
+- [x] User PASS .750: original Bevel/Inset source inward Exact/drag.
+- [x] .750 user PASS: deeper/full cut, Cancel/Undo/Redo and positive Extrude.
 - [ ] Bevel/Knife/Loop and selection/navigation retain accepted behavior.
 
 
 ### .750 publication verification
 
 Runtime 4036c0fdf9c5cabc1173d68a3cf4281d7674b049 published. Actual Node22 CI37620905333/job112790634635:1812tests/1710PASS/102FAIL/0skip; all102failure names match baseline. Pages37620904201 success; live shell/version/kernel/Face loader/original OBJ fixture and frozenBeta6 version byte-match main. Focused81PASS. Device .750 acceptance pending.
+
+
+## 2026-10-08 — v0.36.18.751 warped-target Through planning / ordered exits
+
+- User PASS .750. Remaining legacy planner still rejects supplied Bevel/Inset
+  object as nonplanar-input-face; target surface representation now shares750fan.
+- Selected source remains strictly planar/convex. Warped-target buildThrough uses
+  existing finite cutter at chosen ordered targetDepth + existing epsilon overshoot.
+  Original planar legacy build preserved; no pointer/tool owner changes.
+-8newPASS/focused78PASS; full1820/1718PASS/102FAIL/0skip, identical102identities.
+  Source7 exactexit2; clean42faces/0tris; warped two-shell targets2/5 and first-only
+  second shell untouched; rotation/scaling/volume, actual physical/Exact/history/
+  selection clear and shallow cut compatibility covered.
+- Kernel body only; Face import-only/kernel/shell751, retained other pins. Two
+  reviewed hashes; main/Loop715/Multi/frozen betas untouched.
+- Publication/Node22/live verification and device .751 acceptance pending.
+
+- [ ] .751 supplied object: shallow recess then full inward cut at shell exit.
+- [ ] Cancel and Undo/Redo; selection clears when the cut passes through.
+- [ ] Ordinary cube Through and selection/navigation retain accepted feel.
