@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/loose-bootstrap.js?v=0.36.18.747",
+      "url": "./src/loose-bootstrap.js?v=0.36.18.748",
       "target": "src/loose-bootstrap.js",
-      "sha256": "6fe2b2d01f562576e05f57d294ac7772e54b7076f984c641831e0e081cbe27d1"
+      "sha256": "d9650bc60689622568c4ff3a70eb3e42a7ec917c6dbf8dd9a29ac36b2ae06777"
     },
     {
       "owner": "index.html",
@@ -317,9 +317,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.747",
+      "url": "./src/multi-face-direct.js?v=0.36.18.748",
       "target": "src/multi-face-direct.js",
-      "sha256": "83ca91d3495dfc47141ebfbf7cad3ed38e23771214c19d639cfdced66120b46c"
+      "sha256": "d11f761ef6f84c09fef53bc0343ca22818ea218b1858b32a49d65bcf80d71325"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.747",
+      "url": "./src/release-bootstrap.js?v=0.36.18.748",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.747",
+      "url": "./src/release-version.js?v=0.36.18.748",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1650,9 +1650,9 @@
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./multi-edge-chamfer-topology.js?v=0.36.18.745",
+      "url": "./multi-edge-chamfer-topology.js?v=0.36.18.748",
       "target": "src/multi-edge-chamfer-topology.js",
-      "sha256": "823374ef874c5ee7597ed468396793688c76a03f072ea1e89f8e5bdf1c18c92b"
+      "sha256": "5156c647670563453a7af569c0e1ac4f1aa7b6956a809017fcf141a66214dd97"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1810,9 +1810,9 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./uniform-inset.js?v=0.36.18.747",
+      "url": "./uniform-inset.js?v=0.36.18.748",
       "target": "src/uniform-inset.js",
-      "sha256": "326783715ae00340ddf81bb8bf3884e399255ed4fe839c42c61bbd033995db24"
+      "sha256": "144844c19cb9753e689cba5ae288a726c6e582d29a3da052682d72cfd2284135"
     },
     {
       "owner": "src/multi-object.js",
@@ -2074,9 +2074,9 @@
     },
     {
       "owner": "src/uniform-inset.js",
-      "url": "./loose-bootstrap.js?v=0.36.18.747",
+      "url": "./loose-bootstrap.js?v=0.36.18.748",
       "target": "src/loose-bootstrap.js",
-      "sha256": "6fe2b2d01f562576e05f57d294ac7772e54b7076f984c641831e0e081cbe27d1"
+      "sha256": "d9650bc60689622568c4ff3a70eb3e42a7ec917c6dbf8dd9a29ac36b2ae06777"
     },
     {
       "owner": "src/vertex-tool-viewport-session.js",

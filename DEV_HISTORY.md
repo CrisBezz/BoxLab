@@ -5439,3 +5439,21 @@ Runtime commit 48595c3d767dc99b34458b1c6c9793070d53a461 published. Actual Node22
 ### .747 publication verification
 
 Runtime fd498652f9339c3df639e8bb5ea276ebd980875f published. Actual Node22 CI37594432292/job112703460695:1777tests/1675PASS/102FAIL/0skip; all102failure names match baseline. Pages37594431221 success; live shell/version/guard/bootstrap/Inset/Face loader and frozenBeta6 version byte-match main. Focused69PASS. Device .747 acceptance pending.
+
+
+## 2026-10-07 — v0.36.18.748 partial-chain Bevel through four-way vertices
+
+- User PASS .747; Add Vertex remains deferred.
+- Actual prior multi-chamfer rejects consecutive7/35 or7/35/42 on supplied loop
+  cage. Existing engine extended to one open nonbranching strip chain, four-valence
+  straight-through internal vertices and one-selected-edge endpoints.
+- Directed local one-owner boundary rings supply complete end caps, preserving
+  rounded subdivisions. Chamfer two triangular end caps are necessary geometry;
+  rounded caps are polygons. Existing groups/creases/loose remapping retained.
+- Four-way turns/branches remain safe refusal; complete loops retain dedicated
+  engine. Early widening accidentally routed complete rings to connected engine;
+  existing semantic tests caught it, fixed by explicit connected-open-chain gate.
+-10newPASS/140partialpaths; focused120PASS; full1787/1685/102/0, same102identities.
+- Multi-chamfer runtime only; bootstrap/Inset/Face import-only chain748, guard747;
+  reviewed4hashes/pins; main/Loop715/Multi/frozen betas untouched.
+- Node22/Pages verification and device .748 acceptance pending.

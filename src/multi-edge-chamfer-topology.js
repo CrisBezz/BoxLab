@@ -36,11 +36,31 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
     const picked = ids.map(i => edges[i]);
     if (picked.some(edge => !edge || edge.loose || realFaces(this, edge).length !== 2)) return null;
 
+    const selectedIds = new Set(ids);
     const affected = new Set();
     for (const edge of picked) { affected.add(edge.a); affected.add(edge.b); }
+    let extendedChain = false;
     for (const v of affected) {
       const incident = edges.filter(edge => edge && !edge.loose && (edge.a === v || edge.b === v) && realFaces(this, edge).length === 2);
-      if (incident.length !== 3) return null;
+      if (incident.length === 3) continue;
+      if (incident.length !== 4) return null;
+      extendedChain = true;
+      const selected = incident.filter(edge => selectedIds.has(edges.indexOf(edge)));
+      if (selected.length === 1) continue;
+      // A simple strip chain passes straight through a four-way vertex. A turn
+      // in one face or a branch needs a different corner construction.
+      if (selected.length !== 2 || selected[0].faces.some(fi => selected[1].faces.includes(fi))) return null;
+    }
+    if (extendedChain) {
+      const degree = new Map();
+      for (const edge of picked) for (const v of [edge.a, edge.b]) degree.set(v, (degree.get(v) || 0) + 1);
+      if ([...degree.values()].some(n => n > 2) || [...degree.values()].filter(n => n === 1).length !== 2) return null;
+      const seen = new Set(), queue = [picked[0].a];
+      while (queue.length) {
+        const v = queue.pop(); if (seen.has(v)) continue; seen.add(v);
+        for (const edge of picked) if (edge.a === v || edge.b === v) queue.push(edge.a === v ? edge.b : edge.a);
+      }
+      if (seen.size !== degree.size) return null;
     }
     return { mode:'connected', ids, count:ids.length, affected:[...affected] };
   };
@@ -181,7 +201,7 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
     if (cuts > 1) {
       for (const v of info.affected) {
         const meta = affectedInfo.get(v), chains = endpointProfiles.get(v) || [];
-        if (meta?.selectedCount !== 1 || chains.length !== 1) continue;
+        if (meta?.selectedCount !== 1 || meta.incident.length !== 3 || chains.length !== 1) continue;
         const chain = chains[0], first = chain[0], last = chain[chain.length - 1];
         const capIndex = this.faces.findIndex(face => {
           const ia = face.indexOf(first), ib = face.indexOf(last), n = face.length;
@@ -204,6 +224,40 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
         this.faces.push(face);
         this.faceGroups.push(sharedBevelGroup(originalGroups,edge.faces));
       }
+    }
+
+    // An open chain at a four-way endpoint leaves one local boundary ring.
+    // Stitch its actual directed edges instead of sorting points by an angle:
+    // the ring includes every rounded profile subdivision in source winding.
+    for (const v of info.affected) {
+      const meta = affectedInfo.get(v);
+      if (meta.selectedCount !== 1 || meta.incident.length !== 4) continue;
+      const points = new Set((endpointProfiles.get(v) || []).flat());
+      for (const edge of meta.incident) {
+        const other = edge.a === v ? edge.b : edge.a;
+        const point = edgePointMap.get(`${v}:${other}`);
+        if (Number.isInteger(point)) points.add(point);
+      }
+      const boundary = new Map();
+      for (const edge of this.edges()) {
+        if (edge.loose || edge.faces.length !== 1 || !points.has(edge.a) || !points.has(edge.b)) continue;
+        const face = this.faces[edge.faces[0]];
+        const forward = edgeDirectionInFace(face, edge.a, edge.b) > 0;
+        const a = forward ? edge.b : edge.a, b = forward ? edge.a : edge.b;
+        if (boundary.has(a)) return null;
+        boundary.set(a, b);
+      }
+      if (boundary.size !== points.size || boundary.size < 3) return null;
+      const first = boundary.keys().next().value, cap = [first];
+      let next = boundary.get(first);
+      while (next !== first) {
+        if (!Number.isInteger(next) || cap.includes(next)) return null;
+        cap.push(next); next = boundary.get(next);
+      }
+      if (cap.length !== boundary.size) return null;
+      const incidentFaces = [...new Set(meta.incident.flatMap(edge => realFaces({faces:originalFaces}, edge)))];
+      this.faces.push(cap);
+      this.faceGroups.push(sharedBevelGroup(originalGroups, incidentFaces));
     }
 
     const faceNormal = fi => bevelPolygonNormal(originalVertices,originalFaces[fi]);

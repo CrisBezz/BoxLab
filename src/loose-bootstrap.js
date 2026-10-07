@@ -13,7 +13,7 @@ import { installOpenChainAllQuadBridge } from './bridge-open-chain-all-quad.js?v
 import { installBevelTopology } from './bevel-topology.js?v=0.36.18.745';
 import { installRoundedLoopBevel } from './rounded-loop-bevel.js?v=0.36.18.745';
 import { installGeneralEdgeBevelTopology } from './general-edge-bevel-topology.js?v=0.36.18.745';
-import { installMultiEdgeChamferTopology } from './multi-edge-chamfer-topology.js?v=0.36.18.745';
+import { installMultiEdgeChamferTopology } from './multi-edge-chamfer-topology.js?v=0.36.18.748';
 import { installPerimeterFanBevel } from './perimeter-fan-bevel.js?v=0.36.18.745';
 import { installGeneralizedEdgeFanBevel } from './generalized-edge-fan-bevel.js?v=0.36.18.745';
 import { installBevelSelection } from './bevel-selection.js?v=0.36.18.745';
