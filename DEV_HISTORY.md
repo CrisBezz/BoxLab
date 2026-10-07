@@ -5482,3 +5482,23 @@ Runtime ac7ef2c96274dbd4a96a929c595f3fb0a7fad159 published. Actual Node22 CI3760
 ### .749 publication verification
 
 Runtime df89e43581f82d325d9431b31e23191cacd3489b published. Actual Node22 CI37619318589/job112785293117:1797tests/1695PASS/102FAIL/0skip; all102failure names match baseline. Pages37619317487 success; live shell/version/Knife and frozenBeta6 version byte-match main. Focused89PASS. Device .749 acceptance pending.
+
+
+## 2026-10-07 — v0.36.18.750 Bevel + Inset inward cuts on uploaded source
+
+- User .748 screenshot/file BEVEL ISSUE.obj42verts36faces: selected inset7 planar,
+  rounded caps30/31 warped~.06348. Existing finite target triangulation refuses
+  every cut as nonplanar-input-face. Export header736 is not app build version.
+- Exact untouched source retained in tests/fixtures/bevel-inset-750.obj.
+- Finite cutter uses displayed first-vertex fan privately for warped targets;
+  planar target handling unchanged. Uncut polygons retain points/fan anchor/groups.
+- Rejoin accepted wall/cap pieces across complete reversed edges, preserve ambiguous
+  unions; bounded optional coalescing256pieces. No flattening or wholesale triangles.
+-15newPASS/focused81PASS; full1812/1710PASS/102FAIL/0skip, same102identities as749.
+  Seven depths,zero triangles/closed,exact shallow prism volume, rotated source,
+  groups, physical/Exact actual combined-owner history/Cancel covered.
+- Selected warped source still refuses; legacyThrough path unchanged. No all-quad
+  promise for arbitrary intersected warped surfaces or self-intersection detection.
+- Kernel body only; Face import-only/kernel/shell750, all other pins retained;
+  two reviewed hashes. main/Loop715/Multi/frozen betas untouched.
+- Publication/Node22/live verification and device .750 acceptance pending.

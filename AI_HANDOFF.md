@@ -3,38 +3,50 @@
 ## Current state — 2026-10-07
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.749**, Knife diagonal validity and full failed-cut rollback.
-User PASS .748/.747; .746 big PASS. .745 not blanket device PASS. Add Vertex and
-NOM import deferred. Frozen beta2–6 immutable; main/Loop715/Multi unchanged.
+**v0.36.18.750**, inward cut after rounded Bevel + Inset.
+User supplied BEVEL ISSUE.obj and .748 screenshot: planar inset face7 could not
+negative-extrude. .748 partial-chain Bevel tests accepted previously; .749 Knife
+has no device acceptance yet. Add Vertex and NOM import deferred. Frozen beta2–6
+immutable; main/Loop715/Multi/gestures unchanged.
 
-Actual prior .748 Knife release on a U-notched planar polygon connects vertices3/6
-across exterior void, creates2faces and1history entry. Existing mesh.connectVertices
-only checks shared topology; generic mesh splitter remains unchanged. Knife now
-checks its proposed diagonal in the source face plane before calling that splitter:
-reject exterior crossings, a third boundary vertex on the chord, zero-area cuts
-along subdivided boundaries, and nonplanar/degenerate faces. Valid concave diagonals
-retain source winding/groups and one history entry. Plane projection uses source-
-relative coordinates and scale-relative tolerance. Pointer ownership/snapping/
-hysteresis/armed-tool lifecycle unchanged; no new Knife tool or gesture handler.
+Exact source retained tests/fixtures/bevel-inset-750.obj42verts36faces,30quads6ngons.
+Input closed/winding-clean, source7 atx=1 planar. Unrelated rounded end caps30/31
+are warped by~.06348; finite cutter's strict triangulation of every target face
+rejected nonplanar-input-face, for every selected face. This is not a caching issue
+or a nonplanar selected face. Export header736 is exporter stamp, not app build.
 
-Knife transaction catches splitter exceptions and restores vertices/faces/groups/
-creases/loose metadata. Invalid split-edge attempts restore original boundaries;
-failed cuts do not alter history/redo. Existing clean-cut failure message retained.
-10newPASS: actual release exterior/edge-snap refusal, valid concave cuts both
-windings/history, subdivided collinear/vertex-hit refusal, rotated/translated at
-.001/1000scale, nonplanar refusal, injected actual splitter exception with full
-metadata/redo retained. Focused89PASS including748/747/745/744/746 and release
-contract. FullNode24:1797/1695PASS/102FAIL/0skip, identical102failure identities as
-748. Runtime df89e43581f82d325d9431b31e23191cacd3489b published. Actual Node22 CI37619318589/job112785293117:1797tests/1695PASS/102FAIL/0skip; all102failure names match baseline. Pages37619317487 success; live shell/version/Knife and frozenBeta6 version byte-match main. Focused89PASS. Device .749 acceptance pending. No historical tests excluded.
+Finite negative cutter now privately represents warped target polygons by the exact
+first-vertex fan used by EditableMesh.triangulatedGeometry. Planar target faces keep
+Earcut/polygon clipping; selected cutter faces still require planarity/convexity.
+If all fan pieces are untouched, retain original polygon and exact displayed fan
+anchor. If cut, clip the represented triangles. Classifier-plane cutter wall/cap
+fragments rejoin across reversed full edges; repeated-vertex/ambiguous unions stay
+separate. Optional rejoin capped at256pieces. No source flattening or wholesale
+triangulation. Legacy planThrough/buildThrough path unchanged; finite full-depth
+negative cuts work, no claim every legacy Through route supports warped targets.
 
-Only Knife runtime body changed; direct shell Knife URL749, recovery/shell749.
-Bevel/bootstrap/Inset/Face chain748, guard747, Drawer/Loop746, Through742/fallback743
-remain unchanged. Reviewed one source hash plus intentional shell URLs.
-Read docs/reliability-build-749.md/JSON. Next device: normal Knife after Loop/Bevel;
-concave notch outside chord should refuse, valid inside cut should work; Undo/Redo
-and navigation. A single Knife still requires one planar shared face; crossing a
-third boundary vertex requires separate strokes. No source self-intersection
-repair or arbitrary nonplanar cutting guarantee. Add Vertex remains watch list.
+Supplied source7 succeeds-.01/-.189/-.5/-1/-1.2/-2/-2.2: closed,zero triangle faces;
+shallow40faces/onecap, full42faces/nocap. -.189/.5 volume loss matches prism area;
+untouched cap points/anchors/groups exact. Rotated/scaled/translated covered.
+Actual Face+legacy fallback physical/Exact commit one Undo/Redo; Cancel source/redo
+retained. Selected warped source still refuses unchanged (no guessed normal).
+15newPASS; focused81PASS; fullNode24:1812/1710PASS/102FAIL/0skip, identical102failure
+identities as749. Publication/Node22/live verification pending.
+
+Only Through-kernel runtime changed; Face direct import-only child750 and shell
+parent750. Recovery/shell750; Knife749, Bevel/bootstrap/Inset748, guard747,
+Drawer/Loop746, fallback743 retained. Two reviewed hashes/loading references.
+Read docs/reliability-build-750.md/JSON. Next device use supplied original: negative
+Exact-.189 and deeper drag/full cut, Cancel/Undo/Redo, positive Extrude/navigation.
+No arbitrary warped-source/concave-source cut or self-intersection repair guarantee.
+Add Vertex remains deferred watch list; NOM import deferred.
+
+.749 runtimedf89e43581f82d325d9431b31e23191cacd3489b; final handoff c5bcf1b5.
+Actual Node22CI37619318589/job112785293117:1797/1695/102/0 and all102names;
+Pages37619317487success; live shell/Knife/Beta6 bytes verified. Device749pending.
+Knife now refuses outside concave diagonal, boundary sliver/third-vertex hit and
+nonplanar source; valid concave chord works. Full rollback includes groups/redo;
+actual gesture/snapping unchanged. Generic mesh.connectVertices unchanged.
 
 .748 runtimeac7ef2c96274dbd4a96a929c595f3fb0a7fad159; final handoff a8ebbd3b.
 Actual Node22CI37609372174/job112752603609:1787/1685/102/0 and all102names;
@@ -167,7 +179,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .749; Knife .749; bevel bootstrap/Inset/Face direct/multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; Through child .742; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .750; Face direct/Through child .750; Knife .749; bevel bootstrap/Inset/multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -192,7 +204,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .749 check normal/concave Knife validity and Undo/Redo. Add Vertex remains a deferred, unconfirmed report.
+For .750 check supplied Bevel/Inset source7 inward/through cuts and Undo/Redo. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

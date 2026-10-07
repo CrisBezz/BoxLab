@@ -25,6 +25,48 @@ function triangles(poly,eps) {
   if(!ts.length||Math.abs(ts.reduce((s,t)=>s+areaVector(t).length(),0)-areaVector(poly).length())>eps*poly.length*10)fail('invalid-face-triangulation');
   return ts;
 }
+// Rounded Bevel end caps can be warped n-gons. The displayed surface uses a
+// first-vertex fan; use that exact surface privately for solid classification.
+// Planar faces retain Earcut and polygon-preserving clipping. Selected source
+// faces still require planarity so their extrusion has one unambiguous normal.
+function surfaceTriangles(poly,eps) {
+  const n=areaVector(poly);
+  if(n.length()<=eps*eps)fail('zero-area-input-face');
+  n.normalize();
+  const warped=poly.some(p=>Math.abs(p.clone().sub(poly[0]).dot(n))>eps*4);
+  if(!warped)return {warped:false,parts:triangles(poly,eps)};
+  const parts=[];
+  for(let i=1;i<poly.length-1;i++){
+    const triangle=[poly[0],poly[i],poly[i+1]];
+    if(areaVector(triangle).length()>eps*eps)parts.push(triangle);
+  }
+  if(!parts.length)fail('zero-area-input-face');
+  return {warped:true,parts};
+}
+// Classification planes may partition one cutter wall/cap. Rejoin adjacent
+// accepted pieces along a complete reversed edge; retain separate pieces when
+// their union would repeat a vertex (holes or ambiguous boundaries).
+function mergeBoundaryParts(parts,eps){
+  // Keep bounded coalescing optional on densely intersected walls.
+  if(parts.length>256)return parts;
+  parts=parts.map(p=>[...p]);
+  for(let changed=true;changed;){
+    changed=false;
+    outer:for(let a=0;a<parts.length;a++)for(let b=a+1;b<parts.length;b++){
+      const A=parts[a],B=parts[b];
+      for(let i=0;i<A.length;i++)for(let j=0;j<B.length;j++){
+        if(A[i].distanceTo(B[(j+1)%B.length])>eps||A[(i+1)%A.length].distanceTo(B[j])>eps)continue;
+        const rotate=(p,k)=>p.slice(k).concat(p.slice(0,k));
+        const merged=rotate(A,(i+1)%A.length).concat(rotate(B,(j+1)%B.length).slice(1,-1));
+        if(merged.some((p,k)=>merged.slice(k+1).some(q=>p.distanceTo(q)<=eps)))continue;
+        const expected=areaVector(A).add(areaVector(B)),actual=areaVector(merged);
+        if(actual.length()<=eps*eps||actual.distanceTo(expected)>eps*eps*32)continue;
+        parts[a]=merged;parts.splice(b,1);changed=true;break outer;
+      }
+    }
+  }
+  return parts;
+}
 // Winding number is independent of ray direction and triangle edge ownership.
 function insideSolid(p,ts) {let sum=0;for(const t of ts){const [a,b,c]=t.map(v=>v.clone().sub(p)),la=a.length(),lb=b.length(),lc=c.length();sum+=2*Math.atan2(a.dot(new V().crossVectors(b,c)),la*lb*lc+a.dot(b)*lc+b.dot(c)*la+c.dot(a)*lb);}return Math.abs(sum)>2*Math.PI;}
 function edgeUses(m){const uses=new Map();m.faces.forEach((f,fi)=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],k=topology().edgeKey(a,b);if(!uses.has(k))uses.set(k,[]);uses.get(k).push({a,b,fi});}));return uses;}
@@ -82,7 +124,12 @@ function assemble(before,polys,eps,groups=null) {
   m.faces=faces.map(f=>f.flatMap((a,i)=>{const b=f[(i+1)%f.length],ab=m.vertices[b].clone().sub(m.vertices[a]),l2=ab.lengthSq();if(l2<=eps*eps)fail('collapsed-output-edge');const entries=[];for(const id of used){if(id===a||id===b)continue;const t=m.vertices[id].clone().sub(m.vertices[a]).dot(ab)/l2;if(t>eps/Math.sqrt(l2)&&t<1-eps/Math.sqrt(l2)&&m.vertices[a].clone().addScaledVector(ab,t).distanceTo(m.vertices[id])<=eps)entries.push({id,t});}entries.sort((x,y)=>x.t-y.t);return[a,...entries.map(e=>e.id)];}));
   // EditableMesh.faceNormal uses its first three vertices. Canonical seam
   // subdivisions can make that triple collinear; rotate, never reverse winding.
-  m.faces=m.faces.map(f=>{for(let i=0;i<f.length;i++){const a=m.vertices[f[i]],b=m.vertices[f[(i+1)%f.length]],c=m.vertices[f[(i+2)%f.length]];if(new V().crossVectors(b.clone().sub(a),c.clone().sub(a)).length()>eps*eps)return [...f.slice(i),...f.slice(0,i)];}fail('zero-area-output-face');});
+  m.faces=m.faces.map(f=>{
+    // An untouched warped polygon's first vertex defines its displayed fan.
+    // Rotating that anchor would change the surface even with equal boundaries.
+    const p=f.map(id=>m.vertices[id]),n=areaVector(p).normalize();
+    if(p.some(v=>Math.abs(v.clone().sub(p[0]).dot(n))>eps*4))return f;
+    for(let i=0;i<f.length;i++){const a=m.vertices[f[i]],b=m.vertices[f[(i+1)%f.length]],c=m.vertices[f[(i+2)%f.length]];if(new V().crossVectors(b.clone().sub(a),c.clone().sub(a)).length()>eps*eps)return [...f.slice(i),...f.slice(0,i)];}fail('zero-area-output-face');});
   if(groups)m.faceGroups=[...groups];
   const keys=new Set(edgeUses(m).keys());m.creases=new Map([...m.creases].filter(([k])=>keys.has(k)));
   return m;
@@ -110,14 +157,15 @@ export function buildNegativeExtrude(before,faceIndices,distance) {
     for(const {source,n,dir,sides,group} of cutters){
       // Earcut can emit numerical zero-area triangles along a subdivided straight
       // boundary after rotation. They must never become arbitrary split planes.
-      const ts=trial.faces.flatMap(f=>triangles(f.map(id=>trial.vertices[id]),eps)).filter(t=>areaVector(t).length()>eps*eps),shellPlanes=[];
+      const surfaces=trial.faces.map(f=>surfaceTriangles(f.map(id=>trial.vertices[id]),eps));
+      const ts=surfaces.flatMap(s=>s.parts).filter(t=>areaVector(t).length()>eps*eps),shellPlanes=[];
       for(const t of ts){const pl=plane(areaVector(t).normalize(),t[0]);if(!shellPlanes.some(q=>q.n.distanceTo(pl.n)<1e-8&&Math.abs(q.w-pl.w)<=eps))shellPlanes.push(pl);}
       const end=source.map(p=>p.clone().addScaledVector(dir,depth)),planes=[...sides,plane(n,source[0].clone().addScaledVector(n,eps*32)),plane(dir,end[0])],polys=[],groups=[];
       const add=(p,g)=>{if(p.length){polys.push(p);groups.push(g);}};
       for(let fi=0;fi<trial.faces.length;fi++){
         const p=trial.faces[fi].map(id=>trial.vertices[id]),normal=areaVector(p).normalize();
         const convex=p.every((a,i)=>{const side=new V().crossVectors(p[(i+1)%p.length].clone().sub(a),normal);return p.every(v=>side.dot(v.clone().sub(a))<=eps*side.length());});
-        const parts=(convex?[p]:triangles(p,eps).filter(t=>areaVector(t).length()>eps*eps)).map(t=>subtract(t,planes,eps));
+        const parts=(!surfaces[fi].warped&&convex?[p]:surfaces[fi].parts.filter(t=>areaVector(t).length()>eps*eps)).map(t=>subtract(t,planes,eps));
         if(parts.every(r=>!r.inside.length))add(p,trial.faceGroups?.[fi]??null);
         else for(const r of parts)for(const piece of r.outside)add(piece,trial.faceGroups?.[fi]??null);
       }
@@ -125,7 +173,8 @@ export function buildNegativeExtrude(before,faceIndices,distance) {
       for(const {p,outside} of boundary){
         let parts=[p];
         for(const pl of shellPlanes){parts=parts.flatMap(piece=>split(piece,pl,eps).filter(q=>q.length));if(parts.length>10000)fail('intersection-complexity-limit');}
-        for(const piece of parts)if(insideSolid(center(piece).addScaledVector(outside,eps*16),ts))add(piece,group);
+        const accepted=parts.filter(piece=>insideSolid(center(piece).addScaledVector(outside,eps*16),ts));
+        for(const piece of mergeBoundaryParts(accepted,eps))add(piece,group);
       }
       trial=assemble(trial,polys,eps,groups);
       const valid=validateThrough(trial,eps);if(!valid.ok)fail(valid.reason);
