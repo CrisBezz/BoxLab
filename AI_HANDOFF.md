@@ -22,7 +22,7 @@ warped shells targets2/5 with first-only second shell unchanged, rotated/scaled
 ordered targets/volume, actual Face+legacy fallback physical/Exact completion one
 Undo/Redo/selection cleared, shallow recess retained. Focused78PASS including
 Through12/cavity4,750new15/74227/7437 and releasecontract5. FullNode24:1820/1718PASS/
-102FAIL/0skip, identical102failure identities as750. Publication verification pending.
+102FAIL/0skip, identical102failure identities as750. Runtime 5c3007ce3b9f5863dc924a12bce60c7b3946dc87 published. Node22 Topology run37697834551/job113053828900:1820tests/1718PASS/102FAIL/0skip; all102 failure names exactly match the local inventory and prior build. Pages run37697833503 succeeded. Live shell/version, Through kernel, Face direct, original source fixture and beta-6 version bytes match the tested checkout. Device .751 acceptance remains pending.
 
 Only Through-kernel runtime changed; Face direct import-only/kernel/shell751.
 Recovery751; Knife749; Bevel/bootstrap/Inset748; guard747; Drawer/Loop746;

@@ -5523,3 +5523,8 @@ Runtime 4036c0fdf9c5cabc1173d68a3cf4281d7674b049 published. Actual Node22 CI3762
 - Kernel body only; Face import-only/kernel/shell751, retained other pins. Two
   reviewed hashes; main/Loop715/Multi/frozen betas untouched.
 - Publication/Node22/live verification and device .751 acceptance pending.
+
+
+### .751 publication verification
+
+Runtime 5c3007ce3b9f5863dc924a12bce60c7b3946dc87 published. Node22 Topology run37697834551/job113053828900:1820tests/1718PASS/102FAIL/0skip; all102 failure names exactly match the local inventory and prior build. Pages run37697833503 succeeded. Live shell/version, Through kernel, Face direct, original source fixture and beta-6 version bytes match the tested checkout. Device .751 acceptance remains pending.

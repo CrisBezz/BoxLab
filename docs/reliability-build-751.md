@@ -13,7 +13,7 @@
   selection clear and shallow cut compatibility covered.
 - Kernel body only; Face import-only/kernel/shell751, retained other pins. Two
   reviewed hashes; main/Loop715/Multi/frozen betas untouched.
-- Publication/Node22/live verification and device .751 acceptance pending.
+- Runtime 5c3007ce3b9f5863dc924a12bce60c7b3946dc87 published. Node22 Topology run37697834551/job113053828900:1820tests/1718PASS/102FAIL/0skip; all102 failure names exactly match the local inventory and prior build. Pages run37697833503 succeeded. Live shell/version, Through kernel, Face direct, original source fixture and beta-6 version bytes match the tested checkout. Device .751 acceptance remains pending.
 
 Reuses original supplied tests/fixtures/bevel-inset-750.obj without modification.
 Prior context strict triangles rejected cap30/31. New context target triangles use
@@ -28,4 +28,4 @@ No user requirement to reproduce synthetic layered fixture; device checks use
 original supplied object and an ordinary cube.
 
 Focused78PASS; full1820tests/1718PASS/102FAIL/0skip, exact unchanged failure identities,
-no exclusions/gates. Publication/Node22/live verification pending. Device .751 pending.
+no exclusions/gates. Runtime 5c3007ce3b9f5863dc924a12bce60c7b3946dc87 published. Node22 Topology run37697834551/job113053828900:1820tests/1718PASS/102FAIL/0skip; all102 failure names exactly match the local inventory and prior build. Pages run37697833503 succeeded. Live shell/version, Through kernel, Face direct, original source fixture and beta-6 version bytes match the tested checkout. Device .751 acceptance remains pending.

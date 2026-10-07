@@ -3868,3 +3868,8 @@ Runtime 4036c0fdf9c5cabc1173d68a3cf4281d7674b049 published. Actual Node22 CI3762
 - [ ] .751 supplied object: shallow recess then full inward cut at shell exit.
 - [ ] Cancel and Undo/Redo; selection clears when the cut passes through.
 - [ ] Ordinary cube Through and selection/navigation retain accepted feel.
+
+
+### .751 publication verification
+
+Runtime 5c3007ce3b9f5863dc924a12bce60c7b3946dc87 published. Node22 Topology run37697834551/job113053828900:1820tests/1718PASS/102FAIL/0skip; all102 failure names exactly match the local inventory and prior build. Pages run37697833503 succeeded. Live shell/version, Through kernel, Face direct, original source fixture and beta-6 version bytes match the tested checkout. Device .751 acceptance remains pending.
