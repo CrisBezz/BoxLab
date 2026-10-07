@@ -20,7 +20,7 @@ segments closed and consistently oriented; actual Knife release on every quad
 retains boundaries and exact history. Loop→Knife→Bevel→Loop at1/3segments has
 exact successive Undo/Redo states. Seven new tests PASS; focused69PASS.
 Full Node24:1777tests/1675PASS/102FAIL/0skip, identical failure identities as746.
-No tests excluded or gate introduced. Node22/Pages verification pending.
+No tests excluded or gate introduced. Runtime fd498652f9339c3df639e8bb5ea276ebd980875f published. Actual Node22 CI37594432292/job112703460695:1777tests/1675PASS/102FAIL/0skip; all102failure names match baseline. Pages37594431221 success; live shell/version/guard/bootstrap/Inset/Face loader and frozenBeta6 version byte-match main. Focused69PASS. Device .747 acceptance pending.
 
 Changed runtime guard only; bootstrap/Inset/Face are import-only cache hops747.
 Shell release/recovery747; Drawer/Loop addon746; Bevel engines745; Through742 and

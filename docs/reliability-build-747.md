@@ -24,4 +24,4 @@ Focused69 includes7new,29Bevel745,13combination744,15Loop746 and5releasecontract
 Full baseline retains all102 historical failures; matching identities is evidence
 of no newly failing test, not proof of universal topology safety.
 
-Publication/Node22/live verification pending. Device .747 acceptance pending.
+Runtime fd498652f9339c3df639e8bb5ea276ebd980875f published. Actual Node22 CI37594432292/job112703460695:1777tests/1675PASS/102FAIL/0skip; all102failure names match baseline. Pages37594431221 success; live shell/version/guard/bootstrap/Inset/Face loader and frozenBeta6 version byte-match main. Focused69PASS. Device .747 acceptance pending. Device .747 acceptance pending.

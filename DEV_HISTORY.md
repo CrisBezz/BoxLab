@@ -5434,3 +5434,8 @@ Runtime commit 48595c3d767dc99b34458b1c6c9793070d53a461 published. Actual Node22
 - Guard only runtime edit; bootstrap/Inset/Face import-only cache chain747. Four
   reviewed hashes/pins; protected Loop715/main/Multi/frozen betas untouched.
 - Publication verification pending; .747 device acceptance pending.
+
+
+### .747 publication verification
+
+Runtime fd498652f9339c3df639e8bb5ea276ebd980875f published. Actual Node22 CI37594432292/job112703460695:1777tests/1675PASS/102FAIL/0skip; all102failure names match baseline. Pages37594431221 success; live shell/version/guard/bootstrap/Inset/Face loader and frozenBeta6 version byte-match main. Focused69PASS. Device .747 acceptance pending.
