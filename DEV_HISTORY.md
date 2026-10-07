@@ -5502,3 +5502,8 @@ Runtime df89e43581f82d325d9431b31e23191cacd3489b published. Actual Node22 CI3761
 - Kernel body only; Face import-only/kernel/shell750, all other pins retained;
   two reviewed hashes. main/Loop715/Multi/frozen betas untouched.
 - Publication/Node22/live verification and device .750 acceptance pending.
+
+
+### .750 publication verification
+
+Runtime 4036c0fdf9c5cabc1173d68a3cf4281d7674b049 published. Actual Node22 CI37620905333/job112790634635:1812tests/1710PASS/102FAIL/0skip; all102failure names match baseline. Pages37620904201 success; live shell/version/kernel/Face loader/original OBJ fixture and frozenBeta6 version byte-match main. Focused81PASS. Device .750 acceptance pending.

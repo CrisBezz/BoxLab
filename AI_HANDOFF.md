@@ -31,7 +31,7 @@ untouched cap points/anchors/groups exact. Rotated/scaled/translated covered.
 Actual Face+legacy fallback physical/Exact commit one Undo/Redo; Cancel source/redo
 retained. Selected warped source still refuses unchanged (no guessed normal).
 15newPASS; focused81PASS; fullNode24:1812/1710PASS/102FAIL/0skip, identical102failure
-identities as749. Publication/Node22/live verification pending.
+identities as749. Runtime 4036c0fdf9c5cabc1173d68a3cf4281d7674b049 published. Actual Node22 CI37620905333/job112790634635:1812tests/1710PASS/102FAIL/0skip; all102failure names match baseline. Pages37620904201 success; live shell/version/kernel/Face loader/original OBJ fixture and frozenBeta6 version byte-match main. Focused81PASS. Device .750 acceptance pending.
 
 Only Through-kernel runtime changed; Face direct import-only child750 and shell
 parent750. Recovery/shell750; Knife749, Bevel/bootstrap/Inset748, guard747,

@@ -35,5 +35,5 @@ matching1.47372²*.189 removal. Source/history/selection retained on Cancel/refu
 Actual Face owner tested with window legacy fallback loaded, physical and Exact.
 
 Focused81PASS. Full1812tests/1710PASS/102FAIL/0skip; exact same failure identities
-as749, no exclusions/gates. Publication/Node22/live verification pending.
+as749, no exclusions/gates. Runtime 4036c0fdf9c5cabc1173d68a3cf4281d7674b049 published. Actual Node22 CI37620905333/job112790634635:1812tests/1710PASS/102FAIL/0skip; all102failure names match baseline. Pages37620904201 success; live shell/version/kernel/Face loader/original OBJ fixture and frozenBeta6 version byte-match main. Focused81PASS. Device .750 acceptance pending.
 Device .750 acceptance pending; .749 remains device-pending.
