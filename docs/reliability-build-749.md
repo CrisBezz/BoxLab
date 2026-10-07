@@ -27,5 +27,4 @@ and third-vertex chord requires separate strokes; not a multi-face/free-space Kn
 No source self-intersection repair or arbitrary-geometry guarantee.
 
 Focused89PASS; full1797tests/1695PASS/102FAIL/0skip with exact unchanged failure
-identities. DOM/VM fixtures do not establish iPad feel. Actual Node22/Pages/live
-verification pending; device .749 acceptance pending.
+identities. DOM/VM fixtures do not establish iPad feel. Runtime df89e43581f82d325d9431b31e23191cacd3489b published. Actual Node22 CI37619318589/job112785293117:1797tests/1695PASS/102FAIL/0skip; all102failure names match baseline. Pages37619317487 success; live shell/version/Knife and frozenBeta6 version byte-match main. Focused89PASS. Device .749 acceptance pending.; device .749 acceptance pending.

@@ -25,7 +25,7 @@ windings/history, subdivided collinear/vertex-hit refusal, rotated/translated at
 .001/1000scale, nonplanar refusal, injected actual splitter exception with full
 metadata/redo retained. Focused89PASS including748/747/745/744/746 and release
 contract. FullNode24:1797/1695PASS/102FAIL/0skip, identical102failure identities as
-748. Publication/Node22/live verification pending. No historical tests excluded.
+748. Runtime df89e43581f82d325d9431b31e23191cacd3489b published. Actual Node22 CI37619318589/job112785293117:1797tests/1695PASS/102FAIL/0skip; all102failure names match baseline. Pages37619317487 success; live shell/version/Knife and frozenBeta6 version byte-match main. Focused89PASS. Device .749 acceptance pending. No historical tests excluded.
 
 Only Knife runtime body changed; direct shell Knife URL749, recovery/shell749.
 Bevel/bootstrap/Inset/Face chain748, guard747, Drawer/Loop746, Through742/fallback743

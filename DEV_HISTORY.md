@@ -5477,3 +5477,8 @@ Runtime ac7ef2c96274dbd4a96a929c595f3fb0a7fad159 published. Actual Node22 CI3760
 - Knife body only; shell/directKnife/recovery749, all other loaded pins retained;
   one reviewed hash. main/Loop715/Multi/frozen betas untouched.
 - Publication/Node22/live verification and device .749 acceptance pending.
+
+
+### .749 publication verification
+
+Runtime df89e43581f82d325d9431b31e23191cacd3489b published. Actual Node22 CI37619318589/job112785293117:1797tests/1695PASS/102FAIL/0skip; all102failure names match baseline. Pages37619317487 success; live shell/version/Knife and frozenBeta6 version byte-match main. Focused89PASS. Device .749 acceptance pending.

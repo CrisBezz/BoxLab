@@ -3814,3 +3814,8 @@ Runtime ac7ef2c96274dbd4a96a929c595f3fb0a7fad159 published. Actual Node22 CI3760
 - [ ] .749 normal Knife after Loop/Bevel; valid strokes retain feel.
 - [ ] Concave notched face: outside chord refuses, inside chord succeeds.
 - [ ] Undo/Redo and selection/navigation remain accepted.
+
+
+### .749 publication verification
+
+Runtime df89e43581f82d325d9431b31e23191cacd3489b published. Actual Node22 CI37619318589/job112785293117:1797tests/1695PASS/102FAIL/0skip; all102failure names match baseline. Pages37619317487 success; live shell/version/Knife and frozenBeta6 version byte-match main. Focused89PASS. Device .749 acceptance pending.
