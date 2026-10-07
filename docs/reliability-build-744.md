@@ -31,5 +31,10 @@ refuses; bevel facegroup array can be shorter than output faces. This build does
 not fix either finding. General normals/metadata and arbitrary n-gon traversal
 need further auditing. No Add Vertex fix claimed.
 
-Publication, Node22 CI and live verification pending. Device smoke: Bevel→Loop,
+Runtime e67548c8dac9a62ffade5833da06e3c46c45af80 published. Actual Node22CI
+37552628205/job112571439435 matches1726/1624PASS/102FAIL/0skip and all102
+failure names. Pages37552627347success; live index/version/drawer/logical-addon
+and frozenBeta6 version byte-match main. Focused46PASS. Device .744 pending.
+
+Device smoke: Bevel→Loop,
 Knife→single/multipleLoop→Slide, then Undo/Redo and tool exit/navigation.

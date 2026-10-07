@@ -5360,6 +5360,11 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
   no change to protected .715 commit/placement feel, Multi or frozen betas.
 - 13 new geometry/Knife-release/Slide/History fixtures PASS; full1726/1624/102/0,
   same102 failure identities as .743. One obsolete688 addon pin reconciled through
-  reviewed contract; protected715 assertion retained. Publication verification pending.
+  reviewed contract; protected715 assertion retained.
 - Follow-up findings recorded: Bevel eligibility/execution mismatch after Loop and
   incomplete Bevel facegroup array. Not fixed in this scoped Loop build.
+
+- Runtime e67548c8dac9a62ffade5833da06e3c46c45af80 published. Actual Node22CI
+  37552628205/job112571439435 matches1726/1624PASS/102FAIL/0skip and all102
+  failure names. Pages37552627347success; live index/version/drawer/logical-addon
+  and frozenBeta6 version byte-match main. Focused46PASS. Device .744 pending.

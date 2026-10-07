@@ -23,7 +23,10 @@ fixtures pass. VM DOM/snapping doubles do not establish iPad tactile behavior.
 One obsolete logical-addon .688 pin assertion now uses reviewed cache contract;
 protected .715 commit assertion retained. Full Node24:1726/1624PASS/102FAIL/0skip,
 exact same102 failure identities as .743. Read docs/reliability-build-744.md/JSON.
-Publication and Node22/Pages verification pending; .744 device checks pending.
+Runtime e67548c8dac9a62ffade5833da06e3c46c45af80 published. Actual Node22CI
+37552628205/job112571439435 matches1726/1624PASS/102FAIL/0skip and all102
+failure names. Pages37552627347success; live index/version/drawer/logical-addon
+and frozenBeta6 version byte-match main. Focused46PASS. Device .744 pending.
 
 Next: device Bevel→Loop, Knife→Loop, slide/count/Undo/Redo smoke. Then investigate
 Bevel after Loop: some edges pass generalBevelSelectionInfo but execution refuses;

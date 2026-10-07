@@ -3703,3 +3703,6 @@ Undo old triangular cut or use negative-extrude-742-before.obj first.
 - [ ] Knife across a face, then single/multiple Loop and Slide nearby.
 - [ ] Undo/Redo each stage; selection/tool exit and navigation remain comfortable.
 - [ ] Follow-up Bevel-after-Loop eligibility refusal and Bevel group provenance.
+
+- [x] .744 Node22CI37552628205/job112571439435 matches counts/all102failures;
+  Pages37552627347success; live shell/version/two changed modules/Beta6 verified.
