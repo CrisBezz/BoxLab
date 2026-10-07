@@ -3,39 +3,50 @@
 ## Current state — 2026-10-07
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.748**, partial-chain Bevel after Loop/Knife.
-User PASS .747; .746 big PASS. .745 was not blanket device PASS. Add Vertex and
-NOM import deferred. Frozen beta2–6 immutable; main/Loop715/Multi untouched.
+**v0.36.18.749**, Knife diagonal validity and full failed-cut rollback.
+User PASS .748/.747; .746 big PASS. .745 not blanket device PASS. Add Vertex and
+NOM import deferred. Frozen beta2–6 immutable; main/Loop715/Multi unchanged.
 
-Existing multi-edge chamfer engine only accepted three-valence vertices. Exact
-supplied cage after .746 Loop: consecutive IDs7/35 and7/35/42 refused in .747
-(actual prior implementation probed), while full7edge loop worked. .748 extends
-that existing engine to one connected open chain through four-valence vertices:
-internal two selected edges must not share a source face; endpoints one selected
-edge. Four-way turns/branches/disconnected extended sets remain unsupported.
-Original three-valence routes and closed-loop engine selection are preserved.
+Actual prior .748 Knife release on a U-notched planar polygon connects vertices3/6
+across exterior void, creates2faces and1history entry. Existing mesh.connectVertices
+only checks shared topology; generic mesh splitter remains unchanged. Knife now
+checks its proposed diagonal in the source face plane before calling that splitter:
+reject exterior crossings, a third boundary vertex on the chord, zero-area cuts
+along subdivided boundaries, and nonplanar/degenerate faces. Valid concave diagonals
+retain source winding/groups and one history entry. Plane projection uses source-
+relative coordinates and scale-relative tolerance. Pointer ownership/snapping/
+hysteresis/armed-tool lifecycle unchanged; no new Knife tool or gesture handler.
 
-Four-way end caps follow actual directed one-owner boundaries after strip creation,
-including every rounded-profile subdivision. No angular point sorting or new engine.
-Each endpoint cap must form exactly one complete local ring; failure returns null
-through existing transactional guard. Existing group/crease/loose compaction reused.
-Chamfer has two natural triangular end caps; rounded caps remain polygons. This is
-not a guarantee of arbitrary planar/all-quad output or self-intersection detection.
+Knife transaction catches splitter exceptions and restores vertices/faces/groups/
+creases/loose metadata. Invalid split-edge attempts restore original boundaries;
+failed cuts do not alter history/redo. Existing clean-cut failure message retained.
+10newPASS: actual release exterior/edge-snap refusal, valid concave cuts both
+windings/history, subdivided collinear/vertex-hit refusal, rotated/translated at
+.001/1000scale, nonplanar refusal, injected actual splitter exception with full
+metadata/redo retained. Focused89PASS including748/747/745/744/746 and release
+contract. FullNode24:1797/1695PASS/102FAIL/0skip, identical102failure identities as
+748. Publication/Node22/live verification pending. No historical tests excluded.
 
-10new tests PASS: all35partial source-loop chains at1/2/3/4segments (140cases),
-selection order/duplicate IDs, rotated/scaled/translated cage, groups/creases/loose,
-actual Edge preview Apply/Cancel/history, unsupported immutable refusal, later
-Knife→Loop with exact Undo/Redo. Focused120PASS including747/745/744/746,
-739/707/662 session tests and releasecontract. FullNode24:1787/1685PASS/102FAIL/
-0skip, identical102failure identities as747. Runtime ac7ef2c96274dbd4a96a929c595f3fb0a7fad159 published. Actual Node22 CI37609372174/job112752603609:1787tests/1685PASS/102FAIL/0skip; all102failure names match baseline. Pages37609371712 success; live shell/version/multi-chamfer/bootstrap/Inset/Face loader and frozenBeta6 version byte-match main. Focused120PASS. Device .748 acceptance pending.
+Only Knife runtime body changed; direct shell Knife URL749, recovery/shell749.
+Bevel/bootstrap/Inset/Face chain748, guard747, Drawer/Loop746, Through742/fallback743
+remain unchanged. Reviewed one source hash plus intentional shell URLs.
+Read docs/reliability-build-749.md/JSON. Next device: normal Knife after Loop/Bevel;
+concave notch outside chord should refuse, valid inside cut should work; Undo/Redo
+and navigation. A single Knife still requires one planar shared face; crossing a
+third boundary vertex requires separate strokes. No source self-intersection
+repair or arbitrary nonplanar cutting guarantee. Add Vertex remains watch list.
 
-Only runtime engine body changed: src/multi-edge-chamfer-topology.js. Bootstrap,
-Inset and Face direct changes are import-only cache hops748. Shell/recovery748;
-Bevel guard747, other Bevel engines745; Drawer/Loop746; Through742/fallback743.
-Four reviewed hashes/loading references. Read docs/reliability-build-748.md/JSON.
-Next device: select2–3consecutive edges of a Loop, Bevel1/3segments; Cancel/Undo/
-Redo; Knife and another Loop nearby; navigation. Continue chain/junction reliability
-within supported source fan topology. Add Vertex remains deferred watch list.
+.748 runtimeac7ef2c96274dbd4a96a929c595f3fb0a7fad159; final handoff a8ebbd3b.
+Actual Node22CI37609372174/job112752603609:1787/1685/102/0 and all102names;
+Pages37609371712success; live changed graph/Beta6 bytes verified. User PASS .748.
+Existing multi-chamfer supports one open simple chain through four-way vertices;
+internal two selected edges must not share a source face, endpoints one selected.
+Complete-loop/three-way routes preserved; four-way turns/branches unsupported.
+Directed local boundary end caps preserve rounded subdivisions. Chamfer two natural
+triangular end caps; rounded polygon caps; no all-quad/self-intersection guarantee.
+All35partial supplied-loop chains at1/2/3/4segments tested (140cases), plus actual
+preview/history/groups/creases/loose/rotation and later Knife→Loop. Source fixture
+loop-cut-746.obj unchanged. Do not reroute complete loops into the chain engine.
 
 .747 runtimefd498652f9339c3df639e8bb5ea276ebd980875f; final handoff ff1533ea.
 Actual Node22CI37594432292/job112703460695:1777/1675/102/0 and all102names;
@@ -156,7 +167,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .748; bevel bootstrap/Inset/Face direct/multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; Through child .742; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .749; Knife .749; bevel bootstrap/Inset/Face direct/multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; Through child .742; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -181,7 +192,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .748 check partial2–3edge Loop chains → Bevel and Undo/Redo/Cancel. Add Vertex remains a deferred, unconfirmed report.
+For .749 check normal/concave Knife validity and Undo/Redo. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

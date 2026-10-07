@@ -279,9 +279,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/knife-tool.js?v=0.36.18.684",
+      "url": "./src/knife-tool.js?v=0.36.18.749",
       "target": "src/knife-tool.js",
-      "sha256": "f03c2a731c699a5705ec6db993c9dd33c4df641ff379331c4af941f50b5d0b1d"
+      "sha256": "315dc97d1d246e476a0233ad233b4efd2aa03eec5245c9bda3abbae243a37265"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.748",
+      "url": "./src/release-bootstrap.js?v=0.36.18.749",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.748",
+      "url": "./src/release-version.js?v=0.36.18.749",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },

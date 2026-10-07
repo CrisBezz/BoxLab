@@ -3787,11 +3787,30 @@ Runtime fd498652f9339c3df639e8bb5ea276ebd980875f published. Actual Node22 CI3759
   reviewed4hashes/pins; main/Loop715/Multi/frozen betas untouched.
 - Node22/Pages verification and device .748 acceptance pending.
 
-- [ ] .748 select2–3consecutive Loop edges; Bevel1 then3segments.
-- [ ] Cancel and Undo/Redo; Knife and another nearby Loop.
-- [ ] Complete-loop Bevel and selection/navigation retain accepted behavior.
+- [x] User PASS .748: partial2–3edge Loop chains Bevel1/3segments.
+- [x] .748 user PASS: Cancel/Undo/Redo, Knife and nearby Loop.
+- [x] .748 user PASS: complete-loop Bevel and selection/navigation.
 
 
 ### .748 publication verification
 
 Runtime ac7ef2c96274dbd4a96a929c595f3fb0a7fad159 published. Actual Node22 CI37609372174/job112752603609:1787tests/1685PASS/102FAIL/0skip; all102failure names match baseline. Pages37609371712 success; live shell/version/multi-chamfer/bootstrap/Inset/Face loader and frozenBeta6 version byte-match main. Focused120PASS. Device .748 acceptance pending.
+
+
+## 2026-10-07 — v0.36.18.749 Knife diagonal validity / transactional rollback
+
+- User PASS .748; Add Vertex remains deferred.
+- Actual prior Knife release on U-notched planar face creates exterior diagonal3/6,
+  two faces and one history entry. Topology-only mesh splitter unchanged.
+- Knife validates proposed chord in source plane: reject outside/vertex-hit/boundary
+  sliver/nonplanar cuts, keep valid concave cuts. Source-relative projection/tolerance.
+- Catch failures/exceptions with vertices/faces/groups/creases/loose restoration;
+  invalid edge-snap splits retain source and redo. Actual gesture/snapping unchanged.
+-10newPASS/focused89PASS; full1797/1695PASS/102FAIL/0skip, same102identities as748.
+- Knife body only; shell/directKnife/recovery749, all other loaded pins retained;
+  one reviewed hash. main/Loop715/Multi/frozen betas untouched.
+- Publication/Node22/live verification and device .749 acceptance pending.
+
+- [ ] .749 normal Knife after Loop/Bevel; valid strokes retain feel.
+- [ ] Concave notched face: outside chord refuses, inside chord succeeds.
+- [ ] Undo/Redo and selection/navigation remain accepted.
