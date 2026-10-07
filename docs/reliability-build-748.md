@@ -32,5 +32,5 @@ valence remains unsupported. Does not repair prior damaged meshes, prove no
 self-intersection, or guarantee all-quads. Chamfer uses natural triangular end caps.
 
 Focused120PASS. Full1787tests/1685PASS/102FAIL/0skip; all102 failure identities match
-.747, no exclusions or gates. Publication/Node22/live verification pending.
+.747, no exclusions or gates. Runtime ac7ef2c96274dbd4a96a929c595f3fb0a7fad159 published. Actual Node22 CI37609372174/job112752603609:1787tests/1685PASS/102FAIL/0skip; all102failure names match baseline. Pages37609371712 success; live shell/version/multi-chamfer/bootstrap/Inset/Face loader and frozenBeta6 version byte-match main. Focused120PASS. Device .748 acceptance pending.
 Device .748 acceptance pending.

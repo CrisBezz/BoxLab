@@ -27,7 +27,7 @@ selection order/duplicate IDs, rotated/scaled/translated cage, groups/creases/lo
 actual Edge preview Apply/Cancel/history, unsupported immutable refusal, later
 Knife→Loop with exact Undo/Redo. Focused120PASS including747/745/744/746,
 739/707/662 session tests and releasecontract. FullNode24:1787/1685PASS/102FAIL/
-0skip, identical102failure identities as747. Node22/Pages verification pending.
+0skip, identical102failure identities as747. Runtime ac7ef2c96274dbd4a96a929c595f3fb0a7fad159 published. Actual Node22 CI37609372174/job112752603609:1787tests/1685PASS/102FAIL/0skip; all102failure names match baseline. Pages37609371712 success; live shell/version/multi-chamfer/bootstrap/Inset/Face loader and frozenBeta6 version byte-match main. Focused120PASS. Device .748 acceptance pending.
 
 Only runtime engine body changed: src/multi-edge-chamfer-topology.js. Bootstrap,
 Inset and Face direct changes are import-only cache hops748. Shell/recovery748;
@@ -37,7 +37,7 @@ Next device: select2–3consecutive edges of a Loop, Bevel1/3segments; Cancel/Un
 Redo; Knife and another Loop nearby; navigation. Continue chain/junction reliability
 within supported source fan topology. Add Vertex remains deferred watch list.
 
-.747 runtimefd498652f9339c3df639e8bb5ea276ebd980875f; finalhandoffff1533ea.
+.747 runtimefd498652f9339c3df639e8bb5ea276ebd980875f; final handoff ff1533ea.
 Actual Node22CI37594432292/job112703460695:1777/1675/102/0 and all102names;
 Pages37594431221success; live changed graph/Beta6 bytes verified. User PASS .747.
 Existing guard verifies opposite shared-edge winding for initially closed oriented

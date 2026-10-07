@@ -3790,3 +3790,8 @@ Runtime fd498652f9339c3df639e8bb5ea276ebd980875f published. Actual Node22 CI3759
 - [ ] .748 select2–3consecutive Loop edges; Bevel1 then3segments.
 - [ ] Cancel and Undo/Redo; Knife and another nearby Loop.
 - [ ] Complete-loop Bevel and selection/navigation retain accepted behavior.
+
+
+### .748 publication verification
+
+Runtime ac7ef2c96274dbd4a96a929c595f3fb0a7fad159 published. Actual Node22 CI37609372174/job112752603609:1787tests/1685PASS/102FAIL/0skip; all102failure names match baseline. Pages37609371712 success; live shell/version/multi-chamfer/bootstrap/Inset/Face loader and frozenBeta6 version byte-match main. Focused120PASS. Device .748 acceptance pending.
