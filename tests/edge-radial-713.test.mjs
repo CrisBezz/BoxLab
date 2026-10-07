@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -38,7 +39,7 @@ test('context loss and superseding sessions hide settings without stale suppress
 test('Loop finishing changes only tool state; original cut/slide and commit owners remain intact',()=>{
  const main=read('src/main.js');const fn=main.match(/finishLoopCut:\(\)=>\{([^\n]+)\},/)[1];const calls=[];
  vm.runInNewContext('(()=>{'+fn+'})()',{drag:null,directTool:'loopCut',setDirectTool:x=>calls.push(x),renderMesh:()=>calls.push('render')});assert.deepEqual(calls,[null,'render']);assert.doesNotMatch(fn,/history|clearLoopSlide|loopCut\(/);
- assert.ok(read('index.html').includes('loop-cut-commit.js?v=0.36.18.715'));assert.ok(read('src/drawer-ui.js').includes('loop-cut-added-vertex.js?v=0.36.18.688'));
+ assert.ok(read('index.html').includes('loop-cut-commit.js?v=0.36.18.715'));assertAssetReference(read('src/drawer-ui.js'),'loop-cut-added-vertex.js');
 });
 
 

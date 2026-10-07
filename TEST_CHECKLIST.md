@@ -3688,3 +3688,18 @@ Already overlapping old output is not automatically repaired by this build.
 - [ ] Next single cut + Undo/Redo; two selected bands remain clean.
 
 Undo old triangular cut or use negative-extrude-742-before.obj first.
+
+
+## v0.36.18.744 — Bevel / Knife / Loop combinations
+
+- [x] User PASS .743 stronger single/multiple negative Extrude.
+- [x] Add Vertex explicitly deferred to watch list; no runtime fix claimed.
+- [x] Bevel1/3segments→Loop1/3cuts at every seed: closed shell, unchanged volume.
+- [x] Actual Knife release→Loop preserves existing subdivisions; reverse order.
+- [x] Single/multiple Slide, History Undo/Redo; groups/creases; ordinary cube placement.
+- [x] Coincident disconnected shells remain separate; no new triangulation.
+- [x] Full1726/1624PASS/102FAIL/0skip, same102 failure identities as .743.
+- [ ] iPad Bevel an edge, then Loop nearby: no crack at the bevelled polygon.
+- [ ] Knife across a face, then single/multiple Loop and Slide nearby.
+- [ ] Undo/Redo each stage; selection/tool exit and navigation remain comfortable.
+- [ ] Follow-up Bevel-after-Loop eligibility refusal and Bevel group provenance.

@@ -1,4 +1,4 @@
-// BoxLab v0.36.18.688 — logical-quad Loop Cut for single and multi cuts.
+// BoxLab v0.36.18.744 — conforming logical-quad Loop Cut for single and multi cuts.
 // Add-on-edge turns adjacent quads into 5-gons. Treat those faces as their
 // original logical quads for ring traversal and reuse the existing Added vertex
 // whenever a cut crosses its logical edge. Both loopCut() and loopCuts() use the
@@ -147,17 +147,72 @@ function performLogicalCuts(mesh,edgeIndex,fractions){
   return{ring,amounts,slideGroups};
 }
 
+// Complete boundary subdivisions where the quad ring terminates at an n-gon.
+// Keep the n-gon intact; it must share the exact cut vertices with its neighbour.
+function inheritCutGroups(mesh,before,ring,count){
+  const split=new Set((ring?.splitFaces||[]).map(item=>item.faceIndex));
+  const groups=before.faces.flatMap((_,fi)=>Array(split.has(fi)?count+1:1).fill(before.faceGroups?.[fi]??null));
+  if(groups.length===mesh.faces.length)mesh.faceGroups=groups;
+}
+function conformCutBoundaries(mesh,before,groups){
+  const items=groups.flat(),rails=new Map();
+  for(const item of items){
+    const related=new Set(items.filter(other=>other.start.every((n,i)=>n===item.start[i])&&other.end.every((n,i)=>n===item.end[i])).map(other=>other.vertex));
+    const a=before.vertices.findIndex((v,index)=>v.toArray().every((n,i)=>n===item.start[i])&&mesh.faces.some(face=>face.some(vertex=>related.has(vertex))&&face.includes(index)));
+    const b=before.vertices.findIndex((v,index)=>v.toArray().every((n,i)=>n===item.end[i])&&mesh.faces.some(face=>face.some(vertex=>related.has(vertex))&&face.includes(index)));
+    if(a<0||b<0)continue;
+    const key=edgeKey(mesh,a,b);
+    if(!rails.has(key))rails.set(key,{a,b,vertices:new Set([a,b])});
+    rails.get(key).vertices.add(item.vertex);
+  }
+  for(const [key,split] of logicalTopology(before).splitsByKey){
+    if(!split)continue;
+    if(!rails.has(key))rails.set(key,{a:split.a,b:split.b,vertices:new Set([split.a,split.b])});
+    rails.get(key).vertices.add(split.vertex);
+  }
+  for(const rail of rails.values()){
+    // Logical quads may already contain a boundary subdivision from Knife/Add.
+    for(const face of before.faces){
+      if(!face.includes(rail.a)||!face.includes(rail.b))continue;
+      for(const vertex of face)if(betweenFraction(before.vertices[rail.a],before.vertices[vertex],before.vertices[rail.b])!==null)rail.vertices.add(vertex);
+    }
+  }
+  mesh.faces=mesh.faces.map(face=>{
+    const out=[];
+    for(let i=0;i<face.length;i++){
+      const a=face[i],b=face[(i+1)%face.length];out.push(a);
+      for(const rail of rails.values()){
+        if(!rail.vertices.has(a)||!rail.vertices.has(b))continue;
+        const inside=[...rail.vertices].filter(v=>v!==a&&v!==b).map(vertex=>({vertex,t:betweenFraction(mesh.vertices[a],mesh.vertices[vertex],mesh.vertices[b])})).filter(v=>v.t!==null).sort((x,y)=>x.t-y.t);
+        out.push(...inside.map(v=>v.vertex));break;
+      }
+    }
+    return out;
+  });
+  // Split creases along the same rails rather than leaving keys for dead edges.
+  const actual=new Set(mesh.edges().map(e=>edgeKey(mesh,e.a,e.b)));
+  for(const [key,strength] of before.creases){
+    if(actual.has(key))continue;
+    const rail=rails.get(key);if(!rail)continue;
+    mesh.creases.delete(key);
+    const ordered=[...rail.vertices].map(vertex=>({vertex,t:vertex===rail.a?0:vertex===rail.b?1:betweenFraction(mesh.vertices[rail.a],mesh.vertices[vertex],mesh.vertices[rail.b])})).filter(v=>v.t!==null).sort((x,y)=>x.t-y.t);
+    for(let i=1;i<ordered.length;i++){const child=edgeKey(mesh,ordered[i-1].vertex,ordered[i].vertex);if(actual.has(child))mesh.creases.set(child,strength);}
+  }
+}
 LiveEditableMesh.prototype.loopCut=function(edgeIndex,t=.5){
-  const requested=Math.max(.05,Math.min(.95,t)),result=performLogicalCuts(this,edgeIndex,[requested]);
-  if(!result)return baseLoopCut.call(this,edgeIndex,t);
-  const slideData=result.slideGroups[0]||[],position=result.amounts[0]??requested;
-  return{cutEdges:result.ring.cutKeys.size,splitFaces:result.ring.splitFaces.length,slideData,slideGroups:[slideData],position,promotedAddedVertex:true};
+  const before=this.clone(),nativeRing=this.loopRing(edgeIndex),requested=Math.max(.05,Math.min(.95,t)),result=performLogicalCuts(this,edgeIndex,[requested]);
+  let cut;
+  if(!result)cut=baseLoopCut.call(this,edgeIndex,t);
+  else{const slideData=result.slideGroups[0]||[],position=result.amounts[0]??requested;cut={cutEdges:result.ring.cutKeys.size,splitFaces:result.ring.splitFaces.length,slideData,slideGroups:[slideData],position,promotedAddedVertex:true};}
+  if(cut){inheritCutGroups(this,before,result?.ring||nativeRing,1);conformCutBoundaries(this,before,cut.slideGroups||[cut.slideData]);}
+  return cut;
 };
 LiveEditableMesh.prototype.loopCuts=function(edgeIndex,count=2){
-  const cuts=Math.max(2,Math.min(8,Math.round(Number(count)||2))),fractions=Array.from({length:cuts},(_,i)=>(i+1)/(cuts+1)),result=performLogicalCuts(this,edgeIndex,fractions);
-  if(!result)return baseLoopCuts.call(this,edgeIndex,count);
-  return{cutCount:result.amounts.length,cutEdges:result.ring.cutKeys.size,splitFaces:result.ring.splitFaces.length,slideGroups:result.slideGroups,positions:result.amounts,promotedAddedVertex:true};
+  const before=this.clone(),nativeRing=this.loopRing(edgeIndex),cuts=Math.max(2,Math.min(8,Math.round(Number(count)||2))),fractions=Array.from({length:cuts},(_,i)=>(i+1)/(cuts+1)),result=performLogicalCuts(this,edgeIndex,fractions);
+  const cut=result?{cutCount:result.amounts.length,cutEdges:result.ring.cutKeys.size,splitFaces:result.ring.splitFaces.length,slideGroups:result.slideGroups,positions:result.amounts,promotedAddedVertex:true}:baseLoopCuts.call(this,edgeIndex,count);
+  if(cut){inheritCutGroups(this,before,result?.ring||nativeRing,cut.slideGroups.length);conformCutBoundaries(this,before,cut.slideGroups);}
+  return cut;
 };
 
-LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.688';
-globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.688'};
+LiveEditableMesh.prototype.__boxlabAddedVertexLoopPromotion='0.36.18.744';
+globalThis.__boxlabAddedVertexLoopPromotion={version:'0.36.18.744'};

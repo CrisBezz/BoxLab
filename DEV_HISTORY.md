@@ -5348,3 +5348,18 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
   37544260019/job112544354430 matches1713/1611/102/0 and102failure names.
   Pages37544259082success; live shell/version/3changed assets/Beta6 byte-verified.
   .743 device testing pending.
+
+
+## 2026-10-07 — v0.36.18.744 Bevel / Knife → Loop boundary conformance
+
+- User PASS .743 negative Extrude; explicitly defers Add Vertex to watch list.
+- Actual combined geometry reproduces six unmatched edges when Loop terminates at
+  a bevelled/Knife polygon. Existing logical Loop addon propagates shared vertices
+  into terminal polygons and preserves prior subdivisions on uncut logical rails.
+- Single and multiple cuts retain polygon faces, Loop groups and split-rail creases;
+  no change to protected .715 commit/placement feel, Multi or frozen betas.
+- 13 new geometry/Knife-release/Slide/History fixtures PASS; full1726/1624/102/0,
+  same102 failure identities as .743. One obsolete688 addon pin reconciled through
+  reviewed contract; protected715 assertion retained. Publication verification pending.
+- Follow-up findings recorded: Bevel eligibility/execution mismatch after Loop and
+  incomplete Bevel facegroup array. Not fixed in this scoped Loop build.
