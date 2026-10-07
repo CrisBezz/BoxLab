@@ -39,5 +39,8 @@ DOM/raycast doubles do not prove physical Pencil feel.
 
 Focused103PASS. Full Node24:1755/1653PASS/102FAIL/0skip, same102 failure identities
 as .744. No new failures or skipped checks; full CI remains red, no gate installed.
-Publication/Node22/Pages verification pending. Device smoke: Loop→Edge Bevel near
+Runtime e5d18e5fcff22dd8cf4f268866f1a9b5b5ff51a4 published. Actual Node22CI
+37568114774/job112620395437 matches1755/1653PASS/102FAIL/0skip and all102
+failure names. Pages37568114308success; live shell/version/all13changed src assets
+and frozenBeta6 version byte-match main. Focused103PASS. Device .745 pending. Device smoke: Loop→Edge Bevel near
 corner with1/3segments, Knife→Face/Edge Bevel, facegroups/Cancel/Undo/Redo.

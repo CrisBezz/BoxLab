@@ -3723,3 +3723,6 @@ Undo old triangular cut or use negative-extrude-742-before.obj first.
 - [ ] iPad Loop-cut cube → Edge Bevel near a corner: chamfer then rounded profile.
 - [ ] Knife → Face/Edge Bevel; facegroup colours/export retain sensible labels.
 - [ ] Cancel preview, Undo/Redo repeated edits, return to selection/navigation.
+
+- [x] .745 actual Node22CI37568114774/job112620395437 matches counts/all102names;
+  Pages37568114308success, live shell/version/all13src/Beta6 bytes verified.

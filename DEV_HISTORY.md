@@ -5389,3 +5389,8 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
 -29 newPASS, focused103PASS; full1755/1653PASS/102FAIL/0skip, identical102failure
   identities as .744. Shared real .707 Face Bevel fixture reused, no checks removed.
   Publication verification pending; .745 device testing pending.
+
+- Runtime e5d18e5fcff22dd8cf4f268866f1a9b5b5ff51a4 published. Actual Node22CI
+  37568114774/job112620395437 matches1755/1653PASS/102FAIL/0skip and all102
+  failure names. Pages37568114308success; live shell/version/all13changed src assets
+  and frozenBeta6 version byte-match main. Focused103PASS. Device .745 pending.

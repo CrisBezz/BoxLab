@@ -34,8 +34,10 @@ Multi36.1.0 unchanged. Reviewed hashes/pins include intentional loading parents.
 exact same102 failure identities as .744. No skips, weakened historic contracts or
 CI gate. Shared real Face Bevel fixture extracted from .707 tests for new metadata
 checks; DOM/raycast/snapping doubles do not establish iPad tactile behavior.
-Read docs/reliability-build-745.md/JSON. Publication/Node22/Pages pending;
-.745 device checks pending.
+Read docs/reliability-build-745.md/JSON. Runtime e5d18e5fcff22dd8cf4f268866f1a9b5b5ff51a4 published. Actual Node22CI
+37568114774/job112620395437 matches1755/1653PASS/102FAIL/0skip and all102
+failure names. Pages37568114308success; live shell/version/all13changed src assets
+and frozenBeta6 version byte-match main. Focused103PASS. Device .745 pending.
 
 Next device smoke: Loop→single Edge Bevel1/3segments; Knife→Face/Edge Bevel;
 facegroup colours/export and Cancel/Undo/Redo after repeated edits. Continue varied
