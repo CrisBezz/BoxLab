@@ -3736,11 +3736,30 @@ Undo old triangular cut or use negative-extrude-742-before.obj first.
 - [x] Actual715commit retains rail selection, one Undo/Redo; rotated source.
 - [x] Nonplanar/open/vertex-hit fallback refuses unchanged; native cube unaffected.
 - [x]15newPASS/focused63PASS/full1770/1668/102/0, same102failure identities.
-- [ ] iPad original LOOP CUT.obj → horizontal Loop at red-line height.
-- [ ] Slide and EXACT, repeat nearby, multiple cuts; no crack/triangle fan.
-- [ ] Undo/Redo retains complete geometry; selection and navigation feel unchanged.
+- [x] User big PASS .746: original LOOP CUT.obj horizontal Loop at red-line height.
+- [x] .746 user PASS: Slide/EXACT, repeat/multiple cuts; no crack/triangle fan.
+- [x] .746 user PASS: Undo/Redo, selection and navigation.
 
 
 ### .746 publication verification
 
 Runtime commit 48595c3d767dc99b34458b1c6c9793070d53a461 published. Actual Node22 CI run 37585236460, job 112673733525: 1770 tests, 1668 PASS, 102 FAIL, 0 skipped; all 102 failure names match the recorded baseline. Pages run 37585235717 succeeded. Live index, version, Drawer loader, Loop addon, original OBJ fixture and Beta6 version byte-match main. Focused 63 PASS; device .746 acceptance remains pending.
+
+
+## 2026-10-07 — v0.36.18.747 supplied-cage combinations / Bevel winding guard
+
+- User “big PASS” .746; Add Vertex remains deferred.
+- All67eligible cage edges after polygon Loop bevel1/3segments cleanly; actual
+  Knife on every quad and repeated Loop→Knife→Bevel→Loop preserve exact history.
+- Existing watertight guard accepted injected reversed face with two edge owners.
+  Check opposite shared-edge winding for initially closed oriented inputs; restore
+  full mesh metadata and expose existing error on failure. No current engine defect
+  claimed; open/already inconsistently oriented inputs retain prior routing.
+-7newPASS/focused69PASS; full1777/1675PASS/102FAIL/0skip; same102identities.
+- Guard only runtime edit; bootstrap/Inset/Face import-only cache chain747. Four
+  reviewed hashes/pins; protected Loop715/main/Multi/frozen betas untouched.
+- Publication verification pending; .747 device acceptance pending.
+
+- [ ] .747 iPad supplied cage: Loop → Knife → chamfer then rounded Bevel.
+- [ ] Cancel preview; Undo/Redo each edit, repeat a nearby Loop.
+- [ ] Selection/puck and orbit/pan/zoom remain comfortable.

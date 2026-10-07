@@ -3,48 +3,42 @@
 ## Current state — 2026-10-07
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.746**, uploaded bevelled-cage horizontal Loop continuation. User reported
-red-line Loop unavailable in .745 and supplied LOOP CUT.obj. This is not .745 PASS.
-Add Vertex remains deferred; frozen beta2–6 immutable.
+**v0.36.18.747**, Bevel winding safety / supplied-cage combination coverage.
+User gives .746 a “big PASS”; horizontal polygon Loop, Slide/EXACT and history
+accepted. .745 was not blanket device PASS. Add Vertex and NOM import deferred.
+Frozen beta2–6 immutable; main Loop715/Multi/gesture owners remain protected.
 
-Exact source preserved in tests/fixtures/loop-cut-746.obj:31verts24faces,21quads and
-3ngons. Export header736 is the exporter stamp; screenshot confirms running745.
-No native quad route from edge0 (0:2); other vertical seeds returned partial strips.
-The old logical addon only treats a five-gon with ONE collinear point as a quad;
-source has multi-subdivided7/8gons plus genuine bevel corners. This was not covered
-by prior simple Bevel/Knife→Loop fixtures. Do not erase those subdivisions.
+.747 existing Bevel watertight guard now checks shared-edge winding when the source
+is a closed consistently oriented shell. Two owners alone allowed a flipped face;
+injected actual guard fixture proves that omission. Bad output rolls back topology,
+groups, creases and loose data, with existing __lastBevelError channel. Existing open
+or already inconsistently oriented input is not newly gated by winding. No Bevel
+algorithm or gesture change; no claim that a current engine generated this failure.
 
-Existing logical Loop addon now tries a guarded polygon-strip continuation when
-native/logical route refuses OR creates an open cut chain. It follows a closed
-strip of convex planar faces with exactly two crossings per face and rails parallel
-to the seed, using shared vertex IDs. All13vertical source seeds complete7faces;
-no new triangles, volume/winding/original vertices preserved. Multi2/3/8cuts also
-covered. Shared rail-height overlap bounds Slide; initial cut stays at clicked seed
-height, then slides level within that common interval. Regular quad/Added paths
-and protected715commit/main pointer owner remain unchanged. This is not arbitrary
-n-gon Loop support: concave/nonplanar/ambiguous/nonparallel/open fallback refuses.
-Existing native boundary-termination behavior remains if no safe continuation exists.
+Exact .746 supplied cage: all67eligible edges after horizontal Loop bevel at1/3
+segments closed and consistently oriented; actual Knife release on every quad
+retains boundaries and exact history. Loop→Knife→Bevel→Loop at1/3segments has
+exact successive Undo/Redo states. Seven new tests PASS; focused69PASS.
+Full Node24:1777tests/1675PASS/102FAIL/0skip, identical failure identities as746.
+No tests excluded or gate introduced. Node22/Pages verification pending.
 
-15newPASS; focused63PASS including actual protected commit owner on supplied mesh,
-Slide/History/retained rail selection, groups/creases, rotated/translated source,
-refusal immutability and ordinary cube placement. Full Node24:1770/1668PASS/102FAIL/
-0skip, identical102failure identities as745. DOM doubles do not prove iPad feel.
-Read docs/reliability-build-746.md/JSON. Runtime commit 48595c3d767dc99b34458b1c6c9793070d53a461 published. Actual Node22 CI run 37585236460, job 112673733525: 1770 tests, 1668 PASS, 102 FAIL, 0 skipped; all 102 failure names match the recorded baseline. Pages run 37585235717 succeeded. Live index, version, Drawer loader, Loop addon, original OBJ fixture and Beta6 version byte-match main. Focused 63 PASS; device .746 acceptance remains pending.
+Changed runtime guard only; bootstrap/Inset/Face are import-only cache hops747.
+Shell release/recovery747; Drawer/Loop addon746; Bevel engines745; Through742 and
+fallback743 unchanged. Four hashes reviewed with corresponding loader references.
+Read docs/reliability-build-747.md/JSON. Next device sanity: supplied cage Loop then
+Knife and chamfer/rounded Bevel, Undo/Redo/Cancel and navigation. Continue diverse
+topology/reliability coverage after acceptance; Add Vertex remains watch list.
 
-Logical addon/drawer and recovery shell pins746; Bevel/Face direct/Inset745,
-Through742/fallback743 retained. Only addon and drawer runtime changed. No edits to
-protected Loop715/main/Multi or frozen betas. Reviewed two hashes/loading references.
-Next device test original uploaded mesh horizontal loop, Slide/EXACT, multiple cuts
-and Undo/Redo; then continue diverse topology/normal/reliability work. NOM import
-and Add Vertex remain deferred. Full CI still red102, no release gate installed.
-
-.745 runtimee5d18e5fcff22dd8cf4f268866f1a9b5b5ff51a4, actual Node22CI
-37568114774/job112620395437 matched1755/1653/102/0 and102failure names;
-Pages37568114308success/all13src/live shell/Beta6 verified. Mixed endpoint cap,
-rounded duplicate-cap/winding and6engine group provenance fixes retained. Device
-Loop failure led to746; do not mark all745device checks PASS.
-.744 user PASS, protected boundary conformance retained. .743 accepted stronger
-finite negative Extrude; old triangular meshes not auto-repaired; fixtures retained.
+.746 runtime48595c3d767dc99b34458b1c6c9793070d53a461; finalhandoff4cdbcf37.
+Actual Node22CI37585236460/job112673733525 matched1770/1668/102/0 and all102
+failure names; Pages37585235717 success; runtime/live/sourceOBJ/Beta6 byte-verified.
+User PASS2026-10-07. Exact source tests/fixtures/loop-cut-746.obj31verts24faces,
+21quads3ngons; exporter header736 was not app version. Native edge0 refused, other
+seeds stopped at subdivided7/8gons. Guarded parallel convex-planar polygon strip
+completes all13vertical seed routes through7faces without new triangles. Slide uses
+common rail-height overlap; native quad feel/715 commit unchanged. Concave,
+nonplanar, ambiguous, nonparallel/open fallback refuses; existing native terminal
+behavior retained when safe continuation unavailable. Preserve original source.
 
 ## .742 accepted multiple-cut baseline and limitations (historical)
 
@@ -147,7 +141,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .746; bevel bootstrap/children/direct/Inset/Face direct .745; Loop logical-addon/drawer .746; fallback .743; Through child .742; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .747; bevel bootstrap/guard/Inset/Face direct .747; bevel engines .745; Loop logical-addon/drawer .746; fallback .743; Through child .742; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -172,7 +166,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .746 check uploaded bevelled cage horizontal Loop, Slide/EXACT, count and Undo/Redo. Add Vertex remains a deferred, unconfirmed report.
+For .747 check supplied-cage Loop→Knife→Bevel and Undo/Redo/Cancel. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

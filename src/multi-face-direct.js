@@ -1,6 +1,6 @@
 import {planThrough,buildThrough,firstThroughContact,buildNegativeExtrude} from './through-kernel.js?v=0.36.18.742';
 import {gateClosedEdit,topologySummary} from './topology-seam-conformance.js?v=0.36.18.242';
-import './uniform-inset.js?v=0.36.18.745';
+import './uniform-inset.js?v=0.36.18.747';
 import * as THREE from 'three';
 
 const canvas = document.querySelector('#viewport');

@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/loose-bootstrap.js?v=0.36.18.745",
+      "url": "./src/loose-bootstrap.js?v=0.36.18.747",
       "target": "src/loose-bootstrap.js",
-      "sha256": "2fc1f70911c757abe8df7bcdd805c178b986034e80ca0543378efe266f2df959"
+      "sha256": "6fe2b2d01f562576e05f57d294ac7772e54b7076f984c641831e0e081cbe27d1"
     },
     {
       "owner": "index.html",
@@ -317,9 +317,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.745",
+      "url": "./src/multi-face-direct.js?v=0.36.18.747",
       "target": "src/multi-face-direct.js",
-      "sha256": "bcdd45ff53c3b5bdf8c69a2db35638d351986aa296a9a61fe7ff4caf111e96df"
+      "sha256": "83ca91d3495dfc47141ebfbf7cad3ed38e23771214c19d639cfdced66120b46c"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.746",
+      "url": "./src/release-bootstrap.js?v=0.36.18.747",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.746",
+      "url": "./src/release-version.js?v=0.36.18.747",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1540,9 +1540,9 @@
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./bevel-watertight-guard.js?v=0.36.18.745",
+      "url": "./bevel-watertight-guard.js?v=0.36.18.747",
       "target": "src/bevel-watertight-guard.js",
-      "sha256": "81eb9ab20294c901f737812cf9e319a0602df2e3674dd0249437b9d4153d2de4"
+      "sha256": "90a54a1d4307fe6115a1a9d29671e0497e0487758be1e520fc7c2f79be5a58c4"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1810,9 +1810,9 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./uniform-inset.js?v=0.36.18.745",
+      "url": "./uniform-inset.js?v=0.36.18.747",
       "target": "src/uniform-inset.js",
-      "sha256": "86ae1e79920d5cb3e3bfdd02d723e801d44125389584c6a848e627110ff61ccd"
+      "sha256": "326783715ae00340ddf81bb8bf3884e399255ed4fe839c42c61bbd033995db24"
     },
     {
       "owner": "src/multi-object.js",
@@ -2074,9 +2074,9 @@
     },
     {
       "owner": "src/uniform-inset.js",
-      "url": "./loose-bootstrap.js?v=0.36.18.745",
+      "url": "./loose-bootstrap.js?v=0.36.18.747",
       "target": "src/loose-bootstrap.js",
-      "sha256": "2fc1f70911c757abe8df7bcdd805c178b986034e80ca0543378efe266f2df959"
+      "sha256": "6fe2b2d01f562576e05f57d294ac7772e54b7076f984c641831e0e081cbe27d1"
     },
     {
       "owner": "src/vertex-tool-viewport-session.js",

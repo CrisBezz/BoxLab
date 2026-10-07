@@ -5419,3 +5419,18 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
 ### .746 publication verification
 
 Runtime commit 48595c3d767dc99b34458b1c6c9793070d53a461 published. Actual Node22 CI run 37585236460, job 112673733525: 1770 tests, 1668 PASS, 102 FAIL, 0 skipped; all 102 failure names match the recorded baseline. Pages run 37585235717 succeeded. Live index, version, Drawer loader, Loop addon, original OBJ fixture and Beta6 version byte-match main. Focused 63 PASS; device .746 acceptance remains pending.
+
+
+## 2026-10-07 — v0.36.18.747 supplied-cage combinations / Bevel winding guard
+
+- User “big PASS” .746; Add Vertex remains deferred.
+- All67eligible cage edges after polygon Loop bevel1/3segments cleanly; actual
+  Knife on every quad and repeated Loop→Knife→Bevel→Loop preserve exact history.
+- Existing watertight guard accepted injected reversed face with two edge owners.
+  Check opposite shared-edge winding for initially closed oriented inputs; restore
+  full mesh metadata and expose existing error on failure. No current engine defect
+  claimed; open/already inconsistently oriented inputs retain prior routing.
+-7newPASS/focused69PASS; full1777/1675PASS/102FAIL/0skip; same102identities.
+- Guard only runtime edit; bootstrap/Inset/Face import-only cache chain747. Four
+  reviewed hashes/pins; protected Loop715/main/Multi/frozen betas untouched.
+- Publication verification pending; .747 device acceptance pending.
