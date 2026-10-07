@@ -12,6 +12,7 @@ export function installBevelWatertightGuard(EditableMesh) {
   const restore = (mesh, snapshot) => {
     mesh.vertices = snapshot.vertices.map(v => v.clone());
     mesh.faces = snapshot.faces.map(face => [...face]);
+    mesh.faceGroups=[...snapshot.faceGroups];
     mesh.creases = new Map(snapshot.creases);
     if (snapshot.looseEdges instanceof Set) mesh.looseEdges = new Set(snapshot.looseEdges);
     if (snapshot.looseVertices instanceof Set) mesh.looseVertices = new Set(snapshot.looseVertices);
@@ -22,11 +23,13 @@ export function installBevelWatertightGuard(EditableMesh) {
     const before = this.clone();
     const startedClosed = boundaryCount(this) === 0;
     this.__lastBevelError = null;
-    const result = original.call(this, edgeIndices, width, segments);
-    if (!result) return null;
-    if (startedClosed && boundaryCount(this) > 0) {
+    let result;
+    try{result=original.call(this, edgeIndices, width, segments);}
+    catch(error){restore(this,before);this.__lastBevelError='Bevel cancelled • '+(error?.message||'invalid operation');return null;}
+    if (!result){restore(this,before);return null;}
+    if (startedClosed && (boundaryCount(this) > 0 || this.edges().some(edge=>!edge.loose&&(edge.faces||[]).length>2))) {
       restore(this, before);
-      this.__lastBevelError = 'Bevel cancelled • operation would open the mesh';
+      this.__lastBevelError = 'Bevel cancelled • operation would create invalid mesh edges';
       return null;
     }
     return result;

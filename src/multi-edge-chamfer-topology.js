@@ -1,3 +1,5 @@
+import {sharedBevelGroup,bevelSourceGroups,bevelPolygonNormal} from './bevel-topology-utils.js?v=0.36.18.745';
+
 export function installMultiEdgeChamferTopology(EditableMesh) {
   if (EditableMesh.prototype.__multiEdgeChamferInstalled) return;
 
@@ -51,6 +53,7 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
     const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
     const originalVertices = this.vertices.map(v => v.clone());
     const originalFaces = this.faces.map(face => [...face]);
+    const originalGroups=bevelSourceGroups(this);
     const originalCreases = new Map(this.creases);
     const allEdges = this.edges();
     const selected = new Set(info.ids.map(id => this.edgeKey(allEdges[id].a, allEdges[id].b)));
@@ -137,6 +140,7 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
       rebuilt.push(cleaned);
     }
     this.faces = rebuilt;
+    this.faceGroups=[...originalGroups];
 
     const profileCache = new Map();
     const endpointProfiles = new Map();
@@ -190,7 +194,7 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
 
     const bevelFaceStart = this.faces.length;
     const ringPairs = Array.from({ length: cuts + 1 }, () => []);
-    for (const { d0, chainA, chainB } of edgeProfiles) {
+    for (const { edge, d0, chainA, chainB } of edgeProfiles) {
       for (let j = 0; j <= cuts; j++) ringPairs[j].push([chainA[j], chainB[j]]);
       for (let j = 0; j < cuts; j++) {
         const face = d0 > 0
@@ -198,16 +202,11 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
           : [chainA[j], chainB[j], chainB[j + 1], chainA[j + 1]];
         if (new Set(face).size < 3) return null;
         this.faces.push(face);
+        this.faceGroups.push(sharedBevelGroup(originalGroups,edge.faces));
       }
     }
 
-    const faceNormal = faceIndex => {
-      const face = originalFaces[faceIndex];
-      if (!face || face.length < 3) return null;
-      const a = originalVertices[face[0]], b = originalVertices[face[1]], c = originalVertices[face[2]];
-      const n = b.clone().sub(a).cross(c.clone().sub(a));
-      return n.lengthSq() > 1e-12 ? n.normalize() : null;
-    };
+    const faceNormal = fi => bevelPolygonNormal(originalVertices,originalFaces[fi]);
 
     for (const v of info.affected) {
       const meta = affectedInfo.get(v);
@@ -229,18 +228,17 @@ export function installMultiEdgeChamferTopology(EditableMesh) {
         const a = this.vertices[ia].clone().sub(center), b = this.vertices[ib].clone().sub(center);
         return Math.atan2(a.dot(axisY), a.dot(axisX)) - Math.atan2(b.dot(axisY), b.dot(axisX));
       });
-      if (ordered.length >= 3) {
-        const n = this.vertices[ordered[1]].clone().sub(this.vertices[ordered[0]])
-          .cross(this.vertices[ordered[2]].clone().sub(this.vertices[ordered[0]]));
-        if (n.dot(avgN) < 0) ordered.reverse();
-      }
-      if (cuts === 1) this.faces.push(ordered);
+      const capNormal=bevelPolygonNormal(this.vertices,ordered);
+      if(capNormal&&capNormal.dot(avgN)<0)ordered.reverse();
+      const group=sharedBevelGroup(originalGroups,incidentFaces);
+      if (cuts === 1) {this.faces.push(ordered);this.faceGroups.push(group);}
       else {
         this.vertices.push(center);
         const ci = this.vertices.length - 1;
         for (let i = 0; i < ordered.length; i++) {
           const a = ordered[i], b = ordered[(i + 1) % ordered.length];
           this.faces.push([a, b, ci]);
+          this.faceGroups.push(group);
         }
       }
     }

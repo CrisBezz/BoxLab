@@ -1,3 +1,5 @@
+import {sharedBevelGroup,bevelSourceGroups} from './bevel-topology-utils.js?v=0.36.18.745';
+
 export function installGeneralEdgeBevelTopology(EditableMesh) {
   if (EditableMesh.prototype.__generalEdgeBevelInstalled) return;
 
@@ -87,6 +89,7 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
     const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
     const { a, b, sides, aCapIndex, bCapIndex } = info;
     const originalFaces = this.faces.map(face => [...face]);
+    const originalGroups=bevelSourceGroups(this);
     const originalCreases = new Map(this.creases);
     const railLengths = sides.flatMap(side => [
       this.vertices[a].distanceTo(this.vertices[side.otherA]),
@@ -154,6 +157,7 @@ export function installGeneralEdgeBevelTopology(EditableMesh) {
     }
     const bevelFaceStart = this.faces.length;
     this.faces.push(...bevelFaces);
+    this.faceGroups=originalGroups.concat(Array(bevelFaces.length).fill(sharedBevelGroup(originalGroups,info.edge.faces)));
 
     this.creases = new Map(originalCreases);
     this.creases.delete(this.edgeKey(a, b));

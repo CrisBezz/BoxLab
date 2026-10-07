@@ -1,3 +1,5 @@
+import {sharedBevelGroup,bevelSourceGroups} from './bevel-topology-utils.js?v=0.36.18.745';
+
 export function installBevelTopology(EditableMesh) {
   if (EditableMesh.prototype.__bevelTopologyInstalled) return;
 
@@ -129,6 +131,7 @@ export function installBevelTopology(EditableMesh) {
     if (!info) return null;
     const amount = Math.max(0.02, Math.min(0.49, Number(width) || 0.2));
     const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
+    const originalGroups=bevelSourceGroups(this),sourceEdges=this.edges(),bevelGroups=[];
     const loopSet = new Set(info.orderedVertices);
     const ringByVertex = new Map();
     const railLengths = info.orderedVertices.flatMap(vertex => {
@@ -164,7 +167,9 @@ export function installBevelTopology(EditableMesh) {
     const bevelFaceStart = this.faces.length;
     for (const edge of info.edgesInOrder) {
       const ringsA = ringByVertex.get(edge.a), ringsB = ringByVertex.get(edge.b);
+      const group=sharedBevelGroup(originalGroups,sourceEdges[edge.edgeIndex]?.faces);
       for (let j = 0; j < cuts; j++) {
+        bevelGroups.push(group);
         const face = edge.direction > 0
           ? [ringsB[j], ringsA[j], ringsA[j + 1], ringsB[j + 1]]
           : [ringsA[j], ringsB[j], ringsB[j + 1], ringsA[j + 1]];
@@ -172,6 +177,7 @@ export function installBevelTopology(EditableMesh) {
       }
     }
     this.faces.push(...bevelFaces);
+    this.faceGroups=originalGroups.concat(bevelGroups);
 
     const used = new Set(this.faces.flat());
     if (this.looseEdges instanceof Set) {

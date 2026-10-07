@@ -82,6 +82,7 @@ export function installBevelSelection(EditableMesh) {
     const before = {
       vertices: this.vertices.map(v => v.clone()),
       faces: this.faces.map(f => [...f]),
+      faceGroups: [...this.faceGroups],
       creases: new Map(this.creases),
       looseEdges: this.looseEdges instanceof Set ? new Set(this.looseEdges) : null,
       looseVertices: this.looseVertices instanceof Set ? new Set(this.looseVertices) : null
@@ -92,6 +93,7 @@ export function installBevelSelection(EditableMesh) {
     const restore = () => {
       this.vertices = before.vertices.map(v => v.clone());
       this.faces = before.faces.map(f => [...f]);
+      this.faceGroups=[...before.faceGroups];
       this.creases = new Map(before.creases);
       if (before.looseEdges) this.looseEdges = new Set(before.looseEdges);
       if (before.looseVertices) this.looseVertices = new Set(before.looseVertices);

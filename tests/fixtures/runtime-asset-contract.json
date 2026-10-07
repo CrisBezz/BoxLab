@@ -130,9 +130,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/direct-bevel.js?v=0.36.18.731",
+      "url": "./src/direct-bevel.js?v=0.36.18.745",
       "target": "src/direct-bevel.js",
-      "sha256": "fd756913039cccc9f381a009029e4bf56e78cf5aa2006114a806814009b49b62"
+      "sha256": "02d6e62ecf26ac484540f199eb11e546b783b09c4e2494277a20fe2a15f3c71d"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/loose-bootstrap.js?v=0.36.18.635",
+      "url": "./src/loose-bootstrap.js?v=0.36.18.745",
       "target": "src/loose-bootstrap.js",
-      "sha256": "1ec531f41f22ab439a805be78368e9c63edf508ad5265b53e830463b14617db4"
+      "sha256": "2fc1f70911c757abe8df7bcdd805c178b986034e80ca0543378efe266f2df959"
     },
     {
       "owner": "index.html",
@@ -317,9 +317,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.743",
+      "url": "./src/multi-face-direct.js?v=0.36.18.745",
       "target": "src/multi-face-direct.js",
-      "sha256": "00ba1fd9ea3210170e21a4465de76d50fa4ec53237fa62812a176ac69a96254e"
+      "sha256": "bcdd45ff53c3b5bdf8c69a2db35638d351986aa296a9a61fe7ff4caf111e96df"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.744",
+      "url": "./src/release-bootstrap.js?v=0.36.18.745",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.744",
+      "url": "./src/release-version.js?v=0.36.18.745",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1528,21 +1528,21 @@
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./bevel-selection.js?v=0.28.9",
+      "url": "./bevel-selection.js?v=0.36.18.745",
       "target": "src/bevel-selection.js",
-      "sha256": "152de7fb6af36bf5570b353bebe7531a8351f4ceb27fa7820ec137b6aa7711fb"
+      "sha256": "1d908d5e2c3fa8e729c5b1958df1194d3ddf7e8565cee1d7d11ccc8fdf4a7e07"
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./bevel-topology.js?v=0.28.3",
+      "url": "./bevel-topology.js?v=0.36.18.745",
       "target": "src/bevel-topology.js",
-      "sha256": "3db0bd48c99a7bb96f12382e74b6939bf12024f2dc6273852a084669f4d1b0db"
+      "sha256": "0eca6f1298e2cff443c498c156e16ab8344f13ef6e6db76b0dd3b527425c1b48"
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./bevel-watertight-guard.js?v=0.18.5",
+      "url": "./bevel-watertight-guard.js?v=0.36.18.745",
       "target": "src/bevel-watertight-guard.js",
-      "sha256": "5210197bb177f2349e4a6441694d17781237bbf56c4d5c613ded273578e93392"
+      "sha256": "81eb9ab20294c901f737812cf9e319a0602df2e3674dd0249437b9d4153d2de4"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1626,15 +1626,15 @@
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./general-edge-bevel-topology.js?v=0.28.7",
+      "url": "./general-edge-bevel-topology.js?v=0.36.18.745",
       "target": "src/general-edge-bevel-topology.js",
-      "sha256": "10eb2a8068dd046057d6b63e6148bca474f1bed6d8e5963d9e679f940624f401"
+      "sha256": "f69954a6cabc945354078bb7cd50f60be1d377837a69b61e17509fdf8fbbb73d"
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./generalized-edge-fan-bevel.js?v=0.28.12",
+      "url": "./generalized-edge-fan-bevel.js?v=0.36.18.745",
       "target": "src/generalized-edge-fan-bevel.js",
-      "sha256": "a33e9d521f496f9c67c8b7072eb5c45a0b23cdd2e768db59ec4501911f8e8711"
+      "sha256": "b0973f591607faebbc20cea212d4ea39be38f2004ad61dd93c06c2a8467822ab"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1650,9 +1650,9 @@
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./multi-edge-chamfer-topology.js?v=0.28.8",
+      "url": "./multi-edge-chamfer-topology.js?v=0.36.18.745",
       "target": "src/multi-edge-chamfer-topology.js",
-      "sha256": "e3f3f9c5e68f33d9e6f80fe780b8ba4777221ae14595841bf9b08cd8ea303bae"
+      "sha256": "823374ef874c5ee7597ed468396793688c76a03f072ea1e89f8e5bdf1c18c92b"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1668,15 +1668,15 @@
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./perimeter-fan-bevel.js?v=0.28.11",
+      "url": "./perimeter-fan-bevel.js?v=0.36.18.745",
       "target": "src/perimeter-fan-bevel.js",
-      "sha256": "d80239bfe99bbe57ad7d0ce4a2acd0fd458c3f18f2d61cacd248aa4cacd671e4"
+      "sha256": "3d1aa86eacc2a25a5bcde92339b0e600fa3d8f84447385eab481cd64839fae38"
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./rounded-loop-bevel.js?v=0.28.8",
+      "url": "./rounded-loop-bevel.js?v=0.36.18.745",
       "target": "src/rounded-loop-bevel.js",
-      "sha256": "0ed9fa806e7c43b132c21af94cfcce39558ce3e4291b92e2cc6332a9ff46ece0"
+      "sha256": "a8fdbee0a74c0463ca16fd9a59d0291e24cd88e74dbb4ccc1ef97f9ac2305795"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1810,9 +1810,9 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./uniform-inset.js?v=0.32.11",
+      "url": "./uniform-inset.js?v=0.36.18.745",
       "target": "src/uniform-inset.js",
-      "sha256": "36b50898bb7ec5b7a11bce9ef33386b900510c04a30d5048fe14d34d78ecbc1d"
+      "sha256": "86ae1e79920d5cb3e3bfdd02d723e801d44125389584c6a848e627110ff61ccd"
     },
     {
       "owner": "src/multi-object.js",
@@ -2074,9 +2074,9 @@
     },
     {
       "owner": "src/uniform-inset.js",
-      "url": "./loose-bootstrap.js?v=0.30.3",
+      "url": "./loose-bootstrap.js?v=0.36.18.745",
       "target": "src/loose-bootstrap.js",
-      "sha256": "1ec531f41f22ab439a805be78368e9c63edf508ad5265b53e830463b14617db4"
+      "sha256": "2fc1f70911c757abe8df7bcdd805c178b986034e80ca0543378efe266f2df959"
     },
     {
       "owner": "src/vertex-tool-viewport-session.js",
@@ -2095,6 +2095,42 @@
       "url": "./gizmo-corner-controls.js?v=0.36.18.734",
       "target": "src/gizmo-corner-controls.js",
       "sha256": "996dd0e954c446043038d916500eeadf97d850ffc74f5845755907b5ca3e6a5d"
+    },
+    {
+      "owner": "src/bevel-topology.js",
+      "url": "./bevel-topology-utils.js?v=0.36.18.745",
+      "target": "src/bevel-topology-utils.js",
+      "sha256": "194ddb27c8e35cccd504814ecee4c647a1b244dc1ae56c4fb1ffd2b8041de7d2"
+    },
+    {
+      "owner": "src/rounded-loop-bevel.js",
+      "url": "./bevel-topology-utils.js?v=0.36.18.745",
+      "target": "src/bevel-topology-utils.js",
+      "sha256": "194ddb27c8e35cccd504814ecee4c647a1b244dc1ae56c4fb1ffd2b8041de7d2"
+    },
+    {
+      "owner": "src/general-edge-bevel-topology.js",
+      "url": "./bevel-topology-utils.js?v=0.36.18.745",
+      "target": "src/bevel-topology-utils.js",
+      "sha256": "194ddb27c8e35cccd504814ecee4c647a1b244dc1ae56c4fb1ffd2b8041de7d2"
+    },
+    {
+      "owner": "src/multi-edge-chamfer-topology.js",
+      "url": "./bevel-topology-utils.js?v=0.36.18.745",
+      "target": "src/bevel-topology-utils.js",
+      "sha256": "194ddb27c8e35cccd504814ecee4c647a1b244dc1ae56c4fb1ffd2b8041de7d2"
+    },
+    {
+      "owner": "src/perimeter-fan-bevel.js",
+      "url": "./bevel-topology-utils.js?v=0.36.18.745",
+      "target": "src/bevel-topology-utils.js",
+      "sha256": "194ddb27c8e35cccd504814ecee4c647a1b244dc1ae56c4fb1ffd2b8041de7d2"
+    },
+    {
+      "owner": "src/generalized-edge-fan-bevel.js",
+      "url": "./bevel-topology-utils.js?v=0.36.18.745",
+      "target": "src/bevel-topology-utils.js",
+      "sha256": "194ddb27c8e35cccd504814ecee4c647a1b244dc1ae56c4fb1ffd2b8041de7d2"
     }
   ]
 }

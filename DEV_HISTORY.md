@@ -5368,3 +5368,24 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
   37552628205/job112571439435 matches1726/1624PASS/102FAIL/0skip and all102
   failure names. Pages37552627347success; live index/version/drawer/logical-addon
   and frozenBeta6 version byte-match main. Focused46PASS. Device .744 pending.
+
+
+## 2026-10-07 — v0.36.18.745 Bevel after Loop/Knife + facegroup provenance
+
+- User PASS .744, requests next scoped build; Add Vertex remains deferred.
+- Mixed-valence single-fan endpoint falsely demanded extra corner cap; original
+  cap now closes it and incorporates rounded profile. All20 eligible Loop-cage
+  single edges execute for1/3segments; Knife release→Bevel also covered.
+- Rounded perimeter strips sharing one profile previously got duplicate cap,
+  producing3-owner edges. Skip that redundant cap. Full polygon normals fix flipped
+  rounded caps where firstthree points are collinear; winding/rotation covered.
+- All6existing Edge/Face bevel engines retain source groups; new surfaces inherit
+  unanimous source group, mixed boundaries null. Shared provenance/normal utilities.
+  Guard/selection/direct restore metadata on failure/Cancel; exceptions rolled back,
+  >2owners rejected on closed inputs. Existing rounded fan triangulation retained.
+- Inset imported bootstrap30.3 alongside shell635. Updated both to one745 URL and
+  refreshed Inset→Face loader chain; Extrude body unchanged. Reviewed pins/hashes;
+  protected Loop715/addon744/Multi/frozen betas untouched.
+-29 newPASS, focused103PASS; full1755/1653PASS/102FAIL/0skip, identical102failure
+  identities as .744. Shared real .707 Face Bevel fixture reused, no checks removed.
+  Publication verification pending; .745 device testing pending.

@@ -3699,10 +3699,27 @@ Undo old triangular cut or use negative-extrude-742-before.obj first.
 - [x] Single/multiple Slide, History Undo/Redo; groups/creases; ordinary cube placement.
 - [x] Coincident disconnected shells remain separate; no new triangulation.
 - [x] Full1726/1624PASS/102FAIL/0skip, same102 failure identities as .743.
-- [ ] iPad Bevel an edge, then Loop nearby: no crack at the bevelled polygon.
-- [ ] Knife across a face, then single/multiple Loop and Slide nearby.
-- [ ] Undo/Redo each stage; selection/tool exit and navigation remain comfortable.
+- [x] User PASS .744 Bevel/Knife/Loop combinations2026-10-07.
+- [x] iPad Bevel an edge, then Loop nearby: no crack at the bevelled polygon.
+- [x] Knife across a face, then single/multiple Loop and Slide nearby.
+- [x] Undo/Redo each stage; selection/tool exit and navigation remain comfortable.
 - [ ] Follow-up Bevel-after-Loop eligibility refusal and Bevel group provenance.
 
 - [x] .744 Node22CI37552628205/job112571439435 matches counts/all102failures;
   Pages37552627347success; live shell/version/two changed modules/Beta6 verified.
+
+
+## v0.36.18.745 — Bevel after Loop/Knife / facegroups
+
+- [x] Mixed endpoint corner cap reused; all20Loop edges bevel1/3segments.
+- [x] Knife release→Bevel; rounded perimeter shared profile avoids duplicate caps.
+- [x] Full polygon normals; shared-edge winding including rotated/translated cages.
+- [x] All6bevel engines keep source groups; uniform-generated groups/mixed null.
+- [x] Actual Edge/Face preview Apply/Cancel/drag Cancel; one Undo/Redo with groups.
+- [x] Failure/null/exception/third-owner rollback includes topology/groups/loose data.
+- [x] Repeated Loop/Bevel/Knife history; bevelled OBJ groups round-trip.
+- [x] Inset and shell share one bootstrap745 URL; refreshed import-only Face parent.
+- [x]29newPASS, focused103PASS; full1755/1653/102/0, same102failure names as .744.
+- [ ] iPad Loop-cut cube → Edge Bevel near a corner: chamfer then rounded profile.
+- [ ] Knife → Face/Edge Bevel; facegroup colours/export retain sensible labels.
+- [ ] Cancel preview, Undo/Redo repeated edits, return to selection/navigation.

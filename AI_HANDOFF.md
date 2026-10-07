@@ -3,45 +3,53 @@
 ## Current state — 2026-10-07
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.744**, Bevel/Knife/Loop boundary conformance. User PASS .743:
-negative Extrude is MUCH stronger. User explicitly defers Add Vertex; retain the
-unreproduced report on the watch list, do not claim it fixed. Frozen beta2–6 immutable.
+**v0.36.18.745**, Bevel after Loop/Knife and facegroup preservation. User PASS .744
+on2026-10-07; Add Vertex remains explicitly deferred/unreproduced. Frozen beta2–6
+immutable. .744 boundary conformance and protected .715 Loop gesture/commit unchanged.
 
-.744 reproduces Loop terminating at Bevel/Knife n-gons: splitting only the quad
-side creates six unmatched boundary edges on a closed shell. Existing logical-quad
-Loop addon now propagates cut vertices into terminal polygons, retains prior Knife/
-Added subdivisions on uncut logical rails, inherits Loop facegroups and split-rail
-creases. Both single/multiple paths use this repair. No polygon triangulation,
-new tool or replacement Loop gesture/commit owner. Module/drawer pins744;
-Face direct remains743, Through742; protected Loop commit715 and Multi unchanged.
+.745 fixes single-fan Bevel refusing mixed three/four-valence endpoints after Loop:
+original corner cap already closes the endpoint; rounded profile points now insert
+into that cap rather than demanding an extra fan. All20 eligible edges of the
+Loop-cut cube execute for1/3segments. Rounded perimeter corner strips sharing one
+profile no longer get duplicate caps/three-owner edges. Bevel cap/source normals
+sum full polygons instead of first three possibly collinear vertices; consistent
+winding verified, including rotated/translated cages. Global mesh.faceNormal and
+arbitrary unsupported topology are not claimed repaired.
 
-13 new actual geometry tests cover Bevel1/3segments then Loop1/3cuts at every seed,
-actual Knife release with resolved snap doubles, reverse order, Slide/History,
-closed edge incidence/volume, crease/group inheritance, unchanged cube placement,
-and coincident disconnected shells. Existing Face Bevel and actual Loop commit
-fixtures pass. VM DOM/snapping doubles do not establish iPad tactile behavior.
-One obsolete logical-addon .688 pin assertion now uses reviewed cache contract;
-protected .715 commit assertion retained. Full Node24:1726/1624PASS/102FAIL/0skip,
-exact same102 failure identities as .743. Read docs/reliability-build-744.md/JSON.
-Runtime e67548c8dac9a62ffade5833da06e3c46c45af80 published. Actual Node22CI
-37552628205/job112571439435 matches1726/1624PASS/102FAIL/0skip and all102
-failure names. Pages37552627347success; live index/version/drawer/logical-addon
-and frozenBeta6 version byte-match main. Focused46PASS. Device .744 pending.
+Six existing Edge/Face bevel engines preserve original facegroups. New strips/caps
+inherit a group only if all relevant source faces agree; mixed boundaries get null.
+Shared bevel-topology-utils contains provenance and polygon normal helpers, not a
+new bevel implementation. Selection transaction, watertight guard and direct owner
+restore groups on refusal/exception/Cancel. Closed guard also rejects >2edge owners.
+Actual Face/Edge preview Apply/Cancel/history and OBJ round-trip covered.
 
-Next: device Bevel→Loop, Knife→Loop, slide/count/Undo/Redo smoke. Then investigate
-Bevel after Loop: some edges pass generalBevelSelectionInfo but execution refuses;
-Bevel output faceGroups can remain shorter than faces. These are observed follow-up
-findings, not fixed or hidden by .744. Further arbitrary n-gon traversal/normal and
-metadata auditing remains. Add Vertex watch list; NOM import deferred; CI remains
-red with102 active historical failures, no release gate installed. Beta6 frozen736.
+Bevel children/bootstrap/direct owner refreshed745. Inset previously imported
+bootstrap30.3 while shell635 loaded the same installer elsewhere; both now share745
+so an older cached installer cannot win. Uniform Inset and its Face direct parent
+repinned745 for this import-only change; Extrude algorithms/ownership unchanged,
+finite kernel742/fallback743 retained. Drawer/logical Loop addon744, commit715,
+Multi36.1.0 unchanged. Reviewed hashes/pins include intentional loading parents.
 
-.743 published runtime2a20b6026f82c6c161cf06fe42e08c79ea9ea0bf; actual Node22CI
-37544260019/job112544354430 matched1713/1611/102/0 and102failure names;
-Pages37544259082success/live bytes verified. User PASS2026-10-07. Single finite
-negative cutter now owns closed Extrude before legacy window fallback can arm;
-old triangulated meshes are not repaired automatically. Original supplied OBJ and
-before/corrected fixtures retained. Finite source faces planar/convex, closed winding;
-concave targets can triangulate; unsupported cuts refuse without history loss.
+29 new tests PASS, focused103PASS. Full Node24:1755/1653PASS/102FAIL/0skip,
+exact same102 failure identities as .744. No skips, weakened historic contracts or
+CI gate. Shared real Face Bevel fixture extracted from .707 tests for new metadata
+checks; DOM/raycast/snapping doubles do not establish iPad tactile behavior.
+Read docs/reliability-build-745.md/JSON. Publication/Node22/Pages pending;
+.745 device checks pending.
+
+Next device smoke: Loop→single Edge Bevel1/3segments; Knife→Face/Edge Bevel;
+facegroup colours/export and Cancel/Undo/Redo after repeated edits. Continue varied
+Bevel/Knife/Loop topology and shared-normal auditing, then remaining active CI
+reliability reconciliation. General eligibility still does not guarantee every
+width/geometry combination succeeds; unsupported operations retain source/history.
+Add Vertex watch list, NOM import deferred, Beta6 frozen736.
+
+.744 published runtimee67548c8dac9a62ffade5833da06e3c46c45af80, Node22CI
+37552628205/job112571439435 matches1726/1624/102/0 and all102failure names;
+Pages37552627347success/live shell/two assets/Beta6 byte-verified. Device PASS.
+.743 accepted stronger single/multiple finite negative Extrude; original/before/
+corrected OBJ fixtures retained. Old triangulated meshes are not auto-repaired.
+Finite sources planar/convex closed winding; concave targets can triangulate.
 
 ## .742 accepted multiple-cut baseline and limitations (historical)
 
@@ -144,7 +152,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .744; Loop logical-addon/drawer .744; Face direct/fallback .743; Through child .742; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .745; bevel bootstrap/children/direct/Inset/Face direct .745; Loop logical-addon/drawer .744; fallback .743; Through child .742; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -169,7 +177,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .744 check Bevel/Knife→Loop, cut count/slide and Undo/Redo. Add Vertex remains a deferred, unconfirmed report.
+For .745 check Loop/Knife→Bevel1/3segments, facegroups and Cancel/Undo/Redo. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

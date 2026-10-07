@@ -1,41 +1,9 @@
+import {fixture,geometry} from './helpers/face-bevel-geometry-runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
-import * as THREE from 'three';
 import {EditableMesh} from '../src/mesh.js';
-import {installLooseTopology} from '../src/loose-topology.js';
-import {installFaceRegion} from '../src/face-region.js';
-import {installBevelTopology} from '../src/bevel-topology.js';
-import {installRoundedLoopBevel} from '../src/rounded-loop-bevel.js';
-import {installGeneralEdgeBevelTopology} from '../src/general-edge-bevel-topology.js';
-import {installMultiEdgeChamferTopology} from '../src/multi-edge-chamfer-topology.js';
-import {installPerimeterFanBevel} from '../src/perimeter-fan-bevel.js';
-import {installGeneralizedEdgeFanBevel} from '../src/generalized-edge-fan-bevel.js';
-import {installBevelSelection} from '../src/bevel-selection.js';
-import {installPerimeterBevelRouting} from '../src/perimeter-bevel-routing.js';
-import {installBevelWatertightGuard} from '../src/bevel-watertight-guard.js';
-import {History} from '../src/history.js';
-import {createFaceBevelPreview,disposeFaceBevelPreview} from '../src/bevel-face-preview.js';
-globalThis.document={querySelector:()=>null,addEventListener(){}};
-for(const install of [installLooseTopology,installFaceRegion,installBevelTopology,installRoundedLoopBevel,installGeneralEdgeBevelTopology,installMultiEdgeChamferTopology,installPerimeterFanBevel,installGeneralizedEdgeFanBevel,installBevelSelection,installPerimeterBevelRouting,installBevelWatertightGuard])install(EditableMesh);
-delete globalThis.document;
-const geometry=m=>({vertices:m.vertices.map(v=>v.toArray()),faces:m.faces.map(f=>[...f]),creases:[...m.creases]});
-function fixture(m=EditableMesh.cube()){
- const nodes=new Map(),docHandlers=new Map(),winHandlers=new Map(),events=[];let mode='face',ids=[0],locked=false;
- const el=()=>({style:{},value:'',disabled:false,hidden:true,textContent:'',listeners:new Map(),dataset:{},classList:{add(){},remove(){},toggle(){},contains(){return false;}},appendChild(){},setAttribute(){},getAttribute(){return ''},querySelector:s=>node(s),querySelectorAll(){return []},addEventListener(t,f){this.listeners.set(t,f)},getBoundingClientRect(){return{left:0,top:0,width:400,height:400}},setPointerCapture(){},releasePointerCapture(){},dispatchEvent(){}});
- const node=s=>{if(!nodes.has(s))nodes.set(s,el());return nodes.get(s)};
- node('#bevelWidth').value='20';node('#bevelSegments').value='1';
- const context={THREE:{...THREE,Raycaster:class extends THREE.Raycaster{setFromCamera(){}intersectObjects(){return[{object:{userData:{index:ids[0]}}}]} }},Map,Set,createFaceBevelPreview,disposeFaceBevelPreview,placeToolSessionPanel:p=>{p.style.left='50%';},document:{createElement:el,querySelector:s=>s==='#frameAllBtn'?{}:s==='#app'?{classList:{contains:()=>locked}}:node(s),querySelectorAll:()=>[],head:el(),addEventListener:(t,f)=>{if(!docHandlers.has(t))docHandlers.set(t,[]);docHandlers.get(t).push(f)},dispatchEvent:e=>{events.push(e);for(const f of docHandlers.get(e.type)||[])f(e)}},window:{addEventListener:(t,f)=>winHandlers.set(t,f),dispatchEvent:e=>{events.push(e);winHandlers.get(e.type)?.(e)}},CustomEvent:class{constructor(type,{detail}){Object.assign(this,{type,detail});}},Event:class{},queueMicrotask:f=>f(),requestAnimationFrame:()=>1,cancelAnimationFrame(){},__boxlabBridgeState:{mesh:m,camera:{},scene:new THREE.Group(),controls:{enabled:true}},__boxlabHistory:new History(),__boxlabSelectionBridge:{mode:()=>mode,indices:()=>ids,set:(md,next)=>{assert.equal(md,mode);ids=next},pick:()=>({type:'face',index:ids[0]})}};
- const load=name=>vm.runInNewContext('{'+fs.readFileSync(new URL('../src/'+name,import.meta.url),'utf8').replace(/^import .*;\n/gm,'')+'}',context);
- load('direct-bevel.js');load('selection-hub-bevel-session.js');
- const owner=context.__boxlabDirectBevel,panel=context.__boxlabBevelViewportSession;
- const event=(x=0)=>({target:node('#viewport'),pointerType:'pen',buttons:1,pressure:.5,pointerId:1,isPrimary:true,clientX:x,clientY:0,preventDefault(){},stopImmediatePropagation(){this.stopped=true},stopPropagation(){}});
- const pointer=(type,x=0)=>{const e=event(x);winHandlers.get(type)?.(e);if(!e.stopped)node('#viewport').listeners.get(type)?.(e);return e;};
- const launch=()=>winHandlers.get('boxlab-selection-hub-tool')({detail:{mode,tool:'Bevel'}});
- const action=which=>panel.element.listeners.get('click')({...event(),target:{closest:()=>({dataset:{action:which}})}});
- return{context,owner,panel,nodes,node,events,pointer,launch,action,winHandlers,docHandlers,event,ids:()=>ids,setIds:v=>{ids=v},setMode:v=>{mode=v},setLocked:v=>{locked=v},mode:()=>mode};
-}
 test('Face boundary resolves through existing region/Edge Bevel routing; shared selected edges excluded',()=>{
  const m=EditableMesh.cube(),f=fixture(m);assert.equal(f.owner.faceBevelInfo([0]).ok,true);assert.equal(f.owner.faceBevelInfo([0]).ids.length,4);
  const faces=[0,2],info=f.owner.faceBevelInfo(faces);assert.equal(info.ok,true);assert.equal(info.ids.length,6);

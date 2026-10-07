@@ -1,3 +1,5 @@
+import {sharedBevelGroup,bevelSourceGroups,bevelPolygonNormal} from './bevel-topology-utils.js?v=0.36.18.745';
+
 export function installGeneralizedEdgeFanBevel(EditableMesh) {
   if (EditableMesh.prototype.__generalizedEdgeFanBevelInstalled) return;
 
@@ -54,6 +56,7 @@ export function installGeneralizedEdgeFanBevel(EditableMesh) {
     const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
     const originalVertices = this.vertices.map(v => v.clone());
     const originalFaces = this.faces.map(face => [...face]);
+    const originalGroups=bevelSourceGroups(this);
     const originalCreases = new Map(this.creases);
     const allEdges = this.edges();
     const {a,b,sides} = info;
@@ -149,14 +152,9 @@ export function installGeneralizedEdgeFanBevel(EditableMesh) {
       rebuilt.push(clean);
     }
     this.faces=rebuilt;
+    this.faceGroups=[...originalGroups];
 
-    const faceNormal = fi => {
-      const face=originalFaces[fi];
-      if (!face||face.length<3) return null;
-      const p0=originalVertices[face[0]], p1=originalVertices[face[1]], p2=originalVertices[face[2]];
-      const n=p1.clone().sub(p0).cross(p2.clone().sub(p0));
-      return n.lengthSq()>1e-12?n.normalize():null;
-    };
+    const faceNormal = fi => bevelPolygonNormal(originalVertices,originalFaces[fi]);
 
     const endpointProfiles = new Map([[a,[...aRings]],[b,[...bRings]]]);
     for (const v of [a,b]) {
@@ -167,6 +165,24 @@ export function installGeneralizedEdgeFanBevel(EditableMesh) {
         if (Number.isInteger(p)) points.add(p);
       }
       const list=[...points];
+      if ((endpointRails.get(v)||[]).length===2) {
+        // A three-valence endpoint already closes in its original cap face.
+        // Rounded profiles must also subdivide that cap boundary.
+        const chain=endpointProfiles.get(v),first=chain[0],last=chain[chain.length-1];
+        const capIndex=this.faces.findIndex(face=>{
+          const ia=face.indexOf(first),ib=face.indexOf(last),n=face.length;
+          return ia>=0&&ib>=0&&(face[(ia+1)%n]===last||face[(ib+1)%n]===first);
+        });
+        if(capIndex<0)return null;
+        const cap=this.faces[capIndex],out=[];
+        for(let i=0;i<cap.length;i++){
+          const a=cap[i],b=cap[(i+1)%cap.length];out.push(a);
+          if(a===first&&b===last)out.push(...chain.slice(1,-1));
+          else if(a===last&&b===first)out.push(...chain.slice(1,-1).reverse());
+        }
+        this.faces[capIndex]=out;
+        continue;
+      }
       if (list.length<3) return null;
       const incidentFaces=[...new Set((info.endpointInfo.get(v)||[]).flatMap(e=>realFaces({faces:originalFaces},e)))];
       const avgN=originalVertices[v].clone().set(0,0,0);
@@ -184,15 +200,13 @@ export function installGeneralizedEdgeFanBevel(EditableMesh) {
         const pa=this.vertices[ia].clone().sub(center), pb=this.vertices[ib].clone().sub(center);
         return Math.atan2(pa.dot(axisY),pa.dot(axisX))-Math.atan2(pb.dot(axisY),pb.dot(axisX));
       });
-      if (ordered.length>=3) {
-        const n=this.vertices[ordered[1]].clone().sub(this.vertices[ordered[0]])
-          .cross(this.vertices[ordered[2]].clone().sub(this.vertices[ordered[0]]));
-        if (n.dot(avgN)<0) ordered.reverse();
-      }
-      if (cuts===1) this.faces.push(ordered);
+      const capNormal=bevelPolygonNormal(this.vertices,ordered);
+      if(capNormal&&capNormal.dot(avgN)<0)ordered.reverse();
+      const group=sharedBevelGroup(originalGroups,incidentFaces);
+      if (cuts===1) {this.faces.push(ordered);this.faceGroups.push(group);}
       else {
         this.vertices.push(center); const ci=this.vertices.length-1;
-        for (let i=0;i<ordered.length;i++) this.faces.push([ordered[i],ordered[(i+1)%ordered.length],ci]);
+        for (let i=0;i<ordered.length;i++) {this.faces.push([ordered[i],ordered[(i+1)%ordered.length],ci]);this.faceGroups.push(group);}
       }
     }
 
@@ -203,6 +217,7 @@ export function installGeneralizedEdgeFanBevel(EditableMesh) {
         : [aRings[level],bRings[level],bRings[level+1],aRings[level+1]];
       if (new Set(face).size<3) return null;
       this.faces.push(face);
+      this.faceGroups.push(sharedBevelGroup(originalGroups,info.edge.faces));
     }
 
     const nextCreases=new Map();

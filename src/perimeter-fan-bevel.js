@@ -1,3 +1,5 @@
+import {sharedBevelGroup,bevelSourceGroups,bevelPolygonNormal} from './bevel-topology-utils.js?v=0.36.18.745';
+
 export function installPerimeterFanBevel(EditableMesh) {
   if (EditableMesh.prototype.__perimeterFanBevelInstalled) return;
 
@@ -50,6 +52,7 @@ export function installPerimeterFanBevel(EditableMesh) {
     const cuts = Math.max(1, Math.min(4, Math.round(Number(segments) || 1)));
     const originalVertices = this.vertices.map(v => v.clone());
     const originalFaces = this.faces.map(face => [...face]);
+    const originalGroups=bevelSourceGroups(this);
     const originalCreases = new Map(this.creases);
     const allEdges = this.edges();
     const selectedKeys = new Set(info.ids.map(id => this.edgeKey(allEdges[id].a, allEdges[id].b)));
@@ -127,6 +130,7 @@ export function installPerimeterFanBevel(EditableMesh) {
       rebuilt.push(clean);
     }
     this.faces = rebuilt;
+    this.faceGroups=[...originalGroups];
 
     const profileCache = new Map(), endpointProfiles = new Map();
     const profileChain = (vertex, inner, outer) => {
@@ -166,7 +170,7 @@ export function installPerimeterFanBevel(EditableMesh) {
 
     const bevelFaceStart = this.faces.length;
     const ringPairs = Array.from({length:cuts + 1}, () => []);
-    for (const {chainA,chainB,direction} of edgeProfiles) {
+    for (const {edge,chainA,chainB,direction} of edgeProfiles) {
       for (let j = 0; j <= cuts; j++) ringPairs[j].push([chainA[j], chainB[j]]);
       for (let j = 0; j < cuts; j++) {
         const face = direction > 0
@@ -174,19 +178,19 @@ export function installPerimeterFanBevel(EditableMesh) {
           : [chainA[j], chainB[j], chainB[j + 1], chainA[j + 1]];
         if (new Set(face).size < 3) return null;
         this.faces.push(face);
+        this.faceGroups.push(sharedBevelGroup(originalGroups,edge.faces));
       }
     }
 
-    const faceNormal = fi => {
-      const face = originalFaces[fi];
-      if (!face || face.length < 3) return null;
-      const a = originalVertices[face[0]], b = originalVertices[face[1]], c = originalVertices[face[2]];
-      const n = b.clone().sub(a).cross(c.clone().sub(a));
-      return n.lengthSq() > 1e-12 ? n.normalize() : null;
-    };
+    const faceNormal = fi => bevelPolygonNormal(originalVertices,originalFaces[fi]);
 
     for (const v of info.orderedVertices) {
-      const points = new Set((endpointProfiles.get(v) || []).flat());
+      const profiles=endpointProfiles.get(v)||[];
+      // Two bevel strips can share one complete rounded profile at a corner.
+      // They already close each other; adding a cap would make three owners.
+      const profileKeys=new Set(profiles.map(chain=>[Math.min(chain[0],chain[chain.length-1]),Math.max(chain[0],chain[chain.length-1])].join(':')));
+      if(profileKeys.size===1)continue;
+      const points = new Set(profiles.flat());
       for (const edge of incidentByVertex.get(v) || []) {
         if (selectedKeys.has(this.edgeKey(edge.a, edge.b))) continue;
         const other = edge.a === v ? edge.b : edge.a;
@@ -211,15 +215,13 @@ export function installPerimeterFanBevel(EditableMesh) {
         const a = this.vertices[ia].clone().sub(center), b = this.vertices[ib].clone().sub(center);
         return Math.atan2(a.dot(axisY), a.dot(axisX)) - Math.atan2(b.dot(axisY), b.dot(axisX));
       });
-      if (ordered.length >= 3) {
-        const n = this.vertices[ordered[1]].clone().sub(this.vertices[ordered[0]])
-          .cross(this.vertices[ordered[2]].clone().sub(this.vertices[ordered[0]]));
-        if (n.dot(avgN) < 0) ordered.reverse();
-      }
-      if (cuts === 1) this.faces.push(ordered);
+      const capNormal=bevelPolygonNormal(this.vertices,ordered);
+      if(capNormal&&capNormal.dot(avgN)<0)ordered.reverse();
+      const group=sharedBevelGroup(originalGroups,incidentFaces);
+      if (cuts === 1) {this.faces.push(ordered);this.faceGroups.push(group);}
       else {
         this.vertices.push(center); const ci = this.vertices.length - 1;
-        for (let i = 0; i < ordered.length; i++) this.faces.push([ordered[i], ordered[(i + 1) % ordered.length], ci]);
+        for (let i = 0; i < ordered.length; i++) {this.faces.push([ordered[i], ordered[(i + 1) % ordered.length], ci]);this.faceGroups.push(group);}
       }
     }
 
