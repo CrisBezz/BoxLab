@@ -29,5 +29,5 @@ Full Node24:1770/1668PASS/102FAIL/0skip, same102failure identities as745. No ski
 checks or CI gate. Runtime only logical addon/drawer changed, intentional pins746
 and reviewed two hashes; Bevel/Face745 and Through742 unchanged.
 
-Publication/Node22/Pages pending. Manual: original uploaded cage horizontal red-line
+Runtime commit 48595c3d767dc99b34458b1c6c9793070d53a461 published. Actual Node22 CI run 37585236460, job 112673733525: 1770 tests, 1668 PASS, 102 FAIL, 0 skipped; all 102 failure names match the recorded baseline. Pages run 37585235717 succeeded. Live index, version, Drawer loader, Loop addon, original OBJ fixture and Beta6 version byte-match main. Focused 63 PASS; device .746 acceptance remains pending. Manual: original uploaded cage horizontal red-line
 cut, Slide/EXACT and nearby/multiple cuts, Undo/Redo and selection/navigation.

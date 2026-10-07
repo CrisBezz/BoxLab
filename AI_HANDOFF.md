@@ -29,7 +29,7 @@ Existing native boundary-termination behavior remains if no safe continuation ex
 Slide/History/retained rail selection, groups/creases, rotated/translated source,
 refusal immutability and ordinary cube placement. Full Node24:1770/1668PASS/102FAIL/
 0skip, identical102failure identities as745. DOM doubles do not prove iPad feel.
-Read docs/reliability-build-746.md/JSON. Publication/Node22/Pages verification pending.
+Read docs/reliability-build-746.md/JSON. Runtime commit 48595c3d767dc99b34458b1c6c9793070d53a461 published. Actual Node22 CI run 37585236460, job 112673733525: 1770 tests, 1668 PASS, 102 FAIL, 0 skipped; all 102 failure names match the recorded baseline. Pages run 37585235717 succeeded. Live index, version, Drawer loader, Loop addon, original OBJ fixture and Beta6 version byte-match main. Focused 63 PASS; device .746 acceptance remains pending.
 
 Logical addon/drawer and recovery shell pins746; Bevel/Face direct/Inset745,
 Through742/fallback743 retained. Only addon and drawer runtime changed. No edits to
