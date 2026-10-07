@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.744",
+      "url": "./src/drawer-ui.js?v=0.36.18.746",
       "target": "src/drawer-ui.js",
-      "sha256": "d3207a77efac51da6a73f1e5eeed9666720249419957686be0949e5f9da6d467"
+      "sha256": "205cfaae8b96a75cb226434308832b16341b781ccbf1e6a19817be777ab0f18b"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.745",
+      "url": "./src/release-bootstrap.js?v=0.36.18.746",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.745",
+      "url": "./src/release-version.js?v=0.36.18.746",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -907,9 +907,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./loop-cut-added-vertex.js?v=0.36.18.744",
+      "url": "./loop-cut-added-vertex.js?v=0.36.18.746",
       "target": "src/loop-cut-added-vertex.js",
-      "sha256": "6665609348158c1da7b793c069bb4ab5292c46275a99244a4c35d0579985a849"
+      "sha256": "fe8e5785cd62cfa9530410a483b787e42b4025eafcf75f5fdca24faeb6e75ad0"
     },
     {
       "owner": "src/drawer-ui.js",

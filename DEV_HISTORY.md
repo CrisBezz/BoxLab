@@ -5394,3 +5394,23 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
   37568114774/job112620395437 matches1755/1653PASS/102FAIL/0skip and all102
   failure names. Pages37568114308success; live shell/version/all13changed src assets
   and frozenBeta6 version byte-match main. Focused103PASS. Device .745 pending.
+
+
+## 2026-10-07 — v0.36.18.746 uploaded bevelled-cage Loop continuation
+
+- User screenshot745 red horizontal loop blocked; exact LOOP CUT.obj retained
+  (31verts/24faces/21quads/3ngons). Do not infer .745 device PASS.
+- Edge0 has no native quad ring; other vertical seeds stop at multi-subdivided
+  bevel ngons. Old logical addon handles only5gon/one straight subdivision.
+- Existing addon now completes a guarded convex-planar polygon strip with parallel
+  crossing rails, on failed/partial native paths. All13vertical seeds form7face
+  closed loops without triangles, retaining volume/winding/subdivisions/groups/creases.
+- Slide uses shared rail-height overlap and stays level; initial seed-height retained.
+  Ordinary quad/Added gesture/placement and actual715commit owner unchanged.
+-15newPASS, focused63PASS; full1770/1668/102/0, same102failure identities as745.
+  Exact source/rotation/multi2/3/8/actualcommit/history/refusal fixtures covered.
+- Convex cross-product tolerance accounts for rounded OBJ boundary coordinates.
+  Node parser has a queried mesh class; tests construct authoritative installed
+  EditableMesh explicitly. A native-only probe is not an addon reproduction.
+- Addon/drawer/recovery pins746, two reviewed hashes; protected main/Loop715/Multi/
+  frozen betas untouched. Publication verification and device acceptance pending.

@@ -1,0 +1,625 @@
+{
+  "total": 1770,
+  "passed": 1668,
+  "failed": 102,
+  "skipped": 0,
+  "classification_counts": {
+    "source-pattern-review": 83,
+    "unclassified-behaviour-review": 18,
+    "version-pin-assertion": 1
+  },
+  "failures": [
+    {
+      "file": "tests/edge-extrude-move-plane-510.test.mjs",
+      "test": "510 repeated pulls preserve later user-selected constraint",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(armed&&!wasArmed\\)/."
+    },
+    {
+      "file": "tests/edge-face-boundary-candidates-656.test.mjs",
+      "test": "edge-face-boundary-candidates-656.test: transactional preview retained",
+      "category": "unclassified-behaviour-review",
+      "assertion": "transactional preview retained\n\nfalse !== true"
+    },
+    {
+      "file": "tests/edge-face-boundary-candidates-657.test.mjs",
+      "test": "edge-face-boundary-candidates-657.test: candidate-only preview retained",
+      "category": "unclassified-behaviour-review",
+      "assertion": "candidate-only preview retained\n\nfalse !== true"
+    },
+    {
+      "file": "tests/edge-hold-browser-655.test.mjs",
+      "test": "edge-hold-browser-655.test: candidate preview replaces selection",
+      "category": "unclassified-behaviour-review",
+      "assertion": "candidate preview replaces selection\n\nfalse !== true"
+    },
+    {
+      "file": "tests/edge-hold-browser-655.test.mjs",
+      "test": "edge-hold-browser-655.test: old additive merge removed",
+      "category": "unclassified-behaviour-review",
+      "assertion": "old additive merge removed\n\nfalse !== true"
+    },
+    {
+      "file": "tests/edge-progressive-disclosure-508.test.mjs",
+      "test": "508 compacts Edge home into requested three-column rows",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /for\\(const button of \\[dissolveEdge,del\\]\\)/."
+    },
+    {
+      "file": "tests/face-armed-drag-repeat-516.test.mjs",
+      "test": "516 dragging an unselected Face while armed operates that Face only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-armed-full-toggle-485.test.mjs",
+      "test": "485 armed Face owner raycasts all faces rather than selected faces only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /allFaceIds=m\\.faces\\.map\\(\\(_,index\\)=>index\\)/."
+    },
+    {
+      "file": "tests/face-armed-full-toggle-485.test.mjs",
+      "test": "485 tap toggles selected state both directions",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hitWasSelected=selectionBefore\\.includes\\(hit\\)/."
+    },
+    {
+      "file": "tests/face-armed-full-toggle-485.test.mjs",
+      "test": "485 drag on unselected face includes that face in modelling selection",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=hitWasSelected\\?\\[\\.\\.\\.selectionBefore\\]:\\[\\.\\.\\.selectionBefore,hit\\]/."
+    },
+    {
+      "file": "tests/face-armed-picker-486.test.mjs",
+      "test": "486 armed Face direct uses live viewport faceObjects picker",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /state\\(\\)\\?\\.faceObjects\\?\\.values/."
+    },
+    {
+      "file": "tests/face-armed-tap-toggle-484.test.mjs",
+      "test": "484 tap on an already-selected face removes only that face",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(event\\.type==='pointerup'&&!d\\.changed\\)/."
+    },
+    {
+      "file": "tests/face-armed-tap-toggle-484.test.mjs",
+      "test": "484 drag path remains unchanged and separate from tap toggle",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /else if\\(event\\.type==='pointerup'&&d\\.changed&&d\\.preview&&!d\\.blocked\\)/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 creates three compact Face modelling rows",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /faceSecondaryCompactRow/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 keeps armed contextual controls between primary and secondary rows",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(cursor\\.nextElementSibling!==secondary\\)cursor\\.insertAdjacentElement\\('afterend',secondary\\)/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 puts diagnostics below the entire compact modelling block",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /let tail=tertiary/."
+    },
+    {
+      "file": "tests/face-compact-layout-505.test.mjs",
+      "test": "505 Join Coplanar honors compact secondary row",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const compact=document\\.querySelector\\('#faceSecondaryCompactRow'\\)/."
+    },
+    {
+      "file": "tests/face-deliberate-selection-529.test.mjs",
+      "test": "529 deliberate preselection suppresses sequential overlap substitution",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /preferSequentialUnselected=false;disarmTransforms/."
+    },
+    {
+      "file": "tests/face-deliberate-selection-529.test.mjs",
+      "test": "529 explicit Face tap resets sequential overlap preference",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /bridge\\(\\)\\?\\.toggle\\?\\.\\('face',p\\.hit\\);\\n      preferSequentialUnselected=false;/."
+    },
+    {
+      "file": "tests/face-diagnostics-bottom-506.test.mjs",
+      "test": "506 keeps compact modelling rows and frozen interaction pins",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /faceSecondaryCompactRow/."
+    },
+    {
+      "file": "tests/face-direct-background-yield-652.test.mjs",
+      "test": "face-direct-background-yield-652.test: branch disarms tool",
+      "category": "unclassified-behaviour-review",
+      "assertion": "branch disarms tool\n\nfalse !== true"
+    },
+    {
+      "file": "tests/face-direct-background-yield-652.test.mjs",
+      "test": "face-direct-background-yield-652.test: branch clears pending state",
+      "category": "unclassified-behaviour-review",
+      "assertion": "branch clears pending state\n\nfalse !== true"
+    },
+    {
+      "file": "tests/face-direct-background-yield-652.test.mjs",
+      "test": "face-direct-background-yield-652.test: branch emits navigation yield",
+      "category": "unclassified-behaviour-review",
+      "assertion": "branch emits navigation yield\n\nfalse !== true"
+    },
+    {
+      "file": "tests/face-disclosure-order-503.test.mjs",
+      "test": "503 installs Face contextual controls directly after primary Face row",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const primary=faceTools\\?\\.querySelector\\(':scope > \\.outliner-actions'\\)/."
+    },
+    {
+      "file": "tests/face-disclosure-order-504.test.mjs",
+      "test": "504 orders Inspect and Repair directly above Topology Gate",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /repair\\.insertAdjacentElement\\('afterend',gate\\)/."
+    },
+    {
+      "file": "tests/face-empty-restart-496.test.mjs",
+      "test": "496 preserves armed Face direct state after Deselect button",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /#deselectAllBtn/."
+    },
+    {
+      "file": "tests/face-extrude-repeat-518.test.mjs",
+      "test": "518 armed Face drag aligns live selection to working set before modelling",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-grid-layout-507.test.mjs",
+      "test": "507 Join Coplanar targets requested row 3",
+      "category": "unclassified-behaviour-review",
+      "assertion": "join-selected-coplanar-faces.js must reference its reviewed cache pin in this loader"
+    },
+    {
+      "file": "tests/face-hitstack-diagnostic-494.test.mjs",
+      "test": "494 FaceTap trace includes face indices and distances",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /stack=hits\\.map\\(item=>/."
+    },
+    {
+      "file": "tests/face-hitstack-diagnostic-494.test.mjs",
+      "test": "494 keeps native primary pick and toggle behavior",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-hitstack-select-495.test.mjs",
+      "test": "495 prefers first unselected Face hit when primary is already selected",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /selected\\.has\\(primary\\)&&Number\\.isInteger\\(firstUnselected\\)\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-hitstack-select-495.test.mjs",
+      "test": "495 still allows deselect when no unselected overlapping hit exists",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=Number\\.isInteger\\(primary\\).*\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-hitstack-select-495.test.mjs",
+      "test": "495 trace exposes primary and chosen hit for hands-on verification",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /primary=\\$\\{primary\\}/."
+    },
+    {
+      "file": "tests/face-hitstack-select-523.test.mjs",
+      "test": "523 prefers first unselected Face hit when primary is already selected",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /selected\\.has\\(primary\\)&&Number\\.isInteger\\(firstUnselected\\)\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-hitstack-select-523.test.mjs",
+      "test": "523 keeps current working-face handoff after hit-stack resolution",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-inset-targeting-527.test.mjs",
+      "test": "527 overlap preference is Extrude-only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=armed==='extrude'&&selectionBefore\\.length===1&&Number\\.isInteger\\(primary\\)&&selected\\.has\\(primary\\)&&Number\\.isInteger\\(firstUnselected\\)\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-inset-targeting-527.test.mjs",
+      "test": "527 Inset keeps pressed selected face while still accepting unselected direct press",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /primary=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-live-scene-picker-487.test.mjs",
+      "test": "487 armed Face picker traverses live scene face meshes",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /scene\\.traverse\\?\\.\\(object=>\\{if\\(object\\?\\.userData\\?\\.kind==='face'/."
+    },
+    {
+      "file": "tests/face-live-scene-picker-487.test.mjs",
+      "test": "487 preserves additive and subtractive tap logic",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hitWasSelected=selectionBefore\\.includes\\(hit\\)/."
+    },
+    {
+      "file": "tests/face-multiselect-overlap-526.test.mjs",
+      "test": "526 overlap preference is single-selection only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=selectionBefore\\.length===1&&Number\\.isInteger\\(primary\\)&&selected\\.has\\(primary\\)&&Number\\.isInteger\\(firstUnselected\\)\\?firstUnselected:primary/."
+    },
+    {
+      "file": "tests/face-multiselect-overlap-526.test.mjs",
+      "test": "526 multi-face press keeps existing selected set",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-native-picker-bridge-489.test.mjs",
+      "test": "489 selection bridge exposes exact native component picker",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /pick:\\(type,event\\)=>pickKind\\(event,type\\)/."
+    },
+    {
+      "file": "tests/face-native-picker-bridge-489.test.mjs",
+      "test": "489 armed Face tools call native bridge picker directly",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const m=mesh\\(\\),picker=bridge\\(\\)\\?\\.pick/."
+    },
+    {
+      "file": "tests/face-native-picker-bridge-489.test.mjs",
+      "test": "489 direct controller owns both additive and subtractive tap resolution",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=hitWasSelected\\?\\[\\.\\.\\.selectionBefore\\]:\\[\\.\\.\\.selectionBefore,hit\\]/."
+    },
+    {
+      "file": "tests/face-native-picker-handoff-488.test.mjs",
+      "test": "488 selected-face presses remain owned by direct tool",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /selectedHit=hitSelectedFace\\(event,m,selectionBefore,camera\\)/."
+    },
+    {
+      "file": "tests/face-native-picker-handoff-488.test.mjs",
+      "test": "488 unselected-face presses are handed to native main Face picker",
+      "category": "source-pattern-review",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(start>0)"
+    },
+    {
+      "file": "tests/face-native-picker-handoff-488.test.mjs",
+      "test": "488 native-selected face can promote into direct drag after threshold",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(!drag&&pendingNativePress\\?\\.id===event\\.pointerId\\)/."
+    },
+    {
+      "file": "tests/face-native-toggle-491.test.mjs",
+      "test": "491 drag path still uses working selection and existing modelling flow",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /workingFaces=p\\.selectionBefore\\.includes\\(p\\.hit\\)\\?\\[\\.\\.\\.p\\.selectionBefore\\]:\\[\\.\\.\\.p\\.selectionBefore,p\\.hit\\]/."
+    },
+    {
+      "file": "tests/face-owner-cleanup-501.test.mjs",
+      "test": "501 preserves single-owner armed Face selection fix",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-provisional-selection-519.test.mjs",
+      "test": "519 drag still uses authoritative one-face working set and protected pins",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const workingFaces=selectionBefore\\.includes\\(hit\\)\\?\\[\\.\\.\\.selectionBefore\\]:\\[hit\\]/."
+    },
+    {
+      "file": "tests/face-repeat-explicit-target-530.test.mjs",
+      "test": "530 synthetic Repeat Exact skips live hit-stack repick",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=!synthetic&&armed==='extrude'/."
+    },
+    {
+      "file": "tests/face-repeat-ownership-528.test.mjs",
+      "test": "528 Repeat/Exact synthetic Extrude keeps explicit selected Face",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /event\\.pointerId!==9876&&armed==='extrude'/."
+    },
+    {
+      "file": "tests/face-screen-picker-498.test.mjs",
+      "test": "498 armed Face picker uses projected face polygons",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /function pointInPolygon2D/."
+    },
+    {
+      "file": "tests/face-screen-picker-498.test.mjs",
+      "test": "498 rejects back-facing faces before choosing a hit",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /normal\\.dot\\(toCamera\\)<=1e-5/."
+    },
+    {
+      "file": "tests/face-screen-picker-498.test.mjs",
+      "test": "498 chooses nearest depth only among projected visible candidates",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /candidates\\.push\\(\\{index,distance\\}\\)/."
+    },
+    {
+      "file": "tests/face-screen-picker-498.test.mjs",
+      "test": "498 armed pointerdown uses screen picker, not hit-stack fallback",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=armedVisibleFaceHit\\(event,m,camera\\)/."
+    },
+    {
+      "file": "tests/face-single-owner-499.test.mjs",
+      "test": "499 direct owner uses native visible picker and native toggle",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-tap-before-model-490.test.mjs",
+      "test": "490 pointerdown records face hit without validating modelling region",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /selectionComponentsInfo\\(|faceRegionsInfo/."
+    },
+    {
+      "file": "tests/face-tap-before-model-490.test.mjs",
+      "test": "490 tap selection resolves before modelling validation",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const next=p\\.selectionBefore\\.includes\\(p\\.hit\\)/."
+    },
+    {
+      "file": "tests/face-tap-diagnostic-492.test.mjs",
+      "test": "492 adds persistent FaceTap diagnostic readout",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /faceTapDebug/."
+    },
+    {
+      "file": "tests/face-tap-diagnostic-492.test.mjs",
+      "test": "492 records staged selection state around native toggle",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /up hit=\\$\\{p\\.hit\\} ok=\\$\\{ok\\} before=/."
+    },
+    {
+      "file": "tests/face-tap-diagnostic-492.test.mjs",
+      "test": "492 keeps current native picker/toggle behavior unchanged",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/face-tap-trace-493.test.mjs",
+      "test": "493 keeps full FaceTap trace instead of overwriting stages",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /append&&faceTapDebug\\.textContent/."
+    },
+    {
+      "file": "tests/face-visible-only-497.test.mjs",
+      "test": "497 armed Face taps use only nearest native visible hit",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const selectionBefore=faces\\(\\),hit=picker\\('face',event\\)\\?\\.index/."
+    },
+    {
+      "file": "tests/facegroup-data-connection-456.test.mjs",
+      "test": "456 restores split import control and authoritative Facegroups mesh lookup",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /return bridge\\(\\)\\?\\.mesh\\|\\|null/."
+    },
+    {
+      "file": "tests/facegroup-first-activation-457.test.mjs",
+      "test": "457 entering Facegroups rebuilds and reapplies after viewport settles",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /requestAnimationFrame\\(\\(\\)=>requestAnimationFrame/."
+    },
+    {
+      "file": "tests/facegroup-mirror-459.test.mjs",
+      "test": "459 Facegroups viewport evaluates Mirror but not SubD yet",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /applyMirror\\(source,active\\.settings\\.mirror\\)/."
+    },
+    {
+      "file": "tests/facegroup-solidify-465.test.mjs",
+      "test": "465 does not touch Shell core",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /target\\.faceGroups=/."
+    },
+    {
+      "file": "tests/file-menu-input-542.test.mjs",
+      "test": "542 File menu does not close when editing form controls",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const editable=event\\.target\\?\\.closest\\?\\('#fileMenu input,#fileMenu textarea,#fileMenu select/."
+    },
+    {
+      "file": "tests/file-menu-input-542.test.mjs",
+      "test": "542 File menu still closes after button actions",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /const action=event\\.target\\?\\.closest\\?\\('#fileMenu button'\\)/."
+    },
+    {
+      "file": "tests/fix-component-rotate-start-482.test.mjs",
+      "test": "482 Rotate no longer depends on selected-component hit test",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /hitIndex=t==='rotate'\\?ids\\[0\\]\\?\\?0:hitSelectedIndex/."
+    },
+    {
+      "file": "tests/fix-face-rotate-479.test.mjs",
+      "test": "479 generic transform owner yields Face Rotate",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(m==='face'&&t==='rotate'\\)return;/."
+    },
+    {
+      "file": "tests/fix-face-rotate-479.test.mjs",
+      "test": "479 dedicated Face Rotate reads selection from authoritative bridge",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /mode!=='face'/."
+    },
+    {
+      "file": "tests/global-component-release-631.test.mjs",
+      "test": "global-component-release-631.test: Face/Edge hold release uses window capture",
+      "category": "unclassified-behaviour-review",
+      "assertion": "Face/Edge hold release uses window capture\n\nfalse !== true"
+    },
+    {
+      "file": "tests/global-component-release-631.test.mjs",
+      "test": "global-component-release-631.test: Face/Edge hold cancel uses window capture",
+      "category": "unclassified-behaviour-review",
+      "assertion": "Face/Edge hold cancel uses window capture\n\nfalse !== true"
+    },
+    {
+      "file": "tests/nomad-facegroups-540.test.mjs",
+      "test": "540 GLB import maps primitive/material groups to BoxLab faceGroups",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /geometry\\.groups/."
+    },
+    {
+      "file": "tests/nomad-facegroups-540.test.mjs",
+      "test": "540 GLB export emits one mesh with material groups per facegroup",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /new THREE\\.Mesh\\(geometry,materials\\.length===1\\?materials\\[0\\]:materials\\)/."
+    },
+    {
+      "file": "tests/nomad-glb-passthrough-549.test.mjs",
+      "test": "549 export reattaches safe Nomad metadata and texture bytes",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /passthrough:object\\.glbPassthrough\\|\\|null/."
+    },
+    {
+      "file": "tests/nomad-indexed-topology-553.test.mjs",
+      "test": "553 keeps preserved corner channels in the weld key",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(uvComplete\\)parts\\.push\\('u:'/."
+    },
+    {
+      "file": "tests/nomad-roundtrip-543.test.mjs",
+      "test": "543 import records round-trip object and facegroup details",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /lastImport=\\{objects:meshes\\.length,faceGroups:groupCount,details:perObject\\}/."
+    },
+    {
+      "file": "tests/nomad-uv-preservation-550.test.mjs",
+      "test": "550 captures GLB UVs per face corner",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /quadCornerUVs\\(/."
+    },
+    {
+      "file": "tests/nomad-uv-preservation-550.test.mjs",
+      "test": "550 restores UV attribute only when topology still matches",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /passthrough\\.uvTopologySignature===topologySignature\\(editable\\)/."
+    },
+    {
+      "file": "tests/orbit-registration-handoff-647.test.mjs",
+      "test": "orbit-registration-handoff-647.test: routing policy unchanged",
+      "category": "unclassified-behaviour-review",
+      "assertion": "routing policy unchanged\n\nfalse !== true"
+    },
+    {
+      "file": "tests/pencil-contact-classification-648.test.mjs",
+      "test": "pencil-contact-classification-648.test: mesh-hit routing retained",
+      "category": "unclassified-behaviour-review",
+      "assertion": "mesh-hit routing retained\n\nfalse !== true"
+    },
+    {
+      "file": "tests/pencil-contact-lifecycle-650.test.mjs",
+      "test": "pencil-contact-lifecycle-650.test: mesh routing unchanged",
+      "category": "unclassified-behaviour-review",
+      "assertion": "mesh routing unchanged\n\nfalse !== true"
+    },
+    {
+      "file": "tests/pencil-deferred-orbit-651.test.mjs",
+      "test": "pencil-deferred-orbit-651.test: mesh hit defers while idle",
+      "category": "unclassified-behaviour-review",
+      "assertion": "mesh hit defers while idle\n\nfalse !== true"
+    },
+    {
+      "file": "tests/pencil-orbit-diagnostics-646.test.mjs",
+      "test": "pencil-orbit-diagnostics-646.test: route captures mesh hit",
+      "category": "unclassified-behaviour-review",
+      "assertion": "route captures mesh hit\n\nfalse !== true"
+    },
+    {
+      "file": "tests/pencil-orbit-diagnostics-646.test.mjs",
+      "test": "pencil-orbit-diagnostics-646.test: routing condition unchanged",
+      "category": "unclassified-behaviour-review",
+      "assertion": "routing condition unchanged\n\nfalse !== true"
+    },
+    {
+      "file": "tests/revolve-profile-tool-session-422.test.mjs",
+      "test": "422 Revolve Profile exposes compact launcher before session ownership",
+      "category": "source-pattern-review",
+      "assertion": "The expression evaluated to a falsy value:\n\n  assert.ok(revolve.includes(&quot;launchRow.hidden=true&quot;))"
+    },
+    {
+      "file": "tests/revolve-refine-389.test.mjs",
+      "test": "389 new construction starts positioned before profile editing",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /position\\/snap the plane first/."
+    },
+    {
+      "file": "tests/selection-mode-dock-557.test.mjs",
+      "test": "557 selection modes are docked bottom-left without DOM/id changes",
+      "category": "version-pin-assertion",
+      "assertion": "The input did not match the regular expression /v0\\.36\\.18\\.557 bottom-left selection mode dock/."
+    },
+    {
+      "file": "tests/selection-navigation-retention.test.mjs",
+      "test": "navigation movement preserves current selection",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /Math\\.hypot\\(event\\.clientX-backgroundTap\\.startX,event\\.clientY-backgroundTap\\.startY\\)>=EDIT_DRAG_THRESHOLD\\)backgroundTap\\.moved=true/."
+    },
+    {
+      "file": "tests/shell-solidify-recovery-464.test.mjs",
+      "test": "464 restores .461 Shell and Solidify core contracts",
+      "category": "source-pattern-review",
+      "assertion": "The input was expected to not match the regular expression /target\\.faceGroups=/."
+    },
+    {
+      "file": "tests/sweep-declaration-ui-472.test.mjs",
+      "test": "472 Edge Bevel exact control is repositioned before Slide precision anchor",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /edgePrecisionAnchor=document\\.querySelector\\('\\.loop-slide-option'\\)/."
+    },
+    {
+      "file": "tests/sweep-edit-ownership-400.test.mjs",
+      "test": "400 transform gestures yield to Sweep editing ownership",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /__boxlabSweepPath\\?\\.editing\\?\\.\\(\\)/."
+    },
+    {
+      "file": "tests/total-gizmo-570.test.mjs",
+      "test": "total-gizmo-570.test: version stamp",
+      "category": "unclassified-behaviour-review",
+      "assertion": "version stamp\n\nfalse !== true"
+    },
+    {
+      "file": "tests/total-gizmo-570.test.mjs",
+      "test": "total-gizmo-570.test: fat invisible hit zones",
+      "category": "unclassified-behaviour-review",
+      "assertion": "fat invisible hit zones\n\nfalse !== true"
+    },
+    {
+      "file": "tests/ui-fit-face-layout.test.mjs",
+      "test": "342 File menu fits below command bar with internal scrolling",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /top:calc\\(100% \\+ var\\(--boxlab-commandbar-h\\) \\+ 6px\\)/."
+    },
+    {
+      "file": "tests/unified-toggle-selection.test.mjs",
+      "test": "selected component tap records exact hit and toggles it off on pointer-up",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /current\\.kind==='component'&&!current\\.armed&&event\\.type==='pointerup'&&current\\.tapHit/."
+    },
+    {
+      "file": "tests/unified-toggle-selection.test.mjs",
+      "test": "blank component-area tap still clears selection, but only after tap confirmation",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(!tap\\.cancelled&&!moved\\)\\{clearSelection\\(\\);renderMesh\\(\\);\\}/."
+    },
+    {
+      "file": "tests/unify-component-rotate-483.test.mjs",
+      "test": "483 shared transform yields component Rotate only",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /if\\(t==='rotate'&&\\['vertex','edge','face'\\]\\.includes\\(m\\)\\)return;/."
+    },
+    {
+      "file": "tests/viewport-scroll-467.test.mjs",
+      "test": "467 Viewport menu is height-limited and vertically scrollable",
+      "category": "source-pattern-review",
+      "assertion": "The input did not match the regular expression /max-height:calc\\(100dvh - 118px\\)/."
+    }
+  ]
+}

@@ -3726,3 +3726,16 @@ Undo old triangular cut or use negative-extrude-742-before.obj first.
 
 - [x] .745 actual Node22CI37568114774/job112620395437 matches counts/all102names;
   Pages37568114308success, live shell/version/all13src/Beta6 bytes verified.
+
+
+## v0.36.18.746 — uploaded bevelled cage / horizontal Loop
+
+- [x] Exact31vert24face source retained; native edge0 refusal and partial paths found.
+- [x] All13vertical seeds complete7face closed strips; no triangles/volume change.
+- [x] Single3positions; multi2/3/8; level Slide; original vertices/groups/creases.
+- [x] Actual715commit retains rail selection, one Undo/Redo; rotated source.
+- [x] Nonplanar/open/vertex-hit fallback refuses unchanged; native cube unaffected.
+- [x]15newPASS/focused63PASS/full1770/1668/102/0, same102failure identities.
+- [ ] iPad original LOOP CUT.obj → horizontal Loop at red-line height.
+- [ ] Slide and EXACT, repeat nearby, multiple cuts; no crack/triangle fan.
+- [ ] Undo/Redo retains complete geometry; selection and navigation feel unchanged.
