@@ -4212,10 +4212,23 @@ Runtime8d4d0d51af2b09908863ab9e47b88d96fdfe2a70 published. Actual Node22 Topolog
 - [x] Vertical completion retires horizontal cycle without new history
 - [x] Existing sideways browser/Close Face/Undo/Redo tests retained
 - [x] Focused81PASS; full1935/1833PASS/102FAIL/0skip, exact .761 failure identities
-- [ ] iPad UP/DOWN preview retained after release; neutral return and sideways browser
+- [x] iPad UP/DOWN preview retained after release; neutral return and sideways browser (.762 user PASS)
 - [x] Pages/live shell/main bytes verified
 
 
 ### .762 publication verification — 2026-10-08
 
 Runtimec3bf95c4173341917fe203527178bd9cd24c2a79 published. Actual Node22 Topology run37771704243/job113292612101:1935tests/1833PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .761. Pages37771703594 succeeded. Live shell/version/main and unchanged scaffold helper/Pencil gate/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused81PASS. Device .762 acceptance pending.
+
+
+## .763 Knife same-mesh source validity
+
+- [x] .762 user PASS recorded; original gesture/Close Face releases retained
+- [x] Whole-owner source edit tests reproduce12FAIL/1PASS on old Knife
+- [x] New13PASS: coordinate/count/winding/topology changes cancel before endpoint work
+- [x] Newer source/history/redo/capture/markers preserved; no stale rollback
+- [x] Identical-value array replacements and latest metadata permit normal cut
+- [x] Legacy injected drags capture source via actual owner helper; assertions intact
+- [x] Focused156PASS; full1948/1846PASS/102FAIL/0skip, exact .762 failure identities
+- [ ] iPad Bevel → two Knife cuts → supported Loop/Slide → Undo/Redo → Done/navigation
+- [ ] Pages/live shell/Knife bytes verified
