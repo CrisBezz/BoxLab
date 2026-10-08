@@ -3,28 +3,38 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.753**, Vertex Bevel facegroup preservation. Runtime release
-0f11d92e7eb0655fac0c8b15ddd362278256c772 (parent9be399909982719b9b7ecdf757bbf00c4695631f). User PASS .752 /nextbuild; resume
-Bevel/Knife/Loop reliability. Add Vertex unconfirmed picking report, NOM import
-and Lasso tightening deferred. Frozen beta2–6 immutable; main/Loop715/Multi and
-established gestures unchanged.
+**v0.36.18.754**, Knife perspective EDGE accuracy. Parent main
+43e1a5f7ebd58d10836d4166a284b12ad2306b9e. User PASS .753 /nextbuild.
+Current priority Bevel/Knife/Loop reliability; Add Vertex unconfirmed picking,
+NOM import and Lasso tightening deferred. Frozen beta2–6 immutable;
+main/Loop715/Multi and established gestures unchanged.
 
-.753 reproduced existing single/multi Vertex Bevel adding caps without group
-entries (cube7/8faces but6labels); blue Apply restore omitted candidate groups.
-Existing kernels now retain source labels and append one group per cap: unanimous
-incident label inherited, mixed labels null, same provenance policy as Edge Bevel.
-No geometry algorithm change. Direct owner restores groups on Apply/repeated drag/
-Cancel/disarm and invalidates stale preview when live facegroups change. Public
-API/selection/radial/panel/history owners unchanged. Bootstrap/Inset/Face direct
-changes are import/cache only; Face Through remains751. No parallel bevel engine.
+.754 reproduced Knife EDGE using projected screen fraction directly in world
+interpolation. Angled planar sample worldt=.3 became .2112676: .44366units/
+42.88066pixels off the marker. Existing freeBoundaryPoint converts using endpoint
+clip weights (t=s*wa/((1-s)*wb+s*wa)); orthographic weights1 retain prior result.
+One local helper, no parallel picking/gesture/cut owner. END/MID/PERP priority,
+snap distances, hysteresis and existing splitter/history unchanged. Invalid or
+nonpositive clip weights refuse EDGE conversion; no near-plane clipping added.
 
-16new behavioral PASS; focused82PASS. Full Node24:1848/1746PASS/102FAIL/0skip;
-all102failure identities match .752. Single/adjacent/separate multi, uniform/mixed
-provenance, real direct preview/drag/cancel/disarm, exact Undo/Redo, creases/loose
-geometry, closed oriented shell, Loop/Knife → Vertex Bevel and OBJ groups covered.
-Six reviewed runtime hashes; required parent/recovery/shell753 pins. No exclusions
-or release gate. Runtime 0f11d92e7eb0655fac0c8b15ddd362278256c772 published. Actual Node22 Topology run37721519156/job113130013158:1848tests/1746PASS/102FAIL/0skip; all102failure names exactly match the local inventory and .752. Pages37721518051 succeeded. Live shell/version, all six changed runtime modules/loader parents, accepted Vertex Extrude owner and frozenBeta6 version byte-match the tested checkout. Focused82PASS; .753 device acceptance pending.
-Read docs/reliability-build-753.md/JSON.
+16new behavioral tests: before11FAIL/5PASS; after16PASS. Focused88PASS.
+Full Node24:1864/1762PASS/102FAIL/0skip; same102failure identities as .753.
+Real whole-owner camera/raycast/Pencil release, inverse edge direction, transformed/
+rotated/.01–100scaled camera+model, orthographic, viewport offsets, inference,
+groups/creases/Undo/Redo/Cancel/shorttap/redo and Bevel1/3→Knife→supported Loop
+closed shells covered. One reviewed runtime hash; shell/recovery/Knife754 pins.
+Publication/actual Node22/live verification and .754 device acceptance pending.
+Read docs/reliability-build-754.md/JSON. No test exclusions or CI release gate.
+
+.753 Vertex Bevel is user PASS (2026-10-08). Runtime
+0f11d92e7eb0655fac0c8b15ddd362278256c772; verification43e1a5f.
+Existing single/multi kernels retain source labels; caps inherit unanimous incident
+group, mixed labels null, matching Edge provenance. Direct owner restores groups
+on blue Apply/repeated drag/Cancel/disarm and invalidates changed-group preview.
+Geometry algorithm unchanged. Bootstrap/Inset/Face direct import-only changes.
+16newPASS/focused82PASS; full1848/1746/102/0. Actual Node22 run37721519156/
+job113130013158 matches all102names; Pages37721518051success and all six changed
+runtime graph files/shell/version/accepted Extrude/Beta6 byte-verified.
 
 .752 Vertex Extrude is user PASS. Runtime 9be399909982719b9b7ecdf757bbf00c4695631f published. Actual Node22 Topology run37712338609/job113100902832:1832tests/1730PASS/102FAIL/0skip; all102failure names exactly match the local inventory. Pages37712337662 success; live shell/version/new Extrude core and owner/Vertex panel/gizmo/background policy and frozenBeta6 version byte-match the tested checkout. User PASS .752 on2026-10-08. Browser smoke attempt timed out; device acceptance is the user report.
 Vertex Extrude/core, rendered picker, selection/history/ObjectManager and original
@@ -193,7 +203,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery/Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core/panel, total-gizmo and background policy .752; Through child .751; Knife .749; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery/Knife pins .754; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core/panel, total-gizmo and background policy .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -218,7 +228,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .753 check grouped Vertex Bevel Apply/Cancel/multi drag/Undo/Redo and retained Vertex Extrude. Add Vertex remains a deferred, unconfirmed report.
+For .754 check angled Knife EDGE placement, END/MID/PERP, Bevel→Knife→supported Loop and Undo/Redo. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

@@ -119,6 +119,7 @@ Before finishing a session that changes BoxLab:
 
 0. Prepare a short **user manual test list** for the final reply:
    - normally 3–6 quick checks maximum
+   - user refinement (2026-10-08): clearly say **“The app is ready for testing — build .XXX”**, then the brief checks; make completion versus ongoing work explicit
    - only ask the user to test visible/tactile behaviour they can realistically verify in the app
    - do not ask the user to recreate synthetic backend fixtures or topology torture cases that are better covered by automated tests
    - clearly distinguish what automated regression already covered from what the user should manually sanity-check

@@ -3917,11 +3917,40 @@ Runtime 9be399909982719b9b7ecdf757bbf00c4695631f published. Actual Node22 Topolo
   Extrude752, protected main/Loop715/Multi/frozenbeta unchanged.
 - Publication/actual Node22/live verification and .753 device acceptance pending.
 
-- [ ] .753 iPad: grouped model → Vertex Bevel Width preview → Apply retains groups.
-- [ ] Multi Vertex Bevel, repeated Pencil Width drag and Cancel preserve source.
-- [ ] Apply → Undo → Redo restores geometry/groups; ordinary Vertex Extrude still works.
+- [x] User PASS .753: grouped model → Vertex Bevel Width preview → Apply retains groups.
+- [x] User PASS .753: Multi Vertex Bevel, repeated Pencil Width drag and Cancel preserve source.
+- [x] User PASS .753: Apply → Undo → Redo restores geometry/groups; ordinary Vertex Extrude still works.
 
 
 ### .753 publication verification
 
 Runtime 0f11d92e7eb0655fac0c8b15ddd362278256c772 published. Actual Node22 Topology run37721519156/job113130013158:1848tests/1746PASS/102FAIL/0skip; all102failure names exactly match the local inventory and .752. Pages37721518051 succeeded. Live shell/version, all six changed runtime modules/loader parents, accepted Vertex Extrude owner and frozenBeta6 version byte-match the tested checkout. Focused82PASS; .753 device acceptance pending.
+
+
+### .753 acceptance
+
+User PASS .753 on2026-10-08: Vertex Bevel Apply/Cancel/multi drag/Undo/Redo and retained Vertex Extrude.
+
+
+## 2026-10-08 — v0.36.18.754 Knife perspective EDGE accuracy
+
+- User PASS .753 /nextbuild. Bevel/Knife/Loop audit reproduced Knife EDGE using a
+  screen-space fraction as a world-edge fraction. Angled planar source worldt=.3
+  resolves .2112676: .44366model units /42.88066screen pixels from shown marker.
+- Existing freeBoundaryPoint now converts with camera clip weights before world
+  interpolation. Orthographic weights1 preserve old result; END/MID/PERP priority,
+  distances, release hysteresis, gestures, topology splitter/history unchanged.
+-16new behavioral tests: before11FAIL/5PASS, after16PASS; focused88PASS.
+  Full Node24:1864/1762PASS/102FAIL/0skip, same102failure identities as .753.
+  Actual whole-owner camera/raycast/Pencil cut, reversed edges, rotations/transforms,
+  .01/1/100scale, viewport offsets, groups/creases, Cancel/redo, exact Undo/Redo,
+  Bevel1/3→Knife→supported Loop closed shells covered. No blanket exclusions.
+- Runtime body only Knife; one reviewed hash and shell/recovery/Knife754 pins.
+  Face/bootstrap/VertexBevel753, Extrude752, Through751 retained. Protected main,
+  Loop715/Multi/frozen betas untouched. No near-plane clipping implementation;
+  EDGE conversion refuses nonfinite or nonpositive clip weights.
+- Publication/actual Node22/live verification and .754 device acceptance pending.
+
+- [ ] .754 iPad: angled perspective face, Knife arbitrary EDGE→EDGE endpoints follow markers.
+- [ ] Inference ON retains END/MID/PERP snapping; ordinary cube Knife still feels familiar.
+- [ ] Bevel→Knife→supported Loop; Undo/Redo restores each operation.
