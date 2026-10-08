@@ -3,30 +3,42 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.755**, Knife gesture context/cancellation. Runtime release
-cb28427114df517083239ef07b31e3abc4cac9d9 (parent0e969d41877aa4cb922e273c2b53c9167c5e889c). User PASS .754 /nextbuild.
+**v0.36.18.756**, Bevel preview facegroup validity. Parent main
+9a4c315bc9444a432e3637095adb44e1af4daa4f. User PASS .755 /nextbuild.
 Current priority Bevel/Knife/Loop reliability; Add Vertex unconfirmed picking,
 NOM import and Lasso tightening deferred. Frozen beta2–6 immutable;
 main/Loop715/Multi and established gestures unchanged.
 
-.755 actual Pencil reproduction: cube1 drag start then cube2 active mesh/object
-switch; release cuts cube2 (6→7faces/history1), leaving cube1 untouched. Existing
-Knife owner now saves starting mesh/activeId and verifies mesh/object/Face mode/
-unlocked state before preview/commit; locked arming/start refuses. Changed context
-cancels with no cut/history and existing semantic disarm closes original session.
-One cancellation helper nulls drag before capture release, removes markers; Done/
-exclusive/context, pointercancel/lostcapture, Escape/blur use it. Pointercancel/
-lostcapture preserve armed Knife for next attempt; terminal exits disarm. No new
-picking/cut/gesture owner. No same-instance geometry fingerprint: existing exclusive
-tool events still cancel competing edits; context guard is mesh/object/mode/lock.
+.756 reproduced Face Bevel ignoring external facegroup label changes: staged
+Original source, then Reassigned group; Apply restores Original and Undo contains
+Original. Edge blue preview also ignored labels, though its exact commit already
+recomputes from current source. Shared sourceUnchanged now compares every real
+face's effective group. Changed/deleted labels invalidate stale preview/Apply;
+Cancel retains current labels/redo; fresh launch commits current provenance.
+Missing group entries and null are equivalent for legacy unlabelled faces; unused
+extra entries without a real face are ignored. Initial strict array-length attempt
+blocked old disconnected-shell preview fixture; semantic comparison fixes that
+without changing the fixture or its rendering assertion. No gesture/kernel/history
+algorithm change; original shared owner retained, no new parallel implementation.
 
-17new whole-owner tests: before16FAIL/1PASS; after17PASS. Focused105PASS.
-Full Node24:1881/1779PASS/102FAIL/0skip; same102names as754. Actual raycast/Pencil
-move/release, changed mesh/object/lock/mode, capture/marker cleanup, semantic exits,
-repeat/Undo/Redo/redo retention plus prior perspective and Bevel/Knife/Loop checks.
-Two prepared-endpoint historical fixtures now save starting mesh/object instead of
-bypassing new guard. Runtime body only Knife; reviewed one hash and shell/recovery/
-Knife755 pins. Runtime cb28427114df517083239ef07b31e3abc4cac9d9 published. Actual Node22 Topology run37737755836/job113181100425:1881tests/1779PASS/102FAIL/0skip; all102failure names exactly match the local inventory and .754. Pages37737755773 succeeded. Live shell/version/Knife, accepted Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused105PASS; .755 device acceptance pending. Read docs/reliability-build-755.md/JSON; no exclusions or CI release gate.
+15new semantic tests: before9FAIL/6PASS, after15PASS. Focused121PASS.
+Full Node24:1896/1794PASS/102FAIL/0skip; same102failure identities as755. Actual
+owner/session/history, reassignment/removal/truncation, Cancel/redo, relaunch/
+Apply/Undo/Redo, same-label array replacement/legacy unlabelled faces and grouped
+Face Bevel→Knife→supported Loop tested. Runtime body only Bevel source validator;
+one reviewed hash and shell/recovery/direct-Bevel756 pins. Publication/actual
+Node22/live verification and .756 device checks pending. Read reliability-build-
+756.md/JSON in docs. No exclusions or release gate.
+
+.755 Knife context/cancellation is user PASS (2026-10-08). Runtime
+cb28427114df517083239ef07b31e3abc4cac9d9; verification9a4c315.
+Starting mesh/activeId/Face mode/unlocked guard prevents replacement-object cut;
+cancel helper releases capture/removes markers before semantic terminal disarm.
+Pointercancel/lostcapture keep Knife armed; Done/exclusive/context/Escape/blur exit.
+No same-instance geometry fingerprint; existing exclusive events own other edits.
+17newPASS/focused105PASS; full1881/1779/102/0. Actual Node22 run37737755836/
+job113181100425 matches all102names; Pages37737755773 success and live
+shell/version/Knife/accepted Extrude/Beta6 bytes verified.
 
 .754 Knife perspective placement is user PASS (2026-10-08). Runtime
 5a7f6d585a72f076fe9d80f1bb05fd6a3b269915; verification82148373; acceptance0e969d4.
@@ -214,7 +226,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery/Knife pins .755; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core/panel, total-gizmo and background policy .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery/direct-Bevel pins .756; Knife .755; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core/panel, total-gizmo and background policy .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -239,7 +251,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .755 check ordinary repeat Knife/Undo/Redo, Done/tool/mode exit/navigation and locked-object refusal. Add Vertex remains a deferred, unconfirmed report.
+For .756 check grouped Face Bevel preview/Cancel, Face/Edge Apply/Undo/Redo and retained Knife/Loop. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

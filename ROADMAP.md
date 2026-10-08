@@ -4,18 +4,18 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .755, 2026-10-08 (supersedes historical priorities below)
+## Current direction — .756, 2026-10-08 (supersedes historical priorities below)
 
-User PASS .754 Knife perspective accuracy, .753 Vertex Bevel groups and .752
-Vertex Extrude. .755 fixes reproduced Knife cutting the replacement object when
-active context changes during a drag. Existing owner now guards starting mesh/
-object/Face mode/lock and cleans capture/markers on cancellation. Normal repeat,
-.754 snap placement and Bevel/Knife/Loop kernels retained.
+User PASS .755 Knife context/cancel, .754 perspective accuracy, .753 Vertex Bevel
+labels and .752 Vertex Extrude. .756 repairs stale source facegroup validity in
+existing Edge/Face Bevel preview owner. External label changes invalidate old
+preview; Cancel/current groups/redo preserved; fresh launch uses latest labels.
+Unlabelled legacy faces remain valid. No geometry or gesture algorithm changes.
 
-Next: .755 iPad repeat/history/Done/navigation/locked-object checks, then continue
-reproduced Bevel/Knife/Loop reliability and reconcile102 active historical failures.
-CI/release gate after reconciliation. Radials complete; Beta6 frozen736. Add Vertex
-unconfirmed picking defect, NOM import and Lasso tightening remain deferred.
+Next: .756 ordinary grouped Bevel preview/Cancel/Apply/Undo/Redo and Knife/Loop
+sanity checks, then continue reproduced reliability and reconcile102 historical
+failures. CI/release gate after reconciliation. Radials complete; Beta6 frozen736.
+Add Vertex unconfirmed picking, NOM import and Lasso tightening remain deferred.
 
 ## Beta 6 delivery refinement — .736
 

@@ -59,6 +59,8 @@ function sourceUnchanged(a=faceSession?.before,b=faceSession?.mesh){
   return !!(a&&b&&a.vertices.length===b.vertices.length&&a.faces.length===b.faces.length
     &&a.vertices.every((v,i)=>v.equals(b.vertices[i]))
     &&a.faces.every((f,i)=>f.length===b.faces[i]?.length&&f.every((v,j)=>v===b.faces[i][j]))
+    // Missing labels on legacy/unlabelled faces mean the same as explicit null.
+    &&a.faces.every((_,i)=>(a.faceGroups?.[i]??null)===(b.faceGroups?.[i]??null))
     &&a.creases.size===b.creases.size&&[...a.creases].every(([k,v])=>b.creases.get(k)===v)
     &&['looseEdges','looseVertices'].every(key=>(a[key]?.size||0)===(b[key]?.size||0)&&[...(a[key]||[])].every(v=>b[key]?.has(v))));
 }
