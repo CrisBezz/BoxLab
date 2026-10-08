@@ -4237,3 +4237,12 @@ Runtimec3bf95c4173341917fe203527178bd9cd24c2a79 published. Actual Node22 Topolog
 ### .763 publication verification — 2026-10-08
 
 Runtime4b4f909d8ed2b1c0fda3174f07c6b53860a362ed published. Actual Node22 Topology run37772536234/job113295375073:1948tests/1846PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .762. Pages37772535751 succeeded. Live shell/version/Knife and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused156PASS. Device .763 acceptance pending.
+
+
+## v0.36.18.764 — direct Edge Bevel drag ownership
+
+- [x] User .763 PASS;24 new controller checks and153focusedPASS. Full1972/1870PASS/102FAIL/0skip, exact .763 failures. No exclusions.
+- [x] Newer coordinate/topology/groups/creases/loose edits survive move/release/cancel/disarm; changed mesh/object/mode/lock refuses stale commit. Owned preview rollback, capture/control release, equal arrays and repeated history covered.
+- [ ] Visible .764: Edge Bevel repeated Pencil drags and Width/Segments Exact work; Undo/Redo restores each result.
+- [ ] Cancel/Done during Edge Bevel restores only its own preview; switching mode/object or locking cannot commit stale geometry; navigation resumes.
+- [ ] Face/Vertex blue Bevel Apply/Cancel and Bevel→Knife→Loop still work; accepted floating scaffold selection/Close Face preserved.

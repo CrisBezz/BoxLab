@@ -130,9 +130,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/direct-bevel.js?v=0.36.18.756",
+      "url": "./src/direct-bevel.js?v=0.36.18.764",
       "target": "src/direct-bevel.js",
-      "sha256": "0c1f97671304d30c6d8a96b102f86636a5e0f7b1e83a98abe7fa888d1b5a1117"
+      "sha256": "9c703f2583ed057e71689f27bb9c0b4c5a0b2ded94011b3776fe1cf4b776d7fb"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.763",
+      "url": "./src/release-bootstrap.js?v=0.36.18.764",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.763",
+      "url": "./src/release-version.js?v=0.36.18.764",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },

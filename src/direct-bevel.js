@@ -10,7 +10,7 @@ import {createFaceBevelPreview,disposeFaceBevelPreview} from './bevel-face-previ
 const button=document.querySelector('#bevelBtn'),canvas=document.querySelector('#viewport'),width=document.querySelector('#bevelWidth'),out=document.querySelector('#bevelWidthOut'),multiToggle=document.querySelector('#multiSelectToggle'),ray=new THREE.Raycaster(),pointer=new THREE.Vector2();ray.params.Line.threshold=.09;let armed=false,drag=null,faceSession=null,facePreview=null,persistentEdge=false,edgeSession=null;
 function state(){return globalThis.__boxlabBridgeState}function bridge(){return globalThis.__boxlabSelectionBridge}function hit(e){const s=state(),r=canvas.getBoundingClientRect();if(!s?.camera)return null;pointer.set((e.clientX-r.left)/r.width*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(pointer,s.camera);const h=ray.intersectObjects([...(s.edgeObjects?.values()||[])],false)[0];return Number.isInteger(h?.object?.userData?.index)?h.object.userData.index:null}
 function disarm(){
-  if(!faceSession&&drag){const saved=drag;if(state()?.mesh===saved.mesh)restore(saved.mesh,saved.before);try{canvas.releasePointerCapture?.(saved.id);}catch{}if(persistentEdge&&state()?.controls)state().controls.enabled=saved.controlsEnabled;render();}
+  if(!faceSession&&drag){const saved=drag;if(sourceUnchanged(saved.owned||saved.before,saved.mesh))restore(saved.mesh,saved.before);try{canvas.releasePointerCapture?.(saved.id);}catch{}if(persistentEdge&&state()?.controls)state().controls.enabled=saved.controlsEnabled;render();}
   discardEdgePreview();
   disposeFaceBevelPreview(facePreview);facePreview=null;
   if(faceSession&&drag){
@@ -182,14 +182,21 @@ function startBevelGesture(e){
   const valid=mesh.generalBevelSelectionInfo?.(ids);
   if(!valid){document.querySelector('#selectionStatus').textContent=mesh.__lastBevelError||'Selected boundary cannot be bevelled';return;}
   discardEdgePreview();
-  drag={id:e.pointerId,x:e.clientX,width:Number(width.value||20),mesh,before:mesh.clone(),ids:[...valid.ids],mode:valid.mode,preview:false,face:!!faceSession,controlsEnabled:state()?.controls?.enabled};
+  drag={id:e.pointerId,x:e.clientX,width:Number(width.value||20),mesh,before:mesh.clone(),ids:[...valid.ids],mode:valid.mode,object:globalThis.__boxlabObjectManager?.activeId,preview:false,face:!!faceSession,controlsEnabled:state()?.controls?.enabled};
   if((faceSession||persistentEdge)&&state()?.controls)state().controls.enabled=false;
   canvas.setPointerCapture?.(e.pointerId);
 }
 window.addEventListener('pointerdown',e=>{if(faceSession&&e.target===canvas)startBevelGesture(e);},true);
 canvas?.addEventListener('pointerdown',e=>{if(!faceSession)startBevelGesture(e);},true);
+// Live Edge previews belong to this drag only while their last values remain intact.
+function edgeDragContextValid(){
+  return !!(drag&&editable()&&state()?.mesh===drag.mesh&&bridge()?.mode?.()==='edge'
+    &&globalThis.__boxlabObjectManager?.activeId===drag.object
+    &&sourceUnchanged(drag.owned||drag.before,drag.mesh));
+}
 function moveBevelGesture(e){
   if(!drag||drag.id!==e.pointerId)return;
+  if(!drag.face&&!edgeDragContextValid()){disarm();return;}
   const value=Math.max(2,Math.min(49,drag.width+(e.clientX-drag.x)*.25)),amount=Math.round(value);
   if(drag.face){
     e.preventDefault();e.stopImmediatePropagation();
@@ -198,6 +205,7 @@ function moveBevelGesture(e){
   }
   width.value=String(amount);out.textContent=`${amount}%`;
   restore(drag.mesh,drag.before);drag.preview=!!drag.mesh.generalBevelSelection?.(drag.ids,amount/100,bevelSegments());
+  drag.owned=drag.mesh.clone();
   if(!drag.preview&&drag.mesh.__lastBevelError)document.querySelector('#selectionStatus').textContent=drag.mesh.__lastBevelError;
   render();
 }
@@ -205,6 +213,7 @@ window.addEventListener('pointermove',e=>{if(drag?.face)moveBevelGesture(e);},tr
 canvas?.addEventListener('pointermove',e=>{if(!drag?.face)moveBevelGesture(e);},true);
 function endBevelGesture(e){
   if(!drag||drag.id!==e.pointerId)return;
+  if(!drag.face&&!edgeDragContextValid()){disarm();return;}
   if(drag.face){
     e.preventDefault();e.stopImmediatePropagation();
     if(!faceContextValid()){cancelFaces({restoreSelection:false});return;}
@@ -230,6 +239,7 @@ window.addEventListener('pointerup',e=>{if(drag?.face)endBevelGesture(e);},true)
 canvas?.addEventListener('pointerup',e=>{if(!drag?.face)endBevelGesture(e);},true);
 function cancelBevelGesture(e){
   if(!drag||drag.id!==e.pointerId)return;
+  if(!drag.face&&!edgeDragContextValid()){disarm();return;}
   if(drag.face){e.preventDefault();e.stopImmediatePropagation();cancelFaces();return;}
   const current=drag;
   drag=null;
