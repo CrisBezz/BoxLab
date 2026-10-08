@@ -5822,3 +5822,8 @@ Reviewed Gate/Lasso/Drawer hashes and loader pins760; shell/recovery760. Protect
 main732/Loop715/Multi1.0/frozen betas unchanged. Publication verification pending.
 Device checks: floating tap persists; Multi held horizontal/vertical drags select
 without orbit; Visible Lasso floating edges; finger/empty background navigation.
+
+
+### .760 publication verification — 2026-10-08
+
+Runtime a85585c2a0c6ce42b74d808ed939660ebd257d34 published. Actual Node22 Topology run37766273730/job113274606897:1923tests/1821PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .759. Pages37766272406 succeeded. Live shell/version/Gate/Lasso/Drawer, accepted Edge Extrude and frozenBeta6 version byte-match tested checkout. Focused69PASS. Device .760 acceptance pending.
