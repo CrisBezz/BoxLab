@@ -3865,11 +3865,30 @@ Runtime 4036c0fdf9c5cabc1173d68a3cf4281d7674b049 published. Actual Node22 CI3762
   reviewed hashes; main/Loop715/Multi/frozen betas untouched.
 - Publication/Node22/live verification and device .751 acceptance pending.
 
-- [ ] .751 supplied object: shallow recess then full inward cut at shell exit.
-- [ ] Cancel and Undo/Redo; selection clears when the cut passes through.
-- [ ] Ordinary cube Through and selection/navigation retain accepted feel.
+- [x] User PASS .751: supplied object: shallow recess then full inward cut at shell exit.
+- [x] User PASS .751: Cancel and Undo/Redo; selection clears when the cut passes through.
+- [x] User PASS .751: ordinary cube Through and selection/navigation retain accepted feel.
 
 
 ### .751 publication verification
 
 Runtime 5c3007ce3b9f5863dc924a12bce60c7b3946dc87 published. Node22 Topology run37697834551/job113053828900:1820tests/1718PASS/102FAIL/0skip; all102 failure names exactly match the local inventory and prior build. Pages run37697833503 succeeded. Live shell/version, Through kernel, Face direct, original source fixture and beta-6 version bytes match the tested checkout. Device .751 acceptance remains pending.
+
+
+## v0.36.18.752 — Vertex Extrude scaffolding
+
+- [x] User PASS .751 recorded; frozen betas/Loop715/Multi/main preserved.
+- [x] New tips + loose edges on attached/boundary/loose/multi source vertices;
+      existing faces, positions, groups, creases and source object retained.
+- [x] Actual radial/drawer launch, original top-centre session, rendered picking,
+      Free repeated pulls, signed XYZ Exact, last-vector Repeat and selected tips.
+- [x] One successful pull = one Undo/Redo; cancelled/no-op/invalid preview retains redo.
+- [x] Lock/changed mesh/object/mode, competing Build Edge, Escape/blur/capture cleanup.
+- [x] Original Pencil background policy does not close a loose-tip Repeat tap;
+      true background retains navigation and exits through existing session.
+- [x] Closed scaffolding is eligible for original Create Face after existing Join.
+- [x] 12 new PASS; focused88PASS/full1832/1730/102/0, same102failure identities.
+- [ ] .752 iPad: select vertex → radial Extrude → Free drag → drag selected tip again.
+- [ ] XYZ signed Exact and Repeat ON tap another vertex; multi vertices create one edge each.
+- [ ] Done → Join/Build Edge to close scaffold → original Create Face/Fill.
+- [ ] Cancelled gesture, Undo/Redo, background exit and Pencil/finger navigation.

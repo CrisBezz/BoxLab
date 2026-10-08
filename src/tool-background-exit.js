@@ -22,7 +22,7 @@ const entry=()=>{
 };
 globalThis.__boxlabToolBackgroundExit={
  active:()=>!!entry(),
- ownsPoint:event=>!!globalThis.__boxlabLinearArray?.active&&!!globalThis.__boxlabLinearArray?.ownsPoint?.(event)
+ ownsPoint:event=>(!!globalThis.__boxlabLinearArray?.active&&!!globalThis.__boxlabLinearArray?.ownsPoint?.(event))||!!globalThis.__boxlabVertexExtrude?.ownsPoint?.(event)
 };
 window.addEventListener('boxlab-viewport-background-tap',()=>{
  const route=entry();if(!route||route.legacy||route.busy?.()||globalThis.__boxlabMainDirectTool?.busy?.())return;

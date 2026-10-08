@@ -47,5 +47,5 @@ test('wrong-mode Vertex ring cannot launch and Face/Edge tool coverage remains i
 });
 test('Vertex puck/transform centre opens active-tool ring with centred close and no selection proxies',()=>{
  assert.match(gizmo,/requested==='tools'&&!\['face','edge','vertex','object'\]\.includes\(mode\)/);assert.match(gizmo,/const next=\['face','edge','vertex','object'\]\.includes\(currentMode\(\)\)\?'tools':'closed'/);
- const start=gizmo.indexOf('<div class="tg-tool-ring" data-ring-mode="vertex"');const ring=gizmo.slice(start,gizmo.indexOf('<div class="tg-tool-ring"',start+10));assert.equal((ring.match(/data-tool-target=/g)||[]).length,13);assert.match(ring,/Close Vertex contextual tools/);assert.doesNotMatch(ring,/select|Grow|Shrink/);
+ const start=gizmo.indexOf('<div class="tg-tool-ring" data-ring-mode="vertex"');const ring=gizmo.slice(start,gizmo.indexOf('<div class="tg-tool-ring"',start+10));assert.equal((ring.match(/data-tool-target=/g)||[]).length,14);assert.match(ring,/Close Vertex contextual tools/);assert.doesNotMatch(ring,/select|Grow|Shrink/);
 });

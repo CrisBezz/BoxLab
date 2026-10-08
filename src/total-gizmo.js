@@ -396,6 +396,7 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#weldVertexBtn">Weld</button>
   <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target="#createFaceFromVerticesBtn">Create Face</button>
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#deleteVertexBtn">Delete</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:216deg;--r:230px" data-tool-target="#vertexExtrudeBtn">Extrude</button>
   <div class="tg-vertex-outer-guide" aria-hidden="true"></div>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:230px" data-tool-target="#componentCircleBtn">Circle</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:72deg;--r:230px" data-tool-target="#mergeVerticesCenterBtn">Merge Center</button>
@@ -481,7 +482,7 @@ function syncContextToolAvailability(){
     let unavailable=faceBevel?!globalThis.__boxlabDirectBevel?.faceBevelInfo?.()?.ok:faceAlign?!globalThis.__boxlabFaceAlignViewportSession?.available?.():faceRepair?!globalThis.__boxlabFaceRepairViewportSession?.available?.(sector.textContent.trim()):!target||(!bridgeStart&&!!target.disabled);
     const active=!!target&&(target.classList.contains('active')||target.getAttribute('aria-pressed')==='true');
     const vertexReadOnly=sector.closest('.tg-tool-ring')?.dataset.ringMode==='vertex'&&!!document.querySelector('#app')?.classList?.contains('boxlab-active-locked');
-    const vertexSession=sector.closest('.tg-tool-ring')?.dataset.ringMode==='vertex'&&['Add','Build Edge','Bevel','Slide','Merge Dist','Clean Vertices'].includes(sector.textContent?.trim());
+    const vertexSession=sector.closest('.tg-tool-ring')?.dataset.ringMode==='vertex'&&['Extrude','Add','Build Edge','Bevel','Slide','Merge Dist','Clean Vertices'].includes(sector.textContent?.trim());
     if(vertexSession)unavailable=!globalThis.__boxlabVertexViewportSession?.available?.(sector.textContent.trim());
     unavailable=unavailable||vertexReadOnly;
     if(sector.closest('.tg-tool-ring')?.dataset.ringMode==='object')unavailable=!globalThis.__boxlabObjectRadialSession?.available?.(sector.textContent.trim());
@@ -533,7 +534,7 @@ toolSectors.forEach(button=>{
     const pendingLabel=button.textContent?.trim()||'Tool';
     const guidedBridge=mode==='edge'&&pendingLabel==='Bridge'&&!!globalThis.__boxlabBridgeViewportSession?.canStart?.([...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])]);
     const contextualMerge=mode==='face'&&pendingLabel==='Merge Dist'&&globalThis.__boxlabFaceRepairViewportSession?.available?.(pendingLabel);
-    const contextualVertex=mode==='vertex'&&['Add','Build Edge','Bevel','Slide','Merge Dist','Clean Vertices'].includes(pendingLabel)&&globalThis.__boxlabVertexViewportSession?.available?.(pendingLabel);
+    const contextualVertex=mode==='vertex'&&['Extrude','Add','Build Edge','Bevel','Slide','Merge Dist','Clean Vertices'].includes(pendingLabel)&&globalThis.__boxlabVertexViewportSession?.available?.(pendingLabel);
     if(!target||(!guidedBridge&&!contextualMerge&&!contextualVertex&&target.disabled)){
       if(status)status.textContent=pendingLabel+' unavailable for current selection';
       return;

@@ -3,34 +3,54 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.751**, warped-target Through planning / ordered exits.
-User PASS .750. .748 partial-chain tests accepted; .749 Knife has no separate device
-acceptance yet. Add Vertex and NOM import deferred. Frozen beta2–6 immutable;
-main/Loop715/Multi and gestures unchanged.
+**v0.36.18.752**, Vertex Extrude scaffolding. Parent main dc434a9d77b455d785a23f254e64540e0456f104.
+User explicitly PASS .751 and requests Vertex Extrude using Face Extrude's
+select/drag/exact/repeat workflow. This user-directed feature is the current slice;
+resume Bevel/Knife/Loop reliability afterward. Add Vertex's separate unconfirmed
+picking report remains deferred; NOM import and Lasso tightening remain deferred.
+Frozen beta2–6 immutable; main/Loop715/Multi and established gestures unchanged.
 
-.750 finite inward cuts work on supplied Bevel/Inset source, but legacy context
-still refused all warped targets as nonplanar-input-face. .751 context uses .750's
-surfaceTriangles for target classification, still validates the selected source
-strictly planar/convex. Exact source7 now plans first/last exit2. For a warped target,
-buildThrough delegates privately to existing finite cutter at selected targetDepth
-with existing epsilon overshoot. Planar legacy build route unchanged. Ordered exit
-planning/clamping retained; no new tool or gesture handler.
+Vertex Extrude creates one new tip and loose edge for every selected source;
+source vertices/faces/groups/creases stay intact. Tips remain selected for repeated
+pulls. Reuses existing addLooseVertex/addLooseEdge, rendered Vertex Pick Assist,
+selection/history/ObjectManager and Vertex contextual session/positioning owners.
+No prior Vertex Extrude implementation found; new single direct owner and small
+private candidate builder in src/vertex-extrude.js / vertex-extrude-core.js.
 
-8newPASS: supplied exit and clean42face/zero-triangle result, source immutability,
-selected warped source refusal, ordinary planar Through unchanged, two separated
-warped shells targets2/5 with first-only second shell unchanged, rotated/scaled
-ordered targets/volume, actual Face+legacy fallback physical/Exact completion one
-Undo/Redo/selection cleared, shallow recess retained. Focused78PASS including
-Through12/cavity4,750new15/74227/7437 and releasecontract5. FullNode24:1820/1718PASS/
-102FAIL/0skip, identical102failure identities as750. Runtime 5c3007ce3b9f5863dc924a12bce60c7b3946dc87 published. Node22 Topology run37697834551/job113053828900:1820tests/1718PASS/102FAIL/0skip; all102 failure names exactly match the local inventory and prior build. Pages run37697833503 succeeded. Live shell/version, Through kernel, Face direct, original source fixture and beta-6 version bytes match the tested checkout. Device .751 acceptance remains pending.
+Access Vertex radial outer216deg or drawer Extrude. Top-centre original Vertex
+panel offers Free/X/Y/Z (existing RGB semantics), signed exact Distance, Repeat
+Previous and Done. Free drag uses view plane; Free Exact uses last committed vector
+normalized (view up before the first pull). XYZ is explicit world-axis movement.
+Repeat ON applies the last full vector by tapping a source; new tips stay selected.
+Each successful pull/Exact/repeat is one history step; preview/cancel/invalid input
+retain redo. Done keeps completed scaffold; pointercancel/Escape/blur/context loss
+discard only an in-flight preview. Ordinary armed taps add/remove source selection.
 
-Only Through-kernel runtime changed; Face direct import-only/kernel/shell751.
-Recovery751; Knife749; Bevel/bootstrap/Inset748; guard747; Drawer/Loop746;
-fallback743/its legacy kernel242 retained. Two reviewed hashes and required pins.
-Read docs/reliability-build-751.md/JSON. Next device supplied object: shallow recess
-then full-depth negative cut, Cancel/Undo/Redo and ordinary cube Through/navigation.
-No arbitrary warped-source/concave-source support or self-intersection repair.
-Continue reliability audit; Add Vertex and NOM import remain deferred.
+Document capture owns Vertex extrusion before canvas Move/orbit; only vertex hits
+are claimed. Shared semantic background policy recognizes scaffold contacts, so
+Pencil loose-tip taps cannot be misclassified by the polygon-only orbit gate.
+Background taps exit through existing session owner. Tool switches retire the
+Extrude session without disarming the newly launched owner. Second touch cancels
+an active preview; actual multitouch/iPad behavior still requires device checks.
+No auto-welding, implicit faces or bridging between multiple tips. Close the scaffold
+using existing Join/Build Edge; existing Create Face/Fill requires a closed boundary.
+
+12 new behavioral tests; focused88PASS. Full Node24:1832/1730PASS/102FAIL/0skip,
+identical102failure identities to freshly rerun .751. No exclusions or release gate.
+Two old static contracts explicitly updated for the user-authorized14th Vertex
+sector and reviewed current dock-client cache pins; existing semantic checks retained.
+Runtime bodies changed only new Extrude files, Vertex panel, gizmo sector/launch and
+semantic background policy. Five reviewed runtime hashes; required parent/shell752
+pins refreshed. Face direct/Through remain751; no modelling edits to prior owners.
+Publication/Node22/live verification pending; device .752 acceptance pending.
+Read docs/reliability-build-752.md/JSON.
+
+.751 warped-target Through planning / ordered exits is user PASS. Runtime
+5c3007ce3b9f5863dc924a12bce60c7b3946dc87 published; final verification dc434a9d.
+Its focused78PASS/full1820/1718/102/0 and actual Node22CI37697834551/job113053828900
+matched all102 identities; Pages37697833503 success and live graph byte-verified.
+Selected sources remain planar/convex; warped targets use displayed surface fan and
+finite cutter at ordered exit + epsilon. No arbitrary warped/concave-source support.
 
 .750 runtime4036c0fdf9c5cabc1173d68a3cf4281d7674b049; finalhandoff242256e6.
 Actual Node22CI37620905333/job112790634635:1812/1710/102/0 and all102names;
@@ -181,7 +201,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .751; Face direct/Through child .751; Knife .749; bevel bootstrap/Inset/multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .752; Vertex Extrude/core/panel, total-gizmo and background policy .752; Face direct/Through child .751; Knife .749; bevel bootstrap/Inset/multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -206,7 +226,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .751 check warped-target exit planning/Through and shallow recess/history. Add Vertex remains a deferred, unconfirmed report.
+For .752 check Vertex drag/exact/repeat, closed-scaffold Create Face, Undo/Redo and navigation. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

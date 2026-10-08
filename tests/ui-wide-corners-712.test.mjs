@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {layoutWideToolPanel} from '../src/tool-session-wide-layout.js';
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import {mountGizmoCornerControls} from '../src/gizmo-corner-controls.js';
 const source=n=>fs.readFileSync(new URL('../src/'+n,import.meta.url),'utf8');
 function dom(){
@@ -45,7 +46,7 @@ test('Gizmo centre remains a free Move handle, free Rotate ring retains owner an
  const s=source('total-gizmo.js');assert.match(s,/class="tg-handle tg-center" data-tool="move" data-constraint="free"[^\n]+r="14"/);assert.match(s,/tg-screen-ring" data-tool="rotate" data-constraint="free"/);assert.doesNotMatch(s,/class="tg-collapse"|collapseControl/);assert.match(s,/mountGizmoCornerControls\(root/);assert.match(s,/reason:'corner-radial-tools'/);assert.match(s,/cornerControls.sync\(\)/);assert.match(s,/beginGizmoGesture\?\.\(spec,event\)/);
 });
 test('Every changed shared-dock client repinned from shell; protected transform module stays frozen',()=>{
- const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');for(const file of fs.readdirSync(new URL('../src/',import.meta.url))){if(!file.endsWith('.js'))continue;const s=source(file);if(s.includes('tool-session-panel-position.js?v=')){assert.match(s,/tool-session-panel-position\.js\?v=0\.36\.18\.732/);if(file==='viewport-selection-panel.js')assert.ok(source('topbar-layout.js').includes('viewport-selection-panel.js?v=0.36.18.732'));else {const pin=index.match(new RegExp('src/'+file.replaceAll('.','\\.')+'\\?v=([^\"]+)'))?.[1];assert.ok(['0.36.18.732','0.36.18.734'].includes(pin),file);}}}
+ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');for(const file of fs.readdirSync(new URL('../src/',import.meta.url))){if(!file.endsWith('.js'))continue;const s=source(file);if(s.includes('tool-session-panel-position.js?v=')){assert.match(s,/tool-session-panel-position\.js\?v=0\.36\.18\.732/);if(file==='viewport-selection-panel.js')assert.ok(source('topbar-layout.js').includes('viewport-selection-panel.js?v=0.36.18.732'));else {const pin=index.match(new RegExp('src/'+file.replaceAll('.','\\.')+'\\?v=([^\"]+)'))?.[1];assert.ok(pin,file);assertAssetReference(index,file);}}}
  assert.match(index,/multi-object-transform\.js\?v=0\.36\.1\.0/);assert.match(source('tool-session-panel-position.js'),/tool-session-wide-layout\.js\?v=0\.36\.18\.732/);assert.match(source('total-gizmo.js'),/gizmo-corner-controls\.js\?v=0\.36\.18\.734/);
 });
 

@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.751",
+      "url": "./src/release-bootstrap.js?v=0.36.18.752",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.751",
+      "url": "./src/release-version.js?v=0.36.18.752",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -533,9 +533,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-background-exit.js?v=0.36.18.732",
+      "url": "./src/tool-background-exit.js?v=0.36.18.752",
       "target": "src/tool-background-exit.js",
-      "sha256": "95feb16280f032ec28373c7dd393991840f479824b58b28618c9563bc7a261cc"
+      "sha256": "4c80323a2ec25ba83ab5a2049bdf26e0f7738afb1cc1fa65fcd93a668ee63ccb"
     },
     {
       "owner": "index.html",
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.734",
+      "url": "./src/total-gizmo.js?v=0.36.18.752",
       "target": "src/total-gizmo.js",
-      "sha256": "8efbb5c0c712d1fc7c295e82a337b61b8404665c6dedb661d28cbf582b75c85e"
+      "sha256": "7c96592b95961817b8f9e57359f06149347d207e58cffde09c1b35cce60acd33"
     },
     {
       "owner": "index.html",
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/vertex-tool-viewport-session.js?v=0.36.18.732",
+      "url": "./src/vertex-tool-viewport-session.js?v=0.36.18.752",
       "target": "src/vertex-tool-viewport-session.js",
-      "sha256": "438f27c08da06eddeefe457442efcf716a504850c7191ca0fa27f471bfad7132"
+      "sha256": "7ffda179b4dd7d6e361d3b313c6cfae29c8a5ee3a9d8dee6fb8204a80779b62f"
     },
     {
       "owner": "index.html",
@@ -2131,6 +2131,18 @@
       "url": "./bevel-topology-utils.js?v=0.36.18.745",
       "target": "src/bevel-topology-utils.js",
       "sha256": "194ddb27c8e35cccd504814ecee4c647a1b244dc1ae56c4fb1ffd2b8041de7d2"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/vertex-extrude.js?v=0.36.18.752",
+      "target": "src/vertex-extrude.js",
+      "sha256": "94b10466dbd7755158b78cdfb3bd65176246380c0e2f4d2c3cad55ede1ff80ad"
+    },
+    {
+      "owner": "src/vertex-extrude.js",
+      "url": "./vertex-extrude-core.js?v=0.36.18.752",
+      "target": "src/vertex-extrude-core.js",
+      "sha256": "82a02ebf7ab8371f7ce3e1d3f4e4f4c9c528b66b03f834e5c8b023baa3857d4e"
     }
   ]
 }

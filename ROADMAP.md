@@ -4,6 +4,20 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## Current direction — .752, 2026-10-08 (supersedes historical priorities below)
+
+User PASS .751; requested Vertex Extrude as a Face-Extrude-style scaffolding tool.
+.752 implements select → Extrude → drag/exact → selected new tips → repeat, through
+existing loose edges/selection/history and contextual Vertex panel. Free/XYZ,
+Repeat Previous, Done and original Join/Build Edge/Create Face handoff; device
+acceptance pending. No automatic welding or new face reconstruction algorithm.
+
+Next: .752 iPad scaffolding/history/navigation checks and reported refinements,
+then resume Bevel/Knife/Loop combination reliability and reconcile remaining102
+active historical test failures. Expand CI/release gate after test reconciliation.
+Radial coverage completed, Beta6 frozen736; no return to pre-Beta6 UI rebuild.
+Add Vertex's separate unconfirmed defect, NOM import and Lasso tightening deferred.
+
 ## Beta 6 delivery refinement — .736
 
 .735 user PASS. NOMAD now follows validated MeshUtilz browser-download/preview
