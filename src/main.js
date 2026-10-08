@@ -521,6 +521,10 @@ function finishEdgeHold(event){
     renderMesh();
     resetEdgeHoldCycle();
     gestureDebug('EDGE HOLD CANCEL RESTORE',{pid:event.pointerId,count:restore.length});
+  }else if(hold.fired&&hold.scrubAxis==='vertical'){
+    // Grow/Shrink already owns the current selection; do not replay a sideways outline.
+    resetEdgeHoldCycle();
+    gestureDebug('EDGE HOLD VERTICAL COMMIT',{pid:event.pointerId,count:selectionIndices().length});
   }else if(hold.fired&&hold.candidates?.length){
     const candidate=hold.candidates[hold.candidateIndex];
     const result=[...new Set([...(hold.baseIndices||[]),...candidate.indices])];

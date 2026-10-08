@@ -4193,7 +4193,7 @@ Runtime a85585c2a0c6ce42b74d808ed939660ebd257d34 published. Actual Node22 Topolo
 - [x] Original Fill creates one face, one history entry, Undo/Redo; cancel restores base
 - [x] Actual Grow owner still receives vertical scrub; surfaced candidates exactly unchanged
 - [x] Focused79PASS; full1933/1831PASS/102FAIL/0skip, exact .760 failure identities
-- [ ] iPad floating hold -> sideways browse -> release -> Close Face -> Undo/Redo
+- [x] iPad floating hold -> sideways browse -> release -> Close Face -> Undo/Redo (.761 user PASS)
 - [ ] Surface loops plus floating tap/Lasso and finger/empty-background navigation
 - [x] Pages/live shell/main/new helper bytes verified
 
@@ -4201,3 +4201,16 @@ Runtime a85585c2a0c6ce42b74d808ed939660ebd257d34 published. Actual Node22 Topolo
 ### .761 publication verification — 2026-10-08
 
 Runtime8d4d0d51af2b09908863ab9e47b88d96fdfe2a70 published. Actual Node22 Topology run37770573916/job113288865380:1933tests/1831PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .760. Pages37770573883 succeeded. Live shell/version/main/scaffold helper, unchanged Pencil gate/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused79PASS. Device .761 acceptance pending.
+
+
+## .762 Edge vertical selection release
+
+- [x] .761 user PASS recorded; accepted closed scaffold outlines preserved
+- [x] Actual main .761 reproduces Grow/Shrink/neutral release failures (9PASS/3FAIL)
+- [x] Current12PASS: actual hold/move/window release preserves Grow preview on wire/surface
+- [x] Shrink-to-empty and neutral return survive release; cancel restores pre-hold selection
+- [x] Vertical completion retires horizontal cycle without new history
+- [x] Existing sideways browser/Close Face/Undo/Redo tests retained
+- [x] Focused81PASS; full1935/1833PASS/102FAIL/0skip, exact .761 failure identities
+- [ ] iPad UP/DOWN preview retained after release; neutral return and sideways browser
+- [ ] Pages/live shell/main bytes verified

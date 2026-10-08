@@ -3,31 +3,34 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.761**, floating scaffold loop browsing for Close Face. Parent main
-53d0da837c23f6eb24283ffee84ef7b137bb5672. .759 user PASS; .760 not accepted:
-user screenshot reports branched floating scaffold has no useful gesture loop.
+**v0.36.18.762**, Edge Grow/Shrink release reliability. Parent main
+780f9b3da7adbe76575a161e2f8066cd86fab66e. User .761 PERFECT PASS recorded
+2026-10-08; floating scaffold closed-outline browser/Close Face accepted.
 
-Strict/directed selectors handle quad/straightest/unbranched components; existing
-Face Boundary requires real faces. Extend actual main hold candidate collection
-with loose-seed bounded planar cells through original edges. Pure helper infers
-planes/subdivided rails, prunes tails, excludes exterior/degenerate/crossing and
-already surfaced cycles. Scaffold Boundary candidates precede legacy candidates
-for loose seeds; actual hold/horizontal browser/base/preview/window completion
-and Close Face/Fill/History unchanged. Surfaced candidate order exactly retained.
-Main changes only one import and one candidate loop (three lines). This scoped
-main edit is required by the user-reported gesture fault; no navigation refactor.
-No new raw owner, selection state, geometry operation, implicit cap or weld.
+Audit found actual finishEdgeHold replayed saved horizontal candidate after vertical
+Grow/Shrink. .762 adds vertical completion branch: retain actual current preview,
+reset stale horizontal contribution cycle. Four lines added to original main owner;
+sideways/additive candidate commit and pointercancel restore unchanged. No new
+raw pointer owner, picker, thresholds, topology/history or navigation changes.
 
-Ten new behavioral checks pass. .760 main reproduces hold-to-Close-Face failure
-with new helper available; other nine pass. Actual main timer/move/release, Pencil
-gate, selectors, Grow and Fill/history exercised; pointerdown harness calls actual
-armEdgeHold after rendered picker, not entire WebGL/main pointerdown. Focused79
-PASS; fullNode24:1933/1831PASS/102FAIL/0skip, exact .760 failure identities.
-Main/helper reviewed hashes/pins761; shell/recovery761. Gate/Lasso/Drawer760 and
-accepted Extrude759 unchanged; Loop715/Multi1.0/frozen betas unchanged.
-Runtime8d4d0d51af2b09908863ab9e47b88d96fdfe2a70 published. Actual Node22 Topology run37770573916/job113288865380:1933tests/1831PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .760. Pages37770573883 succeeded. Live shell/version/main/scaffold helper, unchanged Pencil gate/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused79PASS. Device .761 acceptance pending.
-See docs/reliability-build-761.md/JSON. Next test floating hold -> sideways browse
--> release -> Close Face -> Undo/Redo, then ordinary surfaced loops/navigation.
+Extend existing .761 actual timer/browser/window release harness: Grow on floating
+and surfaced cubes, Shrink-to-empty/release/cancel, return-to-neutral/release, cycle
+retirement/no history. Old main reproduces3FAIL/9PASS; new12PASS/focused81PASS.
+FullNode24:1935/1833PASS/102FAIL/0skip; exact .761 failure identities. Harness calls
+actual armEdgeHold after rendered picker; entire WebGL/main pointerdown unexecuted.
+Main/recovery/shell762 pins/hash reviewed. Scaffold helper761/Gate-Lasso-Drawer760/
+Extrude759 unchanged. Loop715/Multi1.0/frozen betas untouched. Syntax/whitespace
+pass. Publication/live verification pending; device .762 acceptance pending.
+See docs/reliability-build-762.md/JSON. Next Bevel/Knife/Loop reliability and102
+active historical checks. No CI gate, exclusions or all-green claim.
+
+.761 runtime8d4d0d51af2b09908863ab9e47b88d96fdfe2a70, verification780f9b3.
+User PASS. Pure helper adds bounded planar scaffold cells through loose seeds to
+original hold browser; surfaced ordering unchanged. Actual Close Face one-step
+Undo/Redo covered; no implicit face creation/welding/nonplanar cap.10newPASS,
+focused79/full1933/1831/102/0; actualNode22 run37770573916/job113288865380 matches
+all102names. Pages37770573883 succeeded and shell/version/main/helper/accepted
+Gate/EdgeExtrude/Beta6 bytes verified. .762 extends release coverage, not geometry.
 
 .760 runtime a85585c2a0c6ce42b74d808ed939660ebd257d34, verification53d0da8.
 Floating Edge hit recognition repaired gate semantic background clear/Orbit claim;
@@ -56,7 +59,7 @@ per real face; missing labels equal null, extraneous labels ignored. Changed lab
 invalidate stale preview/Apply. Geometry/history unchanged. Focused121PASS;
 full1896/1794/102/0, actualNode22 run37750469278/job113222151677 matches names.
 Pages37750468365 success, live bytes verified.
-Current priority after .761 device checks: Bevel/Knife/Loop reliability and102
+Current priority after .762 device checks: Bevel/Knife/Loop reliability and102
 historical active failing checks. Add Vertex unconfirmed picking, NOM import and
 Lasso tightening deferred; Beta2–6 immutable. No CI gate or exclusions.
 
@@ -256,7 +259,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery/main/scaffold-helper pins .761; Gate/Drawer/Lasso .760; total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .756; Knife .755; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery/main pins .762; scaffold-helper .761; Gate/Drawer/Lasso .760; total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .756; Knife .755; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -281,7 +284,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .761 check floating hold/sideways closed-outline browsing, Close Face/Undo/Redo, surfaced loops and floating tap/Lasso/navigation. Add Vertex remains a deferred, unconfirmed report.
+For .762 check Edge UP/DOWN Grow/Shrink survives release, neutral return, sideways scaffold Close Face/Undo/Redo and navigation. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

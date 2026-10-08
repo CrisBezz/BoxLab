@@ -4,13 +4,13 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .761, 2026-10-08 (supersedes historical priorities below)
+## Current direction — .762, 2026-10-08 (supersedes historical priorities below)
 
-.759 user PASS: shared Vertex/Edge Extrude UI accepted. .760 floating tap/drag/Lasso
-repair delivered; no PASS. User-priority .761 adds closed scaffold face outlines to
-existing hold/sideways Edge browser so Close Face can use them. Await .761 device
-acceptance, then Bevel/Knife/Loop reliability and102 historical check reconciliation.
-Common radial slots/Face spacing retained. Beta6 immutable736; Add Vertex
+.761 user PERFECT PASS: floating closed-outline gesture browser/Close Face accepted.
+Adjacent reliability audit .762 repairs Edge vertical Grow/Shrink being replaced by
+saved horizontal candidate on release. Await .762 device acceptance, then resume
+Bevel/Knife/Loop reliability and102 historical check reconciliation.
+Shared Extrude UI/common radial positions accepted; Beta6 immutable736. Add Vertex
 unconfirmed picking/NOM import and unrelated Lasso tightening remain deferred.
 
 ## Beta 6 delivery refinement — .736
