@@ -11,7 +11,7 @@ reproduced Knife EDGE mismatch between displayed marker and actual cut in angled
 perspective view. Existing Knife owner/splitter/history retained; END/MID/PERP
 and orthographic placement preserved. Bevel→real Knife→Loop covered.
 
-Next: .754 iPad placement/snap/history checks, then continue reproduced Bevel/
+User PASS .754 on2026-10-08. Next: continue reproduced Bevel/
 Knife/Loop fixes and reconcile102 active historical failures. Expand CI/release
 gate after reconciliation. Radial coverage complete; Beta6 frozen736. Add Vertex's
 separate unconfirmed defect, NOM import and Lasso tightening remain deferred.

@@ -23,7 +23,7 @@ Real whole-owner camera/raycast/Pencil release, inverse edge direction, transfor
 rotated/.01–100scaled camera+model, orthographic, viewport offsets, inference,
 groups/creases/Undo/Redo/Cancel/shorttap/redo and Bevel1/3→Knife→supported Loop
 closed shells covered. One reviewed runtime hash; shell/recovery/Knife754 pins.
-Runtime 5a7f6d585a72f076fe9d80f1bb05fd6a3b269915 published. Actual Node22 Topology run37725898931/job113143857359:1864tests/1762PASS/102FAIL/0skip; all102failure names match local inventory and .753 exactly. Pages37725898285 succeeded after a delayed deployment step; live shell/version/Knife, accepted Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused88PASS. .754 device acceptance pending.
+Runtime 5a7f6d585a72f076fe9d80f1bb05fd6a3b269915 published. Actual Node22 Topology run37725898931/job113143857359:1864tests/1762PASS/102FAIL/0skip; all102failure names match local inventory and .753 exactly. Pages37725898285 succeeded after a delayed deployment step; live shell/version/Knife, accepted Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused88PASS. User PASS .754 on2026-10-08.
 Read docs/reliability-build-754.md/JSON. No test exclusions or CI release gate.
 
 .753 Vertex Bevel is user PASS (2026-10-08). Runtime
