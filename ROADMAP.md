@@ -4,14 +4,14 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .759, 2026-10-08 (supersedes historical priorities below)
+## Current direction — .760, 2026-10-08 (supersedes historical priorities below)
 
-User requires full Vertex/Edge Extrude UI/UX parity. Both now use same top-centre
-Distance/Apply Exact/Repeat/Done panel and viewport axis chooser; Edge commands
-reuse existing ribbon kernel/history. Edge Free keeps perpendicular semantics.
-Next .759 combined device acceptance, then Bevel/Knife/Loop reliability and102
-historical check reconciliation. .758 common radial positions/Face spacing retained.
-Beta6 immutable736; Add Vertex unconfirmed picking/NOM import/Lasso deferred.
+.759 user PASS: shared Vertex/Edge Extrude UI accepted. User-priority floating Edge
+selection repair .760 addresses Pencil tap cancellation, selection drag ownership
+and Visible Lasso without a body behind the edge. Await .760 device acceptance,
+then Bevel/Knife/Loop reliability and102 historical check reconciliation.
+Common radial slots/Face spacing retained. Beta6 immutable736; Add Vertex
+unconfirmed picking/NOM import and unrelated Lasso tightening remain deferred.
 
 ## Beta 6 delivery refinement — .736
 

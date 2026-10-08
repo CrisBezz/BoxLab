@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.746",
+      "url": "./src/drawer-ui.js?v=0.36.18.760",
       "target": "src/drawer-ui.js",
-      "sha256": "205cfaae8b96a75cb226434308832b16341b781ccbf1e6a19817be777ab0f18b"
+      "sha256": "03ce7a80908c80148c2d5f0645eca494fc374407797b7a417797fc8588cdf875"
     },
     {
       "owner": "index.html",
@@ -354,9 +354,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pencil-orbit-gate.js?v=0.36.18.720",
+      "url": "./src/pencil-orbit-gate.js?v=0.36.18.760",
       "target": "src/pencil-orbit-gate.js",
-      "sha256": "4b0a3a322edd21f968e54182fd4b7faa8abc0e3a4fe6d1e9d06d5d47d6cfc59e"
+      "sha256": "8de049b6fca79fd3217c8b17158d178a9fa6f764bb65098fa08048810693c980"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.759",
+      "url": "./src/release-bootstrap.js?v=0.36.18.760",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.759",
+      "url": "./src/release-version.js?v=0.36.18.760",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -900,10 +900,10 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./lasso-select.js?v=0.36.18.720",
+      "url": "./lasso-select.js?v=0.36.18.760",
       "target": "src/lasso-select.js",
-      "sha256": "0789fb59e9447811447d84438718ae910adce45d7586d6bb4aa0003e2990a688",
-      "sourceVersion": "0.36.18.720"
+      "sha256": "b2a996f99fabd49a95a329214559df6441e48acb85c33756c89d344060f7c87a",
+      "sourceVersion": "0.36.18.760"
     },
     {
       "owner": "src/drawer-ui.js",

@@ -3,26 +3,30 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.759**, shared Vertex/Edge Extrude full session interface.
-Parent main66cd6462703c7373979547bf373994894a7855de. User requests actual full
-UI/UX parity after758; not explicit .757/.758 PASS. .756 remains accepted.
+**v0.36.18.760**, floating Edge selection repair. User explicitly PASS .759.
+Parent main4237570 (inspect git for full SHA). Accepted shared Vertex/Edge Extrude
+interface and common radial placement retained without changing their owners.
 
-SAME original Vertex panel DOM/styles now serves Edge Extrude through mode adapter:
-Distance/Apply Exact/Repeat/Done and viewport XYZ/Free chooser. No cloned UI/kernel.
-Old row/transform-strip controls hidden during both sessions. Edge Exact uses
-existing boundary-ribbon builder/private validation and one-step history; Repeat
-ON taps boundary source with last vector. New outer rails selected. Vertex original
-owner/core untouched. Edge Free centre remains perpendicular to edge; Vertex Free
-view plane. Both use12-o’clock launch, offset chooser, shared popup and Done→puck.
-Edge gains context/capture/session guards and popup click exemption, exclusive
-handoff protection. Background policy respects Edge hits/Repeat; shared completion
-returns puck. Restore includes groups; new ribbon labels null to match History clone.
-No geometry-core/provenance algorithm change.
-10new behavioralPASS, focused62PASS. FullNode24:1916/1814PASS/102FAIL/0skip,
-identical102failure identities to758. Actual panel/owners/history/Pencil/puck tested.
-Four reviewed runtime hashes and759pins: Edge owner/shared panel/gizmo/background.
-Runtimeb2b5752804be956489e5f007d2f4859331fa1a9b published. Actual Node22 Topology run37757723383/job113246285445:1916tests/1814PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .758. Pages37757723210 succeeded. Live shell/version/all four changed runtime modules, unchanged Vertex Extrude and frozenBeta6 version byte-match tested checkout. Focused62PASS. Device .759 acceptance pending.
-See docs/reliability-build-759.md/JSON.
+Audit found Pencil gate classified rendered loose edges as empty background:
+window-release semantic background cleared fresh taps, Orbit took selection drags.
+Gate now uses existing selection bridge Edge picker before body-only tests; yields
+to existing Edge Paint pending/active and held modeless browser. Armed Lasso owns
+Pencil input. Finger and genuine empty-background orbit remain intact.
+Visible Lasso accepts floating edges without body hits and foreground rails over
+bodies; nearer occluding surfaces still reject, Through includes hidden edges.
+Stationary armed-Lasso Edge taps use actual picker instead of semantic background.
+Original polygon/midpoint policy and Face/Vertex/Object visibility remain intact.
+No second picker, selection state, raw pointer owner, or geometry implementation.
+
+Seven new behavioral checks: baseline .759 reproduced six failures/one pass; .760
+seven pass. Focused69PASS. FullNode24:1923/1821PASS/102FAIL/0skip; all102 failure
+identities exactly match .759. Browser hold tests verify gate delivery with browser
+state stub, not execution of actual main Grow/Shrink. Real Three raycasting tests
+cover floating/foreground/occluded Lasso edges and actual semantic background clear.
+Changed Gate/Lasso and Drawer loader reviewed hashes/pins760; shell/recovery760.
+Main732/Loop715/Multi1.0 and all frozen betas untouched. Accepted Extrude759 pins
+and geometry owners preserved. Publication/live verification pending; device .760
+acceptance pending. See docs/reliability-build-760.md/JSON.
 
 .758 runtime39a699296bcf990cadecb7621f7f5c4c9970c61b; verification66cd646.
 Extrude0° inner across components; Vertex Add outer216°; Bevel90°. Face15outer
@@ -243,7 +247,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery/total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .756; Knife .755; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery/Gate/Drawer/Lasso pins .760; total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .756; Knife .755; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -268,7 +272,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .759 compare complete Vertex/Edge UI, pull/Exact/Repeat/history and Done/background→puck/navigation. Add Vertex remains a deferred, unconfirmed report.
+For .760 check floating Edge tap persistence, Multi horizontal/vertical hold drags, Visible Lasso and empty-background/finger navigation. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

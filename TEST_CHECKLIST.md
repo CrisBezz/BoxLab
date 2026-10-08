@@ -4160,3 +4160,20 @@ Manual checks:
 ### .759 publication verification — 2026-10-08
 
 Runtimeb2b5752804be956489e5f007d2f4859331fa1a9b published. Actual Node22 Topology run37757723383/job113246285445:1916tests/1814PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .758. Pages37757723210 succeeded. Live shell/version/all four changed runtime modules, unchanged Vertex Extrude and frozenBeta6 version byte-match tested checkout. Focused62PASS. Device .759 acceptance pending.
+
+
+## .760 floating Edge selection regression
+
+- [x] .759 user PASS recorded; accepted Extrude/radial UI retained
+- [x] Seven new automated checks reproduce six baseline failures and pass after repair
+- [x] Floating Edge tap survives window release without semantic background clear
+- [x] Multi Edge Paint claims pending/active drag before Orbit
+- [x] Held horizontal/vertical browser state receives moves without Orbit (state stub)
+- [x] Visible Lasso selects no-body and foreground rails, rejects nearer occluders;
+      Through retains hidden-edge selection; stationary Edge tap stays selected
+- [x] Genuine background Pencil and finger Orbit forwarding preserved
+- [x] Focused69PASS; full1923/1821PASS/102FAIL/0skip; exact759 failure identities
+- [ ] iPad floating Edge tap persistence and Multi horizontal/vertical hold gestures
+- [ ] iPad Visible Lasso floating rails, including foreground rails over another body
+- [ ] Finger navigation and empty-background Pencil orbit still work
+- [ ] Pages publication and live760 shell/loader/module bytes verified

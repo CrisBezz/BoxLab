@@ -84,6 +84,9 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     const state = globalThis.__boxlabBridgeState;
     const mesh = state?.mesh;
     const camera = state?.camera;
+    // Floating cage/loose edges are editable hits without a polygon behind them.
+    const bridge=selectionBridge();
+    if(bridge?.mode?.()==='edge'&&bridge.pick?.('edge',event))return true;
     if (!mesh || !camera || !mesh.faces?.length) return false;
 
     const rect = canvas.getBoundingClientRect();
@@ -222,7 +225,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
     if(!contact)return;
     const meshHit=pencilHitsEditableMesh(event);
     const modellingToolActive=!!globalThis.__boxlabFaceDirect?.active?.()||!!globalThis.__boxlabMainDirectTool?.ownsModellingGesture?.();
-    if(meshHit||modellingToolActive){
+    if(meshHit||modellingToolActive||globalThis.__boxlabLasso?.isArmed?.()){
       penBackgroundTaps.delete(event.pointerId);
       return;
     }
@@ -237,7 +240,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
   nativeAddEventListener('pointermove',event=>{
     if(event.pointerType!=='pen'||!pendingMeshOrbit||pendingMeshOrbit.pointerId!==event.pointerId)return;
-    if(globalThis.__boxlabModelessSelection?.browsing?.(event.pointerId)){
+    if(globalThis.__boxlabLasso?.isArmed?.()||globalThis.__boxlabModelessSelection?.browsing?.(event.pointerId)||pendingMeshOrbit.floatingEdge&&(globalThis.__boxlabPaintSelectDebug?.pending?.()?.pointerId===event.pointerId||globalThis.__boxlabPaintSelectDebug?.active?.()?.pointerId===event.pointerId)){
       gestureDebug('PEN ORBIT DEFER YIELD HOLD',{pid:event.pointerId});
       pendingMeshOrbit=null;
       return;
@@ -357,8 +360,10 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         const paintActive=paintState?.active?.()||null;
         const multiEnabled=paintState?.multiEnabled?.()??null;
         const controlsEnabled=globalThis.__boxlabBridgeState?.controls?.enabled!==false;
-        const blocked=!!meshHit;
-        const modellingToolActive=faceToolActive||mainDirectActive;
+        const lassoActive=!!globalThis.__boxlabLasso?.isArmed?.();
+        const floatingEdge=selectionMode==='edge'&&!!bridge?.pick?.('edge',event)&&!bridge?.pickObject?.(event);
+        const blocked=!!meshHit||lassoActive;
+        const modellingToolActive=faceToolActive||mainDirectActive||lassoActive;
         const deferred=blocked&&!modellingToolActive;
         // Background Pencil tap candidacy is owned by window-capture tracking,
         // independent of whether OrbitControls receives this pointerdown.
@@ -381,6 +386,7 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         if(deferred){
           pendingMeshOrbit={
             pointerId:event.pointerId,
+            floatingEdge,
             x:event.clientX,
             y:event.clientY,
             pageX:event.pageX,
