@@ -4231,4 +4231,9 @@ Runtimec3bf95c4173341917fe203527178bd9cd24c2a79 published. Actual Node22 Topolog
 - [x] Legacy injected drags capture source via actual owner helper; assertions intact
 - [x] Focused156PASS; full1948/1846PASS/102FAIL/0skip, exact .762 failure identities
 - [ ] iPad Bevel → two Knife cuts → supported Loop/Slide → Undo/Redo → Done/navigation
-- [ ] Pages/live shell/Knife bytes verified
+- [x] Pages/live shell/Knife bytes verified
+
+
+### .763 publication verification — 2026-10-08
+
+Runtime4b4f909d8ed2b1c0fda3174f07c6b53860a362ed published. Actual Node22 Topology run37772536234/job113295375073:1948tests/1846PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .762. Pages37772535751 succeeded. Live shell/version/Knife and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused156PASS. Device .763 acceptance pending.

@@ -24,7 +24,7 @@ same captureDragSource helper to supply real drag field; initial omission caused
 17extra failures. Assertions/guards intact; full-pointer-owner tests separate.
 Knife hash/pin763 and shell/recovery763 reviewed. Main762/scaffold761/Gate-Lasso-
 Drawer760/Extrude759/Loop715/Multi1.0/frozen betas unchanged. Syntax/whitespace pass.
-Publication/live verification pending; .763 device acceptance pending.
+Runtime4b4f909d8ed2b1c0fda3174f07c6b53860a362ed published. Actual Node22 Topology run37772536234/job113295375073:1948tests/1846PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .762. Pages37772535751 succeeded. Live shell/version/Knife and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused156PASS. Device .763 acceptance pending.
 See docs/reliability-build-763.md/JSON. Next varied Bevel/Knife/Loop reliability
 and102 active historical checks. No CI gate, exclusions or all-green claim.
 
