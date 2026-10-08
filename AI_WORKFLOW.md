@@ -271,3 +271,11 @@ source changes and loader keys before updating the fixture; do not regenerate
 expectations blindly to make tests green. Historical .453 recovery source lives
 under tests/fixtures/recovery-453 with exact provenance; no current runtime rollback
 implied. All remaining failing behavior checks stay active until understood.
+
+
+## Extrude / outer-ring placement — .758
+
+User requires Extrude inner0°/12-o’clock in Face/Edge/Vertex for muscle memory.
+Vertex Extrude direction uses viewport axis chooser only; hide old panel buttons.
+Face outer15tools evenly24° apart, Circle0° anchored; preserve common tool slots
+across modes when adjusting layouts. Bevel inner90° remains protected.

@@ -4,13 +4,12 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .757, 2026-10-08 (supersedes historical priorities below)
+## Current direction — .758, 2026-10-08 (supersedes historical priorities below)
 
-.756 user PASS. .757 user-requested Vertex Extrude Free/XYZ viewport axis chooser,
-reusing existing Edge gizmo presentation with original Vertex extrusion owners.
-Next: axis/Free pulls, tip continuation/Exact/history and Done/navigation device
-checks, then continue Bevel/Knife/Loop reliability and reconcile102 historical
-failures. CI gate follows reconciliation. Radials complete; Beta6 frozen736.
+User .757 refinement: chooser-only Vertex Extrude, shared12-o’clock Extrude slot,
+Face15outer tools evenly24° apart with common outer slots aligned across modes.
+Next .758 visual/tactile checks, then Bevel/Knife/Loop reliability and reconciliation
+of102 active historical failures. CI gate follows reconciliation. Beta6 frozen736.
 Add Vertex unconfirmed picking, NOM import and Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736

@@ -87,7 +87,7 @@ function openFromHub({tool}={}){
   if(tool==='Bevel')globalThis.__boxlabDirectVertexBevel?.setPopupPreview?.(true);message='';
   panel.querySelector('.vts-title').textContent=tool==='Merge Dist'?'Merge by Distance':tool==='Clean Vertices'?tool:'Vertex '+tool;
   const exact=['Extrude','Bevel','Slide','Merge Dist'].includes(tool);
-  panel.querySelector('.vts-extrude-direction').hidden=tool!=='Extrude';panel.querySelector('.vts-extrude-repeat').hidden=tool!=='Extrude';
+  panel.querySelector('.vts-extrude-direction').hidden=true;panel.querySelector('.vts-extrude-repeat').hidden=tool!=='Extrude';
   panel.querySelector('.vts-width-row').hidden=tool!=='Bevel';panel.querySelector('.vts-value-row').hidden=!exact;
   apply.hidden=!exact&&tool!=='Clean Vertices';apply.textContent=tool==='Clean Vertices'?'Apply Cleanup':tool==='Merge Dist'?'Apply Merge':tool==='Bevel'?'Apply Bevel':'Apply Exact';
   done.textContent=['Bevel','Merge Dist','Clean Vertices'].includes(tool)?'Cancel':'Done';
@@ -126,4 +126,4 @@ done.addEventListener('click',event=>{event.preventDefault();event.stopPropagati
 window.addEventListener('boxlab-vertex-tool-complete',event=>{if(session?.tool===event.detail?.tool)close();});
 window.addEventListener('boxlab-selection-hub-tool',event=>{if(session&&(event.detail?.mode!=='vertex'||event.detail?.tool!==session.tool))close({complete:false});});
 window.addEventListener('boxlab-bridge-state',()=>{if(session){refreshReady();sync();}});
-globalThis.__boxlabVertexViewportSession={version:'0.36.18.757',available,openFromHub,close,backgroundExitAllowed:()=>!!session&&session.tool!=='Add',active:()=>!!session,element:panel,sync};
+globalThis.__boxlabVertexViewportSession={version:'0.36.18.758',available,openFromHub,close,backgroundExitAllowed:()=>!!session&&session.tool!=='Add',active:()=>!!session,element:panel,sync};

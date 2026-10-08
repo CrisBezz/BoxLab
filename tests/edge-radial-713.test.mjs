@@ -14,7 +14,7 @@ test('Edge exposes every existing Active Tool and no selection actions',()=>{
 });
 test('shared tools use the same radial direction and inner/outer tier',()=>{
  const sectors=mode=>[...ring(mode).matchAll(/<button[^>]+data-tool-target="([^"]+)"[^>]*>([^<]+)<\/button>/g)].map(m=>({label:m[2],outer:m[0].includes('tg-tool-outer'),a:Number(m[0].match(/--a:([\d.]+)/)[1])}));
- for(const [label,modes] of [['Circle',['face','edge','vertex']],['Bevel',['face','edge','vertex']],['Slide',['edge','vertex']],['Bridge',['face','edge']],['Sweep',['face','edge']],['Join Coplanar',['face','edge']],['Merge Dist',['face','vertex']],['Clean Vertices',['face','vertex']]]){
+ for(const [label,modes] of [['Extrude',['face','edge','vertex']],['Circle',['face','edge','vertex']],['Bevel',['face','edge','vertex']],['Slide',['edge','vertex']],['Bridge',['face','edge']],['Sweep',['face','edge']],['Join Coplanar',['face','edge']],['Merge Dist',['face','vertex']],['Clean Vertices',['face','vertex']]]){
   const slots=modes.map(m=>sectors(m).find(s=>s.label===label));assert.ok(slots.every(Boolean),label);assert.ok(slots.every(s=>s.a===slots[0].a&&s.outer===slots[0].outer),label);
  }
 });

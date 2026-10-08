@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.757",
+      "url": "./src/release-bootstrap.js?v=0.36.18.758",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.757",
+      "url": "./src/release-version.js?v=0.36.18.758",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.757",
+      "url": "./src/total-gizmo.js?v=0.36.18.758",
       "target": "src/total-gizmo.js",
-      "sha256": "69e07a56473da1763e09483070b98f26c00dda4243b759e7b1c0a3198f675768"
+      "sha256": "23dc81a609e58ed444915d8b2ca91a1367245d1f6bdc4f3d27806d9229be0013"
     },
     {
       "owner": "index.html",
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/vertex-tool-viewport-session.js?v=0.36.18.757",
+      "url": "./src/vertex-tool-viewport-session.js?v=0.36.18.758",
       "target": "src/vertex-tool-viewport-session.js",
-      "sha256": "5a837b3b2afa1d34bf3e24eba9b2ed4a6d88c1357274caddb911ea909d57bbee"
+      "sha256": "aea318e093d9d130102a1ffd99c953baebd53f7038bd356dfa90027a0b7337f1"
     },
     {
       "owner": "index.html",

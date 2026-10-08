@@ -18,7 +18,7 @@ function fixture(){
  return f;
 }
 test('Vertex Extrude displays expanded offset viewport axes while ordinary Vertex panels stay hidden',()=>{
- const f=fixture();f.session.openFromHub({tool:'Extrude'});const r=f.gizmoSync();assert.equal(r.hidden,false);assert.equal(r.dataset.expanded,'true');assert.equal(r.style.left,'622px');
+ const f=fixture();f.session.openFromHub({tool:'Extrude'});assert.equal(f.fields.get('.vts-extrude-direction').hidden,true);const r=f.gizmoSync();assert.equal(r.hidden,false);assert.equal(r.dataset.expanded,'true');assert.equal(r.style.left,'622px');
  f.owner.disarm();f.context.__boxlabVertexViewportSession={active:()=>true};f.gizmoSync();assert.equal(r.hidden,true);
 });
 for(const axis of ['free','x','y','z'])test(`viewport ${axis} choice delegates existing Vertex Extrude exact/history without Move`,()=>{
