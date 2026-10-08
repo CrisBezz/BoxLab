@@ -36,3 +36,8 @@ Device checks:
   release on the desired outline, then Close Face.
 - Undo/Redo the face and repeat on another scaffold opening.
 - Ordinary surfaced loop gestures and floating tap/Lasso/navigation still work.
+
+
+### .761 publication verification — 2026-10-08
+
+Runtime8d4d0d51af2b09908863ab9e47b88d96fdfe2a70 published. Actual Node22 Topology run37770573916/job113288865380:1933tests/1831PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .760. Pages37770573883 succeeded. Live shell/version/main/scaffold helper, unchanged Pencil gate/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused79PASS. Device .761 acceptance pending.

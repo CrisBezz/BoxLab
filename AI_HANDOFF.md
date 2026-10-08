@@ -25,7 +25,7 @@ armEdgeHold after rendered picker, not entire WebGL/main pointerdown. Focused79
 PASS; fullNode24:1933/1831PASS/102FAIL/0skip, exact .760 failure identities.
 Main/helper reviewed hashes/pins761; shell/recovery761. Gate/Lasso/Drawer760 and
 accepted Extrude759 unchanged; Loop715/Multi1.0/frozen betas unchanged.
-Publication/live verification pending; device .761 acceptance pending.
+Runtime8d4d0d51af2b09908863ab9e47b88d96fdfe2a70 published. Actual Node22 Topology run37770573916/job113288865380:1933tests/1831PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .760. Pages37770573883 succeeded. Live shell/version/main/scaffold helper, unchanged Pencil gate/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused79PASS. Device .761 acceptance pending.
 See docs/reliability-build-761.md/JSON. Next test floating hold -> sideways browse
 -> release -> Close Face -> Undo/Redo, then ordinary surfaced loops/navigation.
 
