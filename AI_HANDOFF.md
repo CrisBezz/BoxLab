@@ -21,7 +21,8 @@ No geometry-core/provenance algorithm change.
 10new behavioralPASS, focused62PASS. FullNode24:1916/1814PASS/102FAIL/0skip,
 identical102failure identities to758. Actual panel/owners/history/Pencil/puck tested.
 Four reviewed runtime hashes and759pins: Edge owner/shared panel/gizmo/background.
-Publication/Node22/live pending; .759 device pending. See docs/reliability-build-759.
+Runtimeb2b5752804be956489e5f007d2f4859331fa1a9b published. Actual Node22 Topology run37757723383/job113246285445:1916tests/1814PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .758. Pages37757723210 succeeded. Live shell/version/all four changed runtime modules, unchanged Vertex Extrude and frozenBeta6 version byte-match tested checkout. Focused62PASS. Device .759 acceptance pending.
+See docs/reliability-build-759.md/JSON.
 
 .758 runtime39a699296bcf990cadecb7621f7f5c4c9970c61b; verification66cd646.
 Extrude0° inner across components; Vertex Add outer216°; Bevel90°. Face15outer

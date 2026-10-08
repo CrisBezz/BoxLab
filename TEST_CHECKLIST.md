@@ -4155,3 +4155,8 @@ Manual checks:
   then Undo/Redo. New tips/outer rails remain selected.
 - Done/background restores puck and navigation; repeat next launch. Edge Free
   remains perpendicular to edge; Vertex Free follows view plane.
+
+
+### .759 publication verification — 2026-10-08
+
+Runtimeb2b5752804be956489e5f007d2f4859331fa1a9b published. Actual Node22 Topology run37757723383/job113246285445:1916tests/1814PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .758. Pages37757723210 succeeded. Live shell/version/all four changed runtime modules, unchanged Vertex Extrude and frozenBeta6 version byte-match tested checkout. Focused62PASS. Device .759 acceptance pending.
