@@ -4213,4 +4213,9 @@ Runtime8d4d0d51af2b09908863ab9e47b88d96fdfe2a70 published. Actual Node22 Topolog
 - [x] Existing sideways browser/Close Face/Undo/Redo tests retained
 - [x] Focused81PASS; full1935/1833PASS/102FAIL/0skip, exact .761 failure identities
 - [ ] iPad UP/DOWN preview retained after release; neutral return and sideways browser
-- [ ] Pages/live shell/main bytes verified
+- [x] Pages/live shell/main bytes verified
+
+
+### .762 publication verification — 2026-10-08
+
+Runtimec3bf95c4173341917fe203527178bd9cd24c2a79 published. Actual Node22 Topology run37771704243/job113292612101:1935tests/1833PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .761. Pages37771703594 succeeded. Live shell/version/main and unchanged scaffold helper/Pencil gate/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused81PASS. Device .762 acceptance pending.

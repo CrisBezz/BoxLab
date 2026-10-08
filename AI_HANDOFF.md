@@ -20,7 +20,7 @@ FullNode24:1935/1833PASS/102FAIL/0skip; exact .761 failure identities. Harness c
 actual armEdgeHold after rendered picker; entire WebGL/main pointerdown unexecuted.
 Main/recovery/shell762 pins/hash reviewed. Scaffold helper761/Gate-Lasso-Drawer760/
 Extrude759 unchanged. Loop715/Multi1.0/frozen betas untouched. Syntax/whitespace
-pass. Publication/live verification pending; device .762 acceptance pending.
+pass. Runtimec3bf95c4173341917fe203527178bd9cd24c2a79 published. Actual Node22 Topology run37771704243/job113292612101:1935tests/1833PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .761. Pages37771703594 succeeded. Live shell/version/main and unchanged scaffold helper/Pencil gate/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused81PASS. Device .762 acceptance pending.
 See docs/reliability-build-762.md/JSON. Next Bevel/Knife/Loop reliability and102
 active historical checks. No CI gate, exclusions or all-green claim.
 

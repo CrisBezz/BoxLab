@@ -5902,3 +5902,8 @@ Device checks:
 - Drag DOWN to Shrink; release preserves it, including empty. Returning to the
   hold start before release keeps the starting selection.
 - Sideways scaffold outline browsing -> Close Face -> Undo/Redo remains accepted.
+
+
+### .762 publication verification — 2026-10-08
+
+Runtimec3bf95c4173341917fe203527178bd9cd24c2a79 published. Actual Node22 Topology run37771704243/job113292612101:1935tests/1833PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .761. Pages37771703594 succeeded. Live shell/version/main and unchanged scaffold helper/Pencil gate/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused81PASS. Device .762 acceptance pending.
