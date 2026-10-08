@@ -26,9 +26,8 @@ Full Node24:1896/1794PASS/102FAIL/0skip; same102failure identities as755. Actual
 owner/session/history, reassignment/removal/truncation, Cancel/redo, relaunch/
 Apply/Undo/Redo, same-label array replacement/legacy unlabelled faces and grouped
 Face Bevel→Knife→supported Loop tested. Runtime body only Bevel source validator;
-one reviewed hash and shell/recovery/direct-Bevel756 pins. Publication/actual
-Node22/live verification and .756 device checks pending. Read reliability-build-
-756.md/JSON in docs. No exclusions or release gate.
+one reviewed hash and shell/recovery/direct-Bevel756 pins. Runtime d1832204c878212a4254701c8996171e446215a3 published. Actual Node22 Topology run37750469278/job113222151677:1896tests/1794PASS/102FAIL/0skip; all102failure names exactly match the local inventory and .755. Pages37750468365 succeeded. Live shell/version/direct Bevel, accepted Knife and frozenBeta6 version byte-match the tested checkout. Focused121PASS; .756 device acceptance pending.
+Read docs/reliability-build-756.md/JSON. No exclusions or release gate.
 
 .755 Knife context/cancellation is user PASS (2026-10-08). Runtime
 cb28427114df517083239ef07b31e3abc4cac9d9; verification9a4c315.

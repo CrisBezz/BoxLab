@@ -5676,3 +5676,8 @@ User PASS .755: repeated Knife/history, Done/tool/mode/navigation and locked-obj
   unchanged. One reviewed hash; required shell/recovery/direct-Bevel756 pins.
   Knife755/VertexBevel753/Extrude752/Through751/protected main/Loop715/Multi/frozen
   betas retained. Publication/actual Node22/live verification and device756 pending.
+
+
+### .756 publication verification — 2026-10-08
+
+Runtime d1832204c878212a4254701c8996171e446215a3 published. Actual Node22 Topology run37750469278/job113222151677:1896tests/1794PASS/102FAIL/0skip; all102failure names exactly match the local inventory and .755. Pages37750468365 succeeded. Live shell/version/direct Bevel, accepted Knife and frozenBeta6 version byte-match the tested checkout. Focused121PASS; .756 device acceptance pending.
