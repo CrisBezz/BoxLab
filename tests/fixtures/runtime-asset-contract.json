@@ -185,10 +185,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/edge-extrude.js?v=0.36.18.663",
+      "url": "./src/edge-extrude.js?v=0.36.18.759",
       "target": "src/edge-extrude.js",
-      "sha256": "2dfcaeb2b62ba9cfc2c9d85e0eee0f75baa673179ee8d385739b4c8a74460e8c",
-      "sourceVersion": "0.36.18.663"
+      "sha256": "f451fe89467e5ea0bf690a8634b7efed78c6860681de65be5cfc4442afda8509",
+      "sourceVersion": "0.36.18.759"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.758",
+      "url": "./src/release-bootstrap.js?v=0.36.18.759",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.758",
+      "url": "./src/release-version.js?v=0.36.18.759",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -533,9 +533,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-background-exit.js?v=0.36.18.752",
+      "url": "./src/tool-background-exit.js?v=0.36.18.759",
       "target": "src/tool-background-exit.js",
-      "sha256": "4c80323a2ec25ba83ab5a2049bdf26e0f7738afb1cc1fa65fcd93a668ee63ccb"
+      "sha256": "32039b96e8dd08672cf6f5c44d92bcfec7f2a97dcbccbadad9be7c83b8353d6d"
     },
     {
       "owner": "index.html",
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.758",
+      "url": "./src/total-gizmo.js?v=0.36.18.759",
       "target": "src/total-gizmo.js",
-      "sha256": "23dc81a609e58ed444915d8b2ca91a1367245d1f6bdc4f3d27806d9229be0013"
+      "sha256": "9af105efe98bf477b0eb0951d7321c1b7157d9c9fe7969e9357aae49cd2d0892"
     },
     {
       "owner": "index.html",
@@ -575,9 +575,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/vertex-tool-viewport-session.js?v=0.36.18.758",
+      "url": "./src/vertex-tool-viewport-session.js?v=0.36.18.759",
       "target": "src/vertex-tool-viewport-session.js",
-      "sha256": "aea318e093d9d130102a1ffd99c953baebd53f7038bd356dfa90027a0b7337f1"
+      "sha256": "d35cf099a6dc619a208f7932b529aa312387d002d7d3e4b2a638046b78897913"
     },
     {
       "owner": "index.html",

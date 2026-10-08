@@ -1,18 +1,22 @@
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
-// Contextual UI only. The existing Vertex owners retain gestures, geometry and history.
+// Shared Edge/Vertex Extrude panel plus original Vertex tool settings.
+// Presentation delegates geometry, gestures and history to authoritative owners.
 const targets={Extrude:'#vertexExtrudeBtn',Add:'#addVertexBtn','Build Edge':'#buildEdgeBtn',Bevel:'#vertexBevelBtn',Slide:'#vertexSlideBtn','Merge Dist':'#mergeByDistanceBtn','Clean Vertices':'#cleanVerticesBtn'};
 const panel=document.createElement('div');panel.id='vertexToolViewportSession';panel.hidden=true;
 panel.innerHTML='<strong class="vts-title"></strong><div class="vts-note" role="status"></div><div class="vts-extrude-direction" hidden><button type="button" data-vertex-extrude-direction="free">Free</button><button type="button" data-vertex-extrude-direction="x" data-axis="x">X</button><button type="button" data-vertex-extrude-direction="y" data-axis="y">Y</button><button type="button" data-vertex-extrude-direction="z" data-axis="z">Z</button></div><button type="button" class="vts-extrude-repeat" hidden>Repeat Previous</button><label class="vts-width-row">Width <input class="vts-width" type="range" aria-label="Vertex Bevel Width"/><output class="vts-width-out"></output></label><label class="vts-value-row"><span class="vts-value-label"></span><input class="vts-value" type="number" inputmode="decimal" aria-label="Exact Vertex tool value"/></label><div class="vts-actions"><button type="button" class="vts-done">Done</button><button type="button" class="vts-apply">Apply Exact</button></div>';
 document.querySelector('#viewportWrap')?.appendChild(panel);
-const style=document.createElement('style');style.textContent='#vertexToolViewportSession{width:280px;padding:10px;border:1px solid #ffffff30;border-radius:12px;background:rgba(16,19,24,.965);color:#eef2f7;font-size:12px;pointer-events:auto;touch-action:none}#vertexToolViewportSession[hidden],#vertexToolViewportSession [hidden]{display:none!important}#vertexToolViewportSession .vts-note{font-size:11px;line-height:1.4;margin:7px 0}#vertexToolViewportSession .vts-extrude-direction{display:flex;gap:5px}#vertexToolViewportSession label{display:grid;grid-template-columns:65px 1fr;gap:6px;align-items:center;margin:8px 0}#vertexToolViewportSession .vts-width-row{grid-template-columns:40px 1fr 35px}#vertexToolViewportSession input{width:100%;min-width:0}#vertexToolViewportSession .vts-value{padding:6px;background:#ffffff0c;color:inherit;border:1px solid #ffffff30;border-radius:6px}#vertexToolViewportSession .vts-actions{display:flex;gap:6px}#vertexToolViewportSession button{min-height:34px;font-size:11px;flex:1;padding:6px}';document.head.appendChild(style);
+const style=document.createElement('style');style.textContent='#app:has(#vertexToolViewportSession[data-tool=Extrude]:not([hidden])) #transformStrip{display:none!important}#vertexToolViewportSession{width:280px;padding:10px;border:1px solid #ffffff30;border-radius:12px;background:rgba(16,19,24,.965);color:#eef2f7;font-size:12px;pointer-events:auto;touch-action:none}#vertexToolViewportSession[hidden],#vertexToolViewportSession [hidden]{display:none!important}#vertexToolViewportSession .vts-note{font-size:11px;line-height:1.4;margin:7px 0}#vertexToolViewportSession .vts-extrude-direction{display:flex;gap:5px}#vertexToolViewportSession label{display:grid;grid-template-columns:65px 1fr;gap:6px;align-items:center;margin:8px 0}#vertexToolViewportSession .vts-width-row{grid-template-columns:40px 1fr 35px}#vertexToolViewportSession input{width:100%;min-width:0}#vertexToolViewportSession .vts-value{padding:6px;background:#ffffff0c;color:inherit;border:1px solid #ffffff30;border-radius:6px}#vertexToolViewportSession .vts-actions{display:flex;gap:6px}#vertexToolViewportSession button{min-height:34px;font-size:11px;flex:1;padding:6px}';document.head.appendChild(style);
 const width=panel.querySelector('.vts-width'),value=panel.querySelector('.vts-value'),apply=panel.querySelector('.vts-apply'),done=panel.querySelector('.vts-done');
 let session=null,raf=0,message='',ready=false;
 const bridge=()=>globalThis.__boxlabSelectionBridge;
 const mesh=()=>globalThis.__boxlabBridgeState?.mesh;
-const ids=()=>bridge()?.mode?.()==='vertex'?[...new Set(bridge().indices?.()||[])]:[];
+const sessionMode=()=>session?.mode||'vertex';
+const extrudeOwner=()=>sessionMode()==='edge'?globalThis.__boxlabEdgeExtrude:globalThis.__boxlabVertexExtrude;
+const ids=()=>bridge()?.mode?.()===sessionMode()?[...new Set(bridge().indices?.()||[])]:[];
 const editable=()=>!document.querySelector('#app')?.classList?.contains('boxlab-active-locked');
-function busy(){return !!(globalThis.__boxlabVertexExtrude?.busy?.()||globalThis.__boxlabDirectVertexBevel?.busy?.()||globalThis.__boxlabVertexSlidePolish?.busy?.()||globalThis.__boxlabBuildEdge?.busy?.()||globalThis.__boxlabAddVertex?.busy?.());}
-function available(tool){
+function busy(){return !!(globalThis.__boxlabEdgeExtrude?.busy?.()||globalThis.__boxlabVertexExtrude?.busy?.()||globalThis.__boxlabDirectVertexBevel?.busy?.()||globalThis.__boxlabVertexSlidePolish?.busy?.()||globalThis.__boxlabBuildEdge?.busy?.()||globalThis.__boxlabAddVertex?.busy?.());}
+function available(tool,mode='vertex'){
+  if(mode==='edge')return tool==='Extrude'&&editable()&&!busy()&&!!globalThis.__boxlabEdgeExtrude?.available?.();
   if(!targets[tool]||bridge()?.mode?.()!=='vertex'||!mesh()||!editable()||busy())return false;
   const target=document.querySelector(targets[tool]);if(!target)return false;
   if(tool==='Extrude')return !!globalThis.__boxlabVertexExtrude?.available?.();
@@ -33,11 +37,12 @@ function stopOwners({cancelDrag=false,selectLast=false}={}){
 function close({complete=true,cancelDrag=false,preserveOwners=false}={}){
   if(busy()&&!cancelDrag)return false;
   const was=session;session=null;panel.hidden=true;cancelAnimationFrame(raf);
-  if(!preserveOwners)stopOwners({cancelDrag,selectLast:!!was&&complete&&was.tool==='Add'&&was.mesh===mesh()&&bridge()?.mode?.()==='vertex'});
-  if(was&&complete)queueMicrotask(()=>window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'vertex',tool:was.tool}})));
+  if(was?.mode==='edge'){globalThis.__boxlabEdgeExtrude?.setArmed?.(false);if(!preserveOwners)globalThis.__boxlabTransformArming?.disarm?.();}
+  else if(!preserveOwners)stopOwners({cancelDrag,selectLast:!!was&&complete&&was.tool==='Add'&&was.mesh===mesh()&&bridge()?.mode?.()==='vertex'});
+  if(was&&complete)queueMicrotask(()=>window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:was.mode,tool:was.tool}})));
   return true;
 }
-function contextValid(){return !!(session&&mesh()===session.mesh&&globalThis.__boxlabObjectManager?.activeId===session.object&&bridge()?.mode?.()==='vertex'&&editable()&&(['Add','Build Edge','Clean Vertices'].includes(session.tool)||ids().length));}
+function contextValid(){return !!(session&&mesh()===session.mesh&&globalThis.__boxlabObjectManager?.activeId===session.object&&bridge()?.mode?.()===sessionMode()&&editable()&&(['Add','Build Edge','Clean Vertices'].includes(session.tool)||ids().length));}
 function refreshReady(){
   if(!session)return;
   const tool=session.tool,raw=Number(value.value);
@@ -56,7 +61,7 @@ function sync(){
   if(!contextValid()){close({cancelDrag:true});return;}
   const tool=session.tool;
   if(tool==='Extrude'){
-    const owner=globalThis.__boxlabVertexExtrude;
+    const owner=extrudeOwner();
     if(!owner?.isArmed?.()){close({cancelDrag:true});return;}
     for(const b of panel.querySelectorAll('[data-vertex-extrude-direction]')){b.disabled=busy();const on=b.dataset.vertexExtrudeDirection===owner.direction();b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on));}
     const repeat=panel.querySelector('.vts-extrude-repeat'),last=owner.last();
@@ -72,20 +77,21 @@ function sync(){
     panel.querySelector('.vts-width-out').textContent=(source?.value||width.value)+'%';
   }
   const notes={Extrude:'Choose Free or X/Y/Z on the viewport axis chooser, then drag a vertex to add an edge; new tips stay selected. Free Exact follows the last pull, or view up for the first pull. Repeat ON: tap a vertex. Done keeps completed edges.',Add:'Tap to add vertices; drag to orbit or slide along an edge. Done ends Add.', 'Build Edge':'Drag from one vertex to another; continue building, then Done.',Bevel:'Blue Width preview • Apply Bevel commits. Pencil-drag a vertex for the existing direct bevel.',Slide:'Drag selected vertices along their existing rails, or apply an exact signed percentage.','Merge Dist':'Selected vertices only • enter distance in model units.','Clean Vertices':'Whole active object • removes safe redundant vertices, including outside your selection.'};
-  panel.querySelector('.vts-note').textContent=message||notes[tool];
+  panel.querySelector('.vts-note').textContent=message||(tool==='Extrude'&&session.mode==='edge'?'Choose an axis or Free centre, then drag an edge. Free stays perpendicular to the edge. Exact follows the chosen axis or last pull. Repeat ON: tap an edge. Done keeps completed ribbons.':notes[tool]);
   apply.disabled=!ready||busy();done.disabled=busy();width.disabled=busy();value.disabled=busy();
   placeToolSessionPanel(panel);raf=requestAnimationFrame(sync);
 }
-function openFromHub({tool}={}){
-  if(!available(tool))return false;
+function openFromHub({tool,mode='vertex'}={}){
+  if(!available(tool,mode))return false;
   if(!close({complete:false}))return false;
-  stopOwners();
-  document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:tool==='Build Edge'?'build-edge':'vertex-'+tool.toLowerCase().replaceAll(' ','-')}}));
-  if(tool==='Extrude'&&!globalThis.__boxlabVertexExtrude?.arm?.())return false;
+  if(mode==='vertex')stopOwners();
+  document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:mode==='edge'?'edge-extrude':tool==='Build Edge'?'build-edge':'vertex-'+tool.toLowerCase().replaceAll(' ','-')}}));
+  if(tool==='Extrude'){if(mode==='edge'){globalThis.__boxlabEdgeExtrude.setArmed(false);globalThis.__boxlabEdgeExtrude.setArmed(true);}else if(!globalThis.__boxlabVertexExtrude?.arm?.())return false;}
   if(['Add','Build Edge','Bevel','Slide'].includes(tool))document.querySelector(targets[tool]).click();
-  session={tool,mesh:mesh(),object:globalThis.__boxlabObjectManager?.activeId};
+  panel.dataset.tool=tool;
+  session={tool,mode,mesh:mesh(),object:globalThis.__boxlabObjectManager?.activeId};
   if(tool==='Bevel')globalThis.__boxlabDirectVertexBevel?.setPopupPreview?.(true);message='';
-  panel.querySelector('.vts-title').textContent=tool==='Merge Dist'?'Merge by Distance':tool==='Clean Vertices'?tool:'Vertex '+tool;
+  panel.querySelector('.vts-title').textContent=tool==='Merge Dist'?'Merge by Distance':tool==='Clean Vertices'?tool:(mode==='edge'?'Edge ':'Vertex ')+tool;
   const exact=['Extrude','Bevel','Slide','Merge Dist'].includes(tool);
   panel.querySelector('.vts-extrude-direction').hidden=true;panel.querySelector('.vts-extrude-repeat').hidden=tool!=='Extrude';
   panel.querySelector('.vts-width-row').hidden=tool!=='Bevel';panel.querySelector('.vts-value-row').hidden=!exact;
@@ -99,8 +105,8 @@ function openFromHub({tool}={}){
   panel.hidden=false;refreshReady();sync();queueMicrotask(()=>{if(session)sync();});return true;
 }
 for(const b of panel.querySelectorAll('[data-vertex-extrude-direction]'))b.addEventListener('click',()=>{globalThis.__boxlabVertexExtrude?.setDirection?.(b.dataset.vertexExtrudeDirection);sync();});
-panel.querySelector('.vts-extrude-repeat').addEventListener('click',()=>{globalThis.__boxlabVertexExtrude?.toggleRepeat?.();sync();});
-window.addEventListener('boxlab-vertex-extrude-state',()=>{if(session?.tool==='Extrude')sync();});
+panel.querySelector('.vts-extrude-repeat').addEventListener('click',()=>{extrudeOwner()?.toggleRepeat?.();sync();});
+for(const type of ['boxlab-vertex-extrude-state','boxlab-edge-extrude-state'])window.addEventListener(type,()=>{if(session?.tool==='Extrude')sync();});
 panel.addEventListener('pointerdown',event=>event.stopPropagation(),true);
 panel.addEventListener('touchstart',event=>event.stopPropagation(),{capture:true,passive:true});
 width.addEventListener('input',()=>{
@@ -112,7 +118,7 @@ function applyCurrent(){
   if(!contextValid()||apply.disabled||busy())return;
   refreshReady();if(!ready){sync();return;}
   const tool=session.tool;let result;
-  if(tool==='Extrude')result=globalThis.__boxlabVertexExtrude.apply(Number(value.value));
+  if(tool==='Extrude')result=extrudeOwner().apply(Number(value.value));
   else if(tool==='Bevel')result=globalThis.__boxlabDirectVertexBevel.applyPreview(Number(value.value));
   else if(tool==='Slide')result=globalThis.__boxlabVertexSlidePolish.apply(Number(value.value));
   else if(tool==='Merge Dist')result=globalThis.__boxlabMergeByDistance.applyFor({ids:ids(),tolerance:Number(value.value),expectedMesh:session.mesh,selectResults:true});
@@ -124,6 +130,8 @@ apply.addEventListener('click',event=>{event.preventDefault();event.stopPropagat
 value.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();applyCurrent();value.blur();}});
 done.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();close();});
 window.addEventListener('boxlab-vertex-tool-complete',event=>{if(session?.tool===event.detail?.tool)close();});
-window.addEventListener('boxlab-selection-hub-tool',event=>{if(session&&(event.detail?.mode!=='vertex'||event.detail?.tool!==session.tool))close({complete:false});});
+window.addEventListener('boxlab-selection-hub-tool',event=>{if(session&&(event.detail?.mode!==session.mode||event.detail?.tool!==session.tool))close({complete:false});if(event.detail?.mode==='edge'&&event.detail?.tool==='Extrude')openFromHub({mode:'edge',tool:'Extrude'});});
 window.addEventListener('boxlab-bridge-state',()=>{if(session){refreshReady();sync();}});
-globalThis.__boxlabVertexViewportSession={version:'0.36.18.758',available,openFromHub,close,backgroundExitAllowed:()=>!!session&&session.tool!=='Add',active:()=>!!session,element:panel,sync};
+globalThis.__boxlabVertexViewportSession={version:'0.36.18.759',available,openFromHub,close,backgroundExitAllowed:()=>!!session&&session.tool!=='Add',active:()=>!!session&&session.mode==='vertex',element:panel,sync};
+
+globalThis.__boxlabEdgeExtrudeViewportSession={openFromHub:()=>openFromHub({mode:'edge',tool:'Extrude'}),active:()=>session?.mode==='edge',close:options=>session?.mode==='edge'?close(options):true,element:panel,sync};

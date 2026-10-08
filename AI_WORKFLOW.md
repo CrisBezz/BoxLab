@@ -279,3 +279,11 @@ User requires Extrude inner0°/12-o’clock in Face/Edge/Vertex for muscle memor
 Vertex Extrude direction uses viewport axis chooser only; hide old panel buttons.
 Face outer15tools evenly24° apart, Circle0° anchored; preserve common tool slots
 across modes when adjusting layouts. Bevel inner90° remains protected.
+
+
+## Full Extrude session parity — .759
+
+User requires Vertex and Edge Extrude to share full interface, not only chooser.
+Use same Distance/Apply Exact/Repeat/Done panel and viewport arrows/Free centre;
+keep direction buttons/legacy transform-strip hidden. Original mode-specific
+geometry owners remain authoritative (Edge Free perpendicular, Vertex view plane).

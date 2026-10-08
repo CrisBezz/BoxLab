@@ -3,23 +3,31 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.758**, radial layout / Vertex Extrude chooser-only refinement.
-Parent main6188f795c13e4e4d4fbb3bad2f842a3166714351. User .757 UI refinement,
-not explicit .757 PASS. .756 remains accepted.
+**v0.36.18.759**, shared Vertex/Edge Extrude full session interface.
+Parent main66cd6462703c7373979547bf373994894a7855de. User requests actual full
+UI/UX parity after758; not explicit .757/.758 PASS. .756 remains accepted.
 
-Vertex Extrude hides old panel Free/XYZ row; viewport arrows/Free centre only.
-Exact/Repeat/Done retained. Extrude now inner0°/12-o'clock in Face/Edge/Vertex;
-Vertex Add moves outer216°, full14tools retained. Bevel90° protected.
-Face15outer tools evenly24° apart, Circle0°/clockwise order retained, no Align.
-Shared Edge Join Coplanar24° / Vertex Clean288° / MergeDist312° match Face,
-retaining canonical common positions. Initial Face-only spacing violated existing
-cross-mode check; coordinated shared positions, no weakened assertion.
-Presentation only, original geometry/gesture/history owners unchanged.
-58focusedPASS; fullNode24:1906/1804PASS/102FAIL/0skip, identical102names to757.
-Extended existing inventory/spacing/hidden-controls checks; computed outer button
-bounds non-overlapping across component modes. Two reviewed hashes and758pins.
-Runtime39a699296bcf990cadecb7621f7f5c4c9970c61b published. Actual Node22 Topology run37754720314/job113236320113:1906tests/1804PASS/102FAIL/0skip; all102failure names exactly match local inventory and .757. Pages37754719444 succeeded. Live shell/version/total-gizmo/Vertex panel, unchanged Vertex Extrude and frozenBeta6 version byte-match tested checkout. Focused58PASS. Device .758 acceptance pending.
-Read docs/reliability-build-758.md/JSON.
+SAME original Vertex panel DOM/styles now serves Edge Extrude through mode adapter:
+Distance/Apply Exact/Repeat/Done and viewport XYZ/Free chooser. No cloned UI/kernel.
+Old row/transform-strip controls hidden during both sessions. Edge Exact uses
+existing boundary-ribbon builder/private validation and one-step history; Repeat
+ON taps boundary source with last vector. New outer rails selected. Vertex original
+owner/core untouched. Edge Free centre remains perpendicular to edge; Vertex Free
+view plane. Both use12-o’clock launch, offset chooser, shared popup and Done→puck.
+Edge gains context/capture/session guards and popup click exemption, exclusive
+handoff protection. Background policy respects Edge hits/Repeat; shared completion
+returns puck. Restore includes groups; new ribbon labels null to match History clone.
+No geometry-core/provenance algorithm change.
+10new behavioralPASS, focused62PASS. FullNode24:1916/1814PASS/102FAIL/0skip,
+identical102failure identities to758. Actual panel/owners/history/Pencil/puck tested.
+Four reviewed runtime hashes and759pins: Edge owner/shared panel/gizmo/background.
+Publication/Node22/live pending; .759 device pending. See docs/reliability-build-759.
+
+.758 runtime39a699296bcf990cadecb7621f7f5c4c9970c61b; verification66cd646.
+Extrude0° inner across components; Vertex Add outer216°; Bevel90°. Face15outer
+24° apart Circle0° clockwise order; common outer slots aligned. Layout retained.
+58focusedPASS; full1906/1804/102/0; Node22 run37754720314/job113236320113 matches
+names. Pages37754719444 success; live bytes verified. No explicit device PASS.
 
 .757 runtime98ed74d9df3b09aa97856b38ef271a429a36a6bb; verification6188f79.
 Existing Edge Extrude gizmo reused for Vertex: selectXYZ/Free, offset alongside
@@ -34,7 +42,7 @@ per real face; missing labels equal null, extraneous labels ignored. Changed lab
 invalidate stale preview/Apply. Geometry/history unchanged. Focused121PASS;
 full1896/1794/102/0, actualNode22 run37750469278/job113222151677 matches names.
 Pages37750468365 success, live bytes verified.
-Current priority after .758 device checks: Bevel/Knife/Loop reliability and102
+Current priority after .759 device checks: Bevel/Knife/Loop reliability and102
 historical active failing checks. Add Vertex unconfirmed picking, NOM import and
 Lasso tightening deferred; Beta2–6 immutable. No CI gate or exclusions.
 
@@ -234,7 +242,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery/total-gizmo/Vertex session pins .758; direct-Bevel .756; Knife .755; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core and background policy .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery/total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .756; Knife .755; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -259,7 +267,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .758 check chooser-only Vertex Extrude, shared12-o’clock Extrude/Add relocation and evenly spaced Face outer tools. Add Vertex remains a deferred, unconfirmed report.
+For .759 compare complete Vertex/Edge UI, pull/Exact/Repeat/history and Done/background→puck/navigation. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

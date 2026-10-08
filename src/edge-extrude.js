@@ -6,7 +6,7 @@ import * as THREE from 'three';
 // Pencil/mouse/touch-drag a selected edge. The newly-created outer rail
 // remains selected and Extrude stays armed for rapid repeated pulls.
 
-const VERSION='0.36.18.663';
+const VERSION='0.36.18.759';
 const canvas=document.querySelector('#viewport');
 const edgeTools=document.querySelector('[data-mode-tools="edge"]');
 const moveRow=edgeTools?.querySelector('.edge-move-actions');
@@ -26,7 +26,10 @@ planeButton.hidden=true;
 precision?.insertBefore(planeButton,precision.querySelector('[data-constraint="auto"]')||null);
 let armed=false;
 let drag=null;
-let launchedFromHub=false;
+let launchedFromHub=false,last=null,repeat=false;
+function notify(){window.dispatchEvent(new CustomEvent('boxlab-edge-extrude-state'));}
+function editable(){return bridge()?.mode?.()==='edge'&&!document.querySelector('#app')?.classList.contains('boxlab-active-locked');}
+function available(){return editable()&&!!history()&&!!boundarySelectionInfo(mesh(),selectedEdges());}
 
 if(!canvas||!edgeTools||!moveRow)throw new Error('Edge Extrude UI dependencies missing');
 
@@ -165,6 +168,7 @@ function centerOfSelection(m,info){
 function restore(target,snapshot){
   target.vertices=snapshot.vertices.map(v=>v.clone());
   target.faces=snapshot.faces.map(f=>[...f]);
+  target.faceGroups=[...(snapshot.faceGroups||[])];
   target.creases=new Map(snapshot.creases||[]);
   target.looseEdges=new Set(snapshot.looseEdges||[]);
   target.looseVertices=new Set(snapshot.looseVertices||[]);
@@ -199,7 +203,9 @@ function applyPlaneDefault(){
 }
 function setArmed(next){
   const wasArmed=armed;
+  if(!next&&drag)finish({pointerId:drag.pointerId,preventDefault(){},stopImmediatePropagation(){}},true);
   armed=!!next;
+  if(!armed)repeat=false;
   if(!armed&&launchedFromHub){
     launchedFromHub=false;
     globalThis.__boxlabTotalGizmo?.endEdgeExtrudeConstraintSession?.();
@@ -211,6 +217,7 @@ function setArmed(next){
   button.classList.toggle('active',armed);
   syncPlaneButton();
   if(status)status.textContent=armed?'Edge Extrude • Move armed • Plane constraint • drag selected boundary edge(s)':'Edge mode';
+  notify();
 }
 precision?.querySelectorAll('[data-constraint]').forEach(control=>control.addEventListener('click',()=>queueMicrotask(syncPlaneButton),true));
 
@@ -225,8 +232,12 @@ planeButton.addEventListener('click',event=>{
 
 button.addEventListener('click',event=>{
   event.preventDefault();event.stopImmediatePropagation();
-  if(!boundarySelectionInfo(mesh(),selectedEdges()))return;
-  setArmed(!armed);
+  if(armed){globalThis.__boxlabEdgeExtrudeViewportSession?.close?.();setArmed(false);return;}
+  if(!available())return;
+  setArmed(true);
+  globalThis.__boxlabEdgeExtrudeViewportSession?.openFromHub?.();
+  launchedFromHub=true;
+  requestAnimationFrame(()=>{if(armed)globalThis.__boxlabTotalGizmo?.beginEdgeExtrudeConstraintSession?.();});
 },true);
 
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(()=>{
@@ -249,12 +260,12 @@ window.addEventListener('boxlab-selection-hub-tool',event=>{
 });
 document.addEventListener('click',event=>{
   if(!armed||event.target===button||event.target?.closest?.('#edgeExtrudeBtn'))return;
-  if(event.target?.closest?.('#transformPrecision,#toolModes,.quick-snap'))return;
+  if(event.target?.closest?.('#vertexToolViewportSession,#transformPrecision,#toolModes,.quick-snap'))return;
   if(event.target?.closest?.('button')&&!event.target?.closest?.('#selectionModes'))setArmed(false);
 },true);
 
 canvas.addEventListener('pointerdown',event=>{
-  if(!armed||!event.isPrimary)return;
+  if(!armed||!event.isPrimary||!editable())return;
   if(event.pointerType==='mouse'&&event.button!==0)return;
   const m=mesh();if(!m)return;
   const previousIds=selectedEdges();
@@ -279,14 +290,15 @@ canvas.addEventListener('pointerdown',event=>{
   const edgeDirection=seedEdgeDirection(m,info,seed);if(!edgeDirection)return;
   const edgePlane=edgePlaneAt(center,edgeDirection);
   const planeStart=edgePlane?rayPlanePoint(event,edgePlane):null;
-  drag={pointerId:event.pointerId,mesh:m,before:m.clone(),info,seed,previousIds,switched:!wasSelected,start,startX:event.clientX,startY:event.clientY,plane,center,edgeDirection,edgePlane,planeStart,constraint:transformConstraint(),axisSnap:axisSnapOn(),autoChoice:null,preview:false,result:null};
+  drag={pointerId:event.pointerId,mesh:m,before:m.clone(),info,seed,previousIds,object:globalThis.__boxlabObjectManager?.activeId,switched:!wasSelected,start,startX:event.clientX,startY:event.clientY,plane,center,edgeDirection,edgePlane,planeStart,constraint:transformConstraint(),axisSnap:axisSnapOn(),autoChoice:null,preview:false,result:null};
   state().controls&&(state().controls.enabled=false);
-  canvas.setPointerCapture?.(event.pointerId);
+  canvas.setPointerCapture?.(event.pointerId);notify();
 },true);
 
 canvas.addEventListener('pointermove',event=>{
   if(!drag||drag.pointerId!==event.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();
+  if(!editable()||mesh()!==drag.mesh||globalThis.__boxlabObjectManager?.activeId!==drag.object){setArmed(false);return;}
   const dx=event.clientX-drag.startX,dy=event.clientY-drag.startY;
   if(!drag.preview&&Math.hypot(dx,dy)<SNAP_START_PX)return;
   let delta;
@@ -297,7 +309,8 @@ canvas.addEventListener('pointermove',event=>{
   restore(drag.mesh,drag.before);
   const result=extrudeBoundaryEdges(drag.mesh,drag.before,drag.info,delta);
   if(!result){restore(drag.mesh,drag.before);drag.result=null;drag.preview=false;render();return;}
-  drag.result=result;drag.preview=true;
+  while(drag.mesh.faceGroups.length<drag.mesh.faces.length)drag.mesh.faceGroups.push(null);
+  drag.result=result;drag.preview=true;drag.delta=delta.clone();
   render();
   bridge()?.set?.('edge',result.outer);
   const axisLabel=constrained?.axis==='plane'?' • Plane ⟂ edge':constrained?.axis?` • ${String(constrained.axis).toUpperCase()} ⟂ edge`:drag.constraint==='free'&&!drag.axisSnap?' • Free':'';
@@ -307,7 +320,8 @@ canvas.addEventListener('pointermove',event=>{
 function finish(event,cancel=false){
   if(!drag||drag.pointerId!==event.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();
-  const current=drag;drag=null;
+  const current=drag;drag=null;notify();
+  cancel=cancel||!editable()||mesh()!==current.mesh||globalThis.__boxlabObjectManager?.activeId!==current.object;
   if(state()?.controls)state().controls.enabled=true;
   try{canvas.releasePointerCapture?.(event.pointerId);}catch{}
   if(cancel){
@@ -318,6 +332,7 @@ function finish(event,cancel=false){
     return;
   }
   if(!current.preview||!current.result){
+    if(repeat&&last){const result=applyDelta(last,current.info.ids);repeat=true;notify();if(result.ok)return;}
     restore(current.mesh,current.before);
     render();
     if(current.switched){
@@ -339,6 +354,7 @@ function finish(event,cancel=false){
     if(status)status.textContent='Edge Extrude • validation failed • rolled back';
     return;
   }
+  last=current.delta.clone();repeat=false;
   history()?.push(current.before);
   globalThis.__boxlabObjectManager?.saveActive?.();
   render();
@@ -351,6 +367,30 @@ function finish(event,cancel=false){
 }
 canvas.addEventListener('pointerup',event=>finish(event,false),true);
 canvas.addEventListener('pointercancel',event=>finish(event,true),true);
+canvas.addEventListener('lostpointercapture',event=>finish(event,true));
+document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(armed&&event.detail?.tool!=='edge-extrude'){globalThis.__boxlabEdgeExtrudeViewportSession?.close?.({complete:false,cancelDrag:true,preserveOwners:true});setArmed(false);}},true);
+window.addEventListener('blur',()=>globalThis.__boxlabEdgeExtrudeViewportSession?.close?.({cancelDrag:true}));
+document.addEventListener('keydown',event=>{if(armed&&event.key==='Escape')globalThis.__boxlabEdgeExtrudeViewportSession?.close?.({cancelDrag:true});},true);
 
+function applyDelta(delta,ids=selectedEdges()){
+  if(!armed||drag||!editable()||!history()||!delta||![delta.x,delta.y,delta.z].every(Number.isFinite)||delta.lengthSq()<1e-18)return {ok:false,reason:'Select boundary edges and a non-zero distance'};
+  const m=mesh(),before=m.clone(),info=boundarySelectionInfo(before,ids);if(!info)return {ok:false,reason:'Select compatible boundary edges'};
+  const candidate=before.clone(),result=extrudeBoundaryEdges(candidate,before,info,delta);if(!result)return {ok:false,reason:'Extrude unavailable'};
+  while(candidate.faceGroups.length<candidate.faces.length)candidate.faceGroups.push(null);
+  const check=validate(candidate);if(!check.ok)return check;
+  restore(m,candidate);history().push(before);last=delta.clone();repeat=false;
+  bridge()?.set?.('edge',result.outer);render();globalThis.__boxlabObjectManager?.saveActive?.();notify();return {ok:true};
+}
+function apply(value){
+  const n=Number(value),info=boundarySelectionInfo(mesh(),selectedEdges());if(!Number.isFinite(n)||!info)return {ok:false,reason:'Select boundary edges and a finite distance'};
+  const edge=seedEdgeDirection(mesh(),info),constraint=transformConstraint();let dir;
+  if(['x','y','z'].includes(constraint))dir=perpendicularAxisDirection(edge,axisVector(constraint));
+  else{dir=last?.clone()||new THREE.Vector3(0,1,0).applyQuaternion(camera()?.quaternion||new THREE.Quaternion());if(constraint==='plane')dir=projectPerpendicularDelta(dir,edge);}
+  if(!dir||dir.lengthSq()<1e-18)return {ok:false,reason:'Axis is parallel to edge; choose another axis or pull first'};
+  return applyDelta(dir.normalize().multiplyScalar(n));
+}
 syncButton();
-globalThis.__boxlabEdgeExtrude={version:VERSION,isArmed:()=>armed,setArmed,boundarySelectionInfo,extrudeBoundaryEdges,launchedFromHub:()=>launchedFromHub};
+globalThis.__boxlabEdgeExtrude={version:VERSION,isArmed:()=>armed,setArmed,boundarySelectionInfo,extrudeBoundaryEdges,launchedFromHub:()=>launchedFromHub,
+  available,busy:()=>!!drag,apply,last:()=>last?.clone()||null,repeat:()=>repeat,toggleRepeat:()=>{if(!drag&&last){repeat=!repeat;notify();}},direction:transformConstraint,
+  ownsPoint:event=>armed&&Number.isInteger(hitAnyEdge(event)),
+  setDirection:value=>{if(!drag&&['free','x','y','z','plane'].includes(value)){globalThis.__boxlabTransformArming?.setConstraint?.(value==='free'?'plane':value);repeat=false;notify();}}};

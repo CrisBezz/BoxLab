@@ -213,11 +213,12 @@ function onHandleDown(event){
   if(edgeExtrudeConstraintSession&&mode==='edge'){
     event.preventDefault();
     event.stopImmediatePropagation();
-    if(spec.tool!=='move')return;
+    if(spec.tool!=='move'||globalThis.__boxlabEdgeExtrude?.busy?.())return;
     const constraint=['x','y','z'].includes(spec.constraint)?spec.constraint:'plane';
     const arming=globalThis.__boxlabTransformArming;
     if(!arming?.active?.())arming?.activateRealMove?.();
     arming?.setConstraint?.(constraint);
+    globalThis.__boxlabEdgeExtrude?.setDirection?.(constraint);
     syncEdgeExtrudeConstraintVisuals();
     gestureDebug('EDGE EXTRUDE GIZMO CONSTRAINT',{constraint,kind:spec.kind||'',pid:event.pointerId});
     window.dispatchEvent(new CustomEvent('boxlab-edge-extrude-gizmo-constraint',{detail:{constraint,kind:spec.kind||''}}));
@@ -484,7 +485,7 @@ function syncEdgeExtrudeConstraintVisuals(){
   }else{
     root.querySelector('.tg-center[data-tool="move"]')?.classList.add('edge-extrude-active');
   }
-  const label=constraint==='free'?'Free':constraint==='plane'?'Plane ⟂ edge':String(constraint).toUpperCase()+' axis';
+  const label=constraint==='free'?'Free':constraint==='plane'?'Free ⟂ edge':String(constraint).toUpperCase()+' axis';
   edgeExtrudeBadge?.querySelector('small')?.replaceChildren(document.createTextNode(vertex?'Choose axis • drag vertex':'Choose constraint • drag edge'));
   edgeExtrudeBadge?.querySelector('span')?.replaceChildren(document.createTextNode(label));
 }
@@ -652,7 +653,7 @@ window.addEventListener('boxlab-selection-hub-session-complete',event=>{
     }else{lastSelectionKey='';root.hidden=true;}
     return;
   }
-  if(event.detail?.mode==='edge'&&['Loop','Split','Sweep','Bevel','Slide','Offset','Crease'].includes(event.detail?.tool)){
+  if(event.detail?.mode==='edge'&&['Extrude','Loop','Split','Sweep','Bevel','Slide','Offset','Crease'].includes(event.detail?.tool)){
     hubSuppressedKey='';resetTransientState({hideFloat:true});
     lastSelectionKey=selectionKey(state()?.mesh,currentMode());
     setHubState('closed',{reason:'edge-session-complete'});
