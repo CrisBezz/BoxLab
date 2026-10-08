@@ -3,8 +3,8 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.753**, Vertex Bevel facegroup preservation. Parent main
-9be399909982719b9b7ecdf757bbf00c4695631f. User PASS .752 /nextbuild; resume
+**v0.36.18.753**, Vertex Bevel facegroup preservation. Runtime release
+0f11d92e7eb0655fac0c8b15ddd362278256c772 (parent9be399909982719b9b7ecdf757bbf00c4695631f). User PASS .752 /nextbuild; resume
 Bevel/Knife/Loop reliability. Add Vertex unconfirmed picking report, NOM import
 and Lasso tightening deferred. Frozen beta2–6 immutable; main/Loop715/Multi and
 established gestures unchanged.
@@ -23,8 +23,8 @@ all102failure identities match .752. Single/adjacent/separate multi, uniform/mix
 provenance, real direct preview/drag/cancel/disarm, exact Undo/Redo, creases/loose
 geometry, closed oriented shell, Loop/Knife → Vertex Bevel and OBJ groups covered.
 Six reviewed runtime hashes; required parent/recovery/shell753 pins. No exclusions
-or release gate. Publication/actual Node22/live verification and .753 device checks
-pending. Read docs/reliability-build-753.md/JSON.
+or release gate. Runtime 0f11d92e7eb0655fac0c8b15ddd362278256c772 published. Actual Node22 Topology run37721519156/job113130013158:1848tests/1746PASS/102FAIL/0skip; all102failure names exactly match the local inventory and .752. Pages37721518051 succeeded. Live shell/version, all six changed runtime modules/loader parents, accepted Vertex Extrude owner and frozenBeta6 version byte-match the tested checkout. Focused82PASS; .753 device acceptance pending.
+Read docs/reliability-build-753.md/JSON.
 
 .752 Vertex Extrude is user PASS. Runtime 9be399909982719b9b7ecdf757bbf00c4695631f published. Actual Node22 Topology run37712338609/job113100902832:1832tests/1730PASS/102FAIL/0skip; all102failure names exactly match the local inventory. Pages37712337662 success; live shell/version/new Extrude core and owner/Vertex panel/gizmo/background policy and frozenBeta6 version byte-match the tested checkout. User PASS .752 on2026-10-08. Browser smoke attempt timed out; device acceptance is the user report.
 Vertex Extrude/core, rendered picker, selection/history/ObjectManager and original

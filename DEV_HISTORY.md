@@ -5576,3 +5576,8 @@ Runtime 9be399909982719b9b7ecdf757bbf00c4695631f published. Actual Node22 Topolo
   Six reviewed hashes; required parent/recovery/shell753 pins. Through child751,
   Extrude752, protected main/Loop715/Multi/frozenbeta unchanged.
 - Publication/actual Node22/live verification and .753 device acceptance pending.
+
+
+### .753 publication verification
+
+Runtime 0f11d92e7eb0655fac0c8b15ddd362278256c772 published. Actual Node22 Topology run37721519156/job113130013158:1848tests/1746PASS/102FAIL/0skip; all102failure names exactly match the local inventory and .752. Pages37721518051 succeeded. Live shell/version, all six changed runtime modules/loader parents, accepted Vertex Extrude owner and frozenBeta6 version byte-match the tested checkout. Focused82PASS; .753 device acceptance pending.

@@ -20,3 +20,8 @@
 
 Manual checks: grouped Vertex Bevel preview/Apply, multi drag/Cancel, Undo/Redo
 and accepted Vertex Extrude. Device checks are separate from automated regression.
+
+
+### .753 publication verification
+
+Runtime 0f11d92e7eb0655fac0c8b15ddd362278256c772 published. Actual Node22 Topology run37721519156/job113130013158:1848tests/1746PASS/102FAIL/0skip; all102failure names exactly match the local inventory and .752. Pages37721518051 succeeded. Live shell/version, all six changed runtime modules/loader parents, accepted Vertex Extrude owner and frozenBeta6 version byte-match the tested checkout. Focused82PASS; .753 device acceptance pending.
