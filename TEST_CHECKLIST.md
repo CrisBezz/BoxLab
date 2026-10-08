@@ -3954,3 +3954,8 @@ User PASS .753 on2026-10-08: Vertex Bevel Apply/Cancel/multi drag/Undo/Redo and 
 - [ ] .754 iPad: angled perspective face, Knife arbitrary EDGE→EDGE endpoints follow markers.
 - [ ] Inference ON retains END/MID/PERP snapping; ordinary cube Knife still feels familiar.
 - [ ] Bevel→Knife→supported Loop; Undo/Redo restores each operation.
+
+
+### .754 publication verification
+
+Runtime 5a7f6d585a72f076fe9d80f1bb05fd6a3b269915 published. Actual Node22 Topology run37725898931/job113143857359:1864tests/1762PASS/102FAIL/0skip; all102failure names match local inventory and .753 exactly. Pages37725898285 succeeded after a delayed deployment step; live shell/version/Knife, accepted Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused88PASS. .754 device acceptance pending.

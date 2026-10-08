@@ -3,8 +3,8 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.754**, Knife perspective EDGE accuracy. Parent main
-43e1a5f7ebd58d10836d4166a284b12ad2306b9e. User PASS .753 /nextbuild.
+**v0.36.18.754**, Knife perspective EDGE accuracy. Runtime release
+5a7f6d585a72f076fe9d80f1bb05fd6a3b269915 (parent43e1a5f7ebd58d10836d4166a284b12ad2306b9e). User PASS .753 /nextbuild.
 Current priority Bevel/Knife/Loop reliability; Add Vertex unconfirmed picking,
 NOM import and Lasso tightening deferred. Frozen beta2–6 immutable;
 main/Loop715/Multi and established gestures unchanged.
@@ -23,7 +23,7 @@ Real whole-owner camera/raycast/Pencil release, inverse edge direction, transfor
 rotated/.01–100scaled camera+model, orthographic, viewport offsets, inference,
 groups/creases/Undo/Redo/Cancel/shorttap/redo and Bevel1/3→Knife→supported Loop
 closed shells covered. One reviewed runtime hash; shell/recovery/Knife754 pins.
-Publication/actual Node22/live verification and .754 device acceptance pending.
+Runtime 5a7f6d585a72f076fe9d80f1bb05fd6a3b269915 published. Actual Node22 Topology run37725898931/job113143857359:1864tests/1762PASS/102FAIL/0skip; all102failure names match local inventory and .753 exactly. Pages37725898285 succeeded after a delayed deployment step; live shell/version/Knife, accepted Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused88PASS. .754 device acceptance pending.
 Read docs/reliability-build-754.md/JSON. No test exclusions or CI release gate.
 
 .753 Vertex Bevel is user PASS (2026-10-08). Runtime

@@ -22,3 +22,8 @@
 Manual checks use an angled cube/bevelled model, arbitrary edge locations away
 from END/MID markers, inference snaps and Undo/Redo. Device acceptance separate
 from real-kernel/DOM-double automated coverage. No all-quad or self-intersection guarantee.
+
+
+### .754 publication verification
+
+Runtime 5a7f6d585a72f076fe9d80f1bb05fd6a3b269915 published. Actual Node22 Topology run37725898931/job113143857359:1864tests/1762PASS/102FAIL/0skip; all102failure names match local inventory and .753 exactly. Pages37725898285 succeeded after a delayed deployment step; live shell/version/Knife, accepted Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused88PASS. .754 device acceptance pending.
