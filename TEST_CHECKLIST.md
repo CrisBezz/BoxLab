@@ -4074,3 +4074,8 @@ Manual checks:
   tap centre Free and pull diagonally. Axis choice alone does not move the vertex.
 - Extrude another selected tip; Exact and Repeat still work. Undo/Redo each pull.
 - Done/background returns selection to puck and navigation; Edge Extrude unchanged.
+
+
+### .757 publication verification — 2026-10-08
+
+Runtime 98ed74d9df3b09aa97856b38ef271a429a36a6bb published. Actual Node22 Topology run37753453091/job113232091538:1906tests/1804PASS/102FAIL/0skip; all102failure names exactly match local inventory and .756. Pages37753452518 succeeded. Live version/shell/total-gizmo/Vertex session, unchanged Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused52PASS. Device .757 acceptance pending.

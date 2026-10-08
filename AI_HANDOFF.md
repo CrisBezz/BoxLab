@@ -17,8 +17,8 @@ normal gizmo. Edge preserves Plane-perpendicular and XYZ semantics.
 10new behavioral PASS/focused52PASS. Full Node24:1906/1804PASS/102FAIL/0skip;
 same102failure identities as756. Actual gizmo handle/sync/visual/session, Pencil
 pull and owner exact/history tested. Two runtime bodies; two reviewed hashes,
-shell/recovery/total-gizmo/Vertex-session757 pins. Publication/Node22/live pending;
-device .757 pending. Read docs/reliability-build-757.md/JSON.
+shell/recovery/total-gizmo/Vertex-session757 pins. Runtime 98ed74d9df3b09aa97856b38ef271a429a36a6bb published. Actual Node22 Topology run37753453091/job113232091538:1906tests/1804PASS/102FAIL/0skip; all102failure names exactly match local inventory and .756. Pages37753452518 succeeded. Live version/shell/total-gizmo/Vertex session, unchanged Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused52PASS. Device .757 acceptance pending.
+Read docs/reliability-build-757.md/JSON.
 
 .756 user PASS on2026-10-08. Runtime d1832204c878212a4254701c8996171e446215a3;
 verification ada275c. Shared Face/Edge Bevel validator compares effective groups
