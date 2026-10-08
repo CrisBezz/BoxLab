@@ -68,6 +68,10 @@ export function installVertexBevelTopology(EditableMesh) {
     if (faceNormal(cap).dot(outward) < 0) cap.reverse();
     const capFaceIndex = this.faces.length;
     this.faces.push(cap);
+    // Retain source-face labels; a cap inherits only an unambiguous incident group.
+    const groups = incidentFaces.map(({index}) => before.faceGroups?.[index] ?? null);
+    this.faceGroups = before.faces.map((_,index) => before.faceGroups?.[index] ?? null);
+    this.faceGroups.push(groups.every(group => group === groups[0]) ? groups[0] : null);
 
     this.creases = new Map(before.creases);
     for (const neighbour of neighbours) {
@@ -89,7 +93,7 @@ export function installVertexBevelTopology(EditableMesh) {
     }
     this.vertices = vertices; this.creases = creases; this.remapLooseTopology?.(indexMap);
     if (boundaryCount(this) !== startedBoundaryCount) {
-      this.vertices = before.vertices.map(vertex => vertex.clone()); this.faces = before.faces.map(face => [...face]); this.creases = new Map(before.creases);
+      this.vertices = before.vertices.map(vertex => vertex.clone()); this.faces = before.faces.map(face => [...face]); this.faceGroups = [...before.faceGroups]; this.creases = new Map(before.creases);
       if (beforeLooseEdges) this.looseEdges = new Set(beforeLooseEdges);
       if (beforeLooseVertices) this.looseVertices = new Set(beforeLooseVertices);
       this.edges();

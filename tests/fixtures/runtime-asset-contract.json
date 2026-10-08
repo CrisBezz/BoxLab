@@ -136,9 +136,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/direct-multi-vertex-bevel.js?v=0.36.18.731",
+      "url": "./src/direct-multi-vertex-bevel.js?v=0.36.18.753",
       "target": "src/direct-multi-vertex-bevel.js",
-      "sha256": "875cf18df4a9d31a75227b93867f551cf94ef8528ac3742adb31b81e25381c7a"
+      "sha256": "2360f46a5c6e369f097e4b3ce8ba89f771af8b8bec7fea5e53eaa0ddeab5811c"
     },
     {
       "owner": "index.html",
@@ -297,9 +297,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/loose-bootstrap.js?v=0.36.18.748",
+      "url": "./src/loose-bootstrap.js?v=0.36.18.753",
       "target": "src/loose-bootstrap.js",
-      "sha256": "d9650bc60689622568c4ff3a70eb3e42a7ec917c6dbf8dd9a29ac36b2ae06777"
+      "sha256": "b674aaedd053e1fe81543361e7b095073230de34402d3e2d5bd7e21ea9ad0daa"
     },
     {
       "owner": "index.html",
@@ -317,9 +317,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.751",
+      "url": "./src/multi-face-direct.js?v=0.36.18.753",
       "target": "src/multi-face-direct.js",
-      "sha256": "58613f7b324c63eec331d7c3e4da3a1b6f48bf745c966f2c939dd31b29057b81"
+      "sha256": "40fa094066ea662fe60f7c7f829c29f074632d7bacf21f91f78f66f775b16be4"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.752",
+      "url": "./src/release-bootstrap.js?v=0.36.18.753",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.752",
+      "url": "./src/release-version.js?v=0.36.18.753",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1656,9 +1656,9 @@
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./multi-vertex-bevel-topology.js?v=0.30.0",
+      "url": "./multi-vertex-bevel-topology.js?v=0.36.18.753",
       "target": "src/multi-vertex-bevel-topology.js",
-      "sha256": "872f9d569f76ca83a2845fe64bda0ef5f53f2169627e34a2ad25d368203a4c4d"
+      "sha256": "76f82dfcfabe92ca107276c59be3868d75972b2e9c0512110d8590e41cf95865"
     },
     {
       "owner": "src/loose-bootstrap.js",
@@ -1686,9 +1686,9 @@
     },
     {
       "owner": "src/loose-bootstrap.js",
-      "url": "./vertex-bevel-topology.js?v=0.28.3",
+      "url": "./vertex-bevel-topology.js?v=0.36.18.753",
       "target": "src/vertex-bevel-topology.js",
-      "sha256": "4e8f14c89cb94da09a7951fb3cb6923f196ef0a9da5abae504ce687de067915c"
+      "sha256": "743ced5ce44ab8ea94069e3a05829291872569e77faa299cac6f202bd31d7f66"
     },
     {
       "owner": "src/main.js",
@@ -1810,9 +1810,9 @@
     },
     {
       "owner": "src/multi-face-direct.js",
-      "url": "./uniform-inset.js?v=0.36.18.748",
+      "url": "./uniform-inset.js?v=0.36.18.753",
       "target": "src/uniform-inset.js",
-      "sha256": "144844c19cb9753e689cba5ae288a726c6e582d29a3da052682d72cfd2284135"
+      "sha256": "71b8936e5cc5eae8c2a1a9ce793a48d2732159dc9e13f1cf739487fdec396c1a"
     },
     {
       "owner": "src/multi-object.js",
@@ -2074,9 +2074,9 @@
     },
     {
       "owner": "src/uniform-inset.js",
-      "url": "./loose-bootstrap.js?v=0.36.18.748",
+      "url": "./loose-bootstrap.js?v=0.36.18.753",
       "target": "src/loose-bootstrap.js",
-      "sha256": "d9650bc60689622568c4ff3a70eb3e42a7ec917c6dbf8dd9a29ac36b2ae06777"
+      "sha256": "b674aaedd053e1fe81543361e7b095073230de34402d3e2d5bd7e21ea9ad0daa"
     },
     {
       "owner": "src/vertex-tool-viewport-session.js",

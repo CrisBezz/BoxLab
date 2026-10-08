@@ -94,6 +94,7 @@ export function installMultiVertexBevelTopology(EditableMesh) {
       return normal.lengthSq()>1e-12 ? normal.normalize() : normal;
     };
 
+    this.faceGroups = before.faces.map((_,index) => before.faceGroups?.[index] ?? null);
     const capFaceIndices = [];
     for (const fan of info.fans) {
       const source = before.vertices[fan.vertexIndex];
@@ -102,6 +103,8 @@ export function installMultiVertexBevelTopology(EditableMesh) {
       const cap = fan.ordered.map(n => cutPoints.get(cutKey(fan.vertexIndex,n)));
       if (polygonNormal(cap).dot(outward) < 0) cap.reverse();
       capFaceIndices.push(this.faces.length); this.faces.push(cap);
+      const groups = fan.incidentFaces.map(({index}) => before.faceGroups?.[index] ?? null);
+      this.faceGroups.push(groups.every(group => group === groups[0]) ? groups[0] : null);
     }
 
     this.creases = new Map(before.creases);
@@ -130,7 +133,7 @@ export function installMultiVertexBevelTopology(EditableMesh) {
     this.vertices=vertices; this.creases=creases; this.remapLooseTopology?.(indexMap); this.edges();
 
     if (boundaryCount(this) !== startedBoundaryCount) {
-      this.vertices=before.vertices.map(v=>v.clone()); this.faces=before.faces.map(f=>[...f]); this.creases=new Map(before.creases);
+      this.vertices=before.vertices.map(v=>v.clone()); this.faces=before.faces.map(f=>[...f]); this.faceGroups=[...before.faceGroups]; this.creases=new Map(before.creases);
       if (beforeLooseEdges) this.looseEdges=new Set(beforeLooseEdges); if (beforeLooseVertices) this.looseVertices=new Set(beforeLooseVertices); this.edges(); return null;
     }
     return { vertexIndices:[...info.ids], count:info.ids.length, distance, width:amount, capFaceIndices };

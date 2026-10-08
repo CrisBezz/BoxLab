@@ -19,8 +19,8 @@ import { installGeneralizedEdgeFanBevel } from './generalized-edge-fan-bevel.js?
 import { installBevelSelection } from './bevel-selection.js?v=0.36.18.745';
 import { installPerimeterBevelRouting } from './perimeter-bevel-routing.js?v=0.28.12';
 import { installBevelWatertightGuard } from './bevel-watertight-guard.js?v=0.36.18.747';
-import { installVertexBevelTopology } from './vertex-bevel-topology.js?v=0.28.3';
-import { installMultiVertexBevelTopology } from './multi-vertex-bevel-topology.js?v=0.30.0';
+import { installVertexBevelTopology } from './vertex-bevel-topology.js?v=0.36.18.753';
+import { installMultiVertexBevelTopology } from './multi-vertex-bevel-topology.js?v=0.36.18.753';
 import { installFaceTransform } from './face-transform.js?v=0.36.18.635';
 import { installFaceRegion } from './face-region.js?v=0.30.3';
 import './selection-transform-state.js?v=0.12';

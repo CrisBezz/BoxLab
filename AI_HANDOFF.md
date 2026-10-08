@@ -3,47 +3,39 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.752**, Vertex Extrude scaffolding. Parent main dc434a9d77b455d785a23f254e64540e0456f104.
-User explicitly PASS .751 and requests Vertex Extrude using Face Extrude's
-select/drag/exact/repeat workflow. This user-directed feature is the current slice;
-resume Bevel/Knife/Loop reliability afterward. Add Vertex's separate unconfirmed
-picking report remains deferred; NOM import and Lasso tightening remain deferred.
-Frozen beta2–6 immutable; main/Loop715/Multi and established gestures unchanged.
+**v0.36.18.753**, Vertex Bevel facegroup preservation. Parent main
+9be399909982719b9b7ecdf757bbf00c4695631f. User PASS .752 /nextbuild; resume
+Bevel/Knife/Loop reliability. Add Vertex unconfirmed picking report, NOM import
+and Lasso tightening deferred. Frozen beta2–6 immutable; main/Loop715/Multi and
+established gestures unchanged.
 
-Vertex Extrude creates one new tip and loose edge for every selected source;
-source vertices/faces/groups/creases stay intact. Tips remain selected for repeated
-pulls. Reuses existing addLooseVertex/addLooseEdge, rendered Vertex Pick Assist,
-selection/history/ObjectManager and Vertex contextual session/positioning owners.
-No prior Vertex Extrude implementation found; new single direct owner and small
-private candidate builder in src/vertex-extrude.js / vertex-extrude-core.js.
+.753 reproduced existing single/multi Vertex Bevel adding caps without group
+entries (cube7/8faces but6labels); blue Apply restore omitted candidate groups.
+Existing kernels now retain source labels and append one group per cap: unanimous
+incident label inherited, mixed labels null, same provenance policy as Edge Bevel.
+No geometry algorithm change. Direct owner restores groups on Apply/repeated drag/
+Cancel/disarm and invalidates stale preview when live facegroups change. Public
+API/selection/radial/panel/history owners unchanged. Bootstrap/Inset/Face direct
+changes are import/cache only; Face Through remains751. No parallel bevel engine.
 
-Access Vertex radial outer216deg or drawer Extrude. Top-centre original Vertex
-panel offers Free/X/Y/Z (existing RGB semantics), signed exact Distance, Repeat
-Previous and Done. Free drag uses view plane; Free Exact uses last committed vector
-normalized (view up before the first pull). XYZ is explicit world-axis movement.
-Repeat ON applies the last full vector by tapping a source; new tips stay selected.
-Each successful pull/Exact/repeat is one history step; preview/cancel/invalid input
-retain redo. Done keeps completed scaffold; pointercancel/Escape/blur/context loss
-discard only an in-flight preview. Ordinary armed taps add/remove source selection.
+16new behavioral PASS; focused82PASS. Full Node24:1848/1746PASS/102FAIL/0skip;
+all102failure identities match .752. Single/adjacent/separate multi, uniform/mixed
+provenance, real direct preview/drag/cancel/disarm, exact Undo/Redo, creases/loose
+geometry, closed oriented shell, Loop/Knife → Vertex Bevel and OBJ groups covered.
+Six reviewed runtime hashes; required parent/recovery/shell753 pins. No exclusions
+or release gate. Publication/actual Node22/live verification and .753 device checks
+pending. Read docs/reliability-build-753.md/JSON.
 
-Document capture owns Vertex extrusion before canvas Move/orbit; only vertex hits
-are claimed. Shared semantic background policy recognizes scaffold contacts, so
-Pencil loose-tip taps cannot be misclassified by the polygon-only orbit gate.
-Background taps exit through existing session owner. Tool switches retire the
-Extrude session without disarming the newly launched owner. Second touch cancels
-an active preview; actual multitouch/iPad behavior still requires device checks.
-No auto-welding, implicit faces or bridging between multiple tips. Close the scaffold
-using existing Join/Build Edge; existing Create Face/Fill requires a closed boundary.
-
-12 new behavioral tests; focused88PASS. Full Node24:1832/1730PASS/102FAIL/0skip,
-identical102failure identities to freshly rerun .751. No exclusions or release gate.
-Two old static contracts explicitly updated for the user-authorized14th Vertex
-sector and reviewed current dock-client cache pins; existing semantic checks retained.
-Runtime bodies changed only new Extrude files, Vertex panel, gizmo sector/launch and
-semantic background policy. Five reviewed runtime hashes; required parent/shell752
-pins refreshed. Face direct/Through remain751; no modelling edits to prior owners.
-Publication/Node22/live verification pending; device .752 acceptance pending.
-Read docs/reliability-build-752.md/JSON.
+.752 Vertex Extrude is user PASS. Runtime 9be399909982719b9b7ecdf757bbf00c4695631f published. Actual Node22 Topology run37712338609/job113100902832:1832tests/1730PASS/102FAIL/0skip; all102failure names exactly match the local inventory. Pages37712337662 success; live shell/version/new Extrude core and owner/Vertex panel/gizmo/background policy and frozenBeta6 version byte-match the tested checkout. User PASS .752 on2026-10-08. Browser smoke attempt timed out; device acceptance is the user report.
+Vertex Extrude/core, rendered picker, selection/history/ObjectManager and original
+Vertex panel/radial own select→pull→selected tips→repeat scaffolding. Free/XYZ
+signed Exact/last-vector Repeat/Done; source faces/groups/creases retained. Free
+Exact uses last vector or view-up initially. One history step per committed pull;
+cancel/no-op retains redo. Only vertex hits claimed; empty background navigation
+and semantic session exit preserved. Loose-tip Repeat recognized by background
+policy; competing tool switch retires Extrude without disarming the new owner.
+No implicit faces, welding or bridges between tips. Join/Build Edge closes boundary
+for existing Create Face/Fill. Main navigation, Edge/Face gestures remain accepted.
 
 .751 warped-target Through planning / ordered exits is user PASS. Runtime
 5c3007ce3b9f5863dc924a12bce60c7b3946dc87 published; final verification dc434a9d.
@@ -201,7 +193,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .752; Vertex Extrude/core/panel, total-gizmo and background policy .752; Face direct/Through child .751; Knife .749; bevel bootstrap/Inset/multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery/Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core/panel, total-gizmo and background policy .752; Through child .751; Knife .749; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -226,7 +218,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .752 check Vertex drag/exact/repeat, closed-scaffold Create Face, Undo/Redo and navigation. Add Vertex remains a deferred, unconfirmed report.
+For .753 check grouped Vertex Bevel Apply/Cancel/multi drag/Undo/Redo and retained Vertex Extrude. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.

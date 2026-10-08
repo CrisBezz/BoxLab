@@ -10,7 +10,7 @@ function bridge(){return globalThis.__boxlabSelectionBridge;}
 function selectedVertexIds(){const b=bridge();return b?.mode?.()==='vertex'?[...(b.indices?.()||[])]:[];}
 function syncButton(){button?.classList.toggle('active',armed);}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));queueMicrotask(syncButton);}
-function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices);mesh.edges?.();}
+function restore(mesh,snapshot){mesh.vertices=snapshot.vertices.map(v=>v.clone());mesh.faces=snapshot.faces.map(f=>[...f]);mesh.faceGroups=[...snapshot.faceGroups];mesh.creases=new Map(snapshot.creases);if(snapshot.looseEdges instanceof Set)mesh.looseEdges=new Set(snapshot.looseEdges);if(snapshot.looseVertices instanceof Set)mesh.looseVertices=new Set(snapshot.looseVertices);mesh.edges?.();}
 function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBoundingClientRect();return new THREE.Vector2(r.left+(p.x*.5+.5)*r.width,r.top+(-p.y*.5+.5)*r.height);}
 function hitVertex(event){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const p=new THREE.Vector2(event.clientX,event.clientY);let best=null;mesh.vertices.forEach((v,index)=>{const q=screenPoint(v,camera),d=q.distanceTo(p);if(d<=PICK_PX&&(!best||d<best.distance))best={index,distance:d};});return best?.index??null;}
 function disarm(){
@@ -26,6 +26,7 @@ function unchanged(){
   return !!(a&&b&&a.vertices.length===b.vertices.length&&a.faces.length===b.faces.length
     &&a.vertices.every((v,i)=>v.equals(b.vertices[i]))
     &&a.faces.every((f,i)=>f.length===b.faces[i]?.length&&f.every((v,j)=>v===b.faces[i][j]))
+    &&a.faceGroups.length===b.faceGroups.length&&a.faceGroups.every((group,i)=>group===b.faceGroups[i])
     &&a.creases.size===b.creases.size&&[...a.creases].every(([k,v])=>b.creases.get(k)===v));
 }
 function previewWidth(value=Number(width?.value||20)){

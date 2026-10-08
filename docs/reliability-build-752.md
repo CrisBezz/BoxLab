@@ -27,3 +27,6 @@ Manual checks use ordinary cube vertices or a loose scaffold, not synthetic fixt
 Repeat stores the full world vector. Free exact uses its direction or camera view-up
 for the initial operation; choose XYZ for explicit axis distances. New tips are
 separate vertices; welding/closing is an explicit existing tool action.
+
+
+Publication verification and acceptance: Runtime 9be399909982719b9b7ecdf757bbf00c4695631f published. Actual Node22 Topology run37712338609/job113100902832:1832tests/1730PASS/102FAIL/0skip; all102failure names exactly match the local inventory. Pages37712337662 success; live shell/version/new Extrude core and owner/Vertex panel/gizmo/background policy and frozenBeta6 version byte-match the tested checkout. User PASS .752 on2026-10-08. Browser smoke attempt timed out; device acceptance is the user report.
