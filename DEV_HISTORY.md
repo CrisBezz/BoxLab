@@ -5642,3 +5642,8 @@ User PASS .754: perspective Knife EDGE placement, END/MID/PERP, Bevel→Knife→
   Same-instance in-place geometry edits are not fingerprinted by this context guard;
   existing tool-exclusive events still own their cancellation.
 - Publication/actual Node22/live verification and .755 device acceptance pending.
+
+
+### .755 publication verification
+
+Runtime cb28427114df517083239ef07b31e3abc4cac9d9 published. Actual Node22 Topology run37737755836/job113181100425:1881tests/1779PASS/102FAIL/0skip; all102failure names exactly match the local inventory and .754. Pages37737755773 succeeded. Live shell/version/Knife, accepted Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused105PASS; .755 device acceptance pending.
