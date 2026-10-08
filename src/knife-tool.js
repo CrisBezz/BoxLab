@@ -16,6 +16,9 @@ let armed=false,drag=null,preview=null,startMarker=null,endMarker=null;
 
 function state(){return globalThis.__boxlabBridgeState;}
 function bridge(){return globalThis.__boxlabSelectionBridge;}
+function editable(){return !document.querySelector('#app')?.classList?.contains?.('boxlab-active-locked');}
+function dragContextValid(d){return state()?.mesh===d.mesh&&globalThis.__boxlabObjectManager?.activeId===d.object&&bridge()?.mode?.()==='face'&&editable();}
+function cancelDrag(){const d=drag;drag=null;clearPreview();if(d)try{canvas.releasePointerCapture?.(d.id);}catch{}}
 function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function inferenceOn(){return !!document.querySelector('#inferenceSnapToggle')?.checked;}
 function edgeKey(mesh,e){return mesh.edgeKey(e.a,e.b);}
@@ -99,7 +102,7 @@ function snapLabel(snap){return snap?.snapType||'NO SNAP';}
 function sameSnap(a,b){if(!a||!b)return false;if(a.kind==='vertex'&&b.kind==='vertex')return a.vertex===b.vertex;if(a.kind==='edge'&&b.kind==='edge'&&a.key===b.key)return Math.abs((a.t??0)-(b.t??0))<.001;return false;}
 function disarm(reason='Knife off'){
   const wasArmed=armed;
-  armed=false;drag=null;clearPreview();button?.classList.remove('active');
+  armed=false;cancelDrag();button?.classList.remove('active');
   if(wasArmed)window.dispatchEvent(new CustomEvent('boxlab-knife-disarmed',{detail:{reason}}));
   return wasArmed;
 }
@@ -108,19 +111,23 @@ function clearFaceSelection(){if(bridge()?.mode?.()==='face')bridge()?.set?.('fa
 function disarmOtherTools(){globalThis.__boxlabTransformArming?.disarm?.();document.querySelectorAll('#toolModes button,#extrudeBtn,#insetBtn').forEach(b=>b.classList.remove('active'));document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'knife'}}));}
 function modeFromTarget(target){return target?.closest?.('#selectionModes button[data-mode]')?.dataset?.mode||null;}
 
-button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();if(armed){disarm('button-toggle');if(status)status.textContent='Face mode • Knife off';return;}armed=true;drag=null;clearPreview();disableMulti();disarmOtherTools();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();clearFaceSelection();button.classList.add('active');window.dispatchEvent(new CustomEvent('boxlab-knife-armed'));if(status)status.textContent=`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`;},true);
+button?.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();if(armed){disarm('button-toggle');if(status)status.textContent='Face mode • Knife off';return;}if(!editable())return;armed=true;drag=null;clearPreview();disableMulti();disarmOtherTools();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();clearFaceSelection();button.classList.add('active');window.dispatchEvent(new CustomEvent('boxlab-knife-armed'));if(status)status.textContent=`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`;},true);
 document.addEventListener('click',e=>{if(!armed||!e.isTrusted||e.target?.closest?.('#knifeBtn'))return;const otherTool=e.target?.closest?.('#extrudeBtn,#insetBtn,#toolModes button,#vertexBevelBtn,#bevelBtn,#edgeSlideBtn,#offsetLoopBtn,#loopCutBtn,#faceSplitBtn,#extractFacesBtn,#bridgeFacesBtn,#deleteFaceBtn');if(otherTool)disarm();},true);
 window.addEventListener('pointerdown',e=>{if(!armed)return;const mode=modeFromTarget(e.target);if(mode&&mode!=='face')disarm();},true);
 document.querySelector('#selectionModes')?.addEventListener('click',e=>{if(!armed)return;const mode=modeFromTarget(e.target);if(mode&&mode!=='face')disarm();},true);
-window.addEventListener('boxlab-bridge-state',()=>{if(armed&&bridge()?.mode?.()!=='face')disarm();});
+window.addEventListener('boxlab-bridge-state',()=>{if(armed&&(bridge()?.mode?.()!=='face'||(drag&&!dragContextValid(drag))))disarm('context-changed');});
 document.addEventListener('boxlab-direct-tool-exclusive',event=>{if(event.detail?.tool&&event.detail.tool!=='knife')disarm();},true);
 
 document.querySelector('#inferenceSnapToggle')?.addEventListener('change',()=>{if(armed&&status)status.textContent=`Knife • END → MID → PERP → EDGE${inferenceOn()?' • geometric inference ON':' • MID/PERP off'}`;});
 
-canvas?.addEventListener('pointerdown',e=>{if(!armed||!e.isPrimary||e.pointerType==='touch'||(e.pointerType==='pen'&&!(e.pressure>0)))return;const face=hitFace(e);if(!face)return;const start=freeBoundaryPoint(face.faceIndex,e.clientX,e.clientY,true);if(!start)return;e.preventDefault();e.stopImmediatePropagation();const faceIndices=candidateFacesForStart(start,face.faceIndex);drag={id:e.pointerId,faceIndex:face.faceIndex,faceIndices,x:e.clientX,y:e.clientY,start,lastEnd:null};showPreview(start,null,start.screen);if(status)status.textContent=`Knife start • ${snapLabel(start)} • ${faceIndices.length} candidate face${faceIndices.length===1?'':'s'}`;canvas.setPointerCapture?.(e.pointerId);},true);
-canvas?.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();const end=endpointWithHysteresis(drag,e);showPreview(drag.start,end,{x:e.clientX,y:e.clientY});if(status)status.textContent=end?`Knife end • ${snapLabel(end)} • release to cut`:'Knife • move onto a boundary snap before releasing';},true);
-canvas?.addEventListener('pointerup',e=>{if(!drag||drag.id!==e.pointerId)return;const d=drag,end=endpointWithHysteresis(d,e);drag=null;clearPreview();e.preventDefault();e.stopImmediatePropagation();try{canvas.releasePointerCapture?.(e.pointerId);}catch{}if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<MIN_DRAG_PX)return;const s=state(),mesh=s?.mesh;if(!mesh)return;if(!end){if(status)status.textContent='Knife • release only after END / MID / PERP / EDGE snap appears';return;}if(sameSnap(d.start,end))return;const cut=tryCut(mesh,d.start,end);if(!cut){render();if(status)status.textContent='Knife could not make a clean cut • use two different face boundaries';return;}globalThis.__boxlabHistory?.push(cut.before);render();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();button?.classList.add('active');armed=true;if(status)status.textContent=`Knife cut committed • ${snapLabel(d.start)} → ${snapLabel(end)} • Knife remains active`;},true);
-canvas?.addEventListener('pointercancel',e=>{if(drag?.id!==e.pointerId)return;drag=null;clearPreview();},true);
+canvas?.addEventListener('pointerdown',e=>{if(!armed||!e.isPrimary||e.pointerType==='touch'||(e.pointerType==='pen'&&!(e.pressure>0)))return;if(!editable()||bridge()?.mode?.()!=='face'){disarm('context-changed');return;}const face=hitFace(e);if(!face)return;const start=freeBoundaryPoint(face.faceIndex,e.clientX,e.clientY,true);if(!start)return;e.preventDefault();e.stopImmediatePropagation();const faceIndices=candidateFacesForStart(start,face.faceIndex);drag={mesh:state()?.mesh,object:globalThis.__boxlabObjectManager?.activeId,id:e.pointerId,faceIndex:face.faceIndex,faceIndices,x:e.clientX,y:e.clientY,start,lastEnd:null};showPreview(start,null,start.screen);if(status)status.textContent=`Knife start • ${snapLabel(start)} • ${faceIndices.length} candidate face${faceIndices.length===1?'':'s'}`;canvas.setPointerCapture?.(e.pointerId);},true);
+canvas?.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const end=endpointWithHysteresis(drag,e);showPreview(drag.start,end,{x:e.clientX,y:e.clientY});if(status)status.textContent=end?`Knife end • ${snapLabel(end)} • release to cut`:'Knife • move onto a boundary snap before releasing';},true);
+canvas?.addEventListener('pointerup',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();if(!dragContextValid(drag)){disarm('context-changed');return;}const d=drag,end=endpointWithHysteresis(d,e);cancelDrag();if(Math.hypot(e.clientX-d.x,e.clientY-d.y)<MIN_DRAG_PX)return;if(!dragContextValid(d)){disarm('context-changed');return;}const mesh=d.mesh;if(!end){if(status)status.textContent='Knife • release only after END / MID / PERP / EDGE snap appears';return;}if(sameSnap(d.start,end))return;const cut=tryCut(mesh,d.start,end);if(!cut){render();if(status)status.textContent='Knife could not make a clean cut • use two different face boundaries';return;}globalThis.__boxlabHistory?.push(cut.before);render();if(bridge()?.mode?.()!=='face')document.querySelector('#selectionModes button[data-mode="face"]')?.click();button?.classList.add('active');armed=true;if(status)status.textContent=`Knife cut committed • ${snapLabel(d.start)} → ${snapLabel(end)} • Knife remains active`;},true);
+canvas?.addEventListener('pointercancel',e=>{if(drag?.id!==e.pointerId)return;cancelDrag();},true);
+
+canvas?.addEventListener('lostpointercapture',e=>{if(drag?.id===e.pointerId)cancelDrag();},true);
+window.addEventListener('keydown',e=>{if(armed&&e.key==='Escape')disarm('escape');},true);
+window.addEventListener('blur',()=>{if(armed)disarm('blur');});
 
 globalThis.__boxlabKnifeTool={
   version:'0.36.18.684',

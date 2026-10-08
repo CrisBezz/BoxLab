@@ -4,17 +4,18 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .754, 2026-10-08 (supersedes historical priorities below)
+## Current direction — .755, 2026-10-08 (supersedes historical priorities below)
 
-User PASS .753 Vertex Bevel facegroups and .752 Vertex Extrude. .754 repairs a
-reproduced Knife EDGE mismatch between displayed marker and actual cut in angled
-perspective view. Existing Knife owner/splitter/history retained; END/MID/PERP
-and orthographic placement preserved. Bevel→real Knife→Loop covered.
+User PASS .754 Knife perspective accuracy, .753 Vertex Bevel groups and .752
+Vertex Extrude. .755 fixes reproduced Knife cutting the replacement object when
+active context changes during a drag. Existing owner now guards starting mesh/
+object/Face mode/lock and cleans capture/markers on cancellation. Normal repeat,
+.754 snap placement and Bevel/Knife/Loop kernels retained.
 
-User PASS .754 on2026-10-08. Next: continue reproduced Bevel/
-Knife/Loop fixes and reconcile102 active historical failures. Expand CI/release
-gate after reconciliation. Radial coverage complete; Beta6 frozen736. Add Vertex's
-separate unconfirmed defect, NOM import and Lasso tightening remain deferred.
+Next: .755 iPad repeat/history/Done/navigation/locked-object checks, then continue
+reproduced Bevel/Knife/Loop reliability and reconcile102 active historical failures.
+CI/release gate after reconciliation. Radials complete; Beta6 frozen736. Add Vertex
+unconfirmed picking defect, NOM import and Lasso tightening remain deferred.
 
 ## Beta 6 delivery refinement — .736
 

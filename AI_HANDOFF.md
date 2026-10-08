@@ -3,28 +3,40 @@
 ## Current state — 2026-10-08
 
 Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build
-**v0.36.18.754**, Knife perspective EDGE accuracy. Runtime release
-5a7f6d585a72f076fe9d80f1bb05fd6a3b269915 (parent43e1a5f7ebd58d10836d4166a284b12ad2306b9e). User PASS .753 /nextbuild.
+**v0.36.18.755**, Knife gesture context/cancellation. Parent main
+0e969d41877aa4cb922e273c2b53c9167c5e889c. User PASS .754 /nextbuild.
 Current priority Bevel/Knife/Loop reliability; Add Vertex unconfirmed picking,
 NOM import and Lasso tightening deferred. Frozen beta2–6 immutable;
 main/Loop715/Multi and established gestures unchanged.
 
-.754 reproduced Knife EDGE using projected screen fraction directly in world
-interpolation. Angled planar sample worldt=.3 became .2112676: .44366units/
-42.88066pixels off the marker. Existing freeBoundaryPoint converts using endpoint
-clip weights (t=s*wa/((1-s)*wb+s*wa)); orthographic weights1 retain prior result.
-One local helper, no parallel picking/gesture/cut owner. END/MID/PERP priority,
-snap distances, hysteresis and existing splitter/history unchanged. Invalid or
-nonpositive clip weights refuse EDGE conversion; no near-plane clipping added.
+.755 actual Pencil reproduction: cube1 drag start then cube2 active mesh/object
+switch; release cuts cube2 (6→7faces/history1), leaving cube1 untouched. Existing
+Knife owner now saves starting mesh/activeId and verifies mesh/object/Face mode/
+unlocked state before preview/commit; locked arming/start refuses. Changed context
+cancels with no cut/history and existing semantic disarm closes original session.
+One cancellation helper nulls drag before capture release, removes markers; Done/
+exclusive/context, pointercancel/lostcapture, Escape/blur use it. Pointercancel/
+lostcapture preserve armed Knife for next attempt; terminal exits disarm. No new
+picking/cut/gesture owner. No same-instance geometry fingerprint: existing exclusive
+tool events still cancel competing edits; context guard is mesh/object/mode/lock.
 
-16new behavioral tests: before11FAIL/5PASS; after16PASS. Focused88PASS.
-Full Node24:1864/1762PASS/102FAIL/0skip; same102failure identities as .753.
-Real whole-owner camera/raycast/Pencil release, inverse edge direction, transformed/
-rotated/.01–100scaled camera+model, orthographic, viewport offsets, inference,
-groups/creases/Undo/Redo/Cancel/shorttap/redo and Bevel1/3→Knife→supported Loop
-closed shells covered. One reviewed runtime hash; shell/recovery/Knife754 pins.
-Runtime 5a7f6d585a72f076fe9d80f1bb05fd6a3b269915 published. Actual Node22 Topology run37725898931/job113143857359:1864tests/1762PASS/102FAIL/0skip; all102failure names match local inventory and .753 exactly. Pages37725898285 succeeded after a delayed deployment step; live shell/version/Knife, accepted Vertex Extrude and frozenBeta6 version byte-match the tested checkout. Focused88PASS. User PASS .754 on2026-10-08.
-Read docs/reliability-build-754.md/JSON. No test exclusions or CI release gate.
+17new whole-owner tests: before16FAIL/1PASS; after17PASS. Focused105PASS.
+Full Node24:1881/1779PASS/102FAIL/0skip; same102names as754. Actual raycast/Pencil
+move/release, changed mesh/object/lock/mode, capture/marker cleanup, semantic exits,
+repeat/Undo/Redo/redo retention plus prior perspective and Bevel/Knife/Loop checks.
+Two prepared-endpoint historical fixtures now save starting mesh/object instead of
+bypassing new guard. Runtime body only Knife; reviewed one hash and shell/recovery/
+Knife755 pins. Publication/actual Node22/live verification and .755 device checks
+pending. Read docs/reliability-build-755.md/JSON; no exclusions or CI release gate.
+
+.754 Knife perspective placement is user PASS (2026-10-08). Runtime
+5a7f6d585a72f076fe9d80f1bb05fd6a3b269915; verification82148373; acceptance0e969d4.
+Screen EDGE fraction uses clip weights for world interpolation, orthographic
+weights1 retain old result. END/MID/PERP priority/distances/hysteresis and splitter
+unchanged. Nonfinite/nonpositive weights refuse; no near-plane clipping added.
+16newPASS/focused88PASS; full1864/1762/102/0. Actual Node22 run37725898931/
+job113143857359 matches all102names. Pages37725898285 succeeded after a delayed
+deploy; live shell/version/Knife/accepted Extrude/Beta6 byte-verified.
 
 .753 Vertex Bevel is user PASS (2026-10-08). Runtime
 0f11d92e7eb0655fac0c8b15ddd362278256c772; verification43e1a5f.
@@ -203,7 +215,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery/Knife pins .754; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core/panel, total-gizmo and background policy .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery/Knife pins .755; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core/panel, total-gizmo and background policy .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -228,7 +240,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .754 check angled Knife EDGE placement, END/MID/PERP, Bevel→Knife→supported Loop and Undo/Redo. Add Vertex remains a deferred, unconfirmed report.
+For .755 check ordinary repeat Knife/Undo/Redo, Done/tool/mode exit/navigation and locked-object refusal. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.
