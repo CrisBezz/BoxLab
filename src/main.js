@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { scaffoldLoopCandidates } from './scaffold-loop-candidates.js?v=0.36.18.761';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { EditableMesh } from './mesh.js?v=0.12';
 import { subdivide } from './subdivision.js?v=0.12';
@@ -106,6 +107,8 @@ function collectEdgeHoldCandidates(seedIndex){
     if(seen.has(signature))return;
     seen.add(signature);candidates.push({kind,indices:clean});
   };
+
+  for(const perimeter of scaffoldLoopCandidates(mesh,seedIndex))add('Scaffold Boundary',perimeter);
 
   add('Loop',invokeEdgeSelector('#selectLoopBtn',[seedIndex]));
 

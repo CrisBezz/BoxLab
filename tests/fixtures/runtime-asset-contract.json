@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.732",
+      "url": "./src/main.js?v=0.36.18.761",
       "target": "src/main.js",
-      "sha256": "70871ae0f36f9f5fbaa08a29e493b57704b0b398293a0ffd189c68b3f7f38356",
+      "sha256": "59bfbc943761114c4fe42591cd9ae8b92eb27be2213784d03475d424d577bbb9",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.760",
+      "url": "./src/release-bootstrap.js?v=0.36.18.761",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.760",
+      "url": "./src/release-version.js?v=0.36.18.761",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2143,6 +2143,12 @@
       "url": "./vertex-extrude-core.js?v=0.36.18.752",
       "target": "src/vertex-extrude-core.js",
       "sha256": "82a02ebf7ab8371f7ce3e1d3f4e4f4c9c528b66b03f834e5c8b023baa3857d4e"
+    },
+    {
+      "owner": "src/main.js",
+      "url": "./scaffold-loop-candidates.js?v=0.36.18.761",
+      "target": "src/scaffold-loop-candidates.js",
+      "sha256": "2938babcc6ecb1a88a6f3bdee2b4ca7ac4fc2f3a444daae948a3dea134f609ad"
     }
   ]
 }

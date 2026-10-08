@@ -4182,3 +4182,17 @@ Runtimeb2b5752804be956489e5f007d2f4859331fa1a9b published. Actual Node22 Topolog
 ### .760 publication verification — 2026-10-08
 
 Runtime a85585c2a0c6ce42b74d808ed939660ebd257d34 published. Actual Node22 Topology run37766273730/job113274606897:1923tests/1821PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .759. Pages37766272406 succeeded. Live shell/version/Gate/Lasso/Drawer, accepted Edge Extrude and frozenBeta6 version byte-match tested checkout. Focused69PASS. Device .760 acceptance pending.
+
+
+## .761 floating scaffold hold / Close Face
+
+- [x] Ten new behavioral checks pass; .760 actual hold-to-Close-Face fault reproduced
+- [x] Branched wire cube/grid return individual planar closed cells through loose seed
+- [x] Subdivided rails, tails, rotated/scaled geometry covered; open/warped/crossing refused
+- [x] Actual hold timer, horizontal browse, window release and Pencil gate retain outline
+- [x] Original Fill creates one face, one history entry, Undo/Redo; cancel restores base
+- [x] Actual Grow owner still receives vertical scrub; surfaced candidates exactly unchanged
+- [x] Focused79PASS; full1933/1831PASS/102FAIL/0skip, exact .760 failure identities
+- [ ] iPad floating hold -> sideways browse -> release -> Close Face -> Undo/Redo
+- [ ] Surface loops plus floating tap/Lasso and finger/empty-background navigation
+- [ ] Pages/live shell/main/new helper bytes verified
