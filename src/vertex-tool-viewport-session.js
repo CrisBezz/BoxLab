@@ -71,7 +71,7 @@ function sync(){
     if(source&&document.activeElement!==width)width.value=source.value;
     panel.querySelector('.vts-width-out').textContent=(source?.value||width.value)+'%';
   }
-  const notes={Extrude:'Drag a vertex to add an edge; new tips stay selected. Free Exact follows the last pull, or view up for the first pull. Repeat ON: tap a vertex. Done keeps completed edges.',Add:'Tap to add vertices; drag to orbit or slide along an edge. Done ends Add.', 'Build Edge':'Drag from one vertex to another; continue building, then Done.',Bevel:'Blue Width preview • Apply Bevel commits. Pencil-drag a vertex for the existing direct bevel.',Slide:'Drag selected vertices along their existing rails, or apply an exact signed percentage.','Merge Dist':'Selected vertices only • enter distance in model units.','Clean Vertices':'Whole active object • removes safe redundant vertices, including outside your selection.'};
+  const notes={Extrude:'Choose Free or X/Y/Z on the viewport axis chooser, then drag a vertex to add an edge; new tips stay selected. Free Exact follows the last pull, or view up for the first pull. Repeat ON: tap a vertex. Done keeps completed edges.',Add:'Tap to add vertices; drag to orbit or slide along an edge. Done ends Add.', 'Build Edge':'Drag from one vertex to another; continue building, then Done.',Bevel:'Blue Width preview • Apply Bevel commits. Pencil-drag a vertex for the existing direct bevel.',Slide:'Drag selected vertices along their existing rails, or apply an exact signed percentage.','Merge Dist':'Selected vertices only • enter distance in model units.','Clean Vertices':'Whole active object • removes safe redundant vertices, including outside your selection.'};
   panel.querySelector('.vts-note').textContent=message||notes[tool];
   apply.disabled=!ready||busy();done.disabled=busy();width.disabled=busy();value.disabled=busy();
   placeToolSessionPanel(panel);raf=requestAnimationFrame(sync);
@@ -126,4 +126,4 @@ done.addEventListener('click',event=>{event.preventDefault();event.stopPropagati
 window.addEventListener('boxlab-vertex-tool-complete',event=>{if(session?.tool===event.detail?.tool)close();});
 window.addEventListener('boxlab-selection-hub-tool',event=>{if(session&&(event.detail?.mode!=='vertex'||event.detail?.tool!==session.tool))close({complete:false});});
 window.addEventListener('boxlab-bridge-state',()=>{if(session){refreshReady();sync();}});
-globalThis.__boxlabVertexViewportSession={version:'0.36.18.752',available,openFromHub,close,backgroundExitAllowed:()=>!!session&&session.tool!=='Add',active:()=>!!session,element:panel,sync};
+globalThis.__boxlabVertexViewportSession={version:'0.36.18.757',available,openFromHub,close,backgroundExitAllowed:()=>!!session&&session.tool!=='Add',active:()=>!!session,element:panel,sync};

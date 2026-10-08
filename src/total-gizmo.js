@@ -70,6 +70,9 @@ function selectionKey(mesh,mode=currentMode()){
   }
   return `${mode}:${[...new Set(globalThis.__boxlabSelectionBridge?.indices?.()||[])].sort((a,b)=>a-b).join(',')}`;
 }
+function vertexExtrudeConstraintSession(){
+  return currentMode()==='vertex'&&!!globalThis.__boxlabVertexExtrude?.isArmed?.();
+}
 function setHubState(next,{reason='',resumeSuspended=true}={}){
   const mode=currentMode();
   let requested=mode==='object'&&!objectTransformDismissed&&next==='closed'?'transform':next;
@@ -99,6 +102,11 @@ function setHubState(next,{reason='',resumeSuspended=true}={}){
       }
     });
     gestureDebug('EDGE EXTRUDE SESSION CLOSE',{reason:reason||'return-to-puck',selectionPreserved:true,edges:preservedEdges.length});
+  }
+
+  if(vertexExtrudeConstraintSession()&&requested!=='transform'){
+    globalThis.__boxlabVertexViewportSession?.close?.({cancelDrag:true,complete:false});
+    requested='closed';
   }
 
   const wasTransform=hubState==='transform';
@@ -194,6 +202,14 @@ function onHandleDown(event){
   if(!selectionAvailable(mesh,mode))return;
   hideFloatInput();
   const el=event.currentTarget,spec=handleSpec(el);
+  if(vertexExtrudeConstraintSession()){
+    event.preventDefault();event.stopImmediatePropagation();
+    const owner=globalThis.__boxlabVertexExtrude;
+    if(spec.tool!=='move'||owner.busy())return;
+    owner.setDirection(['x','y','z'].includes(spec.constraint)?spec.constraint:'free');
+    syncEdgeExtrudeConstraintVisuals();
+    return;
+  }
   if(edgeExtrudeConstraintSession&&mode==='edge'){
     event.preventDefault();
     event.stopImmediatePropagation();
@@ -453,7 +469,8 @@ edgeExtrudeStyle.textContent=`
 document.head.appendChild(edgeExtrudeStyle);
 
 function syncEdgeExtrudeConstraintVisuals(){
-  const active=edgeExtrudeConstraintSession;
+  const vertex=vertexExtrudeConstraintSession();
+  const active=edgeExtrudeConstraintSession||vertex;
   root.dataset.edgeExtrudeConstraint=active?'true':'false';
   const hideSelectors=['.tg-rotate','.tg-screen-ring','.tg-scale-ring','.tg-scale-node','.tg-plane-handles'];
   hideSelectors.forEach(selector=>root.querySelectorAll(selector).forEach(el=>{el.style.display=active?'none':'';}));
@@ -461,13 +478,14 @@ function syncEdgeExtrudeConstraintVisuals(){
   if(edgeExtrudeBadge)edgeExtrudeBadge.hidden=!active;
   root.querySelectorAll('.tg-handle').forEach(el=>el.classList.remove('edge-extrude-active'));
   if(!active)return;
-  const constraint=globalThis.__boxlabTransformArming?.constraint?.()||'plane';
+  const constraint=vertex?globalThis.__boxlabVertexExtrude.direction():globalThis.__boxlabTransformArming?.constraint?.()||'plane';
   if(['x','y','z'].includes(constraint)){
     root.querySelectorAll(`.tg-handle[data-tool="move"][data-constraint="${constraint}"]`).forEach(el=>el.classList.add('edge-extrude-active'));
   }else{
     root.querySelector('.tg-center[data-tool="move"]')?.classList.add('edge-extrude-active');
   }
-  const label=constraint==='plane'?'Plane ⟂ edge':String(constraint).toUpperCase()+' axis';
+  const label=constraint==='free'?'Free':constraint==='plane'?'Plane ⟂ edge':String(constraint).toUpperCase()+' axis';
+  edgeExtrudeBadge?.querySelector('small')?.replaceChildren(document.createTextNode(vertex?'Choose axis • drag vertex':'Choose constraint • drag edge'));
   edgeExtrudeBadge?.querySelector('span')?.replaceChildren(document.createTextNode(label));
 }
 
@@ -1087,14 +1105,15 @@ function sync(){
     lastSelectionKey=key;
     hubSuppressedKey='';
     if(mode==='object')objectTransformDismissed=false;
-    setHubState(edgeExtrudeConstraintSession&&mode==='edge'?'transform':(mode==='object'?'transform':'closed'),{reason:'selection-change'});
+    setHubState((edgeExtrudeConstraintSession&&mode==='edge')||vertexExtrudeConstraintSession()?'transform':(mode==='object'?'transform':'closed'),{reason:'selection-change'});
   }else if(mode==='object'&&!objectTransformDismissed&&hubState!=='transform'&&hubState!=='tools'){
     setHubState('transform',{reason:'object-mode'});
   }
+  if(vertexExtrudeConstraintSession()&&hubState!=='transform')setHubState('transform',{reason:'vertex-extrude-constraint',resumeSuspended:false});
   const c=centerOf(mesh,mode),p=screenPoint(c,camera),cr=canvas.getBoundingClientRect(),vr=viewportWrap.getBoundingClientRect();
   const selectionLeft=cr.left-vr.left+p.x,selectionTop=cr.top-vr.top+p.y;
   let left=selectionLeft,top=selectionTop;
-  if(edgeExtrudeConstraintSession&&mode==='edge'){
+  if((edgeExtrudeConstraintSession&&mode==='edge')||vertexExtrudeConstraintSession()){
     const offset=122;
     const roomRight=vr.width-selectionLeft;
     const side=roomRight>offset+HALF+18?1:-1;
@@ -1103,8 +1122,8 @@ function sync(){
   root.style.left=`${left}px`;
   root.style.top=`${top}px`;
   placeToolSessionPanel(floatPalette);
-  const suppressed=['face','edge','vertex'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession;
-  root.hidden=(mode==='edge'&&(!!globalThis.__boxlabEdgeViewportSession?.active?.()||!!globalThis.__boxlabSweepViewportSession?.active?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()))||(mode==='object'&&!!globalThis.__boxlabObjectRadialSession?.hidesGizmo?.())||(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.())||!!globalThis.__boxlabComponentAlignViewportSession?.active?.()||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
+  const suppressed=['face','edge','vertex'].includes(mode)&&hubSuppressedKey===key&&!edgeExtrudeConstraintSession&&!vertexExtrudeConstraintSession();
+  root.hidden=(mode==='edge'&&(!!globalThis.__boxlabEdgeViewportSession?.active?.()||!!globalThis.__boxlabSweepViewportSession?.active?.()||!!globalThis.__boxlabBevelViewportSession?.edgeActive?.()))||(mode==='object'&&!!globalThis.__boxlabObjectRadialSession?.hidesGizmo?.())||(mode==='vertex'&&!!globalThis.__boxlabVertexViewportSession?.active?.()&&!vertexExtrudeConstraintSession())||!!globalThis.__boxlabComponentAlignViewportSession?.active?.()||suppressed||(mode==='object'&&objectTransformDismissed)||(mode==='face'&&(!!globalThis.__boxlabFaceBridgePreview?.active?.()||!!globalThis.__boxlabFaceRepairViewportSession?.active?.()||!!globalThis.__boxlabFaceAlignViewportSession?.active?.()||!!globalThis.__boxlabDirectBevel?.faceActive?.()));
   root.dataset.hubState=hubState;
   root.dataset.expanded=expanded?'true':'false';
   root.dataset.mode=mode;
@@ -1112,7 +1131,7 @@ function sync(){
   cornerControls.position(left,top,vr);
   root.dataset.singleComponent=mode!=='object'&&selectionKey(mesh,mode).split(':')[1]?.split(',').filter(Boolean).length===1?'true':'false';
   if(!suppressed&&!objectTransformDismissed&&(hubState==='transform'||mode==='object'))syncAxisVisuals(c,camera);
-  if(edgeExtrudeConstraintSession)syncEdgeExtrudeConstraintVisuals();
+  syncEdgeExtrudeConstraintVisuals();
 }
 sync();
 

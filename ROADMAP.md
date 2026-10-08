@@ -4,18 +4,14 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .756, 2026-10-08 (supersedes historical priorities below)
+## Current direction — .757, 2026-10-08 (supersedes historical priorities below)
 
-User PASS .755 Knife context/cancel, .754 perspective accuracy, .753 Vertex Bevel
-labels and .752 Vertex Extrude. .756 repairs stale source facegroup validity in
-existing Edge/Face Bevel preview owner. External label changes invalidate old
-preview; Cancel/current groups/redo preserved; fresh launch uses latest labels.
-Unlabelled legacy faces remain valid. No geometry or gesture algorithm changes.
-
-Next: .756 ordinary grouped Bevel preview/Cancel/Apply/Undo/Redo and Knife/Loop
-sanity checks, then continue reproduced reliability and reconcile102 historical
-failures. CI/release gate after reconciliation. Radials complete; Beta6 frozen736.
-Add Vertex unconfirmed picking, NOM import and Lasso tightening remain deferred.
+.756 user PASS. .757 user-requested Vertex Extrude Free/XYZ viewport axis chooser,
+reusing existing Edge gizmo presentation with original Vertex extrusion owners.
+Next: axis/Free pulls, tip continuation/Exact/history and Done/navigation device
+checks, then continue Bevel/Knife/Loop reliability and reconcile102 historical
+failures. CI gate follows reconciliation. Radials complete; Beta6 frozen736.
+Add Vertex unconfirmed picking, NOM import and Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
 
