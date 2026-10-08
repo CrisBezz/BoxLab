@@ -24,3 +24,8 @@ Manual checks:
 - Vertex Extrude: only viewport axes/Free centre; Exact/Repeat/Done still present.
 - Extrude at12-o'clock in Face/Edge/Vertex; Vertex Add accessible on outer ring.
 - Face outer ring evenly spaced, all tools reachable; Bevel remains3-o'clock.
+
+
+### .758 publication verification — 2026-10-08
+
+Runtime39a699296bcf990cadecb7621f7f5c4c9970c61b published. Actual Node22 Topology run37754720314/job113236320113:1906tests/1804PASS/102FAIL/0skip; all102failure names exactly match local inventory and .757. Pages37754719444 succeeded. Live shell/version/total-gizmo/Vertex panel, unchanged Vertex Extrude and frozenBeta6 version byte-match tested checkout. Focused58PASS. Device .758 acceptance pending.

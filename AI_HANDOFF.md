@@ -18,7 +18,7 @@ Presentation only, original geometry/gesture/history owners unchanged.
 58focusedPASS; fullNode24:1906/1804PASS/102FAIL/0skip, identical102names to757.
 Extended existing inventory/spacing/hidden-controls checks; computed outer button
 bounds non-overlapping across component modes. Two reviewed hashes and758pins.
-Publication/Node22/live verification pending; .758 device acceptance pending.
+Runtime39a699296bcf990cadecb7621f7f5c4c9970c61b published. Actual Node22 Topology run37754720314/job113236320113:1906tests/1804PASS/102FAIL/0skip; all102failure names exactly match local inventory and .757. Pages37754719444 succeeded. Live shell/version/total-gizmo/Vertex panel, unchanged Vertex Extrude and frozenBeta6 version byte-match tested checkout. Focused58PASS. Device .758 acceptance pending.
 Read docs/reliability-build-758.md/JSON.
 
 .757 runtime98ed74d9df3b09aa97856b38ef271a429a36a6bb; verification6188f79.
@@ -34,7 +34,7 @@ per real face; missing labels equal null, extraneous labels ignored. Changed lab
 invalidate stale preview/Apply. Geometry/history unchanged. Focused121PASS;
 full1896/1794/102/0, actualNode22 run37750469278/job113222151677 matches names.
 Pages37750468365 success, live bytes verified.
-Current priority after .757 device checks: Bevel/Knife/Loop reliability and102
+Current priority after .758 device checks: Bevel/Knife/Loop reliability and102
 historical active failing checks. Add Vertex unconfirmed picking, NOM import and
 Lasso tightening deferred; Beta2–6 immutable. No CI gate or exclusions.
 
