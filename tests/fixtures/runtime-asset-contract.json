@@ -360,9 +360,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.444",
+      "url": "./src/primitive-ui.js?v=0.36.18.771",
       "target": "src/primitive-ui.js",
-      "sha256": "fd75c6e187bc420619cacd2b2df2769abcc5cd0ef043843eb8c6de689d41b7c3"
+      "sha256": "72a7765c284197471229f9fbc269c409dc9692913f9254084d6bc95ca6bac8ed"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.770",
+      "url": "./src/release-bootstrap.js?v=0.36.18.771",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.770",
+      "url": "./src/release-version.js?v=0.36.18.771",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1840,9 +1840,9 @@
     },
     {
       "owner": "src/primitive-ui.js",
-      "url": "./primitive-factory.js?v=0.36.18.226",
+      "url": "./primitive-factory.js?v=0.36.18.771",
       "target": "src/primitive-factory.js",
-      "sha256": "d821f066aacd2e9a7da854f77a8b3030e913169c3c015695e2c14f883d64f1e1"
+      "sha256": "3f71005ee8f8019f10849a2dd9b3e527df39002cdab9cda0e0015a4b79319aef"
     },
     {
       "owner": "src/quad-clean.js",
@@ -2149,6 +2149,24 @@
       "url": "./scaffold-loop-candidates.js?v=0.36.18.761",
       "target": "src/scaffold-loop-candidates.js",
       "sha256": "2938babcc6ecb1a88a6f3bdee2b4ca7ac4fc2f3a444daae948a3dea134f609ad"
+    },
+    {
+      "owner": "src/primitive-ui.js",
+      "url": "./text-object-core.js?v=0.36.18.771",
+      "target": "src/text-object-core.js",
+      "sha256": "85f99fa53c5c3c313d98bddfb9e86f8c59449869792157e66a25b14b446fe918"
+    },
+    {
+      "owner": "src/primitive-ui.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/primitive-ui.js",
+      "url": "./fonts/helvetiker_regular.typeface.json?v=0.36.18.771",
+      "target": "src/fonts/helvetiker_regular.typeface.json",
+      "sha256": "d5c5467690f74061179a292af83bd85c4c551e0f106b2af99714f11184c96981"
     }
   ]
 }

@@ -11,49 +11,45 @@ function ringVertices(vertices, y, radius, segments, phase = 0) {
   return ring;
 }
 
-export function makeCube(size = 2) {
-  return EditableMesh.cube(size);
-}
-
-export function makePlane(size = 2) {
-  const s = size / 2;
-  return new EditableMesh(
-    [[-s,0,-s],[s,0,-s],[s,0,s],[-s,0,s]],
-    [[0,3,2,1]]
-  );
-}
-
-export function makeCylinder(radius = 1, height = 2, segments = 12) {
-  segments = Math.max(3, Math.round(segments));
-  const vertices = [], faces = [];
-  const bottom = ringVertices(vertices, -height/2, radius, segments);
-  const top = ringVertices(vertices, height/2, radius, segments);
-  for (let i = 0; i < segments; i++) {
-    const n = (i + 1) % segments;
-    faces.push([bottom[i], top[i], top[n], bottom[n]]);
+const segments=(value,min=1,max=32)=>Math.max(min,Math.min(max,Math.round(Number(value)||min)));
+export function makeCube(size = 2, x = 1, y = 1) {
+  x=segments(x);y=segments(y);
+  const base=EditableMesh.cube(size);if(x===1&&y===1)return base;
+  const vertices=[],faces=[],byPosition=new Map();
+  const id=p=>{const key=p.toArray().map(v=>v.toFixed(10)).join(',');if(!byPosition.has(key)){byPosition.set(key,vertices.length);vertices.push(p);}return byPosition.get(key);};
+  for(const face of base.faces){const a=base.vertices[face[0]],b=base.vertices[face[1]],d=base.vertices[face[3]],u=b.clone().sub(a),v=d.clone().sub(a),nu=Math.abs(u.x)>0?x:y,nv=Math.abs(v.x)>0?x:y,grid=[];
+    for(let i=0;i<=nu;i++){grid[i]=[];for(let j=0;j<=nv;j++)grid[i][j]=id(a.clone().addScaledVector(u,i/nu).addScaledVector(v,j/nv));}
+    for(let i=0;i<nu;i++)for(let j=0;j<nv;j++)faces.push([grid[i][j],grid[i+1][j],grid[i+1][j+1],grid[i][j+1]]);
   }
-  faces.push([...bottom]);
-  faces.push([...top].reverse());
-  return new EditableMesh(vertices, faces);
+  return new EditableMesh(vertices,faces);
 }
 
-export function makeCone(radius = 1, height = 2, segments = 12) {
-  segments = Math.max(3, Math.round(segments));
-  const vertices = [], faces = [];
-  const bottom = ringVertices(vertices, -height/2, radius, segments);
-  vertices.push(new THREE.Vector3(0, height/2, 0));
-  const apex = vertices.length - 1;
-  for (let i = 0; i < segments; i++) {
-    const n = (i + 1) % segments;
-    faces.push([bottom[i], apex, bottom[n]]);
-  }
-  faces.push([...bottom]);
-  return new EditableMesh(vertices, faces);
+export function makePlane(size = 2, x = 1, y = 1) {
+  x=segments(x);y=segments(y);const vertices=[],faces=[];
+  for(let j=0;j<=y;j++)for(let i=0;i<=x;i++)vertices.push([size*(i/x-.5),0,size*(j/y-.5)]);
+  const id=(i,j)=>j*(x+1)+i;
+  for(let j=0;j<y;j++)for(let i=0;i<x;i++)faces.push([id(i,j),id(i,j+1),id(i+1,j+1),id(i+1,j)]);
+  return new EditableMesh(vertices,faces);
+}
+
+export function makeCylinder(radius = 1, height = 2, radial = 12, bands = 1) {
+  radial=segments(radial,3);bands=segments(bands);const vertices=[],faces=[],loops=[];
+  for(let j=0;j<=bands;j++)loops.push(ringVertices(vertices,height*(j/bands-.5),radius,radial));
+  for(let j=0;j<bands;j++)for(let i=0;i<radial;i++){const n=(i+1)%radial;faces.push([loops[j][i],loops[j+1][i],loops[j+1][n],loops[j][n]]);}
+  faces.push([...loops[0]],[...loops[bands]].reverse());return new EditableMesh(vertices,faces);
+}
+
+export function makeCone(radius = 1, height = 2, radial = 12, bands = 1) {
+  radial=segments(radial,3);bands=segments(bands);const vertices=[],faces=[],loops=[];
+  for(let j=0;j<bands;j++)loops.push(ringVertices(vertices,height*(j/bands-.5),radius*(1-j/bands),radial));
+  const apex=vertices.length;vertices.push(new THREE.Vector3(0,height/2,0));
+  for(let j=0;j<bands;j++)for(let i=0;i<radial;i++){const n=(i+1)%radial;faces.push(j===bands-1?[loops[j][i],apex,loops[j][n]]:[loops[j][i],loops[j+1][i],loops[j+1][n],loops[j][n]]);}
+  faces.push([...loops[0]]);return new EditableMesh(vertices,faces);
 }
 
 export function makeSphere(radius = 1, radialSegments = 12, rings = 6) {
-  radialSegments = Math.max(4, Math.round(radialSegments));
-  rings = Math.max(2, Math.round(rings));
+  radialSegments = segments(radialSegments,4);
+  rings = segments(rings,2);
   const vertices = [new THREE.Vector3(0, radius, 0)], faces = [], loops = [];
   for (let r = 1; r < rings; r++) {
     const phi = Math.PI * r / rings;
@@ -81,8 +77,8 @@ export function makeSphere(radius = 1, radialSegments = 12, rings = 6) {
 }
 
 export function makeTorus(majorRadius = 0.72, minorRadius = 0.28, majorSegments = 12, minorSegments = 6) {
-  majorSegments = Math.max(3, Math.round(majorSegments));
-  minorSegments = Math.max(3, Math.round(minorSegments));
+  majorSegments = segments(majorSegments,3);
+  minorSegments = segments(minorSegments,3);
   const vertices = [], faces = [];
   const index = (i,j) => ((i % majorSegments + majorSegments) % majorSegments) * minorSegments + ((j % minorSegments + minorSegments) % minorSegments);
   for (let i = 0; i < majorSegments; i++) {
@@ -100,20 +96,26 @@ export function makeTorus(majorRadius = 0.72, minorRadius = 0.28, majorSegments 
   return new EditableMesh(vertices, faces);
 }
 
+export const primitiveDensity={
+  cube:{x:1,y:1,minX:1,minY:1,xLabel:'X · Width',yLabel:'Y · Height / depth'},
+  plane:{x:1,y:1,minX:1,minY:1,xLabel:'X · Width',yLabel:'Y · Depth'},
+  cylinder:{x:12,y:1,minX:3,minY:1,xLabel:'X · Around',yLabel:'Y · Height'},
+  cone:{x:12,y:1,minX:3,minY:1,xLabel:'X · Around',yLabel:'Y · Height'},
+  sphere:{x:12,y:6,minX:4,minY:2,xLabel:'X · Around',yLabel:'Y · Pole to pole'},
+  torus:{x:12,y:6,minX:3,minY:3,xLabel:'X · Ring',yLabel:'Y · Tube'}
+};
 export function makePrimitive(type, detail = 'medium') {
-  const presets = {
-    low:{ radial:8, sphereRings:4, torusMinor:4 },
-    medium:{ radial:12, sphereRings:6, torusMinor:6 },
-    high:{ radial:16, sphereRings:8, torusMinor:8 }
-  };
-  const p = presets[detail] || presets.medium;
-  switch (type) {
-    case 'plane': return makePlane(2);
-    case 'cylinder': return makeCylinder(1, 2, p.radial);
-    case 'sphere': return makeSphere(1, p.radial, p.sphereRings);
-    case 'cone': return makeCone(1, 2, p.radial);
-    case 'torus': return makeTorus(.72, .28, p.radial, p.torusMinor);
-    case 'cube':
-    default: return makeCube(2);
+  const presets={low:{x:8,y:4},medium:{x:12,y:6},high:{x:16,y:8}},p=presets[detail]||presets.medium;
+  const defaults=primitiveDensity[type]||primitiveDensity.cube;
+  const options=typeof detail==='object'&&detail!==null?detail:{};
+  const x=segments(options.x??(['cube','plane'].includes(type)?1:p.x),defaults.minX);
+  const y=segments(options.y??(['sphere','torus'].includes(type)?p.y:1),defaults.minY);
+  switch(type){
+    case 'plane':return makePlane(2,x,y);
+    case 'cylinder':return makeCylinder(1,2,x,y);
+    case 'cone':return makeCone(1,2,x,y);
+    case 'sphere':return makeSphere(1,x,y);
+    case 'torus':return makeTorus(.72,.28,x,y);
+    default:return makeCube(2,x,y);
   }
 }

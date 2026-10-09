@@ -1,13 +1,21 @@
-<!-- .770 current; user .769 PASS. -->
+<!-- .771 current; last explicit user .769 PASS. -->
 # BoxLab Development Roadmap
 
 This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .770, 2026-10-09 (supersedes historical priorities below)
+## Current direction — .771, 2026-10-09 (supersedes historical priorities below)
 
-.769 user PASS. .770 replaces four obsolete Face-background/Orbit-registration checks with current-owner behavior; no app behavior change. Focused168PASS; full2026/1937PASS/89FAIL/0skip, exactly four reviewed failures removed and no new failures. Next varied Bevel/Knife/Loop reliability and remaining89 historical checks. Accepted Face/Edge/Vertex Bevel, selection/Extrude and Fill Face retained; Beta6 immutable736. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
+Last explicit user PASS .769; .770 sanity not yet confirmed. User-requested Add+
+face-density sliders and 3D Text now implemented .771. Existing primitive owner
+has X/Y settings, counts and Apply/Cancel; Text word/thickness creates one editable
+object with letter holes intact. Bundled licensed font; bounded density controls.
+23 new checks, focused55PASS; full2049/1960PASS/89FAIL/0skip, unchanged failure
+identities. Await .771 device acceptance including controls, Text holes/thickness,
+one-object transforms, Cancel and Undo/Redo. Then resume Bevel/Knife/Loop reliability
+and remaining89 historical checks. Protected interactions and frozenBeta6 unchanged;
+Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
 

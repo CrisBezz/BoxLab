@@ -1,32 +1,64 @@
-# BoxLab AI Handoff — post-Beta 6 reliability
+# BoxLab AI Handoff — Add object density and Text
 
 ## Current state — 2026-10-09
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.770**. User .769 PASS recorded2026-10-09.
-Parent main0079917b8016a0679cc403267a31fbfbec3943ea; accepted .769 runtime
-7f0469d5eb8874db98d5ba795237dd986b43db14. Final publication references below.
+Current build **v0.36.18.771**. Last explicit user acceptance is .769 PASS;
+.770 device sanity was pending when the user requested Add+ density and Text.
+Parent main00b56f127f68619e736952ddbd7bd97d64ce8dfd. Publication evidence below.
 
-## .770 — Face background / Orbit registration validation — 2026-10-09
+## .771 — Add+ density controls and single-object extruded Text
 
-User .769 PASS recorded. Parent main0079917b8016a0679cc403267a31fbfbec3943ea. Validation-only build: three .652 source checks sliced the Pencil background branch at its first pendingBackgroundPress assignment, before the behavior they intended to inspect; one .647 routing check required superseded binary mesh/background routing. Replaced exactly these four checks one-for-one with actual-owner behavior; other21 historical assertions retained.
+User-directed priority supersedes the validation-only next task. Audited original
+primitive-ui capture owner, primitive-factory generators, Object manager/history
+and Text/font absence before implementation. Extend existing Add+ owner; retain
+Revolve Profile and Sweep events. Six primitive choices now open shared top-centre
+settings with X/Y sliders, original Low/Medium/High convenience presets, actual
+face/vertex counts and Apply/Cancel. No object is created before Apply. Cylinder/
+Cone caps remain n-gons; Y adds height bands. Cube X subdivides width, Y subdivides
+height/depth; common boundary vertices welded. Plane, Sphere and Torus use their
+natural two surface directions. Ranges bounded to32, shape-specific minima.
 
-Reuse existing whole multi-face-direct/real-kernel fixture with optional context/elements/pointer exposure and read-only preventDefault evidence. Existing negative-cut assertions unchanged; DOM/picking are controlled doubles. Cover Extrude and Inset Pencil background disarm without capture/consumption, current mesh/selection/history/redo retention, actual pending Face/background presses and queued tool-selection capture cleared before old releases, semantic exclusive yield/debug metadata, and touch background retaining the tool. Reuse whole Gate/Paint fixture for anonymous explicitly registered and named fallback Orbit listeners: mesh intent defers until movement, background forwards immediately, unrelated anonymous listeners remain independent. One authoritative deferred Orbit down callback is retained; do not expect multiple competing Orbit owners to replay together.
+Text adds word (1–64 characters), thickness0.01–100, X curve detail1–16 and Y depth
+bands1–32. Bundled unmodified Helvetiker Regular from pinned three@0.179.1 with
+original font license/provenance. Shapes/cap triangulation reuse Three Font and
+ShapeUtils. One EditableMesh contains all letters and detached glyph parts; holes
+remain open through the depth. Text lies in XY and extrudes Z, centred at origin.
+Unsupported glyphs/blank words/bad thickness refuse creation; not all Unicode fonts
+supported. Font loads asynchronously from local versioned asset; cancelled/replaced
+panel cannot create/update a newer session. Text is ordinary editable geometry,
+not a live typography modifier or new scene type. No viewport preview claimed.
 
-Five deliberate source mutations (Face disarm, latent presses, queued tool selection, semantic yield and anonymous registration) rejected by replacement behavioral checks; restored byte-for-byte. No runtime source/UI/geometry changes, no new event owners. Focused168PASS. Initial historical25tests/21PASS/4FAIL; revised25PASS. FullNode24:2026tests/1937PASS/89FAIL/0skip; exactly four reviewed .769 failures removed, no new failure identities. Remaining89 checks active (83 source-pattern/5 unclassified-behaviour/1 version-pin), no exclusions/skips/CI gate.
+Apply uses original ObjectManager.addMesh, single selection and ObjectHistory
+capture/checkpointSnapshot exactly once; Undo/Redo restores whole scene. Original
+Add bubble cube handler remains stopped by existing capture owner. No gesture,
+selection, Bevel/Knife/Loop or protected module changes. Repin only primitive-ui,
+factory, new Text/font children and shell/recovery771; shared panel pin732 retained.
 
-Shell/recovery770 reviewed; all modelling hashes/pins unchanged: direct Bevel769/Vertex Bevel767/Gate766/Knife763/main762/scaffold761/Extrude759/Loop715/Multi1.0/frozenBeta2–6. Device .770 light sanity pending; no new feature qualification. Next varied Bevel/Knife/Loop reliability and remaining89 historical checks. Add Vertex unconfirmed picking/NOM import/Lasso tightening remain deferred. Use Fill Face for scaffold caps.
+Validation:23 new cases (17 real geometry +6 actual Add/controller/history checks),
+focused55PASS. All six primitive density axes, legacy preset counts, welded solid
+boundaries/outward winding, Text holes via real raycast, thickness/volume/closed
+edges, detached letters, one object, scene Undo/Redo, invalid inputs, async Cancel/
+Escape/outside and preserved redo, original Revolve/Sweep routing. DOM/picking/
+manager doubles are explicit. Additional temporary real-DOM smoke executes actual
+shared wide layout, Text creation and Object history successfully. Whole-app visual/
+WebGL browser QA unavailable: local Playwright Chromium absent and download failed.
+Device layout and touch/Pencil checks remain pending; no browser proof claimed.
+Sweep's obsolete variable-spelling source assertion updated to current launcher;
+actual route additionally tested, other assertions retained.
+
+FullNode24:2049tests/1960PASS/89FAIL/0skip; exactly the same89 failure identities as
+.770 (83 source-pattern/5 unclassified-behaviour/1 version-pin). Counts are test
+results, not app bug counts. No exclusions/skips or CI gate; npm test remains failing.
 
 ## Next task / outstanding issues
 
-Await .770 light iPad sanity, then continue scoped Bevel/Knife/Loop reliability
-and the active89 historical failing checks. Counts are test results, not app bug counts.
-Do not revert accepted runtime to match obsolete source expectations; reconcile
-intended behavior and real owners with semantic coverage. No CI release gate or
-exclusions are installed; npm test remains failing until genuinely reconciled.
-Add Vertex occasional picking report remains unconfirmed/deferred; actual splitter
-and child-edge raycast passed .742, no runtime fix claimed. NOM import and slight
-Lasso tightening remain deferred. No broad device requalification requested.
+Await .771 iPad checks in TEST_CHECKLIST.md: density controls and face counts,
+Text word/thickness/holes/single object, Cancel and Undo/Redo, existing Add launchers.
+Then resume varied Bevel/Knife/Loop reliability and remaining89 historical checks
+unless user directs otherwise. .770 light sanity not explicitly accepted. Add Vertex
+occasional picking remains unconfirmed/deferred; NOM import and slight Lasso
+ tightening remain deferred. FrozenBeta2–6 and Multi1.0/Loop715 unchanged.
 
 ## Accepted interaction / UI baseline
 
@@ -132,7 +164,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery770; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery771; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset/Face direct753;
 Through child751; multi-chamfer748; guard747; other bevel engines745; Loop logical

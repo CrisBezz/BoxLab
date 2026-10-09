@@ -9,7 +9,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 test('Sweep is wired into Add and current runtime',()=>{
   const wrapper=index.match(/sweep-path\.js\?v=([^"]+)/)?.[1];
   assert.equal(wrapper,'0.36.18.731');
-  assert.match(primitive,/sweepPath\.textContent = 'Sweep'/);
+  assert.match(primitive,/button\(p,'Sweep',/);
   assert.match(primitive,/boxlab-add-sweep-path/);
   assert.match(ui,new RegExp("const VERSION='"+wrapper.replaceAll('.','\\.')+"'"));
 });

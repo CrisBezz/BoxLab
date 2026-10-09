@@ -4339,3 +4339,28 @@ Runtime7f0469d5eb8874db98d5ba795237dd986b43db14 published. ActualNode22 Topology
 ### .770 publication verification — 2026-10-09
 
 Runtime499e377a3a8889a5f4d03b450b9355396eb29ff3 published. ActualNode22 Topology run37901813205/job113725877011:2026tests/1937PASS/89FAIL/0skip; all89failure names exactly match local inventory. Exactly four reviewed .769 failures removed, no new failures. Pages37901812074 succeeded. Live shell/version and unchanged Face direct/Pencil Orbit gate/direct Bevel/frozenBeta6 version byte-match tested checkout. Focused168PASS. User .769 PASS recorded; device .770 light sanity pending.
+
+
+## .771 — Add+ density and extruded Text (device acceptance pending)
+
+- Object Add+ → each primitive: X/Y sliders both change face count; try asymmetric
+  Cube7/3 (102 faces), Plane4/3 (12 faces), Cylinder/Cone height bands, Sphere/Torus.
+  Presets change detail; Apply makes one object. Verify shapes/normals and selected
+  object's gizmo work. Defaults retain ordinary Cube/Plane and curved primitives.
+- Add+ → Text: type BOX, set thickness0.4, Apply. All letters should be one Object
+  selection/transform. Inspect B/O holes from front and behind; thickness visible
+  from side. Try Hello and i j for separated letters/dots, and X/Y detail controls.
+- Cancel text or primitive settings (also outside tap) adds nothing; blank word,
+  unsupported glyph or invalid thickness disables Apply with explanation. Closing
+  during font load must not add an object later. Font is bundled; device loading
+  and keyboard/touch popup layout need checking.
+- Undo once removes the newly added primitive or Text; Redo restores exact object,
+  word mesh/density/thickness and selection. Cancel must preserve existing redo.
+- Existing Add+ Revolve Profile/Sweep still launch original sessions. Ordinary
+  one-finger Orbit, two-finger pan/pinch and Pencil selection remain unaffected.
+
+Automated:23 new cases, focused55PASS; fullNode24 2049/1960PASS/89FAIL/0skip,
+exact .770 failure identities. Additional actual-DOM/shared-layout/history smoke
+passes; controlled DOM/manager owner tests and real geometry are not whole-app
+WebGL/touch evidence. Local Chromium unavailable, installation failed; visual/iPad
+acceptance pending. No frozenBeta or protected modelling/gesture edits.

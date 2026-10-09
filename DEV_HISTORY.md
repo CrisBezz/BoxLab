@@ -6046,3 +6046,33 @@ Shell/recovery770 reviewed; all modelling hashes/pins unchanged: direct Bevel769
 ### .770 publication verification — 2026-10-09
 
 Runtime499e377a3a8889a5f4d03b450b9355396eb29ff3 published. ActualNode22 Topology run37901813205/job113725877011:2026tests/1937PASS/89FAIL/0skip; all89failure names exactly match local inventory. Exactly four reviewed .769 failures removed, no new failures. Pages37901812074 succeeded. Live shell/version and unchanged Face direct/Pencil Orbit gate/direct Bevel/frozenBeta6 version byte-match tested checkout. Focused168PASS. User .769 PASS recorded; device .770 light sanity pending.
+
+
+## .771 — Add+ density and 3D Text — 2026-10-09
+
+Parent main00b56f127f68619e736952ddbd7bd97d64ce8dfd. User requests Add+ X/Y face density
+and typed extruded Text as one scene object; last explicit acceptance .769 PASS,
+no .770 PASS inferred. Original primitive-ui/factory audited and extended, not
+parallel handlers. Six primitive settings use shared top-centre owner732, bounded
+X/Y sliders, Low/Medium/High presets, actual face/vertex counts and Apply/Cancel.
+Cube grids weld shared boundaries; cylinder/cone preserve n-gon caps and add height
+bands. Default factory APIs retain original counts. Existing Sweep/Revolve launchers
+retained. Apply captures/checkpoints actual Object history once and selects new object.
+
+New Text core uses Three Font/ShapeUtils and locally bundled unchanged licensed
+Helvetiker Regular from three@0.179.1. Word1–64, thickness0.01–100, curve detail1–16,
+depth bands1–32. All letters/detached parts form one editable object; contours and
+holes have oriented caps/sides, centredXY text extrudedZ. Blank/unsupported/bad
+thickness refuse; async font load completion ignores cancelled/replaced panel.
+Text is mesh geometry, not editable typography; no viewport preview promised.
+
+23 new tests:17 real topology/geometry including actual hole raycast, 6 actual
+Add UI/controller/Object-history behavior with controlled DOM/manager. Focused55PASS.
+Additional temporary real-DOM smoke passes shared wide layout/Text/Add/Undo/Redo.
+Whole-app browser QA unavailable (Chromium absent, installation download failed),
+so device touch/layout/render validation pending. Sweep legacy variable-spelling
+source check updated to current button expression with semantic routing coverage.
+FullNode24:2049tests/1960PASS/89FAIL/0skip; exactly same89 names as .770. No new
+failures/skips/exclusions/CI gate. Reviewed shell/recovery/AddUI/factory/Text/font771;
+all other protected pins/bytes unchanged, frozenBeta2–6 immutable. User device
+acceptance pending. Next return to scoped reliability unless user steers otherwise.
