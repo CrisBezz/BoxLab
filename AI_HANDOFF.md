@@ -4,8 +4,7 @@
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.775**. Last explicit user acceptance is **.774 PASS**.
-Parent main454a51cf1a3dda1607ac3b0526f697e7342b4b2a; .775 publication verification
-pending. .774 published895519977bcf9b3b971d911e204d24ceacc69f3b, Node22 CI2051/
+Parent main454a51cf1a3dda1607ac3b0526f697e7342b4b2a; .775 published and live-verified. .774 published895519977bcf9b3b971d911e204d24ceacc69f3b, Node22 CI2051/
 1967PASS/84FAIL/0skip and exact failure identities; Pages37934474546/live verified.
 All historical details and publication evidence remain in DEV_HISTORY.md and
 corresponding docs/reliability-build-*.md/JSON; this handoff describes current owners.
@@ -35,7 +34,7 @@ failure identities. Remaining81source-pattern/1version-pin active; classificatio
 do not prove all obsolete. No skips/exclusions/CI gate. Runtime and frozenBeta2–6
 unchanged; shell markers/recovery775 and corresponding two reviewed fixture URLs
 only. Topbar734/Export741/AddText771/Main762/Gate766/Gizmo759/Multi1.0/Loop715 kept.
-Publication/Node22/live verification pending. .775 device acceptance pending.
+Publication/Node22/live verified below. .775 device acceptance pending.
 Next remaining82 historical checks and scoped Bevel/Knife/Loop reliability; Add
 Vertex occasional picking/NOM import/Lasso tightening remain deferred.
 
@@ -202,3 +201,14 @@ inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
 real-group preservation. Remaining82 active failures visible until reconciled.
+
+## .775 publication verification — 2026-10-10
+
+Published release commit `4d10bedc73a627a128550232d2d60a5da6968070`,
+tree `e0fd3cb8b8dc2d3df7f63c754dacba4380b12bea` matches tested checkout.
+Actual Node22 Topology run38001174835/job114059327679:2052tests/1970PASS/82FAIL/
+0skip, all82 failure identities exactly match local inventory; no new failures.
+Pages38001174378 completed successfully. Fresh live index.html/version.json byte-
+match .775; unchanged topbar-layout.js/export-as-panel.js and frozenBeta6 version
+also match repository bytes. Focused29PASS. User .774 PASS; .775 device sanity
+pending. No runtime modelling/UI or frozen-beta changes.

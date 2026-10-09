@@ -4502,3 +4502,14 @@ Vertex occasional picking/NOM import/Lasso tightening remain deferred.
 Manual .775 sanity (runtime unchanged): confirm .775; File → edit name/switch
 Editable/Reference, OBJ/GLB and Base/SubD without menu closing; tap outside to close.
 Optional normal export should complete as before. Device acceptance is not inferred.
+
+## .775 publication verification — 2026-10-10
+
+Published release commit `4d10bedc73a627a128550232d2d60a5da6968070`,
+tree `e0fd3cb8b8dc2d3df7f63c754dacba4380b12bea` matches tested checkout.
+Actual Node22 Topology run38001174835/job114059327679:2052tests/1970PASS/82FAIL/
+0skip, all82 failure identities exactly match local inventory; no new failures.
+Pages38001174378 completed successfully. Fresh live index.html/version.json byte-
+match .775; unchanged topbar-layout.js/export-as-panel.js and frozenBeta6 version
+also match repository bytes. Focused29PASS. User .774 PASS; .775 device sanity
+pending. No runtime modelling/UI or frozen-beta changes.
