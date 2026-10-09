@@ -1,11 +1,37 @@
-# BoxLab AI Handoff — Gizmo validation
+# BoxLab AI Handoff — Hold terminal validation
 
 ## Current state — 2026-10-09
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.773**. Last explicit user acceptance is .772 PASS;
+Current build **v0.36.18.774**. Last explicit user acceptance is .773 PASS;
 .770 device sanity was pending when the user requested Add+ density and Text.
-Parent main a9a557ef. Publication verification pending for .773.
+Parent ee046392d0d9d3cd5e79957e98ed974f1983a28d. Publication verification pending for .774.
+
+## .774 — Component hold terminal routing validation — 2026-10-09
+
+User .773 PASS recorded. Parent ee046392d0d9d3cd5e79957e98ed974f1983a28d.
+Two .631 source checks expected only Face/Edge completion, but current main762
+also finishes Vertex at window capture. Replace exactly those two assertions with
+execution of actual registration callbacks: all three completions receive same
+physical event, once, in existing order, above a simulated consuming document owner.
+Explicit callback spies/control dispatch are not native browser propagation proof.
+Reuse existing .761 owner fixture for real Edge hold/timer/scrub/release/cancel:
+release keeps fixed-base current candidate; cancel restores previous selection;
+hold retires, no later timer effect, geometry/loose data/history unchanged.
+Original seven other .631 assertions and12 .761/.762 assertions retained. One new
+test rejects eight in-memory mutations: omitted Vertex/Face/Edge completion or late
+capture, independently on up/cancel. Runtime source never mutated. Initial .631
+9tests/7PASS/2FAIL; revised10PASS.63focusedPASS incl actual gate/paint/floating rails,
+scaffold/Grow/Shrink/Fill history, Gizmo/collapsed isolation and release contracts.
+Full Node24:2051tests/1967PASS/84FAIL/0skip; exactly two reviewed failures removed,
+no new identities against .7732050/1964/86. Remaining83source-pattern/1version-pin
+checks active; classifications do not prove all obsolete. No skips/exclusions/gate.
+Runtime/geometry/gesture files and frozenBeta2–6 unchanged. Only shell/recovery774
+and two reviewed fixture URLs advance. Main762/Gizmo759/Gate766/AddText771,
+protected Multi1.0/Loop715 retained. Publication/Node22/live verification pending.
+Next remaining84 historical checks and scoped Bevel/Knife/Loop reliability.
+Add Vertex occasional picking/NOM import/Lasso tightening deferred. No new feature
+qualification; optional hold sideways/release, UP/DOWN selection and navigation sanity.
 
 ## .773 — Gizmo asset and hit-proxy validation — 2026-10-09
 
@@ -94,10 +120,10 @@ results, not app bug counts. No exclusions/skips or CI gate; npm test remains fa
 
 ## Next task / outstanding issues
 
-User .772 PASS recorded; .773 validation-only device sanity pending. Continue
-remaining86 historical checks and scoped Bevel/Knife/Loop reliability. Existing
+User .773 PASS recorded; .774 validation-only device sanity pending. Continue
+remaining84 historical checks and scoped Bevel/Knife/Loop reliability. Existing
 .771 Add+ density/Text device checks have not been explicitly accepted separately;
-no new feature qualification needed for .773. Add Vertex occasional picking, NOM
+no new feature qualification needed for .774. Add Vertex occasional picking, NOM
 import and slight Lasso tightening remain deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
@@ -204,7 +230,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery773; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery774; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset/Face direct753;
 Through child751; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -241,7 +267,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining86 active failures visible until reconciled.
+real-group preservation. Remaining84 active failures visible until reconciled.
 
 ### .770 publication verification — 2026-10-09
 
