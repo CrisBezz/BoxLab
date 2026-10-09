@@ -4261,3 +4261,8 @@ Runtime b7bc824eaafb8b9cc109d27cb980b61946d1cf35 published. Actual Node22 Topolo
 - [ ] Visible .765: with an existing Edge selection, hold another edge and browse sideways; prior selection survives and old previews do not pile up.
 - [ ] Cancel restores prior selection; UP/DOWN Grow/Shrink keeps its result after release.
 - [ ] Floating scaffold outline → Close Face → Undo/Redo works; navigation resumes.
+
+
+### .765 publication verification — 2026-10-09
+
+Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology run37862651977/job113601797169:1972tests/1874PASS/98FAIL/0skip; all98failure names exactly match local inventory. Exactly four reviewed .764 failures resolved, no new failures. Pages37862651054 succeeded. Live shell/version and unchanged main/direct-Bevel/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused102PASS. Device .765 sanity pending.

@@ -8,4 +8,13 @@ Replacement coverage: fixed base plus current candidate on surfaced/wire cages; 
 
 Focused102PASS. FullNode24:1972tests/1874PASS/98FAIL/0skip. Exactly four named obsolete failures removed; no new failures. Inventory83source-pattern/14unclassified-behaviour/1version-pin remains active. No exclusions/skips or CI release gate. Next continue varied Bevel/Knife/Loop reliability and98 historical checks. Add Vertex unconfirmed picking, NOM import and Lasso tightening remain deferred. Device .765 sanity pending; no new feature qualification required.
 
-Publication verification pending.
+Reviewed replacements (all other35 checks remain active):
+
+| Historical expectation | Accepted behavior / replacement |
+| --- | --- |
+| .655 candidate preview replaces selection | Fixed base survives candidate changes on surfaced and wire cages, including release |
+| .655 old additive merge removed | Overlapping base deduplicated; previous candidates cannot accumulate |
+| .656 transactional preview retained (candidate-only source spelling) | Candidate probes restore selection; additive preview and Cancel preserve fixed base/history/geometry |
+| .657 candidate-only preview retained | Every incident face perimeter available; empty-base preview/release selects current candidate without geometry/history writes |
+
+Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology run37862651977/job113601797169:1972tests/1874PASS/98FAIL/0skip; all98failure names exactly match local inventory. Exactly four reviewed .764 failures resolved, no new failures. Pages37862651054 succeeded. Live shell/version and unchanged main/direct-Bevel/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused102PASS. Device .765 sanity pending.

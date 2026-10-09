@@ -5968,3 +5968,8 @@ User .764 PASS recorded. Current main parent0405e3ab2967abd3c5e4cc0d3fc0f6286ceb
 Replacement coverage: fixed base plus current candidate on surfaced/wire cages; overlap deduplication; no previous-preview accumulation; release retains result; every incident face perimeter discovered; candidate probes restore selection; cancel restores pre-hold selection; geometry/groups/creases and history/redo unchanged. Shared snapshot compares actual Map/Set values, avoiding JSON object/cache artifacts. Four deliberate mutations (preview base loss, accumulation, release base loss, omitted face perimeter) each rejected by behavioral replacements; source restored byte-for-byte. No runtime modelling/UI code changed; shell/recovery765 reviewed, all modelling pins/hashes unchanged.
 
 Focused102PASS. FullNode24:1972tests/1874PASS/98FAIL/0skip. Exactly four named obsolete failures removed; no new failures. Inventory83source-pattern/14unclassified-behaviour/1version-pin remains active. No exclusions/skips or CI release gate. Next continue varied Bevel/Knife/Loop reliability and98 historical checks. Add Vertex unconfirmed picking, NOM import and Lasso tightening remain deferred. Device .765 sanity pending; no new feature qualification required.
+
+
+### .765 publication verification — 2026-10-09
+
+Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology run37862651977/job113601797169:1972tests/1874PASS/98FAIL/0skip; all98failure names exactly match local inventory. Exactly four reviewed .764 failures resolved, no new failures. Pages37862651054 succeeded. Live shell/version and unchanged main/direct-Bevel/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused102PASS. Device .765 sanity pending.
