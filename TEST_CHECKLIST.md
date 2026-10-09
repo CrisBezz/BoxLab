@@ -4306,3 +4306,8 @@ Runtime85bc2cd65bf1f99f18a2ce823db7d62efd5859c8 published. ActualNode22 Topology
 - [ ] Visible .768: Edge Multi tap/drag/hold and scaffold Close Face stay reliable over background and bodies.
 - [ ] Pencil background navigation and selection recover after release/cancel; active tools keep ownership.
 - [ ] Vertex Bevel/Undo/Redo and shared Extrude axis chooser remain as accepted.
+
+
+### .768 publication verification — 2026-10-09
+
+Runtimed77866b4d110eb569de247a9b318e474203f9ab2 published. ActualNode22 Topology run37865322509/job113610547339:2007tests/1914PASS/93FAIL/0skip; all93failure names exactly match local inventory. Exactly five reviewed .767 failures resolved; no new failure identities. Pages37865321691 succeeded. Live shell/version and unchanged Pencil Orbit gate/Vertex Bevel/Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused107PASS. User .767 PASS recorded; device .768 sanity pending.

@@ -372,3 +372,8 @@ Runtimeb4d3270032543270603c5512ea205b883f0c8cca published. ActualNode22 Topology
 ### .767 publication verification — 2026-10-09
 
 Runtime85bc2cd65bf1f99f18a2ce823db7d62efd5859c8 published. ActualNode22 Topology run37863984676/job113606195654:2007tests/1909PASS/98FAIL/0skip; all98failure names exactly match local inventory and .766. Pages37863983873 succeeded. Live shell/version/updated direct Vertex Bevel and unchanged accepted Pencil Orbit gate/Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused156PASS. Device .767 acceptance pending.
+
+
+### .768 publication verification — 2026-10-09
+
+Runtimed77866b4d110eb569de247a9b318e474203f9ab2 published. ActualNode22 Topology run37865322509/job113610547339:2007tests/1914PASS/93FAIL/0skip; all93failure names exactly match local inventory. Exactly five reviewed .767 failures resolved; no new failure identities. Pages37865321691 succeeded. Live shell/version and unchanged Pencil Orbit gate/Vertex Bevel/Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused107PASS. User .767 PASS recorded; device .768 sanity pending.
