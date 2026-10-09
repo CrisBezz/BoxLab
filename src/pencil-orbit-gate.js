@@ -240,7 +240,8 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
 
   nativeAddEventListener('pointermove',event=>{
     if(event.pointerType!=='pen'||!pendingMeshOrbit||pendingMeshOrbit.pointerId!==event.pointerId)return;
-    if(globalThis.__boxlabLasso?.isArmed?.()||globalThis.__boxlabModelessSelection?.browsing?.(event.pointerId)||pendingMeshOrbit.floatingEdge&&(globalThis.__boxlabPaintSelectDebug?.pending?.()?.pointerId===event.pointerId||globalThis.__boxlabPaintSelectDebug?.active?.()?.pointerId===event.pointerId)){
+    // Edge paint owns this contact even when a body lies behind its picked rail.
+    if(globalThis.__boxlabLasso?.isArmed?.()||globalThis.__boxlabModelessSelection?.browsing?.(event.pointerId)||pendingMeshOrbit.selectionMode==='edge'&&(globalThis.__boxlabPaintSelectDebug?.pending?.()?.pointerId===event.pointerId||globalThis.__boxlabPaintSelectDebug?.active?.()?.pointerId===event.pointerId)){
       gestureDebug('PEN ORBIT DEFER YIELD HOLD',{pid:event.pointerId});
       pendingMeshOrbit=null;
       return;
@@ -361,7 +362,6 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         const multiEnabled=paintState?.multiEnabled?.()??null;
         const controlsEnabled=globalThis.__boxlabBridgeState?.controls?.enabled!==false;
         const lassoActive=!!globalThis.__boxlabLasso?.isArmed?.();
-        const floatingEdge=selectionMode==='edge'&&!!bridge?.pick?.('edge',event)&&!bridge?.pickObject?.(event);
         const blocked=!!meshHit||lassoActive;
         const modellingToolActive=faceToolActive||mainDirectActive||lassoActive;
         const deferred=blocked&&!modellingToolActive;
@@ -386,7 +386,6 @@ if (canvas && !canvas.__boxlabPencilOrbitGateInstalled) {
         if(deferred){
           pendingMeshOrbit={
             pointerId:event.pointerId,
-            floatingEdge,
             x:event.clientX,
             y:event.clientY,
             pageX:event.pageX,

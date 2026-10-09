@@ -2,7 +2,17 @@
 
 ## Current state — 2026-10-09
 
-Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build **v0.36.18.765**.
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build **v0.36.18.766**.
+
+## .766 — Edge paint ownership over body hits — 2026-10-09
+
+User .765 PASS, with remaining report: some Edge selection drags turn into Orbit. Parent main2298efe1d41598bcb3d340304dc8424c5ed6faec. Reproduced a confirmed handoff: .760 Orbit gate yielded to pending/active Edge paint only when no body lay behind the picked rail. A body hit allowed the earlier gate to steal both fast first movement and later movement after paint claimed at6px. Existing deferred gate now yields to matching-pointer Edge paint regardless of body backdrop. Removed obsolete floatingEdge bookkeeping/body probe; no new event owner or selection algorithm. Original .720 paint owner, main .762 holds, browser thresholds, semantic exits and navigation retained. Already-selected edges with no paint claim keep original idle navigation; this fix covers the reproduced paint takeover, not a blanket gesture rewrite.
+
+Extended original .760 whole-gate/paint fixture: seven new tests (loose rails over body horizontal/vertical pending/active, surfaced face-boundary pending/active cancellation, no-owner navigation across Edge/Face/Vertex). Baseline expanded suite14tests/8PASS/6FAIL; current14PASS. Original seven .760 floating tap/Lasso/hold/navigation assertions retained. Focused92PASS including actual scaffold/grow/shrink/perimeter/additive/cancel and shared Extrude/shell contract. FullNode24:1979tests/1881PASS/98FAIL/0skip; all98failure identities exactly .765. No skips/exclusions or CI release gate. Syntax/whitespace pass.
+
+Shell/recovery766 and Gate766 hash/pin reviewed; main762/paint720/Drawer-Lasso760/scaffold761/Bevel764/Knife763/Extrude759/Loop715/Multi1.0/frozenBeta2–6 unchanged. iPad .766 acceptance pending. Next confirm this selection fix, then varied Bevel/Knife/Loop reliability and98 historical checks. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
+
+### Accepted .765 baseline
 
 ## .765 — Edge hold test-contract reconciliation — 2026-10-09
 
@@ -10,7 +20,7 @@ User .764 PASS recorded. Current main parent0405e3ab2967abd3c5e4cc0d3fc0f6286ceb
 
 Replacement coverage: fixed base plus current candidate on surfaced/wire cages; overlap deduplication; no previous-preview accumulation; release retains result; every incident face perimeter discovered; candidate probes restore selection; cancel restores pre-hold selection; geometry/groups/creases and history/redo unchanged. Shared snapshot compares actual Map/Set values, avoiding JSON object/cache artifacts. Four deliberate mutations (preview base loss, accumulation, release base loss, omitted face perimeter) each rejected by behavioral replacements; source restored byte-for-byte. No runtime modelling/UI code changed; shell/recovery765 reviewed, all modelling pins/hashes unchanged.
 
-Focused102PASS. FullNode24:1972tests/1874PASS/98FAIL/0skip. Exactly four named obsolete failures removed; no new failures. Inventory83source-pattern/14unclassified-behaviour/1version-pin remains active. No exclusions/skips or CI release gate. Next continue varied Bevel/Knife/Loop reliability and98 historical checks. Add Vertex unconfirmed picking, NOM import and Lasso tightening remain deferred. Device .765 sanity pending; no new feature qualification required.
+Focused102PASS. FullNode24:1972tests/1874PASS/98FAIL/0skip. Exactly four named obsolete failures removed; no new failures. Inventory83source-pattern/14unclassified-behaviour/1version-pin remains active. No exclusions/skips or CI release gate. Next continue varied Bevel/Knife/Loop reliability and98 historical checks. Add Vertex unconfirmed picking, NOM import and Lasso tightening remain deferred. User .765 PASS recorded2026-10-09; remaining Edge drag/Orbit report tracked in .766.
 
 ### Accepted .764 baseline
 
@@ -92,7 +102,7 @@ per real face; missing labels equal null, extraneous labels ignored. Changed lab
 invalidate stale preview/Apply. Geometry/history unchanged. Focused121PASS;
 full1896/1794/102/0, actualNode22 run37750469278/job113222151677 matches names.
 Pages37750468365 success, live bytes verified.
-Current priority after .765 sanity: Bevel/Knife/Loop reliability and98
+Current priority after .766 selection checks: Bevel/Knife/Loop reliability and98
 historical active failing checks. Add Vertex unconfirmed picking, NOM import and
 Lasso tightening deferred; Beta2–6 immutable. No CI gate or exclusions.
 
@@ -292,7 +302,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .765; Knife .763; main .762; scaffold-helper .761; Gate/Drawer/Lasso .760; total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .764; Knife .763; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .766; Knife .763; main .762; scaffold-helper .761; Gate .766; Drawer/Lasso .760; total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .764; Knife .763; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -317,7 +327,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .765 sanity-check additive Edge hold browsing, Cancel/Grow/Shrink and scaffold Close Face. Add Vertex remains a deferred, unconfirmed report.
+For .766 check fast/repeated Edge paint over bodies and floating rails, held browsing/Grow/Shrink and background/finger navigation. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.
@@ -330,4 +340,4 @@ Runtime b7bc824eaafb8b9cc109d27cb980b61946d1cf35 published. Actual Node22 Topolo
 
 ### .765 publication verification — 2026-10-09
 
-Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology run37862651977/job113601797169:1972tests/1874PASS/98FAIL/0skip; all98failure names exactly match local inventory. Exactly four reviewed .764 failures resolved, no new failures. Pages37862651054 succeeded. Live shell/version and unchanged main/direct-Bevel/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused102PASS. Device .765 sanity pending.
+Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology run37862651977/job113601797169:1972tests/1874PASS/98FAIL/0skip; all98failure names exactly match local inventory. Exactly four reviewed .764 failures resolved, no new failures. Pages37862651054 succeeded. Live shell/version and unchanged main/direct-Bevel/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused102PASS. User .765 PASS recorded2026-10-09; remaining Edge drag/Orbit report tracked in .766.

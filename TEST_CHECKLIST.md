@@ -4266,3 +4266,13 @@ Runtime b7bc824eaafb8b9cc109d27cb980b61946d1cf35 published. Actual Node22 Topolo
 ### .765 publication verification — 2026-10-09
 
 Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology run37862651977/job113601797169:1972tests/1874PASS/98FAIL/0skip; all98failure names exactly match local inventory. Exactly four reviewed .764 failures resolved, no new failures. Pages37862651054 succeeded. Live shell/version and unchanged main/direct-Bevel/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused102PASS. Device .765 sanity pending.
+
+
+## v0.36.18.766 — Edge selection paint versus Orbit
+
+- [x] User .765 PASS with remaining Edge selection drag→Orbit report; no blanket gesture PASS inferred.
+- [x] Actual gate/paint baseline14/8PASS/6FAIL; repaired14PASS. Seven new cases; original seven .760 assertions unchanged. Pending/active body-backed rails, horizontal/vertical and surfaced boundary cancellation covered.
+- [x] Existing actual scaffold/vertical-release/selection/Extrude and shell checks92PASS. Full1979/1881PASS/98FAIL/0skip; exact .765 failures, no exclusions. Navigation with no paint claim retained.
+- [ ] Visible .766: Multi Edge Pencil drag across edges over a body and floating rails keeps selection ownership; try quick movement and a small move followed by a longer drag.
+- [ ] Edge hold → sideways candidates and UP/DOWN Grow/Shrink retain results on release; floating Close Face still works.
+- [ ] Pencil background Orbit and finger Orbit/pan/pinch still work, keeping selections; no stuck controls after selection drag/cancel.

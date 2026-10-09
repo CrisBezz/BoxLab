@@ -5,8 +5,8 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import {EditableMesh} from '../src/mesh.js';
 import {vertexRuntime} from './helpers/vertex-extrude-runtime.mjs';
-function fixture(){
- const m=new EditableMesh([[-1,0,0],[1,0,0],[-1,1,0],[1,1,0]],[]);m.addLooseEdge(0,1);m.addLooseEdge(2,3);
+function fixture(mesh=null){
+ const m=mesh||new EditableMesh([[-1,0,0],[1,0,0],[-1,1,0],[1,1,0]],[]);if(!mesh){m.addLooseEdge(0,1);m.addLooseEdge(2,3);}
  const f=vertexRuntime(m,[]),c=f.context;f.setMode('edge');let orbitDown=0,orbitMove=0;
  c.document.createElementNS=c.document.createElement;c.document.body=f.fields.get('#viewportWrap');
  const multi=c.document.body.querySelector('multi');multi.checked=true;f.fields.set('#multiSelectToggle',multi);const depth=c.document.body.querySelector('depth');depth.dataset.paintDepth='visible';f.fields.set('#paintSelectDepth [data-paint-depth].active',depth);
@@ -48,4 +48,22 @@ test('stationary floating Edge tap while Lasso armed keeps mode/selection; real 
 });
 test('empty-space Pencil navigation and finger Orbit remain available around floating edges',()=>{
  const f=fixture();f.pointer('pointerdown',{clientX:990,clientY:590});assert.equal(f.orbit().down,1);f.pointer('pointermove',{clientX:940,clientY:550});assert.ok(f.orbit().move>0);f.pointer('pointerup',{clientX:940,clientY:550});f.pointer('pointerdown',{clientX:500,clientY:300,pointerType:'touch'});assert.equal(f.orbit().down,2);
+});
+
+// .766: a body behind the same rail must not change its paint ownership.
+for(const direction of ['horizontal','vertical'])for(const phase of ['pending','active'])test(`Edge paint ${phase} ${direction} drag over a body cannot become Orbit`,()=>{
+ const f=fixture();f.body(new THREE.Vector3(0,0,-1));const p=f.screen(new THREE.Vector3());
+ f.pointer('pointerdown',{clientX:p.x,clientY:p.y});assert.equal(f.context.__boxlabPaintSelectDebug.pending()?.type,'edge');
+ if(phase==='active'){f.pointer('pointermove',{clientX:p.x+6,clientY:p.y});assert.equal(f.context.__boxlabPaintSelectDebug.active()?.type,'edge');}
+ const q=direction==='horizontal'?{x:p.x+50,y:p.y}:f.screen(new THREE.Vector3(0,1,0));
+ f.pointer('pointermove',{clientX:q.x,clientY:q.y});assert.equal(f.context.__boxlabPaintSelectDebug.active()?.type,'edge');assert.equal(f.orbit().down,0);assert.equal(f.events.some(e=>e.type==='boxlab-pencil-orbit-claim'),false);
+ if(direction==='vertical')assert.ok(f.ids().includes(1));
+ f.pointer('pointerup',{clientX:q.x,clientY:q.y});assert.equal(f.context.__boxlabPaintSelectDebug.active(),null);assert.equal(f.context.__boxlabPaintSelectDebug.pending(),null);assert.equal(f.history.undoStack.length,0);
+});
+for(const phase of ['pending','active'])test(`surfaced face-boundary Edge ${phase} paint keeps ownership across later movement`,()=>{
+ const m=new EditableMesh([[-1,0,0],[1,0,0],[-1,1,0],[1,1,0]],[[0,1,3,2]]),f=fixture(m);f.body(new THREE.Vector3(0,0,-1));const p=f.screen(new THREE.Vector3()),q=f.screen(new THREE.Vector3(0,1,0));
+ f.pointer('pointerdown',{clientX:p.x,clientY:p.y});assert.equal(f.context.__boxlabPaintSelectDebug.pending()?.type,'edge');if(phase==='active')f.pointer('pointermove',{clientX:p.x+6,clientY:p.y});f.pointer('pointermove',{clientX:q.x,clientY:q.y});assert.equal(f.context.__boxlabPaintSelectDebug.active()?.type,'edge');assert.ok(f.ids().includes(2));assert.equal(f.orbit().down,0);f.pointer('pointercancel',{clientX:q.x,clientY:q.y});assert.equal(f.context.__boxlabPaintSelectDebug.active(),null);assert.equal(f.context.__boxlabPencilOrbitDebug.snapshot().pendingMeshOrbit,null);assert.equal(f.history.undoStack.length,0);
+});
+test('Edge single selection and non-Edge idle Pencil mesh drags still defer to Orbit when no selection owner claims them',()=>{
+ for(const mode of ['edge','face','vertex']){const f=fixture();f.body(new THREE.Vector3(0,0,-1));f.setMode(mode);f.multi.checked=false;const p=f.screen(new THREE.Vector3());f.pointer('pointerdown',{clientX:p.x,clientY:p.y});f.pointer('pointermove',{clientX:p.x+50,clientY:p.y});assert.equal(f.orbit().down,1,mode);f.pointer('pointerup',{clientX:p.x+50,clientY:p.y});}
 });

@@ -354,9 +354,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/pencil-orbit-gate.js?v=0.36.18.760",
+      "url": "./src/pencil-orbit-gate.js?v=0.36.18.766",
       "target": "src/pencil-orbit-gate.js",
-      "sha256": "8de049b6fca79fd3217c8b17158d178a9fa6f764bb65098fa08048810693c980"
+      "sha256": "e19958cbb1b4d5e3285dd1c9b4c74724d4214c472c189bd7b9833d8c520b419c"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.765",
+      "url": "./src/release-bootstrap.js?v=0.36.18.766",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.765",
+      "url": "./src/release-version.js?v=0.36.18.766",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },

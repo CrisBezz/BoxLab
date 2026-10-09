@@ -5973,3 +5973,12 @@ Focused102PASS. FullNode24:1972tests/1874PASS/98FAIL/0skip. Exactly four named o
 ### .765 publication verification — 2026-10-09
 
 Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology run37862651977/job113601797169:1972tests/1874PASS/98FAIL/0skip; all98failure names exactly match local inventory. Exactly four reviewed .764 failures resolved, no new failures. Pages37862651054 succeeded. Live shell/version and unchanged main/direct-Bevel/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused102PASS. Device .765 sanity pending.
+
+
+## .766 — Edge paint ownership over body hits — 2026-10-09
+
+User .765 PASS, with remaining report: some Edge selection drags turn into Orbit. Parent main2298efe1d41598bcb3d340304dc8424c5ed6faec. Reproduced a confirmed handoff: .760 Orbit gate yielded to pending/active Edge paint only when no body lay behind the picked rail. A body hit allowed the earlier gate to steal both fast first movement and later movement after paint claimed at6px. Existing deferred gate now yields to matching-pointer Edge paint regardless of body backdrop. Removed obsolete floatingEdge bookkeeping/body probe; no new event owner or selection algorithm. Original .720 paint owner, main .762 holds, browser thresholds, semantic exits and navigation retained. Already-selected edges with no paint claim keep original idle navigation; this fix covers the reproduced paint takeover, not a blanket gesture rewrite.
+
+Extended original .760 whole-gate/paint fixture: seven new tests (loose rails over body horizontal/vertical pending/active, surfaced face-boundary pending/active cancellation, no-owner navigation across Edge/Face/Vertex). Baseline expanded suite14tests/8PASS/6FAIL; current14PASS. Original seven .760 floating tap/Lasso/hold/navigation assertions retained. Focused92PASS including actual scaffold/grow/shrink/perimeter/additive/cancel and shared Extrude/shell contract. FullNode24:1979tests/1881PASS/98FAIL/0skip; all98failure identities exactly .765. No skips/exclusions or CI release gate. Syntax/whitespace pass.
+
+Shell/recovery766 and Gate766 hash/pin reviewed; main762/paint720/Drawer-Lasso760/scaffold761/Bevel764/Knife763/Extrude759/Loop715/Multi1.0/frozenBeta2–6 unchanged. iPad .766 acceptance pending. Next confirm this selection fix, then varied Bevel/Knife/Loop reliability and98 historical checks. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
