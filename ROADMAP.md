@@ -12,7 +12,7 @@ cutter seam cleanup repaired: conform partition edges/cancel internal seams for
 convex unions; retain conservative hole/concave behavior. Supplied shallow recess
 now one quad cap/four walls110verts114faces vs149/123.13new/84focusedPASS;
 full2068/2013PASS/55FAIL/0skip, same55 failure identities. Runtime Through kernel
-plus Face import cache779 only; frozenBeta unchanged. Publication pending.
+plus Face import cache779 only; frozenBeta unchanged. Publication/live verified.
 Confirm supplied-model device cut, then remaining55 checks and scoped Bevel/Knife/
 Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 
@@ -516,3 +516,13 @@ Actual Node22 Topology run38005274839/job114072505737:2055tests/2000PASS/55FAIL/
 Fresh live index.html/version.json, unchanged Face/main owners and frozenBeta6
 version byte-match repository. Focused65PASS. User .777 PASS recorded; .778 device
 sanity pending. Runtime/frozenBeta unchanged.
+
+## .779 publication verification — 2026-10-10
+
+Release commit `5b24a307f9239286ece4d9947ad6a3f79dfb5542`, tree
+`7fc73ef19749c57ec1c910724af03851d6f84905` matches tested checkout.
+Actual Node22 Topology run38006619712/job114076765987:2068tests/2013PASS/55FAIL/
+0skip; all55 failure names exactly match local inventory and778. Pages38006618687
+succeeded. Fresh live index/version/kernel/Face import owner, unchanged main and
+frozenBeta6 version byte-match repository.84focusedPASS. User .778 PASS recorded;
+.779 supplied-model device acceptance pending.

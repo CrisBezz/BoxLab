@@ -4706,3 +4706,13 @@ another inward/outward pull and normal background navigation.
 
 Source SHA256 before a6d3ca81e70ee50c11c25edb331263a4b34eddce325f61ad894662c3c3dd78b2;
 after70c0f4d27ed0f0cc5d9cee01ceeb05f0fbb777436546c761312564c811aff235.
+
+## .779 publication verification — 2026-10-10
+
+Release commit `5b24a307f9239286ece4d9947ad6a3f79dfb5542`, tree
+`7fc73ef19749c57ec1c910724af03851d6f84905` matches tested checkout.
+Actual Node22 Topology run38006619712/job114076765987:2068tests/2013PASS/55FAIL/
+0skip; all55 failure names exactly match local inventory and778. Pages38006618687
+succeeded. Fresh live index/version/kernel/Face import owner, unchanged main and
+frozenBeta6 version byte-match repository.84focusedPASS. User .778 PASS recorded;
+.779 supplied-model device acceptance pending.
