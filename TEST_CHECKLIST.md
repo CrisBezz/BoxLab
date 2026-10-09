@@ -4613,3 +4613,14 @@ Add Vertex occasional picking/NOM import/Lasso tightening deferred.
 Manual .777 sanity (runtime unchanged): confirm .777; deliberately select a Face
 (or several) and use Extrude/Inset; try Exact and Repeat on another Face, with normal
 Undo/Redo and background navigation. No synthetic overlap fixture recreation needed.
+
+## .777 publication verification — 2026-10-10
+
+Published release commit `681821cd6abce11b739c4fcbf17372e06711151a`,
+tree `84fc0d230d4cdb38f38b6db20d8b6fa8ef6d6f1a` matches tested checkout.
+Actual Node22 Topology run38004448143/job114069891788:2054tests/1990PASS/64FAIL/
+0skip; all64 failure names exactly match local inventory, no new failures.
+Pages38004447563 completed successfully. Fresh live .777 index.html/version.json
+byte-match; unchanged multi-face-direct.js/uniform-inset.js and frozenBeta6 version
+also match repository bytes. Focused148PASS. User .776 PASS recorded; .777 device
+sanity pending. Runtime/frozenBeta unchanged.

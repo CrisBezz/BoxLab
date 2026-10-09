@@ -40,3 +40,14 @@ reviewed fixture URLs only. Main762/Face+Inset753/Gate766/Bevel769/Knife763/AddT
 Gizmo759/Multi1.0/Loop715 retained. Publication/Node22/live pending; .777 device
 sanity pending. Next remaining64 checks and scoped Bevel/Knife/Loop reliability.
 Add Vertex occasional picking/NOM import/Lasso tightening deferred.
+
+## .777 publication verification — 2026-10-10
+
+Published release commit `681821cd6abce11b739c4fcbf17372e06711151a`,
+tree `84fc0d230d4cdb38f38b6db20d8b6fa8ef6d6f1a` matches tested checkout.
+Actual Node22 Topology run38004448143/job114069891788:2054tests/1990PASS/64FAIL/
+0skip; all64 failure names exactly match local inventory, no new failures.
+Pages38004447563 completed successfully. Fresh live .777 index.html/version.json
+byte-match; unchanged multi-face-direct.js/uniform-inset.js and frozenBeta6 version
+also match repository bytes. Focused148PASS. User .776 PASS recorded; .777 device
+sanity pending. Runtime/frozenBeta unchanged.

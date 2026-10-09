@@ -11,7 +11,7 @@ User .776 PASS. Validation-only .777 reconciles eleven historical Face targeting
 working-set/Exact/replay assertions using current owners and real selected raycast/
 geometry/history. Ten mutations rejected;148focusedPASS. Full2054/1990PASS/64FAIL/
 0skip; exactly eleven reviewed failures removed, no new identities. Runtime/frozen
-Beta unchanged; publication pending. Next remaining64 historical checks and scoped
+Beta unchanged; .777 publication/live verified. Next remaining64 checks and scoped
 Bevel/Knife/Loop reliability. Add+ density/Text771 implemented; separate acceptance
 not explicitly recorded. Add Vertex/NOM import/Lasso tightening deferred.
 
