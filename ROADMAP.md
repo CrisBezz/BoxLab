@@ -17,6 +17,10 @@ one-object transforms, Cancel and Undo/Redo. Then resume Bevel/Knife/Loop reliab
 and remaining89 historical checks. Protected interactions and frozenBeta6 unchanged;
 Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
 
+Publication verified: .771 runtimeba54fd977437696266f6cc1b9ac890beb4b47ba6;
+Node22 CI2049/1960PASS/89FAIL/0skip, exact local identities; Pages37907016763
+success, changed live assets/font byte-match. Device acceptance pending.
+
 ## Beta 6 delivery refinement — .736
 
 .735 user PASS. NOMAD now follows validated MeshUtilz browser-download/preview

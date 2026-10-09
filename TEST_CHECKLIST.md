@@ -4364,3 +4364,8 @@ exact .770 failure identities. Additional actual-DOM/shared-layout/history smoke
 passes; controlled DOM/manager owner tests and real geometry are not whole-app
 WebGL/touch evidence. Local Chromium unavailable, installation failed; visual/iPad
 acceptance pending. No frozenBeta or protected modelling/gesture edits.
+
+.771 deployment verified: runtimeba54fd977437696266f6cc1b9ac890beb4b47ba6,
+Node22 CI2049/1960PASS/89FAIL/0skip with exact local failure identities; Pages
+37907016763 success. Live shell/version/AddUI/factory/Text/font/Beta6 markers
+byte-match tested source. Device acceptance remains pending.

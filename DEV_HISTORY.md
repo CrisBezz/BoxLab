@@ -6076,3 +6076,13 @@ FullNode24:2049tests/1960PASS/89FAIL/0skip; exactly same89 names as .770. No new
 failures/skips/exclusions/CI gate. Reviewed shell/recovery/AddUI/factory/Text/font771;
 all other protected pins/bytes unchanged, frozenBeta2–6 immutable. User device
 acceptance pending. Next return to scoped reliability unless user steers otherwise.
+
+
+### .771 publication verification — 2026-10-09
+
+Runtimeba54fd977437696266f6cc1b9ac890beb4b47ba6 published. ActualNode22 Topology
+run37907016801/job113742810182:2049tests/1960PASS/89FAIL/0skip; all89 failure names
+exactly match local .771 inventory and .770. Pages37907016763 succeeded. Live
+shell/version/AddUI/factory/Text/font and unchanged frozenBeta6 version byte-match
+tested checkout. Focused55PASS; actual-DOM/shared-layout/history smoke passes.
+User .771 device acceptance pending. Last explicit PASS remains .769.

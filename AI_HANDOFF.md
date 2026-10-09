@@ -206,3 +206,13 @@ real-group preservation. Remaining89 active failures visible until reconciled.
 ### .770 publication verification — 2026-10-09
 
 Runtime499e377a3a8889a5f4d03b450b9355396eb29ff3 published. ActualNode22 Topology run37901813205/job113725877011:2026tests/1937PASS/89FAIL/0skip; all89failure names exactly match local inventory. Exactly four reviewed .769 failures removed, no new failures. Pages37901812074 succeeded. Live shell/version and unchanged Face direct/Pencil Orbit gate/direct Bevel/frozenBeta6 version byte-match tested checkout. Focused168PASS. User .769 PASS recorded; device .770 light sanity pending.
+
+
+### .771 publication verification — 2026-10-09
+
+Runtimeba54fd977437696266f6cc1b9ac890beb4b47ba6 published. ActualNode22 Topology
+run37907016801/job113742810182:2049tests/1960PASS/89FAIL/0skip; all89 failure names
+exactly match local .771 inventory and .770. Pages37907016763 succeeded. Live
+shell/version/AddUI/factory/Text/font and unchanged frozenBeta6 version byte-match
+tested checkout. Focused55PASS; actual-DOM/shared-layout/history smoke passes.
+User .771 device acceptance pending. Last explicit PASS remains .769.
