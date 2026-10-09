@@ -43,7 +43,7 @@ export function faceRuntime(m,ids,{fallback=false}={}){
   const owner=context.testOwner;
   const event=(type,x=400,y=300)=>({type,target:get('#viewport'),pointerId:22,isPrimary:true,clientX:x,clientY:y,preventDefault(){},stopImmediatePropagation(){}});
   const pointerDispatch=e=>{
-    e.target=get('#viewport');e.stopped=false;e.preventDefault=()=>{};e.stopImmediatePropagation=()=>{e.stopped=true;};
+    e.target=get('#viewport');e.stopped=false;e.preventDefault=()=>{e.prevented=true;};e.stopImmediatePropagation=()=>{e.stopped=true;};
     for(const fn of windowHandlers.get(e.type)||[]){fn(e);if(e.stopped)return;}
     for(const fn of documentHandlers.get(e.type)||[]){fn(e);if(e.stopped)return;}
   };
@@ -54,7 +54,7 @@ export function faceRuntime(m,ids,{fallback=false}={}){
     const fallbackSource=fs.readFileSync(new URL('../../src/sequential-through-fallback.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
     vm.runInContext('(function(){'+fallbackSource+'\n})()',context);
   }
-  return {history,state,events,selected:()=>selected,api:context.__boxlabFaceDirect,owner,
+  return {history,state,events,context,elements,pointer:(type,extra={})=>{const e={...event(type),...extra};pointerDispatch(e);return e;},selected:()=>selected,api:context.__boxlabFaceDirect,owner,
     physicalCut(distance,type='pointerup'){
       owner.setTool('extrude');pointerDispatch(event('pointerdown'));
       const normal=context.projectedNormal(m,{normal:m.faceNormal(ids[0]),regionVertices:m.faces[ids[0]]},camera),sign=Math.sign(distance),x=400+normal.x*9*sign,y=300+normal.y*9*sign;

@@ -3,24 +3,24 @@
 ## Current state — 2026-10-09
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.769**. User .768 PASS recorded2026-10-09.
-Parent main48a2f77598ff469828a1bd593b155047423e5ff9; accepted .768 runtime
-d77866b4d110eb569de247a9b318e474203f9ab2. Final publication references below.
+Current build **v0.36.18.770**. User .769 PASS recorded2026-10-09.
+Parent main0079917b8016a0679cc403267a31fbfbec3943ea; accepted .769 runtime
+7f0469d5eb8874db98d5ba795237dd986b43db14. Final publication references below.
 
-## .769 — Face Bevel active-object and selection ownership — 2026-10-09
+## .770 — Face background / Orbit registration validation — 2026-10-09
 
-User .768 PASS recorded. Parent main48a2f77598ff469828a1bd593b155047423e5ff9. User clarifies the scaffold-cap action is Fill Face; use this actual Edge radial label rather than Close Face. Existing controller src/direct-bevel.js owns Face blue previews and Edge live drags. Face session validated mesh/mode/lock/selection but omitted active object identity, unlike Edge ownership. Switching active object while retaining a shared mesh allowed stale preview/Apply/drag continuation. Cancel also restored old Face IDs over a newer selection or locked context.
+User .769 PASS recorded. Parent main0079917b8016a0679cc403267a31fbfbec3943ea. Validation-only build: three .652 source checks sliced the Pencil background branch at its first pendingBackgroundPress assignment, before the behavior they intended to inspect; one .647 routing check required superseded binary mesh/background routing. Replaced exactly these four checks one-for-one with actual-owner behavior; other21 historical assertions retained.
 
-Capture activeId in Face session and compare in existing faceContextValid. Cancel determines selection ownership before disarm and restores only a still-valid session selection. No new controller/gesture owner; original source comparator, kernels, picker, thresholds, blue preview/Apply, Edge repeat and history unchanged. Invalid object/selection contexts refuse stale Apply; existing panel sync/drag cancellation retires preview, releases capture and restores controls without touching newer mesh/selection/history.
+Reuse existing whole multi-face-direct/real-kernel fixture with optional context/elements/pointer exposure and read-only preventDefault evidence. Existing negative-cut assertions unchanged; DOM/picking are controlled doubles. Cover Extrude and Inset Pencil background disarm without capture/consumption, current mesh/selection/history/redo retention, actual pending Face/background presses and queued tool-selection capture cleared before old releases, semantic exclusive yield/debug metadata, and touch background retaining the tool. Reuse whole Gate/Paint fixture for anonymous explicitly registered and named fallback Orbit listeners: mesh intent defers until movement, background forwards immediately, unrelated anonymous listeners remain independent. One authoritative deferred Orbit down callback is retained; do not expect multiple competing Orbit owners to replay together.
 
-New19 actual whole-controller/viewport-panel checks with real Bevel kernels and rendering-preview objects; pointer picking/DOM are controlled doubles. Initial15-case baseline6PASS/9FAIL; all19 nowPASS, including same-mesh active-object transitions, Apply/slider/press/move/release/cancel, current selection/lock/mesh/mode preservation, panel sync and fresh relaunch, single/multi-Face normal Apply/Cancel, exact Undo/Redo and capture/control/ghost cleanup. Focused231PASS (226 nearby modelling/selection cases plus5 release-contract checks). FullNode24:2026tests/1933PASS/93FAIL/0skip; all93failure identities exactly .768. No skips/exclusions or CI gate. Syntax/whitespace pass.
+Five deliberate source mutations (Face disarm, latent presses, queued tool selection, semantic yield and anonymous registration) rejected by replacement behavioral checks; restored byte-for-byte. No runtime source/UI/geometry changes, no new event owners. Focused168PASS. Initial historical25tests/21PASS/4FAIL; revised25PASS. FullNode24:2026tests/1937PASS/89FAIL/0skip; exactly four reviewed .769 failures removed, no new failure identities. Remaining89 checks active (83 source-pattern/5 unclassified-behaviour/1 version-pin), no exclusions/skips/CI gate.
 
-Shell/recovery769 and single direct-Bevel769 index pin/hash reviewed. Vertex Bevel767/Gate766/Knife763/main762/scaffold761/Extrude759/Loop715/Multi1.0 and frozenBeta2–6 unchanged. Device .769 Face Bevel sanity pending. Next varied Bevel/Knife/Loop reliability and remaining93 historical checks; Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
+Shell/recovery770 reviewed; all modelling hashes/pins unchanged: direct Bevel769/Vertex Bevel767/Gate766/Knife763/main762/scaffold761/Extrude759/Loop715/Multi1.0/frozenBeta2–6. Device .770 light sanity pending; no new feature qualification. Next varied Bevel/Knife/Loop reliability and remaining89 historical checks. Add Vertex unconfirmed picking/NOM import/Lasso tightening remain deferred. Use Fill Face for scaffold caps.
 
 ## Next task / outstanding issues
 
-Await .769 Face Bevel iPad sanity, then continue scoped Bevel/Knife/Loop reliability
-and the active93 historical failing checks. Counts are test results, not app bug counts.
+Await .770 light iPad sanity, then continue scoped Bevel/Knife/Loop reliability
+and the active89 historical failing checks. Counts are test results, not app bug counts.
 Do not revert accepted runtime to match obsolete source expectations; reconcile
 intended behavior and real owners with semantic coverage. No CI release gate or
 exclusions are installed; npm test remains failing until genuinely reconciled.
@@ -62,6 +62,11 @@ Lasso tightening remain deferred. No broad device requalification requested.
 ## Recent reliability work / accepted owners
 
 See DEV_HISTORY.md and docs/reliability-build-*.md/JSON for full evidence and commits.
+
+.769 user PASS: Face Bevel captures activeId, rejects stale previews/Apply/drag
+when another object shares the mesh; Cancel restores only owned selection.19new
+checks/231focusedPASS; full2026/1933PASS/93FAIL/0skip. Runtime7f0469d5eb8874db98d5ba795237dd986b43db14,
+Node22 run37893155389/job113698392066 matched93 names; Pages37893154964 success.
 
 .768 user PASS: five obsolete .646/.648/.650/.651 Pencil/Orbit source expectations
 replaced one-for-one with owner behavior, other43 historical assertions and all14
@@ -127,7 +132,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery769; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery770; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset/Face direct753;
 Through child751; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -164,9 +169,4 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining93 active failures visible until reconciled.
-
-
-### .769 publication verification — 2026-10-09
-
-Runtime7f0469d5eb8874db98d5ba795237dd986b43db14 published. ActualNode22 Topology run37893155389/job113698392066:2026tests/1933PASS/93FAIL/0skip; all93failure names exactly match local inventory and .768. Pages37893154964 succeeded. Live shell/version/updated direct Bevel and unchanged Vertex Bevel/Pencil Orbit gate/frozenBeta6 version byte-match tested checkout. Focused231PASS. User .768 PASS recorded; device .769 Face Bevel sanity pending.
+real-group preservation. Remaining89 active failures visible until reconciled.

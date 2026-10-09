@@ -4318,11 +4318,20 @@ Runtimed77866b4d110eb569de247a9b318e474203f9ab2 published. ActualNode22 Topology
 - [x] User .768 PASS recorded2026-10-09. Fill Face is the scaffold-cap action, reusing #fillFaceBtn.
 - [x] Initial15-case baseline6PASS/9FAIL;19 current owner/panel/kernel cases pass. Active-object change with same mesh refuses stale preview/Apply/press; drag terminals/panel sync clean capture/controls/ghosts. Cancel preserves newer Face IDs and mesh/context/history.
 - [x] Focused231PASS; full2026/1933PASS/93FAIL/0skip with exact .768 failures. Bevel kernel/Edge repeat and all unrelated pins unchanged; no exclusions/skips.
-- [ ] Visible .769: single/connected multi-Face Bevel Pencil and Width preview → Apply commits once; Undo/Redo restores source/result.
-- [ ] Face Bevel Cancel leaves original mesh/selection; a fresh Face selection can launch Bevel again and navigation resumes.
-- [ ] Edge/Vertex Bevel and subsequent supported Knife/Loop work as accepted.
+- [x] Visible .769: single/connected multi-Face Bevel Pencil and Width preview → Apply commits once; Undo/Redo restores source/result.
+- [x] Face Bevel Cancel leaves original mesh/selection; a fresh Face selection can launch Bevel again and navigation resumes.
+- [x] Edge/Vertex Bevel and subsequent supported Knife/Loop work as accepted.
 
 
 ### .769 publication verification — 2026-10-09
 
 Runtime7f0469d5eb8874db98d5ba795237dd986b43db14 published. ActualNode22 Topology run37893155389/job113698392066:2026tests/1933PASS/93FAIL/0skip; all93failure names exactly match local inventory and .768. Pages37893154964 succeeded. Live shell/version/updated direct Bevel and unchanged Vertex Bevel/Pencil Orbit gate/frozenBeta6 version byte-match tested checkout. Focused231PASS. User .768 PASS recorded; device .769 Face Bevel sanity pending.
+
+
+## v0.36.18.770 — Face background / Orbit registration checks
+
+- [x] User .769 PASS recorded2026-10-09.
+- [x] Exactly four obsolete checks replaced; other21 historical checks and existing negative-cut assertions retained. Whole owners/real kernels; DOM/picking/Orbit callbacks remain controlled doubles, not browser proof.
+- [x] Five deliberate source mutations caught by behavioral replacements; runtime source restored byte-for-byte. Focused168PASS/full2026/1937PASS/89FAIL/0skip, four reviewed failures removed/no new failures/no exclusions. All modelling pins/hashes unchanged.
+- [ ] Visible .770: Face Extrude/Inset background Pencil exit and subsequent navigation remain as accepted.
+- [ ] Face/Edge selection and Face Bevel Apply/Cancel/Undo/Redo remain as accepted.
