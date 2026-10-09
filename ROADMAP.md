@@ -9,7 +9,8 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 
 Validation-only .772 corrects the Join Coplanar loader assertion to Drawer; all
 runtime source unchanged. Full2049/1961PASS/88FAIL/0skip, one reviewed failure
-removed, no new identities; publication verification pending.
+removed, no new identities. Published ee789b3f; Node22 counts/all88 failure names
+match local; Pages37932245305 success. Live shell/version also byte-match .772.
 
 Last explicit user PASS .769; .770 sanity not yet confirmed. User-requested Add+
 face-density sliders and 3D Text now implemented .771. Existing primitive owner

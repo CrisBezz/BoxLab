@@ -233,3 +233,12 @@ exactly match local .771 inventory and .770. Pages37907016763 succeeded. Live
 shell/version/AddUI/factory/Text/font and unchanged frozenBeta6 version byte-match
 tested checkout. Focused55PASS; actual-DOM/shared-layout/history smoke passes.
 User .771 device acceptance pending. Last explicit PASS remains .769.
+
+
+### .772 publication verification — 2026-10-09
+
+Published commit ee789b3f9b660233d2fbb01f828fd3d6b8a1560f, tree253def3b3e470929c3ea42a43f910d945ed4f36c exactly matches tested checkout.
+Node22 Topology37932246644/job113825549904:2049tests/1961PASS/88FAIL/0skip;
+all88 failure names match local inventory. Pages37932245305 success. 64 focused
+owner/layout checks plus5 release-contract checks PASS (69 total). Unchanged
+AddUI/Join/Beta6 live bytes verified; live shell/version also byte-match .772.
