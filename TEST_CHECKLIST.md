@@ -4335,3 +4335,7 @@ Runtime7f0469d5eb8874db98d5ba795237dd986b43db14 published. ActualNode22 Topology
 - [x] Five deliberate source mutations caught by behavioral replacements; runtime source restored byte-for-byte. Focused168PASS/full2026/1937PASS/89FAIL/0skip, four reviewed failures removed/no new failures/no exclusions. All modelling pins/hashes unchanged.
 - [ ] Visible .770: Face Extrude/Inset background Pencil exit and subsequent navigation remain as accepted.
 - [ ] Face/Edge selection and Face Bevel Apply/Cancel/Undo/Redo remain as accepted.
+
+### .770 publication verification — 2026-10-09
+
+Runtime499e377a3a8889a5f4d03b450b9355396eb29ff3 published. ActualNode22 Topology run37901813205/job113725877011:2026tests/1937PASS/89FAIL/0skip; all89failure names exactly match local inventory. Exactly four reviewed .769 failures removed, no new failures. Pages37901812074 succeeded. Live shell/version and unchanged Face direct/Pencil Orbit gate/direct Bevel/frozenBeta6 version byte-match tested checkout. Focused168PASS. User .769 PASS recorded; device .770 light sanity pending.
