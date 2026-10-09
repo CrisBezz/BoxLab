@@ -10,7 +10,7 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 User .773 PASS. Validation-only .774 replaces two obsolete .631 hold-terminal
 source checks with actual window callback routing plus existing Edge owner release/
 cancel behavior.63focusedPASS; full2051/1967PASS/84FAIL/0skip, two reviewed failures
-removed, no new identities. Runtime/frozen betas unchanged; publication pending.
+removed, no new identities. Runtime/frozen betas unchanged; publication and live .774 verified.
 Next remaining84 historical checks and scoped Bevel/Knife/Loop reliability.
 Add+ density/Text771 remains implemented; separate device acceptance not explicitly
 recorded. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.

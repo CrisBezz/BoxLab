@@ -6174,3 +6174,14 @@ protected Multi1.0/Loop715 retained. Publication/Node22/live verification pendin
 Next remaining84 historical checks and scoped Bevel/Knife/Loop reliability.
 Add Vertex occasional picking/NOM import/Lasso tightening deferred. No new feature
 qualification; optional hold sideways/release, UP/DOWN selection and navigation sanity.
+
+## .774 publication verification — 2026-10-09
+
+Published runtime/test release commit `895519977bcf9b3b971d911e204d24ceacc69f3b`,
+tree `4baed78f41b7078b3b9bd0103a8e8d6b9682853d`. Node 22 CI run
+37934475663, job 113832966074: 2051 tests / 1967 PASS / 84 FAIL / 0 skipped;
+all 84 failure identities match the local inventory, with no new failures.
+Pages run 37934474546 completed successfully. Fresh live .774 index.html and
+version.json match repository bytes; main.js, pencil-orbit-gate.js and frozen
+beta-6/version.json also match. Focused validation: 63 PASS.
+User .773 PASS recorded; .774 device acceptance remains pending.

@@ -5,7 +5,7 @@
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.774**. Last explicit user acceptance is .773 PASS;
 .770 device sanity was pending when the user requested Add+ density and Text.
-Parent ee046392d0d9d3cd5e79957e98ed974f1983a28d. Publication verification pending for .774.
+Parent ee046392d0d9d3cd5e79957e98ed974f1983a28d. .774 published and live-verified; evidence below.
 
 ## .774 — Component hold terminal routing validation — 2026-10-09
 
@@ -300,3 +300,14 @@ Actual Node22 Topology37933050867/job113828237624:2050tests/1964PASS/86FAIL/0ski
 all86 failure names match local. Pages37933050504 success. Live shell/version,
 unchanged Gizmo and frozenBeta6 version byte-match tested checkout. Focused74PASS.
 User .772 PASS recorded; .773 device sanity pending. Runtime source unchanged.
+
+## .774 publication verification — 2026-10-09
+
+Published runtime/test release commit `895519977bcf9b3b971d911e204d24ceacc69f3b`,
+tree `4baed78f41b7078b3b9bd0103a8e8d6b9682853d`. Node 22 CI run
+37934475663, job 113832966074: 2051 tests / 1967 PASS / 84 FAIL / 0 skipped;
+all 84 failure identities match the local inventory, with no new failures.
+Pages run 37934474546 completed successfully. Fresh live .774 index.html and
+version.json match repository bytes; main.js, pencil-orbit-gate.js and frozen
+beta-6/version.json also match. Focused validation: 63 PASS.
+User .773 PASS recorded; .774 device acceptance remains pending.
