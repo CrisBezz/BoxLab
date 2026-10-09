@@ -67,6 +67,52 @@ function mergeBoundaryParts(parts,eps){
   }
   return parts;
 }
+// Classification planes can subdivide opposite sides of the same seam differently.
+// Conform the private pieces before cancelling internal edges. Only a single,
+// unambiguous convex boundary per connected component is coalesced; holes, branches
+// and concave unions retain the established conservative piece merger.
+function coalesceBoundaryParts(parts,eps){
+  if(parts.length<2||parts.length>256)return parts;
+  const points=[];
+  const id=p=>{let i=points.findIndex(q=>p.distanceTo(q)<=eps);if(i<0){i=points.length;points.push(p);}return i;};
+  const faces=parts.map(p=>p.map(id));
+  const conform=faces.map(f=>f.flatMap((a,i)=>{
+    const b=f[(i+1)%f.length],ab=points[b].clone().sub(points[a]),length=ab.length(),entries=[];
+    if(length<=eps)return[a];
+    points.forEach((p,k)=>{if(k===a||k===b)return;const t=p.clone().sub(points[a]).dot(ab)/(length*length);
+      if(t>eps/length&&t<1-eps/length&&points[a].clone().addScaledVector(ab,t).distanceTo(p)<=eps)entries.push({k,t});});
+    entries.sort((x,y)=>x.t-y.t);return[a,...entries.map(e=>e.k)];
+  }));
+  const uses=new Map(),parent=conform.map((_,i)=>i),find=i=>parent[i]===i?i:(parent[i]=find(parent[i]));
+  conform.forEach((f,fi)=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],key=a<b?`${a}:${b}`:`${b}:${a}`;
+    if(!uses.has(key))uses.set(key,[]);uses.get(key).push({a,b,fi});}));
+  for(const owners of uses.values())if(owners.length===2&&owners[0].a===owners[1].b&&owners[0].b===owners[1].a)parent[find(owners[1].fi)]=find(owners[0].fi);
+  const components=new Map();conform.forEach((_,i)=>{const key=find(i);if(!components.has(key))components.set(key,[]);components.get(key).push(i);});
+  const out=[];
+  for(const ids of components.values()){
+    const originals=ids.map(i=>parts[i]),edges=[],members=new Set(ids);let ambiguous=false;
+    for(const owners of uses.values()){
+      const own=owners.filter(o=>members.has(o.fi));if(!own.length)continue;
+      if(own.length===2&&own[0].a===own[1].b&&own[0].b===own[1].a)continue;
+      if(own.length!==1){ambiguous=true;break;}edges.push(own[0]);
+    }
+    const next=new Map(),incoming=new Set();
+    for(const {a,b} of edges){if(next.has(a)||incoming.has(b)){ambiguous=true;break;}next.set(a,b);incoming.add(b);}
+    const loop=[];let current=edges[0]?.a;
+    if(!ambiguous)while(current!==undefined&&!loop.includes(current)){loop.push(current);current=next.get(current);}
+    if(ambiguous||current!==loop[0]||loop.length!==edges.length){out.push(...mergeBoundaryParts(originals,eps));continue;}
+    let polygon=loop.map(i=>points[i]);
+    // Discard only straight-line partition vertices; assemble restores any that
+    // are needed by neighbouring output faces as canonical seam vertices.
+    polygon=polygon.filter((p,i)=>{const a=polygon[(i+polygon.length-1)%polygon.length],b=polygon[(i+1)%polygon.length],ab=b.clone().sub(a),length=ab.length();
+      if(length<=eps)return true;const t=p.clone().sub(a).dot(ab)/(length*length);return t<=0||t>=1||a.clone().addScaledVector(ab,t).distanceTo(p)>eps;});
+    const normal=areaVector(polygon).normalize(),expected=originals.reduce((n,p)=>n.add(areaVector(p)),new V());
+    const convex=polygon.length>=3&&polygon.every((a,i)=>{const side=new V().crossVectors(polygon[(i+1)%polygon.length].clone().sub(a),normal);return polygon.every(p=>side.dot(p.clone().sub(a))<=eps*side.length());});
+    if(!convex||areaVector(polygon).distanceTo(expected)>eps*eps*32)out.push(...mergeBoundaryParts(originals,eps));
+    else out.push(polygon);
+  }
+  return out;
+}
 // Winding number is independent of ray direction and triangle edge ownership.
 function insideSolid(p,ts) {let sum=0;for(const t of ts){const [a,b,c]=t.map(v=>v.clone().sub(p)),la=a.length(),lb=b.length(),lc=c.length();sum+=2*Math.atan2(a.dot(new V().crossVectors(b,c)),la*lb*lc+a.dot(b)*lc+b.dot(c)*la+c.dot(a)*lb);}return Math.abs(sum)>2*Math.PI;}
 function edgeUses(m){const uses=new Map();m.faces.forEach((f,fi)=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],k=topology().edgeKey(a,b);if(!uses.has(k))uses.set(k,[]);uses.get(k).push({a,b,fi});}));return uses;}
@@ -176,7 +222,7 @@ export function buildNegativeExtrude(before,faceIndices,distance) {
         let parts=[p];
         for(const pl of shellPlanes){parts=parts.flatMap(piece=>split(piece,pl,eps).filter(q=>q.length));if(parts.length>10000)fail('intersection-complexity-limit');}
         const accepted=parts.filter(piece=>insideSolid(center(piece).addScaledVector(outside,eps*16),ts));
-        for(const piece of mergeBoundaryParts(accepted,eps))add(piece,group);
+        for(const piece of coalesceBoundaryParts(accepted,eps))add(piece,group);
       }
       trial=assemble(trial,polys,eps,groups);
       const valid=validateThrough(trial,eps);if(!valid.ok)fail(valid.reason);

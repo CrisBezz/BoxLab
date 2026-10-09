@@ -1,4 +1,4 @@
-import {planThrough,buildThrough,firstThroughContact,buildNegativeExtrude} from './through-kernel.js?v=0.36.18.751';
+import {planThrough,buildThrough,firstThroughContact,buildNegativeExtrude} from './through-kernel.js?v=0.36.18.779';
 import {gateClosedEdit,topologySummary} from './topology-seam-conformance.js?v=0.36.18.242';
 import './uniform-inset.js?v=0.36.18.753';
 import * as THREE from 'three';

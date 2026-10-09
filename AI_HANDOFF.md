@@ -1,46 +1,54 @@
-# BoxLab AI Handoff — Native Face bridge validation
+# BoxLab AI Handoff — Negative Extrude clean seams
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.778**. Last explicit user acceptance is **.777 PASS**.
-Parent main5d6b7d258c7ae77f99769df067d0c218b766e4b0; .778 published and live-verified.
-.777 release681821cd6abce11b739c4fcbf17372e06711151a: Node22 CI2054/1990PASS/
-64FAIL/0skip with exact local identities; Pages38004447563/live verified; user PASS.
+Current build **v0.36.18.779**. Last explicit user acceptance is **.778 PASS**.
+Parent main996bbe7101aea54fd7fd8c039fcb1e129d8999e4; .779 publication pending.
+.778 released0ba0fe19edee45b6a82f41b33d1a37b681d9e5f: Node22 CI2055/2000PASS/
+55FAIL/0skip with exact local identities; Pages38005274578/live verified; user PASS.
 All historical details/publication evidence remain in DEV_HISTORY.md and
 corresponding docs/reliability-build-*.md/JSON; this handoff describes current owners.
 
-## .778 — Native Face bridge ownership validation — 2026-10-10
+## .779 — Clean negative Extrude partition seams — 2026-10-10
 
-User .777 PASS recorded. Parent main5d6b7d258c7ae77f99769df067d0c218b766e4b0.
-Audited current Face753/main762 and historical .486–.491 plus accepted .535.
-Nine failing assertions demanded retired faceObjects/scene pickers, pending native
-handoff, obsolete picker/toggle spelling or additive drag union. Reconcile exactly
-those nine using the existing whole-controller armed-face fixture; retain all
-thirteen other assertions, including the still-failing .489 main bridge definition
-check. That definition needs its own main-owner audit; it is not suppressed.
+User .778 PASS, then supplied Before/After Extrude OBJ and screenshot778 showing
+fragmented shallow cap. Parent main996bbe7101aea54fd7fd8c039fcb1e129d8999e4.
+Exact source files retained as negative-extrude-779-before.obj/after.obj (106verts/
+110quads before;149verts/123faces after). Source0 is inset z=-1 rectangle1.772 square;
+depth0.161517. Prior751 kernel reproduces exact output cycles/cap3; point differences
+under1e-4 arise from six-decimal exported source rounding. Not a recent runtime
+rollback: .772–.778 validation releases did not change Extrude geometry.
 
-Native primary bridge receives the original event/type. Direct owner consumes and
-captures the press, emits one semantic press with correct hit/working set, and
-releases ownership on completion. Both Extrude/Inset preserve additive/subtractive
-taps without geometry/history/redo changes. Selected-face real Three raycast priority,
-provisional unselected selection/cancel, deliberate threshold, actual kernels and
-one-step Undo/Redo reuse existing checks. Five in-memory routing mutations rejected:
-wrong component type, cloned event, wrong tap target, too-early promotion and absent
-promotion. No runtime writes or parallel owner. Controlled native picker/event/DOM
-are not evidence of native Safari propagation or primary hit accuracy.
+Audit existing Face753→Through751 finite cutter and .742/.750/.751 cleanliness
+work. Accepted cutter-boundary pieces have differently subdivided shared seams;
+complete-edge greedy merging leaves unnecessary partitions. Extend existing kernel:
+conform private piece edges, cancel reversed interior edges per connected component,
+trace one simple boundary, coalesce only convex area-preserving unions. Remove straight
+partition vertices; canonical assemble restores neighbouring required seam vertices.
+Holes, branches, concave unions retain prior conservative merger; disconnected pieces
+stay separate;256piece bound retained. No global dissolve/flatten/retriangulate or
+new pointer/kernel owner. Existing source/target restrictions and legacy242 path remain.
 
-Initial22checks/12PASS/10FAIL; revised23checks/22PASS/1FAIL. Clean focused65PASS;
-fullNode24:2055tests/2000PASS/55FAIL/0skip. Exactly nine reviewed .777 failures removed,
-no new identities; remaining54source-pattern/1version-pin stay active. No exclusions,
-skips or CI gate. Runtime/frozenBeta2–6 unchanged. Shell/recovery778 and only two
-reviewed recovery fixture URLs changed; all source hashes retained. Multi1.0 and
-Loop715 protected. Publication/Node22/live verified below. .778 device sanity pending.
-Next remaining55 checks and scoped Bevel/Knife/Loop reliability; Add Vertex occasional
-picking/NOM import/Lasso tightening deferred.
+Your shallow recess now110verts/114faces, one quad cap/four quad walls, no triangles,
+closed consistent winding and exact rectangular removed volume. Other105 original
+faces retain exact points/cycles; groups/crease preserved. Five depths0.01–2.2,
+rotated/translated/scaled copy, physical/Exact/replay actual controller with fallback,
+one-step Undo/Redo, preview reversal/Cancel/redo, mismatched seam/hole/disconnected
+private boundaries covered.13newPASS/84focusedPASS; fullNode24:2068tests/2013PASS/
+55FAIL/0skip, same exact55identities as778; all remaining checks active. Original
+fixtures unchanged. Runtime edit only Through kernel; Face import-only cache chain
+and shell/recovery779. Reviewed kernel+Face hashes including legacy242 reference;
+legacy URL retained. Main762/Inset753/Multi1.0/Loop715/frozenBeta2–6 unchanged.
+Publication/Node22/live pending; .779 device acceptance pending.
 
-Manual sanity: confirm .778; armed Extrude/Inset tap to add/remove Faces; drag on
-selected and another Face, then Undo/Redo and normal background navigation.
+Next: confirm supplied-model device negative Extrude, then remaining55 checks and
+scoped Bevel/Knife/Loop reliability. Add Vertex picking/NOM import/Lasso deferred.
+Manual: load Before Extrude, shallow inward pull of same inset; Undo/Redo, then
+another inward/outward pull and normal background navigation.
+
+Source SHA256 before a6d3ca81e70ee50c11c25edb331263a4b34eddce325f61ad894662c3c3dd78b2;
+after70c0f4d27ed0f0cc5d9cee01ceeb05f0fbb777436546c761312564c811aff235.
 
 ## Add+ / Text baseline — .771
 
@@ -58,10 +66,10 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.777 user PASS. .778 native bridge device sanity pending. Continue remaining55
-checks and scoped Bevel/Knife/Loop reliability. Runtime unchanged; no new feature
-qualification. Add Vertex picking/NOM import/Lasso tightening deferred. FrozenBeta2–6
-immutable.
+User .778 PASS; supplied negative Extrude cap fragmentation repaired in779.
+.779 device acceptance pending. Continue remaining55 checks and scoped
+Bevel/Knife/Loop reliability after supplied-model confirmation. Add Vertex picking/
+NOM import/Lasso tightening deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -167,10 +175,10 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery778; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery779; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
-background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset/Face direct753;
-Through child751; multi-chamfer748; guard747; other bevel engines745; Loop logical
+background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct779;
+Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
 addon/drawer746, fallback743; legacy Through242. Export/NOM/core741; debug736;
 axis735; Focus733; component-align705. Repin only changed modules and necessary
 loading parents, plus shell title/visible/data/version and recovery owners.
@@ -205,13 +213,3 @@ inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
 real-group preservation. Remaining55 active failures visible until reconciled.
-
-## .778 publication verification — 2026-10-10
-
-Release commit `d0ba0fe19edee45b6a82f41b33d1a37b681d9e5f`, tree
-`620c4e497aaef5586a46ffe959a4d5209e00e9af` matches tested checkout.
-Actual Node22 Topology run38005274839/job114072505737:2055tests/2000PASS/55FAIL/
-0skip; all55 failure names exactly match local inventory. Pages38005274578 succeeded.
-Fresh live index.html/version.json, unchanged Face/main owners and frozenBeta6
-version byte-match repository. Focused65PASS. User .777 PASS recorded; .778 device
-sanity pending. Runtime/frozenBeta unchanged.
