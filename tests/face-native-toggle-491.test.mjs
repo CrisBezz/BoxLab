@@ -1,3 +1,4 @@
+import {dragCancellation,dragWorkingSet} from './helpers/armed-face-behavior.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -17,9 +18,8 @@ test('491 armed Face tap uses native toggle instead of rebuilding arrays',()=>{
   assert.doesNotMatch(tap,/bridge\(\)\?\.set\?\.\('face'/);
 });
 
-test('491 drag path still uses working selection and existing modelling flow',()=>{
-  assert.match(direct,/workingFaces=p\.selectionBefore\.includes\(p\.hit\)\?\[\.\.\.p\.selectionBefore\]:\[\.\.\.p\.selectionBefore,p\.hit\]/);
-  assert.match(direct,/beginDirectDrag\(event,p\.hit,p\.selectionBefore,workingFaces\)/);
+test('491 drag uses the intended working selection and real modelling history',()=>{
+  dragWorkingSet();dragCancellation();
 });
 
 test('491 cache hops main/direct and preserves protected multi-object pin',()=>{

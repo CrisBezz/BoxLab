@@ -1,3 +1,4 @@
+import {delegatedPicker,tapRemoval,tapToggle} from './helpers/armed-face-behavior.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -11,15 +12,12 @@ test('489 selection bridge exposes exact native component picker',()=>{
   assert.match(main,/pick:\(type,event\)=>pickKind\(event,type\)/);
 });
 
-test('489 armed Face tools call native bridge picker directly',()=>{
-  assert.match(direct,/const m=mesh\(\),picker=bridge\(\)\?\.pick/);
-  assert.match(direct,/const hit=picker\('face',event\)\?\.index/);
+test('489 armed Face tools delegate the original pointer event to the native bridge',()=>{
+  delegatedPicker();
 });
 
-test('489 direct controller owns both additive and subtractive tap resolution',()=>{
-  assert.match(direct,/workingFaces=hitWasSelected\?\[\.\.\.selectionBefore\]:\[\.\.\.selectionBefore,hit\]/);
-  assert.match(direct,/const next=d\.hitWasSelected/);
-  assert.match(direct,/bridge\(\)\?\.set\?\.\('face',next\)/);
+test('489 direct controller resolves additive and subtractive native toggles',()=>{
+  tapToggle();tapRemoval();
 });
 
 test('489 contains no stale native handoff state',()=>{

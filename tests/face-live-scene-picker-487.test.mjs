@@ -1,3 +1,4 @@
+import {delegatedPicker,tapToggle} from './helpers/armed-face-behavior.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,10 +8,8 @@ const direct=fs.readFileSync(new URL('../src/multi-face-direct.js',import.meta.u
 const paint=fs.readFileSync(new URL('../src/edge-paint-select.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
-test('487 armed Face picker traverses live scene face meshes',()=>{
-  assert.match(direct,/scene\.traverse\?\.\(object=>\{if\(object\?\.userData\?\.kind==='face'/);
-  assert.match(direct,/raycaster\.intersectObjects\(objects,false\)/);
-  assert.doesNotMatch(direct,/faceObjects\?\.values/);
+test('487 armed Face tools use the native bridge rather than a parallel scene picker',()=>{
+  delegatedPicker();
 });
 
 test('487 armed Face direct still owns Face taps while paint selector yields',()=>{
@@ -18,10 +17,8 @@ test('487 armed Face direct still owns Face taps while paint selector yields',()
   assert.match(paint,/type==='face'&&globalThis\.__boxlabFaceDirect\?\.active\?\.\(\)/);
 });
 
-test('487 preserves additive and subtractive tap logic',()=>{
-  assert.match(direct,/hitWasSelected=selectionBefore\.includes\(hit\)/);
-  assert.match(direct,/d\.selectionBefore\.filter\(index=>index!==d\.hitFaceIndex\)/);
-  assert.match(direct,/\[\.\.\.new Set\(\[\.\.\.d\.selectionBefore,d\.hitFaceIndex\]\)\]/);
+test('487 preserves additive and subtractive tap behavior',()=>{
+  tapToggle();
 });
 
 test('487 cache-hops direct Face picker only and preserves protected pins',()=>{

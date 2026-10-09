@@ -1,55 +1,46 @@
-# BoxLab AI Handoff — Face target validation
+# BoxLab AI Handoff — Native Face bridge validation
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.777**. Last explicit user acceptance is **.776 PASS**.
-Parent mainebd18b11288313b6b3edb5942f4a2cbffbe06f63; .777 published and live-verified.
+Current build **v0.36.18.778**. Last explicit user acceptance is **.777 PASS**.
+Parent main5d6b7d258c7ae77f99769df067d0c218b766e4b0; .778 publication pending.
 .776 releasefa6e961f12775ff7690e1badb1df5f88b9b88e80: Node22 CI2053/1978PASS/
 75FAIL/0skip with exact local identities; Pages38003438462/live verified; user PASS.
 All historical details/publication evidence remain in DEV_HISTORY.md and
 corresponding docs/reliability-build-*.md/JSON; this handoff describes current owners.
 
-## .777 — Face target / Exact / replay validation — 2026-10-10
+## .778 — Native Face bridge ownership validation — 2026-10-10
 
-User .776 PASS recorded. Parent mainebd18b11288313b6b3edb5942f4a2cbffbe06f63.
-Audited current Face753/main762 selection bridge, precision/repeat owners and
-accepted .516–.535 history. Eleven .516/.518/.519/.526/.527/.528/.529/.530 failures
-expect superseded working-set spellings, old overlap/reset conditions or synthetic
-Repeat routing. Replace exactly those eleven checks with whole current-owner
-behavior using the .776 fixture; retain all fourteen other assertions. .519's
-same failing case also hid two old pins: review existing Face753/main762 bytes and
-use reviewed loader contracts, without repinning either runtime owner. Current
-Repeat uses direct replay since .531; synthetic pointer9876 remains for Exact.
-Do not describe these as the same live UI route.
+User .777 PASS recorded. Parent main5d6b7d258c7ae77f99769df067d0c218b766e4b0.
+Audited current Face753/main762 and historical .486–.491 plus accepted .535.
+Nine failing assertions demanded retired faceObjects/scene pickers, pending native
+handoff, obsolete picker/toggle spelling or additive drag union. Reconcile exactly
+those nine using the existing whole-controller armed-face fixture; retain all
+thirteen other assertions, including the still-failing .489 main bridge definition
+check. That definition needs its own main-owner audit; it is not suppressed.
 
-Extend existing armed-face helper, not another runtime owner. Real selected-Face
-Three raycast at projected cap centres overrides a controlled conflicting native
-primary for deliberate single/multi sets. Sequential preference is enabled through
-actual Extrude commit, not seeded booleans. It substitutes only an unchanged single
-Extrude selection; Inset, matching-key multi selection with no selected hit, or
-changed selection key retain intended primary. Real explicit tap and tool switch/
-rearm clear continuation even when original IDs are restored. Unselected drag
-isolates hit, selected drag retains full working set and actual Undo/Redo remains
-covered by reused .776 checks. Synthetic Exact makes zero native primary/stack
-calls, retains explicit single/multi set and commits once with Undo/Redo. Current
-direct replay API changes supplied Face rather than picker result, keeps unrelated
-Face cycle and commits once with Undo/Redo for Extrude/Inset. Repeat UI launcher and
-native Safari propagation/primary hit accuracy are not proven by these doubles.
+Native primary bridge receives the original event/type. Direct owner consumes and
+captures the press, emits one semantic press with correct hit/working set, and
+releases ownership on completion. Both Extrude/Inset preserve additive/subtractive
+taps without geometry/history/redo changes. Selected-face real Three raycast priority,
+provisional unselected selection/cancel, deliberate threshold, actual kernels and
+one-step Undo/Redo reuse existing checks. Five in-memory routing mutations rejected:
+wrong component type, cloned event, wrong tap target, too-early promotion and absent
+promotion. No runtime writes or parallel owner. Controlled native picker/event/DOM
+are not evidence of native Safari propagation or primary hit accuracy.
 
-Initial25checks/14PASS/11FAIL; revised26PASS. One additional test rejects ten
-in-memory mutations: missing single/multi selected priority, Inset overlap stealing,
-multi overlap substitution, missing key check, tap reset, arm reset, synthetic
-primary/stack repick and wrong replay kernel target. Runtime source never written.
-Focused148PASS including original .776 checks and nearby .535/Through/Knife/Face
-Bevel/label/release contracts. FullNode24:2054tests/1990PASS/64FAIL/0skip; exactly
-eleven reviewed .776 failures removed, no new identities. Remaining63source-pattern/
-1version-pin active; classification does not prove all obsolete. No skips/exclusions/
-CI gate. Runtime/frozenBeta2–6 unchanged; shell/recovery777 and two corresponding
-reviewed fixture URLs only. Main762/Face+Inset753/Gate766/Bevel769/Knife763/AddText771/
-Gizmo759/Multi1.0/Loop715 retained. Publication/Node22/live verified below; .777 device
-sanity pending. Next remaining64 checks and scoped Bevel/Knife/Loop reliability.
-Add Vertex occasional picking/NOM import/Lasso tightening deferred.
+Initial22checks/12PASS/10FAIL; revised23checks/22PASS/1FAIL. Clean focused65PASS;
+fullNode24:2055tests/2000PASS/55FAIL/0skip. Exactly nine reviewed .777 failures removed,
+no new identities; remaining54source-pattern/1version-pin stay active. No exclusions,
+skips or CI gate. Runtime/frozenBeta2–6 unchanged. Shell/recovery778 and only two
+reviewed recovery fixture URLs changed; all source hashes retained. Multi1.0 and
+Loop715 protected. Publication/Node22/live pending. .778 device sanity pending.
+Next remaining55 checks and scoped Bevel/Knife/Loop reliability; Add Vertex occasional
+picking/NOM import/Lasso tightening deferred.
+
+Manual sanity: confirm .778; armed Extrude/Inset tap to add/remove Faces; drag on
+selected and another Face, then Undo/Redo and normal background navigation.
 
 ## Add+ / Text baseline — .771
 
@@ -67,10 +58,10 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-User .776 PASS; .777 Face-target device sanity pending. Continue remaining64 historical
-checks and scoped Bevel/Knife/Loop reliability. No new feature qualification for
-this validation-only release. Add Vertex occasional picking, NOM import and slight
-Lasso tightening deferred. FrozenBeta2–6 immutable.
+.777 user PASS. .778 native bridge device sanity pending. Continue remaining55
+checks and scoped Bevel/Knife/Loop reliability. Runtime unchanged; no new feature
+qualification. Add Vertex picking/NOM import/Lasso tightening deferred. FrozenBeta2–6
+immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -176,7 +167,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery777; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery778; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset/Face direct753;
 Through child751; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -213,15 +204,4 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining64 active failures visible until reconciled.
-
-## .777 publication verification — 2026-10-10
-
-Published release commit `681821cd6abce11b739c4fcbf17372e06711151a`,
-tree `84fc0d230d4cdb38f38b6db20d8b6fa8ef6d6f1a` matches tested checkout.
-Actual Node22 Topology run38004448143/job114069891788:2054tests/1990PASS/64FAIL/
-0skip; all64 failure names exactly match local inventory, no new failures.
-Pages38004447563 completed successfully. Fresh live .777 index.html/version.json
-byte-match; unchanged multi-face-direct.js/uniform-inset.js and frozenBeta6 version
-also match repository bytes. Focused148PASS. User .776 PASS recorded; .777 device
-sanity pending. Runtime/frozenBeta unchanged.
+real-group preservation. Remaining55 active failures visible until reconciled.

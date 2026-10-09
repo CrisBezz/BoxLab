@@ -88,6 +88,11 @@ export function delegatedPicker(sourceTransform){
     const r=fixture(tool,[],sourceTransform);r.setHit(4);
     const event=r.pointer('pointerdown');
     assert.equal(r.picks.length,1);assert.equal(r.picks[0].type,'face');assert.equal(r.picks[0].event,event);
+    assert.equal(event.prevented,true);assert.equal(event.stopped,true,'direct owner consumes the press');
+    assert.ok(r.captures.has(event.pointerId),'direct owner captures the pointer');
+    const press=r.f.events.filter(e=>e.type==='boxlab-face-direct-press');
+    assert.equal(press.length,1);assert.equal(press[0].detail.pointerId,event.pointerId);
+    assert.equal(press[0].detail.hit,4);assert.deepEqual(Array.from(press[0].detail.workingFaces),[4]);
     assert.equal(r.f.api.pending().hit,4,'owner accepts an unselected primary Face from the bridge');
     assert.deepEqual(r.f.selected(),[4]);assert.equal(r.f.owner.drag(),null);r.unchanged();
     r.pointer('pointerup');assert.deepEqual(r.f.selected(),[4]);r.retired();r.unchanged();
