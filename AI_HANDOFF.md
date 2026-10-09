@@ -1,11 +1,28 @@
-# BoxLab AI Handoff — Add object density and Text
+# BoxLab AI Handoff — Join Coplanar loader validation
 
 ## Current state — 2026-10-09
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.771**. Last explicit user acceptance is .769 PASS;
+Current build **v0.36.18.772**. Last explicit user acceptance is .769 PASS;
 .770 device sanity was pending when the user requested Add+ density and Text.
-Parent main00b56f127f68619e736952ddbd7bd97d64ce8dfd. Publication evidence below.
+Parent main51e4937e2e68867d770aa9e50feea75952a5b71f. Publication verification pending for .772.
+
+## .772 — Join Coplanar loader contract — 2026-10-09
+
+Validation-only build from main51e4937e2e68867d770aa9e50feea75952a5b71f.
+Audited original Join placement/kernel and current Drawer import. Historical .507
+check incorrectly inspected face-workflow-layout, which no longer imports Join.
+Point only that loading assertion at authoritative drawer-ui; retain its row3
+placement assertion and all other eight .507 layout checks. Missing-import and
+stale-pin mutations of an in-memory loader string both reject; runtime unchanged.
+64 focused Add/Text, Face Bevel, Knife and layout checks PASS. Full Node24:
+2049tests/1961PASS/88FAIL/0skip, exactly one reviewed failure removed and no new
+failure identities against fresh .7712049/1960/89. No exclusions or CI gate.
+Only shell/recovery pins772 and their two reviewed fixture URLs change; every
+runtime source/hash, Add/Text771, protected Multi1.0/Loop715/frozenBeta2–6 retained.
+Publication/Node22/live verification pending. .771 device acceptance remains pending
+in repository; no inferred PASS. Next scoped modelling reliability and remaining88
+checks. No new feature qualification needed: optional Join/Undo/Redo sanity only.
 
 ## .771 — Add+ density controls and single-object extruded Text
 
@@ -55,7 +72,7 @@ results, not app bug counts. No exclusions/skips or CI gate; npm test remains fa
 
 Await .771 iPad checks in TEST_CHECKLIST.md: density controls and face counts,
 Text word/thickness/holes/single object, Cancel and Undo/Redo, existing Add launchers.
-Then resume varied Bevel/Knife/Loop reliability and remaining89 historical checks
+Then resume varied Bevel/Knife/Loop reliability and remaining88 historical checks
 unless user directs otherwise. .770 light sanity not explicitly accepted. Add Vertex
 occasional picking remains unconfirmed/deferred; NOM import and slight Lasso
  tightening remain deferred. FrozenBeta2–6 and Multi1.0/Loop715 unchanged.
@@ -164,7 +181,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery771; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery772; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset/Face direct753;
 Through child751; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -201,7 +218,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining89 active failures visible until reconciled.
+real-group preservation. Remaining88 active failures visible until reconciled.
 
 ### .770 publication verification — 2026-10-09
 

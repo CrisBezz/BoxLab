@@ -5,7 +5,8 @@ import fs from 'node:fs';
 
 const ui=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.url),'utf8');
 const join=fs.readFileSync(new URL('../src/join-selected-coplanar-faces.js',import.meta.url),'utf8');
-const layout=fs.readFileSync(new URL('../src/face-workflow-layout.js',import.meta.url),'utf8');
+// Drawer is the current authoritative dynamic loader; layout no longer imports Join.
+const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
 test('507 packs Face tools in requested six-row grid',()=>{
@@ -28,7 +29,7 @@ test('507 keeps diagnostics at true bottom',()=>{
 
 test('507 Join Coplanar targets requested row 3',()=>{
   assert.match(join,/#faceCompactRow3/);
-  assertAssetReference(layout,'join-selected-coplanar-faces.js');
+  assertAssetReference(drawer,'join-selected-coplanar-faces.js');
 });
 
 test('507 preserves frozen interaction pins',()=>{

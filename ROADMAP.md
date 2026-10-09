@@ -1,11 +1,15 @@
-<!-- .771 current; last explicit user .769 PASS. -->
+<!-- .772 current; .771 device acceptance not yet recorded. -->
 # BoxLab Development Roadmap
 
 This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .771, 2026-10-09 (supersedes historical priorities below)
+## Current direction — .772, 2026-10-09 (supersedes historical priorities below)
+
+Validation-only .772 corrects the Join Coplanar loader assertion to Drawer; all
+runtime source unchanged. Full2049/1961PASS/88FAIL/0skip, one reviewed failure
+removed, no new identities; publication verification pending.
 
 Last explicit user PASS .769; .770 sanity not yet confirmed. User-requested Add+
 face-density sliders and 3D Text now implemented .771. Existing primitive owner
@@ -14,7 +18,7 @@ object with letter holes intact. Bundled licensed font; bounded density controls
 23 new checks, focused55PASS; full2049/1960PASS/89FAIL/0skip, unchanged failure
 identities. Await .771 device acceptance including controls, Text holes/thickness,
 one-object transforms, Cancel and Undo/Redo. Then resume Bevel/Knife/Loop reliability
-and remaining89 historical checks. Protected interactions and frozenBeta6 unchanged;
+and remaining88 historical checks. Protected interactions and frozenBeta6 unchanged;
 Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
 
 Publication verified: .771 runtimeba54fd977437696266f6cc1b9ac890beb4b47ba6;
