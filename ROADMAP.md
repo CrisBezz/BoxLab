@@ -1,13 +1,13 @@
-<!-- .766 current; user .765 PASS with Edge drag/Orbit report. -->
+<!-- .767 current; user .766 PASS. -->
 # BoxLab Development Roadmap
 
 This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .766, 2026-10-09 (supersedes historical priorities below)
+## Current direction — .767, 2026-10-09 (supersedes historical priorities below)
 
-.765 user PASS with some Edge selection drags becoming Orbit. .766 repairs reproduced body-backed Edge paint takeover in the existing deferred Orbit gate; pending/active paint now retains ownership regardless of body backdrop. Await device selection sanity, then varied Bevel/Knife/Loop reliability and98 historical checks. Full1979/1881PASS/98FAIL/0skip, exact .765 failures. Shared Extrude/common radials and accepted scaffold Close Face retained; Beta6 immutable736. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
+.766 user PASS. .767 repairs live Vertex Bevel stale-source/context rollback and capture cleanup in the existing controller, matching the ownership protection already applied to Edge Bevel. Original blue preview/kernel/gesture feel retained. Await Vertex Bevel device sanity, then varied Bevel/Knife/Loop reliability and98 historical checks. Full2007/1909PASS/98FAIL/0skip, exact .766 failures. Shared Extrude/common radials, accepted .766 Edge selection and scaffold Close Face retained; Beta6 immutable736. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
 

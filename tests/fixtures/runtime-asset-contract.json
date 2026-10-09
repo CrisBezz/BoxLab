@@ -136,9 +136,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/direct-multi-vertex-bevel.js?v=0.36.18.753",
+      "url": "./src/direct-multi-vertex-bevel.js?v=0.36.18.767",
       "target": "src/direct-multi-vertex-bevel.js",
-      "sha256": "2360f46a5c6e369f097e4b3ce8ba89f771af8b8bec7fea5e53eaa0ddeab5811c"
+      "sha256": "740aeae86f8baa22bda453ef611bf43e84d98d6eda944b5b8990c2775dbc5fc5"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.766",
+      "url": "./src/release-bootstrap.js?v=0.36.18.767",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.766",
+      "url": "./src/release-version.js?v=0.36.18.767",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },

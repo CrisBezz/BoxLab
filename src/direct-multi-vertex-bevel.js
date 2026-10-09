@@ -15,19 +15,29 @@ function screenPoint(v,camera){const p=v.clone().project(camera),r=canvas.getBou
 function hitVertex(event){const s=state(),mesh=s?.mesh,camera=s?.camera;if(!mesh||!camera)return null;const p=new THREE.Vector2(event.clientX,event.clientY);let best=null;mesh.vertices.forEach((v,index)=>{const q=screenPoint(v,camera),d=q.distanceTo(p);if(d<=PICK_PX&&(!best||d<best.distance))best={index,distance:d};});return best?.index??null;}
 function disarm(){
   discardPreview();popupPreview=false;
-  if(drag){const d=drag;drag=null;restore(d.mesh,d.before);try{canvas.releasePointerCapture?.(d.pointerId);}catch{}render();}
+  if(drag){const d=drag;drag=null;if(dragSourceOwned(d))restore(d.mesh,d.before);try{canvas.releasePointerCapture?.(d.pointerId);}catch{}render();}
   armed=false;syncButton();
 }
 // Use the existing Vertex kernel and the same blue preview renderer as Face.
 function discardPreview(){disposeFaceBevelPreview(preview?.ghost);preview=null;}
 function selectionKey(){return selectedVertexIds().slice().sort((a,b)=>a-b).join(',');}
-function unchanged(){
-  const a=preview?.before,b=preview?.mesh;
+function unchanged(a=preview?.before,b=preview?.mesh){
   return !!(a&&b&&a.vertices.length===b.vertices.length&&a.faces.length===b.faces.length
     &&a.vertices.every((v,i)=>v.equals(b.vertices[i]))
     &&a.faces.every((f,i)=>f.length===b.faces[i]?.length&&f.every((v,j)=>v===b.faces[i][j]))
     &&a.faceGroups.length===b.faceGroups.length&&a.faceGroups.every((group,i)=>group===b.faceGroups[i])
     &&a.creases.size===b.creases.size&&[...a.creases].every(([k,v])=>b.creases.get(k)===v));
+}
+// A live drag may roll back only the last values it produced, never a newer edit.
+function dragSourceOwned(d){
+  return !!(d&&unchanged(d.owned||d.before,d.mesh)
+    &&['looseEdges','looseVertices'].every(key=>((d.owned||d.before)[key]?.size||0)===(d.mesh[key]?.size||0)
+      &&[...((d.owned||d.before)[key]||[])].every(value=>d.mesh[key]?.has(value))));
+}
+function editable(){return !document.querySelector('#app')?.classList?.contains('boxlab-active-locked');}
+function dragContextValid(){
+  return !!(drag&&editable()&&state()?.mesh===drag.mesh&&bridge()?.mode?.()==='vertex'
+    &&globalThis.__boxlabObjectManager?.activeId===drag.object&&dragSourceOwned(drag));
 }
 function previewWidth(value=Number(width?.value||20)){
   discardPreview();
@@ -74,7 +84,7 @@ document.addEventListener('click',event=>{
 },true);
 
 canvas?.addEventListener('pointerdown',event=>{
-  if(!armed||!event.isPrimary)return;
+  if(!armed||!event.isPrimary||!editable()||bridge()?.mode?.()!=='vertex')return;
   const mesh=state()?.mesh,index=hitVertex(event);if(!mesh||!Number.isInteger(index))return;
   event.preventDefault();event.stopImmediatePropagation();
   const existing=selectedVertexIds(),useMulti=!!multiToggle?.checked&&existing.length>1&&existing.includes(index),ids=useMulti?existing:[index];
@@ -82,17 +92,19 @@ canvas?.addEventListener('pointerdown',event=>{
   const valid=mesh.multiVertexBevelInfo?.(ids);
   if(!valid){if(status)status.textContent=ids.length>1?'Selected vertices cannot be bevelled together':'This vertex cannot be bevelled';return;}
   discardPreview();
-  drag={pointerId:event.pointerId,startX:event.clientX,startWidth:Number(width?.value||20),mesh,before:mesh.clone(),ids:[...valid.ids],preview:false};
+  drag={pointerId:event.pointerId,startX:event.clientX,startWidth:Number(width?.value||20),mesh,before:mesh.clone(),ids:[...valid.ids],object:globalThis.__boxlabObjectManager?.activeId,preview:false};
   canvas.setPointerCapture?.(event.pointerId);
 },true);
 
 canvas?.addEventListener('pointermove',event=>{
   if(!drag||drag.pointerId!==event.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();
+  if(!dragContextValid()){disarm();return;}
   const value=Math.max(2,Math.min(49,drag.startWidth+(event.clientX-drag.startX)*.25)),amount=Math.round(value);
   if(width)width.value=String(amount);if(out)out.textContent=`${amount}%`;
   restore(drag.mesh,drag.before);
   drag.preview=!!drag.mesh.bevelVertices?.(drag.ids,amount/100);
+  drag.owned=drag.mesh.clone();
   if(status)status.textContent=drag.preview?`Vertex Bevel • ${drag.ids.length} vert${drag.ids.length===1?'ex':'ices'} • ${amount}%`:(drag.ids.length>1?'Selected vertices cannot be bevelled together':'This vertex cannot be bevelled');
   render();
 },true);
@@ -100,7 +112,9 @@ canvas?.addEventListener('pointermove',event=>{
 function end(event){
   if(!drag||drag.pointerId!==event.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();
+  if(!dragContextValid()){disarm();return;}
   const current=drag;drag=null;
+  try{canvas.releasePointerCapture?.(current.pointerId);}catch{}
   if(current.preview&&event.type==='pointerup')globalThis.__boxlabHistory?.push(current.before);else restore(current.mesh,current.before);
   bridge()?.set?.('vertex',event.type==='pointerup'&&current.preview?[]:current.ids);
   updateStatus();render();

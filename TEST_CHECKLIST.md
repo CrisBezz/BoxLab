@@ -4273,11 +4273,21 @@ Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology
 - [x] User .765 PASS with remaining Edge selection drag→Orbit report; no blanket gesture PASS inferred.
 - [x] Actual gate/paint baseline14/8PASS/6FAIL; repaired14PASS. Seven new cases; original seven .760 assertions unchanged. Pending/active body-backed rails, horizontal/vertical and surfaced boundary cancellation covered.
 - [x] Existing actual scaffold/vertical-release/selection/Extrude and shell checks92PASS. Full1979/1881PASS/98FAIL/0skip; exact .765 failures, no exclusions. Navigation with no paint claim retained.
-- [ ] Visible .766: Multi Edge Pencil drag across edges over a body and floating rails keeps selection ownership; try quick movement and a small move followed by a longer drag.
-- [ ] Edge hold → sideways candidates and UP/DOWN Grow/Shrink retain results on release; floating Close Face still works.
-- [ ] Pencil background Orbit and finger Orbit/pan/pinch still work, keeping selections; no stuck controls after selection drag/cancel.
+- [x] Visible .766: Multi Edge Pencil drag across edges over a body and floating rails keeps selection ownership; try quick movement and a small move followed by a longer drag.
+- [x] Edge hold → sideways candidates and UP/DOWN Grow/Shrink retain results on release; floating Close Face still works.
+- [x] Pencil background Orbit and finger Orbit/pan/pinch still work, keeping selections; no stuck controls after selection drag/cancel.
 
 
 ### .766 publication verification — 2026-10-09
 
 Runtimeb4d3270032543270603c5512ea205b883f0c8cca published. ActualNode22 Topology run37863375359/job113604189509:1979tests/1881PASS/98FAIL/0skip; all98failure names exactly match local inventory and .765. Pages37863374755 succeeded. Live shell/version/updated Pencil Orbit gate and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused92PASS. Device .766 acceptance pending.
+
+
+## v0.36.18.767 — Vertex Bevel live-drag ownership
+
+- [x] User .766 PASS recorded2026-10-09; accepted body-backed/floating Edge selection and navigation retained.
+- [x] Initial25-case actual-owner baseline2PASS/23FAIL; new28PASS. Geometry/metadata/loose/context preservation, owned rollback, exact Undo/Redo, capture cleanup, equal arrays and start/no-op guards covered.
+- [x] Focused156PASS; full2007/1909PASS/98FAIL/0skip, exact .766 failures. No exclusions/skips or gate. Accepted .753 blue previews/provenance and Bevel→Knife→Loop preserved.
+- [ ] Visible .767: single/multi Vertex Bevel Pencil drags still commit once; Undo/Redo restores source/result.
+- [ ] Blue Width preview → Apply and Cancel still work; cancel a drag/session and resume selection/navigation cleanly.
+- [ ] Vertex Bevel followed by supported Knife/Loop still works; .766 Edge drag-selection stays protected.
