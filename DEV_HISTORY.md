@@ -6138,3 +6138,12 @@ and two reviewed fixture URLs only; Add/Text771, Gizmo759, Multi1.0/Loop715 reta
 Publication/Node22/live verification pending. Next remaining86 historical checks and
 scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 No new feature qualification; optional gizmo Move/Rotate/Scale and Undo/Redo sanity.
+
+
+### .773 publication verification — 2026-10-09
+
+Published32d70bb2e73151b3cb3b61f387e312d1d4371965; tree86adb0a691e79059379ac202554ac4c7a1d7f145 exactly matches tested checkout.
+Actual Node22 Topology37933050867/job113828237624:2050tests/1964PASS/86FAIL/0skip;
+all86 failure names match local. Pages37933050504 success. Live shell/version,
+unchanged Gizmo and frozenBeta6 version byte-match tested checkout. Focused74PASS.
+User .772 PASS recorded; .773 device sanity pending. Runtime source unchanged.

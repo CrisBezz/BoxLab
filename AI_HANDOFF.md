@@ -265,3 +265,12 @@ Node22 Topology37932246644/job113825549904:2049tests/1961PASS/88FAIL/0skip;
 all88 failure names match local inventory. Pages37932245305 success. 64 focused
 owner/layout checks plus5 release-contract checks PASS (69 total). Unchanged
 AddUI/Join/Beta6 live bytes verified; live shell/version also byte-match .772.
+
+
+### .773 publication verification — 2026-10-09
+
+Published32d70bb2e73151b3cb3b61f387e312d1d4371965; tree86adb0a691e79059379ac202554ac4c7a1d7f145 exactly matches tested checkout.
+Actual Node22 Topology37933050867/job113828237624:2050tests/1964PASS/86FAIL/0skip;
+all86 failure names match local. Pages37933050504 success. Live shell/version,
+unchanged Gizmo and frozenBeta6 version byte-match tested checkout. Focused74PASS.
+User .772 PASS recorded; .773 device sanity pending. Runtime source unchanged.

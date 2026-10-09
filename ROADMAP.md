@@ -10,7 +10,8 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 User .772 PASS. Validation-only .773 replaces two obsolete Gizmo .570 expectations
 with reviewed asset identity and actual hit-proxy construction/wiring coverage.
 74 focused PASS; full2050/1964PASS/86FAIL/0skip, two reviewed failures removed,
-no new failure identities. Runtime source/frozen betas unchanged; publication pending.
+no new failure identities. Runtime source/frozen betas unchanged. Published32d70bb2; Node22 counts/all86
+failure names match local, Pages37933050504 success and live markers/assets verified.
 Next remaining86 historical checks and scoped Bevel/Knife/Loop reliability.
 Add+ density/Text771 remains implemented; separate device acceptance not explicitly
 recorded. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
@@ -496,3 +497,12 @@ Release/cache contracts and historicalscope reconciled;333 named scriptchecks,
 full1610/1492/118/0skip. Modeller/frozenbetas unchanged. Next currentselection/
 Gizmo/tool lifecycle semantic fixtures and OBJgroups before algorithms; CI release
 gate follows genuine test reconciliation. See docs/reliability-build-737.md.
+
+
+### .773 publication verification — 2026-10-09
+
+Published32d70bb2e73151b3cb3b61f387e312d1d4371965; tree86adb0a691e79059379ac202554ac4c7a1d7f145 exactly matches tested checkout.
+Actual Node22 Topology37933050867/job113828237624:2050tests/1964PASS/86FAIL/0skip;
+all86 failure names match local. Pages37933050504 success. Live shell/version,
+unchanged Gizmo and frozenBeta6 version byte-match tested checkout. Focused74PASS.
+User .772 PASS recorded; .773 device sanity pending. Runtime source unchanged.
