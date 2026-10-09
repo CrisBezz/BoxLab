@@ -8,4 +8,4 @@ User .766 PASS recorded. Parent main5baf026679ee1e89861a7584dad5a708366d51fc. Ex
 
 Shell/recovery767 and direct-Vertex-Bevel767 hash/pin reviewed (single index loader). Vertex topology/bootstrap/Inset/Face direct753 unchanged; Gate766/Bevel764/Knife763/main762/scaffold761/Extrude759/Loop715/Multi1.0/frozenBeta2–6 unchanged. Device .767 acceptance pending. Next varied Bevel/Knife/Loop reliability and98 historical checks; Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
 
-Publication verification pending.
+Runtime85bc2cd65bf1f99f18a2ce823db7d62efd5859c8 published. ActualNode22 Topology run37863984676/job113606195654:2007tests/1909PASS/98FAIL/0skip; all98failure names exactly match local inventory and .766. Pages37863983873 succeeded. Live shell/version/updated direct Vertex Bevel and unchanged accepted Pencil Orbit gate/Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused156PASS. Device .767 acceptance pending.

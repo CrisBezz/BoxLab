@@ -4291,3 +4291,8 @@ Runtimeb4d3270032543270603c5512ea205b883f0c8cca published. ActualNode22 Topology
 - [ ] Visible .767: single/multi Vertex Bevel Pencil drags still commit once; Undo/Redo restores source/result.
 - [ ] Blue Width preview → Apply and Cancel still work; cancel a drag/session and resume selection/navigation cleanly.
 - [ ] Vertex Bevel followed by supported Knife/Loop still works; .766 Edge drag-selection stays protected.
+
+
+### .767 publication verification — 2026-10-09
+
+Runtime85bc2cd65bf1f99f18a2ce823db7d62efd5859c8 published. ActualNode22 Topology run37863984676/job113606195654:2007tests/1909PASS/98FAIL/0skip; all98failure names exactly match local inventory and .766. Pages37863983873 succeeded. Live shell/version/updated direct Vertex Bevel and unchanged accepted Pencil Orbit gate/Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused156PASS. Device .767 acceptance pending.
