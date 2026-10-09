@@ -2,16 +2,14 @@ import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {dragWorkingSet} from './helpers/armed-face-behavior.mjs';
 
 const direct=fs.readFileSync(new URL('../src/multi-face-direct.js',import.meta.url),'utf8');
 const precision=fs.readFileSync(new URL('../src/precision-face.js',import.meta.url),'utf8');
 const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
-test('516 dragging an unselected Face while armed operates that Face only',()=>{
-  assert.match(direct,/const workingFaces=selectionBefore\.includes\(hit\)\?\[\.\.\.selectionBefore\]:\[hit\]/);
-  assert.match(direct,/workingFaces:\[\.\.\.workingFaces\]/);
-});
+test('516 dragging an unselected Face while armed operates that Face only',()=>dragWorkingSet());
 
 test('516 Face direct press exposes authoritative working set to precision/repeat capture',()=>{
   assert.match(direct,/boxlab-face-direct-press/);

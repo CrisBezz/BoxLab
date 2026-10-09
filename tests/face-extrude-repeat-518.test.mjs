@@ -2,16 +2,14 @@ import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {dragWorkingSet} from './helpers/armed-face-behavior.mjs';
 
 const direct=fs.readFileSync(new URL('../src/multi-face-direct.js',import.meta.url),'utf8');
 const precision=fs.readFileSync(new URL('../src/precision-face.js',import.meta.url),'utf8');
 const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
-test('518 armed Face drag aligns live selection to working set before modelling',()=>{
-  assert.match(direct,/bridge\(\)\?\.set\?\.\('face',workingFaces\)/);
-  assert.match(direct,/const workingFaces=selectionBefore\.includes\(hit\)\?\[\.\.\.selectionBefore\]:\[hit\]/);
-});
+test('518 armed Face drag aligns live selection to working set before modelling',()=>dragWorkingSet());
 
 test('518 ordinary Extrude emits direct committed value for Repeat',()=>{
   assert.match(direct,/boxlab-face-direct-committed/);

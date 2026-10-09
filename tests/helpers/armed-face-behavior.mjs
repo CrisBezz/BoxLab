@@ -148,3 +148,104 @@ export function dragCancellation(sourceTransform){
     r.pointer('pointerup');r.unchanged();r.retired();assert.equal(r.toggles.length,0);
   }
 }
+
+function projectedFace(r,index){
+  const point=new THREE.Vector3();r.m.faces[index].forEach(i=>point.add(r.m.vertices[i]));
+  point.multiplyScalar(1/r.m.faces[index].length).project(r.f.state.camera);
+  return {clientX:(point.x*.5+.5)*900,clientY:(-point.y*.5+.5)*600};
+}
+
+function pressTarget(r,expected,position=projectedFace(r,1),pointerId=22){
+  const before=snapshot(r.m),ids=[...r.f.selected()],undo=r.f.history.undoStack.length,redo=r.f.history.redoStack.length;
+  r.pointer('pointerdown',{...position,pointerId});
+  assert.equal(r.f.api.pending()?.hit,expected,'pending hit must respect the current targeting contract');
+  const working=ids.includes(expected)?ids:[expected];
+  assert.deepEqual(Array.from(r.f.api.pending().workingFaces),working);
+  r.pointer('pointercancel',{pointerId});r.retired();
+  assert.deepEqual(r.f.selected(),ids,'cancel restores provisional selection');
+  assert.equal(snapshot(r.m),before);assert.equal(r.f.history.undoStack.length,undo);assert.equal(r.f.history.redoStack.length,redo);
+}
+
+function committedExtrude(sourceTransform,ids=[1]){
+  const r=fixture('extrude',ids,sourceTransform);r.setHit(1);
+  r.pointer('pointerdown');r.pointer('pointermove',{clientX:10009});
+  const d=r.f.owner.drag();assert.ok(d);
+  r.pointer('pointermove',{clientX:10009+d.normal.x*50,clientY:10000+d.normal.y*50});r.pointer('pointerup');
+  assert.equal(r.f.history.undoStack.length,1);assert.deepEqual(r.f.selected(),ids);r.retired();
+  return r;
+}
+
+export function selectedPriority(sourceTransform){
+  for(const tool of ['extrude','inset'])for(const ids of [[1],[1,0]]){
+    const r=fixture(tool,ids,sourceTransform);r.setHit(2);
+    r.bridge.pickHits=()=>[{index:2},{index:4}];
+    // Real Three selected-Face raycast at the projected front cap, despite a
+    // different controlled native primary/stack. No whole-scene picker claim.
+    pressTarget(r,1);r.unchanged();assert.equal(r.toggles.length,0);
+  }
+}
+
+export function sequentialScope(sourceTransform){
+  // Deliberate selection has priority before an ordinary commit, in both tools.
+  for(const tool of ['extrude','inset']){
+    const r=fixture(tool,[1],sourceTransform);r.setHit(1);r.bridge.pickHits=()=>[{index:1},{index:2}];
+    pressTarget(r,1);r.unchanged();
+  }
+  // Enable continuation via a real commit, not by seeding an internal boolean.
+  const r=committedExtrude(sourceTransform);r.setHit(1);r.bridge.pickHits=()=>[{index:1},{index:2}];
+  pressTarget(r,2);
+  r.f.owner.setTool('inset');pressTarget(r,1); // even with surviving Extrude continuation state
+  r.f.owner.setTool('extrude');r.bridge.set('face',[1,0]);pressTarget(r,1);
+  r.bridge.set('face',[3]);r.setHit(3);r.bridge.pickHits=()=>[{index:3},{index:2}];
+  pressTarget(r,3,projectedFace(r,3)); // selection-key mismatch forbids stale continuation
+  const multi=committedExtrude(sourceTransform,[1,0]);multi.setHit(1);multi.bridge.pickHits=()=>[{index:1},{index:2}];
+  pressTarget(multi,1,{clientX:10000,clientY:10000}); // no selected hit, unchanged multi selection key
+}
+
+export function explicitResets(sourceTransform){
+  for(const reset of ['tap','rearm']){
+    const r=committedExtrude(sourceTransform);r.setHit(1);
+    if(reset==='tap'){
+      // Toggle off explicitly, then deliberately restore the same IDs: a key
+      // comparison alone cannot protect this case; the tap must clear preference.
+      r.pointer('pointerdown');r.pointer('pointerup');assert.deepEqual(r.f.selected(),[]);
+      r.bridge.set('face',[1]);
+    }else{
+      for(const id of ['insetBtn','extrudeBtn']){
+        const target={id,closest(selector){return selector==='#extrudeBtn,#insetBtn'?this:null;}};
+        r.f.context.document.dispatchEvent({type:'click',target,preventDefault(){},stopImmediatePropagation(){}});
+      }
+      assert.equal(r.f.api.tool(),'extrude');
+    }
+    r.bridge.pickHits=()=>[{index:1},{index:2}];pressTarget(r,1);
+  }
+}
+
+export function explicitExactAndReplay(sourceTransform){
+  for(const ids of [[1],[1,0]]){
+    const r=committedExtrude(sourceTransform);r.bridge.set('face',ids);r.setHit(2);
+    let stackReads=0;r.bridge.pickHits=()=>{stackReads++;return [{index:2},{index:4}];};
+    const picks=r.picks.length;pressTarget(r,ids[0],{clientX:10000,clientY:10000},9876);
+    assert.equal(r.picks.length,picks,'synthetic Exact never re-picks the native primary');
+    assert.equal(stackReads,0,'synthetic Exact never re-picks the native stack');
+    // Current Exact-style synthetic path commits the full explicit set once.
+    const before=effectiveSnapshot(r.m),history=r.f.history.undoStack.length;
+    r.f.exact(.2);r.retired();assert.deepEqual(r.f.selected(),ids);
+    assert.equal(r.f.history.undoStack.length,history+1);assert.equal(r.picks.length,picks);assert.equal(stackReads,0);
+    const after=effectiveSnapshot(r.m),undo=r.f.history.undo(r.m);
+    assert.equal(effectiveSnapshot(undo),before);assert.equal(effectiveSnapshot(r.f.history.redo(undo)),after);
+  }
+  // Repeat ceased using synthetic pointers in .531. Exercise its current direct
+  // replay API separately; this is not proof of the Repeat UI's tap launcher.
+  for(const tool of ['extrude','inset']){
+    const r=committedExtrude(sourceTransform);r.setHit(4);r.bridge.pickHits=()=>[{index:4}];
+    const picks=r.picks.length,before=effectiveSnapshot(r.m),history=r.f.history.undoStack.length;
+    const face=Array.from(r.m.faces[2]),other=Array.from(r.m.faces[3]);
+    assert.equal(r.f.api.replay(tool,.2,2),true);assert.deepEqual(r.f.selected(),[2]);
+    assert.notDeepEqual(Array.from(r.m.faces[2]),face,'replay changes the explicit target Face');
+    assert.deepEqual(Array.from(r.m.faces[3]),other,'replay leaves an unrelated Face cycle intact');
+    assert.equal(r.picks.length,picks);assert.equal(r.f.history.undoStack.length,history+1);
+    const after=effectiveSnapshot(r.m),undo=r.f.history.undo(r.m);
+    assert.equal(effectiveSnapshot(undo),before);assert.equal(effectiveSnapshot(r.f.history.redo(undo)),after);
+  }
+}
