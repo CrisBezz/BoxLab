@@ -6026,3 +6026,8 @@ Capture activeId in Face session and compare in existing faceContextValid. Cance
 New19 actual whole-controller/viewport-panel checks with real Bevel kernels and rendering-preview objects; pointer picking/DOM are controlled doubles. Initial15-case baseline6PASS/9FAIL; all19 nowPASS, including same-mesh active-object transitions, Apply/slider/press/move/release/cancel, current selection/lock/mesh/mode preservation, panel sync and fresh relaunch, single/multi-Face normal Apply/Cancel, exact Undo/Redo and capture/control/ghost cleanup. Focused231PASS (226 nearby modelling/selection cases plus5 release-contract checks). FullNode24:2026tests/1933PASS/93FAIL/0skip; all93failure identities exactly .768. No skips/exclusions or CI gate. Syntax/whitespace pass.
 
 Shell/recovery769 and single direct-Bevel769 index pin/hash reviewed. Vertex Bevel767/Gate766/Knife763/main762/scaffold761/Extrude759/Loop715/Multi1.0 and frozenBeta2–6 unchanged. Device .769 Face Bevel sanity pending. Next varied Bevel/Knife/Loop reliability and remaining93 historical checks; Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
+
+
+### .769 publication verification — 2026-10-09
+
+Runtime7f0469d5eb8874db98d5ba795237dd986b43db14 published. ActualNode22 Topology run37893155389/job113698392066:2026tests/1933PASS/93FAIL/0skip; all93failure names exactly match local inventory and .768. Pages37893154964 succeeded. Live shell/version/updated direct Bevel and unchanged Vertex Bevel/Pencil Orbit gate/frozenBeta6 version byte-match tested checkout. Focused231PASS. User .768 PASS recorded; device .769 Face Bevel sanity pending.
