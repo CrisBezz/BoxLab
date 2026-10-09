@@ -25,9 +25,19 @@ fullNode24:2055tests/2000PASS/55FAIL/0skip. Exactly nine reviewed .777 failures 
 no new identities; remaining54source-pattern/1version-pin stay active. No exclusions,
 skips or CI gate. Runtime/frozenBeta2–6 unchanged. Shell/recovery778 and only two
 reviewed recovery fixture URLs changed; all source hashes retained. Multi1.0 and
-Loop715 protected. Publication/Node22/live pending. .778 device sanity pending.
+Loop715 protected. Publication/Node22/live verified below. .778 device sanity pending.
 Next remaining55 checks and scoped Bevel/Knife/Loop reliability; Add Vertex occasional
 picking/NOM import/Lasso tightening deferred.
 
 Manual sanity: confirm .778; armed Extrude/Inset tap to add/remove Faces; drag on
 selected and another Face, then Undo/Redo and normal background navigation.
+
+## .778 publication verification — 2026-10-10
+
+Release commit `d0ba0fe19edee45b6a82f41b33d1a37b681d9e5f`, tree
+`620c4e497aaef5586a46ffe959a4d5209e00e9af` matches tested checkout.
+Actual Node22 Topology run38005274839/job114072505737:2055tests/2000PASS/55FAIL/
+0skip; all55 failure names exactly match local inventory. Pages38005274578 succeeded.
+Fresh live index.html/version.json, unchanged Face/main owners and frozenBeta6
+version byte-match repository. Focused65PASS. User .777 PASS recorded; .778 device
+sanity pending. Runtime/frozenBeta unchanged.

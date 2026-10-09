@@ -4,9 +4,9 @@
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.778**. Last explicit user acceptance is **.777 PASS**.
-Parent main5d6b7d258c7ae77f99769df067d0c218b766e4b0; .778 publication pending.
-.776 releasefa6e961f12775ff7690e1badb1df5f88b9b88e80: Node22 CI2053/1978PASS/
-75FAIL/0skip with exact local identities; Pages38003438462/live verified; user PASS.
+Parent main5d6b7d258c7ae77f99769df067d0c218b766e4b0; .778 published and live-verified.
+.777 release681821cd6abce11b739c4fcbf17372e06711151a: Node22 CI2054/1990PASS/
+64FAIL/0skip with exact local identities; Pages38004447563/live verified; user PASS.
 All historical details/publication evidence remain in DEV_HISTORY.md and
 corresponding docs/reliability-build-*.md/JSON; this handoff describes current owners.
 
@@ -35,7 +35,7 @@ fullNode24:2055tests/2000PASS/55FAIL/0skip. Exactly nine reviewed .777 failures 
 no new identities; remaining54source-pattern/1version-pin stay active. No exclusions,
 skips or CI gate. Runtime/frozenBeta2–6 unchanged. Shell/recovery778 and only two
 reviewed recovery fixture URLs changed; all source hashes retained. Multi1.0 and
-Loop715 protected. Publication/Node22/live pending. .778 device sanity pending.
+Loop715 protected. Publication/Node22/live verified below. .778 device sanity pending.
 Next remaining55 checks and scoped Bevel/Knife/Loop reliability; Add Vertex occasional
 picking/NOM import/Lasso tightening deferred.
 
@@ -205,3 +205,13 @@ inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
 real-group preservation. Remaining55 active failures visible until reconciled.
+
+## .778 publication verification — 2026-10-10
+
+Release commit `d0ba0fe19edee45b6a82f41b33d1a37b681d9e5f`, tree
+`620c4e497aaef5586a46ffe959a4d5209e00e9af` matches tested checkout.
+Actual Node22 Topology run38005274839/job114072505737:2055tests/2000PASS/55FAIL/
+0skip; all55 failure names exactly match local inventory. Pages38005274578 succeeded.
+Fresh live index.html/version.json, unchanged Face/main owners and frozenBeta6
+version byte-match repository. Focused65PASS. User .777 PASS recorded; .778 device
+sanity pending. Runtime/frozenBeta unchanged.

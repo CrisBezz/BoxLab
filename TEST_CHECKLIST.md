@@ -4656,3 +4656,13 @@ picking/NOM import/Lasso tightening deferred.
 
 Manual sanity: confirm .778; armed Extrude/Inset tap to add/remove Faces; drag on
 selected and another Face, then Undo/Redo and normal background navigation.
+
+## .778 publication verification — 2026-10-10
+
+Release commit `d0ba0fe19edee45b6a82f41b33d1a37b681d9e5f`, tree
+`620c4e497aaef5586a46ffe959a4d5209e00e9af` matches tested checkout.
+Actual Node22 Topology run38005274839/job114072505737:2055tests/2000PASS/55FAIL/
+0skip; all55 failure names exactly match local inventory. Pages38005274578 succeeded.
+Fresh live index.html/version.json, unchanged Face/main owners and frozenBeta6
+version byte-match repository. Focused65PASS. User .777 PASS recorded; .778 device
+sanity pending. Runtime/frozenBeta unchanged.

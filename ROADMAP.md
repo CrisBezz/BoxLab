@@ -11,7 +11,7 @@ User .777 PASS. Validation-only .778 reconciles nine obsolete native Face picker
 handoff/toggle assertions through existing current-owner behavior; all thirteen
 other checks retained, including one main-bridge failure needing separate audit.
 Five mutations rejected;65focusedPASS. Full2055/2000PASS/55FAIL/0skip; no new failures.
-Runtime/frozenBeta unchanged; publication pending. Continue remaining55 checks and
+Runtime/frozenBeta unchanged; publication/live verified. Continue remaining55 checks and
 scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
@@ -504,3 +504,13 @@ Actual Node22 Topology37933050867/job113828237624:2050tests/1964PASS/86FAIL/0ski
 all86 failure names match local. Pages37933050504 success. Live shell/version,
 unchanged Gizmo and frozenBeta6 version byte-match tested checkout. Focused74PASS.
 User .772 PASS recorded; .773 device sanity pending. Runtime source unchanged.
+
+## .778 publication verification — 2026-10-10
+
+Release commit `d0ba0fe19edee45b6a82f41b33d1a37b681d9e5f`, tree
+`620c4e497aaef5586a46ffe959a4d5209e00e9af` matches tested checkout.
+Actual Node22 Topology run38005274839/job114072505737:2055tests/2000PASS/55FAIL/
+0skip; all55 failure names exactly match local inventory. Pages38005274578 succeeded.
+Fresh live index.html/version.json, unchanged Face/main owners and frozenBeta6
+version byte-match repository. Focused65PASS. User .777 PASS recorded; .778 device
+sanity pending. Runtime/frozenBeta unchanged.
