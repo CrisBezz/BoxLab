@@ -341,3 +341,8 @@ Runtime b7bc824eaafb8b9cc109d27cb980b61946d1cf35 published. Actual Node22 Topolo
 ### .765 publication verification — 2026-10-09
 
 Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology run37862651977/job113601797169:1972tests/1874PASS/98FAIL/0skip; all98failure names exactly match local inventory. Exactly four reviewed .764 failures resolved, no new failures. Pages37862651054 succeeded. Live shell/version and unchanged main/direct-Bevel/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused102PASS. User .765 PASS recorded2026-10-09; remaining Edge drag/Orbit report tracked in .766.
+
+
+### .766 publication verification — 2026-10-09
+
+Runtimeb4d3270032543270603c5512ea205b883f0c8cca published. ActualNode22 Topology run37863375359/job113604189509:1979tests/1881PASS/98FAIL/0skip; all98failure names exactly match local inventory and .765. Pages37863374755 succeeded. Live shell/version/updated Pencil Orbit gate and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused92PASS. Device .766 acceptance pending.

@@ -5982,3 +5982,8 @@ User .765 PASS, with remaining report: some Edge selection drags turn into Orbit
 Extended original .760 whole-gate/paint fixture: seven new tests (loose rails over body horizontal/vertical pending/active, surfaced face-boundary pending/active cancellation, no-owner navigation across Edge/Face/Vertex). Baseline expanded suite14tests/8PASS/6FAIL; current14PASS. Original seven .760 floating tap/Lasso/hold/navigation assertions retained. Focused92PASS including actual scaffold/grow/shrink/perimeter/additive/cancel and shared Extrude/shell contract. FullNode24:1979tests/1881PASS/98FAIL/0skip; all98failure identities exactly .765. No skips/exclusions or CI release gate. Syntax/whitespace pass.
 
 Shell/recovery766 and Gate766 hash/pin reviewed; main762/paint720/Drawer-Lasso760/scaffold761/Bevel764/Knife763/Extrude759/Loop715/Multi1.0/frozenBeta2–6 unchanged. iPad .766 acceptance pending. Next confirm this selection fix, then varied Bevel/Knife/Loop reliability and98 historical checks. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
+
+
+### .766 publication verification — 2026-10-09
+
+Runtimeb4d3270032543270603c5512ea205b883f0c8cca published. ActualNode22 Topology run37863375359/job113604189509:1979tests/1881PASS/98FAIL/0skip; all98failure names exactly match local inventory and .765. Pages37863374755 succeeded. Live shell/version/updated Pencil Orbit gate and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused92PASS. Device .766 acceptance pending.

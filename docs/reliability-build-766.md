@@ -8,4 +8,4 @@ Extended original .760 whole-gate/paint fixture: seven new tests (loose rails ov
 
 Shell/recovery766 and Gate766 hash/pin reviewed; main762/paint720/Drawer-Lasso760/scaffold761/Bevel764/Knife763/Extrude759/Loop715/Multi1.0/frozenBeta2–6 unchanged. iPad .766 acceptance pending. Next confirm this selection fix, then varied Bevel/Knife/Loop reliability and98 historical checks. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
 
-Publication verification pending.
+Runtimeb4d3270032543270603c5512ea205b883f0c8cca published. ActualNode22 Topology run37863375359/job113604189509:1979tests/1881PASS/98FAIL/0skip; all98failure names exactly match local inventory and .765. Pages37863374755 succeeded. Live shell/version/updated Pencil Orbit gate and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused92PASS. Device .766 acceptance pending.

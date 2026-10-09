@@ -4276,3 +4276,8 @@ Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology
 - [ ] Visible .766: Multi Edge Pencil drag across edges over a body and floating rails keeps selection ownership; try quick movement and a small move followed by a longer drag.
 - [ ] Edge hold → sideways candidates and UP/DOWN Grow/Shrink retain results on release; floating Close Face still works.
 - [ ] Pencil background Orbit and finger Orbit/pan/pinch still work, keeping selections; no stuck controls after selection drag/cancel.
+
+
+### .766 publication verification — 2026-10-09
+
+Runtimeb4d3270032543270603c5512ea205b883f0c8cca published. ActualNode22 Topology run37863375359/job113604189509:1979tests/1881PASS/98FAIL/0skip; all98failure names exactly match local inventory and .765. Pages37863374755 succeeded. Live shell/version/updated Pencil Orbit gate and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused92PASS. Device .766 acceptance pending.
