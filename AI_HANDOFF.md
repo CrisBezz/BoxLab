@@ -1,15 +1,27 @@
 # BoxLab AI Handoff — post-Beta 6 reliability audit
 
-## Current state — 2026-10-08
+## Current state — 2026-10-09
+
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build **v0.36.18.765**.
+
+## .765 — Edge hold test-contract reconciliation — 2026-10-09
+
+User .764 PASS recorded. Current main parent0405e3ab2967abd3c5e4cc0d3fc0f6286ceb416b. Four active historical checks in .655/.656/.657 required candidate-only preview (and no additive merge), superseded by .659 accepted fixed-base additive selection. Initial three suites39tests/35PASS/4FAIL. Replaced exactly those four assertions with actual main timer/move/window-release and selector behavior; other35 assertions retained. Shared extracted .761 fixture evaluates real owner blocks and selectors with real Three raycasts; canvas down remains controlled seed adapter, not whole-app browser proof. All12 existing .761/.762 scaffold tests retain their assertions.
+
+Replacement coverage: fixed base plus current candidate on surfaced/wire cages; overlap deduplication; no previous-preview accumulation; release retains result; every incident face perimeter discovered; candidate probes restore selection; cancel restores pre-hold selection; geometry/groups/creases and history/redo unchanged. Shared snapshot compares actual Map/Set values, avoiding JSON object/cache artifacts. Four deliberate mutations (preview base loss, accumulation, release base loss, omitted face perimeter) each rejected by behavioral replacements; source restored byte-for-byte. No runtime modelling/UI code changed; shell/recovery765 reviewed, all modelling pins/hashes unchanged.
+
+Focused102PASS. FullNode24:1972tests/1874PASS/98FAIL/0skip. Exactly four named obsolete failures removed; no new failures. Inventory83source-pattern/14unclassified-behaviour/1version-pin remains active. No exclusions/skips or CI release gate. Next continue varied Bevel/Knife/Loop reliability and98 historical checks. Add Vertex unconfirmed picking, NOM import and Lasso tightening remain deferred. Device .765 sanity pending; no new feature qualification required.
+
+### Accepted .764 baseline
 
 ## .764 — direct Edge Bevel drag ownership — 2026-10-08
 
 User .763 PASS recorded. Direct Edge Bevel live drag could overwrite same-instance newer edits on move/cancel/disarm or commit stale history after mesh/object/mode/lock changes. Existing sourceUnchanged comparator now checks the last owned preview (or starting source before movement), including real face groups, creases and loose topology. Invalid move/release/cancel uses existing disarm, releases capture and restores controls. Disarm restores only an unchanged owned preview; newer values survive. Replacement meshes remain untouched and the old owned preview rolls back. Original kernels, thresholds, event owners, persistent repeat and Face/Vertex previews retained.
 
-24 new actual-controller cases pass. Initial 19-case baseline:16FAIL/3PASS; after fix all19PASS, plus five metadata/equal-array/repeat checks. Focused153PASS. Full Node24:1972tests/1870PASS/102FAIL/0skip; exact same102failure identities as .763. No tests excluded or CI gate installed. Syntax/whitespace pass. Shell/recovery764 and direct-Bevel764 hash/pin reviewed; Knife763/main762/scaffold761/Extrude759/Loop715/Multi1.0/frozenBeta2–6 unchanged. Device .764 acceptance pending.
+24 new actual-controller cases pass. Initial 19-case baseline:16FAIL/3PASS; after fix all19PASS, plus five metadata/equal-array/repeat checks. Focused153PASS. Full Node24:1972tests/1870PASS/102FAIL/0skip; exact same102failure identities as .763. No tests excluded or CI gate installed. Syntax/whitespace pass. Shell/recovery764 and direct-Bevel764 hash/pin reviewed; Knife763/main762/scaffold761/Extrude759/Loop715/Multi1.0/frozenBeta2–6 unchanged. User .764 PASS recorded2026-10-09.
 
 
-Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build **v0.36.18.764**.
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Accepted build **v0.36.18.764**.
 
 ### Accepted .763 baseline
 
@@ -80,7 +92,7 @@ per real face; missing labels equal null, extraneous labels ignored. Changed lab
 invalidate stale preview/Apply. Geometry/history unchanged. Focused121PASS;
 full1896/1794/102/0, actualNode22 run37750469278/job113222151677 matches names.
 Pages37750468365 success, live bytes verified.
-Current priority after .764 device checks: Bevel/Knife/Loop reliability and102
+Current priority after .765 sanity: Bevel/Knife/Loop reliability and98
 historical active failing checks. Add Vertex unconfirmed picking, NOM import and
 Lasso tightening deferred; Beta2–6 immutable. No CI gate or exclusions.
 
@@ -280,7 +292,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .764; Knife .763; main .762; scaffold-helper .761; Gate/Drawer/Lasso .760; total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .764; Knife .763; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .765; Knife .763; main .762; scaffold-helper .761; Gate/Drawer/Lasso .760; total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .764; Knife .763; Vertex Bevel kernels+direct/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.
@@ -305,7 +317,7 @@ Read AI_WORKFLOW.md, this handoff, TEST_CHECKLIST.md and recent DEV_HISTORY.md.
 Audit existing owners before adding anything. User ALWAYS authorizes publishing;
 /nextbuild implements scoped work, validates, updates handover/history/checklist,
 publishes/verifies Pages then reports ready for testing with realistic device list.
-For .763 check normal Bevel→Knife→Loop, repeated cuts/snapping, Undo/Redo and Done/navigation. Add Vertex remains a deferred, unconfirmed report.
+For .765 sanity-check additive Edge hold browsing, Cancel/Grow/Shrink and scaffold Close Face. Add Vertex remains a deferred, unconfirmed report.
 Frozen Beta6 remains .736; no broad device requalification requested.
 Slight Lasso tightening deferred. PostBeta6 user-authorized reliability direction
 supersedes earlier pre-freeze feature restriction; keep accepted new interface.
@@ -313,4 +325,4 @@ supersedes earlier pre-freeze feature restriction; keep accepted new interface.
 
 ### .764 publication verification — 2026-10-08
 
-Runtime b7bc824eaafb8b9cc109d27cb980b61946d1cf35 published. Actual Node22 Topology run37849650856/job113559106858:1972tests/1870PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .763. Pages37849650385 succeeded. Live shell/version/direct-Bevel and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused153PASS. Device .764 acceptance pending.
+Runtime b7bc824eaafb8b9cc109d27cb980b61946d1cf35 published. Actual Node22 Topology run37849650856/job113559106858:1972tests/1870PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .763. Pages37849650385 succeeded. Live shell/version/direct-Bevel and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused153PASS. User .764 PASS recorded2026-10-09.

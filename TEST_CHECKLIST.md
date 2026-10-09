@@ -4243,11 +4243,21 @@ Runtime4b4f909d8ed2b1c0fda3174f07c6b53860a362ed published. Actual Node22 Topolog
 
 - [x] User .763 PASS;24 new controller checks and153focusedPASS. Full1972/1870PASS/102FAIL/0skip, exact .763 failures. No exclusions.
 - [x] Newer coordinate/topology/groups/creases/loose edits survive move/release/cancel/disarm; changed mesh/object/mode/lock refuses stale commit. Owned preview rollback, capture/control release, equal arrays and repeated history covered.
-- [ ] Visible .764: Edge Bevel repeated Pencil drags and Width/Segments Exact work; Undo/Redo restores each result.
-- [ ] Cancel/Done during Edge Bevel restores only its own preview; switching mode/object or locking cannot commit stale geometry; navigation resumes.
-- [ ] Face/Vertex blue Bevel Apply/Cancel and Bevel→Knife→Loop still work; accepted floating scaffold selection/Close Face preserved.
+- [x] Visible .764: Edge Bevel repeated Pencil drags and Width/Segments Exact work; Undo/Redo restores each result.
+- [x] Cancel/Done during Edge Bevel restores only its own preview; switching mode/object or locking cannot commit stale geometry; navigation resumes.
+- [x] Face/Vertex blue Bevel Apply/Cancel and Bevel→Knife→Loop still work; accepted floating scaffold selection/Close Face preserved.
 
 
 ### .764 publication verification — 2026-10-08
 
 Runtime b7bc824eaafb8b9cc109d27cb980b61946d1cf35 published. Actual Node22 Topology run37849650856/job113559106858:1972tests/1870PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .763. Pages37849650385 succeeded. Live shell/version/direct-Bevel and unchanged main/accepted Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused153PASS. Device .764 acceptance pending.
+
+
+## v0.36.18.765 — additive Edge hold regression contracts
+
+- [x] User .764 PASS recorded2026-10-09. Exactly four obsolete candidate-only expectations replaced with semantic fixed-base/candidate/probe/perimeter checks; other35 assertions retained.
+- [x] Existing12 scaffold/vertical-release assertions retained through shared original fixture; real owner blocks/selectors/raycast, controlled down adapter documented.
+- [x] Four deliberate bad-source mutations caught; original source byte-restored. Focused102PASS/full1972/1874PASS/98FAIL/0skip; no new failure names, exclusions or skips.
+- [ ] Visible .765: with an existing Edge selection, hold another edge and browse sideways; prior selection survives and old previews do not pile up.
+- [ ] Cancel restores prior selection; UP/DOWN Grow/Shrink keeps its result after release.
+- [ ] Floating scaffold outline → Close Face → Undo/Redo works; navigation resumes.

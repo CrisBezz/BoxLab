@@ -1,13 +1,13 @@
-<!-- .764 current; user .763 PASS. -->
+<!-- .765 current; user .764 PASS. -->
 # BoxLab Development Roadmap
 
 This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .764, 2026-10-08 (supersedes historical priorities below)
+## Current direction — .765, 2026-10-09 (supersedes historical priorities below)
 
-.763 user PASS. .764 guards existing direct Edge Bevel drag ownership: stale edits/context cancel without overwriting newer work or committing stale history. Normal repeated drag/history and blue Face/Vertex previews retained. Await .764 device sanity, then varied Bevel/Knife/Loop combinations and102 historical check reconciliation. Shared Extrude/common radials and accepted scaffold Close Face retained; Beta6 immutable736. Add Vertex unconfirmed picking/NOM import and Lasso tightening remain deferred.
+.764 user PASS. .765 reconciles four superseded Edge-hold test expectations with accepted additive gesture ownership using behavioral replacements and mutation checks. Modelling behavior unchanged. Full1972tests/1874PASS/98FAIL/0skip; remaining98 checks active. Next varied Bevel/Knife/Loop reliability and historical contract reconciliation. Shared Extrude/common radials and accepted scaffold Close Face retained; Beta6 immutable736. Add Vertex unconfirmed picking/NOM import and Lasso tightening remain deferred.
 
 ## Beta 6 delivery refinement — .736
 
