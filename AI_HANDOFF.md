@@ -2,7 +2,18 @@
 
 ## Current state — 2026-10-09
 
-Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build **v0.36.18.767**.
+Repo CrisBezz/BoxLab. Live https://crisbezz.github.io/BoxLab/. Current build **v0.36.18.768**.
+
+## .768 — Pencil/Orbit validation reconciliation — 2026-10-09
+
+User .767 PASS recorded. Parent main128cb88018defbdee33f9c34650e015a128fd4da. Validation-only build: five obsolete source-text expectations in .646/.648/.650/.651 replaced one-for-one with current-owner behavior tests. Other43 historical assertions and all14 .760/.766 assertions retained. Extracted original whole Gate/Paint/Lasso fixture into tests/helpers/pencil-selection-runtime.mjs; real Three raycasts and actual semantic background listener, controlled Orbit callbacks/canvas selection-down adapter. This is owner-level evidence, not whole-app browser proof.
+
+Coverage: deferred mesh versus immediate background navigation and diagnostics; Face/Main/Lasso ownership; hover versus buttons/pressure contact; tracked zero-pressure moves and release/cancel retirement; deliberate idle movement versus matching Edge paint ownership. Four deliberate mutations (mesh blocking, tool ownership, tracked contact and Edge paint yield) each fail a replacement behavioral test. Source restored byte-for-byte. No runtime modelling/UI changes or new event owners. Shell/recovery768 reviewed; every modelling asset hash/pin unchanged, including Vertex Bevel767/Gate766/Edge Bevel764/Knife763/main762/scaffold761/Extrude759/Loop715/Multi1.0 and frozenBeta2–6.
+
+Focused107PASS. FullNode24:2007tests/1914PASS/93FAIL/0skip. Exactly five reviewed failures removed, no new failure identities; inventory83 source-pattern/9 unclassified-behaviour/1 version-pin. Remaining checks stay active; no exclusions/skips or CI gate. Device .768 sanity pending. Next varied Bevel/Knife/Loop reliability and remaining93 historical checks. Add Vertex unconfirmed picking/NOM import/Lasso tightening remain deferred.
+
+### Accepted .767 baseline
+
 
 ## .767 — Vertex Bevel live-drag ownership — 2026-10-09
 
@@ -112,7 +123,7 @@ per real face; missing labels equal null, extraneous labels ignored. Changed lab
 invalidate stale preview/Apply. Geometry/history unchanged. Focused121PASS;
 full1896/1794/102/0, actualNode22 run37750469278/job113222151677 matches names.
 Pages37750468365 success, live bytes verified.
-Current priority after .767 Vertex Bevel checks: Bevel/Knife/Loop reliability and98
+Current priority after .768 sanity: Bevel/Knife/Loop reliability and93
 historical active failing checks. Add Vertex unconfirmed picking, NOM import and
 Lasso tightening deferred; Beta2–6 immutable. No CI gate or exclusions.
 
@@ -312,7 +323,7 @@ Audit script only inventories failures; it is not a passing release gate.
 
 src/multi-object-transform.js?v=0.36.1.0 explicitly protected; LoopCut commit/feel
 .715 protected. Frozen betas untouched. Intentionally older pins are not errors.
-Current recovery pins .767; Knife .763; main .762; scaffold-helper .761; Gate .766; Drawer/Lasso .760; total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .764; Knife .763; direct-Vertex-Bevel .767; Vertex Bevel kernels/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
+Current recovery pins .768; Knife .763; main .762; scaffold-helper .761; Gate .766; Drawer/Lasso .760; total-gizmo/shared Vertex session/Edge Extrude/background pins .759; direct-Bevel .764; Knife .763; direct-Vertex-Bevel .767; Vertex Bevel kernels/bootstrap/Inset/Face direct pins .753; Vertex Extrude/core .752; Through child .751; multi-chamfer .748; guard .747; other bevel engines .745; Loop logical-addon/drawer .746; fallback .743; legacy fallback Through .242; export panel/wrapper/NOM/core cache URLs .741; debug .736; axis .735,
 Focus .733; component-align .705. Repin only directly changed modules and their
 loading parents; update title/visible label/data stamp/version.json together on
 actual runtime builds. App .742 adds finite negative cuts and corrects synthetic Exact origin; protected gestures unchanged.

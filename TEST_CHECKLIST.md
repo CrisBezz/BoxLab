@@ -4288,11 +4288,21 @@ Runtimeb4d3270032543270603c5512ea205b883f0c8cca published. ActualNode22 Topology
 - [x] User .766 PASS recorded2026-10-09; accepted body-backed/floating Edge selection and navigation retained.
 - [x] Initial25-case actual-owner baseline2PASS/23FAIL; new28PASS. Geometry/metadata/loose/context preservation, owned rollback, exact Undo/Redo, capture cleanup, equal arrays and start/no-op guards covered.
 - [x] Focused156PASS; full2007/1909PASS/98FAIL/0skip, exact .766 failures. No exclusions/skips or gate. Accepted .753 blue previews/provenance and Bevel→Knife→Loop preserved.
-- [ ] Visible .767: single/multi Vertex Bevel Pencil drags still commit once; Undo/Redo restores source/result.
-- [ ] Blue Width preview → Apply and Cancel still work; cancel a drag/session and resume selection/navigation cleanly.
-- [ ] Vertex Bevel followed by supported Knife/Loop still works; .766 Edge drag-selection stays protected.
+- [x] Visible .767: single/multi Vertex Bevel Pencil drags still commit once; Undo/Redo restores source/result.
+- [x] Blue Width preview → Apply and Cancel still work; cancel a drag/session and resume selection/navigation cleanly.
+- [x] Vertex Bevel followed by supported Knife/Loop still works; .766 Edge drag-selection stays protected.
 
 
 ### .767 publication verification — 2026-10-09
 
 Runtime85bc2cd65bf1f99f18a2ce823db7d62efd5859c8 published. ActualNode22 Topology run37863984676/job113606195654:2007tests/1909PASS/98FAIL/0skip; all98failure names exactly match local inventory and .766. Pages37863983873 succeeded. Live shell/version/updated direct Vertex Bevel and unchanged accepted Pencil Orbit gate/Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused156PASS. Device .767 acceptance pending.
+
+
+## v0.36.18.768 — Pencil/Orbit validation reconciliation
+
+- [x] User .767 PASS recorded2026-10-09.
+- [x] Five obsolete checks replaced; other43 historical and14 floating/body-backed Edge assertions retained. Four intentional routing mutations caught by behavioral replacements; runtime restored.
+- [x] Focused107PASS; full2007/1914PASS/93FAIL/0skip. Exactly five reviewed failures removed; no new failures or exclusions. All modelling pins/hashes unchanged.
+- [ ] Visible .768: Edge Multi tap/drag/hold and scaffold Close Face stay reliable over background and bodies.
+- [ ] Pencil background navigation and selection recover after release/cancel; active tools keep ownership.
+- [ ] Vertex Bevel/Undo/Redo and shared Extrude axis chooser remain as accepted.

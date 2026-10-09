@@ -1,3 +1,5 @@
+import {pencilSelectionRuntime} from './helpers/pencil-selection-runtime.mjs';
+import * as THREE from 'three';
 import {hasAssetReference,shellReleaseMatches} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -10,7 +12,6 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 
 const checks=[
  ['deferred intent exists',gate.includes('let pendingMeshOrbit = null')&&gate.includes('DEFERRED_ORBIT_PX = 8')],
- ['mesh hit defers while idle',gate.includes("route:deferred?'DEFER_MESH_INTENT'")&&gate.includes('const deferred=blocked&&!faceToolActive')],
  ['real OrbitControls down listener captured',gate.includes("if(type==='pointerdown')orbitPointerDownListener=listener")],
  ['drag promotes deferred orbit',gate.includes('PEN ORBIT DEFER CLAIM')&&gate.includes('orbitPointerDownListener.call(canvas,downEvent)')],
  ['hold browser wins',gate.includes("PEN ORBIT DEFER YIELD HOLD")],
@@ -25,3 +26,7 @@ const checks=[
  ['protected transform unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]
 ];
 for(const [name,ok] of checks)test("pencil-deferred-orbit-651.test: "+name,()=>assert.equal(ok,true,name));
+
+test('pencil-deferred-orbit-651.test: idle mesh waits for deliberate movement while matching Edge paint keeps ownership',()=>{
+ for(const owner of ['idle','paint']){const f=pencilSelectionRuntime();f.multi.checked=owner==='paint';f.body(new THREE.Vector3(0,0,-1));f.setIds([1]);const p=f.screen(new THREE.Vector3());f.pointer('pointerdown',{clientX:p.x,clientY:p.y});assert.equal(f.orbit().down,0);assert.equal(f.context.__boxlabPencilOrbitDebug.snapshot().pendingMeshOrbit?.pointerId,1);f.pointer('pointermove',{clientX:p.x+4,clientY:p.y});assert.equal(f.orbit().down,0);f.pointer('pointermove',{clientX:p.x+40,clientY:p.y});assert.equal(f.orbit().down,owner==='idle'?1:0);assert.equal(f.events.some(e=>e.type==='boxlab-pencil-orbit-claim'),owner==='idle');if(owner==='idle')assert.deepEqual(f.ids(),[1]);else assert.equal(f.context.__boxlabPaintSelectDebug.active()?.type,'edge');f.pointer('pointerup',{clientX:p.x+40,clientY:p.y});f.flush();assert.equal(f.context.__boxlabPencilOrbitDebug.snapshot().pendingMeshOrbit,null);assert.equal(f.context.__boxlabPaintSelectDebug.active(),null);assert.equal(f.history.undoStack.length,0);}
+});
