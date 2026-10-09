@@ -1,30 +1,19 @@
-<!-- .772 current; .771 device acceptance not yet recorded. -->
+<!-- .773 current; user .772 PASS. -->
 # BoxLab Development Roadmap
 
 This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .772, 2026-10-09 (supersedes historical priorities below)
+## Current direction — .773, 2026-10-09
 
-Validation-only .772 corrects the Join Coplanar loader assertion to Drawer; all
-runtime source unchanged. Full2049/1961PASS/88FAIL/0skip, one reviewed failure
-removed, no new identities. Published ee789b3f; Node22 counts/all88 failure names
-match local; Pages37932245305 success. Live shell/version also byte-match .772.
-
-Last explicit user PASS .769; .770 sanity not yet confirmed. User-requested Add+
-face-density sliders and 3D Text now implemented .771. Existing primitive owner
-has X/Y settings, counts and Apply/Cancel; Text word/thickness creates one editable
-object with letter holes intact. Bundled licensed font; bounded density controls.
-23 new checks, focused55PASS; full2049/1960PASS/89FAIL/0skip, unchanged failure
-identities. Await .771 device acceptance including controls, Text holes/thickness,
-one-object transforms, Cancel and Undo/Redo. Then resume Bevel/Knife/Loop reliability
-and remaining88 historical checks. Protected interactions and frozenBeta6 unchanged;
-Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
-
-Publication verified: .771 runtimeba54fd977437696266f6cc1b9ac890beb4b47ba6;
-Node22 CI2049/1960PASS/89FAIL/0skip, exact local identities; Pages37907016763
-success, changed live assets/font byte-match. Device acceptance pending.
+User .772 PASS. Validation-only .773 replaces two obsolete Gizmo .570 expectations
+with reviewed asset identity and actual hit-proxy construction/wiring coverage.
+74 focused PASS; full2050/1964PASS/86FAIL/0skip, two reviewed failures removed,
+no new failure identities. Runtime source/frozen betas unchanged; publication pending.
+Next remaining86 historical checks and scoped Bevel/Knife/Loop reliability.
+Add+ density/Text771 remains implemented; separate device acceptance not explicitly
+recorded. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
 
