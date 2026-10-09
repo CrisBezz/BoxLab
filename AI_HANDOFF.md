@@ -4,7 +4,7 @@
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.776**. Last explicit user acceptance is **.775 PASS**.
-Parent mainfbfa4c8d91d11f5c43aaf9062a9f43ce6dfac925; .776 publication verification pending.
+Parent mainfbfa4c8d91d11f5c43aaf9062a9f43ce6dfac925; .776 published and live-verified.
 .775 release4d10bedc73a627a128550232d2d60a5da6968070: Node22 CI2052/1970PASS/
 82FAIL/0skip with exact local identities; Pages38001174378/live verified; user PASS.
 All historical details/publication evidence remain in DEV_HISTORY.md and
@@ -43,7 +43,7 @@ Focused122PASS; fullNode24:2053tests/1978PASS/75FAIL/0skip. Exactly seven review
 checks active, classifications do not prove all obsolete. No exclusions/skips/CI
 gate. Runtime/frozenBeta2–6 unchanged; shell/recovery776 and two corresponding
 reviewed fixture URLs only. Main762/FaceDirect+Inset753/Gate766/Bevel769/Knife763/
-AddText771/Gizmo759/Multi1.0/Loop715 retained. Publication/Node22/live pending.
+AddText771/Gizmo759/Multi1.0/Loop715 retained. Publication/Node22/live verified below.
 .776 device sanity pending; no new feature qualification. Next remaining75
 historical checks and scoped Bevel/Knife/Loop reliability. Add Vertex occasional
 picking/NOM import/Lasso tightening deferred.
@@ -211,3 +211,14 @@ inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
 real-group preservation. Remaining75 active failures visible until reconciled.
+
+## .776 publication verification — 2026-10-10
+
+Published release commit `fa6e961f12775ff7690e1badb1df5f88b9b88e80`,
+tree `6f2bb498821a2d1c3c5c1caabcb6645b64d66a4a` matches tested checkout.
+Actual Node22 Topology run38003439298/job114066673069:2053tests/1978PASS/75FAIL/
+0skip; all75 failure names exactly match local inventory, no new failures.
+Pages38003438462 completed successfully. Fresh live .776 index.html/version.json
+byte-match; unchanged multi-face-direct.js/uniform-inset.js and frozenBeta6 version
+also match repository bytes. Focused122PASS. User .775 PASS recorded; .776 device
+sanity pending. Runtime/frozenBeta unchanged.

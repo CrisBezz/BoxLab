@@ -11,7 +11,7 @@ User .775 PASS. Validation-only .776 replaces seven obsolete .484/.485/.490
 armed-Face source checks with whole current owner + real Inset/Extrude/History
 behavior. Eight mutations rejected;122focusedPASS. Full2053/1978PASS/75FAIL/0skip;
 exactly seven reviewed failures removed, no new identities. Runtime/frozenBeta
-unchanged; publication pending. Next remaining75 historical checks and scoped
+unchanged; .776 publication/live verified. Next remaining75 historical checks and scoped
 Bevel/Knife/Loop reliability. Add+ density/Text771 implemented; separate acceptance
 not explicitly recorded. Add Vertex/NOM import/Lasso tightening deferred.
 

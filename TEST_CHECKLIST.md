@@ -4556,3 +4556,14 @@ picking/NOM import/Lasso tightening deferred.
 Manual .776 sanity (runtime unchanged): confirm .776; with Extrude or Inset armed,
 tap selected/unselected Faces to remove/add; drag a different Face, Undo/Redo once,
 then confirm background Pencil exit/navigation remain normal. Device PASS not inferred.
+
+## .776 publication verification — 2026-10-10
+
+Published release commit `fa6e961f12775ff7690e1badb1df5f88b9b88e80`,
+tree `6f2bb498821a2d1c3c5c1caabcb6645b64d66a4a` matches tested checkout.
+Actual Node22 Topology run38003439298/job114066673069:2053tests/1978PASS/75FAIL/
+0skip; all75 failure names exactly match local inventory, no new failures.
+Pages38003438462 completed successfully. Fresh live .776 index.html/version.json
+byte-match; unchanged multi-face-direct.js/uniform-inset.js and frozenBeta6 version
+also match repository bytes. Focused122PASS. User .775 PASS recorded; .776 device
+sanity pending. Runtime/frozenBeta unchanged.
