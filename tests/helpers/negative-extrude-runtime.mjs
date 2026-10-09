@@ -24,7 +24,7 @@ export function uploadedFixture({before=false}={}){
 export const snapshot=m=>JSON.stringify({vertices:m.vertices,faces:m.faces,creases:[...m.creases],groups:m.faceGroups,looseEdges:[...(m.looseEdges||[])],looseVertices:[...(m.looseVertices||[])]});
 export function volume(m){let total=0;for(const face of m.faces)for(let i=1;i<face.length-1;i++)total+=m.vertices[face[0]].dot(m.vertices[face[i]].clone().cross(m.vertices[face[i+1]]))/6;return total;}
 
-export function faceRuntime(m,ids,{fallback=false}={}){
+export function faceRuntime(m,ids,{fallback=false,sourceTransform=source=>source}={}){
   const documentHandlers=new Map(),windowHandlers=new Map(),events=[],elements=new Map();
   const element=()=>({classList:{contains:()=>false,toggle(){},remove(){}},dispatchEvent(){},getBoundingClientRect:()=>({left:0,top:0,width:900,height:600}),setPointerCapture(){},hasPointerCapture:()=>false});
   const get=selector=>{if(!elements.has(selector))elements.set(selector,element());return elements.get(selector);};
@@ -38,7 +38,9 @@ export function faceRuntime(m,ids,{fallback=false}={}){
     CustomEvent:class{constructor(type,{detail}={}){this.type=type;this.detail=detail;}},
     __boxlabBridgeState:state,__boxlabSelectionBridge:bridge,__boxlabHistory:history};
   vm.createContext(context);
-  const source=fs.readFileSync(new URL('../../src/multi-face-direct.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');
+  // Optional in-memory mutation hook for behavioral test sensitivity. Never writes
+  // runtime source; existing geometry/history fixtures use the unchanged default.
+  const source=sourceTransform(fs.readFileSync(new URL('../../src/multi-face-direct.js',import.meta.url),'utf8')).replace(/^import .*;\n/gm,'');
   vm.runInContext(source+"\n globalThis.testOwner={begin:beginDirectDrag,finish,setTool:tool=>{armed=tool;},drag:()=>drag};",context);
   const owner=context.testOwner;
   const event=(type,x=400,y=300)=>({type,target:get('#viewport'),pointerId:22,isPrimary:true,clientX:x,clientY:y,preventDefault(){},stopImmediatePropagation(){}});

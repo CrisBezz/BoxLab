@@ -1,19 +1,19 @@
-<!-- .775 current; user .774 PASS. -->
+<!-- .776 current; user .775 PASS. -->
 # BoxLab Development Roadmap
 
 This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .775, 2026-10-10
+## Current direction — .776, 2026-10-10
 
-User .774 PASS. Validation-only .775 replaces two .542 File-menu source assertions
-with actual topbar-owner behavior, preserving .545 settings-open/terminal-close
-contract. Six deliberate mutations rejected;29focusedPASS. Full2052/1970PASS/
-82FAIL/0skip; exactly two reviewed failures removed, no new identities. Runtime/
-frozenBeta unchanged; .775 publication/live verification complete. Next remaining82 checks and
-scoped Bevel/Knife/Loop reliability. Add+ density/Text771 implemented; separate
-acceptance not explicitly recorded. Add Vertex/NOM import/Lasso tightening deferred.
+User .775 PASS. Validation-only .776 replaces seven obsolete .484/.485/.490
+armed-Face source checks with whole current owner + real Inset/Extrude/History
+behavior. Eight mutations rejected;122focusedPASS. Full2053/1978PASS/75FAIL/0skip;
+exactly seven reviewed failures removed, no new identities. Runtime/frozenBeta
+unchanged; publication pending. Next remaining75 historical checks and scoped
+Bevel/Knife/Loop reliability. Add+ density/Text771 implemented; separate acceptance
+not explicitly recorded. Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
 

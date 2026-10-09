@@ -2,25 +2,19 @@ import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import {delegatedPicker,tapToggle,dragWorkingSet} from './helpers/armed-face-behavior.mjs';
 
 const direct=fs.readFileSync(new URL('../src/multi-face-direct.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
-test('485 armed Face owner raycasts all faces rather than selected faces only',()=>{
-  assert.match(direct,/allFaceIds=m\.faces\.map\(\(_,index\)=>index\)/);
-  assert.match(direct,/hit=hitSelectedFace\(event,m,allFaceIds,camera\)/);
-});
+// Native primary picking now belongs to the main selection bridge, while the
+// direct owner retains its selected-Face priority raycast (accepted .535).
+test('485 armed Face owner accepts unselected hits from the authoritative picker',()=>delegatedPicker());
 
-test('485 tap toggles selected state both directions',()=>{
-  assert.match(direct,/hitWasSelected=selectionBefore\.includes\(hit\)/);
-  assert.match(direct,/d\.selectionBefore\.filter\(index=>index!==d\.hitFaceIndex\)/);
-  assert.match(direct,/\[\.\.\.new Set\(\[\.\.\.d\.selectionBefore,d\.hitFaceIndex\]\)\]/);
-});
+test('485 tap toggles selected state both directions',()=>tapToggle());
 
-test('485 drag on unselected face includes that face in modelling selection',()=>{
-  assert.match(direct,/workingFaces=hitWasSelected\?\[\.\.\.selectionBefore\]:\[\.\.\.selectionBefore,hit\]/);
-  assert.match(direct,/faces:\[\.\.\.workingFaces\]/);
-});
+// .516/.518/.519 deliberately replaced .485's old union working set.
+test('485 unselected Face drag isolates the hit and selected drag retains the working set',()=>dragWorkingSet());
 
 test('485 cache-hops Face direct owner and preserves Rotate/main protected pins',()=>{
   assertAssetReference(index,'multi-face-direct.js');

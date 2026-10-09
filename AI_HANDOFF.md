@@ -1,42 +1,52 @@
-# BoxLab AI Handoff — File menu validation
+# BoxLab AI Handoff — Armed Face validation
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.775**. Last explicit user acceptance is **.774 PASS**.
-Parent main454a51cf1a3dda1607ac3b0526f697e7342b4b2a; .775 published and live-verified. .774 published895519977bcf9b3b971d911e204d24ceacc69f3b, Node22 CI2051/
-1967PASS/84FAIL/0skip and exact failure identities; Pages37934474546/live verified.
-All historical details and publication evidence remain in DEV_HISTORY.md and
+Current build **v0.36.18.776**. Last explicit user acceptance is **.775 PASS**.
+Parent mainfbfa4c8d91d11f5c43aaf9062a9f43ce6dfac925; .776 publication verification pending.
+.775 release4d10bedc73a627a128550232d2d60a5da6968070: Node22 CI2052/1970PASS/
+82FAIL/0skip with exact local identities; Pages38001174378/live verified; user PASS.
+All historical details/publication evidence remain in DEV_HISTORY.md and
 corresponding docs/reliability-build-*.md/JSON; this handoff describes current owners.
 
-## .775 — File menu interaction validation — 2026-10-10
+## .776 — Armed Face selection / drag validation — 2026-10-10
 
-User .774 PASS recorded. Parent main454a51cf1a3dda1607ac3b0526f697e7342b4b2a.
-Audited authoritative topbar-layout734, current shell/export controls and .541–.545
-history. One .542 editable assertion had a malformed optional-call source regex;
-the other expected every button to close File, superseded by accepted .545 terminal-
-action-only behavior. Replace exactly these two checks with execution of complete
-current topbar owner, imports stubbed and unrelated layout nodes absent. Explicit
-selector-aware DOM/dispatch/microtask doubles are not native Safari focus, event
-propagation, file-picker or export-output evidence. Editing inputs/checkboxes/
-textarea/select/contenteditable, labels/summary and both Import/Format/Geometry
-choices preserve open menu; editable descendants take precedence over terminal
-ancestors. Six existing terminal actions close only after controlled target callback,
-without consuming interaction; nested targets resolve through closest. Outside
-pointerdown dismisses; closed menu is inert. One new test rejects six in-memory
-mutations: missing editable exemption, all-button close, omitted Import terminal,
-early synchronous close, absent outside dismissal and late pointerdown registration.
-Runtime source never mutated. Retain original third .542 pin/protection check and
-all seven .541/.545 assertions. Initial10checks/8PASS/2FAIL; revised11PASS.
-Focused29PASS including File controls, export/NOM and release contracts. FullNode24:
-2052tests/1970PASS/82FAIL/0skip; exactly two reviewed .774 failures removed, no new
-failure identities. Remaining81source-pattern/1version-pin active; classifications
-do not prove all obsolete. No skips/exclusions/CI gate. Runtime and frozenBeta2–6
-unchanged; shell markers/recovery775 and corresponding two reviewed fixture URLs
-only. Topbar734/Export741/AddText771/Main762/Gate766/Gizmo759/Multi1.0/Loop715 kept.
-Publication/Node22/live verified below. .775 device acceptance pending.
-Next remaining82 historical checks and scoped Bevel/Knife/Loop reliability; Add
-Vertex occasional picking/NOM import/Lasso tightening remain deferred.
+User .775 PASS recorded. Parent mainfbfa4c8d91d11f5c43aaf9062a9f43ce6dfac925.
+Audited existing multi-face-direct753/native main762 bridge and accepted .501/
+.516/.518/.519/.535 history. Seven .484/.485/.490 source checks enforce obsolete
+inline tap/raycast/union working-set or function-placement text. Replace these
+seven one-for-one with behavior of the whole existing Face controller. Keep five
+other original checks and all nearby .535/Through/Bevel/Knife checks unchanged.
+Reuse negative-extrude-runtime fixture with optional in-memory source transform;
+no writes to runtime. New shared test helper installs real Face region and current
+uniform Inset kernels via their existing owners. DOM/primary picker/native toggle
+bridge/dispatch are controlled doubles; selected-Face raycast, EditableMesh, Inset/
+Extrude kernels and History are real. No native Safari picking/propagation proof.
+
+Both Extrude/Inset: repeated tap add/remove delegates to bridge once, preserves
+other IDs, geometry/metadata/redo and armed tool; provisional unselected press is
+restored before tap/cancel. Cancel cannot toggle; old release has no latent effect.
+Down/5px movement do not validate region or clone a transaction; tap works even
+with region refusal.9px promotes to modelling. Unselected drag isolates its hit;
+selected drag retains deliberate multi-Face set. Real preview preserves redo,
+release commits once without tap-toggle, previous unselected Face unchanged;
+Cancel restores geometry, retains working selection and redo, releases capture.
+Actual one-step Undo/Redo compared with exact geometry/creases/loose values and
+accepted .756 effective Face labels (absent/null equivalent). No blanket metadata
+normalization. Initial12checks/5PASS/7FAIL; revised13PASS. One new test rejects eight
+mutations: missing primary picker, wrong toggle ID, cancel toggling, early threshold,
+union working set, omitted history, premature region validation, cancel committing.
+
+Focused122PASS; fullNode24:2053tests/1978PASS/75FAIL/0skip. Exactly seven reviewed
+.775 failures removed; no new identities. Remaining74source-pattern/1version-pin
+checks active, classifications do not prove all obsolete. No exclusions/skips/CI
+gate. Runtime/frozenBeta2–6 unchanged; shell/recovery776 and two corresponding
+reviewed fixture URLs only. Main762/FaceDirect+Inset753/Gate766/Bevel769/Knife763/
+AddText771/Gizmo759/Multi1.0/Loop715 retained. Publication/Node22/live pending.
+.776 device sanity pending; no new feature qualification. Next remaining75
+historical checks and scoped Bevel/Knife/Loop reliability. Add Vertex occasional
+picking/NOM import/Lasso tightening deferred.
 
 ## Add+ / Text baseline — .771
 
@@ -54,7 +64,7 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-User .774 PASS; .775 File/menu device sanity pending. Continue remaining82 historical
+User .775 PASS; .776 Face-selection device sanity pending. Continue remaining75 historical
 checks and scoped Bevel/Knife/Loop reliability. No new feature qualification for
 this validation-only release. Add Vertex occasional picking, NOM import and slight
 Lasso tightening deferred. FrozenBeta2–6 immutable.
@@ -163,7 +173,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery775; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery776; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset/Face direct753;
 Through child751; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -200,15 +210,4 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining82 active failures visible until reconciled.
-
-## .775 publication verification — 2026-10-10
-
-Published release commit `4d10bedc73a627a128550232d2d60a5da6968070`,
-tree `e0fd3cb8b8dc2d3df7f63c754dacba4380b12bea` matches tested checkout.
-Actual Node22 Topology run38001174835/job114059327679:2052tests/1970PASS/82FAIL/
-0skip, all82 failure identities exactly match local inventory; no new failures.
-Pages38001174378 completed successfully. Fresh live index.html/version.json byte-
-match .775; unchanged topbar-layout.js/export-as-panel.js and frozenBeta6 version
-also match repository bytes. Focused29PASS. User .774 PASS; .775 device sanity
-pending. No runtime modelling/UI or frozen-beta changes.
+real-group preservation. Remaining75 active failures visible until reconciled.
