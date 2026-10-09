@@ -1,130 +1,64 @@
-# BoxLab AI Handoff — Hold terminal validation
+# BoxLab AI Handoff — File menu validation
 
-## Current state — 2026-10-09
+## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.774**. Last explicit user acceptance is .773 PASS;
-.770 device sanity was pending when the user requested Add+ density and Text.
-Parent ee046392d0d9d3cd5e79957e98ed974f1983a28d. .774 published and live-verified; evidence below.
+Current build **v0.36.18.775**. Last explicit user acceptance is **.774 PASS**.
+Parent main454a51cf1a3dda1607ac3b0526f697e7342b4b2a; .775 publication verification
+pending. .774 published895519977bcf9b3b971d911e204d24ceacc69f3b, Node22 CI2051/
+1967PASS/84FAIL/0skip and exact failure identities; Pages37934474546/live verified.
+All historical details and publication evidence remain in DEV_HISTORY.md and
+corresponding docs/reliability-build-*.md/JSON; this handoff describes current owners.
 
-## .774 — Component hold terminal routing validation — 2026-10-09
+## .775 — File menu interaction validation — 2026-10-10
 
-User .773 PASS recorded. Parent ee046392d0d9d3cd5e79957e98ed974f1983a28d.
-Two .631 source checks expected only Face/Edge completion, but current main762
-also finishes Vertex at window capture. Replace exactly those two assertions with
-execution of actual registration callbacks: all three completions receive same
-physical event, once, in existing order, above a simulated consuming document owner.
-Explicit callback spies/control dispatch are not native browser propagation proof.
-Reuse existing .761 owner fixture for real Edge hold/timer/scrub/release/cancel:
-release keeps fixed-base current candidate; cancel restores previous selection;
-hold retires, no later timer effect, geometry/loose data/history unchanged.
-Original seven other .631 assertions and12 .761/.762 assertions retained. One new
-test rejects eight in-memory mutations: omitted Vertex/Face/Edge completion or late
-capture, independently on up/cancel. Runtime source never mutated. Initial .631
-9tests/7PASS/2FAIL; revised10PASS.63focusedPASS incl actual gate/paint/floating rails,
-scaffold/Grow/Shrink/Fill history, Gizmo/collapsed isolation and release contracts.
-Full Node24:2051tests/1967PASS/84FAIL/0skip; exactly two reviewed failures removed,
-no new identities against .7732050/1964/86. Remaining83source-pattern/1version-pin
-checks active; classifications do not prove all obsolete. No skips/exclusions/gate.
-Runtime/geometry/gesture files and frozenBeta2–6 unchanged. Only shell/recovery774
-and two reviewed fixture URLs advance. Main762/Gizmo759/Gate766/AddText771,
-protected Multi1.0/Loop715 retained. Publication/Node22/live verification pending.
-Next remaining84 historical checks and scoped Bevel/Knife/Loop reliability.
-Add Vertex occasional picking/NOM import/Lasso tightening deferred. No new feature
-qualification; optional hold sideways/release, UP/DOWN selection and navigation sanity.
+User .774 PASS recorded. Parent main454a51cf1a3dda1607ac3b0526f697e7342b4b2a.
+Audited authoritative topbar-layout734, current shell/export controls and .541–.545
+history. One .542 editable assertion had a malformed optional-call source regex;
+the other expected every button to close File, superseded by accepted .545 terminal-
+action-only behavior. Replace exactly these two checks with execution of complete
+current topbar owner, imports stubbed and unrelated layout nodes absent. Explicit
+selector-aware DOM/dispatch/microtask doubles are not native Safari focus, event
+propagation, file-picker or export-output evidence. Editing inputs/checkboxes/
+textarea/select/contenteditable, labels/summary and both Import/Format/Geometry
+choices preserve open menu; editable descendants take precedence over terminal
+ancestors. Six existing terminal actions close only after controlled target callback,
+without consuming interaction; nested targets resolve through closest. Outside
+pointerdown dismisses; closed menu is inert. One new test rejects six in-memory
+mutations: missing editable exemption, all-button close, omitted Import terminal,
+early synchronous close, absent outside dismissal and late pointerdown registration.
+Runtime source never mutated. Retain original third .542 pin/protection check and
+all seven .541/.545 assertions. Initial10checks/8PASS/2FAIL; revised11PASS.
+Focused29PASS including File controls, export/NOM and release contracts. FullNode24:
+2052tests/1970PASS/82FAIL/0skip; exactly two reviewed .774 failures removed, no new
+failure identities. Remaining81source-pattern/1version-pin active; classifications
+do not prove all obsolete. No skips/exclusions/CI gate. Runtime and frozenBeta2–6
+unchanged; shell markers/recovery775 and corresponding two reviewed fixture URLs
+only. Topbar734/Export741/AddText771/Main762/Gate766/Gizmo759/Multi1.0/Loop715 kept.
+Publication/Node22/live verification pending. .775 device acceptance pending.
+Next remaining82 historical checks and scoped Bevel/Knife/Loop reliability; Add
+Vertex occasional picking/NOM import/Lasso tightening remain deferred.
 
-## .773 — Gizmo asset and hit-proxy validation — 2026-10-09
+## Add+ / Text baseline — .771
 
-User .772 PASS recorded. Parent main a9a557ef (verified origin/main).
-Audit found two historical .570 expectations superseded by accepted Gizmo:
-original comment stamp570 versus current595 comment, and literal strokeWidth16
-versus current per-handle inline widths. Replace exactly these checks: reviewed
-loader/hash for asset identity; execute actual proxy-construction block in vm with
-explicit DOM/event doubles. Preserve other13 original checks. Verify all five
-stroke-handle kinds, proxy insertion/class/transparent fill/stroke, visual links,
-hover enter/leave and same-event/receiver forwarding. Selector excludes centre and
-plane handles. Current CSS important override sets effective16px; fixture documents
-this and does not claim variable effective widths or native Safari SVG hit accuracy.
-Four in-memory mutations (no pointer events, visible stroke, missing visual link,
-wrong forwarding receiver) rejected by one additional test; source never mutated.
-Initial .57015tests/13PASS/2FAIL; current16PASS. Focused74PASS across proxy/collapsed
-isolation/Extrude chooser, Face Bevel, Knife, Join and release contracts. Full Node24:
-2050tests/1964PASS/86FAIL/0skip; exactly two reviewed failures removed, no new
-identities against .7722049/1961/88. All remaining checks active, no exclusions/gate.
-Runtime source/geometry/gesture owners and frozenBeta2–6 unchanged. Shell/recovery773
-and two reviewed fixture URLs only; Add/Text771, Gizmo759, Multi1.0/Loop715 retained.
-Publication/Node22/live verification pending. Next remaining86 historical checks and
-scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
-No new feature qualification; optional gizmo Move/Rotate/Scale and Undo/Redo sanity.
-
-## .772 — Join Coplanar loader contract — 2026-10-09
-
-Validation-only build from main51e4937e2e68867d770aa9e50feea75952a5b71f.
-Audited original Join placement/kernel and current Drawer import. Historical .507
-check incorrectly inspected face-workflow-layout, which no longer imports Join.
-Point only that loading assertion at authoritative drawer-ui; retain its row3
-placement assertion and all other eight .507 layout checks. Missing-import and
-stale-pin mutations of an in-memory loader string both reject; runtime unchanged.
-64 focused Add/Text, Face Bevel, Knife and layout checks PASS. Full Node24:
-2049tests/1961PASS/88FAIL/0skip, exactly one reviewed failure removed and no new
-failure identities against fresh .7712049/1960/89. No exclusions or CI gate.
-Only shell/recovery pins772 and their two reviewed fixture URLs change; every
-runtime source/hash, Add/Text771, protected Multi1.0/Loop715/frozenBeta2–6 retained.
-Publication/Node22/live verification pending. .771 device acceptance remains pending
-in repository; no inferred PASS. Next scoped modelling reliability and remaining88
-checks. No new feature qualification needed: optional Join/Undo/Redo sanity only.
-
-## .771 — Add+ density controls and single-object extruded Text
-
-User-directed priority supersedes the validation-only next task. Audited original
-primitive-ui capture owner, primitive-factory generators, Object manager/history
-and Text/font absence before implementation. Extend existing Add+ owner; retain
-Revolve Profile and Sweep events. Six primitive choices now open shared top-centre
-settings with X/Y sliders, original Low/Medium/High convenience presets, actual
-face/vertex counts and Apply/Cancel. No object is created before Apply. Cylinder/
-Cone caps remain n-gons; Y adds height bands. Cube X subdivides width, Y subdivides
-height/depth; common boundary vertices welded. Plane, Sphere and Torus use their
-natural two surface directions. Ranges bounded to32, shape-specific minima.
-
-Text adds word (1–64 characters), thickness0.01–100, X curve detail1–16 and Y depth
-bands1–32. Bundled unmodified Helvetiker Regular from pinned three@0.179.1 with
-original font license/provenance. Shapes/cap triangulation reuse Three Font and
-ShapeUtils. One EditableMesh contains all letters and detached glyph parts; holes
-remain open through the depth. Text lies in XY and extrudes Z, centred at origin.
-Unsupported glyphs/blank words/bad thickness refuse creation; not all Unicode fonts
-supported. Font loads asynchronously from local versioned asset; cancelled/replaced
-panel cannot create/update a newer session. Text is ordinary editable geometry,
-not a live typography modifier or new scene type. No viewport preview claimed.
-
-Apply uses original ObjectManager.addMesh, single selection and ObjectHistory
-capture/checkpointSnapshot exactly once; Undo/Redo restores whole scene. Original
-Add bubble cube handler remains stopped by existing capture owner. No gesture,
-selection, Bevel/Knife/Loop or protected module changes. Repin only primitive-ui,
-factory, new Text/font children and shell/recovery771; shared panel pin732 retained.
-
-Validation:23 new cases (17 real geometry +6 actual Add/controller/history checks),
-focused55PASS. All six primitive density axes, legacy preset counts, welded solid
-boundaries/outward winding, Text holes via real raycast, thickness/volume/closed
-edges, detached letters, one object, scene Undo/Redo, invalid inputs, async Cancel/
-Escape/outside and preserved redo, original Revolve/Sweep routing. DOM/picking/
-manager doubles are explicit. Additional temporary real-DOM smoke executes actual
-shared wide layout, Text creation and Object history successfully. Whole-app visual/
-WebGL browser QA unavailable: local Playwright Chromium absent and download failed.
-Device layout and touch/Pencil checks remain pending; no browser proof claimed.
-Sweep's obsolete variable-spelling source assertion updated to current launcher;
-actual route additionally tested, other assertions retained.
-
-FullNode24:2049tests/1960PASS/89FAIL/0skip; exactly the same89 failure identities as
-.770 (83 source-pattern/5 unclassified-behaviour/1 version-pin). Counts are test
-results, not app bug counts. No exclusions/skips or CI gate; npm test remains failing.
+Original primitive-ui/factory owners extended with top-centre X/Y density settings
+for six primitives, presets, actual counts and Apply/Cancel. Cube grids weld
+boundaries; Cylinder/Cone caps remain n-gons with Y height bands. Text uses bundled
+licensed Helvetiker Regular/Three Font + ShapeUtils: word1–64, thickness0.01–100,
+curve detail1–16, depth bands1–32. All letters/dots form one ordinary editable mesh,
+holes preserved, centredXY/extrudedZ. Unsupported glyphs/blank/bad thickness refuse;
+async completion ignores cancelled/replaced panels. Not editable typography; no
+viewport preview promised. Original object creation/history one-step Undo/Redo,
+Sweep/Revolve routes retained.23newchecks/55focusedPASS plus temporary real-DOM
+layout/history smoke. Whole-app WebGL/browser QA unavailable (Chromium absent and
+download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-User .773 PASS recorded; .774 validation-only device sanity pending. Continue
-remaining84 historical checks and scoped Bevel/Knife/Loop reliability. Existing
-.771 Add+ density/Text device checks have not been explicitly accepted separately;
-no new feature qualification needed for .774. Add Vertex occasional picking, NOM
-import and slight Lasso tightening remain deferred. FrozenBeta2–6 immutable.
+User .774 PASS; .775 File/menu device sanity pending. Continue remaining82 historical
+checks and scoped Bevel/Knife/Loop reliability. No new feature qualification for
+this validation-only release. Add Vertex occasional picking, NOM import and slight
+Lasso tightening deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -230,7 +164,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery774; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery775; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset/Face direct753;
 Through child751; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -267,47 +201,4 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining84 active failures visible until reconciled.
-
-### .770 publication verification — 2026-10-09
-
-Runtime499e377a3a8889a5f4d03b450b9355396eb29ff3 published. ActualNode22 Topology run37901813205/job113725877011:2026tests/1937PASS/89FAIL/0skip; all89failure names exactly match local inventory. Exactly four reviewed .769 failures removed, no new failures. Pages37901812074 succeeded. Live shell/version and unchanged Face direct/Pencil Orbit gate/direct Bevel/frozenBeta6 version byte-match tested checkout. Focused168PASS. User .769 PASS recorded; device .770 light sanity pending.
-
-
-### .771 publication verification — 2026-10-09
-
-Runtimeba54fd977437696266f6cc1b9ac890beb4b47ba6 published. ActualNode22 Topology
-run37907016801/job113742810182:2049tests/1960PASS/89FAIL/0skip; all89 failure names
-exactly match local .771 inventory and .770. Pages37907016763 succeeded. Live
-shell/version/AddUI/factory/Text/font and unchanged frozenBeta6 version byte-match
-tested checkout. Focused55PASS; actual-DOM/shared-layout/history smoke passes.
-User .771 device acceptance pending. Last explicit PASS remains .769.
-
-
-### .772 publication verification — 2026-10-09
-
-Published commit ee789b3f9b660233d2fbb01f828fd3d6b8a1560f, tree253def3b3e470929c3ea42a43f910d945ed4f36c exactly matches tested checkout.
-Node22 Topology37932246644/job113825549904:2049tests/1961PASS/88FAIL/0skip;
-all88 failure names match local inventory. Pages37932245305 success. 64 focused
-owner/layout checks plus5 release-contract checks PASS (69 total). Unchanged
-AddUI/Join/Beta6 live bytes verified; live shell/version also byte-match .772.
-
-
-### .773 publication verification — 2026-10-09
-
-Published32d70bb2e73151b3cb3b61f387e312d1d4371965; tree86adb0a691e79059379ac202554ac4c7a1d7f145 exactly matches tested checkout.
-Actual Node22 Topology37933050867/job113828237624:2050tests/1964PASS/86FAIL/0skip;
-all86 failure names match local. Pages37933050504 success. Live shell/version,
-unchanged Gizmo and frozenBeta6 version byte-match tested checkout. Focused74PASS.
-User .772 PASS recorded; .773 device sanity pending. Runtime source unchanged.
-
-## .774 publication verification — 2026-10-09
-
-Published runtime/test release commit `895519977bcf9b3b971d911e204d24ceacc69f3b`,
-tree `4baed78f41b7078b3b9bd0103a8e8d6b9682853d`. Node 22 CI run
-37934475663, job 113832966074: 2051 tests / 1967 PASS / 84 FAIL / 0 skipped;
-all 84 failure identities match the local inventory, with no new failures.
-Pages run 37934474546 completed successfully. Fresh live .774 index.html and
-version.json match repository bytes; main.js, pencil-orbit-gate.js and frozen
-beta-6/version.json also match. Focused validation: 63 PASS.
-User .773 PASS recorded; .774 device acceptance remains pending.
+real-group preservation. Remaining82 active failures visible until reconciled.

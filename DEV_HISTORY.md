@@ -6185,3 +6185,33 @@ Pages run 37934474546 completed successfully. Fresh live .774 index.html and
 version.json match repository bytes; main.js, pencil-orbit-gate.js and frozen
 beta-6/version.json also match. Focused validation: 63 PASS.
 User .773 PASS recorded; .774 device acceptance remains pending.
+
+
+## .775 — File menu interaction validation — 2026-10-10
+
+User .774 PASS recorded. Parent main454a51cf1a3dda1607ac3b0526f697e7342b4b2a.
+Audited authoritative topbar-layout734, current shell/export controls and .541–.545
+history. One .542 editable assertion had a malformed optional-call source regex;
+the other expected every button to close File, superseded by accepted .545 terminal-
+action-only behavior. Replace exactly these two checks with execution of complete
+current topbar owner, imports stubbed and unrelated layout nodes absent. Explicit
+selector-aware DOM/dispatch/microtask doubles are not native Safari focus, event
+propagation, file-picker or export-output evidence. Editing inputs/checkboxes/
+textarea/select/contenteditable, labels/summary and both Import/Format/Geometry
+choices preserve open menu; editable descendants take precedence over terminal
+ancestors. Six existing terminal actions close only after controlled target callback,
+without consuming interaction; nested targets resolve through closest. Outside
+pointerdown dismisses; closed menu is inert. One new test rejects six in-memory
+mutations: missing editable exemption, all-button close, omitted Import terminal,
+early synchronous close, absent outside dismissal and late pointerdown registration.
+Runtime source never mutated. Retain original third .542 pin/protection check and
+all seven .541/.545 assertions. Initial10checks/8PASS/2FAIL; revised11PASS.
+Focused29PASS including File controls, export/NOM and release contracts. FullNode24:
+2052tests/1970PASS/82FAIL/0skip; exactly two reviewed .774 failures removed, no new
+failure identities. Remaining81source-pattern/1version-pin active; classifications
+do not prove all obsolete. No skips/exclusions/CI gate. Runtime and frozenBeta2–6
+unchanged; shell markers/recovery775 and corresponding two reviewed fixture URLs
+only. Topbar734/Export741/AddText771/Main762/Gate766/Gizmo759/Multi1.0/Loop715 kept.
+Publication/Node22/live verification pending. .775 device acceptance pending.
+Next remaining82 historical checks and scoped Bevel/Knife/Loop reliability; Add
+Vertex occasional picking/NOM import/Lasso tightening remain deferred.
