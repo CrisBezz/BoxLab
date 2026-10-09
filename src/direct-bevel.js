@@ -34,7 +34,7 @@ function faceBevelInfo(faceIds=bridge()?.indices?.()||[]){
   return valid?{ok:true,mesh,faceIds:ids,ids:[...valid.ids]}:{ok:false,reason:mesh.__lastBevelError||'Face boundary cannot be bevelled by the current Edge Bevel engine'};
 }
 function faceContextValid(){
-  return !!(faceSession&&editable()&&state()?.mesh===faceSession.mesh&&bridge()?.mode?.()==='face'
+  return !!(faceSession&&editable()&&state()?.mesh===faceSession.mesh&&globalThis.__boxlabObjectManager?.activeId===faceSession.object&&bridge()?.mode?.()==='face'
     &&[...new Set(bridge()?.indices?.()||[])].sort((a,b)=>a-b).join(',')===faceSession.faceIds.slice().sort((a,b)=>a-b).join(','));
 }
 function armFaces(faceIds){
@@ -42,7 +42,7 @@ function armFaces(faceIds){
   disarm();globalThis.__boxlabTransformArming?.disarm?.();
   globalThis.__boxlabFaceDirect?.suspendForTransform?.();globalThis.__boxlabFaceDirect?.clearTransformSuspension?.();
   document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'bevel'}}));
-  faceSession={...info,before:info.mesh.clone(),candidate:null,previewResult:null};armed=true;button?.classList.add('active');
+  faceSession={...info,object:globalThis.__boxlabObjectManager?.activeId,before:info.mesh.clone(),candidate:null,previewResult:null};armed=true;button?.classList.add('active');
   previewFaces();return info;
 }
 function completeFaces(){
@@ -50,8 +50,9 @@ function completeFaces(){
 }
 function cancelFaces({restoreSelection=true}={}){
   const saved=faceSession;if(!saved)return false;
+  const restoreOwnedSelection=restoreSelection&&faceContextValid();
   disarm();
-  if(restoreSelection&&state()?.mesh===saved.mesh&&bridge()?.mode?.()==='face')bridge()?.set?.('face',saved.faceIds);
+  if(restoreOwnedSelection)bridge()?.set?.('face',saved.faceIds);
   document.dispatchEvent(new CustomEvent('boxlab-direct-tool-exclusive',{detail:{tool:'none',reason:'bevel-cancel'}}));
   completeFaces();return true;
 }

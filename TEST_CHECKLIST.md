@@ -4184,7 +4184,7 @@ Runtimeb2b5752804be956489e5f007d2f4859331fa1a9b published. Actual Node22 Topolog
 Runtime a85585c2a0c6ce42b74d808ed939660ebd257d34 published. Actual Node22 Topology run37766273730/job113274606897:1923tests/1821PASS/102FAIL/0skip; all102failure identities exactly match local inventory and .759. Pages37766272406 succeeded. Live shell/version/Gate/Lasso/Drawer, accepted Edge Extrude and frozenBeta6 version byte-match tested checkout. Focused69PASS. Device .760 acceptance pending.
 
 
-## .761 floating scaffold hold / Close Face
+## .761 floating scaffold hold / Fill Face
 
 - [x] Ten new behavioral checks pass; .760 actual hold-to-Close-Face fault reproduced
 - [x] Branched wire cube/grid return individual planar closed cells through loose seed
@@ -4193,7 +4193,7 @@ Runtime a85585c2a0c6ce42b74d808ed939660ebd257d34 published. Actual Node22 Topolo
 - [x] Original Fill creates one face, one history entry, Undo/Redo; cancel restores base
 - [x] Actual Grow owner still receives vertical scrub; surfaced candidates exactly unchanged
 - [x] Focused79PASS; full1933/1831PASS/102FAIL/0skip, exact .760 failure identities
-- [x] iPad floating hold -> sideways browse -> release -> Close Face -> Undo/Redo (.761 user PASS)
+- [x] iPad floating hold -> sideways browse -> release -> Fill Face -> Undo/Redo (.761 user PASS)
 - [ ] Surface loops plus floating tap/Lasso and finger/empty-background navigation
 - [x] Pages/live shell/main/new helper bytes verified
 
@@ -4210,7 +4210,7 @@ Runtime8d4d0d51af2b09908863ab9e47b88d96fdfe2a70 published. Actual Node22 Topolog
 - [x] Current12PASS: actual hold/move/window release preserves Grow preview on wire/surface
 - [x] Shrink-to-empty and neutral return survive release; cancel restores pre-hold selection
 - [x] Vertical completion retires horizontal cycle without new history
-- [x] Existing sideways browser/Close Face/Undo/Redo tests retained
+- [x] Existing sideways browser/Fill Face/Undo/Redo tests retained
 - [x] Focused81PASS; full1935/1833PASS/102FAIL/0skip, exact .761 failure identities
 - [x] iPad UP/DOWN preview retained after release; neutral return and sideways browser (.762 user PASS)
 - [x] Pages/live shell/main bytes verified
@@ -4223,7 +4223,7 @@ Runtimec3bf95c4173341917fe203527178bd9cd24c2a79 published. Actual Node22 Topolog
 
 ## .763 Knife same-mesh source validity
 
-- [x] .762 user PASS recorded; original gesture/Close Face releases retained
+- [x] .762 user PASS recorded; original gesture/Fill Face releases retained
 - [x] Whole-owner source edit tests reproduce12FAIL/1PASS on old Knife
 - [x] New13PASS: coordinate/count/winding/topology changes cancel before endpoint work
 - [x] Newer source/history/redo/capture/markers preserved; no stale rollback
@@ -4245,7 +4245,7 @@ Runtime4b4f909d8ed2b1c0fda3174f07c6b53860a362ed published. Actual Node22 Topolog
 - [x] Newer coordinate/topology/groups/creases/loose edits survive move/release/cancel/disarm; changed mesh/object/mode/lock refuses stale commit. Owned preview rollback, capture/control release, equal arrays and repeated history covered.
 - [x] Visible .764: Edge Bevel repeated Pencil drags and Width/Segments Exact work; Undo/Redo restores each result.
 - [x] Cancel/Done during Edge Bevel restores only its own preview; switching mode/object or locking cannot commit stale geometry; navigation resumes.
-- [x] Face/Vertex blue Bevel Apply/Cancel and Bevel→Knife→Loop still work; accepted floating scaffold selection/Close Face preserved.
+- [x] Face/Vertex blue Bevel Apply/Cancel and Bevel→Knife→Loop still work; accepted floating scaffold selection/Fill Face preserved.
 
 
 ### .764 publication verification — 2026-10-08
@@ -4260,7 +4260,7 @@ Runtime b7bc824eaafb8b9cc109d27cb980b61946d1cf35 published. Actual Node22 Topolo
 - [x] Four deliberate bad-source mutations caught; original source byte-restored. Focused102PASS/full1972/1874PASS/98FAIL/0skip; no new failure names, exclusions or skips.
 - [ ] Visible .765: with an existing Edge selection, hold another edge and browse sideways; prior selection survives and old previews do not pile up.
 - [ ] Cancel restores prior selection; UP/DOWN Grow/Shrink keeps its result after release.
-- [ ] Floating scaffold outline → Close Face → Undo/Redo works; navigation resumes.
+- [ ] Floating scaffold outline → Fill Face → Undo/Redo works; navigation resumes.
 
 
 ### .765 publication verification — 2026-10-09
@@ -4274,7 +4274,7 @@ Runtime201d8c4aa2bc24006542d4ad69df37e6781dfa6d published. ActualNode22 Topology
 - [x] Actual gate/paint baseline14/8PASS/6FAIL; repaired14PASS. Seven new cases; original seven .760 assertions unchanged. Pending/active body-backed rails, horizontal/vertical and surfaced boundary cancellation covered.
 - [x] Existing actual scaffold/vertical-release/selection/Extrude and shell checks92PASS. Full1979/1881PASS/98FAIL/0skip; exact .765 failures, no exclusions. Navigation with no paint claim retained.
 - [x] Visible .766: Multi Edge Pencil drag across edges over a body and floating rails keeps selection ownership; try quick movement and a small move followed by a longer drag.
-- [x] Edge hold → sideways candidates and UP/DOWN Grow/Shrink retain results on release; floating Close Face still works.
+- [x] Edge hold → sideways candidates and UP/DOWN Grow/Shrink retain results on release; floating Fill Face still works.
 - [x] Pencil background Orbit and finger Orbit/pan/pinch still work, keeping selections; no stuck controls after selection drag/cancel.
 
 
@@ -4303,11 +4303,21 @@ Runtime85bc2cd65bf1f99f18a2ce823db7d62efd5859c8 published. ActualNode22 Topology
 - [x] User .767 PASS recorded2026-10-09.
 - [x] Five obsolete checks replaced; other43 historical and14 floating/body-backed Edge assertions retained. Four intentional routing mutations caught by behavioral replacements; runtime restored.
 - [x] Focused107PASS; full2007/1914PASS/93FAIL/0skip. Exactly five reviewed failures removed; no new failures or exclusions. All modelling pins/hashes unchanged.
-- [ ] Visible .768: Edge Multi tap/drag/hold and scaffold Close Face stay reliable over background and bodies.
-- [ ] Pencil background navigation and selection recover after release/cancel; active tools keep ownership.
-- [ ] Vertex Bevel/Undo/Redo and shared Extrude axis chooser remain as accepted.
+- [x] Visible .768: Edge Multi tap/drag/hold and scaffold Fill Face stay reliable over background and bodies.
+- [x] Pencil background navigation and selection recover after release/cancel; active tools keep ownership.
+- [x] Vertex Bevel/Undo/Redo and shared Extrude axis chooser remain as accepted.
 
 
 ### .768 publication verification — 2026-10-09
 
 Runtimed77866b4d110eb569de247a9b318e474203f9ab2 published. ActualNode22 Topology run37865322509/job113610547339:2007tests/1914PASS/93FAIL/0skip; all93failure names exactly match local inventory. Exactly five reviewed .767 failures resolved; no new failure identities. Pages37865321691 succeeded. Live shell/version and unchanged Pencil Orbit gate/Vertex Bevel/Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused107PASS. User .767 PASS recorded; device .768 sanity pending.
+
+
+## v0.36.18.769 — Face Bevel session ownership
+
+- [x] User .768 PASS recorded2026-10-09. Fill Face is the scaffold-cap action, reusing #fillFaceBtn.
+- [x] Initial15-case baseline6PASS/9FAIL;19 current owner/panel/kernel cases pass. Active-object change with same mesh refuses stale preview/Apply/press; drag terminals/panel sync clean capture/controls/ghosts. Cancel preserves newer Face IDs and mesh/context/history.
+- [x] Focused231PASS; full2026/1933PASS/93FAIL/0skip with exact .768 failures. Bevel kernel/Edge repeat and all unrelated pins unchanged; no exclusions/skips.
+- [ ] Visible .769: single/connected multi-Face Bevel Pencil and Width preview → Apply commits once; Undo/Redo restores source/result.
+- [ ] Face Bevel Cancel leaves original mesh/selection; a fresh Face selection can launch Bevel again and navigation resumes.
+- [ ] Edge/Vertex Bevel and subsequent supported Knife/Loop work as accepted.

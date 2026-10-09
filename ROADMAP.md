@@ -1,13 +1,13 @@
-<!-- .768 current; user .767 PASS. -->
+<!-- .769 current; user .768 PASS. -->
 # BoxLab Development Roadmap
 
 This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .768, 2026-10-09 (supersedes historical priorities below)
+## Current direction — .769, 2026-10-09 (supersedes historical priorities below)
 
-.767 user PASS. .768 reconciles five obsolete Pencil/Orbit checks with current gesture ownership; no app behavior change. Focused107PASS; full2007/1914PASS/93FAIL/0skip, exactly five reviewed failures removed and no new failures. Next varied Bevel/Knife/Loop reliability and remaining93 historical checks. Accepted selection/scaffold/Extrude and Vertex Bevel retained; Beta6 immutable736. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
+.768 user PASS. .769 protects Face Bevel blue previews against active-object changes with a shared mesh, and preserves newer selections on Cancel using the original owner.19 new checks pass; focused231PASS; full2026/1933PASS/93FAIL/0skip, exact .768 failure identities. Await Face Bevel device sanity, then varied Bevel/Knife/Loop reliability and remaining93 historical checks. Use Fill Face for scaffold caps. Accepted selection/Extrude/Edge and Vertex Bevel retained; Beta6 immutable736. Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
 

@@ -6015,3 +6015,14 @@ Focused107PASS. FullNode24:2007tests/1914PASS/93FAIL/0skip. Exactly five reviewe
 ### .768 publication verification — 2026-10-09
 
 Runtimed77866b4d110eb569de247a9b318e474203f9ab2 published. ActualNode22 Topology run37865322509/job113610547339:2007tests/1914PASS/93FAIL/0skip; all93failure names exactly match local inventory. Exactly five reviewed .767 failures resolved; no new failure identities. Pages37865321691 succeeded. Live shell/version and unchanged Pencil Orbit gate/Vertex Bevel/Edge Extrude/frozenBeta6 version byte-match tested checkout. Focused107PASS. User .767 PASS recorded; device .768 sanity pending.
+
+
+## .769 — Face Bevel active-object and selection ownership — 2026-10-09
+
+User .768 PASS recorded. Parent main48a2f77598ff469828a1bd593b155047423e5ff9. User clarifies the scaffold-cap action is Fill Face; use this actual Edge radial label rather than Close Face. Existing controller src/direct-bevel.js owns Face blue previews and Edge live drags. Face session validated mesh/mode/lock/selection but omitted active object identity, unlike Edge ownership. Switching active object while retaining a shared mesh allowed stale preview/Apply/drag continuation. Cancel also restored old Face IDs over a newer selection or locked context.
+
+Capture activeId in Face session and compare in existing faceContextValid. Cancel determines selection ownership before disarm and restores only a still-valid session selection. No new controller/gesture owner; original source comparator, kernels, picker, thresholds, blue preview/Apply, Edge repeat and history unchanged. Invalid object/selection contexts refuse stale Apply; existing panel sync/drag cancellation retires preview, releases capture and restores controls without touching newer mesh/selection/history.
+
+New19 actual whole-controller/viewport-panel checks with real Bevel kernels and rendering-preview objects; pointer picking/DOM are controlled doubles. Initial15-case baseline6PASS/9FAIL; all19 nowPASS, including same-mesh active-object transitions, Apply/slider/press/move/release/cancel, current selection/lock/mesh/mode preservation, panel sync and fresh relaunch, single/multi-Face normal Apply/Cancel, exact Undo/Redo and capture/control/ghost cleanup. Focused231PASS (226 nearby modelling/selection cases plus5 release-contract checks). FullNode24:2026tests/1933PASS/93FAIL/0skip; all93failure identities exactly .768. No skips/exclusions or CI gate. Syntax/whitespace pass.
+
+Shell/recovery769 and single direct-Bevel769 index pin/hash reviewed. Vertex Bevel767/Gate766/Knife763/main762/scaffold761/Extrude759/Loop715/Multi1.0 and frozenBeta2–6 unchanged. Device .769 Face Bevel sanity pending. Next varied Bevel/Knife/Loop reliability and remaining93 historical checks; Add Vertex unconfirmed picking/NOM import/Lasso tightening deferred.
