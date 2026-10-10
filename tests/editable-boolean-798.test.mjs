@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import vm from 'node:vm';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -54,4 +56,13 @@ test('798 source/recipe safeguards refuse linked, grouped, modified, missing and
   result.mesh.vertices[0].x+=.1;r.manager.replaceActiveMesh(result.mesh);assert.equal(check().ok,false);
   const old=EditableMesh.cube(),out={mesh:old};assert.equal(recordBooleanRecipe(out,{kind:'groups'},'union'),false);
   const plain={id:9,mesh:old,settings:{},kind:'editable'};assert.equal(recordBooleanRecipe(out,{kind:'objects',active:plain,other:{...plain,id:10}},'bad'),false);
+});
+
+test('800 actual visibility owner shows both edit operands despite Solo and restores hidden source visibility on exit',()=>{
+ const r=editableBooleanRuntime(),source=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
+ r.c.__boxlabEditableBoolean.state=r.controller.state;r.c.soloId=4;vm.runInContext(source.slice(source.indexOf('function activeShouldShow()'),source.indexOf('function displayMeshFor(')),r.c);
+ assert.equal(r.c.activeShouldShow(),true);assert.equal(r.c.shouldShow(r.objects[0]),false);
+ r.controller.open(4);assert.equal(r.c.activeShouldShow(),true);assert.equal(r.c.shouldShow(r.objects[1]),true);assert.equal(r.c.shouldShow(r.objects.find(o=>o.id===4)),false);
+ r.controller.choose(2);assert.equal(r.c.activeShouldShow(),true);assert.equal(r.c.shouldShow(r.objects[0]),true);
+ r.controller.cancel();assert.equal(r.c.soloId,4);assert.equal(r.c.activeShouldShow(),true);assert.equal(r.c.shouldShow(r.objects[0]),false);assert.equal(r.c.shouldShow(r.objects[1]),false);
 });

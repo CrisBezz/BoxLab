@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.798",
+      "url": "./src/drawer-ui.js?v=0.36.18.800",
       "target": "src/drawer-ui.js",
-      "sha256": "b256e88fa76681ed7de50d8f274a3bf7f45f3971a9d9c83d4766c554cdfd2933"
+      "sha256": "8273063262815c5f1c7d618a36fd74c2f10e77b1e9dc932e1647423314003051"
     },
     {
       "owner": "index.html",
@@ -329,21 +329,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.798",
+      "url": "./src/multi-object.js?v=0.36.18.800",
       "target": "src/multi-object.js",
-      "sha256": "4f121b5369624c4d06611d1a1c1d9cd7f262416de4510b5309a1f0f7b146763a"
+      "sha256": "e5a22f516e11af63a117d7b56edcdcc5721e0823bd20a65d6345b82f0ddf2a67"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.798",
+      "url": "./src/object-management.js?v=0.36.18.800",
       "target": "src/object-management.js",
-      "sha256": "d4cdb7b5fe79685f178a51b81377134cd7db4880aa9a7207876bda0570c3567b"
+      "sha256": "f610696fa56c06d3a8cd62371bc63f26c0e574cc95b7662a55c78018a2d2dbd5"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-radial-session.js?v=0.36.18.799",
+      "url": "./src/object-radial-session.js?v=0.36.18.800",
       "target": "src/object-radial-session.js",
-      "sha256": "a4ba1fdf286f0890608905c2fea81f5fc205d5808112ff184d5d592877502f94"
+      "sha256": "b6d2ec0140f611323490b618016c740336af0733a6d21087dfee3647e5706ab3"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.799",
+      "url": "./src/release-bootstrap.js?v=0.36.18.800",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.799",
+      "url": "./src/release-version.js?v=0.36.18.800",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.759",
+      "url": "./src/total-gizmo.js?v=0.36.18.800",
       "target": "src/total-gizmo.js",
-      "sha256": "9af105efe98bf477b0eb0951d7321c1b7157d9c9fe7969e9357aae49cd2d0892"
+      "sha256": "91f47288b9afeecabad82079210320c9560a041238e55c0db9815181e3824caf"
     },
     {
       "owner": "index.html",
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.798",
+      "url": "./object-management.js?v=0.36.18.800",
       "target": "src/object-management.js",
-      "sha256": "d4cdb7b5fe79685f178a51b81377134cd7db4880aa9a7207876bda0570c3567b"
+      "sha256": "f610696fa56c06d3a8cd62371bc63f26c0e574cc95b7662a55c78018a2d2dbd5"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -2182,10 +2182,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/editable-boolean.js?v=0.36.18.799",
+      "url": "./src/editable-boolean.js?v=0.36.18.800",
       "target": "src/editable-boolean.js",
-      "sha256": "7ce90d25d4eb08f9d968f0c7d8396d31a19f6d83b8a9b9c95650fa33f706c157",
-      "sourceVersion": "0.36.18.799"
+      "sha256": "20139d4163922bf00e49d8df334bd9c7875b9559f600d1ed57187b7e0d1c52f9",
+      "sourceVersion": "0.36.18.800"
     },
     {
       "owner": "src/editable-boolean.js",
@@ -2193,6 +2193,12 @@
       "target": "src/editable-boolean-core.js",
       "sha256": "bb27c71521ce6baf9fc26cd6598cab5c61b3e997113617e88b9a9ad45e5e3cd5",
       "sourceVersion": "0.36.18.798"
+    },
+    {
+      "owner": "src/object-management.js",
+      "url": "./gizmo-corner-controls.js?v=0.36.18.734",
+      "target": "src/gizmo-corner-controls.js",
+      "sha256": "996dd0e954c446043038d916500eeadf97d850ffc74f5845755907b5ca3e6a5d"
     }
   ]
 }

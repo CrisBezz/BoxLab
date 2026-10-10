@@ -1,4 +1,4 @@
-import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.734';
+import { mountGizmoCornerControls, gizmoIcons } from './gizmo-corner-controls.js?v=0.36.18.734';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 import * as THREE from 'three';
 
@@ -427,13 +427,17 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#surfaceInsertBtn">Insert</button>
   <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#solidifyBtn">Solidify</button>
   <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#linearArrayLaunchBtn">Array</button>
-  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#booleanLaunchBtn">Boolean</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90deg;--r:230px" data-tool-target="#booleanLaunchBtn">Boolean</button>
   <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#joinObjectsBtn">Join</button>
   <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target="#symmetryBisectBtn">Symmetry / Bisect</button>
-  <button type="button" class="tg-tool-sector" style="--a:315deg" data-tool-target="#meshHealthBtn">Mesh Health</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270deg;--r:230px" data-tool-target="#meshHealthBtn">Mesh Health</button>
   <div class="tg-object-outer-guide" aria-hidden="true"></div>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:195px" data-tool-target="#revolveProfileLaunchBtn">Revolve Profile</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180deg;--r:195px" data-tool-target="#quadCleanBtn">Clean for SubD</button>
+  <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#outlinerDuplicateBtn">Duplicate</button>
+  <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#outlinerDeleteBtn">Delete</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225deg;--r:230px" data-tool-target="#objectMultiSelectBtn" aria-label="Multi Select" title="Multi Select"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">${gizmoIcons.multi}</svg><span>Multi Select</span></button>
+
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:230px" data-tool-target="#revolveProfileLaunchBtn">Revolve Profile</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180deg;--r:230px" data-tool-target="#quadCleanBtn">Clean for SubD</button>
   <button type="button" class="tg-tool-center" aria-label="Close Object contextual tools" title="Return to gizmo">×</button>
 </div>
 <div class="tg-edge-extrude-badge" hidden><strong>Extrude</strong><span>Plane ⟂ edge</span><small>Choose constraint • drag edge</small></div>
@@ -886,7 +890,7 @@ style.textContent=`
 #totalGizmo[data-hub-state="tools"][data-mode="object"] .tg-tool-ring[data-ring-mode="object"]{display:block}
 #totalGizmo[data-mode="object"] .tg-tool-sector{width:86px;margin-left:-43px;white-space:normal;transform:rotate(var(--a)) translateY(-120px) rotate(calc(-1 * var(--a)))}
 #totalGizmo[data-mode="object"] .tg-tool-outer{transform:rotate(var(--a)) translateY(calc(-1 * var(--r))) rotate(calc(-1 * var(--a)))}
-.tg-object-outer-guide{position:absolute;width:390px;height:390px;left:50%;top:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.08);border-radius:50%;pointer-events:none}
+.tg-object-outer-guide{position:absolute;width:460px;height:460px;left:50%;top:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.08);border-radius:50%;pointer-events:none}
 #totalGizmo .tg-tool-sector{position:absolute;left:50%;top:50%;width:68px;height:34px;margin:-17px -34px;padding:3px 5px;border:1px solid rgba(255,255,255,.22);border-radius:11px;background:rgba(18,21,27,.96);color:#eef2f7;font-size:10px;font-weight:700;line-height:1;white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.34);pointer-events:auto;touch-action:none;transform:rotate(var(--a)) translateY(-82px) rotate(calc(-1 * var(--a)))}
 #totalGizmo .tg-face-outer-guide{position:absolute;left:50%;top:50%;width:460px;height:460px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.15);border-radius:50%;pointer-events:none}
 #totalGizmo .tg-vertex-outer-guide{position:absolute;left:50%;top:50%;width:460px;height:460px;transform:translate(-50%,-50%);border:1px solid rgba(238,242,247,.15);border-radius:50%;pointer-events:none}

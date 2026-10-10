@@ -33,7 +33,7 @@ test('798 whole UI opens shared source session, draws real guides/preview and di
  const u=ui();assert.equal(u.nodes.get('#booleanLaunchBtn').textContent,'Edit Boolean');assert.equal(u.api.open(),true);u.flush();
  assert.equal(u.events.at(-1).id,'boolean-edit');assert.equal(u.nodes.get('#editableBooleanPanel').hidden,false);assert.equal(u.scene.children.length,1);
  u.nodes.get('[data-edit-source="b"]').click();u.r.move(new THREE.Vector3(.08,.03,.01));u.nodes.get('#editableBooleanUpdate').click();u.flush();
- assert.equal(u.scene.children[0].children.length,3);assert.match(u.nodes.get('#editableBooleanNote').textContent,/Preview updated/);
+ assert.equal(u.scene.children[0].children.length,5);assert.match(u.nodes.get('#editableBooleanNote').textContent,/Preview updated/);
  u.nodes.get('#editableBooleanApply').click();u.flush();assert.equal(u.api.active(),false);assert.equal(u.scene.children.length,0);assert.equal(u.nodes.get('#editableBooleanPanel').hidden,true);assert.equal(u.r.manager.activeId,4);
 });
 test('798 whole UI Escape and conflicting action cancel source transaction',()=>{

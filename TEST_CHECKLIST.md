@@ -5215,3 +5215,23 @@ viewport pointer owner or unrelated changes; .797 remains last protected PASS.
 - [ ] Reopen, Update Preview/Apply; one Undo/Redo; ordinary Boolean still works.
 
 .799 validation: **2136/2136 PASS, 0 FAIL, 0 skipped**. Full Node24 suite; touch/layout rendering remains device gate.
+
+## .800 — Boolean A/B visibility / Object radial actions — 2026-10-11
+
+User .799 FAIL: A/B missing. Native visibility now permits current edit sources
+through Solo without changing Solo ID; exit restores filtering. Added translucent
+amber/blue source bodies alongside edge guides and mint preview. Device reproduction
+still a manual gate; .798/.799 not accepted, .797 last protected PASS.
+
+Duplicate inner180° and Delete inner315° reuse original object actions. Boolean and
+Mesh Health outer90°/270°; radius230 retains spacing. Multi Select outer225° uses shared
+icon/original toolbar action, also available at object footer and existing gizmo corner.
+Original footer Duplicate retained. No new group/history/Multi owner.
+
+- [x] Actual visibility owner: Solo result → both A/B visible during edit → original visibility after Cancel.
+- [x] Whole editor source surfaces/preview cleanup; actual radial original action dispatch and common slots/spacing.
+- [ ] iPad: Edit Boolean visibly shows A/B; source buttons and gizmo work; Update/Apply and Cancel/background exit.
+- [ ] Object radial Duplicate at bottom / Delete at upper-left; Undo/Redo both; footer Duplicate retained.
+- [ ] Multi icons in radial, gizmo corner and footer toggle the same state; select objects/group and verify no unwanted edits.
+
+.800 validation: **2138/2138 PASS, 0 FAIL, 0 skipped**; Node24 complete suite. Device A/B display/controls remain acceptance gate.

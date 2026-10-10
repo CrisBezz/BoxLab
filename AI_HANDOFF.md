@@ -1,15 +1,36 @@
 # BoxLab AI Handoff — Editable Boolean sources
 
-## Current state — 2026-10-10
+## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.799**. Last whole-build acceptance **.797 PASS**, protected.
+Current build **v0.36.18.800**. Last whole-build acceptance **.797 PASS**, protected.
 Parent main `e2674f1344bcd4636bbe29f65025f0ed95022ebd`.
 Release commit `f7d64a37b54f7a07ff5acf384bb691eab405ca0e`.
 
 Full2136/2136 PASS, 0 failures/skips. CI38051784577 and Pages38051784633 SUCCESS.
 Fresh live manifest, shell and three changed module owners match main byte-for-byte.
 .799 iPad acceptance pending; .798 reported FAIL, not protected.
+
+## .800 — Boolean source visibility and Object radial actions
+
+User .799 FAIL: A/B not visible; .798/.799 are NOT protected PASS builds. .797 remains
+last acceptance. Actual visibility owner suppressed edit sources under result Solo;
+activeShouldShow/shouldShow now exempt only A/B of the active edit, retaining Solo ID
+and restoring its filtering on exit. Editor also draws amber/blue translucent source
+surfaces with depth-independent edge guides, alongside mint preview; resources disposed.
+This covers known visibility suppression, but actual reported device case still needs PASS.
+
+Object Duplicate inner180° and Delete inner315° match Face and common Delete slots.
+Existing Boolean and Mesh Health move to outer90°/270°; outer radius230 avoids overlap.
+Multi Select outer225° uses shared gizmo icon and existing toolbar button; original
+corner shortcut retained. Footer Multi Select icon clicks same toolbar action, keeping
+original footer Duplicate. Explicit user instruction overrides old selection-only radial
+exclusion for this one action. No duplicate history, group or Multi state added.
+
+Shared pins refreshed: changed total-gizmo, editable-boolean, multi-object, radial adapter,
+object-management and matching drawer loader. Protected Multi1.0/Loop715/frozen betas
+unchanged. Test real source visibility with Solo/exit, UI source surfaces, radial action
+routing and common angles. Next: device .800 PASS before automatic Live Boolean.
 
 ## .799 — Boolean edit radial and exit repair
 
@@ -982,3 +1003,5 @@ main byte-for-byte. Shell/recovery798, matching direct/drawer management798 pins
 protected Multi1.0/Loop715 and frozen Beta2–6 retained. .798 device PASS pending.
 
 .799 validation: **2136/2136 PASS, 0 FAIL, 0 skipped**. Full Node24 suite; touch/layout rendering remains device gate.
+
+.800 validation: **2138/2138 PASS, 0 FAIL, 0 skipped**; Node24 complete suite. Device A/B display/controls remain acceptance gate.

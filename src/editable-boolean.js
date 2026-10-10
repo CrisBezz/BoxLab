@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature} from './editable-boolean-core.js?v=0.36.18.798';
 
-const VERSION='0.36.18.799';
+const VERSION='0.36.18.800';
 const panel=document.createElement('div');
 panel.id='editableBooleanPanel';panel.className='boxlab-tool-session-shell';panel.hidden=true;
 panel.innerHTML=`<div class="boxlab-tool-session-title">Edit Boolean</div>
@@ -35,6 +35,7 @@ function refreshOverlay(){
   for(const [object,color] of [[a,0xf3b34a],[b,0x5da9ff]]){
     const positions=[];for(const e of object.mesh.edges())for(const i of [e.a,e.b])positions.push(...object.mesh.vertices[i].toArray());
     const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+    const sourceBody=new THREE.Mesh(object.mesh.triangulatedGeometry(),new THREE.MeshBasicMaterial({color,transparent:true,opacity:.18,side:THREE.DoubleSide,depthWrite:false}));overlay.add(sourceBody);
     const lines=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color,depthTest:false,transparent:true,opacity:.7}));lines.renderOrder=20;overlay.add(lines);
   }
   if(s.preview){const mesh=new THREE.Mesh(s.preview.triangulatedGeometry(),new THREE.MeshBasicMaterial({color:0x65dbc7,transparent:true,opacity:.3,side:THREE.DoubleSide,depthWrite:false}));overlay.add(mesh);}

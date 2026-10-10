@@ -253,11 +253,13 @@ function saveActive() {
 
 function activeShouldShow() {
   const object = activeObject();
-  return !!object?.visible && (!soloId || soloId === object.id);
+  const edit=globalThis.__boxlabEditableBoolean?.state?.();
+  return !!object?.visible && !!(!soloId || soloId === object.id || edit&&[edit.aId,edit.bId].includes(object.id));
 }
 
 function shouldShow(object) {
-  return !!object?.visible && (!soloId || soloId === object.id);
+  const edit=globalThis.__boxlabEditableBoolean?.state?.();
+  return !!object?.visible && !!(!soloId || soloId === object.id || edit&&[edit.aId,edit.bId].includes(object.id));
 }
 
 function displayMeshFor(object) {
