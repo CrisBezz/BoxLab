@@ -394,3 +394,17 @@ export function faceSessionExit(sourceTransform=source=>source){
     r.setHit(3);r.pointer('pointerdown');r.pointer('pointerup');assert.deepEqual(r.f.selected(),[0,2],'retired controller cannot consume a new tap');
   }
 }
+
+export function frontFaceTap(sourceTransform=source=>source){
+ for(const tool of ['extrude','inset'])for(const ids of [[0],[0,2]]){
+  const r=fixture(tool,ids,sourceTransform),root=nativeFaceRoot(r.m),native=mainPickerRuntime({camera:r.f.state.camera,canvas:r.f.elements.get('#viewport'),root});
+  for(const name of ['pick','pickHits','pickObject'])r.bridge[name]=native.bridge[name];
+  const position=projectedFace(r,1);r.pointer('pointerdown',position);r.pointer('pointerup',position);
+  assert.deepEqual(r.f.selected(),[...ids,1],'rear selection cannot redirect a front Face tap');r.unchanged();r.retired();
+  r.pointer('pointerdown',position);r.pointer('pointerup',position);
+  assert.deepEqual(r.f.selected(),ids,'tap removes the same front Face');r.unchanged();r.retired();
+  root.children.forEach(o=>{o.geometry.dispose();o.material.dispose();});
+ }
+ const r=committedExtrude(sourceTransform);r.setHit(1);r.bridge.pickHits=()=>[{index:1},{index:2}];
+ r.pointer('pointerdown');r.pointer('pointerup');assert.deepEqual(r.f.selected(),[],'sequential Extrude never changes a plain tap to the deeper face');
+}

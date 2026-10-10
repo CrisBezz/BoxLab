@@ -6,7 +6,7 @@ import {installLooseTopology} from '../../src/loose-topology.js';
 import {History} from '../../src/history.js';
 import {buildVertexExtrude} from '../../src/vertex-extrude-core.js';
 installLooseTopology(EditableMesh);
-export function vertexRuntime(m=EditableMesh.cube(),initial=[0]){
+export function vertexRuntime(m=EditableMesh.cube(),initial=[0],{sourceTransform=source=>source}={}){
   const fields=new Map(),queue=[],events=[],directions=[];let ids=[...initial],mode='vertex',locked=false;
   const event=(type,target,extra={})=>({type,target,isPrimary:true,pointerType:'pen',pressure:.5,buttons:1,button:0,pointerId:1,
     clientX:500,clientY:300,preventDefault(){this.prevented=true;},stopPropagation(){},stopImmediatePropagation(){this.stopped=true;},...extra});
@@ -40,7 +40,7 @@ export function vertexRuntime(m=EditableMesh.cube(),initial=[0]){
   const render=()=>{state.scene.clear();state.mesh.vertices.forEach((v,i)=>{const marker=new THREE.Mesh(new THREE.SphereGeometry(.04),new THREE.MeshBasicMaterial());marker.position.copy(v);marker.userData={kind:'vertex',index:i};state.scene.add(marker);});state.scene.updateMatrixWorld();window.dispatchEvent(new context.CustomEvent('boxlab-bridge-state'));};
   fields.get('#cageToggle').addEventListener('change',render);
   vm.createContext(context);
-  const load=name=>vm.runInContext('{'+fs.readFileSync(new URL('../../src/'+name,import.meta.url),'utf8').replace(/^import .*;\n/gm,'')+'}',context);
+  const load=name=>vm.runInContext('{'+sourceTransform(fs.readFileSync(new URL('../../src/'+name,import.meta.url),'utf8'),name).replace(/^import .*;\n/gm,'')+'}',context);
   load('vertex-tool-viewport-session.js');load('vertex-extrude.js');load('vertex-pick-assist.js');
   const flush=()=>{while(queue.length)queue.shift()();};render();
   const canvas=fields.get('#viewport'),pointer=(type,extra={})=>dispatch(event(type,canvas,extra));

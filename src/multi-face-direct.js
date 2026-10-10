@@ -197,6 +197,7 @@ document.addEventListener('pointerdown',event=>{
     y:event.clientY,
     tool:armed,
     hit,
+    tapHit:synthetic?hit:primary,
     selectionBefore:[...selectionBefore],
     workingFaces:[...workingFaces],
     provisionalSelection
@@ -295,6 +296,9 @@ function finish(event){
     event.preventDefault();event.stopImmediatePropagation();
     if(p.provisionalSelection)bridge()?.set?.('face',p.selectionBefore);
     if(event.type==='pointerup'){
+      // Physical taps select the front native hit; selected priority/continuation
+      // remains available only to the deliberate modelling drag.
+      if(Number.isInteger(p.tapHit))p.hit=p.tapHit;
       bridge()?.toggle?.('face',p.hit);
       clearSequentialPreference();
       updateStatus();

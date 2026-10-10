@@ -4,15 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .785, 2026-10-10
+## Current direction — .786, 2026-10-10
 
-User .784 PASS protected. Validation-only785 reconciles three historical selection
-checks with current main navigation/background and component tap-intent owners.
-All component modes retain navigation selection, confirmed taps toggle/clear once;
-original .720 checks retained. Three mutations rejected;110focusedPASS.
-Full2077/2045PASS/32FAIL/0skip, no new identities. Runtime/frozenBeta unchanged;
-publication/CI/live verified. Continue remaining32 checks and scoped Bevel/Knife/Loop
-reliability. Add Vertex/NOM import/Lasso tightening deferred.
+.785 device FAIL: Vertex additive/deselect, Face rear bleed; Edge accepted/protected.
+.786 repairs existing Vertex assist/background shared hit policy and hidden marker
+visibility; armed Face taps use front native hit while modelling drags retain priority/
+continuation. Three concrete reproductions and mutations,267clean-focusedPASS;
+full2081/2049PASS/32FAIL/0skip, same failures as785. Through/Edge/frozenBeta unchanged.
+Publication/CI/live pending. Obtain Vertex/Face user acceptance before remaining32
+historical check review. Do not mistake regex counts for device reliability.
 
 ## Beta 6 delivery refinement — .736
 

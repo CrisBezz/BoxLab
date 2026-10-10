@@ -439,6 +439,7 @@ function beginBackgroundTap(event){
   if(backgroundTap&&backgroundTap.pointerId!==event.pointerId){backgroundTap.cancelled=true;backgroundSelectionTap.reset('secondary-contact');return;}
   if(!event.isPrimary||(globalThis.__boxlabDirectBevel?.faceActive?.()&&!globalThis.__boxlabToolBackgroundExit?.active?.()))return;
   if(globalThis.__boxlabToolBackgroundExit?.ownsPoint?.(event)){backgroundTap=null;return;}
+  if(selectionMode==='vertex'&&globalThis.__boxlabVertexPickAssist?.pick?.(event)){backgroundSelectionTap.reset('vertex-assist-hit');backgroundTap=null;return;}
   if(pick(event)){backgroundSelectionTap.reset('mesh-hit');backgroundTap=null;return;}
   backgroundTap={pointerId:event.pointerId,startX:event.clientX,startY:event.clientY,startedAt:event.timeStamp,moved:false,cancelled:false};
   beginBackgroundHold(event);

@@ -4940,3 +4940,16 @@ Pages run38018332469 succeeded. Fresh live index.html/version.json byte-match785
 unchanged main762/Face779 and frozenBeta6 version also match live repository bytes.
 110focusedPASS; source/frozenBeta unchanged. .784 user PASS protected; .785 device
 sanity pending. Shell markers/recovery785 coherent, original modelling pins retained.
+
+
+## .786 — .785 device FAIL / actual Vertex and Face picking repair
+
+- [x] .785 FAIL recorded: Vertex additive/deselect unreliable; Face rear bleed. Edge performs well and is protected; no overall .785 PASS inferred.
+- [x] Three failures reproduced before runtime changes with real Three marker/body/main raycasts and actual selection owners.
+- [x] Assisted22px Vertex tap shares main background classification; add/remove retains previous selection and geometry/history/redo.
+- [x] Hidden rear marker cannot steal a nearby visible front marker; no-body loose scaffolds retain existing tools/selection.
+- [x] Armed Face taps toggle native front primary even with selected rear Faces or Extrude continuation; drag selection priority/Exact/replay/negative cuts retained.
+- [x] Three mutations rejected;267clean-focusedPASS; broader547/536PASS/11existingFAIL; full2081/2049PASS/32FAIL/0skip, identical failure names to785.
+- [ ] .786: multi-select visible Vertices and tap individual ones off, also near dot edge; orbit/repeat with finger and Pencil.
+- [ ] Front Face taps with Extrude/Inset armed while other Faces remain selected; no rear selection bleed.
+- [ ] Ordinary Face/Edge selection, negative Extrude, Undo/Redo and protected navigation.

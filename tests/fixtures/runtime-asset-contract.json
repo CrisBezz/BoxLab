@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.762",
+      "url": "./src/main.js?v=0.36.18.786",
       "target": "src/main.js",
-      "sha256": "42fc13050037d2d2dd1164b09334e3c32ea9d8a0e19fa09ee73110c4ea702ffa",
+      "sha256": "bbd3f78afe44a9f7a37a20b07f5ba86f8a057cd03282071f995788daadd5e7f1",
       "sourceVersion": "0.35.1"
     },
     {
@@ -317,9 +317,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-face-direct.js?v=0.36.18.779",
+      "url": "./src/multi-face-direct.js?v=0.36.18.786",
       "target": "src/multi-face-direct.js",
-      "sha256": "79c9a020f8c0ae2ec8889beb683a83e5bfd62f3f3d7ee48e3ad9e3e1ee453917"
+      "sha256": "c015acbbf54f798f02c54bbeedb526d65c8171b0db00c689f57a148ee066ce25"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.785",
+      "url": "./src/release-bootstrap.js?v=0.36.18.786",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.785",
+      "url": "./src/release-version.js?v=0.36.18.786",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -569,9 +569,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/vertex-pick-assist.js?v=0.36.18.444",
+      "url": "./src/vertex-pick-assist.js?v=0.36.18.786",
       "target": "src/vertex-pick-assist.js",
-      "sha256": "725227676538ece2330d60c0ca9ae543b94a96e9ceb458be115ee5f97810e094"
+      "sha256": "0ef54be3c857627f122fffb21c12db21bac6efdd151a2d1eb4c031825c85e8f6"
     },
     {
       "owner": "index.html",

@@ -15,7 +15,7 @@ test('776 armed Face behavior rejects picker, tap, cancellation, threshold, work
   const mutations=[
     [source=>source.replace("picker('face',event)?.index","null"),delegatedPicker],
     [source=>source.replace("bridge()?.toggle?.('face',p.hit);","bridge()?.toggle?.('face',p.hit+1);"),tapToggle],
-    [source=>source.replace("if(event.type==='pointerup'){\n      bridge()?.toggle?.('face',p.hit);","if(event.type==='pointerup'||event.type==='pointercancel'){\n      bridge()?.toggle?.('face',p.hit);"),tapToggle],
+    [source=>source.replace("if(event.type==='pointerup'){\n      // Physical taps","if(event.type==='pointerup'||event.type==='pointercancel'){\n      // Physical taps"),tapToggle],
     [source=>source.replace('if(Math.hypot(dx,dy)<8)return;','if(Math.hypot(dx,dy)<4)return;'),deferredModelling],
     [source=>source.replace('(selectionBefore.includes(hit)?[...selectionBefore]:[hit])','(selectionBefore.includes(hit)?[...selectionBefore]:[...selectionBefore,hit])'),dragWorkingSet],
     [source=>source.replaceAll('globalThis.__boxlabHistory?.push(d.before);',''),dragWorkingSet],

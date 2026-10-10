@@ -3,11 +3,59 @@
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.785**. Last explicit user acceptance is **.784 PASS**.
-Parent main `973d8fc44fbad313359338553c7e37e58a9fb3c8`. .785 published and live verified; evidence below.
-.784 release1ed2807186c94684ff088a6ecdb1955f5f4dacc1: Node22 CI2076/2041PASS/
-35FAIL/0skip and Pages/live verified; user PASS protected.
+Current build **v0.36.18.786**. Last whole-build user acceptance is **.784 PASS**.
+.785 device FAIL: Vertex additive/deselect and Face rear selection; Edge accepted.
+Parent main `8637d16da0f7e089b0be3887234dd783787eae4d`. .786 fixes complete; publication/CI/live pending.
 Historical evidence remains in DEV_HISTORY.md and docs/reliability-build-*.md/JSON.
+
+## .786 — Assisted Vertex ownership and front Face taps — 2026-10-10
+
+User .785 FAIL: Vertex additive taps sometimes clear prior selection/deselect wrong
+vertex; Face taps sometimes select rear faces; Edge explicitly performs well and
+is protected. Last whole-build user PASS remains .784. Parent main `8637d16da0f7e089b0be3887234dd783787eae4d`.
+Audit actual main window background classifier, rendered-marker Vertex assist,
+armed Face selected-priority/sequential path, native main raycasts and UI owners.
+.785 seeded intent tests did not cover assist/background mismatch or hidden markers.
+Three new runtime reproductions fail before fixes; do not equate historical regex
+failure counts with product reliability or mark .785 device accepted.
+
+Existing Vertex assist exports its guarded physical pick policy. Main's earlier
+window background classifier consults that same owner before strict marker raycast,
+so22px assisted taps do not arm background-clear ahead of document completion.
+Assist filters invisible ancestors, clipped markers and candidates outside22px,
+then rejects markers occluded by same-parent rendered body using a separate centre
+ray and bounded distance tolerance. Loose scaffolds without body remain pickable;
+existing additive toggle, transform/direct-tool guards and tap/move thresholds kept.
+Occlusion applies to normal assisted taps, not deliberate Lasso/Through selection.
+No new pointer listener/modelling kernel; visibility uses rendered marker positions.
+
+Armed Face controller records physical native primary separately from modelling
+hit. Tap completion toggles native front Face; selected-hit priority and scoped
+single-Extrude continuation still route deliberate modelling drags exactly as before.
+Synthetic Exact, Cancel, working sets and geometry kernels remain unchanged.
+This fixes armed Face rear-selection/continuation overrides; ordinary unarmed native
+Face picking already chooses nearest. No new screen polygon picker or global culling.
+
+Real markers/body/raycasts, main window classifier and whole Vertex assist reproduce
+add/remove at8px outside marker while retaining prior selection/history. Hidden rear
+marker at pointer centre cannot steal nearby visible front vertex. Whole Face plus
+actual main cube raycasts protects selected rear/single/multi tap add/remove and
+post-Extrude continuation tap. Three mutations reject reinstated background clear,
+hidden-marker acceptance and rear tap routing. Controlled DOM/dispatch/renderer;
+on-device tap accuracy still requires user retest. Original .490 cancellation
+mutation adapted to inserted comment; all other mutation checks retained.
+
+267clean-focusedPASS (Vertex tools/picking, Face/native/negative cuts, Pencil/floating
+Edge/background and release). Broader focused547/536PASS/11existingFAIL, all active.
+FullNode24:2081tests/2049PASS/32FAIL/0skip; exactly same32identities as785, no new
+failures. Runtime edits only main background branch, Vertex assist and Face tap-hit
+record/finish. Shell/recovery786; three changed runtime module pins/hashes and two
+recovery URLs reviewed. Through779/Inset753, Edge owners, Multi1.0/Loop715 and
+frozenBeta2–6 unchanged. Publication/Node22/live pending; .786 user retest pending.
+Next: obtain Vertex/Face acceptance before remaining32 historical check review.
+Manual: confirm786; select several front Vertices and tap one off (also just outside
+dot); orbit then repeat; front Face taps with Extrude/Inset armed while other Faces
+selected; normal Face/Edge selection, negative Extrude/Undo/Redo/navigation.
 
 ## .785 — Main selection navigation and tap completion validation — 2026-10-10
 
@@ -141,9 +189,11 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-User .784 PASS. .785 selection navigation/tap validation hands-on pending.
-Continue remaining32 checks and scoped Bevel/Knife/Loop reliability. Add Vertex
-picking/NOM import/Lasso tightening deferred. FrozenBeta2–6 immutable.
+.785 Vertex/Face FAIL; Edge user confirms works. .786 actual picking fixes await retest.
+Obtain acceptance before resuming remaining32 historical checks. Do not present regex
+counts or seeded intent fixtures as on-device tap reliability. Add Vertex broader
+picking/NOM import/Lasso tightening deferred beyond current concrete repair.
+FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -249,9 +299,9 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery785; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
-main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
-background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct779;
+Current recovery786; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
+background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
 addon/drawer746, fallback743; legacy Through242. Export/NOM/core741; debug736;
 axis735; Focus733; component-align705. Repin only changed modules and necessary
