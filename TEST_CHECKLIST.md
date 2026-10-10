@@ -5051,4 +5051,17 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
 - [x]124focusedPASS; full2100/2081PASS/19FAIL/0skip; exactly seven reviewed failures removed, none new. Two legitimate shared UI cache-hop assertions reconciled, no excluded checks.
 - [ ] .791: Face radial Extrude/Inset settings and Done; normal selection/modelling/Undo/Redo.
 - [ ] Optional drawer sanity: Focus off, reload/switch Face mode; Join/Bridge/Sweep retain order.
-- [ ] Publication/Node22/live verification pending.
+- [x] .791 Pages38032058768 success; Node22 run38032058820/job114154883205 matches2100/2081PASS/19FAIL/0skip and all19 identities; live shell/shared UI and accepted/protected owners byte-match tested release.
+
+
+### .791 publication verification — 2026-10-10
+
+Release commit `f1d134e077726ae88da6a9e6a19644894d8853e8`, tree
+`89ba5c3685e6e5cf9a71804e5e961df67d68a559` exactly matches tested checkout.
+Actual Node22 Topology run38032058820/job114154883205:2100tests/2081PASS/19FAIL/
+0skip; all19failure identities exactly match docs/reliability-build-791.json.
+Pages run38032058768 succeeded. Fresh live index/version/shared UI791 byte-match
+repository; accepted main/Face/Vertex786, Sweep789/Revolve788, Through779, protected
+Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.124focused
+PASS. .790 user PASS protected; .791 Face UI/history sanity pending. Shared UI
+cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.

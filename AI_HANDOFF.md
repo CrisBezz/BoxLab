@@ -7,7 +7,7 @@ Current build **v0.36.18.791**. Last whole-build user acceptance is **.790 PASS*
 Accepted Edge, Sweep789/Revolve788 history and picking786 protected.
 Parent main `c851cf8182f2ca57f2542ef76170a17f62f14bd2`.
 .791 repairs late Join ordering in existing Face layout and reconciles historical
-layout checks. Publication/Node22/live verification pending.
+layout checks. Publication/Node22/live verified below.
 
 ## .791 — Face layout ownership and late Join ordering — 2026-10-10
 
@@ -46,7 +46,7 @@ exclusions or CI gate. Runtime change only six lines in shared Face layout;
 main/Face/Vertex786, Sweep789/Revolve788/Through779/Multi1.0/Loop715/frozenBeta2–6
 unchanged. Shared UI direct shell pin732→791/hash reviewed; Edge internal layout
 stamp515 unchanged. Shell/recovery791 and two reviewed recovery URLs refreshed.
-Publication/Node22/live verification pending. Next: audit remaining19 historical
+Publication/Node22/live verified below. Next: audit remaining19 historical
 checks, then scoped Bevel/Knife/Loop reliability. Manual: confirm791; Face Extrude/
 Inset settings and Done; ordinary selection/modelling/Undo/Redo. Optionally disable
 Focus and check Join/Bridge/Sweep order in Face drawer after reload/mode switch.
@@ -630,3 +630,16 @@ precision/shared layout, Sweep789/Revolve788/main/Vertex assist/Face786, Through
 protected Multi1.0 and frozenBeta6 version byte-match repository. No runtime/frozen
 changes.114focusedPASS. .789 user PASS protected; .790 Edge Bevel UI/history sanity
 pending. Shell/recovery790 and exactly two reviewed recovery URLs coherent.
+
+
+### .791 publication verification — 2026-10-10
+
+Release commit `f1d134e077726ae88da6a9e6a19644894d8853e8`, tree
+`89ba5c3685e6e5cf9a71804e5e961df67d68a559` exactly matches tested checkout.
+Actual Node22 Topology run38032058820/job114154883205:2100tests/2081PASS/19FAIL/
+0skip; all19failure identities exactly match docs/reliability-build-791.json.
+Pages run38032058768 succeeded. Fresh live index/version/shared UI791 byte-match
+repository; accepted main/Face/Vertex786, Sweep789/Revolve788, Through779, protected
+Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.124focused
+PASS. .790 user PASS protected; .791 Face UI/history sanity pending. Shared UI
+cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.

@@ -5319,7 +5319,7 @@ and all102 local failure names. No .741 device PASS inferred; awaiting OBJ smoke
 - New27PASS; full1706/1604PASS/102FAIL/0skip, same102failure names as .741.
   Focused53PASS. Only Face direct/Through runtime modules changed; reviewed pins/
   hashes, shell markers .742; protected Multi/Loop/CSS/frozen betas unchanged.
-  Publication/Node22/live verification pending. No device acceptance inferred.
+  Publication/Node22/live verified below. No device acceptance inferred.
 
 - .742 publication verified: runtime85dbb83e960d06b926b071e96dfaa988b5d8ad8b;
   actual Node22CI37463033743/job112267082488 matches1706/1604/102/0 and
@@ -5745,7 +5745,7 @@ no new duplicate implementation/tests. Computed outer-button bounds do not overl
 in Face/Edge/Vertex. Original inner geometry retained. Syntax/whitespace pass.
 Two reviewed runtime hashes and shell/recovery/total-gizmo/Vertex-panel758 pins.
 Original VertexExtrude752/core, main732/Loop715/Multi1.0 and frozenbetas unchanged.
-Publication/Node22/live verification pending. Device .758 acceptance pending.
+Publication/Node22/live verified below. Device .758 acceptance pending.
 
 Manual checks:
 - Vertex Extrude: only viewport axes/Free centre; Exact/Repeat/Done still present.
@@ -6101,7 +6101,7 @@ stale-pin mutations of an in-memory loader string both reject; runtime unchanged
 failure identities against fresh .7712049/1960/89. No exclusions or CI gate.
 Only shell/recovery pins772 and their two reviewed fixture URLs change; every
 runtime source/hash, Add/Text771, protected Multi1.0/Loop715/frozenBeta2–6 retained.
-Publication/Node22/live verification pending. .771 device acceptance remains pending
+Publication/Node22/live verified below. .771 device acceptance remains pending
 in repository; no inferred PASS. Next scoped modelling reliability and remaining88
 checks. No new feature qualification needed: optional Join/Undo/Redo sanity only.
 
@@ -6135,7 +6135,7 @@ isolation/Extrude chooser, Face Bevel, Knife, Join and release contracts. Full N
 identities against .7722049/1961/88. All remaining checks active, no exclusions/gate.
 Runtime source/geometry/gesture owners and frozenBeta2–6 unchanged. Shell/recovery773
 and two reviewed fixture URLs only; Add/Text771, Gizmo759, Multi1.0/Loop715 retained.
-Publication/Node22/live verification pending. Next remaining86 historical checks and
+Publication/Node22/live verified below. Next remaining86 historical checks and
 scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 No new feature qualification; optional gizmo Move/Rotate/Scale and Undo/Redo sanity.
 
@@ -6170,7 +6170,7 @@ no new identities against .7732050/1964/86. Remaining83source-pattern/1version-p
 checks active; classifications do not prove all obsolete. No skips/exclusions/gate.
 Runtime/geometry/gesture files and frozenBeta2–6 unchanged. Only shell/recovery774
 and two reviewed fixture URLs advance. Main762/Gizmo759/Gate766/AddText771,
-protected Multi1.0/Loop715 retained. Publication/Node22/live verification pending.
+protected Multi1.0/Loop715 retained. Publication/Node22/live verified below.
 Next remaining84 historical checks and scoped Bevel/Knife/Loop reliability.
 Add Vertex occasional picking/NOM import/Lasso tightening deferred. No new feature
 qualification; optional hold sideways/release, UP/DOWN selection and navigation sanity.
@@ -6212,7 +6212,7 @@ failure identities. Remaining81source-pattern/1version-pin active; classificatio
 do not prove all obsolete. No skips/exclusions/CI gate. Runtime and frozenBeta2–6
 unchanged; shell markers/recovery775 and corresponding two reviewed fixture URLs
 only. Topbar734/Export741/AddText771/Main762/Gate766/Gizmo759/Multi1.0/Loop715 kept.
-Publication/Node22/live verification pending. .775 device acceptance pending.
+Publication/Node22/live verified below. .775 device acceptance pending.
 Next remaining82 historical checks and scoped Bevel/Knife/Loop reliability; Add
 Vertex occasional picking/NOM import/Lasso tightening remain deferred.
 
@@ -7001,7 +7001,20 @@ exclusions or CI gate. Runtime change only six lines in shared Face layout;
 main/Face/Vertex786, Sweep789/Revolve788/Through779/Multi1.0/Loop715/frozenBeta2–6
 unchanged. Shared UI direct shell pin732→791/hash reviewed; Edge internal layout
 stamp515 unchanged. Shell/recovery791 and two reviewed recovery URLs refreshed.
-Publication/Node22/live verification pending. Next: audit remaining19 historical
+Publication/Node22/live verified below. Next: audit remaining19 historical
 checks, then scoped Bevel/Knife/Loop reliability. Manual: confirm791; Face Extrude/
 Inset settings and Done; ordinary selection/modelling/Undo/Redo. Optionally disable
 Focus and check Join/Bridge/Sweep order in Face drawer after reload/mode switch.
+
+
+### .791 publication verification — 2026-10-10
+
+Release commit `f1d134e077726ae88da6a9e6a19644894d8853e8`, tree
+`89ba5c3685e6e5cf9a71804e5e961df67d68a559` exactly matches tested checkout.
+Actual Node22 Topology run38032058820/job114154883205:2100tests/2081PASS/19FAIL/
+0skip; all19failure identities exactly match docs/reliability-build-791.json.
+Pages run38032058768 succeeded. Fresh live index/version/shared UI791 byte-match
+repository; accepted main/Face/Vertex786, Sweep789/Revolve788, Through779, protected
+Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.124focused
+PASS. .790 user PASS protected; .791 Face UI/history sanity pending. Shared UI
+cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.

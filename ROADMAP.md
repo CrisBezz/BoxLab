@@ -11,7 +11,7 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 seven retired Face layout checks now exercise actual owners.124focusedPASS;
 full2100/2081PASS/19FAIL/0skip, exactly seven reviewed failures removed, none new.
 Only shared row ordering changes; kernels/interaction/frozenBeta unchanged.
-Publication/Node22/live verification pending. Audit remaining19 historical checks,
+Publication/Node22/live verified below. Audit remaining19 historical checks,
 then scoped Bevel/Knife/Loop reliability. Controlled DOM does not prove device/CSS.
 
 ## Beta 6 delivery refinement — .736
@@ -606,3 +606,16 @@ Face786/Vertex assist786 byte-match repository. Through779, protected Multi1.0 a
 frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broader
 547/536PASS/11existingFAIL retained. .785 device FAIL and Edge acceptance recorded;
 .786 user retest pending. Shell/recovery and reviewed runtime module pins verified.
+
+
+### .791 publication verification — 2026-10-10
+
+Release commit `f1d134e077726ae88da6a9e6a19644894d8853e8`, tree
+`89ba5c3685e6e5cf9a71804e5e961df67d68a559` exactly matches tested checkout.
+Actual Node22 Topology run38032058820/job114154883205:2100tests/2081PASS/19FAIL/
+0skip; all19failure identities exactly match docs/reliability-build-791.json.
+Pages run38032058768 succeeded. Fresh live index/version/shared UI791 byte-match
+repository; accepted main/Face/Vertex786, Sweep789/Revolve788, Through779, protected
+Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.124focused
+PASS. .790 user PASS protected; .791 Face UI/history sanity pending. Shared UI
+cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.
