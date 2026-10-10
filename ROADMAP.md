@@ -10,8 +10,8 @@ User .780 PASS. Validation-only781 reconciles five obsolete Face overlap/handoff
 assertions. Existing real main picker connects to whole Face controller with actual
 cube raycasts; two mutations rejected. Other six assertions retained, including
 active .495 trace failure needing diagnostics audit.115clean-focusedPASS; full2072/
-2025PASS/47FAIL/0skip, no new failures. Runtime/frozenBeta unchanged; publication
-pending. Continue remaining47 checks and scoped Bevel/Knife/Loop reliability.
+2025PASS/47FAIL/0skip, no new failures. Runtime/frozenBeta unchanged; publication/live
+verified. Continue remaining47 checks and scoped Bevel/Knife/Loop reliability.
 Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
@@ -534,3 +534,13 @@ Actual Node22 Topology run38007376560/job114079177377:2071tests/2019PASS/52FAIL/
 Fresh live index/version, unchanged main/accepted Through779 and frozenBeta6 version
 byte-match repository.120focusedPASS. User .779 PASS recorded; .780 device sanity
 pending. Runtime/frozenBeta unchanged.
+
+## .781 publication verification — 2026-10-10
+
+Release commit `c49f57c40528236343c38671313868dc526c82a8`, tree
+`f45523d23b7618a672ca93c0c91497a614cfccc2` matches tested checkout.
+Actual Node22 Topology run38009270303/job114085236411:2072tests/2025PASS/47FAIL/
+0skip; all47 failure names exactly match local inventory. Pages38009270112 succeeded.
+Fresh live index/version, unchanged main/Face779 and frozenBeta6 version byte-match
+repository.115clean-focusedPASS; target group19PASS/1existing diagnostic FAIL.
+User .780 PASS recorded; .781 device sanity pending. Runtime/frozenBeta unchanged.

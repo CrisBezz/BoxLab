@@ -6496,3 +6496,13 @@ pending; .781 device sanity pending. Next remaining47 checks and scoped Bevel/Kn
 Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 Manual: confirm781; armed Extrude/Inset tap Faces to add/remove; selected/multi Face
 modelling then Undo/Redo and background navigation.
+
+## .781 publication verification — 2026-10-10
+
+Release commit `c49f57c40528236343c38671313868dc526c82a8`, tree
+`f45523d23b7618a672ca93c0c91497a614cfccc2` matches tested checkout.
+Actual Node22 Topology run38009270303/job114085236411:2072tests/2025PASS/47FAIL/
+0skip; all47 failure names exactly match local inventory. Pages38009270112 succeeded.
+Fresh live index/version, unchanged main/Face779 and frozenBeta6 version byte-match
+repository.115clean-focusedPASS; target group19PASS/1existing diagnostic FAIL.
+User .780 PASS recorded; .781 device sanity pending. Runtime/frozenBeta unchanged.
