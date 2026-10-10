@@ -36,7 +36,20 @@ failure removed from788, no new identities. Remaining27source-pattern/1version-p
 active, no skips/exclusions. Only runtime change Sweep Cancel stacks/stamp789;
 geometry/authoring/stages and transform implementation unchanged. Accepted Revolve788,
 main/Vertex/Face786, Through779, Multi1.0/Loop715/frozenBeta2–6 unchanged. Shell/recovery789
-and Sweep URL/hash/stamp reviewed; recovery hashes retained. Publication pending.
+and Sweep URL/hash/stamp reviewed; recovery hashes retained. Publication/Node22/live verified below.
 Next: remaining28 historical checks, then scoped Bevel/Knife/Loop reliability.
 Manual: edit then Undo; Add Sweep, Cancel, then Redo restores edit. Reopen Sweep,
 choose profile/draw simple path, Apply and Undo/Redo. Selection/navigation sanity.
+
+
+### .789 publication verification — 2026-10-10
+
+Release commit `3d1683dce1f6fa275124aa4aece39009e196d8e0`, tree
+`c78afd2b601e4a0d3fbffcf4a9069bf74ff93f4b` exactly matches tested checkout.
+Actual Node22 Topology run38029040477/job114145919199:2094tests/2066PASS/28FAIL/
+0skip; all28failure identities exactly match docs/reliability-build-789.json.
+Pages run38029040178 succeeded. Fresh live index/version/Sweep789 byte-match;
+accepted Revolve788/main/Vertex assist/Face786, Through779, protected Multi1.0 and
+frozenBeta6 version byte-match repository and are unchanged from accepted parent.
+121focusedPASS. .788 user PASS protected; .789 Sweep Cancel/Redo and Apply/history
+sanity pending. Reviewed Sweep hash/stamp/pin and shell/recovery789 verified.

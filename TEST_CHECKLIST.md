@@ -5018,4 +5018,6 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
 - [x]121focusedPASS; full2094/2066PASS/28FAIL/0skip, only reviewed .400 removed.
 - [ ] .789 device: edit/Undo, Add Sweep/Cancel, Redo restores original edit.
 - [ ] Sweep profile/simple path Apply, Undo/Redo, selection/navigation sanity.
-- [ ] .789 CI/Pages/live verification.
+- [x] .789 Pages38029040178 success; Node22 run38029040477/job114145919199
+  matches all28 failures and2094/2066PASS/28FAIL/0skip. Live shell/Sweep and accepted/
+  protected owners byte-match release3d1683dce1f6fa275124aa4aece39009e196d8e0.

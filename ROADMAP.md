@@ -10,7 +10,7 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 .789 repairs real Sweep Cancel token loss, validates current editing getter against
 existing transform entrypoints, reconciles one historical method assertion. Core,
 stages/authoring/transforms unchanged.121focusedPASS; full2094/2066PASS/28FAIL/0skip,
-only reviewed .400 failure removed. Publication pending. Audit remaining28 checks,
+only reviewed .400 failure removed. Publication/Node22/live verified. Audit remaining28 checks,
 then scoped Bevel/Knife/Loop reliability. Failure counts do not prove device safety.
 
 ## Beta 6 delivery refinement — .736
