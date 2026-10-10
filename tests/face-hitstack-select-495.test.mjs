@@ -1,3 +1,4 @@
+import {faceDiagnostics} from './helpers/armed-face-behavior.mjs';
 import {selectedPriority,sequentialScope,tapRemoval} from './helpers/armed-face-behavior.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
@@ -15,9 +16,8 @@ test('495 deliberate selected Face tap still toggles off',()=>{
   tapRemoval();
 });
 
-test('495 trace exposes primary and chosen hit for hands-on verification',()=>{
-  assert.match(direct,/primary=\$\{primary\}/);
-  assert.match(direct,/stack=\[\$\{stack\}\]/);
+test('495 semantic press exposes chosen hit without retired FaceTap trace',()=>{
+  faceDiagnostics();
 });
 
 test('495 cache hop and protected pins',()=>{

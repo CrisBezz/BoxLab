@@ -1,3 +1,4 @@
+import {gestureDebugRuntime} from './gesture-debug-runtime.mjs';
 import {mainPickerRuntime} from './main-picker-runtime.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -280,5 +281,29 @@ export function nativeFacePicker(sourceTransform){
       assert.deepEqual(r.toggles,[{type:'face',index:1}]);r.unchanged();r.retired();
       r.pointer('pointerup',position);assert.equal(r.toggles.length,1);
     }finally{root.children.forEach(o=>{o.geometry.dispose();o.material.dispose();});}
+  }
+}
+
+// Current semantic press evidence and real central debug owner, without the retired
+// temporary FaceTap overlay. Logging never changes the model or selection/history.
+export function faceDiagnostics(sourceTransform){
+  for(const tool of ['extrude','inset']){
+    const r=fixture(tool,[0,2],sourceTransform),debug=gestureDebugRuntime();r.f.context.__boxlabGestureDebug=debug.api;
+    const before=snapshot(r.m);r.setHit(0);r.pointer('pointerdown');
+    const press=r.f.events.filter(e=>e.type==='boxlab-face-direct-press');assert.equal(press.length,1);
+    assert.equal(press[0].detail.pointerId,22);assert.equal(press[0].detail.tool,tool);assert.equal(press[0].detail.hit,0);
+    assert.deepEqual(Array.from(press[0].detail.selectionBefore),[0,2]);assert.deepEqual(Array.from(press[0].detail.workingFaces),[0,2]);
+    r.pointer('pointerup');assert.deepEqual(r.f.selected(),[2]);r.unchanged();r.retired();
+    assert.deepEqual(Array.from(press[0].detail.selectionBefore),[0,2],'press evidence retains its original snapshot');
+    assert.equal(debug.body.children.filter(n=>n.textContent.includes('FACE DIRECT FINISH')).length,1);
+    assert.match(debug.body.children[0].textContent,/FACE DIRECT FINISH.*type=pointerup.*pid=22.*pointer=pen.*pendingFace=true.*drag=false/);
+    r.setHit(3);r.pointer('pointerdown');r.pointer('pointercancel');assert.deepEqual(r.f.selected(),[2]);r.unchanged();r.retired();
+    const lines=debug.body.children.filter(n=>n.textContent.includes('FACE DIRECT FINISH'));
+    assert.equal(lines.length,2);assert.match(lines[0].textContent,/type=pointercancel/);assert.match(lines[1].textContent,/type=pointerup/);
+    r.pointer('pointerup');assert.equal(debug.body.children.filter(n=>n.textContent.includes('FACE DIRECT FINISH')).length,2,'old release emits no duplicate finish');
+    for(let i=0;i<20;i++)debug.api.log('UNRELATED',{i});assert.equal(debug.body.children.length,12,'central recent log is bounded');
+    debug.api.clear();assert.equal(debug.body.children.length,0);debug.api.disable();assert.equal(debug.root.children.length,0);
+    r.setHit(2);r.pointer('pointerdown');r.pointer('pointerup');assert.deepEqual(r.f.selected(),[]);assert.equal(debug.root.children.length,0,'disabled logging creates no panel');
+    assert.equal(snapshot(r.m),before);assert.equal(r.f.history.undoStack.length,0);assert.equal(r.f.history.redoStack.length,1);
   }
 }
