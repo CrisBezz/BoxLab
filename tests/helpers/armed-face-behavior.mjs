@@ -260,14 +260,19 @@ export function explicitExactAndReplay(sourceTransform){
 // Connect the existing main picker extraction to the whole Face owner using the
 // same camera, canvas rectangle and actual cube face fan meshes. Selection/history
 // and DOM dispatch remain the shared controlled fixture; not a whole-app UI test.
-export function nativeFacePicker(sourceTransform){
-  for(const tool of ['extrude','inset'])for(const ids of [[],[0],[1],[1,0]]){
-    const r=fixture(tool,ids),root=new THREE.Group();
-    r.m.faces.forEach((f,index)=>{
-      const positions=[];for(let i=1;i<f.length-1;i++)for(const id of [f[0],f[i],f[i+1]])positions.push(...r.m.vertices[id].toArray());
+function nativeFaceRoot(mesh){
+  const root=new THREE.Group();
+    mesh.faces.forEach((f,index)=>{
+      const positions=[];for(let i=1;i<f.length-1;i++)for(const id of [f[0],f[i],f[i+1]])positions.push(...mesh.vertices[id].toArray());
       const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
       const object=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({side:THREE.DoubleSide}));object.userData={kind:'face',index};root.add(object);
     });root.updateMatrixWorld(true);
+  return root;
+}
+
+export function nativeFacePicker(sourceTransform){
+  for(const tool of ['extrude','inset'])for(const ids of [[],[0],[1],[1,0]]){
+    const r=fixture(tool,ids),root=nativeFaceRoot(r.m);
     try{
       const native=mainPickerRuntime({sourceTransform,camera:r.f.state.camera,canvas:r.f.elements.get('#viewport'),root});
       for(const name of ['pick','pickHits','pickObject'])r.bridge[name]=native.bridge[name];
@@ -305,5 +310,29 @@ export function faceDiagnostics(sourceTransform){
     debug.api.clear();assert.equal(debug.body.children.length,0);debug.api.disable();assert.equal(debug.root.children.length,0);
     r.setHit(2);r.pointer('pointerdown');r.pointer('pointerup');assert.deepEqual(r.f.selected(),[]);assert.equal(debug.root.children.length,0,'disabled logging creates no panel');
     assert.equal(snapshot(r.m),before);assert.equal(r.f.history.undoStack.length,0);assert.equal(r.f.history.redoStack.length,1);
+  }
+}
+
+// Exercise current native picking from every cube side. Real Face fan meshes and
+// a shared camera/rect are used; no back-facing polygon screen-picker is invented.
+export function nativeFaceViewpoints(sourceTransform){
+  for(const tool of ['extrude','inset'])for(const axis of ['x','y','z'])for(const sign of [-1,1]){
+    const r=fixture(tool,[]),root=nativeFaceRoot(r.m);
+    const camera=r.f.state.camera;camera.position.set(0,0,0);camera.position[axis]=sign*5;
+    camera.up.set(0,axis==='y'?0:1,axis==='y'?1:0);camera.lookAt(0,0,0);camera.updateMatrixWorld();
+    const expected=r.m.faces.findIndex(f=>f.every(i=>r.m.vertices[i][axis]===sign));assert.ok(expected>=0);
+    try{
+      const native=mainPickerRuntime({sourceTransform,camera,canvas:r.f.elements.get('#viewport'),root});
+      for(const name of ['pick','pickHits','pickObject'])r.bridge[name]=native.bridge[name];
+      const position={clientX:450,clientY:300},probe={...position};
+      const primary=native.bridge.pick('face',probe),hits=native.bridge.pickHits('face',probe);
+      assert.equal(primary?.index,expected,'nearest actual face follows camera viewpoint');
+      assert.ok(hits.some(h=>h.index!==expected),'far shell remains deeper in raw native stack');
+      assert.ok(hits.every((h,i)=>!i||h.distance>=hits[i-1].distance));
+      r.pointer('pointerdown',position);assert.equal(r.f.api.pending()?.hit,expected);
+      assert.deepEqual(Array.from(r.f.api.pending().workingFaces),[expected]);r.unchanged();
+      r.pointer('pointerup',position);assert.deepEqual(r.f.selected(),[expected]);
+      assert.deepEqual(r.toggles,[{type:'face',index:expected}]);r.unchanged();r.retired();
+    }finally{root.children.forEach(o=>{o.geometry.dispose();o.material.dispose();});}
   }
 }

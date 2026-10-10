@@ -1,49 +1,47 @@
-# BoxLab AI Handoff — Face diagnostic validation
+# BoxLab AI Handoff — Native viewpoint validation
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.782**. Last explicit user acceptance is **.781 PASS**.
-Parent main192384a668c53dcc80dd1465cf6fbb455734f05e; .782 published and live-verified.
-.781 releasec49f57c40528236343c38671313868dc526c82a8: Node22 CI2072/2025PASS/
-47FAIL/0skip with exact local identities; Pages38009270112/live verified; user PASS.
+Current build **v0.36.18.783**. Last explicit user acceptance is **.782 PASS**.
+Parent main36e11eca8c2811bc6721536d11521c8d8a2bf484; .783 publication pending.
+.782 release8b74b8c1107d1eda3778cca05afaddad0e085710: Node22 CI2073/2033PASS/
+40FAIL/0skip with exact local identities; Pages38011380490/live verified; user PASS.
 All historical details/publication evidence remain in DEV_HISTORY.md and
 corresponding docs/reliability-build-*.md/JSON; this handoff describes current owners.
 
-## .782 — Current Face diagnostic owner validation — 2026-10-10
+## .783 — Native Face picking across cube viewpoints — 2026-10-10
 
-User .781 awesome PASS recorded. Parent main192384a668c53dcc80dd1465cf6fbb455734f05e.
-Audit .492–.495 temporary FaceTap trace, .497 removal, .536 cleanup, current Face779
-semantic press/finish and central Gesture Debug736. Seven failures demand retired
-FaceTap readout/staged microtask/RAF trace or obsolete picker spelling. Reconcile
-those seven with current semantic/central-owner behavior; retain all seven other
-historical assertions, including native stack exposure and pins. No resurrection of
-retired primary/stack text or claim that current panel displays those old fields.
+User .782 PASS recorded. Parent main36e11eca8c2811bc6721536d11521c8d8a2bf484.
+Audit .498 projected-polygon experiment, .499 removal and accepted .534/.535.
+Four failures demand retired screen polygon/back-facing candidate/depth-sort picker
+or prohibit later scoped hit-stack continuation. Reconcile those four with existing
+native integration/selected priority/sequential scope; retain original tap/drag/pin
+check. Separate .496 Deselect workaround failure remains active; requires session-exit
+owner audit, not assumed obsolete picking behavior.
 
-Extract unchanged whole-debug-owner fixture from existing .722 tests into shared
-helper; all five .722 test bodies retained. Connect real central debug API to existing
-whole Face controller fixture. Both Extrude/Inset emit original pointer/tool/chosen
-hit/selectionBefore/workingFaces semantic press; snapshots remain unchanged after
-selection tap. Real central panel records tap and Cancel finish fields in newest-first
-order, old release adds no duplicate, recent log bounded12, Clear removes evidence,
-Disable removes panel and later selection adds no panel. Geometry/history/redo and
-expected native toggles remain intact. Reuse real native picker integration checks.
-Controlled DOM/storage/events/bridge; not Safari screenshot or whole-app proof.
-One new test rejects missing semantic event, wrong chosen hit and missing finish
-stage in memory. Runtime source never written. Retired FaceTap overlay stays absent.
+Extend shared whole-Face/native-main fixture with six axis viewpoints and real cube
+fan meshes, shared perspective camera/viewport rectangle. Both Extrude/Inset choose
+camera-side cap for empty selection, nearest raw hit even though far shell is present
+in distance-ordered stack. Actual press uses that cap/one-Face working set, release
+toggles once, retains geometry/history/redo and retires ownership. Reuse selected/
+multi working set and properly scoped continuation checks. One shared face-mesh builder
+serves existing native integration and new viewpoint checks; no parallel runtime owner.
+Two in-memory mutations rejected: wrong pointer coordinates and farthest primary.
+Controlled DOM/selection/render/events; not whole renderer/Safari propagation or a
+new blanket back-face culling promise. Current native owner semantics remain intact.
 
-Initial14checks/7PASS/7FAIL; revised15PASS. Shared .722 five checks alsoPASS.
-123focusedPASS including .536 cleanup, native bridge/selection scope and all supplied
-.742/.750/.751/.779 clean-negative/Through fixtures. FullNode24:2073tests/2033PASS/
-40FAIL/0skip; exactly seven reviewed781 failures removed, no new identities. Remaining
-39source-pattern/1version-pin active; no skips/exclusions/CI gate. Runtime/frozenBeta2–6
-unchanged; shell/recovery782 and only two reviewed recovery fixture URLs, hashes retained.
-Face+Through779/main762/Inset753/Debug736/Multi1.0/Loop715 protected. Publication/Node22/
-live verified below; .782 device sanity pending. Next remaining40 checks and scoped Bevel/
-Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
-Manual: confirm782; armed Extrude/Inset Face selection taps; model and Undo/Redo,
-then background navigation. Diagnostic internals already automated, no special device
-trace recreation required.
+Initial5checks/1PASS/4FAIL; revised6PASS.131focusedPASS including current diagnostics,
+native integration/targeting and .742/.750/.751/.779 supplied clean-negative/Through
+fixtures. FullNode24:2074tests/2038PASS/36FAIL/0skip; exactly four reviewed782 failures
+removed, no new identities. Remaining35source-pattern/1version-pin active; no skips/
+exclusions/CI gate. Runtime/frozenBeta2–6 unchanged; shell/recovery783 and only two
+reviewed recovery fixture URLs, all hashes retained. Face+Through779/main762/Inset753/
+Debug736/Multi1.0/Loop715 protected. Publication/Node22/live pending; .783 device sanity
+pending. Next remaining36 checks and scoped Bevel/Knife/Loop reliability.
+Add Vertex/NOM import/Lasso tightening deferred.
+Manual: confirm783; orbit to another side and tap Faces with Extrude/Inset armed;
+model then Undo/Redo and normal navigation.
 
 ## Accepted .779 clean negative Extrude
 
@@ -72,8 +70,8 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-User .781 PASS. .782 current diagnostics validation device sanity pending.
-Continue remaining40 checks and scoped Bevel/Knife/Loop reliability. Add Vertex
+User .782 PASS. .783 native-viewpoint validation device sanity pending.
+Continue remaining36 checks and scoped Bevel/Knife/Loop reliability. Add Vertex
 picking/NOM import/Lasso tightening deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
@@ -180,7 +178,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery782; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery783; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct779;
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -217,14 +215,4 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining40 active failures visible until reconciled.
-
-## .782 publication verification — 2026-10-10
-
-Release commit `8b74b8c1107d1eda3778cca05afaddad0e085710`, tree
-`f9ad57892348ae6336d17a2bfae1fb93939f834c` matches tested checkout.
-Actual Node22 Topology run38011380865/job114091946863:2073tests/2033PASS/40FAIL/
-0skip; all40 failure names exactly match local inventory. Pages38011380490 succeeded.
-Fresh live index/version, unchanged central debug/Face779 and frozenBeta6 version
-byte-match repository.123focusedPASS; all five original .722 test bodies byte-identical.
-User .781 PASS recorded; .782 device sanity pending. Runtime/frozenBeta unchanged.
+real-group preservation. Remaining36 active failures visible until reconciled.

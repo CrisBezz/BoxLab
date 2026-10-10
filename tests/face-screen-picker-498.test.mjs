@@ -1,3 +1,4 @@
+import {nativeFacePicker,nativeFaceViewpoints,selectedPriority,sequentialScope} from './helpers/armed-face-behavior.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -6,26 +7,20 @@ import fs from 'node:fs';
 const direct=fs.readFileSync(new URL('../src/multi-face-direct.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
-test('498 armed Face picker uses projected face polygons',()=>{
-  assert.match(direct,/function pointInPolygon2D/);
-  assert.match(direct,/function armedVisibleFaceHit/);
-  assert.match(direct,/const poly=face\.map\(vi=>m\.vertices\[vi\]\).*screenPoint/);
+test('498 armed Face tools use the current native bridge rather than retired screen polygons',()=>{
+  nativeFacePicker();
 });
 
-test('498 rejects back-facing faces before choosing a hit',()=>{
-  assert.match(direct,/normal\.dot\(toCamera\)<=1e-5/);
+test('498 native camera-side hit is chosen from all six cube viewpoints',()=>{
+  nativeFaceViewpoints();
 });
 
-test('498 chooses nearest depth only among projected visible candidates',()=>{
-  assert.match(direct,/candidates\.push\(\{index,distance\}\)/);
-  assert.match(direct,/candidates\.sort\(\(a,b\)=>a\.distance-b\.distance\)/);
-  assert.match(direct,/return candidates\[0\]\?\.index\?\?null/);
+test('498 native primary is the nearest distance-ordered shell hit',()=>{
+  nativeFaceViewpoints();
 });
 
-test('498 armed pointerdown uses screen picker, not hit-stack fallback',()=>{
-  assert.match(direct,/hit=armedVisibleFaceHit\(event,m,camera\)/);
-  assert.doesNotMatch(direct,/firstUnselected/);
-  assert.doesNotMatch(direct,/pickHits\('face',event\)/);
+test('498 armed ownership retains deliberate selection and scoped hit-stack continuation',()=>{
+  selectedPriority();sequentialScope();
 });
 
 test('498 preserves tap toggle, drag flow and protected pins',()=>{
@@ -34,4 +29,11 @@ test('498 preserves tap toggle, drag flow and protected pins',()=>{
   assertAssetReference(index,'multi-face-direct.js');
   assertAssetReference(index,'rotate-transform.js');
   assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
+});
+
+test('498 six-viewpoint checks reject wrong pointer coordinates and farthest primary',()=>{
+  const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
+  for(const [before,after] of [["raycaster.setFromCamera(pointer,camera)","raycaster.setFromCamera(new THREE.Vector2(1,1),camera)"],["index:hits[0].index","index:hits.at(-1).index"]]){
+    assert.ok(main.includes(before));assert.throws(()=>nativeFaceViewpoints(s=>s.replace(before,after)),assert.AssertionError);
+  }
 });
