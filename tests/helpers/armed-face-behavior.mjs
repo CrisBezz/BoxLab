@@ -1,3 +1,4 @@
+import {mainPickerRuntime} from './main-picker-runtime.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -252,5 +253,32 @@ export function explicitExactAndReplay(sourceTransform){
     assert.equal(r.picks.length,picks);assert.equal(r.f.history.undoStack.length,history+1);
     const after=effectiveSnapshot(r.m),undo=r.f.history.undo(r.m);
     assert.equal(effectiveSnapshot(undo),before);assert.equal(effectiveSnapshot(r.f.history.redo(undo)),after);
+  }
+}
+
+// Connect the existing main picker extraction to the whole Face owner using the
+// same camera, canvas rectangle and actual cube face fan meshes. Selection/history
+// and DOM dispatch remain the shared controlled fixture; not a whole-app UI test.
+export function nativeFacePicker(sourceTransform){
+  for(const tool of ['extrude','inset'])for(const ids of [[],[0],[1],[1,0]]){
+    const r=fixture(tool,ids),root=new THREE.Group();
+    r.m.faces.forEach((f,index)=>{
+      const positions=[];for(let i=1;i<f.length-1;i++)for(const id of [f[0],f[i],f[i+1]])positions.push(...r.m.vertices[id].toArray());
+      const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+      const object=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({side:THREE.DoubleSide}));object.userData={kind:'face',index};root.add(object);
+    });root.updateMatrixWorld(true);
+    try{
+      const native=mainPickerRuntime({sourceTransform,camera:r.f.state.camera,canvas:r.f.elements.get('#viewport'),root});
+      for(const name of ['pick','pickHits','pickObject'])r.bridge[name]=native.bridge[name];
+      const position=projectedFace(r,1),press=r.pointer('pointerdown',position);
+      assert.equal(r.f.api.pending()?.hit,1,'live cube front cap is the intended primary');
+      assert.ok(native.events.every(e=>e===press),'primary and stack receive the original press');
+      assert.equal(native.events.length,2);assert.equal(press.prevented,true);assert.equal(press.stopped,true);
+      const expectedWorking=ids.includes(1)?ids:[1];assert.deepEqual(Array.from(r.f.api.pending().workingFaces),expectedWorking);
+      r.unchanged();r.pointer('pointerup',position);
+      assert.deepEqual(r.f.selected(),ids.includes(1)?ids.filter(i=>i!==1):[...ids,1]);
+      assert.deepEqual(r.toggles,[{type:'face',index:1}]);r.unchanged();r.retired();
+      r.pointer('pointerup',position);assert.equal(r.toggles.length,1);
+    }finally{root.children.forEach(o=>{o.geometry.dispose();o.material.dispose();});}
   }
 }

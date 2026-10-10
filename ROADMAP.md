@@ -4,14 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .780, 2026-10-10
+## Current direction — .781, 2026-10-10
 
-User .779 clean negative Extrude PASS. Validation-only780 reconciles three old native
-picker/Face ownership assertions; real main raycast bridge, typed filtering/Object
-route, event identity/hit ordering and four mutations covered.120focusedPASS including
-supplied clean-cut fixtures. Full2071/2019PASS/52FAIL/0skip, no new failure identities.
-Runtime/frozenBeta unchanged; publication/live verified. Continue remaining52 checks and
-scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
+User .780 PASS. Validation-only781 reconciles five obsolete Face overlap/handoff
+assertions. Existing real main picker connects to whole Face controller with actual
+cube raycasts; two mutations rejected. Other six assertions retained, including
+active .495 trace failure needing diagnostics audit.115clean-focusedPASS; full2072/
+2025PASS/47FAIL/0skip, no new failures. Runtime/frozenBeta unchanged; publication
+pending. Continue remaining47 checks and scoped Bevel/Knife/Loop reliability.
+Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
 

@@ -6,12 +6,13 @@ import * as THREE from 'three';
 // objects/camera/raycasts. Selection/render/UI remain controlled dependencies;
 // this is not the entire WebGL app or a native Safari pointer test.
 const source=fs.readFileSync(new URL('../../src/main.js',import.meta.url),'utf8');
-export function mainPickerRuntime({sourceTransform=s=>s}={}){
+export function mainPickerRuntime({sourceTransform=s=>s,camera:providedCamera,canvas:providedCanvas,root:providedRoot}={}){
   const main=sourceTransform(source),start=main.indexOf('function setPointer(event)'),end=main.indexOf('function pick(event)',start);
   const assignment=main.split('\n').find(line=>line.startsWith('globalThis.__boxlabSelectionBridge='));
   if(start<0||end<=start||!assignment)throw new Error('main picker extraction contract changed');
-  const root=new THREE.Group(),camera=new THREE.OrthographicCamera(-2,2,2,-2,.1,100);camera.position.set(0,0,10);camera.lookAt(0,0,0);camera.updateMatrixWorld();
-  const events=[],canvas={getBoundingClientRect:()=>({left:100,top:50,width:800,height:400})};
+  const root=providedRoot??new THREE.Group(),camera=providedCamera??new THREE.OrthographicCamera(-2,2,2,-2,.1,100);
+  if(!providedCamera){camera.position.set(0,0,10);camera.lookAt(0,0,0);camera.updateMatrixWorld();}
+  const events=[],canvas=providedCanvas??{getBoundingClientRect:()=>({left:100,top:50,width:800,height:400})};
   const context={THREE,root,camera,canvas,pointer:new THREE.Vector2(),raycaster:new THREE.Raycaster(),
     selectionMode:'face',selection:null,selectionHas:()=>false,selectionIndices:()=>[],makeSelection:(type,ids)=>({type,ids}),toggleSelection:()=>{},renderMesh:()=>{}};
   vm.createContext(context);vm.runInContext(main.slice(start,end)+'\n'+assignment,context);

@@ -1,45 +1,48 @@
-# BoxLab AI Handoff — Main picker validation
+# BoxLab AI Handoff — Connected Face picker validation
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.780**. Last explicit user acceptance is **.779 PASS**.
-Parent main9b4ea4ba1dbd59df27d38c63b1d3b10b60501f83; .780 published and live-verified.
-.779 release5b24a307f9239286ece4d9947ad6a3f79dfb5542: Node22 CI2068/2013PASS/
-55FAIL/0skip with exact local identities; Pages38006618687/live verified; user PASS.
+Current build **v0.36.18.781**. Last explicit user acceptance is **.780 PASS**.
+Parent main4dd598328bbd7be3c4bebad382a7c5c42fd6e8b1; .781 publication pending.
+.780 release2f200c6bec86eebc417034619949923e14633e4a: Node22 CI2071/2019PASS/
+52FAIL/0skip with exact local identities; Pages38007376421/live verified; user PASS.
 All historical details/publication evidence remain in DEV_HISTORY.md and
 corresponding docs/reliability-build-*.md/JSON; this handoff describes current owners.
 
-## .780 — Main native picker contract validation — 2026-10-10
+## .781 — Connected native Face picking validation — 2026-10-10
 
-User .779 awesome fix/PASS recorded. Parent main9b4ea4ba1dbd59df27d38c63b1d3b10b60501f83.
-Audited main762 picker/bridge, Face779 owner, .489/.499/.501 and accepted .535
-selected priority/sequential scope. Three failures enforce superseded picker spelling,
-component-only bridge routing or absent firstUnselected. Reconcile those three;
-retain all nine other historical checks, including legacy selector yield and pins.
-No further runtime change to accepted .779 clean negative Extrude.
+User .780 PASS recorded. Parent main4dd598328bbd7be3c4bebad382a7c5c42fd6e8b1.
+Audit current main762/Face779 and .495/.497/.523→accepted .534/.535 history.
+Five failures enforce unrestricted deeper-hit substitution, obsolete handoff spelling,
+or nearest-only picking that excludes later selected-hit priority. Reconcile exactly
+those five through existing whole-owner selected priority/sequential scope/tap/drag
+checks; retain all six other assertions, including still-failing .495 trace format.
+Diagnostics require separate owner audit, not suppression or resurrection.
 
-Execute actual main setPointer/pickKindHits/pickKind/pickObject functions and bridge
-assignment from source. Controlled canvas rect/selection/render dependencies with real
-Three tagged plane meshes, camera and raycasts prove original-event coordinates,
-nearest matching-kind primary, raw distance-ordered hit stack, separate Object body
-route, live root changes and null/empty misses. Raw plane centre yields two triangle
-hits per face; preserve main's current unfiltered hit-stack contract. This fixture
-is scoped main code, not whole app/native edge/vertex picker geometry or Safari QA.
-Reuse existing whole Face behavior for native taps, real selected raycast and properly
-scoped sequential Extrude; preserve legacy yielding source assertion. Four in-memory
-mutations rejected: missing kind filter, farthest primary, cloned event and missing
-Object route. Runtime never written. Initial12checks/9PASS/3FAIL; revised15PASS.
+Extend existing main-picker fixture to accept shared root/camera/canvas. Connect its
+actual setPointer/pickKindHits/pickKind/pickObject/bridge to existing whole Face owner,
+using real cube face fan meshes and same perspective camera/viewport rectangle.
+Both Extrude/Inset, empty/preselected-other/selected-single/selected-multi cases resolve
+front cap1, delegate original event for primary+stack, retain intended working set,
+consume press, toggle exactly once, retire capture and preserve geometry/history/redo.
+Native selection/render/event/DOM are controlled dependencies; not whole WebGL app or
+Safari propagation proof. Existing deliberate selected priority, actual committed
+single-Extrude-only continuation, Inset/multi/key protection and explicit reset behavior
+remain covered. One new test rejects wrong-kind and farthest-primary mutations of
+main picker in memory. Runtime never written or repinned.
 
-120focusedPASS including current Face ownership and all .742/.750/.751/.779 supplied
-negative-cut/Through fixtures. FullNode24:2071tests/2019PASS/52FAIL/0skip; exactly
-three reviewed failures removed from779, no new identities. Remaining51source-pattern/
-1version-pin active, no skips/exclusions/CI gate. Runtime/frozenBeta2–6 unchanged;
-shell/recovery780 and two reviewed recovery fixture URLs only, hashes unchanged.
-Face+Through779/main762/Inset753/Multi1.0/Loop715 retained.
-Publication/Node22/live verified below; .780 device sanity pending. Next remaining52 checks
-and scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso deferred.
-Manual: confirm780; Face tap/Extrude/Inset; Object pick then Move, Undo/Redo and navigation.
+Initial11checks/5PASS/6FAIL; revised12checks/11PASS/1FAIL.115clean-focusedPASS including
+.780 main picker and .742/.750/.751/.779 supplied clean-negative/Through fixtures;
+target group plus .489 is19PASS/1existing trace FAIL. FullNode24:2072tests/2025PASS/
+47FAIL/0skip; exactly five reviewed780 failures removed, no new identities. Remaining
+46source-pattern/1version-pin active; no skips/exclusions/CI gate. Runtime/frozenBeta2–6
+unchanged; shell/recovery781 and only two reviewed recovery fixture URLs, hashes retained.
+Face+Through779/main762/Inset753/Multi1.0/Loop715 protected. Publication/Node22/live
+pending; .781 device sanity pending. Next remaining47 checks and scoped Bevel/Knife/
+Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
+Manual: confirm781; armed Extrude/Inset tap Faces to add/remove; selected/multi Face
+modelling then Undo/Redo and background navigation.
 
 ## Accepted .779 clean negative Extrude
 
@@ -68,9 +71,9 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-User .779 clean negative Extrude PASS. .780 main-picker validation device sanity
-pending. Continue remaining52 checks and scoped Bevel/Knife/Loop reliability.
-Add Vertex picking/NOM import/Lasso tightening deferred. FrozenBeta2–6 immutable.
+User .780 PASS. .781 connected-picker validation device sanity pending.
+Continue remaining47 checks and scoped Bevel/Knife/Loop reliability. Add Vertex
+picking/NOM import/Lasso tightening deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -176,7 +179,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery780; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery781; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct779;
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -213,14 +216,4 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining52 active failures visible until reconciled.
-
-## .780 publication verification — 2026-10-10
-
-Release commit `2f200c6bec86eebc417034619949923e14633e4a`, tree
-`ff10ed4fc279c5e7973b92d798461bc99a02218f` matches tested checkout.
-Actual Node22 Topology run38007376560/job114079177377:2071tests/2019PASS/52FAIL/
-0skip; all52 failure names exactly match local inventory. Pages38007376421 succeeded.
-Fresh live index/version, unchanged main/accepted Through779 and frozenBeta6 version
-byte-match repository.120focusedPASS. User .779 PASS recorded; .780 device sanity
-pending. Runtime/frozenBeta unchanged.
+real-group preservation. Remaining47 active failures visible until reconciled.
