@@ -23,3 +23,13 @@ Shell/recovery796, Add UI796/new fit child796 reviewed; preview child795 and fac
 Text/font771 retained. .795/.794 user PASS not supplied; manual acceptance pending.
 Next: unit-size/preview/Apply/Cancel/history and Nomad transfer feedback, then remaining
 Rotate4/GLB7 audit and scoped Bevel/Knife/Loop reliability.
+
+
+### .796 publication verification — 2026-10-10
+
+Release `ff1fe94ac4ef970dd5da400169f5de210ecd78af`, tree
+`4c717f63aa0c9023dfe77c830d35074c4272c068` exactly matches tested checkout.
+Pages38040570537 succeeded. Actual Node22 Topology38040570929/job114179817579:
+2119tests/2108PASS/11FAIL/0skip; all11 identities match local and795.
+37focusedPASS. Fresh live index/version/Add UI/fit child byte-match main;
+protected Multi1.0 and frozenBeta6 version byte-match. iPad/Nomad acceptance pending.
