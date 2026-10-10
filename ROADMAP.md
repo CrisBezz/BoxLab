@@ -11,7 +11,7 @@ checks with current main navigation/background and component tap-intent owners.
 All component modes retain navigation selection, confirmed taps toggle/clear once;
 original .720 checks retained. Three mutations rejected;110focusedPASS.
 Full2077/2045PASS/32FAIL/0skip, no new identities. Runtime/frozenBeta unchanged;
-publication/CI/live pending. Continue remaining32 checks and scoped Bevel/Knife/Loop
+publication/CI/live verified. Continue remaining32 checks and scoped Bevel/Knife/Loop
 reliability. Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
@@ -581,3 +581,15 @@ unchanged; .783 user PASS protected; .784 device sanity pending.
 Fresh live index.html/version.json byte-match .784 repository. Unchanged main762,
 Face779 and frozenBeta6 version also byte-match live. Shell markers/recovery784
 coherent; reviewed runtime pins and hashes retained.
+
+
+### .785 publication verification — 2026-10-10
+
+Release commit `4437ecb4ab9e8223260b912163ee1310a2761732`, tree
+`e5aadf925fe9b39f57d9a00f32899a24b11f8f23` exactly matches tested checkout.
+Actual Node22 Topology run38018332508/job114113537665:2077tests/2045PASS/32FAIL/
+0skip; all32failure identities exactly match docs/reliability-build-785.json.
+Pages run38018332469 succeeded. Fresh live index.html/version.json byte-match785;
+unchanged main762/Face779 and frozenBeta6 version also match live repository bytes.
+110focusedPASS; source/frozenBeta unchanged. .784 user PASS protected; .785 device
+sanity pending. Shell markers/recovery785 coherent, original modelling pins retained.

@@ -4,7 +4,7 @@
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.785**. Last explicit user acceptance is **.784 PASS**.
-Parent main `973d8fc44fbad313359338553c7e37e58a9fb3c8`. .785 validation complete; publication/CI/live pending.
+Parent main `973d8fc44fbad313359338553c7e37e58a9fb3c8`. .785 published and live verified; evidence below.
 .784 release1ed2807186c94684ff088a6ecdb1955f5f4dacc1: Node22 CI2076/2041PASS/
 35FAIL/0skip and Pages/live verified; user PASS protected.
 Historical evidence remains in DEV_HISTORY.md and docs/reliability-build-*.md/JSON.
@@ -40,7 +40,7 @@ failures removed, no new identities. Remaining31source-pattern/1version-pin stay
 active; no exclusions/skips/CI gate. Runtime/frozenBeta2–6 unchanged. Shell/recovery785
 and only two reviewed recovery URLs refreshed; all source hashes retained. Protected
 main762/Face+Through779/Inset753/Debug736/Multi1.0/Loop715 retained.
-Publication/Node22/live pending; .785 hands-on sanity pending.
+Publication/Node22/live verified below; .785 hands-on sanity pending.
 Next: remaining32 checks and scoped Bevel/Knife/Loop reliability. Add Vertex picking,
 NOM import and Lasso tightening deferred.
 Manual: confirm785; selected Face/Edge/Vertex tap removes just that selection;
@@ -314,3 +314,15 @@ unchanged; .783 user PASS protected; .784 device sanity pending.
 Fresh live index.html/version.json byte-match .784 repository. Unchanged main762,
 Face779 and frozenBeta6 version also byte-match live. Shell markers/recovery784
 coherent; reviewed runtime pins and hashes retained.
+
+
+### .785 publication verification — 2026-10-10
+
+Release commit `4437ecb4ab9e8223260b912163ee1310a2761732`, tree
+`e5aadf925fe9b39f57d9a00f32899a24b11f8f23` exactly matches tested checkout.
+Actual Node22 Topology run38018332508/job114113537665:2077tests/2045PASS/32FAIL/
+0skip; all32failure identities exactly match docs/reliability-build-785.json.
+Pages run38018332469 succeeded. Fresh live index.html/version.json byte-match785;
+unchanged main762/Face779 and frozenBeta6 version also match live repository bytes.
+110focusedPASS; source/frozenBeta unchanged. .784 user PASS protected; .785 device
+sanity pending. Shell markers/recovery785 coherent, original modelling pins retained.

@@ -4928,3 +4928,15 @@ coherent; reviewed runtime pins and hashes retained.
 - [x] 110 focused PASS; full2077/2045PASS/32FAIL/0skip; exactly three reviewed old failures removed, no new identities. FrozenBeta unchanged.
 - [ ] .785: selected Vertex/Edge/Face tap removes just that item; blank short tap clears.
 - [ ] Orbit/pan/pinch preserve selection; ordinary modelling and Undo/Redo still work.
+
+
+### .785 publication verification — 2026-10-10
+
+Release commit `4437ecb4ab9e8223260b912163ee1310a2761732`, tree
+`e5aadf925fe9b39f57d9a00f32899a24b11f8f23` exactly matches tested checkout.
+Actual Node22 Topology run38018332508/job114113537665:2077tests/2045PASS/32FAIL/
+0skip; all32failure identities exactly match docs/reliability-build-785.json.
+Pages run38018332469 succeeded. Fresh live index.html/version.json byte-match785;
+unchanged main762/Face779 and frozenBeta6 version also match live repository bytes.
+110focusedPASS; source/frozenBeta unchanged. .784 user PASS protected; .785 device
+sanity pending. Shell markers/recovery785 coherent, original modelling pins retained.
