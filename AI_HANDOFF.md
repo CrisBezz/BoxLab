@@ -1,11 +1,35 @@
-# BoxLab AI Handoff — Add+ live previews
+# BoxLab AI Handoff — Add+ unit insertion zone
 
 ## Current state — 2026-10-10
 
-Repository CrisBezz/BoxLab is source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.795**. Last explicit user acceptance remains **.793 PASS**.
-Parent main `b8111b9b3d58f2c6fb291bc7f6966b305d326e88`.
-.795 adds live rotatable Add+ previews; .794 device checks still pending.
+Current build **v0.36.18.796**; source of truth CrisBezz/BoxLab main.
+Live https://crisbezz.github.io/BoxLab/. Last explicit user PASS remains .793.
+.796 fits Add+ primitive/Text candidates uniformly inside1×1×1 before preview/Apply.
+.795 preview and .794 menu device acceptance remain pending.
+
+## .796 — Add+ unit insertion zone — 2026-10-10
+
+User requests Add+ insertion within1×1×1 for similar Nomad scale. Audited existing
+primitive factory/Text/Add creation and preview; factory defaults remain unchanged.
+Original Add build now uniformly fits each fresh primitive/Text candidate into a
+centred unit bounding cube (longest extent1, each coordinate within±0.5). Same build
+feeds preview/counts and original Apply. Proportions/face cycles/vertex indices
+preserved; no export scaling, imported/existing scene edits or alternate kernel.
+Text thickness label becomes Relative thickness because complete word is fitted
+uniformly. Small panel note explains unit bounds/proportions. Revolve/Sweep retain
+original separate authoring owners and are outside this primitive/Text settings scope.
+No claim of measured Nomad import scale parity; device transfer check pending.
+
+Three new actual-helper/whole-Add tests cover18 density combinations, uniform pair
+distances/topology/centred bounds, all six Apply paths plus Text and original scene
+Undo/Redo; nonfinite/empty candidates refuse before mutation. Original .771 UI exact
+Text thickness assertion reviewed for intentional fitted scale; factory/Text-core
+absolute-thickness tests retained unchanged.37focusedPASS; full2119/2108PASS/11FAIL/
+0skip, identical11 failure identities to795. Protected owners/frozen betas unchanged.
+Shell/recovery796, Add UI796/new fit child796 reviewed; preview child795 and factory/
+Text/font771 retained. .795/.794 user PASS not supplied; manual acceptance pending.
+Next: unit-size/preview/Apply/Cancel/history and Nomad transfer feedback, then remaining
+Rotate4/GLB7 audit and scoped Bevel/Knife/Loop reliability.
 
 ## .795 — Add+ live object previews — 2026-10-10
 
@@ -511,12 +535,11 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.795 Add+ primitive/Text previews await iPad visual/tactile feedback. Confirm live
-X/Y boundaries, drag rotation, Text/thickness, Apply/Cancel and Undo/Redo.
-.794 modes/File/VIEW device checks still pending; do not infer PASS from build request.
-Remaining11 historical failures unchanged: Rotate4 and GLB7; audit actual owners
-before changes, then scoped Bevel/Knife/Loop reliability. NOM import/Lasso deferred.
-FrozenBeta2–6 immutable. Last explicit user PASS .793 remains protected.
+.796 unit insertion and .795 previews await iPad/Nomad feedback: centred unit bounds,
+X/Y/rotation/Text relative thickness, Apply/Cancel and Undo/Redo. .794 menus remain
+pending. Last explicit user PASS793; do not infer acceptance from refinement requests.
+Remaining11 historical failures unchanged: Rotate4/GLB7; audit actual owners, then
+scoped Bevel/Knife/Loop reliability. NOM import/Lasso deferred; frozen betas immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -622,7 +645,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery795; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/preview795; factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery796; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/fit796; preview795; factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical

@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {makePrimitive,primitiveDensity} from '../../src/primitive-factory.js';
+import {fitAddObjectToUnitCube} from '../../src/add-object-fit.js';
 import {makeTextObject} from '../../src/text-object-core.js';
 import {booleanSceneRuntime} from './boolean-scene-runtime.mjs';
 const source=fs.readFileSync(new URL('../../src/primitive-ui.js',import.meta.url),'utf8');
@@ -22,7 +23,7 @@ export function addObjectRuntime({deferred=false,fontOK=true}={}){
  const body=element(),wrap=element(),add=element('button'),status=element();body.append(wrap,add,status);
  const doc=element(),win=element();doc.body=body;doc.createElement=element;doc.querySelector=s=>({'#viewportWrap':wrap,'#outlinerAddBtn':add,'#selectionStatus':status}[s]||null);
  let resolve;const pending=new Promise(r=>resolve=r),response={ok:fontOK,json:async()=>font};
- Object.assign(c,{document:doc,window:win,makePrimitive,primitiveDensity,makeTextObject,
+ Object.assign(c,{document:doc,window:win,makePrimitive,primitiveDensity,makeTextObject,fitAddObjectToUnitCube,
   placeToolSessionPanel:p=>{p.style.left='50%';p.style.top='12px';},
   fetch:()=>deferred?pending:Promise.resolve(response),Event:class{constructor(type){this.type=type;}},CustomEvent:class{constructor(type){this.type=type;}},
   __boxlabObjectSelection:{single(id){c.selectedIds=new Set([id]);}}

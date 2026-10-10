@@ -5156,3 +5156,13 @@ recovery URLs changed, all runtime hashes retained.
 - [x] Full2116/2105PASS/11FAIL/0skip; same11 failures as794, no new identities.
 - [ ] iPad .795: X/Y and presets visibly change divisions, Pencil/finger preview rotation works.
 - [ ] iPad .795: Text word/thickness updates preview; Apply creates one matching object; Undo/Redo and Cancel work.
+
+
+## .796 — Add+ unit insertion zone
+
+- [x] Six primitive density variants fit centred±0.5 bounds with longest extent1, uniform distances and identical topology.
+- [x] Actual Add+ Apply for primitives/Text and original Undo/Redo retain fitted dimensions.
+- [x] Invalid candidates refuse before mutation; original factory/core absolute-scale behavior remains covered.
+- [x]37focusedPASS; full2119/2108PASS/11FAIL/0skip; same11 identities as795.
+- [ ] iPad .796: preview X/Y and rotation, Apply/Cancel/history; primitive/Text proportions remain correct.
+- [ ] Nomad transfer: inserted objects have the requested comparable scale on import.

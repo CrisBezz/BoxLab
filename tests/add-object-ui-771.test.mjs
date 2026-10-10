@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {makeTextObject} from '../src/text-object-core.js';
+import fs from 'node:fs';
 import {addObjectRuntime} from './helpers/add-object-runtime.mjs';
 
 test('Add density settings stage creation, report exact counts and use single scene Undo/Redo',()=>{
@@ -13,7 +15,7 @@ test('all six primitive settings and original detail presets change actual meshe
 });
 test('Text word, thickness and depth bands create exactly one selected editable object with scene history',async()=>{
  const r=addObjectRuntime(),before=r.snapshot();r.open('Text');assert.equal(r.action('apply').disabled,true);await r.flush();r.input('text','BOX');r.input('thickness',.4);r.input('y',3);assert.equal(r.action('apply').disabled,false);r.action('apply').click();
- const o=r.manager.objects.at(-1);assert.equal(r.manager.objects.length,6);assert.equal(o.name,'BOX');assert.equal(o.kind,'editable');assert.ok(o.mesh.faces.length>20);assert.ok(Math.abs(Math.max(...o.mesh.vertices.map(v=>v.z))-Math.min(...o.mesh.vertices.map(v=>v.z))-.4)<1e-10);assert.deepEqual([...r.c.selectedIds],[o.id]);const after=r.snapshot();r.undo();assert.deepEqual(r.snapshot(),before);r.redo();assert.deepEqual(r.snapshot(),after);
+ const o=r.manager.objects.at(-1);assert.equal(r.manager.objects.length,6);assert.equal(o.name,'BOX');assert.equal(o.kind,'editable');assert.ok(o.mesh.faces.length>20);const raw=makeTextObject(JSON.parse(fs.readFileSync(new URL('../src/fonts/helvetiker_regular.typeface.json',import.meta.url))),'BOX',{thickness:.4,x:4,y:3});const extent=Math.max(...['x','y','z'].map(k=>Math.max(...raw.vertices.map(v=>v[k]))-Math.min(...raw.vertices.map(v=>v[k]))));assert.ok(Math.abs(Math.max(...o.mesh.vertices.map(v=>v.z))-Math.min(...o.mesh.vertices.map(v=>v.z))-.4/extent)<1e-10);assert.deepEqual([...r.c.selectedIds],[o.id]);const after=r.snapshot();r.undo();assert.deepEqual(r.snapshot(),before);r.redo();assert.deepEqual(r.snapshot(),after);
 });
 test('Cancel, Escape and outside press preserve scene and redo, including pending font completion',async()=>{
  for(const exit of [r=>r.action('cancel').click(),r=>r.escape(),r=>r.outside()]){const r=addObjectRuntime({deferred:true});r.open('Cube');r.action('apply').click();r.undo();const before=r.snapshot();r.open('Text');exit(r);r.resolve();await r.flush();assert.equal(r.panel(),undefined);assert.deepEqual(r.snapshot(),before);r.redo();assert.equal(r.manager.objects.length,6);}

@@ -2,6 +2,7 @@ import { makePrimitive,primitiveDensity } from './primitive-factory.js?v=0.36.18
 import { makeTextObject } from './text-object-core.js?v=0.36.18.771';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 import { createAddObjectPreview } from './add-object-preview.js?v=0.36.18.795';
+import { fitAddObjectToUnitCube } from './add-object-fit.js?v=0.36.18.796';
 
 const addButton=document.querySelector('#outlinerAddBtn'),status=document.querySelector('#selectionStatus');
 let menu=null,fontPromise=null,preview=null;
@@ -17,10 +18,11 @@ function showSettings(type){
  const body=node('div');body.style.display='grid';body.style.gap='8px';p.append(body);const inputs={};
  function field(name,title,kind,value,min,max){const row=node('label'),caption=node('span',title),input=node('input');input.type=kind;input.value=String(value);input.dataset.addSetting=name;input.setAttribute('aria-label',title);if(min!==undefined)input.min=String(min);if(max!==undefined)input.max=String(max);Object.assign(row.style,{display:'grid',gridTemplateColumns:'minmax(90px,1fr) minmax(120px,2fr) auto',gap:'8px',alignItems:'center'});row.append(caption,input);body.append(row);inputs[name]=input;if(kind==='range'){input.step='1';const out=node('output',String(value));row.append(out);input.addEventListener('input',()=>{out.textContent=input.value;update();});}else input.addEventListener('input',update);return input;}
  let word,thickness,data=null;
- if(text){word=field('text','Text','text','Text');word.maxLength=64;word.autocomplete='off';word.spellcheck=false;thickness=field('thickness','Thickness','number',.2,.01,100);thickness.step='.01';}
+ if(text){word=field('text','Text','text','Text');word.maxLength=64;word.autocomplete='off';word.spellcheck=false;thickness=field('thickness','Relative thickness','number',.2,.01,100);thickness.step='.01';}
  field('x',spec.xLabel,'range',spec.x,spec.minX,text?16:32);field('y',spec.yLabel,'range',spec.y,spec.minY,32);
  const presets=node('div');Object.assign(presets.style,{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'6px'});body.append(presets);for(const [i,name] of ['Low','Medium','High'].entries())button(presets,name,()=>{inputs.x.value=String(text?[2,4,8][i]:['cube','plane'].includes(type)?[1,2,4][i]:[8,12,16][i]);inputs.y.value=String(text||['cylinder','cone'].includes(type)?1:['cube','plane'].includes(type)?[1,2,4][i]:[4,6,8][i]);for(const key of ['x','y'])inputs[key].dispatchEvent(new Event('input',{bubbles:true}));});
  preview=createAddObjectPreview(body);
+ p.append(node('small','Fits within 1 × 1 × 1 · proportions preserved'));
  const count=node('small');count.setAttribute('role','status');p.append(count);
  const apply=button(p,'Apply',()=>{
    let mesh;try{mesh=build();}catch(e){count.textContent=e.message;return;}
@@ -30,7 +32,7 @@ function showSettings(type){
    if(status)status.textContent=`${text?'Text':label(type)} added • ${mesh.faces.length} faces`;closeMenu();
  });apply.dataset.addAction='apply';
  button(p,'Cancel',closeMenu).dataset.addAction='cancel';
- function build(){if(text){if(!data)throw new Error('Loading text font…');return makeTextObject(data,word.value,{thickness:thickness.value,x:inputs.x.value,y:inputs.y.value});}return makePrimitive(type,{x:inputs.x.value,y:inputs.y.value});}
+ function build(){if(text){if(!data)throw new Error('Loading text font…');return fitAddObjectToUnitCube(makeTextObject(data,word.value,{thickness:thickness.value,x:inputs.x.value,y:inputs.y.value}));}return fitAddObjectToUnitCube(makePrimitive(type,{x:inputs.x.value,y:inputs.y.value}));}
  function update(){try{const mesh=build();preview?.setMesh(mesh);count.textContent=`${mesh.faces.length} faces · ${mesh.vertices.length} vertices`;apply.disabled=false;}catch(e){preview?.setMesh(null);count.textContent=e.message;apply.disabled=true;}}
  document.querySelector('#viewportWrap').append(p);placeToolSessionPanel(p);update();
  if(text){word.focus();word.select();fontData().then(font=>{if(menu!==p)return;data=font;update();}).catch(e=>{if(menu===p)count.textContent=e.message;});}
