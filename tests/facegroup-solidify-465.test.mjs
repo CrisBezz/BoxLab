@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
-import fs from 'node:fs';
+import {assertShellGroups} from './helpers/shell-solidify-groups.mjs';
 import {EditableMesh} from '../src/mesh.js';
 import {solidifyOpenMesh} from '../src/solidify-core.js';
 
@@ -10,8 +10,6 @@ test('465 Solidify inherits source Facegroup to inner face and leaves side walls
  const result=solidifyOpenMesh(mesh,.1); assert.equal(result.ok,true); assert.deepEqual(mesh.faceGroups.slice(0,2),['Panel','Panel']); assert.ok(mesh.faceGroups.slice(2).every(g=>g===null));
 });
 
-test('465 does not touch Shell core',()=>{
- const s=fs.readFileSync(new URL('../src/shell-core.js',import.meta.url),'utf8');
- assert.doesNotMatch(s,/target\.faceGroups=/);
- assert.doesNotMatch(s,/faceGroups=mesh\.faces/);
+test('465 accepted later Shell propagation retains surviving groups and ungrouped walls',()=>{
+ assertShellGroups();
 });

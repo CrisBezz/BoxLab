@@ -4,15 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .791, 2026-10-10
+## Current direction — .792, 2026-10-10
 
-.790 user PASS protects Edge Bevel settings/history and prior accepted owners.
-.791 repairs late Join/Bridge/Sweep row order in existing shared Face layout;
-seven retired Face layout checks now exercise actual owners.124focusedPASS;
-full2100/2081PASS/19FAIL/0skip, exactly seven reviewed failures removed, none new.
-Only shared row ordering changes; kernels/interaction/frozenBeta unchanged.
-Publication/Node22/live verified below. Audit remaining19 historical checks,
-then scoped Bevel/Knife/Loop reliability. Controlled DOM does not prove device/CSS.
+.791 user PASS protects late Join ordering/Face settings and prior accepted owners.
+.792 validates current whole Shell/Solidify geometry, Facegroup provenance, mesh
+History and failure rollback; two earlier no-metadata source checks reconciled
+against accepted .465/.466 history.71focusedPASS; full2104/2087PASS/17FAIL/0skip,
+exactly two reviewed failures removed, none new. Runtime/frozenBeta unchanged.
+Publication/Node22/live verification pending. Audit remaining17 historical checks,
+then scoped Bevel/Knife/Loop reliability; core tests are not device/render proof.
 
 ## Beta 6 delivery refinement — .736
 

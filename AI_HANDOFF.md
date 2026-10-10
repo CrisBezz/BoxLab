@@ -1,13 +1,53 @@
-# BoxLab AI Handoff — Face layout / late Join ordering
+# BoxLab AI Handoff — Shell / Solidify Facegroup validation
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.791**. Last whole-build user acceptance is **.790 PASS**.
-Accepted Edge, Sweep789/Revolve788 history and picking786 protected.
-Parent main `c851cf8182f2ca57f2542ef76170a17f62f14bd2`.
-.791 repairs late Join ordering in existing Face layout and reconciles historical
-layout checks. Publication/Node22/live verified below.
+Current build **v0.36.18.792**. Last whole-build user acceptance is **.791 PASS**.
+Accepted shared Face layout791, picking786 and construction history789/788 protected.
+Parent main `175f32b50bde02723156a2ade1b1eb0b3c77ed61`.
+.792 validates accepted Shell/Solidify metadata/geometry/rollback contracts;
+runtime unchanged. Publication/Node22/live verification pending.
+
+## .792 — Shell / Solidify Facegroup contract validation — 2026-10-10
+
+User .791 PASS recorded/protected: Face settings/Done, normal selection/modelling/
+history and late Join ordering; prior accepted owners retained. Parent main
+`175f32b50bde02723156a2ade1b1eb0b3c77ed61`.
+Audit remaining .464 recovery and .465 Shell source prohibitions against current
+whole cores and DEV_HISTORY .464→.465→.466. Historical recovery temporarily removed
+metadata; later separately accepted builds restored Solidify then Shell labels.
+Do not roll back accepted propagation to satisfy the earlier no-assignment tests.
+Replace exactly those two failed checks with actual current geometry/provenance.
+Original .465 Solidify test and .462/.466 propagation/core tests retained.
+
+Actual cores with real Three/EditableMesh: two-quad Solidify retains source cycles,
+reversed offset inner cycles, source/inner labels and crease copies, ungrouped six
+boundary walls and watertightness. One- and connected two-Face Shell openings retain
+compacted source cycles and correctly paired outer/inner labels, remove opening
+label, retain null labels and keep generated walls ungrouped. Duplicate selected
+IDs do not remove extra faces. Real mesh History snapshot Undo/Redo preserves exact
+geometry/groups/creases; this is mesh serialization, not tool-session history wiring.
+Existing session/preview tests remain separate. No browser/device/render proof.
+
+Zero/nonfinite thickness refuses without mutation. Controlled one-time edge-cache
+exception after geometry mutation exercises actual core catch/rollback; geometry,
+complete label arrays and creases restored. Three whole-core in-memory mutations
+reject dropped Shell copy labels, grouped Solidify walls and missing label rollback.
+Dependencies stay actual; source files never changed. One initial normalized snapshot
+hid extraneous post-failure labels; corrected test compares complete arrays and now
+rejects that mutation. No production behavior changed to satisfy assertions.
+
+71focusedPASS including actual cores, mirrored Solidify, original sessions, accepted
+picking/negative Extrude and Face layout mutation checks. FullNode24:2104tests/
+2087PASS/17FAIL/0skip; exactly two reviewed failures removed from791, none new.
+Remaining16source-pattern/1version-pin active; no skips/exclusions/CI gate. All runtime
+sources/hashes/modelling pins, Multi1.0/Loop715 and frozenBeta2–6 unchanged. Shell
+markers/recovery792 and exactly two reviewed recovery URLs refreshed; shared UI791,
+main/Face/Vertex786, Sweep789/Revolve788 and Through779 retained. Publication/Node22/
+live verification pending. Next: audit remaining17 historical checks, then scoped
+Bevel/Knife/Loop reliability. Manual: confirm792; grouped Shell Apply/Cancel/Undo/Redo;
+Solidify on an open mesh, Apply/Cancel and Undo/Redo; normal navigation/selection.
 
 ## .791 — Face layout ownership and late Join ordering — 2026-10-10
 
@@ -379,11 +419,11 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.790 user PASS protects Edge Bevel settings/history and prior accepted owners.
-.791 repairs late Join row order in existing Face layout; seven historical checks
-reconciled. Audit remaining19 active checks, then scoped Bevel/Knife/Loop reliability.
-Do not infer device/CSS reliability from ordered DOM fixtures. Add Vertex broader
-picking/NOM import/Lasso deferred. FrozenBeta2–6 immutable.
+.791 user PASS protects late Join ordering, Face settings and prior accepted owners.
+.792 reconciles two earlier Shell/Solidify no-metadata checks with later accepted
+whole-core geometry/provenance/rollback. Audit remaining17 active historical checks,
+then scoped Bevel/Knife/Loop reliability. Counts/core tests do not establish device
+reliability. Add Vertex broader picking/NOM import/Lasso deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -489,7 +529,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery791; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery792; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -526,7 +566,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining19 active failures visible until reconciled.
+real-group preservation. Remaining17 active failures visible until reconciled.
 
 
 ### .783 publication verification — 2026-10-10

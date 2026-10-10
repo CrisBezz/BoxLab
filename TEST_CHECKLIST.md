@@ -5049,7 +5049,7 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
 - [x] Inspect/Repair/Topology Gate stay true drawer bottom after late extra controls.
 - [x] Four mutations rejected; all original Edge layout/precision tests kept after ordered DOM fixture extraction; CSS and reviewed actual Join loader retained.
 - [x]124focusedPASS; full2100/2081PASS/19FAIL/0skip; exactly seven reviewed failures removed, none new. Two legitimate shared UI cache-hop assertions reconciled, no excluded checks.
-- [ ] .791: Face radial Extrude/Inset settings and Done; normal selection/modelling/Undo/Redo.
+- [x] User .791 PASS protected: Face settings/Done, selection/modelling/history and late Join ordering.
 - [ ] Optional drawer sanity: Focus off, reload/switch Face mode; Join/Bridge/Sweep retain order.
 - [x] .791 Pages38032058768 success; Node22 run38032058820/job114154883205 matches2100/2081PASS/19FAIL/0skip and all19 identities; live shell/shared UI and accepted/protected owners byte-match tested release.
 
@@ -5065,3 +5065,17 @@ repository; accepted main/Face/Vertex786, Sweep789/Revolve788, Through779, prote
 Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.124focused
 PASS. .790 user PASS protected; .791 Face UI/history sanity pending. Shared UI
 cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.
+
+
+## .792 — Shell / Solidify metadata recovery contracts
+
+- [x] User .791 PASS recorded/protected; shared layout791 and accepted interaction owners unchanged.
+- [x] Two earlier no-metadata checks reconciled against separately accepted .465/.466 propagation; original .465/.462/.466 coverage retained.
+- [x] Actual cores keep source and reversed offset inner cycles, expected Facegroup provenance, null side-wall labels, watertightness and creases; one/two-Face Shell openings and duplicate selected IDs covered.
+- [x] Real mesh History serialization retains exact geometry/groups/creases across Undo/Redo; tool-session wiring is separate coverage.
+- [x] Invalid thickness refuses without mutation; one-time post-mutation exception restores complete arrays/creases through actual catch paths.
+- [x] Three whole-core in-memory mutations rejected, including complete label-array rollback; no runtime source writes.
+- [x]71focusedPASS; full2104/2087PASS/17FAIL/0skip, exactly two audited failures removed, none new. No skipped/excluded checks or runtime/frozenBeta changes.
+- [ ] .792: grouped closed object → Face Shell; Apply/Cancel and Undo/Redo remain healthy.
+- [ ] Solidify on an open mesh; Apply/Cancel and Undo/Redo; navigation/selection sanity.
+- [ ] Publication/Node22/live verification pending.
