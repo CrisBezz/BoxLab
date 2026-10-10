@@ -5130,4 +5130,18 @@ recovery URLs changed, all runtime hashes retained.
 - [x] Four in-memory mutations rejected; existing Face row/Duplicate/loading/mode-ID/protected-pin and File interaction checks retained.
 - [x]48focusedPASS; full2112/2101PASS/11FAIL/0skip, exactly three audited failures removed, none new. All11 remaining checks active; no skipped/excluded tests/runtime/frozenBeta changes.
 - [ ] .794: mode buttons; File/VIEW open and scroll to lower controls; return to modelling/navigation.
-- [ ] Publication/Node22/live verification pending.
+- [x] .794 Pages38036207720 success; Node22 run38036208096/job114167039767 matches2112/2101PASS/11FAIL/0skip and all11 identities; live shell/styles/menu and protected owners byte-match tested release.
+
+
+### .794 publication verification — 2026-10-10
+
+Release commit `4ae051d79fc855f0ab4e8224e0d4fb83770c3322`, tree
+`4df564fce34f340b525fdcc8186825ebe6a0fd12` exactly matches tested checkout.
+Actual Node22 Topology run38036208096/job114167039767:2112tests/2101PASS/11FAIL/
+0skip; all11failure identities exactly match docs/reliability-build-794.json.
+Pages run38036207720 succeeded. Fresh live index/version byte-match794. Unchanged
+styles/topbar734/VIEW732, shared UI791/main/Face/Vertex786, Sweep789/Revolve788,
+Through779, protected Multi1.0 and frozenBeta6 version byte-match repository.
+48focusedPASS. .793 user PASS protected; .794 menus/modes device sanity pending.
+No runtime/frozenBeta changes; shell/recovery794 coherent and exactly two reviewed
+recovery URLs changed, all runtime hashes retained.

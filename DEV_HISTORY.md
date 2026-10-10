@@ -7156,7 +7156,20 @@ accepted picking/clean negative Extrude and release contracts. FullNode24:2112te
 All remaining11source-pattern checks active, no skips/exclusions/CI gate. All runtime
 sources/hashes/modelling pins and frozenBeta2–6 unchanged. Shell/recovery794 and
 exactly two reviewed recovery URLs refreshed; accepted UI791/main/Face/Vertex786,
-Sweep789/Revolve788/Through779/Multi1.0/Loop715 retained. Publication/Node22/live
-verification pending. Next: audit remaining component Rotate4 and Nomad GLB7 checks,
+Sweep789/Revolve788/Through779/Multi1.0/Loop715 retained. Publication/Node22/live verified below. Next: audit remaining component Rotate4 and Nomad GLB7 checks,
 then scoped Bevel/Knife/Loop reliability. Manual: confirm794; mode buttons work;
 File and VIEW open/scroll to lower controls, then return to modelling/navigation.
+
+
+### .794 publication verification — 2026-10-10
+
+Release commit `4ae051d79fc855f0ab4e8224e0d4fb83770c3322`, tree
+`4df564fce34f340b525fdcc8186825ebe6a0fd12` exactly matches tested checkout.
+Actual Node22 Topology run38036208096/job114167039767:2112tests/2101PASS/11FAIL/
+0skip; all11failure identities exactly match docs/reliability-build-794.json.
+Pages run38036207720 succeeded. Fresh live index/version byte-match794. Unchanged
+styles/topbar734/VIEW732, shared UI791/main/Face/Vertex786, Sweep789/Revolve788,
+Through779, protected Multi1.0 and frozenBeta6 version byte-match repository.
+48focusedPASS. .793 user PASS protected; .794 menus/modes device sanity pending.
+No runtime/frozenBeta changes; shell/recovery794 coherent and exactly two reviewed
+recovery URLs changed, all runtime hashes retained.

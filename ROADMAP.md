@@ -10,7 +10,7 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 .794 validates original mode dock nodes/listeners and emitted File/VIEW responsive
 scroll bounds; three retired historical expectations reconciled.48focusedPASS;
 full2112/2101PASS/11FAIL/0skip, exactly three audited failures removed, none new.
-Runtime/frozenBeta unchanged. Publication/Node22/live verification pending.
+Runtime/frozenBeta unchanged. Publication/Node22/live verified below.
 Next audit component Rotate4 and Nomad GLB7 remaining checks, then scoped Bevel/
 Knife/Loop reliability. Controlled DOM/CSS declarations do not prove device layout.
 
@@ -646,4 +646,18 @@ render owner568/colour core547, shared UI791/main/Face/Vertex786, Sweep789/Revol
 Through779, protected Multi1.0 and frozenBeta6 version all byte-match repository.
 42focusedPASS. .792 user PASS protected; .793 Facegroups device sanity pending.
 No runtime/frozenBeta changes. Shell/recovery793 coherent; exactly two reviewed
+recovery URLs changed, all runtime hashes retained.
+
+
+### .794 publication verification — 2026-10-10
+
+Release commit `4ae051d79fc855f0ab4e8224e0d4fb83770c3322`, tree
+`4df564fce34f340b525fdcc8186825ebe6a0fd12` exactly matches tested checkout.
+Actual Node22 Topology run38036208096/job114167039767:2112tests/2101PASS/11FAIL/
+0skip; all11failure identities exactly match docs/reliability-build-794.json.
+Pages run38036207720 succeeded. Fresh live index/version byte-match794. Unchanged
+styles/topbar734/VIEW732, shared UI791/main/Face/Vertex786, Sweep789/Revolve788,
+Through779, protected Multi1.0 and frozenBeta6 version byte-match repository.
+48focusedPASS. .793 user PASS protected; .794 menus/modes device sanity pending.
+No runtime/frozenBeta changes; shell/recovery794 coherent and exactly two reviewed
 recovery URLs changed, all runtime hashes retained.
