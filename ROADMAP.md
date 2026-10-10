@@ -11,7 +11,7 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 History and failure rollback; two earlier no-metadata source checks reconciled
 against accepted .465/.466 history.71focusedPASS; full2104/2087PASS/17FAIL/0skip,
 exactly two reviewed failures removed, none new. Runtime/frozenBeta unchanged.
-Publication/Node22/live verification pending. Audit remaining17 historical checks,
+Publication/Node22/live verified below. Audit remaining17 historical checks,
 then scoped Bevel/Knife/Loop reliability; core tests are not device/render proof.
 
 ## Beta 6 delivery refinement — .736
@@ -619,3 +619,17 @@ repository; accepted main/Face/Vertex786, Sweep789/Revolve788, Through779, prote
 Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.124focused
 PASS. .790 user PASS protected; .791 Face UI/history sanity pending. Shared UI
 cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.
+
+
+### .792 publication verification — 2026-10-10
+
+Release commit `e1372c9cc2c379eb8a4f261fca1728517b318551`, tree
+`c87dc4da613e0bb2941fec3a59ac1b50409259d6` exactly matches tested checkout.
+Actual Node22 Topology run38033318243/job114158546682:2104tests/2087PASS/17FAIL/
+0skip; all17failure identities exactly match docs/reliability-build-792.json.
+Pages run38033318385 succeeded. Fresh live index/version byte-match792. Unchanged
+Shell/Solidify cores, shared UI791/main/Face/Vertex786, Sweep789/Revolve788, Through779,
+protected Multi1.0 and frozenBeta6 version all byte-match repository.71focusedPASS.
+No runtime/frozenBeta changes. .791 user PASS protected; .792 Shell/Solidify device
+sanity pending. Shell markers/recovery792 coherent; exactly two reviewed recovery
+URLs changed with every runtime hash retained.

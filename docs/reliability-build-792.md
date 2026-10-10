@@ -35,7 +35,20 @@ picking/negative Extrude and Face layout mutation checks. FullNode24:2104tests/
 Remaining16source-pattern/1version-pin active; no skips/exclusions/CI gate. All runtime
 sources/hashes/modelling pins, Multi1.0/Loop715 and frozenBeta2–6 unchanged. Shell
 markers/recovery792 and exactly two reviewed recovery URLs refreshed; shared UI791,
-main/Face/Vertex786, Sweep789/Revolve788 and Through779 retained. Publication/Node22/
-live verification pending. Next: audit remaining17 historical checks, then scoped
+main/Face/Vertex786, Sweep789/Revolve788 and Through779 retained. Publication/Node22/live verified below. Next: audit remaining17 historical checks, then scoped
 Bevel/Knife/Loop reliability. Manual: confirm792; grouped Shell Apply/Cancel/Undo/Redo;
 Solidify on an open mesh, Apply/Cancel and Undo/Redo; normal navigation/selection.
+
+
+### .792 publication verification — 2026-10-10
+
+Release commit `e1372c9cc2c379eb8a4f261fca1728517b318551`, tree
+`c87dc4da613e0bb2941fec3a59ac1b50409259d6` exactly matches tested checkout.
+Actual Node22 Topology run38033318243/job114158546682:2104tests/2087PASS/17FAIL/
+0skip; all17failure identities exactly match docs/reliability-build-792.json.
+Pages run38033318385 succeeded. Fresh live index/version byte-match792. Unchanged
+Shell/Solidify cores, shared UI791/main/Face/Vertex786, Sweep789/Revolve788, Through779,
+protected Multi1.0 and frozenBeta6 version all byte-match repository.71focusedPASS.
+No runtime/frozenBeta changes. .791 user PASS protected; .792 Shell/Solidify device
+sanity pending. Shell markers/recovery792 coherent; exactly two reviewed recovery
+URLs changed with every runtime hash retained.

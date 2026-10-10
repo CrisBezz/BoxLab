@@ -5078,4 +5078,18 @@ cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.
 - [x]71focusedPASS; full2104/2087PASS/17FAIL/0skip, exactly two audited failures removed, none new. No skipped/excluded checks or runtime/frozenBeta changes.
 - [ ] .792: grouped closed object → Face Shell; Apply/Cancel and Undo/Redo remain healthy.
 - [ ] Solidify on an open mesh; Apply/Cancel and Undo/Redo; navigation/selection sanity.
-- [ ] Publication/Node22/live verification pending.
+- [x] .792 Pages38033318385 success; Node22 run38033318243/job114158546682 matches2104/2087PASS/17FAIL/0skip and all17 identities; live shell and unchanged cores/protected owners byte-match tested release.
+
+
+### .792 publication verification — 2026-10-10
+
+Release commit `e1372c9cc2c379eb8a4f261fca1728517b318551`, tree
+`c87dc4da613e0bb2941fec3a59ac1b50409259d6` exactly matches tested checkout.
+Actual Node22 Topology run38033318243/job114158546682:2104tests/2087PASS/17FAIL/
+0skip; all17failure identities exactly match docs/reliability-build-792.json.
+Pages run38033318385 succeeded. Fresh live index/version byte-match792. Unchanged
+Shell/Solidify cores, shared UI791/main/Face/Vertex786, Sweep789/Revolve788, Through779,
+protected Multi1.0 and frozenBeta6 version all byte-match repository.71focusedPASS.
+No runtime/frozenBeta changes. .791 user PASS protected; .792 Shell/Solidify device
+sanity pending. Shell markers/recovery792 coherent; exactly two reviewed recovery
+URLs changed with every runtime hash retained.
