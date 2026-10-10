@@ -4,12 +4,12 @@
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.801**. Last whole-build acceptance **.797 PASS**, protected.
-Parent main `90662273ecfbdffe0c71d20bd11f2f65328aeea0`.
-Release commit `eeecfe33c43507826c30f03d1192862bb29de178`.
+Parent main `71a1990ca82d908443c6db7ce6e91fcdc5302dd0`.
+Release commit `5cfdba4fb8eb0ef688c4c0fe15a03c91ec1e9b39`.
 
-Full2138/2138 PASS, 0 failures/skips. CI38091987976 and Pages38091987719 SUCCESS.
-Fresh live manifest, shell and six changed module owners match main byte-for-byte.
-.800 iPad acceptance pending; .799 reported FAIL (A/B display), not protected.
+Full2141/2141 PASS, 0 failures/skips. CI38095379471 and Pages38095379020 SUCCESS.
+Fresh live manifest, shell and all three changed runtime owners match main byte-for-byte.
+.801 iPad acceptance pending; .800 reported FAIL (A/B and exit), not protected.
 
 ## .801 — Reproduced Boolean activation/cancel loop; corrected radial
 
