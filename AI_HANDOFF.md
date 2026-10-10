@@ -7,7 +7,7 @@ Current build **v0.36.18.790**. Last whole-build user acceptance is **.789 PASS*
 Sweep789/Revolve788 history, picking786 and accepted Edge behavior protected.
 Parent main `a30f29f4ace104a6b82503fc9d65433c94d60a7d`.
 .790 validates current shared Edge layout and Bevel Exact owner placement;
-runtime unchanged. Publication pending; evidence below and DEV_HISTORY/docs.
+runtime unchanged. Publication/Node22/live verified; evidence below and DEV_HISTORY/docs.
 
 ## .790 — Current Edge layout and Bevel precision validation — 2026-10-10
 
@@ -37,8 +37,8 @@ combinations, accepted Sweep cancellation/picking and release contracts.
 FullNode24:2096tests/2070PASS/26FAIL/0skip; exactly reviewed .472/.508 failures removed
 from789, no new identities. Remaining25source-pattern/1version-pin active; no skips/
 exclusions. Runtime/frozenBeta2–6 unchanged. Shell/recovery790 only; exactly two
-reviewed recovery URLs updated, all hashes and modelling pins retained. Publication
-pending. Next: audit remaining26 checks, then scoped Bevel/Knife/Loop reliability.
+reviewed recovery URLs updated, all hashes and modelling pins retained. Publication/
+Node22/live verified below. Next: audit remaining26 checks, then scoped Bevel/Knife/Loop reliability.
 Manual: confirm790; Edge radial Bevel Width/Segments and Apply/Cancel sanity, then
 Undo/Redo. No manual recreation of synthetic node-order fixtures requested.
 
@@ -575,3 +575,16 @@ accepted Revolve788/main/Vertex assist/Face786, Through779, protected Multi1.0 a
 frozenBeta6 version byte-match repository and are unchanged from accepted parent.
 121focusedPASS. .788 user PASS protected; .789 Sweep Cancel/Redo and Apply/history
 sanity pending. Reviewed Sweep hash/stamp/pin and shell/recovery789 verified.
+
+
+### .790 publication verification — 2026-10-10
+
+Release commit `253afa3edf83b4aa890f43a6f2a8995fb0b3b06f`, tree
+`55adf4d70903a25f0a058021116ddbc7ebeb28cd` exactly matches tested checkout.
+Actual Node22 Topology run38029874102/job114148372358:2096tests/2070PASS/26FAIL/
+0skip; all26failure identities exactly match docs/reliability-build-790.json.
+Pages run38029873759 succeeded. Fresh live index/version byte-match790. Unchanged
+precision/shared layout, Sweep789/Revolve788/main/Vertex assist/Face786, Through779,
+protected Multi1.0 and frozenBeta6 version byte-match repository. No runtime/frozen
+changes.114focusedPASS. .789 user PASS protected; .790 Edge Bevel UI/history sanity
+pending. Shell/recovery790 and exactly two reviewed recovery URLs coherent.

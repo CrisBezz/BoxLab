@@ -10,7 +10,7 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 .790 validation only: current Edge rows/Circle and Bevel Exact placement/delegation
 replace two retired source patterns.114focusedPASS; full2096/2070PASS/26FAIL/0skip,
 only reviewed .472/.508 failures removed, no new identities. Runtime/frozenBeta
-unchanged; publication pending. Audit remaining26 checks, then scoped Bevel/Knife/
+unchanged; publication/Node22/live verified. Audit remaining26 checks, then scoped Bevel/Knife/
 Loop reliability. Counts and controlled DOM do not establish device reliability.
 
 ## Beta 6 delivery refinement — .736

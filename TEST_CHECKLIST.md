@@ -5036,4 +5036,6 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
 - [x]114focusedPASS; full2096/2070PASS/26FAIL/0skip; exactly two reviewed failures
   removed, no new identities/skips/exclusions. Adjacent geometry tests retained.
 - [ ] .790 sanity: Edge radial Bevel Width/Segments, Apply/Cancel and Undo/Redo.
-- [ ] .790 CI/Pages/live verification.
+- [x] .790 Pages38029873759 success; Node22 run38029874102/job114148372358
+  matches26 failures and2096/2070PASS/26FAIL/0skip. Live shell and unchanged runtime/
+  protected owners match release253afa3edf83b4aa890f43a6f2a8995fb0b3b06f.

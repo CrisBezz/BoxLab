@@ -28,7 +28,20 @@ combinations, accepted Sweep cancellation/picking and release contracts.
 FullNode24:2096tests/2070PASS/26FAIL/0skip; exactly reviewed .472/.508 failures removed
 from789, no new identities. Remaining25source-pattern/1version-pin active; no skips/
 exclusions. Runtime/frozenBeta2–6 unchanged. Shell/recovery790 only; exactly two
-reviewed recovery URLs updated, all hashes and modelling pins retained. Publication
-pending. Next: audit remaining26 checks, then scoped Bevel/Knife/Loop reliability.
+reviewed recovery URLs updated, all hashes and modelling pins retained. Publication/
+Node22/live verified below. Next: audit remaining26 checks, then scoped Bevel/Knife/Loop reliability.
 Manual: confirm790; Edge radial Bevel Width/Segments and Apply/Cancel sanity, then
 Undo/Redo. No manual recreation of synthetic node-order fixtures requested.
+
+
+### .790 publication verification — 2026-10-10
+
+Release commit `253afa3edf83b4aa890f43a6f2a8995fb0b3b06f`, tree
+`55adf4d70903a25f0a058021116ddbc7ebeb28cd` exactly matches tested checkout.
+Actual Node22 Topology run38029874102/job114148372358:2096tests/2070PASS/26FAIL/
+0skip; all26failure identities exactly match docs/reliability-build-790.json.
+Pages run38029873759 succeeded. Fresh live index/version byte-match790. Unchanged
+precision/shared layout, Sweep789/Revolve788/main/Vertex assist/Face786, Through779,
+protected Multi1.0 and frozenBeta6 version byte-match repository. No runtime/frozen
+changes.114focusedPASS. .789 user PASS protected; .790 Edge Bevel UI/history sanity
+pending. Shell/recovery790 and exactly two reviewed recovery URLs coherent.
