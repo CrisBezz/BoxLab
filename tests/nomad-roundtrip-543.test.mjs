@@ -1,3 +1,4 @@
+import {checkImportDiagnostics} from './helpers/glb-owner-checks.mjs';
 import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -22,9 +23,8 @@ test('543 GLB verifier checks logical objects and primitive group slots',()=>{
   assert.match(exporter,/expectedGroupSlots/);
 });
 
-test('543 import records round-trip object and facegroup details',()=>{
-  assert.match(importer,/importedFaceGroups/);
-  assert.match(importer,/lastImport=\{objects:meshes\.length,faceGroups:groupCount,details:perObject\}/);
+test('543 import records round-trip object and facegroup details',async ()=>{
+  await checkImportDiagnostics();
 });
 
 test('543 runtime pins current and Beta 5 stays frozen',()=>{

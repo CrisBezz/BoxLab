@@ -4,14 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .796, 2026-10-10
+## Current direction — .797, 2026-10-10
 
-User-requested unit insertion zone implemented for original Add+ primitive/Text
-settings. Uniform centred fit keeps all extents≤1 with longest1; preview and Apply
-share candidate fit. Text relative thickness/proportions preserved.37focusedPASS;
-full2119/2108PASS/11FAIL/0skip, same11 identities. Await iPad/Nomad feedback; .795
-preview/.794 menu acceptance still pending. Then Rotate4/GLB7 owner audit and scoped
-Bevel/Knife/Loop reliability. Existing/imported/export scale and Revolve/Sweep unchanged.
+.796 AWESOME PASS protects Add+ preview/unit fit/Text/history. .797 finishes review
+of all11 remaining historical Rotate/GLB expectations using actual current owners.
+Real binary GLB audit also found/repaired primitive Nomad group metadata ignored on
+import, collapsing names into shared material label. One object/distinct groups and
+optional split now verified.56focusedPASS; full2125/2125PASS/0FAIL/0skip, no exclusions.
+Await iPad GLB/Rotate/history acceptance, then scoped Bevel/Knife/Loop reliability.
+No speculative kernel expansion; frozenBeta2–6 and protected pins unchanged.
 
 ## Beta 6 delivery refinement — .736
 

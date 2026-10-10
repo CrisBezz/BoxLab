@@ -1,3 +1,4 @@
+import {checkCornerWeld} from './helpers/glb-owner-checks.mjs';
 import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -16,10 +17,7 @@ test('553 emits indexed GLB geometry instead of triangle-corner soup',()=>{
 });
 
 test('553 keeps preserved corner channels in the weld key',()=>{
-  assert.match(exporter,/if\(uvComplete\)parts\.push\('u:'/);
-  assert.match(exporter,/if\(tangentComplete\)parts\.push\('t:'/);
-  assert.match(exporter,/if\(colorComplete\)parts\.push\('c:'/);
-  assert.match(exporter,/if\(morphComplete\)data\.morphs\.forEach/);
+  checkCornerWeld();
 });
 
 test('553 runtime pins current and protected baselines remain intact',()=>{

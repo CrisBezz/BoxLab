@@ -5166,3 +5166,16 @@ recovery URLs changed, all runtime hashes retained.
 - [x]37focusedPASS; full2119/2108PASS/11FAIL/0skip; same11 identities as795.
 - [ ] iPad .796: preview X/Y and rotation, Apply/Cancel/history; primitive/Text proportions remain correct.
 - [ ] Nomad transfer: inserted objects have the requested comparable scale on import.
+
+
+## .797 — Green reliability baseline / GLB group import
+
+- [x] User .796 AWESOME PASS protected: Add+ previews/unit fit/Text/Apply/Cancel/history and Nomad-scale feedback.
+- [x] Whole current Rotate owners yield with modern puck; explicit gizmo math/selection/history/Undo/Redo verified; legacy bridge fallback retained.
+- [x] Actual Three GLB binary round-trip keeps one object, distinct group names/IDs, shared material and optional split objects.
+- [x] Material fallback/malformed Nomad IDs/ancestor tables, actual UV fit/weld/reconstruction, topology gating, indexed UV reload and pole/channel seams verified.
+- [x] Opaque metadata and binary image bytes/remapped references verified separately; no image decode or texture render claim.
+- [x] Six routing/GLB mutations rejected; all unrelated historical tests retained.56focusedPASS.
+- [x] Full2125/2125PASS/0FAIL/0skip, exactly11 reviewed failures removed, no quarantine/exclusions.
+- [ ] .797 iPad grouped-object GLB export/import retains facegroup names/colours and one object; optional split works.
+- [ ] .797 Vertex/Edge/Face gizmo Rotate, selection/navigation and Undo/Redo sanity.

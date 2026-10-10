@@ -1,3 +1,4 @@
+import {checkRotateGizmo} from './helpers/rotate-owner-checks.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,8 +8,7 @@ const upgrade=fs.readFileSync(new URL('../src/transform-upgrade.js',import.meta.
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
 test('482 Rotate no longer depends on selected-component hit test',()=>{
-  assert.match(upgrade,/hitIndex=t==='rotate'\?ids\[0\]\?\?0:hitSelectedIndex/);
-  assert.match(upgrade,/t!=='rotate'&&\(m!=='object'&&!Number\.isInteger\(hitIndex\)\)/);
+  checkRotateGizmo();
 });
 
 test('482 Move and Scale keep existing hit-test behavior',()=>{

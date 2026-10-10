@@ -7,7 +7,7 @@ import { evaluateTrianglePair } from './quad-clean-core.js?v=0.36.18.323';
 
 const IMPORT_TARGET_SIZE = 2;
 const EDITABLE_WELD_TOLERANCE = 1e-6;
-const VERSION='0.36.18.556';
+const VERSION='0.36.18.797';
 
 const button = document.querySelector('#importMeshBtn');
 const input = document.querySelector('#importMeshInput');
@@ -211,11 +211,22 @@ function importedMeshes(root,{splitByGroups=false}={}) {
     if (!node.isMesh || !node.geometry) return;
     primitiveIndex++;
     const materialList=Array.isArray(node.material)?node.material:[node.material];
-    const materialName=materialList.find(material=>material?.userData?.boxlabFaceGroup)?.userData?.boxlabFaceGroup
+    // GLTFLoader keeps primitive extras on geometry and mesh extras on nodes.
+    // Nomad deliberately shares one material across differently named groups.
+    const primitiveGroup=node.geometry.userData?.nomad?.group;
+    let nomadGroupName=null;
+    if(Number.isInteger(primitiveGroup)&&primitiveGroup>=0){
+      for(let owner=node;owner;owner=owner.parent){
+        const name=owner.userData?.nomad?.groups?.[primitiveGroup]?.name;
+        if(typeof name==='string'&&name.trim()){nomadGroupName=name.trim();break;}
+      }
+    }
+    const materialName=nomadGroupName||materialList.find(material=>material?.userData?.boxlabFaceGroup)?.userData?.boxlabFaceGroup
       || materialList.find(material=>material?.name&&material.name!=='Material')?.name
       || `FaceGroup ${primitiveIndex}`;
     const converted = geometryToEditableMesh(node.geometry, node.matrixWorld, node.material, materialName, node.morphTargetInfluences);
     if (!converted?.mesh) return;
+    if(nomadGroupName)converted.mesh.faceGroups.fill(nomadGroupName);
     primitiveEntries.push({
       mesh:converted.mesh,
       cornerUVs:converted.cornerUVs,

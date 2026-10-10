@@ -1,3 +1,4 @@
+import {checkImportGroups,checkExportGroups} from './helpers/glb-owner-checks.mjs';
 import {assertAssetReference,assertShellRelease} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -10,15 +11,11 @@ const css=fs.readFileSync(new URL('../styles.css',import.meta.url),'utf8');
 const beta5=fs.readFileSync(new URL('../beta-5/index.html',import.meta.url),'utf8');
 
 test('540 GLB import maps primitive/material groups to BoxLab faceGroups',()=>{
-  assert.match(importer,/decodeFaceGroup/);
-  assert.match(importer,/geometry\.groups/);
-  assert.match(importer,/faceGroups\.push\(groupForStart\(i\)\)/);
+  checkImportGroups();
 });
 
-test('540 GLB export emits one mesh with material groups per facegroup',()=>{
-  assert.match(exporter,/geometry\.addGroup\(group\.start,group\.count,index\)/);
-  assert.match(exporter,/boxlabFaceGroup/);
-  assert.match(exporter,/new THREE\.Mesh\(geometry,materials\.length===1\?materials\[0\]:materials\)/);
+test('540 GLB export emits one mesh with material groups per facegroup',async ()=>{
+  await checkExportGroups();
 });
 
 test('540 File menu sizing matches general BoxLab controls',()=>{

@@ -1,11 +1,63 @@
-# BoxLab AI Handoff — Add+ unit insertion zone
+# BoxLab AI Handoff — Green reliability baseline / GLB group import
 
 ## Current state — 2026-10-10
 
-Current build **v0.36.18.796**; source of truth CrisBezz/BoxLab main.
-Live https://crisbezz.github.io/BoxLab/. Last explicit user PASS remains .793.
-.796 fits Add+ primitive/Text candidates uniformly inside1×1×1 before preview/Apply.
-.795 preview and .794 menu device acceptance remain pending.
+CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
+Current build **v0.36.18.797**. Last whole-build user acceptance **.796 AWESOME PASS**.
+Parent main `69264e78f6a1403379013b49a70e30ccdcac9a7a`.
+All2125 current automated checks pass. .797 repairs GLB facegroup import metadata;
+remaining11 historical expectations reconciled with real current owners, none skipped.
+
+## .797 — Final historical failures / real GLB group import repair — 2026-10-10
+
+User .796 AWESOME PASS protected: Add+ live candidate previews/unit-zone primitives
+and Text, Apply/Cancel/history and transfer-scale feedback. User asks to push through
+as many remaining failures as possible. Audited all11 active checks: Rotate4 and GLB7.
+Read .479→.483 and accepted .635/.636 ownership; .547 shared Nomad material, .550–.556
+channel/pole/morph/scale pipeline. No modelling kernel or broad UI restoration.
+
+Four retired Rotate source requirements replaced one-for-one by whole current
+transform-upgrade/rotate-transform execution with actual Three/EditableMesh/History,
+controlled ordered DOM/dispatch/arming/redraw. Modern puck makes legacy owner yield;
+canvas component drags yield to original main selection owner. Explicit gizmo API
+rotates selected Vertex/Edge/Face/Object about shared centre with real 90° quaternion,
+preserves unselected vertices/IDs, one history push, Undo/Redo and semantic completion.
+Legacy fallback reads bridge IDs when modern gizmo absent. Competing-owner and missing
+gizmo-tool mutations rejected. This is not main integration/Safari propagation proof.
+Other historical Rotate assertions retained; no Rotate runtime change.
+
+Seven GLB source spelling checks replaced one-for-one with actual import conversion,
+fit/weld/quad reconstruction, export geometry/build/verification/metadata patch and
+Three GLTFExporter/GLTFLoader. Blob FileReader is Node transport polyfill only;
+DOM/File picker/object-manager boundary controlled. Material groups/names and world
+matrix, one logical GLB object/multiple group slots, shared material/Nomad table,
+Split groups, corner UV reconstruction/position correspondence, topology-gated Base
+UV versus SubD/changed topology, real indexed UV reload, UV/tangent/color/morph seams
+and accepted high-valence UV/tangent pole collapse covered. Colour/morph pole seams
+stay split. Import report includes all current attribute counters. Metadata patch
+retains opaque mesh/node/layer extras and two objects' binary image bytes/aligned
+bufferViews/remapped texture/material references. No image decode/texture render or
+rich native NOM passthrough claim. Other .547/.551/.552/.554/.555/.556 tests retained.
+
+Real GLB round-trip reproduced groups Front/Back becoming one BoxLab Material label
+before repair. Export already carries correct primitive extras.nomad.group and mesh
+extras.nomad.groups; GLTFLoader puts these on geometry/node respectively. Existing
+importedMeshes now reads valid integer primitive IDs and nearest named owner table,
+labels that primitive's faces before existing merge/weld/quad pipeline. Malformed IDs
+keep material fallback; ancestor tables supported. Actual binary round-trip now keeps
+both names, one object and optional two split objects. Runtime edit confined to this
+metadata hookup and importer797 stamp/pin; no geometry/export/selection rewrite.
+Four whole-source in-memory GLB mutations reject lost group hookup, UV weld seam,
+stale UV export and corrupted binary image bytes. Source files never mutated on disk.
+
+56focusedPASS. Full local Node24:2125tests/2125PASS/0FAIL/0skip. All11 reviewed historical
+failure identities removed, six new top-level regression tests added. No excluded/
+skipped tests or blanket quarantine. First release check caught an accidental unchanged
+Add UI repin; corrected to protected796, reviewed importer797 and shell/recovery797 only.
+All other runtime hashes/pins, Multi1.0/Loop715, accepted Add795/796 and frozenBeta2–6
+unchanged. Fresh chat next: .797 iPad GLB names/colours/Split and Rotate/history checks,
+then scoped Bevel/Knife/Loop reliability. Zero automated failures is coverage evidence,
+not a claim of all app behavior proven. Publication verification follows separately.
 
 ## .796 — Add+ unit insertion zone — 2026-10-10
 
@@ -535,11 +587,13 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.796 unit insertion and .795 previews await iPad/Nomad feedback: centred unit bounds,
-X/Y/rotation/Text relative thickness, Apply/Cancel and Undo/Redo. .794 menus remain
-pending. Last explicit user PASS793; do not infer acceptance from refinement requests.
-Remaining11 historical failures unchanged: Rotate4/GLB7; audit actual owners, then
-scoped Bevel/Knife/Loop reliability. NOM import/Lasso deferred; frozen betas immutable.
+.796 whole-build user PASS protects Add+ previews/unit fit, Text, lifecycle/history.
+.797 awaits iPad: GLB grouped-object export/import retains names/colours as one object,
+Split groups remains optional; component gizmo Rotate and Undo/Redo unchanged.
+Full current suite2125/2125PASS/0FAIL/0skip; no historical tests suppressed. Next scoped
+Bevel/Knife/Loop reliability audit using actual cases; avoid speculative kernel changes.
+.794 File/VIEW manual gate remains separately pending. NOM import/Lasso deferred;
+frozen betas immutable. Node transport/controlled DOM do not prove Safari or textures.
 
 ## Accepted interaction / UI baseline
 
@@ -645,7 +699,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery796; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/fit796; preview795; factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery797; importer797; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/fit796; preview795; factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -682,7 +736,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining11 active failures visible until reconciled.
+real-group preservation. Current .797 suite has zero failures; historical audit remains recorded for provenance.
 
 
 ### .783 publication verification — 2026-10-10

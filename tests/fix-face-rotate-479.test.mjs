@@ -1,3 +1,4 @@
+import {checkRotateRouting,checkLegacyRotateSelection} from './helpers/rotate-owner-checks.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -8,14 +9,11 @@ const rotate=fs.readFileSync(new URL('../src/rotate-transform.js',import.meta.ur
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
 test('479 generic transform owner yields Face Rotate',()=>{
-  assert.match(upgrade,/if\(m==='face'&&t==='rotate'\)return;/);
+  checkRotateRouting();
 });
 
 test('479 dedicated Face Rotate reads selection from authoritative bridge',()=>{
-  assert.match(rotate,/function bridge\(\) \{ return globalThis\.__boxlabSelectionBridge; \}/);
-  assert.match(rotate,/selectedIndices\('face'\)/);
-  assert.doesNotMatch(rotate,/state\(\)\?\.selectedFaces/);
-  assert.match(rotate,/mode!=='face'/);
+  checkLegacyRotateSelection();
 });
 
 test('479 Face Rotate can use transform arming state',()=>{

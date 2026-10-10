@@ -1,3 +1,4 @@
+import {checkRotateRouting} from './helpers/rotate-owner-checks.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -22,7 +23,7 @@ test('483 dedicated Rotate reads X Y Z constraint and 15 degree snap',()=>{
 });
 
 test('483 shared transform yields component Rotate only',()=>{
-  assert.match(upgrade,/if\(t==='rotate'&&\['vertex','edge','face'\]\.includes\(m\)\)return;/);
+  checkRotateRouting();
 });
 
 test('483 cache-hops both Rotate owners and preserves protected core',()=>{
