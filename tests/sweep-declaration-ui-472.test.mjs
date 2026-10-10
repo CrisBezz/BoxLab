@@ -9,10 +9,10 @@ const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
 test('472 Sweep transaction state is declared before Add uses it',()=>{
-  assert.match(sweep,/sweepBeforeScene=null,sweepUndoDepth=null,sweepRedoDepth=null/);
+  assert.match(sweep,/sweepBeforeScene=null,sweepUndoEntries=null,sweepRedoEntries=null/);
   assert.match(sweep,/sweepBeforeScene=before/);
-  assert.match(sweep,/sweepUndoDepth=Array\.isArray/);
-  assert.match(sweep,/sweepRedoDepth=Array\.isArray/);
+  assert.match(sweep,/sweepUndoEntries=Array\.isArray/);
+  assert.match(sweep,/sweepRedoEntries=Array\.isArray/);
 });
 
 test('472 Edge Bevel exact control is repositioned before Slide precision anchor',()=>{

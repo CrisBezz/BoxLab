@@ -1,3 +1,4 @@
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -33,5 +34,5 @@ test('395 Draw Path preserves snapped point depth and Follow Edges can force edg
 
 test('Sweep release wrapper follows current build',()=>{
   const wrapper=index.match(/sweep-path\.js\?v=([^"]+)/)?.[1];
-  assert.equal(wrapper,'0.36.18.731');
+  assertAssetReference(index,'sweep-path.js');
 });

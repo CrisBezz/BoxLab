@@ -4,15 +4,14 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .788, 2026-10-10
+## Current direction — .789, 2026-10-10
 
-.787 user PASS protected; .786 Vertex/Face selection and accepted Edge retained.
-.788 repairs real Revolve Cancel history token loss and reconciles two retired
-launch/Edit source expectations with current owner behavior. Existing geometry and
-UI defaults unchanged; real history bridge tags retained.88focusedPASS; full2087/
-2058PASS/29FAIL/0skip, two reviewed failures removed, no new identities. Publication/Node22/live
-verified. Audit remaining29 checks; separately audit other depth-only Cancel owners.
-Then scoped Bevel/Knife/Loop reliability. Counts do not prove device reliability.
+.788 user PASS protects Revolve history/authoring and prior accepted selection.
+.789 repairs real Sweep Cancel token loss, validates current editing getter against
+existing transform entrypoints, reconciles one historical method assertion. Core,
+stages/authoring/transforms unchanged.121focusedPASS; full2094/2066PASS/28FAIL/0skip,
+only reviewed .400 failure removed. Publication pending. Audit remaining28 checks,
+then scoped Bevel/Knife/Loop reliability. Failure counts do not prove device safety.
 
 ## Beta 6 delivery refinement — .736
 

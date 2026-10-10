@@ -1,13 +1,54 @@
-# BoxLab AI Handoff — Revolve Cancel history
+# BoxLab AI Handoff — Sweep Cancel history
 
 ## Current state — 2026-10-10
 
-Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.788**. Last whole-build user acceptance is **.787 PASS**.
-.786 Vertex/Face picking repairs and accepted Edge behavior protected.
-Parent main `43889bf279386791f74c19f9416c26e3229e06d1`.
-.788 repairs existing Revolve Cancel history tokens, validates current launch/Edit
-contract; publication/Node22/live verified below. Historical evidence in DEV_HISTORY.md and docs.
+Repository CrisBezz/BoxLab is source of truth. Live https://crisbezz.github.io/BoxLab/.
+Current build **v0.36.18.789**. Last whole-build user acceptance is **.788 PASS**.
+Revolve Cancel history788, Vertex/Face picking786 and accepted Edge protected.
+Parent main `4b22766cf8c760cc401f9db7f58b8a4f02bf1487`.
+.789 repairs existing Sweep Cancel history and validates its editing getter/transform
+yield. Publication pending; full evidence below and in DEV_HISTORY/docs.
+
+## .789 — Sweep Cancel history tokens and editing ownership — 2026-10-10
+
+User .788 PASS recorded/protected: Revolve Cancel/Redo, authoring/Edit/Apply/history
+and selection/navigation. Parent main `4b22766cf8c760cc401f9db7f58b8a4f02bf1487`.
+Audit existing Sweep731 transaction, actual object-history checkpoint bridge,
+.469 recovery and current transform-upgrade editing getter. Whole Sweep reproduces
+wrong evicted undo token before repair; code also clears redo at creation then
+restores lengths only, as in prior Revolve incident. Existing transaction now saves
+both token arrays and restores entries in place on Cancel. Same tokens preserve
+WeakMap scene tags; Apply discards rollback entries. No new history/modelling owner.
+
+Extract existing .788 controlled construction/manager/session fixture to shared
+helper; Revolve retains all test bodies and its own whole owner wrapper. Whole
+Sweep uses real Three/core/mesh/History and actual object-management history bridge;
+scene capture/restore and shared host remain controlled adapters. Cancellation
+protects original scene, redo, evicted undo, controls and duplicate completion;
+real tagged redo restores future scene. Competing session exit restores history
+without ending new Array session. Incomplete path refusal preserves current stacks;
+valid seeded path uses original core, commits/selects result and Undo/Redo. Cancel
+after Apply does not undo committed geometry/history. No device propagation claim.
+
+One failing .400 test calls an obsolete editing method; current API is a boolean
+getter. Execute actual transform startGesture/beginGizmoGesture entrypoints against
+real whole Sweep profile/path button transitions. Editing rejects both before
+transform preflight; nonediting reaches preflight sentinel. Mutation omitting guard
+fails. Two history mutations reject length-only undo/redo restoration. Existing
+other .400 checks retained. Update .472 declaration check for repaired array names;
+its unrelated Edge precision anchor failure remains active. Two formerly passing
+.393/.394 hard731 pin checks legitimately fail on reviewed cache hop: use reviewed
+asset contract, preserving Add/runtime/source stamp and other behavior assertions.
+
+121focusedPASS. FullNode24:2094tests/2066PASS/28FAIL/0skip; exactly obsolete .400
+failure removed from788, no new identities. Remaining27source-pattern/1version-pin
+active, no skips/exclusions. Only runtime change Sweep Cancel stacks/stamp789;
+geometry/authoring/stages and transform implementation unchanged. Accepted Revolve788,
+main/Vertex/Face786, Through779, Multi1.0/Loop715/frozenBeta2–6 unchanged. Shell/recovery789
+and Sweep URL/hash/stamp reviewed; recovery hashes retained. Publication pending.
+Next: remaining28 historical checks, then scoped Bevel/Knife/Loop reliability.
+Manual: edit then Undo; Add Sweep, Cancel, then Redo restores edit. Reopen Sweep,
+choose profile/draw simple path, Apply and Undo/Redo. Selection/navigation sanity.
 
 ## .788 — Revolve launch contract and Cancel history repair — 2026-10-10
 
@@ -263,12 +304,11 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.787 user PASS protected; .786 Vertex/Face and accepted Edge protected.
-.788 Revolve Cancel token repair awaits device sanity; current launch/Edit workflow
-validated. Audit remaining29 active checks, then scoped Bevel/Knife/Loop reliability.
-Sweep also uses Cancel history depth rollback; separately audit actual owner before
-claiming redo preservation. Add Vertex broader picking/NOM import/Lasso deferred.
-FrozenBeta2–6 immutable. Test failure counts are not product bug counts.
+.788 user PASS protects Revolve history/authoring and prior selection/navigation.
+.789 Sweep Cancel history repair and editing getter coverage await device sanity.
+Audit remaining28 active historical checks, then scoped Bevel/Knife/Loop reliability.
+Do not infer global transaction safety from scoped Sweep/Revolve fixes. Add Vertex
+broader picking/NOM import/Lasso deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -374,7 +414,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery788; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery789; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -411,7 +451,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining29 active failures visible until reconciled.
+real-group preservation. Remaining28 active failures visible until reconciled.
 
 
 ### .783 publication verification — 2026-10-10

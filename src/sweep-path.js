@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 import {buildSweepProfile} from './sweep-core.js?v=0.36.18.417';
 
-const VERSION='0.36.18.731';
+const VERSION='0.36.18.789';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -69,7 +69,7 @@ function placeLaunchButton(container,button){
 placeLaunchButton(faceTools,faceSelectionSweepBtn);placeLaunchButton(edgeTools,edgeSelectionSweepBtn);
 globalThis.__boxlabEdgeToolLayout?.sync?.();
 
-let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null,hotRailHit=null,railSnapRefs=null,sweepBeforeScene=null,sweepUndoDepth=null,sweepRedoDepth=null;
+let overlay=null,drag=null,lastSignature='',cachedId=null,cachedObject=null,raf=0,drawerLockState=null,hotRailHit=null,railSnapRefs=null,sweepBeforeScene=null,sweepUndoEntries=null,sweepRedoEntries=null;
 const raycaster=new THREE.Raycaster(),pointer=new THREE.Vector2();
 
 function state(){return globalThis.__boxlabBridgeState;}
@@ -567,8 +567,8 @@ function addSweepPath(selectionProfileOverride=null,autoUseSelection=false){
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
   const history=globalThis.__boxlabHistory;
   sweepBeforeScene=before;
-  sweepUndoDepth=Array.isArray(history?.undoStack)?history.undoStack.length:null;
-  sweepRedoDepth=Array.isArray(history?.redoStack)?history.redoStack.length:null;
+  sweepUndoEntries=Array.isArray(history?.undoStack)?[...history.undoStack]:null;
+  sweepRedoEntries=Array.isArray(history?.redoStack)?[...history.redoStack]:null;
   const plane=selectionProfile?constructionPlane():visibleFreshConstructionPlane();
   const o=man.addMesh(plane,'Sweep',{enterObjectMode:true});if(!o)return;
   cachedId=o.id;cachedObject=o;
@@ -589,10 +589,10 @@ function cancelSweepSession({silent=false}={}){
   const history=globalThis.__boxlabHistory;
   if(sweepBeforeScene&&globalThis.__boxlabObjectHistory?.restore){
     globalThis.__boxlabObjectHistory.restore(sweepBeforeScene);
-    if(Array.isArray(history?.undoStack)&&Number.isInteger(sweepUndoDepth))history.undoStack.length=sweepUndoDepth;
-    if(Array.isArray(history?.redoStack)&&Number.isInteger(sweepRedoDepth))history.redoStack.length=sweepRedoDepth;
+    if(Array.isArray(history?.undoStack)&&sweepUndoEntries)history.undoStack.splice(0,history.undoStack.length,...sweepUndoEntries);
+    if(Array.isArray(history?.redoStack)&&sweepRedoEntries)history.redoStack.splice(0,history.redoStack.length,...sweepRedoEntries);
   }
-  sweepBeforeScene=null;sweepUndoDepth=null;sweepRedoDepth=null;
+  sweepBeforeScene=null;sweepUndoEntries=null;sweepRedoEntries=null;
   cachedId=null;cachedObject=null;lastSignature='';
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   if(!silent)setStatus('Sweep cancelled');
@@ -605,7 +605,7 @@ function applySweep(){
   globalThis.__boxlabHistory?.push(mesh.clone());replaceMesh(mesh,result.mesh);m.editProfile=false;m.editPath=false;m.applied=true;unlockTools();
   o.name='Sweep';manager()?.saveActive?.();globalThis.__boxlabObjectSelection?.single?.(o.id);globalThis.__boxlabBooleanUX?.sync?.();
   disposeOverlay();hotRailHit=null;railSnapRefs=null;controls.hidden=true;endSweepSession();lastSignature='';document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
-  sweepBeforeScene=null;sweepUndoDepth=null;sweepRedoDepth=null;
+  sweepBeforeScene=null;sweepUndoEntries=null;sweepRedoEntries=null;
   setStatus('Sweep applied - '+result.profile.length+'-point profile - '+result.points.length+' path points');return true;
 }
 function installPenRange(input,onValue){let pointerId=null,owned=null,releaseFrame=null;const min=()=>Number(input.min),max=()=>Number(input.max),step=()=>Number(input.step)||1;const map=x=>{const r=input.getBoundingClientRect(),t=THREE.MathUtils.clamp((x-r.left)/Math.max(1,r.width),0,1);return Math.round((min()+(max()-min())*t)/step())*step();};const apply=v=>{owned=String(v);input.value=owned;onValue();};const enforce=()=>{if(owned==null)return false;if(input.value!==owned)input.value=owned;return true;};input.addEventListener('pointerdown',e=>{if(e.pointerType!=='pen')return;pointerId=e.pointerId;e.preventDefault();e.stopPropagation();input.setPointerCapture?.(pointerId);apply(map(e.clientX));},{capture:true,passive:false});input.addEventListener('pointermove',e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();apply(map(e.clientX));},{capture:true,passive:false});const finish=e=>{if(e.pointerType!=='pen'||e.pointerId!==pointerId)return;e.preventDefault();e.stopPropagation();if(input.hasPointerCapture?.(pointerId))input.releasePointerCapture(pointerId);pointerId=null;if(releaseFrame)cancelAnimationFrame(releaseFrame);releaseFrame=requestAnimationFrame(()=>{enforce();releaseFrame=requestAnimationFrame(()=>{enforce();owned=null;releaseFrame=null;});});};input.addEventListener('pointerup',finish,{capture:true,passive:false});input.addEventListener('pointercancel',finish,{capture:true,passive:false});input.addEventListener('input',()=>{enforce();onValue();});input.addEventListener('change',()=>{if(enforce())onValue();});}

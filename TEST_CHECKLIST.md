@@ -4996,9 +4996,26 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
   token; actual object-history WeakMap redo tag restores future scene after Cancel.
 - [x] Four default/history mutations rejected;88focusedPASS. Full2087/2058PASS/
   29FAIL/0skip; only reviewed .389/.422 failures removed, no exclusions.
-- [ ] .788 device: edit then Undo; Revolve open/Cancel then Redo restores edit.
-- [ ] Reopen, draw simple profile, toggle Edit off/on, Apply and Undo/Redo.
-- [ ] Existing component selection and navigation sanity.
+- [x] User .788 PASS protected: edit then Undo; Revolve open/Cancel then Redo restores edit.
+- [x] User .788 PASS: authoring, Edit off/on, Apply and Undo/Redo protected.
+- [x] User .788 PASS: component selection and navigation protected.
 - [x] .788 Pages38028447713 success; Node22 run38028448281/job114144169023
   exactly matches29 failures and2087/2058PASS/29FAIL/0skip. Live shell, changed
   Revolve and accepted/protected owners byte-match release da4939dbcf70e426989f08face2ca3875cda48af.
+
+
+## .789 — Sweep Cancel history and editing getter
+
+- [x] User .788 PASS recorded/protected; Revolve/selection owners unchanged.
+- [x] Whole Sweep Cancel restores original scene and exact undo/redo tokens at
+  history limit, retains real object-history tagged redo; duplicate Cancel inert.
+- [x] Competing session Cancel restores history without ending new session.
+- [x] Incomplete path refusal preserves source/stacks; original Apply/core plus
+  Undo/Redo and post-Apply Cancel retain committed result.
+- [x] Actual transform entrypoints yield to Sweep editing boolean getter through
+  profile/path button transitions; no editing reaches preflight sentinel.
+- [x] Three history/transform mutations rejected; other historical checks retained.
+- [x]121focusedPASS; full2094/2066PASS/28FAIL/0skip, only reviewed .400 removed.
+- [ ] .789 device: edit/Undo, Add Sweep/Cancel, Redo restores original edit.
+- [ ] Sweep profile/simple path Apply, Undo/Redo, selection/navigation sanity.
+- [ ] .789 CI/Pages/live verification.
