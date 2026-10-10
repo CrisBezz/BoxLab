@@ -818,3 +818,14 @@ Through779, protected Multi1.0 and frozenBeta6 version byte-match repository.
 48focusedPASS. .793 user PASS protected; .794 menus/modes device sanity pending.
 No runtime/frozenBeta changes; shell/recovery794 coherent and exactly two reviewed
 recovery URLs changed, all runtime hashes retained.
+
+
+### .795 publication verification — 2026-10-10
+
+Release `56f60d06263c53a2dd4bbd790e60599367349937`, tree
+`ba0d059cef528827c68b07ebdc357060a972a61c` exactly matches tested checkout.
+Pages38038583902 succeeded. Actual Node22 Topology38038584082/job114174121931:
+2116tests/2105PASS/11FAIL/0skip; all11 names match local inventory and794.
+34focusedPASS including seven release checks. Fresh live index/version/Add UI/
+preview child byte-match main; protected Multi1.0 and frozenBeta6 version byte-match.
+Device preview/gesture/render acceptance remains pending; no .794 PASS inferred.

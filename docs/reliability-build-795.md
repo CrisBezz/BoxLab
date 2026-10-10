@@ -24,3 +24,14 @@ Release markers/recovery795, Add UI parent795 and new child795 reviewed; other
 runtime hashes/pins, protected Multi1.0/Loop715 and frozenBeta2–6 unchanged.
 .794 user PASS not supplied; its manual checks remain pending. Next: user preview
 feedback, then remaining Rotate4/GLB7 audit and scoped Bevel/Knife/Loop reliability.
+
+
+### .795 publication verification — 2026-10-10
+
+Release `56f60d06263c53a2dd4bbd790e60599367349937`, tree
+`ba0d059cef528827c68b07ebdc357060a972a61c` exactly matches tested checkout.
+Pages38038583902 succeeded. Actual Node22 Topology38038584082/job114174121931:
+2116tests/2105PASS/11FAIL/0skip; all11 names match local inventory and794.
+34focusedPASS including seven release checks. Fresh live index/version/Add UI/
+preview child byte-match main; protected Multi1.0 and frozenBeta6 version byte-match.
+Device preview/gesture/render acceptance remains pending; no .794 PASS inferred.
