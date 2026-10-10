@@ -4,12 +4,12 @@
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.800**. Last whole-build acceptance **.797 PASS**, protected.
-Parent main `e2674f1344bcd4636bbe29f65025f0ed95022ebd`.
-Release commit `f7d64a37b54f7a07ff5acf384bb691eab405ca0e`.
+Parent main `90662273ecfbdffe0c71d20bd11f2f65328aeea0`.
+Release commit `eeecfe33c43507826c30f03d1192862bb29de178`.
 
-Full2136/2136 PASS, 0 failures/skips. CI38051784577 and Pages38051784633 SUCCESS.
-Fresh live manifest, shell and three changed module owners match main byte-for-byte.
-.799 iPad acceptance pending; .798 reported FAIL, not protected.
+Full2138/2138 PASS, 0 failures/skips. CI38091987976 and Pages38091987719 SUCCESS.
+Fresh live manifest, shell and six changed module owners match main byte-for-byte.
+.800 iPad acceptance pending; .799 reported FAIL (A/B display), not protected.
 
 ## .800 — Boolean source visibility and Object radial actions
 
