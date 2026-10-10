@@ -5105,4 +5105,18 @@ URLs changed with every runtime hash retained.
 - [x]42focusedPASS; full2108/2094PASS/14FAIL/0skip, only three reviewed failures removed, none new. No skips/exclusions/runtime/frozenBeta changes.
 - [ ] .793: grouped object → VIEW Facegroups, first activation and Studio switch; SubD/Mirror colours remain sensible.
 - [ ] Selection/navigation and Undo/Redo sanity.
-- [ ] Publication/Node22/live verification pending.
+- [x] .793 Pages38034916795 success; Node22 run38034916611/job114163240465 matches2108/2094PASS/14FAIL/0skip and all14 identities; live shell, render and protected owners byte-match tested release.
+
+
+### .793 publication verification — 2026-10-10
+
+Release commit `f098586bf7c2cf5eeb227d82cd408be294234714`, tree
+`f8f3a85abfcc64caa9b53f57cd3e9d2d73fab958` exactly matches tested checkout.
+Actual Node22 Topology run38034916611/job114163240465:2108tests/2094PASS/14FAIL/
+0skip; all14failure identities exactly match docs/reliability-build-793.json.
+Pages run38034916795 succeeded. Fresh live index/version byte-match793. Unchanged
+render owner568/colour core547, shared UI791/main/Face/Vertex786, Sweep789/Revolve788,
+Through779, protected Multi1.0 and frozenBeta6 version all byte-match repository.
+42focusedPASS. .792 user PASS protected; .793 Facegroups device sanity pending.
+No runtime/frozenBeta changes. Shell/recovery793 coherent; exactly two reviewed
+recovery URLs changed, all runtime hashes retained.
