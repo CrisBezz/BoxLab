@@ -10,7 +10,7 @@ The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.m
 .787 validation only: obsolete .510 source slice replaced by actual whole Edge759
 repeated pulls/cancellation/rearm and mutation; original parity bodies retained.
 67focusedPASS; full2082/2051PASS/31FAIL/0skip, only reviewed failure removed.
-Runtime and frozenBeta unchanged; publication pending. Audit remaining31 historical
+Runtime and frozenBeta unchanged; publication/Node22/live verified. Audit remaining31 historical
 checks, then scoped Bevel/Knife/Loop reliability. Counts do not prove device safety.
 
 ## Beta 6 delivery refinement — .736

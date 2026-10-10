@@ -6,7 +6,7 @@ Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.
 Current build **v0.36.18.787**. Last whole-build user acceptance is **.786 PASS**.
 .785 device FAIL: Vertex additive/deselect and Face rear selection; Edge accepted.
 Parent main `d567a4a0b61092d752be9eca6bfe1870190b0421`. .787 validation complete;
-publication verification pending. Runtime .786 repairs accepted/protected.
+publication/Node22/live verified below. Runtime .786 repairs accepted/protected.
 Historical evidence remains in DEV_HISTORY.md and docs/reliability-build-*.md/JSON.
 
 ## .787 — Edge Extrude repeated-constraint validation — 2026-10-10
@@ -33,7 +33,7 @@ Other .510 source/pin checks retained, no skips or excluded failures.
 failure removed from786, no new identities. Remaining30source-pattern/1version-pin
 checks stay active. Runtime/frozenBeta2–6 untouched; main/Vertex assist/Face786,
 Through779/Multi1.0/Loop715 and all modelling pins/hashes retained. Shell/recovery787
-and exactly two reviewed recovery URLs updated. Publication verification pending.
+and exactly two reviewed recovery URLs updated. Publication/Node22/live verified below.
 Next: audit remaining31 historical checks, then scoped Bevel/Knife/Loop reliability.
 Manual: confirm787; Edge Extrude choose Y and pull twice; Done/reopen and check Free
 (Plane default); selection/Undo/Redo/navigation quick sanity.
@@ -419,3 +419,15 @@ Face786/Vertex assist786 byte-match repository. Through779, protected Multi1.0 a
 frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broader
 547/536PASS/11existingFAIL retained. .785 device FAIL and Edge acceptance recorded;
 .786 user retest pending. Shell/recovery and reviewed runtime module pins verified.
+
+
+### .787 publication verification — 2026-10-10
+
+Release commit `503d4c3825bddaf190f5e4bffe11ce8e83146b1b`, tree
+`a961927d5c843dcabdecb09a5c201e204310a78b` exactly matches tested checkout.
+Actual Node22 Topology run38020165850/job114119194349:2082tests/2051PASS/31FAIL/
+0skip; all31failure identities exactly match docs/reliability-build-787.json.
+Pages run38020165585 succeeded. Fresh live index/version match787; unchanged
+main/Face/Vertex assist786, Edge759, Through779, protected Multi1.0 and frozenBeta6
+version byte-match repository.67focusedPASS. .786 user PASS recorded/protected;
+.787 narrow device sanity pending. Shell/recovery787 reviewed; runtime unchanged.

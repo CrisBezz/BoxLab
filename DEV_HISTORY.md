@@ -6786,7 +6786,19 @@ Other .510 source/pin checks retained, no skips or excluded failures.
 failure removed from786, no new identities. Remaining30source-pattern/1version-pin
 checks stay active. Runtime/frozenBeta2–6 untouched; main/Vertex assist/Face786,
 Through779/Multi1.0/Loop715 and all modelling pins/hashes retained. Shell/recovery787
-and exactly two reviewed recovery URLs updated. Publication verification pending.
+and exactly two reviewed recovery URLs updated. Publication/Node22/live verified below.
 Next: audit remaining31 historical checks, then scoped Bevel/Knife/Loop reliability.
 Manual: confirm787; Edge Extrude choose Y and pull twice; Done/reopen and check Free
 (Plane default); selection/Undo/Redo/navigation quick sanity.
+
+
+### .787 publication verification — 2026-10-10
+
+Release commit `503d4c3825bddaf190f5e4bffe11ce8e83146b1b`, tree
+`a961927d5c843dcabdecb09a5c201e204310a78b` exactly matches tested checkout.
+Actual Node22 Topology run38020165850/job114119194349:2082tests/2051PASS/31FAIL/
+0skip; all31failure identities exactly match docs/reliability-build-787.json.
+Pages run38020165585 succeeded. Fresh live index/version match787; unchanged
+main/Face/Vertex assist786, Edge759, Through779, protected Multi1.0 and frozenBeta6
+version byte-match repository.67focusedPASS. .786 user PASS recorded/protected;
+.787 narrow device sanity pending. Shell/recovery787 reviewed; runtime unchanged.

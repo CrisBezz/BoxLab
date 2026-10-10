@@ -4980,4 +4980,6 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
 - [x] All original ten .759 parity tests and other .510 checks retained.
 - [x] 67 focused PASS; full2082/2051PASS/31FAIL/0skip, only reviewed .510 removed.
 - [ ] .787 device sanity: Edge Y two pulls, Done/reopen Free, history/navigation.
-- [ ] .787 publication verification (record after CI/Pages/live checks).
+- [x] .787 Pages38020165585 success; Node22 run38020165850/job114119194349
+  matches all31 failures and2082/2051PASS/31FAIL/0skip. Live shell/runtime/protected
+  markers byte-match repository; release503d4c3825bddaf190f5e4bffe11ce8e83146b1b.
