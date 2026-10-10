@@ -5076,8 +5076,8 @@ cache pin/hash and shell/recovery791 reviewed; no kernel or frozenBeta changes.
 - [x] Invalid thickness refuses without mutation; one-time post-mutation exception restores complete arrays/creases through actual catch paths.
 - [x] Three whole-core in-memory mutations rejected, including complete label-array rollback; no runtime source writes.
 - [x]71focusedPASS; full2104/2087PASS/17FAIL/0skip, exactly two audited failures removed, none new. No skipped/excluded checks or runtime/frozenBeta changes.
-- [ ] .792: grouped closed object → Face Shell; Apply/Cancel and Undo/Redo remain healthy.
-- [ ] Solidify on an open mesh; Apply/Cancel and Undo/Redo; navigation/selection sanity.
+- [x] User .792 PASS protected: Shell Apply/Cancel and Undo/Redo.
+- [x] User .792 PASS protected: Solidify Apply/Cancel/history; navigation/selection.
 - [x] .792 Pages38033318385 success; Node22 run38033318243/job114158546682 matches2104/2087PASS/17FAIL/0skip and all17 identities; live shell and unchanged cores/protected owners byte-match tested release.
 
 
@@ -5093,3 +5093,16 @@ protected Multi1.0 and frozenBeta6 version all byte-match repository.71focusedPA
 No runtime/frozenBeta changes. .791 user PASS protected; .792 Shell/Solidify device
 sanity pending. Shell markers/recovery792 coherent; exactly two reviewed recovery
 URLs changed with every runtime hash retained.
+
+
+## .793 — Facegroups render ownership
+
+- [x] User .792 PASS protected; accepted runtime remains unchanged.
+- [x] Actual owner active bridge / inactive object-ID lookup with stale manager and missing-source cases; metadata fallback retained.
+- [x] Actual SubD2→Mirror geometry/groups equal expected evaluation, source unchanged; colour attributes/material/pending success checked with real Three.
+- [x] First two missing-geometry frames retain normal material; later readiness installs colours and stops pending retry; look change cancels queued application.
+- [x] Three in-memory mutations rejected; split import/other material assertions and original SubD/Mirror/pending tests retained.
+- [x]42focusedPASS; full2108/2094PASS/14FAIL/0skip, only three reviewed failures removed, none new. No skips/exclusions/runtime/frozenBeta changes.
+- [ ] .793: grouped object → VIEW Facegroups, first activation and Studio switch; SubD/Mirror colours remain sensible.
+- [ ] Selection/navigation and Undo/Redo sanity.
+- [ ] Publication/Node22/live verification pending.

@@ -1,7 +1,7 @@
+import {assertFacegroupEvaluation} from './helpers/facegroups-render-runtime.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
-import fs from 'node:fs';
 import {EditableMesh} from '../src/mesh.js';
 import {applyMirror} from '../src/mirror.js';
 
@@ -13,9 +13,6 @@ test('459 Mirror descendants inherit source facegroups',()=>{
  assert.ok(mirrored.faceGroups.every(group=>group==='Panel'));
 });
 
-test('459 Facegroups viewport evaluates Mirror but not SubD yet',()=>{
- const s=fs.readFileSync(new URL('../src/render-modes.js',import.meta.url),'utf8');
- assert.match(s,/import \{applyMirror\}/);
- assert.match(s,/applyMirror\(source,active\.settings\.mirror\)/);
- assert.doesNotMatch(s,/subdivide\(/);
+test('459 current Facegroups viewport evaluates SubD before Mirror with inherited labels',()=>{
+ assertFacegroupEvaluation();
 });

@@ -1,13 +1,51 @@
-# BoxLab AI Handoff — Shell / Solidify Facegroup validation
+# BoxLab AI Handoff — Facegroups render ownership validation
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.792**. Last whole-build user acceptance is **.791 PASS**.
-Accepted shared Face layout791, picking786 and construction history789/788 protected.
-Parent main `175f32b50bde02723156a2ade1b1eb0b3c77ed61`.
-.792 validates accepted Shell/Solidify metadata/geometry/rollback contracts;
-runtime unchanged. Publication/Node22/live verified below.
+Current build **v0.36.18.793**. Last whole-build user acceptance is **.792 PASS**.
+Accepted Shell/Solidify, shared layout791, picking786 and construction789/788 protected.
+Parent main `304e370ba26d59dbf948f9eb7a6e44f1eb3aa133`.
+.793 validates current Facegroups mesh/evaluation/retry ownership; runtime unchanged.
+Publication/Node22/live verification pending.
+
+## .793 — Facegroups render ownership / retry validation — 2026-10-10
+
+User .792 PASS recorded/protected: Shell/Solidify Apply/Cancel/history and navigation/
+selection; prior accepted owners retained. Parent main
+`304e370ba26d59dbf948f9eb7a6e44f1eb3aa133`.
+Audit .456/.457/.459 failures against actual render owner and accepted .458/.460
+history: bounded pending-state retry replaced fixed two-frame delay, and SubD was
+later restored before Mirror. Source lookup evaluates bridge/object mesh instead
+of returning it directly. Reconcile exactly these three earlier checks; retain
+split-import default/wiring, other material fallback assertions and existing Mirror,
+SubD, pending-state tests. Replace retired .456 hard pins with reviewed current assets.
+
+Execute original render-owner lookup/evaluation/apply/entry/retry functions with
+actual Three scene/bodies/materials, EditableMesh, SubD/Mirror and colour core.
+Active body uses bridge mesh even when manager mesh differs; inactive uses its own
+object ID, missing source returns null, metadata fallback retained. Real evaluated
+SubD2→Mirror output equals expected geometry/groups, source remains unchanged,
+actual colour application installs complete attributes/material and clears pending.
+Evaluation call instrumentation delegates to actual kernels, not substitutes.
+
+Controlled frame/DOM/Studio/UI callbacks isolate render ownership, not full module
+startup/prototype hook/WebGL/browser/device. Invalid geometry on first two frames
+keeps pending normal material; third-frame readiness applies colours and stops retry.
+Entry normalizes settings/rebuilds; queued retry yields after switching look. Three
+in-memory mutations reject stale manager source, reversed evaluation order and
+one-frame-only retry. Runtime source never written; no new rendering/modelling owner.
+
+42focusedPASS including original colour/core/SubD/Mirror, Shell/Solidify rollback,
+accepted picking/clean negative Extrude and release contracts. FullNode24:2108tests/
+2094PASS/14FAIL/0skip; exactly three reviewed failures removed from792, none new.
+Remaining13source-pattern/1version-pin active, no skips/exclusions/CI gate. All runtime
+sources/hashes/modelling pins and frozenBeta2–6 unchanged. Shell/recovery793 and
+exactly two reviewed recovery URLs refreshed. Shared UI791, main/Face/Vertex786,
+Sweep789/Revolve788/Through779/Multi1.0/Loop715 retained. Publication/Node22/live
+verification pending. Next: audit remaining14 historical checks, then scoped Bevel/
+Knife/Loop reliability. Manual: grouped object → VIEW Facegroups, first activation/
+Studio switch; SubD and Mirror retain expected colours; selection/navigation/history.
 
 ## .792 — Shell / Solidify Facegroup contract validation — 2026-10-10
 
@@ -418,11 +456,12 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.791 user PASS protects late Join ordering, Face settings and prior accepted owners.
-.792 reconciles two earlier Shell/Solidify no-metadata checks with later accepted
-whole-core geometry/provenance/rollback. Audit remaining17 active historical checks,
-then scoped Bevel/Knife/Loop reliability. Counts/core tests do not establish device
-reliability. Add Vertex broader picking/NOM import/Lasso deferred. FrozenBeta2–6 immutable.
+.792 user PASS protects Shell/Solidify Apply/Cancel/history and accepted interactions.
+.793 reconciles three earlier Facegroups source/evaluation/frame expectations with
+actual accepted .458/.460 ownership. Audit remaining14 historical checks, then
+scoped Bevel/Knife/Loop reliability. Controlled function/DOM fixtures do not prove
+browser/device reliability. Add Vertex broader picking/NOM import/Lasso deferred.
+FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -528,7 +567,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery792; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery793; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -565,7 +604,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining17 active failures visible until reconciled.
+real-group preservation. Remaining14 active failures visible until reconciled.
 
 
 ### .783 publication verification — 2026-10-10

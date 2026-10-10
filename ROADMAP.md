@@ -4,15 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .792, 2026-10-10
+## Current direction — .793, 2026-10-10
 
-.791 user PASS protects late Join ordering/Face settings and prior accepted owners.
-.792 validates current whole Shell/Solidify geometry, Facegroup provenance, mesh
-History and failure rollback; two earlier no-metadata source checks reconciled
-against accepted .465/.466 history.71focusedPASS; full2104/2087PASS/17FAIL/0skip,
-exactly two reviewed failures removed, none new. Runtime/frozenBeta unchanged.
-Publication/Node22/live verified below. Audit remaining17 historical checks,
-then scoped Bevel/Knife/Loop reliability; core tests are not device/render proof.
+.792 user PASS protects Shell/Solidify/history and prior accepted owners.
+.793 validates current Facegroups active/inactive mesh lookup, SubD→Mirror and
+pending geometry retry/later-look exit; three retired historical expectations
+reconciled.42focusedPASS; full2108/2094PASS/14FAIL/0skip, exactly three audited
+failures removed, none new. Runtime/frozenBeta unchanged. Publication/Node22/live
+verification pending. Audit remaining14 checks, then scoped Bevel/Knife/Loop.
+Controlled functions/DOM/frames do not prove device/WebGL reliability.
 
 ## Beta 6 delivery refinement — .736
 
