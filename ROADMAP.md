@@ -1,20 +1,17 @@
-<!-- .777 current; user .776 PASS. -->
 # BoxLab Development Roadmap
 
 This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .779, 2026-10-10
+## Current direction — .780, 2026-10-10
 
-User .778 PASS then supplied negative Extrude cap fragmentation. Existing finite
-cutter seam cleanup repaired: conform partition edges/cancel internal seams for
-convex unions; retain conservative hole/concave behavior. Supplied shallow recess
-now one quad cap/four walls110verts114faces vs149/123.13new/84focusedPASS;
-full2068/2013PASS/55FAIL/0skip, same55 failure identities. Runtime Through kernel
-plus Face import cache779 only; frozenBeta unchanged. Publication/live verified.
-Confirm supplied-model device cut, then remaining55 checks and scoped Bevel/Knife/
-Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
+User .779 clean negative Extrude PASS. Validation-only780 reconciles three old native
+picker/Face ownership assertions; real main raycast bridge, typed filtering/Object
+route, event identity/hit ordering and four mutations covered.120focusedPASS including
+supplied clean-cut fixtures. Full2071/2019PASS/52FAIL/0skip, no new failure identities.
+Runtime/frozenBeta unchanged; publication pending. Continue remaining52 checks and
+scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
 

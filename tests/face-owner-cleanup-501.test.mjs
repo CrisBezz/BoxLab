@@ -1,3 +1,4 @@
+import {delegatedPicker,tapToggle} from './helpers/armed-face-behavior.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -13,10 +14,9 @@ test('501 removes temporary FaceOwner diagnostics',()=>{
   assert.doesNotMatch(main,/directTool:\(\)=>directTool/);
 });
 
-test('501 preserves single-owner armed Face selection fix',()=>{
+test('501 preserves current armed Face selection behavior and legacy yield',()=>{
+  delegatedPicker();tapToggle();
   assert.match(legacy,/if\(globalThis\.__boxlabFaceDirect\?\.active\?\.\(\)\)return;/);
-  assert.match(direct,/hit=picker\('face',event\)\?\.index/);
-  assert.match(direct,/bridge\(\)\?\.toggle\?\.\('face',p\.hit\)/);
 });
 
 test('501 preserves protected pins',()=>{
