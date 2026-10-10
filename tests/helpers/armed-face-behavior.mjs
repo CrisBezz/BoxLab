@@ -336,3 +336,61 @@ export function nativeFaceViewpoints(sourceTransform){
     }finally{root.children.forEach(o=>{o.geometry.dispose();o.material.dispose();});}
   }
 }
+
+// Execute main's real Deselect listener alongside the whole Face controller.
+// Main selection/render dependencies use the existing controlled bridge fixture.
+export function deselectRestart(sourceTransform=source=>source){
+  const main=sourceTransform(fs.readFileSync(new URL('../../src/main.js',import.meta.url),'utf8'));
+  const listener=main.match(/document\.querySelector\('#deselectAllBtn'\)\.addEventListener\('click',\(\)=>\{[^\n]*?\}\);/)?.[0];
+  assert.ok(listener,'main must retain its authoritative Deselect listener');
+  for(const tool of ['extrude','inset']){
+    const r=fixture(tool,[0,2],sourceTransform);let click,renders=0;
+    vm.runInNewContext(listener,{document:{querySelector:()=>({addEventListener:(type,fn)=>{assert.equal(type,'click');click=fn;}})},clearSelection:()=>r.bridge.set('face',[]),renderMesh:()=>renders++});
+    click();assert.deepEqual(r.f.selected(),[]);assert.equal(renders,1);r.unchanged();r.retired();
+    r.setHit(3);r.pointer('pointerdown');r.pointer('pointerup');
+    assert.deepEqual(r.f.selected(),[3],'fresh Face selection works without rearming after Deselect');r.unchanged();r.retired();
+    click();r.setHit(4);r.pointer('pointerdown');r.pointer('pointerup');
+    assert.deepEqual(r.f.selected(),[4]);assert.equal(renders,2);r.unchanged();r.retired();
+  }
+}
+
+// Connect the unchanged contextual value-session and background policy to the
+// whole Face controller. Controlled DOM/RAF/selection; not Safari propagation.
+export function faceSessionExit(sourceTransform=source=>source){
+  for(const tool of ['extrude','inset'])for(const exit of ['done','background']){
+    const r=fixture(tool,[0,2]),c=r.f.context,fields=new Map(),handlers=new Map();
+    const node=()=>({hidden:true,value:'',style:{},classList:{toggle(){}},setAttribute(){},appendChild(){},addEventListener(type,fn){this.listeners??={};this.listeners[type]=fn;},querySelector(selector){if(!fields.has(selector))fields.set(selector,node());return fields.get(selector);}});
+    const add=c.window.addEventListener;
+    c.window.addEventListener=(type,fn,...rest)=>{if(!handlers.has(type))handlers.set(type,[]);handlers.get(type).push(fn);add(type,fn,...rest);};
+    const completions=[];
+    c.window.dispatchEvent=e=>{if(e.type==='boxlab-selection-hub-session-complete')completions.push(e);for(const fn of handlers.get(e.type)||[])fn(e);};
+    c.document.createElement=node;c.document.head=node();
+    r.f.elements.set('#viewportWrap',node());
+    c.requestAnimationFrame=()=>1;c.cancelAnimationFrame=()=>{};c.placeToolSessionPanel=()=>{};
+    let repeat=true,repeatStops=0;
+    c.__boxlabRepeatFacePrevious={last:()=>null,disarm:()=>{repeat=false;repeatStops++;}};
+    for(const id of ['extrudeBtn','insetBtn'])r.f.elements.get('#'+id).click=()=>c.document.dispatchEvent({type:'click',target:{id,closest:selector=>selector==='#extrudeBtn,#insetBtn'?{id}:null},preventDefault(){},stopImmediatePropagation(){}});
+    const read=name=>sourceTransform(fs.readFileSync(new URL('../../src/'+name,import.meta.url),'utf8')).replace(/^import .*;\n/gm,'');
+    vm.runInContext('(function(){'+read('selection-hub-face-value-session.js')+'\n})()',c);
+    vm.runInContext('(function(){'+read('tool-background-exit.js')+'\n})()',c);
+    const dispatch=(type,detail)=>c.window.dispatchEvent(new c.CustomEvent(type,{detail}));
+    dispatch('boxlab-selection-hub-tool',{mode:'face',tool:tool==='extrude'?'Extrude':'Inset'});
+    const session=c.__boxlabFaceValueViewportSession;
+    assert.equal(session.active(),true);assert.equal(session.element.hidden,false);
+    // During a real active drag, both exit routes must refuse closure. Cancel
+    // then retires the gesture through the original controller's owner.
+    r.setHit(0);r.pointer('pointerdown');r.pointer('pointermove',{clientX:10009});
+    assert.ok(r.f.owner.drag());
+    const close=()=>exit==='done'?fields.get('.shfv-done').listeners.click({preventDefault(){},stopPropagation(){}}):dispatch('boxlab-viewport-background-tap',{pointerId:22});
+    close();assert.equal(session.active(),true);assert.equal(r.f.api.tool(),tool);assert.equal(repeatStops,0);
+    r.pointer('pointercancel');r.retired();r.unchanged();
+    close();assert.equal(session.active(),false);assert.equal(session.element.hidden,true);
+    assert.equal(r.f.api.tool(),null);assert.equal(repeat,false);assert.equal(repeatStops,1);
+    assert.equal(completions.length,1);assert.equal(completions[0].detail.mode,'face');
+    assert.equal(completions[0].detail.tool,tool==='extrude'?'Extrude':'Inset');
+    assert.deepEqual(r.f.selected(),[0,2]);assert.equal(snapshot(r.m),r.before);
+    assert.equal(r.f.history.undoStack.length,0);assert.equal(r.f.history.redoStack.length,1);r.retired();
+    close();assert.equal(completions.length,1);assert.equal(repeatStops,1,'duplicate completion cannot disarm twice');
+    r.setHit(3);r.pointer('pointerdown');r.pointer('pointerup');assert.deepEqual(r.f.selected(),[0,2],'retired controller cannot consume a new tap');
+  }
+}

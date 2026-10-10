@@ -4893,3 +4893,14 @@ Fresh live `index.html`, `version.json`, `src/main.js`,
 `src/multi-face-direct.js`, and `beta-6/version.json` match repository bytes.
 Runtime owners and protected pins unchanged. User accepted .782; .783 device
 sanity remains pending.
+
+
+## .784 — Face Deselect / contextual session exits
+
+- [x] User .783 PASS: native viewpoint Face selection, modelling, Undo/Redo and normal navigation protected.
+- [x] Actual main Deselect listener plus whole Face controller: both tools restart selection without rearming; repeated clear preserves geometry/history/redo.
+- [x] Whole contextual value session plus background policy/direct controller: Done/background refuse during active drag; idle closure disarms direct/Repeat once, hides panel, preserves selection and emits one completion.
+- [x] Three in-memory owner-transition mutations rejected; original .496 selected-aware and pin checks retained.
+- [x] 97 focused PASS; full2076/2041PASS/35FAIL/0skip; exactly one reviewed old failure removed, no new identities. Runtime/frozenBeta unchanged.
+- [ ] .784: radial Extrude → SELECT Deselect → fresh Face tap, without rearming; repeat with Inset.
+- [ ] Done/background closes settings and returns surviving selection puck; normal modelling, Undo/Redo and navigation.
