@@ -1,3 +1,4 @@
+import {assertFaceDiagnostics} from './helpers/face-layout-runtime.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -24,7 +25,7 @@ test('504 orders Inspect and Repair directly above Topology Gate',()=>{
   assert.match(ui,/const inspect=document\.querySelector\('#faceInspectDrawer'\)/);
   assert.match(ui,/const repair=document\.querySelector\('#faceRepairDrawer'\)/);
   assert.match(ui,/const gate=document\.querySelector\('#topologyValidityGate'\)/);
-  assert.match(ui,/repair\.insertAdjacentElement\('afterend',gate\)/);
+  assertFaceDiagnostics();
 });
 
 test('504 waits for late Face drawer startup and preserves frozen interaction pins',()=>{

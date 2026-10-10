@@ -1,3 +1,5 @@
+import {assertFaceRows} from './helpers/face-layout-runtime.mjs';
+import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -15,11 +17,10 @@ test('506 no longer anchors diagnostics immediately after tertiary modelling row
   assert.doesNotMatch(ui,/tail\.insertAdjacentElement\('afterend',node\)/);
 });
 
-test('506 keeps compact modelling rows and frozen interaction pins',()=>{
-  assert.match(ui,/facePrimaryCompactRow/);
-  assert.match(ui,/faceSecondaryCompactRow/);
-  assert.match(ui,/faceTertiaryCompactRow/);
-  assert.match(index,/src\/tool-session-ui\.js\?v=0\.36\.18\.506/);
-  assert.match(index,/src\/multi-face-direct\.js\?v=0\.36\.18\.501/);
-  assert.match(index,/src\/main\.js\?v=0\.36\.18\.501/);
+test('506 keeps compact modelling rows and reviewed interaction pins',()=>{
+  assertFaceRows();
+  assertAssetReference(index,'tool-session-ui.js');
+  assertAssetReference(index,'multi-face-direct.js');
+  assertAssetReference(index,'main.js');
+  assert.match(index,/src\/multi-object-transform\.js\?v=0\.36\.1\.0/);
 });

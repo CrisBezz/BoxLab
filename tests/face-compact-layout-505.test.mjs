@@ -1,35 +1,27 @@
+import {assertFaceRows,assertFaceContext,assertFaceDiagnostics,assertFaceJoin} from './helpers/face-layout-runtime.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
-const ui=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.url),'utf8');
-const join=fs.readFileSync(new URL('../src/join-selected-coplanar-faces.js',import.meta.url),'utf8');
-const faceLayout=fs.readFileSync(new URL('../src/face-workflow-layout.js',import.meta.url),'utf8');
+const drawer=fs.readFileSync(new URL('../src/drawer-ui.js',import.meta.url),'utf8');
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
-test('505 creates three compact Face modelling rows',()=>{
-  assert.match(ui,/facePrimaryCompactRow/);
-  assert.match(ui,/faceSecondaryCompactRow/);
-  assert.match(ui,/faceTertiaryCompactRow/);
-  assert.match(ui,/for\(const button of \[sweep,join,del\]\)/);
-  assert.match(ui,/for\(const button of \[extract,duplicate,bridge\]\)/);
+test('505 creates current six compact Face modelling rows',()=>{
+  assertFaceRows();
 });
 
-test('505 keeps armed contextual controls between primary and secondary rows',()=>{
-  assert.match(ui,/for\(const node of \[value,readout,repeat\]\)/);
-  assert.match(ui,/if\(cursor\.nextElementSibling!==secondary\)cursor\.insertAdjacentElement\('afterend',secondary\)/);
+test('505 keeps armed contextual controls between primary and next modelling row',()=>{
+  assertFaceContext();
 });
 
 test('505 puts diagnostics below the entire compact modelling block',()=>{
-  assert.match(ui,/let tail=tertiary/);
-  assert.match(ui,/for\(const node of \[inspect,repair,gate\]\)/);
+  assertFaceDiagnostics();
 });
 
-test('505 Join Coplanar honors compact secondary row',()=>{
-  assert.match(join,/const compact=document\.querySelector\('#faceSecondaryCompactRow'\)/);
-  assert.match(join,/if\(button\.parentElement!==compact\)compact\.appendChild\(button\)/);
-  assertAssetReference(faceLayout,'join-selected-coplanar-faces.js');
+test('505 Join Coplanar honors current third row after late startup and relocation',()=>{
+  assertFaceJoin();
+  assertAssetReference(drawer,'join-selected-coplanar-faces.js');
 });
 
 test('505 preserves frozen interaction pins',()=>{

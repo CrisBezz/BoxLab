@@ -239,6 +239,12 @@ function installFaceControlOrder(){
 
   for(const button of [del,duplicate,extract])moveButtonToRow(button,row2);
   for(const button of [join,bridge,sweep])moveButtonToRow(button,row3);
+  // Join loads asynchronously and can append after the existing row buttons.
+  // Restore this row's declared order without replacing controls or listeners.
+  const joinRowButtons=[join,bridge,sweep].filter(Boolean);
+  if(joinRowButtons.some((button,index)=>row3.children[index]!==button)){
+    for(const button of joinRowButtons)row3.appendChild(button);
+  }
   for(const button of [shell,poke,circle])moveButtonToRow(button,row4);
   for(const button of [close,triangulate,flip])moveButtonToRow(button,row5);
   for(const button of [quadClean,quadify])moveButtonToRow(button,row6);

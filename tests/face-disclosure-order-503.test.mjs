@@ -1,3 +1,4 @@
+import {assertFaceContext} from './helpers/face-layout-runtime.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,10 +8,7 @@ const ui=fs.readFileSync(new URL('../src/tool-session-ui.js',import.meta.url),'u
 const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 
 test('503 installs Face contextual controls directly after primary Face row',()=>{
-  assert.match(ui,/function installFaceControlOrder\(\)/);
-  assert.match(ui,/const primary=faceTools\?\.querySelector\(':scope > \.outliner-actions'\)/);
-  assert.match(ui,/for\(const node of \[value,readout,repeat\]\)/);
-  assert.match(ui,/cursor\.insertAdjacentElement\('afterend',node\)/);
+  assertFaceContext();
 });
 
 test('503 keeps Face contextual controls hidden until Extrude or Inset is armed',()=>{

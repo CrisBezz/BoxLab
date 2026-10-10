@@ -5035,7 +5035,20 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
 - [x] Two mutations rejected; existing CSS, Sweep declaration and pin checks kept.
 - [x]114focusedPASS; full2096/2070PASS/26FAIL/0skip; exactly two reviewed failures
   removed, no new identities/skips/exclusions. Adjacent geometry tests retained.
-- [ ] .790 sanity: Edge radial Bevel Width/Segments, Apply/Cancel and Undo/Redo.
+- [x] User .790 PASS protected: Edge radial Bevel Width/Segments, Apply/Cancel and Undo/Redo.
 - [x] .790 Pages38029873759 success; Node22 run38029874102/job114148372358
   matches26 failures and2096/2070PASS/26FAIL/0skip. Live shell and unchanged runtime/
   protected owners match release253afa3edf83b4aa890f43a6f2a8995fb0b3b06f.
+
+
+## .791 — Face layout / late Join ordering
+
+- [x] User .790 PASS protected; retain Edge Bevel/history and accepted picking/construction owners.
+- [x] Current six Face rows retain original buttons, three-column styling, ordered contextual Value/readout/Repeat directly below Extrude row, despite earlier unrelated action row.
+- [x] Late Join placement reproduces wrong order before repair; existing shared layout restores Join/Bridge/Sweep order and keeps original listeners after repeated relocation/synchronization.
+- [x] Inspect/Repair/Topology Gate stay true drawer bottom after late extra controls.
+- [x] Four mutations rejected; all original Edge layout/precision tests kept after ordered DOM fixture extraction; CSS and reviewed actual Join loader retained.
+- [x]124focusedPASS; full2100/2081PASS/19FAIL/0skip; exactly seven reviewed failures removed, none new. Two legitimate shared UI cache-hop assertions reconciled, no excluded checks.
+- [ ] .791: Face radial Extrude/Inset settings and Done; normal selection/modelling/Undo/Redo.
+- [ ] Optional drawer sanity: Focus off, reload/switch Face mode; Join/Bridge/Sweep retain order.
+- [ ] Publication/Node22/live verification pending.
