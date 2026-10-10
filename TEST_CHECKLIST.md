@@ -4953,3 +4953,16 @@ sanity pending. Shell markers/recovery785 coherent, original modelling pins reta
 - [ ] .786: multi-select visible Vertices and tap individual ones off, also near dot edge; orbit/repeat with finger and Pencil.
 - [ ] Front Face taps with Extrude/Inset armed while other Faces remain selected; no rear selection bleed.
 - [ ] Ordinary Face/Edge selection, negative Extrude, Undo/Redo and protected navigation.
+
+
+### .786 publication verification — 2026-10-10
+
+Release commit `d1bef467466ac66e08433e412686a399c8473f4a`, tree
+`bec9f248300ac1fcad0deaaf3b931d732fc7e190` exactly matches tested checkout.
+Actual Node22 Topology run38019322721/job114116561321:2081tests/2049PASS/32FAIL/
+0skip; all32failure identities exactly match docs/reliability-build-786.json.
+Pages run38019322728 succeeded. Fresh live index/version and changed main786/
+Face786/Vertex assist786 byte-match repository. Through779, protected Multi1.0 and
+frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broader
+547/536PASS/11existingFAIL retained. .785 device FAIL and Edge acceptance recorded;
+.786 user retest pending. Shell/recovery and reviewed runtime module pins verified.

@@ -6742,8 +6742,21 @@ FullNode24:2081tests/2049PASS/32FAIL/0skip; exactly same32identities as785, no n
 failures. Runtime edits only main background branch, Vertex assist and Face tap-hit
 record/finish. Shell/recovery786; three changed runtime module pins/hashes and two
 recovery URLs reviewed. Through779/Inset753, Edge owners, Multi1.0/Loop715 and
-frozenBeta2–6 unchanged. Publication/Node22/live pending; .786 user retest pending.
+frozenBeta2–6 unchanged. Publication/Node22/live verified below; .786 user retest pending.
 Next: obtain Vertex/Face acceptance before remaining32 historical check review.
 Manual: confirm786; select several front Vertices and tap one off (also just outside
 dot); orbit then repeat; front Face taps with Extrude/Inset armed while other Faces
 selected; normal Face/Edge selection, negative Extrude/Undo/Redo/navigation.
+
+
+### .786 publication verification — 2026-10-10
+
+Release commit `d1bef467466ac66e08433e412686a399c8473f4a`, tree
+`bec9f248300ac1fcad0deaaf3b931d732fc7e190` exactly matches tested checkout.
+Actual Node22 Topology run38019322721/job114116561321:2081tests/2049PASS/32FAIL/
+0skip; all32failure identities exactly match docs/reliability-build-786.json.
+Pages run38019322728 succeeded. Fresh live index/version and changed main786/
+Face786/Vertex assist786 byte-match repository. Through779, protected Multi1.0 and
+frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broader
+547/536PASS/11existingFAIL retained. .785 device FAIL and Edge acceptance recorded;
+.786 user retest pending. Shell/recovery and reviewed runtime module pins verified.
