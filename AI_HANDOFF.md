@@ -1,12 +1,39 @@
-# BoxLab AI Handoff — Green reliability baseline / GLB group import
+# BoxLab AI Handoff — Editable Boolean sources
 
 ## Current state — 2026-10-10
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.797**. Last whole-build user acceptance **.796 AWESOME PASS**.
-Parent main `69264e78f6a1403379013b49a70e30ccdcac9a7a`.
-All2125 current automated checks pass. .797 repairs GLB facegroup import metadata;
-remaining11 historical expectations reconciled with real current owners, none skipped.
+Current build **v0.36.18.798**. Last whole-build acceptance **.797 PASS**, protected.
+Parent main `2366d1d984e5c6b832cf825836656a7c09b3ec03`.
+
+## .798 — Editable Boolean, first narrow step
+
+User approved sequence: Editable Boolean → automatic Live Boolean → shared Curve
+editor/Balloon → Curve Cutter → quad-remeshing feasibility. .797 PASS protects the
+2125-check green baseline, GLB groups and Rotate; .796 Add+ preview/unit fit remains protected.
+
+New independent two-object Union/A−B/Intersect results retain a small versioned recipe.
+Select the result in Object mode, open Edit Boolean, choose source A/B and use existing
+Move/Rotate/Scale gizmo. Update Preview calls the existing Boolean solver. Apply recomputes
+stale previews, replaces the same result, hides sources, and records one scene-history action.
+Cancel/no-op Apply restores geometry, visibility, settings and original history tokens.
+Undo during editing cancels first. Amber/blue guides and mint result preview use disposable
+Three overlays; no viewport pointer handler or modelling kernel added.
+
+Owners: boolean-prototype creates recipes; editable-boolean-core orchestrates transaction;
+editable-boolean supplies shared-session UI; multi-object replaces active geometry through
+its existing replacement helper; object-management retains recipes in snapshots and accepts
+an optional prior mesh for same-result scene checkpoints. tool-session-ui routes launch.
+Drawer dynamic import and direct management pin match. Protected Multi1.0/Loop715 and
+frozen Beta2–6 untouched. New recipes only: historical/exported meshes cannot recover their
+source relationships. Linked/grouped/nested or source-modifier cases deliberately retain
+ordinary Boolean behavior; manually edited result geometry refuses reopening. Automatic
+live recompute, source topology editing and Boolean chains are future narrow builds.
+
+Real manager activation/save/history plus actual Boolean geometry tests cover all three
+operations, source movement, Update/Apply, stale/failing preview, Cancel, exact history tokens,
+no-op, busy guards, and scene Undo/Redo. Automated results and publication verification below.
+Device gate: touch/Pencil gizmo, panel layout, navigation, export and visible preview.
 
 ## .797 — Final historical failures / real GLB group import repair — 2026-10-10
 
@@ -927,3 +954,5 @@ Pages38046675975 succeeded. Actual Node22 Topology38046675999/job114197501430:
 Fresh live index/version/importer797 byte-match main; accepted Add UI796,
 protected Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.
 .796 user PASS protected; .797 grouped GLB/Rotate device acceptance pending.
+
+.798 local validation: **2134/2134 PASS, 0 FAIL, 0 skipped** (Node24 full suite). Whole UI module also exercised with actual manager/Boolean/Three and controlled DOM: shared session, real guide/preview geometry, Apply disposal, Escape/conflicting-action cancellation. Device rendering/touch checks pending.

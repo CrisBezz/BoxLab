@@ -304,6 +304,7 @@ function apply(operation){
   const label=operation==='difference'?'Cut':operation==='intersection'?'Intersect':'Union';
   const created=manager()?.addMesh?.(result.mesh,nextBooleanName(e.active.name),{kind:'editable',visible:true,locked:false,enterObjectMode:true});
   if(!created){for(const object of originals)object.visible=visibility.get(object.id)!==false;setStatus(`Boolean ${label} failed • result object could not be created`);return;}
+  globalThis.__boxlabEditableBoolean?.record?.(created,e,operation);
   if(beforeScene)globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(beforeScene);
   selection()?.select?.([created.id]);
   globalThis.__boxlabTopologyGate?.sync?.();

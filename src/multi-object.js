@@ -920,6 +920,11 @@ function initialize() {
     deleteButton.click();
   }, true);
   globalThis.__boxlabObjectManager = {
+    replaceActiveMesh(mesh) {
+      const object=activeObject(),live=state()?.mesh;
+      if(!object||!live||object.locked||object.kind==='reference'||object.sourceId||!mesh?.clone)return false;
+      replaceMeshInPlace(live,mesh);object.mesh=mesh.clone();forceRender();renderOutliner();return true;
+    },
     addMesh(mesh, name = 'Object', options = {}) { return addObject(mesh, name, options); },
     activate(id) { return activateObject(id); },
     pickObject(event) { return pickViewportObject(event); },

@@ -5179,3 +5179,16 @@ recovery URLs changed, all runtime hashes retained.
 - [x] Full2125/2125PASS/0FAIL/0skip, exactly11 reviewed failures removed, no quarantine/exclusions.
 - [ ] .797 iPad grouped-object GLB export/import retains facegroup names/colours and one object; optional split works.
 - [ ] .797 Vertex/Edge/Face gizmo Rotate, selection/navigation and Undo/Redo sanity.
+
+## .798 — Editable Boolean sources
+
+- [x] .797 user PASS protected: green baseline, GLB group import and Rotate; .796 Add+ preview/unit fit remains protected.
+- [x] Actual Boolean creation/manager/session verifies Union/A−B/Intersect, source transform, same-result Apply and single scene Undo/Redo.
+- [x] Cancel after source history swaps restores scene and exact original global tokens; no-op Apply adds no history.
+- [x] Failed preview/Apply keeps previous valid preview; stale preview recomputed; busy/history controls safe.
+- [ ] iPad: create overlapping independent boxes, Boolean A−B, select result → Edit Boolean; choose A/B, Move/Rotate/Scale, Update Preview and Apply. Sources hidden/result updated.
+- [ ] Undo/Redo edit once; reopen, transform, Cancel restores original; navigate with fingers/Pencil during session.
+- [ ] Union/Intersect and operation switching; failed Intersect can recover; export applied visible result to Nomad.
+- [ ] Confirm panel/gizmo and amber/blue/mint guides, Add+ and ordinary group/linked Boolean remain usable.
+
+.798 local validation: **2134/2134 PASS, 0 FAIL, 0 skipped** (Node24 full suite). Whole UI module also exercised with actual manager/Boolean/Three and controlled DOM: shared session, real guide/preview geometry, Apply disposal, Escape/conflicting-action cancellation. Device rendering/touch checks pending.

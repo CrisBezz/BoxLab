@@ -360,6 +360,7 @@ function installBooleanToolSession(){
   const status=document.querySelector('#selectionStatus');
 
   const open=()=>{
+    if(globalThis.__boxlabEditableBoolean?.eligible?.().ok){globalThis.__boxlabEditableBoolean.open();return;}
     group.hidden=false;
     begin({id:'boolean',title:'Boolean',node:group,subtitle:'Union · Cut · Intersect'});
     const objectSelection=globalThis.__boxlabObjectSelection;

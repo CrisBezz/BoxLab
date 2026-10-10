@@ -7276,3 +7276,15 @@ All other runtime hashes/pins, Multi1.0/Loop715, accepted Add795/796 and frozenB
 unchanged. Fresh chat next: .797 iPad GLB names/colours/Split and Rotate/history checks,
 then scoped Bevel/Knife/Loop reliability. Zero automated failures is coverage evidence,
 not a claim of all app behavior proven. Publication verification follows separately.
+
+## .798 — Editable Boolean sources — 2026-10-10
+
+- User .797 PASS recorded and protected; .796 Add+ preview/unit fit and all older protected owners retained.
+- Audited actual Boolean, object-manager activation/save and scene-history owners before adding recipe/session orchestration. No parallel modelling kernel.
+- New independent two-object Boolean results store A/B IDs, operation and geometry signature. Reopen result, select A/B, transform with existing gizmo, explicitly Update Preview, Apply or Cancel.
+- Apply uses same result ID and recomputes stale previews; invalid calculations keep prior preview/session. Cancel and no-op restore scene/history. Optional prior-mesh checkpoint makes result edits one scene Undo/Redo.
+- Recipe snapshots retained; shared tool-session launch routes editable results. Source/preview guides disposed on exit. Group/link/nested/modifier cases retain ordinary Boolean; historical/exported results lack recipes; edited result refuses reopening.
+- Repinned changed owners and matching drawer dynamic import, updated shell/recovery markers798 and reviewed asset contract. Three historical cache/API assertions updated to current reviewed contract; behavioral checks retained.
+- Actual-manager/geometry regression coverage includes Union, Difference, Intersection, source switching/movement, cancellation/token identity, failed/stale preview, no-op and busy/history guards.
+
+.798 local validation: **2134/2134 PASS, 0 FAIL, 0 skipped** (Node24 full suite). Whole UI module also exercised with actual manager/Boolean/Three and controlled DOM: shared session, real guide/preview geometry, Apply disposal, Escape/conflicting-action cancellation. Device rendering/touch checks pending.

@@ -51,6 +51,6 @@ test('343 Linked Duplicate transfers scene-before checkpoint to newly active obj
   const management=fs.readFileSync(new URL('../src/object-management.js',import.meta.url),'utf8');
   assert.match(multi,/const beforeScene=globalThis\.__boxlabObjectHistory\?\.capture\?\.\(\)\|\|null/);
   assert.match(multi,/checkpointSnapshot\?\.\(beforeScene\)/);
-  assert.match(management,/checkpointSnapshot=snapshot=>/);
+  assert.match(management,/checkpointSnapshot=\(snapshot,mesh\)=>/);
   assert.match(management,/__boxlabObjectHistory=\{checkpoint,checkpointSnapshot,capture:captureScene,restore:restoreScene\}/);
 });
