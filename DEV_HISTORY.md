@@ -7288,3 +7288,9 @@ not a claim of all app behavior proven. Publication verification follows separat
 - Actual-manager/geometry regression coverage includes Union, Difference, Intersection, source switching/movement, cancellation/token identity, failed/stale preview, no-op and busy/history guards.
 
 .798 local validation: **2134/2134 PASS, 0 FAIL, 0 skipped** (Node24 full suite). Whole UI module also exercised with actual manager/Boolean/Three and controlled DOM: shared session, real guide/preview geometry, Apply disposal, Escape/conflicting-action cancellation. Device rendering/touch checks pending.
+
+.798 publication verified: code commit `b48f888f591868bffb8553e14380e47e19e97e41`.
+Topology CI `38051036769` / job `114210039725`: SUCCESS; Pages `38051036202`: SUCCESS.
+Fresh live version.json, HTML shell and all seven changed/new module owners match
+main byte-for-byte. Shell/recovery798, matching direct/drawer management798 pins,
+protected Multi1.0/Loop715 and frozen Beta2–6 retained. .798 device PASS pending.
