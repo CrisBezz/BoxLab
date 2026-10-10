@@ -4836,3 +4836,13 @@ Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 Manual: confirm782; armed Extrude/Inset Face selection taps; model and Undo/Redo,
 then background navigation. Diagnostic internals already automated, no special device
 trace recreation required.
+
+## .782 publication verification — 2026-10-10
+
+Release commit `8b74b8c1107d1eda3778cca05afaddad0e085710`, tree
+`f9ad57892348ae6336d17a2bfae1fb93939f834c` matches tested checkout.
+Actual Node22 Topology run38011380865/job114091946863:2073tests/2033PASS/40FAIL/
+0skip; all40 failure names exactly match local inventory. Pages38011380490 succeeded.
+Fresh live index/version, unchanged central debug/Face779 and frozenBeta6 version
+byte-match repository.123focusedPASS; all five original .722 test bodies byte-identical.
+User .781 PASS recorded; .782 device sanity pending. Runtime/frozenBeta unchanged.

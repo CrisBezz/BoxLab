@@ -10,7 +10,7 @@ User .781 PASS. Validation-only782 reconciles seven retired FaceTap/source asser
 with current semantic press evidence and central Gesture Debug. Original five .722
 checks retained through shared fixture; three mutations rejected.123focusedPASS;
 full2073/2033PASS/40FAIL/0skip, no new failures. Runtime/frozenBeta unchanged;
-publication pending. Continue remaining40 checks and scoped Bevel/Knife/Loop reliability.
+publication/live verified. Continue remaining40 checks and scoped Bevel/Knife/Loop reliability.
 Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
@@ -543,3 +543,13 @@ Actual Node22 Topology run38009270303/job114085236411:2072tests/2025PASS/47FAIL/
 Fresh live index/version, unchanged main/Face779 and frozenBeta6 version byte-match
 repository.115clean-focusedPASS; target group19PASS/1existing diagnostic FAIL.
 User .780 PASS recorded; .781 device sanity pending. Runtime/frozenBeta unchanged.
+
+## .782 publication verification — 2026-10-10
+
+Release commit `8b74b8c1107d1eda3778cca05afaddad0e085710`, tree
+`f9ad57892348ae6336d17a2bfae1fb93939f834c` matches tested checkout.
+Actual Node22 Topology run38011380865/job114091946863:2073tests/2033PASS/40FAIL/
+0skip; all40 failure names exactly match local inventory. Pages38011380490 succeeded.
+Fresh live index/version, unchanged central debug/Face779 and frozenBeta6 version
+byte-match repository.123focusedPASS; all five original .722 test bodies byte-identical.
+User .781 PASS recorded; .782 device sanity pending. Runtime/frozenBeta unchanged.

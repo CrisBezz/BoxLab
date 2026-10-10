@@ -4,7 +4,7 @@
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.782**. Last explicit user acceptance is **.781 PASS**.
-Parent main192384a668c53dcc80dd1465cf6fbb455734f05e; .782 publication pending.
+Parent main192384a668c53dcc80dd1465cf6fbb455734f05e; .782 published and live-verified.
 .781 releasec49f57c40528236343c38671313868dc526c82a8: Node22 CI2072/2025PASS/
 47FAIL/0skip with exact local identities; Pages38009270112/live verified; user PASS.
 All historical details/publication evidence remain in DEV_HISTORY.md and
@@ -39,7 +39,7 @@ Initial14checks/7PASS/7FAIL; revised15PASS. Shared .722 five checks alsoPASS.
 39source-pattern/1version-pin active; no skips/exclusions/CI gate. Runtime/frozenBeta2–6
 unchanged; shell/recovery782 and only two reviewed recovery fixture URLs, hashes retained.
 Face+Through779/main762/Inset753/Debug736/Multi1.0/Loop715 protected. Publication/Node22/
-live pending; .782 device sanity pending. Next remaining40 checks and scoped Bevel/
+live verified below; .782 device sanity pending. Next remaining40 checks and scoped Bevel/
 Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 Manual: confirm782; armed Extrude/Inset Face selection taps; model and Undo/Redo,
 then background navigation. Diagnostic internals already automated, no special device
@@ -218,3 +218,13 @@ inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
 real-group preservation. Remaining40 active failures visible until reconciled.
+
+## .782 publication verification — 2026-10-10
+
+Release commit `8b74b8c1107d1eda3778cca05afaddad0e085710`, tree
+`f9ad57892348ae6336d17a2bfae1fb93939f834c` matches tested checkout.
+Actual Node22 Topology run38011380865/job114091946863:2073tests/2033PASS/40FAIL/
+0skip; all40 failure names exactly match local inventory. Pages38011380490 succeeded.
+Fresh live index/version, unchanged central debug/Face779 and frozenBeta6 version
+byte-match repository.123focusedPASS; all five original .722 test bodies byte-identical.
+User .781 PASS recorded; .782 device sanity pending. Runtime/frozenBeta unchanged.
