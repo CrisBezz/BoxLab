@@ -3,8 +3,21 @@
 ## Current state — 2026-10-10
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.798**. Last whole-build acceptance **.797 PASS**, protected.
+Current build **v0.36.18.799**. Last whole-build acceptance **.797 PASS**, protected.
 Parent main `2366d1d984e5c6b832cf825836656a7c09b3ec03`.
+
+## .799 — Boolean edit radial and exit repair
+
+User reports .798 trapped in edit window; .798 is NOT accepted. Existing Object
+radial Boolean slot now reads Edit Boolean for an eligible result, routes directly
+to the existing editor and recognizes boolean-edit cancellation. Semantic background
+exit now cancels edits; switching tools cannot proceed if cancellation refuses.
+Ordinary Boolean-to-edit launch no longer queues a premature completion because its
+session ID differs. Existing edit gizmo stays available; no new gesture owner or kernel.
+Cancel/Apply button exits retain their existing authoritative transaction.
+Regression exercises whole editor plus actual radial/background adapters, original
+scene restoration and Cancel after failed preview. Last protected user PASS remains .797.
+Validate radial label/launch, Cancel and background exit on iPad before Live Boolean.
 
 ## .798 — Editable Boolean, first narrow step
 
@@ -962,3 +975,5 @@ Topology CI `38051036769` / job `114210039725`: SUCCESS; Pages `38051036202`: SU
 Fresh live version.json, HTML shell and all seven changed/new module owners match
 main byte-for-byte. Shell/recovery798, matching direct/drawer management798 pins,
 protected Multi1.0/Loop715 and frozen Beta2–6 retained. .798 device PASS pending.
+
+.799 validation: **2136/2136 PASS, 0 FAIL, 0 skipped**. Full Node24 suite; touch/layout rendering remains device gate.

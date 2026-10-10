@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature} from './editable-boolean-core.js?v=0.36.18.798';
 
-const VERSION='0.36.18.798';
+const VERSION='0.36.18.799';
 const panel=document.createElement('div');
 panel.id='editableBooleanPanel';panel.className='boxlab-tool-session-shell';panel.hidden=true;
 panel.innerHTML=`<div class="boxlab-tool-session-title">Edit Boolean</div>
@@ -43,7 +43,10 @@ function refreshOverlay(){
 function sync(){
   queued=false;
   const launch=document.querySelector('#booleanLaunchBtn');
-  if(launch){const e=eligible();launch.textContent=e.ok?'Edit Boolean':'Boolean';launch.title=e.ok?'Reopen the sources of this Boolean result':e.reason;}
+  const eligibility=eligible(),label=eligibility.ok?'Edit Boolean':'Boolean';
+  if(launch){launch.textContent=label;launch.title=eligibility.ok?'Reopen the sources of this Boolean result':eligibility.reason;}
+  const radial=document.querySelector('.tg-tool-ring[data-ring-mode="object"] [data-tool-target="#booleanLaunchBtn"]');
+  if(radial)radial.textContent=label;
   if(!controller.active())return;
   const s=controller.state(),objects=manager().objects;
   for(const key of ['a','b']){const object=objects.find(o=>o.id===s[key+'Id']),button=panel.querySelector(`[data-edit-source="${key}"]`);button.textContent=`${key.toUpperCase()} · ${object?.name||'Missing source'}`;button.classList.toggle('active',manager().activeId===object?.id);}

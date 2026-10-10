@@ -16,7 +16,7 @@ const entry=()=>{
  ]){const api=g[name];if(api?.active?.())return {exit:()=>api[method]?.()};}
  if(g.__boxlabEdgeExtrude?.isArmed?.())return {busy:()=>g.__boxlabEdgeExtrude?.busy?.(),exit:()=>{g.__boxlabTotalGizmo?.setHubState?.('closed',{reason:'background-tool-exit'});g.__boxlabEdgeExtrudeViewportSession?.close?.();g.__boxlabEdgeExtrude.setArmed(false);}};
  const id=g.__boxlabToolSession?.current?.()?.id;
- const specs={solidify:['__boxlabSolidifyPreview','cancel'],shell:['__boxlabShell','cancel'],array:['__boxlabLinearArray','cancel'],boolean:['__boxlabBooleanToolSession','close'],'mesh-health':['__boxlabMeshHealth','close']};
+ const specs={solidify:['__boxlabSolidifyPreview','cancel'],shell:['__boxlabShell','cancel'],array:['__boxlabLinearArray','cancel'],boolean:['__boxlabBooleanToolSession','close'],'boolean-edit':['__boxlabEditableBoolean','cancel'],'mesh-health':['__boxlabMeshHealth','close']};
  const spec=specs[id];if(!spec)return null;
  const api=g[spec[0]];return {busy:()=>!!api?.dragging,exit:()=>api?.[spec[1]]?.()};
 };

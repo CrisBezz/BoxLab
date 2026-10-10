@@ -4,12 +4,12 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .798, 2026-10-10
+## Current direction — .799, 2026-10-10
 
 .797 PASS protects the green baseline, GLB group import and Rotate. .796 Add+ previews,
 unit-zone scale and Text remain protected. First Editable Boolean build stores independent
 A/B source recipes and reopens them for existing Move/Rotate/Scale, explicit Update Preview,
-Apply/Cancel and one scene Undo/Redo. Validate .798 on iPad before expanding.
+Apply/Cancel and one scene Undo/Redo. Repair .798 radial/exit FAIL in .799; validate on iPad before expanding.
 
 Agreed sequence:
 1. Editable Boolean source session (this build).

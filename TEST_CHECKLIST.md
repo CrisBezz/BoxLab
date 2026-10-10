@@ -5198,3 +5198,20 @@ Topology CI `38051036769` / job `114210039725`: SUCCESS; Pages `38051036202`: SU
 Fresh live version.json, HTML shell and all seven changed/new module owners match
 main byte-for-byte. Shell/recovery798, matching direct/drawer management798 pins,
 protected Multi1.0/Loop715 and frozen Beta2–6 retained. .798 device PASS pending.
+
+## .799 — Boolean edit radial / exit repair — 2026-10-10
+
+.798 user FAIL: trapped edit window and missing contextual radial label. Existing
+Boolean Object radial slot now displays Edit Boolean for eligible results; actual
+Object adapter launches/cancels boolean-edit, preserves transform gizmo, and avoids
+premature completion when ordinary Boolean launch opens an edit. Background semantic
+exit routes to existing Cancel; failed cancellation blocks switching. No new kernel,
+viewport pointer owner or unrelated changes; .797 remains last protected PASS.
+
+- [x] Whole editor + actual radial/background adapters: contextual label, launch,
+  Cancel, background cancellation, restored scene/session/overlay and failed-preview Cancel.
+- [ ] iPad: select Boolean result → radial → Edit Boolean; move source then Cancel.
+- [ ] Reopen, move then background tap: closes and restores original result.
+- [ ] Reopen, Update Preview/Apply; one Undo/Redo; ordinary Boolean still works.
+
+.799 validation: **2136/2136 PASS, 0 FAIL, 0 skipped**. Full Node24 suite; touch/layout rendering remains device gate.

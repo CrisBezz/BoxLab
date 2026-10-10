@@ -341,9 +341,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-radial-session.js?v=0.36.18.711",
+      "url": "./src/object-radial-session.js?v=0.36.18.799",
       "target": "src/object-radial-session.js",
-      "sha256": "2c1d8d419511df70e1eefe6761cc8b2f1d14b2b6a4759a7092abf3befc56cdbd"
+      "sha256": "a4ba1fdf286f0890608905c2fea81f5fc205d5808112ff184d5d592877502f94"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.798",
+      "url": "./src/release-bootstrap.js?v=0.36.18.799",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.798",
+      "url": "./src/release-version.js?v=0.36.18.799",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -533,9 +533,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-background-exit.js?v=0.36.18.759",
+      "url": "./src/tool-background-exit.js?v=0.36.18.799",
       "target": "src/tool-background-exit.js",
-      "sha256": "32039b96e8dd08672cf6f5c44d92bcfec7f2a97dcbccbadad9be7c83b8353d6d"
+      "sha256": "d5a5d3eb28104427a8ed9ed21ecffe0fb9affdf734377441db8402fc33014cae"
     },
     {
       "owner": "index.html",
@@ -2182,10 +2182,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/editable-boolean.js?v=0.36.18.798",
+      "url": "./src/editable-boolean.js?v=0.36.18.799",
       "target": "src/editable-boolean.js",
-      "sha256": "2e074b4985e8c0aec2df65a5851f6f8b3a250e9164991b3f5f774055d47b0565",
-      "sourceVersion": "0.36.18.798"
+      "sha256": "7ce90d25d4eb08f9d968f0c7d8396d31a19f6d83b8a9b9c95650fa33f706c157",
+      "sourceVersion": "0.36.18.799"
     },
     {
       "owner": "src/editable-boolean.js",
