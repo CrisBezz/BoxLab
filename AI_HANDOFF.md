@@ -1,13 +1,48 @@
-# BoxLab AI Handoff — Facegroups render ownership validation
+# BoxLab AI Handoff — Mode dock / menu layout validation
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.793**. Last whole-build user acceptance is **.792 PASS**.
-Accepted Shell/Solidify, shared layout791, picking786 and construction789/788 protected.
-Parent main `304e370ba26d59dbf948f9eb7a6e44f1eb3aa133`.
-.793 validates current Facegroups mesh/evaluation/retry ownership; runtime unchanged.
-Publication/Node22/live verified below.
+Current build **v0.36.18.794**. Last whole-build user acceptance is **.793 PASS**.
+Accepted Facegroups, Shell/Solidify, layout791 and interaction owners protected.
+Parent main `4c76dbb04ccf1df548e730359aad6f39e1abef69`.
+.794 validates current dock/File/VIEW layout contracts; runtime unchanged.
+Publication/Node22/live verification pending.
+
+## .794 — Mode dock / File / VIEW layout contract validation — 2026-10-10
+
+User .793 PASS recorded/protected: Facegroups first activation/Studio switch,
+SubD/Mirror colours and selection/navigation/history. Parent main
+`4c76dbb04ccf1df548e730359aad6f39e1abef69`.
+Audit .557/.342/.467 failures against current topbar734 and VIEW owner732.
+Mode dock CSS lives in topbar owner, not retired styles557 comment/fixed dock.
+File no longer has command bar: local summary-relative top and topbar-height bound.
+VIEW scroll bound uses current topbar-height variable, not historical fixed118px.
+No broad UI restoration or layout implementation change needed.
+
+Reuse .791 ordered DOM adapter; execute whole topbar owner with imported toolbar/
+selection installers as controlled adapters. Original mode nodes/listeners retained
+through repeated docking/icon setup, command row removed, titles/aria labels intact.
+Execute actual VIEW style construction block; inspect exact emitted selector
+property blocks in source order for base/narrow media rules. Dock absolute within
+viewport, safe-area left offsets and protected status-lane clearance27/25px;
+File relative placement, height bound, internal scrolling and narrow width;
+VIEW base/narrow bounds, scroll containment/touch momentum/pan-y and widths.
+This is emitted stylesheet contract coverage, not computed cascade/layout engine,
+full VIEW UI or Safari/device evidence. Original shell/mode IDs, Face stable-row/
+Duplicate and loading/protected-pin checks retained. Four in-memory mutations reject
+lost docking/status clearance, removed File scrolling and retired VIEW bound.
+
+48focusedPASS including File interactions, Face layout, Facegroups ownership,
+accepted picking/clean negative Extrude and release contracts. FullNode24:2112tests/
+2101PASS/11FAIL/0skip; exactly three reviewed failures removed from793, none new.
+All remaining11source-pattern checks active, no skips/exclusions/CI gate. All runtime
+sources/hashes/modelling pins and frozenBeta2–6 unchanged. Shell/recovery794 and
+exactly two reviewed recovery URLs refreshed; accepted UI791/main/Face/Vertex786,
+Sweep789/Revolve788/Through779/Multi1.0/Loop715 retained. Publication/Node22/live
+verification pending. Next: audit remaining component Rotate4 and Nomad GLB7 checks,
+then scoped Bevel/Knife/Loop reliability. Manual: confirm794; mode buttons work;
+File and VIEW open/scroll to lower controls, then return to modelling/navigation.
 
 ## .793 — Facegroups render ownership / retry validation — 2026-10-10
 
@@ -455,12 +490,12 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.792 user PASS protects Shell/Solidify Apply/Cancel/history and accepted interactions.
-.793 reconciles three earlier Facegroups source/evaluation/frame expectations with
-actual accepted .458/.460 ownership. Audit remaining14 historical checks, then
-scoped Bevel/Knife/Loop reliability. Controlled function/DOM fixtures do not prove
-browser/device reliability. Add Vertex broader picking/NOM import/Lasso deferred.
-FrozenBeta2–6 immutable.
+.793 user PASS protects Facegroups/Studio/SubD/Mirror and accepted interactions.
+.794 reconciles three retired UI expectations with current mode docking/File/VIEW
+owners. Remaining11 active historical checks: component Rotate4, Nomad GLB7.
+Audit those owners before changes, then scoped Bevel/Knife/Loop reliability.
+Emitted CSS/controlled DOM do not prove browser/device layout. Add Vertex broader
+picking/NOM import/Lasso deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -566,7 +601,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery793; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery794; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -603,7 +638,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining14 active failures visible until reconciled.
+real-group preservation. Remaining11 active failures visible until reconciled.
 
 
 ### .783 publication verification — 2026-10-10

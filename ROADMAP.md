@@ -4,14 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .793, 2026-10-10
+## Current direction — .794, 2026-10-10
 
-.792 user PASS protects Shell/Solidify/history and prior accepted owners.
-.793 validates current Facegroups active/inactive mesh lookup, SubD→Mirror and
-pending geometry retry/later-look exit; three retired historical expectations
-reconciled.42focusedPASS; full2108/2094PASS/14FAIL/0skip, exactly three audited
-failures removed, none new. Runtime/frozenBeta unchanged. Publication/Node22/live verified below. Audit remaining14 checks, then scoped Bevel/Knife/Loop.
-Controlled functions/DOM/frames do not prove device/WebGL reliability.
+.793 user PASS protects Facegroups/Studio/SubD/Mirror and accepted interactions.
+.794 validates original mode dock nodes/listeners and emitted File/VIEW responsive
+scroll bounds; three retired historical expectations reconciled.48focusedPASS;
+full2112/2101PASS/11FAIL/0skip, exactly three audited failures removed, none new.
+Runtime/frozenBeta unchanged. Publication/Node22/live verification pending.
+Next audit component Rotate4 and Nomad GLB7 remaining checks, then scoped Bevel/
+Knife/Loop reliability. Controlled DOM/CSS declarations do not prove device layout.
 
 ## Beta 6 delivery refinement — .736
 

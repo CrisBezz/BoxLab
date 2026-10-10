@@ -5103,8 +5103,8 @@ URLs changed with every runtime hash retained.
 - [x] First two missing-geometry frames retain normal material; later readiness installs colours and stops pending retry; look change cancels queued application.
 - [x] Three in-memory mutations rejected; split import/other material assertions and original SubD/Mirror/pending tests retained.
 - [x]42focusedPASS; full2108/2094PASS/14FAIL/0skip, only three reviewed failures removed, none new. No skips/exclusions/runtime/frozenBeta changes.
-- [ ] .793: grouped object → VIEW Facegroups, first activation and Studio switch; SubD/Mirror colours remain sensible.
-- [ ] Selection/navigation and Undo/Redo sanity.
+- [x] User .793 PASS protected: Facegroups first activation/Studio switch and SubD/Mirror colours.
+- [x] User .793 PASS protected: selection/navigation and Undo/Redo.
 - [x] .793 Pages38034916795 success; Node22 run38034916611/job114163240465 matches2108/2094PASS/14FAIL/0skip and all14 identities; live shell, render and protected owners byte-match tested release.
 
 
@@ -5120,3 +5120,14 @@ Through779, protected Multi1.0 and frozenBeta6 version all byte-match repository
 42focusedPASS. .792 user PASS protected; .793 Facegroups device sanity pending.
 No runtime/frozenBeta changes. Shell/recovery793 coherent; exactly two reviewed
 recovery URLs changed, all runtime hashes retained.
+
+
+## .794 — Mode dock / File / VIEW contracts
+
+- [x] User .793 PASS recorded/protected; accepted runtime unchanged.
+- [x] Whole topbar owner moves original mode buttons/listeners, retains icon/title/aria labels through repeated sync and removes command row.
+- [x] Actual emitted dock rules retain base/narrow safe-area offsets and status-lane clearance; File/VIEW maintain current height bounds and internal touch scrolling.
+- [x] Four in-memory mutations rejected; existing Face row/Duplicate/loading/mode-ID/protected-pin and File interaction checks retained.
+- [x]48focusedPASS; full2112/2101PASS/11FAIL/0skip, exactly three audited failures removed, none new. All11 remaining checks active; no skipped/excluded tests/runtime/frozenBeta changes.
+- [ ] .794: mode buttons; File/VIEW open and scroll to lower controls; return to modelling/navigation.
+- [ ] Publication/Node22/live verification pending.

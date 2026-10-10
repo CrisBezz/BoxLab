@@ -1,15 +1,11 @@
+import {assertFileMenuRules} from './helpers/menu-layout-runtime.mjs';
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 
 test('342 File menu fits below command bar with internal scrolling',()=>{
-  const src=fs.readFileSync(new URL('../src/topbar-layout.js',import.meta.url),'utf8');
-  assert.match(src,/\.top-file-menu\{z-index:140\}/);
-  assert.match(src,/top:calc\(100% \+ var\(--boxlab-commandbar-h\) \+ 6px\)/);
-  assert.match(src,/max-height:calc\(100dvh - var\(--boxlab-topbar-h\) - var\(--boxlab-commandbar-h\) - 18px\)/);
-  assert.match(src,/overflow-y:auto/);
-  assert.match(src,/width:min\(300px,calc\(100vw - 16px\)\)/);
+  assertFileMenuRules();
 });
 
 test('342 Face primary row stays three columns and does not reappend when stable',()=>{
