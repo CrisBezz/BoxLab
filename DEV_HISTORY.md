@@ -6628,8 +6628,21 @@ release contracts. Full Node24:2076tests/2041PASS/35FAIL/0skip; exactly the revi
 pin checks stay active; no exclusions/skips/CI gate. Runtime/frozenBeta2–6 unchanged.
 Shell/recovery784 and exactly two reviewed recovery URLs refreshed; all asset hashes,
 main762/Face+Through779/Inset753/Debug736/Multi1.0/Loop715 retained.
-Publication/Node22/live pending; .784 hands-on sanity pending.
+Publication/Node22/live verified below; .784 hands-on sanity pending.
 Next: remaining35 checks and scoped Bevel/Knife/Loop reliability; Add Vertex picking,
 NOM import and Lasso tightening deferred.
 Manual: confirm784; radial Extrude then SELECT Deselect and fresh Face selection;
 repeat with Inset; Done/background returns puck; model and Undo/Redo/navigation.
+
+
+### .784 publication verification — 2026-10-10
+
+Release commit `1ed2807186c94684ff088a6ecdb1955f5f4dacc1`, tree
+`f05d5abf98191f9cb1e43a265e27c106480227f8` exactly matches tested checkout.
+Actual Node22 Topology run38017194089/job114109994738:2076tests/2041PASS/35FAIL/
+0skip; all35failure identities exactly match docs/reliability-build-784.json.
+Pages run38017193466 completed successfully.97focusedPASS. Runtime and frozenBeta
+unchanged; .783 user PASS protected; .784 device sanity pending.
+Fresh live index.html/version.json byte-match .784 repository. Unchanged main762,
+Face779 and frozenBeta6 version also byte-match live. Shell markers/recovery784
+coherent; reviewed runtime pins and hashes retained.

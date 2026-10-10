@@ -4904,3 +4904,16 @@ sanity remains pending.
 - [x] 97 focused PASS; full2076/2041PASS/35FAIL/0skip; exactly one reviewed old failure removed, no new identities. Runtime/frozenBeta unchanged.
 - [ ] .784: radial Extrude → SELECT Deselect → fresh Face tap, without rearming; repeat with Inset.
 - [ ] Done/background closes settings and returns surviving selection puck; normal modelling, Undo/Redo and navigation.
+
+
+### .784 publication verification — 2026-10-10
+
+Release commit `1ed2807186c94684ff088a6ecdb1955f5f4dacc1`, tree
+`f05d5abf98191f9cb1e43a265e27c106480227f8` exactly matches tested checkout.
+Actual Node22 Topology run38017194089/job114109994738:2076tests/2041PASS/35FAIL/
+0skip; all35failure identities exactly match docs/reliability-build-784.json.
+Pages run38017193466 completed successfully.97focusedPASS. Runtime and frozenBeta
+unchanged; .783 user PASS protected; .784 device sanity pending.
+Fresh live index.html/version.json byte-match .784 repository. Unchanged main762,
+Face779 and frozenBeta6 version also byte-match live. Shell markers/recovery784
+coherent; reviewed runtime pins and hashes retained.
