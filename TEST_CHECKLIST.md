@@ -4966,3 +4966,18 @@ Face786/Vertex assist786 byte-match repository. Through779, protected Multi1.0 a
 frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broader
 547/536PASS/11existingFAIL retained. .785 device FAIL and Edge acceptance recorded;
 .786 user retest pending. Shell/recovery and reviewed runtime module pins verified.
+
+
+## .787 — protected .786 PASS and Edge repeated-constraint contract
+
+- [x] User PASS .786: Vertex additive/deselect and front native Face taps accepted;
+  preserve those repairs and previously accepted Edge picking.
+- [x] Actual whole Edge759 owner retains selected Y across two physical pulls,
+  commits two history entries and ribbons, and retires drag while remaining armed.
+- [x] Cancel restores source/redo, releases capture and retains chosen direction;
+  idempotent arm retains Y, Done/new session defaults back to Plane.
+- [x] Regression resetting Plane on every rearm is rejected by behavior test.
+- [x] All original ten .759 parity tests and other .510 checks retained.
+- [x] 67 focused PASS; full2082/2051PASS/31FAIL/0skip, only reviewed .510 removed.
+- [ ] .787 device sanity: Edge Y two pulls, Done/reopen Free, history/navigation.
+- [ ] .787 publication verification (record after CI/Pages/live checks).

@@ -3,10 +3,40 @@
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.786**. Last whole-build user acceptance is **.784 PASS**.
+Current build **v0.36.18.787**. Last whole-build user acceptance is **.786 PASS**.
 .785 device FAIL: Vertex additive/deselect and Face rear selection; Edge accepted.
-Parent main `8637d16da0f7e089b0be3887234dd783787eae4d`. .786 fixes published and live verified; evidence below.
+Parent main `d567a4a0b61092d752be9eca6bfe1870190b0421`. .787 validation complete;
+publication verification pending. Runtime .786 repairs accepted/protected.
 Historical evidence remains in DEV_HISTORY.md and docs/reliability-build-*.md/JSON.
+
+## .787 — Edge Extrude repeated-constraint validation — 2026-10-10
+
+User .786 PASS recorded/protected: assisted Vertex additive/deselect and native
+front Face taps accepted; Edge acceptance retained. Parent main
+`d567a4a0b61092d752be9eca6bfe1870190b0421`.
+Audit .510 failing repeated-pull assertion against original Edge759 owner and
+shared .759 parity fixture. Its source slice ends at the first precision query,
+which now precedes setArmed, yielding empty text. Actual first-arm default and
+idempotent commit rearm already preserve later user-selected constraints.
+No runtime implementation change needed.
+
+Extract original whole-Edge/native-line fixture into shared helper, retaining all
+10 .759 test bodies. Replace only the obsolete .510 slice with two actual Pencil
+pulls using Y, verifying two ribbons/history steps, persistent arm/direction,
+retired drag, cancellation restoring geometry/redo and released capture. An
+idempotent rearm retains Y; Done followed by new session restores Plane. Mutation
+resetting Plane on every arm fails at first commit. Controlled DOM/dispatch and
+transform-arming adapter with real Three/mesh/history; not full Safari integration.
+Other .510 source/pin checks retained, no skips or excluded failures.
+
+67focusedPASS. FullNode24:2082tests/2051PASS/31FAIL/0skip; exactly reviewed .510
+failure removed from786, no new identities. Remaining30source-pattern/1version-pin
+checks stay active. Runtime/frozenBeta2–6 untouched; main/Vertex assist/Face786,
+Through779/Multi1.0/Loop715 and all modelling pins/hashes retained. Shell/recovery787
+and exactly two reviewed recovery URLs updated. Publication verification pending.
+Next: audit remaining31 historical checks, then scoped Bevel/Knife/Loop reliability.
+Manual: confirm787; Edge Extrude choose Y and pull twice; Done/reopen and check Free
+(Plane default); selection/Undo/Redo/navigation quick sanity.
 
 ## .786 — Assisted Vertex ownership and front Face taps — 2026-10-10
 
@@ -189,11 +219,11 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.785 Vertex/Face FAIL; Edge user confirms works. .786 actual picking fixes await retest.
-Obtain acceptance before resuming remaining32 historical checks. Do not present regex
-counts or seeded intent fixtures as on-device tap reliability. Add Vertex broader
-picking/NOM import/Lasso tightening deferred beyond current concrete repair.
-FrozenBeta2–6 immutable.
+.786 user PASS protects Vertex/Face picking repairs and accepted Edge behavior.
+.787 reconciles one broken historical source slice with existing owner behavior.
+Audit remaining31 active checks; do not present source-pattern counts as device
+reliability. Then scoped Bevel/Knife/Loop reliability. Add Vertex broader picking,
+NOM import and Lasso tightening deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -299,7 +329,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery786; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery787; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -336,7 +366,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining32 active failures visible until reconciled.
+real-group preservation. Remaining31 active failures visible until reconciled.
 
 
 ### .783 publication verification — 2026-10-10
