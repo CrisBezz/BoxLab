@@ -4979,7 +4979,24 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
 - [x] Regression resetting Plane on every rearm is rejected by behavior test.
 - [x] All original ten .759 parity tests and other .510 checks retained.
 - [x] 67 focused PASS; full2082/2051PASS/31FAIL/0skip, only reviewed .510 removed.
-- [ ] .787 device sanity: Edge Y two pulls, Done/reopen Free, history/navigation.
+- [x] User .787 PASS: Edge Y two pulls, Done/reopen Free, history/navigation protected.
 - [x] .787 Pages38020165585 success; Node22 run38020165850/job114119194349
   matches all31 failures and2082/2051PASS/31FAIL/0skip. Live shell/runtime/protected
   markers byte-match repository; release503d4c3825bddaf190f5e4bffe11ce8e83146b1b.
+
+
+## .788 — Revolve launch/edit and Cancel history tokens
+
+- [x] User .787 PASS recorded/protected; accepted .786 Vertex/Face/Edge unchanged.
+- [x] Whole current Revolve launcher creates/reuses/cancels/restarts; Add starts Edit,
+  touch yields, Pencil authors UV, Edit-off yields for plane positioning.
+- [x] Actual Apply/core commits one mesh history entry, selects result, Undo/Redo
+  preserve geometry and effective null groups. Existing historical core checks kept.
+- [x] Cancel restores original undo/redo tokens, including evicted history-limit
+  token; actual object-history WeakMap redo tag restores future scene after Cancel.
+- [x] Four default/history mutations rejected;88focusedPASS. Full2087/2058PASS/
+  29FAIL/0skip; only reviewed .389/.422 failures removed, no exclusions.
+- [ ] .788 device: edit then Undo; Revolve open/Cancel then Redo restores edit.
+- [ ] Reopen, draw simple profile, toggle Edit off/on, Apply and Undo/Redo.
+- [ ] Existing component selection and navigation sanity.
+- [ ] .788 CI/Pages/live publication verification.

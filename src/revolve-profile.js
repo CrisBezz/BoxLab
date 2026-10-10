@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
 import {buildRevolveFromPoints} from './revolve-core.js?v=0.36.18.389';
 
-const VERSION='0.36.18.469';
+const VERSION='0.36.18.788';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -48,7 +48,7 @@ const segmentOut=controls.querySelector('#revolveProfileSegmentsOut');
 const applyButton=controls.querySelector('#revolveProfileApplyBtn');
 const cancelButton=controls.querySelector('#revolveProfileCancelBtn');
 
-let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0,cachedActiveId=null,cachedActiveObject=null,profileBeforeScene=null,profileUndoDepth=null,profileRedoDepth=null;
+let overlay=null,drag=null,lastSignature='',activeProfileId=null,raf=0,cachedActiveId=null,cachedActiveObject=null,profileBeforeScene=null,profileUndoEntries=null,profileRedoEntries=null;
 const raycaster=new THREE.Raycaster();
 const pointer=new THREE.Vector2();
 
@@ -355,8 +355,8 @@ function addRevolveProfile(){
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
   const history=globalThis.__boxlabHistory;
   profileBeforeScene=before;
-  profileUndoDepth=Array.isArray(history?.undoStack)?history.undoStack.length:null;
-  profileRedoDepth=Array.isArray(history?.redoStack)?history.redoStack.length:null;
+  profileUndoEntries=Array.isArray(history?.undoStack)?[...history.undoStack]:null;
+  profileRedoEntries=Array.isArray(history?.redoStack)?[...history.redoStack]:null;
   const object=m.addMesh(constructionPlane(),'Revolve Profile',{enterObjectMode:true});
   if(!object)return;
   cachedActiveId=object.id;cachedActiveObject=object;
@@ -375,10 +375,10 @@ function cancelRevolveProfile(){
   const history=globalThis.__boxlabHistory;
   if(profileBeforeScene&&globalThis.__boxlabObjectHistory?.restore){
     globalThis.__boxlabObjectHistory.restore(profileBeforeScene);
-    if(Array.isArray(history?.undoStack)&&Number.isInteger(profileUndoDepth))history.undoStack.length=profileUndoDepth;
-    if(Array.isArray(history?.redoStack)&&Number.isInteger(profileRedoDepth))history.redoStack.length=profileRedoDepth;
+    if(Array.isArray(history?.undoStack)&&profileUndoEntries)history.undoStack.splice(0,history.undoStack.length,...profileUndoEntries);
+    if(Array.isArray(history?.redoStack)&&profileRedoEntries)history.redoStack.splice(0,history.redoStack.length,...profileRedoEntries);
   }
-  profileBeforeScene=null;profileUndoDepth=null;profileRedoDepth=null;
+  profileBeforeScene=null;profileUndoEntries=null;profileRedoEntries=null;
   activeProfileId=null;cachedActiveId=null;cachedActiveObject=null;lastSignature='';
   setStatus('Revolve Profile cancelled');
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
@@ -463,7 +463,7 @@ installPenRange(segmentInput,()=>{
   meta.segments=Math.max(3,Math.min(64,Math.round(Number(segmentInput.value)||24)));
   segmentOut.textContent=String(meta.segments);lastSignature='';
 });
-applyButton.addEventListener('click',()=>{if(applyRevolve()){profileBeforeScene=null;profileUndoDepth=null;profileRedoDepth=null;}});
+applyButton.addEventListener('click',()=>{if(applyRevolve()){profileBeforeScene=null;profileUndoEntries=null;profileRedoEntries=null;}});
 cancelButton?.addEventListener('click',cancelRevolveProfile);
 document.querySelector('#outlinerList')?.addEventListener('click',()=>queueMicrotask(()=>{cachedActiveId=null;cachedActiveObject=null;lastSignature='';buildOverlay();}));
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>queueMicrotask(()=>{lastSignature='';buildOverlay();})));

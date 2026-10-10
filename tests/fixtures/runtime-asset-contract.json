@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.787",
+      "url": "./src/release-bootstrap.js?v=0.36.18.788",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.787",
+      "url": "./src/release-version.js?v=0.36.18.788",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -396,10 +396,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/revolve-profile.js?v=0.36.18.517",
+      "url": "./src/revolve-profile.js?v=0.36.18.788",
       "target": "src/revolve-profile.js",
-      "sha256": "d009b8cc1d2c43bae869a434bee7b6a0e7b61af51d689f9f47fe9ee197314441",
-      "sourceVersion": "0.36.18.469"
+      "sha256": "2f1f0aff839914a272a8beb427b68cfee6ea35b7025269dba0ce0f6fd983a7e6",
+      "sourceVersion": "0.36.18.788"
     },
     {
       "owner": "index.html",
