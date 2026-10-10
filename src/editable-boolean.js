@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import {createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature} from './editable-boolean-core.js?v=0.36.18.798';
 
-const VERSION='0.36.18.800';
+const VERSION='0.36.18.801';
 const panel=document.createElement('div');
 panel.id='editableBooleanPanel';panel.className='boxlab-tool-session-shell';panel.hidden=true;
 panel.innerHTML=`<div class="boxlab-tool-session-title">Edit Boolean</div>
@@ -80,7 +80,11 @@ function open(){
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
   status('Edit source A or B, then Update Preview');queueSync();return true;
 }
-function cancel(){if(!controller.cancel())return false;finish();status('Boolean edit cancelled');return true;}
+function cancel(){
+  // Recover a visible host left behind by an interrupted activation.
+  if(!controller.active()){if(panel.hidden&&globalThis.__boxlabToolSession?.current?.()?.id!=='boolean-edit')return false;finish();status('Boolean editor closed');return true;}
+  if(!controller.cancel())return false;finish();status('Boolean edit cancelled');return true;
+}
 function update(){const result=controller.update();status(result.ok?'Preview updated · Apply keeps this result':`Preview refused · ${result.reason}`);return result;}
 function apply(){const result=controller.apply();if(result.ok){finish();status(result.unchanged?'Boolean unchanged':'Boolean updated · sources hidden');}else status(`Boolean update refused · ${result.reason}`);return result;}
 panel.querySelectorAll('[data-edit-source]').forEach(button=>button.addEventListener('click',()=>{if(controller.choose(controller.state()?.[button.dataset.editSource+'Id'])){globalThis.__boxlabObjectSelection?.single?.(manager().activeId);document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}}));
@@ -94,7 +98,10 @@ window.addEventListener('boxlab-tool-session-change',event=>{if(controller.activ
 // Use existing gesture/transform owners; no new viewport pointer handler.
 document.addEventListener('click',event=>{
   if(!controller.active()||panel.contains(event.target))return;
-  if(event.target?.closest?.('#selectionModes button,#outlinerAddBtn,#outlinerDuplicateBtn,#outlinerDeleteBtn,#resetBtn,#importMeshBtn,#exportAsBtn,#exportBaseBtn,#exportSubdBtn,#linkedDuplicateBtn,#makeUniqueBtn,#modifiersDrawer input,#modifiersDrawer button,.outliner-more-menu,.object-action-menu,.mode-tools[data-mode-tools="object"] button')){
+  const nextMode=event.target?.closest?.('#selectionModes button')?.dataset?.mode;
+  // Activation clicks the CURRENT mode internally to clear component selection.
+  // Only a real mode change cancels this transaction.
+  if(nextMode&&nextMode!==mode()||event.target?.closest?.('#outlinerAddBtn,#outlinerDuplicateBtn,#outlinerDeleteBtn,#resetBtn,#importMeshBtn,#exportAsBtn,#exportBaseBtn,#exportSubdBtn,#linkedDuplicateBtn,#makeUniqueBtn,#modifiersDrawer input,#modifiersDrawer button,.outliner-more-menu,.object-action-menu,.mode-tools[data-mode-tools="object"] button')){
     if(busy()){event.preventDefault();event.stopImmediatePropagation();return;}
     cancel();
   }

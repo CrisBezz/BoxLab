@@ -1,4 +1,4 @@
-import { mountGizmoCornerControls, gizmoIcons } from './gizmo-corner-controls.js?v=0.36.18.734';
+import { mountGizmoCornerControls } from './gizmo-corner-controls.js?v=0.36.18.734';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
 import * as THREE from 'three';
 
@@ -427,17 +427,16 @@ root.innerHTML=`
   <button type="button" class="tg-tool-sector" style="--a:45deg" data-tool-target="#surfaceInsertBtn">Insert</button>
   <button type="button" class="tg-tool-sector" style="--a:90deg" data-tool-target="#solidifyBtn">Solidify</button>
   <button type="button" class="tg-tool-sector" style="--a:135deg" data-tool-target="#linearArrayLaunchBtn">Array</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:90deg;--r:230px" data-tool-target="#booleanLaunchBtn">Boolean</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180deg;--r:230px" data-tool-target="#booleanLaunchBtn">Boolean</button>
   <button type="button" class="tg-tool-sector" style="--a:225deg" data-tool-target="#joinObjectsBtn">Join</button>
   <button type="button" class="tg-tool-sector" style="--a:270deg" data-tool-target="#symmetryBisectBtn">Symmetry / Bisect</button>
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:270deg;--r:230px" data-tool-target="#meshHealthBtn">Mesh Health</button>
   <div class="tg-object-outer-guide" aria-hidden="true"></div>
   <button type="button" class="tg-tool-sector" style="--a:180deg" data-tool-target="#outlinerDuplicateBtn">Duplicate</button>
   <button type="button" class="tg-tool-sector tg-tool-danger" style="--a:315deg" data-tool-target="#outlinerDeleteBtn">Delete</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225deg;--r:230px" data-tool-target="#objectMultiSelectBtn" aria-label="Multi Select" title="Multi Select"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">${gizmoIcons.multi}</svg><span>Multi Select</span></button>
 
   <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:0deg;--r:230px" data-tool-target="#revolveProfileLaunchBtn">Revolve Profile</button>
-  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:180deg;--r:230px" data-tool-target="#quadCleanBtn">Clean for SubD</button>
+  <button type="button" class="tg-tool-sector tg-tool-outer" style="--a:225deg;--r:230px" data-tool-target="#quadCleanBtn">Clean for SubD</button>
   <button type="button" class="tg-tool-center" aria-label="Close Object contextual tools" title="Return to gizmo">×</button>
 </div>
 <div class="tg-edge-extrude-badge" hidden><strong>Extrude</strong><span>Plane ⟂ edge</span><small>Choose constraint • drag edge</small></div>

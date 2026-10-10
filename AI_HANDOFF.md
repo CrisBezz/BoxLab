@@ -3,13 +3,35 @@
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.800**. Last whole-build acceptance **.797 PASS**, protected.
+Current build **v0.36.18.801**. Last whole-build acceptance **.797 PASS**, protected.
 Parent main `90662273ecfbdffe0c71d20bd11f2f65328aeea0`.
 Release commit `eeecfe33c43507826c30f03d1192862bb29de178`.
 
 Full2138/2138 PASS, 0 failures/skips. CI38091987976 and Pages38091987719 SUCCESS.
 Fresh live manifest, shell and six changed module owners match main byte-for-byte.
 .800 iPad acceptance pending; .799 reported FAIL (A/B display), not protected.
+
+## .801 — Reproduced Boolean activation/cancel loop; corrected radial
+
+User .800 FAIL: no A/B and cannot close Edit Boolean popup. Root is NOT source
+material/Solo visibility: actual multi-object activate calls clearComponentSelection,
+which clicks the CURRENT Object mode button. Editable editor document-capture guard
+interpreted it as mode exit and called Cancel during open/switch/cancel. Reentrant
+Cancel ends transaction, then outer restoreTokens reads null session.undo; orphan
+popup persists and A/B never finish activation. Earlier tests stubbed this click,
+so green unit runs missed integration. Do not repeat visibility-only repairs.
+
+Edit guard now cancels only when next mode differs from current; same-mode activation
+passes. Cancel can also close a visible orphan host with no transaction. Regression
+executes actual clearComponentSelection → DOM click → document capture → manager
+activation, plus A/B switch/Apply/Cancel. Whole-source mutation restoring old guard
+reproduces null.undo exception. No main gesture or geometry/history owner changed.
+
+Object radial Multi Select removed as corrected by user. Clean for SubD outer225°
+occupies its former slot. Boolean/Edit Boolean outer180° directly below Duplicate
+inner180°. Delete315° and all other slots retained. Footer Multi icon and gizmo corner
+remain; original footer Duplicate retained. Validate .801 before Live Boolean;
+.798/.799/.800 all unaccepted; .797 remains protected PASS.
 
 ## .800 — Boolean source visibility and Object radial actions
 
@@ -1005,3 +1027,5 @@ protected Multi1.0/Loop715 and frozen Beta2–6 retained. .798 device PASS pendi
 .799 validation: **2136/2136 PASS, 0 FAIL, 0 skipped**. Full Node24 suite; touch/layout rendering remains device gate.
 
 .800 validation: **2138/2138 PASS, 0 FAIL, 0 skipped**; Node24 complete suite. Device A/B display/controls remain acceptance gate.
+
+.801 validation: **2141/2141 PASS, 0 FAIL, 0 skipped** (full Node24 suite). Includes actual activation click plus old-guard mutation; iPad acceptance pending.

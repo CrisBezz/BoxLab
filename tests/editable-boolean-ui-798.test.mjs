@@ -5,7 +5,7 @@ import vm from 'node:vm';
 import * as THREE from 'three';
 import {createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature} from '../src/editable-boolean-core.js';
 import {editableBooleanRuntime} from './helpers/editable-boolean-runtime.mjs';
-function ui(){
+function ui({sourceEdit=s=>s}={}){
  const r=editableBooleanRuntime(),c=r.c,nodes=new Map(),tasks=[],events=[];
  function node(id=''){
   const listeners=new Map(),classes=new Set(),n={id,dataset:{},hidden:false,style:{},children:[],classList:{toggle(k,on){on?classes.add(k):classes.delete(k);}},
@@ -19,13 +19,19 @@ function ui(){
  doc.createElement=()=>{const panel=node('editableBooleanPanel');Object.defineProperty(panel,'innerHTML',{set(){for(const id of ['editableBooleanNote','editableBooleanUpdate','editableBooleanCancel','editableBooleanApply'])panel.appendChild(node(id));for(const [key,attr,values] of [['source','editSource',['a','b']],['operation','editOperation',['union','difference','intersection']]])for(const value of values){const button=node();button.dataset[attr]=value;nodes.set(`[data-edit-${key}="${value}"]`,button);panel.appendChild(button);}}});return panel;};
  doc.querySelector=selector=>selector==='[data-mode-tools="object"]'?parent:nodes.get(selector)||null;
  const radial=node();nodes.set('.tg-tool-ring[data-ring-mode="object"] [data-tool-target="#booleanLaunchBtn"]',radial);
+ const modeButton=node();modeButton.dataset.mode='object';let modeClicks=0;
+ modeButton.closest=selector=>selector.includes('#selectionModes button')?modeButton:null;
+ modeButton.click=()=>{assert.ok(++modeClicks<30,'activation mode clicks must not recursively Cancel');doc.dispatchEvent({type:'click',target:modeButton});};
+ const query=doc.querySelector;doc.querySelector=selector=>selector==='#selectionModes button.active'?modeButton:query(selector);
+ // Actual manager activation clears selection by clicking the current mode.
+ const multi=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');vm.runInContext(multi.slice(multi.indexOf('function clearComponentSelection()'),multi.indexOf('function enterObjectMode()')),c);
  const scene=new THREE.Scene();c.__boxlabBridgeState.scene=scene;
  Object.assign(c,{document:doc,window:win,queueMicrotask:fn=>tasks.push(fn),createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature,
   Event:class{constructor(type){this.type=type;}},CustomEvent:class{constructor(type,options){this.type=type;this.detail=options?.detail;}},
   __boxlabSelectionBridge:{mode:()=> 'object'},__boxlabBooleanPrototype:{buildResult:c.buildResult},__boxlabBooleanToolSession:{close(){}},
   __boxlabObjectSelection:{single(id){c.selectedIds=new Set([id]);c.multiEnabled=false;}},__boxlabToolSession:{begin(value){events.push(value);},end(id){events.push({end:id});}}});
  let current=null;Object.assign(c.__boxlabToolSession,{current:()=>current,begin(value){current=value;events.push(value);},end(id){if(current?.id===id)current=null;events.push({end:id});}});
- const source=fs.readFileSync(new URL('../src/editable-boolean.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');vm.runInContext('(function(){'+source+'})()',c);
+ const source=fs.readFileSync(new URL('../src/editable-boolean.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');vm.runInContext('(function(){'+sourceEdit(source)+'})()',c);
  function flush(){let i=0;while(tasks.length){assert.ok(i++<30,'bounded UI synchronization');tasks.shift()();}}
  flush();return{r,c,nodes,doc,win,scene,events,flush,api:c.__boxlabEditableBoolean};
 }
@@ -56,4 +62,21 @@ test('799 actual Object radial launches Edit Boolean without premature completio
 test('799 actual UI Cancel button exits, including after a refused preview',()=>{
  const u=ui(),before=u.r.snapshot();u.api.open();u.nodes.get('[data-edit-source="b"]').click();u.r.move(new THREE.Vector3(30,0,0));u.nodes.get('[data-edit-operation="intersection"]').click();assert.equal(u.api.update().ok,false);
  u.nodes.get('#editableBooleanCancel').click();u.flush();assert.equal(u.api.active(),false);assert.equal(u.c.__boxlabToolSession.current(),null);assert.equal(u.nodes.get('#editableBooleanPanel').hidden,true);assert.deepEqual(u.r.snapshot(),before);
+});
+
+test('801 actual activation mode-button click keeps edit open; A/B switch, Apply and Cancel exit without recursion',()=>{
+ const u=ui(),before=u.r.snapshot();assert.equal(u.api.open(),true);u.flush();assert.equal(u.api.active(),true);assert.equal(u.r.manager.activeId,1);
+ u.nodes.get('[data-edit-source="b"]').click();u.flush();assert.equal(u.api.active(),true);assert.equal(u.r.manager.activeId,2);assert.equal(u.scene.children[0].children.length,4);
+ u.r.move(new THREE.Vector3(.08,.03,.01));u.nodes.get('#editableBooleanCancel').click();u.flush();assert.deepEqual(u.r.snapshot(),before);assert.equal(u.c.__boxlabToolSession.current(),null);
+ u.api.open();u.nodes.get('[data-edit-source="b"]').click();u.r.move(new THREE.Vector3(.08,.03,.01));assert.equal(u.api.apply().ok,true);u.flush();assert.equal(u.api.active(),false);assert.equal(u.r.manager.activeId,4);
+});
+
+test('801 regression rejects old capture guard with actual activation click (previous stub missed this)',()=>{
+ const u=ui({sourceEdit:s=>s.replace(/  const nextMode=[\s\S]*?if\(nextMode&&nextMode!==mode\(\)\|\|event.target\?\.closest\?\.\('#outlinerAddBtn/,"  if(event.target?.closest?.('#selectionModes button,#outlinerAddBtn")});
+ assert.throws(()=>u.api.open(),/Cannot read properties of null.*undo/);
+});
+
+test('801 Cancel closes an orphaned edit host even when its transaction already ended',()=>{
+ const u=ui(),before=u.r.snapshot(),panel=u.nodes.get('#editableBooleanPanel');panel.hidden=false;u.c.__boxlabToolSession.begin({id:'boolean-edit',node:panel});
+ assert.equal(u.api.cancel(),true);assert.equal(panel.hidden,true);assert.equal(u.c.__boxlabToolSession.current(),null);assert.deepEqual(u.r.snapshot(),before);
 });

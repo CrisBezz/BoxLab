@@ -7331,3 +7331,24 @@ Original footer Duplicate retained. No new group/history/Multi owner.
 - [ ] Multi icons in radial, gizmo corner and footer toggle the same state; select objects/group and verify no unwanted edits.
 
 .800 validation: **2138/2138 PASS, 0 FAIL, 0 skipped**; Node24 complete suite. Device A/B display/controls remain acceptance gate.
+
+## .801 — Reproduced Boolean activation reentrancy / radial correction — 2026-10-11
+
+User .800 FAIL. Real manager clears component selection by clicking CURRENT mode;
+editor capture guard treated this internal click as exit and Cancel re-entered,
+ending session before outer restoreTokens (null.undo), leaving orphan popup and no A/B.
+Previous fixture stubbed this click; visibility-only .800 did not address root.
+Guard now only exits on different mode. Cancel closes orphan host if transaction ended.
+Whole-source old-guard mutation reproduces exception with actual manager/mode-click path.
+
+Radial Multi removed; Clean for SubD outer225°; Boolean/Edit Boolean outer180° below
+Duplicate inner180°. Existing Delete315°, footer Duplicate/Multi and corner Multi retained.
+Only editor/radial/gizmo owners changed; protected geometry, Multi1.0, Loop715 and betas untouched.
+
+- [x] Actual internal selection-clearing click/capture ordering, source A/B switching, Apply/Cancel and restored scene; old guard mutation rejected.
+- [x] Cancel closes orphaned host; normal session and existing radial lifecycle checks retained.
+- [x] Corrected radial positions / no radial Multi / footer Multi and Duplicate retained.
+- [ ] iPad: Edit Boolean → A/B visible, switch/transform → Cancel; reopen → Update/Apply → Undo/Redo.
+- [ ] Background exit and mode switch close safely; radial Boolean below Duplicate, Clean in prior Multi slot, no radial Multi.
+
+.801 validation: **2141/2141 PASS, 0 FAIL, 0 skipped** (full Node24 suite). Includes actual activation click plus old-guard mutation; iPad acceptance pending.

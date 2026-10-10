@@ -341,9 +341,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-radial-session.js?v=0.36.18.800",
+      "url": "./src/object-radial-session.js?v=0.36.18.801",
       "target": "src/object-radial-session.js",
-      "sha256": "b6d2ec0140f611323490b618016c740336af0733a6d21087dfee3647e5706ab3"
+      "sha256": "b423487d6a7279156109ce6ac6c8d5775f43ad0593f19871f8e1f8a7a3f900e3"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.800",
+      "url": "./src/release-bootstrap.js?v=0.36.18.801",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.800",
+      "url": "./src/release-version.js?v=0.36.18.801",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.800",
+      "url": "./src/total-gizmo.js?v=0.36.18.801",
       "target": "src/total-gizmo.js",
-      "sha256": "91f47288b9afeecabad82079210320c9560a041238e55c0db9815181e3824caf"
+      "sha256": "0fd8d6f7495f5b33ad03542d29930bd2d42060b91811a3c58a2d6acc847c975d"
     },
     {
       "owner": "index.html",
@@ -2182,10 +2182,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/editable-boolean.js?v=0.36.18.800",
+      "url": "./src/editable-boolean.js?v=0.36.18.801",
       "target": "src/editable-boolean.js",
-      "sha256": "20139d4163922bf00e49d8df334bd9c7875b9559f600d1ed57187b7e0d1c52f9",
-      "sourceVersion": "0.36.18.800"
+      "sha256": "26724775b66765c4d87d03812034be2516361bbc90f6c23517681f919279f0cb",
+      "sourceVersion": "0.36.18.801"
     },
     {
       "owner": "src/editable-boolean.js",

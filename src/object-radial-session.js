@@ -9,7 +9,6 @@ const tools={
   Join:['#joinObjectsBtn'],
   Delete:['#outlinerDeleteBtn'],
   Duplicate:['#outlinerDuplicateBtn'],
-  'Multi Select':['#objectMultiSelectBtn'],
   'Symmetry / Bisect':['#symmetryBisectBtn','symmetry-bisect','__boxlabSymmetryBisect'],
   'Mesh Health':['#meshHealthBtn','mesh-health','__boxlabMeshHealth'],
   'Revolve Profile':['#revolveProfileLaunchBtn','revolve-profile','__boxlabRevolveProfile'],
@@ -24,7 +23,7 @@ function available(label){
  const spec=tools[label],target=spec&&document.querySelector(spec[0]),o=object();
  if(mode()!=='object'||!target||target.disabled||!o)return false;
  if(['Transform','Insert'].includes(label)&&globalThis.__boxlabObjectSelection?.ids?.size>1)return false;
- return label==='Multi Select'||!o.locked&&o.kind!=='reference';
+ return !o.locked&&o.kind!=='reference';
 }
 function complete(tool){window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'object',tool}}));}
 function cancelCurrent(){
@@ -56,5 +55,5 @@ window.addEventListener('boxlab-tool-session-change',event=>{
 // Existing owners cancel on context loss; Boolean also needs a mode exit.
 window.addEventListener('boxlab-bridge-state',()=>{if(mode()!=='object'&&['boolean','boolean-edit'].includes(current()))cancelCurrent();});
 document.querySelectorAll('#selectionModes button').forEach(b=>b.addEventListener('click',()=>queueMicrotask(()=>{if(mode()!=='object')cancelCurrent();})));
-globalThis.__boxlabObjectRadialSession={version:'0.36.18.800',available,launch,cancelCurrent,
+globalThis.__boxlabObjectRadialSession={version:'0.36.18.801',available,launch,cancelCurrent,
  hidesGizmo:()=>!!current()&&Object.values(tools).some(s=>s[1]===current())&&!['symmetry-bisect','revolve-profile'].includes(current())};
