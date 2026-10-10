@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — Native viewpoint validation
+# BoxLab AI Handoff — Revolve Cancel history
 
 ## Current state — 2026-10-10
 
@@ -7,7 +7,7 @@ Current build **v0.36.18.788**. Last whole-build user acceptance is **.787 PASS*
 .786 Vertex/Face picking repairs and accepted Edge behavior protected.
 Parent main `43889bf279386791f74c19f9416c26e3229e06d1`.
 .788 repairs existing Revolve Cancel history tokens, validates current launch/Edit
-contract; publication pending. Historical evidence in DEV_HISTORY.md and docs.
+contract; publication/Node22/live verified below. Historical evidence in DEV_HISTORY.md and docs.
 
 ## .788 — Revolve launch contract and Cancel history repair — 2026-10-10
 
@@ -45,7 +45,7 @@ host execution; controlled adapters are explicit.
 pin stay active. Only runtime change is Revolve Cancel stacks/stamp; geometry,
 launcher/Edit defaults, existing transforms and frozenBeta2–6 unchanged. Main/Face/
 Vertex assist786, Through779/Multi1.0/Loop715 retained. Shell/recovery788, reviewed
-Revolve URL/hash/stamp and two recovery URLs refreshed. Publication pending.
+Revolve URL/hash/stamp and two recovery URLs refreshed. Publication/Node22/live verified below.
 Next: audit remaining29 checks, then scoped Bevel/Knife/Loop reliability. Other
 session Cancel length-only approaches (e.g. Sweep) require separate owner audit;
 do not infer their safety from this Revolve fix.
@@ -476,3 +476,16 @@ Pages run38020165585 succeeded. Fresh live index/version match787; unchanged
 main/Face/Vertex assist786, Edge759, Through779, protected Multi1.0 and frozenBeta6
 version byte-match repository.67focusedPASS. .786 user PASS recorded/protected;
 .787 narrow device sanity pending. Shell/recovery787 reviewed; runtime unchanged.
+
+
+### .788 publication verification — 2026-10-10
+
+Release commit `da4939dbcf70e426989f08face2ca3875cda48af`, tree
+`8b5a81cbbd6b7379fed0a07426a8e8b372f6d8b9` exactly matches tested checkout.
+Actual Node22 Topology run38028448281/job114144169023:2087tests/2058PASS/29FAIL/
+0skip; all29failure identities exactly match docs/reliability-build-788.json.
+Pages run38028447713 succeeded. Fresh live index/version/Revolve788 match repository;
+accepted main/Vertex assist/Face786, Through779, protected Multi1.0 and frozenBeta6
+version also byte-match live.88focusedPASS. .787 user PASS protected; .788 device
+Cancel/Redo and profile authoring/Apply sanity pending. Reviewed shell/recovery788
+and changed Revolve hash/stamp/pin verified; all other runtime owners untouched.

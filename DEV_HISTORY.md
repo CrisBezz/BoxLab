@@ -6840,10 +6840,23 @@ host execution; controlled adapters are explicit.
 pin stay active. Only runtime change is Revolve Cancel stacks/stamp; geometry,
 launcher/Edit defaults, existing transforms and frozenBeta2–6 unchanged. Main/Face/
 Vertex assist786, Through779/Multi1.0/Loop715 retained. Shell/recovery788, reviewed
-Revolve URL/hash/stamp and two recovery URLs refreshed. Publication pending.
+Revolve URL/hash/stamp and two recovery URLs refreshed. Publication/Node22/live verified below.
 Next: audit remaining29 checks, then scoped Bevel/Knife/Loop reliability. Other
 session Cancel length-only approaches (e.g. Sweep) require separate owner audit;
 do not infer their safety from this Revolve fix.
 Manual: create an undoable edit then Undo; open Revolve Profile, Cancel, Redo must
 restore prior edit. Reopen, author simple profile, switch Edit off/on, Apply then
 Undo/Redo. Confirm existing component selection/navigation remains intact.
+
+
+### .788 publication verification — 2026-10-10
+
+Release commit `da4939dbcf70e426989f08face2ca3875cda48af`, tree
+`8b5a81cbbd6b7379fed0a07426a8e8b372f6d8b9` exactly matches tested checkout.
+Actual Node22 Topology run38028448281/job114144169023:2087tests/2058PASS/29FAIL/
+0skip; all29failure identities exactly match docs/reliability-build-788.json.
+Pages run38028447713 succeeded. Fresh live index/version/Revolve788 match repository;
+accepted main/Vertex assist/Face786, Through779, protected Multi1.0 and frozenBeta6
+version also byte-match live.88focusedPASS. .787 user PASS protected; .788 device
+Cancel/Redo and profile authoring/Apply sanity pending. Reviewed shell/recovery788
+and changed Revolve hash/stamp/pin verified; all other runtime owners untouched.

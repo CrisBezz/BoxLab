@@ -4999,4 +4999,6 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
 - [ ] .788 device: edit then Undo; Revolve open/Cancel then Redo restores edit.
 - [ ] Reopen, draw simple profile, toggle Edit off/on, Apply and Undo/Redo.
 - [ ] Existing component selection and navigation sanity.
-- [ ] .788 CI/Pages/live publication verification.
+- [x] .788 Pages38028447713 success; Node22 run38028448281/job114144169023
+  exactly matches29 failures and2087/2058PASS/29FAIL/0skip. Live shell, changed
+  Revolve and accepted/protected owners byte-match release da4939dbcf70e426989f08face2ca3875cda48af.
