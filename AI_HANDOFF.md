@@ -916,3 +916,14 @@ Pages38040570537 succeeded. Actual Node22 Topology38040570929/job114179817579:
 2119tests/2108PASS/11FAIL/0skip; all11 identities match local and795.
 37focusedPASS. Fresh live index/version/Add UI/fit child byte-match main;
 protected Multi1.0 and frozenBeta6 version byte-match. iPad/Nomad acceptance pending.
+
+
+### .797 publication verification — 2026-10-10
+
+Release `7927b53ca1668bb114209457a981dc57a38d210e`, tree
+`126db9144ea1080491dad90346270a608e3f57c4` exactly matches tested checkout.
+Pages38046675975 succeeded. Actual Node22 Topology38046675999/job114197501430:
+2125tests/2125PASS/0FAIL/0skip; CI green, no exclusions.56focusedPASS.
+Fresh live index/version/importer797 byte-match main; accepted Add UI796,
+protected Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.
+.796 user PASS protected; .797 grouped GLB/Rotate device acceptance pending.

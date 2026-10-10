@@ -50,3 +50,14 @@ All other runtime hashes/pins, Multi1.0/Loop715, accepted Add795/796 and frozenB
 unchanged. Fresh chat next: .797 iPad GLB names/colours/Split and Rotate/history checks,
 then scoped Bevel/Knife/Loop reliability. Zero automated failures is coverage evidence,
 not a claim of all app behavior proven. Publication verification follows separately.
+
+
+### .797 publication verification — 2026-10-10
+
+Release `7927b53ca1668bb114209457a981dc57a38d210e`, tree
+`126db9144ea1080491dad90346270a608e3f57c4` exactly matches tested checkout.
+Pages38046675975 succeeded. Actual Node22 Topology38046675999/job114197501430:
+2125tests/2125PASS/0FAIL/0skip; CI green, no exclusions.56focusedPASS.
+Fresh live index/version/importer797 byte-match main; accepted Add UI796,
+protected Multi1.0 and frozenBeta6 version byte-match unchanged repository bytes.
+.796 user PASS protected; .797 grouped GLB/Rotate device acceptance pending.
