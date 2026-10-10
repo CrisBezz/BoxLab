@@ -3,11 +3,49 @@
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.784**. Last explicit user acceptance is **.783 PASS**.
-Parent main `bcbcf487b58bb7d3a75d29fe1e4b5dd44e4ac1c2`. .784 published and live verified; publication evidence below.
-.783 release30e2a9f0af57222ea24b27fb960cf486dac2f07d: Node22 CI2074/2038PASS/
-36FAIL/0skip and Pages/live verified; user PASS now protected.
-All historical evidence remains in DEV_HISTORY.md and docs/reliability-build-*.md/JSON.
+Current build **v0.36.18.785**. Last explicit user acceptance is **.784 PASS**.
+Parent main `973d8fc44fbad313359338553c7e37e58a9fb3c8`. .785 validation complete; publication/CI/live pending.
+.784 release1ed2807186c94684ff088a6ecdb1955f5f4dacc1: Node22 CI2076/2041PASS/
+35FAIL/0skip and Pages/live verified; user PASS protected.
+Historical evidence remains in DEV_HISTORY.md and docs/reliability-build-*.md/JSON.
+
+## .785 — Main selection navigation and tap completion validation — 2026-10-10
+
+User .784 PASS recorded/protected. Parent main `973d8fc44fbad313359338553c7e37e58a9fb3c8`.
+Audit main762 background movement/hold/confirmed tap owners and componentTapIntent
+against historical navigation/unified-toggle assertions. Three failures demand
+retired source spelling or old endDrag tapHit dispatch. Replace exactly those three
+with actual current owner behavior; keep other source/pin checks and all original
+.720 native-owner test bodies. No implementation changes or skipped checks.
+
+Extract original .720 native background fixture into shared helper; actual main
+window movement listener replaces previously manufactured movement code. Vertex,
+Edge and Face retain selection on navigation, moving away/back, diagonal/exact8px
+threshold, cancellation, second contact and movement only at release. Confirmed
+short blank tap clears once, disarms Lasso and duplicate native/semantic release
+is inert. Existing .724 hold-invert, exclusions and session lifecycle tests retained.
+Execute actual main component tap-intent release/cancel, toggleSelection and endDrag
+listeners with seeded press intent, real EditableMesh/History and controlled selection/
+render dependencies. Each component mode toggles only intended selected ID, ignores
+wrong pointer until matching release and protects cancel/long/moved/cancelled intent.
+Release retires drag/intent, restores controls, tap releases capture, geometry/history/
+redo unchanged and duplicate completion inert. Not full down/move/hold arbitration,
+whole renderer or Safari propagation proof; original down-source assertion retained.
+Three in-memory mutations rejected: lost navigation flag, absent toggle, premature
+blank completion. Runtime source never written; no parallel pointer/modelling owner.
+
+110focusedPASS including background/Lasso/session, Pencil/floating Edge and release
+contracts. Full Node24:2077tests/2045PASS/32FAIL/0skip; exactly three reviewed .784
+failures removed, no new identities. Remaining31source-pattern/1version-pin stay
+active; no exclusions/skips/CI gate. Runtime/frozenBeta2–6 unchanged. Shell/recovery785
+and only two reviewed recovery URLs refreshed; all source hashes retained. Protected
+main762/Face+Through779/Inset753/Debug736/Multi1.0/Loop715 retained.
+Publication/Node22/live pending; .785 hands-on sanity pending.
+Next: remaining32 checks and scoped Bevel/Knife/Loop reliability. Add Vertex picking,
+NOM import and Lasso tightening deferred.
+Manual: confirm785; selected Face/Edge/Vertex tap removes just that selection;
+background orbit/pan/pinch preserve selection; short blank tap clears; model then
+Undo/Redo. No synthetic timing fixture recreation requested.
 
 ## .784 — Face Deselect and contextual session-exit validation — 2026-10-10
 
@@ -103,8 +141,8 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-User .783 PASS. .784 Face Deselect/session-exit validation hands-on pending.
-Continue remaining35 checks and scoped Bevel/Knife/Loop reliability. Add Vertex
+User .784 PASS. .785 selection navigation/tap validation hands-on pending.
+Continue remaining32 checks and scoped Bevel/Knife/Loop reliability. Add Vertex
 picking/NOM import/Lasso tightening deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
@@ -211,7 +249,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery784; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery785; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main762; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct779;
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -248,7 +286,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining35 active failures visible until reconciled.
+real-group preservation. Remaining32 active failures visible until reconciled.
 
 
 ### .783 publication verification — 2026-10-10

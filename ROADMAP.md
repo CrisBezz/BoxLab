@@ -4,15 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .784, 2026-10-10
+## Current direction — .785, 2026-10-10
 
-User .783 PASS protected. Validation-only784 reconciles the retired .496 Deselect
-hook with actual main Deselect and contextual session-exit owners. Both tools restart
-selection, preserve geometry/history/redo and complete Done/background once; active
-drags guarded. Three mutations rejected;97focusedPASS. Full2076/2041PASS/35FAIL/
-0skip, exactly one reviewed old failure removed, no new identities. Runtime/frozenBeta
-unchanged; publication/CI/live verified. Continue remaining35 checks and scoped
-Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
+User .784 PASS protected. Validation-only785 reconciles three historical selection
+checks with current main navigation/background and component tap-intent owners.
+All component modes retain navigation selection, confirmed taps toggle/clear once;
+original .720 checks retained. Three mutations rejected;110focusedPASS.
+Full2077/2045PASS/32FAIL/0skip, no new identities. Runtime/frozenBeta unchanged;
+publication/CI/live pending. Continue remaining32 checks and scoped Bevel/Knife/Loop
+reliability. Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
 

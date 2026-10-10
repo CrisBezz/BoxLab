@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {createBackgroundSelectionTap} from '../src/background-selection-tap.js';
+import {nativeOwner} from './helpers/background-selection-runtime.mjs';
 const read=n=>fs.readFileSync(new URL('../src/'+n,import.meta.url),'utf8');
 test('Double tap uses native release times through 500ms despite delayed callbacks; late tap clears',()=>{
  for(const interval of [100,360,440,500,501]){
@@ -17,17 +18,6 @@ test('Older timestamps cannot invert a newer tap',()=>{
  const owner=createBackgroundSelectionTap();let inversions=0,ids=[1];const opts={context:'edge',read:()=>ids,clear:()=>ids=[],invert:()=>inversions++};
  owner.tap({timeStamp:1000,clientX:0,clientY:0},opts);owner.tap({timeStamp:900,clientX:0,clientY:0},opts);assert.equal(inversions,0);
 });
-function nativeOwner(){
- const s=read('main.js'),windowHandlers={},canvas={},logs=[],timers=new Map();let timerId=0;let ids=[1,3],armed=true,hit=false,wall=100000;
- const c={setTimeout:(fn,ms)=>{timers.set(++timerId,{fn,ms});return timerId;},clearTimeout:id=>timers.delete(id),canvas,window:{addEventListener:(t,f)=>{(windowHandlers[t]??=[]).push(f);},dispatchEvent(){}},createBackgroundSelectionTap:()=>createBackgroundSelectionTap({now:()=>wall}),backgroundTap:null,selectionMode:'edge',directTool:null,mesh:{},EDIT_DRAG_THRESHOLD:8,TAP_MAX_MS:320,performance:{now:()=>wall},gestureDebug:(stage,detail)=>logs.push({stage,detail}),pick:()=>hit,selectionIndices:()=>ids,resetEdgeHoldCycle(){},clearSelection(){ids=[];},renderMesh(){},__boxlabLasso:{isArmed:()=>armed,isDrawing:()=>false,setArmed:v=>armed=v},__boxlabSelectionSetPolish:{invert:seed=>ids=[0,1,2,3].filter(i=>!seed.includes(i))}};
- vm.createContext(c);
- const begin=s.slice(s.indexOf('function beginBackgroundTap('),s.indexOf("canvas.addEventListener('pointerdown',event=>{if(event.pointerType==='mouse'"));
- const helper=s.slice(s.indexOf('const backgroundSelectionTap='),s.indexOf("window.addEventListener('pointerup',event=>{\n  if(backgroundHold"));
- const finish=s.slice(s.indexOf("window.addEventListener('pointerup',event=>{\n  if(backgroundHold"),s.indexOf('// Pencil orbit owner'));
- const move="window.addEventListener('pointermove',event=>{if(!backgroundTap||backgroundTap.pointerId!==event.pointerId)return;if(Math.hypot(event.clientX-backgroundTap.startX,event.clientY-backgroundTap.startY)>=EDIT_DRAG_THRESHOLD){backgroundTap.moved=true;backgroundSelectionTap.reset();}},true);";
- vm.runInContext(begin+helper+move+finish,c);
- return {c,logs,fireHold(){for(const [id,t] of [...timers]){timers.delete(id);assert.equal(t.ms,500);t.fn();}},get ids(){return ids;},get armed(){return armed;},set hit(v){hit=v;},send(type,timeStamp,x=10,extra={}){const e={type,timeStamp,clientX:x,clientY:20,pointerId:1,pointerType:'touch',isPrimary:true,target:canvas,button:0,...extra};for(const f of windowHandlers[type]||[])f(e);},semantic(timeStamp){c.completeBackgroundSelectionTap({pointerId:1,timeStamp,clientX:10,clientY:20});}};
-}
 test('Actual window owner clears Edge/Lasso despite unavailable canvas delivery and delayed Safari timers',()=>{
  const h=nativeOwner();h.send('pointerdown',1000);h.send('pointerup',1070);assert.deepEqual(h.ids,[]);assert.equal(h.armed,false);h.semantic(1070);assert.deepEqual(h.ids,[],'duplicate semantic release cannot invert');
  h.send('pointerdown',1400);h.send('pointerup',1470);assert.deepEqual(h.ids,[],'second short tap also clears; double-tap Invert retired');h.semantic(1470);assert.deepEqual(h.ids,[],'duplicate remains harmless');

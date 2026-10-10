@@ -1,5 +1,6 @@
 import {assertAssetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
+import {backgroundRetention} from './helpers/background-selection-runtime.mjs';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
@@ -14,10 +15,7 @@ test('blank pointer-down arms deselect instead of clearing immediately',()=>{
   assert.doesNotMatch(main,/if\(!hit\)\{clearSelection\(\);renderMesh\(\);return;\}/);
 });
 
-test('navigation movement preserves current selection',()=>{
-  assert.match(main,/Math\.hypot\(event\.clientX-backgroundTap\.startX,event\.clientY-backgroundTap\.startY\)>=EDIT_DRAG_THRESHOLD\)backgroundTap\.moved=true/);
-  assert.match(main,/if\(!tap\.cancelled&&!moved\)\{clearSelection\(\);renderMesh\(\);\}/);
-});
+test('navigation movement preserves current selection',()=>backgroundRetention());
 
 test('second pointer cancels pending blank deselect for pan and pinch',()=>{
   assert.match(main,/if\(backgroundTap&&backgroundTap\.pointerId!==event\.pointerId\)backgroundTap\.cancelled=true/);

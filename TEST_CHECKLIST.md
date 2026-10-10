@@ -4917,3 +4917,14 @@ unchanged; .783 user PASS protected; .784 device sanity pending.
 Fresh live index.html/version.json byte-match .784 repository. Unchanged main762,
 Face779 and frozenBeta6 version also byte-match live. Shell markers/recovery784
 coherent; reviewed runtime pins and hashes retained.
+
+
+## .785 — Main navigation / selection tap completion
+
+- [x] User .784 PASS: Deselect restart, contextual Done/background, modelling/history/navigation protected.
+- [x] Actual main window movement and completion: Vertex/Edge/Face navigate-away/back, diagonal8px/threshold, cancel/secondary/release movement preserve selection; confirmed blank tap clears once, disarms Lasso, deduplicates native/semantic release.
+- [x] Actual main selected-component intent/toggle/endDrag: intended ID toggles once, wrong pointer waits, cancel/long/moved/cancelled intent retained; controls restored, tap capture released; mesh/history/redo unchanged.
+- [x] Original .720 native-owner test bodies retained; three mutations rejected; no runtime source changes.
+- [x] 110 focused PASS; full2077/2045PASS/32FAIL/0skip; exactly three reviewed old failures removed, no new identities. FrozenBeta unchanged.
+- [ ] .785: selected Vertex/Edge/Face tap removes just that item; blank short tap clears.
+- [ ] Orbit/pan/pinch preserve selection; ordinary modelling and Undo/Redo still work.
