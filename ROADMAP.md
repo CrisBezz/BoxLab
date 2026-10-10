@@ -10,7 +10,7 @@ User .782 PASS. Validation-only783 reconciles four retired projected-picker chec
 with current native owner. Six cube viewpoints with real raycasts/Face taps covered;
 two mutations rejected. .496 Deselect check remains for session-exit audit.
 131focusedPASS; full2074/2038PASS/36FAIL/0skip, no new failures. Runtime/frozenBeta
-unchanged; publication pending. Continue remaining36 checks and scoped Bevel/Knife/
+unchanged; publication and live verification complete. Continue remaining36 checks and scoped Bevel/Knife/
 Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
@@ -553,3 +553,17 @@ Actual Node22 Topology run38011380865/job114091946863:2073tests/2033PASS/40FAIL/
 Fresh live index/version, unchanged central debug/Face779 and frozenBeta6 version
 byte-match repository.123focusedPASS; all five original .722 test bodies byte-identical.
 User .781 PASS recorded; .782 device sanity pending. Runtime/frozenBeta unchanged.
+
+
+### .783 publication verification — 2026-10-10
+
+Published release commit `30e2a9f0af57222ea24b27fb960cf486dac2f07d`, tree
+`9ef9c75b66c2456700cd3980d54ff4490b834bf0`. Pages run `38015557953`
+completed successfully. Topology CI run `38015558359`, job `114104912894`,
+completed with the expected active inventory: 2074 tests / 2038 PASS / 36 FAIL /
+0 skipped. All 36 failure identities match `docs/reliability-build-783.json`;
+four .782 failures removed and no new failures. Focused validation: 131 PASS.
+Fresh live `index.html`, `version.json`, `src/main.js`,
+`src/multi-face-direct.js`, and `beta-6/version.json` match repository bytes.
+Runtime owners and protected pins unchanged. User accepted .782; .783 device
+sanity remains pending.

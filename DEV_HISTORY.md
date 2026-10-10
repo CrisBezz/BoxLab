@@ -6584,3 +6584,17 @@ pending. Next remaining36 checks and scoped Bevel/Knife/Loop reliability.
 Add Vertex/NOM import/Lasso tightening deferred.
 Manual: confirm783; orbit to another side and tap Faces with Extrude/Inset armed;
 model then Undo/Redo and normal navigation.
+
+
+### .783 publication verification — 2026-10-10
+
+Published release commit `30e2a9f0af57222ea24b27fb960cf486dac2f07d`, tree
+`9ef9c75b66c2456700cd3980d54ff4490b834bf0`. Pages run `38015557953`
+completed successfully. Topology CI run `38015558359`, job `114104912894`,
+completed with the expected active inventory: 2074 tests / 2038 PASS / 36 FAIL /
+0 skipped. All 36 failure identities match `docs/reliability-build-783.json`;
+four .782 failures removed and no new failures. Focused validation: 131 PASS.
+Fresh live `index.html`, `version.json`, `src/main.js`,
+`src/multi-face-direct.js`, and `beta-6/version.json` match repository bytes.
+Runtime owners and protected pins unchanged. User accepted .782; .783 device
+sanity remains pending.
