@@ -4,7 +4,12 @@
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.799**. Last whole-build acceptance **.797 PASS**, protected.
-Parent main `2366d1d984e5c6b832cf825836656a7c09b3ec03`.
+Parent main `e2674f1344bcd4636bbe29f65025f0ed95022ebd`.
+Release commit `f7d64a37b54f7a07ff5acf384bb691eab405ca0e`.
+
+Full2136/2136 PASS, 0 failures/skips. CI38051784577 and Pages38051784633 SUCCESS.
+Fresh live manifest, shell and three changed module owners match main byte-for-byte.
+.799 iPad acceptance pending; .798 reported FAIL, not protected.
 
 ## .799 — Boolean edit radial and exit repair
 
