@@ -1,13 +1,46 @@
-# BoxLab AI Handoff — Sweep Cancel history
+# BoxLab AI Handoff — Edge layout validation
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.789**. Last whole-build user acceptance is **.788 PASS**.
-Revolve Cancel history788, Vertex/Face picking786 and accepted Edge protected.
-Parent main `4b22766cf8c760cc401f9db7f58b8a4f02bf1487`.
-.789 repairs existing Sweep Cancel history and validates its editing getter/transform
-yield. Publication/Node22/live verified; full evidence below and in DEV_HISTORY/docs.
+Current build **v0.36.18.790**. Last whole-build user acceptance is **.789 PASS**.
+Sweep789/Revolve788 history, picking786 and accepted Edge behavior protected.
+Parent main `a30f29f4ace104a6b82503fc9d65433c94d60a7d`.
+.790 validates current shared Edge layout and Bevel Exact owner placement;
+runtime unchanged. Publication pending; evidence below and DEV_HISTORY/docs.
+
+## .790 — Current Edge layout and Bevel precision validation — 2026-10-10
+
+User .789 PASS recorded/protected: Sweep Cancel/Redo, Apply/history and selection/
+navigation; prior Revolve788 and picking786 accepted. Parent main
+`a30f29f4ace104a6b82503fc9d65433c94d60a7d`.
+Audit .472 obsolete Slide anchor, .508 compact rows, current precision710/shared
+layout515 and accepted radial Bevel owner. Current precision places Edge Exact
+inside Bevel options after Segments; current final three-column row includes Circle.
+Replace only those two historical source expectations with actual current owners.
+No runtime/UI implementation change, broad layout restoration or modelling kernel.
+
+Ordered DOM adapter models node moves and sibling order, executes whole precision
+owner and original shared Edge layout functions/timers. Five three-column rows,
+Circle and original button identities survive repeated synchronization; contextual
+Loop/Slide/Bevel/Offset blocks retain actual order. Exact placement tested with0/1/2
+existing range rows, original input/Apply listeners survive layout passes, physical
+press captures deduplicated IDs before selection changes, Apply delegates numeric
+value/IDs to existing direct owner. Invalid value refuses delegation. Actual bevel
+controller is an explicit call adapter here; adjacent real geometry/history tests
+remain unchanged. Not a CSS/layout engine, renderer or Safari device proof. Original
+.472 Sweep declarations/pins and .508 progressive CSS/protected pin checks retained.
+Two in-memory mutations reject omitted Circle and unrepositioned Exact controls.
+
+114focusedPASS including actual Edge/Face Bevel ownership, clean chain/Knife/Loop
+combinations, accepted Sweep cancellation/picking and release contracts.
+FullNode24:2096tests/2070PASS/26FAIL/0skip; exactly reviewed .472/.508 failures removed
+from789, no new identities. Remaining25source-pattern/1version-pin active; no skips/
+exclusions. Runtime/frozenBeta2–6 unchanged. Shell/recovery790 only; exactly two
+reviewed recovery URLs updated, all hashes and modelling pins retained. Publication
+pending. Next: audit remaining26 checks, then scoped Bevel/Knife/Loop reliability.
+Manual: confirm790; Edge radial Bevel Width/Segments and Apply/Cancel sanity, then
+Undo/Redo. No manual recreation of synthetic node-order fixtures requested.
 
 ## .789 — Sweep Cancel history tokens and editing ownership — 2026-10-10
 
@@ -304,11 +337,11 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.788 user PASS protects Revolve history/authoring and prior selection/navigation.
-.789 Sweep Cancel history repair and editing getter coverage await device sanity.
-Audit remaining28 active historical checks, then scoped Bevel/Knife/Loop reliability.
-Do not infer global transaction safety from scoped Sweep/Revolve fixes. Add Vertex
-broader picking/NOM import/Lasso deferred. FrozenBeta2–6 immutable.
+.789 user PASS protects Sweep history/Apply and prior selection/navigation.
+.790 reconciles two retired Edge UI source assertions with current owner behavior.
+Audit remaining26 active historical checks, then scoped Bevel/Knife/Loop reliability.
+Do not infer device/CSS reliability from ordered DOM fixtures. Add Vertex broader
+picking/NOM import/Lasso deferred. FrozenBeta2–6 immutable.
 
 ## Accepted interaction / UI baseline
 
@@ -414,7 +447,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery789; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery790; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
@@ -451,7 +484,7 @@ then python scripts/audit-test-results.py /tmp/boxlab.xml output.json. Audit onl
 inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
-real-group preservation. Remaining28 active failures visible until reconciled.
+real-group preservation. Remaining26 active failures visible until reconciled.
 
 
 ### .783 publication verification — 2026-10-10

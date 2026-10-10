@@ -5016,8 +5016,24 @@ frozenBeta6 version also match live repository bytes.267clean-focusedPASS; broad
   profile/path button transitions; no editing reaches preflight sentinel.
 - [x] Three history/transform mutations rejected; other historical checks retained.
 - [x]121focusedPASS; full2094/2066PASS/28FAIL/0skip, only reviewed .400 removed.
-- [ ] .789 device: edit/Undo, Add Sweep/Cancel, Redo restores original edit.
-- [ ] Sweep profile/simple path Apply, Undo/Redo, selection/navigation sanity.
+- [x] User .789 PASS protected: edit/Undo, Sweep/Cancel, Redo restores edit.
+- [x] User .789 PASS: Sweep Apply, Undo/Redo, selection/navigation protected.
 - [x] .789 Pages38029040178 success; Node22 run38029040477/job114145919199
   matches all28 failures and2094/2066PASS/28FAIL/0skip. Live shell/Sweep and accepted/
   protected owners byte-match release3d1683dce1f6fa275124aa4aece39009e196d8e0.
+
+
+## .790 — Current Edge layout / Bevel Exact validation
+
+- [x] User .789 PASS protected; all runtime owners unchanged.
+- [x] Actual shared Edge layout retains five three-column rows including Circle,
+  original node identity, contextual option order and idempotent sync.
+- [x] Whole precision owner retains Exact/readout inside Bevel settings after
+  range rows; repeated layout preserves original inputs/Apply listeners.
+- [x] Captured selection survives to Exact delegation, deduplicated IDs/numeric
+  value correct, nonfinite values refuse; actual direct owner is adapter here.
+- [x] Two mutations rejected; existing CSS, Sweep declaration and pin checks kept.
+- [x]114focusedPASS; full2096/2070PASS/26FAIL/0skip; exactly two reviewed failures
+  removed, no new identities/skips/exclusions. Adjacent geometry tests retained.
+- [ ] .790 sanity: Edge radial Bevel Width/Segments, Apply/Cancel and Undo/Redo.
+- [ ] .790 CI/Pages/live verification.
