@@ -10,7 +10,7 @@ User .779 clean negative Extrude PASS. Validation-only780 reconciles three old n
 picker/Face ownership assertions; real main raycast bridge, typed filtering/Object
 route, event identity/hit ordering and four mutations covered.120focusedPASS including
 supplied clean-cut fixtures. Full2071/2019PASS/52FAIL/0skip, no new failure identities.
-Runtime/frozenBeta unchanged; publication pending. Continue remaining52 checks and
+Runtime/frozenBeta unchanged; publication/live verified. Continue remaining52 checks and
 scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso tightening deferred.
 
 ## Beta 6 delivery refinement — .736
@@ -523,3 +523,13 @@ Actual Node22 Topology run38006619712/job114076765987:2068tests/2013PASS/55FAIL/
 succeeded. Fresh live index/version/kernel/Face import owner, unchanged main and
 frozenBeta6 version byte-match repository.84focusedPASS. User .778 PASS recorded;
 .779 supplied-model device acceptance pending.
+
+## .780 publication verification — 2026-10-10
+
+Release commit `2f200c6bec86eebc417034619949923e14633e4a`, tree
+`ff10ed4fc279c5e7973b92d798461bc99a02218f` matches tested checkout.
+Actual Node22 Topology run38007376560/job114079177377:2071tests/2019PASS/52FAIL/
+0skip; all52 failure names exactly match local inventory. Pages38007376421 succeeded.
+Fresh live index/version, unchanged main/accepted Through779 and frozenBeta6 version
+byte-match repository.120focusedPASS. User .779 PASS recorded; .780 device sanity
+pending. Runtime/frozenBeta unchanged.

@@ -4,7 +4,7 @@
 
 Repository CrisBezz/BoxLab is the source of truth. Live https://crisbezz.github.io/BoxLab/.
 Current build **v0.36.18.780**. Last explicit user acceptance is **.779 PASS**.
-Parent main9b4ea4ba1dbd59df27d38c63b1d3b10b60501f83; .780 publication pending.
+Parent main9b4ea4ba1dbd59df27d38c63b1d3b10b60501f83; .780 published and live-verified.
 .779 release5b24a307f9239286ece4d9947ad6a3f79dfb5542: Node22 CI2068/2013PASS/
 55FAIL/0skip with exact local identities; Pages38006618687/live verified; user PASS.
 All historical details/publication evidence remain in DEV_HISTORY.md and
@@ -37,7 +37,7 @@ three reviewed failures removed from779, no new identities. Remaining51source-pa
 1version-pin active, no skips/exclusions/CI gate. Runtime/frozenBeta2–6 unchanged;
 shell/recovery780 and two reviewed recovery fixture URLs only, hashes unchanged.
 Face+Through779/main762/Inset753/Multi1.0/Loop715 retained.
-Publication/Node22/live pending; .780 device sanity pending. Next remaining52 checks
+Publication/Node22/live verified below; .780 device sanity pending. Next remaining52 checks
 and scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso deferred.
 Manual: confirm780; Face tap/Extrude/Inset; Object pick then Move, Undo/Redo and navigation.
 
@@ -214,3 +214,13 @@ inventories; does not gate release or suppress failures. Node24 local/Node22 CI.
 Original audit docs/reliability-audit-2026-10-05.md/JSON:277check failures, not277
 bugs; conflicts include accepted Facegroups, Boolean checkpointSnapshot and OBJ
 real-group preservation. Remaining52 active failures visible until reconciled.
+
+## .780 publication verification — 2026-10-10
+
+Release commit `2f200c6bec86eebc417034619949923e14633e4a`, tree
+`ff10ed4fc279c5e7973b92d798461bc99a02218f` matches tested checkout.
+Actual Node22 Topology run38007376560/job114079177377:2071tests/2019PASS/52FAIL/
+0skip; all52 failure names exactly match local inventory. Pages38007376421 succeeded.
+Fresh live index/version, unchanged main/accepted Through779 and frozenBeta6 version
+byte-match repository.120focusedPASS. User .779 PASS recorded; .780 device sanity
+pending. Runtime/frozenBeta unchanged.

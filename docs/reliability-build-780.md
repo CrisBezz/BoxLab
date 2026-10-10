@@ -27,6 +27,16 @@ three reviewed failures removed from779, no new identities. Remaining51source-pa
 1version-pin active, no skips/exclusions/CI gate. Runtime/frozenBeta2–6 unchanged;
 shell/recovery780 and two reviewed recovery fixture URLs only, hashes unchanged.
 Face+Through779/main762/Inset753/Multi1.0/Loop715 retained.
-Publication/Node22/live pending; .780 device sanity pending. Next remaining52 checks
+Publication/Node22/live verified below; .780 device sanity pending. Next remaining52 checks
 and scoped Bevel/Knife/Loop reliability. Add Vertex/NOM import/Lasso deferred.
 Manual: confirm780; Face tap/Extrude/Inset; Object pick then Move, Undo/Redo and navigation.
+
+## .780 publication verification — 2026-10-10
+
+Release commit `2f200c6bec86eebc417034619949923e14633e4a`, tree
+`ff10ed4fc279c5e7973b92d798461bc99a02218f` matches tested checkout.
+Actual Node22 Topology run38007376560/job114079177377:2071tests/2019PASS/52FAIL/
+0skip; all52 failure names exactly match local inventory. Pages38007376421 succeeded.
+Fresh live index/version, unchanged main/accepted Through779 and frozenBeta6 version
+byte-match repository.120focusedPASS. User .779 PASS recorded; .780 device sanity
+pending. Runtime/frozenBeta unchanged.
