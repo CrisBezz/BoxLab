@@ -5145,3 +5145,14 @@ Through779, protected Multi1.0 and frozenBeta6 version byte-match repository.
 48focusedPASS. .793 user PASS protected; .794 menus/modes device sanity pending.
 No runtime/frozenBeta changes; shell/recovery794 coherent and exactly two reviewed
 recovery URLs changed, all runtime hashes retained.
+
+
+## .795 — Add+ candidate previews
+
+- [x] All six primitive previews draw actual face boundaries/counts, update X/Y, keep scene/history unchanged and Apply through original owner.
+- [x] Preview rotation changes projection only; mismatched pointer ignored, Cancel ends drag and releases capture.
+- [x] Text readiness, word/thickness/depth updates and invalid-candidate clearing execute actual owners.
+- [x] Cancel/Escape/outside/Add-toggle disposal preserves scene and redo; original .771 checks retained.
+- [x] Full2116/2105PASS/11FAIL/0skip; same11 failures as794, no new identities.
+- [ ] iPad .795: X/Y and presets visibly change divisions, Pencil/finger preview rotation works.
+- [ ] iPad .795: Text word/thickness updates preview; Apply creates one matching object; Undo/Redo and Cancel work.

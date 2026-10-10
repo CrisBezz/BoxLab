@@ -1,13 +1,36 @@
-# BoxLab AI Handoff — Mode dock / menu layout validation
+# BoxLab AI Handoff — Add+ live previews
 
 ## Current state — 2026-10-10
 
 Repository CrisBezz/BoxLab is source of truth. Live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.794**. Last whole-build user acceptance is **.793 PASS**.
-Accepted Facegroups, Shell/Solidify, layout791 and interaction owners protected.
-Parent main `4c76dbb04ccf1df548e730359aad6f39e1abef69`.
-.794 validates current dock/File/VIEW layout contracts; runtime unchanged.
-Publication/Node22/live verified below.
+Current build **v0.36.18.795**. Last explicit user acceptance remains **.793 PASS**.
+Parent main `b8111b9b3d58f2c6fb291bc7f6966b305d326e88`.
+.795 adds live rotatable Add+ previews; .794 device checks still pending.
+
+## .795 — Add+ live object previews — 2026-10-10
+
+Requested live previews before insertion. Audited primitive-ui771/factory/Text771:
+existing candidate generation/counts are authoritative; no preview existed. Added
+presentation-only add-object-preview795 inside original top-centre settings panel.
+Canvas projects actual candidate face cycles with shaded fill and polygon boundaries;
+Pencil/finger drag rotates this isolated preview. X/Y and Low/Medium/High update it;
+Text word/thickness/detail/depth bands update after original asynchronous font load.
+No second modelling kernel, WebGL context, viewport event owner or scene insertion.
+Original Apply factory/object selection/history stay authoritative. Preview never
+adds history; Cancel/Escape/outside/Add-toggle/resize dispose resources/capture;
+invalid candidates clear preview and original Apply remains disabled. Orthographic
+painter preview is a topology inspection aid, not the Studio/WebGL renderer.
+
+27 Add/factory/Text/preview checks PASS; four new tests execute actual Add controller
+and projection against recorded Canvas calls, real factory/Text/Object history and
+controlled DOM/manager. Covers polygon counts/finite projections, density/rotation,
+Text readiness/invalid input, disposal/capture and preserved redo. No whole Safari
+or device rendering proof; iPad visual/tactile acceptance pending. Full local Node24:
+2116 tests / 2105 PASS / 11 FAIL / 0 skipped; failure identities exactly match794.
+Release markers/recovery795, Add UI parent795 and new child795 reviewed; other
+runtime hashes/pins, protected Multi1.0/Loop715 and frozenBeta2–6 unchanged.
+.794 user PASS not supplied; its manual checks remain pending. Next: user preview
+feedback, then remaining Rotate4/GLB7 audit and scoped Bevel/Knife/Loop reliability.
 
 ## .794 — Mode dock / File / VIEW layout contract validation — 2026-10-10
 
@@ -481,20 +504,19 @@ boundaries; Cylinder/Cone caps remain n-gons with Y height bands. Text uses bund
 licensed Helvetiker Regular/Three Font + ShapeUtils: word1–64, thickness0.01–100,
 curve detail1–16, depth bands1–32. All letters/dots form one ordinary editable mesh,
 holes preserved, centredXY/extrudedZ. Unsupported glyphs/blank/bad thickness refuse;
-async completion ignores cancelled/replaced panels. Not editable typography; no
-viewport preview promised. Original object creation/history one-step Undo/Redo,
+async completion ignores cancelled/replaced panels. Not editable typography; .795 adds an isolated rotatable preview in the settings panel. Original object creation/history one-step Undo/Redo,
 Sweep/Revolve routes retained.23newchecks/55focusedPASS plus temporary real-DOM
 layout/history smoke. Whole-app WebGL/browser QA unavailable (Chromium absent and
 download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.793 user PASS protects Facegroups/Studio/SubD/Mirror and accepted interactions.
-.794 reconciles three retired UI expectations with current mode docking/File/VIEW
-owners. Remaining11 active historical checks: component Rotate4, Nomad GLB7.
-Audit those owners before changes, then scoped Bevel/Knife/Loop reliability.
-Emitted CSS/controlled DOM do not prove browser/device layout. Add Vertex broader
-picking/NOM import/Lasso deferred. FrozenBeta2–6 immutable.
+.795 Add+ primitive/Text previews await iPad visual/tactile feedback. Confirm live
+X/Y boundaries, drag rotation, Text/thickness, Apply/Cancel and Undo/Redo.
+.794 modes/File/VIEW device checks still pending; do not infer PASS from build request.
+Remaining11 historical failures unchanged: Rotate4 and GLB7; audit actual owners
+before changes, then scoped Bevel/Knife/Loop reliability. NOM import/Lasso deferred.
+FrozenBeta2–6 immutable. Last explicit user PASS .793 remains protected.
 
 ## Accepted interaction / UI baseline
 
@@ -600,7 +622,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery794; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery795; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/preview795; factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
 Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical

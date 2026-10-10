@@ -1,13 +1,14 @@
 import { makePrimitive,primitiveDensity } from './primitive-factory.js?v=0.36.18.771';
 import { makeTextObject } from './text-object-core.js?v=0.36.18.771';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
+import { createAddObjectPreview } from './add-object-preview.js?v=0.36.18.795';
 
 const addButton=document.querySelector('#outlinerAddBtn'),status=document.querySelector('#selectionStatus');
-let menu=null,fontPromise=null;
+let menu=null,fontPromise=null,preview=null;
 const manager=()=>globalThis.__boxlabObjectManager;
 const label=type=>type.charAt(0).toUpperCase()+type.slice(1);
 const node=(tag,text)=>{const n=document.createElement(tag);if(text)n.textContent=text;return n;};
-function closeMenu(){menu?.remove();menu=null;}
+function closeMenu(){preview?.dispose();preview=null;menu?.remove();menu=null;}
 function fontData(){if(!fontPromise)fontPromise=fetch(new URL('./fonts/helvetiker_regular.typeface.json?v=0.36.18.771',import.meta.url)).then(r=>{if(!r.ok)throw new Error('Text font could not load; try again');return r.json();}).catch(e=>{fontPromise=null;throw e;});return fontPromise;}
 function panel(title){closeMenu();const p=node('div');p.className='boxlab-primitive-menu';p.id='primitiveAddPanel';Object.assign(p.style,{zIndex:'2000',padding:'10px',border:'1px solid #ffffff29',borderRadius:'12px',background:'rgba(24,27,33,.98)',boxShadow:'0 14px 36px #0006'});p.append(node('strong',title));menu=p;return p;}
 function button(parent,text,fn){const b=node('button',text);b.type='button';b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();fn();});parent.append(b);return b;}
@@ -19,6 +20,7 @@ function showSettings(type){
  if(text){word=field('text','Text','text','Text');word.maxLength=64;word.autocomplete='off';word.spellcheck=false;thickness=field('thickness','Thickness','number',.2,.01,100);thickness.step='.01';}
  field('x',spec.xLabel,'range',spec.x,spec.minX,text?16:32);field('y',spec.yLabel,'range',spec.y,spec.minY,32);
  const presets=node('div');Object.assign(presets.style,{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:'6px'});body.append(presets);for(const [i,name] of ['Low','Medium','High'].entries())button(presets,name,()=>{inputs.x.value=String(text?[2,4,8][i]:['cube','plane'].includes(type)?[1,2,4][i]:[8,12,16][i]);inputs.y.value=String(text||['cylinder','cone'].includes(type)?1:['cube','plane'].includes(type)?[1,2,4][i]:[4,6,8][i]);for(const key of ['x','y'])inputs[key].dispatchEvent(new Event('input',{bubbles:true}));});
+ preview=createAddObjectPreview(body);
  const count=node('small');count.setAttribute('role','status');p.append(count);
  const apply=button(p,'Apply',()=>{
    let mesh;try{mesh=build();}catch(e){count.textContent=e.message;return;}
@@ -29,7 +31,7 @@ function showSettings(type){
  });apply.dataset.addAction='apply';
  button(p,'Cancel',closeMenu).dataset.addAction='cancel';
  function build(){if(text){if(!data)throw new Error('Loading text font…');return makeTextObject(data,word.value,{thickness:thickness.value,x:inputs.x.value,y:inputs.y.value});}return makePrimitive(type,{x:inputs.x.value,y:inputs.y.value});}
- function update(){try{const mesh=build();count.textContent=`${mesh.faces.length} faces · ${mesh.vertices.length} vertices`;apply.disabled=false;}catch(e){count.textContent=e.message;apply.disabled=true;}}
+ function update(){try{const mesh=build();preview?.setMesh(mesh);count.textContent=`${mesh.faces.length} faces · ${mesh.vertices.length} vertices`;apply.disabled=false;}catch(e){preview?.setMesh(null);count.textContent=e.message;apply.disabled=true;}}
  document.querySelector('#viewportWrap').append(p);placeToolSessionPanel(p);update();
  if(text){word.focus();word.select();fontData().then(font=>{if(menu!==p)return;data=font;update();}).catch(e=>{if(menu===p)count.textContent=e.message;});}
 }

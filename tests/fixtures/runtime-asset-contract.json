@@ -360,9 +360,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.771",
+      "url": "./src/primitive-ui.js?v=0.36.18.795",
       "target": "src/primitive-ui.js",
-      "sha256": "72a7765c284197471229f9fbc269c409dc9692913f9254084d6bc95ca6bac8ed"
+      "sha256": "55821e28682eaaf3abbe6445b3439b73df3b2f1b8e59abf9929ddafa6d55199a"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.794",
+      "url": "./src/release-bootstrap.js?v=0.36.18.795",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.794",
+      "url": "./src/release-version.js?v=0.36.18.795",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2167,6 +2167,12 @@
       "url": "./fonts/helvetiker_regular.typeface.json?v=0.36.18.771",
       "target": "src/fonts/helvetiker_regular.typeface.json",
       "sha256": "d5c5467690f74061179a292af83bd85c4c551e0f106b2af99714f11184c96981"
+    },
+    {
+      "owner": "src/primitive-ui.js",
+      "url": "./add-object-preview.js?v=0.36.18.795",
+      "target": "src/add-object-preview.js",
+      "sha256": "71af6b9c75f14fa20db74b6658147d69ea5a485ffe9b8d22dd9bdd25a6793132"
     }
   ]
 }
