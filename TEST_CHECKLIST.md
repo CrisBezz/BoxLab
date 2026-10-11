@@ -5381,5 +5381,5 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 - [x] User .807 AWESOME PASS and explicit release request recorded.
 - [x]303 runtime/supporting files match accepted source; immutable SHA256 manifest added.
 - [x] Frozen shell/modules/templates/refresh/PWA references stay within beta-7 namespace.
-- [ ] Pages and regression CI succeed; live/frozen critical assets byte-match repository.
+- [x] Pages and regression CI succeed; live/frozen critical assets byte-match repository.
 - [ ] Recommended final frozen-link iPad launch, navigation and Nomad export smoke.

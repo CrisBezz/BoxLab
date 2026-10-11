@@ -19,8 +19,8 @@ exclusive Result/Sources views; user .804 PASS protected. .805 compacts the Bool
 object list using existing recipes;  .806 removes redundant Update Preview and matches compact popup typography;
 User .806 PASS protected; .807 matches startup/reset cube to accepted Add+1unit.
 User .807 AWESOME PASS; Beta7 freeze/deployment explicitly requested and implemented
-from accepted source (publication pending). Next on live main: shared Curve editor/Balloon, then Curve Cutter. Beta7 remains
-frozen at .807 and becomes immutable after deployment.
+from accepted source; Pages and regression CI succeeded. Next on live main: shared Curve editor/Balloon, then Curve Cutter. Beta7 remains
+frozen at .807 and immutable.
 
 Agreed sequence:
 1. Editable Boolean source session (this build).

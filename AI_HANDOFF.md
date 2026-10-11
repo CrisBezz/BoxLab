@@ -6,7 +6,7 @@ CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/
 Current live and frozen build **v0.36.18.807**, user **AWESOME PASS**, protected.
 User explicitly requested Beta7 freeze/deployment. Frozen source
 `02d04cc72acef5415352ce4426792442cb7e99dd`; Beta7 URL
-https://crisbezz.github.io/BoxLab/beta-7/ . Freeze implemented, deployment pending.
+https://crisbezz.github.io/BoxLab/beta-7/ . Frozen and deployed; immutable.
 Protected .806 compact automatic Boolean, .805 result list workflow, .804 visibility,
 .802 Extrude/.801 activation/exit/radial retained. Beta2–6 unchanged.
 
@@ -24,7 +24,14 @@ immutable SHA256 hashes. Release notes and Beta7 checklist added. Two dedicated
 freeze checks verify hashes/markers and local HTML/import/template references within
 beta namespace, relative refresh manifest resolution and PWA start URL. Every frozen
 asset also verified against accepted main before publishing. Full Node24 suite:
-2165/2165 PASS,0 FAIL,0 skips; publication pending. Beta7 immutable after deployment; continue feature development on main.
+2165/2165 PASS,0 FAIL,0 skips; deployment verified. Continue feature development on main.
+
+
+Beta7 freeze commit `cfa5f2b5992558e61132e7006cec36c2c115f6e3`;
+Topology38101242200 and Pages38101242127 SUCCESS. Fresh live shell/manifest and
+frozen shell/manifest/metadata/PWA/main/manager/editor/refresh owners/native template
+match repository bytes. Existing Beta2–6 manifests byte-match unchanged files.
+Beta7 is released and immutable; continue development on main.
 
 ## .807 — Unit startup/reset cube / .806 PASS — 2026-10-11
 
