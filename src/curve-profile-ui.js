@@ -1,7 +1,7 @@
 import {appendStrokePoint,simplifyStroke} from './stroke-sampling.js?v=0.36.18.808';
-import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.814';
+import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.816';
 import {createAddObjectPreview} from './add-object-preview.js?v=0.36.18.814';
-const VERSION='0.36.18.815',W=320,H=180,NS='http://www.w3.org/2000/svg';
+const VERSION='0.36.18.816',W=320,H=180,NS='http://www.w3.org/2000/svg';
 const manager=()=>globalThis.__boxlabObjectManager,session=()=>globalThis.__boxlabToolSession;
 const activeObject=()=>{const m=manager();return m?.objects.find(o=>o.id===m.activeId);};
 let panel=null,pad=null,path=null,handles=null,note=null,applyButton=null,profile=null,objectId=null,drag=null,edit=false,undos=[],committing=false,preview=null;
@@ -38,7 +38,7 @@ function apply(){
 }
 function open(existing=false,balloon=false){
  if(panel)cancel();const current=session()?.current?.();if(current&&!globalThis.__boxlabObjectRadialSession?.cancelCurrent?.()){return false;}
- const source=existing?activeObject():null,record=existing?editableCurveProfile(source):{version:1,points:[],closed:true,smooth:true,detail:balloon?16:32,...(balloon?{output:'balloon',depth:.25}:{})};
+ const source=existing?activeObject():null,record=existing?editableCurveProfile(source):{version:1,points:[],closed:true,smooth:true,detail:balloon?16:32,...(balloon?{output:'balloon',depth:.25,balloonResolution:4}:{})};
  if(!record||!session()){return false;}
  globalThis.__boxlabLasso?.setArmed?.(false);globalThis.__boxlabTransformArming?.disarm?.();
  profile=record;objectId=source?.id??null;edit=existing;undos=[];panel=node('div');panel.id='curveProfilePanel';panel.className='boxlab-tool-session-shell';
@@ -49,8 +49,13 @@ function open(existing=false,balloon=false){
  const tools=node('div');tools.className='outliner-actions';tools.style.gridTemplateColumns='repeat(3,minmax(0,1fr))';panel.append(tools);
  button(tools,'Draw','mode',()=>{edit=!edit;});button(tools,'Closed','closed',()=>{remember();profile.closed=!profile.closed;});button(tools,'Smooth','smooth',()=>{remember();profile.smooth=!profile.smooth;});
  const row=node('label'),slider=node('input'),out=node('output',String(profile.detail));row.append(node('span','Detail'),slider,out);slider.type='range';slider.min='8';slider.max='128';slider.step='8';slider.value=String(profile.detail);slider.addEventListener('change',()=>{remember();profile.detail=Number(slider.value);out.textContent=slider.value;draw();});panel.append(row);
- if(profile.output==='balloon'){const depthRow=node('label'),input=node('input'),depthOut=node('output',String(profile.depth));input.type='range';input.min='.05';input.max='.8';input.step='.05';input.value=String(profile.depth);input.dataset.curveAction='depth';depthRow.append(node('span','Depth'),input,depthOut);input.addEventListener('change',()=>{remember();profile.depth=Number(input.value);depthOut.textContent=input.value;draw();});panel.append(depthRow);preview=createAddObjectPreview(panel);}
- const helpers=node('div');helpers.className='outliner-actions';panel.append(helpers);button(helpers,'Undo','undo',()=>{profile=undos.pop()||profile;slider.value=String(profile.detail);out.textContent=slider.value;if(profile.output==='balloon'){const input=panel.querySelector('[data-curve-action="depth"]');input.value=String(profile.depth);input.parentElement.children[2].textContent=input.value;}});button(helpers,'Clear','clear',()=>{remember();profile.points=[];});
+ if(profile.output==='balloon'){const depthRow=node('label'),input=node('input'),depthOut=node('output',String(profile.depth));input.type='range';input.min='.05';input.max='.8';input.step='.05';input.value=String(profile.depth);input.dataset.curveAction='depth';depthRow.append(node('span','Depth'),input,depthOut);input.addEventListener('change',()=>{remember();profile.depth=Number(input.value);depthOut.textContent=input.value;draw();});panel.append(depthRow);
+  const densityRow=node('label'),density=node('input'),densityOut=node('output',String(profile.balloonResolution??'Legacy'));
+  density.type='range';density.min='4';density.max='12';density.step='1';density.value=String(profile.balloonResolution??12);density.dataset.curveAction='balloon-density';
+  densityRow.append(node('span','Density'),density,densityOut);
+  density.addEventListener('change',()=>{remember();profile.balloonResolution=Number(density.value);densityOut.textContent=density.value;draw();});panel.append(densityRow);
+  preview=createAddObjectPreview(panel);}
+ const helpers=node('div');helpers.className='outliner-actions';panel.append(helpers);button(helpers,'Undo','undo',()=>{profile=undos.pop()||profile;slider.value=String(profile.detail);out.textContent=slider.value;if(profile.output==='balloon'){const input=panel.querySelector('[data-curve-action="depth"]');input.value=String(profile.depth);input.parentElement.children[2].textContent=input.value;const density=panel.querySelector('[data-curve-action="balloon-density"]');density.value=String(profile.balloonResolution??12);density.parentElement.children[2].textContent=String(profile.balloonResolution??'Legacy');}});button(helpers,'Clear','clear',()=>{remember();profile.points=[];});
  panel.append(node('small',profile.output==='balloon'?'Draw a convex closed outline · Relative depth · Fits 1 × 1 × 1 · Editable triangle solid':'Pencil: draw or drag points · New curve fits 1 × 1 · Curves become solids in later tools.'));
  note=node('div');note.setAttribute('role','status');panel.append(note);const actions=node('div');actions.className='outliner-actions';panel.append(actions);button(actions,'Cancel','cancel',cancel);applyButton=button(actions,'Apply','apply',apply);
  function beginStroke(e){
