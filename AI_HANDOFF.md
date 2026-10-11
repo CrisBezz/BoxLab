@@ -22,6 +22,10 @@ Protected Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–6 unchanged.
 Full Node24:2163/2163 PASS, 0 FAIL, 0 skips. Actual startup geometry matches
 unit-fitted Add+ cube bounds. Device cube/reset comparison pending before Beta7 freeze.
 
+Release `013b90a59b3859d68b4cb8d62dade93af34a0237`; CI38100638849 and
+Pages38100638280 SUCCESS. Fresh live manifest/shell/main807/manager807 match
+main byte-for-byte. User .806 PASS recorded; .807 startup/reset acceptance pending.
+
 ## .806 — Compact automatic Edit Boolean popup — 2026-10-11
 
 User requests removing Update Preview and checking compactness before Beta deployment.
