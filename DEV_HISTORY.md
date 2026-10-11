@@ -7947,3 +7947,8 @@ Balloon Pencil drawing/navigation gate pending; no full Safari propagation proof
 ## .816 — Balloon resolution / performance gate — 2026-10-11
 
 User PASS .815 Pencil/Reset, reports severe ~minute Balloon insertion stall; screenshot active 938v/1872f and scene 161358 rendered triangles, idle60FPS. Donor mesh detail minimum independently creates >=12 section rings. Added optional tessellation controls to ORIGINAL MeshUtilz geometry owner; new Balloon Density4 default, slider4–12; legacy recipes without field preserve identical donor tessellation. Original scene/history and iPad gesture owners retained. Release pins and runtime asset hash fixture reviewed. Performance iPad acceptance pending; no measured gain claimed.
+
+
+## .817 — Star-shaped concave Balloon evaluation — 2026-10-11
+
+User reports .816 Balloon markedly more responsive. User requests concave preview to judge fit. Existing donor radial rings already support some star-shaped concavities; adapter convex-only guard removed, original crossing and generated-rim/pole fold checks retained. No new kernel/geometry or pointer/history owner. Geometry outside star-shaped safe rim rejects. Density4 and old recipes preserved. Tests revised for shallow indentation and no-crossing; iPad visual acceptance pending.
