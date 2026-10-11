@@ -1,7 +1,7 @@
 import {appendStrokePoint,simplifyStroke} from './stroke-sampling.js?v=0.36.18.808';
-import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.816';
+import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.817';
 import {createAddObjectPreview} from './add-object-preview.js?v=0.36.18.814';
-const VERSION='0.36.18.816',W=320,H=180,NS='http://www.w3.org/2000/svg';
+const VERSION='0.36.18.817',W=320,H=180,NS='http://www.w3.org/2000/svg';
 const manager=()=>globalThis.__boxlabObjectManager,session=()=>globalThis.__boxlabToolSession;
 const activeObject=()=>{const m=manager();return m?.objects.find(o=>o.id===m.activeId);};
 let panel=null,pad=null,path=null,handles=null,note=null,applyButton=null,profile=null,objectId=null,drag=null,edit=false,undos=[],committing=false,preview=null;
@@ -56,7 +56,7 @@ function open(existing=false,balloon=false){
   density.addEventListener('change',()=>{remember();profile.balloonResolution=Number(density.value);densityOut.textContent=density.value;draw();});panel.append(densityRow);
   preview=createAddObjectPreview(panel);}
  const helpers=node('div');helpers.className='outliner-actions';panel.append(helpers);button(helpers,'Undo','undo',()=>{profile=undos.pop()||profile;slider.value=String(profile.detail);out.textContent=slider.value;if(profile.output==='balloon'){const input=panel.querySelector('[data-curve-action="depth"]');input.value=String(profile.depth);input.parentElement.children[2].textContent=input.value;const density=panel.querySelector('[data-curve-action="balloon-density"]');density.value=String(profile.balloonResolution??12);density.parentElement.children[2].textContent=String(profile.balloonResolution??'Legacy');}});button(helpers,'Clear','clear',()=>{remember();profile.points=[];});
- panel.append(node('small',profile.output==='balloon'?'Draw a convex closed outline · Relative depth · Fits 1 × 1 × 1 · Editable triangle solid':'Pencil: draw or drag points · New curve fits 1 × 1 · Curves become solids in later tools.'));
+ panel.append(node('small',profile.output==='balloon'?'Draw a closed outline · Shallow concave dents OK · Relative depth · Fits 1 × 1 × 1 · Editable triangle solid':'Pencil: draw or drag points · New curve fits 1 × 1 · Curves become solids in later tools.'));
  note=node('div');note.setAttribute('role','status');panel.append(note);const actions=node('div');actions.className='outliner-actions';panel.append(actions);button(actions,'Cancel','cancel',cancel);applyButton=button(actions,'Apply','apply',apply);
  function beginStroke(e){
   if(!panel||!pad.contains(e.target))return;
