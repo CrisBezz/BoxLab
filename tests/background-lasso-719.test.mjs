@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
+import {appendStrokePoint} from '../src/stroke-sampling.js';
 import {createBackgroundSelectionTap} from '../src/background-selection-tap.js';
 const read=n=>fs.readFileSync(new URL('../src/'+n,import.meta.url),'utf8');
 function mainOwner({mode='face',lasso=null}={}){
@@ -29,8 +30,8 @@ function lassoOwner(){
  const handlers={},semantic=[],released=[],nodes=new Map();
  const element=()=>({style:{},children:[],classList:{toggle(){}},addEventListener(){},appendChild(n){this.children.push(n);},setAttribute(){}});
  const canvas=element();canvas.addEventListener=(t,f)=>{(handlers[t]??=[]).push(f);};canvas.setPointerCapture=()=>{};canvas.releasePointerCapture=id=>released.push(id);nodes.set('#viewport',canvas);nodes.set('#componentSelectionTools .selection-dock',element());
- const c={THREE,document:{querySelector:s=>nodes.get(s),querySelectorAll:()=>[],createElement:element,createElementNS:element,body:element()},window:{dispatchEvent:e=>semantic.push(e)},CustomEvent:class{constructor(type,{detail}){this.type=type;this.detail=detail;}},__boxlabObjectManager:{pickObject:()=>null},__boxlabSelectionBridge:{mode:()=> 'face'},queueMicrotask};
- vm.createContext(c);vm.runInContext(read('lasso-select.js').replace(/^import[^\n]+\n/,''),c);
+ const c={THREE,appendStrokePoint,document:{querySelector:s=>nodes.get(s),querySelectorAll:()=>[],createElement:element,createElementNS:element,body:element()},window:{dispatchEvent:e=>semantic.push(e)},CustomEvent:class{constructor(type,{detail}){this.type=type;this.detail=detail;}},__boxlabObjectManager:{pickObject:()=>null},__boxlabSelectionBridge:{mode:()=> 'face'},queueMicrotask};
+ vm.createContext(c);vm.runInContext(read('lasso-select.js').replace(/^import[^\n]+\n/gm,''),c);
  const event=(type,x,y=0)=>({type,isPrimary:true,pointerType:'pen',pointerId:7,button:0,clientX:x,clientY:y,preventDefault(){},stopImmediatePropagation(){}});
  return {c,semantic,released,send(type,x,y){for(const f of handlers[type]||[])f(event(type,x,y));}};
 }

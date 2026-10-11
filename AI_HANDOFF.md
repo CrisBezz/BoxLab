@@ -1,14 +1,55 @@
-# BoxLab AI Handoff — Beta 7 release
+# BoxLab AI Handoff — Curve Profile .808
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current live and frozen build **v0.36.18.807**, user **AWESOME PASS**, protected.
+Accepted frozen build **v0.36.18.807**, user **AWESOME PASS**, protected.
+Current development build **v0.36.18.808**, device acceptance pending.
 User explicitly requested Beta7 freeze/deployment. Frozen source
 `02d04cc72acef5415352ce4426792442cb7e99dd`; Beta7 URL
 https://crisbezz.github.io/BoxLab/beta-7/ . Frozen and deployed; immutable.
 Protected .806 compact automatic Boolean, .805 result list workflow, .804 visibility,
 .802 Extrude/.801 activation/exit/radial retained. Beta2–6 unchanged.
+
+## .808 shared Curve Profile foundation — 2026-10-11
+
+User “Nice - lets build something” followed shared Curve/Lasso discussion; implement
+that narrow foundation first. Add+ > Curve opens a compact viewport editor: Pencil/
+mouse stroke, reduced control points, drag points, Open/Closed, Smooth/Straight,
+Detail, candidate Undo/Clear, Apply/Cancel. Touch retains navigation ownership.
+Applied profile is canonical EditableMesh loose edges, fitted to 1unit in XY; no
+solid faces, face cutting, Balloon or export promise yet. Select wire curves through
+the object list; Add+ > Edit Curve reopens eligible independent unmodified curves.
+Existing affine object transforms are preserved on reopen; component/topology changes
+invalidate recipe editing safely. Curve metadata follows duplicate and scene history.
+Shared 4px stroke sampler reuses Lasso behaviour with unchanged capture/navigation.
+Owners: curve-profile-core/UI, stroke-sampling; existing Add, loose topology, fit,
+instance affine derivation, object manager and tool-session UI reused. Scene-history
+bridge preserves Undo/Redo tokens when scene restoration changes active object;
+manager activation would otherwise erase the opposite stack. No parallel history.
+Main807, Extrude802, Boolean806/visibility804, protected Multi1.0, Loop715 and all
+frozen betas remain unchanged. .808 device acceptance pending; do not mark PASS.
+
+## New requested directions — UV/painting and performance
+
+Feasible staged UV workflow: inspect imported UVs/textures already preserved via
+GLB passthrough; authoritative face-corner UV seam data with history/topology handling;
+projection/seam unwrap and packing; then 2D/3D texture painting. Canvas textures use
+existing Three.js, but editable renderer UVs/materials and painting/texture Undo are
+additional work. Versioned .boxlab projects should embed texture resources. Begin at
+modest working resolution with real iPad memory checks; do not promise full PBR/layers.
+
+Performance audit: main.addCage creates one Line/geometry per edge and one sphere
+Mesh/geometry per vertex; renderMesh clears/rebuilds the active display, and the
+animation loop updates screen-space markers each frame. History uses full mesh clones
+(main limit60); multi-object.captureHistory/restoreHistory clones entire stacks.
+These are plausible costs, not a measured attribution. Prioritise dense-scene timing,
+draw calls/memory, then batched/instanced cage and cached/in-place geometry updates;
+selection acceleration and worker tasks based on evidence. Reduce history duplication,
+use byte budgets/deltas/checkpoints; keep recent Undo in RAM and consider asynchronous
+older-history storage in IndexedDB/OPFS. Browser storage can be evicted and is not a
+user backup; .boxlab Save remains separate. External history alone cannot fix render
+costs. No performance or UV implementation included in .808.
 
 ## Project persistence and NOM import queued — 2026-10-11
 
@@ -1267,3 +1308,6 @@ Pages38098655578 SUCCESS. Fresh live manifest/shell/editor/core/scheduler byte-m
 main. .802 Extrude, .801 radial/activation, Multi1.0/Loop715 and frozenBeta2–6 untouched.
 .803 device live-preview performance/visibility and Apply/Cancel/history pending.
 No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
+
+.808 local full regression: **2170/2170 PASS, 0 FAIL, 0 skipped**; five new Curve
+tests and reviewed changed loader/hash contract pass. Device acceptance pending.

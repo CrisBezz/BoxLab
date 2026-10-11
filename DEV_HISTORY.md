@@ -7549,3 +7549,28 @@ facegroups, explicitly report unsupported attributes and stage rich metadata han
 do not promise complete materials/textures/layers round-trip from export alone.
 No implementation or release-marker changes in this roadmap update; frozenBeta7
 remains immutable at .807.
+
+
+## 2026-10-11 — .808 shared Curve Profile foundation
+
+User chose “Nice - lets build something” after shared curve/Lasso discussion. Audit
+found temporary Lasso screen strokes and procedural Sweep/Revolve editors, but no
+reusable saved curve profile. Reuse Lasso 4px sampler, canonical EditableMesh loose
+edges, Add unit fit, instance affine derivation, manager/history and viewport session.
+New Add+ Curve and eligible Edit Curve: draw/reduce points, drag points, Open/Closed,
+Smooth/Straight, Detail, candidate Undo/Clear, Apply/Cancel. XY outline only; solid
+consumers (Balloon/extrusion/cutter) pending. Object-list selection for no-face curves.
+Curve recipe follows duplication and scene restore. Real manager regression exposed
+activation replacing global history stacks during scene Undo/Redo: existing bridge
+now preserves tokens across restore. Tests exercise real creation/edit history and
+candidate cancellation, topology, unit fit and affine reopening. FrozenBeta2–7 and
+accepted main geometry/Boolean/Extrude/Multi untouched. Acceptance pending.
+
+User additionally requested feasibility of UV/unwrap/painting and dense-mesh
+performance/external history. Audited existing UV passthrough, per-component cage
+objects, full display rebuild and mesh/history stack clones; documented staged UV
+owners and measurement-first performance work. No UV or performance implementation
+silently bundled into .808; older-history disk storage remains proposed.
+
+.808 local full regression: **2170/2170 PASS, 0 FAIL, 0 skipped**; five new Curve
+tests and reviewed changed loader/hash contract pass. Device acceptance pending.

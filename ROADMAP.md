@@ -4,7 +4,7 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — Beta 7 / .807, 2026-10-11
+## Current direction — Curve foundation .808 / frozen Beta 7, 2026-10-11
 
 .797 PASS protects the green baseline, GLB group import and Rotate. .796 Add+ previews,
 unit-zone scale and Text remain protected. First Editable Boolean build stores independent
@@ -19,8 +19,23 @@ exclusive Result/Sources views; user .804 PASS protected. .805 compacts the Bool
 object list using existing recipes;  .806 removes redundant Update Preview and matches compact popup typography;
 User .806 PASS protected; .807 matches startup/reset cube to accepted Add+1unit.
 User .807 AWESOME PASS; Beta7 freeze/deployment explicitly requested and implemented
-from accepted source; Pages and regression CI succeeded. Next on live main: recommended project Save/Open, NOM import, then Curve/Balloon and Curve Cutter. Beta7 remains
+from accepted source; Pages and regression CI succeeded. User then chose to start the shared curve foundation: .808 Add+ Curve draw/edit profiles, device acceptance pending. Next recommended: performance measurement and cage rendering optimisation before expanding dense geometry/texture workloads; project Save/Open, NOM import, then Balloon and Curve Cutter consumers. Beta7 remains
 frozen at .807 and immutable.
+
+## Requested UV/texture workflow and performance — queued
+
+Imported GLB UV/material/texture passthrough exists. Stage imported-UV inspection,
+authoritative editable face-corner seam channels, projection/seam unwrap and packing,
+then painting through existing Three.js textures. Preserve channels through topology,
+history and .boxlab embedded resources. Larger painting/PBR/layer budgets need iPad
+measurement; these are not implemented or promised by the Curve build.
+
+User reports rapid slowdown with higher polygon counts. Audit identifies per-edge
+Line/per-vertex sphere objects, active-display rebuilds, per-frame marker work and
+full mesh/stack history clones. Measure first, then batch/instance cage geometry and
+reuse render buffers; cache topology and accelerate picking as justified. Keep recent
+Undo resident; optimise duplicate snapshots and evaluate older history in IndexedDB/
+OPFS with quota/recovery handling. Exporting history alone will not improve draw calls.
 
 ## Added priorities — project files and NOM import
 

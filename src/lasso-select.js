@@ -1,10 +1,11 @@
 import * as THREE from 'three';
+import {appendStrokePoint} from './stroke-sampling.js?v=0.36.18.808';
 
 // BoxLab v0.36.18.152 — Vertex Lasso uses live rendered cage markers.
 // This keeps newly added loose vertices selectable even when a bridge mesh snapshot
 // has not yet caught up. Edge / Face / Object Lasso behavior is unchanged.
 
-const VERSION='0.36.18.760';
+const VERSION='0.36.18.808';
 const canvas=document.querySelector('#viewport');
 const status=document.querySelector('#selectionStatus');
 const dock=document.querySelector('#componentSelectionTools .selection-dock');
@@ -64,7 +65,7 @@ canvas?.addEventListener('pointermove',restoreTouchNavigation,true);
 canvas?.addEventListener('pointerup',endTouchNavigation,true);
 canvas?.addEventListener('pointercancel',endTouchNavigation,true);
 canvas?.addEventListener('pointerdown',event=>{if(!armed||!event.isPrimary||event.button>0||event.pointerType==='touch')return;event.preventDefault();event.stopImmediatePropagation();gesture={id:event.pointerId,points:[{x:event.clientX,y:event.clientY}],start:{x:event.clientX,y:event.clientY}};canvas.setPointerCapture?.(event.pointerId);draw(gesture.points);},true);
-canvas?.addEventListener('pointermove',event=>{if(!gesture||gesture.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const last=gesture.points.at(-1),p={x:event.clientX,y:event.clientY};if(Math.hypot(p.x-last.x,p.y-last.y)<4)return;gesture.points.push(p);draw([...gesture.points,gesture.points[0]]);},true);
+canvas?.addEventListener('pointermove',event=>{if(!gesture||gesture.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();if(!appendStrokePoint(gesture.points,{x:event.clientX,y:event.clientY}))return;draw([...gesture.points,gesture.points[0]]);},true);
 function finish(event,cancel=false){
   if(!gesture||gesture.id!==event.pointerId)return;
   event.preventDefault();event.stopImmediatePropagation();

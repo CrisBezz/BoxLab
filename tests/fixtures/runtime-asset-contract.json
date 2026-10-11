@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.800",
+      "url": "./src/drawer-ui.js?v=0.36.18.808",
       "target": "src/drawer-ui.js",
-      "sha256": "8273063262815c5f1c7d618a36fd74c2f10e77b1e9dc932e1647423314003051"
+      "sha256": "a86afc985b5c8d1227902a856fab7fa55b48eb0dfaee70d8785f4e09a9a1002a"
     },
     {
       "owner": "index.html",
@@ -329,21 +329,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.807",
+      "url": "./src/multi-object.js?v=0.36.18.808",
       "target": "src/multi-object.js",
-      "sha256": "2409ee73deea5e7182d5aab55a98fe6da8f578fe234d4da4cd1138e91c3b85f0"
+      "sha256": "e6f9bf10aa2271e7edb12e0d0771502dca6cc8381359658b34f07b559946286a"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.800",
+      "url": "./src/object-management.js?v=0.36.18.808",
       "target": "src/object-management.js",
-      "sha256": "f610696fa56c06d3a8cd62371bc63f26c0e574cc95b7662a55c78018a2d2dbd5"
+      "sha256": "dbe5cc62793b789287d02affbb646fdb5b934ed2c4b443eb178ded14b2b8c37c"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-radial-session.js?v=0.36.18.801",
+      "url": "./src/object-radial-session.js?v=0.36.18.808",
       "target": "src/object-radial-session.js",
-      "sha256": "b423487d6a7279156109ce6ac6c8d5775f43ad0593f19871f8e1f8a7a3f900e3"
+      "sha256": "f464310f4773732b723183350fa5dbf4ab00b955e176c99e45db56a311778fbc"
     },
     {
       "owner": "index.html",
@@ -360,9 +360,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.796",
+      "url": "./src/primitive-ui.js?v=0.36.18.808",
       "target": "src/primitive-ui.js",
-      "sha256": "9dc5e18fc130ae40232a871ec53e31449023171d68b66b1c5e488cb25c82cadd"
+      "sha256": "399d7c666c40ff4a474bc30587adec7430e9f303ccb7d7b932d9043fce9ae2d8"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.807",
+      "url": "./src/release-bootstrap.js?v=0.36.18.808",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.807",
+      "url": "./src/release-version.js?v=0.36.18.808",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -533,15 +533,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-background-exit.js?v=0.36.18.799",
+      "url": "./src/tool-background-exit.js?v=0.36.18.808",
       "target": "src/tool-background-exit.js",
-      "sha256": "d5a5d3eb28104427a8ed9ed21ecffe0fb9affdf734377441db8402fc33014cae"
+      "sha256": "e4d3b344ce63d112d028e862c660044386047da63425580337f4b3e42c6227a6"
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-session-ui.js?v=0.36.18.798",
+      "url": "./src/tool-session-ui.js?v=0.36.18.808",
       "target": "src/tool-session-ui.js",
-      "sha256": "599a56c852013aeae696aeb17c83ef48a5affd2a23cdcbb3b6954b412d26b92d"
+      "sha256": "3f39d5ff2b8418f122c17dd9e54e7e776e5230da5e7e273d04d86da1d1e6bb7f"
     },
     {
       "owner": "index.html",
@@ -900,10 +900,10 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./lasso-select.js?v=0.36.18.760",
+      "url": "./lasso-select.js?v=0.36.18.808",
       "target": "src/lasso-select.js",
-      "sha256": "b2a996f99fabd49a95a329214559df6441e48acb85c33756c89d344060f7c87a",
-      "sourceVersion": "0.36.18.760"
+      "sha256": "25c991dde5b8780b941374e74c9da1d793703b8f392611bd7edba0f5a838e2a0",
+      "sourceVersion": "0.36.18.808"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.800",
+      "url": "./object-management.js?v=0.36.18.808",
       "target": "src/object-management.js",
-      "sha256": "f610696fa56c06d3a8cd62371bc63f26c0e574cc95b7662a55c78018a2d2dbd5"
+      "sha256": "dbe5cc62793b789287d02affbb646fdb5b934ed2c4b443eb178ded14b2b8c37c"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -2212,6 +2212,49 @@
       "target": "src/editable-boolean-core.js",
       "sha256": "052d86ab1973ede750cd2cfad237d1d12e545e80260e2970a0719f3c7ad5a96e",
       "sourceVersion": "0.36.18.803"
+    },
+    {
+      "owner": "src/curve-profile-core.js",
+      "url": "./add-object-fit.js?v=0.36.18.796",
+      "target": "src/add-object-fit.js",
+      "sha256": "6233730de5cb0b50f0ecae19cb55623fa7a1963b576836c87a76e7688b6e0b50"
+    },
+    {
+      "owner": "src/curve-profile-core.js",
+      "url": "./instance-core.js?v=0.36.18.343",
+      "target": "src/instance-core.js",
+      "sha256": "ab05cf3c145b4a3694318d41329391f84aaf5c83520019e9b3988f8a202994d8"
+    },
+    {
+      "owner": "src/curve-profile-core.js",
+      "url": "./mesh.js",
+      "target": "src/mesh.js",
+      "sha256": "70511061a5e8701124616a387ced43d0bd1297ecf130afc1fbc74c3b3b010e24"
+    },
+    {
+      "owner": "src/curve-profile-ui.js",
+      "url": "./curve-profile-core.js?v=0.36.18.808",
+      "target": "src/curve-profile-core.js",
+      "sha256": "d06c2c79d23a1ed80e206f7445a644724d9e4c9d9739c34808a92fa06af3f2af"
+    },
+    {
+      "owner": "src/curve-profile-ui.js",
+      "url": "./stroke-sampling.js?v=0.36.18.808",
+      "target": "src/stroke-sampling.js",
+      "sha256": "762a969d807a1c631d29f73e213d7b2b470e6168e633e868e472d86740b12c4e"
+    },
+    {
+      "owner": "src/lasso-select.js",
+      "url": "./stroke-sampling.js?v=0.36.18.808",
+      "target": "src/stroke-sampling.js",
+      "sha256": "762a969d807a1c631d29f73e213d7b2b470e6168e633e868e472d86740b12c4e"
+    },
+    {
+      "owner": "src/primitive-ui.js",
+      "url": "./curve-profile-ui.js?v=0.36.18.808",
+      "target": "src/curve-profile-ui.js",
+      "sha256": "c38b2bc0ed221a6aa57afee6f049b864998e4729ae800e3a3f2b211882324eb8",
+      "sourceVersion": "0.36.18.808"
     }
   ]
 }

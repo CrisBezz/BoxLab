@@ -60,10 +60,10 @@ function installGroupUiPolish() {
 
 syncDrawerToMode();
 
-import('./object-management.js?v=0.36.18.800').catch(error => console.warn('BoxLab object management failed to load', error));
+import('./object-management.js?v=0.36.18.808').catch(error => console.warn('BoxLab object management failed to load', error));
 import('./object-drawer-retain.js?v=0.36.18.517').catch(error => console.warn('BoxLab object drawer retain failed to load', error));
 import('./studio-scene-fix.js?v=0.36.18.197').catch(error => console.warn('BoxLab Studio scene fix failed to load', error));
-import('./lasso-select.js?v=0.36.18.760').catch(error => console.warn('BoxLab Lasso Select failed to load', error));
+import('./lasso-select.js?v=0.36.18.808').catch(error => console.warn('BoxLab Lasso Select failed to load', error));
 import('./cross-object-snap.js?v=0.36.18.6').catch(error => console.warn('BoxLab cross-object snap failed to load', error));
 import('./object-mode-retain.js?v=0.36.18.4').catch(error => console.warn('BoxLab object mode retain failed to load', error));
 import('./transform-state-fix.js?v=0.36.18.5').catch(error => console.warn('BoxLab transform state fix failed to load', error));

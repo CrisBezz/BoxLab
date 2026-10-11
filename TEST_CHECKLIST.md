@@ -5389,3 +5389,18 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 - [ ] .boxlab Save/Open preserves exact scene scale/topology, groups/links/modifiers and hidden Boolean recipes/sources.
 - [ ] Reopen remains editable; invalid/unsupported projects leave current scene intact; schema migrations covered.
 - [ ] NOM import uses real file fixtures, preserves supported geometry/transforms/names/facegroups and reports unsupported data.
+
+
+## .808 Curve Profile — device acceptance pending
+
+- Add+ > Curve: Pencil/mouse draw, Open/Closed, Smooth/Straight and Detail preview.
+- Edit points by dragging; candidate Undo/Clear and Cancel leave scene/history intact.
+- Apply creates one connected wire outline fitted to 1unit (not a solid yet).
+- Select Curve via object list; Add+ > Edit Curve changes existing outline.
+- Move/Rotate/Scale then reopen; Apply preserves placement; Cancel preserves mesh.
+- Creation/edit Undo and Redo restore recipe and geometry; duplication remains editable.
+- Normal Add previews, Lasso, one/two-finger navigation and popup exit remain stable.
+- Frozen Beta7 .807 acceptance protected; .808 manual PASS must be supplied by user.
+
+.808 local full regression: **2170/2170 PASS, 0 FAIL, 0 skipped**; five new Curve
+tests and reviewed changed loader/hash contract pass. Device acceptance pending.
