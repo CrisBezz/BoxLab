@@ -1346,3 +1346,16 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 tests and reviewed changed loader/hash contract pass. Device acceptance pending.
 
 .809 full local Node24 regression: **2175/2175 PASS, 0 FAIL, 0 skipped**.
+
+
+### .809 publication verification — 2026-10-11
+
+Release `6aee879d791d188f2d6f8445a45d25fb13000798`, tree
+`61d745952fe3f26885c2bd8f30d256206ba81a7c` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2175tests/2175PASS/0FAIL/0skip.
+Topology38121546217/job114417137475 and Pages38121545819 SUCCESS.
+Fresh live index/version/main809/performance UI809/core809 byte-match repository;
+frozenBeta7 manifest matches unchanged .807. Protected Curve808, Multi1.0,
+Loop715, Extrude802, Boolean806 and all frozenBeta2–7 unchanged.
+Current main source baseline is this release plus documentation verification;
+.808 user PASS recorded, .809 iPad readout/selection/navigation acceptance pending.
