@@ -15,19 +15,11 @@ export function makeCurveBalloon(points, profile) {
     if(i===0&&j===points.length-1)continue;
     const a=points[i],b=points[(i+1)%points.length],c=points[j],d=points[(j+1)%points.length];
     if(cross(a,b,c)*cross(a,b,d)<0&&cross(c,d,a)*cross(c,d,b)<0)
-      throw Error('Draw a simple convex outline without crossings');
+      throw Error('Draw a simple outline without crossings');
   }
-  const bounds=new THREE.Box3().setFromPoints(points),size=bounds.getSize(new THREE.Vector3());
-  const tolerance=Math.max(size.x,size.y)*.005;
-  // All points must lie on the same side of each directed edge. This also
-  // rejects star/self-crossing polygons with locally consistent turns.
-  for (let i = 0; i < points.length; i++) {
-    const a=points[i],b=points[(i+1)%points.length];
-    // Half a percent of outline size accepts sub-pixel Pencil/spline wobbles,
-    // without replacing the authored silhouette with its convex hull.
-    for (const p of points) if (sign*cross(a,b,p) < -tolerance*a.distanceTo(b)-1e-10)
-      throw Error('Draw a convex outline; reduce inward dents');
-  }
+  // Concave evaluation: preserve the authored outline, but accept only
+  // star-shaped silhouettes whose actual smoothed rim can fan from the
+  // existing MeshUtilz pole without crossing or folding.
   const resolution=profile.balloonResolution;
   if(resolution!=null&&(!Number.isInteger(resolution)||resolution<4||resolution>12))throw Error('Balloon resolution must be 4–12');
   // Keep legacy Balloon tessellation when a recipe lacks resolution.
@@ -41,7 +33,7 @@ export function makeCurveBalloon(points, profile) {
     // its actual smoothed rim against the pole centre before accepting a shell.
     const rim=vertices.slice(0,index.getX(2)),centre=vertices.at(-1),rimSign=Math.sign(THREE.ShapeUtils.area(rim));
     if(rim.length<3||rim.some((p,i)=>rimSign*cross(centre,p,rim[(i+1)%rim.length])<=1e-12))
-      throw Error('Outline folds inward; reduce inward dents');
+      throw Error('Concavity too deep for Balloon centre; use a shallower indentation');
     return new EditableMesh(vertices,faces);
   } finally { geometry.dispose(); }
 }
