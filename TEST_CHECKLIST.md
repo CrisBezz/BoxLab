@@ -5383,3 +5383,9 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 - [x] Frozen shell/modules/templates/refresh/PWA references stay within beta-7 namespace.
 - [x] Pages and regression CI succeed; live/frozen critical assets byte-match repository.
 - [ ] Recommended final frozen-link iPad launch, navigation and Nomad export smoke.
+
+## Planned project/NOM persistence gates — not implemented
+
+- [ ] .boxlab Save/Open preserves exact scene scale/topology, groups/links/modifiers and hidden Boolean recipes/sources.
+- [ ] Reopen remains editable; invalid/unsupported projects leave current scene intact; schema migrations covered.
+- [ ] NOM import uses real file fixtures, preserves supported geometry/transforms/names/facegroups and reports unsupported data.

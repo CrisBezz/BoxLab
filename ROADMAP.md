@@ -19,16 +19,25 @@ exclusive Result/Sources views; user .804 PASS protected. .805 compacts the Bool
 object list using existing recipes;  .806 removes redundant Update Preview and matches compact popup typography;
 User .806 PASS protected; .807 matches startup/reset cube to accepted Add+1unit.
 User .807 AWESOME PASS; Beta7 freeze/deployment explicitly requested and implemented
-from accepted source; Pages and regression CI succeeded. Next on live main: shared Curve editor/Balloon, then Curve Cutter. Beta7 remains
+from accepted source; Pages and regression CI succeeded. Next on live main: recommended project Save/Open, NOM import, then Curve/Balloon and Curve Cutter. Beta7 remains
 frozen at .807 and immutable.
 
-Agreed sequence:
-1. Editable Boolean source session (this build).
-2. Automatic Live Boolean refresh with coalescing and reliable failed-preview behavior.
-3. Shared curve editor and Balloon silhouette object, auditing the existing Balloon algorithm.
-4. Extruded curve cutters feeding the existing Boolean owner.
-5. Quad-remeshing feasibility with legally available algorithms or licensed integration;
-   no proprietary Exoside implementation copying.
+## Added priorities — project files and NOM import
+
+User requests native `.BOXLAB` Save/Open and Nomad `.nom` import. Recommended order:
+1. Versioned `.boxlab` project format and File Save/Open, preserving complete editable
+   scene including hidden Boolean sources/recipes, groups/links, modifiers and scale.
+2. NOM import using existing container reader and scene importer, validated against
+   real Nomad files; staged geometry/names/facegroups before richer attributes.
+3. Shared curve editor and Balloon silhouette object, auditing existing Balloon code.
+4. Extruded curve cutters feeding existing editable Boolean owner.
+5. Quad-remeshing feasibility using open algorithms or licensed integration.
+
+The project schema should be portable between browser and a future native iPad app.
+Version migrations, validated atomic reopen and future procedural parameters belong
+to the design. Native file-type registration and cross-session Undo persistence are
+separate decisions. Export/import meshes do not replace native project persistence.
+Both additions are queued, not implemented. Editable/live Boolean steps are complete.
 
 ## Beta 6 delivery refinement — .736
 

@@ -7524,3 +7524,28 @@ Topology38101242200 and Pages38101242127 SUCCESS. Fresh live shell/manifest and
 frozen shell/manifest/metadata/PWA/main/manager/editor/refresh owners/native template
 match repository bytes. Existing Beta2–6 manifests byte-match unchanged files.
 Beta7 is released and immutable; continue development on main.
+
+## Project persistence and NOM import queued — 2026-10-11
+
+User requests Nomad NOM import and proprietary .BOXLAB Save/Open, considering future
+iPad app packaging. Audit: nomad-export-core.readNomadProject already reads validated
+container/header/JSON/binary sections for export donor; import-mesh supports OBJ/GLB/
+GLTF but no NOM import. object-management captures/restores scene and Boolean recipes
+for history; no durable native project serializer/File Save/Open exists. Reuse these
+owners; do not add parallel scene or modelling kernels.
+
+Recommended order before Curve/Balloon: versioned .boxlab project Save/Open, then
+staged NOM import. Project requirements: full editable polygon topology, facegroups/
+creases, object IDs/names/kinds/visibility/locks, groups/links/origins, modifiers, Boolean
+recipes AND hidden operands, current scene/view/settings and preserved import channels.
+Exact scale on project reopen; no generic mesh-import fitting. Atomic validated open,
+schema migrations and future curve/procedural parameters. Cross-session Undo persistence
+is a separate decision, not automatically promised. Same documented schema can be used
+by browser and future native wrapper; native file-type integration is separate work.
+
+NOM import must validate real files/schema versions and compressed binary fields,
+transforms/hierarchy and base versus sculpted geometry. Start with geometry/names/
+facegroups, explicitly report unsupported attributes and stage rich metadata handling;
+do not promise complete materials/textures/layers round-trip from export alone.
+No implementation or release-marker changes in this roadmap update; frozenBeta7
+remains immutable at .807.
