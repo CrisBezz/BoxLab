@@ -60,7 +60,7 @@ function interiorCenter(poly){
   return best;
 }
 
-export function buildOutlineBalloon(points,{depth=.42,roundness=.18,edgeRoundness=.72,smooth=5}={}){
+export function buildOutlineBalloon(points,{depth=.42,roundness=.18,edgeRoundness=.72,smooth=5,outlineSegments=null,sectionRings=null}={}){
   if(points.length<3)return new THREE.BufferGeometry();
 
   const simplified=simplifyClosed(points,Math.max(.018,depth*.045));
@@ -77,7 +77,7 @@ export function buildOutlineBalloon(points,{depth=.42,roundness=.18,edgeRoundnes
 
   let pts2=simplified.map(p=>new THREE.Vector2(p.clone().sub(origin).dot(u),p.clone().sub(origin).dot(v)));
   const curve=new THREE.CatmullRomCurve3(pts2.map(p=>new THREE.Vector3(p.x,p.y,0)),true,'centripetal',.45);
-  const target=Math.max(24,Math.min(180,pts2.length*Math.max(2,smooth)));
+  const target=outlineSegments==null?Math.max(24,Math.min(180,pts2.length*Math.max(2,smooth))):Math.max(12,Math.min(180,Math.round(outlineSegments)));
   pts2=curve.getPoints(target).slice(0,-1).map(p=>new THREE.Vector2(p.x,p.y));
 
   const area=THREE.ShapeUtils.area(pts2);
@@ -89,7 +89,7 @@ export function buildOutlineBalloon(points,{depth=.42,roundness=.18,edgeRoundnes
   const edge=THREE.MathUtils.clamp(edgeRoundness,0,1);
   const superN=THREE.MathUtils.lerp(1.25,5.0,edge);
   const power=2/superN;
-  const rings=Math.max(12,Math.min(28,Math.round(14+roundness*8+edge*6)));
+  const rings=sectionRings==null?Math.max(12,Math.min(28,Math.round(14+roundness*8+edge*6))):Math.max(4,Math.min(28,Math.round(sectionRings)));
   const ringCount=pts2.length;
   const verts=[],idx=[];
 
