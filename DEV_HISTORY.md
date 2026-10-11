@@ -7957,3 +7957,8 @@ User reports .816 Balloon markedly more responsive. User requests concave previe
 ## .818 — Optional quad-dominant Balloon — 2026-10-11
 
 User .817 concave C/star PASS, deep crescent FAIL. Existing donor concentric ring triangle pairs merged in original Balloon adapter into editable quads, with both pole fans retained as triangles. Explicit Topology toggle; default triangle mode and older recipes unchanged. Existing preview, history, scene, density and Pencil owners retained. Visual/nonplanar quad triangulation requires iPad gate. Test added for reduced faces, two pole fans and oriented closed edge incidence.
+
+
+## .819 — Paired quad poles — 2026-10-12
+
+User accepts .818 quad-dominant modelling and requests pole cleanup. Same Balloon adapter pairs adjacent fan triangles into quad faces when complete and even, with directed winding and no new vertices. New Balloon defaults Quads plus paired pole mode; legacy records unchanged. Triangle fallback remains. No vendor/history/gesture kernel modifications. CI/iPad gate pending.
