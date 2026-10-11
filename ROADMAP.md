@@ -4,7 +4,7 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .802, 2026-10-11
+## Current direction — .803, 2026-10-11
 
 .797 PASS protects the green baseline, GLB group import and Rotate. .796 Add+ previews,
 unit-zone scale and Text remain protected. First Editable Boolean build stores independent
@@ -12,7 +12,10 @@ A/B source recipes and reopens them for existing Move/Rotate/Scale, explicit Upd
 Apply/Cancel and one scene Undo/Redo. User .801 PASS protects activation/exit and corrected radial. Concrete uploaded dense
 Extrude repair in .802 takes priority before expanding: existing coalescer now handles
 more than256 private wall cells, preserving guarded topology. User .802 PASS protects
-the clean extrusion case and continued-modelling/history checks. Next: automatic Live Boolean.
+the clean extrusion case and continued-modelling/history checks. .803 implements automatic
+staged Live Boolean previews through existing editor/solver/history owners; device
+acceptance pending. Next: shared Curve editor/Balloon, then Curve Cutter. Beta7 remains
+a release recommendation; no freeze performed in this build.
 
 Agreed sequence:
 1. Editable Boolean source session (this build).

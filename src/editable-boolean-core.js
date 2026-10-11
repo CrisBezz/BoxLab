@@ -1,6 +1,6 @@
 // Recipe/session orchestration only. Boolean geometry and scene history retain
 // their existing owners. This first step edits independent Object transforms.
-export const VERSION='0.36.18.798';
+export const VERSION='0.36.18.803';
 const operations=new Set(['union','difference','intersection']);
 export function booleanMeshSignature(mesh){
   return JSON.stringify([mesh.vertices.map(v=>[v.x,v.y,v.z]),mesh.faces,mesh.faceGroups,[...mesh.creases]]);
@@ -61,8 +61,10 @@ export function createEditableBooleanController({manager,objectHistory,history,s
     session.operation=value;session.previewSignature=null;changed();return true;
   }
   const signature=e=>JSON.stringify([session.operation,booleanMeshSignature(e.a.mesh),booleanMeshSignature(e.b.mesh)]);
-  function update(){
-    if(busy())return fail('Finish the transform first');
+  function update({live=false}={}){
+    // A live preview only solves private clones; it never activates an object,
+    // commits geometry or adds history. Apply/Cancel keep their drag guards.
+    if(busy()&&!live)return fail('Finish the transform first');
     const e=context();if(!e.ok)return e;
     let result;try{result=solve(e.a.mesh.clone(),e.b.mesh.clone(),session.operation);}catch(error){return fail(error.message||'Boolean calculation failed');}
     if(!result?.ok)return fail(result?.reason||'Boolean calculation failed');
@@ -97,5 +99,5 @@ export function createEditableBooleanController({manager,objectHistory,history,s
     objectHistory().checkpointSnapshot(saved.scene,saved.scene.objects.find(o=>o.id===saved.resultId).mesh);
     changed({applied:result.id});return{ok:true};
   }
-  return{open,choose,operation,update,cancel,apply,context,active:()=>!!session,state:()=>session};
+  return{open,choose,operation,update,cancel,apply,context,inputSignature:()=>{const e=context();return e.ok?signature(e):null;},active:()=>!!session,state:()=>session};
 }

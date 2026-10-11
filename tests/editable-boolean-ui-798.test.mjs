@@ -5,8 +5,9 @@ import vm from 'node:vm';
 import * as THREE from 'three';
 import {createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature} from '../src/editable-boolean-core.js';
 import {editableBooleanRuntime} from './helpers/editable-boolean-runtime.mjs';
+import {createLiveBooleanPreview} from '../src/live-boolean-preview.js';
 function ui({sourceEdit=s=>s}={}){
- const r=editableBooleanRuntime(),c=r.c,nodes=new Map(),tasks=[],events=[];
+ const r=editableBooleanRuntime(),c=r.c,nodes=new Map(),tasks=[],events=[],timers=new Map();let timerId=0;
  function node(id=''){
   const listeners=new Map(),classes=new Set(),n={id,dataset:{},hidden:false,style:{},children:[],classList:{toggle(k,on){on?classes.add(k):classes.delete(k);}},
    appendChild(child){this.children.push(child);},contains(child){return child===this||this.children.includes(child);},
@@ -26,14 +27,16 @@ function ui({sourceEdit=s=>s}={}){
  // Actual manager activation clears selection by clicking the current mode.
  const multi=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');vm.runInContext(multi.slice(multi.indexOf('function clearComponentSelection()'),multi.indexOf('function enterObjectMode()')),c);
  const scene=new THREE.Scene();c.__boxlabBridgeState.scene=scene;
- Object.assign(c,{document:doc,window:win,queueMicrotask:fn=>tasks.push(fn),createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature,
+ Object.assign(c,{document:doc,window:win,queueMicrotask:fn=>tasks.push(fn),createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature,createLiveBooleanPreview:options=>createLiveBooleanPreview({...options,setTimer:fn=>{timers.set(++timerId,fn);return timerId;},clearTimer:id=>timers.delete(id)}),
+  setTimeout:fn=>{timers.set(++timerId,fn);return timerId;},clearTimeout:id=>timers.delete(id),
   Event:class{constructor(type){this.type=type;}},CustomEvent:class{constructor(type,options){this.type=type;this.detail=options?.detail;}},
   __boxlabSelectionBridge:{mode:()=> 'object'},__boxlabBooleanPrototype:{buildResult:c.buildResult},__boxlabBooleanToolSession:{close(){}},
   __boxlabObjectSelection:{single(id){c.selectedIds=new Set([id]);c.multiEnabled=false;}},__boxlabToolSession:{begin(value){events.push(value);},end(id){events.push({end:id});}}});
  let current=null;Object.assign(c.__boxlabToolSession,{current:()=>current,begin(value){current=value;events.push(value);},end(id){if(current?.id===id)current=null;events.push({end:id});}});
  const source=fs.readFileSync(new URL('../src/editable-boolean.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'');vm.runInContext('(function(){'+sourceEdit(source)+'})()',c);
  function flush(){let i=0;while(tasks.length){assert.ok(i++<30,'bounded UI synchronization');tasks.shift()();}}
- flush();return{r,c,nodes,doc,win,scene,events,flush,api:c.__boxlabEditableBoolean};
+ function tick(){for(const [id,fn] of [...timers]){timers.delete(id);fn();flush();}}
+ flush();return{r,c,nodes,doc,win,scene,events,flush,tick,timers,api:c.__boxlabEditableBoolean};
 }
 test('798 whole UI opens shared source session, draws real guides/preview and disposes on Apply',()=>{
  const u=ui();assert.equal(u.nodes.get('#booleanLaunchBtn').textContent,'Edit Boolean');assert.equal(u.api.open(),true);u.flush();
@@ -79,4 +82,33 @@ test('801 regression rejects old capture guard with actual activation click (pre
 test('801 Cancel closes an orphaned edit host even when its transaction already ended',()=>{
  const u=ui(),before=u.r.snapshot(),panel=u.nodes.get('#editableBooleanPanel');panel.hidden=false;u.c.__boxlabToolSession.begin({id:'boolean-edit',node:panel});
  assert.equal(u.api.cancel(),true);assert.equal(panel.hidden,true);assert.equal(u.c.__boxlabToolSession.current(),null);assert.deepEqual(u.r.snapshot(),before);
+});
+
+test('803 whole UI automatically previews latest A/B geometry and operation without Update',()=>{
+ const u=ui();let solves=0;const solve=u.c.__boxlabBooleanPrototype.buildResult;u.c.__boxlabBooleanPrototype.buildResult=(...args)=>{solves++;return solve(...args);};
+ u.api.open();u.flush();u.tick();assert.equal(solves,1);assert.equal(u.scene.children[0].children.length,5);
+ u.nodes.get('[data-edit-source="b"]').click();u.flush();
+ for(let i=0;i<5;i++){u.r.move(new THREE.Vector3(.01,.003,0));u.win.dispatchEvent({type:'boxlab-bridge-state'});u.flush();}
+ assert.equal(u.timers.size,1);const undo=[...u.r.h.undoStack];u.tick();assert.equal(solves,2);assert.match(u.nodes.get('#editableBooleanNote').textContent,/Live preview updated/);
+ assert.deepEqual(u.r.h.undoStack,undo);const preview=u.api.state().preview;
+ u.nodes.get('[data-edit-operation="union"]').click();u.flush();u.tick();assert.equal(solves,3);assert.notEqual(u.api.state().preview,preview);
+ u.api.apply();u.flush();assert.equal(u.api.active(),false);assert.equal(u.timers.size,0);assert.equal(u.r.h.undoStack.length,2);
+});
+
+test('803 automatic failed preview retains last valid result, retries after change, and Cancel clears pending work',()=>{
+ const u=ui(),before=u.r.snapshot();u.api.open();u.flush();u.tick();const preview=u.api.state().preview;
+ u.nodes.get('[data-edit-source="b"]').click();u.r.move(new THREE.Vector3(30,0,0));u.nodes.get('[data-edit-operation="intersection"]').click();u.flush();u.tick();
+ assert.equal(u.api.state().preview,preview);assert.match(u.nodes.get('#editableBooleanNote').textContent,/last valid result retained/);
+ for(let i=0;i<4;i++){u.win.dispatchEvent({type:'boxlab-bridge-state'});u.flush();}assert.equal(u.timers.size,0);
+ u.r.move(new THREE.Vector3(-30,.03,.01));u.win.dispatchEvent({type:'boxlab-transform-end'});u.flush();assert.equal(u.timers.size,1);u.tick();assert.notEqual(u.api.state().preview,preview);
+ u.r.move(new THREE.Vector3(.01,0,0));u.win.dispatchEvent({type:'boxlab-bridge-state'});u.flush();assert.equal(u.timers.size,1);u.api.cancel();u.flush();u.tick();assert.deepEqual(u.r.snapshot(),before);assert.equal(u.scene.children.length,0);
+});
+
+test('803 UI reads unsaved live Rotate/Scale geometry during gizmo drag; idle events do not solve again',()=>{
+ const u=ui();u.api.open();u.flush();u.tick();u.nodes.get('[data-edit-source="b"]').click();u.flush();
+ const old=u.api.state().previewSignature,undo=[...u.r.h.undoStack];u.nodes.set('#totalGizmo',{dataset:{dragging:'true'}});
+ const q=new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0,1,0),.12);u.r.live.vertices.forEach(v=>v.applyQuaternion(q).multiplyScalar(1.04));
+ u.win.dispatchEvent({type:'boxlab-bridge-state'});u.flush();u.tick();assert.notEqual(u.api.state().previewSignature,old);assert.deepEqual(u.r.h.undoStack,undo);assert.equal(u.api.apply().ok,false);
+ for(let i=0;i<3;i++){u.win.dispatchEvent({type:'boxlab-bridge-state'});u.flush();}assert.equal(u.timers.size,0);
+ u.nodes.get('#totalGizmo').dataset.dragging='false';u.api.cancel();u.flush();assert.equal(u.timers.size,0);
 });

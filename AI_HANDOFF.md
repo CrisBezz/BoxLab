@@ -1,16 +1,47 @@
-# BoxLab AI Handoff — Dense Extrude wall repair
+# BoxLab AI Handoff — Automatic Live Boolean preview
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.802**. User **.801 PASS** recorded/protected for Editable
-Boolean A/B activation, editing/exit and corrected Object radial layout. The user
-then reports a separate dense middle Extrude on the attached Torus; this is the
-current fix, not a reversal of Boolean acceptance. Parent main
-`35b4aa2f64029deb300472e4c242d9f06ea05789`. Release `bbfa37b1676bbda1c7cfe11a5fe0a81f0ef57d0d`; full2153/2153 PASS,
-CI38097266187/Pages38097266175 SUCCESS. Live manifest/shell/changed owners verified.
-User .802 PASS recorded on 2026-10-11; clean dense Extrude and its manual
-continued-modelling/history checks are accepted and protected. Publication details follow below.
+Current build **v0.36.18.803**. Last device acceptance **.802 PASS**, protected;
+.801 Editable Boolean activation/exit and corrected radial also protected.
+Parent main `3649d4e466f2df66a659b0df52b613050609fb9c`.
+Full Node24 **2158/2158 PASS, 0 FAIL, 0 skips**. .803 live preview device acceptance
+pending. Publication verification follows below. No Beta7 freeze performed.
+
+## .803 — Automatic staged Live Boolean previews
+
+/nextbuild implements the next agreed automatic preview step, not a Beta freeze.
+Audited actual editor/controller, manager objects getter/saveActive, bridge-topology
+render notifications and main/transform-upgrade semantic transform-end. Those
+owners already supply current live geometry and refresh signals; no pointer owner
+or parallel solver added. Existing recipe/session UI now automatically previews
+opening, A/B Move/Rotate/Scale and operation changes. Original Update remains manual
+retry, Apply/Cancel and same-result/one-scene-history transaction remain authoritative.
+
+Small live-boolean-preview scheduler coalesces changed signatures on a150ms first
+deadline (continuous drags do not postpone forever). Reads latest geometry at fire,
+suppresses unchanged/failed repeat solves, invalidates callbacks on session exit or
+replacement. Existing controller update accepts private live-preview-only busy bypass;
+only cloned geometry is solved. Apply/Cancel/choose/op busy guards retained. Last
+valid mint result retained on failure; note explicitly reports refusal. Changing
+geometry or operation retries; manual Update retries unchanged failed inputs.
+
+Bridge and transform-end feed original UI sync. Real manager objects getter saves
+unsaved live coordinates before signature/solve. Preview adds no history or source
+activation; Apply still recomputes stale preview synchronously before committing.
+A/B guides remain disposable. No automatic dependency graph outside the active
+Edit Boolean session, no chained/grouped/linked/modifier operands added. Solver is
+synchronous:150ms is scheduling coalescing, not guaranteed frame timing on iPad.
+
+Five new behavior checks cover whole editor initial/live coalesced updates, operation
+switches, unsaved Rotate/Scale geometry during busy gizmo, unchanged idle/failure
+suppression, last valid preview/recovery, pending Cancel, actual history, private busy
+preview guard and retired callback isolation. Existing .801 activation/capture and
+.802 dense Extrude tests retained. UI/core/new scheduler803 and shell/recovery803
+pins reviewed; all other runtime owners/protected Multi1.0/Loop715/betas unchanged.
+Device preview visibility, touch performance and normal Apply/Cancel/history pending.
+Next after acceptance: shared Curve editor/Balloon audit, then Curve Cutter.
 
 ## .802 — Dense simple Extrude exceeds former cleanup bound
 
@@ -709,12 +740,13 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.801 PASS protects Editable Boolean A/B switching/transforms, safe exit and corrected
-Object radial slots. .797 GLB/Rotate green baseline and .796 Add+ preview/unit fit
-remain protected. .802 PASS protects supplied dense simple Extrude and continued modelling/history;
-next automatic Live Boolean → Curve/Balloon
-→ Curve Cutter → open/licensed quad-remesher feasibility. NOM import/Lasso deferred.
-Do not infer device acceptance from Node tests or auto-repair already damaged meshes.
+.802 PASS protects clean dense Extrude and continued modelling/history; .801 PASS
+protects Editable Boolean activation/exit and Object radial corrections. .797 GLB/
+Rotate and .796 Add+ preview/unit fit remain protected. .803 automatic staged Live
+Boolean implemented; obtain device Move/Rotate/Scale preview, operation switching,
+Apply/Cancel/Undo acceptance before shared Curve editor/Balloon → Curve Cutter →
+open/licensed quad-remesher feasibility. Beta7 is recommended, not frozen/published;
+.802 remains last device-accepted checkpoint. NOM import/Lasso remain deferred.
 
 ## Accepted interaction / UI baseline
 
@@ -820,7 +852,7 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery802; importer797; shared Tool Session UI798; Editable Boolean801/core798;
+Current recovery803; importer797; shared Tool Session UI798; Editable Boolean803/core803/live scheduler803;
 Object radial/total-gizmo801; management/multi-object/drawer800; background799; Sweep789; Revolve Profile788; Add UI/fit796; preview795; factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
 background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct802(import-only; tap786);
@@ -1084,3 +1116,5 @@ User PASS recorded. Clean dense negative Extrude, corrected-file continued model
 and Undo/Redo/navigation manual checks are accepted and protected. .801 Editable
 Boolean/radial acceptance retained. Runtime and release markers unchanged. Next
 scoped /nextbuild: automatic Live Boolean using existing recipe/session/solver owners.
+
+.803 complete Node24 validation: **2158/2158 PASS, 0 FAIL, 0 skipped**. All historical checks remain active; five new checks. Publication/device verification pending.

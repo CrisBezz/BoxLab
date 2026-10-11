@@ -1,7 +1,8 @@
 import * as THREE from 'three';
-import {createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature} from './editable-boolean-core.js?v=0.36.18.798';
+import {createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature} from './editable-boolean-core.js?v=0.36.18.803';
+import {createLiveBooleanPreview} from './live-boolean-preview.js?v=0.36.18.803';
 
-const VERSION='0.36.18.801';
+const VERSION='0.36.18.803';
 const panel=document.createElement('div');
 panel.id='editableBooleanPanel';panel.className='boxlab-tool-session-shell';panel.hidden=true;
 panel.innerHTML=`<div class="boxlab-tool-session-title">Edit Boolean</div>
@@ -10,7 +11,7 @@ panel.innerHTML=`<div class="boxlab-tool-session-title">Edit Boolean</div>
 <button type="button" data-edit-source="b" style="color:#5da9ff">B · Cutter</button></div>
 <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
 <button type="button" data-edit-operation="union">Union</button><button type="button" data-edit-operation="difference">A − B</button><button type="button" data-edit-operation="intersection">Intersect</button></div>
-<div class="drawer-hint">Select A or B, then move, rotate or scale with the gizmo. Update previews the result.</div>
+<div class="drawer-hint">Select A or B, then move, rotate or scale with the gizmo. Live preview updates automatically.</div>
 <div role="status" id="editableBooleanNote"></div>
 <button type="button" id="editableBooleanUpdate">Update Preview</button>
 <div class="outliner-actions"><button type="button" id="editableBooleanCancel">Cancel</button><button type="button" id="editableBooleanApply" class="boxlab-tool-session-primary">Apply</button></div>`;
@@ -55,6 +56,7 @@ function sync(){
   const e=controller.context();
   if(!e.ok){if(!busy())cancel();return;}
   refreshOverlay();
+  livePreview.notify();
 }
 function queueSync(){if(!queued){queued=true;queueMicrotask(sync);}}
 const controller=createEditableBooleanController({manager,objectHistory:()=>globalThis.__boxlabObjectHistory,history:()=>globalThis.__boxlabHistory,
@@ -64,7 +66,13 @@ function eligible(){
   const m=manager();if(!m||mode()!=='object')return{ok:false,reason:'Select an editable Boolean result in Object mode'};
   const objects=m.objects;return editableBooleanEligibility(objects,objects.find(o=>o.id===m.activeId));
 }
+const livePreview=createLiveBooleanPreview({
+  read:()=>{const s=controller.state();return s?{session:s,signature:controller.inputSignature(),previewSignature:s.previewSignature}:null;},
+  update:()=>controller.update({live:true}),
+  result:r=>status(r.ok?'Live preview updated · Apply keeps this result':`Live preview refused · last valid result retained · ${r.reason}`)
+});
 function finish(){
+  livePreview.stop();
   panel.hidden=true;disposeOverlay();globalThis.__boxlabToolSession?.end?.('boolean-edit');
   globalThis.__boxlabTransformArming?.disarm?.();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
@@ -78,7 +86,7 @@ function open(){
   globalThis.__boxlabToolSession.begin({id:'boolean-edit',title:'Edit Boolean',node:panel});
   globalThis.__boxlabObjectSelection?.single?.(manager().activeId);
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
-  status('Edit source A or B, then Update Preview');queueSync();return true;
+  status('Live preview · edit source A or B');queueSync();return true;
 }
 function cancel(){
   // Recover a visible host left behind by an interrupted activation.
@@ -93,6 +101,7 @@ panel.querySelector('#editableBooleanUpdate').addEventListener('click',update);
 panel.querySelector('#editableBooleanCancel').addEventListener('click',cancel);
 panel.querySelector('#editableBooleanApply').addEventListener('click',apply);
 window.addEventListener('boxlab-bridge-state',queueSync);
+window.addEventListener('boxlab-transform-end',queueSync);
 window.addEventListener('boxlab-object-manager-ready',queueSync);
 window.addEventListener('boxlab-tool-session-change',event=>{if(controller.active()&&event.detail?.id==='boolean-edit'&&!event.detail.active)cancel();});
 // Use existing gesture/transform owners; no new viewport pointer handler.

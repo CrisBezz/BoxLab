@@ -7397,3 +7397,25 @@ User PASS recorded. Clean dense negative Extrude, corrected-file continued model
 and Undo/Redo/navigation manual checks are accepted and protected. .801 Editable
 Boolean/radial acceptance retained. Runtime and release markers unchanged. Next
 scoped /nextbuild: automatic Live Boolean using existing recipe/session/solver owners.
+
+
+## .803 — Automatic Live Boolean preview — 2026-10-11
+
+User .802 PASS recorded/protected; /nextbuild proceeds to agreed automatic preview.
+Audited manager live save/getter, bridge render events and transform-end before changes.
+Existing editor now schedules private preview clones on150ms coalesced first deadlines:
+opening, A/B transforms and operation edits update automatically. Idle unchanged and
+unchanged failed signatures do not repeatedly solve. Failure keeps last valid result;
+changed inputs/manual Update can retry. Cancel/Apply invalidate pending callbacks.
+Existing controller permits preview-only busy solve; mutation/exit controls keep drag
+guards, same result Apply and one scene Undo/Redo retained. No new kernel/pointer/
+history owner. Synchronous solver performance remains iPad gate; not an always-on
+scene dependency graph or chains/groups/links extension. Beta7 not frozen by this build.
+
+Five new checks execute whole editor/actual manager/solver/history with controlled
+timers, verify unsaved Rotate/Scale, drag-time private previews, coalescing, operation
+switch/failure/recovery/Cancel, unchanged suppression and retired callbacks. Existing
+.801 integration and .802 dense Extrude coverage retained. UI/core/scheduler803 plus
+shell/recovery pins reviewed; other owners and protected Multi1.0/Loop715/betas unchanged.
+
+.803 complete Node24 validation: **2158/2158 PASS, 0 FAIL, 0 skipped**. All historical checks remain active; five new checks. Publication/device verification pending.

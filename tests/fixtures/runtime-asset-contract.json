@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.802",
+      "url": "./src/release-bootstrap.js?v=0.36.18.803",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.802",
+      "url": "./src/release-version.js?v=0.36.18.803",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2182,23 +2182,29 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/editable-boolean.js?v=0.36.18.801",
+      "url": "./src/editable-boolean.js?v=0.36.18.803",
       "target": "src/editable-boolean.js",
-      "sha256": "26724775b66765c4d87d03812034be2516361bbc90f6c23517681f919279f0cb",
-      "sourceVersion": "0.36.18.801"
+      "sha256": "14a563bf668088d0a7bc884245fa8485cb5585ba0138b290a53b8fa7423769a7",
+      "sourceVersion": "0.36.18.803"
     },
     {
       "owner": "src/editable-boolean.js",
-      "url": "./editable-boolean-core.js?v=0.36.18.798",
+      "url": "./editable-boolean-core.js?v=0.36.18.803",
       "target": "src/editable-boolean-core.js",
-      "sha256": "bb27c71521ce6baf9fc26cd6598cab5c61b3e997113617e88b9a9ad45e5e3cd5",
-      "sourceVersion": "0.36.18.798"
+      "sha256": "052d86ab1973ede750cd2cfad237d1d12e545e80260e2970a0719f3c7ad5a96e",
+      "sourceVersion": "0.36.18.803"
     },
     {
       "owner": "src/object-management.js",
       "url": "./gizmo-corner-controls.js?v=0.36.18.734",
       "target": "src/gizmo-corner-controls.js",
       "sha256": "996dd0e954c446043038d916500eeadf97d850ffc74f5845755907b5ca3e6a5d"
+    },
+    {
+      "owner": "src/editable-boolean.js",
+      "url": "./live-boolean-preview.js?v=0.36.18.803",
+      "target": "src/live-boolean-preview.js",
+      "sha256": "eb3f9a6f4065fecff7a8072a4bd78032e759e5290919cf562c455f648bd0d747"
     }
   ]
 }
