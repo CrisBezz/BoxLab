@@ -5391,7 +5391,7 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 - [ ] NOM import uses real file fixtures, preserves supported geometry/transforms/names/facegroups and reports unsupported data.
 
 
-## .808 Curve Profile — device acceptance pending
+## .808 Curve Profile — user PASS protected
 
 - Add+ > Curve: Pencil/mouse draw, Open/Closed, Smooth/Straight and Detail preview.
 - Edit points by dragging; candidate Undo/Clear and Cancel leave scene/history intact.
@@ -5400,7 +5400,19 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 - Move/Rotate/Scale then reopen; Apply preserves placement; Cancel preserves mesh.
 - Creation/edit Undo and Redo restore recipe and geometry; duplication remains editable.
 - Normal Add previews, Lasso, one/two-finger navigation and popup exit remain stable.
-- Frozen Beta7 .807 acceptance protected; .808 manual PASS must be supplied by user.
+- Frozen Beta7 .807 acceptance protected; user “Awesome!! /nextbuilf” accepts .808.
 
 .808 local full regression: **2170/2170 PASS, 0 FAIL, 0 skipped**; five new Curve
 tests and reviewed changed loader/hash contract pass. Device acceptance pending.
+
+
+## .809 Performance — device acceptance pending
+
+- [x] Actual cage geometry, edge indices, crease/selection/loop styling unchanged; edge enumeration reduced to one pass.
+- [x] Off-by-default capture, bounded samples/pause/reset, actual main frame/rebuild timing and whole UI enable/close/timer cleanup.
+- [ ] VIEW > Diagnostics > Performance opens a readable overlay; Close and Reset work.
+- [ ] On a denser mesh, orbit and select components; readout updates without altering selection or geometry.
+- [ ] Creased edges and selected vertices/edges look normal; Undo/Redo and Curve draw/edit still work.
+- [ ] Screenshot dense-mesh performance readout with FPS/draw calls/rebuild cost for next optimisation.
+
+.809 full local Node24 regression: **2175/2175 PASS, 0 FAIL, 0 skipped**.

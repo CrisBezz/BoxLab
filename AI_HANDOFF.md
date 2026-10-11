@@ -1,15 +1,48 @@
-# BoxLab AI Handoff — Curve Profile .808
+# BoxLab AI Handoff — Performance .809
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
 Accepted frozen build **v0.36.18.807**, user **AWESOME PASS**, protected.
-Current development build **v0.36.18.808**, device acceptance pending.
+Accepted development build **v0.36.18.808**, user **Awesome!!**, protected.
+Current development build **v0.36.18.809**, device acceptance pending.
+Source baseline `c652a2dcd98e90bbb385a584f51fa71c6a6c8aed`; release verification follows below.
 User explicitly requested Beta7 freeze/deployment. Frozen source
 `02d04cc72acef5415352ce4426792442cb7e99dd`; Beta7 URL
 https://crisbezz.github.io/BoxLab/beta-7/ . Frozen and deployed; immutable.
 Protected .806 compact automatic Boolean, .805 result list workflow, .804 visibility,
 .802 Extrude/.801 activation/exit/radial retained. Beta2–6 unchanged.
+
+## .809 — Dense cage lookup / opt-in performance measurements — 2026-10-11
+
+User “Awesome!! /nextbuilf” accepts .808 Curve Profile and authorizes next build.
+Curve draw/edit/Apply/Cancel, recipe/history and existing navigation are protected.
+Audited actual main addCage/renderMesh/animate, mesh.edgeCrease/edges, history clones
+and existing VIEW Diagnostics; no performance owner/readout existed. Benchmark executes
+actual cage with Three geometry, no WebGL. It identified edgeCrease(index) rebuilding
+all edges once per ordinary cage edge. Existing cage now reads the identical canonical
+crease Map key from its already-enumerated edge; topology/picking/render order and
+materials unchanged. No mesh kernel cache or parallel modelling implementation.
+
+VIEW > Diagnostics > Performance installs one optional overlay, off on each launch.
+Bounded120-frame intervals report average FPS/frame/p95, latest marker/render-submit
+CPU time, native renderer calls/triangles/geometry/texture counts, active mesh counts,
+active Undo/Redo depths and bounded rebuild timings. Reset clears measurement window;
+Close disables capture and refresh timer. Visibility changes reset interval origin.
+Readout excludes suspended intervals >=1s, reports no GPU timing/RAM byte claim and
+never inspects/clones history meshes or enumerates topology. Main native owners supply
+read-only measurements; disabled path adds no timing calls. Original VIEW unchanged.
+
+Repeatable CPU-only benchmark: scripts/benchmark-cage.mjs and
+ docs/performance-cage-809.json. One before/after trial per fixture, not an iPad FPS
+claim; cage object counts remain per-component and batching is the next measured
+candidate. Five tests exercise bounded/off/reset metrics, actual main animation/
+rebuild owners, whole readout UI/timer cleanup and actual cage equivalence across
+Vertex/Edge/Face/Object including loose edges, creases and loop/selected materials.
+Main809/new diagnostics809/shell recovery809 pins reviewed; main internal VERSION
+remains original. Protected Multi1.0/Loop715/Curve808/Extrude802/Boolean806 and frozen
+Beta2–7 unchanged. Device acceptance pending. Next: iPad readout evidence, then
+batched cage/picking-preservation audit; no history disk/UV/project scope bundled.
 
 ## .808 shared Curve Profile foundation — 2026-10-11
 
@@ -28,7 +61,7 @@ instance affine derivation, object manager and tool-session UI reused. Scene-his
 bridge preserves Undo/Redo tokens when scene restoration changes active object;
 manager activation would otherwise erase the opposite stack. No parallel history.
 Main807, Extrude802, Boolean806/visibility804, protected Multi1.0, Loop715 and all
-frozen betas remain unchanged. .808 device acceptance pending; do not mark PASS.
+frozen betas remain unchanged. .808 user PASS recorded/protected on 2026-10-11.
 
 ## New requested directions — UV/painting and performance
 
@@ -1311,3 +1344,5 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 
 .808 local full regression: **2170/2170 PASS, 0 FAIL, 0 skipped**; five new Curve
 tests and reviewed changed loader/hash contract pass. Device acceptance pending.
+
+.809 full local Node24 regression: **2175/2175 PASS, 0 FAIL, 0 skipped**.

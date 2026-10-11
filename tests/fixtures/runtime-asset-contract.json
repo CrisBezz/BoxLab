@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.807",
+      "url": "./src/main.js?v=0.36.18.809",
       "target": "src/main.js",
-      "sha256": "425aad3ecabcd871db83b7ec61075a611e611bca57625b6b18c0c2ca47897b78",
+      "sha256": "1bd937b508f1a878bd28d02d5aa0ce39071020f28b3f000b5b3ca4a78d04392c",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.808",
+      "url": "./src/release-bootstrap.js?v=0.36.18.809",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.808",
+      "url": "./src/release-version.js?v=0.36.18.809",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2255,6 +2255,18 @@
       "target": "src/curve-profile-ui.js",
       "sha256": "c38b2bc0ed221a6aa57afee6f049b864998e4729ae800e3a3f2b211882324eb8",
       "sourceVersion": "0.36.18.808"
+    },
+    {
+      "owner": "index.html",
+      "url": "./src/performance-monitor.js?v=0.36.18.809",
+      "target": "src/performance-monitor.js",
+      "sha256": "21c9c69fabb3d31fb2bb5987e75f747af08b26b1ad982cfaecb723ef6221c57e"
+    },
+    {
+      "owner": "src/performance-monitor.js",
+      "url": "./performance-core.js?v=0.36.18.809",
+      "target": "src/performance-core.js",
+      "sha256": "c806a5b3cd6fbda122dc7e19252b9a264f45555f9eefc48e8d4c0e28a6a5abd8"
     }
   ]
 }
