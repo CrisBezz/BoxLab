@@ -1460,3 +1460,16 @@ also byte-match live. Protected Multi1.0/Loop715/Curve808/Extrude802/Boolean806 
 frozenBeta2–7 unchanged. Current source is this release plus docs verification.
 User .809 accepted with screenshot evidence; .810 iPad visual/tactile acceptance
 pending. Next controlled cage-on Reset capture, then SubD selection-only cache audit.
+
+
+### .811 publication verification — 2026-10-11
+
+Release `f68bc50f74359e4454ad28f2527d356a1115d663`, tree
+`36bc79484035b52aa79259195c307894b8f199ab` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2187tests/2187PASS/0FAIL/0skip.
+Topology38124854307/job114426994517 and Pages38124853872 SUCCESS.
+Fresh main manifest/main owner and live index/version/main811/subd-display-cache811
+match tested files; unchanged multi-object810 and frozenBeta7 .807 manifest also
+byte-match live. Reviewed shell/recovery811 and child811 pins; protected modules and
+all frozenBeta2–7 untouched. Device acceptance pending; selection-only and edit
+measurements must use separate Reset windows. .810 screenshot is evidence, not full PASS.
