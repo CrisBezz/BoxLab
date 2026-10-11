@@ -7952,3 +7952,8 @@ User PASS .815 Pencil/Reset, reports severe ~minute Balloon insertion stall; scr
 ## .817 — Star-shaped concave Balloon evaluation — 2026-10-11
 
 User reports .816 Balloon markedly more responsive. User requests concave preview to judge fit. Existing donor radial rings already support some star-shaped concavities; adapter convex-only guard removed, original crossing and generated-rim/pole fold checks retained. No new kernel/geometry or pointer/history owner. Geometry outside star-shaped safe rim rejects. Density4 and old recipes preserved. Tests revised for shallow indentation and no-crossing; iPad visual acceptance pending.
+
+
+## .818 — Optional quad-dominant Balloon — 2026-10-11
+
+User .817 concave C/star PASS, deep crescent FAIL. Existing donor concentric ring triangle pairs merged in original Balloon adapter into editable quads, with both pole fans retained as triangles. Explicit Topology toggle; default triangle mode and older recipes unchanged. Existing preview, history, scene, density and Pencil owners retained. Visual/nonplanar quad triangulation requires iPad gate. Test added for reduced faces, two pole fans and oriented closed edge incidence.
