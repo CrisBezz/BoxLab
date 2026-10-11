@@ -7,7 +7,9 @@ Current build **v0.36.18.802**. User **.801 PASS** recorded/protected for Editab
 Boolean A/B activation, editing/exit and corrected Object radial layout. The user
 then reports a separate dense middle Extrude on the attached Torus; this is the
 current fix, not a reversal of Boolean acceptance. Parent main
-`35b4aa2f64029deb300472e4c242d9f06ea05789`. Publication verification follows below.
+`35b4aa2f64029deb300472e4c242d9f06ea05789`. Release `bbfa37b1676bbda1c7cfe11a5fe0a81f0ef57d0d`; full2153/2153 PASS,
+CI38097266187/Pages38097266175 SUCCESS. Live manifest/shell/changed owners verified.
+Device .802 acceptance pending. Publication details follow below.
 
 ## .802 — Dense simple Extrude exceeds former cleanup bound
 
@@ -1061,4 +1063,15 @@ protected Multi1.0/Loop715 and frozen Beta2–6 retained. .798 device PASS pendi
 
 .801 validation: **2141/2141 PASS, 0 FAIL, 0 skipped** (full Node24 suite). Includes actual activation click plus old-guard mutation; iPad acceptance pending.
 
-.802 full Node24 validation: **2153/2153 PASS, 0 FAIL, 0 skipped**. 12 new checks; all historical tests retained. Device acceptance and publication verification pending.
+.802 full Node24 validation: **2153/2153 PASS, 0 FAIL, 0 skipped**. 12 new checks; all historical tests retained. Publication verified below; device acceptance pending.
+
+
+### .802 publication verification — 2026-10-11
+
+Release `bbfa37b1676bbda1c7cfe11a5fe0a81f0ef57d0d`, tree
+`09184ca39e60ceb9035385acb4efb86fd3c53ac7` exactly matches tested checkout.
+Full Node24:2153tests/2153PASS/0FAIL/0skip. GitHub Topology38097266187 SUCCESS;
+Pages38097266175 SUCCESS. Fresh live version.json/index.html/Through802/Face802
+byte-match main. Protected .801 Boolean/radial, Multi1.0/Loop715 and frozenBeta2–6
+unchanged. Corrected fixture146v/122f verified closed, same exterior boundaries and
+volume within export rounding. Device extrusion/continued-modelling acceptance pending.
