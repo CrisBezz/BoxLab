@@ -5506,3 +5506,12 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Pencil drawing after Reset, Edit/Cancel, Curve Undo, scene Undo/Redo continue working
 - [ ] One-finger orbit, two-finger pan, pinch, component selection and downstream transforms remain usable
 - [ ] Record real iPad preview, insertion and modelling delay, not idle FPS alone
+
+
+## Concave Balloon .817
+
+- [ ] Shallow concave notch/C-like outline previews and Applies at Density4
+- [ ] Result has outward surfaces, no visibly crossed/folded triangles, and can be orbited
+- [ ] Deep unsupported indentation and self crossing reject without scene/history mutation
+- [ ] Convex Balloon, Density4/8/12, Edit, Cancel, Undo/Redo remain functional
+- [ ] iPad Pencil/Reset and normal touch navigation remain unchanged
