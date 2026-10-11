@@ -37,8 +37,10 @@ test('809 whole diagnostic UI installs once, updates counters and closes without
  vm.createContext(c);vm.runInContext(fs.readFileSync(new URL('../src/performance-monitor.js',import.meta.url),'utf8').replace(/^import .*;\n/,''),c);
  listeners.load();assert.equal(grid.children.length,1);const button=grid.children[0];button.handlers.click();assert.equal(c.__boxlabPerformance.enabled,true);assert.equal(wrap.children.length,1);assert.equal(timers.size,1);
  c.__boxlabPerformance.frame(10,2,3,{render:{calls:40,triangles:30},memory:{geometries:12,textures:2}},{vertices:[1],faces:[]},{undoStack:[],redoStack:[]});c.__boxlabPerformance.frame(30,2,3,{render:{calls:40,triangles:30},memory:{geometries:12,textures:2}},{vertices:[1],faces:[]},{undoStack:[],redoStack:[]});[...timers.values()][0]();
+ c.__boxlabPerformance.stage('geometry',0);c.__boxlabPerformance.cache(true);[...timers.values()][0]();
+ assert.match(wrap.children[0].children[1].textContent,/Phase mean\/max ms/);assert.match(wrap.children[0].children[1].textContent,/SubD cache 1 hits/);
  assert.match(wrap.children[0].children[1].textContent,/50 FPS/);assert.match(wrap.children[0].children[1].textContent,/Draw calls 40/);
- const actions=wrap.children[0].children[3];actions.children[0].handlers.click();assert.equal(c.__boxlabPerformance.snapshot().samples,0);actions.children[1].handlers.click();assert.equal(wrap.children.length,0);assert.equal(timers.size,0);assert.equal(button.attrs['aria-pressed'],'false');assert.equal(listeners.pointerdown,undefined);
+ const actions=wrap.children[0].children[3];actions.children[0].handlers.click();assert.equal(c.__boxlabPerformance.snapshot().samples,0);assert.equal(c.__boxlabPerformance.snapshot().cacheHits,0);assert.equal(Object.keys(c.__boxlabPerformance.snapshot().stages).length,0);actions.children[1].handlers.click();assert.equal(wrap.children.length,0);assert.equal(timers.size,0);assert.equal(button.attrs['aria-pressed'],'false');assert.equal(listeners.pointerdown,undefined);
 });
 test('809 actual cage avoids repeated edge enumeration with identical edge/vertex geometry and crease/selection styles',async()=>{
  const THREE=await import('three'),{EditableMesh}=await import('../src/mesh.js'),{installLooseTopology}=await import('../src/loose-topology.js');installLooseTopology(EditableMesh);

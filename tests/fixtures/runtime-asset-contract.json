@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.811",
+      "url": "./src/main.js?v=0.36.18.812",
       "target": "src/main.js",
-      "sha256": "a2ac4b596e803d127001c5a740bda6415ea7bc79ee7b95480dc39aed725e36ab",
+      "sha256": "4f16a5725b0840f084516c946344dae1c188374166869cfd683b21b9605fdb2e",
       "sourceVersion": "0.35.1"
     },
     {
@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.810",
+      "url": "./src/multi-object.js?v=0.36.18.812",
       "target": "src/multi-object.js",
-      "sha256": "96892c1abb253e99432becc28c207a189a2f4cfeaa5eb137fbbbdf3e559058d6"
+      "sha256": "0e661c7369cf05ba93f7a0c8706ada838ab7106a05a5cf809323d395227fb313"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.811",
+      "url": "./src/release-bootstrap.js?v=0.36.18.812",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.811",
+      "url": "./src/release-version.js?v=0.36.18.812",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2258,15 +2258,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/performance-monitor.js?v=0.36.18.809",
+      "url": "./src/performance-monitor.js?v=0.36.18.812",
       "target": "src/performance-monitor.js",
-      "sha256": "21c9c69fabb3d31fb2bb5987e75f747af08b26b1ad982cfaecb723ef6221c57e"
+      "sha256": "9738cfaa2be6bde6c65cf93d997164779a8bddda887b322c1bbb6380ce10cc56"
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-core.js?v=0.36.18.809",
+      "url": "./performance-core.js?v=0.36.18.812",
       "target": "src/performance-core.js",
-      "sha256": "c806a5b3cd6fbda122dc7e19252b9a264f45555f9eefc48e8d4c0e28a6a5abd8"
+      "sha256": "ee791c20ef87d63c1d0bfbd678ade790cb4f2044b561b371e75d710bbb2a3d4b"
     },
     {
       "owner": "src/main.js",
@@ -2276,9 +2276,9 @@
     },
     {
       "owner": "src/main.js",
-      "url": "./subd-display-cache.js?v=0.36.18.811",
+      "url": "./subd-display-cache.js?v=0.36.18.812",
       "target": "src/subd-display-cache.js",
-      "sha256": "987c6bc8d587906e5a69482ac9bd6b3f3874023cd9afc61b7c246a2e529dda34"
+      "sha256": "060ff410d190b066367a1d7677634c7009973b4ebb7515f9556fd7ce79e97b69"
     }
   ]
 }

@@ -5442,3 +5442,17 @@ tests and reviewed changed loader/hash contract pass. Device acceptance pending.
 
 .810 readout evidence:57FPS/17calls,44rebuilds mean529ms/max614ms during Edge Move;
 selection-only cost not isolated and full .810 tactile PASS not inferred.
+
+
+## .812 Rebuild phase readout — device acceptance pending
+
+- [x] Bounded off/reset phase/counters, actual main timings/cache counts and inactive nested timing with native skip/error behavior; whole UI phase output/Reset/Close tests.
+- [ ] Open Performance on same dense SubD scene, Reset, select/deselect components without editing; capture phase timings and cache hits/misses.
+- [ ] Reset separately, make a small component move and Undo/Redo; capture phases.
+- [ ] Reset clears phases/counters; Close removes panel and modelling/navigation continue.
+
+Inactive time is included in Scene hooks, not additive. Phase means/maxima use
+independent last120samples and need not sum to total rebuild time. After this test,
+user requests pausing performance work and returning to modelling development.
+
+.812 full local Node24 regression: **2190/2190 PASS, 0 FAIL, 0 skipped**.

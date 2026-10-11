@@ -21,13 +21,14 @@ function inputs(mesh, level, axes) {
 }
 
 export function createSubdDisplayCache(subdivide, applyMirror) {
-  let source = null, previous = null, display = null;
+  let source = null, previous = null, display = null, hit = false;
   return {
+    get hit() { return hit; },
     // Returned mesh is read-only display data. Export callers must clone it.
     get(mesh, level, axes) {
       const next = inputs(mesh, level, axes);
       if (source === mesh && previous?.length === next.length &&
-          next.every((value, i) => Object.is(value, previous[i]))) return display;
+          next.every((value, i) => Object.is(value, previous[i]))) { hit = true; return display; }
       this.clear();
       const result = applyMirror(subdivide(mesh, level), axes);
       source = mesh;
@@ -35,6 +36,6 @@ export function createSubdDisplayCache(subdivide, applyMirror) {
       display = result;
       return display;
     },
-    clear() { source = previous = display = null; }
+    clear() { source = previous = display = null; hit = false; }
   };
 }

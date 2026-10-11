@@ -809,6 +809,7 @@ function clearInactiveLayer(){
   inactiveBodies=[];
 }
 function rebuildInactiveLayer(body){
+  const perf=globalThis.__boxlabPerformance,perfStart=perf?.start();
   const layer=ensureInactiveLayer();
   if(!layer)return;
   clearInactiveLayer();
@@ -831,6 +832,7 @@ function rebuildInactiveLayer(body){
     }
   }
   globalThis.__boxlabRenderModes?.refreshStudio?.();
+  perf?.stage?.('inactive',perfStart);
 }
 
 function installRenderObserver() {

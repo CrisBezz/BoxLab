@@ -7733,3 +7733,41 @@ match tested files; unchanged multi-object810 and frozenBeta7 .807 manifest also
 byte-match live. Reviewed shell/recovery811 and child811 pins; protected modules and
 all frozenBeta2–7 untouched. Device acceptance pending; selection-only and edit
 measurements must use separate Reset windows. .810 screenshot is evidence, not full PASS.
+
+## .812 — Rebuild phase diagnostics / performance pause next — 2026-10-11
+
+User requests one more /nextbuild and test, then something more exciting; performance
+can be revisited. .811 screenshot:60FPS/13drawcalls,8rebuilds mean424ms/max473ms,
+540cageverts/408faces. Selection-only activity not explicitly confirmed, not a
+controlled speedup comparison or full device PASS. .810/.811 gates remain pending.
+
+Audit identifies main renderMesh as total timer, root.add(body) as synchronous scene
+observer (saveActive/history + inactive objects + render hooks), and native
+rebuildInactiveLayer as existing per-object display path. Extend original off-by-default
+Performance owner, no parallel profiler/rebuild/history/gesture/kernel. Readout adds
+mean/max CPU phases: Base/SubD (base mirror + active evaluated display), Body geometry
+(native triangulation + Mesh construction), Scene hooks (root.add including observer),
+Inactive (its nested rebuild incl clearing/materials/Studio refresh), Cage/highlights.
+Inactive is a subset of Scene hooks: do NOT add those together. Phases have independently
+bounded120sample windows; standalone inactive rebuilds can produce different sample
+counts from total active rebuilds. Timings omit disposal/UI/status/other uninstrumented
+work; do not claim exhaustive sum or GPU attribution.
+
+SubD cache hit/miss counts track active render requests only, reset with measurements.
+Existing cache exposes last lookup hit; key/evaluation/isolation behavior unchanged.
+Disabled capture performs no timing calls, phase samples/counters or refresh timer.
+Reset clears every phase/counter; Close disables all capture. Existing FPS/resources/
+history depth data retained. Parent/changed owner cache pins812 reviewed; main, native
+manager, Performance UI/core and cache812 only. Cage810 and all modelling/gesture
+modules, protected Multi1.0/Loop715/Curve808/Extrude802/Boolean806/frozenBeta2–7 unchanged.
+
+Three new tests execute phase core bounds/reset/off, actual main native SubD/cache/
+render path with controlled elapsed timings, actual inactive rebuild with hidden/
+active/error skips and nested phase accounting. Existing whole UI test additionally
+checks phase/cache output and Reset; no pointer owners. Full validation below.
+Device: separate Reset selections then edit screenshot; verify Reset/Close. After
+this test, pause performance optimisation as requested and return to shared Curve/
+Balloon modelling-owner audit. Project Save/Open and NOM import remain queued; do not
+automatically continue optimisation just because timings expose a bottleneck.
+
+.812 full local Node24 regression: **2190/2190 PASS, 0 FAIL, 0 skipped**.
