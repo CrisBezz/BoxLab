@@ -1,9 +1,9 @@
-# BoxLab AI Handoff — Concave Balloon evaluation .817
+# BoxLab AI Handoff — Balloon quad topology .818
 
-## Current state — 2026-10-11
-Main build .817 device evaluation pending. User reports .816 works much better; preserve Density4, optional donor tessellation and .815 Reset/Pencil. Beta7 frozen .807.
+## State — 2026-10-11
+Main release .818 pending iPad testing. User .817 reports concave C and star PASS, deep crescent FAIL (unsupported). User .816 performance much improved; protect density4 default. Frozen Beta7 .807 unchanged.
 
-## .817
-User requests concave Balloons to evaluate usefulness. Audited source: original MeshUtilz donor already creates rings by interpolating between an interior pole and actual rim; existing adapter first rejects ANY concavity, then has a separate actual-rim star/fold test. Removed ONLY the blanket convex half-plane rejection; existing crossing rejection and actual donor-rim radial visibility/fold refusal remain. This permits simple star-shaped concavities such as shallow notches. Deep overhangs, folded rims and self-crossings refuse, not automatically triangulated by a separate kernel. No change to donor, density, history, preview, Pencil gesture ownership or SubD. Updated editor explanation, test fixture and parent import pins.
+## .818 scope
+Existing MeshUtilz donor provides triangulated concentric rings. Adapter merges each adjacent strip triangle pair into one editable quad while leaving front/back pole fans as triangles. This is quad-DOMINANT, not all quads or an alternative generator. Original triangle path remains default for new and old profiles; optional profile.balloonTopology='quads' allows A/B tests. No change to MeshUtilz donor, renderer, history, Pencil owner, density, existing recipes or global SubD. Geometry remains native EditableMesh and preview uses unchanged owner. Quad strip triangles will be triangulated by native display, possibly with a different diagonal; real iPad visual acceptance is essential. Rejection guard for crossings and overly deep concavity preserved.
 
-Device evaluation: Add+ Balloon > draw concave shallow bite (C/notch), Density4, Depth; preview and Apply, orbit; increase density; attempt deep concave and self crossing, verify rejection. Compare convex oval and undo/edit. If faces fold or performance regresses, mark FAIL with screenshot and return to .816. Future concave algorithm expansion needs an explicit go/no-go after tactile evaluation.
+Tests: optional triangle/quad face count, pole triangles, edge manifold/orientation, invalid topology. Visual device test needed for convex, accepted shallow C and star, edit/reopen, Undo/Redo, and SubD preview; do not mark prior acceptance proof for new quad path. Preserve Multi1.0/Loop715/Extrude802/Boolean806, .815 Pencil/Reset, .816 density, frozen beta2–7. Next: user decision on usefulness of quad-dominant vs triangle Balloon before expanding all-quad poles/deep concave.
