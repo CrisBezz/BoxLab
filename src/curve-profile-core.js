@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {makeCurveBalloon} from './curve-balloon-core.js?v=0.36.18.818';
+import {makeCurveBalloon} from './curve-balloon-core.js?v=0.36.18.819';
 import {fitAddObjectToUnitCube} from './add-object-fit.js?v=0.36.18.796';
 import {deriveInstancePlacement} from './instance-core.js?v=0.36.18.343';
 export function curvePoints(profile){
