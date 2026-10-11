@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
-import {buildOutlineBalloon} from './vendor/meshutilz-outline-balloon.js?v=0.36.18.813';
+import {buildOutlineBalloon} from './vendor/meshutilz-outline-balloon.js?v=0.36.18.816';
 
 // Adapter only: shape generation remains the exact MeshUtilz outline owner.
 export function makeCurveBalloon(points, profile) {
@@ -28,7 +28,10 @@ export function makeCurveBalloon(points, profile) {
     for (const p of points) if (sign*cross(a,b,p) < -tolerance*a.distanceTo(b)-1e-10)
       throw Error('Draw a convex outline; reduce inward dents');
   }
-  const geometry = buildOutlineBalloon(points, {depth, smooth:2});
+  const resolution=profile.balloonResolution;
+  if(resolution!=null&&(!Number.isInteger(resolution)||resolution<4||resolution>12))throw Error('Balloon resolution must be 4–12');
+  // Keep legacy Balloon tessellation when a recipe lacks resolution.
+  const geometry = buildOutlineBalloon(points, {depth,smooth:2,...(resolution==null?{}:{outlineSegments:resolution*6,sectionRings:resolution})});
   try {
     const position=geometry.getAttribute('position'),index=geometry.getIndex();
     if (!position?.count || !index?.count) throw Error('Outline is too small; draw a larger shape');
