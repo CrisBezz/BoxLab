@@ -5285,8 +5285,8 @@ deferred until this case is accepted. Protected Boolean801/Multi1.0/Loop715/beta
 - [x] Four depths,3000 private cells/mismatched seams/hole, closed orientation, volume, metadata and unrelated warped geometry.
 - [x] Corrected downloadable OBJ matches original exterior boundaries/volume within six-decimal rounding.
 - [x] Physical/Exact/replay, one-step Undo/Redo, repeated-cap preview and Cancel/redo preservation.
-- [ ] iPad: import corrected mesh, inspect middle section and continue a simple inward/outward Face extrusion.
-- [ ] Undo/Redo restores each new operation cleanly; normal orbit/pan/zoom and selection remain intact.
+- [x] User .802 PASS: import corrected mesh, inspect middle section and continue a simple inward/outward Face extrusion.
+- [x] User .802 PASS: Undo/Redo restores each new operation cleanly; normal orbit/pan/zoom and selection remain intact.
 
 .802 full Node24 validation: **2153/2153 PASS, 0 FAIL, 0 skipped**. 12 new checks; all historical tests retained. Publication verified below; device acceptance pending.
 
@@ -5300,3 +5300,11 @@ Pages38097266175 SUCCESS. Fresh live version.json/index.html/Through802/Face802
 byte-match main. Protected .801 Boolean/radial, Multi1.0/Loop715 and frozenBeta2–6
 unchanged. Corrected fixture146v/122f verified closed, same exterior boundaries and
 volume within export rounding. Device extrusion/continued-modelling acceptance pending.
+
+
+## .802 user acceptance — 2026-10-11
+
+User PASS recorded. Clean dense negative Extrude, corrected-file continued modelling,
+and Undo/Redo/navigation manual checks are accepted and protected. .801 Editable
+Boolean/radial acceptance retained. Runtime and release markers unchanged. Next
+scoped /nextbuild: automatic Live Boolean using existing recipe/session/solver owners.

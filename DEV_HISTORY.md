@@ -7389,3 +7389,11 @@ Pages38097266175 SUCCESS. Fresh live version.json/index.html/Through802/Face802
 byte-match main. Protected .801 Boolean/radial, Multi1.0/Loop715 and frozenBeta2–6
 unchanged. Corrected fixture146v/122f verified closed, same exterior boundaries and
 volume within export rounding. Device extrusion/continued-modelling acceptance pending.
+
+
+## .802 user acceptance — 2026-10-11
+
+User PASS recorded. Clean dense negative Extrude, corrected-file continued modelling,
+and Undo/Redo/navigation manual checks are accepted and protected. .801 Editable
+Boolean/radial acceptance retained. Runtime and release markers unchanged. Next
+scoped /nextbuild: automatic Live Boolean using existing recipe/session/solver owners.

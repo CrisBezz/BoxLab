@@ -9,7 +9,8 @@ then reports a separate dense middle Extrude on the attached Torus; this is the
 current fix, not a reversal of Boolean acceptance. Parent main
 `35b4aa2f64029deb300472e4c242d9f06ea05789`. Release `bbfa37b1676bbda1c7cfe11a5fe0a81f0ef57d0d`; full2153/2153 PASS,
 CI38097266187/Pages38097266175 SUCCESS. Live manifest/shell/changed owners verified.
-Device .802 acceptance pending. Publication details follow below.
+User .802 PASS recorded on 2026-10-11; clean dense Extrude and its manual
+continued-modelling/history checks are accepted and protected. Publication details follow below.
 
 ## .802 — Dense simple Extrude exceeds former cleanup bound
 
@@ -41,8 +42,8 @@ bound mutation,3000 mismatched pieces/hole preservation, labels/crease/unrelated
 geometry, physical/Exact/replay owners and history/Cancel. .779 tests all remain.
 Through child802 and direct Face import-only shell pin802; legacy242 plan/buildThrough
 URL retained because that path does not use the changed coalescer. Other runtime pins,
-.801 Boolean/radial, Multi1.0/Loop715 and frozenBeta2–6 unchanged. Device acceptance
-pending. Finish this concrete Extrude case before automatic Live Boolean.
+.801 Boolean/radial, Multi1.0/Loop715 and frozenBeta2–6 unchanged. User .802 PASS
+protects this concrete Extrude case. Next scoped build: automatic Live Boolean.
 
 ## .801 — Reproduced Boolean activation/cancel loop; corrected radial
 
@@ -710,8 +711,8 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 .801 PASS protects Editable Boolean A/B switching/transforms, safe exit and corrected
 Object radial slots. .797 GLB/Rotate green baseline and .796 Add+ preview/unit fit
-remain protected. .802 fixes supplied dense simple Extrude; obtain device sanity for
-new cuts and corrected-file usability, then automatic Live Boolean → Curve/Balloon
+remain protected. .802 PASS protects supplied dense simple Extrude and continued modelling/history;
+next automatic Live Boolean → Curve/Balloon
 → Curve Cutter → open/licensed quad-remesher feasibility. NOM import/Lasso deferred.
 Do not infer device acceptance from Node tests or auto-repair already damaged meshes.
 
@@ -1075,3 +1076,11 @@ Pages38097266175 SUCCESS. Fresh live version.json/index.html/Through802/Face802
 byte-match main. Protected .801 Boolean/radial, Multi1.0/Loop715 and frozenBeta2–6
 unchanged. Corrected fixture146v/122f verified closed, same exterior boundaries and
 volume within export rounding. Device extrusion/continued-modelling acceptance pending.
+
+
+## .802 user acceptance — 2026-10-11
+
+User PASS recorded. Clean dense negative Extrude, corrected-file continued modelling,
+and Undo/Redo/navigation manual checks are accepted and protected. .801 Editable
+Boolean/radial acceptance retained. Runtime and release markers unchanged. Next
+scoped /nextbuild: automatic Live Boolean using existing recipe/session/solver owners.

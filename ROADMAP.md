@@ -11,8 +11,8 @@ unit-zone scale and Text remain protected. First Editable Boolean build stores i
 A/B source recipes and reopens them for existing Move/Rotate/Scale, explicit Update Preview,
 Apply/Cancel and one scene Undo/Redo. User .801 PASS protects activation/exit and corrected radial. Concrete uploaded dense
 Extrude repair in .802 takes priority before expanding: existing coalescer now handles
-more than256 private wall cells, preserving guarded topology. Validate new cuts and
-corrected supplied OBJ, then resume automatic Live Boolean.
+more than256 private wall cells, preserving guarded topology. User .802 PASS protects
+the clean extrusion case and continued-modelling/history checks. Next: automatic Live Boolean.
 
 Agreed sequence:
 1. Editable Boolean source session (this build).
