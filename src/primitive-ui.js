@@ -1,8 +1,8 @@
-import './curve-profile-ui.js?v=0.36.18.813';
+import './curve-profile-ui.js?v=0.36.18.814';
 import { makePrimitive,primitiveDensity } from './primitive-factory.js?v=0.36.18.771';
 import { makeTextObject } from './text-object-core.js?v=0.36.18.771';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
-import { createAddObjectPreview } from './add-object-preview.js?v=0.36.18.795';
+import { createAddObjectPreview } from './add-object-preview.js?v=0.36.18.814';
 import { fitAddObjectToUnitCube } from './add-object-fit.js?v=0.36.18.796';
 
 const addButton=document.querySelector('#outlinerAddBtn'),status=document.querySelector('#selectionStatus');

@@ -7,12 +7,15 @@ export function createAddObjectPreview(parent) {
   parent.append(canvas);
   const hint=document.createElement('small');hint.textContent='Preview · drag to rotate';parent.append(hint);
   const ctx=canvas.getContext?.('2d');
-  let mesh=null,yaw=.65,pitch=.4,drag=null,disposed=false;
+  let mesh=null,message='',yaw=.65,pitch=.4,drag=null,disposed=false;
   function draw(){
     if(disposed||!ctx)return;
     const w=Math.max(1,canvas.clientWidth||320),h=190,dpr=Math.min(2,globalThis.devicePixelRatio||1);
     canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
-    if(!mesh?.vertices.length)return;
+    if(!mesh?.vertices.length){
+      if(message){ctx.font='12px sans-serif';ctx.fillStyle='#d2dce8';ctx.textAlign='center';ctx.fillText?.(message,w/2,h/2,w-24);}
+      return;
+    }
     const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];
     for(const v of mesh.vertices)for(const [i,key] of ['x','y','z'].entries()){min[i]=Math.min(min[i],v[key]);max[i]=Math.max(max[i],v[key]);}
     const centre=min.map((v,i)=>(v+max[i])/2),cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
@@ -36,5 +39,5 @@ export function createAddObjectPreview(parent) {
   canvas.addEventListener('pointermove',e=>{if(drag?.id!==e.pointerId)return;e.preventDefault();e.stopPropagation();yaw+=(e.clientX-drag.x)*.012;pitch=Math.max(-1.5,Math.min(1.5,pitch+(e.clientY-drag.y)*.012));drag.x=e.clientX;drag.y=e.clientY;draw();});
   for(const type of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(type,end);
   const observer=typeof ResizeObserver==='function'?new ResizeObserver(draw):null;observer?.observe(canvas);
-  return {setMesh(value){if(disposed)return;mesh=value;draw();},dispose(){if(disposed)return;disposed=true;observer?.disconnect();if(drag&&canvas.hasPointerCapture?.(drag.id))canvas.releasePointerCapture(drag.id);drag=null;mesh=null;canvas.remove();hint.remove();}};
+  return {setMesh(value,emptyMessage=''){if(disposed)return;mesh=value;message=emptyMessage;draw();},dispose(){if(disposed)return;disposed=true;observer?.disconnect();if(drag&&canvas.hasPointerCapture?.(drag.id))canvas.releasePointerCapture(drag.id);drag=null;mesh=null;canvas.remove();hint.remove();}};
 }

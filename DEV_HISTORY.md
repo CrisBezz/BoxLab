@@ -7852,3 +7852,38 @@ also match live. Changed parent-child graph and exact donor hash verified. Prote
 Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 unchanged. User .812 Awesome
 acceptance/profiling evidence recorded; performance paused. .813 iPad draw/preview/
 layout/history/recipe editing acceptance pending. No concave or all-quad claim.
+
+
+## .814 — Balloon hand-drawn oval acceptance / preview explanation — 2026-10-11
+
+User accepts .813 outline drawing and point editing, and confirms preview works with
+"a better profile". Protect those specific passes; whole-build/history acceptance
+is not inferred. Screenshot EC30CB0A shows closed smooth oval, Detail48/Depth.55,
+disabled Apply and convex warning. Approximate transcribed controls reproduce strict
+turn rejection; strongest inward half-plane deviation ~0.45 drawing-pad pixels.
+Original check demanded mathematical convexity of Catmull samples, rejecting tiny
+Pencil/spline wobbles. Canvas rendering was not the reported root cause.
+
+Repair existing adapter only: winding from signed area, explicit crossings rejection,
+half-plane tolerance 0.5% of longest outline span. Preserve authored points and exact
+MeshUtilz generator; no convex-hull replacement, parallel kernel or broad concave
+support. Validate actual donor smoothed rim fans around its pole centre before
+accepting a shell, disposing temporary geometry on every exit. Deep dents/crossings/
+open/zero-area profiles continue refusing. Existing preview now accepts explanatory
+empty text, shown inside canvas for refusal or active drawing; successful candidates
+retain original rotatable shaded triangle projection. Apply/history owners unchanged.
+
+Four regressions: screenshot-style oval at5details/3depths/both windings, closed Euler/
+edge winding/nondegenerate/positive-volume shells; actual editor Canvas triangle calls,
+depth changes/rotation/Apply/reopen; invalid preview text and no mutation; dent/crossing
+refusal. Shared Curve UI helper now supplies recorded2D context, repairing .813
+coverage gap (it had checked canvas existence only). Original historical tests retained.
+Cloud browser cannot create WebGL context; full-app rendering cannot be checked there.
+Real iPad remains visual/tactile gate. Drawing/point editing protected, preview working
+with valid profile accepted; .814 natural oval tolerance retest pending.
+
+Changed adapter/core/UI/Add-parent/preview cache chain814 plus shell/recovery814;
+vendor813 bytes/pin unchanged. Main/manager/Performance812, protected Multi1.0/Loop715/
+Extrude802/Boolean806 and frozenBeta2–7 unchanged. Performance remains paused.
+
+.814 full local Node24 regression: **2201/2201 PASS, 0 FAIL, 0 skipped**.

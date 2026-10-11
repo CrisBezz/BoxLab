@@ -1,7 +1,7 @@
 import {appendStrokePoint,simplifyStroke} from './stroke-sampling.js?v=0.36.18.808';
-import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.813';
-import {createAddObjectPreview} from './add-object-preview.js?v=0.36.18.795';
-const VERSION='0.36.18.813',W=320,H=180,NS='http://www.w3.org/2000/svg';
+import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.814';
+import {createAddObjectPreview} from './add-object-preview.js?v=0.36.18.814';
+const VERSION='0.36.18.814',W=320,H=180,NS='http://www.w3.org/2000/svg';
 const manager=()=>globalThis.__boxlabObjectManager,session=()=>globalThis.__boxlabToolSession;
 const activeObject=()=>{const m=manager();return m?.objects.find(o=>o.id===m.activeId);};
 let panel=null,pad=null,path=null,handles=null,note=null,applyButton=null,profile=null,objectId=null,drag=null,edit=false,undos=[],committing=false,preview=null;
@@ -17,7 +17,7 @@ function finish(){release();preview?.dispose();preview=null;const old=panel;pane
 function cancel(){if(!panel)return false;finish();return true;}
 function draw(){
  if(!panel)return;handles.replaceChildren();let points=[];
- try{points=curvePoints(profile);const mesh=drag&&profile.output==='balloon'?null:makeCurveProfile(profile);preview?.setMesh(mesh);applyButton.disabled=!!drag;status(mesh&&profile.output==='balloon'?`${mesh.vertices.length} vertices · ${mesh.faces.length} triangles`:`${profile.points.length} control points · ${points.length} curve vertices`);}catch(e){preview?.setMesh(null);applyButton.disabled=true;status(e.message);}
+ try{points=curvePoints(profile);const mesh=drag&&profile.output==='balloon'?null:makeCurveProfile(profile);preview?.setMesh(mesh,drag?'Release Pencil to preview':'');applyButton.disabled=!!drag;status(mesh&&profile.output==='balloon'?`${mesh.vertices.length} vertices · ${mesh.faces.length} triangles`:`${profile.points.length} control points · ${points.length} curve vertices`);}catch(e){preview?.setMesh(null,e.message);applyButton.disabled=true;status(e.message);}
  path.setAttribute('points',points.map(screen).map(p=>`${p.x},${p.y}`).join(' ')+(profile.closed&&points.length?' '+Object.values(screen(points[0])).join(','):''));
  if(edit)profile.points.forEach((p,i)=>{const dot=svgNode('circle'),q=screen(p);dot.setAttribute('cx',q.x);dot.setAttribute('cy',q.y);dot.setAttribute('r',4);dot.dataset.curvePoint=String(i);handles.append(dot);});
  panel.querySelector('[data-curve-action="mode"]').textContent=edit?'Edit points':'Draw';

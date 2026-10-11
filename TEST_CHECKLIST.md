@@ -5458,7 +5458,7 @@ user requests pausing performance work and returning to modelling development.
 .812 full local Node24 regression: **2190/2190 PASS, 0 FAIL, 0 skipped**.
 
 
-## .813 Outline Balloon — device acceptance pending
+## .813 Outline Balloon — drawing/editing/valid-profile preview accepted; remaining checks pending
 
 - [x] Exact donor hash and geometry, closed shell/rim/winding/volume across depth/direction; invalid convex scope refuses and wire Curve preserved.
 - [x] Actual Add launcher, core affine/invalidation, whole editor depth/preview/history/Cancel and native duplication metadata.
@@ -5471,3 +5471,17 @@ Performance paused after user .812 Awesome and readout; future target unchanged
 inactive object displays (304.1ms mean of444.3ms total sample), no current fix claim.
 
 .813 full local Node24 regression: **2197/2197 PASS, 0 FAIL, 0 skipped**.
+
+
+## .814 Balloon oval preview — device retest pending
+
+- [x] Screenshot-derived oval produces closed oriented shells at5details/3depths/both windings; authored points retained and donor unchanged.
+- [x] Actual editor records triangle Canvas draws, depth/rotation updates, Apply/reopen; invalid preview text/no mutation and dent/crossing refusal covered.
+- [ ] Draw an ordinary oval like the screenshot: preview appears and Apply enables. Change Detail/Depth and rotate preview.
+- [ ] Apply, reopen Edit Balloon, move points slightly; preview/Apply remain usable, Cancel and Undo/Redo retain expected state.
+- [ ] Open outline shows its reason inside the preview; close it again to restore preview. Original Curve and Add+ primitive previews remain usable.
+
+.813 Pencil drawing/point editing and valid-profile preview accepted by user; protect
+these specific passes. Original broad .813 history/placement gates are not inferred.
+
+.814 full local Node24 regression: **2201/2201 PASS, 0 FAIL, 0 skipped**.

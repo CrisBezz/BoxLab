@@ -7,21 +7,26 @@ export function makeCurveBalloon(points, profile) {
   if (!profile.closed) throw Error('Balloon needs a closed outline');
   const depth = Number(profile.depth ?? .25);
   if (!Number.isFinite(depth) || depth < .05 || depth > .8) throw Error('Depth must be 0.05–0.8');
-  let sign = 0;
-  for (let i = 0; i < points.length; i++) {
-    const a = points[i], b = points[(i + 1) % points.length], c = points[(i + 2) % points.length];
-    const cross = (b.x-a.x)*(c.y-b.y)-(b.y-a.y)*(c.x-b.x);
-    if (Math.abs(cross) < 1e-10) continue;
-    if (sign && Math.sign(cross) !== sign) throw Error('Draw a convex outline for this first Balloon build');
-    sign = Math.sign(cross);
+  const area=THREE.ShapeUtils.area(points),sign=Math.sign(area);
+  if (Math.abs(area)<1e-10) throw Error('Draw an outline with visible area');
+  const cross=(a,b,p)=>(b.x-a.x)*(p.y-a.y)-(b.y-a.y)*(p.x-a.x);
+  // Reject crossings independently of the small drawing tolerance below.
+  for(let i=0;i<points.length;i++)for(let j=i+2;j<points.length;j++){
+    if(i===0&&j===points.length-1)continue;
+    const a=points[i],b=points[(i+1)%points.length],c=points[j],d=points[(j+1)%points.length];
+    if(cross(a,b,c)*cross(a,b,d)<0&&cross(c,d,a)*cross(c,d,b)<0)
+      throw Error('Draw a simple convex outline without crossings');
   }
-  if (!sign) throw Error('Draw an outline with visible area');
+  const bounds=new THREE.Box3().setFromPoints(points),size=bounds.getSize(new THREE.Vector3());
+  const tolerance=Math.max(size.x,size.y)*.005;
   // All points must lie on the same side of each directed edge. This also
   // rejects star/self-crossing polygons with locally consistent turns.
   for (let i = 0; i < points.length; i++) {
     const a=points[i],b=points[(i+1)%points.length];
-    for (const p of points) if (sign*((b.x-a.x)*(p.y-a.y)-(b.y-a.y)*(p.x-a.x)) < -1e-10)
-      throw Error('Draw a simple convex outline without crossings');
+    // Half a percent of outline size accepts sub-pixel Pencil/spline wobbles,
+    // without replacing the authored silhouette with its convex hull.
+    for (const p of points) if (sign*cross(a,b,p) < -tolerance*a.distanceTo(b)-1e-10)
+      throw Error('Draw a convex outline; reduce inward dents');
   }
   const geometry = buildOutlineBalloon(points, {depth, smooth:2});
   try {
@@ -29,6 +34,11 @@ export function makeCurveBalloon(points, profile) {
     if (!position?.count || !index?.count) throw Error('Outline is too small; draw a larger shape');
     const vertices=Array.from({length:position.count},(_,i)=>new THREE.Vector3().fromBufferAttribute(position,i)),faces=[];
     for (let i=0;i<index.count;i+=3) faces.push([index.getX(i),index.getX(i+1),index.getX(i+2)]);
+    // Donor's first triangle joins rim 0/1 to the first interior ring. Validate
+    // its actual smoothed rim against the pole centre before accepting a shell.
+    const rim=vertices.slice(0,index.getX(2)),centre=vertices.at(-1),rimSign=Math.sign(THREE.ShapeUtils.area(rim));
+    if(rim.length<3||rim.some((p,i)=>rimSign*cross(centre,p,rim[(i+1)%rim.length])<=1e-12))
+      throw Error('Outline folds inward; reduce inward dents');
     return new EditableMesh(vertices,faces);
   } finally { geometry.dispose(); }
 }
