@@ -27,6 +27,9 @@ editor804 and native visibility owner804 pins change; core/scheduler803 and prot
 gesture/modelling owners retain their pins. Full Node24 suite:2160/2160 PASS, 0 FAIL, 0 skips. Original semantic Move/Rotate/Scale
 gizmo runtime also changes selected object geometry with source picking unavailable.
 Device acceptance pending.
+Release `92440fd4b205b64aaf20983434dad6a9b9e20fac`; CI38099219569 and
+Pages38099218882 SUCCESS. Fresh live shell/manifest/editor/native visibility owner
+match main byte-for-byte.
 
 ## .803 — Automatic staged Live Boolean previews
 
