@@ -7418,4 +7418,15 @@ switch/failure/recovery/Cancel, unchanged suppression and retired callbacks. Exi
 .801 integration and .802 dense Extrude coverage retained. UI/core/scheduler803 plus
 shell/recovery pins reviewed; other owners and protected Multi1.0/Loop715/betas unchanged.
 
-.803 complete Node24 validation: **2158/2158 PASS, 0 FAIL, 0 skipped**. All historical checks remain active; five new checks. Publication/device verification pending.
+.803 complete Node24 validation: **2158/2158 PASS, 0 FAIL, 0 skipped**. All historical checks remain active; five new checks. Publication verified below; device acceptance pending.
+
+
+### .803 publication verification — 2026-10-11
+
+Release `704b76a6ceac2f3375812e2f37dbe7831013ac1e`, tree
+`d248c92e862628bc78d147230dd0a009c54424d9` exactly matches tested checkout.
+Full Node24:2158tests/2158PASS/0FAIL/0skip. GitHub Topology38098655432 SUCCESS;
+Pages38098655578 SUCCESS. Fresh live manifest/shell/editor/core/scheduler byte-match
+main. .802 Extrude, .801 radial/activation, Multi1.0/Loop715 and frozenBeta2–6 untouched.
+.803 device live-preview performance/visibility and Apply/Cancel/history pending.
+No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
