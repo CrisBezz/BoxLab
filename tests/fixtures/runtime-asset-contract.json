@@ -360,9 +360,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.816",
+      "url": "./src/primitive-ui.js?v=0.36.18.817",
       "target": "src/primitive-ui.js",
-      "sha256": "95a46702392ce924012b71adc9c9cd49110fbb0abba1547b46eb55ee93f68ef3"
+      "sha256": "41d62be6aa61ae7e3222700623cd755f7b719cb39c02e9b0d8a38a24fa32433b"
     },
     {
       "owner": "index.html",
@@ -2233,9 +2233,9 @@
     },
     {
       "owner": "src/curve-profile-ui.js",
-      "url": "./curve-profile-core.js?v=0.36.18.816",
+      "url": "./curve-profile-core.js?v=0.36.18.817",
       "target": "src/curve-profile-core.js",
-      "sha256": "c03fd6b7efe9388cd7dab5d62fe3e777be8d400794a19e3371a19c60aab7e16b"
+      "sha256": "44e808e428980538e06e6b02680bf8b10fda8d93ad104d797c675dbad277cab7"
     },
     {
       "owner": "src/curve-profile-ui.js",
@@ -2251,9 +2251,9 @@
     },
     {
       "owner": "src/primitive-ui.js",
-      "url": "./curve-profile-ui.js?v=0.36.18.816",
+      "url": "./curve-profile-ui.js?v=0.36.18.817",
       "target": "src/curve-profile-ui.js",
-      "sha256": "64620edd847011cb9114231d3de8340351f9cd6205b9a488e6d1845dd7407f11",
+      "sha256": "410a9a30d18d7a7ffda31c28a5c7132291a1840a114dcf961ea3234b75bbbf20",
       "sourceVersion": "0.36.18.815"
     },
     {
@@ -2288,9 +2288,9 @@
     },
     {
       "owner": "src/curve-profile-core.js",
-      "url": "./curve-balloon-core.js?v=0.36.18.816",
+      "url": "./curve-balloon-core.js?v=0.36.18.817",
       "target": "src/curve-balloon-core.js",
-      "sha256": "3b9b5a189f6bf63bc4d7f2f334a82925427cdfcc2c310c40a8292ae2884a599d"
+      "sha256": "a9c512c5b682e3bd712451bd32fa248358dbcc739691dbdbdbf2b7a9e32114f4"
     },
     {
       "owner": "src/curve-balloon-core.js",
