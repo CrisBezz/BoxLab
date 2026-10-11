@@ -71,3 +71,19 @@ test('818 optional quad Balloon uses fewer editable faces, keeps pole triangles 
  for(const uses of edges.values())assert.deepEqual(uses.sort(),[-1,1]);
  assert.throws(()=>makeCurveProfile({...p,balloonTopology:'invalid'}),/Unsupported/);
 });
+
+test('819 optional paired pole quads retain watertight oriented face cycles and fallback',()=>{
+ const p={...profile(),balloonResolution:4,balloonTopology:'quads',balloonPoleQuads:true};
+ const a=makeCurveProfile(p),legacy=makeCurveProfile({...p,balloonPoleQuads:false});
+ assert(a.faces.length<legacy.faces.length);
+ assert(a.faces.every(face=>face.length===4));
+ const edges=new Map();
+ for(const f of a.faces)for(let i=0;i<f.length;i++){
+  const x=f[i],y=f[(i+1)%f.length],key=a.edgeKey(x,y);
+  if(!edges.has(key))edges.set(key,[]);
+  edges.get(key).push(x<y?1:-1);
+ }
+ assert.equal(a.vertices.length-edges.size+a.faces.length,2);
+ for(const uses of edges.values())assert.deepEqual(uses.sort(),[-1,1]);
+ assert(legacy.faces.some(f=>f.length===3));
+});
