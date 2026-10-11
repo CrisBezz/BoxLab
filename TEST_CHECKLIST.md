@@ -5496,3 +5496,13 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Add+ Curve still draws; Cancel/Apply then finger orbit/pan/pinch work normally in viewport.
 
 .815 full local Node24 regression: **2204/2204 PASS, 0 FAIL, 0 skipped**.
+
+
+## Balloon density .816
+
+- [ ] New Balloon Density 4 gives reduced triangle mesh and rapid candidate preview/Apply on iPad
+- [ ] Density 4/8/12 increases section/outline tessellation without distorting depth or shape
+- [ ] Existing .815 Balloon with no resolution retains prior topology; only explicit slider move migrates
+- [ ] Pencil drawing after Reset, Edit/Cancel, Curve Undo, scene Undo/Redo continue working
+- [ ] One-finger orbit, two-finger pan, pinch, component selection and downstream transforms remain usable
+- [ ] Record real iPad preview, insertion and modelling delay, not idle FPS alone
