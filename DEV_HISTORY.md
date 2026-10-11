@@ -7930,3 +7930,15 @@ Next: Reset > Add+ Balloon > Pencil oval, preview/depth/Apply, Edit/Cancel/Undo/
 original wire Curve and navigation. Obtain feedback before further modelling build.
 
 .815 full local Node24 regression: **2204/2204 PASS, 0 FAIL, 0 skipped**.
+
+
+### .815 publication verification — 2026-10-11
+
+Release 7169e065ad958c5ecec553ca93fc580a17fe9344, tree 0a27156b1566f52876bfb06a532028834771ae2b
+exactly matches tested checkout. Full local Node24 and actual Node22 CI:
+2204tests/2204PASS/0FAIL/0skip. Topology38133341366/job114452034683 and
+Pages38133341007 SUCCESS. Fresh main shell/manifest/Curve UI/Add-parent byte-match;
+live manifest/index/Add815/Curve UI815/core814/preview814/main812 and frozenBeta7
+manifest match tested files. .814 live chain/donor also verified before .815.
+Protected modelling/navigation owners and all frozenBeta2–7 unchanged. Device Reset >
+Balloon Pencil drawing/navigation gate pending; no full Safari propagation proof.
