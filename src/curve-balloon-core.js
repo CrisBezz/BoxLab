@@ -34,6 +34,30 @@ export function makeCurveBalloon(points, profile) {
     const rim=vertices.slice(0,index.getX(2)),centre=vertices.at(-1),rimSign=Math.sign(THREE.ShapeUtils.area(rim));
     if(rim.length<3||rim.some((p,i)=>rimSign*cross(centre,p,rim[(i+1)%rim.length])<=1e-12))
       throw Error('Concavity too deep for Balloon centre; use a shallower indentation');
+    if(profile.balloonTopology==='quads'){
+      // MeshUtilz supplies paired, consistently wound triangles in each
+      // radial strip. Merge only exact adjacent pairs; keep pole fans.
+      const result=[];
+      let merged=0;
+      for(let i=0;i<faces.length;){
+        const a=faces[i],b=faces[i+1];
+        if(b&&a.length===3&&b.length===3){
+          const [v0,v1,v3]=a;
+          // Front strip: a,b,d and b,c,d
+          if(b[0]===v1&&b[2]===v3&&new Set([v0,v1,b[1],v3]).size===4){
+            result.push([v0,v1,b[1],v3]);i+=2;merged++;continue;
+          }
+          // Reverse-wound back strip: a,d,b and b,d,c
+          if(b[0]===a[2]&&b[1]===a[1]&&new Set([a[0],a[1],b[2],a[2]]).size===4){
+            result.push([a[0],a[1],b[2],a[2]]);i+=2;merged++;continue;
+          }
+        }
+        result.push(a);i++;
+      }
+      if(!merged)throw Error('Balloon could not form quad strips');
+      return new EditableMesh(vertices,result);
+    }
+    if(profile.balloonTopology!=null&&profile.balloonTopology!=='triangles')throw Error('Unsupported Balloon topology');
     return new EditableMesh(vertices,faces);
   } finally { geometry.dispose(); }
 }
