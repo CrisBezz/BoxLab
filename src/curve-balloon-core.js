@@ -57,6 +57,38 @@ export function makeCurveBalloon(points, profile) {
         result.push(a);i++;
       }
       if(!merged)throw Error('Balloon could not form quad strips');
+      // Experimental .819 pole foundation: adjacent triangles of each fan
+      // can be paired into quads, without inventing new vertices or changing
+      // the donor surface. Only pair the complete fans with even membership.
+      // For odd fans retain the already accepted triangular pole.
+      if(profile.balloonPoleQuads===true){
+        for(const pole of [frontPole,backPole]){
+          const fan=result.filter(face=>face.length===3&&face.includes(pole));
+          if(fan.length<4||fan.length%2)continue;
+          const mergedFan=[];
+          let safe=true;
+          for(let j=0;j<fan.length;j+=2){
+            const a=fan[j],b=fan[j+1];
+            const first=a.filter(x=>x!==pole),second=b.filter(x=>x!==pole);
+            const shared=first.find(x=>second.includes(x));
+            if(shared==null){safe=false;break;}
+            const outerA=first.find(x=>x!==shared),outerB=second.find(x=>x!==shared);
+            if(outerA==null||outerB==null||new Set([outerA,shared,outerB,pole]).size!==4){safe=false;break;}
+            // Preserve directed boundary edges from both original triangles.
+            const edge=(f,x,y)=>f.some((v,k)=>v===x&&f[(k+1)%f.length]===y);
+            const quad=[outerA,shared,outerB,pole];
+            if(edge(a,outerA,shared)&&edge(b,shared,outerB))mergedFan.push(quad);
+            else if(edge(b,outerB,shared)&&edge(a,shared,outerA))mergedFan.push([outerB,shared,outerA,pole]);
+            else {safe=false;break;}
+          }
+          if(safe){
+            const set=new Set(fan);
+            const retained=result.filter(face=>!set.has(face));
+            retained.push(...mergedFan);
+            result.splice(0,result.length,...retained);
+          }
+        }
+      }
       return new EditableMesh(vertices,result);
     }
     if(profile.balloonTopology!=null&&profile.balloonTopology!=='triangles')throw Error('Unsupported Balloon topology');
