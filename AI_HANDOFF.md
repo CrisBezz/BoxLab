@@ -1,15 +1,32 @@
-# BoxLab AI Handoff — Automatic Live Boolean preview
+# BoxLab AI Handoff — Boolean preview visibility repair
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.803**. Last device acceptance **.802 PASS**, protected;
-.801 Editable Boolean activation/exit and corrected radial also protected.
-Parent main `3649d4e466f2df66a659b0df52b613050609fb9c`.
-Full Node24 **2158/2158 PASS, 0 FAIL, 0 skips**. .803 live preview device acceptance
-pending. Release704b76a6ceac2f3375812e2f37dbe7831013ac1e;
-CI38098655432/Pages38098655578 SUCCESS. Fresh live shell/manifest/all three changed
-Boolean modules match main byte-for-byte. No Beta7 freeze performed.
+Current build **v0.36.18.804**. Last device acceptance **.802 PASS**, protected;
+.801 activation/exit and radial also protected. User .803 FAIL for combined primitive
+and result visibility; .804 repair awaits device acceptance. Parent main
+`077849d5e6b5b1819a968974d3bf934756841700`. No Beta7 freeze performed.
+
+## .804 — Exclusive Boolean Result/Sources views
+
+User .803 FAIL: preview displayed A/B primitives and the result simultaneously.
+The previous layered composite also duplicated source surfaces in the editor overlay.
+Do not restore that presentation. Result now defaults to one opaque staged result,
+using the original result until the first automatic solve. Sources explicitly shows
+native A/B solids plus existing edge guides; no result surface or duplicate source
+surface is drawn there. Authoritative multi-object visibility suppresses active and
+inactive source bodies/cages only during Result view, without changing source scene
+visibility, Solo, selection or history. A/B buttons and original gizmo remain available;
+Sources restores viewport source picking. Cancel/Apply restore ordinary visibility.
+
+Two new behavioral checks exercise exclusive overlay views and actual native render
+observer/inactive rebuild, including Solo and Cancel restoration. Existing automatic
+refresh, busy guard, failed-preview and .801/.802 protected checks retained. Only
+editor804 and native visibility owner804 pins change; core/scheduler803 and protected
+gesture/modelling owners retain their pins. Full Node24 suite:2160/2160 PASS, 0 FAIL, 0 skips. Original semantic Move/Rotate/Scale
+gizmo runtime also changes selected object geometry with source picking unavailable.
+Device acceptance pending.
 
 ## .803 — Automatic staged Live Boolean previews
 

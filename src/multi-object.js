@@ -254,11 +254,13 @@ function saveActive() {
 function activeShouldShow() {
   const object = activeObject();
   const edit=globalThis.__boxlabEditableBoolean?.state?.();
+  if(edit&&globalThis.__boxlabEditableBoolean?.view?.()==='result'&&[edit.aId,edit.bId].includes(object?.id))return false;
   return !!object?.visible && !!(!soloId || soloId === object.id || edit&&[edit.aId,edit.bId].includes(object.id));
 }
 
 function shouldShow(object) {
   const edit=globalThis.__boxlabEditableBoolean?.state?.();
+  if(edit&&globalThis.__boxlabEditableBoolean?.view?.()==='result'&&[edit.aId,edit.bId].includes(object?.id))return false;
   return !!object?.visible && !!(!soloId || soloId === object.id || edit&&[edit.aId,edit.bId].includes(object.id));
 }
 

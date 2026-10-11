@@ -7430,3 +7430,23 @@ Pages38098655578 SUCCESS. Fresh live manifest/shell/editor/core/scheduler byte-m
 main. .802 Extrude, .801 radial/activation, Multi1.0/Loop715 and frozenBeta2–6 untouched.
 .803 device live-preview performance/visibility and Apply/Cancel/history pending.
 No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
+
+## .804 — Exclusive Boolean Result/Sources views
+
+User .803 FAIL: preview displayed A/B primitives and the result simultaneously.
+The previous layered composite also duplicated source surfaces in the editor overlay.
+Do not restore that presentation. Result now defaults to one opaque staged result,
+using the original result until the first automatic solve. Sources explicitly shows
+native A/B solids plus existing edge guides; no result surface or duplicate source
+surface is drawn there. Authoritative multi-object visibility suppresses active and
+inactive source bodies/cages only during Result view, without changing source scene
+visibility, Solo, selection or history. A/B buttons and original gizmo remain available;
+Sources restores viewport source picking. Cancel/Apply restore ordinary visibility.
+
+Two new behavioral checks exercise exclusive overlay views and actual native render
+observer/inactive rebuild, including Solo and Cancel restoration. Existing automatic
+refresh, busy guard, failed-preview and .801/.802 protected checks retained. Only
+editor804 and native visibility owner804 pins change; core/scheduler803 and protected
+gesture/modelling owners retain their pins. Full Node24 suite:2160/2160 PASS, 0 FAIL, 0 skips. Original semantic Move/Rotate/Scale
+gizmo runtime also changes selected object geometry with source picking unavailable.
+Device acceptance pending.

@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.800",
+      "url": "./src/multi-object.js?v=0.36.18.804",
       "target": "src/multi-object.js",
-      "sha256": "e5a22f516e11af63a117d7b56edcdcc5721e0823bd20a65d6345b82f0ddf2a67"
+      "sha256": "054b84f7ce33a0a272de6fa3b32d93a45a620c5bd65fa63a3d27286eda3feb1b"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.803",
+      "url": "./src/release-bootstrap.js?v=0.36.18.804",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.803",
+      "url": "./src/release-version.js?v=0.36.18.804",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2182,10 +2182,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/editable-boolean.js?v=0.36.18.803",
+      "url": "./src/editable-boolean.js?v=0.36.18.804",
       "target": "src/editable-boolean.js",
-      "sha256": "14a563bf668088d0a7bc884245fa8485cb5585ba0138b290a53b8fa7423769a7",
-      "sourceVersion": "0.36.18.803"
+      "sha256": "e282dd2fc44afaa08402594794405144cc1b4ee57dd5780b9599579d1014f7a8",
+      "sourceVersion": "0.36.18.804"
     },
     {
       "owner": "src/editable-boolean.js",

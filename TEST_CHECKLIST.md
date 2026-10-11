@@ -5348,3 +5348,12 @@ Pages38098655578 SUCCESS. Fresh live manifest/shell/editor/core/scheduler byte-m
 main. .802 Extrude, .801 radial/activation, Multi1.0/Loop715 and frozenBeta2–6 untouched.
 .803 device live-preview performance/visibility and Apply/Cancel/history pending.
 No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
+
+## .804 Boolean preview visibility repair — acceptance pending
+
+- [ ] Edit Boolean defaults to Result: one solid result, no A/B solid duplication.
+- [ ] Sources shows A/B for editing without a result layered over them.
+- [ ] A/B selection and Move/Rotate/Scale still work; Result updates automatically.
+- [ ] Switching views creates no history; Solo remains unchanged on exit.
+- [ ] Apply/Cancel/background exit and one scene Undo/Redo retain .801 behavior.
+- [x] Automated exclusive overlay and native render visibility/Solo/Cancel checks pass.
