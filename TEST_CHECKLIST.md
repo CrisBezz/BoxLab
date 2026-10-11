@@ -5429,3 +5429,16 @@ tests and reviewed changed loader/hash contract pass. Device acceptance pending.
 - [ ] Edit then Undo/Redo; Curve draw/edit and normal finger navigation remain stable. Send reset readout screenshot.
 
 .810 full local Node24 regression: **2182/2182 PASS, 0 FAIL, 0 skipped**.
+
+
+## .811 Active SubD reuse — device acceptance pending
+
+- [x] Native-kernel equivalence, repeated reuse, direct geometry/topology/crease/groups/loose inputs and modifier invalidation; source/history replacement and export isolation.
+- [x] Actual main render path reuses selection-only SubD; failed recomputation retries; full2187tests PASS,0FAIL,0skips.
+- [ ] Dense SubD mesh with cage on: Reset Performance, select/deselect Vertex/Edge/Face without editing; record rebuild mean/max.
+- [ ] Reset again, move selected components; surface follows cage. Undo/Redo restores both. Record separate edit timings.
+- [ ] Change SubD level/Mirror and switch objects: correct surfaces, selections and finger navigation.
+- [ ] Export SubD geometry matches the edited surface.
+
+.810 readout evidence:57FPS/17calls,44rebuilds mean529ms/max614ms during Edge Move;
+selection-only cost not isolated and full .810 tactile PASS not inferred.

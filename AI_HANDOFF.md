@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — Cage Batching .810
+# BoxLab AI Handoff — Active SubD Reuse .811
 
 ## Current state — 2026-10-11
 
@@ -6,13 +6,49 @@ CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/
 Accepted frozen build **v0.36.18.807**, user **AWESOME PASS**, protected.
 Accepted development build **v0.36.18.808**, user **Awesome!!**, protected.
 Accepted development build **v0.36.18.809**, user **Awesome**, protected.
-Current development build **v0.36.18.810**, device acceptance pending.
-Source baseline `c4af8d22` (.809 publication verification); current release verification follows below.
+Current development build **v0.36.18.811**, device acceptance pending.
+.810 screenshot evidence recorded; full tactile acceptance not inferred.
+Source baseline `0324e233` (.810 publication verification); current release verification follows below.
 User explicitly requested Beta7 freeze/deployment. Frozen source
 `02d04cc72acef5415352ce4426792442cb7e99dd`; Beta7 URL
 https://crisbezz.github.io/BoxLab/beta-7/ . Frozen and deployed; immutable.
 Protected .806 compact automatic Boolean, .805 result list workflow, .804 visibility,
 .802 Extrude/.801 activation/exit/radial retained. Beta2–6 unchanged.
+
+
+## .811 — Active SubD display reuse — 2026-10-11
+
+User /nextbuild authorizes the next narrow measured optimisation. .810 iPad capture
+shows57FPS/17drawcalls,44rebuilds averaging529ms/max614ms during Edge Move; prior
+idle capture13calls and0rebuilds. Observational evidence, not controlled A/B or a
+full device PASS. .810 tactile checklist remains pending; do not mark it accepted.
+
+Audit: main modifiedSubdMesh invokes native subdivision then mirror on every render,
+including selection-only rebuilds. No universal geometry revision exists: tools mutate
+coordinates/faces directly. New subd-display-cache holds one active result and exact
+input snapshot, comparing mesh identity, all coordinates/face cycles, creases, facegroups,
+loose topology, SubD level and mirror axes. No lossy hash, new kernel, interaction or
+history owner. Same unchanged cage reuses result; edits/replacement/object switch/
+history restoration/settings changes recompute via original kernels. Failed compute
+clears cache and retries next request. Cached result is read-only display data; native
+quick SubD export receives a clone. Only one result retained, including while Base
+view is active; no per-object/history cache. Inactive scene display path untouched.
+
+Triangulation, GPU geometry recreation, cage construction, native render observers and
+full history snapshots still run; this is not a total edit latency fix. CPU-only
+docs/performance-subd-811.json executes actual modifiedSubdMesh on400-face grid,
+level3:77.86ms first request,0.21ms mean twenty unchanged requests; uncached triangulation
+28.46ms. Single desktop trial, not iPad FPS or guaranteed speedup.
+
+Five new tests execute cache with real kernels and actual main render/export path;
+cover exact output, fifty reuse requests, direct tiny coordinate changes, topology/
+winding/crease/groups/loose inputs/modifiers, object replacement, Undo/Redo coordinates,
+export isolation and failure retry. Full Node24:2187/2187 PASS,0FAIL,0skips. Main811/
+new child811 and shell/recovery811 reviewed; native manager/cage810, diagnostic809 and
+all other hashes/pins unchanged. Multi1.0/Loop715/Curve808/Extrude802/Boolean806 and
+frozenBeta2–7 protected. .811 device acceptance pending. Next: controlled selection-only
+Reset sample versus a separate edit sample, then audit remaining triangulation/buffer
+rebuild cost before broadening caching or async geometry.
 
 ## .810 — Batched active cage rendering — 2026-10-11
 

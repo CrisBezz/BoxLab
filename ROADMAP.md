@@ -4,7 +4,7 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — Cage batching .810 / frozen Beta 7, 2026-10-11
+## Current direction — Active SubD reuse .811 / frozen Beta 7, 2026-10-11
 
 .797 PASS protects the green baseline, GLB group import and Rotate. .796 Add+ previews,
 unit-zone scale and Text remain protected. First Editable Boolean build stores independent
@@ -19,7 +19,7 @@ exclusive Result/Sources views; user .804 PASS protected. .805 compacts the Bool
 object list using existing recipes;  .806 removes redundant Update Preview and matches compact popup typography;
 User .806 PASS protected; .807 matches startup/reset cube to accepted Add+1unit.
 User .807 AWESOME PASS; Beta7 freeze/deployment explicitly requested and implemented
-from accepted source; Pages and regression CI succeeded. User then chose to start the shared curve foundation: .808 Add+ Curve draw/edit profiles, user PASS protected. .809 performance readout and crease lookup accepted with iPad captures. .810 batches visible cage edges/markers while retaining authoritative picking proxies. Device acceptance pending. Next recommended: controlled iPad Reset comparisons, then SubD selection-only cache audit before expanding dense geometry/texture workloads; project Save/Open, NOM import, then Balloon and Curve Cutter consumers. Beta7 remains
+from accepted source; Pages and regression CI succeeded. User then chose to start the shared curve foundation: .808 Add+ Curve draw/edit profiles, user PASS protected. .809 performance readout and crease lookup accepted with iPad captures. .810 batches visible cage edges/markers while retaining authoritative picking proxies. .811 reuses unchanged active SubD results through exact cage/settings comparison; existing kernels and export isolation retained. Device acceptance pending. Next recommended: separate Reset selection-only and edit measurements, then remaining triangulation/render-buffer audit before expanding dense geometry/texture workloads; project Save/Open, NOM import, then Balloon and Curve Cutter consumers. Beta7 remains
 frozen at .807 and immutable.
 
 ## Requested UV/texture workflow and performance — queued

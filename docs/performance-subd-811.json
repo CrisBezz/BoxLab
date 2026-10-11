@@ -1,0 +1,9 @@
+{
+  "kind": "CPU only; one warm display, twenty unchanged requests; not iPad FPS",
+  "cageFaces": 400,
+  "level": 3,
+  "displayFaces": 25600,
+  "firstRequestMs": 77.859351,
+  "unchangedRequestMeanMs": 0.21073255000000018,
+  "uncachedTriangulationMs": 28.457359000000025
+}
