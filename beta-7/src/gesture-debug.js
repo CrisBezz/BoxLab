@@ -1,0 +1,142 @@
+const MAX_LINES=12;
+const MAX_BACKGROUND_LINES=6;
+const QUIET_STAGES=new Set(['PEN HOVER SWALLOW','PEN ORBIT MOVE FORWARD']);
+let enabled=false;
+let panel=null,body=null,backgroundBody=null,contactBody=null,seq=0;
+const PREF_KEY='boxlab-gesture-debug';
+
+function ensurePanel(){
+  if(panel||!enabled)return;
+  panel=document.createElement('div');
+  panel.id='boxlabGestureDebug';
+  panel.style.cssText=[
+    'position:fixed','right:8px','bottom:42px','z-index:99999',
+    'width:min(390px,46vw)','max-height:42vh','overflow:hidden',
+    'padding:8px 9px','border:1px solid rgba(255,255,255,.28)',
+    'border-radius:8px','background:rgba(8,10,14,.92)','color:#fff',
+    'font:11px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace',
+    'pointer-events:none','box-shadow:0 8px 24px rgba(0,0,0,.35)'
+  ].join(';');
+  const title=document.createElement('div');
+  title.textContent='GESTURE DEBUG';
+  title.style.cssText='font-weight:800;margin-bottom:5px;opacity:.9';
+  backgroundBody=document.createElement('div');
+  backgroundBody.style.cssText='border-bottom:1px solid #ffffff35;padding-bottom:5px;margin-bottom:5px;color:#a9d7ff';
+  backgroundBody.textContent='BACKGROUND TAP — waiting for test';
+  contactBody=document.createElement('div');
+  contactBody.style.cssText='color:#ffd69c;border-bottom:1px solid #ffffff35;margin-bottom:5px';
+  body=document.createElement('div');
+  panel.append(title,contactBody,backgroundBody,body);
+  document.body.appendChild(panel);
+}
+function compact(detail){
+  if(detail==null)return'';
+  if(typeof detail==='string')return detail;
+  try{
+    return Object.entries(detail).map(([k,v])=>{
+      if(v==null)return `${k}=null`;
+      if(Array.isArray(v))return `${k}=[${v.join(',')}]`;
+      if(typeof v==='object')return `${k}=${JSON.stringify(v)}`;
+      return `${k}=${String(v)}`;
+    }).join(' ');
+  }catch{return String(detail);}
+}
+function log(stage,detail=null){
+  if(!enabled||QUIET_STAGES.has(stage))return;
+  ensurePanel();
+  const line=document.createElement('div');
+  const n=String(++seq).padStart(2,'0');
+  line.textContent=`${n} ${stage}${detail==null?'':` • ${compact(detail)}`}`;
+  if(stage==='PHYSICAL CONTACT'){
+    const summary=document.createElement('div');summary.textContent=line.textContent;
+    contactBody.prepend(summary);
+    while(contactBody.children.length>4)contactBody.lastElementChild.remove();
+  }
+  if(stage.startsWith('BACKGROUND ')){
+    if(!backgroundBody.children.length)backgroundBody.textContent='';
+    const summary=document.createElement('div');summary.textContent=line.textContent;
+    backgroundBody.prepend(summary);
+    while(backgroundBody.children.length>MAX_BACKGROUND_LINES)backgroundBody.lastElementChild.remove();
+  }
+  body?.prepend(line);
+  while(body?.children.length>MAX_LINES)body.lastElementChild?.remove();
+}
+function clear(){if(contactBody)contactBody.textContent='';if(body)body.textContent='';if(backgroundBody)backgroundBody.textContent='BACKGROUND TAP — waiting for test';seq=0;}
+function setEnabled(next,{persist=true}={}){
+  enabled=!!next;
+  if(persist){try{localStorage.setItem(PREF_KEY,enabled?'1':'0');}catch{}}
+  if(enabled){ensurePanel();log('DEBUG ENABLED');installDeepCaptureTrace();}
+  else{panel?.remove();panel=null;body=null;backgroundBody=null;contactBody=null;seq=0;}
+  window.dispatchEvent(new CustomEvent('boxlab-gesture-debug-change',{detail:{enabled}}));
+  return enabled;
+}
+function enable(){return setEnabled(true);}
+function disable(){return setEnabled(false);}
+function toggle(){return setEnabled(!enabled);}
+try{enabled=localStorage.getItem(PREF_KEY)==='1';}catch{}
+globalThis.__boxlabGestureDebug={log,clear,enable,disable,toggle,setEnabled,get enabled(){return enabled;}};
+queueMicrotask(()=>{if(enabled){ensurePanel();installDeepCaptureTrace();log('DEBUG READY');}});
+
+document.addEventListener('pointerdown',event=>{
+  log('RAW POINTERDOWN',{pointer:event.pointerType,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
+},true);
+const debugCanvas=document.querySelector('#viewport');
+debugCanvas?.addEventListener('pointerdown',event=>{
+  log('RAW CANVAS CAPTURE',{pointer:event.pointerType,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
+},{capture:true});
+debugCanvas?.addEventListener('pointerdown',event=>{
+  log('RAW CANVAS BUBBLE',{pointer:event.pointerType,pid:event.pointerId,pressure:event.pressure,buttons:event.buttons,target:event.target?.id||event.target?.tagName||'unknown'});
+});
+
+let deepTraceInstalled=false;
+function installDeepCaptureTrace(){
+  if(deepTraceInstalled)return true;
+  const canvas=document.querySelector('#viewport');
+  if(!canvas)return false;
+  const priorAdd=canvas.addEventListener.bind(canvas);
+  const priorRemove=canvas.removeEventListener.bind(canvas);
+  const wrapped=new WeakMap();
+  let seq=0;
+  function isCapture(options){return options===true||!!(options&&typeof options==='object'&&options.capture);}
+  canvas.addEventListener=function(type,listener,options){
+    if(type==='pointerdown'&&isCapture(options)&&listener){
+      const id=++seq;
+      const label=typeof listener==='function'?(listener.name||'anonymous'):(listener?.handleEvent?.name||'handleEvent');
+      let stack='';
+      try{stack=(new Error()).stack?.split('\n').slice(2,5).join(' | ')||'';}catch{}
+      const fn=typeof listener==='function'
+        ? function(event){
+            log('CAPTURE ENTER',{id,label,pid:event.pointerId});
+            const before=event.cancelBubble;
+            try{return listener.call(this,event);}
+            finally{log('CAPTURE EXIT',{id,label,before,after:event.cancelBubble});}
+          }
+        : {
+            handleEvent(event){
+              log('CAPTURE ENTER',{id,label,pid:event.pointerId});
+              const before=event.cancelBubble;
+              try{return listener.handleEvent(event);}
+              finally{log('CAPTURE EXIT',{id,label,before,after:event.cancelBubble});}
+            }
+          };
+      wrapped.set(listener,fn);
+      log('CAPTURE REGISTER',{id,label,stack});
+      return priorAdd(type,fn,options);
+    }
+    return priorAdd(type,listener,options);
+  };
+  canvas.removeEventListener=function(type,listener,options){
+    return priorRemove(type,wrapped.get(listener)||listener,options);
+  };
+  deepTraceInstalled=true;
+  log('DEEP CAPTURE TRACE INSTALLED');
+  return true;
+}
+
+// Read-only early contact evidence; never consumes or claims a gesture.
+for(const type of ['pointerdown','pointerup','pointercancel']){
+  window.addEventListener(type,event=>{
+    if(!enabled||event.target?.id!=='viewport')return;
+    log('PHYSICAL CONTACT',{event:type,pointer:event.pointerType,pid:event.pointerId,stamp:Math.round(event.timeStamp),x:Math.round(event.clientX),y:Math.round(event.clientY),primary:event.isPrimary,buttons:event.buttons,pressure:event.pressure});
+  },{capture:true,passive:true});
+}

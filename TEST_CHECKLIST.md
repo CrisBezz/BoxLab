@@ -5371,7 +5371,15 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 - [x] Fonts and spacing match compact popups; Cancel/Apply remain stacked right, at top centre.
 - [x] Result/Sources and A/B, Apply/Cancel/Undo/Redo remain functional with result-only object list.
 
-## .807 Startup/reset unit cube — acceptance pending
+## .807 Startup/reset unit cube — user PASS protected
 
-- [ ] Fresh launch default cube matches Add+ Cube at1×1×1.
-- [ ] Reset returns to one1×1×1 cube; Add+ density/preview and navigation remain unchanged.
+- [x] Fresh launch default cube matches Add+ Cube at1×1×1.
+- [x] Reset returns to one1×1×1 cube; Add+ density/preview and navigation remain unchanged.
+
+## Beta 7 freeze — .807
+
+- [x] User .807 AWESOME PASS and explicit release request recorded.
+- [x]303 runtime/supporting files match accepted source; immutable SHA256 manifest added.
+- [x] Frozen shell/modules/templates/refresh/PWA references stay within beta-7 namespace.
+- [ ] Pages and regression CI succeed; live/frozen critical assets byte-match repository.
+- [ ] Recommended final frozen-link iPad launch, navigation and Nomad export smoke.

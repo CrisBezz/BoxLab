@@ -1,12 +1,30 @@
-# BoxLab AI Handoff — Unit startup cube
+# BoxLab AI Handoff — Beta 7 release
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.807**. User **.806 PASS**, protected: compact automatic
-Boolean editor and retained result-only list workflow. .804/.802/.801 remain protected.
-Parent main `5b44e3258824aca2f8a85f050dfe25597fb35e69`. Startup/reset1unit cube
-acceptance pending before Beta7 freeze; no freeze performed.
+Current live and frozen build **v0.36.18.807**, user **AWESOME PASS**, protected.
+User explicitly requested Beta7 freeze/deployment. Frozen source
+`02d04cc72acef5415352ce4426792442cb7e99dd`; Beta7 URL
+https://crisbezz.github.io/BoxLab/beta-7/ . Freeze implemented, deployment pending.
+Protected .806 compact automatic Boolean, .805 result list workflow, .804 visibility,
+.802 Extrude/.801 activation/exit/radial retained. Beta2–6 unchanged.
+
+## Beta 7 freeze — .807 accepted — 2026-10-11
+
+User AWESOME PASS .807 and explicit freeze/Beta7 deployment request. .807 unit startup/
+Reset cube protected alongside .806 compact automatic Boolean, .805 retained list
+workflow, .804 visibility, .802 Extrude and .801 radial/edit/exit. Freeze exact runtime
+from `02d04cc72acef5415352ce4426792442cb7e99dd` into /beta-7/:303 supporting/runtime
+files copied byte-for-byte, including binary native export template. No runtime,
+release marker or pin changes; main remains .807. Beta2–6 untouched.
+
+freeze.json records accepted source/version/date; runtime-assets.json records303
+immutable SHA256 hashes. Release notes and Beta7 checklist added. Two dedicated
+freeze checks verify hashes/markers and local HTML/import/template references within
+beta namespace, relative refresh manifest resolution and PWA start URL. Every frozen
+asset also verified against accepted main before publishing. Full Node24 suite:
+2165/2165 PASS,0 FAIL,0 skips; publication pending. Beta7 immutable after deployment; continue feature development on main.
 
 ## .807 — Unit startup/reset cube / .806 PASS — 2026-10-11
 

@@ -7502,3 +7502,19 @@ hashes retain original main internal VERSION (release stamp owned by release-ver
 Protected Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–6 unchanged.
 Full Node24:2163/2163 PASS, 0 FAIL, 0 skips. Actual startup geometry matches
 unit-fitted Add+ cube bounds. Device cube/reset comparison pending before Beta7 freeze.
+
+## Beta 7 freeze — .807 accepted — 2026-10-11
+
+User AWESOME PASS .807 and explicit freeze/Beta7 deployment request. .807 unit startup/
+Reset cube protected alongside .806 compact automatic Boolean, .805 retained list
+workflow, .804 visibility, .802 Extrude and .801 radial/edit/exit. Freeze exact runtime
+from `02d04cc72acef5415352ce4426792442cb7e99dd` into /beta-7/:303 supporting/runtime
+files copied byte-for-byte, including binary native export template. No runtime,
+release marker or pin changes; main remains .807. Beta2–6 untouched.
+
+freeze.json records accepted source/version/date; runtime-assets.json records303
+immutable SHA256 hashes. Release notes and Beta7 checklist added. Two dedicated
+freeze checks verify hashes/markers and local HTML/import/template references within
+beta namespace, relative refresh manifest resolution and PWA start URL. Every frozen
+asset also verified against accepted main before publishing. Full Node24 suite:
+2165/2165 PASS,0 FAIL,0 skips; publication pending. Beta7 immutable after deployment; continue feature development on main.

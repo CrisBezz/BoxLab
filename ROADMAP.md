@@ -4,7 +4,7 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .807, 2026-10-11
+## Current direction — Beta 7 / .807, 2026-10-11
 
 .797 PASS protects the green baseline, GLB group import and Rotate. .796 Add+ previews,
 unit-zone scale and Text remain protected. First Editable Boolean build stores independent
@@ -18,8 +18,9 @@ acceptance failed for combined source/result presentation. .804 repairs this wit
 exclusive Result/Sources views; user .804 PASS protected. .805 compacts the Boolean
 object list using existing recipes;  .806 removes redundant Update Preview and matches compact popup typography;
 User .806 PASS protected; .807 matches startup/reset cube to accepted Add+1unit.
-Final cube acceptance precedes Beta7 freeze. Next: shared Curve editor/Balloon, then Curve Cutter. Beta7 remains
-a release recommendation; no freeze performed in this build.
+User .807 AWESOME PASS; Beta7 freeze/deployment explicitly requested and implemented
+from accepted source (publication pending). Next on live main: shared Curve editor/Balloon, then Curve Cutter. Beta7 remains
+frozen at .807 and becomes immutable after deployment.
 
 Agreed sequence:
 1. Editable Boolean source session (this build).

@@ -1,0 +1,84 @@
+import * as THREE from 'three';
+
+const canvas=document.querySelector('#viewport');
+const extrudeButton=document.querySelector('#extrudeBtn');
+const status=document.querySelector('#selectionStatus');
+let probe=null,takeover=null,internalCancel=false;
+
+function topo(){return globalThis.__boxlabTopology;}
+function state(){return globalThis.__boxlabBridgeState;}
+function bridge(){return globalThis.__boxlabSelectionBridge;}
+function mesh(){return state()?.mesh||null;}
+function selectedFace(){const b=bridge();if(b?.mode?.()!=='face')return null;const ids=[...new Set(b.indices?.()||[])];return ids.length===1?ids[0]:null;}
+function extrudeArmed(){return !!(extrudeButton?.classList.contains('active')||extrudeButton?.classList.contains('boxlab-direct-stable'));}
+function render(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
+function restore(target,source){const t=topo();if(t?.restoreMeshState)return t.restoreMeshState(target,t.cloneMeshState(source));target.vertices=source.vertices.map(v=>v.clone());target.faces=source.faces.map(f=>[...f]);target.creases=new Map(source.creases||[]);target.looseEdges=new Set(source.looseEdges||[]);target.looseVertices=new Set(source.looseVertices||[]);target.edges?.();}
+function centerOf(m,ids){const c=new THREE.Vector3();ids.forEach(id=>c.add(m.vertices[id]));return c.multiplyScalar(1/ids.length);}
+function screenPoint(point,camera){const p=point.clone().project(camera),r=canvas.getBoundingClientRect();return{x:r.left+(p.x*.5+.5)*r.width,y:r.top+(-p.y*.5+.5)*r.height};}
+function projectedNormal(m,fi,camera){const n=m.faceNormal(fi)?.clone().normalize();if(!n)return null;const c=centerOf(m,m.faces[fi]),a=screenPoint(c,camera),b=screenPoint(c.clone().add(n),camera),x=b.x-a.x,y=b.y-a.y,l=Math.hypot(x,y);return l>1e-4?{x:x/l,y:y/l}:null;}
+function faceBasis(normal){const n=normal.clone().normalize(),helper=Math.abs(n.y)<.9?new THREE.Vector3(0,1,0):new THREE.Vector3(1,0,0),u=new THREE.Vector3().crossVectors(helper,n).normalize(),v=new THREE.Vector3().crossVectors(n,u).normalize();return{u,v};}
+function polygonArea(poly){let a=0;for(let i=0;i<poly.length;i++){const p=poly[i],q=poly[(i+1)%poly.length];a+=p.x*q.y-q.x*p.y;}return a*.5;}
+function pointSegDistance2(p,a,b){const ab=b.clone().sub(a),l2=ab.lengthSq();if(l2<1e-12)return p.distanceTo(a);const t=THREE.MathUtils.clamp(p.clone().sub(a).dot(ab)/l2,0,1);return p.distanceTo(a.clone().addScaledVector(ab,t));}
+function pointInPolygonInclusive(point,poly,tol){for(let i=0;i<poly.length;i++)if(pointSegDistance2(point,poly[i],poly[(i+1)%poly.length])<=tol)return true;let inside=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if(((a.y>point.y)!==(b.y>point.y))&&(point.x<(b.x-a.x)*(point.y-a.y)/((b.y-a.y)||1e-12)+a.x))inside=!inside;}return inside;}
+function facePlane(m,fi){const f=m.faces[fi];if(!Array.isArray(f)||f.length<3)return null;const normal=m.faceNormal(fi)?.clone().normalize();return normal?{normal,point:m.vertices[f[0]].clone()}:null;}
+function samePlane(m,fi,normal,point,tol){const f=m.faces[fi];if(!Array.isArray(f)||f.length<3)return false;const n=m.faceNormal(fi)?.clone().normalize();return !!n&&Math.abs(n.dot(normal))>.999&&f.every(id=>Math.abs(m.vertices[id].clone().sub(point).dot(normal))<=tol);}
+function coplanarFaces(m,normal,point,tol){return m.faces.map((_,fi)=>samePlane(m,fi,normal,point,tol)?fi:-1).filter(fi=>fi>=0);}
+function pointInFace(m,fi,p,normal,origin,tol){const {u,v}=faceBasis(normal),to2=q=>new THREE.Vector2(q.clone().sub(origin).dot(u),q.clone().sub(origin).dot(v));return pointInPolygonInclusive(to2(p),m.faces[fi].map(id=>to2(m.vertices[id])),tol);}
+function pointInRegion(m,faces,p,normal,origin,tol){return faces.some(fi=>pointInFace(m,fi,p,normal,origin,tol));}
+
+function throughPlan(m,sourceFaceIndex){
+  const source=m.faces[sourceFaceIndex];if(!Array.isArray(source)||source.length<3)return null;
+  const sourceNormal=m.faceNormal(sourceFaceIndex)?.clone().normalize();if(!sourceNormal)return null;
+  let scale=Infinity;for(let i=0;i<source.length;i++)scale=Math.min(scale,m.vertices[source[i]].distanceTo(m.vertices[source[(i+1)%source.length]]));
+  const tol=Math.max(1e-5,(Number.isFinite(scale)?scale:1)*.008),candidates=[];
+  for(let fi=0;fi<m.faces.length;fi++){
+    if(fi===sourceFaceIndex)continue;const plane=facePlane(m,fi);if(!plane||sourceNormal.dot(plane.normal)>-.75)continue;
+    const denom=sourceNormal.dot(plane.normal);if(Math.abs(denom)<.75)continue;
+    const ts=source.map(id=>plane.point.clone().sub(m.vertices[id]).dot(plane.normal)/denom),distance=ts.reduce((a,b)=>a+b,0)/ts.length;
+    if(Math.abs(distance)<tol||ts.some(t=>Math.abs(t-distance)>tol*2))continue;
+    const projected=source.map(id=>m.vertices[id].clone().addScaledVector(sourceNormal,distance)),targetFaces=coplanarFaces(m,plane.normal,plane.point,tol*3);
+    const samples=[...projected];for(let i=0;i<projected.length;i++)samples.push(projected[i].clone().lerp(projected[(i+1)%projected.length],.5));
+    const c=new THREE.Vector3();projected.forEach(p=>c.add(p));samples.push(c.multiplyScalar(1/projected.length));
+    const hits=samples.filter(p=>pointInRegion(m,targetFaces,p,plane.normal,plane.point,tol*2)).length;
+    if(hits<Math.max(1,Math.ceil(samples.length*.25)))continue;
+    candidates.push({sourceFaceIndex,source:[...source],sourceNormal,distance,projected,targetFaces,targetNormal:plane.normal,planePoint:plane.point,tol});
+  }
+  candidates.sort((a,b)=>Math.abs(a.distance)-Math.abs(b.distance));return candidates[0]||null;
+}
+
+function previewExtrude(live,before,fi,distance){restore(live,before);const source=before.faces[fi],normal=before.faceNormal(fi)?.clone().normalize();if(!source||!normal)return false;const replacement=new Map();for(const id of source){live.vertices.push(before.vertices[id].clone().addScaledVector(normal,distance));replacement.set(id,live.vertices.length-1);}live.faces[fi]=source.map(id=>replacement.get(id));for(let i=0;i<source.length;i++){const a=source[i],b=source[(i+1)%source.length];live.faces.push([a,b,replacement.get(b),replacement.get(a)]);}live.edges?.();return true;}
+function cancelNativeDrag(pointerId){internalCancel=true;try{canvas.dispatchEvent(new PointerEvent('pointercancel',{pointerId,isPrimary:true,bubbles:true,cancelable:true}));}catch{const e=new Event('pointercancel',{bubbles:true,cancelable:true});Object.defineProperty(e,'pointerId',{value:pointerId});canvas.dispatchEvent(e);}finally{internalCancel=false;}}
+function faceNormalFromLoop(m,loop){if(loop.length<3)return new THREE.Vector3();const a=m.vertices[loop[0]];for(let i=1;i<loop.length-1;i++){const n=new THREE.Vector3().crossVectors(m.vertices[loop[i]].clone().sub(a),m.vertices[loop[i+1]].clone().sub(a));if(n.lengthSq()>1e-12)return n.normalize();}return new THREE.Vector3();}
+function orientLike(m,loop,n){return faceNormalFromLoop(m,loop).dot(n)<0?[...loop].reverse():loop;}
+function pointKey(p,tol){const s=1/Math.max(tol,1e-7);return`${Math.round(p.x*s)}:${Math.round(p.y*s)}:${Math.round(p.z*s)}`;}
+function getVertex(m,cache,p,tol){const k=pointKey(p,tol);if(cache.has(k))return cache.get(k);m.vertices.push(p.clone());const id=m.vertices.length-1;cache.set(k,id);return id;}
+function splitByLine(poly,a,b,keepLeft,eps=1e-9){const out=[],cross=p=>(b.x-a.x)*(p.y-a.y)-(b.y-a.y)*(p.x-a.x);for(let i=0;i<poly.length;i++){const p=poly[i],q=poly[(i+1)%poly.length],cp=cross(p),cq=cross(q),pin=keepLeft?cp>=-eps:cp<=eps,qin=keepLeft?cq>=-eps:cq<=eps;if(pin)out.push(p.clone());if(pin!==qin){const t=cp/(cp-cq);out.push(p.clone().lerp(q,t));}}return out;}
+function subtractConvex(poly,clip){if(poly.length<3||clip.length<3)return[poly];let c=clip.map(p=>p.clone());if(polygonArea(c)<0)c.reverse();let inside=[poly.map(p=>p.clone())],outside=[];for(let i=0;i<c.length;i++){const a=c[i],b=c[(i+1)%c.length],next=[];for(const piece of inside){const inPiece=splitByLine(piece,a,b,true),outPiece=splitByLine(piece,a,b,false);if(outPiece.length>=3&&Math.abs(polygonArea(outPiece))>1e-10)outside.push(outPiece);if(inPiece.length>=3&&Math.abs(polygonArea(inPiece))>1e-10)next.push(inPiece);}inside=next;if(!inside.length)break;}return outside;}
+function dedupePoly(poly,eps=1e-8){const out=[];for(const p of poly)if(!out.length||p.distanceTo(out[out.length-1])>eps)out.push(p);if(out.length>2&&out[0].distanceTo(out[out.length-1])<=eps)out.pop();return out;}
+function triangulate2D(poly){let p=poly.map(q=>q.clone());if(polygonArea(p)<0)p.reverse();return THREE.ShapeUtils.triangulateShape(p,[]).map(t=>t.map(i=>p[i].clone()));}
+function sourceClipTriangles(plan){const {u,v}=faceBasis(plan.targetNormal),origin=plan.planePoint,to2=p=>new THREE.Vector2(p.clone().sub(origin).dot(u),p.clone().sub(origin).dot(v));return triangulate2D(plan.projected.map(to2));}
+function rebuildTargetFace(trial,fi,clipTriangles,cache,tol){const face=trial.faces[fi];if(!Array.isArray(face)||face.length<3)return[];const normal=trial.faceNormal(fi)?.clone().normalize();if(!normal)return[];const {u,v}=faceBasis(normal),origin=trial.vertices[face[0]].clone(),to2=p=>new THREE.Vector2(p.clone().sub(origin).dot(u),p.clone().sub(origin).dot(v)),to3=p=>origin.clone().addScaledVector(u,p.x).addScaledVector(v,p.y);let face2=face.map(id=>to2(trial.vertices[id]));const baseTris=triangulate2D(face2),clips=clipTriangles.map(poly=>poly.map(p=>new THREE.Vector2(p.x,p.y))),out=[];for(const tri of baseTris){let pieces=[tri];for(const clip of clips){const next=[];for(const piece of pieces)next.push(...subtractConvex(piece,clip));pieces=next;if(!pieces.length)break;}for(let piece of pieces){piece=dedupePoly(piece);if(piece.length<3)continue;for(const t2 of triangulate2D(piece)){const ids=t2.map(p=>getVertex(trial,cache,to3(p),tol));if(new Set(ids).size===3)out.push(orientLike(trial,ids,normal));}}}return out;}
+
+function buildThroughOnClone(before,plan){
+  const t=topo();if(!t)return{ok:false,reason:'topology-foundation-missing'};
+  const trial=before.clone(),cache=new Map();trial.vertices.forEach((p,i)=>cache.set(pointKey(p,plan.tol),i));
+  const source=[...(trial.faces[plan.sourceFaceIndex]||[])];if(source.length<3)return{ok:false,reason:'source-missing'};
+  const opening=plan.projected.map(p=>getVertex(trial,cache,p,plan.tol)),clips=sourceClipTriangles(plan);if(!clips.length)return{ok:false,reason:'source-footprint-failed'};
+  const replacementFaces=[],affected=[];
+  for(const fi of plan.targetFaces){const rebuilt=rebuildTargetFace(trial,fi,clips,cache,plan.tol);if(rebuilt.length!==trial.faces[fi].length-2||rebuilt.length!==0){affected.push(fi);replacementFaces.push(...rebuilt);}}
+  if(!affected.length)return{ok:false,reason:'no-target-intersection'};
+  for(const fi of [...new Set([plan.sourceFaceIndex,...affected])].sort((a,b)=>b-a))trial.faces.splice(fi,1);
+  trial.faces.push(...replacementFaces);
+  for(let i=0;i<source.length;i++){const j=(i+1)%source.length,q=[source[i],source[j],opening[j],opening[i]];if(new Set(q).size===4)trial.faces.push(q);}
+  trial.edges?.();
+  const validation=t.validateTopology(trial,{allowBoundary:true});if(!validation.ok)return{ok:false,reason:'validation-failed',validation};
+  const boundaries=t.extractBoundaryLoops(trial);if(!boundaries.ok)return{ok:false,reason:'boundary-extraction-failed',boundaries};
+  return{ok:true,mesh:trial,affected,boundaries:boundaries.loops};
+}
+
+function clear(){probe=null;takeover=null;}
+window.addEventListener('pointerdown',event=>{if(internalCancel||event.target!==canvas||!event.isPrimary||!extrudeArmed()||!topo())return;const m=mesh(),fi=selectedFace(),camera=state()?.camera;if(!m||!Number.isInteger(fi)||!camera)return;const plan=throughPlan(m,fi);if(!plan)return;const normal2d=projectedNormal(m,fi,camera);if(!normal2d)return;probe={id:event.pointerId,x:event.clientX,y:event.clientY,m,fi,before:m.clone(),plan,normal2d,passedMove:false};},true);
+window.addEventListener('pointermove',event=>{if(internalCancel||!probe||probe.id!==event.pointerId||takeover)return;const dx=event.clientX-probe.x,dy=event.clientY-probe.y;if(Math.hypot(dx,dy)<8)return;const d=(dx*probe.normal2d.x+dy*probe.normal2d.y)*.006,toward=Math.sign(d)===Math.sign(probe.plan.distance);if(toward&&Math.abs(d)>=Math.abs(probe.plan.distance)*.55){event.preventDefault();event.stopImmediatePropagation();if(!probe.passedMove)globalThis.__boxlabHistory?.push(probe.before);cancelNativeDrag(probe.id);takeover=probe;probe=null;let dist=d,ready=false;if(Math.abs(dist)>=Math.abs(takeover.plan.distance)){dist=takeover.plan.distance;ready=true;}takeover.distance=dist;takeover.ready=ready;previewExtrude(takeover.m,takeover.before,takeover.fi,dist);if(status)status.textContent=`${ready?'THROUGH TRANSACTION READY':'Extrude In'} • ${takeover.plan.targetFaces.length} target face${takeover.plan.targetFaces.length===1?'':'s'} • ${dist.toFixed(2)}`;render();}else probe.passedMove=true;},true);
+window.addEventListener('pointermove',event=>{if(internalCancel||!takeover||takeover.id!==event.pointerId)return;event.preventDefault();event.stopImmediatePropagation();const dx=event.clientX-takeover.x,dy=event.clientY-takeover.y;let d=(dx*takeover.normal2d.x+dy*takeover.normal2d.y)*.006,ready=Math.sign(d)===Math.sign(takeover.plan.distance)&&Math.abs(d)>=Math.abs(takeover.plan.distance);if(ready)d=takeover.plan.distance;takeover.distance=d;takeover.ready=ready;previewExtrude(takeover.m,takeover.before,takeover.fi,d);if(status)status.textContent=`${ready?'THROUGH TRANSACTION READY':d<0?'Extrude In':'Extrude'} • ${takeover.plan.targetFaces.length} target face${takeover.plan.targetFaces.length===1?'':'s'} • ${d.toFixed(2)}`;render();},true);
+window.addEventListener('pointerup',event=>{if(internalCancel)return;if(takeover&&takeover.id===event.pointerId){event.preventDefault();event.stopImmediatePropagation();const x=takeover;takeover=null;probe=null;if(x.ready){const built=buildThroughOnClone(x.before,x.plan);if(built.ok){restore(x.m,built.mesh);bridge()?.set?.('face',[]);if(status)status.textContent=`Extrude Through • transactional commit • ${built.affected.length} shell face${built.affected.length===1?'':'s'} rebuilt`;}else{restore(x.m,x.before);bridge()?.set?.('face',[x.fi]);if(status)status.textContent=`Extrude Through • safe rollback • ${built.reason}`;}}else{previewExtrude(x.m,x.before,x.fi,x.distance);bridge()?.set?.('face',[x.fi]);}render();return;}probe=null;},true);
+window.addEventListener('pointercancel',event=>{if(internalCancel)return;if(takeover&&takeover.id===event.pointerId){restore(takeover.m,takeover.before);render();}clear();},true);
