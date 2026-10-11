@@ -5364,3 +5364,9 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 - [ ] Edit Boolean A/B buttons/transforms/Result/Sources work; Apply/Cancel keep compact list.
 - [ ] Scene Undo/Redo restores correct result/source rows; deleting result reveals retained sources.
 - [x] Actual outliner/manager/history coverage: hidden ordinary rows, no history mutation, active edit, Cancel, Apply/Undo/Redo, locked/damaged/missing/deleted recipes.
+
+## .806 Edit Boolean compactness — acceptance pending
+
+- [ ] No Update Preview button; source transforms and operation changes update automatically.
+- [ ] Fonts and spacing match compact popups; Cancel/Apply remain stacked right, at top centre.
+- [ ] Result/Sources and A/B, Apply/Cancel/Undo/Redo remain functional with result-only object list.

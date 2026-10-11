@@ -7469,3 +7469,22 @@ recipes and no list-render history mutation. Only multi-object805 and shell/reco
 pins change; editor804/core803/scheduler803, protected Multi1.0/Loop715/Extrude802 and
 frozen Beta2–6 unchanged. Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; device acceptance pending. Beta7 freeze follows
 final candidate acceptance; no freeze in this refinement build.
+
+## .806 — Compact automatic Edit Boolean popup — 2026-10-11
+
+User requests removing Update Preview and checking compactness before Beta deployment.
+Audit confirms shared wide layout already supplies7px/8px packing,4px body gaps,5px
+button-row gaps and10px hints/status, but Edit Boolean inherited13px row controls and
+root-sized terminal controls instead of comparable popup11px buttons. Existing editor
+now scopes12px body/11px buttons with5px/7px padding and34px body controls; shared
+36px Cancel/Apply rail remains authoritative. Shorter hint; redundant Update Preview
+button/listener removed. Automatic scheduler, solver and Apply stale-preview recompute
+unchanged; programmatic update helper retained for compatibility/diagnostics.
+
+Existing whole-UI test now uses automatic tick rather than deleted button; fake DOM
+no longer fabricates that node and accommodates actual scoped style injection.
+Result/Sources804, compact object list805 and geometry/history/gesture owners unchanged.
+.804 remains latest user PASS; no .805 PASS inferred from this UI request. Only editor806
+and shell/recovery806 repinned; protected Multi1.0/Loop715/Extrude802/betas untouched.
+Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; final popup/list acceptance
+precedes Beta7 freeze.

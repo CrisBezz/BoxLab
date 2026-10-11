@@ -17,7 +17,7 @@ function ui({sourceEdit=s=>s}={}){
   n.click=()=>n.dispatchEvent({type:'click'});if(id)nodes.set('#'+id,n);return n;
  }
  const parent=node(),status=node('selectionStatus'),launch=node('booleanLaunchBtn'),cage=node('cageToggle'),doc=node(),win=node();
- doc.createElement=()=>{const panel=node('editableBooleanPanel');Object.defineProperty(panel,'innerHTML',{set(){for(const id of ['editableBooleanNote','editableBooleanUpdate','editableBooleanCancel','editableBooleanApply'])panel.appendChild(node(id));for(const [key,attr,values] of [['source','editSource',['a','b']],['operation','editOperation',['union','difference','intersection']],['view','editView',['result','sources']]])for(const value of values){const button=node();button.dataset[attr]=value;nodes.set(`[data-edit-${key}="${value}"]`,button);panel.appendChild(button);}}});return panel;};
+ doc.head=node();doc.createElement=tag=>{if(tag==='style')return node();const panel=node('editableBooleanPanel');Object.defineProperty(panel,'innerHTML',{set(){for(const id of ['editableBooleanNote','editableBooleanCancel','editableBooleanApply'])panel.appendChild(node(id));for(const [key,attr,values] of [['source','editSource',['a','b']],['operation','editOperation',['union','difference','intersection']],['view','editView',['result','sources']]])for(const value of values){const button=node();button.dataset[attr]=value;nodes.set(`[data-edit-${key}="${value}"]`,button);panel.appendChild(button);}}});return panel;};
  doc.querySelector=selector=>selector==='[data-mode-tools="object"]'?parent:nodes.get(selector)||null;
  const radial=node();nodes.set('.tg-tool-ring[data-ring-mode="object"] [data-tool-target="#booleanLaunchBtn"]',radial);
  const modeButton=node();modeButton.dataset.mode='object';let modeClicks=0;
@@ -41,8 +41,8 @@ function ui({sourceEdit=s=>s}={}){
 test('798 whole UI opens shared source session, draws real guides/preview and disposes on Apply',()=>{
  const u=ui();assert.equal(u.nodes.get('#booleanLaunchBtn').textContent,'Edit Boolean');assert.equal(u.api.open(),true);u.flush();
  assert.equal(u.events.at(-1).id,'boolean-edit');assert.equal(u.nodes.get('#editableBooleanPanel').hidden,false);assert.equal(u.scene.children.length,1);
- u.nodes.get('[data-edit-source="b"]').click();u.r.move(new THREE.Vector3(.08,.03,.01));u.nodes.get('#editableBooleanUpdate').click();u.flush();
- assert.equal(u.scene.children[0].children.length,1);assert.match(u.nodes.get('#editableBooleanNote').textContent,/Preview updated/);
+ u.nodes.get('[data-edit-source="b"]').click();u.r.move(new THREE.Vector3(.08,.03,.01));u.flush();u.tick();
+ assert.equal(u.scene.children[0].children.length,1);assert.match(u.nodes.get('#editableBooleanNote').textContent,/Live preview updated/);
  u.nodes.get('#editableBooleanApply').click();u.flush();assert.equal(u.api.active(),false);assert.equal(u.scene.children.length,0);assert.equal(u.nodes.get('#editableBooleanPanel').hidden,true);assert.equal(u.r.manager.activeId,4);
 });
 test('798 whole UI Escape and conflicting action cancel source transaction',()=>{

@@ -2,7 +2,10 @@ import * as THREE from 'three';
 import {createEditableBooleanController,editableBooleanEligibility,recordBooleanRecipe,booleanMeshSignature} from './editable-boolean-core.js?v=0.36.18.803';
 import {createLiveBooleanPreview} from './live-boolean-preview.js?v=0.36.18.803';
 
-const VERSION='0.36.18.804';
+const VERSION='0.36.18.806';
+const style=document.createElement('style');style.id='editableBooleanStyle';
+style.textContent='#editableBooleanPanel{font-size:12px}#editableBooleanPanel button{font-size:11px;padding:5px 7px;min-height:34px}';
+document.head.appendChild(style);
 const panel=document.createElement('div');
 panel.id='editableBooleanPanel';panel.className='boxlab-tool-session-shell';panel.hidden=true;
 panel.innerHTML=`<div class="boxlab-tool-session-title">Edit Boolean</div>
@@ -12,9 +15,8 @@ panel.innerHTML=`<div class="boxlab-tool-session-title">Edit Boolean</div>
 <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
 <button type="button" data-edit-operation="union">Union</button><button type="button" data-edit-operation="difference">A − B</button><button type="button" data-edit-operation="intersection">Intersect</button></div>
 <div class="outliner-actions" style="grid-template-columns:1fr 1fr"><button type="button" data-edit-view="result">Result</button><button type="button" data-edit-view="sources">Sources</button></div>
-<div class="drawer-hint">Select A or B, then move, rotate or scale with the gizmo. Live preview updates automatically.</div>
+<div class="drawer-hint">Edit A/B with the gizmo · preview updates automatically.</div>
 <div role="status" id="editableBooleanNote"></div>
-<button type="button" id="editableBooleanUpdate">Update Preview</button>
 <div class="outliner-actions"><button type="button" id="editableBooleanCancel">Cancel</button><button type="button" id="editableBooleanApply" class="boxlab-tool-session-primary">Apply</button></div>`;
 document.querySelector('[data-mode-tools="object"]')?.appendChild(panel);
 const note=panel.querySelector('#editableBooleanNote');
@@ -107,7 +109,6 @@ panel.querySelectorAll('[data-edit-view]').forEach(button=>button.addEventListen
   previewView=button.dataset.editView;queueSync();
   document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
 }));
-panel.querySelector('#editableBooleanUpdate').addEventListener('click',update);
 panel.querySelector('#editableBooleanCancel').addEventListener('click',cancel);
 panel.querySelector('#editableBooleanApply').addEventListener('click',apply);
 window.addEventListener('boxlab-bridge-state',queueSync);

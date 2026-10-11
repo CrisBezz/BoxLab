@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.805",
+      "url": "./src/release-bootstrap.js?v=0.36.18.806",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.805",
+      "url": "./src/release-version.js?v=0.36.18.806",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2182,10 +2182,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/editable-boolean.js?v=0.36.18.804",
+      "url": "./src/editable-boolean.js?v=0.36.18.806",
       "target": "src/editable-boolean.js",
-      "sha256": "e282dd2fc44afaa08402594794405144cc1b4ee57dd5780b9599579d1014f7a8",
-      "sourceVersion": "0.36.18.804"
+      "sha256": "544c254191c260308066ce0a22cd68bcb2a2f103ef0dae689501833b86117cbd",
+      "sourceVersion": "0.36.18.806"
     },
     {
       "owner": "src/editable-boolean.js",

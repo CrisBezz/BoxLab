@@ -1,11 +1,31 @@
-# BoxLab AI Handoff — Boolean result-only object list
+# BoxLab AI Handoff — Compact automatic Boolean editor
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.805**. User **.804 PASS**, accepted/protected together with
-.802 Extrude and .801 activation/exit/radial. .803 composite visibility failed; .804
-exclusive Result/Sources resolves it. Parent main `e37a6bfc8c1afced131d79daf4515312aa43c5ba`. .805 final outliner candidate awaits device acceptance before Beta7 freeze.
+Current build **v0.36.18.806**. User **.804 PASS** protected; .805 object-list and
+.806 compact popup candidate acceptance pending before Beta7 freeze. Parent main
+`9a6aad0e6c9543931cee1828f888ebd917719348`. Repository is source of truth; .802 Extrude/.801
+activation/exit/radial remain protected. No Beta7 freeze performed.
+
+## .806 — Compact automatic Edit Boolean popup — 2026-10-11
+
+User requests removing Update Preview and checking compactness before Beta deployment.
+Audit confirms shared wide layout already supplies7px/8px packing,4px body gaps,5px
+button-row gaps and10px hints/status, but Edit Boolean inherited13px row controls and
+root-sized terminal controls instead of comparable popup11px buttons. Existing editor
+now scopes12px body/11px buttons with5px/7px padding and34px body controls; shared
+36px Cancel/Apply rail remains authoritative. Shorter hint; redundant Update Preview
+button/listener removed. Automatic scheduler, solver and Apply stale-preview recompute
+unchanged; programmatic update helper retained for compatibility/diagnostics.
+
+Existing whole-UI test now uses automatic tick rather than deleted button; fake DOM
+no longer fabricates that node and accommodates actual scoped style injection.
+Result/Sources804, compact object list805 and geometry/history/gesture owners unchanged.
+.804 remains latest user PASS; no .805 PASS inferred from this UI request. Only editor806
+and shell/recovery806 repinned; protected Multi1.0/Loop715/Extrude802/betas untouched.
+Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; final popup/list acceptance
+precedes Beta7 freeze.
 
 ## .805 — Boolean result-only object list / .804 PASS — 2026-10-11
 
