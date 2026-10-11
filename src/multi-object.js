@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { editableBooleanEligibility } from './editable-boolean-core.js?v=0.36.18.803';
 import { EditableMesh } from './mesh.js';
 import { subdivide } from './subdivision.js';
 import { applyMirror } from './mirror.js';
@@ -317,7 +318,16 @@ function renderOutliner() {
   const active = activeObject();
   if (modeLabel) modeLabel.textContent = active ? `${mode === 'object' ? 'Object Mode' : `Edit • ${cap(mode)}`} • ${active.name}${active.kind === 'reference' ? ' • Reference' : ''}${active.locked ? ' • Locked' : ''}` : 'No active object';
   list.replaceChildren();
+  // Sources belong to the editable result; retain them in the scene/history.
+  // Unusable recipes expose their sources again rather than stranding objects.
+  const booleanSources = new Set();
+  for (const result of objects) {
+    if (!result.booleanRecipe) continue;
+    const editable = editableBooleanEligibility(objects, {...result, locked:false});
+    if (editable.ok) { booleanSources.add(editable.a.id); booleanSources.add(editable.b.id); }
+  }
   for (const object of objects) {
+    if (booleanSources.has(object.id)) continue;
     const row = document.createElement('div');
     row.className = `outliner-row compact-object-row${object.id === activeId ? ' active' : ''}${object.locked ? ' locked' : ''}`;
     row.dataset.objectId = String(object.id);

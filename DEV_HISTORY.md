@@ -7450,3 +7450,22 @@ editor804 and native visibility owner804 pins change; core/scheduler803 and prot
 gesture/modelling owners retain their pins. Full Node24 suite:2160/2160 PASS, 0 FAIL, 0 skips. Original semantic Move/Rotate/Scale
 gizmo runtime also changes selected object geometry with source picking unavailable.
 Device acceptance pending.
+
+## .805 — Boolean result-only object list / .804 PASS — 2026-10-11
+
+User .804 PASS: exclusive Result/Sources presentation, automatic preview and edit/exit
+accepted/protected. User requests final object-list refinement before Beta deployment.
+Audited authoritative multi-object renderOutliner, object-management hierarchy/selection,
+recipe validity and original scene history. Outliner now omits A/B rows only when the
+existing editableBooleanEligibility owner confirms a usable recipe. Locked valid
+results stay compact; deleted/damaged/missing-source/noneditable recipes expose remaining
+sources again. Ordinary hidden objects remain listed. A/B remain stored in manager,
+scene history and Edit Boolean buttons; no mesh deletion, visibility or selection
+mutation. Result row remains during editing; active source name stays in mode label.
+
+Three actual outliner/manager/solver/history checks cover normal/hidden rows, live A/B
+selection and Cancel, Apply/Undo/Redo/reopen, locked result, damaged/missing/deleted
+recipes and no list-render history mutation. Only multi-object805 and shell/recovery805
+pins change; editor804/core803/scheduler803, protected Multi1.0/Loop715/Extrude802 and
+frozen Beta2–6 unchanged. Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; device acceptance pending. Beta7 freeze follows
+final candidate acceptance; no freeze in this refinement build.

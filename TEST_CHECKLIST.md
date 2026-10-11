@@ -5349,11 +5349,18 @@ main. .802 Extrude, .801 radial/activation, Multi1.0/Loop715 and frozenBeta2–6
 .803 device live-preview performance/visibility and Apply/Cancel/history pending.
 No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 
-## .804 Boolean preview visibility repair — acceptance pending
+## .804 Boolean preview visibility repair — user PASS protected
 
-- [ ] Edit Boolean defaults to Result: one solid result, no A/B solid duplication.
-- [ ] Sources shows A/B for editing without a result layered over them.
-- [ ] A/B selection and Move/Rotate/Scale still work; Result updates automatically.
-- [ ] Switching views creates no history; Solo remains unchanged on exit.
-- [ ] Apply/Cancel/background exit and one scene Undo/Redo retain .801 behavior.
+- [x] Edit Boolean defaults to Result: one solid result, no A/B solid duplication.
+- [x] Sources shows A/B for editing without a result layered over them.
+- [x] A/B selection and Move/Rotate/Scale still work; Result updates automatically.
+- [x] Switching views creates no history; Solo remains unchanged on exit.
+- [x] Apply/Cancel/background exit and one scene Undo/Redo retain .801 behavior.
 - [x] Automated exclusive overlay and native render visibility/Solo/Cancel checks pass.
+
+## .805 Boolean result-only object list — acceptance pending
+
+- [ ] After Boolean creation, object list shows result, with A/B absent; unrelated objects retain normal rows.
+- [ ] Edit Boolean A/B buttons/transforms/Result/Sources work; Apply/Cancel keep compact list.
+- [ ] Scene Undo/Redo restores correct result/source rows; deleting result reveals retained sources.
+- [x] Actual outliner/manager/history coverage: hidden ordinary rows, no history mutation, active edit, Cancel, Apply/Undo/Redo, locked/damaged/missing/deleted recipes.

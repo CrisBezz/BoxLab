@@ -1,12 +1,30 @@
-# BoxLab AI Handoff — Boolean preview visibility repair
+# BoxLab AI Handoff — Boolean result-only object list
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.804**. Last device acceptance **.802 PASS**, protected;
-.801 activation/exit and radial also protected. User .803 FAIL for combined primitive
-and result visibility; .804 repair awaits device acceptance. Parent main
-`077849d5e6b5b1819a968974d3bf934756841700`. No Beta7 freeze performed.
+Current build **v0.36.18.805**. User **.804 PASS**, accepted/protected together with
+.802 Extrude and .801 activation/exit/radial. .803 composite visibility failed; .804
+exclusive Result/Sources resolves it. Parent main `e37a6bfc8c1afced131d79daf4515312aa43c5ba`. .805 final outliner candidate awaits device acceptance before Beta7 freeze.
+
+## .805 — Boolean result-only object list / .804 PASS — 2026-10-11
+
+User .804 PASS: exclusive Result/Sources presentation, automatic preview and edit/exit
+accepted/protected. User requests final object-list refinement before Beta deployment.
+Audited authoritative multi-object renderOutliner, object-management hierarchy/selection,
+recipe validity and original scene history. Outliner now omits A/B rows only when the
+existing editableBooleanEligibility owner confirms a usable recipe. Locked valid
+results stay compact; deleted/damaged/missing-source/noneditable recipes expose remaining
+sources again. Ordinary hidden objects remain listed. A/B remain stored in manager,
+scene history and Edit Boolean buttons; no mesh deletion, visibility or selection
+mutation. Result row remains during editing; active source name stays in mode label.
+
+Three actual outliner/manager/solver/history checks cover normal/hidden rows, live A/B
+selection and Cancel, Apply/Undo/Redo/reopen, locked result, damaged/missing/deleted
+recipes and no list-render history mutation. Only multi-object805 and shell/recovery805
+pins change; editor804/core803/scheduler803, protected Multi1.0/Loop715/Extrude802 and
+frozen Beta2–6 unchanged. Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; device acceptance pending. Beta7 freeze follows
+final candidate acceptance; no freeze in this refinement build.
 
 ## .804 — Exclusive Boolean Result/Sources views
 
@@ -26,7 +44,7 @@ refresh, busy guard, failed-preview and .801/.802 protected checks retained. Onl
 editor804 and native visibility owner804 pins change; core/scheduler803 and protected
 gesture/modelling owners retain their pins. Full Node24 suite:2160/2160 PASS, 0 FAIL, 0 skips. Original semantic Move/Rotate/Scale
 gizmo runtime also changes selected object geometry with source picking unavailable.
-Device acceptance pending.
+User .804 PASS recorded/protected on 2026-10-11.
 Release `92440fd4b205b64aaf20983434dad6a9b9e20fac`; CI38099219569 and
 Pages38099218882 SUCCESS. Fresh live shell/manifest/editor/native visibility owner
 match main byte-for-byte.
