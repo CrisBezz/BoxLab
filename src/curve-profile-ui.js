@@ -1,7 +1,7 @@
 import {appendStrokePoint,simplifyStroke} from './stroke-sampling.js?v=0.36.18.808';
 import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.814';
 import {createAddObjectPreview} from './add-object-preview.js?v=0.36.18.814';
-const VERSION='0.36.18.814',W=320,H=180,NS='http://www.w3.org/2000/svg';
+const VERSION='0.36.18.815',W=320,H=180,NS='http://www.w3.org/2000/svg';
 const manager=()=>globalThis.__boxlabObjectManager,session=()=>globalThis.__boxlabToolSession;
 const activeObject=()=>{const m=manager();return m?.objects.find(o=>o.id===m.activeId);};
 let panel=null,pad=null,path=null,handles=null,note=null,applyButton=null,profile=null,objectId=null,drag=null,edit=false,undos=[],committing=false,preview=null;
@@ -12,8 +12,8 @@ const clone=()=>structuredClone(profile),status=t=>{if(note)note.textContent=t;}
 function remember(){undos.push(clone());if(undos.length>30)undos.shift();}
 function point(event){const r=pad.getBoundingClientRect();return{x:Math.max(0,Math.min(W,(event.clientX-r.left)*W/r.width)),y:Math.max(0,Math.min(H,(event.clientY-r.top)*H/r.height))};}
 const local=p=>({x:(p.x-W/2)/H,y:(H/2-p.y)/H}),screen=p=>({x:W/2+p.x*H,y:H/2-p.y*H});
-function release(){if(drag){try{pad.releasePointerCapture(drag.id);}catch{}drag=null;}}
-function finish(){release();preview?.dispose();preview=null;const old=panel;panel=null;profile=null;session()?.end?.('curve-profile');old?.remove();window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'object',tool:'Curve'}}));}
+function release(){if(drag){const g=drag;drag=null;if(g.controls)g.controls.owner.enabled=g.controls.enabled;try{pad.releasePointerCapture(g.id);}catch{}}}
+function finish(){release();panel?.releaseStrokeListeners?.();preview?.dispose();preview=null;const old=panel;panel=null;profile=null;session()?.end?.('curve-profile');old?.remove();window.dispatchEvent(new CustomEvent('boxlab-selection-hub-session-complete',{detail:{mode:'object',tool:'Curve'}}));}
 function cancel(){if(!panel)return false;finish();return true;}
 function draw(){
  if(!panel)return;handles.replaceChildren();let points=[];
@@ -53,21 +53,28 @@ function open(existing=false,balloon=false){
  const helpers=node('div');helpers.className='outliner-actions';panel.append(helpers);button(helpers,'Undo','undo',()=>{profile=undos.pop()||profile;slider.value=String(profile.detail);out.textContent=slider.value;if(profile.output==='balloon'){const input=panel.querySelector('[data-curve-action="depth"]');input.value=String(profile.depth);input.parentElement.children[2].textContent=input.value;}});button(helpers,'Clear','clear',()=>{remember();profile.points=[];});
  panel.append(node('small',profile.output==='balloon'?'Draw a convex closed outline · Relative depth · Fits 1 × 1 × 1 · Editable triangle solid':'Pencil: draw or drag points · New curve fits 1 × 1 · Curves become solids in later tools.'));
  note=node('div');note.setAttribute('role','status');panel.append(note);const actions=node('div');actions.className='outliner-actions';panel.append(actions);button(actions,'Cancel','cancel',cancel);applyButton=button(actions,'Apply','apply',apply);
- pad.addEventListener('pointerdown',e=>{
+ function beginStroke(e){
+  if(!panel||!pad.contains(e.target))return;
   if(e.pointerType==='touch'||!e.isPrimary||e.button>0||drag)return;e.preventDefault();e.stopImmediatePropagation();const p=point(e),before=clone();
   if(edit){let index=-1,near=14;profile.points.forEach((v,i)=>{const q=screen(v),d=Math.hypot(p.x-q.x,p.y-q.y);if(d<near){near=d;index=i;}});if(index<0)return;drag={id:e.pointerId,before,index};profile.points[index]=local(p);}
   else{drag={id:e.pointerId,before,stroke:[p]};profile.points=[local(p)];}
+  const controls=globalThis.__boxlabBridgeState?.controls;if(controls){drag.controls={owner:controls,enabled:controls.enabled};controls.enabled=false;}
   pad.setPointerCapture(e.pointerId);draw();
- });
- pad.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();const p=point(e);if(edit)profile.points[drag.index]=local(p);else if(drag.stroke.length<2000&&appendStrokePoint(drag.stroke,p)){profile.points=drag.stroke.map(local);}draw();});
+ }
+ function moveStroke(e){if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();const p=point(e);if(edit)profile.points[drag.index]=local(p);else if(drag.stroke.length<2000&&appendStrokePoint(drag.stroke,p)){profile.points=drag.stroke.map(local);}draw();}
  function end(e,cancelled=false){if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();const g=drag;
   if(cancelled)profile=g.before;else{if(g.stroke){appendStrokePoint(g.stroke,point(e),0);let tolerance=3,points=simplifyStroke(g.stroke,tolerance);while(points.length>128)points=simplifyStroke(g.stroke,tolerance*=1.5);if(points.length>2&&Math.hypot(points[0].x-points.at(-1).x,points[0].y-points.at(-1).y)<8)points.pop();profile.points=points.map(local);edit=true;}undos.push(g.before);if(undos.length>30)undos.shift();}
   release();draw();
  }
- pad.addEventListener('pointerup',e=>end(e));pad.addEventListener('pointercancel',e=>end(e,true));pad.addEventListener('lostpointercapture',e=>{if(drag?.id===e.pointerId){profile=drag.before;drag=null;draw();}});
+ // Same authoring owner, before document-capture modelling consumers. Only
+ // strokes originating inside this pad are claimed; touch remains unclaimed.
+ const down=e=>beginStroke(e),move=e=>moveStroke(e),up=e=>end(e),cancelled=e=>end(e,true);
+ window.addEventListener('pointerdown',down,true);window.addEventListener('pointermove',move,true);window.addEventListener('pointerup',up,true);window.addEventListener('pointercancel',cancelled,true);
+ panel.releaseStrokeListeners=()=>{window.removeEventListener('pointerdown',down,true);window.removeEventListener('pointermove',move,true);window.removeEventListener('pointerup',up,true);window.removeEventListener('pointercancel',cancelled,true);};
+ pad.addEventListener('lostpointercapture',e=>{if(drag?.id===e.pointerId){profile=drag.before;release();draw();}});
  document.querySelector('#viewportWrap')?.append(panel);session().begin({id:'curve-profile',title:'Curve',node:panel});draw();return true;
 }
 window.addEventListener('keydown',e=>{if(panel&&e.key==='Escape'){e.preventDefault();cancel();}});
-window.addEventListener('boxlab-tool-session-change',e=>{if(panel&&e.detail?.active&&e.detail.id!=='curve-profile'){release();preview?.dispose();preview=null;panel.remove();panel=null;profile=null;}});
-document.addEventListener('click',e=>{if(panel&&!committing&&e.target?.closest?.('#selectionModes button,#outlinerAddBtn,#outlinerDeleteBtn')&&!panel.contains(e.target))cancel();},true);
+window.addEventListener('boxlab-tool-session-change',e=>{if(panel&&e.detail?.active&&e.detail.id!=='curve-profile'){release();panel.releaseStrokeListeners?.();preview?.dispose();preview=null;panel.remove();panel=null;profile=null;}});
+document.addEventListener('click',e=>{if(panel&&!committing&&(e.target?.id==='resetBtn'||e.target?.closest?.('#selectionModes button,#outlinerAddBtn,#outlinerDeleteBtn'))&&!panel.contains(e.target))cancel();},true);
 globalThis.__boxlabCurveProfile={version:VERSION,open,apply,cancel,eligible:()=>!!editableCurveProfile(activeObject()),active:()=>!!panel,get dragging(){return !!drag;}};

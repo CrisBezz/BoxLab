@@ -7,19 +7,21 @@ import {orderedDOM} from './ordered-dom.mjs';
 export function curveProfileUIRuntime(){
  const r=editableBooleanRuntime(),c=r.c,dom=orderedDOM(),doc=dom.node(),win=dom.node(),wrap=dom.node('viewportWrap'),host=dom.node(),head=dom.node(),draws=[];let current=null;
  function node(tag){const n=dom.node();n.dataset={};n.attributes={};n.setAttribute=(k,v)=>n.attributes[k]=v;n.getBoundingClientRect=()=>({left:0,top:0,width:320,height:180});n.setPointerCapture=id=>n.capture=id;n.releasePointerCapture=()=>n.capture=null;
+ n.contains=target=>target===n||n.children.some(child=>child.contains?.(target));
  if(tag==='canvas'){let path=[];n.clientWidth=320;n.hasPointerCapture=id=>n.capture===id;n.getContext=()=>({setTransform(){},clearRect(){draws.push({clear:true});},beginPath(){path=[];},moveTo(x,y){path.push([x,y]);},lineTo(x,y){path.push([x,y]);},closePath(){},fill(){draws.push({path:[...path]});},stroke(){},fillText(message){draws.push({message});}});}
  n.replaceChildren=(...children)=>{for(const child of [...n.children])child.remove();n.append(...children);};
  n.querySelector=s=>find(n,x=>s.startsWith('[data-curve-action')?x.dataset?.curveAction===s.match(/="([^"]+)"/)[1]:s.startsWith('#')?x.id===s.slice(1):false);
  Object.defineProperty(n,'firstChild',{get:()=>n.children[0]});n.click=()=>{if(!n.disabled)n.dispatchEvent({type:'click'});};return n;
  }
  function find(n,fn){if(fn(n))return n;for(const child of n.children){const match=find(child,fn);if(match)return match;}return null;}
- doc.createElement=node;doc.createElementNS=(ns,tag)=>node(tag);doc.head=head;doc.querySelector=s=>s==='#viewportWrap'?wrap:null;doc.addEventListener=()=>{};
+ doc.createElement=node;doc.createElementNS=(ns,tag)=>node(tag);doc.head=head;doc.querySelector=s=>s==='#viewportWrap'?wrap:null;
+ win.removeEventListener=(type,fn)=>{const list=win.listeners.get(type)||[],i=list.indexOf(fn);if(i>=0)list.splice(i,1);};
  const session={current:()=>current,begin(value){current=value;host.append(value.node);},end(id){if(current?.id===id){wrap.append(current.node);current=null;}}};
  Object.assign(c,{document:doc,window:win,appendStrokePoint,simplifyStroke,curvePoints,makeCurveProfile,editableCurveProfile,structuredClone,
  CustomEvent:class{constructor(type,options){this.type=type;this.detail=options?.detail;}},__boxlabToolSession:session,__boxlabObjectRadialSession:{cancelCurrent:()=>false},__boxlabObjectSelection:{single(id){c.selectedIds=new Set([id]);}}});
  vm.runInContext(fs.readFileSync(new URL('../../src/add-object-preview.js',import.meta.url),'utf8').replace(/^export /gm,''),c);
  vm.runInContext('(function(){'+fs.readFileSync(new URL('../../src/curve-profile-ui.js',import.meta.url),'utf8').replace(/^import .*;\n/gm,'')+'})()',c);
  const api=c.__boxlabCurveProfile;
- return {r,c,api,wrap,host,draws,current:()=>current,find:fn=>find(host,fn)||find(wrap,fn),button:action=>find(host,n=>n.dataset?.curveAction===action),
- pointer(type,x,y,extra={}){const pad=find(host,n=>n.id==='curveProfilePad');pad.dispatchEvent({type,isPrimary:true,pointerType:'pen',pointerId:1,button:0,clientX:x,clientY:y,preventDefault(){},stopImmediatePropagation(){},...extra});},draw(){this.pointer('pointerdown',40,130);for(const [x,y] of [[70,40],[180,20],[270,100],[200,150],[45,133]])this.pointer('pointermove',x,y);this.pointer('pointerup',45,133);}};
+ return {r,c,api,wrap,host,draws,win,doc,current:()=>current,find:fn=>find(host,fn)||find(wrap,fn),button:action=>find(host,n=>n.dataset?.curveAction===action),
+ pointer(type,x,y,extra={}){const pad=find(host,n=>n.id==='curveProfilePad'),e={type,target:pad,isPrimary:true,pointerType:'pen',pointerId:1,button:0,clientX:x,clientY:y,preventDefault(){this.prevented=true;},stopImmediatePropagation(){this.stopped=true;},...extra};if(type==='lostpointercapture')pad.dispatchEvent(e);else{win.dispatchEvent(e);if(!e.stopped)doc.dispatchEvent(e);if(!e.stopped)pad.dispatchEvent(e);}return e;},draw(){this.pointer('pointerdown',40,130);for(const [x,y] of [[70,40],[180,20],[270,100],[200,150],[45,133]])this.pointer('pointermove',x,y);this.pointer('pointerup',45,133);}};
 }

@@ -4,7 +4,7 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — Balloon oval preview .814 / frozen Beta 7, 2026-10-11
+## Current direction — Profile stroke / Reset .815 / frozen Beta 7, 2026-10-11
 
 .797 PASS protects the green baseline, GLB group import and Rotate. .796 Add+ previews,
 unit-zone scale and Text remain protected. First Editable Boolean build stores independent
@@ -19,7 +19,7 @@ exclusive Result/Sources views; user .804 PASS protected. .805 compacts the Bool
 object list using existing recipes;  .806 removes redundant Update Preview and matches compact popup typography;
 User .806 PASS protected; .807 matches startup/reset cube to accepted Add+1unit.
 User .807 AWESOME PASS; Beta7 freeze/deployment explicitly requested and implemented
-from accepted source; Pages and regression CI succeeded. User then chose to start the shared curve foundation: .808 Add+ Curve draw/edit profiles, user PASS protected. .809 performance readout and crease lookup accepted with iPad captures. .810 batches visible cage edges/markers while retaining authoritative picking proxies. .811 reuses unchanged active SubD results through exact cage/settings comparison; existing kernels and export isolation retained. User .812 Awesome acceptance recorded; readout identifies inactive displays as dominant cost. Performance work paused as requested. .813 brings the audited MeshUtilz Outline Balloon generator into the existing Curve editor, with Depth/rotatable preview, native editable triangle solid and recipe/history reuse. Convex closed outlines first; drawing/point editing and valid-profile preview accepted. .814 repairs over-strict rejection of tiny hand-drawn oval wobbles, explains invalid candidates inside preview; device retest pending. Remaining triangulation/render-buffer optimisation can resume later; project Save/Open, NOM import, then Balloon and Curve Cutter consumers. Beta7 remains
+from accepted source; Pages and regression CI succeeded. User then chose to start the shared curve foundation: .808 Add+ Curve draw/edit profiles, user PASS protected. .809 performance readout and crease lookup accepted with iPad captures. .810 batches visible cage edges/markers while retaining authoritative picking proxies. .811 reuses unchanged active SubD results through exact cage/settings comparison; existing kernels and export isolation retained. User .812 Awesome acceptance recorded; readout identifies inactive displays as dominant cost. Performance work paused as requested. .813 brings the audited MeshUtilz Outline Balloon generator into the existing Curve editor, with Depth/rotatable preview, native editable triangle solid and recipe/history reuse. Convex closed outlines first; drawing/point editing and valid-profile preview accepted. .814 repairs over-strict rejection of tiny hand-drawn oval wobbles, explains invalid candidates inside preview; device retest pending. .815 cancels profile sessions on Reset and moves the existing Pencil authoring owner ahead of document modelling consumers; Reset/draw/navigation retest required before expanding. Remaining triangulation/render-buffer optimisation can resume later; project Save/Open, NOM import, then Balloon and Curve Cutter consumers. Beta7 remains
 frozen at .807 and immutable.
 
 ## Requested UV/texture workflow and performance — queued

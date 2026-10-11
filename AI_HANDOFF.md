@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — Balloon oval preview .814
+# BoxLab AI Handoff — Profile stroke / Reset .815
 
 ## Current state — 2026-10-11
 
@@ -7,10 +7,10 @@ Accepted frozen build **v0.36.18.807**, user **AWESOME PASS**, protected.
 Accepted development build **v0.36.18.808**, user **Awesome!!**, protected.
 Accepted development build **v0.36.18.809**, user **Awesome**, protected.
 Accepted development build **v0.36.18.812**, user **Awesome**, protected.
-Current development build **v0.36.18.814**, device retest pending.
+Current development build **v0.36.18.815**, device retest pending.
 .813 drawing/point editing and valid-profile preview accepted; strict oval refusal repaired in814.
 .810 screenshot evidence recorded; full tactile acceptance not inferred.
-Source baseline `c057a99d` (.813 publication verification); current release verification follows below.
+Source baseline `d2117e48` (.814 oval preview release); current release verification follows below.
 User explicitly requested Beta7 freeze/deployment. Frozen source
 `02d04cc72acef5415352ce4426792442cb7e99dd`; Beta7 URL
 https://crisbezz.github.io/BoxLab/beta-7/ . Frozen and deployed; immutable.
@@ -19,6 +19,37 @@ Protected .806 compact automatic Boolean, .805 result list workflow, .804 visibi
 
 
 
+
+## .815 — Profile stroke ownership / Reset lifecycle — 2026-10-11
+
+During .814 publication user reports Reset then Pencil in the drawing box moves the
+screen instead of authoring. Audit: native Reset resets scene/direct tool/selection,
+but shared Curve editor did not cancel on Reset; pad-local bubble handlers run after
+other document capture owners. Exact originating stale consumer cannot be proven
+without on-device event evidence; do not claim desktop test fully reproduces iPad.
+
+Existing Curve/Balloon authoring handlers now register at window capture while the
+panel is open, claiming only non-touch primary strokes originating inside its pad.
+Matching moves/releases terminate before document modelling consumers; unrelated
+pointer IDs, touches and outside starts are unclaimed. Same sampler/profile/candidate
+history, no alternate gesture owner or navigation kernel. Controls suspended only
+for an owned stroke and prior enabled state restored on release/cancel/lost capture/
+editor exit. Clear drag before releasing capture to avoid rollback reentrancy.
+All four temporary listeners removed on Apply/Cancel/Escape/conflicting-session exit.
+Existing editor click-cancellation owner includes Reset, before original target Reset
+handler runs; Reset closes pending editor rather than leaving obsolete session/recipe.
+
+Three tests connect actual editor to ordered window/document boundary with a competing
+document consumer, test native main Reset click callback (scene reset adapter explicit),
+same pointer ID reopen/draw/Apply, touch/wrong ID yielding, capture/control cleanup and
+repeated launch/exit listener bounds. Existing16Curve/Balloon checks pass. Controlled
+DOM/camera/dispatch, not real Safari propagation or full WebGL QA; iPad retest required.
+No changes to main Reset, Pencil Orbit gate, transform owners, Multi1.0, Loop715,
+Extrude802, Boolean806, geometry kernels or frozenBeta2–7. Curve UI/Add-parent815 only;
+core/adapter/preview814/vendor813 retained. Shell/recovery815 reviewed. Performance paused.
+
+Next: Reset > Add+ Balloon > Pencil oval, preview/depth/Apply, Edit/Cancel/Undo/Redo,
+original wire Curve and navigation. Obtain feedback before further modelling build.
 
 ## .814 — Balloon hand-drawn oval acceptance / preview explanation — 2026-10-11
 
@@ -1630,3 +1661,15 @@ acceptance/profiling evidence recorded; performance paused. .813 iPad draw/previ
 layout/history/recipe editing acceptance pending. No concave or all-quad claim.
 
 .814 full local Node24 regression: **2201/2201 PASS, 0 FAIL, 0 skipped**.
+
+
+### .814 publication verification — 2026-10-11
+
+Release d2117e4873b5afa5d529554de23035ebc8e82c8e, tested tree
+deeb87e30f40d4f4def572369fdb23f055f99a11.
+Full local2201PASS/0FAIL/0skip. Topology38132805965 and Pages38132805482 SUCCESS.
+Fresh live manifest/index/Add-parent/Curve UI/core/adapter/preview/donor and frozen
+Beta7 manifest byte-match tested checkout. Subsequent Reset/drawing regression reported
+before full .814 device acceptance; .815 addresses session/authoring ownership.
+
+.815 full local Node24 regression: **2204/2204 PASS, 0 FAIL, 0 skipped**.

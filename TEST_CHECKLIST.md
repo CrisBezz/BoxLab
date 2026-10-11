@@ -5485,3 +5485,14 @@ inactive object displays (304.1ms mean of444.3ms total sample), no current fix c
 these specific passes. Original broad .813 history/placement gates are not inferred.
 
 .814 full local Node24 regression: **2201/2201 PASS, 0 FAIL, 0 skipped**.
+
+
+## .815 Profile stroke / Reset — device retest pending
+
+- [x] Existing authoring owner precedes competing document consumer; touch/unrelated pointer yielding and controls/capture cleanup covered.
+- [x] Actual main Reset callback observes cancelled editor, same pointer ID can reopen/draw/Apply; repeated exits leave no stroke listeners.
+- [ ] Reset, Add+ Balloon, Pencil draw inside outline box: profile follows Pencil and viewport stays still. Repeat Reset/reopen once.
+- [ ] Change Depth/Detail, rotate preview, Apply; reopen Edit Balloon, drag points, Cancel then test Undo/Redo.
+- [ ] Add+ Curve still draws; Cancel/Apply then finger orbit/pan/pinch work normally in viewport.
+
+.815 full local Node24 regression: **2204/2204 PASS, 0 FAIL, 0 skipped**.

@@ -360,9 +360,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.814",
+      "url": "./src/primitive-ui.js?v=0.36.18.815",
       "target": "src/primitive-ui.js",
-      "sha256": "21fb3908ef7687a2b5c08ecc63ad269882ec2ccc59c28d108c1323e5fcd1b243"
+      "sha256": "5ed08ac7ad490f4d26e9771b3f53649f4350c71d593e35ab7982a4e32d197d2e"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.814",
+      "url": "./src/release-bootstrap.js?v=0.36.18.815",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.814",
+      "url": "./src/release-version.js?v=0.36.18.815",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2251,10 +2251,10 @@
     },
     {
       "owner": "src/primitive-ui.js",
-      "url": "./curve-profile-ui.js?v=0.36.18.814",
+      "url": "./curve-profile-ui.js?v=0.36.18.815",
       "target": "src/curve-profile-ui.js",
-      "sha256": "c14daf69945324e560d214e82934c3957b4bd819b747b72afb6a1717135d7f3c",
-      "sourceVersion": "0.36.18.814"
+      "sha256": "2be06e9d919e742f2518e9a5cf500b8fccf49f1e53ddb1bd59f635d414d7cc58",
+      "sourceVersion": "0.36.18.815"
     },
     {
       "owner": "index.html",
