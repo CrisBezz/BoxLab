@@ -26,6 +26,12 @@ pins change; editor804/core803/scheduler803, protected Multi1.0/Loop715/Extrude8
 frozen Beta2–6 unchanged. Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; device acceptance pending. Beta7 freeze follows
 final candidate acceptance; no freeze in this refinement build.
 
+Release `0353f1cc26e469c557d38255c465a3c72f7c9815`, tree
+`945680ecdada494bc45350e1f1359b10bde8006a`; CI38099607352 and
+Pages38099607139 SUCCESS. Fresh live shell/manifest/multi-object805 match main
+byte-for-byte. Await final outliner check; then freeze Beta7 using existing isolated
+beta convention, preserving immutable Beta2–6.
+
 ## .804 — Exclusive Boolean Result/Sources views
 
 User .803 FAIL: preview displayed A/B primitives and the result simultaneously.
