@@ -5406,7 +5406,7 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 tests and reviewed changed loader/hash contract pass. Device acceptance pending.
 
 
-## .809 Performance — device acceptance pending
+## .809 Performance — user acceptance / iPad evidence protected
 
 - [x] Actual cage geometry, edge indices, crease/selection/loop styling unchanged; edge enumeration reduced to one pass.
 - [x] Off-by-default capture, bounded samples/pause/reset, actual main frame/rebuild timing and whole UI enable/close/timer cleanup.
@@ -5416,3 +5416,16 @@ tests and reviewed changed loader/hash contract pass. Device acceptance pending.
 - [ ] Screenshot dense-mesh performance readout with FPS/draw calls/rebuild cost for next optimisation.
 
 .809 full local Node24 regression: **2175/2175 PASS, 0 FAIL, 0 skipped**.
+
+
+## .810 Cage batching — device acceptance pending
+
+- [x] Exact .809/.810 edge raycasts, loop/index identity, materials/order and marker instance matrices; three camera views/zoom.
+- [x] Original Vertex assist and Lasso keep indexed/loose vertices; Bridge Topology maps/native group and source visibility retain contracts.
+- [x] Shared geometry and instance resources dispose, mirror endpoints match, dense unselected cage uses two visible batches.
+- [ ] Same dense mesh, cage on: Reset Performance, tap/select components, orbit; draw calls/resources are substantially lower and markers look normal at different zooms.
+- [ ] Vertex/Edge multi-select and deselect, Lasso and long-hold Loop; direct Slide/Bevel/Extrude still find intended components.
+- [ ] Mirror/SubD cage, whole-group selection and Boolean Result/Sources hide/show the cage correctly.
+- [ ] Edit then Undo/Redo; Curve draw/edit and normal finger navigation remain stable. Send reset readout screenshot.
+
+.810 full local Node24 regression: **2182/2182 PASS, 0 FAIL, 0 skipped**.

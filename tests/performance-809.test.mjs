@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {createPerformanceMonitor} from '../src/performance-core.js';
+import {createCageBatch} from '../src/cage-render-batches.js';
 const source=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 test('809 monitor defaults off, bounds samples, resets and excludes suspended frames',()=>{
  let clock=0,calls=0;const m=createPerformanceMonitor(()=>{calls++;return clock;});
@@ -42,16 +43,16 @@ test('809 whole diagnostic UI installs once, updates counters and closes without
 test('809 actual cage avoids repeated edge enumeration with identical edge/vertex geometry and crease/selection styles',async()=>{
  const THREE=await import('three'),{EditableMesh}=await import('../src/mesh.js'),{installLooseTopology}=await import('../src/loose-topology.js');installLooseTopology(EditableMesh);
  const current=source.slice(source.indexOf('function addCage(){'),source.indexOf('\n',source.indexOf('function addCage(){')));
- const previous=current.replace('(mesh.creases.get(mesh.edgeKey(e.a,e.b))||0)>0','mesh.edgeCrease(index)>0');assert.notEqual(previous,current);
+ const previous=fs.readFileSync(new URL('./fixtures/performance/cage-809.js',import.meta.url),'utf8').replace('(mesh.creases.get(mesh.edgeKey(e.a,e.b))||0)>0','mesh.edgeCrease(index)>0');assert.notEqual(previous,current);
  for(const mode of ['vertex','edge','face','object']){
   const mesh=EditableMesh.cube(1);mesh.addLooseEdge(0,6);mesh.creases.set('0:1',.7);mesh.creases.set('0:6',1);mesh.faceGroups[0]='Front';
   const originals={vertices:mesh.vertices.map(v=>v.toArray()),faces:mesh.faces.map(f=>[...f]),creases:[...mesh.creases]};
   function build(code){let enumerations=0;const candidate=mesh.clone(),base=candidate.edges.bind(candidate);candidate.edges=()=>{enumerations++;return base();};
    const root=new THREE.Group(),materials=Object.fromEntries(['x','neutral','edge','crease','vertex','selectedVertex','loop','currentLoop'].map(k=>[k,new THREE.MeshBasicMaterial()]));
    for(const [k,m] of Object.entries(materials))m.name=k;
-   const c={THREE,mesh:candidate,root,activeLoopSlides:[[ {vertex:0},{vertex:1} ]],activeLoopSlide:null,selection:mode==='object'?{type:'object'}:{type:mode},selectionMode:mode,directTool:null,selectionHas:(type,i)=>type===mode&&i===2,edgeAxis:()=> 'x',axisLineMaterials:materials,creaseEdgeMaterial:materials.crease,edgeMaterial:materials.edge,selectedVertexMaterial:materials.selectedVertex,vertexMaterial:materials.vertex,activeLoopMaterial:materials.loop,currentLoopMaterial:materials.currentLoop,addSelectedEdgeOverlay:()=>{},addFacePickers:()=>{}};
+   const c={THREE,createCageBatch,mesh:candidate,root,activeLoopSlides:[[ {vertex:0},{vertex:1} ]],activeLoopSlide:null,selection:mode==='object'?{type:'object'}:{type:mode},selectionMode:mode,directTool:null,selectionHas:(type,i)=>type===mode&&i===2,edgeAxis:()=> 'x',axisLineMaterials:materials,creaseEdgeMaterial:materials.crease,edgeMaterial:materials.edge,selectedVertexMaterial:materials.selectedVertex,vertexMaterial:materials.vertex,activeLoopMaterial:materials.loop,currentLoopMaterial:materials.currentLoop,addSelectedEdgeOverlay:()=>{},addFacePickers:()=>{}};
    vm.createContext(c);vm.runInContext(code,c);c.addCage();
-   const snapshot=root.children.map(o=>({kind:o.userData.kind,index:o.userData.index,material:o.material.name,positions:Array.from(o.geometry.attributes.position.array),position:o.position.toArray(),order:o.renderOrder,userData:{...o.userData}}));root.children.forEach(o=>o.geometry.dispose());Object.values(materials).forEach(m=>m.dispose());return{snapshot,enumerations};
+   const snapshot=root.children.filter(o=>['edge','vertex'].includes(o.userData.kind)).map(o=>({kind:o.userData.kind,index:o.userData.index,material:(o.userData.cageMaterial||o.material).name,positions:Array.from(o.geometry.attributes.position.array),position:o.position.toArray(),order:o.renderOrder,userData:Object.fromEntries(Object.entries(o.userData).filter(([key])=>key!=='cageMaterial'))}));root.children.forEach(o=>o.geometry.dispose());Object.values(materials).forEach(m=>m.dispose());return{snapshot,enumerations};
   }
   const old=build(previous),fixed=build(current);assert.deepEqual(fixed.snapshot,old.snapshot);assert.equal(fixed.enumerations,1);if(mode!=='object')assert(old.enumerations>1);
   assert.deepEqual({vertices:mesh.vertices.map(v=>v.toArray()),faces:mesh.faces,creases:[...mesh.creases]},originals);

@@ -1,0 +1,75 @@
+{
+  "scope": "Before exact .809 cage; after current cage. Node CPU construction only; active cage, no face pickers, no GPU rendering. Position bytes exclude normals, UVs, indices, driver and JS overhead.",
+  "node": "v24.19.0",
+  "results": [
+    {
+      "density": 10,
+      "before": {
+        "faces": 100,
+        "vertices": 121,
+        "edges": 220,
+        "cageDrawObjects": 341,
+        "uniqueGeometries": 341,
+        "positionAttributeBytes": 175164,
+        "edgeEnumerations": 1,
+        "constructionMs": 23.2
+      },
+      "after": {
+        "faces": 100,
+        "vertices": 121,
+        "edges": 220,
+        "cageDrawObjects": 2,
+        "uniqueGeometries": 222,
+        "positionAttributeBytes": 11964,
+        "edgeEnumerations": 1,
+        "constructionMs": 4.09
+      }
+    },
+    {
+      "density": 20,
+      "before": {
+        "faces": 400,
+        "vertices": 441,
+        "edges": 840,
+        "cageDrawObjects": 1281,
+        "uniqueGeometries": 1281,
+        "positionAttributeBytes": 639324,
+        "edgeEnumerations": 1,
+        "constructionMs": 60.12
+      },
+      "after": {
+        "faces": 400,
+        "vertices": 441,
+        "edges": 840,
+        "cageDrawObjects": 2,
+        "uniqueGeometries": 842,
+        "positionAttributeBytes": 41724,
+        "edgeEnumerations": 1,
+        "constructionMs": 22
+      }
+    },
+    {
+      "density": 40,
+      "before": {
+        "faces": 1600,
+        "vertices": 1681,
+        "edges": 3280,
+        "cageDrawObjects": 4961,
+        "uniqueGeometries": 4961,
+        "positionAttributeBytes": 2438844,
+        "edgeEnumerations": 1,
+        "constructionMs": 183.41
+      },
+      "after": {
+        "faces": 1600,
+        "vertices": 1681,
+        "edges": 3280,
+        "cageDrawObjects": 2,
+        "uniqueGeometries": 3282,
+        "positionAttributeBytes": 158844,
+        "edgeEnumerations": 1,
+        "constructionMs": 34.68
+      }
+    }
+  ]
+}

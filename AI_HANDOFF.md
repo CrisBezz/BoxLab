@@ -1,17 +1,66 @@
-# BoxLab AI Handoff — Performance .809
+# BoxLab AI Handoff — Cage Batching .810
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
 Accepted frozen build **v0.36.18.807**, user **AWESOME PASS**, protected.
 Accepted development build **v0.36.18.808**, user **Awesome!!**, protected.
-Current development build **v0.36.18.809**, device acceptance pending.
-Source baseline `c652a2dcd98e90bbb385a584f51fa71c6a6c8aed`; release verification follows below.
+Accepted development build **v0.36.18.809**, user **Awesome**, protected.
+Current development build **v0.36.18.810**, device acceptance pending.
+Source baseline `c4af8d22` (.809 publication verification); current release verification follows below.
 User explicitly requested Beta7 freeze/deployment. Frozen source
 `02d04cc72acef5415352ce4426792442cb7e99dd`; Beta7 URL
 https://crisbezz.github.io/BoxLab/beta-7/ . Frozen and deployed; immutable.
 Protected .806 compact automatic Boolean, .805 result list workflow, .804 visibility,
 .802 Extrude/.801 activation/exit/radial retained. Beta2–6 unchanged.
+
+## .810 — Batched active cage rendering — 2026-10-11
+
+User “Awesome - /nextbuild” accepts .809 and authorizes cage optimisation.
+Readout supplied two real .809 iPad captures: cage540v/408f,1589calls/1993geometries,
+60FPS,149.6ms mean/300ms max rebuild; SubD view11calls/7geometries,1594374triangles,
+60FPS,252.4ms mean/758ms max rebuild. These are observational samples, not reset,
+controlled A/B benchmarks; rebuild means retain latest120 samples across settings.
+No history-memory attribution or iPad speedup established by these captures.
+
+Audit found individual indexed Line/Mesh owners shared by main raycasts, Bridge
+Topology, Edge Object/Live Mesh bridges, direct Edge tools, Vertex assist/Slide,
+Lasso and native active visibility. Preserve those exact-index picking proxies with
+material.visible=false (raycasts still work), original edge endpoint buffers and
+sphere marker positions/scales. Shared sphere geometry replaces one sphere allocation
+per vertex. New cage-render-batches only groups visible edges by existing material/
+renderOrder, instances visible marker spheres by original selected/ordinary material,
+and batches mirror wires. No pointer handlers, new picking policy or modelling kernel.
+Loop/selected edge cylinder overlays remain original; Face pickers/highlights unchanged.
+
+Main screen sizing still owns proxy scale, then synchronises instance matrices each
+frame. Vertex visual batches have no raycast and disable frustum culling to avoid
+stale instance bounds after zoom; proxies remain the only component pick targets.
+Native multi-object observer adds visual batch kinds to whole-group suppression;
+existing active visibility/Solo/Boolean source decisions stay authoritative. Main
+clearGroup disposes each shared geometry once and calls InstancedMesh.dispose for
+instance GPU resources. No immutable-beta, SubD algorithm/cache, history or Curve edit
+changes. Individual proxies/edge buffers remain CPU objects intentionally; full
+picking acceleration is a later measured scope, not claimed eliminated here.
+
+Seven new regressions execute actual main cage/screen/disposal functions with real
+Three; preserve edge geometry/styles/orders, selected/loop IDs and marker matrices;
+compare real .809/.810 raycasts through three views/zoom; run actual Vertex assist
+and Lasso including loose vertices; verify shared/instance disposal, mirror endpoints,
+dense draw-object bounds, actual Bridge Topology maps/native group/visibility observer.
+.809 cage equivalence keeps exact .809 source fixture with release provenance;
+historical .354 suppression assertion now requires original four AND both new kinds,
+with runtime observer coverage. Other semantic tests remain active.
+
+CPU-only single-trial benchmark scripts/benchmark-cage.mjs now compares exact .809
+fixture to current owner. docs/performance-cage-810.json:1600-face unselected cage
+4961visible draw objects→2; CPU construction183.41ms→34.68ms in this run. Unique
+CPU edge proxy geometries remain; renderer resource/draw counts need iPad evidence.
+No comparison across desktop benchmark runs or GPU/FPS guarantee. Main810 and its
+new child810, native manager810 plus shell/recovery810 repinned; diagnostics809 and
+all other module pins/hashes retained. Protected Multi1.0/Loop715/Curve808/Extrude802/
+Boolean806/frozenBeta2–7 unchanged. .810 device acceptance pending. Next after PASS:
+controlled Reset measurements, then SubD cache audit for selection-only rebuilds.
 
 ## .809 — Dense cage lookup / opt-in performance measurements — 2026-10-11
 
@@ -1359,3 +1408,5 @@ frozenBeta7 manifest matches unchanged .807. Protected Curve808, Multi1.0,
 Loop715, Extrude802, Boolean806 and all frozenBeta2–7 unchanged.
 Current main source baseline is this release plus documentation verification;
 .808 user PASS recorded, .809 iPad readout/selection/navigation acceptance pending.
+
+.810 full local Node24 regression: **2182/2182 PASS, 0 FAIL, 0 skipped**.

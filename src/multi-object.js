@@ -836,7 +836,7 @@ function rebuildInactiveLayer(body){
 function installRenderObserver() {
   if (THREE.Group.prototype.__boxlabMultiObjectInstalled) return;
   const baseAdd = THREE.Group.prototype.add;
-  const groupSuppressedKinds=new Set(['edge','vertex','mirror-edge','edge-selection-overlay']);
+  const groupSuppressedKinds=new Set(['edge','vertex','mirror-edge','edge-selection-overlay','cage-edge-batch','cage-vertex-batch']);
   THREE.Group.prototype.add = function (...items) {
     const body = items.find(item => item?.userData?.kind === 'body');
     const activeSource = body ? state()?.mesh : null;

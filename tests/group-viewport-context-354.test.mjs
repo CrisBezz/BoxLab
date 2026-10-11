@@ -31,7 +31,9 @@ test('354 selected Group is amber and ordinary two-object Multi stays amber blue
 
 test('354 active member cage and verts are suppressed while whole Group context is selected',()=>{
   const src=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
-  assert.match(src,/groupSuppressedKinds=new Set\(\['edge','vertex','mirror-edge','edge-selection-overlay'\]\)/);
+  const kinds=src.match(/groupSuppressedKinds=new Set\(\[([^\]]+)\]\)/)?.[1];
+  assert.ok(kinds,'native cage suppression set is declared');
+  for(const kind of ['edge','vertex','mirror-edge','edge-selection-overlay','cage-edge-batch','cage-vertex-batch'])assert.ok(kinds.includes(`'${kind}'`),`${kind} is suppressed for whole groups`);
   assert.match(src,/wholeGroupId!=null/);
   assert.match(src,/!\(groupContext&&groupSuppressedKinds\.has\(item\?\.userData\?\.kind\)\)/);
   assert.match(src,/queueMicrotask\(\(\)=>globalThis\.__boxlabBooleanUX\?\.sync\?\.\(\)\)/);
