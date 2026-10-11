@@ -360,9 +360,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.815",
+      "url": "./src/primitive-ui.js?v=0.36.18.816",
       "target": "src/primitive-ui.js",
-      "sha256": "5ed08ac7ad490f4d26e9771b3f53649f4350c71d593e35ab7982a4e32d197d2e"
+      "sha256": "95a46702392ce924012b71adc9c9cd49110fbb0abba1547b46eb55ee93f68ef3"
     },
     {
       "owner": "index.html",
@@ -2233,9 +2233,9 @@
     },
     {
       "owner": "src/curve-profile-ui.js",
-      "url": "./curve-profile-core.js?v=0.36.18.814",
+      "url": "./curve-profile-core.js?v=0.36.18.816",
       "target": "src/curve-profile-core.js",
-      "sha256": "d30076d1a089f93cc7280810a7d62ae08933115fa86bf47543c7688453e89522"
+      "sha256": "c03fd6b7efe9388cd7dab5d62fe3e777be8d400794a19e3371a19c60aab7e16b"
     },
     {
       "owner": "src/curve-profile-ui.js",
@@ -2251,9 +2251,9 @@
     },
     {
       "owner": "src/primitive-ui.js",
-      "url": "./curve-profile-ui.js?v=0.36.18.815",
+      "url": "./curve-profile-ui.js?v=0.36.18.816",
       "target": "src/curve-profile-ui.js",
-      "sha256": "2be06e9d919e742f2518e9a5cf500b8fccf49f1e53ddb1bd59f635d414d7cc58",
+      "sha256": "64620edd847011cb9114231d3de8340351f9cd6205b9a488e6d1845dd7407f11",
       "sourceVersion": "0.36.18.815"
     },
     {
@@ -2288,9 +2288,9 @@
     },
     {
       "owner": "src/curve-profile-core.js",
-      "url": "./curve-balloon-core.js?v=0.36.18.814",
+      "url": "./curve-balloon-core.js?v=0.36.18.816",
       "target": "src/curve-balloon-core.js",
-      "sha256": "cffeb347e78a6dc43921188cca597bb7e2d6873d4c71400d585e4f8237612a83"
+      "sha256": "3b9b5a189f6bf63bc4d7f2f334a82925427cdfcc2c310c40a8292ae2884a599d"
     },
     {
       "owner": "src/curve-balloon-core.js",
@@ -2300,9 +2300,9 @@
     },
     {
       "owner": "src/curve-balloon-core.js",
-      "url": "./vendor/meshutilz-outline-balloon.js?v=0.36.18.813",
+      "url": "./vendor/meshutilz-outline-balloon.js?v=0.36.18.816",
       "target": "src/vendor/meshutilz-outline-balloon.js",
-      "sha256": "b90694d2a27d2b652b7455a0b407d1de552e8dc5be5319fd4d78a0414897f8ee"
+      "sha256": "7f186281fc8f4cbb43259165bb0c52f839cd1c4c99175eed04ca7ce901b6eb16"
     }
   ]
 }
