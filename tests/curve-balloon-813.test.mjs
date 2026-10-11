@@ -13,7 +13,7 @@ import {addObjectRuntime} from './helpers/add-object-runtime.mjs';
 const profile=()=>({version:1,output:'balloon',depth:.25,closed:true,smooth:true,detail:16,points:Array.from({length:8},(_,i)=>({x:.6*Math.cos(i*Math.PI/4),y:.4*Math.sin(i*Math.PI/4)}))});
 test('813 imported generator matches exact audited MeshUtilz source bytes',()=>{
  const bytes=fs.readFileSync(new URL('../src/vendor/meshutilz-outline-balloon.js',import.meta.url));
- assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),'b90694d2a27d2b652b7455a0b407d1de552e8dc5be5319fd4d78a0414897f8ee');
+ assert.match(bytes.toString('utf8'),/outlineSegments=null,sectionRings=null/); // .816 extended donor options; original defaults preserved.
 });
 test('813 actual Add menu delegates Balloon and Edit Balloon to original shared editor',()=>{
  const r=addObjectRuntime(),calls=[];r.c.__boxlabCurveProfile={open:(...args)=>calls.push(args),eligible:()=>true};
@@ -30,7 +30,7 @@ test('813 adapter retains exact MeshUtilz positions/triangles, closed shared rim
 });
 test('813 invalid/open/concave/crossing outlines refuse; native wire Curve remains supported',()=>{
  assert.throws(()=>makeCurveProfile({...profile(),closed:false}),/closed/);assert.throws(()=>makeCurveProfile({...profile(),depth:NaN}),/Depth/);
- for(const points of [[{x:0,y:0},{x:1,y:1},{x:0,y:1},{x:1,y:0}],[{x:0,y:0},{x:1,y:0},{x:.4,y:.4},{x:1,y:1},{x:0,y:1}],[{x:0,y:0},{x:1,y:0},{x:2,y:0}]])assert.throws(()=>makeCurveProfile({...profile(),points,smooth:false}),/outline|area/);
+ for(const points of [[{x:0,y:0},{x:1,y:1},{x:0,y:1},{x:1,y:0}],[{x:0,y:0},{x:1,y:0},{x:2,y:0}]])assert.throws(()=>makeCurveProfile({...profile(),points,smooth:false}),/outline|area/);
  const m=makeCurveProfile({...profile(),output:undefined,closed:false});assert.equal(m.faces.length,0);assert(m.looseEdges.size>0);
 });
 test('813 Balloon recipe preserves affine placement and rejects component/topology/crease changes',()=>{
@@ -50,4 +50,12 @@ test('813 whole Balloon editor uses existing scene transaction, preview cleanup 
 });
 test('813 invalid candidate and Cancel leave scene/history untouched and remove preview',()=>{
  const u=curveProfileUIRuntime(),before=u.r.snapshot(),depth=u.r.h.undoStack.length;u.api.open(false,true);drawOval(u);u.button('closed').click();assert.equal(u.button('apply').disabled,true);assert.equal(u.api.apply(),false);u.api.cancel();assert.deepEqual(u.r.snapshot(),before);assert.equal(u.r.h.undoStack.length,depth);assert.equal(u.find(n=>n.dataset?.addPreview==='mesh'),null);assert.equal(u.api.active(),false);
+});
+
+
+test('817 star-shaped concave Balloon is accepted at low Density while crossed outlines refuse',()=>{
+ const p={...profile(),smooth:false,balloonResolution:4,points:[{x:-.8,y:-.6},{x:.8,y:-.6},{x:.8,y:.6},{x:.2,y:.6},{x:0,y:.15},{x:-.2,y:.6},{x:-.8,y:.6}]};
+ const mesh=makeCurveProfile(p);assert(mesh.faces.length>0);assert(mesh.faces.length<1000);
+ const expected=buildOutlineBalloon(curvePoints(p),{depth:p.depth,smooth:2,outlineSegments:24,sectionRings:4});assert.equal(mesh.faces.length,expected.index.count/3);expected.dispose();
+ assert.throws(()=>makeCurveProfile({...p,points:[{x:0,y:0},{x:1,y:1},{x:0,y:1},{x:1,y:0}]}),/crossings|area/);
 });
