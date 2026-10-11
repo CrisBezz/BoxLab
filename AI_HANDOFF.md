@@ -1512,3 +1512,17 @@ all frozenBeta2–7 untouched. Device acceptance pending; selection-only and edi
 measurements must use separate Reset windows. .810 screenshot is evidence, not full PASS.
 
 .812 full local Node24 regression: **2190/2190 PASS, 0 FAIL, 0 skipped**.
+
+
+### .812 publication verification — 2026-10-11
+
+Release `c38df5f0690102f003b47557ab316c9f43697537`, tree
+`c40e7e2ab877d1e4f9e95b81b196b8062c0aafd1` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2190tests/2190PASS/0FAIL/0skip.
+Topology38127672084/job114435320188 and Pages38127671668 SUCCESS.
+Fresh main shell and live manifest/index/main812/multi-object812/Performance UI812/
+core812/cache812 byte-match tested files; frozenBeta7 .807 manifest also matches.
+Protected modelling owners and all frozenBeta2–7 unchanged. Shell/recovery/changed
+parent-child pins reviewed; legacy Face workflow recovery210 deliberately retained.
+.812 device phase readability and reset selection/edit screenshots pending. User
+requests performance pause after this test, then shared Curve/Balloon modelling audit.
