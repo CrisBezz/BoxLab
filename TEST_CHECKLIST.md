@@ -5515,3 +5515,13 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Deep unsupported indentation and self crossing reject without scene/history mutation
 - [ ] Convex Balloon, Density4/8/12, Edit, Cancel, Undo/Redo remain functional
 - [ ] iPad Pencil/Reset and normal touch navigation remain unchanged
+
+
+## Balloon optional quads .818
+
+- [ ] New Balloon defaults to Triangles, preserves .817 convex and concave cases
+- [ ] Topology switch to Quads reduces displayed editable face count; ring strips show quads, poles remain triangles
+- [ ] Convex oval, moderate C and five-point star preview and Apply with no visible inverted/folded faces
+- [ ] Existing older Balloon Edit retains triangle mode until explicitly switched
+- [ ] Topology Undo in editor restores selector and mesh; scene Undo/Redo after Apply works
+- [ ] Density4, preview, Pencil after Reset, orbit/pan/pinch and editing performance remain protected
