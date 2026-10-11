@@ -1,13 +1,9 @@
-# BoxLab AI Handoff — Balloon density .816
+# BoxLab AI Handoff — Concave Balloon evaluation .817
 
 ## Current state — 2026-10-11
+Main build .817 device evaluation pending. User reports .816 works much better; preserve Density4, optional donor tessellation and .815 Reset/Pencil. Beta7 frozen .807.
 
-Main release v0.36.18.816, pending device acceptance. User PASS .815 Reset→Pencil drawing; protect it. Beta7 frozen .807 immutable. Repo is source of truth.
+## .817
+User requests concave Balloons to evaluate usefulness. Audited source: original MeshUtilz donor already creates rings by interpolating between an interior pole and actual rim; existing adapter first rejects ANY concavity, then has a separate actual-rim star/fold test. Removed ONLY the blanket convex half-plane rejection; existing crossing rejection and actual donor-rim radial visibility/fold refusal remain. This permits simple star-shaped concavities such as shallow notches. Deep overhangs, folded rims and self-crossings refuse, not automatically triangulated by a separate kernel. No change to donor, density, history, preview, Pencil gesture ownership or SubD. Updated editor explanation, test fixture and parent import pins.
 
-## .816 — Balloon density and performance gate
-
-User reports about a minute to insert Balloon, almost unusable modelling. Screenshot: active mesh 938 vertices/1872 faces, full scene 161358 rendered triangles, idle 60FPS/0 timed rebuilds. Exact stall owner NOT proven: idle FPS does not measure creation latency. Audit: new Balloon already sets SubD false and MeshUtilz-derived generator requires >=12 section rings regardless of Detail. Original donor receives OPTIONAL outlineSegments/sectionRings; no alternate geometry kernel. New Balloon records have balloonResolution=4. Slider Density 4–12 maps N section rings and 6N outline segments. Old scene recipes lacking balloonResolution use exact prior donor defaults, and are not migrated unless the user moves Density. Existing Curve candidate preview, original native object manager/history, Pencil window capture and Reset lifecycle remain owners. No global SubD/display/performance changes. Assets repinned from vendor to core to UI to primitive parent, plus shell/recovery markers. SHA256 reference fixture reviewed. Legacy Beta2–7 unchanged.
-
-Test gate on iPad: Reset > Add Balloon > draw oval > Density4 Preview and Apply; Density8/12; edit old .815 Balloon; Cancel/Undo/Redo, orbit/pan/pinch and subsequent component edits. Time insertion and post-insertion responsiveness. If still slow, profile root.add scene hooks / inactive displays versus triangulation/history using the existing .812 Performance tool. Do not claim performance fixed before tactile acceptance.
-
-Protected: Multi transform 1.0, Loop .715, Extrude .802, Boolean .806, .815 drawing/Reset, navigation and all frozen Betas. Next .boxlab Save/Open, NOM, concave Balloon and UV remain queued after performance gate.
+Device evaluation: Add+ Balloon > draw concave shallow bite (C/notch), Density4, Depth; preview and Apply, orbit; increase density; attempt deep concave and self crossing, verify rejection. Compare convex oval and undo/edit. If faces fold or performance regresses, mark FAIL with screenshot and return to .816. Future concave algorithm expansion needs an explicit go/no-go after tactile evaluation.
