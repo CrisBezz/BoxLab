@@ -7488,3 +7488,17 @@ Result/Sources804, compact object list805 and geometry/history/gesture owners un
 and shell/recovery806 repinned; protected Multi1.0/Loop715/Extrude802/betas untouched.
 Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; final popup/list acceptance
 precedes Beta7 freeze.
+
+## .807 — Unit startup/reset cube / .806 PASS — 2026-10-11
+
+User .806 PASS recorded/protected: automatic compact Edit Boolean and retained
+result-only list workflow. User reports startup cube still2units despite accepted
+Add+1×1×1 insertion. Audit found explicit cube(2) at main startup, main Reset fallback,
+manager Reset and legacy Add fallback. Those four call sites now use cube(1).
+General EditableMesh.cube default2 remains unchanged for geometry callers/fixtures;
+Add+796 fit, camera/navigation/geometry/export owners otherwise unchanged.
+Only main807/multi-object807 and shell/recovery807 cache keys change; reviewed source
+hashes retain original main internal VERSION (release stamp owned by release-version).
+Protected Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–6 unchanged.
+Full Node24:2163/2163 PASS, 0 FAIL, 0 skips. Actual startup geometry matches
+unit-fitted Add+ cube bounds. Device cube/reset comparison pending before Beta7 freeze.

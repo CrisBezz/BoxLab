@@ -652,7 +652,7 @@ function resetAll() {
   const live = state()?.mesh;
   if (!live) return false;
   const settings = { mirror:{ x:false, y:false, z:false }, subd:false, subdLevel:1, cage:true };
-  replaceMeshInPlace(live, EditableMesh.cube(2));
+  replaceMeshInPlace(live, EditableMesh.cube(1));
   history()?.clear?.();
   soloId = null;
   linkedSources.clear();
@@ -889,7 +889,7 @@ function installUI() {
     standardRow.append(more);
     menu.addEventListener('click',event=>{if(event.target.closest('button'))queueMicrotask(()=>{more.open=false;});});
   }
-  addButton?.addEventListener('click', () => addObject(EditableMesh.cube(2), 'Cube', { enterObjectMode:true }));
+  addButton?.addEventListener('click', () => addObject(EditableMesh.cube(1), 'Cube', { enterObjectMode:true }));
   duplicateButton?.addEventListener('click', duplicateActive);
   linkedDuplicateButton?.addEventListener('click', linkedDuplicateActive);
   makeUniqueButton?.addEventListener('click', makeActiveUnique);

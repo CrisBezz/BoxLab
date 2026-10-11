@@ -1,12 +1,26 @@
-# BoxLab AI Handoff — Compact automatic Boolean editor
+# BoxLab AI Handoff — Unit startup cube
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.806**. User **.804 PASS** protected; .805 object-list and
-.806 compact popup candidate acceptance pending before Beta7 freeze. Parent main
-`9a6aad0e6c9543931cee1828f888ebd917719348`. Repository is source of truth; .802 Extrude/.801
-activation/exit/radial remain protected. No Beta7 freeze performed.
+Current build **v0.36.18.807**. User **.806 PASS**, protected: compact automatic
+Boolean editor and retained result-only list workflow. .804/.802/.801 remain protected.
+Parent main `5b44e3258824aca2f8a85f050dfe25597fb35e69`. Startup/reset1unit cube
+acceptance pending before Beta7 freeze; no freeze performed.
+
+## .807 — Unit startup/reset cube / .806 PASS — 2026-10-11
+
+User .806 PASS recorded/protected: automatic compact Edit Boolean and retained
+result-only list workflow. User reports startup cube still2units despite accepted
+Add+1×1×1 insertion. Audit found explicit cube(2) at main startup, main Reset fallback,
+manager Reset and legacy Add fallback. Those four call sites now use cube(1).
+General EditableMesh.cube default2 remains unchanged for geometry callers/fixtures;
+Add+796 fit, camera/navigation/geometry/export owners otherwise unchanged.
+Only main807/multi-object807 and shell/recovery807 cache keys change; reviewed source
+hashes retain original main internal VERSION (release stamp owned by release-version).
+Protected Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–6 unchanged.
+Full Node24:2163/2163 PASS, 0 FAIL, 0 skips. Actual startup geometry matches
+unit-fitted Add+ cube bounds. Device cube/reset comparison pending before Beta7 freeze.
 
 ## .806 — Compact automatic Edit Boolean popup — 2026-10-11
 

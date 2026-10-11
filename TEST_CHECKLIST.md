@@ -5365,8 +5365,13 @@ No Beta7 freeze performed; .802 remains last device-accepted release checkpoint.
 - [ ] Scene Undo/Redo restores correct result/source rows; deleting result reveals retained sources.
 - [x] Actual outliner/manager/history coverage: hidden ordinary rows, no history mutation, active edit, Cancel, Apply/Undo/Redo, locked/damaged/missing/deleted recipes.
 
-## .806 Edit Boolean compactness — acceptance pending
+## .806 Edit Boolean compactness — user PASS protected
 
-- [ ] No Update Preview button; source transforms and operation changes update automatically.
-- [ ] Fonts and spacing match compact popups; Cancel/Apply remain stacked right, at top centre.
-- [ ] Result/Sources and A/B, Apply/Cancel/Undo/Redo remain functional with result-only object list.
+- [x] No Update Preview button; source transforms and operation changes update automatically.
+- [x] Fonts and spacing match compact popups; Cancel/Apply remain stacked right, at top centre.
+- [x] Result/Sources and A/B, Apply/Cancel/Undo/Redo remain functional with result-only object list.
+
+## .807 Startup/reset unit cube — acceptance pending
+
+- [ ] Fresh launch default cube matches Add+ Cube at1×1×1.
+- [ ] Reset returns to one1×1×1 cube; Add+ density/preview and navigation remain unchanged.
