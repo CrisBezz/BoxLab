@@ -38,10 +38,12 @@ export function makeCurveBalloon(points, profile) {
       // MeshUtilz supplies paired, consistently wound triangles in each
       // radial strip. Merge only exact adjacent pairs; keep pole fans.
       const result=[];
+      const frontPole=faces[Math.floor(faces.length/2)-1]?.[2];
+      const backPole=faces.at(-1)?.[2];
       let merged=0;
       for(let i=0;i<faces.length;){
         const a=faces[i],b=faces[i+1];
-        if(b&&a.length===3&&b.length===3){
+        if(b&&a.length===3&&b.length===3&&!a.includes(frontPole)&&!b.includes(frontPole)&&!a.includes(backPole)&&!b.includes(backPole)){
           const [v0,v1,v3]=a;
           // Front strip: a,b,d and b,c,d
           if(b[0]===v1&&b[2]===v3&&new Set([v0,v1,b[1],v3]).size===4){
