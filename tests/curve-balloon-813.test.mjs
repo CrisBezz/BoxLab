@@ -59,3 +59,15 @@ test('817 star-shaped concave Balloon is accepted at low Density while crossed o
  const expected=buildOutlineBalloon(curvePoints(p),{depth:p.depth,smooth:2,outlineSegments:24,sectionRings:4});assert.equal(mesh.faces.length,expected.index.count/3);expected.dispose();
  assert.throws(()=>makeCurveProfile({...p,points:[{x:0,y:0},{x:1,y:1},{x:0,y:1},{x:1,y:0}]}),/crossings|area/);
 });
+
+test('818 optional quad Balloon uses fewer editable faces, keeps pole triangles and preserves legacy triangle default',()=>{
+ const p={...profile(),balloonResolution:4};const tris=makeCurveProfile(p),quads=makeCurveProfile({...p,balloonTopology:'quads'});
+ assert(quads.faces.length<tris.faces.length);
+ assert(quads.faces.some(f=>f.length===4));
+ assert(quads.faces.some(f=>f.length===3));
+ assert(tris.faces.every(f=>f.length===3));
+ assert.equal(quads.vertices.length,tris.vertices.length);
+ const edges=new Map();for(const f of quads.faces)for(let i=0;i<f.length;i++){const a=f[i],b=f[(i+1)%f.length],key=quads.edgeKey(a,b);if(!edges.has(key))edges.set(key,[]);edges.get(key).push(a<b?1:-1);}
+ for(const uses of edges.values())assert.deepEqual(uses.sort(),[-1,1]);
+ assert.throws(()=>makeCurveProfile({...p,balloonTopology:'invalid'}),/Unsupported/);
+});
