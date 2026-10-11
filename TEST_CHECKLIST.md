@@ -5525,3 +5525,13 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Existing older Balloon Edit retains triangle mode until explicitly switched
 - [ ] Topology Undo in editor restores selector and mesh; scene Undo/Redo after Apply works
 - [ ] Density4, preview, Pencil after Reset, orbit/pan/pinch and editing performance remain protected
+
+
+## Balloon paired pole quads .819
+
+- [ ] New Balloon defaults to Quads, poles consist of four-sided faces at Density4
+- [ ] Convex oval and accepted C/star preview and Apply without folded/overlapping geometry
+- [ ] Face/Edge selection and SubD at poles remain usable, inspect pinching
+- [ ] Older .818 quad Balloon retains original triangular pole fans
+- [ ] Topology switch to Triangles retains original mode
+- [ ] Density, Pencil/Reset, Edit, Cancel, Undo/Redo and navigation remain protected
