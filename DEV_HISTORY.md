@@ -7785,3 +7785,56 @@ Protected modelling owners and all frozenBeta2–7 unchanged. Shell/recovery/cha
 parent-child pins reviewed; legacy Face workflow recovery210 deliberately retained.
 .812 device phase readability and reset selection/edit screenshots pending. User
 requests performance pause after this test, then shared Curve/Balloon modelling audit.
+
+## .813 — Shared Curve Outline Balloon — 2026-10-11
+
+User “Awesome /nextbuild” accepts .812 and requests returning to exciting modelling
+work. .812 diagnostics protected at812, performance optimisation paused. Real iPad
+8rebuild capture:60FPS/13calls,mean444.3ms/max577ms; Base/SubD32.9/143,Body28.5/47,
+Scene hooks304.5/352 (includes Inactive304.1/350),Cage76.5/92ms; cache6hits/2misses.
+Inactive is dominant in this sample (~68% total mean), not a controlled comparison;
+independent phase samples and incomplete gesture history prevent stronger attribution.
+Future performance target: reuse unchanged inactive displays; not part of .813.
+
+Audit: no BoxLab Balloon geometry owner, only wire Curve808 and unrelated Silhouette
+render mode. MeshUtilz-Sweep-Lab default main has docs only; existing balloon-v0.6
+source18e72a6bf964974591038345d68c2196a18f6af2 holds live v1.1.3 Outline/Tube generators.
+Outline owner src/outlineGeometry.js imported byte-for-byte as
+src/vendor/meshutilz-outline-balloon.js, SHA256
+b90694d2a27d2b652b7455a0b407d1de552e8dc5be5319fd4d78a0414897f8ee; provenance README.
+Source repo read-only; no MeshUtilz UI/gesture/history/renderer copied, no parallel
+Balloon algorithm. Small curve-balloon-core adapter validates first convex closed
+XY silhouette scope and depth0.05–0.8, converts exact indexed triangles/shared rim
+and poles to EditableMesh, disposes intermediate BufferGeometry. Original generator
+resamples/rounds outline; not an exact polygon extrusion or general concave promise.
+
+Add+ > Balloon launches existing Curve editor in Balloon mode: same Pencil sketch/
+point editing, Closed/Smooth/Detail/candidate Undo/Clear; Depth plus existing Add
+rotatable candidate preview. No scene insertion until Apply. Drawing skips candidate
+generation during pointer capture; release rebuilds preview. Open/concave/crossing/
+zero-area outlines refuse visibly without mesh/history mutation. New shapes fit
+1×1×1 proportionally, depth relative to authored outline; default detail16/depth.25.
+Result is native editable triangle solid (typical1250v/2496f), not all-quad low-poly.
+Convex-only scope explicit in panel; Tube/pressure/concave silhouette/quad conversion
+are separate later builds. Modelling topology edits remain normal BoxLab operations.
+
+Existing curveProfile version1 recipe gains optional output='balloon'/depth; wires
+retain previous behavior. Add+ Edit Balloon offered through same eligibility owner;
+whole-object affine transforms preserved on reopen. Component/topology edits, creases,
+facegroup/loose changes and modifiers invalidate Balloon recipe editing safely.
+Existing native addMesh/replaceActiveMesh, object snapshots/duplication and scene-history
+bridge remain authoritative. Apply/edit one checkpoint; Cancel/invalid candidates none;
+preview disposed on Apply/Cancel/session replacement. No manager/history/kernel edits.
+
+Seven new tests cover exact provenance, real Add launcher, donor equivalence, closed
+Euler/shared-edge winding/nondegenerate triangles/positive volume at3depths/both
+windings, unsupported outlines/wire preservation, affine/invalidation, whole editor
+preview/depth/Undo/Redo/Cancel/actual native duplication. Existing5Curve tests retained
+using extracted reusable DOM/runtime helper; original Add/preview/source tests stay.
+Changed Curve core/UI/new adapter/vendor813, Add parent813 and shell/recovery813 pins
+reviewed; Add preview795 and protected samplers808 unchanged. Main/manager/Performance
+812, protected Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 untouched.
+.813 iPad touch/layout acceptance pending. Next: Balloon device feedback then scoped
+Curve consumer refinements; .boxlab/NOM/UV scopes remain queued, not implemented.
+
+.813 full local Node24 regression: **2197/2197 PASS, 0 FAIL, 0 skipped**.

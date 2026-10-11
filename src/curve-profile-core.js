@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import {EditableMesh} from './mesh.js';
+import {makeCurveBalloon} from './curve-balloon-core.js?v=0.36.18.813';
 import {fitAddObjectToUnitCube} from './add-object-fit.js?v=0.36.18.796';
 import {deriveInstancePlacement} from './instance-core.js?v=0.36.18.343';
 export function curvePoints(profile){
@@ -14,16 +15,17 @@ export function curvePoints(profile){
  if(closed)sampled.pop();return sampled;
 }
 export function makeCurveProfile(profile){
- const vertices=curvePoints(profile),mesh=new EditableMesh(vertices,[]);
+ const vertices=curvePoints(profile),mesh=profile.output==='balloon'?makeCurveBalloon(vertices,profile):new EditableMesh(vertices,[]);
  mesh.looseEdges=new Set();mesh.looseVertices=new Set();
- for(let i=1;i<vertices.length;i++)mesh.looseEdges.add(mesh.edgeKey(i-1,i));
- if(profile.closed)mesh.looseEdges.add(mesh.edgeKey(vertices.length-1,0));
+ if(profile.output!=='balloon'){for(let i=1;i<vertices.length;i++)mesh.looseEdges.add(mesh.edgeKey(i-1,i));
+ if(profile.closed)mesh.looseEdges.add(mesh.edgeKey(vertices.length-1,0));}
  fitAddObjectToUnitCube(mesh);
  if(profile.placement){if(!Array.isArray(profile.placement)||profile.placement.length!==16||!profile.placement.every(Number.isFinite))throw Error('Invalid curve placement');const matrix=new THREE.Matrix4().fromArray(profile.placement);mesh.vertices.forEach(v=>v.applyMatrix4(matrix));}
  return mesh;
 }
 export function editableCurveProfile(object){
  if(!object?.curveProfile||object.curveProfile.version!==1||object.locked||object.kind==='reference'||object.sourceId||object.settings?.subd||Object.values(object.settings?.mirror||{}).some(Boolean))return null;
+ if(object.curveProfile.output==='balloon'&&(object.mesh?.creases?.size||object.mesh?.faceGroups?.some(Boolean)||object.mesh?.looseVertices?.size))return null;
  try{const profile=structuredClone(object.curveProfile),base=makeCurveProfile(profile);if([...base.looseEdges].sort().join()!==[...(object.mesh.looseEdges||[])].sort().join())return null;const delta=deriveInstancePlacement(base,object.mesh);if(!delta)return null;
   profile.placement=delta.multiply(new THREE.Matrix4().fromArray(profile.placement||new THREE.Matrix4().elements)).elements.slice();return profile;
  }catch{return null;}

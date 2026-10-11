@@ -1,4 +1,4 @@
-import './curve-profile-ui.js?v=0.36.18.808';
+import './curve-profile-ui.js?v=0.36.18.813';
 import { makePrimitive,primitiveDensity } from './primitive-factory.js?v=0.36.18.771';
 import { makeTextObject } from './text-object-core.js?v=0.36.18.771';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
@@ -43,7 +43,9 @@ function buildMenu(){
  for(const type of ['cube','plane','cylinder','sphere','cone','torus','text'])button(grid,label(type),()=>showSettings(type)).dataset.primitive=type;
  p.append(grid);
  button(p,'Curve',()=>{closeMenu();globalThis.__boxlabCurveProfile?.open?.();}).dataset.specialObject='curve-profile';
- if(globalThis.__boxlabCurveProfile?.eligible?.())button(p,'Edit Curve',()=>{closeMenu();globalThis.__boxlabCurveProfile.open(true);}).dataset.specialObject='edit-curve';
+ button(p,'Balloon',()=>{closeMenu();globalThis.__boxlabCurveProfile?.open?.(false,true);}).dataset.specialObject='balloon';
+ const active=manager()?.objects.find(o=>o.id===manager()?.activeId);
+ if(globalThis.__boxlabCurveProfile?.eligible?.())button(p,active?.curveProfile?.output==='balloon'?'Edit Balloon':'Edit Curve',()=>{closeMenu();globalThis.__boxlabCurveProfile.open(true);}).dataset.specialObject='edit-curve';
  button(p,'Revolve Profile',()=>{window.dispatchEvent(new CustomEvent('boxlab-add-revolve-profile'));closeMenu();}).dataset.specialObject='revolve-profile';
  button(p,'Sweep',()=>{window.dispatchEvent(new CustomEvent('boxlab-add-sweep-path'));closeMenu();}).dataset.specialObject='sweep-path';
  Object.assign(p.style,{position:'fixed',minWidth:'250px',maxHeight:'calc(100% - 16px)',overflowY:'auto'});document.body.append(p);const r=addButton.getBoundingClientRect(),w=p.offsetWidth||250;

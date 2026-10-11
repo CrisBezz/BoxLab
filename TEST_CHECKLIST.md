@@ -5444,7 +5444,7 @@ tests and reviewed changed loader/hash contract pass. Device acceptance pending.
 selection-only cost not isolated and full .810 tactile PASS not inferred.
 
 
-## .812 Rebuild phase readout — device acceptance pending
+## .812 Rebuild phase readout — user Awesome acceptance protected
 
 - [x] Bounded off/reset phase/counters, actual main timings/cache counts and inactive nested timing with native skip/error behavior; whole UI phase output/Reset/Close tests.
 - [ ] Open Performance on same dense SubD scene, Reset, select/deselect components without editing; capture phase timings and cache hits/misses.
@@ -5456,3 +5456,18 @@ independent last120samples and need not sum to total rebuild time. After this te
 user requests pausing performance work and returning to modelling development.
 
 .812 full local Node24 regression: **2190/2190 PASS, 0 FAIL, 0 skipped**.
+
+
+## .813 Outline Balloon — device acceptance pending
+
+- [x] Exact donor hash and geometry, closed shell/rim/winding/volume across depth/direction; invalid convex scope refuses and wire Curve preserved.
+- [x] Actual Add launcher, core affine/invalidation, whole editor depth/preview/history/Cancel and native duplication metadata.
+- [ ] Add+ > Balloon: Pencil draw an oval; rotate preview, change Depth/Detail, Apply. One editable solid appears.
+- [ ] Select it, Add+ > Edit Balloon: change Depth/points, Cancel then Apply; creation/edit Undo/Redo work.
+- [ ] Move/Rotate/Scale, reopen editor and confirm placement remains; duplicate retains independent edit recipe.
+- [ ] Original Add+ Curve drawing, ordinary mesh selection and finger navigation remain usable.
+
+Performance paused after user .812 Awesome and readout; future target unchanged
+inactive object displays (304.1ms mean of444.3ms total sample), no current fix claim.
+
+.813 full local Node24 regression: **2197/2197 PASS, 0 FAIL, 0 skipped**.
