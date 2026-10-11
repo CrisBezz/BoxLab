@@ -7942,3 +7942,8 @@ live manifest/index/Add815/Curve UI815/core814/preview814/main812 and frozenBeta
 manifest match tested files. .814 live chain/donor also verified before .815.
 Protected modelling/navigation owners and all frozenBeta2–7 unchanged. Device Reset >
 Balloon Pencil drawing/navigation gate pending; no full Safari propagation proof.
+
+
+## .816 — Balloon resolution / performance gate — 2026-10-11
+
+User PASS .815 Pencil/Reset, reports severe ~minute Balloon insertion stall; screenshot active 938v/1872f and scene 161358 rendered triangles, idle60FPS. Donor mesh detail minimum independently creates >=12 section rings. Added optional tessellation controls to ORIGINAL MeshUtilz geometry owner; new Balloon Density4 default, slider4–12; legacy recipes without field preserve identical donor tessellation. Original scene/history and iPad gesture owners retained. Release pins and runtime asset hash fixture reviewed. Performance iPad acceptance pending; no measured gain claimed.
