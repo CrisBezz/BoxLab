@@ -1,4 +1,4 @@
-import './curve-profile-ui.js?v=0.36.18.817';
+import './curve-profile-ui.js?v=0.36.18.818';
 import { makePrimitive,primitiveDensity } from './primitive-factory.js?v=0.36.18.771';
 import { makeTextObject } from './text-object-core.js?v=0.36.18.771';
 import { placeToolSessionPanel } from './tool-session-panel-position.js?v=0.36.18.732';
