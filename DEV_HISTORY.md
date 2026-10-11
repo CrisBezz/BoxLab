@@ -7838,3 +7838,17 @@ reviewed; Add preview795 and protected samplers808 unchanged. Main/manager/Perfo
 Curve consumer refinements; .boxlab/NOM/UV scopes remain queued, not implemented.
 
 .813 full local Node24 regression: **2197/2197 PASS, 0 FAIL, 0 skipped**.
+
+
+### .813 publication verification — 2026-10-11
+
+Release `06fca10d9da01356ac82f086e86e0be0ef8c4520`, tree
+`b0b167cd960fae9018e89cc4c44c116861968857` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2197tests/2197PASS/0FAIL/0skip.
+Topology38128611756/job114438090124 and Pages38128611350 SUCCESS.
+Fresh main shell and live manifest/index/Add813/Curve UI813/core813/adapter813/vendor813
+byte-match tested files; unchanged main812/Performance812 and frozenBeta7 .807 manifest
+also match live. Changed parent-child graph and exact donor hash verified. Protected
+Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 unchanged. User .812 Awesome
+acceptance/profiling evidence recorded; performance paused. .813 iPad draw/preview/
+layout/history/recipe editing acceptance pending. No concave or all-quad claim.
