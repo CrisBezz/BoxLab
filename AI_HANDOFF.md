@@ -1410,3 +1410,17 @@ Current main source baseline is this release plus documentation verification;
 .808 user PASS recorded, .809 iPad readout/selection/navigation acceptance pending.
 
 .810 full local Node24 regression: **2182/2182 PASS, 0 FAIL, 0 skipped**.
+
+
+### .810 publication verification — 2026-10-11
+
+Release `c2bd98aecb4476bff459d9931f6bb415be847ecf`, tree
+`92efbb5534ef6a1ba71e73c31cb19219e75e1df4` exactly matches tested checkout.
+Full local Node24 and actual Node22 CI:2182tests/2182PASS/0FAIL/0skip.
+Topology38123138533/job114421838235 and Pages38123138371 SUCCESS.
+Fresh main and live index/version/main810/multi-object810/cage-render-batches810
+byte-match tested files; unchanged diagnostics809 and frozenBeta7 .807 manifest
+also byte-match live. Protected Multi1.0/Loop715/Curve808/Extrude802/Boolean806 and
+frozenBeta2–7 unchanged. Current source is this release plus docs verification.
+User .809 accepted with screenshot evidence; .810 iPad visual/tactile acceptance
+pending. Next controlled cage-on Reset capture, then SubD selection-only cache audit.
