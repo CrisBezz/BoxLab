@@ -1,7 +1,7 @@
 import {appendStrokePoint,simplifyStroke} from './stroke-sampling.js?v=0.36.18.808';
-import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.817';
+import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.818';
 import {createAddObjectPreview} from './add-object-preview.js?v=0.36.18.814';
-const VERSION='0.36.18.817',W=320,H=180,NS='http://www.w3.org/2000/svg';
+const VERSION='0.36.18.818',W=320,H=180,NS='http://www.w3.org/2000/svg';
 const manager=()=>globalThis.__boxlabObjectManager,session=()=>globalThis.__boxlabToolSession;
 const activeObject=()=>{const m=manager();return m?.objects.find(o=>o.id===m.activeId);};
 let panel=null,pad=null,path=null,handles=null,note=null,applyButton=null,profile=null,objectId=null,drag=null,edit=false,undos=[],committing=false,preview=null;
@@ -17,7 +17,7 @@ function finish(){release();panel?.releaseStrokeListeners?.();preview?.dispose()
 function cancel(){if(!panel)return false;finish();return true;}
 function draw(){
  if(!panel)return;handles.replaceChildren();let points=[];
- try{points=curvePoints(profile);const mesh=drag&&profile.output==='balloon'?null:makeCurveProfile(profile);preview?.setMesh(mesh,drag?'Release Pencil to preview':'');applyButton.disabled=!!drag;status(mesh&&profile.output==='balloon'?`${mesh.vertices.length} vertices · ${mesh.faces.length} triangles`:`${profile.points.length} control points · ${points.length} curve vertices`);}catch(e){preview?.setMesh(null,e.message);applyButton.disabled=true;status(e.message);}
+ try{points=curvePoints(profile);const mesh=drag&&profile.output==='balloon'?null:makeCurveProfile(profile);preview?.setMesh(mesh,drag?'Release Pencil to preview':'');applyButton.disabled=!!drag;status(mesh&&profile.output==='balloon'?`${mesh.vertices.length} vertices · ${mesh.faces.length} faces`:`${profile.points.length} control points · ${points.length} curve vertices`);}catch(e){preview?.setMesh(null,e.message);applyButton.disabled=true;status(e.message);}
  path.setAttribute('points',points.map(screen).map(p=>`${p.x},${p.y}`).join(' ')+(profile.closed&&points.length?' '+Object.values(screen(points[0])).join(','):''));
  if(edit)profile.points.forEach((p,i)=>{const dot=svgNode('circle'),q=screen(p);dot.setAttribute('cx',q.x);dot.setAttribute('cy',q.y);dot.setAttribute('r',4);dot.dataset.curvePoint=String(i);handles.append(dot);});
  panel.querySelector('[data-curve-action="mode"]').textContent=edit?'Edit points':'Draw';
@@ -38,7 +38,7 @@ function apply(){
 }
 function open(existing=false,balloon=false){
  if(panel)cancel();const current=session()?.current?.();if(current&&!globalThis.__boxlabObjectRadialSession?.cancelCurrent?.()){return false;}
- const source=existing?activeObject():null,record=existing?editableCurveProfile(source):{version:1,points:[],closed:true,smooth:true,detail:balloon?16:32,...(balloon?{output:'balloon',depth:.25,balloonResolution:4}:{})};
+ const source=existing?activeObject():null,record=existing?editableCurveProfile(source):{version:1,points:[],closed:true,smooth:true,detail:balloon?16:32,...(balloon?{output:'balloon',depth:.25,balloonResolution:4,balloonTopology:'triangles'}:{})};
  if(!record||!session()){return false;}
  globalThis.__boxlabLasso?.setArmed?.(false);globalThis.__boxlabTransformArming?.disarm?.();
  profile=record;objectId=source?.id??null;edit=existing;undos=[];panel=node('div');panel.id='curveProfilePanel';panel.className='boxlab-tool-session-shell';
@@ -54,9 +54,10 @@ function open(existing=false,balloon=false){
   density.type='range';density.min='4';density.max='12';density.step='1';density.value=String(profile.balloonResolution??12);density.dataset.curveAction='balloon-density';
   densityRow.append(node('span','Density'),density,densityOut);
   density.addEventListener('change',()=>{remember();profile.balloonResolution=Number(density.value);densityOut.textContent=density.value;draw();});panel.append(densityRow);
+  const topologyRow=node('div');topologyRow.className='outliner-actions';const topo=node('button');topo.type='button';topo.dataset.curveAction='topology';const showTopo=()=>{topo.textContent='Topology: '+(profile.balloonTopology==='quads'?'Quads':'Triangles');};showTopo();topo.addEventListener('click',()=>{if(drag)return;remember();profile.balloonTopology=profile.balloonTopology==='quads'?'triangles':'quads';showTopo();draw();});topologyRow.append(topo);panel.append(topologyRow);
   preview=createAddObjectPreview(panel);}
- const helpers=node('div');helpers.className='outliner-actions';panel.append(helpers);button(helpers,'Undo','undo',()=>{profile=undos.pop()||profile;slider.value=String(profile.detail);out.textContent=slider.value;if(profile.output==='balloon'){const input=panel.querySelector('[data-curve-action="depth"]');input.value=String(profile.depth);input.parentElement.children[2].textContent=input.value;const density=panel.querySelector('[data-curve-action="balloon-density"]');density.value=String(profile.balloonResolution??12);density.parentElement.children[2].textContent=String(profile.balloonResolution??'Legacy');}});button(helpers,'Clear','clear',()=>{remember();profile.points=[];});
- panel.append(node('small',profile.output==='balloon'?'Draw a closed outline · Shallow concave dents OK · Relative depth · Fits 1 × 1 × 1 · Editable triangle solid':'Pencil: draw or drag points · New curve fits 1 × 1 · Curves become solids in later tools.'));
+ const helpers=node('div');helpers.className='outliner-actions';panel.append(helpers);button(helpers,'Undo','undo',()=>{profile=undos.pop()||profile;slider.value=String(profile.detail);out.textContent=slider.value;if(profile.output==='balloon'){const input=panel.querySelector('[data-curve-action="depth"]');input.value=String(profile.depth);input.parentElement.children[2].textContent=input.value;const density=panel.querySelector('[data-curve-action="balloon-density"]');density.value=String(profile.balloonResolution??12);density.parentElement.children[2].textContent=String(profile.balloonResolution??'Legacy');panel.querySelector('[data-curve-action="topology"]').textContent='Topology: '+(profile.balloonTopology==='quads'?'Quads':'Triangles');}});button(helpers,'Clear','clear',()=>{remember();profile.points=[];});
+ panel.append(node('small',profile.output==='balloon'?'Draw a closed outline · Shallow concave dents OK · Relative depth · Fits 1 × 1 × 1 · Editable triangle/quad solid':'Pencil: draw or drag points · New curve fits 1 × 1 · Curves become solids in later tools.'));
  note=node('div');note.setAttribute('role','status');panel.append(note);const actions=node('div');actions.className='outliner-actions';panel.append(actions);button(actions,'Cancel','cancel',cancel);applyButton=button(actions,'Apply','apply',apply);
  function beginStroke(e){
   if(!panel||!pad.contains(e.target))return;
