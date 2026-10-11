@@ -5252,7 +5252,40 @@ Only editor/radial/gizmo owners changed; protected geometry, Multi1.0, Loop715 a
 - [x] Actual internal selection-clearing click/capture ordering, source A/B switching, Apply/Cancel and restored scene; old guard mutation rejected.
 - [x] Cancel closes orphaned host; normal session and existing radial lifecycle checks retained.
 - [x] Corrected radial positions / no radial Multi / footer Multi and Duplicate retained.
-- [ ] iPad: Edit Boolean → A/B visible, switch/transform → Cancel; reopen → Update/Apply → Undo/Redo.
-- [ ] Background exit and mode switch close safely; radial Boolean below Duplicate, Clean in prior Multi slot, no radial Multi.
+- [x] User .801 PASS — iPad: Edit Boolean → A/B visible, switch/transform → Cancel; reopen → Update/Apply → Undo/Redo.
+- [x] User .801 PASS — Background exit and mode switch close safely; radial Boolean below Duplicate, Clean in prior Multi slot, no radial Multi.
 
-.801 validation: **2141/2141 PASS, 0 FAIL, 0 skipped** (full Node24 suite). Includes actual activation click plus old-guard mutation; iPad acceptance pending.
+.801 validation: **2141/2141 PASS, 0 FAIL, 0 skipped** (full Node24 suite). Includes actual activation click plus old-guard mutation; User .801 PASS recorded/protected.
+
+
+## .802 — Dense negative Extrude regression — 2026-10-11
+
+User .801 PASS recorded/protected: Editable Boolean A/B edit/exit and corrected Object
+radial. Separate attached BAD EXTRUDE.obj814v/730f and screenshot801 reveal dense
+rectangular cut walls. Audit live/main and .779 owner: no kernel rollback;256-piece
+cleanup shortcut returns unmerged cells when plane classification is denser.
+Existing coalescer now spatially welds and axis-indexes private seams, cancels interior
+edges at existing10000 generation bound, iterative component lookup. Convex/area/
+single-boundary guards and hole/concave conservative fallback retained. No new kernel,
+global dissolve, pointer/history/UI change. Face import-only parent/cache chain802,
+shell/recovery802; reviewed hashes include retained legacy242 plan/Through reference.
+
+Exact uploaded OBJ preserved (SHA256a3ebd5e09db1c46e4b0dedaa12fa60d82a9b3aadce59ced100a5336bd4f1c212).
+No original before export available: reconstructed closed146v/120f regression cage
+closes two rectangular final openings and removes only their straight seam points.
+Old256 guard produces >1000 faces. Fixed recess150v/124f and through146v/122f;
+corrected downloadable OBJ preserves all118 exterior boundaries within2e-6, volume
+within2e-7 and warped anchors exactly. Not an automatic saved-mesh repair feature.
+12new regression checks: upload, old-guard mutation, four depths,3000-cell/hole,
+labels/crease/unchanged faces, physical/Exact/replay and Undo/Redo/Cancel. Earlier
+.779 tests retained. Device new-cut/corrected-file acceptance pending; Live Boolean
+deferred until this case is accepted. Protected Boolean801/Multi1.0/Loop715/betas untouched.
+
+- [x] Actual attached after mesh and explicitly reconstructed before cage; old256 guard mutation reproduces fragmentation.
+- [x] Four depths,3000 private cells/mismatched seams/hole, closed orientation, volume, metadata and unrelated warped geometry.
+- [x] Corrected downloadable OBJ matches original exterior boundaries/volume within six-decimal rounding.
+- [x] Physical/Exact/replay, one-step Undo/Redo, repeated-cap preview and Cancel/redo preservation.
+- [ ] iPad: import corrected mesh, inspect middle section and continue a simple inward/outward Face extrusion.
+- [ ] Undo/Redo restores each new operation cleanly; normal orbit/pan/zoom and selection remain intact.
+
+.802 full Node24 validation: **2153/2153 PASS, 0 FAIL, 0 skipped**. 12 new checks; all historical tests retained. Device acceptance and publication verification pending.

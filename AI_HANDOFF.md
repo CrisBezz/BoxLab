@@ -1,15 +1,46 @@
-# BoxLab AI Handoff — Editable Boolean sources
+# BoxLab AI Handoff — Dense Extrude wall repair
 
 ## Current state — 2026-10-11
 
 CrisBezz/BoxLab main is source of truth; live https://crisbezz.github.io/BoxLab/.
-Current build **v0.36.18.801**. Last whole-build acceptance **.797 PASS**, protected.
-Parent main `71a1990ca82d908443c6db7ce6e91fcdc5302dd0`.
-Release commit `5cfdba4fb8eb0ef688c4c0fe15a03c91ec1e9b39`.
+Current build **v0.36.18.802**. User **.801 PASS** recorded/protected for Editable
+Boolean A/B activation, editing/exit and corrected Object radial layout. The user
+then reports a separate dense middle Extrude on the attached Torus; this is the
+current fix, not a reversal of Boolean acceptance. Parent main
+`35b4aa2f64029deb300472e4c242d9f06ea05789`. Publication verification follows below.
 
-Full2141/2141 PASS, 0 failures/skips. CI38095379471 and Pages38095379020 SUCCESS.
-Fresh live manifest, shell and all three changed runtime owners match main byte-for-byte.
-.801 iPad acceptance pending; .800 reported FAIL (A/B and exit), not protected.
+## .802 — Dense simple Extrude exceeds former cleanup bound
+
+Screenshot confirms .801; fresh live .801 shell/manifest matched main before work.
+Exact uploaded BAD EXTRUDE.obj retained as negative-extrude-802-upload.obj:
+814 vertices / 730 faces, closed and consistently wound; two long final cutter
+walls each contain over256 cells. No Extrude geometry rollback since .779: existing
+coalesceBoundaryParts returned all accepted cells when count exceeded256. Infinite
+shell plane extensions subdivide even an ordinary rectangular cut densely.
+
+Repair confined to existing Through/negative-cut coalescer: remove its256 shortcut;
+spatially weld private points with the same tolerance/first-point choice, index
+candidate seam points by dominant axis, and use iterative disjoint-set lookup.
+Existing10000 cutter-generation limit remains. Same reversed-edge cancellation,
+single-loop/convex/area guards and conservative hole/concave fallback retained.
+No global dissolve, shape flattening, new kernel, gesture or history owner.
+
+Only an after export was supplied. Regression before cage is explicitly reconstructed
+by closing its two final rectangular openings and removing their straight seam points;
+not claimed identical to the original pre-operation mesh. This closed146v/120f cage
+reproduces >1000 faces with the old256 guard. Fixed recess150v/124f, one quad cap/four
+walls; through146v/122f, four walls/no cap. Uploaded and corrected exterior boundaries
+agree within2e-6 and volume within2e-7 (six-decimal OBJ rounding); warped anchors exact.
+Corrected copy negative-extrude-802-corrected.obj is downloadable for continued work.
+Saved damaged topology is not automatically repaired by the runtime change.
+
+Tests:12new checks cover actual upload/recovered/corrected cages, four depths, old
+bound mutation,3000 mismatched pieces/hole preservation, labels/crease/unrelated
+geometry, physical/Exact/replay owners and history/Cancel. .779 tests all remain.
+Through child802 and direct Face import-only shell pin802; legacy242 plan/buildThrough
+URL retained because that path does not use the changed coalescer. Other runtime pins,
+.801 Boolean/radial, Multi1.0/Loop715 and frozenBeta2–6 unchanged. Device acceptance
+pending. Finish this concrete Extrude case before automatic Live Boolean.
 
 ## .801 — Reproduced Boolean activation/cancel loop; corrected radial
 
@@ -30,8 +61,8 @@ reproduces null.undo exception. No main gesture or geometry/history owner change
 Object radial Multi Select removed as corrected by user. Clean for SubD outer225°
 occupies its former slot. Boolean/Edit Boolean outer180° directly below Duplicate
 inner180°. Delete315° and all other slots retained. Footer Multi icon and gizmo corner
-remain; original footer Duplicate retained. Validate .801 before Live Boolean;
-.798/.799/.800 all unaccepted; .797 remains protected PASS.
+remain; original footer Duplicate retained. User .801 PASS accepted/protected A/B editing/exit and corrected radial.
+.798/.799/.800 earlier failed attempts remain historical; repair Extrude case before Live Boolean.
 
 ## .800 — Boolean source visibility and Object radial actions
 
@@ -675,13 +706,12 @@ download failed); separate .771 device acceptance not explicitly recorded here.
 
 ## Next task / outstanding issues
 
-.796 whole-build user PASS protects Add+ previews/unit fit, Text, lifecycle/history.
-.797 awaits iPad: GLB grouped-object export/import retains names/colours as one object,
-Split groups remains optional; component gizmo Rotate and Undo/Redo unchanged.
-Full current suite2125/2125PASS/0FAIL/0skip; no historical tests suppressed. Next scoped
-Bevel/Knife/Loop reliability audit using actual cases; avoid speculative kernel changes.
-.794 File/VIEW manual gate remains separately pending. NOM import/Lasso deferred;
-frozen betas immutable. Node transport/controlled DOM do not prove Safari or textures.
+.801 PASS protects Editable Boolean A/B switching/transforms, safe exit and corrected
+Object radial slots. .797 GLB/Rotate green baseline and .796 Add+ preview/unit fit
+remain protected. .802 fixes supplied dense simple Extrude; obtain device sanity for
+new cuts and corrected-file usability, then automatic Live Boolean → Curve/Balloon
+→ Curve Cutter → open/licensed quad-remesher feasibility. NOM import/Lasso deferred.
+Do not infer device acceptance from Node tests or auto-repair already damaged meshes.
 
 ## Accepted interaction / UI baseline
 
@@ -787,10 +817,11 @@ unchanged. Through .242 route retained; no-op/refusal/cancel preserves redo.
 
 Frozen beta2/3/4/5/6 immutable. src/multi-object-transform.js?v=0.36.1.0 explicitly
 protected; LoopCut commit/feel715 protected. Intentionally old pins are not errors.
-Current recovery797; importer797; shared Tool Session UI791; Sweep789; Revolve Profile788; Add UI/fit796; preview795; factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
+Current recovery802; importer797; shared Tool Session UI798; Editable Boolean801/core798;
+Object radial/total-gizmo801; management/multi-object/drawer800; background799; Sweep789; Revolve Profile788; Add UI/fit796; preview795; factory/Text/font771; direct-Bevel769; direct-Vertex-Bevel767; Gate766; Knife763;
 main786(background-only); Vertex assist786; scaffold-helper761; Drawer/Lasso760; shared Vertex/Edge Extrude/total-gizmo/
-background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct786(tap-only);
-Through child779; multi-chamfer748; guard747; other bevel engines745; Loop logical
+background759; Vertex Extrude/core752; Vertex kernels/bootstrap/Inset753; Face direct802(import-only; tap786);
+Through child802; multi-chamfer748; guard747; other bevel engines745; Loop logical
 addon/drawer746, fallback743; legacy Through242. Export/NOM/core741; debug736;
 axis735; Focus733; component-align705. Repin only changed modules and necessary
 loading parents, plus shell title/visible/data/version and recovery owners.
@@ -1029,3 +1060,5 @@ protected Multi1.0/Loop715 and frozen Beta2–6 retained. .798 device PASS pendi
 .800 validation: **2138/2138 PASS, 0 FAIL, 0 skipped**; Node24 complete suite. Device A/B display/controls remain acceptance gate.
 
 .801 validation: **2141/2141 PASS, 0 FAIL, 0 skipped** (full Node24 suite). Includes actual activation click plus old-guard mutation; iPad acceptance pending.
+
+.802 full Node24 validation: **2153/2153 PASS, 0 FAIL, 0 skipped**. 12 new checks; all historical tests retained. Device acceptance and publication verification pending.

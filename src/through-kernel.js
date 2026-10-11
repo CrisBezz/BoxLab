@@ -72,18 +72,33 @@ function mergeBoundaryParts(parts,eps){
 // unambiguous convex boundary per connected component is coalesced; holes, branches
 // and concave unions retain the established conservative piece merger.
 function coalesceBoundaryParts(parts,eps){
-  if(parts.length<2||parts.length>256)return parts;
-  const points=[];
-  const id=p=>{let i=points.findIndex(q=>p.distanceTo(q)<=eps);if(i<0){i=points.length;points.push(p);}return i;};
+  if(parts.length<2)return parts;
+  // Use the cutter's existing 10,000-piece generation limit. The old 256-piece
+  // shortcut published hundreds of artificial cells even for one rectangular
+  // wall. Spatial lookup keeps dense private seam conformance bounded in practice.
+  const points=[],buckets=new Map(),cell=p=>[p.x,p.y,p.z].map(v=>Math.floor(v/eps));
+  const id=p=>{
+    const c=cell(p);let found=Infinity;
+    for(let x=-1;x<=1;x++)for(let y=-1;y<=1;y++)for(let z=-1;z<=1;z++){
+      for(const i of buckets.get(`${c[0]+x}:${c[1]+y}:${c[2]+z}`)||[])if(i<found&&p.distanceTo(points[i])<=eps)found=i;
+    }
+    if(found!==Infinity)return found;
+    const i=points.length,key=c.join(':');points.push(p);if(!buckets.has(key))buckets.set(key,[]);buckets.get(key).push(i);return i;
+  };
   const faces=parts.map(p=>p.map(id));
+  const axes=['x','y','z'],ordered=axes.map(axis=>points.map((p,k)=>({k,value:p[axis]})).sort((a,b)=>a.value-b.value));
+  const lower=(items,value)=>{let a=0,b=items.length;while(a<b){const mid=(a+b)>>>1;if(items[mid].value<value)a=mid+1;else b=mid;}return a;};
   const conform=faces.map(f=>f.flatMap((a,i)=>{
     const b=f[(i+1)%f.length],ab=points[b].clone().sub(points[a]),length=ab.length(),entries=[];
     if(length<=eps)return[a];
-    points.forEach((p,k)=>{if(k===a||k===b)return;const t=p.clone().sub(points[a]).dot(ab)/(length*length);
-      if(t>eps/length&&t<1-eps/length&&points[a].clone().addScaledVector(ab,t).distanceTo(p)<=eps)entries.push({k,t});});
+    const axis=axes.reduce((best,key)=>Math.abs(ab[key])>Math.abs(ab[best])?key:best,'x'),items=ordered[axes.indexOf(axis)],end=Math.max(points[a][axis],points[b][axis])+eps;
+    for(let j=lower(items,Math.min(points[a][axis],points[b][axis])-eps);j<items.length&&items[j].value<=end;j++){
+      const k=items[j].k,p=points[k];if(k===a||k===b)continue;const t=p.clone().sub(points[a]).dot(ab)/(length*length);
+      if(t>eps/length&&t<1-eps/length&&points[a].clone().addScaledVector(ab,t).distanceTo(p)<=eps)entries.push({k,t});
+    }
     entries.sort((x,y)=>x.t-y.t);return[a,...entries.map(e=>e.k)];
   }));
-  const uses=new Map(),parent=conform.map((_,i)=>i),find=i=>parent[i]===i?i:(parent[i]=find(parent[i]));
+  const uses=new Map(),parent=conform.map((_,i)=>i),find=i=>{let root=i;while(parent[root]!==root)root=parent[root];while(parent[i]!==i){const next=parent[i];parent[i]=root;i=next;}return root;};
   conform.forEach((f,fi)=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],key=a<b?`${a}:${b}`:`${b}:${a}`;
     if(!uses.has(key))uses.set(key,[]);uses.get(key).push({a,b,fi});}));
   for(const owners of uses.values())if(owners.length===2&&owners[0].a===owners[1].b&&owners[0].b===owners[1].a)parent[find(owners[1].fi)]=find(owners[0].fi);
