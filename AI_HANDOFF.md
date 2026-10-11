@@ -27,6 +27,10 @@ and shell/recovery806 repinned; protected Multi1.0/Loop715/Extrude802/betas unto
 Full Node24:2163/2163 PASS, 0 FAIL, 0 skips; final popup/list acceptance
 precedes Beta7 freeze.
 
+Release `88b4c17e261f72346e8f1f7dcbf651cef4b07196`; CI38100108214 and
+Pages38100107974 SUCCESS. Fresh live manifest/shell/editor806 match main byte-for-byte.
+Await combined .805 list / .806 appearance and automatic-preview device acceptance.
+
 ## .805 — Boolean result-only object list / .804 PASS — 2026-10-11
 
 User .804 PASS: exclusive Result/Sources presentation, automatic preview and edit/exit
