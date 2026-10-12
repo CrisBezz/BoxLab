@@ -69,3 +69,9 @@ Releasef7ae31c4636f8161ba14987f064dc93d30c7f405; tree616a35bf09d3c01db956db443dd
 Node22 CI38237955024/job114773194656 SUCCESS2219PASS/0FAIL/0skip.
 Pages38237954570 SUCCESS; live shell/manifest/three changed owners byte-match.
 .831 iPad mixed-guide Save/Open acceptance pending.
+
+## .832 publication verified
+Releasecce8e76a25d78d40e33fe63ba4441363fda70876; treea508345e37ea19ad835bdccb67c777fa99aa9208.
+Node22 CI38239991844/job114779926952 SUCCESS2223PASS/0FAIL/0skip.
+Pages38239990977 SUCCESS; live shell/manifest/three changed owners byte-match.
+.832 linked-instance project iPad gate pending.

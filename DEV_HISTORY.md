@@ -8113,3 +8113,12 @@ Multi1.0/Loop715/Extrude802/Boolean806/frozenBeta2–7 untouched. Device linked 
 component edit sharing, independent move/Make Unique/history pending.
 
 .832 full local Node24:2223PASS/0FAIL/0skip. CI/publication verified separately.
+
+
+### .832 publication verification — 2026-10-12
+
+Releasecce8e76a25d78d40e33fe63ba4441363fda70876; tested tree
+ a508345e37ea19ad835bdccb67c777fa99aa9208 matches checkout. Node22 CI
+38239991844/job114779926952 SUCCESS:2223PASS/0FAIL/0skip. Pages38239990977
+SUCCESS. Fresh live shell/manifest/manager/object-management/drawer bytes match.
+.831 user PASS protected; .832 linked project device edit/Move/Make Unique gate pending.
