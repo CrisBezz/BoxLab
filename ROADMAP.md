@@ -4,7 +4,13 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .833 linked mode-transition failure repair / frozen Beta 7, 2026-10-12
+## Current direction — .834 linked disappearance evidence / frozen Beta 7, 2026-10-12
+
+.833 user retest FAIL. .834 adds off-by-default read-only LINKED bounds/visibility traces
+inside existing Gesture Debug. Obtain iPad mode-switch screenshot before another repair;
+no new modeling feature work until this failure is understood and fixed.
+
+## Previous direction — .833 linked mode-transition failure repair / frozen Beta 7, 2026-10-12
 
 User FAIL .832: moved Linked Duplicate disappears on Face-mode switch. .833 flushes
 outgoing Object placement before main mode mutation; real-owner regression covers

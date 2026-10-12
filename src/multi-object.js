@@ -890,9 +890,19 @@ function installRenderObserver() {
 // Commit the outgoing Object placement before main changes selection mode.
 // The render observer otherwise sees Face mode and can treat a pending object
 // transform as a shared component edit using the previous instance matrix.
+function linkedModeTrace(stage){
+  const debug=globalThis.__boxlabGestureDebug,object=activeObject();
+  if(!debug?.enabled||!object?.sourceId)return;
+  const bounds=mesh=>{if(!mesh?.vertices?.length)return '-';const box=new THREE.Box3().setFromPoints(mesh.vertices),v=box.getCenter(new THREE.Vector3());return [v.x,v.y,v.z].map(n=>Number(n.toFixed(3))).join(',');};
+  const source=linkedSources.get(object.sourceId),evaluated=source?transformEditableMesh(source.mesh,matrixForInstance(object)):null;
+  debug.log('LINKED '+stage,{mode:currentMode(),id:object.id,live:bounds(state()?.mesh),stored:bounds(object.mesh),evaluated:bounds(evaluated),source:bounds(source?.mesh),visible:object.visible,solo:soloId,body:activeBody?.visible,faces:state()?.mesh?.faces?.length});
+}
 function flushLinkedPlacementOnModeChange(event){
   const button=event.target?.closest?.('#selectionModes button'),next=button?.dataset?.mode;
-  if(currentMode()==='object'&&next&&next!=='object'&&activeObject()?.sourceId)saveActive();
+  if(currentMode()==='object'&&next&&next!=='object'&&activeObject()?.sourceId){
+    linkedModeTrace('BEFORE '+next);saveActive();linkedModeTrace('SAVED');
+    queueMicrotask(()=>linkedModeTrace('AFTER '+next));
+  }
 }
 function installUI() {
   const standardRow=addButton?.parentElement;

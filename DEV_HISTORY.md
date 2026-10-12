@@ -8148,3 +8148,17 @@ Releaseaf69a754f0e6005c11f577e9d834c5b8e98a7264; tested tree
 38240986196/job114783239634 SUCCESS:2225PASS/0FAIL/0skip. Pages38240986065
 SUCCESS. Fresh live shell/manifest/manager byte-match. .832 device FAIL remains
 recorded; .833 moved linked copy > Face mode retest pending, not claimed accepted.
+
+
+## .834 — Linked disappearance diagnosis after .833 device FAIL — 2026-10-12
+
+User says .833 no good. Prior synthetic source-corruption fixture does not prove exact
+iPad disappearance cause. No further speculative placement repair. Existing manager logs
+before/saved/after mode-switch bounds of live/cached/evaluated/source meshes plus active ID,
+mode, visible/solo/body and face count through off-by-default Gesture Debug. Existing bounded
+pinned summary retains LINKED lines despite pointer traffic. Read-only trace test covers off
+state and observed mismatch with no mutation. Manager/Debug/recovery/shell834 reviewed;
+project owners832/Curve830/protected kernels/frozenBeta unchanged. Screenshot evidence
+needed before next fix; .832/.833 device failure not marked accepted.
+
+.834 full local Node24:2226PASS/0FAIL/0skip; device failure unresolved pending trace.

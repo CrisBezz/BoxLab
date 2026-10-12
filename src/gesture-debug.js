@@ -52,7 +52,7 @@ function log(stage,detail=null){
     contactBody.prepend(summary);
     while(contactBody.children.length>4)contactBody.lastElementChild.remove();
   }
-  if(stage.startsWith('BACKGROUND ')){
+  if(stage.startsWith('BACKGROUND ')||stage.startsWith('LINKED ')){
     if(!backgroundBody.children.length)backgroundBody.textContent='';
     const summary=document.createElement('div');summary.textContent=line.textContent;
     backgroundBody.prepend(summary);

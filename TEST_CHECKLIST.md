@@ -5697,3 +5697,11 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Repeat Object Move → Edge and Vertex; component edit shares without moving other copy.
 - [ ] Save/Open linked scene, repeat mode switch; Make Unique/Undo/Redo normal.
 - [ ] Pencil orbit/pan/pinch unchanged.
+
+
+## .834 Linked disappearance diagnostics — .833 retest FAIL
+
+- [x] User .833 no good recorded; exact iPad disappearance remains unresolved.
+- [x] Read-only trace off by default, no mesh/source mutation, records distinct bounds.
+- [ ] Enable VIEW > Gesture Debug; Linked Duplicate > move > Face; capture pinned LINKED lines.
+- [ ] If no LINKED lines, note it as routing evidence, not a successful placement guard.
