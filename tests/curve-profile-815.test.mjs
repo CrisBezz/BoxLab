@@ -10,7 +10,11 @@ test('815 shared editor owns Pencil before competing document capture and restor
  const u=curveProfileUIRuntime(),nav=controls(u),before=u.r.snapshot();let penMoves=0,touchMoves=0;
  for(const type of ['pointerdown','pointermove','pointerup','pointercancel'])u.doc.addEventListener(type,e=>{e.pointerType==='pen'?penMoves++:touchMoves++;e.stopImmediatePropagation();},true);
  u.api.open(false,true);assert(u.pointer('pointerdown',270,90).stopped);assert.equal(nav.enabled,false);u.pointer('pointermove',200,30);assert.equal(u.pointer('pointermove',100,30,{pointerId:9}).stopped,true);assert.equal(u.api.dragging,true);u.pointer('pointermove',60,90);u.pointer('pointermove',160,155);u.pointer('pointerup',270,90);assert.equal(nav.enabled,true);assert.equal(u.api.dragging,false);assert.equal(penMoves,1,'only unrelated pointer reaches document consumer');assert.deepEqual(u.r.snapshot(),before);
- const event=u.pointer('pointerdown',50,50,{pointerType:'touch'});assert.equal(event.prevented,undefined);assert.equal(nav.enabled,true);assert.equal(touchMoves,1);u.api.cancel();
+ // .824 explicitly accepts primary touch inside the pad (Safari may classify Pencil as touch).
+ u.button('mode').click();
+ const event=u.pointer('pointerdown',50,50,{pointerType:'touch'});assert.equal(event.prevented,true);assert.equal(nav.enabled,false);assert.equal(touchMoves,0);
+ u.pointer('pointerup',80,60,{pointerType:'touch'});assert.equal(nav.enabled,true);
+ const outside=u.pointer('pointerdown',50,50,{pointerType:'touch',target:u.wrap});assert.equal(outside.prevented,undefined);assert.equal(nav.enabled,true);assert.equal(touchMoves,1);u.api.cancel();
 });
 test('815 actual Reset click closes profile before native reset, then same Pencil ID can draw again',()=>{
  const u=curveProfileUIRuntime(),nav=controls(u),reset={id:'resetBtn',listeners:[],addEventListener(type,fn){this.listeners.push(fn);}};let resets=0;

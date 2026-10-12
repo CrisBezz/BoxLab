@@ -360,9 +360,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.829",
+      "url": "./src/primitive-ui.js?v=0.36.18.830",
       "target": "src/primitive-ui.js",
-      "sha256": "f37fccb3e875931355023ef4f7d7b761c63eec216780dbea1be73445c6971029"
+      "sha256": "dde3d10d65bdf7ee2346e413715e4c0ad2fd042124c0ed7c0339a61337a4cbe2"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.829",
+      "url": "./src/release-bootstrap.js?v=0.36.18.830",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.829",
+      "url": "./src/release-version.js?v=0.36.18.830",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2233,9 +2233,9 @@
     },
     {
       "owner": "src/curve-profile-ui.js",
-      "url": "./curve-profile-core.js?v=0.36.18.820",
+      "url": "./curve-profile-core.js?v=0.36.18.830",
       "target": "src/curve-profile-core.js",
-      "sha256": "7940540af7513412c51ca216cfedfa974e73bfc8f8a77170b4e422d68956d950"
+      "sha256": "d19f8223947815693d6f2eaa3900ccc5669e6fcd7e3f26eaeb7267bc9ff87d5a"
     },
     {
       "owner": "src/curve-profile-ui.js",
@@ -2251,9 +2251,9 @@
     },
     {
       "owner": "src/primitive-ui.js",
-      "url": "./curve-profile-ui.js?v=0.36.18.824",
+      "url": "./curve-profile-ui.js?v=0.36.18.830",
       "target": "src/curve-profile-ui.js",
-      "sha256": "2d897b780db0c13faace77cdfb3f4cf86c4ac353b24813ee7d3dacb0216d1808",
+      "sha256": "9c18b302117cce37551db5383c2adb77e3c7a3bf46c16a3865d339c1b86de47b",
       "sourceVersion": "0.36.18.815"
     },
     {
@@ -2288,9 +2288,9 @@
     },
     {
       "owner": "src/curve-profile-core.js",
-      "url": "./curve-balloon-core.js?v=0.36.18.820",
+      "url": "./curve-balloon-core.js?v=0.36.18.830",
       "target": "src/curve-balloon-core.js",
-      "sha256": "87fb86a2255c6bdb5758788ea60155409c2f8db9e17ea372a89dbd054190fb45"
+      "sha256": "a9f1f9528283f4585948aa715b81fc968e06e53c27bdcd19de7e23ca9d75322b"
     },
     {
       "owner": "src/curve-balloon-core.js",

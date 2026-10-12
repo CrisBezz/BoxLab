@@ -4,7 +4,16 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .829 project Open hardening / frozen Beta 7, 2026-10-12
+## Current direction — .830 zero regression failures / frozen Beta 7, 2026-10-12
+
+User prioritised failures. .830 fixes new quadball orphan poles with versioned recipes,
+keeps old grid recipes editable, reconciles three stale UI/diagnostic checks and tests
+safe shallow concavity alongside unsafe-notch refusal. Full2216PASS/0FAIL/0skip.
+Next iPad Balloon/merge/navigation sanity, then .boxlab resource completeness and
+performance improvements before NOM/Curve cutters/UV painting. .829 Open device gate
+also pending. All accepted gestures and frozen Beta7 remain protected.
+
+## Previous direction — .829 project Open hardening / frozen Beta 7, 2026-10-12
 
 .829 hardens existing basic Open manager rollback, allocator and history integrity;
 corrects stale Save status and unifies drawer/shell object-management loading.

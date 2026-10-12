@@ -1,7 +1,7 @@
 import {appendStrokePoint,simplifyStroke} from './stroke-sampling.js?v=0.36.18.808';
-import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.820';
+import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.830';
 import {createAddObjectPreview} from './add-object-preview.js?v=0.36.18.814';
-const VERSION='0.36.18.824',W=320,H=180,NS='http://www.w3.org/2000/svg';
+const VERSION='0.36.18.830',W=320,H=180,NS='http://www.w3.org/2000/svg';
 const manager=()=>globalThis.__boxlabObjectManager,session=()=>globalThis.__boxlabToolSession;
 const activeObject=()=>{const m=manager();return m?.objects.find(o=>o.id===m.activeId);};
 let panel=null,pad=null,path=null,handles=null,note=null,applyButton=null,profile=null,objectId=null,drag=null,edit=false,undos=[],committing=false,preview=null;
@@ -38,7 +38,7 @@ function apply(){
 }
 function open(existing=false,balloon=false){
  if(panel)cancel();const current=session()?.current?.();if(current&&!globalThis.__boxlabObjectRadialSession?.cancelCurrent?.()){return false;}
- const source=existing?activeObject():null,record=existing?editableCurveProfile(source):{version:1,points:[],closed:true,smooth:true,detail:balloon?16:32,...(balloon?{output:'balloon',depth:.25,balloonResolution:4,balloonTopology:'quads',balloonPoleQuads:true,balloonPolePatch:'grid'}:{})};
+ const source=existing?activeObject():null,record=existing?editableCurveProfile(source):{version:1,points:[],closed:true,smooth:true,detail:balloon?16:32,...(balloon?{output:'balloon',depth:.25,balloonResolution:4,balloonTopology:'quads',balloonPoleQuads:true,balloonPolePatch:'grid',balloonGridVersion:2}:{})};
  if(!record||!session()){return false;}
  globalThis.__boxlabLasso?.setArmed?.(false);globalThis.__boxlabTransformArming?.disarm?.();
  profile=record;objectId=source?.id??null;edit=existing;undos=[];panel=node('div');panel.id='curveProfilePanel';panel.className='boxlab-tool-session-shell';
@@ -73,7 +73,7 @@ function open(existing=false,balloon=false){
   release();draw();
  }
  // Same authoring owner, before document-capture modelling consumers. Only
- // strokes originating inside this pad are claimed; touch remains unclaimed.
+ // primary strokes originating inside this pad are claimed, including touch.
  const down=e=>beginStroke(e),move=e=>moveStroke(e),up=e=>end(e),cancelled=e=>end(e,true);
  window.addEventListener('pointerdown',down,true);window.addEventListener('pointermove',move,true);window.addEventListener('pointerup',up,true);window.addEventListener('pointercancel',cancelled,true);
  panel.releaseStrokeListeners=()=>{window.removeEventListener('pointerdown',down,true);window.removeEventListener('pointermove',move,true);window.removeEventListener('pointerup',up,true);window.removeEventListener('pointercancel',cancelled,true);};

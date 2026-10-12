@@ -8040,3 +8040,24 @@ Actual Node22 Topology run38234001316/job114760078286:2216tests/2211PASS/5FAIL/
 CI remains failed, not green. Pages run38234000894 SUCCESS. Fresh live manifest,
 index, manager, object-management and drawer bytes match repository .829.
 No protected modelling/frozenBeta changes. iPad manual gate pending.
+
+
+## .830 — Resolve all five remaining regression failures — 2026-10-12
+
+User prioritises returning to zero failures. Audit separated stale contracts from runtime.
+Quadball grid replaced pole fans but kept two unreferenced donor pole vertices (Euler4).
+New recipes flag balloonGridVersion2 and compact those vertices/remap faces; legacy unflagged
+grid recipes preserve exact indices and affine recipe editing. No visible surface changes.
+Existing grid test now covers every Density4–12, all quads, directed closed incidence,
+Euler2, no orphan vertices and legacy recipe eligibility. Existing UI/history tests exercise
+new default. Concave817 fixture's donor pole lies outside its visibility kernel: keep
+unsafe deep-notch refusal and add a shallow accepted notch in same active check, with
+original donor geometry/count parity; no relaxation of fold guard or broader concave claim.
+Merge821 test queried detached SVG handle replaced by draw(): requery active target, retaining
+red cue/merge count/Undo assertions. Refusal814 now accepts actual deep-concavity diagnosis
+while retaining refusal. Pointer815 reconciled with user-passed824 primary touch inside pad;
+explicit outside-pad touch yielding/control restoration retained. No tests deleted/skipped.
+Full local Node24:2216/2216PASS/0FAIL/0skip. Changed adapter/core/UI/Add parent830 and shell/
+recovery830 reviewed. Unchanged scene-manager/drawer829 URLs remain identical; protected
+Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 unchanged. iPad new/old Balloon,
+point merge/history and touch navigation gate pending. Next .boxlab resources/performance.

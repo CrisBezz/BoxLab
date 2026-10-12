@@ -26,5 +26,5 @@ test('814 invalid outline explains refusal inside preview and never mutates scen
  const u=curveProfileUIRuntime(),before=u.r.snapshot();u.api.open(false,true);sketch(u);u.button('closed').click();assert.equal(u.button('apply').disabled,true);assert(frame(u).some(d=>/closed outline/.test(d.message)));assert.equal(frame(u).filter(d=>d.path).length,0);assert.equal(u.api.apply(),false);assert.deepEqual(u.r.snapshot(),before);u.button('closed').click();assert.equal(u.button('apply').disabled,false);assert(frame(u).filter(d=>d.path).length>0);u.api.cancel();
 });
 test('814 deep dents and crossing silhouettes still refuse despite tolerance',()=>{
- const p=recipe();for(const points of [[{x:0,y:0},{x:1,y:0},{x:.4,y:.4},{x:1,y:1},{x:0,y:1}],[{x:0,y:0},{x:1,y:1},{x:0,y:1},{x:1,y:0}]])assert.throws(()=>makeCurveProfile({...p,smooth:false,points}),/outline|area/);
+ const p=recipe();for(const points of [[{x:0,y:0},{x:1,y:0},{x:.4,y:.4},{x:1,y:1},{x:0,y:1}],[{x:0,y:0},{x:1,y:1},{x:0,y:1},{x:1,y:0}]])assert.throws(()=>makeCurveProfile({...p,smooth:false,points}),/outline|area|Concavity too deep/);
 });

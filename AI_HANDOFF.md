@@ -1,7 +1,7 @@
-# BoxLab AI Handoff — .829 basic Open replacement hardening
+# BoxLab AI Handoff — .830 zero regression failures
 
 ## Verified state — 2026-10-12
-Repository: CrisBezz/BoxLab, main; live https://crisbezz.github.io/BoxLab/; released version 0.36.18.829 (device acceptance pending). User reports **PERFECT** on .828 iPad .boxlab Open recognition fix and is moving development to ChatGPT Work. Keep .828 protected. Build .829 follows the user /nextbuild in Work. Parent main b13d1c86. Read AI_WORKFLOW.md completely, this handoff, TEST_CHECKLIST.md, recent DEV_HISTORY.md and ROADMAP.md, then current code/release markers before making changes. Main is source of truth.
+Repository: CrisBezz/BoxLab, main; live https://crisbezz.github.io/BoxLab/; released version 0.36.18.830 (device acceptance pending). User reports **PERFECT** on .828 iPad .boxlab Open recognition fix and is moving development to ChatGPT Work. Keep .828 protected. Build .829 follows the user /nextbuild in Work. Parent main b13d1c86. Read AI_WORKFLOW.md completely, this handoff, TEST_CHECKLIST.md, recent DEV_HISTORY.md and ROADMAP.md, then current code/release markers before making changes. Main is source of truth.
 
 ## Recent accepted builds
 - .820 Quadball: genuine all-quad gridded caps, no radial pole vertex; user PASS.
@@ -30,13 +30,24 @@ identities;25 stale release-contract dependent checks resolved. Remaining five C
 checks stay active, recorded in docs/reliability-build-829.json; no full-green or Safari claim.
 Protected Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 untouched.
 
+## .830 current build
+All five remaining tests resolved; full local Node24 2216PASS/0FAIL/0skip, none removed.
+Runtime fix: new Balloon grid recipes carry balloonGridVersion2; compact unreferenced
+pole vertices with remapped quad faces. Legacy recipes without flag retain exact layout
+and remain editable; do not silently regenerate their indices. Grid test covers Density4–12,
+all quads, directed closed incidence, Euler2, no orphan vertices and legacy eligibility.
+Three stale tests corrected: query current SVG merge target after draw replaces nodes;
+accept actual concavity refusal diagnosis; primary inside-pad touch authoring follows
+protected824, outside-pad touch still yields. Concave817 deep notch refuses safely because
+donor pole is outside visibility kernel; shallow notch accepted with donor parity. No
+relaxed fold guard, new concave capability or altered donor. UI/core/adapter/Add830;
+scene-manager/drawer829 still use identical object-management829 URL. No protected
+modelling/frozenBeta changes. Node22 CI/publication must be verified separately.
+
 ## Suggested next /nextbuild
-Obtain .829 iPad Save/Open Cancel/Confirm/Add/edit/history feedback. Audit the five existing
-Curve/Balloon failing checks against protected device passes before changing their contracts
-or algorithms. Then preserved rich data and complete .boxlab resources in narrow stages.
-Nomad .NOM import, UV workflows, Curve cutters and performance remain queued. Do not add
-parallel modelling/scene/gesture owners. Basic Open still clears history on successful import;
-rollback guards synchronous manager setup only, not every asynchronous render failure.
+Obtain .830 iPad new/legacy Balloon, merge/Undo and navigation feedback plus .829
+Save/Open Cancel/Confirm/Add/edit gate. Then staged .boxlab resources and performance,
+followed by NOM/Curve cutters/UV workflow. Keep existing authoritative owners.
 
 ## Important release practices
 /nextbuild = audit current main, implement one narrow build on main, repin nested dynamic imports and index, refresh index title/data-release/version.json/bootstrap pins, update tests/fixtures, DEV_HISTORY/TEST_CHECKLIST/ROADMAP/AI_HANDOFF, verify readback. User responds PASS/FAIL; record PASSes protected. Never claim CI passed without an actual test result.

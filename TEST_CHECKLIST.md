@@ -5645,3 +5645,17 @@ these specific passes. Original broad .813 history/placement gates are not infer
 
 Full local Node24 2216/2211 PASS/5 existing FAIL/0skip. Remaining tests kept active;
 see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from automation.
+
+
+## .830 All five failures resolved — automated green; iPad gate pending
+
+- [x] All existing2216checks pass,0FAIL/0skip; no removed/quarantined checks.
+- [x] New grid caps at every Density4–12: all quads, closed oriented edge incidence, Euler2 and no orphan vertices.
+- [x] Legacy unflagged grid recipe retains exact layout and remains editable.
+- [x] Concave shallow notch matches donor; unsafe pole fan/deep notch/crossing still refuse.
+- [x] Merge queries current SVG target, red cue/merge/Undo verified.
+- [x] Primary touch inside pad authoring and outside-pad navigation yielding match accepted824.
+- [ ] New Balloon: draw oval, Density4/5/8; Apply, select pole area, Edit/Cancel and Undo/Redo.
+- [ ] Older Balloon: Edit Balloon still available; shape/placement preserved.
+- [ ] Drag point onto another: red target, release merges, Undo restores.
+- [ ] Pencil drawing stays stationary; outside-pad orbit/pan/pinch still work.

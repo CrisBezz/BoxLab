@@ -53,10 +53,14 @@ test('813 invalid candidate and Cancel leave scene/history untouched and remove 
 });
 
 
-test('817 star-shaped concave Balloon is accepted at low Density while crossed outlines refuse',()=>{
+test('817 shallow concave Balloon accepts; unsafe pole fan and crossed outlines refuse',()=>{
  const p={...profile(),smooth:false,balloonResolution:4,points:[{x:-.8,y:-.6},{x:.8,y:-.6},{x:.8,y:.6},{x:.2,y:.6},{x:0,y:.15},{x:-.2,y:.6},{x:-.8,y:.6}]};
- const mesh=makeCurveProfile(p);assert(mesh.faces.length>0);assert(mesh.faces.length<1000);
- const expected=buildOutlineBalloon(curvePoints(p),{depth:p.depth,smooth:2,outlineSegments:24,sectionRings:4});assert.equal(mesh.faces.length,expected.index.count/3);expected.dispose();
+ // The deep notch is star-shaped, but the donor's selected pole lies outside
+ // its visibility kernel; preserve safe refusal rather than accepting folds.
+ assert.throws(()=>makeCurveProfile(p),/Concavity too deep/);
+ const shallow={...p,points:p.points.map(v=>v.y===.15?{...v,y:.45}:v)};
+ const mesh=makeCurveProfile(shallow);assert(mesh.faces.length>0);assert(mesh.faces.length<1000);
+ const expected=buildOutlineBalloon(curvePoints(shallow),{depth:p.depth,smooth:2,outlineSegments:24,sectionRings:4});assert.equal(mesh.faces.length,expected.index.count/3);expected.dispose();
  assert.throws(()=>makeCurveProfile({...p,points:[{x:0,y:0},{x:1,y:1},{x:0,y:1},{x:1,y:0}]}),/crossings|area/);
 });
 
@@ -90,9 +94,13 @@ test('819 optional paired pole quads retain watertight oriented face cycles and 
 
 
 test('820 quadball replaces both pole fans with a manifold quad grid',()=>{
- for(const density of [4,6,8]){
-  const p={...profile(),balloonResolution:density,balloonTopology:'quads',balloonPolePatch:'grid'};
+ for(const density of [4,5,6,7,8,9,10,11,12]){
+  const p={...profile(),balloonResolution:density,balloonTopology:'quads',balloonPolePatch:'grid',balloonGridVersion:2};
   const mesh=makeCurveProfile(p);
+  assert.equal(new Set(mesh.faces.flat()).size,mesh.vertices.length,'no orphan pole vertices');
+  const legacy=makeCurveProfile({...p,balloonGridVersion:undefined});
+  assert.equal(legacy.vertices.length,mesh.vertices.length+2);
+  assert(editableCurveProfile({mesh:legacy,curveProfile:{...p,balloonGridVersion:undefined},settings:{}}),'legacy recipe remains editable');
   assert(mesh.faces.every(f=>f.length===4),'all faces should be quads');
   const edgeMap=new Map();
   for(const f of mesh.faces)for(let i=0;i<f.length;i++){
@@ -116,7 +124,8 @@ test('821 shared Curve editor Pencil drag-to-merge removes one point and Undo re
  const dots=u.find(n=>n.id==='curveProfilePad').children[1].children;
  const a=dots[0],b=dots[1];const ax=Number(a.attributes.cx),ay=Number(a.attributes.cy),bx=Number(b.attributes.cx),by=Number(b.attributes.cy);
  u.pointer('pointerdown',ax,ay);u.pointer('pointermove',bx,by);
- assert.equal(b.style.fill,'#e34b4b');
+ // draw() replaces SVG handles; query the current target, not a detached dot.
+ assert.equal(u.find(n=>n.id==='curveProfilePad').children[1].children[1].style.fill,'#e34b4b');
  u.pointer('pointerup',bx,by);
  assert.equal(u.find(n=>n.id==='curveProfilePad').children[1].children.length,before-1);
  u.button('undo').click();

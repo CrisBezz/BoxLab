@@ -100,6 +100,13 @@ export function makeCurveBalloon(points, profile) {
           retained.push(...patches);
           result.splice(0,result.length,...retained);
         }
+        // v2 grid caps remove the two now-unused donor poles. Legacy
+        // recipes retain their indices so existing saved Balloons still edit.
+        if(profile.balloonGridVersion===2){
+          const used=new Set(result.flat()),remap=new Map(),compact=[];
+          vertices.forEach((vertex,i)=>{if(used.has(i)){remap.set(i,compact.length);compact.push(vertex);}});
+          return new EditableMesh(compact,result.map(face=>face.map(i=>remap.get(i))));
+        }
         return new EditableMesh(vertices,result);
       }
       // Experimental .819 pole foundation: adjacent triangles of each fan
