@@ -5554,3 +5554,12 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Closed 3-point/open 2-point minimum guarded, Cancel non-mutating
 - [ ] Works in Curve and Balloon edit, preserves .820 Quadball preview
 - [ ] Pencil Reset, orbit, pan, pinch and scene Undo/Redo unaffected
+
+
+## Native project preflight .822
+
+- [ ] File > Check project snapshot reports object/vertex/face counts, groups, Boolean and Curve recipes
+- [ ] Audit does not alter selection, geometry or native scene Undo/Redo
+- [ ] Invalid coordinates are diagnosed without crashing File menu
+- [ ] .821 Pencil merge, .820 Quadball, Reset and viewport gestures retain accepted behaviour
+- [ ] No .boxlab Save/Open advertised until serializer round-trip and resource support are tested
