@@ -5589,3 +5589,13 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Project verification never modifies scene; editing and Undo/Redo still work
 - [ ] Unsupported rich resource scenes safely refuse rather than losing data
 - [ ] .824 Pencil drawing after Reset and .823 File menu scroll remain operational
+
+
+## Basic .boxlab Save .826
+
+- [ ] File > Save .boxlab (basic scene) downloads a nonempty .boxlab file from iPad Safari
+- [ ] Download filename follows File export name; no changes to live model or Undo stack
+- [ ] Created simple Quadball and second object survive in the saved JSON metadata
+- [ ] Unsupported GLB passthrough/UV/material resource scene refuses to save with visible explanation
+- [ ] Open is not yet offered; file is basic scene data and excludes history and rich resources
+- [ ] .824 Pencil capture, .823 compact File scroll, .821 Merge and .820 Quadball unchanged
