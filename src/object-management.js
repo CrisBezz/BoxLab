@@ -211,5 +211,35 @@ function installObserver(){if(!list)return;new MutationObserver(()=>{if(hierarch
 function installHistoryBridge(){if(historyBridgeInstalled)return;const h=globalThis.__boxlabHistory;if(!h||h.__boxlabObjectBridge)return;historyBridgeInstalled=true;h.__boxlabObjectBridge=true;const meta=new WeakMap(),basePush=h.push.bind(h),baseUndo=h.undo.bind(h),baseRedo=h.redo.bind(h);const tagLast=(stack,snapshot)=>{const token=stack?.[stack.length-1];if(token&&snapshot)meta.set(token,snapshot);};const checkpointSnapshot=(snapshot,mesh)=>{const live=mesh||globalThis.__boxlabBridgeState?.mesh;if(!live||!snapshot)return false;basePush(live);tagLast(h.undoStack,snapshot);return true;};const restoreWithTokens=snapshot=>{const undo=[...h.undoStack],redo=[...h.redoStack];try{restoreScene(snapshot);}finally{h.undoStack.splice(0,h.undoStack.length,...undo);h.redoStack.splice(0,h.redoStack.length,...redo);}};const checkpoint=()=>checkpointSnapshot(captureScene());h.push=function(mesh){const snapshot=currentMode()==='object'?captureScene():null;basePush(mesh);if(snapshot)tagLast(h.undoStack,snapshot);};h.undo=function(current){if(globalThis.__boxlabEditableBoolean?.active?.()){globalThis.__boxlabEditableBoolean.cancel();return null;}const token=h.undoStack?.[h.undoStack.length-1],snapshot=token?meta.get(token):null,currentScene=snapshot?captureScene():null,result=baseUndo(current);if(snapshot&&result){tagLast(h.redoStack,currentScene);restoreWithTokens(snapshot);}return result;};h.redo=function(current){if(globalThis.__boxlabEditableBoolean?.active?.()){globalThis.__boxlabEditableBoolean.cancel();return null;}const token=h.redoStack?.[h.redoStack.length-1],snapshot=token?meta.get(token):null,currentScene=snapshot?captureScene():null,result=baseRedo(current);if(snapshot&&result){tagLast(h.undoStack,currentScene);restoreWithTokens(snapshot);}return result;};globalThis.__boxlabObjectHistory={checkpoint,checkpointSnapshot,capture:captureScene,restore:restoreScene};document.addEventListener('click',e=>{const target=e.target?.closest?.('#objectOriginTools button[data-origin],#outlinerDuplicateBtn,#outlinerDeleteBtn,#joinObjectsBtn,#quadCleanBtn');if(!target||target.disabled)return;
     const label=target.textContent?.trim();
     checkpoint();},true);}
-function initialize(){if(globalThis.__boxlabObjectSelectionRuntime?.initialized)return true;if(!manager()||!drawer||!list)return false;globalThis.__boxlabObjectSelectionRuntime={initialized:true,owner:toolbarOwner};buildToolbar();selectedIds=new Set(activeId()==null?[]:[activeId()]);installCaptureHandlers();installObserver();updateUI();globalThis.__boxlabObjectSelection={__authoritative:true,owner:toolbarOwner,get ids(){return new Set(selectedIds);},get multi(){return multiEnabled;},invert(seed=[...selectedIds]){const have=new Set(seed);multiEnabled=true;selectedIds=new Set(objects().filter(o=>o.visible!==false&&!have.has(o.id)).map(o=>o.id));updateUI();},get wholeGroupId(){return selectedWholeGroupId();},select(ids=[]){multiEnabled=true;selectedIds=new Set(ids);updateUI();},single(id=activeId()){multiEnabled=false;selectedIds=new Set(id==null?[]:[id]);updateUI();},clear(){selectedIds.clear();updateUI();},refresh(){updateUI();}};globalThis.__boxlabObjectGroups={groupSelection,ungroupSelection,selectGroup,renameGroup,refresh:updateUI,label:groupLabel,members:groupMembers,completeSelectedGroupIds:selectedCompleteGroupIds};installHistoryBridge();return true;}
+function auditProjectSnapshot(){
+ const scene=captureScene();
+ if(!scene)return {ok:false,reason:'Scene not ready'};
+ const counts={objects:scene.objects.length,faces:0,vertices:0,groups:scene.groups?.names?.length||0,booleanRecipes:0,curveProfiles:0,linkedObjects:0,referenceObjects:0};
+ const issues=[];
+ for(const obj of scene.objects){
+  const mesh=obj.mesh;
+  if(!mesh||!Array.isArray(mesh.vertices)||!Array.isArray(mesh.faces)){issues.push('Missing editable mesh: '+obj.name);continue;}
+  counts.vertices+=mesh.vertices.length;counts.faces+=mesh.faces.length;
+  if(obj.booleanRecipe)counts.booleanRecipes++;
+  if(obj.curveProfile)counts.curveProfiles++;
+  if(obj.sourceId)counts.linkedObjects++;
+  if(obj.kind==='reference')counts.referenceObjects++;
+  if(mesh.vertices.some(v=>![v.x,v.y,v.z].every(Number.isFinite)))issues.push('Non-finite vertex: '+obj.name);
+ }
+ return {ok:issues.length===0,counts,issues,hasSelection:scene.selected.length>0,activeId:scene.activeId};
+}
+function installProjectAudit(){
+ const menu=document.querySelector('#fileMenu .top-file-content');
+ if(!menu||menu.querySelector('#projectAuditBtn'))return;
+ const button=document.createElement('button');button.id='projectAuditBtn';button.type='button';button.textContent='Check project snapshot';button.title='Check the current scene before native .boxlab Save/Open is introduced';
+ const output=document.createElement('div');output.id='projectAuditResult';output.className='export-destination-note';output.setAttribute('role','status');
+ button.addEventListener('click',()=>{
+  manager()?.saveActive?.();
+  const report=auditProjectSnapshot(),n=report.counts;
+  output.textContent=report.ok?`Project snapshot: ${n.objects} objects · ${n.vertices} vertices · ${n.faces} faces · ${n.groups} groups · ${n.booleanRecipes} Boolean recipes · ${n.curveProfiles} Curve profiles · ${n.linkedObjects} links · ${n.referenceObjects} references. File Save/Open not enabled yet.`:`Project snapshot issues: ${report.issues.slice(0,3).join('; ')||report.reason}`;
+ });
+ menu.append(button,output);
+}
+globalThis.__boxlabProjectSnapshotAudit={version:'0.36.18.822',inspect:auditProjectSnapshot};
+function initialize(){if(globalThis.__boxlabObjectSelectionRuntime?.initialized)return true;if(!manager()||!drawer||!list)return false;globalThis.__boxlabObjectSelectionRuntime={initialized:true,owner:toolbarOwner};buildToolbar();selectedIds=new Set(activeId()==null?[]:[activeId()]);installCaptureHandlers();installObserver();updateUI();globalThis.__boxlabObjectSelection={__authoritative:true,owner:toolbarOwner,get ids(){return new Set(selectedIds);},get multi(){return multiEnabled;},invert(seed=[...selectedIds]){const have=new Set(seed);multiEnabled=true;selectedIds=new Set(objects().filter(o=>o.visible!==false&&!have.has(o.id)).map(o=>o.id));updateUI();},get wholeGroupId(){return selectedWholeGroupId();},select(ids=[]){multiEnabled=true;selectedIds=new Set(ids);updateUI();},single(id=activeId()){multiEnabled=false;selectedIds=new Set(id==null?[]:[id]);updateUI();},clear(){selectedIds.clear();updateUI();},refresh(){updateUI();}};globalThis.__boxlabObjectGroups={groupSelection,ungroupSelection,selectGroup,renameGroup,refresh:updateUI,label:groupLabel,members:groupMembers,completeSelectedGroupIds:selectedCompleteGroupIds};installHistoryBridge();installProjectAudit();return true;}
 if(!initialize()){const ready=()=>{if(!initialize())return;window.removeEventListener('boxlab-object-manager-ready',ready);};window.addEventListener('boxlab-object-manager-ready',ready);}
