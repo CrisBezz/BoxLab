@@ -5599,3 +5599,13 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Unsupported GLB passthrough/UV/material resource scene refuses to save with visible explanation
 - [ ] Open is not yet offered; file is basic scene data and excludes history and rich resources
 - [ ] .824 Pencil capture, .823 compact File scroll, .821 Merge and .820 Quadball unchanged
+
+
+## Basic .boxlab Open .827
+
+- [ ] Save a simple 2-object scene, change the scene, select Open; Cancel confirmation leaves scene unchanged
+- [ ] Confirm Open restores saved object names, meshes, groups and settings; editing remains possible
+- [ ] New Add+ after Open allocates a new distinct object ID; no broken Outliner references
+- [ ] Wrong extension/malformed JSON/unsupported linked/reference scene refuses without replacing the current project
+- [ ] Open explicitly warns Undo/history reset, no misleading full-resource support; File menu scroll and iPad file picker work
+- [ ] Quadball, Pencil stroke capture, point merge and native Export/Save remain unchanged
