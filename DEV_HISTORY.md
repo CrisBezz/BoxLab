@@ -7977,3 +7977,8 @@ User PASS .820 Quadball; protect. Existing Curve editor window capture Pencil ow
 ## .822 — Native .boxlab project preflight — 2026-10-12
 
 User PASS .821 Pencil point merge, and .820 Quadball protected. Next roadmap native .boxlab Save/Open. Existing authoritative object-management captureScene/restoreScene already supports groups, selections, recipes and linked objects but mesh runtime serialization is not yet proven. Added read-only File > Check project snapshot with counts and finite vertex audit. No file codec/Save/Open claim, no scene/history mutation. Pending tactile acceptance. Next: design versioned codec with complete topology and resources before file actions.
+
+
+## .823 — File menu compact and scrollable — 2026-10-12
+
+User reports oversized File controls and Check project snapshot hidden by Snap/Mode controls on smaller screens. CSS-only scoped File content compactness, viewport max-height and touch scrolling; shell portrait prompt changed to device-neutral Rotate device to landscape. No geometry, file logic, history or Pencil changes. iPad gate pending.
