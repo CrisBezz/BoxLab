@@ -5535,3 +5535,13 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Older .818 quad Balloon retains original triangular pole fans
 - [ ] Topology switch to Triangles retains original mode
 - [ ] Density, Pencil/Reset, Edit, Cancel, Undo/Redo and navigation remain protected
+
+
+## Quadball grid poles .820
+
+- [ ] New Density4 Balloon produces quad grid caps and no high-valence central pole
+- [ ] Convex oval, C and star produce clean surfaces without twisted cap faces
+- [ ] Density4/6/8 preview and Apply with manifold all-quad topology; odd slider values must have supported counts or show safe failure
+- [ ] Face, Edge, SubD and Edit Balloon work on newly generated pole grids
+- [ ] Older saved Balloon retains previous topology; Triangle fallback works
+- [ ] Pencil/Reset, history, iPad navigation and performance remain protected
