@@ -58,3 +58,9 @@ Release commit b4ecfacdb667b7e9ab38c3b37aa643b476a4860c; tested tree
 fresh live shell/manifest and three changed runtime files byte-match checkout.
 Node22 CI38234001316/job114760078286 confirms2216/2211PASS/5FAIL/0skip,
 exact same five existing failure identities; CI is not green. iPad gate pending.
+
+## Publication verified — .830
+Release77cbbb6989d6949398a45eb60d1c7f8765818ae3; tested tree
+5b44a811281881e48be8316723e3ccff54e262e2. Node22 CI38236275255/job114767622444
+SUCCESS:2216PASS/0FAIL/0skip. Pages38236275003 SUCCESS. Fresh live shell/manifest/
+Add parent/Curve UI/core/adapter bytes verified. All five failures resolved; iPad gate pending.

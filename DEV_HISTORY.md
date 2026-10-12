@@ -8061,3 +8061,13 @@ Full local Node24:2216/2216PASS/0FAIL/0skip. Changed adapter/core/UI/Add parent8
 recovery830 reviewed. Unchanged scene-manager/drawer829 URLs remain identical; protected
 Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 unchanged. iPad new/old Balloon,
 point merge/history and touch navigation gate pending. Next .boxlab resources/performance.
+
+
+### .830 publication verification — 2026-10-12
+
+Release77cbbb6989d6949398a45eb60d1c7f8765818ae3; tested tree
+5b44a811281881e48be8316723e3ccff54e262e2 matches checkout. Actual Node22 CI
+38236275255/job114767622444:2216tests/2216PASS/0FAIL/0skip SUCCESS.
+Pages38236275003 SUCCESS. Fresh live index/manifest/Add-parent/Curve UI/core/adapter
+byte-match repository. All five prior failure checks remain active and now pass.
+Protected/frozenBeta files untouched. iPad tactile gate pending.
