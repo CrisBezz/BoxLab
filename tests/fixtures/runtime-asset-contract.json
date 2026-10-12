@@ -335,9 +335,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.808",
+      "url": "./src/object-management.js?v=0.36.18.822",
       "target": "src/object-management.js",
-      "sha256": "dbe5cc62793b789287d02affbb646fdb5b934ed2c4b443eb178ded14b2b8c37c"
+      "sha256": "d17f54da574061552f94adc0383f1b56cbc44b340c16986ba5219b996129660f"
     },
     {
       "owner": "index.html",
@@ -933,7 +933,7 @@
       "owner": "src/drawer-ui.js",
       "url": "./object-management.js?v=0.36.18.808",
       "target": "src/object-management.js",
-      "sha256": "dbe5cc62793b789287d02affbb646fdb5b934ed2c4b443eb178ded14b2b8c37c"
+      "sha256": "d17f54da574061552f94adc0383f1b56cbc44b340c16986ba5219b996129660f"
     },
     {
       "owner": "src/drawer-ui.js",
