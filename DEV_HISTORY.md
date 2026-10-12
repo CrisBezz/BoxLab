@@ -7962,3 +7962,8 @@ User .817 concave C/star PASS, deep crescent FAIL. Existing donor concentric rin
 ## .819 — Paired quad poles — 2026-10-12
 
 User accepts .818 quad-dominant modelling and requests pole cleanup. Same Balloon adapter pairs adjacent fan triangles into quad faces when complete and even, with directed winding and no new vertices. New Balloon defaults Quads plus paired pole mode; legacy records unchanged. Triangle fallback remains. No vendor/history/gesture kernel modifications. CI/iPad gate pending.
+
+
+## .820 — Genuine quadball grid pole caps — 2026-10-12
+
+User says .819 kite quads still share single poles; asks for mathematical quadball. Original donor N=6*density outline divisions (divisible by4 for even density; odd densities produce N=6d not divisible by4!). New adapter replaces each radial fan with an N/4-per-side Coons-interpolated square quad grid using last-ring boundary. Original generator and earlier recipes untouched, new profiles flag balloonPolePatch grid. Regression tests added for all quads and Euler/orientation. Pending automated/device test.
