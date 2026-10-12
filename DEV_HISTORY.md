@@ -8087,3 +8087,12 @@ Full Node24 2219PASS/0FAIL/0skip. Manager/Object-management/Drawer831 aligned ca
 Curve830, Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 untouched.
 Device guide Save/Open lock/visibility, editable Add/edit/history gate pending.
 Next linked-instance and resource preservation, plus performance; NOM/Curve cutters/UV queued.
+
+
+### .831 publication verification — 2026-10-12
+
+Releasef7ae31c4636f8161ba14987f064dc93d30c7f405; tested tree
+616a35bf09d3c01db956db443dd63cc24840c5e3 matches checkout. Node22 CI
+38237955024/job114773194656 SUCCESS:2219PASS/0FAIL/0skip. Pages38237954570
+SUCCESS. Fresh live shell/manifest/manager/object-management/drawer byte-match.
+.830 user PASS protected, .831 mixed-reference Save/Open device gate pending.

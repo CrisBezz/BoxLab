@@ -52,3 +52,9 @@ UV inspection/unwrap/painting remain queued; no duplicate scene/modelling/gestur
 /nextbuild: audit, narrow implementation on main, reviewed child/parent cache pins,
 coherent title/data/visible/version.json/recovery pins, all tests, docs, publish and
 readback. User responds PASS/FAIL; protect passes. Publishing already authorized.
+
+## .831 publication verified
+Releasef7ae31c4636f8161ba14987f064dc93d30c7f405; tree616a35bf09d3c01db956db443dd63cc24840c5e3.
+Node22 CI38237955024/job114773194656 SUCCESS2219PASS/0FAIL/0skip.
+Pages38237954570 SUCCESS; live shell/manifest/three changed owners byte-match.
+.831 iPad mixed-guide Save/Open acceptance pending.
