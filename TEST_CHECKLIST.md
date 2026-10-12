@@ -5609,3 +5609,12 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Wrong extension/malformed JSON/unsupported linked/reference scene refuses without replacing the current project
 - [ ] Open explicitly warns Undo/history reset, no misleading full-resource support; File menu scroll and iPad file picker work
 - [ ] Quadball, Pencil stroke capture, point merge and native Export/Save remain unchanged
+
+
+## iPad Files custom extension .828
+
+- [ ] Within BoxLab choose File > Open .boxlab from Files; Browse → Downloads shows .boxlab selectable, not greyed out
+- [ ] Selected .boxlab passes filename check and reaches replacement confirmation without changing scene
+- [ ] Cancel leaves current scene intact; Confirm restores basic saved project
+- [ ] Select a wrong-extension file: explicit Open refused, scene remains intact
+- [ ] Do not claim Files-app direct association until native iOS app declares .boxlab document type
