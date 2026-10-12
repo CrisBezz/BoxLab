@@ -87,3 +87,40 @@
 #selectionDrawer .selection-object-note{
   font-size:10px;
 }
+
+
+/* v0.36.18.823 — compact, viewport-contained File menu */
+#fileMenu .top-file-content{
+  box-sizing:border-box;
+  width:min(300px,calc(100vw - 16px));
+  padding:7px 8px;
+  top:calc(100% + 4px);
+  max-height:calc(100dvh - 68px - env(safe-area-inset-bottom,0px));
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
+  font-size:11px;
+}
+#fileMenu .top-file-content button{
+  min-height:30px;
+  padding:4px 7px;
+  font-size:11px;
+  margin-top:3px;
+  line-height:1.2;
+  border-radius:7px;
+}
+#fileMenu .top-file-content .outliner-actions{margin-top:4px;gap:4px}
+#fileMenu .top-file-content .outliner-actions button{margin:0}
+#fileMenu .top-file-content .drawer-subtitle{font-size:10px;margin:5px 0 3px}
+#fileMenu .top-file-content .toggle-row{font-size:11px;min-height:27px;padding:2px 0}
+#fileMenu .top-file-content .export-row-label,
+#fileMenu .top-file-content .export-file-name,
+#fileMenu .top-file-content .export-destination-note,
+#fileMenu .top-file-content .quick-export>summary,
+#fileMenu .top-file-content .about-menu>summary{font-size:11px}
+#fileMenu .top-file-content .about-menu{margin-top:5px;padding-top:5px}
+#fileMenu .top-file-content .export-as-panel{gap:4px}
+#fileMenu .top-file-content .export-file-name input{min-height:29px;font-size:11px;padding:4px 6px}
+#fileMenu .top-file-content .segmented{gap:2px;padding:2px}
+#fileMenu .top-file-content .segmented button{min-height:28px;padding:3px 5px;margin-top:0}
