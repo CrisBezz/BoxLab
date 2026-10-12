@@ -335,9 +335,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.823",
+      "url": "./src/object-management.js?v=0.36.18.825",
       "target": "src/object-management.js",
-      "sha256": "d17f54da574061552f94adc0383f1b56cbc44b340c16986ba5219b996129660f"
+      "sha256": "5d6f67ef33ee1a08ffa1689ddcca10d8a48b3c1d5bb1db379d6e880eb498085b"
     },
     {
       "owner": "index.html",
@@ -933,7 +933,7 @@
       "owner": "src/drawer-ui.js",
       "url": "./object-management.js?v=0.36.18.808",
       "target": "src/object-management.js",
-      "sha256": "d17f54da574061552f94adc0383f1b56cbc44b340c16986ba5219b996129660f"
+      "sha256": "5d6f67ef33ee1a08ffa1689ddcca10d8a48b3c1d5bb1db379d6e880eb498085b"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -2303,6 +2303,12 @@
       "url": "./vendor/meshutilz-outline-balloon.js?v=0.36.18.816",
       "target": "src/vendor/meshutilz-outline-balloon.js",
       "sha256": "7f186281fc8f4cbb43259165bb0c52f839cd1c4c99175eed04ca7ce901b6eb16"
+    },
+    {
+      "owner": "src/object-management.js",
+      "url": "./boxlab-project-codec.js?v=0.36.18.825",
+      "target": "src/boxlab-project-codec.js",
+      "sha256": "8e24de11dca6bdc9b1a504fd7a68553892e202c9d35b7986eb5a2163a4f3b686"
     }
   ]
 }
