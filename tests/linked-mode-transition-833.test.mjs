@@ -9,7 +9,7 @@ const src=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf
 function fixture(){
  const base=EditableMesh.cube(2),a={id:1,sourceId:'source-1',mesh:base.clone(),instanceMatrix:new THREE.Matrix4().elements},b={id:2,sourceId:'source-1',mesh:base.clone(),instanceMatrix:new THREE.Matrix4().elements};
  const pool={mesh:base.clone(),revision:0},live=transformEditableMesh(base,new THREE.Matrix4().makeTranslation(4,1,0));let mode='object';
- const c={objects:[a,b],linkedSources:new Map([['source-1',pool]]),activeObject:()=>b,state:()=>({mesh:live}),currentMode:()=>mode,captureSettings:()=>({}),captureHistory:()=>({undo:[],redo:[]}),linkedModeTrace(){},setTimeout:fn=>fn(),matrixForInstance,setInstanceMatrix,localMeshFromWorld,meshesNear,transformEditableMesh,deriveInstancePlacement};
+ const c={objects:[a,b],linkedSources:new Map([['source-1',pool]]),activeObject:()=>b,state:()=>({mesh:live}),currentMode:()=>mode,traceLinkedSourceWrite(){},captureSettings:()=>({}),captureHistory:()=>({undo:[],redo:[]}),linkedModeTrace(){},setTimeout:fn=>fn(),matrixForInstance,setInstanceMatrix,localMeshFromWorld,meshesNear,transformEditableMesh,deriveInstancePlacement};
  vm.createContext(c);vm.runInContext(src.slice(src.indexOf('function syncLinkedPeers('),src.indexOf('function evaluatedLinkedMesh('))+src.slice(src.indexOf('function saveActive()'),src.indexOf('function activeShouldShow()'))+src.slice(src.indexOf('function flushLinkedPlacementOnModeChange('),src.indexOf('function installUI()')),c);
  return {c,base,a,b,pool,live,setMode:x=>mode=x};
 }

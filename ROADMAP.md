@@ -4,7 +4,13 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .837 native main Object drag repair / frozen Beta 7, 2026-10-12
+## Current direction — .838 exact instancing source-write audit / frozen Beta 7, 2026-10-13
+
+User .837 repair FAIL. .838 traces exact authoritative shared-source assignment, branch,
+geometry bounds/placement and caller stack through existing Debug. No behavior change;
+need device writer evidence before correcting placement/edit boundary. Features paused.
+
+## Previous direction — .837 native main Object drag repair / frozen Beta 7, 2026-10-12
 
 User .836 FAIL; diagonal move and Array produce same source jump. .837 covers actual
 main direct Object drag completion, which .836 transform-upgrade fix did not own.

@@ -9,7 +9,7 @@ import {matrixForInstance,setInstanceMatrix,localMeshFromWorld,meshesNear,transf
 const main=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8'),manager=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf8');
 function fixture(){
  const base=EditableMesh.cube(2),copy={id:2,sourceId:'source-1',mesh:base.clone(),instanceMatrix:new THREE.Matrix4().elements},original={id:1,sourceId:'source-1',mesh:base.clone(),instanceMatrix:new THREE.Matrix4().elements},pool={mesh:base.clone(),revision:0};let mode='object';const events={};
- const c={THREE,mesh:base.clone(),drag:null,objects:[original,copy],linkedSources:new Map([['source-1',pool]]),activeObject:()=>copy,currentMode:()=>mode,state:()=>({mesh:c.mesh}),history:new History(),captureSettings:()=>({}),captureHistory:()=>({}),matrixForInstance,setInstanceMatrix,localMeshFromWorld,meshesNear,transformEditableMesh,deriveInstancePlacement,
+ const c={THREE,mesh:base.clone(),drag:null,objects:[original,copy],linkedSources:new Map([['source-1',pool]]),activeObject:()=>copy,currentMode:()=>mode,state:()=>({mesh:c.mesh}),history:new History(),traceLinkedSourceWrite(){},captureSettings:()=>({}),captureHistory:()=>({}),matrixForInstance,setInstanceMatrix,localMeshFromWorld,meshesNear,transformEditableMesh,deriveInstancePlacement,
  canvas:{addEventListener:(t,fn)=>{(events[t]||=[]).push(fn);}},window:{addEventListener(){},dispatchEvent(){}},controls:{enabled:false},CustomEvent:class{},resetEdgeHoldCycle(){},toolMode:'move',axisSnapEnabled:false,inferenceSnapEnabled:false,EDIT_DRAG_THRESHOLD:8,rayPlanePoint:e=>new THREE.Vector3(e.clientX/100,e.clientY/100,0),clearLoopSlide(){},componentVertexIndicesOn:(m)=>m.vertices.map((_,i)=>i),crossObjectMoveSnap:()=>null};
  c.renderMesh=()=>c.saveActive();vm.createContext(c);vm.runInContext(manager.slice(manager.indexOf('function syncLinkedPeers('),manager.indexOf('function evaluatedLinkedMesh('))+manager.slice(manager.indexOf('function saveActive()'),manager.indexOf('function activeShouldShow()')),c);
  const move=main.split('\n').find(s=>s.startsWith("canvas.addEventListener('pointermove',event=>{if(!drag"));
@@ -26,4 +26,11 @@ test('837 real main diagonal move cannot leak through mode switch into linked so
 });
 test('837 fixture exposes source jump if native main drag is not completed',()=>{
  const f=fixture();f.move(165,120);f.setMode('face');f.move(-1800,-1300);assert(!meshesNear(f.pool.mesh,f.base));assert.notEqual(f.pool.revision,0);
+});
+
+test('838 source-write evidence identifies component mutation and exact previous/new source without extra mutation',()=>{
+ const f=fixture(),lines=[];f.c.__boxlabGestureDebug={enabled:false,log:(...args)=>lines.push(args)};
+ vm.runInContext(manager.slice(manager.indexOf('function traceLinkedSourceWrite('),manager.indexOf('function saveActive()')),f.c);
+ f.move(165,120);assert.equal(lines.length,0);f.c.__boxlabGestureDebug.enabled=true;f.setMode('face');f.move(-1800,-1300);
+ assert.equal(lines[0][0],'LINKED SOURCE WRITE');assert.equal(lines[0][1].branch,'component');assert.equal(lines[0][1].from,'0,0,0');assert.notEqual(lines[0][1].to,'0,0,0');assert.match(lines[0][1].stack,/saveActive/);assert.equal(f.pool.revision,1);
 });

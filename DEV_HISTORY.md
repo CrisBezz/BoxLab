@@ -8244,3 +8244,17 @@ b07166bc85ee839e4843f4cb1b1be599062922e3 matches checkout. Node22 CI
 38247942108/job114806468896 SUCCESS:2232PASS/0FAIL/0skip. Pages38247941344
 SUCCESS. Fresh pinned live shell/manifest/main owner byte-match. .836 user FAIL
 recorded; .837 straight/diagonal Linked Duplicate and Array iPad retest pending.
+
+
+## .838 — Exact shared-source write evidence after .837 FAIL — 2026-10-13
+
+User .837 did not fix it. Prior completion regressions cover synthetic stale-drag paths;
+do not claim they establish actual device cause. Instrument BOTH actual manager source
+writes via existing off-by-default Debug: branch/mode/id, old/new source centre, live/
+stored centre, matrix translation and caller stack. Read-only, no rendering/instancing
+behavior change. New actual-manager fixture confirms source delta/branch/stack and no
+extra revision. Need device SOURCE WRITE evidence before next behavioral repair.
+Runtime manager838; repinned unchanged main/Debug/transform/recovery and reviewed asset
+hashes. Protected Multi1.0/Loop715/Extrude802/Boolean806/frozenBeta unchanged.
+
+.838 full local Node24:2233PASS/0FAIL/0skip; device issue unresolved.

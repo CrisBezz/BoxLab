@@ -241,6 +241,11 @@ function linkedDuplicateObject(sourceObject,{name=null,enterObjectMode=true}={})
   });
   return copy||null;
 }
+function traceLinkedSourceWrite(object,source,local,branch){
+  const debug=globalThis.__boxlabGestureDebug;if(!debug?.enabled)return;
+  const centre=mesh=>{const box=new THREE.Box3().setFromPoints(mesh.vertices),v=box.getCenter(new THREE.Vector3());return [v.x,v.y,v.z].map(n=>Number(n.toFixed(3))).join(',');};
+  debug.log('LINKED SOURCE WRITE',{id:object.id,branch,mode:currentMode(),from:centre(source.mesh),to:centre(local),live:centre(state()?.mesh),stored:centre(object.mesh),placement:object.instanceMatrix?.slice(12,15),stack:new Error().stack?.split('\n').slice(2,7).join(' | ')});
+}
 function saveActive() {
   const object = activeObject(), live = state()?.mesh;
   if (!object || !live) return;
@@ -253,6 +258,7 @@ function saveActive() {
       }else{
         const local=localMeshFromWorld(live,matrixForInstance(object));
         if(local&&!meshesNear(local,source.mesh)){
+          traceLinkedSourceWrite(object,source,local,currentMode()==='object'?'object fallback':'component');
           source.mesh=local.clone();
           source.revision++;
           syncLinkedPeers(object.sourceId,object.id);
@@ -262,7 +268,8 @@ function saveActive() {
     }else{
       const local=localMeshFromWorld(live,matrixForInstance(object));
       if(local&&!meshesNear(local,source.mesh)){
-        source.mesh=local.clone();
+        traceLinkedSourceWrite(object,source,local,currentMode()==='object'?'object fallback':'component');
+          source.mesh=local.clone();
         source.revision++;
         syncLinkedPeers(object.sourceId,object.id);
       }

@@ -1,7 +1,7 @@
-# BoxLab AI Handoff — .837 native main Object drag completion
+# BoxLab AI Handoff — .838 exact shared-source-write evidence
 
 ## Current state — 2026-10-12
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.837.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.838.
 User PASS .831 mixed reference project Open, guide lock/visibility and editing/history.
 User PASS .830 Balloon/merge/navigation remains protected. .832 user FAIL: moved Linked Duplicate disappears on Face-mode selection. .833 retest pending. Repository is source of truth; read AI_WORKFLOW,
 this handoff, TEST_CHECKLIST, recent DEV_HISTORY and ROADMAP before changing code.
@@ -115,11 +115,22 @@ No new transform maths/instance owner or Multi1.0 edit. Full local2232PASS/0FAIL
 Main837; other repinned runtime files unchanged. Prior .833/.836 incomplete owner fixes
 are NOT device-accepted. .837 Linked Duplicate/Array iPad retest pending.
 
+## .838 current diagnosis / .837 user FAIL
+User reports .837 did not fix it. Both transform-upgrade and main drag repairs remain
+unaccepted on device; synthetic stale-drag fixtures reproduce a possible corruption path,
+NOT the established device root cause. Current manager source mutation automatically
+infers component edit from currentMode; audit its exact write before changing semantics.
+Read-only off-by-default traceLinkedSourceWrite logs LINKED SOURCE WRITE immediately
+before BOTH Object-fallback and component source assignments: id/branch/mode, source
+from/to centres, live/stored centres, placement translation and five caller frames.
+Pinned through existing Debug; no instance/geometry behavior change. Test confirms true
+component source mutation evidence with one revision, no extra mutation/off logging.
+
 ## Next
-Retest Linked Duplicate > diagonal Object move > Face/Edge/Vertex, then Array > move
-instance > Face. Both originals/all peers must keep placements. Component sharing,
-Object independent placement, Undo/Redo, Make Unique, .boxlab linked Open and navigation.
-Do not expand features before this specific device failure passes.
+On .838 Gesture Debug ON, reproduce Linked Duplicate or Array Move→Face; obtain SOURCE
+WRITE lines with stack. Need exact writer/trigger, not another before/after inference.
+Then reproduce that path and fix authoritative placement/component boundary. Broader
+features paused. User .831/.830 PASS protected; .832/.833/.836/.837 device FAIL recorded.
 
 ## Release protocol
 /nextbuild: audit, narrow implementation on main, reviewed child/parent cache pins,
@@ -173,3 +184,5 @@ Release8386bedcdd75b72977d85bd45f076dce9728f387; treeb07166bc85ee839e4843f4cb1b1
 Node22 CI38247942108/job114806468896 SUCCESS2232PASS/0FAIL/0skip.
 Pages38247941344 SUCCESS; pinned live shell/manifest/main owner byte-match.
 Native main repair awaits Linked Duplicate/Array diagonal mode-switch iPad acceptance.
+
+.838 full local Node24:2233PASS/0FAIL/0skip; device issue unresolved.

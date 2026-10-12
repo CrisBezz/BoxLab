@@ -5737,3 +5737,12 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Linked Duplicate > diagonal Move > Face/Edge/Vertex: no jump in original or copy.
 - [ ] Array > move an instance > Face: all placements retained, component edits share.
 - [ ] Undo/Redo, Make Unique, linked project Open and external navigation remain stable.
+
+
+## .838 shared-source exact write evidence
+
+- [x] .837 user FAIL recorded; actual device cause not established by synthetic stale-drag tests.
+- [x] Both source-write branches traced only when Debug enabled, centres/placement/caller captured.
+- [x] Test checks component source write and no extra source mutation/revision.
+- [ ] Gesture Debug ON; reproduce Linked Duplicate/Array move→Face; capture SOURCE WRITE stack lines.
+- [ ] Do not mark linked source drift repaired until device PASS.
