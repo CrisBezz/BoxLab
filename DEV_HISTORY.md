@@ -8171,3 +8171,19 @@ Release49e6449772222413a6b8972ad005f80bd8c09f14; tested tree
 38242145811/job114787121113 SUCCESS:2226PASS/0FAIL/0skip. Pages38242145077
 SUCCESS. Fresh live shell/manifest/manager and pinned Gesture Debug byte-match.
 Diagnostic build only; .833 device failure remains unresolved, awaiting LINKED trace.
+
+
+## .835 — Correct completed-event trace / original drift evidence — 2026-10-12
+
+Two .834 screenshots: live/stored/evaluated active centres agree, source0,0,0,
+visible/bodytrue; user observes original moves far away. Earlier claim of proven mode
+state mismatch was premature: queueMicrotask in window capture can run before later
+native target listeners. AFTER now uses next task; includes UI mode/all peer bounds,
+visibility/inactive count. Existing Debug pins browser errors/rejections and inactive
+render-skip error messages. No additional modelling repair, source mutation or mode
+owner. Two tests cover completed-handler timing and off/enabled error logging.
+Device failure remains unresolved. Screenshot evidence captured in docs; no need to
+read Library images (inline images visible; supplied local image files missing).
+Manager/Debug/recovery835; project owners832/Curve830 and protected/frozenBeta untouched.
+
+.835 full local Node24:2228PASS/0FAIL/0skip; linked device failure unresolved.

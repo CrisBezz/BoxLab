@@ -140,3 +140,11 @@ for(const type of ['pointerdown','pointerup','pointercancel']){
     log('PHYSICAL CONTACT',{event:type,pointer:event.pointerType,pid:event.pointerId,stamp:Math.round(event.timeStamp),x:Math.round(event.clientX),y:Math.round(event.clientY),primary:event.isPrimary,buttons:event.buttons,pressure:event.pressure});
   },{capture:true,passive:true});
 }
+
+// Keep real browser failures visible alongside the linked transition trace.
+window.addEventListener('error',event=>{
+  if(enabled)log('LINKED RUNTIME ERROR',{message:event.message,file:event.filename?.split('/').pop(),line:event.lineno,column:event.colno});
+});
+window.addEventListener('unhandledrejection',event=>{
+  if(enabled)log('LINKED ASYNC ERROR',{message:event.reason?.message||String(event.reason)});
+});

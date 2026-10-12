@@ -259,9 +259,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.834",
+      "url": "./src/gesture-debug.js?v=0.36.18.835",
       "target": "src/gesture-debug.js",
-      "sha256": "d6579599e402f2a9b063f7860f792b029ee9b9bb840397c47fe79145f6acad2d"
+      "sha256": "611155d3e5da43a7be35f811ac5a23eec18d3a2c772b6c645895e4836d57894c"
     },
     {
       "owner": "index.html",
@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.834",
+      "url": "./src/multi-object.js?v=0.36.18.835",
       "target": "src/multi-object.js",
-      "sha256": "7e37af569bbce4354ba0f33f3be08a91936e7bb12f350beb0873b0768c9aa7d7"
+      "sha256": "dda9ecee8a7cbbdfcf5ef6a2d5dfb8626e78e0a326a7d15e4ecebbd3ec50f8f0"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.834",
+      "url": "./src/release-bootstrap.js?v=0.36.18.835",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.834",
+      "url": "./src/release-version.js?v=0.36.18.835",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },

@@ -9,7 +9,7 @@ const src=fs.readFileSync(new URL('../src/multi-object.js',import.meta.url),'utf
 function fixture(){
  const base=EditableMesh.cube(2),a={id:1,sourceId:'source-1',mesh:base.clone(),instanceMatrix:new THREE.Matrix4().elements},b={id:2,sourceId:'source-1',mesh:base.clone(),instanceMatrix:new THREE.Matrix4().elements};
  const pool={mesh:base.clone(),revision:0},live=transformEditableMesh(base,new THREE.Matrix4().makeTranslation(4,1,0));let mode='object';
- const c={objects:[a,b],linkedSources:new Map([['source-1',pool]]),activeObject:()=>b,state:()=>({mesh:live}),currentMode:()=>mode,captureSettings:()=>({}),captureHistory:()=>({undo:[],redo:[]}),linkedModeTrace(){},queueMicrotask:fn=>fn(),matrixForInstance,setInstanceMatrix,localMeshFromWorld,meshesNear,transformEditableMesh,deriveInstancePlacement};
+ const c={objects:[a,b],linkedSources:new Map([['source-1',pool]]),activeObject:()=>b,state:()=>({mesh:live}),currentMode:()=>mode,captureSettings:()=>({}),captureHistory:()=>({undo:[],redo:[]}),linkedModeTrace(){},setTimeout:fn=>fn(),matrixForInstance,setInstanceMatrix,localMeshFromWorld,meshesNear,transformEditableMesh,deriveInstancePlacement};
  vm.createContext(c);vm.runInContext(src.slice(src.indexOf('function syncLinkedPeers('),src.indexOf('function evaluatedLinkedMesh('))+src.slice(src.indexOf('function saveActive()'),src.indexOf('function activeShouldShow()'))+src.slice(src.indexOf('function flushLinkedPlacementOnModeChange('),src.indexOf('function installUI()')),c);
  return {c,base,a,b,pool,live,setMode:x=>mode=x};
 }
@@ -28,9 +28,20 @@ test('833 transition guard yields unrelated clicks and registers before document
 });
 
 test('834 linked trace is off by default and reports live/stored/evaluated placement without mutating geometry',()=>{
- const f=fixture(),lines=[];Object.assign(f.c,{THREE,soloId:null,activeBody:{visible:true},__boxlabGestureDebug:{enabled:false,log:(...args)=>lines.push(args)}});
+ const f=fixture(),lines=[];Object.assign(f.c,{THREE,soloId:null,activeBody:{visible:true},inactiveBodies:[],document:{querySelector:()=>({dataset:{mode:'object'}})},__boxlabGestureDebug:{enabled:false,log:(...args)=>lines.push(args)}});
  vm.runInContext(src.slice(src.indexOf('function linkedModeTrace('),src.indexOf('function flushLinkedPlacementOnModeChange(')),f.c);
  const before=f.live.vertices.map(v=>v.toArray());f.c.linkedModeTrace('BEFORE');assert.equal(lines.length,0);
- f.c.__boxlabGestureDebug.enabled=true;f.c.linkedModeTrace('BEFORE');assert.equal(lines[0][0],'LINKED BEFORE');assert.equal(lines[0][1].live,'4,1,0');assert.equal(lines[0][1].evaluated,'0,0,0');assert.equal(lines[0][1].body,true);
+ f.c.__boxlabGestureDebug.enabled=true;f.c.linkedModeTrace('BEFORE');assert.equal(lines[0][0],'LINKED BEFORE');assert.equal(lines[0][1].live,'4,1,0');assert.equal(lines[0][1].evaluated,'0,0,0');assert.equal(lines[0][1].body,true);assert.equal(lines[0][1].ui,'object');assert.equal(lines[0][1].inactive,0);assert.match(lines[0][1].peers,/2:/);
  assert.deepEqual(f.live.vertices.map(v=>v.toArray()),before);assert.equal(f.pool.revision,0);
+});
+
+test('835 after-event trace runs after native mode handlers rather than an early microtask checkpoint',()=>{
+ const f=fixture(),timers=[],lines=[];f.c.setTimeout=fn=>timers.push(fn);f.c.linkedModeTrace=stage=>lines.push([stage,f.c.currentMode()]);
+ f.c.flushLinkedPlacementOnModeChange({target:{closest:()=>({dataset:{mode:'face'}})}});
+ assert.deepEqual(lines,[['BEFORE face','object'],['SAVED','object']]);f.setMode('face');timers[0]();assert.deepEqual(lines.at(-1),['AFTER face','face']);
+});
+test('835 runtime and async errors are pinned through existing debug logger only when enabled',()=>{
+ const listeners={},lines=[],c={enabled:false,log:(...args)=>lines.push(args),window:{addEventListener:(type,fn)=>listeners[type]=fn}};vm.createContext(c);
+ const debug=fs.readFileSync(new URL('../src/gesture-debug.js',import.meta.url),'utf8');vm.runInContext(debug.slice(debug.indexOf('// Keep real browser failures')),c);
+ listeners.error({message:'render failed',filename:'https://x/main.js',lineno:358});assert.equal(lines.length,0);c.enabled=true;listeners.error({message:'render failed',filename:'https://x/main.js',lineno:358});listeners.unhandledrejection({reason:Error('async failed')});assert.equal(lines[0][0],'LINKED RUNTIME ERROR');assert.equal(lines[0][1].file,'main.js');assert.equal(lines[1][1].message,'async failed');
 });

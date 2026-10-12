@@ -5705,3 +5705,12 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [x] Read-only trace off by default, no mesh/source mutation, records distinct bounds.
 - [ ] Enable VIEW > Gesture Debug; Linked Duplicate > move > Face; capture pinned LINKED lines.
 - [ ] If no LINKED lines, note it as routing evidence, not a successful placement guard.
+
+
+## .835 original linked object drift / completed-event diagnostics
+
+- [x] User .834 screenshot evidence: active bounds agree, original reported moving far away.
+- [x] AFTER samples next task after native mode callbacks; prior early mode inference withdrawn.
+- [x] Runtime/rejection errors off by default and pinned when enabled; inactive render-skip logs IDs/message.
+- [ ] .835 Linked Duplicate > move > Face; screenshot final AFTER, peers/inactive count and any runtime/render error.
+- [ ] Keep .832/.833 failure active until real iPad repair passes.

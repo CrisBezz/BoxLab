@@ -851,6 +851,7 @@ function rebuildInactiveLayer(body){
       layer.add(inactive);
       globalThis.__boxlabRenderModes?.apply?.(inactive);
     }catch(error){
+      globalThis.__boxlabGestureDebug?.log?.('LINKED RENDER ERROR',{id:object.id,message:error?.message||String(error)});
       console.warn('BoxLab inactive object render skipped',error);
     }
   }
@@ -895,13 +896,13 @@ function linkedModeTrace(stage){
   if(!debug?.enabled||!object?.sourceId)return;
   const bounds=mesh=>{if(!mesh?.vertices?.length)return '-';const box=new THREE.Box3().setFromPoints(mesh.vertices),v=box.getCenter(new THREE.Vector3());return [v.x,v.y,v.z].map(n=>Number(n.toFixed(3))).join(',');};
   const source=linkedSources.get(object.sourceId),evaluated=source?transformEditableMesh(source.mesh,matrixForInstance(object)):null;
-  debug.log('LINKED '+stage,{mode:currentMode(),id:object.id,live:bounds(state()?.mesh),stored:bounds(object.mesh),evaluated:bounds(evaluated),source:bounds(source?.mesh),visible:object.visible,solo:soloId,body:activeBody?.visible,faces:state()?.mesh?.faces?.length});
+  debug.log('LINKED '+stage,{mode:currentMode(),id:object.id,live:bounds(state()?.mesh),stored:bounds(object.mesh),evaluated:bounds(evaluated),source:bounds(source?.mesh),visible:object.visible,solo:soloId,body:activeBody?.visible,faces:state()?.mesh?.faces?.length,ui:document.querySelector('#selectionModes button.active')?.dataset?.mode,peers:objects.map(o=>o.id+':'+(o.visible?'on':'off')+':'+bounds(o.mesh)).join(';'),inactive:inactiveBodies.length});
 }
 function flushLinkedPlacementOnModeChange(event){
   const button=event.target?.closest?.('#selectionModes button'),next=button?.dataset?.mode;
   if(currentMode()==='object'&&next&&next!=='object'&&activeObject()?.sourceId){
     linkedModeTrace('BEFORE '+next);saveActive();linkedModeTrace('SAVED');
-    queueMicrotask(()=>linkedModeTrace('AFTER '+next));
+    setTimeout(()=>linkedModeTrace('AFTER '+next),0);
   }
 }
 function installUI() {

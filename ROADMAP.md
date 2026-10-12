@@ -4,7 +4,13 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .834 linked disappearance evidence / frozen Beta 7, 2026-10-12
+## Current direction — .835 linked original drift diagnosis / frozen Beta 7, 2026-10-12
+
+User screenshots .834 active geometry/placement/visibility agree, original moves far away.
+AFTER microtask was early; .835 next-task trace and browser/render-error reporting expose
+completed mode/UI/peer geometry. Device failure unresolved; no further feature work.
+
+## Previous direction — .834 linked disappearance evidence / frozen Beta 7, 2026-10-12
 
 .833 user retest FAIL. .834 adds off-by-default read-only LINKED bounds/visibility traces
 inside existing Gesture Debug. Obtain iPad mode-switch screenshot before another repair;

@@ -1,7 +1,7 @@
-# BoxLab AI Handoff — .834 linked disappearance diagnostics
+# BoxLab AI Handoff — .835 completed-event linked diagnostics
 
 ## Current state — 2026-10-12
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.834.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.835.
 User PASS .831 mixed reference project Open, guide lock/visibility and editing/history.
 User PASS .830 Balloon/merge/navigation remains protected. .832 user FAIL: moved Linked Duplicate disappears on Face-mode selection. .833 retest pending. Repository is source of truth; read AI_WORKFLOW,
 this handoff, TEST_CHECKLIST, recent DEV_HISTORY and ROADMAP before changing code.
@@ -74,11 +74,23 @@ bury them. No geometry/placement/render behavior change; .833 guard remains pend
 New test proves trace off/read-only and distinguishes stale evaluated vs moved live bounds.
 Need on-device evidence before further algorithm changes; cloud WebGL unavailable.
 
+## .835 screenshot evidence / diagnostics correction
+User screenshots .834 show live/stored/evaluated centres matching (1.707 then1.013,0,0),
+source0,0,0 and body/object visible. User observes ORIGINAL object moves far away.
+Do not conclude hidden body from these traces. The AFTER line used queueMicrotask in
+window capture; browser microtask checkpoints can precede later target handlers, so
+mode=object is not reliable final-state evidence. Face active + Edge footer suggests
+possible interrupted render, not established root cause. .835 replaces AFTER scheduling
+with setTimeout0, includes UI mode/all peer centres and visibility/inactive body count.
+Existing Gesture Debug pins uncaught runtime/rejection and inactive render-skip errors.
+Off by default; no geometry mutation/further speculative repair. Two tests cover true
+post-handler sampling and off/enabled error reporting. User .832/.833 failure unresolved.
+
 ## Next
-User: VIEW > Gesture Debug, Linked Duplicate, move aside, Face; screenshot pinned LINKED
-BEFORE/SAVED/AFTER lines. Compare geometry bounds and visibility to distinguish source/
-placement corruption from render/bridge/context reset. If no LINKED lines, mode shortcut
-bypasses expected click owner. .832/.833 remain FAIL/pending; .831/.830 protected.
+On .835 enable Gesture Debug; Linked Duplicate > move > Face; capture AFTER plus any
+LINKED RUNTIME/RENDER ERROR. Peer positions now distinguish original drift from active
+copy placement, completed mode/UI from early trace, and inactive render failures.
+Do not continue feature expansion until concrete device failure is fixed and passed.
 
 ## Release protocol
 /nextbuild: audit, narrow implementation on main, reviewed child/parent cache pins,
@@ -112,3 +124,5 @@ Release49e6449772222413a6b8972ad005f80bd8c09f14; tree9de1b70e9417417f15f4a165dc0
 Node22 CI38242145811/job114787121113 SUCCESS2226PASS/0FAIL/0skip.
 Pages38242145077 SUCCESS; live shell/manifest/manager/Debug byte-match.
 Read-only diagnostic release, not a claimed fix. Device trace needed.
+
+.835 full local Node24:2228PASS/0FAIL/0skip; linked device failure unresolved.
