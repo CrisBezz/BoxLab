@@ -8007,3 +8007,8 @@ User PASS .826 basic project download. Added .boxlab file picker, v1 independent
 ## .828 — iPad .boxlab Files picker recognition hotfix — 2026-10-12
 
 User says .boxlab format not recognized for Open. Corrected .827 double-escaped extension regex, removed MIME/extension filtering from Safari file input for custom extension (validate after selection), clarified UI to Open .boxlab from Files. File picker must be initiated inside browser; direct Files app Open In association requires packaged native app. Existing replacement validation preserved. iPad test pending.
+
+
+## .828 accepted — Work mode migration handoff — 2026-10-12
+
+User replied PERFECT after .828 custom extension picker/filename regex hotfix and requested move to ChatGPT Work. Recognised basic .boxlab Open workflow now user-accepted for this fix; complete scene restoration and all edge cases are not independently established by this message. Protected .820 Quadball, .821 Pencil merge, .824 no-camera-moving Balloon drawing, .825 codec, .826 download, .828 file recognition. No numbered release change for the handoff. Native file features remain basic; rich assets/history not preserved and direct iPad Files association awaits app packaging.
