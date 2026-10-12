@@ -5618,3 +5618,13 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Cancel leaves current scene intact; Confirm restores basic saved project
 - [ ] Select a wrong-extension file: explicit Open refused, scene remains intact
 - [ ] Do not claim Files-app direct association until native iOS app declares .boxlab document type
+
+
+## Protected .828 acceptance / Work handoff — 2026-10-12
+
+- [x] User reports PERFECT after .828 fix for .boxlab file recognition from BoxLab's Open picker
+- [x] .826 basic .boxlab download user PASS; .825 in-memory codec user PASS
+- [x] .824 Balloon Pencil drawing no viewport movement user PASS
+- [x] .821 point merge user PASS; .820 quadball topology user PASS
+- [ ] Independently verify full Confirm Open restore, subsequent object IDs, Cancel and malformed file refusal on iPad
+- [ ] Rich embedded material/UV/GLB resources, linked instances and scene Undo persistence intentionally unsupported in basic project format
