@@ -8235,3 +8235,12 @@ peer tests preserve source/placements; former incomplete path demonstrably shift
 Full Node24 2232PASS/0FAIL/0skip, focused revised peer test PASS. Main837/shell/recovery
 and reviewed asset fixture; protected Multi1.0/Loop715/Extrude802/Boolean806/Curve830/
 frozenBeta unchanged. .836 not accepted, .837 actual iPad Linked/Array retest pending.
+
+
+### .837 publication verification — 2026-10-12
+
+Release8386bedcdd75b72977d85bd45f076dce9728f387; tested tree
+b07166bc85ee839e4843f4cb1b1be599062922e3 matches checkout. Node22 CI
+38247942108/job114806468896 SUCCESS:2232PASS/0FAIL/0skip. Pages38247941344
+SUCCESS. Fresh pinned live shell/manifest/main owner byte-match. .836 user FAIL
+recorded; .837 straight/diagonal Linked Duplicate and Array iPad retest pending.

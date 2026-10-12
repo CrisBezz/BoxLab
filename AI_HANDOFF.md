@@ -167,3 +167,9 @@ Release7b689c234474e27a5d5c042f57f2048d8f5a345e; tree33926a9397320b1f34c93726a29
 Node22 CI38246212104/job114800613228 SUCCESS2230PASS/0FAIL/0skip.
 Pages38246212136 SUCCESS; pinned live shell/manifest/transform owner byte-match.
 Repair build, awaits moved Linked Duplicate→Face iPad retest.
+
+## .837 publication verified
+Release8386bedcdd75b72977d85bd45f076dce9728f387; treeb07166bc85ee839e4843f4cb1b1be599062922e3.
+Node22 CI38247942108/job114806468896 SUCCESS2232PASS/0FAIL/0skip.
+Pages38247941344 SUCCESS; pinned live shell/manifest/main owner byte-match.
+Native main repair awaits Linked Duplicate/Array diagonal mode-switch iPad acceptance.
