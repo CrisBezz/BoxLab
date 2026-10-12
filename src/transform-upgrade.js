@@ -220,7 +220,14 @@ function finish(event){const g=gesture;if(!g||g.id!==event.pointerId)return;even
     window.dispatchEvent(new CustomEvent('boxlab-transform-end',{detail:{tool:g.t,constraint:g.axis||g.constraint||'free',pointerId:event.pointerId,owner:'transform-upgrade'}}));
   }
 }}
-document.addEventListener('pointerup',finish,true);document.addEventListener('pointercancel',finish,true);toolButtons.forEach(b=>b.addEventListener('click',()=>{globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});queueMicrotask(()=>{constraint=globalThis.__boxlabTransformArming?.constraint?.()||'free';render();syncPrecision();});},true));syncPrecision();
+window.addEventListener('pointerup',finish,true);window.addEventListener('pointercancel',finish,true);
+// Mode changes commit the current preview and close its gesture before the
+// scene manager saves placement; reused Pencil IDs must not revive old drags.
+window.addEventListener('click',event=>{
+  const next=event.target?.closest?.('#selectionModes button')?.dataset?.mode;
+  if(gesture&&next&&next!==gesture.m)finish({type:'pointerup',pointerId:gesture.id,preventDefault(){},stopImmediatePropagation(){}});
+},true);
+toolButtons.forEach(b=>b.addEventListener('click',()=>{globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});queueMicrotask(()=>{constraint=globalThis.__boxlabTransformArming?.constraint?.()||'free';render();syncPrecision();});},true));syncPrecision();
 
 
 function setTransformContext(toolName,constraintName='free'){

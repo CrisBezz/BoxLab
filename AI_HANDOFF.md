@@ -1,7 +1,7 @@
-# BoxLab AI Handoff — .835 completed-event linked diagnostics
+# BoxLab AI Handoff — .836 stale transform release repair
 
 ## Current state — 2026-10-12
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.835.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.836.
 User PASS .831 mixed reference project Open, guide lock/visibility and editing/history.
 User PASS .830 Balloon/merge/navigation remains protected. .832 user FAIL: moved Linked Duplicate disappears on Face-mode selection. .833 retest pending. Repository is source of truth; read AI_WORKFLOW,
 this handoff, TEST_CHECKLIST, recent DEV_HISTORY and ROADMAP before changing code.
@@ -86,11 +86,24 @@ Existing Gesture Debug pins uncaught runtime/rejection and inactive render-skip 
 Off by default; no geometry mutation/further speculative repair. Two tests cover true
 post-handler sampling and off/enabled error reporting. User .832/.833 failure unresolved.
 
+## .836 repair from .835 device evidence
+Screenshot .835 BEFORE/SAVED:copyX1.65/sourceX0; AFTER face:copyX-16.498/sourceX-18.148,
+UI/modeFace, visibletrue/bodytrue/inactive1. Shared source/live shift ~-18.148 confirmed;
+not lost instance matrix or hidden body. transform-upgrade release at document capture
+can be blocked by earlier document consumers. Its old gesture then handles same Pencil
+ID later, applying delta from old plane/start after mode switch; component save propagates
+the whole-object jump to shared source. Existing finish now window capture; mode-button
+window capture commits/closes owned preview before manager placement save. No parallel
+transform owner, no geometry/instance algorithm change. Two actual owner tests: mode
+switch and consumed document release cannot revive move on reused ID. Whole rotate-owner
+helper dispatch now models window before document completion. Full local2230PASS/0FAIL.
+Only transform-upgrade runtime changes; other runtime pins repinned/reviewed with identical
+bytes. Diagnostics remain available. User .832/.833 failures recorded; .836 iPad pending.
+
 ## Next
-On .835 enable Gesture Debug; Linked Duplicate > move > Face; capture AFTER plus any
-LINKED RUNTIME/RENDER ERROR. Peer positions now distinguish original drift from active
-copy placement, completed mode/UI from early trace, and inactive render failures.
-Do not continue feature expansion until concrete device failure is fixed and passed.
+Retest Linked Duplicate > move > Face/Edge/Vertex; both objects retain positions and
+component edit still shares. Then .boxlab linked Save/Open, Object move, Make Unique,
+Undo/Redo and navigation. Do not expand features until concrete failure passes on iPad.
 
 ## Release protocol
 /nextbuild: audit, narrow implementation on main, reviewed child/parent cache pins,

@@ -5714,3 +5714,14 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [x] Runtime/rejection errors off by default and pinned when enabled; inactive render-skip logs IDs/message.
 - [ ] .835 Linked Duplicate > move > Face; screenshot final AFTER, peers/inactive count and any runtime/render error.
 - [ ] Keep .832/.833 failure active until real iPad repair passes.
+
+
+## .836 shared-source jump after mode switch
+
+- [x] .835 screenshot confirms shared-source jump -18.148 with matching visible copy, not disappearance alone.
+- [x] Existing transform finish sees window release before consuming document handler.
+- [x] Mode switch commits/closes owned gesture; reused pointer movement cannot change mesh/history.
+- [x] Full local2230PASS/0FAIL/0skip; existing rotate/helper checks retained.
+- [ ] Linked Duplicate > Move > Face/Edge/Vertex: original and copy retain exact placements.
+- [ ] Component edit shares; Object move independent; Save/Open/Make Unique/Undo/Redo normal.
+- [ ] Pencil/finger navigation and ordinary Move/Rotate/Scale unaffected.

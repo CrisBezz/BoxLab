@@ -259,7 +259,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.835",
+      "url": "./src/gesture-debug.js?v=0.36.18.836",
       "target": "src/gesture-debug.js",
       "sha256": "611155d3e5da43a7be35f811ac5a23eec18d3a2c772b6c645895e4836d57894c"
     },
@@ -329,7 +329,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.835",
+      "url": "./src/multi-object.js?v=0.36.18.836",
       "target": "src/multi-object.js",
       "sha256": "dda9ecee8a7cbbdfcf5ef6a2d5dfb8626e78e0a326a7d15e4ecebbd3ec50f8f0"
     },
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.835",
+      "url": "./src/release-bootstrap.js?v=0.36.18.836",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.835",
+      "url": "./src/release-version.js?v=0.36.18.836",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -563,9 +563,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/transform-upgrade.js?v=0.36.18.718",
+      "url": "./src/transform-upgrade.js?v=0.36.18.836",
       "target": "src/transform-upgrade.js",
-      "sha256": "8d417d05bc3662194fa06c3d5f97aafbb9626592680fffd675526f58d6be99a0"
+      "sha256": "2cf09f40d82c9237de2049a08d5d5250987f5be137f4ed36fb4b2b9b327dda2e"
     },
     {
       "owner": "index.html",

@@ -8196,3 +8196,18 @@ fbff479119df53209e04c11359300e249096a64f matches checkout. Node22 CI
 38245284982/job114797502516 SUCCESS:2228PASS/0FAIL/0skip. Pages38245284604
 SUCCESS. Fresh pinned live shell/manifest/manager/Debug byte-match. User original-object
 drift remains unresolved; diagnostic only, completed-event screenshot required.
+
+
+## .836 — Stale transform release / mode exit repair — 2026-10-12
+
+User .835 screenshot resolves drift: AFTER face live/stored/evaluated-16.498/source-18.148
+from BEFORE copy1.65/source0; visibility retained. Existing transform-upgrade gesture
+release lived at document capture, could be swallowed, then reused Pencil ID moved live
+mesh from stale gesture plane. Component-mode save applies whole shift to linked source.
+Move authoritative finish to window capture (existing workflow rule); same owner finishes
+pending preview on mode-button window capture before manager placement save. Preserve
+committed mesh/history rather than cancelling back. No parallel kernel or protected
+Multi1.0 edit. Two actual-owner regression tests cover mode exit/reused pointer and earlier
+document consumer; rotate helper now models window/document completion. Full Node24
+2230PASS/0FAIL/0skip. Transform836 plus reviewed shell/recovery; diagnostics retained.
+Protected modelling/frozenBeta unchanged. iPad Linked Duplicate Move→Face retest pending.

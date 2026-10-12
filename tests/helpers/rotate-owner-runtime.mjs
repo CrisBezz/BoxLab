@@ -20,12 +20,12 @@ export function rotateOwnerRuntime({mode='face',ids=[0],tool='rotate',visible=tr
   __boxlabSelectionBridge:{mode:()=>mode,indices:()=>selected,set:(m,next)=>selected=[...next]},
   __boxlabTransformArming:{tool:()=>tool,constraint:()=> 'z',active:()=>true},__boxlabTotalGizmo:{visible:()=>visible},
   __boxlabObjectManager:{pickObject:()=>({id:1})},__boxlabObjectSelection:{ids:new Set([1]),multi:false}};
- win.dispatchEvent=e=>events.push(e);vm.createContext(c);
+ const nativeWindowDispatch=win.dispatchEvent.bind(win);win.dispatchEvent=e=>{events.push(e);nativeWindowDispatch(e);};vm.createContext(c);
  vm.runInContext('{'+upgradeSource.replace(/^import .*;\n/gm,'')+'}',c);
  vm.runInContext('{'+rotateSource.replace(/^import .*;\n/gm,'')+'}',c);
  const point=(type,x,y,extra={})=>({type,target:canvas,isPrimary:true,pointerType:'pen',pointerId:1,clientX:x,clientY:y,preventDefault(){this.prevented=true;},stopImmediatePropagation(){this.stopped=true;},...extra});
  return {c,mesh,history,camera,canvas,status,events,selected:()=>selected,captured:()=>captured,redraws:()=>redraws,
-  dispatch(type,x,y,extra={}){const e=point(type,x,y,extra);doc.dispatchEvent(e);return e;},
+  dispatch(type,x,y,extra={}){const e=point(type,x,y,extra);if(type==='pointerup'||type==='pointercancel')win.dispatchEvent(e);if(!e.stopped)doc.dispatchEvent(e);return e;},
   begin(x,y,spec={tool:'rotate',constraint:'z'}){return c.__boxlabTransformUpgrade.beginGizmoGesture(spec,point('pointerdown',x,y));},
   centre(){const vertices=new Set(mode==='vertex'?ids:mode==='edge'?ids.flatMap(id=>{const e=mesh.edges()[id];return[e.a,e.b];}):mode==='face'?ids.flatMap(id=>mesh.faces[id]):mesh.vertices.map((_,i)=>i));const p=new THREE.Vector3();for(const i of vertices)p.add(mesh.vertices[i]);p.divideScalar(vertices.size).project(camera);return{x:(p.x*.5+.5)*640,y:(-p.y*.5+.5)*480};}
  };

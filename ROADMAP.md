@@ -4,7 +4,14 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .835 linked original drift diagnosis / frozen Beta 7, 2026-10-12
+## Current direction — .836 stale transform release repair / frozen Beta 7, 2026-10-12
+
+.835 screenshot confirms shared-source jump with visibility retained. .836 authoritative
+transform owner completes at window capture and closes before mode change, preventing
+reused Pencil ID from continuing old move. Full2230PASS/0FAIL; iPad original/copy
+placement and linked-edit/project gate pending before resources/performance expansion.
+
+## Previous direction — .835 linked original drift diagnosis / frozen Beta 7, 2026-10-12
 
 User screenshots .834 active geometry/placement/visibility agree, original moves far away.
 AFTER microtask was early; .835 next-task trace and browser/render-error reporting expose
