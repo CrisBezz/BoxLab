@@ -87,3 +87,21 @@ test('819 optional paired pole quads retain watertight oriented face cycles and 
  for(const uses of edges.values())assert.deepEqual(uses.sort(),[-1,1]);
  assert(legacy.faces.some(f=>f.length===3));
 });
+
+
+test('820 quadball replaces both pole fans with a manifold quad grid',()=>{
+ for(const density of [4,6,8]){
+  const p={...profile(),balloonResolution:density,balloonTopology:'quads',balloonPolePatch:'grid'};
+  const mesh=makeCurveProfile(p);
+  assert(mesh.faces.every(f=>f.length===4),'all faces should be quads');
+  const edgeMap=new Map();
+  for(const f of mesh.faces)for(let i=0;i<f.length;i++){
+   const a=f[i],b=f[(i+1)%f.length],key=mesh.edgeKey(a,b);
+   if(!edgeMap.has(key))edgeMap.set(key,[]);
+   edgeMap.get(key).push(a<b?1:-1);
+  }
+  for(const uses of edgeMap.values())assert.deepEqual(uses.sort(),[-1,1]);
+  assert.equal(mesh.vertices.length-edgeMap.size+mesh.faces.length,2);
+  assert(mesh.vertices.length>makeCurveProfile({...p,balloonPolePatch:undefined}).vertices.length);
+ }
+});
