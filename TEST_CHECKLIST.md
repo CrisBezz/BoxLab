@@ -5580,3 +5580,12 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Repeat after File menu scroll/open and after Cancel/reopen
 - [ ] Inside-pad primary touch draws rather than moving 3D scene; outside-pad finger orbit, two-finger pan and pinch remain unchanged
 - [ ] .821 Edit points merge/Undo and .820 Quadball preview/Apply remain intact
+
+
+## Native .boxlab round-trip preflight .825
+
+- [ ] File > Check project snapshot on basic scene reports BOXLAB v1 round-trip verified in memory
+- [ ] Test Quadball and two objects, with creases/groups or Curve recipes where feasible
+- [ ] Project verification never modifies scene; editing and Undo/Redo still work
+- [ ] Unsupported rich resource scenes safely refuse rather than losing data
+- [ ] .824 Pencil drawing after Reset and .823 File menu scroll remain operational
