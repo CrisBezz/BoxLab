@@ -5673,3 +5673,16 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Open/Cancel preserves changed scene; Open/Confirm restores guide + editable object.
 - [ ] Reference remains read-only; hide/show works, editable object can select/Add/edit/Undo.
 - [ ] Balloon Pencil drawing and point merge remain accepted.
+
+
+## .831 user PASS / .832 Linked project instances
+
+- [x] User PASS .831 mixed guide Save/Open, reference lock/visibility and editable history; protected.
+- [x] Manager restores local linked source pool, separate world placements and source allocator.
+- [x] Existing peer-sync propagates component edits through separate placements.
+- [x] Malformed/singular/projective matrices, source IDs and mismatched linked meshes refuse; rollback restores allocator/source pool/history.
+- [x] Save validation precedes download; Open validation precedes confirmation; Cancel preserves scene.
+- [ ] Linked Duplicate an object, move copy separately, Save .boxlab and reopen.
+- [ ] Component edit propagates between linked copies; Object move affects only moved copy.
+- [ ] Make Unique breaks sharing; edit then Undo/Redo remains normal.
+- [ ] Add another linked pair after Open; original links stay separate from new pair.

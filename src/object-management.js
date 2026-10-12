@@ -250,6 +250,8 @@ function exportBasicProject(button,output){
       source?.mesh?.uvLayers||source?.mesh?.materialSlots)
     throw Error('Scene contains resource channels not yet supported by basic .boxlab Save');
   }
+  if(scene.objects.some(o=>o.sourceId)&&!manager()?.validateBasicProjectLinks?.(scene.objects))
+   throw Error('Linked instance data failed validation');
   const data=encodeBoxlabScene(scene);
   const text=JSON.stringify(data);
   const restored=decodeBoxlabScene(JSON.parse(text),(v,f,c,g)=>new EditableMesh(v,f,c,g));
@@ -271,10 +273,9 @@ async function openBasicProject(file,output){
   if(!/\.boxlab$/i.test(file.name)||file.size>32*1024*1024)throw Error('Choose a .boxlab file smaller than 32 MB');
   const source=JSON.parse(await file.text());
   const incoming=decodeBoxlabScene(source,(v,f,c,g)=>new EditableMesh(v,f,c,g));
-  // The v1 codec does not reconstruct imported resource pools or linked
-  // source meshes; refuse instead of creating visibly broken instances.
-  if(incoming.objects.some(o=>o.sourceId||o.glbPassthrough||o.materials||o.textures))
-   throw Error('Linked/rich-resource projects are not supported by basic Open');
+  // The v1 codec does not reconstruct imported resource pools; refuse instead of creating visibly broken instances.
+  if(incoming.objects.some(o=>o.glbPassthrough||o.materials||o.textures))
+   throw Error('Rich-resource projects are not supported by basic Open');
   const ids=new Set(incoming.objects.map(o=>o.id));
   if(ids.size!==incoming.objects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))
    throw Error('Invalid or duplicate object IDs');
@@ -283,6 +284,8 @@ async function openBasicProject(file,output){
   if(!incoming.objects.some(o=>o.kind==='editable'&&!o.locked))throw Error('Project has no editable unlocked object');
   if(JSON.stringify(encodeBoxlabScene(incoming))!==JSON.stringify(source))
    throw Error('Project data failed round-trip validation');
+  if(incoming.objects.some(o=>o.sourceId)&&!manager()?.validateBasicProjectLinks?.(incoming.objects))
+   throw Error('Linked instance data failed validation');
   const response=window.confirm('Replace the CURRENT BoxLab scene with '+incoming.objects.length+' objects from '+file.name+'?\n\nThis clears the current scene and Undo history. Save your current project first.');
   if(!response){output.textContent='Open cancelled · current scene unchanged';return;}
   const managerApi=manager();

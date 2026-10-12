@@ -160,6 +160,29 @@ function restoreHistory(snapshot) {
 function linkedCount(sourceId) {
   return sourceId ? objects.filter(object => object.sourceId === sourceId).length : 0;
 }
+// Reconstruct the existing linked-source pool from persisted world meshes.
+// Validation uses the same placement/geometry owners as normal linked editing.
+function projectLinkedSources(sceneObjects){
+  const sources=new Map();let next=nextSourceId;
+  for(const object of sceneObjects){
+    if(!object.sourceId)continue;
+    const number=typeof object.sourceId==='string'&&/^source-[1-9][0-9]*$/.test(object.sourceId)?Number(object.sourceId.slice(7)):NaN;
+    const a=object.instanceMatrix;
+    if(!Number.isSafeInteger(number)||number>=Number.MAX_SAFE_INTEGER||object.kind==='reference'||
+      !Array.isArray(a)||a.length!==16||!a.every(Number.isFinite)||a[3]!==0||a[7]!==0||a[11]!==0||a[15]!==1)
+      throw Error('Invalid linked instance');
+    const matrix=matrixForInstance(object);
+    if(!Number.isFinite(matrix.determinant())||matrix.determinant()===0)throw Error('Invalid linked placement');
+    const local=localMeshFromWorld(object.mesh,matrix);
+    if(!local||local.vertices.some(v=>![v.x,v.y,v.z].every(Number.isFinite)))throw Error('Invalid linked mesh');
+    const attributes=m=>JSON.stringify([[...(m.creases||[])],m.faceGroups||[],[...(m.looseEdges||[])].sort(),[...(m.looseVertices||[])].sort()]);
+    const prior=sources.get(object.sourceId);
+    if(prior&&(!meshesNear(prior.mesh,local)||attributes(prior.mesh)!==attributes(local)))throw Error('Linked meshes disagree');
+    if(!prior)sources.set(object.sourceId,{id:object.sourceId,mesh:local,revision:0});
+    next=Math.max(next,number+1);
+  }
+  return {sources,next};
+}
 function newLinkedSource(mesh) {
   const id=`source-${nextSourceId++}`;
   linkedSources.set(id,{ id, mesh:mesh.clone(), revision:0 });
@@ -942,10 +965,11 @@ function initialize() {
       if(!object||!live||object.locked||object.kind==='reference'||object.sourceId||!mesh?.clone)return false;
       replaceMeshInPlace(live,mesh);object.mesh=mesh.clone();forceRender();renderOutliner();return true;
     },
+    validateBasicProjectLinks(sceneObjects) { try { projectLinkedSources(sceneObjects);return true; } catch { return false; } },
     replaceBasicProjectScene(sceneObjects, wantedId) {
       const live=state()?.mesh;
       if(!live||!Array.isArray(sceneObjects)||!sceneObjects.length)return false;
-      if(sceneObjects.some(o=>o.sourceId||o.glbPassthrough||!o.mesh?.clone))return false;
+      if(sceneObjects.some(o=>o.glbPassthrough||!o.mesh?.clone))return false;
       // All validation and confirmation must be performed by the caller.
       const ids=new Set(sceneObjects.map(o=>o.id));
       if(ids.size!==sceneObjects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))return false;
@@ -953,11 +977,12 @@ function initialize() {
       const active=sceneObjects.find(o=>o.id===wantedId&&editable(o))||sceneObjects.find(editable);
       if(!active)return false;
       // Stage independent meshes/settings before touching the live scene.
-      let prepared, previous;
+      let prepared, previous, links;
       const h=history();
       try {
         prepared=sceneObjects.map(o=>({...o,locked:o.kind==='reference'?true:!!o.locked,mesh:o.mesh.clone(),history:{undo:[],redo:[]},settings:cloneSettings(o.settings)}));
-        previous={mesh:live.clone(),settings:captureSettings(),objects,activeId,soloId,nextId,
+        links=projectLinkedSources(prepared);
+        previous={mesh:live.clone(),settings:captureSettings(),objects,activeId,soloId,nextId,nextSourceId,
           sources:new Map(linkedSources),undo:h?.undoStack?.slice(),redo:h?.redoStack?.slice()};
       } catch { return false; }
       try {
@@ -965,7 +990,8 @@ function initialize() {
         objects=prepared;
         activeId=active.id;
         soloId=null;
-        linkedSources.clear();
+        linkedSources.clear();for(const [id,source] of links.sources)linkedSources.set(id,source);
+        nextSourceId=links.next;
         nextId=prepared.reduce((id,o)=>Math.max(id,o.id+1),nextId);
         restoreSettings(active.settings);
         forceRender();
@@ -973,7 +999,7 @@ function initialize() {
         // History is cleared only after successful replacement/render setup.
         h?.clear?.();
       } catch {
-        objects=previous.objects;activeId=previous.activeId;soloId=previous.soloId;nextId=previous.nextId;
+        objects=previous.objects;activeId=previous.activeId;soloId=previous.soloId;nextId=previous.nextId;nextSourceId=previous.nextSourceId;
         linkedSources.clear();for(const [id,source] of previous.sources)linkedSources.set(id,source);
         if(previous.undo&&h?.undoStack)h.undoStack.splice(0,h.undoStack.length,...previous.undo);
         if(previous.redo&&h?.redoStack)h.redoStack.splice(0,h.redoStack.length,...previous.redo);

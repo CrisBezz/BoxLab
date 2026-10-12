@@ -4,7 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .831 basic project reference guides / frozen Beta 7, 2026-10-12
+## Current direction — .832 linked project instances / frozen Beta 7, 2026-10-12
+
+User PASS .831 protected. .832 reopens linked instance pool from existing persisted
+world meshes/matrices, validates shared local data, preserves independent placement and
+allocator integrity. Save/Open guards and peer-sync tested; device linked edit/Move/Make
+Unique/history gate pending. Next rich resource persistence and measured performance;
+NOM/Curve cutters/UV remain queued. .830 zero-failure baseline remains protected.
+
+## Previous direction — .831 basic project reference guides / frozen Beta 7, 2026-10-12
 
 User PASS .830 protected. .831 restores mixed reference/editable projects via existing
 codec/Open/manager, keeps guides locked, chooses editable primary, refuses reference-only

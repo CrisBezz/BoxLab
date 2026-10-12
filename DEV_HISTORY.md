@@ -8096,3 +8096,20 @@ Releasef7ae31c4636f8161ba14987f064dc93d30c7f405; tested tree
 38237955024/job114773194656 SUCCESS:2219PASS/0FAIL/0skip. Pages38237954570
 SUCCESS. Fresh live shell/manifest/manager/object-management/drawer byte-match.
 .830 user PASS protected, .831 mixed-reference Save/Open device gate pending.
+
+
+## .832 — .boxlab linked-instance restoration — 2026-10-12
+
+User PASS .831 guide Save/Open/locks/edit/history protected. Existing codec already saved
+sourceId/matrix/world meshes. Reconstruct authoritative linkedSources via existing inverse
+placement and geometry owners; canonical source-N/finite invertible affine transforms and
+peer local geometry/topology/crease/group/loose consistency required. Validate on Save and
+before Open confirmation. Stage source pool, advance source allocator, rollback restores
+allocator/source pool. Four tests actual manager/codec/peer-sync/Open/Save cover sharing,
+independent placement, allocator collision avoidance, malformed matrices/disagreeing data,
+Cancel, rollback and download gate. No parallel geometry/history owner. Rich resources
+still unsupported. Manager/Object-management/Drawer832 aligned; codec825/Curve830,
+Multi1.0/Loop715/Extrude802/Boolean806/frozenBeta2–7 untouched. Device linked Save/Open,
+component edit sharing, independent move/Make Unique/history pending.
+
+.832 full local Node24:2223PASS/0FAIL/0skip. CI/publication verified separately.
