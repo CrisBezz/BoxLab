@@ -1,7 +1,7 @@
 import {appendStrokePoint,simplifyStroke} from './stroke-sampling.js?v=0.36.18.808';
 import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.820';
 import {createAddObjectPreview} from './add-object-preview.js?v=0.36.18.814';
-const VERSION='0.36.18.821',W=320,H=180,NS='http://www.w3.org/2000/svg';
+const VERSION='0.36.18.824',W=320,H=180,NS='http://www.w3.org/2000/svg';
 const manager=()=>globalThis.__boxlabObjectManager,session=()=>globalThis.__boxlabToolSession;
 const activeObject=()=>{const m=manager();return m?.objects.find(o=>o.id===m.activeId);};
 let panel=null,pad=null,path=null,handles=null,note=null,applyButton=null,profile=null,objectId=null,drag=null,edit=false,undos=[],committing=false,preview=null;
@@ -61,7 +61,7 @@ function open(existing=false,balloon=false){
  note=node('div');note.setAttribute('role','status');panel.append(note);const actions=node('div');actions.className='outliner-actions';panel.append(actions);button(actions,'Cancel','cancel',cancel);applyButton=button(actions,'Apply','apply',apply);
  function beginStroke(e){
   if(!panel||!pad.contains(e.target))return;
-  if(e.pointerType==='touch'||!e.isPrimary||e.button>0||drag)return;e.preventDefault();e.stopImmediatePropagation();const p=point(e),before=clone();
+  if(!e.isPrimary||e.button>0||drag)return;e.preventDefault();e.stopImmediatePropagation();const p=point(e),before=clone();
   if(edit){let index=-1,near=14;profile.points.forEach((v,i)=>{const q=screen(v),d=Math.hypot(p.x-q.x,p.y-q.y);if(d<near){near=d;index=i;}});if(index<0)return;drag={id:e.pointerId,before,index,mergeTarget:-1};profile.points[index]=local(p);}
   else{drag={id:e.pointerId,before,stroke:[p]};profile.points=[local(p)];}
   const controls=globalThis.__boxlabBridgeState?.controls;if(controls){drag.controls={owner:controls,enabled:controls.enabled};controls.enabled=false;}
