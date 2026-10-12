@@ -230,6 +230,41 @@ function auditProjectSnapshot(){
  }
  return {ok:issues.length===0,counts,issues,hasSelection:scene.selected.length>0,activeId:scene.activeId};
 }
+function projectFileName(){
+ const input=document.querySelector('#exportFileName');
+ const name=String(input?.value||'BoxLab_Project').replace(/[^a-zA-Z0-9 _.-]/g,'_').replace(/\\.boxlab$/i,'').trim();
+ return (name||'BoxLab_Project')+'.boxlab';
+}
+function exportBasicProject(button,output){
+ if(button.disabled)return;
+ button.disabled=true;
+ let url=null;
+ try{
+  manager()?.saveActive?.();
+  const scene=captureScene();
+  // Snapshot cloning currently omits some rich runtime channels; explicitly
+  // reject those before using the basic geometry/recipe-only v1 codec.
+  for(const source of manager()?.objects||[]){
+   if(source?.glbPassthrough||source?.materials||source?.textures||
+      source?.mesh?.uvs||source?.mesh?.faceUVs||
+      source?.mesh?.uvLayers||source?.mesh?.materialSlots)
+    throw Error('Scene contains resource channels not yet supported by basic .boxlab Save');
+  }
+  const data=encodeBoxlabScene(scene);
+  const text=JSON.stringify(data);
+  const restored=decodeBoxlabScene(JSON.parse(text),(v,f,c,g)=>new EditableMesh(v,f,c,g));
+  if(JSON.stringify(encodeBoxlabScene(restored))!==text)throw Error('Project round-trip verification failed');
+  const blob=new Blob([text],{type:'application/json'});
+  url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=projectFileName();
+  document.body.appendChild(a);a.click();a.remove();
+  output.textContent='Basic .boxlab download requested · '+data.objects.length+' objects · project history and rich resources not included. Open remains disabled.';
+ }catch(error){output.textContent='Save refused · '+(error?.message||error);}
+ finally{
+  button.disabled=false;
+  if(url)setTimeout(()=>URL.revokeObjectURL(url),60000);
+ }
+}
 function installProjectAudit(){
  const menu=document.querySelector('#fileMenu .top-file-content');
  if(!menu||menu.querySelector('#projectAuditBtn'))return;
@@ -250,8 +285,9 @@ function installProjectAudit(){
   }
   output.textContent=report.ok?`Project snapshot: ${n.objects} objects · ${n.vertices} vertices · ${n.faces} faces · ${n.groups} groups · ${n.booleanRecipes} Boolean recipes · ${n.curveProfiles} Curve profiles · ${n.linkedObjects} links · ${n.referenceObjects} references. File Save/Open not enabled yet.`:`Project snapshot issues: ${report.issues.slice(0,3).join('; ')||report.reason}`;
  });
- menu.append(button,output);
+ const save=document.createElement('button');save.id='projectSaveBasicBtn';save.type='button';save.textContent='Save .boxlab (basic scene)';save.title='Download supported editable geometry and scene metadata; not history, UVs or textures';save.addEventListener('click',()=>exportBasicProject(save,output));
+ menu.append(button,save,output);
 }
-globalThis.__boxlabProjectSnapshotAudit={version:'0.36.18.825',inspect:auditProjectSnapshot};
+globalThis.__boxlabProjectSnapshotAudit={version:'0.36.18.826',inspect:auditProjectSnapshot};
 function initialize(){if(globalThis.__boxlabObjectSelectionRuntime?.initialized)return true;if(!manager()||!drawer||!list)return false;globalThis.__boxlabObjectSelectionRuntime={initialized:true,owner:toolbarOwner};buildToolbar();selectedIds=new Set(activeId()==null?[]:[activeId()]);installCaptureHandlers();installObserver();updateUI();globalThis.__boxlabObjectSelection={__authoritative:true,owner:toolbarOwner,get ids(){return new Set(selectedIds);},get multi(){return multiEnabled;},invert(seed=[...selectedIds]){const have=new Set(seed);multiEnabled=true;selectedIds=new Set(objects().filter(o=>o.visible!==false&&!have.has(o.id)).map(o=>o.id));updateUI();},get wholeGroupId(){return selectedWholeGroupId();},select(ids=[]){multiEnabled=true;selectedIds=new Set(ids);updateUI();},single(id=activeId()){multiEnabled=false;selectedIds=new Set(id==null?[]:[id]);updateUI();},clear(){selectedIds.clear();updateUI();},refresh(){updateUI();}};globalThis.__boxlabObjectGroups={groupSelection,ungroupSelection,selectGroup,renameGroup,refresh:updateUI,label:groupLabel,members:groupMembers,completeSelectedGroupIds:selectedCompleteGroupIds};installHistoryBridge();installProjectAudit();return true;}
 if(!initialize()){const ready=()=>{if(!initialize())return;window.removeEventListener('boxlab-object-manager-ready',ready);};window.addEventListener('boxlab-object-manager-ready',ready);}
