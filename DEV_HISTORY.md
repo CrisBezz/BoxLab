@@ -7997,3 +7997,8 @@ User PASS .824 drawing regression. Added independent, versioned JSON-safe projec
 ## .826 — Guarded basic .boxlab file download — 2026-10-12
 
 User PASS .825 round-trip preflight. File > Save .boxlab (basic scene) now serializes supported scene geometry/group/recipe metadata via existing v1 codec, performs independent reconstruction/re-encode check, then requests iPad browser download. Known unsupported imported GLB rich channels and UV/material/texture fields refuse rather than silently discard. History stacks and resource packages not saved; Open intentionally disabled. User verification and CI pending.
+
+
+## .827 — Guarded basic .boxlab Open — 2026-10-12
+
+User PASS .826 basic project download. Added .boxlab file picker, v1 independent decode/re-encode validation, explicit replacement warning/confirmation, unsupported linked/reference/rich resource refusal and 32MB size gate. Authoritative multi-object manager now exposes guarded basic scene replacement synchronising object ID allocator and live mesh; restores group/selection metadata in existing owner. Replacement clears history and cannot be undone; Cancel leaves project unchanged. CI/iPad device validation pending.
