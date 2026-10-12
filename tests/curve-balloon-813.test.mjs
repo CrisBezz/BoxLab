@@ -105,3 +105,20 @@ test('820 quadball replaces both pole fans with a manifold quad grid',()=>{
   assert(mesh.vertices.length>makeCurveProfile({...p,balloonPolePatch:undefined}).vertices.length);
  }
 });
+
+
+test('821 shared Curve editor Pencil drag-to-merge removes one point and Undo restores it',()=>{
+ const u=curveProfileUIRuntime();assert(u.api.open(false,true));
+ const pts=[[35,130],[80,30],[200,25],[275,130],[160,155]];
+ u.pointer('pointerdown',...pts[0]);for(const xy of pts.slice(1))u.pointer('pointermove',...xy);u.pointer('pointerup',...pts.at(-1));
+ const before=u.find(n=>n.id==='curveProfilePad').children[1].children.length;
+ assert(before>=3);
+ const dots=u.find(n=>n.id==='curveProfilePad').children[1].children;
+ const a=dots[0],b=dots[1];const ax=Number(a.attributes.cx),ay=Number(a.attributes.cy),bx=Number(b.attributes.cx),by=Number(b.attributes.cy);
+ u.pointer('pointerdown',ax,ay);u.pointer('pointermove',bx,by);
+ assert.equal(b.style.fill,'#e34b4b');
+ u.pointer('pointerup',bx,by);
+ assert.equal(u.find(n=>n.id==='curveProfilePad').children[1].children.length,before-1);
+ u.button('undo').click();
+ assert.equal(u.find(n=>n.id==='curveProfilePad').children[1].children.length,before);
+});
