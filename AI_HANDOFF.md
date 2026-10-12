@@ -186,3 +186,9 @@ Pages38247941344 SUCCESS; pinned live shell/manifest/main owner byte-match.
 Native main repair awaits Linked Duplicate/Array diagonal mode-switch iPad acceptance.
 
 .838 full local Node24:2233PASS/0FAIL/0skip; device issue unresolved.
+
+## .838 publication verified
+Release37cbd70cb8fc6446529003c6c3c87c5e662187ab; treee5c28a09ba20c5a66ddb2f76bf440409ab25ef38.
+Node22 CI38324508602/job115059953152 SUCCESS2233PASS/0FAIL/0skip.
+Pages38324508260 SUCCESS; pinned live shell/manifest/manager byte-match.
+Diagnostic only; .837 failure unresolved. Fresh-scene SOURCE WRITE screenshot required.

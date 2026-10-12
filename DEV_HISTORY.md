@@ -8258,3 +8258,12 @@ Runtime manager838; repinned unchanged main/Debug/transform/recovery and reviewe
 hashes. Protected Multi1.0/Loop715/Extrude802/Boolean806/frozenBeta unchanged.
 
 .838 full local Node24:2233PASS/0FAIL/0skip; device issue unresolved.
+
+
+### .838 publication verification — 2026-10-13
+
+Release37cbd70cb8fc6446529003c6c3c87c5e662187ab; tested tree
+e5c28a09ba20c5a66ddb2f76bf440409ab25ef38 matches checkout. Node22 CI
+38324508602/job115059953152 SUCCESS:2233PASS/0FAIL/0skip. Pages38324508260
+SUCCESS. Fresh pinned live shell/manifest/manager byte-match. Diagnostic-only source
+write trace; .837 user FAIL remains unresolved, exact device caller evidence pending.
