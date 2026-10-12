@@ -5686,3 +5686,14 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Component edit propagates between linked copies; Object move affects only moved copy.
 - [ ] Make Unique breaks sharing; edit then Undo/Redo remains normal.
 - [ ] Add another linked pair after Open; original links stay separate from new pair.
+
+
+## .833 Linked Duplicate mode transition — .832 device FAIL recorded
+
+- [x] Real saveActive fixture reproduces pending Object transform reinterpreted as shared component edit.
+- [x] Outgoing Object placement flush precedes mode switch; Face/Edge/Vertex preserve both placements.
+- [x] Subsequent genuine component edit still propagates through original linked owner.
+- [ ] Linked Duplicate, move aside, select Face: both objects remain visible in original positions.
+- [ ] Repeat Object Move → Edge and Vertex; component edit shares without moving other copy.
+- [ ] Save/Open linked scene, repeat mode switch; Make Unique/Undo/Redo normal.
+- [ ] Pencil orbit/pan/pinch unchanged.

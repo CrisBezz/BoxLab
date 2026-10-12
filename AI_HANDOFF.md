@@ -1,9 +1,9 @@
-# BoxLab AI Handoff — .832 linked project instances
+# BoxLab AI Handoff — .833 linked placement mode-transition repair
 
 ## Current state — 2026-10-12
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.832.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.833.
 User PASS .831 mixed reference project Open, guide lock/visibility and editing/history.
-User PASS .830 Balloon/merge/navigation remains protected. .832 acceptance pending. Repository is source of truth; read AI_WORKFLOW,
+User PASS .830 Balloon/merge/navigation remains protected. .832 user FAIL: moved Linked Duplicate disappears on Face-mode selection. .833 retest pending. Repository is source of truth; read AI_WORKFLOW,
 this handoff, TEST_CHECKLIST, recent DEV_HISTORY and ROADMAP before changing code.
 Frozen Beta7 .807 and Beta2–6 remain immutable. Protected Multi1.0/Loop715/
 Extrude802/Boolean806 and historic user passes remain unchanged.
@@ -53,11 +53,22 @@ component edits and retains separate world placements. No duplicate instance ker
 Four actual manager/codec/peer-sync/Open/Save tests; full Node242223PASS/0FAIL/0skip.
 Manager/Object-management/Drawer832 share child URL; codec825,Curve830 unchanged.
 
+## .833 current repair / .832 user FAIL
+User reports moved Linked Duplicate disappears when selecting Face mode. Existing
+saveActive chooses placement vs component mutation based on current mode; main switches
+mode before rendering, so an unsaved Object move can be reinterpreted as shared geometry
+with stale instance matrix. Automated real-owner fixture reproduces source corruption,
+not full WebGL disappearance. Manager window-capture mode-button click flush saves outgoing
+linked Object placement before document main handler mutates mode. Face/Edge/Vertex tests
+preserve source/peer placement and then propagate genuine component edits. No gesture/
+transform kernel change or protected Multi1.0 edit. Manager833; other project owners832,
+Curve830 unchanged. Full local validation and publication results below when verified.
+
 ## Next
-Obtain .832 Linked Duplicate > separate placements > Save/Open > component edit sharing,
-independent Object move, Make Unique and Undo/Redo sanity. Then rich project resources
-and measured performance; NOM/Curve cutters/UV remain queued. Preserve .831 guide and
-.830 modelling passes. History is still cleared on successful Open, not persisted.
+Retest Linked Duplicate > Move aside > Face/Edge/Vertex; no disappearing copy, independent
+Object Move and shared component edit. Then .832 Save/Open > repeat mode switch, Make
+Unique/history tests. Do not infer .832 linked-file acceptance from prior .831 PASS.
+Resume resources/performance only after this concrete failure is resolved on iPad.
 
 ## Release protocol
 /nextbuild: audit, narrow implementation on main, reviewed child/parent cache pins,
@@ -75,3 +86,5 @@ Releasecce8e76a25d78d40e33fe63ba4441363fda70876; treea508345e37ea19ad835bdccb67c
 Node22 CI38239991844/job114779926952 SUCCESS2223PASS/0FAIL/0skip.
 Pages38239990977 SUCCESS; live shell/manifest/three changed owners byte-match.
 .832 linked-instance project iPad gate pending.
+
+.833 full local Node24:2225PASS/0FAIL/0skip; iPad mode-switch retest pending.

@@ -4,7 +4,14 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .832 linked project instances / frozen Beta 7, 2026-10-12
+## Current direction — .833 linked mode-transition failure repair / frozen Beta 7, 2026-10-12
+
+User FAIL .832: moved Linked Duplicate disappears on Face-mode switch. .833 flushes
+outgoing Object placement before main mode mutation; real-owner regression covers
+Face/Edge/Vertex and later shared edits. Retest this case and .832 project persistence
+before richer resources/performance expansion. .831/.830 PASS remain protected.
+
+## Previous direction — .832 linked project instances / frozen Beta 7, 2026-10-12
 
 User PASS .831 protected. .832 reopens linked instance pool from existing persisted
 world meshes/matrices, validates shared local data, preserves independent placement and

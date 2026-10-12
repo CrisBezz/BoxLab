@@ -887,6 +887,13 @@ function installRenderObserver() {
   THREE.Group.prototype.__boxlabMultiObjectInstalled = true;
 }
 
+// Commit the outgoing Object placement before main changes selection mode.
+// The render observer otherwise sees Face mode and can treat a pending object
+// transform as a shared component edit using the previous instance matrix.
+function flushLinkedPlacementOnModeChange(event){
+  const button=event.target?.closest?.('#selectionModes button'),next=button?.dataset?.mode;
+  if(currentMode()==='object'&&next&&next!=='object'&&activeObject()?.sourceId)saveActive();
+}
 function installUI() {
   const standardRow=addButton?.parentElement;
   if(standardRow&&!document.querySelector('#objectActionMore')){
@@ -949,6 +956,7 @@ function initialize() {
   activeId = initial.id;
   installRenderObserver();
   installUI();
+  window.addEventListener('click',flushLinkedPlacementOnModeChange,true);
   window.addEventListener('keydown', event => {
     if (currentMode() !== 'object') return;
     if (event.key !== 'Delete' && event.key !== 'Backspace') return;

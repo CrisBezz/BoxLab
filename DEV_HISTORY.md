@@ -8122,3 +8122,20 @@ Releasecce8e76a25d78d40e33fe63ba4441363fda70876; tested tree
 38239991844/job114779926952 SUCCESS:2223PASS/0FAIL/0skip. Pages38239990977
 SUCCESS. Fresh live shell/manifest/manager/object-management/drawer bytes match.
 .831 user PASS protected; .832 linked project device edit/Move/Make Unique gate pending.
+
+
+## .833 — Moved Linked Duplicate mode-transition repair — 2026-10-12
+
+User FAIL .832: moved linked copy disappears when switching to Face. Audit main mode
+click sets selectionMode before rendering; linked saveActive then sees component mode
+and may apply unsaved Object transform to shared source with old matrix. Real-owner
+fixture reproduces source corruption (not full Safari/WebGL disappearance). Existing
+manager now flushes outgoing linked Object placement at window-capture mode-button click
+before main document handler changes mode. Two tests preserve source/placements across
+Face/Edge/Vertex, then confirm genuine component editing still shares; unrelated clicks
+yield and original unsafe sequence reproduces. No new transform/gesture/kernel owner.
+Manager833/recovery/shell833 reviewed; project owners832/Curve830 and protected
+Multi1.0/Loop715/Extrude802/Boolean806/frozenBeta2–7 unchanged. iPad regression retest
+required before further expansion; .832 linked file acceptance remains pending.
+
+.833 full local Node24:2225PASS/0FAIL/0skip; iPad mode-switch retest pending.
