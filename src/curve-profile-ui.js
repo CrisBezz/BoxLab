@@ -1,7 +1,7 @@
 import {appendStrokePoint,simplifyStroke} from './stroke-sampling.js?v=0.36.18.808';
 import {curvePoints,makeCurveProfile,editableCurveProfile} from './curve-profile-core.js?v=0.36.18.820';
 import {createAddObjectPreview} from './add-object-preview.js?v=0.36.18.814';
-const VERSION='0.36.18.820',W=320,H=180,NS='http://www.w3.org/2000/svg';
+const VERSION='0.36.18.821',W=320,H=180,NS='http://www.w3.org/2000/svg';
 const manager=()=>globalThis.__boxlabObjectManager,session=()=>globalThis.__boxlabToolSession;
 const activeObject=()=>{const m=manager();return m?.objects.find(o=>o.id===m.activeId);};
 let panel=null,pad=null,path=null,handles=null,note=null,applyButton=null,profile=null,objectId=null,drag=null,edit=false,undos=[],committing=false,preview=null;
@@ -19,7 +19,7 @@ function draw(){
  if(!panel)return;handles.replaceChildren();let points=[];
  try{points=curvePoints(profile);const mesh=drag&&profile.output==='balloon'?null:makeCurveProfile(profile);preview?.setMesh(mesh,drag?'Release Pencil to preview':'');applyButton.disabled=!!drag;status(mesh&&profile.output==='balloon'?`${mesh.vertices.length} vertices · ${mesh.faces.length} faces`:`${profile.points.length} control points · ${points.length} curve vertices`);}catch(e){preview?.setMesh(null,e.message);applyButton.disabled=true;status(e.message);}
  path.setAttribute('points',points.map(screen).map(p=>`${p.x},${p.y}`).join(' ')+(profile.closed&&points.length?' '+Object.values(screen(points[0])).join(','):''));
- if(edit)profile.points.forEach((p,i)=>{const dot=svgNode('circle'),q=screen(p);dot.setAttribute('cx',q.x);dot.setAttribute('cy',q.y);dot.setAttribute('r',4);dot.dataset.curvePoint=String(i);handles.append(dot);});
+ if(edit)profile.points.forEach((p,i)=>{const dot=svgNode('circle'),q=screen(p);dot.setAttribute('cx',q.x);dot.setAttribute('cy',q.y);dot.setAttribute('r',drag?.mergeTarget===i?7:4);if(drag?.mergeTarget===i){dot.style.fill='#e34b4b';dot.style.stroke='#ffbbbb';}dot.dataset.curvePoint=String(i);handles.append(dot);});
  panel.querySelector('[data-curve-action="mode"]').textContent=edit?'Edit points':'Draw';
  panel.querySelector('[data-curve-action="closed"]').textContent=profile.closed?'Closed':'Open';
  panel.querySelector('[data-curve-action="smooth"]').textContent=profile.smooth?'Smooth':'Straight';
@@ -62,14 +62,14 @@ function open(existing=false,balloon=false){
  function beginStroke(e){
   if(!panel||!pad.contains(e.target))return;
   if(e.pointerType==='touch'||!e.isPrimary||e.button>0||drag)return;e.preventDefault();e.stopImmediatePropagation();const p=point(e),before=clone();
-  if(edit){let index=-1,near=14;profile.points.forEach((v,i)=>{const q=screen(v),d=Math.hypot(p.x-q.x,p.y-q.y);if(d<near){near=d;index=i;}});if(index<0)return;drag={id:e.pointerId,before,index};profile.points[index]=local(p);}
+  if(edit){let index=-1,near=14;profile.points.forEach((v,i)=>{const q=screen(v),d=Math.hypot(p.x-q.x,p.y-q.y);if(d<near){near=d;index=i;}});if(index<0)return;drag={id:e.pointerId,before,index,mergeTarget:-1};profile.points[index]=local(p);}
   else{drag={id:e.pointerId,before,stroke:[p]};profile.points=[local(p)];}
   const controls=globalThis.__boxlabBridgeState?.controls;if(controls){drag.controls={owner:controls,enabled:controls.enabled};controls.enabled=false;}
   pad.setPointerCapture(e.pointerId);draw();
  }
- function moveStroke(e){if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();const p=point(e);if(edit)profile.points[drag.index]=local(p);else if(drag.stroke.length<2000&&appendStrokePoint(drag.stroke,p)){profile.points=drag.stroke.map(local);}draw();}
+ function moveStroke(e){if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();const p=point(e);if(edit){profile.points[drag.index]=local(p);let candidate=-1,nearest=12;profile.points.forEach((v,i)=>{if(i===drag.index)return;const q=screen(v),dist=Math.hypot(p.x-q.x,p.y-q.y);if(dist<nearest){nearest=dist;candidate=i;}});drag.mergeTarget=candidate;status(candidate>=0?'Release to merge control points':'Drag point over another to merge');}else if(drag.stroke.length<2000&&appendStrokePoint(drag.stroke,p)){profile.points=drag.stroke.map(local);}draw();}
  function end(e,cancelled=false){if(!drag||drag.id!==e.pointerId)return;e.preventDefault();e.stopImmediatePropagation();const g=drag;
-  if(cancelled)profile=g.before;else{if(g.stroke){appendStrokePoint(g.stroke,point(e),0);let tolerance=3,points=simplifyStroke(g.stroke,tolerance);while(points.length>128)points=simplifyStroke(g.stroke,tolerance*=1.5);if(points.length>2&&Math.hypot(points[0].x-points.at(-1).x,points[0].y-points.at(-1).y)<8)points.pop();profile.points=points.map(local);edit=true;}undos.push(g.before);if(undos.length>30)undos.shift();}
+  if(cancelled)profile=g.before;else{if(g.index!=null&&g.mergeTarget>=0){const minimum=profile.closed?3:2;if(profile.points.length<=minimum){profile=g.before;status('Cannot merge: outline needs at least '+minimum+' points');}else{profile.points.splice(g.index,1);status('Control points merged');}}if(g.stroke){appendStrokePoint(g.stroke,point(e),0);let tolerance=3,points=simplifyStroke(g.stroke,tolerance);while(points.length>128)points=simplifyStroke(g.stroke,tolerance*=1.5);if(points.length>2&&Math.hypot(points[0].x-points.at(-1).x,points[0].y-points.at(-1).y)<8)points.pop();profile.points=points.map(local);edit=true;}undos.push(g.before);if(undos.length>30)undos.shift();}
   release();draw();
  }
  // Same authoring owner, before document-capture modelling consumers. Only
