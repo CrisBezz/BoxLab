@@ -7982,3 +7982,8 @@ User PASS .821 Pencil point merge, and .820 Quadball protected. Next roadmap nat
 ## .823 — File menu compact and scrollable — 2026-10-12
 
 User reports oversized File controls and Check project snapshot hidden by Snap/Mode controls on smaller screens. CSS-only scoped File content compactness, viewport max-height and touch scrolling; shell portrait prompt changed to device-neutral Rotate device to landscape. No geometry, file logic, history or Pencil changes. iPad gate pending.
+
+
+## .824 — Balloon pad pointer ownership hotfix — 2026-10-12
+
+User reports screen moving while drawing Balloon after .823 menu work. .823 only changed File-scoped CSS and orientation shell, no pointer code. Existing Curve pen capture still disarmed camera controls for matching strokes, but rejected touch-type pointer streams. Changed beginStroke to claim primary pointer streams originating inside pad, including Safari touch-classified Pencil, before document consumers. Changes finger interaction INSIDE pad; outside pad gestures unchanged. iPad confirmation pending; no causal claim for File CSS.
