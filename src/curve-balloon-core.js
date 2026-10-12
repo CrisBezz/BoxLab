@@ -57,6 +57,51 @@ export function makeCurveBalloon(points, profile) {
         result.push(a);i++;
       }
       if(!merged)throw Error('Balloon could not form quad strips');
+      // .820: replace each radial pole fan by a topological quad grid.
+      // Boundary has 4*m edges (density 4 => 24 => 6x6 cap).
+      // Construct from the existing donor's last-ring vertices; no new kernel.
+      if(profile.balloonPolePatch==='grid'){
+        for(const pole of [frontPole,backPole]){
+          const fan=result.filter(f=>f.length===3&&f.includes(pole));
+          const n=fan.length,m=n/4;
+          if(n<16||n%4)throw Error('Quadball pole needs a perimeter divisible by four');
+          // Fan order is reversed on back side. Orient each perimeter edge
+          // exactly as in the old pole triangles to preserve shell winding.
+          const ordered=fan[0][0]===fan[1]?.[1]?[...fan].reverse():fan;
+          const boundary=ordered.map(f=>f[0]);
+          if(ordered.some((f,i)=>f[1]!==ordered[(i+1)%n][0]))
+            throw Error('Quadball pole boundary is not continuous');
+          const at=(x,y)=>y*(m+1)+x,grid=new Array((m+1)*(m+1));
+          let k=0;
+          for(let x=0;x<m;x++)grid[at(x,0)]=boundary[k++];
+          for(let y=0;y<m;y++)grid[at(m,y)]=boundary[k++];
+          for(let x=m;x>0;x--)grid[at(x,m)]=boundary[k++];
+          for(let y=m;y>0;y--)grid[at(0,y)]=boundary[k++];
+          const lerp=(a,b,t)=>a.clone().lerp(b,t);
+          for(let y=1;y<m;y++)for(let x=1;x<m;x++){
+            const u=x/m,v=y/m;
+            const top=lerp(vertices[grid[at(0,0)]],vertices[grid[at(m,0)]],u);
+            const bottom=lerp(vertices[grid[at(0,m)]],vertices[grid[at(m,m)]],u);
+            const left=lerp(vertices[grid[at(0,0)]],vertices[grid[at(0,m)]],v);
+            const right=lerp(vertices[grid[at(m,0)]],vertices[grid[at(m,m)]],v);
+            // Coons patch uses actual curved boundary instead of only corners.
+            const edgeTop=vertices[grid[at(x,0)]],edgeBottom=vertices[grid[at(x,m)]];
+            const edgeLeft=vertices[grid[at(0,y)]],edgeRight=vertices[grid[at(m,y)]];
+            const bilinear=lerp(top,bottom,v);
+            const p=edgeTop.clone().lerp(edgeBottom,v)
+              .add(edgeLeft.clone().lerp(edgeRight,u)).sub(bilinear);
+            grid[at(x,y)]=vertices.length;vertices.push(p);
+          }
+          const patches=[];
+          for(let y=0;y<m;y++)for(let x=0;x<m;x++)
+            patches.push([grid[at(x,y)],grid[at(x+1,y)],grid[at(x+1,y+1)],grid[at(x,y+1)]]);
+          const fanSet=new Set(fan);
+          const retained=result.filter(f=>!fanSet.has(f));
+          retained.push(...patches);
+          result.splice(0,result.length,...retained);
+        }
+        return new EditableMesh(vertices,result);
+      }
       // Experimental .819 pole foundation: adjacent triangles of each fan
       // can be paired into quads, without inventing new vertices or changing
       // the donor surface. Only pair the complete fans with even membership.
