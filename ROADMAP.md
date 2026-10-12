@@ -4,7 +4,7 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — Shared Curve point merge .821 / frozen Beta 7, 2026-10-12
+## Current direction — Native project snapshot preflight .822 / frozen Beta 7, 2026-10-12
 
 .797 PASS protects the green baseline, GLB group import and Rotate. .796 Add+ previews,
 unit-zone scale and Text remain protected. First Editable Boolean build stores independent
@@ -37,7 +37,7 @@ reuse render buffers; cache topology and accelerate picking as justified. Keep r
 Undo resident; optimise duplicate snapshots and evaluate older history in IndexedDB/
 OPFS with quota/recovery handling. Exporting history alone will not improve draw calls.
 
-## Added priorities — project files and NOM import
+User PASS .821 Pencil point merge. .822 introduces read-only project snapshot preflight through existing scene owner; versioned .boxlab codec and File Save/Open remain next steps, not shipped.\n\n## Added priorities — project files and NOM import
 
 User requests native `.BOXLAB` Save/Open and Nomad `.nom` import. Recommended order:
 1. Versioned `.boxlab` project format and File Save/Open, preserving complete editable
