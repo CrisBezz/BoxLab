@@ -232,7 +232,7 @@ function auditProjectSnapshot(){
 }
 function projectFileName(){
  const input=document.querySelector('#exportFileName');
- const name=String(input?.value||'BoxLab_Project').replace(/[^a-zA-Z0-9 _.-]/g,'_').replace(/\\.boxlab$/i,'').trim();
+ const name=String(input?.value||'BoxLab_Project').replace(/[^a-zA-Z0-9 _.-]/g,'_').replace(/\.boxlab$/i,'').trim();
  return (name||'BoxLab_Project')+'.boxlab';
 }
 function exportBasicProject(button,output){
@@ -281,7 +281,7 @@ async function openBasicProject(file,output){
   if(!incoming.objects.some(o=>!o.locked))throw Error('Project has no editable unlocked object');
   if(JSON.stringify(encodeBoxlabScene(incoming))!==JSON.stringify(source))
    throw Error('Project data failed round-trip validation');
-  const response=window.confirm('Replace the CURRENT BoxLab scene with '+incoming.objects.length+' objects from '+file.name+'?\\n\\nThis clears the current scene and Undo history. Save your current project first.');
+  const response=window.confirm('Replace the CURRENT BoxLab scene with '+incoming.objects.length+' objects from '+file.name+'?\n\nThis clears the current scene and Undo history. Save your current project first.');
   if(!response){output.textContent='Open cancelled · current scene unchanged';return;}
   const managerApi=manager();
   if(!managerApi?.replaceBasicProjectScene?.(incoming.objects,incoming.activeId))
