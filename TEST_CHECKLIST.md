@@ -5563,3 +5563,12 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Invalid coordinates are diagnosed without crashing File menu
 - [ ] .821 Pencil merge, .820 Quadball, Reset and viewport gestures retain accepted behaviour
 - [ ] No .boxlab Save/Open advertised until serializer round-trip and resource support are tested
+
+
+## Compact File menu .823
+
+- [ ] File controls visually match other compact menus; no oversized padding or fonts
+- [ ] On smaller landscape screen File menu scrolls down to Check project snapshot without overlap blocking interaction
+- [ ] Import, Export/Save and About controls remain tappable and File menu scroll never orbits viewport
+- [ ] Portrait prompt reads Rotate device to landscape
+- [ ] .820 Quadball and .821 Pencil merge unaffected
