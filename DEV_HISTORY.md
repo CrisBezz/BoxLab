@@ -8139,3 +8139,12 @@ Multi1.0/Loop715/Extrude802/Boolean806/frozenBeta2–7 unchanged. iPad regressio
 required before further expansion; .832 linked file acceptance remains pending.
 
 .833 full local Node24:2225PASS/0FAIL/0skip; iPad mode-switch retest pending.
+
+
+### .833 publication verification — 2026-10-12
+
+Releaseaf69a754f0e6005c11f577e9d834c5b8e98a7264; tested tree
+ d2bd74cd6c611263888e6b44b625888cfc51a769 matches checkout. Node22 CI
+38240986196/job114783239634 SUCCESS:2225PASS/0FAIL/0skip. Pages38240986065
+SUCCESS. Fresh live shell/manifest/manager byte-match. .832 device FAIL remains
+recorded; .833 moved linked copy > Face mode retest pending, not claimed accepted.

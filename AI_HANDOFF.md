@@ -88,3 +88,9 @@ Pages38239990977 SUCCESS; live shell/manifest/three changed owners byte-match.
 .832 linked-instance project iPad gate pending.
 
 .833 full local Node24:2225PASS/0FAIL/0skip; iPad mode-switch retest pending.
+
+## .833 publication verified
+Releaseaf69a754f0e6005c11f577e9d834c5b8e98a7264; treed2bd74cd6c611263888e6b44b625888cfc51a769.
+Node22 CI38240986196/job114783239634 SUCCESS2225PASS/0FAIL/0skip.
+Pages38240986065 SUCCESS; live shell/manifest/manager byte-match.
+User must retest moved Linked Duplicate > Face before accepting fix.
