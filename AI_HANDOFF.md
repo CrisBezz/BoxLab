@@ -40,3 +40,10 @@ rollback guards synchronous manager setup only, not every asynchronous render fa
 
 ## Important release practices
 /nextbuild = audit current main, implement one narrow build on main, repin nested dynamic imports and index, refresh index title/data-release/version.json/bootstrap pins, update tests/fixtures, DEV_HISTORY/TEST_CHECKLIST/ROADMAP/AI_HANDOFF, verify readback. User responds PASS/FAIL; record PASSes protected. Never claim CI passed without an actual test result.
+
+## Publication verified — .829
+Release commit b4ecfacdb667b7e9ab38c3b37aa643b476a4860c; tested tree
+0922b4b6f8c243524fc3383f4bad1d64208159eb. Pages38234000894 succeeded;
+fresh live shell/manifest and three changed runtime files byte-match checkout.
+Node22 CI38234001316/job114760078286 confirms2216/2211PASS/5FAIL/0skip,
+exact same five existing failure identities; CI is not green. iPad gate pending.

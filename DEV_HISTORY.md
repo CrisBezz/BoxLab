@@ -8029,3 +8029,14 @@ Curve/Balloon failure names existed on original main, no new failures;25 depende
 checks resolved. Inventory docs/reliability-build-829.json. No removed/skipped tests or
 protected modelling/frozenBeta changes. iPad Cancel/Confirm/Add/edit/history gate pending.
 Next feedback and audit of remaining five checks before expanding rich resources.
+
+
+### .829 publication verification — 2026-10-12
+
+Release b4ecfacdb667b7e9ab38c3b37aa643b476a4860c, tree
+0922b4b6f8c243524fc3383f4bad1d64208159eb exactly matches tested checkout.
+Actual Node22 Topology run38234001316/job114760078286:2216tests/2211PASS/5FAIL/
+0skip; all five failure names match the recorded local baseline inventory.
+CI remains failed, not green. Pages run38234000894 SUCCESS. Fresh live manifest,
+index, manager, object-management and drawer bytes match repository .829.
+No protected modelling/frozenBeta changes. iPad manual gate pending.
