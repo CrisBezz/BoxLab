@@ -8162,3 +8162,12 @@ project owners832/Curve830/protected kernels/frozenBeta unchanged. Screenshot ev
 needed before next fix; .832/.833 device failure not marked accepted.
 
 .834 full local Node24:2226PASS/0FAIL/0skip; device failure unresolved pending trace.
+
+
+### .834 publication verification — 2026-10-12
+
+Release49e6449772222413a6b8972ad005f80bd8c09f14; tested tree
+9de1b70e9417417f15f4a165dc0772da4641e172 matches checkout. Node22 CI
+38242145811/job114787121113 SUCCESS:2226PASS/0FAIL/0skip. Pages38242145077
+SUCCESS. Fresh live shell/manifest/manager and pinned Gesture Debug byte-match.
+Diagnostic build only; .833 device failure remains unresolved, awaiting LINKED trace.

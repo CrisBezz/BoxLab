@@ -106,3 +106,9 @@ Pages38240986065 SUCCESS; live shell/manifest/manager byte-match.
 User must retest moved Linked Duplicate > Face before accepting fix.
 
 .834 full local Node24:2226PASS/0FAIL/0skip; device failure unresolved pending trace.
+
+## .834 publication verified
+Release49e6449772222413a6b8972ad005f80bd8c09f14; tree9de1b70e9417417f15f4a165dc0772da4641e172.
+Node22 CI38242145811/job114787121113 SUCCESS2226PASS/0FAIL/0skip.
+Pages38242145077 SUCCESS; live shell/manifest/manager/Debug byte-match.
+Read-only diagnostic release, not a claimed fix. Device trace needed.
