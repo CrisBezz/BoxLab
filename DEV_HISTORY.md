@@ -8012,3 +8012,20 @@ User says .boxlab format not recognized for Open. Corrected .827 double-escaped 
 ## .828 accepted — Work mode migration handoff — 2026-10-12
 
 User replied PERFECT after .828 custom extension picker/filename regex hotfix and requested move to ChatGPT Work. Recognised basic .boxlab Open workflow now user-accepted for this fix; complete scene restoration and all edge cases are not independently established by this message. Protected .820 Quadball, .821 Pencil merge, .824 no-camera-moving Balloon drawing, .825 codec, .826 download, .828 file recognition. No numbered release change for the handoff. Native file features remain basic; rich assets/history not preserved and direct iPad Files association awaits app packaging.
+
+
+## .829 — Basic project Open replacement hardening — 2026-10-12
+
+User /nextbuild after Work handoff. Existing manager stages meshes/settings, restores live
+mesh and scene bookkeeping/ID allocator/source map/history tokens on synchronous setup
+failure; history clear delayed until successful setup. Reject maximum safe object ID.
+Correct outdated Save status. Audit found drawer still dynamically imported object-management808
+alongside shell828: aligned both829 and repinned parent. Reviewed stale shell references and
+asset hashes individually; no blind fixture regeneration. Five new actual-manager/Open tests
+cover independent clones/native codec, Cancel/Confirm, settings/render/outliner rollback,
+ID bounds, malformed JSON/extensions/size refusal. Focused12/12PASS. Full local Node24
+2216/2211PASS/5FAIL/0skip; original main baseline2211/2181PASS/30FAIL. All five remaining
+Curve/Balloon failure names existed on original main, no new failures;25 dependent release
+checks resolved. Inventory docs/reliability-build-829.json. No removed/skipped tests or
+protected modelling/frozenBeta changes. iPad Cancel/Confirm/Add/edit/history gate pending.
+Next feedback and audit of remaining five checks before expanding rich resources.

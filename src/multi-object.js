@@ -948,21 +948,38 @@ function initialize() {
       if(sceneObjects.some(o=>o.sourceId||o.glbPassthrough||!o.mesh?.clone))return false;
       // All validation and confirmation must be performed by the caller.
       const ids=new Set(sceneObjects.map(o=>o.id));
-      if(ids.size!==sceneObjects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1))return false;
+      if(ids.size!==sceneObjects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))return false;
       const active=sceneObjects.find(o=>o.id===wantedId&&!o.locked)||sceneObjects.find(o=>!o.locked);
       if(!active)return false;
-      const prepared=sceneObjects.map(o=>({...o,mesh:o.mesh.clone(),history:{undo:[],redo:[]},settings:cloneSettings(o.settings)}));
-      // Replace the active geometry before swapping scene bookkeeping.
-      replaceMeshInPlace(live,active.mesh);
-      history()?.clear?.();
-      objects=prepared;
-      activeId=active.id;
-      soloId=null;
-      linkedSources.clear();
-      nextId=Math.max(nextId,...prepared.map(o=>o.id+1));
-      restoreSettings(active.settings);
-      forceRender();
-      renderOutliner();
+      // Stage independent meshes/settings before touching the live scene.
+      let prepared, previous;
+      const h=history();
+      try {
+        prepared=sceneObjects.map(o=>({...o,mesh:o.mesh.clone(),history:{undo:[],redo:[]},settings:cloneSettings(o.settings)}));
+        previous={mesh:live.clone(),settings:captureSettings(),objects,activeId,soloId,nextId,
+          sources:new Map(linkedSources),undo:h?.undoStack?.slice(),redo:h?.redoStack?.slice()};
+      } catch { return false; }
+      try {
+        replaceMeshInPlace(live,prepared.find(o=>o.id===active.id).mesh);
+        objects=prepared;
+        activeId=active.id;
+        soloId=null;
+        linkedSources.clear();
+        nextId=prepared.reduce((id,o)=>Math.max(id,o.id+1),nextId);
+        restoreSettings(active.settings);
+        forceRender();
+        renderOutliner();
+        // History is cleared only after successful replacement/render setup.
+        h?.clear?.();
+      } catch {
+        objects=previous.objects;activeId=previous.activeId;soloId=previous.soloId;nextId=previous.nextId;
+        linkedSources.clear();for(const [id,source] of previous.sources)linkedSources.set(id,source);
+        if(previous.undo&&h?.undoStack)h.undoStack.splice(0,h.undoStack.length,...previous.undo);
+        if(previous.redo&&h?.redoStack)h.redoStack.splice(0,h.redoStack.length,...previous.redo);
+        replaceMeshInPlace(live,previous.mesh);
+        try { restoreSettings(previous.settings);forceRender();renderOutliner(); } catch {}
+        return false;
+      }
       return true;
     },
     addMesh(mesh, name = 'Object', options = {}) { return addObject(mesh, name, options); },

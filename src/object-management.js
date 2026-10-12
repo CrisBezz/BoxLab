@@ -258,7 +258,7 @@ function exportBasicProject(button,output){
   url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download=projectFileName();
   document.body.appendChild(a);a.click();a.remove();
-  output.textContent='Basic .boxlab download requested · '+data.objects.length+' objects · project history and rich resources not included. Open remains disabled.';
+  output.textContent='Basic .boxlab download requested · '+data.objects.length+' objects · project history and rich resources not included. Use Open .boxlab from Files to restore it.';
  }catch(error){output.textContent='Save refused · '+(error?.message||error);}
  finally{
   button.disabled=false;
@@ -276,7 +276,7 @@ async function openBasicProject(file,output){
   if(incoming.objects.some(o=>o.sourceId||o.kind==='reference'||o.glbPassthrough||o.materials||o.textures))
    throw Error('Linked/reference/rich-resource projects are not supported by basic Open');
   const ids=new Set(incoming.objects.map(o=>o.id));
-  if(ids.size!==incoming.objects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1))
+  if(ids.size!==incoming.objects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))
    throw Error('Invalid or duplicate object IDs');
   if(!incoming.objects.some(o=>!o.locked))throw Error('Project has no editable unlocked object');
   if(JSON.stringify(encodeBoxlabScene(incoming))!==JSON.stringify(source))

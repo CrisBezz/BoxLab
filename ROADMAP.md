@@ -4,7 +4,14 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .828 accepted; Work migration, project Open hardening next / frozen Beta 7, 2026-10-12
+## Current direction — .829 project Open hardening / frozen Beta 7, 2026-10-12
+
+.829 hardens existing basic Open manager rollback, allocator and history integrity;
+corrects stale Save status and unifies drawer/shell object-management loading.
+Focused tests12PASS; full2216/2211PASS/5 existing FAIL, no new failures versus main.
+Device Save/Open Cancel/Confirm/Add/edit gate pending. Next audit five existing
+Curve/Balloon test failures, then staged project resources; NOM/UV remain queued.
+
 
 .797 PASS protects the green baseline, GLB group import and Rotate. .796 Add+ previews,
 unit-zone scale and Text remain protected. First Editable Boolean build stores independent

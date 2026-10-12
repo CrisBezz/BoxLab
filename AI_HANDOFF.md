@@ -1,7 +1,7 @@
-# BoxLab AI Handoff — Work migration after .828 acceptance
+# BoxLab AI Handoff — .829 basic Open replacement hardening
 
 ## Verified state — 2026-10-12
-Repository: CrisBezz/BoxLab, main; live https://crisbezz.github.io/BoxLab/; released version 0.36.18.828. User reports **PERFECT** on .828 iPad .boxlab Open recognition fix and is moving development to ChatGPT Work. Keep .828 protected. No new numbered build requested for migration. Read AI_WORKFLOW.md completely, this handoff, TEST_CHECKLIST.md, recent DEV_HISTORY.md and ROADMAP.md, then current code/release markers before making changes. Main is source of truth.
+Repository: CrisBezz/BoxLab, main; live https://crisbezz.github.io/BoxLab/; released version 0.36.18.829 (device acceptance pending). User reports **PERFECT** on .828 iPad .boxlab Open recognition fix and is moving development to ChatGPT Work. Keep .828 protected. Build .829 follows the user /nextbuild in Work. Parent main b13d1c86. Read AI_WORKFLOW.md completely, this handoff, TEST_CHECKLIST.md, recent DEV_HISTORY.md and ROADMAP.md, then current code/release markers before making changes. Main is source of truth.
 
 ## Recent accepted builds
 - .820 Quadball: genuine all-quad gridded caps, no radial pole vertex; user PASS.
@@ -15,8 +15,28 @@ Repository: CrisBezz/BoxLab, main; live https://crisbezz.github.io/BoxLab/; rele
 ## Current native file workflow / limitations
 Authoritative scene snapshot/restore owner: src/object-management.js; manager and object-ID allocator: src/multi-object.js; versioned JSON scene codec: src/boxlab-project-codec.js. Basic Save encodes mesh vertices/faces, creases, facegroups, loose topology, object metadata, groups, settings, procedural Boolean/Curve profiles and round-trip checks before a download. Basic Open is initiated **inside BoxLab** using File > Open .boxlab from Files > Browse/Downloads. A web app cannot yet register .boxlab direct Open In from iPad Files; that needs native app document registration. Open validates, reconstructs separately, refuses unsupported reference/linked-instance/rich-resource projects, and asks before destructively replacing the current scene. Confirm clears scene Undo history; Cancel leaves scene unchanged. No embedded GLB passthrough textures/UV/material resource bundles, no full history preservation. Do not claim complete project archival.
 
+## .829 current build / validation
+Existing manager replacement now stages independent meshes/settings, keeps live mesh identity,
+and restores prior live geometry, objects/active/solo IDs, allocator, linked-source map and
+Undo/Redo tokens on synchronous settings/render/outliner setup failure. History clears only
+after successful setup. Reserved maximum safe ID refuses to leave space for the next Add.
+Save status no longer incorrectly says Open disabled. Drawer dynamic import and shell now
+load object-management with the same .829 URL, avoiding a second module evaluation.
+Reviewed stale .828 shell pins and runtime hashes reconciled; unchanged assets retain bytes.
+Five new tests exercise actual manager/Open functions with controlled owners and a native
+EditableMesh codec reconstruction. Focused 12/12 PASS. Full local Node24:2216 tests,
+2211 PASS,5 FAIL,0 skipped. Baseline b13d1c86:2211 tests,2181 PASS,30 FAIL. No new failure
+identities;25 stale release-contract dependent checks resolved. Remaining five Curve/Balloon
+checks stay active, recorded in docs/reliability-build-829.json; no full-green or Safari claim.
+Protected Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 untouched.
+
 ## Suggested next /nextbuild
-After checking actual .828 device tests, strengthen safe basic Open round-trip and manager replacement/rollback/ID integrity with automation; audit preserved rich data and enable complete .boxlab resources in narrow stages. Nomad .NOM import remains queued, as does UV preservation/unwrap/painting, Balloon/Curve cutter consumers and large-mesh performance. Do NOT add a second modelling, scene, or gesture owner. Work mode should access connected GitHub repository, audit before edits and perform the repo's release protocol, including cache pins, fixtures, tests, handoff docs, main publication and short iPad test gate.
+Obtain .829 iPad Save/Open Cancel/Confirm/Add/edit/history feedback. Audit the five existing
+Curve/Balloon failing checks against protected device passes before changing their contracts
+or algorithms. Then preserved rich data and complete .boxlab resources in narrow stages.
+Nomad .NOM import, UV workflows, Curve cutters and performance remain queued. Do not add
+parallel modelling/scene/gesture owners. Basic Open still clears history on successful import;
+rollback guards synchronous manager setup only, not every asynchronous render failure.
 
 ## Important release practices
 /nextbuild = audit current main, implement one narrow build on main, repin nested dynamic imports and index, refresh index title/data-release/version.json/bootstrap pins, update tests/fixtures, DEV_HISTORY/TEST_CHECKLIST/ROADMAP/AI_HANDOFF, verify readback. User responds PASS/FAIL; record PASSes protected. Never claim CI passed without an actual test result.

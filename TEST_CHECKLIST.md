@@ -5628,3 +5628,20 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [x] .821 point merge user PASS; .820 quadball topology user PASS
 - [ ] Independently verify full Confirm Open restore, subsequent object IDs, Cancel and malformed file refusal on iPad
 - [ ] Rich embedded material/UV/GLB resources, linked instances and scene Undo persistence intentionally unsupported in basic project format
+
+
+## .829 Basic Open replacement — automated verified; device gate pending
+
+- [x] Actual manager stages independent mesh clones and advances object-ID allocator.
+- [x] Synchronous settings/render/outliner failures restore prior live mesh, objects, active/solo IDs, linked sources, allocator and Undo/Redo tokens.
+- [x] Clone failure, duplicate/max-safe IDs and all-locked scenes refuse without mutation.
+- [x] Actual Open Cancel avoids replacement/selection owners; Confirm round-trips native EditableMesh.
+- [x] Malformed JSON, wrong extension, oversize and invalid IDs refuse before confirmation.
+- [x] Reviewed shell/child cache contracts pass; Object management shell and drawer use one identical URL.
+- [ ] Save two named objects, change scene, Open and Cancel: current scene remains.
+- [ ] Open and Confirm: saved meshes/names/settings return; old Undo history is cleared.
+- [ ] Add another object, select each, edit and Undo/Redo normally.
+- [ ] File menu scrolling and Balloon Pencil drawing remain accepted.
+
+Full local Node24 2216/2211 PASS/5 existing FAIL/0skip. Remaining tests kept active;
+see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from automation.
