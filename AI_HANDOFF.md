@@ -1,10 +1,9 @@
-# BoxLab AI Handoff — Paired quad poles .819
+# BoxLab AI Handoff — Quadball grid caps .820
 
-## Current state — 2026-10-12
-Main .819 experimental pole foundation pending device and automated CI acceptance. User confirms .818 quad-dominant Balloon cleaner and easier to edit; accepted C/star .817, deep crescent unsupported. Preserve .816 density improvement and .815 Pencil Reset. Beta7 frozen .807.
+## State — 2026-10-12
+Current main release .820, pending iPad and CI acceptance. User .819 says kite quads pinch less but converge to a point; requests mathematical all-quad quadball cap. User .818 accepted quad edit, .817 C/star passed (deep crescent failed), .816 density helped performance. Beta7 frozen .807.
 
-## .819
-Original MeshUtilz donor builds ordered triangular fans at both poles; .818 adapter produces editable quad ring strips. Same adapter now optionally pairs successive pole fan triangles into four-sided faces for complete even-count fans, preserving directed perimeter edges and original positions. This is not an alternative modelling kernel or a smooth all-quad retopology. New Balloon defaults to quad strips plus balloonPoleQuads true. Legacy recipes without the field retain previous triangular poles. Triangles remain accessible via Topology toggle. Extraordinary pole vertices persist, and SubD pinching remains a visual test gate.
+## .820 approach
+Existing MeshUtilz donor retained unchanged, including optional outlineSegments=6*density and sectionRings=density, so sampled perimeter N is a multiple of 4. New Balloon profiles default topology quads with balloonPolePatch='grid'. Original adapter merges ring strips into quads, then for each front/back fan uses N=4m boundary vertices to replace the entire N-triangle radial fan with an m×m Coons-interpolated quad grid: actual existing last-ring boundary is reused, (m-1)^2 interior vertices per cap added; all grid faces have four vertices. No single common pole vertex, and cap layout has four corner extraordinary vertices instead of central high valence. Existing recipes lacking patch retain earlier .819 pole quads, and prior triangles remain accessible. No second generator, new manager, gesture or history owner. This is experimental: Coons patches can fold for extreme concavities; do not claim deep crescent support. The .819 paired kite branch stays fallback for legacy recipes. Grid generation only for new records.
 
-Device: new oval Density4 > Apply > inspect both poles in Face and Edge, test C/star, compare triangle fallback, inspect SubD and Undo/Redo. If distorted, revert only new experimental pole flag and preserve accepted .818 quad strips. Automated CI and iPad still require confirmation.
-Protected: Multi1.0, Loop715, Extrude802, Boolean806, native donor, .815 Pencil/Reset, .816 Density and frozen Betas2–7.
+User test: Oval Density4 → Apply → Face/Edge inspect poles and SubD; C/star shapes for edge flow and pinching; Density8; legacy file Edit and Undo/Redo, Reset/Pencil/navigation. Tests added for all-quad manifold Euler and winding at several densities but run result not yet verified. Protect .815 Pencil, .816 performance, Multi1.0/Loop715/Extrude802/Boolean806 and frozen betas.
