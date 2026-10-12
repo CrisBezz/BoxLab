@@ -5545,3 +5545,12 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Face, Edge, SubD and Edit Balloon work on newly generated pole grids
 - [ ] Older saved Balloon retains previous topology; Triangle fallback works
 - [ ] Pencil/Reset, history, iPad navigation and performance remain protected
+
+
+## Shared Curve point merge .821
+
+- [ ] In Edit points, drag one point near another; target turns red, release removes source
+- [ ] Editor Undo restores point and silhouette; ordinary point drag stays unmerged
+- [ ] Closed 3-point/open 2-point minimum guarded, Cancel non-mutating
+- [ ] Works in Curve and Balloon edit, preserves .820 Quadball preview
+- [ ] Pencil Reset, orbit, pan, pinch and scene Undo/Redo unaffected
