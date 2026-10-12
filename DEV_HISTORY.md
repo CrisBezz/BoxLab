@@ -7972,3 +7972,8 @@ User says .819 kite quads still share single poles; asks for mathematical quadba
 ## .821 — Shared Curve control point drag merge — 2026-10-12
 
 User PASS .820 Quadball; protect. Existing Curve editor window capture Pencil ownership reused. Drag edit point within 12 SVG units of another highlights target red; release removes source point, retains target location, undo restores single operation. Minimum 3 closed/2 open; no new gesture owner or modelling kernel. Release/iPad validation pending.
+
+
+## .822 — Native .boxlab project preflight — 2026-10-12
+
+User PASS .821 Pencil point merge, and .820 Quadball protected. Next roadmap native .boxlab Save/Open. Existing authoritative object-management captureScene/restoreScene already supports groups, selections, recipes and linked objects but mesh runtime serialization is not yet proven. Added read-only File > Check project snapshot with counts and finite vertex audit. No file codec/Save/Open claim, no scene/history mutation. Pending tactile acceptance. Next: design versioned codec with complete topology and resources before file actions.
