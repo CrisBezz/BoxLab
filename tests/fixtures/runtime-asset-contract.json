@@ -329,15 +329,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.812",
+      "url": "./src/multi-object.js?v=0.36.18.827",
       "target": "src/multi-object.js",
-      "sha256": "0e661c7369cf05ba93f7a0c8706ada838ab7106a05a5cf809323d395227fb313"
+      "sha256": "7c17cc872f0901ae935a59972ce9535fbfb37b799f37fa3c5c6af3e697b88648"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.826",
+      "url": "./src/object-management.js?v=0.36.18.827",
       "target": "src/object-management.js",
-      "sha256": "9dc065f967ff032aac75c6375e5c82bf3bc939e9df3b1bfd627e3ee39bf32fa8"
+      "sha256": "ba32377fd258e092d318c4f0602edba336b118a1f9e66eb476c6f60e01f4c2af"
     },
     {
       "owner": "index.html",
@@ -933,7 +933,7 @@
       "owner": "src/drawer-ui.js",
       "url": "./object-management.js?v=0.36.18.808",
       "target": "src/object-management.js",
-      "sha256": "9dc065f967ff032aac75c6375e5c82bf3bc939e9df3b1bfd627e3ee39bf32fa8"
+      "sha256": "ba32377fd258e092d318c4f0602edba336b118a1f9e66eb476c6f60e01f4c2af"
     },
     {
       "owner": "src/drawer-ui.js",
