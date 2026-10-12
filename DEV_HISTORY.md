@@ -7992,3 +7992,8 @@ User reports screen moving while drawing Balloon after .823 menu work. .823 only
 ## .825 — BOXLAB v1 codec foundation — 2026-10-12
 
 User PASS .824 drawing regression. Added independent, versioned JSON-safe project codec for scene geometry and metadata with explicit refusal for unsupported resources. Existing File snapshot preflight now performs in-memory encode→JSON→decode EditableMesh→encode comparison without replacing scene. Native .boxlab save/open remains disabled pending resources, lossless integration and full tests. Protect .820/.821/.823/.824.
+
+
+## .826 — Guarded basic .boxlab file download — 2026-10-12
+
+User PASS .825 round-trip preflight. File > Save .boxlab (basic scene) now serializes supported scene geometry/group/recipe metadata via existing v1 codec, performs independent reconstruction/re-encode check, then requests iPad browser download. Known unsupported imported GLB rich channels and UV/material/texture fields refuse rather than silently discard. History stacks and resource packages not saved; Open intentionally disabled. User verification and CI pending.
