@@ -8220,3 +8220,18 @@ Release7b689c234474e27a5d5c042f57f2048d8f5a345e; tested tree
 38246212104/job114800613228 SUCCESS:2230PASS/0FAIL/0skip. Pages38246212136
 SUCCESS. Fresh pinned live shell/manifest/transform owner byte-match. User linked
 mode-switch drift repair acceptance pending; .832/.833 failures stay recorded.
+
+
+## .837 — Complete native main Object drag before mode switch — 2026-10-12
+
+User .836 FAIL: original jump follows initial diagonal move, Array same issue. Audit
+second actual owner main: Object component drag completes on canvas only; old startMesh/
+plane/delta can survive consumed release and run with reused Pencil ID in Face context.
+Actual main pointermove+manager save regression reproduces shared-source shift without
+completion. Main window release/cancel completes only Object-selection component drag;
+mode button calls same endDrag before context mutation. Keep committed preview/one history
+step, no rewrite of geometry/instance ownership. Straight/diagonal and extra Array-style
+peer tests preserve source/placements; former incomplete path demonstrably shifts source.
+Full Node24 2232PASS/0FAIL/0skip, focused revised peer test PASS. Main837/shell/recovery
+and reviewed asset fixture; protected Multi1.0/Loop715/Extrude802/Boolean806/Curve830/
+frozenBeta unchanged. .836 not accepted, .837 actual iPad Linked/Array retest pending.

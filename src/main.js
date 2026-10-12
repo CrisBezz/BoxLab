@@ -679,8 +679,19 @@ window.addEventListener('boxlab-pencil-orbit-claim',event=>{
 
 function endDrag(event){if(!drag||drag.pointerId!==event.pointerId)return;const current=drag;globalThis.__boxlabLastTransformFeedback=current?.kind==='component'?{tool:toolMode,axis:current.axisLock||null,plane:current.planeLock||null,delta:current.liveDelta?.clone?.()||null,softSnap:current.softSnap||null}:null;drag=null;controls.enabled=true;if(current.kind==='vertexBevel'){if(current.preview&&event.type==='pointerup'){history.push(current.startMesh);clearSelection();}else mesh=current.startMesh;}else if(current.kind==='component'&&current.armed){resetEdgeHoldCycle();}renderMesh();if(current.kind==='component'&&current.armed&&event.type==='pointerup'){window.dispatchEvent(new CustomEvent('boxlab-transform-end',{detail:{tool:toolMode,constraint:current.axisLock||current.planeLock||current.gizmoConstraint||'free',pointerId:event.pointerId,owner:'main'}}));}}canvas.addEventListener('pointerup',endDrag);canvas.addEventListener('pointercancel',endDrag);
 
+// Main owns direct Object moves; retire its drag before changing edit context.
+function finishPendingObjectMove(){
+  if(drag?.kind==='component'&&drag.selection?.type==='object')endDrag({type:'pointerup',pointerId:drag.pointerId});
+}
+window.addEventListener('pointerup',event=>{
+  if(drag?.kind==='component'&&drag.selection?.type==='object')endDrag(event);
+},true);
+window.addEventListener('pointercancel',event=>{
+  if(drag?.kind==='component'&&drag.selection?.type==='object')endDrag(event);
+},true);
+
 function transferSelection(nextMode){if(selection?.type==='face'&&nextMode==='edge'){const edgeByKey=new Map(mesh.edges().map((edge,index)=>[mesh.edgeKey(edge.a,edge.b),index])),ids=new Set();selectionIndices().forEach(faceIndex=>{const face=mesh.faces[faceIndex]||[];for(let i=0;i<face.length;i++){const edgeIndex=edgeByKey.get(mesh.edgeKey(face[i],face[(i+1)%face.length]));if(Number.isInteger(edgeIndex))ids.add(edgeIndex);}});return makeSelection('edge',[...ids]);}if(selection?.type==='edge'&&nextMode==='vertex'){const ids=new Set(),edges=mesh.edges();selectionIndices().forEach(edgeIndex=>{const edge=edges[edgeIndex];if(edge){ids.add(edge.a);ids.add(edge.b);}});return makeSelection('vertex',[...ids]);}return null;}
-document.querySelectorAll('#selectionModes button').forEach(btn=>btn.addEventListener('click',()=>{resetEdgeHoldCycle();cancelFaceHold();const nextMode=btn.dataset.mode,transferred=transferSelection(nextMode);setDirectTool(null);selectionMode=nextMode;selection=selectionMode==='object'?{type:'object',index:0}:transferred;if(selectionMode==='object'){multiSelectEnabled=false;document.querySelector('#multiSelectToggle').checked=false;}selectedEdgeCutT=.5;renderMesh();}));
+document.querySelectorAll('#selectionModes button').forEach(btn=>btn.addEventListener('click',()=>{finishPendingObjectMove();resetEdgeHoldCycle();cancelFaceHold();const nextMode=btn.dataset.mode,transferred=transferSelection(nextMode);setDirectTool(null);selectionMode=nextMode;selection=selectionMode==='object'?{type:'object',index:0}:transferred;if(selectionMode==='object'){multiSelectEnabled=false;document.querySelector('#multiSelectToggle').checked=false;}selectedEdgeCutT=.5;renderMesh();}));
 document.querySelectorAll('#toolModes button').forEach(btn=>btn.addEventListener('click',()=>{setDirectTool(null);toolMode=btn.dataset.tool;renderMesh();}));
 document.querySelector('#multiSelectToggle').addEventListener('change',e=>{multiSelectEnabled=e.target.checked&&selectionMode!=='object';renderMesh();});document.querySelector('#selectAllBtn').addEventListener('click',selectAllCurrent);document.querySelector('#deselectAllBtn').addEventListener('click',()=>{clearSelection();renderMesh();});
 function withFaceEdit(action){if(selection?.type!=='face'||!selectionCount())return;setDirectTool(null);clearLoopSlide();history.push(mesh);action();renderMesh();}

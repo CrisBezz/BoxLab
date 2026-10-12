@@ -1,7 +1,7 @@
-# BoxLab AI Handoff — .836 stale transform release repair
+# BoxLab AI Handoff — .837 native main Object drag completion
 
 ## Current state — 2026-10-12
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.836.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.837.
 User PASS .831 mixed reference project Open, guide lock/visibility and editing/history.
 User PASS .830 Balloon/merge/navigation remains protected. .832 user FAIL: moved Linked Duplicate disappears on Face-mode selection. .833 retest pending. Repository is source of truth; read AI_WORKFLOW,
 this handoff, TEST_CHECKLIST, recent DEV_HISTORY and ROADMAP before changing code.
@@ -100,10 +100,26 @@ helper dispatch now models window before document completion. Full local2230PASS
 Only transform-upgrade runtime changes; other runtime pins repinned/reviewed with identical
 bytes. Diagnostics remain available. User .832/.833 failures recorded; .836 iPad pending.
 
+## .837 current repair / .836 FAIL
+User .836 jump persists and follows initial move direction; Array also affected.
+.836 fixed transform-upgrade owner only. Main also owns direct Object drag and receives
+release on canvas; consuming upstream handlers may prevent its completion. Existing
+main pointermove replaces mesh from startMesh and applies total delta; if drag survives
+Face switch, same Pencil ID applies old Object translation in component context and
+manager writes it into shared source. NEW actual-main-move + actual-manager-save fixture
+reproduces source jump with old incomplete sequence. Straight/diagonal moves and a third
+Array-style placed peer stay exact when completed, one Undo token/source revision0.
+Main now retires only component-kind/Object-selection drag on window up/cancel, and calls
+same endDrag before mode click mutates context. Non-Object tap completion unchanged.
+No new transform maths/instance owner or Multi1.0 edit. Full local2232PASS/0FAIL/0skip.
+Main837; other repinned runtime files unchanged. Prior .833/.836 incomplete owner fixes
+are NOT device-accepted. .837 Linked Duplicate/Array iPad retest pending.
+
 ## Next
-Retest Linked Duplicate > move > Face/Edge/Vertex; both objects retain positions and
-component edit still shares. Then .boxlab linked Save/Open, Object move, Make Unique,
-Undo/Redo and navigation. Do not expand features until concrete failure passes on iPad.
+Retest Linked Duplicate > diagonal Object move > Face/Edge/Vertex, then Array > move
+instance > Face. Both originals/all peers must keep placements. Component sharing,
+Object independent placement, Undo/Redo, Make Unique, .boxlab linked Open and navigation.
+Do not expand features before this specific device failure passes.
 
 ## Release protocol
 /nextbuild: audit, narrow implementation on main, reviewed child/parent cache pins,

@@ -5725,3 +5725,15 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Linked Duplicate > Move > Face/Edge/Vertex: original and copy retain exact placements.
 - [ ] Component edit shares; Object move independent; Save/Open/Make Unique/Undo/Redo normal.
 - [ ] Pencil/finger navigation and ordinary Move/Rotate/Scale unaffected.
+
+
+## .837 native main Object drag / shared-source drift
+
+- [x] .836 user FAIL and diagonal-relative original movement / Array report recorded.
+- [x] Actual main move plus linked manager save reproduces source corruption with unfinished drag.
+- [x] Completion preserves straight/diagonal move and original/extra placed peer positions, one history entry.
+- [x] Main window completion scoped to Object drag; original component tap handlers retained.
+- [x] Local2232PASS/0FAIL/0skip; revised Array-style peer focused checks pass.
+- [ ] Linked Duplicate > diagonal Move > Face/Edge/Vertex: no jump in original or copy.
+- [ ] Array > move an instance > Face: all placements retained, component edits share.
+- [ ] Undo/Redo, Make Unique, linked project Open and external navigation remain stable.

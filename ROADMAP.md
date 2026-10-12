@@ -4,7 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .836 stale transform release repair / frozen Beta 7, 2026-10-12
+## Current direction — .837 native main Object drag repair / frozen Beta 7, 2026-10-12
+
+User .836 FAIL; diagonal move and Array produce same source jump. .837 covers actual
+main direct Object drag completion, which .836 transform-upgrade fix did not own.
+Actual main+manager regression reproduces old drift and preserves straight/diagonal
+linked/Array-style placements after completion. Local2232PASS/0FAIL; iPad gate pending.
+Keep broader feature work paused until Linked Duplicate and Array pass.
+
+## Previous direction — .836 stale transform release repair / frozen Beta 7, 2026-10-12
 
 .835 screenshot confirms shared-source jump with visibility retained. .836 authoritative
 transform owner completes at window capture and closes before mode change, preventing
