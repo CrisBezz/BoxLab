@@ -23,7 +23,7 @@ export function makeCurveBalloon(points, profile) {
   const resolution=profile.balloonResolution;
   if(resolution!=null&&(!Number.isInteger(resolution)||resolution<4||resolution>12))throw Error('Balloon resolution must be 4–12');
   // Keep legacy Balloon tessellation when a recipe lacks resolution.
-  const geometry = buildOutlineBalloon(points, {depth,smooth:2,...(resolution==null?{}:{outlineSegments:resolution*6,sectionRings:resolution})});
+  const geometry = buildOutlineBalloon(points, {depth,smooth:2,...(resolution==null?{}:{outlineSegments:resolution*(profile.balloonPolePatch==='grid'&&resolution%2?8:6),sectionRings:resolution})});
   try {
     const position=geometry.getAttribute('position'),index=geometry.getIndex();
     if (!position?.count || !index?.count) throw Error('Outline is too small; draw a larger shape');
