@@ -7987,3 +7987,8 @@ User reports oversized File controls and Check project snapshot hidden by Snap/M
 ## .824 — Balloon pad pointer ownership hotfix — 2026-10-12
 
 User reports screen moving while drawing Balloon after .823 menu work. .823 only changed File-scoped CSS and orientation shell, no pointer code. Existing Curve pen capture still disarmed camera controls for matching strokes, but rejected touch-type pointer streams. Changed beginStroke to claim primary pointer streams originating inside pad, including Safari touch-classified Pencil, before document consumers. Changes finger interaction INSIDE pad; outside pad gestures unchanged. iPad confirmation pending; no causal claim for File CSS.
+
+
+## .825 — BOXLAB v1 codec foundation — 2026-10-12
+
+User PASS .824 drawing regression. Added independent, versioned JSON-safe project codec for scene geometry and metadata with explicit refusal for unsupported resources. Existing File snapshot preflight now performs in-memory encode→JSON→decode EditableMesh→encode comparison without replacing scene. Native .boxlab save/open remains disabled pending resources, lossless integration and full tests. Protect .820/.821/.823/.824.
