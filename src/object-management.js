@@ -1,4 +1,6 @@
 import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.734';
+import {encodeBoxlabScene,decodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.825';
+import {EditableMesh} from './mesh.js';
 const list=document.querySelector('#outlinerList');
 const drawer=document.querySelector('#objectsDrawer .drawer-content');
 const duplicateButton=document.querySelector('#outlinerDuplicateBtn');
@@ -236,10 +238,20 @@ function installProjectAudit(){
  button.addEventListener('click',()=>{
   manager()?.saveActive?.();
   const report=auditProjectSnapshot(),n=report.counts;
+  if(report.ok){
+   try{
+    const encoded=encodeBoxlabScene(captureScene());
+    const recovered=decodeBoxlabScene(JSON.parse(JSON.stringify(encoded)),(v,f,c,g)=>new EditableMesh(v,f,c,g));
+    const again=encodeBoxlabScene(recovered);
+    if(JSON.stringify(encoded)!==JSON.stringify(again))throw Error('Round-trip mismatch');
+    output.textContent='BOXLAB v1 round-trip verified in memory · '+n.objects+' objects · '+n.vertices+' vertices · '+n.faces+' faces. Save/Open not enabled yet.';
+    return;
+   }catch(error){output.textContent='Project codec not ready · '+error.message;return;}
+  }
   output.textContent=report.ok?`Project snapshot: ${n.objects} objects · ${n.vertices} vertices · ${n.faces} faces · ${n.groups} groups · ${n.booleanRecipes} Boolean recipes · ${n.curveProfiles} Curve profiles · ${n.linkedObjects} links · ${n.referenceObjects} references. File Save/Open not enabled yet.`:`Project snapshot issues: ${report.issues.slice(0,3).join('; ')||report.reason}`;
  });
  menu.append(button,output);
 }
-globalThis.__boxlabProjectSnapshotAudit={version:'0.36.18.822',inspect:auditProjectSnapshot};
+globalThis.__boxlabProjectSnapshotAudit={version:'0.36.18.825',inspect:auditProjectSnapshot};
 function initialize(){if(globalThis.__boxlabObjectSelectionRuntime?.initialized)return true;if(!manager()||!drawer||!list)return false;globalThis.__boxlabObjectSelectionRuntime={initialized:true,owner:toolbarOwner};buildToolbar();selectedIds=new Set(activeId()==null?[]:[activeId()]);installCaptureHandlers();installObserver();updateUI();globalThis.__boxlabObjectSelection={__authoritative:true,owner:toolbarOwner,get ids(){return new Set(selectedIds);},get multi(){return multiEnabled;},invert(seed=[...selectedIds]){const have=new Set(seed);multiEnabled=true;selectedIds=new Set(objects().filter(o=>o.visible!==false&&!have.has(o.id)).map(o=>o.id));updateUI();},get wholeGroupId(){return selectedWholeGroupId();},select(ids=[]){multiEnabled=true;selectedIds=new Set(ids);updateUI();},single(id=activeId()){multiEnabled=false;selectedIds=new Set(id==null?[]:[id]);updateUI();},clear(){selectedIds.clear();updateUI();},refresh(){updateUI();}};globalThis.__boxlabObjectGroups={groupSelection,ungroupSelection,selectGroup,renameGroup,refresh:updateUI,label:groupLabel,members:groupMembers,completeSelectedGroupIds:selectedCompleteGroupIds};installHistoryBridge();installProjectAudit();return true;}
 if(!initialize()){const ready=()=>{if(!initialize())return;window.removeEventListener('boxlab-object-manager-ready',ready);};window.addEventListener('boxlab-object-manager-ready',ready);}
