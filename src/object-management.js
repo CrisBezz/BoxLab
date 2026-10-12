@@ -265,6 +265,34 @@ function exportBasicProject(button,output){
   if(url)setTimeout(()=>URL.revokeObjectURL(url),60000);
  }
 }
+async function openBasicProject(file,output){
+ if(!file)return;
+ try{
+  if(!/\\.boxlab$/i.test(file.name)||file.size>32*1024*1024)throw Error('Choose a .boxlab file smaller than 32 MB');
+  const source=JSON.parse(await file.text());
+  const incoming=decodeBoxlabScene(source,(v,f,c,g)=>new EditableMesh(v,f,c,g));
+  // The v1 codec does not reconstruct imported resource pools or linked
+  // source meshes; refuse instead of creating visibly broken instances.
+  if(incoming.objects.some(o=>o.sourceId||o.kind==='reference'||o.glbPassthrough||o.materials||o.textures))
+   throw Error('Linked/reference/rich-resource projects are not supported by basic Open');
+  const ids=new Set(incoming.objects.map(o=>o.id));
+  if(ids.size!==incoming.objects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1))
+   throw Error('Invalid or duplicate object IDs');
+  if(!incoming.objects.some(o=>!o.locked))throw Error('Project has no editable unlocked object');
+  if(JSON.stringify(encodeBoxlabScene(incoming))!==JSON.stringify(source))
+   throw Error('Project data failed round-trip validation');
+  const response=window.confirm('Replace the CURRENT BoxLab scene with '+incoming.objects.length+' objects from '+file.name+'?\\n\\nThis clears the current scene and Undo history. Save your current project first.');
+  if(!response){output.textContent='Open cancelled · current scene unchanged';return;}
+  const managerApi=manager();
+  if(!managerApi?.replaceBasicProjectScene?.(incoming.objects,incoming.activeId))
+   throw Error('Scene replacement was refused; current scene unchanged');
+  restoreGroupMetadata(incoming,incoming.objects);
+  multiEnabled=!!incoming.multi;
+  selectedIds=new Set(incoming.selected.filter(id=>ids.has(id)));
+  updateUI();
+  output.textContent='Opened basic .boxlab · '+incoming.objects.length+' objects · Undo history reset.';
+ }catch(error){output.textContent='Open refused · '+(error?.message||error);}
+}
 function installProjectAudit(){
  const menu=document.querySelector('#fileMenu .top-file-content');
  if(!menu||menu.querySelector('#projectAuditBtn'))return;
@@ -286,8 +314,12 @@ function installProjectAudit(){
   output.textContent=report.ok?`Project snapshot: ${n.objects} objects · ${n.vertices} vertices · ${n.faces} faces · ${n.groups} groups · ${n.booleanRecipes} Boolean recipes · ${n.curveProfiles} Curve profiles · ${n.linkedObjects} links · ${n.referenceObjects} references. File Save/Open not enabled yet.`:`Project snapshot issues: ${report.issues.slice(0,3).join('; ')||report.reason}`;
  });
  const save=document.createElement('button');save.id='projectSaveBasicBtn';save.type='button';save.textContent='Save .boxlab (basic scene)';save.title='Download supported editable geometry and scene metadata; not history, UVs or textures';save.addEventListener('click',()=>exportBasicProject(save,output));
- menu.append(button,save,output);
+ const open=document.createElement('button');open.id='projectOpenBasicBtn';open.type='button';open.textContent='Open .boxlab (basic scene)';open.title='Validate a project, then confirm replacement of the current scene';
+ const input=document.createElement('input');input.id='projectOpenBasicInput';input.type='file';input.accept='.boxlab,application/json';input.hidden=true;
+ open.addEventListener('click',()=>input.click());
+ input.addEventListener('change',()=>{const file=input.files?.[0];input.value='';void openBasicProject(file,output);});
+ menu.append(button,save,open,input,output);
 }
-globalThis.__boxlabProjectSnapshotAudit={version:'0.36.18.826',inspect:auditProjectSnapshot};
+globalThis.__boxlabProjectSnapshotAudit={version:'0.36.18.827',inspect:auditProjectSnapshot};
 function initialize(){if(globalThis.__boxlabObjectSelectionRuntime?.initialized)return true;if(!manager()||!drawer||!list)return false;globalThis.__boxlabObjectSelectionRuntime={initialized:true,owner:toolbarOwner};buildToolbar();selectedIds=new Set(activeId()==null?[]:[activeId()]);installCaptureHandlers();installObserver();updateUI();globalThis.__boxlabObjectSelection={__authoritative:true,owner:toolbarOwner,get ids(){return new Set(selectedIds);},get multi(){return multiEnabled;},invert(seed=[...selectedIds]){const have=new Set(seed);multiEnabled=true;selectedIds=new Set(objects().filter(o=>o.visible!==false&&!have.has(o.id)).map(o=>o.id));updateUI();},get wholeGroupId(){return selectedWholeGroupId();},select(ids=[]){multiEnabled=true;selectedIds=new Set(ids);updateUI();},single(id=activeId()){multiEnabled=false;selectedIds=new Set(id==null?[]:[id]);updateUI();},clear(){selectedIds.clear();updateUI();},refresh(){updateUI();}};globalThis.__boxlabObjectGroups={groupSelection,ungroupSelection,selectGroup,renameGroup,refresh:updateUI,label:groupLabel,members:groupMembers,completeSelectedGroupIds:selectedCompleteGroupIds};installHistoryBridge();installProjectAudit();return true;}
 if(!initialize()){const ready=()=>{if(!initialize())return;window.removeEventListener('boxlab-object-manager-ready',ready);};window.addEventListener('boxlab-object-manager-ready',ready);}
