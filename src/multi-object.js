@@ -942,6 +942,29 @@ function initialize() {
       if(!object||!live||object.locked||object.kind==='reference'||object.sourceId||!mesh?.clone)return false;
       replaceMeshInPlace(live,mesh);object.mesh=mesh.clone();forceRender();renderOutliner();return true;
     },
+    replaceBasicProjectScene(sceneObjects, wantedId) {
+      const live=state()?.mesh;
+      if(!live||!Array.isArray(sceneObjects)||!sceneObjects.length)return false;
+      if(sceneObjects.some(o=>o.sourceId||o.glbPassthrough||!o.mesh?.clone))return false;
+      // All validation and confirmation must be performed by the caller.
+      const ids=new Set(sceneObjects.map(o=>o.id));
+      if(ids.size!==sceneObjects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1))return false;
+      const active=sceneObjects.find(o=>o.id===wantedId&&!o.locked)||sceneObjects.find(o=>!o.locked);
+      if(!active)return false;
+      const prepared=sceneObjects.map(o=>({...o,mesh:o.mesh.clone(),history:{undo:[],redo:[]},settings:cloneSettings(o.settings)}));
+      // Replace the active geometry before swapping scene bookkeeping.
+      replaceMeshInPlace(live,active.mesh);
+      history()?.clear?.();
+      objects=prepared;
+      activeId=active.id;
+      soloId=null;
+      linkedSources.clear();
+      nextId=Math.max(nextId,...prepared.map(o=>o.id+1));
+      restoreSettings(active.settings);
+      forceRender();
+      renderOutliner();
+      return true;
+    },
     addMesh(mesh, name = 'Object', options = {}) { return addObject(mesh, name, options); },
     activate(id) { return activateObject(id); },
     pickObject(event) { return pickViewportObject(event); },
