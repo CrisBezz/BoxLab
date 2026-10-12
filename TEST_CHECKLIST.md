@@ -5572,3 +5572,11 @@ these specific passes. Original broad .813 history/placement gates are not infer
 - [ ] Import, Export/Save and About controls remain tappable and File menu scroll never orbits viewport
 - [ ] Portrait prompt reads Rotate device to landscape
 - [ ] .820 Quadball and .821 Pencil merge unaffected
+
+
+## Balloon drawing camera regression .824
+
+- [ ] Reset then draw Balloon outline with Pencil: 3D camera does not orbit/pan/zoom
+- [ ] Repeat after File menu scroll/open and after Cancel/reopen
+- [ ] Inside-pad primary touch draws rather than moving 3D scene; outside-pad finger orbit, two-finger pan and pinch remain unchanged
+- [ ] .821 Edit points merge/Undo and .820 Quadball preview/Apply remain intact
