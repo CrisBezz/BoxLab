@@ -8211,3 +8211,12 @@ Multi1.0 edit. Two actual-owner regression tests cover mode exit/reused pointer 
 document consumer; rotate helper now models window/document completion. Full Node24
 2230PASS/0FAIL/0skip. Transform836 plus reviewed shell/recovery; diagnostics retained.
 Protected modelling/frozenBeta unchanged. iPad Linked Duplicate Move→Face retest pending.
+
+
+### .836 publication verification — 2026-10-12
+
+Release7b689c234474e27a5d5c042f57f2048d8f5a345e; tested tree
+33926a9397320b1f34c93726a29578e5fcc792c2 matches checkout. Node22 CI
+38246212104/job114800613228 SUCCESS:2230PASS/0FAIL/0skip. Pages38246212136
+SUCCESS. Fresh pinned live shell/manifest/transform owner byte-match. User linked
+mode-switch drift repair acceptance pending; .832/.833 failures stay recorded.

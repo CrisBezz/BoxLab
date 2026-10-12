@@ -145,3 +145,9 @@ Releasec46b2eff501e05989ab2de861fa2b2ff19b01362; treefbff479119df53209e04c113593
 Node22 CI38245284982/job114797502516 SUCCESS2228PASS/0FAIL/0skip.
 Pages38245284604 SUCCESS; pinned live shell/manifest/manager/Debug byte-match.
 Diagnostic only; original-object drift not fixed/accepted.
+
+## .836 publication verified
+Release7b689c234474e27a5d5c042f57f2048d8f5a345e; tree33926a9397320b1f34c93726a29578e5fcc792c2.
+Node22 CI38246212104/job114800613228 SUCCESS2230PASS/0FAIL/0skip.
+Pages38246212136 SUCCESS; pinned live shell/manifest/transform owner byte-match.
+Repair build, awaits moved Linked Duplicate→Face iPad retest.
