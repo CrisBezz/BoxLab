@@ -7967,3 +7967,8 @@ User accepts .818 quad-dominant modelling and requests pole cleanup. Same Balloo
 ## .820 — Genuine quadball grid pole caps — 2026-10-12
 
 User says .819 kite quads still share single poles; asks for mathematical quadball. Original donor N=6*density outline divisions (divisible by4 for even density; odd densities produce N=6d not divisible by4!). Correction implemented before release: grid-enabled odd Density uses 8*density perimeter samples; even Density uses 6*density, ensuring N is divisible by four. New adapter replaces each radial fan with an N/4-per-side Coons-interpolated square quad grid using last-ring boundary. Original generator and earlier recipes untouched, new profiles flag balloonPolePatch grid. Regression tests added for all quads and Euler/orientation. Pending automated/device test.
+
+
+## .821 — Shared Curve control point drag merge — 2026-10-12
+
+User PASS .820 Quadball; protect. Existing Curve editor window capture Pencil ownership reused. Drag edit point within 12 SVG units of another highlights target red; release removes source point, retains target location, undo restores single operation. Minimum 3 closed/2 open; no new gesture owner or modelling kernel. Release/iPad validation pending.
