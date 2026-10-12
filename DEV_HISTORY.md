@@ -8002,3 +8002,8 @@ User PASS .825 round-trip preflight. File > Save .boxlab (basic scene) now seria
 ## .827 — Guarded basic .boxlab Open — 2026-10-12
 
 User PASS .826 basic project download. Added .boxlab file picker, v1 independent decode/re-encode validation, explicit replacement warning/confirmation, unsupported linked/reference/rich resource refusal and 32MB size gate. Authoritative multi-object manager now exposes guarded basic scene replacement synchronising object ID allocator and live mesh; restores group/selection metadata in existing owner. Replacement clears history and cannot be undone; Cancel leaves project unchanged. CI/iPad device validation pending.
+
+
+## .828 — iPad .boxlab Files picker recognition hotfix — 2026-10-12
+
+User says .boxlab format not recognized for Open. Corrected .827 double-escaped extension regex, removed MIME/extension filtering from Safari file input for custom extension (validate after selection), clarified UI to Open .boxlab from Files. File picker must be initiated inside browser; direct Files app Open In association requires packaged native app. Existing replacement validation preserved. iPad test pending.
