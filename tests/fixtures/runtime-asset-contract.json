@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.829",
+      "url": "./src/drawer-ui.js?v=0.36.18.831",
       "target": "src/drawer-ui.js",
-      "sha256": "77c92b90c601408e7ea7813064d0707d62087eb2c35cdc1ff70c73fee60921fb"
+      "sha256": "c254f5e8f6274882e8b0881497608f52584ab2aaf83c96f34b8096149ea2dfe9"
     },
     {
       "owner": "index.html",
@@ -329,15 +329,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.829",
+      "url": "./src/multi-object.js?v=0.36.18.831",
       "target": "src/multi-object.js",
-      "sha256": "9a1550e8e1ea9104bc03f7237ce0db651be59fd39beac75cdd5798fa6c97805d"
+      "sha256": "208b7651aa5fd6b258ba1a692db74c82469b64cce65c9cd055535dc9b83e112a"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.829",
+      "url": "./src/object-management.js?v=0.36.18.831",
       "target": "src/object-management.js",
-      "sha256": "b61e4be4431e0964f8dd21ee52b0882cf3a6dfb7d20d3989ea0dc01610a6e1d5"
+      "sha256": "bf8776c3968bc812f3b75fddafd1d6a0970ae119228344ec660b07e52bf3cdeb"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.830",
+      "url": "./src/release-bootstrap.js?v=0.36.18.831",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.830",
+      "url": "./src/release-version.js?v=0.36.18.831",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.829",
+      "url": "./object-management.js?v=0.36.18.831",
       "target": "src/object-management.js",
-      "sha256": "b61e4be4431e0964f8dd21ee52b0882cf3a6dfb7d20d3989ea0dc01610a6e1d5"
+      "sha256": "bf8776c3968bc812f3b75fddafd1d6a0970ae119228344ec660b07e52bf3cdeb"
     },
     {
       "owner": "src/drawer-ui.js",

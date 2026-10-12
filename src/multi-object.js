@@ -949,13 +949,14 @@ function initialize() {
       // All validation and confirmation must be performed by the caller.
       const ids=new Set(sceneObjects.map(o=>o.id));
       if(ids.size!==sceneObjects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))return false;
-      const active=sceneObjects.find(o=>o.id===wantedId&&!o.locked)||sceneObjects.find(o=>!o.locked);
+      const editable=o=>o.kind!=='reference'&&!o.locked;
+      const active=sceneObjects.find(o=>o.id===wantedId&&editable(o))||sceneObjects.find(editable);
       if(!active)return false;
       // Stage independent meshes/settings before touching the live scene.
       let prepared, previous;
       const h=history();
       try {
-        prepared=sceneObjects.map(o=>({...o,mesh:o.mesh.clone(),history:{undo:[],redo:[]},settings:cloneSettings(o.settings)}));
+        prepared=sceneObjects.map(o=>({...o,locked:o.kind==='reference'?true:!!o.locked,mesh:o.mesh.clone(),history:{undo:[],redo:[]},settings:cloneSettings(o.settings)}));
         previous={mesh:live.clone(),settings:captureSettings(),objects,activeId,soloId,nextId,
           sources:new Map(linkedSources),undo:h?.undoStack?.slice(),redo:h?.redoStack?.slice()};
       } catch { return false; }

@@ -8071,3 +8071,19 @@ Release77cbbb6989d6949398a45eb60d1c7f8765818ae3; tested tree
 Pages38236275003 SUCCESS. Fresh live index/manifest/Add-parent/Curve UI/core/adapter
 byte-match repository. All five prior failure checks remain active and now pass.
 Protected/frozenBeta files untouched. iPad tactile gate pending.
+
+
+## .831 — Basic .boxlab reference-guide restoration — 2026-10-12
+
+User PASS .830; protect Balloon new/legacy, merge/history/navigation and zero failures.
+Audit: codec already retains guide geometry/kind/lock/visibility/groups; only Open blanket
+reference refusal blocked mixed projects. Existing Open now validates editable/reference
+kinds and locked guides, requires unlocked editable mesh. Manager enforces reference lock
+and excludes guides from active editable fallback, preserving transactional replacement.
+Reference-only, unlocked forged guide, linked/rich scenes still refuse. No new import/scene/
+reference owner or codec changes. Three new tests actual manager/Open/native codec: mixed
+acceptance, independent guide data, Cancel, malformed/reference-only/linked refusal.
+Full Node24 2219PASS/0FAIL/0skip. Manager/Object-management/Drawer831 aligned cache URL;
+Curve830, Multi1.0/Loop715/Extrude802/Boolean806 and frozenBeta2–7 untouched.
+Device guide Save/Open lock/visibility, editable Add/edit/history gate pending.
+Next linked-instance and resource preservation, plus performance; NOM/Curve cutters/UV queued.

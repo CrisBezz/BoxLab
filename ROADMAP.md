@@ -4,7 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .830 zero regression failures / frozen Beta 7, 2026-10-12
+## Current direction — .831 basic project reference guides / frozen Beta 7, 2026-10-12
+
+User PASS .830 protected. .831 restores mixed reference/editable projects via existing
+codec/Open/manager, keeps guides locked, chooses editable primary, refuses reference-only
+and linked/rich resources. Full2219PASS/0FAIL/0skip; iPad guide Save/Open gate pending.
+Next linked-instance project persistence then rich resources, with performance work
+alongside; NOM import/Curve cutters/UV tools remain queued.
+
+## Previous direction — .830 zero regression failures / frozen Beta 7, 2026-10-12
 
 User prioritised failures. .830 fixes new quadball orphan poles with versioned recipes,
 keeps old grid recipes editable, reconciles three stale UI/diagnostic checks and tests

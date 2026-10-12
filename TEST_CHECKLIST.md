@@ -5659,3 +5659,17 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Older Balloon: Edit Balloon still available; shape/placement preserved.
 - [ ] Drag point onto another: red target, release merges, Undo restores.
 - [ ] Pencil drawing stays stationary; outside-pad orbit/pan/pinch still work.
+
+
+## .830 user PASS / .831 Reference project guides
+
+- [x] User PASS .830 new/legacy Balloon, merge/history and external navigation; protected.
+- [x] .831 existing codec round-trips reference geometry/kind/visibility/lock/groups.
+- [x] Actual manager stages guides locked, excludes guide from active editable fallback.
+- [x] Actual Open mixed scene accepts; Cancel leaves owners untouched.
+- [x] Reference-only/unlocked forged reference/linked scenes refuse before confirmation.
+- [x] Full local2219PASS/0FAIL/0skip; no old checks removed.
+- [ ] Import OBJ as Reference alongside editable object, Save .boxlab, change scene.
+- [ ] Open/Cancel preserves changed scene; Open/Confirm restores guide + editable object.
+- [ ] Reference remains read-only; hide/show works, editable object can select/Add/edit/Undo.
+- [ ] Balloon Pencil drawing and point merge remain accepted.

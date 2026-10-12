@@ -273,12 +273,14 @@ async function openBasicProject(file,output){
   const incoming=decodeBoxlabScene(source,(v,f,c,g)=>new EditableMesh(v,f,c,g));
   // The v1 codec does not reconstruct imported resource pools or linked
   // source meshes; refuse instead of creating visibly broken instances.
-  if(incoming.objects.some(o=>o.sourceId||o.kind==='reference'||o.glbPassthrough||o.materials||o.textures))
-   throw Error('Linked/reference/rich-resource projects are not supported by basic Open');
+  if(incoming.objects.some(o=>o.sourceId||o.glbPassthrough||o.materials||o.textures))
+   throw Error('Linked/rich-resource projects are not supported by basic Open');
   const ids=new Set(incoming.objects.map(o=>o.id));
   if(ids.size!==incoming.objects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))
    throw Error('Invalid or duplicate object IDs');
-  if(!incoming.objects.some(o=>!o.locked))throw Error('Project has no editable unlocked object');
+  if(incoming.objects.some(o=>!['editable','reference'].includes(o.kind)||o.kind==='reference'&&!o.locked))
+   throw Error('Invalid object kind or unlocked reference');
+  if(!incoming.objects.some(o=>o.kind==='editable'&&!o.locked))throw Error('Project has no editable unlocked object');
   if(JSON.stringify(encodeBoxlabScene(incoming))!==JSON.stringify(source))
    throw Error('Project data failed round-trip validation');
   const response=window.confirm('Replace the CURRENT BoxLab scene with '+incoming.objects.length+' objects from '+file.name+'?\n\nThis clears the current scene and Undo history. Save your current project first.');

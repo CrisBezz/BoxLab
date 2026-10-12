@@ -57,3 +57,22 @@ test('829 actual Open rejects malformed JSON, IDs, extensions and size before co
   const f=openFixture(),out={};await f.c.openBasicProject(input,out);assert.deepEqual(f.calls,[]);assert.match(out.textContent,/Open refused/);
  }
 });
+
+test('831 manager restores reference guides locked and never promotes a reference to editable active mesh',()=>{
+ const {c,live}=fixture(),items=incoming();items[1]={...items[1],kind:'reference',locked:false,visible:false,groupId:5};
+ assert.equal(c.replace(items,41),true);assert.equal(c.activeId,40);assert.equal(live.value,40);
+ assert.equal(c.objects[1].kind,'reference');assert.equal(c.objects[1].locked,true);assert.equal(c.objects[1].visible,false);assert.equal(c.objects[1].groupId,5);
+ const f=fixture();assert.equal(f.c.replace([{...items[1],locked:false}],41),false);assert.equal(f.live.value,1);assert.equal(f.undo.length,1);
+});
+test('831 reference project round trip preserves geometry, groups, lock and visibility; Open accepts mixed scene',async()=>{
+ const data=project();data.objects.push({...structuredClone(data.objects[0]),id:41,name:'Guide',kind:'reference',locked:true,visible:false,groupId:5});data.groups={names:[[5,'Guides']],collapsed:[5]};
+ const recovered=decodeBoxlabScene(data,(...args)=>new EditableMesh(...args));assert.deepEqual(encodeBoxlabScene(recovered),data);
+ const f=openFixture(),out={};await f.c.openBasicProject(file(data),out);assert.deepEqual(f.calls,['confirm','replace','groups','ui']);assert.match(out.textContent,/Opened basic/);
+ const cancel=openFixture(false);await cancel.c.openBasicProject(file(data),out);assert.deepEqual(cancel.calls,['confirm']);
+});
+test('831 Open refuses reference-only or forged unlocked guides and still refuses linked resources',async()=>{
+ const ref=project();ref.objects[0].kind='reference';ref.objects[0].locked=true;
+ const unlocked=structuredClone(ref);unlocked.objects[0].locked=false;
+ const linked=project();linked.objects[0].sourceId=40;
+ for(const data of [ref,unlocked,linked]){const f=openFixture(),out={};await f.c.openBasicProject(file(data),out);assert.deepEqual(f.calls,[]);assert.match(out.textContent,/Open refused/);}
+});
