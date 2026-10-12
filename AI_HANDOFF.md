@@ -126,3 +126,9 @@ Pages38242145077 SUCCESS; live shell/manifest/manager/Debug byte-match.
 Read-only diagnostic release, not a claimed fix. Device trace needed.
 
 .835 full local Node24:2228PASS/0FAIL/0skip; linked device failure unresolved.
+
+## .835 publication verified
+Releasec46b2eff501e05989ab2de861fa2b2ff19b01362; treefbff479119df53209e04c11359300e249096a64f.
+Node22 CI38245284982/job114797502516 SUCCESS2228PASS/0FAIL/0skip.
+Pages38245284604 SUCCESS; pinned live shell/manifest/manager/Debug byte-match.
+Diagnostic only; original-object drift not fixed/accepted.

@@ -8187,3 +8187,12 @@ read Library images (inline images visible; supplied local image files missing).
 Manager/Debug/recovery835; project owners832/Curve830 and protected/frozenBeta untouched.
 
 .835 full local Node24:2228PASS/0FAIL/0skip; linked device failure unresolved.
+
+
+### .835 publication verification — 2026-10-12
+
+Releasec46b2eff501e05989ab2de861fa2b2ff19b01362; tested tree
+fbff479119df53209e04c11359300e249096a64f matches checkout. Node22 CI
+38245284982/job114797502516 SUCCESS:2228PASS/0FAIL/0skip. Pages38245284604
+SUCCESS. Fresh pinned live shell/manifest/manager/Debug byte-match. User original-object
+drift remains unresolved; diagnostic only, completed-event screenshot required.
