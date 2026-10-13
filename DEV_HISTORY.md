@@ -8552,3 +8552,20 @@ Pages38390897016 SUCCESS. Fresh live shell/manifest/manager848/monitor848/core84
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
 reads returned previous assets; subsequent complete graph matches848.
 Device separated-cache readout capture pending; no new geometry optimisation claimed.
+
+
+## .849 — reuse owned inactive SubD render buffers — 2026-10-13
+
+User848 capture confirms111inactive cache hits/1miss but6.4ms inactive phase, active30/
+24 and cage6.2ms; /nextbuild. Audit native inactive layer cleanup/display/render overlays.
+Cache BufferGeometry by independent inactive object + immutable native display identity;
+only currently visible inactive SubD participates. Preserve buffer through wrapper
+rebuilds, replace on display changes, prune hidden/active/deleted/replaced objects and
+free map on scene/standalone clear. Shared overlay geometry excluded from transient
+cleanup; repair misplaced overlay-material ownership check to actual node userData.
+Linked/nonSubD evaluation/geometry remains original. No duplicate rendering/kernel/
+history/gesture owner; manager849 shell/recovery849/cache812 graph reviewed.
+Three native lifecycle/output tests plus strengthened847 identity+hide-release contract;
+812 stub adds native userData (its initial failure was adapter shape, timing unchanged).
+Full2271PASS/0FAIL/0skip. Device comparable timing and visual/selection/history gates
+pending; no hardware speed claim. Existing840/Array/Clean/Soft owners protected.

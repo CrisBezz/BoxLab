@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.848",
+      "url": "./src/multi-object.js?v=0.36.18.849",
       "target": "src/multi-object.js",
-      "sha256": "e953f6ac976c51c420856c5192daa2c693279e23f2d4292f1e336f44b8932fd5"
+      "sha256": "91db75046606412f86b2a974dfec91385c7809fb665dbd9ceb5402d32e5034a9"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.848",
+      "url": "./src/release-bootstrap.js?v=0.36.18.849",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.848",
+      "url": "./src/release-version.js?v=0.36.18.849",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },

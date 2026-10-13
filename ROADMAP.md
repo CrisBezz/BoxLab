@@ -4,7 +4,16 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .848 cache owner measurements / frozen Beta 7, 2026-10-13
+## Current direction — .849 inactive render geometry reuse / frozen Beta 7, 2026-10-13
+
+848 capture111inactive hits/1miss but6.4ms inactive mean, cage6.2ms and activeSubD5.7ms.
+Next narrow build reuses owned buffers for visible independent inactive SubD objects
+through existing layer/display identity. Changes invalidate, hidden/active/removed
+objects free buffers; shared wire wrappers never dispose retained geometry. Linked
+path unchanged. Full2271PASS/0FAIL; same-scene849 visual/resource/timing gate pending.
+Next measured cage/active geometry work or richer project resources after acceptance.
+
+## Previous direction — .848 cache owner measurements / frozen Beta 7, 2026-10-13
 
 847 device capture shows281aggregate hits/41misses,106rebuilds mean14.5ms and inactive
 mean5.8ms, without comparable pre-change sample. Split existing Performance cache counts

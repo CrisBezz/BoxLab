@@ -33,7 +33,7 @@ test('812 actual main separates active display, geometry, scene hooks and cage w
 });
 test('812 actual inactive rebuild reports its own nested cost and preserves skip/error behavior',()=>{
  const source=read('multi-object.js'),start=source.indexOf('function rebuildInactiveLayer(body){'),text=source.slice(start,source.indexOf('\nfunction installRenderObserver',start));
- let clock=0;const monitor=createPerformanceMonitor(()=>clock),added=[],warnings=[],layer={add:x=>added.push(x)};
+ let clock=0;const monitor=createPerformanceMonitor(()=>clock),added=[],warnings=[],layer={userData:{},add:x=>added.push(x)};
  const c={__boxlabPerformance:monitor,ensureInactiveLayer:()=>layer,clearInactiveLayer:()=>{clock+=2;},objects:[{id:'active'},{id:'hidden'},{id:'bad'},{id:'other'}],activeId:'active',shouldShow:o=>o.id!=='hidden',displayMeshFor:o=>{clock+=10;if(o.id==='bad')throw Error('fixture');return {triangulatedGeometry:()=>{clock+=4;return {};}};},inactiveBodies:[],THREE:{Mesh:class{constructor(){this.userData={};}}},console:{warn:(...x)=>warnings.push(x)},__boxlabRenderModes:{refreshStudio:()=>{clock+=1;}}};
  vm.createContext(c);vm.runInContext(text,c);const body={material:{clone:()=>({})}};
  c.rebuildInactiveLayer(body);assert.equal(monitor.snapshot().stages.inactive,undefined);

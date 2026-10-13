@@ -5890,3 +5890,16 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Performance > Reset, select/deselect several times with independent inactive SubD objects: Inactive cache hits increase.
 - [ ] Small active edit then Undo: Active misses/hits change; inactive surfaces remain correct. Send readout capture.
 - [ ] Reset clears both rows; Close removes diagnostic panel; normal gestures/history remain accepted.
+
+
+## .848 device evidence / .849 inactive GPU geometry reuse
+
+- [x]848 capture active30hits/24misses, inactive111/1;54rebuilds21.9/41ms, inactive6.4/17ms, cage6.2/12ms. Owner reuse confirmed, no comparative speed/full manual PASS inferred.
+- [x] Native repeated rebuild preserves geometry identity and bytes; wire overlays share cache without disposing it, transient overlay material disposes.
+- [x] Source edit invalidates/disposes once and matches native geometry; standalone clear frees owned map.
+- [x] Hide/activate/delete/object replacement/scene switch prune geometry; linked bodies stay uncached with correct placement.
+- [x] Full2271PASS/0FAIL/0skip; original picking/visibility/timing coverage retained and ownership expectation revised.
+- [ ] Same scene: active select/edit/Undo with inactive SubD visible; all surfaces and Object picks remain correct.
+- [ ] Switch/edit old inactive object, change SubD/Mirror, hide/show and Undo/Redo: no stale surfaces/disappearance.
+- [ ] VIEW render looks, linked Move/component edits and Live Array source edit remain accepted.
+- [ ] Performance Reset/capture Inactive timing and resource counts after comparable interaction; orbit/navigation stable.

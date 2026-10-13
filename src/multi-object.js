@@ -832,29 +832,35 @@ function ensureInactiveLayer(){
   const scene=state()?.scene;
   if(!scene)return null;
   if(inactiveLayer?.parent===scene)return inactiveLayer;
+  clearInactiveLayer();
   inactiveLayer=new THREE.Group();
   inactiveLayer.name='BoxLab Inactive Objects';
   inactiveLayer.userData.boxlabInactiveLayer=true;
   scene.add(inactiveLayer);
   return inactiveLayer;
 }
-function clearInactiveLayer(){
+function clearInactiveLayer(keepGeometry=false){
   if(!inactiveLayer)return;
   for(const child of [...inactiveLayer.children]){
     inactiveLayer.remove(child);
     child.traverse?.(node=>{
-      if(node.geometry?.dispose)node.geometry.dispose();
-      if(node!==child&&node.material?.userData?.boxlabRenderOverlay)node.material?.dispose?.();
+      if(node.geometry?.dispose&&node.geometry!==child.userData.boxlabCachedGeometry)node.geometry.dispose();
+      if(node!==child&&node.userData?.boxlabRenderOverlay)node.material?.dispose?.();
     });
     if(child.material?.userData?.disposable)child.material.dispose?.();
   }
   inactiveBodies=[];
+  if(!keepGeometry){
+    for(const entry of inactiveLayer.userData.boxlabGeometryCache?.values()||[])entry.geometry.dispose();
+    inactiveLayer.userData.boxlabGeometryCache?.clear();
+  }
 }
 function rebuildInactiveLayer(body){
   const perf=globalThis.__boxlabPerformance,perfStart=perf?.start();
   const layer=ensureInactiveLayer();
   if(!layer)return;
-  clearInactiveLayer();
+  clearInactiveLayer(true);
+  const geometryCache=layer.userData.boxlabGeometryCache ||= new Map(),usedCacheObjects=new Set();
   for(const object of objects){
     if(object.id===activeId||!shouldShow(object))continue;
     try{
@@ -863,8 +869,18 @@ function rebuildInactiveLayer(body){
       material.transparent=true;
       material.opacity=object.locked?.32:.52;
       material.userData={...(material.userData||{}),disposable:true};
-      const inactive=new THREE.Mesh(display.triangulatedGeometry(),material);
+      let geometry,cachedGeometry=null;
+      if(object.settings?.subd&&!object.sourceId){
+        let entry=geometryCache.get(object);
+        if(entry?.display!==display){
+          geometry=display.triangulatedGeometry();
+          entry?.geometry.dispose();entry={display,geometry};geometryCache.set(object,entry);
+        }
+        geometry=entry.geometry;cachedGeometry=geometry;usedCacheObjects.add(object);
+      }else geometry=display.triangulatedGeometry();
+      const inactive=new THREE.Mesh(geometry,material);
       inactive.userData={kind:'boxlab-inactive-body',objectId:object.id};
+      if(cachedGeometry)inactive.userData.boxlabCachedGeometry=cachedGeometry;
       inactive.renderOrder=-1;
       inactiveBodies.push(inactive);
       layer.add(inactive);
@@ -874,6 +890,7 @@ function rebuildInactiveLayer(body){
       console.warn('BoxLab inactive object render skipped',error);
     }
   }
+  for(const [object,entry] of geometryCache)if(!usedCacheObjects.has(object)){entry.geometry.dispose();geometryCache.delete(object);}
   globalThis.__boxlabRenderModes?.refreshStudio?.();
   perf?.stage?.('inactive',perfStart);
 }

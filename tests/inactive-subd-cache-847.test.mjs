@@ -30,11 +30,11 @@ test('847 exact component/metadata/settings/source replacement invalidate; disab
  const n=f.calls();f.b.settings.subd=false;f.c.displayMeshFor(f.b);assert.equal(f.calls(),n);f.b.settings.subd=true;assert.notEqual(f.c.displayMeshFor(f.b),previous);assert.equal(f.calls(),n+1);
  const restored={...f.b,mesh:f.b.mesh.clone()};assert.notEqual(f.c.displayMeshFor(restored),previous);
 });
-test('847 native inactive scene rebuild still replaces GPU geometries, preserves raycast IDs and visibility, while avoiding repeated subdivision',()=>{
+test('847 native inactive scene rebuild preserves owned GPU geometry, preserves raycast IDs and visibility, while avoiding repeated subdivision',()=>{
  const f=fixture(),body=new THREE.Mesh(new THREE.BoxGeometry(),new THREE.MeshStandardMaterial());f.c.rebuildInactiveLayer(body);const first=f.c.inactiveBodies[0];let disposed=0;first.geometry.addEventListener('dispose',()=>disposed++);f.scene.updateMatrixWorld(true);
  const ray=new THREE.Raycaster(new THREE.Vector3(3,0,5),new THREE.Vector3(0,0,-1));const hits=()=>ray.intersectObjects(f.c.inactiveBodies,false).map(h=>[h.object.userData.objectId,h.distance]);const before=hits();assert(before.length);
- for(let i=0;i<10;i++)f.c.rebuildInactiveLayer(body);f.scene.updateMatrixWorld(true);assert.equal(f.calls(),1);assert.equal(disposed,1);assert.deepEqual(hits(),before);assert.equal(f.scene.children.length,1);
- f.b.visible=false;f.c.rebuildInactiveLayer(body);assert.equal(f.c.inactiveBodies.length,0);f.b.visible=true;f.c.rebuildInactiveLayer(body);assert.equal(f.calls(),1);
+ for(let i=0;i<10;i++)f.c.rebuildInactiveLayer(body);f.scene.updateMatrixWorld(true);assert.equal(f.calls(),1);assert.equal(disposed,0);assert.equal(f.c.inactiveBodies[0].geometry,first.geometry);assert.deepEqual(hits(),before);assert.equal(f.scene.children.length,1);
+ f.b.visible=false;f.c.rebuildInactiveLayer(body);assert.equal(f.c.inactiveBodies.length,0);assert.equal(disposed,1);f.b.visible=true;f.c.rebuildInactiveLayer(body);assert.equal(f.calls(),1);
  f.c.activeId=2;f.c.rebuildInactiveLayer(body);assert.equal(f.c.inactiveBodies[0].userData.objectId,1);
 });
 test('847 linked source placement always follows authoritative uncached evaluator; source edits refresh immediately',()=>{

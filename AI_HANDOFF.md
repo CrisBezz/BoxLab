@@ -1,13 +1,36 @@
-# BoxLab AI Handoff — .848 active/inactive cache measurements
+# BoxLab AI Handoff — .849 inactive render geometry reuse
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.848.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.849.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .848 scope — device readout gate pending
+## .849 scope — device geometry/performance gate pending
+User848 capture:54rebuilds21.9ms mean/41max; inactive6.4/17ms; active30hits/24misses,
+inactive111hits/1miss; cage6.2/12ms. This confirms independent inactive CPU reuse but
+remaining render cost, not matched speed gain. /nextbuild authorizes next narrow stage.
+Existing inactive layer now owns one BufferGeometry per currently visible independent
+inactive SubD object, keyed by existing847 immutable display-result identity. Rebuild
+reuses it while recreating normal material/render-look wrappers. Changed CPU display
+replaces/disposes geometry; hidden/active/deleted/replaced objects prune it. Scene/layer
+switch and standalone clear release entire owned map. Shared wire-overlay geometry is
+not disposed by transient wrapper cleanup. Correct overlay material flag is on node
+userData, not material userData; transient overlay materials now dispose correctly.
+Linked/non-SubD geometry retains original uncached path. Existing picking/visibility/
+render look/history/modifier/Array and protected kernels untouched. No new renderer,
+triangulation algorithm or revision system. Cache holds only visible independent
+inactive SubD buffers; CPU display cache847 remains weakly keyed as before.
+Three new native tests cover20redraw identities/one buffer, edit/native geometry
+parity/shared wire/disposal, hide/activate/delete/replacement/scene cleanup and linked
+uncached placement. Existing847 GPU expectation now protects reuse + disposal on hide;
+812 timing adapter has native layer userData, semantic timing coverage retained.
+Full Node24:2271PASS/0FAIL/0skip. Manager849→helper812 unchanged; shell/recovery849;
+monitor/core848/main842/Array844/drawer846/Clean845/Cage846 remain coherent.
+Publication/Node22/live verification follows. Device visual and timing comparison pending.
+
+## .848 scope — device readout evidence captured
 User /nextbuild after847 captures. Latest iPad847 capture:106rebuilds mean14.5/max42ms,
 Inactive mean5.8/max20ms,281cache hits/41misses,34FPS/p9588ms. Previous idle capture
 had0rebuilds/0cache counts. These demonstrate aggregate cache use, NOT matched before/
@@ -210,11 +233,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Capture848 after Performance Reset in same independent multi-SubD scene: repeated
-selection, one edit/Undo; inspect Active versus Inactive cache counts and Inactive phase.
-Then choose measured geometry/render improvement or project resource preservation.
-No quantified iPad speed claim without comparable before/after workload. Keep847
-visual/object-switch/modifier/history gates visible;846 and earlier user PASS protected.
+Same multi-SubD scene849: Performance Reset, repeat active select/edit/Undo, capture
+Inactive phase versus8486.4ms mean. Check switching/editing former inactive objects,
+modifier changes, hide/show and Undo/Redo; render modes and linked placement remain
+correct. If accepted, target measured cage/active geometry cost or project resources.
+No quantified iPad speed improvement until comparable workload capture. Preserve
+published848 split counters and all prior explicitly accepted device gates.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
