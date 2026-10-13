@@ -1,9 +1,9 @@
-// BoxLab v0.36.18.191 — cage intensity presentation control.
+// BoxLab v0.36.18.846 — cage intensity presentation control.
 // Visual only: softens rendered cage overlays without changing mesh, selection,
 // topology, tools, History, Clean View ownership or the live-mesh bridge.
-const VERSION='0.36.18.191';
-const KINDS=new Set(['edge','vertex','mirror-edge','edge-selection-overlay']);
-const FACTOR={edge:.42,vertex:.56,'mirror-edge':.28,'edge-selection-overlay':.82};
+const VERSION='0.36.18.846';
+const KINDS=new Set(['edge','vertex','mirror-edge','edge-selection-overlay','cage-edge-batch','cage-vertex-batch']);
+const FACTOR={edge:.42,vertex:.56,'mirror-edge':.28,'edge-selection-overlay':.82,'cage-edge-batch':.42,'cage-vertex-batch':.56};
 const originals=new WeakMap();
 let mode=localStorage.getItem('boxlab-cage-intensity')==='soft'?'soft':'full';
 let lastTouch=0;

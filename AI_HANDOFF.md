@@ -1,13 +1,26 @@
-# BoxLab AI Handoff — .845 Clean View batch repair
+# BoxLab AI Handoff — .846 Soft cage batch compatibility
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.845.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.846.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .845 scope — device acceptance pending
+## .846 scope — device acceptance pending
+User Perfect PASS .845 protects Clean On/Off/rebuild and overlay restoration.
+Adjacent audit found Cage Soft191 also missing810 cage-edge-batch/cage-vertex-batch.
+Existing cage-intensity owner now includes them with the original edge.42/vertex.56
+opacity factors. Full restores original material identity; repeated Soft does not
+compound opacity. Existing invisible picking proxy materials remain invisible, normal
+raycasts/selection metadata and surface materials unchanged. Clean845 remains intact.
+Three native THREE/batch tests cover Soft/Full identity/disposal/raycast preservation,
+stored Soft after rebuild/bridge/render events and coexistence with Clean/suppression.
+Full local Node24:2262PASS/0FAIL/0skip. Source/core/render/manager/Array and frozen/
+protected modules unchanged. Cage846→face-workflow846→drawer846→shell846 reviewed;
+Clean stays845, main/manager842, Array844. Publication/Node22/live proof follows.
+
+## Protected .845 scope — user PASS2026-10-13
 User PASS .844 protects staged source editing/local Undo/Cancel/Apply, regenerated
 array count/END transforms, scene history/project gate. User screenshot confirms844
 Clean On leaves visible cage edges/vertex dots. Root cause: Clean owner predates810
@@ -159,11 +172,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Await .845 iPad Clean toggle: edges/dots disappear, off restores cage; orbit and
-edit/rebuild while Clean remains on. Check Mirror/SubD and source editing if useful.
-Source844 and conversion843 are accepted. After repair acceptance, resume requested
-Live Array polish only from concrete feedback, or staged project resources/measured
-performance; NOM/Curve cutters/UV remain queued. Preserve owner/cache audit workflow.
+Await .846 iPad Full↔Soft visibility, Clean toggles, edit/rebuild persistence and
+normal component selection/navigation. After acceptance resume staged richer project
+resource persistence/measured performance; scope one resource family at a time through
+existing codec/manager/import/export owners. NOM/Curve cutters/UV remain queued.
+Live Array source844/conversion843 and Clean845 are accepted and protected.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

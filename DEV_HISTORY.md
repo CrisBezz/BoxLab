@@ -8474,3 +8474,18 @@ Pages38377611930 SUCCESS. Fresh live shell/manifest/drawer845/face-workflow845/
 Clean845, protected Multi1.0 and frozenBeta7 version byte-match repository.
 Initial shell/manifest reads preceded deployment; subsequent reads match845.
 .844 source-editor user PASS protected; iPad Clean On/Off/rebuild gate pending.
+
+
+## .845 user Perfect PASS / .846 Soft cage batching compatibility — 2026-10-13
+
+User Perfect PASS and /nextbuild. Protect845 Clean behavior. Current repo/roadmap audit
+finds adjacent Soft191 owner still targeting legacy individual overlays after810 batch
+migration. Finish this existing display gap before resource/performance expansion.
+Add batch kinds to existing intensity whitelist and retain original42%edge/56%vertex
+factors. Repeated application/Full restores original identity; invisible proxies stay
+invisible and original raycasts/surface/selection metadata retained. Clean845 untouched.
+Three native tests cover actual generated batches/material restore/disposal/picking,
+persisted Soft at rebuild/bridge/render and Clean+suppressed visibility coexistence.
+Full2262PASS/0FAIL/0skip. Loader cage846→face-workflow846→drawer846→shell846 and
+reviewed hashes repinned; protected kernels/frozen betas/Array source editor unchanged.
+Device Soft/Full/Clean/rebuild gate pending; next richer project resources/measured perf.

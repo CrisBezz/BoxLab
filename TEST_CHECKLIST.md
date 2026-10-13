@@ -5852,3 +5852,16 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Clean Off: normal cage returns; selection and Pencil/finger orbit-pan-pinch still work.
 - [ ] Clean On, edit or switch component mode/Undo/Redo: cage stays hidden after rebuild.
 - [ ] Mirror/SubD and Live Array source Apply/Cancel retain their accepted behaviour.
+
+
+## .845 user Perfect PASS / .846 Soft cage batching
+
+- [x] User Perfect PASS .845 Clean On/Off/rebuild/normal-navigation gate protected.
+- [x] Actual batched lines/markers receive original edge42%/vertex56% opacity factors; invisible proxies/native raycast hits unchanged.
+- [x] Repeated Soft does not compound opacity; Full restores exact original material identity and disposes generated clones.
+- [x] Saved Soft state applies to rebuilt batches through bridge/render events; surface material and selection metadata unchanged.
+- [x] Soft/Full coexist with Clean845 visibility and preserve suppressed batches.
+- [x] Full local2262PASS/0FAIL/0skip; reviewed cage/face-workflow/drawer/shell graph retained.
+- [ ] VIEW > Cage > Soft visibly softens lines/dots; Full restores their normal intensity.
+- [ ] Clean On still hides cage; Clean Off while Soft selected restores a soft cage.
+- [ ] Edit/Undo or switch objects: selected intensity persists; component picking/orbit/pan/pinch unchanged.

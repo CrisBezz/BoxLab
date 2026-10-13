@@ -4,7 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .845 Clean View repair / frozen Beta 7, 2026-10-13
+## Current direction — .846 Soft cage batch compatibility / frozen Beta 7, 2026-10-13
+
+User Perfect PASS .845 protects Clean View. Adjacent existing Soft owner missed810
+batch kinds too; now applies original opacity factors to batched lines/vertex markers.
+Full restores exact materials, Clean compatibility/picking retained. Full2262PASS/0FAIL;
+iPad Soft/Full/Clean/rebuild gate pending. This finishes the audited display mismatch
+before staged project resources/measured performance. No new modelling capability.
+
+## Previous direction — .845 Clean View repair / frozen Beta 7, 2026-10-13
 
 User PASS .844 protects Live Array source editing. Clean On screenshot still shows
 batched cage: existing Clean owner now handles810 batch kinds and restores prior
