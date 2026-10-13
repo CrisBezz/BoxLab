@@ -8569,3 +8569,13 @@ Three native lifecycle/output tests plus strengthened847 identity+hide-release c
 812 stub adds native userData (its initial failure was adapter shape, timing unchanged).
 Full2271PASS/0FAIL/0skip. Device comparable timing and visual/selection/history gates
 pending; no hardware speed claim. Existing840/Array/Clean/Soft owners protected.
+
+
+## .849 publication verified — 2026-10-13
+
+Release17c18ab495032f5e2ec527247aa341bd7325e742; tested tree
+4fb6d03909a791e69e3811b6086550185ab1207c exactly matches local validated checkout.
+Node22 CI38395647448/job115290048343 SUCCESS:2271PASS/0FAIL/0skip.
+Pages38395648071 SUCCESS. Fresh live shell/manifest/manager849, unchanged cache812,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Screenshot848
+baseline recorded; comparable849 visual/resource/phase capture pending.

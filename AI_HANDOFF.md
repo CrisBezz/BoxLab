@@ -28,7 +28,7 @@ uncached placement. Existing847 GPU expectation now protects reuse + disposal on
 812 timing adapter has native layer userData, semantic timing coverage retained.
 Full Node24:2271PASS/0FAIL/0skip. Manager849→helper812 unchanged; shell/recovery849;
 monitor/core848/main842/Array844/drawer846/Clean845/Cage846 remain coherent.
-Publication/Node22/live verification follows. Device visual and timing comparison pending.
+Publication/Node22/live verification recorded below. Device visual and timing comparison pending.
 
 ## .848 scope — device readout evidence captured
 User /nextbuild after847 captures. Latest iPad847 capture:106rebuilds mean14.5/max42ms,
@@ -311,3 +311,13 @@ Pages38390897016 SUCCESS. Fresh live shell/manifest/manager848/monitor848/core84
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
 reads returned previous assets; subsequent complete graph matches848.
 Device separated-cache readout capture pending; no new geometry optimisation claimed.
+
+
+## .849 publication verified — 2026-10-13
+
+Release17c18ab495032f5e2ec527247aa341bd7325e742; tested tree
+4fb6d03909a791e69e3811b6086550185ab1207c exactly matches local validated checkout.
+Node22 CI38395647448/job115290048343 SUCCESS:2271PASS/0FAIL/0skip.
+Pages38395648071 SUCCESS. Fresh live shell/manifest/manager849, unchanged cache812,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Screenshot848
+baseline recorded; comparable849 visual/resource/phase capture pending.
