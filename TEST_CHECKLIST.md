@@ -5779,7 +5779,7 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [x] Protect explicit main core-mesh publication; temporary/legacy edge queries never replace it.
 
 
-## .841 Live Array foundation — device acceptance pending
+## .841 Live Array foundation — user PASS protected2026-10-13
 
 - [x] Existing instance/join owners distribute geometry without source mutation.
 - [x] Whole-object transformed results reopen; non-affine edits refuse safely.
@@ -5792,3 +5792,19 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Undo/Redo restores count/placement/recipe; whole-object Move then reopen remains correct.
 - [ ] Save/Open .boxlab restores Live Array and reopening; linked pair Save/Open remains stable.
 - [ ] Ordinary unchecked Array and Pencil orbit/pan/pinch remain accepted.
+
+
+## .841 user PASS / .842 END rotation and scale
+
+- [x] User PASS .841 one-object creation/reopen/count/placement/Cancel/history/project checks; protect.
+- [x] Each copy rotates/scales around its own centre; original unchanged, evenly spaced centres.
+- [x] XYZ degree/factor interpolation includes deliberate full turns; invalid transforms refuse.
+- [x] Mixed effects reopen after affine whole-object placement and survive codec/count edits.
+- [x] Actual native THREE ring/uniform/axis handle raycasts drive existing END owner; preview matches Apply.
+- [x] Actual Apply/history restores transforms and geometry with one Undo/Redo step.
+- [x] Full2247PASS/0FAIL/0skip;841 and protected linked/ordinary Array coverage retained.
+- [ ] Live Array count5: Scale END + Free drag gives gradual sizes, original stays unchanged.
+- [ ] Rotate END + XYZ ring/degree fields gives gradual orientation, including360° turn.
+- [ ] Combine scale/rotation/placement/count; Apply keeps ONE row; reopen preserves values/result.
+- [ ] Cancel restores previous result; Undo/Redo restores transforms and recipe.
+- [ ] Save/Open and whole-object Move/reopen retain array; Pencil navigation/unchecked Array stable.

@@ -8369,3 +8369,21 @@ Release9dcb5d538acb16a470e1b2cac9bacdc089b6a244; tested tree
 38341669287/job115113811558 SUCCESS:2241PASS/0FAIL/0skip. Pages38341668618
 SUCCESS; pinned live shell/manifest/Array/core/manager/codec/management/drawer byte-match.
 Device acceptance pending; progressive endpoint scale/rotation remains next stage.
+
+
+## .841 user PASS / .842 progressive Live Array transforms — 2026-10-13
+
+User PASS .841 and /nextbuild. Protect single-object Live Array, reopened count/END,
+Cancel/Apply, Undo/Redo and .boxlab persistence. User reiterates always explicitly
+announce build completion; reinforce existing AI_WORKFLOW final-response requirement.
+Audit existing END owner, Rotate and gizmo/session exclusion. Extend existing Array
+owner with Live-only Move/Rotate/Scale, XYZ rotation rings and scale cubes/Free uniform
+drag; exact degrees/factors available. Shared arrayItemMatrix drives preview and Apply.
+XYZ degrees/factors interpolate from original0/1 to END around each item centre; full
+turns remain meaningful, centre path unchanged. Optional v1 rotation/scale/placement
+fields default for841; canonical frame + inferred affine whole-object placement avoids
+conjugation errors on reopen. Old native841 test now forwards reopened frame options,
+retaining identical transformed mesh assertions. Existing Array cache assertions repin842.
+No parallel gesture/history/topology implementation; protected/frozen files untouched.
+Six new real geometry/THREE raycast/END gesture/actual Apply-history tests plus complete
+suite2247PASS/0FAIL/0skip. Source component editor/conversion remain queued. Device pending.

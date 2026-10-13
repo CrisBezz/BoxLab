@@ -9,7 +9,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 test('Linear Array runtime follows current app build',()=>{
   const wrapper=index.match(/linear-array\.js\?v=([^"]+)/)?.[1];
   const stamp=index.match(/data-release-version="([^"]+)"/)?.[1];
-  assert.equal(wrapper,'0.36.18.841'); // Persistent Live Array extends the existing owner.
+  assert.equal(wrapper,'0.36.18.842'); // Persistent Live Array extends the existing owner.
   assert.equal(stamp,version);
 });
 

@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.841",
+      "url": "./src/drawer-ui.js?v=0.36.18.842",
       "target": "src/drawer-ui.js",
-      "sha256": "1ab921caa47bfb597e31f2ea6b1beba0a34b50ff9f5d46330809cef85caa2c87"
+      "sha256": "85d5419a1eaf75de2984476847e192c13bd82474925ed15d3e1d3fe7650ae397"
     },
     {
       "owner": "index.html",
@@ -259,7 +259,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.841",
+      "url": "./src/gesture-debug.js?v=0.36.18.842",
       "target": "src/gesture-debug.js",
       "sha256": "611155d3e5da43a7be35f811ac5a23eec18d3a2c772b6c645895e4836d57894c"
     },
@@ -285,9 +285,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/linear-array.js?v=0.36.18.841",
+      "url": "./src/linear-array.js?v=0.36.18.842",
       "target": "src/linear-array.js",
-      "sha256": "4b3b0b62c2b37f65318e0d66b428a785f7c3ef0a43736b83281f997a3d33ac9a"
+      "sha256": "2be293c21c7518daa48ba030e1600e84da66c01b7e8e66d259e86493f6597e07"
     },
     {
       "owner": "index.html",
@@ -303,7 +303,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.841",
+      "url": "./src/main.js?v=0.36.18.842",
       "target": "src/main.js",
       "sha256": "117035722c22026f61f9a683bfa68a2a05ccd5db0b3bb47f252eadc8792243d2",
       "sourceVersion": "0.35.1"
@@ -329,15 +329,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.841",
+      "url": "./src/multi-object.js?v=0.36.18.842",
       "target": "src/multi-object.js",
       "sha256": "01619ca3da36a24d0a89621239bfb3e5f6005438aa9b6474f683d0ce7f2e4c2f"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.841",
+      "url": "./src/object-management.js?v=0.36.18.842",
       "target": "src/object-management.js",
-      "sha256": "aa2e7960ffb78bd4f7a06c1eef0a987dbac01efadedde43e766032f54d525f23"
+      "sha256": "8cf6d02ee50556ee0cf6d7293357afd36fa0d21b1d329220fabf0f7737d497c9"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.841",
+      "url": "./src/release-bootstrap.js?v=0.36.18.842",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.841",
+      "url": "./src/release-version.js?v=0.36.18.842",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -563,7 +563,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/transform-upgrade.js?v=0.36.18.841",
+      "url": "./src/transform-upgrade.js?v=0.36.18.842",
       "target": "src/transform-upgrade.js",
       "sha256": "2cf09f40d82c9237de2049a08d5d5250987f5be137f4ed36fb4b2b9b327dda2e"
     },
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.841",
+      "url": "./object-management.js?v=0.36.18.842",
       "target": "src/object-management.js",
-      "sha256": "aa2e7960ffb78bd4f7a06c1eef0a987dbac01efadedde43e766032f54d525f23"
+      "sha256": "8cf6d02ee50556ee0cf6d7293357afd36fa0d21b1d329220fabf0f7737d497c9"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -2306,21 +2306,21 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.841",
+      "url": "./boxlab-project-codec.js?v=0.36.18.842",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "40cde4e53e6538edd2fdfb635670c2849e85a7892fe8270e90922410554d0871"
+      "sha256": "c3e12a8f60ce3aab61d5cdd3d963a3b61c349dba625a06abf1a379fdc642116a"
     },
     {
       "owner": "src/linear-array.js",
-      "url": "./live-array-core.js?v=0.36.18.841",
+      "url": "./live-array-core.js?v=0.36.18.842",
       "target": "src/live-array-core.js",
-      "sha256": "44f27ab6592e62ffdda0a2e4ba89a7a76c5465f365fddaa14db35a6f6f9e22b8"
+      "sha256": "1f1e6797d9d1281d3cb139c52b9f53d99dca6d668180e1d24bca5fc732ba7f88"
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./live-array-core.js?v=0.36.18.841",
+      "url": "./live-array-core.js?v=0.36.18.842",
       "target": "src/live-array-core.js",
-      "sha256": "44f27ab6592e62ffdda0a2e4ba89a7a76c5465f365fddaa14db35a6f6f9e22b8"
+      "sha256": "1f1e6797d9d1281d3cb139c52b9f53d99dca6d668180e1d24bca5fc732ba7f88"
     },
     {
       "owner": "src/live-array-core.js",

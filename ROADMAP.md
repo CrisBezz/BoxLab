@@ -4,12 +4,22 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .841 Live Array foundation / frozen Beta 7, 2026-10-13
+## Current direction — .842 progressive Live Array transforms / frozen Beta 7, 2026-10-13
+
+User PASS .841 protects one-object/reopen/history/project foundation. .842 adds END
+rotation rings and uniform/axis scale handles + exact values. Original0°/1× interpolates
+to END across intermediate items; per-item centres remain on evenly spaced path.
+One recipe persists count/placement/rotation/scale; shared preview/Apply maths and
+canonical frame preserve combined effects after whole-object transforms. Full2247PASS/0FAIL;
+iPad acceptance pending. Next source editor/conversion or resume resources/performance
+following acceptance and authoritative-owner audit.
+
+## Previous direction — .841 accepted Live Array foundation, 2026-10-13
 
 Optional Live mode in existing Array keeps one object with source/count/END recipe.
 Reopen count/spacing, Cancel, one-step Undo/Redo and basic .boxlab persistence implemented;
 whole-object affine placement recoverable, non-affine edits refuse safely. Full2241PASS/0FAIL.
-Device gate pending. Next progressive endpoint scale/rotation; source component editing
+User PASS .841 protected. Progressive endpoint scale/rotation now implemented842; source component editing
 and full requested scope remain queued. Rich resources/performance follow.
 
 ## Previous direction — .840 accepted; project resources/performance, 2026-10-13
@@ -41,8 +51,9 @@ and endpoint transforms rather than baking separate scene objects on Apply.
 Before implementation, audit existing Array end-copy, instance/source, modifier/recipe
 and Live Boolean object-list owners. Extend those authoritative owners; do not add a
 parallel modelling kernel. Protect .840 linked/Array placement and idle stability.
-First count/placement/single-object/persistence stage shipped in .841; endpoint rotation
-and scale plus source component editing remain queued. Protect accepted .840 drift repair.
+Count/placement/single-object/persistence stage shipped and accepted in .841; endpoint
+rotation/scale shipped842, device gate pending. Source component editing and conversion
+remain queued. Protect accepted .840 drift repair.
 
 ## Previous direction — .839 live-mesh identity feedback repair / frozen Beta 7, 2026-10-13
 

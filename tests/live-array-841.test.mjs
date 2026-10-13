@@ -13,7 +13,7 @@ test('841 live Array generates disconnected copies without mutating source and r
  for(let i=0;i<5;i++)assert.deepEqual(result.vertices[i*8].toArray(),source.vertices[0].clone().add(new THREE.Vector3(2*i,.5*i,-i)).toArray());
  const matrix=new THREE.Matrix4().makeRotationY(.4).premultiply(new THREE.Matrix4().makeScale(2,2,2)).premultiply(new THREE.Matrix4().makeTranslation(3,1,-2));
  const object={arrayRecipe:recipe,mesh:transformEditableMesh(result,matrix)},opened=reopenArray(object);
- const next=createArrayRecipe(opened.source,opened.count,opened.endpoint.toArray());assert(meshesNear(evaluateArray(next),object.mesh));
+ const next=createArrayRecipe(opened.source,opened.count,opened.endpoint.toArray(),opened);assert(meshesNear(evaluateArray(next),object.mesh));
  object.mesh.vertices[1].x+=.2;assert.throws(()=>reopenArray(object),/geometry changed/);
 });
 test('841 recipe persists through actual scene snapshots and codec; invalid recipes refuse',()=>{
@@ -30,7 +30,7 @@ test('841 actual Array Apply and scene-history owners keep one object and restor
  const r=editableBooleanRuntime(),{c,manager,h}=r;manager.activate(3);
  const beforeCount=manager.objects.length,initial=manager.objects.find(o=>o.id===3).mesh.clone();
  const ui=fs.readFileSync(new URL('../src/linear-array.js',import.meta.url),'utf8');
- Object.assign(c,{createArrayRecipe,evaluateArray,sessionSource:null,previewObjectId:3,endpoint:new THREE.Vector3(4,0,2),endpointLength:()=>Math.hypot(4,2),count:()=>4,liveInput:{checked:true},restoreResult(){},setStatus(){}});
+ Object.assign(c,{createArrayRecipe,evaluateArray,sessionSource:null,previewObjectId:3,endpoint:new THREE.Vector3(4,0,2),endpointLength:()=>Math.hypot(4,2),count:()=>4,liveInput:{checked:true},localEndpoint:()=>new THREE.Vector3(4,0,2),transformOptions:()=>({}),restoreResult(){},setStatus(){}});
  vm.runInContext(ui.slice(ui.indexOf('function applyArray(){'),ui.indexOf('function installPenRange(')),c);
  const historyBefore=h.undoStack.length;assert.equal(c.applyArray(),true);
  assert.equal(manager.objects.length,beforeCount);assert.equal(h.undoStack.length,historyBefore+1);

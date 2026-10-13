@@ -1,6 +1,6 @@
 // Versioned, non-destructive BoxLab scene codec foundation.
 // Explicitly refuse resources not yet representable, rather than losing them.
-import {evaluateArray} from './live-array-core.js?v=0.36.18.841';
+import {evaluateArray} from './live-array-core.js?v=0.36.18.842';
 const plain=value=>value==null?null:JSON.parse(JSON.stringify(value));
 export function encodeBoxlabScene(snapshot){
  if(!snapshot||!Array.isArray(snapshot.objects)||!snapshot.objects.length)throw Error('Scene has no objects');
