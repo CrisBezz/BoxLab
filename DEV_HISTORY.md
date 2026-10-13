@@ -8541,3 +8541,14 @@ Two native main/manager/lifecycle checks plus existing actual UI assertions; ful
 PASS/0FAIL/0skip. No geometry, caching algorithm, gesture/history or frozenBeta changes.
 Core+monitor+manager/shell848 reviewed; helper812/main842 remain. Capture guides next
 measured optimisation; no matched device speed improvement/full847 manual PASS claimed.
+
+
+## .848 publication verified — 2026-10-13
+
+Release1c4b1c7a2c5296ecd6577368122cafc7466a18d1; tested tree
+a007c0f4700204f564c6751c14456bdae57a1324 exactly matches local validated checkout.
+Node22 CI38390897289/job115274131163 SUCCESS:2268PASS/0FAIL/0skip.
+Pages38390897016 SUCCESS. Fresh live shell/manifest/manager848/monitor848/core848,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+reads returned previous assets; subsequent complete graph matches848.
+Device separated-cache readout capture pending; no new geometry optimisation claimed.

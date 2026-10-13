@@ -21,7 +21,7 @@ real main/manager routing and disabled/reset/snapshot lifecycle; original diagno
 test now verifies both lines. Full local2268PASS/0FAIL/0skip.
 Core848→monitor848→shell848; manager848→unchanged cache812, shell/recovery848;
 main842/Array844/drawer846/Clean845/Cage846 and protected/frozen kernels retained.
-Node22/Pages/live verification follows publication.
+Node22/Pages/live verification recorded below.
 
 ## .847 scope — device performance evidence captured, full gate pending
 User PASS .846 protects Soft/Full/Clean/rebuild/navigation compatibility.
@@ -276,3 +276,14 @@ Pages38388215312 SUCCESS. Fresh live shell/manifest/multi-object847, unchanged
 cache812, protected Multi1.0 and frozenBeta7 version byte-match repository.
 Initial shell/manifest GETs preceded deployment; later reads match847.
 .846 user PASS protected; independent inactive SubD visual/performance gate pending.
+
+
+## .848 publication verified — 2026-10-13
+
+Release1c4b1c7a2c5296ecd6577368122cafc7466a18d1; tested tree
+a007c0f4700204f564c6751c14456bdae57a1324 exactly matches local validated checkout.
+Node22 CI38390897289/job115274131163 SUCCESS:2268PASS/0FAIL/0skip.
+Pages38390897016 SUCCESS. Fresh live shell/manifest/manager848/monitor848/core848,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+reads returned previous assets; subsequent complete graph matches848.
+Device separated-cache readout capture pending; no new geometry optimisation claimed.
