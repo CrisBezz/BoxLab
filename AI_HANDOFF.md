@@ -25,7 +25,7 @@ visual dots only in Vertex, dense Face cage one visual line batch; original topo
 material/order/picking/bridge/Lasso coverage retained. Full local2276PASS/0FAIL/0skip.
 Main851→cage-render-batches851; shell/recovery851. CPUcache812/manager849/monitor+core848,
 Array844/drawer846/Clean845/CageIntensity846 and protected/frozen kernels unchanged.
-Publication/Node22/live verification follows. No explicit850 PASS received.
+Publication/Node22/live verification recorded below. No explicit850 PASS received.
 
 ## .850 scope — device geometry/performance gate pending
 Latest849 screenshot:113rebuilds mean8.6/max25ms; Inactive0.1/6ms, Body2.8/9ms,
@@ -374,3 +374,14 @@ Pages38400808087 SUCCESS. Fresh live shell/manifest/main850, unchanged cache812,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
 returned849 during deployment; postdeployment verification matches850. Device active
 geometry/performance/visual/history/modifier gate pending; no full849 PASS inferred.
+
+
+## .851 publication verified — 2026-10-14
+
+Release6eb8bec6b0a3bb57e10993708dbfba701b8db4f7; tested tree
+bf549bdc90490de8d765a42abb1961d10c8c52a2 exactly matches local validated checkout.
+Node22 CI38481476151/job115584851726 SUCCESS:2276PASS/0FAIL/0skip.
+Pages38481476107 SUCCESS. Fresh live shell/manifest/main851/cage-render-batches851,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+reads returned850; complete postdeployment graph matches851. Device mode/selection/
+Clean/Soft gate pending,850 geometry/performance gate not yet accepted.

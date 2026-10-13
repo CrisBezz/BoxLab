@@ -8625,3 +8625,14 @@ and existing Clean/Soft integration.810 parity and dense Face expectations recon
 intentional visual change, retain original semantic coverage. Full2276PASS/0FAIL/0skip.
 Main851→builder851 and shell/recovery851 reviewed; manager849/cache812/protected/frozen
 sources unchanged. Device gates pending, no quantified speed claim/no inferred850 PASS.
+
+
+## .851 publication verified — 2026-10-14
+
+Release6eb8bec6b0a3bb57e10993708dbfba701b8db4f7; tested tree
+bf549bdc90490de8d765a42abb1961d10c8c52a2 exactly matches local validated checkout.
+Node22 CI38481476151/job115584851726 SUCCESS:2276PASS/0FAIL/0skip.
+Pages38481476107 SUCCESS. Fresh live shell/manifest/main851/cage-render-batches851,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+reads returned850; complete postdeployment graph matches851. Device mode/selection/
+Clean/Soft gate pending,850 geometry/performance gate not yet accepted.
