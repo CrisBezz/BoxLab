@@ -8489,3 +8489,14 @@ persisted Soft at rebuild/bridge/render and Clean+suppressed visibility coexiste
 Full2262PASS/0FAIL/0skip. Loader cage846→face-workflow846→drawer846→shell846 and
 reviewed hashes repinned; protected kernels/frozen betas/Array source editor unchanged.
 Device Soft/Full/Clean/rebuild gate pending; next richer project resources/measured perf.
+
+
+## .846 publication verified — 2026-10-13
+
+Release3645db541a0e9ed0c35209d58ceb375e27b93300; tested tree
+101870b6eb956484928a5dbaaceed28f5079a2d7 exactly matches local validated checkout.
+Node22 CI38385836614/job115257282265 SUCCESS:2262PASS/0FAIL/0skip.
+Pages38385836609 SUCCESS. Fresh live shell/manifest/drawer846/face-workflow846/
+Cage846, unchanged Clean845, protected Multi1.0 and frozenBeta7 version byte-match.
+Initial shell/manifest GETs preceded deployment; postdeployment reads match846.
+.845 Perfect PASS protected; iPad Soft/Full/Clean/rebuild gate pending.
