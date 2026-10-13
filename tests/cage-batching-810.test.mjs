@@ -21,7 +21,7 @@ function runtime(mesh,legacy=false,mode='edge',loop=true){
  return {c,root,materials,overlays,dispose(){c.clearGroup(root);Object.values(materials).forEach(m=>m.dispose());}};
 }
 function mesh(){const m=EditableMesh.cube(1);m.addLooseEdge(0,6);m.addLooseVertex(new THREE.Vector3(1,1,1));m.creases.set('0:6',1);m.creases.set('0:1',.6);return m;}
-test('810 actual cage batches keep every edge/material/order and marker instance transform identical to .809',()=>{
+test('810 actual cage batches keep every edge/material/order and Vertex-mode marker transforms identical to .809; other modes omit visual dots',()=>{
  for(const mode of ['vertex','edge','face','object']){
   const a=runtime(mesh(),true,mode),b=runtime(mesh(),false,mode);
   const prior=a.root.children.filter(o=>o.userData.kind==='edge'),proxies=b.root.children.filter(o=>o.userData.kind==='edge');assert.equal(prior.length,proxies.length);
@@ -30,6 +30,7 @@ test('810 actual cage batches keep every edge/material/order and marker instance
   const expected=prior.map(o=>({position:Array.from(o.geometry.attributes.position.array),material:o.material.name,order:o.renderOrder}));const sort=x=>JSON.stringify(x);assert.deepEqual(records.map(sort).sort(),expected.map(sort).sort());
   for(let i=0;i<prior.length;i++){assert.deepEqual(Array.from(proxies[i].geometry.attributes.position.array),Array.from(prior[i].geometry.attributes.position.array));assert.equal(proxies[i].userData.index,prior[i].userData.index);assert.equal(proxies[i].userData.loopSlideGroup,prior[i].userData.loopSlideGroup);assert.equal(proxies[i].material.visible,false);assert.equal(proxies[i].visible,true);}
   const vertices=b.root.children.filter(o=>o.userData.kind==='vertex');assert.equal(new Set(vertices.map(o=>o.geometry)).size,1);
+  assert.equal(b.root.children.filter(o=>o.isInstancedMesh).length,mode==='vertex'?2:0);
   for(const batch of b.root.children.filter(o=>o.isInstancedMesh)){assert.equal(batch.frustumCulled,false);batch.userData.cageMarkers.forEach((marker,i)=>{const actual=new THREE.Matrix4();batch.getMatrixAt(i,actual);const old=a.root.children.find(o=>o.userData.kind==='vertex'&&o.userData.index===marker.userData.index);old.updateMatrix();actual.elements.forEach((v,k)=>assert(Math.abs(v-old.matrix.elements[k])<1e-7));assert.equal(batch.material.name,old.material.name);});}
   assert.deepEqual(b.overlays,a.overlays);a.dispose();b.dispose();
  }
@@ -58,7 +59,7 @@ test('810 mirror wire is one independent segment batch with unchanged endpoints'
 });
 test('810 dense fixture bounds visible cage draw objects while keeping all canonical picking proxies',()=>{
  const vertices=[],faces=[],n=30;for(let y=0;y<=n;y++)for(let x=0;x<=n;x++)vertices.push([x/n,y/n,0]);for(let y=0;y<n;y++)for(let x=0;x<n;x++){const i=y*(n+1)+x;faces.push([i,i+1,i+n+2,i+n+1]);}
- const m=new EditableMesh(vertices,faces),r=runtime(m,false,'face',false);assert.equal(r.root.children.filter(o=>o.userData.kind==='edge').length,m.edges().length);assert.equal(r.root.children.filter(o=>o.userData.kind==='vertex').length,m.vertices.length);assert.equal(r.root.children.filter(o=>o.material.visible!==false).length,2);r.dispose();
+ const m=new EditableMesh(vertices,faces),r=runtime(m,false,'face',false);assert.equal(r.root.children.filter(o=>o.userData.kind==='edge').length,m.edges().length);assert.equal(r.root.children.filter(o=>o.userData.kind==='vertex').length,m.vertices.length);assert.equal(r.root.children.filter(o=>o.material.visible!==false).length,1);r.dispose();
 });
 test('810 actual bridge/edge registry and native visibility observer retain proxy IDs and suppress batches for groups and Boolean source views',()=>{
  const oldAdd=THREE.Group.prototype.add,oldProjection=THREE.PerspectiveCamera.prototype.updateProjectionMatrix;const oldState=globalThis.__boxlabBridgeState;globalThis.__boxlabBridgeState=undefined;globalThis.window={dispatchEvent(){}};
@@ -90,4 +91,42 @@ test('810 existing rendered-marker Vertex assist and Lasso return the same indic
  for(const poly of [[{x:0,y:0},{x:800,y:0},{x:800,y:800},{x:0,y:800}],[{x:250,y:250},{x:450,y:250},{x:450,y:450},{x:250,y:450}]])assert.deepEqual(y.lasso(poly),x.lasso(poly));
  assert.equal(y.lasso([{x:0,y:0},{x:800,y:0},{x:800,y:800},{x:0,y:800}]).length,9);
  for(const r of [a,b])r.dispose();x.body.material.dispose();y.body.material.dispose();
+});
+
+
+test('851 native mode rebuilds show dots only in Vertex while retaining indexed picking proxies and selection materials',()=>{
+ const r=runtime(mesh(),false,'face',false),c=r.c;
+ for(const mode of ['face','vertex','edge','vertex','object','face']){
+  c.clearGroup(r.root);c.selectionMode=mode;c.selection={type:mode};c.selectionHas=(type,i)=>type===mode&&i===2;c.addCage();c.updateScreenSpaceSelection();r.root.updateMatrixWorld(true);
+  const proxies=r.root.children.filter(o=>o.userData.kind==='vertex'),batches=r.root.children.filter(o=>o.userData.kind==='cage-vertex-batch');
+  assert.equal(proxies.length,c.mesh.vertices.length);assert.equal(batches.length,mode==='vertex'?2:0);
+  proxies.forEach((o,i)=>{assert.equal(o.userData.index,i);assert.equal(o.material.visible,false);assert.equal(o.userData.selected,mode==='vertex'&&i===2);});
+  const camera=c.camera.position,ray=new THREE.Raycaster(camera,new THREE.Vector3().subVectors(c.mesh.vertices[2],camera).normalize());assert(ray.intersectObjects(proxies,false).some(h=>h.object.userData.index===2));
+  assert(r.root.children.some(o=>o.userData.kind==='cage-edge-batch'));
+ }
+ r.dispose();
+});
+test('851 omitted visual markers preserve shared proxy geometry until normal clear and batch default keeps existing callers',()=>{
+ for(const showVertices of [false,true]){
+  const root=new THREE.Group(),batch=createCageBatch({showVertices}),material=new THREE.MeshBasicMaterial();let disposed=0;batch.sphereGeometry.addEventListener('dispose',()=>disposed++);
+  const dot=new THREE.Mesh(batch.sphereGeometry,material);dot.userData={kind:'vertex',index:0};batch.vertex(dot,material);root.add(dot);batch.finish(root);
+  assert.equal(disposed,0);assert.equal(root.children.filter(o=>o.isInstancedMesh).length,showVertices?1:0);
+  const c={root};vm.createContext(c);vm.runInContext(line('clearGroup'),c);c.clearGroup(root);assert.equal(disposed,1);material.dispose();
+ }
+});
+
+test('851 native mode rebuilds coexist with existing Clean and Soft owners without restoring dots outside Vertex',()=>{
+ const r=runtime(mesh(),false,'face',false),c=r.c,scene=new THREE.Scene();scene.add(r.root);
+ Object.assign(c,{__boxlabBridgeState:{scene},document:{querySelector:()=>null,querySelectorAll:()=>[],addEventListener(){},dispatchEvent(){}},window:{addEventListener(){}},localStorage:{getItem:()=>null,setItem(){}},performance:{now:()=>1000},CustomEvent:class{},setInterval:()=>1,clearInterval(){},setTimeout:()=>1,requestAnimationFrame:()=>1,cancelAnimationFrame(){},queueMicrotask:fn=>fn()});
+ for(const file of ['clean-view.js','cage-intensity.js'])vm.runInContext('{'+fs.readFileSync(new URL('../src/'+file,import.meta.url),'utf8')+'}',c);
+ for(const mode of ['face','vertex','edge','object','vertex']){
+  c.clearGroup(r.root);c.selectionMode=mode;c.addCage();c.updateScreenSpaceSelection();
+  const visual=r.root.children.filter(o=>o.userData.kind==='cage-vertex-batch');assert.equal(visual.length,mode==='vertex'?1:0);
+  const materials=visual.map(o=>o.material);c.__boxlabCageIntensity.setMode('soft');visual.forEach((o,i)=>assert.equal(o.material.opacity,materials[i].opacity*.56));
+  c.__boxlabCleanView.setEnabled(true);visual.forEach(o=>assert.equal(o.visible,false));
+  c.__boxlabCleanView.setEnabled(false);visual.forEach(o=>assert.equal(o.visible,true));
+  c.__boxlabCageIntensity.setMode('full');visual.forEach((o,i)=>assert.equal(o.material,materials[i]));
+  assert.equal(r.root.children.filter(o=>o.userData.kind==='vertex').length,c.mesh.vertices.length);
+ }
+ r.dispose();
 });

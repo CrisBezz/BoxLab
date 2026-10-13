@@ -1,11 +1,31 @@
-# BoxLab AI Handoff — .850 active render geometry reuse
+# BoxLab AI Handoff — .851 vertex dots only in Vertex mode
 
-## Current state — 2026-10-13
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.850.
+## Current state — 2026-10-14
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.851.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .851 scope — user-requested mode-specific vertex visibility, device gate pending
+User asks to hide vertices until Vertex mode during optimisation. Audit: main addCage
+always registers invisible indexed vertex proxies, then810 visual builder creates
+InstancedMesh dots. Main now passes showVertices only for Vertex mode to existing
+createCageBatch; finish omits visual dot batches otherwise. Proxy indices/materials,
+ray-picking/snapping/bridge remain available in every mode. Edge lines/face pickers,
+selected marker materials, geometry/topology/history and gestures unchanged. No new
+visibility/pointer owner. Omitting instances avoids their draw and per-frame matrix
+updates; proxies and their screen sizing still exist, no device speed claim.
+Vertex mode still respects SubD Show Cage/Clean/group/Boolean-source suppression;
+this does not force a hidden cage visible. Default batch option true preserves other
+callers. Mode changes use existing native cage rebuild, including tools entering Vertex.
+Three new native tests protect repeated mode transitions/selected materials/real raycasts,
+geometry cleanup and actual Clean845/Soft846 integration.810 assertions now require
+visual dots only in Vertex, dense Face cage one visual line batch; original topology,
+material/order/picking/bridge/Lasso coverage retained. Full local2276PASS/0FAIL/0skip.
+Main851→cage-render-batches851; shell/recovery851. CPUcache812/manager849/monitor+core848,
+Array844/drawer846/Clean845/CageIntensity846 and protected/frozen kernels unchanged.
+Publication/Node22/live verification follows. No explicit850 PASS received.
 
 ## .850 scope — device geometry/performance gate pending
 Latest849 screenshot:113rebuilds mean8.6/max25ms; Inactive0.1/6ms, Body2.8/9ms,
@@ -256,12 +276,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Same multi-SubD scene850: Performance Reset, select/deselect an active surface repeatedly,
-then edit and Undo/Redo; capture Body phase and Active/Inactive counts. Check object
-switching, modifier changes and render looks/Clean/Soft. Changed displays still require
-triangulation; no quantified device gain claimed. Next narrow measured bottleneck or
-richer project resources after feedback. Preserve accepted gates through846; screenshots
-847–849 are performance evidence, not blanket visual/history acceptance.
+851 hands-on: Face/Edge/Object have cage lines without dots; Vertex restores normal
+and selected dots, including loose vertices. Check picking/Lasso/snap/navigation,
+mode switches after edits/Undo/Redo, Soft/Full/Clean compatibility. SubD Show Cage still
+owns whether cage appears.850 active-geometry device gate remains pending. Choose next
+narrow measured bottleneck or project-resource work after feedback; no inferred PASS.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

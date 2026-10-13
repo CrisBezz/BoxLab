@@ -8609,3 +8609,19 @@ Pages38400808087 SUCCESS. Fresh live shell/manifest/main850, unchanged cache812,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
 returned849 during deployment; postdeployment verification matches850. Device active
 geometry/performance/visual/history/modifier gate pending; no full849 PASS inferred.
+
+
+## .851 — vertex dots only in Vertex mode — 2026-10-14
+
+User proposes hiding vertex visibility until Vertex mode during optimisation. Audit main
+addCage +810 visual batch + picking/bridge + Clean/Soft. Main passes showVertices based
+on selectionMode to existing builder; omitted visual marker instances outside Vertex
+avoid dot draw and per-frame instance updates. Invisible indexed proxies retained in
+all modes for picking/snapping; unchanged screen sizing/proxy cost still exists.
+Edges/face pickers/topology/history/gesture/selected dots and existing cage suppression
+unchanged. No new visibility owner. Default builder option true preserves callers.
+Three native regressions cover repeated mode switches/materials/real raycasts/disposal
+and existing Clean/Soft integration.810 parity and dense Face expectations reconcile
+intentional visual change, retain original semantic coverage. Full2276PASS/0FAIL/0skip.
+Main851→builder851 and shell/recovery851 reviewed; manager849/cache812/protected/frozen
+sources unchanged. Device gates pending, no quantified speed claim/no inferred850 PASS.

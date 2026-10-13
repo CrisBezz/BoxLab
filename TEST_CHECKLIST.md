@@ -5922,3 +5922,21 @@ Manual pending850:
 - Toggle Studio/Wire and Clean/Soft; selection/cage restoration and navigation remain sane.
 One root-owned active SubD buffer retained; changed displays still rebuild. Main850,
 unchanged CPUcache812/manager849, shell/recovery850; protected/frozen sources untouched.
+
+
+## .851 vertex-mode-only dots — 2026-10-14
+
+User-requested behaviour, not yet device PASS: visual vertex markers only in Vertex
+mode; cage lines remain Face/Edge/Object. Keep invisible indexed proxies every mode
+for ray-picking/snapping/bridge. Clean/Soft and Show Cage/group/Boolean suppression
+still apply; entering Vertex must not forcibly reveal a suppressed cage.
+Automated three native regressions: repeated native mode cage rebuilds/selected
+materials/indexed real raycasts, shared geometry lifetime and Clean845/Soft846 owners.
+810 original topology/material/order/picking/Lasso/bridge contracts retained; visible
+marker/dense Face assertions updated for intentional requested presentation change.
+Full local2276PASS/0FAIL/0skip. Main851→builder851/shell/recovery851 reviewed.
+Manual pending:
+- Face→Edge→Object: lines without dots. Vertex: dots return, selecting shows highlight.
+- Vertex select/Lasso/move→Undo/Redo→mode switch: normal picking and navigation.
+- Clean On/Off and Soft/Full across modes: correct restoration; no dots outside Vertex.
+850 device geometry/timing gate remains pending; no new PASS inferred.

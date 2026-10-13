@@ -3,7 +3,7 @@ import * as THREE from 'three';
 // geometry is batched; proxy materials are skipped by WebGL but still raycast.
 const pickLineMaterial=new THREE.LineBasicMaterial({visible:false});
 const pickVertexMaterial=new THREE.MeshBasicMaterial({visible:false});
-export function createCageBatch(){
+export function createCageBatch({showVertices=true}={}){
  const edges=[],vertices=[],sphereGeometry=new THREE.SphereGeometry(1,12,8);
  function register(object,material,list,pickMaterial){object.userData.cageMaterial=material;object.material=pickMaterial;list.push(object);}
  return {
@@ -18,7 +18,7 @@ export function createCageBatch(){
     const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
     const lines=new THREE.LineSegments(geometry,material);lines.renderOrder=order;lines.userData={kind:'cage-edge-batch'};root.add(lines);
    }
-   const markerGroups=new Map();for(const marker of vertices){const material=marker.userData.cageMaterial;if(!markerGroups.has(material))markerGroups.set(material,[]);markerGroups.get(material).push(marker);}
+   const markerGroups=new Map();for(const marker of showVertices?vertices:[]){const material=marker.userData.cageMaterial;if(!markerGroups.has(material))markerGroups.set(material,[]);markerGroups.get(material).push(marker);}
    for(const [material,markers] of markerGroups){
     const batch=new THREE.InstancedMesh(sphereGeometry,material,markers.length);batch.instanceMatrix.setUsage(THREE.DynamicDrawUsage);batch.frustumCulled=false;
     batch.userData={kind:'cage-vertex-batch',cageMarkers:markers};batch.raycast=()=>{}; // proxies are authoritative
