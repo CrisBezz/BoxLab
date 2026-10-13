@@ -8415,3 +8415,26 @@ Pages38362603155 SUCCESS. Fresh live shell/manifest/Array843, unchanged core842,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
 briefly returned842 during deployment; subsequent pinned verification matches843.
 Device conversion gate pending; .842 user PASS protected, source editing next.
+
+
+## .843 user PASS / .844 staged Live Array source editing — 2026-10-13
+
+User PASS .843 and /nextbuild. Audit current main/Array/core/manager/scene history,
+Boolean transactions/shared panel owners: no Array source component owner existed.
+Add recipe transaction controller and UI through existing Array import graph. Edit
+Source isolates placed original on same object (no temporary scene rows), preserves
+private original snapshot/history, uses existing component tools and local history.
+Apply Source inverse-maps edited geometry into canonical recipe frame and uses
+original evaluator to regenerate every item with saved/staged count/END transforms;
+one committed Undo restores original recipe/result. Cancel restores exact scene/tokens;
+no-op adds no history. Source bar shares top-centre position, yields to actual tool
+popups and returns on finish; files/object operations require source Apply/Cancel.
+No new raw-pointer owner, geometry kernel or history implementation; existing main/
+manager/codec and frozen/protected sources untouched. Generated array updates on
+Apply Source for this first staged source-only view; continuous preview not claimed.
+Six native regressions cover topology/affine placement/local+scene history/codec/
+invalid+busy+context guards/UI nesting and parameter handoff. Full2256PASS/0FAIL/0skip.
+One first full-run failure assumed every shared-dock client is shell-loaded; reviewed
+parent-chain assertion now verifies new indirect client via Array, retaining coverage.
+Shell/recovery/Array844 and new child844 cache graph reviewed; core stays842.
+Device source edit/history/project/navigation gate pending.

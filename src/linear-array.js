@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import './live-array-source-editor.js?v=0.36.18.844';
 import {createArrayRecipe,evaluateArray,reopenArray,arrayItemMatrix} from './live-array-core.js?v=0.36.18.842';
 
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -43,6 +44,7 @@ controls.innerHTML=`
     ${['x','y','z'].map(axis=>`<label style="font-size:10px">${axis.toUpperCase()} <input data-array-value="${axis}" type="number" step="1" style="width:64px;font-size:11px"/></label>`).join('')}
   </div>
   <div class="drawer-hint">Drag the END copy. X/Y/Z places it on that axis; Free allows a free endpoint or arrow-constrained movement.</div>
+  <button id="linearArraySourceBtn" type="button" hidden title="Edit the original mesh while retaining this preview’s count and END transforms.">Edit Source</button>
   <button id="linearArrayConvertBtn" type="button" hidden title="Keep this preview as one ordinary mesh. Undo restores the Live Array.">Convert to Mesh</button>
   <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
     <button id="linearArrayCancelBtn" type="button">Cancel</button>
@@ -55,6 +57,7 @@ const launchButton=launchRow.querySelector('#linearArrayLaunchBtn');
 const applyButton=controls.querySelector('#linearArrayApplyBtn');
 const cancelButton=controls.querySelector('#linearArrayCancelBtn');
 const convertButton=controls.querySelector('#linearArrayConvertBtn');
+const sourceButton=controls.querySelector('#linearArraySourceBtn');
 const countInput=controls.querySelector('#linearArrayCount');
 const liveInput=controls.querySelector('#linearArrayLive');
 const countOut=controls.querySelector('#linearArrayCountOut');
@@ -93,6 +96,7 @@ function endAxis(axis){return axisVector(axis).transformDirection(sessionPlaceme
 function syncEndTools(){
   const live=!!liveInput?.checked;
   if(convertButton)convertButton.hidden=!live||!activeObject()?.arrayRecipe;
+  if(sourceButton)sourceButton.hidden=!live||!activeObject()?.arrayRecipe;
   if(endpointHint)endpointHint.textContent=endTransform==='rotate'?'Drag the END rotation ring · XYZ values are degrees · rotation grows from original to END.':endTransform==='scale'?'Drag END for uniform scale in Free, or an axis cube · XYZ values are scale factors · size grows from original to END.':'Drag the END copy. X/Y/Z places it on that axis; Free allows a free endpoint or arrow-constrained movement.';
   if(endTools)endTools.hidden=!live;
   if(transformValues)transformValues.hidden=!live||endTransform==='move';
@@ -466,6 +470,13 @@ applyButton?.addEventListener('click',()=>{
   }
 });
 cancelButton?.addEventListener('click',()=>cancelPreview());
+sourceButton?.addEventListener('click',()=>{
+  if(!previewArmed||endpointDrag)return;
+  const id=previewObjectId;
+  const parameters={count:count(),endpoint:localEndpoint().toArray(),...transformOptions(),rotation:[...endRotation],scale:[...endScale],placement:[...sessionPlacement.elements]};
+  cancelPreview({silent:true});
+  globalThis.__boxlabLiveArraySourceEditor?.open?.(id,parameters);
+});
 convertButton?.addEventListener('click',()=>{
   if(!previewArmed)return;
   endEndpointDrag();
@@ -481,7 +492,7 @@ window.addEventListener('beforeunload',()=>{document.removeEventListener('pointe
 sync();
 
 globalThis.__boxlabLinearArray={
-  version:'0.36.18.843',
+  version:'0.36.18.844',
   get active(){return previewArmed;},
   get hiddenObjectId(){return hiddenResult?.object.id??null;},
   get dragging(){return!!endpointDrag;},

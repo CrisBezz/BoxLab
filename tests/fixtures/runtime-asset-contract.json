@@ -285,9 +285,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/linear-array.js?v=0.36.18.843",
+      "url": "./src/linear-array.js?v=0.36.18.844",
       "target": "src/linear-array.js",
-      "sha256": "84da97b95ac9194304d9061323885a8cdeda1f2eb8b86cc6046eff5bcad27a42"
+      "sha256": "cfe600afad6d23ccaae5cd0edd5dde111c2bbd5b23fb8a0b52d85a60d0790990"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.843",
+      "url": "./src/release-bootstrap.js?v=0.36.18.844",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.843",
+      "url": "./src/release-version.js?v=0.36.18.844",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2330,6 +2330,36 @@
     },
     {
       "owner": "src/live-array-core.js",
+      "url": "./instance-core.js?v=0.36.18.343",
+      "target": "src/instance-core.js",
+      "sha256": "ab05cf3c145b4a3694318d41329391f84aaf5c83520019e9b3988f8a202994d8"
+    },
+    {
+      "owner": "src/linear-array.js",
+      "url": "./live-array-source-editor.js?v=0.36.18.844",
+      "target": "src/live-array-source-editor.js",
+      "sha256": "50278b0563aadfac0a4d68c05ad2573dd393784e6de9fdfb75eeff7c95c90935"
+    },
+    {
+      "owner": "src/live-array-source-editor.js",
+      "url": "./live-array-source-core.js?v=0.36.18.844",
+      "target": "src/live-array-source-core.js",
+      "sha256": "fc2864f5f8bcf63d9f84fc0126a79d96be02118e4635d44bf97140a4b76b57bc"
+    },
+    {
+      "owner": "src/live-array-source-editor.js",
+      "url": "./tool-session-panel-position.js?v=0.36.18.732",
+      "target": "src/tool-session-panel-position.js",
+      "sha256": "5844e2d188b157cdf6954c3dcb2de7dd17be5efd00214e5c90cb6aacaae6e7ae"
+    },
+    {
+      "owner": "src/live-array-source-core.js",
+      "url": "./live-array-core.js?v=0.36.18.842",
+      "target": "src/live-array-core.js",
+      "sha256": "1f1e6797d9d1281d3cb139c52b9f53d99dca6d668180e1d24bca5fc732ba7f88"
+    },
+    {
+      "owner": "src/live-array-source-core.js",
       "url": "./instance-core.js?v=0.36.18.343",
       "target": "src/instance-core.js",
       "sha256": "ab05cf3c145b4a3694318d41329391f84aaf5c83520019e9b3988f8a202994d8"

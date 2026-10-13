@@ -1,13 +1,45 @@
-# BoxLab AI Handoff — .843 Live Array conversion
+# BoxLab AI Handoff — .844 staged Live Array source editing
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.843.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.844.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .843 scope — device acceptance pending
+## .844 scope — device acceptance pending
+User PASS .843 protects Convert to Mesh, current preview shape, one-object conversion,
+Undo/Redo and Save/Open; .842/.841 and .840 gates remain protected.
+Reopen Live Array > Edit Source isolates its placed original mesh on the SAME scene
+object and starts Face mode. Existing Vertex/Edge/Face tools edit it normally; local
+Undo/Redo stays within source changes. The source bar uses shared top-centre placement
+and yields to visible existing tool popups, returning when their owners finish.
+Finish the component tool (Done/Apply/Cancel) before Apply Source or source Cancel.
+Apply Source regenerates all copies through the original Array evaluator, retains
+count/END placement/rotation/scale and canonical frame, and returns to Object mode.
+Edit Source carries current staged END/count values from the Array panel. Cancel
+restores the previously committed result/recipe/scene and exact prior history tokens.
+An unchanged source/parameters restores without creating history. A changed source
+commits one scene Undo step; source-local history is retired. No temporary objects,
+new pointer handlers, topology kernel, history stack or protected kernel changes.
+The procedural recipe is held privately during source editing; Object mode, files,
+object management and modifier commands require Apply Source/Cancel first. Save/Open
+is supported after Apply. A changed Curve/Balloon source no longer retains a stale
+curveProfile; Cancel restores it. Source-only view is intentional for this first stage:
+the generated result updates on Apply Source, not during every component gesture.
+Direct non-affine editing of the combined result still refuses reopening; use Edit
+Source before editing components, or Convert to Mesh for ordinary combined editing.
+Loader graph: Array844→source-editor844→source-core844→Array-core842/instance343;
+source-editor uses shared placement732. Unchanged manager/codec/main stay842. Array,
+shell/recovery pins844 and reviewed child+parent asset contract are coherent.
+Six new native tests cover placed source/topology/actual scene history/project codec,
+local Undo/Cancel/no-op, invalid/busy/context guards, source UI nesting/file-command
+blocking, and pending END/count handoff. Full local Node24:2256PASS/0FAIL/0skip.
+Three old Array pin checks advance844; shared-dock check verifies new indirect client
+through reviewed Array parent rather than demanding duplicate shell loading.
+Node22 CI/Pages/live publication verification appended after completion.
+
+## Protected .843 scope — user PASS2026-10-13
 User PASS .842 protects progressive END scale/rotation, combined placement/count,
 one-object Apply/reopen, Cancel, Undo/Redo and .boxlab round-trip.
 Existing Array panel now offers Convert to Mesh when reopening a Live Array.
@@ -15,8 +47,8 @@ It commits the CURRENT staged preview (including changed count/END transforms) a
 one ordinary disconnected editable mesh, removes arrayRecipe, closes the session
 and records one scene Undo step. Undo restores the prior live recipe and geometry;
 Redo restores the converted mesh. Apply Array still retains the procedural recipe.
-Conversion does not create separate scene objects. Source component editing remains
-queued. A component-modified live result still refuses reopening; use conversion
+Conversion does not create separate scene objects. Source component editing ships844.
+A component-modified live result still refuses reopening; use Edit Source or conversion
 before ordinary component edits, or Undo such edits first.
 Only linear-array.js runtime changed; shell/recovery pins843, core/manager/codec842
 unchanged. Reviewed runtime contract updated only for these cache references and
@@ -65,12 +97,12 @@ instance-core transform/derive placement and object-join combine. No new topolog
 Whole-object affine moves/rotations/scales are recovered on reopen. Non-affine component
 edits refuse reopening instead of discarding them. Live creation currently refuses
 linked/Boolean/rich-resource/SubD/Mirror objects; ordinary Array remains available.
-Separate source component editing remains queued; conversion shipped in .843;
+Staged source component editing shipped in .844; conversion shipped in .843;
 endpoint rotation/scale interpolation now shipped in .842. Default Live checkbox off; explicitly check it for new arrays.
 
 object-management snapshots/restores and v1 .boxlab codec preserve/validate optional
 arrayRecipe. No schema-version change; older projects retain original encoding.
-Current loader graph: Array843→core842; codec842→core842; object-management842→codec842;
+Current Array evaluator stays842; codec842→core842; object-management842→codec842;
 drawer842→object-management842. Unchanged main/manager parents remain842.
 Protected source modules/frozen betas unchanged. Tests reconcile three old Array cache
 assertions with reviewed841 owner; all original semantic tests retained.
@@ -112,11 +144,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Await .843 device test: reopen Live Array, Convert to Mesh, inspect one row/shape,
-component edit, Undo/Redo and Save/Open. Apply Array must remain live and Cancel
-must preserve the prior result. Then staged Live Array source component editing
-through existing manager/tool/history owners; richer resources/performance, NOM,
-Curve cutters and UV remain queued. Protect .842 endpoint transforms and .840 drift.
+Await .844 iPad source edit: Face/Vertex/Edge Move or Extrude, finish its settings,
+Apply Source; all items update and one row remains. Reopen source, local Undo and
+Cancel; scene Undo/Redo; transformed array and Save/Open. Record acceptance before
+expanding. Optional generated preview/source UX polish can follow concrete feedback;
+resource persistence/measured performance, NOM, Curve cutters and UV remain queued.
+Protect .843 conversion, .842 transforms and .840 linked-source publication repair.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

@@ -5823,3 +5823,19 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Undo restores the previous editable Live Array; Redo restores converted mesh.
 - [ ] Save/Open the converted mesh preserves geometry and component editing.
 - [ ] Apply Array still keeps live editability; Cancel, ordinary Array and Pencil navigation remain protected.
+
+
+## .843 user PASS / .844 Live Array source editing
+
+- [x] User PASS .843 conversion/current preview/one-object/history/project gate protected.
+- [x] Native source isolation retains one object and affine world placement; topology Apply regenerates all copies with original count/END transforms.
+- [x] Existing source component Undo/Redo, source Cancel, exact prior history tokens and unchanged Apply verified.
+- [x] One final scene Undo/Redo restores full result and recipe; saved project reopens source parameters and regenerated mesh.
+- [x] Invalid geometry, busy tools, context changes and unsupported sources refuse safely; pending count/END settings transfer to source editor.
+- [x] Actual UI source bar yields to visible nested tool panels; object/file commands guarded, component modes and viewport gesture owners retained.
+- [x] Full local2256PASS/0FAIL/0skip; existing semantics retained; reviewed shell/parent/child pins validated.
+- [ ] Reopen Live Array > Edit Source: original only; move a Face/Vertex or Extrude a Face; finish the tool > Apply Source: all items update, ONE live row remains.
+- [ ] Reopen Edit Source, make an edit, Undo/Redo within source, then Cancel: prior complete array returns.
+- [ ] Source Apply then scene Undo/Redo restores old/new array; reopen count/END values unchanged.
+- [ ] Whole-object Move/Rotate first, then source edit: placement and progressive END effects retained.
+- [ ] Save/Open .boxlab, reopen source editing; conversion/ordinary Array/Pencil orbit-pan-pinch remain protected.

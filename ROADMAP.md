@@ -4,7 +4,18 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .843 Live Array conversion / frozen Beta 7, 2026-10-13
+## Current direction — .844 staged Live Array source editing / frozen Beta 7, 2026-10-13
+
+User PASS .843 protects explicit conversion. Edit Source isolates the placed original
+on the same object, with existing component tools and local Undo/Redo. Apply Source
+regenerates all items with saved/staged count and END transforms, one final history
+step; Cancel restores the original scene and history. Top-centre source bar yields
+to existing component tool panels. Source-only stage updates result on Apply.
+Full2256PASS/0FAIL; iPad source/exit/history/project gate pending before expansion.
+Optional generated preview can be scoped after acceptance; richer project resources
+and measured performance remain next broader priorities.
+
+## Previous direction — .843 Live Array conversion / frozen Beta 7, 2026-10-13
 
 User PASS .842 protects progressive endpoint transforms and combined persistence.
 Convert to Mesh in the reopened Array panel commits its staged preview as ONE ordinary
@@ -60,9 +71,8 @@ Before implementation, audit existing Array end-copy, instance/source, modifier/
 and Live Boolean object-list owners. Extend those authoritative owners; do not add a
 parallel modelling kernel. Protect .840 linked/Array placement and idle stability.
 Count/placement/single-object/persistence stage shipped and accepted in .841; endpoint
-rotation/scale shipped842 and user PASS protected. Source component editing remains
-queued; conversion to one ordinary mesh shipped843,
-device gate pending. Protect accepted .840 drift repair.
+rotation/scale shipped842 and user PASS protected. Staged source component editing ships844 (device gate pending); conversion to one
+ordinary mesh shipped843 and user PASS protected. Protect accepted .840 drift repair.
 
 ## Previous direction — .839 live-mesh identity feedback repair / frozen Beta 7, 2026-10-13
 
