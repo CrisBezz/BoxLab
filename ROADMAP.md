@@ -4,7 +4,17 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .849 inactive render geometry reuse / frozen Beta 7, 2026-10-13
+## Current direction — .850 active render geometry reuse / frozen Beta 7, 2026-10-13
+
+849 screenshot113rebuilds mean8.6/max25ms; inactive0.1/6ms with226hits/0misses;
+Body2.8/9ms. Cage workload differs from848, no controlled improvement claim.
+Reuse one active SubD BufferGeometry through existing main + cache812 display identity;
+changed display/modifiers/source replace it, SubD Off releases it; normal cage and
+nonSubD cleanup retained. Full2273PASS/0FAIL. Same-scene selection/edit/history/modifier/
+render-look gate and Body measurement pending. Next measured bottleneck or richer
+project resources after feedback; accepted846 and earlier protections retained.
+
+## Previous direction — .849 inactive render geometry reuse / frozen Beta 7, 2026-10-13
 
 848 capture111inactive hits/1miss but6.4ms inactive mean, cage6.2ms and activeSubD5.7ms.
 Next narrow build reuses owned buffers for visible independent inactive SubD objects

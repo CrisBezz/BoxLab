@@ -5903,3 +5903,22 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Switch/edit old inactive object, change SubD/Mirror, hide/show and Undo/Redo: no stale surfaces/disappearance.
 - [ ] VIEW render looks, linked Move/component edits and Live Array source edit remain accepted.
 - [ ] Performance Reset/capture Inactive timing and resource counts after comparable interaction; orbit/navigation stable.
+
+
+## .850 active SubD render geometry reuse — 2026-10-13
+
+849 screenshot evidence:113rebuilds8.6ms mean25max, Inactive0.1/6ms,226hits/0misses,
+Body2.8/9ms. Different848 cage workload means no matched speed claim; full device
+847–849 gates not inferred. Accepted846 and earlier PASSes remain protected.
+Automated: two native main/clear/kernel/cache tests protect unchanged geometry identity,
+edit/native parity/Undo replacement, modifiers/source invalidation, exactly-once buffer
+disposal, independent cage cleanup and SubD Off/normal geometry replacement. Existing
+366 full-line source ordering guard retains publication before clear/add; all other
+protected contracts remain. Full local2273PASS/0FAIL/0skip.
+Manual pending850:
+- Same multi-SubD scene, Performance Reset; select/deselect then edit/Undo/Redo; capture
+  Body phase and active/inactive counts, without changing cage workload mid-comparison.
+- Switch objects and change SubD level/Mirror; verify visible surfaces and picking update.
+- Toggle Studio/Wire and Clean/Soft; selection/cage restoration and navigation remain sane.
+One root-owned active SubD buffer retained; changed displays still rebuild. Main850,
+unchanged CPUcache812/manager849, shell/recovery850; protected/frozen sources untouched.

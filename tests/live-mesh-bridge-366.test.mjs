@@ -6,7 +6,7 @@ import fs from 'node:fs';
 test('366 main publishes the current lexical mesh before root rebuild',()=>{
   const src=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
   const start=src.indexOf('function renderMesh()');
-  const block=src.slice(start,start+700);
+  const block=src.slice(start,src.indexOf('\n',start));
   assert.match(block,/__boxlabBridgeState\.mesh=mesh;\}?clearGroup\(root\)/);
   assert.ok(block.indexOf('__boxlabBridgeState.mesh=mesh') < block.indexOf('clearGroup(root)'));
   assert.ok(block.indexOf('publishCoreMesh?.(mesh)') < block.indexOf('__boxlabBridgeState.mesh=mesh'));

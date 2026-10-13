@@ -8579,3 +8579,22 @@ Node22 CI38395647448/job115290048343 SUCCESS:2271PASS/0FAIL/0skip.
 Pages38395648071 SUCCESS. Fresh live shell/manifest/manager849, unchanged cache812,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Screenshot848
 baseline recorded; comparable849 visual/resource/phase capture pending.
+
+
+## .850 — reuse active SubD render geometry — 2026-10-13
+
+User849 screenshot113rebuilds8.6ms mean25max; inactive0.1/6ms and226hits/0misses;
+active63/50; Body2.8/9ms, Base/SubD5.4/19ms, cage0.1/1ms. Different cage workload
+from848 prevents controlled benchmark claim; no explicit full849 PASS. /nextbuild.
+Audit main renderMesh: existing exact-input cache812 avoids unchanged subdivision but
+triangulatedGeometry always rebuilds GPU body. Main root now retains one BufferGeometry
+by immutable native display identity; same-result redraw keeps it, display change
+replaces/disposes, SubD Off releases it. Normal nonSubD/cage disposal preserved.
+No new renderer/kernel/gesture/history owner; core publication and linked840 protected.
+Two native main/kernel/cache tests cover20redraws, edits/native geometry parity/Undo,
+modifier/source replacement, disposal/cage independence and leavingSubD. Initial local
+run caught publication/clear adjacency interruption; declaration moved before publication.
+366 guard's700character slice then excluded root.add after the longer body code; changed
+to full function line, retaining all original ordering assertions. Full2273PASS/0FAIL/
+0skip. Main/shell/recovery850 reviewed, helper812 and other pins retained. Device timing,
+visual/picking/history/modifier/render-look gates pending; no hardware speed claim.

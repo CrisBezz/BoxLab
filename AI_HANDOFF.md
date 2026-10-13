@@ -1,13 +1,36 @@
-# BoxLab AI Handoff — .849 inactive render geometry reuse
+# BoxLab AI Handoff — .850 active render geometry reuse
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.849.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.850.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .849 scope — device geometry/performance gate pending
+## .850 scope — device geometry/performance gate pending
+Latest849 screenshot:113rebuilds mean8.6/max25ms; Inactive0.1/6ms, Body2.8/9ms,
+Base/SubD5.4/19ms, Cage0.1/1ms; active63hits/50misses, inactive226hits/0misses.
+Earlier848 had different cage workload: evidence of reuse, not a controlled speed
+benchmark or full manual PASS. User /nextbuild authorizes next narrow active stage.
+Audit found native main renderMesh triangulates even when existing cache812 returns
+an unchanged immutable display result. Main root now retains one active SubD
+BufferGeometry keyed by that result identity. Wrapper/cage/highlight rebuilds preserve
+it; display changes dispose/replace it, disabling SubD releases it. Existing exact-input
+CPU cache handles geometry/metadata/modifier/mesh replacement invalidation. Ordinary
+non-SubD geometry keeps original disposal/rebuild. Same main owner, native kernels,
+core publication, component/picking/history/navigation and linked-source840 preserved.
+Two native tests execute real main render/clear + kernels/cache:20unchanged redraws,
+edit/native position parity/Undo replacement, modifier/source invalidation, single
+disposal, independent cage cleanup and SubD disable/nonSubD cleanup. The366 source
+publication guard now reads the whole function line instead of700characters; all
+publication/clear/add ordering assertions retained. Initial insertion broke source
+adjacency; final declaration precedes publication, preserving protected sequence.
+Full local Node24:2273PASS/0FAIL/0skip. Main850→unchanged cache812; shell/recovery850;
+manager849/monitor+core848/Array844/drawer846/Clean845/Cage846/protected pins retained.
+Publication/Node22/live verification follows. Manual same-scene selection/edit/history/
+modifier/render-look gate pending; edits still recompute changed native displays.
+
+## .849 scope — device evidence captured, full gate pending
 User848 capture:54rebuilds21.9ms mean/41max; inactive6.4/17ms; active30hits/24misses,
 inactive111hits/1miss; cage6.2/12ms. This confirms independent inactive CPU reuse but
 remaining render cost, not matched speed gain. /nextbuild authorizes next narrow stage.
@@ -233,12 +256,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Same multi-SubD scene849: Performance Reset, repeat active select/edit/Undo, capture
-Inactive phase versus8486.4ms mean. Check switching/editing former inactive objects,
-modifier changes, hide/show and Undo/Redo; render modes and linked placement remain
-correct. If accepted, target measured cage/active geometry cost or project resources.
-No quantified iPad speed improvement until comparable workload capture. Preserve
-published848 split counters and all prior explicitly accepted device gates.
+Same multi-SubD scene850: Performance Reset, select/deselect an active surface repeatedly,
+then edit and Undo/Redo; capture Body phase and Active/Inactive counts. Check object
+switching, modifier changes and render looks/Clean/Soft. Changed displays still require
+triangulation; no quantified device gain claimed. Next narrow measured bottleneck or
+richer project resources after feedback. Preserve accepted gates through846; screenshots
+847–849 are performance evidence, not blanket visual/history acceptance.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
