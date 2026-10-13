@@ -8287,3 +8287,13 @@ Full Node242237PASS/0FAIL/0skip, revised sharing focused PASS. No modelling/tran
 or Multi1.0 changes; .833/.836/.837 device failures accurately retained in history. Bridge/
 face-workflow dynamic parent/drawer839 pins reviewed; other source bytes unchanged.
 Device Linked/Array move→Face and project/history gate pending before feature expansion.
+
+
+### .839 publication verification — 2026-10-13
+
+Release73d80488d9db90cca117f15fc0281ea74a4076da; tested tree
+412ef04a5181dc7d7723efaf362f61d3d7d09b0c matches checkout. Node22 CI
+38325878624/job115064302371 SUCCESS:2237PASS/0FAIL/0skip. Pages38325878737
+SUCCESS. Fresh pinned live shell/manifest/bridge/face-workflow parent/drawer byte-match.
+Actual old bridge failed two new reproduction checks; repaired suite green. iPad
+Linked Duplicate/Array drift acceptance still pending, not inferred from automation.

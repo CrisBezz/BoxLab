@@ -58,3 +58,9 @@ this concrete drift case passes. Then rich resources/performance, NOM/Curve cutt
 /nextbuild = audit, one narrow main build, coherent shell/title/data/version.json/recovery,
 review child+parent cache pins/hashes, tests, update all handoff/history/checklist/roadmap,
 publish and readback. Publishing already authorized. User PASS/FAIL becomes repo contract.
+
+## .839 publication verified
+Release73d80488d9db90cca117f15fc0281ea74a4076da; tree412ef04a5181dc7d7723efaf362f61d3d7d09b0c.
+Node22 CI38325878624/job115064302371 SUCCESS2237PASS/0FAIL/0skip.
+Pages38325878737 SUCCESS; pinned live shell/manifest/bridge/both parent loaders byte-match.
+Device Linked Duplicate/Array move→Face gate pending.
