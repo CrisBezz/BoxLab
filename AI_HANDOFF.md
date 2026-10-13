@@ -37,7 +37,7 @@ local Undo/Cancel/no-op, invalid/busy/context guards, source UI nesting/file-com
 blocking, and pending END/count handoff. Full local Node24:2256PASS/0FAIL/0skip.
 Three old Array pin checks advance844; shared-dock check verifies new indirect client
 through reviewed Array parent rather than demanding duplicate shell loading.
-Node22 CI/Pages/live publication verification appended after completion.
+Node22 CI/Pages/live publication verified below.
 
 ## Protected .843 scope — user PASS2026-10-13
 User PASS .842 protects progressive END scale/rotation, combined placement/count,
@@ -167,3 +167,14 @@ Pages38362603155 SUCCESS. Fresh live shell/manifest/Array843, unchanged core842,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
 briefly returned842 during deployment; subsequent pinned verification matches843.
 Device conversion gate pending; .842 user PASS protected, source editing next.
+
+
+## .844 publication verified — 2026-10-13
+
+Release22cbdef0409c023b74c5341adabc40e7a991f514; tested tree
+96d912e08b4bebc53a25be7d73f800c0953ac8e3 exactly matches local validated checkout.
+Node22 CI38375667786/job115223276580 SUCCESS:2256PASS/0FAIL/0skip.
+Pages38375667131 SUCCESS. Fresh live shell/manifest/Array844/source-editor844/
+source-core844, unchanged Array-core842, protected Multi1.0 and frozenBeta7 version
+byte-match repository. Earlier predeployment GETs returned843/404; complete
+postdeployment graph now verified. Device source-edit/exit/history/project gate pending.

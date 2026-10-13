@@ -8438,3 +8438,14 @@ One first full-run failure assumed every shared-dock client is shell-loaded; rev
 parent-chain assertion now verifies new indirect client via Array, retaining coverage.
 Shell/recovery/Array844 and new child844 cache graph reviewed; core stays842.
 Device source edit/history/project/navigation gate pending.
+
+
+## .844 publication verified — 2026-10-13
+
+Release22cbdef0409c023b74c5341adabc40e7a991f514; tested tree
+96d912e08b4bebc53a25be7d73f800c0953ac8e3 exactly matches local validated checkout.
+Node22 CI38375667786/job115223276580 SUCCESS:2256PASS/0FAIL/0skip.
+Pages38375667131 SUCCESS. Fresh live shell/manifest/Array844/source-editor844/
+source-core844, unchanged Array-core842, protected Multi1.0 and frozenBeta7 version
+byte-match repository. Earlier predeployment GETs returned843/404; complete
+postdeployment graph now verified. Device source-edit/exit/history/project gate pending.
