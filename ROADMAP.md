@@ -10,7 +10,7 @@ User requests dots only in Vertex mode. Existing cage batch builder skips visual
 instances outside Vertex; indexed proxies retained for picking/snapping/bridge. Edges,
 face picking, Clean/Soft and original cage suppression retained. Avoids marker drawing
 and instance updates outside Vertex, no quantified speed claim. Full2276PASS/0FAIL.
-Device mode-switch/selection/Clean/Soft gate pending;850 timing gate still pending.
+Device851 mode-switch/selection/Clean/Soft gate pending;850 user PASS protected.
 Next measured bottleneck or project-resource work after feedback.
 
 ## Previous direction — .850 active render geometry reuse / frozen Beta 7, 2026-10-13
@@ -19,8 +19,9 @@ Next measured bottleneck or project-resource work after feedback.
 Body2.8/9ms. Cage workload differs from848, no controlled improvement claim.
 Reuse one active SubD BufferGeometry through existing main + cache812 display identity;
 changed display/modifiers/source replace it, SubD Off releases it; normal cage and
-nonSubD cleanup retained. Full2273PASS/0FAIL. Same-scene selection/edit/history/modifier/
-render-look gate and Body measurement pending. Next measured bottleneck or richer
+nonSubD cleanup retained. Full2273PASS/0FAIL. User850 PASS2026-10-14 protects
+selection/edit/history/modifier/render-look baseline. Latest screenshot851:94rebuilds,
+mean6.2/max39ms, Body1.0/9ms; no controlled before/after timing claim. Next measured bottleneck or richer
 project resources after feedback; accepted846 and earlier protections retained.
 
 ## Previous direction — .849 inactive render geometry reuse / frozen Beta 7, 2026-10-13

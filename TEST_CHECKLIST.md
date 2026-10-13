@@ -5940,3 +5940,13 @@ Manual pending:
 - Vertex select/Lasso/move→Undo/Redo→mode switch: normal picking and navigation.
 - Clean On/Off and Soft/Full across modes: correct restoration; no dots outside Vertex.
 850 device geometry/timing gate remains pending; no new PASS inferred.
+
+
+## .850 user PASS protected / .851 performance capture — 2026-10-14
+
+User explicitly reports .850 PASS on2026-10-14: protect active SubD geometry reuse,
+selection/edit/UndoRedo/modifier/render-look baseline. Attached screenshot visibly851:
+94rebuilds mean6.2/max39ms; Body1.0/9ms, Base/SubD4.1/17ms, Scene0.8/18ms,
+Inactive0.5/18ms, Cage0.1/6ms; active64hits/30misses, inactive194hits/2misses,
+59FPS displayed. Capture is851 evidence, not a controlled850 benchmark or explicit
+851 Vertex-mode visibility PASS. Keep851 hands-on gate pending; no new build.

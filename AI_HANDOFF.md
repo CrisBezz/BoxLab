@@ -25,9 +25,9 @@ visual dots only in Vertex, dense Face cage one visual line batch; original topo
 material/order/picking/bridge/Lasso coverage retained. Full local2276PASS/0FAIL/0skip.
 Main851→cage-render-batches851; shell/recovery851. CPUcache812/manager849/monitor+core848,
 Array844/drawer846/Clean845/CageIntensity846 and protected/frozen kernels unchanged.
-Publication/Node22/live verification recorded below. No explicit850 PASS received.
+Publication/Node22/live verification recorded below. User850 PASS2026-10-14 protected;851 device gate pending.
 
-## .850 scope — device geometry/performance gate pending
+## Protected .850 scope — user PASS2026-10-14
 Latest849 screenshot:113rebuilds mean8.6/max25ms; Inactive0.1/6ms, Body2.8/9ms,
 Base/SubD5.4/19ms, Cage0.1/1ms; active63hits/50misses, inactive226hits/0misses.
 Earlier848 had different cage workload: evidence of reuse, not a controlled speed
@@ -47,8 +47,8 @@ publication/clear/add ordering assertions retained. Initial insertion broke sour
 adjacency; final declaration precedes publication, preserving protected sequence.
 Full local Node24:2273PASS/0FAIL/0skip. Main850→unchanged cache812; shell/recovery850;
 manager849/monitor+core848/Array844/drawer846/Clean845/Cage846/protected pins retained.
-Publication/Node22/live verification recorded below. Manual same-scene selection/edit/history/
-modifier/render-look gate pending; edits still recompute changed native displays.
+Publication/Node22/live verification recorded below. User850 PASS protects this gate;
+edits still recompute changed native displays.
 
 ## .849 scope — device evidence captured, full gate pending
 User848 capture:54rebuilds21.9ms mean/41max; inactive6.4/17ms; active30hits/24misses,
@@ -279,7 +279,7 @@ recipes keep indices/editability.
 851 hands-on: Face/Edge/Object have cage lines without dots; Vertex restores normal
 and selected dots, including loose vertices. Check picking/Lasso/snap/navigation,
 mode switches after edits/Undo/Redo, Soft/Full/Clean compatibility. SubD Show Cage still
-owns whether cage appears.850 active-geometry device gate remains pending. Choose next
+owns whether cage appears.850 active-geometry user PASS is protected. Choose next
 narrow measured bottleneck or project-resource work after feedback; no inferred PASS.
 
 ## Release workflow
@@ -385,3 +385,13 @@ Pages38481476107 SUCCESS. Fresh live shell/manifest/main851/cage-render-batches8
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
 reads returned850; complete postdeployment graph matches851. Device mode/selection/
 Clean/Soft gate pending,850 geometry/performance gate not yet accepted.
+
+
+## .850 acceptance / .851 device evidence — 2026-10-14
+
+User explicitly reports .850 PASS on2026-10-14: protect active SubD geometry reuse,
+selection/edit/UndoRedo/modifier/render-look baseline. Attached screenshot visibly851:
+94rebuilds mean6.2/max39ms; Body1.0/9ms, Base/SubD4.1/17ms, Scene0.8/18ms,
+Inactive0.5/18ms, Cage0.1/6ms; active64hits/30misses, inactive194hits/2misses,
+59FPS displayed. Capture is851 evidence, not a controlled850 benchmark or explicit
+851 Vertex-mode visibility PASS. Keep851 hands-on gate pending; no new build.

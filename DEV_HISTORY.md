@@ -8636,3 +8636,13 @@ Pages38481476107 SUCCESS. Fresh live shell/manifest/main851/cage-render-batches8
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
 reads returned850; complete postdeployment graph matches851. Device mode/selection/
 Clean/Soft gate pending,850 geometry/performance gate not yet accepted.
+
+
+## .850 user PASS protected / .851 performance capture — 2026-10-14
+
+User explicitly reports .850 PASS on2026-10-14: protect active SubD geometry reuse,
+selection/edit/UndoRedo/modifier/render-look baseline. Attached screenshot visibly851:
+94rebuilds mean6.2/max39ms; Body1.0/9ms, Base/SubD4.1/17ms, Scene0.8/18ms,
+Inactive0.5/18ms, Cage0.1/6ms; active64hits/30misses, inactive194hits/2misses,
+59FPS displayed. Capture is851 evidence, not a controlled850 benchmark or explicit
+851 Vertex-mode visibility PASS. Keep851 hands-on gate pending; no new build.
