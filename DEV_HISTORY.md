@@ -8646,3 +8646,19 @@ selection/edit/UndoRedo/modifier/render-look baseline. Attached screenshot visib
 Inactive0.5/18ms, Cage0.1/6ms; active64hits/30misses, inactive194hits/2misses,
 59FPS displayed. Capture is851 evidence, not a controlled850 benchmark or explicit
 851 Vertex-mode visibility PASS. Keep851 hands-on gate pending; no new build.
+
+
+## .851 user PASS / .852 skip unused active base evaluation — 2026-10-14
+
+User851 PASS /nextbuild. Protect Vertex-only dots, picking/mode/history/Clean/Soft.
+Audit current main/live/pins and existing display/base owners: SubD render always
+calls modifiedBaseMesh (applyMirror, including clone with no axes), even if base is
+unused. Existing base/cage/export owners already implemented. Narrow main condition
+calls base only for nonSubD surface or shown mirror cage. SubD computation/order/cache,
+850 GPUreuse,851 dots, geometry/picking/history/linked840 untouched. No new cache/kernel.
+Two native main/kernel checks cover call counts/visible native surface+cage output,
+modifier/ShowCage/SubD transitions, direct edit/Undo and fresh independent base export.
+812 deterministic phase expected display0/20 versus2/22 and rebuild15 versus17 reflect
+removed fixture base work; original timing/counter semantics retained. Full2278PASS/
+0FAIL/0skip. Main/shell/recovery852 reviewed; builder851/cache812/manager849 and protected/
+frozen sources unchanged. Device gate pending; no iPad speed claim.

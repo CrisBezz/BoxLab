@@ -27,3 +27,18 @@ test('850 modifier and source replacement invalidate; leaving SubD releases cach
  let released=0;previous.addEventListener('dispose',()=>released++);c.subdEnabled=false;c.addCage=()=>{};c.addMirrorCage=()=>{};c.renderMesh();assert.equal(released,1);assert.equal(c.root.userData.activeSubdGeometry,undefined);
  const plain=c.root.children[0].geometry;let plainDisposed=0;plain.addEventListener('dispose',()=>plainDisposed++);c.renderMesh();assert.equal(plainDisposed,1);assert.notEqual(c.root.children[0].geometry,plain);
 });
+
+
+test('852 active SubD skips unused base evaluation, keeps mirror cage and native surface parity across modifier toggles',()=>{
+ const c=fixture();let baseCalls=0,cage=null;const native=c.applyMirror;c.applyMirror=(...args)=>{baseCalls++;return native(...args);};c.addCage=()=>{};c.addMirrorCage=m=>{cage=m;};
+ for(const [subd,show,axes,expected] of [[true,false,{},0],[true,true,{},0],[true,false,{x:true},0],[true,true,{x:true},1],[true,true,{},0],[false,false,{},1],[false,true,{x:true},1]]){
+  c.subdEnabled=subd;c.showCage=show;c.mirrorAxes=axes;const before=baseCalls;cage=null;c.renderMesh();assert.equal(baseCalls-before,expected);
+  const display=native(subd?subdivide(c.mesh,c.subdLevel):c.mesh,axes),g=display.triangulatedGeometry();assert.deepEqual(Array.from(c.root.children[0].geometry.attributes.position.array),Array.from(g.attributes.position.array));g.dispose();
+  if(show&&axes.x||!subd&&axes.x){assert(cage);assert.deepEqual(cage.vertices.map(v=>v.toArray()),native(c.mesh,axes).vertices.map(v=>v.toArray()));}else assert.equal(cage,null);
+ }
+});
+test('852 SubD without base still handles direct edits and Undo replacement; explicit base export stays fresh and independently owned',()=>{
+ const c=fixture(),original=c.mesh.clone();c.renderMesh();c.mesh.vertices[0].x+=.25;c.renderMesh();const edited=Array.from(c.root.children[0].geometry.attributes.position.array);c.mesh=original;c.renderMesh();assert.notDeepEqual(Array.from(c.root.children[0].geometry.attributes.position.array),edited);
+ const exported=c.modifiedBaseMesh();assert.notEqual(exported,c.mesh);exported.vertices[0].x+=10;assert.equal(c.mesh.vertices[0].x,original.vertices[0].x);
+ c.mirrorAxes={x:true};const mirrored=c.modifiedBaseMesh();assert.deepEqual(mirrored.vertices.map(v=>v.toArray()),applyMirror(c.mesh,c.mirrorAxes).vertices.map(v=>v.toArray()));
+});

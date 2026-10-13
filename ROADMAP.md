@@ -4,13 +4,21 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .851 mode-specific vertex dots / frozen Beta 7, 2026-10-14
+## Current direction — .852 skip unused active base calculation, 2026-10-14
+
+851 user PASS protected. Audit main: SubD render calculates base even when no body/
+mirror cage uses it. Skip only unused base path; nonSubD body, enabled mirror cage,
+explicit base export and native SubD/cache remain original. Full2278PASS/0FAIL.
+Device SubD/Mirror/ShowCage/edit/history/export gate pending, no speed claim.
+Next measured bottleneck or richer project resources after feedback.
+
+## Previous direction — .851 mode-specific vertex dots / frozen Beta 7, 2026-10-14
 
 User requests dots only in Vertex mode. Existing cage batch builder skips visual marker
 instances outside Vertex; indexed proxies retained for picking/snapping/bridge. Edges,
 face picking, Clean/Soft and original cage suppression retained. Avoids marker drawing
 and instance updates outside Vertex, no quantified speed claim. Full2276PASS/0FAIL.
-Device851 mode-switch/selection/Clean/Soft gate pending;850 user PASS protected.
+User851 PASS2026-10-14 protects mode-switch/selection/Clean/Soft;850 PASS protected.
 Next measured bottleneck or project-resource work after feedback.
 
 ## Previous direction — .850 active render geometry reuse / frozen Beta 7, 2026-10-13

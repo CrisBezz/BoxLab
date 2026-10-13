@@ -5950,3 +5950,19 @@ selection/edit/UndoRedo/modifier/render-look baseline. Attached screenshot visib
 Inactive0.5/18ms, Cage0.1/6ms; active64hits/30misses, inactive194hits/2misses,
 59FPS displayed. Capture is851 evidence, not a controlled850 benchmark or explicit
 851 Vertex-mode visibility PASS. Keep851 hands-on gate pending; no new build.
+
+
+## .851 user PASS protected / .852 unused-base render gate — 2026-10-14
+
+User851 PASS: protect Vertex-only visual dots, Face/Edge/Object lines, selecting/moving/
+UndoRedo/mode transitions and Clean/Soft compatibility.850 PASS also protected.
+Automated852 native render/kernel tests: unused-base call avoidance, exact visible
+surface/cage parity across SubD/Mirror/ShowCage toggles, direct edits/Undo and original
+fresh independent base export.812 fixture timing updates reflect removed2ms base work;
+phase/counter/lifecycle coverage retained. Full2278PASS/0FAIL/0skip.
+Manual852 pending:
+- SubD edit/select→Undo/Redo; visible shape/picking and navigation remain correct.
+- Mirror On/Off + Show Cage toggle + SubD Off/On: surface/cage updates correctly.
+- Base OBJ export remains correct with Mirror;851 dots return only in Vertex.
+Main852→builder851/cache812 unchanged; shell/recovery852 and protected pins coherent.
+No new cache/kernel/history/visibility owner and no quantified hardware gain claimed.

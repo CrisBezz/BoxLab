@@ -1,13 +1,30 @@
-# BoxLab AI Handoff — .851 vertex dots only in Vertex mode
+# BoxLab AI Handoff — .852 skip unused active base evaluation
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.851.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.852.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .851 scope — user-requested mode-specific vertex visibility, device gate pending
+## .852 scope — avoid unused active base calculation, device gate pending
+User851 PASS protects Vertex-only visual dots, mode switching/picking/history/Clean/Soft.
+Audit latest main/live851/pins and852 measured direction: Base/SubD dominates recent
+readout; native renderMesh always calls modifiedBaseMesh even for a SubD surface with
+no displayed mirror cage. Base result then has no consumer. Calculate it only for
+nonSubD body or enabled mirror cage (Show Cage + active axis). SubD kernel/cache/result,
+GPUreuse850, actual base/cage native path and explicit export unchanged. No new cache,
+mesh identity/revision/kernel/visibility/history owner or changes to accepted851 dots.
+Two native main/kernel tests cover no-base call cases, mirror/ShowCage/SubD toggles,
+visible surface/cage parity, direct edit/Undo and independent fresh base export.
+812 measured fixture now expects0ms unused base on hit and20ms native SubD on miss,
+rather than2/22ms; all phase/counter/scene/cage semantics retained. Full2278PASS/0FAIL/
+0skip. Main852→unchanged builder851/cache812; shell/recovery852; manager849/monitor+core848/
+Array844/drawer846/Clean845/CageIntensity846/protected/frozen pins unchanged.
+Publication/Node22/live verification follows. No quantified iPad speed claim; dense
+native SubD edits still recompute.851 accepted independently of earlier capture evidence.
+
+## Protected .851 scope — user PASS2026-10-14
 User asks to hide vertices until Vertex mode during optimisation. Audit: main addCage
 always registers invisible indexed vertex proxies, then810 visual builder creates
 InstancedMesh dots. Main now passes showVertices only for Vertex mode to existing
@@ -25,7 +42,7 @@ visual dots only in Vertex, dense Face cage one visual line batch; original topo
 material/order/picking/bridge/Lasso coverage retained. Full local2276PASS/0FAIL/0skip.
 Main851→cage-render-batches851; shell/recovery851. CPUcache812/manager849/monitor+core848,
 Array844/drawer846/Clean845/CageIntensity846 and protected/frozen kernels unchanged.
-Publication/Node22/live verification recorded below. User850 PASS2026-10-14 protected;851 device gate pending.
+Publication/Node22/live verification recorded below. User850 and851 PASS2026-10-14 protected.
 
 ## Protected .850 scope — user PASS2026-10-14
 Latest849 screenshot:113rebuilds mean8.6/max25ms; Inactive0.1/6ms, Body2.8/9ms,
@@ -276,11 +293,10 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-851 hands-on: Face/Edge/Object have cage lines without dots; Vertex restores normal
-and selected dots, including loose vertices. Check picking/Lasso/snap/navigation,
-mode switches after edits/Undo/Redo, Soft/Full/Clean compatibility. SubD Show Cage still
-owns whether cage appears.850 active-geometry user PASS is protected. Choose next
-narrow measured bottleneck or project-resource work after feedback; no inferred PASS.
+852 device: same SubD scene select/edit/UndoRedo, Performance capture; toggle Mirror
+and Show Cage, then SubD Off/On, checking body/cage shape and picking. Base OBJ export
+should match visible base with Mirror applied. Preserve850/851 accepted optimisations.
+Next measured bottleneck or project-resource work after feedback; no benchmark claim.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

@@ -28,8 +28,8 @@ test('812 actual main separates active display, geometry, scene hooks and cage w
  for(const name of ['updateStatus','updateActionAvailability','syncDirectToolControls','syncTransformButtons','syncSelectionModeButtons','syncCreaseControl','syncMirrorAlignControl'])c[name]=()=>{};
  vm.createContext(c);vm.runInContext(line('modifiedBaseMesh')+'\n'+line('renderMesh'),c);
  c.renderMesh();assert.equal(monitor.snapshot().rebuilds,0);
- monitor.setEnabled(true);c.renderMesh();let s=monitor.snapshot();assert.equal(s.cacheHits,1);assert.equal(s.cacheMisses,0);assert.equal(s.stages.display.meanMs,2);assert.equal(s.stages.geometry.meanMs,3);assert.equal(s.stages.scene.meanMs,7);assert.equal(s.stages.cage.meanMs,5);assert.equal(s.rebuildMeanMs,17);
- mesh.vertices[0].x+=.1;c.renderMesh();s=monitor.snapshot();assert.equal(s.cacheMisses,1);assert.equal(s.stages.display.maxMs,22);assert.deepEqual(events,['clear','body','cage','clear','body','cage','clear','body','cage']);assert.equal(EditableMesh.prototype.triangulatedGeometry,native);
+ monitor.setEnabled(true);c.renderMesh();let s=monitor.snapshot();assert.equal(s.cacheHits,1);assert.equal(s.cacheMisses,0);assert.equal(s.stages.display.meanMs,0);assert.equal(s.stages.geometry.meanMs,3);assert.equal(s.stages.scene.meanMs,7);assert.equal(s.stages.cage.meanMs,5);assert.equal(s.rebuildMeanMs,15);
+ mesh.vertices[0].x+=.1;c.renderMesh();s=monitor.snapshot();assert.equal(s.cacheMisses,1);assert.equal(s.stages.display.maxMs,20);assert.deepEqual(events,['clear','body','cage','clear','body','cage','clear','body','cage']);assert.equal(EditableMesh.prototype.triangulatedGeometry,native);
 });
 test('812 actual inactive rebuild reports its own nested cost and preserves skip/error behavior',()=>{
  const source=read('multi-object.js'),start=source.indexOf('function rebuildInactiveLayer(body){'),text=source.slice(start,source.indexOf('\nfunction installRenderObserver',start));
