@@ -8360,3 +8360,12 @@ Session Undo cancels preview first. Count/spacing shipped; endpoint scale/rotati
 source editing remain queued. No new modelling kernel or protected/frozen changes.
 Four native tests plus existing suite:2241PASS/0FAIL/0skip. Three stale Array pin
 assertions updated to reviewed841 loader; semantic coverage retained. iPad gate pending.
+
+
+### .841 publication verified — 2026-10-13
+
+Release9dcb5d538acb16a470e1b2cac9bacdc089b6a244; tested tree
+1caa33d0933512872831d9c43fe5206871f8c498 matches checkout. Node22 CI
+38341669287/job115113811558 SUCCESS:2241PASS/0FAIL/0skip. Pages38341668618
+SUCCESS; pinned live shell/manifest/Array/core/manager/codec/management/drawer byte-match.
+Device acceptance pending; progressive endpoint scale/rotation remains next stage.

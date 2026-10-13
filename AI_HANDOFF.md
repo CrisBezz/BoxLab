@@ -39,7 +39,9 @@ assertions with reviewed841 owner; all original semantic tests retained.
 Full local Node24:2241PASS/0FAIL/0skip. Four new native checks cover distribution,
 source immutability, transformed reopen/refusal, real snapshots/codec, actual Array
 Apply + manager replacement + scene Undo/Redo and session Undo cancellation.
-Publication/Node22/live readback recorded in DEV_HISTORY after verification.
+Release9dcb5d538acb16a470e1b2cac9bacdc089b6a244; tree1caa33d0933512872831d9c43fe5206871f8c498.
+Node22 CI38341669287/job115113811558 SUCCESS2241/0/0skip; Pages38341668618 SUCCESS.
+Pinned live shell/manifest/Array/core/manager/codec/management/drawer byte-match.
 Manual: Object Array→Live check→count4→END drag→Apply, one row; reopen change count/END,
 Cancel then Apply; Undo/Redo; Save/Open then reopen; linked Save/Open sanity.
 Device acceptance pending; .841 is not protected PASS yet.
