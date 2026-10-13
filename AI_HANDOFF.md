@@ -77,6 +77,14 @@ no source-write churn or drift. Repeat Array and genuine component edit sharing/
 Do not hide/rate-limit writes as a substitute for resolving feedback. No new features
 until this concrete idle drift/device case passes.
 
+## Queued user request — Live Array, 2026-10-13
+Live Array must remain ONE editable Object Browser object, like Live Boolean.
+Last-item Move controls extent; last-item Rotate/Scale interpolate gradually from
+original to final across intermediate items. Reopen source/count/placement/endpoint
+transforms after creation; preserve history and .boxlab recipe persistence. Audit
+existing Array/end-copy/instances/recipes/Boolean presentation before implementation.
+Full scope in ROADMAP.md; queued only, no runtime change or new build requested.
+
 ## Release protocol
 /nextbuild = audit, one narrow main build, coherent shell/title/data/version.json/recovery,
 review child+parent cache pins/hashes, tests, update all handoff/history/checklist/roadmap,

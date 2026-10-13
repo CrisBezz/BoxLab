@@ -13,6 +13,29 @@ User PASS fresh Linked/Array idle/editing gate on2026-10-13. Protect owner repai
 Next scoped build may resume project resource persistence and measured performance;
 linked-file round-trip sanity remains relevant before expanding rich resources.
 
+## Requested Live Array — queued, 2026-10-13
+
+User requests a persistent, non-destructive Live Array presented as ONE object in the
+Object Browser, following the existing Live Boolean result/source editing pattern.
+Keep the array editable after creation: reopen its source, count, spacing/placement
+and endpoint transforms rather than baking separate scene objects on Apply.
+
+- Moving the last item controls the array extent through the existing Array end-copy
+  interaction; rotating/scaling that last item controls the final orientation/size.
+- Interpolate rotation and scale gradually from the unchanged original to the final
+  item across every intermediate item. Support combined placement, rotation and scale.
+- Transform handles on the last item remain available when reopening the Live Array;
+  editing the original/source updates the generated array without losing parameters.
+- Preserve one-object selection, Undo/Redo and .boxlab recipe/resource round-trip.
+  Explicit conversion to independent meshes may be a separate operation; normal
+  completion must retain the editable procedural array.
+
+Before implementation, audit existing Array end-copy, instance/source, modifier/recipe
+and Live Boolean object-list owners. Extend those authoritative owners; do not add a
+parallel modelling kernel. Protect .840 linked/Array placement and idle stability.
+Queued alongside project resource persistence and measured performance; this request
+adds a feature to the list, not an implementation or numbered build.
+
 ## Previous direction — .839 live-mesh identity feedback repair / frozen Beta 7, 2026-10-13
 
 .838 stack identifies temporary instance-local mesh stealing live-world bridge identity,

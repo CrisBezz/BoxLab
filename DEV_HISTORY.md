@@ -8334,3 +8334,12 @@ gate. Protect explicit main publication and legacy helper isolation; source drif
 loop resolved by device acceptance. Earlier failed builds remain accurately recorded.
 No numbered release/runtime changes. Resume scoped project resources/performance only
 on next build request.
+
+
+## Live Array roadmap request — 2026-10-13
+
+User requests one persistent editable array object, analogous to Live Boolean, with
+last-item rotation/scale distributed gradually from original to endpoint, alongside
+existing end-copy placement. Record source/count/placement/endpoint reopening,
+history/project persistence and authoritative-owner audit in roadmap/handoff.
+Documentation only; runtime remains accepted .840. No manual test required.
