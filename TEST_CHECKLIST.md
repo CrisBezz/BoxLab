@@ -5770,3 +5770,10 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [x] Genuine component edit still shares, legacy pre-core inference stays supported.
 - [ ] Fresh Linked Duplicate > diagonal move > Face > idle10seconds: no SOURCE WRITE churn/drift.
 - [ ] Array idle/edit sharing and Undo/Redo normal; external navigation and project Open remain protected.
+
+
+## .840 accepted / protected — 2026-10-13
+
+- [x] User PASS latest .840 Linked Duplicate/Array mode-switch and idle stability gate.
+- [x] User PASS shared component editing and Undo/Redo gate.
+- [x] Protect explicit main core-mesh publication; temporary/legacy edge queries never replace it.

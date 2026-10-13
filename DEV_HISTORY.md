@@ -8325,3 +8325,12 @@ b4d7b0a8f92ee05a5d7c1f364e2dd171cd6e937e matches checkout. Node22 CI
 SUCCESS. Fresh pinned live shell/manifest/main/bridge/face-workflow/drawer byte-match.
 Expanded legacy bridge chain had3FAIL on839; corrected explicit API passes plus1000idle
 reads/source revision0. .839 user idle-loop FAIL remains recorded; .840 iPad pending.
+
+
+## .840 user PASS — 2026-10-13
+
+User PASS after fresh linked/Array mode switch, idle10s and shared editing/history test
+gate. Protect explicit main publication and legacy helper isolation; source drift/idle
+loop resolved by device acceptance. Earlier failed builds remain accurately recorded.
+No numbered release/runtime changes. Resume scoped project resources/performance only
+on next build request.

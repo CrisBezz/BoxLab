@@ -3,7 +3,7 @@
 ## Current state — 2026-10-13
 CrisBezz/BoxLab main, live https://crisbezz.github.io/BoxLab/, release0.36.18.840.
 Repository is source of truth. Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST,
-recent DEV_HISTORY and ROADMAP before code. .839 user FAIL: idle marker loop source writes continue. .840 retest pending.
+recent DEV_HISTORY and ROADMAP before code. .839 user FAIL: idle marker loop source writes continue. .840 user PASS on2026-10-13; protect fresh linked/Array placement, idle stability and shared edit/history gate.
 FrozenBeta7 .807 / Beta2–6 immutable. Protected Multi1.0/Loop715/Extrude802/Boolean806,
 all accepted Pencil/navigation/selection behaviours unchanged. .830/.831 user PASS protected.
 
@@ -66,7 +66,12 @@ still shares. No removed tests, no instancing maths/transform change. Main/bridg
 face-workflow/drawer parents840 repinned; protected modules and frozenBeta unchanged.
 Full local validation/publication listed when verified. .839 not marked accepted.
 
-## Next
+## Accepted .840 / next
+User PASS2026-10-13 confirms latest manual gate. Protect explicit core publication,
+legacy edge-write isolation, linked/Array placement and idle stability. No new build
+requested by PASS alone. Next /nextbuild: audit remaining linked .boxlab round-trip
+acceptance and rich-resource persistence, then resume resources/performance roadmap.
+Historical test instructions follow for regression reference:
 Fresh scene on .840; Debug ON; Linked Duplicate→diagonal move→Face, leave untouched10s:
 no source-write churn or drift. Repeat Array and genuine component edit sharing/Undo.
 Do not hide/rate-limit writes as a substitute for resolving feedback. No new features
@@ -89,4 +94,4 @@ Device Linked Duplicate/Array move→Face gate pending.
 Release703f8ad78429697559c1be3b453fed812a322eae; treeb4d7b0a8f92ee05a5d7c1f364e2dd171cd6e937e.
 Node22 CI38326579309/job115066533821 SUCCESS2237PASS/0FAIL/0skip.
 Pages38326579350 SUCCESS; pinned live shell/manifest/main/bridge/both parents byte-match.
-Fresh-scene Linked/Array idle10s iPad acceptance pending.
+Fresh-scene Linked/Array idle10s iPad acceptance user PASS2026-10-13; protected.
