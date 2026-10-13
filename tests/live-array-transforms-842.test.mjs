@@ -75,7 +75,7 @@ test('842 actual END scale gesture changes uniform/axis factors while leaving en
 test('842 actual Live Apply records endpoint transforms in one scene history step; Undo/Redo restores them',()=>{
  const r=editableBooleanRuntime(),{c,manager,h}=r;manager.activate(3);
  Object.assign(c,{createArrayRecipe,evaluateArray,sessionSource:null,previewObjectId:3,endpoint:new THREE.Vector3(4,0,2),endpointLength:()=>Math.hypot(4,2),count:()=>4,liveInput:{checked:true},localEndpoint:()=>new THREE.Vector3(4,0,2),transformOptions:()=>({rotation:[0,90,0],scale:[3,3,3]}),restoreResult(){},setStatus(){}});
- vm.runInContext(ui.slice(ui.indexOf('function applyArray(){'),ui.indexOf('function installPenRange(')),c);
+ vm.runInContext(ui.slice(ui.indexOf('function applyArray('),ui.indexOf('function installPenRange(')),c);
  const n=h.undoStack.length;assert.equal(c.applyArray(),true);assert.equal(h.undoStack.length,n+1);
  const applied=manager.objects.find(o=>o.id===3),result=applied.mesh.clone();assert.deepEqual(Array.from(applied.arrayRecipe.rotation),[0,90,0]);
  manager.replaceActiveMesh(h.undo(r.live));assert.equal(manager.objects.find(o=>o.id===3).arrayRecipe,undefined);

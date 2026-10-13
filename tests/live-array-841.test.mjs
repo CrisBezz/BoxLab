@@ -31,7 +31,7 @@ test('841 actual Array Apply and scene-history owners keep one object and restor
  const beforeCount=manager.objects.length,initial=manager.objects.find(o=>o.id===3).mesh.clone();
  const ui=fs.readFileSync(new URL('../src/linear-array.js',import.meta.url),'utf8');
  Object.assign(c,{createArrayRecipe,evaluateArray,sessionSource:null,previewObjectId:3,endpoint:new THREE.Vector3(4,0,2),endpointLength:()=>Math.hypot(4,2),count:()=>4,liveInput:{checked:true},localEndpoint:()=>new THREE.Vector3(4,0,2),transformOptions:()=>({}),restoreResult(){},setStatus(){}});
- vm.runInContext(ui.slice(ui.indexOf('function applyArray(){'),ui.indexOf('function installPenRange(')),c);
+ vm.runInContext(ui.slice(ui.indexOf('function applyArray('),ui.indexOf('function installPenRange(')),c);
  const historyBefore=h.undoStack.length;assert.equal(c.applyArray(),true);
  assert.equal(manager.objects.length,beforeCount);assert.equal(h.undoStack.length,historyBefore+1);
  assert.equal(manager.objects.find(o=>o.id===3).arrayRecipe.count,4);assert.equal(r.live.vertices.length,32);

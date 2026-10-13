@@ -8387,3 +8387,20 @@ retaining identical transformed mesh assertions. Existing Array cache assertions
 No parallel gesture/history/topology implementation; protected/frozen files untouched.
 Six new real geometry/THREE raycast/END gesture/actual Apply-history tests plus complete
 suite2247PASS/0FAIL/0skip. Source component editor/conversion remain queued. Device pending.
+
+
+## .842 user PASS / .843 Live Array conversion — 2026-10-13
+
+User PASS .842 and /nextbuild. Protect progressive END rotation/scale, combined
+count/placement, single-object/reopen/Cancel/history/project gate. Audit current main,
+Array/core, manager/scene history/codec and Boolean owners; no existing conversion
+launcher found. Next narrow stage is explicit conversion, source editing follows.
+Reopened Array panel Convert to Mesh uses original Apply evaluation/replacement and
+scene checkpoint, commits CURRENT staged preview as one ordinary mesh, removes recipe
+and exits session. Normal Apply remains live. One Undo restores previous recipe/mesh;
+Redo converted state. Existing core/manager/codec and frozen/protected modules untouched.
+Three native tests cover placement/preview/real scene history/codec/component edit,
+actual button teardown and all refusal guards. Full2250PASS/0FAIL/0skip. Initial suite
+had one stale .842 Array cache assertion, reviewed/advanced alongside the other two;
+all existing semantic tests retained. Shell/recovery/Array pin843 and reviewed asset
+hash updated only where required. iPad conversion/history/project gate pending.

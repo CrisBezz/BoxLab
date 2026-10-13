@@ -5808,3 +5808,18 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Combine scale/rotation/placement/count; Apply keeps ONE row; reopen preserves values/result.
 - [ ] Cancel restores previous result; Undo/Redo restores transforms and recipe.
 - [ ] Save/Open and whole-object Move/reopen retain array; Pencil navigation/unchecked Array stable.
+
+
+## .842 user PASS / .843 Live Array conversion
+
+- [x] User PASS .842 gradual scale/rotation/full-turn, combined preview/reopen, Cancel/history and project gate protected.
+- [x] Native conversion preserves affine placed geometry, one object and ordinary component edits.
+- [x] Convert commits current staged count/transforms and closes actual session button once.
+- [x] One Undo restores original live recipe/result; Redo restores converted mesh; codec preserves conversion.
+- [x] Locked/reference/wrong-object/unchecked/no-recipe/invalid-transform conversion refuses without scene/history changes.
+- [x] Full local2250PASS/0FAIL/0skip; original semantic coverage retained, three Array cache checks advance843.
+- [ ] Reopen Live Array > Convert to Mesh: same shape, ONE object row, no Array label; component edits work.
+- [ ] Change count or END scale/rotation before converting: resulting mesh matches preview.
+- [ ] Undo restores the previous editable Live Array; Redo restores converted mesh.
+- [ ] Save/Open the converted mesh preserves geometry and component editing.
+- [ ] Apply Array still keeps live editability; Cancel, ordinary Array and Pencil navigation remain protected.

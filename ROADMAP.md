@@ -4,7 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .842 progressive Live Array transforms / frozen Beta 7, 2026-10-13
+## Current direction — .843 Live Array conversion / frozen Beta 7, 2026-10-13
+
+User PASS .842 protects progressive endpoint transforms and combined persistence.
+Convert to Mesh in the reopened Array panel commits its staged preview as ONE ordinary
+editable mesh with a single Undo restoring the live recipe. Apply Array remains live;
+separate objects are not created. Full2250PASS/0FAIL; device test pending.
+Source component editing is the next Live Array stage after this conversion gate.
+
+## Previous direction — .842 progressive Live Array transforms / frozen Beta 7, 2026-10-13
 
 User PASS .841 protects one-object/reopen/history/project foundation. .842 adds END
 rotation rings and uniform/axis scale handles + exact values. Original0°/1× interpolates
@@ -52,8 +60,9 @@ Before implementation, audit existing Array end-copy, instance/source, modifier/
 and Live Boolean object-list owners. Extend those authoritative owners; do not add a
 parallel modelling kernel. Protect .840 linked/Array placement and idle stability.
 Count/placement/single-object/persistence stage shipped and accepted in .841; endpoint
-rotation/scale shipped842, device gate pending. Source component editing and conversion
-remain queued. Protect accepted .840 drift repair.
+rotation/scale shipped842 and user PASS protected. Source component editing remains
+queued; conversion to one ordinary mesh shipped843,
+device gate pending. Protect accepted .840 drift repair.
 
 ## Previous direction — .839 live-mesh identity feedback repair / frozen Beta 7, 2026-10-13
 

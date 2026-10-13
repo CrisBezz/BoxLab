@@ -43,6 +43,7 @@ controls.innerHTML=`
     ${['x','y','z'].map(axis=>`<label style="font-size:10px">${axis.toUpperCase()} <input data-array-value="${axis}" type="number" step="1" style="width:64px;font-size:11px"/></label>`).join('')}
   </div>
   <div class="drawer-hint">Drag the END copy. X/Y/Z places it on that axis; Free allows a free endpoint or arrow-constrained movement.</div>
+  <button id="linearArrayConvertBtn" type="button" hidden title="Keep this preview as one ordinary mesh. Undo restores the Live Array.">Convert to Mesh</button>
   <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
     <button id="linearArrayCancelBtn" type="button">Cancel</button>
     <button id="linearArrayApplyBtn" class="boxlab-tool-session-primary" type="button">Apply Array</button>
@@ -53,6 +54,7 @@ objectTools?.appendChild(controls);
 const launchButton=launchRow.querySelector('#linearArrayLaunchBtn');
 const applyButton=controls.querySelector('#linearArrayApplyBtn');
 const cancelButton=controls.querySelector('#linearArrayCancelBtn');
+const convertButton=controls.querySelector('#linearArrayConvertBtn');
 const countInput=controls.querySelector('#linearArrayCount');
 const liveInput=controls.querySelector('#linearArrayLive');
 const countOut=controls.querySelector('#linearArrayCountOut');
@@ -90,6 +92,7 @@ function axisVector(axis){const direction=new THREE.Vector3();direction[axis]=1;
 function endAxis(axis){return axisVector(axis).transformDirection(sessionPlacement);}
 function syncEndTools(){
   const live=!!liveInput?.checked;
+  if(convertButton)convertButton.hidden=!live||!activeObject()?.arrayRecipe;
   if(endpointHint)endpointHint.textContent=endTransform==='rotate'?'Drag the END rotation ring · XYZ values are degrees · rotation grows from original to END.':endTransform==='scale'?'Drag END for uniform scale in Free, or an axis cube · XYZ values are scale factors · size grows from original to END.':'Drag the END copy. X/Y/Z places it on that axis; Free allows a free endpoint or arrow-constrained movement.';
   if(endTools)endTools.hidden=!live;
   if(transformValues)transformValues.hidden=!live||endTransform==='move';
@@ -332,9 +335,10 @@ function nudgeLive(offset){
   live.edges?.();
   return true;
 }
-function applyArray(){
+function applyArray({convert=false}={}){
   const m=manager(),source=activeObject();
   if(!m||!source||source.id!==previewObjectId||source.locked||source.kind==='reference')return false;
+  if(convert&&(!liveInput?.checked||!source.arrayRecipe))return false;
   if(endpointLength()<1e-6){setStatus('Array refused • end copy must be moved away from source');return false;}
   if(liveInput?.checked){
     if(source.sourceId||source.booleanRecipe||source.glbPassthrough||source.materials||source.textures||source.mesh?.uvs||source.mesh?.faceUVs||source.mesh?.uvLayers||source.mesh?.materialSlots||source.settings?.subd||Object.values(source.settings?.mirror||{}).some(Boolean)){setStatus('Live Array requires an independent geometry object');return false;}
@@ -343,11 +347,12 @@ function applyArray(){
       restoreResult();
       const before=globalThis.__boxlabObjectHistory?.capture?.();
       if(!before||!m.replaceActiveMesh?.(result))throw Error('Live Array replacement unavailable');
-      source.arrayRecipe=recipe;
+      if(convert)delete source.arrayRecipe;
+      else source.arrayRecipe=recipe;
       globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before,before.objects.find(o=>o.id===source.id)?.mesh);
       m.activate?.(source.id);
       globalThis.__boxlabObjectSelection?.refresh?.();
-      setStatus('Live Array · one object · reopen Array to edit count and END placement');
+      setStatus(convert?'Array converted · one editable mesh · Undo restores Live Array':'Live Array · one object · reopen Array to edit count and END placement');
       return true;
     }catch(error){setStatus('Live Array refused · '+error.message);return false;}
   }
@@ -461,6 +466,13 @@ applyButton?.addEventListener('click',()=>{
   }
 });
 cancelButton?.addEventListener('click',()=>cancelPreview());
+convertButton?.addEventListener('click',()=>{
+  if(!previewArmed)return;
+  endEndpointDrag();
+  if(applyArray({convert:true})){
+    disposePreview();previewArmed=false;previewObjectId=null;sessionSource=null;restoreResult();endArraySession();
+  }
+});
 
 window.addEventListener('boxlab-object-manager-ready',sync);
 window.addEventListener('boxlab-bridge-state',()=>queueMicrotask(sync));
@@ -469,7 +481,7 @@ window.addEventListener('beforeunload',()=>{document.removeEventListener('pointe
 sync();
 
 globalThis.__boxlabLinearArray={
-  version:'0.36.18.842',
+  version:'0.36.18.843',
   get active(){return previewArmed;},
   get hiddenObjectId(){return hiddenResult?.object.id??null;},
   get dragging(){return!!endpointDrag;},

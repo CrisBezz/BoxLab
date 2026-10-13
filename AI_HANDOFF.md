@@ -1,13 +1,31 @@
-# BoxLab AI Handoff — .842 progressive Live Array END transforms
+# BoxLab AI Handoff — .843 Live Array conversion
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.842.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.843.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .842 scope — device acceptance pending
+## .843 scope — device acceptance pending
+User PASS .842 protects progressive END scale/rotation, combined placement/count,
+one-object Apply/reopen, Cancel, Undo/Redo and .boxlab round-trip.
+Existing Array panel now offers Convert to Mesh when reopening a Live Array.
+It commits the CURRENT staged preview (including changed count/END transforms) as
+one ordinary disconnected editable mesh, removes arrayRecipe, closes the session
+and records one scene Undo step. Undo restores the prior live recipe and geometry;
+Redo restores the converted mesh. Apply Array still retains the procedural recipe.
+Conversion does not create separate scene objects. Source component editing remains
+queued. A component-modified live result still refuses reopening; use conversion
+before ordinary component edits, or Undo such edits first.
+Only linear-array.js runtime changed; shell/recovery pins843, core/manager/codec842
+unchanged. Reviewed runtime contract updated only for these cache references and
+Array bytes. Three existing Array pin assertions advanced; all semantics retained.
+Native conversion tests cover affine placement, current preview, single-object scene
+history, project codec, component editing, button teardown and invalid guards.
+Full local Node24:2250PASS/0FAIL/0skip. Node22 CI/Pages/live verification follows.
+
+## Protected .842 scope — user PASS2026-10-13
 User PASS .841 protected: one object/count/END/reopen/Cancel/history/.boxlab checks.
 Existing END gesture owner now has Live-only Move END / Rotate END / Scale END.
 Rotate uses selected XYZ ring plus exact degree fields; scale uses END drag in Free
@@ -27,7 +45,7 @@ Rotate/Scale handles follow the persisted array frame. Apply/Cancel/history stil
 by existing Array/object manager/session. Ordinary unchecked Array unchanged.
 Child core/codec/management/drawer/Array graph repinned842; shell/recovery markers842.
 Full local2247PASS/0FAIL/0skip; six new real geometry/raycast/gesture/history checks.
-Publication and Node22/live verification appended after completion. Device retest pending.
+User PASS2026-10-13 protects this endpoint-transform device gate.
 
 ## Protected .841 scope and authoritative owners
 User requests Live Array: ONE persistent editable Object Browser object like Live
@@ -47,13 +65,13 @@ instance-core transform/derive placement and object-join combine. No new topolog
 Whole-object affine moves/rotations/scales are recovered on reopen. Non-affine component
 edits refuse reopening instead of discarding them. Live creation currently refuses
 linked/Boolean/rich-resource/SubD/Mirror objects; ordinary Array remains available.
-Separate source component editing and conversion controls remain queued;
+Separate source component editing remains queued; conversion shipped in .843;
 endpoint rotation/scale interpolation now shipped in .842. Default Live checkbox off; explicitly check it for new arrays.
 
 object-management snapshots/restores and v1 .boxlab codec preserve/validate optional
 arrayRecipe. No schema-version change; older projects retain original encoding.
-Changed loader graph: Array841→core841; codec841→core841; object-management841→codec841;
-drawer841→object-management841. Shell/main/recovery/manager parents coherently841.
+Current loader graph: Array843→core842; codec842→core842; object-management842→codec842;
+drawer842→object-management842. Unchanged main/manager parents remain842.
 Protected source modules/frozen betas unchanged. Tests reconcile three old Array cache
 assertions with reviewed841 owner; all original semantic tests retained.
 
@@ -94,11 +112,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Await .842 device tests: scale END uniformly/axis, rotate ring/degree fields, combine
-with count/placement, Apply/reopen/Cancel/Undo/Redo, Save/Open and whole-object Move/reopen.
-Record acceptance before expanding. Source component editing and explicit conversion
-remain queued alongside richer project resources/measured performance; NOM/Curve cutters/
-UV tools queued. Full requested Live Array scope lives in ROADMAP.md.
+Await .843 device test: reopen Live Array, Convert to Mesh, inspect one row/shape,
+component edit, Undo/Redo and Save/Open. Apply Array must remain live and Cancel
+must preserve the prior result. Then staged Live Array source component editing
+through existing manager/tool/history owners; richer resources/performance, NOM,
+Curve cutters and UV remain queued. Protect .842 endpoint transforms and .840 drift.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
