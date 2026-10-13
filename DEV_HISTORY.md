@@ -8267,3 +8267,23 @@ e5c28a09ba20c5a66ddb2f76bf440409ab25ef38 matches checkout. Node22 CI
 38324508602/job115059953152 SUCCESS:2233PASS/0FAIL/0skip. Pages38324508260
 SUCCESS. Fresh pinned live shell/manifest/manager byte-match. Diagnostic-only source
 write trace; .837 user FAIL remains unresolved, exact device caller evidence pending.
+
+
+## .839 — Live world mesh identity / instance-local feedback repair — 2026-10-13
+
+User .838 SOURCE WRITE screenshot identifies stack: live-mesh-bridge event→quad-clean
+update→manager objects getter→saveActive component. Repeated local inverse subtracts
+placement1.6875733 from sourceZ on each bridge notification. Actual bridge169 setter
+ignored explicit main publication after first owner, while last edges() heuristic promoted
+temporary instance-local meshes during cage add. Their promotion feeds source writes and
+further helper edges; explains directional cumulative drift and Array same shared path.
+
+New explicit core owner priority in EXISTING bridge getter/setter; body/cage notification
+tracks core identity and ignores helper edges after publication. Preserve legacy inference
+before explicit main mesh. Four nativeMesh/THREEGroup/actual manager regressions; first two
+FAIL on original bridge before fix. Twenty repeated events preserve source/world identity;
+real bridge observers/saveActive peer-sync keep originals and allow true component edits.
+Full Node242237PASS/0FAIL/0skip, revised sharing focused PASS. No modelling/transform kernel
+or Multi1.0 changes; .833/.836/.837 device failures accurately retained in history. Bridge/
+face-workflow dynamic parent/drawer839 pins reviewed; other source bytes unchanged.
+Device Linked/Array move→Face and project/history gate pending before feature expansion.

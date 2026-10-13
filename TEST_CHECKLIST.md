@@ -5746,3 +5746,16 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [x] Test checks component source write and no extra source mutation/revision.
 - [ ] Gesture Debug ON; reproduce Linked Duplicate/Array move→Face; capture SOURCE WRITE stack lines.
 - [ ] Do not mark linked source drift repaired until device PASS.
+
+
+## .839 live mesh identity / inverse placement feedback
+
+- [x] User .838 stack evidence identifies bridge→quad-clean→objects getter→saveActive source writes.
+- [x] Two new native tests fail on old bridge and pass after explicit core owner priority.
+- [x] Temporary local/helper edges cannot replace published world mesh;20events do not accumulate inverse placement.
+- [x] Actual manager/bridge observers preserve source/original; genuine component edit still shares.
+- [x] Identity notifications bounded, next core clone honored; legacy cage inference preserved pre-publication.
+- [x] Local2237PASS/0FAIL/0skip; revised focused sharing checks pass.
+- [ ] Linked Duplicate straight/diagonal move→Face/Edge/Vertex: both positions remain exact.
+- [ ] Array, move copy, switch Face: all positions remain; component edit sharing normal.
+- [ ] Undo/Redo/Make Unique/linked Save/Open and Pencil navigation still work.

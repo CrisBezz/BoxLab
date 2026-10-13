@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.832",
+      "url": "./src/drawer-ui.js?v=0.36.18.839",
       "target": "src/drawer-ui.js",
-      "sha256": "42b514d2f3304c920582a8eab9267bdf97fd941cf31ce7a05e2f383535ae12ab"
+      "sha256": "fb965637a711d14f755f6b9533cf8d4d7dc28be3c85707885ab336e956ca096a"
     },
     {
       "owner": "index.html",
@@ -259,7 +259,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.838",
+      "url": "./src/gesture-debug.js?v=0.36.18.839",
       "target": "src/gesture-debug.js",
       "sha256": "611155d3e5da43a7be35f811ac5a23eec18d3a2c772b6c645895e4836d57894c"
     },
@@ -303,7 +303,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.838",
+      "url": "./src/main.js?v=0.36.18.839",
       "target": "src/main.js",
       "sha256": "eed02da992c9e29789f5faf1de984249900791395c0e5a55ce9a1eac2eaa5d63",
       "sourceVersion": "0.35.1"
@@ -329,7 +329,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.838",
+      "url": "./src/multi-object.js?v=0.36.18.839",
       "target": "src/multi-object.js",
       "sha256": "1465d562a70fc132a678d2aea10ac415dc01462cc192d0ee1849ae4c79b2a72c"
     },
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.838",
+      "url": "./src/release-bootstrap.js?v=0.36.18.839",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.838",
+      "url": "./src/release-version.js?v=0.36.18.839",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -563,7 +563,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/transform-upgrade.js?v=0.36.18.838",
+      "url": "./src/transform-upgrade.js?v=0.36.18.839",
       "target": "src/transform-upgrade.js",
       "sha256": "2cf09f40d82c9237de2049a08d5d5250987f5be137f4ed36fb4b2b9b327dda2e"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.706",
+      "url": "./face-workflow-layout.js?v=0.36.18.839",
       "target": "src/face-workflow-layout.js",
-      "sha256": "956225ac4325a4597c5bf45b51669275387c838d1877085394165c0ab8d4c94f"
+      "sha256": "5d7e9479a93388c4aa34644d74464931932665066b2656ee5c90dbc0162e0e4a"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1315,9 +1315,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./live-mesh-bridge.js?v=0.36.18.169",
+      "url": "./live-mesh-bridge.js?v=0.36.18.839",
       "target": "src/live-mesh-bridge.js",
-      "sha256": "7ac1ff5826b1fb98a4ae5b87716b8d106870e56b3558cffef7f4bb95caf3301a"
+      "sha256": "664e6314e95500f827840db7c2617ac339b9b335baa1edd45546378af4242d24"
     },
     {
       "owner": "src/face-workflow-layout.js",

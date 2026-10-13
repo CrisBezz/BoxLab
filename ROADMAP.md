@@ -4,7 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .838 exact instancing source-write audit / frozen Beta 7, 2026-10-13
+## Current direction — .839 live-mesh identity feedback repair / frozen Beta 7, 2026-10-13
+
+.838 stack identifies temporary instance-local mesh stealing live-world bridge identity,
+then inverse placement repeatedly shifts source. .839 bridge honors explicit main owner,
+ignores helper edges after publication and publishes bounded identity events. New tests
+fail on actual old bridge/pass repaired; full2237PASS/0FAIL. Device Linked/Array move→Face
+and linked-file gate pending before further feature work. .830/.831 PASS protected.
+
+## Previous direction — .838 exact instancing source-write audit / frozen Beta 7, 2026-10-13
 
 User .837 repair FAIL. .838 traces exact authoritative shared-source assignment, branch,
 geometry bounds/placement and caller stack through existing Debug. No behavior change;

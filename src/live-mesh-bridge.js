@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { EditableMesh } from './mesh.js?v=0.12';
 
-// BoxLab v0.36.18.169 — authoritative rendered-cage mesh accessor.
+// BoxLab v0.36.18.839 — authoritative rendered-cage mesh accessor.
 // Helper/diagnostic modules also call EditableMesh.edges(), so the last mesh to
 // call edges() is not necessarily the editable mesh being shown. Track that
 // transient owner separately, and only promote it when core adds one of its
@@ -12,10 +12,11 @@ const baseEdges=EditableMesh.prototype.edges;
 const baseAdd=THREE.Group.prototype.add;
 let pendingEdgesOwner=null;
 let renderedMeshOwner=null;
+let explicitCoreMesh=null;
 let fallbackMesh=globalThis.__boxlabBridgeState?.mesh||null;
 
 function state(){return globalThis.__boxlabBridgeState ||= {};}
-function liveMesh(){return renderedMeshOwner||fallbackMesh||null;}
+function liveMesh(){return explicitCoreMesh||renderedMeshOwner||fallbackMesh||null;}
 function installMeshAccessor(){
   const s=state();
   const descriptor=Object.getOwnPropertyDescriptor(s,'mesh');
@@ -27,7 +28,9 @@ function installMeshAccessor(){
     configurable:true,
     enumerable:true,
     get:getter,
-    set(value){if(value&&!renderedMeshOwner)fallbackMesh=value;}
+    // main publishes its lexical mesh before every rebuild. This explicit
+    // owner must outrank edge queries on temporary instance-local meshes.
+    set(value){if(value){explicitCoreMesh=value;fallbackMesh=value;}}
   });
 }
 
@@ -44,9 +47,11 @@ if(!EditableMesh.prototype.__boxlabLiveMeshBridgeEdges169){
 if(!THREE.Group.prototype.__boxlabLiveMeshBridgeAdd169){
   THREE.Group.prototype.add=function(...objects){
     const renderedCageEdge=objects.some(object=>object?.userData?.kind==='edge');
-    if(renderedCageEdge&&pendingEdgesOwner){
-      const changed=renderedMeshOwner!==pendingEdgesOwner;
-      renderedMeshOwner=pendingEdgesOwner;
+    const renderedBody=objects.some(object=>object?.userData?.kind==='body');
+    const candidate=explicitCoreMesh||pendingEdgesOwner;
+    if(candidate&&(renderedCageEdge||explicitCoreMesh&&renderedBody)){
+      const changed=renderedMeshOwner!==candidate;
+      renderedMeshOwner=candidate;
       fallbackMesh=renderedMeshOwner;
       installMeshAccessor();
       if(changed)window.dispatchEvent(new Event('boxlab-bridge-state'));
@@ -59,4 +64,4 @@ if(!THREE.Group.prototype.__boxlabLiveMeshBridgeAdd169){
 // Force one cage rebuild so the bridge captures the actual core cage owner.
 queueMicrotask(()=>document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})));
 
-globalThis.__boxlabLiveMeshBridge={version:'0.36.18.169',mesh:liveMesh};
+globalThis.__boxlabLiveMeshBridge={version:'0.36.18.839',mesh:liveMesh};
