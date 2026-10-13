@@ -8463,3 +8463,14 @@ native raycasts, hidden-owner restoration and rebuild/event/repeated toggle hand
 Full2259PASS/0FAIL/0skip. Reviewed loader path Clean845→face-workflow845→drawer845→
 shell845; current manifest/recovery845 coherent, protected runtime/frozen beta unchanged.
 Device Clean On/Off/rebuild sanity pending; source844 acceptance protected.
+
+
+## .845 publication verified — 2026-10-13
+
+Release2ebc4138775f6977182b1d373cbd9ca852ff69dd; tested tree
+f0049e567ae6118fda9c00900f7dc06907a5ea1a exactly matches local validated checkout.
+Node22 CI38377613150/job115229836452 SUCCESS:2259PASS/0FAIL/0skip.
+Pages38377611930 SUCCESS. Fresh live shell/manifest/drawer845/face-workflow845/
+Clean845, protected Multi1.0 and frozenBeta7 version byte-match repository.
+Initial shell/manifest reads preceded deployment; subsequent reads match845.
+.844 source-editor user PASS protected; iPad Clean On/Off/rebuild gate pending.

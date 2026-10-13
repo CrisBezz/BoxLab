@@ -20,7 +20,7 @@ suppressed visibility restoration, rebuild/bridge/render event upkeep and repeat
 Full local Node24:2259PASS/0FAIL/0skip. Clean845→face-workflow845→drawer845→shell845
 cache graph reviewed; release/recovery845. Main/render/kernel/Array844 unchanged;
 protected Multi1.0, Loop715, Extrude802, Boolean806 and frozen betas untouched.
-Publication/Node22/live verification appended after completion.
+Publication/Node22/live verification recorded below.
 
 ## Protected .844 scope — user PASS2026-10-13
 User PASS .843 protects Convert to Mesh, current preview shape, one-object conversion,
@@ -192,3 +192,14 @@ Pages38375667131 SUCCESS. Fresh live shell/manifest/Array844/source-editor844/
 source-core844, unchanged Array-core842, protected Multi1.0 and frozenBeta7 version
 byte-match repository. Earlier predeployment GETs returned843/404; complete
 postdeployment graph now verified. Device source-edit/exit/history/project gate pending.
+
+
+## .845 publication verified — 2026-10-13
+
+Release2ebc4138775f6977182b1d373cbd9ca852ff69dd; tested tree
+f0049e567ae6118fda9c00900f7dc06907a5ea1a exactly matches local validated checkout.
+Node22 CI38377613150/job115229836452 SUCCESS:2259PASS/0FAIL/0skip.
+Pages38377611930 SUCCESS. Fresh live shell/manifest/drawer845/face-workflow845/
+Clean845, protected Multi1.0 and frozenBeta7 version byte-match repository.
+Initial shell/manifest reads preceded deployment; subsequent reads match845.
+.844 source-editor user PASS protected; iPad Clean On/Off/rebuild gate pending.
