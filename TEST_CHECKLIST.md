@@ -5759,3 +5759,14 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Linked Duplicate straight/diagonal move→Face/Edge/Vertex: both positions remain exact.
 - [ ] Array, move copy, switch Face: all positions remain; component edit sharing normal.
 - [ ] Undo/Redo/Make Unique/linked Save/Open and Pencil navigation still work.
+
+
+## .840 idle linked-source writes / legacy bridge chain
+
+- [x] .839 user FAIL: idle object-origin reads trigger repeated source writes.
+- [x] Actual bridge-topology wrapper loaded before live bridge in regression;3checks FAIL on839.
+- [x] Explicit main publishCoreMesh precedes state assignment; generic helper assignments cannot replace core.
+- [x]20redraws/1000idle linked save reads preserve world/source geometry and revision0.
+- [x] Genuine component edit still shares, legacy pre-core inference stays supported.
+- [ ] Fresh Linked Duplicate > diagonal move > Face > idle10seconds: no SOURCE WRITE churn/drift.
+- [ ] Array idle/edit sharing and Undo/Redo normal; external navigation and project Open remain protected.

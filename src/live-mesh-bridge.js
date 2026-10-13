@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { EditableMesh } from './mesh.js?v=0.12';
 
-// BoxLab v0.36.18.839 — authoritative rendered-cage mesh accessor.
+// BoxLab v0.36.18.840 — authoritative rendered-cage mesh accessor.
 // Helper/diagnostic modules also call EditableMesh.edges(), so the last mesh to
 // call edges() is not necessarily the editable mesh being shown. Track that
 // transient owner separately, and only promote it when core adds one of its
@@ -28,9 +28,9 @@ function installMeshAccessor(){
     configurable:true,
     enumerable:true,
     get:getter,
-    // main publishes its lexical mesh before every rebuild. This explicit
-    // owner must outrank edge queries on temporary instance-local meshes.
-    set(value){if(value){explicitCoreMesh=value;fallbackMesh=value;}}
+    // Legacy edge wrappers write here too: assignment is not proof of main ownership.
+    // Only publishCoreMesh may establish/replace the authoritative core owner.
+    set(value){if(value&&!explicitCoreMesh)fallbackMesh=value;}
   });
 }
 
@@ -64,4 +64,4 @@ if(!THREE.Group.prototype.__boxlabLiveMeshBridgeAdd169){
 // Force one cage rebuild so the bridge captures the actual core cage owner.
 queueMicrotask(()=>document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true})));
 
-globalThis.__boxlabLiveMeshBridge={version:'0.36.18.839',mesh:liveMesh};
+globalThis.__boxlabLiveMeshBridge={version:'0.36.18.840',mesh:liveMesh,publishCoreMesh(value){if(!value)return false;explicitCoreMesh=value;fallbackMesh=value;return true;}};

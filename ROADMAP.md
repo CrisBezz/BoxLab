@@ -4,7 +4,14 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .839 live-mesh identity feedback repair / frozen Beta 7, 2026-10-13
+## Current direction — .840 explicit core publication / frozen Beta 7, 2026-10-13
+
+.839 user FAIL: idle source writes. Legacy bridge-topology edges also writes state.mesh;
+.840 dedicated main publication prevents those helper writes taking live ownership.
+Expanded actual legacy/live/manager chain fails839, passes840 with1000idle reads stable.
+Fresh Linked/Array idle and editing device gate pending. Features remain paused.
+
+## Previous direction — .839 live-mesh identity feedback repair / frozen Beta 7, 2026-10-13
 
 .838 stack identifies temporary instance-local mesh stealing live-world bridge identity,
 then inverse placement repeatedly shifts source. .839 bridge honors explicit main owner,

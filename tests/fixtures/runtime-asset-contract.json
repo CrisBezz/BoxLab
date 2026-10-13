@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.839",
+      "url": "./src/drawer-ui.js?v=0.36.18.840",
       "target": "src/drawer-ui.js",
-      "sha256": "fb965637a711d14f755f6b9533cf8d4d7dc28be3c85707885ab336e956ca096a"
+      "sha256": "931056d976ec69a3571c35c5031e9da24d145f0122b5c65ff5856854181eaa98"
     },
     {
       "owner": "index.html",
@@ -259,7 +259,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/gesture-debug.js?v=0.36.18.839",
+      "url": "./src/gesture-debug.js?v=0.36.18.840",
       "target": "src/gesture-debug.js",
       "sha256": "611155d3e5da43a7be35f811ac5a23eec18d3a2c772b6c645895e4836d57894c"
     },
@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.839",
+      "url": "./src/main.js?v=0.36.18.840",
       "target": "src/main.js",
-      "sha256": "eed02da992c9e29789f5faf1de984249900791395c0e5a55ce9a1eac2eaa5d63",
+      "sha256": "117035722c22026f61f9a683bfa68a2a05ccd5db0b3bb47f252eadc8792243d2",
       "sourceVersion": "0.35.1"
     },
     {
@@ -329,7 +329,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.839",
+      "url": "./src/multi-object.js?v=0.36.18.840",
       "target": "src/multi-object.js",
       "sha256": "1465d562a70fc132a678d2aea10ac415dc01462cc192d0ee1849ae4c79b2a72c"
     },
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.839",
+      "url": "./src/release-bootstrap.js?v=0.36.18.840",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.839",
+      "url": "./src/release-version.js?v=0.36.18.840",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -563,7 +563,7 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/transform-upgrade.js?v=0.36.18.839",
+      "url": "./src/transform-upgrade.js?v=0.36.18.840",
       "target": "src/transform-upgrade.js",
       "sha256": "2cf09f40d82c9237de2049a08d5d5250987f5be137f4ed36fb4b2b9b327dda2e"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.839",
+      "url": "./face-workflow-layout.js?v=0.36.18.840",
       "target": "src/face-workflow-layout.js",
-      "sha256": "5d7e9479a93388c4aa34644d74464931932665066b2656ee5c90dbc0162e0e4a"
+      "sha256": "546f6780ff80c38335b4f8051d18821a35418aa4ba86653b5e7b82b0d052baf7"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1315,9 +1315,9 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./live-mesh-bridge.js?v=0.36.18.839",
+      "url": "./live-mesh-bridge.js?v=0.36.18.840",
       "target": "src/live-mesh-bridge.js",
-      "sha256": "664e6314e95500f827840db7c2617ac339b9b335baa1edd45546378af4242d24"
+      "sha256": "5d8aa0c0e9c17b38f58283eb18c652c82f4bf39a40fb24bbf1ed24c3eb72b0cf"
     },
     {
       "owner": "src/face-workflow-layout.js",

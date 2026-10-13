@@ -8297,3 +8297,21 @@ Release73d80488d9db90cca117f15fc0281ea74a4076da; tested tree
 SUCCESS. Fresh pinned live shell/manifest/bridge/face-workflow parent/drawer byte-match.
 Actual old bridge failed two new reproduction checks; repaired suite green. iPad
 Linked Duplicate/Array drift acceptance still pending, not inferred from automation.
+
+
+## .840 — Explicit main publication versus legacy edge writes — 2026-10-13
+
+User .839 idle SOURCE WRITE infinite loop: object-origin markerLoop→activeObject→manager
+objects getter→saveActive. .839 test omission found: bridge-topology installs edges wrapper
+state.mesh=this before calling edges. Generic setter therefore accepted temporary local
+helper as 'explicit' core, sustaining offset feedback. Expanded native tests load actual
+legacy bridge-topology FIRST; three FAIL on839. Fix dedicated publishCoreMesh API in
+existing live bridge, invoked by main before old state assignment/rebuild. Only this API
+updates core owner; generic setter merely fallback before core publication. Legacy edges
+cannot replace authoritative world. Body/cage publish bounded.20rebuilds/1000idle reads,
+actual manager/peer chain stable revision0; true component edit still shares. No new
+instance/transform maths, no debugging suppression; diagnostic logging retained. Main/
+bridge/parent face-workflow/drawer840 loader graph reviewed; protected/frozenBeta unchanged.
+Device fresh linked/Array scene idle10s and edit/history gate pending.
+
+.840 full local Node24:2237PASS/0FAIL/0skip; fresh-scene device retest pending.

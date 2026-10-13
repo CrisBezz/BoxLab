@@ -1,9 +1,9 @@
-# BoxLab AI Handoff — .839 authoritative live-mesh identity repair
+# BoxLab AI Handoff — .840 explicit main mesh publication
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main, live https://crisbezz.github.io/BoxLab/, release0.36.18.839.
+CrisBezz/BoxLab main, live https://crisbezz.github.io/BoxLab/, release0.36.18.840.
 Repository is source of truth. Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST,
-recent DEV_HISTORY and ROADMAP before code. .839 device acceptance pending.
+recent DEV_HISTORY and ROADMAP before code. .839 user FAIL: idle marker loop source writes continue. .840 retest pending.
 FrozenBeta7 .807 / Beta2–6 immutable. Protected Multi1.0/Loop715/Extrude802/Boolean806,
 all accepted Pencil/navigation/selection behaviours unchanged. .830/.831 user PASS protected.
 
@@ -48,11 +48,29 @@ association and full cross-session history are not implemented.
 .830 new Balloon grid recipes balloonGridVersion2 compact unused poles; legacy recipes
 preserve exact indices/editability. .820/.821/.824/.825/.826/.828 passes protected.
 
+## .840 complete owner-chain correction / .839 FAIL
+User .839 screenshot shows idle SOURCE WRITE stack through object-origin markerLoop→
+manager objects getter; source/live centres change repeatedly with no input. Missing owner
+in .839 fixture: bridge-topology.js installs edges() wrapper assigning state.mesh=this on
+EVERY mesh, including inverse-local helpers. .839 setter mistook these as explicit main
+publication, so source steal remained. Expanded existing fixture loads actual legacy
+bridge-topology installer FIRST; three checks FAIL on .839 before this fix.
+
+Main now calls live-mesh-bridge.publishCoreMesh(mesh) before its existing state.mesh
+assignment and root rebuild. Only this explicit API establishes/replaces authoritative
+core mesh. Generic setter stores fallback only before core publication; legacy helper
+state.mesh=this can never replace core. Body/cage identity events remain bounded.
+Actual legacy/live bridges + inverse math + linked-save/peer-sync chain tests:20redraws
+and1000idle manager reads keep world/source identity and revision0; true component edit
+still shares. No removed tests, no instancing maths/transform change. Main/bridge840,
+face-workflow/drawer parents840 repinned; protected modules and frozenBeta unchanged.
+Full local validation/publication listed when verified. .839 not marked accepted.
+
 ## Next
-First .839 Linked Duplicate→straight/diagonal move→Face/Edge/Vertex, then Array→move
-instance→Face: original/copies keep position; genuine component edits still share. Check
-Undo/Redo, Make Unique, linked project Save/Open and navigation. No feature expansion until
-this concrete drift case passes. Then rich resources/performance, NOM/Curve cutters/UV.
+Fresh scene on .840; Debug ON; Linked Duplicate→diagonal move→Face, leave untouched10s:
+no source-write churn or drift. Repeat Array and genuine component edit sharing/Undo.
+Do not hide/rate-limit writes as a substitute for resolving feedback. No new features
+until this concrete idle drift/device case passes.
 
 ## Release protocol
 /nextbuild = audit, one narrow main build, coherent shell/title/data/version.json/recovery,
@@ -64,3 +82,5 @@ Release73d80488d9db90cca117f15fc0281ea74a4076da; tree412ef04a5181dc7d7723efaf362
 Node22 CI38325878624/job115064302371 SUCCESS2237PASS/0FAIL/0skip.
 Pages38325878737 SUCCESS; pinned live shell/manifest/bridge/both parent loaders byte-match.
 Device Linked Duplicate/Array move→Face gate pending.
+
+.840 full local Node24:2237PASS/0FAIL/0skip; fresh-scene device retest pending.
