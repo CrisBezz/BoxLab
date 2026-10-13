@@ -8598,3 +8598,14 @@ run caught publication/clear adjacency interruption; declaration moved before pu
 to full function line, retaining all original ordering assertions. Full2273PASS/0FAIL/
 0skip. Main/shell/recovery850 reviewed, helper812 and other pins retained. Device timing,
 visual/picking/history/modifier/render-look gates pending; no hardware speed claim.
+
+
+## .850 publication verified — 2026-10-13
+
+Release35f5037d586d8f274f6dc51c5b822a4b4e138c14; tested tree
+5ac5d7a17c976f07e4f85a613a228c9cf2cac1d1 exactly matches local validated checkout.
+Node22 CI38400809245/job115307642524 SUCCESS:2273PASS/0FAIL/0skip.
+Pages38400808087 SUCCESS. Fresh live shell/manifest/main850, unchanged cache812,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
+returned849 during deployment; postdeployment verification matches850. Device active
+geometry/performance/visual/history/modifier gate pending; no full849 PASS inferred.

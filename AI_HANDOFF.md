@@ -27,7 +27,7 @@ publication/clear/add ordering assertions retained. Initial insertion broke sour
 adjacency; final declaration precedes publication, preserving protected sequence.
 Full local Node24:2273PASS/0FAIL/0skip. Main850→unchanged cache812; shell/recovery850;
 manager849/monitor+core848/Array844/drawer846/Clean845/Cage846/protected pins retained.
-Publication/Node22/live verification follows. Manual same-scene selection/edit/history/
+Publication/Node22/live verification recorded below. Manual same-scene selection/edit/history/
 modifier/render-look gate pending; edits still recompute changed native displays.
 
 ## .849 scope — device evidence captured, full gate pending
@@ -344,3 +344,14 @@ Node22 CI38395647448/job115290048343 SUCCESS:2271PASS/0FAIL/0skip.
 Pages38395648071 SUCCESS. Fresh live shell/manifest/manager849, unchanged cache812,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Screenshot848
 baseline recorded; comparable849 visual/resource/phase capture pending.
+
+
+## .850 publication verified — 2026-10-13
+
+Release35f5037d586d8f274f6dc51c5b822a4b4e138c14; tested tree
+5ac5d7a17c976f07e4f85a613a228c9cf2cac1d1 exactly matches local validated checkout.
+Node22 CI38400809245/job115307642524 SUCCESS:2273PASS/0FAIL/0skip.
+Pages38400808087 SUCCESS. Fresh live shell/manifest/main850, unchanged cache812,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
+returned849 during deployment; postdeployment verification matches850. Device active
+geometry/performance/visual/history/modifier gate pending; no full849 PASS inferred.
