@@ -8662,3 +8662,14 @@ modifier/ShowCage/SubD transitions, direct edit/Undo and fresh independent base 
 removed fixture base work; original timing/counter semantics retained. Full2278PASS/
 0FAIL/0skip. Main/shell/recovery852 reviewed; builder851/cache812/manager849 and protected/
 frozen sources unchanged. Device gate pending; no iPad speed claim.
+
+
+## .852 publication verified — 2026-10-14
+
+Releasee71bf18a927d54cb1a9b6fba0224c0d88254469c; tested tree
+ae0f6921afc21c658d5e005db58d3a08d7b1c66e exactly matches local validated checkout.
+Node22 CI38485760091/job115598883328 SUCCESS:2278PASS/0FAIL/0skip.
+Pages38485759871 SUCCESS. Fresh live shell/manifest/main852, unchanged builder851,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment reads
+returned851; subsequent complete release verification matches852. User851 PASS
+protected;852 SubD/Mirror/cage/history/export device gate pending, no speed claim.

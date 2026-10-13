@@ -21,7 +21,7 @@ visible surface/cage parity, direct edit/Undo and independent fresh base export.
 rather than2/22ms; all phase/counter/scene/cage semantics retained. Full2278PASS/0FAIL/
 0skip. Main852→unchanged builder851/cache812; shell/recovery852; manager849/monitor+core848/
 Array844/drawer846/Clean845/CageIntensity846/protected/frozen pins unchanged.
-Publication/Node22/live verification follows. No quantified iPad speed claim; dense
+Publication/Node22/live verification recorded below. No quantified iPad speed claim; dense
 native SubD edits still recompute.851 accepted independently of earlier capture evidence.
 
 ## Protected .851 scope — user PASS2026-10-14
@@ -411,3 +411,14 @@ selection/edit/UndoRedo/modifier/render-look baseline. Attached screenshot visib
 Inactive0.5/18ms, Cage0.1/6ms; active64hits/30misses, inactive194hits/2misses,
 59FPS displayed. Capture is851 evidence, not a controlled850 benchmark or explicit
 851 Vertex-mode visibility PASS. Keep851 hands-on gate pending; no new build.
+
+
+## .852 publication verified — 2026-10-14
+
+Releasee71bf18a927d54cb1a9b6fba0224c0d88254469c; tested tree
+ae0f6921afc21c658d5e005db58d3a08d7b1c66e exactly matches local validated checkout.
+Node22 CI38485760091/job115598883328 SUCCESS:2278PASS/0FAIL/0skip.
+Pages38485759871 SUCCESS. Fresh live shell/manifest/main852, unchanged builder851,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment reads
+returned851; subsequent complete release verification matches852. User851 PASS
+protected;852 SubD/Mirror/cage/history/export device gate pending, no speed claim.
