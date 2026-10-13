@@ -1,9 +1,10 @@
-// BoxLab v0.36.18.179 — Clean View presentation layer.
+// BoxLab v0.36.18.845 — Clean View presentation layer.
 // Visual only: hides modelling cage overlays without changing mesh, selection,
 // History, topology, render look or THREE.Group.add ownership.
 
-const VERSION='0.36.18.179';
-const HIDDEN_KINDS=new Set(['edge','vertex','mirror-edge','edge-selection-overlay']);
+const VERSION='0.36.18.845';
+const HIDDEN_KINDS=new Set(['edge','vertex','mirror-edge','edge-selection-overlay','cage-edge-batch','cage-vertex-batch']);
+const previousVisibility=new WeakMap();
 let enabled=false;
 let raf=0;
 let lastTouchToggle=0;
@@ -16,7 +17,13 @@ function applyToScene(){
   const scene=state()?.scene;
   if(!scene)return false;
   scene.traverse(object=>{
-    if(shouldHide(object))object.visible=!enabled;
+    if(!shouldHide(object))return;
+    if(enabled){
+      if(!previousVisibility.has(object))previousVisibility.set(object,object.visible);
+      object.visible=false;
+    }else if(previousVisibility.has(object)){
+      object.visible=previousVisibility.get(object);previousVisibility.delete(object);
+    }
   });
   return true;
 }

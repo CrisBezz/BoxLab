@@ -8449,3 +8449,17 @@ Pages38375667131 SUCCESS. Fresh live shell/manifest/Array844/source-editor844/
 source-core844, unchanged Array-core842, protected Multi1.0 and frozenBeta7 version
 byte-match repository. Earlier predeployment GETs returned843/404; complete
 postdeployment graph now verified. Device source-edit/exit/history/project gate pending.
+
+
+## .844 user PASS / .845 Clean View cage batching repair — 2026-10-13
+
+User PASS .844 then reports VIEW Clean does not work. Screenshot844 confirms Clean On
+with visible cage lines/markers. Audit: .810 creates cage-edge-batch/cage-vertex-batch;
+Clean179 only hides individual proxies/mirror/selection overlay kinds. Extend existing
+Clean owner to batch kinds; remember prior visibility so Off cannot reveal previously
+suppressed overlays. No geometry/render-look/selection/history/gesture changes.
+Three native tests use actual THREE cage batch/proxy builder, check visibility versus
+native raycasts, hidden-owner restoration and rebuild/event/repeated toggle handling.
+Full2259PASS/0FAIL/0skip. Reviewed loader path Clean845→face-workflow845→drawer845→
+shell845; current manifest/recovery845 coherent, protected runtime/frozen beta unchanged.
+Device Clean On/Off/rebuild sanity pending; source844 acceptance protected.

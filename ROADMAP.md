@@ -4,7 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .844 staged Live Array source editing / frozen Beta 7, 2026-10-13
+## Current direction — .845 Clean View repair / frozen Beta 7, 2026-10-13
+
+User PASS .844 protects Live Array source editing. Clean On screenshot still shows
+batched cage: existing Clean owner now handles810 batch kinds and restores prior
+visibility safely. Full2259PASS/0FAIL; iPad Clean/rebuild/restore gate pending.
+No broader feature change. Resume project resources/performance or concrete Live
+Array polish after this repair is accepted; source editing and conversion are passed.
+
+## Previous direction — .844 staged Live Array source editing / frozen Beta 7, 2026-10-13
 
 User PASS .843 protects explicit conversion. Edit Source isolates the placed original
 on the same object, with existing component tools and local Undo/Redo. Apply Source

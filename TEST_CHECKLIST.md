@@ -5839,3 +5839,16 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Source Apply then scene Undo/Redo restores old/new array; reopen count/END values unchanged.
 - [ ] Whole-object Move/Rotate first, then source edit: placement and progressive END effects retained.
 - [ ] Save/Open .boxlab, reopen source editing; conversion/ordinary Array/Pencil orbit-pan-pinch remain protected.
+
+
+## .844 user PASS / .845 Clean View batched cage
+
+- [x] User PASS .844 source/edit/exit/local+scene history/project gate protected.
+- [x] Actual batched edges/instanced vertex markers, mirrored cage and legacy selection overlays hide in Clean On; body and native raycast hits unchanged.
+- [x] Clean Off restores prior visibility without revealing suppressed group/hidden overlays; unrelated nodes retained.
+- [x] New cage/rebuild/bridge/render events and repeated toggle cycles retain the Clean state.
+- [x] Full local2259PASS/0FAIL/0skip; reviewed Clean/face-workflow/drawer/shell parent pins pass.
+- [ ] VIEW > Clean On: cage lines and white vertex dots disappear, model remains visible.
+- [ ] Clean Off: normal cage returns; selection and Pencil/finger orbit-pan-pinch still work.
+- [ ] Clean On, edit or switch component mode/Undo/Redo: cage stays hidden after rebuild.
+- [ ] Mirror/SubD and Live Array source Apply/Cancel retain their accepted behaviour.

@@ -1,13 +1,28 @@
-# BoxLab AI Handoff — .844 staged Live Array source editing
+# BoxLab AI Handoff — .845 Clean View batch repair
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.844.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.845.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .844 scope — device acceptance pending
+## .845 scope — device acceptance pending
+User PASS .844 protects staged source editing/local Undo/Cancel/Apply, regenerated
+array count/END transforms, scene history/project gate. User screenshot confirms844
+Clean On leaves visible cage edges/vertex dots. Root cause: Clean owner predates810
+batched cage and only hides old proxy/overlay kinds. Existing clean-view.js now also
+hides cage-edge-batch/cage-vertex-batch. WeakMap restores prior visibility on disable
+rather than revealing overlays already suppressed by another owner. Existing legacy
+kinds, surface/material look, picking proxies, geometry/history/gesture owners retained.
+Three native THREE/cage regressions cover true batch visibility and raycast equivalence,
+suppressed visibility restoration, rebuild/bridge/render event upkeep and repeat toggles.
+Full local Node24:2259PASS/0FAIL/0skip. Clean845→face-workflow845→drawer845→shell845
+cache graph reviewed; release/recovery845. Main/render/kernel/Array844 unchanged;
+protected Multi1.0, Loop715, Extrude802, Boolean806 and frozen betas untouched.
+Publication/Node22/live verification appended after completion.
+
+## Protected .844 scope — user PASS2026-10-13
 User PASS .843 protects Convert to Mesh, current preview shape, one-object conversion,
 Undo/Redo and Save/Open; .842/.841 and .840 gates remain protected.
 Reopen Live Array > Edit Source isolates its placed original mesh on the SAME scene
@@ -144,12 +159,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Await .844 iPad source edit: Face/Vertex/Edge Move or Extrude, finish its settings,
-Apply Source; all items update and one row remains. Reopen source, local Undo and
-Cancel; scene Undo/Redo; transformed array and Save/Open. Record acceptance before
-expanding. Optional generated preview/source UX polish can follow concrete feedback;
-resource persistence/measured performance, NOM, Curve cutters and UV remain queued.
-Protect .843 conversion, .842 transforms and .840 linked-source publication repair.
+Await .845 iPad Clean toggle: edges/dots disappear, off restores cage; orbit and
+edit/rebuild while Clean remains on. Check Mirror/SubD and source editing if useful.
+Source844 and conversion843 are accepted. After repair acceptance, resume requested
+Live Array polish only from concrete feedback, or staged project resources/measured
+performance; NOM/Curve cutters/UV remain queued. Preserve owner/cache audit workflow.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
