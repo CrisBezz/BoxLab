@@ -291,9 +291,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/loop-cut-commit.js?v=0.36.18.715",
+      "url": "./src/loop-cut-commit.js?v=0.36.18.853",
       "target": "src/loop-cut-commit.js",
-      "sha256": "c0408bbfd6b208609f50c01d76ae501dabaca4d8e6a95df076152078884a58b1"
+      "sha256": "df2f919ce0a28174f2c4938ff7bf0646e1f43382bb4b337c2a6e246be4034cc0"
     },
     {
       "owner": "index.html",
@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.852",
+      "url": "./src/main.js?v=0.36.18.853",
       "target": "src/main.js",
-      "sha256": "16268ba4cb0886f9a5af00f41e15d2fcb75ee3c6eef3bc8dd4100c91478e5578",
+      "sha256": "0ddb3d548790930b167be2c15522d8692e9d7e0fd0f41a4201b358b18fef288d",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.852",
+      "url": "./src/release-bootstrap.js?v=0.36.18.853",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.852",
+      "url": "./src/release-version.js?v=0.36.18.853",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },

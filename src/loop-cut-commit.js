@@ -12,7 +12,7 @@ function currentYellowEdgeKeys() {
   if (!mesh || !(s?.edgeObjects instanceof Map)) return [];
   const keys = [];
   for (const [index, object] of s.edgeObjects) {
-    const color = object?.material?.color?.getHex?.();
+    const color = (object?.userData?.cageMaterial || object?.material)?.color?.getHex?.();
     const edge = mesh.edges()[index];
     if (color === YELLOW && edge) keys.push(mesh.edgeKey(edge.a, edge.b));
   }

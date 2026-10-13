@@ -8673,3 +8673,22 @@ Pages38485759871 SUCCESS. Fresh live shell/manifest/main852, unchanged builder85
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment reads
 returned851; subsequent complete release verification matches852. User851 PASS
 protected;852 SubD/Mirror/cage/history/export device gate pending, no speed claim.
+
+
+## .852 Loop device FAIL / .853 completion owner repair — 2026-10-14
+
+User Loop MultiLoop cannot finalise; single cuts retain yellow. Screenshot852 has
+28verts/26faces/5active loops in Face mode, so recorded topology exists despite visible
+staging. Audit authoritative main/715 commit/713 viewport/810 batching: completion
+reads material.color but picking proxies now use invisible shared material, actual
+visual colour cageMaterial. Repair existing commit lookup with legacy fallback. Main
+setDirectTool clears private slide groups/slider only when leaving Loop. Background/
+mode/tool exits now retire stale rails; rearm/busy/EXACT/history semantics preserved.
+Native cut/slide kernels unchanged; protected commit owner explicitly changed for user
+bug request, no speculative kernel edit. Two real batch/kernel/history/main tests cover
+single/5cuts, slide/EXACT/native output/oneUndoRedo, rearm/finish/busy/tool-switch cleanup.
+First new test compared mesh clone's faceGroup padding, unrelated to exit state; now
+asserts unchanged native vertices/faces/creases. Full2280PASS/0FAIL/0skip; original semantic
+checks retained,713 hardcoded715 pin now reviewed asset assertion. Main853/commit853/
+shell+recovery853 hashes reviewed; builder/cache/protected Multi/frozenBeta untouched.
+Device Loop completion/editable patch/history gate pending; no new852 PASS inferred.

@@ -1,11 +1,33 @@
-# BoxLab AI Handoff — .852 skip unused active base evaluation
+# BoxLab AI Handoff — .853 Loop completion repair
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.852.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.853.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .853 scope — Loop/MultiLoop completion repair, device gate pending
+User reports852 Edge Loop MultiLoop fails to finish; single cut remains yellow.
+Screenshot852 shows28verts/26faces/5active loops after leaving to Face: topology exists
+but private slide state remains active. Do not attribute this to852 optimisation.
+Audit actual main/native cuts,715 commit,713 viewport session and810/851 batches:
+commit checks edge.material yellow, but batched proxies have invisible pick materials;
+actual colour is userData.cageMaterial. Existing commit now reads that authoritative
+material, retaining original fallback for legacy proxies. EXACT/pending detection works
+again; original scene Undo/Redo-based completion and direct edge selection retained.
+Main setDirectTool now clears activeLoopSlides/activeLoopSlide/slider when leaving
+loopCut. This covers background finish, mode switch and another tool/disarm. Rearming
+Loop preserves staged slides; busy gesture guard retained. Cut/slide kernels unchanged,
+no new event/history/geometry/visibility owner. Loop commit715 repinned853 only for this
+explicit requested bug; protected loop topology/behaviour and other kernels retained.
+Two native regressions reproduce real batched proxies + single/5cuts/placed slide,
+EXACT detection/shape/one UndoRedo and main finish/disarm/rearm/busy cleanup. Fixture
+compares native vertices/faces/creases rather than clone-normalised faceGroup padding.
+Existing632/715/713 semantic coverage retained;713 literal commit pin becomes reviewed
+asset assertion. Full2280PASS/0FAIL/0skip. Main853/commit853/shell+recovery853 coherent;
+builder851/cache812/manager849/Array844/Clean845/Soft846/frozen kernels unchanged.
+Publication/Node22/live verification follows.852 acceptance not received;851 PASS protected.
 
 ## .852 scope — avoid unused active base calculation, device gate pending
 User851 PASS protects Vertex-only visual dots, mode switching/picking/history/Clean/Soft.
@@ -293,10 +315,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-852 device: same SubD scene select/edit/UndoRedo, Performance capture; toggle Mirror
-and Show Cage, then SubD Off/On, checking body/cage shape and picking. Base OBJ export
-should match visible base with Mirror applied. Preserve850/851 accepted optimisations.
-Next measured bottleneck or project-resource work after feedback; no benchmark claim.
+853: fresh cube Edge Loop count1 and5, cut/slide then EXACT, background exit or Face
+switch. Yellow/blue active rails retire; face patches should be independently editable.
+Undo/Redo restores before/after cut. Repeat Loop on another edge before background exit.
+Preserve851 Vertex-only dots and850 GPUreuse;852 device optimisation gate still pending.
+Broader feature work waits for this Loop fix feedback.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

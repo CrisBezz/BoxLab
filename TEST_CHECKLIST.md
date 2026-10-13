@@ -5966,3 +5966,19 @@ Manual852 pending:
 - Base OBJ export remains correct with Mirror;851 dots return only in Vertex.
 Main852→builder851/cache812 unchanged; shell/recovery852 and protected pins coherent.
 No new cache/kernel/history/visibility owner and no quantified hardware gain claimed.
+
+
+## .853 Loop/MultiLoop finish regression — 2026-10-14
+
+User852 FAIL scoped to Loop completion: yellow/blue rails and5active loops in Face;
+screenshot topology counts increased. Keep851 PASS protected;852 acceptance pending.
+Automated: actual batch proxies + native single/5cuts + placed slide/commit detect
+cageMaterial yellow, exact shape and oneUndoRedo. Native main disarm/finish clears
+slide groups/slider while preserving cuts; busy guard and rearm remain. Original632/
+715/713 semantic tests retained; commit pin advanced853 through reviewed asset graph.
+Full2280PASS/0FAIL/0skip; main853/commit853/shell/recovery853 coherent, kernel unchanged.
+Manual pending853:
+- Fresh cube Edge Loop1 then5; cut/slide→EXACT→background exit: rails clear.
+- Enter Face and select/move a cut patch; confirm real faces, Undo/Redo restores cuts.
+- Repeat cuts on another edge, then exit directly via Face or another tool: no stale
+  yellow/blue lines or active-loop count. Vertex-only dots/Clean/Soft still sane.
