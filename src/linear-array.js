@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {createArrayRecipe,evaluateArray,reopenArray} from './live-array-core.js?v=0.36.18.841';
 
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
@@ -19,6 +20,7 @@ controls.className='boxlab-tool-session-shell linear-array-controls';
 controls.hidden=true;
 controls.innerHTML=`
   <div class="boxlab-tool-session-title"><span>Array</span><span class="boxlab-tool-session-subtitle">Linked instances</span></div>
+  <label class="toggle-row"><input id="linearArrayLive" type="checkbox"/><span>Live · keep one editable object</span></label>
   <div class="boxlab-tool-session-section">Direction</div>
   <div class="outliner-actions" style="grid-template-columns:repeat(4,1fr)">
     <button type="button" data-array-move="free" class="active">Free</button>
@@ -44,9 +46,11 @@ const launchButton=launchRow.querySelector('#linearArrayLaunchBtn');
 const applyButton=controls.querySelector('#linearArrayApplyBtn');
 const cancelButton=controls.querySelector('#linearArrayCancelBtn');
 const countInput=controls.querySelector('#linearArrayCount');
+const liveInput=controls.querySelector('#linearArrayLive');
 const countOut=controls.querySelector('#linearArrayCountOut');
 const moveButtons=[...controls.querySelectorAll('[data-array-move]')];
 
+let sessionSource=null,hiddenResult=null;
 let moveMode='free';
 let endpoint=new THREE.Vector3(2.5,0,0);
 let preview=null,previewArmed=false,previewObjectId=null,endpointDrag=null;
@@ -96,9 +100,12 @@ function endEndpointDrag(){
   if(canvas?.hasPointerCapture?.(pointerId))canvas.releasePointerCapture?.(pointerId);
   endpointDrag=null;
 }
+function restoreResult(){
+  if(hiddenResult){hiddenResult=null;document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
+}
 function cancelPreview({silent=false}={}){
   endEndpointDrag();
-  disposePreview();previewArmed=false;previewObjectId=null;endArraySession();
+  disposePreview();previewArmed=false;previewObjectId=null;sessionSource=null;restoreResult();endArraySession();
   if(!silent)setStatus('Array preview cancelled');
 }
 function buildPreview(){
@@ -106,12 +113,12 @@ function buildPreview(){
   const object=activeObject(),scene=state()?.scene;
   if(!object||object.id!==previewObjectId||!scene){cancelPreview({silent:true});return false;}
   disposePreview();
-  const geometry=object.mesh?.triangulatedGeometry?.();
+  const geometry=(sessionSource||object.mesh)?.triangulatedGeometry?.();
   if(!geometry)return false;
 
   const group=new THREE.Group();
   const total=count();
-  for(let i=1;i<total;i++){
+  for(let i=hiddenResult?0:1;i<total;i++){
     const isEndpoint=i===total-1;
     const fillMaterial=new THREE.MeshBasicMaterial({
       color:0x62d8ff,transparent:true,opacity:isEndpoint?.28:.11,side:THREE.DoubleSide,depthWrite:false
@@ -128,7 +135,7 @@ function buildPreview(){
     fill.renderOrder=isEndpoint?12:10;wire.renderOrder=isEndpoint?13:11;
     group.add(fill,wire);
   }
-  const center=new THREE.Box3().setFromPoints(object.mesh.vertices).getCenter(new THREE.Vector3()).add(endpoint);
+  const center=new THREE.Box3().setFromPoints((sessionSource||object.mesh).vertices).getCenter(new THREE.Vector3()).add(endpoint);
   const length=Math.max(.2,(camera()?.position.distanceTo(center)||5)*.12);
   for(const [axis,color] of [['x',0xef6b72],['y',0x71d984],['z',0x719eef]]){
     if(moveMode!=='free'&&moveMode!==axis)continue;
@@ -174,7 +181,7 @@ function worldPointOnViewPlane(event,plane){
 function hitPreview(event){
   if(!previewArmed||!preview||!camera()||!pointerNdc(event))return null;
   raycaster.setFromCamera(pointer,camera());
-  raycaster.params.Line.threshold=Math.max(.015,(camera().position.distanceTo(new THREE.Box3().setFromPoints(activeObject().mesh.vertices).getCenter(new THREE.Vector3()).add(endpoint)))*.006);
+  raycaster.params.Line.threshold=Math.max(.015,(camera().position.distanceTo(new THREE.Box3().setFromPoints((sessionSource||activeObject().mesh).vertices).getCenter(new THREE.Vector3()).add(endpoint)))*.006);
   preview.updateMatrixWorld(true);
   const hits=raycaster.intersectObject(preview,true);
   return hits.find(item=>item.object?.userData?.arrayAxis)||hits.find(item=>item.object?.userData?.arrayEndpoint===true)||null;
@@ -236,12 +243,14 @@ function sync(){
   syncCount();
   const object=activeObject(),currentMode=mode();
   const eligible=currentMode==='object'&&!!object&&!object.locked&&object.kind!=='reference';
-  if(launchButton)launchButton.disabled=!eligible;
+  if(launchButton){launchButton.disabled=!eligible;launchButton.textContent=object?.arrayRecipe?'Edit Array':'Array';}
+  if(liveInput)liveInput.disabled=!!object?.arrayRecipe;
   if(!previewArmed)return;
   if(currentMode!=='object'){cancelPreview({silent:true});return;}
   if(object?.id!==previewObjectId){
     const source=manager()?.objects?.find?.(o=>o.id===previewObjectId);
     if(source)manager()?.activate?.(previewObjectId);
+    else {cancelPreview({silent:true});return;}
   }
   if(!toolSession()?.isActive?.('array'))beginArraySession();
 }
@@ -256,6 +265,21 @@ function applyArray(){
   const m=manager(),source=activeObject();
   if(!m||!source||source.id!==previewObjectId||source.locked||source.kind==='reference')return false;
   if(endpointLength()<1e-6){setStatus('Array refused • end copy must be moved away from source');return false;}
+  if(liveInput?.checked){
+    if(source.sourceId||source.booleanRecipe||source.glbPassthrough||source.materials||source.textures||source.mesh?.uvs||source.mesh?.faceUVs||source.mesh?.uvLayers||source.mesh?.materialSlots||source.settings?.subd||Object.values(source.settings?.mirror||{}).some(Boolean)){setStatus('Live Array requires an independent geometry object');return false;}
+    try{
+      const recipe=createArrayRecipe(sessionSource||source.mesh,count(),endpoint.toArray()),result=evaluateArray(recipe);
+      restoreResult();
+      const before=globalThis.__boxlabObjectHistory?.capture?.();
+      if(!before||!m.replaceActiveMesh?.(result))throw Error('Live Array replacement unavailable');
+      source.arrayRecipe=recipe;
+      globalThis.__boxlabObjectHistory?.checkpointSnapshot?.(before,before.objects.find(o=>o.id===source.id)?.mesh);
+      m.activate?.(source.id);
+      globalThis.__boxlabObjectSelection?.refresh?.();
+      setStatus('Live Array · one object · reopen Array to edit count and END placement');
+      return true;
+    }catch(error){setStatus('Live Array refused · '+error.message);return false;}
+  }
   const before=globalThis.__boxlabObjectHistory?.capture?.()||null;
   m.saveActive?.();
   const sourceId=source.id,created=[],total=count();
@@ -331,8 +355,16 @@ launchButton?.addEventListener('click',()=>{
   const object=activeObject();
   if(!object||mode()!=='object'||object.locked||object.kind==='reference'||previewArmed)return;
   moveMode='free';moveButtons.forEach(b=>b.classList.toggle('active',b.dataset.arrayMove==='free'));
+  sessionSource=null;
   endpoint.set(2.5,0,0);
   if(countInput)countInput.value='2';
+  if(liveInput)liveInput.checked=!!object.arrayRecipe;
+  if(object.arrayRecipe){
+    try{const reopened=reopenArray(object);sessionSource=reopened.source;endpoint.copy(reopened.endpoint);countInput.value=String(reopened.count);}
+    catch(error){setStatus(error.message);return;}
+    hiddenResult={object};
+    document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));
+  }
   syncCount();
   previewArmed=true;previewObjectId=object.id;
   beginArraySession();
@@ -341,7 +373,7 @@ launchButton?.addEventListener('click',()=>{
 applyButton?.addEventListener('click',()=>{
   if(!previewArmed)return;
   if(applyArray()){
-    disposePreview();previewArmed=false;previewObjectId=null;endArraySession();
+    disposePreview();previewArmed=false;previewObjectId=null;sessionSource=null;restoreResult();endArraySession();
   }
 });
 cancelButton?.addEventListener('click',()=>cancelPreview());
@@ -353,8 +385,9 @@ window.addEventListener('beforeunload',()=>{document.removeEventListener('pointe
 sync();
 
 globalThis.__boxlabLinearArray={
-  version:'0.36.18.418',
+  version:'0.36.18.841',
   get active(){return previewArmed;},
+  get hiddenObjectId(){return hiddenResult?.object.id??null;},
   get dragging(){return!!endpointDrag;},
   get endpoint(){return endpoint.clone();},
   ownsPoint:event=>!!hitPreview(event),

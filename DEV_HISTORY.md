@@ -8343,3 +8343,20 @@ last-item rotation/scale distributed gradually from original to endpoint, alongs
 existing end-copy placement. Record source/count/placement/endpoint reopening,
 history/project persistence and authoritative-owner audit in roadmap/handoff.
 Documentation only; runtime remains accepted .840. No manual test required.
+
+
+## .841 — Persistent Live Array foundation — 2026-10-13
+
+User /nextbuild after Live Array roadmap request. Audit: existing linear-array END
+preview/linked manager, Live Boolean presentation/history and v1 project codec are
+owners. Add optional Live checkbox; unchecked Array retains linked copies. Live Apply
+keeps same single scene object with arrayRecipe v1, combined disconnected geometry via
+existing instance/join helpers. Reopen source/count/END placement, hide result only
+through manager display policy, preserve whole-object affine transforms. Refuse
+non-affine edits/rich/linked/Boolean/modifier inputs rather than overwrite attributes.
+Scene snapshots and project codec preserve recipes. Explicit pre-result history token
+fix discovered by real Undo test; one Apply step restores recipe/mesh on Undo/Redo.
+Session Undo cancels preview first. Count/spacing shipped; endpoint scale/rotation and
+source editing remain queued. No new modelling kernel or protected/frozen changes.
+Four native tests plus existing suite:2241PASS/0FAIL/0skip. Three stale Array pin
+assertions updated to reviewed841 loader; semantic coverage retained. iPad gate pending.

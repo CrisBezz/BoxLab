@@ -284,12 +284,14 @@ function saveActive() {
 
 function activeShouldShow() {
   const object = activeObject();
+  if(globalThis.__boxlabLinearArray?.hiddenObjectId===object?.id)return false;
   const edit=globalThis.__boxlabEditableBoolean?.state?.();
   if(edit&&globalThis.__boxlabEditableBoolean?.view?.()==='result'&&[edit.aId,edit.bId].includes(object?.id))return false;
   return !!object?.visible && !!(!soloId || soloId === object.id || edit&&[edit.aId,edit.bId].includes(object.id));
 }
 
 function shouldShow(object) {
+  if(globalThis.__boxlabLinearArray?.hiddenObjectId===object?.id)return false;
   const edit=globalThis.__boxlabEditableBoolean?.state?.();
   if(edit&&globalThis.__boxlabEditableBoolean?.view?.()==='result'&&[edit.aId,edit.bId].includes(object?.id))return false;
   return !!object?.visible && !!(!soloId || soloId === object.id || edit&&[edit.aId,edit.bId].includes(object.id));
@@ -366,7 +368,7 @@ function renderOutliner() {
     name.className = 'outliner-name';
     const baseName = object.kind === 'reference' ? `${object.name} • Ref` : object.name;
     const links = linkedCount(object.sourceId);
-    name.textContent = links > 1 ? `${baseName} • Link ×${links}` : baseName;
+    name.textContent = object.arrayRecipe ? `${baseName} • Array ×${object.arrayRecipe.count}` : links > 1 ? `${baseName} • Link ×${links}` : baseName;
     name.title = object.kind === 'reference'
       ? 'Reference guide — read-only snapping geometry'
       : (object.locked ? 'Locked object — unlock from More' : 'Make active object');

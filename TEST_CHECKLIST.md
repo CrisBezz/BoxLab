@@ -5777,3 +5777,18 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [x] User PASS latest .840 Linked Duplicate/Array mode-switch and idle stability gate.
 - [x] User PASS shared component editing and Undo/Redo gate.
 - [x] Protect explicit main core-mesh publication; temporary/legacy edge queries never replace it.
+
+
+## .841 Live Array foundation — device acceptance pending
+
+- [x] Existing instance/join owners distribute geometry without source mutation.
+- [x] Whole-object transformed results reopen; non-affine edits refuse safely.
+- [x] Optional recipe survives actual scene snapshot and codec round-trip.
+- [x] Actual Apply/manager/history keeps one object, one Undo step, restores recipe/mesh on Undo/Redo.
+- [x] Undo during session cancels preview without consuming history or changing scene.
+- [x] Full2241PASS/0FAIL/0skip; existing linked/Array/Boolean semantics retained.
+- [ ] Object→Array→check Live→count4→drag END→Apply: ONE row labelled Array ×4.
+- [ ] Reopen Array, change count/END; Cancel restores old result, Apply updates same object.
+- [ ] Undo/Redo restores count/placement/recipe; whole-object Move then reopen remains correct.
+- [ ] Save/Open .boxlab restores Live Array and reopening; linked pair Save/Open remains stable.
+- [ ] Ordinary unchecked Array and Pencil orbit/pan/pinch remain accepted.

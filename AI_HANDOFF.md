@@ -1,105 +1,83 @@
-# BoxLab AI Handoff — .840 explicit main mesh publication
+# BoxLab AI Handoff — .841 persistent Live Array foundation
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main, live https://crisbezz.github.io/BoxLab/, release0.36.18.840.
-Repository is source of truth. Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST,
-recent DEV_HISTORY and ROADMAP before code. .839 user FAIL: idle marker loop source writes continue. .840 user PASS on2026-10-13; protect fresh linked/Array placement, idle stability and shared edit/history gate.
-FrozenBeta7 .807 / Beta2–6 immutable. Protected Multi1.0/Loop715/Extrude802/Boolean806,
-all accepted Pencil/navigation/selection behaviours unchanged. .830/.831 user PASS protected.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.841.
+Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
+ROADMAP before code. Repository is source of truth. Standing publish authorization.
+Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
+Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .839 actual shared-source drift cause and repair
-User .838 screenshot SOURCE WRITE stack: live-mesh-bridge dispatchEvent→quad-clean
-update→manager.objects getter→saveActive component branch. Source repeatedly moves by
-negative instance placement. .835 trace copy/source jumped ~-18.148; latest Z drift
-step1.6875733, matching instance matrix translation. Prior .833/.836/.837 drag repairs
-FAILED device retest; their synthetic tests covered possible paths, not the root cause.
+## .841 scope and authoritative owners
+User requests Live Array: ONE persistent editable Object Browser object like Live
+Boolean, with gradual last-item scale/rotation across the array. This first narrow
+stage adds the optional Live checkbox to existing linear-array.js. Ordinary unchecked
+Array still creates linked objects through existing end-copy/manager owners.
+Live Apply replaces the independent source object's geometry with disconnected copies
+and stores arrayRecipe v1 on that same object. Object row displays Array ×count.
+Reopening existing Array launcher retrieves source/count/END vector; cyan preview hides
+old result through manager display policy only, never changes stored visibility.
+Count and END placement can be edited repeatedly. Cancel leaves scene untouched.
+Undo during session cancels preview; Apply checkpoints pre-result mesh plus real scene
+snapshot once, so Undo/Redo restores geometry AND recipe through existing history owner.
 
-Live-mesh-bridge169 setter ignored main's explicit state.mesh writes once it had a
-rendered owner. Its heuristic promoted the last mesh calling edges() when a cage edge
-was added. Inverse instance placement calls edges() on TEMPORARY LOCAL meshes; that
-helper was promoted to live world mesh. Bridge-state observers call saveActive again,
-subtract placement again, update shared source and peers: repeated offset feedback.
+New live-array-core.js is recipe orchestration: reuse existing EditableMesh,
+instance-core transform/derive placement and object-join combine. No new topology kernel.
+Whole-object affine moves/rotations/scales are recovered on reopen. Non-affine component
+edits refuse reopening instead of discarding them. Live creation currently refuses
+linked/Boolean/rich-resource/SubD/Mirror objects; ordinary Array remains available.
+Separate source component editing, endpoint rotation/scale interpolation and conversion
+controls are NOT shipped. Default Live checkbox off; explicitly check it for new arrays.
 
-Fix existing accessor only: explicit mesh published by main outranks pending helper
-edge owner. Getter immediately returns explicit core owner. Body/cage adds publish one
-identity-change event for that owner; repeated helper queries cannot switch it. Legacy
-cage inference remains until first explicit publication. Do not remove main's lexical
-mesh publication or reintroduce last-edges-wins after core publication.
+object-management snapshots/restores and v1 .boxlab codec preserve/validate optional
+arrayRecipe. No schema-version change; older projects retain original encoding.
+Changed loader graph: Array841→core841; codec841→core841; object-management841→codec841;
+drawer841→object-management841. Shell/main/recovery/manager parents coherently841.
+Protected source modules/frozen betas unchanged. Tests reconcile three old Array cache
+assertions with reviewed841 owner; all original semantic tests retained.
 
-Four native mesh/THREE Group tests: two fail on actual old bridge before fix; world vs
-inverse-local identity, twenty repeated offsets/cage events, next published mesh/one
-notification, legacy diagnostics safety; real saveActive/peer-sync/bridge observers preserve
-original/source and then genuine component edit still shares. Full Node242237PASS/0FAIL/
-0skip; revised component-sharing focused checks pass. Real Safari/WebGL retest still needed.
-Runtime bridge839, dynamic face-workflow parent839 and drawer839 repinned. Shell/recovery
-and reviewed asset fixture current; all other runtime source bytes unchanged. Diagnostics
-remain available. No topology kernel, instance maths or Multi1.0 edit.
+## Validation / device gate
+Full local Node24:2241PASS/0FAIL/0skip. Four new native checks cover distribution,
+source immutability, transformed reopen/refusal, real snapshots/codec, actual Array
+Apply + manager replacement + scene Undo/Redo and session Undo cancellation.
+Publication/Node22/live readback recorded in DEV_HISTORY after verification.
+Manual: Object Array→Live check→count4→END drag→Apply, one row; reopen change count/END,
+Cancel then Apply; Undo/Redo; Save/Open then reopen; linked Save/Open sanity.
+Device acceptance pending; .841 is not protected PASS yet.
 
-## Project files and prior work
-Existing object-management snapshot/File Save/Open, multi-object manager/source pool and
-boxlab-project-codec v1 are authoritative. Basic projects preserve editable mesh topology,
-creases/facegroups/loose data, groups/settings/recipes, mixed locked reference guides and
-validated linked placements. .831 references user PASS. .832 linked projects still need
-complete manual acceptance following drift repair. Linked source-N pool reconstructs via
-existing inverse-placement owners; peers must agree, allocators/rollback guarded.
-Rich GLB/UV/material/texture resource pools still refuse. Open starts inside BoxLab Files
-picker, asks before replacement, clears old Undo; Cancel/refusal unchanged. Native Files
-association and full cross-session history are not implemented.
-.830 new Balloon grid recipes balloonGridVersion2 compact unused poles; legacy recipes
-preserve exact indices/editability. .820/.821/.824/.825/.826/.828 passes protected.
+## Protected .840 shared-source drift repair
+User PASS2026-10-13: Linked Duplicate/Array move→component modes, idle stability and
+shared editing/history. Source/write loop resolved on device; protect core publication.
+Exact cause: bridge-topology edges() wrapper assigns state.mesh=this for every mesh,
+including inverse-local helpers. Legacy live bridge inferred live owner from those
+helpers; repeated saveActive inverse placement moved sources without input.
+.839 generic setter fix failed. .840 main publishes through dedicated publishCoreMesh
+before state assignment/root rebuild. Generic legacy assignments cannot replace core.
+Actual legacy/live bridge+manager chain:20redraws/1000idle reads stable; true component
+edit shares. Do not suppress debug writes instead of preserving owner correctness.
+.833/.836/.837 stale-drag candidate fixes failed device case; history retains evidence.
+.840 release703f8ad78429697559c1be3b453fed812a322eae; CI38326579309 successful2237/0;
+Pages38326579350 verified pinned bytes. .830/.831 and earlier accepted gates protected.
 
-## .840 complete owner-chain correction / .839 FAIL
-User .839 screenshot shows idle SOURCE WRITE stack through object-origin markerLoop→
-manager objects getter; source/live centres change repeatedly with no input. Missing owner
-in .839 fixture: bridge-topology.js installs edges() wrapper assigning state.mesh=this on
-EVERY mesh, including inverse-local helpers. .839 setter mistook these as explicit main
-publication, so source steal remained. Expanded existing fixture loads actual legacy
-bridge-topology installer FIRST; three checks FAIL on .839 before this fix.
+## Project persistence / remaining work
+Existing File Save/Open + object-management snapshot + multi-object source pool +
+boxlab-project-codec own persistence. Basic meshes, groups/settings/recipes, mixed locked
+references and linked placement pool supported. Linked project device round-trip remains
+worth checking beyond accepted drift gate. Source pool reconstruction uses existing
+inverse placement, validates source IDs/finite invertible affine matrices/peer agreement;
+allocator/history/render rollback guarded. Open confirms replacement and clears old Undo.
+Rich GLB/UV/material/texture pools still refuse; full cross-session history/native file
+association not implemented. .830 Balloon gridVersion2 removes orphan poles while legacy
+recipes keep indices/editability.
 
-Main now calls live-mesh-bridge.publishCoreMesh(mesh) before its existing state.mesh
-assignment and root rebuild. Only this explicit API establishes/replaces authoritative
-core mesh. Generic setter stores fallback only before core publication; legacy helper
-state.mesh=this can never replace core. Body/cage identity events remain bounded.
-Actual legacy/live bridges + inverse math + linked-save/peer-sync chain tests:20redraws
-and1000idle manager reads keep world/source identity and revision0; true component edit
-still shares. No removed tests, no instancing maths/transform change. Main/bridge840,
-face-workflow/drawer parents840 repinned; protected modules and frozenBeta unchanged.
-Full local validation/publication listed when verified. .839 not marked accepted.
+## Next
+Await .841 manual acceptance. Next scoped Live Array stage: progressive endpoint rotation
+and scale through the existing END interaction, keep one object and persisted recipe;
+audit transform/session owners before integration. Source editing remains further work.
+Then richer project resources/measured performance; NOM/Curve cutters/UV tools queued.
+Full requested Live Array scope lives in ROADMAP.md.
 
-## Accepted .840 / next
-User PASS2026-10-13 confirms latest manual gate. Protect explicit core publication,
-legacy edge-write isolation, linked/Array placement and idle stability. No new build
-requested by PASS alone. Next /nextbuild: audit remaining linked .boxlab round-trip
-acceptance and rich-resource persistence, then resume resources/performance roadmap.
-Historical test instructions follow for regression reference:
-Fresh scene on .840; Debug ON; Linked Duplicate→diagonal move→Face, leave untouched10s:
-no source-write churn or drift. Repeat Array and genuine component edit sharing/Undo.
-Do not hide/rate-limit writes as a substitute for resolving feedback. No new features
-until this concrete idle drift/device case passes.
-
-## Queued user request — Live Array, 2026-10-13
-Live Array must remain ONE editable Object Browser object, like Live Boolean.
-Last-item Move controls extent; last-item Rotate/Scale interpolate gradually from
-original to final across intermediate items. Reopen source/count/placement/endpoint
-transforms after creation; preserve history and .boxlab recipe persistence. Audit
-existing Array/end-copy/instances/recipes/Boolean presentation before implementation.
-Full scope in ROADMAP.md; queued only, no runtime change or new build requested.
-
-## Release protocol
-/nextbuild = audit, one narrow main build, coherent shell/title/data/version.json/recovery,
-review child+parent cache pins/hashes, tests, update all handoff/history/checklist/roadmap,
-publish and readback. Publishing already authorized. User PASS/FAIL becomes repo contract.
-
-## .839 publication verified
-Release73d80488d9db90cca117f15fc0281ea74a4076da; tree412ef04a5181dc7d7723efaf362f61d3d7d09b0c.
-Node22 CI38325878624/job115064302371 SUCCESS2237PASS/0FAIL/0skip.
-Pages38325878737 SUCCESS; pinned live shell/manifest/bridge/both parent loaders byte-match.
-Device Linked Duplicate/Array move→Face gate pending.
-
-.840 full local Node24:2237PASS/0FAIL/0skip; fresh-scene device retest pending.
-
-## .840 publication verified
-Release703f8ad78429697559c1be3b453fed812a322eae; treeb4d7b0a8f92ee05a5d7c1f364e2dd171cd6e937e.
-Node22 CI38326579309/job115066533821 SUCCESS2237PASS/0FAIL/0skip.
-Pages38326579350 SUCCESS; pinned live shell/manifest/main/bridge/both parents byte-match.
-Fresh-scene Linked/Array idle10s iPad acceptance user PASS2026-10-13; protected.
+## Release workflow
+/nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
+reviewed child+parent cache URLs/hashes; appropriate tests; update handoff/history/checklist/
+roadmap; publish and verify. User PASS/FAIL becomes repository contract. No new numbered
+build on PASS alone. Give short real iPad manual tests when release is ready.

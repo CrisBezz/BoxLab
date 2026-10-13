@@ -4,7 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .840 accepted; project resources/performance next / frozen Beta 7, 2026-10-13
+## Current direction — .841 Live Array foundation / frozen Beta 7, 2026-10-13
+
+Optional Live mode in existing Array keeps one object with source/count/END recipe.
+Reopen count/spacing, Cancel, one-step Undo/Redo and basic .boxlab persistence implemented;
+whole-object affine placement recoverable, non-affine edits refuse safely. Full2241PASS/0FAIL.
+Device gate pending. Next progressive endpoint scale/rotation; source component editing
+and full requested scope remain queued. Rich resources/performance follow.
+
+## Previous direction — .840 accepted; project resources/performance, 2026-10-13
 
 .839 user FAIL: idle source writes. Legacy bridge-topology edges also writes state.mesh;
 .840 dedicated main publication prevents those helper writes taking live ownership.
@@ -13,7 +21,7 @@ User PASS fresh Linked/Array idle/editing gate on2026-10-13. Protect owner repai
 Next scoped build may resume project resource persistence and measured performance;
 linked-file round-trip sanity remains relevant before expanding rich resources.
 
-## Requested Live Array — queued, 2026-10-13
+## Requested Live Array — staged implementation, 2026-10-13
 
 User requests a persistent, non-destructive Live Array presented as ONE object in the
 Object Browser, following the existing Live Boolean result/source editing pattern.
@@ -33,8 +41,8 @@ and endpoint transforms rather than baking separate scene objects on Apply.
 Before implementation, audit existing Array end-copy, instance/source, modifier/recipe
 and Live Boolean object-list owners. Extend those authoritative owners; do not add a
 parallel modelling kernel. Protect .840 linked/Array placement and idle stability.
-Queued alongside project resource persistence and measured performance; this request
-adds a feature to the list, not an implementation or numbered build.
+First count/placement/single-object/persistence stage shipped in .841; endpoint rotation
+and scale plus source component editing remain queued. Protect accepted .840 drift repair.
 
 ## Previous direction — .839 live-mesh identity feedback repair / frozen Beta 7, 2026-10-13
 
