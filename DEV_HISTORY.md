@@ -8315,3 +8315,13 @@ bridge/parent face-workflow/drawer840 loader graph reviewed; protected/frozenBet
 Device fresh linked/Array scene idle10s and edit/history gate pending.
 
 .840 full local Node24:2237PASS/0FAIL/0skip; fresh-scene device retest pending.
+
+
+### .840 publication verification — 2026-10-13
+
+Release703f8ad78429697559c1be3b453fed812a322eae; tested tree
+b4d7b0a8f92ee05a5d7c1f364e2dd171cd6e937e matches checkout. Node22 CI
+38326579309/job115066533821 SUCCESS:2237PASS/0FAIL/0skip. Pages38326579350
+SUCCESS. Fresh pinned live shell/manifest/main/bridge/face-workflow/drawer byte-match.
+Expanded legacy bridge chain had3FAIL on839; corrected explicit API passes plus1000idle
+reads/source revision0. .839 user idle-loop FAIL remains recorded; .840 iPad pending.

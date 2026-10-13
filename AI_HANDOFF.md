@@ -84,3 +84,9 @@ Pages38325878737 SUCCESS; pinned live shell/manifest/bridge/both parent loaders 
 Device Linked Duplicate/Array move→Face gate pending.
 
 .840 full local Node24:2237PASS/0FAIL/0skip; fresh-scene device retest pending.
+
+## .840 publication verified
+Release703f8ad78429697559c1be3b453fed812a322eae; treeb4d7b0a8f92ee05a5d7c1f364e2dd171cd6e937e.
+Node22 CI38326579309/job115066533821 SUCCESS2237PASS/0FAIL/0skip.
+Pages38326579350 SUCCESS; pinned live shell/manifest/main/bridge/both parents byte-match.
+Fresh-scene Linked/Array idle10s iPad acceptance pending.
