@@ -27,7 +27,7 @@ actual inactive layer/visibility/raycast/GPU cleanup and linked-source updates.
 Full local Node24:2266PASS/0FAIL/0skip. Only multi-object runtime changed (shell847),
 imports unchanged cache812; recovery/shell markers847. Main842, Array844, drawer846,
 Clean845/Cage846 and all protected/frozen kernels retained. Reviewed asset graph/hashes
-updated for new owner import. Node22/Pages/live verification appended after publication.
+updated for new owner import. Node22/Pages/live verification recorded below.
 
 ## Protected .846 scope — user PASS2026-10-13
 User Perfect PASS .845 protects Clean On/Off/rebuild and overlay restoration.
@@ -251,3 +251,14 @@ Pages38385836609 SUCCESS. Fresh live shell/manifest/drawer846/face-workflow846/
 Cage846, unchanged Clean845, protected Multi1.0 and frozenBeta7 version byte-match.
 Initial shell/manifest GETs preceded deployment; postdeployment reads match846.
 .845 Perfect PASS protected; iPad Soft/Full/Clean/rebuild gate pending.
+
+
+## .847 publication verified — 2026-10-13
+
+Releasedeaf1c931ef948c3ca882882e894a0d10764c361; tested tree
+cceb4602c684aa832518e8f2f5689f5d3285b2f3 exactly matches local validated checkout.
+Node22 CI38388216821/job115265162810 SUCCESS:2266PASS/0FAIL/0skip.
+Pages38388215312 SUCCESS. Fresh live shell/manifest/multi-object847, unchanged
+cache812, protected Multi1.0 and frozenBeta7 version byte-match repository.
+Initial shell/manifest GETs preceded deployment; later reads match847.
+.846 user PASS protected; independent inactive SubD visual/performance gate pending.

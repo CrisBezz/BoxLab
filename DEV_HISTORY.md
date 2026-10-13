@@ -8517,3 +8517,14 @@ actual render layer/raycast/visibility/geometry disposal and linked source propa
 Full2266PASS/0FAIL/0skip. Only multi-object runtime extended; shell/recovery847, reviewed
 cache812 import graph/hash updated. Protected Multi1.0/main ownership/frozenBeta untouched.
 Device multi-object visual/history/modifier test and Performance capture pending.
+
+
+## .847 publication verified — 2026-10-13
+
+Releasedeaf1c931ef948c3ca882882e894a0d10764c361; tested tree
+cceb4602c684aa832518e8f2f5689f5d3285b2f3 exactly matches local validated checkout.
+Node22 CI38388216821/job115265162810 SUCCESS:2266PASS/0FAIL/0skip.
+Pages38388215312 SUCCESS. Fresh live shell/manifest/multi-object847, unchanged
+cache812, protected Multi1.0 and frozenBeta7 version byte-match repository.
+Initial shell/manifest GETs preceded deployment; later reads match847.
+.846 user PASS protected; independent inactive SubD visual/performance gate pending.
