@@ -8404,3 +8404,14 @@ actual button teardown and all refusal guards. Full2250PASS/0FAIL/0skip. Initial
 had one stale .842 Array cache assertion, reviewed/advanced alongside the other two;
 all existing semantic tests retained. Shell/recovery/Array pin843 and reviewed asset
 hash updated only where required. iPad conversion/history/project gate pending.
+
+
+## .843 publication verified — 2026-10-13
+
+Release424a973d1380dc943733435ec4af7e1c9ed206d1; tested tree
+32914e47e5f873289770bf4065dd315b055dc5aa exactly matches local validated checkout.
+Node22 CI38362603121/job115180108329 SUCCESS:2250PASS/0FAIL/0skip.
+Pages38362603155 SUCCESS. Fresh live shell/manifest/Array843, unchanged core842,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
+briefly returned842 during deployment; subsequent pinned verification matches843.
+Device conversion gate pending; .842 user PASS protected, source editing next.

@@ -23,7 +23,7 @@ unchanged. Reviewed runtime contract updated only for these cache references and
 Array bytes. Three existing Array pin assertions advanced; all semantics retained.
 Native conversion tests cover affine placement, current preview, single-object scene
 history, project codec, component editing, button teardown and invalid guards.
-Full local Node24:2250PASS/0FAIL/0skip. Node22 CI/Pages/live verification follows.
+Full local Node24:2250PASS/0FAIL/0skip. Node22 CI/Pages/live verified below.
 
 ## Protected .842 scope — user PASS2026-10-13
 User PASS .841 protected: one object/count/END/reopen/Cancel/history/.boxlab checks.
@@ -123,3 +123,14 @@ Curve cutters and UV remain queued. Protect .842 endpoint transforms and .840 dr
 reviewed child+parent cache URLs/hashes; appropriate tests; update handoff/history/checklist/
 roadmap; publish and verify. User PASS/FAIL becomes repository contract. No new numbered
 build on PASS alone. Give short real iPad manual tests when release is ready.
+
+
+## .843 publication verified — 2026-10-13
+
+Release424a973d1380dc943733435ec4af7e1c9ed206d1; tested tree
+32914e47e5f873289770bf4065dd315b055dc5aa exactly matches local validated checkout.
+Node22 CI38362603121/job115180108329 SUCCESS:2250PASS/0FAIL/0skip.
+Pages38362603155 SUCCESS. Fresh live shell/manifest/Array843, unchanged core842,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
+briefly returned842 during deployment; subsequent pinned verification matches843.
+Device conversion gate pending; .842 user PASS protected, source editing next.
