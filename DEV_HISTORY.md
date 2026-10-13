@@ -8528,3 +8528,16 @@ Pages38388215312 SUCCESS. Fresh live shell/manifest/multi-object847, unchanged
 cache812, protected Multi1.0 and frozenBeta7 version byte-match repository.
 Initial shell/manifest GETs preceded deployment; later reads match847.
 .846 user PASS protected; independent inactive SubD visual/performance gate pending.
+
+
+## .848 — separate active/inactive cache measurement — 2026-10-13
+
+User847 screenshot:106rebuilds14.5ms mean42max, inactive5.8/20ms,281aggregate hits/
+41misses; idle capture lacked rebuild data. /nextbuild. Audit actual monitor core/UI,
+main active cache and manager inactive cache: totals obscure owner-level reuse. Extend
+existing opt-in counters with active/inactive owner buckets, keep total contract; label
+both in existing readout. Manager supplies inactive label, main default active unchanged.
+Two native main/manager/lifecycle checks plus existing actual UI assertions; full2268
+PASS/0FAIL/0skip. No geometry, caching algorithm, gesture/history or frozenBeta changes.
+Core+monitor+manager/shell848 reviewed; helper812/main842 remain. Capture guides next
+measured optimisation; no matched device speed improvement/full847 manual PASS claimed.

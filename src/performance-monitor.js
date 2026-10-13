@@ -1,4 +1,4 @@
-import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.812';
+import {createPerformanceMonitor} from './performance-core.js?v=0.36.18.848';
 const monitor=createPerformanceMonitor();
 let panel=null,output=null,timer=null,button=null;
 const number=(value,digits=0)=>Number(value||0).toFixed(digits);
@@ -17,6 +17,8 @@ function refresh(){
   `Scene hooks ${phase(s,'scene')} · Inactive ${phase(s,'inactive')}`,
   `Cage/highlights ${phase(s,'cage')}`,
   `SubD cache ${s.cacheHits} hits · ${s.cacheMisses} misses`,
+  `Active cache ${s.cacheOwners.active.hits} hits · ${s.cacheOwners.active.misses} misses`,
+  `Inactive cache ${s.cacheOwners.inactive.hits} hits · ${s.cacheOwners.inactive.misses} misses`,
   `Active Undo ${s.undo} · Redo ${s.redo}`
  ].join('\n'):'Collecting frames…';
 }

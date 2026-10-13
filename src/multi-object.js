@@ -313,7 +313,7 @@ function displayMeshFor(object) {
     let cache=inactiveSubdCaches.get(object);
     if(!cache){cache=createSubdDisplayCache(subdivide,applyMirror);inactiveSubdCaches.set(object,cache);}
     const result=cache.get(display,Math.max(1,Math.min(4,object.settings.subdLevel||1)),object.settings.mirror||{});
-    globalThis.__boxlabPerformance?.cache?.(cache.hit);
+    globalThis.__boxlabPerformance?.cache?.(cache.hit,'inactive');
     return result;
   }
   inactiveSubdCaches.delete(object);

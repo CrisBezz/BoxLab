@@ -1,13 +1,29 @@
-# BoxLab AI Handoff — .847 inactive SubD display reuse
+# BoxLab AI Handoff — .848 active/inactive cache measurements
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.847.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.848.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .847 scope — device performance/visual gate pending
+## .848 scope — device readout gate pending
+User /nextbuild after847 captures. Latest iPad847 capture:106rebuilds mean14.5/max42ms,
+Inactive mean5.8/max20ms,281cache hits/41misses,34FPS/p9588ms. Previous idle capture
+had0rebuilds/0cache counts. These demonstrate aggregate cache use, NOT matched before/
+after speed gain or separate inactive hit rates. Full847 visual/history gate not inferred.
+Existing Performance monitor now separates Active cache and Inactive cache hit/miss
+counts while retaining aggregate SubD totals. Main's existing cache call defaults active;
+manager847's existing inactive cache call passes explicit inactive owner. No geometry,
+cache validity, gesture, history or display behaviour change. Counters opt-in/reset with
+existing monitor; snapshots return independent per-owner values. Two native tests cover
+real main/manager routing and disabled/reset/snapshot lifecycle; original diagnostic UI
+test now verifies both lines. Full local2268PASS/0FAIL/0skip.
+Core848→monitor848→shell848; manager848→unchanged cache812, shell/recovery848;
+main842/Array844/drawer846/Clean845/Cage846 and protected/frozen kernels retained.
+Node22/Pages/live verification follows publication.
+
+## .847 scope — device performance evidence captured, full gate pending
 User PASS .846 protects Soft/Full/Clean/rebuild/navigation compatibility.
 Roadmap resumes measured performance: prior812 device readout showed inactive displays
 as the dominant rebuild phase. Audit found displayMeshFor recomputes native SubD for
@@ -194,13 +210,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Await .847 independent multi-object SubD sanity: edit active object with other SubD
-objects visible, inactive surfaces stay correct; switch/edit old inactive mesh, Undo/
-Redo and modifiers invalidate. Performance Reset/capture Inactive timing and SubD
-hits/misses on comparable dense scene (local kernel reduction is not device speed).
-Then choose another measured inactive/render optimisation or stage one richer project
-resource family through existing codec/manager/import/export owners. Linked840, Array
-source844/conversion843 and Clean845/Soft846 are accepted/protected.
+Capture848 after Performance Reset in same independent multi-SubD scene: repeated
+selection, one edit/Undo; inspect Active versus Inactive cache counts and Inactive phase.
+Then choose measured geometry/render improvement or project resource preservation.
+No quantified iPad speed claim without comparable before/after workload. Keep847
+visual/object-switch/modifier/history gates visible;846 and earlier user PASS protected.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

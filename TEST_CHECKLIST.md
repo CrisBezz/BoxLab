@@ -5879,3 +5879,14 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] Switch to previously inactive object, edit and Undo/Redo; change SubD level/Mirror: surfaces update correctly.
 - [ ] Hide/show/solo, Object selection and linked component edit retain accepted behavior.
 - [ ] VIEW > Performance > Reset, repeat active selections/edits with dense inactive SubD visible; capture Inactive phase and scene SubD hit/miss counts.
+
+
+## .847 device evidence / .848 cache owner readout
+
+- [x]847 capture106rebuilds mean14.5/max42ms; inactive5.8/20ms;281hits/41misses,34FPS/p9588ms. Aggregate evidence only; no comparative speed or full manual PASS inferred.
+- [x] Native main/manager report separate active/inactive hits and misses while preserving total counts.
+- [x] Off/reset/re-enable and snapshot isolation retain existing monitor lifecycle; native UI exposes both lines.
+- [x] Full2268PASS/0FAIL/0skip; reviewed monitor/core/manager/shell848 graph coherent.
+- [ ] Performance > Reset, select/deselect several times with independent inactive SubD objects: Inactive cache hits increase.
+- [ ] Small active edit then Undo: Active misses/hits change; inactive surfaces remain correct. Send readout capture.
+- [ ] Reset clears both rows; Close removes diagnostic panel; normal gestures/history remain accepted.

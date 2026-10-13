@@ -4,7 +4,15 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .847 inactive SubD display reuse / frozen Beta 7, 2026-10-13
+## Current direction — .848 cache owner measurements / frozen Beta 7, 2026-10-13
+
+847 device capture shows281aggregate hits/41misses,106rebuilds mean14.5ms and inactive
+mean5.8ms, without comparable pre-change sample. Split existing Performance cache counts
+into Active/Inactive while retaining total; no geometry/cache algorithm change.
+Full2268PASS/0FAIL; repeat device capture to scope next measured improvement or richer
+project resources. Full847 manual visual/history acceptance still not inferred.
+
+## Previous direction — .847 inactive SubD display reuse / frozen Beta 7, 2026-10-13
 
 User PASS .846 completes audited cage display fixes. Resume measured performance:
 existing exact-input cache812 now serves each independent inactive SubD object through

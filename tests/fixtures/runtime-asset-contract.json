@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.847",
+      "url": "./src/multi-object.js?v=0.36.18.848",
       "target": "src/multi-object.js",
-      "sha256": "16d9852874e3c34d16dcc85f2b9a8d53bf3e0913e72bf9d48703c5e7ea6946be"
+      "sha256": "e953f6ac976c51c420856c5192daa2c693279e23f2d4292f1e336f44b8932fd5"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.847",
+      "url": "./src/release-bootstrap.js?v=0.36.18.848",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.847",
+      "url": "./src/release-version.js?v=0.36.18.848",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2258,15 +2258,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/performance-monitor.js?v=0.36.18.812",
+      "url": "./src/performance-monitor.js?v=0.36.18.848",
       "target": "src/performance-monitor.js",
-      "sha256": "9738cfaa2be6bde6c65cf93d997164779a8bddda887b322c1bbb6380ce10cc56"
+      "sha256": "28ce92e906d4fd21e6cee9e287b65087b9eb1abb0a03dbfa7f01a1df1d4b80de"
     },
     {
       "owner": "src/performance-monitor.js",
-      "url": "./performance-core.js?v=0.36.18.812",
+      "url": "./performance-core.js?v=0.36.18.848",
       "target": "src/performance-core.js",
-      "sha256": "ee791c20ef87d63c1d0bfbd678ade790cb4f2044b561b371e75d710bbb2a3d4b"
+      "sha256": "141ab2919c502168172f59a23d7b648fcea4e928dcbf23facde6c5a42a01c4b3"
     },
     {
       "owner": "src/main.js",
