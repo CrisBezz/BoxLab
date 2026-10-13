@@ -8500,3 +8500,20 @@ Pages38385836609 SUCCESS. Fresh live shell/manifest/drawer846/face-workflow846/
 Cage846, unchanged Clean845, protected Multi1.0 and frozenBeta7 version byte-match.
 Initial shell/manifest GETs preceded deployment; postdeployment reads match846.
 .845 Perfect PASS protected; iPad Soft/Full/Clean/rebuild gate pending.
+
+
+## .846 user PASS / .847 inactive SubD cache reuse — 2026-10-13
+
+User PASS /nextbuild. Protect Soft/Full/Clean. Roadmap's prior812 iPad evidence identifies
+inactive display rebuild as dominant cost. Audit finds existing displayMeshFor always
+runs subdivision; active display already has exact-input cache812. Reuse that helper
+with WeakMap per independent inactive SubD object; SubD→Mirror native output unchanged.
+Linked source evaluation remains unchanged/uncached. Non-SubD clears object cache;
+exact inputs, mesh/object replacements invalidate, removed objects weakly collect.
+Existing Performance cache counters now reflect scene cache hits/misses. One CPU display
+per cached object retained, GPU geometry still rebuilt/disposed, no iPad speed claim.
+Four native tests verify50requests/1kernel evaluation, direct metadata/modifier changes,
+actual render layer/raycast/visibility/geometry disposal and linked source propagation.
+Full2266PASS/0FAIL/0skip. Only multi-object runtime extended; shell/recovery847, reviewed
+cache812 import graph/hash updated. Protected Multi1.0/main ownership/frozenBeta untouched.
+Device multi-object visual/history/modifier test and Performance capture pending.

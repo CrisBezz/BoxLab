@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.842",
+      "url": "./src/multi-object.js?v=0.36.18.847",
       "target": "src/multi-object.js",
-      "sha256": "01619ca3da36a24d0a89621239bfb3e5f6005438aa9b6474f683d0ce7f2e4c2f"
+      "sha256": "16d9852874e3c34d16dcc85f2b9a8d53bf3e0913e72bf9d48703c5e7ea6946be"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.846",
+      "url": "./src/release-bootstrap.js?v=0.36.18.847",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.846",
+      "url": "./src/release-version.js?v=0.36.18.847",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2363,6 +2363,12 @@
       "url": "./instance-core.js?v=0.36.18.343",
       "target": "src/instance-core.js",
       "sha256": "ab05cf3c145b4a3694318d41329391f84aaf5c83520019e9b3988f8a202994d8"
+    },
+    {
+      "owner": "src/multi-object.js",
+      "url": "./subd-display-cache.js?v=0.36.18.812",
+      "target": "src/subd-display-cache.js",
+      "sha256": "060ff410d190b066367a1d7677634c7009973b4ebb7515f9556fd7ce79e97b69"
     }
   ]
 }

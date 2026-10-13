@@ -1,13 +1,35 @@
-# BoxLab AI Handoff — .846 Soft cage batch compatibility
+# BoxLab AI Handoff — .847 inactive SubD display reuse
 
 ## Current state — 2026-10-13
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.846.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.847.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .846 scope — device acceptance pending
+## .847 scope — device performance/visual gate pending
+User PASS .846 protects Soft/Full/Clean/rebuild/navigation compatibility.
+Roadmap resumes measured performance: prior812 device readout showed inactive displays
+as the dominant rebuild phase. Audit found displayMeshFor recomputes native SubD for
+every inactive object on every active redraw. Reuse the existing exact-input
+createSubdDisplayCache812, one weakly keyed result per independent SubD object.
+Native SubD→Mirror order/output unchanged; coordinates/topology/creases/facegroups/
+loose sets/modifier values and mesh/object replacement invalidate through existing
+helper. Non-SubD retires that object's cache. Linked sources stay on the authoritative
+uncached placement/evaluation path to protect840. Scene visibility/selection/materials,
+raycast body IDs, history and normal inactive GPU geometry disposal/rebuild unchanged.
+Performance panel existing SubD hits/misses now includes active and inactive caches.
+This retains one CPU display result/input snapshot per participating object; it does
+not reuse GPU buffers or improve every dense single-object edit. Weak keys allow
+removed object caches to collect; no portable iPad speed claim before device measurement.
+Four native tests cover50unchanged requests/one kernel evaluation, exact invalidation,
+actual inactive layer/visibility/raycast/GPU cleanup and linked-source updates.
+Full local Node24:2266PASS/0FAIL/0skip. Only multi-object runtime changed (shell847),
+imports unchanged cache812; recovery/shell markers847. Main842, Array844, drawer846,
+Clean845/Cage846 and all protected/frozen kernels retained. Reviewed asset graph/hashes
+updated for new owner import. Node22/Pages/live verification appended after publication.
+
+## Protected .846 scope — user PASS2026-10-13
 User Perfect PASS .845 protects Clean On/Off/rebuild and overlay restoration.
 Adjacent audit found Cage Soft191 also missing810 cage-edge-batch/cage-vertex-batch.
 Existing cage-intensity owner now includes them with the original edge.42/vertex.56
@@ -172,11 +194,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Await .846 iPad Full↔Soft visibility, Clean toggles, edit/rebuild persistence and
-normal component selection/navigation. After acceptance resume staged richer project
-resource persistence/measured performance; scope one resource family at a time through
-existing codec/manager/import/export owners. NOM/Curve cutters/UV remain queued.
-Live Array source844/conversion843 and Clean845 are accepted and protected.
+Await .847 independent multi-object SubD sanity: edit active object with other SubD
+objects visible, inactive surfaces stay correct; switch/edit old inactive mesh, Undo/
+Redo and modifiers invalidate. Performance Reset/capture Inactive timing and SubD
+hits/misses on comparable dense scene (local kernel reduction is not device speed).
+Then choose another measured inactive/render optimisation or stage one richer project
+resource family through existing codec/manager/import/export owners. Linked840, Array
+source844/conversion843 and Clean845/Soft846 are accepted/protected.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

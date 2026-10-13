@@ -3,6 +3,7 @@ import { editableBooleanEligibility } from './editable-boolean-core.js?v=0.36.18
 import { EditableMesh } from './mesh.js';
 import { subdivide } from './subdivision.js';
 import { applyMirror } from './mirror.js';
+import { createSubdDisplayCache } from './subd-display-cache.js?v=0.36.18.812';
 import { combineEditableMeshes, modifierSettingsCompatible } from './object-join-core.js?v=0.36.18.277';
 import { matrixForInstance, setInstanceMatrix, transformEditableMesh, meshesNear, deriveInstancePlacement, localMeshFromWorld } from './instance-core.js?v=0.36.18.343';
 
@@ -297,6 +298,7 @@ function shouldShow(object) {
   return !!object?.visible && !!(!soloId || soloId === object.id || edit&&[edit.aId,edit.bId].includes(object.id));
 }
 
+const inactiveSubdCaches=new WeakMap();
 function displayMeshFor(object) {
   let display = object.mesh;
   if(object?.sourceId&&linkedSources.has(object.sourceId)){
@@ -307,6 +309,14 @@ function displayMeshFor(object) {
       display=evaluated;
     }
   }
+  if(object.settings?.subd&&!object.sourceId){
+    let cache=inactiveSubdCaches.get(object);
+    if(!cache){cache=createSubdDisplayCache(subdivide,applyMirror);inactiveSubdCaches.set(object,cache);}
+    const result=cache.get(display,Math.max(1,Math.min(4,object.settings.subdLevel||1)),object.settings.mirror||{});
+    globalThis.__boxlabPerformance?.cache?.(cache.hit);
+    return result;
+  }
+  inactiveSubdCaches.delete(object);
   if (object.settings?.subd) display = subdivide(display, Math.max(1, Math.min(4, object.settings.subdLevel || 1)));
   return applyMirror(display, object.settings?.mirror || { x:false, y:false, z:false });
 }

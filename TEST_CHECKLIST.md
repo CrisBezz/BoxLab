@@ -5865,3 +5865,17 @@ see docs/reliability-build-829.json. Device/WebGL acceptance not inferred from a
 - [ ] VIEW > Cage > Soft visibly softens lines/dots; Full restores their normal intensity.
 - [ ] Clean On still hides cage; Clean Off while Soft selected restores a soft cage.
 - [ ] Edit/Undo or switch objects: selected intensity persists; component picking/orbit/pan/pinch unchanged.
+
+
+## .846 user PASS / .847 independent inactive SubD reuse
+
+- [x] User PASS .846 Soft/Full/Clean/rebuild/selection-navigation gate protected.
+- [x] Actual displayMeshFor returns exact native SubD+Mirror output;50unchanged calls evaluate kernel once without source mutation.
+- [x] Coordinates/topology/crease/group/loose/settings/mesh+object replacement invalidate; disabled SubD retires cached result.
+- [x] Actual inactive rebuild retains visibility/raycast object IDs and GPU geometry disposal while repeated redraws reuse SubD result.
+- [x] Linked placement/source geometry remains uncached and responds immediately to native source edits.
+- [x] Full local2266PASS/0FAIL/0skip; existing semantics retained; shell847/cache812 owner graph reviewed.
+- [ ] Two or more independent SubD objects: select/edit active mesh; other surfaces stay correct and selecting components remains responsive.
+- [ ] Switch to previously inactive object, edit and Undo/Redo; change SubD level/Mirror: surfaces update correctly.
+- [ ] Hide/show/solo, Object selection and linked component edit retain accepted behavior.
+- [ ] VIEW > Performance > Reset, repeat active selections/edits with dense inactive SubD visible; capture Inactive phase and scene SubD hit/miss counts.

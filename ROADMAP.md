@@ -4,7 +4,17 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .846 Soft cage batch compatibility / frozen Beta 7, 2026-10-13
+## Current direction — .847 inactive SubD display reuse / frozen Beta 7, 2026-10-13
+
+User PASS .846 completes audited cage display fixes. Resume measured performance:
+existing exact-input cache812 now serves each independent inactive SubD object through
+native displayMeshFor, avoiding repeat subdivision of unchanged objects. Linked source
+path unchanged; GPU geometry still rebuilt. Four native checks/full2266PASS/0FAIL.
+Device multi-object surfaces/history/visibility and Performance phase capture pending.
+Retains one CPU display result per cached object; iPad speed/memory tradeoff must be
+measured. Next measured inactive/render work or staged project resource preservation.
+
+## Previous direction — .846 Soft cage batch compatibility / frozen Beta 7, 2026-10-13
 
 User Perfect PASS .845 protects Clean View. Adjacent existing Soft owner missed810
 batch kinds too; now applies original opacity factors to batched lines/vertex markers.
