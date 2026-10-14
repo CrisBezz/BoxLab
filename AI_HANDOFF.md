@@ -26,7 +26,7 @@ UV export + final native metadata/material/image patch. Node lacks image decode,
 final image-bound GLB byte verification is separate from native geometry/UV loader.
 Full2285PASS/0FAIL/0skip. Management855→unchanged codec842; drawer855→management855;
 shell/recovery855; main+LoopCommit854/builder851/cache812/manager849/Array844/Clean845/
-Soft846/protected/frozen owners unchanged. Publication/Node22/live verification follows.
+Soft846/protected/frozen owners unchanged. Publication/Node22/live verification recorded below.
 Rich .boxlab save/open still refuses imported resources. No new renderer/codec/resource
 pool/history format; this stage protects existing resources within scene history only.
 
@@ -509,3 +509,15 @@ Pages38500128663 SUCCESS. Fresh live shell/manifest/main854/loop-cut-commit854,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
 shell/manifest reads returned853; subsequent verification matches854. User853 PASS
 protected;854 native completion/repeat/exit/history device gate pending.
+
+
+## .855 publication verified — 2026-10-14
+
+Release5bddfe7c848adab7c451b157db4bbdd282a2d072; tested tree
+1332e93988f68c962d695b39e70832e309429956 exactly matches local validated checkout.
+Node22 CI38506338293/job115664606721 SUCCESS:2285PASS/0FAIL/0skip.
+Pages38506338178 SUCCESS. Fresh live shell/manifest/object-management855/drawer855,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
+returned854 during deployment; postdeployment verification matches855. User854 PASS
+protected;855 imported GLB delete/UndoRedo/export device gate pending. Rich-resource
+.boxlab saving remains refused, no file-resource codec implementation claimed.

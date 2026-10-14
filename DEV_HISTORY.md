@@ -8754,3 +8754,15 @@ geometry/UV loader and native final resource patch separately (existing GLB conv
 Full2285PASS/0FAIL/0skip. Management855 + drawer855 parents/shell/recovery855 reviewed;
 main/Loop854/manager849/cache812/protected/frozen sources unchanged. Rich .boxlab save
 still refused; resource schema/open pools not implemented. Device gate pending.
+
+
+## .855 publication verified — 2026-10-14
+
+Release5bddfe7c848adab7c451b157db4bbdd282a2d072; tested tree
+1332e93988f68c962d695b39e70832e309429956 exactly matches local validated checkout.
+Node22 CI38506338293/job115664606721 SUCCESS:2285PASS/0FAIL/0skip.
+Pages38506338178 SUCCESS. Fresh live shell/manifest/object-management855/drawer855,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell GET
+returned854 during deployment; postdeployment verification matches855. User854 PASS
+protected;855 imported GLB delete/UndoRedo/export device gate pending. Rich-resource
+.boxlab saving remains refused, no file-resource codec implementation claimed.
