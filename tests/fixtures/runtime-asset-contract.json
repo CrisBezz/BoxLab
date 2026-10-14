@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.856",
+      "url": "./src/drawer-ui.js?v=0.36.18.858",
       "target": "src/drawer-ui.js",
-      "sha256": "8bc218972df27ee81cc48906b71a328d1b47d4da7baaaa78a33ac726b58b9120"
+      "sha256": "787b4437e6578ccf302cf49144672e9561004d620acdda8c852de6d296e9565c"
     },
     {
       "owner": "index.html",
@@ -335,9 +335,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.856",
+      "url": "./src/object-management.js?v=0.36.18.858",
       "target": "src/object-management.js",
-      "sha256": "43796bfd109e492fdfa78a8685608ec883718019fbbad09b46e47c0a8ac79b1f"
+      "sha256": "038dfd9f386f5f690a0a1f50fe8e24293c480ba12f925724823a790c75fa92c4"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.857",
+      "url": "./src/release-bootstrap.js?v=0.36.18.858",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.857",
+      "url": "./src/release-version.js?v=0.36.18.858",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.856",
+      "url": "./object-management.js?v=0.36.18.858",
       "target": "src/object-management.js",
-      "sha256": "43796bfd109e492fdfa78a8685608ec883718019fbbad09b46e47c0a8ac79b1f"
+      "sha256": "038dfd9f386f5f690a0a1f50fe8e24293c480ba12f925724823a790c75fa92c4"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -2306,9 +2306,9 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.856",
+      "url": "./boxlab-project-codec.js?v=0.36.18.858",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "0fb67a648af8a8b46062136c2a70fc9d96d32b1b57504117734f9530c10b2af1"
+      "sha256": "0015e3b5a20ca694299067ec58188315d19e10552ca4fc0e3406cb9c0b6378a0"
     },
     {
       "owner": "src/linear-array.js",
@@ -2372,9 +2372,9 @@
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./project-glb-resources.js?v=0.36.18.856",
+      "url": "./project-glb-resources.js?v=0.36.18.858",
       "target": "src/project-glb-resources.js",
-      "sha256": "6df19e3f413f9681c596b863829ad5998729d496b9028c8e0727b4e0a1a9b70d"
+      "sha256": "f0e9df95d27faabbf346f402cd3be84b123b977ff1923f50d0e77da409bc90bc"
     }
   ]
 }

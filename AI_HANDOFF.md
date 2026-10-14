@@ -1,11 +1,35 @@
-# BoxLab AI Handoff — .857 SubD Live Array editing
+# BoxLab AI Handoff — .858 shared project image pool
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.857.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.858.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .858 scope — shared embedded image pool in .boxlab, device gate pending
+User /nextbuild. Current857 Apply/SubD acceptance protected. Audit856 codec/importer:
+multiple imported objects repeat whole shared image byte arrays in every resource
+payload. Extend existing resource helper/codec with optional scene glbImagePool and
+resource version2 references; identical canonical bytes serialize once, including
+separate buffers with equal contents. Per-object image definitions/materials/UV/metadata
+remain independent. Different bytes retain different pool entries. No renderer/kernel/
+texture editor/resource-history owner. New decoded pool bytes are read-only and shared;
+future resource editors must copy touched buffers before replacing payloads.
+Decoder validates canonical bytes/length/24MB unique pool and safe in-range references.
+Legacy856 resource version1 inline and plain v1 files still open: non-enumerable decode
+flag preserves their original encoding during Open's exact roundtrip check. Fresh Save
+uses pooled encoding; metadata-only resources stayversion1, pooled binary resources2.
+Project header remainsv1; old app versions safely refuse new referenced resources.
+Save32MB/Open limits, invalid-file/cancel/rollback/history semantics and linked-rich/
+other-resource refusals retained. Dedup reduces repeated image file/storage and new-file
+byte allocations, not arbitrary scene/render speed. No project history persistence.
+Four new native codec/Open tests cover shared+equal bytes/size reduction, distinct images,
+per-object definitions/materials/UVs, shared decoded buffers, exact legacy/plain roundtrip,
+bad pool bytes/index/shape/version and rejection before scene replacement. Full2297PASS/
+0FAIL/0skip. Codec+resource+management+drawer/shell+recovery858; manager856/main+Loop854/
+Array857/builder851/cache812/protected/frozen owners unchanged. Publication proof follows.
+856/858 resource-file device gates remain pending; do not infer full857 source gate.
 
 ## Protected .857 Apply — user confirms working2026-10-14
 User reports856 LiveArray + later SubD modifier: Edit/apply errors independent geometry;
@@ -407,11 +431,10 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-857: create Live Array→enable SubD→Edit Array count/END→Apply/Cancel without switching
-SubD off. Edit Source component change→Apply Source/Cancel→UndoRedo; level stays on.
-Save/Open .boxlab and reopen. Existing source-cage preview is intentional; SubD applies
-to displayed committed result.856 imported-resource file roundtrip gate still pending.
-Next scoped resource stage after feedback, preserving accepted855/854/853/851/850.
+858: multi-object imported GLB sharing texture images→Save .boxlab→reset→Open→export
+GLB to Nomad, verify each object's UV/material/texture. Reopen older856 resource file
+and re-save; compare file size when it contains repeated shared images. Plain/LiveArray
+file sanity and857 SubD Apply remain protected. Next narrow resource stage after feedback.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

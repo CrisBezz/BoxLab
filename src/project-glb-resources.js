@@ -11,15 +11,27 @@ function decodeBytes(value){
  const binary=atob(value.data);if(binary.length!==value.byteLength||btoa(binary)!==value.data)throw Error('Invalid GLB image byte length');
  return Uint8Array.from(binary,c=>c.charCodeAt(0));
 }
-export function encodeProjectGLB(payload){
+export function createProjectGLBImagePool(){
+ const images=[],indices=new Map();let bytes=0;
+ return {images,add(value){const key=value.byteLength+':'+value.data;let index=indices.get(key);if(index==null){bytes+=value.byteLength;if(bytes>LIMIT)throw Error('GLB image pool exceeds 24 MB');index=images.length;images.push(value);indices.set(key,index);}return {imagePoolIndex:index};}};
+}
+export function decodeProjectGLBImagePool(images){
+ if(!Array.isArray(images))throw Error('Invalid GLB image pool');let bytes=0;
+ return images.map(value=>{const data=decodeBytes(value);bytes+=data.length;if(bytes>LIMIT)throw Error('GLB image pool exceeds 24 MB');return data;});
+}
+function imageData(value,pool){
+ if(value&&Object.hasOwn(value,'imagePoolIndex')){const index=value.imagePoolIndex;if(Object.keys(value).length!==1||!Number.isSafeInteger(index)||index<0||!pool||index>=pool.length)throw Error('Invalid GLB image pool reference');return pool[index];}
+ return decodeBytes(value);
+}
+export function encodeProjectGLB(payload,pool=null){
  if(!payload||typeof payload!=='object'||Array.isArray(payload)||payload.version!==1||payload.source!=='glb')throw Error('Invalid GLB resource payload');
  let bytes=0;const result={...payload};
- if(payload.images!=null){if(!Array.isArray(payload.images))throw Error('Invalid GLB images');result.images=payload.images.map(image=>{if(!image||typeof image!=='object')throw Error('Invalid GLB image');const data=image.data==null?null:encodeBytes(image.data);bytes+=data?.byteLength||0;if(bytes>LIMIT)throw Error('GLB image pool exceeds 24 MB');return {...image,data};});}
- return {version:1,payload:json(result)};
+ if(payload.images!=null){if(!Array.isArray(payload.images))throw Error('Invalid GLB images');result.images=payload.images.map(image=>{if(!image||typeof image!=='object')throw Error('Invalid GLB image');const data=image.data==null?null:encodeBytes(image.data);bytes+=data?.byteLength||0;if(bytes>LIMIT)throw Error('GLB image pool exceeds 24 MB');return {...image,data:data&&pool?pool.add(data):data};});}
+ return {version:pool&&result.images?.some(image=>image.data?.imagePoolIndex!=null)?2:1,payload:json(result)};
 }
-export function decodeProjectGLB(resource){
- if(resource?.version!==1||!resource.payload||typeof resource.payload!=='object'||Array.isArray(resource.payload))throw Error('Unsupported GLB project resources');
+export function decodeProjectGLB(resource,pool=null){
+ if(![1,2].includes(resource?.version)||!resource.payload||typeof resource.payload!=='object'||Array.isArray(resource.payload))throw Error('Unsupported GLB project resources');
  const result=json(resource.payload);if(result.version!==1||result.source!=='glb')throw Error('Invalid imported GLB payload');let bytes=0;
- if(result.images!=null){if(!Array.isArray(result.images))throw Error('Invalid GLB images');result.images=result.images.map(image=>{if(!image||typeof image!=='object')throw Error('Invalid GLB image');const data=image.data==null?null:decodeBytes(image.data);bytes+=data?.byteLength||0;if(bytes>LIMIT)throw Error('GLB image pool exceeds 24 MB');return {...image,data};});}
+ if(result.images!=null){if(!Array.isArray(result.images))throw Error('Invalid GLB images');result.images=result.images.map(image=>{if(!image||typeof image!=='object')throw Error('Invalid GLB image');if(image.data?.imagePoolIndex!=null&&resource.version!==2)throw Error('Invalid GLB resource reference version');const data=image.data==null?null:imageData(image.data,pool);bytes+=data?.byteLength||0;if(bytes>LIMIT)throw Error('GLB image pool exceeds 24 MB');return {...image,data};});}
  return result;
 }

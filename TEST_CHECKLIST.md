@@ -6061,3 +6061,21 @@ Apply with SubD enabled. Initial failure is superseded for this device case; sta
 asset cause is user-reported, not independently reproduced. No additional code/build.
 Source-edit/conversion/file gates not separately confirmed;856 resource-file gate still
 pending. Keep857 published implementation and reviewed cache graph; no speculative repair.
+
+
+## .858 shared embedded project images — 2026-10-14
+
+857 Apply/SubD accepted and protected, other pending gates not inferred. Four native
+codec/Open regressions: identical bytes stored once across shared/equal buffers, distinct
+bytes remain distinct, independent image/material/UV definitions, new decoded read-only
+shared bytes, fixture size reduction, exact856 inline/plain roundtrip, bad pool bytes/
+refs/version and actual legacy/new Open acceptance/rejection without scene replacement.
+Full2297PASS/0FAIL/0skip. Pool references resourcev2; plain/inlinev1 remains supported.
+Manual858 pending:
+- Multi-object GLB sharing textures→Save .boxlab→reset→Open saved file.
+- Export restored GLB to Nomad; verify every object's UV/materials/textures.
+- Open an older856 resource project; re-save and compare size if images were duplicated;
+  plain/LiveArray SaveOpen and SubD Array Apply sanity.
+32MB project/24MB unique pool limits retained. Codec/resource/management/drawer858;
+manager856/main+Loop854/Array857/protected/frozen unchanged. Future image edits must
+copy touched buffers; read-only shared image data must never mutate across objects/history.

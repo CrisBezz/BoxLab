@@ -8837,3 +8837,22 @@ Apply with SubD enabled. Initial failure is superseded for this device case; sta
 asset cause is user-reported, not independently reproduced. No additional code/build.
 Source-edit/conversion/file gates not separately confirmed;856 resource-file gate still
 pending. Keep857 published implementation and reviewed cache graph; no speculative repair.
+
+
+## .858 — deduplicate imported embedded image bytes in .boxlab — 2026-10-14
+
+User /nextbuild. Audit confirms importer shares image pools across objects but856
+project encoder writes all byte strings per-object. Extend existing resource helper/
+codec with scene image pool, canonical-byte equality keys and resource-v2 references.
+Separate definitions/materials/UV metadata retained; different bytes remain separate.
+New-file decode shares read-only pool buffers; future editors must copy touched bytes
+before replacing resources. Canonical pool/ref/24MB validations and32MB file gate remain.
+Legacy856 inline/v1 and plain scene files retain exact Open roundtrip through private
+non-enumerable decode-format flag. Fresh saves use new pool; metadata-only resources
+stayv1. No rendering/history/kernel/editor change; linked-rich/other-owner refusals stay.
+Four native codec/Open checks: shared/equal/distinct bytes, file-size reduction fixture,
+metadata/buffer identity, bad pool/ref rejection, exact legacy/plain and actual Open
+acceptance without corrupt-scene replacement. Full2297PASS/0FAIL/0skip. Resource references
+explicitly version2; projectv1 envelope unchanged. Codec/resource/management/drawer858/
+shell+recovery858 graph reviewed; manager856/main+Loop854/Array857/protected/frozen unchanged.
+Device pooled project/Nomad/older-file gate pending; no hardware speed claim.

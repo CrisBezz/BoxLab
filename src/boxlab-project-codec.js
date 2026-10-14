@@ -1,10 +1,11 @@
 // Versioned, non-destructive BoxLab scene codec foundation.
 // Explicitly refuse resources not yet representable, rather than losing them.
-import {encodeProjectGLB,decodeProjectGLB} from './project-glb-resources.js?v=0.36.18.856';
+import {encodeProjectGLB,decodeProjectGLB,createProjectGLBImagePool,decodeProjectGLBImagePool} from './project-glb-resources.js?v=0.36.18.858';
 import {evaluateArray} from './live-array-core.js?v=0.36.18.842';
 const plain=value=>value==null?null:JSON.parse(JSON.stringify(value));
-export function encodeBoxlabScene(snapshot){
+export function encodeBoxlabScene(snapshot,{poolImages=true}={}){
  if(!snapshot||!Array.isArray(snapshot.objects)||!snapshot.objects.length)throw Error('Scene has no objects');
+ const pool=poolImages&&!snapshot.__boxlabInlineGLB?createProjectGLBImagePool():null;
  const objects=snapshot.objects.map(o=>{
   const m=o.mesh;
   if(o.glbPassthrough&&o.sourceId)throw Error('Linked imported GLB projects are not supported yet');
@@ -17,16 +18,17 @@ export function encodeBoxlabScene(snapshot){
   if(faces.some(f=>f.length<3||f.some(i=>!Number.isInteger(i)||i<0||i>=vertices.length)))throw Error('Invalid mesh topology');
   const creases=[...(m.creases||new Map())];
   if(creases.some(([k,v])=>typeof k!=='string'||!Number.isFinite(v)))throw Error('Invalid crease data');
-  return {...(o.glbPassthrough?{glbResource:encodeProjectGLB(o.glbPassthrough)}:{}),id:o.id,name:o.name,visible:o.visible!==false,locked:!!o.locked,kind:o.kind||'editable',settings:plain(o.settings),origin:plain(o.origin),groupId:o.groupId??null,sourceId:o.sourceId??null,instanceMatrix:plain(o.instanceMatrix),booleanRecipe:plain(o.booleanRecipe),curveProfile:plain(o.curveProfile),...(o.arrayRecipe?{arrayRecipe:plain(o.arrayRecipe)}:{}),mesh:{vertices,faces,creases,faceGroups:[...(m.faceGroups||[])],looseEdges:[...(m.looseEdges||[])],looseVertices:[...(m.looseVertices||[])]}};
+  return {...(o.glbPassthrough?{glbResource:encodeProjectGLB(o.glbPassthrough,pool)}:{}),id:o.id,name:o.name,visible:o.visible!==false,locked:!!o.locked,kind:o.kind||'editable',settings:plain(o.settings),origin:plain(o.origin),groupId:o.groupId??null,sourceId:o.sourceId??null,instanceMatrix:plain(o.instanceMatrix),booleanRecipe:plain(o.booleanRecipe),curveProfile:plain(o.curveProfile),...(o.arrayRecipe?{arrayRecipe:plain(o.arrayRecipe)}:{}),mesh:{vertices,faces,creases,faceGroups:[...(m.faceGroups||[])],looseEdges:[...(m.looseEdges||[])],looseVertices:[...(m.looseVertices||[])]}};
  });
- return {format:'boxlab',version:1,activeId:snapshot.activeId,selected:[...(snapshot.selected||[])],multi:!!snapshot.multi,groups:plain(snapshot.groups),objects};
+ return {...(pool?.images.length?{glbImagePool:pool.images}:{}),format:'boxlab',version:1,activeId:snapshot.activeId,selected:[...(snapshot.selected||[])],multi:!!snapshot.multi,groups:plain(snapshot.groups),objects};
 }
 export function decodeBoxlabScene(data,makeMesh){
  if(data?.format!=='boxlab'||data.version!==1||!Array.isArray(data.objects)||!data.objects.length)throw Error('Unsupported BOXLAB project');
  if(typeof makeMesh!=='function')throw Error('Mesh factory required');
+ const pool=data.glbImagePool==null?null:decodeProjectGLBImagePool(data.glbImagePool);
  const objects=data.objects.map(o=>{
   if(o.glbPassthrough)throw Error('Unencoded GLB project resources');
-  const glb=o.glbResource?decodeProjectGLB(o.glbResource):null;
+  const glb=o.glbResource?decodeProjectGLB(o.glbResource,pool):null;
   const m=o.mesh;
   if(!m||!Array.isArray(m.vertices)||!Array.isArray(m.faces))throw Error('Missing mesh data');
   if(m.vertices.some(v=>!Array.isArray(v)||v.length!==3||v.some(n=>!Number.isFinite(n))))throw Error('Invalid vertex');
@@ -37,5 +39,7 @@ export function decodeBoxlabScene(data,makeMesh){
   mesh.looseVertices=new Set(m.looseVertices||[]);
   const {glbResource,...rest}=o;return {...rest,...(glb?{glbPassthrough:glb}:{}),mesh,history:{undo:[],redo:[]}};
  });
- return {activeId:data.activeId,selected:[...(data.selected||[])],multi:!!data.multi,groups:plain(data.groups),objects};
+ const result={activeId:data.activeId,selected:[...(data.selected||[])],multi:!!data.multi,groups:plain(data.groups),objects};
+ // Open's exact roundtrip validation must retain legacy inline resource encoding.
+ Object.defineProperty(result,'__boxlabInlineGLB',{value:pool===null});return result;
 }

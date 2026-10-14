@@ -4,7 +4,16 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .857 SubD Live Array editing repair, 2026-10-14
+## Current direction — .858 shared project image pool, 2026-10-14
+
+857 SubD Apply accepted.856 imported objects repeat shared image bytes in project JSON.
+Existing codec now pools identical bytes once, with per-object metadata and validated
+resource-v2 references. New decoded buffers shared read-only; legacy856 inline/plain
+files preserve exact Open roundtrip. Full2297PASS/0FAIL.32MB file/24MB unique pool limits.
+Device imported multi-object file/resources/legacy-open gate pending. No rendering or
+texture editing change; next narrow resource stage after feedback.
+
+## Previous direction — .857 SubD Live Array editing repair, 2026-10-14
 
 User856 LiveArray+SubD edit error: universal guard wrongly rejects existing recipe base
 geometry. Existing Array/source owners now allow existing Live Array SubD edits and
