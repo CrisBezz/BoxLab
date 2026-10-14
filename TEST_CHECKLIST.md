@@ -6051,3 +6051,13 @@ Manual857 pending:
 - Save/Open .boxlab and reopen Array; keep SubD level and count/END settings.
 Preview remains source-cage guide; committed result uses existing SubD rendering owner.
 856 imported-resource .boxlab roundtrip gate still pending; prior accepted gates retained.
+
+
+## .857 Apply acceptance / refresh clarification — 2026-10-14
+
+User first reported857 unchanged, clarified failure on Apply Array, then explicitly
+reported it works now and suspected updated-file refresh. Protect existing Live Array
+Apply with SubD enabled. Initial failure is superseded for this device case; stale
+asset cause is user-reported, not independently reproduced. No additional code/build.
+Source-edit/conversion/file gates not separately confirmed;856 resource-file gate still
+pending. Keep857 published implementation and reviewed cache graph; no speculative repair.

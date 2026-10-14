@@ -7,7 +7,7 @@ ROADMAP before code. Repository is source of truth. Standing publish authorizati
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .857 scope — existing Live Array editing with SubD, device gate pending
+## Protected .857 Apply — user confirms working2026-10-14
 User reports856 LiveArray + later SubD modifier: Edit/apply errors independent geometry;
 turning off SubD works. Audit existing Array apply/reopen/source stage: guard blocks
 SubD universally although object.mesh and recipe remain independent base geometry.
@@ -27,7 +27,8 @@ invalid-context guards; three legacy Array pin assertions advance857, behavior r
 Full2293PASS/0FAIL/0skip. Array857→source-editor857→source-core857, evaluator842 unchanged;
 shell/recovery857; main+Loop854/manager+codec+management+drawer856/builder851/cache812/
 Clean845/Soft846/protected/frozen owners unchanged. Publication/Node22/live proof recorded below.
-856 imported-resource project gate remains pending; no new PASS inferred from bug report.
+User confirms857 Apply with SubD works after suspected file refresh; protect this gate.
+Source-edit/conversion/file checks and856 resource-file gate remain separately pending.
 
 ## .856 scope — imported GLB .boxlab Save/Open, device gate pending
 User855 PASS protects imported GLB scene-history/resource restoration and export.
@@ -593,3 +594,13 @@ unchanged evaluator842, protected Multi1.0 and frozenBeta7 version byte-match re
 Predeployment reads returned856; subsequent complete graph matches857. Device existing
 LiveArray + SubD count/END/source/history/project gate pending;856 resource gate not
 inferred from this bug report. New SubD creation/Mirror restrictions retained.
+
+
+## .857 Apply acceptance / refresh clarification — 2026-10-14
+
+User first reported857 unchanged, clarified failure on Apply Array, then explicitly
+reported it works now and suspected updated-file refresh. Protect existing Live Array
+Apply with SubD enabled. Initial failure is superseded for this device case; stale
+asset cause is user-reported, not independently reproduced. No additional code/build.
+Source-edit/conversion/file gates not separately confirmed;856 resource-file gate still
+pending. Keep857 published implementation and reviewed cache graph; no speculative repair.

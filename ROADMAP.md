@@ -10,7 +10,8 @@ User856 LiveArray+SubD edit error: universal guard wrongly rejects existing reci
 geometry. Existing Array/source owners now allow existing Live Array SubD edits and
 retain modifier settings, native recipe/history. New Live creation with SubD and Mirror
 remain restricted. Full2293PASS/0FAIL, native Apply/Cancel/source/history/codec coverage.
-Device SubD count/END/source/reopen gate pending;856 resource-file gate remains pending.
+User857 Apply/SubD works after suspected asset refresh; protect it. Source/reopen
+checks and856 resource-file gate remain separately pending.
 No modelling/render kernel change. Resume resource stage after feedback.
 
 ## Previous direction — .856 imported GLB project resources, 2026-10-14

@@ -8827,3 +8827,13 @@ unchanged evaluator842, protected Multi1.0 and frozenBeta7 version byte-match re
 Predeployment reads returned856; subsequent complete graph matches857. Device existing
 LiveArray + SubD count/END/source/history/project gate pending;856 resource gate not
 inferred from this bug report. New SubD creation/Mirror restrictions retained.
+
+
+## .857 Apply acceptance / refresh clarification — 2026-10-14
+
+User first reported857 unchanged, clarified failure on Apply Array, then explicitly
+reported it works now and suspected updated-file refresh. Protect existing Live Array
+Apply with SubD enabled. Initial failure is superseded for this device case; stale
+asset cause is user-reported, not independently reproduced. No additional code/build.
+Source-edit/conversion/file gates not separately confirmed;856 resource-file gate still
+pending. Keep857 published implementation and reviewed cache graph; no speculative repair.
