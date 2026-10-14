@@ -32,7 +32,7 @@ to imported payload support while other resource refusal remains;829 UI status a
 advance to accurate Open text, original semantics retained. Full2290PASS/0FAIL/0skip.
 Codec856→new resource856; management856→codec856; drawer856→management856; manager856;
 shell/recovery856. Main+LoopCommit854/builder851/cache812/Array844/Clean845/Soft846/
-protected/frozen kernels unchanged. Publication/Node22/live verification follows.
+protected/frozen kernels unchanged. Publication/Node22/live verification recorded below.
 
 ## Protected .855 scope — user PASS2026-10-14
 User854 PASS protects native Loop EXACT/repeat/exit/history; move to roadmap resource
@@ -548,3 +548,14 @@ protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell 
 returned854 during deployment; postdeployment verification matches855. User854 PASS
 protected;855 imported GLB delete/UndoRedo/export device gate pending. Rich-resource
 .boxlab saving remains refused, no file-resource codec implementation claimed.
+
+
+## .856 publication verified — 2026-10-14
+
+Release9ec6e46725768ca46dab2521aa9df22e4ccbd329; tested tree
+b71757dad42bbab4bc007b880d3945e15289b3f8 exactly matches local validated checkout.
+Node22 CI38508953096/job115672788333 SUCCESS:2290PASS/0FAIL/0skip.
+Pages38508952135 SUCCESS. Fresh live shell/manifest/management856/codec856/resource856/
+manager856/drawer856, protected Multi1.0 and frozenBeta7 version byte-match repository.
+User855 PASS protected;856 independent importedGLB .boxlab save/open/export device gate
+pending. File32MB/pool24MB limits and linked-rich/other-resource refusals retained.

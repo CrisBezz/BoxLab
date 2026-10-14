@@ -8786,3 +8786,14 @@ support + other-owner refusal;829 status checks retain original acceptance seman
 Full2290PASS/0FAIL/0skip. Reviewed codec/helper/management/drawer/manager graph856 and
 shell/recovery856; main/Loop854/builder851/cache812/protected/frozen unchanged.
 Device imported-file/export/Nomad and basic-file sanity gate pending.
+
+
+## .856 publication verified — 2026-10-14
+
+Release9ec6e46725768ca46dab2521aa9df22e4ccbd329; tested tree
+b71757dad42bbab4bc007b880d3945e15289b3f8 exactly matches local validated checkout.
+Node22 CI38508953096/job115672788333 SUCCESS:2290PASS/0FAIL/0skip.
+Pages38508952135 SUCCESS. Fresh live shell/manifest/management856/codec856/resource856/
+manager856/drawer856, protected Multi1.0 and frozenBeta7 version byte-match repository.
+User855 PASS protected;856 independent importedGLB .boxlab save/open/export device gate
+pending. File32MB/pool24MB limits and linked-rich/other-resource refusals retained.
