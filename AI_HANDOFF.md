@@ -24,7 +24,7 @@ one cleanup redraw, no synthetic UI history and actual UndoRedo, busy/no-stage r
 model native cleanup instead of mesh replacement, retaining geometry/selection/history
 assertions. Full2282PASS/0FAIL/0skip. Main854/commit854/shell+recovery854 coherent;
 builder851/cache812/manager849/Array844/Clean845/Soft846/protected/frozen kernels unchanged.
-Publication/Node22/live verification follows. Device repeat/EXACT/exit/history gate pending.
+Publication/Node22/live verification recorded below. Device repeat/EXACT/exit/history gate pending.
 
 ## Protected .853 scope — user PASS2026-10-14
 User reports852 Edge Loop MultiLoop fails to finish; single cut remains yellow.
@@ -474,3 +474,14 @@ Pages38487534251 SUCCESS. Fresh live shell/manifest/main853/loop-cut-commit853,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
 reads returned852; complete postdeployment verification matches853. User852 Loop
 FAIL recorded;853 single/MultiLoop completion/editable faces/history gate pending.
+
+
+## .854 publication verified — 2026-10-14
+
+Releaseb6806ccb9b4da959e68d17d95596431d3dee1dcc; tested tree
+f62b760d0b50974cf5f2db45caee135c67a46629 exactly matches local validated checkout.
+Node22 CI38500128979/job115644854684 SUCCESS:2282PASS/0FAIL/0skip.
+Pages38500128663 SUCCESS. Fresh live shell/manifest/main854/loop-cut-commit854,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+shell/manifest reads returned853; subsequent verification matches854. User853 PASS
+protected;854 native completion/repeat/exit/history device gate pending.

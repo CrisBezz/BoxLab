@@ -8724,3 +8724,14 @@ Device EXACT/repeat/exit/history gate pending; no quantified speed claim.
 face arrays retained foreign prototypes now that history no longer clones/replaces
 the mesh. Compare exact face cycles through Array.from (existing fixture convention),
 retaining vertex/selection/native UndoRedo assertions; no runtime topology fix implied.
+
+
+## .854 publication verified — 2026-10-14
+
+Releaseb6806ccb9b4da959e68d17d95596431d3dee1dcc; tested tree
+f62b760d0b50974cf5f2db45caee135c67a46629 exactly matches local validated checkout.
+Node22 CI38500128979/job115644854684 SUCCESS:2282PASS/0FAIL/0skip.
+Pages38500128663 SUCCESS. Fresh live shell/manifest/main854/loop-cut-commit854,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+shell/manifest reads returned853; subsequent verification matches854. User853 PASS
+protected;854 native completion/repeat/exit/history device gate pending.
