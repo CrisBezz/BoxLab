@@ -553,6 +553,7 @@ function addObject(mesh, name = 'Cube', options = {}) {
   };
   if(options.glbPassthrough)object.glbPassthrough=options.glbPassthrough;
   if(options.curveProfile)object.curveProfile=cloneLooseValue(options.curveProfile);
+  if(options.arrayRecipe)object.arrayRecipe=JSON.parse(JSON.stringify(options.arrayRecipe));
   if(options.sourceId)object.sourceId=options.sourceId;
   if(Array.isArray(options.instanceMatrix)&&options.instanceMatrix.length===16)object.instanceMatrix=[...options.instanceMatrix];
   if(options.origin)object.origin={...options.origin};
@@ -571,7 +572,7 @@ function duplicateActive() {
   const source = activeObject();
   if (!source) return;
   saveActive();
-  const copy = addObject(source.mesh, nextDuplicateName(source.name), { settings:source.settings, curveProfile:source.curveProfile, glbPassthrough:source.glbPassthrough, enterObjectMode:true });
+  const copy = addObject(source.mesh, nextDuplicateName(source.name), { settings:source.settings, curveProfile:source.curveProfile, arrayRecipe:source.arrayRecipe, glbPassthrough:source.glbPassthrough, enterObjectMode:true });
   if (!copy) return;
   requestAnimationFrame(() => {
     if (currentMode() !== 'object') return;

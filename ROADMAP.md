@@ -4,7 +4,21 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .859 imported resources through ordinary Duplicate, 2026-10-14
+## Current direction — .860 ordinary Duplicate retains editable Live Arrays, 2026-10-14
+
+859 published/CI/Pages/live verified after direct standing push/publish approval.
+Single Duplicate omitted arrayRecipe; Multi captured but dropped it at addMesh. Existing
+addObject now deep-copies serialized recipe; both original duplicate owners forward it.
+One independent editable array per copy, native count/END/source/subdivision/file owners
+retained. Three native tests cover independent source/parameters, placement/Move/settings,
+mixed grouped Multi, count/END Apply, source Cancel/Apply/edit UndoRedo and native project
+replacement. Device860 gate pending;859 Nomad duplicate visual gate not yet accepted.
+Next: proven existing affine-tail rounding in reopenArray after arbitrary-angle/nonuniform
+placement+count/END edits can give[15]=1.0000000000000002 and refuse source reopen. This
+also reproduces on original without duplication; repair native recipe owner separately,
+retain strict external-transform/file guards and protected instance kernel.
+
+## Previous direction — .859 imported resources through ordinary Duplicate, 2026-10-14
 
 858 user PASS protects imported-resource pooled/legacy .boxlab Save/Open/export.
 Audit found ordinary single and Multi Duplicate drop glbPassthrough. Pass read-only
@@ -1004,3 +1018,11 @@ push to main despite recorded repository standing approval; direct authorization
 publication is now required by the review. Remote/live remain858.859 CI/Pages/live
 verification and device gate pending. See AI_HANDOFF publication block; do not claim859
 published or route around rejection through another tool.
+
+
+## .860 local validation — 2026-10-14
+
+Full native Node regression:2303PASS/0FAIL/0skip, including three new Live Array
+duplicate tests and retained859 resource coverage. Reviewed shell/cache contract passes.
+Protected Multi1.0/frozen betas unchanged; device860 gate and proven prior affine-tail
+roundoff remain separate. Publication verification pending.

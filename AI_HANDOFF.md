@@ -1,12 +1,39 @@
-# BoxLab AI Handoff — .859 imported resources through Duplicate
+# BoxLab AI Handoff — .860 editable Live Array duplicates
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main build0.36.18.859; live https://crisbezz.github.io/BoxLab/.
+CrisBezz/BoxLab main build0.36.18.860; live https://crisbezz.github.io/BoxLab/.
 Publication verification pending. User explicitly approves pushing/publishing on2026-10-14.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .860 scope — ordinary Duplicate keeps an independent Live Array, device gate pending
+User explicitly authorizes all future pushing/publishing and /nextbuild. Publish prior859
+first: connected GitHub tree4008eb4179031b70f4882bdb0f729f96b658c267 exactly matches local;
+main d7dae3c8147373920e9c526f0b6eb36e5482e4bc, CI/Pages/live verified below. No859 PASS inferred.
+Audit manager duplicateActive/addObject and management duplicateSelection: single omitted
+arrayRecipe; Multi cloned it in snapshots but never installed it. Both now forward recipe
+through existing addObject, which JSON-deep-copies serialized recipe rather than shallow
+cloneLooseValue. Each copy remains ONE independent object with own source/count/END/frame.
+Native affine reopen/evaluator/source editor/history/file owners remain authoritative.
+Preserves SubD/settings, mixed ordinary+LiveArray groups, independent geometry, Move and
+859 read-only GLB payload. Linked Duplicate/unchecked Array and all protected kernels
+unchanged; no new recipe version, kernel/history/gesture/render owner.
+Three native tests: both actual duplicate owners, deep source/END independence, placed
+rotation/nonuniform scale/move reopen, SubD, mixed grouped Multi, count+END Apply, source
+Apply/Cancel/edit UndoRedo, codec/native scene replacement and original unaffected.
+Test staging correctly distinguishes native incoming scene from renamed module globals.
+Known pre-existing arbitrary-angle affine tail-rounding issue reproduced WITHOUT any
+Duplicate: after count/END Apply, reopenArray can return placement[15]=1.0000000000000002;
+strict arrayTransforms refuses subsequent source reopen. Separate next repair;860 tests
+cover exact affine rotation/scale/translation, not blanket transformed-array acceptance.
+Recipe clone must remain deep; manager cloneLooseValue is intentionally shallow for
+mesh fields and cannot safely clone this recipe. No general clone refactor.
+Manager/management860→unchanged codec858, drawer860/shell+recovery860. Array857/evaluator842/
+source857/main+Loop854/builder851/cache812/protected/frozen remain unchanged.
+Full validation/publication proof recorded below. Device860 gate pending; separate859
+GLB duplication/Nomad gate pending. User858 PASS remains protected.
 
 ## .859 scope — imported GLB resources through ordinary Duplicate, device gate pending
 User858 PASS /nextbuild protects pooled imported-resource Save/Open/export, older resource
@@ -56,7 +83,7 @@ per-object definitions/materials/UVs, shared decoded buffers, exact legacy/plain
 bad pool bytes/index/shape/version and rejection before scene replacement. Full2297PASS/
 0FAIL/0skip. Codec+resource+management+drawer/shell+recovery858; manager856/main+Loop854/
 Array857/builder851/cache812/protected/frozen owners unchanged. Publication proof recorded below.
-856/858 resource-file device gates remain pending; do not infer full857 source gate.
+858 resource-file gate accepted; do not infer full857 source gate.
 
 ## Protected .857 Apply — user confirms working2026-10-14
 User reports856 LiveArray + later SubD modifier: Edit/apply errors independent geometry;
@@ -458,12 +485,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-859: import textured GLB→ordinary Object Duplicate (single and Multi)→move copy→export
-Base GLB to Nomad, compare both objects' UV/material/texture. Save .boxlab→reset→Open→
-export again. Delete one copy→Undo/Redo and export restored data. Plain duplicate/group/
-Move and protected857 SubD Array Apply sanity. Next narrow project-resource or imported
-UV inspection stage after feedback; audit native owners first. Linked imported resources
-still refuse project Save, and linked/Array duplicates are not included in859 scope.
+860: Live Array with progressive END rotation/scale→SubD On→ordinary Duplicate→move copy→
+reopen count/END and Apply; original stays unchanged. Edit Source on copy→Apply/Cancel;
+UndoRedo source changes. Multi duplicate mixed plain/LiveArray group. Save/Open→reopen both.
+859 imported-resource Duplicate→GLB/Nomad visual comparison still pending. Next narrow
+build should repair proven existing affine-tail rounding in Live Array reopen using
+existing recipe owner, retaining strict external-file/project transform validation and
+protected instance kernel343. Do not quietly weaken arbitrary invalid transform guards.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
@@ -696,3 +724,23 @@ and /nextbuild. Prior approval-review block superseded by current direct authori
 Shell git push lacks HTTPS credentials; publish validated tree using connected GitHub
 Git Data tools, preserving remote parent and checking expected main SHA. No auth secrets
 retrieved. .859 CI/Pages/live verification pending; no device859 PASS inferred.
+
+
+## .859 publication verified / approval block superseded — 2026-10-14
+
+User directly approves ongoing pushes/publishing. Connected GitHub release
+d7dae3c8147373920e9c526f0b6eb36e5482e4bc, tree4008eb4179031b70f4882bdb0f729f96b658c267
+exactly matches local. Node22 CI38541026468/job115775518061 SUCCESS;2300PASS/0FAIL/0skip.
+Pages38541024866 SUCCESS. Live manifest/shell/manager859/management859/drawer859,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Shell git credentials
+unavailable; connected Git Data publication preserves main parent with expected-SHA
+lease and matching blob hashes. Prior approval block is historical and superseded.
+No859 device PASS inferred.
+
+
+## .860 local validation — 2026-10-14
+
+Full native Node regression:2303PASS/0FAIL/0skip, including three new Live Array
+duplicate tests and retained859 resource coverage. Reviewed shell/cache contract passes.
+Protected Multi1.0/frozen betas unchanged; device860 gate and proven prior affine-tail
+roundoff remain separate. Publication verification pending.

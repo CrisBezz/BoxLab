@@ -8903,3 +8903,40 @@ push to main despite recorded repository standing approval; direct authorization
 publication is now required by the review. Remote/live remain858.859 CI/Pages/live
 verification and device gate pending. See AI_HANDOFF publication block; do not claim859
 published or route around rejection through another tool.
+
+
+## .859 publication verified — 2026-10-14
+
+Direct user standing authorization supersedes prior approval block. Release
+d7dae3c8147373920e9c526f0b6eb36e5482e4bc/tree4008eb4179031b70f4882bdb0f729f96b658c267
+match local validated files. CI38541026468/job115775518061 SUCCESS2300/0/0skip;
+Pages38541024866 SUCCESS. Live shell/manifest/manager859/management859/drawer859 and
+protected Multi1.0/frozenBeta7 version match.859 device gate pending.
+
+
+## .860 — ordinary Duplicate retains independent Live Array recipe — 2026-10-14
+
+User direct ongoing push/publish approval and /nextbuild.859 published first. Audit single
+Duplicate omitted arrayRecipe; Multi snapshot already captured it but addMesh dropped it.
+Forward through both existing owners; native addObject deep-JSON-copies serialized recipe.
+Original cloneLooseValue is shallow; do not use it for mutable nested source/END metadata.
+SubD/settings/group/Move/geometry unchanged,859 read-only imported payload still shared.
+Three actual owner/manager/evaluator/source/history/codec tests cover single/Multi deep
+independence, placed rotation/nonuniform scale/move, mixed group/plain objects, count+END
+Apply, source Cancel/Apply/edit UndoRedo, original unchanged and native file replacement.
+Initial tests fail on859 missing recipe; shallow initial clone also failed nested identity,
+replaced with JSON clone. No new kernel/session/history/recipe version or general refactor.
+Audit independently reproduced existing original-array affine-tail roundoff after arbitrary
+rotation/nonuniform placement + count/END edits:[15]=1.0000000000000002, strict source reopen
+fails. Separate next build, not silently treated as860 acceptance. Tests retain exact affine
+rotation/scale/translation; native staged-file test fixes fixture input/global-name collision.
+Manager/management860/drawer860/shell+recovery860, codec858/Array857/evaluator842/source857/
+main+Loop854/protected/frozen untouched. Full validation/publication follows below.
+
+
+## .860 local validation — 2026-10-14
+
+Full native Node regression:2303PASS/0FAIL/0skip, including three new Live Array
+duplicate tests and retained859 resource coverage. Reviewed shell/cache contract passes.
+Protected Multi1.0/frozen betas unchanged; device860 gate and proven prior affine-tail
+roundoff remain separate. Publication verification pending.

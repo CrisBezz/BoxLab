@@ -6117,3 +6117,42 @@ push to main despite recorded repository standing approval; direct authorization
 publication is now required by the review. Remote/live remain858.859 CI/Pages/live
 verification and device gate pending. See AI_HANDOFF publication block; do not claim859
 published or route around rejection through another tool.
+
+
+## .859 publication verified — 2026-10-14
+
+Direct user standing authorization supersedes prior approval block. Release
+d7dae3c8147373920e9c526f0b6eb36e5482e4bc/tree4008eb4179031b70f4882bdb0f729f96b658c267
+match local validated files. CI38541026468/job115775518061 SUCCESS2300/0/0skip;
+Pages38541024866 SUCCESS. Live shell/manifest/manager859/management859/drawer859 and
+protected Multi1.0/frozenBeta7 version match.859 device gate pending.
+
+
+## .860 independent editable Live Array duplication — 2026-10-14
+
+Three native tests execute existing single/Multi duplicate owners with actual manager:
+- Separate deeply copied source vertices/faces/count/END rotation/scale/frame; geometry,
+  SubD/settings and Move handoff retained. Exact affine rotation/nonuniform scale/move
+  reopens correctly; mixed/group plain+LiveArray copies keep independent recipe status.
+- Copy count/END Apply, source Cancel/Apply and source edit UndoRedo preserve original;
+  copied object remains one editable LiveArray and uses original geometry/history owners.
+- Codec roundtrip and native atomic scene replacement retain independent recipes and
+  SubD; successful Open clears old history.859 resource duplicate tests remain active.
+Manual860 pending:
+- Live Array with END rotate/scale→SubD On→ordinary Duplicate→move copy→reopen Array,
+  change count/END→Apply. Original remains unchanged; both still one object each.
+- Copy Edit Source→small face edit→Apply Source/Cancel; UndoRedo source change.
+- Multi duplicate plain+LiveArray group, then Save .boxlab→reset→Open→reopen both arrays.
+Known separate existing issue: some arbitrary-angle whole-array rotations/scales cause
+reopenArray affine[15] roundoff after later count/END Apply, then source reopen refuses.
+Reproduces without duplication. Repair next; no blanket transformed-array gate claimed.
+No new native kernel/history/renderer; linked Duplicate/unchecked Array and protected/
+frozen owners untouched. Publication/build validation follows in handoff/history.
+
+
+## .860 local validation — 2026-10-14
+
+Full native Node regression:2303PASS/0FAIL/0skip, including three new Live Array
+duplicate tests and retained859 resource coverage. Reviewed shell/cache contract passes.
+Protected Multi1.0/frozen betas unchanged; device860 gate and proven prior affine-tail
+roundoff remain separate. Publication verification pending.
