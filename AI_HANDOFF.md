@@ -26,7 +26,7 @@ new-creation/Mirror refusal.844 modifier-refusal case becomes Mirror, retaining 
 invalid-context guards; three legacy Array pin assertions advance857, behavior retained.
 Full2293PASS/0FAIL/0skip. Array857→source-editor857→source-core857, evaluator842 unchanged;
 shell/recovery857; main+Loop854/manager+codec+management+drawer856/builder851/cache812/
-Clean845/Soft846/protected/frozen owners unchanged. Publication/Node22/live proof follows.
+Clean845/Soft846/protected/frozen owners unchanged. Publication/Node22/live proof recorded below.
 856 imported-resource project gate remains pending; no new PASS inferred from bug report.
 
 ## .856 scope — imported GLB .boxlab Save/Open, device gate pending
@@ -581,3 +581,15 @@ Pages38508952135 SUCCESS. Fresh live shell/manifest/management856/codec856/resou
 manager856/drawer856, protected Multi1.0 and frozenBeta7 version byte-match repository.
 User855 PASS protected;856 independent importedGLB .boxlab save/open/export device gate
 pending. File32MB/pool24MB limits and linked-rich/other-resource refusals retained.
+
+
+## .857 publication verified — 2026-10-14
+
+Release40db2d5e49f4e8d6843ef1b06fa92867df300451; tested tree
+cb336090408074903b32901b20cd66d821990e5a exactly matches local validated checkout.
+Node22 CI38510208221/job115676736263 SUCCESS:2293PASS/0FAIL/0skip.
+Pages38510208124 SUCCESS. Fresh live shell/manifest/Array857/source-editor857/source-core857,
+unchanged evaluator842, protected Multi1.0 and frozenBeta7 version byte-match repository.
+Predeployment reads returned856; subsequent complete graph matches857. Device existing
+LiveArray + SubD count/END/source/history/project gate pending;856 resource gate not
+inferred from this bug report. New SubD creation/Mirror restrictions retained.

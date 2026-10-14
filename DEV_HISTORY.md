@@ -8815,3 +8815,15 @@ advanced857 only, behavior assertions retained. Final2293PASS/0FAIL/0skip.
 Array/source-editor/source-core857 loader chain and shell/recovery857 hashes reviewed;
 evaluator842/main854/manager+project856/protected/frozen unchanged. Device gate pending;
 856 resource-file acceptance not inferred from this scoped issue.
+
+
+## .857 publication verified — 2026-10-14
+
+Release40db2d5e49f4e8d6843ef1b06fa92867df300451; tested tree
+cb336090408074903b32901b20cd66d821990e5a exactly matches local validated checkout.
+Node22 CI38510208221/job115676736263 SUCCESS:2293PASS/0FAIL/0skip.
+Pages38510208124 SUCCESS. Fresh live shell/manifest/Array857/source-editor857/source-core857,
+unchanged evaluator842, protected Multi1.0 and frozenBeta7 version byte-match repository.
+Predeployment reads returned856; subsequent complete graph matches857. Device existing
+LiveArray + SubD count/END/source/history/project gate pending;856 resource gate not
+inferred from this bug report. New SubD creation/Mirror restrictions retained.
