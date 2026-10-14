@@ -28,7 +28,7 @@ Four new native codec/Open tests cover shared+equal bytes/size reduction, distin
 per-object definitions/materials/UVs, shared decoded buffers, exact legacy/plain roundtrip,
 bad pool bytes/index/shape/version and rejection before scene replacement. Full2297PASS/
 0FAIL/0skip. Codec+resource+management+drawer/shell+recovery858; manager856/main+Loop854/
-Array857/builder851/cache812/protected/frozen owners unchanged. Publication proof follows.
+Array857/builder851/cache812/protected/frozen owners unchanged. Publication proof recorded below.
 856/858 resource-file device gates remain pending; do not infer full857 source gate.
 
 ## Protected .857 Apply — user confirms working2026-10-14
@@ -627,3 +627,14 @@ Apply with SubD enabled. Initial failure is superseded for this device case; sta
 asset cause is user-reported, not independently reproduced. No additional code/build.
 Source-edit/conversion/file gates not separately confirmed;856 resource-file gate still
 pending. Keep857 published implementation and reviewed cache graph; no speculative repair.
+
+
+## .858 publication verified — 2026-10-14
+
+Releaseb5f352c0c2843536c6f46f444fb2e0c41292b8aa; tested tree
+c25a1473cbcb9608e63a6c28202dfd1f4d594ba7 exactly matches local validated checkout.
+Node22 CI38516162270/job115695323751 SUCCESS:2297PASS/0FAIL/0skip.
+Pages38516162030 SUCCESS. Fresh live shell/manifest/management858/codec858/resource858/
+drawer858, protected Multi1.0 and frozenBeta7 version byte-match repository. Initial
+reads preceded deployment; postdeployment full graph matches858.857 Apply/SubD accepted
+and protected.858 pooled/legacy resource-file device gates pending; no renderer gain claim.

@@ -8856,3 +8856,14 @@ acceptance without corrupt-scene replacement. Full2297PASS/0FAIL/0skip. Resource
 explicitly version2; projectv1 envelope unchanged. Codec/resource/management/drawer858/
 shell+recovery858 graph reviewed; manager856/main+Loop854/Array857/protected/frozen unchanged.
 Device pooled project/Nomad/older-file gate pending; no hardware speed claim.
+
+
+## .858 publication verified — 2026-10-14
+
+Releaseb5f352c0c2843536c6f46f444fb2e0c41292b8aa; tested tree
+c25a1473cbcb9608e63a6c28202dfd1f4d594ba7 exactly matches local validated checkout.
+Node22 CI38516162270/job115695323751 SUCCESS:2297PASS/0FAIL/0skip.
+Pages38516162030 SUCCESS. Fresh live shell/manifest/management858/codec858/resource858/
+drawer858, protected Multi1.0 and frozenBeta7 version byte-match repository. Initial
+reads preceded deployment; postdeployment full graph matches858.857 Apply/SubD accepted
+and protected.858 pooled/legacy resource-file device gates pending; no renderer gain claim.
