@@ -1,12 +1,32 @@
-# BoxLab AI Handoff — .860 editable Live Array duplicates
+# BoxLab AI Handoff — .861 affine Live Array reopen repair
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main build0.36.18.860; live https://crisbezz.github.io/BoxLab/.
-Release40f638db; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.861; live https://crisbezz.github.io/BoxLab/.
+Release .861 local validation; publication verification pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .861 scope — internally inferred affine placement, device gate pending
+Continued from current main697a9fa9/.860 after repository/owner audit. Baseline2303PASS;
+live860 shell/manifest matched. Reproduced original array (no Duplicate): arbitrary XYZ
+rotation/nonuniform scale→count/END Apply→reopen produces inferred placement[15]
+1.0000000000000002, then strict recipe creation/source editing refuses.
+Only reopenArray in existing live-array-core canonicalizes internally derived affine
+bottom row to0/0/0/1 after finite and32*Number.EPSILON tail checks. Existing external
+arrayTransforms/project codec validation stays exact; non-affine component refusal and
+protected instance343 unchanged. No new kernel/history/gesture/render/recipe version.
+Three native tests cover repeated placed count/END edits/shape/project roundtrip, actual
+Array Apply→source Cancel/Apply→UndoRedo with SubD, and strict malformed external/file
+refusal plus unchanged-source/non-affine edit refusal. Prior860 duplicate gates retained.
+Core861 and all three import graphs refreshed: Array861→source-editor861→source-core861;
+codec861→management861→drawer861; shell/recovery861. Other owners/frozen betas retained.
+Three literal Array cache assertions advanced861; reviewed contract changes only to
+these loaders/bytes. Full validation and publication evidence recorded below.
+Device861,860 duplication and859 resource/Nomad gates remain pending. Next: iPad
+rotated/scaled LiveArray count/END Apply then Edit Source, history and Save/Open sanity;
+resume staged resource/UV inspection or measured performance after feedback/owner audit.
 
 ## .860 scope — ordinary Duplicate keeps an independent Live Array, device gate pending
 User explicitly authorizes all future pushing/publishing and /nextbuild. Publish prior859
@@ -26,7 +46,7 @@ Apply/Cancel/edit UndoRedo, codec/native scene replacement and original unaffect
 Test staging correctly distinguishes native incoming scene from renamed module globals.
 Known pre-existing arbitrary-angle affine tail-rounding issue reproduced WITHOUT any
 Duplicate: after count/END Apply, reopenArray can return placement[15]=1.0000000000000002;
-strict arrayTransforms refuses subsequent source reopen. Separate next repair;860 tests
+strict arrayTransforms refuses subsequent source reopen. Resolved by861;860 tests
 cover exact affine rotation/scale/translation, not blanket transformed-array acceptance.
 Recipe clone must remain deep; manager cloneLooseValue is intentionally shallow for
 mesh fields and cannot safely clone this recipe. No general clone refactor.
@@ -485,13 +505,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-860: Live Array with progressive END rotation/scale→SubD On→ordinary Duplicate→move copy→
-reopen count/END and Apply; original stays unchanged. Edit Source on copy→Apply/Cancel;
-UndoRedo source changes. Multi duplicate mixed plain/LiveArray group. Save/Open→reopen both.
-859 imported-resource Duplicate→GLB/Nomad visual comparison still pending. Next narrow
-build should repair proven existing affine-tail rounding in Live Array reopen using
-existing recipe owner, retaining strict external-file/project transform validation and
-protected instance kernel343. Do not quietly weaken arbitrary invalid transform guards.
+861 device gate: rotate/scale a Live Array as a whole, reopen count/END→Apply repeatedly,
+then Edit Source→Apply/Cancel. Keep SubD on, Undo/Redo and Save/Open→reopen checks.
+860 independent ordinary/Multi Duplicate gate and859 imported-resource Duplicate→Nomad
+visual comparison remain pending; no new PASS inferred. The queued affine-tail defect
+is repaired in861. Resume staged resource/UV inspection or measured performance after
+feedback and audit of existing owners; preserve all accepted interactions/frozen betas.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
@@ -756,3 +775,11 @@ management860/drawer860, protected Multi1.0 and frozenBeta7 version byte-match.
 Connected Git Data publication uses expected-main SHA and verified file/tree hashes.
 Device860 duplicate/source/file gate pending;859 imported-duplicate/Nomad gate
 not yet accepted. Next proven original-array affine-tail rounding repair remains queued.
+
+
+## .861 local validation — 2026-10-14
+
+Full native Node24 regression:2306PASS/0FAIL/0skip. Three new native affine reopen
+checks and all prior semantic coverage pass. Reviewed cache contract/shell markers
+coherent; protected Multi1.0/instance343/frozen beta files untouched. Publication
+CI/Pages/live verification pending; device gates not inferred.

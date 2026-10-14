@@ -6168,3 +6168,28 @@ management860/drawer860, protected Multi1.0 and frozenBeta7 version byte-match.
 Connected Git Data publication uses expected-main SHA and verified file/tree hashes.
 Device860 duplicate/source/file gate pending;859 imported-duplicate/Nomad gate
 not yet accepted. Next proven original-array affine-tail rounding repair remains queued.
+
+
+## .861 arbitrary affine Live Array reopen — device gate pending2026-10-14
+
+Native regressions: repeated arbitrary XYZ rotation/nonuniform scale and count/END
+edits preserve geometry/first item/canonical inferred tail and project roundtrip.
+Actual Array Apply→Edit Source→Cancel/Apply→UndoRedo keeps SubD and recipe. Strict
+external near-affine recipe/project refusal and non-affine component guards retained.
+Manual861 pending:
+- Live Array→whole-object Rotate (e.g.17°,31°,27°) and nonuniform Scale→Edit Array;
+  change count/END rotation/scale→Apply→reopen and Apply again.
+- With SubD enabled, Edit Source→small face edit→Apply Source; reopen→Cancel.
+  Undo/Redo retains shape and editable recipe.
+- Save .boxlab→reset→Open→reopen Array and Edit Source successfully.
+860 Duplicate and859 imported-resource/Nomad gates remain separately pending.
+Only inferred reopen output gets a guarded canonical tail; external validation stays
+strict. All loaders refreshed861; protected instance343/Multi1.0/frozen betas retained.
+
+
+## .861 local validation — 2026-10-14
+
+Full native Node24 regression:2306PASS/0FAIL/0skip. Three new native affine reopen
+checks and all prior semantic coverage pass. Reviewed cache contract/shell markers
+coherent; protected Multi1.0/instance343/frozen beta files untouched. Publication
+CI/Pages/live verification pending; device gates not inferred.

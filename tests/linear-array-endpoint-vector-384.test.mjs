@@ -8,7 +8,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 
 test('Endpoint-vector Array runtime follows current app build',()=>{
   const wrapper=index.match(/linear-array\.js\?v=([^"]+)/)?.[1];
-  assert.equal(wrapper,'0.36.18.857'); // Persistent Array extends the existing owner.
+  assert.equal(wrapper,'0.36.18.861'); // Persistent Array extends the existing owner.
 });
 
 test('384 starts with source plus one END copy and no spacing slider',()=>{

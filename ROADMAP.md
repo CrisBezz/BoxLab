@@ -4,7 +4,18 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .860 ordinary Duplicate retains editable Live Arrays, 2026-10-14
+## Current direction — .861 affine Live Array reopen repair, 2026-10-14
+
+Repository continuation audits860/main/live and reproduces the queued original-array
+failure. Existing reopen owner canonicalizes only its internally inferred near-affine
+matrix tail within32*Number.EPSILON. Strict external recipe/file validation remains.
+Native tests cover repeated arbitrary rotation/nonuniform scale with count/END Apply,
+source Apply/Cancel/history/SubD and project roundtrip; component edits still refuse.
+Device861 gate pending;860 duplicate and859 Nomad resource gates remain separate.
+Next: hands-on placed-array source/history/project sanity, then staged resource/UV
+inspection or measured performance after feedback and authoritative-owner audit.
+
+## Previous direction — .860 ordinary Duplicate retains editable Live Arrays, 2026-10-14
 
 859 published/CI/Pages/live verified after direct standing push/publish approval.
 Single Duplicate omitted arrayRecipe; Multi captured but dropped it at addMesh. Existing

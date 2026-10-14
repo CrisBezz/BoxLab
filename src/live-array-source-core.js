@@ -1,7 +1,7 @@
 // Staged source editing. Existing Array, instance, manager and history owners
 // perform all geometry and scene operations; no modelling/gesture kernel here.
 import * as THREE from 'three';
-import {createArrayRecipe,evaluateArray,reopenArray} from './live-array-core.js?v=0.36.18.842';
+import {createArrayRecipe,evaluateArray,reopenArray} from './live-array-core.js?v=0.36.18.861';
 import {transformEditableMesh,meshesNear} from './instance-core.js?v=0.36.18.343';
 const signature=mesh=>JSON.stringify(createArrayRecipe(mesh,2,[1,0,0]).source);
 export function createArraySourceEditor({manager,objectHistory,history,busy=()=>false,changed=()=>{}}){

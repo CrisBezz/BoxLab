@@ -39,6 +39,11 @@ export function reopenArray(object){
  const recipe=object.arrayRecipe,generated=evaluateArray(recipe),delta=deriveInstancePlacement(generated,object.mesh);
  if(!delta||Math.abs(delta.determinant())<1e-12)throw Error('Array geometry changed; Undo component edits before reopening');
  const transforms=arrayTransforms(recipe),placement=delta.multiply(new THREE.Matrix4().fromArray(transforms.placement));
+ // Frame inversion can round the homogeneous tail of this internally derived
+ // affine matrix. Canonicalize only that output; external recipes stay strict.
+ const elements=placement.elements,epsilon=32*Number.EPSILON;
+ if(!elements.every(Number.isFinite)||[3,7,11].some(i=>Math.abs(elements[i])>epsilon)||Math.abs(elements[15]-1)>epsilon)throw Error('Array placement is not affine');
+ elements[3]=elements[7]=elements[11]=0;elements[15]=1;
  // Preserve a shared frame: moving/scaling the whole array must not conjugate
  // its individual END rotations into a different shape on the next Apply.
  return {source:arraySource(recipe),count:recipe.count,endpoint:new THREE.Vector3(...recipe.endpoint),...transforms,placement:placement.elements.slice()};

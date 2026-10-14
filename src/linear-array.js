@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import './live-array-source-editor.js?v=0.36.18.857';
-import {createArrayRecipe,evaluateArray,reopenArray,arrayItemMatrix} from './live-array-core.js?v=0.36.18.842';
+import './live-array-source-editor.js?v=0.36.18.861';
+import {createArrayRecipe,evaluateArray,reopenArray,arrayItemMatrix} from './live-array-core.js?v=0.36.18.861';
 
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');

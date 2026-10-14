@@ -8952,3 +8952,26 @@ management860/drawer860, protected Multi1.0 and frozenBeta7 version byte-match.
 Connected Git Data publication uses expected-main SHA and verified file/tree hashes.
 Device860 duplicate/source/file gate pending;859 imported-duplicate/Nomad gate
 not yet accepted. Next proven original-array affine-tail rounding repair remains queued.
+
+
+## .861 affine Live Array reopen repair — 2026-10-14
+
+Audit current main697a9fa9/live860/pins; baseline2303PASS/0FAIL. Reproduced original
+arbitrary-angle/nonuniformly scaled array count/END Apply producing inferred affine
+[15]=1.0000000000000002. Existing reopenArray now guards finite/tail32*Number.EPSILON,
+then canonicalizes internally derived bottom row0/0/0/1. External recipe/project strict
+validation, instance343, non-affine component refusal and protected/frozen owners stay.
+Three native regressions cover repeated placed edits/shape/project, actual Array Apply
+followed by source Apply/Cancel/history with SubD, and strict external/file refusal.
+Core/source/Array/codec/management/drawer parent graph861 reviewed; three historical
+literal Array pin expectations advance861 with original semantics retained.
+Device861 source/history/project gate pending;860 duplicate/859 Nomad gates not inferred.
+Full validation/publication proof follows after verification.
+
+
+## .861 local validation — 2026-10-14
+
+Full native Node24 regression:2306PASS/0FAIL/0skip. Three new native affine reopen
+checks and all prior semantic coverage pass. Reviewed cache contract/shell markers
+coherent; protected Multi1.0/instance343/frozen beta files untouched. Publication
+CI/Pages/live verification pending; device gates not inferred.

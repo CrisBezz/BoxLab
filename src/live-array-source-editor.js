@@ -1,4 +1,4 @@
-import {createArraySourceEditor} from './live-array-source-core.js?v=0.36.18.857';
+import {createArraySourceEditor} from './live-array-source-core.js?v=0.36.18.861';
 import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.732';
 const panel=document.createElement('div');panel.id='liveArraySourcePanel';panel.className='boxlab-tool-session-shell';panel.hidden=true;
 panel.innerHTML='<div class="boxlab-tool-session-title">Edit Array Source</div><div class="drawer-hint">Edit with Vertex / Edge / Face tools. Apply Source regenerates the array with its saved END transforms.</div><div class="outliner-actions"><button type="button" id="liveArraySourceCancel">Cancel</button><button type="button" id="liveArraySourceApply">Apply Source</button></div>';

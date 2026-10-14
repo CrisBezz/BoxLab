@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.860",
+      "url": "./src/drawer-ui.js?v=0.36.18.861",
       "target": "src/drawer-ui.js",
-      "sha256": "9ab88978cdb0768f685b243aed11d341ca4e1ed2ab315c4d71dd8d75c3fdddbf"
+      "sha256": "964ad7f397c83a4702617e3d57910c7095824104a6e523fefccfc8a8897c95e5"
     },
     {
       "owner": "index.html",
@@ -285,9 +285,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/linear-array.js?v=0.36.18.857",
+      "url": "./src/linear-array.js?v=0.36.18.861",
       "target": "src/linear-array.js",
-      "sha256": "0cd3832f9b17a8e7f96426cc815e4393fc016bb340429a8b390906ba6276ed34"
+      "sha256": "2b6fc7c70907e709ff3ffe7bfde15d7bdf7c0b683de52902400c5f457f0242d9"
     },
     {
       "owner": "index.html",
@@ -335,9 +335,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.860",
+      "url": "./src/object-management.js?v=0.36.18.861",
       "target": "src/object-management.js",
-      "sha256": "01eb0018d29a2cb95fa3a47980fa4e06e3abda456236068e53d36067332de9eb"
+      "sha256": "6597f5051360d298be89cc5239c8b66dbbbaef3fbcf7cc0a165b69191924ec39"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.860",
+      "url": "./src/release-bootstrap.js?v=0.36.18.861",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.860",
+      "url": "./src/release-version.js?v=0.36.18.861",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.860",
+      "url": "./object-management.js?v=0.36.18.861",
       "target": "src/object-management.js",
-      "sha256": "01eb0018d29a2cb95fa3a47980fa4e06e3abda456236068e53d36067332de9eb"
+      "sha256": "6597f5051360d298be89cc5239c8b66dbbbaef3fbcf7cc0a165b69191924ec39"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -2306,21 +2306,21 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.858",
+      "url": "./boxlab-project-codec.js?v=0.36.18.861",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "0015e3b5a20ca694299067ec58188315d19e10552ca4fc0e3406cb9c0b6378a0"
+      "sha256": "c037566e45c1a4085ce54a75b6837a2d5756bb30a47afd32bc3f5ba65bbe56f6"
     },
     {
       "owner": "src/linear-array.js",
-      "url": "./live-array-core.js?v=0.36.18.842",
+      "url": "./live-array-core.js?v=0.36.18.861",
       "target": "src/live-array-core.js",
-      "sha256": "1f1e6797d9d1281d3cb139c52b9f53d99dca6d668180e1d24bca5fc732ba7f88"
+      "sha256": "6ad501013d1932d55083508632d5d33cce0d651a27a75c7a4edae1a079ca87ce"
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./live-array-core.js?v=0.36.18.842",
+      "url": "./live-array-core.js?v=0.36.18.861",
       "target": "src/live-array-core.js",
-      "sha256": "1f1e6797d9d1281d3cb139c52b9f53d99dca6d668180e1d24bca5fc732ba7f88"
+      "sha256": "6ad501013d1932d55083508632d5d33cce0d651a27a75c7a4edae1a079ca87ce"
     },
     {
       "owner": "src/live-array-core.js",
@@ -2336,15 +2336,15 @@
     },
     {
       "owner": "src/linear-array.js",
-      "url": "./live-array-source-editor.js?v=0.36.18.857",
+      "url": "./live-array-source-editor.js?v=0.36.18.861",
       "target": "src/live-array-source-editor.js",
-      "sha256": "823ac97ac846f722054cde9ed73eae011f9fed3389df1e8b99788073eba89568"
+      "sha256": "67547f2d79643cc23b82cbff2a48ced60b7ee6b15bf991c240d5ef0bfdfbcd6d"
     },
     {
       "owner": "src/live-array-source-editor.js",
-      "url": "./live-array-source-core.js?v=0.36.18.857",
+      "url": "./live-array-source-core.js?v=0.36.18.861",
       "target": "src/live-array-source-core.js",
-      "sha256": "c05d95d9b1306417fe1c295dcf8d0d2a9cad70f2a3293999212d164a3ff30a6b"
+      "sha256": "a335306e6d8643e64b3f3c2b48bc7d596b57ded627880528be64b4dbf1dd55ba"
     },
     {
       "owner": "src/live-array-source-editor.js",
@@ -2354,9 +2354,9 @@
     },
     {
       "owner": "src/live-array-source-core.js",
-      "url": "./live-array-core.js?v=0.36.18.842",
+      "url": "./live-array-core.js?v=0.36.18.861",
       "target": "src/live-array-core.js",
-      "sha256": "1f1e6797d9d1281d3cb139c52b9f53d99dca6d668180e1d24bca5fc732ba7f88"
+      "sha256": "6ad501013d1932d55083508632d5d33cce0d651a27a75c7a4edae1a079ca87ce"
     },
     {
       "owner": "src/live-array-source-core.js",
