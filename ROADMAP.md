@@ -4,7 +4,16 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .856 imported GLB project resources, 2026-10-14
+## Current direction — .857 SubD Live Array editing repair, 2026-10-14
+
+User856 LiveArray+SubD edit error: universal guard wrongly rejects existing recipe base
+geometry. Existing Array/source owners now allow existing Live Array SubD edits and
+retain modifier settings, native recipe/history. New Live creation with SubD and Mirror
+remain restricted. Full2293PASS/0FAIL, native Apply/Cancel/source/history/codec coverage.
+Device SubD count/END/source/reopen gate pending;856 resource-file gate remains pending.
+No modelling/render kernel change. Resume resource stage after feedback.
+
+## Previous direction — .856 imported GLB project resources, 2026-10-14
 
 855 PASS protected. Existing .boxlab v1 adds optional versioned imported GLB payload;
 canonical binary image encoding, UV/material/metadata preservation, validated native

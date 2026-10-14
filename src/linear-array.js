@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import './live-array-source-editor.js?v=0.36.18.844';
+import './live-array-source-editor.js?v=0.36.18.857';
 import {createArrayRecipe,evaluateArray,reopenArray,arrayItemMatrix} from './live-array-core.js?v=0.36.18.842';
 
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -345,7 +345,7 @@ function applyArray({convert=false}={}){
   if(convert&&(!liveInput?.checked||!source.arrayRecipe))return false;
   if(endpointLength()<1e-6){setStatus('Array refused • end copy must be moved away from source');return false;}
   if(liveInput?.checked){
-    if(source.sourceId||source.booleanRecipe||source.glbPassthrough||source.materials||source.textures||source.mesh?.uvs||source.mesh?.faceUVs||source.mesh?.uvLayers||source.mesh?.materialSlots||source.settings?.subd||Object.values(source.settings?.mirror||{}).some(Boolean)){setStatus('Live Array requires an independent geometry object');return false;}
+    if(source.sourceId||source.booleanRecipe||source.glbPassthrough||source.materials||source.textures||source.mesh?.uvs||source.mesh?.faceUVs||source.mesh?.uvLayers||source.mesh?.materialSlots||(source.settings?.subd&&!source.arrayRecipe)||Object.values(source.settings?.mirror||{}).some(Boolean)){setStatus('Live Array requires an independent geometry object');return false;}
     try{
       const recipe=createArrayRecipe(sessionSource||source.mesh,count(),localEndpoint().toArray(),transformOptions()),result=evaluateArray(recipe);
       restoreResult();

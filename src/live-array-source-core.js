@@ -7,7 +7,7 @@ const signature=mesh=>JSON.stringify(createArrayRecipe(mesh,2,[1,0,0]).source);
 export function createArraySourceEditor({manager,objectHistory,history,busy=()=>false,changed=()=>{}}){
  let session=null;
  const fail=reason=>({ok:false,reason});
- const valid=object=>object&&!object.locked&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.glbPassthrough&&!object.materials&&!object.textures&&!object.settings?.subd&&!Object.values(object.settings?.mirror||{}).some(Boolean);
+ const valid=object=>object&&!object.locked&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.glbPassthrough&&!object.materials&&!object.textures&&!Object.values(object.settings?.mirror||{}).some(Boolean);
  function context(){
   if(!session)return fail('No Array source edit is open');
   const m=manager(),object=m?.objects?.find(o=>o.id===session.id);
@@ -31,7 +31,7 @@ export function createArraySourceEditor({manager,objectHistory,history,busy=()=>
   if(!m?.replaceActiveMesh||!owner?.capture||!owner?.restore||!owner?.checkpointSnapshot||!h)return fail('Scene history is not ready');
   if(m.activeId!==id)return fail('Select the Live Array first');
   const object=m.objects.find(o=>o.id===id);
-  if(!valid(object)||!object.arrayRecipe)return fail('Select an independent Live Array without modifiers');
+  if(!valid(object)||!object.arrayRecipe)return fail('Select an independent Live Array without Mirror');
   let opened,world,parametersChanged;
   try{
    opened=reopenArray(object);

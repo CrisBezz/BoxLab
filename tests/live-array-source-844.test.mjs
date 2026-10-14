@@ -51,9 +51,9 @@ test('844 invalid geometry and busy sessions refuse; changed object context canc
  r.busy(true);assert.equal(controller.cancel(),false);assert.equal(controller.apply().ok,false);r.busy(false);
  h.push(r.live);r.live.vertices[0].x=NaN;assert.equal(controller.apply().ok,false);assert.equal(controller.active(),true);assert.equal(manager.objects.find(o=>o.id===3).arrayRecipe,undefined);
  manager.replaceActiveMesh(h.undo(r.live));manager.activate(1);assert.equal(controller.context().ok,false);assert.equal(controller.cancel(),true);assert.deepEqual(r.snapshot(),r.before);
- for(const kind of ['locked','reference','linked','modifier','component-edited']){
+ for(const kind of ['locked','reference','linked','mirror','component-edited']){
   const f=fixture(),o=f.manager.objects.find(o=>o.id===3);
-  if(kind==='locked')o.locked=true;if(kind==='reference')o.kind='reference';if(kind==='linked')o.sourceId='linked';if(kind==='modifier')o.settings.subd=true;if(kind==='component-edited'){f.live.vertices[0].x+=.2;f.manager.saveActive();}
+  if(kind==='locked')o.locked=true;if(kind==='reference')o.kind='reference';if(kind==='linked')o.sourceId='linked';if(kind==='mirror')o.settings.mirror={x:true};if(kind==='component-edited'){f.live.vertices[0].x+=.2;f.manager.saveActive();}
   const snap=f.snapshot();assert.equal(f.controller.open(3).ok,false,kind);assert.deepEqual(f.snapshot(),snap,kind);
  }
 });

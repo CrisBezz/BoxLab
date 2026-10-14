@@ -6034,3 +6034,20 @@ Manual856 pending:
   Open resets Undo as before. Loop EXACT/repeat remains correct.
 Embedded images supported; file32MB/pool24MB limits. Linked imported resources and other
 resource owners still refuse; no texture rendering/editing/unwrap/dedup claim.
+
+
+## .857 existing SubD Live Array editing — 2026-10-14
+
+856 scoped issue: LiveArray Edit refuses after enabling SubD; no856 resource PASS inferred.
+Automated857 three native manager/Array/source/history/codec tests protect SubD retained
+for existing count/END Apply, actual subdivided output parity, source isolation Apply/
+Cancel/UndoRedo, one object/history/recipe/settings, .boxlab reopen and conversion.
+New Live creation with SubD and Mirror still refuse;844 invalid-context test now Mirror,
+other guards retained. Three old Array cache expectations advanced857, semantics retained.
+Full2293PASS/0FAIL/0skip. Parent/children/shell/recovery857 reviewed, evaluator842 unchanged.
+Manual857 pending:
+- Make Live Array→SubD On→Edit Array count/END→Apply; repeat Cancel; SubD stays enabled.
+- Edit Source with SubD On→component change→Apply Source/Cancel→UndoRedo.
+- Save/Open .boxlab and reopen Array; keep SubD level and count/END settings.
+Preview remains source-cage guide; committed result uses existing SubD rendering owner.
+856 imported-resource .boxlab roundtrip gate still pending; prior accepted gates retained.

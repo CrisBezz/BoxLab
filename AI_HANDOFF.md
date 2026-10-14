@@ -1,11 +1,33 @@
-# BoxLab AI Handoff — .856 imported GLB project resources
+# BoxLab AI Handoff — .857 SubD Live Array editing
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.856.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.857.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .857 scope — existing Live Array editing with SubD, device gate pending
+User reports856 LiveArray + later SubD modifier: Edit/apply errors independent geometry;
+turning off SubD works. Audit existing Array apply/reopen/source stage: guard blocks
+SubD universally although object.mesh and recipe remain independent base geometry.
+linear-array now allows SubD when applying/converting an existing arrayRecipe; new Live
+creation still rejects SubD. Existing source editor accepts SubD, retains Mirror/link/
+Boolean/reference/locked/rich-resource guards. Base source/recipe regeneration uses
+original owners, object modifier settings stay intact throughout Apply/Cancel/history.
+No baked subdivision/new kernel or new preview/render owner. Existing END preview stays
+its source-cage guide; native SubD displays regenerated result after Apply. Mirror stays
+unsupported for this Live workflow. SubD levels/cage, count/END rotation+scale, one object,
+source-local history and saved scene history/recipe restore unchanged. Safe base recipe
+reopen still rejects non-affine component edits of the combined result.
+Three native manager/Array/source/history/codec tests cover count+END Apply/SubD display
+parity, source edit Apply/Cancel, UndoRedo/settings and .boxlab reopen, conversion and
+new-creation/Mirror refusal.844 modifier-refusal case becomes Mirror, retaining other
+invalid-context guards; three legacy Array pin assertions advance857, behavior retained.
+Full2293PASS/0FAIL/0skip. Array857→source-editor857→source-core857, evaluator842 unchanged;
+shell/recovery857; main+Loop854/manager+codec+management+drawer856/builder851/cache812/
+Clean845/Soft846/protected/frozen owners unchanged. Publication/Node22/live proof follows.
+856 imported-resource project gate remains pending; no new PASS inferred from bug report.
 
 ## .856 scope — imported GLB .boxlab Save/Open, device gate pending
 User855 PASS protects imported GLB scene-history/resource restoration and export.
@@ -384,11 +406,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-856: independent imported GLB with known UV/material/texture→Save .boxlab→reset→Open
-saved file→export GLB to Nomad; verify geometry/resources. Plain/LiveArray/linked basic
-project SaveOpen regression and cancel/Undo-after-Open sanity. File32MB limit remains;
-no portable texture preview or linked rich-resource support claimed. Preserve855 resource
-history and854 Loop PASS. Next scoped resource validation/dedup stage after feedback.
+857: create Live Array→enable SubD→Edit Array count/END→Apply/Cancel without switching
+SubD off. Edit Source component change→Apply Source/Cancel→UndoRedo; level stays on.
+Save/Open .boxlab and reopen. Existing source-cage preview is intentional; SubD applies
+to displayed committed result.856 imported-resource file roundtrip gate still pending.
+Next scoped resource stage after feedback, preserving accepted855/854/853/851/850.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

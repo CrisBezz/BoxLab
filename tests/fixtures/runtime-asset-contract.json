@@ -285,9 +285,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/linear-array.js?v=0.36.18.844",
+      "url": "./src/linear-array.js?v=0.36.18.857",
       "target": "src/linear-array.js",
-      "sha256": "cfe600afad6d23ccaae5cd0edd5dde111c2bbd5b23fb8a0b52d85a60d0790990"
+      "sha256": "0cd3832f9b17a8e7f96426cc815e4393fc016bb340429a8b390906ba6276ed34"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.856",
+      "url": "./src/release-bootstrap.js?v=0.36.18.857",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.856",
+      "url": "./src/release-version.js?v=0.36.18.857",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2336,15 +2336,15 @@
     },
     {
       "owner": "src/linear-array.js",
-      "url": "./live-array-source-editor.js?v=0.36.18.844",
+      "url": "./live-array-source-editor.js?v=0.36.18.857",
       "target": "src/live-array-source-editor.js",
-      "sha256": "50278b0563aadfac0a4d68c05ad2573dd393784e6de9fdfb75eeff7c95c90935"
+      "sha256": "823ac97ac846f722054cde9ed73eae011f9fed3389df1e8b99788073eba89568"
     },
     {
       "owner": "src/live-array-source-editor.js",
-      "url": "./live-array-source-core.js?v=0.36.18.844",
+      "url": "./live-array-source-core.js?v=0.36.18.857",
       "target": "src/live-array-source-core.js",
-      "sha256": "fc2864f5f8bcf63d9f84fc0126a79d96be02118e4635d44bf97140a4b76b57bc"
+      "sha256": "c05d95d9b1306417fe1c295dcf8d0d2a9cad70f2a3293999212d164a3ff30a6b"
     },
     {
       "owner": "src/live-array-source-editor.js",

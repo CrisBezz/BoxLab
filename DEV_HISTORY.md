@@ -8797,3 +8797,21 @@ Pages38508952135 SUCCESS. Fresh live shell/manifest/management856/codec856/resou
 manager856/drawer856, protected Multi1.0 and frozenBeta7 version byte-match repository.
 User855 PASS protected;856 independent importedGLB .boxlab save/open/export device gate
 pending. File32MB/pool24MB limits and linked-rich/other-resource refusals retained.
+
+
+## .856 LiveArray+SubD edit issue / .857 guard compatibility repair — 2026-10-14
+
+User existing LiveArray fails Edit with independent-geometry error after adding SubD,
+works with SubD off. Audit actual linear-array apply and source-core guard: both reject
+SubD despite base geometry/recipe independent. Allow SubD for existing recipe apply/
+conversion, source controller accepts SubD; new Live creation still rejects it, Mirror/
+linked/Boolean/locked/reference/rich guards retained. Native recipe/base/history owners
+retain SubD settings/level across Apply/Cancel and saved file. Existing preview is source
+cage guide; no new SubD preview/kernel. Three native manager/Array/source/history/codec
+checks cover count/END/native SubD parity, source Apply/Cancel/UndoRedo, modifiers/.boxlab
+reopen, conversion and new/Mirror refusal.844 modifier case now Mirror, other guards
+unchanged. Full first run three literal844 pin checks failed after repin; expected pins
+advanced857 only, behavior assertions retained. Final2293PASS/0FAIL/0skip.
+Array/source-editor/source-core857 loader chain and shell/recovery857 hashes reviewed;
+evaluator842/main854/manager+project856/protected/frozen unchanged. Device gate pending;
+856 resource-file acceptance not inferred from this scoped issue.

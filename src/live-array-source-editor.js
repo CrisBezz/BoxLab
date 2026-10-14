@@ -1,4 +1,4 @@
-import {createArraySourceEditor} from './live-array-source-core.js?v=0.36.18.844';
+import {createArraySourceEditor} from './live-array-source-core.js?v=0.36.18.857';
 import {placeToolSessionPanel} from './tool-session-panel-position.js?v=0.36.18.732';
 const panel=document.createElement('div');panel.id='liveArraySourcePanel';panel.className='boxlab-tool-session-shell';panel.hidden=true;
 panel.innerHTML='<div class="boxlab-tool-session-title">Edit Array Source</div><div class="drawer-hint">Edit with Vertex / Edge / Face tools. Apply Source regenerates the array with its saved END transforms.</div><div class="outliner-actions"><button type="button" id="liveArraySourceCancel">Cancel</button><button type="button" id="liveArraySourceApply">Apply Source</button></div>';
@@ -48,6 +48,6 @@ window.addEventListener('keydown',event=>{
  if(event.key==='Escape'&&!nested()&&cancel()){event.preventDefault();event.stopImmediatePropagation();}
 },true);
 for(const name of ['boxlab-bridge-state','boxlab-transform-end','boxlab-tool-session-change','boxlab-selection-hub-session-complete','boxlab-object-manager-ready'])window.addEventListener(name,queueSync);
-globalThis.__boxlabLiveArraySourceEditor={version:'0.36.18.844',open,apply,cancel,active:controller.active,state:controller.state};
+globalThis.__boxlabLiveArraySourceEditor={version:'0.36.18.857',open,apply,cancel,active:controller.active,state:controller.state};
 
 new MutationObserver(queueSync).observe(document.querySelector('#viewportWrap'),{subtree:true,childList:true,attributes:true,attributeFilter:['hidden']});
