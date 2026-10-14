@@ -27,7 +27,7 @@ compares native vertices/faces/creases rather than clone-normalised faceGroup pa
 Existing632/715/713 semantic coverage retained;713 literal commit pin becomes reviewed
 asset assertion. Full2280PASS/0FAIL/0skip. Main853/commit853/shell+recovery853 coherent;
 builder851/cache812/manager849/Array844/Clean845/Soft846/frozen kernels unchanged.
-Publication/Node22/live verification follows.852 acceptance not received;851 PASS protected.
+Publication/Node22/live verification recorded below.852 acceptance not received;851 PASS protected.
 
 ## .852 scope — avoid unused active base calculation, device gate pending
 User851 PASS protects Vertex-only visual dots, mode switching/picking/history/Clean/Soft.
@@ -445,3 +445,14 @@ Pages38485759871 SUCCESS. Fresh live shell/manifest/main852, unchanged builder85
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment reads
 returned851; subsequent complete release verification matches852. User851 PASS
 protected;852 SubD/Mirror/cage/history/export device gate pending, no speed claim.
+
+
+## .853 publication verified — 2026-10-14
+
+Release245b665ec4224efa75bb9b67bff0c892ff56a070; tested tree
+94a243ba49ee7ebba573e448493f979796822dc7 exactly matches local validated checkout.
+Node22 CI38487534483/job115604691428 SUCCESS:2280PASS/0FAIL/0skip.
+Pages38487534251 SUCCESS. Fresh live shell/manifest/main853/loop-cut-commit853,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+reads returned852; complete postdeployment verification matches853. User852 Loop
+FAIL recorded;853 single/MultiLoop completion/editable faces/history gate pending.

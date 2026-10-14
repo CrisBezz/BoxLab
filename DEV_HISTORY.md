@@ -8692,3 +8692,14 @@ asserts unchanged native vertices/faces/creases. Full2280PASS/0FAIL/0skip; origi
 checks retained,713 hardcoded715 pin now reviewed asset assertion. Main853/commit853/
 shell+recovery853 hashes reviewed; builder/cache/protected Multi/frozenBeta untouched.
 Device Loop completion/editable patch/history gate pending; no new852 PASS inferred.
+
+
+## .853 publication verified — 2026-10-14
+
+Release245b665ec4224efa75bb9b67bff0c892ff56a070; tested tree
+94a243ba49ee7ebba573e448493f979796822dc7 exactly matches local validated checkout.
+Node22 CI38487534483/job115604691428 SUCCESS:2280PASS/0FAIL/0skip.
+Pages38487534251 SUCCESS. Fresh live shell/manifest/main853/loop-cut-commit853,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
+reads returned852; complete postdeployment verification matches853. User852 Loop
+FAIL recorded;853 single/MultiLoop completion/editable faces/history gate pending.
