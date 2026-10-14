@@ -331,6 +331,7 @@ globalThis.__boxlabMainDirectTool={
   active:()=>directTool,
   busy:()=>!!drag,
   disarmForSelection:()=>{if(drag)return false;setDirectTool(null);renderMesh();return true;},
+  commitLoopCut:()=>{if(drag||!activeLoopSlides.length)return false;clearLoopSlide();renderMesh();return true;},
   finishLoopCut:()=>{if(drag||directTool!=='loopCut')return false;setDirectTool(null);renderMesh();return true;},
   ownsModellingGesture:()=>!!directTool,
   applyCreaseSelection:(ids,value,{pushHistory=true}={})=>{

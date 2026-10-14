@@ -10,7 +10,7 @@ const version=JSON.parse(fs.readFileSync(new URL('../version.json',import.meta.u
 const checks=[
   ['no synthetic pointer replay',!mod.includes("dispatchEvent(new PointerEvent('pointerdown'")&&!mod.includes("dispatchEvent(new PointerEvent('pointerup'")],
   ['direct edge selection bridge',mod.includes("globalThis.__boxlabSelectionBridge?.set?.('edge', indices)")],
-  ['undo/redo loop-slide commit retained',mod.includes("document.querySelector('#undoBtn')?.click()")&&mod.includes("document.querySelector('#redoBtn')?.click()")],
+  ['native loop-slide commit avoids history replay',mod.includes('globalThis.__boxlabMainDirectTool?.commitLoopCut?.()')&&!mod.includes("document.querySelector('#undoBtn')?.click()")&&!mod.includes("document.querySelector('#redoBtn')?.click()")],
   ['published module reviewed cache pin',hasAssetReference(index,'loop-cut-commit.js')],
   ['current release',shellReleaseMatches(index,version.version)],
   ['protected multi-object transform pin unchanged',index.includes('src/multi-object-transform.js?v=0.36.1.0')]

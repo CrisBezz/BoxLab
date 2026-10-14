@@ -4,13 +4,21 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .853 Loop/MultiLoop completion repair, 2026-10-14
+## Current direction — .854 native Loop completion, 2026-10-14
+
+853 user PASS protected. Replace internal Undo/Redo clicks with existing main slide
+cleanup exposed through guarded native commit. Same mesh/history/placed cuts remain;
+853 colour detection, exact/repeat/background exit retained. Full2282PASS/0FAIL.
+Device repeat/EXACT/exit/UndoRedo gate pending. Next project-resource stage or measured
+bottleneck after feedback; accepted owners remain protected.
+
+## Previous direction — .853 Loop/MultiLoop completion repair, 2026-10-14
 
 User852 FAIL: lingering yellow/blue loops and no finalisation. Screenshot counts show
 cut topology but5active slide groups. Commit reads wrong proxy material after batching;
 use actual cageMaterial. Main disarm retires loop slides, preserving cut/history.
 Full2280PASS/0FAIL; actual single/5cut + batch + EXACT + native finish tests.
-Device completion/editable faces/history gate pending before feature expansion.
+User853 PASS2026-10-14 protects completion/editable faces/history.
 851 PASS protected;852 optimisation acceptance not assumed.
 
 ## Previous direction — .852 skip unused active base calculation, 2026-10-14

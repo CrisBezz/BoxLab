@@ -8703,3 +8703,24 @@ Pages38487534251 SUCCESS. Fresh live shell/manifest/main853/loop-cut-commit853,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
 reads returned852; complete postdeployment verification matches853. User852 Loop
 FAIL recorded;853 single/MultiLoop completion/editable faces/history gate pending.
+
+
+## .853 user PASS / .854 native Loop completion without history replay — 2026-10-14
+
+User Awesome853 PASS /nextbuild protects repaired single/MultiLoop completion. Audit
+commit adapter: UndoRedo UI workaround replaces mesh and rebuilds twice simply to clear
+private slides. Existing main clearLoopSlide owns cleanup. Expose guarded commitLoopCut
+(clear + redraw), adapter delegates and returnsfalse if rejected. Keep live mesh identity,
+placed cuts, undo/redo tokens and one native completion redraw; selection bridge still
+selects confirmed rail, repeat/background/session/busy owners unchanged. No kernel or
+history implementation changes. Two native main+adapter+kernel/history tests cover1/5
+cuts/slide/identity/tokens/no replay/UndoRedo and busy/no-stage refusal.632 source guard
+now asserts native/no history UI;715/746/853 fixtures model native cleanup, original semantic
+assertions retained. Full2282PASS/0FAIL/0skip. Main/commit/shell/recovery854 reviewed;
+builder851/cache812/manager849/Array/Clean/Soft/protected/frozen kernels untouched.
+Device EXACT/repeat/exit/history gate pending; no quantified speed claim.
+
+854 validation note:746 old adapter first lacked native cleanup; after update its VM
+face arrays retained foreign prototypes now that history no longer clones/replaces
+the mesh. Compare exact face cycles through Array.from (existing fixture convention),
+retaining vertex/selection/native UndoRedo assertions; no runtime topology fix implied.

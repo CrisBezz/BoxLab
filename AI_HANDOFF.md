@@ -1,13 +1,32 @@
-# BoxLab AI Handoff — .853 Loop completion repair
+# BoxLab AI Handoff — .854 native Loop completion
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.853.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.854.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .853 scope — Loop/MultiLoop completion repair, device gate pending
+## .854 scope — native Loop completion without history replay, device gate pending
+User Awesome853 PASS /nextbuild protects single/MultiLoop EXACT/background/mode exit,
+editable cut faces and UndoRedo. Audit native cleanup and commit853: commit still clicks
+Undo then Redo to retire private slides. That replaces live mesh and rebuilds scene
+unnecessarily. MainDirectTool now exposes guarded commitLoopCut using existing
+clearLoopSlide + renderMesh; adapter delegates to it instead of clicking history UI.
+Cut already commits history during native gesture; completion adds no history and
+keeps exact mesh identity, placed geometry and current undo/redo tokens. Adapter keeps
+853 batched cageMaterial detection, direct edge selection, persistent repeat Loop,
+background/session owners and busy guard. Rejected native cleanup returnsfalse through
+adapter. No new history/kernel/gesture/visibility owner, clone/cache/revision system.
+Two new actual main+adapter+kernel/history tests cover1/5cuts, slide, same mesh/tokens,
+one cleanup redraw, no synthetic UI history and actual UndoRedo, busy/no-stage rejection.
+632 history-replay source contract now asserts native cleanup/no clicks;715/746/853 fixtures
+model native cleanup instead of mesh replacement, retaining geometry/selection/history
+assertions. Full2282PASS/0FAIL/0skip. Main854/commit854/shell+recovery854 coherent;
+builder851/cache812/manager849/Array844/Clean845/Soft846/protected/frozen kernels unchanged.
+Publication/Node22/live verification follows. Device repeat/EXACT/exit/history gate pending.
+
+## Protected .853 scope — user PASS2026-10-14
 User reports852 Edge Loop MultiLoop fails to finish; single cut remains yellow.
 Screenshot852 shows28verts/26faces/5active loops after leaving to Face: topology exists
 but private slide state remains active. Do not attribute this to852 optimisation.
@@ -315,11 +334,10 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-853: fresh cube Edge Loop count1 and5, cut/slide then EXACT, background exit or Face
-switch. Yellow/blue active rails retire; face patches should be independently editable.
-Undo/Redo restores before/after cut. Repeat Loop on another edge before background exit.
-Preserve851 Vertex-only dots and850 GPUreuse;852 device optimisation gate still pending.
-Broader feature work waits for this Loop fix feedback.
+854: single/MultiLoop cut+slide→EXACT→another cut→background/Face exit. Cut faces remain
+editable; UndoRedo correctly restores cuts and placement without extra completion steps.
+Preserve853 device PASS,851 dots and850 GPUreuse. If accepted, next project resources or
+measured bottleneck after repo audit;852 optimisation gate not separately accepted.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

@@ -5982,3 +5982,19 @@ Manual pending853:
 - Enter Face and select/move a cut patch; confirm real faces, Undo/Redo restores cuts.
 - Repeat cuts on another edge, then exit directly via Face or another tool: no stale
   yellow/blue lines or active-loop count. Vertex-only dots/Clean/Soft still sane.
+
+
+## .853 user PASS protected / .854 native Loop completion — 2026-10-14
+
+User853 PASS protects Loop1/MultiLoop5 completion, rail cleanup, editable cut faces,
+repeat/background/Face exit and UndoRedo.851 and850 accepted protections retained.
+Automated854 actual main + commit adapter + native kernel/history checks:1/5cuts with
+placed slide, unchanged live mesh and undo/redo token identity, original geometry,
+no synthetic Undo/Redo clicks, native redraw and busy/no-stage refusal.632 source
+history guard updated to native cleanup/no replay;715/746/853 fixtures use native cleanup
+and retain original output/selection/UndoRedo assertions. Full2282PASS/0FAIL/0skip.
+Manual pending854:
+- Single/MultiLoop cut→slide→EXACT→repeat on another edge→background exit.
+- Switch Face, select/move a cut face; no active yellow/blue rails remain.
+- Undo/Redo through cuts and placement: completion adds no extra step.
+Main854/commit854/shell/recovery854 coherent; no topology/history/gesture changes.
