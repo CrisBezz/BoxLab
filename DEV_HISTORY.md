@@ -8867,3 +8867,39 @@ Pages38516162030 SUCCESS. Fresh live shell/manifest/management858/codec858/resou
 drawer858, protected Multi1.0 and frozenBeta7 version byte-match repository. Initial
 reads preceded deployment; postdeployment full graph matches858.857 Apply/SubD accepted
 and protected.858 pooled/legacy resource-file device gates pending; no renderer gain claim.
+
+
+## .858 user PASS / .859 ordinary Duplicate imported resources — 2026-10-14
+
+User PASS /nextbuild accepts858 pooled resources, imported-file/export/legacy reopen and
+plain/LiveArray sanity. Audit native single duplicateActive and Multi duplicateSelection:
+resource payload omitted despite existing addObject support. Forward read-only imported
+payload through both original owners. Independent mesh clones, settings/group/selection/
+activation/Move handoffs unchanged. No new kernel/exporter/history/renderer; linked-rich
+project Save restriction retained. Three native tests: both actual duplicate paths,
+independent edits, plain+rich grouped Multi, Move, delete/UndoRedo payload retention,
+pooled project roundtrip/native replacement, actual GLB UV + final material/image bytes,
+and original stale-topology UV refusal. Browser texture decode remains hands-on gate.
+Initial new tests reproduced payload loss; fixture then included missing linked-source
+staging variables and normalized cross-realm JSON comparisons. No runtime change beyond
+payload forwarding. Full validation/publication follows below. Manager/management859,
+drawer child859 and shell/recovery859; codec/resource858/main+Loop854/Array857/protected/
+frozen owners untouched. Duplicate transaction-history activation behavior unchanged;
+new scene-history test explicitly covers deletion/restoration of a duplicate.
+
+
+## .859 local validation — 2026-10-14
+
+Full native Node regression:2300PASS/0FAIL/0skip, including three new duplicate-resource
+checks. Reviewed release/cache contract passes; protected Multi1.0 and frozen betas
+unchanged. Device859 duplicate→project→Nomad gate pending. Publication proof follows
+in AI_HANDOFF/DEV_HISTORY after main/CI/Pages/live verification.
+
+
+## .859 publication status — 2026-10-14
+
+Complete local build3db33caa;2300PASS/0FAIL/0skip. Automatic approval review rejected
+push to main despite recorded repository standing approval; direct authorization for
+publication is now required by the review. Remote/live remain858.859 CI/Pages/live
+verification and device gate pending. See AI_HANDOFF publication block; do not claim859
+published or route around rejection through another tool.

@@ -571,7 +571,7 @@ function duplicateActive() {
   const source = activeObject();
   if (!source) return;
   saveActive();
-  const copy = addObject(source.mesh, nextDuplicateName(source.name), { settings:source.settings, curveProfile:source.curveProfile, enterObjectMode:true });
+  const copy = addObject(source.mesh, nextDuplicateName(source.name), { settings:source.settings, curveProfile:source.curveProfile, glbPassthrough:source.glbPassthrough, enterObjectMode:true });
   if (!copy) return;
   requestAnimationFrame(() => {
     if (currentMode() !== 'object') return;

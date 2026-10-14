@@ -6079,3 +6079,41 @@ Manual858 pending:
 32MB project/24MB unique pool limits retained. Codec/resource/management/drawer858;
 manager856/main+Loop854/Array857/protected/frozen unchanged. Future image edits must
 copy touched buffers; read-only shared image data must never mutate across objects/history.
+
+
+## .858 user PASS protected / .859 ordinary Duplicate GLB resources — 2026-10-14
+
+User858 PASS protects shared-image pooled .boxlab Save/Open/export, legacy resource file
+reopen/re-save and plain/LiveArray sanity.857 Apply/SubD acceptance retained separately.
+Automated859: actual manager single and management Multi duplication share read-only
+resource payload/bytes while geometry stays independent; plain+rich group duplication,
+Move handoff, deleted-copy native scene UndoRedo, pooled codec + native project replacement,
+real GLB UV export + original final material/image bytes, stale-topology UV rejection.
+Node browser texture/image decoding remains separate; no new history transaction behavior.
+Manual859 pending:
+- Import known textured GLB; Object Duplicate, move copy; export Base GLB to Nomad and
+  compare both objects' UV/materials/textures.
+- Repeat with Multi selected imported objects; independent copies move normally.
+- Save .boxlab→reset→Open→export; duplicate resources remain; delete a copy→Undo→Redo→
+  Undo and export restored resources.
+- Plain/group Duplicate and existing LiveArray+SubD Apply sanity.
+Manager+management859/drawer859/shell+recovery859; original codec/resource858 and
+protected/frozen kernels retained. Linked-rich project refusal unchanged. Future resource
+editors MUST copy touched buffers and replace payloads rather than mutate shared data.
+
+
+## .859 local validation — 2026-10-14
+
+Full native Node regression:2300PASS/0FAIL/0skip, including three new duplicate-resource
+checks. Reviewed release/cache contract passes; protected Multi1.0 and frozen betas
+unchanged. Device859 duplicate→project→Nomad gate pending. Publication proof follows
+in AI_HANDOFF/DEV_HISTORY after main/CI/Pages/live verification.
+
+
+## .859 publication status — 2026-10-14
+
+Complete local build3db33caa;2300PASS/0FAIL/0skip. Automatic approval review rejected
+push to main despite recorded repository standing approval; direct authorization for
+publication is now required by the review. Remote/live remain858.859 CI/Pages/live
+verification and device gate pending. See AI_HANDOFF publication block; do not claim859
+published or route around rejection through another tool.

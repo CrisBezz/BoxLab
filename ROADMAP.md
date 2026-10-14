@@ -4,13 +4,24 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .858 shared project image pool, 2026-10-14
+## Current direction — .859 imported resources through ordinary Duplicate, 2026-10-14
+
+858 user PASS protects imported-resource pooled/legacy .boxlab Save/Open/export.
+Audit found ordinary single and Multi Duplicate drop glbPassthrough. Pass read-only
+payload through existing manager/addMesh; geometry remains independent, buffers shared.
+Native tests cover both owners, mixed/group Multi and Move, delete/UndoRedo, pooled
+project replacement and actual GLB UV/material/image bytes with topology safety retained.
+Device duplicate→move→Save/Open→Nomad gate pending. Linked-rich project restriction
+unchanged; no new history/render/export/texture editor. Next scoped resource work or
+imported-UV inspection after feedback and audit of authoritative owners.
+
+## Previous direction — .858 shared project image pool, accepted 2026-10-14
 
 857 SubD Apply accepted.856 imported objects repeat shared image bytes in project JSON.
 Existing codec now pools identical bytes once, with per-object metadata and validated
 resource-v2 references. New decoded buffers shared read-only; legacy856 inline/plain
 files preserve exact Open roundtrip. Full2297PASS/0FAIL.32MB file/24MB unique pool limits.
-Device imported multi-object file/resources/legacy-open gate pending. No rendering or
+User858 PASS protects imported multi-object resources/legacy-open gate. No rendering or
 texture editing change; next narrow resource stage after feedback.
 
 ## Previous direction — .857 SubD Live Array editing repair, 2026-10-14
@@ -976,3 +987,20 @@ Through779, protected Multi1.0 and frozenBeta6 version byte-match repository.
 48focusedPASS. .793 user PASS protected; .794 menus/modes device sanity pending.
 No runtime/frozenBeta changes; shell/recovery794 coherent and exactly two reviewed
 recovery URLs changed, all runtime hashes retained.
+
+
+## .859 local validation — 2026-10-14
+
+Full native Node regression:2300PASS/0FAIL/0skip, including three new duplicate-resource
+checks. Reviewed release/cache contract passes; protected Multi1.0 and frozen betas
+unchanged. Device859 duplicate→project→Nomad gate pending. Publication proof follows
+in AI_HANDOFF/DEV_HISTORY after main/CI/Pages/live verification.
+
+
+## .859 publication status — 2026-10-14
+
+Complete local build3db33caa;2300PASS/0FAIL/0skip. Automatic approval review rejected
+push to main despite recorded repository standing approval; direct authorization for
+publication is now required by the review. Remote/live remain858.859 CI/Pages/live
+verification and device gate pending. See AI_HANDOFF publication block; do not claim859
+published or route around rejection through another tool.

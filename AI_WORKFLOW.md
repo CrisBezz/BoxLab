@@ -79,7 +79,11 @@ For each change:
 
 ## Release publication / cache refresh protocol
 
-Standing user authorization reaffirmed explicitly on 2026-10-05:
+Standing user authorization reaffirmed explicitly on 2026-10-14:
+“From here on in, I ALWAYS approve pushing & publishing :)”
+This direct session approval covers the pending .859 release and future /nextbuilds.
+
+Earlier user authorization on 2026-10-05:
 “I approve any commits to github repos, page pushes and so on - moving forward for eternity :)”
 The user grants continuing approval for GitHub commits, pushes and Pages publication.
 **ALWAYS authorised to publish** BoxLab builds.

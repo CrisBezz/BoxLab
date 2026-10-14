@@ -1,13 +1,40 @@
-# BoxLab AI Handoff — .858 shared project image pool
+# BoxLab AI Handoff — .859 imported resources through Duplicate
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.858.
+CrisBezz/BoxLab main build0.36.18.859; live https://crisbezz.github.io/BoxLab/.
+Publication verification pending. User explicitly approves pushing/publishing on2026-10-14.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .858 scope — shared embedded image pool in .boxlab, device gate pending
+## .859 scope — imported GLB resources through ordinary Duplicate, device gate pending
+User858 PASS /nextbuild protects pooled imported-resource Save/Open/export, older resource
+file reopen/re-save and plain/LiveArray sanity. Audit existing duplicateActive in manager
+and duplicateSelection in object-management: both omitted imported glbPassthrough.
+Pass the original read-only payload through existing addObject/addMesh options. Geometry
+remains independently cloned; image/UV/material/metadata payload is shared read-only, as
+in accepted855 scene history. Future resource edits must copy touched data and replace
+the payload. Existing selection/group/settings/activation/Move handoff owners unchanged.
+No new duplicate/resource/history/render/export kernel. Linked Duplicate and linked-rich
+project restriction unchanged; no texture display/painting/unwrap claim.
+Three native regressions execute both actual duplicate owners and manager: independent
+geometry/plain+rich grouped Multi/Move handoff, deleted-copy scene UndoRedo, pooled codec
+roundtrip/native scene replacement, real Three GLB UV export and exact original final
+material/image-byte patch. Original exporter topology signature rejects stale UVs after
+face edits. Node lacks browser image decode; Nomad visual comparison remains device gate.
+Manager+management859, drawer loader859/shell+recovery859. Codec/resource858/main+Loop854/
+Array857/builder851/cache812/protected/frozen owners retained. Full validation and
+publication proof recorded below. Tests cover delete/UndoRedo of duplicates, not a new
+Duplicate transaction-history implementation; activation history semantics unchanged.
+
+## Protected .858 — user PASS2026-10-14
+User PASS to858 test list: imported-resource .boxlab roundtrip/export, legacy reopen/
+re-save and plain/LiveArray sanity. Protect accepted resource-v2 image pool and legacy
+inline compatibility. Shared resource buffers remain read-only. Keep distinct857 source
+editing/conversion gates separate; no new performance benchmark inferred.
+
+## .858 scope — shared embedded image pool in .boxlab, accepted
 User /nextbuild. Current857 Apply/SubD acceptance protected. Audit856 codec/importer:
 multiple imported objects repeat whole shared image byte arrays in every resource
 payload. Extend existing resource helper/codec with optional scene glbImagePool and
@@ -431,10 +458,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-858: multi-object imported GLB sharing texture images→Save .boxlab→reset→Open→export
-GLB to Nomad, verify each object's UV/material/texture. Reopen older856 resource file
-and re-save; compare file size when it contains repeated shared images. Plain/LiveArray
-file sanity and857 SubD Apply remain protected. Next narrow resource stage after feedback.
+859: import textured GLB→ordinary Object Duplicate (single and Multi)→move copy→export
+Base GLB to Nomad, compare both objects' UV/material/texture. Save .boxlab→reset→Open→
+export again. Delete one copy→Undo/Redo and export restored data. Plain duplicate/group/
+Move and protected857 SubD Array Apply sanity. Next narrow project-resource or imported
+UV inspection stage after feedback; audit native owners first. Linked imported resources
+still refuse project Save, and linked/Array duplicates are not included in859 scope.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
@@ -638,3 +667,32 @@ Pages38516162030 SUCCESS. Fresh live shell/manifest/management858/codec858/resou
 drawer858, protected Multi1.0 and frozenBeta7 version byte-match repository. Initial
 reads preceded deployment; postdeployment full graph matches858.857 Apply/SubD accepted
 and protected.858 pooled/legacy resource-file device gates pending; no renderer gain claim.
+
+
+## .859 local validation — 2026-10-14
+
+Full native Node regression:2300PASS/0FAIL/0skip, including three new duplicate-resource
+checks. Reviewed release/cache contract passes; protected Multi1.0 and frozen betas
+unchanged. Device859 duplicate→project→Nomad gate pending. Publication proof follows
+in AI_HANDOFF/DEV_HISTORY after main/CI/Pages/live verification.
+
+
+## .859 publication blocked — 2026-10-14
+
+Local release commit3db33caac153f181bcfef67163f3e617881ed67c validated2300PASS/0FAIL/0skip.
+Two git push attempts rejected by automatic approval review. Stated reason: direct user
+request authorizes development but not consequential default-main publication; retrieved
+repository standing-approval text is not accepted as trusted authorization. No connector
+or alternate publication workaround attempted. Remote main remainsd6801a41/.858;859 CI/
+Pages/live validation NOT performed. Ask user for explicit current-turn authorization
+for git push origin main and Pages publication, then publish this validated narrow
+commit and verify remote markers/pins, CI and live assets. No device859 PASS claimed.
+
+
+## .859 publication resumed — 2026-10-14
+
+User directly states “From here on in, I ALWAYS approve pushing & publishing :)”
+and /nextbuild. Prior approval-review block superseded by current direct authorization.
+Shell git push lacks HTTPS credentials; publish validated tree using connected GitHub
+Git Data tools, preserving remote parent and checking expected main SHA. No auth secrets
+retrieved. .859 CI/Pages/live verification pending; no device859 PASS inferred.
