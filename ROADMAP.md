@@ -1049,3 +1049,16 @@ management860/drawer860, protected Multi1.0 and frozenBeta7 version byte-match.
 Connected Git Data publication uses expected-main SHA and verified file/tree hashes.
 Device860 duplicate/source/file gate pending;859 imported-duplicate/Nomad gate
 not yet accepted. Next proven original-array affine-tail rounding repair remains queued.
+
+
+## .861 publication verified — 2026-10-14
+
+Releasef36b216a9c272a024e64f773279157858698cab2; tested tree
+c94fbe5d4dd85b79ca536df549c190f8931b2f3a exactly matches fetched main.
+Node22 CI38556571969/job115827100089 SUCCESS2306PASS/0FAIL/0skip.
+Pages38556564998 build/deploy SUCCESS. Fresh postdeployment live shell/manifest,
+core861/Array861/source-core861/source-editor861/codec861/management861/drawer861,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial asset reads
+preceded completed deployment; complete postdeployment verification matches861.
+All four handoff files current; device861 gate pending,860 duplicate and859 imported
+resource/Nomad gates remain separately pending. No new user PASS inferred.

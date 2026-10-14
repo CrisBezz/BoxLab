@@ -2,7 +2,7 @@
 
 ## Current state — 2026-10-14
 CrisBezz/BoxLab main build0.36.18.861; live https://crisbezz.github.io/BoxLab/.
-Release .861 local validation; publication verification pending. User explicitly approves ongoing pushing/publishing.
+Releasef36b216a; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
@@ -783,3 +783,16 @@ Full native Node24 regression:2306PASS/0FAIL/0skip. Three new native affine reop
 checks and all prior semantic coverage pass. Reviewed cache contract/shell markers
 coherent; protected Multi1.0/instance343/frozen beta files untouched. Publication
 CI/Pages/live verification pending; device gates not inferred.
+
+
+## .861 publication verified — 2026-10-14
+
+Releasef36b216a9c272a024e64f773279157858698cab2; tested tree
+c94fbe5d4dd85b79ca536df549c190f8931b2f3a exactly matches fetched main.
+Node22 CI38556571969/job115827100089 SUCCESS2306PASS/0FAIL/0skip.
+Pages38556564998 build/deploy SUCCESS. Fresh postdeployment live shell/manifest,
+core861/Array861/source-core861/source-editor861/codec861/management861/drawer861,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial asset reads
+preceded completed deployment; complete postdeployment verification matches861.
+All four handoff files current; device861 gate pending,860 duplicate and859 imported
+resource/Nomad gates remain separately pending. No new user PASS inferred.
