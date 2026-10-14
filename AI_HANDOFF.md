@@ -1,13 +1,36 @@
-# BoxLab AI Handoff — .854 native Loop completion
+# BoxLab AI Handoff — .855 imported GLB resource history
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.854.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.855.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .854 scope — native Loop completion without history replay, device gate pending
+## .855 scope — imported GLB resource scene-history preservation, device gate pending
+User854 PASS protects native Loop EXACT/repeat/exit/history; move to roadmap resource
+foundation. Audit existing import-mesh797 glbPassthrough, manager storage, export741,
+scene snapshots and codec842: snapshotObject omitted read-only imported GLB payload;
+restoreScene recreated objects without it. Scene Undo/Redo could silently lose UVs,
+tangents/colours/morph metadata, materials/textures/image bytes and Nomad extras.
+Existing object-management snapshot/restore now carries glbPassthrough by reference.
+Audit found resource writes only during import before object installation; exporters
+read it. Share this read-only payload/images through history, avoiding large buffer
+copies. Any future resource editor MUST replace payload (copy-on-write), never mutate
+shared payload in place. Geometry/settings/recipes still clone through existing owners.
+Restoration uses snapshot payload, not whichever object currently has same ID; absent
+payload remains absent. Deleted objects restore resources even without a prior object.
+Three native tests exercise actual manager/scene History, delete/UndoRedo/replacement,
+shared byte/UV/morph identity, rich codec refusal/plain v1 unchanged, real GLB geometry/
+UV export + final native metadata/material/image patch. Node lacks image decode, so
+final image-bound GLB byte verification is separate from native geometry/UV loader.
+Full2285PASS/0FAIL/0skip. Management855→unchanged codec842; drawer855→management855;
+shell/recovery855; main+LoopCommit854/builder851/cache812/manager849/Array844/Clean845/
+Soft846/protected/frozen owners unchanged. Publication/Node22/live verification follows.
+Rich .boxlab save/open still refuses imported resources. No new renderer/codec/resource
+pool/history format; this stage protects existing resources within scene history only.
+
+## Protected .854 scope — user PASS2026-10-14
 User Awesome853 PASS /nextbuild protects single/MultiLoop EXACT/background/mode exit,
 editable cut faces and UndoRedo. Audit native cleanup and commit853: commit still clicks
 Undo then Redo to retire private slides. That replaces live mesh and rebuilds scene
@@ -329,15 +352,16 @@ references and linked placement pool supported. Linked project device round-trip
 worth checking beyond accepted drift gate. Source pool reconstruction uses existing
 inverse placement, validates source IDs/finite invertible affine matrices/peer agreement;
 allocator/history/render rollback guarded. Open confirms replacement and clears old Undo.
-Rich GLB/UV/material/texture pools still refuse; full cross-session history/native file
+Rich GLB/UV/material/texture project pools still refuse;855 scene history now retains imported payload; full cross-session history/native file
 association not implemented. .830 Balloon gridVersion2 removes orphan poles while legacy
 recipes keep indices/editability.
 
 ## Next
-854: single/MultiLoop cut+slide→EXACT→another cut→background/Face exit. Cut faces remain
-editable; UndoRedo correctly restores cuts and placement without extra completion steps.
-Preserve853 device PASS,851 dots and850 GPUreuse. If accepted, next project resources or
-measured bottleneck after repo audit;852 optimisation gate not separately accepted.
+855: imported GLB with known UV/materials, delete (keeping another editable object),
+Undo restore→Redo delete→Undo, export GLB to Nomad and compare preserved resources.
+Plain .boxlab Save/Open still works; imported-rich save explicitly refuses. Loop854
+repeat/EXACT/exit remains protected. Next scope resource-aware project encoding after
+this foundation gate; do not enable .boxlab rich resources until encode/open validates.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

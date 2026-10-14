@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.846",
+      "url": "./src/drawer-ui.js?v=0.36.18.855",
       "target": "src/drawer-ui.js",
-      "sha256": "287576665580015502e094126302d3d4dd6875935f2027f1fcc694f2912a0712"
+      "sha256": "b116a82595d11b685216dacf8223fbb994e2745c7367c3d6abf80d59d42f0f61"
     },
     {
       "owner": "index.html",
@@ -335,9 +335,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.842",
+      "url": "./src/object-management.js?v=0.36.18.855",
       "target": "src/object-management.js",
-      "sha256": "8cf6d02ee50556ee0cf6d7293357afd36fa0d21b1d329220fabf0f7737d497c9"
+      "sha256": "2a402e5854f40c6c099a0c24e1fd2b7a9904f4ec5f1beaf506bde8a0eff8f509"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.854",
+      "url": "./src/release-bootstrap.js?v=0.36.18.855",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.854",
+      "url": "./src/release-version.js?v=0.36.18.855",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.842",
+      "url": "./object-management.js?v=0.36.18.855",
       "target": "src/object-management.js",
-      "sha256": "8cf6d02ee50556ee0cf6d7293357afd36fa0d21b1d329220fabf0f7737d497c9"
+      "sha256": "2a402e5854f40c6c099a0c24e1fd2b7a9904f4ec5f1beaf506bde8a0eff8f509"
     },
     {
       "owner": "src/drawer-ui.js",

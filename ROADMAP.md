@@ -4,12 +4,21 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .854 native Loop completion, 2026-10-14
+## Current direction — .855 imported GLB scene-history resources, 2026-10-14
+
+854 PASS protected; resume project-resource foundation. Existing imported glbPassthrough
+was dropped by scene snapshots/restoration. Carry read-only payload through existing
+history, share image buffers, require copy-on-write for future resource edits.
+Full2285PASS/0FAIL; native History + UV/metadata/material/image export byte checks.
+Device imported delete/UndoRedo/export gate pending. Rich .boxlab remains refused;
+resource-aware encode/open is next scoped stage, not silently enabled by this change.
+
+## Previous direction — .854 native Loop completion, 2026-10-14
 
 853 user PASS protected. Replace internal Undo/Redo clicks with existing main slide
 cleanup exposed through guarded native commit. Same mesh/history/placed cuts remain;
 853 colour detection, exact/repeat/background exit retained. Full2282PASS/0FAIL.
-Device repeat/EXACT/exit/UndoRedo gate pending. Next project-resource stage or measured
+User854 PASS2026-10-14 protects repeat/EXACT/exit/UndoRedo. Next project-resource stage or measured
 bottleneck after feedback; accepted owners remain protected.
 
 ## Previous direction — .853 Loop/MultiLoop completion repair, 2026-10-14

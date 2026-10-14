@@ -5998,3 +5998,21 @@ Manual pending854:
 - Switch Face, select/move a cut face; no active yellow/blue rails remain.
 - Undo/Redo through cuts and placement: completion adds no extra step.
 Main854/commit854/shell/recovery854 coherent; no topology/history/gesture changes.
+
+
+## .854 user PASS protected / .855 imported-resource scene history — 2026-10-14
+
+User854 PASS protects native Loop EXACT/repeat/exit/UndoRedo.853/851/850 retained.
+Automated855 actual scene History/manager: imported object delete→UndoRedo resources,
+reference/embedded-byte/UV/morph preservation without buffer clones, payload replacement
+uses correct snapshot (not current object), absent payload unchanged, basic v1 codec
+still rejects rich resources. Native GLB geometry/UV export + final metadata/material/
+image-byte patch tested separately; Node image decode/WebGL not claimed. Full2285PASS/
+0FAIL/0skip. Management855/drawer855/shell+recovery855 reviewed; other owners untouched.
+Manual855 pending:
+- Import known UV/material GLB with another editable object present; delete imported
+  object, Undo→Redo→Undo and check restored geometry.
+- Export restored GLB to Nomad; check known UV/texture/material data remains available.
+- Plain .boxlab Save/Open sanity; rich imported scene should still refuse basic Save.
+Imported payload is read-only shared history data. Future editors must replace it via
+copy-on-write; file-resource encoding is separate and not enabled in this build.

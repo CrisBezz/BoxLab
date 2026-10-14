@@ -8735,3 +8735,22 @@ Pages38500128663 SUCCESS. Fresh live shell/manifest/main854/loop-cut-commit854,
 protected Multi1.0 and frozenBeta7 version byte-match repository. Predeployment
 shell/manifest reads returned853; subsequent verification matches854. User853 PASS
 protected;854 native completion/repeat/exit/history device gate pending.
+
+
+## .854 user PASS / .855 imported GLB scene-history resource preservation — 2026-10-14
+
+User PASS /nextbuild (current854). Protect native Loop completion/repeat/history.
+Roadmap resource audit finds glbPassthrough installed by import/manager and consumed
+by export, but omitted by object-management snapshot/restore. Undoing scene operations
+could drop UV/morph/colour/tangent/material/image/Nomad metadata. Carry existing payload
+reference in snapshot + restored object. Resource writes audited preinstallation import;
+export reads only. Sharing read-only payload/image buffers avoids per-history copies;
+future resource edits must replace payload, never mutate shared data in place.
+Three actual manager/scene-history tests: delete restore with no prior object, repeated
+UndoRedo/payload replacement/shared bytes+UV+morph, rich codec refusal/plain v1, native
+GLB UV/geometry export and final metadata/material/image-byte patch. First full run
+attempted texturedGLB loader in Node without image decode; fixture now verifies native
+geometry/UV loader and native final resource patch separately (existing GLB convention).
+Full2285PASS/0FAIL/0skip. Management855 + drawer855 parents/shell/recovery855 reviewed;
+main/Loop854/manager849/cache812/protected/frozen sources unchanged. Rich .boxlab save
+still refused; resource schema/open pools not implemented. Device gate pending.
