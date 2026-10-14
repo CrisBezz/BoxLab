@@ -1026,3 +1026,15 @@ Full native Node regression:2303PASS/0FAIL/0skip, including three new Live Array
 duplicate tests and retained859 resource coverage. Reviewed shell/cache contract passes.
 Protected Multi1.0/frozen betas unchanged; device860 gate and proven prior affine-tail
 roundoff remain separate. Publication verification pending.
+
+
+## .860 publication verified — 2026-10-14
+
+Release40f638db7033dff8b79469e880531055a051cc72; tested tree
+925bfba7f07e248a7c3ac58e0527ee693e3c68b7 exactly matches local.
+Node22 CI38541986782/job115778710723 SUCCESS2303PASS/0FAIL/0skip;
+Pages38541985896 build/deploy SUCCESS. Fresh live shell/manifest/manager860/
+management860/drawer860, protected Multi1.0 and frozenBeta7 version byte-match.
+Connected Git Data publication uses expected-main SHA and verified file/tree hashes.
+Device860 duplicate/source/file gate pending;859 imported-duplicate/Nomad gate
+not yet accepted. Next proven original-array affine-tail rounding repair remains queued.
