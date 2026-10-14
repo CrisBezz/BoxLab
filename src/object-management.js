@@ -1,5 +1,5 @@
 import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.734';
-import {encodeBoxlabScene,decodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.842';
+import {encodeBoxlabScene,decodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.856';
 import {EditableMesh} from './mesh.js';
 const list=document.querySelector('#outlinerList');
 const drawer=document.querySelector('#objectsDrawer .drawer-content');
@@ -244,10 +244,9 @@ function exportBasicProject(button,output){
  try{
   manager()?.saveActive?.();
   const scene=captureScene();
-  // Snapshot cloning currently omits some rich runtime channels; explicitly
-  // reject those before using the basic geometry/recipe-only v1 codec.
+  // Imported GLB payload is encoded by the codec; other resource owners remain unsupported.
   for(const source of manager()?.objects||[]){
-   if(source?.glbPassthrough||source?.materials||source?.textures||
+   if(source?.materials||source?.textures||
       source?.mesh?.uvs||source?.mesh?.faceUVs||
       source?.mesh?.uvLayers||source?.mesh?.materialSlots)
     throw Error('Scene contains resource channels not yet supported by basic .boxlab Save');
@@ -259,10 +258,11 @@ function exportBasicProject(button,output){
   const restored=decodeBoxlabScene(JSON.parse(text),(v,f,c,g)=>new EditableMesh(v,f,c,g));
   if(JSON.stringify(encodeBoxlabScene(restored))!==text)throw Error('Project round-trip verification failed');
   const blob=new Blob([text],{type:'application/json'});
+  if(blob.size>32*1024*1024)throw Error('Project exceeds the 32 MB Open limit');
   url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download=projectFileName();
   document.body.appendChild(a);a.click();a.remove();
-  output.textContent='Basic .boxlab download requested · '+data.objects.length+' objects · project history and rich resources not included. Use Open .boxlab from Files to restore it.';
+  output.textContent='.boxlab download requested · '+data.objects.length+' objects · imported GLB resources included; Undo history not included. Use Open .boxlab from Files to restore it.';
  }catch(error){output.textContent='Save refused · '+(error?.message||error);}
  finally{
   button.disabled=false;
@@ -275,8 +275,7 @@ async function openBasicProject(file,output){
   if(!/\.boxlab$/i.test(file.name)||file.size>32*1024*1024)throw Error('Choose a .boxlab file smaller than 32 MB');
   const source=JSON.parse(await file.text());
   const incoming=decodeBoxlabScene(source,(v,f,c,g)=>new EditableMesh(v,f,c,g));
-  // The v1 codec does not reconstruct imported resource pools; refuse instead of creating visibly broken instances.
-  if(incoming.objects.some(o=>o.glbPassthrough||o.materials||o.textures))
+  if(incoming.objects.some(o=>o.materials||o.textures))
    throw Error('Rich-resource projects are not supported by basic Open');
   const ids=new Set(incoming.objects.map(o=>o.id));
   if(ids.size!==incoming.objects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))
@@ -297,13 +296,13 @@ async function openBasicProject(file,output){
   multiEnabled=!!incoming.multi;
   selectedIds=new Set(incoming.selected.filter(id=>ids.has(id)));
   updateUI();
-  output.textContent='Opened basic .boxlab · '+incoming.objects.length+' objects · Undo history reset.';
+  output.textContent='Opened .boxlab · '+incoming.objects.length+' objects · Undo history reset.';
  }catch(error){output.textContent='Open refused · '+(error?.message||error);}
 }
 function installProjectAudit(){
  const menu=document.querySelector('#fileMenu .top-file-content');
  if(!menu||menu.querySelector('#projectAuditBtn'))return;
- const button=document.createElement('button');button.id='projectAuditBtn';button.type='button';button.textContent='Check project snapshot';button.title='Check the current scene before native .boxlab Save/Open is introduced';
+ const button=document.createElement('button');button.id='projectAuditBtn';button.type='button';button.textContent='Check project snapshot';button.title='Check the current scene for .boxlab Save/Open';
  const output=document.createElement('div');output.id='projectAuditResult';output.className='export-destination-note';output.setAttribute('role','status');
  button.addEventListener('click',()=>{
   manager()?.saveActive?.();
@@ -318,9 +317,9 @@ function installProjectAudit(){
     return;
    }catch(error){output.textContent='Project codec not ready · '+error.message;return;}
   }
-  output.textContent=report.ok?`Project snapshot: ${n.objects} objects · ${n.vertices} vertices · ${n.faces} faces · ${n.groups} groups · ${n.booleanRecipes} Boolean recipes · ${n.curveProfiles} Curve profiles · ${n.linkedObjects} links · ${n.referenceObjects} references. File Save/Open not enabled yet.`:`Project snapshot issues: ${report.issues.slice(0,3).join('; ')||report.reason}`;
+  output.textContent=report.ok?`Project snapshot: ${n.objects} objects · ${n.vertices} vertices · ${n.faces} faces · ${n.groups} groups · ${n.booleanRecipes} Boolean recipes · ${n.curveProfiles} Curve profiles · ${n.linkedObjects} links · ${n.referenceObjects} references. Ready for .boxlab Save.`:`Project snapshot issues: ${report.issues.slice(0,3).join('; ')||report.reason}`;
  });
- const save=document.createElement('button');save.id='projectSaveBasicBtn';save.type='button';save.textContent='Save .boxlab (basic scene)';save.title='Download supported editable geometry and scene metadata; not history, UVs or textures';save.addEventListener('click',()=>exportBasicProject(save,output));
+ const save=document.createElement('button');save.id='projectSaveBasicBtn';save.type='button';save.textContent='Save .boxlab';save.title='Download scene geometry, metadata and imported GLB resources; Undo history is not saved';save.addEventListener('click',()=>exportBasicProject(save,output));
  const open=document.createElement('button');open.id='projectOpenBasicBtn';open.type='button';open.textContent='Open .boxlab from Files';open.title='Choose your downloaded .boxlab from iPad Files; opening directly from Files requires a native app';
  const input=document.createElement('input');input.id='projectOpenBasicInput';input.type='file';input.accept='';input.hidden=true;
  open.addEventListener('click',()=>{output.textContent='Choose a .boxlab file in the picker (Browse → Downloads). Other files will be refused.';input.click();});

@@ -1024,7 +1024,7 @@ function initialize() {
     replaceBasicProjectScene(sceneObjects, wantedId) {
       const live=state()?.mesh;
       if(!live||!Array.isArray(sceneObjects)||!sceneObjects.length)return false;
-      if(sceneObjects.some(o=>o.glbPassthrough||!o.mesh?.clone))return false;
+      if(sceneObjects.some(o=>!o.mesh?.clone||(o.glbPassthrough&&(o.glbPassthrough.version!==1||o.glbPassthrough.source!=='glb'))))return false;
       // All validation and confirmation must be performed by the caller.
       const ids=new Set(sceneObjects.map(o=>o.id));
       if(ids.size!==sceneObjects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))return false;

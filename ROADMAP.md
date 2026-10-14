@@ -4,13 +4,22 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .855 imported GLB scene-history resources, 2026-10-14
+## Current direction — .856 imported GLB project resources, 2026-10-14
+
+855 PASS protected. Existing .boxlab v1 adds optional versioned imported GLB payload;
+canonical binary image encoding, UV/material/metadata preservation, validated native
+Save/Open/atomic replacement,32MB file limit. Plain v1 unchanged. Full2290PASS/0FAIL.
+Device GLB→.boxlab→Open→GLB→Nomad gate pending. Linked imported GLB and other resource
+owners still refuse; texture editing/UV unwrap/pool dedup not implemented. Next scoped
+resource validation/pool stage after acceptance, retain accepted history/Loop/optimisation.
+
+## Previous direction — .855 imported GLB scene-history resources, 2026-10-14
 
 854 PASS protected; resume project-resource foundation. Existing imported glbPassthrough
 was dropped by scene snapshots/restoration. Carry read-only payload through existing
 history, share image buffers, require copy-on-write for future resource edits.
 Full2285PASS/0FAIL; native History + UV/metadata/material/image export byte checks.
-Device imported delete/UndoRedo/export gate pending. Rich .boxlab remains refused;
+User855 PASS2026-10-14 protects imported delete/UndoRedo/export. Rich .boxlab remains refused;
 resource-aware encode/open is next scoped stage, not silently enabled by this change.
 
 ## Previous direction — .854 native Loop completion, 2026-10-14

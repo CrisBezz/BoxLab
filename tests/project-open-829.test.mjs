@@ -50,7 +50,7 @@ test('829 actual Open Cancel leaves replacement and selection owners untouched; 
  const data=project(),reconstructed=decodeBoxlabScene(data,(...args)=>new EditableMesh(...args));
  assert.deepEqual(encodeBoxlabScene(reconstructed),data);
  const cancelled=openFixture(false),out={};await cancelled.c.openBasicProject(file(data),out);assert.deepEqual(cancelled.calls,['confirm']);assert.match(out.textContent,/cancelled/);
- const accepted=openFixture();await accepted.c.openBasicProject(file(data),out);assert.deepEqual(accepted.calls,['confirm','replace','groups','ui']);assert.match(out.textContent,/Opened basic/);
+ const accepted=openFixture();await accepted.c.openBasicProject(file(data),out);assert.deepEqual(accepted.calls,['confirm','replace','groups','ui']);assert.match(out.textContent,/Opened \.boxlab/);
 });
 test('829 actual Open rejects malformed JSON, IDs, extensions and size before confirmation',async()=>{
  const bad=project();bad.objects[0].id=Number.MAX_SAFE_INTEGER;
@@ -68,7 +68,7 @@ test('831 manager restores reference guides locked and never promotes a referenc
 test('831 reference project round trip preserves geometry, groups, lock and visibility; Open accepts mixed scene',async()=>{
  const data=project();data.objects.push({...structuredClone(data.objects[0]),id:41,name:'Guide',kind:'reference',locked:true,visible:false,groupId:5});data.groups={names:[[5,'Guides']],collapsed:[5]};
  const recovered=decodeBoxlabScene(data,(...args)=>new EditableMesh(...args));assert.deepEqual(encodeBoxlabScene(recovered),data);
- const f=openFixture(),out={};await f.c.openBasicProject(file(data),out);assert.deepEqual(f.calls,['confirm','replace','groups','ui']);assert.match(out.textContent,/Opened basic/);
+ const f=openFixture(),out={};await f.c.openBasicProject(file(data),out);assert.deepEqual(f.calls,['confirm','replace','groups','ui']);assert.match(out.textContent,/Opened \.boxlab/);
  const cancel=openFixture(false);await cancel.c.openBasicProject(file(data),out);assert.deepEqual(cancel.calls,['confirm']);
 });
 test('831 Open refuses reference-only/unlocked guides; malformed linked data still refuses',async()=>{

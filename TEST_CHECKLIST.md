@@ -6016,3 +6016,21 @@ Manual855 pending:
 - Plain .boxlab Save/Open sanity; rich imported scene should still refuse basic Save.
 Imported payload is read-only shared history data. Future editors must replace it via
 copy-on-write; file-resource encoding is separate and not enabled in this build.
+
+
+## .855 user PASS protected / .856 imported GLB project roundtrip — 2026-10-14
+
+User855 PASS protects scene history imported resources;854/853/851/850 retained.
+Automated856 five native tests: payload+binary canonical JSON roundtrip, independent
+byte buffers, plain v1 unchanged, corrupt/version/base64/size/finite/unsupported owners,
+actual SaveOpen/native manager restore, cancellation/invalid data/history preservation,
+render rollback and Save32MB refusal.855 other-resource refusal retained while supported
+imported payload encodes;829 Open status assertions updated, original behavior retained.
+Full2290PASS/0FAIL/0skip; codec/resource/management/drawer/manager/shell/recovery856 reviewed.
+Manual856 pending:
+- Independent imported UV/textured GLB→Save .boxlab→reset→Open saved .boxlab.
+- Export restored GLB to Nomad; compare geometry, UVs/materials/textures.
+- Plain or LiveArray .boxlab SaveOpen; cancel replacement leaves current scene, successful
+  Open resets Undo as before. Loop EXACT/repeat remains correct.
+Embedded images supported; file32MB/pool24MB limits. Linked imported resources and other
+resource owners still refuse; no texture rendering/editing/unwrap/dedup claim.

@@ -8766,3 +8766,23 @@ protected Multi1.0 and frozenBeta7 version byte-match repository. Initial shell 
 returned854 during deployment; postdeployment verification matches855. User854 PASS
 protected;855 imported GLB delete/UndoRedo/export device gate pending. Rich-resource
 .boxlab saving remains refused, no file-resource codec implementation claimed.
+
+
+## .855 user PASS / .856 imported GLB .boxlab Save/Open — 2026-10-14
+
+User PASS /nextbuild (current855). Protect imported GLB scene-history restoration.
+Audit existing resource payload/codec/File UI/native replacement: no binary encoder.
+Add small transport helper for imported sourceglb/version1 payload, canonical base64
+Uint8Array image bytes + version/length/format/finite JSON/24MB pool guards. Existing
+codec optional glbResource with own version1 preserves plain v1 shape. Save/Open uses
+native snapshot + encode/decode roundtrip + confirmation + staged atomic replacement;
+success resets history, cancellation/invalid/render-error preserves it. Save checks32MB
+same as Open. Snapshot status/Save label updated to current capability; no UI cleanup.
+Only independent imported GLB payloads supported; linked rich scenes/other channel owners
+still refuse. Native UV/topology/export signature safety retained; no new exporter/kernel/
+renderer/history or resource dedup. Five native tests binary/plain/corruption/owners,
+actual SaveOpen/manager/cancel/invalid/rollback/size.855 codec assertion now imported
+support + other-owner refusal;829 status checks retain original acceptance semantics.
+Full2290PASS/0FAIL/0skip. Reviewed codec/helper/management/drawer/manager graph856 and
+shell/recovery856; main/Loop854/builder851/cache812/protected/frozen unchanged.
+Device imported-file/export/Nomad and basic-file sanity gate pending.

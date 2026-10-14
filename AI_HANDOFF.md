@@ -1,13 +1,40 @@
-# BoxLab AI Handoff — .855 imported GLB resource history
+# BoxLab AI Handoff — .856 imported GLB project resources
 
 ## Current state — 2026-10-14
-CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.855.
+CrisBezz/BoxLab main; live https://crisbezz.github.io/BoxLab/; release0.36.18.856.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .855 scope — imported GLB resource scene-history preservation, device gate pending
+## .856 scope — imported GLB .boxlab Save/Open, device gate pending
+User855 PASS protects imported GLB scene-history/resource restoration and export.
+Audit existing codec/SaveOpen/snapshot/atomic replacement/export paths found no binary
+project-resource encoder. Extend existing v1 codec with optional glbResource (own version1),
+using small project-glb-resources856 transport helper. Imported version1/sourceglb payload
+keeps plain JSON metadata/UV/tangent/colour/morph arrays, material/texture definitions
+and embedded images; Uint8Array image bytes encode canonical base64 with exact lengths.
+Decode validates envelope/base64/canonical bytes/finite metadata/24MB image pool, creates
+independent byte buffers, then native manager stages meshes and original payloads through
+existing atomic scene replacement. Invalid files/cancel/render failure leave scene and
+history unchanged; successful Open resets history as before. Plain v1 encoding unchanged.
+Save validates full JSON roundtrip and refuses files over existing32MB Open limit.
+File Save label now simply Save .boxlab; status mentions imported GLB resources, no Undo
+history. Existing snapshot checker no longer falsely says Save/Open is not enabled.
+Other resource owners (materials/textures outside glbPassthrough, mesh UV layers/slots)
+and linked importedGLB projects still refuse. No texture editing/rendering, UV unwrap,
+new import/export/modelling/history owner or resource-pool deduplication. Export still
+checks its original topology/geometry signatures for safe attribute restoration.
+Five native tests cover canonical binary+JSON/plain compatibility, malformed/oversized
+payloads/unsupported channels, actual SaveOpen+manager replacement, cancel/invalid-file
+preservation, rollback and save-size refusal.855 rich codec refusal assertion advances
+to imported payload support while other resource refusal remains;829 UI status assertions
+advance to accurate Open text, original semantics retained. Full2290PASS/0FAIL/0skip.
+Codec856→new resource856; management856→codec856; drawer856→management856; manager856;
+shell/recovery856. Main+LoopCommit854/builder851/cache812/Array844/Clean845/Soft846/
+protected/frozen kernels unchanged. Publication/Node22/live verification follows.
+
+## Protected .855 scope — user PASS2026-10-14
 User854 PASS protects native Loop EXACT/repeat/exit/history; move to roadmap resource
 foundation. Audit existing import-mesh797 glbPassthrough, manager storage, export741,
 scene snapshots and codec842: snapshotObject omitted read-only imported GLB payload;
@@ -352,16 +379,16 @@ references and linked placement pool supported. Linked project device round-trip
 worth checking beyond accepted drift gate. Source pool reconstruction uses existing
 inverse placement, validates source IDs/finite invertible affine matrices/peer agreement;
 allocator/history/render rollback guarded. Open confirms replacement and clears old Undo.
-Rich GLB/UV/material/texture project pools still refuse;855 scene history now retains imported payload; full cross-session history/native file
+Independent imported GLB payloads now save/open in856; other resource owners and linked imported GLB projects still refuse;855 scene history retains imported payload; full cross-session history/native file
 association not implemented. .830 Balloon gridVersion2 removes orphan poles while legacy
 recipes keep indices/editability.
 
 ## Next
-855: imported GLB with known UV/materials, delete (keeping another editable object),
-Undo restore→Redo delete→Undo, export GLB to Nomad and compare preserved resources.
-Plain .boxlab Save/Open still works; imported-rich save explicitly refuses. Loop854
-repeat/EXACT/exit remains protected. Next scope resource-aware project encoding after
-this foundation gate; do not enable .boxlab rich resources until encode/open validates.
+856: independent imported GLB with known UV/material/texture→Save .boxlab→reset→Open
+saved file→export GLB to Nomad; verify geometry/resources. Plain/LiveArray/linked basic
+project SaveOpen regression and cancel/Undo-after-Open sanity. File32MB limit remains;
+no portable texture preview or linked rich-resource support claimed. Preserve855 resource
+history and854 Loop PASS. Next scoped resource validation/dedup stage after feedback.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
