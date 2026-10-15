@@ -4,7 +4,17 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .863 UV island/seam inspection, 2026-10-15
+## Current direction — .864 imported UV rotation, 2026-10-15
+
+863 PASS protected. First imported-channel authoring operation: Rotate UVs90° in
+existing MeshHealth, full valid independent imported layout only. Copy UV arrays and
+replace shared payload; one native scene checkpoint, Undo/Redo/project/export reuse.
+Old tangents retired, metadata/images shared read-only; geometry unchanged. No new
+UV channel/schema/history/kernel or BoxLab projection/unwrap/painting. Four native
+history/resource/codec/GLB/guard/UI tests; full2318PASS/0FAIL. Device rotation/UndoRedo/file/export pending.
+Next small UV authoring stage after feedback and authoritative resource/topology audit.
+
+## Previous direction — .863 UV island/seam inspection, 2026-10-15
 
 User862 PASS protects imported layout/stale-Undo/project gate. Extend existing inspector
 with connected UV island colours/count and orange discontinuous shared-edge seams.

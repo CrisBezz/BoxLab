@@ -1,14 +1,48 @@
-# BoxLab AI Handoff — .863 UV islands and seams
+# BoxLab AI Handoff — .864 imported UV rotation
 
 ## Current state — 2026-10-15
-CrisBezz/BoxLab main build0.36.18.863; live https://crisbezz.github.io/BoxLab/.
-Release406cfd1f; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.864; live https://crisbezz.github.io/BoxLab/.
+Release864 validation/publication pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .863 scope — read-only UV island/seam diagnostics, device gate pending
+## .864 scope — Rotate imported UVs90°, device gate pending
+User PASS /nextbuild2026-10-15 protects863 island colours/count, orange seams,
+coordinate-vs-topology/Undo and project inspection. Audit mainca84d25e/live863 plus
+import797/export741/scene-history/codec858 finds existing imported UV corner channel,
+shared read-only payload snapshots and native checkpointSnapshot already sufficient.
+First narrow authoring operation adds Rotate UVs90° to existing MeshHealth disclosure.
+New imported-uv-edit864 reuses inspector863 guards and native history. Valid complete
+independent imported meshes only; locked/reference/linked/Boolean/Array/Curve/stale/
+partial/absent UV contexts refuse. Rotate ALL corners90° counterclockwise around tile
+centre(.5,.5):[u,v]→[1-v,u]. No per-island selection/unwrap/new-mesh projection yet.
+Allocate new UV arrays and shallow replacement glbPassthrough; preserve original payload
+and all untouched metadata/images/buffers read-only for duplicates/history. Retire ONLY
+old tangentCorners + topology/geometry signatures because old tangents describe prior
+UV basis. Native GLB export uses rotated UVs without stale tangents. Existing geometry,
+scene/session/export/project owners and resource format remain unchanged. One original
+scene checkpoint per changed operation; unchanged central degenerate map no history.
+MeshHealth refreshes canvas after click; Close→Undo/Redo→reopen/Refresh shows old/new UVs.
+Base UV editing; original SubD/Mirror evaluated-export restrictions remain. No texture
+rendering/painting, new channel/kernel/history format or topology-UV propagation claim.
+Four native regressions: shared payload/image/metadata independence, real scene Undo/
+Redo, codec + actual Three GLB UV attributes/tangent exclusion, guarded/no-op/history
+failure cases and actual UI action delegation. Native manager capture clones stored
+object mesh normally; live geometry identity/coordinates remain unchanged. Test stale
+fixture targets actual live mesh rather than manager's saved clone. Earlier862/863
+inspection tests retained. Full validation/publication proof follows below.
+MeshHealth864→new edit864→unchanged inspector863; shell/recovery864. All other owner,
+protected kernel and frozen beta bytes retained. Next iPad rotate/UndoRedo/file/export
+sanity; future UV authoring follows copy-on-write resource boundary and owner audit.
+
+## Protected .863 — user PASS2026-10-15
+Protect island count/colours and orange seam outlines, coordinate-only edits retaining
+inspection, topology stale hiding→Undo restoration and .boxlab persistence.862/861
+protections retained;860 Duplicate/859 resource/Nomad gates remain separately pending.
+
+## .863 scope — read-only UV island/seam diagnostics, accepted2026-10-15
 User PASS /nextbuild2026-10-15 protects862 imported UV layout/coverage, stale after
 topology edit→Undo recovery, plain no-UV state and .boxlab reopening. Audit main85eb80ef,
 live862/shell pins, existing inspection862/import797/export741 and topology helpers:
@@ -30,7 +64,7 @@ UVs unchanged and no overlap/distortion/unwrap/painting/evaluated-modifier claim
 Four new native tests: continuous/reversed/split/point-touch/disconnected layouts,
 missing/ambiguous/bounded/stale data, actual GLB import→project→export unchanged, no
 legacy edges() call, deterministic colours/orange sides. Original862 tests retained.
-Full local Node24:2314PASS/0FAIL/0skip. iPad visual/colour/seam gate pending.
+Full local Node24:2314PASS/0FAIL/0skip. User863 PASS accepts the visual/colour/seam gate.
 MeshHealth863→inspection863/shell+recovery863 reviewed; other owners/protected/frozen
 betas unchanged. Next iPad known seamed GLB/coordinate edit vs topology edit/Undo/file
 sanity; then staged UV channel/authoring design after topology/history/resource audit.
@@ -571,13 +605,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-863 device gate: Object Mesh Health→Imported UVs on known seamed GLB. Check island
-colours/count and orange seams. Coordinate-only mesh edits retain UV layout; topology
-edit hides stale preview, Undo restores. Save/Open preserves diagnostics.862 PASS and
-861 affine Array PASS protected.860 Duplicate and859 resource/Nomad gates remain separate.
-Next staged UV channel/authoring design must audit existing topology mutation, history,
-project and export owners; do not mutate shared passthrough or invent parallel channels.
-No UV unwrap/painting/overlap analysis or evaluated modifier UV promise yet.
+864 device gate: valid UV-bearing imported GLB→Object Mesh Health→Imported UVs→Rotate
+UVs90°. Check layout rotates, seams/island counts stay sane. Close→Undo/Redo→reopen;
+Save/Open and Base GLB export to Nomad preserve edited map. Plain/stale/partial/procedural
+objects should not enable UV rotation.863/862/861 user PASS protected,860/859 gates separate.
+Next authoring stages may add UV transforms/projection after feedback and owner audit;
+new BoxLab UV projection/unwrap/painting are not implemented by this imported-only build.
+Copy touched UV arrays and replace shared resource payloads; never mutate in place.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
@@ -886,3 +920,11 @@ inspection863 and protected Multi1.0/frozenBeta7 version byte-match repository.
 862 user PASS protected;863 iPad island/seam/coordinate-vs-topology/Undo/project gate
 pending. Separate860 Duplicate and859 resource/Nomad gates not inferred. All four
 handoff files current; no new authoring/channel/kernel/history owner.
+
+
+## .864 local validation — 2026-10-15
+
+Full native Node24 regression2318PASS/0FAIL/0skip, including four new UV authoring
+checks and unchanged862/863 inspection coverage. Reviewed shell/cache graph coherent;
+protected/frozen files unchanged. Device864 UV rotate/history/project/export gate pending.
+Publication CI/Pages/live proof follows after verification.

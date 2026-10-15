@@ -6279,3 +6279,33 @@ inspection863 and protected Multi1.0/frozenBeta7 version byte-match repository.
 862 user PASS protected;863 iPad island/seam/coordinate-vs-topology/Undo/project gate
 pending. Separate860 Duplicate and859 resource/Nomad gates not inferred. All four
 handoff files current; no new authoring/channel/kernel/history owner.
+
+
+## .863 user PASS protected — 2026-10-15
+
+User PASS accepts island count/colours/orange seams, coordinate-only vs topology edit
+stale handling and Undo recovery, .boxlab persistence.862/861 protections retained.
+
+## .864 imported UV Rotate90° — device gate pending2026-10-15
+
+Native regressions: payload copy-on-write/shared original unchanged, image/metadata
+identity, live geometry unchanged, one actual scene UndoRedo step, project codec and
+real Three GLB rotated UV attributes with prior tangent basis excluded. Guard linked/
+locked/reference/procedural/stale/partial contexts and missing/failed history; central
+UV no-op adds no checkpoint. Actual MeshHealth action delegates owner and refreshes.
+Manual864:
+- Valid UV-bearing GLB→Object MeshHealth→Imported UVs→Rotate UVs90°: visible layout
+  rotation; four clicks return to starting orientation. Island/seam counts stay sane.
+- Close→Undo→reopen, then Redo→reopen: old/new UV layout, unchanged model geometry.
+- Save .boxlab→reset→Open→inspect→export Base GLB to Nomad: rotated UV map retained.
+Plain/stale/incomplete/locked/linked/procedural meshes cannot rotate UVs. Base channel
+only; existing evaluated SubD/Mirror UV-export restrictions stay. No UV unwrap/painting.
+863/862/861 PASS protected;860 Duplicate and859 resource/Nomad gates remain separate.
+
+
+## .864 local validation — 2026-10-15
+
+Full native Node24 regression2318PASS/0FAIL/0skip, including four new UV authoring
+checks and unchanged862/863 inspection coverage. Reviewed shell/cache graph coherent;
+protected/frozen files unchanged. Device864 UV rotate/history/project/export gate pending.
+Publication CI/Pages/live proof follows after verification.

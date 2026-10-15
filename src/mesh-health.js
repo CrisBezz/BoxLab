@@ -4,8 +4,9 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV,drawImportedUV} from './imported-uv-inspection.js?v=0.36.18.863';
+import {rotateImportedUV} from './imported-uv-edit.js?v=0.36.18.864';
 
-const VERSION='0.36.18.863';
+const VERSION='0.36.18.864';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -25,10 +26,11 @@ panel.innerHTML=`
   <div id="meshHealthVerdict" style="font-size:16px;font-weight:750;padding:4px 0"></div>
   <div id="meshHealthSummary" class="boxlab-tool-session-subtitle"></div>
   <details id="meshHealthUVDetails">
-    <summary class="boxlab-tool-session-section">Imported UVs · inspect</summary>
+    <summary class="boxlab-tool-session-section">Imported UVs</summary>
     <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
     <canvas id="meshHealthUVPreview" width="256" height="200" role="img" aria-label="Imported UV islands in different colours, orange seams, grey square marks UV tile zero to one" style="width:256px;max-width:100%;height:auto;margin:6px 0" hidden></canvas>
     <div id="meshHealthUVNote" class="boxlab-tool-session-subtitle"></div>
+    <button id="meshHealthUVRotate" type="button" title="Rotate the complete imported UV layout around the tile centre; one Undo step" disabled>Rotate UVs 90°</button>
   </details>
   <div class="boxlab-tool-session-section">Topology</div>
   <div id="meshHealthTopology" style="display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:11px"></div>
@@ -73,6 +75,7 @@ const uvDetails=panel.querySelector('#meshHealthUVDetails');
 const uvSummary=panel.querySelector('#meshHealthUVSummary');
 const uvPreview=panel.querySelector('#meshHealthUVPreview');
 const uvNote=panel.querySelector('#meshHealthUVNote');
+const uvRotate=panel.querySelector('#meshHealthUVRotate');
 let active=false,last=null,lastBoundary=null,objectId=null;
 
 function renderUVReport(object,mesh){
@@ -80,11 +83,21 @@ function renderUVReport(object,mesh){
  const messages={absent:'No imported UV channel on this mesh.',stale:'Stored UVs no longer match the current topology.',invalid:'Stored UV channel is incomplete or invalid.',unavailable:'UV inspection is not ready. Try Refresh.'};
  uvSummary.textContent=report.state==='ready'?`${report.mappedFaces} / ${report.faces} faces have UVs · ${report.islandCount} island${report.islandCount===1?'':'s'} · ${report.seamEdges} seam edge${report.seamEdges===1?'':'s'}${report.nonManifoldEdges?` · ${report.nonManifoldEdges} ambiguous edge${report.nonManifoldEdges===1?'':'s'}`:''}${report.missingFaces?` · ${report.missingFaces} missing`:''}${report.outsideCorners?` · ${report.outsideCorners} corners outside tile 0–1`:''}`:messages[report.state];
  uvPreview.hidden=report.state!=='ready';
+ uvRotate.disabled=report.state!=='ready'||report.missingFaces>0||report.mappedFaces!==report.faces||!object||object.locked||object.kind==='reference'||!!(object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile)||object.glbPassthrough?.version!==1||object.glbPassthrough?.source!=='glb'||!globalThis.__boxlabObjectHistory?.capture||!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
  uvNote.textContent=report.state==='ready'?`Base UVs · island colours · orange = seams · grey square = tile 0–1${report.nonManifoldEdges?' · ambiguous edges do not join islands':''}${report.previewFaces.length<report.mappedFaces?` · preview shows ${report.previewFaces.length} of ${report.mappedFaces} mapped faces`:''}`:report.state==='stale'?'Stored data is retained; this preview is hidden.':'Read-only inspection of imported UVs.';
  if(uvDetails.open)drawImportedUV(uvPreview,report);
  return report;
 }
 uvDetails.addEventListener('toggle',()=>{if(active&&uvDetails.open)renderUVReport(activeObject(),liveMesh());});
+function rotateUVs(){
+ const object=activeObject(),mesh=liveMesh();
+ if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;
+ const result=rotateImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory);
+ renderReport();
+ setStatus(result.ok?result.changed?'UVs rotated 90° • Undo to restore':'UV rotation • no change needed':`UV rotation • ${result.reason}`);
+ return result.ok;
+}
+uvRotate.addEventListener('click',rotateUVs);
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function toolSession(){return globalThis.__boxlabToolSession;}

@@ -9047,3 +9047,28 @@ inspection863 and protected Multi1.0/frozenBeta7 version byte-match repository.
 862 user PASS protected;863 iPad island/seam/coordinate-vs-topology/Undo/project gate
 pending. Separate860 Duplicate and859 resource/Nomad gates not inferred. All four
 handoff files current; no new authoring/channel/kernel/history owner.
+
+
+## .863 user PASS / .864 imported UV rotation — 2026-10-15
+
+User PASS accepts863 UV island/seam/coordinate-vs-topology/Undo/file tests. Audit main
+ca84d25e/live863 and import/export/history/codec confirms existing channel supports a
+first authoring operation via payload replacement. Add Rotate UVs90° to MeshHealth.
+New edit864 uses inspector863/native checkpointSnapshot; [u,v]→[1-v,u] about(.5,.5).
+Valid complete independent imported GLB only; unsupported/stale/partial contexts refuse.
+New UV arrays + replacement payload preserve shared originals/images/metadata; retire
+stale tangent corners/signatures. Geometry and original resource schema/export owners
+unchanged. One native Undo step; no-op adds none. No projection/unwrap/painting claim.
+Four native tests cover shared resource identity/scene history, codec/real GLB UVs with
+old tangents excluded, no-op/refusal and actual UI delegation. Fixture corrections:
+native capture clones saved mesh normally; test live identity, and mutate live mesh for
+stale-topology case. All original inspector tests retained. Validation/publication below.
+MeshHealth864→edit864→inspector863, shell/recovery864; other protected/frozen owners stay.
+
+
+## .864 local validation — 2026-10-15
+
+Full native Node24 regression2318PASS/0FAIL/0skip, including four new UV authoring
+checks and unchanged862/863 inspection coverage. Reviewed shell/cache graph coherent;
+protected/frozen files unchanged. Device864 UV rotate/history/project/export gate pending.
+Publication CI/Pages/live proof follows after verification.
