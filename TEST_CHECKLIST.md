@@ -6503,3 +6503,16 @@ Numeric Move/Scale are selected-only; canvas drag remains pan. No unwrap/paintin
 - [ ] Back to3D, Save/Open and File NOMAD Base retain moved UVs/seams; optional Exact controls still work.
 
 Scale remains exact numeric; Pencil Scale/Rotate follow after feedback. No .871 PASS inferred.
+
+## .871 publication verified — 2026-10-16
+
+Release bb0191af0c7ee0266d95662b1ec2073f9eb12224; tested tree
+7d6ea21850ddeb29b9a4189cd25c5ba2cfa5b1d0 exactly matches fetched main.
+Actual Node22 CI38818127353/job116707802378 SUCCESS2349PASS/0FAIL/0skip;
+Pages38818126928 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth871/workspace871/edit871/inspector871, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned870; final complete graph matches871. All four
+handoff files current. User870 PASS protected;871 Pencil feel/navigation/history/
+project/native-export device gate pending. Scale remains numeric under Exact;
+Pencil Scale/Rotate follow feedback, no871 user PASS inferred.
