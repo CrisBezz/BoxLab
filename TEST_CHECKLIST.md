@@ -6475,7 +6475,7 @@ UndoRedo and project/native Nomad device gate pending. Repeated /nextbuild durin
 publication continued the active release; no869 PASS or later build is inferred.
 
 
-## .870 selected-island numeric Move / Scale — device gate pending
+## .870 selected-island numeric Move / Scale — user PASS2026-10-16
 
 - [x] User869 PASS protected; selected/whole Rotate/Flip and native UV roundtrip retained.
 - [x] Full Node24:2345PASS/0FAIL/0skip; four native numeric regressions.
@@ -6483,9 +6483,23 @@ publication continued the active release; no869 PASS or later build is inferred.
 - [x] Other islands/geometry/shared resources/peers unchanged; native UndoRedo/project/NOM UV bytes/GLB attributes.
 - [x] Zero Move/Scale1 no checkpoint; blank/nonfinite/nonpositive/stale/locked/overflow refuse.
 - [x] Original workspace numeric delegation/disable/validation, reopen defaults0/0/1 and input Backspace.
-- [ ] Select island → ΔU0.1 / ΔV0 → Move: only that island moves right; ΔV0.1 moves up.
-- [ ] Scale0.5 then2: selected island shrinks then returns about its own centre; other islands stay put.
-- [ ] Undo/Redo steps through numeric edits; Clear disables Move/Scale; Rotate/Flip and pan/pinch still work.
-- [ ] iPad numeric entry/backspace and close/reopen work; Save/Open→File NOMAD Base retains edited UVs/seams.
+- [x] Select island → ΔU0.1 / ΔV0 → Move: only that island moves right; ΔV0.1 moves up.
+- [x] Scale0.5 then2: selected island shrinks then returns about its own centre; other islands stay put.
+- [x] Undo/Redo steps through numeric edits; Clear disables Move/Scale; Rotate/Flip and pan/pinch still work.
+- [x] iPad numeric entry/backspace and close/reopen work; Save/Open→File NOMAD Base retains edited UVs/seams.
 
 Numeric Move/Scale are selected-only; canvas drag remains pan. No unwrap/painting/new-mesh UVs yet.
+
+## .871 Pencil Move for selected UV islands — device gate pending
+
+- [x] .870 user PASS protected; exact Move/Scale retained under collapsed disclosure.
+- [x] Actual canvas-owner Pencil preview is read-only; one original Move transaction at lift.
+- [x] Native history/peer/resource isolation, seam-side preview, stable projection, DPR/zoom mapping.
+- [x] Jitter/cancel/lost capture/report/lock/resize/Fit/history/close do not commit previews.
+- [x] Finger/pinch/background Pencil navigation and palm suppression; stale context refuses.
+- [ ] Tap an island; Pencil-drag it right/up: island and orange seam outlines follow, others stay fixed.
+- [ ] Lift, drag again; one Undo per stroke and Redo restores. No tiny-tap movement or view jump.
+- [ ] Finger pan, pinch zoom, background Pencil pan, Fit and two-/three-finger UndoRedo still work.
+- [ ] Back to3D, Save/Open and File NOMAD Base retain moved UVs/seams; optional Exact controls still work.
+
+Scale remains exact numeric; Pencil Scale/Rotate follow after feedback. No .871 PASS inferred.

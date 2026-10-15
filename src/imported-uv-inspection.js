@@ -39,7 +39,7 @@ function inspectConnectivity(faces,uvs,report){
  const root=fi=>{while(parent[fi]!==fi){parent[fi]=parent[parent[fi]];fi=parent[fi];}return fi;};
  const same=(a,b)=>a[0]===b[0]&&a[1]===b[1];
  const endpoints=o=>{const points=uvs[o.fi],next=(o.i+1)%points.length;return o.a<o.b?[points[o.i],points[next]]:[points[next],points[o.i]];};
- const preview=new Set(report.previewFaceIndices);
+ const preview=new Set(report.previewFaceIndices),seamFaces=[];
  report.seamEdges=0;report.boundaryEdges=0;report.nonManifoldEdges=0;report.previewSeams=[];
  for(const owners of edges.values()){
   const mapped=owners.filter(o=>parent[o.fi]>=0);if(!mapped.length)continue;
@@ -50,7 +50,7 @@ function inspectConnectivity(faces,uvs,report){
    const ra=root(a.fi),rb=root(b.fi);parent[Math.max(ra,rb)]=Math.min(ra,rb);
   }else{
    report.seamEdges++;
-   for(const o of mapped)if(preview.has(o.fi))report.previewSeams.push([uvs[o.fi][o.i],uvs[o.fi][(o.i+1)%uvs[o.fi].length]]);
+   for(const o of mapped)if(preview.has(o.fi)){report.previewSeams.push([uvs[o.fi][o.i],uvs[o.fi][(o.i+1)%uvs[o.fi].length]]);seamFaces.push(o.fi);}
   }
  }
  const islands=new Map();
@@ -58,29 +58,32 @@ function inspectConnectivity(faces,uvs,report){
  report.islandCount=islands.size;
  report.faceIslands=Array.from(parent,(_,fi)=>parent[fi]>=0?islands.get(root(fi)):null);
  report.previewIslands=report.previewFaceIndices.map(fi=>report.faceIslands[fi]);
+ report.previewSeamIslands=seamFaces.map(fi=>report.faceIslands[fi]);
 }
-export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null}={}){
+export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null}={}){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;
  const width=canvas.width,height=canvas.height;
  ctx.clearRect(0,0,width,height);ctx.fillStyle='#101722';ctx.fillRect(0,0,width,height);
  if(report.state!=='ready')return false;
  const {x,y}=uvProjection(width,height,report,{padding,center,view});
+ // Pencil preview moves only displayed selected corners; stored UV arrays stay read-only.
+ const px=(p,moving)=>x(p[0]+(moving&&previewOffset?previewOffset.u:0)),py=(p,moving)=>y(p[1]+(moving&&previewOffset?previewOffset.v:0));
  ctx.strokeStyle='#69788e';ctx.lineWidth=pixelRatio;ctx.strokeRect(x(0),y(1),x(1)-x(0),y(0)-y(1));
  ctx.strokeStyle='#65d5f5';ctx.lineWidth=pixelRatio;
  // Bound each canvas path, including dense imports; no viewport render work.
  const colours=['#65d5f5','#b69aff','#8fe3a5','#f7cf72','#f39ac5','#82b3ff'];
  for(let i=0;i<report.previewFaces.length;i++){
-  const face=report.previewFaces[i];ctx.strokeStyle=colours[(report.previewIslands?.[i]||0)%colours.length];
-  ctx.beginPath();face.forEach(([u,v],i)=>i?ctx.lineTo(x(u),y(v)):ctx.moveTo(x(u),y(v)));ctx.closePath();ctx.stroke();
+  const face=report.previewFaces[i],moving=report.previewIslands?.[i]===selectedIsland;ctx.strokeStyle=colours[(report.previewIslands?.[i]||0)%colours.length];
+  ctx.beginPath();face.forEach((p,i)=>i?ctx.lineTo(px(p,moving),py(p,moving)):ctx.moveTo(px(p,moving),py(p,moving)));ctx.closePath();ctx.stroke();
  }
  // Selection is view state only; preserve island colours/seams beneath it.
  if(Number.isInteger(selectedIsland))for(let i=0;i<report.previewFaces.length;i++){
   if(report.previewIslands?.[i]!==selectedIsland)continue;
   ctx.fillStyle='#ffe06a33';ctx.strokeStyle='#ffe06a';ctx.lineWidth=3*pixelRatio;
-  ctx.beginPath();report.previewFaces[i].forEach(([u,v],j)=>j?ctx.lineTo(x(u),y(v)):ctx.moveTo(x(u),y(v)));ctx.closePath();ctx.fill();ctx.stroke();
+  ctx.beginPath();report.previewFaces[i].forEach((p,j)=>j?ctx.lineTo(px(p,true),py(p,true)):ctx.moveTo(px(p,true),py(p,true)));ctx.closePath();ctx.fill();ctx.stroke();
  }
  ctx.strokeStyle='#ff9f43';ctx.lineWidth=2*pixelRatio;
- for(const [a,b] of report.previewSeams||[]){ctx.beginPath();ctx.moveTo(x(a[0]),y(a[1]));ctx.lineTo(x(b[0]),y(b[1]));ctx.stroke();}
+ for(let i=0;i<(report.previewSeams?.length||0);i++){const [a,b]=report.previewSeams[i],moving=report.previewSeamIslands?.[i]===selectedIsland;ctx.beginPath();ctx.moveTo(px(a,moving),py(a,moving));ctx.lineTo(px(b,moving),py(b,moving));ctx.stroke();}
  return true;
 }
 
@@ -95,7 +98,7 @@ function uvProjection(width,height,report,{padding=12,center=false,view={}}={}){
  const bottom=height-padding-(center?(height-2*padding-(maxV/magnitude-minV/magnitude)*scale)/2:0);
  const x=u=>(left+(u/magnitude-minU/magnitude)*scale-width/2)*zoom+width/2+(view.panX||0);
  const y=v=>(bottom-(v/magnitude-minV/magnitude)*scale-height/2)*zoom+height/2+(view.panY||0);
- return {x,y};
+ return {x,y,delta:(dx,dy)=>({u:dx/scale/zoom*magnitude,v:-dy/scale/zoom*magnitude})};
 }
 export function pickImportedUVIsland(width,height,report,point,options={}){
  if(report?.state!=='ready'||!Number.isFinite(point?.x)||!Number.isFinite(point?.y))return null;
@@ -113,4 +116,11 @@ export function pickImportedUVIsland(width,height,report,point,options={}){
   if(inside||boundary)return report.previewIslands?.[i]??null;
  }
  return null;
+}
+
+// Use the renderer's projection for CSS-pixel Pencil movement, independent of DPR.
+export function importedUVScreenDelta(width,height,report,dx,dy,options={}){
+ if(report?.state!=='ready'||![width,height,dx,dy].every(Number.isFinite))return null;
+ const delta=uvProjection(width,height,report,options).delta(dx,dy);
+ return Object.values(delta).every(Number.isFinite)?delta:null;
 }

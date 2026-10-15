@@ -1,4 +1,4 @@
-import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.869';
+import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.871';
 // UV transforms keep the existing imported face-corner channel
 // and native scene history. All untouched resource buffers remain read-only.
 export function rotateImportedUV(object,mesh,topologySignature,history,scope){

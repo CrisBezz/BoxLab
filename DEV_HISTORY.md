@@ -9284,3 +9284,42 @@ inspector869/nav868/native865/manager+delete867/protected Multi1.0/frozen betas 
 Device870 numeric/iPad keyboard/history/native-export gate pending;869 PASS protected.
 Next after feedback: remaining narrow numeric UV transform controls via same edit owner;
 projection/unwrap/new-mesh UV channels and painting remain later. No direct drag editing.
+
+## .871 — Pencil Move for selected UV islands, 2026-10-16
+
+User .870 PASS protects numeric Move/Scale, native UndoRedo and project/Nomad UV
+roundtrip. User requests Pencil movement instead of typing. Audit current main
+604bac15 and live .870; existing workspace canvas owns pointers/navigation and
+imported-uv-edit owns Move/history. Extend that canvas owner only: tap to select,
+then Pencil-drag the selected island for a read-only live preview. Lift delegates
+ONCE to the existing Move transaction (one native checkpoint for a changed stroke).
+Finger drag, background/unselected Pencil drag, pinch, wheel and touch UndoRedo
+retain navigation ownership. Palm touch while Pencil is down cannot edit UVs.
+Exact Move/Scale fields remain available inside a collapsed disclosure; Scale stays
+numeric in this narrow build. No new UV channel, edit kernel, scene history or schema.
+
+Renderer preview offsets selected outlines/highlight and their orange seam sides
+without changing payload/report arrays; seam-side island IDs avoid shared-corner
+reference ambiguity. Screen deltas reuse the renderer projection, with CSS-pixel,
+zoom and DPR parity. Workspace keeps projection bounds until Fit/reopen so moving
+outside tile 0–1 does not auto-fit/jump. Whole selected island still moves through
+existing transaction beyond the preview budget. Other islands/resources stay intact.
+Tap jitter <=4px adds no edit. Cancel/lost capture/report replacement/lock/resize/
+Fit/history/close discard previews; release guards original object/mesh/payload.
+Four native tests exercise the actual workspace plus manager/history, live read-only
+preview, repeated strokes/one checkpoint, seam sides, pointer/capture/palm/gesture
+lifecycle, view mapping, peers and stale MeshHealth callback. Existing .870 export
+regressions retain project, actual NOM corner bytes and GLB UV coverage.
+
+Changed cache graph: MeshHealth871 → workspace871 / edit871 → inspector871;
+nav868 and original Move math unchanged; shell/recovery871. Protected Multi1.0,
+modelling kernels and frozen betas unchanged. Local Node24 full suite:2349PASS/0FAIL/0skip; final four Pencil tests also rerun
+after seam assertions. Publication proof follows after verification. Device .871 Pencil feel/navigation/history/export
+gate pending. Next: feedback on Pencil Move, then Pencil Scale/Rotate through the same
+canvas/transaction owners; projection/unwrap/new-mesh UVs/painting remain later.
+
+## Protected .870 — user PASS2026-10-16
+
+Selected-island numeric Move/Scale, island isolation, UndoRedo, iPad field editing and
+project/native Nomad UV roundtrip accepted. Pencil Move supersedes numeric-first UX
+in .871; exact fields remain optional. Do not infer .871 device acceptance.
