@@ -1095,3 +1095,15 @@ Pages38658512404 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth862/
 inspection862 and protected Multi1.0/frozenBeta7 version byte-match repository.
 861 user PASS protected;862 iPad layout/UV/stale-Undo/project checks pending. Separate
 860 Duplicate and859 Nomad/resource gates not inferred. Four handoff files current.
+
+
+## .863 publication verified — 2026-10-15
+
+Release406cfd1f37ca9ab3e5eccaf7a6dd0c1ad59579ce; tested tree
+3a8b20c62f2c5c86c3b3ea4d91135761ec46960b exactly matches fetched main.
+Node22 CI38662867643/job116187970520 SUCCESS2314PASS/0FAIL/0skip.
+Pages38662867413 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth863/
+inspection863 and protected Multi1.0/frozenBeta7 version byte-match repository.
+862 user PASS protected;863 iPad island/seam/coordinate-vs-topology/Undo/project gate
+pending. Separate860 Duplicate and859 resource/Nomad gates not inferred. All four
+handoff files current; no new authoring/channel/kernel/history owner.
