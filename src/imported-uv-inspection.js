@@ -60,14 +60,15 @@ function inspectConnectivity(faces,uvs,report){
  report.previewIslands=report.previewFaceIndices.map(fi=>report.faceIslands[fi]);
  report.previewSeamIslands=seamFaces.map(fi=>report.faceIslands[fi]);
 }
-export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null}={}){
+export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null,previewScale=null}={}){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;
  const width=canvas.width,height=canvas.height;
  ctx.clearRect(0,0,width,height);ctx.fillStyle='#101722';ctx.fillRect(0,0,width,height);
  if(report.state!=='ready')return false;
  const {x,y}=uvProjection(width,height,report,{padding,center,view});
  // Pencil preview moves only displayed selected corners; stored UV arrays stay read-only.
- const px=(p,moving)=>x(p[0]+(moving&&previewOffset?previewOffset.u:0)),py=(p,moving)=>y(p[1]+(moving&&previewOffset?previewOffset.v:0));
+ const component=(p,k,moving)=>moving&&previewScale?previewScale.centre[k]+(p[k]-previewScale.centre[k])*previewScale.factor:p[k]+(moving&&previewOffset?(k?previewOffset.v:previewOffset.u):0);
+ const px=(p,moving)=>x(component(p,0,moving)),py=(p,moving)=>y(component(p,1,moving));
  ctx.strokeStyle='#69788e';ctx.lineWidth=pixelRatio;ctx.strokeRect(x(0),y(1),x(1)-x(0),y(0)-y(1));
  ctx.strokeStyle='#65d5f5';ctx.lineWidth=pixelRatio;
  // Bound each canvas path, including dense imports; no viewport render work.
@@ -123,4 +124,18 @@ export function importedUVScreenDelta(width,height,report,dx,dy,options={}){
  if(report?.state!=='ready'||![width,height,dx,dy].every(Number.isFinite))return null;
  const delta=uvProjection(width,height,report,options).delta(dx,dy);
  return Object.values(delta).every(Number.isFinite)?delta:null;
+}
+
+// Shared read-only bounds centre for exact edits and gesture previews. Includes
+// every face of the selected island, even beyond the canvas preview budget.
+export function importedUVIslandCentre(uvCorners,faces){
+ if(!Array.isArray(faces)||!faces.length)return null;
+ let minU=Infinity,minV=Infinity,maxU=-Infinity,maxV=-Infinity;
+ for(const fi of faces){
+  const face=uvCorners?.[fi];if(!Array.isArray(face)||!face.length)return null;
+  for(const p of face){if(!Array.isArray(p)||p.length!==2||!p.every(Number.isFinite))return null;
+   const [u,v]=p;minU=Math.min(minU,u);maxU=Math.max(maxU,u);minV=Math.min(minV,v);maxV=Math.max(maxV,v);
+  }
+ }
+ return [minU/2+maxU/2,minV/2+maxV/2];
 }

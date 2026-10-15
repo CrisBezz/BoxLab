@@ -9336,3 +9336,36 @@ preceded deployment and returned870; final complete graph matches871. All four
 handoff files current. User870 PASS protected;871 Pencil feel/navigation/history/
 project/native-export device gate pending. Scale remains numeric under Exact;
 Pencil Scale/Rotate follow feedback, no871 user PASS inferred.
+
+## .872 — Pencil Scale for selected UV islands, 2026-10-16
+
+User .871 Perfect PASS protects Pencil Move, seam following, one Undo per stroke,
+navigation and project/Nomad UV roundtrip. Audit main7864abe9/live871: workspace
+owns the sole canvas gesture, imported-uv-edit already owns uniform Scale. Add
+selected-only Move/Scale buttons to that workspace; Move remains default on reopen.
+Scale: Pencil-drag selected island upward to enlarge/downward to shrink about its
+full UV-bounds centre. 120 CSS pixels doubles/halves; positive factor clamped .01–100
+per stroke, with live factor readout. Finger/background navigation and palm handling
+remain unchanged; horizontal-only/tiny strokes do not scale. Mode switch cancels
+preview. Exact fields remain optional under the existing collapsed disclosure.
+
+Reuse the original read-only preview and one on-release Scale transaction/native
+checkpoint. Shared importedUVIslandCentre extracts the existing bounds-centre loop
+into the inspector; preview and commit use identical full-island bounds, including
+faces beyond preview budget. Scale preview transforms only selected outlines/gold
+highlight/orange seam sides; payload and report arrays stay unchanged until lift.
+Existing stale context/locked/history/no-op/overflow guards and stable projection
+remain. No new UV schema/kernel/history or pointer owner. Four native regressions
+cover actual workspace/manager/history, preview/pivot/peer/resource isolation,
+reciprocal strokes, cancellation/no-ops/mode switch/reopen, navigation/palm/zoom/DPR,
+positive limits and bounded-preview/shared-corner seam correctness. Existing native
+project/NOM/GLB and Move/Rotate/Flip tests remain active. Local Node24 full suite:2353PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/workspace/edit/inspector872; nav868 and
+protected Multi1.0/modelling kernels/frozen betas unchanged. Device872 gate pending.
+Next after feedback: Pencil Rotate through the same workspace/transaction owners;
+projection/unwrap/new-mesh UV channels/painting remain later.
+
+## Protected .871 — user PASS2026-10-16
+
+Pencil Move and orange seam following, repeated drags/one native Undo per stroke,
+finger/pinch/background navigation and project→native Nomad UV roundtrip accepted.
+Default Move remains protected when introducing Scale; .872 acceptance is separate.

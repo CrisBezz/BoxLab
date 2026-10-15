@@ -1,12 +1,45 @@
-# BoxLab AI Handoff — .871 Pencil UV Move
+# BoxLab AI Handoff — .872 Pencil UV Scale
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.871; live https://crisbezz.github.io/BoxLab/.
-Previous release604bac15 / .870 accepted; .871 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.872; live https://crisbezz.github.io/BoxLab/.
+Previous main7864abe9 / .871 accepted; .872 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .872 — Pencil Scale for selected UV islands, 2026-10-16
+
+User .871 Perfect PASS protects Pencil Move, seam following, one Undo per stroke,
+navigation and project/Nomad UV roundtrip. Audit main7864abe9/live871: workspace
+owns the sole canvas gesture, imported-uv-edit already owns uniform Scale. Add
+selected-only Move/Scale buttons to that workspace; Move remains default on reopen.
+Scale: Pencil-drag selected island upward to enlarge/downward to shrink about its
+full UV-bounds centre. 120 CSS pixels doubles/halves; positive factor clamped .01–100
+per stroke, with live factor readout. Finger/background navigation and palm handling
+remain unchanged; horizontal-only/tiny strokes do not scale. Mode switch cancels
+preview. Exact fields remain optional under the existing collapsed disclosure.
+
+Reuse the original read-only preview and one on-release Scale transaction/native
+checkpoint. Shared importedUVIslandCentre extracts the existing bounds-centre loop
+into the inspector; preview and commit use identical full-island bounds, including
+faces beyond preview budget. Scale preview transforms only selected outlines/gold
+highlight/orange seam sides; payload and report arrays stay unchanged until lift.
+Existing stale context/locked/history/no-op/overflow guards and stable projection
+remain. No new UV schema/kernel/history or pointer owner. Four native regressions
+cover actual workspace/manager/history, preview/pivot/peer/resource isolation,
+reciprocal strokes, cancellation/no-ops/mode switch/reopen, navigation/palm/zoom/DPR,
+positive limits and bounded-preview/shared-corner seam correctness. Existing native
+project/NOM/GLB and Move/Rotate/Flip tests remain active. Local Node24 full suite:2353PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/workspace/edit/inspector872; nav868 and
+protected Multi1.0/modelling kernels/frozen betas unchanged. Device872 gate pending.
+Next after feedback: Pencil Rotate through the same workspace/transaction owners;
+projection/unwrap/new-mesh UV channels/painting remain later.
+
+## Protected .871 — user PASS2026-10-16
+
+Pencil Move and orange seam following, repeated drags/one native Undo per stroke,
+finger/pinch/background navigation and project→native Nomad UV roundtrip accepted.
+Default Move remains protected when introducing Scale; .872 acceptance is separate.
 
 ## .871 — Pencil Move for selected UV islands, 2026-10-16
 
@@ -831,10 +864,10 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.871 device gate: tap a UV island, Pencil-drag it, lift; verify one Undo step,
-other islands fixed, finger/pinch navigation and project→File NOMAD UV roundtrip.
-After feedback, Pencil Scale/Rotate using the same gesture/edit owners. No unwrap,
-new-mesh channels or painting yet; existing imported resources stay copy-on-write.
+.872 device gate: select island → Scale → Pencil drag up/down; verify centred scale,
+other islands fixed, one Undo per stroke and Move/navigation/export retained.
+After feedback, Pencil Rotate through the same owners. Imported UV authoring only;
+projection/unwrap/new channels/painting remain later. Shared resources copy-on-write.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

@@ -1,4 +1,4 @@
-import {drawImportedUV,pickImportedUVIsland,importedUVScreenDelta} from './imported-uv-inspection.js?v=0.36.18.871';
+import {drawImportedUV,pickImportedUVIsland,importedUVScreenDelta,importedUVIslandCentre} from './imported-uv-inspection.js?v=0.36.18.872';
 import {createUVNavigation} from './uv-navigation.js?v=0.36.18.868';
 // Workspace preview/navigation. Existing Mesh Health owns context, edit actions,
 // native history and session completion. Original canvas/controls are moved here.
@@ -8,6 +8,7 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTrans
  #boxlabUVWorkspace[hidden]{display:none!important}
  #boxlabUVWorkspace{position:absolute;inset:8px;z-index:180;display:flex;flex-direction:column;gap:8px;padding:10px;box-sizing:border-box;min-width:0;min-height:0;border:1px solid #536073;border-radius:12px;background:#151c27;color:#edf3fa;box-shadow:0 12px 36px #0009;font-size:12px;touch-action:none}
  #boxlabUVWorkspace .uv-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+ #boxlabUVWorkspace button[aria-pressed="true"]{background:#335d80;border-color:#72bfff;color:#fff}
  #boxlabUVWorkspace .uv-title{font-size:14px;flex:1;font-weight:700;min-width:100px}
  #boxlabUVWorkspace button{min-height:36px;font-size:12px;padding:5px 10px;margin:0}
  #boxlabUVWorkspace .uv-canvas-wrap{flex:1;min-height:0;min-width:0;position:relative;background:#101722;border:1px solid #334256;border-radius:6px;overflow:hidden}
@@ -21,14 +22,17 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTrans
  #boxlabUVWorkspace #meshHealthUVNote{flex:1;min-width:180px}
  `;document.head.appendChild(style);
  const root=document.createElement('section');root.id='boxlabUVWorkspace';root.hidden=true;root.setAttribute('aria-label','UV Editor');
- root.innerHTML=`<div class="uv-top"><strong class="uv-title">UV Editor</strong><button data-uv="undo" type="button">Undo</button><button data-uv="redo" type="button">Redo</button><button data-uv="out" type="button" aria-label="Zoom out">−</button><button data-uv="in" type="button" aria-label="Zoom in">+</button><button data-uv="fit" type="button">Fit</button><button data-uv="done" type="button">Back to 3D</button></div><div class="uv-summary" aria-live="polite"></div><div class="uv-top"><span class="uv-selection" aria-live="polite"></span><button data-uv="clear" type="button">Clear Selection</button></div><div class="uv-canvas-wrap"></div><details><summary>Exact Move / Scale</summary><div class="uv-numeric"><span>Selected island</span><label>ΔU <input data-uv="move-u" aria-label="UV U offset" type="number" step="any" value="0"></label><label>ΔV <input data-uv="move-v" aria-label="UV V offset" type="number" step="any" value="0"></label><button data-uv="move" type="button">Move</button><label>Scale × <input data-uv="scale-factor" aria-label="UV scale factor" type="number" step="any" value="1"></label><button data-uv="scale" type="button">Scale</button><span class="uv-input-status" role="status"></span></div></details><div class="uv-footer"></div><div>Tap to select · Pencil-drag selected island to move · finger / background drag to pan · pinch to zoom · two-finger tap Undo · three-finger tap Redo</div>`;
+ root.innerHTML=`<div class="uv-top"><strong class="uv-title">UV Editor</strong><button data-uv="undo" type="button">Undo</button><button data-uv="redo" type="button">Redo</button><button data-uv="out" type="button" aria-label="Zoom out">−</button><button data-uv="in" type="button" aria-label="Zoom in">+</button><button data-uv="fit" type="button">Fit</button><button data-uv="done" type="button">Back to 3D</button></div><div class="uv-summary" aria-live="polite"></div><div class="uv-top"><span class="uv-selection" aria-live="polite"></span><button data-uv="clear" type="button">Clear Selection</button><button data-uv="drag-move" type="button" aria-pressed="true">Move</button><button data-uv="drag-scale" type="button" aria-pressed="false">Scale</button><span class="uv-drag-status" role="status"></span></div><div class="uv-canvas-wrap"></div><details><summary>Exact Move / Scale</summary><div class="uv-numeric"><span>Selected island</span><label>ΔU <input data-uv="move-u" aria-label="UV U offset" type="number" step="any" value="0"></label><label>ΔV <input data-uv="move-v" aria-label="UV V offset" type="number" step="any" value="0"></label><button data-uv="move" type="button">Move</button><label>Scale × <input data-uv="scale-factor" aria-label="UV scale factor" type="number" step="any" value="1"></label><button data-uv="scale" type="button">Scale</button><span class="uv-input-status" role="status"></span></div></details><div class="uv-footer"></div><div>Tap to select · <span class="uv-drag-hint">Pencil-drag selected island to move</span> · finger / background drag to pan · pinch to zoom · two-finger tap Undo · three-finger tap Redo</div>`;
  parent.appendChild(root);
  const area=root.querySelector('.uv-canvas-wrap'),summary=root.querySelector('.uv-summary'),footer=root.querySelector('.uv-footer');
  area.appendChild(canvas);footer.append(controls,note);
- let active=false,report=null,observer=null,ratio=1,penId=null,selectedIsland=null,stroke=null,projectionBounds=null;
+ let active=false,report=null,observer=null,ratio=1,penId=null,selectedIsland=null,stroke=null,projectionBounds=null,dragTool='move';
  const moveU=root.querySelector('[data-uv="move-u"]'),moveV=root.querySelector('[data-uv="move-v"]'),factor=root.querySelector('[data-uv="scale-factor"]'),moveButton=root.querySelector('[data-uv="move"]'),scaleButton=root.querySelector('[data-uv="scale"]'),inputStatus=root.querySelector('.uv-input-status');
+ const dragMove=root.querySelector('[data-uv="drag-move"]'),dragScale=root.querySelector('[data-uv="drag-scale"]'),dragStatus=root.querySelector('.uv-drag-status'),dragHint=root.querySelector('.uv-drag-hint');
  const selection=root.querySelector('.uv-selection'),clear=root.querySelector('[data-uv="clear"]');
- function showSelection(){selection.textContent=selectedIsland===null?'No island selected · Rotate / Flip affect whole layout':`Island ${selectedIsland+1} of ${report.islandCount} selected · Rotate / Flip affect this island`;clear.disabled=selectedIsland===null;for(const control of [moveU,moveV,factor,moveButton,scaleButton])control.disabled=selectedIsland===null||!canEdit();}
+ function showSelection(){selection.textContent=selectedIsland===null?'No island selected · Rotate / Flip affect whole layout':`Island ${selectedIsland+1} of ${report.islandCount} selected · Rotate / Flip affect this island`;clear.disabled=selectedIsland===null;for(const control of [moveU,moveV,factor,moveButton,scaleButton,dragMove,dragScale])control.disabled=selectedIsland===null||!canEdit();}
+ function setDragTool(kind){cancel();dragTool=kind;dragMove.setAttribute('aria-pressed',String(kind==='move'));dragScale.setAttribute('aria-pressed',String(kind==='scale'));dragHint.textContent=kind==='scale'?'Pencil-drag up to enlarge · down to shrink':'Pencil-drag selected island to move';draw();}
+ dragMove.addEventListener('click',()=>setDragTool('move'));dragScale.addEventListener('click',()=>setDragTool('scale'));
  function select(value){cancel();selectedIsland=value;showSelection();draw();}
  function numeric(kind){
   if(!active||selectedIsland===null||!canEdit())return;
@@ -44,7 +48,7 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTrans
  const displayReport=()=>projectionBounds?{...report,bounds:projectionBounds}:report;
  const projectionOptions=()=>({center:true,padding:24,view:nav.view});
  const pick=point=>pickImportedUVIsland(size().width,size().height,displayReport(),point,projectionOptions());
- function draw(){if(!active||!report)return;drawImportedUV(canvas,displayReport(),{center:true,padding:24*ratio,pixelRatio:ratio,selectedIsland,previewOffset:stroke?.moved?stroke.delta:null,view:{zoom:nav.view.zoom,panX:nav.view.panX*ratio,panY:nav.view.panY*ratio}});}
+ function draw(){if(!active||!report)return;dragStatus.textContent=stroke?.moved&&stroke.kind==='scale'?`Scale ×${stroke.factor.toFixed(2)}`:'';drawImportedUV(canvas,displayReport(),{center:true,padding:24*ratio,pixelRatio:ratio,selectedIsland,previewOffset:stroke?.moved&&stroke.kind==='move'?stroke.delta:null,previewScale:stroke?.moved&&stroke.kind==='scale'?{centre:stroke.centre,factor:stroke.factor}:null,view:{zoom:nav.view.zoom,panX:nav.view.panX*ratio,panY:nav.view.panY*ratio}});}
  function history(action){if(!active)return;cancel();draw();onHistory(action);}
  const nav=createUVNavigation({size,changed:draw,undo:()=>history('undo'),redo:()=>history('redo'),tap:point=>select(pick(point))});
  function resize(){if(!active)return;cancel();const s=size();ratio=Math.min(2,globalThis.devicePixelRatio||1,4096/s.width,4096/s.height);const w=Math.max(1,Math.round(s.width*ratio)),h=Math.max(1,Math.round(s.height*ratio));if(canvas.width!==w)canvas.width=w;if(canvas.height!==h)canvas.height=h;draw();}
@@ -58,7 +62,11 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTrans
   const p=local(e);
   if(e.pointerType==='pen'){
    cancel();penId=e.pointerId;
-   if(selectedIsland!==null&&canEdit()&&pick(p)===selectedIsland)stroke={id:e.pointerId,start:p,report,island:selectedIsland,context:getTransformContext(),delta:{u:0,v:0},moved:false};
+   if(selectedIsland!==null&&canEdit()&&pick(p)===selectedIsland){
+    const context=getTransformContext(),faces=dragTool==='scale'?report.faceIslands.flatMap((id,fi)=>id===selectedIsland?[fi]:[]):null;
+    const centre=faces?importedUVIslandCentre(context?.payload?.uvCorners,faces):null;
+    if(dragTool==='move'||centre)stroke={id:e.pointerId,start:p,report,island:selectedIsland,kind:dragTool,context,centre,factor:1,delta:{u:0,v:0},moved:false};
+   }
   }
   if(!stroke)nav.down(e.pointerId,p.x,p.y,e.pointerType);
   try{canvas.setPointerCapture(e.pointerId);captures.add(e.pointerId);}catch{}
@@ -68,7 +76,8 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTrans
   if(stroke.report!==report||stroke.island!==selectedIsland||!canEdit()){cancel();draw();return true;}
   const p=local(e);if(!Number.isFinite(p.x)||!Number.isFinite(p.y))return true;
   const dx=p.x-stroke.start.x,dy=p.y-stroke.start.y;
-  stroke.moved||=Math.hypot(dx,dy)>4;
+  stroke.moved||=(stroke.kind==='scale'?Math.abs(dy):Math.hypot(dx,dy))>4;
+  if(stroke.kind==='scale'){stroke.factor=Math.max(.01,Math.min(100,2**(-dy/120)));draw();return true;}
   const delta=importedUVScreenDelta(size().width,size().height,displayReport(),dx,dy,projectionOptions());
   if(delta)stroke.delta=delta;else{cancel();draw();return true;}
   draw();return true;
@@ -78,7 +87,9 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTrans
   if(!active)return;consume(e);
   if(stroke?.id===e.pointerId){
    preview(e);const done=stroke;stroke=null;
-   if(done?.moved&&done.report===report&&done.island===selectedIsland&&canEdit())onTransform('move',done.delta.u,done.delta.v,done.context);
+   if(done?.moved&&done.report===report&&done.island===selectedIsland&&canEdit()){
+    if(done.kind==='scale')onTransform('scale',done.factor,undefined,done.context);else onTransform('move',done.delta.u,done.delta.v,done.context);
+   }
    draw();
   }else nav.up(e.pointerId);
   captures.delete(e.pointerId);if(penId===e.pointerId)penId=null;
@@ -95,6 +106,6 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTrans
   if(!Array.isArray(faces)||!faces.length||report?.state!=='ready'||!report.faceIslands)return;
   const id=report.faceIslands[faces[0]],current=report.faceIslands.flatMap((v,fi)=>v===id?[fi]:[]);
   if(Number.isInteger(id)&&current.length===faces.length&&current.every((fi,i)=>fi===faces[i]))select(id);
- },open(){if(report?.state!=='ready')return false;active=true;projectionBounds=report.bounds;moveU.value=moveV.value='0';factor.value='1';inputStatus.textContent='';root.hidden=false;nav.fit();resize();if(typeof ResizeObserver!=='undefined'){observer??=new ResizeObserver(resize);observer.observe(area);}window.addEventListener('resize',resize);window.addEventListener('keydown',key,true);return true;},close(){active=false;selectedIsland=null;showSelection();root.hidden=true;cancel();observer?.disconnect();window.removeEventListener('resize',resize);window.removeEventListener('keydown',key,true);},get view(){return {...nav.view};}};
+ },open(){if(report?.state!=='ready')return false;active=true;setDragTool('move');projectionBounds=report.bounds;moveU.value=moveV.value='0';factor.value='1';inputStatus.textContent='';root.hidden=false;nav.fit();resize();if(typeof ResizeObserver!=='undefined'){observer??=new ResizeObserver(resize);observer.observe(area);}window.addEventListener('resize',resize);window.addEventListener('keydown',key,true);return true;},close(){active=false;selectedIsland=null;showSelection();root.hidden=true;cancel();observer?.disconnect();window.removeEventListener('resize',resize);window.removeEventListener('keydown',key,true);},get view(){return {...nav.view};}};
  globalThis.__boxlabUVWorkspace=api;return api;
 }

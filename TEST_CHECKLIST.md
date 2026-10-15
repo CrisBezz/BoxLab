@@ -6490,19 +6490,19 @@ publication continued the active release; no869 PASS or later build is inferred.
 
 Numeric Move/Scale are selected-only; canvas drag remains pan. No unwrap/painting/new-mesh UVs yet.
 
-## .871 Pencil Move for selected UV islands — device gate pending
+## .871 Pencil Move for selected UV islands — user PASS2026-10-16
 
 - [x] .870 user PASS protected; exact Move/Scale retained under collapsed disclosure.
 - [x] Actual canvas-owner Pencil preview is read-only; one original Move transaction at lift.
 - [x] Native history/peer/resource isolation, seam-side preview, stable projection, DPR/zoom mapping.
 - [x] Jitter/cancel/lost capture/report/lock/resize/Fit/history/close do not commit previews.
 - [x] Finger/pinch/background Pencil navigation and palm suppression; stale context refuses.
-- [ ] Tap an island; Pencil-drag it right/up: island and orange seam outlines follow, others stay fixed.
-- [ ] Lift, drag again; one Undo per stroke and Redo restores. No tiny-tap movement or view jump.
-- [ ] Finger pan, pinch zoom, background Pencil pan, Fit and two-/three-finger UndoRedo still work.
-- [ ] Back to3D, Save/Open and File NOMAD Base retain moved UVs/seams; optional Exact controls still work.
+- [x] Tap an island; Pencil-drag it right/up: island and orange seam outlines follow, others stay fixed.
+- [x] Lift, drag again; one Undo per stroke and Redo restores. No tiny-tap movement or view jump.
+- [x] Finger pan, pinch zoom, background Pencil pan, Fit and two-/three-finger UndoRedo still work.
+- [x] Back to3D, Save/Open and File NOMAD Base retain moved UVs/seams; optional Exact controls still work.
 
-Scale remains exact numeric; Pencil Scale/Rotate follow after feedback. No .871 PASS inferred.
+Pencil Move accepted; Pencil Scale ships in872, with Rotate to follow after feedback.
 
 ## .871 publication verified — 2026-10-16
 
@@ -6516,3 +6516,16 @@ preceded deployment and returned870; final complete graph matches871. All four
 handoff files current. User870 PASS protected;871 Pencil feel/navigation/history/
 project/native-export device gate pending. Scale remains numeric under Exact;
 Pencil Scale/Rotate follow feedback, no871 user PASS inferred.
+
+## .872 Pencil Scale for selected UV islands — device gate pending
+
+- [x] User871 PASS protected; default Pencil Move, native history/navigation/export retained.
+- [x] Actual workspace Scale uses original transaction once on lift; preview/payload/resource isolation.
+- [x] Shared full-island pivot beyond preview budget, selected seam-side isolation and stable projection.
+- [x] Cancel/mode switch/no-op/jitter/horizontal/locked/stale guards, positive limits and reopen default.
+- [ ] Select island → Scale → Pencil-drag up/down: enlarge/shrink about its centre; other islands stay fixed.
+- [ ] Lift, repeat, Undo/Redo: one step per stroke. Live factor and seam outlines match committed result.
+- [ ] Switch back to Move; Pencil Move, finger pan/pinch and background Pencil pan still work.
+- [ ] Save/Open → File NOMAD Base preserves scaled UVs/seams. Optional Exact Scale still works.
+
+Pencil Rotate is next after feedback. No new unwrap/painting/mesh UV channel in872.

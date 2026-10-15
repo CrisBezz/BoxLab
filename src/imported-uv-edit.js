@@ -1,4 +1,4 @@
-import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.871';
+import {inspectImportedUV,importedUVIslandCentre} from './imported-uv-inspection.js?v=0.36.18.872';
 // UV transforms keep the existing imported face-corner channel
 // and native scene history. All untouched resource buffers remain read-only.
 export function rotateImportedUV(object,mesh,topologySignature,history,scope){
@@ -26,9 +26,9 @@ function editImportedUV(object,mesh,topologySignature,history,operation,scope){
   if(scope?.payload!==previous||!Number.isInteger(scope.island)||scope.island<0||scope.island>=report.islandCount)return {ok:false,reason:'Select the UV island again'};
   selectedFaces=report.faceIslands.flatMap((id,fi)=>id===scope.island?[fi]:[]);
   if(!selectedFaces.length)return {ok:false,reason:'Select the UV island again'};
-  let minU=Infinity,minV=Infinity,maxU=-Infinity,maxV=-Infinity;
-  for(const fi of selectedFaces)for(const [u,v] of previous.uvCorners[fi]){minU=Math.min(minU,u);maxU=Math.max(maxU,u);minV=Math.min(minV,v);maxV=Math.max(maxV,v);}
-  centreU=minU/2+maxU/2;centreV=minV/2+maxV/2;
+  const centre=importedUVIslandCentre(previous.uvCorners,selectedFaces);
+  if(!centre)return {ok:false,reason:'Select the UV island again'};
+  [centreU,centreV]=centre;
  }
  const selected=selectedFaces&&new Set(selectedFaces);
  const uvCorners=previous.uvCorners.map((face,fi)=>selected&&!selected.has(fi)?face:face.map(([u,v])=>{
