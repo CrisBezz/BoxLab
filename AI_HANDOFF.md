@@ -2,7 +2,7 @@
 
 ## Current state — 2026-10-15
 CrisBezz/BoxLab main build0.36.18.868; live https://crisbezz.github.io/BoxLab/.
-Previous release d7b43cac verified/user PASS; .868 publication proof below. User explicitly approves ongoing pushing/publishing.
+Release984c3326 CI/Pages/live verified; previous867 user PASS protected. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
@@ -1081,3 +1081,13 @@ unchanged inspector863/export-panel865/native-core865 and protected Multi1.0/fro
 Beta7 version byte-match repository.865 native UV roundtrip user PASS protected;866
 flip/history/project/native-export device gate pending. All four handoff files current;
 no new device PASS inferred and no native schema/exporter/geometry changes.
+
+## .868 publication verified — 2026-10-15
+
+Release984c33265abc3118eb978121dac91737c8ac272c; tested tree
+eebfa006c906772b0cfb8773e1dd9fe5541fbea1 exactly matches fetched main.
+Node22 CI38696478096/job116294097328 SUCCESS2337PASS/0FAIL/0skip;
+Pages38696477599 SUCCESS. Live shell/version/MeshHealth/workspace/navigation/
+inspector/edit868, unchanged native865, protected Multi1.0 and frozenBeta7 marker
+byte-match repository. User867 PASS protected;868 island selection device gate
+pending. No selected-island transforms or new UV/history/resource/export schema.
