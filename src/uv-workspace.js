@@ -1,4 +1,4 @@
-import {drawImportedUV,pickImportedUVIsland} from './imported-uv-inspection.js?v=0.36.18.868';
+import {drawImportedUV,pickImportedUVIsland} from './imported-uv-inspection.js?v=0.36.18.869';
 import {createUVNavigation} from './uv-navigation.js?v=0.36.18.868';
 // Presentation/navigation only. Existing Mesh Health owns context, edit actions,
 // native history and session completion. Original canvas/controls are moved here.
@@ -24,7 +24,7 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory}){
  area.appendChild(canvas);footer.append(controls,note);
  let active=false,report=null,observer=null,ratio=1,penId=null,selectedIsland=null;
  const selection=root.querySelector('.uv-selection'),clear=root.querySelector('[data-uv="clear"]');
- function showSelection(){selection.textContent=selectedIsland===null?'No island selected · Rotate / Flip affect whole layout':`Island ${selectedIsland+1} of ${report.islandCount} selected · Rotate / Flip affect whole layout`;clear.disabled=selectedIsland===null;}
+ function showSelection(){selection.textContent=selectedIsland===null?'No island selected · Rotate / Flip affect this island':`Island ${selectedIsland+1} of ${report.islandCount} selected · Rotate / Flip affect this island`;clear.disabled=selectedIsland===null;}
  function select(value){selectedIsland=value;showSelection();draw();}
  clear.addEventListener('click',()=>select(null));const captures=new Set();
  const size=()=>{const r=canvas.getBoundingClientRect();return {width:Math.max(1,r.width),height:Math.max(1,r.height)};};
@@ -44,6 +44,10 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory}){
  for(const type of ['touchstart','touchmove','touchend','touchcancel'])root.addEventListener(type,e=>e.stopPropagation(),{passive:true});
  for(const [action,fn] of Object.entries({undo:()=>history('undo'),redo:()=>history('redo'),fit:()=>nav.fit(),in:()=>nav.zoomAt({x:size().width/2,y:size().height/2},1.25),out:()=>nav.zoomAt({x:size().width/2,y:size().height/2},.8),done:()=>onDone()}))root.querySelector(`[data-uv="${action}"]`).addEventListener('click',fn);
  function key(e){if(!active)return;if(['Delete','Backspace'].includes(e.key)){e.preventDefault();e.stopImmediatePropagation();}else if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();onDone();}else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.stopImmediatePropagation();history(e.shiftKey?'redo':'undo');}}
- const api={get active(){return active;},setReport(value,text){report=value;selectedIsland=null;showSelection();summary.textContent=text;draw();},get selectedIsland(){return selectedIsland;},open(){if(report?.state!=='ready')return false;active=true;root.hidden=false;nav.fit();resize();if(typeof ResizeObserver!=='undefined'){observer??=new ResizeObserver(resize);observer.observe(area);}window.addEventListener('resize',resize);window.addEventListener('keydown',key,true);return true;},close(){active=false;selectedIsland=null;showSelection();root.hidden=true;cancel();observer?.disconnect();window.removeEventListener('resize',resize);window.removeEventListener('keydown',key,true);},get view(){return {...nav.view};}};
+ const api={get active(){return active;},setReport(value,text){report=value;selectedIsland=null;showSelection();summary.textContent=text;draw();},get selectedIsland(){return selectedIsland;},retainSelection(faces){
+  if(!Array.isArray(faces)||!faces.length||report?.state!=='ready'||!report.faceIslands)return;
+  const id=report.faceIslands[faces[0]],current=report.faceIslands.flatMap((v,fi)=>v===id?[fi]:[]);
+  if(Number.isInteger(id)&&current.length===faces.length&&current.every((fi,i)=>fi===faces[i]))select(id);
+ },open(){if(report?.state!=='ready')return false;active=true;root.hidden=false;nav.fit();resize();if(typeof ResizeObserver!=='undefined'){observer??=new ResizeObserver(resize);observer.observe(area);}window.addEventListener('resize',resize);window.addEventListener('keydown',key,true);return true;},close(){active=false;selectedIsland=null;showSelection();root.hidden=true;cancel();observer?.disconnect();window.removeEventListener('resize',resize);window.removeEventListener('keydown',key,true);},get view(){return {...nav.view};}};
  globalThis.__boxlabUVWorkspace=api;return api;
 }

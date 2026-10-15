@@ -6414,7 +6414,7 @@ Live shell/version/workspace867/navigation867 byte-match repository before868 ch
 User Works well PASS accepts large workspace, navigation and session exit; protect
 same canvas/controls/history and clean Back to3D. Native865 and866 protections retained.
 
-## .868 UV island selection — device gate pending
+## .868 UV island selection — user PASS2026-10-15
 
 - [x] Full Node24:2337PASS/0FAIL/0skip; five native selection regressions.
 - [x] Original island IDs and shared renderer/picker mapping after zoom/pan; UV data unchanged.
@@ -6422,10 +6422,10 @@ same canvas/controls/history and clean Back to3D. Native865 and866 protections r
 - [x] Single pen/finger/mouse short tap selects; drag/long/cancel/multitouch never picks.
 - [x] Gold highlight, Clear/empty tap, report refresh/history/close resets; Fit retains selection.
 - [x] Native edit/history/export owners unchanged; Rotate/Flip clearly affect whole layout.
-- [ ] iPad tap separate islands: selected island highlights and number updates.
-- [ ] Pan/pinch, then tap an island: highlight follows the visible island; Fit still works.
-- [ ] Clear Selection and empty tap clear; close/reopen starts with no selection.
-- [ ] Two-/three-finger Undo/Redo and Back to3D retain accepted867 behaviour.
+- [x] User868 PASS iPad tap separate islands: selected island highlights and number updates.
+- [x] User868 PASS Pan/pinch, then tap an island: highlight follows the visible island; Fit still works.
+- [x] User868 PASS Clear Selection and empty tap clear; close/reopen starts with no selection.
+- [x] User868 PASS Two-/three-finger Undo/Redo and Back to3D retain accepted867 behaviour.
 
 Only previewed faces are pickable; stacked islands choose topmost. Selected-island
 transforms, unwrap and painting are future work. Selection creates no Undo checkpoint.
@@ -6439,3 +6439,19 @@ Pages38696477599 SUCCESS. Live shell/version/MeshHealth/workspace/navigation/
 inspector/edit868, unchanged native865, protected Multi1.0 and frozenBeta7 marker
 byte-match repository. User867 PASS protected;868 island selection device gate
 pending. No selected-island transforms or new UV/history/resource/export schema.
+
+
+## .869 selected-island edits — device gate pending
+
+- [x] User868 PASS protected: selection/highlight/clear/navigation/history/session exit.
+- [x] Full Node24:2341PASS/0FAIL/0skip; four native selected-edit regressions.
+- [x] Original inspector full-face connectivity (including beyond preview); selected pivot at island bounds centre.
+- [x] Existing UV edit transaction/native history/resource copy-on-write; other islands/peers/geometry unchanged.
+- [x] Native project/NOM UV bytes/GLB export, no stale tangents; stale scope/topology/index/context/overflow refuse.
+- [x] Selection survives only matching full membership after edit; history/close/refresh clears; original whole-layout maths retained.
+- [ ] Select island → Rotate90° / Flip U / Flip V: only that island changes, about its own centre.
+- [ ] Repeat same flip twice; selected highlight remains; Undo/Redo restores one operation at a time.
+- [ ] Clear Selection → buttons affect whole layout; pan/pinch/Fit and Back to3D retain868 behavior.
+- [ ] Save/Open .boxlab and File NOMAD Base preserve edited layout/seams in Nomad.
+
+No island Move/Scale/unwrap/painting yet. Device869 PASS remains pending.

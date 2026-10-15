@@ -3,11 +3,11 @@ import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
 import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
-import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.868';
-import {rotateImportedUV,flipImportedUV} from './imported-uv-edit.js?v=0.36.18.868';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.868';
+import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.869';
+import {rotateImportedUV,flipImportedUV} from './imported-uv-edit.js?v=0.36.18.869';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.869';
 
-const VERSION='0.36.18.868';
+const VERSION='0.36.18.869';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -98,7 +98,7 @@ function renderUVReport(object,mesh){
  uvOpen.disabled=report.state!=='ready';
  uvRotate.disabled=report.state!=='ready'||report.missingFaces>0||report.mappedFaces!==report.faces||!object||object.locked||object.kind==='reference'||!!(object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile)||object.glbPassthrough?.version!==1||object.glbPassthrough?.source!=='glb'||!globalThis.__boxlabObjectHistory?.capture||!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
  uvFlipU.disabled=uvFlipV.disabled=uvRotate.disabled;
- uvNote.textContent=report.state==='ready'?`Whole layout · base UVs · island colours · orange = seams · grey square = tile 0–1${report.nonManifoldEdges?' · ambiguous edges do not join islands':''}${report.previewFaces.length<report.mappedFaces?` · preview shows ${report.previewFaces.length} of ${report.mappedFaces} mapped faces`:''}`:report.state==='stale'?'Stored data is retained; this preview is hidden.':'Read-only inspection of imported UVs.';
+ uvNote.textContent=report.state==='ready'?`Base UVs · island colours · orange = seams · grey square = tile 0–1${report.nonManifoldEdges?' · ambiguous edges do not join islands':''}${report.previewFaces.length<report.mappedFaces?` · preview shows ${report.previewFaces.length} of ${report.mappedFaces} mapped faces`:''}`:report.state==='stale'?'Stored data is retained; this preview is hidden.':'Read-only inspection of imported UVs.';
  uvWorkspace?.setReport(report,`${object?.name||'UVs'} · ${uvSummary.textContent}`);
  return report;
 }
@@ -116,8 +116,10 @@ uvDetails.addEventListener('toggle',()=>{if(active&&uvDetails.open)renderUVRepor
 function rotateUVs(){
  const object=activeObject(),mesh=liveMesh();
  if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;
- const result=rotateImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory);
+ const scope=typeof uvWorkspace!=='undefined'&&uvWorkspace?.active&&Number.isInteger(uvWorkspace.selectedIsland)?{island:uvWorkspace.selectedIsland,payload:uvPayload}:undefined;
+ const result=rotateImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,scope);
  renderReport();
+ if(result.selectedFaces)uvWorkspace?.retainSelection(result.selectedFaces);
  setStatus(result.ok?result.changed?'UVs rotated 90° • Undo to restore':'UV rotation • no change needed':`UV rotation • ${result.reason}`);
  return result.ok;
 }
@@ -125,8 +127,10 @@ uvRotate.addEventListener('click',rotateUVs);
 function flipUVs(axis){
  const object=activeObject(),mesh=liveMesh();
  if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;
- const result=flipImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,axis);
+ const scope=typeof uvWorkspace!=='undefined'&&uvWorkspace?.active&&Number.isInteger(uvWorkspace.selectedIsland)?{island:uvWorkspace.selectedIsland,payload:uvPayload}:undefined;
+ const result=flipImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,axis,scope);
  renderReport();
+ if(result.selectedFaces)uvWorkspace?.retainSelection(result.selectedFaces);
  setStatus(result.ok?result.changed?`UVs flipped ${axis.toUpperCase()} • Undo to restore`:'UV flip • no change needed':`UV flip • ${result.reason}`);
  return result.ok;
 }

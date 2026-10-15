@@ -1,12 +1,47 @@
-# BoxLab AI Handoff — .868 UV island selection
+# BoxLab AI Handoff — .869 selected-island transforms
 
 ## Current state — 2026-10-15
-CrisBezz/BoxLab main build0.36.18.868; live https://crisbezz.github.io/BoxLab/.
-Release984c3326 CI/Pages/live verified; previous867 user PASS protected. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.869; live https://crisbezz.github.io/BoxLab/.
+Previous release984c3326 verified;868 user PASS protected;869 proof below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .869 — selected-island Rotate / Flip, 2026-10-15
+
+User868 PASS accepts tap selection/highlight, pan/pinch/Fit/clear and native history/
+Back to3D. Audit main04ffe1a4/live868: existing imported-uv-edit transaction owns all
+Rotate/Flip edits; inspector owns connectivity; no selected-island transform exists.
+Extend SAME edit owner with optional island+expected-payload scope. Recompute original
+inspector connectivity and validate current topology/payload/index; no stale island ID
+silently applies to a replacement resource. Inspector now exposes faceIslands for ALL
+mapped faces, retaining preview cap; whole selected island transforms beyond preview.
+Selected Rotate90°/FlipU/V pivot around that island's UV bounds centre. Unselected faces
+and resources are shared read-only; only touched UV arrays/payload replaced, prior tangent
+basis retired. Existing no-op suppression/native checkpoint/guards remain. Without a
+selection, original tile-centred WHOLE layout maths and exact APIs remain unchanged.
+Original MeshHealth buttons pass workspace selection scope, refresh same report and
+retain highlight only if full island membership still matches; merging/splitting clears.
+Selection label explicitly says this island vs whole layout. UndoRedo/close/report
+refresh still clear ephemeral selection; no new history/project schema or kernel.
+Four native regressions cover continuous full island beyond preview, exact transforms/
+twice flip, untouched peer/resources/geometry/native UndoRedo, codec + actual NOM UV
+bytes and GLB indexed attributes, stale/invalid/locked/overflow refusal and real UI scope.
+Existing868 test updated only selected scope text + membership retention/merge refusal;
+all prior whole-layout/export/navigation contracts retained. Full Node24:2341PASS/0FAIL/
+0skip. MeshHealth/edit/inspector/workspace869; nav868/manager+delete867/native865 unchanged.
+Shell/recovery869; frozen betas/protected Multi1.0/modelling kernels unchanged.
+Device869 selected edit/history/Nomad/project gate pending;868 PASS protected.
+Next: after feedback, selected-island numeric Move/Scale through this same transaction;
+no drag transform gesture takeover, unwrap, new-mesh UVs or painting in869.
+
+## Protected .868 — user PASS2026-10-15
+
+Tap selection/gold highlight, clear/empty tap, pan/pinch/Fit and native UndoRedo/Back
+to3D accepted. Keep original gesture owner and shared renderer/picker projection.
+869 deliberately extends Rotate/Flip from whole layout to current selected island;
+no-selection whole-layout behavior remains protected. Stacked selection stays topmost.
 
 ## .868 — UV island selection, 2026-10-15
 

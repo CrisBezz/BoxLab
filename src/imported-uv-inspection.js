@@ -56,7 +56,8 @@ function inspectConnectivity(faces,uvs,report){
  const islands=new Map();
  for(let fi=0;fi<faces.length;fi++)if(parent[fi]>=0){const r=root(fi);if(!islands.has(r))islands.set(r,islands.size);}
  report.islandCount=islands.size;
- report.previewIslands=report.previewFaceIndices.map(fi=>islands.get(root(fi)));
+ report.faceIslands=Array.from(parent,(_,fi)=>parent[fi]>=0?islands.get(root(fi)):null);
+ report.previewIslands=report.previewFaceIndices.map(fi=>report.faceIslands[fi]);
 }
 export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null}={}){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;

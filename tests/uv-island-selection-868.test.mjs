@@ -48,8 +48,8 @@ test('868 actual workspace selects/clears by tap, keeps navigation and resets se
  const ctx=Object.fromEntries(['clearRect','fillRect','strokeRect','beginPath','moveTo','lineTo','closePath','stroke','fill'].map(k=>[k,()=>{}]));canvas.getContext=()=>ctx;
  try{const api=createUVWorkspace({canvas,note:node(),controls:node(),onDone(){},onHistory:x=>history.push(x)}),r=fixture().report;api.setReport(r,'two islands');api.open();
  const tap=(x,y)=>{canvas.fire('pointerdown',{pointerId:1,pointerType:'pen',clientX:x,clientY:y});canvas.fire('pointerup',{pointerId:1});};
- tap(280,520);assert.equal(api.selectedIsland,0);assert.match(root.querySelector('.uv-selection').textContent,/Island 1 of 2 selected/);assert.match(root.querySelector('.uv-selection').textContent,/whole layout/);assert.deepEqual(history,[]);
+ tap(280,520);assert.equal(api.selectedIsland,0);assert.match(root.querySelector('.uv-selection').textContent,/Island 1 of 2 selected/);assert.match(root.querySelector('.uv-selection').textContent,/this island/);assert.deepEqual(history,[]);
  root.querySelector('[data-uv="fit"]').fire('click');assert.equal(api.selectedIsland,0);tap(610,190);assert.equal(api.selectedIsland,1);root.querySelector('[data-uv="clear"]').fire('click');assert.equal(api.selectedIsland,null);
- tap(280,520);api.setReport(r,'refresh');assert.equal(api.selectedIsland,null);tap(280,520);api.close();assert.equal(api.selectedIsland,null);api.open();assert.equal(api.selectedIsland,null);
+ tap(280,520);api.setReport(r,'refresh');assert.equal(api.selectedIsland,null);api.retainSelection([0,1]);assert.equal(api.selectedIsland,0);api.setReport(r,'refresh');api.retainSelection([0]);assert.equal(api.selectedIsland,null);tap(280,520);api.close();assert.equal(api.selectedIsland,null);api.open();assert.equal(api.selectedIsland,null);
  }finally{keys.forEach((k,i)=>old[i]?Object.defineProperty(globalThis,k,old[i]):delete globalThis[k]);}
 });

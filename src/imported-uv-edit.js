@@ -1,19 +1,31 @@
-import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.868';
+import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.869';
 // UV transforms keep the existing imported face-corner channel
 // and native scene history. All untouched resource buffers remain read-only.
-export function rotateImportedUV(object,mesh,topologySignature,history){
- return editImportedUV(object,mesh,topologySignature,history,'rotate');
+export function rotateImportedUV(object,mesh,topologySignature,history,scope){
+ return editImportedUV(object,mesh,topologySignature,history,'rotate',scope);
 }
-export function flipImportedUV(object,mesh,topologySignature,history,axis){
+export function flipImportedUV(object,mesh,topologySignature,history,axis,scope){
  if(axis!=='u'&&axis!=='v')return {ok:false,reason:'Choose UV axis U or V'};
- return editImportedUV(object,mesh,topologySignature,history,axis);
+ return editImportedUV(object,mesh,topologySignature,history,axis,scope);
 }
-function editImportedUV(object,mesh,topologySignature,history,operation){
+function editImportedUV(object,mesh,topologySignature,history,operation,scope){
  if(!object||object.locked||object.kind==='reference'||object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile||object.glbPassthrough?.version!==1||object.glbPassthrough?.source!=='glb')return {ok:false,reason:'Select an independent imported mesh'};
  const report=inspectImportedUV(mesh,object.glbPassthrough,topologySignature);
  if(report.state!=='ready'||report.missingFaces||report.mappedFaces!==report.faces)return {ok:false,reason:'Complete matching imported UVs are required'};
- const previous=object.glbPassthrough,uvCorners=previous.uvCorners.map(face=>face.map(([u,v])=>operation==='u'?[1-u,v]:operation==='v'?[u,1-v]:[1-v,u]));
- if(uvCorners.every((face,i)=>face.every((uv,j)=>uv.every((value,k)=>value===previous.uvCorners[i][j][k]))))return {ok:true,changed:false};
+ const previous=object.glbPassthrough;
+ let selectedFaces=null,centreU=.5,centreV=.5;
+ if(scope!==undefined){
+  if(scope?.payload!==previous||!Number.isInteger(scope.island)||scope.island<0||scope.island>=report.islandCount)return {ok:false,reason:'Select the UV island again'};
+  selectedFaces=report.faceIslands.flatMap((id,fi)=>id===scope.island?[fi]:[]);
+  if(!selectedFaces.length)return {ok:false,reason:'Select the UV island again'};
+  let minU=Infinity,minV=Infinity,maxU=-Infinity,maxV=-Infinity;
+  for(const fi of selectedFaces)for(const [u,v] of previous.uvCorners[fi]){minU=Math.min(minU,u);maxU=Math.max(maxU,u);minV=Math.min(minV,v);maxV=Math.max(maxV,v);}
+  centreU=minU/2+maxU/2;centreV=minV/2+maxV/2;
+ }
+ const selected=selectedFaces&&new Set(selectedFaces);
+ const uvCorners=previous.uvCorners.map((face,fi)=>selected&&!selected.has(fi)?face:face.map(([u,v])=>!selected?(operation==='u'?[1-u,v]:operation==='v'?[u,1-v]:[1-v,u]):operation==='u'?[centreU+(centreU-u),v]:operation==='v'?[u,centreV+(centreV-v)]:[centreU+(centreV-v),centreV+(u-centreU)]));
+ if(uvCorners.some(face=>face.some(uv=>!uv.every(Number.isFinite))))return {ok:false,reason:'UV transform exceeds the coordinate range'};
+ if(uvCorners.every((face,i)=>face.every((uv,j)=>uv.every((value,k)=>value===previous.uvCorners[i][j][k]))))return selectedFaces?{ok:true,changed:false,selectedFaces}:{ok:true,changed:false};
  if(!history?.capture||!history?.checkpointSnapshot)return {ok:false,reason:'Scene history is not ready'};
  const next={...previous,uvCorners};
  // Imported tangents describe the old UV basis; never export them as current.
@@ -21,5 +33,5 @@ function editImportedUV(object,mesh,topologySignature,history,operation){
  const before=history.capture();
  if(!before||!history.checkpointSnapshot(before,mesh))return {ok:false,reason:'Could not record the UV edit'};
  object.glbPassthrough=next;
- return {ok:true,changed:true};
+ return selectedFaces?{ok:true,changed:true,selectedFaces}:{ok:true,changed:true};
 }
