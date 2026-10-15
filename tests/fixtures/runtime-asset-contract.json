@@ -210,10 +210,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.741",
+      "url": "./src/export-as-panel.js?v=0.36.18.865",
       "target": "src/export-as-panel.js",
-      "sha256": "ff8d7df3b418d265dee74d35fa2d6b373d23aab6d06c2025ceb0f3a9d687ae64",
-      "sourceVersion": "0.36.18.736"
+      "sha256": "b3df24507ac1f347da3fe306685136dcc6e3e8ebc3abd6e56045379723c1e01f",
+      "sourceVersion": "0.36.18.865"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.864",
+      "url": "./src/release-bootstrap.js?v=0.36.18.865",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.864",
+      "url": "./src/release-version.js?v=0.36.18.865",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-export-core.js?v=0.36.18.741",
+      "url": "./nomad-export-core.js?v=0.36.18.865",
       "target": "src/nomad-export-core.js",
-      "sha256": "754ced2666adf224a73b4420e6806316a7a83a971b9d36bc0b566159630c5b9c"
+      "sha256": "438c68e3d9a095f85bfa4652ce4d14546a9bac365395f4d3873994c1dc295d3b"
     },
     {
       "owner": "src/export-as-panel.js",

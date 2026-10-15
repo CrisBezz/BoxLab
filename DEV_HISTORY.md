@@ -9084,3 +9084,21 @@ unchanged inspector863 and protected Multi1.0/frozenBeta7 version byte-match rep
 Initial reads preceded deployment; final complete graph matches864.863 user PASS
 protected;864 iPad rotation/history/project/BaseGLB→Nomad gate pending. Separate860/859
 gates not inferred; all four handoff files current. No geometry/kernel/schema changes.
+
+
+## .864 native NOM roundtrip FAIL / .865 native UV repair — 2026-10-15
+
+User FAIL: UVs lost returning to Nomad. Clarification confirms File→NOMAD, not Base GLB.
+Audit main6023e71c/live864: native writer741 always writes zero UVs/faces_uv geometry
+indices, whereas GLB carries corners. Fix existing native writer, no UV rotation change.
+Uses original exporter topologySignature + stored base UV corners; separate UV pool
+keys geometry ID+UV pair to preserve seams/shared geometry and continuous UV indices.
+Original ngon/triangle conversion preserves UV corners/count_uv/field bounds. Plain
+no-UV path unchanged. Known incompatible/stale/partial/nonfinite/f32-overflow channels
+refuse, including unsupported evaluated SubD/Mirror; status counts UV-bearing objects.
+Four native tests read binary corners/seam indices, rotated/project actual File NOMAD
+bytes, triangulation/shared/mixed offsets and invalid guards. Full2322PASS/0FAIL/0skip;
+original9native tests and GLB/UV/history coverage retained. Donor schema already carries
+independent UV/vertex counts; template untouched. Core/panel/shell+recovery865 reviewed,
+other protected/frozen owners unchanged. Native Nomad device gate pending;864 not PASS.
+No materials/textures/layers extension; publishing proof follows after verification.

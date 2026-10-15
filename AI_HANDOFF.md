@@ -1,14 +1,41 @@
-# BoxLab AI Handoff — .864 imported UV rotation
+# BoxLab AI Handoff — .865 native NOM UV repair
 
 ## Current state — 2026-10-15
-CrisBezz/BoxLab main build0.36.18.864; live https://crisbezz.github.io/BoxLab/.
-Releasec84b5c1b; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.865; live https://crisbezz.github.io/BoxLab/.
+Release865 locally validated; publication verification pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .864 scope — Rotate imported UVs90°, device gate pending
+## .865 scope — native File NOMAD UV export repair, device gate pending
+User864 FAIL: UVs lost on return to Nomad; user explicitly identifies File→NOMAD,
+not Base GLB. Do not mark864 accepted. Audit main6023e71c/live864 and both exporters:
+GLB741 writes face-corner UVs; native nomad-export-core741 allocates zero-filled uvs
+and writes faces_uv=geometry indices unconditionally. This long-standing native-route
+omission was NOT covered by864's Base GLB tests. Do not attribute to UV rotation maths.
+Existing native writer now consumes stored matching base glbPassthrough.uvCorners,
+using the EXISTING exporter topologySignature supplied through public __boxlabExportAs
+(or explicit core option). No second signature owner. Build separate UV index pool by
+geometry vertex ID+exact UV pair; continuous corners share UV indices, seams can use
+multiple UV indices per geometry vertex. count_uv/uvs/faces_uv reflect this pool.
+Existing polygon triangulation retains source-corner UV correspondence; triangles use
+same repeated fourth corner. Plain no-UV meshes keep legacy zero-UV layout unchanged.
+Known stored UVs with stale topology/incomplete/nonfinite/f32-overflow data or evaluated
+SubD/Mirror mismatch refuse with clear error rather than silently dropping UVs. Existing
+resolver, geometry/normals/groups/header/template/binary alignment/scene/download flow
+remain authoritative and unchanged. Status reports UV-bearing object count.
+No native texture/material/layer preservation expansion; this repair writes UVs only.
+Four native tests read actual NOM binary UV values/indices/bounds/seams, rotate→project→
+actual File NOMAD downloaded bytes, ngons/triangles/shared UV indices/mixed offsets and
+invalid/evaluated guards. Donor itself confirms independent count_uv2796 vs2642 vertices.
+Full local Node24:2322PASS/0FAIL/0skip, all prior native9 and GLB/UV/history tests retained.
+Core865→export panel865 (internal stamp865)→shell/recovery865 graph reviewed; other
+owners/protected/frozen bytes retained. Postpublication native Nomad device gate pending.
+Next: use Base geometry, known UV GLB→Rotate→File NOMAD→open Nomad UV view; verify layout
+and seams, then Save/Open and repeat.864 broad PASS remains unconfirmed;863 protected.
+
+## .864 scope — Rotate imported UVs90°, native NOM roundtrip FAIL (repaired865)
 User PASS /nextbuild2026-10-15 protects863 island colours/count, orange seams,
 coordinate-vs-topology/Undo and project inspection. Audit mainca84d25e/live863 plus
 import797/export741/scene-history/codec858 finds existing imported UV corner channel,
@@ -605,13 +632,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-864 device gate: valid UV-bearing imported GLB→Object Mesh Health→Imported UVs→Rotate
-UVs90°. Check layout rotates, seams/island counts stay sane. Close→Undo/Redo→reopen;
-Save/Open and Base GLB export to Nomad preserve edited map. Plain/stale/partial/procedural
-objects should not enable UV rotation.863/862/861 user PASS protected,860/859 gates separate.
-Next authoring stages may add UV transforms/projection after feedback and owner audit;
-new BoxLab UV projection/unwrap/painting are not implemented by this imported-only build.
-Copy touched UV arrays and replace shared resource payloads; never mutate in place.
+865 native NOM device gate takes priority. Known UV GLB→rotate UVs→File NOMAD using
+Base geometry→open in Nomad and inspect UV layout/seams. Save/Open .boxlab then repeat.
+Plain NOM geometry/groups and original Base GLB export remain regression checks.
+864 user FAIL was specifically native File NOMAD's old zero-UV writer; broad864 PASS
+not inferred.863/862/861 PASS protected; separate860/859 gates remain pending. Stop new
+UV feature expansion until native UV roundtrip passes. Materials/textures/layers in
+native NOM are outside this repair; do not promise those channels from UV byte tests.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

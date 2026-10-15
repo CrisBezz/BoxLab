@@ -6321,3 +6321,20 @@ unchanged inspector863 and protected Multi1.0/frozenBeta7 version byte-match rep
 Initial reads preceded deployment; final complete graph matches864.863 user PASS
 protected;864 iPad rotation/history/project/BaseGLB→Nomad gate pending. Separate860/859
 gates not inferred; all four handoff files current. No geometry/kernel/schema changes.
+
+
+## .864 FAIL native File NOMAD / .865 UV repair — 2026-10-15
+
+User confirms failing route File→NOMAD. Do not infer a Base GLB or UV-rotation failure;
+old native writer always stored zeros. Four new native tests check actual NOM UV binary
+coordinates/independent face UV indices at seams, rotated→project→actual NOMAD download,
+triangle/ngon correspondence/shared UV indices/mixed object offsets, invalid/stale/
+partial/evaluated refusal. Full2322PASS/0FAIL/0skip; original native/GLB tests retained.
+Manual865 (native Nomad compatibility pending):
+- Known UV-bearing GLB→rotate UVs90°→File NOMAD with Base geometry→open in Nomad;
+  inspect UV layout and seams in Nomad's UV view (not material appearance).
+- Save/Open .boxlab and repeat File NOMAD: rotated layout preserved.
+- Plain cube File NOMAD: geometry/groups intact; original Base GLB UV export sanity.
+If known stored UVs cannot match evaluated geometry, NOMAD must give an explicit error
+rather than a silent zero-UV file. Native materials/textures/layers not extended here.
+864 broad acceptance pending;863/862/861 PASS and protected/frozen baseline retained.

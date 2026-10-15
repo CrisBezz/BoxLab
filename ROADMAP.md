@@ -4,7 +4,17 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .864 imported UV rotation, 2026-10-15
+## Current direction — .865 native File NOMAD UV repair, 2026-10-15
+
+864 FAIL is confirmed on File→NOMAD, separate native path still writing zeros. Existing
+native writer now writes stored valid base UVs with independent UV indices at seams,
+preserves polygon/triangulation corner mapping and counts UV objects. Stale/invalid/
+evaluated unsupported UVs refuse clearly; no-UV legacy geometry unchanged.
+Full2322PASS/0FAIL; four actual native byte/UI/rotation/project/seam/guard regressions.
+Native Nomad device UV gate pending before more UV feature work.863 PASS remains
+protected;864 broad acceptance not inferred. No native texture/material/layer extension.
+
+## Previous direction — .864 imported UV rotation, 2026-10-15
 
 863 PASS protected. First imported-channel authoring operation: Rotate UVs90° in
 existing MeshHealth, full valid independent imported layout only. Copy UV arrays and
