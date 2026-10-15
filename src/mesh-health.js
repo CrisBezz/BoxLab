@@ -5,7 +5,7 @@ import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.869';
 import {rotateImportedUV,flipImportedUV} from './imported-uv-edit.js?v=0.36.18.869';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.869';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.869.1';
 
 const VERSION='0.36.18.869';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');

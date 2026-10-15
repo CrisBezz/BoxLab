@@ -9237,3 +9237,10 @@ Shell/recovery869; frozen betas/protected Multi1.0/modelling kernels unchanged.
 Device869 selected edit/history/Nomad/project gate pending;868 PASS protected.
 Next: after feedback, selected-island numeric Move/Scale through this same transaction;
 no drag transform gesture takeover, unwrap, new-mesh UVs or painting in869.
+
+### .869 final scope-label correction
+
+Final source review caught a text replacement also changing the no-selection label;
+whole-layout maths stayed correct. Restore explicit whole-layout label when cleared,
+add actual workspace assertions at open/clear and refresh only MeshHealth/workspace
+cache keys to869.1 (shell/version869; internal MeshHealth stamp869). No new user PASS.

@@ -1274,3 +1274,10 @@ Pages38696477599 SUCCESS. Live shell/version/MeshHealth/workspace/navigation/
 inspector/edit868, unchanged native865, protected Multi1.0 and frozenBeta7 marker
 byte-match repository. User867 PASS protected;868 island selection device gate
 pending. No selected-island transforms or new UV/history/resource/export schema.
+
+### .869 final scope-label correction
+
+Final source review caught a text replacement also changing the no-selection label;
+whole-layout maths stayed correct. Restore explicit whole-layout label when cleared,
+add actual workspace assertions at open/clear and refresh only MeshHealth/workspace
+cache keys to869.1 (shell/version869; internal MeshHealth stamp869). No new user PASS.

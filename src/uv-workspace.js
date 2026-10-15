@@ -24,7 +24,7 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory}){
  area.appendChild(canvas);footer.append(controls,note);
  let active=false,report=null,observer=null,ratio=1,penId=null,selectedIsland=null;
  const selection=root.querySelector('.uv-selection'),clear=root.querySelector('[data-uv="clear"]');
- function showSelection(){selection.textContent=selectedIsland===null?'No island selected · Rotate / Flip affect this island':`Island ${selectedIsland+1} of ${report.islandCount} selected · Rotate / Flip affect this island`;clear.disabled=selectedIsland===null;}
+ function showSelection(){selection.textContent=selectedIsland===null?'No island selected · Rotate / Flip affect whole layout':`Island ${selectedIsland+1} of ${report.islandCount} selected · Rotate / Flip affect this island`;clear.disabled=selectedIsland===null;}
  function select(value){selectedIsland=value;showSelection();draw();}
  clear.addEventListener('click',()=>select(null));const captures=new Set();
  const size=()=>{const r=canvas.getBoundingClientRect();return {width:Math.max(1,r.width),height:Math.max(1,r.height)};};
