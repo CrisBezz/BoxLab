@@ -1,14 +1,44 @@
-# BoxLab AI Handoff — .865 native NOM UV repair
+# BoxLab AI Handoff — .866 imported UV flips
 
 ## Current state — 2026-10-15
-CrisBezz/BoxLab main build0.36.18.865; live https://crisbezz.github.io/BoxLab/.
-Releaseb080c811; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.866; live https://crisbezz.github.io/BoxLab/.
+Release866 locally validated; publication verification pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .865 scope — native File NOMAD UV export repair, device gate pending
+## .866 scope — imported UV Flip U / Flip V, device gate pending
+User Perfect PASS /nextbuild2026-10-15 accepts865 native File NOMAD UV layout/seams,
+rotated UV export and .boxlab→native export. Audit main9ad41dba/live865/source pins:
+no UV flip owner/UI exists. Extend existing imported-uv-edit, not another transaction
+or UV channel. Rotate retains original API and maths; all transforms delegate one
+private editImportedUV transaction with existing guards/copy-on-write/checkpoint.
+New flipImportedUV axisU:[u,v]→[1-u,v], axisV:[u,v]→[u,1-v] around tile centre; rejects
+unknown axes. Same complete independent imported-only guard, no-op history suppression,
+new UV arrays/replacement payload and old tangent-basis retirement. Geometry, untouched
+metadata/images, shared peer payload and scene history remain with original owners.
+MeshHealth keeps Rotate90° plus FlipU/FlipV in one compact row, same enable/disable
+state. One Undo per changed click; context guard and inspector refresh use same owners.
+All UVs transform together; no per-island selection/unwrap/projection/painting claim.
+Four new native tests cover exact U/V transforms/two-flip restoration, unchanged geometry/
+shared resource/peer identities, actual scene UndoRedo, project roundtrip, real NOM
+UV/seam bytes and Three GLB attributes/tangent exclusion, guards/no-ops and actual UI
+actions. Full local Node24:2326PASS/0FAIL/0skip; all previous rotate/NOM tests unchanged.
+MeshHealth866→edit866→unchanged inspector863; shell/recovery866. Export panel/native
+core865, protected kernels and frozen betas unchanged. Reviewed cache graph only these
+changed bytes/pins. Device866 flip/history/native-export/project gate pending.
+Next: iPad flip U/V/twice/UndoRedo→File NOMAD with Base geometry, then project reopen;
+continue small UV authoring stage after feedback and authoritative-owner audit.
+
+## Protected .865 — user PASS2026-10-15
+User accepts native File NOMAD stored UV layout/seams, rotated layout and Save/Open
+repeat. Protect independent UV index pool/count_uv, polygon corner mapping, unchanged
+geometry/groups/header/donor and explicit stale/evaluated UV refusal. Original864 FAIL
+is resolved for this native-device case; broader unrelated gates not inferred.863/862/
+861 protections retained;860 Duplicate and859 resource/Nomad gates remain separate.
+
+## .865 scope — native File NOMAD UV export repair, accepted2026-10-15
 User864 FAIL: UVs lost on return to Nomad; user explicitly identifies File→NOMAD,
 not Base GLB. Do not mark864 accepted. Audit main6023e71c/live864 and both exporters:
 GLB741 writes face-corner UVs; native nomad-export-core741 allocates zero-filled uvs
@@ -31,9 +61,9 @@ actual File NOMAD downloaded bytes, ngons/triangles/shared UV indices/mixed offs
 invalid/evaluated guards. Donor itself confirms independent count_uv2796 vs2642 vertices.
 Full local Node24:2322PASS/0FAIL/0skip, all prior native9 and GLB/UV/history tests retained.
 Core865→export panel865 (internal stamp865)→shell/recovery865 graph reviewed; other
-owners/protected/frozen bytes retained. Postpublication native Nomad device gate pending.
-Next: use Base geometry, known UV GLB→Rotate→File NOMAD→open Nomad UV view; verify layout
-and seams, then Save/Open and repeat.864 broad PASS remains unconfirmed;863 protected.
+owners/protected/frozen bytes retained. User865 PASS accepts the native Nomad UV gate.
+Native known-UV/rotated/project→File NOMAD layout and seams accepted by user865 PASS.
+Keep separate864 broader history gate and prior863 protections; flip stage now866.
 
 ## .864 scope — Rotate imported UVs90°, native NOM roundtrip FAIL (repaired865)
 User PASS /nextbuild2026-10-15 protects863 island colours/count, orange seams,
@@ -632,13 +662,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-865 native NOM device gate takes priority. Known UV GLB→rotate UVs→File NOMAD using
-Base geometry→open in Nomad and inspect UV layout/seams. Save/Open .boxlab then repeat.
-Plain NOM geometry/groups and original Base GLB export remain regression checks.
-864 user FAIL was specifically native File NOMAD's old zero-UV writer; broad864 PASS
-not inferred.863/862/861 PASS protected; separate860/859 gates remain pending. Stop new
-UV feature expansion until native UV roundtrip passes. Materials/textures/layers in
-native NOM are outside this repair; do not promise those channels from UV byte tests.
+866 device gate: Imported UVs→Flip U/Flip V (horizontal/vertical); repeat same flip to
+restore. Close→UndoRedo→reopen; Save/Open and File NOMAD using Base geometry preserve
+flipped layout/seams.865 native UV roundtrip is USER PASS and protected; do not resume
+speculative native schema changes. Next small UV authoring stage after feedback/owner
+audit; projection/unwrap/painting/per-island transforms still not implemented.
+All edits must copy touched UV arrays and replace shared payloads; retain strict guards.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

@@ -9115,3 +9115,19 @@ Initial reads preceded deployment; final complete graph matches865. Native Nomad
 layout/seam device gate pending;864 FAIL recorded specifically on File NOMAD.863 PASS
 retained; no native texture/material claim or new device acceptance inferred. Four
 handoff files current; frozen donor/protected geometry owners unchanged.
+
+
+## .865 user PASS / .866 imported UV flips — 2026-10-15
+
+User Perfect PASS accepts865 native UV/seam/rotation/project File NOMAD gate; protect
+native UV pool/corner/header/geometry behavior. Audit main9ad41dba/live865/current edit
+owner finds no UV flip controls. Extend same edit owner with FlipU[1-u,v]/FlipV[u,1-v];
+rotate API stays intact, all delegate one private guarded copy-on-write transaction.
+Compact MeshHealth row reuses original enable/history/context/refresh paths. Axis-invalid,
+unsupported/stale/partial/no-op guards retained; touched arrays replaced, other resources
+shared read-only, stale tangents retired. No new channel/history/kernel or UV unwrap.
+Four native regressions cover both flips/twice/scene UndoRedo/shared payload/geometry,
+project + actual native NOM UV seams/GLB attributes, guards/no-ops and actual UI actions.
+Full2326PASS/0FAIL/0skip; earlier rotate/NOM tests retained. MeshHealth/edit866 + shell/
+recovery866 reviewed; inspector863/export+native865/protected/frozen bytes unchanged.
+Device866 flip/history/project/native-export gate pending. Publication proof follows.

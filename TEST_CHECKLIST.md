@@ -6351,3 +6351,27 @@ Initial reads preceded deployment; final complete graph matches865. Native Nomad
 layout/seam device gate pending;864 FAIL recorded specifically on File NOMAD.863 PASS
 retained; no native texture/material claim or new device acceptance inferred. Four
 handoff files current; frozen donor/protected geometry owners unchanged.
+
+
+## .865 user PASS protected — 2026-10-15
+
+User Perfect PASS accepts native File NOMAD UV layout/seams, rotated layout and project
+reopen→native export. Protect separate UV indices/counts and polygon-corner mapping,
+original geometry/groups/header/donor and clear incompatible-UV refusal.864 native-route
+FAIL superseded for this case; other pending gates not inferred.
+
+## .866 imported UV Flip U/V — device gate pending2026-10-15
+
+Four new native tests: U/V coordinate transforms, twice restores original, one actual
+scene UndoRedo checkpoint per change, shared payload/images/metadata/peer independence,
+geometry unchanged, project roundtrip, real native NOM UV/seam indices and Three GLB
+UV attributes/tangent exclusion. Unsupported/stale/partial/axis/no-op guards and actual
+MeshHealth actions retained. Full2326PASS/0FAIL/0skip; original rotate/NOM tests unchanged.
+Manual866:
+- Imported UVs→Flip U (horizontal)/Flip V (vertical): preview mirrors; repeat the same
+  flip restores starting orientation. Rotate90° still works beside them.
+- Close→Undo/Redo→reopen: expected UV map and unchanged mesh geometry.
+- Save/Open .boxlab→File NOMAD with Base geometry: Nomad UV view keeps flipped layout
+  and seams. Existing865 native gate is protected.
+Whole imported layout only. Plain/stale/partial/locked/linked/procedural controls stay
+unavailable. No projection/per-island transforms/unwrap/painting in this build.

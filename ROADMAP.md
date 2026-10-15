@@ -4,7 +4,17 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .865 native File NOMAD UV repair, 2026-10-15
+## Current direction — .866 imported UV flips, 2026-10-15
+
+865 native File NOMAD UV gate user PASS protected. Extend existing imported UV edit
+owner with Flip U/V beside Rotate; common transaction/guards/copy-on-write/history and
+stale tangent retirement. Whole layout about tile centre, no per-island/unwrap feature.
+Full2326PASS/0FAIL; four native history/resource/project/GLB/NOM/seam/UI tests, original
+rotate/native export tests retained. Device flip/UndoRedo/project/native export pending.
+Native865 writer/protected/frozen bytes unchanged; next small authoring step after
+feedback and authoritative UV/history/resource/export owner audit.
+
+## Previous direction — .865 native File NOMAD UV repair, 2026-10-15
 
 864 FAIL is confirmed on File→NOMAD, separate native path still writing zeros. Existing
 native writer now writes stored valid base UVs with independent UV indices at seams,
