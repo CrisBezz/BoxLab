@@ -8988,3 +8988,21 @@ protected Multi1.0 and frozenBeta7 version byte-match repository. Initial asset 
 preceded completed deployment; complete postdeployment verification matches861.
 All four handoff files current; device861 gate pending,860 duplicate and859 imported
 resource/Nomad gates remain separately pending. No new user PASS inferred.
+
+
+## .861 user PASS / .862 imported UV inspection — 2026-10-15
+
+User PASS /nextbuild protects861 rotated/scaled LiveArray source/history/project tests.
+Audit main5599eea7/import797/export741/MeshHealth443: imported face-corner UV storage and
+export signature exist, layout inspector absent. Existing MeshHealth disclosure now
+shows read-only base UV outlines/coverage/tile0–1/outside corners via new helper862.
+Reuses exporter topologySignature global; no parallel signature/kernel/history/channel.
+Absent/stale/invalid/unavailable states explicit; stale preview hidden, payload retained.
+Preview capped20000corners with truncation count, stats complete; drawn only disclosure/
+Refresh. No UV editing/unwrap/painting/material display or evaluated modifier UV claim.
+Four native tests cover real GLB importer/exporter/codec, immutability/topology/facegroups,
+partial/malformed/tiled/extreme coordinates/budget and actual MeshHealth UI lifecycle.
+Full2310PASS/0FAIL/0skip. Browser visual attempt blocked by truncated Chromium download;
+iPad canvas/layout pending. MeshHealth862/child862/shell+recovery862 reviewed; all other
+runtime/protected/frozen owners unchanged.860 Duplicate/859 Nomad gates stay separate.
+Publication proof follows after main/CI/Pages/live verification.

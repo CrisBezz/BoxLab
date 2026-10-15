@@ -1,14 +1,47 @@
-# BoxLab AI Handoff — .861 affine Live Array reopen repair
+# BoxLab AI Handoff — .862 imported UV inspection
 
-## Current state — 2026-10-14
-CrisBezz/BoxLab main build0.36.18.861; live https://crisbezz.github.io/BoxLab/.
-Releasef36b216a; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
+## Current state — 2026-10-15
+CrisBezz/BoxLab main build0.36.18.862; live https://crisbezz.github.io/BoxLab/.
+Release862 locally validated; publication verification pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .861 scope — internally inferred affine placement, device gate pending
+## .862 scope — imported UV inspection in existing Mesh Health, device gate pending
+User PASS /nextbuild2026-10-15 protects861 rotated/nonuniformly scaled LiveArray
+count/END Apply→Edit Source Apply/Cancel/history/project reopen. Separate860 Duplicate
+and859 imported-resource/Nomad gates are not inferred. Audit current main5599eea7,
+importer797 corner UV/reconstruction, exporter741 topologySignature and MeshHealth443:
+UV storage/export exists; no imported UV layout UI exists. Reuse existing Object radial
+Mesh Health launcher/session/Refresh/Close with collapsed Imported UVs disclosure.
+New read-only imported-uv-inspection862 consumes original glbPassthrough.uvCorners and
+calls the EXPORTER'S existing topologySignature through __boxlabExportAs. No duplicate
+signature/model/kernel/channel/history owner. Missing/stale/invalid/unavailable states
+are explicit; stale preview hidden, stored resources untouched. Ready view reports mapped
+faces/missing/outside0–1 corners; cyan base-face outlines, grey0–1 square, fitting tiled
+coordinates. Preview drawing capped20000corners with displayed-face count if limited;
+statistics inspect all faces. Canvas draws only on open disclosure/explicit Refresh,
+not viewport frames. SubD/Mirror evaluated UV export, islands/overlap/distortion analysis,
+unwrap/painting/textures/UV editing are NOT implemented. Imported base channel only.
+Four native regressions: actual GLB import/export and codec roundtrip, immutable payload,
+export-owner topology/facegroup parity, malformed/missing/partial/stale channels, tiled/
+extreme finite coordinates/bounded drawing, actual MeshHealth launch/toggle/Refresh/
+close/context exit without history writes. Full local2310PASS/0FAIL/0skip. Browser visual
+QA unavailable: Playwright Chromium download returned truncated archive; actual iPad
+canvas/layout remains device gate, no browser-render proof claimed.
+MeshHealth862→new inspection862/shell+recovery862; all previous owners/protected/frozen
+betas unchanged. Reviewed contract updates only these bytes/pins and new child reference.
+Next: iPad Object→Mesh Health→Imported UVs on known UV GLB, stale-after-edit/Undo and
+Save/Open sanity; then continue staged UV/resource work after feedback/owner audit.
+
+## Protected .861 — user PASS2026-10-15
+Protect whole-array arbitrary rotation/nonuniform scale, repeated count/END Apply,
+Edit Source Apply/Cancel with SubD, UndoRedo and .boxlab reopen. Strict external matrix
+validation and existing non-affine component refusal remain intact. No other pending
+build gate inferred from this PASS.
+
+## .861 scope — internally inferred affine placement, accepted2026-10-15
 Continued from current main697a9fa9/.860 after repository/owner audit. Baseline2303PASS;
 live860 shell/manifest matched. Reproduced original array (no Duplicate): arbitrary XYZ
 rotation/nonuniform scale→count/END Apply→reopen produces inferred placement[15]
@@ -505,12 +538,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-861 device gate: rotate/scale a Live Array as a whole, reopen count/END→Apply repeatedly,
-then Edit Source→Apply/Cancel. Keep SubD on, Undo/Redo and Save/Open→reopen checks.
-860 independent ordinary/Multi Duplicate gate and859 imported-resource Duplicate→Nomad
-visual comparison remain pending; no new PASS inferred. The queued affine-tail defect
-is repaired in861. Resume staged resource/UV inspection or measured performance after
-feedback and audit of existing owners; preserve all accepted interactions/frozen betas.
+862 device gate: import known UV GLB→Object Mesh Health→Imported UVs; view layout and
+coverage. Close, make a topology edit, reopen: stale UV preview hidden; Undo restores
+preview. Save/Open preserves inspection and GLB export. Canvas layout/readability remain
+iPad gate; native read-only/channel/session/export/project checks pass.
+861 user PASS protected.860 Duplicate and859 imported-resource/Nomad visual gates remain
+separate. Next staged UV/resource work or measured performance follows feedback and
+existing-owner audit. No UV authoring/unwrap/painting or evaluated modifier UV promise.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

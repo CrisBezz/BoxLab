@@ -6206,3 +6206,28 @@ protected Multi1.0 and frozenBeta7 version byte-match repository. Initial asset 
 preceded completed deployment; complete postdeployment verification matches861.
 All four handoff files current; device861 gate pending,860 duplicate and859 imported
 resource/Nomad gates remain separately pending. No new user PASS inferred.
+
+
+## .861 user PASS protected — 2026-10-15
+
+User PASS accepts861 whole-array rotation/nonuniform scale→count/END Apply/reopen,
+Edit Source Apply/Cancel with SubD, UndoRedo and .boxlab reopen. Strict external affine
+validation and non-affine component refusal retained.860/859 pending gates stay separate.
+
+## .862 imported UV inspection — device gate pending2026-10-15
+
+Four native regressions: real GLB importer/exporter and .boxlab channel roundtrip,
+read-only payload, original exporter topology/facegroup signature, coordinate-only edits,
+stale/invalid/missing/partial channels; canvas tile/orientation/tiled/extreme finite UVs,
+20000-corner budget; original MeshHealth launch/expand/Refresh/close/context lifecycle
+without history writes. Full2310PASS/0FAIL/0skip. No browser visual proof (Chromium
+archive download truncated); real iPad canvas/scroll/layout gate remains pending.
+Manual862:
+- Import known UV GLB→Object→Mesh Health→expand Imported UVs: face coverage and cyan
+  outlines visible; grey square shows tile0–1. Plain cube reports no imported UVs.
+- Close, make a topology edit, reopen: stale message and no layout. Undo the edit and
+  reopen: UV layout returns. Inspection adds no Undo step.
+- Save .boxlab→reset→Open→inspect again; original UV-bearing GLB export still works.
+Base UV inspection only; no unwrap/painting/texture display or SubD/Mirror UV export.
+Stats cover full channel; preview caps20000corners with displayed-face count when limited.
+861 PASS protected;860 Duplicate and859 imported-resource/Nomad gates remain separate.

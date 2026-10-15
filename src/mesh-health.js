@@ -3,8 +3,9 @@ import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
 import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
+import {inspectImportedUV,drawImportedUV} from './imported-uv-inspection.js?v=0.36.18.862';
 
-const VERSION='0.36.18.443';
+const VERSION='0.36.18.862';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -23,6 +24,12 @@ panel.innerHTML=`
   <div class="boxlab-tool-session-title"><span>Mesh Health</span><span class="boxlab-tool-session-subtitle">Inspect · safe repair</span></div>
   <div id="meshHealthVerdict" style="font-size:16px;font-weight:750;padding:4px 0"></div>
   <div id="meshHealthSummary" class="boxlab-tool-session-subtitle"></div>
+  <details id="meshHealthUVDetails">
+    <summary class="boxlab-tool-session-section">Imported UVs · inspect</summary>
+    <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
+    <canvas id="meshHealthUVPreview" width="256" height="200" role="img" aria-label="Imported UV face outlines; grey square marks UV tile zero to one" style="width:256px;max-width:100%;height:auto;margin:6px 0" hidden></canvas>
+    <div id="meshHealthUVNote" class="boxlab-tool-session-subtitle"></div>
+  </details>
   <div class="boxlab-tool-session-section">Topology</div>
   <div id="meshHealthTopology" style="display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:11px"></div>
   <div class="boxlab-tool-session-section">Findings</div>
@@ -62,7 +69,22 @@ const unifyButton=panel.querySelector('#meshHealthUnifyWinding');
 const flipNormalsButton=panel.querySelector('#meshHealthFlipNormals');
 const triangulateButton=panel.querySelector('#meshHealthTriangulate');
 const closeButton=panel.querySelector('#meshHealthClose');
+const uvDetails=panel.querySelector('#meshHealthUVDetails');
+const uvSummary=panel.querySelector('#meshHealthUVSummary');
+const uvPreview=panel.querySelector('#meshHealthUVPreview');
+const uvNote=panel.querySelector('#meshHealthUVNote');
 let active=false,last=null,lastBoundary=null,objectId=null;
+
+function renderUVReport(object,mesh){
+ const report=inspectImportedUV(mesh,object?.glbPassthrough,globalThis.__boxlabExportAs?.topologySignature);
+ const messages={absent:'No imported UV channel on this mesh.',stale:'Stored UVs no longer match the current topology.',invalid:'Stored UV channel is incomplete or invalid.',unavailable:'UV inspection is not ready. Try Refresh.'};
+ uvSummary.textContent=report.state==='ready'?`${report.mappedFaces} / ${report.faces} faces have UVs${report.missingFaces?` · ${report.missingFaces} missing`:''}${report.outsideCorners?` · ${report.outsideCorners} corners outside tile 0–1`:''}`:messages[report.state];
+ uvPreview.hidden=report.state!=='ready';
+ uvNote.textContent=report.state==='ready'?`Base mesh UVs · grey square = tile 0–1${report.previewFaces.length<report.mappedFaces?` · preview shows ${report.previewFaces.length} of ${report.mappedFaces} mapped faces`:''}`:report.state==='stale'?'Stored data is retained; this preview is hidden.':'Read-only inspection of imported UVs.';
+ if(uvDetails.open)drawImportedUV(uvPreview,report);
+ return report;
+}
+uvDetails.addEventListener('toggle',()=>{if(active&&uvDetails.open)renderUVReport(activeObject(),liveMesh());});
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function toolSession(){return globalThis.__boxlabToolSession;}
@@ -89,6 +111,7 @@ function renderReport(){
   verdict.textContent=last.label;
   verdict.dataset.healthState=last.state;
   summary.textContent=`${object.name} · ${last.vertices} verts · ${last.faces} faces · ${last.edges} edges`;
+  renderUVReport(object,mesh);
   topology.replaceChildren();
   addMetric('Triangles',last.triangles);addMetric('Quads',last.quads);addMetric('Ngons',last.ngons);
   addMetric('Boundary edges',last.boundaryEdges);addMetric('Non-manifold edges',last.nonManifoldEdges);

@@ -4,7 +4,18 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .861 affine Live Array reopen repair, 2026-10-14
+## Current direction — .862 imported UV inspection, 2026-10-15
+
+User861 PASS protects affine Array source/history/project gate. Existing importer
+corner UV and exporter topology owner supply read-only Imported UVs disclosure in
+Object Mesh Health. Shows coverage/base outlines/tile0–1/outside corners, hides stale
+or malformed data and bounds preview drawing. Existing MeshHealth session owns lifecycle.
+Full2310PASS/0FAIL; four native import/export/codec/channel/canvas/UI tests. iPad visual
+and stale-edit/Undo/file sanity pending. No unwrap/painting/editable UV owner or evaluated
+SubD/Mirror UV export. Next staged UV/resource work after feedback/authoritative audit;
+860 Duplicate and859 Nomad gates remain separately pending.
+
+## Previous direction — .861 affine Live Array reopen repair, 2026-10-14
 
 Repository continuation audits860/main/live and reproduces the queued original-array
 failure. Existing reopen owner canonicalizes only its internally inferred near-affine
