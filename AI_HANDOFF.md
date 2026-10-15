@@ -1262,3 +1262,15 @@ preceded deployment and returned870; final complete graph matches871. All four
 handoff files current. User870 PASS protected;871 Pencil feel/navigation/history/
 project/native-export device gate pending. Scale remains numeric under Exact;
 Pencil Scale/Rotate follow feedback, no871 user PASS inferred.
+
+## .872 publication verified — 2026-10-16
+
+Release bbb8efdfa00b6ccc073400a9f36339fdb1c8808f; tested tree
+9a4a162fa38eaff472a1596fdc1204a612dc6ea8 exactly matches fetched main.
+Actual Node22 CI38823964047/job116726929368 SUCCESS2353PASS/0FAIL/0skip;
+Pages38823962841 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth872/workspace872/edit872/inspector872, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned871; final complete graph matches872. User871 PASS
+protected;872 Pencil Scale/navigation/history/project/native-export device gate
+pending. All four handoff files current; Pencil Rotate next after feedback.
