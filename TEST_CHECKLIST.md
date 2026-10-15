@@ -6441,7 +6441,7 @@ byte-match repository. User867 PASS protected;868 island selection device gate
 pending. No selected-island transforms or new UV/history/resource/export schema.
 
 
-## .869 selected-island edits — device gate pending
+## .869 selected-island edits — user PASS2026-10-16
 
 - [x] User868 PASS protected: selection/highlight/clear/navigation/history/session exit.
 - [x] Full Node24:2341PASS/0FAIL/0skip; four native selected-edit regressions.
@@ -6449,12 +6449,12 @@ pending. No selected-island transforms or new UV/history/resource/export schema.
 - [x] Existing UV edit transaction/native history/resource copy-on-write; other islands/peers/geometry unchanged.
 - [x] Native project/NOM UV bytes/GLB export, no stale tangents; stale scope/topology/index/context/overflow refuse.
 - [x] Selection survives only matching full membership after edit; history/close/refresh clears; original whole-layout maths retained.
-- [ ] Select island → Rotate90° / Flip U / Flip V: only that island changes, about its own centre.
-- [ ] Repeat same flip twice; selected highlight remains; Undo/Redo restores one operation at a time.
-- [ ] Clear Selection → buttons affect whole layout; pan/pinch/Fit and Back to3D retain868 behavior.
-- [ ] Save/Open .boxlab and File NOMAD Base preserve edited layout/seams in Nomad.
+- [x] User869 PASS Select island → Rotate90° / Flip U / Flip V: only that island changes, about its own centre.
+- [x] User869 PASS Repeat same flip twice; selected highlight remains; Undo/Redo restores one operation at a time.
+- [x] User869 PASS Clear Selection → buttons affect whole layout; pan/pinch/Fit and Back to3D retain868 behavior.
+- [x] User869 PASS Save/Open .boxlab and File NOMAD Base preserve edited layout/seams in Nomad.
 
-No island Move/Scale/unwrap/painting yet. Device869 PASS remains pending.
+No island Move/Scale/unwrap/painting yet. User869 PASS is protected;870 has a separate device gate.
 
 ### .869 final scope-label correction
 
@@ -6473,3 +6473,19 @@ nav868/native865/protected Multi1.0/frozenBeta7 marker byte-match repository.
 Final label correction included;868 user PASS protected.869 selected-island edit,
 UndoRedo and project/native Nomad device gate pending. Repeated /nextbuild during
 publication continued the active release; no869 PASS or later build is inferred.
+
+
+## .870 selected-island numeric Move / Scale — device gate pending
+
+- [x] User869 PASS protected; selected/whole Rotate/Flip and native UV roundtrip retained.
+- [x] Full Node24:2345PASS/0FAIL/0skip; four native numeric regressions.
+- [x] Selected-only Move(U,V)/uniform positive Scale around island centre; original transaction/history/guards.
+- [x] Other islands/geometry/shared resources/peers unchanged; native UndoRedo/project/NOM UV bytes/GLB attributes.
+- [x] Zero Move/Scale1 no checkpoint; blank/nonfinite/nonpositive/stale/locked/overflow refuse.
+- [x] Original workspace numeric delegation/disable/validation, reopen defaults0/0/1 and input Backspace.
+- [ ] Select island → ΔU0.1 / ΔV0 → Move: only that island moves right; ΔV0.1 moves up.
+- [ ] Scale0.5 then2: selected island shrinks then returns about its own centre; other islands stay put.
+- [ ] Undo/Redo steps through numeric edits; Clear disables Move/Scale; Rotate/Flip and pan/pinch still work.
+- [ ] iPad numeric entry/backspace and close/reopen work; Save/Open→File NOMAD Base retains edited UVs/seams.
+
+Numeric Move/Scale are selected-only; canvas drag remains pan. No unwrap/painting/new-mesh UVs yet.

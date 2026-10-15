@@ -4,10 +4,10 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.869';
-import {rotateImportedUV,flipImportedUV} from './imported-uv-edit.js?v=0.36.18.869';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.869.1';
+import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV} from './imported-uv-edit.js?v=0.36.18.870';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.870';
 
-const VERSION='0.36.18.869';
+const VERSION='0.36.18.870';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -104,7 +104,7 @@ function renderUVReport(object,mesh){
 }
 function openUVEditor(){
  const object=activeObject();if(!active||currentMode()!=='object'||!object||object.id!==objectId)return false;
- uvWorkspace??=createUVWorkspace({canvas:uvPreview,note:uvNote,controls:uvRotate.parentElement,onDone:close,onHistory:action=>{
+ uvWorkspace??=createUVWorkspace({canvas:uvPreview,note:uvNote,controls:uvRotate.parentElement,onDone:close,onTransform:transformUVs,canEdit:()=>!uvRotate.disabled,onHistory:action=>{
   document.querySelector(action==='redo'?'#redoBtn':'#undoBtn')?.click();
   queueMicrotask(()=>{if(active)renderReport();});
  }});
@@ -136,6 +136,16 @@ function flipUVs(axis){
 }
 uvFlipU.addEventListener('click',()=>flipUVs('u'));
 uvFlipV.addEventListener('click',()=>flipUVs('v'));
+
+function transformUVs(kind,a,b){
+ const object=activeObject(),mesh=liveMesh();
+ if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh||!uvWorkspace?.active||!Number.isInteger(uvWorkspace.selectedIsland))return false;
+ const scope={island:uvWorkspace.selectedIsland,payload:uvPayload};
+ const result=kind==='move'?moveImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,a,b,scope):kind==='scale'?scaleImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,a,scope):{ok:false,reason:'Choose Move or Scale'};
+ renderReport();if(result.selectedFaces)uvWorkspace.retainSelection(result.selectedFaces);
+ setStatus(result.ok?result.changed?`UV island ${kind==='move'?'moved':'scaled'} • Undo to restore`:'UV transform • no change needed':`UV transform • ${result.reason}`);
+ return result.ok;
+}
 
 function manager(){return globalThis.__boxlabObjectManager;}
 function toolSession(){return globalThis.__boxlabToolSession;}

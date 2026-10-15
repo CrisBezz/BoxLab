@@ -4,6 +4,41 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## .870 — selected-island numeric Move / Scale, 2026-10-16
+
+User869 PASS protects selected Rotate/Flip, pivot/other-island isolation, native history
+and project/Nomad UV roundtrip. Audit main82bed89c/live869 and original edit/workspace/
+inspector/session/history owners: no UV Move/Scale controls exist. Extend existing
+imported-uv-edit transaction with moveImportedUV(U,V,scope) and scaleImportedUV(factor,
+scope). Require selected island + expected payload; all existing complete-imported/
+context/stale/index/history guards remain. Positive uniform scale about original island
+bounds centre; Move uses UV-tile offsets. Whole island includes faces beyond preview.
+Other islands/geometry/peer payload/resources untouched; copy touched corners + payload,
+retire old tangent basis, one native checkpoint per changed click. Zero Move/Scale1
+no-op adds no history; nonfinite/nonpositive/overflow refuses before mutation.
+Existing UV workspace gets compact ΔU/ΔV→Move and Scale×→Scale row, selected-only and
+original edit eligibility. Fields default0/0/1 on reopen; retained after Apply so clicks
+repeat. Blank/nonfinite/nonpositive values show inline error without edit. Original
+MeshHealth callback supplies live context/scope, refreshes same report and retains only
+matching island membership. Original Rotate/Flip/no-selection scopes unchanged. Canvas
+drag stays pan; no new pointer owner/history/kernel/schema. Keyboard guard yields to
+input editing, so Backspace/CtrlZ in fields remain normal native input actions.
+Four native regressions: Move/Scale geometry/resource/peer/history isolation, project +
+actual NOM UV bytes and indexed GLB attributes, no-op/invalid/stale/locked/overflow guards,
+and real MeshHealth callback. Original868 workspace integration expanded for numeric
+values/invalid/no-selection/UI delegation/Backspace;867 mock gets new callback binding.
+Full Node24:2345PASS/0FAIL/0skip. MeshHealth/edit/workspace870, shell/recovery870;
+inspector869/nav868/native865/manager+delete867/protected Multi1.0/frozen betas unchanged.
+Device870 numeric/iPad keyboard/history/native-export gate pending;869 PASS protected.
+Next after feedback: remaining narrow numeric UV transform controls via same edit owner;
+projection/unwrap/new-mesh UV channels and painting remain later. No direct drag editing.
+
+## Protected .869 — user PASS2026-10-16
+
+Selected Rotate90°/FlipU/V around own bounds centre, unselected islands unchanged,
+selection retention and native history/project/Nomad gate accepted. No-selection
+whole-layout behavior and869.1 scope-label correction remain protected.
+
 ## .869 — selected-island Rotate / Flip, 2026-10-15
 
 User868 PASS accepts tap selection/highlight, pan/pinch/Fit/clear and native history/
