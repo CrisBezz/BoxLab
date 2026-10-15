@@ -58,11 +58,33 @@ function inspectConnectivity(faces,uvs,report){
  report.islandCount=islands.size;
  report.previewIslands=report.previewFaceIndices.map(fi=>islands.get(root(fi)));
 }
-export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={}}={}){
+export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null}={}){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;
  const width=canvas.width,height=canvas.height;
  ctx.clearRect(0,0,width,height);ctx.fillStyle='#101722';ctx.fillRect(0,0,width,height);
  if(report.state!=='ready')return false;
+ const {x,y}=uvProjection(width,height,report,{padding,center,view});
+ ctx.strokeStyle='#69788e';ctx.lineWidth=pixelRatio;ctx.strokeRect(x(0),y(1),x(1)-x(0),y(0)-y(1));
+ ctx.strokeStyle='#65d5f5';ctx.lineWidth=pixelRatio;
+ // Bound each canvas path, including dense imports; no viewport render work.
+ const colours=['#65d5f5','#b69aff','#8fe3a5','#f7cf72','#f39ac5','#82b3ff'];
+ for(let i=0;i<report.previewFaces.length;i++){
+  const face=report.previewFaces[i];ctx.strokeStyle=colours[(report.previewIslands?.[i]||0)%colours.length];
+  ctx.beginPath();face.forEach(([u,v],i)=>i?ctx.lineTo(x(u),y(v)):ctx.moveTo(x(u),y(v)));ctx.closePath();ctx.stroke();
+ }
+ // Selection is view state only; preserve island colours/seams beneath it.
+ if(Number.isInteger(selectedIsland))for(let i=0;i<report.previewFaces.length;i++){
+  if(report.previewIslands?.[i]!==selectedIsland)continue;
+  ctx.fillStyle='#ffe06a33';ctx.strokeStyle='#ffe06a';ctx.lineWidth=3*pixelRatio;
+  ctx.beginPath();report.previewFaces[i].forEach(([u,v],j)=>j?ctx.lineTo(x(u),y(v)):ctx.moveTo(x(u),y(v)));ctx.closePath();ctx.fill();ctx.stroke();
+ }
+ ctx.strokeStyle='#ff9f43';ctx.lineWidth=2*pixelRatio;
+ for(const [a,b] of report.previewSeams||[]){ctx.beginPath();ctx.moveTo(x(a[0]),y(a[1]));ctx.lineTo(x(b[0]),y(b[1]));ctx.stroke();}
+ return true;
+}
+
+// Shared screen mapping for drawing and picking; UV coordinates remain read-only.
+function uvProjection(width,height,report,{padding=12,center=false,view={}}={}){
  const {minU,minV,maxU,maxV}=report.bounds;
  // Normalize before subtracting so even large finite tiled UVs stay finite.
  const magnitude=Math.max(1,Math.abs(minU),Math.abs(minV),Math.abs(maxU),Math.abs(maxV));
@@ -72,15 +94,22 @@ export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio
  const bottom=height-padding-(center?(height-2*padding-(maxV/magnitude-minV/magnitude)*scale)/2:0);
  const x=u=>(left+(u/magnitude-minU/magnitude)*scale-width/2)*zoom+width/2+(view.panX||0);
  const y=v=>(bottom-(v/magnitude-minV/magnitude)*scale-height/2)*zoom+height/2+(view.panY||0);
- ctx.strokeStyle='#69788e';ctx.lineWidth=pixelRatio;ctx.strokeRect(x(0),y(1),x(1)-x(0),y(0)-y(1));
- ctx.strokeStyle='#65d5f5';ctx.lineWidth=pixelRatio;
- // Bound each canvas path, including dense imports; no viewport render work.
- const colours=['#65d5f5','#b69aff','#8fe3a5','#f7cf72','#f39ac5','#82b3ff'];
- for(let i=0;i<report.previewFaces.length;i++){
-  const face=report.previewFaces[i];ctx.strokeStyle=colours[(report.previewIslands?.[i]||0)%colours.length];
-  ctx.beginPath();face.forEach(([u,v],i)=>i?ctx.lineTo(x(u),y(v)):ctx.moveTo(x(u),y(v)));ctx.closePath();ctx.stroke();
+ return {x,y};
+}
+export function pickImportedUVIsland(width,height,report,point,options={}){
+ if(report?.state!=='ready'||!Number.isFinite(point?.x)||!Number.isFinite(point?.y))return null;
+ const {x,y}=uvProjection(width,height,report,options);
+ // Reverse paint order gives deterministic topmost selection for stacked islands.
+ for(let i=report.previewFaces.length-1;i>=0;i--){
+  const face=report.previewFaces[i];if(face.length<3)continue;
+  let inside=false,boundary=false;
+  for(let j=0,k=face.length-1;j<face.length;k=j++){
+   const ax=x(face[k][0]),ay=y(face[k][1]),bx=x(face[j][0]),by=y(face[j][1]);
+   const dx=bx-ax,dy=by-ay,length=dx*dx+dy*dy,t=length?Math.max(0,Math.min(1,((point.x-ax)*dx+(point.y-ay)*dy)/length)):0;
+   if(Math.hypot(point.x-ax-t*dx,point.y-ay-t*dy)<=1)boundary=true;
+   if((ay>point.y)!==(by>point.y)&&point.x<(bx-ax)*(point.y-ay)/(by-ay)+ax)inside=!inside;
+  }
+  if(inside||boundary)return report.previewIslands?.[i]??null;
  }
- ctx.strokeStyle='#ff9f43';ctx.lineWidth=2*pixelRatio;
- for(const [a,b] of report.previewSeams||[]){ctx.beginPath();ctx.moveTo(x(a[0]),y(a[1]));ctx.lineTo(x(b[0]),y(b[1]));ctx.stroke();}
- return true;
+ return null;
 }

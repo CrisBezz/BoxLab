@@ -6396,11 +6396,36 @@ no new device PASS inferred and no native schema/exporter/geometry changes.
 - [x] Same Mesh Health session/original canvas/edit buttons/native history; no duplicate edit kernel.
 - [x] Scoped pan/pinch anchor continuation, Fit/bounded zoom, tap-history discrimination and pen/palm guard.
 - [x] DPR sizing, observer/capture cleanup, close/reopen and both native keyboard Delete guards.
-- [ ] iPad: Mesh Health → Open UV Editor gives large readable layout; summary and controls visible.
-- [ ] Pencil/finger drag pans; pinch zooms; Fit restores; buttons remain tappable.
-- [ ] Rotate/Flip U/V → toolbar and two-/three-finger Undo/Redo restore exact layout.
-- [ ] Back to 3D ends session; original orbit/pan/pinch/selection work; reopen remains clean.
+- [x] User867 PASS iPad: Mesh Health → Open UV Editor gives large readable layout; summary and controls visible.
+- [x] User867 PASS Pencil/finger drag pans; pinch zooms; Fit restores; buttons remain tappable.
+- [x] User867 PASS Rotate/Flip U/V → toolbar and two-/three-finger Undo/Redo restore exact layout.
+- [x] User867 PASS Back to 3D ends session; original orbit/pan/pinch/selection work; reopen remains clean.
 - [ ] File NOMAD Base after UV edits retains layout/seams in Nomad; Save/Open retains UVs.
 
-Island picking/transforms and unwrap/painting are not implemented in867. Device PASS
-is pending; automated checks do not imply iPad gesture acceptance.
+Island picking/transforms and unwrap/painting are not implemented in867. Workspace device PASS is recorded above; new868 selection gate remains separate.
+
+
+## .867 publication verified / user PASS — 2026-10-15
+
+Release d7b43cac5313fcf01e2b3adfc45b82fc758d9916; tree
+217eeca8a73a0d3cd3488cfc601ab6b42cb8af2f. Node22 CI38677757901 /
+job116235131037 SUCCESS2332PASS/0FAIL/0skip; Pages38677757250 SUCCESS.
+Live shell/version/workspace867/navigation867 byte-match repository before868 changes.
+User Works well PASS accepts large workspace, navigation and session exit; protect
+same canvas/controls/history and clean Back to3D. Native865 and866 protections retained.
+
+## .868 UV island selection — device gate pending
+
+- [x] Full Node24:2337PASS/0FAIL/0skip; five native selection regressions.
+- [x] Original island IDs and shared renderer/picker mapping after zoom/pan; UV data unchanged.
+- [x] Continuous/stacked/boundary/concave/limited/stale picking; topmost stacked island only.
+- [x] Single pen/finger/mouse short tap selects; drag/long/cancel/multitouch never picks.
+- [x] Gold highlight, Clear/empty tap, report refresh/history/close resets; Fit retains selection.
+- [x] Native edit/history/export owners unchanged; Rotate/Flip clearly affect whole layout.
+- [ ] iPad tap separate islands: selected island highlights and number updates.
+- [ ] Pan/pinch, then tap an island: highlight follows the visible island; Fit still works.
+- [ ] Clear Selection and empty tap clear; close/reopen starts with no selection.
+- [ ] Two-/three-finger Undo/Redo and Back to3D retain accepted867 behaviour.
+
+Only previewed faces are pickable; stacked islands choose topmost. Selected-island
+transforms, unwrap and painting are future work. Selection creates no Undo checkpoint.

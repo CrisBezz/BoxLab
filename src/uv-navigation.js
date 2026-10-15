@@ -1,5 +1,5 @@
 // One navigation owner, used only by the UV canvas. Coordinates are CSS pixels.
-export function createUVNavigation({size,changed=()=>{},undo=()=>{},redo=()=>{},now=()=>performance.now()}){
+export function createUVNavigation({size,changed=()=>{},undo=()=>{},redo=()=>{},tap=()=>{},now=()=>performance.now()}){
  const view={zoom:1,panX:0,panY:0},points=new Map();let base=null,group=null;
  const snapshot=()=>({view:{...view},points:new Map([...points].map(([id,p])=>[id,{...p}]))});
  const midpoint=(a,b)=>({x:(a.x+b.x)/2,y:(a.y+b.y)/2});
@@ -12,7 +12,7 @@ export function createUVNavigation({size,changed=()=>{},undo=()=>{},redo=()=>{},
  function zoomAt(point,factor){if(!Number.isFinite(factor)||factor<=0)return;cancel();placeZoom(view,point,Math.max(.1,Math.min(100,view.zoom*factor)));changed();}
  function down(id,x,y,type='touch'){
   if(!Number.isFinite(x)||!Number.isFinite(y))return;
-  if(!points.size)group={started:now(),max:0,moved:false,touchOnly:true,starts:new Map()};
+  if(!points.size)group={started:now(),max:0,moved:false,touchOnly:true,starts:new Map(),view:{...view}};
   points.set(id,{x,y});group.starts.set(id,{x,y});group.touchOnly&&=type==='touch';group.max=Math.max(group.max,points.size);base=snapshot();
  }
  function move(id,x,y){
@@ -30,8 +30,8 @@ export function createUVNavigation({size,changed=()=>{},undo=()=>{},redo=()=>{},
  function up(id){
   if(!points.has(id))return;points.delete(id);
   if(points.size){base=snapshot();return;}
-  const tap=group.touchOnly&&!group.moved&&now()-group.started<=320,count=group.max;cancel();
-  if(tap&&count===2)undo();else if(tap&&count===3)redo();
+  const quick=!group.moved&&now()-group.started<=320,count=group.max,touchOnly=group.touchOnly,point=group.starts.get(id),startView=group.view;cancel();
+  if(quick&&count===1){Object.assign(view,startView);changed();tap(point);}else if(quick&&touchOnly&&count===2)undo();else if(quick&&touchOnly&&count===3)redo();
  }
  return {view,down,move,up,cancel,zoomAt,fit(){cancel();Object.assign(view,{zoom:1,panX:0,panY:0});changed();}};
 }

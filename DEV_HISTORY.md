@@ -9167,3 +9167,35 @@ Device workspace/pan/pinch/toolbar/history/exit/native-export gate pending. Prev
 still capped at20,000 corners; no per-island picking/manipulation, unwrap or painting.
 Next after feedback: island selection in this workspace using existing island data,
 then narrowly scoped selected-island transforms. Do not build another UV edit owner.
+
+## .867 publication verified / user PASS — 2026-10-15
+
+Release d7b43cac5313fcf01e2b3adfc45b82fc758d9916; tree
+217eeca8a73a0d3cd3488cfc601ab6b42cb8af2f. Node22 CI38677757901 /
+job116235131037 SUCCESS2332PASS/0FAIL/0skip; Pages38677757250 SUCCESS.
+Live shell/version/workspace867/navigation867 byte-match repository before868 changes.
+User Works well PASS accepts large workspace, navigation and session exit; protect
+same canvas/controls/history and clean Back to3D. Native865 and866 protections retained.
+
+## .868 — UV island selection, 2026-10-15
+
+User Works well PASS /nextbuild accepts867 large workspace/navigation/session exit.
+Audit current main d7b43cac/live867 and inspector/workspace/navigation/edit owners:
+island IDs already exist; extend original inspector renderer and gesture owner.
+Tap Pencil/finger/mouse selects the hit island, highlights its preview faces in gold,
+and reports Island N of count. Clear Selection/empty tap clears. Shared uvProjection
+maps both renderer and picker after pan/zoom; reverse paint order selects topmost
+stacked island. Only previewed faces are pickable under existing20,000-corner budget.
+Single short stationary tap uses existing navigation owner; restores tiny tap jitter.
+Drag/long/multitouch/cancel do not pick; native two-/three-finger history unchanged.
+Selection is ephemeral view state; refresh/edit/UndoRedo report replacement and close
+clear it, Fit retains it. No UV coordinates/payload/geometry/history/project changes.
+Existing Rotate/Flip remain WHOLE LAYOUT, explicitly labelled even with selection.
+No selected-island editing yet; next narrow build extends existing edit transaction
+with selected-island transforms after device feedback. No parallel UV kernel.
+Five native tests cover continuous/stacked/concave/boundary/bounded/stale picking,
+shared pan/zoom mapping, pen/mouse/touch and history discrimination, read-only highlight,
+and actual workspace clear/reset/close/controls integration. Full Node24:2337PASS,
+0FAIL/0skip. MeshHealth/edit/imported-inspector/workspace/navigation868; shell/recovery868.
+Manager/delete867/native exporter865/protected Multi1.0/frozen betas unchanged.
+Device868 selection/navigation/history gate pending; user867 PASS is protected.

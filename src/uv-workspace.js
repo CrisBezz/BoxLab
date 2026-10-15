@@ -1,5 +1,5 @@
-import {drawImportedUV} from './imported-uv-inspection.js?v=0.36.18.867';
-import {createUVNavigation} from './uv-navigation.js?v=0.36.18.867';
+import {drawImportedUV,pickImportedUVIsland} from './imported-uv-inspection.js?v=0.36.18.868';
+import {createUVNavigation} from './uv-navigation.js?v=0.36.18.868';
 // Presentation/navigation only. Existing Mesh Health owns context, edit actions,
 // native history and session completion. Original canvas/controls are moved here.
 export function createUVWorkspace({canvas,note,controls,onDone,onHistory}){
@@ -18,15 +18,19 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory}){
  #boxlabUVWorkspace #meshHealthUVNote{flex:1;min-width:180px}
  `;document.head.appendChild(style);
  const root=document.createElement('section');root.id='boxlabUVWorkspace';root.hidden=true;root.setAttribute('aria-label','UV Editor');
- root.innerHTML=`<div class="uv-top"><strong class="uv-title">UV Editor</strong><button data-uv="undo" type="button">Undo</button><button data-uv="redo" type="button">Redo</button><button data-uv="out" type="button" aria-label="Zoom out">−</button><button data-uv="in" type="button" aria-label="Zoom in">+</button><button data-uv="fit" type="button">Fit</button><button data-uv="done" type="button">Back to 3D</button></div><div class="uv-summary" aria-live="polite"></div><div class="uv-canvas-wrap"></div><div class="uv-footer"></div><div>Drag to pan · pinch to zoom · two-finger tap Undo · three-finger tap Redo</div>`;
+ root.innerHTML=`<div class="uv-top"><strong class="uv-title">UV Editor</strong><button data-uv="undo" type="button">Undo</button><button data-uv="redo" type="button">Redo</button><button data-uv="out" type="button" aria-label="Zoom out">−</button><button data-uv="in" type="button" aria-label="Zoom in">+</button><button data-uv="fit" type="button">Fit</button><button data-uv="done" type="button">Back to 3D</button></div><div class="uv-summary" aria-live="polite"></div><div class="uv-top"><span class="uv-selection" aria-live="polite"></span><button data-uv="clear" type="button">Clear Selection</button></div><div class="uv-canvas-wrap"></div><div class="uv-footer"></div><div>Tap an island to select · drag to pan · pinch to zoom · two-finger tap Undo · three-finger tap Redo</div>`;
  parent.appendChild(root);
  const area=root.querySelector('.uv-canvas-wrap'),summary=root.querySelector('.uv-summary'),footer=root.querySelector('.uv-footer');
  area.appendChild(canvas);footer.append(controls,note);
- let active=false,report=null,observer=null,ratio=1,penId=null;const captures=new Set();
+ let active=false,report=null,observer=null,ratio=1,penId=null,selectedIsland=null;
+ const selection=root.querySelector('.uv-selection'),clear=root.querySelector('[data-uv="clear"]');
+ function showSelection(){selection.textContent=selectedIsland===null?'No island selected · Rotate / Flip affect whole layout':`Island ${selectedIsland+1} of ${report.islandCount} selected · Rotate / Flip affect whole layout`;clear.disabled=selectedIsland===null;}
+ function select(value){selectedIsland=value;showSelection();draw();}
+ clear.addEventListener('click',()=>select(null));const captures=new Set();
  const size=()=>{const r=canvas.getBoundingClientRect();return {width:Math.max(1,r.width),height:Math.max(1,r.height)};};
- function draw(){if(!active||!report)return;drawImportedUV(canvas,report,{center:true,padding:24*ratio,pixelRatio:ratio,view:{zoom:nav.view.zoom,panX:nav.view.panX*ratio,panY:nav.view.panY*ratio}});}
+ function draw(){if(!active||!report)return;drawImportedUV(canvas,report,{center:true,padding:24*ratio,pixelRatio:ratio,selectedIsland,view:{zoom:nav.view.zoom,panX:nav.view.panX*ratio,panY:nav.view.panY*ratio}});}
  function history(action){if(!active)return;nav.cancel();onHistory(action);}
- const nav=createUVNavigation({size,changed:draw,undo:()=>history('undo'),redo:()=>history('redo')});
+ const nav=createUVNavigation({size,changed:draw,undo:()=>history('undo'),redo:()=>history('redo'),tap:point=>select(pickImportedUVIsland(size().width,size().height,report,point,{center:true,padding:24,view:nav.view}))});
  function resize(){if(!active)return;const s=size();ratio=Math.min(2,globalThis.devicePixelRatio||1,4096/s.width,4096/s.height);const w=Math.max(1,Math.round(s.width*ratio)),h=Math.max(1,Math.round(s.height*ratio));if(canvas.width!==w)canvas.width=w;if(canvas.height!==h)canvas.height=h;draw();}
  const local=e=>{const r=canvas.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};};
  const consume=e=>{e.stopPropagation();if(e.cancelable)e.preventDefault();};
@@ -40,6 +44,6 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory}){
  for(const type of ['touchstart','touchmove','touchend','touchcancel'])root.addEventListener(type,e=>e.stopPropagation(),{passive:true});
  for(const [action,fn] of Object.entries({undo:()=>history('undo'),redo:()=>history('redo'),fit:()=>nav.fit(),in:()=>nav.zoomAt({x:size().width/2,y:size().height/2},1.25),out:()=>nav.zoomAt({x:size().width/2,y:size().height/2},.8),done:()=>onDone()}))root.querySelector(`[data-uv="${action}"]`).addEventListener('click',fn);
  function key(e){if(!active)return;if(['Delete','Backspace'].includes(e.key)){e.preventDefault();e.stopImmediatePropagation();}else if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();onDone();}else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.stopImmediatePropagation();history(e.shiftKey?'redo':'undo');}}
- const api={get active(){return active;},setReport(value,text){report=value;summary.textContent=text;draw();},open(){if(report?.state!=='ready')return false;active=true;root.hidden=false;nav.fit();resize();if(typeof ResizeObserver!=='undefined'){observer??=new ResizeObserver(resize);observer.observe(area);}window.addEventListener('resize',resize);window.addEventListener('keydown',key,true);return true;},close(){active=false;root.hidden=true;cancel();observer?.disconnect();window.removeEventListener('resize',resize);window.removeEventListener('keydown',key,true);},get view(){return {...nav.view};}};
+ const api={get active(){return active;},setReport(value,text){report=value;selectedIsland=null;showSelection();summary.textContent=text;draw();},get selectedIsland(){return selectedIsland;},open(){if(report?.state!=='ready')return false;active=true;root.hidden=false;nav.fit();resize();if(typeof ResizeObserver!=='undefined'){observer??=new ResizeObserver(resize);observer.observe(area);}window.addEventListener('resize',resize);window.addEventListener('keydown',key,true);return true;},close(){active=false;selectedIsland=null;showSelection();root.hidden=true;cancel();observer?.disconnect();window.removeEventListener('resize',resize);window.removeEventListener('keydown',key,true);},get view(){return {...nav.view};}};
  globalThis.__boxlabUVWorkspace=api;return api;
 }
