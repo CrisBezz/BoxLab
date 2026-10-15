@@ -2,7 +2,7 @@
 
 ## Current state — 2026-10-15
 CrisBezz/BoxLab main build0.36.18.864; live https://crisbezz.github.io/BoxLab/.
-Release864 validation/publication pending. User explicitly approves ongoing pushing/publishing.
+Releasec84b5c1b; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
@@ -928,3 +928,15 @@ Full native Node24 regression2318PASS/0FAIL/0skip, including four new UV authori
 checks and unchanged862/863 inspection coverage. Reviewed shell/cache graph coherent;
 protected/frozen files unchanged. Device864 UV rotate/history/project/export gate pending.
 Publication CI/Pages/live proof follows after verification.
+
+
+## .864 publication verified — 2026-10-15
+
+Releasec84b5c1b48034be7e597459c9c276e6d51df0dd7; tested tree
+55358c7e8530028e071d44fbb502f01735e94ad6 exactly matches fetched main.
+Node22 CI38664362797/job116192739572 SUCCESS2318PASS/0FAIL/0skip.
+Pages38664361873 SUCCESS. Postdeployment live shell/manifest/MeshHealth864/edit864,
+unchanged inspector863 and protected Multi1.0/frozenBeta7 version byte-match repository.
+Initial reads preceded deployment; final complete graph matches864.863 user PASS
+protected;864 iPad rotation/history/project/BaseGLB→Nomad gate pending. Separate860/859
+gates not inferred; all four handoff files current. No geometry/kernel/schema changes.

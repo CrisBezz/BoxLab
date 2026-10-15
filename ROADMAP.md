@@ -1117,3 +1117,15 @@ inspection863 and protected Multi1.0/frozenBeta7 version byte-match repository.
 862 user PASS protected;863 iPad island/seam/coordinate-vs-topology/Undo/project gate
 pending. Separate860 Duplicate and859 resource/Nomad gates not inferred. All four
 handoff files current; no new authoring/channel/kernel/history owner.
+
+
+## .864 publication verified — 2026-10-15
+
+Releasec84b5c1b48034be7e597459c9c276e6d51df0dd7; tested tree
+55358c7e8530028e071d44fbb502f01735e94ad6 exactly matches fetched main.
+Node22 CI38664362797/job116192739572 SUCCESS2318PASS/0FAIL/0skip.
+Pages38664361873 SUCCESS. Postdeployment live shell/manifest/MeshHealth864/edit864,
+unchanged inspector863 and protected Multi1.0/frozenBeta7 version byte-match repository.
+Initial reads preceded deployment; final complete graph matches864.863 user PASS
+protected;864 iPad rotation/history/project/BaseGLB→Nomad gate pending. Separate860/859
+gates not inferred; all four handoff files current. No geometry/kernel/schema changes.
