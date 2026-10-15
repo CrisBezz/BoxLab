@@ -1073,3 +1073,14 @@ protected Multi1.0 and frozenBeta7 version byte-match repository. Initial asset 
 preceded completed deployment; complete postdeployment verification matches861.
 All four handoff files current; device861 gate pending,860 duplicate and859 imported
 resource/Nomad gates remain separately pending. No new user PASS inferred.
+
+
+## .862 publication verified — 2026-10-15
+
+Release47767d31bdcb54e23493fbe4a40adc4597592c1c; tested tree
+e0fe02a94a7be968f147ff487e4c616c480aab65 exactly matches fetched main.
+Node22 CI38658512748/job116173915714 SUCCESS2310PASS/0FAIL/0skip.
+Pages38658512404 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth862/
+inspection862 and protected Multi1.0/frozenBeta7 version byte-match repository.
+861 user PASS protected;862 iPad layout/UV/stale-Undo/project checks pending. Separate
+860 Duplicate and859 Nomad/resource gates not inferred. Four handoff files current.

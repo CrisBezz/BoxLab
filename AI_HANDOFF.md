@@ -2,7 +2,7 @@
 
 ## Current state — 2026-10-15
 CrisBezz/BoxLab main build0.36.18.862; live https://crisbezz.github.io/BoxLab/.
-Release862 locally validated; publication verification pending. User explicitly approves ongoing pushing/publishing.
+Release47767d31; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
@@ -57,9 +57,9 @@ Core861 and all three import graphs refreshed: Array861→source-editor861→sou
 codec861→management861→drawer861; shell/recovery861. Other owners/frozen betas retained.
 Three literal Array cache assertions advanced861; reviewed contract changes only to
 these loaders/bytes. Full validation and publication evidence recorded below.
-Device861,860 duplication and859 resource/Nomad gates remain pending. Next: iPad
-rotated/scaled LiveArray count/END Apply then Edit Source, history and Save/Open sanity;
-resume staged resource/UV inspection or measured performance after feedback/owner audit.
+User861 PASS2026-10-15 protects the rotated/scaled Array source/history/file gate.
+860 duplication and859 resource/Nomad gates remain separately pending. Imported UV
+inspection is now862; continue after its device checks and authoritative-owner audit.
 
 ## .860 scope — ordinary Duplicate keeps an independent Live Array, device gate pending
 User explicitly authorizes all future pushing/publishing and /nextbuild. Publish prior859
@@ -830,3 +830,14 @@ protected Multi1.0 and frozenBeta7 version byte-match repository. Initial asset 
 preceded completed deployment; complete postdeployment verification matches861.
 All four handoff files current; device861 gate pending,860 duplicate and859 imported
 resource/Nomad gates remain separately pending. No new user PASS inferred.
+
+
+## .862 publication verified — 2026-10-15
+
+Release47767d31bdcb54e23493fbe4a40adc4597592c1c; tested tree
+e0fe02a94a7be968f147ff487e4c616c480aab65 exactly matches fetched main.
+Node22 CI38658512748/job116173915714 SUCCESS2310PASS/0FAIL/0skip.
+Pages38658512404 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth862/
+inspection862 and protected Multi1.0/frozenBeta7 version byte-match repository.
+861 user PASS protected;862 iPad layout/UV/stale-Undo/project checks pending. Separate
+860 Duplicate and859 Nomad/resource gates not inferred. Four handoff files current.
