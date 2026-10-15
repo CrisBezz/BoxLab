@@ -9131,3 +9131,15 @@ project + actual native NOM UV seams/GLB attributes, guards/no-ops and actual UI
 Full2326PASS/0FAIL/0skip; earlier rotate/NOM tests retained. MeshHealth/edit866 + shell/
 recovery866 reviewed; inspector863/export+native865/protected/frozen bytes unchanged.
 Device866 flip/history/project/native-export gate pending. Publication proof follows.
+
+
+## .866 publication verified — 2026-10-15
+
+Release8186bf45691bed9b173d8db1af5033c136edec34; tested tree
+cb39f28fdef41a49b0cb8bee2a05747cf3db611d exactly matches fetched main.
+Node22 CI38676132706/job116230036867 SUCCESS2326PASS/0FAIL/0skip.
+Pages38676132006 SUCCESS. Postdeployment live shell/manifest/MeshHealth866/edit866,
+unchanged inspector863/export-panel865/native-core865 and protected Multi1.0/frozen
+Beta7 version byte-match repository.865 native UV roundtrip user PASS protected;866
+flip/history/project/native-export device gate pending. All four handoff files current;
+no new device PASS inferred and no native schema/exporter/geometry changes.

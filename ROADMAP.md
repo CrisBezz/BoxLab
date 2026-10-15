@@ -1162,3 +1162,15 @@ Initial reads preceded deployment; final complete graph matches865. Native Nomad
 layout/seam device gate pending;864 FAIL recorded specifically on File NOMAD.863 PASS
 retained; no native texture/material claim or new device acceptance inferred. Four
 handoff files current; frozen donor/protected geometry owners unchanged.
+
+
+## .866 publication verified — 2026-10-15
+
+Release8186bf45691bed9b173d8db1af5033c136edec34; tested tree
+cb39f28fdef41a49b0cb8bee2a05747cf3db611d exactly matches fetched main.
+Node22 CI38676132706/job116230036867 SUCCESS2326PASS/0FAIL/0skip.
+Pages38676132006 SUCCESS. Postdeployment live shell/manifest/MeshHealth866/edit866,
+unchanged inspector863/export-panel865/native-core865 and protected Multi1.0/frozen
+Beta7 version byte-match repository.865 native UV roundtrip user PASS protected;866
+flip/history/project/native-export device gate pending. All four handoff files current;
+no new device PASS inferred and no native schema/exporter/geometry changes.
