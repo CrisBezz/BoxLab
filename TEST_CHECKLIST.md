@@ -6242,3 +6242,28 @@ Pages38658512404 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth862/
 inspection862 and protected Multi1.0/frozenBeta7 version byte-match repository.
 861 user PASS protected;862 iPad layout/UV/stale-Undo/project checks pending. Separate
 860 Duplicate and859 Nomad/resource gates not inferred. Four handoff files current.
+
+
+## .862 user PASS protected — 2026-10-15
+
+User PASS accepts imported UV face coverage/layout, plain-mesh no-channel state,
+stale-after-topology-edit hiding→Undo preview recovery, and native .boxlab reopening.
+Resources remain read-only; original exporter topology signature and history retained.
+
+## .863 UV island/seam inspection — device gate pending2026-10-15
+
+Four native regressions protect shared vertex-ID adjacency, winding-independent exact
+UV endpoint matching, tiny intentional splits, point-touch/disconnected overlap,
+missing UV borders/ambiguous non-manifold edge separation, stale refusal and full
+connectivity beyond preview budget. Real GLB import→project→export stays unchanged;
+no mesh.edges() side effects. Deterministic palette and orange seam sides bounded by
+original preview budget. Original862 tests retained; full2314PASS/0FAIL/0skip.
+Manual863:
+- Known seamed GLB→Object Mesh Health→Imported UVs: island count/colours and orange
+  seam sides visible. Grey tile and face coverage remain readable.
+- Close→move a vertex: layout still available. Topology edit→reopen: stale preview
+  hidden; Undo edit→reopen: island/seam view returns, no inspection Undo step.
+- Save .boxlab→reset→Open→inspect: same counts/layout and normal GLB export.
+Six-colour palette cycles. Islands are connectivity diagnostics, not overlap detection;
+physical/missing-UV borders are not labelled interior seam edges. No UV authoring yet.
+862/861 PASS protected;860 Duplicate and859 resource/Nomad gates stay separate.

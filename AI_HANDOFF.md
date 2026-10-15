@@ -1,14 +1,47 @@
-# BoxLab AI Handoff — .862 imported UV inspection
+# BoxLab AI Handoff — .863 UV islands and seams
 
 ## Current state — 2026-10-15
-CrisBezz/BoxLab main build0.36.18.862; live https://crisbezz.github.io/BoxLab/.
-Release47767d31; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.863; live https://crisbezz.github.io/BoxLab/.
+Release863 locally validated; publication verification pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .862 scope — imported UV inspection in existing Mesh Health, device gate pending
+## .863 scope — read-only UV island/seam diagnostics, device gate pending
+User PASS /nextbuild2026-10-15 protects862 imported UV layout/coverage, stale after
+topology edit→Undo recovery, plain no-UV state and .boxlab reopening. Audit main85eb80ef,
+live862/shell pins, existing inspection862/import797/export741 and topology helpers:
+no UV island/seam analyser exists. Extend SAME imported-uv-inspection/MeshHealth owners.
+Diagnostic edge adjacency comes from current face vertex IDs, not coordinates or
+mesh.edges() (legacy wrappers can publish live mesh). Shared edges join mapped faces
+only when both vertex-aligned UV endpoints are exactly equal. No tolerance welding;
+minute deliberate UV splits remain seams. Point contacts, disconnected/overlapping
+shells and ambiguous non-manifold/repeated/self edges do not join through those edges.
+Union-find builds connected UV islands; a seam can exist within an otherwise connected
+island via another path. Missing-UV neighbours count as borders, not invented seams.
+Inspector shows island count/colours, seam-edge count and orange UV-side outlines.
+Palette cycles six colours; colours do not identify material/groups or promise every
+island a unique colour. Grey0–1 tile/fit/stale guard and original20000-corner preview
+budget remain. Full channel connectivity is analysed even when preview is limited;
+orange segments only for previewed faces, bounded by same corner budget. No viewport
+frame/gesture work. No new editable channel/seam flags/kernel/history/resource version;
+UVs unchanged and no overlap/distortion/unwrap/painting/evaluated-modifier claim.
+Four new native tests: continuous/reversed/split/point-touch/disconnected layouts,
+missing/ambiguous/bounded/stale data, actual GLB import→project→export unchanged, no
+legacy edges() call, deterministic colours/orange sides. Original862 tests retained.
+Full local Node24:2314PASS/0FAIL/0skip. iPad visual/colour/seam gate pending.
+MeshHealth863→inspection863/shell+recovery863 reviewed; other owners/protected/frozen
+betas unchanged. Next iPad known seamed GLB/coordinate edit vs topology edit/Undo/file
+sanity; then staged UV channel/authoring design after topology/history/resource audit.
+
+## Protected .862 — user PASS2026-10-15
+Protect imported UV coverage/base outlines, stale-topology hiding and Undo recovery,
+plain-mesh no-UV state and .boxlab reopen. Existing exporter topologySignature remains
+authoritative, resources remain read-only, inspection adds no Undo.861 protections and
+separate860 Duplicate/859 resource/Nomad gates retained; no additional PASS inferred.
+
+## .862 scope — imported UV inspection in existing Mesh Health, accepted2026-10-15
 User PASS /nextbuild2026-10-15 protects861 rotated/nonuniformly scaled LiveArray
 count/END Apply→Edit Source Apply/Cancel/history/project reopen. Separate860 Duplicate
 and859 imported-resource/Nomad gates are not inferred. Audit current main5599eea7,
@@ -29,11 +62,11 @@ export-owner topology/facegroup parity, malformed/missing/partial/stale channels
 extreme finite coordinates/bounded drawing, actual MeshHealth launch/toggle/Refresh/
 close/context exit without history writes. Full local2310PASS/0FAIL/0skip. Browser visual
 QA unavailable: Playwright Chromium download returned truncated archive; actual iPad
-canvas/layout remains device gate, no browser-render proof claimed.
+canvas/layout accepted by user862 PASS2026-10-15; no automated browser-render proof claimed.
 MeshHealth862→new inspection862/shell+recovery862; all previous owners/protected/frozen
 betas unchanged. Reviewed contract updates only these bytes/pins and new child reference.
-Next: iPad Object→Mesh Health→Imported UVs on known UV GLB, stale-after-edit/Undo and
-Save/Open sanity; then continue staged UV/resource work after feedback/owner audit.
+User862 PASS accepts known-UV/plain/stale-after-edit/Undo and Save/Open sanity.
+Island/seam inspection now863; continue staged UV/resource work after its device gate.
 
 ## Protected .861 — user PASS2026-10-15
 Protect whole-array arbitrary rotation/nonuniform scale, repeated count/END Apply,
@@ -538,13 +571,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-862 device gate: import known UV GLB→Object Mesh Health→Imported UVs; view layout and
-coverage. Close, make a topology edit, reopen: stale UV preview hidden; Undo restores
-preview. Save/Open preserves inspection and GLB export. Canvas layout/readability remain
-iPad gate; native read-only/channel/session/export/project checks pass.
-861 user PASS protected.860 Duplicate and859 imported-resource/Nomad visual gates remain
-separate. Next staged UV/resource work or measured performance follows feedback and
-existing-owner audit. No UV authoring/unwrap/painting or evaluated modifier UV promise.
+863 device gate: Object Mesh Health→Imported UVs on known seamed GLB. Check island
+colours/count and orange seams. Coordinate-only mesh edits retain UV layout; topology
+edit hides stale preview, Undo restores. Save/Open preserves diagnostics.862 PASS and
+861 affine Array PASS protected.860 Duplicate and859 resource/Nomad gates remain separate.
+Next staged UV channel/authoring design must audit existing topology mutation, history,
+project and export owners; do not mutate shared passthrough or invent parallel channels.
+No UV unwrap/painting/overlap analysis or evaluated modifier UV promise yet.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

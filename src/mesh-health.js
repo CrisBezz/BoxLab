@@ -3,9 +3,9 @@ import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
 import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
-import {inspectImportedUV,drawImportedUV} from './imported-uv-inspection.js?v=0.36.18.862';
+import {inspectImportedUV,drawImportedUV} from './imported-uv-inspection.js?v=0.36.18.863';
 
-const VERSION='0.36.18.862';
+const VERSION='0.36.18.863';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -27,7 +27,7 @@ panel.innerHTML=`
   <details id="meshHealthUVDetails">
     <summary class="boxlab-tool-session-section">Imported UVs · inspect</summary>
     <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
-    <canvas id="meshHealthUVPreview" width="256" height="200" role="img" aria-label="Imported UV face outlines; grey square marks UV tile zero to one" style="width:256px;max-width:100%;height:auto;margin:6px 0" hidden></canvas>
+    <canvas id="meshHealthUVPreview" width="256" height="200" role="img" aria-label="Imported UV islands in different colours, orange seams, grey square marks UV tile zero to one" style="width:256px;max-width:100%;height:auto;margin:6px 0" hidden></canvas>
     <div id="meshHealthUVNote" class="boxlab-tool-session-subtitle"></div>
   </details>
   <div class="boxlab-tool-session-section">Topology</div>
@@ -78,9 +78,9 @@ let active=false,last=null,lastBoundary=null,objectId=null;
 function renderUVReport(object,mesh){
  const report=inspectImportedUV(mesh,object?.glbPassthrough,globalThis.__boxlabExportAs?.topologySignature);
  const messages={absent:'No imported UV channel on this mesh.',stale:'Stored UVs no longer match the current topology.',invalid:'Stored UV channel is incomplete or invalid.',unavailable:'UV inspection is not ready. Try Refresh.'};
- uvSummary.textContent=report.state==='ready'?`${report.mappedFaces} / ${report.faces} faces have UVs${report.missingFaces?` · ${report.missingFaces} missing`:''}${report.outsideCorners?` · ${report.outsideCorners} corners outside tile 0–1`:''}`:messages[report.state];
+ uvSummary.textContent=report.state==='ready'?`${report.mappedFaces} / ${report.faces} faces have UVs · ${report.islandCount} island${report.islandCount===1?'':'s'} · ${report.seamEdges} seam edge${report.seamEdges===1?'':'s'}${report.nonManifoldEdges?` · ${report.nonManifoldEdges} ambiguous edge${report.nonManifoldEdges===1?'':'s'}`:''}${report.missingFaces?` · ${report.missingFaces} missing`:''}${report.outsideCorners?` · ${report.outsideCorners} corners outside tile 0–1`:''}`:messages[report.state];
  uvPreview.hidden=report.state!=='ready';
- uvNote.textContent=report.state==='ready'?`Base mesh UVs · grey square = tile 0–1${report.previewFaces.length<report.mappedFaces?` · preview shows ${report.previewFaces.length} of ${report.mappedFaces} mapped faces`:''}`:report.state==='stale'?'Stored data is retained; this preview is hidden.':'Read-only inspection of imported UVs.';
+ uvNote.textContent=report.state==='ready'?`Base UVs · island colours · orange = seams · grey square = tile 0–1${report.nonManifoldEdges?' · ambiguous edges do not join islands':''}${report.previewFaces.length<report.mappedFaces?` · preview shows ${report.previewFaces.length} of ${report.mappedFaces} mapped faces`:''}`:report.state==='stale'?'Stored data is retained; this preview is hidden.':'Read-only inspection of imported UVs.';
  if(uvDetails.open)drawImportedUV(uvPreview,report);
  return report;
 }

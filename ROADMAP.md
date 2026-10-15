@@ -4,7 +4,18 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .862 imported UV inspection, 2026-10-15
+## Current direction — .863 UV island/seam inspection, 2026-10-15
+
+User862 PASS protects imported layout/stale-Undo/project gate. Extend existing inspector
+with connected UV island colours/count and orange discontinuous shared-edge seams.
+Vertex-ID adjacency/exact UV endpoints, conservative ambiguous-edge handling; no shared
+payload mutations/new channel/history/kernel. Preview budget retained, full diagnostics.
+Full2314PASS/0FAIL/0skip; four new native GLB/project/export/connectivity/canvas tests.
+iPad colour/seam/layout/history/project gate pending.862 and861 PASS protected;860/859
+gates remain separate. Next staged editable UV channel/authoring design after existing
+topology/history/resource/export audit; no unwrap/painting/overlap analysis claim.
+
+## Previous direction — .862 imported UV inspection, 2026-10-15
 
 User861 PASS protects affine Array source/history/project gate. Existing importer
 corner UV and exporter topology owner supply read-only Imported UVs disclosure in

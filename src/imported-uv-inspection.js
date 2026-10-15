@@ -2,7 +2,7 @@
 // exporter supplies its authoritative topology signature; no second UV owner.
 export function inspectImportedUV(mesh,payload,topologySignature,{maxPreviewCorners=20000}={}){
  const faces=mesh?.faces||[],uvs=payload?.uvCorners;
- const report={state:'absent',faces:faces.length,mappedFaces:0,missingFaces:0,invalidFaces:0,outsideCorners:0,previewFaces:[],previewCorners:0,bounds:{minU:0,minV:0,maxU:1,maxV:1}};
+ const report={state:'absent',faces:faces.length,mappedFaces:0,missingFaces:0,invalidFaces:0,outsideCorners:0,previewFaces:[],previewFaceIndices:[],previewCorners:0,bounds:{minU:0,minV:0,maxU:1,maxV:1}};
  if(!Array.isArray(uvs)||!uvs.some(Boolean))return report;
  if(typeof topologySignature!=='function'){report.state='unavailable';return report;}
  if(!payload.uvTopologySignature||payload.uvTopologySignature!==topologySignature(mesh)){report.state='stale';return report;}
@@ -17,10 +17,46 @@ export function inspectImportedUV(mesh,payload,topologySignature,{maxPreviewCorn
    report.bounds.maxU=Math.max(report.bounds.maxU,u);report.bounds.maxV=Math.max(report.bounds.maxV,v);
    if(u<0||u>1||v<0||v>1)report.outsideCorners++;
   }
-  if(report.previewCorners+corners.length<=maxPreviewCorners){report.previewFaces.push(corners);report.previewCorners+=corners.length;}
+  if(report.previewCorners+corners.length<=maxPreviewCorners){report.previewFaces.push(corners);report.previewFaceIndices.push(i);report.previewCorners+=corners.length;}
  }
  report.state=report.invalidFaces?'invalid':report.mappedFaces?'ready':'absent';
+ if(report.state==='ready')inspectConnectivity(faces,uvs,report);
  return report;
+}
+function inspectConnectivity(faces,uvs,report){
+ // Diagnostic adjacency only: never call mesh.edges(), which legacy bridges may
+ // wrap with live-mesh publication side effects. Never weld or author UV data.
+ const parent=new Int32Array(faces.length).fill(-1),edges=new Map();
+ for(let fi=0;fi<faces.length;fi++){
+  if(uvs[fi])parent[fi]=fi;
+  const face=faces[fi];
+  for(let i=0;i<face.length;i++){
+   const a=face[i],b=face[(i+1)%face.length],key=a<b?`${a}:${b}`:`${b}:${a}`;
+   if(!edges.has(key))edges.set(key,[]);
+   edges.get(key).push({fi,i,a,b});
+  }
+ }
+ const root=fi=>{while(parent[fi]!==fi){parent[fi]=parent[parent[fi]];fi=parent[fi];}return fi;};
+ const same=(a,b)=>a[0]===b[0]&&a[1]===b[1];
+ const endpoints=o=>{const points=uvs[o.fi],next=(o.i+1)%points.length;return o.a<o.b?[points[o.i],points[next]]:[points[next],points[o.i]];};
+ const preview=new Set(report.previewFaceIndices);
+ report.seamEdges=0;report.boundaryEdges=0;report.nonManifoldEdges=0;report.previewSeams=[];
+ for(const owners of edges.values()){
+  const mapped=owners.filter(o=>parent[o.fi]>=0);if(!mapped.length)continue;
+  if(owners.length>2||owners.some(o=>o.a===o.b)||owners.length===2&&owners[0].fi===owners[1].fi){report.nonManifoldEdges++;continue;}
+  if(owners.length===1||mapped.length===1){report.boundaryEdges++;continue;}
+  const [a,b]=mapped,[a0,a1]=endpoints(a),[b0,b1]=endpoints(b);
+  if(same(a0,b0)&&same(a1,b1)){
+   const ra=root(a.fi),rb=root(b.fi);parent[Math.max(ra,rb)]=Math.min(ra,rb);
+  }else{
+   report.seamEdges++;
+   for(const o of mapped)if(preview.has(o.fi))report.previewSeams.push([uvs[o.fi][o.i],uvs[o.fi][(o.i+1)%uvs[o.fi].length]]);
+  }
+ }
+ const islands=new Map();
+ for(let fi=0;fi<faces.length;fi++)if(parent[fi]>=0){const r=root(fi);if(!islands.has(r))islands.set(r,islands.size);}
+ report.islandCount=islands.size;
+ report.previewIslands=report.previewFaceIndices.map(fi=>islands.get(root(fi)));
 }
 export function drawImportedUV(canvas,report){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;
@@ -37,8 +73,12 @@ export function drawImportedUV(canvas,report){
  ctx.strokeStyle='#69788e';ctx.lineWidth=1;ctx.strokeRect(x(0),y(1),x(1)-x(0),y(0)-y(1));
  ctx.strokeStyle='#65d5f5';ctx.lineWidth=1;
  // Bound each canvas path, including dense imports; no viewport render work.
- for(const face of report.previewFaces){
+ const colours=['#65d5f5','#b69aff','#8fe3a5','#f7cf72','#f39ac5','#82b3ff'];
+ for(let i=0;i<report.previewFaces.length;i++){
+  const face=report.previewFaces[i];ctx.strokeStyle=colours[(report.previewIslands?.[i]||0)%colours.length];
   ctx.beginPath();face.forEach(([u,v],i)=>i?ctx.lineTo(x(u),y(v)):ctx.moveTo(x(u),y(v)));ctx.closePath();ctx.stroke();
  }
+ ctx.strokeStyle='#ff9f43';ctx.lineWidth=2;
+ for(const [a,b] of report.previewSeams||[]){ctx.beginPath();ctx.moveTo(x(a[0]),y(a[1]));ctx.lineTo(x(b[0]),y(b[1]));ctx.stroke();}
  return true;
 }

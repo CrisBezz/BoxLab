@@ -9017,3 +9017,21 @@ Pages38658512404 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth862/
 inspection862 and protected Multi1.0/frozenBeta7 version byte-match repository.
 861 user PASS protected;862 iPad layout/UV/stale-Undo/project checks pending. Separate
 860 Duplicate and859 Nomad/resource gates not inferred. Four handoff files current.
+
+
+## .862 user PASS / .863 UV islands and seam inspection — 2026-10-15
+
+User PASS accepts862 UV layout/coverage/stale topology→Undo/plain/project tests.
+Audit main85eb80ef/live862/existing import/export/inspector/topology helpers finds no UV
+connectivity analyser. Existing inspector now derives islands from mesh vertex-ID edges
+and exact vertex-aligned UV endpoint matches, with conservative ambiguous/missing data.
+Six cycling island colours and orange seam sides in same bounded canvas; full island/
+seam stats independent of preview truncation. Disconnected/point-touch/overlapping UVs
+do not merge merely by coordinates. No legacy mesh.edges() call or resource mutation;
+no new channel/kernel/history/gesture, unwrap/painting/overlap/evaluated modifier claim.
+Four native tests cover orientation/exact splits/ambiguity/missing/stale/limits, real
+GLB import→codec→export, readonly/legacy edges refusal, deterministic canvas colours.
+Original862 tests unchanged; full2314PASS/0FAIL/0skip. MeshHealth/inspection863 and shell/
+recovery pins/hashes reviewed; all other protected/frozen/runtime owners unchanged.
+Device863 colour/seam/project gate pending;860 Duplicate/859 Nomad remain separate.
+Publication proof follows after main/CI/Pages/live verification.
