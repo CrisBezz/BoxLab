@@ -58,7 +58,7 @@ function inspectConnectivity(faces,uvs,report){
  report.islandCount=islands.size;
  report.previewIslands=report.previewFaceIndices.map(fi=>islands.get(root(fi)));
 }
-export function drawImportedUV(canvas,report){
+export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={}}={}){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;
  const width=canvas.width,height=canvas.height;
  ctx.clearRect(0,0,width,height);ctx.fillStyle='#101722';ctx.fillRect(0,0,width,height);
@@ -67,18 +67,20 @@ export function drawImportedUV(canvas,report){
  // Normalize before subtracting so even large finite tiled UVs stay finite.
  const magnitude=Math.max(1,Math.abs(minU),Math.abs(minV),Math.abs(maxU),Math.abs(maxV));
  const span=Math.max(maxU/magnitude-minU/magnitude,maxV/magnitude-minV/magnitude);
- const scale=(Math.min(width,height)-24)/span;
- const x=u=>12+(u/magnitude-minU/magnitude)*scale;
- const y=v=>height-12-(v/magnitude-minV/magnitude)*scale;
- ctx.strokeStyle='#69788e';ctx.lineWidth=1;ctx.strokeRect(x(0),y(1),x(1)-x(0),y(0)-y(1));
- ctx.strokeStyle='#65d5f5';ctx.lineWidth=1;
+ const scale=Math.max(1,Math.min(width,height)-2*padding)/span,zoom=view.zoom??1;
+ const left=padding+(center?(width-2*padding-(maxU/magnitude-minU/magnitude)*scale)/2:0);
+ const bottom=height-padding-(center?(height-2*padding-(maxV/magnitude-minV/magnitude)*scale)/2:0);
+ const x=u=>(left+(u/magnitude-minU/magnitude)*scale-width/2)*zoom+width/2+(view.panX||0);
+ const y=v=>(bottom-(v/magnitude-minV/magnitude)*scale-height/2)*zoom+height/2+(view.panY||0);
+ ctx.strokeStyle='#69788e';ctx.lineWidth=pixelRatio;ctx.strokeRect(x(0),y(1),x(1)-x(0),y(0)-y(1));
+ ctx.strokeStyle='#65d5f5';ctx.lineWidth=pixelRatio;
  // Bound each canvas path, including dense imports; no viewport render work.
  const colours=['#65d5f5','#b69aff','#8fe3a5','#f7cf72','#f39ac5','#82b3ff'];
  for(let i=0;i<report.previewFaces.length;i++){
   const face=report.previewFaces[i];ctx.strokeStyle=colours[(report.previewIslands?.[i]||0)%colours.length];
   ctx.beginPath();face.forEach(([u,v],i)=>i?ctx.lineTo(x(u),y(v)):ctx.moveTo(x(u),y(v)));ctx.closePath();ctx.stroke();
  }
- ctx.strokeStyle='#ff9f43';ctx.lineWidth=2;
+ ctx.strokeStyle='#ff9f43';ctx.lineWidth=2*pixelRatio;
  for(const [a,b] of report.previewSeams||[]){ctx.beginPath();ctx.moveTo(x(a[0]),y(a[1]));ctx.lineTo(x(b[0]),y(b[1]));ctx.stroke();}
  return true;
 }

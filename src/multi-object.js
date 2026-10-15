@@ -1006,6 +1006,7 @@ function initialize() {
   installUI();
   window.addEventListener('click',flushLinkedPlacementOnModeChange,true);
   window.addEventListener('keydown', event => {
+    if(globalThis.__boxlabUVWorkspace?.active)return;
     if (currentMode() !== 'object') return;
     if (event.key !== 'Delete' && event.key !== 'Backspace') return;
     if (event.metaKey || event.ctrlKey || event.altKey) return;

@@ -6387,3 +6387,20 @@ unchanged inspector863/export-panel865/native-core865 and protected Multi1.0/fro
 Beta7 version byte-match repository.865 native UV roundtrip user PASS protected;866
 flip/history/project/native-export device gate pending. All four handoff files current;
 no new device PASS inferred and no native schema/exporter/geometry changes.
+
+
+## .866 user PASS protected / .867 UV workspace — 2026-10-15
+
+- [x] User .866 PASS: Flip U/V, twice restoration, native history and UV roundtrip protected.
+- [x] Full Node24 regression:2332PASS/0FAIL/0skip, six workspace regressions.
+- [x] Same Mesh Health session/original canvas/edit buttons/native history; no duplicate edit kernel.
+- [x] Scoped pan/pinch anchor continuation, Fit/bounded zoom, tap-history discrimination and pen/palm guard.
+- [x] DPR sizing, observer/capture cleanup, close/reopen and both native keyboard Delete guards.
+- [ ] iPad: Mesh Health → Open UV Editor gives large readable layout; summary and controls visible.
+- [ ] Pencil/finger drag pans; pinch zooms; Fit restores; buttons remain tappable.
+- [ ] Rotate/Flip U/V → toolbar and two-/three-finger Undo/Redo restore exact layout.
+- [ ] Back to 3D ends session; original orbit/pan/pinch/selection work; reopen remains clean.
+- [ ] File NOMAD Base after UV edits retains layout/seams in Nomad; Save/Open retains UVs.
+
+Island picking/transforms and unwrap/painting are not implemented in867. Device PASS
+is pending; automated checks do not imply iPad gesture acceptance.

@@ -4,7 +4,30 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
-## Current direction — .866 imported UV flips, 2026-10-15
+## .867 — large UV workspace, 2026-10-15
+
+User 866 PASS protects Flip U/V, twice restoration, history and native/project UV
+roundtrip. User approves dedicated large UV workspace after tiny Mesh Health preview
+feedback. Audit main5b85e244/live866: inspector/drawing/edit/history/session owners exist;
+no UV workspace/navigation owner. Reuse the same Mesh Health session, original canvas,
+Rotate/Flip nodes and native Undo/Redo buttons. Mesh Health retains summary + Open UV
+Editor; large overlay uses existing renderer with centred DPR-aware view, drag pan,
+pinch/wheel/button zoom and Fit. New uv-navigation is presentation-only CSS-pixel state;
+no modelling kernel, UV channel or history stack. Back to 3D/Escape closes original
+session; capture/resize cleanup and pen/palm guards retained. Both existing keyboard
+Delete owners yield while UV workspace is active. Root touch propagation is scoped,
+but toolbar touch default remains available for Safari synthesized clicks.
+Six native regressions cover pan/pinch continuation, tap Undo/Redo discrimination,
+read-only renderer, original DOM/control/history/session wiring, DPR/resize/capture/
+close/reopen/palm cleanup and actual Delete owners. Full Node24:2332PASS/0FAIL/0skip.
+MeshHealth/edit/inspector/workspace/navigation867, manager/delete scoped guard pins867,
+shell/recovery867; native export865, protected Multi1.0 and frozen betas unchanged.
+Device workspace/pan/pinch/toolbar/history/exit/native-export gate pending. Preview
+still capped at20,000 corners; no per-island picking/manipulation, unwrap or painting.
+Next after feedback: island selection in this workspace using existing island data,
+then narrowly scoped selected-island transforms. Do not build another UV edit owner.
+
+## Previous direction — .866 imported UV flips, 2026-10-15
 
 865 native File NOMAD UV gate user PASS protected. Extend existing imported UV edit
 owner with Flip U/V beside Rotate; common transaction/guards/copy-on-write/history and

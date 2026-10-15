@@ -123,9 +123,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/delete-key-router.js?v=0.36.18.444",
+      "url": "./src/delete-key-router.js?v=0.36.18.867",
       "target": "src/delete-key-router.js",
-      "sha256": "b15cfd623445307c20390669b84fa9b2aa0975e245813d9783911e724b05983e",
+      "sha256": "05e7c3d3854dc3ae93f38629ecd50e6a73fc3fc3624ba62f3b4016df6dab6e2e",
       "sourceVersion": "0.36.18.387"
     },
     {
@@ -310,10 +310,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.866",
+      "url": "./src/mesh-health.js?v=0.36.18.867",
       "target": "src/mesh-health.js",
-      "sha256": "273190ebf35cb601b02e98c6159915cfeac93d93350fb739685b50dc061f4e2d",
-      "sourceVersion": "0.36.18.866"
+      "sha256": "9142d61565bbbb23eff644b2305b3b364d0220665ff3dc1500107a3998e07a94",
+      "sourceVersion": "0.36.18.867"
     },
     {
       "owner": "index.html",
@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.860",
+      "url": "./src/multi-object.js?v=0.36.18.867",
       "target": "src/multi-object.js",
-      "sha256": "72b2b724b5852e57cbdb1a94b7574645eba7533c2bc3d97a1e2922866ff097a7"
+      "sha256": "304a8f0f20e74c776aad7e5d10553b36471223940cf10542e50b658a82dcd0bc"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.866",
+      "url": "./src/release-bootstrap.js?v=0.36.18.867",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.866",
+      "url": "./src/release-version.js?v=0.36.18.867",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2378,21 +2378,39 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./imported-uv-inspection.js?v=0.36.18.863",
+      "url": "./imported-uv-inspection.js?v=0.36.18.867",
       "target": "src/imported-uv-inspection.js",
-      "sha256": "7e53a0d7c1a965f7b933f0e5a431ceed97f4cfa5bdb03dc86ae820d241f163a7"
+      "sha256": "b74c7484f94185ba8bb518219b6b2eed79c6d941dacd64b6e0151bfca9a82005"
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./imported-uv-edit.js?v=0.36.18.866",
+      "url": "./imported-uv-edit.js?v=0.36.18.867",
       "target": "src/imported-uv-edit.js",
-      "sha256": "b45f64191d38707804ff9361e54b6f852d7708e7bddb5b6538dfc7f4cdf78568"
+      "sha256": "0926c67f5e5b4940640ec3a3a7c1e1505f67dd4a1bc59e56a8ec7469d2c81480"
     },
     {
       "owner": "src/imported-uv-edit.js",
-      "url": "./imported-uv-inspection.js?v=0.36.18.863",
+      "url": "./imported-uv-inspection.js?v=0.36.18.867",
       "target": "src/imported-uv-inspection.js",
-      "sha256": "7e53a0d7c1a965f7b933f0e5a431ceed97f4cfa5bdb03dc86ae820d241f163a7"
+      "sha256": "b74c7484f94185ba8bb518219b6b2eed79c6d941dacd64b6e0151bfca9a82005"
+    },
+    {
+      "owner": "src/mesh-health.js",
+      "url": "./uv-workspace.js?v=0.36.18.867",
+      "target": "src/uv-workspace.js",
+      "sha256": "7b171a1720cd0d4a960ea582d80352ef7e2cafe0f54c54c3d05a863ab37cb428"
+    },
+    {
+      "owner": "src/uv-workspace.js",
+      "url": "./imported-uv-inspection.js?v=0.36.18.867",
+      "target": "src/imported-uv-inspection.js",
+      "sha256": "b74c7484f94185ba8bb518219b6b2eed79c6d941dacd64b6e0151bfca9a82005"
+    },
+    {
+      "owner": "src/uv-workspace.js",
+      "url": "./uv-navigation.js?v=0.36.18.867",
+      "target": "src/uv-navigation.js",
+      "sha256": "210725aa0736f5b7a7e9b2995c7e4ca34ef62da723f2039fed0f111573f3ed93"
     }
   ]
 }

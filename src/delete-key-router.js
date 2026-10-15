@@ -23,6 +23,7 @@ function deleteButtonFor(mode){
   return null;
 }
 function handleDeleteKey(event){
+  if(globalThis.__boxlabUVWorkspace?.active)return;
   if(event.defaultPrevented)return;
   if(event.key!=='Delete'&&event.key!=='Backspace')return;
   if(event.altKey||event.ctrlKey||event.metaKey)return;

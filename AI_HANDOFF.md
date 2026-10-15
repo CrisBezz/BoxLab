@@ -1,14 +1,42 @@
-# BoxLab AI Handoff — .866 imported UV flips
+# BoxLab AI Handoff — .867 large UV workspace
 
 ## Current state — 2026-10-15
-CrisBezz/BoxLab main build0.36.18.866; live https://crisbezz.github.io/BoxLab/.
-Release8186bf45; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.867; live https://crisbezz.github.io/BoxLab/.
+Previous release8186bf45 verified; .867 publication proof below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
 
-## .866 scope — imported UV Flip U / Flip V, device gate pending
+## .867 — large UV workspace, 2026-10-15
+
+User 866 PASS protects Flip U/V, twice restoration, history and native/project UV
+roundtrip. User approves dedicated large UV workspace after tiny Mesh Health preview
+feedback. Audit main5b85e244/live866: inspector/drawing/edit/history/session owners exist;
+no UV workspace/navigation owner. Reuse the same Mesh Health session, original canvas,
+Rotate/Flip nodes and native Undo/Redo buttons. Mesh Health retains summary + Open UV
+Editor; large overlay uses existing renderer with centred DPR-aware view, drag pan,
+pinch/wheel/button zoom and Fit. New uv-navigation is presentation-only CSS-pixel state;
+no modelling kernel, UV channel or history stack. Back to 3D/Escape closes original
+session; capture/resize cleanup and pen/palm guards retained. Both existing keyboard
+Delete owners yield while UV workspace is active. Root touch propagation is scoped,
+but toolbar touch default remains available for Safari synthesized clicks.
+Six native regressions cover pan/pinch continuation, tap Undo/Redo discrimination,
+read-only renderer, original DOM/control/history/session wiring, DPR/resize/capture/
+close/reopen/palm cleanup and actual Delete owners. Full Node24:2332PASS/0FAIL/0skip.
+MeshHealth/edit/inspector/workspace/navigation867, manager/delete scoped guard pins867,
+shell/recovery867; native export865, protected Multi1.0 and frozen betas unchanged.
+Device workspace/pan/pinch/toolbar/history/exit/native-export gate pending. Preview
+still capped at20,000 corners; no per-island picking/manipulation, unwrap or painting.
+Next after feedback: island selection in this workspace using existing island data,
+then narrowly scoped selected-island transforms. Do not build another UV edit owner.
+
+## Protected .866 — user PASS2026-10-15
+
+Flip U/V, twice restoration, history and UV roundtrip are accepted. Preserve the
+existing copy-on-write edit owner and native865 UV exporter. New device gates separate.
+
+## .866 scope — imported UV Flip U / Flip V, accepted2026-10-15
 User Perfect PASS /nextbuild2026-10-15 accepts865 native File NOMAD UV layout/seams,
 rotated UV export and .boxlab→native export. Audit main9ad41dba/live865/source pins:
 no UV flip owner/UI exists. Extend existing imported-uv-edit, not another transaction
