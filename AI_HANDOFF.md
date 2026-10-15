@@ -2,7 +2,7 @@
 
 ## Current state — 2026-10-15
 CrisBezz/BoxLab main build0.36.18.865; live https://crisbezz.github.io/BoxLab/.
-Release865 locally validated; publication verification pending. User explicitly approves ongoing pushing/publishing.
+Releaseb080c811; CI/Pages/live verified. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
@@ -967,3 +967,16 @@ unchanged inspector863 and protected Multi1.0/frozenBeta7 version byte-match rep
 Initial reads preceded deployment; final complete graph matches864.863 user PASS
 protected;864 iPad rotation/history/project/BaseGLB→Nomad gate pending. Separate860/859
 gates not inferred; all four handoff files current. No geometry/kernel/schema changes.
+
+
+## .865 publication verified — 2026-10-15
+
+Releaseb080c811a3b4e901b4a360fb314f63adc38034de; tested tree
+d548e4c2ff0bf1765933cbec32a9b511e6a06502 exactly matches fetched main.
+Node22 CI38665811583/job116197395797 SUCCESS2322PASS/0FAIL/0skip.
+Pages38665810713 build/deploy SUCCESS. Postdeployment live shell/manifest/export-panel865/
+native-core865 and protected Multi1.0/frozenBeta7 version byte-match repository.
+Initial reads preceded deployment; final complete graph matches865. Native Nomad UV
+layout/seam device gate pending;864 FAIL recorded specifically on File NOMAD.863 PASS
+retained; no native texture/material claim or new device acceptance inferred. Four
+handoff files current; frozen donor/protected geometry owners unchanged.
