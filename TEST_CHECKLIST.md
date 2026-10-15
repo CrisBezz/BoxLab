@@ -6462,3 +6462,14 @@ Final source review caught a text replacement also changing the no-selection lab
 whole-layout maths stayed correct. Restore explicit whole-layout label when cleared,
 add actual workspace assertions at open/clear and refresh only MeshHealth/workspace
 cache keys to869.1 (shell/version869; internal MeshHealth stamp869). No new user PASS.
+
+## .869 publication verified — 2026-10-15
+
+Final release312e030d95bd582dcd641b1835ba13f77ef93e74; tested tree
+b72f182c44f1cfbf61d686e4dbf9ceaaf8f74970 matches fetched main. Node22 CI
+38724621405/job116387284480 SUCCESS2341PASS/0FAIL/0skip; Pages38724621331
+SUCCESS. Live shell/version869, MeshHealth/workspace869.1, edit/inspector869,
+nav868/native865/protected Multi1.0/frozenBeta7 marker byte-match repository.
+Final label correction included;868 user PASS protected.869 selected-island edit,
+UndoRedo and project/native Nomad device gate pending. Repeated /nextbuild during
+publication continued the active release; no869 PASS or later build is inferred.
