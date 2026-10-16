@@ -1977,3 +1977,17 @@ matches884. All four continuity documents current. User donor schema/actual JPEG
 audit recorded; native colour-image orientation/appearance/device gate pending. No884
 user PASS or full PBR/multi-material native support inferred. Final proof commit changes
 only documentation; tested runtime bytes retained.
+
+## .885 publication verified — 2026-10-16
+
+Runtime9154caaa1d4dbca3811fdec895109bcc9d29152f; tested tree
+5874f4df1c6424017612ae531d0ef9af2c0a6769 exactly matches fetched main.
+Node22 CI38900750576/job116972113908 SUCCESS2417PASS/0FAIL/0skip.
+Pages38900749158 build/deploy SUCCESS. Postdeployment live shell/manifest/export-panel/
+native-core/surface/image-helper/MeshHealth/workspace/render885, protected Multi1.0
+and frozenBeta7 version byte-match repository. Prior884 live audit also matched main.
+User884 PASS protected;885 normal/emissive Material-slot appearance/orientation/strength/
+UV/project device gate pending. Full donor metadata/actual JPEG+PNG byte audit recorded;
+private donor pixels not shipped. Roughness/metalness unpacking and displacement/native
+multi-material stages remain pending. All four continuity docs current. Final proof
+commit changes documentation only, retaining tested runtime bytes. No885 PASS inferred.
