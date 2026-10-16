@@ -6682,3 +6682,7 @@ User .876 PASS remains protected. The .877 device gate remains pending: upright 
 - [ ] Back to3D and reopen: checker defaults off; ordinary viewport navigation works.
 
 2D reference only; 3D texture/stretch inspection and painting remain later stages.
+
+## .878 publication verified — 2026-10-16
+
+Release `7b7cf2751e371959437a6ad10601c930f727a64d`; tested tree `ef9e7b6005166f3c6e38eb93830963f11f513e36` exactly matches fetched main. Actual Node22 CI38867402179/job116863294620 SUCCESS **2381 PASS / 0 FAIL / 0 skipped**; Pages38867401881 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth/workspace/inspector/edit878, unchanged GLB panel877/protected Multi1.0/frozenBeta7 version byte-match repository. Native NOM865, manager/codec/resources875/nav868 and protected modelling owners unchanged. All four continuity documents current. User877 PASS protected;878 checker readability/navigation/Pencil/history/reopen device gate pending. This checker is a 2D reference only; 3D texture/stretch inspection remains the next audited stage.
