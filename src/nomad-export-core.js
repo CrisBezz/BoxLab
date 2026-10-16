@@ -1,5 +1,5 @@
-import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.885';
-import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.885';
+import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.887';
+import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.887';
 // NOM container/header, field and scene-node conventions adapted from CrisBezz/
 // MeshUtilz-Sweep-Lab balloon-v0.6, commit 18e72a6bf964974591038345d68c2196a18f6af2:
 // src/nomadBalloonExport.js + nomadBalloonExport097.js; validated donor copied intact.
@@ -73,7 +73,7 @@ function meshPart(mesh,name,donor,cornerUVs=null){
 function nativeColourSource(payload){
  const used=Array.isArray(payload?.materialIndices)?payload.materialIndices:[];
  if(!used.some(id=>payload.materials?.[id]?.pbrMetallicRoughness?.baseColorTexture))return null;
- const source=uvImageSurfaceSource(payload);
+ const source=uvImageSurfaceSource(payload,{maxBytes:24*1024*1024});
  if(!source)throw Error('NOMAD colour textures require one opaque embedded PNG/JPEG material with UV0; use GLB for other materials');
  const pbr=payload.materials[source.choice.materialIndex].pbrMetallicRoughness;
  if([pbr.roughnessFactor??1,pbr.metallicFactor??1].some(v=>!Number.isFinite(v)||v<0||v>1))throw Error('NOMAD material factors are invalid');
@@ -90,7 +90,7 @@ export function nativeMaterialMaps(payload){
  const maps={};if(colour)maps.color=colour;
  for(const [slot,info] of [['normal',material.normalTexture],['emissive',material.emissiveTexture],['packed',pbr.metallicRoughnessTexture]]){
   if(!info)continue;
-  const choice=embeddedUVImage(payload,info);if(!choice||Object.keys(info.extensions||{}).length)throw Error('NOMAD '+slot+' map requires an embedded PNG/JPEG UV0 image without transforms');
+  const choice=embeddedUVImage(payload,info,{maxBytes:(slot==='packed'?8:24)*1024*1024});if(!choice||Object.keys(info.extensions||{}).length)throw Error('NOMAD '+slot+' map requires an embedded PNG/JPEG UV0 image without transforms');
   const texture=payload.textures[info.index],sampler=texture.sampler===undefined?{}:Number.isInteger(texture.sampler)&&texture.sampler>=0?payload.samplers?.[texture.sampler]:null;
   if(!sampler||(sampler.wrapS??10497)!==10497||(sampler.wrapT??10497)!==10497||(sampler.magFilter??9729)!==9729||(sampler.minFilter??9987)!==9987)throw Error('NOMAD '+slot+' map requires default repeat/linear mipmap sampling');
   maps[slot]={choice};

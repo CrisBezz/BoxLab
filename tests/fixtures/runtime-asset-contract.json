@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.875",
+      "url": "./src/drawer-ui.js?v=0.36.18.887",
       "target": "src/drawer-ui.js",
-      "sha256": "70321ce12eff90432e034428fbb94d59bcd04dcb83c84ce97cfd8457ebfaea2c"
+      "sha256": "795c208047edaa2f01f38e826ce304daba64618a6af7e4f5a83020420d0113a9"
     },
     {
       "owner": "index.html",
@@ -210,10 +210,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.886",
+      "url": "./src/export-as-panel.js?v=0.36.18.887",
       "target": "src/export-as-panel.js",
-      "sha256": "09144538ebab85ab3dedb6cb94292d8f434deef8843d380e261755a29494db60",
-      "sourceVersion": "0.36.18.886"
+      "sha256": "f362ee290fdc986a9eae7af79acc93673a1a00183d24b2b439ac39ab3078c606",
+      "sourceVersion": "0.36.18.887"
     },
     {
       "owner": "index.html",
@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.885",
+      "url": "./src/mesh-health.js?v=0.36.18.887",
       "target": "src/mesh-health.js",
-      "sha256": "22e64cdd21e362da9876a8057c7fc58db78d452ee8da76b08b034794b6512b97",
+      "sha256": "20a090a0a2d5867935751ca83a3337d076fb973246080ce6e20ef955abe08c5a",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -335,9 +335,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.875",
+      "url": "./src/object-management.js?v=0.36.18.887",
       "target": "src/object-management.js",
-      "sha256": "dce1a355b4b2cad7d3dff056e51082c41aa2564a18f54b5f6bec82d007949df7"
+      "sha256": "dc7ce2876020691ad894ac0d16c733e561d4f53425b8309cbcfdc023f16c07e9"
     },
     {
       "owner": "index.html",
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.886",
+      "url": "./src/release-bootstrap.js?v=0.36.18.887",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.886",
+      "url": "./src/release-version.js?v=0.36.18.887",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.885",
+      "url": "./src/render-modes.js?v=0.36.18.887",
       "target": "src/render-modes.js",
-      "sha256": "ad8382dccd59cd2358ccd5f5db685ccc03d45d46ace9f12ad0d6dae37820a1cd"
+      "sha256": "f60ec3a4c98bb17e9529c76186a8b1934ded5aa299a2a8f19348ed2d9890900e"
     },
     {
       "owner": "index.html",
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.875",
+      "url": "./object-management.js?v=0.36.18.887",
       "target": "src/object-management.js",
-      "sha256": "dce1a355b4b2cad7d3dff056e51082c41aa2564a18f54b5f6bec82d007949df7"
+      "sha256": "dc7ce2876020691ad894ac0d16c733e561d4f53425b8309cbcfdc023f16c07e9"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.886",
+      "url": "./nomad-packed-maps.js?v=0.36.18.887",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "e90c64a83ddfd764c7c0545ea5d2489a93c53c70aacb234838ee812e14bd98ed"
+      "sha256": "2b8b9113d425208dcbba9f51e5f1ecec29987dd1d6c1716546259d80092e6e8b"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -2306,9 +2306,9 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.875",
+      "url": "./boxlab-project-codec.js?v=0.36.18.887",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "7ff12c9c12b059497eb80bef4ca9632b42ea00990225ae1a3900a0c122ceab51"
+      "sha256": "52a058282c77c564a00fdbef07c1e52dc32610dfa7f56d9d59f8e6e4c6392de8"
     },
     {
       "owner": "src/linear-array.js",
@@ -2372,9 +2372,9 @@
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./project-glb-resources.js?v=0.36.18.875",
+      "url": "./project-glb-resources.js?v=0.36.18.887",
       "target": "src/project-glb-resources.js",
-      "sha256": "1edf514013453f86edd6ef86a21937e557e3dca240be01b7d102bccd1682ce57"
+      "sha256": "802f8652121e15530b864dfb02fab57a0aeeb9811db27243ff858a2d473cf303"
     },
     {
       "owner": "src/mesh-health.js",
@@ -2396,9 +2396,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.885",
+      "url": "./uv-workspace.js?v=0.36.18.887",
       "target": "src/uv-workspace.js",
-      "sha256": "890408b2239bdef00f73317d11fd31d106ced8280f376df5a49f4b6a56e36f80"
+      "sha256": "c2ff453ae66fd56d656bd16a6fb65d96666f41068c6acc9f10e5b524b7b6d1fc"
     },
     {
       "owner": "src/uv-workspace.js",
@@ -2420,39 +2420,39 @@
     },
     {
       "owner": "src/uv-workspace.js",
-      "url": "./uv-image-preview.js?v=0.36.18.885",
+      "url": "./uv-image-preview.js?v=0.36.18.887",
       "target": "src/uv-image-preview.js",
-      "sha256": "ab28b72fe073d9c51adba03e5f0b147e2f0a373f7216fbb985c6a8642c1bb4be"
+      "sha256": "526299058fb9ca37fff85bf9bf5b4311fa7890974edd4e20c59d813aa4e3f5ae"
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.885",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.887",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "a57e7c685ee81e18b082098b80579fe85523a2046a24b1accab559bb9b488a4b"
+      "sha256": "26847a88a31a9523e0abf63dcb8b99dfef9c4180cf9d321e217b3c243dcea3ec"
     },
     {
       "owner": "src/uv-image-surface-preview.js",
-      "url": "./uv-image-preview.js?v=0.36.18.885",
+      "url": "./uv-image-preview.js?v=0.36.18.887",
       "target": "src/uv-image-preview.js",
-      "sha256": "ab28b72fe073d9c51adba03e5f0b147e2f0a373f7216fbb985c6a8642c1bb4be"
+      "sha256": "526299058fb9ca37fff85bf9bf5b4311fa7890974edd4e20c59d813aa4e3f5ae"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.885",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.887",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "a57e7c685ee81e18b082098b80579fe85523a2046a24b1accab559bb9b488a4b"
+      "sha256": "26847a88a31a9523e0abf63dcb8b99dfef9c4180cf9d321e217b3c243dcea3ec"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-preview.js?v=0.36.18.885",
+      "url": "./uv-image-preview.js?v=0.36.18.887",
       "target": "src/uv-image-preview.js",
-      "sha256": "ab28b72fe073d9c51adba03e5f0b147e2f0a373f7216fbb985c6a8642c1bb4be"
+      "sha256": "526299058fb9ca37fff85bf9bf5b4311fa7890974edd4e20c59d813aa4e3f5ae"
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.886",
+      "url": "./nomad-export-core.js?v=0.36.18.887",
       "target": "src/nomad-export-core.js",
-      "sha256": "ee6a81a57a1aefabda6dcd1c5f6ee9f3199bf7dc6fa32f4fe71929a2e803d884"
+      "sha256": "47549abd58edcec1e351cd9986c032e3ca2d2606f5abfa6c2a8523f748a9c4ca"
     }
   ]
 }

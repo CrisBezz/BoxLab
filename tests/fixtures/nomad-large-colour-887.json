@@ -1,0 +1,289 @@
+{
+  "sourceName": "FULL MATERIAL.glb",
+  "sourceSha256": "a68dbedf6cfa49efcfd3b5a86c0a599d5502410e7235913ff482790e24b1419d",
+  "materials": [
+    {
+      "alphaMode": "OPAQUE",
+      "doubleSided": true,
+      "emissiveFactor": [
+        1,
+        1,
+        1
+      ],
+      "emissiveTexture": {
+        "index": 2
+      },
+      "normalTexture": {
+        "index": 1,
+        "scale": 1
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 1,
+        "metallicRoughnessTexture": {
+          "index": 4
+        },
+        "roughnessFactor": 1
+      }
+    }
+  ],
+  "textures": [
+    {
+      "source": 0
+    },
+    {
+      "source": 1
+    },
+    {
+      "source": 2
+    },
+    {
+      "source": 3
+    },
+    {
+      "source": 4
+    }
+  ],
+  "images": [
+    {
+      "index": 0,
+      "name": "Water_001_DISP_1.png",
+      "mime": "image/png",
+      "length": 11121601,
+      "sha256": "509766afb0724bf5a81369028a825a6de7e8ec3b3088f83a59d1075d08a5cd8e",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "index": 1,
+      "name": "blue_floor_tiles_01_normal.jpg",
+      "mime": "image/jpeg",
+      "length": 1248872,
+      "sha256": "3554db9f7486dc39db8cb4acbe61acd619b9466a5ab3cf71eec0cbfe2872c16f",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGB"
+    },
+    {
+      "index": 2,
+      "name": "COLOUR - Flat White.png",
+      "mime": "image/png",
+      "length": 2754,
+      "sha256": "1b7e7bbe3534aa2472a7b27ef09bc6bb4101cf8a182d94b3975630c96e0a5575",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA"
+    },
+    {
+      "index": 3,
+      "name": "blue_floor_tiles_01.png",
+      "mime": "image/png",
+      "length": 6200450,
+      "sha256": "45771544a0c7442d03136ce78fc8b79f4341a5a1541eb34f9f6e45cf3cc0b501",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "I;16"
+    },
+    {
+      "index": 4,
+      "name": "blue_floor_tiles_01_metal_rough.jpg",
+      "mime": "image/jpeg",
+      "length": 733993,
+      "sha256": "3c0ec3a61999f04ee7e5e2376ebf4a4324f1c56b09caf1334523b639b3b2d9b5",
+      "size": [
+        2048,
+        2048
+      ],
+      "mode": "RGB"
+    }
+  ],
+  "samplers": [],
+  "nomadMaterial": {
+    "textures": {
+      "color": {
+        "magFilter": "auto",
+        "minFilter": "auto",
+        "name": "Water_001_DISP_1.png",
+        "offset": [
+          0,
+          0
+        ],
+        "projection": "auto",
+        "rotation": 0,
+        "scale": [
+          1,
+          1
+        ],
+        "triplanar_hardness": [
+          0.8999999761581421,
+          0.8999999761581421,
+          0.8999999761581421
+        ],
+        "triplanar_world": true,
+        "wrapS": "repeat",
+        "wrapT": "repeat"
+      },
+      "displacement": {
+        "magFilter": "auto",
+        "minFilter": "auto",
+        "name": "blue_floor_tiles_01.png",
+        "offset": [
+          0,
+          0
+        ],
+        "projection": "auto",
+        "rotation": 0,
+        "scale": [
+          1,
+          1
+        ],
+        "triplanar_hardness": [
+          0.8999999761581421,
+          0.8999999761581421,
+          0.8999999761581421
+        ],
+        "triplanar_world": true,
+        "wrapS": "repeat",
+        "wrapT": "repeat"
+      },
+      "emissive": {
+        "magFilter": "auto",
+        "minFilter": "auto",
+        "name": "COLOUR - Flat White.png",
+        "offset": [
+          0,
+          0
+        ],
+        "projection": "auto",
+        "rotation": 0,
+        "scale": [
+          1,
+          1
+        ],
+        "triplanar_hardness": [
+          0.8999999761581421,
+          0.8999999761581421,
+          0.8999999761581421
+        ],
+        "triplanar_world": true,
+        "wrapS": "repeat",
+        "wrapT": "repeat"
+      },
+      "metalness": {
+        "magFilter": "auto",
+        "minFilter": "auto",
+        "name": "GRADIENT - Transparent Black to White.png",
+        "offset": [
+          0,
+          0
+        ],
+        "projection": "auto",
+        "rotation": 0,
+        "scale": [
+          1,
+          1
+        ],
+        "triplanar_hardness": [
+          0.8999999761581421,
+          0.8999999761581421,
+          0.8999999761581421
+        ],
+        "triplanar_world": true,
+        "wrapS": "repeat",
+        "wrapT": "repeat"
+      },
+      "normal": {
+        "magFilter": "auto",
+        "minFilter": "auto",
+        "name": "blue_floor_tiles_01_normal.jpg",
+        "offset": [
+          0,
+          0
+        ],
+        "projection": "auto",
+        "rotation": 0,
+        "scale": [
+          1,
+          1
+        ],
+        "triplanar_hardness": [
+          0.8999999761581421,
+          0.8999999761581421,
+          0.8999999761581421
+        ],
+        "triplanar_world": true,
+        "wrapS": "repeat",
+        "wrapT": "repeat"
+      },
+      "opacity": {
+        "magFilter": "auto",
+        "minFilter": "auto",
+        "name": "Water_001_DISP_opacity.png",
+        "offset": [
+          0,
+          0
+        ],
+        "projection": "auto",
+        "rotation": 0,
+        "scale": [
+          1,
+          1
+        ],
+        "triplanar_hardness": [
+          0.8999999761581421,
+          0.8999999761581421,
+          0.8999999761581421
+        ],
+        "triplanar_world": true,
+        "wrapS": "repeat",
+        "wrapT": "repeat"
+      },
+      "roughness": {
+        "magFilter": "auto",
+        "minFilter": "auto",
+        "name": "blue_floor_tiles_01_roughness.jpg",
+        "offset": [
+          0,
+          0
+        ],
+        "projection": "auto",
+        "rotation": 0,
+        "scale": [
+          1,
+          1
+        ],
+        "triplanar_hardness": [
+          0.8999999761581421,
+          0.8999999761581421,
+          0.8999999761581421
+        ],
+        "triplanar_world": true,
+        "wrapS": "repeat",
+        "wrapT": "repeat"
+      }
+    },
+    "factorOpacity": 1,
+    "factorDisplacement": 0.17320507764816284,
+    "displacementMid": 0.5,
+    "displacementWorld": false,
+    "use_color_opacity": 1,
+    "material_type": "opaque"
+  }
+}

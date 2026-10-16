@@ -1,22 +1,24 @@
 // Read-only references to the importer's retained embedded images. No material,
 // image-byte, project, or UV edits. Only UV0 base-colour images without transforms.
 // Shared read-only embedded UV0 image resolver; callers own material/slot policy.
-export function embeddedUVImage(payload,info){
+export function embeddedUVImage(payload,info,{maxBytes=8*1024*1024}={}){
+ // Preview defaults stay bounded; native byte-copy export may use its 24 MB pool.
+ if(!Number.isSafeInteger(maxBytes)||maxBytes<=0||maxBytes>24*1024*1024)return null;
  if(payload?.source!=='glb'||payload.version!==1||!info||!Number.isInteger(info.index)||info.index<0||(info.texCoord??0)!==0||info.extensions?.KHR_texture_transform)return null;
  const texture=payload.textures?.[info.index];if(!texture||Object.keys(texture.extensions||{}).length||!Number.isInteger(texture.source)||texture.source<0)return null;
  const stored=payload.images?.[texture.source],data=stored?.data;
- if(!(data instanceof Uint8Array)||!data.length||data.byteLength>8*1024*1024)return null;
+ if(!(data instanceof Uint8Array)||!data.length||data.byteLength>maxBytes)return null;
  const png=[137,80,78,71,13,10,26,10].every((b,i)=>data[i]===b),jpeg=data[0]===255&&data[1]===216&&data[2]===255;
  const mime=png?'image/png':jpeg?'image/jpeg':null;
  if(!mime||stored.definition?.mimeType&&stored.definition.mimeType!==mime)return null;
  return {imageIndex:texture.source,data,mime};
 }
-export function importedUVImageChoices(payload){
+export function importedUVImageChoices(payload,imageOptions){
  if(payload?.source!=='glb'||payload.version!==1||!Array.isArray(payload.materialIndices))return [];
  const result=[];
  for(const materialIndex of new Set(payload.materialIndices)){
   if(!Number.isInteger(materialIndex)||materialIndex<0)continue;
-  const material=payload.materials?.[materialIndex],choice=embeddedUVImage(payload,material?.pbrMetallicRoughness?.baseColorTexture);
+  const material=payload.materials?.[materialIndex],choice=embeddedUVImage(payload,material?.pbrMetallicRoughness?.baseColorTexture,imageOptions);
   if(choice)result.push({materialIndex,...choice,label:String(material.name||`Material ${materialIndex+1}`)});
  }
  return result;

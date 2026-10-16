@@ -6811,7 +6811,7 @@ per-face multiple materials are NOT implemented. Native visual success is not pr
 by final-byte assertions; source≤8MB, total≤24MB, observed native revision7 for images.
 
 
-## .885 native normal + emissive maps — user PASS2026-10-16
+## .885 native normal + emissive maps — smaller-case PASS; full-material FAIL2026-10-17
 
 - [x] User884 PASS protected: native colour image/alignment/Pencil UV repeat/project reopen.
 - [x] Full material donor schema/provenance recorded; private pixels/file not shipped.
@@ -6832,7 +6832,7 @@ channel conversion, displacement source binding and native per-face multi-materi
 remain pending. HDR material extensions remain unsupported in native map route.
 
 
-## .886 native roughness + metalness — device gate pending
+## .886 native roughness + metalness — full-material export blocked2026-10-17
 
 - [x] User885 PASS protected: normal/emissive strengths/alignment/UV/project; colour884 and native UV865 retained.
 - [x] Original packed ref resolver and native writer retained; green→roughness/blue→metalness, original resolution, separate donor slots/factors.
@@ -6852,3 +6852,23 @@ UV0/default repeat sampler, one material per object. Source≤8MB, derived≤8MB
 native image aggregate≤24MB. No resampling/gamma/factor baking; scalar multipliers stored
 in native factorRoughness/Metalness. Real Safari/Nomad appearance remains a device gate.
 Displacement binding, native per-face materials and NOM import remain unimplemented.
+
+
+## .887 large native colour image / project validation — device gate pending
+
+- [x] User885 FAIL screenshot886 recorded; exact FULL MATERIAL.glb SHA/metadata audited. Earlier smaller map PASS baselines protected, no blanket full-file PASS.
+- [x] Original importer payload reproduces failure:11,121,601B colour exceeds inherited8MB preview guard; one opaque UV0/default-sampler material is otherwise supported.
+- [x] Native raw colour/normal/emissive opt into existing24MB aggregate; preview8MB/1024² and packed8MB/2048² limits unchanged.
+- [x] Exact original image bytes, native slots/offsets/counts/dedup;24MB boundary/oversize/aggregate/packed-policy guards.
+- [x] Original project base64 validator no longer overflows stack on large images; strict alphabet/padding/canonical bits/length/pool/version checks retained.
+- [x] Selected UV/resource repeat + ACTUAL File NOMAD downloaded bytes + ACTUAL pooled .boxlab Open handler pass.
+- [x] Actual user-file native audit:5nativeimages/6faces/16,310,924B output; unchanged colour/normal/emissive hashes. Offline packed split is Pillow, not browser visual proof.
+- [x] Actual5-image pooled resource roundtrip25,750,555B encoded /19,307,670B decoded retains all source bytes.
+- [x] Full local2428PASS/0FAIL/0skip; parent/child cache contracts reviewed; protected modelling/Multi/frozen betas retained.
+- [ ] Supplied FULL MATERIAL.glb, SubD off→File→NOMAD downloads successfully and opens in Nomad with colour/normal/emissive/roughness/metalness slots intact.
+- [ ] Pencil-edit one UV island→NOMAD retains alignment of all supported maps.
+- [ ] Save/Open this textured .boxlab project→NOMAD repeats without validation errors; ordinary small/plain meshes still export.
+
+Large-image preview may stay Solid under unchanged display budget; native export byte
+copy does not require rendering that image. Opacity/displacement slots remain pending;
+latest opaque NOM donor confirms opacity STORAGE only, GLB name-only extras need audit.

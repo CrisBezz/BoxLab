@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.885';
+import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.887';
 // Active Base inspection. Mixed materials require exact per-face import provenance.
 // Names/facegroup labels are never interpreted as material assignments.
 export function uvImageMaterialSource(payload){
@@ -10,10 +10,10 @@ export function uvImageMaterialSource(payload){
  if(Object.keys(material.extensions||{}).length||(material.alphaMode??'OPAQUE')!=='OPAQUE'||!Array.isArray(factor)||factor.length!==4||factor.some(v=>!Number.isFinite(v)||v<0||v>1)||factor[3]!==1)return null;
  return {materialIndex:id,material,factor};
 }
-export function uvImageSurfaceSource(payload){
+export function uvImageSurfaceSource(payload,imageOptions){
  const source=uvImageMaterialSource(payload);if(!source)return null;
  const {materialIndex:id,material,factor}=source;
- const choice=importedUVImageChoices(payload).find(c=>c.materialIndex===id);
+ const choice=importedUVImageChoices(payload,imageOptions).find(c=>c.materialIndex===id);
  if(!choice||Object.keys(material.pbrMetallicRoughness.baseColorTexture.extensions||{}).length)return null;
  const texture=payload.textures[material.pbrMetallicRoughness.baseColorTexture.index];
  const sampler=texture.sampler===undefined?{}:Number.isInteger(texture.sampler)&&texture.sampler>=0?payload.samplers?.[texture.sampler]:null;

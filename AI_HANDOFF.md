@@ -1,13 +1,72 @@
-# BoxLab AI Handoff — .886 Native Roughness + Metalness Maps
+# BoxLab AI Handoff — .887 Large Native Texture Export Repair
 
-## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.886; live https://crisbezz.github.io/BoxLab/.
-Runtimeed65c49a; CI/Pages/live verified below; device886 gate pending.
-Previous main25412b5c / .885 normal+emissive accepted; .886 roughness/metalness device gate pending. User explicitly approves ongoing pushing/publishing.
+## Current state — 2026-10-17
+CrisBezz/BoxLab main build0.36.18.887; live https://crisbezz.github.io/BoxLab/.
+Previous runtimeed65c49a/main44dca980; .887 validation/publication proof below.
+User885 FAIL screenshot886: large FULL MATERIAL export blocked; .887 repairs reproduced image-budget and project-validation failures. Prior smaller PASS baselines remain protected. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .887 — large native colour image / project validation repair, 2026-10-17
+
+User reports885 FAIL; screenshot explicitly shows886 and native File NOMAD refusing
+at generic colour-material guard. This supersedes earlier885 PASS for the supplied
+FULL MATERIAL case; prior smaller accepted colour/normal/emissive/UV behaviour remains
+protected. Audit main44dca980/live886/pins; original importer parses supplied
+FULL MATERIAL.glb SHA256a68dbedf6cfa49efcfd3b5a86c0a599d5502410e7235913ff482790e24b1419d.
+Exactly one OPAQUE material, alpha1, UV0, default sampler, no material extensions.
+Colour PNG11,121,601B fails shared preview's8MB encoded guard. Reproduced same error
+with ACTUAL retained importer payload before change; no alpha/material-format guess.
+
+Shared embeddedUVImage takes optional maxBytes, default8MB and capped24MB; existing
+choices/surface resolver forward caller policy. ONLY native colour/normal/emissive
+byte-copy path opts into24MB. Existing native24MB unique-image aggregate remains exact;
+packed source/derived images remain8MB and≤2048² conversion. UV Editor and active surface
+preview still enforce8MB/default1024² decode, including large-image Solid/no-image
+fallback. No new decoder/material/UV/signature/history owner, downscale/reencode or
+change to unsupported material/sampler guards. Original native layout/UV/header/slot/
+image-dedup/download owners retained. This is a byte-copy budget repair, not added RAM
+for display textures or blanket PBR/opacity/displacement support.
+
+New large-resource test also reproduces RangeError Maximum call stack size exceeded
+in ORIGINAL project-glb-resources.decodeBytes repeated-group base64 regex. Replace
+only grammar validation with expected padding from decoded byteLength and a flat
+invalid-alphabet search; original byte length, atob→btoa canonical check,24MB pool,
+resource versions1/2/3,32MB project Open and legacy compatibility retained. No new codec
+or looser malformed-padding/unused-bit acceptance. Actual Open handler + large shared
+pooled file now passes; inline large resource and selected UV→native repeat pass too.
+
+Four native tests use metadata-only reported fixture + synthetic same-length bytes:
+exact11,121,601B native colour/normal/emissive output and preview rejection;24MB boundary,
+shared-slot/object dedup/aggregate/packed-budget guards; selected UV/resource/ACTUAL File
+NOMAD downloads; pooled .boxlab ACTUAL Open and strict invalid/valid base64 cases.
+Full local2428PASS/0FAIL/0skip. Extra ACTUAL user-file audit: original importer/Three
+geometry conversion→native cube6faces/1UVobject/5images,16,310,924B file, all colour/
+normal/emissive hashes identical to source. Node geometry-loader copy strips image refs
+only; original retained resources go to writer. Packed JPEG split in this offline audit
+uses Pillow G/B, so browser conversion/Nomad appearance still needs device confirmation.
+Actual full5-image pooled resource roundtrip25,750,555B encoded /19,307,670B decoded
+retains ALL five image bytes, including unused displacement. No private pixels shipped.
+
+Latest native donor FULL MATERIAL EXPORT(1).nom SHA25689170a6ecc5427413069ad9902c1b0c128ee17ad7136e8737a28be324196e47c
+adds textures.opacity index4,417,303B PNG, factorOpacity1/use_color_opacity1; material
+stillopaque. GLB meshExtras.nomad has NAME-ONLY displacement/opacity slots and factors;
+displacement texture/image3 is unreferenced by core glTF material; opacity named image
+is absent. Metadata fixture records this; audit explicit binding/semantics in a later
+stage, never assign by image filename alone. No opacity/displacement implementation887.
+
+Reviewed887 cache graph: export-panel→packed-child→native-core→surface/image-helper;
+render→surface; MeshHealth→workspace→image-helper; drawer→management→project-codec→
+resource helper (also direct management shell entry). Existing internal stamps retained
+except export-panel887; all corresponding parent URLs/hash contracts reviewed. Importer882,
+UV maths/inspector880/nav868, manager875, protected Multi1.0/native donor/modelling and
+frozen betas unchanged. All four continuity docs updated; publication proof follows.
+Device887: supplied FULL MATERIAL.glb, SubD off→File→NOMAD must download/open; colour,
+normal/emissive/roughness/metalness slots intact; UV edit→export and .boxlab Save/Open→
+export repeat. Native visual gate remains pending; do not infer PASS from file upload.
+Next: this exact-file retest before advancing opacity/displacement/native multi-materials.
 
 ## .886 — native roughness + metalness from packed GLB maps, 2026-10-16
 
@@ -1500,13 +1559,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.885 native normal/emissive PASS protected; .884 colour and .865 UVs protected.
-.886 roughness/metalness device gate: one opaque-material GLB with packed≤2048² image,
-SubD off→File→NOMAD; separate slots/expected surface, UV edit/project repeat.
-Displacement still needs actual GLB source-channel proof; never choose image by filename.
-Native multi-material requires a validated per-face donor/schema. No NOM import exists.
-Keep .883 GLB device gate separate from native-map acceptance. Await886 feedback before
-choosing the next narrow step; do not assume displacement is represented in core glTF.
+Re-test supplied FULL MATERIAL.glb on887: native File→NOMAD download/all five supported
+map slots, Pencil UV edit repeat and .boxlab Save/Open repeat. User885 FAIL screenshot886
+reopens this exact-file gate; prior smaller accepted map/UV workflows stay protected.
+Preview retains8MB/1024² display budget; large colour can export while preview is Solid.
+After887 feedback, audit explicit Nomad extras binding for displacement/opacity using
+latest donors. Names alone are not validated image indices; no NOM import, native
+per-face materials, displacement or transparency support added. Keep883 GLB gate separate.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

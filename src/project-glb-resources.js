@@ -7,7 +7,10 @@ function encodeBytes(data){
  return {encoding:'base64',byteLength:data.length,data:btoa(binary)};
 }
 function decodeBytes(value){
- if(value?.encoding!=='base64'||!Number.isSafeInteger(value.byteLength)||value.byteLength<0||value.byteLength>LIMIT||typeof value.data!=='string'||value.data.length!==4*Math.ceil(value.byteLength/3)||!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(value.data))throw Error('Invalid GLB image encoding');
+ if(value?.encoding!=='base64'||!Number.isSafeInteger(value.byteLength)||value.byteLength<0||value.byteLength>LIMIT||typeof value.data!=='string'||value.data.length!==4*Math.ceil(value.byteLength/3))throw Error('Invalid GLB image encoding');
+ // Avoid a repeated-group regex: valid multi-megabyte images overflow its stack.
+ const padding=(3-value.byteLength%3)%3;
+ if(!value.data.endsWith('='.repeat(padding))||/[^A-Za-z0-9+/]/.test(value.data.slice(0,value.data.length-padding)))throw Error('Invalid GLB image encoding');
  const binary=atob(value.data);if(binary.length!==value.byteLength||btoa(binary)!==value.data)throw Error('Invalid GLB image byte length');
  return Uint8Array.from(binary,c=>c.charCodeAt(0));
 }
