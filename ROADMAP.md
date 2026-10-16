@@ -1460,3 +1460,16 @@ protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live r
 preceded deployment and returned871; final complete graph matches872. User871 PASS
 protected;872 Pencil Scale/navigation/history/project/native-export device gate
 pending. All four handoff files current; Pencil Rotate next after feedback.
+
+## .873 publication verified — 2026-10-16
+
+Release 0087d2cbe3d8fd00d586619ebd890c0f4668e4a9; tested tree
+015ab6da6fb23c90e3a9c1924faac9fac1f39927 exactly matches fetched main.
+Actual Node22 CI38826931252/job116736445051 SUCCESS2357PASS/0FAIL/0skip;
+Pages38826931247 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth873/workspace873/edit873/inspector873, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned872; final complete graph matches873. User872 PASS
+protected;873 Pencil Rotate/navigation/history/project/native-export device gate
+pending. All four handoff files current; next UV-authoring stage needs owner audit
+and873 feedback. No new unwrap/new-mesh channels/painting or device PASS inferred.
