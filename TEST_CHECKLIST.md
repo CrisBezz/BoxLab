@@ -6609,3 +6609,16 @@ requires owner audit and874 feedback. Selected fit does not pack multiple island
 - [ ] Existing imported UV mesh still edits/exports; Planar buttons stay disabled for imported resources.
 
 Planar projection can overlap/collapse faces; no full unwrap/box mapping/painting or evaluated UVs yet.
+
+## .875 publication verified — 2026-10-16
+
+Release 6272110710d0a590c701d9c587c4cee3e6d12fdd; tested tree
+66fd86f936273230409adf6bb56e1e88a80b5b55 exactly matches fetched main.
+Actual Node22 CI38857230889/job116831332240 SUCCESS2368PASS/0FAIL/0skip;
+Pages38857230399 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth/edit/manager/codec/resource/management/drawer875, unchanged workspace874,
+GLB/native exporters865, protected Multi1.0 and frozenBeta7 version byte-match
+repository. Initial live reads preceded deployment and returned874; final complete
+published graph matches875. User874 PASS protected;875 native Planar/editor/history/
+project/native Nomad device gate pending. All four handoff files current. Native
+resource v3/sourceboxlab is explicit; no seam unwrap/painting/evaluated UV claim.
