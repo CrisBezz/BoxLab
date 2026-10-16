@@ -1,12 +1,58 @@
-# BoxLab AI Handoff — .879 3D UV Checker
+# BoxLab AI Handoff — .880 UV Image Reference
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.879; live https://crisbezz.github.io/BoxLab/.
-Previous main033d9950 / .878 accepted; .879 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.880; live https://crisbezz.github.io/BoxLab/.
+Previous main67e01309 / .879 accepted; .880 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .880 — embedded base-colour image reference in UV Editor, 2026-10-16
+
+User .879 Perfect PASS protects temporary surface checker, navigation, UV edits/session
+refresh/history and ordinary look restoration. Audit main67e01309/live879: importer797
+retains materialIndices/materials/textures/embedded image bytes; resource875, history,
+Duplicate and codec already preserve them. No image display/decoder exists. Extend the
+ORIGINAL UV workspace/renderer with optional Image reference and material-name chooser
+when multiple compatible sources exist. Whole selected image behind ALL UV outlines;
+this is reference inspection, not face-material assignment or PBR rendering.
+
+Small uv-image-preview helper resolves USED materialIndices → UV0 baseColorTexture →
+texture.source → existing embedded PNG/JPEG bytes. No URLs/network fetches or unrelated
+normal/roughness images. Texture transforms/other UV sets/texture extensions, external
+or missing/invalid/over8MB image records refuse; missing native/plain resources disable
+Image. Labels use textContent. Optional browser createImageBitmap produces a1024×1024
+reference (square tile mapping); original image bytes never resized/replaced. Browser
+unsupported/decode failures show inline status. At most one decoded image held; token
+checks discard/close late results, canceled-before-start work never decodes. Switching,
+off/close/payload replacement releases bitmap; same read-only image across UV-only payload
+replacement reuses it. No new history/resource schema or image editor/cache pool.
+
+Renderer shares original projection/picking, clips canvas+tile0–1, flips vertically so
+stored glTF V0 corresponds to image top (GLTFLoader uses flipY=false). Image drawn above
+optional checker and beneath outlines/selection/seams; Pencil transforms UVs over fixed
+image. Reference is tile-only, not sampler wrapping/material colour-factor evaluation.
+Controls cancel pending Pencil without commit, retain view/selection; off on reopen.
+No 3D image look, painting, new UV channel, kernel, gesture owner, or topology changes.
+
+Five native regressions cover actual importer container/resource shape+codec bytes,
+used-source/unsupported guards, decoder thumbnail/budget/fail/cancel/race/reuse lifecycle,
+renderer V0/projection/clip/order/read-only and actual workspace chooser/Pencil/session
+cleanup. Full local Node24:2391PASS/0FAIL/0skip; final publication proof follows.
+Cache MeshHealth/workspace/edit/inspector880 plus new image helper880 and shell/recovery;
+edit880 changes ONLY shared inspector import. Surface checker/render/export879, native
+NOM865, manager/codec/resources875/nav868, protected Multi1.0/main854/Loop/Extrude/Boolean
+and frozen betas unchanged. Device880 image orientation/readability/Pencil/chooser/file
+reopen gate pending. Next after feedback: audit temporary 3D base-colour image view with
+per-material ambiguity/sampler/colour/lifetime handling before painting; reuse original
+render/geometry/resource owners and keep imported images read-only.
+
+## Protected .879 — user PASS2026-10-16
+
+3D UV Checker surface/seams, orbit/pan/pinch, island Scale→Back to3D refresh, native
+Undo/Redo and Studio/Solid restoration accepted. Preserve ephemeral overlay and original
+body geometry/picking/export isolation; .880 image reference gate remains separate.
 
 ## .879 — temporary 3D UV Checker view, 2026-10-16
 
@@ -1148,11 +1194,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.879 device: plain Cube→Box UVs or upright Cylinder→Cylinder UVs (Y), SubD off →
-VIEW→UV Checker. Orbit, Scale an island in UV Editor then Back to3D, Undo/Redo;
-return to Studio/Solid. Missing/stale/unsupported/over20k-corner channels use Solid.
-.878 user PASS protected. After feedback, audit imported-image inspection through
-original render/resource owners before painting. No evaluated UV propagation claim.
+.880 device: import GLB with embedded base-colour PNG/JPEG, Split groups off → UV
+Editor→Image. Check orientation/alignment, Pencil edits/history, source chooser if
+multiple materials, close/reopen off and Save/Open retains image. Plain/native has
+no image reference. .879 user PASS protected. Then audit temporary3D image view with
+per-material/sampler/colour/lifetime constraints before painting. No new UV propagation.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

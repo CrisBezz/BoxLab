@@ -9730,3 +9730,49 @@ Undo/Redo, Back to3D/reopen defaults accepted. .879 surface-checker device gate 
 ## .879 publication verified — 2026-10-16
 
 Release `6b20c3939a9ebe7b9847fdc0830adb565fd0a1ba`; tested tree `794865b855df33763e91136e5421b4933569507a` exactly matches fetched main. Actual Node22 CI38870113315/job116871955152 SUCCESS **2386 PASS / 0 FAIL / 0 skipped**; Pages38870112481 build/deploy SUCCESS. Final fresh live shell/manifest/render-owner/preview-child/export-panel879, unchanged workspace878/native NOM865/protected Multi1.0/frozenBeta7 version byte-match repository. Initial reads preceded deployment (old878/child404); final full graph matches879. All four continuity docs current. User878 PASS protected;879 surface checker/navigation/UV edit→session-exit/history/look-restoration device gate pending. Stored Base UVs only; unsupported/stale/over20k-corner objects use Solid; no painting/evaluated UV propagation claim.
+
+## .880 — embedded base-colour image reference in UV Editor, 2026-10-16
+
+User .879 Perfect PASS protects temporary surface checker, navigation, UV edits/session
+refresh/history and ordinary look restoration. Audit main67e01309/live879: importer797
+retains materialIndices/materials/textures/embedded image bytes; resource875, history,
+Duplicate and codec already preserve them. No image display/decoder exists. Extend the
+ORIGINAL UV workspace/renderer with optional Image reference and material-name chooser
+when multiple compatible sources exist. Whole selected image behind ALL UV outlines;
+this is reference inspection, not face-material assignment or PBR rendering.
+
+Small uv-image-preview helper resolves USED materialIndices → UV0 baseColorTexture →
+texture.source → existing embedded PNG/JPEG bytes. No URLs/network fetches or unrelated
+normal/roughness images. Texture transforms/other UV sets/texture extensions, external
+or missing/invalid/over8MB image records refuse; missing native/plain resources disable
+Image. Labels use textContent. Optional browser createImageBitmap produces a1024×1024
+reference (square tile mapping); original image bytes never resized/replaced. Browser
+unsupported/decode failures show inline status. At most one decoded image held; token
+checks discard/close late results, canceled-before-start work never decodes. Switching,
+off/close/payload replacement releases bitmap; same read-only image across UV-only payload
+replacement reuses it. No new history/resource schema or image editor/cache pool.
+
+Renderer shares original projection/picking, clips canvas+tile0–1, flips vertically so
+stored glTF V0 corresponds to image top (GLTFLoader uses flipY=false). Image drawn above
+optional checker and beneath outlines/selection/seams; Pencil transforms UVs over fixed
+image. Reference is tile-only, not sampler wrapping/material colour-factor evaluation.
+Controls cancel pending Pencil without commit, retain view/selection; off on reopen.
+No 3D image look, painting, new UV channel, kernel, gesture owner, or topology changes.
+
+Five native regressions cover actual importer container/resource shape+codec bytes,
+used-source/unsupported guards, decoder thumbnail/budget/fail/cancel/race/reuse lifecycle,
+renderer V0/projection/clip/order/read-only and actual workspace chooser/Pencil/session
+cleanup. Full local Node24:2391PASS/0FAIL/0skip; final publication proof follows.
+Cache MeshHealth/workspace/edit/inspector880 plus new image helper880 and shell/recovery;
+edit880 changes ONLY shared inspector import. Surface checker/render/export879, native
+NOM865, manager/codec/resources875/nav868, protected Multi1.0/main854/Loop/Extrude/Boolean
+and frozen betas unchanged. Device880 image orientation/readability/Pencil/chooser/file
+reopen gate pending. Next after feedback: audit temporary 3D base-colour image view with
+per-material ambiguity/sampler/colour/lifetime handling before painting; reuse original
+render/geometry/resource owners and keep imported images read-only.
+
+## Protected .879 — user PASS2026-10-16
+
+3D UV Checker surface/seams, orbit/pan/pinch, island Scale→Back to3D refresh, native
+Undo/Redo and Studio/Solid restoration accepted. Preserve ephemeral overlay and original
+body geometry/picking/export isolation; .880 image reference gate remains separate.

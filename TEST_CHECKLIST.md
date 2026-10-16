@@ -6688,7 +6688,7 @@ User .876 PASS remains protected. The .877 device gate remains pending: upright 
 Release `7b7cf2751e371959437a6ad10601c930f727a64d`; tested tree `ef9e7b6005166f3c6e38eb93830963f11f513e36` exactly matches fetched main. Actual Node22 CI38867402179/job116863294620 SUCCESS **2381 PASS / 0 FAIL / 0 skipped**; Pages38867401881 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth/workspace/inspector/edit878, unchanged GLB panel877/protected Multi1.0/frozenBeta7 version byte-match repository. Native NOM865, manager/codec/resources875/nav868 and protected modelling owners unchanged. All four continuity documents current. User877 PASS protected;878 checker readability/navigation/Pencil/history/reopen device gate pending. This checker is a 2D reference only; 3D texture/stretch inspection remains the next audited stage.
 
 
-## .879 temporary 3D UV Checker view — device gate pending
+## .879 temporary 3D UV Checker view — user PASS2026-10-16
 
 - [x] User878 PASS protected: 2D checker/navigation/Pencil/history/reopen.
 - [x] Original exporter triangulation/corner mapping; live positions/no import-fit restoration; concave and seam variants.
@@ -6697,10 +6697,10 @@ Release `7b7cf2751e371959437a6ad10601c930f727a64d`; tested tree `ef9e7b6005166f3
 - [x] Actual render active bridge/inactive object/fallback/session-end UV refresh and Studio/Clay restoration.
 - [x] Cylinder seam+cap variants preserved; preview leaves native NOM bytes unchanged; all export/history regressions retained.
 - [x] Full local Node24:2386PASS/0FAIL/0skip; reviewed cache graph and all original8 view modes retained.
-- [ ] Cube→Box UVs or upright Cylinder→Cylinder UVs(Y), SubD off: VIEW→UV Checker shows checker over surface.
-- [ ] Orbit/pan/pinch remain normal; inspect box panels and cylinder side/cap seam.
-- [ ] UV Editor→Scale island→Back to3D changes checker size there; Undo/Redo restores it.
-- [ ] VIEW→Studio/Solid restores ordinary look; mesh without UVs remains plain in checker mode.
+- [x] Cube→Box UVs or upright Cylinder→Cylinder UVs(Y), SubD off: VIEW→UV Checker shows checker over surface.
+- [x] Orbit/pan/pinch remain normal; inspect box panels and cylinder side/cap seam.
+- [x] UV Editor→Scale island→Back to3D changes checker size there; Undo/Redo restores it.
+- [x] VIEW→Studio/Solid restores ordinary look; mesh without UVs remains plain in checker mode.
 
 Base stored UVs only, maximum20,000 face corners; evaluated/linked/procedural/stale channels use Solid.
 Temporary view only; no image painting/persistent materials/export changes.
@@ -6708,3 +6708,21 @@ Temporary view only; no image painting/persistent materials/export changes.
 ## .879 publication verified — 2026-10-16
 
 Release `6b20c3939a9ebe7b9847fdc0830adb565fd0a1ba`; tested tree `794865b855df33763e91136e5421b4933569507a` exactly matches fetched main. Actual Node22 CI38870113315/job116871955152 SUCCESS **2386 PASS / 0 FAIL / 0 skipped**; Pages38870112481 build/deploy SUCCESS. Final fresh live shell/manifest/render-owner/preview-child/export-panel879, unchanged workspace878/native NOM865/protected Multi1.0/frozenBeta7 version byte-match repository. Initial reads preceded deployment (old878/child404); final full graph matches879. All four continuity docs current. User878 PASS protected;879 surface checker/navigation/UV edit→session-exit/history/look-restoration device gate pending. Stored Base UVs only; unsupported/stale/over20k-corner objects use Solid; no painting/evaluated UV propagation claim.
+
+
+## .880 embedded colour-image reference — device gate pending
+
+- [x] User879 Perfect PASS protected: 3D checker/navigation/Pencil/session refresh/history/look restoration.
+- [x] Actual GLB importer image/material shape and codec byte continuity; original resources shared read-only.
+- [x] Used material UV0/core PNG/JPEG source resolution; transform/extension/external/missing/bad/over8MB refusal.
+- [x] Bounded1024 bitmap decode, off/select/close cleanup, late result close, canceled-before-start skip, same-image reuse.
+- [x] Shared projection/V0 vertical orientation, clipping/draw order, read-only report and picking/UV maths unchanged.
+- [x] Actual workspace image toggle/source chooser, Pencil cancellation/view+selection retention, native/plain disabled.
+- [x] Full local Node24:2391PASS/0FAIL/0skip; surface checker/render/export/protected/frozen owners retained.
+- [ ] Import GLB with embedded base-colour image (Split groups off) → UV Editor→Image: image behind UVs, correct orientation.
+- [ ] Pan/pinch/Fit; Pencil Move/Scale/Rotate over stationary image, Undo/Redo; original checker still works.
+- [ ] If multiple compatible materials exist, image chooser changes reference; Back to3D/reopen defaults Image off.
+- [ ] Save/Open .boxlab → UV Editor→Image still works; plain/native meshes keep Image disabled.
+
+Whole selected source-image reference in tile0–1, not per-face material/PBR rendering, wrapping, 3D image texturing or painting.
+Only embedded PNG/JPEG UV0 without texture transforms, ≤8MB source; reference decoding requires browser createImageBitmap.

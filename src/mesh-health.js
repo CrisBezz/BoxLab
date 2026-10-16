@@ -3,11 +3,11 @@ import {safeRepairMesh} from './mesh-health-repair-core.js?v=0.36.18.443';
 import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.js?v=0.36.18.443';
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
-import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.878';
-import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,createPlanarUV,createBoxUV,createCylinderUV} from './imported-uv-edit.js?v=0.36.18.878';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.878';
+import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.880';
+import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,createPlanarUV,createBoxUV,createCylinderUV} from './imported-uv-edit.js?v=0.36.18.880';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.880';
 
-const VERSION='0.36.18.878';
+const VERSION='0.36.18.880';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 

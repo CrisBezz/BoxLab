@@ -60,7 +60,7 @@ function inspectConnectivity(faces,uvs,report){
  report.previewIslands=report.previewFaceIndices.map(fi=>report.faceIslands[fi]);
  report.previewSeamIslands=seamFaces.map(fi=>report.faceIslands[fi]);
 }
-export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null,previewScale=null,previewRotation=null,checker=false}={}){
+export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null,previewScale=null,previewRotation=null,checker=false,image=null}={}){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;
  const width=canvas.width,height=canvas.height;
  ctx.clearRect(0,0,width,height);ctx.fillStyle='#101722';ctx.fillRect(0,0,width,height);
@@ -74,6 +74,15 @@ export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio
    const top=Math.max(0,y((row+1)/16)),bottom=Math.min(height,y(row/16));
    if(![left,right,top,bottom].every(Number.isFinite)||right<=left||bottom<=top)continue;
    ctx.fillStyle=(row+col)%2?'#26384c':'#1b2839';ctx.fillRect(left,top,right-left,bottom-top);
+  }
+ }
+ // glTF UV0 maps image top to V=0. Our editor draws V upwards, so the
+ // reference must be vertically flipped. Clip tile and canvas before transforming.
+ if(image?.width>0&&image?.height>0){
+  const x0=x(0),x1=x(1),y0=y(0),y1=y(1),left=Math.max(0,x0),right=Math.min(width,x1),top=Math.max(0,y1),bottom=Math.min(height,y0);
+  if([x0,x1,y0,y1].every(Number.isFinite)&&right>left&&bottom>top&&x1>x0&&y0>y1){
+   ctx.save();ctx.beginPath();ctx.rect(left,top,right-left,bottom-top);ctx.clip();
+   ctx.translate(x0,y0);ctx.scale((x1-x0)/image.width,(y1-y0)/image.height);ctx.drawImage(image,0,0);ctx.restore();
   }
  }
  // Pencil preview moves only displayed selected corners; stored UV arrays stay read-only.
