@@ -5,9 +5,9 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.741';
 
-import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.885';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.886';
 
-const VERSION='0.36.18.885';
+const VERSION='0.36.18.886';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -46,7 +46,7 @@ function updateNote(){
 let nomadTemplatePromise=null;
 async function buildNOM(sceneObjects,subd=false){
   if(!nomadTemplatePromise)nomadTemplatePromise=fetch(new URL('./templates/nomad-tube.nom',import.meta.url)).then(response=>{if(!response.ok)throw Error('Nomad template could not be loaded');return response.arrayBuffer();}).catch(error=>{nomadTemplatePromise=null;throw error;});
-  return buildNomadProject(sceneObjects,await nomadTemplatePromise,{subd,name:cleanName(nameInput?.value)});
+  return buildNomadProjectWithMaps(sceneObjects,nomadTemplatePromise,{subd,name:cleanName(nameInput?.value)});
 }
 async function exportNomad(){
   if(shareButton.disabled)return;
@@ -56,7 +56,7 @@ async function exportNomad(){
     if(status)status.textContent='NOMAD • building scene…';
     const result=await buildNOM(sceneObjects,geometry==='subd'),mime='application/x-nomad-sculpt';
     downloadBlob(new Blob([result.bytes],{type:mime}),cleanName(nameInput?.value)+'.nom',60000);
-    if(status)status.textContent=`NOMAD • ${result.count} object${result.count===1?'':'s'} • ${result.faces} faces${result.colourTextureObjects?` • colour images ${result.colourTextureObjects}/${result.count}`:''}${result.normalTextureObjects?` • normal maps ${result.normalTextureObjects}`:''}${result.emissiveTextureObjects?` • emissive maps ${result.emissiveTextureObjects}`:''}${result.uvObjects?` • UVs ${result.uvObjects}/${result.count}`:''} • open browser download, then Open In / Share → Nomad`;
+    if(status)status.textContent=`NOMAD • ${result.count} object${result.count===1?'':'s'} • ${result.faces} faces${result.colourTextureObjects?` • colour images ${result.colourTextureObjects}/${result.count}`:''}${result.normalTextureObjects?` • normal maps ${result.normalTextureObjects}`:''}${result.emissiveTextureObjects?` • emissive maps ${result.emissiveTextureObjects}`:''}${result.roughnessTextureObjects?` • roughness maps ${result.roughnessTextureObjects}`:''}${result.metalnessTextureObjects?` • metalness maps ${result.metalnessTextureObjects}`:''}${result.uvObjects?` • UVs ${result.uvObjects}/${result.count}`:''} • open browser download, then Open In / Share → Nomad`;
   }catch(error){if(status)status.textContent=`NOMAD export failed • ${error?.message||error}`;}
   finally{shareButton.disabled=false;updateNote();}
 }

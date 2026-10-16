@@ -1,3 +1,4 @@
+import {buildNomadProjectWithMaps} from '../src/nomad-packed-maps.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -24,7 +25,7 @@ test('865 native NOM stores nonzero per-corner UVs with separate seam indices an
 test('865 rotated UVs survive project and actual File NOMAD action in native downloaded bytes',async()=>{
  const o=fixture();assert(rotateImportedUV(o,o.mesh,signature,{capture:()=>({}),checkpointSnapshot:()=>true}).changed);
  const encoded=encodeBoxlabScene({activeId:1,objects:[o]}),restored=decodeBoxlabScene(JSON.parse(JSON.stringify(encoded)),(...a)=>new EditableMesh(...a)).objects[0],saves=[],status={};
- const source=fs.readFileSync(new URL('../src/export-as-panel.js',import.meta.url),'utf8'),c={URL,Blob,shareButton:{disabled:false},status,note:{},nameInput:{value:'UV cube'},cleanName:x=>x,objects:()=>[restored],geometry:'base',buildNomadProject,fetch:async()=>({ok:true,arrayBuffer:async()=>template}),downloadBlob:(...args)=>saves.push(args)};
+ const source=fs.readFileSync(new URL('../src/export-as-panel.js',import.meta.url),'utf8'),c={URL,Blob,shareButton:{disabled:false},status,note:{},nameInput:{value:'UV cube'},cleanName:x=>x,objects:()=>[restored],geometry:'base',buildNomadProjectWithMaps,fetch:async()=>({ok:true,arrayBuffer:async()=>template}),downloadBlob:(...args)=>saves.push(args)};
  vm.createContext(c);vm.runInContext(source.slice(source.indexOf('function updateNote(){'),source.indexOf('function extension()')).replace('import.meta.url',"'https://example.test/src/export-as-panel.js'"),c);
  const prior=globalThis.__boxlabExportAs;globalThis.__boxlabExportAs={topologySignature:signature};try{await c.exportNomad();}finally{globalThis.__boxlabExportAs=prior;}
  assert.equal(saves.length,1);assert.match(saves[0][1],/\.nom$/);assert.match(status.textContent,/UVs 1\/1/);const p=readNomadProject(await saves[0][0].arrayBuffer());assertUVs(p,0,restored);

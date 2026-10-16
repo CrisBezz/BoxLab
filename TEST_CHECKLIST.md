@@ -6811,7 +6811,7 @@ per-face multiple materials are NOT implemented. Native visual success is not pr
 by final-byte assertions; source≤8MB, total≤24MB, observed native revision7 for images.
 
 
-## .885 native normal + emissive maps — device gate pending
+## .885 native normal + emissive maps — user PASS2026-10-16
 
 - [x] User884 PASS protected: native colour image/alignment/Pencil UV repeat/project reopen.
 - [x] Full material donor schema/provenance recorded; private pixels/file not shipped.
@@ -6823,10 +6823,32 @@ by final-byte assertions; source≤8MB, total≤24MB, observed native revision7 
 - [x] Actual File NOMAD action + selected UV/project persistence + status counters verified.
 - [x] Real donor normal1,248,872B and emissive2,754B hashes retained through native writer audit.
 - [x] Full local2417PASS/0FAIL/0skip; original tests/protected/frozen/native donor retained.
-- [ ] Import one-material GLB with normal/emissive maps, SubD off→File→NOMAD: slots populated and visible bump/emission correct in Nomad.
-- [ ] Pencil UV edit→NOMAD keeps map alignment; original colour-image behavior retained.
-- [ ] Save/Open .boxlab→NOMAD repeats with normal/emissive resources intact.
+- [x] Import one-material GLB with normal/emissive maps, SubD off→File→NOMAD: slots populated and visible bump/emission correct in Nomad.
+- [x] Pencil UV edit→NOMAD keeps map alignment; original colour-image behavior retained.
+- [x] Save/Open .boxlab→NOMAD repeats with normal/emissive resources intact.
 
 Emissive effect follows source RGB factor (defaultblack). Roughness/metalness packed
 channel conversion, displacement source binding and native per-face multi-materials
 remain pending. HDR material extensions remain unsupported in native map route.
+
+
+## .886 native roughness + metalness — device gate pending
+
+- [x] User885 PASS protected: normal/emissive strengths/alignment/UV/project; colour884 and native UV865 retained.
+- [x] Original packed ref resolver and native writer retained; green→roughness/blue→metalness, original resolution, separate donor slots/factors.
+- [x] Actual per-pixel unpacking/valid PNG CRC+inflate/native image bytes; geometry/UV fields and source project resources unchanged.
+- [x] All five core map slots coexist; source-buffer conversion once across objects; native dedup/offsets/counts and factor defaults guarded.
+- [x] Selected UV/project continuity and snapshot-before-await isolation from ongoing scene edits.
+- [x] Source/UV/sampler/factor/bit-depth/dimensions/orientation/alpha/encoded+aggregate budgets refuse; no silent packed-map loss.
+- [x] Bitmap/canvas cleanup on failure; JPEG header checks and DOM canvas/toBlob fallback; browser transport adapted in Node.
+- [x] ACTUAL File NOMAD waits, downloads real native PNGs, reports counts and restores button on failure; prior action semantics retained.
+- [x] Full local2424PASS/0FAIL/0skip; reviewed cache graph; protected modelling/Multi/frozen betas/native donor unchanged.
+- [ ] One opaque-material GLB with packed roughness/metalness≤2048², SubD off→File→NOMAD: separate Roughness/Metalness slots and correct glossy/matte/metallic regions.
+- [ ] Colour/normal/emissive still present and correctly aligned; Pencil island edit→NOMAD repeat keeps every map aligned.
+- [ ] Save/Open .boxlab→NOMAD repeats with roughness/metalness maps intact; plain mesh still opens normally.
+
+Conversion supports opaque8-bit embedded PNG/JPEG, no EXIF/eXIf orientation metadata,
+UV0/default repeat sampler, one material per object. Source≤8MB, derived≤8MB/image,
+native image aggregate≤24MB. No resampling/gamma/factor baking; scalar multipliers stored
+in native factorRoughness/Metalness. Real Safari/Nomad appearance remains a device gate.
+Displacement binding, native per-face materials and NOM import remain unimplemented.

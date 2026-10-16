@@ -1,12 +1,63 @@
-# BoxLab AI Handoff — .885 Native Normal + Emissive Maps
+# BoxLab AI Handoff — .886 Native Roughness + Metalness Maps
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.885; live https://crisbezz.github.io/BoxLab/.
-Previous main3cd0d5ae / .884 native colour accepted; .885 native map device gate pending. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.886; live https://crisbezz.github.io/BoxLab/.
+Previous main25412b5c / .885 normal+emissive accepted; .886 roughness/metalness device gate pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .886 — native roughness + metalness from packed GLB maps, 2026-10-16
+
+User .885 PASS /nextbuild protects native normal/emissive slots, strengths, alignment,
+UV edit repeat and project reopening, alongside accepted .884 colour and .865 UVs.
+Audited current main25412b5c/runtime9154caaa and live .885 markers/owners. Original GLB
+resources retain pbrMetallicRoughness.metallicRoughnessTexture; no channel conversion
+exists. Full donor885 proves separate textures.roughness/metalness and factorRoughness/
+factorMetalness. No filename inference, new modelling/material/history kernel or schema.
+
+New small nomad-packed-maps child performs export-local preparation, then delegates
+ORIGINAL native writer. Shared nativeMaterialMaps guard now recognizes the packed ref
+with the same single opaque material, embedded PNG/JPEG UV0, default repeat/linear
+sampling and finite factors. Green→roughness, blue→metalness per official glTF2 spec;
+no red/occlusion reuse, luminance conversion, factor baking, gamma maths or Y flip.
+Original dimensions retained: at most2048×2048, 8-bit source. Header inspection bounds
+BEFORE bitmap decode; 16-bit PNG, EXIF/eXIf orientation metadata and translucent decoded
+pixels refuse clearly. Browser createImageBitmap uses colorSpaceConversion:none and
+premultiplyAlpha:none, then canvas produces opaque grayscale PNGs. OffscreenCanvas or
+original DOM canvas/toBlob fallback; bitmap close and scratch canvas reset in finally,
+including encode/decode failure. No preview-thumbnail decoder changes. Original colour/
+normal/emissive images stay exact encoded bytes. Full donor's relevant JPEGs are2048²;
+its16-bit displacement is a distinct unsupported source, not treated as packed PBR.
+
+One conversion per shared encoded buffer per export. Derived PNGs exist only within
+this download, never source/project/history payload. Same native image-table alignment,
+byte-identity dedup and≤8MB/image /24MB aggregate guards. Native factorRoughness and
+factorMetalness carry source scalar factors (default1); native slot/header7/mesh/UV/
+facegroup owners retained. Synchronous core refuses unprepared declared packed maps,
+never silently omits them. Async facade captures mesh/settings and read-only payload
+BEFORE any await so ongoing scene edits cannot mix UV/geometry states. Plain/no-packed
+output remains byte-identical; existing File NOMAD download owner reports both map
+counts. Existing GLB/OBJ and surface preview/import/resource/editor math unchanged.
+
+Seven new regressions cover actual G/B pixel arrays→distinct valid PNG bytes (inflate+
+CRC), donor slots/factors/native geometry+UV byte identity, all five core maps together,
+shared source conversion once across objects, selected UV/project continuity, in-flight
+snapshot isolation, source/sampler/UV/factor/size/budget refusals, bitmap/canvas cleanup,
+JPEG header/metadata guards, DOM canvas fallback and ACTUAL File NOMAD downloaded bytes/
+status/failure recovery. Browser transport is adapted in Node; no browser/Nomad rendering
+proof claimed. Prior735/865/884/885 action fixtures now supply real async facade, retaining
+all their semantic assertions. Full local2424PASS/0FAIL/0skip; publication proof follows.
+
+Reviewed cache graph: shell/recovery/export-panel886→packed-child886→native-core886;
+core→unchanged surface/image885. Render/MeshHealth/workspace885, importer882, UV edit/
+inspector880/nav868, Multi1.0, native donor and all modelling/frozen beta bytes unchanged.
+Device886: one-material GLB with packed roughness/metalness (≤2048²), SubD off→File→NOMAD:
+separate Roughness/Metalness slots, expected glossy/matte and metallic regions; existing
+colour/normal/emissive intact; Pencil UV edit and .boxlab Save/Open→export repeat.
+Next:886 device feedback, then audit actual source binding for displacement or native
+multi-material schema before claiming either. No native NOM import or painting added.
 
 ## .885 — native normal + emissive maps from full donor, 2026-10-16
 
@@ -1448,12 +1499,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.885 native normal/emissive device gate: one opaque material GLB with those maps,
-SubD off→File→NOMAD; correct Material slots/strength/alignment, Pencil repeat/project.
-.884 colour image PASS protected. Next unpack metallicRoughnessTexture green/blue
-into separate roughness/metalness images with original source/UV/byte budgets and
-read-only resource boundaries. Displacement still needs actual source-channel proof;
-never choose image by filename. No native multi-material or NOM import implementation.
+.885 native normal/emissive PASS protected; .884 colour and .865 UVs protected.
+.886 roughness/metalness device gate: one opaque-material GLB with packed≤2048² image,
+SubD off→File→NOMAD; separate slots/expected surface, UV edit/project repeat.
+Displacement still needs actual GLB source-channel proof; never choose image by filename.
+Native multi-material requires a validated per-face donor/schema. No NOM import exists.
+Keep .883 GLB device gate separate from native-map acceptance. Await886 feedback before
+choosing the next narrow step; do not assume displacement is represented in core glTF.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

@@ -210,10 +210,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.885",
+      "url": "./src/export-as-panel.js?v=0.36.18.886",
       "target": "src/export-as-panel.js",
-      "sha256": "3a8d8b23f2adc275b13c3d1b7e17de909bef8d5349637eea7c8ca77b725aa7ac",
-      "sourceVersion": "0.36.18.885"
+      "sha256": "09144538ebab85ab3dedb6cb94292d8f434deef8843d380e261755a29494db60",
+      "sourceVersion": "0.36.18.886"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.885",
+      "url": "./src/release-bootstrap.js?v=0.36.18.886",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.885",
+      "url": "./src/release-version.js?v=0.36.18.886",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-export-core.js?v=0.36.18.885",
-      "target": "src/nomad-export-core.js",
-      "sha256": "f542cc6e71cd009a6f573b2ede08f305411fea05f17346e2501bee9247d01fcc"
+      "url": "./nomad-packed-maps.js?v=0.36.18.886",
+      "target": "src/nomad-packed-maps.js",
+      "sha256": "e90c64a83ddfd764c7c0545ea5d2489a93c53c70aacb234838ee812e14bd98ed"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -2447,6 +2447,12 @@
       "url": "./uv-image-preview.js?v=0.36.18.885",
       "target": "src/uv-image-preview.js",
       "sha256": "ab28b72fe073d9c51adba03e5f0b147e2f0a373f7216fbb985c6a8642c1bb4be"
+    },
+    {
+      "owner": "src/nomad-packed-maps.js",
+      "url": "./nomad-export-core.js?v=0.36.18.886",
+      "target": "src/nomad-export-core.js",
+      "sha256": "ee6a81a57a1aefabda6dcd1c5f6ee9f3199bf7dc6fa32f4fe71929a2e803d884"
     }
   ]
 }
