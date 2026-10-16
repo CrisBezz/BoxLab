@@ -9684,3 +9684,45 @@ transport and imported pole-weld compatibility; .878 checker device gate remains
 ## .878 publication verified — 2026-10-16
 
 Release `7b7cf2751e371959437a6ad10601c930f727a64d`; tested tree `ef9e7b6005166f3c6e38eb93830963f11f513e36` exactly matches fetched main. Actual Node22 CI38867402179/job116863294620 SUCCESS **2381 PASS / 0 FAIL / 0 skipped**; Pages38867401881 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth/workspace/inspector/edit878, unchanged GLB panel877/protected Multi1.0/frozenBeta7 version byte-match repository. Native NOM865, manager/codec/resources875/nav868 and protected modelling owners unchanged. All four continuity documents current. User877 PASS protected;878 checker readability/navigation/Pencil/history/reopen device gate pending. This checker is a 2D reference only; 3D texture/stretch inspection remains the next audited stage.
+
+## .879 — temporary 3D UV Checker view, 2026-10-16
+
+User .878 PASS protects 2D Checker readability/alignment/navigation/Pencil/history/
+reopen. Audit main033d9950/live878: render-modes568 owns all body looks; exporter877
+already owns polygon triangulation and corner UV seam mapping. Add UV Checker as a
+ninth look under VIEW, through that same render owner. No new modelling/triangulation/
+pointer/history kernel. Studio remains startup default; switching looks restores original
+body geometry/material behavior. Plain independent Base meshes with complete valid stored
+GLB/native UVs show a repeating16×16 unlit checker over the surface; missing/stale/invalid,
+linked/procedural/reference/SubD/Mirror objects retain Solid fallback. Preview bounded to
+20,000 face corners; larger channels fall back entirely, never partial checker surfaces.
+
+Exporter exposes guarded buildUVPreviewGeometry, delegating original editableToGeometry/
+triangulateFace with seam preservation, no imported-fit restoration (live coordinates),
+finite f32/index/corner/signature/completeness guards. Actual GLB/NOM export maths unchanged.
+Small uv-checker-preview owns temporary child geometry/ShaderMaterial; no textures/images,
+paint or stored material edits. Original body geometry/raycast is untouched, preview
+raycast disabled. Existing render cleanup disposes checker exactly once; original body
+geometry dispose listener also removes/disposes it during native main/inactive redraw,
+without modifying protected main854 or manager875. Read-only payload stays untouched.
+Original Mesh Health session-end event refreshes checker after UV edits; native rebuilds
+handle scene history/object changes. Importer/editor/navigation/resource codecs unchanged.
+
+Five native regressions cover original corner mapping/live-space/concave triangulation,
+invalid/stale/partial/overbudget refusals, actual Three overlay/picking/resource lifecycle,
+actual render active bridge/inactive lookup/fallback/look restoration/session refresh,
+and cylinder THREE seam+cap variants/native NOM bytes unchanged. Full Node24 suite:
+2386PASS/0FAIL/0skip. Existing453 render-button test now requires all original8 plus new
+checker, rather than freezing total8. Reviewed render/export-panel/child cache879 and
+shell/recovery879 only; MeshHealth/workspace/edit/inspector878/nav868/NOM865 retained.
+Protected Multi1.0/Loop/Extrude/Boolean/main and frozen beta bytes unchanged.
+Device879: Cube Box UVs or upright Cylinder UVs, SubD off → VIEW→UV Checker; orbit to
+inspect seam/stretch/relative density; edit island Scale then Back to3D; Undo/Redo;
+VIEW→Studio/Solid. Native Base UVs only, no evaluated UV propagation/painting claim.
+Next: device feedback on temporary checker, then imported-image inspection through
+original resource/render owners before painting or broader seam unwrap work.
+
+## Protected .878 — user PASS2026-10-16
+
+2D Checker toggle/readability, tile-aligned pan/pinch/Fit, Pencil Move/Scale/Rotate and
+Undo/Redo, Back to3D/reopen defaults accepted. .879 surface-checker device gate separate.

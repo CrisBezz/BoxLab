@@ -6669,20 +6669,38 @@ Runtime release `e1d5ccffd03941b982df25d9463de9b0746e5e4a`; tested tree `c872ec6
 User .876 PASS remains protected. The .877 device gate remains pending: upright round world-Y Cylinder UVs, independent Pencil edits, Undo/Redo, project persistence, NOMAD Base and native GLB seam checks. No general unwrap, elliptic mapping, painting, or evaluated-modifier UV claim. All four continuity documents are current.
 
 
-## .878 UV Editor checker reference — device gate pending
+## .878 UV Editor checker reference — user PASS2026-10-16
 
 - [x] User .877 PASS protected; Cylinder/Box/Planar/imported native history/project/export baselines retained.
 - [x] Shared renderer projection/picking/DPR parity, clipped bounded256cells, extreme/tiled/offscreen/stale guards.
 - [x] Checker under island selection/seams; payload/report read-only; no edit/history callback from toggle.
 - [x] Actual workspace cancels pending Pencil/capture, retains view/selection, refresh preference, reopen off.
 - [x] Full local Node24:2381PASS/0FAIL/0skip. Original UV edit maths/export/render/kernel owners unchanged.
-- [ ] Open UV Editor → Checker: readable16×16 grid inside tile0–1; toggle off restores plain view.
-- [ ] Pan/pinch/+/−/Fit: grid and UV tile stay aligned, selection stays usable.
-- [ ] Pencil Move/Scale/Rotate and Undo/Redo work with checker; grid stays fixed while islands move.
-- [ ] Back to3D and reopen: checker defaults off; ordinary viewport navigation works.
+- [x] Open UV Editor → Checker: readable16×16 grid inside tile0–1; toggle off restores plain view.
+- [x] Pan/pinch/+/−/Fit: grid and UV tile stay aligned, selection stays usable.
+- [x] Pencil Move/Scale/Rotate and Undo/Redo work with checker; grid stays fixed while islands move.
+- [x] Back to3D and reopen: checker defaults off; ordinary viewport navigation works.
 
 2D reference only; 3D texture/stretch inspection and painting remain later stages.
 
 ## .878 publication verified — 2026-10-16
 
 Release `7b7cf2751e371959437a6ad10601c930f727a64d`; tested tree `ef9e7b6005166f3c6e38eb93830963f11f513e36` exactly matches fetched main. Actual Node22 CI38867402179/job116863294620 SUCCESS **2381 PASS / 0 FAIL / 0 skipped**; Pages38867401881 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth/workspace/inspector/edit878, unchanged GLB panel877/protected Multi1.0/frozenBeta7 version byte-match repository. Native NOM865, manager/codec/resources875/nav868 and protected modelling owners unchanged. All four continuity documents current. User877 PASS protected;878 checker readability/navigation/Pencil/history/reopen device gate pending. This checker is a 2D reference only; 3D texture/stretch inspection remains the next audited stage.
+
+
+## .879 temporary 3D UV Checker view — device gate pending
+
+- [x] User878 PASS protected: 2D checker/navigation/Pencil/history/reopen.
+- [x] Original exporter triangulation/corner mapping; live positions/no import-fit restoration; concave and seam variants.
+- [x] Missing/stale/partial/invalid/nonfinite/f32/over20k-corner refusal, safe full Solid fallback.
+- [x] Actual Three overlay disposal once on native source-geometry cleanup or mode change; original body geometry/picking retained.
+- [x] Actual render active bridge/inactive object/fallback/session-end UV refresh and Studio/Clay restoration.
+- [x] Cylinder seam+cap variants preserved; preview leaves native NOM bytes unchanged; all export/history regressions retained.
+- [x] Full local Node24:2386PASS/0FAIL/0skip; reviewed cache graph and all original8 view modes retained.
+- [ ] Cube→Box UVs or upright Cylinder→Cylinder UVs(Y), SubD off: VIEW→UV Checker shows checker over surface.
+- [ ] Orbit/pan/pinch remain normal; inspect box panels and cylinder side/cap seam.
+- [ ] UV Editor→Scale island→Back to3D changes checker size there; Undo/Redo restores it.
+- [ ] VIEW→Studio/Solid restores ordinary look; mesh without UVs remains plain in checker mode.
+
+Base stored UVs only, maximum20,000 face corners; evaluated/linked/procedural/stale channels use Solid.
+Temporary view only; no image painting/persistent materials/export changes.

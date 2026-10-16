@@ -1,12 +1,54 @@
-# BoxLab AI Handoff — .878 UV Editor Checker
+# BoxLab AI Handoff — .879 3D UV Checker
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.878; live https://crisbezz.github.io/BoxLab/.
-Previous main83c0b563 / .877 accepted; .878 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.879; live https://crisbezz.github.io/BoxLab/.
+Previous main033d9950 / .878 accepted; .879 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .879 — temporary 3D UV Checker view, 2026-10-16
+
+User .878 PASS protects 2D Checker readability/alignment/navigation/Pencil/history/
+reopen. Audit main033d9950/live878: render-modes568 owns all body looks; exporter877
+already owns polygon triangulation and corner UV seam mapping. Add UV Checker as a
+ninth look under VIEW, through that same render owner. No new modelling/triangulation/
+pointer/history kernel. Studio remains startup default; switching looks restores original
+body geometry/material behavior. Plain independent Base meshes with complete valid stored
+GLB/native UVs show a repeating16×16 unlit checker over the surface; missing/stale/invalid,
+linked/procedural/reference/SubD/Mirror objects retain Solid fallback. Preview bounded to
+20,000 face corners; larger channels fall back entirely, never partial checker surfaces.
+
+Exporter exposes guarded buildUVPreviewGeometry, delegating original editableToGeometry/
+triangulateFace with seam preservation, no imported-fit restoration (live coordinates),
+finite f32/index/corner/signature/completeness guards. Actual GLB/NOM export maths unchanged.
+Small uv-checker-preview owns temporary child geometry/ShaderMaterial; no textures/images,
+paint or stored material edits. Original body geometry/raycast is untouched, preview
+raycast disabled. Existing render cleanup disposes checker exactly once; original body
+geometry dispose listener also removes/disposes it during native main/inactive redraw,
+without modifying protected main854 or manager875. Read-only payload stays untouched.
+Original Mesh Health session-end event refreshes checker after UV edits; native rebuilds
+handle scene history/object changes. Importer/editor/navigation/resource codecs unchanged.
+
+Five native regressions cover original corner mapping/live-space/concave triangulation,
+invalid/stale/partial/overbudget refusals, actual Three overlay/picking/resource lifecycle,
+actual render active bridge/inactive lookup/fallback/look restoration/session refresh,
+and cylinder THREE seam+cap variants/native NOM bytes unchanged. Full Node24 suite:
+2386PASS/0FAIL/0skip. Existing453 render-button test now requires all original8 plus new
+checker, rather than freezing total8. Reviewed render/export-panel/child cache879 and
+shell/recovery879 only; MeshHealth/workspace/edit/inspector878/nav868/NOM865 retained.
+Protected Multi1.0/Loop/Extrude/Boolean/main and frozen beta bytes unchanged.
+Device879: Cube Box UVs or upright Cylinder UVs, SubD off → VIEW→UV Checker; orbit to
+inspect seam/stretch/relative density; edit island Scale then Back to3D; Undo/Redo;
+VIEW→Studio/Solid. Native Base UVs only, no evaluated UV propagation/painting claim.
+Next: device feedback on temporary checker, then imported-image inspection through
+original resource/render owners before painting or broader seam unwrap work.
+
+## Protected .878 — user PASS2026-10-16
+
+2D Checker toggle/readability, tile-aligned pan/pinch/Fit, Pencil Move/Scale/Rotate and
+Undo/Redo, Back to3D/reopen defaults accepted. .879 surface-checker device gate separate.
 
 ## .878 — UV Editor checker reference, 2026-10-16
 
@@ -1106,10 +1148,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.878 device: Open UV Editor → Checker; pan/pinch/Fit keeps the grid anchored to tile0–1;
-Pencil edits/history retain original behavior; Back to3D/reopen resets checker off.
-Then audit temporary 3D checker via original render/triangulation/resource owners.
-.877 user PASS protected; no painting/evaluated UV propagation claim.
+.879 device: plain Cube→Box UVs or upright Cylinder→Cylinder UVs (Y), SubD off →
+VIEW→UV Checker. Orbit, Scale an island in UV Editor then Back to3D, Undo/Redo;
+return to Studio/Solid. Missing/stale/unsupported/over20k-corner channels use Solid.
+.878 user PASS protected. After feedback, audit imported-image inspection through
+original render/resource owners before painting. No evaluated UV propagation claim.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

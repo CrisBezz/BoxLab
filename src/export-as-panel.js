@@ -7,7 +7,7 @@ import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-co
 
 import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.865';
 
-const VERSION='0.36.18.877';
+const VERSION='0.36.18.879';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -145,6 +145,23 @@ function topologySignature(mesh){
 function geometrySignature(mesh){
   if(!mesh?.vertices)return'';
   return topologySignature(mesh)+'#'+mesh.vertices.map(vertex=>[vertex.x,vertex.y,vertex.z].map(value=>Number(value).toPrecision(12)).join(',')).join('|');
+}
+// Temporary viewport inspection reuses the same triangulation/corner mapping.
+// No import-fit restoration: preview positions stay in current BoxLab coordinates.
+function buildUVPreviewGeometry(mesh,payload){
+  if(!Array.isArray(mesh?.vertices)||!mesh.vertices.length||!Array.isArray(mesh?.faces)||!mesh.faces.length||mesh.faces.some(f=>!Array.isArray(f))||payload?.version!==1||!['glb','boxlab'].includes(payload?.source)||payload.uvTopologySignature!==topologySignature(mesh))return null;
+  const uvs=payload.uvCorners;if(!Array.isArray(uvs)||uvs.length!==mesh.faces.length)return null;
+  let corners=0,triangles=0;
+  for(let fi=0;fi<mesh.faces.length;fi++){
+    const face=mesh.faces[fi],uv=uvs[fi];
+    if(!Array.isArray(face)||face.length<3||new Set(face).size!==face.length||!Array.isArray(uv)||uv.length!==face.length)return null;
+    corners+=face.length;triangles+=face.length-2;if(corners>20000)return null;
+    if(face.some(id=>!Number.isInteger(id)||id<0||id>=mesh.vertices.length)||uv.some(p=>!Array.isArray(p)||p.length!==2||p.some(n=>!Number.isFinite(n)||!Number.isFinite(Math.fround(n)))))return null;
+    for(const id of face){const v=mesh.vertices[id];if(!v||![v.x,v.y,v.z].every(n=>Number.isFinite(n)&&Number.isFinite(Math.fround(n))))return null;}
+  }
+  const built=editableToGeometry(mesh,{uvs,preserveUVSeams:true}),geometry=built.geometry;
+  if(!built.uvRestored||geometry.index?.count!==triangles*3){geometry.dispose();return null;}
+  return geometry;
 }
 function editableToGeometry(mesh,channels={}){
   const cornerUVs=channels?.uvs||null;
@@ -670,4 +687,4 @@ setActive(formatButtons,'exportFormat',format);
 setActive(geometryButtons,'exportGeometry',geometry);
 updateNote();
 
-globalThis.__boxlabExportAs={version:VERSION,exportAs,shareOpenIn,exportNomad,buildNOM,buildGLB,verifyGLB,patchNomadFaceGroupGLB,topologySignature,geometrySignature,get format(){return format;},get geometry(){return geometry;}};
+globalThis.__boxlabExportAs={version:VERSION,exportAs,shareOpenIn,exportNomad,buildNOM,buildGLB,verifyGLB,patchNomadFaceGroupGLB,buildUVPreviewGeometry,topologySignature,geometrySignature,get format(){return format;},get geometry(){return geometry;}};

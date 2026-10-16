@@ -210,10 +210,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.877",
+      "url": "./src/export-as-panel.js?v=0.36.18.879",
       "target": "src/export-as-panel.js",
-      "sha256": "45c3b22155f23a25cf6a6886049811da31fc2c11ee0bf81dd3fd52349fb594b3",
-      "sourceVersion": "0.36.18.877"
+      "sha256": "bd48513559ddb8855df397d711729000cd99d4cda3960fba629e2f4a775430ec",
+      "sourceVersion": "0.36.18.879"
     },
     {
       "owner": "index.html",
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.878",
+      "url": "./src/release-bootstrap.js?v=0.36.18.879",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.878",
+      "url": "./src/release-version.js?v=0.36.18.879",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.568",
+      "url": "./src/render-modes.js?v=0.36.18.879",
       "target": "src/render-modes.js",
-      "sha256": "0e5a543fb9df275149cda62a4c831b095a2bc89db34ba1470db45aac4d6d2021"
+      "sha256": "35fefa71f2a4c55f2d53c4a3210f0d8b74e6358f6678ee69bd5f981ce75a2e25"
     },
     {
       "owner": "index.html",
@@ -2411,6 +2411,12 @@
       "url": "./uv-navigation.js?v=0.36.18.868",
       "target": "src/uv-navigation.js",
       "sha256": "d0caa70461a2b3831647581ca11e6b121a291662a72554d123e2f1b215731107"
+    },
+    {
+      "owner": "src/render-modes.js",
+      "url": "./uv-checker-preview.js?v=0.36.18.879",
+      "target": "src/uv-checker-preview.js",
+      "sha256": "bbed3bf287f6dcea7a0f333472e716196b24d2646ee21b25e174f47b3bb10839"
     }
   ]
 }
