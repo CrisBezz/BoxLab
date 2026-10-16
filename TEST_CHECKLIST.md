@@ -6623,16 +6623,16 @@ published graph matches875. User874 PASS protected;875 native Planar/editor/hist
 project/native Nomad device gate pending. All four handoff files current. Native
 resource v3/sourceboxlab is explicit; no seam unwrap/painting/evaluated UV claim.
 
-## .876 Native Box UVs — device gate pending
+## .876 Native Box UVs — user PASS2026-10-16
 
 - [x] User875 PASS protected; Planar/sourceboxlab/v3/native editor/history/export baseline retained.
 - [x] Cube six disjoint noncollapsed islands/12seams, fixed directional cells, rectangular proportions/density.
 - [x] Original one checkpoint/COW/Planar replacement/native Undo/no-op and selected-only edit isolation.
 - [x] Native project/NOM independent UV pool+corner bytes/actual Three GLB UVs; guarded refusal coverage.
-- [ ] Cube/SubD off → Mesh Health→UVs→Box UVs→Open UV Editor: six separate coloured islands.
-- [ ] Pencil-move/scale/rotate one island; others stay fixed. Undo/Redo restores each action.
-- [ ] Planar→Box→Undo restores prior layout; repeated Box adds no Undo. Geometry unchanged.
-- [ ] Save/Open .boxlab → UV Editor → File NOMAD Base retains box panels/seams.
+- [x] Cube/SubD off → Mesh Health→UVs→Box UVs→Open UV Editor: six separate coloured islands.
+- [x] Pencil-move/scale/rotate one island; others stay fixed. Undo/Redo restores each action.
+- [x] Planar→Box→Undo restores prior layout; repeated Box adds no Undo. Geometry unchanged.
+- [x] Save/Open .boxlab → UV Editor → File NOMAD Base retains box panels/seams.
 
 Axis-aligned box projection first; general directional patches may overlap/distort.
 No seam unwrap/optimal packing/painting/evaluated UVs in876.
@@ -6648,3 +6648,16 @@ byte-match repository. Manager/codec/resources875 and all protected/frozen owner
 unchanged. User875 PASS protected;876 Box panels/selected edits/history/project/
 NOMAD Base device gate pending. All four handoff files current. No general seam
 unwrap/optimal packing/painting/evaluated UV claim; directional patches may overlap.
+
+## .877 Native Cylinder UVs (Y) — device gate pending
+
+- [x] User876 PASS protected; Box/Planar/native v3/editor/history/NOMAD Base retained.
+- [x] Upright closed cylinder: one measured-edge strip/two caps, deterministic seam, native one-step history/no-op.
+- [x] Odd rings/height bands/side+cap density, geometry/peer/island isolation and guarded refusals.
+- [x] Full local2378PASS/0FAIL/0skip; native GLB preserves all seam+cap UV variants; imported pole-weld path unchanged; actual NOM/project/GLB checks.
+- [ ] Upright Cylinder/SubD off → Mesh Health→UVs→Cylinder UVs (Y)→Open UV Editor: strip plus two caps.
+- [ ] Pencil-edit side/cap separately; other islands fixed. Undo/Redo and repeated mapping behave correctly.
+- [ ] Save/Open .boxlab → UV Editor → File NOMAD Base retains layout/seams; Base GLB also retains seam/caps.
+- [ ] Existing Box/Planar and imported UV workflows still behave as accepted.
+
+Round aligned world-Y rings first; no general seam unwrap/elliptic mapping/painting/evaluated UVs.

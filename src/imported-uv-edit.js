@@ -135,3 +135,41 @@ export function createBoxUV(object,mesh,topologySignature,history){
  }
  return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
 }
+
+// Upright, round aligned rings: unfold measured polygon edge lengths into one
+// side strip, with a deterministic existing-vertex seam and separate planar caps.
+export function createCylinderUV(object,mesh,topologySignature,history){
+ const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
+ const used=new Set();let magnitude=0;
+ for(const face of mesh.faces){
+  if(!Array.isArray(face)||face.length<3)return {ok:false,reason:'Invalid mesh faces'};
+  for(const id of face){const v=mesh.vertices[id];if(!Number.isInteger(id)||!v||!['x','y','z'].every(k=>Number.isFinite(v[k])))return {ok:false,reason:'Invalid mesh coordinates'};used.add(id);magnitude=Math.max(magnitude,Math.abs(v.x),Math.abs(v.y),Math.abs(v.z));}
+ }
+ if(!magnitude)return {ok:false,reason:'Cylinder mapping needs radial and Y extent'};
+ const positions=new Map(),columns=new Map();let minY=Infinity,maxY=-Infinity;
+ for(const id of used){const v=mesh.vertices[id],p=[v.x/magnitude,v.y/magnitude,v.z/magnitude];positions.set(id,p);minY=Math.min(minY,p[1]);maxY=Math.max(maxY,p[1]);const key=p[0]+':'+p[2];if(!columns.has(key))columns.set(key,{x:p[0],z:p[2],key});}
+ const height=maxY-minY;if(!height)return {ok:false,reason:'Cylinder mapping needs Y height'};
+ const points=[...columns.values()],cx=points.reduce((s,p)=>s+p.x/points.length,0),cz=points.reduce((s,p)=>s+p.z/points.length,0);
+ let radius=0;for(const p of points){p.radius=Math.hypot(p.x-cx,p.z-cz);radius=Math.max(radius,p.radius);}
+ if(!radius)return {ok:false,reason:'Cylinder mapping needs radial extent'};
+ const ring=points.filter(p=>p.radius>radius*1e-8);
+ if(ring.length<3||ring.some(p=>Math.abs(p.radius-radius)>radius*1e-7))return {ok:false,reason:'Cylinder UVs require round aligned rings about world Y'};
+ let anchor=ring[0];for(const p of ring)if(p.x>anchor.x||p.x===anchor.x&&p.z<anchor.z)anchor=p;
+ const start=Math.atan2(anchor.z-cz,anchor.x-cx);
+ for(const p of ring){p.angle=Math.atan2(p.z-cz,p.x-cx)-start;if(p.angle<0)p.angle+=2*Math.PI;}
+ ring.sort((a,b)=>a.angle-b.angle);let circumference=0;
+ for(let i=0;i<ring.length;i++){ring[i].u=circumference;const next=ring[(i+1)%ring.length];circumference+=Math.hypot(next.x-ring[i].x,next.z-ring[i].z);}
+ const scale=Math.min(.96/circumference,.54/height,.36/(2*radius)),uvCorners=[];
+ if(!Number.isFinite(scale)||scale<=0)return {ok:false,reason:'Cylinder UV scale is out of range'};
+ for(const face of mesh.faces){
+  const corners=face.map(id=>positions.get(id)),bottom=corners.every(p=>p[1]===minY),top=corners.every(p=>p[1]===maxY);
+  if(bottom||top){uvCorners.push(corners.map(p=>[(bottom ? .25 : .75)+(p[0]-cx)*scale,.80+(p[2]-cz)*(bottom?1:-1)*scale]));continue;}
+  const angular=corners.map(p=>columns.get(p[0]+':'+p[2]));
+  if(angular.some(p=>!Number.isFinite(p.u))||corners.every(p=>p[1]===corners[0][1]))return {ok:false,reason:'Cylinder sides must stay off the Y axis and have height'};
+  const us=angular.map(p=>p.u);if(Math.max(...us)-Math.min(...us)>circumference/2)for(let i=0;i<us.length;i++)if(us[i]<circumference/2)us[i]+=circumference;
+  if(Math.max(...us)>circumference*(1+1e-12)||Math.max(...us)-Math.min(...us)>circumference*(.5+1e-12))return {ok:false,reason:'Cylinder mapping needs an aligned seam column'};
+  uvCorners.push(corners.map((p,i)=>[.5-(us[i]-circumference/2)*scale,.30+((p[1]-minY)-height/2)*scale]));
+ }
+ if(uvCorners.some(face=>{let area=0;for(let i=0;i<face.length;i++){const a=face[i],b=face[(i+1)%face.length];area+=a[0]*b[1]-a[1]*b[0];}return !Number.isFinite(area)||area===0;}))return {ok:false,reason:'Cylinder projection would collapse a face'};
+ return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
+}

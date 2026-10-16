@@ -4,6 +4,47 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## .877 — native Cylinder UVs (world Y), 2026-10-16
+
+User876 Perfect PASS protects Box panels/seams/island edits/history/project/NOMAD
+Base. Audit main79fec447/live876: no cylindrical mapper exists. Add Cylinder UVs (Y)
+to Mesh Health→UVs for plain upright round aligned-ring cylinders/prisms. Uses the
+same native eligibility, sourceboxlab/v3 channel and original commit/history owner.
+One side strip with deterministic existing-column seam near maximum world X, plus
+two separate planar caps for the standard closed Cylinder. No geometry split/change.
+Open side-only forms can produce one strip; no general arbitrary seam-cut operation.
+Measured cross-section polygon edge lengths unfold the strip, preserving side/cap
+edge density, including odd radial counts and multiple height bands. Atlas is fitted
+with gaps between strip/caps. Round rings about Y required; nonround/elliptic, axis-
+collapsed, unaligned seam, degenerate/invalid/procedural/imported/modifier contexts
+refuse before history/payload mutation. User can still use Planar/Box as appropriate.
+
+Extend existing imported-uv-edit with createCylinderUV; read-only normalized positions
+and unique radial columns, original native commit. Repeat no-op; replaces native UVs
+with one checkpoint, Undo restores original; peers/resources untouched. Original
+UV editor, selection, Pencil tools and navigation unchanged. Manager/codec/resources875,
+inspector/workspace874/nav868/native NOM865 and protected/frozen owners unchanged.
+
+Related GLB audit found old >=3-UV-variants pole-collapse rule could merge native
+seam+cap variants at one geometry vertex. Existing exporter now sets preserveUVSeams
+ONLY for sourceboxlab, retaining native UV corner variants; imported GLB pole/weld
+path unchanged. No new exporter or triangle kernel. Prior membership-only attribute
+tests did not prove this distinction. New real GLB assertion checks all THREE UV
+variants of the seam/cap vertex against source values, in addition to NOM UV pool
+bytes/project continuity. File NOMAD writer was already seam-correct and unchanged.
+Five native regressions cover3islands/seam/no-op/Undo/geometry identity, measured edge
+density/odd rings/finite extremes, native replacement/peer/island isolation, actual
+MeshHealth/project/NOM/GLB seam variants, and invalid/unsupported refusals. Local Node24 full2378PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/edit/export-panel877 plus
+shell/recovery877; all other owner pins retained. Device877 gate pending;876 PASS
+protected. Next after feedback: audit UV checker/texture inspection through existing
+render/resource owners before painting or broader curved/seam unwrap work.
+
+## Protected .876 — user PASS2026-10-16
+
+Cube Box six-panel layout/seams, selected Pencil edits, native Undo/Redo/Planar
+replacement and Save/Open→NOMAD Base accepted. Preserve Box mapper/sole gesture owner;
+.877 Cylinder and native GLB seam gate remains separate.
+
 ## .876 — native Box UV mapping, 2026-10-16
 
 User875 PASS protects native Planar/editor/history/SaveOpen→NOMAD Base and existing

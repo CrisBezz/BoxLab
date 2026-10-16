@@ -1,12 +1,53 @@
-# BoxLab AI Handoff — .876 Native Box UVs
+# BoxLab AI Handoff — .877 Native Cylinder UVs
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.876; live https://crisbezz.github.io/BoxLab/.
-Previous main2f29af87 / .875 accepted; .876 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.877; live https://crisbezz.github.io/BoxLab/.
+Previous main79fec447 / .876 accepted; .877 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .877 — native Cylinder UVs (world Y), 2026-10-16
+
+User876 Perfect PASS protects Box panels/seams/island edits/history/project/NOMAD
+Base. Audit main79fec447/live876: no cylindrical mapper exists. Add Cylinder UVs (Y)
+to Mesh Health→UVs for plain upright round aligned-ring cylinders/prisms. Uses the
+same native eligibility, sourceboxlab/v3 channel and original commit/history owner.
+One side strip with deterministic existing-column seam near maximum world X, plus
+two separate planar caps for the standard closed Cylinder. No geometry split/change.
+Open side-only forms can produce one strip; no general arbitrary seam-cut operation.
+Measured cross-section polygon edge lengths unfold the strip, preserving side/cap
+edge density, including odd radial counts and multiple height bands. Atlas is fitted
+with gaps between strip/caps. Round rings about Y required; nonround/elliptic, axis-
+collapsed, unaligned seam, degenerate/invalid/procedural/imported/modifier contexts
+refuse before history/payload mutation. User can still use Planar/Box as appropriate.
+
+Extend existing imported-uv-edit with createCylinderUV; read-only normalized positions
+and unique radial columns, original native commit. Repeat no-op; replaces native UVs
+with one checkpoint, Undo restores original; peers/resources untouched. Original
+UV editor, selection, Pencil tools and navigation unchanged. Manager/codec/resources875,
+inspector/workspace874/nav868/native NOM865 and protected/frozen owners unchanged.
+
+Related GLB audit found old >=3-UV-variants pole-collapse rule could merge native
+seam+cap variants at one geometry vertex. Existing exporter now sets preserveUVSeams
+ONLY for sourceboxlab, retaining native UV corner variants; imported GLB pole/weld
+path unchanged. No new exporter or triangle kernel. Prior membership-only attribute
+tests did not prove this distinction. New real GLB assertion checks all THREE UV
+variants of the seam/cap vertex against source values, in addition to NOM UV pool
+bytes/project continuity. File NOMAD writer was already seam-correct and unchanged.
+Five native regressions cover3islands/seam/no-op/Undo/geometry identity, measured edge
+density/odd rings/finite extremes, native replacement/peer/island isolation, actual
+MeshHealth/project/NOM/GLB seam variants, and invalid/unsupported refusals. Local Node24 full2378PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/edit/export-panel877 plus
+shell/recovery877; all other owner pins retained. Device877 gate pending;876 PASS
+protected. Next after feedback: audit UV checker/texture inspection through existing
+render/resource owners before painting or broader curved/seam unwrap work.
+
+## Protected .876 — user PASS2026-10-16
+
+Cube Box six-panel layout/seams, selected Pencil edits, native Undo/Redo/Planar
+replacement and Save/Open→NOMAD Base accepted. Preserve Box mapper/sole gesture owner;
+.877 Cylinder and native GLB seam gate remains separate.
 
 ## .876 — native Box UV mapping, 2026-10-16
 
@@ -1031,12 +1072,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.876 device: Cube/SubD off → Object Mesh Health → UVs → Box UVs → Open UV Editor:
-six separate islands. Pick/Pencil edit one island; other islands stay fixed. UndoRedo,
-Planar→Box replacement, Save/Open and File NOMAD Base. Axis-aligned boxes are the
-initial target; directional patches can overlap/distort general shapes. After feedback,
-audit seam/unwrap or texture-inspection step through the same native resource owners.
-No evaluated/linked UV propagation or painting. Frozen/protected kernels unchanged.
+.877 device: upright Add Cylinder/SubD off → Mesh Health→UVs→Cylinder UVs (Y)→Open
+UV Editor: one strip/two caps; Pencil edits, UndoRedo, Save/Open and NOMAD Base.
+Native GLB now retains seam+cap UV variants; test Base GLB too if convenient. Round
+aligned Y rings only; imported resources remain protected. After feedback audit checker/
+texture inspection via original render owners, then broader unwrap/paint stages.
+No linked/evaluated UV propagation or arbitrary seam-cut topology changes.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

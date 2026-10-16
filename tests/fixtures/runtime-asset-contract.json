@@ -210,10 +210,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.865",
+      "url": "./src/export-as-panel.js?v=0.36.18.877",
       "target": "src/export-as-panel.js",
-      "sha256": "b3df24507ac1f347da3fe306685136dcc6e3e8ebc3abd6e56045379723c1e01f",
-      "sourceVersion": "0.36.18.865"
+      "sha256": "45c3b22155f23a25cf6a6886049811da31fc2c11ee0bf81dd3fd52349fb594b3",
+      "sourceVersion": "0.36.18.877"
     },
     {
       "owner": "index.html",
@@ -310,10 +310,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.876",
+      "url": "./src/mesh-health.js?v=0.36.18.877",
       "target": "src/mesh-health.js",
-      "sha256": "80a43d8560575b8de19c2f8de01c56dbfb7b7ec041123acf8ac43cd1569d314a",
-      "sourceVersion": "0.36.18.876"
+      "sha256": "a95b5bb0372d772d8f02b9d233dbc8d290c055e7bc49a2521ae1a38551ff5c2b",
+      "sourceVersion": "0.36.18.877"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.876",
+      "url": "./src/release-bootstrap.js?v=0.36.18.877",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.876",
+      "url": "./src/release-version.js?v=0.36.18.877",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2384,9 +2384,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./imported-uv-edit.js?v=0.36.18.876",
+      "url": "./imported-uv-edit.js?v=0.36.18.877",
       "target": "src/imported-uv-edit.js",
-      "sha256": "c6c40d44661d0b43ec4d74e4bc877b635d218eb4f51f4941362e637d0f588e16"
+      "sha256": "ccfb945ea498cd820abb1412409a53602b0555a4a27cd404dbf750e109a6ea50"
     },
     {
       "owner": "src/imported-uv-edit.js",

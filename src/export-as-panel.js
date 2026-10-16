@@ -7,7 +7,7 @@ import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-co
 
 import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.865';
 
-const VERSION='0.36.18.865';
+const VERSION='0.36.18.877';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -182,7 +182,7 @@ function editableToGeometry(mesh,channels={}){
   const morphPositionArrays=Array.isArray(morphTargets)?morphTargets.map(()=>[]):[];
   const vertexMap=new Map();
   const collapseUVVertices=new Set();
-  if(uvComplete){
+  if(uvComplete&&!channels.preserveUVSeams){
     const variants=new Map();
     for(let faceIndex=0;faceIndex<mesh.faces.length;faceIndex++){
       const face=mesh.faces[faceIndex];
@@ -504,6 +504,7 @@ async function buildGLB(sceneObjects,subd){
     const morphCompatible=!subd&&passthrough?.morphTopologySignature&&passthrough.morphTopologySignature===topology;
     const built=editableToGeometry(editable,{
       uvs:uvCompatible?passthrough.uvCorners:null,
+      preserveUVSeams:passthrough?.source==='boxlab',
       tangents:tangentCompatible?passthrough.tangentCorners:null,
       colors:colorCompatible?passthrough.vertexColorCorners:null,
       morphTargets:morphCompatible?passthrough.morphTargets:null,
