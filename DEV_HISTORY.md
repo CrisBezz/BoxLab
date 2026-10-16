@@ -9465,3 +9465,16 @@ GLB provenance, new-mesh UVs, seam unwrap, evaluated-modifier UVs or painting in
 Pencil Rotate centred preview/seams, repeated strokes/one native Undo, Move/Scale/
 navigation and Save/Open→native Nomad UV roundtrip accepted. Preserve quarter-turn
 parity and sole canvas gesture owner. .874 acceptance remains separate.
+
+## .874 publication verified — 2026-10-16
+
+Release 594de3e95bb49dccc8484be92030f6d80fe9ad7a; tested tree
+46c868ca785f9dc84744606f3345fd2becd14839 exactly matches fetched main.
+Actual Node22 CI38852645045/job116817062661 SUCCESS2361PASS/0FAIL/0skip;
+Pages38852644283 build/deploy SUCCESS. Postdeployment live shell/manifest,
+MeshHealth874/workspace874/edit874/inspector874, unchanged navigation868,
+protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live reads
+preceded deployment and returned873; final complete graph matches874. User873 PASS
+protected;874 fit/aspect/isolation/history/navigation/project/native-export device
+gate pending. All four handoff files current; next native UV-channel/projection stage
+requires owner audit and874 feedback. Selected fit does not pack multiple islands.
