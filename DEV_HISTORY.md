@@ -10149,3 +10149,18 @@ separate Roughness/Metalness slots, expected glossy/matte and metallic regions; 
 colour/normal/emissive intact; Pencil UV edit and .boxlab Save/Open→export repeat.
 Next:886 device feedback, then audit actual source binding for displacement or native
 multi-material schema before claiming either. No native NOM import or painting added.
+
+## .886 publication verified — 2026-10-16
+
+Runtimeed65c49adb9da3c109ae1c786c77b0060da5af97; tested tree
+1db0840f3b32ca6b9e9579854d92c32a177e2509 exactly matches fetched main.
+Actual Node22.23.3 CI38906707292/job116991968396 SUCCESS2424PASS/0FAIL/0skip.
+Pages38906707520 build/deploy SUCCESS. Postdeployment live shell/manifest/recovery/
+export-panel/packed-child/native-core886, unchanged surface/image-helper885, protected
+Multi1.0 and frozenBeta7 version all byte-match repository. Predeployment requests
+served885/child404; complete postdeployment graph matches886. Prior885 live audit
+also matched its repository tree. All four continuity docs current. User885 PASS
+protected;886 Roughness/Metalness slot/appearance/Pencil UV/project device gate pending.
+No real browser decode or Nomad appearance proof inferred from Node adapters; limits
+and unsupported displacement/native per-face materials documented. Final verification
+commit changes documentation only, retaining tested runtime bytes.

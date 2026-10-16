@@ -2,6 +2,7 @@
 
 ## Current state — 2026-10-16
 CrisBezz/BoxLab main build0.36.18.886; live https://crisbezz.github.io/BoxLab/.
+Runtimeed65c49a; CI/Pages/live verified below; device886 gate pending.
 Previous main25412b5c / .885 normal+emissive accepted; .886 roughness/metalness device gate pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
@@ -2043,3 +2044,18 @@ UV/project device gate pending. Full donor metadata/actual JPEG+PNG byte audit r
 private donor pixels not shipped. Roughness/metalness unpacking and displacement/native
 multi-material stages remain pending. All four continuity docs current. Final proof
 commit changes documentation only, retaining tested runtime bytes. No885 PASS inferred.
+
+## .886 publication verified — 2026-10-16
+
+Runtimeed65c49adb9da3c109ae1c786c77b0060da5af97; tested tree
+1db0840f3b32ca6b9e9579854d92c32a177e2509 exactly matches fetched main.
+Actual Node22.23.3 CI38906707292/job116991968396 SUCCESS2424PASS/0FAIL/0skip.
+Pages38906707520 build/deploy SUCCESS. Postdeployment live shell/manifest/recovery/
+export-panel/packed-child/native-core886, unchanged surface/image-helper885, protected
+Multi1.0 and frozenBeta7 version all byte-match repository. Predeployment requests
+served885/child404; complete postdeployment graph matches886. Prior885 live audit
+also matched its repository tree. All four continuity docs current. User885 PASS
+protected;886 Roughness/Metalness slot/appearance/Pencil UV/project device gate pending.
+No real browser decode or Nomad appearance proof inferred from Node adapters; limits
+and unsupported displacement/native per-face materials documented. Final verification
+commit changes documentation only, retaining tested runtime bytes.
