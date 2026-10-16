@@ -6710,7 +6710,7 @@ Temporary view only; no image painting/persistent materials/export changes.
 Release `6b20c3939a9ebe7b9847fdc0830adb565fd0a1ba`; tested tree `794865b855df33763e91136e5421b4933569507a` exactly matches fetched main. Actual Node22 CI38870113315/job116871955152 SUCCESS **2386 PASS / 0 FAIL / 0 skipped**; Pages38870112481 build/deploy SUCCESS. Final fresh live shell/manifest/render-owner/preview-child/export-panel879, unchanged workspace878/native NOM865/protected Multi1.0/frozenBeta7 version byte-match repository. Initial reads preceded deployment (old878/child404); final full graph matches879. All four continuity docs current. User878 PASS protected;879 surface checker/navigation/UV edit→session-exit/history/look-restoration device gate pending. Stored Base UVs only; unsupported/stale/over20k-corner objects use Solid; no painting/evaluated UV propagation claim.
 
 
-## .880 embedded colour-image reference — device gate pending
+## .880 embedded colour-image reference — user PASS2026-10-16
 
 - [x] User879 Perfect PASS protected: 3D checker/navigation/Pencil/session refresh/history/look restoration.
 - [x] Actual GLB importer image/material shape and codec byte continuity; original resources shared read-only.
@@ -6719,10 +6719,28 @@ Release `6b20c3939a9ebe7b9847fdc0830adb565fd0a1ba`; tested tree `794865b855df337
 - [x] Shared projection/V0 vertical orientation, clipping/draw order, read-only report and picking/UV maths unchanged.
 - [x] Actual workspace image toggle/source chooser, Pencil cancellation/view+selection retention, native/plain disabled.
 - [x] Full local Node24:2391PASS/0FAIL/0skip; surface checker/render/export/protected/frozen owners retained.
-- [ ] Import GLB with embedded base-colour image (Split groups off) → UV Editor→Image: image behind UVs, correct orientation.
-- [ ] Pan/pinch/Fit; Pencil Move/Scale/Rotate over stationary image, Undo/Redo; original checker still works.
-- [ ] If multiple compatible materials exist, image chooser changes reference; Back to3D/reopen defaults Image off.
-- [ ] Save/Open .boxlab → UV Editor→Image still works; plain/native meshes keep Image disabled.
+- [x] Import GLB with embedded base-colour image (Split groups off) → UV Editor→Image: image behind UVs, correct orientation.
+- [x] Pan/pinch/Fit; Pencil Move/Scale/Rotate over stationary image, Undo/Redo; original checker still works.
+- [x] If multiple compatible materials exist, image chooser changes reference; Back to3D/reopen defaults Image off.
+- [x] Save/Open .boxlab → UV Editor→Image still works; plain/native meshes keep Image disabled.
 
 Whole selected source-image reference in tile0–1, not per-face material/PBR rendering, wrapping, 3D image texturing or painting.
 Only embedded PNG/JPEG UV0 without texture transforms, ≤8MB source; reference decoding requires browser createImageBitmap.
+
+
+## .881 active-object UV Image surface — device gate pending
+
+- [x] .880 Perfect PASS protected: image reference/orientation/Pencil/chooser/project persistence.
+- [x] Single-used opaque image/material/sampler guards, codec/resource read-only identity.
+- [x] Real Three source UVs, V0 orientation, sRGB/linear factor, wrap/filter/double-side mapping.
+- [x] Original source geometry/picking retained; geometry/material/texture/bitmap disposed once.
+- [x] Async cancellation-before-start, late results, decode failure and mode/rebuild cleanup.
+- [x] Actual render active-only/Base guards, inactive Solid, UV session refresh and look restoration.
+- [x] Native NOM/project/image bytes and GLB UVs retained; full local2396PASS/0FAIL/0skip.
+- [ ] Single-material textured GLB/SubD off → VIEW→UV Image: colour image correctly oriented on active object; orbit/pan/pinch normal.
+- [ ] UV Editor→Pencil Move/Scale island→Back to3D: surface updates; Undo/Redo restores layout.
+- [ ] VIEW→Studio/Solid restores ordinary look. Switch active object: only active supported object receives image.
+- [ ] Plain/native/mixed-material/SubD objects remain Solid; existing UV Checker and UV Editor Image still work.
+
+Temporary unlit active Base inspection only, one opaque embedded PNG/JPEG UV0 material,
+≤8MB source/1024² bitmap/20k corners. No painting or persistent material/export changes.

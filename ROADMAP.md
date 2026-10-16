@@ -4,6 +4,50 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## .881 — temporary active-object 3D UV Image view, 2026-10-16
+
+User .880 Perfect PASS /nextbuild protects embedded image orientation/reference,
+Pencil/navigation/history, source chooser and project persistence. Repeated PASS/
+nextbuild while .881 was still in progress continues this release; no .881 device
+acceptance inferred. Audit main6b6565c4/.880: retained importer material/sampler/image
+resources, .880 bounded decoder, .879 exporter preview geometry and render owner are
+sufficient. No second UV/triangulation/history/material-editing kernel.
+
+VIEW→UV Image now inspects the ACTIVE plain independent Base object with exactly ONE
+used opaque core material and embedded PNG/JPEG UV0 base-colour image. Unlit sRGB image
+with linear baseColorFactor, glTF V0 (flipY=false), original core clamp/repeat/mirrored
+wrap and nearest/linear/mipmap filters, material double-sided flag. Original decoder
+limits retained (≤8MB encoded source,1024² bitmap). Inactive objects remain Solid,
+bounding resident surface preview to one active image. Mixed used materials, alpha
+blend/mask/nonopaque factor, material/texture transforms/extensions, missing/external/
+invalid resources, linked/procedural/reference/SubD/Mirror/stale/incomplete/over20k-
+corner channels retain Solid; no guessed per-face material assignment. UV Editor's
+multi-image reference chooser remains accepted and unchanged.
+
+Small uv-image-surface-preview child delegates original geometry builder and decoder.
+Original body geometry/raycast untouched; overlay raycast disabled. Solid stays while
+loading/on decode failure. Native source geometry disposal or existing render cleanup
+removes overlay and disposes geometry/material/texture/bitmap once. Canceled-before-
+start requests skip decode; late results close without replacing a newer look. Existing
+Mesh Health session-end refresh applies UV changes; native rebuild handles history and
+object switches. Startup Studio retained. No persistent textures, resource writes,
+painting, PBR lighting, evaluated UV propagation or export changes.
+
+Five real Three/native tests cover source/material/sampler guards + codec continuity,
+sRGB/factor/wrap/filter/orientation/UV mapping, exact-once disposal and async cancellation/
+failure races, actual render active/inactive/base eligibility + UV session refresh/look
+restoration, original image/project/native NOM byte identity + GLB UVs. Full local suite:
+2396 PASS /0 FAIL /0 skipped. Original .879/.880 tests remain intact. Render-button
+contract now requires original9 plus UV Image. Cache graph shell/recovery881 → render881
+→ new surface child881 → unchanged decoder880; exporter879/workspace880/native NOM865/
+manager875/navigation868/protected modelling/frozen beta bytes retained.
+
+Device .881 gate pending: textured single-material GLB/SubD off → VIEW→UV Image;
+orientation/colour/orbit, Pencil island edit→Back to3D refresh + Undo/Redo, Studio/Solid
+restoration, native/plain/mixed-material fallback. Next: .881 device feedback, then audit
+per-face material assignments through the ORIGINAL exporter buckets before multi-material
+surface support. Keep resource images read-only; painting remains later.
+
 ## .880 — embedded base-colour image reference in UV Editor, 2026-10-16
 
 User .879 Perfect PASS protects temporary surface checker, navigation, UV edits/session

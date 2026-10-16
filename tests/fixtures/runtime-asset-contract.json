@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.880",
+      "url": "./src/release-bootstrap.js?v=0.36.18.881",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.880",
+      "url": "./src/release-version.js?v=0.36.18.881",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.879",
+      "url": "./src/render-modes.js?v=0.36.18.881",
       "target": "src/render-modes.js",
-      "sha256": "35fefa71f2a4c55f2d53c4a3210f0d8b74e6358f6678ee69bd5f981ce75a2e25"
+      "sha256": "4bef7bc670d10dd3b398b3e76127a142493b88cd444d834acb016cf8b760b12d"
     },
     {
       "owner": "index.html",
@@ -2420,6 +2420,18 @@
     },
     {
       "owner": "src/uv-workspace.js",
+      "url": "./uv-image-preview.js?v=0.36.18.880",
+      "target": "src/uv-image-preview.js",
+      "sha256": "e55caf67d2e6943f314e0e4580fd1ec0edc8310c5e1a70896cda6d8110a47d7c"
+    },
+    {
+      "owner": "src/render-modes.js",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.881",
+      "target": "src/uv-image-surface-preview.js",
+      "sha256": "867d616438994e2c3628e3eeb099aad515004c9fb4266c4c421c7956df2abfe6"
+    },
+    {
+      "owner": "src/uv-image-surface-preview.js",
       "url": "./uv-image-preview.js?v=0.36.18.880",
       "target": "src/uv-image-preview.js",
       "sha256": "e55caf67d2e6943f314e0e4580fd1ec0edc8310c5e1a70896cda6d8110a47d7c"
