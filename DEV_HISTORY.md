@@ -10015,3 +10015,16 @@ unchanged render/importer882/native-core865/protected Multi1.0/frozenBeta7 marke
 byte-match883 repository. Predeployment/time-out reads were retried after deployment.
 Native donor arrived during verification;884 continues the authorized native repair.
 No883 device PASS inferred; original native texture omission is separate from GLB fix.
+
+## .884 publication verified — 2026-10-16
+
+Runtime d3047291a9a051d9cc98df3dbf595262c41576d5; tested tree
+9cc6c9bdf8f859eb1fc7e25e3dd96dc8d1d942de matches fetched main exactly.
+Actual Node22 CI38897532603/job116961508349 SUCCESS2412PASS/0FAIL/0skip.
+Pages38897532505 build/deploy SUCCESS. Postdeployment live shell/manifest/export-panel/
+native-core884, unchanged surface882/decoder880/protected Multi1.0/frozenBeta7 version
+byte-match repository. Initial live reads preceded deployment; complete final graph
+matches884. All four continuity documents current. User donor schema/actual JPEG-byte
+audit recorded; native colour-image orientation/appearance/device gate pending. No884
+user PASS or full PBR/multi-material native support inferred. Final proof commit changes
+only documentation; tested runtime bytes retained.
