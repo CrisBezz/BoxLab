@@ -1482,3 +1482,15 @@ repository. Initial live reads preceded deployment and returned874; final comple
 published graph matches875. User874 PASS protected;875 native Planar/editor/history/
 project/native Nomad device gate pending. All four handoff files current. Native
 resource v3/sourceboxlab is explicit; no seam unwrap/painting/evaluated UV claim.
+
+## .876 publication verified — 2026-10-16
+
+Release 51e05f4cdccce9765ed3c3840680b19c520deb74; tested tree
+88afe5f38e4c0f1d853752c6b927ecc54591165f exactly matches fetched main.
+Actual Node22 CI38861934472/job116845958125 SUCCESS2373PASS/0FAIL/0skip;
+Pages38861934138 build/deploy SUCCESS. Fresh live shell/manifest, MeshHealth/edit876,
+unchanged workspace874/GLB+native exporters865/protected Multi1.0/frozenBeta7 version
+byte-match repository. Manager/codec/resources875 and all protected/frozen owners
+unchanged. User875 PASS protected;876 Box panels/selected edits/history/project/
+NOMAD Base device gate pending. All four handoff files current. No general seam
+unwrap/optimal packing/painting/evaluated UV claim; directional patches may overlap.
