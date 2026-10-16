@@ -7,7 +7,7 @@ import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-co
 
 import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.865';
 
-const VERSION='0.36.18.882';
+const VERSION='0.36.18.883';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -146,6 +146,11 @@ function geometrySignature(mesh){
   if(!mesh?.vertices)return'';
   return topologySignature(mesh)+'#'+mesh.vertices.map(vertex=>[vertex.x,vertex.y,vertex.z].map(value=>Number(value).toPrecision(12)).join(',')).join('|');
 }
+// Shared exact imported face-material guard for inspection and Base GLB export.
+function faceMaterialAssignments(mesh,payload){
+  const ids=payload?.faceMaterialIndices;
+  return payload?.source==='glb'&&payload.version===1&&payload.materialTopologySignature===topologySignature(mesh)&&Array.isArray(ids)&&ids.length===mesh.faces.length&&ids.every(id=>Number.isInteger(id)&&id>=0&&payload.materialIndices?.includes(id)&&payload.materials?.[id])?ids:null;
+}
 // Temporary viewport inspection reuses the same triangulation/corner mapping.
 // No import-fit restoration: preview positions stay in current BoxLab coordinates.
 function buildUVPreviewGeometry(mesh,payload,{materials=false}={}){
@@ -159,8 +164,8 @@ function buildUVPreviewGeometry(mesh,payload,{materials=false}={}){
     if(face.some(id=>!Number.isInteger(id)||id<0||id>=mesh.vertices.length)||uv.some(p=>!Array.isArray(p)||p.length!==2||p.some(n=>!Number.isFinite(n)||!Number.isFinite(Math.fround(n)))))return null;
     for(const id of face){const v=mesh.vertices[id];if(!v||![v.x,v.y,v.z].every(n=>Number.isFinite(n)&&Number.isFinite(Math.fround(n))))return null;}
   }
-  const faceMaterials=materials?payload.faceMaterialIndices:null;
-  if(materials&&(payload.materialTopologySignature!==topologySignature(mesh)||!Array.isArray(faceMaterials)||faceMaterials.length!==mesh.faces.length||faceMaterials.some(id=>!Number.isInteger(id)||id<0||!payload.materialIndices?.includes(id)||!payload.materials?.[id])))return null;
+  const faceMaterials=materials?faceMaterialAssignments(mesh,payload):null;
+  if(materials&&!faceMaterials)return null;
   const built=editableToGeometry(mesh,{uvs,preserveUVSeams:true,faceMaterials}),geometry=built.geometry;
   if(!built.uvRestored||geometry.index?.count!==triangles*3){geometry.dispose();return null;}
   return geometry;
@@ -180,7 +185,7 @@ function editableToGeometry(mesh,channels={}){
     const face=mesh.faces[faceIndex];
     if(!Array.isArray(face)||face.length<3)continue;
     const group=normalizedFaceGroup(mesh,faceIndex);
-    const key=channels.faceMaterials?channels.faceMaterials[faceIndex]:group??'__BOXLAB_UNGROUPED__';
+    const key=channels.faceMaterials?(channels.materialFacegroups?JSON.stringify([group,channels.faceMaterials[faceIndex]]):channels.faceMaterials[faceIndex]):group??'__BOXLAB_UNGROUPED__';
     if(!buckets.has(key))buckets.set(key,{name:group,materialIndex:channels.faceMaterials?.[faceIndex],triangles:[]});
     for(const tri of triangulateFace(mesh,face))buckets.get(key).triangles.push({tri,faceIndex});
   }
@@ -419,7 +424,8 @@ function patchNomadFaceGroupGLB(buffer,objectDetails){
     }
     (mesh.primitives||[]).forEach((primitive,index)=>{
       primitive.extras=primitive.extras||{};
-      primitive.extras.nomad={...(primitive.extras.nomad||{}),group:index};
+      const group=detail.groupIds?.[index]??index;
+      primitive.extras.nomad={...(primitive.extras.nomad||{}),group};
     });
 
     if(passthrough?.materials?.length){
@@ -450,7 +456,10 @@ function patchNomadFaceGroupGLB(buffer,objectDetails){
       for(const material of passthrough.materials||[])gltf.materials.push(remapTextureRefs(material,textureBase));
       const sourceMaterial=Number.isInteger(passthrough.materialIndices?.[0])?passthrough.materialIndices[0]:0;
       const materialIndex=materialBase+Math.min(sourceMaterial,Math.max(0,passthrough.materials.length-1));
-      for(const primitive of mesh.primitives||[])primitive.material=materialIndex;
+      if(detail.materialIndices){
+        if(detail.materialIndices.length!==(mesh.primitives||[]).length||detail.materialIndices.some(id=>!Number.isInteger(id)||id<0||!passthrough.materials[id]))throw Error('GLB material slots no longer match exported primitives');
+        (mesh.primitives||[]).forEach((primitive,index)=>primitive.material=materialBase+detail.materialIndices[index]);
+      }else for(const primitive of mesh.primitives||[])primitive.material=materialIndex;
     }
   }
   if(gltf.buffers?.length)gltf.buffers[0].byteLength=bin.length;
@@ -512,10 +521,14 @@ async function buildGLB(sceneObjects,subd){
   root.name='BoxLab';
   let count=0,faceGroupCount=0,groupSlotCount=0,uvRestoredCount=0,tangentsRestoredCount=0,vertexColorsRestoredCount=0,morphTargetsRestoredCount=0;
   const objectDetails=[];
+  try{
   sceneObjects.forEach((object,index)=>{
     const editable=resolveExportMesh(object,subd);
     if(!editable?.vertices?.length||!editable?.faces?.length)return;
     const passthrough=object.glbPassthrough||null;
+    const multiMaterial=Array.isArray(passthrough?.materialIndices)&&new Set(passthrough.materialIndices).size>1;
+    const materialFaces=multiMaterial&&!subd?faceMaterialAssignments(editable,passthrough):null;
+    if(multiMaterial&&!materialFaces)throw Error('Multi-material GLB export requires matching Base face assignments. Reimport the original GLB with Split groups off; use Base geometry.');
     const topology=topologySignature(editable);
     const geometryState=geometrySignature(editable);
     const uvCompatible=!subd&&passthrough?.uvTopologySignature&&passthrough.uvTopologySignature===topology;
@@ -524,7 +537,8 @@ async function buildGLB(sceneObjects,subd){
     const morphCompatible=!subd&&passthrough?.morphTopologySignature&&passthrough.morphTopologySignature===topology;
     const built=editableToGeometry(editable,{
       uvs:uvCompatible?passthrough.uvCorners:null,
-      preserveUVSeams:passthrough?.source==='boxlab',
+      faceMaterials:materialFaces,materialFacegroups:!!materialFaces,
+      preserveUVSeams:!!materialFaces||passthrough?.source==='boxlab',
       tangents:tangentCompatible?passthrough.tangentCorners:null,
       colors:colorCompatible?passthrough.vertexColorCorners:null,
       morphTargets:morphCompatible?passthrough.morphTargets:null,
@@ -536,6 +550,12 @@ async function buildGLB(sceneObjects,subd){
     if(built.tangentsRestored)tangentsRestoredCount++;
     if(built.vertexColorsRestored)vertexColorsRestoredCount++;
     if(built.morphTargetsRestored)morphTargetsRestoredCount++;
+    const uniqueNames=[],groupKeys=new Map();
+    const groupIds=materialFaces?built.groups.map(group=>{
+      const key=group.name??null;
+      if(!groupKeys.has(key)){groupKeys.set(key,uniqueNames.length);uniqueNames.push(group.name||('FaceGroup '+(uniqueNames.length+1)));}
+      return groupKeys.get(key);
+    }):null;
     const sharedMaterial=sharedNomadMaterial();
     sharedMaterial.vertexColors=!!built.vertexColorsRestored;
     const materials=built.groups.map(()=>sharedMaterial);
@@ -548,7 +568,7 @@ async function buildGLB(sceneObjects,subd){
     node.name=safeOBJName(object.name,index);
     node.userData.boxlabObjectId=object.id;
     node.userData.boxlabRoundTripObject=true;
-    node.userData.boxlabFaceGroupCount=built.groups.filter(group=>group.name).length;
+    node.userData.boxlabFaceGroupCount=materialFaces?new Set(built.groups.filter(group=>group.name).map(group=>group.name)).size:built.groups.filter(group=>group.name).length;
     node.userData.boxlabGroupSlotCount=built.groups.length;
     node.userData.boxlabUVRestored=!!built.uvRestored;
     node.userData.boxlabTangentsRestored=!!built.tangentsRestored;
@@ -560,7 +580,9 @@ async function buildGLB(sceneObjects,subd){
       name:node.name,
       faceGroups:node.userData.boxlabFaceGroupCount,
       groupSlots:node.userData.boxlabGroupSlotCount,
-      groupNames:built.groups.map((group,groupIndex)=>group.name||('FaceGroup '+(groupIndex+1))),
+      groupNames:materialFaces?uniqueNames:built.groups.map((group,groupIndex)=>group.name||('FaceGroup '+(groupIndex+1))),
+      groupIds,
+      materialIndices:materialFaces?built.groups.map(group=>group.materialIndex):null,
       passthrough,
       uvRestored:!!built.uvRestored,
       uvCompatible:!!uvCompatible,
@@ -577,11 +599,7 @@ async function buildGLB(sceneObjects,subd){
   const exporter=new GLTFExporter();
   let buffer=await exporter.parseAsync(root,{binary:true,onlyVisible:true});
   buffer=patchNomadFaceGroupGLB(buffer,objectDetails);
-  root.traverse(node=>{
-    node.geometry?.dispose?.();
-    if(Array.isArray(node.material))node.material.forEach(material=>material?.dispose?.());
-    else node.material?.dispose?.();
-  });
+
   const verification=await verifyGLB(buffer,count,groupSlotCount);
   globalThis.__boxlabNomadRoundTrip ||= {};
   globalThis.__boxlabNomadRoundTrip.lastAttributeExport={
@@ -592,6 +610,13 @@ async function buildGLB(sceneObjects,subd){
   };
   globalThis.__boxlabNomadRoundTrip.lastUVExport={restored:uvRestoredCount,total:count};
   return{buffer,count,faceGroupCount,groupSlotCount,uvRestoredCount,tangentsRestoredCount,vertexColorsRestoredCount,morphTargetsRestoredCount,objectDetails,verification};
+  }finally{
+  const retired=new Set();
+  root.traverse(node=>{
+    node.geometry?.dispose?.();
+    for(const material of Array.isArray(node.material)?node.material:[node.material])if(material&&!retired.has(material)){retired.add(material);material.dispose?.();}
+  });
+  }
 }
 
 async function shareOpenIn(){

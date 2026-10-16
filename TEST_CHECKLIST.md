@@ -6746,7 +6746,7 @@ Temporary unlit active Base inspection only, one opaque embedded PNG/JPEG UV0 ma
 ≤8MB source/1024² bitmap/20k corners. No painting or persistent material/export changes.
 
 
-## .882 exact face-material UV Image — device gate pending
+## .882 exact face-material UV Image — user PASS2026-10-16
 
 - [x] User881 PERFECT PASS protects active-image/navigation/Pencil→surface/history/look restoration.
 - [x] Actual GLTFLoader/parser associations preserve reversed IDs with identical material names through logical merge/weld/quad import.
@@ -6756,12 +6756,37 @@ Temporary unlit active Base inspection only, one opaque embedded PNG/JPEG UV0 ma
 - [x] Real Three multi-slot image/factor/sampler mapping, serial all-ready display, cancellation/failure/budgets and exact-once disposal.
 - [x] Actual File GLB callback supplies associations; editable OBJ callback remains independent.
 - [x] Full local2402PASS/0FAIL/0skip; all prior881/880/879 semantic tests retained.
-- [ ] FRESH import GLB with2–4 opaque embedded-image materials, Split groups OFF/SubD OFF → UV Image: distinct images occupy correct face areas.
-- [ ] Pencil UV edit→Back to3D updates affected areas; Undo/Redo restores them. Orbit/pan/pinch unchanged.
-- [ ] Save/Open .boxlab retains multi-material UV Image assignment; switch Studio/Solid and back safely.
-- [ ] Existing single-material GLB still works; unsupported/legacy mixed-material inputs remain Solid.
+- [x] FRESH import GLB with2–4 opaque embedded-image materials, Split groups OFF/SubD OFF → UV Image: distinct images occupy correct face areas.
+- [x] Pencil UV edit→Back to3D updates affected areas; Undo/Redo restores them. Orbit/pan/pinch unchanged.
+- [x] Save/Open .boxlab retains multi-material UV Image assignment; switch Studio/Solid and back safely.
+- [x] Existing single-material GLB still works; unsupported/legacy mixed-material inputs remain Solid.
 
 Fresh import required for old mixed-material projects. Active Base only, max4 opaque
 image materials/8MB encoded aggregate/1024² per decode; all-or-Solid. No painting or
 persistent material changes. Existing multi-material GLB OUTPUT patcher repair remains
 separate;882 preview/codec tests do not claim that export route is repaired.
+
+
+## .883 exact GLB material handoff — device gate pending
+
+- [x] .882 PASS protected including intentional active-only image view; native missing-texture report is a separate failure.
+- [x] Actual Three GLB triangle/material/UV mapping and original group table/IDs retained across material splits.
+- [x] Multiple objects retain distinct global material/texture bases even with identical names.
+- [x] Final embedded image bytes, five core texture slots/samplers/alignment verified; Node private verification input avoids image decoding only.
+- [x] Selected UV edit + resource project roundtrip retains exact GLB material mapping.
+- [x] Missing/stale/invalid/evaluated multi-material assignments refuse; failure cleanup and subsequent valid export pass.
+- [x] Full local2407PASS/0FAIL/0skip; native NOM865 writer/donor and protected/frozen bytes unchanged.
+- [ ] File format GLB + Base → Export/Save → Nomad: correct image on each area with original facegroups.
+- [ ] Pencil UV edit→Base GLB→Nomad retains new UV layout and material placement.
+- [ ] Save/Open .boxlab→Base GLB repeats correctly; ordinary single/plain GLB remains accepted.
+
+## OPEN native File→NOMAD texture omission — user report2026-10-16
+
+- [x] User explicitly confirms native File→NOMAD (.nom), not GLB; UVs survive, images do not.
+- [x] Audit proves writer865 lacks imported image serialization; donor has no texture/image records.
+- [ ] Obtain a textured .nom saved by Nomad to establish real binary/image/material conventions.
+- [ ] Implement native image embedding only after fixture audit and binary/resource regression tests.
+- [ ] Device File→NOMAD preserves image textures as well as accepted865 UVs.
+
+883 GLB repair is NOT acceptance/repair of native texture export. Do not infer NOM
+image support from GLB final-byte assertions or native UV-only tests.

@@ -23,7 +23,8 @@ test('547 GLB uses one shared material across facegroup primitives',()=>{
 test('547 patches Nomad group table and primitive group ids into GLB',()=>{
   assert.match(exporter,/function patchNomadFaceGroupGLB\(/);
   assert.match(exporter,/groups:names\.map/);
-  assert.match(exporter,/primitive\.extras\.nomad=.*group:index/);
+  assert.match(exporter,/const group=detail\.groupIds\?\.\[index\]\?\?index/);
+  assert.match(exporter,/primitive\.extras\.nomad=.*group\}/);
   assert.match(exporter,/buffer=patchNomadFaceGroupGLB\(buffer,objectDetails\)/);
 });
 

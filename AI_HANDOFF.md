@@ -1,12 +1,63 @@
-# BoxLab AI Handoff — .882 Exact UV Image Materials
+# BoxLab AI Handoff — .883 GLB Materials / Native Texture Gap
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.882; live https://crisbezz.github.io/BoxLab/.
-Previous main007fdfb6 / .881 accepted; .882 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.883; live https://crisbezz.github.io/BoxLab/.
+Previous main15e57665 / .882 accepted; .883 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .883 — exact material GLB handoff; native NOM textures still unresolved, 2026-10-16
+
+User .882 PASS /nextbuild after confirming active/selected-only UV Image is expected.
+Protect fresh exact multi-material preview, Pencil/history/project persistence and
+active-only memory policy. During883 user reports UVs but no textures on return to
+Nomad and explicitly confirms File→NOMAD (.nom), NOT GLB. That report is a distinct
+NATIVE image omission; do not claim this GLB repair fixes it or mark native textures PASS.
+
+Audit main15e57665: original GLB patcher assigns first retained material to every
+primitive. Original exporter now optionally buckets by BOTH facegroup and exact .882
+face-material ID, using original triangulator/attribute/fit owners. Shared exporter
+faceMaterialAssignments validates imported version/source, original topology signature,
+face count and material IDs for both preview and Base GLB. Multi-material missing/
+stale/invalid/evaluated/SubD mappings refuse with fresh-import/Base instruction rather
+than first-material substitution. Legacy single/plain GLB paths unchanged.
+
+Patch each exported primitive to the corresponding retained material with original
+per-object texture/sampler/image base remapping and byte append. Facegroup identity is
+independent of material splitting: unique original group table + per-primitive group ID;
+several material primitives may belong to ONE Nomad facegroup. Exact multi-material
+branch preserves all UV seam variants (old imported pole-collapse path unchanged for
+legacy/single exports). GLB inspection remains original Loader self-check. Temporary
+export geometry/material cleanup now runs in finally on errors too, shared materials
+retired once. No image decoding/painting/render/kernel/resource/history changes.
+
+Five native tests verify actual Three GLB triangles/material IDs/UV corners/group IDs,
+reimport names, multiple objects/global material bases with duplicate names, final image
+bytes + all five core texture slots/sampler references/alignment, selected UV edit +
+resource-codec continuity, missing/stale/invalid/evaluated refusals and failure cleanup.
+Image-bound test removes texture refs ONLY from private Node verification copy so actual
+Loader can validate geometry without browser decoding; final real exporter/patcher bytes
+checked independently. No automated browser/Nomad image rendering proof. Full local
+2407PASS/0FAIL/0skip, earlier semantic tests retained.547 source assertion follows
+separate group-ID mapping rather than freezing group=index. Reviewed shell/recovery/
+export-panel883 only; importer/render/surface882/workspace+decoder880/NOM865/protected
+modelling/frozen beta bytes unchanged. Publication proof follows.
+
+NATIVE BLOCKER: nomad-export-core865 explicitly writes geometry/UVs/groups only and
+retains donor material; no imported texture/image serialization exists. Sole validated
+native donor nomad-tube.nom has material factors but NO image/texture records. No
+textured .nom fixture or validated image-link/binary convention exists in repository.
+Do not invent native fields or rename GLB as NOM. Request a real textured .nom SAVED BY
+NOMAD (simple UV cube + one image sufficient) to inspect image payload/material links
+and build a truthful native test before implementation. Native writer/donor unchanged;
+accepted865 UVs remain protected. User texture omission remains OPEN, not fixed by883.
+
+Device883 GLB gate: File format GLB + Base→Export/Save (NOT NOMAD button) → Nomad:
+correct images/areas + facegroups; UV edit→repeat; .boxlab Save/Open→GLB. Exact maps
+require fresh882+ GLB import with Split groups off. Next priority is native .nom
+texture sample/format audit and repair once fixture available; painting later.
 
 ## .882 — exact imported face materials in UV Image, 2026-10-16
 
@@ -1289,11 +1340,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.882 device: fresh2–4 opaque image-material GLB, Split groups off/SubD off → VIEW→UV
-Image, correct areas/orientation, Pencil UV edits→Back to3D/history, Save/Open and
-Studio restoration. Old multi-material projects need fresh import for exact face IDs.
-.881 PASS protected. Next audit original GLB material patcher; surface preview support
-is not proof that existing multi-material GLB export assignment is repaired.
+User explicitly reports File→NOMAD loses textures while UVs survive. Native texture
+export is NOT implemented or fixed by883. Need real textured .nom saved by Nomad to
+inspect image/material/binary schema: donor has no textures. Preserve865 UV writer;
+never guess native fields.883 GLB/Base exact-material handoff device gate pending;
+882 active-only multi-image PASS protected. Painting later.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

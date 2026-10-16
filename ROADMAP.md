@@ -4,6 +4,57 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## .883 — exact material GLB handoff; native NOM textures still unresolved, 2026-10-16
+
+User .882 PASS /nextbuild after confirming active/selected-only UV Image is expected.
+Protect fresh exact multi-material preview, Pencil/history/project persistence and
+active-only memory policy. During883 user reports UVs but no textures on return to
+Nomad and explicitly confirms File→NOMAD (.nom), NOT GLB. That report is a distinct
+NATIVE image omission; do not claim this GLB repair fixes it or mark native textures PASS.
+
+Audit main15e57665: original GLB patcher assigns first retained material to every
+primitive. Original exporter now optionally buckets by BOTH facegroup and exact .882
+face-material ID, using original triangulator/attribute/fit owners. Shared exporter
+faceMaterialAssignments validates imported version/source, original topology signature,
+face count and material IDs for both preview and Base GLB. Multi-material missing/
+stale/invalid/evaluated/SubD mappings refuse with fresh-import/Base instruction rather
+than first-material substitution. Legacy single/plain GLB paths unchanged.
+
+Patch each exported primitive to the corresponding retained material with original
+per-object texture/sampler/image base remapping and byte append. Facegroup identity is
+independent of material splitting: unique original group table + per-primitive group ID;
+several material primitives may belong to ONE Nomad facegroup. Exact multi-material
+branch preserves all UV seam variants (old imported pole-collapse path unchanged for
+legacy/single exports). GLB inspection remains original Loader self-check. Temporary
+export geometry/material cleanup now runs in finally on errors too, shared materials
+retired once. No image decoding/painting/render/kernel/resource/history changes.
+
+Five native tests verify actual Three GLB triangles/material IDs/UV corners/group IDs,
+reimport names, multiple objects/global material bases with duplicate names, final image
+bytes + all five core texture slots/sampler references/alignment, selected UV edit +
+resource-codec continuity, missing/stale/invalid/evaluated refusals and failure cleanup.
+Image-bound test removes texture refs ONLY from private Node verification copy so actual
+Loader can validate geometry without browser decoding; final real exporter/patcher bytes
+checked independently. No automated browser/Nomad image rendering proof. Full local
+2407PASS/0FAIL/0skip, earlier semantic tests retained.547 source assertion follows
+separate group-ID mapping rather than freezing group=index. Reviewed shell/recovery/
+export-panel883 only; importer/render/surface882/workspace+decoder880/NOM865/protected
+modelling/frozen beta bytes unchanged. Publication proof follows.
+
+NATIVE BLOCKER: nomad-export-core865 explicitly writes geometry/UVs/groups only and
+retains donor material; no imported texture/image serialization exists. Sole validated
+native donor nomad-tube.nom has material factors but NO image/texture records. No
+textured .nom fixture or validated image-link/binary convention exists in repository.
+Do not invent native fields or rename GLB as NOM. Request a real textured .nom SAVED BY
+NOMAD (simple UV cube + one image sufficient) to inspect image payload/material links
+and build a truthful native test before implementation. Native writer/donor unchanged;
+accepted865 UVs remain protected. User texture omission remains OPEN, not fixed by883.
+
+Device883 GLB gate: File format GLB + Base→Export/Save (NOT NOMAD button) → Nomad:
+correct images/areas + facegroups; UV edit→repeat; .boxlab Save/Open→GLB. Exact maps
+require fresh882+ GLB import with Split groups off. Next priority is native .nom
+texture sample/format audit and repair once fixture available; painting later.
+
 ## .882 — exact imported face materials in UV Image, 2026-10-16
 
 User .881 PERFECT PASS /nextbuild protects active-image orientation/colour/navigation,
