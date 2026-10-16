@@ -1781,3 +1781,16 @@ unsupported Base contexts use Solid. No painting or persistent material/export c
 Shell git has no HTTPS credentials; connected Git Data publication used expected-main
 SHA lease and verified blob/tree hashes. Documentation-only verification follows runtime
 release without changing tested assets. No881 device PASS inferred.
+
+## .882 publication verified — 2026-10-16
+
+Runtime releasea00022aafa3914a422e172d48f8de1e47b0c0950; tested tree
+d5b9204dae40414e860399795f0a7b0bbe9be233 matches fetched main exactly.
+Node22 CI38889866338/job116936462977 SUCCESS2402PASS/0FAIL/0skip.
+Pages38889865865 build/deploy SUCCESS. Postdeployment live shell/manifest/importer/
+export-panel/render/image-surface882, unchanged decoder880, protected Multi1.0 and
+frozenBeta7 version byte-match repository. Initial live reads preceded deployment;
+final full graph matches882. User881 PASS protected;882 fresh multi-material import/
+UV edit/history/project device gate pending. All four continuity files current.
+Connected Git Data used expected-main SHA and exact tested blob/tree hashes; final
+documentation proof changes no runtime bytes. No882 device PASS inferred.
