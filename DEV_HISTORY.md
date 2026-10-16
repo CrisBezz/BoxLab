@@ -10223,3 +10223,19 @@ Device887: supplied FULL MATERIAL.glb, SubD off→File→NOMAD must download/ope
 normal/emissive/roughness/metalness slots intact; UV edit→export and .boxlab Save/Open→
 export repeat. Native visual gate remains pending; do not infer PASS from file upload.
 Next: this exact-file retest before advancing opacity/displacement/native multi-materials.
+
+## .887 publication verified — 2026-10-17
+
+Runtime3f605425529ecb4443ac73ac4ca82c1297403b2a; tested tree
+588b5515fddf512251af19f790a6fd7d6f3a2bae exactly matches fetched main.
+Actual Node22 CI38978052888/job117232125229 SUCCESS2428PASS/0FAIL/0skip;
+Pages38978052416 build/deploy SUCCESS. Fresh live shell/manifest/recovery/export-panel/
+packed-child/native-core/surface/image-helper/MeshHealth/workspace/render/drawer/
+management/project-codec/resource-helper887, unchanged importer882, protected Multi1.0
+and frozenBeta7 marker all byte-match repository. Prior886 live graph matched original
+main during audit. Exact uploadedGLB refusal and large base64 regex overflow reproduced
+before repair; actual source-byte/hash and pooled-resource audits recorded above.
+User885 FAIL screenshot886 remains the failed case;887 exact-file Nomad opening,
+map alignment/UV edits and .boxlab reopen device gates await feedback. Earlier smaller
+accepted map/UV protections remain; no new device PASS inferred. All four continuity
+documents current. Final proof commit changes docs only, preserving tested runtime.

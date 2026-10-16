@@ -2,7 +2,7 @@
 
 ## Current state — 2026-10-17
 CrisBezz/BoxLab main build0.36.18.887; live https://crisbezz.github.io/BoxLab/.
-Previous runtimeed65c49a/main44dca980; .887 validation/publication proof below.
+Runtime3f605425; .887 CI/Pages/live verified below; exact-file device retest pending.
 User885 FAIL screenshot886: large FULL MATERIAL export blocked; .887 repairs reproduced image-budget and project-validation failures. Prior smaller PASS baselines remain protected. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
@@ -2118,3 +2118,19 @@ protected;886 Roughness/Metalness slot/appearance/Pencil UV/project device gate 
 No real browser decode or Nomad appearance proof inferred from Node adapters; limits
 and unsupported displacement/native per-face materials documented. Final verification
 commit changes documentation only, retaining tested runtime bytes.
+
+## .887 publication verified — 2026-10-17
+
+Runtime3f605425529ecb4443ac73ac4ca82c1297403b2a; tested tree
+588b5515fddf512251af19f790a6fd7d6f3a2bae exactly matches fetched main.
+Actual Node22 CI38978052888/job117232125229 SUCCESS2428PASS/0FAIL/0skip;
+Pages38978052416 build/deploy SUCCESS. Fresh live shell/manifest/recovery/export-panel/
+packed-child/native-core/surface/image-helper/MeshHealth/workspace/render/drawer/
+management/project-codec/resource-helper887, unchanged importer882, protected Multi1.0
+and frozenBeta7 marker all byte-match repository. Prior886 live graph matched original
+main during audit. Exact uploadedGLB refusal and large base64 regex overflow reproduced
+before repair; actual source-byte/hash and pooled-resource audits recorded above.
+User885 FAIL screenshot886 remains the failed case;887 exact-file Nomad opening,
+map alignment/UV edits and .boxlab reopen device gates await feedback. Earlier smaller
+accepted map/UV protections remain; no new device PASS inferred. All four continuity
+documents current. Final proof commit changes docs only, preserving tested runtime.
