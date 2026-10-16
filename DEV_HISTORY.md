@@ -9640,3 +9640,9 @@ render/resource owners before painting or broader curved/seam unwrap work.
 Cube Box six-panel layout/seams, selected Pencil edits, native Undo/Redo/Planar
 replacement and Save/Open→NOMAD Base accepted. Preserve Box mapper/sole gesture owner;
 .877 Cylinder and native GLB seam gate remains separate.
+
+## .877 publication verified — 2026-10-16
+
+Runtime release `e1d5ccffd03941b982df25d9463de9b0746e5e4a`; tested tree `c872ec647f8a7188f227d48c6cfc5459237a4328` matched fetched main exactly. Actual Node 22 topology CI run 38865991906 / job 116858835631 succeeded: **2378 PASS / 0 FAIL / 0 skipped**. Pages run 38865990703 build and deploy succeeded. Fresh live shell, manifest, Mesh Health/edit/GLB panel .877, unchanged UV workspace .874, native NOM core .865, protected Multi .1.0, and frozen beta-7 version all byte-matched repository files.
+
+User .876 PASS remains protected. The .877 device gate remains pending: upright round world-Y Cylinder UVs, independent Pencil edits, Undo/Redo, project persistence, NOMAD Base and native GLB seam checks. No general unwrap, elliptic mapping, painting, or evaluated-modifier UV claim. All four continuity documents are current.
