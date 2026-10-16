@@ -1,12 +1,63 @@
-# BoxLab AI Handoff — .881 UV Image Surface
+# BoxLab AI Handoff — .882 Exact UV Image Materials
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.881; live https://crisbezz.github.io/BoxLab/.
-Previous main6b6565c4 / .880 accepted; .881 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.882; live https://crisbezz.github.io/BoxLab/.
+Previous main007fdfb6 / .881 accepted; .882 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .882 — exact imported face materials in UV Image, 2026-10-16
+
+User .881 PERFECT PASS /nextbuild protects active-image orientation/colour/navigation,
+Pencil UV edit→surface refresh/history and ordinary look restoration. Audit main007fdfb6
+and original importer882 predecessor797 found retained materialIndices are a used-set,
+NOT per-face assignments. Exporter buckets group by facegroup labels; duplicate names
+are not proof of material identity. Do not infer image assignment from those labels.
+
+Extend ORIGINAL importer conversion/merge/weld/quad owners with optional per-face global
+material IDs from glTF.parser.associations. Carry them alongside existing corner channels;
+drop matching entries for removed faces, retain IDs for reconstructed quads, and prevent
+quad merges across differing IDs even if facegroup labels match. Store only complete
+valid IDs in imported payload.faceMaterialIndices + materialTopologySignature. Legacy/
+missing associations never claim provenance. File GLB callback supplies parser map; OBJ
+flow unchanged. Existing generic imported resource codec/history/COW snapshots carry
+optional fields without a new envelope/version/history owner. Old mixed-material project
+files need a FRESH GLB import in882 to obtain exact assignments; no name-based migration.
+
+Original buildUVPreviewGeometry adds explicit materials:true inspection option, validates
+assignment/signature/IDs, and delegates same editableToGeometry triangulation/corner UVs.
+Only that preview option groups by exact material ID and exposes slot IDs in geometry
+userData. Ordinary GLB/NOM/OBJ writers and checker retain their original grouping/math;
+this stage does NOT repair the older multi-material GLB output patcher's first-material
+behavior. Keep that export limitation distinct from correct surface preview.
+
+Extend SAME active-image helper: up to FOUR used opaque embedded-image materials,
+aggregate≤8MB encoded source, each original1024² decode (up to16MiB decoded RGBA total
+plus GPU textures). Decode serially and show image only after ALL sources are ready.
+Any unsupported/missing/transparent/overbudget material, stale/missing map or failed
+decode leaves whole object Solid. Source cleanup/mode switch cancels further decoding;
+late results and all prior bitmaps/textures/materials/geometry release exactly once.
+Per-slot baseColorFactor/sampler/sidedness retained. Existing881 single-material files
+remain supported; inactive objects still Solid. No painting, PBR lighting, persistent
+material edits, new pointer/kernel/history owner or evaluated UV propagation.
+
+Six new native tests cover actual GLTFLoader reversed IDs/identical material names,
+conversion/merge/weld/quad boundary provenance, optional channel codec roundtrip, original
+triangulator group/position/UV slot mapping + stale refusal, real Three multi-image
+factors/samplers/serial readiness/disposal/failure/cancel/budgets, actual File GLB callback
+and independent OBJ callback. Full local2402PASS/0FAIL/0skip. One544 literal importer-call
+assertion advances to include parser associations, preserving split-toggle contract;
+all earlier tests retained. Reviewed pins shell/recovery/render/importer/export panel/
+surface child882; decoder/workspace880/native NOM865/manager875/navigation868/protected
+modelling and frozen betas unchanged. Publication proof follows.
+
+Device882: FRESH import2–4 opaque embedded-image materials, Split groups OFF/SubD OFF →
+VIEW→UV Image. Inspect correct image areas, edit UVs→Back to3D/history, Save/Open project,
+and switch to Studio/Solid. Existing single-material gate remains protected. Next after
+feedback audit original GLB patcher's per-face material export (without guessing from
+facegroup names) before painting or broader material support.
 
 ## .881 — temporary active-object 3D UV Image view, 2026-10-16
 
@@ -1238,11 +1289,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.881 device: import single opaque embedded-image GLB, SubD off → VIEW→UV Image.
-Inspect orientation/colour/navigation; edit island in UV Editor→Back to3D, UndoRedo;
-Studio/Solid restoration and unsupported fallback. .880 user PASS protected. After
-feedback audit per-face materials through original export buckets, before painting.
-No .881 acceptance inferred from repeated /nextbuild during development.
+.882 device: fresh2–4 opaque image-material GLB, Split groups off/SubD off → VIEW→UV
+Image, correct areas/orientation, Pencil UV edits→Back to3D/history, Save/Open and
+Studio restoration. Old multi-material projects need fresh import for exact face IDs.
+.881 PASS protected. Next audit original GLB material patcher; surface preview support
+is not proof that existing multi-material GLB export assignment is repaired.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

@@ -7,7 +7,7 @@ import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-co
 
 import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.865';
 
-const VERSION='0.36.18.879';
+const VERSION='0.36.18.882';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -148,7 +148,7 @@ function geometrySignature(mesh){
 }
 // Temporary viewport inspection reuses the same triangulation/corner mapping.
 // No import-fit restoration: preview positions stay in current BoxLab coordinates.
-function buildUVPreviewGeometry(mesh,payload){
+function buildUVPreviewGeometry(mesh,payload,{materials=false}={}){
   if(!Array.isArray(mesh?.vertices)||!mesh.vertices.length||!Array.isArray(mesh?.faces)||!mesh.faces.length||mesh.faces.some(f=>!Array.isArray(f))||payload?.version!==1||!['glb','boxlab'].includes(payload?.source)||payload.uvTopologySignature!==topologySignature(mesh))return null;
   const uvs=payload.uvCorners;if(!Array.isArray(uvs)||uvs.length!==mesh.faces.length)return null;
   let corners=0,triangles=0;
@@ -159,7 +159,9 @@ function buildUVPreviewGeometry(mesh,payload){
     if(face.some(id=>!Number.isInteger(id)||id<0||id>=mesh.vertices.length)||uv.some(p=>!Array.isArray(p)||p.length!==2||p.some(n=>!Number.isFinite(n)||!Number.isFinite(Math.fround(n)))))return null;
     for(const id of face){const v=mesh.vertices[id];if(!v||![v.x,v.y,v.z].every(n=>Number.isFinite(n)&&Number.isFinite(Math.fround(n))))return null;}
   }
-  const built=editableToGeometry(mesh,{uvs,preserveUVSeams:true}),geometry=built.geometry;
+  const faceMaterials=materials?payload.faceMaterialIndices:null;
+  if(materials&&(payload.materialTopologySignature!==topologySignature(mesh)||!Array.isArray(faceMaterials)||faceMaterials.length!==mesh.faces.length||faceMaterials.some(id=>!Number.isInteger(id)||id<0||!payload.materialIndices?.includes(id)||!payload.materials?.[id])))return null;
+  const built=editableToGeometry(mesh,{uvs,preserveUVSeams:true,faceMaterials}),geometry=built.geometry;
   if(!built.uvRestored||geometry.index?.count!==triangles*3){geometry.dispose();return null;}
   return geometry;
 }
@@ -178,8 +180,8 @@ function editableToGeometry(mesh,channels={}){
     const face=mesh.faces[faceIndex];
     if(!Array.isArray(face)||face.length<3)continue;
     const group=normalizedFaceGroup(mesh,faceIndex);
-    const key=group??'__BOXLAB_UNGROUPED__';
-    if(!buckets.has(key))buckets.set(key,{name:group,triangles:[]});
+    const key=channels.faceMaterials?channels.faceMaterials[faceIndex]:group??'__BOXLAB_UNGROUPED__';
+    if(!buckets.has(key))buckets.set(key,{name:group,materialIndex:channels.faceMaterials?.[faceIndex],triangles:[]});
     for(const tri of triangulateFace(mesh,face))buckets.get(key).triangles.push({tri,faceIndex});
   }
 
@@ -276,7 +278,7 @@ function editableToGeometry(mesh,channels={}){
       }
     }
     const count=indices.length-start;
-    if(count)groups.push({start,count,name:bucket.name});
+    if(count)groups.push(channels.faceMaterials?{start,count,name:bucket.name,materialIndex:bucket.materialIndex}:{start,count,name:bucket.name});
   }
 
   const geometry=new THREE.BufferGeometry();
@@ -296,6 +298,7 @@ function editableToGeometry(mesh,channels={}){
   }
   groups.forEach((group,index)=>geometry.addGroup(group.start,group.count,index));
   geometry.userData.boxlabFaceGroups=groups.map(group=>group.name);
+  if(channels.faceMaterials)geometry.userData.boxlabFaceMaterials=groups.map(group=>group.materialIndex);
   geometry.userData.boxlabUVRestored=uvRestored;
   geometry.userData.boxlabTangentsRestored=tangentsRestored;
   geometry.userData.boxlabVertexColorsRestored=vertexColorsRestored;

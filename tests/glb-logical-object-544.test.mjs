@@ -8,7 +8,7 @@ const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const beta5=fs.readFileSync(new URL('../beta-5/index.html',import.meta.url),'utf8');
 
 test('544 GLB import uses Split objects by groups toggle',()=>{
-  assert.match(importer,/importedMeshes\(gltf\.scene,\{splitByGroups:!!splitGroupsToggle\?\.checked\}\)/);
+  assert.match(importer,/importedMeshes\(gltf\.scene,\{splitByGroups:!!splitGroupsToggle\?\.checked,associations:gltf\.parser\?\.associations\}\)/);
 });
 
 test('544 GLB importer groups sibling primitives into one logical object',()=>{

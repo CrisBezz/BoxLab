@@ -6728,7 +6728,7 @@ Whole selected source-image reference in tile0–1, not per-face material/PBR re
 Only embedded PNG/JPEG UV0 without texture transforms, ≤8MB source; reference decoding requires browser createImageBitmap.
 
 
-## .881 active-object UV Image surface — device gate pending
+## .881 active-object UV Image surface — user PASS2026-10-16
 
 - [x] .880 Perfect PASS protected: image reference/orientation/Pencil/chooser/project persistence.
 - [x] Single-used opaque image/material/sampler guards, codec/resource read-only identity.
@@ -6737,10 +6737,31 @@ Only embedded PNG/JPEG UV0 without texture transforms, ≤8MB source; reference 
 - [x] Async cancellation-before-start, late results, decode failure and mode/rebuild cleanup.
 - [x] Actual render active-only/Base guards, inactive Solid, UV session refresh and look restoration.
 - [x] Native NOM/project/image bytes and GLB UVs retained; full local2396PASS/0FAIL/0skip.
-- [ ] Single-material textured GLB/SubD off → VIEW→UV Image: colour image correctly oriented on active object; orbit/pan/pinch normal.
-- [ ] UV Editor→Pencil Move/Scale island→Back to3D: surface updates; Undo/Redo restores layout.
-- [ ] VIEW→Studio/Solid restores ordinary look. Switch active object: only active supported object receives image.
-- [ ] Plain/native/mixed-material/SubD objects remain Solid; existing UV Checker and UV Editor Image still work.
+- [x] Single-material textured GLB/SubD off → VIEW→UV Image: colour image correctly oriented on active object; orbit/pan/pinch normal.
+- [x] UV Editor→Pencil Move/Scale island→Back to3D: surface updates; Undo/Redo restores layout.
+- [x] VIEW→Studio/Solid restores ordinary look. Switch active object: only active supported object receives image.
+- [x] Plain/native/mixed-material/SubD objects remain Solid; existing UV Checker and UV Editor Image still work.
 
 Temporary unlit active Base inspection only, one opaque embedded PNG/JPEG UV0 material,
 ≤8MB source/1024² bitmap/20k corners. No painting or persistent material/export changes.
+
+
+## .882 exact face-material UV Image — device gate pending
+
+- [x] User881 PERFECT PASS protects active-image/navigation/Pencil→surface/history/look restoration.
+- [x] Actual GLTFLoader/parser associations preserve reversed IDs with identical material names through logical merge/weld/quad import.
+- [x] Removed-face IDs drop correctly; cross-material equal-name triangles cannot merge; same-material quad path retained.
+- [x] Exact optional payload mapping/signature survives existing codec; legacy files never guess assignments.
+- [x] Original preview geometry material slots align with triangle positions/UVs; stale/bad maps refuse; ordinary checker/export grouping unchanged.
+- [x] Real Three multi-slot image/factor/sampler mapping, serial all-ready display, cancellation/failure/budgets and exact-once disposal.
+- [x] Actual File GLB callback supplies associations; editable OBJ callback remains independent.
+- [x] Full local2402PASS/0FAIL/0skip; all prior881/880/879 semantic tests retained.
+- [ ] FRESH import GLB with2–4 opaque embedded-image materials, Split groups OFF/SubD OFF → UV Image: distinct images occupy correct face areas.
+- [ ] Pencil UV edit→Back to3D updates affected areas; Undo/Redo restores them. Orbit/pan/pinch unchanged.
+- [ ] Save/Open .boxlab retains multi-material UV Image assignment; switch Studio/Solid and back safely.
+- [ ] Existing single-material GLB still works; unsupported/legacy mixed-material inputs remain Solid.
+
+Fresh import required for old mixed-material projects. Active Base only, max4 opaque
+image materials/8MB encoded aggregate/1024² per decode; all-or-Solid. No painting or
+persistent material changes. Existing multi-material GLB OUTPUT patcher repair remains
+separate;882 preview/codec tests do not claim that export route is repaired.

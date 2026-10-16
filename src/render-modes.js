@@ -1,4 +1,4 @@
-import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.881';
+import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.882';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';
 import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js?v=0.36.18.547';
@@ -189,7 +189,7 @@ Object.assign(globalThis.__boxlabRenderModes ||= {},{
 });
 function rebuild(){document.querySelector('#cageToggle')?.dispatchEvent(new Event('change',{bubbles:true}));}
 function applyToSceneBodies(){const scene=bridge()?.scene;if(!scene)return false;let found=false;scene.traverse(object=>{const kind=object?.userData?.kind;if(kind==='body'||kind==='boxlab-inactive-body'){applyMode(object);found=true;}});return found;}
-function modeLabel(){if(mode==='uvimage')return'UV Image · active Base; one opaque embedded material; unavailable objects use Solid';if(mode==='uvchecker')return'UV Checker · Base UVs; unavailable objects use Solid';if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='studio')return'Studio';if(mode==='facegroups')return'Facegroups';return mode[0].toUpperCase()+mode.slice(1);}
+function modeLabel(){if(mode==='uvimage')return'UV Image · active Base; up to 4 mapped opaque materials; unavailable objects use Solid';if(mode==='uvchecker')return'UV Checker · Base UVs; unavailable objects use Solid';if(mode==='wire')return'Wire + Solid';if(mode==='matcap')return'MatCap';if(mode==='normals')return'Normals';if(mode==='studio')return'Studio';if(mode==='facegroups')return'Facegroups';return mode[0].toUpperCase()+mode.slice(1);}
 
 function retryPendingFacegroup(body,attempts=8){
   if(mode!=='facegroups'||!body?.isMesh||attempts<=0)return;

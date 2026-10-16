@@ -210,10 +210,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.879",
+      "url": "./src/export-as-panel.js?v=0.36.18.882",
       "target": "src/export-as-panel.js",
-      "sha256": "bd48513559ddb8855df397d711729000cd99d4cda3960fba629e2f4a775430ec",
-      "sourceVersion": "0.36.18.879"
+      "sha256": "c9f1df29e076dfe2a5523f8987ef084961c23ae0ff81bdf45d49fa4824a798ad",
+      "sourceVersion": "0.36.18.882"
     },
     {
       "owner": "index.html",
@@ -265,10 +265,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/import-mesh.js?v=0.36.18.797",
+      "url": "./src/import-mesh.js?v=0.36.18.882",
       "target": "src/import-mesh.js",
-      "sha256": "184b0acdd6678b1189145d84b06518529a0602f73449156b49741b148bbf5c2d",
-      "sourceVersion": "0.36.18.797"
+      "sha256": "624fb8058e42d968c8df14ba96d1d67c89c6c0d3dd65866a0188e6ee311e197f",
+      "sourceVersion": "0.36.18.882"
     },
     {
       "owner": "index.html",
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.881",
+      "url": "./src/release-bootstrap.js?v=0.36.18.882",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.881",
+      "url": "./src/release-version.js?v=0.36.18.882",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.881",
+      "url": "./src/render-modes.js?v=0.36.18.882",
       "target": "src/render-modes.js",
-      "sha256": "4bef7bc670d10dd3b398b3e76127a142493b88cd444d834acb016cf8b760b12d"
+      "sha256": "746f7f94048215cf675642415522992741d0b181415c9d8df64d25b5291c7b11"
     },
     {
       "owner": "index.html",
@@ -2426,9 +2426,9 @@
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.881",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.882",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "867d616438994e2c3628e3eeb099aad515004c9fb4266c4c421c7956df2abfe6"
+      "sha256": "51c9f1b12fae2260e94f22be045eee082065436a7335c0aa0b905f2d65d07551"
     },
     {
       "owner": "src/uv-image-surface-preview.js",
