@@ -6517,16 +6517,16 @@ handoff files current. User870 PASS protected;871 Pencil feel/navigation/history
 project/native-export device gate pending. Scale remains numeric under Exact;
 Pencil Scale/Rotate follow feedback, no871 user PASS inferred.
 
-## .872 Pencil Scale for selected UV islands — device gate pending
+## .872 Pencil Scale for selected UV islands — user PASS2026-10-16
 
 - [x] User871 PASS protected; default Pencil Move, native history/navigation/export retained.
 - [x] Actual workspace Scale uses original transaction once on lift; preview/payload/resource isolation.
 - [x] Shared full-island pivot beyond preview budget, selected seam-side isolation and stable projection.
 - [x] Cancel/mode switch/no-op/jitter/horizontal/locked/stale guards, positive limits and reopen default.
-- [ ] Select island → Scale → Pencil-drag up/down: enlarge/shrink about its centre; other islands stay fixed.
-- [ ] Lift, repeat, Undo/Redo: one step per stroke. Live factor and seam outlines match committed result.
-- [ ] Switch back to Move; Pencil Move, finger pan/pinch and background Pencil pan still work.
-- [ ] Save/Open → File NOMAD Base preserves scaled UVs/seams. Optional Exact Scale still works.
+- [x] Select island → Scale → Pencil-drag up/down: enlarge/shrink about its centre; other islands stay fixed.
+- [x] Lift, repeat, Undo/Redo: one step per stroke. Live factor and seam outlines match committed result.
+- [x] Switch back to Move; Pencil Move, finger pan/pinch and background Pencil pan still work.
+- [x] Save/Open → File NOMAD Base preserves scaled UVs/seams. Optional Exact Scale still works.
 
 Pencil Rotate is next after feedback. No new unwrap/painting/mesh UV channel in872.
 
@@ -6541,3 +6541,16 @@ protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live r
 preceded deployment and returned871; final complete graph matches872. User871 PASS
 protected;872 Pencil Scale/navigation/history/project/native-export device gate
 pending. All four handoff files current; Pencil Rotate next after feedback.
+
+## .873 Pencil Rotate for selected UV islands — device gate pending
+
+- [x] User872 PASS protected; Pencil Move/Scale, scene history/navigation/export retained.
+- [x] Existing transaction + shared point maths; read-only preview, full-island pivot and isolated seam sides.
+- [x] Quarter-turn parity, arbitrary-angle project/actual NOM/GLB UVs, peer/resource/history isolation.
+- [x] Cancel/mode switch/jitter/vertical/full-turn/stale/locked/overflow refusal and default Move.
+- [ ] Select island → Rotate → Pencil-drag right/left: centred rotation with live angle/seam preview; others fixed.
+- [ ] Lift, repeat, Undo/Redo: one native step per stroke. Rotate90/Flip still work.
+- [ ] Switch Move/Scale; Pencil edits and finger pan/pinch/background Pencil navigation remain good.
+- [ ] Save/Open → File NOMAD Base preserves rotated UV layout/seams.
+
+No new unwrap/new-mesh UVs/painting in873. Device873 acceptance remains separate.

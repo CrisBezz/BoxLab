@@ -60,14 +60,14 @@ function inspectConnectivity(faces,uvs,report){
  report.previewIslands=report.previewFaceIndices.map(fi=>report.faceIslands[fi]);
  report.previewSeamIslands=seamFaces.map(fi=>report.faceIslands[fi]);
 }
-export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null,previewScale=null}={}){
+export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null,previewScale=null,previewRotation=null}={}){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;
  const width=canvas.width,height=canvas.height;
  ctx.clearRect(0,0,width,height);ctx.fillStyle='#101722';ctx.fillRect(0,0,width,height);
  if(report.state!=='ready')return false;
  const {x,y}=uvProjection(width,height,report,{padding,center,view});
  // Pencil preview moves only displayed selected corners; stored UV arrays stay read-only.
- const component=(p,k,moving)=>moving&&previewScale?previewScale.centre[k]+(p[k]-previewScale.centre[k])*previewScale.factor:p[k]+(moving&&previewOffset?(k?previewOffset.v:previewOffset.u):0);
+ const component=(p,k,moving)=>moving&&previewRotation?rotateImportedUVPoint(p,previewRotation.centre,previewRotation.degrees)[k]:moving&&previewScale?previewScale.centre[k]+(p[k]-previewScale.centre[k])*previewScale.factor:p[k]+(moving&&previewOffset?(k?previewOffset.v:previewOffset.u):0);
  const px=(p,moving)=>x(component(p,0,moving)),py=(p,moving)=>y(component(p,1,moving));
  ctx.strokeStyle='#69788e';ctx.lineWidth=pixelRatio;ctx.strokeRect(x(0),y(1),x(1)-x(0),y(0)-y(1));
  ctx.strokeStyle='#65d5f5';ctx.lineWidth=pixelRatio;
@@ -138,4 +138,16 @@ export function importedUVIslandCentre(uvCorners,faces){
   }
  }
  return [minU/2+maxU/2,minV/2+maxV/2];
+}
+
+// Shared point maths for preview and committed arbitrary-angle rotations.
+// Exact quarter turns retain the accepted Rotate90 layout without trig drift.
+export function rotateImportedUVPoint([u,v],[cu,cv],degrees){
+ let angle=degrees%360;if(angle<0)angle+=360;
+ if(angle===0)return [u,v];
+ if(angle===90)return [cu+(cv-v),cv+(u-cu)];
+ if(angle===180)return [cu+(cu-u),cv+(cv-v)];
+ if(angle===270)return [cu+(v-cv),cv+(cu-u)];
+ const radians=angle*Math.PI/180,c=Math.cos(radians),s=Math.sin(radians),du=u-cu,dv=v-cv;
+ return [cu+du*c-dv*s,cv+du*s+dv*c];
 }

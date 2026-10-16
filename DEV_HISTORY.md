@@ -9381,3 +9381,39 @@ protected Multi1.0 and frozenBeta7 version byte-match repository. Initial live r
 preceded deployment and returned871; final complete graph matches872. User871 PASS
 protected;872 Pencil Scale/navigation/history/project/native-export device gate
 pending. All four handoff files current; Pencil Rotate next after feedback.
+
+## .873 — Pencil Rotate for selected UV islands, 2026-10-16
+
+User872 PASS protects Pencil Scale/pivot/seams, one Undo per stroke, Move/navigation
+and project/Nomad UV roundtrip. Audit main89a17b3c/live872 and original workspace/edit
+owners: Rotate90 exists, arbitrary-angle selected rotation does not. Add Rotate to
+existing Move/Scale controls. Pencil horizontal drag right rotates counterclockwise,
+left clockwise;120 CSS pixels =90degrees, live angle readout. Full-island bounds
+centre remains shared with Scale, including unpreviewed faces. Default Move on reopen,
+finger/background navigation, pinch and palm policy unchanged. Vertical-only/tiny
+strokes add no edit. Original Rotate90/Flip buttons and exact Move/Scale remain.
+
+Extend SAME imported-uv-edit transaction with rotateImportedUVByAngle(degrees,scope),
+requiring selected island/expected payload/finite angle and all original guards.
+Renderer and transaction share rotateImportedUVPoint; exact quarter-turn branches
+retain accepted90-degree coordinates, generic angles use sine/cosine. Full turns
+are exact no-ops. Read-only preview rotates selected outlines/highlight/orange seam
+sides; original payload/other islands/resources remain untouched until lift. One
+native checkpoint per changed stroke; mode/capture/report/lock/history/resize/close
+cancel preview and original object/mesh/payload release guard remains. No new UV
+schema/kernel/history/pointer owner. Four native regressions cover real workspace/
+manager/history, reciprocal quarter turns, preview/seam/peer isolation, cancellation/
+no-op/full-turn/navigation/palm/zoom/default Move, arbitrary-angle project/actual NOM
+UV bytes/GLB attributes, actual MeshHealth callback, invalid/stale/overflow refusal
+and full-island pivot. Local Node24 full suite:2357PASS/0FAIL/0skip; publication proof follows below. Cache graph
+MeshHealth/workspace/edit/inspector873; navigation868, Multi1.0/modelling kernels and
+frozen betas unchanged. Device873 gate pending;872 PASS protected.
+Next: device feedback on Pencil Rotate, then audit the next staged UV-authoring step;
+projection/unwrap/new-mesh UV channels and painting remain unimplemented, no blanket
+UV propagation through topology edits or evaluated modifiers is claimed.
+
+## Protected .872 — user PASS2026-10-16
+
+Pencil Scale around island centre, seam preview, repeated strokes/one Undo, Move/
+navigation and Save/Open→native Nomad UV roundtrip accepted. Protect uniform Scale
+sensitivity/default Move; .873 device acceptance remains separate.

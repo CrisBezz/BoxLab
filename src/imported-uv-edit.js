@@ -1,4 +1,4 @@
-import {inspectImportedUV,importedUVIslandCentre} from './imported-uv-inspection.js?v=0.36.18.872';
+import {inspectImportedUV,importedUVIslandCentre,rotateImportedUVPoint} from './imported-uv-inspection.js?v=0.36.18.873';
 // UV transforms keep the existing imported face-corner channel
 // and native scene history. All untouched resource buffers remain read-only.
 export function rotateImportedUV(object,mesh,topologySignature,history,scope){
@@ -16,6 +16,10 @@ export function scaleImportedUV(object,mesh,topologySignature,history,factor,sco
  if(scope===undefined||!Number.isFinite(factor)||factor<=0)return {ok:false,reason:'Select an island and enter a positive scale factor'};
  return editImportedUV(object,mesh,topologySignature,history,{kind:'scale',factor},scope);
 }
+export function rotateImportedUVByAngle(object,mesh,topologySignature,history,degrees,scope){
+ if(scope===undefined||!Number.isFinite(degrees))return {ok:false,reason:'Select an island and a finite rotation angle'};
+ return editImportedUV(object,mesh,topologySignature,history,{kind:'angle',degrees},scope);
+}
 function editImportedUV(object,mesh,topologySignature,history,operation,scope){
  if(!object||object.locked||object.kind==='reference'||object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile||object.glbPassthrough?.version!==1||object.glbPassthrough?.source!=='glb')return {ok:false,reason:'Select an independent imported mesh'};
  const report=inspectImportedUV(mesh,object.glbPassthrough,topologySignature);
@@ -32,6 +36,7 @@ function editImportedUV(object,mesh,topologySignature,history,operation,scope){
  }
  const selected=selectedFaces&&new Set(selectedFaces);
  const uvCorners=previous.uvCorners.map((face,fi)=>selected&&!selected.has(fi)?face:face.map(([u,v])=>{
+  if(operation.kind==='angle')return rotateImportedUVPoint([u,v],[centreU,centreV],operation.degrees);
   if(operation.kind==='move')return [u+operation.u,v+operation.v];
   if(operation.kind==='scale')return operation.factor===1?[u,v]:[centreU+(u-centreU)*operation.factor,centreV+(v-centreV)*operation.factor];
   if(!selected)return operation==='u'?[1-u,v]:operation==='v'?[u,1-v]:[1-v,u];

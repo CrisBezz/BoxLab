@@ -1,12 +1,48 @@
-# BoxLab AI Handoff — .872 Pencil UV Scale
+# BoxLab AI Handoff — .873 Pencil UV Rotate
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.872; live https://crisbezz.github.io/BoxLab/.
-Previous main7864abe9 / .871 accepted; .872 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.873; live https://crisbezz.github.io/BoxLab/.
+Previous main89a17b3c / .872 accepted; .873 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .873 — Pencil Rotate for selected UV islands, 2026-10-16
+
+User872 PASS protects Pencil Scale/pivot/seams, one Undo per stroke, Move/navigation
+and project/Nomad UV roundtrip. Audit main89a17b3c/live872 and original workspace/edit
+owners: Rotate90 exists, arbitrary-angle selected rotation does not. Add Rotate to
+existing Move/Scale controls. Pencil horizontal drag right rotates counterclockwise,
+left clockwise;120 CSS pixels =90degrees, live angle readout. Full-island bounds
+centre remains shared with Scale, including unpreviewed faces. Default Move on reopen,
+finger/background navigation, pinch and palm policy unchanged. Vertical-only/tiny
+strokes add no edit. Original Rotate90/Flip buttons and exact Move/Scale remain.
+
+Extend SAME imported-uv-edit transaction with rotateImportedUVByAngle(degrees,scope),
+requiring selected island/expected payload/finite angle and all original guards.
+Renderer and transaction share rotateImportedUVPoint; exact quarter-turn branches
+retain accepted90-degree coordinates, generic angles use sine/cosine. Full turns
+are exact no-ops. Read-only preview rotates selected outlines/highlight/orange seam
+sides; original payload/other islands/resources remain untouched until lift. One
+native checkpoint per changed stroke; mode/capture/report/lock/history/resize/close
+cancel preview and original object/mesh/payload release guard remains. No new UV
+schema/kernel/history/pointer owner. Four native regressions cover real workspace/
+manager/history, reciprocal quarter turns, preview/seam/peer isolation, cancellation/
+no-op/full-turn/navigation/palm/zoom/default Move, arbitrary-angle project/actual NOM
+UV bytes/GLB attributes, actual MeshHealth callback, invalid/stale/overflow refusal
+and full-island pivot. Local Node24 full suite:2357PASS/0FAIL/0skip; publication proof follows below. Cache graph
+MeshHealth/workspace/edit/inspector873; navigation868, Multi1.0/modelling kernels and
+frozen betas unchanged. Device873 gate pending;872 PASS protected.
+Next: device feedback on Pencil Rotate, then audit the next staged UV-authoring step;
+projection/unwrap/new-mesh UV channels and painting remain unimplemented, no blanket
+UV propagation through topology edits or evaluated modifiers is claimed.
+
+## Protected .872 — user PASS2026-10-16
+
+Pencil Scale around island centre, seam preview, repeated strokes/one Undo, Move/
+navigation and Save/Open→native Nomad UV roundtrip accepted. Protect uniform Scale
+sensitivity/default Move; .873 device acceptance remains separate.
 
 ## .872 — Pencil Scale for selected UV islands, 2026-10-16
 
@@ -864,10 +900,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.872 device gate: select island → Scale → Pencil drag up/down; verify centred scale,
-other islands fixed, one Undo per stroke and Move/navigation/export retained.
-After feedback, Pencil Rotate through the same owners. Imported UV authoring only;
-projection/unwrap/new channels/painting remain later. Shared resources copy-on-write.
+.873 device gate: select island → Rotate → Pencil horizontal drag right/left; verify
+centred rotation/seams, other islands fixed, one Undo per stroke and Move/Scale/
+navigation/project/native-export retained. After feedback, audit staged UV-authoring
+roadmap before adding capabilities; projection/unwrap/new channels/painting still
+unimplemented. Retain source-of-truth ownership and copy-on-write resource boundary.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
