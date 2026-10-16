@@ -1714,3 +1714,19 @@ Release `7b7cf2751e371959437a6ad10601c930f727a64d`; tested tree `ef9e7b6005166f3
 ## .879 publication verified — 2026-10-16
 
 Release `6b20c3939a9ebe7b9847fdc0830adb565fd0a1ba`; tested tree `794865b855df33763e91136e5421b4933569507a` exactly matches fetched main. Actual Node22 CI38870113315/job116871955152 SUCCESS **2386 PASS / 0 FAIL / 0 skipped**; Pages38870112481 build/deploy SUCCESS. Final fresh live shell/manifest/render-owner/preview-child/export-panel879, unchanged workspace878/native NOM865/protected Multi1.0/frozenBeta7 version byte-match repository. Initial reads preceded deployment (old878/child404); final full graph matches879. All four continuity docs current. User878 PASS protected;879 surface checker/navigation/UV edit→session-exit/history/look-restoration device gate pending. Stored Base UVs only; unsupported/stale/over20k-corner objects use Solid; no painting/evaluated UV propagation claim.
+
+## .881 publication verified — 2026-10-16
+
+Runtime release00be7829f43feafddb262d63de6b81c6e7fea8c9; tested tree
+ccf22e986663736321186a41f38a655a8b33e303 exactly matches fetched main.
+Actual Node22 CI38886425246/job116925168650 SUCCESS2396PASS/0FAIL/0skip.
+Pages38886425248 build/deploy SUCCESS. Postdeployment live shell/manifest/render881/
+new image surface child881, unchanged image decoder880/MeshHealth880, protected
+Multi1.0 and frozenBeta7 version byte-match repository. Predeployment reads served880;
+final full graph matches881. All four continuity documents current. User880 PASS
+protected;881 active-image orientation/Pencil→surface/history/look-restoration device
+gate pending. One active opaque embedded material only; mixed materials/inactive/
+unsupported Base contexts use Solid. No painting or persistent material/export change.
+Shell git has no HTTPS credentials; connected Git Data publication used expected-main
+SHA lease and verified blob/tree hashes. Documentation-only verification follows runtime
+release without changing tested assets. No881 device PASS inferred.

@@ -9821,3 +9821,19 @@ orientation/colour/orbit, Pencil island edit→Back to3D refresh + Undo/Redo, St
 restoration, native/plain/mixed-material fallback. Next: .881 device feedback, then audit
 per-face material assignments through the ORIGINAL exporter buckets before multi-material
 surface support. Keep resource images read-only; painting remains later.
+
+## .881 publication verified — 2026-10-16
+
+Runtime release00be7829f43feafddb262d63de6b81c6e7fea8c9; tested tree
+ccf22e986663736321186a41f38a655a8b33e303 exactly matches fetched main.
+Actual Node22 CI38886425246/job116925168650 SUCCESS2396PASS/0FAIL/0skip.
+Pages38886425248 build/deploy SUCCESS. Postdeployment live shell/manifest/render881/
+new image surface child881, unchanged image decoder880/MeshHealth880, protected
+Multi1.0 and frozenBeta7 version byte-match repository. Predeployment reads served880;
+final full graph matches881. All four continuity documents current. User880 PASS
+protected;881 active-image orientation/Pencil→surface/history/look-restoration device
+gate pending. One active opaque embedded material only; mixed materials/inactive/
+unsupported Base contexts use Solid. No painting or persistent material/export change.
+Shell git has no HTTPS credentials; connected Git Data publication used expected-main
+SHA lease and verified blob/tree hashes. Documentation-only verification follows runtime
+release without changing tested assets. No881 device PASS inferred.
