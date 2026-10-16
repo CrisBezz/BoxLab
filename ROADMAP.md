@@ -4,6 +4,59 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## .884 — native File→NOMAD colour image embedding, 2026-10-16
+
+User supplied EXPORTED TEXTURED.nom from Nomad during883 publication, lifting the
+native-schema fixture blocker. SHA256ab3d9293d51d0597cdd6b17439112378e11a486c2898bc72282686a849dcfd6f.
+Read donor fully through existing reader: revision7, JSON offset65608, images table
+{length,offset,type} points to RAW JPEG/PNG bytes, material.textures.color.index links
+image table. Donor contains colour/roughness/normal/displacement records. Metadata-only
+fixture records provenance/header/image descriptors/colour texture convention; user's
+10MB file/pixels are NOT committed or used as runtime donor. Frozen tube donor remains
+byte-identical.883 GLB device acceptance is NOT inferred from native-file upload.
+
+Extend original nomad-export-core writer, not another container/UV/export kernel.
+First stage: one USED opaque core UV0 PNG/JPEG colour-image material per object, same
+original uvImageSurfaceSource eligibility through unchanged882 helper. Require matching
+complete Base UVs, default repeat wrapping + linear mipmap filters; unsupported/multi/
+missing/nonopaque/transformed/invalid/nondefault-sampler inputs refuse clearly instead
+of dropping colour. This is colour handoff only, not full PBR: normal/packed roughness-
+metalness/displacement/other image slots remain pending. Constant roughness/metallic
+factors and RGB baseColorFactor transfer with donor-proven colour slot convention.
+
+Native-local image table embeds ORIGINAL source bytes (no decode/reencode/downscale),
+4-byte aligned; image buffer identity dedup across objects within this build, ≤24MB
+aggregate, original≤8MB source guard. Existing geometry parts append after images with
+same offsetFields owner; mesh.material points to appended native material cloned from
+original donor. Temporary table/material/parts are local; shared scene/project/history
+payloads untouched. Textured output uses observed header revision7; no-image output
+retains original revision6/header and native UV/geometry bytes. Original donor thumbnail/
+other settings retained. Count now counts meshes, not binary image/padding parts.
+Image field bounds verified with existing reader. Native action reports colour images
+count while retaining real .nom MIME/name/download and original UV status.
+
+Five new native tests verify donor metadata convention/header7, exact PNG/JPEG image
+bytes/material links/factors, unchanged UV/geometry field bytes, mixed plain/coloured
+objects/alignment/shared-image dedup, selected UV/project-resource continuity, unsafe
+source/UV/sampler/budget refusals and ACTUAL File NOMAD downloaded bytes/status.881
+preview-invariance fixture now uses default sampler for its native baseline; its
+clamp/nearest preview tests remain, and new native refusal test explicitly covers them.
+Full local2412PASS/0FAIL/0skip. Additional audit exported donor's actual1,412,537-byte
+JPEG through new writer: original image hash matched, native revision7, one colour image.
+No browser/Nomad visual proof claimed; iPad opening/orientation/appearance gate pending.
+
+Cache graph shell/recovery/export-panel884→native-core884→unchanged surface882→decoder880.
+Original importer/render/surface882/UV workspace880/resource875/native donor, protected
+modelling and frozen betas unchanged. Only metadata fixture, no user image assets shipped.
+All four continuity docs updated; publication proof follows.883 GLB tests remain active.
+
+Device884: ONE-material textured GLB, SubD off → File→NOMAD → open in Nomad: colour
+image+UV alignment; Pencil island edit→NOMAD repeat; .boxlab Save/Open→NOMAD; plain mesh
+still exports. Multiple supported single-material objects may share one native file.
+Next after feedback: native colour device result first; audit additional PBR channels
+or native per-face material format using real donors before claiming support. Packed
+roughness/metalness cannot be copied as a plain roughness image without channel handling.
+
 ## .883 — exact material GLB handoff; native NOM textures still unresolved, 2026-10-16
 
 User .882 PASS /nextbuild after confirming active/selected-only UV Image is expected.

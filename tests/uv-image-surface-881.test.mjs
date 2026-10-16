@@ -58,7 +58,8 @@ test('881 actual render owner keeps image active-only with existing Base guards,
  f.c.__boxlabRenderModes.apply(f.body);f.c.set('clay');await tick();assert.equal(f.body.material,f.c.clayMaterial);assert(!f.body.children.some(n=>n.userData.boxlabUVImagePreview));assert(images.every(i=>i.closed===1));
 });
 test('881 preview preserves original read-only image bytes, project encoding, native NOM bytes and UV geometry export',async()=>{
- const {mesh,object,p}=fixture(),before=encodeProjectGLB(p),template=fs.readFileSync(new URL('../src/templates/nomad-tube.nom',import.meta.url)),nom=buildNomadProject([object],template,{topologySignature:sig}).bytes;
+ const {mesh,object,p}=fixture();delete p.textures[0].sampler; // Native884 donor sampler; preview sampler semantics are covered above.
+ const before=encodeProjectGLB(p),template=fs.readFileSync(new URL('../src/templates/nomad-tube.nom',import.meta.url)),nom=buildNomadProject([object],template,{topologySignature:sig}).bytes;
  const b=body(mesh),overlay=createUVImageOverlay(b,mesh,p,build,new THREE.MeshBasicMaterial(),{decode:async()=>bitmap()});await tick();overlay.userData.boxlabUVImageDispose();
  assert.equal(object.glbPassthrough,p);assert.deepEqual(encodeProjectGLB(p),before);assert.deepEqual(buildNomadProject([object],template,{topologySignature:sig}).bytes,nom);
  const plain={...object,glbPassthrough:{...p,materials:[],textures:[],images:[]}},exported=await ex.build([plain]);assert.equal(exported.uvRestoredCount,1);assert.equal(b.geometry.attributes.position.count,mesh.triangulatedGeometry().attributes.position.count);

@@ -5,9 +5,9 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.741';
 
-import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.865';
+import {buildNomadProject} from './nomad-export-core.js?v=0.36.18.884';
 
-const VERSION='0.36.18.883';
+const VERSION='0.36.18.884';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];
@@ -56,7 +56,7 @@ async function exportNomad(){
     if(status)status.textContent='NOMAD • building scene…';
     const result=await buildNOM(sceneObjects,geometry==='subd'),mime='application/x-nomad-sculpt';
     downloadBlob(new Blob([result.bytes],{type:mime}),cleanName(nameInput?.value)+'.nom',60000);
-    if(status)status.textContent=`NOMAD • ${result.count} object${result.count===1?'':'s'} • ${result.faces} faces${result.uvObjects?` • UVs ${result.uvObjects}/${result.count}`:''} • open browser download, then Open In / Share → Nomad`;
+    if(status)status.textContent=`NOMAD • ${result.count} object${result.count===1?'':'s'} • ${result.faces} faces${result.colourTextureObjects?` • colour images ${result.colourTextureObjects}/${result.count}`:''}${result.uvObjects?` • UVs ${result.uvObjects}/${result.count}`:''} • open browser download, then Open In / Share → Nomad`;
   }catch(error){if(status)status.textContent=`NOMAD export failed • ${error?.message||error}`;}
   finally{shareButton.disabled=false;updateNote();}
 }

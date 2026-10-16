@@ -6784,9 +6784,28 @@ separate;882 preview/codec tests do not claim that export route is repaired.
 
 - [x] User explicitly confirms native File→NOMAD (.nom), not GLB; UVs survive, images do not.
 - [x] Audit proves writer865 lacks imported image serialization; donor has no texture/image records.
-- [ ] Obtain a textured .nom saved by Nomad to establish real binary/image/material conventions.
-- [ ] Implement native image embedding only after fixture audit and binary/resource regression tests.
+- [x] User supplied textured native donor;884 audits exact image/material/header conventions.
+- [x] First single-material colour-image implementation884 follows donor/byte/resource tests; full PBR/per-face native materials remain pending.
 - [ ] Device File→NOMAD preserves image textures as well as accepted865 UVs.
 
 883 GLB repair is NOT acceptance/repair of native texture export. Do not infer NOM
 image support from GLB final-byte assertions or native UV-only tests.
+
+
+## .884 native colour-image export — device gate pending
+
+- [x] Real donor schema/header7/image descriptors/material colour slot extracted, SHA provenance recorded; no private pixels shipped.
+- [x] Actual donor1.4MB JPEG retained byte-for-byte through native writer audit.
+- [x] Original PNG/JPEG image bytes, native links/RGB factors/alignment/bounds; UV/geometry fields unchanged.
+- [x] Multiple single-material coloured/plain objects, native-local image dedup, material/mesh offsets and counts correct.
+- [x] Selected UV edit + resource project roundtrip retain native colour bytes; original scene payload unchanged.
+- [x] Unsafe materials/UVs/samplers/missing/oversize/aggregate image budget refuse clearly.
+- [x] ACTUAL File NOMAD action downloads .nom image-bearing bytes and reports colour image count.
+- [x] No-image revision6/native UV tests retained; full local2412PASS/0FAIL/0skip.
+- [ ] ONE opaque image-material GLB, UV0/default repeat sampler/SubD off → File→NOMAD: image visible and correctly aligned in Nomad.
+- [ ] Pencil-edit one island → File→NOMAD retains moved UVs and image; original geometry/facegroups retained.
+- [ ] Save/Open .boxlab → File→NOMAD repeats; ordinary plain meshes still open normally.
+
+FIRST COLOUR stage only. Native normal/roughness/metalness/displacement image maps and
+per-face multiple materials are NOT implemented. Native visual success is not proven
+by final-byte assertions; source≤8MB, total≤24MB, observed native revision7 for images.
