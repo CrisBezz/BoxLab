@@ -1,12 +1,47 @@
-# BoxLab AI Handoff — .873 Pencil UV Rotate
+# BoxLab AI Handoff — .874 UV Fit to tile
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.873; live https://crisbezz.github.io/BoxLab/.
-Previous main89a17b3c / .872 accepted; .873 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.874; live https://crisbezz.github.io/BoxLab/.
+Previous main3068b720 / .873 accepted; .874 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .874 — Fit selected UV island to tile, 2026-10-16
+
+User873 Awesome PASS protects Pencil Rotate/pivot/seams, one Undo per stroke,
+Move/Scale/navigation and project/Nomad UV roundtrip. Audit main3068b720/live873:
+no UV fit-to-tile/packing operation exists; view Fit is navigation only. Add selected-
+only Fit to tile beside existing workspace tools. Centres selected island at(.5,.5),
+uniformly scales its longest UV dimension to.96, leaving2% margin; aspect ratio and
+other islands unchanged. Single original UV transaction/checkpoint; repeated fitted
+click is a no-op (8EPS centre/span tolerance only for fit-idempotence). This is selected-
+island placement, not automatic multi-island packing or overlap prevention.
+
+Extend SAME imported-uv-edit owner with fitImportedUVToTile(scope). Reuse original
+island bounds loop through shared read-only importedUVIslandBounds; existing centre
+helper delegates unchanged maths. Normalized coordinates avoid overflow/underflow,
+including extreme/tiny finite UV extents. Zero-extent islands refuse; original complete-
+imported/context/stale/history/locked guards remain. Full selected island includes
+unpreviewed faces. Copy touched corners/replace payload/retire stale tangents as before;
+resources/geometry/peers untouched. Workspace button cancels pending Pencil preview,
+keeps matching selection and current view; original Fit still only frames the view.
+Move/Scale/Rotate gesture owner and all original modelling owners unchanged.
+Four native regressions cover native history/peer/resource isolation/idempotence,
+aspect/full-island/extreme/degenerate guards, actual workspace/view-Fit distinction,
+actual MeshHealth callback/stale scope and project/NOM UV bytes/GLB attributes.
+Local Node24 full suite:2361PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/workspace/edit/
+inspector874; navigation868/Multi1.0/modelling kernels/frozen betas retained. Device874
+gate pending;873 PASS protected. Next after feedback: audit a native BoxLab UV-channel/
+projection foundation, using original history/project/export owners; no fake imported
+GLB provenance, new-mesh UVs, seam unwrap, evaluated-modifier UVs or painting in874.
+
+## Protected .873 — user PASS2026-10-16
+
+Pencil Rotate centred preview/seams, repeated strokes/one native Undo, Move/Scale/
+navigation and Save/Open→native Nomad UV roundtrip accepted. Preserve quarter-turn
+parity and sole canvas gesture owner. .874 acceptance remains separate.
 
 ## .873 — Pencil Rotate for selected UV islands, 2026-10-16
 
@@ -900,11 +935,11 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.873 device gate: select island → Rotate → Pencil horizontal drag right/left; verify
-centred rotation/seams, other islands fixed, one Undo per stroke and Move/Scale/
-navigation/project/native-export retained. After feedback, audit staged UV-authoring
-roadmap before adding capabilities; projection/unwrap/new channels/painting still
-unimplemented. Retain source-of-truth ownership and copy-on-write resource boundary.
+.874 device gate: select an island → Fit to tile; verify centred proportional fit,
+other islands unchanged, one Undo/Redo and repeat no-op; distinguish view Fit.
+Confirm Pencil edits/navigation and project/native export. After feedback audit native
+BoxLab UV-channel/projection foundation with original resource/history/export owners;
+new-mesh UVs/unwrap/painting remain unimplemented. Do not fabricate GLB provenance.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

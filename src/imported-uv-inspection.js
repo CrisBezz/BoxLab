@@ -128,7 +128,7 @@ export function importedUVScreenDelta(width,height,report,dx,dy,options={}){
 
 // Shared read-only bounds centre for exact edits and gesture previews. Includes
 // every face of the selected island, even beyond the canvas preview budget.
-export function importedUVIslandCentre(uvCorners,faces){
+export function importedUVIslandBounds(uvCorners,faces){
  if(!Array.isArray(faces)||!faces.length)return null;
  let minU=Infinity,minV=Infinity,maxU=-Infinity,maxV=-Infinity;
  for(const fi of faces){
@@ -137,7 +137,11 @@ export function importedUVIslandCentre(uvCorners,faces){
    const [u,v]=p;minU=Math.min(minU,u);maxU=Math.max(maxU,u);minV=Math.min(minV,v);maxV=Math.max(maxV,v);
   }
  }
- return [minU/2+maxU/2,minV/2+maxV/2];
+ return {minU,minV,maxU,maxV};
+}
+export function importedUVIslandCentre(uvCorners,faces){
+ const b=importedUVIslandBounds(uvCorners,faces);
+ return b?[b.minU/2+b.maxU/2,b.minV/2+b.maxV/2]:null;
 }
 
 // Shared point maths for preview and committed arbitrary-angle rotations.

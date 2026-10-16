@@ -4,6 +4,41 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## .874 — Fit selected UV island to tile, 2026-10-16
+
+User873 Awesome PASS protects Pencil Rotate/pivot/seams, one Undo per stroke,
+Move/Scale/navigation and project/Nomad UV roundtrip. Audit main3068b720/live873:
+no UV fit-to-tile/packing operation exists; view Fit is navigation only. Add selected-
+only Fit to tile beside existing workspace tools. Centres selected island at(.5,.5),
+uniformly scales its longest UV dimension to.96, leaving2% margin; aspect ratio and
+other islands unchanged. Single original UV transaction/checkpoint; repeated fitted
+click is a no-op (8EPS centre/span tolerance only for fit-idempotence). This is selected-
+island placement, not automatic multi-island packing or overlap prevention.
+
+Extend SAME imported-uv-edit owner with fitImportedUVToTile(scope). Reuse original
+island bounds loop through shared read-only importedUVIslandBounds; existing centre
+helper delegates unchanged maths. Normalized coordinates avoid overflow/underflow,
+including extreme/tiny finite UV extents. Zero-extent islands refuse; original complete-
+imported/context/stale/history/locked guards remain. Full selected island includes
+unpreviewed faces. Copy touched corners/replace payload/retire stale tangents as before;
+resources/geometry/peers untouched. Workspace button cancels pending Pencil preview,
+keeps matching selection and current view; original Fit still only frames the view.
+Move/Scale/Rotate gesture owner and all original modelling owners unchanged.
+Four native regressions cover native history/peer/resource isolation/idempotence,
+aspect/full-island/extreme/degenerate guards, actual workspace/view-Fit distinction,
+actual MeshHealth callback/stale scope and project/NOM UV bytes/GLB attributes.
+Local Node24 full suite:2361PASS/0FAIL/0skip; publication proof follows below. Cache graph MeshHealth/workspace/edit/
+inspector874; navigation868/Multi1.0/modelling kernels/frozen betas retained. Device874
+gate pending;873 PASS protected. Next after feedback: audit a native BoxLab UV-channel/
+projection foundation, using original history/project/export owners; no fake imported
+GLB provenance, new-mesh UVs, seam unwrap, evaluated-modifier UVs or painting in874.
+
+## Protected .873 — user PASS2026-10-16
+
+Pencil Rotate centred preview/seams, repeated strokes/one native Undo, Move/Scale/
+navigation and Save/Open→native Nomad UV roundtrip accepted. Preserve quarter-turn
+parity and sole canvas gesture owner. .874 acceptance remains separate.
+
 ## .873 — Pencil Rotate for selected UV islands, 2026-10-16
 
 User872 PASS protects Pencil Scale/pivot/seams, one Undo per stroke, Move/navigation

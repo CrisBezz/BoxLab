@@ -6542,16 +6542,16 @@ preceded deployment and returned871; final complete graph matches872. User871 PA
 protected;872 Pencil Scale/navigation/history/project/native-export device gate
 pending. All four handoff files current; Pencil Rotate next after feedback.
 
-## .873 Pencil Rotate for selected UV islands — device gate pending
+## .873 Pencil Rotate for selected UV islands — user PASS2026-10-16
 
 - [x] User872 PASS protected; Pencil Move/Scale, scene history/navigation/export retained.
 - [x] Existing transaction + shared point maths; read-only preview, full-island pivot and isolated seam sides.
 - [x] Quarter-turn parity, arbitrary-angle project/actual NOM/GLB UVs, peer/resource/history isolation.
 - [x] Cancel/mode switch/jitter/vertical/full-turn/stale/locked/overflow refusal and default Move.
-- [ ] Select island → Rotate → Pencil-drag right/left: centred rotation with live angle/seam preview; others fixed.
-- [ ] Lift, repeat, Undo/Redo: one native step per stroke. Rotate90/Flip still work.
-- [ ] Switch Move/Scale; Pencil edits and finger pan/pinch/background Pencil navigation remain good.
-- [ ] Save/Open → File NOMAD Base preserves rotated UV layout/seams.
+- [x] Select island → Rotate → Pencil-drag right/left: centred rotation with live angle/seam preview; others fixed.
+- [x] Lift, repeat, Undo/Redo: one native step per stroke. Rotate90/Flip still work.
+- [x] Switch Move/Scale; Pencil edits and finger pan/pinch/background Pencil navigation remain good.
+- [x] Save/Open → File NOMAD Base preserves rotated UV layout/seams.
 
 No new unwrap/new-mesh UVs/painting in873. Device873 acceptance remains separate.
 
@@ -6567,3 +6567,16 @@ preceded deployment and returned872; final complete graph matches873. User872 PA
 protected;873 Pencil Rotate/navigation/history/project/native-export device gate
 pending. All four handoff files current; next UV-authoring stage needs owner audit
 and873 feedback. No new unwrap/new-mesh channels/painting or device PASS inferred.
+
+## .874 Fit selected UV island to tile — device gate pending
+
+- [x] User873 PASS protected; Pencil Move/Scale/Rotate/navigation/history/native export retained.
+- [x] Selected-only proportional centring/2% margin, full island beyond preview, shared bounds owner.
+- [x] One checkpoint/COW resource isolation; repeat no-op; stale/locked/zero-extent/extreme/tiny guards.
+- [x] Actual workspace cancels Pencil preview; view Fit is navigation; native project/NOM/GLB coverage.
+- [ ] Move/scale island outside tile → Fit to tile: centred fit, proportions retained, others fixed.
+- [ ] Undo/Redo restores fit in one step; repeat Fit to tile adds no extra Undo step.
+- [ ] View Fit changes only framing; Pencil Move/Scale/Rotate, finger pan/pinch remain intact.
+- [ ] Save/Open → File NOMAD Base preserves fitted layout/seams.
+
+Selected fit only; no automatic island packing/new-mesh UVs/unwrap/painting in874.

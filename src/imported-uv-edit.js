@@ -1,4 +1,4 @@
-import {inspectImportedUV,importedUVIslandCentre,rotateImportedUVPoint} from './imported-uv-inspection.js?v=0.36.18.873';
+import {inspectImportedUV,importedUVIslandCentre,importedUVIslandBounds,rotateImportedUVPoint} from './imported-uv-inspection.js?v=0.36.18.874';
 // UV transforms keep the existing imported face-corner channel
 // and native scene history. All untouched resource buffers remain read-only.
 export function rotateImportedUV(object,mesh,topologySignature,history,scope){
@@ -20,6 +20,10 @@ export function rotateImportedUVByAngle(object,mesh,topologySignature,history,de
  if(scope===undefined||!Number.isFinite(degrees))return {ok:false,reason:'Select an island and a finite rotation angle'};
  return editImportedUV(object,mesh,topologySignature,history,{kind:'angle',degrees},scope);
 }
+export function fitImportedUVToTile(object,mesh,topologySignature,history,scope){
+ if(scope===undefined)return {ok:false,reason:'Select a UV island to fit'};
+ return editImportedUV(object,mesh,topologySignature,history,{kind:'fit'},scope);
+}
 function editImportedUV(object,mesh,topologySignature,history,operation,scope){
  if(!object||object.locked||object.kind==='reference'||object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile||object.glbPassthrough?.version!==1||object.glbPassthrough?.source!=='glb')return {ok:false,reason:'Select an independent imported mesh'};
  const report=inspectImportedUV(mesh,object.glbPassthrough,topologySignature);
@@ -34,8 +38,19 @@ function editImportedUV(object,mesh,topologySignature,history,operation,scope){
   if(!centre)return {ok:false,reason:'Select the UV island again'};
   [centreU,centreV]=centre;
  }
+ let fit=null;
+ if(operation.kind==='fit'){
+  const bounds=importedUVIslandBounds(previous.uvCorners,selectedFaces);
+  const magnitude=Math.max(1,...Object.values(bounds).map(Math.abs));
+  const span=Math.max(bounds.maxU/magnitude-bounds.minU/magnitude,bounds.maxV/magnitude-bounds.minV/magnitude);
+  if(!span)return {ok:false,reason:'The selected UV island has no extent to fit'};
+  // Avoid repeated history from floating-point noise after an already-fitted island.
+  if(magnitude===1&&Math.abs(span-.96)<=8*Number.EPSILON&&Math.abs(centreU-.5)<=8*Number.EPSILON&&Math.abs(centreV-.5)<=8*Number.EPSILON)return {ok:true,changed:false,selectedFaces};
+  fit={magnitude,span,minU:bounds.minU/magnitude,minV:bounds.minV/magnitude,width:bounds.maxU/magnitude-bounds.minU/magnitude,height:bounds.maxV/magnitude-bounds.minV/magnitude};
+ }
  const selected=selectedFaces&&new Set(selectedFaces);
  const uvCorners=previous.uvCorners.map((face,fi)=>selected&&!selected.has(fi)?face:face.map(([u,v])=>{
+  if(fit)return [.5+((u/fit.magnitude-fit.minU)/fit.span-fit.width/fit.span/2)*.96,.5+((v/fit.magnitude-fit.minV)/fit.span-fit.height/fit.span/2)*.96];
   if(operation.kind==='angle')return rotateImportedUVPoint([u,v],[centreU,centreV],operation.degrees);
   if(operation.kind==='move')return [u+operation.u,v+operation.v];
   if(operation.kind==='scale')return operation.factor===1?[u,v]:[centreU+(u-centreU)*operation.factor,centreV+(v-centreV)*operation.factor];
