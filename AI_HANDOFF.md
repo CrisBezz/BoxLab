@@ -1,12 +1,67 @@
-# BoxLab AI Handoff — .884 Native Colour Images
+# BoxLab AI Handoff — .885 Native Normal + Emissive Maps
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.884; live https://crisbezz.github.io/BoxLab/.
-Previous main7a601596 / .883 GLB publication; .884 native colour device gate pending. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.885; live https://crisbezz.github.io/BoxLab/.
+Previous main3cd0d5ae / .884 native colour accepted; .885 native map device gate pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .885 — native normal + emissive maps from full donor, 2026-10-16
+
+User .884 Perfect PASS protects native colour image visibility/alignment, Pencil UV
+edit repeat and project reopening. User requests other maps and supplies FULL MATERIAL
+EXPORT.nom, SHA256dc9102c6eb38ea95e4d7705b0d2fe89eb58cf0c1248c35f2cce35a2a15cf8685.
+Audit current main3cd0d5ae/native884, full material donor and retained GLB resources.
+Donor revision7 confirms slots color/normal/emissive/roughness/metalness/displacement,
+same image descriptors/texture projection/samplers; normal_neg_y=false, factorNormal,
+factorEmissive and factorEmissiveStrength observed. Only metadata/provenance fixture
+committed, not user's large file/images.885 scope: normal+emissive can transfer exact
+encoded bytes. Roughness/metalness packed G/B conversion and displacement source
+channel identification remain separate; never guess from retained image filenames.
+
+Reuse original image resolver: extract embeddedUVImage from unchanged880 choice rules,
+with importedUVImageChoices delegating same exact PNG/JPEG/UV0/mime/≤8MB checks. Same
+renderer/decoder lifecycle/math retained. Extract uvImageMaterialSource from original
+surface helper for shared single-used opaque/material factor checks; original colour
+surface API delegates it and retains original sampler/image policies. No parallel
+material/UV/signature/history/picking owner. Only parent import URLs change for UV
+workspace/MeshHealth/render, preserving old internal MeshHealth stamp880 deliberately.
+
+Extend ORIGINAL synchronous native writer's884 local image table/material links for
+normalTexture→textures.normal, emissiveTexture→textures.emissive. No decode/reencode,
+gamma conversion or resampling. Match Base UVs, source UV0/PNG/JPEG/no transforms,
+default repeat+linear mipmap sampler and one opaque material. Explicit source normal
+scale→factorNormal (finite f32/nonnegative); native normal_neg_y=false matches donor/
+glTF convention. Source emissiveFactor→factorEmissive (defaultblack), native strength1.
+HDR/material extensions remain refused. Normal/emissive-only materials do not require
+fake colour image; base RGB factor supplies constant colour. Existing colour-only/plain
+flow retained. Source images shared read-only, byte-identity dedup across slots/objects,
+existing≤8MB per image/24MB aggregate. Whole export refuses unsupported declared normal/
+emissive refs rather than dropping them. Original geometry/UV bytes/field offsets/native
+revision7/donor/header/download owners retained. Status adds normal/emissive map counts.
+
+Five native tests cover donor slot descriptors/raw PNG+JPEG bytes/normal strength/
+emissive RGB/defaults, normal-only/emissive-only input, shared-image dedup/material
+links/counts, unsupported image/UV/transform/sampler/factor/aggregate guards, selected
+UV+project continuity and ACTUAL File NOMAD downloaded bytes/status. All880–884 checks
+retained. Full local2417PASS/0FAIL/0skip. Additional real donor audit exported actual
+1,248,872-byte normal JPEG and2,754-byte emissive PNG, both original hashes matched.
+No browser/Nomad appearance proof claimed. Original .884 colour PASS protected.
+Reviewed885 cache graph: export-panel→native-core→surface/image helper; render→surface;
+MeshHealth→workspace→image helper. Inspector/edit880/nav868/importer882/native baseline
+donor/protected modelling/frozen betas untouched. Publication proof follows.
+
+Device885: one-material GLB containing normal/emissive maps, SubD off → File→NOMAD:
+Nomad Material Normal/Emissive slots populated, bump detail/emission factor correct;
+Pencil UV edit→export repeat; .boxlab Save/Open→NOMAD; accepted colour map retained.
+Next narrow stage after feedback: unpack glTF metallicRoughnessTexture GREEN→roughness,
+BLUE→metalness with bounded browser conversion; native slot layout now proven by donor.
+Reference: Khronos glTF2.0 Specification additional textures/material metallic-roughness,
+https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html . No direct copy of packed RGB
+image into scalar slots, no invented displacement reference, no native multi-material
+support or Nomad import claim. Keep885 device gate separate from883 GLB export gate.
 
 ## .884 — native File→NOMAD colour image embedding, 2026-10-16
 
@@ -1393,13 +1448,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.884 implements FIRST native colour-image stage using the user's textured NOM donor.
-Test File→NOMAD with ONE opaque embedded-image material/UV0/default repeat sampler,
-SubD off: image/UV orientation, Pencil edit repeat, project reopen and plain meshes.
-Normal/roughness/displacement image maps and native per-face materials remain pending.
-883 GLB exact-material device gate separate;882 active-only preview PASS protected.
-Donor schema blocker is superseded by provided sample; native visual acceptance still
-requires iPad feedback. Do not interpret uploaded donor as883/884 PASS.
+.885 native normal/emissive device gate: one opaque material GLB with those maps,
+SubD off→File→NOMAD; correct Material slots/strength/alignment, Pencil repeat/project.
+.884 colour image PASS protected. Next unpack metallicRoughnessTexture green/blue
+into separate roughness/metalness images with original source/UV/byte budgets and
+read-only resource boundaries. Displacement still needs actual source-channel proof;
+never choose image by filename. No native multi-material or NOM import implementation.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

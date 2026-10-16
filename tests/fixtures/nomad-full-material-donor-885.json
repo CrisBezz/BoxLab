@@ -1,0 +1,191 @@
+{
+  "source": "User fully loaded native material donor, 2026-10-16",
+  "sha256": "dc9102c6eb38ea95e4d7705b0d2fe89eb58cf0c1248c35f2cce35a2a15cf8685",
+  "headerVersion": 7,
+  "images": [
+    {
+      "length": 11179097,
+      "offset": 0,
+      "type": "image/png"
+    },
+    {
+      "length": 738877,
+      "offset": 11179100,
+      "type": "image/jpeg"
+    },
+    {
+      "length": 4771,
+      "offset": 11917980,
+      "type": "image/png"
+    },
+    {
+      "length": 1248872,
+      "offset": 11922752,
+      "type": "image/jpeg"
+    },
+    {
+      "length": 2754,
+      "offset": 13171624,
+      "type": "image/png"
+    },
+    {
+      "length": 6200450,
+      "offset": 13174380,
+      "type": "image/png"
+    }
+  ],
+  "slots": {
+    "color": {
+      "index": 0,
+      "magFilter": "auto",
+      "minFilter": "auto",
+      "name": "Noise fractal_1.png",
+      "offset": [
+        0,
+        0
+      ],
+      "projection": "auto",
+      "rotation": 0,
+      "scale": [
+        1,
+        1
+      ],
+      "triplanar_hardness": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421
+      ],
+      "triplanar_world": true,
+      "wrapS": "repeat",
+      "wrapT": "repeat"
+    },
+    "displacement": {
+      "index": 5,
+      "magFilter": "auto",
+      "minFilter": "auto",
+      "name": "blue_floor_tiles_01.png",
+      "offset": [
+        0,
+        0
+      ],
+      "projection": "auto",
+      "rotation": 0,
+      "scale": [
+        1,
+        1
+      ],
+      "triplanar_hardness": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421
+      ],
+      "triplanar_world": true,
+      "wrapS": "repeat",
+      "wrapT": "repeat"
+    },
+    "emissive": {
+      "index": 4,
+      "magFilter": "auto",
+      "minFilter": "auto",
+      "name": "COLOUR - Flat White.png",
+      "offset": [
+        0,
+        0
+      ],
+      "projection": "auto",
+      "rotation": 0,
+      "scale": [
+        1,
+        1
+      ],
+      "triplanar_hardness": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421
+      ],
+      "triplanar_world": true,
+      "wrapS": "repeat",
+      "wrapT": "repeat"
+    },
+    "metalness": {
+      "index": 2,
+      "magFilter": "auto",
+      "minFilter": "auto",
+      "name": "GRADIENT - Transparent Black to White.png",
+      "offset": [
+        0,
+        0
+      ],
+      "projection": "auto",
+      "rotation": 0,
+      "scale": [
+        1,
+        1
+      ],
+      "triplanar_hardness": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421
+      ],
+      "triplanar_world": true,
+      "wrapS": "repeat",
+      "wrapT": "repeat"
+    },
+    "normal": {
+      "index": 3,
+      "magFilter": "auto",
+      "minFilter": "auto",
+      "name": "blue_floor_tiles_01_normal.jpg",
+      "offset": [
+        0,
+        0
+      ],
+      "projection": "auto",
+      "rotation": 0,
+      "scale": [
+        1,
+        1
+      ],
+      "triplanar_hardness": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421
+      ],
+      "triplanar_world": true,
+      "wrapS": "repeat",
+      "wrapT": "repeat"
+    },
+    "roughness": {
+      "index": 1,
+      "magFilter": "auto",
+      "minFilter": "auto",
+      "name": "blue_floor_tiles_01_roughness.jpg",
+      "offset": [
+        0,
+        0
+      ],
+      "projection": "auto",
+      "rotation": 0,
+      "scale": [
+        1,
+        1
+      ],
+      "triplanar_hardness": [
+        0.8999999761581421,
+        0.8999999761581421,
+        0.8999999761581421
+      ],
+      "triplanar_world": true,
+      "wrapS": "repeat",
+      "wrapT": "repeat"
+    }
+  },
+  "normal_neg_y": false,
+  "factorNormal": 1,
+  "factorEmissive": [
+    1,
+    1,
+    1
+  ],
+  "factorEmissiveStrength": 1
+}

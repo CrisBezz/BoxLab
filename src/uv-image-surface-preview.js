@@ -1,14 +1,20 @@
 import * as THREE from 'three';
-import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.880';
+import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.885';
 // Active Base inspection. Mixed materials require exact per-face import provenance.
 // Names/facegroup labels are never interpreted as material assignments.
-export function uvImageSurfaceSource(payload){
- if(!Array.isArray(payload?.materialIndices))return null;
+export function uvImageMaterialSource(payload){
+ if(payload?.source!=='glb'||payload.version!==1||!Array.isArray(payload.materialIndices))return null;
  const used=new Set(payload.materialIndices);if(used.size!==1)return null;
- const id=[...used][0],choice=importedUVImageChoices(payload).find(c=>c.materialIndex===id);
- if(!choice||Object.keys(payload.materials[id].pbrMetallicRoughness.baseColorTexture.extensions||{}).length)return null;
- const material=payload.materials[id],factor=material.pbrMetallicRoughness.baseColorFactor??[1,1,1,1];
+ const id=[...used][0],material=Number.isInteger(id)&&id>=0?payload.materials?.[id]:null;if(!material)return null;
+ const factor=material.pbrMetallicRoughness?.baseColorFactor??[1,1,1,1];
  if(Object.keys(material.extensions||{}).length||(material.alphaMode??'OPAQUE')!=='OPAQUE'||!Array.isArray(factor)||factor.length!==4||factor.some(v=>!Number.isFinite(v)||v<0||v>1)||factor[3]!==1)return null;
+ return {materialIndex:id,material,factor};
+}
+export function uvImageSurfaceSource(payload){
+ const source=uvImageMaterialSource(payload);if(!source)return null;
+ const {materialIndex:id,material,factor}=source;
+ const choice=importedUVImageChoices(payload).find(c=>c.materialIndex===id);
+ if(!choice||Object.keys(material.pbrMetallicRoughness.baseColorTexture.extensions||{}).length)return null;
  const texture=payload.textures[material.pbrMetallicRoughness.baseColorTexture.index];
  const sampler=texture.sampler===undefined?{}:Number.isInteger(texture.sampler)&&texture.sampler>=0?payload.samplers?.[texture.sampler]:null;
  if(!sampler||![33071,33648,10497].includes(sampler.wrapS??10497)||![33071,33648,10497].includes(sampler.wrapT??10497)||![9728,9729].includes(sampler.magFilter??9729)||![9728,9729,9984,9985,9986,9987].includes(sampler.minFilter??9987))return null;

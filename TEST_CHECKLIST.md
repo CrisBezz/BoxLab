@@ -6786,13 +6786,13 @@ separate;882 preview/codec tests do not claim that export route is repaired.
 - [x] Audit proves writer865 lacks imported image serialization; donor has no texture/image records.
 - [x] User supplied textured native donor;884 audits exact image/material/header conventions.
 - [x] First single-material colour-image implementation884 follows donor/byte/resource tests; full PBR/per-face native materials remain pending.
-- [ ] Device File→NOMAD preserves image textures as well as accepted865 UVs.
+- [x] User884 PASS accepts native colour-image textures plus865 UVs; additional map slots tracked separately.
 
 883 GLB repair is NOT acceptance/repair of native texture export. Do not infer NOM
 image support from GLB final-byte assertions or native UV-only tests.
 
 
-## .884 native colour-image export — device gate pending
+## .884 native colour-image export — user PASS2026-10-16
 
 - [x] Real donor schema/header7/image descriptors/material colour slot extracted, SHA provenance recorded; no private pixels shipped.
 - [x] Actual donor1.4MB JPEG retained byte-for-byte through native writer audit.
@@ -6802,10 +6802,31 @@ image support from GLB final-byte assertions or native UV-only tests.
 - [x] Unsafe materials/UVs/samplers/missing/oversize/aggregate image budget refuse clearly.
 - [x] ACTUAL File NOMAD action downloads .nom image-bearing bytes and reports colour image count.
 - [x] No-image revision6/native UV tests retained; full local2412PASS/0FAIL/0skip.
-- [ ] ONE opaque image-material GLB, UV0/default repeat sampler/SubD off → File→NOMAD: image visible and correctly aligned in Nomad.
-- [ ] Pencil-edit one island → File→NOMAD retains moved UVs and image; original geometry/facegroups retained.
-- [ ] Save/Open .boxlab → File→NOMAD repeats; ordinary plain meshes still open normally.
+- [x] ONE opaque image-material GLB, UV0/default repeat sampler/SubD off → File→NOMAD: image visible and correctly aligned in Nomad.
+- [x] Pencil-edit one island → File→NOMAD retains moved UVs and image; original geometry/facegroups retained.
+- [x] Save/Open .boxlab → File→NOMAD repeats; ordinary plain meshes still open normally.
 
 FIRST COLOUR stage only. Native normal/roughness/metalness/displacement image maps and
 per-face multiple materials are NOT implemented. Native visual success is not proven
 by final-byte assertions; source≤8MB, total≤24MB, observed native revision7 for images.
+
+
+## .885 native normal + emissive maps — device gate pending
+
+- [x] User884 PASS protected: native colour image/alignment/Pencil UV repeat/project reopen.
+- [x] Full material donor schema/provenance recorded; private pixels/file not shipped.
+- [x] Shared embedded-image/material guards preserve prior880–884 choice/preview/native behavior.
+- [x] Real native map slots, original PNG/JPEG bytes, normal scale/defaultY convention, emissive RGB/defaults.
+- [x] Normal-only/emissive-only materials work without fake colour images.
+- [x] Cross-slot/object image dedup, material links/counts/offsets and unchanged UV/geometry bytes.
+- [x] Unsupported source/transform/UV/sampler/factor/budgets refuse; source resources unchanged.
+- [x] Actual File NOMAD action + selected UV/project persistence + status counters verified.
+- [x] Real donor normal1,248,872B and emissive2,754B hashes retained through native writer audit.
+- [x] Full local2417PASS/0FAIL/0skip; original tests/protected/frozen/native donor retained.
+- [ ] Import one-material GLB with normal/emissive maps, SubD off→File→NOMAD: slots populated and visible bump/emission correct in Nomad.
+- [ ] Pencil UV edit→NOMAD keeps map alignment; original colour-image behavior retained.
+- [ ] Save/Open .boxlab→NOMAD repeats with normal/emissive resources intact.
+
+Emissive effect follows source RGB factor (defaultblack). Roughness/metalness packed
+channel conversion, displacement source binding and native per-face multi-materials
+remain pending. HDR material extensions remain unsupported in native map route.

@@ -1,4 +1,5 @@
-import {uvImageSurfaceSource} from './uv-image-surface-preview.js?v=0.36.18.882';
+import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.885';
+import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.885';
 // NOM container/header, field and scene-node conventions adapted from CrisBezz/
 // MeshUtilz-Sweep-Lab balloon-v0.6, commit 18e72a6bf964974591038345d68c2196a18f6af2:
 // src/nomadBalloonExport.js + nomadBalloonExport097.js; validated donor copied intact.
@@ -79,11 +80,30 @@ function nativeColourSource(payload){
  if((source.sampler.wrapS??10497)!==10497||(source.sampler.wrapT??10497)!==10497||(source.sampler.magFilter??9729)!==9729||(source.sampler.minFilter??9987)!==9987)throw Error('NOMAD colour textures currently require repeat wrapping and default linear mipmap filtering; use GLB for other samplers');
  return source;
 }
-function colourTexture(index,name){return {index,name,magFilter:'auto',minFilter:'auto',offset:[0,0],projection:'auto',rotation:0,scale:[1,1],triplanar_hardness:[.8999999761581421,.8999999761581421,.8999999761581421],triplanar_world:true,wrapS:'repeat',wrapT:'repeat'};}
+function nativeMaterialMaps(payload){
+ const colour=nativeColourSource(payload),used=Array.isArray(payload?.materialIndices)?payload.materialIndices:[];
+ const extra=used.some(id=>payload.materials?.[id]?.normalTexture||payload.materials?.[id]?.emissiveTexture);
+ if(!colour&&!extra)return null;
+ const source=uvImageMaterialSource(payload);if(!source)throw Error('NOMAD image maps require one opaque material; use GLB for other materials');
+ const material=source.material,pbr=material.pbrMetallicRoughness||{};
+ if([pbr.roughnessFactor??1,pbr.metallicFactor??1].some(v=>!Number.isFinite(v)||v<0||v>1))throw Error('NOMAD material factors are invalid');
+ const maps={};if(colour)maps.color=colour;
+ for(const [slot,info] of [['normal',material.normalTexture],['emissive',material.emissiveTexture]]){
+  if(!info)continue;
+  const choice=embeddedUVImage(payload,info);if(!choice||Object.keys(info.extensions||{}).length)throw Error('NOMAD '+slot+' map requires an embedded PNG/JPEG UV0 image without transforms');
+  const texture=payload.textures[info.index],sampler=texture.sampler===undefined?{}:Number.isInteger(texture.sampler)&&texture.sampler>=0?payload.samplers?.[texture.sampler]:null;
+  if(!sampler||(sampler.wrapS??10497)!==10497||(sampler.wrapT??10497)!==10497||(sampler.magFilter??9729)!==9729||(sampler.minFilter??9987)!==9987)throw Error('NOMAD '+slot+' map requires default repeat/linear mipmap sampling');
+  maps[slot]={choice};
+ }
+ const normalScale=material.normalTexture?.scale??1,emissiveFactor=material.emissiveFactor??[0,0,0];
+ if(!Number.isFinite(normalScale)||!Number.isFinite(Math.fround(normalScale))||normalScale<0||!Array.isArray(emissiveFactor)||emissiveFactor.length!==3||emissiveFactor.some(v=>!Number.isFinite(v)||v<0||v>1))throw Error('NOMAD normal/emissive factors are invalid');
+ return {...source,maps,normalScale,emissiveFactor};
+}
+function nativeTexture(index,name){return {index,name,magFilter:'auto',minFilter:'auto',offset:[0,0],projection:'auto',rotation:0,scale:[1,1],triplanar_hardness:[.8999999761581421,.8999999761581421,.8999999761581421],triplanar_world:true,wrapS:'repeat',wrapT:'repeat'};}
 export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab',topologySignature=globalThis.__boxlabExportAs?.topologySignature}={}){
  const base=readNomadProject(templateBytes),donor=base.json.meshes?.[0];if(!donor?.vertices)throw Error('Nomad donor mesh is missing');
  const project=clone(base.json),parts=[],proto=findNode(base.json.scene)||{};project.meshes=[];
- const group={name,group:0,selected:true,selected_main:true,children:[],visible:true,node_collapse:false,lock:false};let offset=0,vertices=0,faces=0,uvObjects=0,colourTextureObjects=0,imageBytes=0;
+ const group={name,group:0,selected:true,selected_main:true,children:[],visible:true,node_collapse:false,lock:false};let offset=0,vertices=0,faces=0,uvObjects=0,colourTextureObjects=0,normalTextureObjects=0,emissiveTextureObjects=0,imageBytes=0;
  const images=[],imageIndices=new Map();
  for(const [index,object] of (objects||[]).entries()){
   if(object?.kind==='reference'||object?.visible===false)continue;
@@ -94,23 +114,28 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
    if(stored.length!==editable.faces.length||stored.some((uv,fi)=>!Array.isArray(uv)||uv.length!==editable.faces[fi].length||uv.some(p=>!Array.isArray(p)||p.length!==2||p.some(v=>!Number.isFinite(v)||!Number.isFinite(Math.fround(v))))))throw Error('NOMAD UV channel is incomplete or invalid');
    cornerUVs=stored;uvObjects++;
   }
-  const colour=nativeColourSource(payload);let materialIndex=null;
-  if(colour){
-   if(!cornerUVs)throw Error('NOMAD colour textures require a complete matching Base UV channel');
-   let imageIndex=imageIndices.get(colour.choice.data);
-   if(imageIndex===undefined){
-    imageBytes+=colour.choice.data.length;if(imageBytes>24*1024*1024)throw Error('NOMAD embedded colour images exceed 24 MB');
-    const aligned=Math.ceil(offset/4)*4;if(aligned>offset){parts.push(new Uint8Array(aligned-offset));offset=aligned;}
-    imageIndex=images.length;imageIndices.set(colour.choice.data,imageIndex);
-    images.push({length:colour.choice.data.length,offset,type:colour.choice.mime});parts.push(colour.choice.data);offset+=colour.choice.data.length;
+  const source=nativeMaterialMaps(payload);let materialIndex=null;
+  if(source){
+   if(!cornerUVs)throw Error('NOMAD image maps require a complete matching Base UV channel');
+   const material=clone(base.json.materials?.[0]||{});material.textures={};
+   for(const [slot,map] of Object.entries(source.maps)){
+    const choice=map.choice;let imageIndex=imageIndices.get(choice.data);
+    if(imageIndex===undefined){
+     imageBytes+=choice.data.length;if(imageBytes>24*1024*1024)throw Error('NOMAD embedded images exceed 24 MB');
+     const aligned=Math.ceil(offset/4)*4;if(aligned>offset){parts.push(new Uint8Array(aligned-offset));offset=aligned;}
+     imageIndex=images.length;imageIndices.set(choice.data,imageIndex);
+     images.push({length:choice.data.length,offset,type:choice.mime});parts.push(choice.data);offset+=choice.data.length;
+    }
+    material.textures[slot]=nativeTexture(imageIndex,String(payload.images[choice.imageIndex].definition?.name||(slot+' '+(imageIndex+1)+(choice.mime==='image/png'?'.png':'.jpg'))));
    }
    const aligned=Math.ceil(offset/4)*4;if(aligned>offset){parts.push(new Uint8Array(aligned-offset));offset=aligned;}
-   const material=clone(base.json.materials?.[0]||{});delete material.textures;
-   material.textures={color:colourTexture(imageIndex,String(payload.images[colour.choice.imageIndex].definition?.name||('Colour '+(imageIndex+1)+(colour.choice.mime==='image/png'?'.png':'.jpg'))))};
-   material.factorColor=[...colour.factor.slice(0,3)];material.color=[1,1,1];material.opacity=1;material.factorOpacity=1;material.material_type='opaque';
-   const pbr=payload.materials[colour.choice.materialIndex].pbrMetallicRoughness;
+   material.factorColor=[...source.factor.slice(0,3)];material.color=source.maps.color?[1,1,1]:[...source.factor.slice(0,3)];material.opacity=1;material.factorOpacity=1;material.material_type='opaque';
+   const pbr=source.material.pbrMetallicRoughness||{};
    material.roughness=Number.isFinite(pbr.roughnessFactor)?pbr.roughnessFactor:1;material.metalness=Number.isFinite(pbr.metallicFactor)?pbr.metallicFactor:1;
-   materialIndex=project.materials.length;project.materials.push(material);colourTextureObjects++;
+   if(source.maps.normal){material.factorNormal=source.normalScale;material.normal_neg_y=false;normalTextureObjects++;}
+   if(source.maps.emissive){material.factorEmissive=[...source.emissiveFactor];material.factorEmissiveStrength=1;emissiveTextureObjects++;}
+   if(source.maps.color)colourTextureObjects++;
+   materialIndex=project.materials.length;project.materials.push(material);
   }
   const part=meshPart(editable,safeOBJName(object.name,index),donor,cornerUVs);if(materialIndex!==null)part.mesh.material=materialIndex;
   offsetFields(part.mesh,offset);offset+=part.bin.length;
@@ -121,5 +146,5 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
  const dv=new DataView(out.buffer);if(images.length)dv.setUint32(12,7,true);w64(dv,16,out.length);w64(dv,24,base.jo);w64(dv,32,json.length);w64(dv,40,bo);w64(dv,48,offset);
  const parsed=readNomadProject(out);for(const mesh of parsed.json.meshes)for(const key of ['vertices','normals','uvs','faces','faces_uv','faces_group']){const f=mesh[key];if(f.offset<0||f.offset+f.length>parsed.bin.length)throw Error('Nomad field bounds check failed');}
  for(const image of images)if(image.offset<0||image.offset+image.length>parsed.bin.length)throw Error('Nomad image bounds check failed');
- return {bytes:out,count:project.meshes.length,vertices,faces,uvObjects,colourTextureObjects,facegroups:project.meshes.reduce((n,m)=>n+m.groups.length,0)};
+ return {bytes:out,count:project.meshes.length,vertices,faces,uvObjects,colourTextureObjects,normalTextureObjects,emissiveTextureObjects,facegroups:project.meshes.reduce((n,m)=>n+m.groups.length,0)};
 }

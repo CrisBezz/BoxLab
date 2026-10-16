@@ -210,10 +210,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.884",
+      "url": "./src/export-as-panel.js?v=0.36.18.885",
       "target": "src/export-as-panel.js",
-      "sha256": "f8074aade90c467cebca8d675010c6990c16baa29dbf5e2ce27f81e0ce47a376",
-      "sourceVersion": "0.36.18.884"
+      "sha256": "3a8d8b23f2adc275b13c3d1b7e17de909bef8d5349637eea7c8ca77b725aa7ac",
+      "sourceVersion": "0.36.18.885"
     },
     {
       "owner": "index.html",
@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.880",
+      "url": "./src/mesh-health.js?v=0.36.18.885",
       "target": "src/mesh-health.js",
-      "sha256": "2e6785081a6e4b15b4ef0afbd2fd0e1e35c20b1a0fda42e54ffc3fefcdb32dfd",
+      "sha256": "22e64cdd21e362da9876a8057c7fc58db78d452ee8da76b08b034794b6512b97",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.884",
+      "url": "./src/release-bootstrap.js?v=0.36.18.885",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.884",
+      "url": "./src/release-version.js?v=0.36.18.885",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.882",
+      "url": "./src/render-modes.js?v=0.36.18.885",
       "target": "src/render-modes.js",
-      "sha256": "746f7f94048215cf675642415522992741d0b181415c9d8df64d25b5291c7b11"
+      "sha256": "ad8382dccd59cd2358ccd5f5db685ccc03d45d46ace9f12ad0d6dae37820a1cd"
     },
     {
       "owner": "index.html",
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-export-core.js?v=0.36.18.884",
+      "url": "./nomad-export-core.js?v=0.36.18.885",
       "target": "src/nomad-export-core.js",
-      "sha256": "6214db4fc6490723a710f3ff59d740065456ac1a527aa0bd00fc86b489ec53d6"
+      "sha256": "f542cc6e71cd009a6f573b2ede08f305411fea05f17346e2501bee9247d01fcc"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -2396,9 +2396,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.880",
+      "url": "./uv-workspace.js?v=0.36.18.885",
       "target": "src/uv-workspace.js",
-      "sha256": "54cd16985dd04b167de65b1eeeb380bb18205ccf7a2552edad113e21df31f456"
+      "sha256": "890408b2239bdef00f73317d11fd31d106ced8280f376df5a49f4b6a56e36f80"
     },
     {
       "owner": "src/uv-workspace.js",
@@ -2420,27 +2420,33 @@
     },
     {
       "owner": "src/uv-workspace.js",
-      "url": "./uv-image-preview.js?v=0.36.18.880",
+      "url": "./uv-image-preview.js?v=0.36.18.885",
       "target": "src/uv-image-preview.js",
-      "sha256": "e55caf67d2e6943f314e0e4580fd1ec0edc8310c5e1a70896cda6d8110a47d7c"
+      "sha256": "ab28b72fe073d9c51adba03e5f0b147e2f0a373f7216fbb985c6a8642c1bb4be"
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.882",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.885",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "51c9f1b12fae2260e94f22be045eee082065436a7335c0aa0b905f2d65d07551"
+      "sha256": "a57e7c685ee81e18b082098b80579fe85523a2046a24b1accab559bb9b488a4b"
     },
     {
       "owner": "src/uv-image-surface-preview.js",
-      "url": "./uv-image-preview.js?v=0.36.18.880",
+      "url": "./uv-image-preview.js?v=0.36.18.885",
       "target": "src/uv-image-preview.js",
-      "sha256": "e55caf67d2e6943f314e0e4580fd1ec0edc8310c5e1a70896cda6d8110a47d7c"
+      "sha256": "ab28b72fe073d9c51adba03e5f0b147e2f0a373f7216fbb985c6a8642c1bb4be"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.882",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.885",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "51c9f1b12fae2260e94f22be045eee082065436a7335c0aa0b905f2d65d07551"
+      "sha256": "a57e7c685ee81e18b082098b80579fe85523a2046a24b1accab559bb9b488a4b"
+    },
+    {
+      "owner": "src/nomad-export-core.js",
+      "url": "./uv-image-preview.js?v=0.36.18.885",
+      "target": "src/uv-image-preview.js",
+      "sha256": "ab28b72fe073d9c51adba03e5f0b147e2f0a373f7216fbb985c6a8642c1bb4be"
     }
   ]
 }
