@@ -1,4 +1,4 @@
-// Imported GLB payload only. Geometry/history remain with their existing owners.
+// Imported GLB resources and native UV-only envelopes; geometry/history keep their owners.
 const LIMIT=24*1024*1024;
 function json(value){return JSON.parse(JSON.stringify(value,(_key,v)=>{if(typeof v==='number'&&!Number.isFinite(v))throw Error('Invalid GLB resource number');if(ArrayBuffer.isView(v)||v instanceof ArrayBuffer)throw Error('Unsupported GLB resource binary channel');return v;}));}
 function encodeBytes(data){
@@ -23,13 +23,20 @@ function imageData(value,pool){
  if(value&&Object.hasOwn(value,'imagePoolIndex')){const index=value.imagePoolIndex;if(Object.keys(value).length!==1||!Number.isSafeInteger(index)||index<0||!pool||index>=pool.length)throw Error('Invalid GLB image pool reference');return pool[index];}
  return decodeBytes(value);
 }
+// Resource v3 is a native UV-only channel, not GLB provenance/material data.
+function nativeUV(payload){
+ if(!payload||payload.version!==1||payload.source!=='boxlab'||Object.keys(payload).some(k=>!['version','source','uvTopologySignature','uvCorners'].includes(k))||typeof payload.uvTopologySignature!=='string'||!payload.uvTopologySignature||!Array.isArray(payload.uvCorners)||!payload.uvCorners.length||payload.uvCorners.some(face=>!Array.isArray(face)||face.length<3||face.some(p=>!Array.isArray(p)||p.length!==2||!p.every(Number.isFinite))))throw Error('Invalid native BoxLab UV channel');
+ return payload;
+}
 export function encodeProjectGLB(payload,pool=null){
+ if(payload?.source==='boxlab')return {version:3,payload:json(nativeUV(payload))};
  if(!payload||typeof payload!=='object'||Array.isArray(payload)||payload.version!==1||payload.source!=='glb')throw Error('Invalid GLB resource payload');
  let bytes=0;const result={...payload};
  if(payload.images!=null){if(!Array.isArray(payload.images))throw Error('Invalid GLB images');result.images=payload.images.map(image=>{if(!image||typeof image!=='object')throw Error('Invalid GLB image');const data=image.data==null?null:encodeBytes(image.data);bytes+=data?.byteLength||0;if(bytes>LIMIT)throw Error('GLB image pool exceeds 24 MB');return {...image,data:data&&pool?pool.add(data):data};});}
  return {version:pool&&result.images?.some(image=>image.data?.imagePoolIndex!=null)?2:1,payload:json(result)};
 }
 export function decodeProjectGLB(resource,pool=null){
+ if(resource?.version===3)return json(nativeUV(resource.payload));
  if(![1,2].includes(resource?.version)||!resource.payload||typeof resource.payload!=='object'||Array.isArray(resource.payload))throw Error('Unsupported GLB project resources');
  const result=json(resource.payload);if(result.version!==1||result.source!=='glb')throw Error('Invalid imported GLB payload');let bytes=0;
  if(result.images!=null){if(!Array.isArray(result.images))throw Error('Invalid GLB images');result.images=result.images.map(image=>{if(!image||typeof image!=='object')throw Error('Invalid GLB image');if(image.data?.imagePoolIndex!=null&&resource.version!==2)throw Error('Invalid GLB resource reference version');const data=image.data==null?null:imageData(image.data,pool);bytes+=data?.byteLength||0;if(bytes>LIMIT)throw Error('GLB image pool exceeds 24 MB');return {...image,data};});}

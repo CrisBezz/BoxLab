@@ -4,10 +4,10 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.874';
-import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile} from './imported-uv-edit.js?v=0.36.18.874';
+import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,createPlanarUV} from './imported-uv-edit.js?v=0.36.18.875';
 import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.874';
 
-const VERSION='0.36.18.874';
+const VERSION='0.36.18.875';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
 const status=document.querySelector('#selectionStatus');
 
@@ -27,11 +27,12 @@ panel.innerHTML=`
   <div id="meshHealthVerdict" style="font-size:16px;font-weight:750;padding:4px 0"></div>
   <div id="meshHealthSummary" class="boxlab-tool-session-subtitle"></div>
   <details id="meshHealthUVDetails">
-    <summary class="boxlab-tool-session-section">Imported UVs</summary>
+    <summary class="boxlab-tool-session-section">UVs</summary>
     <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
+    <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button></div><div class="boxlab-tool-session-subtitle">Planar UVs for plain Base meshes · replaces native UVs · not a seam unwrap</div>
     <button id="meshHealthUVOpen" type="button" disabled>Open UV Editor</button>
     <div id="meshHealthUVStorage" hidden>
-    <canvas id="meshHealthUVPreview" width="256" height="200" role="img" aria-label="Imported UV islands in different colours, orange seams, grey square marks UV tile zero to one" style="width:256px;max-width:100%;height:auto;margin:6px 0" hidden></canvas>
+    <canvas id="meshHealthUVPreview" width="256" height="200" role="img" aria-label="UV islands in different colours, orange seams, grey square marks UV tile zero to one" style="width:256px;max-width:100%;height:auto;margin:6px 0" hidden></canvas>
     <div id="meshHealthUVNote" class="boxlab-tool-session-subtitle"></div>
     <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)">
       <button id="meshHealthUVRotate" type="button" title="Rotate the complete imported UV layout around the tile centre; one Undo step" disabled>Rotate UVs 90°</button>
@@ -87,18 +88,21 @@ const uvRotate=panel.querySelector('#meshHealthUVRotate');
 const uvFlipU=panel.querySelector('#meshHealthUVFlipU');
 const uvFlipV=panel.querySelector('#meshHealthUVFlipV');
 const uvOpen=panel.querySelector('#meshHealthUVOpen');
+const uvPlanar=['XY','XZ','YZ'].map(axis=>panel.querySelector('#meshHealthUVPlanar'+axis));
 let active=false,last=null,lastBoundary=null,objectId=null,uvWorkspace=null,uvMesh=null,uvPayload=null;
 
 function renderUVReport(object,mesh){
  uvMesh=mesh;uvPayload=object?.glbPassthrough;
+ const nativeReady=object&&!object.locked&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&!object.materials&&!object.textures&&!object.settings?.subd&&!Object.values(object.settings?.mirror||{}).some(Boolean)&&(!object.glbPassthrough||object.glbPassthrough.source==='boxlab')&&!!globalThis.__boxlabObjectHistory?.capture&&!!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
+ for(const button of uvPlanar)button.disabled=!nativeReady;
  const report=inspectImportedUV(mesh,object?.glbPassthrough,globalThis.__boxlabExportAs?.topologySignature);
- const messages={absent:'No imported UV channel on this mesh.',stale:'Stored UVs no longer match the current topology.',invalid:'Stored UV channel is incomplete or invalid.',unavailable:'UV inspection is not ready. Try Refresh.'};
+ const messages={absent:'No UV channel on this mesh. Plain Base meshes can create planar UVs.',stale:'Stored UVs no longer match the current topology.',invalid:'Stored UV channel is incomplete or invalid.',unavailable:'UV inspection is not ready. Try Refresh.'};
  uvSummary.textContent=report.state==='ready'?`${report.mappedFaces} / ${report.faces} faces have UVs · ${report.islandCount} island${report.islandCount===1?'':'s'} · ${report.seamEdges} seam edge${report.seamEdges===1?'':'s'}${report.nonManifoldEdges?` · ${report.nonManifoldEdges} ambiguous edge${report.nonManifoldEdges===1?'':'s'}`:''}${report.missingFaces?` · ${report.missingFaces} missing`:''}${report.outsideCorners?` · ${report.outsideCorners} corners outside tile 0–1`:''}`:messages[report.state];
  uvPreview.hidden=report.state!=='ready';
  uvOpen.disabled=report.state!=='ready';
- uvRotate.disabled=report.state!=='ready'||report.missingFaces>0||report.mappedFaces!==report.faces||!object||object.locked||object.kind==='reference'||!!(object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile)||object.glbPassthrough?.version!==1||object.glbPassthrough?.source!=='glb'||!globalThis.__boxlabObjectHistory?.capture||!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
+ uvRotate.disabled=report.state!=='ready'||report.missingFaces>0||report.mappedFaces!==report.faces||!object||object.locked||object.kind==='reference'||!!(object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile)||object.glbPassthrough?.version!==1||!['glb','boxlab'].includes(object.glbPassthrough?.source)||!globalThis.__boxlabObjectHistory?.capture||!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
  uvFlipU.disabled=uvFlipV.disabled=uvRotate.disabled;
- uvNote.textContent=report.state==='ready'?`Base UVs · island colours · orange = seams · grey square = tile 0–1${report.nonManifoldEdges?' · ambiguous edges do not join islands':''}${report.previewFaces.length<report.mappedFaces?` · preview shows ${report.previewFaces.length} of ${report.mappedFaces} mapped faces`:''}`:report.state==='stale'?'Stored data is retained; this preview is hidden.':'Read-only inspection of imported UVs.';
+ uvNote.textContent=report.state==='ready'?`${object?.glbPassthrough?.source==='boxlab'?'BoxLab planar':'Imported base'} UVs · island colours · orange = seams · grey square = tile 0–1${report.nonManifoldEdges?' · ambiguous edges do not join islands':''}${report.previewFaces.length<report.mappedFaces?` · preview shows ${report.previewFaces.length} of ${report.mappedFaces} mapped faces`:''}`:report.state==='stale'?'Stored data is retained; this preview is hidden.':'Read-only inspection of imported UVs.';
  uvWorkspace?.setReport(report,`${object?.name||'UVs'} · ${uvSummary.textContent}`);
  return report;
 }
@@ -113,6 +117,14 @@ function openUVEditor(){
 }
 uvOpen.addEventListener('click',openUVEditor);
 uvDetails.addEventListener('toggle',()=>{if(active&&uvDetails.open)renderUVReport(activeObject(),liveMesh());});
+function projectUVs(plane){
+ const object=activeObject(),mesh=liveMesh();
+ if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;
+ const result=createPlanarUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,plane);
+ renderReport();setStatus(result.ok?result.changed?'Planar UVs created • Undo to restore':'Planar UVs • no change needed':`Planar UVs • ${result.reason}`);
+ return result.ok;
+}
+uvPlanar.forEach((button,i)=>button.addEventListener('click',()=>projectUVs(['xy','xz','yz'][i])));
 function rotateUVs(){
  const object=activeObject(),mesh=liveMesh();
  if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;

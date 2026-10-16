@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.861",
+      "url": "./src/drawer-ui.js?v=0.36.18.875",
       "target": "src/drawer-ui.js",
-      "sha256": "964ad7f397c83a4702617e3d57910c7095824104a6e523fefccfc8a8897c95e5"
+      "sha256": "70321ce12eff90432e034428fbb94d59bcd04dcb83c84ce97cfd8457ebfaea2c"
     },
     {
       "owner": "index.html",
@@ -310,10 +310,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.874",
+      "url": "./src/mesh-health.js?v=0.36.18.875",
       "target": "src/mesh-health.js",
-      "sha256": "d8ed0387adc48769c971734c7aa726a3ccb5bead479ca1151e4f2ee79514c963",
-      "sourceVersion": "0.36.18.874"
+      "sha256": "0f1699595870e7168b93d5ef34077b9856358963f9cdea631b7b2e42954fe3a1",
+      "sourceVersion": "0.36.18.875"
     },
     {
       "owner": "index.html",
@@ -329,15 +329,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.867",
+      "url": "./src/multi-object.js?v=0.36.18.875",
       "target": "src/multi-object.js",
-      "sha256": "304a8f0f20e74c776aad7e5d10553b36471223940cf10542e50b658a82dcd0bc"
+      "sha256": "5e01d66e674679f5713de7b3711521160f72fda44ee03c67791335d8d96de35b"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.861",
+      "url": "./src/object-management.js?v=0.36.18.875",
       "target": "src/object-management.js",
-      "sha256": "6597f5051360d298be89cc5239c8b66dbbbaef3fbcf7cc0a165b69191924ec39"
+      "sha256": "dce1a355b4b2cad7d3dff056e51082c41aa2564a18f54b5f6bec82d007949df7"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.874",
+      "url": "./src/release-bootstrap.js?v=0.36.18.875",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.874",
+      "url": "./src/release-version.js?v=0.36.18.875",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.861",
+      "url": "./object-management.js?v=0.36.18.875",
       "target": "src/object-management.js",
-      "sha256": "6597f5051360d298be89cc5239c8b66dbbbaef3fbcf7cc0a165b69191924ec39"
+      "sha256": "dce1a355b4b2cad7d3dff056e51082c41aa2564a18f54b5f6bec82d007949df7"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -2306,9 +2306,9 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.861",
+      "url": "./boxlab-project-codec.js?v=0.36.18.875",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "c037566e45c1a4085ce54a75b6837a2d5756bb30a47afd32bc3f5ba65bbe56f6"
+      "sha256": "7ff12c9c12b059497eb80bef4ca9632b42ea00990225ae1a3900a0c122ceab51"
     },
     {
       "owner": "src/linear-array.js",
@@ -2372,9 +2372,9 @@
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./project-glb-resources.js?v=0.36.18.858",
+      "url": "./project-glb-resources.js?v=0.36.18.875",
       "target": "src/project-glb-resources.js",
-      "sha256": "f0e9df95d27faabbf346f402cd3be84b123b977ff1923f50d0e77da409bc90bc"
+      "sha256": "1edf514013453f86edd6ef86a21937e557e3dca240be01b7d102bccd1682ce57"
     },
     {
       "owner": "src/mesh-health.js",
@@ -2384,9 +2384,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./imported-uv-edit.js?v=0.36.18.874",
+      "url": "./imported-uv-edit.js?v=0.36.18.875",
       "target": "src/imported-uv-edit.js",
-      "sha256": "6bf246cc706026a35ed72b384bba2af92864c463f869691c39ddfd0c9c368ffd"
+      "sha256": "ac28bfcd6ecfc129c0e77257e919d6f5041975b96046a4abab2b70eae71cd5cc"
     },
     {
       "owner": "src/imported-uv-edit.js",

@@ -225,6 +225,7 @@ function detachLinkedObject(object) {
   return true;
 }
 function linkedDuplicateObject(sourceObject,{name=null,enterObjectMode=true}={}) {
+  if(sourceObject?.glbPassthrough?.source==='boxlab'){if(status)status.textContent='Native UVs currently support ordinary Duplicate only';return null;}
   if(!sourceObject||sourceObject.kind==='reference')return null;
   if(sourceObject.id===activeId)saveActive();
   const source=ensureLinkedSource(sourceObject);
@@ -1026,7 +1027,7 @@ function initialize() {
     replaceBasicProjectScene(sceneObjects, wantedId) {
       const live=state()?.mesh;
       if(!live||!Array.isArray(sceneObjects)||!sceneObjects.length)return false;
-      if(sceneObjects.some(o=>!o.mesh?.clone||(o.glbPassthrough&&(o.glbPassthrough.version!==1||o.glbPassthrough.source!=='glb'))))return false;
+      if(sceneObjects.some(o=>!o.mesh?.clone||(o.glbPassthrough&&(o.glbPassthrough.version!==1||!['glb','boxlab'].includes(o.glbPassthrough.source)))))return false;
       // All validation and confirmation must be performed by the caller.
       const ids=new Set(sceneObjects.map(o=>o.id));
       if(ids.size!==sceneObjects.length||[...ids].some(id=>!Number.isSafeInteger(id)||id<1||id>=Number.MAX_SAFE_INTEGER))return false;

@@ -1,6 +1,6 @@
 // Versioned, non-destructive BoxLab scene codec foundation.
 // Explicitly refuse resources not yet representable, rather than losing them.
-import {encodeProjectGLB,decodeProjectGLB,createProjectGLBImagePool,decodeProjectGLBImagePool} from './project-glb-resources.js?v=0.36.18.858';
+import {encodeProjectGLB,decodeProjectGLB,createProjectGLBImagePool,decodeProjectGLBImagePool} from './project-glb-resources.js?v=0.36.18.875';
 import {evaluateArray} from './live-array-core.js?v=0.36.18.861';
 const plain=value=>value==null?null:JSON.parse(JSON.stringify(value));
 export function encodeBoxlabScene(snapshot,{poolImages=true}={}){

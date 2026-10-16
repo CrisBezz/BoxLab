@@ -4,6 +4,60 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## .875 — native BoxLab Planar UV creation, 2026-10-16
+
+User874 PASS protects Fit-to-tile aspect/isolation/idempotence/history, Pencil tools,
+navigation and project/Nomad UV roundtrip. Audit mainaeae3081/live874: existing read-
+only resource/history/ordinary Duplicate/UV inspector/edit/export paths are sufficient;
+no native UV authoring or projection exists. Mesh Health disclosure is now UVs, with
+Planar XY/XZ/YZ for plain independent Base meshes (SubD/Mirror/linked/Boolean/Array/
+curve/reference/locked/imported-resource contexts refuse). Projects the WHOLE mesh
+onto chosen coordinate axes, uniformly fits to tile with2% margin, original geometry
+unchanged; repeat same projection no-op. Reprojection replaces only native UVs with
+one native scene checkpoint. Axis silhouettes can overlap/collapse opposite/side faces;
+this is planar projection, not a box/seam unwrap, packing or painting.
+
+Extend original imported-uv-edit owner with createPlanarUV; no parallel edit/history
+kernel. Native channel uses the existing glbPassthrough face-corner RESOURCE TRANSPORT
+with explicit source:'boxlab', version1 and only uvTopologySignature/uvCorners. This
+is honest native provenance, never source:'glb' or invented material/image metadata.
+Project resource envelope version3 encodes native UV-only records; strict keys/finite
+corner/signature validation, no images/materials. Existing GLB envelopes1/2, plain
+project format1, imported channels and pooled resources unchanged. Older apps refuse
+v3 safely. Existing .boxlab codec/SaveOpen/manager atomic replacement now accept this
+native record; read-only snapshots, single/Multi Duplicate and copy-on-write edits
+reuse original owners. Native Linked Duplicate refuses before source conversion;
+LiveArray/source guards already refuse attribute-bearing resources. No linked UV
+propagation or topology/modifier UV regeneration promised.
+
+Existing inspector874, workspace874/Pencil/navigation868 and UV Move/Scale/Rotate/
+Flip/Fit now also accept native provenance through original edit guard. Existing GLB
+and native NOM865 writers ALREADY consume this face-corner format/source-agnostically;
+unchanged writers verified with real UV attributes/NOM indices and corner bytes.
+Same topology signature owner; topology edits hide stale UVs and unsafe native export
+refuses, Undo restores original resource. Initial projection normalizes coordinates
+before subtracting, handles huge/tiny finite extents and refuses collapsed planes or
+invalid indices/vertices/history without mutation. No texture rendering/paint/OBJ UV
+expansion or evaluated UV export in875.
+
+Seven native tests: axes/proportion/one Undo/no-op/reprojection; edits/COW/duplicate/
+native scene replacement; strict v3 and legacy/plain codecs; actual NOM/GLB UVs and
+stale topology; invalid/imported/procedural/modifier/finite-extreme guards; actual
+MeshHealth callback; original single/Multi duplicate/deleted-copy Undo/linked refusal.
+VM project replacement preserves incoming/global namespace separation (860 pattern).
+Local Node24 full2368PASS/0FAIL/0skip;12 focused native/release PASS. Cache graph:
+MeshHealth/edit875; manager875; resource875→codec875→management875→drawer875;
+shell/recovery875. Inspector/workspace874/nav868/native+export865/protected kernels
+and frozen betas unchanged. Device875 planar/editor/history/file/Nomad gate pending.
+Next after feedback: inspect simple box/dominant-axis mapping and UV seams before a
+full unwrap; preserve native channel transport and imported GLB protections.
+
+## Protected .874 — user PASS2026-10-16
+
+Fit-to-tile centring/aspect/other-island isolation, repeat no-op, one Undo/Redo,
+view Fit distinction, Pencil/navigation and project/native UV roundtrip accepted.
+.875 native channel/device acceptance remains separate.
+
 ## .874 — Fit selected UV island to tile, 2026-10-16
 
 User873 Awesome PASS protects Pencil Rotate/pivot/seams, one Undo per stroke,
