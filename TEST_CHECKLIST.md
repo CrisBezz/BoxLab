@@ -6594,7 +6594,7 @@ protected;874 fit/aspect/isolation/history/navigation/project/native-export devi
 gate pending. All four handoff files current; next native UV-channel/projection stage
 requires owner audit and874 feedback. Selected fit does not pack multiple islands.
 
-## .875 Native BoxLab planar UVs — device gate pending
+## .875 Native BoxLab planar UVs — user PASS2026-10-16
 
 - [x] User874 PASS protected; original imported UV authoring/file/Nomad baseline retained.
 - [x] Native sourceboxlab/v3 UV-only envelope, strict validation, legacy/plain/imported bytes retained.
@@ -6603,10 +6603,10 @@ requires owner audit and874 feedback. Selected fit does not pack multiple island
 - [x] Locked/reference/linked/procedural/imported/modifier/invalid/collapsed refusals and finite extremes.
 - [x] Native Linked Duplicate refuses before mutation; resource-bearing Live Array remains refused.
 - [x] Full local Node24:2368PASS/0FAIL/0skip;12 focused native/release checks PASS.
-- [ ] Plain mesh/SubD off → Object Mesh Health → UVs → Planar XY → Open UV Editor shows native layout.
-- [ ] Try XZ/YZ and Undo/Redo; Pencil Move/Scale/Rotate/Fit works on generated UVs, geometry stays fixed.
-- [ ] Save/Open .boxlab → reopen UV Editor → File NOMAD Base preserves created/edited UVs.
-- [ ] Existing imported UV mesh still edits/exports; Planar buttons stay disabled for imported resources.
+- [x] Plain mesh/SubD off → Object Mesh Health → UVs → Planar XY → Open UV Editor shows native layout.
+- [x] Try XZ/YZ and Undo/Redo; Pencil Move/Scale/Rotate/Fit works on generated UVs, geometry stays fixed.
+- [x] Save/Open .boxlab → reopen UV Editor → File NOMAD Base preserves created/edited UVs.
+- [x] Existing imported UV mesh still edits/exports; Planar buttons stay disabled for imported resources.
 
 Planar projection can overlap/collapse faces; no full unwrap/box mapping/painting or evaluated UVs yet.
 
@@ -6622,3 +6622,17 @@ repository. Initial live reads preceded deployment and returned874; final comple
 published graph matches875. User874 PASS protected;875 native Planar/editor/history/
 project/native Nomad device gate pending. All four handoff files current. Native
 resource v3/sourceboxlab is explicit; no seam unwrap/painting/evaluated UV claim.
+
+## .876 Native Box UVs — device gate pending
+
+- [x] User875 PASS protected; Planar/sourceboxlab/v3/native editor/history/export baseline retained.
+- [x] Cube six disjoint noncollapsed islands/12seams, fixed directional cells, rectangular proportions/density.
+- [x] Original one checkpoint/COW/Planar replacement/native Undo/no-op and selected-only edit isolation.
+- [x] Native project/NOM independent UV pool+corner bytes/actual Three GLB UVs; guarded refusal coverage.
+- [ ] Cube/SubD off → Mesh Health→UVs→Box UVs→Open UV Editor: six separate coloured islands.
+- [ ] Pencil-move/scale/rotate one island; others stay fixed. Undo/Redo restores each action.
+- [ ] Planar→Box→Undo restores prior layout; repeated Box adds no Undo. Geometry unchanged.
+- [ ] Save/Open .boxlab → UV Editor → File NOMAD Base retains box panels/seams.
+
+Axis-aligned box projection first; general directional patches may overlap/distort.
+No seam unwrap/optimal packing/painting/evaluated UVs in876.

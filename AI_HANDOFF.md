@@ -1,12 +1,54 @@
-# BoxLab AI Handoff — .875 Native Planar UVs
+# BoxLab AI Handoff — .876 Native Box UVs
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.875; live https://crisbezz.github.io/BoxLab/.
-Previous mainaeae3081 / .874 accepted; .875 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.876; live https://crisbezz.github.io/BoxLab/.
+Previous main2f29af87 / .875 accepted; .876 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .876 — native Box UV mapping, 2026-10-16
+
+User875 PASS protects native Planar/editor/history/SaveOpen→NOMAD Base and existing
+imported-UV baseline. Audit main2f29af87/live875: no box/dominant-axis mapper exists;
+native sourceboxlab/v3 channel, inspector/seam data and scene/export owners suffice.
+Add Box UVs alongside Planar XY/XZ/YZ in Mesh Health→UVs. Whole plain Base mesh maps
+by each face's dominant signed Newell normal (deterministic X/Y/Z tie order) into six
+fixed3×2 directional cells. Normalized read-only coordinates avoid huge/tiny finite
+scale overflow. One common projected-coordinate scale preserves rectangular face
+proportions/equal axis-aligned density,2% horizontal tile/cell margins; spare space is
+intentional. A normal cube yields six separate quad islands and12 seam edges, without
+side-face collapse or opposite-face overlap. Same-direction subdivisions keep shared
+UVs. General shapes can still overlap within a directional cell or distort; this is
+box projection, not seam-based unwrap/optimal packing or texture painting.
+
+Extend existing native creation owner in imported-uv-edit with createBoxUV. Extract
+original native eligibility/commit into private shared helpers used by Planar and Box;
+Planar maths/output retained. Invalid indices/nonfinite/degenerate faces/context/history
+refuse before resource/history changes. Repeated same Box mapping adds no history;
+Box can replace native Planar UVs in one checkpoint, Undo restores the previous payload.
+Imported GLB/procedural/modifier/linked/reference/locked resource refusals retained.
+Original COW transport, native envelope v3, inspector874/workspace874/navigation868,
+manager/codec/resources875 and GLB/native exporters865 unchanged. No modelling kernel,
+new schema/pointer/history/exporter or geometry mutation. UI native note now generic,
+since same native channel supports more than Planar. All Pencil edits remain original.
+
+Five native tests cover cube6islands/12seams/disjoint atlas/noncollapsed faces/native
+Undo/no-op, rectangular proportions/density/same-direction adjacency/extreme finite
+scales, Planar replacement/peer isolation/selected edit, actual MeshHealth callback/
+project/native NOM independent UV indices+corner bytes/real GLB UVs, invalid/imported/
+procedural/modifier/degenerate/history refusals. Local Node24 full2373PASS/0FAIL/0skip; publication proof follows below.
+Cache graph MeshHealth/edit876; shell/recovery876. Other owners/protected Multi1.0,
+Loop/Extrude/Boolean/main and frozen betas untouched. Device876 box/editor/history/
+project/Nomad gate pending;875 PASS protected. Next: feedback on Box mapping, then
+seam/unwrap or texture-inspection stages after owner audit; no evaluated UV guarantee.
+
+## Protected .875 — user PASS2026-10-16
+
+Native Planar XY/XZ/YZ layout, original Pencil manipulation/history, native project/
+NOMAD Base roundtrip and imported UV baseline accepted. Preserve sourceboxlab/v3
+transport and no fake GLB provenance;876 device acceptance remains separate.
 
 ## .875 — native BoxLab Planar UV creation, 2026-10-16
 
@@ -989,12 +1031,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.875 device: plain mesh/SubD off → Object Mesh Health → UVs → Planar XY/XZ/YZ →
-Open UV Editor; Pencil edits, UndoRedo and Save/Open→File NOMAD Base. Imported UV
-buttons/edit baseline retained. Channel is sourceboxlab/native project resource v3
-inside existing transport, not fake GLB import. Projection may overlap/collapse faces;
-next audit simple box mapping/seams before full unwrap/painting. No linked/modifier
-UV propagation. Keep all source resources copy-on-write and frozen/protected kernels.
+.876 device: Cube/SubD off → Object Mesh Health → UVs → Box UVs → Open UV Editor:
+six separate islands. Pick/Pencil edit one island; other islands stay fixed. UndoRedo,
+Planar→Box replacement, Save/Open and File NOMAD Base. Axis-aligned boxes are the
+initial target; directional patches can overlap/distort general shapes. After feedback,
+audit seam/unwrap or texture-inspection step through the same native resource owners.
+No evaluated/linked UV propagation or painting. Frozen/protected kernels unchanged.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

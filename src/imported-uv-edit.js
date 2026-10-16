@@ -74,8 +74,7 @@ function editImportedUV(object,mesh,topologySignature,history,operation,scope){
 export function createPlanarUV(object,mesh,topologySignature,history,plane){
  const axes={xy:['x','y'],xz:['x','z'],yz:['y','z']}[plane];
  if(!['xy','xz','yz'].includes(plane))return {ok:false,reason:'Choose planar UV axes XY, XZ or YZ'};
- if(!object||object.locked||object.kind==='reference'||object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile||object.materials||object.textures||mesh?.uvs||mesh?.faceUVs||mesh?.uvLayers||object.settings?.subd||Object.values(object.settings?.mirror||{}).some(Boolean)||object.glbPassthrough&&(object.glbPassthrough.source!=='boxlab'||object.glbPassthrough.version!==1))return {ok:false,reason:'Planar UVs require a plain independent Base mesh'};
- if(typeof topologySignature!=='function'||!mesh?.faces?.length||!mesh?.vertices?.length)return {ok:false,reason:'UV projection is not ready'};
+ const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
  const values=[];
  for(const face of mesh.faces){
   if(!Array.isArray(face)||face.length<3)return {ok:false,reason:'Invalid mesh faces'};
@@ -91,11 +90,48 @@ export function createPlanarUV(object,mesh,topologySignature,history,plane){
  const width=maxU-minU,height=maxV-minV,span=Math.max(width,height);
  if(!span)return {ok:false,reason:'This projection plane has no extent'};
  const uvCorners=values.map(face=>face.map(([u,v])=>[.5+((u/magnitude-minU)/span-width/span/2)*.96,.5+((v/magnitude-minV)/span-height/span/2)*.96]));
+ return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
+}
+function nativeUVTargetError(object,mesh,topologySignature){
+ if(!object||object.locked||object.kind==='reference'||object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile||object.materials||object.textures||mesh?.uvs||mesh?.faceUVs||mesh?.uvLayers||object.settings?.subd||Object.values(object.settings?.mirror||{}).some(Boolean)||object.glbPassthrough&&(object.glbPassthrough.source!=='boxlab'||object.glbPassthrough.version!==1))return 'UV projection requires a plain independent Base mesh';
+ if(typeof topologySignature!=='function'||!mesh?.faces?.length||!mesh?.vertices?.length)return 'UV projection is not ready';
+ return null;
+}
+function commitNativeUV(object,mesh,topologySignature,history,uvCorners){
+ if(uvCorners.some(face=>face.some(p=>!p.every(Number.isFinite))))return {ok:false,reason:'UV projection exceeds the coordinate range'};
  const signature=topologySignature(mesh);if(typeof signature!=='string'||!signature)return {ok:false,reason:'Topology signature is not ready'};
  const previous=object.glbPassthrough;
  if(previous?.uvTopologySignature===signature&&JSON.stringify(previous.uvCorners)===JSON.stringify(uvCorners))return {ok:true,changed:false};
  if(!history?.capture||!history?.checkpointSnapshot)return {ok:false,reason:'Scene history is not ready'};
- const before=history.capture();if(!before||!history.checkpointSnapshot(before,mesh))return {ok:false,reason:'Could not record planar UVs'};
+ const before=history.capture();if(!before||!history.checkpointSnapshot(before,mesh))return {ok:false,reason:'Could not record UV projection'};
  object.glbPassthrough={version:1,source:'boxlab',uvTopologySignature:signature,uvCorners};
  return {ok:true,changed:true};
+}
+
+// Six fixed directional cells. Faces in the same direction share one projection;
+// all cells use one scale, preserving proportions and equal world-unit UV density.
+export function createBoxUV(object,mesh,topologySignature,history){
+ const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
+ let magnitude=0;
+ for(const face of mesh.faces){
+  if(!Array.isArray(face)||face.length<3)return {ok:false,reason:'Invalid mesh faces'};
+  for(const id of face){const v=mesh.vertices[id];if(!Number.isInteger(id)||!v||!['x','y','z'].every(k=>Number.isFinite(v[k])))return {ok:false,reason:'Invalid mesh coordinates'};magnitude=Math.max(magnitude,Math.abs(v.x),Math.abs(v.y),Math.abs(v.z));}
+ }
+ if(!magnitude)return {ok:false,reason:'Box projection requires faces with area'};
+ const normalized=mesh.vertices.map(v=>[v.x/magnitude,v.y/magnitude,v.z/magnitude]);
+ const min=[Infinity,Infinity,Infinity],max=[-Infinity,-Infinity,-Infinity];
+ for(const face of mesh.faces)for(const id of face)normalized[id].forEach((v,k)=>{min[k]=Math.min(min[k],v);max[k]=Math.max(max[k],v);});
+ const span=Math.max(...max.map((v,k)=>v-min[k]));if(!span)return {ok:false,reason:'Box projection has no extent'};
+ const directions=[{u:2,sign:-1,v:1},{u:2,sign:1,v:1},{u:0,sign:1,v:2,vsign:-1},{u:0,sign:1,v:2},{u:0,sign:1,v:1},{u:0,sign:-1,v:1}];
+ const scale=(1/3-.04)/span,uvCorners=[];
+ for(const face of mesh.faces){
+  const n=[0,0,0];
+  for(let j=0;j<face.length;j++){const a=normalized[face[j]],b=normalized[face[(j+1)%face.length]];n[0]+=(a[1]-b[1])*(a[2]+b[2]);n[1]+=(a[2]-b[2])*(a[0]+b[0]);n[2]+=(a[0]-b[0])*(a[1]+b[1]);}
+  let axis=0;for(let k=1;k<3;k++)if(Math.abs(n[k])>Math.abs(n[axis]))axis=k;
+  if(!Number.isFinite(n[axis])||n[axis]===0)return {ok:false,reason:'Box projection requires non-degenerate faces'};
+  const cell=axis*2+(n[axis]<0?1:0),d=directions[cell],cu=(cell%3+.5)/3,cv=(Math.floor(cell/3)+.5)/2;
+  const centreU=min[d.u]/2+max[d.u]/2,centreV=min[d.v]/2+max[d.v]/2;
+  uvCorners.push(face.map(id=>[cu+(normalized[id][d.u]-centreU)*d.sign*scale,cv+(normalized[id][d.v]-centreV)*(d.vsign||1)*scale]));
+ }
+ return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
 }
