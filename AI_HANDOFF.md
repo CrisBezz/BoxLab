@@ -1,12 +1,46 @@
-# BoxLab AI Handoff — .877 Native Cylinder UVs
+# BoxLab AI Handoff — .878 UV Editor Checker
 
 ## Current state — 2026-10-16
-CrisBezz/BoxLab main build0.36.18.877; live https://crisbezz.github.io/BoxLab/.
-Previous main79fec447 / .876 accepted; .877 validation/publication below. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.878; live https://crisbezz.github.io/BoxLab/.
+Previous main83c0b563 / .877 accepted; .878 validation/publication below. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .878 — UV Editor checker reference, 2026-10-16
+
+User .877 PASS protects upright Cylinder strip/caps, Pencil/history, native project/
+NOMAD Base and GLB seams; Box/Planar/imported baselines remain protected. Audit current
+main83c0b563/live877: no checker inspection exists. Existing inspector canvas owns UV
+projection; render-modes568 owns Studio/materials but has no UV-checker surface path.
+Add optional Checker toggle to the ORIGINAL large UV workspace and renderer. Fixed
+16×16 reference inside tile0–1 uses the same projection as outlines/picking, with
+numerically clipped cells and at most256 rectangles regardless of UV bounds/zoom.
+Draw under island colours/gold selection/orange seams. Default off on reopen; keep
+view and selection when toggled, cancel pending Pencil preview/capture without edit.
+Report/history refresh retains checker setting within current session. No scene/resource/
+project/history writes, image decoding, new gesture/UV/render kernel or material changes.
+This is a 2D size/alignment aid, not 3D stretch inspection or texture painting.
+
+Three actual renderer/workspace regressions cover DPR/pan/zoom/picking, extreme/tiled/
+offscreen/stale layouts, draw order/read-only arrays, pending-stroke cancellation,
+view/selection/refresh/reopen lifecycle and no edit/history callbacks. Full local Node24
+2381PASS/0FAIL/0skip. Cache graph MeshHealth/workspace/inspector878; edit878 changes ONLY
+its inspector import pin; original edit maths/guards unchanged. Shell/recovery878.
+Export panel877/native NOM865/manager+codec+resources875/nav868, protected Multi1.0,
+main854/Loop/Extrude/Boolean and frozen betas unchanged. Publication proof follows.
+Device878: Checker toggle/readability, pan/pinch/Fit, Pencil Move/Scale/Rotate + Undo,
+close/reopen default off. Next audit a temporary 3D checker through existing render
+and triangulation owners; do not add another triangulation kernel or persist a preview
+material into resource/history/export. Imported image inspection and painting follow
+separately after material/resource budget and lifecycle audit.
+
+## Protected .877 — user PASS2026-10-16
+
+Upright Cylinder UV strip/two caps, separate Pencil island edits, Undo/Redo, Save/Open,
+NOMAD Base and Base GLB seam/cap continuity accepted. Preserve native sourceboxlab/v3
+transport and imported pole-weld compatibility; .878 checker device gate remains separate.
 
 ## .877 — native Cylinder UVs (world Y), 2026-10-16
 
@@ -1072,12 +1106,10 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-.877 device: upright Add Cylinder/SubD off → Mesh Health→UVs→Cylinder UVs (Y)→Open
-UV Editor: one strip/two caps; Pencil edits, UndoRedo, Save/Open and NOMAD Base.
-Native GLB now retains seam+cap UV variants; test Base GLB too if convenient. Round
-aligned Y rings only; imported resources remain protected. After feedback audit checker/
-texture inspection via original render owners, then broader unwrap/paint stages.
-No linked/evaluated UV propagation or arbitrary seam-cut topology changes.
+.878 device: Open UV Editor → Checker; pan/pinch/Fit keeps the grid anchored to tile0–1;
+Pencil edits/history retain original behavior; Back to3D/reopen resets checker off.
+Then audit temporary 3D checker via original render/triangulation/resource owners.
+.877 user PASS protected; no painting/evaluated UV propagation claim.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

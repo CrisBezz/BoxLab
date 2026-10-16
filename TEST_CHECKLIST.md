@@ -6649,16 +6649,16 @@ unchanged. User875 PASS protected;876 Box panels/selected edits/history/project/
 NOMAD Base device gate pending. All four handoff files current. No general seam
 unwrap/optimal packing/painting/evaluated UV claim; directional patches may overlap.
 
-## .877 Native Cylinder UVs (Y) — device gate pending
+## .877 Native Cylinder UVs (Y) — user PASS2026-10-16
 
 - [x] User876 PASS protected; Box/Planar/native v3/editor/history/NOMAD Base retained.
 - [x] Upright closed cylinder: one measured-edge strip/two caps, deterministic seam, native one-step history/no-op.
 - [x] Odd rings/height bands/side+cap density, geometry/peer/island isolation and guarded refusals.
 - [x] Full local2378PASS/0FAIL/0skip; native GLB preserves all seam+cap UV variants; imported pole-weld path unchanged; actual NOM/project/GLB checks.
-- [ ] Upright Cylinder/SubD off → Mesh Health→UVs→Cylinder UVs (Y)→Open UV Editor: strip plus two caps.
-- [ ] Pencil-edit side/cap separately; other islands fixed. Undo/Redo and repeated mapping behave correctly.
-- [ ] Save/Open .boxlab → UV Editor → File NOMAD Base retains layout/seams; Base GLB also retains seam/caps.
-- [ ] Existing Box/Planar and imported UV workflows still behave as accepted.
+- [x] Upright Cylinder/SubD off → Mesh Health→UVs→Cylinder UVs (Y)→Open UV Editor: strip plus two caps.
+- [x] Pencil-edit side/cap separately; other islands fixed. Undo/Redo and repeated mapping behave correctly.
+- [x] Save/Open .boxlab → UV Editor → File NOMAD Base retains layout/seams; Base GLB also retains seam/caps.
+- [x] Existing Box/Planar and imported UV workflows still behave as accepted.
 
 Round aligned world-Y rings first; no general seam unwrap/elliptic mapping/painting/evaluated UVs.
 
@@ -6667,3 +6667,18 @@ Round aligned world-Y rings first; no general seam unwrap/elliptic mapping/paint
 Runtime release `e1d5ccffd03941b982df25d9463de9b0746e5e4a`; tested tree `c872ec647f8a7188f227d48c6cfc5459237a4328` matched fetched main exactly. Actual Node 22 topology CI run 38865991906 / job 116858835631 succeeded: **2378 PASS / 0 FAIL / 0 skipped**. Pages run 38865990703 build and deploy succeeded. Fresh live shell, manifest, Mesh Health/edit/GLB panel .877, unchanged UV workspace .874, native NOM core .865, protected Multi .1.0, and frozen beta-7 version all byte-matched repository files.
 
 User .876 PASS remains protected. The .877 device gate remains pending: upright round world-Y Cylinder UVs, independent Pencil edits, Undo/Redo, project persistence, NOMAD Base and native GLB seam checks. No general unwrap, elliptic mapping, painting, or evaluated-modifier UV claim. All four continuity documents are current.
+
+
+## .878 UV Editor checker reference — device gate pending
+
+- [x] User .877 PASS protected; Cylinder/Box/Planar/imported native history/project/export baselines retained.
+- [x] Shared renderer projection/picking/DPR parity, clipped bounded256cells, extreme/tiled/offscreen/stale guards.
+- [x] Checker under island selection/seams; payload/report read-only; no edit/history callback from toggle.
+- [x] Actual workspace cancels pending Pencil/capture, retains view/selection, refresh preference, reopen off.
+- [x] Full local Node24:2381PASS/0FAIL/0skip. Original UV edit maths/export/render/kernel owners unchanged.
+- [ ] Open UV Editor → Checker: readable16×16 grid inside tile0–1; toggle off restores plain view.
+- [ ] Pan/pinch/+/−/Fit: grid and UV tile stay aligned, selection stays usable.
+- [ ] Pencil Move/Scale/Rotate and Undo/Redo work with checker; grid stays fixed while islands move.
+- [ ] Back to3D and reopen: checker defaults off; ordinary viewport navigation works.
+
+2D reference only; 3D texture/stretch inspection and painting remain later stages.

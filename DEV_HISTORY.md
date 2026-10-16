@@ -9646,3 +9646,37 @@ replacement and Save/Open→NOMAD Base accepted. Preserve Box mapper/sole gestur
 Runtime release `e1d5ccffd03941b982df25d9463de9b0746e5e4a`; tested tree `c872ec647f8a7188f227d48c6cfc5459237a4328` matched fetched main exactly. Actual Node 22 topology CI run 38865991906 / job 116858835631 succeeded: **2378 PASS / 0 FAIL / 0 skipped**. Pages run 38865990703 build and deploy succeeded. Fresh live shell, manifest, Mesh Health/edit/GLB panel .877, unchanged UV workspace .874, native NOM core .865, protected Multi .1.0, and frozen beta-7 version all byte-matched repository files.
 
 User .876 PASS remains protected. The .877 device gate remains pending: upright round world-Y Cylinder UVs, independent Pencil edits, Undo/Redo, project persistence, NOMAD Base and native GLB seam checks. No general unwrap, elliptic mapping, painting, or evaluated-modifier UV claim. All four continuity documents are current.
+
+## .878 — UV Editor checker reference, 2026-10-16
+
+User .877 PASS protects upright Cylinder strip/caps, Pencil/history, native project/
+NOMAD Base and GLB seams; Box/Planar/imported baselines remain protected. Audit current
+main83c0b563/live877: no checker inspection exists. Existing inspector canvas owns UV
+projection; render-modes568 owns Studio/materials but has no UV-checker surface path.
+Add optional Checker toggle to the ORIGINAL large UV workspace and renderer. Fixed
+16×16 reference inside tile0–1 uses the same projection as outlines/picking, with
+numerically clipped cells and at most256 rectangles regardless of UV bounds/zoom.
+Draw under island colours/gold selection/orange seams. Default off on reopen; keep
+view and selection when toggled, cancel pending Pencil preview/capture without edit.
+Report/history refresh retains checker setting within current session. No scene/resource/
+project/history writes, image decoding, new gesture/UV/render kernel or material changes.
+This is a 2D size/alignment aid, not 3D stretch inspection or texture painting.
+
+Three actual renderer/workspace regressions cover DPR/pan/zoom/picking, extreme/tiled/
+offscreen/stale layouts, draw order/read-only arrays, pending-stroke cancellation,
+view/selection/refresh/reopen lifecycle and no edit/history callbacks. Full local Node24
+2381PASS/0FAIL/0skip. Cache graph MeshHealth/workspace/inspector878; edit878 changes ONLY
+its inspector import pin; original edit maths/guards unchanged. Shell/recovery878.
+Export panel877/native NOM865/manager+codec+resources875/nav868, protected Multi1.0,
+main854/Loop/Extrude/Boolean and frozen betas unchanged. Publication proof follows.
+Device878: Checker toggle/readability, pan/pinch/Fit, Pencil Move/Scale/Rotate + Undo,
+close/reopen default off. Next audit a temporary 3D checker through existing render
+and triangulation owners; do not add another triangulation kernel or persist a preview
+material into resource/history/export. Imported image inspection and painting follow
+separately after material/resource budget and lifecycle audit.
+
+## Protected .877 — user PASS2026-10-16
+
+Upright Cylinder UV strip/two caps, separate Pencil island edits, Undo/Redo, Save/Open,
+NOMAD Base and Base GLB seam/cap continuity accepted. Preserve native sourceboxlab/v3
+transport and imported pole-weld compatibility; .878 checker device gate remains separate.

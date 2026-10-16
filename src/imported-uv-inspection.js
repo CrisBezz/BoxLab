@@ -60,12 +60,22 @@ function inspectConnectivity(faces,uvs,report){
  report.previewIslands=report.previewFaceIndices.map(fi=>report.faceIslands[fi]);
  report.previewSeamIslands=seamFaces.map(fi=>report.faceIslands[fi]);
 }
-export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null,previewScale=null,previewRotation=null}={}){
+export function drawImportedUV(canvas,report,{padding=12,center=false,pixelRatio=1,view={},selectedIsland=null,previewOffset=null,previewScale=null,previewRotation=null,checker=false}={}){
  const ctx=canvas?.getContext?.('2d');if(!ctx)return false;
  const width=canvas.width,height=canvas.height;
  ctx.clearRect(0,0,width,height);ctx.fillStyle='#101722';ctx.fillRect(0,0,width,height);
  if(report.state!=='ready')return false;
  const {x,y}=uvProjection(width,height,report,{padding,center,view});
+ // Fixed 16×16 reference tile, using the exact navigation projection. Draw at
+ // most 256 clipped rectangles even for extreme UV bounds/zoom; no image resource.
+ if(checker){
+  for(let row=0;row<16;row++)for(let col=0;col<16;col++){
+   const left=Math.max(0,x(col/16)),right=Math.min(width,x((col+1)/16));
+   const top=Math.max(0,y((row+1)/16)),bottom=Math.min(height,y(row/16));
+   if(![left,right,top,bottom].every(Number.isFinite)||right<=left||bottom<=top)continue;
+   ctx.fillStyle=(row+col)%2?'#26384c':'#1b2839';ctx.fillRect(left,top,right-left,bottom-top);
+  }
+ }
  // Pencil preview moves only displayed selected corners; stored UV arrays stay read-only.
  const component=(p,k,moving)=>moving&&previewRotation?rotateImportedUVPoint(p,previewRotation.centre,previewRotation.degrees)[k]:moving&&previewScale?previewScale.centre[k]+(p[k]-previewScale.centre[k])*previewScale.factor:p[k]+(moving&&previewOffset?(k?previewOffset.v:previewOffset.u):0);
  const px=(p,moving)=>x(component(p,0,moving)),py=(p,moving)=>y(component(p,1,moving));
