@@ -6811,7 +6811,7 @@ per-face multiple materials are NOT implemented. Native visual success is not pr
 by final-byte assertions; source≤8MB, total≤24MB, observed native revision7 for images.
 
 
-## .885 native normal + emissive maps — smaller-case PASS; full-material FAIL2026-10-17
+## .885 native normal + emissive maps — smaller-case PASS; full-material FAIL resolved on887
 
 - [x] User884 PASS protected: native colour image/alignment/Pencil UV repeat/project reopen.
 - [x] Full material donor schema/provenance recorded; private pixels/file not shipped.
@@ -6832,7 +6832,7 @@ channel conversion, displacement source binding and native per-face multi-materi
 remain pending. HDR material extensions remain unsupported in native map route.
 
 
-## .886 native roughness + metalness — full-material export blocked2026-10-17
+## .886 native roughness + metalness — full-material blocker resolved/accepted on887
 
 - [x] User885 PASS protected: normal/emissive strengths/alignment/UV/project; colour884 and native UV865 retained.
 - [x] Original packed ref resolver and native writer retained; green→roughness/blue→metalness, original resolution, separate donor slots/factors.
@@ -6843,9 +6843,9 @@ remain pending. HDR material extensions remain unsupported in native map route.
 - [x] Bitmap/canvas cleanup on failure; JPEG header checks and DOM canvas/toBlob fallback; browser transport adapted in Node.
 - [x] ACTUAL File NOMAD waits, downloads real native PNGs, reports counts and restores button on failure; prior action semantics retained.
 - [x] Full local2424PASS/0FAIL/0skip; reviewed cache graph; protected modelling/Multi/frozen betas/native donor unchanged.
-- [ ] One opaque-material GLB with packed roughness/metalness≤2048², SubD off→File→NOMAD: separate Roughness/Metalness slots and correct glossy/matte/metallic regions.
-- [ ] Colour/normal/emissive still present and correctly aligned; Pencil island edit→NOMAD repeat keeps every map aligned.
-- [ ] Save/Open .boxlab→NOMAD repeats with roughness/metalness maps intact; plain mesh still opens normally.
+- [x] One opaque-material GLB with packed roughness/metalness≤2048², SubD off→File→NOMAD: separate Roughness/Metalness slots and correct glossy/matte/metallic regions.
+- [x] Colour/normal/emissive still present and correctly aligned; Pencil island edit→NOMAD repeat keeps every map aligned.
+- [x] Save/Open .boxlab→NOMAD repeats with roughness/metalness maps intact; plain mesh still opens normally.
 
 Conversion supports opaque8-bit embedded PNG/JPEG, no EXIF/eXIf orientation metadata,
 UV0/default repeat sampler, one material per object. Source≤8MB, derived≤8MB/image,
@@ -6854,7 +6854,7 @@ in native factorRoughness/Metalness. Real Safari/Nomad appearance remains a devi
 Displacement binding, native per-face materials and NOM import remain unimplemented.
 
 
-## .887 large native colour image / project validation — device gate pending
+## .887 large native colour image / project validation — user PASS2026-10-17
 
 - [x] User885 FAIL screenshot886 recorded; exact FULL MATERIAL.glb SHA/metadata audited. Earlier smaller map PASS baselines protected, no blanket full-file PASS.
 - [x] Original importer payload reproduces failure:11,121,601B colour exceeds inherited8MB preview guard; one opaque UV0/default-sampler material is otherwise supported.
@@ -6865,10 +6865,32 @@ Displacement binding, native per-face materials and NOM import remain unimplemen
 - [x] Actual user-file native audit:5nativeimages/6faces/16,310,924B output; unchanged colour/normal/emissive hashes. Offline packed split is Pillow, not browser visual proof.
 - [x] Actual5-image pooled resource roundtrip25,750,555B encoded /19,307,670B decoded retains all source bytes.
 - [x] Full local2428PASS/0FAIL/0skip; parent/child cache contracts reviewed; protected modelling/Multi/frozen betas retained.
-- [ ] Supplied FULL MATERIAL.glb, SubD off→File→NOMAD downloads successfully and opens in Nomad with colour/normal/emissive/roughness/metalness slots intact.
-- [ ] Pencil-edit one UV island→NOMAD retains alignment of all supported maps.
-- [ ] Save/Open this textured .boxlab project→NOMAD repeats without validation errors; ordinary small/plain meshes still export.
+- [x] Supplied FULL MATERIAL.glb, SubD off→File→NOMAD downloads successfully and opens in Nomad with colour/normal/emissive/roughness/metalness slots intact.
+- [x] Pencil-edit one UV island→NOMAD retains alignment of all supported maps.
+- [x] Save/Open this textured .boxlab project→NOMAD repeats without validation errors; ordinary small/plain meshes still export.
 
 Large-image preview may stay Solid under unchanged display budget; native export byte
 copy does not require rendering that image. Opacity/displacement slots remain pending;
 latest opaque NOM donor confirms opacity STORAGE only, GLB name-only extras need audit.
+
+
+## .888 explicit Nomad displacement map — device gate pending
+
+- [x] User887 PASS protects exact FULL MATERIAL native five-map export, Pencil UV repeat and large .boxlab Save/Open; prior885/886 reported blocker resolved for this case.
+- [x] Paired GLB/NOM explicit slot reference and same6,200,450B16-bit PNG SHA proven; metadata-only provenance fixture, no private pixels shipped.
+- [x] No image-name-only guessing: explicit version1 Nomad displacement slot + unique exact image definition + unique core texture link required.
+- [x] Original16-bit image bytes/MIME/offsets, native slot/strength/midpoint/world setting, geometry+UV field bytes retained; no decode/reencode/bake.
+- [x] Missing/ambiguous/unsupported/non-UV/transformed/sampler/factor/stale/evaluated inputs refuse; existing material/source/pool guards retained.
+- [x] Native dedup/24MB aggregate includes displacement; packed/display/large raw source budgets unchanged.
+- [x] Selected UV/project resource continuity, ACTUAL File NOMAD six-slot output/status and failure recovery; no scene/source mutation.
+- [x] Actual user-file/resource-roundtrip audit22,511,792B native file/6images/6faces retains original colour/normal/emissive/displacement hashes and exact native scalar settings.
+- [x] Full local2433PASS/0FAIL/0skip; narrow cache graph reviewed; protected modelling/Multi/native donor/frozen beta bytes retained.
+- [ ] Same FULL MATERIAL.glb, SubD off→File→NOMAD: Displacement texture slot populated with the original image and saved strength/midpoint/world setting.
+- [ ] Colour/normal/emissive/roughness/metalness remain intact; Pencil island UV edit→NOMAD keeps displacement aligned.
+- [ ] Save/Open .boxlab→NOMAD repeats with displacement slot/settings intact; ordinary small/plain export still works.
+
+Slot/settings handoff only: no BoxLab displacement display/geometry bake or strength
+compensation for import-fit/baked object scale.16-bit bytes retained exactly. Explicit
+Auto/UV + identity texture transforms only. Separate opacity image is absent from this
+GLB; named-but-missing opacity is not evidence of usable pixels. Generic glTF displacement,
+transparency, native per-face materials, painting and NOM import remain later stages.

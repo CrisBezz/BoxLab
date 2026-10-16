@@ -210,10 +210,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.887",
+      "url": "./src/export-as-panel.js?v=0.36.18.888",
       "target": "src/export-as-panel.js",
-      "sha256": "f362ee290fdc986a9eae7af79acc93673a1a00183d24b2b439ac39ab3078c606",
-      "sourceVersion": "0.36.18.887"
+      "sha256": "02433ec191e4a0e116f3b7eb6d1b507d458a5088d99b9f1f1cdcd1d3a9233581",
+      "sourceVersion": "0.36.18.888"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.887",
+      "url": "./src/release-bootstrap.js?v=0.36.18.888",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.887",
+      "url": "./src/release-version.js?v=0.36.18.888",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.887",
+      "url": "./nomad-packed-maps.js?v=0.36.18.888",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "2b8b9113d425208dcbba9f51e5f1ecec29987dd1d6c1716546259d80092e6e8b"
+      "sha256": "132696342790236608e28e1e65dae00a854219845b43c68a4191ba3ecb115971"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -2450,9 +2450,21 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.887",
+      "url": "./nomad-export-core.js?v=0.36.18.888",
       "target": "src/nomad-export-core.js",
-      "sha256": "47549abd58edcec1e351cd9986c032e3ca2d2606f5abfa6c2a8523f748a9c4ca"
+      "sha256": "1e85ed49ce6ab44d06874875aa35f986340b77b99c0eca4a4362d661407672a2"
+    },
+    {
+      "owner": "src/nomad-export-core.js",
+      "url": "./nomad-displacement-map.js?v=0.36.18.888",
+      "target": "src/nomad-displacement-map.js",
+      "sha256": "27a38a041be0da655e3d23c8db0e80685265008107ca5a364c13e43386453a87"
+    },
+    {
+      "owner": "src/nomad-displacement-map.js",
+      "url": "./uv-image-preview.js?v=0.36.18.887",
+      "target": "src/uv-image-preview.js",
+      "sha256": "526299058fb9ca37fff85bf9bf5b4311fa7890974edd4e20c59d813aa4e3f5ae"
     }
   ]
 }

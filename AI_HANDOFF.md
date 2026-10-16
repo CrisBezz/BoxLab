@@ -1,13 +1,73 @@
-# BoxLab AI Handoff — .887 Large Native Texture Export Repair
+# BoxLab AI Handoff — .888 Native Displacement Map Handoff
 
 ## Current state — 2026-10-17
-CrisBezz/BoxLab main build0.36.18.887; live https://crisbezz.github.io/BoxLab/.
-Runtime3f605425; .887 CI/Pages/live verified below; exact-file device retest pending.
-User885 FAIL screenshot886: large FULL MATERIAL export blocked; .887 repairs reproduced image-budget and project-validation failures. Prior smaller PASS baselines remain protected. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.888; live https://crisbezz.github.io/BoxLab/.
+Previous main714bd5a1/runtime3f605425; user887 PASS protected. .888 displacement validation/publication proof below.
+User887 PASS resolves supplied FULL MATERIAL native export/project failure and protects all five core maps/UV repeat. .888 adds explicit Nomad displacement map; its device gate remains pending. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .888 — explicit Nomad displacement-map handoff, 2026-10-17
+
+User887 PASS /nextbuild protects supplied FULL MATERIAL.glb native download, original
+large colour plus normal/emissive/roughness/metalness slots, UV-edit repeat and .boxlab
+Save/Open after validator repair. Resolves reported885 FAIL screenshot886 for this case;
+earlier smaller native/UV/Pencil/navigation baselines retained. Audit current
+main714bd5a1/runtime3f605425/live887/owners and paired user GLB/NOM donors.
+
+Original importer ALREADY retains meshExtras.nomad.version1/textures.displacement
+semantic NAME REFERENCE plus all original image definitions/core texture links. Proved
+that explicitly named GLB image3 (6,200,450B16-bit PNG) equals BOTH native donors'
+displacement image, SHA25645771544a0c7442d03136ce78fc8b79f4341a5a1541eb34f9f6e45cf3cc0b501.
+Generator nomad11 observed. Metadata-only paired provenance fixture includes saved native
+slot/strength/midpoint/world and a tiny synthetic16-bit PNG; no private pixels committed.
+No new import channel, envelope/version, filename-stem inference or duplicate kernel.
+
+Small nomad-displacement-map binding helper reads only explicit version1 Nomad slot.
+Require EXACTLY ONE image.definition.name matching that explicit reference and EXACTLY
+ONE core texture sourcing it; missing/ambiguous/no-data/unsupported refs refuse before
+download. A matching image filename WITHOUT semantic slot never enables displacement.
+Shared embeddedUVImage validates PNG/JPEG bytes/MIME≤24MB;16-bit data copied unchanged,
+no decode/reencode/downsample or precision loss. Default repeat/linear sampling; source
+Auto/UV and identity transforms only, unknown slot keys/transforms/Triplanar refuse.
+Observed native Auto encoding used with REQUIRED complete matching Base UV channel
+(Auto uses UV when UVs exist; official manual https://nomadsculpt.com/manual/material).
+Hardness/world projection metadata and finite source strength/midpoint/world fields
+validated; numeric settings preserved VERBATIM, including negative strength and source
+world boolean. This stage does not compensate displacement amplitude for import-fit
+or baked object scaling, bake displaced geometry, or add a BoxLab displacement renderer.
+
+ORIGINAL nativeMaterialMaps/writer now includes displacement-only input or displacement alongside existing
+map slots, original image-table dedup/alignment/24MB aggregate and donor material slot.
+Original one opaque material/Base UV/stale/evaluated refusal stays. .887 raw colour/
+normal/emissive24MB and display8MB/1024², packed8MB/2048² budgets unchanged. Source
+mesh/UV/resources/history stay read-only. Async facade already counts ALL nonpacked
+maps in same pool; no duplicate conversion/cache. File NOMAD status adds displacement
+count. Plain/no-explicit-slot and prior map output paths retain original behaviour.
+
+Five native regressions: explicit reference vs filename-only/array reorder, valid16-bit
+bytes/native donor slot/settings/unchanged geometry+UV fields, ambiguous/missing/sampler/
+transform/factor/stale/evaluated refusals, shared-image dedup/aggregate budgets and
+selected UV/project continuity, ACTUAL File NOMAD six slots/status/error recovery.
+Full local2433PASS/0FAIL/0skip. Actual user GLB→original importer/Three geometry conversion
+→resource Save/Open→native output22,511,792B:1object/6faces/1UVobject/6images; colour/
+normal/emissive/displacement hashes exact; native strength.17320507764816284, midpoint.5,
+worldfalse exact. Import fit scale2 retained as before. Offline packed split uses Pillow
+G/B and Node private geometry input strips image refs only; no browser/Nomad appearance
+proof inferred. .887 device PASS protected; .888 displacement device gate pending.
+
+Reviewed888 graph: shell/recovery/export-panel→packed-child→native-core→new displacement
+binding helper; core/image/surface and new helper's shared decoder remain887. All other
+UI/importer/resource/UV math/navigation/protected modelling/Multi/frozen beta/native donor
+bytes unchanged. All four continuity docs updated; publication verification follows.
+Device888: same FULL MATERIAL.glb/SubD off→File→NOMAD: Displacement slot populated with
+original image and saved settings, previous five maps intact; Pencil UV/project repeat.
+Separate opacity texture absent from GLB despite named extras, so opacity remains
+pending. Do not guess missing pixels or declare generic glTF displacement/NOM import.
+Next:888 device feedback; then audit opacity source/baked colour alpha and native material
+semantics before adding transparency or unrelated UV painting/native per-face materials.
 
 ## .887 — large native colour image / project validation repair, 2026-10-17
 
@@ -1559,13 +1619,15 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Re-test supplied FULL MATERIAL.glb on887: native File→NOMAD download/all five supported
-map slots, Pencil UV edit repeat and .boxlab Save/Open repeat. User885 FAIL screenshot886
-reopens this exact-file gate; prior smaller accepted map/UV workflows stay protected.
-Preview retains8MB/1024² display budget; large colour can export while preview is Solid.
-After887 feedback, audit explicit Nomad extras binding for displacement/opacity using
-latest donors. Names alone are not validated image indices; no NOM import, native
-per-face materials, displacement or transparency support added. Keep883 GLB gate separate.
+User887 PASS protects exact FULL MATERIAL.glb native download/all five core map slots,
+Pencil UV repeat and large .boxlab Save/Open. Prior885 FAIL screenshot886 resolved for
+this case. Re-test888 displacement slot/image/saved settings and UV/project repeat.
+Binding now proven from explicit Nomad extras name reference + unique image/core texture,
+paired native image hash; no filename-only guessing. Source settings preserved numerically;
+no amplitude compensation for import fit/object scaling and no displaced geometry bake.
+Separate opacity image absent from supplied GLB: next audit baked colour alpha/source
+availability and native opacity semantics after888 feedback. Display stays8MB/1024².
+No native per-face materials, generic glTF displacement, painting or NOM import added.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

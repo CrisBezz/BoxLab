@@ -1,6 +1,6 @@
 // Export-local glTF G/B unpacking. Source resources remain read-only; the original
 // native writer owns materials, UV validation, binary layout and final byte budgets.
-import {nativeMaterialMaps,buildNomadProject} from './nomad-export-core.js?v=0.36.18.887';
+import {nativeMaterialMaps,buildNomadProject} from './nomad-export-core.js?v=0.36.18.888';
 const LIMIT=2048,IMAGE_LIMIT=8*1024*1024,TOTAL_LIMIT=24*1024*1024;
 function dimensions(choice){
  const a=choice.data,v=new DataView(a.buffer,a.byteOffset,a.byteLength);let width=0,height=0;

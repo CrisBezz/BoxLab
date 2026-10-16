@@ -1,3 +1,4 @@
+import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.888';
 import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.887';
 import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.887';
 // NOM container/header, field and scene-node conventions adapted from CrisBezz/
@@ -81,13 +82,13 @@ function nativeColourSource(payload){
  return source;
 }
 export function nativeMaterialMaps(payload){
- const colour=nativeColourSource(payload),used=Array.isArray(payload?.materialIndices)?payload.materialIndices:[];
+ const displacement=nomadDisplacementMap(payload),colour=nativeColourSource(payload),used=Array.isArray(payload?.materialIndices)?payload.materialIndices:[];
  const extra=used.some(id=>payload.materials?.[id]?.normalTexture||payload.materials?.[id]?.emissiveTexture||payload.materials?.[id]?.pbrMetallicRoughness?.metallicRoughnessTexture);
- if(!colour&&!extra)return null;
+ if(!colour&&!extra&&!displacement)return null;
  const source=uvImageMaterialSource(payload);if(!source)throw Error('NOMAD image maps require one opaque material; use GLB for other materials');
  const material=source.material,pbr=material.pbrMetallicRoughness||{};
  if([pbr.roughnessFactor??1,pbr.metallicFactor??1].some(v=>!Number.isFinite(v)||v<0||v>1))throw Error('NOMAD material factors are invalid');
- const maps={};if(colour)maps.color=colour;
+ const maps={};if(colour)maps.color=colour;if(displacement)maps.displacement=displacement;
  for(const [slot,info] of [['normal',material.normalTexture],['emissive',material.emissiveTexture],['packed',pbr.metallicRoughnessTexture]]){
   if(!info)continue;
   const choice=embeddedUVImage(payload,info,{maxBytes:(slot==='packed'?8:24)*1024*1024});if(!choice||Object.keys(info.extensions||{}).length)throw Error('NOMAD '+slot+' map requires an embedded PNG/JPEG UV0 image without transforms');
@@ -103,7 +104,7 @@ function nativeTexture(index,name){return {index,name,magFilter:'auto',minFilter
 export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab',topologySignature=globalThis.__boxlabExportAs?.topologySignature,packedMaps=new Map()}={}){
  const base=readNomadProject(templateBytes),donor=base.json.meshes?.[0];if(!donor?.vertices)throw Error('Nomad donor mesh is missing');
  const project=clone(base.json),parts=[],proto=findNode(base.json.scene)||{};project.meshes=[];
- const group={name,group:0,selected:true,selected_main:true,children:[],visible:true,node_collapse:false,lock:false};let offset=0,vertices=0,faces=0,uvObjects=0,colourTextureObjects=0,normalTextureObjects=0,emissiveTextureObjects=0,roughnessTextureObjects=0,metalnessTextureObjects=0,imageBytes=0;
+ const group={name,group:0,selected:true,selected_main:true,children:[],visible:true,node_collapse:false,lock:false};let offset=0,vertices=0,faces=0,uvObjects=0,colourTextureObjects=0,normalTextureObjects=0,emissiveTextureObjects=0,roughnessTextureObjects=0,metalnessTextureObjects=0,displacementTextureObjects=0,imageBytes=0;
  const images=[],imageIndices=new Map();
  for(const [index,object] of (objects||[]).entries()){
   if(object?.kind==='reference'||object?.visible===false)continue;
@@ -147,6 +148,7 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
    if(maps.metalness){material.factorMetalness=pbr.metallicFactor??1;metalnessTextureObjects++;}
    if(source.maps.normal){material.factorNormal=source.normalScale;material.normal_neg_y=false;normalTextureObjects++;}
    if(source.maps.emissive){material.factorEmissive=[...source.emissiveFactor];material.factorEmissiveStrength=1;emissiveTextureObjects++;}
+   if(maps.displacement){Object.assign(material,maps.displacement.settings);Object.assign(material.textures.displacement,{projection:maps.displacement.projection,triplanar_hardness:[...maps.displacement.hardness],triplanar_world:maps.displacement.world});displacementTextureObjects++;}
    if(source.maps.color)colourTextureObjects++;
    materialIndex=project.materials.length;project.materials.push(material);
   }
@@ -159,5 +161,5 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
  const dv=new DataView(out.buffer);if(images.length)dv.setUint32(12,7,true);w64(dv,16,out.length);w64(dv,24,base.jo);w64(dv,32,json.length);w64(dv,40,bo);w64(dv,48,offset);
  const parsed=readNomadProject(out);for(const mesh of parsed.json.meshes)for(const key of ['vertices','normals','uvs','faces','faces_uv','faces_group']){const f=mesh[key];if(f.offset<0||f.offset+f.length>parsed.bin.length)throw Error('Nomad field bounds check failed');}
  for(const image of images)if(image.offset<0||image.offset+image.length>parsed.bin.length)throw Error('Nomad image bounds check failed');
- return {bytes:out,count:project.meshes.length,vertices,faces,uvObjects,colourTextureObjects,normalTextureObjects,emissiveTextureObjects,roughnessTextureObjects,metalnessTextureObjects,facegroups:project.meshes.reduce((n,m)=>n+m.groups.length,0)};
+ return {bytes:out,count:project.meshes.length,vertices,faces,uvObjects,colourTextureObjects,normalTextureObjects,emissiveTextureObjects,roughnessTextureObjects,metalnessTextureObjects,displacementTextureObjects,facegroups:project.meshes.reduce((n,m)=>n+m.groups.length,0)};
 }

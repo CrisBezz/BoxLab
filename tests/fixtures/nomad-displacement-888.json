@@ -1,0 +1,63 @@
+{
+  "glbSha256": "a68dbedf6cfa49efcfd3b5a86c0a599d5502410e7235913ff482790e24b1419d",
+  "nativeSha256": "89170a6ecc5427413069ad9902c1b0c128ee17ad7136e8737a28be324196e47c",
+  "generator": "nomad 11",
+  "extrasVersion": 1,
+  "explicitGLBSlot": {
+    "magFilter": "auto",
+    "minFilter": "auto",
+    "name": "blue_floor_tiles_01.png",
+    "offset": [
+      0,
+      0
+    ],
+    "projection": "auto",
+    "rotation": 0,
+    "scale": [
+      1,
+      1
+    ],
+    "triplanar_hardness": [
+      0.8999999761581421,
+      0.8999999761581421,
+      0.8999999761581421
+    ],
+    "triplanar_world": true,
+    "wrapS": "repeat",
+    "wrapT": "repeat"
+  },
+  "embeddedImageIndex": 3,
+  "imageSha256": "45771544a0c7442d03136ce78fc8b79f4341a5a1541eb34f9f6e45cf3cc0b501",
+  "imageLength": 6200450,
+  "imageBitDepth": 16,
+  "nativeSlot": {
+    "index": 6,
+    "magFilter": "auto",
+    "minFilter": "auto",
+    "name": "blue_floor_tiles_01.png",
+    "offset": [
+      0,
+      0
+    ],
+    "projection": "auto",
+    "rotation": 0,
+    "scale": [
+      1,
+      1
+    ],
+    "triplanar_hardness": [
+      0.8999999761581421,
+      0.8999999761581421,
+      0.8999999761581421
+    ],
+    "triplanar_world": true,
+    "wrapS": "repeat",
+    "wrapT": "repeat"
+  },
+  "settings": {
+    "factorDisplacement": 0.17320507764816284,
+    "displacementMid": 0.5,
+    "displacementWorld": false
+  },
+  "synthetic16BitPNG": "iVBORw0KGgoAAAANSUhEUgAAAAIAAAACEAAAAAAHTY67AAAAEklEQVR4nGNgYHBgYGhg+P8fAAbHAr89RY6RAAAAAElFTkSuQmCC"
+}
