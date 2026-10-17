@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.887';
+import {importedUVImageChoices,decodeUVImage} from './uv-image-preview.js?v=0.36.18.891';
 // Active Base inspection. Mixed materials require exact per-face import provenance.
 // Names/facegroup labels are never interpreted as material assignments.
 export function uvImageMaterialSource(payload){

@@ -1,6 +1,6 @@
-import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.888';
-import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.887';
-import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.887';
+import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.891';
+import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.891';
+import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.891';
 // NOM container/header, field and scene-node conventions adapted from CrisBezz/
 // MeshUtilz-Sweep-Lab balloon-v0.6, commit 18e72a6bf964974591038345d68c2196a18f6af2:
 // src/nomadBalloonExport.js + nomadBalloonExport097.js; validated donor copied intact.

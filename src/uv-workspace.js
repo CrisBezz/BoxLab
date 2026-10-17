@@ -1,4 +1,4 @@
-import {createUVImagePreview} from './uv-image-preview.js?v=0.36.18.887';
+import {createUVImagePreview} from './uv-image-preview.js?v=0.36.18.891';
 import {drawImportedUV,pickImportedUVIsland,importedUVScreenDelta,importedUVIslandCentre} from './imported-uv-inspection.js?v=0.36.18.880';
 import {createUVNavigation} from './uv-navigation.js?v=0.36.18.868';
 // Workspace preview/navigation. Existing Mesh Health owns context, edit actions,
@@ -36,7 +36,7 @@ export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTrans
  checkerButton.addEventListener('click',()=>{if(!active)return;cancel();checker=!checker;checkerButton.setAttribute('aria-pressed',String(checker));draw();});
  const imageButton=root.querySelector('[data-uv="image"]'),imageSource=root.querySelector('[data-uv="image-source"]'),imageStatus=root.querySelector('.uv-image-status');
  let imageChoices=null;
- const imagePreview=createUVImagePreview({changed:()=>{syncImageControls();draw();}});
+ const imagePreview=createUVImagePreview({slots:['color','normal','emissive'],changed:()=>{syncImageControls();draw();}});
  function syncImageControls(){
   const state=imagePreview.view;imageButton.disabled=!state.choices.length;imageButton.setAttribute('aria-pressed',String(state.enabled));imageSource.disabled=!state.enabled||state.choices.length<2;imageSource.hidden=state.choices.length<2;imageStatus.textContent=state.status;
   if(imageChoices!==state.choices){imageChoices=state.choices;imageSource.innerHTML='';for(let i=0;i<state.choices.length;i++){const option=document.createElement('option');option.value=String(i);option.textContent=state.choices[i].label;imageSource.appendChild(option);}}

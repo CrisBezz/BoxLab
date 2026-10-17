@@ -1,5 +1,5 @@
-// Read-only references to the importer's retained embedded images. No material,
-// image-byte, project, or UV edits. Only UV0 base-colour images without transforms.
+// Read-only references to retained embedded images; default callers stay colour-only.
+// UV workspace opts into normal/emissive references, never lighting or image edits.
 // Shared read-only embedded UV0 image resolver; callers own material/slot policy.
 export function embeddedUVImage(payload,info,{maxBytes=8*1024*1024}={}){
  // Preview defaults stay bounded; native byte-copy export may use its 24 MB pool.
@@ -13,13 +13,19 @@ export function embeddedUVImage(payload,info,{maxBytes=8*1024*1024}={}){
  if(!mime||stored.definition?.mimeType&&stored.definition.mimeType!==mime)return null;
  return {imageIndex:texture.source,data,mime};
 }
-export function importedUVImageChoices(payload,imageOptions){
+const mapLabels={color:'Colour',normal:'Normal',emissive:'Emissive'};
+export function importedUVImageChoices(payload,imageOptions,slots=['color']){
  if(payload?.source!=='glb'||payload.version!==1||!Array.isArray(payload.materialIndices))return [];
- const result=[];
+ const result=[],requested=Array.isArray(slots)?[...new Set(slots)].filter(slot=>Object.hasOwn(mapLabels,slot)):[];
  for(const materialIndex of new Set(payload.materialIndices)){
   if(!Number.isInteger(materialIndex)||materialIndex<0)continue;
-  const material=payload.materials?.[materialIndex],choice=embeddedUVImage(payload,material?.pbrMetallicRoughness?.baseColorTexture,imageOptions);
-  if(choice)result.push({materialIndex,...choice,label:String(material.name||`Material ${materialIndex+1}`)});
+  const material=payload.materials?.[materialIndex];
+  for(const slot of requested){
+   const info=slot==='color'?material?.pbrMetallicRoughness?.baseColorTexture:material?.[slot+'Texture'];
+   if(slot!=='color'&&Object.keys(info?.extensions||{}).length)continue;
+   const choice=embeddedUVImage(payload,info,imageOptions);
+   if(choice){const label=String(material.name||`Material ${materialIndex+1}`);result.push({materialIndex,...choice,...(requested.length===1&&slot==='color'?{}:{slot}),label:requested.length===1&&slot==='color'?label:label+' · '+mapLabels[slot]});}
+  }
  }
  return result;
 }
@@ -29,24 +35,25 @@ export async function decodeUVImage(choice){
  if(!image.width||!image.height||image.width>1024||image.height>1024){image.close?.();throw Error('Image preview exceeds the display budget');}
  return image;
 }
-export function createUVImagePreview({changed=()=>{},decode=decodeUVImage}={}){
- let choices=[],index=0,enabled=false,image=null,generation=0,status='No compatible embedded colour image.';
+export function createUVImagePreview({changed=()=>{},decode=decodeUVImage,slots=['color']}={}){
+ const emptyStatus=slots.length===1&&slots[0]==='color'?'No compatible embedded colour image.':'No compatible embedded colour, normal or emissive image.';
+ let choices=[],index=0,enabled=false,image=null,generation=0,status=emptyStatus;
  const release=()=>{image?.close?.();image=null;};
  function load(){
   const token=++generation;release();const choice=choices[index];
-  status=enabled&&choice?'Loading image…':choice?'':'No compatible embedded colour image.';changed();
+  status=enabled&&choice?'Loading image…':choice?'':emptyStatus;changed();
   if(!enabled||!choice)return;
   Promise.resolve().then(()=>token===generation&&enabled?decode(choice):null).then(value=>{
    if(token!==generation||!enabled){value?.close?.();return;}
-   image=value;status='Base-colour image reference · tile 0–1';changed();
+   image=value;status=(choice.slot&&choice.slot!=='color'?mapLabels[choice.slot]:'Base-colour')+' image reference · tile 0–1';changed();
   },()=>{if(token===generation&&enabled){status='Could not decode this image.';changed();}});
  }
  return {get view(){return {choices,index,enabled,image,status};},setPayload(payload){
-  const previous=choices[index],next=importedUVImageChoices(payload);
-  const found=next.findIndex(c=>c.materialIndex===previous?.materialIndex&&c.imageIndex===previous?.imageIndex);
+  const previous=choices[index],next=importedUVImageChoices(payload,undefined,slots);
+  const found=next.findIndex(c=>c.materialIndex===previous?.materialIndex&&c.imageIndex===previous?.imageIndex&&c.slot===previous?.slot);
   choices=next;index=found>=0?found:0;
   const choice=choices[index];if(!choice)enabled=false;
-  if(previous&&choice&&previous.data===choice.data&&previous.mime===choice.mime){changed();return;}
+  if(previous&&choice&&previous.data===choice.data&&previous.mime===choice.mime&&previous.slot===choice.slot){changed();return;}
   load();
  },enable(value){if(enabled===!!value)return;enabled=!!value&&!!choices.length;load();},choose(value){
   if(!Number.isInteger(value)||value<0||value>=choices.length||value===index)return;index=value;load();

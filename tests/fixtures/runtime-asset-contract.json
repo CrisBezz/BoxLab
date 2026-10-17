@@ -210,10 +210,10 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.890",
+      "url": "./src/export-as-panel.js?v=0.36.18.891",
       "target": "src/export-as-panel.js",
-      "sha256": "abeb4429fdd54d3dae5de7fb53a24d303778f503493b613da8051de6d1696191",
-      "sourceVersion": "0.36.18.890"
+      "sha256": "fd3d24393e6d542df063be537cf997622ff524b872578b19d413371ec5bebdb7",
+      "sourceVersion": "0.36.18.891"
     },
     {
       "owner": "index.html",
@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.887",
+      "url": "./src/mesh-health.js?v=0.36.18.891",
       "target": "src/mesh-health.js",
-      "sha256": "20a090a0a2d5867935751ca83a3337d076fb973246080ce6e20ef955abe08c5a",
+      "sha256": "a1df50eb163a03d580e3092a942abdf821a46261e0bf61921222add78c81d1e3",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.890",
+      "url": "./src/release-bootstrap.js?v=0.36.18.891",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.890",
+      "url": "./src/release-version.js?v=0.36.18.891",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.887",
+      "url": "./src/render-modes.js?v=0.36.18.891",
       "target": "src/render-modes.js",
-      "sha256": "f60ec3a4c98bb17e9529c76186a8b1934ded5aa299a2a8f19348ed2d9890900e"
+      "sha256": "dd287df2b73ac36822ba6948192060b526d2fc8c0af673bd698bc395bf4f5204"
     },
     {
       "owner": "index.html",
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.890",
+      "url": "./nomad-packed-maps.js?v=0.36.18.891",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "5897a8171422647796e463c76c6337f81a3bef3e6af3981cdb85987c214e28a8"
+      "sha256": "15a8ed3334a30bef4728fb8e42a62336c0733a62d1cb61067cfc624957d6f3e6"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -2396,9 +2396,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./uv-workspace.js?v=0.36.18.887",
+      "url": "./uv-workspace.js?v=0.36.18.891",
       "target": "src/uv-workspace.js",
-      "sha256": "c2ff453ae66fd56d656bd16a6fb65d96666f41068c6acc9f10e5b524b7b6d1fc"
+      "sha256": "7813f4599aec3941c0b085f01f14ecd24c0906b774ef246398d6d9b73c34ad63"
     },
     {
       "owner": "src/uv-workspace.js",
@@ -2420,51 +2420,51 @@
     },
     {
       "owner": "src/uv-workspace.js",
-      "url": "./uv-image-preview.js?v=0.36.18.887",
+      "url": "./uv-image-preview.js?v=0.36.18.891",
       "target": "src/uv-image-preview.js",
-      "sha256": "526299058fb9ca37fff85bf9bf5b4311fa7890974edd4e20c59d813aa4e3f5ae"
+      "sha256": "5c6ab262d3ecff294e84da913a66a0e90b61daed53e3041ec18cf7aacba0e1b9"
     },
     {
       "owner": "src/render-modes.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.887",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.891",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "26847a88a31a9523e0abf63dcb8b99dfef9c4180cf9d321e217b3c243dcea3ec"
+      "sha256": "2d39a4139c48e542f56f5a1c4272dc3afa0a88dd152400cef8743db2cd0ffaf1"
     },
     {
       "owner": "src/uv-image-surface-preview.js",
-      "url": "./uv-image-preview.js?v=0.36.18.887",
+      "url": "./uv-image-preview.js?v=0.36.18.891",
       "target": "src/uv-image-preview.js",
-      "sha256": "526299058fb9ca37fff85bf9bf5b4311fa7890974edd4e20c59d813aa4e3f5ae"
+      "sha256": "5c6ab262d3ecff294e84da913a66a0e90b61daed53e3041ec18cf7aacba0e1b9"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-surface-preview.js?v=0.36.18.887",
+      "url": "./uv-image-surface-preview.js?v=0.36.18.891",
       "target": "src/uv-image-surface-preview.js",
-      "sha256": "26847a88a31a9523e0abf63dcb8b99dfef9c4180cf9d321e217b3c243dcea3ec"
+      "sha256": "2d39a4139c48e542f56f5a1c4272dc3afa0a88dd152400cef8743db2cd0ffaf1"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./uv-image-preview.js?v=0.36.18.887",
+      "url": "./uv-image-preview.js?v=0.36.18.891",
       "target": "src/uv-image-preview.js",
-      "sha256": "526299058fb9ca37fff85bf9bf5b4311fa7890974edd4e20c59d813aa4e3f5ae"
+      "sha256": "5c6ab262d3ecff294e84da913a66a0e90b61daed53e3041ec18cf7aacba0e1b9"
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.890",
+      "url": "./nomad-export-core.js?v=0.36.18.891",
       "target": "src/nomad-export-core.js",
-      "sha256": "7fbad143a5ee65fea452ffa0045a706ac076bdd8cc09e5f49011476c658b728d"
+      "sha256": "f2c7280400a87c2d9a7b2bdaaa9f44b71ccec36cb3c4a355abe3246433a447dd"
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./nomad-displacement-map.js?v=0.36.18.888",
+      "url": "./nomad-displacement-map.js?v=0.36.18.891",
       "target": "src/nomad-displacement-map.js",
-      "sha256": "27a38a041be0da655e3d23c8db0e80685265008107ca5a364c13e43386453a87"
+      "sha256": "61f46b56e596a674b51725c88f8fd80906b92e576d31fd7f4d3d63366df52464"
     },
     {
       "owner": "src/nomad-displacement-map.js",
-      "url": "./uv-image-preview.js?v=0.36.18.887",
+      "url": "./uv-image-preview.js?v=0.36.18.891",
       "target": "src/uv-image-preview.js",
-      "sha256": "526299058fb9ca37fff85bf9bf5b4311fa7890974edd4e20c59d813aa4e3f5ae"
+      "sha256": "5c6ab262d3ecff294e84da913a66a0e90b61daed53e3041ec18cf7aacba0e1b9"
     },
     {
       "owner": "src/nomad-packed-maps.js",

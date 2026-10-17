@@ -6917,7 +6917,7 @@ No source texture reduction, displacement amplitude compensation or BoxLab geome
 Opacity and native multi-material/NOM import remain pending.
 
 
-## .890 identical native image content — device gate pending
+## .890 identical native image content — user PASS2026-10-17
 
 - [x] User .889 PASS protects original full-material six maps, UV/project repeat; .888 reported budget case resolved by889.
 - [x] Existing native table/layout retained; identical MIME/length/bytes share across independent source buffers; no scene/history/resource mutation.
@@ -6927,9 +6927,9 @@ Opacity and native multi-material/NOM import remain pending.
 - [x] Earlier budget fixtures now contain distinct bytes; all existing unsupported-map/budget assertions retained.
 - [x] Full Node24 suite2440PASS/0FAIL/0skip; actual supplied source-image audit two objects/six images/22,557,536B payload, exact raw hashes and one packed decode.
 - [x] Opacity donor audited: separate1024² opacity image absent from GLB; existing colour alpha/native opacity flag retained, no invented separate slot or transparency claim.
-- [ ] Reset; import FULL MATERIAL.glb TWICE, move one aside, SubD off; File NOMAD downloads and opens two objects with all six supported map slots.
-- [ ] Pencil-edit one object's UV island; repeat NOMAD export: independent UVs and maps remain aligned on both objects.
-- [ ] Save/Open .boxlab then NOMAD repeats normally; original single-import export stays correct.
+- [x] Reset; import FULL MATERIAL.glb TWICE, move one aside, SubD off; File NOMAD downloads and opens two objects with all six supported map slots.
+- [x] Pencil-edit one object's UV island; repeat NOMAD export: independent UVs and maps remain aligned on both objects.
+- [x] Save/Open .boxlab then NOMAD repeats normally; original single-import export stays correct.
 
 Unique-image24MB pool and original raw24MB/packed8MB/2048²/display budgets remain.
 No source texture resampling, material merging, geometry/UV/history/kernel changes.
@@ -6944,3 +6944,20 @@ packed-child/native-core890, unchanged scalar889/displacement888/protected Multi
 and frozenBeta7 marker all byte-match repository. Initial reads preceded deployment;
 final graph matches890. All four continuity files current; proof changes docs only.
 User889 PASS protected;890 two-independent-import/UV/project native device gate PENDING.
+
+
+## .891 UV Normal / Emissive references — device gate pending
+
+- [x] User890 PASS protects repeated-import native dedup, individual UVs and project repeat.
+- [x] Existing chooser/resolver/controller reused; optional slot list only for UV workspace, all default colour-only consumers retained.
+- [x] Exact index/source binding, Material · map labels, UV0/PNG/JPEG/extension/missing/budget guards, original project bytes unchanged.
+- [x] One1024² bitmap/8MB source, same semantic slot across refresh/shared image, stale-label prevention, async cancel/late/close cleanup.
+- [x] ACTUAL workspace chooser cancels Pencil preview without edit/history, keeps view/selection, existing projection and Image-off reopen.
+- [x] Supplied GLB audit resolves original normal1/1,248,872B and emissive2/2,754B; large colour still obeys original preview limit.
+- [x] Full2443PASS/0FAIL/0skip; parent/child cache graph reviewed; protected/frozen and native export behavior retained.
+- [ ] Mesh Health -> UVs -> Open UV Editor -> Image: choose Normal then Emissive; images align with UV outlines.
+- [ ] Pencil Move/Scale/Rotate + UndoRedo and pan/pinch work over chosen reference; Back to3D/reopen starts Image off.
+- [ ] Save/Open .boxlab retains available image choices; File NOMAD still exports all six supported maps correctly.
+
+Raw 2D references: normal strength/emissive factor and PBR lighting are not evaluated.
+No painting/packed-channel/opacity/displacement inspection or 3D normal/emissive shading.

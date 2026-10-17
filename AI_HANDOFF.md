@@ -1,15 +1,61 @@
-# BoxLab AI Handoff — .890 Content-Shared Native Images
+# BoxLab AI Handoff — .891 UV Map References
 
 ## Current state — 2026-10-17
-CrisBezz/BoxLab main build0.36.18.890; live https://crisbezz.github.io/BoxLab/.
-Current runtime08f0256ef54901f205311b25d93b04b3250c2746/main890; CI/Pages/live verified.
-User .889 PASS now protects six native maps, UV repeat and project reopening.
-.890 local/Node22 CI2440/0/0; two-import device gate remains separate.
+CrisBezz/BoxLab main build0.36.18.891; live https://crisbezz.github.io/BoxLab/.
+Previous verified runtime08f0256ef54901f205311b25d93b04b3250c2746/main890.
+User .890 PASS protects independent repeated imports, six native maps, UV/project repeat.
+.891 local2443/0/0; publication pending. .891 preview device gate remains separate.
 User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .891 — UV Editor Normal / Emissive references, 2026-10-17
+
+User .890 Perfect PASS protects two independent FULL MATERIAL.glb imports/native
+six-map export, individual UV edits and .boxlab Save/Open; .889 remains protected.
+Audit current main a0a56749/runtime08f0256e and original UV chooser/resolver/decoder,
+workspace gesture owner and native/render consumers. Importer already retains exact
+normalTexture/emissiveTexture links; no UV inspection chooser for those slots existed.
+
+Extend ORIGINAL importedUVImageChoices with an optional colour/normal/emissive slot
+list. Default callers stay colour-only with identical output shape/labels/eligibility;
+only UV workspace opts into three slots. Same image-source dropdown shows Material ·
+Colour/Normal/Emissive, with explicit reference status. Resolve actual material texture
+index -> texture.source -> embedded image, never names/array position/facegroup guesses.
+Normal/emissive texture extensions, nonUV0/transformed/missing/external/oversize/invalid
+sources refuse independently; valid remaining references still available. Read-only
+image reference only: normal scale and emissive factors/lighting are not evaluated.
+No packed roughness/metalness/displacement/opacity selector, painting or new material UI.
+
+Same controller/one1024² bitmap,8MB encoded source limit, generation cancellation,
+late-result cleanup and UV-only payload reuse. Selected semantic slot survives refresh
+when still present, including two slots sharing one image; removed slots cannot leave a
+stale Normal label on Colour. Switching chooser uses EXISTING Pencil-cancel/capture
+release and retains view/island selection without a transaction or history checkpoint.
+Close/reopen starts Image off. Original V0/tile clipping/projection/pan/pinch/history
+and Pencil Move/Scale/Rotate owner unchanged. 3D UV Image remains base-colour-only;
+no additional surface/GPU bitmap residency or changed export/resource schema.
+
+Three native regressions cover exact/reordered map links/default caller parity/codec,
+unsupported refs/bytes/budgets, shared-image semantic refresh/cancel/dispose lifecycle,
+and ACTUAL workspace labels/1024² decode/Pencil cancellation/view/selection/reopen.
+Actual supplied FULL MATERIAL.glb source audit resolves normal image1/1,248,872B and
+emissive image2/2,754B. Its11,121,601B colour remains outside existing8MB preview policy;
+Normal/Emissive stay inspectable. No private pixels committed, browser visual gate pending.
+Full local Node24 2443PASS/0FAIL/0skip. Cache graph reviewed: workspace/preview891,
+MeshHealth parent891; shared preview consumers surface/render/native-displacement/
+native-core/packed/export parents891 (imports only), scalar889 retained. Internal
+MeshHealth stamp880 intentionally retained. Protected Multi1.0/modelling/frozen beta,
+actual decoder, native image/dedup maths and source/export image bytes unchanged.
+
+Device891: imported GLB -> Object Mesh Health -> UVs -> Open UV Editor -> Image;
+choose Normal, then Emissive; inspect alignment/orientation beneath UV outlines.
+Pencil edit/UndoRedo and pan/pinch still work; close/reopen starts Image off.
+Save/Open .boxlab -> chooser and native NOMAD six-map export remain intact.
+Next after feedback: audit packed-map inspection or the next staged UV-authoring
+step; separate opacity still needs source-complete input. No NOM import claim.
 
 ## .890 — identical native export images shared by content, 2026-10-17
 
@@ -1733,13 +1779,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Test .890 with TWO independent FULL MATERIAL.glb imports, SubD off: native download,
-two objects/six slots, independent UV edits and .boxlab Save/Open. .889 accepted.
-Same-content images now share export bytes and packed conversion; genuinely distinct
-image content still obeys 24MB. No source images resized or resources mutated.
-Opacity audit above proves separate NOM image absent from GLB; colour alpha and native
-colour-opacity switch already retained. Obtain source-complete opacity before promising
-separate map recovery; otherwise resume staged UV/texture work after device feedback.
+Test891 UV Editor Image dropdown: Normal/Emissive reference alignment, existing
+Pencil/navigation/history/close/reopen and .boxlab/native-export continuity.
+User890 PASS protected. Default3D/base-colour/native export owners unchanged;
+8MB encoded/one1024² bitmap limit retained. Actual supplied large colour remains
+unavailable in preview, its normal/emissive references are within budget.
+After feedback audit packed-map inspection or staged UV authoring. Separate opacity
+image remains absent from supplied GLB; no invented map recovery/NOM import.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
