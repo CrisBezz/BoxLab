@@ -1,6 +1,7 @@
 // Object radial launch/lifecycle adapter. Geometry, history and gestures remain
 // with the existing Active Tools owners; their original controls are docked intact.
 const tools={
+  'UV Paint':['#viewportPaintBtn','uv-paint','__boxlabViewportPaint'],
   Transform:['#surfaceTransformBtn','surface-transform','__boxlabSurfaceTransform'],
   Insert:['#surfaceInsertBtn','surface-insert','__boxlabSurfaceInsert'],
   Solidify:['#solidifyBtn','solidify','__boxlabSolidifyPreview'],

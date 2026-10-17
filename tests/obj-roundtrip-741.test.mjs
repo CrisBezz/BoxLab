@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import {assetReference} from './helpers/release-contract.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import * as THREE from 'three';
@@ -42,6 +43,6 @@ test('741 object name whitespace/newlines remain one object record and fallback 
 test('741 direct shell and integrity loader share one refreshed Quick OBJ module URL',()=>{
  const shell=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8'),loader=fs.readFileSync(new URL('../src/direct-topology-conformance-guard.js',import.meta.url),'utf8');
  const pattern=/scene-obj-export-238\.js\?v=([0-9.]+)/;
- assert.equal(shell.match(pattern)?.[1],'0.36.18.741');assert.equal(loader.match(pattern)?.[1],shell.match(pattern)?.[1]);
- assert.match(shell,/direct-topology-conformance-guard\.js\?v=0\.36\.18\.741/);
+ assert.equal(shell.match(pattern)?.[1],assetReference(shell,'scene-obj-export-238.js').split('?v=')[1]);assert.equal(loader.match(pattern)?.[1],shell.match(pattern)?.[1]);
+ assetReference(shell,'direct-topology-conformance-guard.js');
 });

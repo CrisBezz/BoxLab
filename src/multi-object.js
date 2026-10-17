@@ -629,6 +629,7 @@ function joinObjects(ids = []) {
   let chosen = objects.filter(object => requested.includes(object.id));
   if (chosen.length < 2) return { ok:false, reason:'Select at least two objects' };
   if (chosen.some(object => object.kind === 'reference')) return { ok:false, reason:'Reference objects cannot be joined' };
+  if (chosen.some(object => object.colourPaint)) return { ok:false, reason:'UV Paint objects cannot be joined yet; preserve them with .boxlab' };
   if (chosen.some(object => object.locked)) return { ok:false, reason:'Unlock selected objects before Join' };
 
   let primary = chosen.find(object => object.id === activeId) || chosen[0];

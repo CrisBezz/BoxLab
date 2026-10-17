@@ -142,9 +142,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/direct-topology-conformance-guard.js?v=0.36.18.741",
+      "url": "./src/direct-topology-conformance-guard.js?v=0.36.18.900",
       "target": "src/direct-topology-conformance-guard.js",
-      "sha256": "0e6c9743187ff521563e48dfae6c36f4e50cd38d8611edaf7428bf5c3841f286",
+      "sha256": "ca14052151973d942f70eafe53f00fc2b892ee724772d864a795b206a86483a9",
       "sourceVersion": "0.36.18.242"
     },
     {
@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.899",
+      "url": "./src/drawer-ui.js?v=0.36.18.900",
       "target": "src/drawer-ui.js",
-      "sha256": "c4e7ba0ae76621734d54da66d98d1f62b84a05929d1de21f09f7e80a99ceab94"
+      "sha256": "486ad15960b7caf0fe6a0ff5209122effcde229318b6a92b7e0787982cc83141"
     },
     {
       "owner": "index.html",
@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.897",
+      "url": "./src/export-as-panel.js?v=0.36.18.900",
       "target": "src/export-as-panel.js",
-      "sha256": "ecbab8e10ab12f9659a81375a282e6165d30343a5a01ab2872ac59933e0a7205",
+      "sha256": "03291674bbd0e4455980c6f3a5fbadd2398d4742f9a5296a3bae51bb88dde22d",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -329,21 +329,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.899",
+      "url": "./src/multi-object.js?v=0.36.18.900",
       "target": "src/multi-object.js",
-      "sha256": "eb4fc198487fbff0783364064f20c5d546fac343d49932fc82edf0bc7ebb77cb"
+      "sha256": "c3f086c5a84cc0b07f0b5067ca1e4ebe1dc5a501d61fb5b91881de9a7f71cbfb"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.899",
+      "url": "./src/object-management.js?v=0.36.18.900",
       "target": "src/object-management.js",
-      "sha256": "449fe393373ac0ac1fd42f7afaa4c4aff73e5e793672455d088e6d67681b8702"
+      "sha256": "ead4a0d36c05911b63f3aa99a116ae7a38dd5fd40049e3b709c0bebf2721260f"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-radial-session.js?v=0.36.18.808",
+      "url": "./src/object-radial-session.js?v=0.36.18.900",
       "target": "src/object-radial-session.js",
-      "sha256": "f464310f4773732b723183350fa5dbf4ab00b955e176c99e45db56a311778fbc"
+      "sha256": "804b0b84a1456b4aaafa5ec8ade16ca6adced7125f82fe781e790f414682af97"
     },
     {
       "owner": "index.html",
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.899",
+      "url": "./src/release-bootstrap.js?v=0.36.18.900",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.899",
+      "url": "./src/release-version.js?v=0.36.18.900",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.892",
+      "url": "./src/render-modes.js?v=0.36.18.900",
       "target": "src/render-modes.js",
-      "sha256": "7111173f57b422943927f17493f2e3df859cab4b3f7e8710fb4053704207ceca"
+      "sha256": "8de6a112ad2856a26e7749d246e908d8719db9847f27c36a180e05973654edb1"
     },
     {
       "owner": "index.html",
@@ -421,9 +421,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/scene-obj-export-238.js?v=0.36.18.741",
+      "url": "./src/scene-obj-export-238.js?v=0.36.18.900",
       "target": "src/scene-obj-export-238.js",
-      "sha256": "bf00a852c7fffff85ee1d5013e642b64fbee0487876f7f45ed591d84a5a5f5ea",
+      "sha256": "d792795ea71f78a971a95a8f2078e57590ff92e51bfb2a622df02da36f988809",
       "sourceVersion": "0.36.18.450"
     },
     {
@@ -783,9 +783,9 @@
     },
     {
       "owner": "src/direct-topology-conformance-guard.js",
-      "url": "./scene-obj-export-238.js?v=0.36.18.741",
+      "url": "./scene-obj-export-238.js?v=0.36.18.900",
       "target": "src/scene-obj-export-238.js",
-      "sha256": "bf00a852c7fffff85ee1d5013e642b64fbee0487876f7f45ed591d84a5a5f5ea",
+      "sha256": "d792795ea71f78a971a95a8f2078e57590ff92e51bfb2a622df02da36f988809",
       "sourceVersion": "0.36.18.450"
     },
     {
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.899",
+      "url": "./object-management.js?v=0.36.18.900",
       "target": "src/object-management.js",
-      "sha256": "449fe393373ac0ac1fd42f7afaa4c4aff73e5e793672455d088e6d67681b8702"
+      "sha256": "ead4a0d36c05911b63f3aa99a116ae7a38dd5fd40049e3b709c0bebf2721260f"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1189,15 +1189,15 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.892",
+      "url": "./nomad-packed-maps.js?v=0.36.18.900",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "71ee472c7a007a54956f1e887d2763c1d987c0d4af7b2d6fece02a7bf3801472"
+      "sha256": "f6d242261e77ddd59f40ba3e724d5adb89ac8ea76b8eeac666f92af7c1f35a73"
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./scene-obj-export-core.js?v=0.36.18.741",
+      "url": "./scene-obj-export-core.js?v=0.36.18.900",
       "target": "src/scene-obj-export-core.js",
-      "sha256": "cfc012b342ee55f1852f3c6133c2557bfdbf8895ae528b21d9e002e66ab4a85b"
+      "sha256": "ea1afa1297c5f2d24bad36a5cedebb97c630a3375dc92d76bd3fc33032c3f04d"
     },
     {
       "owner": "src/extrude-through-viability.js",
@@ -1828,9 +1828,9 @@
     },
     {
       "owner": "src/nomad-export-core.js",
-      "url": "./scene-obj-export-core.js?v=0.36.18.741",
+      "url": "./scene-obj-export-core.js?v=0.36.18.900",
       "target": "src/scene-obj-export-core.js",
-      "sha256": "cfc012b342ee55f1852f3c6133c2557bfdbf8895ae528b21d9e002e66ab4a85b"
+      "sha256": "ea1afa1297c5f2d24bad36a5cedebb97c630a3375dc92d76bd3fc33032c3f04d"
     },
     {
       "owner": "src/obj-facegroups-core.js",
@@ -1872,9 +1872,9 @@
     },
     {
       "owner": "src/scene-obj-export-238.js",
-      "url": "./scene-obj-export-core.js?v=0.36.18.741",
+      "url": "./scene-obj-export-core.js?v=0.36.18.900",
       "target": "src/scene-obj-export-core.js",
-      "sha256": "cfc012b342ee55f1852f3c6133c2557bfdbf8895ae528b21d9e002e66ab4a85b"
+      "sha256": "ea1afa1297c5f2d24bad36a5cedebb97c630a3375dc92d76bd3fc33032c3f04d"
     },
     {
       "owner": "src/scene-obj-export-core.js",
@@ -2450,9 +2450,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.892",
+      "url": "./nomad-export-core.js?v=0.36.18.900",
       "target": "src/nomad-export-core.js",
-      "sha256": "8c42f36ce3a5b74b48981c308c41e4a0b6d38d2e908a56dfc2f3479267334435"
+      "sha256": "1215a61c0cb7db24702d5a97f76e6b0c818bf6388269af8012fa8df8cd77379b"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2489,6 +2489,66 @@
       "target": "src/project-glb-resources.js",
       "url": "./project-glb-resources.js?v=0.36.18.899",
       "sha256": "7afa65af49793da01988893cf4b8d9d613e279607f1fd8fb94118de835258ac1"
+    },
+    {
+      "owner": "index.html",
+      "target": "src/viewport-paint.js",
+      "url": "./src/viewport-paint.js?v=0.36.18.900",
+      "sha256": "e6940f6562813f65f00a9a0a6a3fe215b6646db5d553aaee3580728f60746175"
+    },
+    {
+      "owner": "src/viewport-paint.js",
+      "target": "src/viewport-paint-core.js",
+      "url": "./viewport-paint-core.js?v=0.36.18.900",
+      "sha256": "a7bb26cb0da15e7e65d1d488b0a094c963b9f33692f7d9e940be31413c0f17ea"
+    },
+    {
+      "owner": "src/viewport-paint.js",
+      "target": "evaluations/uv-paint/paint-core.js",
+      "url": "../evaluations/uv-paint/paint-core.js?v=896",
+      "sha256": "bafdd454f09535cefad1871e83cafaea900cc1ecee49ff3070a059a36a0e1ebb"
+    },
+    {
+      "owner": "src/viewport-paint-core.js",
+      "target": "evaluations/uv-paint/paint-core.js",
+      "url": "../evaluations/uv-paint/paint-core.js?v=896",
+      "sha256": "bafdd454f09535cefad1871e83cafaea900cc1ecee49ff3070a059a36a0e1ebb"
+    },
+    {
+      "owner": "src/viewport-paint-core.js",
+      "target": "evaluations/uv-paint/stroke.js",
+      "url": "../evaluations/uv-paint/stroke.js?v=896",
+      "sha256": "f56c90f5e368220d156420a2fecac7a4060fa15ddf31174f32fff868b3499627"
+    },
+    {
+      "owner": "src/viewport-paint-core.js",
+      "target": "src/paint-resource.js",
+      "url": "./paint-resource.js?v=898",
+      "sha256": "aed7f91f7c49ca191fc09e5bb74240ce6315ecbc3cd4ee2f69be84edccfab05a"
+    },
+    {
+      "owner": "src/viewport-paint-core.js",
+      "target": "src/paint-target.js",
+      "url": "./paint-target.js?v=0.36.18.900",
+      "sha256": "be1585330297b920625a515710bd407b783087f66197a0190c32d7ca8a77ef66"
+    },
+    {
+      "owner": "src/paint-target.js",
+      "target": "src/paint-resource.js",
+      "url": "./paint-resource.js?v=898",
+      "sha256": "aed7f91f7c49ca191fc09e5bb74240ce6315ecbc3cd4ee2f69be84edccfab05a"
+    },
+    {
+      "owner": "src/paint-target.js",
+      "target": "src/boxlab-project-codec.js",
+      "url": "./boxlab-project-codec.js?v=0.36.18.899",
+      "sha256": "8e291d417d0743ac099ef660d13069b1b614200a739cd4f2d1c9fb0ad4d50a82"
+    },
+    {
+      "owner": "src/render-modes.js",
+      "target": "src/paint-target.js",
+      "url": "./paint-target.js?v=0.36.18.900",
+      "sha256": "be1585330297b920625a515710bd407b783087f66197a0190c32d7ca8a77ef66"
     }
   ]
 }

@@ -296,7 +296,7 @@ async function openBasicProject(file,output){
   multiEnabled=!!incoming.multi;
   selectedIds=new Set(incoming.selected.filter(id=>ids.has(id)));
   updateUI();
-  output.textContent='Opened .boxlab · '+incoming.objects.length+' objects · Undo history reset.'+(incoming.objects.some(o=>o.colourPaint)?' Colour paint preserved; main viewport display/editing is not available yet.':'');
+  output.textContent='Opened .boxlab · '+incoming.objects.length+' objects · Undo history reset.'+(incoming.objects.some(o=>o.colourPaint)?' Colour paint preserved; Studio / Solid / UV Image display requires matching Base UVs.':'');
  }catch(error){output.textContent='Open refused · '+(error?.message||error);}
 }
 function installProjectAudit(){

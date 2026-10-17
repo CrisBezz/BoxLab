@@ -1,3 +1,4 @@
+import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.900';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';
@@ -60,7 +61,7 @@ const xrayMaterial=new THREE.MeshStandardMaterial({color:0x9eb4cc,roughness:.78,
 const xrayHiddenWireMaterial=new THREE.MeshBasicMaterial({color:0xaec3d9,wireframe:true,transparent:true,opacity:.22,depthTest:false,depthWrite:false});
 const xrayVisibleWireMaterial=new THREE.MeshBasicMaterial({color:0xf1f6fb,wireframe:true,transparent:true,opacity:.88,depthTest:true,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
 
-function clearRenderChildren(body){[...body.children].forEach(child=>{if(child?.userData?.boxlabUVImageDispose){child.userData.boxlabUVImageDispose();}else if(child?.userData?.boxlabUVCheckerDispose){child.userData.boxlabUVCheckerDispose();}else if(child?.userData?.boxlabRenderOverlay){body.remove(child);child.material?.dispose?.();}});}
+function clearRenderChildren(body){[...body.children].forEach(child=>{if(child?.userData?.boxlabColourPaintDispose){child.userData.boxlabColourPaintDispose();}else if(child?.userData?.boxlabUVImageDispose){child.userData.boxlabUVImageDispose();}else if(child?.userData?.boxlabUVCheckerDispose){child.userData.boxlabUVCheckerDispose();}else if(child?.userData?.boxlabRenderOverlay){body.remove(child);child.material?.dispose?.();}});}
 function addWire(body,material,order=12){const overlay=new THREE.Mesh(body.geometry,material.clone());overlay.userData.boxlabRenderOverlay=true;overlay.renderOrder=order;body.add(overlay);}
 function addBackface(body){const overlay=new THREE.Mesh(body.geometry,backfaceMaterial.clone());overlay.userData.boxlabRenderOverlay=true;overlay.userData.boxlabBackfaceCue=true;overlay.renderOrder=1;body.add(overlay);}
 function frontOnly(material){
@@ -179,10 +180,12 @@ function applyMode(body){
     }
   }
   else{body.material=frontOnly(original);addBackface(body);}
+  if(['studio','solid','uvimage'].includes(mode)){const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));if(object?.colourPaint)createCommittedPaintSurface(body,object,inactive?object.mesh:bridge()?.mesh);}
 }
 
 Object.assign(globalThis.__boxlabRenderModes ||= {},{
   apply:applyMode,
+  paintVisible:()=>['studio','solid','uvimage'].includes(mode),
   refreshStudio,
   facegroupView:()=>({...facegroupView}),
   setFacegroupView(next){updateFacegroupView(next);}

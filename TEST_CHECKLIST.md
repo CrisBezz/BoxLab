@@ -7230,7 +7230,7 @@ view and continued UndoRedo; then original scene-resource/codec/COW/history inte
 - [x] Actual snapshot/UndoRedo/deletion and both ordinary Duplicate owners share committed resources; replacements isolate edits, geometry independent.
 - [x] Pool content/identity dedup,8MiB boundary, malformed schema/alpha/base64/refs/owners refuse; no unencoded paint passthrough.
 - [x] Original Save/Open/download/atomic replacement and render-failure rollback preserve resource/history state; full2487PASS/0FAIL/0skip, focused4PASS.
-- [ ] Nearby regression: lab Save/Reset/Open and continued paint/UndoRedo; main ordinary Duplicate/Undo and plain .boxlab Save/Open.
+- [x] (.899 user PASS) Nearby regression: lab Save/Reset/Open and continued paint/UndoRedo; main ordinary Duplicate/Undo and plain .boxlab Save/Open.
 
 Storage foundation only, no new main paint authoring/display. Binding opaque until
 production validity/rebinding bridge; no paint export/UV propagation/SHA-authenticated
@@ -7249,3 +7249,18 @@ frozen/modelling/brush/preview bytes retained. User898PASS protected;899 nearby 
 project device sanity pending. No new rendered/Pencil proof or main paint authoring claim.
 Documentation proof changes no tested runtime bytes. Next bounded original-owner
 selected-object paint bridge requires validity/rebinding/lifetime/refusal rules before UI.
+
+## .900 — main viewport UV Paint, device gate pending
+
+- [x] Original UV topology/codec binding; moved geometry follows unchanged UVs, names/IDs excluded; UV edits/stale/unsupported owners refuse.
+- [x] Real Three active front rays/occlusion, no-op/Redo/cancel, COW checkpoint and global history, exact project bytes.
+- [x] Async opening/display races, once-only disposal, dirty-frame uploads; original render owner active/live + inactive/locked and ordinary look restoration.
+- [x] Actual paint UI window capture/Pencil/hover/finger/palm/pressure/interruption/context loss routing adapted in Node; full2494PASS/0FAIL/0skip.
+- [ ] Native UV cube, SubD/Mirror off → File/Paint selected object → Pencil marks appear during motion; fingers orbit/pan/pinch without paint.
+- [ ] Try both brushes/settings; Done → global UndoRedo; reopen to continue; duplicate/edit leaves original paint intact.
+- [ ] Save .boxlab → reload/Open restores paint in Studio/Solid/UV Image; ordinary object Move retains paint.
+
+First single opaque512² base layer only. Seams can bleed; UV/topology edits guarded,
+not silently rebound. Painted OBJ/GLB/NOM and Join refuse pending propagation/export.
+Save .boxlab; global history50 entries, current unique pool8MiB. Device/rendering not
+inferred from Node or previous lab PASS. User899PASS protected.

@@ -1,6 +1,6 @@
 // BoxLab v0.36.18.450 — scene OBJ export polish with Safari-compatible OBJ download MIME.
 // Preserves object boundaries and global vertex offsets while embedding compact Mesh Health metadata.
-import {buildSceneOBJ} from './scene-obj-export-core.js?v=0.36.18.741';
+import {buildSceneOBJ} from './scene-obj-export-core.js?v=0.36.18.900';
 
 const VERSION='0.36.18.450';
 const baseButton=document.querySelector('#exportBaseBtn');
@@ -28,7 +28,7 @@ function handle(event){
   const objects=sceneObjects();if(!objects.length)return;
   event.preventDefault();event.stopImmediatePropagation();
   const subd=target===subdButton;
-  const result=buildSceneOBJ(objects,{subd,version:VERSION});
+  let result;try{result=buildSceneOBJ(objects,{subd,version:VERSION});}catch(error){if(status)status.textContent='OBJ export refused · '+error.message;return;}
   download(result.content,`BoxLab-v${VERSION}-${subd?'subd-scene':'base-scene'}.obj`);
   if(status){
     const p=result.preflight;

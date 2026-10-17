@@ -1,51 +1,59 @@
-# BoxLab AI Handoff — .899 / Project colour resource preservation
+# BoxLab AI Handoff — .900 / Main viewport UV Paint
 
 ## Current state — 17 October 2026
 
-CrisBezz/BoxLab main release0.36.18.899, based on37c77ab5 (.898 runtime62849d78).
-User .898 PASS: protect .boxpaint Save/Open, both maps/settings/view and continued
-Pencil/history/PNG, alongside .896/.897. Older pending-pass proof entries below are
-historical, not the current gate. .895 density remains separately pending.
-File → UV Paint Lab: https://crisbezz.github.io/BoxLab/evaluations/uv-paint/?build=899 .
-Full Node24 2487PASS/0FAIL/0skip; focused resource tests4PASS after rollback assertion.
-Runtime47136701; Node22 CI/Pages/live .899 verified below. Publishing authorized. Read docs/project-paint-resources-899.md.
+CrisBezz/BoxLab main release0.36.18.900, based on2c56d33f (.899 runtime47136701).
+User .899 PASS protects nearby lab sessions/main Duplicate/history/.boxlab, alongside
+.896/.897/.898. Historical pending gates below are not current acceptance; .895 density
+remains separate. Full Node24 2494PASS/0FAIL/0skip. Publishing authorized, proof follows.
+Read docs/viewport-paint-900.md for implementation/lifetimes/limits/tests/manual gate.
 
-## .899 scope and next step
+## .900 — actual selected-object painting
 
-Audit original synchronous scene codec and snapshot/history/manager/duplicate owners.
-Separate committed object.colourPaint resource; never append paint to native UVv3.
-Scene capture/restore and ordinary single/Multi Duplicate share read-only resources;
-new edits must checkpoint ORIGINAL history then replace captured resource/pixels (COW).
-.boxlab v2 only when paint exists; version1 bytes/layout retained for existing projects.
-Explicit colourPaintPool envelopev1 + object refv1, canonical binary transport reused
-from project GLB owner,8MiB unique raw paint budget, opaque16..1024 dimensions, strict
-schema/alpha/refs/budgets/owner validation. Identity and exact content dedup. Decode
-owns bytes and shares pool references. Original atomic Open/exact roundtrip/history reset.
-Invalid file/render failure preserve scene/history/resources. No second history/raster.
-Native UVv3 UV-only; imported GLB envelopes/image pool unchanged. Linked colour duplicates
-refuse; codec limits paint to independent native UV objects, no procedural/reference.
-Main Open explicitly reports preserved colour has no main viewport display/editing yet.
+File → Paint selected object; original Object-mode/Tool Session owner, top-centre.
+One plain visible unlocked native-UV BoxLab object, SubD/Mirror OFF,≤20k corners. Create
+UVs through ORIGINAL Mesh Health/UV Editor first. Studio/Solid/UV Image supported.
+Pencil/primary mouse paint directly in main viewport; fingers navigate. Accepted .896
+raster + BoxLab/Klecks samplers reused unchanged, single opaque512² colour layer.
+Color/size/hardness/opacity/pressure→size. Source-preview rays per dab and inactive-body
+occlusion; no UV spline/new triangulation/mesh/history/navigation kernel. Original
+Object radial lifecycle hides gizmo/cancels Paint; transform disarms via actual owner.
 
-Project transport is synchronous and canonical, not SHA-authenticated. Lab .boxpaint
-SHA integrity remains unchanged. Binding is preserved as an opaque ID, NOT validated
-against current UV/geometry by this storage build. The898 lab hash includes whole scene;
-production display must use authoritative UV/geometry validity and explicit rebinding.
-No UI creates these main resources yet, no lab→main transfer or GLB/Nomad paint export.
-Next: bounded selected-object display/authoring bridge through ORIGINAL preview/selection/
-history owners, with validity/lifetime/refusal rules before exposing it to actual objects.
-Read full scope/limits/tests in docs/project-paint-resources-899.md. Main resource
-preservation does not establish UV propagation after topology editing or paint export.
+New paint-target.js validates/binds/displays; viewport-paint-core.js handles isolated
+raster preview and ORIGINAL scene checkpoints; viewport-paint.js only armed input/UI.
+Changed stroke: capture pixels, checkpoint existing scene, replace object.colourPaint.
+COW/ordinary Duplicate/history/project v2 from899; no-op/cancel preserves Redo. Native
+global Undo/Redo exits Paint, panel clicks original buttons. Reopen to continue. Done/
+Escape keep strokes; blur/hidden/resize/lost capture/settings cancel unfinished stroke.
+Body/context/session/history loss closes/disposes; controls/capture restored. Palms
+swallowed through final Up; fingers otherwise pass to original navigation. BFCache
+cancel only; ordinary exit disposes. Dirty texture uploads once/frame, no performance claim.
 
-Shell/recovery899; manager/management/drawer/scene-codec/project-GLB binary exports/new
-paint-codec899. Lab index/controller/session loader899 to refresh scene-codec child;
-samples898/resource898/core+stroke896/export-preview897 intentionally retained. No
-modelling kernels, protected Multi-transform1.0, frozen betas, gestures or brush changes.
-Four tests cover actual Save/Open/UndoRedo/duplicate/COW/deletion/budgets and rollback;
-full2487PASS. Device checks only nearby lab Save/Open/continued paint and plain main
-Duplicate/Undo/.boxlab Save/Open. No synthetic resource fixture requested from user.
+Binding SHA256 over ORIGINAL codec's exact native-UV envelope after original UV
+signature/safety validation. Names/identity/positions excluded: transforms/deformation
+with unchanged native UV topology keep paint attached. UV/topology edits hide/refuse
+stale resources, retain bytes for Undo. No silent rebind of898/899 opaque bindings.
+Async open checks object/resource/key/context after digest. Display shared lifetime
+owner through ORIGINAL render-modes, active bridge + inactive base; locked display okay,
+editing refuses. Studio/Solid/UV Image basic unlit colour, other modes ordinary look.
 
-Read AI_WORKFLOW.md, this handoff completely, relevant checklist/history and roadmap.
-Repository is source of truth. Prior handoff preserved at main569d4e7e:
+Original export mesh resolver refuses painted OBJ/GLB/NOM until flattened export exists;
+Quick OBJ catches refusal before legacy handler. Save .boxlab instead. Original Join
+refuses painted inputs pending propagation. .boxlab8MiB unique current raw paint/32MiB
+file budgets retained; history original50 entries (~50MiB paint for50 distinct commits,
+plus existing scene/browser/GPU), not lab6. Main authoring/display512² only. No layers,
+imported texture base, PBR, seam stitching/island masks/world-radius/export paint claim.
+Next: DEVICE feedback on actual painting/navigation/history/persistence; then flatten
+colour through ORIGINAL GLB/NOM owners, no unrelated UV utilities or duplicate kernel.
+
+Seven new tests + all2494 pass. Real Three/raster/history/codec/render and actual paint
+UI routing adapted in Node, not rendered/iPad proof. Prior cloud WebGL unavailable.
+.741 exact loader pin assertion now uses reviewed contract, keeps shell/parent equality.
+Cache graph900 for changed owners/parents; original codec899/resource898/brush896 retained.
+Protected Multi-transform1.0, frozen betas, modelling algorithms/gestures unchanged.
+
+Read AI_WORKFLOW.md, this handoff completely, relevant checklist/history/roadmap.
+Repository authoritative; prior full historical handoff at main569d4e7e:
 https://github.com/CrisBezz/BoxLab/blob/569d4e7e09d34e043bae7cd1038b9034c31823a7/AI_HANDOFF.md .
 
 ## .898 — paint resource v1 and lab Save/Open; .897 PASS, 2026-10-17
@@ -143,10 +151,10 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-.898 user PASS is protected. .899 establishes resource preservation only. Next use
-original selected-object UV geometry/history owners for the bounded paint bridge,
-explicit validity/rebinding and lifetime/refusals before production exposure. Keep
-backend replaceable; no second mesh/history/gesture kernel or unrelated UV utilities.
+.899 user PASS protected. .900 actual viewport paint device gate: native UV cube,
+File/Paint selected, Pencil/live colour/finger navigation, Done/global UndoRedo,
+.boxlab reload/Open, ordinary duplicate/COW. Then flattened colour export through
+ORIGINAL GLB/NOM owners; existing refusal must remain until exact pixels preserved.
 
 ## Protected interaction and modelling baseline
 

@@ -10982,3 +10982,23 @@ frozen/modelling/brush/preview bytes retained. User898PASS protected;899 nearby 
 project device sanity pending. No new rendered/Pencil proof or main paint authoring claim.
 Documentation proof changes no tested runtime bytes. Next bounded original-owner
 selected-object paint bridge requires validity/rebinding/lifetime/refusal rules before UI.
+
+## .900 — main viewport UV Paint; .899 user PASS — 2026-10-17
+
+Audit2c56d33f original native UV preview/raster/scene history/resource/render/input
+owners. File Paint selected object, actual main viewport, one plain native UV object,
+SubD/Mirror off≤20k corners. Original top-centre Tool Session/transform disarm/radial
+lifecycle. Reuse896 raster + both samplers unchanged; opaque512², Pencil paints/fingers
+navigate, occlusion/surface rays, one dirty upload/frame. Changed stroke checkpoints
+original scene then COW resource; UndoRedo original/exits Paint. Async UV-envelope binding
+uses original codec/signature; ordinary movement/deformation follows unchanged UVs,
+UV/topology changes hide/refuse stale. Preview/body/context/disposal/capture/controls/
+palm/interruption guards. Original render owner active/live + inactive/locked display
+in Studio/Solid/UV Image. Main .boxlab v2 persistence through899. Original export resolver
+now refuses painted OBJ/GLB/NOM rather than dropping paint; Quick OBJ catches; Join
+refuses pending resource propagation. No PBR/layers/imported paint base/seam-safe/export
+paint claim. Seven new tests; full2494PASS/0FAIL/0skip, no browser/Pencil proof inferred.
+Historical741 pin test uses reviewed contract and retains shell/dynamic equality.
+Read docs/viewport-paint-900.md. User899PASS protected;900 device gate pending.
+Next hands-on actual paint, then flattened colour export through original owners.
+Publication proof follows; protected Multi1.0/frozen/modelling/brush bytes retained.

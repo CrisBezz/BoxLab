@@ -8,6 +8,7 @@ export function safeOBJName(value,index=0){
   return clean||`Object ${index+1}`;
 }
 export function resolveExportMesh(object,subd=false){
+  if(object?.colourPaint)throw Error('UV Paint export is not available yet; Save .boxlab to preserve paint');
   let mesh=object?.mesh?.clone?object.mesh.clone():object?.mesh;
   if(!mesh)return null;
   if(subd)mesh=subdivide(mesh,Math.max(1,Math.min(4,Number(object.settings?.subdLevel||1))));
