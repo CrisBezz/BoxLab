@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.892",
+      "url": "./src/export-as-panel.js?v=0.36.18.897",
       "target": "src/export-as-panel.js",
-      "sha256": "22089972588a0e0b6ebbc522219fd2a79df15e6af2b14af79d292c2ed0227cc1",
+      "sha256": "ecbab8e10ab12f9659a81375a282e6165d30343a5a01ab2872ac59933e0a7205",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.896",
+      "url": "./src/release-bootstrap.js?v=0.36.18.897",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.896",
+      "url": "./src/release-version.js?v=0.36.18.897",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },

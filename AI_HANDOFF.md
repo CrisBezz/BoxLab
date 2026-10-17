@@ -2,18 +2,13 @@
 
 ## Current state — 17 October 2026
 
-Repository CrisBezz/BoxLab, main. Release0.36.18.896 implements the isolated brush
-comparison agreed in docs/uv-paint-integration-audit-2026-10-17.md. Main app adds a
-File → UV Paint Lab link opening a separate tab. Lab URL:
-https://crisbezz.github.io/BoxLab/evaluations/uv-paint/?build=896 .
-
-Base before this build: audit569d4e7e09d34e043bae7cd1038b9034c31823a7;
-previous runtime895=6b1e003324e5e883d8a0f4625a1e69ba0336fde7.
-Local full Node24 and Node22 CI2474PASS/0FAIL/0skip; Pages/live verified below.
-Runtime release81871e11; rendered/iPad acceptance remains pending.
-User .894 PASS remains protected; .895 density gate remains pending. TexturePaint
-feedback “brush needs work but promising” is qualitative, not blanket trial acceptance.
-No .896 device PASS is inferred. User authorizes ongoing pushing/publishing.
+CrisBezz/BoxLab main release0.36.18.897: UV preview winding repair following user896 PASS.
+File → UV Paint Lab opens https://crisbezz.github.io/BoxLab/evaluations/uv-paint/?build=897 .
+Base53abe68b3a0e252afda6f79f25f59851ad3d6a7e; prior runtime896=81871e11.
+Local Node24 full2477PASS/0FAIL/0skip;897 CI/Pages/live verification pending at preparation.
+User896 PASS protects brush/Pencil/settings/navigation/history/PNG baseline EXCEPT reported
+inward paint triangles.897 fixes that preview-specific exception; no897 device PASS yet.
+Earlier894 protected;895 density pending. Ongoing publish authorization retained.
 
 Read AI_WORKFLOW.md completely, this handoff completely, relevant TEST_CHECKLIST,
 recent DEV_HISTORY and ROADMAP before code. Repository is authoritative. This file
@@ -22,6 +17,37 @@ https://github.com/CrisBezz/BoxLab/blob/569d4e7e09d34e043bae7cd1038b9034c31823a7
 All earlier chronology, failures, acceptance and publication evidence remain in
 DEV_HISTORY/TEST_CHECKLIST and git. Do not treat historical pending-gate paragraphs
 as overriding later explicit PASS or current state.
+
+## .897 — UV preview winding repair; .896 brush PASS, 2026-10-17
+
+User .896 PASS; only reported issue paint mesh normals not consistently outward.
+Protect accepted brush comparison/Pencil/settings/navigation/paired history/PNG workflow;
+normal orientation is the explicit exception, not a blanket896 failure or895 PASS.
+Audit main53abe68b and original primitive/projection/export preview owners. Source sphere
+and cube faces are outward, but projected Earcut triangles lose polygon winding:
+original sample sphere240/528 triangles inward; cube6/12 inward. Recomputed normals or
+DoubleSide cannot repair picking/culling orientation. Root is existing triangulateFace.
+Add preserveFaceWinding option in SAME triangulation owner, enabled ONLY by
+buildUVPreviewGeometry. Compare signed projected polygon area with each triangle and
+swap two local triangle indices when opposite. Original face winding, including deliberate
+reversed/imported surfaces, is preserved; no convex-centre heuristic/new triangulator,
+source mesh/UV mutation or general normals repair command. Normals recomputed by original
+geometry builder. Preview checker/image consumers also gain correct source winding.
+Ordinary editableToGeometry/GLB file export keeps original default false; native NOM,
+UV storage, brush raster/strokes/history/input and frozen/protected modelling unchanged.
+Known ordinary export winding behavior is NOT repaired or claimed fixed in this scope.
+After proper source winding, plane temporary display uses +X90 instead of896 -X90.
+Three regressions cover EVERY sphere/cube triangle+normal, real front-sided raycasts from
+six external directions/near hit, plane front, concave tilted/reversed polygon winding,
+exact position/UV corner correspondence/read-only source and unchanged ordinary export
+path plus triangle-corner sets. Full Node24 **2477PASS/0FAIL/0skip**.
+Reviewed shell/recovery/export-parent897 and lab index/lab-loader/sample897; shared brush/
+curve/core896 and native/export children892 retained. Main exporter internal stamp892
+intentionally distinct from loader897. No blind all-module repin. Previous browser WebGL
+limitation unchanged; device897 winding confirmation pending, no897 PASS inferred.
+Next: orbit sphere/cube, paint around all sides; plane visible; switch brushes/UndoRedo.
+Then resume paint resource/codec/COW/global-history design after chosen-brush feedback.
+Publication verification follows; no layered or persistent painting claim.
 
 ## .896 scope / owners
 
@@ -35,7 +61,7 @@ No Klecks history/selection/editor/gesture/Parcel owner imported. TexturePaint o
 trial at evaluations/texturepaint remains unchanged; not a production dependency.
 
 Lab sample Sphere/Cube/Plane come from original primitive-factory and native UV projection
-owners. It loads original export-as-panel892 ONLY in the separate document to call
+owners. It loads original export-as-panel897 (internal stamp892) ONLY in the separate document to call
 buildUVPreviewGeometry (same authoritative triangulation/corner mapping). No main.js,
 manager, scene history or modelling input loaded there. Main HTML loads no paint modules;
 new File link only. Preserve existing module pins, not blanket shell-version repinning.
@@ -58,9 +84,8 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-First obtain .896 Pencil feel comparison: Demo and manual strokes; switch candidates;
-pressure/size/hardness/opacity; fingers orbit/pan/pinch; paired UndoRedo/cancel; Cube/Plane
-and PNG. Ask only3–6 practical checks. No synthetic fixtures for the user.
+User896 PASS recorded; confirm897 sphere/cube surfaces face outward and remain paintable
+from all sides, plus plane and paired UndoRedo. Ask only3–6 practical checks.
 After feedback, refine chosen stroke/footprint. Before editing actual BoxLab objects,
 design explicit paint resource version/codec/immutable copy-on-write history and flattened
 export. Do not divert into further UV utilities instead of proving direct3D painting.
@@ -146,7 +171,7 @@ verify remote tree against tested local tree, CI/Pages and live graph. Standing 
 authorization applies; no repeat permission. If shell git has no credentials, connected
 Git Data tools create exact blobs/tree/commit with old main parent, non-forced expected-SHA
 ref update. Check every blob matches local hash (large base64 tool stdout can truncate).
-Never publish a mismatched tree. Version896 navigation link loads no painting in main.
+Never publish a mismatched tree. The main navigation link loads no painting modules into the modelling app.
 
 ## Publication evidence
 

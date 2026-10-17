@@ -93,3 +93,14 @@ islands; split/screen sampling alone is not seam-safe projected coverage. No tex
 base, imported file support, persistent layers, appearance-preserving UV edits or generic
 painting export. Next after feedback: refine chosen stroke/footprint, then design the
 explicit paint resource/codec/COW/history transaction before production scene integration.
+
+## .897 follow-up — preview winding
+
+User896PASS protects the brush workflow, with inward sample triangles reported as the
+exception. Root reproduced in shared preview's projected triangulation, not primitive
+faces.897 preserves source polygon winding through the SAME triangle owner for preview
+only; UV/position corner correspondence retained, normals rebuilt normally. No DoubleSide
+workaround or outward heuristic. Plane display now +X90 after this correction. Normal
+GLB/native exports and paint engine unchanged. Three new regressions/full2477PASS.
+Orbit sphere/cube and paint all outer sides, then plane/switch/history.897 acceptance
+pending; see current handoff for publication proof.

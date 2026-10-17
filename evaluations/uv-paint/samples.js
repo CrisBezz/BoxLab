@@ -8,6 +8,6 @@ export function comparisonGeometry(kind,owner){
  const result=kind==='cube'?createBoxUV(object,mesh,owner.topologySignature,history):kind==='sphere'?createSphereUV(object,mesh,owner.topologySignature,history):createPlanarUV(object,mesh,owner.topologySignature,history,'xz');
  if(!result.ok)throw Error(result.reason);const geometry=owner.buildUVPreviewGeometry(mesh,object.glbPassthrough);if(!geometry)throw Error('Sample UV geometry refused');
  // BoxLab plane lies in XZ. Rotate the temporary display only to face the camera.
- if(kind==='plane')geometry.rotateX(-Math.PI/2);
+ if(kind==='plane')geometry.rotateX(Math.PI/2);
  return geometry;
 }

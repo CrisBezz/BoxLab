@@ -122,7 +122,7 @@ function faceNormal(mesh,face){
   }
   return n.lengthSq()>1e-12?n.normalize():n.set(0,1,0);
 }
-function triangulateFace(mesh,face){
+function triangulateFace(mesh,face,preserveFaceWinding=false){
   if(face.length===3)return [[face[0],face[1],face[2]]];
   const normal=faceNormal(mesh,face),ax=Math.abs(normal.x),ay=Math.abs(normal.y),az=Math.abs(normal.z);
   const points=face.map(index=>{
@@ -132,6 +132,16 @@ function triangulateFace(mesh,face){
     return new THREE.Vector2(v.x,v.y);
   });
   const tris=THREE.ShapeUtils.triangulateShape(points,[]);
+  // Earcut normalizes projected winding. Preview faces must retain the source
+  // polygon's orientation; swap triangle indices, never positions or UV corners.
+  if(preserveFaceWinding){
+    const winding=Math.sign(THREE.ShapeUtils.area(points));
+    for(const t of tris){
+      const a=points[t[0]],b=points[t[1]],c=points[t[2]];
+      const direction=Math.sign((b.x-a.x)*(c.y-a.y)-(b.y-a.y)*(c.x-a.x));
+      if(winding&&direction&&direction!==winding)[t[1],t[2]]=[t[2],t[1]];
+    }
+  }
   return tris.length?tris.map(t=>t.map(local=>face[local])):[];
 }
 function normalizedFaceGroup(mesh,faceIndex){
@@ -166,7 +176,7 @@ function buildUVPreviewGeometry(mesh,payload,{materials=false}={}){
   }
   const faceMaterials=materials?faceMaterialAssignments(mesh,payload):null;
   if(materials&&!faceMaterials)return null;
-  const built=editableToGeometry(mesh,{uvs,preserveUVSeams:true,faceMaterials}),geometry=built.geometry;
+  const built=editableToGeometry(mesh,{uvs,preserveUVSeams:true,preserveFaceWinding:true,faceMaterials}),geometry=built.geometry;
   if(!built.uvRestored||geometry.index?.count!==triangles*3){geometry.dispose();return null;}
   return geometry;
 }
@@ -187,7 +197,7 @@ function editableToGeometry(mesh,channels={}){
     const group=normalizedFaceGroup(mesh,faceIndex);
     const key=channels.faceMaterials?(channels.materialFacegroups?JSON.stringify([group,channels.faceMaterials[faceIndex]]):channels.faceMaterials[faceIndex]):group??'__BOXLAB_UNGROUPED__';
     if(!buckets.has(key))buckets.set(key,{name:group,materialIndex:channels.faceMaterials?.[faceIndex],triangles:[]});
-    for(const tri of triangulateFace(mesh,face))buckets.get(key).triangles.push({tri,faceIndex});
+    for(const tri of triangulateFace(mesh,face,channels.preserveFaceWinding===true))buckets.get(key).triangles.push({tri,faceIndex});
   }
 
   let uvComplete=Array.isArray(cornerUVs)&&cornerUVs.length===mesh.faces.length;

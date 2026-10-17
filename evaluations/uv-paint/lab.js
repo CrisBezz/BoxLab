@@ -2,10 +2,10 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {createPaintComparison,brushSettings,topDownPixels} from './paint-core.js?v=896';
 import {createStroke} from './stroke.js?v=896';
-import {comparisonGeometry} from './samples.js?v=896';
+import {comparisonGeometry} from './samples.js?v=897';
 // This standalone document loads the original export geometry owner, not main.js,
 // scene management or modelling input. Its export controls are absent and never used.
-import '../../src/export-as-panel.js?v=0.36.18.892';
+import '../../src/export-as-panel.js?v=0.36.18.897';
 const $=id=>document.getElementById(id),canvas=$('canvas'),view=$('view'),status=$('status');
 const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(38,1,.01,100),raycaster=new THREE.Raycaster();
 let renderer,controls,documentPaint,textures=[],mesh,selected=0,mode='paint',stroke=null,disposed=false,demoToken=0,metrics=[],dimensions='';

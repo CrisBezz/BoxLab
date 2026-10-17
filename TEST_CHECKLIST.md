@@ -7165,3 +7165,15 @@ acceptance remains pending, not passed by browser inspection or Node adapters. N
 of an iPad WebGL failure; this is the observed cloud-browser limitation. No896 user PASS.
 Documentation proof changes no tested runtime bytes. Next: user paired-brush comparison,
 then selected refinement/resource/codec/global-history work per docs/uv-paint-lab-896.md.
+
+## .897 — preview winding; .896 user PASS
+
+- [x] User896PASS protects brush/Pencil/settings/navigation/paired UndoRedo/PNG workflow; reported paint normals explicitly excepted.895 density acceptance not inferred.
+- [x] Every Sphere/Cube preview triangle and normal outward; real front-sided raycasts from six directions hit near exterior. Plane front remains visible.
+- [x] Tilted concave/reversed polygons retain SOURCE winding and exact UV/position pairing; no source mutations, no convex-centre outward guess.
+- [x] Ordinary export default path/geometry unchanged; same triangle corner sets. Full2477PASS/0FAIL/0skip; brush/kernel/frozen/protected code retained.
+- [ ] Orbit Sphere/Cube through all sides: no inside-out/missing patches; Pencil paint stays on visible outer surface.
+- [ ] Plane visible; paired brush switching and UndoRedo still work.
+
+Winding fix is shared UV PREVIEW only. General file-export winding repair remains out
+of scope; preserve intentionally reversed source polygons. No897 device PASS yet.

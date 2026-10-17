@@ -4,6 +4,37 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## .897 — UV preview winding repair; .896 brush PASS, 2026-10-17
+
+User .896 PASS; only reported issue paint mesh normals not consistently outward.
+Protect accepted brush comparison/Pencil/settings/navigation/paired history/PNG workflow;
+normal orientation is the explicit exception, not a blanket896 failure or895 PASS.
+Audit main53abe68b and original primitive/projection/export preview owners. Source sphere
+and cube faces are outward, but projected Earcut triangles lose polygon winding:
+original sample sphere240/528 triangles inward; cube6/12 inward. Recomputed normals or
+DoubleSide cannot repair picking/culling orientation. Root is existing triangulateFace.
+Add preserveFaceWinding option in SAME triangulation owner, enabled ONLY by
+buildUVPreviewGeometry. Compare signed projected polygon area with each triangle and
+swap two local triangle indices when opposite. Original face winding, including deliberate
+reversed/imported surfaces, is preserved; no convex-centre heuristic/new triangulator,
+source mesh/UV mutation or general normals repair command. Normals recomputed by original
+geometry builder. Preview checker/image consumers also gain correct source winding.
+Ordinary editableToGeometry/GLB file export keeps original default false; native NOM,
+UV storage, brush raster/strokes/history/input and frozen/protected modelling unchanged.
+Known ordinary export winding behavior is NOT repaired or claimed fixed in this scope.
+After proper source winding, plane temporary display uses +X90 instead of896 -X90.
+Three regressions cover EVERY sphere/cube triangle+normal, real front-sided raycasts from
+six external directions/near hit, plane front, concave tilted/reversed polygon winding,
+exact position/UV corner correspondence/read-only source and unchanged ordinary export
+path plus triangle-corner sets. Full Node24 **2477PASS/0FAIL/0skip**.
+Reviewed shell/recovery/export-parent897 and lab index/lab-loader/sample897; shared brush/
+curve/core896 and native/export children892 retained. Main exporter internal stamp892
+intentionally distinct from loader897. No blind all-module repin. Previous browser WebGL
+limitation unchanged; device897 winding confirmation pending, no897 PASS inferred.
+Next: orbit sphere/cube, paint around all sides; plane visible; switch brushes/UndoRedo.
+Then resume paint resource/codec/COW/global-history design after chosen-brush feedback.
+Publication verification follows; no layered or persistent painting claim.
+
 ## .896 — isolated UV Paint Lab, 2026-10-17
 
 User /nextbuild after selective-reuse audit. Base main569d4e7e; build896 adds File link
