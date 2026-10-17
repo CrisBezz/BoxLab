@@ -1,3 +1,4 @@
+import {preparedPaintImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.901';
 import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.892';
 import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.892';
@@ -123,14 +124,14 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
  const images=[],imageIndices=new Map(),imageIdentity=createNomadImageIdentity();
  for(const [index,object] of (objects||[]).entries()){
   if(object?.kind==='reference'||object?.visible===false)continue;
-  const editable=resolveExportMesh(object,subd);if(!editable?.vertices?.length||!editable?.faces?.length)continue;
+  const editable=resolveExportMesh(paintExportGeometryObject(object),subd);if(!editable?.vertices?.length||!editable?.faces?.length)continue;
   const payload=object.glbPassthrough,stored=payload?.uvCorners;let cornerUVs=null;
   if(Array.isArray(stored)&&stored.some(Boolean)){
    if(subd||typeof topologySignature!=='function'||!payload.uvTopologySignature||payload.uvTopologySignature!==topologySignature(editable))throw Error('NOMAD UV export requires matching Base geometry; disable evaluated modifiers or undo topology edits');
    if(stored.length!==editable.faces.length||stored.some((uv,fi)=>!Array.isArray(uv)||uv.length!==editable.faces[fi].length||uv.some(p=>!Array.isArray(p)||p.length!==2||p.some(v=>!Number.isFinite(v)||!Number.isFinite(Math.fround(v))))))throw Error('NOMAD UV channel is incomplete or invalid');
    cornerUVs=stored;uvObjects++;
   }
-  const source=nativeMaterialMaps(payload);let materialIndex=null;
+  const paint=preparedPaintImage(object),source=paint?{factor:[1,1,1,1],material:{pbrMetallicRoughness:{roughnessFactor:1,metallicFactor:0}},maps:{color:paint}}:nativeMaterialMaps(payload);let materialIndex=null;
   if(source){
    if(!cornerUVs)throw Error('NOMAD image maps require a complete matching Base UV channel');
    const material=clone(base.json.materials?.[0]||{});material.textures={};
@@ -153,7 +154,7 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
      imageIndex=images.length;imageIndices.set(image,imageIndex);
      images.push({length:choice.data.length,offset,type:choice.mime});parts.push(choice.data);offset+=choice.data.length;
     }
-    material.textures[slot]=nativeTexture(imageIndex,String(map.name||payload.images[choice.imageIndex]?.definition?.name||(slot+' '+(imageIndex+1)+(choice.mime==='image/png'?'.png':'.jpg'))));
+    material.textures[slot]=nativeTexture(imageIndex,String(map.name||payload.images?.[choice.imageIndex]?.definition?.name||(slot+' '+(imageIndex+1)+(choice.mime==='image/png'?'.png':'.jpg'))));
    }
    const aligned=Math.ceil(offset/4)*4;if(aligned>offset){parts.push(new Uint8Array(aligned-offset));offset=aligned;}
    material.factorColor=[...source.factor.slice(0,3)];material.color=source.maps.color?[1,1,1]:[...source.factor.slice(0,3)];material.opacity=1;material.factorOpacity=1;material.material_type='opaque';

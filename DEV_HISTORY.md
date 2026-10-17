@@ -11017,3 +11017,21 @@ PASS protected;900 actual viewport/Pencil/navigation/project device gate pending
 No rendered/iPad proof inferred from Node adapters or previous cloud WebGL limitation.
 Documentation proof changes no tested runtime. Next: device feedback, then flattened
 paint export through original GLB/NOM owners; painted export refusal remains meanwhile.
+
+## .901 — painted native Nomad / GLB export; .900 user PASS — 2026-10-17
+
+Audit50bcdb2a: original native image/material/UV/container writer and GLB patch already
+supply handoff; adapt export-local512² colour through them. New paint-export capture/
+UV binding guard/private prepared snapshot association, owned geometry/UV/pixels before
+await; no fake imported provenance/stored nativeUV material mutation. Existing PNG owner
+adds losslessRGB8/sRGB and reuses CRC/zlib; scalar remains unchanged. Rows follow native/
+glTF UV-v0-first convention, no Lab human PNG flip. Native white-factor colour image,
+original independent UV/polygon buffers/image pool24MiB/dedup/offset/header. GLB embedded
+PNG/neutral material/clamp sampler/original groups/seams/loader verification; painted
+path enables existing source-winding flag only. Nonpainted path retained. Painted OBJ/
+Join/raw unprepared sync export still refuse; .boxlab remains editable paint project.
+Six focused tests PASS: exact PNG/UV/material/geometry/dedup/winding/snapshots/refusals
+and both real File download actions. Full Node24 2500PASS/0FAIL/0skip; publication proof follows. User900PASS
+protects viewport/Pencil/history/persistence/COW; no new Nomad/device acceptance inferred.
+Read docs/paint-export-901.md. Next export feedback, then layer/compositor resource plan
+through original owners. No rendered/PBR/seam-safe/imported paint-base/NOM import claim.

@@ -7256,9 +7256,9 @@ selected-object paint bridge requires validity/rebinding/lifetime/refusal rules 
 - [x] Real Three active front rays/occlusion, no-op/Redo/cancel, COW checkpoint and global history, exact project bytes.
 - [x] Async opening/display races, once-only disposal, dirty-frame uploads; original render owner active/live + inactive/locked and ordinary look restoration.
 - [x] Actual paint UI window capture/Pencil/hover/finger/palm/pressure/interruption/context loss routing adapted in Node; full2494PASS/0FAIL/0skip.
-- [ ] Native UV cube, SubD/Mirror off → File/Paint selected object → Pencil marks appear during motion; fingers orbit/pan/pinch without paint.
-- [ ] Try both brushes/settings; Done → global UndoRedo; reopen to continue; duplicate/edit leaves original paint intact.
-- [ ] Save .boxlab → reload/Open restores paint in Studio/Solid/UV Image; ordinary object Move retains paint.
+- [x] (.900 user PASS) Native UV cube, SubD/Mirror off → File/Paint selected object → Pencil marks appear during motion; fingers orbit/pan/pinch without paint.
+- [x] (.900 user PASS) Try both brushes/settings; Done → global UndoRedo; reopen to continue; duplicate/edit leaves original paint intact.
+- [x] (.900 user PASS) Save .boxlab → reload/Open restores paint in Studio/Solid/UV Image; ordinary object Move retains paint.
 
 First single opaque512² base layer only. Seams can bleed; UV/topology edits guarded,
 not silently rebound. Painted OBJ/GLB/NOM and Join refuse pending propagation/export.
@@ -7279,3 +7279,16 @@ PASS protected;900 actual viewport/Pencil/navigation/project device gate pending
 No rendered/iPad proof inferred from Node adapters or previous cloud WebGL limitation.
 Documentation proof changes no tested runtime. Next: device feedback, then flattened
 paint export through original GLB/NOM owners; painted export refusal remains meanwhile.
+
+## .901 — painted native NOM / GLB export, device gate pending
+
+- [x] Shared PNG packaging: exactRGB8/sRGB/opaque pixels/rows/CRC/zlib/source ownership; existing scalar tests retained.
+- [x] Actual native image/material/header/UV/polygon bytes and dedup; actual GLB exporter/loader/PNG/UV/white factors/painted source winding.
+- [x] Geometry/UV/pixel capture before await; stale/Base/unsupported refusals; raw synchronous and OBJ safeguard retained.
+- [x] Actual File NOMAD and GLB actions download paint, report colour count and restore buttons; six focused checks PASS; full Node24 2500PASS/0FAIL/0skip.
+- [ ] Paint asymmetric colours/marks, Done → File NOMAD → open in Nomad: compare placement/orientation/colour.
+- [ ] Repeat GLB+Base; painted duplicate retains its own colour/UVs alongside original.
+- [ ] Continue BoxLab paint/Undo and .boxlab Save/Open after exports; original resource remains editable.
+
+Flattened colour only in NOM/GLB. .boxlab retains editable paint resource; no layer/
+brush-history/PBR expansion/seam-safe/NOM import claim. .900 device PASS protected.
