@@ -1,15 +1,50 @@
-# BoxLab AI Handoff — .893 Pack UV Islands
+# BoxLab AI Handoff — .894 Sphere UVs (Y)
 
 ## Current state — 2026-10-17
-CrisBezz/BoxLab main build0.36.18.893; live https://crisbezz.github.io/BoxLab/.
-Current runtimebbc0e4b20d55a47fbac9fa3daaa1b4a0c226a3e0/main893; CI/Pages/live verified.
-User .892 PASS protects scalar/map references, Pencil/navigation and UV/project/export repeat.
-.893 local/Node22 CI2452/0/0; packing device gate remains separate.
+CrisBezz/BoxLab main build0.36.18.894; live https://crisbezz.github.io/BoxLab/.
+Previous verified runtime bbc0e4b20d55a47fbac9fa3daaa1b4a0c226a3e0 (.893); .894 publication follows.
+User .893 PASS protects packing, framing, history, Pencil/navigation and UV/project/export repeat.
+.894 local2457/0/0; Sphere device gate pending. .893 user PASS recorded.
 User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .894 — Sphere UVs (Y), 2026-10-17
+
+User .893 PASS protects Pack all, framing/selection, UndoRedo, project/native UV export
+and prior Pencil/navigation/map references. Audited main ccf5e0e4/runtime bbc0e4b2,
+current markers/pins and original primitive/projection/UV/history/export owners; no
+spherical UV authoring exists in current or frozen code (orbit spherical maths unrelated).
+
+Add Sphere UVs (Y) alongside original MeshHealth Planar/Box/Cylinder buttons. Extend
+SAME imported-uv-edit native projection owner and commitNativeUV transaction. Round
+sphere with two Y vertex poles and seam-aligned longitude rings, including BoxLab's
+Sphere primitive. Equirectangular longitude/latitude with 2% tile margin; deterministic
+seam through the first non-pole corner. Split UV poles per face wedge without splitting
+geometry. Replaces existing native UVs; refuses imported/resource-bearing, linked,
+procedural, locked, modifier, nonround/no-pole/invalid/degenerate/unsupported seam spans
+before history/mutation. Coordinates normalized before subtraction for huge/tiny input.
+One existing native checkpoint, copy-on-write/peer isolation, repeat no-op. No geometry,
+resource schema, exporter, pointer owner or native modelling kernel changes.
+
+Five new regressions: source identity, pole/seam/tile layout, real UndoRedo/no-op;
+4/5/12/32 radial and 2/3/8 latitude bands, translations/Y rotations and huge/tiny scales;
+Box replacement/shared peers/Pack all; actual MeshHealth context action, project codec,
+native NOM UV pool and Three GLB pole variants; context/invalid/history refusals.
+15 focused PASS; full Node24 **2457 PASS / 0 FAIL / 0 skipped**. Reviewed cache graph:
+shell/recovery/MeshHealth894 -> edit894; workspace893, inspector880, preview/render/
+native892, scalar889 unchanged. Internal MeshHealth stamp880 retained. Protected
+Multi1.0/modelling/frozen betas unchanged. Publication verification follows.
+
+Device894 pending: add Sphere -> Object MeshHealth -> UVs -> Sphere UVs (Y) -> Open
+UV Editor; check flat latitude layout, Checker and surface seam/poles. Edit with Pencil,
+Pack all, UndoRedo, pan/pinch. Save/Open .boxlab and File NOMAD Base retain UV layout.
+Equirectangular mapping intentionally distorts near poles; not equal-density unwrapping.
+Does not promise arbitrary deformed/tilted spheres, Quadball mapping, seam cutting,
+optimal packing, painting, opacity recovery, native multi-materials or NOM import.
+Next: Sphere device feedback, then audit next narrow UV authoring or painting stage.
 
 ## .893 — Pack all UV islands, 2026-10-17
 

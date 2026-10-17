@@ -204,3 +204,47 @@ export function createCylinderUV(object,mesh,topologySignature,history){
  if(uvCorners.some(face=>{let area=0;for(let i=0;i<face.length;i++){const a=face[i],b=face[(i+1)%face.length];area+=a[0]*b[1]-a[1]*b[0];}return !Number.isFinite(area)||area===0;}))return {ok:false,reason:'Cylinder projection would collapse a face'};
  return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
 }
+
+// Equirectangular projection for round spheres with vertex poles on world Y.
+// The UV pole is split per face wedge; geometry and existing export owners stay intact.
+export function createSphereUV(object,mesh,topologySignature,history){
+ const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
+ const refuse=()=>({ok:false,reason:'Sphere UVs require a round sphere with Y-axis vertex poles'});
+ const used=new Set();let magnitude=0;
+ for(const face of mesh.faces){
+  if(!Array.isArray(face)||face.length<3||new Set(face).size!==face.length)return refuse();
+  for(const id of face){const v=mesh.vertices[id];if(!Number.isInteger(id)||!v||!['x','y','z'].every(k=>Number.isFinite(v[k])))return refuse();used.add(id);magnitude=Math.max(magnitude,Math.abs(v.x),Math.abs(v.y),Math.abs(v.z));}
+ }
+ if(!magnitude)return refuse();
+ const points=new Map([...used].map(id=>{const v=mesh.vertices[id];return [id,[v.x/magnitude,v.y/magnitude,v.z/magnitude]];}));
+ let north=null,south=null;
+ for(const p of points.values()){if(!north||p[1]>north[1])north=p;if(!south||p[1]<south[1])south=p;}
+ const radius=(north[1]-south[1])/2,centre=[north[0]/2+south[0]/2,north[1]/2+south[1]/2,north[2]/2+south[2]/2];
+ if(!(radius>0)||Math.hypot(north[0]-south[0],north[2]-south[2])>radius*1e-7)return refuse();
+ const coords=new Map();let poles=0,seam=null;
+ for(const [id,p] of points){
+  const [x,y,z]=p.map((v,k)=>(v-centre[k])/radius),length=Math.hypot(x,y,z);
+  if(Math.abs(length-1)>1e-7)return refuse();
+  const pole=Math.hypot(x,z)<1e-7;
+  if(pole)poles++;
+  const angle=Math.atan2(z,x)/(2*Math.PI);if(!pole&&seam===null)seam=angle;
+  let u=(angle-(seam??0)+1)%1;if(Math.abs(u-1)<1e-14||Math.abs(u)<1e-14)u=0;
+  coords.set(id,{u,v:.5+Math.asin(Math.max(-1,Math.min(1,y)))/Math.PI,pole});
+ }
+ if(poles!==2)return refuse();
+ const uvCorners=[];
+ for(const face of mesh.faces){
+  const corners=face.map(id=>coords.get(id)),ring=corners.filter(p=>!p.pole);
+  if(ring.length<2||corners.length-ring.length>1)return refuse();
+  let min=Math.min(...ring.map(p=>p.u)),max=Math.max(...ring.map(p=>p.u));
+  const wrap=max-min>.5;
+  const us=ring.map(p=>p.u+(wrap&&p.u<.5?1:0));
+  min=Math.min(...us);max=Math.max(...us);if(max-min>.5+1e-12||max>1+1e-12)return refuse();
+  const poleU=min/2+max/2;
+  const uv=corners.map(p=>[.02+.96*(p.pole?poleU:p.u+(wrap&&p.u<.5?1:0)),.02+.96*p.v]);
+  let area=0;for(let j=0;j<uv.length;j++){const a=uv[j],b=uv[(j+1)%uv.length];area+=a[0]*b[1]-a[1]*b[0];}
+  if(Math.abs(area)<1e-14)return refuse();
+  uvCorners.push(uv);
+ }
+ return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
+}

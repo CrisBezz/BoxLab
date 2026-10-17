@@ -10634,3 +10634,39 @@ workspace/edit893, unchanged inspector880/preview/render/native892, protected Mu
 and frozenBeta7 marker all byte-match repository. All four continuity files current.
 User892 PASS protected;893 Pack all/framing/history/project/native UV device gate PENDING.
 Proof is documentation-only; tested runtime bytes unchanged.
+
+
+## .894 — Sphere UVs (Y), 2026-10-17
+
+User .893 PASS protects Pack all, framing/selection, UndoRedo, project/native UV export
+and prior Pencil/navigation/map references. Audited main ccf5e0e4/runtime bbc0e4b2,
+current markers/pins and original primitive/projection/UV/history/export owners; no
+spherical UV authoring exists in current or frozen code (orbit spherical maths unrelated).
+
+Add Sphere UVs (Y) alongside original MeshHealth Planar/Box/Cylinder buttons. Extend
+SAME imported-uv-edit native projection owner and commitNativeUV transaction. Round
+sphere with two Y vertex poles and seam-aligned longitude rings, including BoxLab's
+Sphere primitive. Equirectangular longitude/latitude with 2% tile margin; deterministic
+seam through the first non-pole corner. Split UV poles per face wedge without splitting
+geometry. Replaces existing native UVs; refuses imported/resource-bearing, linked,
+procedural, locked, modifier, nonround/no-pole/invalid/degenerate/unsupported seam spans
+before history/mutation. Coordinates normalized before subtraction for huge/tiny input.
+One existing native checkpoint, copy-on-write/peer isolation, repeat no-op. No geometry,
+resource schema, exporter, pointer owner or native modelling kernel changes.
+
+Five new regressions: source identity, pole/seam/tile layout, real UndoRedo/no-op;
+4/5/12/32 radial and 2/3/8 latitude bands, translations/Y rotations and huge/tiny scales;
+Box replacement/shared peers/Pack all; actual MeshHealth context action, project codec,
+native NOM UV pool and Three GLB pole variants; context/invalid/history refusals.
+15 focused PASS; full Node24 **2457 PASS / 0 FAIL / 0 skipped**. Reviewed cache graph:
+shell/recovery/MeshHealth894 -> edit894; workspace893, inspector880, preview/render/
+native892, scalar889 unchanged. Internal MeshHealth stamp880 retained. Protected
+Multi1.0/modelling/frozen betas unchanged. Publication verification follows.
+
+Device894 pending: add Sphere -> Object MeshHealth -> UVs -> Sphere UVs (Y) -> Open
+UV Editor; check flat latitude layout, Checker and surface seam/poles. Edit with Pencil,
+Pack all, UndoRedo, pan/pinch. Save/Open .boxlab and File NOMAD Base retain UV layout.
+Equirectangular mapping intentionally distorts near poles; not equal-density unwrapping.
+Does not promise arbitrary deformed/tilted spheres, Quadball mapping, seam cutting,
+optimal packing, painting, opacity recovery, native multi-materials or NOM import.
+Next: Sphere device feedback, then audit next narrow UV authoring or painting stage.
