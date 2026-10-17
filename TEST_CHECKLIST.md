@@ -7087,3 +7087,18 @@ protected Multi1.0 and frozenBeta7 marker all byte-match repository. All four
 continuity files current. User894 PASS protected;895 density/Pack/Pencil/history/
 project/native UV device gate PENDING. Proof changes documentation only; tested
 runtime bytes unchanged.
+
+
+## TexturePaint isolated evaluation — 2026-10-17, device gate pending
+
+- [x] Exact MIT upstream commit/source/hash/licence retained; pixel-level original row-wrap and destructive texture-reset defects reproduced.
+- [x] Adapter clips XY, sRGB bytes/falloff/pressure/opacity, immediate texture invalidation; real UndoRedo/cancel/no-op, bounded pixel/history memory and cleanup.
+- [x] Screen-space resampling raycasts actual Three sphere; no line interpolated across UV atlas; nearest front surface hit.
+- [x] Trial separate from BoxLab scene/history/resources/loaders; main .895 markers/pins and protected/frozen code unchanged. No .895 user PASS inferred.
+- [x] Five new tests; full2467PASS/0FAIL/0skip. Evaluation report records fit/limitations and authoritative production integration owners.
+- [ ] Trial: Pencil paint appears during motion; colour/radius/hardness/opacity/pressure usable, fingers orbit/pan/pinch without paint.
+- [ ] UndoRedo/cancel/Reset work; inspect sphere seam and Plane texture boundaries; report bleed or latency.
+- [ ] Download PNG has matching colours/orientation; Back to BoxLab leaves original scene unchanged.
+
+Volatile sample-mesh trial only. No layers/project/Nomad persistence, actual BoxLab
+mesh paint integration, seam stitching, world-size brush or GPU-stamping claim.

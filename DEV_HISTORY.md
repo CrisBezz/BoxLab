@@ -10740,3 +10740,41 @@ protected Multi1.0 and frozenBeta7 marker all byte-match repository. All four
 continuity files current. User894 PASS protected;895 density/Pack/Pencil/history/
 project/native UV device gate PENDING. Proof changes documentation only; tested
 runtime bytes unchanged.
+
+## TexturePaint evaluation — 2026-10-17
+
+User directs evaluation of ceramicSoda/TexturePaint for direct in-viewport Pencil
+painting with instant feedback, ultimately brushes/layers/colour controls. This is
+NOT a .895 PASS or a numbered main-app build. .895 density device gate stays pending;
+.894 and earlier accepted gates remain protected. Main shell/runtime/pins unchanged895.
+
+Audit upstream master commit3af8a61e9493ff960ff29ed429fc734335c80931 (MIT, source and
+licence retained byte-exact) and BoxLab renderer/UV geometry/preview/gesture/tool-session/
+resource/history owners. Upstream is CPU DataTexture stamping, no layer engine; confirmed
+row-wrap corruption at texture edges and destructive getTexture reset/reallocation.
+Other integration gaps: linear colour bytes, aliasing private Undo/no Redo, anonymous
+mouse listeners, frame-rate stamping, no pressure/coalescing, seam masks or persistence.
+See docs/texturepaint-evaluation-2026-10-17.md for exact findings and production plan.
+
+Add SEPARATE evaluations/texturepaint/ browser trial on sample sphere/plane; no live
+BoxLab objects, no production loader imports or app-state mutation. Reuse original
+constructor/brush/DataTexture through attributed adapter with clipped stamp blending,
+sRGB quantisation, hardness/opacity/pressure, screen-space resampling and real Three
+nearest-surface raycasts. Live texture updates during movement. Pencil paints; fingers
+use trial OrbitControls orbit/pan/pinch.512² map, radius1–64,12 Undo/Redo snapshots,
+cancel/no-op/disposal; Download PNG flattens pixels with correct top-down row order.
+Reset/reload clears volatile trial. Labels explicitly say no layers/project/Nomad save.
+No claim of actual BoxLab mesh integration, seam stitching, world-radius brush or GPU
+stamping. This separate page does NOT replace protected app gesture/history owners.
+
+Five tests reproduce upstream faults and check corrected pixels/bounds/colour/pressure/
+opacity, texture invalidation, bounded history/cancel/disposal, sampled actual sphere
+raycasts, exact upstream SHA256/licence and app isolation. Full2467PASS/0FAIL/0skip
+(Node24). Headless Chromium download returned truncated archives; rendered browser and
+iPad acceptance remain distinct. Publish evaluation + report, then verify Pages/assets.
+
+Next: evaluate Pencil feel and seams on M2; production prototype should reuse existing
+buildUVPreviewGeometry/render owner and original tool/gesture/history owners. Native
+resource v3 is UV-only: design explicit paint-resource transport/COW/codec before
+promising Save/Open or native painted exports. Preserve replaceable paint backend.
+Do not add further UV utilities in place of proving the requested 3D brush experience.
