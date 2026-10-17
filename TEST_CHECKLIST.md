@@ -7292,3 +7292,17 @@ paint export through original GLB/NOM owners; painted export refusal remains mea
 
 Flattened colour only in NOM/GLB. .boxlab retains editable paint resource; no layer/
 brush-history/PBR expansion/seam-safe/NOM import claim. .900 device PASS protected.
+
+## .901 publication verified — 2026-10-17
+
+Runtime32cca00338fc3bcd8894fb9f0c7ed9a14171c223; tested tree
+5780a931a693f41bf4d72128d48289f014cad204 matches fetched main/local exactly.
+Node22.23.3 topology CI39036938146/job117408573676 SUCCESS2500PASS/0FAIL/0skip;
+Pages39036937708 build117408575029/deploy117408682503 SUCCESS.
+Postdeployment exact live shell/version and export-panel/native-core/packed-parent/
+PNG/new paint-export graph901 plus Lab901 index/controller byte-match repository.
+Unchanged main paint/binding900 and recovery901 match. Protected Multi1.0/frozen/
+modelling/raster/input bytes retained. User900PASS protected;901 external Nomad and
+GLB colour/orientation/placement device gate pending, no rendered proof inferred.
+Documentation proof changes no tested runtime. Next device export feedback, then layer/
+compositor design through original owners; .boxlab remains editable paint project.
