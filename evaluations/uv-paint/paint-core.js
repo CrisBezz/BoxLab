@@ -1,0 +1,47 @@
+// Isolated comparison document. One opaque colour layer per candidate, not scene history.
+export const RESOLUTION=512;
+export function brushSettings(value={}){
+ const s={colour:'#e34b37',radius:10,hardness:.7,opacity:1,pressure:true,...value};
+ if(!/^#[\da-f]{6}$/i.test(s.colour)||![s.radius,s.hardness,s.opacity].every(Number.isFinite)||s.radius<1||s.radius>48||s.hardness<0||s.hardness>1||s.opacity<0||s.opacity>1||typeof s.pressure!=='boolean')throw Error('Invalid brush settings');
+ return Object.freeze(s);
+}
+export function createPaintLayer(size=RESOLUTION){
+ if(!Number.isInteger(size)||size<16||size>512)throw Error('Comparison map budget exceeded');
+ const pixels=new Uint8Array(size*size*4).fill(255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true;
+ return {
+  pixels,size,
+  begin(value){if(disposed||before)throw Error('Paint layer unavailable');settings=brushSettings(value);before=pixels.slice();coverage=new Float32Array(size*size);changed=false;},
+  stamp(u,v,pressure=1){
+   if(disposed||!before||![u,v,pressure].every(Number.isFinite)||u<0||u>1||v<0||v>1)return false;
+   const p=settings.pressure?Math.min(1,Math.max(0,pressure)):1;if(!p||!settings.opacity)return false;
+   const radius=Math.max(.35,settings.radius*p),cx=u*(size-1),cy=v*(size-1),rgb=[1,3,5].map(i=>parseInt(settings.colour.slice(i,i+2),16));let touched=false;
+   for(let y=Math.max(0,Math.floor(cy-radius-1));y<=Math.min(size-1,Math.ceil(cy+radius+1));y++)for(let x=Math.max(0,Math.floor(cx-radius-1));x<=Math.min(size-1,Math.ceil(cx+radius+1));x++){
+    const d=Math.hypot(x-cx,y-cy),edge=Math.min(1,Math.max(0,radius+.5-d));if(!edge)continue;
+    const t=Math.min(1,Math.max(0,(1-d/radius)/Math.max(.00001,1-settings.hardness))),falloff=t*t*(3-2*t);
+    const a=settings.opacity*edge*(d/radius<=settings.hardness?1:falloff),at=x+y*size;if(a<=coverage[at])continue;coverage[at]=a;
+    for(let k=0;k<3;k++){const i=at*4+k,next=Math.round(before[i]*(1-a)+rgb[k]*a);if(pixels[i]!==next){pixels[i]=next;touched=true;}}
+   }
+   if(touched){dirty=true;changed=true;}return touched;
+  },
+  finish(cancel=false){if(!before)return false;const did=changed;if(cancel&&changed){pixels.set(before);dirty=true;}before=coverage=settings=null;changed=false;return !cancel&&did;},
+  restore(data){if(disposed||before||!(data instanceof Uint8Array)||data.length!==pixels.length)throw Error('Invalid paint snapshot');pixels.set(data);dirty=true;},
+  consumeDirty(){const was=dirty;dirty=false;return was;},
+  dispose(){if(disposed)return;this.finish(true);disposed=true;pixels.fill(255);},
+  get drawing(){return !!before;}
+ };
+}
+export function createPaintComparison(size=RESOLUTION,limit=6){
+ if(!Number.isInteger(limit)||limit<1||limit>6)throw Error('History budget exceeded');
+ const layers=[createPaintLayer(size),createPaintLayer(size)],undo=[],redo=[];let before=null,disposed=false;
+ function snapshot(){return layers.map(l=>l.pixels.slice());}
+ function restore(s){layers.forEach((l,i)=>l.restore(s[i]));}
+ return {layers,
+  begin(settings){if(disposed||before)throw Error('Comparison unavailable');const valid=brushSettings(settings);before=snapshot();layers.forEach(l=>l.begin(valid));},
+  finish(cancel=false){if(!before)return false;const changed=layers.map(l=>l.finish(cancel)).some(Boolean);if(changed){undo.push(before);if(undo.length>limit)undo.shift();redo.length=0;}before=null;return changed;},
+  undo(){if(disposed||before||!undo.length)return false;redo.push(snapshot());restore(undo.pop());return true;},
+  redo(){if(disposed||before||!redo.length)return false;undo.push(snapshot());restore(redo.pop());return true;},
+  dispose(){if(disposed)return;this.finish(true);disposed=true;undo.length=redo.length=0;layers.forEach(l=>l.dispose());},
+  get state(){return {drawing:!!before,undo:undo.length,redo:redo.length};}
+ };
+}
+export function topDownPixels(layer){const out=new Uint8ClampedArray(layer.pixels.length),stride=layer.size*4;for(let y=0;y<layer.size;y++)out.set(layer.pixels.subarray(y*stride,(y+1)*stride),(layer.size-1-y)*stride);return out;}

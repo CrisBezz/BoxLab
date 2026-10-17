@@ -7135,3 +7135,18 @@ one colour layer; benchmark adapted Klecks vs simple BoxLab brush before live in
 No upstream source imported, no runtime/pin/version/frozen changes; .895 remains live.
 No new hands-on test required for this documentation-only audit. Existing device gates
 remain pending; user feedback is qualitative. Full report carries integration/acceptance plan.
+
+## .896 UV Paint Lab — acceptance pending
+
+- [x] Original BoxLab primitive/projection/UV geometry builder and actual Three ray hits for Sphere/Cube/Plane; no duplicate triangulator.
+- [x] Exact colour/pressure size/opacity cap/clipping/PNG rows, paired bounded history, no-op/Redo/cancel/disposal.
+- [x] Screen samplers: subdivision parity within1e-12, Klecks curve tail/finite pressure/dab cap; every emitted dab raycast, no UV spline.
+- [x] Actual controller movement/dirty-frame policy/Undo/lost capture, finger/palm ownership, demo cancel/blur/reset/disposal, source provenance and production isolation.
+- [x] Seven new tests; full Node24 2474PASS/0FAIL/0skip. Browser transport adapted; not rendered/Pencil proof.
+- [ ] File → UV Paint Lab; Demo then switch BoxLab round/Klecks curve and compare shapes/lag.
+- [ ] Pencil paints during movement; size/hardness/opacity/pressure→size; fingers orbit/pan/pinch without paint; paired UndoRedo and interrupted strokes restore correctly.
+- [ ] Cube and Plane visible/paintable; selected PNG has matching colour/orientation; Back to BoxLab scene stays separate.
+
+512² volatile sample layers only; reload/Reset clears them. No persistent project/native
+paint, full Klecks PenBrush/layers, seam stitching/world radius/smudge/PBR claim. .895
+density gate remains pending; qualitative TexturePaint feedback is not blanket PASS.

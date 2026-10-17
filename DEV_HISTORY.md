@@ -10811,3 +10811,31 @@ one colour layer; benchmark adapted Klecks vs simple BoxLab brush before live in
 No upstream source imported, no runtime/pin/version/frozen changes; .895 remains live.
 No new hands-on test required for this documentation-only audit. Existing device gates
 remain pending; user feedback is qualitative. Full report carries integration/acceptance plan.
+
+## .896 — isolated UV Paint Lab, 2026-10-17
+
+User /nextbuild after selective-reuse audit. Base main569d4e7e; build896 adds File link
+to separate evaluations/uv-paint/?build=896. Shared screen inputs compare BoxLab distance
+carry and attributed Klecks-derived BezierLine/PointLine/Vec2 (cc24e977), SAME new opaque
+colour raster, two512² buffers, one paired6-step UndoRedo. Original BoxLab primitives/
+Planar/Box/Sphere UVs and export-as-panel892 buildUVPreviewGeometry; no second triangulator.
+No production paint/scene/input/history/resource integration. Exact upstream source and
+MIT notice retained; no full Klecks brush/history/selection/editor/Parcel dependency.
+Pressure→size, hardness, per-stroke opacity cap, subpixel stamps; real raycast per screen
+dab, at most one texture-dirty mark/frame. CPU timings exclude GPU/frame time. Demo same
+inputs, switch candidates, cancel/lost capture/blur/resize/visibility/settings rollback,
+palm suppression/finger navigation, reset/disposal and top-down selected PNG.20MiB raw
+active paint buffer budget excluding browser/GPU/PNG,12k dabs/candidate cap.
+Seven tests plus full Node24 **2474PASS/0FAIL/0skip**. Real Three geometry/raycast/raster,
+adapted controller Canvas/WebGL/OrbitControls; browser/iPad separate. Plane test caught
+back-facing sample; rotate temporary display -X90 only. Distance parity allows1e-12
+floating roundoff, not altered source geometry. All prior semantic checks retained.
+Read docs/uv-paint-lab-896.md. Main shell/recovery896; original exporter892, MeshHealth895,
+main854 and all protected Multi/frozen/modelling owners unchanged. Existing TexturePaint
+trial intact. No layers/.boxlab/Nomad paint persistence, imported texture base, seam-safe
+projection/world radius/PBR claim.895 density and trial device gates remain pending;
+prior894PASS protected. Consolidated living handoff references exact prior193KB handoff
+in git; historical chronology/acceptance retained in DEV_HISTORY/TEST_CHECKLIST.
+Next: compare Pencil feel; refine chosen stroke/footprint, then explicit paint resource/
+codec/COW/global history before real scene integration. No896 device PASS inferred.
+Publication/CI/Pages/live proof follows separately.
