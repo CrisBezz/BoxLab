@@ -1,4 +1,4 @@
-import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.891';
+import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';
 import {applyFaceGroupColours,DEFAULT_FACEGROUP_VIEW,normaliseFacegroupView} from './facegroup-colours-core.js?v=0.36.18.547';

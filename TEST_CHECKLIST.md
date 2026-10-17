@@ -6946,7 +6946,7 @@ final graph matches890. All four continuity files current; proof changes docs on
 User889 PASS protected;890 two-independent-import/UV/project native device gate PENDING.
 
 
-## .891 UV Normal / Emissive references — device gate pending
+## .891 UV Normal / Emissive references — user PASS2026-10-17
 
 - [x] User890 PASS protects repeated-import native dedup, individual UVs and project repeat.
 - [x] Existing chooser/resolver/controller reused; optional slot list only for UV workspace, all default colour-only consumers retained.
@@ -6955,9 +6955,9 @@ User889 PASS protected;890 two-independent-import/UV/project native device gate 
 - [x] ACTUAL workspace chooser cancels Pencil preview without edit/history, keeps view/selection, existing projection and Image-off reopen.
 - [x] Supplied GLB audit resolves original normal1/1,248,872B and emissive2/2,754B; large colour still obeys original preview limit.
 - [x] Full2443PASS/0FAIL/0skip; parent/child cache graph reviewed; protected/frozen and native export behavior retained.
-- [ ] Mesh Health -> UVs -> Open UV Editor -> Image: choose Normal then Emissive; images align with UV outlines.
-- [ ] Pencil Move/Scale/Rotate + UndoRedo and pan/pinch work over chosen reference; Back to3D/reopen starts Image off.
-- [ ] Save/Open .boxlab retains available image choices; File NOMAD still exports all six supported maps correctly.
+- [x] Mesh Health -> UVs -> Open UV Editor -> Image: choose Normal then Emissive; images align with UV outlines.
+- [x] Pencil Move/Scale/Rotate + UndoRedo and pan/pinch work over chosen reference; Back to3D/reopen starts Image off.
+- [x] Save/Open .boxlab retains available image choices; File NOMAD still exports all six supported maps correctly.
 
 Raw 2D references: normal strength/emissive factor and PBR lighting are not evaluated.
 No painting/packed-channel/opacity/displacement inspection or 3D normal/emissive shading.
@@ -6973,3 +6973,20 @@ Multi1.0 and frozenBeta7 marker all byte-match repository. Initial reads precede
 deployment; final complete graph matches891. All four continuity files current.
 User890 PASS protected;891 UV Normal/Emissive/Pencil/project/native device gate PENDING.
 Proof is documentation-only; tested runtime bytes unchanged.
+
+
+## .892 UV Roughness / Metalness references — device gate pending
+
+- [x] User891 PASS protects Normal/Emissive references, Pencil/navigation/history, Image-off reopen, project/native export.
+- [x] Original chooser resolves exact packed ref: green->Roughness, blue->Metalness; no red/occlusion/name inference/factor baking/default colour-consumer change.
+- [x] Actual <=1024² decoder readback -> opaque grayscale, original pixel orientation, Offscreen/DOM fallback, no PNG/second output bitmap or source mutation.
+- [x] Bitmap closes on success/failure; scratch/output canvas resets on context/read/write/alpha/late-cancel/chooser/session cleanup.
+- [x] ACTUAL workspace grayscale under original UV projection, Pencil cancellation/view/selection, reopen and unchanged resource bytes.
+- [x] Actual supplied packed JPEG733,993B source audit, every transported1024² G/B pixel verified, original hash exact; browser visual gate separate.
+- [x] Full2447PASS/0FAIL/0skip; reviewed parent cache graph; native maths/protected/frozen owners retained.
+- [ ] UV Editor -> Image -> Roughness (G), then Metalness (B): different grayscale maps under UV outlines; Normal/Emissive still available.
+- [ ] Pencil UV edits/UndoRedo and pan/pinch work; switching maps preserves view/selection; reopening starts Image off.
+- [ ] Save/Open .boxlab retains choices and edited UVs; File NOMAD still transfers six supported maps correctly.
+
+Thumbnail raw-channel references, not PBR lighting or full-resolution numeric analysis.
+One held <=1024² preview/8MB source; temporary scalar bitmap/canvas/readback bounded.

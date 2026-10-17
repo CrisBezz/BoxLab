@@ -5,9 +5,9 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.741';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.891';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.892';
 
-const VERSION='0.36.18.891';
+const VERSION='0.36.18.892';
 const panel=document.querySelector('#exportAsPanel');
 const nameInput=document.querySelector('#exportFileName');
 const formatButtons=[...document.querySelectorAll('#exportFormat [data-export-format]')];

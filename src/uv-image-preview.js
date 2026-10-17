@@ -1,5 +1,5 @@
 // Read-only references to retained embedded images; default callers stay colour-only.
-// UV workspace opts into normal/emissive references, never lighting or image edits.
+// UV workspace opts into map references, never lighting or stored image edits.
 // Shared read-only embedded UV0 image resolver; callers own material/slot policy.
 export function embeddedUVImage(payload,info,{maxBytes=8*1024*1024}={}){
  // Preview defaults stay bounded; native byte-copy export may use its 24 MB pool.
@@ -13,7 +13,7 @@ export function embeddedUVImage(payload,info,{maxBytes=8*1024*1024}={}){
  if(!mime||stored.definition?.mimeType&&stored.definition.mimeType!==mime)return null;
  return {imageIndex:texture.source,data,mime};
 }
-const mapLabels={color:'Colour',normal:'Normal',emissive:'Emissive'};
+const mapLabels={color:'Colour',normal:'Normal',emissive:'Emissive',roughness:'Roughness (G)',metalness:'Metalness (B)'};
 export function importedUVImageChoices(payload,imageOptions,slots=['color']){
  if(payload?.source!=='glb'||payload.version!==1||!Array.isArray(payload.materialIndices))return [];
  const result=[],requested=Array.isArray(slots)?[...new Set(slots)].filter(slot=>Object.hasOwn(mapLabels,slot)):[];
@@ -21,22 +21,37 @@ export function importedUVImageChoices(payload,imageOptions,slots=['color']){
   if(!Number.isInteger(materialIndex)||materialIndex<0)continue;
   const material=payload.materials?.[materialIndex];
   for(const slot of requested){
-   const info=slot==='color'?material?.pbrMetallicRoughness?.baseColorTexture:material?.[slot+'Texture'];
+   const channel=slot==='roughness'?1:slot==='metalness'?2:null;
+   const info=channel?material?.pbrMetallicRoughness?.metallicRoughnessTexture:slot==='color'?material?.pbrMetallicRoughness?.baseColorTexture:material?.[slot+'Texture'];
    if(slot!=='color'&&Object.keys(info?.extensions||{}).length)continue;
    const choice=embeddedUVImage(payload,info,imageOptions);
-   if(choice){const label=String(material.name||`Material ${materialIndex+1}`);result.push({materialIndex,...choice,...(requested.length===1&&slot==='color'?{}:{slot}),label:requested.length===1&&slot==='color'?label:label+' · '+mapLabels[slot]});}
+   if(choice){const label=String(material.name||`Material ${materialIndex+1}`);result.push({materialIndex,...choice,...(channel?{channel}:{}),...(requested.length===1&&slot==='color'?{}:{slot}),label:requested.length===1&&slot==='color'?label:label+' · '+mapLabels[slot]});}
   }
  }
  return result;
 }
 export async function decodeUVImage(choice){
  if(typeof globalThis.createImageBitmap!=='function')throw Error('Image preview is unavailable');
- const image=await globalThis.createImageBitmap(new Blob([choice.data],{type:choice.mime}),{resizeWidth:1024,resizeHeight:1024,resizeQuality:'high',imageOrientation:'from-image'});
+ const scalar=choice.channel===1||choice.channel===2;
+ const image=await globalThis.createImageBitmap(new Blob([choice.data],{type:choice.mime}),{resizeWidth:1024,resizeHeight:1024,resizeQuality:'high',imageOrientation:'from-image',...(scalar?{colorSpaceConversion:'none',premultiplyAlpha:'none'}:{})});
  if(!image.width||!image.height||image.width>1024||image.height>1024){image.close?.();throw Error('Image preview exceeds the display budget');}
- return image;
+ if(!scalar)return image;
+ let canvas,ready=false;
+ try{
+  canvas=typeof OffscreenCanvas==='function'?new OffscreenCanvas(image.width,image.height):globalThis.document?.createElement('canvas');
+  if(!canvas)throw Error('Scalar image preview is unavailable');
+  canvas.width=image.width;canvas.height=image.height;
+  const context=canvas.getContext('2d',{willReadFrequently:true,colorSpace:'srgb'});if(!context)throw Error('Scalar image preview canvas is unavailable');
+  context.drawImage(image,0,0);const pixels=context.getImageData(0,0,image.width,image.height);
+  for(let i=0;i<pixels.data.length;i+=4){if(pixels.data[i+3]!==255)throw Error('Scalar image reference requires opaque packed pixels');const value=pixels.data[i+choice.channel];pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;}
+  context.putImageData(pixels,0,0);
+  // Keep one canvas image in the existing controller, rather than encode a PNG
+  // or allocate a second bitmap. Late/canceled results use the same close hook.
+  canvas.close=()=>{canvas.width=canvas.height=1;};ready=true;return canvas;
+ }finally{image.close?.();if(canvas&&!ready)canvas.width=canvas.height=1;}
 }
 export function createUVImagePreview({changed=()=>{},decode=decodeUVImage,slots=['color']}={}){
- const emptyStatus=slots.length===1&&slots[0]==='color'?'No compatible embedded colour image.':'No compatible embedded colour, normal or emissive image.';
+ const emptyStatus=slots.length===1&&slots[0]==='color'?'No compatible embedded colour image.':'No compatible embedded image reference.';
  let choices=[],index=0,enabled=false,image=null,generation=0,status=emptyStatus;
  const release=()=>{image?.close?.();image=null;};
  function load(){

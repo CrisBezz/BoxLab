@@ -1,7 +1,7 @@
 // Nomad GLB extras use an explicit material-slot name reference, unlike core
 // glTF's texture indices. Paired user GLB/NOM files prove this convention for
 // displacement (same 16-bit PNG SHA256); never infer a slot from an image name.
-import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.891';
+import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.892';
 export function nomadDisplacementMap(payload){
  const material=payload?.meshExtras?.nomad,slot=material?.textures?.displacement;
  if(slot==null)return null;

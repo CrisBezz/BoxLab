@@ -1,15 +1,66 @@
-# BoxLab AI Handoff — .891 UV Map References
+# BoxLab AI Handoff — .892 Scalar UV References
 
 ## Current state — 2026-10-17
-CrisBezz/BoxLab main build0.36.18.891; live https://crisbezz.github.io/BoxLab/.
-Current runtime278b0042b4a1815e1765cf69edd1a2462862e669/main891; CI/Pages/live verified.
-User .890 PASS protects independent repeated imports, six native maps, UV/project repeat.
-.891 local/Node22 CI2443/0/0; preview device gate remains separate.
+CrisBezz/BoxLab main build0.36.18.892; live https://crisbezz.github.io/BoxLab/.
+Previous verified runtime278b0042b4a1815e1765cf69edd1a2462862e669/main891.
+User .891 PASS protects Normal/Emissive references, Pencil/navigation and UV/project/export repeat.
+.892 local2447/0/0; publication pending. Scalar-reference device gate remains separate.
 User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .892 — UV Editor Roughness / Metalness references, 2026-10-17
+
+User .891 PASS protects Normal/Emissive references, existing Pencil/navigation/history,
+Image-off reopen, project resources and native six-map export. Audit current main
+433c73f0/runtime278b0042 and original chooser/decoder/controller/workspace plus native
+packed-map owner. Existing native export proves glTF roughness=G and metalness=B.
+
+Extend ORIGINAL optional UV map chooser with Roughness (G) and Metalness (B), BOTH
+resolving material.pbrMetallicRoughness.metallicRoughnessTexture through the same
+embedded-image resolver. Never use red/occlusion, luminance, filenames or inferred
+images. Raw channel references: do not bake roughnessFactor/metallicFactor or simulate
+PBR shading. Only UV workspace opts into five map kinds; default base-colour consumers
+(surface/native writer) retain identical source selection/shape/behaviour.
+
+Extend SAME bounded decodeUVImage: colour/normal/emissive path unchanged. Packed
+references request existing <=1024² bitmap with colour conversion/premultiplication
+none, use one OffscreenCanvas or DOM canvas for readback, repeat G/B into RGB with
+opaque alpha, no Y flip or PNG encoding. Translucent readback refuses because Canvas
+premultiplication could lose RGB. Source bitmap closes in finally; failures reset the
+scratch canvas. Successful canvas is the single controller-held image, with close()
+resetting dimensions to1. No second output bitmap, retained conversion cache, GPU
+material change or permanent image/UV/project mutation. Bitmap + canvas + readback
+are temporary bounded allocations; inspection is a resized reference, NOT full-resolution
+lossless data analysis. Original encoded8MB guard and one held preview remain.
+
+Existing generation cancellation, slot-aware UV-refresh reuse, chooser Pencil-cancel/
+capture release/view/selection, tile/V0 projection, pan/pinch/history and Image-off
+reopen remain original. Aria label now UV image reference, matching all image choices.
+Four regressions cover exact bindings/G/B vs red/factors/default parity/guards, actual
+bounded decoder pixels and DOM fallback, context/read/write/alpha failure and late
+cleanup, ACTUAL workspace grayscale rendering/switch/Pencil/view/selection/reopen.
+Prior891 workspace test now locates its Normal/Emissive entries before the added two;
+all previous behavioural assertions retained. Full Node24 2447PASS/0FAIL/0skip.
+
+Actual supplied FULL MATERIAL.glb resolves both to image4/733,993B packed JPEG,
+SHA2563c0ec3a61999f04ee7e5e2376ebf4a4324f1c56b09caf1334523b639b3b2d9b5.
+Pillow1024² readback transport -> REAL decoder channel conversion verifies every G/B
+value in1,048,576 pixels per reference; original source hash unchanged, both source
+bitmaps closed. Browser decode/readback adapted; iPad visual gate remains separate.
+No private pixels committed or lossless/resizing-equivalence claim for browser thumbnail.
+
+Reviewed shell/recovery/MeshHealth/workspace/shared preview and surface/render/native
+parent cache graph892; native parent changes ONLY shared import pins. ScalarPNG889,
+UV maths/decoder options for existing maps, all native binary/dedup/kernel/history/
+resource/import owners, protected Multi1.0 and frozen betas retained. All four docs current.
+Device892: UV Editor -> Image -> Roughness (G), Metalness (B): separate grayscale
+references under UV outlines; Normal/Emissive still work. Pencil edits/UndoRedo/pan/
+pinch, reopen and Save/Open -> native six-map export remain intact. Next after feedback:
+audit next staged UV-authoring/packing capability; separate opacity requires source-
+complete input. No opacity/displacement/occlusion inspection, painting or NOM import.
 
 ## .891 — UV Editor Normal / Emissive references, 2026-10-17
 
@@ -1779,13 +1830,12 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Test891 UV Editor Image dropdown: Normal/Emissive reference alignment, existing
-Pencil/navigation/history/close/reopen and .boxlab/native-export continuity.
-User890 PASS protected. Default3D/base-colour/native export owners unchanged;
-8MB encoded/one1024² bitmap limit retained. Actual supplied large colour remains
-unavailable in preview, its normal/emissive references are within budget.
-After feedback audit packed-map inspection or staged UV authoring. Separate opacity
-image remains absent from supplied GLB; no invented map recovery/NOM import.
+Test892 Roughness(G)/Metalness(B) grayscale references in UV Editor Image chooser,
+Pencil/navigation/history/reopen and project/native export continuity. User891 PASS
+protects previous map references.8MB encoded/one1024² held preview retained; scalar
+scratch/readback bounded, source bytes and native export maths unchanged.
+After feedback audit next staged UV authoring/packing through existing owners.
+Separate opacity remains absent from supplied GLB; no invented recovery/NOM import.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
