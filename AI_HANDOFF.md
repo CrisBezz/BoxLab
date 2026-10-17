@@ -5,7 +5,8 @@
 CrisBezz/BoxLab main release0.36.18.898: colour resource + lab Save/Open after user897PASS.
 File → UV Paint Lab opens https://crisbezz.github.io/BoxLab/evaluations/uv-paint/?build=898 .
 Base6677ce85c3e40dd6f4da08da29c917a6b897b6e7; prior runtime897=1db5769b.
-Local Node24 full2483PASS/0FAIL/0skip;898 CI/Pages/live pending at preparation.
+Local Node24 and Node22 CI2483PASS/0FAIL/0skip;898 Pages/live verified below.
+Runtime62849d78; current main adds documentation proof without runtime changes.
 User897PASS protects preview outward winding/visible surface paint/plane/brush/history/
 navigation, alongside896PASS. No898 device PASS yet;895 density remains separate pending.
 Ongoing pushing/publishing authorization retained. Save/Open .boxpaint is a LAB session,
@@ -237,3 +238,19 @@ This verification updates documentation only; tested runtime bytes retained. Nex
 user orbit/paint sphere and cube all sides, plane/paired history sanity; then paint
 resource/codec/COW/global-history design per current roadmap. Ordinary file-export
 winding remains a separate audit item; no automatic general outward-repair promise.
+
+## .898 publication verified — 2026-10-17
+
+Runtime62849d782d40767f330adf79344c17b843bf8a34; tested tree
+4047f6d1c5ca540e14e605ca5897f6ddabb1821d matches fetched main/local exactly.
+Node22.23.3 topology CI39025253753/job117374865418 SUCCESS2483PASS/0FAIL/0skip;
+Pages39025253372 build117374867123/deploy117374959488 SUCCESS.
+Postdeployment shell/version and exact lab898 index/controller/sample/session plus
+paint-resource898 byte-match repository. Initial predeployment reads served897/404;
+final complete changed graph matches898. Main codec/native resources/export/brush core/
+winding/protected modelling and frozen beta bytes retained. User897PASS protected.
+Documentation proof changes no tested runtime bytes;898 filepicker/download/reload/
+Open/Pencil continuation gate pending, no898 device PASS inferred. No new cloud WebGL
+or Safari rendering proof. .boxpaint is a lab session, not main .boxlab/Nomad paint.
+Next: Save Paint→Reset/reload→Open Paint from Downloads, compare both results/settings/
+view and continued UndoRedo; then original scene-resource/codec/COW/history integration.

@@ -10931,3 +10931,19 @@ No layers/autosave/main .boxlab paint/global scene history/Nomad paint export cl
 Manual: paint→Save Paint; Reset/reload→Open Paint from Downloads; compare both brushes,
 settings/view, then draw/Undo/Redo and PNG. Next original scene-resource/codec/COW/history
 integration after feedback. Publication verification follows; no898 device PASS inferred.
+
+## .898 publication verified — 2026-10-17
+
+Runtime62849d782d40767f330adf79344c17b843bf8a34; tested tree
+4047f6d1c5ca540e14e605ca5897f6ddabb1821d matches fetched main/local exactly.
+Node22.23.3 topology CI39025253753/job117374865418 SUCCESS2483PASS/0FAIL/0skip;
+Pages39025253372 build117374867123/deploy117374959488 SUCCESS.
+Postdeployment shell/version and exact lab898 index/controller/sample/session plus
+paint-resource898 byte-match repository. Initial predeployment reads served897/404;
+final complete changed graph matches898. Main codec/native resources/export/brush core/
+winding/protected modelling and frozen beta bytes retained. User897PASS protected.
+Documentation proof changes no tested runtime bytes;898 filepicker/download/reload/
+Open/Pencil continuation gate pending, no898 device PASS inferred. No new cloud WebGL
+or Safari rendering proof. .boxpaint is a lab session, not main .boxlab/Nomad paint.
+Next: Save Paint→Reset/reload→Open Paint from Downloads, compare both results/settings/
+view and continued UndoRedo; then original scene-resource/codec/COW/history integration.
