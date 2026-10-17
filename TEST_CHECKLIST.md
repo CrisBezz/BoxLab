@@ -6874,7 +6874,7 @@ copy does not require rendering that image. Opacity/displacement slots remain pe
 latest opaque NOM donor confirms opacity STORAGE only, GLB name-only extras need audit.
 
 
-## .888 explicit Nomad displacement map — device gate pending
+## .888 explicit Nomad displacement map — FAIL:24MB image budget on device
 
 - [x] User887 PASS protects exact FULL MATERIAL native five-map export, Pencil UV repeat and large .boxlab Save/Open; prior885/886 reported blocker resolved for this case.
 - [x] Paired GLB/NOM explicit slot reference and same6,200,450B16-bit PNG SHA proven; metadata-only provenance fixture, no private pixels shipped.
@@ -6894,3 +6894,24 @@ compensation for import-fit/baked object scale.16-bit bytes retained exactly. Ex
 Auto/UV + identity texture transforms only. Separate opacity image is absent from this
 GLB; named-but-missing opacity is not evidence of usable pixels. Generic glTF displacement,
 transparency, native per-face materials, painting and NOM import remain later stages.
+
+
+## .889 scalar PNG encoding / native image-budget repair — device gate pending
+
+- [x] User88824MB FAIL recorded; earlier offline Pillow-encoded size estimate did not prove platform PNG output fits.887 PASS protected.
+- [x] Original converter now uses real one-channel8-bit PNG encoder with adaptive filters/CRC/zlib; no platform RGBA PNG serialization, resize, gamma or lossy compression.
+- [x] Independent Node CRC/inflate/inverse-filter checks preserve every G/B pixel, dimensions, factors/source resources; bounds/missing compression API/failure cleanup retained.
+- [x] Existing886 tests retain semantics and use actual production PNG bytes; platform encoder calls zero, DOM canvas readback fallback retained.
+- [x] ACTUAL File NOMAD six-map export at reported source byte sizes uses real production compression and fits24MB; original colour/normal/emissive/displacement bytes remain exact.
+- [x] Native24MB guard still rejects excess sources, reports sources/converted MiB + object count; no content-based dedup or increased limits implied.
+- [x] Actual user JPEG→production encoder:roughness2,035,568B/metalness1,948,291B; independent Pillow decode confirms all pixel bytes.
+- [x] Actual source assets/native pipeline audit:image payload22,557,536B/21.51MiB with2,608,288B headroom; native file22,629,956B. Browser decode/readback adapted; no device PASS inferred.
+- [x] Full local2436PASS/0FAIL/0skip; narrow cache graph and protected/frozen owners retained.
+- [ ] Reset scene; import FULL MATERIAL.glb ONCE; SubD off→File→NOMAD downloads without24MB error.
+- [ ] Nomad shows all six slots including original16-bit displacement; colour/normal/roughness/metalness/emissive alignment and saved displacement settings retained.
+- [ ] Pencil island UV edit→NOMAD and Save/Open .boxlab→NOMAD repeat normally.
+
+If overbudget remains, capture complete sources/converted/object breakdown. Multiple
+independent imports can still legitimately exceed24MB; pool dedup is buffer identity.
+No source texture reduction, displacement amplitude compensation or BoxLab geometry bake.
+Opacity and native multi-material/NOM import remain pending.

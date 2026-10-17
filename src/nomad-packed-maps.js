@@ -1,7 +1,8 @@
+import {encodeNomadScalarPNG} from './nomad-scalar-png.js?v=0.36.18.889';
 // Export-local glTF G/B unpacking. Source resources remain read-only; the original
 // native writer owns materials, UV validation, binary layout and final byte budgets.
 import {nativeMaterialMaps,buildNomadProject} from './nomad-export-core.js?v=0.36.18.888';
-const LIMIT=2048,IMAGE_LIMIT=8*1024*1024,TOTAL_LIMIT=24*1024*1024;
+const LIMIT=2048,TOTAL_LIMIT=24*1024*1024;
 function dimensions(choice){
  const a=choice.data,v=new DataView(a.buffer,a.byteOffset,a.byteLength);let width=0,height=0;
  if(choice.mime==='image/png'){
@@ -27,11 +28,6 @@ function makeCanvas(width,height){
  if(!canvas)throw Error('NOMAD map conversion is unavailable in this browser');
  canvas.width=width;canvas.height=height;return canvas;
 }
-async function pngBytes(canvas){
- const blob=typeof canvas.convertToBlob==='function'?await canvas.convertToBlob({type:'image/png'}):await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error('NOMAD map PNG encoding failed')),'image/png'));
- if(!blob||blob.type!=='image/png'||!blob.size||blob.size>IMAGE_LIMIT)throw Error('NOMAD converted map exceeds 8 MB or PNG encoding failed');
- return new Uint8Array(await blob.arrayBuffer());
-}
 export async function splitNomadPackedImage(choice){
  const {width,height}=dimensions(choice);
  if(typeof globalThis.createImageBitmap!=='function')throw Error('NOMAD map conversion is unavailable in this browser');
@@ -46,11 +42,8 @@ export async function splitNomadPackedImage(choice){
   ctx.drawImage(bitmap,0,0);bitmap.close();bitmap=null;
   const pixels=ctx.getImageData(0,0,width,height),input=pixels.data;
   for(let i=3;i<input.length;i+=4)if(input[i]!==255)throw Error('NOMAD packed maps require opaque pixels to preserve channel values');
-  const output=ctx.createImageData(width,height),result={};
-  for(const [slot,channel] of [['roughness',1],['metalness',2]]){
-   for(let i=0;i<input.length;i+=4){const value=input[i+channel];output.data[i]=value;output.data[i+1]=value;output.data[i+2]=value;output.data[i+3]=255;}
-   ctx.putImageData(output,0,0);result[slot]={name:slot+'.png',choice:{data:await pngBytes(canvas),mime:'image/png'}};
-  }
+  const result={};
+  for(const [slot,channel] of [['roughness',1],['metalness',2]])result[slot]={name:slot+'.png',choice:{data:await encodeNomadScalarPNG(input,width,height,channel),mime:'image/png'}};
   return result;
  }finally{bitmap?.close();if(canvas){canvas.width=1;canvas.height=1;}}
 }
@@ -58,18 +51,19 @@ export async function buildNomadProjectWithMaps(objects,template,{subd=false,...
  // Snapshot before the first await: edits/Undo/scene replacement during conversion
  // cannot mix geometry, UVs or factors from different scene states in the download.
  const snapshot=(objects||[]).filter(o=>o?.kind!=='reference'&&o?.visible!==false&&o?.mesh?.vertices?.length&&o?.mesh?.faces?.length).map(o=>({...o,mesh:o.mesh.clone?o.mesh.clone():structuredClone(o.mesh),settings:structuredClone(o.settings||{})}));
- const templateBytes=await template,packedMaps=new Map(),sources=new Set();let bytes=0;
+ const templateBytes=await template,packedMaps=new Map(),sources=new Set();let bytes=0,sourceBytes=0;
+ const checkBudget=()=>{if(bytes>TOTAL_LIMIT)throw Error(`NOMAD embedded images exceed 24 MB (sources ${(sourceBytes/1048576).toFixed(2)} MiB + converted ${((bytes-sourceBytes)/1048576).toFixed(2)} MiB; ${snapshot.length} objects)`);};
  for(const object of snapshot){
   const material=nativeMaterialMaps(object.glbPassthrough);
   for(const [slot,map] of Object.entries(material?.maps||{}))if(slot!=='packed'&&!sources.has(map.choice.data)){sources.add(map.choice.data);bytes+=map.choice.data.length;}
  }
- if(bytes>TOTAL_LIMIT)throw Error('NOMAD embedded images exceed 24 MB');
+ sourceBytes=bytes;checkBudget();
  for(const object of snapshot){
   const choice=nativeMaterialMaps(object.glbPassthrough)?.maps.packed?.choice;
   if(!choice||packedMaps.has(choice.data))continue;
   if(subd)throw Error('NOMAD UV export requires matching Base geometry; disable evaluated modifiers');
   const maps=await split(choice);
-  for(const slot of ['roughness','metalness']){bytes+=maps[slot]?.choice?.data?.length||0;if(bytes>TOTAL_LIMIT)throw Error('NOMAD embedded images exceed 24 MB');}
+  for(const slot of ['roughness','metalness']){bytes+=maps[slot]?.choice?.data?.length||0;checkBudget();}
   packedMaps.set(choice.data,maps);
  }
  return buildNomadProject(snapshot,templateBytes,{...options,subd,packedMaps});

@@ -10299,3 +10299,78 @@ Separate opacity texture absent from GLB despite named extras, so opacity remain
 pending. Do not guess missing pixels or declare generic glTF displacement/NOM import.
 Next:888 device feedback; then audit opacity source/baked colour alpha and native material
 semantics before adding transparency or unrelated UV painting/native per-face materials.
+
+## .888 publication verified — 2026-10-17
+
+Runtime9af5dff180f3f79e48959706ab0771e060ad6af8; tested tree
+0e0183c76e95afa06a1bfeeda85980e4a39d77c7 exactly matches fetched main.
+Actual Node22 CI38979044490/job117235309930 SUCCESS2433PASS/0FAIL/0skip;
+Pages38979043395 build/deploy SUCCESS. Fresh postdeployment live shell/manifest/recovery/
+export-panel/packed-child/native-core/new displacement-helper888, unchanged source image/
+surface helpers887/importer882, protected Multi1.0 and frozenBeta7 marker all byte-match
+repository. Initial reads preceded deployment (old887/new helper404); final graph888
+fully matches. Prior887 live audit matched main before changes. User887 PASS protected;
+888 Displacement slot/image/settings/UV/project device gate pending. Paired explicit
+binding/hash proof and actual6-map output22,511,792B recorded; original16-bit data/source
+settings retained, no physical-height compensation or BoxLab geometry bake claim.
+All four continuity docs current. This local verification note was pending publication
+when the user reported888 image-budget FAIL;889 continues that repair. No888 PASS inferred.
+
+## .889 — lossless scalar PNG encoding / .888 budget FAIL, 2026-10-17
+
+User reports888 File NOMAD failed: embedded images exceed24MB. Do not mark888 PASS.
+Audit main9af5dff1/runtime888, original packed-map preparation and24MB native pool.
+Prior offline audit used Pillow scalar PNGs in place of browser output; this did NOT
+prove the real platform-encoded files would fit. Actual browser PNG byte sizes were
+not captured, and multiple independent textured imports can also exceed source budget.
+.887 exact-file five-map/Pencil/project PASS remains protected. Keep888 displacement
+binding/schema/16-bit byte tests; repair derived encoding rather than enlarge the pool.
+
+Original splitNomadPackedImage used canvas.createImageData RGBA, repeated G/B into
+three channels plus opaque alpha, then platform convertToBlob/toBlob PNG. Scalar data
+needs only ONE8-bit channel. New small nomad-scalar-png owner encodes colour type0 PNG,
+adaptive per-row None/Sub/Up/Average/Paeth filtering, real CompressionStream('deflate')
+zlib and chunk CRCs. Standard: https://www.w3.org/TR/png-3/ and
+https://compression.spec.whatwg.org/ . Original2048² bound and8MB derived-image cap
+remain; source bytes/dimensions/G/B values unchanged. No gamma/profile/alpha chunks,
+resampling, factor baking, lossy compression or quality reduction. Encoder does not
+mutate readback/source. Removes full RGBA output scratch allocation and platform PNG
+encoder dependency; browser bitmap decode/canvas readback + finally cleanup stay original.
+CompressionStream unavailable/failure refuses clearly; no oversized RGBA fallback.
+
+Native24MB aggregate guard stays ACTIVE. Async preparation now reports source-image MiB,
+converted-map MiB and visible object count in overbudget error, distinguishing derived
+size from repeated/large imports. Dedup still source-buffer identity as protected884;
+independent imports of identical bytes are NOT content-deduped. Do not silently raise
+limits or claim this permits unlimited scenes. Test one fresh import to isolate result.
+Original native writer/displacement helper888/image/surface/resource887/UV/render/kernel/
+history/importer/frozen owners unchanged; no duplicate pool, decoder or modelling owner.
+
+Existing886 tests now inspect actual production grayscale PNGs with independent Node
+zlib/CRC/inverse-filter reader; retain all exact G/B/geometry/UV/source/factor/resource/
+cleanup/DOM-readback assertions. Encoding-failure injection moves to CompressionStream;
+platform PNG encoder calls must be zero. Three new regressions cover real compressed
+PNG pixels/headers/CRC/filters/bounds/API failure, ACTUAL File NOMAD six-map export at
+reported source sizes with real compression and forbidden platform PNG encoder, and
+retained24MB source guard with diagnostic breakdown. Full local2436PASS/0FAIL/0skip.
+
+ACTUAL user packed JPEG decoded to RGBA through Pillow as Node transport fixture, then
+REAL production scalar encoder/deflate (no substitute PNG encoder): roughness2,035,568B,
+metalness1,948,291B. Independent Pillow PNG decode confirms EVERY G/B byte identical.
+Actual retained source assets + production split/native facade:6images,22,557,536B image
+payload (21.51MiB),2,608,288B pool headroom,22,629,956B native file. Colour/normal/emissive/
+displacement original hashes exact, displacement16-bit/settings untouched. Native Box
+UVs used for byte-budget audit; original imported UV/history coverage remains in suite.
+Browser decoder/readback adapted in Node; no Safari/Nomad visual acceptance inferred.
+Private images/readback not committed. This replaces the earlier Pillow-encoded size
+estimate;888 failure preserved as device evidence and889 exact-file gate remains pending.
+
+Reviewed889 graph: shell/recovery/export-panel889→packed-child889→new scalar encoder889;
+packed child still imports native-core888→displacement888 and source/image helpers887.
+All unrelated UI/import/codec/UV maths/protected modelling/Multi/frozen/native donor bytes
+unchanged. All four continuity docs updated; publication proof follows.
+Device889: reset scene, import FULL MATERIAL.glb ONCE, SubD off→File→NOMAD must download;
+check all six native slots including displacement; UV edit and .boxlab Save/Open repeat.
+If still overbudget, report FULL new source/converted/object breakdown rather than guess.
+Opacity remains pending; displacement numeric settings copied unchanged, no amplitude
+rescaling/BoxLab geometry bake/generic glTF displacement/native multi-material/NOM import.
