@@ -2690,3 +2690,15 @@ protected Multi1.0 and frozenBeta7 marker all byte-match repository. All four
 continuity files current. User894 PASS protected;895 density/Pack/Pencil/history/
 project/native UV device gate PENDING. Proof changes documentation only; tested
 runtime bytes unchanged.
+
+## TexturePaint evaluation publication verified — 2026-10-17
+
+Evaluation commit ec7d0f6666a7b7713bece07c603ea0e976eb2634; tested tree
+f12d0461396b98f883acb279cb728bbc6d512c56 exactly matches fetched main.
+Node22.23.3 CI39006748131/job117320658726 SUCCESS2467PASS/0FAIL/0skip;
+Pages39006747665 build/deploy SUCCESS. Fresh live trial index/controller/adapter,
+byte-exact upstream source/licence and evaluation report match repository. Main
+index/version remain byte-identical .895. Rendered browser verification did not
+complete; iPad Pencil/navigation/seam/PNG tests remain pending, no device PASS inferred.
+All four continuity docs current. Next is hands-on trial feedback before production
+paint resource/history/gesture integration. Proof is documentation-only.

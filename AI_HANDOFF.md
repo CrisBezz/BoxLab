@@ -5,7 +5,8 @@ CrisBezz/BoxLab main build0.36.18.895; live https://crisbezz.github.io/BoxLab/.
 Current runtime6b1e003324e5e883d8a0f4625a1e69ba0336fde7/main895; CI/Pages/live verified.
 User .894 PASS protects Sphere UVs, Pencil/packing/history/navigation and project/native UV export.
 .895 local/Node22 CI2462/0/0; density device gate pending. .894 user PASS protected.
-Current focus: direct viewport painting; isolated TexturePaint trial and fit report.
+Current focus: direct viewport painting; TexturePaint trial published/CI/live verified.
+Evaluation ec7d0f66, Node22 CI2467/0/0; rendered/iPad gates pending. Main runtime remains .895.
 User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
@@ -2674,3 +2675,15 @@ protected Multi1.0 and frozenBeta7 marker all byte-match repository. All four
 continuity files current. User894 PASS protected;895 density/Pack/Pencil/history/
 project/native UV device gate PENDING. Proof changes documentation only; tested
 runtime bytes unchanged.
+
+## TexturePaint evaluation publication verified — 2026-10-17
+
+Evaluation commit ec7d0f6666a7b7713bece07c603ea0e976eb2634; tested tree
+f12d0461396b98f883acb279cb728bbc6d512c56 exactly matches fetched main.
+Node22.23.3 CI39006748131/job117320658726 SUCCESS2467PASS/0FAIL/0skip;
+Pages39006747665 build/deploy SUCCESS. Fresh live trial index/controller/adapter,
+byte-exact upstream source/licence and evaluation report match repository. Main
+index/version remain byte-identical .895. Rendered browser verification did not
+complete; iPad Pencil/navigation/seam/PNG tests remain pending, no device PASS inferred.
+All four continuity docs current. Next is hands-on trial feedback before production
+paint resource/history/gesture integration. Proof is documentation-only.
