@@ -2640,3 +2640,15 @@ protected Multi1.0 and frozenBeta7 marker all byte-match repository. Initial rea
 preceded deployment; final complete graph matches894. All four continuity files
 current. User893 PASS protected;894 Sphere layout/Pencil/history/project/native UV
 device gate PENDING. Proof is documentation-only; tested runtime bytes unchanged.
+
+## .895 publication verified — 2026-10-17
+
+Runtime6b1e003324e5e883d8a0f4625a1e69ba0336fde7; tested tree
+d972fde28ba3b85d3cda78c4f33afe5a97a727ac exactly matches fetched main.
+Actual Node22.23.3 CI39005809090/job117317939014 SUCCESS2462PASS/0FAIL/0skip;
+Pages39005808724 build/deploy SUCCESS. Fresh live shell/manifest/recovery/
+MeshHealth895/workspace895/edit895, unchanged inspector880/render892,
+protected Multi1.0 and frozenBeta7 marker all byte-match repository. All four
+continuity files current. User894 PASS protected;895 density/Pack/Pencil/history/
+project/native UV device gate PENDING. Proof changes documentation only; tested
+runtime bytes unchanged.

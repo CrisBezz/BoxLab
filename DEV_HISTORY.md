@@ -10728,3 +10728,15 @@ Pencil Scale it larger, Equalize density makes six sides comparable again, then 
 all separates them. UndoRedo, repeat no-op and Pencil/pan/pinch still work. Save/Open
 .boxlab and File NOMAD Base retain layout. .894 user PASS protected; no895 device PASS
 inferred. Next: density feedback, then audit next narrow UV authoring/painting stage.
+
+## .895 publication verified — 2026-10-17
+
+Runtime6b1e003324e5e883d8a0f4625a1e69ba0336fde7; tested tree
+d972fde28ba3b85d3cda78c4f33afe5a97a727ac exactly matches fetched main.
+Actual Node22.23.3 CI39005809090/job117317939014 SUCCESS2462PASS/0FAIL/0skip;
+Pages39005808724 build/deploy SUCCESS. Fresh live shell/manifest/recovery/
+MeshHealth895/workspace895/edit895, unchanged inspector880/render892,
+protected Multi1.0 and frozenBeta7 marker all byte-match repository. All four
+continuity files current. User894 PASS protected;895 density/Pack/Pencil/history/
+project/native UV device gate PENDING. Proof changes documentation only; tested
+runtime bytes unchanged.
