@@ -10790,3 +10790,24 @@ index/version remain byte-identical .895. Rendered browser verification did not
 complete; iPad Pencil/navigation/seam/PNG tests remain pending, no device PASS inferred.
 All four continuity docs current. Next is hands-on trial feedback before production
 paint resource/history/gesture integration. Proof is documentation-only.
+
+
+## UV Paint integration audit — 2026-10-17
+
+User says TexturePaint brush needs work but promising; requests audit of TexturePaint
+and Klecks and delegates reuse-versus-new decision. No blanket trial or .895 PASS.
+See docs/uv-paint-integration-audit-2026-10-17.md. Audited BoxLab main353e9881,
+TexturePaint3af8a61e and Klecks cc24e97712c199929760250881ffe2e25233ce6d.
+Decision: BoxLab-owned architecture + selective attributed brush/stroke/compositor
+reuse; no wholesale editor/history/input import, no TexturePaint runtime dependency.
+Klecks Pen/Eraser read and push KlHistory; LayerCompositor is a smaller extraction
+candidate. Screen-space smoothing BEFORE picking; no UV spline across islands.
+Three instrumented upstream probes confirm atlas-spanning Bezier marks (162),
+smoothing position/pressure and compositor call order; no rendered pixel/perf proof.
+Existing focused trial/release tests10PASS/0FAIL/0skip; not a new full-suite run.
+Native resource v3 remains UV-only; design paint resource/codec/COW/history explicitly.
+Next narrow build: isolated identical-stroke comparison on BoxLab-generated UV geometry,
+one colour layer; benchmark adapted Klecks vs simple BoxLab brush before live integration.
+No upstream source imported, no runtime/pin/version/frozen changes; .895 remains live.
+No new hands-on test required for this documentation-only audit. Existing device gates
+remain pending; user feedback is qualitative. Full report carries integration/acceptance plan.

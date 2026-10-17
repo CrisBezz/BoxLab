@@ -5,13 +5,33 @@ CrisBezz/BoxLab main build0.36.18.895; live https://crisbezz.github.io/BoxLab/.
 Current runtime6b1e003324e5e883d8a0f4625a1e69ba0336fde7/main895; CI/Pages/live verified.
 User .894 PASS protects Sphere UVs, Pencil/packing/history/navigation and project/native UV export.
 .895 local/Node22 CI2462/0/0; density device gate pending. .894 user PASS protected.
-Current focus: direct viewport painting; TexturePaint trial published/CI/live verified.
+Current focus: UV Paint integration audit complete; selective reuse decision, isolated brush comparison next.
 Evaluation ec7d0f66, Node22 CI2467/0/0; rendered/iPad gates pending. Main runtime remains .895.
 User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## UV Paint integration audit — 2026-10-17
+
+User says TexturePaint brush needs work but promising; requests audit of TexturePaint
+and Klecks and delegates reuse-versus-new decision. No blanket trial or .895 PASS.
+See docs/uv-paint-integration-audit-2026-10-17.md. Audited BoxLab main353e9881,
+TexturePaint3af8a61e and Klecks cc24e97712c199929760250881ffe2e25233ce6d.
+Decision: BoxLab-owned architecture + selective attributed brush/stroke/compositor
+reuse; no wholesale editor/history/input import, no TexturePaint runtime dependency.
+Klecks Pen/Eraser read and push KlHistory; LayerCompositor is a smaller extraction
+candidate. Screen-space smoothing BEFORE picking; no UV spline across islands.
+Three instrumented upstream probes confirm atlas-spanning Bezier marks (162),
+smoothing position/pressure and compositor call order; no rendered pixel/perf proof.
+Existing focused trial/release tests10PASS/0FAIL/0skip; not a new full-suite run.
+Native resource v3 remains UV-only; design paint resource/codec/COW/history explicitly.
+Next narrow build: isolated identical-stroke comparison on BoxLab-generated UV geometry,
+one colour layer; benchmark adapted Klecks vs simple BoxLab brush before live integration.
+No upstream source imported, no runtime/pin/version/frozen changes; .895 remains live.
+No new hands-on test required for this documentation-only audit. Existing device gates
+remain pending; user feedback is qualitative. Full report carries integration/acceptance plan.
 
 ## TexturePaint evaluation — 2026-10-17
 
