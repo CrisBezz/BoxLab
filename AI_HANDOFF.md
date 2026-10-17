@@ -2,9 +2,9 @@
 
 ## Current state — 2026-10-17
 CrisBezz/BoxLab main build0.36.18.893; live https://crisbezz.github.io/BoxLab/.
-Previous verified runtime68ee2db64bf7b3bd6bb4df7433141fef48db44f7/main892.
+Current runtimebbc0e4b20d55a47fbac9fa3daaa1b4a0c226a3e0/main893; CI/Pages/live verified.
 User .892 PASS protects scalar/map references, Pencil/navigation and UV/project/export repeat.
-.893 local2452/0/0; publication pending. Packing device gate remains separate.
+.893 local/Node22 CI2452/0/0; packing device gate remains separate.
 User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
@@ -2518,4 +2518,15 @@ Pages38991841149 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHe
 workspace/preview/surface/render/export/native-parent graph892, scalar889, protected
 Multi1.0 and frozenBeta7 marker all byte-match repository. All four continuity files
 current. User891 PASS protected;892 grayscale/Pencil/project/native device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
+
+## .893 publication verified — 2026-10-17
+
+Runtimebbc0e4b20d55a47fbac9fa3daaa1b4a0c226a3e0; tested tree
+efd82dfde462eca6e53e7ed61f23d8bf4332dc8b exactly matches fetched main.
+Actual Node22.23.3 CI39003980800/job117312549657 SUCCESS2452PASS/0FAIL/0skip;
+Pages39003980205 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/edit893, unchanged inspector880/preview/render/native892, protected Multi1.0
+and frozenBeta7 marker all byte-match repository. All four continuity files current.
+User892 PASS protected;893 Pack all/framing/history/project/native UV device gate PENDING.
 Proof is documentation-only; tested runtime bytes unchanged.

@@ -7018,3 +7018,14 @@ Proof is documentation-only; tested runtime bytes unchanged.
 
 Manual UV layout operation: images stay fixed, so packing changes texture sampling.
 Grid bounding boxes only; no optimal packing/unwrap/within-island overlap repair/painting.
+
+## .893 publication verified — 2026-10-17
+
+Runtimebbc0e4b20d55a47fbac9fa3daaa1b4a0c226a3e0; tested tree
+efd82dfde462eca6e53e7ed61f23d8bf4332dc8b exactly matches fetched main.
+Actual Node22.23.3 CI39003980800/job117312549657 SUCCESS2452PASS/0FAIL/0skip;
+Pages39003980205 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/edit893, unchanged inspector880/preview/render/native892, protected Multi1.0
+and frozenBeta7 marker all byte-match repository. All four continuity files current.
+User892 PASS protected;893 Pack all/framing/history/project/native UV device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
