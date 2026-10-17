@@ -2412,3 +2412,15 @@ packed-child/native-core890, unchanged scalar889/displacement888/protected Multi
 and frozenBeta7 marker all byte-match repository. Initial reads preceded deployment;
 final graph matches890. All four continuity files current; proof changes docs only.
 User889 PASS protected;890 two-independent-import/UV/project native device gate PENDING.
+
+## .891 publication verified — 2026-10-17
+
+Runtime278b0042b4a1815e1765cf69edd1a2462862e669; tested tree
+fdf44a1b86e9faa474fe1b785e104a70a0a12a34 exactly matches fetched main.
+Actual Node22.23.3 CI38987566193/job117262477050 SUCCESS2443PASS/0FAIL/0skip;
+Pages38987566624 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/preview/surface/render/export/native-parent graph891, scalar889, protected
+Multi1.0 and frozenBeta7 marker all byte-match repository. Initial reads preceded
+deployment; final complete graph matches891. All four continuity files current.
+User890 PASS protected;891 UV Normal/Emissive/Pencil/project/native device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
