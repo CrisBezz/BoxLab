@@ -4,6 +4,52 @@ This is the persistent product roadmap for BoxLab.
 
 The repository is the source of truth. Keep this file aligned with `AI_HANDOFF.md`, `DEV_HISTORY.md`, and `TEST_CHECKLIST.md`.
 
+## .895 — Equalize UV density, 2026-10-17
+
+User .894 PASS protects Sphere UV creation/layout/seams, Pencil edits/Pack all,
+UndoRedo/navigation, project reopening and NOMAD Base UV export. Audit main39ae725e /
+runtime260817ff, live .894 markers and current loader graph, original projection /
+UV inspection/edit/workspace/history/export owners. No existing equal-density action;
+Box/Cylinder projections already use common density, Pack all preserves input ratios.
+
+Add Equalize density to ORIGINAL UV workspace for all1–128 islands, with or without
+selection. SAME editImportedUV transaction/copy-on-write/native scene checkpoint,
+expected payload/object/mesh/session guards, source images/peers/geometry read-only,
+tangent retirement and selection retention. No new pointer/history/schema/kernel.
+Each island gets one positive uniform scale about its bounding-box centre; preserve
+shape, orientation and mirroring. Target is total input UV area / total Base surface
+area; preserve total UV area, equalize each island's AVERAGE UV-area/Base-area ratio.
+Aggregate ALL faces, including beyond preview. Read-only planar polygon area vectors
+and signed UV polygon areas with normalized input; concave planar polygons supported.
+No triangulation or source face mutation. Nonplanar/degenerate/missing/nonfinite mesh
+or UV area refuses; numeric/export-f32 edge collapse, nonfinite export coordinates,
+unsupported count or changed island connectivity refuses BEFORE history/mutation.
+Already-equal/repeated result within1e-12 scale tolerance adds no history. Original
+Pack all tolerance/maths unchanged; avoid absolute tile-coordinate no-op tolerance
+for density because small off-tile coordinates must not hide meaningful rescaling.
+
+Centres stay fixed, so enlarged islands MAY overlap or leave tile; use Pack all next.
+Images stay fixed: sampling changes intentionally. This is UV-area density; equal
+pixel density assumes the same image resolution. Does not remove within-island
+stretch/distortion or bake/repaint textures. Success uses original workspace Fit;
+rejection leaves view unchanged. Existing Pencil preview is cancelled on click.
+
+Five new regressions: actual history/COW/peers/metadata/centres/aspect/area/no-op;
+unequal surface areas/mirrored UVs, native Box quads+Pack, concave polygons, multi-face
+islands/full-face metrics and huge/tiny geometry; stale/invalid/history/nonplanar/
+zero-area/export-collapse/new-seam-join/count refusals; ACTUAL workspace+MeshHealth
+no-selection action/Pencil cancellation/selection/stale guard; actual project codec,
+NOM UV indices/f32 corners and Three GLB UV/tangent retirement.15 focused PASS.
+Full Node24 **2462 PASS / 0 FAIL / 0 skipped**. Reviewed narrow graph shell/recovery/
+MeshHealth895 -> workspace895/edit895; inspector880/preview/render/native892 and
+scalar889 retained. Internal MeshHealth stamp880, Multi1.0/frozen/modelling untouched.
+
+Device895 pending: cube -> MeshHealth UVs -> Box UVs -> Open UV Editor; select island,
+Pencil Scale it larger, Equalize density makes six sides comparable again, then Pack
+all separates them. UndoRedo, repeat no-op and Pencil/pan/pinch still work. Save/Open
+.boxlab and File NOMAD Base retain layout. .894 user PASS protected; no895 device PASS
+inferred. Next: density feedback, then audit next narrow UV authoring/painting stage.
+
 ## .894 — Sphere UVs (Y), 2026-10-17
 
 User .893 PASS protects Pack all, framing/selection, UndoRedo, project/native UV export

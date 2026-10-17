@@ -28,6 +28,46 @@ export function packImportedUVIslands(object,mesh,topologySignature,history,scop
  if(!scope||scope.payload!==object?.glbPassthrough||scope.island!=null&&!Number.isInteger(scope.island))return {ok:false,reason:'Refresh the UV layout before packing'};
  return editImportedUV(object,mesh,topologySignature,history,{kind:'pack'},scope.island==null?undefined:scope);
 }
+// Equal average UV area per Base surface area; island centres/orientation stay fixed.
+// This does not remove internal stretch or overlap. Pack all remains a separate action.
+export function equalizeImportedUVDensity(object,mesh,topologySignature,history,scope){
+ if(!Array.isArray(mesh?.faces)||!mesh.faces.length||mesh.faces.some(face=>!Array.isArray(face)||face.length<3))return {ok:false,reason:'Equalize density needs valid Base faces'};
+ if(!scope||scope.payload!==object?.glbPassthrough||scope.island!=null&&!Number.isInteger(scope.island))return {ok:false,reason:'Refresh the UV layout before equalizing density'};
+ return editImportedUV(object,mesh,topologySignature,history,{kind:'density'},scope.island==null?undefined:scope);
+}
+function densityLayout(mesh,payload,report){
+ const refuse=()=>({reason:'Equalize density needs non-degenerate UVs and finite planar Base faces'});
+ const count=report.islandCount;if(count<1||count>128)return {reason:'Equalize density supports 1–128 UV islands'};
+ const faces=Array.from({length:count},()=>[]);report.faceIslands.forEach((id,fi)=>faces[id].push(fi));
+ const bounds=faces.map(ids=>importedUVIslandBounds(payload.uvCorners,ids));
+ let worldMagnitude=0,uvMagnitude=0;
+ for(const face of mesh.faces)for(const id of face){const p=mesh.vertices?.[id];if(!Number.isInteger(id)||!p||!['x','y','z'].every(k=>Number.isFinite(p[k])))return refuse();worldMagnitude=Math.max(worldMagnitude,Math.abs(p.x),Math.abs(p.y),Math.abs(p.z));}
+ for(const b of bounds)for(const v of Object.values(b))uvMagnitude=Math.max(uvMagnitude,Math.abs(v));
+ if(!worldMagnitude||!uvMagnitude)return refuse();
+ const worldArea=Array(count).fill(0),uvArea=Array(count).fill(0);
+ for(let fi=0;fi<mesh.faces.length;fi++){
+  const face=mesh.faces[fi];if(face.length<3||new Set(face).size!==face.length)return refuse();
+  const points=face.map(id=>{const p=mesh.vertices[id];return [p.x/worldMagnitude,p.y/worldMagnitude,p.z/worldMagnitude];});
+  const origin=points[0],local=points.map(p=>p.map((v,k)=>v-origin[k])),normal=[0,0,0];
+  for(let i=1;i<local.length-1;i++){const a=local[i],b=local[i+1];normal[0]+=a[1]*b[2]-a[2]*b[1];normal[1]+=a[2]*b[0]-a[0]*b[2];normal[2]+=a[0]*b[1]-a[1]*b[0];}
+  const area=Math.hypot(...normal);let extent=0;for(const p of local)extent=Math.max(extent,Math.hypot(...p));
+  if(!(area>0)||!Number.isFinite(area)||local.some(p=>Math.abs(p.reduce((sum,v,k)=>sum+v*(normal[k]/area),0))>extent*1e-7))return refuse();
+  const uv=payload.uvCorners[fi].map(p=>p.map(v=>v/uvMagnitude)),start=uv[0];let signed=0;
+  for(let i=1;i<uv.length-1;i++)signed+=(uv[i][0]-start[0])*(uv[i+1][1]-start[1])-(uv[i][1]-start[1])*(uv[i+1][0]-start[0]);
+  if(!Number.isFinite(signed)||signed===0)return refuse();
+  const id=report.faceIslands[fi];worldArea[id]+=area;uvArea[id]+=Math.abs(signed);
+ }
+ const target=uvArea.reduce((a,b)=>a+b,0)/worldArea.reduce((a,b)=>a+b,0);
+ const scales=uvArea.map((area,id)=>Math.sqrt(target/(area/worldArea[id])));
+ if(scales.some(s=>!Number.isFinite(s)||s<=0))return refuse();
+ // An already-equal layout is a real no-op, including after roundoff on repeat.
+ if(scales.every(s=>Math.abs(s-1)<=1e-12))return {uvCorners:payload.uvCorners};
+ const centres=bounds.map(b=>[b.minU/2+b.maxU/2,b.minV/2+b.maxV/2]);
+ const uvCorners=payload.uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],centre=centres[id];return face.map(p=>p.map((v,k)=>centre[k]+(v-centre[k])*scales[id]));});
+ if(uvCorners.some(face=>face.some(p=>p.some(v=>!Number.isFinite(v)||!Number.isFinite(Math.fround(v))))))return {reason:'Equalizing density exceeds the export coordinate range'};
+ if(uvCorners.some((face,fi)=>face.some((p,j)=>{const a=payload.uvCorners[fi][j],b=payload.uvCorners[fi][(j+1)%face.length],q=face[(j+1)%face.length];return (a[0]!==b[0]||a[1]!==b[1])&&p[0]===q[0]&&p[1]===q[1]||(Math.fround(a[0])!==Math.fround(b[0])||Math.fround(a[1])!==Math.fround(b[1]))&&Math.fround(p[0])===Math.fround(q[0])&&Math.fround(p[1])===Math.fround(q[1]);})))return {reason:'Equalizing density would collapse an existing UV edge'};
+ return {uvCorners};
+}
 // Deterministic grid packing, not an optimal atlas solver. One common scale
 // preserves existing relative UV density; island bounds stay in separate cells.
 function packedLayout(uvCorners,report){
@@ -76,7 +116,7 @@ function editImportedUV(object,mesh,topologySignature,history,operation,scope){
   if(magnitude===1&&Math.abs(span-.96)<=8*Number.EPSILON&&Math.abs(centreU-.5)<=8*Number.EPSILON&&Math.abs(centreV-.5)<=8*Number.EPSILON)return {ok:true,changed:false,selectedFaces};
   fit={magnitude,span,minU:bounds.minU/magnitude,minV:bounds.minV/magnitude,width:bounds.maxU/magnitude-bounds.minU/magnitude,height:bounds.maxV/magnitude-bounds.minV/magnitude};
  }
- const packing=operation.kind==='pack'?packedLayout(previous.uvCorners,report):null;
+ const packing=operation.kind==='pack'?packedLayout(previous.uvCorners,report):operation.kind==='density'?densityLayout(mesh,previous,report):null;
  if(packing?.reason)return {ok:false,reason:packing.reason};
  const selected=selectedFaces&&new Set(selectedFaces);
  const uvCorners=packing?packing.uvCorners:previous.uvCorners.map((face,fi)=>selected&&!selected.has(fi)?face:face.map(([u,v])=>{
@@ -88,7 +128,11 @@ function editImportedUV(object,mesh,topologySignature,history,operation,scope){
   return operation==='u'?[centreU+(centreU-u),v]:operation==='v'?[u,centreV+(centreV-v)]:[centreU+(centreV-v),centreV+(u-centreU)];
  }));
  if(uvCorners.some(face=>face.some(uv=>!uv.every(Number.isFinite))))return {ok:false,reason:'UV transform exceeds the coordinate range'};
- if(packing&&uvCorners.every((face,i)=>face.every((uv,j)=>uv.every((value,k)=>Math.abs(value-previous.uvCorners[i][j][k])<=32*Number.EPSILON))))return selectedFaces?{ok:true,changed:false,selectedFaces}:{ok:true,changed:false};
+ if(operation.kind==='density'){
+  const nextReport=inspectImportedUV(mesh,{...previous,uvCorners},topologySignature);
+  if(nextReport.state!=='ready'||nextReport.faceIslands.some((id,i)=>id!==report.faceIslands[i]))return {ok:false,reason:'Equalizing density would change UV island connectivity'};
+ }
+ if(operation.kind==='pack'&&uvCorners.every((face,i)=>face.every((uv,j)=>uv.every((value,k)=>Math.abs(value-previous.uvCorners[i][j][k])<=32*Number.EPSILON))))return selectedFaces?{ok:true,changed:false,selectedFaces}:{ok:true,changed:false};
  if(uvCorners.every((face,i)=>face.every((uv,j)=>uv.every((value,k)=>value===previous.uvCorners[i][j][k]))))return selectedFaces?{ok:true,changed:false,selectedFaces}:{ok:true,changed:false};
  if(!history?.capture||!history?.checkpointSnapshot)return {ok:false,reason:'Scene history is not ready'};
  const next={...previous,uvCorners};

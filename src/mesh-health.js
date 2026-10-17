@@ -4,8 +4,8 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.880';
-import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,createPlanarUV,createBoxUV,createCylinderUV,createSphereUV} from './imported-uv-edit.js?v=0.36.18.894';
-import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.893';
+import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createBoxUV,createCylinderUV,createSphereUV} from './imported-uv-edit.js?v=0.36.18.895';
+import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.895';
 
 const VERSION='0.36.18.880';
 const objectTools=document.querySelector('.mode-tools[data-mode-tools="object"]');
@@ -178,12 +178,12 @@ uvFlipV.addEventListener('click',()=>flipUVs('v'));
 
 function transformUVs(kind,a,b,expected){
  const object=activeObject(),mesh=liveMesh();
- if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh||!uvWorkspace?.active||(kind!=='pack'&&!Number.isInteger(uvWorkspace.selectedIsland)))return false;
+ if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh||!uvWorkspace?.active||(!['pack','density'].includes(kind)&&!Number.isInteger(uvWorkspace.selectedIsland)))return false;
  if(expected&&(expected.object!==object||expected.mesh!==mesh||expected.payload!==uvPayload||expected.payload!==object.glbPassthrough))return false;
  const scope={island:uvWorkspace.selectedIsland,payload:uvPayload};
- const result=kind==='pack'?packImportedUVIslands(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,scope):kind==='move'?moveImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,a,b,scope):kind==='scale'?scaleImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,a,scope):kind==='rotate'?rotateImportedUVByAngle(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,a,scope):kind==='fit'?fitImportedUVToTile(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,scope):{ok:false,reason:'Choose Move, Scale, Rotate, Fit to tile or Pack all'};
+ const result=kind==='density'?equalizeImportedUVDensity(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,scope):kind==='pack'?packImportedUVIslands(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,scope):kind==='move'?moveImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,a,b,scope):kind==='scale'?scaleImportedUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,a,scope):kind==='rotate'?rotateImportedUVByAngle(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,a,scope):kind==='fit'?fitImportedUVToTile(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory,scope):{ok:false,reason:'Choose Move, Scale, Rotate, Fit to tile, Pack all or Equalize density'};
  renderReport();if(result.selectedFaces)uvWorkspace.retainSelection(result.selectedFaces);
- setStatus(result.ok?result.changed?`${kind==='pack'?'UV islands':'UV island'} ${kind==='pack'?'packed':kind==='move'?'moved':kind==='rotate'?'rotated':kind==='fit'?'fitted to tile':'scaled'} • Undo to restore`:'UV transform • no change needed':`UV transform • ${result.reason}`);
+ setStatus(result.ok?result.changed?`${['pack','density'].includes(kind)?'UV islands':'UV island'} ${kind==='density'?'density equalized':kind==='pack'?'packed':kind==='move'?'moved':kind==='rotate'?'rotated':kind==='fit'?'fitted to tile':'scaled'} • Undo to restore`:'UV transform • no change needed':`UV transform • ${result.reason}`);
  return result.ok;
 }
 

@@ -7031,7 +7031,7 @@ User892 PASS protected;893 Pack all/framing/history/project/native UV device gat
 Proof is documentation-only; tested runtime bytes unchanged.
 
 
-## .894 Sphere UVs (Y) — device gate pending
+## .894 Sphere UVs (Y) — user PASS protected
 
 - [x] User .893 PASS protects Pack all/framing/selection/history/project/native export and prior Pencil/navigation/map references.
 - [x] Same native UV projection/history owner; round Y-pole sphere, equirectangular layout, aligned seam, per-wedge pole UVs, no geometry changes.
@@ -7039,9 +7039,9 @@ Proof is documentation-only; tested runtime bytes unchanged.
 - [x] Minimum/odd/dense rings, Y rotation/translation, finite huge/tiny coordinates; unsupported/invalid/context/history refusals before mutation.
 - [x] Actual MeshHealth callback/session guard; actual .boxlab, native NOM UV pool and Three GLB pole-variant preservation.
 - [x] Full2457PASS/0FAIL/0skip; reviewed narrow cache graph; protected/frozen owners retained.
-- [ ] Add Sphere -> Object MeshHealth UVs -> Sphere UVs (Y) -> Open UV Editor: latitude layout inside tile; Checker/surface seam and pole appearance.
-- [ ] Pencil edit, Pack all, UndoRedo, pan/pinch remain usable; repeat projection adds no redundant Undo.
-- [ ] Save/Open .boxlab and File NOMAD Base preserve the sphere UV layout/seams.
+- [x] Add Sphere -> Object MeshHealth UVs -> Sphere UVs (Y) -> Open UV Editor: latitude layout inside tile; Checker/surface seam and pole appearance.
+- [x] Pencil edit, Pack all, UndoRedo, pan/pinch remain usable; repeat projection adds no redundant Undo.
+- [x] Save/Open .boxlab and File NOMAD Base preserve the sphere UV layout/seams.
 
 Equirectangular pole distortion expected. Round Y-pole meshes with aligned longitude
 rings only; no general deformed/Quadball unwrap, seam cutting, painting or new kernel.
@@ -7057,3 +7057,21 @@ protected Multi1.0 and frozenBeta7 marker all byte-match repository. Initial rea
 preceded deployment; final complete graph matches894. All four continuity files
 current. User893 PASS protected;894 Sphere layout/Pencil/history/project/native UV
 device gate PENDING. Proof is documentation-only; tested runtime bytes unchanged.
+
+
+## .895 Equalize UV density — device gate pending
+
+- [x] User .894 PASS protects Sphere UVs/seams, Pencil/Pack all/history/navigation/project and native export.
+- [x] Original edit/history/workspace owners; all1–128 islands, same positive uniform scale per island about unchanged centre, average UV-area/Base-area ratio equal; total UV area preserved.
+- [x] Mirroring/orientation/aspect/source geometry/resources/peers retained; tangent retirement, one native UndoRedo and repeat no-op.
+- [x] Planar concave/quad/triangles, multi-face islands/full metrics beyond preview, normalized huge/tiny geometry; nonplanar/degenerate/nonfinite/stale/history/context/count/collapse/export overflow/new seam-join refusal.
+- [x] Actual workspace + MeshHealth works without selection, cancels pending Pencil preview, retains selection and uses original Fit on success.
+- [x] Actual project codec, NOM independent UV indices/f32 corners and Three GLB UV/tangent retirement.
+- [x] Full2462PASS/0FAIL/0skip; reviewed cache graph; protected/frozen owners unchanged.
+- [ ] Cube -> Box UVs -> Open UV Editor; Pencil Scale one island larger, Equalize density makes sides comparable again; Pack all separates islands.
+- [ ] UndoRedo restores each step; repeated Equalize adds no redundant Undo; Pencil/pan/pinch and selected-island editing still work.
+- [ ] Save/Open .boxlab and File NOMAD Base preserve final density/layout/seams.
+
+All-island UV-area scaling; images/centres fixed so overlaps/outside tile and changed
+sampling are possible. Pack separately. Same pixel density assumes equal map resolution;
+no within-island stretch correction, painting, baking, general seam unwrap or new kernel.
