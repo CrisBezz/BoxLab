@@ -10885,3 +10885,20 @@ limitation unchanged; device897 winding confirmation pending, no897 PASS inferre
 Next: orbit sphere/cube, paint around all sides; plane visible; switch brushes/UndoRedo.
 Then resume paint resource/codec/COW/global-history design after chosen-brush feedback.
 Publication verification follows; no layered or persistent painting claim.
+
+## .897 publication verified — 2026-10-17
+
+Runtime1db5769b9888e6f6d1c5cbda4e968ffd27afab1d; tested tree
+49fc268524ca308bb6dffcf0ca459346b87247fc matches fetched main/local exactly.
+Node22.23.3 topology CI39018873809/job117356495970 SUCCESS2477PASS/0FAIL/0skip;
+Pages39018873340 build117356496893/deploy117356596313 SUCCESS.
+Postdeployment live shell/version/export-parent897 and lab index/controller/sample897
+byte-match repository; protected Multi1.0/frozenBeta7 marker unchanged. Initial live
+reads preceded completed deployment and served896; final postdeployment graph matches897.
+User896PASS protects brush workflow with reported winding exception;897 fixes preview
+orientation only, device retest pending. No897PASS inferred. Prior cloud WebGL limitation
+remains separate from this actual Three geometry/raycast/source-winding test evidence.
+This verification updates documentation only; tested runtime bytes retained. Next:
+user orbit/paint sphere and cube all sides, plane/paired history sanity; then paint
+resource/codec/COW/global-history design per current roadmap. Ordinary file-export
+winding remains a separate audit item; no automatic general outward-repair promise.

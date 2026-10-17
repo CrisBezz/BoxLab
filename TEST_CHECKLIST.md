@@ -7136,16 +7136,16 @@ No upstream source imported, no runtime/pin/version/frozen changes; .895 remains
 No new hands-on test required for this documentation-only audit. Existing device gates
 remain pending; user feedback is qualitative. Full report carries integration/acceptance plan.
 
-## .896 UV Paint Lab — acceptance pending
+## .896 UV Paint Lab — user PASS, normals exception repaired in .897
 
 - [x] Original BoxLab primitive/projection/UV geometry builder and actual Three ray hits for Sphere/Cube/Plane; no duplicate triangulator.
 - [x] Exact colour/pressure size/opacity cap/clipping/PNG rows, paired bounded history, no-op/Redo/cancel/disposal.
 - [x] Screen samplers: subdivision parity within1e-12, Klecks curve tail/finite pressure/dab cap; every emitted dab raycast, no UV spline.
 - [x] Actual controller movement/dirty-frame policy/Undo/lost capture, finger/palm ownership, demo cancel/blur/reset/disposal, source provenance and production isolation.
 - [x] Seven new tests; full Node24 2474PASS/0FAIL/0skip. Browser transport adapted; not rendered/Pencil proof.
-- [ ] File → UV Paint Lab; Demo then switch BoxLab round/Klecks curve and compare shapes/lag.
-- [ ] Pencil paints during movement; size/hardness/opacity/pressure→size; fingers orbit/pan/pinch without paint; paired UndoRedo and interrupted strokes restore correctly.
-- [ ] Cube and Plane visible/paintable; selected PNG has matching colour/orientation; Back to BoxLab scene stays separate.
+- [x] File → UV Paint Lab; Demo then switch BoxLab round/Klecks curve and compare shapes/lag (.896 user PASS).
+- [x] Pencil paints during movement; size/hardness/opacity/pressure→size; fingers orbit/pan/pinch without paint; paired UndoRedo and interrupted strokes restore correctly (.896 user PASS).
+- [x] Selected PNG/Back to BoxLab baseline accepted in .896; inconsistent outward sample winding is explicitly excepted and retested in .897.
 
 512² volatile sample layers only; reload/Reset clears them. No persistent project/native
 paint, full Klecks PenBrush/layers, seam stitching/world radius/smudge/PBR claim. .895
@@ -7177,3 +7177,20 @@ then selected refinement/resource/codec/global-history work per docs/uv-paint-la
 
 Winding fix is shared UV PREVIEW only. General file-export winding repair remains out
 of scope; preserve intentionally reversed source polygons. No897 device PASS yet.
+
+## .897 publication verified — 2026-10-17
+
+Runtime1db5769b9888e6f6d1c5cbda4e968ffd27afab1d; tested tree
+49fc268524ca308bb6dffcf0ca459346b87247fc matches fetched main/local exactly.
+Node22.23.3 topology CI39018873809/job117356495970 SUCCESS2477PASS/0FAIL/0skip;
+Pages39018873340 build117356496893/deploy117356596313 SUCCESS.
+Postdeployment live shell/version/export-parent897 and lab index/controller/sample897
+byte-match repository; protected Multi1.0/frozenBeta7 marker unchanged. Initial live
+reads preceded completed deployment and served896; final postdeployment graph matches897.
+User896PASS protects brush workflow with reported winding exception;897 fixes preview
+orientation only, device retest pending. No897PASS inferred. Prior cloud WebGL limitation
+remains separate from this actual Three geometry/raycast/source-winding test evidence.
+This verification updates documentation only; tested runtime bytes retained. Next:
+user orbit/paint sphere and cube all sides, plane/paired history sanity; then paint
+resource/codec/COW/global-history design per current roadmap. Ordinary file-export
+winding remains a separate audit item; no automatic general outward-repair promise.

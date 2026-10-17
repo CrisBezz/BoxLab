@@ -5,7 +5,8 @@
 CrisBezz/BoxLab main release0.36.18.897: UV preview winding repair following user896 PASS.
 File → UV Paint Lab opens https://crisbezz.github.io/BoxLab/evaluations/uv-paint/?build=897 .
 Base53abe68b3a0e252afda6f79f25f59851ad3d6a7e; prior runtime896=81871e11.
-Local Node24 full2477PASS/0FAIL/0skip;897 CI/Pages/live verification pending at preparation.
+Local Node24 and Node22 CI2477PASS/0FAIL/0skip;897 Pages/live verified below.
+Runtime1db5769b; current main includes the documentation proof after that runtime.
 User896 PASS protects brush/Pencil/settings/navigation/history/PNG baseline EXCEPT reported
 inward paint triangles.897 fixes that preview-specific exception; no897 device PASS yet.
 Earlier894 protected;895 density pending. Ongoing publish authorization retained.
@@ -189,3 +190,20 @@ acceptance remains pending, not passed by browser inspection or Node adapters. N
 of an iPad WebGL failure; this is the observed cloud-browser limitation. No896 user PASS.
 Documentation proof changes no tested runtime bytes. Next: user paired-brush comparison,
 then selected refinement/resource/codec/global-history work per docs/uv-paint-lab-896.md.
+
+## .897 publication verified — 2026-10-17
+
+Runtime1db5769b9888e6f6d1c5cbda4e968ffd27afab1d; tested tree
+49fc268524ca308bb6dffcf0ca459346b87247fc matches fetched main/local exactly.
+Node22.23.3 topology CI39018873809/job117356495970 SUCCESS2477PASS/0FAIL/0skip;
+Pages39018873340 build117356496893/deploy117356596313 SUCCESS.
+Postdeployment live shell/version/export-parent897 and lab index/controller/sample897
+byte-match repository; protected Multi1.0/frozenBeta7 marker unchanged. Initial live
+reads preceded completed deployment and served896; final postdeployment graph matches897.
+User896PASS protects brush workflow with reported winding exception;897 fixes preview
+orientation only, device retest pending. No897PASS inferred. Prior cloud WebGL limitation
+remains separate from this actual Three geometry/raycast/source-winding test evidence.
+This verification updates documentation only; tested runtime bytes retained. Next:
+user orbit/paint sphere and cube all sides, plane/paired history sanity; then paint
+resource/codec/COW/global-history design per current roadmap. Ordinary file-export
+winding remains a separate audit item; no automatic general outward-repair promise.
