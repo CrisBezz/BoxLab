@@ -8,7 +8,7 @@ Pencil/history/PNG, alongside .896/.897. Older pending-pass proof entries below 
 historical, not the current gate. .895 density remains separately pending.
 File → UV Paint Lab: https://crisbezz.github.io/BoxLab/evaluations/uv-paint/?build=899 .
 Full Node24 2487PASS/0FAIL/0skip; focused resource tests4PASS after rollback assertion.
-Publishing authorized; CI/Pages/live .899 proof follows. Read docs/project-paint-resources-899.md.
+Runtime47136701; Node22 CI/Pages/live .899 verified below. Publishing authorized. Read docs/project-paint-resources-899.md.
 
 ## .899 scope and next step
 
@@ -279,3 +279,17 @@ Open/Pencil continuation gate pending, no898 device PASS inferred. No new cloud 
 or Safari rendering proof. .boxpaint is a lab session, not main .boxlab/Nomad paint.
 Next: Save Paint→Reset/reload→Open Paint from Downloads, compare both results/settings/
 view and continued UndoRedo; then original scene-resource/codec/COW/history integration.
+
+## .899 publication verified — 2026-10-17
+
+Runtime47136701c9c667ecdb410d89ca6e8b751c773680; tested tree
+da7f9e98766dff998f71e60d6deb20947dc692e1 matches fetched main/local exactly.
+Node22.23.3 topology CI39028416328/job117383876628 SUCCESS2487PASS/0FAIL/0skip;
+Pages39028415912 build117383877465/deploy117383953976 SUCCESS.
+Postdeployment exact live shell/version, lab899 index/controller/session and changed
+manager/management/drawer/codec/project-GLB/new paint-codec graph899 byte-match repository;
+unchanged resource898 and recovery loader899 graph also match. Protected Multi-transform/
+frozen/modelling/brush/preview bytes retained. User898PASS protected;899 nearby lab/main
+project device sanity pending. No new rendered/Pencil proof or main paint authoring claim.
+Documentation proof changes no tested runtime bytes. Next bounded original-owner
+selected-object paint bridge requires validity/rebinding/lifetime/refusal rules before UI.

@@ -7235,3 +7235,17 @@ view and continued UndoRedo; then original scene-resource/codec/COW/history inte
 Storage foundation only, no new main paint authoring/display. Binding opaque until
 production validity/rebinding bridge; no paint export/UV propagation/SHA-authenticated
 project claim. .898 file workflow userPASS protected. No synthetic fixture device test.
+
+## .899 publication verified — 2026-10-17
+
+Runtime47136701c9c667ecdb410d89ca6e8b751c773680; tested tree
+da7f9e98766dff998f71e60d6deb20947dc692e1 matches fetched main/local exactly.
+Node22.23.3 topology CI39028416328/job117383876628 SUCCESS2487PASS/0FAIL/0skip;
+Pages39028415912 build117383877465/deploy117383953976 SUCCESS.
+Postdeployment exact live shell/version, lab899 index/controller/session and changed
+manager/management/drawer/codec/project-GLB/new paint-codec graph899 byte-match repository;
+unchanged resource898 and recovery loader899 graph also match. Protected Multi-transform/
+frozen/modelling/brush/preview bytes retained. User898PASS protected;899 nearby lab/main
+project device sanity pending. No new rendered/Pencil proof or main paint authoring claim.
+Documentation proof changes no tested runtime bytes. Next bounded original-owner
+selected-object paint bridge requires validity/rebinding/lifetime/refusal rules before UI.
