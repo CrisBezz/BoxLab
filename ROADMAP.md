@@ -2858,3 +2858,24 @@ Open/Pencil continuation gate pending, no898 device PASS inferred. No new cloud 
 or Safari rendering proof. .boxpaint is a lab session, not main .boxlab/Nomad paint.
 Next: Save Paint→Reset/reload→Open Paint from Downloads, compare both results/settings/
 view and continued UndoRedo; then original scene-resource/codec/COW/history integration.
+
+## .899 — project colour resource preservation; .898 user PASS — 2026-10-17
+
+User898PASS protects .boxpaint Save/Open/continued brush/history/settings/view;895
+not inferred. Audit37c77ab5 synchronous codec/actual history/manager/duplicates: no
+colour resource forwarding existed. Separate colourPaint owner, original scene
+snapshot/restore/ordinary single+Multi Duplicate share committed read-only buffers;
+replace resource for COW edits. Original .boxlab Save/Open handles explicit scenev2
+paint pool/ref envelopesv1 using existing canonical binary transport,8MiB unique raw
+budget; plain projects retain v1 exactly. Native UVv3 remains strictly UV-only.
+Owned decode/pool sharing/content+identity dedup; malformed/unknown/alpha/ref/budget/
+linked/procedural/reference owners refuse. Original exact roundtrip/atomic Open,
+render-failure rollback/history reset retained. Four tests + full2487PASS/0FAIL/0skip;
+focused4PASS includes added failed-render rollback assertions. No rendered/iPad claim.
+Binding opaque, no project SHA/current UV validity claim; .boxpaint SHA unchanged.
+Main Open says colour preserved but display/editing unavailable. No authoring/transfer
+UI/main paint/layers/UV propagation/GLB/Nomad paint export yet. Read
+ docs/project-paint-resources-899.md. Next bounded selected-object bridge through
+original preview/selection/history, explicit validity/rebinding/lifetime/refusals.
+Shell/recovery and changed owner graph899; original sample/resource898, brush896,
+preview897 and protected modelling/frozen bytes retained. Publication proof follows.

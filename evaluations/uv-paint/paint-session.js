@@ -1,4 +1,4 @@
-import {encodeBoxlabScene,decodeBoxlabScene} from '../../src/boxlab-project-codec.js?v=0.36.18.887';
+import {encodeBoxlabScene,decodeBoxlabScene} from '../../src/boxlab-project-codec.js?v=0.36.18.899';
 import {EditableMesh} from '../../src/mesh.js';
 import {captureColourResource,encodeColourResource,decodeColourResource,paintDigest} from '../../src/paint-resource.js?v=898';
 import {brushSettings} from './paint-core.js?v=896';

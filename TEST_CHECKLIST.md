@@ -7195,15 +7195,15 @@ user orbit/paint sphere and cube all sides, plane/paired history sanity; then pa
 resource/codec/COW/global-history design per current roadmap. Ordinary file-export
 winding remains a separate audit item; no automatic general outward-repair promise.
 
-## .898 — Paint Lab sessions, device acceptance pending
+## .898 — Paint Lab sessions, user PASS protected
 
 - [x] .897 userPASS protects corrected preview winding/visible-surface paint and prior brush/history/navigation.
 - [x] Version1 colour resource owned copies and exact integrity; strict size/channel/alpha/binding guards.
 - [x] Actual BoxLab scene/nativeUV codec and exact maps/settings/view for Sphere/Cube/Plane; no fake GLB or parallel mesh schema.
 - [x] Binary/corruption/budget/refusal, asynchronous Save snapshots, superseded/stale Open, atomic staged rollback and new Pencil contact guards.
 - [x] Actual controller Save/Open bytes, continued paired history, settings/view/brush restoration and disposal; original test assertions retained. Full2483PASS/0FAIL/0skip.
-- [ ] Paint, select brush/change settings/view → Save Paint (.boxpaint); Reset/reload → Open Paint from Downloads restores BOTH results/settings/view.
-- [ ] Continue painting after Open; Undo/Redo works for new strokes, PNG remains correct; older pre-save Undo is intentionally absent.
+- [x] (.898 user PASS) Paint, select brush/change settings/view → Save Paint (.boxpaint); Reset/reload → Open Paint from Downloads restores BOTH results/settings/view.
+- [x] (.898 user PASS) Continue painting after Open; Undo/Redo works for new strokes, PNG remains correct; older pre-save Undo is intentionally absent.
 
 .boxpaint is a separate lab session; no main .boxlab paint, layers, autosave or native
 paint export yet. Invalid file must not replace committed work; unfiltered iPad picker.
@@ -7223,3 +7223,15 @@ Open/Pencil continuation gate pending, no898 device PASS inferred. No new cloud 
 or Safari rendering proof. .boxpaint is a lab session, not main .boxlab/Nomad paint.
 Next: Save Paint→Reset/reload→Open Paint from Downloads, compare both results/settings/
 view and continued UndoRedo; then original scene-resource/codec/COW/history integration.
+
+## .899 — colour project resource foundation
+
+- [x] Exact colour bytes/descriptor/native UVs round-trip through explicit projectv2; ordinary v1 remains identical; UVv3 refuses paint fields.
+- [x] Actual snapshot/UndoRedo/deletion and both ordinary Duplicate owners share committed resources; replacements isolate edits, geometry independent.
+- [x] Pool content/identity dedup,8MiB boundary, malformed schema/alpha/base64/refs/owners refuse; no unencoded paint passthrough.
+- [x] Original Save/Open/download/atomic replacement and render-failure rollback preserve resource/history state; full2487PASS/0FAIL/0skip, focused4PASS.
+- [ ] Nearby regression: lab Save/Reset/Open and continued paint/UndoRedo; main ordinary Duplicate/Undo and plain .boxlab Save/Open.
+
+Storage foundation only, no new main paint authoring/display. Binding opaque until
+production validity/rebinding bridge; no paint export/UV propagation/SHA-authenticated
+project claim. .898 file workflow userPASS protected. No synthetic fixture device test.

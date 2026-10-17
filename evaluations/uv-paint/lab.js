@@ -3,7 +3,7 @@ import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 import {createPaintComparison,brushSettings,topDownPixels} from './paint-core.js?v=896';
 import {createStroke} from './stroke.js?v=896';
 import {comparisonSample} from './samples.js?v=898';
-import {createPaintSessionIO,PAINT_SESSION_LIMIT} from './paint-session.js?v=898';
+import {createPaintSessionIO,PAINT_SESSION_LIMIT} from './paint-session.js?v=899';
 // This standalone document loads the original export geometry owner, not main.js,
 // scene management or modelling input. Its export controls are absent and never used.
 import '../../src/export-as-panel.js?v=0.36.18.897';

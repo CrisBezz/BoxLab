@@ -45,3 +45,6 @@ export function decodeProjectGLB(resource,pool=null){
  if(result.images!=null){if(!Array.isArray(result.images))throw Error('Invalid GLB images');result.images=result.images.map(image=>{if(!image||typeof image!=='object')throw Error('Invalid GLB image');if(image.data?.imagePoolIndex!=null&&resource.version!==2)throw Error('Invalid GLB resource reference version');const data=image.data==null?null:imageData(image.data,pool);bytes+=data?.byteLength||0;if(bytes>LIMIT)throw Error('GLB image pool exceeds 24 MB');return {...image,data};});}
  return result;
 }
+
+// Shared canonical binary transport; paint uses a separate versioned envelope.
+export {encodeBytes as encodeProjectBytes,decodeBytes as decodeProjectBytes};

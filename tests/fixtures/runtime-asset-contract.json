@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.887",
+      "url": "./src/drawer-ui.js?v=0.36.18.899",
       "target": "src/drawer-ui.js",
-      "sha256": "795c208047edaa2f01f38e826ce304daba64618a6af7e4f5a83020420d0113a9"
+      "sha256": "c4e7ba0ae76621734d54da66d98d1f62b84a05929d1de21f09f7e80a99ceab94"
     },
     {
       "owner": "index.html",
@@ -329,15 +329,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.875",
+      "url": "./src/multi-object.js?v=0.36.18.899",
       "target": "src/multi-object.js",
-      "sha256": "5e01d66e674679f5713de7b3711521160f72fda44ee03c67791335d8d96de35b"
+      "sha256": "eb4fc198487fbff0783364064f20c5d546fac343d49932fc82edf0bc7ebb77cb"
     },
     {
       "owner": "index.html",
-      "url": "./src/object-management.js?v=0.36.18.887",
+      "url": "./src/object-management.js?v=0.36.18.899",
       "target": "src/object-management.js",
-      "sha256": "dc7ce2876020691ad894ac0d16c733e561d4f53425b8309cbcfdc023f16c07e9"
+      "sha256": "449fe393373ac0ac1fd42f7afaa4c4aff73e5e793672455d088e6d67681b8702"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.898",
+      "url": "./src/release-bootstrap.js?v=0.36.18.899",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.898",
+      "url": "./src/release-version.js?v=0.36.18.899",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -931,9 +931,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./object-management.js?v=0.36.18.887",
+      "url": "./object-management.js?v=0.36.18.899",
       "target": "src/object-management.js",
-      "sha256": "dc7ce2876020691ad894ac0d16c733e561d4f53425b8309cbcfdc023f16c07e9"
+      "sha256": "449fe393373ac0ac1fd42f7afaa4c4aff73e5e793672455d088e6d67681b8702"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -2306,9 +2306,9 @@
     },
     {
       "owner": "src/object-management.js",
-      "url": "./boxlab-project-codec.js?v=0.36.18.887",
+      "url": "./boxlab-project-codec.js?v=0.36.18.899",
       "target": "src/boxlab-project-codec.js",
-      "sha256": "52a058282c77c564a00fdbef07c1e52dc32610dfa7f56d9d59f8e6e4c6392de8"
+      "sha256": "8e291d417d0743ac099ef660d13069b1b614200a739cd4f2d1c9fb0ad4d50a82"
     },
     {
       "owner": "src/linear-array.js",
@@ -2372,9 +2372,9 @@
     },
     {
       "owner": "src/boxlab-project-codec.js",
-      "url": "./project-glb-resources.js?v=0.36.18.887",
+      "url": "./project-glb-resources.js?v=0.36.18.899",
       "target": "src/project-glb-resources.js",
-      "sha256": "802f8652121e15530b864dfb02fab57a0aeeb9811db27243ff858a2d473cf303"
+      "sha256": "7afa65af49793da01988893cf4b8d9d613e279607f1fd8fb94118de835258ac1"
     },
     {
       "owner": "src/mesh-health.js",
@@ -2471,6 +2471,24 @@
       "url": "./nomad-scalar-png.js?v=0.36.18.889",
       "target": "src/nomad-scalar-png.js",
       "sha256": "8b630e548edf2f328b7403b3239a96d403dd9502eb96b96ff6a16e40f9eac9b8"
+    },
+    {
+      "owner": "src/boxlab-project-codec.js",
+      "target": "src/project-paint-resources.js",
+      "url": "./project-paint-resources.js?v=0.36.18.899",
+      "sha256": "82cb0975a4a3d9e28148e6dda47d4d963a1a3cd92a839b3d86d5039053d9d314"
+    },
+    {
+      "owner": "src/project-paint-resources.js",
+      "target": "src/paint-resource.js",
+      "url": "./paint-resource.js?v=898",
+      "sha256": "aed7f91f7c49ca191fc09e5bb74240ce6315ecbc3cd4ee2f69be84edccfab05a"
+    },
+    {
+      "owner": "src/project-paint-resources.js",
+      "target": "src/project-glb-resources.js",
+      "url": "./project-glb-resources.js?v=0.36.18.899",
+      "sha256": "7afa65af49793da01988893cf4b8d9d613e279607f1fd8fb94118de835258ac1"
     }
   ]
 }

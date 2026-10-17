@@ -225,7 +225,7 @@ function detachLinkedObject(object) {
   return true;
 }
 function linkedDuplicateObject(sourceObject,{name=null,enterObjectMode=true}={}) {
-  if(sourceObject?.glbPassthrough?.source==='boxlab'){if(status)status.textContent='Native UVs currently support ordinary Duplicate only';return null;}
+  if(sourceObject?.colourPaint||sourceObject?.glbPassthrough?.source==='boxlab'){if(status)status.textContent='Native UVs / colour paint currently support ordinary Duplicate only';return null;}
   if(!sourceObject||sourceObject.kind==='reference')return null;
   if(sourceObject.id===activeId)saveActive();
   const source=ensureLinkedSource(sourceObject);
@@ -553,6 +553,7 @@ function addObject(mesh, name = 'Cube', options = {}) {
     history: { undo:[], redo:[] }
   };
   if(options.glbPassthrough)object.glbPassthrough=options.glbPassthrough;
+  if(options.colourPaint)object.colourPaint=options.colourPaint;
   if(options.curveProfile)object.curveProfile=cloneLooseValue(options.curveProfile);
   if(options.arrayRecipe)object.arrayRecipe=JSON.parse(JSON.stringify(options.arrayRecipe));
   if(options.sourceId)object.sourceId=options.sourceId;
@@ -573,7 +574,7 @@ function duplicateActive() {
   const source = activeObject();
   if (!source) return;
   saveActive();
-  const copy = addObject(source.mesh, nextDuplicateName(source.name), { settings:source.settings, curveProfile:source.curveProfile, arrayRecipe:source.arrayRecipe, glbPassthrough:source.glbPassthrough, enterObjectMode:true });
+  const copy = addObject(source.mesh, nextDuplicateName(source.name), { settings:source.settings, curveProfile:source.curveProfile, arrayRecipe:source.arrayRecipe, glbPassthrough:source.glbPassthrough, colourPaint:source.colourPaint, enterObjectMode:true });
   if (!copy) return;
   requestAnimationFrame(() => {
     if (currentMode() !== 'object') return;
