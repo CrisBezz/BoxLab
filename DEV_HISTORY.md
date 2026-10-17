@@ -10562,3 +10562,14 @@ references under UV outlines; Normal/Emissive still work. Pencil edits/UndoRedo/
 pinch, reopen and Save/Open -> native six-map export remain intact. Next after feedback:
 audit next staged UV-authoring/packing capability; separate opacity requires source-
 complete input. No opacity/displacement/occlusion inspection, painting or NOM import.
+
+## .892 publication verified — 2026-10-17
+
+Runtime68ee2db64bf7b3bd6bb4df7433141fef48db44f7; tested tree
+ce6c0a21c0fd49925ed557d4997edbb5fa2e1b89 exactly matches fetched main.
+Actual Node22.23.3 CI38991841599/job117275721906 SUCCESS2447PASS/0FAIL/0skip;
+Pages38991841149 build/deploy SUCCESS. Fresh live shell/manifest/recovery/MeshHealth/
+workspace/preview/surface/render/export/native-parent graph892, scalar889, protected
+Multi1.0 and frozenBeta7 marker all byte-match repository. All four continuity files
+current. User891 PASS protected;892 grayscale/Pencil/project/native device gate PENDING.
+Proof is documentation-only; tested runtime bytes unchanged.
