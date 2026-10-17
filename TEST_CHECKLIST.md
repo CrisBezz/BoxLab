@@ -7045,3 +7045,15 @@ Proof is documentation-only; tested runtime bytes unchanged.
 
 Equirectangular pole distortion expected. Round Y-pole meshes with aligned longitude
 rings only; no general deformed/Quadball unwrap, seam cutting, painting or new kernel.
+
+## .894 publication verified — 2026-10-17
+
+Runtime260817ff6794ce467346ad36dd8543978cdaf4d3; tested tree
+60b9ca959af6b1c0e04bf766ea1aee8225390eda exactly matches fetched main.
+Actual Node22.23.3 CI39005188711/job117316093356 SUCCESS2457PASS/0FAIL/0skip;
+Pages39005188424 build/deploy SUCCESS. Fresh postdeployment live shell/manifest/
+recovery/MeshHealth894/edit894, unchanged workspace893/inspector880/render892,
+protected Multi1.0 and frozenBeta7 marker all byte-match repository. Initial reads
+preceded deployment; final complete graph matches894. All four continuity files
+current. User893 PASS protected;894 Sphere layout/Pencil/history/project/native UV
+device gate PENDING. Proof is documentation-only; tested runtime bytes unchanged.

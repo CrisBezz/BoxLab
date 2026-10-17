@@ -29,7 +29,7 @@ native NOM UV pool and Three GLB pole variants; context/invalid/history refusals
 15 focused PASS; full Node24 **2457 PASS / 0 FAIL / 0 skipped**. Reviewed cache graph:
 shell/recovery/MeshHealth894 -> edit894; workspace893, inspector880, preview/render/
 native892, scalar889 unchanged. Internal MeshHealth stamp880 retained. Protected
-Multi1.0/modelling/frozen betas unchanged. Publication verification follows.
+Multi1.0/modelling/frozen betas unchanged. Publication verified below.
 
 Device894 pending: add Sphere -> Object MeshHealth -> UVs -> Sphere UVs (Y) -> Open
 UV Editor; check flat latitude layout, Checker and surface seam/poles. Edit with Pencil,
@@ -2582,3 +2582,15 @@ workspace/edit893, unchanged inspector880/preview/render/native892, protected Mu
 and frozenBeta7 marker all byte-match repository. All four continuity files current.
 User892 PASS protected;893 Pack all/framing/history/project/native UV device gate PENDING.
 Proof is documentation-only; tested runtime bytes unchanged.
+
+## .894 publication verified — 2026-10-17
+
+Runtime260817ff6794ce467346ad36dd8543978cdaf4d3; tested tree
+60b9ca959af6b1c0e04bf766ea1aee8225390eda exactly matches fetched main.
+Actual Node22.23.3 CI39005188711/job117316093356 SUCCESS2457PASS/0FAIL/0skip;
+Pages39005188424 build/deploy SUCCESS. Fresh postdeployment live shell/manifest/
+recovery/MeshHealth894/edit894, unchanged workspace893/inspector880/render892,
+protected Multi1.0 and frozenBeta7 marker all byte-match repository. Initial reads
+preceded deployment; final complete graph matches894. All four continuity files
+current. User893 PASS protected;894 Sphere layout/Pencil/history/project/native UV
+device gate PENDING. Proof is documentation-only; tested runtime bytes unchanged.
