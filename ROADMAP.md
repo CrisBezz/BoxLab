@@ -2355,3 +2355,14 @@ Release `7b7cf2751e371959437a6ad10601c930f727a64d`; tested tree `ef9e7b6005166f3
 ## .879 publication verified — 2026-10-16
 
 Release `6b20c3939a9ebe7b9847fdc0830adb565fd0a1ba`; tested tree `794865b855df33763e91136e5421b4933569507a` exactly matches fetched main. Actual Node22 CI38870113315/job116871955152 SUCCESS **2386 PASS / 0 FAIL / 0 skipped**; Pages38870112481 build/deploy SUCCESS. Final fresh live shell/manifest/render-owner/preview-child/export-panel879, unchanged workspace878/native NOM865/protected Multi1.0/frozenBeta7 version byte-match repository. Initial reads preceded deployment (old878/child404); final full graph matches879. All four continuity docs current. User878 PASS protected;879 surface checker/navigation/UV edit→session-exit/history/look-restoration device gate pending. Stored Base UVs only; unsupported/stale/over20k-corner objects use Solid; no painting/evaluated UV propagation claim.
+
+## .890 publication verified — 2026-10-17
+
+Runtime08f0256ef54901f205311b25d93b04b3250c2746; tested tree
+c7f3fd960f69b86bba150b377cc84646f18ced47 exactly matches fetched main.
+Actual Node22.23.3 CI38985850970/job117257022771 SUCCESS2440PASS/0FAIL/0skip;
+Pages38985850874 build/deploy SUCCESS. Fresh live shell/manifest/recovery/export-panel/
+packed-child/native-core890, unchanged scalar889/displacement888/protected Multi1.0
+and frozenBeta7 marker all byte-match repository. Initial reads preceded deployment;
+final graph matches890. All four continuity files current; proof changes docs only.
+User889 PASS protected;890 two-independent-import/UV/project native device gate PENDING.

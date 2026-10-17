@@ -10442,3 +10442,14 @@ File NOMAD must download/open two objects with six maps each. Pencil UV edit one
 then repeat; Save/Open .boxlab repeat. Genuine unique-image excess still refuses with
 source/converted/object breakdown. Next: device feedback, then source-complete opacity
 input/native material audit or staged UV/texture work; no invented opacity/NOM import.
+
+## .890 publication verified — 2026-10-17
+
+Runtime08f0256ef54901f205311b25d93b04b3250c2746; tested tree
+c7f3fd960f69b86bba150b377cc84646f18ced47 exactly matches fetched main.
+Actual Node22.23.3 CI38985850970/job117257022771 SUCCESS2440PASS/0FAIL/0skip;
+Pages38985850874 build/deploy SUCCESS. Fresh live shell/manifest/recovery/export-panel/
+packed-child/native-core890, unchanged scalar889/displacement888/protected Multi1.0
+and frozenBeta7 marker all byte-match repository. Initial reads preceded deployment;
+final graph matches890. All four continuity files current; proof changes docs only.
+User889 PASS protected;890 two-independent-import/UV/project native device gate PENDING.

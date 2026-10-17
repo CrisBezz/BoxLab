@@ -2,9 +2,9 @@
 
 ## Current state — 2026-10-17
 CrisBezz/BoxLab main build0.36.18.890; live https://crisbezz.github.io/BoxLab/.
-Previous verified runtime b7c5d1e349741906d55f510c8f5c240ed403efca/main889.
+Current runtime08f0256ef54901f205311b25d93b04b3250c2746/main890; CI/Pages/live verified.
 User .889 PASS now protects six native maps, UV repeat and project reopening.
-.890 local2440/0/0; publication verification pending. .890 device gate separate.
+.890 local/Node22 CI2440/0/0; two-import device gate remains separate.
 User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
@@ -2338,3 +2338,14 @@ all byte-match repository. Initial predeployment reads were stale/404; final gra
 fully matches. All four continuity docs updated. This proof changes docs only.
 User888 FAIL retained;889 iPad export/Nomad six-slot/UV/project gate PENDING.
 No device PASS inferred. Fresh scene, one FULL MATERIAL.glb import, SubD off.
+
+## .890 publication verified — 2026-10-17
+
+Runtime08f0256ef54901f205311b25d93b04b3250c2746; tested tree
+c7f3fd960f69b86bba150b377cc84646f18ced47 exactly matches fetched main.
+Actual Node22.23.3 CI38985850970/job117257022771 SUCCESS2440PASS/0FAIL/0skip;
+Pages38985850874 build/deploy SUCCESS. Fresh live shell/manifest/recovery/export-panel/
+packed-child/native-core890, unchanged scalar889/displacement888/protected Multi1.0
+and frozenBeta7 marker all byte-match repository. Initial reads preceded deployment;
+final graph matches890. All four continuity files current; proof changes docs only.
+User889 PASS protected;890 two-independent-import/UV/project native device gate PENDING.
