@@ -10839,3 +10839,18 @@ in git; historical chronology/acceptance retained in DEV_HISTORY/TEST_CHECKLIST.
 Next: compare Pencil feel; refine chosen stroke/footprint, then explicit paint resource/
 codec/COW/global history before real scene integration. No896 device PASS inferred.
 Publication/CI/Pages/live proof follows separately.
+
+## .896 publication verified — 2026-10-17
+
+Runtime81871e11aa9890747bea1ef337694a8666ce0eac; tested tree
+011024983673d1d5d40a1cfc448f4031491ddfdb matches fetched main/local exactly.
+Node22 topology CI39017673843/job117353013439 SUCCESS2474PASS/0FAIL/0skip;
+Pages39017673462 build117353014782/deploy117353094301 SUCCESS.
+Fresh live shell/version and all9 lab source/vendor assets byte-match repository.
+Main protected modelling/Multi/frozen beta bytes and original TexturePaint trial unchanged.
+Cloud Chrome loads lab modules/UI but WebGL context creation fails; unchanged original
+TexturePaint page fails identically. Thus rendered surface/Pencil/navigation/PNG device
+acceptance remains pending, not passed by browser inspection or Node adapters. No claim
+of an iPad WebGL failure; this is the observed cloud-browser limitation. No896 user PASS.
+Documentation proof changes no tested runtime bytes. Next: user paired-brush comparison,
+then selected refinement/resource/codec/global-history work per docs/uv-paint-lab-896.md.

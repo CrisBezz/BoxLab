@@ -9,8 +9,8 @@ https://crisbezz.github.io/BoxLab/evaluations/uv-paint/?build=896 .
 
 Base before this build: audit569d4e7e09d34e043bae7cd1038b9034c31823a7;
 previous runtime895=6b1e003324e5e883d8a0f4625a1e69ba0336fde7.
-Local full Node24 validation2474PASS/0FAIL/0skip. Publication/Node22 CI/Pages/live
-verification is recorded below when complete; do not infer it from local results.
+Local full Node24 and Node22 CI2474PASS/0FAIL/0skip; Pages/live verified below.
+Runtime release81871e11; rendered/iPad acceptance remains pending.
 User .894 PASS remains protected; .895 density gate remains pending. TexturePaint
 feedback “brush needs work but promising” is qualitative, not blanket trial acceptance.
 No .896 device PASS is inferred. User authorizes ongoing pushing/publishing.
@@ -150,4 +150,17 @@ Never publish a mismatched tree. Version896 navigation link loads no painting in
 
 ## Publication evidence
 
-Pending at preparation; append verified commit/CI/Pages/live evidence after publication.
+## .896 publication verified — 2026-10-17
+
+Runtime81871e11aa9890747bea1ef337694a8666ce0eac; tested tree
+011024983673d1d5d40a1cfc448f4031491ddfdb matches fetched main/local exactly.
+Node22 topology CI39017673843/job117353013439 SUCCESS2474PASS/0FAIL/0skip;
+Pages39017673462 build117353014782/deploy117353094301 SUCCESS.
+Fresh live shell/version and all9 lab source/vendor assets byte-match repository.
+Main protected modelling/Multi/frozen beta bytes and original TexturePaint trial unchanged.
+Cloud Chrome loads lab modules/UI but WebGL context creation fails; unchanged original
+TexturePaint page fails identically. Thus rendered surface/Pencil/navigation/PNG device
+acceptance remains pending, not passed by browser inspection or Node adapters. No claim
+of an iPad WebGL failure; this is the observed cloud-browser limitation. No896 user PASS.
+Documentation proof changes no tested runtime bytes. Next: user paired-brush comparison,
+then selected refinement/resource/codec/global-history work per docs/uv-paint-lab-896.md.
