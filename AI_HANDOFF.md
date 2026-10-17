@@ -5,7 +5,7 @@
 CrisBezz/BoxLab main release0.36.18.900, based on2c56d33f (.899 runtime47136701).
 User .899 PASS protects nearby lab sessions/main Duplicate/history/.boxlab, alongside
 .896/.897/.898. Historical pending gates below are not current acceptance; .895 density
-remains separate. Full Node24 2494PASS/0FAIL/0skip. Publishing authorized, proof follows.
+remains separate. Full Node24 2494PASS/0FAIL/0skip. Runtimeeb26b991; Node22 CI/Pages/live verified below. Publishing authorized.
 Read docs/viewport-paint-900.md for implementation/lifetimes/limits/tests/manual gate.
 
 ## .900 — actual selected-object painting
@@ -301,3 +301,18 @@ frozen/modelling/brush/preview bytes retained. User898PASS protected;899 nearby 
 project device sanity pending. No new rendered/Pencil proof or main paint authoring claim.
 Documentation proof changes no tested runtime bytes. Next bounded original-owner
 selected-object paint bridge requires validity/rebinding/lifetime/refusal rules before UI.
+
+## .900 publication verified — 2026-10-17
+
+Runtimeeb26b99141af4a1e3a77d1f09fe559887880dd7e; tested tree
+b687f2b2f3665f389f67e02db1e67bf991b487bf matches fetched main/local exactly.
+Node22.23.3 topology CI39030804811/job117390693515 SUCCESS2494PASS/0FAIL/0skip;
+Pages39030803672 build117390693845/deploy117390798136 SUCCESS.
+Postdeployment exact shell/version, main viewport paint/target/core/render/radial/
+manager/management/drawer/export/refusal parent graph900 plus Lab900 index/controller
+and unchanged accepted raster/stroke896 byte-match repository. Recovery900 matches.
+Protected Multi-transform1.0/frozen/modelling algorithms/brush bytes retained. User899
+PASS protected;900 actual viewport/Pencil/navigation/project device gate pending.
+No rendered/iPad proof inferred from Node adapters or previous cloud WebGL limitation.
+Documentation proof changes no tested runtime. Next: device feedback, then flattened
+paint export through original GLB/NOM owners; painted export refusal remains meanwhile.

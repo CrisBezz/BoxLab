@@ -11002,3 +11002,18 @@ Historical741 pin test uses reviewed contract and retains shell/dynamic equality
 Read docs/viewport-paint-900.md. User899PASS protected;900 device gate pending.
 Next hands-on actual paint, then flattened colour export through original owners.
 Publication proof follows; protected Multi1.0/frozen/modelling/brush bytes retained.
+
+## .900 publication verified — 2026-10-17
+
+Runtimeeb26b99141af4a1e3a77d1f09fe559887880dd7e; tested tree
+b687f2b2f3665f389f67e02db1e67bf991b487bf matches fetched main/local exactly.
+Node22.23.3 topology CI39030804811/job117390693515 SUCCESS2494PASS/0FAIL/0skip;
+Pages39030803672 build117390693845/deploy117390798136 SUCCESS.
+Postdeployment exact shell/version, main viewport paint/target/core/render/radial/
+manager/management/drawer/export/refusal parent graph900 plus Lab900 index/controller
+and unchanged accepted raster/stroke896 byte-match repository. Recovery900 matches.
+Protected Multi-transform1.0/frozen/modelling algorithms/brush bytes retained. User899
+PASS protected;900 actual viewport/Pencil/navigation/project device gate pending.
+No rendered/iPad proof inferred from Node adapters or previous cloud WebGL limitation.
+Documentation proof changes no tested runtime. Next: device feedback, then flattened
+paint export through original GLB/NOM owners; painted export refusal remains meanwhile.
