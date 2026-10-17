@@ -1,0 +1,16 @@
+import fs from 'node:fs';import vm from 'node:vm';import assert from 'node:assert/strict';import * as THREE from 'three';
+import {createPaintComparison,topDownPixels} from '../../evaluations/uv-paint/paint-core.js';
+import {createStroke} from '../../evaluations/uv-paint/stroke.js';
+import {comparisonGeometry,comparisonSample} from '../../evaluations/uv-paint/samples.js';
+import {createPaintSessionIO,PAINT_SESSION_LIMIT} from '../../evaluations/uv-paint/paint-session.js';
+import {glbOwnerRuntime} from './glb-owner-runtime.mjs';
+const owner=glbOwnerRuntime().c,read=p=>fs.readFileSync(new URL('../../'+p,import.meta.url),'utf8');
+export function uvPaintLabRuntime(){
+ const nodes=new Map(),raf=[],events=new Map(),downloads=[];let animation;
+ class Node{constructor(id){this.id=id;this.value='';this.checked=false;this.listeners=new Map();this.style={};this.dataset={};}addEventListener(n,f){const a=this.listeners.get(n)||[];a.push(f);this.listeners.set(n,a);}dispatch(n,data={}){const e={pointerId:1,pointerType:'pen',button:0,buttons:1,pressure:.7,clientX:450,clientY:300,preventDefault(){this.prevented=true;},stopImmediatePropagation(){this.stopped=true;},...data};e.pending=Promise.all((this.listeners.get(n)||[]).map(f=>f(e)));return e;}setAttribute(n,v){this[n]=v;}getBoundingClientRect(){return {left:0,top:0,width:900,height:600};}setPointerCapture(id){this.capture=id;}releasePointerCapture(){this.capture=null;}append(){}remove(){}click(){this.clicked=true;return this.dispatch('click');}}
+ for(const [,id]of read('evaluations/uv-paint/index.html').matchAll(/id="([^"]+)"/g))nodes.set(id,new Node(id));for(const [id,v]of Object.entries({model:'sphere',colour:'#e34b37',radius:'10',hardness:'.7',opacity:'1'}))nodes.get(id).value=v;nodes.get('pressure').checked=true;
+ class Renderer{constructor(){}setPixelRatio(){}setSize(){}setAnimationLoop(f){animation=f;}render(){}dispose(){this.disposed=true;}}
+ class Controls{constructor(camera){this.camera=camera;this.target=new THREE.Vector3();this.enabled=true;}update(){this.camera.lookAt(this.target);this.camera.updateMatrixWorld();}dispose(){}}
+ const c={THREE:{...THREE,WebGLRenderer:Renderer},OrbitControls:Controls,createPaintComparison,brushSettings:undefined,topDownPixels,createStroke,comparisonGeometry,comparisonSample,createPaintSessionIO,PAINT_SESSION_LIMIT,__boxlabExportAs:owner,document:{getElementById:id=>nodes.get(id),createElement:()=>new Node(),body:new Node(),addEventListener(n,f){events.set(n,f);}},devicePixelRatio:1,performance,Uint8Array,Blob,URL:{createObjectURL:blob=>{downloads.push(blob);return 'blob:test';},revokeObjectURL(){}},setTimeout:(fn,ms)=>{const t=setTimeout(fn,ms);t.unref?.();return t;},requestAnimationFrame:f=>raf.push(f),ResizeObserver:class{observe(){}disconnect(){}},console,addEventListener:(n,f)=>events.set(n,f)};
+ return {nodes,events,raf,downloads,c,run:async()=>{c.brushSettings=(await import('../../evaluations/uv-paint/paint-core.js')).brushSettings;vm.createContext(c);const source=read('evaluations/uv-paint/lab.js').replace(/^import[^;]+;\s*$/gm,'');vm.runInContext(source,c);animation?.();assert.match(nodes.get('status').textContent,/Ready/);return c.__boxlabUVPaintLab;},frame:()=>animation?.()};
+}

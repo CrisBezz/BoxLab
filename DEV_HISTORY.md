@@ -10902,3 +10902,32 @@ This verification updates documentation only; tested runtime bytes retained. Nex
 user orbit/paint sphere and cube all sides, plane/paired history sanity; then paint
 resource/codec/COW/global-history design per current roadmap. Ordinary file-export
 winding remains a separate audit item; no automatic general outward-repair promise.
+
+## .898 — paint resource v1 and lab Save/Open; .897 PASS, 2026-10-17
+
+User897PASS protects corrected outward preview, paint/navigation/history/plane baseline.
+Audit current6677ce85: no editable paint-resource codec exists; native projectv3 UV-only.
+Add src/paint-resource.js: version1 opaque baseColor/sRGB/RGBA8/UV-v0-first, explicit size/
+binding, owned pixel capture/async encode/decode copies, exact SHA256 integrity. Metadata
+frozen; typed pixels are read-only by caller contract, not magically immutable. No global
+history owner or changes to native .boxlab resource envelopes.
+Lab Save/Open .boxpaint v1 embeds scene through ORIGINAL BoxLab scene/nativeUV codec,
+actual sample geometry/UVs, both512² results, settings/selected brush/camera. Binary header
+≤1MiB/file≤4MiB, two exact raw RGBA buffers with descriptors/hash, bounded plain native
+sample only. No fake GLB metadata, new mesh kernel, PNG reencoding or main paint save claim.
+Save snapshots before await; Open stages/validates before replacement, clears lab history
+on success, disposes old resources once. Invalid/corrupt/stale files keep committed work;
+revision/generation checks block late Open after a new Pencil contact/settings/history/
+reset/candidate/navigation or another Open. Unfiltered iPad picker follows existing
+.boxlab Open to avoid unknown-extension filtering. PNG and accepted brush semantics intact.
+Six new tests cover owned resource/integrity, exact three-sample pixel/UV/geometry/settings/
+view restoration, async capture and load guards, budgets/corruption, real controller Save/
+Open/continued Undo/stale-stage rollback/new contact. Extracted original lab test harness;
+all original assertions retained. Full Node24 **2483PASS/0FAIL/0skip**. Browser/iPad gate
+separate; no rendered/filepicker proof inferred from Node.
+Shell/recovery898; lab loader/sample/session/resource898. Export897/codec887/core+stroke896
+and all production UV/project/history/import/export/modelling/frozen owners unchanged.
+No layers/autosave/main .boxlab paint/global scene history/Nomad paint export claim.
+Manual: paint→Save Paint; Reset/reload→Open Paint from Downloads; compare both brushes,
+settings/view, then draw/Undo/Redo and PNG. Next original scene-resource/codec/COW/history
+integration after feedback. Publication verification follows; no898 device PASS inferred.

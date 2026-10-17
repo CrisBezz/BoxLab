@@ -7172,8 +7172,8 @@ then selected refinement/resource/codec/global-history work per docs/uv-paint-la
 - [x] Every Sphere/Cube preview triangle and normal outward; real front-sided raycasts from six directions hit near exterior. Plane front remains visible.
 - [x] Tilted concave/reversed polygons retain SOURCE winding and exact UV/position pairing; no source mutations, no convex-centre outward guess.
 - [x] Ordinary export default path/geometry unchanged; same triangle corner sets. Full2477PASS/0FAIL/0skip; brush/kernel/frozen/protected code retained.
-- [ ] Orbit Sphere/Cube through all sides: no inside-out/missing patches; Pencil paint stays on visible outer surface.
-- [ ] Plane visible; paired brush switching and UndoRedo still work.
+- [x] Orbit Sphere/Cube through all sides: no inside-out/missing patches; Pencil paint stays on visible outer surface (.897 user PASS).
+- [x] Plane visible; paired brush switching and UndoRedo still work (.897 user PASS).
 
 Winding fix is shared UV PREVIEW only. General file-export winding repair remains out
 of scope; preserve intentionally reversed source polygons. No897 device PASS yet.
@@ -7194,3 +7194,16 @@ This verification updates documentation only; tested runtime bytes retained. Nex
 user orbit/paint sphere and cube all sides, plane/paired history sanity; then paint
 resource/codec/COW/global-history design per current roadmap. Ordinary file-export
 winding remains a separate audit item; no automatic general outward-repair promise.
+
+## .898 — Paint Lab sessions, device acceptance pending
+
+- [x] .897 userPASS protects corrected preview winding/visible-surface paint and prior brush/history/navigation.
+- [x] Version1 colour resource owned copies and exact integrity; strict size/channel/alpha/binding guards.
+- [x] Actual BoxLab scene/nativeUV codec and exact maps/settings/view for Sphere/Cube/Plane; no fake GLB or parallel mesh schema.
+- [x] Binary/corruption/budget/refusal, asynchronous Save snapshots, superseded/stale Open, atomic staged rollback and new Pencil contact guards.
+- [x] Actual controller Save/Open bytes, continued paired history, settings/view/brush restoration and disposal; original test assertions retained. Full2483PASS/0FAIL/0skip.
+- [ ] Paint, select brush/change settings/view → Save Paint (.boxpaint); Reset/reload → Open Paint from Downloads restores BOTH results/settings/view.
+- [ ] Continue painting after Open; Undo/Redo works for new strokes, PNG remains correct; older pre-save Undo is intentionally absent.
+
+.boxpaint is a separate lab session; no main .boxlab paint, layers, autosave or native
+paint export yet. Invalid file must not replace committed work; unfiltered iPad picker.

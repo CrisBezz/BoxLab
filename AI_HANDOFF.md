@@ -1,15 +1,15 @@
-# BoxLab AI Handoff — .896 / UV Paint Lab
+# BoxLab AI Handoff — .898 / Paint resource and lab sessions
 
 ## Current state — 17 October 2026
 
-CrisBezz/BoxLab main release0.36.18.897: UV preview winding repair following user896 PASS.
-File → UV Paint Lab opens https://crisbezz.github.io/BoxLab/evaluations/uv-paint/?build=897 .
-Base53abe68b3a0e252afda6f79f25f59851ad3d6a7e; prior runtime896=81871e11.
-Local Node24 and Node22 CI2477PASS/0FAIL/0skip;897 Pages/live verified below.
-Runtime1db5769b; current main includes the documentation proof after that runtime.
-User896 PASS protects brush/Pencil/settings/navigation/history/PNG baseline EXCEPT reported
-inward paint triangles.897 fixes that preview-specific exception; no897 device PASS yet.
-Earlier894 protected;895 density pending. Ongoing publish authorization retained.
+CrisBezz/BoxLab main release0.36.18.898: colour resource + lab Save/Open after user897PASS.
+File → UV Paint Lab opens https://crisbezz.github.io/BoxLab/evaluations/uv-paint/?build=898 .
+Base6677ce85c3e40dd6f4da08da29c917a6b897b6e7; prior runtime897=1db5769b.
+Local Node24 full2483PASS/0FAIL/0skip;898 CI/Pages/live pending at preparation.
+User897PASS protects preview outward winding/visible surface paint/plane/brush/history/
+navigation, alongside896PASS. No898 device PASS yet;895 density remains separate pending.
+Ongoing pushing/publishing authorization retained. Save/Open .boxpaint is a LAB session,
+not production .boxlab or Nomad paint persistence. Read docs/paint-session-898.md.
 
 Read AI_WORKFLOW.md completely, this handoff completely, relevant TEST_CHECKLIST,
 recent DEV_HISTORY and ROADMAP before code. Repository is authoritative. This file
@@ -18,6 +18,35 @@ https://github.com/CrisBezz/BoxLab/blob/569d4e7e09d34e043bae7cd1038b9034c31823a7
 All earlier chronology, failures, acceptance and publication evidence remain in
 DEV_HISTORY/TEST_CHECKLIST and git. Do not treat historical pending-gate paragraphs
 as overriding later explicit PASS or current state.
+
+## .898 — paint resource v1 and lab Save/Open; .897 PASS, 2026-10-17
+
+User897PASS protects corrected outward preview, paint/navigation/history/plane baseline.
+Audit current6677ce85: no editable paint-resource codec exists; native projectv3 UV-only.
+Add src/paint-resource.js: version1 opaque baseColor/sRGB/RGBA8/UV-v0-first, explicit size/
+binding, owned pixel capture/async encode/decode copies, exact SHA256 integrity. Metadata
+frozen; typed pixels are read-only by caller contract, not magically immutable. No global
+history owner or changes to native .boxlab resource envelopes.
+Lab Save/Open .boxpaint v1 embeds scene through ORIGINAL BoxLab scene/nativeUV codec,
+actual sample geometry/UVs, both512² results, settings/selected brush/camera. Binary header
+≤1MiB/file≤4MiB, two exact raw RGBA buffers with descriptors/hash, bounded plain native
+sample only. No fake GLB metadata, new mesh kernel, PNG reencoding or main paint save claim.
+Save snapshots before await; Open stages/validates before replacement, clears lab history
+on success, disposes old resources once. Invalid/corrupt/stale files keep committed work;
+revision/generation checks block late Open after a new Pencil contact/settings/history/
+reset/candidate/navigation or another Open. Unfiltered iPad picker follows existing
+.boxlab Open to avoid unknown-extension filtering. PNG and accepted brush semantics intact.
+Six new tests cover owned resource/integrity, exact three-sample pixel/UV/geometry/settings/
+view restoration, async capture and load guards, budgets/corruption, real controller Save/
+Open/continued Undo/stale-stage rollback/new contact. Extracted original lab test harness;
+all original assertions retained. Full Node24 **2483PASS/0FAIL/0skip**. Browser/iPad gate
+separate; no rendered/filepicker proof inferred from Node.
+Shell/recovery898; lab loader/sample/session/resource898. Export897/codec887/core+stroke896
+and all production UV/project/history/import/export/modelling/frozen owners unchanged.
+No layers/autosave/main .boxlab paint/global scene history/Nomad paint export claim.
+Manual: paint→Save Paint; Reset/reload→Open Paint from Downloads; compare both brushes,
+settings/view, then draw/Undo/Redo and PNG. Next original scene-resource/codec/COW/history
+integration after feedback. Publication verification follows; no898 device PASS inferred.
 
 ## .897 — UV preview winding repair; .896 brush PASS, 2026-10-17
 
@@ -78,19 +107,20 @@ release resources; BFCache cancel without disposal. PNG exports selected flatten
 with top-down row conversion. Six paired history entries and12,000-dab/candidate cap;
 raw active CPU paint-buffer peak~20MiB excluding PNG/browser/GPU/geometry allocations.
 
-Limits are explicit: volatile sample-mesh painting only, no layers/project/native export
-persistence, real user-object editing, imported texture base, seam stitching/island masks,
+Scope is sample-mesh painting, with .boxpaint Save/Open from898. No layers or MAIN
+.boxlab/native paint export persistence, real user-object editing, imported texture base, seam stitching/island masks,
 world-radius projection, smudge or PBR. Adjacent islands can bleed. Do not promise that
 splitting paths alone makes painting seamless or that CPU timings establish M2 performance.
 
 ## Next narrow step
 
-User896 PASS recorded; confirm897 sphere/cube surfaces face outward and remain paintable
-from all sides, plus plane and paired UndoRedo. Ask only3–6 practical checks.
-After feedback, refine chosen stroke/footprint. Before editing actual BoxLab objects,
-design explicit paint resource version/codec/immutable copy-on-write history and flattened
-export. Do not divert into further UV utilities instead of proving direct3D painting.
-Keep backend replaceable; small attributed reuse, no wholesale editor import.
+Test898 Save Paint→Reset/reload→Open Paint from Downloads, both maps/settings/view and
+continued paired Undo/Redo/PNG. .897 winding and .896 brush acceptance are protected.
+Then integrate the explicit colour resource with ORIGINAL scene snapshots/codec/history
+and copy-on-write under an explicit schema. Native resourcev3 must remain UV-only.
+Actual selected-object display/input and flattened GLB/native paint export follow through
+existing owners. No second mesh/history kernel or premature .boxlab/Nomad claim.
+Keep backend replaceable; no further unrelated UV utilities in place of3D painting.
 
 ## Protected interaction and modelling baseline
 
