@@ -2,7 +2,8 @@
 
 ## Current state — 2026-10-17
 CrisBezz/BoxLab main build0.36.18.889; live https://crisbezz.github.io/BoxLab/.
-Previous runtime9af5dff1/main888; user reports24MB export FAIL. .889 repairs scalar PNG encoding; .887 PASS protected.
+Current runtime b7c5d1e349741906d55f510c8f5c240ed403efca/main889; CI/Pages/live verified.
+Previous888 user24MB export FAIL;889 device retest pending. .887 PASS protected.
 User887 PASS protects five-map export/UV/project. User888 FAIL is open pending889 retest; displacement binding retained, no888 acceptance inferred. User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
@@ -2271,3 +2272,17 @@ binding/hash proof and actual6-map output22,511,792B recorded; original16-bit da
 settings retained, no physical-height compensation or BoxLab geometry bake claim.
 All four continuity docs current. This local verification note was pending publication
 when the user reported888 image-budget FAIL;889 continues that repair. No888 PASS inferred.
+
+
+## .889 publication verified — 2026-10-17
+
+Runtime b7c5d1e349741906d55f510c8f5c240ed403efca; tested tree
+dda3ae2132766f5f18f674da18693424d3b74b20 matches fetched main exactly.
+Actual Node22 CI38984764493/job117253528765 SUCCESS2436PASS/0FAIL/0skip;
+Pages38984764391 build/deploy SUCCESS. Postdeployment live shell/manifest/recovery/
+export-panel/packed-child/new scalar encoder889, native core/displacement888,
+source-image helper887/importer882, protected Multi1.0 and frozenBeta7 marker
+all byte-match repository. Initial predeployment reads were stale/404; final graph
+fully matches. All four continuity docs updated. This proof changes docs only.
+User888 FAIL retained;889 iPad export/Nomad six-slot/UV/project gate PENDING.
+No device PASS inferred. Fresh scene, one FULL MATERIAL.glb import, SubD off.

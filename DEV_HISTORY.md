@@ -10374,3 +10374,17 @@ check all six native slots including displacement; UV edit and .boxlab Save/Open
 If still overbudget, report FULL new source/converted/object breakdown rather than guess.
 Opacity remains pending; displacement numeric settings copied unchanged, no amplitude
 rescaling/BoxLab geometry bake/generic glTF displacement/native multi-material/NOM import.
+
+
+## .889 publication verified — 2026-10-17
+
+Runtime b7c5d1e349741906d55f510c8f5c240ed403efca; tested tree
+dda3ae2132766f5f18f674da18693424d3b74b20 matches fetched main exactly.
+Actual Node22 CI38984764493/job117253528765 SUCCESS2436PASS/0FAIL/0skip;
+Pages38984764391 build/deploy SUCCESS. Postdeployment live shell/manifest/recovery/
+export-panel/packed-child/new scalar encoder889, native core/displacement888,
+source-image helper887/importer882, protected Multi1.0 and frozenBeta7 marker
+all byte-match repository. Initial predeployment reads were stale/404; final graph
+fully matches. All four continuity docs updated. This proof changes docs only.
+User888 FAIL retained;889 iPad export/Nomad six-slot/UV/project gate PENDING.
+No device PASS inferred. Fresh scene, one FULL MATERIAL.glb import, SubD off.
