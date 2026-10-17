@@ -10573,3 +10573,53 @@ workspace/preview/surface/render/export/native-parent graph892, scalar889, prote
 Multi1.0 and frozenBeta7 marker all byte-match repository. All four continuity files
 current. User891 PASS protected;892 grayscale/Pencil/project/native device gate PENDING.
 Proof is documentation-only; tested runtime bytes unchanged.
+
+## .893 — Pack all UV islands, 2026-10-17
+
+User .892 PASS protects Roughness(G)/Metalness(B) references, prior map choices,
+Pencil/navigation/history, project reopening and native six-map export. Audit main
+321674aa/runtime68ee2db6 and original UV inspection/edit/workspace/history/export owners;
+Fit-to-tile exists for ONE island, no all-island packer exists.
+
+Add Pack all to ORIGINAL UV workspace. Whole current object's complete UV layout,
+with or without an island selection; supported imported GLB and native BoxLab channels.
+Deterministic GRID packing, not optimal polygon packing, seam unwrap or texture baking.
+Try column counts for best common uniform scale; preserve every island's orientation,
+shape and RELATIVE UV sizes/density. Island IDs/order unchanged.2% tile outer margin
+and at least2% gap between island BOUNDING BOXES. At most128 islands; larger layouts
+refuse before history. Does not remove overlaps WITHIN an island. Texture images stay
+fixed: packing intentionally changes their sampling, like existing UV transforms.
+Button title explains all-island scope/fixed images. No auto-pack on import/export.
+
+Extend SAME imported-uv-edit transaction with packImportedUVIslands, using original
+inspector connectivity/full faceIslands and shared bounds. Expected payload/scope/context,
+complete matching channel, independent/unlocked/resource/history guards retained. Plan
+with normalized coordinates to handle huge/tiny finite UVs; reject zero-extent islands,
+nonfinite scale, collapsed extents or newly collapsed UV edges in double OR export-f32
+precision before mutation. Existing copy-on-write payload/tangent retirement and one
+native scene checkpoint. Source mesh, metadata/images, peers and source arrays read-only.
+Near-identical repeated packed result (32EPS absolute in0–1) adds no Undo entry. Original
+selected-island/whole-layout Rotate/Flip/Move/Scale/Fit maths unchanged.
+
+Pack click cancels pending Pencil preview through existing owner, delegates original
+MeshHealth transaction and retains matching selected-island membership. Successful pack
+frames resulting tile with EXISTING view Fit; rejection leaves view unchanged. No new
+pointer/history/resource/UV signature owner, schema or geometry changes. No packing of
+selected subsets or user-adjustable gutters in this first stage.
+
+Five native regressions: common scale/aspect/orientation/bounding gaps/COW/peer isolation/
+actual UndoRedo/repeat no-op; native Box UVs, huge/tiny/full-face-beyond-preview layouts;
+invalid/stale/locked/no-history/zero-extent/f64/f32 collapse refusals and128 allowed vs129
+refused; ACTUAL workspace+MeshHealth no-selection launch/Pencil cancel/selection/context;
+actual .boxlab codec, native NOM UV indices/f32 corners and Three GLB UV/tangent roundtrip.
+Full local Node24 2452PASS/0FAIL/0skip. Narrow cache graph shell/recovery/MeshHealth893 ->
+workspace893/edit893; inspector880/preview892/render/native export892/scalar889 retained.
+Internal MeshHealth stamp880 retained. All protected modelling/Multi/frozen bytes unchanged.
+
+Device893: cube -> MeshHealth UVs -> Box UVs -> Open UV Editor -> Pack all: separated
+islands inside tile, result framed; select/move island then Pack all with selection
+retained. Undo/Redo restores layout; repeated Pack all adds no extra Undo. Save/Open
+.boxlab and File NOMAD Base retain packed layout/seams. This is manual UV layout
+editing; do not expect imported painted texture appearance to stay fixed after packing.
+Next: device packing feedback, then audit staged seam/UV authoring or resource-backed
+painting; no new opacity recovery/native multi-material/NOM import claim.

@@ -24,6 +24,34 @@ export function fitImportedUVToTile(object,mesh,topologySignature,history,scope)
  if(scope===undefined)return {ok:false,reason:'Select a UV island to fit'};
  return editImportedUV(object,mesh,topologySignature,history,{kind:'fit'},scope);
 }
+export function packImportedUVIslands(object,mesh,topologySignature,history,scope){
+ if(!scope||scope.payload!==object?.glbPassthrough||scope.island!=null&&!Number.isInteger(scope.island))return {ok:false,reason:'Refresh the UV layout before packing'};
+ return editImportedUV(object,mesh,topologySignature,history,{kind:'pack'},scope.island==null?undefined:scope);
+}
+// Deterministic grid packing, not an optimal atlas solver. One common scale
+// preserves existing relative UV density; island bounds stay in separate cells.
+function packedLayout(uvCorners,report){
+ const count=report.islandCount;if(count<1||count>128)return {reason:'Pack all supports 1–128 UV islands'};
+ const faces=Array.from({length:count},()=>[]);report.faceIslands.forEach((id,fi)=>faces[id].push(fi));
+ const bounds=faces.map(ids=>importedUVIslandBounds(uvCorners,ids));let magnitude=0;
+ for(const b of bounds)for(const value of Object.values(b))magnitude=Math.max(magnitude,Math.abs(value));
+ if(!magnitude)return {reason:'UV islands need extent to pack'};
+ const normalized=bounds.map(b=>({minU:b.minU/magnitude,minV:b.minV/magnitude,width:b.maxU/magnitude-b.minU/magnitude,height:b.maxV/magnitude-b.minV/magnitude}));
+ if(normalized.some(b=>!b.width&&!b.height))return {reason:'A UV island has no packable extent'};
+ const width=Math.max(...normalized.map(b=>b.width)),height=Math.max(...normalized.map(b=>b.height));let best=null;
+ for(let columns=count;columns>=1;columns--){
+  const rows=Math.ceil(count/columns),cellWidth=(.96-(columns-1)*.02)/columns,cellHeight=(.96-(rows-1)*.02)/rows;
+  if(cellWidth<=0||cellHeight<=0)continue;
+  const scale=Math.min(width?cellWidth/width:Infinity,height?cellHeight/height:Infinity);
+  if(Number.isFinite(scale)&&scale>0&&(!best||scale>best.scale*(1+32*Number.EPSILON)))best={columns,rows,cellWidth,cellHeight,scale};
+ }
+ if(!best)return {reason:'UV island scale is out of range'};
+ const result=uvCorners.map((face,fi)=>{const id=report.faceIslands[fi],b=normalized[id],u=.02+(id%best.columns)*(best.cellWidth+.02)+best.cellWidth/2,v=.02+Math.floor(id/best.columns)*(best.cellHeight+.02)+best.cellHeight/2;return face.map(([x,y])=>[u+((x/magnitude-b.minU)-b.width/2)*best.scale,v+((y/magnitude-b.minV)-b.height/2)*best.scale]);});
+ // Refuse numeric collapse of any existing island extent rather than losing it.
+ if(faces.some((ids,id)=>{const b=importedUVIslandBounds(result,ids),old=bounds[id];return old.maxU>old.minU&&b.maxU===b.minU||old.maxV>old.minV&&b.maxV===b.minV;}))return {reason:'UV packing exceeds the coordinate range'};
+ if(result.some((face,fi)=>face.some((uv,j)=>{const k=(j+1)%face.length,a=uvCorners[fi][j],b=uvCorners[fi][k],next=face[k];return (a[0]!==b[0]||a[1]!==b[1])&&uv[0]===next[0]&&uv[1]===next[1]||(Math.fround(a[0])!==Math.fround(b[0])||Math.fround(a[1])!==Math.fround(b[1]))&&Math.fround(uv[0])===Math.fround(next[0])&&Math.fround(uv[1])===Math.fround(next[1]);})))return {reason:'UV packing would collapse an existing UV edge'};
+ return {uvCorners:result};
+}
 function editImportedUV(object,mesh,topologySignature,history,operation,scope){
  if(!object||object.locked||object.kind==='reference'||object.sourceId||object.booleanRecipe||object.arrayRecipe||object.curveProfile||object.glbPassthrough?.version!==1||!['glb','boxlab'].includes(object.glbPassthrough?.source))return {ok:false,reason:'Select an independent UV mesh'};
  const report=inspectImportedUV(mesh,object.glbPassthrough,topologySignature);
@@ -48,8 +76,10 @@ function editImportedUV(object,mesh,topologySignature,history,operation,scope){
   if(magnitude===1&&Math.abs(span-.96)<=8*Number.EPSILON&&Math.abs(centreU-.5)<=8*Number.EPSILON&&Math.abs(centreV-.5)<=8*Number.EPSILON)return {ok:true,changed:false,selectedFaces};
   fit={magnitude,span,minU:bounds.minU/magnitude,minV:bounds.minV/magnitude,width:bounds.maxU/magnitude-bounds.minU/magnitude,height:bounds.maxV/magnitude-bounds.minV/magnitude};
  }
+ const packing=operation.kind==='pack'?packedLayout(previous.uvCorners,report):null;
+ if(packing?.reason)return {ok:false,reason:packing.reason};
  const selected=selectedFaces&&new Set(selectedFaces);
- const uvCorners=previous.uvCorners.map((face,fi)=>selected&&!selected.has(fi)?face:face.map(([u,v])=>{
+ const uvCorners=packing?packing.uvCorners:previous.uvCorners.map((face,fi)=>selected&&!selected.has(fi)?face:face.map(([u,v])=>{
   if(fit)return [.5+((u/fit.magnitude-fit.minU)/fit.span-fit.width/fit.span/2)*.96,.5+((v/fit.magnitude-fit.minV)/fit.span-fit.height/fit.span/2)*.96];
   if(operation.kind==='angle')return rotateImportedUVPoint([u,v],[centreU,centreV],operation.degrees);
   if(operation.kind==='move')return [u+operation.u,v+operation.v];
@@ -58,6 +88,7 @@ function editImportedUV(object,mesh,topologySignature,history,operation,scope){
   return operation==='u'?[centreU+(centreU-u),v]:operation==='v'?[u,centreV+(centreV-v)]:[centreU+(centreV-v),centreV+(u-centreU)];
  }));
  if(uvCorners.some(face=>face.some(uv=>!uv.every(Number.isFinite))))return {ok:false,reason:'UV transform exceeds the coordinate range'};
+ if(packing&&uvCorners.every((face,i)=>face.every((uv,j)=>uv.every((value,k)=>Math.abs(value-previous.uvCorners[i][j][k])<=32*Number.EPSILON))))return selectedFaces?{ok:true,changed:false,selectedFaces}:{ok:true,changed:false};
  if(uvCorners.every((face,i)=>face.every((uv,j)=>uv.every((value,k)=>value===previous.uvCorners[i][j][k]))))return selectedFaces?{ok:true,changed:false,selectedFaces}:{ok:true,changed:false};
  if(!history?.capture||!history?.checkpointSnapshot)return {ok:false,reason:'Scene history is not ready'};
  const next={...previous,uvCorners};

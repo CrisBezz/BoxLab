@@ -1,15 +1,65 @@
-# BoxLab AI Handoff — .892 Scalar UV References
+# BoxLab AI Handoff — .893 Pack UV Islands
 
 ## Current state — 2026-10-17
-CrisBezz/BoxLab main build0.36.18.892; live https://crisbezz.github.io/BoxLab/.
-Current runtime68ee2db64bf7b3bd6bb4df7433141fef48db44f7/main892; CI/Pages/live verified.
-User .891 PASS protects Normal/Emissive references, Pencil/navigation and UV/project/export repeat.
-.892 local/Node22 CI2447/0/0; scalar-reference device gate remains separate.
+CrisBezz/BoxLab main build0.36.18.893; live https://crisbezz.github.io/BoxLab/.
+Previous verified runtime68ee2db64bf7b3bd6bb4df7433141fef48db44f7/main892.
+User .892 PASS protects scalar/map references, Pencil/navigation and UV/project/export repeat.
+.893 local2452/0/0; publication pending. Packing device gate remains separate.
 User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .893 — Pack all UV islands, 2026-10-17
+
+User .892 PASS protects Roughness(G)/Metalness(B) references, prior map choices,
+Pencil/navigation/history, project reopening and native six-map export. Audit main
+321674aa/runtime68ee2db6 and original UV inspection/edit/workspace/history/export owners;
+Fit-to-tile exists for ONE island, no all-island packer exists.
+
+Add Pack all to ORIGINAL UV workspace. Whole current object's complete UV layout,
+with or without an island selection; supported imported GLB and native BoxLab channels.
+Deterministic GRID packing, not optimal polygon packing, seam unwrap or texture baking.
+Try column counts for best common uniform scale; preserve every island's orientation,
+shape and RELATIVE UV sizes/density. Island IDs/order unchanged.2% tile outer margin
+and at least2% gap between island BOUNDING BOXES. At most128 islands; larger layouts
+refuse before history. Does not remove overlaps WITHIN an island. Texture images stay
+fixed: packing intentionally changes their sampling, like existing UV transforms.
+Button title explains all-island scope/fixed images. No auto-pack on import/export.
+
+Extend SAME imported-uv-edit transaction with packImportedUVIslands, using original
+inspector connectivity/full faceIslands and shared bounds. Expected payload/scope/context,
+complete matching channel, independent/unlocked/resource/history guards retained. Plan
+with normalized coordinates to handle huge/tiny finite UVs; reject zero-extent islands,
+nonfinite scale, collapsed extents or newly collapsed UV edges in double OR export-f32
+precision before mutation. Existing copy-on-write payload/tangent retirement and one
+native scene checkpoint. Source mesh, metadata/images, peers and source arrays read-only.
+Near-identical repeated packed result (32EPS absolute in0–1) adds no Undo entry. Original
+selected-island/whole-layout Rotate/Flip/Move/Scale/Fit maths unchanged.
+
+Pack click cancels pending Pencil preview through existing owner, delegates original
+MeshHealth transaction and retains matching selected-island membership. Successful pack
+frames resulting tile with EXISTING view Fit; rejection leaves view unchanged. No new
+pointer/history/resource/UV signature owner, schema or geometry changes. No packing of
+selected subsets or user-adjustable gutters in this first stage.
+
+Five native regressions: common scale/aspect/orientation/bounding gaps/COW/peer isolation/
+actual UndoRedo/repeat no-op; native Box UVs, huge/tiny/full-face-beyond-preview layouts;
+invalid/stale/locked/no-history/zero-extent/f64/f32 collapse refusals and128 allowed vs129
+refused; ACTUAL workspace+MeshHealth no-selection launch/Pencil cancel/selection/context;
+actual .boxlab codec, native NOM UV indices/f32 corners and Three GLB UV/tangent roundtrip.
+Full local Node24 2452PASS/0FAIL/0skip. Narrow cache graph shell/recovery/MeshHealth893 ->
+workspace893/edit893; inspector880/preview892/render/native export892/scalar889 retained.
+Internal MeshHealth stamp880 retained. All protected modelling/Multi/frozen bytes unchanged.
+
+Device893: cube -> MeshHealth UVs -> Box UVs -> Open UV Editor -> Pack all: separated
+islands inside tile, result framed; select/move island then Pack all with selection
+retained. Undo/Redo restores layout; repeated Pack all adds no extra Undo. Save/Open
+.boxlab and File NOMAD Base retain packed layout/seams. This is manual UV layout
+editing; do not expect imported painted texture appearance to stay fixed after packing.
+Next: device packing feedback, then audit staged seam/UV authoring or resource-backed
+painting; no new opacity recovery/native multi-material/NOM import claim.
 
 ## .892 — UV Editor Roughness / Metalness references, 2026-10-17
 
@@ -1830,12 +1880,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Test892 Roughness(G)/Metalness(B) grayscale references in UV Editor Image chooser,
-Pencil/navigation/history/reopen and project/native export continuity. User891 PASS
-protects previous map references.8MB encoded/one1024² held preview retained; scalar
-scratch/readback bounded, source bytes and native export maths unchanged.
-After feedback audit next staged UV authoring/packing through existing owners.
-Separate opacity remains absent from supplied GLB; no invented recovery/NOM import.
+Test893 Pack all on native Box UVs: whole layout/gaps/framing, selected membership,
+UndoRedo/repeat no-op and .boxlab/native UV roundtrip. User892 PASS protected.
+Packing changes texture sampling; images stay fixed. Grid bounding-box separation,
+not optimal packing/unwrap/internal-overlap repair.1–128 islands,2% margin/gaps,
+common scale/orientation/relative density preserved; numeric collapse refuses.
+After feedback audit staged seam/UV authoring or resource-backed painting. Separate
+opacity remains absent from supplied GLB; no invented recovery/NOM import.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and

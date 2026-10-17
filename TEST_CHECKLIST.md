@@ -6975,7 +6975,7 @@ User890 PASS protected;891 UV Normal/Emissive/Pencil/project/native device gate 
 Proof is documentation-only; tested runtime bytes unchanged.
 
 
-## .892 UV Roughness / Metalness references — device gate pending
+## .892 UV Roughness / Metalness references — user PASS2026-10-17
 
 - [x] User891 PASS protects Normal/Emissive references, Pencil/navigation/history, Image-off reopen, project/native export.
 - [x] Original chooser resolves exact packed ref: green->Roughness, blue->Metalness; no red/occlusion/name inference/factor baking/default colour-consumer change.
@@ -6984,9 +6984,9 @@ Proof is documentation-only; tested runtime bytes unchanged.
 - [x] ACTUAL workspace grayscale under original UV projection, Pencil cancellation/view/selection, reopen and unchanged resource bytes.
 - [x] Actual supplied packed JPEG733,993B source audit, every transported1024² G/B pixel verified, original hash exact; browser visual gate separate.
 - [x] Full2447PASS/0FAIL/0skip; reviewed parent cache graph; native maths/protected/frozen owners retained.
-- [ ] UV Editor -> Image -> Roughness (G), then Metalness (B): different grayscale maps under UV outlines; Normal/Emissive still available.
-- [ ] Pencil UV edits/UndoRedo and pan/pinch work; switching maps preserves view/selection; reopening starts Image off.
-- [ ] Save/Open .boxlab retains choices and edited UVs; File NOMAD still transfers six supported maps correctly.
+- [x] UV Editor -> Image -> Roughness (G), then Metalness (B): different grayscale maps under UV outlines; Normal/Emissive still available.
+- [x] Pencil UV edits/UndoRedo and pan/pinch work; switching maps preserves view/selection; reopening starts Image off.
+- [x] Save/Open .boxlab retains choices and edited UVs; File NOMAD still transfers six supported maps correctly.
 
 Thumbnail raw-channel references, not PBR lighting or full-resolution numeric analysis.
 One held <=1024² preview/8MB source; temporary scalar bitmap/canvas/readback bounded.
@@ -7001,3 +7001,20 @@ workspace/preview/surface/render/export/native-parent graph892, scalar889, prote
 Multi1.0 and frozenBeta7 marker all byte-match repository. All four continuity files
 current. User891 PASS protected;892 grayscale/Pencil/project/native device gate PENDING.
 Proof is documentation-only; tested runtime bytes unchanged.
+
+
+## .893 Pack all UV islands — device gate pending
+
+- [x] User892 PASS protects scalar/earlier map references, Pencil/navigation/history and project/native export.
+- [x] Original UV inspector/edit/history owners; whole-layout grid1–128 islands,2% outer margin/gaps, common scale/orientation/relative density, deterministic and repeat no-op.
+- [x] Geometry/resources/peers/source arrays unchanged; one native UndoRedo checkpoint, old tangents retired; original transforms unchanged.
+- [x] Stale/context/incomplete/locked/history/zero-extent/extreme/collapsed f64+f32 edge refusal before mutation;128 allowed/129 refused.
+- [x] ACTUAL workspace+MeshHealth works without selection, cancels Pencil, retains selected membership and uses original view Fit on success.
+- [x] Actual project codec/native NOM independent UV indices+f32 corners/Three GLB UVs and tangent retirement.
+- [x] Full2452PASS/0FAIL/0skip; narrow cache graph reviewed; protected/frozen/native owners retained.
+- [ ] Cube -> MeshHealth UVs -> Box UVs -> Open UV Editor -> Pack all: islands fit with gaps, whole result framed.
+- [ ] Move a selected island then Pack all: selection retained; UndoRedo restores layouts; repeated Pack all adds no extra Undo step.
+- [ ] Save/Open .boxlab and File NOMAD Base preserve packed layout/seams; Pencil/navigation/reference choices still work.
+
+Manual UV layout operation: images stay fixed, so packing changes texture sampling.
+Grid bounding boxes only; no optimal packing/unwrap/within-island overlap repair/painting.
