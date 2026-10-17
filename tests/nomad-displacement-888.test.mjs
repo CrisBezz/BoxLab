@@ -30,7 +30,7 @@ test('888 missing/ambiguous/transformed/non-UV/invalid native displacement refs,
 });
 test('888 displacement shares native image dedup and aggregate budget with other maps/objects while selected UV and project resources stay read-only',()=>{
  const o=fixture(),p=o.glbPassthrough;p.materials[0].pbrMetallicRoughness.baseColorTexture={index:0};p.materials[0].normalTexture={index:0};p.materials[0].emissiveTexture={index:0};p.materials[0].emissiveFactor=[1,1,1];const other={...o,id:2},before=encodeProjectGLB(p),out=build([o,other]),n=readNomadProject(out.bytes);assert.equal(n.json.images.length,1);assert.equal(out.displacementTextureObjects,2);assert.equal(out.normalTextureObjects,2);verify(n,o);assert.deepEqual(encodeProjectGLB(p),before);
- const x=fixture(),y=fixture();for(const a of [x,y]){a.glbPassthrough.images[0].data=new Uint8Array(13*1024*1024);a.glbPassthrough.images[0].data.set(png16());}assert.throws(()=>build([x,y]),/24 MB/);
+ const x=fixture(),y=fixture();for(const a of [x,y]){a.glbPassthrough.images[0].data=new Uint8Array(13*1024*1024);a.glbPassthrough.images[0].data.set(png16());a.glbPassthrough.images[0].data[100]=a===x?1:2;}assert.throws(()=>build([x,y]),/24 MB/);
  assert(rotateImportedUV(o,o.mesh,signature,history,{island:0,payload:p}).ok);o.glbPassthrough=decodeProjectGLB(encodeProjectGLB(o.glbPassthrough));verify(readNomadProject(build([o]).bytes),o);assert.equal(other.glbPassthrough,p);
 });
 test('888 ACTUAL File NOMAD action combines six map slots through original async preparation/writer and reports displacement count after UV/project repeat',async()=>{

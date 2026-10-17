@@ -32,7 +32,7 @@ test('887 native image budget admits one 24 MB raw image and shared large slots/
  const out=buildNomadProject([a],template,options);assert.equal(readNomadProject(out.bytes).json.images[0].length,24*MB);
  p.images[0].data=encoded(24*MB+1);assert.throws(()=>buildNomadProject([a],template,options),/NOMAD/);
  const b=fixture();b.glbPassthrough.textures.forEach(t=>t.source=0);const shared=buildNomadProject([b,{...b,id:2}],template,options),nom=readNomadProject(shared.bytes);assert.equal(shared.count,2);assert.equal(nom.json.images.length,1);verify(nom,b);
- const separate=fixture();separate.glbPassthrough.images[0].data=encoded(14*MB);b.glbPassthrough.images[0].data=encoded(14*MB);await assert.rejects(buildNomadProjectWithMaps([b,separate],template,options),/24 MB/);
+ const separate=fixture();separate.glbPassthrough.images[0].data=encoded(14*MB);b.glbPassthrough.images[0].data=encoded(14*MB);b.glbPassthrough.images[0].data[100]=71;await assert.rejects(buildNomadProjectWithMaps([b,separate],template,options),/24 MB/);
  const packed=fixture();packed.glbPassthrough.materials[0].pbrMetallicRoughness.metallicRoughnessTexture={index:0};assert.throws(()=>nativeMaterialMaps(packed.glbPassthrough),/packed/);
  assert.equal(embeddedUVImage(packed.glbPassthrough,{index:0},{maxBytes:Infinity}),null);assert.equal(embeddedUVImage(packed.glbPassthrough,{index:0},{maxBytes:25*MB}),null);
 });

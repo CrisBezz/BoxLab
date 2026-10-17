@@ -101,11 +101,26 @@ export function nativeMaterialMaps(payload){
  return {...source,maps,normalScale,emissiveFactor};
 }
 function nativeTexture(index,name){return {index,name,magFilter:'auto',minFilter:'auto',offset:[0,0],projection:'auto',rotation:0,scale:[1,1],triplanar_hardness:[.8999999761581421,.8999999761581421,.8999999761581421],triplanar_world:true,wrapS:'repeat',wrapT:'repeat'};}
+// Export-local identity only. Hashes select candidates; full byte equality decides
+// sharing, including typed-array offsets. Never replace source/project resources.
+export function createNomadImageIdentity(){
+ const identities=new WeakMap(),buckets=new Map();
+ return choice=>{
+  const {data,mime}=choice;
+  let known=identities.get(data);if(known?.has(mime))return known.get(mime);
+  let hash=2166136261;for(let i=0;i<data.length;i++)hash=Math.imul(hash^data[i],16777619)>>>0;
+  const key=mime+':'+data.length+':'+hash,candidates=buckets.get(key)||[];
+  let canonical=candidates.find(c=>{for(let i=0;i<data.length;i++)if(c.data[i]!==data[i])return false;return true;});
+  if(!canonical){canonical={data,mime};candidates.push(canonical);buckets.set(key,candidates);}
+  if(!known){known=new Map();identities.set(data,known);}known.set(mime,canonical);
+  return canonical;
+ };
+}
 export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab',topologySignature=globalThis.__boxlabExportAs?.topologySignature,packedMaps=new Map()}={}){
  const base=readNomadProject(templateBytes),donor=base.json.meshes?.[0];if(!donor?.vertices)throw Error('Nomad donor mesh is missing');
  const project=clone(base.json),parts=[],proto=findNode(base.json.scene)||{};project.meshes=[];
  const group={name,group:0,selected:true,selected_main:true,children:[],visible:true,node_collapse:false,lock:false};let offset=0,vertices=0,faces=0,uvObjects=0,colourTextureObjects=0,normalTextureObjects=0,emissiveTextureObjects=0,roughnessTextureObjects=0,metalnessTextureObjects=0,displacementTextureObjects=0,imageBytes=0;
- const images=[],imageIndices=new Map();
+ const images=[],imageIndices=new Map(),imageIdentity=createNomadImageIdentity();
  for(const [index,object] of (objects||[]).entries()){
   if(object?.kind==='reference'||object?.visible===false)continue;
   const editable=resolveExportMesh(object,subd);if(!editable?.vertices?.length||!editable?.faces?.length)continue;
@@ -131,11 +146,11 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
     delete maps.packed;
    }
    for(const [slot,map] of Object.entries(maps)){
-    const choice=map.choice;let imageIndex=imageIndices.get(choice.data);
+    const choice=map.choice,image=imageIdentity(choice);let imageIndex=imageIndices.get(image);
     if(imageIndex===undefined){
      imageBytes+=choice.data.length;if(imageBytes>24*1024*1024)throw Error('NOMAD embedded images exceed 24 MB');
      const aligned=Math.ceil(offset/4)*4;if(aligned>offset){parts.push(new Uint8Array(aligned-offset));offset=aligned;}
-     imageIndex=images.length;imageIndices.set(choice.data,imageIndex);
+     imageIndex=images.length;imageIndices.set(image,imageIndex);
      images.push({length:choice.data.length,offset,type:choice.mime});parts.push(choice.data);offset+=choice.data.length;
     }
     material.textures[slot]=nativeTexture(imageIndex,String(map.name||payload.images[choice.imageIndex]?.definition?.name||(slot+' '+(imageIndex+1)+(choice.mime==='image/png'?'.png':'.jpg'))));

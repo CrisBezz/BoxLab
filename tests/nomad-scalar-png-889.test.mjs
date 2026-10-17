@@ -30,5 +30,5 @@ test('889 ACTUAL File NOMAD six-map export uses real production compression and 
  }finally{for(const [key,value] of [['createImageBitmap',prior.bitmap],['OffscreenCanvas',prior.canvas],['__boxlabExportAs',prior.api]])if(value===undefined)delete globalThis[key];else globalThis[key]=value;}
 });
 test('889 native 24 MB guard remains active and explains distinct imported sources versus converted maps and object count',async()=>{
- const a=fixture(),b=fixture();b.id=2;await assert.rejects(buildNomadProjectWithMaps([a,b],template,{topologySignature:signature},()=>assert.fail('Overbudget sources must fail before decode')),/24 MB \(sources 35\.\d+ MiB \+ converted 0\.00 MiB; 2 objects\)/);
+ const a=fixture(),b=fixture();b.id=2;for(const image of b.glbPassthrough.images)image.data[100]=1;await assert.rejects(buildNomadProjectWithMaps([a,b],template,{topologySignature:signature},()=>assert.fail('Overbudget sources must fail before decode')),/24 MB \(sources 35\.\d+ MiB \+ converted 0\.00 MiB; 2 objects\)/);
 });

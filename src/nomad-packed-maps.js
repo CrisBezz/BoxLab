@@ -1,7 +1,7 @@
 import {encodeNomadScalarPNG} from './nomad-scalar-png.js?v=0.36.18.889';
 // Export-local glTF G/B unpacking. Source resources remain read-only; the original
 // native writer owns materials, UV validation, binary layout and final byte budgets.
-import {nativeMaterialMaps,buildNomadProject} from './nomad-export-core.js?v=0.36.18.888';
+import {nativeMaterialMaps,buildNomadProject,createNomadImageIdentity} from './nomad-export-core.js?v=0.36.18.890';
 const LIMIT=2048,TOTAL_LIMIT=24*1024*1024;
 function dimensions(choice){
  const a=choice.data,v=new DataView(a.buffer,a.byteOffset,a.byteLength);let width=0,height=0;
@@ -51,19 +51,24 @@ export async function buildNomadProjectWithMaps(objects,template,{subd=false,...
  // Snapshot before the first await: edits/Undo/scene replacement during conversion
  // cannot mix geometry, UVs or factors from different scene states in the download.
  const snapshot=(objects||[]).filter(o=>o?.kind!=='reference'&&o?.visible!==false&&o?.mesh?.vertices?.length&&o?.mesh?.faces?.length).map(o=>({...o,mesh:o.mesh.clone?o.mesh.clone():structuredClone(o.mesh),settings:structuredClone(o.settings||{})}));
- const templateBytes=await template,packedMaps=new Map(),sources=new Set();let bytes=0,sourceBytes=0;
+ const templateBytes=await template,packedMaps=new Map(),sources=new Set(),imageIdentity=createNomadImageIdentity(),packedIdentity=createNomadImageIdentity(),converted=new Map();let bytes=0,sourceBytes=0;
+ const addImage=choice=>{const image=imageIdentity(choice);if(!sources.has(image)){sources.add(image);bytes+=image.data.length;}};
  const checkBudget=()=>{if(bytes>TOTAL_LIMIT)throw Error(`NOMAD embedded images exceed 24 MB (sources ${(sourceBytes/1048576).toFixed(2)} MiB + converted ${((bytes-sourceBytes)/1048576).toFixed(2)} MiB; ${snapshot.length} objects)`);};
  for(const object of snapshot){
   const material=nativeMaterialMaps(object.glbPassthrough);
-  for(const [slot,map] of Object.entries(material?.maps||{}))if(slot!=='packed'&&!sources.has(map.choice.data)){sources.add(map.choice.data);bytes+=map.choice.data.length;}
+  for(const [slot,map] of Object.entries(material?.maps||{}))if(slot!=='packed')addImage(map.choice);
  }
  sourceBytes=bytes;checkBudget();
  for(const object of snapshot){
   const choice=nativeMaterialMaps(object.glbPassthrough)?.maps.packed?.choice;
   if(!choice||packedMaps.has(choice.data))continue;
   if(subd)throw Error('NOMAD UV export requires matching Base geometry; disable evaluated modifiers');
-  const maps=await split(choice);
-  for(const slot of ['roughness','metalness']){bytes+=maps[slot]?.choice?.data?.length||0;checkBudget();}
+  const key=packedIdentity(choice);let maps=converted.get(key);
+  if(!maps){
+   maps=await split(choice);
+   for(const slot of ['roughness','metalness']){if(maps[slot]?.choice?.data)addImage(maps[slot].choice);checkBudget();}
+   converted.set(key,maps);
+  }
   packedMaps.set(choice.data,maps);
  }
  return buildNomadProject(snapshot,templateBytes,{...options,subd,packedMaps});

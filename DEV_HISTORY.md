@@ -10388,3 +10388,57 @@ all byte-match repository. Initial predeployment reads were stale/404; final gra
 fully matches. All four continuity docs updated. This proof changes docs only.
 User888 FAIL retained;889 iPad export/Nomad six-slot/UV/project gate PENDING.
 No device PASS inferred. Fresh scene, one FULL MATERIAL.glb import, SubD off.
+
+
+## .890 — identical native export images shared by content, 2026-10-17
+
+User .889 PASS protects exact FULL MATERIAL.glb six-slot native download/open,
+Pencil UV repeat and .boxlab Save/Open. The .888 24MB device failure is resolved for
+that accepted case; keep the failure history and .889 lossless encoding protected.
+Audit main a5e671ca/runtime b7c5d1e3, shell .889 and original native writer/preflight.
+Native pooling and packed conversion previously used buffer identity only, unlike
+existing content-pooled .boxlab files. Re-importing the same GLB independently could
+therefore exceed the native 24MB pool although a reopened pooled project fitted.
+
+Extend ORIGINAL native writer with export-local createNomadImageIdentity; no second
+binary pool/container/resource owner. MIME + byte length + FNV-1a hash selects a
+candidate bucket; full byte comparison decides equality, including subarray offsets.
+Hash collisions never merge unequal data; per-buffer/MIME memo avoids repeated scans.
+Original image table, alignment, 24MB guard, mesh/UV/material/slot owners retained.
+Async preflight uses the SAME identity helper to count unique raw and converted bytes;
+equal packed source content converts once even across independent buffers. Distinct
+encoded images remain distinct regardless of names. Original image buffers stay
+read-only and independent; no content merging in scene/history/import/project state.
+Each object keeps its own material factors, texture names, geometry and UVs. No image
+resampling/reencoding, increased limits, permanent cache or new modelling/history owner.
+
+Four regressions cover an actual same-length FNV collision, MIME/length/offset identity,
+separate materials/names/selected UVs/native field bytes, ACTUAL File NOMAD two full-size
+independent six-map payloads, conversion once, project reopen and exact unique budget
+including equal converted slots. Existing six historical budget tests now use genuinely
+DIFFERENT bytes instead of identical filler; all rejection assertions remain active.
+Full local Node24: 2440 PASS / 0 FAIL / 0 skipped. Reviewed graph shell/recovery/export
+panel890 -> packed890 -> native-core890; scalar889, displacement888 and all other
+resource/UV/render/import/protected modelling/Multi/frozen owners unchanged.
+
+Actual uploaded GLB source images + actual JPEG G/B decode transport, REAL production
+scalar encoder/native writer: two independent textured objects with different UVs,
+6 unique images, 22,557,536B payload, 2,608,288B headroom; one packed decode. Original
+colour/normal/emissive/displacement hashes exact. Browser readback adapted in Node;
+iPad/Nomad .890 multiple-import gate remains pending, no device PASS inferred.
+
+Opacity audit of actual paired files: GLB colour PNG RGBA2048x2048 already carries
+alpha0..123; native template ALREADY use_color_opacity=1/factorOpacity1, and exporter
+retains the encoded colour bytes. NOM separate opacity image is RGB1024x1024,
+417,303B, SHA256440163515a426e5017aa0695f537f48ca8d9d20a36717f040ba08161b4e0b440.
+That separate image is ABSENT from GLB, whose extras name Water_001_DISP_opacity.png;
+NOM slot names Water_001_DISP.png. Do not derive/rename alpha as a recovered separate
+map, invent missing pixels, or claim new opacity/transparency support. No opacity
+runtime change in890. Public reference: https://nomadsculpt.com/manual/material
+(texture-panel Opacity uses colour alpha; Auto uses UV when present).
+
+Device890: reset; import FULL MATERIAL.glb TWICE, SubD off; move one object aside;
+File NOMAD must download/open two objects with six maps each. Pencil UV edit one object
+then repeat; Save/Open .boxlab repeat. Genuine unique-image excess still refuses with
+source/converted/object breakdown. Next: device feedback, then source-complete opacity
+input/native material audit or staged UV/texture work; no invented opacity/NOM import.

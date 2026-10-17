@@ -1,14 +1,68 @@
-# BoxLab AI Handoff — .889 Lossless Scalar Map Export
+# BoxLab AI Handoff — .890 Content-Shared Native Images
 
 ## Current state — 2026-10-17
-CrisBezz/BoxLab main build0.36.18.889; live https://crisbezz.github.io/BoxLab/.
-Current runtime b7c5d1e349741906d55f510c8f5c240ed403efca/main889; CI/Pages/live verified.
-Previous888 user24MB export FAIL;889 device retest pending. .887 PASS protected.
-User887 PASS protects five-map export/UV/project. User888 FAIL is open pending889 retest; displacement binding retained, no888 acceptance inferred. User explicitly approves ongoing pushing/publishing.
+CrisBezz/BoxLab main build0.36.18.890; live https://crisbezz.github.io/BoxLab/.
+Previous verified runtime b7c5d1e349741906d55f510c8f5c240ed403efca/main889.
+User .889 PASS now protects six native maps, UV repeat and project reopening.
+.890 local2440/0/0; publication verification pending. .890 device gate separate.
+User explicitly approves ongoing pushing/publishing.
 Read AI_WORKFLOW completely, this handoff, TEST_CHECKLIST, recent DEV_HISTORY and
 ROADMAP before code. Repository is source of truth. Standing publish authorization.
 Frozen Beta7 .807 and Beta2–6 immutable. Protect Multi1.0, Loop715, Extrude802,
 Boolean806 and all accepted Pencil/navigation/selection behaviour.
+
+## .890 — identical native export images shared by content, 2026-10-17
+
+User .889 PASS protects exact FULL MATERIAL.glb six-slot native download/open,
+Pencil UV repeat and .boxlab Save/Open. The .888 24MB device failure is resolved for
+that accepted case; keep the failure history and .889 lossless encoding protected.
+Audit main a5e671ca/runtime b7c5d1e3, shell .889 and original native writer/preflight.
+Native pooling and packed conversion previously used buffer identity only, unlike
+existing content-pooled .boxlab files. Re-importing the same GLB independently could
+therefore exceed the native 24MB pool although a reopened pooled project fitted.
+
+Extend ORIGINAL native writer with export-local createNomadImageIdentity; no second
+binary pool/container/resource owner. MIME + byte length + FNV-1a hash selects a
+candidate bucket; full byte comparison decides equality, including subarray offsets.
+Hash collisions never merge unequal data; per-buffer/MIME memo avoids repeated scans.
+Original image table, alignment, 24MB guard, mesh/UV/material/slot owners retained.
+Async preflight uses the SAME identity helper to count unique raw and converted bytes;
+equal packed source content converts once even across independent buffers. Distinct
+encoded images remain distinct regardless of names. Original image buffers stay
+read-only and independent; no content merging in scene/history/import/project state.
+Each object keeps its own material factors, texture names, geometry and UVs. No image
+resampling/reencoding, increased limits, permanent cache or new modelling/history owner.
+
+Four regressions cover an actual same-length FNV collision, MIME/length/offset identity,
+separate materials/names/selected UVs/native field bytes, ACTUAL File NOMAD two full-size
+independent six-map payloads, conversion once, project reopen and exact unique budget
+including equal converted slots. Existing six historical budget tests now use genuinely
+DIFFERENT bytes instead of identical filler; all rejection assertions remain active.
+Full local Node24: 2440 PASS / 0 FAIL / 0 skipped. Reviewed graph shell/recovery/export
+panel890 -> packed890 -> native-core890; scalar889, displacement888 and all other
+resource/UV/render/import/protected modelling/Multi/frozen owners unchanged.
+
+Actual uploaded GLB source images + actual JPEG G/B decode transport, REAL production
+scalar encoder/native writer: two independent textured objects with different UVs,
+6 unique images, 22,557,536B payload, 2,608,288B headroom; one packed decode. Original
+colour/normal/emissive/displacement hashes exact. Browser readback adapted in Node;
+iPad/Nomad .890 multiple-import gate remains pending, no device PASS inferred.
+
+Opacity audit of actual paired files: GLB colour PNG RGBA2048x2048 already carries
+alpha0..123; native template ALREADY use_color_opacity=1/factorOpacity1, and exporter
+retains the encoded colour bytes. NOM separate opacity image is RGB1024x1024,
+417,303B, SHA256440163515a426e5017aa0695f537f48ca8d9d20a36717f040ba08161b4e0b440.
+That separate image is ABSENT from GLB, whose extras name Water_001_DISP_opacity.png;
+NOM slot names Water_001_DISP.png. Do not derive/rename alpha as a recovered separate
+map, invent missing pixels, or claim new opacity/transparency support. No opacity
+runtime change in890. Public reference: https://nomadsculpt.com/manual/material
+(texture-panel Opacity uses colour alpha; Auto uses UV when present).
+
+Device890: reset; import FULL MATERIAL.glb TWICE, SubD off; move one object aside;
+File NOMAD must download/open two objects with six maps each. Pencil UV edit one object
+then repeat; Save/Open .boxlab repeat. Genuine unique-image excess still refuses with
+source/converted/object breakdown. Next: device feedback, then source-complete opacity
+input/native material audit or staged UV/texture work; no invented opacity/NOM import.
 
 ## .889 — lossless scalar PNG encoding / .888 budget FAIL, 2026-10-17
 
@@ -1679,15 +1733,13 @@ association not implemented. .830 Balloon gridVersion2 removes orphan poles whil
 recipes keep indices/editability.
 
 ## Next
-Re-test889 with reset scene + ONE FULL MATERIAL.glb import, SubD off→File→NOMAD:
-six native image slots including displacement, UV edit and .boxlab Save/Open repeat.
-User888 FAIL:24MB image budget exceeded. New scalar PNG encoder preserves G/B bytes,
-2048² dimensions and24MB guard; reports sources/converted/object counts if still over.
-Independent imports of identical bytes are NOT content-deduped; budget can remain valid
-for large/multiple scenes. Real source/encoder audit21.51MiB is not Safari visual proof.
-User887 PASS remains protected. Displacement settings numeric-only, no amplitude/bake.
-After889 feedback audit opacity source/baked colour alpha; no separate opacity image in
-provided GLB. No generic glTF displacement/native per-face materials/painting/NOM import.
+Test .890 with TWO independent FULL MATERIAL.glb imports, SubD off: native download,
+two objects/six slots, independent UV edits and .boxlab Save/Open. .889 accepted.
+Same-content images now share export bytes and packed conversion; genuinely distinct
+image content still obeys 24MB. No source images resized or resources mutated.
+Opacity audit above proves separate NOM image absent from GLB; colour alpha and native
+colour-opacity switch already retained. Obtain source-complete opacity before promising
+separate map recovery; otherwise resume staged UV/texture work after device feedback.
 
 ## Release workflow
 /nextbuild = audit current main/live/pins; one narrow build; coherent release markers and
