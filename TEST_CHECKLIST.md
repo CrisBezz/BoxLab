@@ -7630,3 +7630,22 @@ relative placement; material slots/UI polish follow product direction.
 - [ ]911 DEVICE + Image → Pencil Move/Rotate/Scale; fingers align view → Project.
 - [ ]911 DEVICE orbit confirms back/hidden surfaces clean; Edit image/cancel/reproject.
 - [ ]911 DEVICE UndoRedo/SaveOpen/re-edit; mask/blend and Nomad colour sanity.
+
+
+## .911 publication verified — 2026-10-18
+
+Runtime cf86b14a0585d6242a13b3007a60c7a7a9e1ac67; tested tree
+1f2b43401ec2245c392afa1d86d9067a39fad79d. All14 uploaded blob hashes and created
+tree match tested local source. Fetched origin/main has exactly the same tree;
+remote manifest/title/data/visible label and reviewed painter911 graph verified.
+Local Node24.19.0 full2563PASS/0FAIL/0skip; Node22 topology CI39102076649 /
+job117600224293 SUCCESS. Pages39102076118 build117600224532 /
+deploy117600313566 SUCCESS. All14 checked postdeployment live shell/version/
+painter/core/projector/overlay/source/placement/image/stack/pool/native writer/
+recovery files byte-match repository. Initial live manifest served910 before deploy;
+final complete checked graph matches911. Protected Multi1.0/modelling/frozen unchanged.
+All four continuity documents updated. This proof is documentation-only; tested
+runtime bytes retained. User910PASS recorded;911 actual Safari/Pencil/image picker/
+latency/front-only appearance gate remains pending. No rendered acceptance inferred
+from Node canvas adapters or byte verification. Next manual Project checklist in
+paint-image-project-911.md, then surface-relative placement from original Insert.
