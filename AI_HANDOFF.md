@@ -739,3 +739,20 @@ runtime bytes retained. User910PASS recorded;911 actual Safari/Pencil/image pick
 latency/front-only appearance gate remains pending. No rendered acceptance inferred
 from Node canvas adapters or byte verification. Next manual Project checklist in
 paint-image-project-911.md, then surface-relative placement from original Insert.
+
+
+## .912 publication verified — 2026-10-18
+
+Runtime7c5002a42016621916fb7874df570a7425638421; tested tree
+9264653aefcbbff915d09139391807bb393d5681. All13 uploaded blobs and created tree
+match tested local source; fetched origin/main has identical tree. Main version/
+shell/painter912 pin verified. Node24.19.0 local full2570PASS/0FAIL/0skip;
+Node22 topology CI39103377854/job117604045125 SUCCESS. Pages39103377692 /
+build117604047193/deploy117604136007 SUCCESS. All15 checked postdeployment live
+shell/version/painter/core/surface/projector/overlay/source/placement/stack/pool/
+native writer/Insert alignment/recovery files byte-match repository. Protected
+Multi1.0/modelling/frozen unchanged. All four continuity files current; this proof
+changes documentation only and retains tested runtime bytes. User911PASS protected;
+912 Safari/Pencil/guide appearance/release-preview latency gate pending, no rendered
+or M2 performance acceptance inferred. Next On surface manual gate, then material/
+channel owner audit per product direction. Original screen Project remains available.
