@@ -3182,3 +3182,26 @@ no invented native fields. Then resume original image projection UI plan.
 
 .910 local validation: Node24.19.0 full **2556 PASS / 0 FAIL / 0 skipped**; four new
 native paint/export/name regressions PASS. Actual Nomad retest remains pending.
+
+
+## .911 — retained image Project from View; .910 user PASS — 2026-10-18
+
+User910PASS protects independent duplicate paint in Nomad, clearing external gate.
+Audit b0fd19a8: source/placement907 + retained image stack908/pool909 already present;
+missing real picker/overlay/visible-front raster. Connect SAME painter/input/history.
++ Image PNG/JPEG ≤1024²/2MiB;65% screen guide, Pencil Move→Rotate→Scale tap cycle uses
+original Insert437 function; fingers navigate behind image. Project captures current
+camera/body frame; original UV triangles/Three rays enforce75° front and scene/self
+occlusion BEFORE texels. Refuse sampled overlapping/cross-tile UVs and bounded work.
+Paired908 image recipe+raster append/replace, original preflight/checkpoint/COW; Edit
+image reprojects retained source FROM CURRENT VIEW, retains mask/blend/name/order.
+Cancel/layer change/close/stale async preserves committed work, original Undo exits
+Paint. Same .boxlab codec/source persistence/flat NOM+GLB; no new schema/history/kernel.
+Screen-projector gestures are not tangent-following surface decals. Three overlays,
+8MiB unique/16MiB expanded retained; complex scenes may refuse; no seam-safe/performance
+claim. Read docs/paint-image-project-911.md. Seven focused actual raster/UI/persistence/
+export tests PASS; Node24.19.0 full **2563 PASS / 0 FAIL / 0 skipped**. Publication
+verification follows. Changed painter/core+new projector/
+overlay graph911;907/908/909 storage,910 native exporter and protected modelling/Multi/
+frozen retained. Device911 gate pending. Next hands-on Project feedback then surface-
+relative placement; material slots/UI polish follow product direction.

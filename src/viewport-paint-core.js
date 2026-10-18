@@ -2,7 +2,9 @@ import * as THREE from 'three';
 import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=905';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
-import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack} from './paint-layer-stack.js?v=0.36.18.908';
+import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer} from './paint-layer-stack.js?v=0.36.18.908';
+import {projectPaintImage} from './paint-image-project.js?v=0.36.18.911';
+import {paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.909';
 import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.909';
 import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.909';
@@ -53,6 +55,18 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function ready(){if(!session)return false;cancel();if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}return true;}
  function selectLayer(id){if(!ready())return false;if(id!=='$base'&&!session.stack?.layers.some(l=>l.id===id))throw Error('Unknown paint layer');session.selected=id;session.paintTarget='colour';loadLayer();return true;}
  function addLayer(){if(!ready())return false;const s=session,stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:512,height:512,pixels:s.preview,binding:s.binding}));let n=1;while(stack.layers.some(l=>l.id==='layer'+n))n++;const id='layer'+n,resource=captureLayeredColourResource(appendPaintLayer(stack,{id,name:'Layer '+n}));if(commit(resource)){session.selected=id;session.paintTarget='colour';loadLayer();return true;}return false;}
+ function projectImage(source,placement,{replace=false,name='Image layer'}={}){
+  if(!ready())return false;const s=session,selected=s.stack?.layers.find(l=>l.id===s.selected);
+  if(replace&&!selected?.image)throw Error('Select an image layer to edit');
+  const stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:512,height:512,pixels:s.preview,binding:s.binding}));
+  if(!replace&&stack.layers.length>=3)throw Error('Delete a layer first; three overlays maximum');
+  scene.updateMatrixWorld(true);
+  const image={version:1,source,placement:paintImagePlacementFromCamera(camera,placement),objectToWorld:s.body.matrixWorld.toArray()},result=projectPaintImage({geometry:s.display.surface.geometry,image,scene,body:s.body});
+  let n=1;while(stack.layers.some(l=>l.id==='image'+n))n++;const id=replace?s.selected:'image'+n;
+  const next=replace?replaceImagePaintLayer(stack,id,result):appendImagePaintLayer(stack,{...result,id,name:name.trim().slice(0,64)||'Image layer'});
+  if(commit(captureLayeredColourResource(next))){s.selected=id;s.paintTarget='colour';loadLayer();return true;}return false;
+ }
+ function imageForEdit(){if(!ready())return null;const image=session.stack?.layers.find(l=>l.id===session.selected)?.image;return image?{source:image.source,placement:{centre:[...image.placement.centre],size:[...image.placement.size],rotation:image.placement.rotation}}:null;}
  function editLayer(patch){if(!ready()||session.selected==='$base')return false;const layer=session.stack.layers.find(l=>l.id===session.selected);if(Object.keys(patch).every(k=>layer[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,patch)));}
  function removeLayer(){if(!ready()||session.selected==='$base')return false;const s=session,layers=s.stack.layers.filter(l=>l.id!==s.selected);if(commit(captureLayeredColourResource({...s.stack,layers}))){session.selected=layers.at(-1)?.id||'$base';loadLayer();return true;}return false;}
  function moveLayer(direction){if(!ready()||session.selected==='$base'||![-1,1].includes(direction))return false;const layers=[...session.stack.layers],i=layers.findIndex(l=>l.id===session.selected),j=i+direction;if(j<0||j>=layers.length)return false;[layers[i],layers[j]]=[layers[j],layers[i]];return commit(captureLayeredColourResource({...session.stack,layers}));}
@@ -63,7 +77,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function editMask(patch){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)throw Error('Add a mask to the selected paint layer first');if(!patch||Object.keys(patch).some(k=>!['enabled','inverted'].includes(k)))throw Error('Unsupported mask edit');if(Object.keys(patch).every(k=>layer.mask[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{...layer.mask,...patch}})));}
  function removeMask(){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:null})));}
  function state(){const s=session;return s?{selected:s.selected,paintTarget:s.paintTarget,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
- return {open,close,cancel,begin,move,finish,hit,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,
+ return {open,close,cancel,begin,move,finish,hit,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,
   tick(){if(session&&!current()){close();return;}if(session?.layer.consumeDirty())updatePreview();if(session?.dirty){session.display.surface.material.map.needsUpdate=true;session.dirty=false;}},
   get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
 }

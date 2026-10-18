@@ -2,12 +2,31 @@
 
 ## Current state — 18 October 2026
 
-Main release0.36.18.910, based onc1b350e0 (.909 proof). User909PASS protects viewport
-duplicate release/Done/SaveOpen/Undo. NOMAD export exception: copy displays original
-paint. PNG bytes/indices already distinct;910 removes colliding native texture names.
-Consumer name caching is inference; DEVICE Nomad retest required. Read
-docs/paint-nomad-duplicate-910.md. Painting/pool909 unchanged; projection UI follows gate.
+Main release 0.36.18.911, based on b0fd19a8 (.910 proof). User .910 PASS protects
+independent painted duplicates in Nomad. Visible retained-image Project from View
+is implemented; .911 iPad gate pending. Read docs/paint-image-project-911.md.
 
+## .911 — retained image Project from View; .910 user PASS — 2026-10-18
+
+User910PASS protects independent duplicate paint in Nomad, clearing external gate.
+Audit b0fd19a8: source/placement907 + retained image stack908/pool909 already present;
+missing real picker/overlay/visible-front raster. Connect SAME painter/input/history.
++ Image PNG/JPEG ≤1024²/2MiB;65% screen guide, Pencil Move→Rotate→Scale tap cycle uses
+original Insert437 function; fingers navigate behind image. Project captures current
+camera/body frame; original UV triangles/Three rays enforce75° front and scene/self
+occlusion BEFORE texels. Refuse sampled overlapping/cross-tile UVs and bounded work.
+Paired908 image recipe+raster append/replace, original preflight/checkpoint/COW; Edit
+image reprojects retained source FROM CURRENT VIEW, retains mask/blend/name/order.
+Cancel/layer change/close/stale async preserves committed work, original Undo exits
+Paint. Same .boxlab codec/source persistence/flat NOM+GLB; no new schema/history/kernel.
+Screen-projector gestures are not tangent-following surface decals. Three overlays,
+8MiB unique/16MiB expanded retained; complex scenes may refuse; no seam-safe/performance
+claim. Read docs/paint-image-project-911.md. Seven focused actual raster/UI/persistence/
+export tests PASS; Node24.19.0 full **2563 PASS / 0 FAIL / 0 skipped**. Publication
+verification follows. Changed painter/core+new projector/
+overlay graph911;907/908/909 storage,910 native exporter and protected modelling/Multi/
+frozen retained. Device911 gate pending. Next hands-on Project feedback then surface-
+relative placement; material slots/UI polish follow product direction.
 
 ## .910 — native paint texture-name collisions; .909 viewport PASS — 2026-10-18
 
@@ -331,13 +350,11 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-DEVICE:910 export original+green-painted copy to fresh NOM → open Nomad, verify copy
-paint distinct; further paint/export repeats.909 viewport PASS protected; external
-exception remains pending. If persistent inspect actual NOM bytes/material refs, do
-not guess native fields or undo909 painting. Then resume picker/overlay/Project from
-View via current painter/input/original UV geometry; facing/angle/scene+self occlusion
-before texels, atomic908 recipe+raster API, retained source/frame, Insert437 cycle.
-No duplicate history/kernel, implicit bake, nativeUV paint fields or broad UI cleanup.
+DEVICE .911: + Image → Pencil move/tap-cycle rotate/scale, fingers align view → Project.
+Check front-only result, Edit image/reproject, Cancel, UndoRedo and .boxlab Save/Open.
+User910PASS clears Nomad duplicate gate. Then refine Project from feedback and build
+surface-relative image placement using original Insert owner; no parallel gesture,
+history or modelling kernel. Current gestures adjust the SCREEN projector only.
 
 ## Protected interaction and modelling baseline
 
