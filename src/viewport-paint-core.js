@@ -4,7 +4,8 @@ import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
 import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer} from './paint-layer-stack.js?v=0.36.18.908';
 import {projectPaintImage} from './paint-image-project.js?v=0.36.18.911';
-import {paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
+import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.912';
+import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.909';
 import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.909';
 import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.909';
@@ -26,7 +27,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   const proxy=new THREE.Mesh(session.display.surface.geometry,session.display.surface.material);proxy.matrixWorld.copy(session.body.matrixWorld);const h=ray.intersectObject(proxy,false)[0];if(!h?.uv)return null;
   let blocked=false;scene.traverse(b=>{if(blocked||b===session.body||!['body','boxlab-inactive-body'].includes(b.userData?.kind)||!b.geometry)return;for(let a=b;a;a=a.parent)if(!a.visible)return;const other=new THREE.Mesh(b.geometry,occluderMaterial);other.matrixWorld.copy(b.matrixWorld);const nearest=ray.intersectObject(other,false)[0];if(nearest&&nearest.distance<h.distance-1e-6)blocked=true;});return blocked?null:h;
  }
- function begin(p,settings,kind='boxlab',maskValue=0){if(!session||stroke)return false;const selected=session.stack?.layers.find(l=>l.id===session.selected);if(selected&&(!selected.visible||!selected.opacity))throw Error('Show the selected layer and increase its opacity before painting');if(session.paintTarget==='mask'){if(!selected?.mask?.enabled)throw Error('Enable the selected layer mask before painting it');if(!Number.isInteger(maskValue)||maskValue<0||maskValue>255)throw Error('Mask value must be 0 to 255');const hex=maskValue.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}if(selected?.image&&session.paintTarget==='colour')throw Error('Image colour is retained; paint its mask or select a paint layer');if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}session.layer.begin(settings);const enabled=controls.enabled;controls.enabled=false;const path=createStroke(kind,q=>{const h=hit({...q,width:p.width,height:p.height});if(h)session.layer.stamp(h.uv.x,h.uv.y,q.pressure);});stroke={path,controls:enabled};path.start(p);return true;}
+ function begin(p,settings,kind='boxlab',maskValue=0){if(!session||stroke)return false;clearImagePreview();const selected=session.stack?.layers.find(l=>l.id===session.selected);if(selected&&(!selected.visible||!selected.opacity))throw Error('Show the selected layer and increase its opacity before painting');if(session.paintTarget==='mask'){if(!selected?.mask?.enabled)throw Error('Enable the selected layer mask before painting it');if(!Number.isInteger(maskValue)||maskValue<0||maskValue>255)throw Error('Mask value must be 0 to 255');const hex=maskValue.toString(16).padStart(2,'0');settings={...settings,colour:'#'+hex.repeat(3)};}if(selected?.image&&session.paintTarget==='colour')throw Error('Image colour is retained; paint its mask or select a paint layer');if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}session.layer.begin(settings);const enabled=controls.enabled;controls.enabled=false;const path=createStroke(kind,q=>{const h=hit({...q,width:p.width,height:p.height});if(h)session.layer.stamp(h.uv.x,h.uv.y,q.pressure);});stroke={path,controls:enabled};path.start(p);return true;}
  function move(p){if(stroke){if(!current()){close();return;}stroke.path.move(p);}}
  function finish(p){if(!stroke)return false;if(p)move(p);if(!stroke)return false;stroke.path.end();const enabled=stroke.controls;stroke=null;controls.enabled=enabled;
   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){session.layer.finish(true);close();return false;}
@@ -40,32 +41,40 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   const maskPixels=s.paintTarget==='mask'?new Uint8Array(512*512):null;if(maskPixels)for(let i=0;i<maskPixels.length;i++)maskPixels[i]=s.layer.pixels[i*4];
   return {...s.stack,layers:s.stack.layers.map(l=>l.id===s.selected?(maskPixels?{...l,mask:{...l.mask,pixels:maskPixels}}:{...l,pixels:s.layer.pixels}):l)};
  }
- function updatePreview(){if(!session)return;session.preview.set(session.stack?flattenPaintLayerStack(workingStack()).pixels:session.layer.pixels);session.dirty=true;}
+ function updatePreview(){if(!session)return;session.preview.set(session.imagePreview?.resource.pixels||(session.stack?flattenPaintLayerStack(workingStack()).pixels:session.layer.pixels));session.dirty=true;}
  function loadLayer(){const s=session;if(!s)return;const selected=s.stack?.layers.find(l=>l.id===s.selected);if(s.paintTarget==='mask'&&!selected?.mask)s.paintTarget='colour';
   s.layer.dispose();s.layer=createPaintLayer(512,{transparent:!!selected&&s.paintTarget!=='mask'});
   if(s.paintTarget==='mask'){const rgba=new Uint8Array(512*512*4),mask=selected.mask.pixels;for(let i=0;i<mask.length;i++){const at=i*4;rgba[at]=rgba[at+1]=rgba[at+2]=mask[i];rgba[at+3]=255;}s.layer.restore(rgba);}
   else{const pixels=selected?.pixels||s.stack?.base.pixels||s.resource?.pixels;if(pixels)s.layer.restore(pixels);}
  }
+ function preflight(resource){const pool=createProjectPaintPool();for(const o of objects()){const r=o===target()?resource:o?.colourPaint;if(r)pool.add(r);}}
+ function clearImagePreview(){if(session?.imagePreview){session.imagePreview=null;updatePreview();}}
  function commit(resource){
   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();throw Error('Object changed during paint');}
-  const pool=createProjectPaintPool();for(const o of objects()){const r=o===target()?resource:o?.colourPaint;if(r)pool.add(r);}
+  preflight(resource);
   if(!checkpoint())throw Error('Scene history checkpoint unavailable');
-  target().colourPaint=resource;session.resource=resource;session.stack=resource.version>=2?resource.layers:null;loadLayer();updatePreview();return true;
+  target().colourPaint=resource;session.imagePreview=null;session.resource=resource;session.stack=resource.version>=2?resource.layers:null;loadLayer();updatePreview();return true;
  }
- function ready(){if(!session)return false;cancel();if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}return true;}
+ function ready(){if(!session)return false;cancel();clearImagePreview();if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}return true;}
  function selectLayer(id){if(!ready())return false;if(id!=='$base'&&!session.stack?.layers.some(l=>l.id===id))throw Error('Unknown paint layer');session.selected=id;session.paintTarget='colour';loadLayer();return true;}
  function addLayer(){if(!ready())return false;const s=session,stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:512,height:512,pixels:s.preview,binding:s.binding}));let n=1;while(stack.layers.some(l=>l.id==='layer'+n))n++;const id='layer'+n,resource=captureLayeredColourResource(appendPaintLayer(stack,{id,name:'Layer '+n}));if(commit(resource)){session.selected=id;session.paintTarget='colour';loadLayer();return true;}return false;}
- function projectImage(source,placement,{replace=false,name='Image layer'}={}){
-  if(!ready())return false;const s=session,selected=s.stack?.layers.find(l=>l.id===s.selected);
+ function prepareImage(source,placement,{replace=false,name='Image layer'}={}){
+ const s=session,selected=s.stack?.layers.find(l=>l.id===s.selected);
   if(replace&&!selected?.image)throw Error('Select an image layer to edit');
   const stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:512,height:512,pixels:s.preview,binding:s.binding}));
   if(!replace&&stack.layers.length>=3)throw Error('Delete a layer first; three overlays maximum');
   scene.updateMatrixWorld(true);
-  const image={version:1,source,placement:paintImagePlacementFromCamera(camera,placement),objectToWorld:s.body.matrixWorld.toArray()},result=projectPaintImage({geometry:s.display.surface.geometry,image,scene,body:s.body});
+  const image={version:1,source,placement:placement?.worldToClip?capturePaintImagePlacement(placement):paintImagePlacementFromCamera(camera,placement),objectToWorld:s.body.matrixWorld.toArray()},result=projectPaintImage({geometry:s.display.surface.geometry,image,scene,body:s.body});
   let n=1;while(stack.layers.some(l=>l.id==='image'+n))n++;const id=replace?s.selected:'image'+n;
   const next=replace?replaceImagePaintLayer(stack,id,result):appendImagePaintLayer(stack,{...result,id,name:name.trim().slice(0,64)||'Image layer'});
-  if(commit(captureLayeredColourResource(next))){s.selected=id;s.paintTarget='colour';loadLayer();return true;}return false;
+  return {resource:captureLayeredColourResource(next),id};
  }
+ function projectImage(source,placement,options={}){if(!ready())return false;const candidate=prepareImage(source,placement,options);return publishImage(candidate);}
+ function publishImage(candidate){if(commit(candidate.resource)){session.selected=candidate.id;session.paintTarget='colour';loadLayer();return true;}return false;}
+ function previewImage(source,placement,options={}){if(!ready())return false;const candidate=prepareImage(source,placement,options);preflight(candidate.resource);session.imagePreview=candidate;updatePreview();return true;}
+ function applyImagePreview(){const candidate=session?.imagePreview;if(!candidate||!ready())return false;try{return publishImage(candidate);}catch(error){updatePreview();throw error;}}
+ function surfaceFrame(p,source){if(!current())return null;const h=hit(p);return h?surfaceImageFrameFromHit(h,{matrixWorld:session.body.matrixWorld,geometry:session.display.surface.geometry,source}):null;}
+
  function imageForEdit(){if(!ready())return null;const image=session.stack?.layers.find(l=>l.id===session.selected)?.image;return image?{source:image.source,placement:{centre:[...image.placement.centre],size:[...image.placement.size],rotation:image.placement.rotation}}:null;}
  function editLayer(patch){if(!ready()||session.selected==='$base')return false;const layer=session.stack.layers.find(l=>l.id===session.selected);if(Object.keys(patch).every(k=>layer[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,patch)));}
  function removeLayer(){if(!ready()||session.selected==='$base')return false;const s=session,layers=s.stack.layers.filter(l=>l.id!==s.selected);if(commit(captureLayeredColourResource({...s.stack,layers}))){session.selected=layers.at(-1)?.id||'$base';loadLayer();return true;}return false;}
@@ -77,7 +86,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function editMask(patch){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)throw Error('Add a mask to the selected paint layer first');if(!patch||Object.keys(patch).some(k=>!['enabled','inverted'].includes(k)))throw Error('Unsupported mask edit');if(Object.keys(patch).every(k=>layer.mask[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{...layer.mask,...patch}})));}
  function removeMask(){if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:null})));}
  function state(){const s=session;return s?{selected:s.selected,paintTarget:s.paintTarget,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
- return {open,close,cancel,begin,move,finish,hit,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,
+ return {open,close,cancel,begin,move,finish,hit,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,previewImage,applyImagePreview,clearImagePreview,surfaceFrame,
   tick(){if(session&&!current()){close();return;}if(session?.layer.consumeDirty())updatePreview();if(session?.dirty){session.display.surface.material.map.needsUpdate=true;session.dirty=false;}},
   get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
 }

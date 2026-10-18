@@ -7627,9 +7627,9 @@ relative placement; material slots/UI polish follow product direction.
 - [x]911 actual projection .boxlab codec/Open/re-edit and native flattened PNG.
 - [x]911 checkpoint/stack and stale async refusal preserves committed state.
 - [x]911 overlay aspect/rotation affine parity/disposal; no second pointer owner.
-- [ ]911 DEVICE + Image → Pencil Move/Rotate/Scale; fingers align view → Project.
-- [ ]911 DEVICE orbit confirms back/hidden surfaces clean; Edit image/cancel/reproject.
-- [ ]911 DEVICE UndoRedo/SaveOpen/re-edit; mask/blend and Nomad colour sanity.
+- [x]911 DEVICE + Image → Pencil Move/Rotate/Scale; fingers align view → Project. USER911PASS.
+- [x]911 DEVICE orbit confirms back/hidden surfaces clean; Edit image/cancel/reproject. USER911PASS.
+- [x]911 DEVICE UndoRedo/SaveOpen/re-edit; mask/blend and Nomad colour sanity. USER911PASS.
 
 
 ## .911 publication verified — 2026-10-18
@@ -7649,3 +7649,35 @@ runtime bytes retained. User910PASS recorded;911 actual Safari/Pencil/image pick
 latency/front-only appearance gate remains pending. No rendered acceptance inferred
 from Node canvas adapters or byte verification. Next manual Project checklist in
 paint-image-project-911.md, then surface-relative placement from original Insert.
+
+
+## .912 — surface-relative retained images; .911 user PASS — 2026-10-18
+
+User911PASS protects Project from View/picker/Pencil/navigation/persistence/history.
+Audit a647d08f: reuse911 projector and908/909 storage/pool; new surface frame uses actual
+Insert437 alignment/cycle and907 orthographic camera capture, no new geometry kernel.
++ Image/Edit image → On surface → pick selected mesh. First tap places; then tap-cycle
+Move/Rotate/Scale, Move follows original hit/triangle normal. Planar65% contact guide;
+lift regenerates exact UV mesh preview, Apply commits ONE original scene checkpoint.
+Preview never assigns object colourPaint or enters Save/history; original preflight,
+commit/COW/export and .911 front/occlusion/UV/work limits retained. Cancel/close/layer/
+body loss restores committed work and controls, guide disposed. Back to view preserves
+accepted .911 path. Edit / On surface starts fresh anchor/default size; persisted source/
+projection/frame/cache support re-placement, not automatic old anchor/spin/scale resume.
+Same scene/project schema and flat native handoff. No continuous curved raster while
+contact, seam-safe wrapping, larger budgets or iPad performance claim. Read
+docs/paint-image-surface-912.md. Seven focused new checks cover actual frame/guide/
+preview/UI/history/limits/curved Sphere UV+Save/native PNG. Node24.19.0 full
+**2570 PASS / 0 FAIL / 0 skipped**; publication verification follows.
+Changed painter/core/new helper graph912; projector911/source907/stack908/pool909/native
+writer910/Insert437 and protected modelling/Multi/frozen retained. Device912 gate pending.
+Next surface interaction feedback, then audit material-channel slots/placeholder plan.
+
+- [x]912 surface frame aspect/spin/normal and actual Insert alignment parity.
+- [x]912 guide is non-raycastable, source unchanged and disposed on all stage exits.
+- [x]912 transient display survives tick; no scene resource/history/save before Apply.
+- [x]912 original UI pick/tap-cycle/move/cancel/finger/palm and single history Apply.
+- [x]912 masks/blends/source sharing retained; pool/checkpoint/body-loss atomic refusal.
+- [x]912 real curved sphere projection/codec/native flattened PNG through original owners.
+- [ ]912 DEVICE On surface pick/move/Rotate/Scale; lift mesh preview, fingers navigate.
+- [ ]912 DEVICE Apply UndoRedo; Edit image/On surface, Cancel/reapply, SaveOpen/export.

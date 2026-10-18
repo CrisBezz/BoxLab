@@ -3224,3 +3224,26 @@ runtime bytes retained. User910PASS recorded;911 actual Safari/Pencil/image pick
 latency/front-only appearance gate remains pending. No rendered acceptance inferred
 from Node canvas adapters or byte verification. Next manual Project checklist in
 paint-image-project-911.md, then surface-relative placement from original Insert.
+
+
+## .912 — surface-relative retained images; .911 user PASS — 2026-10-18
+
+User911PASS protects Project from View/picker/Pencil/navigation/persistence/history.
+Audit a647d08f: reuse911 projector and908/909 storage/pool; new surface frame uses actual
+Insert437 alignment/cycle and907 orthographic camera capture, no new geometry kernel.
++ Image/Edit image → On surface → pick selected mesh. First tap places; then tap-cycle
+Move/Rotate/Scale, Move follows original hit/triangle normal. Planar65% contact guide;
+lift regenerates exact UV mesh preview, Apply commits ONE original scene checkpoint.
+Preview never assigns object colourPaint or enters Save/history; original preflight,
+commit/COW/export and .911 front/occlusion/UV/work limits retained. Cancel/close/layer/
+body loss restores committed work and controls, guide disposed. Back to view preserves
+accepted .911 path. Edit / On surface starts fresh anchor/default size; persisted source/
+projection/frame/cache support re-placement, not automatic old anchor/spin/scale resume.
+Same scene/project schema and flat native handoff. No continuous curved raster while
+contact, seam-safe wrapping, larger budgets or iPad performance claim. Read
+docs/paint-image-surface-912.md. Seven focused new checks cover actual frame/guide/
+preview/UI/history/limits/curved Sphere UV+Save/native PNG. Node24.19.0 full
+**2570 PASS / 0 FAIL / 0 skipped**; publication verification follows.
+Changed painter/core/new helper graph912; projector911/source907/stack908/pool909/native
+writer910/Insert437 and protected modelling/Multi/frozen retained. Device912 gate pending.
+Next surface interaction feedback, then audit material-channel slots/placeholder plan.
