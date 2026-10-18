@@ -6,7 +6,8 @@ CrisBezz/BoxLab main release0.36.18.906, based onf8455236 (.905 runtime30472e8d)
 User905PASS protects layers/Pencil/navigation/UndoRedo/project; agrees UI/UX polish
 once feature flows present.906 adds on-surface masks to same painter/raster/resource:
 Hide/Reveal/Grey, Colour/Mask target, enabled/invert/remove. Source colours preserved.
-Read docs/paint-mask-ui-906.md. Full suite/publication proof follows. Device906 pending.
+Read docs/paint-mask-ui-906.md. Runtime6824f146, full2533PASS/0FAIL/0skip;
+Node22 CI/Pages/live906 verified below. Device906 pending.
 
 ## .906 — main viewport layer mask painting; .905 PASS — 2026-10-18
 
@@ -517,3 +518,19 @@ Next hands-on layering, then mask painting/UI and product direction as above.
 
 .906 local validation: Node24.19.0 full **2533 PASS / 0 FAIL / 0 skipped**;
 seven new mask UI/core tests PASS. Device906 pending; no rendered proof inferred.
+
+## .906 publication verified — 2026-10-18
+
+Runtime6824f14667f3e743bc52bc0607de52660222212f; tested tree
+a4d869947ec2e27fb5314f740b1dd18e7cd325c0. All remote blobs/created tree SHA match
+local tested source, connected GitHub current main head verified6824f146.
+Node22.23.3 CI39087874612/job117558144690 SUCCESS2533PASS/0FAIL/0skip;
+Pages39087874513 build117558146759/deploy117558241062 SUCCESS.
+All12 checked live shell/version/painter/core/recovery906 and unchanged raster/Lab905,
+compositor903/resource+pool+paint export904 byte-match repository. Initial predeployment
+shell/painter served905; final checked graph matches906. Only intended painter/loader
+source changed; protected modelling/Multi1.0/frozen/resource/project/export retained.
+All four continuity files current. This proof changes documentation only and retains
+tested runtime bytes. User905PASS protected;906 mask device gate pending, no rendered
+browser or iPad performance acceptance inferred. Next mask feedback then editable
+image sources/Project from View/Insert-cycle plan, as current product direction.
