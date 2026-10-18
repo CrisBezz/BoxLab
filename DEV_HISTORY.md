@@ -11473,3 +11473,20 @@ no arbitrary native-UV material metadata or new writer. Other material slots que
 Local Node24.19.0 full regression **2581 PASS / 0 FAIL / 0 skipped**; existing905/906
 nearby14PASS and new915 focused3PASS. Original colour brush/resource/history/UV/
 image/export/Multi/frozen owners unchanged. Publication verification follows.
+
+
+## .915 publication verified — 19 October 2026 (Brisbane)
+
+Runtime6c094e8448dbbc324146af621a709b5581160e06; tested tree
+ e0d4f532e7c2a558d585d155ac1052769c797f95. Uploaded13 exact blobs and identical
+tested tree; main fetched/local equivalent tree aligned. Node24 local + Node22
+hosted full2581PASS/0FAIL/0skip. TopologyCI39167551114/job117793558051 SUCCESS;
+Pages39167550557/build117793559585/deploy117793690409 SUCCESS. Final12/12 checked
+live shell/manifest/painter/new colour helper/recovery/core/UV/Multi/budget/surface
+files byte-match source. Initial in-flight reads served914 and helper404 with proxy
+timeout; fresh postdeployment complete graph matches915. Only painter/new helper,
+three shell cache keys and reviewed fixture changed; all other algorithm pins retained.
+All four continuity files current, user914PASS protected. This proof is docs only;
+915 device colour/picker/grey-black recovery/paint gate pending. Next independent
+roughness data-resource/transport foundation per docs/paint-colour-controls-915.md;
+no extra material-channel parity or iPad performance claim inferred.
