@@ -54,7 +54,8 @@ reimplemented by this direction. Audit current material/resource/export owners f
   Preserve explicit project pool via existing codec, atomic
   Open, original scene Undo/Redo and ordinary Duplicate. Retain v1/v2 plain/opaque
   project compatibility and binding validation; never silently flatten editable saves.
-4. Transparent brush + layer/mask controls in main viewport through current painter.
+4.905 transparent brush + layer controls delivered in main viewport through current
+  painter. Mask drawing/UI next; existing stored masks retained.
   Copy only edited payload where safe; no duplicate scene/paint history or editor.
 5. Image sources + Project from View, then surface placement via audited Insert cycle.
 6. Material slots and per-channel stacks in stages; displacement reserved until real

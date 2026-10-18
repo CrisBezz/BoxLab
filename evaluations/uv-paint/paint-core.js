@@ -5,9 +5,10 @@ export function brushSettings(value={}){
  if(!/^#[\da-f]{6}$/i.test(s.colour)||![s.radius,s.hardness,s.opacity].every(Number.isFinite)||s.radius<1||s.radius>48||s.hardness<0||s.hardness>1||s.opacity<0||s.opacity>1||typeof s.pressure!=='boolean')throw Error('Invalid brush settings');
  return Object.freeze(s);
 }
-export function createPaintLayer(size=RESOLUTION){
+export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
+ if(typeof transparent!=='boolean')throw Error('Invalid paint layer alpha mode');
  if(!Number.isInteger(size)||size<16||size>512)throw Error('Comparison map budget exceeded');
- const pixels=new Uint8Array(size*size*4).fill(255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true;
+ const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true;
  return {
   pixels,size,
   begin(value){if(disposed||before)throw Error('Paint layer unavailable');settings=brushSettings(value);before=pixels.slice();coverage=new Float32Array(size*size);changed=false;},
@@ -19,14 +20,19 @@ export function createPaintLayer(size=RESOLUTION){
     const d=Math.hypot(x-cx,y-cy),edge=Math.min(1,Math.max(0,radius+.5-d));if(!edge)continue;
     const t=Math.min(1,Math.max(0,(1-d/radius)/Math.max(.00001,1-settings.hardness))),falloff=t*t*(3-2*t);
     const a=settings.opacity*edge*(d/radius<=settings.hardness?1:falloff),at=x+y*size;if(a<=coverage[at])continue;coverage[at]=a;
-    for(let k=0;k<3;k++){const i=at*4+k,next=Math.round(before[i]*(1-a)+rgb[k]*a);if(pixels[i]!==next){pixels[i]=next;touched=true;}}
+    const offset=at*4,baseAlpha=before[offset+3]/255,outAlpha=a+baseAlpha*(1-a);
+    for(let k=0;k<3;k++){
+     const i=offset+k,next=transparent?Math.round((rgb[k]*a+before[i]*baseAlpha*(1-a))/outAlpha):Math.round(before[i]*(1-a)+rgb[k]*a);
+     if(pixels[i]!==next){pixels[i]=next;touched=true;}
+    }
+    if(transparent){const next=Math.round(outAlpha*255);if(pixels[offset+3]!==next){pixels[offset+3]=next;touched=true;}}
    }
    if(touched){dirty=true;changed=true;}return touched;
   },
   finish(cancel=false){if(!before)return false;const did=changed;if(cancel&&changed){pixels.set(before);dirty=true;}before=coverage=settings=null;changed=false;return !cancel&&did;},
   restore(data){if(disposed||before||!(data instanceof Uint8Array)||data.length!==pixels.length)throw Error('Invalid paint snapshot');pixels.set(data);dirty=true;},
   consumeDirty(){const was=dirty;dirty=false;return was;},
-  dispose(){if(disposed)return;this.finish(true);disposed=true;pixels.fill(255);},
+  dispose(){if(disposed)return;this.finish(true);disposed=true;pixels.fill(transparent?0:255);},
   get drawing(){return !!before;}
  };
 }

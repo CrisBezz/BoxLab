@@ -1,14 +1,36 @@
-# BoxLab AI Handoff — .904 / Editable layered project resources
+# BoxLab AI Handoff — .905 / Main viewport colour layers
 
 ## Current state — 18 October 2026
 
-CrisBezz/BoxLab main release0.36.18.904, based on5efdc7d9 (.903 runtimea0a910de).
-Latest user devicePASS901 protects exports and900 paint/history/project/duplicates.
-904 connects layered colour resourcev2 to SAME colourPaint pool/scene history/duplicates,
-projectv3 and existing flattened display/export. No layer UI yet; old painter refuses
-layered resources until UI build. Read docs/paint-layer-resources-904.md and
- docs/paint-material-direction.md. Runtime598675a2, full2519PASS/0FAIL/0skip;
-Node22 CI/Pages/live904 verified below.
+CrisBezz/BoxLab main release0.36.18.905, based on1d246735 (.904 runtime598675a2).
+User904PASS protects paint/project/history/Duplicate/export. Layers now visible in
+File/Paint selected object; + Layer preserves existing paint as base, transparent
+paint layers editable/selectable with opacity/visibility/order/name and26 blend modes.
+Same resourcev2/projectv3/history/export owners; mask bytes retained, mask UI next.
+Read docs/paint-layer-ui-905.md. Full suite/publication proof follows. Device905 pending.
+
+## .905 — visible main viewport colour layers; .904 PASS — 2026-10-18
+
+User904PASS protects paint Save/Open/Undo/Duplicate/NOM/GLB regression. Audit1d246735:
+connect existing900 painter/903 stack+26 blends/904 resource and original scene history.
+Layers panel: select/top-first, + Layer (max3), rename/reorder/delete, visibility,
+layer opacity and26 modes. Base paintable/opaque; existing v1 converts only on + Layer.
+Same raster gains optional straight-alpha layer mode with preserved opaque default,
+pressure/hardness/per-stroke cap/cancel; same stroke/input/raycast/navigation owners.
+Separate mutable layer/composite preview; original one dirty upload/frame; no measured
+M2 performance claim. Whole-stack copies/preflight remain, not sparse optimization.
+Every changed stroke/metadata operation checkpoints original scene and COW replaces
+resource; selection/no-op creates no history. Full-scene8MiB pool checked BEFORE
+checkpoint; invalid/budget/checkpoint failure restores original resource/preview.
+Stored masks persist; no mask/image/material UI claim. Save/Openv3 and flat NOM/GLB use
+original904 owners. Hidden/zero opacity layer refuses strokes while panel stays open.
+Seven focused905 checks PASS; all original900 assertions retained in extracted shared
+runtime.904 refusal assertion superseded by real layered opening/editable-path tests.
+Read docs/paint-layer-ui-905.md. Changed painter/shared raster and Lab loader graph905;
+compositor903/resource+project+export904/stroke896/protected/frozen owners retained.
+Next DEVICE layer/Pencil/navigation/persistence feedback, then mask paint/UI through
+same owners, followed by image projection/Insert cycle/material plan. Full suite and
+publication proof follow. No905 userPASS or rendered browser evidence inferred.
 
 ## .904 — editable layered project/history resources — 2026-10-18
 
@@ -214,14 +236,15 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-904 layered resource lives in EXISTING object.colourPaint (version2 with layers),
-project scenev3/pool entryv2. No separate paintLayers object field or second history.
-Next REAL main viewport layer controls/transparent raster, original history checkpoints,
-903 compositor and904 captureLayeredColourResource. Replace resource atomically; never
-paint into flat preview and drop layers. Existing opaque strokes/Undo/Pencil navigation
-remain protected; remove current layered-painter refusal only when editable path exists.
-Then image sources/Project from View and shared Insert Move→Rotate→Scale tap cycle;
-material channels staged, displacement placeholder per docs/paint-material-direction.md.
+905 main layer UI and transparent paint now implemented. DEVICE check: + Layer,
+contrasting strokes/selection/visibility/opacity/blend/order, Pencil/finger navigation,
+Done/UndoRedo/reopen and Save/Open layered project. Source-copy/preflight costs need
+actual iPad feedback; no blanket performance claim. User904PASS protects prior flow.
+Then mask drawing/UI through same raster/compositor/resource/history, preserving masks
+already stored. No duplicate paintLayers property/editor/history. Next image sources/
+Project from View and shared Insert Move→Rotate→Scale tap cycle; material channels and
+displacement placeholder per docs/paint-material-direction.md. Original resource904,
+opaque compatibility and flattened export remain authoritative.
 
 ## Protected interaction and modelling baseline
 
@@ -451,3 +474,6 @@ This proof changes documentation only; no tested runtime bytes. User901PASS reta
 Next REAL layer controls/transparent brush through same resource/history, not more
 parallel storage. Manual existing paint Save/Open/new-stroke UndoRedo, duplicate
 isolation and NOM/GLB colour sanity. New layered fixtures are automated checks.
+
+.905 local validation: Node24.19.0 full **2526 PASS / 0 FAIL / 0 skipped**;
+seven new layer/raster/UI checks PASS, original semantic checks retained. iPad gate pending.

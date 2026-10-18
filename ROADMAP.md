@@ -3040,3 +3040,30 @@ regression only; new layered fixtures automated, not user tasks.
 
 .904 local validation: Node24.19.0 full **2519 PASS / 0 FAIL / 0 skipped**;
 seven new resource/history/codec/export checks PASS. No device acceptance inferred.
+
+
+## .905 — visible main viewport colour layers; .904 PASS — 2026-10-18
+
+User904PASS protects paint Save/Open/Undo/Duplicate/NOM/GLB regression. Audit1d246735:
+connect existing900 painter/903 stack+26 blends/904 resource and original scene history.
+Layers panel: select/top-first, + Layer (max3), rename/reorder/delete, visibility,
+layer opacity and26 modes. Base paintable/opaque; existing v1 converts only on + Layer.
+Same raster gains optional straight-alpha layer mode with preserved opaque default,
+pressure/hardness/per-stroke cap/cancel; same stroke/input/raycast/navigation owners.
+Separate mutable layer/composite preview; original one dirty upload/frame; no measured
+M2 performance claim. Whole-stack copies/preflight remain, not sparse optimization.
+Every changed stroke/metadata operation checkpoints original scene and COW replaces
+resource; selection/no-op creates no history. Full-scene8MiB pool checked BEFORE
+checkpoint; invalid/budget/checkpoint failure restores original resource/preview.
+Stored masks persist; no mask/image/material UI claim. Save/Openv3 and flat NOM/GLB use
+original904 owners. Hidden/zero opacity layer refuses strokes while panel stays open.
+Seven focused905 checks PASS; all original900 assertions retained in extracted shared
+runtime.904 refusal assertion superseded by real layered opening/editable-path tests.
+Read docs/paint-layer-ui-905.md. Changed painter/shared raster and Lab loader graph905;
+compositor903/resource+project+export904/stroke896/protected/frozen owners retained.
+Next DEVICE layer/Pencil/navigation/persistence feedback, then mask paint/UI through
+same owners, followed by image projection/Insert cycle/material plan. Full suite and
+publication proof follow. No905 userPASS or rendered browser evidence inferred.
+
+.905 local validation: Node24.19.0 full **2526 PASS / 0 FAIL / 0 skipped**;
+seven new layer/raster/UI checks PASS, original semantic checks retained. iPad gate pending.
