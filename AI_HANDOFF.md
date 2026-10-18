@@ -629,3 +629,18 @@ new image authoring not exposed yet, fixture coverage is automated not an iPad g
 
 .909 local validation: Node24.19.0 full **2552 PASS / 0 FAIL / 0 skipped**; five new
 actual duplicate/pool/recovery regressions PASS. Device release retest pending.
+
+## .909 publication verified — 2026-10-18
+
+Runtimeca8352337f5bfd3bc82a9235454836827d47b427; tested tree
+26a49083ed61c00dce1dab6183dad49d311ce73f. All27 uploaded blob hashes/created tree
+match tested local source; fetched main shell/manifest blobs verified exactly.
+Node22.23.3 CI39098952488/job117591081486 SUCCESS2552PASS/0FAIL/0skip;
+Pages39098952422 build117591083237/deploy117591156486 SUCCESS.
+All26 checked live shell/version, shared-byte/resource/project/painter/export/render/
+management/Lab loader graph, recovery and unchanged stack/image/source/placement/
+Insert-cycle files byte-match repository. Protected Multi1.0/frozen/modelling/brush
+bytes retained. All four continuity documents updated; proof is documentation-only,
+no tested runtime changes. .908 user duplicate FAIL reproduced and repaired in source;
+.909 device retest pending, latest accepted device baseline906. Next duplicate stroke
+release/Done/reselect/SaveOpen/Undo test, then resume image projection UI after pass.
