@@ -6,7 +6,8 @@ CrisBezz/BoxLab main release0.36.18.902, based on0bfb6819 (.901 runtime32cca003)
 User .901 PASS protects painted Nomad/GLB handoff plus .900 viewport paint/Pencil/
 navigation/history/project/duplicates. .895 density remains separate.
 .902 adds an isolated compositor API only; no new runtime layer UI or persistence.
-Read docs/paint-layer-stack-902.md. Publishing authorized; proof follows below.
+Read docs/paint-layer-stack-902.md. Runtime0d37f014, full2505PASS/0FAIL/0skip;
+Node22 CI/Pages/live902 verified below. Publishing authorized.
 
 ## .902 — layer/compositor foundation; .901 user PASS — 2026-10-18
 
@@ -347,3 +348,18 @@ compositor design through original owners; .boxlab remains editable paint projec
 
 .902 local validation: Node24.19.0 full suite **2505 PASS / 0 FAIL / 0 skipped**;
 five new focused compositor checks PASS. No new device/rendered layer proof.
+
+## .902 publication verified — 2026-10-18
+
+Runtime0d37f014a47e7b473aa12710a467da736047e22a; tested tree
+3961609068a980cb26982be472f4a6dd0199626c matches fetched main/local exactly.
+Node22.23.3 CI39081195618/job117538289593 SUCCESS2505PASS/0FAIL/0skip;
+Pages39081195076 build117538290786/deploy117538384344 SUCCESS.
+Postdeployment live shell/version/new isolated compositor/recovery902 and unchanged
+viewport900/export901 byte-match repository. Initial live version still901 before
+completed deployment; final complete checked graph902 matches. Main app does not
+import compositor yet; layer UI/storage/transparent raster remain future work.
+Protected Multi/frozen/modelling/brush/resource/project/export owners unchanged.
+User901PASS recorded; no new902 manual gate or rendered layer acceptance claimed.
+All four continuity files updated; this proof is documentation-only and changes
+no tested runtime bytes. Next separate layer scene-resource/project integration.
