@@ -11429,3 +11429,20 @@ parent chain914. Original913 painter/resource budget retained. An initial local
 cache-contract run caught an overbroad shell pin replacement during preparation;
 restored unrelated913 pins before FINAL full2578PASS run. No published bad graph.
 Publication evidence to follow; manual device gates remain pending.
+
+
+## .914 publication verified — 2026-10-18
+
+Runtime88315294db29a9046ace8cef4896c449a31166e9; tested tree
+ d5dcff41107bed86a43b34f7bf95240122cfa22e. Uploaded13 exact source blobs/tree,
+fetched main and aligned local equivalent tree. LocalNode24.19.0 and hostedNode22
+full2578PASS/0FAIL/0skip. TopologyCI39123430499/job117663549250 SUCCESS;
+Pages39123429994/build117663550431/deploy117663655310 SUCCESS. All12 checked
+live shell/manifest/UV owner/Mesh Health/Lab parents/recovery/Multi/painter/budget
+files byte-match source after deployment. Initial public proxy timeouts/old913
+manifest resolved on retried versioned fetch; final12/12 match914. Extra unversioned
+manifest request timed out at proxy; no evidence of app regression. Protected
+Multi1.0/frozen/modelling/paint kernels and unrelated913 pins retained. All four
+continuity files current; proof changes docs only. No device PASS inferred.
+Stop at manual gate: tomorrow914 Cylinder/Cone/upright Revolve UVs +913 repeat-image
+retake; first912 image placement PASS protected. Material-channel work stays queued.
