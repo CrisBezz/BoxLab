@@ -58,7 +58,9 @@ reimplemented by this direction. Audit current material/resource/export owners f
   painter. 906 mask drawing/enable/invert/remove UI delivered through same owner;905 layer UI
   accepted. Broader UX polish follows feature flow work as user requested.
   Copy only edited payload where safe; no duplicate scene/paint history or editor.
-5. Image sources + Project from View, then surface placement via audited Insert cycle.
+5.907 image source/placement foundation;908 retained image layer resources/projectv4
+  and original history/export integration delivered. Next picker/overlay + Project
+  from View, then surface placement via audited Insert cycle.
 6. Material slots and per-channel stacks in stages; displacement reserved until real
   implementation. Preserve current rich imported maps/export without false parity claims.
 

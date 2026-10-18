@@ -11204,3 +11204,26 @@ No new hands-on gate this foundation build; .906 PASS is protected, not907 image
 
 .907 local validation: Node24.19.0 full **2539 PASS / 0 FAIL / 0 skipped**; six new
 focused image source/placement checks PASS. No new image UI or device gate.
+
+
+## .908 — retained image layers in original resource/project owners — 2026-10-18
+
+Auditfa81af3d:907 input/placement isolated;903/904 strict raster-only storage. Extend
+SAME stack/resource/pool to explicitv3 and sceneprojectv4. Image recipe retains original
+encoded+decoded source, placement and affine capture frame, separate surface raster.
+Paired image+preview append/replace APIs; generic colour pixel edits refuse images.
+All source/cache/mask/flat/base bytes charged to existing8MiB pool BEFORE decode;
+legacy projects and nativeUVv3 unchanged. Original scene history/Undo/single+Multi
+Duplicate/atomic File Open and flattened NOM/GLB retained. Existing painter supports
+v3 controls/masks with image label and colour-stroke guard, no implicit bake.
+Eight focused actual codec/history/File/painter/UI/export checks PASS. No new image
+picker/Project UI, facing/occlusion rasterizer or rendered/device claim yet.
+Source+placement907/brush905/blend903/Insert437/protected modelling/Multi/frozen retained;
+changed owners and parent/Lab loader graph908. Read docs/paint-image-resources-908.md.
+Next visible picker/overlay/Project via original UV geometry and current viewport input,
+front/angle/scene/self-occlusion before texel acceptance, atomic recipe+raster commit.
+Manual: existing paint/masks Save/Open/continue, UndoRedo, duplicate/export sanity.
+Latest user906PASS protected; no907/908 devicePASS inferred.
+
+.908 local validation: Node24.19.0 full **2547 PASS / 0 FAIL / 0 skipped**; eight new
+image resource/history/project/UI/export checks PASS. Device gate remains separate.

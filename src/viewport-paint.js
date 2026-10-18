@@ -1,4 +1,4 @@
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.906';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.908';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=905';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 const canvas=document.querySelector('#viewport'),menu=document.querySelector('#fileMenu .top-file-content'),status=document.querySelector('#selectionStatus');
@@ -12,14 +12,14 @@ const input=k=>panel.querySelector(`[data-paint="${k}"]`),say=s=>{if(status)stat
 function options(select,items){const nodes=items.map(({value,label})=>{const o=document.createElement('option');o.value=value;o.textContent=label;return o;});select.replaceChildren?.(...nodes);}
 input('mask-value').value='0';
 options(input('layer-blend'),PAINT_BLEND_MODES.map(value=>({value,label:value.split('-').map(s=>s[0].toUpperCase()+s.slice(1)).join(' ')})));
-function syncLayers(){const state=controller?.state;if(!state)return;options(input('layer'),[...state.layers].reverse().map(l=>({value:l.id,label:l.name+(l.visible?'':' · hidden')})));input('layer').value=state.selected;
+function syncLayers(){const state=controller?.state;if(!state)return;options(input('layer'),[...state.layers].reverse().map(l=>({value:l.id,label:l.name+(l.image?' · image':'')+(l.visible?'':' · hidden')})));input('layer').value=state.selected;
  const selected=state.layers.find(l=>l.id===state.selected),base=state.selected==='$base',index=state.layers.indexOf(selected);
  input('layer-name').value=selected.name;input('layer-visible').checked=selected.visible;input('layer-opacity').value=String(selected.opacity);input('layer-blend').value=selected.blendMode;
  for(const key of ['layer-name','layer-visible','layer-opacity','layer-blend','remove-layer'])input(key).disabled=base;
- const hasMask=!!selected.mask;input('paint-target').value=state.paintTarget;input('paint-target').disabled=!hasMask;input('add-mask').disabled=base||hasMask;input('remove-mask').disabled=!hasMask;input('mask-enabled').checked=hasMask&&selected.mask.enabled;input('mask-inverted').checked=hasMask&&selected.mask.inverted;for(const key of ['mask-enabled','mask-inverted','mask-hide','mask-reveal','mask-grey','mask-value'])input(key).disabled=!hasMask;input('colour').disabled=state.paintTarget==='mask';
+ const hasMask=!!selected.mask;input('paint-target').value=state.paintTarget;input('paint-target').disabled=!hasMask;input('add-mask').disabled=base||hasMask;input('remove-mask').disabled=!hasMask;input('mask-enabled').checked=hasMask&&selected.mask.enabled;input('mask-inverted').checked=hasMask&&selected.mask.inverted;for(const key of ['mask-enabled','mask-inverted','mask-hide','mask-reveal','mask-grey','mask-value'])input(key).disabled=!hasMask;input('colour').disabled=state.paintTarget==='mask'||!!selected.image;
  input('add-layer').disabled=state.layers.length>=4;input('layer-up').disabled=base||index===state.layers.length-1;input('layer-down').disabled=base||index<=1;
 }
-function layerAction(fn){cancel();try{fn();syncLayers();say(controller?.state?.paintTarget==='mask'?'UV Paint · Pencil paints mask · Hide/Reveal brush sets coverage · Undo exits Paint':'UV Paint · selected layer receives Pencil strokes · Undo exits Paint');}catch(error){syncLayers();say('UV Paint: '+error.message);}}
+function layerAction(fn){cancel();try{fn();syncLayers();say(controller?.state?.paintTarget==='mask'?'UV Paint · Pencil paints mask · Hide/Reveal brush sets coverage · Undo exits Paint':controller?.state?.layers.find(l=>l.id===controller.state.selected)?.image?'UV Paint · image retained · edit its mask or select a paint layer':'UV Paint · selected layer receives Pencil strokes · Undo exits Paint');}catch(error){syncLayers();say('UV Paint: '+error.message);}}
 input('layer').addEventListener('change',()=>layerAction(()=>controller?.selectLayer(input('layer').value)));
 input('add-layer').addEventListener('click',()=>layerAction(()=>controller?.addLayer()));
 input('remove-layer').addEventListener('click',()=>layerAction(()=>controller?.removeLayer()));

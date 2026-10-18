@@ -1,12 +1,32 @@
-# BoxLab AI Handoff — .907 / Editable image source foundation
+# BoxLab AI Handoff — .908 / Retained image layer resources
 
 ## Current state — 18 October 2026
 
-Main release0.36.18.907, based on4778567c (.906 proof). User906PASS recorded.
-Image source+camera placement foundation isolated; no new image controls yet.
-Read docs/paint-image-source-907.md. Existing .906 mask workflow is protected.
-Validation/publication evidence follows when completed.
+Main release0.36.18.908, based onfa81af3d (.907 proof). Latest user906PASS protected.
+Same colourPaint now supports image source+placement+frame with surface cache, explicit
+resourcev3/projectv4; legacy projects preserved. Painter supports image masks/layer
+controls and refuses destructive colour strokes; creation/projection UI is next.
+Read docs/paint-image-resources-908.md. Validation/publication proof follows below.
 
+
+## .908 — retained image layers in original resource/project owners — 2026-10-18
+
+Auditfa81af3d:907 input/placement isolated;903/904 strict raster-only storage. Extend
+SAME stack/resource/pool to explicitv3 and sceneprojectv4. Image recipe retains original
+encoded+decoded source, placement and affine capture frame, separate surface raster.
+Paired image+preview append/replace APIs; generic colour pixel edits refuse images.
+All source/cache/mask/flat/base bytes charged to existing8MiB pool BEFORE decode;
+legacy projects and nativeUVv3 unchanged. Original scene history/Undo/single+Multi
+Duplicate/atomic File Open and flattened NOM/GLB retained. Existing painter supports
+v3 controls/masks with image label and colour-stroke guard, no implicit bake.
+Eight focused actual codec/history/File/painter/UI/export checks PASS. No new image
+picker/Project UI, facing/occlusion rasterizer or rendered/device claim yet.
+Source+placement907/brush905/blend903/Insert437/protected modelling/Multi/frozen retained;
+changed owners and parent/Lab loader graph908. Read docs/paint-image-resources-908.md.
+Next visible picker/overlay/Project via original UV geometry and current viewport input,
+front/angle/scene/self-occlusion before texel acceptance, atomic recipe+raster commit.
+Manual: existing paint/masks Save/Open/continue, UndoRedo, duplicate/export sanity.
+Latest user906PASS protected; no907/908 devicePASS inferred.
 
 ## .907 — editable image source and placement foundation; .906 PASS — 2026-10-18
 
@@ -275,14 +295,14 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-User906PASS now protects mask workflow.907 source/placement groundwork delivered.
-Next versioned image resource/project pool integration, then projection UI; see
-docs/paint-image-source-907.md. Older staged device gates below are historical.
-
-User UI/UX polish follows feature flows. Retain906 masks and905 layers.
-Store image source+placement through existing resource/project/history/export;
-Move→Rotate→Scale uses original Insert cycle. No shadow paintLayers, second editor
-or broad UI cleanup. Material slots/displacement remain staged direction.
+908 resource/project/history/export image persistence delivered. Next REAL image picker/
+overlay/Project from View through current painter/input and original UV geometry.
+907 projector is coordinate maths only; enforce front angle and scene/self-occlusion
+before texels, atomically capture recipe+surface raster through908 paired API. Retain
+image source and frame for re-projection, Insert437 Move→Rotate→Scale cycle. No implicit
+bake, shadow paintLayers/editor/history, nativeUV fields or broad UI redesign. Material
+slots/displacement follow docs/paint-material-direction.md. Latest user906PASS; UI
+polish follows functional flows. No907/908 device PASS inferred.
 
 ## Protected interaction and modelling baseline
 
@@ -568,3 +588,6 @@ All four continuity files updated. This proof is documentation-only; runtime byt
 retained. User906PASS protected. No image button or new device test in this isolated
 foundation release. Next explicit image resource/project-pool integration, then
 visible-front Project from View; never use coordinate projection alone for visibility.
+
+.908 local validation: Node24.19.0 full **2547 PASS / 0 FAIL / 0 skipped**; eight new
+image resource/history/project/UI/export checks PASS. Device gate remains separate.
