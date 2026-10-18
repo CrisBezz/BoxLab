@@ -2,13 +2,13 @@ import * as THREE from 'three';
 import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=905';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
-import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer} from './paint-layer-stack.js?v=0.36.18.908';
+import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer} from './paint-layer-stack.js?v=0.36.18.913';
 import {projectPaintImage} from './paint-image-project.js?v=0.36.18.911';
 import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.912';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
-import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.909';
-import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.909';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.909';
+import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.913';
+import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.913';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.913';
 // Scene history, selection, camera and body lifetime remain with the existing app.
 export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()]}){
  let session=null,generation=0,stroke=null;const ray=new THREE.Raycaster(),occluderMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});

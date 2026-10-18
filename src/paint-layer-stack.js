@@ -1,3 +1,4 @@
+import {paintBudget} from './paint-budget.js?v=0.36.18.913';
 // Layer/compositor foundation only: not a scene resource or a second history owner.
 // Straight RGBA8 sRGB byte-space source-over matches the accepted paint raster.
 import {captureColourResource} from './paint-resource.js?v=898';
@@ -25,7 +26,7 @@ function copyLayer(value,length,version){
 // No flattened cache is trusted or stored; every capture owns all input bytes.
 export function capturePaintLayerStack(value){
  exact(value,['version','base','layers']);if(![1,2,3].includes(value.version)||!Array.isArray(value.layers)||value.layers.length>=MAX_LAYERS)throw Error('Paint stack supports one base and up to three overlays');
- if(paintLayerStackBytes(value)>8*1024*1024)throw Error('Colour paint pool exceeds 8 MiB');
+ const budget=paintBudget(value.version===3);if(paintLayerStackBytes(value)>budget.unique)throw Error('Colour paint pool exceeds '+budget.uniqueMiB+' MiB');
  const base=copyBase(value.base),ids=new Set(),layers=Array.from(value.layers,v=>{const l=copyLayer(v,base.pixels.length,value.version);if(ids.has(l.id))throw Error('Duplicate paint layer ID');ids.add(l.id);return l;});
  return Object.freeze({version:value.version,base,layers:Object.freeze(layers)});
 }

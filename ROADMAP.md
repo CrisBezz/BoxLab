@@ -3264,3 +3264,24 @@ changes documentation only and retains tested runtime bytes. User911PASS protect
 912 Safari/Pencil/guide appearance/release-preview latency gate pending, no rendered
 or M2 performance acceptance inferred. Next On surface manual gate, then material/
 channel owner audit per product direction. Original screen Project remains available.
+
+
+## .913 — repeated surface image quota repair; .912 partial PASS — 2026-10-18
+
+User912PASS first surface image; explicit second-add failure. Actual912 UI reproduced:
+16px second image works; second1024² source fails8MiB preflight (decoded source4MiB
+alone). No user's file supplied; quota explanation verified, device retest required.
+Same stack/resource/pool owners select bounded image-capablev3 profile24MiB unique /
+48MiB expanded; raster-only8/16 retained. Three1024² sources+encoded+cache+base/flat/
+masks fit≤23.75MiB resource. Original source dimensions/bytes,512² maps,three-overlay
+and32MiB file limits unchanged; no downsizing, new schema/history/kernel or performance
+claim. Original8MiB transport threshold retained: larger images use EXISTING scenev5
+shared-byte codec; strict per-resource/ref/canonical/predecode/atomic refusal retained.
+Failed pool upgrades cannot publish buffers or raise allowance. Image errors now also
+appear inside active panel. Read docs/paint-image-repeat-913.md. Four new focused real
+UI/same+different1024²/File/codec/native/quota checks added.908/912 image budget fixtures
+updated to genuine24MiB overflow; all raster-only8/16 assertions retained. Local
+Node24.19.0 full **2574 PASS / 0 FAIL / 0 skipped**; publication verification follows. Resource/pool and parent/Lab graph913; surface912/projector911/
+source907/Insert437/brush/protected modelling/Multi/frozen retained. Native writer only
+parent paint-export pin changed. Next DEVICE two/three adds in same session, edit second,
+UndoRedo/SaveOpen; material work follows acceptance, not an inferred blanket912PASS.

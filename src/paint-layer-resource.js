@@ -1,6 +1,7 @@
+import {paintBudget} from './paint-budget.js?v=0.36.18.913';
 // One colourPaint resource: opaque v1, raster layers v2, retained images v3.
 import {captureColourResource} from './paint-resource.js?v=898';
-import {upgradePaintLayerStack,flattenPaintLayerStack,paintLayerStackBytes} from './paint-layer-stack.js?v=0.36.18.908';
+import {upgradePaintLayerStack,flattenPaintLayerStack,paintLayerStackBytes} from './paint-layer-stack.js?v=0.36.18.913';
 import {encodeProjectBytes,decodeProjectBytes} from './project-glb-resources.js?v=0.36.18.899';
 const fields=['version','channel','width','height','colorSpace','rowOrder','binding','pixels'];
 const sourceFields=['version','mime','width','height','rowOrder','colourSpace','alpha','encoded','data'];
@@ -9,7 +10,7 @@ function opaque(value){exact(value,fields);const copy=captureColourResource(valu
 function same(a,b){return a.length===b.length&&a.every((v,i)=>v===b[i]);}
 export function captureLayeredColourResource(stack){
  // Include the outer flattened preview before allocating owned stack copies.
- if(paintLayerStackBytes(stack)+(stack.base?.pixels?.byteLength||0)>8*1024*1024)throw Error('Colour paint pool exceeds 8 MiB');
+ const budget=paintBudget(stack.version===3);if(paintLayerStackBytes(stack)+(stack.base?.pixels?.byteLength||0)>budget.unique)throw Error('Colour paint pool exceeds '+budget.uniqueMiB+' MiB');
  const layers=upgradePaintLayerStack(stack),flat=flattenPaintLayerStack(layers);return Object.freeze({...flat,version:layers.version===3?3:2,layers});
 }
 export function capturePaintResource(value){
@@ -48,7 +49,7 @@ export function paintResourceEntryBytes(entry){
  let total=0;mapPaintResourceEntryBuffers(entry,data=>{exact(data,['encoding','byteLength','data']);if(!Number.isSafeInteger(data.byteLength)||data.byteLength<0)throw Error('Invalid paint byte length');total+=data.byteLength;if(!Number.isSafeInteger(total))throw Error('Invalid paint byte budget');return data;});return total;
 }
 export function decodePaintResourceEntry(entry){
- if(paintResourceEntryBytes(entry)>8*1024*1024)throw Error('Colour paint pool exceeds 8 MiB');
+ const budget=paintBudget(entry.version===3);if(paintResourceEntryBytes(entry)>budget.unique)throw Error('Colour paint pool exceeds '+budget.uniqueMiB+' MiB');
  if(entry.version===1){exact(entry.descriptor,fields.filter(k=>k!=='pixels'));return opaque({...entry.descriptor,pixels:decodeProjectBytes(entry.data)});}
  exact(entry.descriptor,fields.filter(k=>k!=='pixels'));
  const serialized=entry.layers;exact(serialized.base.descriptor,fields.filter(k=>k!=='pixels'));

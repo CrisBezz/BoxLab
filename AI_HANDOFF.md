@@ -1,11 +1,31 @@
-# BoxLab AI Handoff — .912 / Surface image placement
+# BoxLab AI Handoff — .913 / Repeated image additions
 
 ## Current state — 18 October 2026
 
-Main release0.36.18.912 based on a647d08f (.911 proof). User911PASS protects accepted
-screen Project from View flow. Surface-relative image placement is implemented via
-original painter/projector/history; .912 device gate pending. Read
-docs/paint-image-surface-912.md. Lift Pencil updates mesh preview; Apply commits once.
+Main release0.36.18.913 based on c75b8156 (.912 proof). First surface placement accepted;
+second-add failure reproduced as8MiB image resource refusal. Image-capable budget24/48
+MiB repairs bounded repeat adds; raster8/16 unchanged. Read docs/paint-image-repeat-913.md.
+Device913 repeat-add gate pending; retain source and accepted912 placement behavior.
+
+## .913 — repeated surface image quota repair; .912 partial PASS — 2026-10-18
+
+User912PASS first surface image; explicit second-add failure. Actual912 UI reproduced:
+16px second image works; second1024² source fails8MiB preflight (decoded source4MiB
+alone). No user's file supplied; quota explanation verified, device retest required.
+Same stack/resource/pool owners select bounded image-capablev3 profile24MiB unique /
+48MiB expanded; raster-only8/16 retained. Three1024² sources+encoded+cache+base/flat/
+masks fit≤23.75MiB resource. Original source dimensions/bytes,512² maps,three-overlay
+and32MiB file limits unchanged; no downsizing, new schema/history/kernel or performance
+claim. Original8MiB transport threshold retained: larger images use EXISTING scenev5
+shared-byte codec; strict per-resource/ref/canonical/predecode/atomic refusal retained.
+Failed pool upgrades cannot publish buffers or raise allowance. Image errors now also
+appear inside active panel. Read docs/paint-image-repeat-913.md. Four new focused real
+UI/same+different1024²/File/codec/native/quota checks added.908/912 image budget fixtures
+updated to genuine24MiB overflow; all raster-only8/16 assertions retained. Local
+Node24.19.0 full **2574 PASS / 0 FAIL / 0 skipped**; publication verification follows. Resource/pool and parent/Lab graph913; surface912/projector911/
+source907/Insert437/brush/protected modelling/Multi/frozen retained. Native writer only
+parent paint-export pin changed. Next DEVICE two/three adds in same session, edit second,
+UndoRedo/SaveOpen; material work follows acceptance, not an inferred blanket912PASS.
 
 ## .912 — surface-relative retained images; .911 user PASS — 2026-10-18
 
@@ -373,11 +393,11 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-DEVICE .912: + Image → On surface → pick/drag, tap Rotate/Scale, lift for mesh preview;
-fingers navigate; Apply then UndoRedo. Edit image/On surface starts a fresh anchor,
-Cancel/reapply and .boxlab Save/Open/native colour sanity. User911PASS protects screen
-Project; no new912 acceptance inferred. Then material/channel owner audit per product
-direction. Preserve source/recipe/flat maps and original history/kernel/input owners.
+DEVICE .913: add first then SECOND image On surface in ONE paint session, Apply each;
+optionally third, verify originals retained. Edit second independently, UndoRedo and
+Save/Open. User912 accepts first-image placement with explicit repeated-add exception.
+Genuine refusal text now also appears in image panel. If persistent inspect actual
+reported error/source/state; don't blindly raise budgets. Material/channel audit queued.
 
 ## Protected interaction and modelling baseline
 
