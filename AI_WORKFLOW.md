@@ -292,3 +292,12 @@ User requires Vertex and Edge Extrude to share full interface, not only chooser.
 Use same Distance/Apply Exact/Repeat/Done panel and viewport arrows/Free centre;
 keep direction buttons/legacy transform-strip hidden. Original mode-specific
 geometry owners remain authoritative (Edge Free perpendicular, Vertex view plane).
+
+
+## Paint dock and UV access — .916 user direction, 19 October 2026
+
+Paint is the user-directed exception to top-centre/wide tool popups: compact on the
+LEFT of the viewport, bounded/scrolling, advanced controls collapsed, original
+Undo/Redo/Done footer retained. Other tool positions stay unchanged. Object radial
+has a dedicated UV button using existing projection/workspace/history owners;
+Mesh Health is diagnostic/repair UI. Do not reintroduce parallel UV editors.

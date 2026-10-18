@@ -299,7 +299,15 @@ function begin({id,title,node,subtitle=''}={}){
   if(dock){document.querySelector('#viewportWrap')?.appendChild(host);}
   else{contentRoot?.prepend(host);host.removeAttribute('style');delete host.dataset.wideToolPanel;}
   host.replaceChildren(node);
-  if(dock)placeToolSessionPanel(host);
+  if(dock){
+    // Paint is the user's compact left-side exception to the shared wide popup.
+    // Keep its original footer/actions in place; every other session uses the
+    // protected top-centre positioner and wide-layout owner unchanged.
+    if(id==='uv-paint'){
+      delete host.dataset.wideToolPanel;
+      Object.assign(host.style,{position:'absolute',left:'8px',top:'12px',transform:'none',width:'272px',maxWidth:'calc(100% - 16px)',maxHeight:'calc(100% - 100px)',overflowY:'auto',boxSizing:'border-box',zIndex:'134'});
+    }else{host.style.width='';placeToolSessionPanel(host);}
+  }
   host.hidden=false;
   drawer.dataset.toolSessionActive='true';
   drawer.dataset.keepOpen='true';

@@ -44,7 +44,7 @@ test('439 Mesh Health inspection remains read-only while current shell loads the
   const index=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
   const beta4=JSON.parse(fs.readFileSync(new URL('../beta-4/version.json',import.meta.url),'utf8'));
   assert.match(ui,/Inspect · safe repair/);
-  assert.match(ui,/id:'mesh-health'/);
+  assert.match(ui,/const sessionId=\(\)=>uvOnly\?'uv-tools':'mesh-health'/);
   assert.match(ui,/function renderReport\(\)/);
   assert.doesNotMatch(ui.match(/function renderReport\(\)\{[\s\S]*?\n\}/)?.[0]||'',/checkpoint|safeRepairMesh|vertices\s*=/);
   assertAssetReference(index,'mesh-health.js');

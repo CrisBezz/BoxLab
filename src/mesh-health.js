@@ -13,19 +13,24 @@ const status=document.querySelector('#selectionStatus');
 
 const launchRow=document.createElement('div');
 launchRow.className='outliner-actions mesh-health-launch-row';
-launchRow.style.gridTemplateColumns='1fr';
-launchRow.innerHTML='<button id="meshHealthBtn" type="button">Mesh Health</button>';
+launchRow.style.gridTemplateColumns='repeat(2,1fr)';
+launchRow.innerHTML='<button id="meshHealthBtn" type="button">Mesh Health</button><button id="uvToolsBtn" type="button">UV</button>';
 objectTools?.appendChild(launchRow);
 const launchButton=launchRow.querySelector('#meshHealthBtn');
+const uvLaunchButton=launchRow.querySelector('#uvToolsBtn');
+let uvOnly=false;
+const sessionId=()=>uvOnly?'uv-tools':'mesh-health';
 
 const panel=document.createElement('div');
 panel.id='meshHealthSession';
 panel.className='boxlab-tool-session-shell mesh-health-session';
 panel.hidden=true;
 panel.innerHTML=`
-  <div class="boxlab-tool-session-title"><span>Mesh Health</span><span class="boxlab-tool-session-subtitle">Inspect · safe repair</span></div>
+  <div class="boxlab-tool-session-title"><span id="meshHealthTitle">Mesh Health</span><span id="meshHealthSubtitle" class="boxlab-tool-session-subtitle">Inspect · safe repair</span></div>
+  <div id="meshHealthDiagnosticsSummary">
   <div id="meshHealthVerdict" style="font-size:16px;font-weight:750;padding:4px 0"></div>
   <div id="meshHealthSummary" class="boxlab-tool-session-subtitle"></div>
+  </div>
   <details id="meshHealthUVDetails">
     <summary class="boxlab-tool-session-section">UVs</summary>
     <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
@@ -41,6 +46,7 @@ panel.innerHTML=`
     </div>
     </div>
   </details>
+  <div id="meshHealthDiagnosticsTools">
   <div class="boxlab-tool-session-section">Topology</div>
   <div id="meshHealthTopology" style="display:grid;grid-template-columns:1fr auto;gap:4px 10px;font-size:11px"></div>
   <div class="boxlab-tool-session-section">Findings</div>
@@ -58,11 +64,11 @@ panel.innerHTML=`
     <button id="meshHealthTriangulate" type="button">Triangulate</button>
   </div>
   <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)">
-    <button id="meshHealthRefresh" type="button">Refresh</button>
     <button id="meshHealthRepair" type="button">Safe Repair</button>
     <button id="meshHealthAutoClose" type="button">Auto Close</button>
-    <button id="meshHealthClose" class="boxlab-tool-session-primary" type="button">Close</button>
   </div>
+  </div>
+  <div class="outliner-actions" style="grid-template-columns:repeat(2,1fr)"><button id="meshHealthRefresh" type="button">Refresh</button><button id="meshHealthClose" class="boxlab-tool-session-primary" type="button">Close</button></div>
 `;
 objectTools?.appendChild(panel);
 
@@ -208,6 +214,7 @@ function renderReport(){
   const object=activeObject(),mesh=liveMesh();
   if(!active||!object||object.id!==objectId||!mesh)return false;
   manager()?.saveActive?.();
+  if(uvOnly){renderUVReport(object,mesh);setStatus(`UV · ${object.name} · ${uvSummary.textContent}`);return true;}
   last=analyzeMeshHealth(mesh);
   verdict.textContent=last.label;
   verdict.dataset.healthState=last.state;
@@ -326,17 +333,25 @@ function flipNormals(){return commitTopologyAction(flipAllFaces,'Flip Normals');
 function triangulate(){return commitTopologyAction(triangulateMesh,'Triangulate');}
 function close(){
   if(!active)return;
-  active=false;objectId=null;uvWorkspace?.close();panel.hidden=true;toolSession()?.end?.('mesh-health');
-  setStatus('Mesh Health closed • no geometry changed');
+  active=false;objectId=null;uvWorkspace?.close();panel.hidden=true;toolSession()?.end?.(sessionId());
+  setStatus(uvOnly?'UV tools closed':'Mesh Health closed • no geometry changed');
 }
-function launch(){
+function launch({uvOnly:showUV=false}={}){
   const object=activeObject(),mesh=liveMesh();
   if(currentMode()!=='object'||!object||!mesh)return;
+  if(active)close();
+  uvOnly=showUV;
+  panel.querySelector('#meshHealthTitle').textContent=uvOnly?'UV':'Mesh Health';
+  panel.querySelector('#meshHealthSubtitle').textContent=uvOnly?'Project · edit UVs':'Inspect · safe repair';
+  panel.querySelector('#meshHealthDiagnosticsSummary').hidden=uvOnly;
+  panel.querySelector('#meshHealthDiagnosticsTools').hidden=uvOnly;
+  uvDetails.hidden=!uvOnly;uvDetails.open=uvOnly;
   uvWorkspace?.close();objectId=object.id;active=true;panel.hidden=false;
-  toolSession()?.begin?.({id:'mesh-health',title:'Mesh Health',node:panel,subtitle:'Inspect · safe repair'});
+  toolSession()?.begin?.({id:sessionId(),title:uvOnly?'UV':'Mesh Health',node:panel,subtitle:uvOnly?'Project · edit UVs':'Inspect · safe repair'});
   renderReport();
 }
 launchButton?.addEventListener('click',launch);
+uvLaunchButton?.addEventListener('click',()=>launch({uvOnly:true}));
 refreshButton?.addEventListener('click',renderReport);
 repairButton?.addEventListener('click',repair);
 autoCloseButton?.addEventListener('click',autoClose);
@@ -350,7 +365,7 @@ window.addEventListener('boxlab-bridge-state',()=>{
   if(!active)return;
   const object=activeObject();
   if(currentMode()!=='object'||!object||object.id!==objectId)close();
-  else if(uvWorkspace?.active)queueMicrotask(()=>{if(active&&(liveMesh()!==uvMesh||activeObject()?.glbPassthrough!==uvPayload))renderReport();});
+  else if(uvOnly||uvWorkspace?.active)queueMicrotask(()=>{if(active&&(liveMesh()!==uvMesh||activeObject()?.glbPassthrough!==uvPayload))renderReport();});
 });
 document.querySelector('#resetBtn')?.addEventListener('click',()=>{if(active)close();});
 document.querySelectorAll('#selectionModes button').forEach(button=>button.addEventListener('click',()=>{if(active&&currentMode()!=='object')close();}));

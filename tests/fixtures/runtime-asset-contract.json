@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.914",
+      "url": "./src/mesh-health.js?v=0.36.18.916",
       "target": "src/mesh-health.js",
-      "sha256": "2ef095c1c29b78da118cc3b91c32d385347f9f45d854d68e6ef0cc65aba49f49",
+      "sha256": "53ef078bd3609e5567dba0f3454de90db797810c36360a6fac5b8b571cca67f1",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -341,9 +341,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/object-radial-session.js?v=0.36.18.900",
+      "url": "./src/object-radial-session.js?v=0.36.18.916",
       "target": "src/object-radial-session.js",
-      "sha256": "804b0b84a1456b4aaafa5ec8ade16ca6adced7125f82fe781e790f414682af97"
+      "sha256": "acd00862861d1824de2377be564512ed334566e20d5efd0d76b8a2381c2be996"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.915",
+      "url": "./src/release-bootstrap.js?v=0.36.18.916",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.915",
+      "url": "./src/release-version.js?v=0.36.18.916",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -533,15 +533,15 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-background-exit.js?v=0.36.18.808",
+      "url": "./src/tool-background-exit.js?v=0.36.18.916",
       "target": "src/tool-background-exit.js",
-      "sha256": "e4d3b344ce63d112d028e862c660044386047da63425580337f4b3e42c6227a6"
+      "sha256": "02229efb4563ffc22f69383707caddd56332c6cc490a2a999e1351e74a404752"
     },
     {
       "owner": "index.html",
-      "url": "./src/tool-session-ui.js?v=0.36.18.808",
+      "url": "./src/tool-session-ui.js?v=0.36.18.916",
       "target": "src/tool-session-ui.js",
-      "sha256": "3f39d5ff2b8418f122c17dd9e54e7e776e5230da5e7e273d04d86da1d1e6bb7f"
+      "sha256": "f7f51883f01178ede334282eccfd984a3c1d64774412430a435219d2ae8e2c24"
     },
     {
       "owner": "index.html",
@@ -551,9 +551,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/total-gizmo.js?v=0.36.18.801",
+      "url": "./src/total-gizmo.js?v=0.36.18.916",
       "target": "src/total-gizmo.js",
-      "sha256": "0fd8d6f7495f5b33ad03542d29930bd2d42060b91811a3c58a2d6acc847c975d"
+      "sha256": "bc45dc49a63fa2a75527bc147f23a7f2585e1c5ae8b66dbe9de94c86b6d4b935"
     },
     {
       "owner": "index.html",
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.915",
-      "sha256": "2b65dd2d14df25a0704e1335957cceed791bd8c6d4ab1c783cccd09f340ddae7"
+      "url": "./src/viewport-paint.js?v=0.36.18.916",
+      "sha256": "e04726a5199eae45e9f584a5f5cb1efac642710c33b4e9a354220613c1441bc0"
     },
     {
       "owner": "src/viewport-paint.js",

@@ -77,3 +77,11 @@ limit. Measure iPad memory/upload/frame costs before raising resolution/layer co
 brush controls now bind original colour picker without changing scene resources.
 Read paint-colour-controls-915.md for actual owner audit and next roughness resource/
 transport foundation. Numeric brush colour is not yet a material-channel stack.
+
+
+## .916 user UI priority — 19 October 2026
+
+.915 PASS. User prioritised compact left Paint and dedicated Object radial UV.
+.916 changes presentation/navigation only; roughness owner audit remains read-only.
+Resume independent data-channel foundation after this manual UI gate. See
+paint-uv-layout-916.md; preserve original brush/layer/image/UV/history owners.

@@ -1,6 +1,7 @@
 // Object radial launch/lifecycle adapter. Geometry, history and gestures remain
 // with the existing Active Tools owners; their original controls are docked intact.
 const tools={
+  UV:['#uvToolsBtn','uv-tools','__boxlabMeshHealth'],
   'UV Paint':['#viewportPaintBtn','uv-paint','__boxlabViewportPaint'],
   Transform:['#surfaceTransformBtn','surface-transform','__boxlabSurfaceTransform'],
   Insert:['#surfaceInsertBtn','surface-insert','__boxlabSurfaceInsert'],
@@ -35,7 +36,7 @@ function cancelCurrent(){
  if(!entry)return false;
  const api=globalThis[entry[1][2]];
  if(id==='boolean')api?.close?.({silent:true});
- else if(id==='mesh-health')api?.close?.();
+ else if(id==='mesh-health'||id==='uv-tools')api?.close?.();
  else api?.cancel?.({silent:true});
  return true;
 }

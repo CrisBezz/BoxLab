@@ -7829,7 +7829,7 @@ no arbitrary native-UV material metadata or new writer. Other material slots que
 - [x]915 numeric colour UI linking, grey/black memory and no scene history on selection.
 - [x]915 invalid/partial values, shorthand commit and mask-disabled controls.
 - [x]915 actual stroke cancel, exact cyan pixels, Undo/Redo, Save/Open and native PNG.
-- [ ]915 DEVICE preciseRGB/HSB/hex/picker sync and grey/black recovery; paint and Undo.
+- [x]915 DEVICE preciseRGB/HSB/hex and paint checks: user PASS2026-10-19.
 
 Local Node24.19.0 full regression **2581 PASS / 0 FAIL / 0 skipped**; existing905/906
 nearby14PASS and new915 focused3PASS. Original colour brush/resource/history/UV/
@@ -7851,3 +7851,39 @@ All four continuity files current, user914PASS protected. This proof is docs onl
 915 device colour/picker/grey-black recovery/paint gate pending. Next independent
 roughness data-resource/transport foundation per docs/paint-colour-controls-915.md;
 no extra material-channel parity or iPad performance claim inferred.
+
+
+## .916 — compact left Paint + Object radial UV; .915 PASS — 2026-10-19
+
+User915PASS protects linkedRGB/HSB/hex and prior paint/UV. User explicitly requests
+Paint left/tidy because bulky UI obstructs mesh, plus dedicatedUV in Object radial.
+This user direction takes priority over roughness work; audit only, no roughness
+resource/schema changes made. Same tool-session-ui owner special-casesuv-paint as
+left8px/top12px/272px bounded scrolling dock, keeps original footer/buttons intact,
+skips wide action reparenting; next tool clears width and original centred placement
+returns. Shared positioner/wide-layout732 unchanged. Painter re-groups SAME controls:
+colour/size/opacity/layer/Add exposed; brush/RGBHSB/layer settings/masks collapsed,
+image controls staged only; sticky UndoRedoDone. No pointer/brush/resource changes.
+UV outer90°/230px added preserving other Object sectors; newuvToolsBtn launches SAME
+Mesh Health UV owner inuv-tools session, titleUV and diagnostic nodes hidden. Projection/
+workspace/history/payload/Close owners unchanged; Refresh stays visible. Mesh Health
+mode hides UVs and retains repairs. UV-only reports skip health analysis and refresh
+on context/history changes. Close old mode before switching IDs; original radial/
+background close adapters includeuv-tools. No second editor/kernel/history.
+Two new integration checks + updated original radial/workspace harness retain semantic
+checks; full suite/publication follow. All6 changed owners+shell/recovery916; unchanged
+paint core/budgets913/colour915/UV mapper914/Multi/frozen/modelling/shared layouts retained.
+Read docs/paint-uv-layout-916.md. Next DEVICE left dock footprint/sections, paint/mask/
+image placement; ObjectUV project/editor/Back/Close and Mesh Health repair regression.
+Then resume independent roughness data-resource/explicit transport foundation.
+
+- [x]916 actual session docking/node identity and next-tool centre restoration.
+- [x]916 UV-only projection/history/close and Mesh Health mode restoration.
+- [ ]916 DEVICE left Paint size/scroll/sections/Done; painting and image M/R/S preserved.
+- [ ]916 DEVICE Object radialUV → project/editor/Back/Close; Mesh Health repairs intact.
+
+Local Node24.19.0 final full **2583 PASS / 0 FAIL / 0 skipped**. Initial full run
+caught two outdated test adapters:439 expected literal fixed Mesh Health ID,731
+Sweep host omitted real DOM style property. Updated fixtures to dual ID and actual
+host shape; kept all semantic/read-only/Sweep assertions. Focused9PASS, final full
+2583PASS; no runtime Sweep or shared positioner changes. Publication/visual proof follows.

@@ -1,12 +1,37 @@
-# BoxLab AI Handoff — .915 / Precise paint colour
+# BoxLab AI Handoff — .916 / Left Paint dock and Object UV
 
 ## Current state — 19 October 2026
 
-Main release0.36.18.915 based on0a7ba302 (.914 publication proof).
-User914PASS protects last UV and repeated-image manual list. Precise RGB/HSB/hex
-paint controls now use original picker/input; existing saved data formats unchanged.
-Device915 colour controls gate pending; material-channel owner audit recorded in
- docs/paint-colour-controls-915.md. Next roughness resource/transport foundation.
+Main release0.36.18.916 based ona3ffdc36 (.915 publication proof).
+User915PASS protected. User prioritised Paint obstruction and dedicated ObjectUV.
+Original Paint panel now compact on left; UV shortcut shows existing UV controls
+without diagnostics. Roughness work deferred after read-only audit. No resource or
+geometry changes. Device916 dock/UV navigation gate pending. Read
+ docs/paint-uv-layout-916.md; full test/publication evidence below.
+
+## .916 — compact left Paint + Object radial UV; .915 PASS — 2026-10-19
+
+User915PASS protects linkedRGB/HSB/hex and prior paint/UV. User explicitly requests
+Paint left/tidy because bulky UI obstructs mesh, plus dedicatedUV in Object radial.
+This user direction takes priority over roughness work; audit only, no roughness
+resource/schema changes made. Same tool-session-ui owner special-casesuv-paint as
+left8px/top12px/272px bounded scrolling dock, keeps original footer/buttons intact,
+skips wide action reparenting; next tool clears width and original centred placement
+returns. Shared positioner/wide-layout732 unchanged. Painter re-groups SAME controls:
+colour/size/opacity/layer/Add exposed; brush/RGBHSB/layer settings/masks collapsed,
+image controls staged only; sticky UndoRedoDone. No pointer/brush/resource changes.
+UV outer90°/230px added preserving other Object sectors; newuvToolsBtn launches SAME
+Mesh Health UV owner inuv-tools session, titleUV and diagnostic nodes hidden. Projection/
+workspace/history/payload/Close owners unchanged; Refresh stays visible. Mesh Health
+mode hides UVs and retains repairs. UV-only reports skip health analysis and refresh
+on context/history changes. Close old mode before switching IDs; original radial/
+background close adapters includeuv-tools. No second editor/kernel/history.
+Two new integration checks + updated original radial/workspace harness retain semantic
+checks; full suite/publication follow. All6 changed owners+shell/recovery916; unchanged
+paint core/budgets913/colour915/UV mapper914/Multi/frozen/modelling/shared layouts retained.
+Read docs/paint-uv-layout-916.md. Next DEVICE left dock footprint/sections, paint/mask/
+image placement; ObjectUV project/editor/Back/Close and Mesh Health repair regression.
+Then resume independent roughness data-resource/explicit transport foundation.
 
 ## .915 — precise paint RGB / HSB / hex; .914 user PASS — 2026-10-19
 
@@ -444,10 +469,11 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Manual915 precise colour controls; protect user914PASS for Cylinder/Cone/upright
-Revolve UVs and repeated On surface images. Then roughness data-resource/explicit
-transport foundation through original scene/history/duplicate/export owners;
-see docs/paint-colour-controls-915.md. Do not treat grey scalar maps as RGB paint.
+DEVICE916 compact left Paint footprint/sections and original painting/image controls;
+Object radial UV → projection/editor/Back/Close; Mesh Health repairs unchanged.
+Protect user915PASS numeric colour,914 UV and913 repeated images. Then resume
+roughness data-resource/transport foundation per material direction; no roughness
+code exists yet. See docs/paint-uv-layout-916.md for placement/navigation owners.
 
 ## Protected interaction and modelling baseline
 
@@ -890,3 +916,9 @@ All four continuity files current, user914PASS protected. This proof is docs onl
 915 device colour/picker/grey-black recovery/paint gate pending. Next independent
 roughness data-resource/transport foundation per docs/paint-colour-controls-915.md;
 no extra material-channel parity or iPad performance claim inferred.
+
+Local Node24.19.0 final full **2583 PASS / 0 FAIL / 0 skipped**. Initial full run
+caught two outdated test adapters:439 expected literal fixed Mesh Health ID,731
+Sweep host omitted real DOM style property. Updated fixtures to dual ID and actual
+host shape; kept all semantic/read-only/Sweep assertions. Focused9PASS, final full
+2583PASS; no runtime Sweep or shared positioner changes. Publication/visual proof follows.
