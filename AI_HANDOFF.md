@@ -7,7 +7,8 @@ User904PASS protects paint/project/history/Duplicate/export. Layers now visible 
 File/Paint selected object; + Layer preserves existing paint as base, transparent
 paint layers editable/selectable with opacity/visibility/order/name and26 blend modes.
 Same resourcev2/projectv3/history/export owners; mask bytes retained, mask UI next.
-Read docs/paint-layer-ui-905.md. Full suite/publication proof follows. Device905 pending.
+Read docs/paint-layer-ui-905.md. Runtime30472e8d, full2526PASS/0FAIL/0skip;
+Node22 CI/Pages/live905 verified below. Device905 pending.
 
 ## .905 — visible main viewport colour layers; .904 PASS — 2026-10-18
 
@@ -477,3 +478,20 @@ isolation and NOM/GLB colour sanity. New layered fixtures are automated checks.
 
 .905 local validation: Node24.19.0 full **2526 PASS / 0 FAIL / 0 skipped**;
 seven new layer/raster/UI checks PASS, original semantic checks retained. iPad gate pending.
+
+## .905 publication verified — 2026-10-18
+
+Runtime30472e8d34ffe3804a5965c266de55a695a7cd8e; tested tree
+7a0d19b675c99f030c32fb76361fcad0cb9edca3. Every remote blob and created tree SHA
+matches tested local source; connected GitHub current main head verified30472e8d.
+Node22.23.3 CI39084660612/job117548601242 SUCCESS2526PASS/0FAIL/0skip;
+Pages39084660257 build117548602647/deploy117548680244 SUCCESS.
+All14 checked live shell/version/painter/core/shared raster/Lab index+loader+session/
+recovery905 and unchanged compositor903/resource+pool+paint export904 byte-match
+repository. Source topology/Multi1.0/frozen/history/project/export owners retained.
+Shell read-only git fetch stalled; publication used verified connected Git Data
+blobs/tree/commit/non-forced expected-parent ref, not an unverified shell push.
+All four continuity documents updated. This proof changes docs only, tested runtime
+bytes retained. User904PASS recorded;905 actual layer/Pencil/navigation/latency and
+project device gate pending. No cloud rendered or iPad performance proof inferred.
+Next hands-on layering, then mask painting/UI and product direction as above.
