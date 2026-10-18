@@ -55,7 +55,8 @@ reimplemented by this direction. Audit current material/resource/export owners f
   Open, original scene Undo/Redo and ordinary Duplicate. Retain v1/v2 plain/opaque
   project compatibility and binding validation; never silently flatten editable saves.
 4.905 transparent brush + layer controls delivered in main viewport through current
-  painter. Mask drawing/UI next; existing stored masks retained.
+  painter. 906 mask drawing/enable/invert/remove UI delivered through same owner;905 layer UI
+  accepted. Broader UX polish follows feature flow work as user requested.
   Copy only edited payload where safe; no duplicate scene/paint history or editor.
 5. Image sources + Project from View, then surface placement via audited Insert cycle.
 6. Material slots and per-channel stacks in stages; displacement reserved until real

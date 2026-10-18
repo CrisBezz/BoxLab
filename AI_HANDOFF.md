@@ -1,14 +1,34 @@
-# BoxLab AI Handoff — .905 / Main viewport colour layers
+# BoxLab AI Handoff — .906 / On-surface layer masks
 
 ## Current state — 18 October 2026
 
-CrisBezz/BoxLab main release0.36.18.905, based on1d246735 (.904 runtime598675a2).
-User904PASS protects paint/project/history/Duplicate/export. Layers now visible in
-File/Paint selected object; + Layer preserves existing paint as base, transparent
-paint layers editable/selectable with opacity/visibility/order/name and26 blend modes.
-Same resourcev2/projectv3/history/export owners; mask bytes retained, mask UI next.
-Read docs/paint-layer-ui-905.md. Runtime30472e8d, full2526PASS/0FAIL/0skip;
-Node22 CI/Pages/live905 verified below. Device905 pending.
+CrisBezz/BoxLab main release0.36.18.906, based onf8455236 (.905 runtime30472e8d).
+User905PASS protects layers/Pencil/navigation/UndoRedo/project; agrees UI/UX polish
+once feature flows present.906 adds on-surface masks to same painter/raster/resource:
+Hide/Reveal/Grey, Colour/Mask target, enabled/invert/remove. Source colours preserved.
+Read docs/paint-mask-ui-906.md. Full suite/publication proof follows. Device906 pending.
+
+## .906 — main viewport layer mask painting; .905 PASS — 2026-10-18
+
+User905PASS: layers work well; UI/UX polish after feature flows are present. Audit
+mainf8455236/local verified905 treefb902274: reuse903 masks/compositor,904 resource/
+project/history/export and905 raster/input. Add Mask selects Mask paint target; same
+opaque raster edits raw grey coverage, R8 committed, source colour pixels unchanged.
+Hide/Reveal/Grey brush presets account for inversion; raw value0–255 slider, size/
+hardness/pressure/opacity and both samplers retained. Colour picker preserved/disabled
+in Mask mode. Layer switch/reopen starts Colour; base has no mask. Enabled/invert/
+remove use COW + original checkpoints; selection/preset/no-op do not create history.
+Cancel/settings/target/layer/body-loss restore mask/preview/navigation. Parent layer
+must show/nonzero opacity and mask enabled to paint. Original8MiB preflight/rollback
+preserved. Same resourcev2/projectv3/flat NOM+GLB, no new schema/history/kernel.
+Seven focused906 tests PASS incl actual UI/core/source preservation, flags/UndoRedo,
+interruption/invalid/budget/checkpoint rollback, exact Save/Open/re-edit and native
+export. Full suite/publication proof follows; no rendered/iPad acceptance inferred.
+Read docs/paint-mask-ui-906.md. Only main painter + shell/recovery906; raster/Lab905,
+compositor903/resource+project+export904 and protected modelling/Multi/frozen untouched.
+Next DEVICE mask gate, then editable image sources/Project from View through original
+UV/geometry and Insert cycle. No material opacity/displacement or broad UI redesign
+claim. Product direction remains docs/paint-material-direction.md.
 
 ## .905 — visible main viewport colour layers; .904 PASS — 2026-10-18
 
@@ -237,15 +257,14 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-905 main layer UI and transparent paint now implemented. DEVICE check: + Layer,
-contrasting strokes/selection/visibility/opacity/blend/order, Pencil/finger navigation,
-Done/UndoRedo/reopen and Save/Open layered project. Source-copy/preflight costs need
-actual iPad feedback; no blanket performance claim. User904PASS protects prior flow.
-Then mask drawing/UI through same raster/compositor/resource/history, preserving masks
-already stored. No duplicate paintLayers property/editor/history. Next image sources/
-Project from View and shared Insert Move→Rotate→Scale tap cycle; material channels and
-displacement placeholder per docs/paint-material-direction.md. Original resource904,
-opaque compatibility and flattened export remain authoritative.
+905 userPASS protected; user wants UI polish once features are in place, so keep
+changes narrow.906 mask UI/core implemented; DEVICE: + Mask on paint layer, Hide/
+Reveal/Grey, enable/invert/remove+Undo, Save/Open/reselect Mask/continue and fingers.
+Then image sources/Project from View, explicit editable source+placement versioning
+through existing resource/project/history/export and original UV/geometry owners.
+Surface image Move→Rotate→Scale tap cycle must reuse audited Insert methodology.
+No shadow paintLayers property/editor/history or blanket UI cleanup. Material slots/
+displacement placeholder per docs/paint-material-direction.md remain staged future work.
 
 ## Protected interaction and modelling baseline
 
@@ -495,3 +514,6 @@ All four continuity documents updated. This proof changes docs only, tested runt
 bytes retained. User904PASS recorded;905 actual layer/Pencil/navigation/latency and
 project device gate pending. No cloud rendered or iPad performance proof inferred.
 Next hands-on layering, then mask painting/UI and product direction as above.
+
+.906 local validation: Node24.19.0 full **2533 PASS / 0 FAIL / 0 skipped**;
+seven new mask UI/core tests PASS. Device906 pending; no rendered proof inferred.

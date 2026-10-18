@@ -7437,9 +7437,42 @@ publication proof follow. No905 userPASS or rendered browser evidence inferred.
 - [x]Transparent/opaque raster vectors, alpha coverage/cancel, same original stroke.
 - [x]Actual layer UI/Pencil state/history/base isolation/order/name/visibility/blends.
 - [x]Scene budget/checkpoint rollback, masks retained, v3 re-open and native export.
-- [ ]Two contrasting layers + base: select/reorder/hide/opacity/blend, Pencil/fingers.
-- [ ]Done/UndoRedo/reopen and .boxlab reload/Open keep editable layers.
-- [ ]Duplicate layer edits independent; native NOM/GLB optional colour sanity.
+- [x](.905 user PASS) Two contrasting layers + base: select/reorder/hide/opacity/blend, Pencil/fingers.
+- [x](.905 user PASS) Done/UndoRedo/reopen and .boxlab reload/Open keep editable layers.
+- [x](.905 user PASS) Duplicate layer edits independent; native NOM/GLB optional colour sanity.
 
 .905 local validation: Node24.19.0 full **2526 PASS / 0 FAIL / 0 skipped**;
 seven new layer/raster/UI checks PASS, original semantic checks retained. iPad gate pending.
+
+
+## .906 — main viewport layer mask painting; .905 PASS — 2026-10-18
+
+User905PASS: layers work well; UI/UX polish after feature flows are present. Audit
+mainf8455236/local verified905 treefb902274: reuse903 masks/compositor,904 resource/
+project/history/export and905 raster/input. Add Mask selects Mask paint target; same
+opaque raster edits raw grey coverage, R8 committed, source colour pixels unchanged.
+Hide/Reveal/Grey brush presets account for inversion; raw value0–255 slider, size/
+hardness/pressure/opacity and both samplers retained. Colour picker preserved/disabled
+in Mask mode. Layer switch/reopen starts Colour; base has no mask. Enabled/invert/
+remove use COW + original checkpoints; selection/preset/no-op do not create history.
+Cancel/settings/target/layer/body-loss restore mask/preview/navigation. Parent layer
+must show/nonzero opacity and mask enabled to paint. Original8MiB preflight/rollback
+preserved. Same resourcev2/projectv3/flat NOM+GLB, no new schema/history/kernel.
+Seven focused906 tests PASS incl actual UI/core/source preservation, flags/UndoRedo,
+interruption/invalid/budget/checkpoint rollback, exact Save/Open/re-edit and native
+export. Full suite/publication proof follows; no rendered/iPad acceptance inferred.
+Read docs/paint-mask-ui-906.md. Only main painter + shell/recovery906; raster/Lab905,
+compositor903/resource+project+export904 and protected modelling/Multi/frozen untouched.
+Next DEVICE mask gate, then editable image sources/Project from View through original
+UV/geometry and Insert cycle. No material opacity/displacement or broad UI redesign
+claim. Product direction remains docs/paint-material-direction.md.
+
+- [x]Mask strokes preserve exact colour pixels; Hide/Reveal/grey raw coverage.
+- [x]Actual UI/presets/inversion/colour return/removal and settings cancellation.
+- [x]Flags/no-op/original checkpoints/UndoRedo, loss/budget/checkpoint rollback.
+- [x]Exact projectv3 re-open/re-edit and original native composed colour export.
+- [ ]+ Mask→Hide/Reveal/Grey on mesh; visible results, Pencil/fingers unchanged.
+- [ ]Enabled/invert/remove+Undo restore underlying layer; Save/Open/reselect Mask.
+
+.906 local validation: Node24.19.0 full **2533 PASS / 0 FAIL / 0 skipped**;
+seven new mask UI/core tests PASS. Device906 pending; no rendered proof inferred.
