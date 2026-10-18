@@ -1,11 +1,34 @@
-# BoxLab AI Handoff — .914 / Cylinder, cone and Revolve UVs
+# BoxLab AI Handoff — .915 / Precise paint colour
 
-## Current state — 18 October 2026
+## Current state — 19 October 2026
 
-Main release0.36.18.914, based on625714b3 (.913 publication proof).
-Original Cylinder mapper extended for cones/upright applied Revolves; exact ordinary
-cylinder layout preserved. Publication/test evidence follows below. Device914 UV and
-913 repeated-image gates pending. User paused overnight; material work remains queued.
+Main release0.36.18.915 based on0a7ba302 (.914 publication proof).
+User914PASS protects last UV and repeated-image manual list. Precise RGB/HSB/hex
+paint controls now use original picker/input; existing saved data formats unchanged.
+Device915 colour controls gate pending; material-channel owner audit recorded in
+ docs/paint-colour-controls-915.md. Next roughness resource/transport foundation.
+
+## .915 — precise paint RGB / HSB / hex; .914 user PASS — 2026-10-19
+
+User914PASS accepts preceding Cylinder/Cone/upright Revolve UVs, UV Editor/history/
+SaveOpen and repeated On surface images manual list. Protect914 UV +913 repeat-add
+behaviour and earlier surface placement, masks/layers/paint/native exports. Audit
+0a7ba302: production paint has only browser swatch, no numeric RGB/HSB editor.
+New small paint-colour-controls binds ORIGINAL input, sRGB0–255 / HSV hue0–360,
+saturation+brightness0–100%, hex optional#; shorthand only commits on change.
+Hue survives grey, saturation survives black; invalid/partial/range entries never
+publish and revert on commit. Same swatch input event owns stroke cancel/rollback;
+no pointer/history/paint kernel or resource/codec/export change. Numeric controls
+follow original mask/image disabled state. Collapsed foldout, original swatch retained.
+Brush preferences are session UI only, not object/save metadata. Three focused actual
+UI/pixel/history/project/native tests added; full suite/publication follows.
+Only painter UI/new helper and shell/recovery keys915; core/budgets913/UV914/frozen/
+Multi1.0 remain pinned. Read docs/paint-colour-controls-915.md for owner audit.
+Next DEVICE setRGB/HSB/hex, paint, picker sync and grey→colour/black→colour; mask
+colour controls disabled; history/image placement remains accepted. Then independent
+roughness DATA-resource + explicit scene transport foundation through authoritative
+owners, followed by visible controls/preview; no sRGB blends for data/normal maps,
+no arbitrary native-UV material metadata or new writer. Other material slots queued.
 
 ## .914 — Cylinder UVs for cones and upright Revolves — 2026-10-18
 
@@ -421,11 +444,10 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-DEVICE .913: add first then SECOND image On surface in ONE paint session, Apply each;
-optionally third, verify originals retained. Edit second independently, UndoRedo and
-Save/Open. User912 accepts first-image placement with explicit repeated-add exception.
-Genuine refusal text now also appears in image panel. If persistent inspect actual
-reported error/source/state; don't blindly raise budgets. Material/channel audit queued.
+Manual915 precise colour controls; protect user914PASS for Cylinder/Cone/upright
+Revolve UVs and repeated On surface images. Then roughness data-resource/explicit
+transport foundation through original scene/history/duplicate/export owners;
+see docs/paint-colour-controls-915.md. Do not treat grey scalar maps as RGB paint.
 
 ## Protected interaction and modelling baseline
 
@@ -847,3 +869,7 @@ Multi1.0/frozen/modelling/paint kernels and unrelated913 pins retained. All four
 continuity files current; proof changes docs only. No device PASS inferred.
 Stop at manual gate: tomorrow914 Cylinder/Cone/upright Revolve UVs +913 repeat-image
 retake; first912 image placement PASS protected. Material-channel work stays queued.
+
+Local Node24.19.0 full regression **2581 PASS / 0 FAIL / 0 skipped**; existing905/906
+nearby14PASS and new915 focused3PASS. Original colour brush/resource/history/UV/
+image/export/Multi/frozen owners unchanged. Publication verification follows.

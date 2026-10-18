@@ -3357,3 +3357,30 @@ Multi1.0/frozen/modelling/paint kernels and unrelated913 pins retained. All four
 continuity files current; proof changes docs only. No device PASS inferred.
 Stop at manual gate: tomorrow914 Cylinder/Cone/upright Revolve UVs +913 repeat-image
 retake; first912 image placement PASS protected. Material-channel work stays queued.
+
+
+## .915 — precise paint RGB / HSB / hex; .914 user PASS — 2026-10-19
+
+User914PASS accepts preceding Cylinder/Cone/upright Revolve UVs, UV Editor/history/
+SaveOpen and repeated On surface images manual list. Protect914 UV +913 repeat-add
+behaviour and earlier surface placement, masks/layers/paint/native exports. Audit
+0a7ba302: production paint has only browser swatch, no numeric RGB/HSB editor.
+New small paint-colour-controls binds ORIGINAL input, sRGB0–255 / HSV hue0–360,
+saturation+brightness0–100%, hex optional#; shorthand only commits on change.
+Hue survives grey, saturation survives black; invalid/partial/range entries never
+publish and revert on commit. Same swatch input event owns stroke cancel/rollback;
+no pointer/history/paint kernel or resource/codec/export change. Numeric controls
+follow original mask/image disabled state. Collapsed foldout, original swatch retained.
+Brush preferences are session UI only, not object/save metadata. Three focused actual
+UI/pixel/history/project/native tests added; full suite/publication follows.
+Only painter UI/new helper and shell/recovery keys915; core/budgets913/UV914/frozen/
+Multi1.0 remain pinned. Read docs/paint-colour-controls-915.md for owner audit.
+Next DEVICE setRGB/HSB/hex, paint, picker sync and grey→colour/black→colour; mask
+colour controls disabled; history/image placement remains accepted. Then independent
+roughness DATA-resource + explicit scene transport foundation through authoritative
+owners, followed by visible controls/preview; no sRGB blends for data/normal maps,
+no arbitrary native-UV material metadata or new writer. Other material slots queued.
+
+Local Node24.19.0 full regression **2581 PASS / 0 FAIL / 0 skipped**; existing905/906
+nearby14PASS and new915 focused3PASS. Original colour brush/resource/history/UV/
+image/export/Multi/frozen owners unchanged. Publication verification follows.

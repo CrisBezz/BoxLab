@@ -69,3 +69,11 @@ composited channel maps through existing writers where supported; never silently
 unsupported data or invent native fields. Editable Nomad layer equivalence is not
 promised. Current512²/four-layer foundation budget is provisional, not the final UI
 limit. Measure iPad memory/upload/frame costs before raising resolution/layer counts.
+
+
+## .915 colour-control prerequisite — 19 October 2026
+
+.914 userPASS clears preceding UV/repeated-image manual gates. Numeric RGB/HSB/hex
+brush controls now bind original colour picker without changing scene resources.
+Read paint-colour-controls-915.md for actual owner audit and next roughness resource/
+transport foundation. Numeric brush colour is not yet a material-channel stack.

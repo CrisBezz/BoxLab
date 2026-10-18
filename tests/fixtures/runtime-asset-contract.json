@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.914",
+      "url": "./src/release-bootstrap.js?v=0.36.18.915",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.914",
+      "url": "./src/release-version.js?v=0.36.18.915",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2481,8 +2481,8 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.913",
-      "sha256": "a542bb476ab489794eaca742d332be68e479c2967844f5e60ecc7e5ea3a3e863"
+      "url": "./src/viewport-paint.js?v=0.36.18.915",
+      "sha256": "2b65dd2d14df25a0704e1335957cceed791bd8c6d4ab1c783cccd09f340ddae7"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2855,6 +2855,12 @@
       "url": "./paint-budget.js?v=0.36.18.913",
       "target": "src/paint-budget.js",
       "sha256": "8290363530245633f3cc49b4d93023803ecd202137435adfa4b021ee6d32e49e"
+    },
+    {
+      "owner": "src/viewport-paint.js",
+      "url": "./paint-colour-controls.js?v=0.36.18.915",
+      "target": "src/paint-colour-controls.js",
+      "sha256": "f0145a050e0368638cef2bed06cbef4f46fdf435aa9649627173b57509f3b855"
     }
   ]
 }
