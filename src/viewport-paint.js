@@ -1,4 +1,4 @@
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.908';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.909';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=905';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 const canvas=document.querySelector('#viewport'),menu=document.querySelector('#fileMenu .top-file-content'),status=document.querySelector('#selectionStatus');
@@ -56,7 +56,7 @@ function down(e){if(e.target!==canvas)return;if(e.pointerType==='touch'){if(cont
  if(!controller?.active||e.button!==0)return;consume(e);if(e.pointerType==='pen'&&(!e.buttons||e.pressure<=0)||touches.size||contact!==null)return;
  try{if(controller.begin(point(e),settings(),input('brush').value,Number(input('mask-value').value))){contact=e.pointerId;canvas.setPointerCapture(contact);}}catch(error){cancel();say('UV Paint: '+error.message);}}
 function move(e){if(palms.has(e.pointerId)){consume(e);return;}if(contact!==e.pointerId)return;consume(e);if(e.pointerType==='pen'&&!e.buttons)return;const coalesced=e.getCoalescedEvents?.()||[];for(const p of coalesced.length?coalesced:[e]){if(p.pointerType==='pen'&&!p.buttons)continue;controller.move(point(p));}}
-function up(e){touches.delete(e.pointerId);if(palms.delete(e.pointerId)){try{canvas.releasePointerCapture(e.pointerId);}catch{}consume(e);return;}if(contact!==e.pointerId)return;consume(e);try{if(e.type==='pointercancel')controller.cancel();else controller.finish(point(e,true));}catch(error){close();say('UV Paint: '+error.message);}release();}
+function up(e){touches.delete(e.pointerId);if(palms.delete(e.pointerId)){try{canvas.releasePointerCapture(e.pointerId);}catch{}consume(e);return;}if(contact!==e.pointerId)return;consume(e);try{if(e.type==='pointercancel')controller.cancel();else controller.finish(point(e,true));}catch(error){cancel();say('UV Paint: '+error.message);}release();}
 function cancel(){controller?.cancel();release();}
 for(const [name,fn] of [['pointerdown',down],['pointermove',move],['pointerup',up],['pointercancel',up]])window.addEventListener(name,fn,{capture:true,passive:false});
 canvas?.addEventListener('lostpointercapture',e=>{if(contact===e.pointerId)cancel();});

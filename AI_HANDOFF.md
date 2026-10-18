@@ -1,13 +1,33 @@
-# BoxLab AI Handoff — .908 / Retained image layer resources
+# BoxLab AI Handoff — .909 / Duplicate paint release fix
 
 ## Current state — 18 October 2026
 
-Main release0.36.18.908, based onfa81af3d (.907 proof). Latest user906PASS protected.
-Same colourPaint now supports image source+placement+frame with surface cache, explicit
-resourcev3/projectv4; legacy projects preserved. Painter supports image masks/layer
-controls and refuses destructive colour strokes; creation/projection UI is next.
-Read docs/paint-image-resources-908.md. Validation/publication proof follows below.
+Main release0.36.18.909, based on0313796f (.908 proof). Latest devicePASS906. User908
+FAIL duplicate paint disappears on release: reproduced whole-resource8MiB quota,
+fixed with exact shared-byte accounting + optional projectv5 (8MiB unique/16MiB
+expanded). Same owners/history, oldv1–4 under-limit encodings retained. Refused
+strokes restore bytes and keep Paint open. Read docs/paint-duplicate-909.md.
+Device duplicate retest pending; image projection UI deferred until this passes.
 
+
+## .909 — duplicate paint release fix; .908 user FAIL — 2026-10-18
+
+User: duplicate paint disappears on Pencil release. Reproduced original Duplicate +
+actual UI,3layers: whole-resource quota double-charges unchanged base/layers/flat and
+refuses8MiB commit. Existing direct-assignment Duplicate tests missed actual release.
+Repair SAME paint pool: exact canonical buffer-content dedup,8MiB unique /16MiB
+expanded resource cap. Explicit scenev5 shared-byte transport only when inline>8MiB;
+old scenev1–4 encoding retained below limit, complete predecode/schema/ref guards.
+Original history/Undo/Duplicate/atomic File Open and flat NOM/GLB unchanged. All paint
+commits preflight same pool, including opaque; failed commit restores buffers and
+keeps Paint panel open. Five new regressions cover real single+Multi copy paint/release,
+committed display/history/actual SaveOpen/re-edit, corrupt pool+both budgets/atomic
+rollback, genuine limits/staged add and recoverable UI refusal.906 budget fixture
+now uses genuinely distinct data; quota/rollback assertions retained. See
+docs/paint-duplicate-909.md. Changed owners/parent/Lab cache909; stack/image908,
+source907/brush905/blend903/Insert437/protected Multi/frozen/modelling retained.
+Latest devicePASS906;908 duplicateFAIL recorded;909 device retest pending.
+Next device duplicate release/Done/SaveOpen/Undo, then resume Project from View UI.
 
 ## .908 — retained image layers in original resource/project owners — 2026-10-18
 
@@ -295,14 +315,13 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-908 resource/project/history/export image persistence delivered. Next REAL image picker/
-overlay/Project from View through current painter/input and original UV geometry.
-907 projector is coordinate maths only; enforce front angle and scene/self-occlusion
-before texels, atomically capture recipe+surface raster through908 paired API. Retain
-image source and frame for re-projection, Insert437 Move→Rotate→Scale cycle. No implicit
-bake, shadow paintLayers/editor/history, nativeUV fields or broad UI redesign. Material
-slots/displacement follow docs/paint-material-direction.md. Latest user906PASS; UI
-polish follows functional flows. No907/908 device PASS inferred.
+DEVICE:909 duplicate layered paint → lift Pencil → Done/reselect → Save/Open/continue
+and UndoRedo.908 userFAIL tracked; no909 acceptance inferred. Then resume908's REAL
+image picker/overlay/Project from View through current painter/input/original UV
+geometry, front angle + scene/self-occlusion before texels. Capture recipe+raster
+atomically via908 API, retain source/frame; original Insert437 tap cycle. No new
+paint history/kernel, implicit bake, nativeUV fields or broad UI redesign. Material
+direction in docs/paint-material-direction.md; UI polish after functional flows.
 
 ## Protected interaction and modelling baseline
 
@@ -607,3 +626,6 @@ changes no tested runtime bytes. Latest user906PASS protected; no907/908 deviceP
 Next REAL picker/overlay/visible-front Project UI per docs/paint-image-resources-908.md.
 Manual908: existing paint/masks Save/Open/continue, UndoRedo/Duplicate/export sanity;
 new image authoring not exposed yet, fixture coverage is automated not an iPad gate.
+
+.909 local validation: Node24.19.0 full **2552 PASS / 0 FAIL / 0 skipped**; five new
+actual duplicate/pool/recovery regressions PASS. Device release retest pending.

@@ -3,9 +3,9 @@ import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=905';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
 import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack} from './paint-layer-stack.js?v=0.36.18.908';
-import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.908';
-import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.908';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.908';
+import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.909';
+import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.909';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.909';
 // Scene history, selection, camera and body lifetime remain with the existing app.
 export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()]}){
  let session=null,generation=0,stroke=null;const ray=new THREE.Raycaster(),occluderMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
@@ -46,7 +46,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  }
  function commit(resource){
   if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();throw Error('Object changed during paint');}
-  if(resource.version>=2){const pool=createProjectPaintPool();for(const o of objects()){const r=o===target()?resource:o?.colourPaint;if(r)pool.add(r);}}
+  const pool=createProjectPaintPool();for(const o of objects()){const r=o===target()?resource:o?.colourPaint;if(r)pool.add(r);}
   if(!checkpoint())throw Error('Scene history checkpoint unavailable');
   target().colourPaint=resource;session.resource=resource;session.stack=resource.version>=2?resource.layers:null;loadLayer();updatePreview();return true;
  }

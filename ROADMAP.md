@@ -3138,3 +3138,26 @@ Latest user906PASS protected; no907/908 devicePASS inferred.
 
 .908 local validation: Node24.19.0 full **2547 PASS / 0 FAIL / 0 skipped**; eight new
 image resource/history/project/UI/export checks PASS. Device gate remains separate.
+
+
+## .909 — duplicate paint release fix; .908 user FAIL — 2026-10-18
+
+User: duplicate paint disappears on Pencil release. Reproduced original Duplicate +
+actual UI,3layers: whole-resource quota double-charges unchanged base/layers/flat and
+refuses8MiB commit. Existing direct-assignment Duplicate tests missed actual release.
+Repair SAME paint pool: exact canonical buffer-content dedup,8MiB unique /16MiB
+expanded resource cap. Explicit scenev5 shared-byte transport only when inline>8MiB;
+old scenev1–4 encoding retained below limit, complete predecode/schema/ref guards.
+Original history/Undo/Duplicate/atomic File Open and flat NOM/GLB unchanged. All paint
+commits preflight same pool, including opaque; failed commit restores buffers and
+keeps Paint panel open. Five new regressions cover real single+Multi copy paint/release,
+committed display/history/actual SaveOpen/re-edit, corrupt pool+both budgets/atomic
+rollback, genuine limits/staged add and recoverable UI refusal.906 budget fixture
+now uses genuinely distinct data; quota/rollback assertions retained. See
+docs/paint-duplicate-909.md. Changed owners/parent/Lab cache909; stack/image908,
+source907/brush905/blend903/Insert437/protected Multi/frozen/modelling retained.
+Latest devicePASS906;908 duplicateFAIL recorded;909 device retest pending.
+Next device duplicate release/Done/SaveOpen/Undo, then resume Project from View UI.
+
+.909 local validation: Node24.19.0 full **2552 PASS / 0 FAIL / 0 skipped**; five new
+actual duplicate/pool/recovery regressions PASS. Device release retest pending.

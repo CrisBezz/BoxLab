@@ -28,21 +28,24 @@ export function encodePaintResourceEntry(value){
  if(!layers)return {version:1,descriptor,data:encodeProjectBytes(pixels)};
  return {version:copy.version,descriptor,data:encodeProjectBytes(pixels),layers:{version:layers.version,base:baseEntry(layers.base),layers:layers.layers.map(({pixels,mask,image,...meta})=>({...meta,data:encodeProjectBytes(pixels),mask:mask?{enabled:mask.enabled,inverted:mask.inverted,data:encodeProjectBytes(mask.pixels)}:null,...(layers.version===3?{image:encodeImage(image)}:{})}))}};
 }
-// Inspect every serialized buffer before any pool decode allocation.
-export function paintResourceEntryBytes(entry){
+// Same strict envelope walker for inline bytes and shared project byte references.
+export function mapPaintResourceEntryBuffers(entry,visit){
  exact(entry,entry?.version===1?['version','descriptor','data']:['version','descriptor','data','layers']);
  if(![1,2,3].includes(entry.version))throw Error('Unsupported project colour envelope');
- const buffers=[entry.data];
- if(entry.version>=2){
-  exact(entry.layers,['version','base','layers']);exact(entry.layers.base,['descriptor','data']);
-  if(entry.layers.version!==entry.version||!Array.isArray(entry.layers.layers)||entry.layers.layers.length>3)throw Error('Invalid layered colour envelope');buffers.push(entry.layers.base.data);
-  for(const l of entry.layers.layers){
-   exact(l,['id','name','visible','opacity','blendMode','data','mask',...(entry.version===3?['image']:[])]);buffers.push(l.data);
-   if(l.mask!==null){exact(l.mask,['enabled','inverted','data']);buffers.push(l.mask.data);}
-   if(entry.version===3&&l.image!==null){exact(l.image,['version','source','placement','objectToWorld']);exact(l.image.source,sourceFields);buffers.push(l.image.source.encoded,l.image.source.data);}
-  }
- }
- let total=0;for(const data of buffers){exact(data,['encoding','byteLength','data']);if(!Number.isSafeInteger(data.byteLength)||data.byteLength<0)throw Error('Invalid paint byte length');total+=data.byteLength;if(!Number.isSafeInteger(total))throw Error('Invalid paint byte budget');}return total;
+ const data=visit(entry.data);if(entry.version===1)return {...entry,data};
+ exact(entry.layers,['version','base','layers']);exact(entry.layers.base,['descriptor','data']);
+ if(entry.layers.version!==entry.version||!Array.isArray(entry.layers.layers)||entry.layers.layers.length>3)throw Error('Invalid layered colour envelope');
+ const base={...entry.layers.base,data:visit(entry.layers.base.data)},layers=Array.from(entry.layers.layers,l=>{
+  exact(l,['id','name','visible','opacity','blendMode','data','mask',...(entry.version===3?['image']:[])]);
+  const data=visit(l.data);let mask=null,image=null;
+  if(l.mask!==null){exact(l.mask,['enabled','inverted','data']);mask={...l.mask,data:visit(l.mask.data)};}
+  if(entry.version===3&&l.image!==null){exact(l.image,['version','source','placement','objectToWorld']);exact(l.image.source,sourceFields);image={...l.image,source:{...l.image.source,encoded:visit(l.image.source.encoded),data:visit(l.image.source.data)}};}
+  return {...l,data,mask,...(entry.version===3?{image}:{})};
+ });
+ return {...entry,data,layers:{...entry.layers,base,layers}};
+}
+export function paintResourceEntryBytes(entry){
+ let total=0;mapPaintResourceEntryBuffers(entry,data=>{exact(data,['encoding','byteLength','data']);if(!Number.isSafeInteger(data.byteLength)||data.byteLength<0)throw Error('Invalid paint byte length');total+=data.byteLength;if(!Number.isSafeInteger(total))throw Error('Invalid paint byte budget');return data;});return total;
 }
 export function decodePaintResourceEntry(entry){
  if(paintResourceEntryBytes(entry)>8*1024*1024)throw Error('Colour paint pool exceeds 8 MiB');
