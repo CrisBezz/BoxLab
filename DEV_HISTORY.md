@@ -11182,3 +11182,25 @@ claim. Product direction remains docs/paint-material-direction.md.
 
 .906 local validation: Node24.19.0 full **2533 PASS / 0 FAIL / 0 skipped**;
 seven new mask UI/core tests PASS. Device906 pending; no rendered proof inferred.
+
+
+## .907 — editable image source and placement foundation; .906 PASS — 2026-10-18
+
+User906PASS protects mask/Pencil/navigation/history/project behaviour. Audit remote
+4778567c and existing read-only UV image892/Insert437 owners. New isolated image
+source importer retains original encoded PNG/JPEG + owned decoded RGBA, preflight
+2MiB/1024² before bitmap decode, exact dimensions, async snapshot and cleanup.
+Camera placement snapshots original Three matrices plus NDC centre/size/rotation;
+projector clips camera/image bounds, returns top-first UVs. Original Insert cycle
+re-exported verbatim; no new pointer/mesh/history owner. Six focused tests PASS.
+Read docs/paint-image-source-907.md for browser colour/alpha/EXIF and memory limits.
+NOT connected to painter, layer/project schema or UI yet. Coordinate projection
+does NOT enforce facing/angle/scene occlusion; existing painter must do so before
+rasterization. No Project from View/surface placement/manual device claim.
+Main paint906/resource904/compositor903/protected Multi1.0/frozen unchanged.
+Next explicit image source+placement resource/pool versioning and original history/
+project/export integration, then picker/overlay/visible-front projection UI.
+No new hands-on gate this foundation build; .906 PASS is protected, not907 image UI.
+
+.907 local validation: Node24.19.0 full **2539 PASS / 0 FAIL / 0 skipped**; six new
+focused image source/placement checks PASS. No new image UI or device gate.

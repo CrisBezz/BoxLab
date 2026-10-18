@@ -1,13 +1,30 @@
-# BoxLab AI Handoff — .906 / On-surface layer masks
+# BoxLab AI Handoff — .907 / Editable image source foundation
 
 ## Current state — 18 October 2026
 
-CrisBezz/BoxLab main release0.36.18.906, based onf8455236 (.905 runtime30472e8d).
-User905PASS protects layers/Pencil/navigation/UndoRedo/project; agrees UI/UX polish
-once feature flows present.906 adds on-surface masks to same painter/raster/resource:
-Hide/Reveal/Grey, Colour/Mask target, enabled/invert/remove. Source colours preserved.
-Read docs/paint-mask-ui-906.md. Runtime6824f146, full2533PASS/0FAIL/0skip;
-Node22 CI/Pages/live906 verified below. Device906 pending.
+Main release0.36.18.907, based on4778567c (.906 proof). User906PASS recorded.
+Image source+camera placement foundation isolated; no new image controls yet.
+Read docs/paint-image-source-907.md. Existing .906 mask workflow is protected.
+Validation/publication evidence follows when completed.
+
+
+## .907 — editable image source and placement foundation; .906 PASS — 2026-10-18
+
+User906PASS protects mask/Pencil/navigation/history/project behaviour. Audit remote
+4778567c and existing read-only UV image892/Insert437 owners. New isolated image
+source importer retains original encoded PNG/JPEG + owned decoded RGBA, preflight
+2MiB/1024² before bitmap decode, exact dimensions, async snapshot and cleanup.
+Camera placement snapshots original Three matrices plus NDC centre/size/rotation;
+projector clips camera/image bounds, returns top-first UVs. Original Insert cycle
+re-exported verbatim; no new pointer/mesh/history owner. Six focused tests PASS.
+Read docs/paint-image-source-907.md for browser colour/alpha/EXIF and memory limits.
+NOT connected to painter, layer/project schema or UI yet. Coordinate projection
+does NOT enforce facing/angle/scene occlusion; existing painter must do so before
+rasterization. No Project from View/surface placement/manual device claim.
+Main paint906/resource904/compositor903/protected Multi1.0/frozen unchanged.
+Next explicit image source+placement resource/pool versioning and original history/
+project/export integration, then picker/overlay/visible-front projection UI.
+No new hands-on gate this foundation build; .906 PASS is protected, not907 image UI.
 
 ## .906 — main viewport layer mask painting; .905 PASS — 2026-10-18
 
@@ -258,14 +275,14 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-905 userPASS protected; user wants UI polish once features are in place, so keep
-changes narrow.906 mask UI/core implemented; DEVICE: + Mask on paint layer, Hide/
-Reveal/Grey, enable/invert/remove+Undo, Save/Open/reselect Mask/continue and fingers.
-Then image sources/Project from View, explicit editable source+placement versioning
-through existing resource/project/history/export and original UV/geometry owners.
-Surface image Move→Rotate→Scale tap cycle must reuse audited Insert methodology.
-No shadow paintLayers property/editor/history or blanket UI cleanup. Material slots/
-displacement placeholder per docs/paint-material-direction.md remain staged future work.
+User906PASS now protects mask workflow.907 source/placement groundwork delivered.
+Next versioned image resource/project pool integration, then projection UI; see
+docs/paint-image-source-907.md. Older staged device gates below are historical.
+
+User UI/UX polish follows feature flows. Retain906 masks and905 layers.
+Store image source+placement through existing resource/project/history/export;
+Move→Rotate→Scale uses original Insert cycle. No shadow paintLayers, second editor
+or broad UI cleanup. Material slots/displacement remain staged direction.
 
 ## Protected interaction and modelling baseline
 
@@ -534,3 +551,6 @@ All four continuity files current. This proof changes documentation only and ret
 tested runtime bytes. User905PASS protected;906 mask device gate pending, no rendered
 browser or iPad performance acceptance inferred. Next mask feedback then editable
 image sources/Project from View/Insert-cycle plan, as current product direction.
+
+.907 local validation: Node24.19.0 full **2539 PASS / 0 FAIL / 0 skipped**; six new
+focused image source/placement checks PASS. No new image UI or device gate.
