@@ -663,3 +663,20 @@ release/Done/reselect/SaveOpen/Undo test, then resume image projection UI after 
 
 .910 local validation: Node24.19.0 full **2556 PASS / 0 FAIL / 0 skipped**; four new
 native paint/export/name regressions PASS. Actual Nomad retest remains pending.
+
+## .910 publication verified — 2026-10-18
+
+Runtime7acecdcb7d1cbecbb4cc9fae7e38d91a17306638; tested tree
+bbd6d9ea7989e8638ac4dad632bcffeb1046a5ab. All14 uploaded blob hashes/created tree
+match tested local source; fetched main shell/manifest blobs verified exactly.
+Node22.23.3 CI39100189745/job117594706071 SUCCESS2556PASS/0FAIL/0skip;
+Pages39100189368 build117594707602/deploy117594794621 SUCCESS.
+All14 checked live shell/version/native writer/packed parent/File export/Lab loaders/
+recovery plus unchanged909 paint-export/viewport/pool/codec files byte-match source.
+Only native texture-name policy changed; accepted909 viewport/persistence, image byte
+identity, modelling/Multi1.0/frozen owners retained. All four continuity files current.
+Proof is documentation-only, no tested runtime changes.909 user viewport PASS protected;
+Nomad duplicate exception remains device-pending for910. Name collision proven removed;
+private consumer caching remains inference, not rendered/native acceptance. Next fresh
+NOM export of original+green copy, then further copy paint/export check; if persistent
+inspect actual user NOM before speculating on other native fields. Projection UI follows.
