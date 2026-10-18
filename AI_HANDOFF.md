@@ -7,7 +7,8 @@ Latest user devicePASS901 protects exports and900 paint/history/project/duplicat
 904 connects layered colour resourcev2 to SAME colourPaint pool/scene history/duplicates,
 projectv3 and existing flattened display/export. No layer UI yet; old painter refuses
 layered resources until UI build. Read docs/paint-layer-resources-904.md and
- docs/paint-material-direction.md. Publication/full-suite evidence follows.
+ docs/paint-material-direction.md. Runtime598675a2, full2519PASS/0FAIL/0skip;
+Node22 CI/Pages/live904 verified below.
 
 ## .904 — editable layered project/history resources — 2026-10-18
 
@@ -433,3 +434,20 @@ acceptance inferred. Next explicit layered project/scene resource/history integr
 
 .904 local validation: Node24.19.0 full **2519 PASS / 0 FAIL / 0 skipped**;
 seven new resource/history/codec/export checks PASS. No device acceptance inferred.
+
+## .904 publication verified — 2026-10-18
+
+Runtime598675a2088b03ad76f5acc9f577a036a57bc0c0; tested tree
+5af1d449285527e5c99b1f2a18f24d1edbea5364 matches fetched main/local exactly.
+Node22.23.3 CI39083654261/job117545612952 SUCCESS2519PASS/0FAIL/0skip;
+Pages39083653898 build117545614117/deploy117545686267 SUCCESS.
+All20 postdeployment live shell/version/new resource/project codec/pool/paint export/
+NOM/GLB parent/binding/painter/render/management/drawer/recovery and Lab index/loader/
+session files byte-match repository. Initial predeployment graph served903/new child404;
+final complete checked graph904 matches. Protected modelling/Multi1.0/frozen/brush
+algorithms retained; parent cache graph reviewed. All four continuity files updated.
+This proof changes documentation only; no tested runtime bytes. User901PASS retained;
+904 nearby device regressions remain pending, no rendered/layer UI acceptance inferred.
+Next REAL layer controls/transparent brush through same resource/history, not more
+parallel storage. Manual existing paint Save/Open/new-stroke UndoRedo, duplicate
+isolation and NOM/GLB colour sanity. New layered fixtures are automated checks.
