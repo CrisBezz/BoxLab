@@ -7887,3 +7887,23 @@ caught two outdated test adapters:439 expected literal fixed Mesh Health ID,731
 Sweep host omitted real DOM style property. Updated fixtures to dual ID and actual
 host shape; kept all semantic/read-only/Sweep assertions. Focused9PASS, final full
 2583PASS; no runtime Sweep or shared positioner changes. Publication/visual proof follows.
+
+
+## .916 publication verified — 19 October 2026 (Brisbane)
+
+Runtime3295032ca2bd89cf7c4a7de3b870656d765fcd2f; tested tree
+5be85556700c13b08b8294e45082406f5e2b9759. All21 uploaded blobs/tree match tested
+local source; fetched main/local equivalent tree aligned. LocalNode24 + hostedNode22
+full2583PASS/0FAIL/0skip. TopologyCI39173064962/job117809986464 SUCCESS;
+Pages39173064486/build117809988186/deploy117810083028 SUCCESS. Live13/15 checked
+files byte-match, including shell/manifest and ALL6 changed runtime owners, recovery
+version/wide layout/Multi/colour/UV mapper. Two UNCHANGED files (release-bootstrap,
+shared positioner732) repeatedly proxy-timed-out on HTTP recheck; repository exact
+bytes/pins retained and previously verified. No claim those two were fetched916.
+Cloud browser loaded visible916 shell but WebGL context creation failed in unchanged
+main854/Three renderer; therefore no mesh/radial/Paint rendered acceptance claimed.
+Isolated test tab closed; no screenshot of a blank mesh returned as layout proof.
+Actual session/UV owner semantics and native paint/image flows remain tested by Node;
+iPad left-dock/section/scroll and UV navigation manual gate remains pending916.
+All four continuity files + workflow user exception updated. User915PASS protected;
+this proof changes docs only. Roughness audit read-only, implementation deferred.
