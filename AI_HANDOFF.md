@@ -591,3 +591,19 @@ visible-front Project from View; never use coordinate projection alone for visib
 
 .908 local validation: Node24.19.0 full **2547 PASS / 0 FAIL / 0 skipped**; eight new
 image resource/history/project/UI/export checks PASS. Device gate remains separate.
+
+## .908 publication verified — 2026-10-18
+
+Runtime24e47147543e6010a99b58b0cbaf7b006d0c5310; tested tree
+569840ed3dfeee9239c17984186d973200e1f0cf. All28 uploaded blob hashes and created tree
+match tested local source; remote main shell/manifest blobs verified exactly.
+Node22.23.3 CI39096320967/job117583416373 SUCCESS2547PASS/0FAIL/0skip;
+Pages39096320411 build117583416785/deploy117583490568 SUCCESS.
+All25 checked postdeployment live shell/version, changed resource/project/painter/
+export/management/render/Lab loader graph, recovery and unchanged907 source/placement/
+437 shared cycle byte-match repository. Protected Multi1.0/frozen/modelling/brush
+bytes retained. All four continuity files updated; proof is documentation-only and
+changes no tested runtime bytes. Latest user906PASS protected; no907/908 devicePASS.
+Next REAL picker/overlay/visible-front Project UI per docs/paint-image-resources-908.md.
+Manual908: existing paint/masks Save/Open/continue, UndoRedo/Duplicate/export sanity;
+new image authoring not exposed yet, fixture coverage is automated not an iPad gate.
