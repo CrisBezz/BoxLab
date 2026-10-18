@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.902",
+      "url": "./src/release-bootstrap.js?v=0.36.18.903",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.902",
+      "url": "./src/release-version.js?v=0.36.18.903",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2591,6 +2591,12 @@
       "url": "./paint-resource.js?v=898",
       "target": "src/paint-resource.js",
       "sha256": "aed7f91f7c49ca191fc09e5bb74240ce6315ecbc3cd4ee2f69be84edccfab05a"
+    },
+    {
+      "owner": "src/paint-layer-stack.js",
+      "url": "./paint-blend-modes.js?v=0.36.18.903",
+      "target": "src/paint-blend-modes.js",
+      "sha256": "b98b9ed41b62468e11216d6fd5181ef69465ba0632051b56b693297f9d3c1a40"
     }
   ]
 }

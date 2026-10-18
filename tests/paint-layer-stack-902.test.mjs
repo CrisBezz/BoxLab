@@ -29,7 +29,7 @@ test('902 captures/edits/flatten isolate caller and duplicate buffers without cr
 });
 test('902 rejects ambiguous schemas, invalid buffers/opacity/IDs and over-budget layers without source edits',()=>{
  const stack=createPaintLayerStack(base()),withLayer=overlay(stack,'one',[1,2,3,255]),before=flattenPaintLayerStack(withLayer).pixels;
- for(const patch of [{opacity:NaN},{opacity:-1},{opacity:1.1},{visible:1},{pixels:new Uint8Array(3)},{blendMode:'multiply'},{name:''}])assert.throws(()=>replacePaintLayer(withLayer,'one',patch));
+ for(const patch of [{opacity:NaN},{opacity:-1},{opacity:1.1},{visible:1},{pixels:new Uint8Array(3)},{blendMode:'unknown-mode'},{name:''}])assert.throws(()=>replacePaintLayer(withLayer,'one',patch));
  assert.throws(()=>replacePaintLayer(withLayer,'missing',{}));assert.throws(()=>appendPaintLayer(withLayer,{id:'one'}));assert.throws(()=>appendPaintLayer(stack,{id:'bad id'}));
  assert.throws(()=>capturePaintLayerStack({...stack,flattened:stack.base.pixels}));assert.throws(()=>createPaintLayerStack({...base(),version:2}));assert.throws(()=>createPaintLayerStack(base(513)));
  const full=appendPaintLayer(appendPaintLayer(withLayer,{id:'two'}),{id:'three'});assert.equal(full.layers.length,3);assert.throws(()=>appendPaintLayer(full,{id:'four'}));assert.deepEqual(flattenPaintLayerStack(withLayer).pixels,before);

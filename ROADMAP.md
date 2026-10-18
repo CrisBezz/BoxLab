@@ -2984,3 +2984,30 @@ and full-suite evidence follow; no902 device PASS inferred.
 
 .902 local validation: Node24.19.0 full suite **2505 PASS / 0 FAIL / 0 skipped**;
 five new focused compositor checks PASS. No new device/rendered layer proof.
+
+
+## .903 — masks/blend foundation and material direction — 2026-10-18
+
+User requests surface image placement/Project from View, Insert Move→Rotate→Scale tap
+cycle, masks/blend modes and Nomad-style material slots with displacement placeholder.
+Read docs/paint-material-direction.md for requirements, sequencing and limitations.
+Audit787cfcb9:902 compositor Normal-only;900 paint/899 project/901 export opaque.
+Extend SAME isolated stack owner to v2 with owned per-overlay8-bit coverage masks,
+enable/invert and26 colour blend modes in paint-blend-modes903. v1 Normal upgrade
+byte-identical; strict unknown fields/invalid modes/masks and sparse arrays refuse.
+Alpha×opacity×mask gates blended RGB; Normal exact902; standard W3C colour formulas,
+extra modes explicitly defined in docs/paint-layers-903.md. Not Nomad bit-parity or
+normal-vector/scalar/PBR blending. Buffers read-only by convention; max4.75MiB stack
+plus copies/flat outputs, no measured performance claim.
+Seven focused903 checks PASS; existing902 semantic checks retained (unknown-mode
+refusal supersedes its obsolete Multiply refusal). Actual opaque project/native PNG
+handoff retained. No app/lab layer UI, mask drawing, image projection or editable
+layer persistence yet. Main resource/project/export continue refusing editable stack.
+Shell/recovery903, isolated child903; main900/export901/lab901/brush896/protected
+Multi1.0/frozen/modelling owners unchanged. No new hands-on test or user903PASS.
+Next explicit layered scene/project pool through original codec/history/duplicate
+owners, then transparent brush+layer/mask UI; image projection/Insert-cycle follows.
+Full suite/publication proof follows;901 userPASS remains latest accepted device gate.
+
+.903 local validation: Node24.19.0 full **2512 PASS / 0 FAIL / 0 skipped**;
+seven new focused checks + existing902 tests PASS. No rendered/device gate inferred.

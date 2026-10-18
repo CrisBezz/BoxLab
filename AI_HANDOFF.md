@@ -1,13 +1,36 @@
-# BoxLab AI Handoff — .902 / Layer compositor foundation
+# BoxLab AI Handoff — .903 / Masks and blend foundation
 
 ## Current state — 18 October 2026
 
-CrisBezz/BoxLab main release0.36.18.902, based on0bfb6819 (.901 runtime32cca003).
-User .901 PASS protects painted Nomad/GLB handoff plus .900 viewport paint/Pencil/
-navigation/history/project/duplicates. .895 density remains separate.
-.902 adds an isolated compositor API only; no new runtime layer UI or persistence.
-Read docs/paint-layer-stack-902.md. Runtime0d37f014, full2505PASS/0FAIL/0skip;
-Node22 CI/Pages/live902 verified below. Publishing authorized.
+CrisBezz/BoxLab main release0.36.18.903, based on787cfcb9 (.902 runtime0d37f014).
+Latest user device PASS901 protects export plus900 paint/history/project/duplicates.
+No902 userPASS inferred; foundation had no new hands-on gate.895 remains separate.
+903 adds masks/26 colour blends to isolated compositor and records agreed material/
+image direction. No main layer UI/persistence yet. Read docs/paint-layers-903.md and
+ docs/paint-material-direction.md. Publishing authorized; proof follows below.
+
+## .903 — masks/blend foundation and material direction — 2026-10-18
+
+User requests surface image placement/Project from View, Insert Move→Rotate→Scale tap
+cycle, masks/blend modes and Nomad-style material slots with displacement placeholder.
+Read docs/paint-material-direction.md for requirements, sequencing and limitations.
+Audit787cfcb9:902 compositor Normal-only;900 paint/899 project/901 export opaque.
+Extend SAME isolated stack owner to v2 with owned per-overlay8-bit coverage masks,
+enable/invert and26 colour blend modes in paint-blend-modes903. v1 Normal upgrade
+byte-identical; strict unknown fields/invalid modes/masks and sparse arrays refuse.
+Alpha×opacity×mask gates blended RGB; Normal exact902; standard W3C colour formulas,
+extra modes explicitly defined in docs/paint-layers-903.md. Not Nomad bit-parity or
+normal-vector/scalar/PBR blending. Buffers read-only by convention; max4.75MiB stack
+plus copies/flat outputs, no measured performance claim.
+Seven focused903 checks PASS; existing902 semantic checks retained (unknown-mode
+refusal supersedes its obsolete Multiply refusal). Actual opaque project/native PNG
+handoff retained. No app/lab layer UI, mask drawing, image projection or editable
+layer persistence yet. Main resource/project/export continue refusing editable stack.
+Shell/recovery903, isolated child903; main900/export901/lab901/brush896/protected
+Multi1.0/frozen/modelling owners unchanged. No new hands-on test or user903PASS.
+Next explicit layered scene/project pool through original codec/history/duplicate
+owners, then transparent brush+layer/mask UI; image projection/Insert-cycle follows.
+Full suite/publication proof follows;901 userPASS remains latest accepted device gate.
 
 ## .902 — layer/compositor foundation; .901 user PASS — 2026-10-18
 
@@ -165,11 +188,14 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-901 user PASS protected;902 compositor is isolated and has no new hands-on test.
-Next: explicit separate layer scene resource/project pool through original codec,
-atomic Open, global history and duplicate owners; preserve old opaque projects.
-Then transparent stroke + UI through original viewport. Do not assign stack to
-colourPaint or silently flatten a project intended to retain editable layers.
+903 isolated v2 colour stack supports masks/blends; no new hands-on test.
+Follow docs/paint-material-direction.md: explicit layered scene resource/project pool,
+original history/atomic Open/duplicate compatibility and strict binding first; then
+transparent brush + layer/mask UI, followed by image sources/Project from View and
+surface placement using shared Insert tap-cycle owner. Material slots staged; keep
+Displacement Apply disabled until real vertex displacement is implemented.
+Never silently flatten an editable-layer project or treat RGB modes as normal-vector
+blending. Keep existing imported resource/export owners and nativeUVv3 strict.
 
 ## Protected interaction and modelling baseline
 
@@ -363,3 +389,6 @@ Protected Multi/frozen/modelling/brush/resource/project/export owners unchanged.
 User901PASS recorded; no new902 manual gate or rendered layer acceptance claimed.
 All four continuity files updated; this proof is documentation-only and changes
 no tested runtime bytes. Next separate layer scene-resource/project integration.
+
+.903 local validation: Node24.19.0 full **2512 PASS / 0 FAIL / 0 skipped**;
+seven new focused checks + existing902 tests PASS. No rendered/device gate inferred.
