@@ -1,5 +1,5 @@
 import {makeCube,makeSphere,makePlane} from '../../src/primitive-factory.js';
-import {createBoxUV,createSphereUV,createPlanarUV} from '../../src/imported-uv-edit.js?v=0.36.18.895';
+import {createBoxUV,createSphereUV,createPlanarUV} from '../../src/imported-uv-edit.js?v=0.36.18.914';
 // Use ORIGINAL BoxLab primitives/projection/triangulation. No alternate UV/mesh kernel.
 export function comparisonSample(kind,owner){
  if(!owner?.topologySignature||!owner?.buildUVPreviewGeometry)throw Error('BoxLab UV geometry owner unavailable');

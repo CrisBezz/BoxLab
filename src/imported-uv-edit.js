@@ -228,7 +228,7 @@ export function createCylinderUV(object,mesh,topologySignature,history){
  let radius=0;for(const p of points){p.radius=Math.hypot(p.x-cx,p.z-cz);radius=Math.max(radius,p.radius);}
  if(!radius)return {ok:false,reason:'Cylinder mapping needs radial extent'};
  const ring=points.filter(p=>p.radius>radius*1e-8);
- if(ring.length<3||ring.some(p=>Math.abs(p.radius-radius)>radius*1e-7))return {ok:false,reason:'Cylinder UVs require round aligned rings about world Y'};
+ if(ring.length<3||ring.some(p=>Math.abs(p.radius-radius)>radius*1e-7))return createRevolvedCylinderUV(object,mesh,topologySignature,history,positions);
  let anchor=ring[0];for(const p of ring)if(p.x>anchor.x||p.x===anchor.x&&p.z<anchor.z)anchor=p;
  const start=Math.atan2(anchor.z-cz,anchor.x-cx);
  for(const p of ring){p.angle=Math.atan2(p.z-cz,p.x-cx)-start;if(p.angle<0)p.angle+=2*Math.PI;}
@@ -240,12 +240,87 @@ export function createCylinderUV(object,mesh,topologySignature,history){
   const corners=face.map(id=>positions.get(id)),bottom=corners.every(p=>p[1]===minY),top=corners.every(p=>p[1]===maxY);
   if(bottom||top){uvCorners.push(corners.map(p=>[(bottom ? .25 : .75)+(p[0]-cx)*scale,.80+(p[2]-cz)*(bottom?1:-1)*scale]));continue;}
   const angular=corners.map(p=>columns.get(p[0]+':'+p[2]));
-  if(angular.some(p=>!Number.isFinite(p.u))||corners.every(p=>p[1]===corners[0][1]))return {ok:false,reason:'Cylinder sides must stay off the Y axis and have height'};
+  if(angular.some(p=>!Number.isFinite(p.u))||corners.every(p=>p[1]===corners[0][1]))return createRevolvedCylinderUV(object,mesh,topologySignature,history,positions);
   const us=angular.map(p=>p.u);if(Math.max(...us)-Math.min(...us)>circumference/2)for(let i=0;i<us.length;i++)if(us[i]<circumference/2)us[i]+=circumference;
   if(Math.max(...us)>circumference*(1+1e-12)||Math.max(...us)-Math.min(...us)>circumference*(.5+1e-12))return {ok:false,reason:'Cylinder mapping needs an aligned seam column'};
   uvCorners.push(corners.map((p,i)=>[.5-(us[i]-circumference/2)*scale,.30+((p[1]-minY)-height/2)*scale]));
  }
  if(uvCorners.some(face=>{let area=0;for(let i=0;i<face.length;i++){const a=face[i],b=face[(i+1)%face.length];area+=a[0]*b[1]-a[1]*b[0];}return !Number.isFinite(area)||area===0;}))return {ok:false,reason:'Cylinder projection would collapse a face'};
+ return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
+}
+
+// Cones and applied Y-axis Revolves have a chain of concentric rings, rather
+// than constant-radius columns. Recover that chain from the existing Base mesh;
+// measured profile distance also unfolds horizontal shoulders and return walls.
+// No procedural metadata is changed and ordinary cylinders retain their old UVs.
+function createRevolvedCylinderUV(object,mesh,topologySignature,history,positions){
+ const refuse=()=>({ok:false,reason:'Cylinder UVs require aligned round rings about world Y (cylinder, cone or upright Revolve)'});
+ const tolerance=1e-7,levels=[];
+ for(const [id,p] of positions){
+  let level=levels.find(row=>Math.abs(row.y-p[1])<tolerance);
+  if(!level){level={y:p[1],ids:[]};levels.push(level);}level.ids.push(id);
+ }
+ const widest=levels.reduce((a,b)=>a.ids.length>b.ids.length?a:b),centre=[0,0];
+ for(const id of widest.ids){const p=positions.get(id);centre[0]+=p[0]/widest.ids.length;centre[1]+=p[2]/widest.ids.length;}
+ const rings=[],membership=new Map();let radius=0;
+ for(const level of levels)for(const id of level.ids){
+  const p=positions.get(id),r=Math.hypot(p[0]-centre[0],p[2]-centre[1]);
+  let ring=rings.find(row=>Math.abs(row.y-level.y)<tolerance&&Math.abs(row.radius-r)<tolerance);
+  if(!ring){ring={y:level.y,radius:r,ids:[],links:new Set()};rings.push(ring);}
+  ring.ids.push(id);membership.set(id,ring);radius=Math.max(radius,r);
+ }
+ if(!(radius>tolerance)||rings.length<2)return refuse();
+ let reference=null;
+ for(const ring of rings){
+  ring.pole=ring.radius<tolerance;
+  if(ring.pole){if(ring.ids.length!==1)return refuse();continue;}
+  if(ring.ids.length<3)return refuse();
+  ring.angular=ring.ids.map(id=>{const p=positions.get(id);return {id,angle:(Math.atan2(p[2]-centre[1],p[0]-centre[0])+2*Math.PI)%(2*Math.PI)};}).sort((a,b)=>a.angle-b.angle);
+  if(!reference||ring.radius>reference.radius)reference=ring;
+ }
+ if(!reference)return refuse();
+ const count=reference.ids.length,start=reference.angular[0].angle,angles=new Map();
+ for(const ring of rings){
+  if(ring.pole)continue;
+  if(ring.ids.length!==count)return refuse();
+  const columns=new Set();
+  for(const p of ring.angular){
+   const column=Math.round(((p.angle-start+2*Math.PI)%(2*Math.PI))*count/(2*Math.PI))%count;
+   const expected=start+column*2*Math.PI/count,delta=Math.atan2(Math.sin(p.angle-expected),Math.cos(p.angle-expected));
+   if(Math.abs(delta)>tolerance||columns.has(column))return refuse();columns.add(column);angles.set(p.id,column/count);
+  }
+ }
+ for(const face of mesh.faces){
+  const owners=[...new Set(face.map(id=>membership.get(id)))];
+  if(new Set(face).size!==face.length||owners.length>2)return refuse();
+  if(owners.length===2){owners[0].links.add(owners[1]);owners[1].links.add(owners[0]);}
+  else if(owners[0].pole||face.length!==count)return refuse();
+ }
+ const ends=rings.filter(ring=>ring.links.size===1).sort((a,b)=>a.y-b.y||a.radius-b.radius);
+ if(ends.length!==2||rings.some(ring=>ring.links.size<1||ring.links.size>2))return refuse();
+ let previous=null,current=ends[0],distance=0;const visited=new Set();
+ while(current&&!visited.has(current)){
+  visited.add(current);current.v=distance;
+  const next=[...current.links].find(ring=>ring!==previous);
+  if(next)distance+=Math.hypot(next.y-current.y,next.radius-current.radius);
+  previous=current;current=next;
+ }
+ if(visited.size!==rings.length||!Number.isFinite(distance)||distance<=0)return refuse();
+ const circumference=2*count*radius*Math.sin(Math.PI/count),scale=Math.min(.96/circumference,.54/distance,.36/(2*radius)),uvCorners=[];
+ for(const face of mesh.faces){
+  const owners=face.map(id=>membership.get(id));
+  if(owners.every(ring=>ring===owners[0])){
+   const bottom=owners[0]===ends[0];
+   uvCorners.push(face.map(id=>{const p=positions.get(id);return [(bottom ? .25 : .75)+(p[0]-centre[0])*scale,.80+(p[2]-centre[1])*(bottom?1:-1)*scale];}));continue;
+  }
+  const us=face.map(id=>angles.get(id)),regular=us.filter(Number.isFinite);
+  if(regular.length<2)return refuse();
+  if(Math.max(...regular)-Math.min(...regular)>.5)for(let i=0;i<us.length;i++)if(us[i]<.5)us[i]+=1;
+  const low=Math.min(...us.filter(Number.isFinite)),high=Math.max(...us.filter(Number.isFinite));
+  if(high-low>1/count+tolerance)return refuse();
+  uvCorners.push(us.map((u,i)=>[.5-((Number.isFinite(u)?u:(low+high)/2)-.5)*circumference*scale,.30+(owners[i].v-distance/2)*scale]));
+ }
+ if(uvCorners.some(face=>{let area=0;for(let i=0;i<face.length;i++){const a=face[i],b=face[(i+1)%face.length];area+=a[0]*b[1]-a[1]*b[0];}return !Number.isFinite(area)||Math.abs(area)<Number.EPSILON;}))return refuse();
  return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
 }
 

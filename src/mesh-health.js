@@ -4,7 +4,7 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.880';
-import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createBoxUV,createCylinderUV,createSphereUV} from './imported-uv-edit.js?v=0.36.18.895';
+import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createBoxUV,createCylinderUV,createSphereUV} from './imported-uv-edit.js?v=0.36.18.914';
 import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.895';
 
 const VERSION='0.36.18.880';
@@ -29,7 +29,7 @@ panel.innerHTML=`
   <details id="meshHealthUVDetails">
     <summary class="boxlab-tool-session-section">UVs</summary>
     <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
-    <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button><button id="meshHealthUVBox" type="button">Box UVs</button><button id="meshHealthUVCylinder" type="button">Cylinder UVs (Y)</button><button id="meshHealthUVSphere" type="button" title="Round spheres with Y-axis vertex poles; replaces native UVs">Sphere UVs (Y)</button></div><div class="boxlab-tool-session-subtitle">Planar / Box / upright Cylinder / round Sphere mapping for plain Base meshes · replaces native UVs</div>
+    <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button><button id="meshHealthUVBox" type="button">Box UVs</button><button id="meshHealthUVCylinder" type="button">Cylinder UVs (Y)</button><button id="meshHealthUVSphere" type="button" title="Round spheres with Y-axis vertex poles; replaces native UVs">Sphere UVs (Y)</button></div><div class="boxlab-tool-session-subtitle">Planar / Box / Cylinder: upright cylinders, cones, Revolves / round Sphere · Base meshes · replaces native UVs</div>
     <button id="meshHealthUVOpen" type="button" disabled>Open UV Editor</button>
     <div id="meshHealthUVStorage" hidden>
     <canvas id="meshHealthUVPreview" width="256" height="200" role="img" aria-label="UV islands in different colours, orange seams, grey square marks UV tile zero to one" style="width:256px;max-width:100%;height:auto;margin:6px 0" hidden></canvas>

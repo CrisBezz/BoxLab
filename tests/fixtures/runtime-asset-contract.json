@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.895",
+      "url": "./src/mesh-health.js?v=0.36.18.914",
       "target": "src/mesh-health.js",
-      "sha256": "b11538f134822e3a9af7f8ef610b21487e4790274b943d425608446eb73e0d89",
+      "sha256": "2ef095c1c29b78da118cc3b91c32d385347f9f45d854d68e6ef0cc65aba49f49",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.913",
+      "url": "./src/release-bootstrap.js?v=0.36.18.914",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.913",
+      "url": "./src/release-version.js?v=0.36.18.914",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2384,9 +2384,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./imported-uv-edit.js?v=0.36.18.895",
+      "url": "./imported-uv-edit.js?v=0.36.18.914",
       "target": "src/imported-uv-edit.js",
-      "sha256": "f66a48a4507166bd28d6016e8c4393098b029e2d9c537120c46161c0400924bb"
+      "sha256": "5f0b068953fca9cdc1ab129213cad2c67235910059138d59e42a1c3c7b7a75b8"
     },
     {
       "owner": "src/imported-uv-edit.js",
@@ -2756,9 +2756,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "./samples.js?v=898",
+      "url": "./samples.js?v=914",
       "target": "evaluations/uv-paint/samples.js",
-      "sha256": "507b682f8a47f206f1e10042ea01c5ef2c5b1a2e71d5756b496c5fdf4b1ac48f"
+      "sha256": "303f297f55ec014e93995aee2251e37e3cff66322000c11aaf228a1160d8d276"
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
@@ -2804,9 +2804,9 @@
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=913",
+      "url": "./lab.js?v=914",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "e48f626dab5e9e0b84b44976a2453d4e6fb9f0c6adfd07bb6083517e1a58eabe"
+      "sha256": "30478ee2e3e95bbd7996a368424f72925fc318bb28541a5b45a2a48295640843"
     },
     {
       "owner": "index.html",

@@ -11393,3 +11393,39 @@ runtime bytes retained. User912 first-placement PASS protected; repeated-image d
 exception remains pending913 retest. No actual user source file, Safari latency or
 M2 RAM acceptance inferred from Node/source-byte checks. Next repeat-add SAME session,
 verify first preserved, edit second/UndoRedo/SaveOpen; material work stays queued.
+
+
+## .914 — Cylinder UVs for cones and upright Revolves — 2026-10-18
+
+User requested Cylinder UVs for Revolve/cylinders/cones and completion up to the
+next manual gate before pausing overnight. Audit: applied Revolve has revolveProfile
+(not curveProfile), already eligible in Mesh Health; constant-radius/axis-side
+checks in the original Cylinder mapper were the refusal. Extend THAT mapper only:
+ordinary cylinders retain exact measured-edge strip/two-cap layout; fallback recovers
+regular concentric world-Y rings and their single profile chain from Base topology.
+Angular seam plus measured radius/height profile distance supports taper, pointed
+ends, shoulders and return walls. Pole U splits per face wedge; n-gon caps stay planar.
+No geometry, recipe, modelling/gesture/history/export kernel changes. Same native
+corner payload, commit, original UV edits, Save/Open and GLB/NOM writers. UI explains
+upright cylinder/cone/Revolve scope. Tilted/elliptical/twisted/branching/malformed
+and procedural/modifier/imported contexts still refuse atomically. Not arbitrary-axis
+projection, remeshing, auto-bake, zero-distortion or automatic packing. Closed profile
+loops are unsupported. Four new tests cover native cone3–64 sides/multiple bands,
+huge/tiny scale, original Revolve owner output with poles/taper/shoulders/return walls,
+no geometry/metadata mutation, one Undo/Redo/idempotence, UV edits/codec/actual native
+and GLB values, atomic refusal and retained original cylinder layout. Entire changed
+UV/parent/Lab graph and shell/recovery keys914; other module pins retained.
+
+Next DEVICE: Add+ Cylinder and Cone → Mesh Health → UVs → Cylinder UVs (Y), inspect
+UV Editor; apply upright Revolve and repeat; Undo/Redo and Save/Open, paint/export
+as desired. Also retest913 two images in SAME On surface session, first preserved,
+second independent. No new PASS inferred; first912 placement remains protected.
+Material-channel work stays queued behind these manual gates. User pausing overnight;
+continue from repository tomorrow, no further automatic build needed tonight.
+
+Local Node24.19.0 complete regression: **2578 PASS / 0 FAIL / 0 skipped**.
+Reviewed shell changes only Mesh Health and both recovery URLs; UV child and Lab
+parent chain914. Original913 painter/resource budget retained. An initial local
+cache-contract run caught an overbroad shell pin replacement during preparation;
+restored unrelated913 pins before FINAL full2578PASS run. No published bad graph.
+Publication evidence to follow; manual device gates remain pending.
