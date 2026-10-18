@@ -7726,3 +7726,22 @@ UndoRedo/SaveOpen; material work follows acceptance, not an inferred blanket912P
 - [x]913 image24/48 unique/expanded quota preflight and atomic failure; raster8/16 retained.
 - [ ]913 DEVICE first+second On surface add/Apply in SAME paint session; originals retained.
 - [ ]913 DEVICE optionally third; edit second independently, UndoRedo/SaveOpen.
+
+
+## .913 publication verified — 2026-10-18
+
+Runtimeb4849c600938243311cdcbce7828b8a64869a072; tested tree
+8a859acf4b1d30b97fa3348dd9aa0efcddaa9514. All30 uploaded blob hashes/created tree
+match local tested source; fetched origin/main identical. Main913 shell/manifest/
+painter pin verified. Local Node24.19.0 full2574PASS/0FAIL/0skip; Node22 topology
+CI39105181178/job117609354728 SUCCESS. Pages39105180906 /
+build117609356689/deploy117609442669 SUCCESS. All26 postdeployment live shell/
+version/resource/pool/new budget/UI/parent/Lab/recovery plus unchanged surface/
+projector/source files byte-match source. Initial reads during deployment mixed912
+and new files/new budget404; final fresh complete graph26/26 matches913. Protected
+Multi1.0/frozen/modelling/brush/Insert algorithms retained; native writer only loader
+pin changes. All four continuity files current. This proof changes docs only; tested
+runtime bytes retained. User912 first-placement PASS protected; repeated-image device
+exception remains pending913 retest. No actual user source file, Safari latency or
+M2 RAM acceptance inferred from Node/source-byte checks. Next repeat-add SAME session,
+verify first preserved, edit second/UndoRedo/SaveOpen; material work stays queued.
