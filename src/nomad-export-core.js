@@ -102,6 +102,16 @@ export function nativeMaterialMaps(payload){
  return {...source,maps,normalScale,emissiveFactor};
 }
 function nativeTexture(index,name){return {index,name,magFilter:'auto',minFilter:'auto',offset:[0,0],projection:'auto',rotation:0,scale:[1,1],triplanar_hardness:[.8999999761581421,.8999999761581421,.8999999761581421],triplanar_world:true,wrapS:'repeat',wrapT:'repeat'};}
+// Native texture names are export-local asset labels. Different embedded images
+// must not advertise the same name; equal images may keep their existing aliases.
+function createNativeTextureNames(){
+ const used=new Map(),key=name=>name.normalize('NFC').toLowerCase();
+ return (preferred,index)=>{
+  const match=String(preferred).match(/^(.*?)(\.[^./\\]+)?$/s),stem=match[1],extension=match[2]||'';let name=String(preferred),suffix=2;
+  while(used.has(key(name))&&used.get(key(name))!==index)name=stem+' '+(suffix++)+extension;
+  used.set(key(name),index);return name;
+ };
+}
 // Export-local identity only. Hashes select candidates; full byte equality decides
 // sharing, including typed-array offsets. Never replace source/project resources.
 export function createNomadImageIdentity(){
@@ -121,7 +131,7 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
  const base=readNomadProject(templateBytes),donor=base.json.meshes?.[0];if(!donor?.vertices)throw Error('Nomad donor mesh is missing');
  const project=clone(base.json),parts=[],proto=findNode(base.json.scene)||{};project.meshes=[];
  const group={name,group:0,selected:true,selected_main:true,children:[],visible:true,node_collapse:false,lock:false};let offset=0,vertices=0,faces=0,uvObjects=0,colourTextureObjects=0,normalTextureObjects=0,emissiveTextureObjects=0,roughnessTextureObjects=0,metalnessTextureObjects=0,displacementTextureObjects=0,imageBytes=0;
- const images=[],imageIndices=new Map(),imageIdentity=createNomadImageIdentity();
+ const images=[],imageIndices=new Map(),imageIdentity=createNomadImageIdentity(),textureName=createNativeTextureNames();
  for(const [index,object] of (objects||[]).entries()){
   if(object?.kind==='reference'||object?.visible===false)continue;
   const editable=resolveExportMesh(paintExportGeometryObject(object),subd);if(!editable?.vertices?.length||!editable?.faces?.length)continue;
@@ -154,7 +164,7 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
      imageIndex=images.length;imageIndices.set(image,imageIndex);
      images.push({length:choice.data.length,offset,type:choice.mime});parts.push(choice.data);offset+=choice.data.length;
     }
-    material.textures[slot]=nativeTexture(imageIndex,String(map.name||payload.images?.[choice.imageIndex]?.definition?.name||(slot+' '+(imageIndex+1)+(choice.mime==='image/png'?'.png':'.jpg'))));
+    material.textures[slot]=nativeTexture(imageIndex,textureName(String(map.name||payload.images?.[choice.imageIndex]?.definition?.name||(slot+' '+(imageIndex+1)+(choice.mime==='image/png'?'.png':'.jpg'))),imageIndex));
    }
    const aligned=Math.ceil(offset/4)*4;if(aligned>offset){parts.push(new Uint8Array(aligned-offset));offset=aligned;}
    material.factorColor=[...source.factor.slice(0,3)];material.color=source.maps.color?[1,1,1]:[...source.factor.slice(0,3)];material.opacity=1;material.factorOpacity=1;material.material_type='opaque';

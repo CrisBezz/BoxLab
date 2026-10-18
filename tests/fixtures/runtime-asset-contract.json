@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.909",
+      "url": "./src/export-as-panel.js?v=0.36.18.910",
       "target": "src/export-as-panel.js",
-      "sha256": "487f88b8b602eb1b2bd29aed5238ef7596ac716d64a8ee8b6e09b0f752cfa92d",
+      "sha256": "785ee61ae49c5d9b53dd28b8e3348cb72e8d178266c6f5fc594a43f966339455",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.909",
+      "url": "./src/release-bootstrap.js?v=0.36.18.910",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.909",
+      "url": "./src/release-version.js?v=0.36.18.910",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.909",
+      "url": "./nomad-packed-maps.js?v=0.36.18.910",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "5b1269ae297c6dd9d60fbb1342e2a31a9fadbd611de2894e5ef3d29f3e32abaa"
+      "sha256": "659152d5a708cc51c48c4e76651881423fba5515c6305ffac855a4c3b544c951"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -2450,9 +2450,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.909",
+      "url": "./nomad-export-core.js?v=0.36.18.910",
       "target": "src/nomad-export-core.js",
-      "sha256": "839bb2c04580fe1c3de3efc6291695a7687ad7bd9644720f3e109d24d55a9562"
+      "sha256": "6d261197ecccf79a9f309dcfd810cf5d1a446a1bca6fc78c300ccf01666db06b"
     },
     {
       "owner": "src/nomad-export-core.js",

@@ -1,14 +1,30 @@
-# BoxLab AI Handoff — .909 / Duplicate paint release fix
+# BoxLab AI Handoff — .910 / Native paint texture names
 
 ## Current state — 18 October 2026
 
-Main release0.36.18.909, based on0313796f (.908 proof). Latest devicePASS906. User908
-FAIL duplicate paint disappears on release: reproduced whole-resource8MiB quota,
-fixed with exact shared-byte accounting + optional projectv5 (8MiB unique/16MiB
-expanded). Same owners/history, oldv1–4 under-limit encodings retained. Refused
-strokes restore bytes and keep Paint open. Read docs/paint-duplicate-909.md.
-Device duplicate retest pending; image projection UI deferred until this passes.
+Main release0.36.18.910, based onc1b350e0 (.909 proof). User909PASS protects viewport
+duplicate release/Done/SaveOpen/Undo. NOMAD export exception: copy displays original
+paint. PNG bytes/indices already distinct;910 removes colliding native texture names.
+Consumer name caching is inference; DEVICE Nomad retest required. Read
+docs/paint-nomad-duplicate-910.md. Painting/pool909 unchanged; projection UI follows gate.
 
+
+## .910 — native paint texture-name collisions; .909 viewport PASS — 2026-10-18
+
+User909PASS protects duplicate paint release/Done/SaveOpen/Undo; NOMAD exception:
+copy adopts original paint. Screenshots show909/green copy strokes in BoxLab, absent
+in Nomad. Auditc1b350e0: prepared PNGs/material+image indices already distinct, but all
+paint textures namedBoxLab paint.png. Repair authoritative native writer name registry:
+NFC/case-folded collision names get numeric suffix for DIFFERENT image indices; equal
+images keep sharing, unique names and existing aliases retained. Export-local only;
+source bytes/names,890 exact image dedup, factors/UV/offsets/24MiB budget unchanged.
+Four actual NOM/File/SaveOpen/async/dedup/mixed-name regression tests PASS. Consumer
+name caching is an inference; actual Nomad device retest remains required. Read
+docs/paint-nomad-duplicate-910.md. Native/File/Lab loader graph910; viewport/resource/
+history/pool909 and protected Multi/modelling/frozen unchanged.
+Next DEVICE re-export original+green copy from910; confirm distinct paint in Nomad,
+then second export after further copy painting. If persistent inspect actual NOM bytes;
+no invented native fields. Then resume original image projection UI plan.
 
 ## .909 — duplicate paint release fix; .908 user FAIL — 2026-10-18
 
@@ -315,13 +331,13 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-DEVICE:909 duplicate layered paint → lift Pencil → Done/reselect → Save/Open/continue
-and UndoRedo.908 userFAIL tracked; no909 acceptance inferred. Then resume908's REAL
-image picker/overlay/Project from View through current painter/input/original UV
-geometry, front angle + scene/self-occlusion before texels. Capture recipe+raster
-atomically via908 API, retain source/frame; original Insert437 tap cycle. No new
-paint history/kernel, implicit bake, nativeUV fields or broad UI redesign. Material
-direction in docs/paint-material-direction.md; UI polish after functional flows.
+DEVICE:910 export original+green-painted copy to fresh NOM → open Nomad, verify copy
+paint distinct; further paint/export repeats.909 viewport PASS protected; external
+exception remains pending. If persistent inspect actual NOM bytes/material refs, do
+not guess native fields or undo909 painting. Then resume picker/overlay/Project from
+View via current painter/input/original UV geometry; facing/angle/scene+self occlusion
+before texels, atomic908 recipe+raster API, retained source/frame, Insert437 cycle.
+No duplicate history/kernel, implicit bake, nativeUV paint fields or broad UI cleanup.
 
 ## Protected interaction and modelling baseline
 
@@ -644,3 +660,6 @@ bytes retained. All four continuity documents updated; proof is documentation-on
 no tested runtime changes. .908 user duplicate FAIL reproduced and repaired in source;
 .909 device retest pending, latest accepted device baseline906. Next duplicate stroke
 release/Done/reselect/SaveOpen/Undo test, then resume image projection UI after pass.
+
+.910 local validation: Node24.19.0 full **2556 PASS / 0 FAIL / 0 skipped**; four new
+native paint/export/name regressions PASS. Actual Nomad retest remains pending.

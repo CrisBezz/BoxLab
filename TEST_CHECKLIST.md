@@ -7564,8 +7564,36 @@ Next device duplicate release/Done/SaveOpen/Undo, then resume Project from View 
 - [x]Shared byte pool refs/versions/canonical data/duplicates/usage refuse atomically.
 - [x]8MiB unique and16MiB expanded preflight before decode; staged quota rollback.
 - [x]Genuine failed stroke restores data/history/controls and keeps Paint open.
-- [ ]909 DEVICE duplicate3layer paint → lift Pencil → Done/reselect; source unchanged.
-- [ ]909 DEVICE Save/Open/continue/UndoRedo on duplicate.908 FAIL not yet device-cleared.
+- [x]909 DEVICE duplicate3layer paint → lift Pencil → Done/reselect; source unchanged. USER909PASS.
+- [x]909 DEVICE Save/Open/continue/UndoRedo on duplicate. USER909PASS clears908 release failure; native export exception tracked910.
 
 .909 local validation: Node24.19.0 full **2552 PASS / 0 FAIL / 0 skipped**; five new
 actual duplicate/pool/recovery regressions PASS. Device release retest pending.
+
+
+## .910 — native paint texture-name collisions; .909 viewport PASS — 2026-10-18
+
+User909PASS protects duplicate paint release/Done/SaveOpen/Undo; NOMAD exception:
+copy adopts original paint. Screenshots show909/green copy strokes in BoxLab, absent
+in Nomad. Auditc1b350e0: prepared PNGs/material+image indices already distinct, but all
+paint textures namedBoxLab paint.png. Repair authoritative native writer name registry:
+NFC/case-folded collision names get numeric suffix for DIFFERENT image indices; equal
+images keep sharing, unique names and existing aliases retained. Export-local only;
+source bytes/names,890 exact image dedup, factors/UV/offsets/24MiB budget unchanged.
+Four actual NOM/File/SaveOpen/async/dedup/mixed-name regression tests PASS. Consumer
+name caching is an inference; actual Nomad device retest remains required. Read
+docs/paint-nomad-duplicate-910.md. Native/File/Lab loader graph910; viewport/resource/
+history/pool909 and protected Multi/modelling/frozen unchanged.
+Next DEVICE re-export original+green copy from910; confirm distinct paint in Nomad,
+then second export after further copy painting. If persistent inspect actual NOM bytes;
+no invented native fields. Then resume original image projection UI plan.
+
+- [x]User909 PASS: duplicate release/Done/SaveOpen/Undo protected; NOMAD exception.
+- [x]910 exact per-object PNG/material/image links and distinct native texture names.
+- [x]Actual File NOMAD after project Open + async snapshot, identical-image dedup.
+- [x]Mixed/case-folded/pre-suffixed names distinct, deterministic, source untouched.
+- [ ]910 DEVICE fresh NOM: green copy strokes remain independent in Nomad.
+- [ ]910 DEVICE further paint + second export retains each object's own colour.
+
+.910 local validation: Node24.19.0 full **2556 PASS / 0 FAIL / 0 skipped**; four new
+native paint/export/name regressions PASS. Actual Nomad retest remains pending.
