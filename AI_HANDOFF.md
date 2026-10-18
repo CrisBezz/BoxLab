@@ -554,3 +554,17 @@ image sources/Project from View/Insert-cycle plan, as current product direction.
 
 .907 local validation: Node24.19.0 full **2539 PASS / 0 FAIL / 0 skipped**; six new
 focused image source/placement checks PASS. No new image UI or device gate.
+
+## .907 publication verified — 2026-10-18
+
+Runtime3e659dd1d09a42df0b9feabeb56ee22c6aa809cb; tested tree
+028e6e81ccd7f6d8e056509b2efcf2bf53c5760d matches all uploaded blobs/created tree.
+Remote main manifest/shell blob SHAs verified. Local2539PASS/0FAIL/0skip;
+GitHub regression39094898396/job117579191429 SUCCESS;
+Pages39094898116 build117579192795/deploy117579269550 SUCCESS.
+All11 postdeployment live shell/version/source/placement/shared Insert cycle/main
+painter/core/layer-resource/stack/recovery files byte-match tested repository.
+All four continuity files updated. This proof is documentation-only; runtime bytes
+retained. User906PASS protected. No image button or new device test in this isolated
+foundation release. Next explicit image resource/project-pool integration, then
+visible-front Project from View; never use coordinate projection alone for visibility.
