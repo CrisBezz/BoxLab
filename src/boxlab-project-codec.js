@@ -2,7 +2,7 @@
 // Explicitly refuse resources not yet representable, rather than losing them.
 import {encodeProjectGLB,decodeProjectGLB,createProjectGLBImagePool,decodeProjectGLBImagePool} from './project-glb-resources.js?v=0.36.18.899';
 import {evaluateArray} from './live-array-core.js?v=0.36.18.861';
-import {createProjectPaintPool,decodeProjectPaintPool,paintOwner} from './project-paint-resources.js?v=0.36.18.899';
+import {createProjectPaintPool,decodeProjectPaintPool,paintOwner} from './project-paint-resources.js?v=0.36.18.904';
 const plain=value=>value==null?null:JSON.parse(JSON.stringify(value));
 export function encodeBoxlabScene(snapshot,{poolImages=true}={}){
  if(!snapshot||!Array.isArray(snapshot.objects)||!snapshot.objects.length)throw Error('Scene has no objects');
@@ -23,10 +23,10 @@ export function encodeBoxlabScene(snapshot,{poolImages=true}={}){
   if(creases.some(([k,v])=>typeof k!=='string'||!Number.isFinite(v)))throw Error('Invalid crease data');
   return {...(o.colourPaint?{colourPaintResource:paint.add(o.colourPaint)}:{}),...(o.glbPassthrough?{glbResource:encodeProjectGLB(o.glbPassthrough,pool)}:{}),id:o.id,name:o.name,visible:o.visible!==false,locked:!!o.locked,kind:o.kind||'editable',settings:plain(o.settings),origin:plain(o.origin),groupId:o.groupId??null,sourceId:o.sourceId??null,instanceMatrix:plain(o.instanceMatrix),booleanRecipe:plain(o.booleanRecipe),curveProfile:plain(o.curveProfile),...(o.arrayRecipe?{arrayRecipe:plain(o.arrayRecipe)}:{}),mesh:{vertices,faces,creases,faceGroups:[...(m.faceGroups||[])],looseEdges:[...(m.looseEdges||[])],looseVertices:[...(m.looseVertices||[])]}};
  });
- return {...(pool?.images.length?{glbImagePool:pool.images}:{}),...(paint.resources.length?{colourPaintPool:paint.resources}:{}),format:'boxlab',version:paint.resources.length?2:1,activeId:snapshot.activeId,selected:[...(snapshot.selected||[])],multi:!!snapshot.multi,groups:plain(snapshot.groups),objects};
+ return {...(pool?.images.length?{glbImagePool:pool.images}:{}),...(paint.resources.length?{colourPaintPool:paint.resources}:{}),format:'boxlab',version:paint.layered?3:paint.resources.length?2:1,activeId:snapshot.activeId,selected:[...(snapshot.selected||[])],multi:!!snapshot.multi,groups:plain(snapshot.groups),objects};
 }
 export function decodeBoxlabScene(data,makeMesh){
- if(data?.format!=='boxlab'||![1,2].includes(data.version)||!Array.isArray(data.objects)||!data.objects.length)throw Error('Unsupported BOXLAB project');
+ if(data?.format!=='boxlab'||![1,2,3].includes(data.version)||!Array.isArray(data.objects)||!data.objects.length)throw Error('Unsupported BOXLAB project');
  if(typeof makeMesh!=='function')throw Error('Mesh factory required');
  const pool=data.glbImagePool==null?null:decodeProjectGLBImagePool(data.glbImagePool);
  const paint=decodeProjectPaintPool(data);

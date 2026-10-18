@@ -1,12 +1,12 @@
 // Export-local adaptation only. Never add material/provenance fields to native UVs.
-import {captureColourResource} from './paint-resource.js?v=898';
-import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.900';
+import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.904';
+import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.904';
 import {encodeNomadColourPNG} from './nomad-scalar-png.js?v=0.36.18.901';
 const prepared=new WeakMap();
 export function capturePaintExportObjects(objects){
  const copies=new WeakMap();return (objects||[]).map(o=>{
   if(!o)return o;let colourPaint=o.colourPaint;
-  if(colourPaint){let copy=copies.get(colourPaint);if(!copy){copy=captureColourResource(colourPaint);const fields=['version','channel','width','height','colorSpace','rowOrder','binding','pixels'];if(Object.keys(colourPaint).some(k=>!fields.includes(k))||fields.slice(0,-1).some(k=>colourPaint[k]!==copy[k]))throw Error('Unsupported paint export descriptor');copies.set(colourPaint,copy);}colourPaint=copy;}
+  if(colourPaint){let copy=copies.get(colourPaint);if(!copy){copy=captureFlattenedPaint(colourPaint);copies.set(colourPaint,copy);}colourPaint=copy;}
   return {...o,mesh:o.mesh?.clone?o.mesh.clone():structuredClone(o.mesh),settings:structuredClone(o.settings||{}),...(colourPaint?{colourPaint,glbPassthrough:structuredClone(o.glbPassthrough)}:{})};
  });
 }

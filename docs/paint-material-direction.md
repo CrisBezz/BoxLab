@@ -49,7 +49,9 @@ reimplemented by this direction. Audit current material/resource/export owners f
 1.902 opaque base + transparent overlay compositor foundation delivered.
 2.903 colour blend functions + per-overlay masks, v1→v2 owned upgrade delivered,
   isolated API only. No mask drawing, image source schema or material slots UI yet.
-3. Separate explicit layered scene resource / project pool via existing codec, atomic
+3.904 layered colour resourcev2 in existing colourPaint, explicit projectv3 and original
+  history/duplicate/atomic Open integration delivered. See paint-layer-resources-904.md.
+  Preserve explicit project pool via existing codec, atomic
   Open, original scene Undo/Redo and ordinary Duplicate. Retain v1/v2 plain/opaque
   project compatibility and binding validation; never silently flatten editable saves.
 4. Transparent brush + layer/mask controls in main viewport through current painter.

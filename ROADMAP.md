@@ -3011,3 +3011,32 @@ Full suite/publication proof follows;901 userPASS remains latest accepted device
 
 .903 local validation: Node24.19.0 full **2512 PASS / 0 FAIL / 0 skipped**;
 seven new focused checks + existing902 tests PASS. No rendered/device gate inferred.
+
+
+## .904 — editable layered project/history resources — 2026-10-18
+
+Audit5efdc7d9: existing colourPaint history/ordinary Duplicate already share read-only
+resources. New paint-layer-resource owner stores explicit layered resourcev2 in SAME
+colourPaint field: validated opaque preview + owned903 stack with exact masks/modes.
+Original colourPaintPool entryv2 and sceneprojectv3 transport all buffers through
+original canonical bytes, whole-resource dedup;8MiB aggregate BEFORE decode includes
+flat/base/overlays/masks. Plainv1/opaquev2 unchanged; strict field/version/ref/cache/
+budget/unsupported owner guards. Original nativeUVv3 remains UV-only.
+Same history/checkpoint/single+Multi Duplicate/atomic Open owners unchanged. Original
+surface display reads validated flat colour; export adapter validates/captures owned
+flatv1 BEFORE await and uses existing NOM/GLB writers. Editable layers persist only
+in.boxlab. Existing opaque painter refuses layered resource until controls land,
+preventing destructive flattening. No new layer UI/image sources/material authoring.
+Seven focused904 checks PASS: exact resource/project/pool, real history/duplicates,
+File Save/Open/corrupt input/render rollback, actual NOM/GLB+async snapshot and
+committed display/painter guard. Node transport adapters are not rendered/iPad proof.
+Read docs/paint-layer-resources-904.md. Changed codec/export/binding/paint/render+
+parent loader graph904; main modelling/Multi1.0/frozen/brush algorithms unchanged.
+No extra902/903/904 devicePASS inferred;901 userPASS remains protected.
+Next REAL layer UI/transparent brush through original viewport/history and this
+resource; do not add a parallel paintLayers property or history. Full suite and
+publication proof follow. Manual904: existing paint/save/reopen/Undo/Duplicate/export
+regression only; new layered fixtures automated, not user tasks.
+
+.904 local validation: Node24.19.0 full **2519 PASS / 0 FAIL / 0 skipped**;
+seven new resource/history/codec/export checks PASS. No device acceptance inferred.

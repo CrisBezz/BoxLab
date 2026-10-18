@@ -1,4 +1,4 @@
-import {preparedPaintImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.901';
+import {preparedPaintImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.904';
 import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.892';
 import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.892';

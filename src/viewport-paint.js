@@ -1,4 +1,4 @@
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.900';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.904';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=896';
 const canvas=document.querySelector('#viewport'),menu=document.querySelector('#fileMenu .top-file-content'),status=document.querySelector('#selectionStatus');
 const manager=()=>globalThis.__boxlabObjectManager,bridge=()=>globalThis.__boxlabBridgeState,tools=()=>globalThis.__boxlabToolSession;

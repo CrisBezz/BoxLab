@@ -1,14 +1,38 @@
-# BoxLab AI Handoff — .903 / Masks and blend foundation
+# BoxLab AI Handoff — .904 / Editable layered project resources
 
 ## Current state — 18 October 2026
 
-CrisBezz/BoxLab main release0.36.18.903, based on787cfcb9 (.902 runtime0d37f014).
-Latest user device PASS901 protects export plus900 paint/history/project/duplicates.
-No902 userPASS inferred; foundation had no new hands-on gate.895 remains separate.
-903 adds masks/26 colour blends to isolated compositor and records agreed material/
-image direction. Runtimea0a910de; Node24/Node22 full2512PASS/0FAIL/0skip, Pages/live
-verified below. No main layer UI/persistence yet. Read docs/paint-layers-903.md and
- docs/paint-material-direction.md. Publishing authorized; proof follows below.
+CrisBezz/BoxLab main release0.36.18.904, based on5efdc7d9 (.903 runtimea0a910de).
+Latest user devicePASS901 protects exports and900 paint/history/project/duplicates.
+904 connects layered colour resourcev2 to SAME colourPaint pool/scene history/duplicates,
+projectv3 and existing flattened display/export. No layer UI yet; old painter refuses
+layered resources until UI build. Read docs/paint-layer-resources-904.md and
+ docs/paint-material-direction.md. Publication/full-suite evidence follows.
+
+## .904 — editable layered project/history resources — 2026-10-18
+
+Audit5efdc7d9: existing colourPaint history/ordinary Duplicate already share read-only
+resources. New paint-layer-resource owner stores explicit layered resourcev2 in SAME
+colourPaint field: validated opaque preview + owned903 stack with exact masks/modes.
+Original colourPaintPool entryv2 and sceneprojectv3 transport all buffers through
+original canonical bytes, whole-resource dedup;8MiB aggregate BEFORE decode includes
+flat/base/overlays/masks. Plainv1/opaquev2 unchanged; strict field/version/ref/cache/
+budget/unsupported owner guards. Original nativeUVv3 remains UV-only.
+Same history/checkpoint/single+Multi Duplicate/atomic Open owners unchanged. Original
+surface display reads validated flat colour; export adapter validates/captures owned
+flatv1 BEFORE await and uses existing NOM/GLB writers. Editable layers persist only
+in.boxlab. Existing opaque painter refuses layered resource until controls land,
+preventing destructive flattening. No new layer UI/image sources/material authoring.
+Seven focused904 checks PASS: exact resource/project/pool, real history/duplicates,
+File Save/Open/corrupt input/render rollback, actual NOM/GLB+async snapshot and
+committed display/painter guard. Node transport adapters are not rendered/iPad proof.
+Read docs/paint-layer-resources-904.md. Changed codec/export/binding/paint/render+
+parent loader graph904; main modelling/Multi1.0/frozen/brush algorithms unchanged.
+No extra902/903/904 devicePASS inferred;901 userPASS remains protected.
+Next REAL layer UI/transparent brush through original viewport/history and this
+resource; do not add a parallel paintLayers property or history. Full suite and
+publication proof follow. Manual904: existing paint/save/reopen/Undo/Duplicate/export
+regression only; new layered fixtures automated, not user tasks.
 
 ## .903 — masks/blend foundation and material direction — 2026-10-18
 
@@ -189,14 +213,14 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-903 isolated v2 colour stack supports masks/blends; no new hands-on test.
-Follow docs/paint-material-direction.md: explicit layered scene resource/project pool,
-original history/atomic Open/duplicate compatibility and strict binding first; then
-transparent brush + layer/mask UI, followed by image sources/Project from View and
-surface placement using shared Insert tap-cycle owner. Material slots staged; keep
-Displacement Apply disabled until real vertex displacement is implemented.
-Never silently flatten an editable-layer project or treat RGB modes as normal-vector
-blending. Keep existing imported resource/export owners and nativeUVv3 strict.
+904 layered resource lives in EXISTING object.colourPaint (version2 with layers),
+project scenev3/pool entryv2. No separate paintLayers object field or second history.
+Next REAL main viewport layer controls/transparent raster, original history checkpoints,
+903 compositor and904 captureLayeredColourResource. Replace resource atomically; never
+paint into flat preview and drop layers. Existing opaque strokes/Undo/Pencil navigation
+remain protected; remove current layered-painter refusal only when editable path exists.
+Then image sources/Project from View and shared Insert Move→Rotate→Scale tap cycle;
+material channels staged, displacement placeholder per docs/paint-material-direction.md.
 
 ## Protected interaction and modelling baseline
 
@@ -406,3 +430,6 @@ final full checked graph903 matches. All four continuity documents updated; full
 material/image direction is in docs/paint-material-direction.md. This verification is
 documentation-only, no tested runtime byte changes and no new rendered/iPad layer
 acceptance inferred. Next explicit layered project/scene resource/history integration.
+
+.904 local validation: Node24.19.0 full **2519 PASS / 0 FAIL / 0 skipped**;
+seven new resource/history/codec/export checks PASS. No device acceptance inferred.
