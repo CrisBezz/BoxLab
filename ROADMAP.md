@@ -2960,3 +2960,27 @@ modelling/raster/input bytes retained. User900PASS protected;901 external Nomad 
 GLB colour/orientation/placement device gate pending, no rendered proof inferred.
 Documentation proof changes no tested runtime. Next device export feedback, then layer/
 compositor design through original owners; .boxlab remains editable paint project.
+
+
+## .902 — layer/compositor foundation; .901 user PASS — 2026-10-18
+
+User901PASS protects painted NOMAD/GLB placement/orientation/colour, independent
+painted duplicates and continued painting/Undo/.boxlab. Audit main0bfb6819: raster896
+writes opaque bytes, resource898/project899/export901 have no editable layer stack.
+New isolated paint-layer-stack API: existing opaque base + up to3 straight-alpha
+512² overlays, bounded IDs/names, visible/opacity, owned capture/append/replace,
+byte-space source-over and flattened resource via ORIGINAL captureColourResource.
+No new history/input/kernel or app wiring. Strict schemas/budgets; typed buffers
+read-only by convention. Current copy-all API has no sparse/COW/performance claim.
+Five focused checks PASS: exact blending/order/visibility/opacity/rows, input/edit/
+output isolation, refusal/budgets/max stack, actual original project + native PNG
+flattened handoff; editable stack still refuses as project colourPaint.
+Read docs/paint-layer-stack-902.md. No layer UI/transparent brush/editable layer save
+claim. No new hands-on test; existing paint/export unchanged. Shell/recovery902;
+main paint900/export901/resource898/project899/lab901/protected/frozen bytes retained.
+Next separate layered scene resource/project codec + atomic Open/history/duplicate
+integration, then transparent raster/UI through current viewport owner. Publication
+and full-suite evidence follow; no902 device PASS inferred.
+
+.902 local validation: Node24.19.0 full suite **2505 PASS / 0 FAIL / 0 skipped**;
+five new focused compositor checks PASS. No new device/rendered layer proof.

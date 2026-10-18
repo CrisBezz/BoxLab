@@ -1,12 +1,32 @@
-# BoxLab AI Handoff — .901 / Painted Nomad and GLB export
+# BoxLab AI Handoff — .902 / Layer compositor foundation
 
-## Current state — 17 October 2026
+## Current state — 18 October 2026
 
-CrisBezz/BoxLab main release0.36.18.901, based on50bcdb2a (.900 runtimeeb26b991).
-User .900 PASS protects main viewport paint/Pencil/brushes/finger navigation/Done/global
-history/.boxlab/Duplicate COW, alongside .896–899. .895 density remains separate.
-Full Node24 2500PASS/0FAIL/0skip; six focused paint export checks PASS. Runtime32cca003; Node22 CI/Pages/live verified below.
-Publishing authorized. Read docs/paint-export-901.md and docs/viewport-paint-900.md.
+CrisBezz/BoxLab main release0.36.18.902, based on0bfb6819 (.901 runtime32cca003).
+User .901 PASS protects painted Nomad/GLB handoff plus .900 viewport paint/Pencil/
+navigation/history/project/duplicates. .895 density remains separate.
+.902 adds an isolated compositor API only; no new runtime layer UI or persistence.
+Read docs/paint-layer-stack-902.md. Publishing authorized; proof follows below.
+
+## .902 — layer/compositor foundation; .901 user PASS — 2026-10-18
+
+User901PASS protects painted NOMAD/GLB placement/orientation/colour, independent
+painted duplicates and continued painting/Undo/.boxlab. Audit main0bfb6819: raster896
+writes opaque bytes, resource898/project899/export901 have no editable layer stack.
+New isolated paint-layer-stack API: existing opaque base + up to3 straight-alpha
+512² overlays, bounded IDs/names, visible/opacity, owned capture/append/replace,
+byte-space source-over and flattened resource via ORIGINAL captureColourResource.
+No new history/input/kernel or app wiring. Strict schemas/budgets; typed buffers
+read-only by convention. Current copy-all API has no sparse/COW/performance claim.
+Five focused checks PASS: exact blending/order/visibility/opacity/rows, input/edit/
+output isolation, refusal/budgets/max stack, actual original project + native PNG
+flattened handoff; editable stack still refuses as project colourPaint.
+Read docs/paint-layer-stack-902.md. No layer UI/transparent brush/editable layer save
+claim. No new hands-on test; existing paint/export unchanged. Shell/recovery902;
+main paint900/export901/resource898/project899/lab901/protected/frozen bytes retained.
+Next separate layered scene resource/project codec + atomic Open/history/duplicate
+integration, then transparent raster/UI through current viewport owner. Publication
+and full-suite evidence follow; no902 device PASS inferred.
 
 ## .901 — flattened base-colour handoff
 
@@ -41,9 +61,8 @@ painted winding, shared images, async capture and refusals. Independent PNG read
 ImageBitmap transport adapter is NOT rendered/browser/Nomad proof.900 high-level GLB
 refusal assertion superseded by901 exact-export tests; raw resolver/OBJ still refuse.
 
-Next: DEVICE export feedback (asymmetric paint via NOMAD and GLB+Base; compare colours/
-orientation/placement; duplicate paint separation); then layers/compositor resource
-plan using original paint/history owners and keeping flattened export compatible.
+User901PASS now protects the export device checks. Continue layered resource/codec
+integration after the902 isolated compositor; keep existing flattened export compatible.
 
 Read AI_WORKFLOW.md and this handoff completely; checklist/history/roadmap and current
 repo authoritative. Historical pending-pass proof entries below reflect their time,
@@ -145,10 +164,11 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-900 user PASS protected.901 device gate: export asymmetric painted native object
-through File NOMAD and GLB+Base; compare placement/orientation/colours in Nomad and
-independent duplicate colours. Keep .boxlab for continuing paint edits. Then layer/
-compositor design through existing resource/history owners, no duplicate editor kernel.
+901 user PASS protected;902 compositor is isolated and has no new hands-on test.
+Next: explicit separate layer scene resource/project pool through original codec,
+atomic Open, global history and duplicate owners; preserve old opaque projects.
+Then transparent stroke + UI through original viewport. Do not assign stack to
+colourPaint or silently flatten a project intended to retain editable layers.
 
 ## Protected interaction and modelling baseline
 
@@ -324,3 +344,6 @@ modelling/raster/input bytes retained. User900PASS protected;901 external Nomad 
 GLB colour/orientation/placement device gate pending, no rendered proof inferred.
 Documentation proof changes no tested runtime. Next device export feedback, then layer/
 compositor design through original owners; .boxlab remains editable paint project.
+
+.902 local validation: Node24.19.0 full suite **2505 PASS / 0 FAIL / 0 skipped**;
+five new focused compositor checks PASS. No new device/rendered layer proof.

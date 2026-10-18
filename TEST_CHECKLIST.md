@@ -7286,9 +7286,9 @@ paint export through original GLB/NOM owners; painted export refusal remains mea
 - [x] Actual native image/material/header/UV/polygon bytes and dedup; actual GLB exporter/loader/PNG/UV/white factors/painted source winding.
 - [x] Geometry/UV/pixel capture before await; stale/Base/unsupported refusals; raw synchronous and OBJ safeguard retained.
 - [x] Actual File NOMAD and GLB actions download paint, report colour count and restore buttons; six focused checks PASS; full Node24 2500PASS/0FAIL/0skip.
-- [ ] Paint asymmetric colours/marks, Done → File NOMAD → open in Nomad: compare placement/orientation/colour.
-- [ ] Repeat GLB+Base; painted duplicate retains its own colour/UVs alongside original.
-- [ ] Continue BoxLab paint/Undo and .boxlab Save/Open after exports; original resource remains editable.
+- [x] (.901 user PASS) Paint asymmetric colours/marks, Done → File NOMAD → open in Nomad: compare placement/orientation/colour.
+- [x] (.901 user PASS) Repeat GLB+Base; painted duplicate retains its own colour/UVs alongside original.
+- [x] (.901 user PASS) Continue BoxLab paint/Undo and .boxlab Save/Open after exports; original resource remains editable.
 
 Flattened colour only in NOM/GLB. .boxlab retains editable paint resource; no layer/
 brush-history/PBR expansion/seam-safe/NOM import claim. .900 device PASS protected.
@@ -7306,3 +7306,34 @@ modelling/raster/input bytes retained. User900PASS protected;901 external Nomad 
 GLB colour/orientation/placement device gate pending, no rendered proof inferred.
 Documentation proof changes no tested runtime. Next device export feedback, then layer/
 compositor design through original owners; .boxlab remains editable paint project.
+
+
+## .902 — layer/compositor foundation; .901 user PASS — 2026-10-18
+
+User901PASS protects painted NOMAD/GLB placement/orientation/colour, independent
+painted duplicates and continued painting/Undo/.boxlab. Audit main0bfb6819: raster896
+writes opaque bytes, resource898/project899/export901 have no editable layer stack.
+New isolated paint-layer-stack API: existing opaque base + up to3 straight-alpha
+512² overlays, bounded IDs/names, visible/opacity, owned capture/append/replace,
+byte-space source-over and flattened resource via ORIGINAL captureColourResource.
+No new history/input/kernel or app wiring. Strict schemas/budgets; typed buffers
+read-only by convention. Current copy-all API has no sparse/COW/performance claim.
+Five focused checks PASS: exact blending/order/visibility/opacity/rows, input/edit/
+output isolation, refusal/budgets/max stack, actual original project + native PNG
+flattened handoff; editable stack still refuses as project colourPaint.
+Read docs/paint-layer-stack-902.md. No layer UI/transparent brush/editable layer save
+claim. No new hands-on test; existing paint/export unchanged. Shell/recovery902;
+main paint900/export901/resource898/project899/lab901/protected/frozen bytes retained.
+Next separate layered scene resource/project codec + atomic Open/history/duplicate
+integration, then transparent raster/UI through current viewport owner. Publication
+and full-suite evidence follow; no902 device PASS inferred.
+
+- [x] Five focused902 checks cover exact source-over/ordering/visibility/opacity,
+  opaque output/asymmetric rows, independent captures/edits/flatten, strict schema/
+  buffer/ID/size/layer limits and max512² stack.
+- [x] Flattened bytes survive original project/native Nomad PNG owners; project
+  rejects stack as opaque colourPaint rather than silently discarding layers.
+- No new hands-on902 check: layer API is intentionally not loaded by app/lab.
+
+.902 local validation: Node24.19.0 full suite **2505 PASS / 0 FAIL / 0 skipped**;
+five new focused compositor checks PASS. No new device/rendered layer proof.
