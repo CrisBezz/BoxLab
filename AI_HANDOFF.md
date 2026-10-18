@@ -6,7 +6,8 @@ CrisBezz/BoxLab main release0.36.18.903, based on787cfcb9 (.902 runtime0d37f014)
 Latest user device PASS901 protects export plus900 paint/history/project/duplicates.
 No902 userPASS inferred; foundation had no new hands-on gate.895 remains separate.
 903 adds masks/26 colour blends to isolated compositor and records agreed material/
-image direction. No main layer UI/persistence yet. Read docs/paint-layers-903.md and
+image direction. Runtimea0a910de; Node24/Node22 full2512PASS/0FAIL/0skip, Pages/live
+verified below. No main layer UI/persistence yet. Read docs/paint-layers-903.md and
  docs/paint-material-direction.md. Publishing authorized; proof follows below.
 
 ## .903 — masks/blend foundation and material direction — 2026-10-18
@@ -392,3 +393,16 @@ no tested runtime bytes. Next separate layer scene-resource/project integration.
 
 .903 local validation: Node24.19.0 full **2512 PASS / 0 FAIL / 0 skipped**;
 seven new focused checks + existing902 tests PASS. No rendered/device gate inferred.
+
+## .903 publication verified — 2026-10-18
+
+Runtimea0a910de17eecbb3732122f5df7ac515be316454; tested tree
+cb166e9709360ccb936056f43acf6e42f3b09716 matches fetched main/local exactly.
+Node22.23.3 CI39082365708/job117541786361 SUCCESS2512PASS/0FAIL/0skip;
+Pages39082365678 build117541788777/deploy117541886468 SUCCESS.
+Postdeployment live shell/version/stack/blend903/recovery903 and unchanged viewport900/
+export901 byte-match repository. Initial predeployment reads served902/new child404;
+final full checked graph903 matches. All four continuity documents updated; full
+material/image direction is in docs/paint-material-direction.md. This verification is
+documentation-only, no tested runtime byte changes and no new rendered/iPad layer
+acceptance inferred. Next explicit layered project/scene resource/history integration.
