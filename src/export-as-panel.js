@@ -1,12 +1,12 @@
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.920';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.921';
 // BoxLab .735 — native NOMAD handoff; regular OBJ/GLB exports remain available.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
 import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.917';
+import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.921';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.920';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.921';
 
 const VERSION='0.36.18.892';
 const panel=document.querySelector('#exportAsPanel');

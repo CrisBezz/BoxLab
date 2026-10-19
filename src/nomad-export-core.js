@@ -1,4 +1,4 @@
-import {preparedPaintImage,preparedRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.920';
+import {preparedPaintImage,preparedRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.921';
 import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.892';
 import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.892';
@@ -7,7 +7,7 @@ import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.892';
 // src/nomadBalloonExport.js + nomadBalloonExport097.js; validated donor copied intact.
 // BoxLab adapter writes editable polygon meshes, not MeshUtilz procedural Tubes.
 import * as THREE from 'three';
-import {resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.917';
+import {resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.921';
 const enc=new TextEncoder(),dec=new TextDecoder(),clone=value=>structuredClone(value);
 const DATA_FIELDS=['vertices','uvs','faces','faces_uv','faces_group','normals','colors','materials'];
 const u64=(dv,o)=>Number(dv.getBigUint64(o,true)),w64=(dv,o,n)=>dv.setBigUint64(o,BigInt(n),true);

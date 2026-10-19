@@ -1,11 +1,12 @@
 // Export-local adaptation only. Never add material/provenance fields to native UVs.
 import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.913';
-import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.920';
-import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.918';
+import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.921';
+import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.921';
 import {encodeNomadScalarPNG,encodeNomadColourPNG} from './nomad-scalar-png.js?v=0.36.18.901';
 const prepared=new WeakMap(),roughnessPrepared=new WeakMap();
 export function capturePaintExportObjects(objects){
  const copies=new WeakMap(),roughnessCopies=new WeakMap();return (objects||[]).map(o=>{
+  if(o?.metalnessPaint)throw Error('Metalness export is not available yet; Save .boxlab to preserve metalness');
   if(!o)return o;let colourPaint=o.colourPaint,roughnessPaint=o.roughnessPaint;
   if(colourPaint){let copy=copies.get(colourPaint);if(!copy){copy=captureFlattenedPaint(colourPaint);copies.set(colourPaint,copy);}colourPaint=copy;}
   if(roughnessPaint){let copy=roughnessCopies.get(roughnessPaint);if(!copy){copy=copyRoughnessResource(roughnessPaint);roughnessCopies.set(roughnessPaint,copy);}roughnessPaint=copy;}
@@ -13,6 +14,7 @@ export function capturePaintExportObjects(objects){
  });
 }
 export async function preparePaintExportObjects(objects,{subd=false,owner=globalThis.__boxlabExportAs}={}){
+ if(objects.some(o=>o?.metalnessPaint))throw Error('Metalness export is not available yet; Save .boxlab to preserve metalness');
  const items=objects.filter(o=>o?.colourPaint||o?.roughnessPaint).map(object=>{
   if(subd)throw Error('Paint export requires Base geometry; turn evaluated modifiers off');
   return {object,key:paintTargetKey(object,object.mesh,owner)};

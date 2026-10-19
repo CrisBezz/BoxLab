@@ -1,14 +1,14 @@
-# BoxLab AI Handoff — .920 / Lit roughness preview
+# BoxLab AI Handoff — .921 / Metalness foundation
 
 ## Current state — 19 October 2026
 
-Main release0.36.18.920 atb3aae526; source base fb7f928a. User919PASS protects scalar Pencil,
-grayscale/history/SaveOpen/native smooth/rough handoff; earlier918 colour export
-and916 left dock/UV remain protected. Paint offers Channel(default) / Lit material;
-valid roughness also displays lit after Done in Studio/Solid/UV Image. Existing
-colour-only appearance retained. Resource/project/history/export semantics unchanged.
-Read docs/roughness-preview-920.md; actual iPad appearance gate pending.
-Validation/publication evidence below. Next remaining material-slot owner audit.
+Main release0.36.18.921, source base05ddf085. User920PASS protects lit roughness/
+Channel/Done/SaveOpen/selection and colour-only appearance. Shared scalar codec/pool
+now serves unchanged roughness plus metalness data, history/Duplicate and explicit
+projectv7 transport. No metalness UI/preview/export yet; exports refuse unsupported
+metalness-bearing objects. Legacy1–6 preserved without metalness. Read
+docs/metalness-resource-921.md. No new hands-on test needed; next original export
+owners, then original Paint channel/preview. Validation/publication below.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -497,10 +497,10 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Device920 lit roughness highlights/Channel return/Done/SaveOpen/inactive appearance.
-After acceptance, audit next material slot (Metalness) resource/export/preview owners
-before extending data semantics through original history/project/input pipeline.
-Do not add parallel paint kernels, scene history or ordinary RGB scalar blend modes.
+Metalness captured PNG + original NOM/GLB material writers, retaining simultaneous
+colour+roughness and exact material identity/async snapshot guards. Then original
+Pencil channel and lit preview. No new hands-on921 task;920PASS remains protected.
+No parallel scalar codec/pool/paint kernels, new history or ordinary RGB data blends.
 
 ## Protected interaction and modelling baseline
 
@@ -1164,3 +1164,47 @@ not established by Node Three material/texture tests. Ready for hands-on Paint
 Roughness → Preview Lit material0/255/orbit, Channel return, Done/SaveOpen/selection
 and existing no-roughness colour appearance. Next remaining material-slot audit
 (Metalness candidate) follows device feedback, through original owners.
+
+
+## .921 — metalness data/project foundation via shared scalar owners — 19 October 2026
+
+User920PASS protects Lit/Channel roughness preview, highlights, Done/SaveOpen/selection
+appearance and original colour-only look. Audit main05ddf085: imported NOM/GLB metalness
+slots exist; editable resource/scene transport do not. Extract the accepted917 R8
+validation/canonical byte codec and dedup/quota/predecode pool into shared scalar
+owners; existing roughness API/descriptor/byte serialization/errors and4MiB unique /
+8MiB expanded budgets retained. Metalness uses separate strict linear R8 descriptor,
+16–512 axes, UV-v0-first, owned captures, read-only committed sharing. No RGB blending,
+new brush/kernel/history/writer or metalness UI/preview delivered.
+
+Explicit scenev7 ONLY when metalness exists: mandatorypaintProjectVersion1–6 delegates
+existing envelopes, roughnessv6 retainscolourPaintVersion1–5. Without metalness original
+legacy JSON/version retained exactly. Independent metalness pool4MiB unique/8MiB
+expanded, original32MiB file and colour/roughness budgets retained. Complete resource/
+ref/schema/size preflight before mesh creation; corruption/quota/unsupported owners
+refuse atomically. Native UV envelope remains UV-only. Original history snapshots/
+restore/addMesh/single+Multi Duplicate carry metalness by read-only reference; edits
+replace. Original File Save/Open and render-failure scene/history rollback retained.
+Join/linked operations and raw/async OBJ/GLB/NOM exports refuse metalness-bearing
+objects, even alongside accepted colour/roughness, so pending channels cannot vanish.
+No imported metalness export behavior changed; native paint export adaptation next.
+
+Six new integrations cover codec ownership/channel separation, all six legacy formats/
+exact removal/dedup, schemas/refs/quotas/owner guards, actual history+single/Multi
+Duplicate, actual File Save/Open/corrupt/render rollback, all writer/Join refusals.
+Existing917–920 scalar/paint/preview nearby23PASS. Complete reviewed resource/codec/
+metadata/export/parent/Lab graph921; UI/render/brush algorithms unchanged. Multi1.0,
+frozen betas and modelling kernels untouched. Read docs/metalness-resource-921.md.
+Full regression/publication evidence below. No new metalness device feature yet.
+
+No new hands-on test needed for921; user920PASS is protected. New foundation fixtures
+are automated, never a synthetic iPad task. Next narrow build: captured metalness
+through existing scalar PNG/NOM/GLB material owners, including combined colour+
+roughness+metalness identities/async capture and data semantics. Then visible Pencil
+channel and lit preview through existing compact Paint/material owners.
+
+.921 final local validation: Node24.19.0 full **2,612 PASS / 0 FAIL / 0 skipped**.
+Six new integrations + existing917–920 nearby23PASS; release contract5PASS.
+All other changed JS parents verified pin-only; protected Multi1.0/frozen/modelling
+and existing paint/preview/export algorithms retained. No behavior checks relaxed.
+No new hands-on gate; user920PASS protected. Publication verification follows.

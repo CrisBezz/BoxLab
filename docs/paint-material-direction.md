@@ -111,3 +111,11 @@ preview and committed roughness under existing Studio/base lights; Channel inspe
 retained, colour-only committed look unchanged. See roughness-preview-920.md for
 ownership/limits. Remaining channels need their own resource/transport/writer audit;
 Metalness next candidate, not delivered by roughness. No physical Nomad parity claim.
+
+
+## .921 metalness foundation — 19 October 2026
+
+.920 lit roughness accepted. Shared strict scalar codec/pool now serves both channels,
+with existing roughness transports retained; metalness has scenev7/history/Duplicate
+but no authoring/preview/export yet. Read metalness-resource-921.md. Next captured
+metalness into existing NOM/GLB writers, then original Paint channel/material bridge.
