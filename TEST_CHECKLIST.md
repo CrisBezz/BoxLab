@@ -7953,3 +7953,43 @@ Publication evidence follows; no new roughness device UI or render claim.
 Runtime commit `30f39970f808a022af054f0e4505d20eaef39772`, tested tree `0b4dc5441f3399232a36cdddfb1e458567eb641c`, is published. Hosted Node 22 regression run 39194785838 (job 117875081484) passed all 2,589 tests, with zero failures or skips. Pages run 39194785560 completed successfully (deploy job 117875216536). All 25 checked live runtime, Lab, release and protected Multi files matched repository bytes. Protected .916 user PASS remains in force; no rendered roughness UI acceptance is claimed.
 
 Hands-on .917 checks: paint a distinctive mark, Save .boxlab and reopen; duplicate a painted object, paint the copy, and Undo/Redo while confirming the original remains unchanged. Roughness has no controls yet; its resource/project/history foundation is covered by automated tests. Next narrow work remains scalar PNG and existing export-owner adaptation before visible roughness painting.
+
+
+## .918 — roughness export through existing writers; .917 user PASS — 19 October 2026
+
+User917PASS protects existing colour Save/Open, painted Duplicate isolation and
+Undo/Redo. Audit main0f040ed2/.917: scalarPNG/native material slots/GLB material patch
+already exist. Extend original paint-export capture with strict owned R8 copies
+before await, existing native Base UV key/digest for both channels, and scalarPNG G
+encoding (no gamma/flip/resample/factor bake). Original NOM roughness slot/factor1,
+UV/polygon/container/name/dedup/24MiB budget retained. GLB G roughnessFactor1 and
+metallicFactor0; image identity separate from combined colour+roughness material
+identity so shared colour cannot merge distinct roughness maps. Scalar-only and
+colour+scalar supported; unprepared sync native/OBJ/Join still refuse. No project
+schema/history/brush/UI/kernel/provenance changes. Five actual writer/File/PNG/async/
+binding/refusal/source-immutability regressions added; old917 async refusal updated
+to stale-binding validation, other guards retained. Changed owners and recursive
+parent/Lab cache graph918; protected Multi1.0/frozen/modelling and accepted Paint UI
+retained. Read docs/roughness-export-918.md. Full validation/publication follow.
+No roughness controls/preview yet; next original painter scalar channel integration.
+Manual nearby: export differently painted original/copy to NOMAD and GLB, confirm
+independent colour/UV placement; paint Save/Open/history remains protected917PASS.
+
+- [x]917 DEVICE existing paint Save/Open and Duplicate/UndoRedo: user PASS2026-10-19. Protected.
+- [x]918 automated scalar PNG/NOM/GLB exact bytes, UVs, combined materials and dedup.
+- [x]918 automated async capture, malformed/stale owner refusal and source immutability.
+- [x]918 actual File NOMAD/GLB actions download scalar maps and report counts.
+- [ ]918 DEVICE nearby colour NOMAD/GLB export appearance; no roughness controls yet.
+
+
+User reminder — 19 October 2026: every build completion must explicitly state
+whether there is something to test, with build/readiness and quick hands-on checks,
+or clearly state no new hands-on test is needed. Reaffirmed in AI_WORKFLOW.md.
+
+
+.918 final local validation: Node24.19.0 full **2,594 PASS / 0 FAIL / 0 skipped**.
+Five new export integrations and all existing paint/image/UV/modelling checks pass.
+Initial cache preparation accidentally repinned unchanged917 shell owners; regression
+checks caught this, unrelated pins were restored, reviewed contract passed, and the
+final complete suite above ran against corrected source. No bad graph published.
+Multi1.0 and frozen betas unchanged. Publication verification follows.

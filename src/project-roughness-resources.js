@@ -1,6 +1,6 @@
 // Scene v6 adds one independent R8 roughness pool; the existing colour envelope
 // version remains explicit and is decoded by its original v1–5 owner unchanged.
-import {encodeRoughnessEntry,decodeRoughnessEntry,roughnessEntryBytes} from './roughness-resource.js?v=0.36.18.917';
+import {encodeRoughnessEntry,decodeRoughnessEntry,roughnessEntryBytes} from './roughness-resource.js?v=0.36.18.918';
 const UNIQUE=4*1024*1024,EXPANDED=8*1024*1024;
 function ref(index){return {version:1,index};}
 export function createProjectRoughnessPool(){

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.917';
+import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.918';
 import {paintDigest} from './paint-resource.js?v=898';
 const encoder=new TextEncoder(),hidden=new THREE.MeshBasicMaterial({colorWrite:false,depthWrite:false});
 // Reuse original codec/UV topology validation. Positions may move/deform with unchanged UVs.

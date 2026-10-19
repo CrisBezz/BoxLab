@@ -1,4 +1,4 @@
-import {createProjectRoughnessPool,decodeProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.917';
+import {createProjectRoughnessPool,decodeProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.918';
 // Versioned, non-destructive BoxLab scene codec foundation.
 // Explicitly refuse resources not yet representable, rather than losing them.
 import {encodeProjectGLB,decodeProjectGLB,createProjectGLBImagePool,decodeProjectGLBImagePool} from './project-glb-resources.js?v=0.36.18.899';

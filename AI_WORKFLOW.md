@@ -129,6 +129,7 @@ Before finishing a session that changes BoxLab:
    - clearly distinguish what automated regression already covered from what the user should manually sanity-check
    - user reaffirmed 2026-10-13: always explicitly tell the user when the build is complete; do not end with only a progress update
    - if no meaningful manual test is needed, say so explicitly
+   - user reaffirmed (2026-10-19): **always explicitly tell the user whether there is something to test**. Include the build number, readiness status and short hands-on checks in the completion reply; if there is no new hands-on test, state that plainly. Do not leave the user to infer readiness from progress updates or automated test results.
 
 1. Rewrite `AI_HANDOFF.md` so it describes the repository AFTER the work.
 2. Update current version, HEAD/release commit references, current focus, known issues, and next step as applicable.

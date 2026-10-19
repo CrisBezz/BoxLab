@@ -94,3 +94,11 @@ implemented; original colour envelopes1–5 unchanged without roughness. No scal
 or material export yet: roughness-bearing export refuses to prevent dropping data.
 Read roughness-resource-917.md; next adapt original scalar PNG/NOM/GLB writers, then
 visible channel controls/preview through accepted compact Paint owner.
+
+
+## .918 export foundation — 19 October 2026
+
+.917 userPASS protected. Original scalar PNG, NOM roughness slot and GLB material
+patch now transport validated captured R8 maps; combined colour/roughness identity
+prevents shared-colour material collisions. No controls/preview yet. Read
+roughness-export-918.md; next visible scalar channel through original Paint owner.

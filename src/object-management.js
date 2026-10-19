@@ -1,5 +1,5 @@
 import {gizmoIcons} from './gizmo-corner-controls.js?v=0.36.18.734';
-import {encodeBoxlabScene,decodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.917';
+import {encodeBoxlabScene,decodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.918';
 import {EditableMesh} from './mesh.js';
 const list=document.querySelector('#outlinerList');
 const drawer=document.querySelector('#objectsDrawer .drawer-content');

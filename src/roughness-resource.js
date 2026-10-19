@@ -14,10 +14,13 @@ export function captureRoughnessResource(value){
  if(!(value.pixels instanceof Uint8Array)||value.pixels.length!==value.width*value.height)throw Error('Invalid roughness R8 pixels');
  return Object.freeze({version:1,channel:'roughness',width:value.width,height:value.height,colorSpace:'linear',pixelType:'r8',rowOrder:'uv-v0-first',binding:value.binding,pixels:value.pixels.slice()});
 }
-export function encodeRoughnessEntry(value){
+export function copyRoughnessResource(value){
  exact(value,[...fields,'pixels']);const {pixels,...meta}=value;descriptor(meta);
  const copy=captureRoughnessResource({width:value.width,height:value.height,binding:value.binding,pixels});
- const {pixels:data,...d}=copy;return {version:1,descriptor:d,data:encodeProjectBytes(data)};
+ return copy;
+}
+export function encodeRoughnessEntry(value){
+ const {pixels:data,...d}=copyRoughnessResource(value);return {version:1,descriptor:d,data:encodeProjectBytes(data)};
 }
 // Inspect the complete declared size and base64 length before any byte allocation.
 export function roughnessEntryBytes(entry){

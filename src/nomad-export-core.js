@@ -1,4 +1,4 @@
-import {preparedPaintImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.917';
+import {preparedPaintImage,preparedRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.918';
 import {nomadDisplacementMap} from './nomad-displacement-map.js?v=0.36.18.892';
 import {uvImageSurfaceSource,uvImageMaterialSource} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {embeddedUVImage} from './uv-image-preview.js?v=0.36.18.892';
@@ -141,7 +141,7 @@ export function buildNomadProject(objects,templateBytes,{subd=false,name='BoxLab
    if(stored.length!==editable.faces.length||stored.some((uv,fi)=>!Array.isArray(uv)||uv.length!==editable.faces[fi].length||uv.some(p=>!Array.isArray(p)||p.length!==2||p.some(v=>!Number.isFinite(v)||!Number.isFinite(Math.fround(v))))))throw Error('NOMAD UV channel is incomplete or invalid');
    cornerUVs=stored;uvObjects++;
   }
-  const paint=preparedPaintImage(object),source=paint?{factor:[1,1,1,1],material:{pbrMetallicRoughness:{roughnessFactor:1,metallicFactor:0}},maps:{color:paint}}:nativeMaterialMaps(payload);let materialIndex=null;
+  const paint=preparedPaintImage(object),roughness=preparedRoughnessImage(object),source=(paint||roughness)?{factor:[1,1,1,1],material:{pbrMetallicRoughness:{roughnessFactor:1,metallicFactor:0}},maps:{...(paint?{color:paint}:{}),...(roughness?{roughness}:{})}}:nativeMaterialMaps(payload);let materialIndex=null;
   if(source){
    if(!cornerUVs)throw Error('NOMAD image maps require a complete matching Base UV channel');
    const material=clone(base.json.materials?.[0]||{});material.textures={};
