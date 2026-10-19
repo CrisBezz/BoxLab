@@ -3842,3 +3842,23 @@ Next: respond narrowly to923 device feedback before adding more material channel
 13 new integrations, nearby roughness/mask19PASS and release contract5PASS.
 No existing assertions relaxed; protected Multi1.0/frozen/modelling unchanged.
 Publication/hosted regression/live-byte verification follows. Device923 pending.
+
+## .923 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `e505f232856a7d6581368de7f7cf29e45cc514da`, tested tree
+`342c4ca1282a98ab95abfe65a66bccdc311ac757`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39337186659` / job `118349490286` both pass
+2,633 tests, zero failures/skips; complete hosted logs verified. Pages run
+`39337186074`, deploy job `118349698451`, completed all steps successfully.
+All19 fresh live files byte-match source: shell/version, every changed runtime/
+export/parent/Lab file, recovery, protected Multi1.0, retained scalar resources/
+metalness pool and project codec. Initial in-flight reads served922; final complete
+checked graph matches923. No frozen/modelling/lighting/UV or writer algorithm changes.
+
+All four continuity files current; this proof is docs-only. Build923 complete and
+ready for hands-on Metalness0/255 Channel/Lit, low Roughness highlights and independent
+channels, Done/SaveOpen, UndoRedo and duplicate isolation. Optional native Nomad
+appearance sanity check. Actual GPU highlights/Pencil latency and923 device acceptance
+remain pending; user920PASS protected, no921/922/923 devicePASS inferred.
+Next: respond narrowly to923 device feedback before another material channel.
