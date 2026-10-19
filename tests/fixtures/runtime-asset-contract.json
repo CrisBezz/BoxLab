@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.918",
+      "url": "./src/release-bootstrap.js?v=0.36.18.919",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.918",
+      "url": "./src/release-version.js?v=0.36.18.919",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2481,14 +2481,14 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.918",
-      "sha256": "75d3a8a77db1ada941072b5b9645cef63c113da30b8fbe8d97d052a3b12a265d"
+      "url": "./src/viewport-paint.js?v=0.36.18.919",
+      "sha256": "a2ff3e1365c4d328424fa2a784cf1f0c86f33c010142bce69b6f0d809b75d52d"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.918",
-      "sha256": "d57dcf018971dd9ebe9187a5b8d332d1994ef86d7a5dfbc2e680a76e8eae9cd5"
+      "url": "./viewport-paint-core.js?v=0.36.18.919",
+      "sha256": "f316f11fc10524c26db051727b9a2eeaa9db75f339e6d1069cb635f4c2705076"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2885,6 +2885,18 @@
       "target": "src/roughness-resource.js",
       "url": "./roughness-resource.js?v=0.36.18.918",
       "sha256": "c20663ba5a085be4a19d2204336f64294c36848390b11e70de7dff4e4532d5d2"
+    },
+    {
+      "owner": "src/viewport-paint-core.js",
+      "url": "./roughness-resource.js?v=0.36.18.918",
+      "target": "src/roughness-resource.js",
+      "sha256": "c20663ba5a085be4a19d2204336f64294c36848390b11e70de7dff4e4532d5d2"
+    },
+    {
+      "owner": "src/viewport-paint-core.js",
+      "url": "./project-roughness-resources.js?v=0.36.18.918",
+      "target": "src/project-roughness-resources.js",
+      "sha256": "8c2c8c6ba5a1e35ab49df64b0ea06dddc70715b94784902d1e268c29ba9f29ec"
     }
   ]
 }
