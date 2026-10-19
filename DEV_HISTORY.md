@@ -11672,3 +11672,23 @@ surface lifetime owner, retaining accepted colour appearance where no scalar exi
 Six new scalar integration checks pass; reviewed release contract5PASS and original
 colour/mask checks retained. No runtime tests skipped, no protected/frozen changes.
 Publication verification follows; actual iPad/grayscale/native-lighting gate pending.
+
+
+## .919 publication verified — 19 October 2026 (Brisbane)
+
+Runtime `76e48e3b4ee5dc73018e566a5f8a4b323ca3bac9`, tested tree
+`e58d35ee563881ae74fefbb03c3cfbfe62f567b2`, is published. Connected Git Data
+created the identical local tested tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39242723896` / job `118027165309` both pass
+2,600 tests, zero failures/skips; hosted complete logs verified counts. Pages
+`39242722754`, deploy job `118027373427`, completed all deployment steps successfully.
+Ten fresh live files byte-match tested source: shell/version, both changed painter
+owners, both recovery scripts, paint target, roughness resource/pool and Multi1.0.
+Initial predeployment requests served918; final complete graph matches919.
+Shell push lacked credentials; connected Git Data publication used expected-parent,
+non-forced ref update. No protected/frozen/modelling/export/render changes.
+
+All four continuity files are current; this proof changes docs only. User918PASS
+protected. .919 iPad Pencil/grayscale/navigation/native-lighting acceptance pending;
+no actual rendered proof inferred from Node adapters. Ready for hands-on checks in
+this build's entry. Next lit material preview through existing surface/lifetime owner.
