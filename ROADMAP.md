@@ -3452,3 +3452,36 @@ Actual session/UV owner semantics and native paint/image flows remain tested by 
 iPad left-dock/section/scroll and UV navigation manual gate remains pending916.
 All four continuity files + workflow user exception updated. User915PASS protected;
 this proof changes docs only. Roughness audit read-only, implementation deferred.
+
+
+## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
+
+User916PASS protects compact LEFT Paint/sections/Done, colour/image Pencil cycle,
+Object radialUV projection/editor/exit and Mesh Health repair baseline. Audit current
+ddf240f6: only sRGB colour resources exist; imported scalar writers already own map
+export. Add separate R8roughness resource16–512 axes, linear data/UV-v0-first/binding,
+owned capture/encode/decode, committed read-only sharing convention. Exact schema,
+canonical original project bytes, dedup4MiB unique/8MiB expanded and predecode budget/
+ref validation. Scenev6 ONLY with roughness; mandatorycolourPaintVersion delegates
+original colourv1–5 envelope to unchanged owners. Without roughness exact legacyJSON/
+version retained. UV envelope stays UV-only; original32MiB file + colour budgets stay.
+Original scene snapshot/restore/addMesh/single+Multi Duplicate share resource, edits
+replace; atomic Open corruption and render failure retain scene/resources/history.
+Join refuses scalar-only paint; linked nativeUV guard retained. Shared export mesh
+resolver refuses roughness-bearing OBJ/GLB/NOM (including alongside colour) instead
+of silently dropping unsupported channel. No writer/provenance/geometry/brush/UI
+kernel added. Six new integration tests cover data bytes, all legacy colour transports,
+quotas/refs/predecode/ownership, actual history/Duplicate/File/Open/rollback and writer/
+Join refusals. Full suite/publication follow. Docs: roughness-resource-917.md.
+Actual resource/codec/metadata/guard + complete parent/Lab graph917; painter UI only
+parent pin, retains accepted916 left dock/UV access. Multi1.0/frozen/UV914/colour915/
+brush/projection/layout/modelling kernels unchanged. No roughness controls/render/
+export/layers/displacement parity claim. No new device roughness test possible yet.
+Next original scalarPNG + NOM/GLB material export adaptation with async capture/binding/
+combined material identity tests, then visible channel/preview through original painter.
+Manual nearby: existing colour paint SaveOpen/Duplicate; do not ask synthetic R8 fixtures.
+
+Local Node24.19.0 full **2589 PASS / 0 FAIL / 0 skipped**; six new917 checks and
+all existing colour/UV/left-dock/paint/image/native regressions pass. Reviewed complete
+parent/Lab cache graph, source stamps retained, protected Multi/frozen unchanged.
+Publication evidence follows; no new roughness device UI or render claim.

@@ -1,5 +1,5 @@
 import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915';
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.913';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.917';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=905';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 import {importPaintImage} from './paint-image-source.js?v=0.36.18.907';

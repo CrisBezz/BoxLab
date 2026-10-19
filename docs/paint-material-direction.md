@@ -85,3 +85,12 @@ transport foundation. Numeric brush colour is not yet a material-channel stack.
 .916 changes presentation/navigation only; roughness owner audit remains read-only.
 Resume independent data-channel foundation after this manual UI gate. See
 paint-uv-layout-916.md; preserve original brush/layer/image/UV/history owners.
+
+
+## .917 data foundation — 19 October 2026
+
+.916 userPASS. R8 roughness resource + original history/Duplicate/projectv6 transport
+implemented; original colour envelopes1–5 unchanged without roughness. No scalar UI
+or material export yet: roughness-bearing export refuses to prevent dropping data.
+Read roughness-resource-917.md; next adapt original scalar PNG/NOM/GLB writers, then
+visible channel controls/preview through accepted compact Paint owner.

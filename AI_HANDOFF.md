@@ -1,13 +1,41 @@
-# BoxLab AI Handoff — .916 / Left Paint dock and Object UV
+# BoxLab AI Handoff — .917 / Roughness data foundation
 
 ## Current state — 19 October 2026
 
-Main release0.36.18.916 based ona3ffdc36 (.915 publication proof).
-User915PASS protected. User prioritised Paint obstruction and dedicated ObjectUV.
-Original Paint panel now compact on left; UV shortcut shows existing UV controls
-without diagnostics. Roughness work deferred after read-only audit. No resource or
-geometry changes. Device916 dock/UV navigation gate pending. Read
- docs/paint-uv-layout-916.md; full test/publication evidence below.
+Main release0.36.18.917 based onddf240f6 (.916 publication proof).
+User916PASS now protects left Paint and dedicated ObjectUV. Roughness R8 resources
+now survive original history/Duplicate/projectv6 transport; no roughness UI yet.
+Original legacy colour versions1–5 retained exactly when no roughness. Unsupported
+scalar export refuses; existing colour exports unchanged. Read
+ docs/roughness-resource-917.md. Next original data-map export adapter, then visible
+roughness controls/preview. Automated/publication evidence follows below.
+
+## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
+
+User916PASS protects compact LEFT Paint/sections/Done, colour/image Pencil cycle,
+Object radialUV projection/editor/exit and Mesh Health repair baseline. Audit current
+ddf240f6: only sRGB colour resources exist; imported scalar writers already own map
+export. Add separate R8roughness resource16–512 axes, linear data/UV-v0-first/binding,
+owned capture/encode/decode, committed read-only sharing convention. Exact schema,
+canonical original project bytes, dedup4MiB unique/8MiB expanded and predecode budget/
+ref validation. Scenev6 ONLY with roughness; mandatorycolourPaintVersion delegates
+original colourv1–5 envelope to unchanged owners. Without roughness exact legacyJSON/
+version retained. UV envelope stays UV-only; original32MiB file + colour budgets stay.
+Original scene snapshot/restore/addMesh/single+Multi Duplicate share resource, edits
+replace; atomic Open corruption and render failure retain scene/resources/history.
+Join refuses scalar-only paint; linked nativeUV guard retained. Shared export mesh
+resolver refuses roughness-bearing OBJ/GLB/NOM (including alongside colour) instead
+of silently dropping unsupported channel. No writer/provenance/geometry/brush/UI
+kernel added. Six new integration tests cover data bytes, all legacy colour transports,
+quotas/refs/predecode/ownership, actual history/Duplicate/File/Open/rollback and writer/
+Join refusals. Full suite/publication follow. Docs: roughness-resource-917.md.
+Actual resource/codec/metadata/guard + complete parent/Lab graph917; painter UI only
+parent pin, retains accepted916 left dock/UV access. Multi1.0/frozen/UV914/colour915/
+brush/projection/layout/modelling kernels unchanged. No roughness controls/render/
+export/layers/displacement parity claim. No new device roughness test possible yet.
+Next original scalarPNG + NOM/GLB material export adaptation with async capture/binding/
+combined material identity tests, then visible channel/preview through original painter.
+Manual nearby: existing colour paint SaveOpen/Duplicate; do not ask synthetic R8 fixtures.
 
 ## .916 — compact left Paint + Object radial UV; .915 PASS — 2026-10-19
 
@@ -469,11 +497,12 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-DEVICE916 compact left Paint footprint/sections and original painting/image controls;
-Object radial UV → projection/editor/Back/Close; Mesh Health repairs unchanged.
-Protect user915PASS numeric colour,914 UV and913 repeated images. Then resume
-roughness data-resource/transport foundation per material direction; no roughness
-code exists yet. See docs/paint-uv-layout-916.md for placement/navigation owners.
+Original NOM/GLB scalar-map export adaptation, using existing scalarPNG/writers,
+original paintTargetKey/digest and immutable capture before await. GLB material keys
+must include colour AND roughness. Then roughness UI/preview via existing painter.
+917 is data/transport only; manual existing paint SaveOpen/Duplicate regression,
+no synthetic scalar-data task. Protect user916PASS left dock/UV and earlier paint.
+Read docs/roughness-resource-917.md before adding editable channels or output.
 
 ## Protected interaction and modelling baseline
 
@@ -942,3 +971,8 @@ Actual session/UV owner semantics and native paint/image flows remain tested by 
 iPad left-dock/section/scroll and UV navigation manual gate remains pending916.
 All four continuity files + workflow user exception updated. User915PASS protected;
 this proof changes docs only. Roughness audit read-only, implementation deferred.
+
+Local Node24.19.0 full **2589 PASS / 0 FAIL / 0 skipped**; six new917 checks and
+all existing colour/UV/left-dock/paint/image/native regressions pass. Reviewed complete
+parent/Lab cache graph, source stamps retained, protected Multi/frozen unchanged.
+Publication evidence follows; no new roughness device UI or render claim.

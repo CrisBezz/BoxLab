@@ -7879,8 +7879,8 @@ Then resume independent roughness data-resource/explicit transport foundation.
 
 - [x]916 actual session docking/node identity and next-tool centre restoration.
 - [x]916 UV-only projection/history/close and Mesh Health mode restoration.
-- [ ]916 DEVICE left Paint size/scroll/sections/Done; painting and image M/R/S preserved.
-- [ ]916 DEVICE Object radialUV → project/editor/Back/Close; Mesh Health repairs intact.
+- [x]916 DEVICE left Paint size/scroll/sections/Done and image M/R/S: user PASS2026-10-19.
+- [x]916 DEVICE Object radialUV/editor/exit and Mesh Health: user PASS2026-10-19.
 
 Local Node24.19.0 final full **2583 PASS / 0 FAIL / 0 skipped**. Initial full run
 caught two outdated test adapters:439 expected literal fixed Mesh Health ID,731
@@ -7907,3 +7907,42 @@ Actual session/UV owner semantics and native paint/image flows remain tested by 
 iPad left-dock/section/scroll and UV navigation manual gate remains pending916.
 All four continuity files + workflow user exception updated. User915PASS protected;
 this proof changes docs only. Roughness audit read-only, implementation deferred.
+
+
+## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
+
+User916PASS protects compact LEFT Paint/sections/Done, colour/image Pencil cycle,
+Object radialUV projection/editor/exit and Mesh Health repair baseline. Audit current
+ddf240f6: only sRGB colour resources exist; imported scalar writers already own map
+export. Add separate R8roughness resource16–512 axes, linear data/UV-v0-first/binding,
+owned capture/encode/decode, committed read-only sharing convention. Exact schema,
+canonical original project bytes, dedup4MiB unique/8MiB expanded and predecode budget/
+ref validation. Scenev6 ONLY with roughness; mandatorycolourPaintVersion delegates
+original colourv1–5 envelope to unchanged owners. Without roughness exact legacyJSON/
+version retained. UV envelope stays UV-only; original32MiB file + colour budgets stay.
+Original scene snapshot/restore/addMesh/single+Multi Duplicate share resource, edits
+replace; atomic Open corruption and render failure retain scene/resources/history.
+Join refuses scalar-only paint; linked nativeUV guard retained. Shared export mesh
+resolver refuses roughness-bearing OBJ/GLB/NOM (including alongside colour) instead
+of silently dropping unsupported channel. No writer/provenance/geometry/brush/UI
+kernel added. Six new integration tests cover data bytes, all legacy colour transports,
+quotas/refs/predecode/ownership, actual history/Duplicate/File/Open/rollback and writer/
+Join refusals. Full suite/publication follow. Docs: roughness-resource-917.md.
+Actual resource/codec/metadata/guard + complete parent/Lab graph917; painter UI only
+parent pin, retains accepted916 left dock/UV access. Multi1.0/frozen/UV914/colour915/
+brush/projection/layout/modelling kernels unchanged. No roughness controls/render/
+export/layers/displacement parity claim. No new device roughness test possible yet.
+Next original scalarPNG + NOM/GLB material export adaptation with async capture/binding/
+combined material identity tests, then visible channel/preview through original painter.
+Manual nearby: existing colour paint SaveOpen/Duplicate; do not ask synthetic R8 fixtures.
+
+- [x]917 R8 owned bytes and colourv1–5 exact transport preservation under explicit scenev6.
+- [x]917 malformed/ref/unique+expanded budgets before decode; failed adds do not alter pool.
+- [x]917 original history/single+Multi Duplicate/File/atomic Open and render rollback.
+- [x]917 unsupported data export/Join refuse; no roughness inside nativeUV envelope.
+- [ ]917 DEVICE nearby existing colour paint SaveOpen and ordinary Duplicate regression.
+
+Local Node24.19.0 full **2589 PASS / 0 FAIL / 0 skipped**; six new917 checks and
+all existing colour/UV/left-dock/paint/image/native regressions pass. Reviewed complete
+parent/Lab cache graph, source stamps retained, protected Multi/frozen unchanged.
+Publication evidence follows; no new roughness device UI or render claim.

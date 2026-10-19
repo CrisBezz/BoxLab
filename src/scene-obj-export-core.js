@@ -8,6 +8,7 @@ export function safeOBJName(value,index=0){
   return clean||`Object ${index+1}`;
 }
 export function resolveExportMesh(object,subd=false){
+  if(object?.roughnessPaint)throw Error('Roughness export is not available yet; Save .boxlab to preserve roughness');
   if(object?.colourPaint)throw Error('UV Paint export is not available yet; Save .boxlab to preserve paint');
   let mesh=object?.mesh?.clone?object.mesh.clone():object?.mesh;
   if(!mesh)return null;

@@ -1,8 +1,8 @@
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage} from './paint-export.js?v=0.36.18.913';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage} from './paint-export.js?v=0.36.18.917';
 import {encodeNomadScalarPNG} from './nomad-scalar-png.js?v=0.36.18.901';
 // Export-local glTF G/B unpacking. Source resources remain read-only; the original
 // native writer owns materials, UV validation, binary layout and final byte budgets.
-import {nativeMaterialMaps,buildNomadProject,createNomadImageIdentity} from './nomad-export-core.js?v=0.36.18.913';
+import {nativeMaterialMaps,buildNomadProject,createNomadImageIdentity} from './nomad-export-core.js?v=0.36.18.917';
 const LIMIT=2048,TOTAL_LIMIT=24*1024*1024;
 function dimensions(choice){
  const a=choice.data,v=new DataView(a.buffer,a.byteOffset,a.byteLength);let width=0,height=0;

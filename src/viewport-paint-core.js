@@ -8,7 +8,7 @@ import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.912';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.913';
 import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.913';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.913';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.917';
 // Scene history, selection, camera and body lifetime remain with the existing app.
 export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()]}){
  let session=null,generation=0,stroke=null;const ray=new THREE.Raycaster(),occluderMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
