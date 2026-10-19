@@ -11951,3 +11951,33 @@ channels, Done/SaveOpen, UndoRedo and duplicate isolation. Optional native Nomad
 appearance sanity check. Actual GPU highlights/Pencil latency and923 device acceptance
 remain pending; user920PASS protected, no921/922/923 devicePASS inferred.
 Next: respond narrowly to923 device feedback before another material channel.
+
+## .924 — UV workspace layers contained beneath main toolbar — 20 October 2026
+
+User reports intermittent missing TOP-RIGHT MAIN APP buttons during UV Editor;
+clarified these are Frame/UndoRedo/Focus/Objects/VIEW, not UV-local controls.
+Audit main553ba061: no UV action deliberately hides the toolbar. Header stacking
+context is10; viewport had no stacking context, allowing workspace180 to overpaint
+header descendants (including VIEW dropdown200 trapped inside header10).
+Add one active-UV-only isolation rule in original uv-workspace stylesheet: viewport
+contains its own layers while visible workspace exists. Original header remains
+above it; closing/hiding UV automatically removes containment. No z-index arms race,
+DOM replacement, event/pointer/history/model/UV/paint algorithm changes. Refresh
+UV workspace + Mesh Health loader and shell/recovery924; unrelated pins retained.
+
+Source layering defect identified; exact intermittent iPad button disappearance
+not reproduced. Cloud main WebGL creation fails (same known environment limitation),
+so no full-app rendered acceptance claimed. Synthetic data-URL layout experiment
+blocked by browser URL policy; no workaround attempted. Nearby workspace navigation/
+history/lifetime/background/Focus + release20PASS. Initial prep contract caught an
+over-broad shell pin replacement; restored unrelated pins before final validation.
+No tests weakened, no user923PASS inferred; user920PASS and protected Multi1.0/frozen
+remain. DEVICE: repeatedly enter/exit UV, pan/pinch/edit/UndoRedo, check top-right
+buttons and VIEW dropdown while inside UV and after Back to3D. If disappearance
+persists, obtain screenshot and exact trigger before more presentation changes.
+Metalness923 device gate still pending. Next:924 device feedback, narrow repair only.
+
+.924 final local Node24.19.0 regression: **2,633 PASS / 0 FAIL / 0 skipped**;
+nearby UV/workspace/history/Focus/background/release20PASS. Final source contains
+only active-UV isolation + reviewed loader/release pins; no assertions relaxed.
+No rendered/device disappearance acceptance inferred; publication proof follows.

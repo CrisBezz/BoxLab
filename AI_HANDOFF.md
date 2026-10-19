@@ -1,14 +1,14 @@
-# BoxLab AI Handoff — .923 / Metalness painting and lit preview
+# BoxLab AI Handoff — .924 / UV editor main toolbar layering
 
 ## Current state — 20 October 2026
 
-Release0.36.18.923 published at e505f232; source base f2cc8a38 (.922).
-Metalness is now visible in original compact Paint: black base0, brush255, Channel
-inspection and original Lit material preview. Separate colour/roughness/metalness
-resources retain original history, project and export owners. No new lighting or
-modelling kernel. User920PASS protected;923 device gate pending. Validation and
-publication evidence will be recorded below. Next:923 feedback, narrow fixes only.
-Read docs/metalness-paint-923.md for scope and hands-on gate.
+Release0.36.18.924 from main553ba061 (.923); validation/publication below.
+User reports intermittent missing main top-right buttons while UV Editor is open.
+Original UV workspace now isolates viewport layers beneath original main header.
+One CSS rule, no modelling/UV/paint/history/input changes. Source stacking defect
+identified; exact iPad disappearance remains device-pending. Next:924 retest; if it
+persists obtain screenshot/trigger before further UI changes. User920PASS protected;
+923 Metalness gate still pending. Current923 feature details: metalness-paint-923.md.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -497,11 +497,9 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Visible Metalness Pencil channel through original scalar resource/raster/history and
-compact Paint UI; then lit material integration through existing surface owner.
-GLB packed G/B export922 + native scalar export ready; protect accepted colour and
-roughness data, preview, projects and interactions. No new922 hands-on gate or
-synthetic fixture task; no ordinary RGB blend semantics for scalar data.
+Retest924 main toolbar through UV open/pan/pinch/edit/history/close and VIEW dropdown.
+If intermittent disappearance persists, inspect screenshot and exact trigger first.
+Metalness923 authoring/material device gate also remains pending. No new channel work.
 
 ## Protected interaction and modelling baseline
 
@@ -1352,3 +1350,33 @@ channels, Done/SaveOpen, UndoRedo and duplicate isolation. Optional native Nomad
 appearance sanity check. Actual GPU highlights/Pencil latency and923 device acceptance
 remain pending; user920PASS protected, no921/922/923 devicePASS inferred.
 Next: respond narrowly to923 device feedback before another material channel.
+
+## .924 — UV workspace layers contained beneath main toolbar — 20 October 2026
+
+User reports intermittent missing TOP-RIGHT MAIN APP buttons during UV Editor;
+clarified these are Frame/UndoRedo/Focus/Objects/VIEW, not UV-local controls.
+Audit main553ba061: no UV action deliberately hides the toolbar. Header stacking
+context is10; viewport had no stacking context, allowing workspace180 to overpaint
+header descendants (including VIEW dropdown200 trapped inside header10).
+Add one active-UV-only isolation rule in original uv-workspace stylesheet: viewport
+contains its own layers while visible workspace exists. Original header remains
+above it; closing/hiding UV automatically removes containment. No z-index arms race,
+DOM replacement, event/pointer/history/model/UV/paint algorithm changes. Refresh
+UV workspace + Mesh Health loader and shell/recovery924; unrelated pins retained.
+
+Source layering defect identified; exact intermittent iPad button disappearance
+not reproduced. Cloud main WebGL creation fails (same known environment limitation),
+so no full-app rendered acceptance claimed. Synthetic data-URL layout experiment
+blocked by browser URL policy; no workaround attempted. Nearby workspace navigation/
+history/lifetime/background/Focus + release20PASS. Initial prep contract caught an
+over-broad shell pin replacement; restored unrelated pins before final validation.
+No tests weakened, no user923PASS inferred; user920PASS and protected Multi1.0/frozen
+remain. DEVICE: repeatedly enter/exit UV, pan/pinch/edit/UndoRedo, check top-right
+buttons and VIEW dropdown while inside UV and after Back to3D. If disappearance
+persists, obtain screenshot and exact trigger before more presentation changes.
+Metalness923 device gate still pending. Next:924 device feedback, narrow repair only.
+
+.924 final local Node24.19.0 regression: **2,633 PASS / 0 FAIL / 0 skipped**;
+nearby UV/workspace/history/Focus/background/release20PASS. Final source contains
+only active-UV isolation + reviewed loader/release pins; no assertions relaxed.
+No rendered/device disappearance acceptance inferred; publication proof follows.

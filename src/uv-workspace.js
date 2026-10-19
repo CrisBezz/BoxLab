@@ -6,6 +6,8 @@ import {createUVNavigation} from './uv-navigation.js?v=0.36.18.868';
 export function createUVWorkspace({canvas,note,controls,onDone,onHistory,onTransform=()=>false,canEdit=()=>true,getTransformContext=()=>null}){
  const parent=document.querySelector('#viewportWrap');if(!parent)return null;
  const style=document.createElement('style');style.textContent=`
+ /* Keep UV layers below the main header and its original menus. Reverts on close. */
+ #viewportWrap:has(> #boxlabUVWorkspace:not([hidden])){isolation:isolate}
  #boxlabUVWorkspace[hidden]{display:none!important}
  #boxlabUVWorkspace{position:absolute;inset:8px;z-index:180;display:flex;flex-direction:column;gap:8px;padding:10px;box-sizing:border-box;min-width:0;min-height:0;border:1px solid #536073;border-radius:12px;background:#151c27;color:#edf3fa;box-shadow:0 12px 36px #0009;font-size:12px;touch-action:none}
  #boxlabUVWorkspace .uv-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
