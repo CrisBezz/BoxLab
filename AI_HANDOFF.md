@@ -2,7 +2,7 @@
 
 ## Current state — 19 October 2026
 
-Main release0.36.18.918 based on0f040ed2 (.917 publication proof). User917PASS
+Main release0.36.18.918 at57a53f93 (publication verified in this continuation). User917PASS
 protects paint Save/Open/Duplicate/UndoRedo, alongside accepted916 left dock/UV.
 Roughness resource/project/history917 now exports through original NOM/GLB owners
 with validated UV binding and captured scalar bytes. No roughness UI/preview yet.
@@ -1015,3 +1015,22 @@ Initial cache preparation accidentally repinned unchanged917 shell owners; regre
 checks caught this, unrelated pins were restored, reviewed contract passed, and the
 final complete suite above ran against corrected source. No bad graph published.
 Multi1.0 and frozen betas unchanged. Publication verification follows.
+
+
+## .918 publication verified — 19 October 2026 (Brisbane)
+
+Runtime commit `57a53f93ffb8c9a194bb1baaccbb738ab0d8b924`, tree
+`c15f998e6ecaa416e159bca959312370e419b048`, is published. Hosted topology
+regression run `39232675588`, job `117994153957`, completed successfully;
+Pages run `39232675125` completed successfully. The build's recorded local full
+suite is 2,594 PASS / 0 FAIL / 0 skipped; this continuation verified hosted success,
+without rerunning the local suite. All 19 checked live files byte-match main:
+shell/manifest, every changed runtime and Lab file, and protected Multi1.0.
+No runtime changes in this continuation and no .918 device PASS inferred.
+
+The app is ready for testing — build .918. Export differently colour-painted
+original/copy to NOMAD and GLB; check independent colour and UV placement. Repaint
+the copy and repeat NOMAD export to confirm the original remains unchanged.
+Roughness fixtures are automated; there are no roughness controls to test yet.
+Next narrow build: visible roughness channel/preview through existing compact Paint,
+raster/input/history owners, preserving scalar data semantics and existing exports.
