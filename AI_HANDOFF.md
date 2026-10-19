@@ -2,7 +2,7 @@
 
 ## Current state — 19 October 2026
 
-Main release0.36.18.920, source base fb7f928a. User919PASS protects scalar Pencil,
+Main release0.36.18.920 atb3aae526; source base fb7f928a. User919PASS protects scalar Pencil,
 grayscale/history/SaveOpen/native smooth/rough handoff; earlier918 colour export
 and916 left dock/UV remain protected. Paint offers Channel(default) / Lit material;
 valid roughness also displays lit after Done in Studio/Solid/UV Image. Existing
@@ -1142,3 +1142,25 @@ Initial preparation run caught an incorrect temporary write target that replaced
 local HTML shell with cache-fixture JSON. Restored shell from main, applied only reviewed
 pins/markers, corrected fixture destination, then reran the entire final suite above.
 No malformed shell published and no behavior checks relaxed. Publication proof follows.
+
+
+## .920 publication verified — 19 October 2026 (Brisbane)
+
+Runtime `b3aae5266bcff0f206500d2e5fea278825e5cd41`, tested tree
+`22b91cd354bb03f4acd9540adf4952b04a69b546`, is published. Connected Git Data
+created an identical local tested tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39245427937` / job `118036074696` both pass
+2,606 tests, zero failures/skips (hosted complete logs verified). Pages run
+`39245427818` deploy job `118036289017` completed all deployment steps successfully.
+All18 fresh live shell/version, four runtime owners, complete changed export/Lab
+parent graph, recovery, protected Multi1.0, retained roughness resource/pool and
+project codec files byte-match tested source. Initial predeployment reads served919;
+final complete checked graph matches920. No frozen/modelling/brush/project/export
+algorithm changes. Source scalar bytes/data semantics retained; no custom lights.
+
+All four continuity documents updated; this proof is docs-only. User919PASS protected;
+920 actual iPad highlights/material appearance/latency acceptance remains pending,
+not established by Node Three material/texture tests. Ready for hands-on Paint
+Roughness → Preview Lit material0/255/orbit, Channel return, Done/SaveOpen/selection
+and existing no-roughness colour appearance. Next remaining material-slot audit
+(Metalness candidate) follows device feedback, through original owners.
