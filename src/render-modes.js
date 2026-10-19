@@ -1,4 +1,4 @@
-import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.918';
+import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.920';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';
@@ -180,7 +180,7 @@ function applyMode(body){
     }
   }
   else{body.material=frontOnly(original);addBackface(body);}
-  if(['studio','solid','uvimage'].includes(mode)){const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));if(object?.colourPaint)createCommittedPaintSurface(body,object,inactive?object.mesh:bridge()?.mesh);}
+  if(['studio','solid','uvimage'].includes(mode)){const m=manager(),object=m?.objects?.find(o=>o.id===(inactive?body.userData.objectId:m.activeId));if(object?.colourPaint||object?.roughnessPaint)createCommittedPaintSurface(body,object,inactive?object.mesh:bridge()?.mesh);}
 }
 
 Object.assign(globalThis.__boxlabRenderModes ||= {},{

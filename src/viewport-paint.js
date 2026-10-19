@@ -1,5 +1,5 @@
 import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915';
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.919';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.920';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=905';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 import {importPaintImage} from './paint-image-source.js?v=0.36.18.907';
@@ -14,7 +14,8 @@ let imageStage=null,imageGesture=null,imageRequest=0;
 const panel=document.createElement('section');panel.id='boxlabViewportPaint';panel.hidden=true;
 panel.innerHTML=`
 <label>Channel <select data-paint="channel"><option value="colour">Colour</option><option value="roughness">Roughness</option></select></label>
-<div data-paint="roughness-controls" hidden><label>Value (0–255) <input data-paint="roughness-value" type="range" min="0" max="255" step="1" value="128"><output data-paint="roughness-readout">128</output></label><small>Grayscale inspection · black smooth / white rough</small></div>
+<label>Preview <select data-paint="preview"><option value="channel">Channel</option><option value="material">Lit material</option></select></label>
+<div data-paint="roughness-controls" hidden><label>Value (0–255) <input data-paint="roughness-value" type="range" min="0" max="255" step="1" value="128"><output data-paint="roughness-readout">128</output></label><small data-paint="preview-hint">Grayscale inspection · black smooth / white rough</small></div>
 <div class="paint-main-row"><strong>Paint</strong><label>Colour <input data-paint="colour" type="color" value="#e34b37"></label></div>
 <div class="paint-brush-row"><label>Size <input data-paint="radius" type="range" min="1" max="48" value="10"></label><label>Opacity <input data-paint="opacity" type="range" min="0" max="1" step=".01" value="1"></label></div>
 <details><summary>Brush settings</summary><div class="paint-layer-controls"><label>Brush <select data-paint="brush"><option value="boxlab">BoxLab round</option><option value="klecks">Klecks curve</option></select></label><label>Hardness <input data-paint="hardness" type="range" min="0" max="1" step=".01" value=".7"></label><label><input data-paint="pressure" type="checkbox" checked>Pressure → size</label></div></details>
@@ -32,7 +33,7 @@ function options(select,items){const nodes=items.map(({value,label})=>{const o=d
 input('mask-value').value='0';input('roughness-value').value='128';
 options(input('layer-blend'),PAINT_BLEND_MODES.map(value=>({value,label:value.split('-').map(s=>s[0].toUpperCase()+s.slice(1)).join(' ')})));
 function syncLayers(){const state=controller?.state;if(!state)return;input('layer').disabled=false;options(input('layer'),[...state.layers].reverse().map(l=>({value:l.id,label:l.name+(l.image?' · image':'')+(l.visible?'':' · hidden')})));input('layer').value=state.selected;
- const rough=state.paintTarget==='roughness';input('channel').value=rough?'roughness':'colour';input('roughness-controls').hidden=!rough;
+ const rough=state.paintTarget==='roughness';input('preview').value=state.previewMode;input('preview-hint').textContent=state.previewMode==='material'?'Lit material · 0 smooth / 255 rough':'Grayscale inspection · black smooth / white rough';input('channel').value=rough?'roughness':'colour';input('roughness-controls').hidden=!rough;
  const selected=state.layers.find(l=>l.id===state.selected),base=state.selected==='$base',index=state.layers.indexOf(selected);
  input('layer-name').value=selected.name;input('layer-visible').checked=selected.visible;input('layer-opacity').value=String(selected.opacity);input('layer-blend').value=selected.blendMode;
  for(const key of ['layer-name','layer-visible','layer-opacity','layer-blend','remove-layer'])input(key).disabled=base;
@@ -41,7 +42,8 @@ function syncLayers(){const state=controller?.state;if(!state)return;input('laye
  input('add-layer').disabled=state.layers.length>=4;input('choose-image').disabled=state.layers.length>=4;input('edit-image').disabled=!selected.image;input('layer-up').disabled=base||index===state.layers.length-1;input('layer-down').disabled=base||index<=1;
  if(rough)for(const key of ['layer','add-layer','choose-image','edit-image','layer-name','layer-visible','layer-opacity','layer-blend','remove-layer','layer-up','layer-down','paint-target','add-mask','remove-mask','mask-enabled','mask-inverted','mask-hide','mask-reveal','mask-grey','mask-value'])input(key).disabled=true;
 }
-function layerAction(fn){clearImage();cancel();try{fn();syncLayers();say(controller?.state?.paintTarget==='roughness'?'Roughness · Pencil paints values · grayscale inspection · black smooth / white rough':controller?.state?.paintTarget==='mask'?'UV Paint · Pencil paints mask · Hide/Reveal brush sets coverage · Undo exits Paint':controller?.state?.layers.find(l=>l.id===controller.state.selected)?.image?'UV Paint · image retained · edit its mask or select a paint layer':'UV Paint · selected layer receives Pencil strokes · Undo exits Paint');}catch(error){syncLayers();say('UV Paint: '+error.message);}}
+function layerAction(fn){clearImage();cancel();try{fn();syncLayers();say(controller?.state?.previewMode==='material'?'Paint · lit material preview · Pencil paints the selected channel · fingers navigate':controller?.state?.paintTarget==='roughness'?'Roughness · Pencil paints values · grayscale inspection · black smooth / white rough':controller?.state?.paintTarget==='mask'?'UV Paint · Pencil paints mask · Hide/Reveal brush sets coverage · Undo exits Paint':controller?.state?.layers.find(l=>l.id===controller.state.selected)?.image?'UV Paint · image retained · edit its mask or select a paint layer':'UV Paint · selected layer receives Pencil strokes · Undo exits Paint');}catch(error){syncLayers();say('UV Paint: '+error.message);}}
+input('preview').addEventListener('change',()=>layerAction(()=>controller?.selectPreviewMode(input('preview').value)));
 input('channel').addEventListener('change',()=>layerAction(()=>controller?.selectPaintTarget(input('channel').value)));
 input('roughness-value').addEventListener('input',()=>{cancel();input('roughness-readout').textContent=input('roughness-value').value;});
 input('layer').addEventListener('change',()=>layerAction(()=>controller?.selectLayer(input('layer').value)));

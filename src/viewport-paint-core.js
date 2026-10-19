@@ -8,7 +8,7 @@ import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.912';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.913';
 import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.913';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.918';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.920';
 import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.918';
 import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.918';
 // Scene history, selection, camera and body lifetime remain with the existing app.
@@ -24,7 +24,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   const b=body();if(!b?.geometry)throw Error('Selected viewport body unavailable');const geometry=owner.buildUVPreviewGeometry(o.mesh,o.glbPassthrough);if(!geometry)throw Error('UV geometry unavailable');
   const stack=resource?.version>=2?capturePaintResource(resource).layers:null,selected=stack?.layers.at(-1)?.id||'$base',preview=new Uint8Array(512*512*4).fill(255);if(resource)preview.set(resource.pixels);
   let layer,display;try{layer=createPaintLayer(512,{transparent:!!stack&&selected!=='$base'});if(stack)layer.restore(selected==='$base'?stack.base.pixels:stack.layers.find(l=>l.id===selected).pixels);else if(resource)layer.restore(resource.pixels);for(const child of [...b.children])child.userData?.boxlabColourPaintDispose?.();display=createPaintSurface(b,geometry,paintTexture(preview,512));display.show();}catch(e){geometry.dispose();display?.dispose();layer?.dispose();throw e;}
-  const lost=()=>close(false);session={object:o,id:o.id,key,binding,resource,roughness,uv:o.glbPassthrough,body:b,layer,display,lost,stack,selected,preview,dirty:true,paintTarget:'colour'};b.geometry.addEventListener('dispose',lost);return true;
+  const lost=()=>close(false);session={object:o,id:o.id,key,binding,resource,roughness,uv:o.glbPassthrough,body:b,layer,display,lost,stack,selected,preview,dirty:true,paintTarget:'colour',previewMode:'channel'};b.geometry.addEventListener('dispose',lost);return true;
  }
  function hit(p){if(!current())return null;scene.updateMatrixWorld(true);ray.setFromCamera(new THREE.Vector2(p.x/p.width*2-1,1-p.y/p.height*2),camera);
   const proxy=new THREE.Mesh(session.display.surface.geometry,session.display.surface.material);proxy.matrixWorld.copy(session.body.matrixWorld);const h=ray.intersectObject(proxy,false)[0];if(!h?.uv)return null;
@@ -46,6 +46,13 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
   return {...s.stack,layers:s.stack.layers.map(l=>l.id===s.selected?(maskPixels?{...l,mask:{...l.mask,pixels:maskPixels}}:{...l,pixels:s.layer.pixels}):l)};
  }
  function updatePreview(){if(!session)return;session.preview.set(session.paintTarget==='roughness'?session.layer.pixels:session.imagePreview?.resource.pixels||(session.stack?flattenPaintLayerStack(workingStack()).pixels:session.layer.pixels));session.dirty=true;}
+ function updateMaterialPreview(){const s=session;if(!s)return;
+  if(s.previewMode!=='material'){s.display.showChannel();return;}
+  const colour=s.paintTarget==='roughness'?(s.resource?.pixels||null):s.preview;
+  const roughness=s.paintTarget==='roughness'?{width:512,height:512,pixels:s.layer.pixels}:s.roughness;
+  s.display.showMaterial(colour,roughness,s.paintTarget==='roughness');
+ }
+ function selectPreviewMode(value){if(!ready())return false;if(!['channel','material'].includes(value))throw Error('Unknown paint preview');if(session.previewMode===value)return false;session.previewMode=value;session.dirty=true;return true;}
  function loadLayer(){const s=session;if(!s)return;const selected=s.stack?.layers.find(l=>l.id===s.selected);if(s.paintTarget==='mask'&&!selected?.mask)s.paintTarget='colour';
   s.layer.dispose();s.layer=createPaintLayer(512,{transparent:!!selected&&s.paintTarget==='colour'});
   if(s.paintTarget==='roughness'){const rgba=new Uint8Array(512*512*4).fill(255),pixels=s.roughness?.pixels;if(pixels)for(let i=0;i<pixels.length;i++)rgba[i*4]=rgba[i*4+1]=rgba[i*4+2]=pixels[i];s.layer.restore(rgba);}
@@ -101,8 +108,8 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  }
  function editMask(patch){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)throw Error('Add a mask to the selected paint layer first');if(!patch||Object.keys(patch).some(k=>!['enabled','inverted'].includes(k)))throw Error('Unsupported mask edit');if(Object.keys(patch).every(k=>layer.mask[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{...layer.mask,...patch}})));}
  function removeMask(){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:null})));}
- function state(){const s=session;return s?{selected:s.selected,paintTarget:s.paintTarget,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
- return {open,close,cancel,begin,move,finish,hit,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,previewImage,applyImagePreview,clearImagePreview,surfaceFrame,
-  tick(){if(session&&!current()){close();return;}if(session?.layer.consumeDirty())updatePreview();if(session?.dirty){session.display.surface.material.map.needsUpdate=true;session.dirty=false;}},
+ function state(){const s=session;return s?{selected:s.selected,paintTarget:s.paintTarget,previewMode:s.previewMode,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
+ return {open,close,cancel,begin,move,finish,hit,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,previewImage,applyImagePreview,clearImagePreview,surfaceFrame,
+  tick(){if(session&&!current()){close();return;}if(session?.layer.consumeDirty())updatePreview();if(session?.dirty){updateMaterialPreview();const map=session.display.surface.material.map;if(session.previewMode==='channel'&&map)map.needsUpdate=true;session.dirty=false;}},
   get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
 }

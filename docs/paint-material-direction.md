@@ -102,3 +102,12 @@ visible channel controls/preview through accepted compact Paint owner.
 patch now transport validated captured R8 maps; combined colour/roughness identity
 prevents shared-colour material collisions. No controls/preview yet. Read
 roughness-export-918.md; next visible scalar channel through original Paint owner.
+
+
+## .919–.920 roughness authoring and preview — 19 October 2026
+
+.919 scalar Pencil channel accepted by user. .920 adds optional live Lit material
+preview and committed roughness under existing Studio/base lights; Channel inspection
+retained, colour-only committed look unchanged. See roughness-preview-920.md for
+ownership/limits. Remaining channels need their own resource/transport/writer audit;
+Metalness next candidate, not delivered by roughness. No physical Nomad parity claim.
