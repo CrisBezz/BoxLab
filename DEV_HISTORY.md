@@ -11899,3 +11899,35 @@ published. No new hands-on test needed: editable metalness controls/preview rema
 next; export fixtures and actual File actions are automated, no rendered/native
 appearance acceptance inferred. User920PASS remains protected; no921/922 devicePASS
 invented. Next original scalar Pencil channel, then existing material preview owner.
+
+## .923 — Metalness Pencil channel and existing lit material preview — 20 October 2026
+
+Audit main f2cc8a38 / .922: scalar resources, codec/history/duplicate and native/GLB
+writers already exist; expose them through original compact LEFT Paint and surface
+owners. Shared scalar configuration reuses accepted raster, quota/checkpoint and
+cancellation paths. Metalness starts black0, brush defaults255; opaque raw equal-RGB
+working bytes publish independent linear R8 only. Colour/masks/images stay disabled
+while editing either scalar; returning Colour restores existing controls/layers.
+Non512 retained maps refuse painting rather than resampling. All identity/binding,
+body lifetime, budget and checkpoint refusal rules retained.
+
+Existing surface owns separate linear roughness G and metalness B textures; metal
+factor1 with a map, default0 otherwise. Existing lighting/UVs/colour sRGB remain.
+Live dirty uploads coalesce; switching Channel/Lit or scalars cancels contact without
+history. Committed active/inactive/locked overlays use same owner; disposal frees maps.
+No new brush/kernel/writer/history owner, lights, environment, or modelling changes.
+Reverse loader/cache graph reviewed and pinned923; protected Multi1.0/frozen intact.
+13 new integrations cover UI/raw0/255/opacity/no-op, cancellation, quota/checkpoint,
+identity/stale/non512, history/SaveOpen/single+Multi Duplicate, actual NOM/GLB bytes,
+linear B material, map independence/lifetime and active/inactive render ownership.
+Existing roughness/mask nearby19PASS. Read docs/metalness-paint-923.md.
+
+User920PASS remains protected; /nextbuild alone is not921/922/923 device acceptance.
+DEVICE923: Metalness0/255 Channel/Lit, low Roughness highlights, independent channels,
+Done/SaveOpen, UndoRedo and duplicate isolation; native Nomad material sanity check.
+Next: respond narrowly to923 device feedback before adding more material channels.
+
+.923 local validation: Node24.19.0 full **2,633 PASS / 0 FAIL / 0 skipped**;
+13 new integrations, nearby roughness/mask19PASS and release contract5PASS.
+No existing assertions relaxed; protected Multi1.0/frozen/modelling unchanged.
+Publication/hosted regression/live-byte verification follows. Device923 pending.

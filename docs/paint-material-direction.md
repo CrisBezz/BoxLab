@@ -128,3 +128,5 @@ roughness/colour, with exact bytes and captured UVs. No metalness UI/preview yet
 See metalness-export-922.md. Next original Paint scalar channel, then lit preview;
 keep data semantics and project/history/duplicate isolation. No device metalness
 appearance acceptance inferred from export fixtures.
+
+Build .923 exposes Metalness through the original Pencil scalar and Lit material owners. See metalness-paint-923.md; device gate pending, user920PASS protected.
