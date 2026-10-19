@@ -11981,3 +11981,25 @@ Metalness923 device gate still pending. Next:924 device feedback, narrow repair 
 nearby UV/workspace/history/Focus/background/release20PASS. Final source contains
 only active-UV isolation + reviewed loader/release pins; no assertions relaxed.
 No rendered/device disappearance acceptance inferred; publication proof follows.
+
+## .924 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `97a4d9e118e8a2bc71b66b90e393eec3818dc264`, tested tree
+`0413e5a8253f822d93154f1e4d145b69f0bb97f6`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39338873374` / job `118355146518` both pass
+2,633 tests, zero failures/skips; complete hosted logs verified. Pages
+`39338872454`, deploy job `118355375163`, completed all steps successfully.
+All16 fresh live files byte-match source: shell/version, UV workspace/Mesh Health
+loader, recovery, protected Multi1.0, original header/toolbar/view CSS and owners,
+painter, retained scalar resources/pool and project codec. Initial in-flight reads
+served923; final checked graph matches924. No UV/model/paint/history/input algorithm
+changes; only one active-UV CSS rule and reviewed release/cache references.
+
+All four continuity files current; this proof is docs-only. Build924 complete and
+ready for iPad retest: repeatedly enter UV Editor, pan/pinch/edit/history, use VIEW,
+then Back to3D; confirm main top-right buttons remain visible and usable. Source
+layering issue repaired; exact intermittent Safari disappearance still needs this
+device confirmation. Cloud main WebGL unavailable, no full-app rendered proof.
+If it persists obtain screenshot and exact trigger before further UI changes.
+User920PASS protected;923 Metalness device gate still pending, no inferred PASS.
