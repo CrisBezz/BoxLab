@@ -1,4 +1,4 @@
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.921';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from './paint-export.js?v=0.36.18.922';
 // BoxLab .735 — native NOMAD handoff; regular OBJ/GLB exports remain available.
 // GLB keeps BoxLab editable objects as separate named scene nodes for Nomad/3D handoff.
 import * as THREE from 'three';
@@ -6,7 +6,7 @@ import {GLTFExporter} from 'three/addons/exporters/GLTFExporter.js';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {buildSceneOBJ,resolveExportMesh,safeOBJName} from './scene-obj-export-core.js?v=0.36.18.921';
 
-import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.921';
+import {buildNomadProjectWithMaps} from './nomad-packed-maps.js?v=0.36.18.922';
 
 const VERSION='0.36.18.892';
 const panel=document.querySelector('#exportAsPanel');
@@ -446,12 +446,12 @@ function patchNomadFaceGroupGLB(buffer,objectDetails){
       primitive.extras.nomad={...(primitive.extras.nomad||{}),group};
     });
 
-    if(detail.paintImage||detail.roughnessImage){
-      const image=detail.paintImage,roughness=detail.roughnessImage;
+    if(detail.paintImage||detail.roughnessImage||detail.metalnessImage){
+      const image=detail.paintImage,roughness=detail.scalarImage||detail.roughnessImage,metalness=!!detail.metalnessImage;
       const colourTexture=image?addPaintTexture(image):null,roughnessTexture=roughness?addPaintTexture(roughness):null;
-      const materialKey=JSON.stringify([colourTexture,roughnessTexture]);let material=paintMaterials.get(materialKey);
+      const materialKey=JSON.stringify([colourTexture,roughnessTexture,metalness]);let material=paintMaterials.get(materialKey);
       if(material===undefined){
-       material=gltf.materials.length;gltf.materials.push({name:'BoxLab painted material',pbrMetallicRoughness:{...(image?{baseColorTexture:{index:colourTexture,texCoord:0}}:{}),...(roughness?{metallicRoughnessTexture:{index:roughnessTexture,texCoord:0}}:{}),baseColorFactor:[1,1,1,1],roughnessFactor:1,metallicFactor:0},alphaMode:'OPAQUE',doubleSided:false});paintMaterials.set(materialKey,material);
+       material=gltf.materials.length;gltf.materials.push({name:'BoxLab painted material',pbrMetallicRoughness:{...(image?{baseColorTexture:{index:colourTexture,texCoord:0}}:{}),...(roughness?{metallicRoughnessTexture:{index:roughnessTexture,texCoord:0}}:{}),baseColorFactor:[1,1,1,1],roughnessFactor:1,metallicFactor:metalness?1:0},alphaMode:'OPAQUE',doubleSided:false});paintMaterials.set(materialKey,material);
       }
       for(const primitive of mesh.primitives||[])primitive.material=material;
     }else if(passthrough?.materials?.length){
@@ -543,7 +543,7 @@ async function verifyGLB(buffer,expectedObjects,expectedGroupSlots){
   return report;
 }
 async function buildGLB(sceneObjects,subd){
-  if(sceneObjects.some(o=>o?.colourPaint||o?.roughnessPaint)){sceneObjects=capturePaintExportObjects(sceneObjects);await preparePaintExportObjects(sceneObjects,{subd,owner:{topologySignature,buildUVPreviewGeometry}});}
+  if(sceneObjects.some(o=>o?.colourPaint||o?.roughnessPaint||o?.metalnessPaint)){sceneObjects=capturePaintExportObjects(sceneObjects);await preparePaintExportObjects(sceneObjects,{subd,packedScalars:true,owner:{topologySignature,buildUVPreviewGeometry}});}
   const root=new THREE.Group();
   root.name='BoxLab';
   let count=0,faceGroupCount=0,groupSlotCount=0,uvRestoredCount=0,tangentsRestoredCount=0,vertexColorsRestoredCount=0,morphTargetsRestoredCount=0;
@@ -552,7 +552,7 @@ async function buildGLB(sceneObjects,subd){
   sceneObjects.forEach((object,index)=>{
     const editable=resolveExportMesh(paintExportGeometryObject(object),subd);
     if(!editable?.vertices?.length||!editable?.faces?.length)return;
-    const paintImage=preparedPaintImage(object),roughnessImage=preparedRoughnessImage(object),passthrough=object.glbPassthrough||null;
+    const paintImage=preparedPaintImage(object),roughnessImage=preparedRoughnessImage(object),metalnessImage=preparedMetalnessImage(object),scalarImage=preparedMetallicRoughnessImage(object),passthrough=object.glbPassthrough||null;
     const multiMaterial=Array.isArray(passthrough?.materialIndices)&&new Set(passthrough.materialIndices).size>1;
     const materialFaces=multiMaterial&&!subd?faceMaterialAssignments(editable,passthrough):null;
     if(multiMaterial&&!materialFaces)throw Error('Multi-material GLB export requires matching Base face assignments. Reimport the original GLB with Split groups off; use Base geometry.');
@@ -564,7 +564,7 @@ async function buildGLB(sceneObjects,subd){
     const morphCompatible=!subd&&passthrough?.morphTopologySignature&&passthrough.morphTopologySignature===topology;
     const built=editableToGeometry(editable,{
       uvs:uvCompatible?passthrough.uvCorners:null,
-      preserveFaceWinding:!!(paintImage||roughnessImage),
+      preserveFaceWinding:!!(paintImage||roughnessImage||metalnessImage),
       faceMaterials:materialFaces,materialFacegroups:!!materialFaces,
       preserveUVSeams:!!materialFaces||passthrough?.source==='boxlab',
       tangents:tangentCompatible?passthrough.tangentCorners:null,
@@ -611,7 +611,7 @@ async function buildGLB(sceneObjects,subd){
       groupNames:materialFaces?uniqueNames:built.groups.map((group,groupIndex)=>group.name||('FaceGroup '+(groupIndex+1))),
       groupIds,
       materialIndices:materialFaces?built.groups.map(group=>group.materialIndex):null,
-      passthrough,paintImage,roughnessImage,
+      passthrough,paintImage,roughnessImage,metalnessImage,scalarImage,
       uvRestored:!!built.uvRestored,
       uvCompatible:!!uvCompatible,
       tangentsRestored:!!built.tangentsRestored,
@@ -693,7 +693,7 @@ async function exportAs(){
       const result=await buildGLB(sceneObjects,subd);
       const blob=new Blob([result.buffer],{type:'model/gltf-binary'});
       const outcome=await saveBlob(blob,fileName,'model/gltf-binary');
-      if(status&&outcome!=='cancelled'){const painted=result.objectDetails.filter(item=>item.paintImage).length,roughness=result.objectDetails.filter(item=>item.roughnessImage).length,preserved=result.objectDetails.filter(item=>item.passthrough?.source==='glb').length;status.textContent=`GLB verified • ${result.verification.objects} object${result.verification.objects===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'}${painted?` • painted colour ${painted}`:''}${roughness?` • roughness maps ${roughness}`:''}${preserved?` • ${preserved} Nomad payload preserved`:''}${result.uvRestoredCount?` • UVs restored ${result.uvRestoredCount}/${result.count}`:''}${result.tangentsRestoredCount?` • tangents restored ${result.tangentsRestoredCount}/${result.count}`:''}${result.vertexColorsRestoredCount?` • vertex colours restored ${result.vertexColorsRestoredCount}/${result.count}`:''}${result.morphTargetsRestoredCount?` • layers restored ${result.morphTargetsRestoredCount}/${result.count}`:''} • ${outcome}`;}
+      if(status&&outcome!=='cancelled'){const painted=result.objectDetails.filter(item=>item.paintImage).length,roughness=result.objectDetails.filter(item=>item.roughnessImage).length,metalness=result.objectDetails.filter(item=>item.metalnessImage).length,preserved=result.objectDetails.filter(item=>item.passthrough?.source==='glb').length;status.textContent=`GLB verified • ${result.verification.objects} object${result.verification.objects===1?'':'s'} • ${result.faceGroupCount} facegroup${result.faceGroupCount===1?'':'s'}${painted?` • painted colour ${painted}`:''}${roughness?` • roughness maps ${roughness}`:''}${metalness?` • metalness maps ${metalness}`:''}${preserved?` • ${preserved} Nomad payload preserved`:''}${result.uvRestoredCount?` • UVs restored ${result.uvRestoredCount}/${result.count}`:''}${result.tangentsRestoredCount?` • tangents restored ${result.tangentsRestoredCount}/${result.count}`:''}${result.vertexColorsRestoredCount?` • vertex colours restored ${result.vertexColorsRestoredCount}/${result.count}`:''}${result.morphTargetsRestoredCount?` • layers restored ${result.morphTargetsRestoredCount}/${result.count}`:''} • ${outcome}`;}
     }
   }catch(error){
     console.error('BoxLab Export As failed',error);

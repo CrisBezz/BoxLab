@@ -29,17 +29,20 @@ export async function encodeNomadScalarPNG(rgba,width,height,channel){
  return packagePNG(rows,width,height,0);
 }
 // Opaque sRGB colour transport; UV-v0-first rows stay in their original order.
-export async function encodeNomadColourPNG(rgba,width,height){
+export async function encodeNomadColourPNG(rgba,width,height){return encodeRGBPNG(rgba,width,height,true);}
+// Packed scalar RGB uses the same PNG owner without colour metadata or conversion.
+export async function encodeNomadDataPNG(rgba,width,height){return encodeRGBPNG(rgba,width,height,false);}
+async function encodeRGBPNG(rgba,width,height,colour){
  if(!Number.isInteger(width)||!Number.isInteger(height)||width<16||height<16||width>1024||height>1024||!(rgba instanceof Uint8Array)||rgba.length!==width*height*4)throw Error('Paint PNG input is invalid');
  const stride=width*3+1,rows=new Uint8Array(stride*height);
  for(let y=0;y<height;y++)for(let x=0;x<width;x++){const i=(y*width+x)*4;if(rgba[i+3]!==255)throw Error('Paint PNG requires opaque pixels');const at=y*stride+1+x*3;rows[at]=rgba[i];rows[at+1]=rgba[i+1];rows[at+2]=rgba[i+2];}
- return packagePNG(rows,width,height,2);
+ return packagePNG(rows,width,height,2,colour);
 }
-async function packagePNG(rows,width,height,type){
+async function packagePNG(rows,width,height,type,colour=true){
  if(typeof globalThis.CompressionStream!=='function')throw Error('NOMAD PNG compression is unavailable in this browser');
  const compressed=new Uint8Array(await new Response(new Blob([rows]).stream().pipeThrough(new CompressionStream('deflate'))).arrayBuffer());
  const header=new Uint8Array(13),view=new DataView(header.buffer);view.setUint32(0,width);view.setUint32(4,height);header[8]=8;header[9]=type; // scalar remains type0 without colour metadata
- const parts=[new Uint8Array([137,80,78,71,13,10,26,10]),chunk('IHDR',header),...(type===2?[chunk('sRGB',new Uint8Array([0]))]:[]),chunk('IDAT',compressed),chunk('IEND',new Uint8Array())],size=parts.reduce((n,b)=>n+b.length,0);
+ const parts=[new Uint8Array([137,80,78,71,13,10,26,10]),chunk('IHDR',header),...(type===2&&colour?[chunk('sRGB',new Uint8Array([0]))]:[]),chunk('IDAT',compressed),chunk('IEND',new Uint8Array())],size=parts.reduce((n,b)=>n+b.length,0);
  if(size>8*1024*1024)throw Error('NOMAD converted map exceeds 8 MB');
  const png=new Uint8Array(size);let at=0;for(const part of parts){png.set(part,at);at+=part.length;}return png;
 }

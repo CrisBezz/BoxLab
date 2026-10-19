@@ -1,8 +1,8 @@
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage} from './paint-export.js?v=0.36.18.921';
-import {encodeNomadScalarPNG} from './nomad-scalar-png.js?v=0.36.18.901';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage} from './paint-export.js?v=0.36.18.922';
+import {encodeNomadScalarPNG} from './nomad-scalar-png.js?v=0.36.18.922';
 // Export-local glTF G/B unpacking. Source resources remain read-only; the original
 // native writer owns materials, UV validation, binary layout and final byte budgets.
-import {nativeMaterialMaps,buildNomadProject,createNomadImageIdentity} from './nomad-export-core.js?v=0.36.18.921';
+import {nativeMaterialMaps,buildNomadProject,createNomadImageIdentity} from './nomad-export-core.js?v=0.36.18.922';
 const LIMIT=2048,TOTAL_LIMIT=24*1024*1024;
 function dimensions(choice){
  const a=choice.data,v=new DataView(a.buffer,a.byteOffset,a.byteLength);let width=0,height=0;
@@ -59,6 +59,7 @@ export async function buildNomadProjectWithMaps(objects,template,{subd=false,...
  for(const object of snapshot){
   const painted=preparedPaintImage(object);if(painted)addImage(painted.choice);
   const roughness=preparedRoughnessImage(object);if(roughness)addImage(roughness.choice);
+  const metalness=preparedMetalnessImage(object);if(metalness)addImage(metalness.choice);
   const material=nativeMaterialMaps(object.glbPassthrough);
   for(const [slot,map] of Object.entries(material?.maps||{}))if(slot!=='packed')addImage(map.choice);
  }

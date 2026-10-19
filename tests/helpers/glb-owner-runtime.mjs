@@ -1,4 +1,4 @@
-import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,paintExportGeometryObject} from '../../src/paint-export.js';
+import {capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject} from '../../src/paint-export.js';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import * as THREE from 'three';
@@ -17,7 +17,7 @@ class BlobReader{
 globalThis.FileReader??=BlobReader;
 export function glbOwnerRuntime({importSource=glbSource('import-mesh.js'),exportSource=glbSource('export-as-panel.js')}={}){
  const added=[];let message='';
- const c={capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,paintExportGeometryObject,THREE,EditableMesh,evaluateTrianglePair,resolveExportMesh,safeOBJName,GLTFExporter,GLTFLoader,TextEncoder,TextDecoder,Uint8Array,DataView,ArrayBuffer,console,
+ const c={capturePaintExportObjects,preparePaintExportObjects,preparedPaintImage,preparedRoughnessImage,preparedMetalnessImage,preparedMetallicRoughnessImage,paintExportGeometryObject,THREE,EditableMesh,evaluateTrianglePair,resolveExportMesh,safeOBJName,GLTFExporter,GLTFLoader,TextEncoder,TextDecoder,Uint8Array,DataView,ArrayBuffer,console,
   IMPORT_TARGET_SIZE:2,EDITABLE_WELD_TOLERANCE:1e-6,importKind:'editable',splitGroupsToggle:{checked:false},FileReader:BlobReader,
   setStatus:text=>message=text,fileBaseName:file=>file.name.replace(/\.[^.]+$/,''),__boxlabObjectManager:{addMesh:(mesh,name,options)=>added.push({mesh,name,...options})}};
  vm.createContext(c);

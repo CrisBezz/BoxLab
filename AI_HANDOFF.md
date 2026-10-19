@@ -1,14 +1,14 @@
-# BoxLab AI Handoff — .921 / Metalness foundation
+# BoxLab AI Handoff — .922 / Metalness export
 
-## Current state — 19 October 2026
+## Current state — 20 October 2026
 
-Main release0.36.18.921 at21ea62eb; source base05ddf085. User920PASS protects lit roughness/
-Channel/Done/SaveOpen/selection and colour-only appearance. Shared scalar codec/pool
-now serves unchanged roughness plus metalness data, history/Duplicate and explicit
-projectv7 transport. No metalness UI/preview/export yet; exports refuse unsupported
-metalness-bearing objects. Legacy1–6 preserved without metalness. Read
-docs/metalness-resource-921.md. No new hands-on test needed; next original export
-owners, then original Paint channel/preview. Validation/publication below.
+Main release0.36.18.922, source base2c438348. User920PASS protects existing paint/
+lit roughness/Channel/Done/SaveOpen/selection/colour appearance. Metalness resource/
+project/history921 now exports through original NOM slot and GLB packed G/B image;
+all source maps copied before await, UV binding and original budgets retained.
+No metalness authoring/preview controls yet. Read docs/metalness-export-922.md.
+No new hands-on test needed; next original scalar Pencil channel/material bridge.
+Validation/publication below. No new921 device PASS inferred from /nextbuild.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -497,10 +497,11 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Metalness captured PNG + original NOM/GLB material writers, retaining simultaneous
-colour+roughness and exact material identity/async snapshot guards. Then original
-Pencil channel and lit preview. No new hands-on921 task;920PASS remains protected.
-No parallel scalar codec/pool/paint kernels, new history or ordinary RGB data blends.
+Visible Metalness Pencil channel through original scalar resource/raster/history and
+compact Paint UI; then lit material integration through existing surface owner.
+GLB packed G/B export922 + native scalar export ready; protect accepted colour and
+roughness data, preview, projects and interactions. No new922 hands-on gate or
+synthetic fixture task; no ordinary RGB blend semantics for scalar data.
 
 ## Protected interaction and modelling baseline
 
@@ -1229,3 +1230,52 @@ complete; no new hands-on test needed because metalness controls/preview/export 
 not exposed yet. Fixture transport/history/atomic Open and refusal checks are automated.
 Next narrow build: captured metalness through original scalar PNG/NOM/GLB writers,
 then original Paint channel/material preview. No metalness visual acceptance claimed.
+
+
+## .922 — metalness export through original NOM/GLB owners — 20 October 2026
+
+Continue authorized921 foundation; no new device PASS inferred. User920PASS remains
+protected for paint/lit roughness/Channel/history/SaveOpen/selection/colour-only look.
+Audit main2c438348: existing native metalness slot, scalar PNG, paint capture and GLB
+material patch own required transport. Extend these owners; no new writer, schema,
+metadata provenance, history, modelling/paint kernel or UI controls.
+
+Capture owned metalness alongside colour/roughness/geometry/native UVs BEFORE await;
+original Base target digest validates all channels. Native metalness uses original
+lossless grayscalePNG + metalness slot/factor1; roughness factor1/default1 retained.
+Original names/content dedup/polygon UV pool/container/24MiB aggregate budget remain.
+GLB uses packed RGB data PNG G=roughness(or255), B=metalness, R=255, factors1; only
+roughness retains accepted grayscale PNG/metallicFactor0. Same PNG RGB/filter/CRC/zlib
+packager gets explicit no-colour-metadata path, not a canvas/gamma/resample encoder.
+Packed pair cache plus original colour image cache and full material key distinguish
+all colour/roughness/metalness combinations; shared exact resource pairs reuse images.
+Absent colour remains white. Independent non-square maps remain exact in NOM; GLB
+requires matching roughness/metalness dimensions and refuses rather than resizing.
+New data rows remain UV-v0-first, no factor baking or sRGB metadata on scalar data.
+
+Original File actions report metalness counts. Raw OBJ/unprepared sync native/Join
+still refuse metalness; invalid descriptor/stale binding/evaluated/imported/linked
+owners refuse. Async download captures never assign maps to source scene or native
+UV metadata. Resource/projectv7/history/brush/UI/lit preview algorithms unchanged.
+Complete changed PNG/export/parent/Lab graph922 only; Multi1.0/frozen unchanged.
+Old921 async blanket-refusal assertions now check stale binding; raw guards retained.
+
+Eight new integration tests cover actual NOM/GLB export+loader and File actions,
+independent PNG CRC/zlib/channel bytes, combinations/dedup, metal-only defaults,
+unequal-size refusal/NOM retention, async snapshots, invalid owners, original native
+24MiB preflight AND final writer cap, PNG data-vs-colour metadata/ownership.
+Native writer budget test imports its ACTUAL versioned paint-export dependency:
+prepared WeakMaps are module-local, so an unversioned Node helper cannot prepare
+another versioned module's writer. First fixture attempt hit the intended raw guard;
+corrected test wiring, not the runtime guard. Read docs/metalness-export-922.md.
+Full regression/publication evidence below; no renderer/Nomad appearance acceptance
+inferred from Node adapters. No new hands-on test needed: metalness has no controls
+yet. Next original Pencil scalar channel + material preview integration in narrow
+stages, preserving existing colour/roughness and independent resource semantics.
+
+.922 final local validation: Node24.19.0 full **2,620 PASS / 0 FAIL / 0 skipped**.
+Eight new integrations and all existing paint/preview/modelling/import/export checks
+pass; reviewed release contract5PASS. PNG data metadata path preserves old colour/
+scalar semantics; source resource/project/history/UI algorithms and Multi/frozen
+unchanged. No assertions excluded; old async refusal upgraded to binding contract.
+No new hands-on gate; publishing verification follows.

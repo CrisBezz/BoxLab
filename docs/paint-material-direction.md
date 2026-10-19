@@ -119,3 +119,12 @@ Metalness next candidate, not delivered by roughness. No physical Nomad parity c
 with existing roughness transports retained; metalness has scenev7/history/Duplicate
 but no authoring/preview/export yet. Read metalness-resource-921.md. Next captured
 metalness into existing NOM/GLB writers, then original Paint channel/material bridge.
+
+
+## .922 metalness export — 20 October 2026
+
+Original native scalar slot + GLB packed G/B transport now support metalness beside
+roughness/colour, with exact bytes and captured UVs. No metalness UI/preview yet.
+See metalness-export-922.md. Next original Paint scalar channel, then lit preview;
+keep data semantics and project/history/duplicate isolation. No device metalness
+appearance acceptance inferred from export fixtures.
