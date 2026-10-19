@@ -8203,3 +8203,24 @@ Six new integrations + existing917–920 nearby23PASS; release contract5PASS.
 All other changed JS parents verified pin-only; protected Multi1.0/frozen/modelling
 and existing paint/preview/export algorithms retained. No behavior checks relaxed.
 No new hands-on gate; user920PASS protected. Publication verification follows.
+
+
+## .921 publication verified — 19 October 2026 (Brisbane)
+
+Runtime `21ea62ebddef2a404b14e029fdb0744a1bd0862f`, tested tree
+`f0d7a3f92abab520806a4ed5874f99f3b7cb25f2`, is published. Connected Git Data
+created an identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39248074915` / job `118044791985` both pass
+2,612 tests with zero failures/skips; hosted full logs verified. Pages run
+`39248074813`, deploy job `118045052264`, completed all steps successfully.
+All30 checked live files byte-match tested source: shell/version, every changed
+runtime/parent/Lab file, four new scalar modules, recovery, protected Multi1.0 and
+retained colour pool. Initial in-flight reads served920/new modules404; final whole
+checked graph matches921. No protected/frozen/modelling/brush/preview algorithm changes.
+
+All four continuity files current; this proof changes docs only. User920PASS protects
+existing lit roughness/Channel/Done/SaveOpen/selection/colour appearance. Build921 is
+complete; no new hands-on test needed because metalness controls/preview/export are
+not exposed yet. Fixture transport/history/atomic Open and refusal checks are automated.
+Next narrow build: captured metalness through original scalar PNG/NOM/GLB writers,
+then original Paint channel/material preview. No metalness visual acceptance claimed.
