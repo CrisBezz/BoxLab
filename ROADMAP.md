@@ -3485,3 +3485,10 @@ Local Node24.19.0 full **2589 PASS / 0 FAIL / 0 skipped**; six new917 checks and
 all existing colour/UV/left-dock/paint/image/native regressions pass. Reviewed complete
 parent/Lab cache graph, source stamps retained, protected Multi/frozen unchanged.
 Publication evidence follows; no new roughness device UI or render claim.
+
+
+### Build .917 publication verification
+
+Runtime commit `30f39970f808a022af054f0e4505d20eaef39772`, tested tree `0b4dc5441f3399232a36cdddfb1e458567eb641c`, is published. Hosted Node 22 regression run 39194785838 (job 117875081484) passed all 2,589 tests, with zero failures or skips. Pages run 39194785560 completed successfully (deploy job 117875216536). All 25 checked live runtime, Lab, release and protected Multi files matched repository bytes. Protected .916 user PASS remains in force; no rendered roughness UI acceptance is claimed.
+
+Hands-on .917 checks: paint a distinctive mark, Save .boxlab and reopen; duplicate a painted object, paint the copy, and Undo/Redo while confirming the original remains unchanged. Roughness has no controls yet; its resource/project/history foundation is covered by automated tests. Next narrow work remains scalar PNG and existing export-owner adaptation before visible roughness painting.
