@@ -2,7 +2,7 @@
 
 ## Current state — 20 October 2026
 
-Main release0.36.18.922, source base2c438348. User920PASS protects existing paint/
+Main release0.36.18.922 ate550ae53; source base2c438348. User920PASS protects existing paint/
 lit roughness/Channel/Done/SaveOpen/selection/colour appearance. Metalness resource/
 project/history921 now exports through original NOM slot and GLB packed G/B image;
 all source maps copied before await, UV binding and original budgets retained.
@@ -1279,3 +1279,24 @@ pass; reviewed release contract5PASS. PNG data metadata path preserves old colou
 scalar semantics; source resource/project/history/UI algorithms and Multi/frozen
 unchanged. No assertions excluded; old async refusal upgraded to binding contract.
 No new hands-on gate; publishing verification follows.
+
+
+## .922 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `e550ae539d3a59789de95c6b9d18b800f4a7eb27`, tested tree
+`28860d5de9252cf60d31a11636082113f678bc95`, is published. Connected Git Data
+created an identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39335979744` / job `118345461602` both pass
+2,620 tests, zero failures/skips; complete hosted logs verified counts. Pages
+`39335978411`, deploy job `118345671446`, completed all steps successfully.
+All18 checked fresh live files byte-match source: shell/version, all five changed
+export/PNG runtime owners and Lab parents, recovery, protected Multi1.0 and retained
+scalar resources/project codec/painter UI/core/paint target. Initial in-flight reads
+served921; final complete checked graph matches922. No frozen/modelling/brush/
+project/history/preview algorithms changed; same native image budget and raw guards.
+
+All four continuity files current; this proof is docs-only. Build922 complete and
+published. No new hands-on test needed: editable metalness controls/preview remain
+next; export fixtures and actual File actions are automated, no rendered/native
+appearance acceptance inferred. User920PASS remains protected; no921/922 devicePASS
+invented. Next original scalar Pencil channel, then existing material preview owner.
