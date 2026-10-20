@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.927';
+import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.929';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
 import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer} from './paint-layer-stack.js?v=0.36.18.913';

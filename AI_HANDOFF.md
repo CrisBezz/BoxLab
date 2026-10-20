@@ -1,12 +1,12 @@
-# BoxLab AI Handoff — .928 / keep Paint open during history
+# BoxLab AI Handoff — .929 / PNG alpha brush tips
 
 ## Current state — 20 October 2026
 
-Build0.36.18.928 published at6584f8d0; source base f1ee9217. User .927 PASS protected.
-Undo/Redo now reconnects the original painter after scene restore so painting can
-continue, retaining selected channel/layer/preview and brush controls. Original
-history/gesture owners remain authoritative. Validation/publication below.
-Reflection preview unresolved independently; native Nomad export correct.
+Build0.36.18.929 prepared from main5ee8bb54; user .928 PASS protected.
+PNG alpha tips use original shared raster/Pencil/history/project/export owners.
+Read latest .929 entry and docs/paint-alpha-929.md for limits and manual gate.
+Local validation/publication status below; do not infer device acceptance.
+Reflection preview remains independently unresolved; native Nomad export correct.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -495,8 +495,8 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Retest928 two-finger Undo / three-finger Redo and continued painting; protect927PASS.
-Next bounded PNG alpha brush tips through original raster. UV-safe blur/smudge pending.
+Protect user928PASS: Paint history stays open with controls/continued strokes.
+Retest929 PNG alpha load/rotation/erase/Round tip; then UV-safe blur/smudge.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
@@ -1657,3 +1657,30 @@ open, continued Pencil strokes, retained channel/preview/brush controls and orig
 Paint footer history. Done still closes. User927 PASS protected; actual928 iPad
 acceptance pending. Reflection preview remains independently unresolved; native export
 correct. Next bounded PNG alpha tips; UV-safe blur/smudge pending.
+
+## .929 — PNG alpha brush tips; .928 user PASS — 20 October 2026
+
+User .928 PASS protects Paint staying open across two/three-finger and footer
+Undo/Redo, retained controls and continued Pencil strokes. Audit main5ee8bb54:
+original shared raster/input/history already own brush and Eraser; no custom tip
+importer/sampler. Add bounded PNG coverage through those SAME owners, reusing907
+image preflight/decode. Brush settings: Load alpha PNG / rotation / Round tip.
+PNG≤256²/256KiB, luminance×alpha coverage; white paints, black/transparent skips.
+Owned R8 tip≤64KiB, copied per contact; top-first/aspect-preserving rotated bilinear
+sampling in UV texels. Alpha replaces round hardness, original pressure/opacity cap/
+source-over/erase/cancel retained. Whole-object Fill ignores tip. No new pointer,
+history, paint-resource/project/native writer or modelling kernel. Tips/rotation are
+session preferences, retained through928 reopen but not saved in.boxlab. Marks persist.
+Late/invalid imports retain previous tip and committed work; original decode cleanup.
+Read docs/paint-alpha-929.md. Four focused tests cover limits/cleanup/coverage ownership,
+rotation/aspect/cancel/erase, real UI/history/project/native PNG and async refusal.
+Original shared raster reverse main/Lab cache graph929 reviewed; Multi1.0/frozen intact.
+Reflection preview remains unresolved, native export correct. Alpha device gate pending.
+Next device alpha feedback, then UV-safe blur/smudge; viewport/baked AO and Edge-based
+seam-authoring remain queued for existing-owner audits, not delivered features.
+Validation/publication evidence follows; no rendered or device performance claim.
+
+.929 final local Node24.19.0: **2,652 PASS / 0 FAIL / 0 skipped**.
+Four new alpha tests and original nearby18PASS; release/cache checks included.
+No assertions relaxed. Shared raster main/Lab reverse graph929 reviewed; Multi1.0
+and frozen builds unchanged. Publication/hosted/live verification follows.

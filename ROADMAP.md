@@ -4170,3 +4170,30 @@ open, continued Pencil strokes, retained channel/preview/brush controls and orig
 Paint footer history. Done still closes. User927 PASS protected; actual928 iPad
 acceptance pending. Reflection preview remains independently unresolved; native export
 correct. Next bounded PNG alpha tips; UV-safe blur/smudge pending.
+
+## .929 — PNG alpha brush tips; .928 user PASS — 20 October 2026
+
+User .928 PASS protects Paint staying open across two/three-finger and footer
+Undo/Redo, retained controls and continued Pencil strokes. Audit main5ee8bb54:
+original shared raster/input/history already own brush and Eraser; no custom tip
+importer/sampler. Add bounded PNG coverage through those SAME owners, reusing907
+image preflight/decode. Brush settings: Load alpha PNG / rotation / Round tip.
+PNG≤256²/256KiB, luminance×alpha coverage; white paints, black/transparent skips.
+Owned R8 tip≤64KiB, copied per contact; top-first/aspect-preserving rotated bilinear
+sampling in UV texels. Alpha replaces round hardness, original pressure/opacity cap/
+source-over/erase/cancel retained. Whole-object Fill ignores tip. No new pointer,
+history, paint-resource/project/native writer or modelling kernel. Tips/rotation are
+session preferences, retained through928 reopen but not saved in.boxlab. Marks persist.
+Late/invalid imports retain previous tip and committed work; original decode cleanup.
+Read docs/paint-alpha-929.md. Four focused tests cover limits/cleanup/coverage ownership,
+rotation/aspect/cancel/erase, real UI/history/project/native PNG and async refusal.
+Original shared raster reverse main/Lab cache graph929 reviewed; Multi1.0/frozen intact.
+Reflection preview remains unresolved, native export correct. Alpha device gate pending.
+Next device alpha feedback, then UV-safe blur/smudge; viewport/baked AO and Edge-based
+seam-authoring remain queued for existing-owner audits, not delivered features.
+Validation/publication evidence follows; no rendered or device performance claim.
+
+.929 final local Node24.19.0: **2,652 PASS / 0 FAIL / 0 skipped**.
+Four new alpha tests and original nearby18PASS; release/cache checks included.
+No assertions relaxed. Shared raster main/Lab reverse graph929 reviewed; Multi1.0
+and frozen builds unchanged. Publication/hosted/live verification follows.

@@ -1,8 +1,9 @@
+import {captureAlphaTip,alphaTipCoverage} from './alpha-tip.js?v=0.36.18.929';
 // Isolated comparison document. One opaque colour layer per candidate, not scene history.
 export const RESOLUTION=512;
 export function brushSettings(value={}){
  const s={colour:'#e34b37',radius:10,hardness:.7,opacity:1,pressure:true,...value};
- if(!/^#[\da-f]{6}$/i.test(s.colour)||![s.radius,s.hardness,s.opacity].every(Number.isFinite)||s.radius<1||s.radius>48||s.hardness<0||s.hardness>1||s.opacity<0||s.opacity>1||typeof s.pressure!=='boolean')throw Error('Invalid brush settings');
+ if(!/^#[\da-f]{6}$/i.test(s.colour)||![s.radius,s.hardness,s.opacity].every(Number.isFinite)||s.radius<1||s.radius>48||s.hardness<0||s.hardness>1||s.opacity<0||s.opacity>1||typeof s.pressure!=='boolean'||!Number.isFinite(s.tipRotation??0)||Math.abs(s.tipRotation??0)>360)throw Error('Invalid brush settings');
  return Object.freeze(s);
 }
 export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
@@ -23,12 +24,13 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  }
  return {
   pixels,size,
-  begin(value,{erase=false}={}){if(typeof erase!=='boolean'||erase&&!transparent)throw Error('Alpha erasing requires a transparent paint layer');if(disposed||before)throw Error('Paint layer unavailable');settings=brushSettings(value);erasing=erase;before=pixels.slice();coverage=new Float32Array(size*size);changed=false;},
+  begin(value,{erase=false}={}){if(typeof erase!=='boolean'||erase&&!transparent)throw Error('Alpha erasing requires a transparent paint layer');if(disposed||before)throw Error('Paint layer unavailable');settings=brushSettings(value);erasing=erase;if(settings.alphaTip)settings={...settings,alphaTip:captureAlphaTip(settings.alphaTip)};before=pixels.slice();coverage=new Float32Array(size*size);changed=false;},
   stamp(u,v,pressure=1){
    if(disposed||!before||![u,v,pressure].every(Number.isFinite)||u<0||u>1||v<0||v>1)return false;
    const p=settings.pressure?Math.min(1,Math.max(0,pressure)):1;if(!p||!settings.opacity)return false;
-   const radius=Math.max(.35,settings.radius*p),cx=u*(size-1),cy=v*(size-1),rgb=[1,3,5].map(i=>parseInt(settings.colour.slice(i,i+2),16));let touched=false;
-   for(let y=Math.max(0,Math.floor(cy-radius-1));y<=Math.min(size-1,Math.ceil(cy+radius+1));y++)for(let x=Math.max(0,Math.floor(cx-radius-1));x<=Math.min(size-1,Math.ceil(cx+radius+1));x++){
+   const radius=Math.max(.35,settings.radius*p),cx=u*(size-1),cy=v*(size-1),rgb=[1,3,5].map(i=>parseInt(settings.colour.slice(i,i+2),16)),extent=settings.alphaTip?radius*Math.SQRT2:radius,angle=(settings.tipRotation??0)*Math.PI/180,cos=Math.cos(angle),sin=Math.sin(angle);let touched=false;
+   for(let y=Math.max(0,Math.floor(cy-extent-1));y<=Math.min(size-1,Math.ceil(cy+extent+1));y++)for(let x=Math.max(0,Math.floor(cx-extent-1));x<=Math.min(size-1,Math.ceil(cx+extent+1));x++){
+    if(settings.alphaTip){const a=settings.opacity*alphaTipCoverage(settings.alphaTip,(x-cx)/radius,(y-cy)/radius,cos,sin);if(applyCoverage(x+y*size,a,rgb))touched=true;continue;}
     const d=Math.hypot(x-cx,y-cy),edge=Math.min(1,Math.max(0,radius+.5-d));if(!edge)continue;
     const t=Math.min(1,Math.max(0,(1-d/radius)/Math.max(.00001,1-settings.hardness))),falloff=t*t*(3-2*t);
     const a=settings.opacity*edge*(d/radius<=settings.hardness?1:falloff),at=x+y*size;if(a<=coverage[at])continue;
