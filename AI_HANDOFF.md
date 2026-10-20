@@ -2,10 +2,10 @@
 
 ## Current state — 20 October 2026
 
-Build0.36.18.929 prepared from main5ee8bb54; user .928 PASS protected.
+Build0.36.18.929 published atc9f29fa2; source base5ee8bb54; user928PASS protected.
 PNG alpha tips use original shared raster/Pencil/history/project/export owners.
 Read latest .929 entry and docs/paint-alpha-929.md for limits and manual gate.
-Local validation/publication status below; do not infer device acceptance.
+Local+hosted2652PASS; Pages/live16-file verification below; device929 pending.
 Reflection preview remains independently unresolved; native Nomad export correct.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
@@ -1684,3 +1684,21 @@ Validation/publication evidence follows; no rendered or device performance claim
 Four new alpha tests and original nearby18PASS; release/cache checks included.
 No assertions relaxed. Shared raster main/Lab reverse graph929 reviewed; Multi1.0
 and frozen builds unchanged. Publication/hosted/live verification follows.
+
+## .929 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `c9f29fa240fa87a4a3310138058b1cc6f906e58a`, tested tree
+`cafdf77c8cdcf612f411659ea1ff953b5ade692f`, published via connected Git Data.
+All18 uploaded blobs and tree match locally tested source; fetched main identical.
+Local Node24 and hosted Node22 regression39409570949/job118583708420 both
+**2,652 PASS / 0 FAIL / 0 skipped**; full hosted logs verified. Pages39409570873,
+deploy118583935503 completed successfully. All16 fresh checked live files byte-match:
+shell/version, every changed runtime/Lab owner, recovery, protected Multi1.0,
+retained image importer/export/paint surface. Frozen builds unchanged.
+
+All four continuity files current; proof is documentation-only. Build929 complete
+and ready for Brush settings → Load alpha PNG≤256²/256KiB, rotate/paint/overlay
+Eraser, UndoRedo and continued painting, Round tip, SaveOpen/export retained marks.
+User928PASS protected;929 visible/Pencil/picker/latency acceptance remains pending.
+Reflection preview independently unresolved; native exports correct. Next alpha
+feedback then UV-safe blur/smudge; AO and Edge seam audits queued, not implemented.
