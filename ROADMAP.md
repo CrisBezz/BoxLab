@@ -4111,3 +4111,24 @@ open and should use device/version/renderer evidence, no further lighting guesse
 Protected926 Fill/924 toolbar/native export/Multi1.0/frozen retained. Scalar mapping
 unchanged; layout/device confirmation and Eraser hands-on gate pending.
 Publication/hosted regression/live verification follows.
+
+## .927 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `2fab3eb743d00acdfb93c053957ad1d9be8f6f68`, tested tree
+`c97a8423f236aec542b314541b9a9529847b0413`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39369984553` / job `118455433985` both pass
+2,643 tests, zero failures/skips; complete hosted logs verified. Pages
+`39369984116`, deploy job `118455588608`, completed all steps successfully.
+All19 fresh live files byte-match source: shell/version, painter/core/shared raster,
+complete changed Lab graph, recovery, protected Multi1.0, retained scalar/codec/native
+and paint export/material/reflection/UV owners. Initial in-flight reads served926;
+final checked graph matches927. No frozen/modelling/UV/project/writer changes.
+
+All four continuity files current; proof is docs-only. Build927 complete and ready
+for label separation/explicit0-255 meaning and Tool Eraser overlay reveal/UndoRedo,
+Base white/scalar defaults and return to Brush/accepted Tap Fill. Actual iPad text
+layout and Eraser feel remain device-pending; automated tests are not visual proof.
+User926 Fill and924 toolbar PASS protected; native export correct. Alpha PNG tips
+next; UV-safe blur/smudge pending. Reflection925 remains independently unresolved,
+not a slider inversion or an inferred PASS from the corrected help text.
