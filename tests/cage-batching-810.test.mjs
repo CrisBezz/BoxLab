@@ -27,7 +27,7 @@ test('810 actual cage batches keep every edge/material/order and Vertex-mode mar
   const prior=a.root.children.filter(o=>o.userData.kind==='edge'),proxies=b.root.children.filter(o=>o.userData.kind==='edge');assert.equal(prior.length,proxies.length);
   const batches=b.root.children.filter(o=>o.userData.kind==='cage-edge-batch'),records=[];
   for(const batch of batches){const attr=batch.geometry.attributes.position;for(let i=0;i<attr.count;i+=2)records.push({position:Array.from(attr.array.slice(i*3,(i+2)*3)),material:batch.material.name,order:batch.renderOrder});}
-  const expected=prior.map(o=>({position:Array.from(o.geometry.attributes.position.array),material:o.material.name,order:o.renderOrder}));const sort=x=>JSON.stringify(x);assert.deepEqual(records.map(sort).sort(),expected.map(sort).sort());
+  const expected=(mode==='object'?prior.filter(o=>!a.c.mesh.edges()[o.userData.index].faces.length):prior).map(o=>({position:Array.from(o.geometry.attributes.position.array),material:mode==='object'?'edge':o.material.name,order:o.renderOrder}));const sort=x=>JSON.stringify(x);assert.deepEqual(records.map(sort).sort(),expected.map(sort).sort());
   for(let i=0;i<prior.length;i++){assert.deepEqual(Array.from(proxies[i].geometry.attributes.position.array),Array.from(prior[i].geometry.attributes.position.array));assert.equal(proxies[i].userData.index,prior[i].userData.index);assert.equal(proxies[i].userData.loopSlideGroup,prior[i].userData.loopSlideGroup);assert.equal(proxies[i].material.visible,false);assert.equal(proxies[i].visible,true);}
   const vertices=b.root.children.filter(o=>o.userData.kind==='vertex');assert.equal(new Set(vertices.map(o=>o.geometry)).size,1);
   assert.equal(b.root.children.filter(o=>o.isInstancedMesh).length,mode==='vertex'?2:0);
@@ -102,7 +102,8 @@ test('851 native mode rebuilds show dots only in Vertex while retaining indexed 
   assert.equal(proxies.length,c.mesh.vertices.length);assert.equal(batches.length,mode==='vertex'?2:0);
   proxies.forEach((o,i)=>{assert.equal(o.userData.index,i);assert.equal(o.material.visible,false);assert.equal(o.userData.selected,mode==='vertex'&&i===2);});
   const camera=c.camera.position,ray=new THREE.Raycaster(camera,new THREE.Vector3().subVectors(c.mesh.vertices[2],camera).normalize());assert(ray.intersectObjects(proxies,false).some(h=>h.object.userData.index===2));
-  assert(r.root.children.some(o=>o.userData.kind==='cage-edge-batch'));
+  assert.equal(r.root.children.some(o=>o.userData.kind==='cage-edge-batch'),mode!=='object'||c.mesh.edges().some(e=>!e.faces.length));
+  if(mode==='object')assert.equal(r.root.children.filter(o=>o.userData.kind==='cage-edge-batch').reduce((n,o)=>n+o.geometry.attributes.position.count,0),c.mesh.edges().filter(e=>!e.faces.length).length*2);
  }
  r.dispose();
 });
@@ -129,4 +130,19 @@ test('851 native mode rebuilds coexist with existing Clean and Soft owners witho
   assert.equal(r.root.children.filter(o=>o.userData.kind==='vertex').length,c.mesh.vertices.length);
  }
  r.dispose();
+});
+
+
+test('930 Object mode omits surface cage batches and retains loose wires while retaining indexed component proxies, restores component cages, and frees geometry once',()=>{
+ const plain=runtime(EditableMesh.cube(1),false,'object',false);assert(!plain.root.children.some(o=>o.material?.visible!==false));plain.dispose();
+ const r=runtime(mesh(),false,'object',false),c=r.c;
+ for(const mode of ['object','face','object','edge','object','vertex','object']){
+  c.clearGroup(r.root);c.selectionMode=mode;c.selection={type:mode};c.selectionHas=()=>false;c.addCage();c.updateScreenSpaceSelection();r.root.updateMatrixWorld(true);
+  const edges=r.root.children.filter(o=>o.userData.kind==='edge'),vertices=r.root.children.filter(o=>o.userData.kind==='vertex'),draws=r.root.children.filter(o=>o.material?.visible!==false);
+  assert.equal(edges.length,c.mesh.edges().length);assert.equal(vertices.length,c.mesh.vertices.length);
+  if(mode==='object'){const loose=c.mesh.edges().filter(e=>!e.faces.length);assert.equal(draws.length,loose.length?1:0);assert.equal(draws[0]?.geometry.attributes.position.count??0,loose.length*2);assert.equal(r.root.children.filter(o=>o.isInstancedMesh).length,0);}
+  else{assert(draws.some(o=>o.userData.kind==='cage-edge-batch'));assert.equal(draws.some(o=>o.userData.kind==='cage-vertex-batch'),mode==='vertex');}
+  const ray=new THREE.Raycaster(c.camera.position,new THREE.Vector3().subVectors(c.mesh.vertices[2],c.camera.position).normalize());assert(ray.intersectObjects(vertices,false).some(h=>h.object.userData.index===2));
+ }
+ let disposed=0;const geometry=r.root.children.find(o=>o.userData.kind==='vertex').geometry;geometry.addEventListener('dispose',()=>disposed++);r.dispose();assert.equal(disposed,1);
 });

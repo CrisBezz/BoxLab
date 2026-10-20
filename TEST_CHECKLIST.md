@@ -8713,3 +8713,46 @@ Eraser, UndoRedo and continued painting, Round tip, SaveOpen/export retained mar
 User928PASS protected;929 visible/Pencil/picker/latency acceptance remains pending.
 Reflection preview independently unresolved; native exports correct. Next alpha
 feedback then UV-safe blur/smudge; AO and Edge seam audits queued, not implemented.
+
+## .930 — solid Object-mode display, no modelling cage — 20 October 2026
+
+User requests removing the distracting Object-mode X-ray, especially while painting.
+Audit current6ce62fe3/.929: main addCage uses depthTest:false neutral axis-line material
+for every selected Object edge, drawn over solid body/paint. Actual VIEW X-Ray is a
+separate explicit diagnostic mode; do not confuse it with this automatic cage.
+Original cage batch gets optional showEdges(defaulttrue); main passes false in Object,
+showVertices remains Vertex-only. Surface cage geometry/batches are not allocated; isolated loose edges remain
+visible with ordinary depth-tested edgeMaterial so wire-only objects do not vanish;
+original invisible indexed edge/vertex picking proxies/bridge registry remain intact.
+Mirror cage is also omitted in Object; active SubD no longer evaluates spare mirrored
+base solely for that omitted wire. Original evaluated surface and its geometry cache
+are unchanged. Vertex/Edge/Face restore their original cages and material/order/selection
+semantics. Clean/Soft, Multi/group tints, gizmos, history, brush/paint/material/export
+owners untouched. Explicit VIEW Wire/X-Ray modes retain deliberate user control.
+No frame-rate or broad memory claim; removed visual cage draws/allocation only.
+
+Two new native-owner tests cover Object↔component transitions, absent visual batches,
+actual Three raycast proxy IDs/disposal, mirrored SubD base-call counts and exact solid
+geometry. Existing810/851 Object visual-cage expectation replaced by new user request;
+all component/proxy assertions retained. Existing850/809/812 render fixtures now supply their real selectionMode='face'
+dependency;809 Object loose-wire material expectation follows the new depth-tested
+policy, all component/geometry/metadata/enumeration assertions retained. No production
+fallback or weakened cache/timing checks.
+Focused cage/cache/timing/release29PASS and earlier paint-history/tint/cage24PASS.
+Legacy809 loose-wire normalization inspects a CLONE: original loose edges() can add
+its historical faces[-1] sentinel. Original source-preservation assertion retained.
+Only main/cage batch and shell/recovery cache930; Multi1.0/frozen unchanged. Alpha929
+manual gate not inferred PASS. Reflection preview independently unresolved; exports correct.
+Next DEVICE Object orbit/paint no through-cage; component cages return; Multi/gizmo and
+Paint UndoRedo stay intact. Then resume alpha feedback/UV-safe blur/smudge; AO/seams queued.
+Full validation/publication follows; no rendered/iPad proof inferred from Node.
+
+- [ ] .930: selected Object stays solid without automatic through-mesh cage; orbit and paint.
+- [ ] .930: Vertex/Edge/Face restore cages; return Object hides them, including mirrors/SubD.
+- [ ] .930: Object Multi selection/gizmo and Paint UndoRedo/continue remain usable.
+
+.930 final local Node24.19.0 regression: **2,654 PASS / 0 FAIL / 0 skipped**.
+Focused native cage/cache/timing/release29PASS; original surface/proxy/metadata,
+history/paint/alpha/image/native export assertions retained. Only superseded Object
+visual cage and depth-tested loose-wire expectations changed. Multi1.0/frozen intact.
+Publication/hosted/live verification follows; iPad display acceptance pending.

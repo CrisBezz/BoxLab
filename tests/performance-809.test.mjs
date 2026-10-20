@@ -25,7 +25,7 @@ test('809 actual animation owner preserves disabled rendering and submits read-o
 test('809 native rebuild timing surrounds existing owner without duplicate rebuild or history work',()=>{
  let clock=0;const monitor=createPerformanceMonitor(()=>clock),order=[];
  const text=source.slice(source.indexOf('function renderMesh(){'),source.indexOf('\n',source.indexOf('function renderMesh(){')));
- const c={__boxlabPerformance:monitor,__boxlabBridgeState:{},mesh:{},root:{add:()=>order.push('add')},clearGroup:()=>order.push('clear'),modifiedBaseMesh:()=>({triangulatedGeometry:()=>({})}),subdEnabled:false,showCage:true,baseMaterial:{},THREE:{Mesh:class{constructor(){this.userData={};}}},activeMirrorAxes:()=>[],addCage:()=>{order.push('cage');clock+=10;},selection:null,drag:null};
+ const c={__boxlabPerformance:monitor,__boxlabBridgeState:{},mesh:{},root:{add:()=>order.push('add')},clearGroup:()=>order.push('clear'),modifiedBaseMesh:()=>({triangulatedGeometry:()=>({})}),subdEnabled:false,showCage:true,selectionMode:'face',baseMaterial:{},THREE:{Mesh:class{constructor(){this.userData={};}}},activeMirrorAxes:()=>[],addCage:()=>{order.push('cage');clock+=10;},selection:null,drag:null};
  for(const name of ['updateStatus','updateActionAvailability','syncDirectToolControls','syncTransformButtons','syncSelectionModeButtons','syncCreaseControl','syncMirrorAlignControl'])c[name]=()=>{};
  vm.createContext(c);vm.runInContext(text,c);c.renderMesh();assert.equal(monitor.snapshot().rebuilds,0);monitor.setEnabled(true);c.renderMesh();assert.equal(monitor.snapshot().rebuilds,1);assert.equal(monitor.snapshot().rebuildMeanMs,10);assert.deepEqual(order,['clear','add','cage','clear','add','cage']);
 });
@@ -56,7 +56,7 @@ test('809 actual cage avoids repeated edge enumeration with identical edge/verte
    vm.createContext(c);vm.runInContext(code,c);c.addCage();
    const snapshot=root.children.filter(o=>['edge','vertex'].includes(o.userData.kind)).map(o=>({kind:o.userData.kind,index:o.userData.index,material:(o.userData.cageMaterial||o.material).name,positions:Array.from(o.geometry.attributes.position.array),position:o.position.toArray(),order:o.renderOrder,userData:Object.fromEntries(Object.entries(o.userData).filter(([key])=>key!=='cageMaterial'))}));root.children.forEach(o=>o.geometry.dispose());Object.values(materials).forEach(m=>m.dispose());return{snapshot,enumerations};
   }
-  const old=build(previous),fixed=build(current);assert.deepEqual(fixed.snapshot,old.snapshot);assert.equal(fixed.enumerations,1);if(mode!=='object')assert(old.enumerations>1);
+  const old=build(previous),fixed=build(current);if(mode==='object')for(const o of old.snapshot)if(o.kind==='edge'&&!mesh.clone().edges()[o.index].faces.length)o.material='edge';assert.deepEqual(fixed.snapshot,old.snapshot);assert.equal(fixed.enumerations,1);if(mode!=='object')assert(old.enumerations>1);
   assert.deepEqual({vertices:mesh.vertices.map(v=>v.toArray()),faces:mesh.faces,creases:[...mesh.creases]},originals);
  }
 });

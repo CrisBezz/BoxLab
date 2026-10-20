@@ -303,9 +303,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/main.js?v=0.36.18.928",
+      "url": "./src/main.js?v=0.36.18.930",
       "target": "src/main.js",
-      "sha256": "9a988b9b98a81b31cec47e3e72ab16c05063f5690b670dddd035f17098d2cd11",
+      "sha256": "7a91b7cfcdaaa0eba7f8e8de29a9d0e6a199885157900640a855acbba648f02b",
       "sourceVersion": "0.35.1"
     },
     {
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.929",
+      "url": "./src/release-bootstrap.js?v=0.36.18.930",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.929",
+      "url": "./src/release-version.js?v=0.36.18.930",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2270,9 +2270,9 @@
     },
     {
       "owner": "src/main.js",
-      "url": "./cage-render-batches.js?v=0.36.18.851",
+      "url": "./cage-render-batches.js?v=0.36.18.930",
       "target": "src/cage-render-batches.js",
-      "sha256": "412616f0bfcea905103e39fbdce05a202c2d1c241e8efe39183a439d145afbd2"
+      "sha256": "a343a8626f4378a4bccab6f754015612eb1beb84bc674ea4b561c239a33b017c"
     },
     {
       "owner": "src/main.js",

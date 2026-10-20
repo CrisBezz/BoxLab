@@ -24,7 +24,7 @@ test('812 actual main separates active display, geometry, scene hooks and cage w
  const cache=createSubdDisplayCache((m,l)=>{clock+=20;return subdivide(m,l);},applyMirror);
  const native=EditableMesh.prototype.triangulatedGeometry;
  // Controlled elapsed work; actual native geometry and SubD still execute.
- const c={mesh,subdLevel:1,mirrorAxes:{},subdDisplayCache:cache,applyMirror:()=>{clock+=2;return {triangulatedGeometry:()=>({})};},subdEnabled:true,showCage:true,selection:null,drag:null,root:{add:()=>{events.push('body');clock+=7;}},clearGroup:()=>events.push('clear'),baseMaterial:{},subdMaterial:{},THREE:{Mesh:class{constructor(){this.userData={};clock+=3;}}},activeMirrorAxes:()=>[],addCage:()=>{events.push('cage');clock+=5;},__boxlabPerformance:monitor};
+ const c={mesh,subdLevel:1,mirrorAxes:{},subdDisplayCache:cache,applyMirror:()=>{clock+=2;return {triangulatedGeometry:()=>({})};},subdEnabled:true,showCage:true,selectionMode:'face',selection:null,drag:null,root:{add:()=>{events.push('body');clock+=7;}},clearGroup:()=>events.push('clear'),baseMaterial:{},subdMaterial:{},THREE:{Mesh:class{constructor(){this.userData={};clock+=3;}}},activeMirrorAxes:()=>[],addCage:()=>{events.push('cage');clock+=5;},__boxlabPerformance:monitor};
  for(const name of ['updateStatus','updateActionAvailability','syncDirectToolControls','syncTransformButtons','syncSelectionModeButtons','syncCreaseControl','syncMirrorAlignControl'])c[name]=()=>{};
  vm.createContext(c);vm.runInContext(line('modifiedBaseMesh')+'\n'+line('renderMesh'),c);
  c.renderMesh();assert.equal(monitor.snapshot().rebuilds,0);

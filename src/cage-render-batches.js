@@ -3,16 +3,16 @@ import * as THREE from 'three';
 // geometry is batched; proxy materials are skipped by WebGL but still raycast.
 const pickLineMaterial=new THREE.LineBasicMaterial({visible:false});
 const pickVertexMaterial=new THREE.MeshBasicMaterial({visible:false});
-export function createCageBatch({showVertices=true}={}){
- const edges=[],vertices=[],sphereGeometry=new THREE.SphereGeometry(1,12,8);
+export function createCageBatch({showVertices=true,showEdges=true}={}){
+ const edges=[],vertices=[],looseEdges=new Set(),sphereGeometry=new THREE.SphereGeometry(1,12,8);
  function register(object,material,list,pickMaterial){object.userData.cageMaterial=material;object.material=pickMaterial;list.push(object);}
  return {
   sphereGeometry,
-  edge(object,material){register(object,material,edges,pickLineMaterial);},
+  edge(object,material,loose=false){register(object,material,edges,pickLineMaterial);if(loose)looseEdges.add(object);},
   vertex(object,material){register(object,material,vertices,pickVertexMaterial);},
   finish(root){
    const groups=new Map();
-   for(const edge of edges){const material=edge.userData.cageMaterial;let orders=groups.get(material);if(!orders){orders=new Map();groups.set(material,orders);}let list=orders.get(edge.renderOrder);if(!list){list=[];orders.set(edge.renderOrder,list);}list.push(edge);}
+   for(const edge of edges){if(!showEdges&&!looseEdges.has(edge))continue;const material=edge.userData.cageMaterial;let orders=groups.get(material);if(!orders){orders=new Map();groups.set(material,orders);}let list=orders.get(edge.renderOrder);if(!list){list=[];orders.set(edge.renderOrder,list);}list.push(edge);}
    for(const [material,orders] of groups)for(const [order,list] of orders){
     const positions=[];for(const edge of list)positions.push(...edge.geometry.attributes.position.array);
     const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));

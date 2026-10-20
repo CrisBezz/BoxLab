@@ -9,7 +9,7 @@ import {applyMirror} from '../src/mirror.js';
 import {createSubdDisplayCache} from '../src/subd-display-cache.js';
 const source=fs.readFileSync(new URL('../src/main.js',import.meta.url),'utf8');
 function fixture(){
- const c={THREE,mesh:EditableMesh.cube(1),subdDisplayCache:createSubdDisplayCache(subdivide,applyMirror),applyMirror,mirrorAxes:{},subdLevel:2,subdEnabled:true,showCage:false,selection:null,drag:null,root:new THREE.Group(),baseMaterial:new THREE.MeshBasicMaterial(),subdMaterial:new THREE.MeshBasicMaterial(),activeLoopSlides:[]};
+ const c={THREE,mesh:EditableMesh.cube(1),subdDisplayCache:createSubdDisplayCache(subdivide,applyMirror),applyMirror,mirrorAxes:{},subdLevel:2,subdEnabled:true,showCage:false,selectionMode:'face',selection:null,drag:null,root:new THREE.Group(),baseMaterial:new THREE.MeshBasicMaterial(),subdMaterial:new THREE.MeshBasicMaterial(),activeLoopSlides:[]};
  for(const name of ['updateStatus','updateActionAvailability','syncDirectToolControls','syncTransformButtons','syncSelectionModeButtons','syncCreaseControl','syncMirrorAlignControl'])c[name]=()=>{};
  const line=name=>{const i=source.indexOf('function '+name+'(');return source.slice(i,source.indexOf('\n',i));};vm.createContext(c);vm.runInContext(['clearGroup','modifiedBaseMesh','renderMesh'].map(line).join('\n'),c);return c;
 }
@@ -41,4 +41,13 @@ test('852 SubD without base still handles direct edits and Undo replacement; exp
  const c=fixture(),original=c.mesh.clone();c.renderMesh();c.mesh.vertices[0].x+=.25;c.renderMesh();const edited=Array.from(c.root.children[0].geometry.attributes.position.array);c.mesh=original;c.renderMesh();assert.notDeepEqual(Array.from(c.root.children[0].geometry.attributes.position.array),edited);
  const exported=c.modifiedBaseMesh();assert.notEqual(exported,c.mesh);exported.vertices[0].x+=10;assert.equal(c.mesh.vertices[0].x,original.vertices[0].x);
  c.mirrorAxes={x:true};const mirrored=c.modifiedBaseMesh();assert.deepEqual(mirrored.vertices.map(v=>v.toArray()),applyMirror(c.mesh,c.mirrorAxes).vertices.map(v=>v.toArray()));
+});
+
+
+test('930 Object mode omits mirrored cage and its spare SubD base evaluation, with exact solid geometry and component restoration',()=>{
+ const c=fixture();c.mirrorAxes={x:true};c.showCage=true;c.addCage=()=>{};let baseCalls=0,mirrorCalls=0;const native=c.applyMirror;c.applyMirror=(...args)=>{baseCalls++;return native(...args);};c.addMirrorCage=()=>mirrorCalls++;
+ for(const mode of ['object','face','object','edge','object']){
+  c.selectionMode=mode;const priorBase=baseCalls,priorMirror=mirrorCalls;c.renderMesh();assert.equal(baseCalls-priorBase,mode==='object'?0:1);assert.equal(mirrorCalls-priorMirror,mode==='object'?0:1);
+  const g=native(subdivide(c.mesh,c.subdLevel),c.mirrorAxes).triangulatedGeometry();assert.deepEqual(Array.from(c.root.children[0].geometry.attributes.position.array),Array.from(g.attributes.position.array));g.dispose();
+ }
 });
