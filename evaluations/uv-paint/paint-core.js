@@ -9,14 +9,14 @@ export function brushSettings(value={}){
 export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  if(typeof transparent!=='boolean')throw Error('Invalid paint layer alpha mode');
  if(!Number.isInteger(size)||size<16||size>512)throw Error('Comparison map budget exceeded');
- const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true,erasing=false,blur=null;
+ const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true,erasing=false,blur=null,blurLinks=null;
  function applyCoverage(at,a,rgb){
   if(a<=coverage[at])return false;coverage[at]=a;let touched=false;
     const offset=at*4;
     if(blur){
      const x=at%size,y=Math.floor(at/size),label=blur[at],sum=[0,0,0];let weight=0,alpha=0;
-     for(const [dx,dy,w] of [[0,0,4],[-1,0,1],[1,0,1],[0,-1,1],[0,1,1]]){
-      const nx=x+dx,ny=y+dy,n=nx+ny*size;if(nx<0||nx>=size||ny<0||ny>=size||blur[n]!==label)continue;
+     for(const [dx,dy,w,side] of [[0,0,4,-1],[-1,0,1,0],[1,0,1,1],[0,-1,1,2],[0,1,1,3]]){
+      const nx=x+dx,ny=y+dy,n=blurLinks&&side>=0?blurLinks[at*4+side]:nx+ny*size;if(blurLinks&&side>=0){if(n<0)continue;}else if(nx<0||nx>=size||ny<0||ny>=size||blur[n]!==label)continue;
       const k=n*4,aw=before[k+3]/255*w;weight+=w;alpha+=aw;for(let c=0;c<3;c++)sum[c]+=before[k+c]*aw;
      }
      const sourceAlpha=before[offset+3]/255,targetAlpha=alpha/weight,outAlpha=sourceAlpha*(1-a)+targetAlpha*a;
@@ -34,7 +34,7 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  }
  return {
   pixels,size,
-  begin(value,{erase=false,filter=null}={}){if(typeof erase!=='boolean'||erase&&!transparent)throw Error('Alpha erasing requires a transparent paint layer');if(disposed||before)throw Error('Paint layer unavailable');if(filter&&(!(filter.domains instanceof Int32Array)||filter.domains.length!==size*size||erase))throw Error('Invalid Blur domain');settings=brushSettings(value);blur=filter?filter.domains.slice():null;erasing=erase;if(settings.alphaTip)settings={...settings,alphaTip:captureAlphaTip(settings.alphaTip)};before=pixels.slice();coverage=new Float32Array(size*size);changed=false;},
+  begin(value,{erase=false,filter=null}={}){if(typeof erase!=='boolean'||erase&&!transparent)throw Error('Alpha erasing requires a transparent paint layer');if(disposed||before)throw Error('Paint layer unavailable');if(filter&&(!(filter.domains instanceof Int32Array)||filter.domains.length!==size*size||erase))throw Error('Invalid Blur domain');if(filter?.neighbours!=null&&(!(filter.neighbours instanceof Int32Array)||filter.neighbours.length!==size*size*4||filter.neighbours.some(n=>n< -1||n>=size*size)))throw Error('Invalid Blur neighbours');settings=brushSettings(value);blur=filter?filter.domains.slice():null;blurLinks=filter?.neighbours?.slice()||null;erasing=erase;if(settings.alphaTip)settings={...settings,alphaTip:captureAlphaTip(settings.alphaTip)};before=pixels.slice();coverage=new Float32Array(size*size);changed=false;},
   stamp(u,v,pressure=1,face=null){
    if(blur&&(!Number.isInteger(face)||face<0))return false;
    if(disposed||!before||![u,v,pressure].every(Number.isFinite)||u<0||u>1||v<0||v>1)return false;
@@ -56,7 +56,7 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
    for(let at=0;at<size*size;at++)if(applyCoverage(at,settings.opacity,rgb))touched=true;
    if(touched){dirty=true;changed=true;}return touched;
   },
-  finish(cancel=false){if(!before)return false;const did=changed;if(cancel&&changed){pixels.set(before);dirty=true;}before=coverage=settings=blur=null;changed=false;return !cancel&&did;},
+  finish(cancel=false){if(!before)return false;const did=changed;if(cancel&&changed){pixels.set(before);dirty=true;}before=coverage=settings=blur=blurLinks=null;changed=false;return !cancel&&did;},
   restore(data){if(disposed||before||!(data instanceof Uint8Array)||data.length!==pixels.length)throw Error('Invalid paint snapshot');pixels.set(data);dirty=true;},
   consumeDirty(){const was=dirty;dirty=false;return was;},
   dispose(){if(disposed)return;this.finish(true);disposed=true;pixels.fill(transparent?0:255);},

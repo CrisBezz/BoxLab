@@ -285,11 +285,11 @@ function editableToGeometry(mesh,channels={}){
     return next;
   };
 
-  const previewFaces=channels.previewFaceIndices?[]:null;
+  const previewFaces=channels.previewFaceIndices?[]:null,previewVertices=channels.previewFaceIndices?[]:null;
   for(const bucket of buckets.values()){
     const start=indices.length;
     for(const item of bucket.triangles){
-      if(previewFaces)previewFaces.push(item.faceIndex);
+      if(previewFaces){previewFaces.push(item.faceIndex);previewVertices.push(...item.tri);}
       for(const index of item.tri){
         const data=cornerData(item.faceIndex,index);
         indices.push(emitVertex(index,data));
@@ -300,7 +300,7 @@ function editableToGeometry(mesh,channels={}){
   }
 
   const geometry=new THREE.BufferGeometry();
-  if(previewFaces)geometry.userData.boxlabTriangleFaces=Object.freeze(previewFaces);
+  if(previewFaces){geometry.userData.boxlabTriangleFaces=Object.freeze(previewFaces);geometry.userData.boxlabTriangleVertices=Object.freeze(previewVertices);}
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
   geometry.setIndex(indices);
   const vertexCount=positions.length/3;

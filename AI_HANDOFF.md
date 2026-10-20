@@ -1,12 +1,13 @@
-# BoxLab AI Handoff — .931 / Blur within face
+# BoxLab AI Handoff — .932 / Connected-face Blur sampling
 
 ## Current state — 20 October 2026
 
-Build0.36.18.931 published at0226dc19; source basea9f2a10d. User930PASS protected.
-Blur within face uses original paint/raycast/history plus authoritative triangle face
-metadata. Read latest931 entry/docs/paint-blur-931.md for precise scope and limits.
-Local+hosted2659PASS; Pages/live18-file proof below; Blur931/alpha929 gates pending. Reflection preview
-independently unresolved; native exports correct. Next Blur feedback then Smudge.
+Build0.36.18.932 prepared from main05a790e8; user931PASS protected.
+Blur samples real connected faces across UV seams; stroke both sides, footprint stays
+on picked face. Original UV inspector/preview geometry/raster/history owners retained.
+Read latest932 entry and docs/paint-seams-932.md. Focused20PASS; full/publication below.
+Device932/alpha929 gates pending. Reflection preview unresolved; native exports correct.
+Next seam feedback then bounded Smudge. AO/UV seam authoring queued.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -496,7 +497,7 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 ## Next narrow step
 
 Protect user928PASS: Paint history stays open with controls/continued strokes.
-Protect930PASS; retest931 Blur within face, history and layer/channel isolation.
+Protect930/931PASS; test932 connected-face sampling across UV seams, history and layer/channel isolation.
 Then similarly bounded Smudge;929 alpha gate remains independently pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
@@ -1814,3 +1815,33 @@ in Paint, return Brush and continue. SaveOpen/native export retains results. Use
 PASS protected; actual931 appearance/Pencil feel/latency and929 alpha gate pending.
 No rendered/iPad performance claim. Reflection preview independently unresolved;
 native exports correct. Next Blur feedback then protected Smudge; AO/seams queued.
+
+## .932 — Connected-face Blur sampling; .931 user PASS — 20 October 2026
+
+User PASS protects .931 Blur and prior .930 solid Object display. Audit main05a790e8:
+original UV inspector already owns polygon edges, exporter owns triangle emission;
+reuse both via optional edgeOwners and original vertex IDs. Default reports/geometry/
+exports unchanged. New small read-only seam plan unfolds original triangle neighbours
+across real manifold edges, mapping into detached/rotated/mirrored UV islands. Atlas
+proximity never connects faces. Internal diagonals use the same original emission.
+Fixed centre4/cardinal1 stroke-start blur now reads mapped connected-face texels.
+Writes remain clipped to picked face: stroke BOTH sides of edge; brush footprint does
+not wrap automatically. No world-radius/full seamless-footprint claim, no Smudge.
+Boundary/nonmanifold/ambiguous corner/long walks clip; invalid/stale ownership and
+existing overlapping/degenerate/out-of-tile/complex UV refusals stay atomic. Max8
+crossings/sample and2M walk steps; lazy session plan512² labels1MiB+links4MiB,
+temporary triangle map1MiB; owned contact copies5MiB plus original stroke buffers.
+Premultiplied colour alpha, raw masks/scalars, capped coverage, original alpha tips,
+input/raycast/history/COW/SaveOpen/NOM/GLB owners retained. UI says connected faces
+and explicitly asks strokes over both sides. No modelling/UV authoring kernel added.
+Five new tests cover 12 fold/rotation/mirror layouts, disconnected atlas decoy,
+nonmanifold/stale metadata, exact raster alpha/cancel and actual UI→history→SaveOpen→
+exact native PNG. Focused20PASS incl release5; full/publication below. Complete changed
+reverse loader graph repinned932; retained main/cage/Multi1.0/frozen bytes unchanged.
+Read docs/paint-seams-932.md. Device932 seam appearance/latency pending; alpha929 gate
+not inferred. Reflection preview independently unresolved; native exports protected.
+Next device feedback then bounded Smudge through original paint owner; AO and UV seam
+AUTHORING remain queued. Seam sampling is not seam authoring.
+
+.932 final local Node24.19.0 regression: **2,664 PASS / 0 FAIL / 0 skipped**.
+Focused20PASS; no existing assertions relaxed. Hosted/Pages/live verification follows.

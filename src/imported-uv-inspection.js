@@ -1,6 +1,6 @@
 // Read-only inspection of the importer's existing face-corner channel. The
 // exporter supplies its authoritative topology signature; no second UV owner.
-export function inspectImportedUV(mesh,payload,topologySignature,{maxPreviewCorners=20000}={}){
+export function inspectImportedUV(mesh,payload,topologySignature,{maxPreviewCorners=20000,includeEdgeOwners=false}={}){
  const faces=mesh?.faces||[],uvs=payload?.uvCorners;
  const report={state:'absent',faces:faces.length,mappedFaces:0,missingFaces:0,invalidFaces:0,outsideCorners:0,previewFaces:[],previewFaceIndices:[],previewCorners:0,bounds:{minU:0,minV:0,maxU:1,maxV:1}};
  if(!Array.isArray(uvs)||!uvs.some(Boolean))return report;
@@ -20,10 +20,10 @@ export function inspectImportedUV(mesh,payload,topologySignature,{maxPreviewCorn
   if(report.previewCorners+corners.length<=maxPreviewCorners){report.previewFaces.push(corners);report.previewFaceIndices.push(i);report.previewCorners+=corners.length;}
  }
  report.state=report.invalidFaces?'invalid':report.mappedFaces?'ready':'absent';
- if(report.state==='ready')inspectConnectivity(faces,uvs,report);
+ if(report.state==='ready')inspectConnectivity(faces,uvs,report,includeEdgeOwners);
  return report;
 }
-function inspectConnectivity(faces,uvs,report){
+function inspectConnectivity(faces,uvs,report,includeEdgeOwners=false){
  // Diagnostic adjacency only: never call mesh.edges(), which legacy bridges may
  // wrap with live-mesh publication side effects. Never weld or author UV data.
  const parent=new Int32Array(faces.length).fill(-1),edges=new Map();
@@ -36,6 +36,7 @@ function inspectConnectivity(faces,uvs,report){
    edges.get(key).push({fi,i,a,b});
   }
  }
+ if(includeEdgeOwners)report.edgeOwners=edges;
  const root=fi=>{while(parent[fi]!==fi){parent[fi]=parent[parent[fi]];fi=parent[fi];}return fi;};
  const same=(a,b)=>a[0]===b[0]&&a[1]===b[1];
  const endpoints=o=>{const points=uvs[o.fi],next=(o.i+1)%points.length;return o.a<o.b?[points[o.i],points[next]]:[points[next],points[o.i]];};

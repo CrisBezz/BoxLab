@@ -1,9 +1,10 @@
+import {createPaintSeamNeighbours} from './paint-seam-neighbours.js?v=0.36.18.932';
 // Conservative texel ownership for read-neighbour brushes. Uses ONLY the original
 // preview triangulation and its opt-in source-face map; never authors UVs/topology.
-export function createPaintFilterDomain(geometry,size=512){
+export function createPaintFilterDomain(geometry,size=512,source=null){
  const uv=geometry?.attributes?.uv,pos=geometry?.attributes?.position,index=geometry?.index,faces=geometry?.userData?.boxlabTriangleFaces,count=index?.count??pos?.count;
  if(!Number.isInteger(size)||size<16||size>512||!uv||!pos||!Number.isInteger(count)||count%3||count>60000||!Array.isArray(faces)||faces.length!==count/3||faces.some(n=>!Number.isInteger(n)||n<0||n>=20000))throw Error('Blur needs original UV face ownership');
- const labels=new Int32Array(size*size).fill(-1),interior=new Uint8Array(size*size);let work=0;
+ const labels=new Int32Array(size*size).fill(-1),interior=new Uint8Array(size*size),triangleAt=source?new Int32Array(size*size).fill(-1):null;let work=0;
  for(let i=0;i<count;i+=3){
   const ids=[0,1,2].map(k=>index?index.getX(i+k):i+k);
   if(ids.some(n=>!Number.isInteger(n)||n<0||n>=uv.count))throw Error('Invalid Blur UV geometry');
@@ -17,9 +18,10 @@ export function createPaintFilterDomain(geometry,size=512){
    const a=x/(size-1),b=y/(size-1),w0=((v[1]-v[2])*(a-u[2])+(u[2]-u[1])*(b-v[2]))/d,w1=((v[2]-v[0])*(a-u[2])+(u[0]-u[2])*(b-v[2]))/d,w2=1-w0-w1;
    if(Math.min(w0,w1,w2)< -1e-8)continue;
    const at=x+y*size,inside=Math.min(w0,w1,w2)>1e-7,old=labels[at];
-   if(old!==-1&&old!==face){if(interior[at]&&inside)throw Error('Overlapping UV faces: separate and Pack islands before Blur');labels[at]=-2;interior[at]=0;}
-   else{labels[at]=face;interior[at]||=inside?1:0;}
+   if(old!==-1&&old!==face){if(interior[at]&&inside)throw Error('Overlapping UV faces: separate and Pack islands before Blur');labels[at]=-2;interior[at]=0;if(triangleAt)triangleAt[at]=-1;}
+   else{labels[at]=face;interior[at]||=inside?1:0;if(triangleAt)triangleAt[at]=i/3;}
   }
  }
- return Object.freeze({labels,faceAt:triangle=>Number.isInteger(triangle)&&triangle>=0&&triangle<faces.length?faces[triangle]:null});
+ const linked=source?createPaintSeamNeighbours({geometry,size,labels,triangleAt,...source}):{};
+ return Object.freeze({labels,...linked,faceAt:triangle=>Number.isInteger(triangle)&&triangle>=0&&triangle<faces.length?faces[triangle]:null});
 }
