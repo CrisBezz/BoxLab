@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
 import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.921';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.921';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.921';
@@ -14,8 +15,8 @@ export function paintTargetKey(object,mesh=object?.mesh,owner=globalThis.__boxla
 export const paintTargetDigest=key=>paintDigest(encoder.encode(key));
 export function paintTexture(pixels,size){const t=new THREE.DataTexture(pixels,size,size,THREE.RGBAFormat);t.colorSpace=THREE.SRGBColorSpace;t.flipY=false;t.generateMipmaps=false;t.minFilter=t.magFilter=THREE.LinearFilter;t.needsUpdate=true;return t;}
 // One surface/lifetime owner for committed display and temporary stroke preview.
-export function createPaintSurface(body,geometry,texture){
- const fallback=body.material,source=body.geometry,material=new THREE.MeshBasicMaterial({map:texture,toneMapped:false}),surface=new THREE.Mesh(geometry,material);let disposed=false,lit=null,colourMap=null,roughnessMap=null,metalnessMap=null;
+export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__boxlabBridgeState?.renderer,environmentPool=paintMaterialEnvironments}={}){
+ const fallback=body.material,source=body.geometry,material=new THREE.MeshBasicMaterial({map:texture,toneMapped:false}),surface=new THREE.Mesh(geometry,material);let disposed=false,lit=null,colourMap=null,roughnessMap=null,metalnessMap=null,environment=null;
  surface.userData.boxlabRenderOverlay=true;surface.raycast=()=>{};
  // Textures belong to this surface, never the shared committed resources.
  // Roughness G and metalness B are linear data; colour keeps the accepted sRGB map.
@@ -33,11 +34,16 @@ export function createPaintSurface(body,geometry,texture){
   if(colour){if(!colourMap)colourMap=paintTexture(colour.slice(),512);else{colourMap.image.data.set(colour);colourMap.needsUpdate=true;}}
   if(roughness)roughnessMap=scalarTexture(roughnessMap,roughness,rgba,1);
   if(metalness)metalnessMap=scalarTexture(metalnessMap,metalness,metalnessRGBA,2);
+  let scene=body;while(scene&&!scene.isScene)scene=scene.parent;
+  if(metalness&&!scene?.environment){environment??=environmentPool.acquire(renderer);}
+  else if(environment){environment.release();environment=null;}
+  const nextEnvironment=environment?.texture||null;
+  if(lit.envMap!==nextEnvironment){lit.envMap=nextEnvironment;lit.needsUpdate=true;}
   const nextColour=colour?colourMap:null,nextRoughness=roughness?roughnessMap:null,nextMetalness=metalness?metalnessMap:null;
   if(lit.map!==nextColour||lit.roughnessMap!==nextRoughness||lit.metalnessMap!==nextMetalness)lit.needsUpdate=true;
   lit.map=nextColour;lit.roughnessMap=nextRoughness;lit.metalnessMap=nextMetalness;lit.metalness=metalness?1:0;surface.material=lit;surface.castShadow=body.castShadow;surface.receiveShadow=body.receiveShadow;
  }
- function dispose(){if(disposed)return;disposed=true;source.removeEventListener('dispose',dispose);body.remove(surface);if(body.material===hidden)body.material=fallback;geometry.dispose();material.dispose();texture.dispose();lit?.dispose();colourMap?.dispose();roughnessMap?.dispose();metalnessMap?.dispose();}
+ function dispose(){if(disposed)return;disposed=true;source.removeEventListener('dispose',dispose);body.remove(surface);if(body.material===hidden)body.material=fallback;geometry.dispose();material.dispose();texture.dispose();lit?.dispose();colourMap?.dispose();roughnessMap?.dispose();metalnessMap?.dispose();environment?.release();environment=null;}
  surface.userData.boxlabColourPaintDispose=dispose;source.addEventListener('dispose',dispose);body.add(surface);
  return {surface,showMaterial,showChannel(){if(!disposed)surface.material=material;},show(){if(!disposed){surface.visible=true;body.material=hidden;for(const child of [...body.children])if(child.userData?.boxlabBackfaceCue){body.remove(child);child.material?.dispose?.();}}},dispose,get disposed(){return disposed;}};
 }

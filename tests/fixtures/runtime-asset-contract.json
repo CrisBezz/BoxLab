@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.923",
+      "url": "./src/export-as-panel.js?v=0.36.18.925",
       "target": "src/export-as-panel.js",
-      "sha256": "3c8557d710a39da84f9c589bdcf72fae58a58281260705f90e74b131af0d7839",
+      "sha256": "3580c2150fc0f3157d76e394e5de2cfd760625f329d17fea6cee13f9e58e6420",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -378,21 +378,21 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.924",
+      "url": "./src/release-bootstrap.js?v=0.36.18.925",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.924",
+      "url": "./src/release-version.js?v=0.36.18.925",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
     {
       "owner": "index.html",
-      "url": "./src/render-modes.js?v=0.36.18.923",
+      "url": "./src/render-modes.js?v=0.36.18.925",
       "target": "src/render-modes.js",
-      "sha256": "74ada280c7c6fa7f4a21c3ab1de794df88a7df003687635776761392d1212f25"
+      "sha256": "6a77aefdd3f46b488fa1145806b9cd3d7a6c9f64b69d7aac56a732aaab1f70d7"
     },
     {
       "owner": "index.html",
@@ -1189,9 +1189,9 @@
     },
     {
       "owner": "src/export-as-panel.js",
-      "url": "./nomad-packed-maps.js?v=0.36.18.923",
+      "url": "./nomad-packed-maps.js?v=0.36.18.925",
       "target": "src/nomad-packed-maps.js",
-      "sha256": "77e53c82e194e09ca9993c1399844c4a51f8382169f3450fbd1eb50e51a08472"
+      "sha256": "e7c318d41a64fb6a442d37dee641b57a9399273d7e7fb575ce903b73328e4342"
     },
     {
       "owner": "src/export-as-panel.js",
@@ -2450,9 +2450,9 @@
     },
     {
       "owner": "src/nomad-packed-maps.js",
-      "url": "./nomad-export-core.js?v=0.36.18.923",
+      "url": "./nomad-export-core.js?v=0.36.18.925",
       "target": "src/nomad-export-core.js",
-      "sha256": "cc62d7576a94e2a27517ac8d262d7c0a744757dbc647f4f60d74235273f4ab53"
+      "sha256": "47193edbfe690c867c3598857e5cf80e8e02ccd286edef4b3a39bb5db465d759"
     },
     {
       "owner": "src/nomad-export-core.js",
@@ -2481,14 +2481,14 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.923",
-      "sha256": "871a119dda59eefcbc570791e3b13ff52a61da8aa81c76758065d99568f1c8c7"
+      "url": "./src/viewport-paint.js?v=0.36.18.925",
+      "sha256": "dd4ebdfe8c66112908e742c5a6d8c29dd79e7a4ada6760c850173c64fc1827f2"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.923",
-      "sha256": "673aaba2f7c8487522128956be6523569aafb024b5ddaea215409aa7c4ba6ea9"
+      "url": "./viewport-paint-core.js?v=0.36.18.925",
+      "sha256": "eab0929f6a5524d3fb7c5df1e5e36d2142e1a513d2ac7f756d440a007946a9c4"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2517,8 +2517,8 @@
     {
       "owner": "src/viewport-paint-core.js",
       "target": "src/paint-target.js",
-      "url": "./paint-target.js?v=0.36.18.923",
-      "sha256": "37d9e21ced1e29c5e9e6cffe79c40a0254dce07825ef419c28b50e2a50c6f7de"
+      "url": "./paint-target.js?v=0.36.18.925",
+      "sha256": "1e644efe5d44e97c5bcf38112bca9e9996676e6742a105111060b2564e013ca6"
     },
     {
       "owner": "src/paint-target.js",
@@ -2535,32 +2535,32 @@
     {
       "owner": "src/render-modes.js",
       "target": "src/paint-target.js",
-      "url": "./paint-target.js?v=0.36.18.923",
-      "sha256": "37d9e21ced1e29c5e9e6cffe79c40a0254dce07825ef419c28b50e2a50c6f7de"
+      "url": "./paint-target.js?v=0.36.18.925",
+      "sha256": "1e644efe5d44e97c5bcf38112bca9e9996676e6742a105111060b2564e013ca6"
     },
     {
       "owner": "src/export-as-panel.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.923",
-      "sha256": "51694353c481e4e43f7c83d06e7310701a5e6050401ac0f2c2a3b0298b0178b9"
+      "url": "./paint-export.js?v=0.36.18.925",
+      "sha256": "60f94ed7ba139d700f7601f9d68a1dded9163b345077c22ef04cbf1e8cd00b43"
     },
     {
       "owner": "src/nomad-packed-maps.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.923",
-      "sha256": "51694353c481e4e43f7c83d06e7310701a5e6050401ac0f2c2a3b0298b0178b9"
+      "url": "./paint-export.js?v=0.36.18.925",
+      "sha256": "60f94ed7ba139d700f7601f9d68a1dded9163b345077c22ef04cbf1e8cd00b43"
     },
     {
       "owner": "src/nomad-export-core.js",
       "target": "src/paint-export.js",
-      "url": "./paint-export.js?v=0.36.18.923",
-      "sha256": "51694353c481e4e43f7c83d06e7310701a5e6050401ac0f2c2a3b0298b0178b9"
+      "url": "./paint-export.js?v=0.36.18.925",
+      "sha256": "60f94ed7ba139d700f7601f9d68a1dded9163b345077c22ef04cbf1e8cd00b43"
     },
     {
       "owner": "src/paint-export.js",
       "target": "src/paint-target.js",
-      "url": "./paint-target.js?v=0.36.18.923",
-      "sha256": "37d9e21ced1e29c5e9e6cffe79c40a0254dce07825ef419c28b50e2a50c6f7de"
+      "url": "./paint-target.js?v=0.36.18.925",
+      "sha256": "1e644efe5d44e97c5bcf38112bca9e9996676e6742a105111060b2564e013ca6"
     },
     {
       "owner": "src/paint-export.js",
@@ -2768,9 +2768,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "../../src/export-as-panel.js?v=0.36.18.923",
+      "url": "../../src/export-as-panel.js?v=0.36.18.925",
       "target": "src/export-as-panel.js",
-      "sha256": "3c8557d710a39da84f9c589bdcf72fae58a58281260705f90e74b131af0d7839"
+      "sha256": "3580c2150fc0f3157d76e394e5de2cfd760625f329d17fea6cee13f9e58e6420"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2804,9 +2804,9 @@
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=0.36.18.923",
+      "url": "./lab.js?v=0.36.18.925",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "2b94afa69fe382206bf4226c150df0d7fabafd654c0c5d373b5429f45b134c6d"
+      "sha256": "0069e7e0485e945d6cace2c4666bf6d55abad25d9f054eeb6f29154af0d1905e"
     },
     {
       "owner": "index.html",
@@ -2963,6 +2963,12 @@
       "target": "src/metalness-resource.js",
       "url": "./metalness-resource.js?v=0.36.18.921",
       "sha256": "d295ef25f3efe72c0185ff0525c268cd92b2b763b95816a635679521e03f3667"
+    },
+    {
+      "owner": "src/paint-target.js",
+      "url": "./paint-material-environment.js?v=0.36.18.925",
+      "target": "src/paint-material-environment.js",
+      "sha256": "4c960c8621dcfc6a58355926b592c8ee961957b12048c569f133972c7b809d02"
     }
   ]
 }

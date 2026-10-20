@@ -2,12 +2,12 @@
 
 ## Current state — 20 October 2026
 
-Runtime remains0.36.18.924 /97a4d9e1. User924 toolbar-fix PASS is protected.
-Metalness923/924 is explicitly FAIL: reported inverted stroke appearance, black Lit
-preview and absent exported metalness. Audit21 focused checks pass but do not reproduce
-device failure; no runtime change or inverted-byte workaround made.
-Next: obtain affected .boxlab, exported .nom and screenshot with Preview/Value visible;
-trace exact resources and export before repair. See latest device-feedback entry below.
+Build0.36.18.925 from mainfb92f974: painted-metal Lit reflection input repaired.
+User924 toolbar fix PASS protected. New screenshots and METAL TEST files establish
+Channel values and native export are correct; Lit smooth metal turns black because
+reflection environment was absent. Existing surface now owns bounded shared room
+PMREM for metallic materials only. No slider inversion, data/export/scene changes.
+925 validation/publication below; GPU/iPad visual gate pending. Next:925 feedback.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -496,9 +496,9 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Investigate reported Metalness FAIL using actual affected .boxlab / exported .nom
-and Preview/Value screenshot. Current21 fixture checks pass without reproducing it.
-Preserve user924 toolbar PASS; do not invert values or add more channels speculatively.
+Retest925 Lit metallic255 with Roughness0, orbit highlights, then rough255, Channel
+and Done/reopen. Actual supplied native export matches project metalness exactly;
+do not invert scalar bytes. Preserve924 toolbar PASS. No new channels until feedback.
 
 ## Protected interaction and modelling baseline
 
@@ -1426,3 +1426,48 @@ with Channel/Preview selector and Value visible. Trace exact authored bytes/bind
 actual exported slot/factors and displayed preview before changing slider semantics.
 Do not dismiss report because fixtures pass. Keep original owners; no parallel material
 or brush implementation. Runtime remains924, no new build or new manual gate yet.
+
+## .925 — painted metal Lit preview reflection input — 20 October 2026
+
+User clarified with924 screenshots + METAL TEST.boxlab/.nom: Channel255 draws white
+correctly; metal exports perfectly in Nomad. Smooth metallic patches turn black in
+BoxLab Lit, including when Roughness0 is painted over metal. Prior suspected byte
+inversion/export loss are superseded by concrete evidence. Decoded actual project
+has independent512² colour and metalness; metal contains0–255. Actual native material
+has color+metalness, metalness/factorMetalness1; exported grayscalePNG matches EVERY
+project metalness byte exactly. Supplied project predates shown roughness edit; no
+roughness map present in that snapshot, not proof of dropped roughness. Uploads remain
+unmodified and are not copied into runtime/repository.
+
+Root source omission: Standard painted metal had no scene/material reflection input.
+Direct lights give narrow highlights; smooth metal can otherwise show black. Keep raw
+0/nonmetal /255metal semantics and existing writers. Original surface/lifetime owner
+now acquires a local room PMREM only for metallic Lit material with no existing scene
+environment. Original Three179 RoomEnvironment + PMREMGenerator,128cube size, no HDR
+network fetch, custom shader or added live-scene lights. Independent envMap per material
+uses shared per-renderer/refcount pool; generator/room temporary assets disposed after
+creation, render target freed exactly once after last surface. Channel holds accepted
+unlit map, colour/roughness-only paths unchanged; explicit scene environment respected.
+Source paint/UVs/history/projects and export factors/maps unchanged. No inverted-slider
+workaround, source migration or scene-global lighting change.
+
+3new regressions cover original surface binding of reflection+exact scalar channels,
+Channel/Lit reuse/source preservation, colour-only/custom environment isolation,
+multiple surfaces/reference lifetime, renderer separation and failed-generation retry.
+Nearby new+roughness/metalness/export30PASS, release5PASS; full/publication below.
+Cloud GPU cannot render actual main; fake target verifies ownership only, not GPU look.
+Official API: threejs.org/docs/pages/RoomEnvironment.html and PMREMGenerator.html;
+pinned installed Three179 source verified supports fromScene options.size.
+
+User924 toolbar PASS protected; current runtime correction only painted material
+reflection path and reviewed reverse loader graph925. Metalness authoring/exports
+are confirmed by user clarification,925 visual acceptance pending. DEVICE: reopen
+saved painted cube, Lit + Metalness255 and Roughness0, orbit; should reflect studio
+panels rather than solid black. Compare Roughness255, Channel0/255, Done/reopen and
+NOMAD export. Next respond narrowly to925 visual feedback before new channels.
+
+.925 final local Node24.19.0: **2,636 PASS / 0 FAIL / 0 skipped**;
+nearby30PASS and release5PASS. Actual supplied NOM/project metalness compared byte
+for byte: identical. No test assertions relaxed; no source/user file modifications.
+Protected924 toolbar and Multi1.0/frozen retained. Publication proof follows;
+real GPU/925 iPad reflection appearance still pending.
