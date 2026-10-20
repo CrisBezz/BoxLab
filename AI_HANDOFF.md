@@ -1,14 +1,14 @@
-# BoxLab AI Handoff — .933 / Surface image wrapping
+# BoxLab AI Handoff — .934 / Blur Amount
 
 ## Current state — 21 October 2026 (Brisbane)
 
-Build0.36.18.933 published at284f2923 from main36845450; latest user PASS931 protected.
-On surface images now wrap connected faces/corners and UV seams on Pencil lift.
-Same image placement/raster/history/codec/export owners; flat Project from View retained.
-Read latest933 entry and docs/paint-image-wrap-933.md. Local+hosted2670PASS;
-Pages/live24-file proof below. Device933 appearance/stretch/latency,932 Blur and929 alpha pending.
-Next feedback, stronger Blur, image raster conversion, merge layers, then bounded
-resolution/layer-count choices; Smudge/AO/seam authoring queued. Reflection unresolved.
+Build0.36.18.934 prepared from main6688de17. User933PASS protects image wrapping,
+placement/history/SaveOpen; prior930/931 PASS retained. Blur Amount1–32/default8 now
+controls smoothing separately from Opacity and Size; same raster/seam/history owners.
+Read latest934 entry and docs/paint-blur-amount-934.md. Focused26PASS+release5PASS;
+full/publication below. Device934 softness/latency pending;929 alpha gate independent.
+Next image conversion/blur, then Merge/Flatten, bounded resolution/layer-count choices.
+Smudge/AO/UV seam authoring queued; reflection preview independently unresolved.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -498,8 +498,8 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 ## Next narrow step
 
 Protect user928PASS: Paint history stays open with controls/continued strokes.
-Protect930/931PASS; test933 surface image wrapping and932 Blur; preserve history/layer/channel isolation.
-User priorities: stronger Blur, image conversion/blur, layer Merge/Flatten, staged resolution/layer budgets. Smudge and929 alpha gate remain pending.
+Protect930/931/933PASS; test934 Amount versus Opacity, preserve wrapped images/history/layer/channel isolation.
+Next image conversion/blur, layer Merge/Flatten, staged resolution/layer budgets. Smudge and929 alpha gate remain pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
@@ -1940,3 +1940,45 @@ No device933 appearance/latency PASS inferred;932 Blur and929 alpha gates pendin
 Next stronger Blur, image conversion/blur, Merge/Flatten, bounded resolution/layer
 options; Smudge/AO/seam authoring remain queued. Reflection preview independent.
 This proof changes documentation only; verified runtime remains byte-identical.
+
+## .934 — Blur Amount; .933 user PASS — 21 October 2026 (Brisbane)
+
+User933PASS protects image wrapping across cube edges/UV seams, Move/Rotate/Scale,
+Apply/history/SaveOpen. Audit main6688de17/live933: original paint-core has fixed
+centre4/cardinal1 one-pass blur, no stronger filter/slider owner. Extend original
+raster only; no new brush, adjacency, input, history, resource or writer implementation.
+
+Blur shows Amount1–32, default8. Amount repeats existing smoothing kernel over the
+stroke-start snapshot; Opacity mixes filtered target with original; Size controls brush
+footprint. Core filter.amount defaults1 (legacy calls/settings remain valid). Main
+UI passes optional blurAmount; shared brush defaults/Lab saved settings/native schemas
+unchanged. Existing original neighbour table handles connected faces/UV seams on every
+pass; no atlas-neighbour reads or new topology plan. Writes still clip to picked face:
+stroke both sides. One-pass exact accepted .931/.932 outputs retained; strong blur
+uses premultiplied RGBA through all passes (raw masks/scalars remain independent).
+
+Compute target once/contact, using two bounded Float64 RGBA buffers to avoid rounding
+between passes; one target retained for contact. At512² each buffer8MiB,16MiB filtering
+buffers total; target8MiB retained plus existing before/coverage/domain/pool resources.
+Uniform sources shortcut; opacity0 skips filtering. Max32*512² texel visits, no
+per-dab repeated filtering or unbounded feedback. Coverage remains max/contact;
+lift/repeat for more. Finish/cancel/dispose drops target; validation precedes contact
+state publication. Amount input cancels in-flight work and updates existing readout;
+original Paint history reopen retains tool/amount. Current selected layer/channel only.
+Image colour stays source-preserved/read-only pending explicit image conversion.
+
+Five new regressions: analytical one/two/32-pass impulse and independent opacity;
+alpha/raw scalar/domain/invalid/no-op/cancel; strong folded-seam sampling excludes
+atlas decoy and far-face writes; actual UI low/high softness, amount-change rollback,
+Paint UndoRedo and SaveOpen/exact native PNG; scalar/mask isolation/checkpoint refusal.
+Focused26PASS incl .933 wrapping6 and Paint-history5; release5PASS; full below.
+No old assertions relaxed. Complete changed raster/Lab/main reverse loader graph934;
+accepted933 wrap/graph/export/UV inspector, main/cage/Multi/frozen bytes unchanged.
+Device934 strength/first-contact latency pending; Node timings are not iPad evidence.
+Read docs/paint-blur-amount-934.md. Reflection preview independently unresolved.
+Next image-to-paint conversion/blur, then Merge Down/Flatten, staged resolutions/layer
+budgets; Smudge/AO/edge-seam authoring queued. Current512²/1024²/256²/base+3 unchanged.
+
+.934 final local Node24.19.0 regression: **2,675 PASS / 0 FAIL / 0 skipped**.
+Focused26PASS + release5PASS; no existing assertions relaxed. Hosted/Pages/live
+verification follows; actual iPad934 strength/latency gate pending.

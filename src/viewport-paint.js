@@ -1,7 +1,7 @@
 import {importPaintAlpha} from './paint-alpha-source.js?v=0.36.18.929';
 import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915';
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.933';
-import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.932';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.934';
+import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.934';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 import {importPaintImage} from './paint-image-source.js?v=0.36.18.907';
 import {cyclePaintImageMode} from './paint-image-placement.js?v=0.36.18.907';
@@ -18,6 +18,7 @@ panel.innerHTML=`
 <label>Channel <select data-paint="channel"><option value="colour">Colour</option><option value="roughness">Roughness</option><option value="metalness">Metalness</option></select></label>
 <label>Preview <select data-paint="preview"><option value="channel">Channel</option><option value="material">Lit material</option></select></label>
 <label>Tool <select data-paint="paint-action"><option value="paint">Brush</option><option value="fill">Tap fill · whole object</option><option value="erase">Eraser</option><option value="blur">Blur · connected faces</option></select></label>
+<div data-paint="blur-controls" class="paint-scalar-controls" hidden><label class="paint-scalar-row">Blur amount <input data-paint="blur-amount" type="range" min="1" max="32" step="1" value="8"><output data-paint="blur-readout">8</output></label><small>Amount spreads the blur · Opacity mixes it · Size sets the brushed area</small></div>
 <div data-paint="roughness-controls" class="paint-scalar-controls" hidden><label class="paint-scalar-row">Value (0–255) <input data-paint="roughness-value" type="range" min="0" max="255" step="1" value="128"><output data-paint="roughness-readout">128</output></label><small data-paint="preview-hint">0 = smooth (black) · 255 = rough (white)</small></div>
 <div data-paint="metalness-controls" class="paint-scalar-controls" hidden><label class="paint-scalar-row">Value (0–255) <input data-paint="metalness-value" type="range" min="0" max="255" step="1" value="255"><output data-paint="metalness-readout">255</output></label><small>0 = non-metal (black) · 255 = metal (white)</small><small>Eraser restores 0. Lit material shows both scalar channels</small></div>
 <div class="paint-main-row"><strong>Paint</strong><label>Colour <input data-paint="colour" type="color" value="#e34b37"></label></div>
@@ -34,9 +35,9 @@ const style=document.createElement('style');style.textContent=`#boxlabViewportPa
 const input=k=>panel.querySelector(`[data-paint="${k}"]`),say=s=>{if(status)status.textContent=s;};
 const colourControls=bindPaintColourControls(input);
 function options(select,items){const nodes=items.map(({value,label})=>{const o=document.createElement('option');o.value=value;o.textContent=label;return o;});select.replaceChildren?.(...nodes);}
-input('paint-action').value='paint';input('mask-value').value='0';input('roughness-value').value='128';input('metalness-value').value='255';
+input('paint-action').value='paint';input('mask-value').value='0';input('roughness-value').value='128';input('metalness-value').value='255';input('blur-amount').value='8';input('blur-readout').textContent='8';
 options(input('layer-blend'),PAINT_BLEND_MODES.map(value=>({value,label:value.split('-').map(s=>s[0].toUpperCase()+s.slice(1)).join(' ')})));
-function syncLayers(){const state=controller?.state;if(!state)return;input('layer').disabled=false;options(input('layer'),[...state.layers].reverse().map(l=>({value:l.id,label:l.name+(l.image?' · image':'')+(l.visible?'':' · hidden')})));input('layer').value=state.selected;
+function syncLayers(){input('blur-controls').hidden=input('paint-action').value!=='blur';const state=controller?.state;if(!state)return;input('layer').disabled=false;options(input('layer'),[...state.layers].reverse().map(l=>({value:l.id,label:l.name+(l.image?' · image':'')+(l.visible?'':' · hidden')})));input('layer').value=state.selected;
  const rough=state.paintTarget==='roughness',metal=state.paintTarget==='metalness',scalar=rough||metal;input('metalness-controls').hidden=!metal;input('preview').value=state.previewMode;input('preview-hint').textContent=state.previewMode==='material'?'0 = smooth (black) · 255 = rough (white) · Eraser restores 255':'0 = smooth (black) · 255 = rough (white)';input('channel').value=scalar?state.paintTarget:'colour';input('roughness-controls').hidden=!rough;
  const selected=state.layers.find(l=>l.id===state.selected),base=state.selected==='$base',index=state.layers.indexOf(selected);
  input('layer-name').value=selected.name;input('layer-visible').checked=selected.visible;input('layer-opacity').value=String(selected.opacity);input('layer-blend').value=selected.blendMode;
@@ -47,7 +48,7 @@ function syncLayers(){const state=controller?.state;if(!state)return;input('laye
  if(scalar)for(const key of ['layer','add-layer','choose-image','edit-image','layer-name','layer-visible','layer-opacity','layer-blend','remove-layer','layer-up','layer-down','paint-target','add-mask','remove-mask','mask-enabled','mask-inverted','mask-hide','mask-reveal','mask-grey','mask-value'])input(key).disabled=true;
 }
 function layerAction(fn){clearImage();cancel();try{fn();syncLayers();say(controller?.state?.previewMode==='material'?'Paint · lit material preview · Pencil paints the selected channel · fingers navigate':controller?.state?.paintTarget==='metalness'?'Metalness · Pencil paints values · black non-metal / white metal':controller?.state?.paintTarget==='roughness'?'Roughness · Pencil paints values · grayscale inspection · black smooth / white rough':controller?.state?.paintTarget==='mask'?'UV Paint · Pencil paints mask · Hide/Reveal brush sets coverage · Undo/Redo keeps Paint open':controller?.state?.layers.find(l=>l.id===controller.state.selected)?.image?'UV Paint · image retained · edit its mask or select a paint layer':'UV Paint · selected layer receives Pencil strokes · Undo/Redo keeps Paint open');}catch(error){syncLayers();say('UV Paint: '+error.message);}}
-input('paint-action').addEventListener('change',()=>{clearImage();cancel();syncLayers();say(input('paint-action').value==='blur'?'Blur · samples connected faces/seams · stroke over both sides · lift/repeat to soften further':input('paint-action').value==='fill'?'Tap mesh to fill the selected layer/channel · drag cancels · fingers navigate':input('paint-action').value==='erase'?'Eraser · overlays reveal lower layers; Base resets white; masks reveal; Roughness 255 / Metalness 0':'Pencil paints · fingers navigate');});
+input('paint-action').addEventListener('change',()=>{clearImage();cancel();syncLayers();say(input('paint-action').value==='blur'?'Blur · samples connected faces/seams · stroke over both sides · increase Amount for stronger smoothing':input('paint-action').value==='fill'?'Tap mesh to fill the selected layer/channel · drag cancels · fingers navigate':input('paint-action').value==='erase'?'Eraser · overlays reveal lower layers; Base resets white; masks reveal; Roughness 255 / Metalness 0':'Pencil paints · fingers navigate');});
 input('preview').addEventListener('change',()=>layerAction(()=>controller?.selectPreviewMode(input('preview').value)));
 input('channel').addEventListener('change',()=>layerAction(()=>controller?.selectPaintTarget(input('channel').value)));
 for(const channel of ['roughness','metalness'])input(channel+'-value').addEventListener('input',()=>{cancel();input(channel+'-readout').textContent=input(channel+'-value').value;});
@@ -65,8 +66,9 @@ input('mask-enabled').addEventListener('change',()=>layerAction(()=>controller?.
 input('mask-inverted').addEventListener('change',()=>layerAction(()=>controller?.editMask({inverted:input('mask-inverted').checked})));
 for(const [key,value] of [['mask-hide',0],['mask-reveal',255],['mask-grey',128]])input(key).addEventListener('click',()=>layerAction(()=>{const s=controller?.state,selected=s?.layers.find(l=>l.id===s.selected);input('mask-value').value=String(selected?.mask?.inverted?255-value:value);controller?.selectPaintTarget('mask');}));
 input('mask-value').addEventListener('input',cancel);
+input('blur-amount').addEventListener('input',()=>{cancel();input('blur-readout').textContent=input('blur-amount').value;});
 
-function settings(){return brushSettings({alphaTip,tipRotation:Number(input('tip-rotation').value),colour:input('colour').value,radius:Number(input('radius').value),hardness:Number(input('hardness').value),opacity:Number(input('opacity').value),pressure:input('pressure').checked});}
+function settings(){return brushSettings({blurAmount:Number(input('blur-amount').value),alphaTip,tipRotation:Number(input('tip-rotation').value),colour:input('colour').value,radius:Number(input('radius').value),hardness:Number(input('hardness').value),opacity:Number(input('opacity').value),pressure:input('pressure').checked});}
 function release(){if(contact!==null){try{canvas.releasePointerCapture(contact);}catch{}contact=null;}}
 function stopped(){alphaRequest++;opening++;clearImage();release();for(const id of palms){try{canvas.releasePointerCapture(id);}catch{}}panel.hidden=true;tools()?.end('uv-paint');}
 function close(){historyContext=null;opening++;controller?.close();stopped();}
