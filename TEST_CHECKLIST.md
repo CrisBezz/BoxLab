@@ -8812,3 +8812,23 @@ similarly bounded Smudge. AO and Edge-seam audits remain queued, not delivered.
 New Blur5 + nearby21=26PASS, release5PASS; no existing assertions relaxed.
 Default export/preview geometry and accepted930 main/cage/protected Multi/frozen bytes
 unchanged. Publication/hosted/live verification follows; actual iPad Blur gate pending.
+
+## .931 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `0226dc19bdb401b4851bb9d84ee95acb8785b957`, tested tree
+`ed0b12770fc595035fbfebd435d398ac77d59e97`, is published. Connected Git Data
+uploaded all17 exact local blobs/tree; fetched main matches tested source.
+Local Node24 and hosted Node22 regression39416319307/job118606105355 both pass
+**2,659 tests / 0 failures / 0 skipped**; complete hosted logs verified. Pages
+39416319079/deploy118606303731 completed successfully. All18 fresh checked live
+files byte-match: shell/version, every changed runtime/export/Lab owner, new filter
+domain, recovery, accepted930 main/cage, protected Multi1.0 and retained paint surface/
+export/image projector. Frozen builds unchanged. No assertions relaxed.
+
+All four continuity files current; this proof changes documentation only. Build931
+complete and ready for Tool Blur within face on a hard-edged painted mark, larger
+Size, lift/repeat for stronger smoothing; overlay/channel isolation and UndoRedo stay
+in Paint, return Brush and continue. SaveOpen/native export retains results. User930
+PASS protected; actual931 appearance/Pencil feel/latency and929 alpha gate pending.
+No rendered/iPad performance claim. Reflection preview independently unresolved;
+native exports correct. Next Blur feedback then protected Smudge; AO/seams queued.

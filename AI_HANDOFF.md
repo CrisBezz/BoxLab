@@ -2,10 +2,10 @@
 
 ## Current state — 20 October 2026
 
-Build0.36.18.931 prepared from maina9f2a10d (.930). User930PASS protected.
+Build0.36.18.931 published at0226dc19; source basea9f2a10d. User930PASS protected.
 Blur within face uses original paint/raycast/history plus authoritative triangle face
 metadata. Read latest931 entry/docs/paint-blur-931.md for precise scope and limits.
-Validation/publication below; Blur931/alpha929 device gates pending. Reflection preview
+Local+hosted2659PASS; Pages/live18-file proof below; Blur931/alpha929 gates pending. Reflection preview
 independently unresolved; native exports correct. Next Blur feedback then Smudge.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
@@ -1794,3 +1794,23 @@ similarly bounded Smudge. AO and Edge-seam audits remain queued, not delivered.
 New Blur5 + nearby21=26PASS, release5PASS; no existing assertions relaxed.
 Default export/preview geometry and accepted930 main/cage/protected Multi/frozen bytes
 unchanged. Publication/hosted/live verification follows; actual iPad Blur gate pending.
+
+## .931 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `0226dc19bdb401b4851bb9d84ee95acb8785b957`, tested tree
+`ed0b12770fc595035fbfebd435d398ac77d59e97`, is published. Connected Git Data
+uploaded all17 exact local blobs/tree; fetched main matches tested source.
+Local Node24 and hosted Node22 regression39416319307/job118606105355 both pass
+**2,659 tests / 0 failures / 0 skipped**; complete hosted logs verified. Pages
+39416319079/deploy118606303731 completed successfully. All18 fresh checked live
+files byte-match: shell/version, every changed runtime/export/Lab owner, new filter
+domain, recovery, accepted930 main/cage, protected Multi1.0 and retained paint surface/
+export/image projector. Frozen builds unchanged. No assertions relaxed.
+
+All four continuity files current; this proof changes documentation only. Build931
+complete and ready for Tool Blur within face on a hard-edged painted mark, larger
+Size, lift/repeat for stronger smoothing; overlay/channel isolation and UndoRedo stay
+in Paint, return Brush and continue. SaveOpen/native export retains results. User930
+PASS protected; actual931 appearance/Pencil feel/latency and929 alpha gate pending.
+No rendered/iPad performance claim. Reflection preview independently unresolved;
+native exports correct. Next Blur feedback then protected Smudge; AO/seams queued.
