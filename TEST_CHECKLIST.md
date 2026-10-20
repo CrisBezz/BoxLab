@@ -8474,3 +8474,26 @@ nearby30PASS and release5PASS. Actual supplied NOM/project metalness compared by
 for byte: identical. No test assertions relaxed; no source/user file modifications.
 Protected924 toolbar and Multi1.0/frozen retained. Publication proof follows;
 real GPU/925 iPad reflection appearance still pending.
+
+## .925 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `597659e1889220b0a209c1028ec518cb526023c5`, tested tree
+`760f3a6e749949ced660cf536d5ead98daff0829`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39362761751` / job `118432489899` both pass
+2,636 tests, zero failures/skips; complete hosted logs verified. Pages
+`39362761578`, deploy job `118432624041`, completed all steps successfully.
+All20 fresh live files byte-match source: shell/version, new reflection helper,
+original paint surface and every changed runtime/export/parent/Lab file, recovery,
+protected Multi1.0, retained scalar/project owners and accepted924 UV isolation.
+Initial in-flight reads served924/new helper404; final checked graph matches925.
+Only painted material reflection behavior changed; native/GLB algorithms and source
+scalar values retain exact accepted bytes. Supplied project/native files unmodified.
+
+All four continuity files current; this proof is docs-only. Build925 complete and
+ready for iPad Lit material metal255/roughness0+orbit reflection check, rough255
+blur comparison, Channel0/255 and Done/SaveOpen. Existing Channel and native export
+confirmed correct by supplied files/user clarification, not reversed. Real GPU
+reflection appearance and latency remain device-pending; Node PMREM target adapter
+verifies binding/sharing/lifetime only. User924 toolbar PASS protected.
+Next:925 visual feedback, narrow fixes before further material-channel work.
