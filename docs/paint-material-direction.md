@@ -130,3 +130,41 @@ keep data semantics and project/history/duplicate isolation. No device metalness
 appearance acceptance inferred from export fixtures.
 
 Build .923 exposes Metalness through the original Pencil scalar and Lit material owners. See metalness-paint-923.md; device gate pending, user920PASS protected.
+
+## .926 — whole-object Tap Fill; requested brush roadmap — 20 October 2026
+
+User925 feedback: reflections still not visible in BoxLab preview; Nomad export
+“great” and protected.925 visual fix is NOT accepted. No further speculative lighting
+change in926; preserve raw maps and correct native handoff. Need actual925/926 preview
+version/state or renderer diagnostics before claiming another reflection repair.
+User requests Tap to Fill, alpha compatibility, delete-paint/eraser, blur and smudge.
+Clarified Tap Fill default WHOLE OBJECT, selected layer/channel, not island/flood region.
+Audit existing raster/input/stack/history and prior Klecks integration audit first.
+
+Original raster now shares exactly the same coverage/opaque/straight-alpha texel
+operation for brush and fill. New Tool selector Brush / Tap fill · whole object.
+Pencil/mouse down must hit visible selected mesh; whole512² selected layer/channel
+previews at current opacity/value, release commits once via original finish/preflight/
+checkpoint/COW. Size/pressure do not limit fill. Drag>8px, pointercancel/tool/channel
+switch/body loss cancel; fingers still navigate, background contacts never fill.
+Colour/image/hidden-layer/scalar eligibility guards retained; image colour remains
+read-only, editable masks fill normally. No-op adds no history; quota/checkpoint
+failure restores original resource/preview/navigation. No schema/writer changes.
+
+4new integrations: exact shared raster coverage/alpha/no-op/cancel; actual UI layer
+fill and source preservation/UndoRedo/SaveOpen/native PNG; independent scalar+mask
+fill; mesh miss/finger/drag/cancel/settings/body-loss/checkpoint rollback. Nearby19PASS;
+full and publication below. Original brush expectations retained, no frozen/Multi/kernel
+changes. Reviewed shared raster/main+Lab reverse cache graph926 only.
+
+Remaining requested brushes are accepted roadmap, not delivered buttons: eraser
+(transparent overlays/masks; explicit Base reset semantics), alpha tips (bounded PNG
+coverage/rotation with original brush), blur and smudge with UV-island/seam-aware
+sampling so neighbouring atlas islands cannot contaminate unrelated surfaces.
+No ABR import or general Nomad brush-format compatibility promised. Prefer audited
+Klecks algorithms in existing raster/input/history over another painting engine.
+Next narrow build: reflection diagnostic evidence plus eraser/alpha implementation;
+keep blur/smudge scope bounded and test before exposing. No new material channel work.
+DEVICE926: choose Tool Tap Fill, tap mesh with chosen colour; UndoRedo. Fill an overlay
+at50% opacity; confirm underlying paint retained. Fill Roughness/Metalness0/255 and
+check Channel/export independence; switch Brush and confirm normal Pencil strokes.

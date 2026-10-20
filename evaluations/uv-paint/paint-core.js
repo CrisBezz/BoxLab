@@ -9,6 +9,16 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  if(typeof transparent!=='boolean')throw Error('Invalid paint layer alpha mode');
  if(!Number.isInteger(size)||size<16||size>512)throw Error('Comparison map budget exceeded');
  const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true;
+ function applyCoverage(at,a,rgb){
+  if(a<=coverage[at])return false;coverage[at]=a;let touched=false;
+    const offset=at*4,baseAlpha=before[offset+3]/255,outAlpha=a+baseAlpha*(1-a);
+    for(let k=0;k<3;k++){
+     const i=offset+k,next=transparent?Math.round((rgb[k]*a+before[i]*baseAlpha*(1-a))/outAlpha):Math.round(before[i]*(1-a)+rgb[k]*a);
+     if(pixels[i]!==next){pixels[i]=next;touched=true;}
+    }
+    if(transparent){const next=Math.round(outAlpha*255);if(pixels[offset+3]!==next){pixels[offset+3]=next;touched=true;}}
+  return touched;
+ }
  return {
   pixels,size,
   begin(value){if(disposed||before)throw Error('Paint layer unavailable');settings=brushSettings(value);before=pixels.slice();coverage=new Float32Array(size*size);changed=false;},
@@ -19,14 +29,15 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
    for(let y=Math.max(0,Math.floor(cy-radius-1));y<=Math.min(size-1,Math.ceil(cy+radius+1));y++)for(let x=Math.max(0,Math.floor(cx-radius-1));x<=Math.min(size-1,Math.ceil(cx+radius+1));x++){
     const d=Math.hypot(x-cx,y-cy),edge=Math.min(1,Math.max(0,radius+.5-d));if(!edge)continue;
     const t=Math.min(1,Math.max(0,(1-d/radius)/Math.max(.00001,1-settings.hardness))),falloff=t*t*(3-2*t);
-    const a=settings.opacity*edge*(d/radius<=settings.hardness?1:falloff),at=x+y*size;if(a<=coverage[at])continue;coverage[at]=a;
-    const offset=at*4,baseAlpha=before[offset+3]/255,outAlpha=a+baseAlpha*(1-a);
-    for(let k=0;k<3;k++){
-     const i=offset+k,next=transparent?Math.round((rgb[k]*a+before[i]*baseAlpha*(1-a))/outAlpha):Math.round(before[i]*(1-a)+rgb[k]*a);
-     if(pixels[i]!==next){pixels[i]=next;touched=true;}
-    }
-    if(transparent){const next=Math.round(outAlpha*255);if(pixels[offset+3]!==next){pixels[offset+3]=next;touched=true;}}
+    const a=settings.opacity*edge*(d/radius<=settings.hardness?1:falloff),at=x+y*size;if(a<=coverage[at])continue;
+    if(applyCoverage(at,a,rgb))touched=true;
    }
+   if(touched){dirty=true;changed=true;}return touched;
+  },
+  fill(){
+   if(disposed||!before)throw Error('Paint layer unavailable');
+   const rgb=[1,3,5].map(i=>parseInt(settings.colour.slice(i,i+2),16));let touched=false;
+   for(let at=0;at<size*size;at++)if(applyCoverage(at,settings.opacity,rgb))touched=true;
    if(touched){dirty=true;changed=true;}return touched;
   },
   finish(cancel=false){if(!before)return false;const did=changed;if(cancel&&changed){pixels.set(before);dirty=true;}before=coverage=settings=null;changed=false;return !cancel&&did;},

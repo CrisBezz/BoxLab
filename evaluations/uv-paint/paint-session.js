@@ -1,7 +1,7 @@
 import {encodeBoxlabScene,decodeBoxlabScene} from '../../src/boxlab-project-codec.js?v=0.36.18.921';
 import {EditableMesh} from '../../src/mesh.js';
 import {captureColourResource,encodeColourResource,decodeColourResource,paintDigest} from '../../src/paint-resource.js?v=898';
-import {brushSettings} from './paint-core.js?v=905';
+import {brushSettings} from './paint-core.js?v=0.36.18.926';
 // Lab transport wraps the ORIGINAL BoxLab scene codec; it is not a .boxlab file.
 const MAGIC=new TextEncoder().encode('BOXPAINT'),HEADER_LIMIT=1024*1024;
 export const PAINT_SESSION_LIMIT=4*1024*1024;

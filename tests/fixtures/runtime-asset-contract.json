@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.925",
+      "url": "./src/release-bootstrap.js?v=0.36.18.926",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.925",
+      "url": "./src/release-version.js?v=0.36.18.926",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2481,26 +2481,26 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.925",
-      "sha256": "dd4ebdfe8c66112908e742c5a6d8c29dd79e7a4ada6760c850173c64fc1827f2"
+      "url": "./src/viewport-paint.js?v=0.36.18.926",
+      "sha256": "f3765c9a7d863575b549d77f2d0ef087aac837508f17d026e3d55c99c8400f71"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.925",
-      "sha256": "eab0929f6a5524d3fb7c5df1e5e36d2142e1a513d2ac7f756d440a007946a9c4"
+      "url": "./viewport-paint-core.js?v=0.36.18.926",
+      "sha256": "ca0cac73fa592959d9461878e1a42616e30ce8f4633ded41b1896f52913efdc7"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "evaluations/uv-paint/paint-core.js",
-      "url": "../evaluations/uv-paint/paint-core.js?v=905",
-      "sha256": "f0a93e121ac811eba55fca3067129a0c2b2e27c3e80f6ed8b92ddfaf5a725afa"
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.926",
+      "sha256": "eb0d78041135328930aae4b9af4924966c9bf1c1df331dfcbe506acdb7ab47ee"
     },
     {
       "owner": "src/viewport-paint-core.js",
       "target": "evaluations/uv-paint/paint-core.js",
-      "url": "../evaluations/uv-paint/paint-core.js?v=905",
-      "sha256": "f0a93e121ac811eba55fca3067129a0c2b2e27c3e80f6ed8b92ddfaf5a725afa"
+      "url": "../evaluations/uv-paint/paint-core.js?v=0.36.18.926",
+      "sha256": "eb0d78041135328930aae4b9af4924966c9bf1c1df331dfcbe506acdb7ab47ee"
     },
     {
       "owner": "src/viewport-paint-core.js",
@@ -2744,9 +2744,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "./paint-core.js?v=905",
+      "url": "./paint-core.js?v=0.36.18.926",
       "target": "evaluations/uv-paint/paint-core.js",
-      "sha256": "f0a93e121ac811eba55fca3067129a0c2b2e27c3e80f6ed8b92ddfaf5a725afa"
+      "sha256": "eb0d78041135328930aae4b9af4924966c9bf1c1df331dfcbe506acdb7ab47ee"
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
@@ -2762,9 +2762,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "./paint-session.js?v=0.36.18.921",
+      "url": "./paint-session.js?v=0.36.18.926",
       "target": "evaluations/uv-paint/paint-session.js",
-      "sha256": "1a5297b18f93db2a3e740f044a98aa879d1ee9d300fe75830b64d80d23ca3d77"
+      "sha256": "ba4b9bbf7c46d23d5084c0898f0f2fb6c96fd4a859ced94dffdf7ea2dcf28a16"
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
@@ -2798,15 +2798,15 @@
     },
     {
       "owner": "evaluations/uv-paint/paint-session.js",
-      "url": "./paint-core.js?v=905",
+      "url": "./paint-core.js?v=0.36.18.926",
       "target": "evaluations/uv-paint/paint-core.js",
-      "sha256": "f0a93e121ac811eba55fca3067129a0c2b2e27c3e80f6ed8b92ddfaf5a725afa"
+      "sha256": "eb0d78041135328930aae4b9af4924966c9bf1c1df331dfcbe506acdb7ab47ee"
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=0.36.18.925",
+      "url": "./lab.js?v=0.36.18.926",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "0069e7e0485e945d6cace2c4666bf6d55abad25d9f054eeb6f29154af0d1905e"
+      "sha256": "5c0722315cb95f065a24092c4a9117891fb3b63f3f2287f3cfd2695a1becf0a6"
     },
     {
       "owner": "index.html",
