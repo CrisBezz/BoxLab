@@ -12241,3 +12241,21 @@ PNG tips next, UV-safe blur/smudge pending. Device .928 acceptance pending.
 .928 local Node24 full regression: **2,648 PASS / 0 FAIL / 0 skipped**;
 five new history regressions and reviewed release contract5PASS. Protected Multi1.0
 and frozen builds unchanged. Publication/hosted/live-byte verification follows.
+
+## .928 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `6584f8d060dbbe8a52f901d814d655cece4209ba`, tested tree
+`e554ccf0c77018eb4b3fd4134ab80f50a8bddd90`, published through connected Git Data
+with the exact locally tested tree; fetched origin/main matched and working tree clean.
+Local Node24 and hosted Node22 regression run `39373206187`, job `118465435842`,
+both **2,648 PASS / 0 FAIL / 0 skipped**; full hosted log totals verified. Pages run
+`39373205537`, deploy `118465573202`, completed successfully. All17 checked fresh
+live files byte-match: shell/version, changed main/painter, recovery, unchanged paint
+core/raster/scalar/project/export/reflection/UV and protected Multi1.0. Frozen builds
+unchanged. All four continuity files current; this proof is documentation-only.
+
+Build928 complete and ready for two-finger Undo / three-finger Redo while Paint stays
+open, continued Pencil strokes, retained channel/preview/brush controls and original
+Paint footer history. Done still closes. User927 PASS protected; actual928 iPad
+acceptance pending. Reflection preview remains independently unresolved; native export
+correct. Next bounded PNG alpha tips; UV-safe blur/smudge pending.
