@@ -12343,3 +12343,22 @@ Focused native cage/cache/timing/release29PASS; original surface/proxy/metadata,
 history/paint/alpha/image/native export assertions retained. Only superseded Object
 visual cage and depth-tested loose-wire expectations changed. Multi1.0/frozen intact.
 Publication/hosted/live verification follows; iPad display acceptance pending.
+
+## .930 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `defbd5b79b89166aaef3a8e479ab09e6bce1df63`, tested tree
+`d4234bfa273e1640ff515b9937f016f0849efb24`, is published. Connected Git Data
+uploaded all13 exact local blobs/tree; fetched main has identical tested files.
+Local Node24 and hosted Node22 regression39411220064/job118589175903 both pass
+**2,654 tests / 0 failures / 0 skipped**; complete hosted logs verified. Pages
+39411219467/deploy118589389324 completed successfully. All11 checked fresh live
+files byte-match: shell/version, main/cage batch, recovery, protected Multi1.0 and
+unchanged painter/raster/render/material surface. Frozen builds unchanged.
+
+All four continuity files current; this proof changes documentation only. Build930
+complete and ready for Object-mode solid orbit/paint without automatic through-cage,
+Vertex/Edge/Face cage restoration, Object return and Paint UndoRedo/continued marks.
+Loose wire geometry remains depth-tested; original picking/bridge/cache owners intact.
+No measured FPS claim or rendered iPad acceptance inferred. User928PASS protected;
+929 alpha gate remains pending. Reflection preview remains independently unresolved;
+native exports correct. Resume alpha feedback then UV-safe blur/smudge; AO/seams queued.
