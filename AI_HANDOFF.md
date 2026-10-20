@@ -2,11 +2,11 @@
 
 ## Current state — 21 October 2026 (Brisbane)
 
-Build0.36.18.933 prepared from main36845450; latest user PASS931 protected.
+Build0.36.18.933 published at284f2923 from main36845450; latest user PASS931 protected.
 On surface images now wrap connected faces/corners and UV seams on Pencil lift.
 Same image placement/raster/history/codec/export owners; flat Project from View retained.
-Read latest933 entry and docs/paint-image-wrap-933.md. Focused25PASS+release5PASS;
-full/publication below. Device933 appearance/stretch/latency,932 Blur and929 alpha pending.
+Read latest933 entry and docs/paint-image-wrap-933.md. Local+hosted2670PASS;
+Pages/live24-file proof below. Device933 appearance/stretch/latency,932 Blur and929 alpha pending.
 Next feedback, stronger Blur, image raster conversion, merge layers, then bounded
 resolution/layer-count choices; Smudge/AO/seam authoring queued. Reflection unresolved.
 
@@ -1917,3 +1917,26 @@ unchanged. Smudge/AO/UV edge-seam authoring queued; this is image wrapping only.
 .933 final local Node24.19.0 regression: **2,670 PASS / 0 FAIL / 0 skipped**.
 Six new checks + nearby19 =25PASS; release5PASS. No existing assertions relaxed.
 Publication/hosted/live verification follows; actual iPad933 gate pending.
+
+## .933 publication verified — 21 October 2026 (Brisbane)
+
+Runtime `284f292306c06a857ffc047bd5dd497370312337`, tested tree
+`4209dda642676652b76feb89c3148ec55da2f9b2`, is published on main.
+Connected Git Data uploaded19 exact local blobs; fetched main matches tested tree.
+Local Node24 and hosted Node22 regression39510312183/job118929399272 both pass
+**2,670 tests / 0 failures / 0 skipped**; complete hosted logs verified.
+Pages39510311401/deploy118929589714 succeeded. All24 fresh checked live files
+byte-match: shell/version, complete changed image/Blur reverse loader graph,
+new shared graph/wrap chart, recovery, main/cage, protected Multi1.0 and retained
+exporter/UV inspector/raster/image-source/recipe owners. Frozen builds untouched;
+no assertions relaxed. All four continuity files updated.
+
+Build933 complete and ready: +Image→On surface, place near cube edge, lift and orbit
+to inspect continuation. Drag onto next face; rotate/scale, lift; try curved patch.
+Apply→UndoRedo, SaveOpen retains exact result. Contact guide stays planar; wrapped
+mesh preview updates on lift. Interactive chart remains transient; Edit image→
+On surface repicks, as912. Curvature/large closed patches can stretch/reach boundary.
+No device933 appearance/latency PASS inferred;932 Blur and929 alpha gates pending.
+Next stronger Blur, image conversion/blur, Merge/Flatten, bounded resolution/layer
+options; Smudge/AO/seam authoring remain queued. Reflection preview independent.
+This proof changes documentation only; verified runtime remains byte-identical.
