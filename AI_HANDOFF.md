@@ -2,10 +2,10 @@
 
 ## Current state — 20 October 2026
 
-Build0.36.18.932 prepared from main05a790e8; user931PASS protected.
+Build0.36.18.932 published at5bac1182 from main05a790e8; user931PASS protected.
 Blur samples real connected faces across UV seams; stroke both sides, footprint stays
 on picked face. Original UV inspector/preview geometry/raster/history owners retained.
-Read latest932 entry and docs/paint-seams-932.md. Focused20PASS; full/publication below.
+Read latest932 entry and docs/paint-seams-932.md. Local+hosted2664PASS; Pages/live22-file proof below.
 Device932/alpha929 gates pending. Reflection preview unresolved; native exports correct.
 Next seam feedback then bounded Smudge. AO/UV seam authoring queued.
 
@@ -1845,3 +1845,23 @@ AUTHORING remain queued. Seam sampling is not seam authoring.
 
 .932 final local Node24.19.0 regression: **2,664 PASS / 0 FAIL / 0 skipped**.
 Focused20PASS; no existing assertions relaxed. Hosted/Pages/live verification follows.
+
+## .932 publication verified — 20 October 2026
+
+Runtime `5bac11821f49d7d47c6ed99cd90755c05fded102`, tested tree
+`8a6f25d6e380442b8c2c7c89893d8f94d153404d`, is published on main.
+Connected Git Data uploaded24 exact local blobs; fetched main matches tested tree.
+Local Node24 and hosted Node22 regression39418615870/job118613691692 both pass
+**2,664 tests / 0 failures / 0 skipped**; complete hosted logs verified.
+Pages39418615854/deploy118613868578 succeeded. All22 fresh checked live files
+byte-match: shell/version, complete changed runtime/export/UV/Lab loader graph,
+new seam helper, recovery, accepted main, protected Multi1.0 and retained surface.
+Frozen builds unchanged; no assertions relaxed. All four continuity files updated.
+
+Build932 complete and ready for testing: paint different colours across a cube edge,
+Blur strokes over BOTH sides, lift/repeat, UndoRedo stay in Paint, SaveOpen retains.
+This connects sample reads across real face edges/UV seams; footprint does not wrap.
+User931PASS protected; actual932 Pencil feel/appearance/first-use latency pending.
+Alpha929 device gate remains independent. Reflection preview unresolved; native exports
+correct. Next feedback then bounded Smudge through original owner; AO/seam authoring
+remain queued. This proof changes documentation only, not the verified runtime.
