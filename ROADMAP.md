@@ -3914,3 +3914,28 @@ layering issue repaired; exact intermittent Safari disappearance still needs thi
 device confirmation. Cloud main WebGL unavailable, no full-app rendered proof.
 If it persists obtain screenshot and exact trigger before further UI changes.
 User920PASS protected;923 Metalness device gate still pending, no inferred PASS.
+
+## Device feedback — .924 toolbar PASS; Metalness FAIL — 20 October 2026
+
+User: “PASS for the fix.” Protect .924 main top-right toolbar visibility through UV
+Editor; keep active-UV viewport isolation and original header/action owners intact.
+
+Metalness is NOT accepted: user reports whole model black in Channel, white draws
+black / black draws white, Lit paints black, and no metal channel in export.
+Treat all reported symptoms as an open device failure; do not infer Metalness PASS
+from the separate toolbar acceptance. No speculative inversion or resource migration.
+
+Audit current009d45f3: slider forwards integer0–255 directly; scalar raster publishes
+raw R8 independent of colour; Channel uses grayscale; Lit samples B with factor1;
+existing native slot and GLB packed B receive captured metalness. Rerun actual UI/
+painter/history/duplicate/preview/export suites:21PASS/0FAIL/0skip. Those fixtures
+write255 white/0black and contain exact metalness in NOM/GLB, so they do NOT yet
+reproduce user failure. Lit material/scene have no reflection environment; possible
+dark-metal appearance contributor, NOT a confirmed diagnosis of all symptoms.
+Cloud GPU limitation still prevents rendered-device reproduction.
+
+Next required evidence: affected .boxlab project and its exported .nom, plus screenshot
+with Channel/Preview selector and Value visible. Trace exact authored bytes/binding,
+actual exported slot/factors and displayed preview before changing slider semantics.
+Do not dismiss report because fixtures pass. Keep original owners; no parallel material
+or brush implementation. Runtime remains924, no new build or new manual gate yet.

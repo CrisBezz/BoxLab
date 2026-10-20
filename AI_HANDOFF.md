@@ -2,13 +2,12 @@
 
 ## Current state — 20 October 2026
 
-Release0.36.18.924 published at97a4d9e1; source base553ba061 (.923).
-User reports intermittent missing main top-right buttons while UV Editor is open.
-Original UV workspace now isolates viewport layers beneath original main header.
-One CSS rule, no modelling/UV/paint/history/input changes. Source stacking defect
-identified; exact iPad disappearance remains device-pending. Next:924 retest; if it
-persists obtain screenshot/trigger before further UI changes. User920PASS protected;
-923 Metalness gate still pending. Current923 feature details: metalness-paint-923.md.
+Runtime remains0.36.18.924 /97a4d9e1. User924 toolbar-fix PASS is protected.
+Metalness923/924 is explicitly FAIL: reported inverted stroke appearance, black Lit
+preview and absent exported metalness. Audit21 focused checks pass but do not reproduce
+device failure; no runtime change or inverted-byte workaround made.
+Next: obtain affected .boxlab, exported .nom and screenshot with Preview/Value visible;
+trace exact resources and export before repair. See latest device-feedback entry below.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -497,9 +496,9 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Retest924 main toolbar through UV open/pan/pinch/edit/history/close and VIEW dropdown.
-If intermittent disappearance persists, inspect screenshot and exact trigger first.
-Metalness923 authoring/material device gate also remains pending. No new channel work.
+Investigate reported Metalness FAIL using actual affected .boxlab / exported .nom
+and Preview/Value screenshot. Current21 fixture checks pass without reproducing it.
+Preserve user924 toolbar PASS; do not invert values or add more channels speculatively.
 
 ## Protected interaction and modelling baseline
 
@@ -1402,3 +1401,28 @@ layering issue repaired; exact intermittent Safari disappearance still needs thi
 device confirmation. Cloud main WebGL unavailable, no full-app rendered proof.
 If it persists obtain screenshot and exact trigger before further UI changes.
 User920PASS protected;923 Metalness device gate still pending, no inferred PASS.
+
+## Device feedback — .924 toolbar PASS; Metalness FAIL — 20 October 2026
+
+User: “PASS for the fix.” Protect .924 main top-right toolbar visibility through UV
+Editor; keep active-UV viewport isolation and original header/action owners intact.
+
+Metalness is NOT accepted: user reports whole model black in Channel, white draws
+black / black draws white, Lit paints black, and no metal channel in export.
+Treat all reported symptoms as an open device failure; do not infer Metalness PASS
+from the separate toolbar acceptance. No speculative inversion or resource migration.
+
+Audit current009d45f3: slider forwards integer0–255 directly; scalar raster publishes
+raw R8 independent of colour; Channel uses grayscale; Lit samples B with factor1;
+existing native slot and GLB packed B receive captured metalness. Rerun actual UI/
+painter/history/duplicate/preview/export suites:21PASS/0FAIL/0skip. Those fixtures
+write255 white/0black and contain exact metalness in NOM/GLB, so they do NOT yet
+reproduce user failure. Lit material/scene have no reflection environment; possible
+dark-metal appearance contributor, NOT a confirmed diagnosis of all symptoms.
+Cloud GPU limitation still prevents rendered-device reproduction.
+
+Next required evidence: affected .boxlab project and its exported .nom, plus screenshot
+with Channel/Preview selector and Value visible. Trace exact authored bytes/binding,
+actual exported slot/factors and displayed preview before changing slider semantics.
+Do not dismiss report because fixtures pass. Keep original owners; no parallel material
+or brush implementation. Runtime remains924, no new build or new manual gate yet.
