@@ -8,10 +8,12 @@ export function brushSettings(value={}){
 export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  if(typeof transparent!=='boolean')throw Error('Invalid paint layer alpha mode');
  if(!Number.isInteger(size)||size<16||size>512)throw Error('Comparison map budget exceeded');
- const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true;
+ const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true,erasing=false;
  function applyCoverage(at,a,rgb){
   if(a<=coverage[at])return false;coverage[at]=a;let touched=false;
-    const offset=at*4,baseAlpha=before[offset+3]/255,outAlpha=a+baseAlpha*(1-a);
+    const offset=at*4;
+    if(erasing){const next=Math.round(before[offset+3]*(1-a));if(pixels[offset+3]!==next){pixels[offset+3]=next;touched=true;}return touched;}
+    const baseAlpha=before[offset+3]/255,outAlpha=a+baseAlpha*(1-a);
     for(let k=0;k<3;k++){
      const i=offset+k,next=transparent?Math.round((rgb[k]*a+before[i]*baseAlpha*(1-a))/outAlpha):Math.round(before[i]*(1-a)+rgb[k]*a);
      if(pixels[i]!==next){pixels[i]=next;touched=true;}
@@ -21,7 +23,7 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  }
  return {
   pixels,size,
-  begin(value){if(disposed||before)throw Error('Paint layer unavailable');settings=brushSettings(value);before=pixels.slice();coverage=new Float32Array(size*size);changed=false;},
+  begin(value,{erase=false}={}){if(typeof erase!=='boolean'||erase&&!transparent)throw Error('Alpha erasing requires a transparent paint layer');if(disposed||before)throw Error('Paint layer unavailable');settings=brushSettings(value);erasing=erase;before=pixels.slice();coverage=new Float32Array(size*size);changed=false;},
   stamp(u,v,pressure=1){
    if(disposed||!before||![u,v,pressure].every(Number.isFinite)||u<0||u>1||v<0||v>1)return false;
    const p=settings.pressure?Math.min(1,Math.max(0,pressure)):1;if(!p||!settings.opacity)return false;

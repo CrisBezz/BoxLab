@@ -168,3 +168,34 @@ keep blur/smudge scope bounded and test before exposing. No new material channel
 DEVICE926: choose Tool Tap Fill, tap mesh with chosen colour; UndoRedo. Fill an overlay
 at50% opacity; confirm underlying paint retained. Fill Roughness/Metalness0/255 and
 check Channel/export independence; switch Brush and confirm normal Pencil strokes.
+
+## .927 — explicit scalar label rows and Eraser — 20 October 2026
+
+User926PASS protects whole-object Tap Fill/opacity/history/channel workflow. Screenshot
+identifies earlier metal white/black confusion as inline hint text joining readout:
+“255Black…” / “0Black…”. No inverted bytes. Shared scalar controls now grid rows:
+label + flexible slider + fixed3ch readout, then separate block hints. Explicit
+0=non-metal(black)/255=metal(white); roughness0=smooth(black)/255=rough(white).
+Help cannot sit beside numeric output. Compact LEFT dock/scroll/footer retained.
+No scalar/data/export/light semantic change; reflection925 remains separate unresolved
+report, not implied PASS from926 or this clarification. Native export protected.
+
+Next requested narrow brush: original Tool selector gains Eraser. Same samplers,
+pressure/size/hardness/maximum per-contact coverage and existing commit/checkpoint/
+COW/pools. Transparent colour overlays reduce alpha only, retaining RGB/source/base;
+Base resets white. Roughness resets255, Metalness0, masks reveal (raw0 if inverted,
+255 otherwise). Original image colour stays retained/read-only; erase its mask.
+No scene/material opacity, destructive image baking or deletion of layer/resource.
+Colour controls disable for Eraser and restore on return; colour brush setting retained.
+Cancellation/settings/body-loss/failed checkpoint retain original pixels/history.
+Original Brush and accepted Tap Fill retain semantics; no new pointer/history owner.
+
+3new integration tests cover alpha coverage/RGB/no-op/cancel; actual UI overlay/Base
+isolation + UndoRedo/SaveOpen/exact composed native PNG; defaults/mask inversion/
+scalar independence and refusal rollback. Existing fill/roughness/metalness/mask23PASS;
+full/cache/publication below. Shared main/Lab raster reverse graph repinned927 only;
+protected Multi1.0/frozen/modelling/UV/project/native writer unchanged.
+DEVICE927: read Metalness0/255 hint below slider with no joined text; erase a painted
+overlay to reveal lower paint, UndoRedo; erase Base/scalars, switch Brush/Fill back.
+Alpha PNG tips next, UV-safe blur/smudge remain queued. Reflection diagnosis remains
+open and should use device/version/renderer evidence, no further lighting guesses.

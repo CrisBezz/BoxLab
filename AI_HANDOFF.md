@@ -1,14 +1,14 @@
-# BoxLab AI Handoff — .926 / whole-object Tap Fill and brush roadmap
+# BoxLab AI Handoff — .927 / scalar label fix and Eraser
 
 ## Current state — 20 October 2026
 
-Build0.36.18.926 published at3b01bce1; source base63e82fa8. Whole-object Tap Fill uses original
-raster/input/history. User selected whole-object default for selected layer/channel.
-User925 reflection preview still FAIL; Nomad paint/material export “great” protected.
-No second lighting guess in926. User924 toolbar PASS protected. Alpha tips, eraser,
-blur and smudge requested and queued in latest926 entry; only Fill delivered here.
-Validation/publication below. Next:926 hands-on fill, then narrow brush extensions
-and evidence-led preview diagnosis; no claim925 reflections visually accepted.
+Build0.36.18.927 from main64886209 fixes scalar help joining slider readout and adds
+Eraser through original paint stroke/raster/history. User926 Tap Fill PASS protected;
+user confirms apparent metal inversion came from wrapping text, not reversed values.
+Scalar hints now occupy separate rows with explicit0/255 meanings. Overlay Eraser
+reveals lower layers; Base white, Roughness255, Metalness0, masks reveal.
+Reflection925 remains unresolved independently; native export and924 toolbar PASS
+protected. Alpha tips next; UV-safe blur/smudge queued. Validation/publication below.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -497,11 +497,10 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Retest926 whole-object Tap Fill, UndoRedo/overlay opacity/scalar independence, then
-continue eraser/alpha through original raster. Blur/smudge need safe UV-island sampling.
-Reflection preview remains unresolved despite925; inspect actual version/state or
-renderer diagnostics before another lighting change. Nomad export and924 toolbar PASS
-protected. No parallel brush/history owner or new material channel work.
+Retest927 label separation and Eraser/UndoRedo/Brush+Fill return; protect926PASS.
+Next bounded PNG alpha brush tips through original raster. UV-safe blur/smudge pending.
+Reflection preview remains unresolved; obtain device/version/renderer evidence before
+more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
 ## Protected interaction and modelling baseline
 
@@ -1564,3 +1563,40 @@ requested pending stages, not implemented. Reflection preview remains user-repor
 unresolved despite925, no new lighting repair claimed. Nomad export confirmed great
 and protected;924 toolbar PASS protected. Next:926 device feedback, narrow eraser/
 alpha additions and evidence-led preview diagnosis through original owners.
+
+## .927 — explicit scalar label rows and Eraser — 20 October 2026
+
+User926PASS protects whole-object Tap Fill/opacity/history/channel workflow. Screenshot
+identifies earlier metal white/black confusion as inline hint text joining readout:
+“255Black…” / “0Black…”. No inverted bytes. Shared scalar controls now grid rows:
+label + flexible slider + fixed3ch readout, then separate block hints. Explicit
+0=non-metal(black)/255=metal(white); roughness0=smooth(black)/255=rough(white).
+Help cannot sit beside numeric output. Compact LEFT dock/scroll/footer retained.
+No scalar/data/export/light semantic change; reflection925 remains separate unresolved
+report, not implied PASS from926 or this clarification. Native export protected.
+
+Next requested narrow brush: original Tool selector gains Eraser. Same samplers,
+pressure/size/hardness/maximum per-contact coverage and existing commit/checkpoint/
+COW/pools. Transparent colour overlays reduce alpha only, retaining RGB/source/base;
+Base resets white. Roughness resets255, Metalness0, masks reveal (raw0 if inverted,
+255 otherwise). Original image colour stays retained/read-only; erase its mask.
+No scene/material opacity, destructive image baking or deletion of layer/resource.
+Colour controls disable for Eraser and restore on return; colour brush setting retained.
+Cancellation/settings/body-loss/failed checkpoint retain original pixels/history.
+Original Brush and accepted Tap Fill retain semantics; no new pointer/history owner.
+
+3new integration tests cover alpha coverage/RGB/no-op/cancel; actual UI overlay/Base
+isolation + UndoRedo/SaveOpen/exact composed native PNG; defaults/mask inversion/
+scalar independence and refusal rollback. Existing fill/roughness/metalness/mask23PASS;
+full/cache/publication below. Shared main/Lab raster reverse graph repinned927 only;
+protected Multi1.0/frozen/modelling/UV/project/native writer unchanged.
+DEVICE927: read Metalness0/255 hint below slider with no joined text; erase a painted
+overlay to reveal lower paint, UndoRedo; erase Base/scalars, switch Brush/Fill back.
+Alpha PNG tips next, UV-safe blur/smudge remain queued. Reflection diagnosis remains
+open and should use device/version/renderer evidence, no further lighting guesses.
+
+.927 final local Node24.19.0: **2,643 PASS / 0 FAIL / 0 skipped**;
+3new eraser integrations, nearby23PASS and release5PASS. No tests relaxed.
+Protected926 Fill/924 toolbar/native export/Multi1.0/frozen retained. Scalar mapping
+unchanged; layout/device confirmation and Eraser hands-on gate pending.
+Publication/hosted regression/live verification follows.
