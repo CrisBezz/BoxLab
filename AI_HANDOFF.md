@@ -1,14 +1,12 @@
-# BoxLab AI Handoff — .927 / scalar label fix and Eraser
+# BoxLab AI Handoff — .928 / keep Paint open during history
 
 ## Current state — 20 October 2026
 
-Build0.36.18.927 published at2fab3eb7; source base64886209. Fixes scalar help and adds
-Eraser through original paint stroke/raster/history. User926 Tap Fill PASS protected;
-user confirms apparent metal inversion came from wrapping text, not reversed values.
-Scalar hints now occupy separate rows with explicit0/255 meanings. Overlay Eraser
-reveals lower layers; Base white, Roughness255, Metalness0, masks reveal.
-Reflection925 remains unresolved independently; native export and924 toolbar PASS
-protected. Alpha tips next; UV-safe blur/smudge queued. Validation/publication below.
+Build0.36.18.928 prepared from main f1ee9217. User .927 PASS protected.
+Undo/Redo now reconnects the original painter after scene restore so painting can
+continue, retaining selected channel/layer/preview and brush controls. Original
+history/gesture owners remain authoritative. Validation/publication below.
+Reflection preview unresolved independently; native Nomad export correct.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -497,7 +495,7 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Retest927 label separation and Eraser/UndoRedo/Brush+Fill return; protect926PASS.
+Retest928 two-finger Undo / three-finger Redo and continued painting; protect927PASS.
 Next bounded PNG alpha brush tips through original raster. UV-safe blur/smudge pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
@@ -1621,3 +1619,23 @@ layout and Eraser feel remain device-pending; automated tests are not visual pro
 User926 Fill and924 toolbar PASS protected; native export correct. Alpha PNG tips
 next; UV-safe blur/smudge pending. Reflection925 remains independently unresolved,
 not a slider inversion or an inferred PASS from the corrected help text.
+
+## .928 — Paint stays open across Undo/Redo — 20 October 2026
+
+User .927 PASS protected: scalar hint layout and Eraser, alongside .926 Fill and
+.924 toolbar. Requested history gesture fix takes priority over PNG alpha tips.
+Audit: original main doUndo/doRedo restores scene/body and painter closes on disposal;
+Paint footer also explicitly closed. Original history owner now brackets restoration
+with painter preparation/resume. Cancel transient stroke/image before capture, close
+old display, reopen on rebuilt active body; retain layer if present, channel/mask if
+valid, Lit/Channel preview and existing brush/action/slider controls. No duplicate
+history or gesture owner/checkpoint. Empty history and rapid repeated history retain
+Paint; Done/other session/object changes defeat stale reopen. Original two/three-finger
+gestures, toolbar and footer share this path. Five regressions execute original main
+Undo/Redo and touch-end functions with real scene snapshots, paint resources and UI.
+Reflection preview remains unresolved; native Nomad export remains correct. Alpha
+PNG tips next, UV-safe blur/smudge pending. Device .928 acceptance pending.
+
+.928 local Node24 full regression: **2,648 PASS / 0 FAIL / 0 skipped**;
+five new history regressions and reviewed release contract5PASS. Protected Multi1.0
+and frozen builds unchanged. Publication/hosted/live-byte verification follows.

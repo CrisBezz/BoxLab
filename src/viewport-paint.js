@@ -9,6 +9,7 @@ import {createSurfaceImageGuide,surfaceImagePlacement} from './paint-image-surfa
 const canvas=document.querySelector('#viewport'),menu=document.querySelector('#fileMenu .top-file-content'),status=document.querySelector('#selectionStatus');
 const manager=()=>globalThis.__boxlabObjectManager,bridge=()=>globalThis.__boxlabBridgeState,tools=()=>globalThis.__boxlabToolSession;
 const target=()=>{const m=manager();return m?.objects?.find(o=>o.id===m.activeId);};
+let historyContext=null;
 let contact=null,opening=0,controller=null,disposed=false,lastPressure=1;const touches=new Set(),palms=new Set();
 let imageStage=null,imageGesture=null,imageRequest=0;
 const panel=document.createElement('section');panel.id='boxlabViewportPaint';panel.hidden=true;
@@ -44,7 +45,7 @@ function syncLayers(){const state=controller?.state;if(!state)return;input('laye
  input('add-layer').disabled=state.layers.length>=4;input('choose-image').disabled=state.layers.length>=4;input('edit-image').disabled=!selected.image;input('layer-up').disabled=base||index===state.layers.length-1;input('layer-down').disabled=base||index<=1;
  if(scalar)for(const key of ['layer','add-layer','choose-image','edit-image','layer-name','layer-visible','layer-opacity','layer-blend','remove-layer','layer-up','layer-down','paint-target','add-mask','remove-mask','mask-enabled','mask-inverted','mask-hide','mask-reveal','mask-grey','mask-value'])input(key).disabled=true;
 }
-function layerAction(fn){clearImage();cancel();try{fn();syncLayers();say(controller?.state?.previewMode==='material'?'Paint · lit material preview · Pencil paints the selected channel · fingers navigate':controller?.state?.paintTarget==='metalness'?'Metalness · Pencil paints values · black non-metal / white metal':controller?.state?.paintTarget==='roughness'?'Roughness · Pencil paints values · grayscale inspection · black smooth / white rough':controller?.state?.paintTarget==='mask'?'UV Paint · Pencil paints mask · Hide/Reveal brush sets coverage · Undo exits Paint':controller?.state?.layers.find(l=>l.id===controller.state.selected)?.image?'UV Paint · image retained · edit its mask or select a paint layer':'UV Paint · selected layer receives Pencil strokes · Undo exits Paint');}catch(error){syncLayers();say('UV Paint: '+error.message);}}
+function layerAction(fn){clearImage();cancel();try{fn();syncLayers();say(controller?.state?.previewMode==='material'?'Paint · lit material preview · Pencil paints the selected channel · fingers navigate':controller?.state?.paintTarget==='metalness'?'Metalness · Pencil paints values · black non-metal / white metal':controller?.state?.paintTarget==='roughness'?'Roughness · Pencil paints values · grayscale inspection · black smooth / white rough':controller?.state?.paintTarget==='mask'?'UV Paint · Pencil paints mask · Hide/Reveal brush sets coverage · Undo/Redo keeps Paint open':controller?.state?.layers.find(l=>l.id===controller.state.selected)?.image?'UV Paint · image retained · edit its mask or select a paint layer':'UV Paint · selected layer receives Pencil strokes · Undo/Redo keeps Paint open');}catch(error){syncLayers();say('UV Paint: '+error.message);}}
 input('paint-action').addEventListener('change',()=>{clearImage();cancel();syncLayers();say(input('paint-action').value==='fill'?'Tap mesh to fill the selected layer/channel · drag cancels · fingers navigate':input('paint-action').value==='erase'?'Eraser · overlays reveal lower layers; Base resets white; masks reveal; Roughness 255 / Metalness 0':'Pencil paints · fingers navigate');});
 input('preview').addEventListener('change',()=>layerAction(()=>controller?.selectPreviewMode(input('preview').value)));
 input('channel').addEventListener('change',()=>layerAction(()=>controller?.selectPaintTarget(input('channel').value)));
@@ -67,16 +68,17 @@ input('mask-value').addEventListener('input',cancel);
 function settings(){return brushSettings({colour:input('colour').value,radius:Number(input('radius').value),hardness:Number(input('hardness').value),opacity:Number(input('opacity').value),pressure:input('pressure').checked});}
 function release(){if(contact!==null){try{canvas.releasePointerCapture(contact);}catch{}contact=null;}}
 function stopped(){opening++;clearImage();release();for(const id of palms){try{canvas.releasePointerCapture(id);}catch{}}panel.hidden=true;tools()?.end('uv-paint');}
-function close(){opening++;controller?.close();stopped();}
+function close(){historyContext=null;opening++;controller?.close();stopped();}
 function makeController(){const b=bridge();if(!b?.camera||!b.scene||!b.controls)throw Error('Viewport not ready');return createViewportPainter({target,activeId:()=>manager()?.activeId,body:()=>{let found;b.scene.traverse(o=>{if(o.userData?.kind==='body')found=o;});return found;},owner:globalThis.__boxlabExportAs,camera:b.camera,controls:b.controls,scene:b.scene,checkpoint:()=>globalThis.__boxlabObjectHistory?.checkpoint?.(),objects:()=>manager()?.objects||[],onClose:stopped,refresh:body=>globalThis.__boxlabRenderModes?.apply?.(body),allowed:()=>globalThis.__boxlabSelectionBridge?.mode?.()==='object'&&tools()?.isActive?.('uv-paint')&&globalThis.__boxlabRenderModes?.paintVisible?.()!==false});}
-async function open(){let instance;try{
+async function open(restore=null){let instance;try{
+ historyContext=restore;
  if(controller?.active){close();return;}if(tools()?.isActive?.())throw Error('Finish the current tool first');
  const ids=globalThis.__boxlabObjectSelection?.ids;if(ids?.size>1)throw Error('Select one object for UV Paint');if(ids?.size===1&&!ids.has(manager()?.activeId))throw Error('Activate the selected object first');
  if(globalThis.__boxlabSelectionBridge?.mode?.()!=='object')document.querySelector('#selectionModes [data-mode="object"]')?.click();
  manager()?.saveActive?.();if(!bridge()?.controls?.enabled)throw Error('Finish the current gesture first');
  if(globalThis.__boxlabRenderModes?.paintVisible?.()===false)throw Error('Switch VIEW to Studio, Solid or UV Image for painting');
  globalThis.__boxlabTransformArming?.disarm?.();instance=controller=makeController();panel.hidden=false;if(!tools()?.begin?.({id:'uv-paint',title:'UV Paint',node:panel}))throw Error('Tool session unavailable');
- globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});const token=++opening;await instance.open();if(token!==opening){instance.close();return;}syncLayers();document.querySelector('#fileMenu')?.removeAttribute('open');say('UV Paint · Pencil paints; fingers navigate · Done keeps strokes · Undo exits Paint');requestAnimationFrame(()=>frame(instance));
+ globalThis.__boxlabTotalGizmo?.resetTransient?.({hideFloat:true});const token=++opening;await instance.open();if(token!==opening){instance.close();return;}historyContext=null;if(restore){const state=instance.state;if(state.layers.some(l=>l.id===restore.selected))instance.selectLayer(restore.selected);const selected=instance.state.layers.find(l=>l.id===instance.state.selected);if(restore.paintTarget!=='mask'||selected?.mask)instance.selectPaintTarget(restore.paintTarget);instance.selectPreviewMode(restore.previewMode);}syncLayers();document.querySelector('#fileMenu')?.removeAttribute('open');say('UV Paint · Pencil paints; fingers navigate · Done keeps strokes · Undo/Redo keeps Paint open');requestAnimationFrame(()=>frame(instance));
  }catch(e){if(instance&&instance!==controller)return;close();say('UV Paint: '+e.message);}}
 function frame(instance){if(disposed||controller!==instance||!instance.active)return;instance.tick();if(imageStage)drawImageStage();if(instance.active)requestAnimationFrame(()=>frame(instance));}
 function point(e,up=false){const r=canvas.getBoundingClientRect();if(e.pointerType==='pen'&&!up)lastPressure=e.pressure;return {x:e.clientX-r.left,y:e.clientY-r.top,width:r.width,height:r.height,pressure:e.pointerType==='pen'?lastPressure:1};}
@@ -114,7 +116,7 @@ input('edit-image').addEventListener('click',()=>{cancel();try{const image=contr
 input('surface-image').addEventListener('click',()=>{cancel();const s=imageStage;if(!s)return;controller?.clearImagePreview();s.surface=!s.surface;s.frame=null;s.mode='move';if(s.surface){s.overlay?.dispose();s.overlay=null;s.guide=createSurfaceImageGuide(bridge().scene,s.source);}else{s.guide?.dispose();s.guide=null;s.overlay=createPaintImageOverlay(canvas,s.source);}drawImageStage();imageHint();});
 input('image-mode').addEventListener('click',()=>{cancel();if(imageStage){imageStage.mode=cyclePaintImageMode(imageStage.mode);imageHint();}});
 input('cancel-image').addEventListener('click',()=>{cancel();clearImage();say('Image placement cancelled · existing paint kept');});
-input('project-image').addEventListener('click',()=>{cancel();if(!imageStage)return;try{const s=imageStage;if(s.surface&&!s.frame)throw Error('Pick a visible surface first');const done=s.surface?(surfacePreview()&&controller.applyImagePreview()):controller?.projectImage(s.source,s.placement,{replace:s.replace,name:s.name});if(done){clearImage();syncLayers();say('Image applied · source retained · Edit image / On surface repositions it · Undo exits Paint');}}catch(error){input('image-status').textContent=error.message;say('Image: '+error.message);}});
+input('project-image').addEventListener('click',()=>{cancel();if(!imageStage)return;try{const s=imageStage;if(s.surface&&!s.frame)throw Error('Pick a visible surface first');const done=s.surface?(surfacePreview()&&controller.applyImagePreview()):controller?.projectImage(s.source,s.placement,{replace:s.replace,name:s.name});if(done){clearImage();syncLayers();say('Image applied · source retained · Edit image / On surface repositions it · Undo/Redo keeps Paint open');}}catch(error){input('image-status').textContent=error.message;say('Image: '+error.message);}});
 
 for(const [name,fn] of [['pointerdown',down],['pointermove',move],['pointerup',up],['pointercancel',up]])window.addEventListener(name,fn,{capture:true,passive:false});
 canvas?.addEventListener('lostpointercapture',e=>{if(contact===e.pointerId)cancel();});
@@ -123,6 +125,9 @@ window.addEventListener('keydown',e=>{if(e.key==='Escape'&&(controller?.active||
 window.addEventListener('pagehide',e=>{if(e.persisted){cancel();return;}disposed=true;close();});
 for(const k of ['colour','radius','hardness','opacity','pressure','brush'])input(k).addEventListener('input',cancel);
 input('done').addEventListener('click',()=>{close();say('UV Paint closed · strokes kept · Save .boxlab to keep paint');});
-for(const k of ['undo','redo'])input(k).addEventListener('click',()=>{close();document.querySelector('#'+k+'Btn')?.click();});
-const button=document.createElement('button');button.id='viewportPaintBtn';button.type='button';button.textContent='Paint selected object';button.addEventListener('click',open);menu?.insertBefore(button,menu.querySelector('.drawer-subtitle'));
-globalThis.__boxlabViewportPaint={open,close,cancel:close,get active(){return !!controller?.active;}};
+for(const k of ['undo','redo'])input(k).addEventListener('click',()=>{document.querySelector('#'+k+'Btn')?.click();});
+const button=document.createElement('button');button.id='viewportPaintBtn';button.type='button';button.textContent='Paint selected object';button.addEventListener('click',()=>open());menu?.insertBefore(button,menu.querySelector('.drawer-subtitle'));
+// The original history owner brackets the whole scene restore, including body rebuild.
+// Close before capture so transient strokes/images cannot leak into scene history.
+function beforeHistory(){const restore=controller?.active?controller.state:historyContext;if(!restore)return;const id=manager()?.activeId;cancel();close();const token=opening;return ()=>{if(disposed||opening!==token||manager()?.activeId!==id||tools()?.isActive?.())return;void open(restore);};}
+globalThis.__boxlabViewportPaint={open:()=>open(),beforeHistory,close,cancel:close,get active(){return !!controller?.active;}};
