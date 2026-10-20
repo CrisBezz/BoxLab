@@ -8542,3 +8542,25 @@ Lab raster omitted from loader closure; complete main/Lab graph reviewed and upd
 before final run. No assertions relaxed; protected Multi1.0/frozen/export retained.
 Reflection925 remains user-reported unresolved, no lighting fix claim in926.
 Publication and hosted/live verification follow.
+
+## .926 publication verified — 20 October 2026 (Brisbane)
+
+Runtime `3b01bce1d66b7a06b2286565811f5e67962ab91f`, tested tree
+`e606147e30b8f86de7b009b25c31af536963edec`, is published. Connected Git Data
+created the identical tested local tree; fetched origin/main matched exactly.
+Local Node24 and hosted regression `39365018326` / job `118439759937` both pass
+2,640 tests, zero failures/skips; complete hosted logs verified. Pages
+`39365017500`, deploy job `118439889747`, completed all steps successfully.
+All19 fresh live files byte-match source: shell/version, main painter/core, shared
+raster and complete changed Lab session/loader graph, recovery, protected Multi1.0,
+retained scalar/codec/native export/paint export/material/reflection/UV owners.
+Initial in-flight reads served925; final checked graph matches926. No frozen,
+modelling, project or export algorithm change; original brush semantics retained.
+
+All four continuity files current; proof is docs-only. Build926 complete and ready
+for Tool → Tap fill · whole object: tap colour fill/UndoRedo, overlay50% preservation,
+scalar0/255 independence and return to Brush. Alpha tips, eraser, blur and smudge are
+requested pending stages, not implemented. Reflection preview remains user-reported
+unresolved despite925, no new lighting repair claimed. Nomad export confirmed great
+and protected;924 toolbar PASS protected. Next:926 device feedback, narrow eraser/
+alpha additions and evidence-led preview diagnosis through original owners.
