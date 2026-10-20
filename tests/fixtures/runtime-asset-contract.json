@@ -167,9 +167,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/drawer-ui.js?v=0.36.18.932",
+      "url": "./src/drawer-ui.js?v=0.36.18.933",
       "target": "src/drawer-ui.js",
-      "sha256": "bad8d95a886c4462d9efe124abfaa147e6cf4d1432b7d5f65a865f47f4921cb1"
+      "sha256": "4a9aef0a08975dd781734f8e87f5468f1f8e8202c61c05ddcf9e0a0fc48c2445"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.932",
+      "url": "./src/release-bootstrap.js?v=0.36.18.933",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.932",
+      "url": "./src/release-version.js?v=0.36.18.933",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -876,9 +876,9 @@
     },
     {
       "owner": "src/drawer-ui.js",
-      "url": "./face-workflow-layout.js?v=0.36.18.932",
+      "url": "./face-workflow-layout.js?v=0.36.18.933",
       "target": "src/face-workflow-layout.js",
-      "sha256": "2597a490f91043aed0b9309513a89b0c373ba12c5b0361e16416b3c19415e185"
+      "sha256": "bebb0d42cebbef4381c1c6bd6746c5948f2372c9ee1837a16b228dd8d29ef8bb"
     },
     {
       "owner": "src/drawer-ui.js",
@@ -1373,7 +1373,7 @@
     },
     {
       "owner": "src/face-workflow-layout.js",
-      "url": "./release-version.js?v=0.36.18.932",
+      "url": "./release-version.js?v=0.36.18.933",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2481,14 +2481,14 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.932",
-      "sha256": "9394923a23fe9af887e15783237b6d12a689f9fa3a4011112cb5e24816b96632"
+      "url": "./src/viewport-paint.js?v=0.36.18.933",
+      "sha256": "bab6b871959221032be49e5197243316afb1509cca7afb3539574116c127d088"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.932",
-      "sha256": "403bdcd3d6466f30497eb8cee17edf50de094480ab3d0d9cdf4b10f668b1130f"
+      "url": "./viewport-paint-core.js?v=0.36.18.933",
+      "sha256": "5b404ba21f5ff609d4312a5727ff94b392efbcdc95e62bea3e47154eb3de2000"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2690,9 +2690,9 @@
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./paint-image-project.js?v=0.36.18.911",
+      "url": "./paint-image-project.js?v=0.36.18.933",
       "target": "src/paint-image-project.js",
-      "sha256": "98c7127dc6cd0b76076dfaa13a13a07be96b7c69a5a36d543b566a6952f17ec6"
+      "sha256": "020f6975f71901857b98fb27e622964b602af58f1f56f7f99350efad474c71d5"
     },
     {
       "owner": "src/viewport-paint-core.js",
@@ -2732,15 +2732,15 @@
     },
     {
       "owner": "src/viewport-paint-core.js",
-      "url": "./paint-image-surface.js?v=0.36.18.912",
+      "url": "./paint-image-surface.js?v=0.36.18.933",
       "target": "src/paint-image-surface.js",
-      "sha256": "6e1a5a19b7e75d5145eb6b7965722a3397d00c05a51f135bac86a2be807c0861"
+      "sha256": "85872d7921f7d7b2061bea6ebca03c998db3d1dff9949e355e6146c0485e27bd"
     },
     {
       "owner": "src/viewport-paint.js",
-      "url": "./paint-image-surface.js?v=0.36.18.912",
+      "url": "./paint-image-surface.js?v=0.36.18.933",
       "target": "src/paint-image-surface.js",
-      "sha256": "6e1a5a19b7e75d5145eb6b7965722a3397d00c05a51f135bac86a2be807c0861"
+      "sha256": "85872d7921f7d7b2061bea6ebca03c998db3d1dff9949e355e6146c0485e27bd"
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
@@ -2997,20 +2997,44 @@
     {
       "owner": "src/viewport-paint-core.js",
       "target": "src/paint-filter-domain.js",
-      "url": "./paint-filter-domain.js?v=0.36.18.932",
-      "sha256": "81dc6112f6c16773298fa014faea10297b1ce5f01b6fcc3d67ee0198c49906c5"
+      "url": "./paint-filter-domain.js?v=0.36.18.933",
+      "sha256": "87d5b42a833d97354356eb90f48bf770346029148ac6082625596ac22e26af86"
     },
     {
       "owner": "src/paint-filter-domain.js",
-      "url": "./paint-seam-neighbours.js?v=0.36.18.932",
+      "url": "./paint-seam-neighbours.js?v=0.36.18.933",
       "target": "src/paint-seam-neighbours.js",
-      "sha256": "7b054e8464a2a795b38715c6ebe53e73f8ffbf1529da6e020eb0292198a5e44d"
+      "sha256": "66194cb07ea209dc5d78598f98d25c06d00951b9de65e080733e73584eb68792"
     },
     {
       "owner": "src/paint-seam-neighbours.js",
-      "url": "./imported-uv-inspection.js?v=0.36.18.932",
+      "target": "src/paint-triangle-graph.js",
+      "url": "./paint-triangle-graph.js?v=0.36.18.933",
+      "sha256": "6ecf46c0aff26f26240199cc580407160983fa252197b69c068aca6b93bb8860"
+    },
+    {
+      "owner": "src/paint-triangle-graph.js",
       "target": "src/imported-uv-inspection.js",
+      "url": "./imported-uv-inspection.js?v=0.36.18.932",
       "sha256": "83462f7ebf8a3de57fcaeb80ffdf2995ed292c86f1e59ff0d246c8f61c28c525"
+    },
+    {
+      "owner": "src/paint-image-project.js",
+      "target": "src/paint-image-wrap.js",
+      "url": "./paint-image-wrap.js?v=0.36.18.933",
+      "sha256": "7ab8e3829ed5d38398a4409e2e6e733818c6f99e8c323a2a4f3ecc431e0c3d5b"
+    },
+    {
+      "owner": "src/paint-image-wrap.js",
+      "target": "src/paint-triangle-graph.js",
+      "url": "./paint-triangle-graph.js?v=0.36.18.933",
+      "sha256": "6ecf46c0aff26f26240199cc580407160983fa252197b69c068aca6b93bb8860"
+    },
+    {
+      "owner": "src/paint-image-wrap.js",
+      "target": "src/paint-image-surface.js",
+      "url": "./paint-image-surface.js?v=0.36.18.933",
+      "sha256": "85872d7921f7d7b2061bea6ebca03c998db3d1dff9949e355e6146c0485e27bd"
     }
   ]
 }

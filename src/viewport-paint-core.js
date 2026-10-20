@@ -1,11 +1,11 @@
-import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.932';
+import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.933';
 import * as THREE from 'three';
 import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.932';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
 import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer} from './paint-layer-stack.js?v=0.36.18.913';
-import {projectPaintImage} from './paint-image-project.js?v=0.36.18.911';
-import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.912';
+import {projectPaintImage} from './paint-image-project.js?v=0.36.18.933';
+import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
 import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.913';
 import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.913';
@@ -87,13 +87,13 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function ready(){if(!session)return false;cancel();clearImagePreview();if(!current()||paintTargetKey(target(),target()?.mesh,owner)!==session.key){close();return false;}return true;}
  function selectLayer(id){if(!ready())return false;colourOnly();if(id!=='$base'&&!session.stack?.layers.some(l=>l.id===id))throw Error('Unknown paint layer');session.selected=id;session.paintTarget='colour';loadLayer();return true;}
  function addLayer(){colourOnly();if(!ready())return false;const s=session,stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:512,height:512,pixels:s.preview,binding:s.binding}));let n=1;while(stack.layers.some(l=>l.id==='layer'+n))n++;const id='layer'+n,resource=captureLayeredColourResource(appendPaintLayer(stack,{id,name:'Layer '+n}));if(commit(resource)){session.selected=id;session.paintTarget='colour';loadLayer();return true;}return false;}
- function prepareImage(source,placement,{replace=false,name='Image layer'}={}){colourOnly();
+ function prepareImage(source,placement,{replace=false,name='Image layer',surface=null}={}){colourOnly();
  const s=session,selected=s.stack?.layers.find(l=>l.id===s.selected);
   if(replace&&!selected?.image)throw Error('Select an image layer to edit');
   const stack=s.stack||createPaintLayerStack(s.resource||captureColourResource({width:512,height:512,pixels:s.preview,binding:s.binding}));
   if(!replace&&stack.layers.length>=3)throw Error('Delete a layer first; three overlays maximum');
   scene.updateMatrixWorld(true);
-  const image={version:1,source,placement:placement?.worldToClip?capturePaintImagePlacement(placement):paintImagePlacementFromCamera(camera,placement),objectToWorld:s.body.matrixWorld.toArray()},result=projectPaintImage({geometry:s.display.surface.geometry,image,scene,body:s.body});
+  const image={version:1,source,placement:placement?.worldToClip?capturePaintImagePlacement(placement):paintImagePlacementFromCamera(camera,placement),objectToWorld:s.body.matrixWorld.toArray()},result=projectPaintImage({geometry:s.display.surface.geometry,image,scene,body:s.body,surface,mesh:s.object.mesh,payload:s.uv,topologySignature:owner.topologySignature});
   let n=1;while(stack.layers.some(l=>l.id==='image'+n))n++;const id=replace?s.selected:'image'+n;
   const next=replace?replaceImagePaintLayer(stack,id,result):appendImagePaintLayer(stack,{...result,id,name:name.trim().slice(0,64)||'Image layer'});
   return {resource:captureLayeredColourResource(next),id};

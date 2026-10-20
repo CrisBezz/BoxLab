@@ -1,13 +1,14 @@
-# BoxLab AI Handoff — .932 / Connected-face Blur sampling
+# BoxLab AI Handoff — .933 / Surface image wrapping
 
-## Current state — 20 October 2026
+## Current state — 21 October 2026 (Brisbane)
 
-Build0.36.18.932 published at5bac1182 from main05a790e8; user931PASS protected.
-Blur samples real connected faces across UV seams; stroke both sides, footprint stays
-on picked face. Original UV inspector/preview geometry/raster/history owners retained.
-Read latest932 entry and docs/paint-seams-932.md. Local+hosted2664PASS; Pages/live22-file proof below.
-Device932/alpha929 gates pending. Reflection preview unresolved; native exports correct.
-Next seam feedback then bounded Smudge. AO/UV seam authoring queued.
+Build0.36.18.933 prepared from main36845450; latest user PASS931 protected.
+On surface images now wrap connected faces/corners and UV seams on Pencil lift.
+Same image placement/raster/history/codec/export owners; flat Project from View retained.
+Read latest933 entry and docs/paint-image-wrap-933.md. Focused25PASS+release5PASS;
+full/publication below. Device933 appearance/stretch/latency,932 Blur and929 alpha pending.
+Next feedback, stronger Blur, image raster conversion, merge layers, then bounded
+resolution/layer-count choices; Smudge/AO/seam authoring queued. Reflection unresolved.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -497,8 +498,8 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 ## Next narrow step
 
 Protect user928PASS: Paint history stays open with controls/continued strokes.
-Protect930/931PASS; test932 connected-face sampling across UV seams, history and layer/channel isolation.
-Then similarly bounded Smudge;929 alpha gate remains independently pending.
+Protect930/931PASS; test933 surface image wrapping and932 Blur; preserve history/layer/channel isolation.
+User priorities: stronger Blur, image conversion/blur, layer Merge/Flatten, staged resolution/layer budgets. Smudge and929 alpha gate remain pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
@@ -1865,3 +1866,54 @@ User931PASS protected; actual932 Pencil feel/appearance/first-use latency pendin
 Alpha929 device gate remains independent. Reflection preview unresolved; native exports
 correct. Next feedback then bounded Smudge through original owner; AO/seam authoring
 remain queued. This proof changes documentation only, not the verified runtime.
+
+## .933 — Surface image wrapping; user priority — 21 October 2026 (Brisbane)
+
+User asks image placement to wrap connected surfaces rather than clip at one face.
+Audit main36845450/live932: .912 On surface follows anchor/normal but feeds flat
+orthographic .911 projector with75° facing/visibility cuts; no wrapping image owner.
+Extend that original path; preserve separate Project from View. Extract existing932
+read-only triangle graph into paint-triangle-graph.js; original UV inspector polygon
+edges and exporter face/vertex metadata stay authoritative. Blur uses exact same graph,
+existing sample walk unchanged. No duplicate adjacency/triangulation/modelling kernel.
+
+On surface retains raycast triangle index with point/normal; Move updates all three.
+Surface orientation still Insert's original helper. New paint-image-wrap.js carries a
+local image chart over real manifold triangle neighbours, unfolding common edges with
+world lengths and opposite-side third vertex; midpoint/centroid distance queue chooses
+one route per triangle. Reconcile shared canonical vertex coordinates to avoid cracks
+at local cycle closures; seed triangle pinned. Curved/closed patches necessarily stretch;
+not a globally distortion-free spherical unwrap. Stops expanding outside image rectangle,
+20K triangles/200K queue-pop cap. Boundaries/nonmanifold/disconnected components clip;
+no coordinate welding or atlas adjacency. Original .911 UV raster/source alpha sampling,
+overlap/tile/2M scan budgets and stack/pool/history/export owners remain. Wrapped samples
+follow connected target surfaces round corners even when not front-facing/visible from
+anchor projector; picked anchor still obeys original visible-target/occlusion hit guard.
+Flat Project from View retains original75°/scene/self occlusion/30M ray-work rules.
+
+Existing contact tangent guide remains planar; lift updates exact wrapped mesh preview.
+Apply recomputes current candidate then commits ONE original checkpoint/COW. Cancel,
+close, body loss, layer/target change and refusal preserve committed resource/history.
+Source/raster retained together through original recipe/codec: no schema/budget increase.
+Interactive wrap chart/anchor is transient, as912: Edit image→On surface repicks anchor;
+old flat matrix alone cannot regenerate a wrapped chart. Saved pixels/native exports
+retain exact wrapping; never auto-rasterize retained source from that matrix on Open.
+
+Six new regressions: exact asymmetric pixels across flat/oblique/90° + mirrored UVs,
+disconnected/nonmanifold exclusions, original view rules/stale anchor/UV refusal,
+transformed frame/rotation/scale, actual UI drag onto another face/cancel/cycle→Apply→
+history→SaveOpen→exact native PNG, sphere/denied checkpoint and shared-vertex continuity.
+Focused image+seam25PASS and release5PASS; full/publication follows. Complete changed
+reverse loader graph933, retained exporter/inspector/main/cage/Multi/frozen unchanged.
+No932 device PASS inferred. Device933 wrap appearance/stretch/first-use latency pending.
+Read docs/paint-image-wrap-933.md. Independent reflection preview unresolved.
+
+Pending user requests explicitly retained: stronger Blur amount/radius separate from
+opacity; image raster conversion/editable blur; Merge Down/Flatten with blend/mask
+appearance preserved; staged texture/image/alpha resolution and layer-count choices
+with memory budgets. Current512² painted maps,1024² sources,256² tips,base+3 overlays
+unchanged. Smudge/AO/UV edge-seam authoring queued; this is image wrapping only.
+
+.933 final local Node24.19.0 regression: **2,670 PASS / 0 FAIL / 0 skipped**.
+Six new checks + nearby19 =25PASS; release5PASS. No existing assertions relaxed.
+Publication/hosted/live verification follows; actual iPad933 gate pending.

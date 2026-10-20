@@ -1,4 +1,4 @@
-import {createPaintSeamNeighbours} from './paint-seam-neighbours.js?v=0.36.18.932';
+import {createPaintSeamNeighbours} from './paint-seam-neighbours.js?v=0.36.18.933';
 // Conservative texel ownership for read-neighbour brushes. Uses ONLY the original
 // preview triangulation and its opt-in source-face map; never authors UVs/topology.
 export function createPaintFilterDomain(geometry,size=512,source=null){

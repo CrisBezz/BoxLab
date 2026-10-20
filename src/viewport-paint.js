@@ -1,12 +1,12 @@
 import {importPaintAlpha} from './paint-alpha-source.js?v=0.36.18.929';
 import {bindPaintColourControls} from './paint-colour-controls.js?v=0.36.18.915';
-import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.932';
+import {createViewportPainter} from './viewport-paint-core.js?v=0.36.18.933';
 import {brushSettings} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.932';
 import {PAINT_BLEND_MODES} from './paint-blend-modes.js?v=0.36.18.903';
 import {importPaintImage} from './paint-image-source.js?v=0.36.18.907';
 import {cyclePaintImageMode} from './paint-image-placement.js?v=0.36.18.907';
 import {createPaintImageOverlay} from './paint-image-overlay.js?v=0.36.18.911';
-import {createSurfaceImageGuide,surfaceImagePlacement} from './paint-image-surface.js?v=0.36.18.912';
+import {createSurfaceImageGuide,surfaceImagePlacement} from './paint-image-surface.js?v=0.36.18.933';
 const canvas=document.querySelector('#viewport'),menu=document.querySelector('#fileMenu .top-file-content'),status=document.querySelector('#selectionStatus');
 const manager=()=>globalThis.__boxlabObjectManager,bridge=()=>globalThis.__boxlabBridgeState,tools=()=>globalThis.__boxlabToolSession;
 const target=()=>{const m=manager();return m?.objects?.find(o=>o.id===m.activeId);};
@@ -92,13 +92,13 @@ function up(e){touches.delete(e.pointerId);if(palms.delete(e.pointerId)){try{can
 function cancel(){alphaRequest++;imageRequest++;finishImageGesture(true);controller?.cancel();release();}
 
 function clearImage(){imageRequest++;const old=imageStage;imageStage=null;finishImageGesture(true);old?.overlay?.dispose();old?.guide?.dispose();controller?.clearImagePreview();input('image-controls').hidden=true;}
-function imageHint(){if(!imageStage)return;input('image-mode').textContent=imageStage.mode[0].toUpperCase()+imageStage.mode.slice(1)+' · tap to cycle';input('surface-image').textContent=imageStage.surface?'Back to view':'On surface';input('project-image').textContent=imageStage.surface?'Apply image':'Project from View';if(imageStage.surface){say('Image on surface · '+(imageStage.frame?'Pencil '+imageStage.mode+' · tap cycles · lift updates mesh preview · Apply image keeps it':'tap a visible surface to place image')+' · fingers navigate');return;}say('Image · Pencil drags '+imageStage.mode+' · tap cycles Move / Rotate / Scale · fingers align model · Project from View commits');}
+function imageHint(){if(!imageStage)return;input('image-mode').textContent=imageStage.mode[0].toUpperCase()+imageStage.mode.slice(1)+' · tap to cycle';input('surface-image').textContent=imageStage.surface?'Back to view':'On surface';input('project-image').textContent=imageStage.surface?'Apply image':'Project from View';if(imageStage.surface){say('Image on surface · '+(imageStage.frame?'Pencil '+imageStage.mode+' · tap cycles · lift updates mesh preview · Apply image keeps it':'tap a visible surface to place image')+' · wraps connected faces on lift · fingers navigate');return;}say('Image · Pencil drags '+imageStage.mode+' · tap cycles Move / Rotate / Scale · fingers align model · Project from View commits');}
 function stageImage(source,placement,{replace=false,name='Image layer'}={}){
  clearImage();cancel();input('image-status').textContent='';const overlay=createPaintImageOverlay(canvas,source);imageStage={source,placement,overlay,replace,name,mode:'move'};input('image-controls').hidden=false;overlay.draw(placement);imageHint();
 }
 function drawImageStage(){const s=imageStage;if(!s)return;if(s.surface)s.guide?.draw(s.frame,{visible:!!imageGesture});else s.overlay?.draw(s.placement);}
-function surfacePreview(){const s=imageStage;if(!s?.surface)return;if(!s.frame){controller?.clearImagePreview();return;}try{input('image-status').textContent='';controller.previewImage(s.source,surfaceImagePlacement(s.frame),{replace:s.replace,name:s.name});}catch(error){controller?.clearImagePreview();input('image-status').textContent=error.message;say('Image: '+error.message);return false;}return true;}
-function moveImage(p){const g=imageGesture,s=imageStage;if(!g||!s)return;const dx=p.x-g.start.x,dy=p.y-g.start.y;if(!g.moved&&Math.hypot(dx,dy)<8)return;g.moved=true;if(s.surface){const old=g.surfaceStart;if(s.mode==='move'){const hit=controller.surfaceFrame(p,s.source);if(hit)s.frame={...old,point:hit.point,normal:hit.normal};}else if(s.mode==='rotate')s.frame={...old,spin:old.spin+dx*.012};else s.frame={...old,scale:Math.max(.05,Math.min(20,old.scale*Math.exp((dx-dy)*.006)))};drawImageStage();return;}const old=g.placement;
+function surfacePreview(){const s=imageStage;if(!s?.surface)return;if(!s.frame){controller?.clearImagePreview();return;}try{input('image-status').textContent='';controller.previewImage(s.source,surfaceImagePlacement(s.frame),{replace:s.replace,name:s.name,surface:s.frame});}catch(error){controller?.clearImagePreview();input('image-status').textContent=error.message;say('Image: '+error.message);return false;}return true;}
+function moveImage(p){const g=imageGesture,s=imageStage;if(!g||!s)return;const dx=p.x-g.start.x,dy=p.y-g.start.y;if(!g.moved&&Math.hypot(dx,dy)<8)return;g.moved=true;if(s.surface){const old=g.surfaceStart;if(s.mode==='move'){const hit=controller.surfaceFrame(p,s.source);if(hit)s.frame={...old,point:hit.point,normal:hit.normal,triangle:hit.triangle};}else if(s.mode==='rotate')s.frame={...old,spin:old.spin+dx*.012};else s.frame={...old,scale:Math.max(.05,Math.min(20,old.scale*Math.exp((dx-dy)*.006)))};drawImageStage();return;}const old=g.placement;
  if(s.mode==='move')s.placement={...old,centre:[old.centre[0]+dx/p.width*2,old.centre[1]-dy/p.height*2]};
  else if(s.mode==='rotate'){const cx=(old.centre[0]+1)*p.width/2,cy=(1-old.centre[1])*p.height/2,angle=q=>Math.atan2((cy-q.y)/p.height,(q.x-cx)/p.width);s.placement={...old,rotation:old.rotation+angle(p)-angle(g.start)};}
  else{const scale=Math.exp(dx/200);s.placement={...old,size:old.size.map(v=>Math.max(.02,Math.min(8,v*scale)))};}

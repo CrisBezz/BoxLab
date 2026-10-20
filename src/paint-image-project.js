@@ -1,14 +1,16 @@
 import * as THREE from 'three';
+import {createPaintImageWrap} from './paint-image-wrap.js?v=0.36.18.933';
 import {capturePaintImageLayer} from './paint-image-layer.js?v=0.36.18.908';
 import {createPaintImageProjector} from './paint-image-placement.js?v=0.36.18.907';
 
 // Rasterize the original UV preview geometry; never triangulate or edit a mesh here.
 // Bounded synchronous work: failure returns no resource and creates no history step.
-export function projectPaintImage({geometry,image,scene,body,size=512}){
+export function projectPaintImage({geometry,image,scene,body,size=512,surface=null,mesh,payload,topologySignature}){
  const recipe=capturePaintImageLayer(image),projector=createPaintImageProjector(recipe.placement);
  if(!Number.isInteger(size)||size<1||size>512||!geometry?.attributes?.position||!geometry.attributes.uv)throw Error('Image projection requires UV geometry');
  scene.updateMatrixWorld(true);
  const frame=new THREE.Matrix4().fromArray(recipe.objectToWorld),clip=new THREE.Matrix4().fromArray(recipe.placement.worldToClip),inverse=clip.clone().invert();
+ const wrap=surface?createPaintImageWrap({geometry,mesh,payload,topologySignature,matrixWorld:frame,surface}):null;
  const pos=geometry.attributes.position,uv=geometry.attributes.uv,index=geometry.index,count=index?index.count:pos.count;
  if(count%3)throw Error('Invalid UV triangle geometry');
  const material=new THREE.MeshBasicMaterial({side:THREE.DoubleSide}),proxies=[];
@@ -35,17 +37,19 @@ export function projectPaintImage({geometry,image,scene,body,size=512}){
     // Distinct surfaces sharing texels cannot support a front-only image. Refuse
     // sampled interior overlaps instead of silently stamping onto hidden faces.
     if(weights.every(w=>w>1e-7)){const old=occupied[slot];if(old>=0){const prior=triangles[old];if(at(prior,bary(prior,a,b),near).distanceTo(point)>1e-5)throw Error('Overlapping UVs: use Box UVs or Pack separate islands before projecting');}occupied[slot]=triangles.length-1;}
-    const sample=projector.project(point);if(!sample)continue;
+    const sample=wrap?wrap.sample(i/3,weights):projector.project(point);if(!sample)continue;
+    if(!wrap){
     const ndc=point.clone().applyMatrix4(clip);near.set(ndc.x,ndc.y,-1).applyMatrix4(inverse);far.set(ndc.x,ndc.y,1).applyMatrix4(inverse);direction.subVectors(far,near).normalize();
     if(normal.dot(direction)>-Math.cos(75*Math.PI/180))continue;
     rayWork+=triangleCount;if(rayWork>3e7)throw Error('Projection visibility check is too complex; use a simpler scene');
     ray.set(near,direction);ray.near=0;ray.far=near.distanceTo(far);const nearest=ray.intersectObjects(proxies,false)[0],distance=near.distanceTo(point);
     if(!nearest||nearest.object!==proxy||Math.abs(nearest.distance-distance)>Math.max(1e-6,distance*1e-6))continue;
+    }
     const source=recipe.source,sx=Math.min(source.width-1,Math.floor(sample.u*source.width)),sy=Math.min(source.height-1,Math.floor(sample.v*source.height)),from=(sy*source.width+sx)*4,to=slot*4;
     if(!source.pixels[from+3])continue;pixels.set(source.pixels.subarray(from,from+4),to);painted++;
    }
   }
-  if(!painted)throw Error('Image does not cover a visible front surface; move the image or rotate the model');
+  if(!painted)throw Error(wrap?'Image does not cover the connected surface; move or scale the image':'Image does not cover a visible front surface; move the image or rotate the model');
   return {image:recipe,pixels};
  }finally{material.dispose();}
 }
