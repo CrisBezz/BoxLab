@@ -12362,3 +12362,36 @@ Loose wire geometry remains depth-tested; original picking/bridge/cache owners i
 No measured FPS claim or rendered iPad acceptance inferred. User928PASS protected;
 929 alpha gate remains pending. Reflection preview remains independently unresolved;
 native exports correct. Resume alpha feedback then UV-safe blur/smudge; AO/seams queued.
+
+## .931 — Blur within original polygon faces; .930 user PASS — 20 October 2026
+
+User930PASS protects solid Object display/component cages and Paint/history. Audit
+maina9f2a10d: original UV inspector owns islands, exporter owns triangle emission;
+no neighbour brush exists. First Blur clips BOTH reads and writes to picked polygon
+face; never samples adjacent atlas faces. Original preview builder gains opt-in frozen
+triangle→source-face metadata from its existing emission loop (group order retained).
+Default previews/export bytes unchanged. Painter requests map; new small filter-domain
+raster labels original geometry,512²,2M scanned budget. Sampled interior overlaps,
+out-of-tile/degenerate/unsupported UVs refuse atomically; ambiguous borders excluded.
+No new triangulation/signature/UV editor/input/history/resource/writer owner.
+
+Tool Blur · within face uses original raster, samplers, raycast and commit/rollback.
+Fixed five-tap centre4/cardinal1 smoothing of stroke-start pixels; face-only reads and
+writes, renormalized clipped weights. Maximum per-contact coverage/opacity retained;
+lift/repeat for stronger smoothing. Same size/pressure/hardness/alpha tips. Transparent
+layers use premultiplied RGBA filtering/interpolation to avoid hidden-colour halos;
+scalar/mask raw values stay independent. Colour picker ignored/disabled. Base/layers/
+masks/Roughness/Metalness work; retained image colour remains read-only. No across-face
+or seamless/world-radius claim, no Smudge yet. Original scene checkpoint/COW/pools,
+SaveOpen/NOM/GLB and Paint history928 remain; domain1MiB/session+1MiB/contact is transient.
+Read docs/paint-blur-931.md. Five new regressions + nearby21=26PASS; release5PASS;
+full/publication below. Complete changed main/export/Lab reverse loader graph931;
+Multi1.0/frozen and accepted930 main/cage bytes unchanged. Alpha929 device gate not
+inferred PASS. Reflection remains unresolved; native export protected. Next DEVICE
+hard-edged mark→Blur brush/lift/repeat, overlay isolation, UndoRedo/continue, then
+similarly bounded Smudge. AO and Edge-seam audits remain queued, not delivered.
+
+.931 final local Node24.19.0 regression: **2,659 PASS / 0 FAIL / 0 skipped**.
+New Blur5 + nearby21=26PASS, release5PASS; no existing assertions relaxed.
+Default export/preview geometry and accepted930 main/cage/protected Multi/frozen bytes
+unchanged. Publication/hosted/live verification follows; actual iPad Blur gate pending.

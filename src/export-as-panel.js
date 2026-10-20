@@ -164,7 +164,7 @@ function faceMaterialAssignments(mesh,payload){
 }
 // Temporary viewport inspection reuses the same triangulation/corner mapping.
 // No import-fit restoration: preview positions stay in current BoxLab coordinates.
-function buildUVPreviewGeometry(mesh,payload,{materials=false}={}){
+function buildUVPreviewGeometry(mesh,payload,{materials=false,faceIndices=false}={}){
   if(!Array.isArray(mesh?.vertices)||!mesh.vertices.length||!Array.isArray(mesh?.faces)||!mesh.faces.length||mesh.faces.some(f=>!Array.isArray(f))||payload?.version!==1||!['glb','boxlab'].includes(payload?.source)||payload.uvTopologySignature!==topologySignature(mesh))return null;
   const uvs=payload.uvCorners;if(!Array.isArray(uvs)||uvs.length!==mesh.faces.length)return null;
   let corners=0,triangles=0;
@@ -177,7 +177,7 @@ function buildUVPreviewGeometry(mesh,payload,{materials=false}={}){
   }
   const faceMaterials=materials?faceMaterialAssignments(mesh,payload):null;
   if(materials&&!faceMaterials)return null;
-  const built=editableToGeometry(mesh,{uvs,preserveUVSeams:true,preserveFaceWinding:true,faceMaterials}),geometry=built.geometry;
+  const built=editableToGeometry(mesh,{uvs,preserveUVSeams:true,preserveFaceWinding:true,faceMaterials,previewFaceIndices:faceIndices}),geometry=built.geometry;
   if(!built.uvRestored||geometry.index?.count!==triangles*3){geometry.dispose();return null;}
   return geometry;
 }
@@ -285,9 +285,11 @@ function editableToGeometry(mesh,channels={}){
     return next;
   };
 
+  const previewFaces=channels.previewFaceIndices?[]:null;
   for(const bucket of buckets.values()){
     const start=indices.length;
     for(const item of bucket.triangles){
+      if(previewFaces)previewFaces.push(item.faceIndex);
       for(const index of item.tri){
         const data=cornerData(item.faceIndex,index);
         indices.push(emitVertex(index,data));
@@ -298,6 +300,7 @@ function editableToGeometry(mesh,channels={}){
   }
 
   const geometry=new THREE.BufferGeometry();
+  if(previewFaces)geometry.userData.boxlabTriangleFaces=Object.freeze(previewFaces);
   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
   geometry.setIndex(indices);
   const vertexCount=positions.length/3;
