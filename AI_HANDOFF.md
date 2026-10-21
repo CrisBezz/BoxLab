@@ -12,7 +12,7 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 ## Current state — 21 October 2026 (Brisbane)
 
-Build 0.36.18.936 prepared on main from 4db83c38; local2,687PASS/0FAIL/0skip; publication below.
+Build 0.36.18.936 published at dd313a08 from 4db83c38; local+hosted2,687PASS/0FAIL/0skip; Pages/live31 verified below.
 User .935 PASS protects image conversion/Blur/Brush/Eraser, restored source on Undo,
 Redo/SaveOpen and prior .934/.933 acceptance. User explicitly prioritizes increased
 image-layer/general-paint resolution over the queued Merge/Flatten work.
@@ -2108,3 +2108,24 @@ run admitted intermediate sizes; original guard now only adds exact1024² above5
 GLB fixture follows actual primitive material ID; no production writer workaround.
 All four continuity files current. Publication/hosted/live verification follows;
 actual .936 iPad sharpness, brush/Blur latency and memory acceptance remain pending.
+
+## .936 publication verified — 21 October 2026 (Brisbane)
+
+Runtime `dd313a08a0163ea16ca86034b607553bff06e635`, tested tree
+`80165089f0ecde310eede444f7ebd972ffcf90d0`, is published on main. Connected Git
+Data uploaded31 exact blobs and created the identical tested tree; fetched main
+matched and local branch was aligned without file changes. Local Node24 and hosted
+Node22 regression39593356534/job119199545040 both pass **2,687 tests / 0 failures /
+0 skipped**; complete hosted logs verified. Pages39593355281/deploy119199756737
+succeeded. All31 checked runtime/Lab/shell/recovery/protected files byte-match.
+Initial fetch began during rollout and returned six .935 ancestors; fresh postdeploy
+rechecks closed all six. No frozen/main/cage/Multi edits. Eleven functional owners;
+eleven reverse-graph parent files contain cache-reference changes only.
+
+All four continuity files current. Proof is documentation-only, same runtime bytes.
+User .935 PASS protects conversion/Blur/edit/history/persistence; .936 device detail/
+latency/memory gate remains pending. Ready: Paint → Texture resolution → Increase
+to1024×1024; fresh strokes/new image placement, Undo512/Redo1024, SaveOpen and NOMAD.
+Existing pixels enlarge exactly; re-place retained sources for fresh image detail.
+Independent512 scalars/source1024/alpha256/base+three limits retained. Next resolution
+feedback then Merge Down/Flatten; larger sources/maps/layers remain staged.
