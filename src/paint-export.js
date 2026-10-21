@@ -1,6 +1,6 @@
 // Export-local adaptation only. Never add material/provenance fields to native UVs.
-import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.935';
-import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.935';
+import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.936';
+import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.936';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.921';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.921';
 import {encodeNomadScalarPNG,encodeNomadColourPNG,encodeNomadDataPNG} from './nomad-scalar-png.js?v=0.36.18.922';
@@ -24,7 +24,7 @@ export async function preparePaintExportObjects(objects,{subd=false,owner=global
  for(const {object,key} of items){
   const binding=await paintTargetDigest(key);
   const colour=object.colourPaint,roughness=object.roughnessPaint,metalness=object.metalnessPaint;
-  if(colour&&(colour.width!==512||colour.height!==512||binding!==colour.binding)||roughness&&binding!==roughness.binding||metalness&&binding!==metalness.binding)throw Error('Paint export requires matching native Base UVs; Undo UV/topology changes first');
+  if(colour&&(![512,1024].includes(colour.width)||colour.height!==colour.width||binding!==colour.binding)||roughness&&binding!==roughness.binding||metalness&&binding!==metalness.binding)throw Error('Paint export requires matching native Base UVs; Undo UV/topology changes first');
   if(colour){let image=encoded.get(colour);if(!image){image={name:'BoxLab paint.png',choice:{data:await encodeNomadColourPNG(colour.pixels,colour.width,colour.height),mime:'image/png'}};encoded.set(colour,image);}prepared.set(object,image);}
   if(roughness){
    let image=encoded.get(roughness);if(!image){

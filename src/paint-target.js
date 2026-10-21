@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.935';
+import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.936';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.921';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.921';
 import {paintDigest} from './paint-resource.js?v=898';
@@ -28,10 +28,11 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
  }
  function showMaterial(colour,roughness,rgba=false,metalness=null,metalnessRGBA=false){
   if(disposed)return;
-  if(colour&&(!(colour instanceof Uint8Array)||colour.length!==512*512*4))throw Error('Invalid material colour preview');
+  const colourSize=colour?Math.sqrt(colour.length/4):0;
+  if(colour&&(!(colour instanceof Uint8Array)||![512,1024].includes(colourSize)))throw Error('Invalid material colour preview');
   validateScalar(roughness,rgba,'roughness');validateScalar(metalness,metalnessRGBA,'metalness');
   if(!lit)lit=new THREE.MeshStandardMaterial({color:0xffffff,roughness:1,metalness:0,side:THREE.FrontSide});
-  if(colour){if(!colourMap)colourMap=paintTexture(colour.slice(),512);else{colourMap.image.data.set(colour);colourMap.needsUpdate=true;}}
+  if(colour){if(!colourMap||colourMap.image.width!==colourSize){colourMap?.dispose();colourMap=paintTexture(colour.slice(),colourSize);}else{colourMap.image.data.set(colour);colourMap.needsUpdate=true;}}
   if(roughness)roughnessMap=scalarTexture(roughnessMap,roughness,rgba,1);
   if(metalness)metalnessMap=scalarTexture(metalnessMap,metalness,metalnessRGBA,2);
   let scene=body;while(scene&&!scene.isScene)scene=scene.parent;
@@ -45,13 +46,13 @@ export function createPaintSurface(body,geometry,texture,{renderer=globalThis.__
  }
  function dispose(){if(disposed)return;disposed=true;source.removeEventListener('dispose',dispose);body.remove(surface);if(body.material===hidden)body.material=fallback;geometry.dispose();material.dispose();texture.dispose();lit?.dispose();colourMap?.dispose();roughnessMap?.dispose();metalnessMap?.dispose();environment?.release();environment=null;}
  surface.userData.boxlabColourPaintDispose=dispose;source.addEventListener('dispose',dispose);body.add(surface);
- return {surface,showMaterial,showChannel(){if(!disposed)surface.material=material;},show(){if(!disposed){surface.visible=true;body.material=hidden;for(const child of [...body.children])if(child.userData?.boxlabBackfaceCue){body.remove(child);child.material?.dispose?.();}}},dispose,get disposed(){return disposed;}};
+ return {surface,showMaterial,replaceChannelTexture(next){texture.dispose();texture=next;material.map=next;material.needsUpdate=true;},showChannel(){if(!disposed)surface.material=material;},show(){if(!disposed){surface.visible=true;body.material=hidden;for(const child of [...body.children])if(child.userData?.boxlabBackfaceCue){body.remove(child);child.material?.dispose?.();}}},dispose,get disposed(){return disposed;}};
 }
 export function createCommittedPaintSurface(body,object,mesh,owner=globalThis.__boxlabExportAs){
  const resource=object?.colourPaint,roughness=object?.roughnessPaint,metalness=object?.metalnessPaint;if(!resource&&!roughness&&!metalness)return null;
- if(resource&&(resource.width!==512||resource.height!==512))return null;
+ if(resource&&(![512,1024].includes(resource.width)||resource.height!==resource.width))return null;
  let key,geometry,scalar,metal;try{key=paintTargetKey(object,mesh,owner);if(roughness)scalar=copyRoughnessResource(roughness);if(metalness)metal=copyMetalnessResource(metalness);geometry=owner.buildUVPreviewGeometry(mesh,object.glbPassthrough);if(!geometry)return null;}catch{return null;}
- const display=createPaintSurface(body,geometry,paintTexture(resource?.pixels||new Uint8Array([255,255,255,255]),resource?512:1));display.surface.visible=false;
+ const display=createPaintSurface(body,geometry,paintTexture(resource?.pixels||new Uint8Array([255,255,255,255]),resource?resource.width:1));display.surface.visible=false;
  display.ready=paintTargetDigest(key).then(binding=>{
   if(display.disposed)return;
   if(object.colourPaint!==resource||object.roughnessPaint!==roughness||object.metalnessPaint!==metalness||paintTargetKey(object,mesh,owner)!==key){display.dispose();return;}

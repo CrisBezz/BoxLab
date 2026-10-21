@@ -4,7 +4,7 @@ import {createProjectRoughnessPool,decodeProjectRoughnessPool} from './project-r
 // Explicitly refuse resources not yet representable, rather than losing them.
 import {encodeProjectGLB,decodeProjectGLB,createProjectGLBImagePool,decodeProjectGLBImagePool} from './project-glb-resources.js?v=0.36.18.899';
 import {evaluateArray} from './live-array-core.js?v=0.36.18.861';
-import {createProjectPaintPool,decodeProjectPaintPool,paintOwner} from './project-paint-resources.js?v=0.36.18.935';
+import {createProjectPaintPool,decodeProjectPaintPool,paintOwner} from './project-paint-resources.js?v=0.36.18.936';
 const plain=value=>value==null?null:JSON.parse(JSON.stringify(value));
 export function encodeBoxlabScene(snapshot,{poolImages=true}={}){
  if(!snapshot||!Array.isArray(snapshot.objects)||!snapshot.objects.length)throw Error('Scene has no objects');

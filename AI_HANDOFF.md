@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .935 / Convert image to paint
+# BoxLab AI Handoff — .936 / Optional 1024 colour textures
 
 ## Permanent rule — every build completion
 
@@ -12,14 +12,30 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 ## Current state — 21 October 2026 (Brisbane)
 
-Build0.36.18.935 published at44c4eccf from mainbc84450c. User934PASS protects stronger Blur Amount;
-933 wrapped placement and prior PASSes protected. Image-only Convert to paint keeps
-current surface pixels/settings, enables Brush/Eraser/Blur, original Undo restores image
-editing. Original stack/history/codec/export owners; no schema or resolution change.
-Read latest935 entry/docs/paint-image-rasterize-935.md. Local+hosted2680PASS;
-Pages/live37 proof below;934 proof closed. Device935 gate pending.
-Next Merge Down/Flatten to free slots; then staged resolution/layer budgets.
-Smudge/AO/UV seam authoring queued; reflection unresolved; alpha929 gate independent.
+Build 0.36.18.936 prepared on main from 4db83c38; local2,687PASS/0FAIL/0skip; publication below.
+User .935 PASS protects image conversion/Blur/Brush/Eraser, restored source on Undo,
+Redo/SaveOpen and prior .934/.933 acceptance. User explicitly prioritizes increased
+image-layer/general-paint resolution over the queued Merge/Flatten work.
+Paint → Texture resolution → Increase to 1024 × 1024 is an explicit one-checkpoint
+512→1024 enlargement of this object's colour stack, all overlays/image pixels and
+masks. New paint and newly projected images use four times the texels. Existing
+pixels replicate exactly; no invented detail or automatic reprojection of wrapped
+sources. Retained sources remain editable; re-place an image for fresh source detail.
+Undo returns the original 512 resource; existing files open at their saved resolution.
+Colour-only and scalar-lit active/inactive display and original NOM/GLB/SaveOpen
+owners follow colour size. Roughness/Metalness stay independent 512; sources remain
+1024²/2 MiB and alpha tips 256²/256 KiB. Base+three overlays unchanged.
+Layered 1024 (v2/v3, including empty stack after enlargement) opts into bounded
+32/64 MiB raster or 48/96 MiB image unique/expanded pool profiles; original v1 and
+512 profiles remain 8/16 or 24/48. Existing scene-v5 pooled transport, integrity,
+predecode/reference/schema/atomic refusal and 32 MiB file/native 24 MiB image guards
+remain. Full stacks/images can still hit scene/file limits. No new schema/history/
+brush/UV/modelling/writer owner. Complete reverse loader graph .936; protected main/
+cage/Multi/frozen files unchanged. Read docs/paint-resolution-936.md.
+Device .936 grid/detail/latency gate pending; Node tests are not iPad performance.
+Next: device resolution feedback, then Merge Down/Flatten to free slots; stage larger
+sources/maps/layer budgets after evidence. Smudge/AO/UV seam authoring queued.
+Reflection preview unresolved; alpha .929 device gate independent.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -509,8 +525,8 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 ## Next narrow step
 
 Protect user928PASS: Paint history stays open with controls/continued strokes.
-Protect930/931/933/934PASS; test935 image conversion/Blur/Undo while preserving wrapped images/history/layer/channel isolation.
-Next layer Merge/Flatten, then staged resolution/layer budgets. Smudge and929 alpha gate remain pending.
+Protect930/931/933/934/935PASS. Test optional936 1024 colour maps, images/masks, Undo/Redo and persistence/export with independent512 scalars.
+Next resolution feedback then layer Merge/Flatten; larger source/map/layer budgets staged. Smudge and929 alpha gate remain pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
@@ -2084,3 +2100,11 @@ not the converted saved layer; masks/blends/other image layers remain independen
 User934PASS protected; actual935 appearance/feel gate pending. Next Merge Down/Flatten
 to free slots, then staged resolution/layer budgets; Smudge/AO/seam authoring queued.
 Reflection preview remains independent; alpha929 device gate not inferred.
+
+.936 final local Node24.19.0 regression: **2,687 PASS / 0 FAIL / 0 skipped**.
+Seven new resolution integrations plus every original test pass unchanged. Reviewed
+release/cache contract5PASS, original902 size513 refusal retained. Initial exploratory
+run admitted intermediate sizes; original guard now only adds exact1024² above512.
+GLB fixture follows actual primitive material ID; no production writer workaround.
+All four continuity files current. Publication/hosted/live verification follows;
+actual .936 iPad sharpness, brush/Blur latency and memory acceptance remain pending.

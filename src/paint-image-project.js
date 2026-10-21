@@ -7,7 +7,7 @@ import {createPaintImageProjector} from './paint-image-placement.js?v=0.36.18.90
 // Bounded synchronous work: failure returns no resource and creates no history step.
 export function projectPaintImage({geometry,image,scene,body,size=512,surface=null,mesh,payload,topologySignature}){
  const recipe=capturePaintImageLayer(image),projector=createPaintImageProjector(recipe.placement);
- if(!Number.isInteger(size)||size<1||size>512||!geometry?.attributes?.position||!geometry.attributes.uv)throw Error('Image projection requires UV geometry');
+ if(!Number.isInteger(size)||size<1||size>1024||!geometry?.attributes?.position||!geometry.attributes.uv)throw Error('Image projection requires UV geometry');
  scene.updateMatrixWorld(true);
  const frame=new THREE.Matrix4().fromArray(recipe.objectToWorld),clip=new THREE.Matrix4().fromArray(recipe.placement.worldToClip),inverse=clip.clone().invert();
  const wrap=surface?createPaintImageWrap({geometry,mesh,payload,topologySignature,matrixWorld:frame,surface}):null;

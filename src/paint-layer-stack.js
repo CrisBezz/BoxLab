@@ -1,15 +1,15 @@
-import {paintBudget} from './paint-budget.js?v=0.36.18.913';
+import {paintBudget} from './paint-budget.js?v=0.36.18.936';
 // Layer/compositor foundation only: not a scene resource or a second history owner.
 // Straight RGBA8 sRGB byte-space source-over matches the accepted paint raster.
 import {captureColourResource} from './paint-resource.js?v=898';
 import {blendPaintRGB,isPaintBlendMode} from './paint-blend-modes.js?v=0.36.18.903';
 import {capturePaintImageLayer,paintImageLayerBytes} from './paint-image-layer.js?v=0.36.18.908';
-const MAX_LAYERS=4,MAX_SIZE=512;
+const MAX_LAYERS=4,MAX_SIZE=1024;
 const baseFields=['version','channel','width','height','colorSpace','rowOrder','binding','pixels'];
 function exact(value,fields){if(!value||typeof value!=='object'||Object.keys(value).some(k=>!fields.includes(k))||fields.some(k=>!Object.hasOwn(value,k)))throw Error('Unsupported paint layer fields');}
 function copyBase(value){
  exact(value,baseFields);const base=captureColourResource(value);
- if(baseFields.slice(0,-1).some(k=>value[k]!==base[k])||base.width>MAX_SIZE||base.height>MAX_SIZE)throw Error('Unsupported layer base');return base;
+ if(baseFields.slice(0,-1).some(k=>value[k]!==base[k])||base.width>MAX_SIZE||base.height>MAX_SIZE||(base.width>512||base.height>512)&&(base.width!==1024||base.height!==1024))throw Error('Unsupported layer base');return base;
 }
 function copyMask(value,length){
  if(value===null)return null;
@@ -26,7 +26,7 @@ function copyLayer(value,length,version){
 // No flattened cache is trusted or stored; every capture owns all input bytes.
 export function capturePaintLayerStack(value){
  exact(value,['version','base','layers']);if(![1,2,3].includes(value.version)||!Array.isArray(value.layers)||value.layers.length>=MAX_LAYERS)throw Error('Paint stack supports one base and up to three overlays');
- const budget=paintBudget(value.version===3);if(paintLayerStackBytes(value)>budget.unique)throw Error('Colour paint pool exceeds '+budget.uniqueMiB+' MiB');
+ const budget=paintBudget(value.version===3,value.base?.width===1024&&value.base?.height===1024);if(paintLayerStackBytes(value)>budget.unique)throw Error('Colour paint pool exceeds '+budget.uniqueMiB+' MiB');
  const base=copyBase(value.base),ids=new Set(),layers=Array.from(value.layers,v=>{const l=copyLayer(v,base.pixels.length,value.version);if(ids.has(l.id))throw Error('Duplicate paint layer ID');ids.add(l.id);return l;});
  return Object.freeze({version:value.version,base,layers:Object.freeze(layers)});
 }
@@ -88,4 +88,13 @@ export function rasterizeImagePaintLayer(stack,id){
  if(index<0||!snapshot.layers[index].image)throw Error('Select an image layer to convert');
  const layers=[...snapshot.layers];layers[index]={...layers[index],image:null};
  return capturePaintLayerStack({...snapshot,layers});
+}
+
+// Enlargement preserves every old texel/settings/source; fresh strokes/projections
+// use the new grid. Retained wrapped pixels cannot be reconstructed from a flat recipe.
+export function enlargePaintLayerStack(stack){
+ const s=capturePaintLayerStack(stack);
+ if(s.base.width!==512||s.base.height!==512)throw Error('Only 512 × 512 colour maps can be increased to 1024');
+ const enlarge=(pixels,channels)=>{const out=new Uint8Array(1024*1024*channels);for(let y=0;y<1024;y++)for(let x=0;x<1024;x++){const at=(y*1024+x)*channels,old=((y>>1)*512+(x>>1))*channels;for(let k=0;k<channels;k++)out[at+k]=pixels[old+k];}return out;};
+ return capturePaintLayerStack({...s,base:{...s.base,width:1024,height:1024,pixels:enlarge(s.base.pixels,4)},layers:s.layers.map(l=>({...l,pixels:enlarge(l.pixels,4),...(l.mask?{mask:{...l.mask,pixels:enlarge(l.mask.pixels,1)}}:{})}))});
 }

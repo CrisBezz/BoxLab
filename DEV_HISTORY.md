@@ -12672,3 +12672,39 @@ not the converted saved layer; masks/blends/other image layers remain independen
 User934PASS protected; actual935 appearance/feel gate pending. Next Merge Down/Flatten
 to free slots, then staged resolution/layer budgets; Smudge/AO/seam authoring queued.
 Reflection preview remains independent; alpha929 device gate not inferred.
+
+## .936 — Optional 1024 colour textures; .935 PASS — 21 October 2026 (Brisbane)
+
+User .935 PASS is protected. User priority moves resolution ahead of Merge/Flatten.
+Audit: colour resource already permits1024, but painter/stack/projection/display/export
+and Blur domain were512. Extend those SAME owners: Paint → Texture resolution →
+Increase to1024×1024, one original checkpoint, explicit per-object opt-in. Exact2×
+nearest texel replication preserves old base/overlays/masks/blends/image raster and
+source; fresh paint/new projections use1,048,576 texels. Wrapped source is NOT silently
+reprojected from an insufficient flat recipe. Original Undo restores512; redo/reopen
+keeps1024. Sources1024²/2MiB and tips256² unchanged; scalars remain independently512.
+Original composite/scene codec/immutable sharing/native+GLB writers retained.
+
+Explicit layered1024v2/v3 dimensions select32/64MiB raster or48/96MiB image pool
+profiles (unique/expanded); original opaquev1 and5128/16 or24/48 unchanged. Enlargement
+uses existingv2 even with no overlays, no new schema. Existing content dedup/pooledv5,
+strict refs/canonical bytes/predecode/atomic errors and32MiB file/24MiB native cap
+retained. Unsupported dimensions/checkpoint/stale/budget/staged-placement refuse
+without changed resources/history. Larger full image scenes can still hit file limits.
+
+Original raster/filter size ceiling1024 only; accepted32-pass Blur math unchanged.
+At1024 Blur has two32MiB Float64 buffers (64MiB filtering peak;32MiB target retained)
+plus ownership/stroke/resource/GPU copies; no device RAM/FPS/latency claim. Original
+2M UV scan/2M seam-walk/30M projection ray-work guards retained, so complex high-res
+layouts can refuse atomically. Brush Size remains texel-based. Shared Lab remains512.
+All changed reverse-loader parents repinned936; main930/cage/Multi1.0/frozen unchanged.
+Read docs/paint-resolution-936.md for test scope and memory/transport distinctions.
+Validation/publication follow; .936 actual iPad feel remains pending.
+
+.936 final local Node24.19.0 regression: **2,687 PASS / 0 FAIL / 0 skipped**.
+Seven new resolution integrations plus every original test pass unchanged. Reviewed
+release/cache contract5PASS, original902 size513 refusal retained. Initial exploratory
+run admitted intermediate sizes; original guard now only adds exact1024² above512.
+GLB fixture follows actual primitive material ID; no production writer workaround.
+All four continuity files current. Publication/hosted/live verification follows;
+actual .936 iPad sharpness, brush/Blur latency and memory acceptance remain pending.

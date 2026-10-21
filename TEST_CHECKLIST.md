@@ -9108,3 +9108,27 @@ not the converted saved layer; masks/blends/other image layers remain independen
 User934PASS protected; actual935 appearance/feel gate pending. Next Merge Down/Flatten
 to free slots, then staged resolution/layer budgets; Smudge/AO/seam authoring queued.
 Reflection preview remains independent; alpha929 device gate not inferred.
+
+## .935 user PASS / .936 resolution regression — 21 October 2026
+
+- [x] User .935 PASS: image→paint appearance/Brush/Eraser/Blur, Undo restored source,
+  Redo/SaveOpen editable pixels. Earlier .933/.934 and Paint-history PASSes protected.
+- [ ] DEVICE .936: Paint → Texture resolution → Increase to1024×1024; existing marks
+  retained; fresh fine strokes/newly projected image use sharper grid; Paint stays open.
+- [ ] DEVICE: Undo→512 / Redo→1024; Save/Open retains1024, continued paint; export to
+  Nomad preserves image placement and fresh marks. Test larger Size/Blur feel.
+- [ ] DEVICE: Roughness/Metalness and mask/colour switching remain independent.
+- Automated .936: exact owned2× colour/image/mask replication, retained source/settings,
+  original one-checkpoint UI/history/continued1024 Brush+Blur/mask,512 scalar/material
+  dimensions, committed display, three overlays, pooled scene transport/exact native PNG,
+  predecode corruption/quota, staged/checkpoint/stale rollback. No iPad performance proof.
+- Preserve old512 and opaquev1 quota tests; only layered1024 opts into new budgets.
+  Existing source/tip/layer-count/file/native caps and UV/work guards remain active.
+
+.936 final local Node24.19.0 regression: **2,687 PASS / 0 FAIL / 0 skipped**.
+Seven new resolution integrations plus every original test pass unchanged. Reviewed
+release/cache contract5PASS, original902 size513 refusal retained. Initial exploratory
+run admitted intermediate sizes; original guard now only adds exact1024² above512.
+GLB fixture follows actual primitive material ID; no production writer workaround.
+All four continuity files current. Publication/hosted/live verification follows;
+actual .936 iPad sharpness, brush/Blur latency and memory acceptance remain pending.

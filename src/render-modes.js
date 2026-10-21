@@ -1,4 +1,4 @@
-import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.935';
+import {createCommittedPaintSurface} from './paint-target.js?v=0.36.18.936';
 import {createUVImageOverlay} from './uv-image-surface-preview.js?v=0.36.18.892';
 import {createUVCheckerOverlay} from './uv-checker-preview.js?v=0.36.18.879';
 import * as THREE from 'three';

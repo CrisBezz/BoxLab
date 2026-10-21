@@ -29,7 +29,7 @@ function blurSnapshot(bytes,size,domains,links,amount){
 }
 export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  if(typeof transparent!=='boolean')throw Error('Invalid paint layer alpha mode');
- if(!Number.isInteger(size)||size<16||size>512)throw Error('Comparison map budget exceeded');
+ if(!Number.isInteger(size)||size<16||size>1024)throw Error('Comparison map budget exceeded');
  const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true,erasing=false,blur=null,blurTarget=null;
  function applyCoverage(at,a,rgb){
   if(a<=coverage[at])return false;coverage[at]=a;let touched=false;
