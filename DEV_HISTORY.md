@@ -12788,3 +12788,24 @@ and unchanged scene/history on failures. No runtime failure remains from that ru
 New default+legacy resolution10PASS, nearby scalar/alpha16PASS; final release/cache
 contract5PASS after completing drawer-ui parent pin. No protected/frozen changes.
 Hosted full-suite rerun and publication/live evidence follow; device sharpness pending.
+
+## .937 publication verified — 22 October 2026 (Brisbane)
+
+Runtime `1bbb4d6d2620d6ff801259c02fe61c6df90fc9d5`, tree
+`3bbfe418d10a633e66f4580091f5f4f94f958edd`, is published. Connected Git Data
+uploaded18 exact local blobs/tree; fetched main matches local tested tree. Hosted
+Node22 regression39694120390/job119547225819 passes **2,691 tests / 0 failures /
+0 skipped**; complete job logs verify totals, including corrected high-res File test.
+Local complete run covered2,690 passing checks; corrected File case separately passed,
+and the hosted rerun closes the full final-tree proof. Pages39694119853 succeeded.
+All19 checked live shell/runtime/parent/recovery and retained paint/source/project/
+native-export/Multi files byte-match. Main/Multi/frozen bytes unchanged.
+
+This proof changes documentation only. User .935 PASS protected; .936 pixelation
+report remains a device issue awaiting .937 confirmation, not an inferred PASS.
+Ready for new cube → Paint showing Colour texture1024×1024 BEFORE first mark/image;
+compare fresh detail, then UndoRedo/SaveOpen. Existing512 saved textures stay512 until
+visible Increase. Higher-res project Save/Open96MiB (ordinary32MiB), scalar512 and
+source1024/tip256/base+three limits retained. No2K/4K or all-zoom pixel-free claim.
+Next confirmed1024 device feedback; inspect source/UV density if still coarse, then
+stage larger maps/sources/memory work. Merge/Flatten/Smudge/AO/seams remain queued.
