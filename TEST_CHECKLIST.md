@@ -9081,3 +9081,30 @@ section. It applies every build, including an explicit no-new-test statement whe
 appropriate; never end with only progress. No runtime change in this audit. Current
 next build remains935 (published main was934 when PASS arrived); finish935 and its
 hands-on image conversion/Blur/Undo/SaveOpen list before declaring it ready.
+
+## .935 publication verified — 21 October 2026 (Brisbane)
+
+Runtime `44c4eccf036fd7fa1d61bbee4802a506166c49b3`, published tree
+`f3749803243107a097ecb798c56edb0ec73a1903`, matches local main exactly.
+Original local tested treeac566305 had identical runtime; only four continuity files
+changed to promote the permanent completion rule before publication. Git Data tree
+verified with all28 blobs. Local Node24 and hosted Node22 regression39586601556/
+job119176937360 both pass **2,680 tests / 0 failures / 0 skipped**; full hosted logs
+verified. Pages39586601079/deploy119177154130 succeeded. All37 fresh checked live
+files byte-match: shell/version, complete changed resource/project/export/Lab/paint
+loader graph and retained raster934, wrap933, UV inspector, main/cage/Multi1.0/recovery/
+image-source owners. Frozen builds untouched; no assertions relaxed.
+
+Handoff audit complete: permanent readiness/build/manual-test rule was already in
+AI_WORKFLOW and an older AI_HANDOFF entry; now prominently at TOP of AI_HANDOFF.
+Every finished build must give its readiness, build number and short device tests,
+or explicitly say no new test is needed. Never end with progress alone.
+All four continuity files current. This proof changes documentation only.
+
+Build935 complete and ready: applied image layer→Convert to paint, appearance kept;
+Blur Amount/Brush/Eraser edits pixels; Undo edits and conversion restores Edit image;
+Redo then SaveOpen retains editable paint. Source recipe belongs to old Undo resource,
+not the converted saved layer; masks/blends/other image layers remain independent.
+User934PASS protected; actual935 appearance/feel gate pending. Next Merge Down/Flatten
+to free slots, then staged resolution/layer budgets; Smudge/AO/seam authoring queued.
+Reflection preview remains independent; alpha929 device gate not inferred.
