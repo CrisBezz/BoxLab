@@ -9153,3 +9153,32 @@ to1024×1024; fresh strokes/new image placement, Undo512/Redo1024, SaveOpen and 
 Existing pixels enlarge exactly; re-place retained sources for fresh image detail.
 Independent512 scalars/source1024/alpha256/base+three limits retained. Next resolution
 feedback then Merge Down/Flatten; larger sources/maps/layers remain staged.
+
+## .937 fresh1024 default — 22 October 2026
+
+- User .936 reports pixelated image and fresh cube paint after refresh; NOT a PASS.
+  Confirmed audit: .936 production default remained512, Increase opt-in was collapsed.
+- [ ] DEVICE new cube: Paint shows Colour texture1024×1024 immediately, before paint
+  or adding image; compare fresh fine strokes/new image, orbit/zoom and responsiveness.
+- [ ] DEVICE Undo/Redo remains in Paint; Save/Open keeps1024. Existing512 project
+  opens at512 with exposed Increase; existing pixels stay exact until explicit action.
+- Automated .937 actual UI:1024 first-edit paint and image raster, no blank Open commit,
+  first-stroke Undo/Redo/new-controller reopen, legacy512 one-step Increase, exact scene/
+  native1024 PNG and512 scalar independence. .936 enlargement fixtures explicitly512;
+  alpha checks use actual grid; scalar checks cover every display texel against raw512.
+- Existing geometry/UV/paint/project/export/quotas and Multi/frozen contracts retained.
+  Device sharpness not inferred from Node dimensions/pixel bytes; a1024 atlas is shared.
+
+- .937 actual1024 three-layer painted Duplicate must Save/Open above32MiB through
+  original File actions, exact resource bytes.96MiB high-res cap/32MiB legacy cap
+  and over-cap/corruption/scene+history preservation checks remain active.
+
+.937 final local validation: complete2,691-check run passed2,690; the new high-res
+File test had already saved/reopened exact pixels, then a test-only cross-realm
+empty-array comparator failed. Replaced that comparator with original history length/
+identity checks, retaining every assertion. Corrected focused high-res test now1PASS
+(69s), including actual>32MiB Save/Open,96MiB pre-read bound,32MiB legacy eligibility
+and unchanged scene/history on failures. No runtime failure remains from that run.
+New default+legacy resolution10PASS, nearby scalar/alpha16PASS; final release/cache
+contract5PASS after completing drawer-ui parent pin. No protected/frozen changes.
+Hosted full-suite rerun and publication/live evidence follow; device sharpness pending.

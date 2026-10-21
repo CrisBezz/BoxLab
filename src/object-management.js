@@ -258,7 +258,8 @@ function exportBasicProject(button,output){
   const restored=decodeBoxlabScene(JSON.parse(text),(v,f,c,g)=>new EditableMesh(v,f,c,g));
   if(JSON.stringify(encodeBoxlabScene(restored))!==text)throw Error('Project round-trip verification failed');
   const blob=new Blob([text],{type:'application/json'});
-  if(blob.size>32*1024*1024)throw Error('Project exceeds the 32 MB Open limit');
+  const limit=restored.objects.some(o=>o.colourPaint?.version>=2&&o.colourPaint.width===1024&&o.colourPaint.height===1024)?96:32;
+  if(blob.size>limit*1024*1024)throw Error('Project exceeds the '+limit+' MB Open limit');
   url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download=projectFileName();
   document.body.appendChild(a);a.click();a.remove();
@@ -272,9 +273,12 @@ function exportBasicProject(button,output){
 async function openBasicProject(file,output){
  if(!file)return;
  try{
-  if(!/\.boxlab$/i.test(file.name)||file.size>32*1024*1024)throw Error('Choose a .boxlab file smaller than 32 MB');
+  if(!/\.boxlab$/i.test(file.name)||file.size>96*1024*1024)throw Error('Choose a .boxlab file smaller than 96 MB');
   const source=JSON.parse(await file.text());
   const incoming=decodeBoxlabScene(source,(v,f,c,g)=>new EditableMesh(v,f,c,g));
+  // Eligibility follows validated resources, never a filename or unchecked flag.
+  const limit=incoming.objects.some(o=>o.colourPaint?.version>=2&&o.colourPaint.width===1024&&o.colourPaint.height===1024)?96:32;
+  if(file.size>limit*1024*1024)throw Error('Project exceeds the '+limit+' MB Open limit');
   if(incoming.objects.some(o=>o.materials||o.textures))
    throw Error('Rich-resource projects are not supported by basic Open');
   const ids=new Set(incoming.objects.map(o=>o.id));

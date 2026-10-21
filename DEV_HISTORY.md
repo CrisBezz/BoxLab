@@ -12729,3 +12729,62 @@ to1024×1024; fresh strokes/new image placement, Undo512/Redo1024, SaveOpen and 
 Existing pixels enlarge exactly; re-place retained sources for fresh image detail.
 Independent512 scalars/source1024/alpha256/base+three limits retained. Next resolution
 feedback then Merge Down/Flatten; larger sources/maps/layers remain staged.
+
+## .937 — Actual1024 fresh Paint default; .936 pixelation feedback — 22 October 2026
+
+User: images still pixelated, then clarified fresh cube paint after refresh too.
+No .936 PASS inferred. Audit f1f13afc: fresh production painter still defaulted512;
+optional .936 Increase sat in collapsed details. Refresh does not select that control.
+Correct production makeController to explicitly request newColourSize1024 from SAME
+painter. Only no-colour-resource objects use default. Their temporary1024 base/stack
+remains uncommitted until first real paint/image edit; no blank resource or extra
+history on Open/Close. First edit uses accepted layeredv2/v3 and high-res pool profile.
+Existing512/1024 saved resources override default and retain exact bytes/history.
+Original reusable API512/Lab defaults remain; all production UI paths request1024.
+
+Move original resolution nodes into visible row near Channel/Tool, explicit Colour
+texture label; Increase exposed for512, hidden at1024, scalar channel guard retained.
+Open status reports actual size. No new listeners/history/kernel or automatic raster
+upscale/reprojection, source limits/UV/render/native-export/resource-budget/schema change. Original
+nearest image sample/linear texture display unchanged; no claim all zoomed pixelation
+is solved or that user was definitely painting512. 1024 is whole atlas, shared by faces.
+Two painter owners + existing File owner and parent shell/recovery pins937 only; main/Multi/frozen intact.
+
+Three new actual UI tests verify fresh1024 before paint, no Open history/payload,
+first-edit resource/UndoRedo/new-controller reopening; existing512 visible opt-in with
+one checkpoint; first image projection→SaveOpen→exact native1024 PNG and512 scalar
+independence. Original .936 enlargement test now explicitly creates a legacy512 map.
+Existing alpha test samples actual paint.width; scalar UI tests compare every displayed
+texel to the exact512 source at current display size. Their old fixed512 display indices
+were incompatible with the newly requested production default; no raw-data assertions
+removed or weakened. Read docs/paint-default-resolution-937.md. Validation follows.
+
+DEVICE: new cube → Paint; visible Colour texture1024×1024 BEFORE first mark. Fresh
+fine strokes/new image; orbit/zoom and judge detail/latency. UndoRedo keeps Paint;
+SaveOpen retains1024; existing512 project offers Increase and remains512 until tapped.
+Actual iPad sharpness gate remains pending. Next device evidence before higher-map/
+source/UV-density work; Merge/Flatten and other queued requests preserved.
+
+.937 File-size follow-through: actual fresh1024 three-layer duplicate exceeded the
+old32MiB JSON file cap despite valid resource quotas. Original object-management
+Save/Open now permits96MiB ONLY for validated layeredv2/v3 colour1024² projects;
+legacy/ordinary projects retain32MiB. Open rejects>96MiB before reading; files32–96
+are parsed/staged, decoded with original strict resource/geometry guards, then must
+qualify BEFORE confirmation or scene/history replacement. Save qualifies only after
+original exact roundtrip validation. Original quota/predecode/canonical/ref rules,
+native24MiB cap, confirmation and failed-Open rollback remain. Raw JSON parsing is
+now bounded96MiB (not a total browser-memory guarantee). Three-layer512 duplicate
+regressions explicitly seed a legacy512 base to retain their8/16MiB assertions. A new
+actual1024 three-layer duplicate test verifies real Save/Open>32MiB, exact pixels,
+96MiB pre-read refusal, legacy32MiB rejection and unchanged scene/history on errors.
+No blanket file-limit increase for ordinary projects or invented schema fields.
+
+.937 final local validation: complete2,691-check run passed2,690; the new high-res
+File test had already saved/reopened exact pixels, then a test-only cross-realm
+empty-array comparator failed. Replaced that comparator with original history length/
+identity checks, retaining every assertion. Corrected focused high-res test now1PASS
+(69s), including actual>32MiB Save/Open,96MiB pre-read bound,32MiB legacy eligibility
+and unchanged scene/history on failures. No runtime failure remains from that run.
+New default+legacy resolution10PASS, nearby scalar/alpha16PASS; final release/cache
+contract5PASS after completing drawer-ui parent pin. No protected/frozen changes.
+Hosted full-suite rerun and publication/live evidence follow; device sharpness pending.

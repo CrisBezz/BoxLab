@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .936 / Optional 1024 colour textures
+# BoxLab AI Handoff — .937 / Fresh Paint actually starts at 1024
 
 ## Permanent rule — every build completion
 
@@ -10,32 +10,36 @@ the build number and readiness status. Never finish with only a progress update 
 leave the user to infer completion. This applies to EVERY build without a reminder.
 User reaffirmed this permanent instruction on 21 October 2026.
 
-## Current state — 21 October 2026 (Brisbane)
+## Current state — 22 October 2026 (Brisbane)
 
-Build 0.36.18.936 published at dd313a08 from 4db83c38; local+hosted2,687PASS/0FAIL/0skip; Pages/live31 verified below.
-User .935 PASS protects image conversion/Blur/Brush/Eraser, restored source on Undo,
-Redo/SaveOpen and prior .934/.933 acceptance. User explicitly prioritizes increased
-image-layer/general-paint resolution over the queued Merge/Flatten work.
-Paint → Texture resolution → Increase to 1024 × 1024 is an explicit one-checkpoint
-512→1024 enlargement of this object's colour stack, all overlays/image pixels and
-masks. New paint and newly projected images use four times the texels. Existing
-pixels replicate exactly; no invented detail or automatic reprojection of wrapped
-sources. Retained sources remain editable; re-place an image for fresh source detail.
-Undo returns the original 512 resource; existing files open at their saved resolution.
-Colour-only and scalar-lit active/inactive display and original NOM/GLB/SaveOpen
-owners follow colour size. Roughness/Metalness stay independent 512; sources remain
-1024²/2 MiB and alpha tips 256²/256 KiB. Base+three overlays unchanged.
-Layered 1024 (v2/v3, including empty stack after enlargement) opts into bounded
-32/64 MiB raster or 48/96 MiB image unique/expanded pool profiles; original v1 and
-512 profiles remain 8/16 or 24/48. Existing scene-v5 pooled transport, integrity,
-predecode/reference/schema/atomic refusal and 32 MiB file/native 24 MiB image guards
-remain. Full stacks/images can still hit scene/file limits. No new schema/history/
-brush/UV/modelling/writer owner. Complete reverse loader graph .936; protected main/
-cage/Multi/frozen files unchanged. Read docs/paint-resolution-936.md.
-Device .936 grid/detail/latency gate pending; Node tests are not iPad performance.
-Next: device resolution feedback, then Merge Down/Flatten to free slots; stage larger
-sources/maps/layer budgets after evidence. Smudge/AO/UV seam authoring queued.
-Reflection preview unresolved; alpha .929 device gate independent.
+Build0.36.18.937 prepared from mainf1f13afc (.936), local behavior/release checks complete; publication below.
+User .935 PASS remains protected. User reports image AND fresh cube paint still
+pixelated following refresh; .936 visual sharpness is NOT accepted. Audit proves
+.936 kept fresh production maps at512, with optional enlargement hidden in a details
+section. Refresh alone never enabled1024. This is a confirmed default/access issue;
+we have not reproduced the actual iPad screenshot or proved it explains all pixelation.
+
+Production Paint now supplies newColourSize1024 to the SAME painter owner. A new
+object with no colour resource gets a transient1024 base/stack, no metadata/history
+on open/close, first real colour/image edit commits existing layeredv2/v3 through
+original checkpoint/preflight. Existing saved512/1024 map size wins over the default;
+no migration/resampling on Open. Colour texture readout is visible near Channel/Tool,
+with existing Increase control exposed for512 and hidden for1024. History reopening
+keeps actual saved size; undoing first paint reopens an uncommitted1024 session.
+Core reusable API retains its existing512 default unless caller explicitly chooses
+newColourSize1024. Production UI always chooses1024; Lab remains512.
+
+Paint runtime changes are confined to viewport-paint.js and viewport-paint-core.js;
+object-management.js also adjusts existing File Save/Open limits for high-res scenes. No brush,
+projector, UV, sampling, compositor, resource budget/schema, native/GLB rendering or modelling
+change. Complete changed loader graph937; protected main/cage/Multi/frozen retained.
+Original .9361024 limits/memory budgets/scene-resource and native guards remain. Scalar512 and
+source1024/tip256/base+three limits retained. Actual iPad sharpness and latency are
+pending; a1024 atlas still shares texels between cube faces and can pixelate zoomed.
+Read docs/paint-default-resolution-937.md. Next device default/readout/detail feedback;
+if confirmed1024 is still inadequate, inspect actual source/UV texel density and stage
+higher-resolution work rather than infer a cache failure. Merge/Flatten remains queued.
+Smudge/AO/seam authoring queued; reflection preview unresolved, alpha929 gate independent.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -525,8 +529,8 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 ## Next narrow step
 
 Protect user928PASS: Paint history stays open with controls/continued strokes.
-Protect930/931/933/934/935PASS. Test optional936 1024 colour maps, images/masks, Undo/Redo and persistence/export with independent512 scalars.
-Next resolution feedback then layer Merge/Flatten; larger source/map/layer budgets staged. Smudge and929 alpha gate remain pending.
+Protect930/931/933/934/935PASS;936 sharpness report remains open. Test937 new cube visible1024 default, first paint/image, UndoRedo and saved512 opt-in.
+Next confirmed1024 device sharpness feedback before larger maps/sources; Merge/Flatten queued. Smudge and929 alpha gate remain pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
@@ -2129,3 +2133,27 @@ to1024×1024; fresh strokes/new image placement, Undo512/Redo1024, SaveOpen and 
 Existing pixels enlarge exactly; re-place retained sources for fresh image detail.
 Independent512 scalars/source1024/alpha256/base+three limits retained. Next resolution
 feedback then Merge Down/Flatten; larger sources/maps/layers remain staged.
+
+.937 File-size follow-through: actual fresh1024 three-layer duplicate exceeded the
+old32MiB JSON file cap despite valid resource quotas. Original object-management
+Save/Open now permits96MiB ONLY for validated layeredv2/v3 colour1024² projects;
+legacy/ordinary projects retain32MiB. Open rejects>96MiB before reading; files32–96
+are parsed/staged, decoded with original strict resource/geometry guards, then must
+qualify BEFORE confirmation or scene/history replacement. Save qualifies only after
+original exact roundtrip validation. Original quota/predecode/canonical/ref rules,
+native24MiB cap, confirmation and failed-Open rollback remain. Raw JSON parsing is
+now bounded96MiB (not a total browser-memory guarantee). Three-layer512 duplicate
+regressions explicitly seed a legacy512 base to retain their8/16MiB assertions. A new
+actual1024 three-layer duplicate test verifies real Save/Open>32MiB, exact pixels,
+96MiB pre-read refusal, legacy32MiB rejection and unchanged scene/history on errors.
+No blanket file-limit increase for ordinary projects or invented schema fields.
+
+.937 final local validation: complete2,691-check run passed2,690; the new high-res
+File test had already saved/reopened exact pixels, then a test-only cross-realm
+empty-array comparator failed. Replaced that comparator with original history length/
+identity checks, retaining every assertion. Corrected focused high-res test now1PASS
+(69s), including actual>32MiB Save/Open,96MiB pre-read bound,32MiB legacy eligibility
+and unchanged scene/history on failures. No runtime failure remains from that run.
+New default+legacy resolution10PASS, nearby scalar/alpha16PASS; final release/cache
+contract5PASS after completing drawer-ui parent pin. No protected/frozen changes.
+Hosted full-suite rerun and publication/live evidence follow; device sharpness pending.

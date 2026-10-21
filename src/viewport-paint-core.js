@@ -16,18 +16,22 @@ import {captureMetalnessResource,copyMetalnessResource} from './metalness-resour
 import {createProjectMetalnessPool} from './project-metalness-resources.js?v=0.36.18.921';
 const scalarOwners={roughness:{field:'roughnessPaint',capture:captureRoughnessResource,copy:copyRoughnessResource,pool:createProjectRoughnessPool,initial:255,label:'Roughness'},metalness:{field:'metalnessPaint',capture:captureMetalnessResource,copy:copyMetalnessResource,pool:createProjectMetalnessPool,initial:0,label:'Metalness'}};
 // Scene history, selection, camera and body lifetime remain with the existing app.
-export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()]}){
+export function createViewportPainter({target,activeId=()=>target()?.id,body,owner,camera,controls,scene,checkpoint,onClose=()=>{},refresh=()=>{},allowed=()=>true,objects=()=>[target()],newColourSize=512}){
+ if(![512,1024].includes(newColourSize))throw Error('New colour texture must be 512 or 1024');
  let session=null,generation=0,stroke=null;const ray=new THREE.Raycaster(),occluderMaterial=new THREE.MeshBasicMaterial({side:THREE.DoubleSide});
  function current(){if(!session)return false;const o=session.object;return !session.display.disposed&&allowed()&&activeId()===session.id&&o?.id===session.id&&o.colourPaint===session.resource&&o.roughnessPaint===session.roughness&&o.metalnessPaint===session.metalness&&o.glbPassthrough===session.uv&&o.visible!==false&&!o.locked&&!o.sourceId&&!o.arrayRecipe&&!o.booleanRecipe&&!o.curveProfile&&!o.settings?.subd&&!Object.values(o.settings?.mirror||{}).some(Boolean);}
  function cancel(){if(!stroke)return;stroke.path?.cancel();session?.layer.finish(true);if(session)updatePreview();controls.enabled=stroke.controls;stroke=null;}
  function close(redraw=true){generation++;if(!session)return;cancel();const old=session;session=null;old.body.geometry.removeEventListener('dispose',old.lost);old.display.dispose();old.layer.dispose();onClose();if(redraw)refresh(old.body);}
  async function open(){close();const token=++generation,o=target();if(o?.locked||o?.visible===false)throw Error('Unlock and show the selected object first');const key=paintTargetKey(o,o?.mesh,owner),resource=o.colourPaint,roughness=o.roughnessPaint,metalness=o.metalnessPaint,binding=await paintTargetDigest(key);
   if(token!==generation||!allowed()||target()!==o||target()?.colourPaint!==resource||target()?.roughnessPaint!==roughness||target()?.metalnessPaint!==metalness||paintTargetKey(target(),target()?.mesh,owner)!==key)throw Error('Object changed while opening paint');
-  const size=resource?.width||512;
+  const size=resource?.width||newColourSize;
   if(resource&&(resource.binding!==binding||![512,1024].includes(size)||resource.height!==size))throw Error('Stored paint no longer matches this geometry/UVs; Undo the mesh or UV change first');
   for(const [channel,cfg] of Object.entries(scalarOwners)){const resource=o[cfg.field];if(resource){const r=cfg.copy(resource);if(r.binding!==binding)throw Error('Stored '+channel+' no longer matches this geometry/UVs; Undo the mesh or UV change first');}}
   const b=body();if(!b?.geometry)throw Error('Selected viewport body unavailable');const geometry=owner.buildUVPreviewGeometry(o.mesh,o.glbPassthrough,{faceIndices:true});if(!geometry)throw Error('UV geometry unavailable');
-  const stack=resource?.version>=2?capturePaintResource(resource).layers:null,selected=stack?.layers.at(-1)?.id||'$base',preview=new Uint8Array(size*size*4).fill(255);if(resource)preview.set(resource.pixels);
+  const preview=new Uint8Array(size*size*4).fill(255);if(resource)preview.set(resource.pixels);
+  // Opening a new 1024 document stays transient: first edit uses the accepted
+  // layered profile; no blank resource or history entry is published on open.
+  const stack=resource?.version>=2?capturePaintResource(resource).layers:!resource&&size===1024?createPaintLayerStack(captureColourResource({width:size,height:size,pixels:preview,binding})):null,selected=stack?.layers.at(-1)?.id||'$base';
   let layer,display;try{layer=createPaintLayer(size,{transparent:!!stack&&selected!=='$base'});if(stack)layer.restore(selected==='$base'?stack.base.pixels:stack.layers.find(l=>l.id===selected).pixels);else if(resource)layer.restore(resource.pixels);for(const child of [...b.children])child.userData?.boxlabColourPaintDispose?.();display=createPaintSurface(b,geometry,paintTexture(preview,size));display.show();}catch(e){geometry.dispose();display?.dispose();layer?.dispose();throw e;}
   const lost=()=>close(false);session={size,object:o,id:o.id,key,binding,resource,roughness,metalness,uv:o.glbPassthrough,body:b,layer,display,lost,stack,selected,preview,dirty:true,paintTarget:'colour',previewMode:'channel'};b.geometry.addEventListener('dispose',lost);return true;
  }
