@@ -1,7 +1,7 @@
 import {paintBudget} from './paint-budget.js?v=0.36.18.913';
 // One colourPaint resource: opaque v1, raster layers v2, retained images v3.
 import {captureColourResource} from './paint-resource.js?v=898';
-import {upgradePaintLayerStack,flattenPaintLayerStack,paintLayerStackBytes} from './paint-layer-stack.js?v=0.36.18.913';
+import {upgradePaintLayerStack,flattenPaintLayerStack,paintLayerStackBytes} from './paint-layer-stack.js?v=0.36.18.935';
 import {encodeProjectBytes,decodeProjectBytes} from './project-glb-resources.js?v=0.36.18.899';
 const fields=['version','channel','width','height','colorSpace','rowOrder','binding','pixels'];
 const sourceFields=['version','mime','width','height','rowOrder','colourSpace','alpha','encoded','data'];

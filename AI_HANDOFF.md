@@ -1,14 +1,25 @@
-# BoxLab AI Handoff — .934 / Blur Amount
+# BoxLab AI Handoff — .935 / Convert image to paint
+
+## Permanent rule — every build completion
+
+The final user-facing reply MUST explicitly say **“The app is ready for testing —
+build .XXX”** once the build is published and verified, then give a short hands-on
+test list (normally 3–6 quick checks). State what changed and distinguish automated
+checks from device testing. If there is nothing new to test, explicitly say so with
+the build number and readiness status. Never finish with only a progress update or
+leave the user to infer completion. This applies to EVERY build without a reminder.
+User reaffirmed this permanent instruction on 21 October 2026.
 
 ## Current state — 21 October 2026 (Brisbane)
 
-Build0.36.18.934 prepared from main6688de17. User933PASS protects image wrapping,
-placement/history/SaveOpen; prior930/931 PASS retained. Blur Amount1–32/default8 now
-controls smoothing separately from Opacity and Size; same raster/seam/history owners.
-Read latest934 entry and docs/paint-blur-amount-934.md. Focused26PASS+release5PASS;
-full/publication below. Device934 softness/latency pending;929 alpha gate independent.
-Next image conversion/blur, then Merge/Flatten, bounded resolution/layer-count choices.
-Smudge/AO/UV seam authoring queued; reflection preview independently unresolved.
+Build0.36.18.935 prepared from mainbc84450c. User934PASS protects stronger Blur Amount;
+933 wrapped placement and prior PASSes protected. Image-only Convert to paint keeps
+current surface pixels/settings, enables Brush/Eraser/Blur, original Undo restores image
+editing. Original stack/history/codec/export owners; no schema or resolution change.
+Read latest935 entry/docs/paint-image-rasterize-935.md. Full/publication below;
+934 hosted2675PASS/Pages/live27 proof closed below. Device935 gate pending.
+Next Merge Down/Flatten to free slots; then staged resolution/layer budgets.
+Smudge/AO/UV seam authoring queued; reflection unresolved; alpha929 gate independent.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -498,8 +509,8 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 ## Next narrow step
 
 Protect user928PASS: Paint history stays open with controls/continued strokes.
-Protect930/931/933PASS; test934 Amount versus Opacity, preserve wrapped images/history/layer/channel isolation.
-Next image conversion/blur, layer Merge/Flatten, staged resolution/layer budgets. Smudge and929 alpha gate remain pending.
+Protect930/931/933/934PASS; test935 image conversion/Blur/Undo while preserving wrapped images/history/layer/channel isolation.
+Next layer Merge/Flatten, then staged resolution/layer budgets. Smudge and929 alpha gate remain pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
@@ -1982,3 +1993,67 @@ budgets; Smudge/AO/edge-seam authoring queued. Current512²/1024²/256²/base+3 
 .934 final local Node24.19.0 regression: **2,675 PASS / 0 FAIL / 0 skipped**.
 Focused26PASS + release5PASS; no existing assertions relaxed. Hosted/Pages/live
 verification follows; actual iPad934 strength/latency gate pending.
+
+## .934 publication closed; user PASS — 21 October 2026 (Brisbane)
+
+Runtimebc84450ce760a54424938e0f2548d05eca0aaf1e, tested treee59b2bac3b9c531a815403f6bab1816d9e3a04ae,
+published. Hosted Node22 regression39512294347/job118936016708 logs confirm2675PASS/
+0FAIL/0skip, matching recorded local Node24 run. Pages39512293048/deploy118936225379
+succeeded. Live934 manifest and all27 checked runtime/protected files byte-match the
+published934 source (git-show snapshot used while935 working tree was dirty). User
+PASS934 protects dedicated Blur Amount1–32/default8, independent Opacity/Size, retained
+Paint history and earlier933 image wrapping. Prior interrupted publication proof is now
+closed; no new934 runtime changes. Alpha929 acceptance remains independently pending.
+
+## .935 — Image to paint conversion; .934 PASS — 21 October 2026 (Brisbane)
+
+Audit mainbc84450c/live934: source-preserved image cache and explicit paired replacement
+exist; no raster conversion. Extend original paint-layer-stack with explicit
+rasterizeImagePaintLayer: validated owned snapshot, same stack/version/order/ID/name/
+visibility/opacity/blend/mask/pixels; ONLY selected image recipe becomes null. Existing
+compositor verifies identical appearance, including every supported blend and inverted
+mask. No implicit compositing into base, extra layer, resampling, new writer/schema,
+brush, history, modelling or UV owner. Existing three-overlay/512² limits unchanged.
+
+Image-only Convert to paint button uses original layerAction/scene checkpoint/preflight/
+COW owner. Conversion selects Colour even when image mask was selected; Brush, Eraser,
+Fill and Blur then use original raster and accepted934 Amount. Other image layers keep
+source editing. Same pixels include933 wrapped placement. Edit image button disappears
+by original state when no recipe; name/slot retained. Undo restores retained source and
+placement editing, Redo restores raster conversion. After Save/Open converted layer is
+ordinary editable pixels; source recipe isn't serialized for that layer. Other objects
+sharing old resource and original saved image sources remain unchanged. Source release
+reduces committed resource bytes; Undo may still retain it in bounded scene history.
+
+Block conversion while staged image placement exists, keeping candidate/committed work
+intact; Apply/Cancel first. Missing/nonimage/scalar/stale target/checkpoint/pool errors
+leave committed resources/history untouched. Read-only image message keeps accepted
+'Image colour is retained' prefix and points to conversion. UI return/result reused for
+accurate success status, no separate input/listener/history system. Current Paint stays.
+
+Five new tests: all-blend/mask exact appearance and owned buffers/byte accounting;
+actual wrapped image UI→convert→strong Blur→Paint UndoRedo→SaveOpen→exact native PNG;
+mask→Colour and Brush/Eraser/full-stack/other-image/scalar behavior; staged/missing/stale/
+checkpoint/pool refusal; staged UI edit/cancel guard. Nearby908/933/934 and release5
+remain active; full/publication below. Complete changed stack/resource/project/export/
+Lab/main reverse loader graph935; functional change confined to original3 owners.
+Accepted raster934, wrap933/UV/mesh kernels/main/cage/Multi/frozen bytes unchanged.
+Read docs/paint-image-rasterize-935.md. Device935 conversion/blur/Undo feel pending.
+Next Merge Down/Flatten through existing compositor to free slots, then staged texture/
+source/alpha resolution and layer budgets. Smudge/AO/UV edge-seam authoring queued;
+reflection preview independently unresolved. Current512²/1024²/256²/base+3 retained.
+
+.935 final local Node24.19.0 regression: **2,680 PASS / 0 FAIL / 0 skipped**.
+Focused29PASS (new5, image908 eight, wrap933 six, Amount934 five, release5); no
+existing assertions relaxed. Hosted/Pages/live publication verification follows.
+
+## Permanent completion-instruction audit — 21 October 2026
+
+User repeated PASS /nextbuild while935 publication was pending and asked to audit
+manual-test instructions. AI_WORKFLOW already explicitly requires readiness/build
+number and3–6 quick device checks; AI_HANDOFF also contained the19 October reminder
+inside an older entry. Promoted the same rule to the TOP of AI_HANDOFF as a permanent
+section. It applies every build, including an explicit no-new-test statement when
+appropriate; never end with only progress. No runtime change in this audit. Current
+next build remains935 (published main was934 when PASS arrived); finish935 and its
+hands-on image conversion/Blur/Undo/SaveOpen list before declaring it ready.

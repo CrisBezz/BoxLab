@@ -80,3 +80,12 @@ export function replaceImagePaintLayer(stack,id,{image,pixels}={}){
  if(index<0||!snapshot.layers[index].image||!image||!(pixels instanceof Uint8Array))throw Error('Image replacement requires recipe and surface preview');
  const layers=[...snapshot.layers];layers[index]={...layers[index],image,pixels};return capturePaintLayerStack({...snapshot,layers});
 }
+
+// Explicitly keep the committed surface pixels as a regular editable paint layer.
+// The caller owns history: Undo can restore the retained image recipe/source.
+export function rasterizeImagePaintLayer(stack,id){
+ const snapshot=upgradePaintLayerStack(stack),index=snapshot.layers.findIndex(l=>l.id===id);
+ if(index<0||!snapshot.layers[index].image)throw Error('Select an image layer to convert');
+ const layers=[...snapshot.layers];layers[index]={...layers[index],image:null};
+ return capturePaintLayerStack({...snapshot,layers});
+}

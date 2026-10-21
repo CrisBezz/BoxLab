@@ -1,6 +1,6 @@
 // Export-local adaptation only. Never add material/provenance fields to native UVs.
-import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.913';
-import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.925';
+import {captureFlattenedPaint} from './paint-layer-resource.js?v=0.36.18.935';
+import {paintTargetKey,paintTargetDigest} from './paint-target.js?v=0.36.18.935';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.921';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.921';
 import {encodeNomadScalarPNG,encodeNomadColourPNG,encodeNomadDataPNG} from './nomad-scalar-png.js?v=0.36.18.922';
