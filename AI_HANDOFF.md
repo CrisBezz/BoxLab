@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .939 / UV-ready starting cube and Add choice
+# BoxLab AI Handoff — .940 / Torus UVs through native owner
 
 ## Permanent rule — every build completion
 
@@ -12,43 +12,40 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 ## Current state — 22 October 2026 (Brisbane)
 
-User “Awesome - PASS” accepts .938: protect Merge to Base prefix semantics,
-Flatten colour appearance/free slots, hidden-layer warning, Paint UndoRedo and
-SaveOpen. Earlier .937 fresh1024/readout/detail and saved512 optional Increase remain
+User PASS accepts .939: protect initial/reset UV-ready1×1×1 cube, Add UV checkbox
+for Cube/Plane/Cylinder/Cone/Sphere, unticked plain path, one-step UndoRedo and
+SaveOpen/paint. Earlier .938 Merge/Flatten and .9371024/readout/detail remain
 protected. Alpha .929 and reflection-preview gates remain independent.
 
-Build0.36.18.939 implements user's requested UV-ready objects. The ORIGINAL
-multi-object initial/reset owner attaches existing Box UVs to its unchanged1×1×1
-cube; no extra scene checkpoint. Main startup geometry and modelling/cage untouched.
-Add settings now default Generate UVs ON for Cube(Box), Plane(XZ), Cylinder/Cone(Y
-Cylinder) and Sphere(Y Sphere). Untick for original plain mesh. UV-enabled Add uses
-plain Base settings (Mirror/SubD off) so it is immediately paintable; plain Add retains
-original settings inheritance. Density/presets/preview/cancel/selection/history owners
-unchanged. Torus/Text explicitly say automatic UVs unavailable and add without UVs;
-Curve/Balloon/Revolve/Sweep launchers unchanged. No general unwrap or Torus map claim.
+Build0.36.18.940 completes the supported primitive Add UV choice for Torus before
+resuming queued brush work. Audit found no Torus projector. Extend SAME
+imported-uv-edit native projection owner with createTorusUV; no duplicate unwrap,
+modelling, history, pointer or export kernel. Recover regular angular quad grid
+from actual positions around worldY, validate round tube/ring, every cell/edge order
+and original vertex coverage. Vertex/face numbering arbitrary. Both periodic seams
+split in face-corner UVs, one rectangular island inset2%, no geometry changes.
+Uniform angular layout stretches differently inside/outside ring; not equal density
+or a general/distortion-free unwrap. Upright round regular quads3–64 per axis only;
+factory Add remains3–32. Tilted/elliptical/deformed/horn/spindle/nonquad/incomplete
+or unsupported owners refuse with explanation before resource/history publication.
 
-Existing imported-uv-edit projection owners generate PRIVATE candidate payloads
-before Add/history capture. Internal token bypasses scene checkpoints ONLY for the
-new isolated candidate; ordinary scene UV edits still require original history.
-No fake history, second projector, modelling kernel, new UV schema or mesh metadata.
-Extract original identical import/export topology identity into shared
-mesh-topology-signature.js; existing local wrappers delegate exact same bytes. This
-also makes startup independent of exporter script arrival; no asynchronous patchup.
-Original UV inspector/editors/paint/project/native writers consume same sourceboxlab
-version1 face-corner resource. No auto-remap of existing saved/imported/edited meshes.
-Current native restrictions still apply: stale/evaluated/linked resources guarded;
-choose without UVs for current linked-geometry workflows. No UV propagation promise
-through later topology edits/modifiers. Undo restores original UV binding normally.
+Add Torus now uses existing checked Generate UVs control/private candidate staging,
+plain Base settings and one original Add checkpoint. Untick retains original plain
+path. Existing Object radial→UV tools adds Torus UVs (Y) through same native scene
+checkpoint/COW/no-op/history path, so old plain tori can explicitly acquire UVs.
+No auto-remapping existing projects or changing other primitive layouts. Text remains
+without automatic UVs; Curve/Balloon/Revolve/Sweep launchers unchanged. Existing
+stale/evaluated/linked guards remain; no UV propagation through topology/modifiers.
 
-Functional changes: multi-object.js, primitive-ui.js, imported-uv-edit.js, shared
-signature and import/export delegation. Other runtime edits are complete reviewed
-reverse loader pins939 (including Mesh Health and Lab). Protected main930/cage/
-Multi1.0/frozen betas and paint resolution/budgets unchanged. Local full2703PASS/0FAIL/0skip; new focused6PASS;
-nearby original Add/Box/Sphere19PASS; release5PASS. Published e076ba40; hosted2703PASS, Pages and live20 verified below.
-Read docs/primitive-auto-uv-939.md. DEVICE .939 gate: fresh/reset cube immediate
-Paint/UV Editor, Add Cube/Cylinder/Cone/Sphere with UVs, Add unticked, one-step
-UndoRedo and SaveOpen. Next respond to device feedback, then queued bounded
-Smudge/AO/edge-seam authoring audits; Torus/general unwrap stays future work.
+Three functional owners: imported-uv-edit.js, primitive-ui.js, mesh-health.js.
+Multi-object only parent import pin940; shell/recovery markers and complete changed
+loader graph940. Lab/export/signature/paint/main930/cage/Multi1.0/frozen retained.
+Production Paint1024/scalar512, saved512 optional Increase, sources/tips/layers and
+all resource/File/native guards unchanged. Focused new6+expanded939six =12PASS;
+release5PASS; full2709PASS/0FAIL/0skip. Publication evidence follows. Read docs/native-torus-uv-940.md.
+DEVICE .940: Add Torus checked→Paint; UV Editor rectangular island; unticked Torus
+→ UV tools Torus UVs (Y); UndoRedo, SaveOpen/export placement. Next device feedback,
+then bounded Smudge/AO/edge-seam authoring audits. General/Text unwrap remains future.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -539,7 +536,7 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 Protect user928PASS: Paint history stays open with controls/continued strokes.
 Protect930/931/933/934/935/937PASS; .937 closes prior pixelation gate. Fresh1024/readout/detail and saved512 opt-in remain protected.
-User .938 PASS protects Merge/Flatten/free slots/UndoRedo/SaveOpen. Device .939 UV-ready startup/reset/Add and optional plain meshes are next. Smudge/AO/seams and929 alpha gate remain pending.
+User .938/.939 PASS protects Merge/Flatten and UV-ready startup/reset/Add/plain choice/history/persistence. Device .940 Torus UVs/Add/Paint/UndoRedo/SaveOpen are next. Smudge/AO/seams and929 alpha gate remain pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
@@ -2218,3 +2215,9 @@ retained main/cage/Multi1.0/primitive factory/paint owners and frozenBeta7 marke
 byte-match tested source. Main/cage/Multi1.0/frozen beta bytes unchanged. No assertion
 relaxed. This proof changes docs only; same runtime bytes. User .938 PASS protected;
 .939 actual iPad startup/reset/Add/UV checkbox/paint/history/SaveOpen gate pending.
+
+.940 final local Node24 full regression: **2,709 PASS / 0 FAIL / 0 skipped**.
+New Torus6 and expanded939 creation6 =12 focusedPASS; reviewed release5PASS.
+No original behaviour assertions relaxed; superseded Torus-unavailable checks now
+require mapped/optional plain Torus and exact project/NOM/GLB output. Protected
+main/cage/Multi1.0/frozen retained. Hosted/Pages/live proof follows; device940 pending.

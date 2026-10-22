@@ -177,7 +177,7 @@ function nativeUVTargetError(object,mesh,topologySignature){
 // require their original checkpoint; creation stages a private payload before Add.
 const nativeUVCandidate=Symbol('native UV candidate');
 export function createNativeUVCandidate(mesh,projection){
- const project={box:createBoxUV,xz:(o,m,s,h)=>createPlanarUV(o,m,s,h,'xz'),cylinder:createCylinderUV,sphere:createSphereUV}[projection];
+ const project={box:createBoxUV,xz:(o,m,s,h)=>createPlanarUV(o,m,s,h,'xz'),cylinder:createCylinderUV,sphere:createSphereUV,torus:createTorusUV}[projection];
  if(!project)throw new Error('This shape has no automatic UV projection yet');
  const candidate={},result=project(candidate,mesh,meshTopologySignature,nativeUVCandidate);
  if(!result.ok)throw new Error(result.reason);
@@ -377,6 +377,38 @@ export function createSphereUV(object,mesh,topologySignature,history){
   let area=0;for(let j=0;j<uv.length;j++){const a=uv[j],b=uv[(j+1)%uv.length];area+=a[0]*b[1]-a[1]*b[0];}
   if(Math.abs(area)<1e-14)return refuse();
   uvCorners.push(uv);
+ }
+ return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
+}
+
+// Round upright torus: recover the regular angular grid from positions, then
+// validate every original quad/cell. Corner splits cut BOTH periodic seams.
+// No vertex-order assumption, remeshing, geometry edits or general unwrap.
+export function createTorusUV(object,mesh,topologySignature,history){
+ const error=nativeUVTargetError(object,mesh,topologySignature);if(error)return {ok:false,reason:error};
+ const refuse=()=>({ok:false,reason:'Torus UVs require a round upright Y-axis torus with a regular quad grid'});
+ if(mesh.faces.some(face=>!Array.isArray(face)||face.length!==4||new Set(face).size!==4))return refuse();
+ const used=new Set();let magnitude=0;
+ for(const face of mesh.faces)for(const id of face){const p=mesh.vertices[id];if(!Number.isInteger(id)||!p||!['x','y','z'].every(k=>Number.isFinite(p[k])))return refuse();used.add(id);magnitude=Math.max(magnitude,Math.abs(p.x),Math.abs(p.y),Math.abs(p.z));}
+ if(!magnitude||used.size!==mesh.vertices.length||mesh.faces.length!==used.size)return refuse();
+ const points=mesh.vertices.map(p=>[p.x/magnitude,p.y/magnitude,p.z/magnitude]),centre=[0,0,0];
+ for(const p of points)for(let k=0;k<3;k++)centre[k]+=p[k]/points.length;
+ const local=points.map(p=>p.map((n,k)=>n-centre[k])),radial=local.map(p=>Math.hypot(p[0],p[2])),major=radial.reduce((a,b)=>a+b/radial.length,0),minor=local.reduce((a,p,i)=>a+Math.hypot(radial[i]-major,p[1])/local.length,0);
+ if(!(minor>0&&major>minor*(1+1e-7))||local.some((p,i)=>Math.abs(Math.hypot(radial[i]-major,p[1])-minor)>minor*1e-7))return refuse();
+ const angle=(y,x)=>Math.atan2(y,x)/(2*Math.PI),seamU=angle(local[0][2],local[0][0]),seamV=angle(local[0][1],radial[0]-major);
+ const wrap=n=>{const u=(n+2)%1;return u<1e-12||u>1-1e-12?0:u;};
+ const coords=local.map((p,i)=>[wrap(angle(p[2],p[0])-seamU),wrap(angle(p[1],radial[i]-major)-seamV)]);
+ const axes=[0,1].map(k=>{const unique=[];for(const n of coords.map(p=>p[k]).sort((a,b)=>a-b))if(!unique.length||n-unique.at(-1)>1e-7)unique.push(n);return unique;});
+ if(axes.some(a=>a.length<3||a.length>64||a.some((n,i)=>Math.abs(n-i/a.length)>1e-7))||axes[0].length*axes[1].length!==points.length)return refuse();
+ const counts=axes.map(a=>a.length),grid=coords.map(p=>p.map((n,k)=>Math.round(n*counts[k])%counts[k])),vertices=new Set(grid.map(p=>p.join(':')));
+ if(vertices.size!==points.length)return refuse();
+ const cells=new Set(),uvCorners=[];
+ for(const face of mesh.faces){
+  const corners=face.map(id=>grid[id]),pairs=[0,1].map(k=>[...new Set(corners.map(p=>p[k]))].sort((a,b)=>a-b));
+  if(pairs.some((a,k)=>a.length!==2||a[1]-a[0]!==1&&!(a[0]===0&&a[1]===counts[k]-1)))return refuse();
+  const cell=pairs.map((a,k)=>a[1]-a[0]===1?a[0]:counts[k]-1),key=cell.join(':');if(cells.has(key))return refuse();cells.add(key);
+  for(let j=0;j<4;j++){const a=corners[j],b=corners[(j+1)%4];if(Number(a[0]!==b[0])+Number(a[1]!==b[1])!==1)return refuse();}
+  uvCorners.push(corners.map(p=>p.map((n,k)=>.02+.96*((cell[k]===counts[k]-1&&n===0?counts[k]:n)/counts[k]))));
  }
  return commitNativeUV(object,mesh,topologySignature,history,uvCorners);
 }

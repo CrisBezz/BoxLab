@@ -9233,9 +9233,9 @@ User .937 PASS protected; .938 device merge/flatten/UndoRedo/SaveOpen gate pendi
 - [x] Actual Add defaults Generate UVs ON; OFF retains plain path/settings inheritance. UV ON uses plain Base settings. Staging/Cancel/refusal preserves scene/redo; one Undo/Redo carries exact resource.
 - [x] Actual project transport and NOM/GLB output retain face-corner UV variants; startup cube opens production Paint immediately at1024 and Save/Open retains painted binding.
 - [x] Torus/Text remain plain with visible explanation; special object launchers unchanged. Original stale/evaluated/linked guards retained; no auto-remapping old projects.
-- [ ] DEVICE .939: refresh or Reset → Paint on cube without first projecting UVs; UV Editor shows six islands.
-- [ ] DEVICE .939: Add Cylinder/Cone/Sphere with Generate UVs checked; inspect UVs/paint. Untick on another object to create without UVs.
-- [ ] DEVICE .939: Undo once removes new UV object, Redo restores; Save/Open retains UVs/paint.
+- [x] User PASS .939: refresh or Reset → Paint on cube without first projecting UVs; UV Editor shows six islands.
+- [x] User PASS .939: Add Cylinder/Cone/Sphere with Generate UVs checked; inspect UVs/paint. Untick on another object to create without UVs.
+- [x] User PASS .939: Undo once removes new UV object, Redo restores; Save/Open retains UVs/paint.
 
 .939 final local Node24 full regression: **2,703 PASS / 0 FAIL / 0 skipped**.
 New creation6PASS, original nearby Add/Box/Sphere19PASS, reviewed release5PASS.
@@ -9256,3 +9256,23 @@ retained main/cage/Multi1.0/primitive factory/paint owners and frozenBeta7 marke
 byte-match tested source. Main/cage/Multi1.0/frozen beta bytes unchanged. No assertion
 relaxed. This proof changes docs only; same runtime bytes. User .938 PASS protected;
 .939 actual iPad startup/reset/Add/UV checkbox/paint/history/SaveOpen gate pending.
+
+## .940 — Torus UVs regression; .939 protected PASS
+
+- [x] User .939 PASS protects UV-ready initial/reset cube, Add UV choice/plain creation, painting, one-step UndoRedo and SaveOpen.
+- [x] Round upright Torus grids3–32 across36 density pairs: every quad mapped once,1 island, both seams, full rectangle within tile; no geometry mutation.
+- [x] Translated/Y-rotated/extreme scale/renumbered regular grids supported; deformed/tilted/nonquad/incomplete/unsupported/checkpoint failures retain metadata/history.
+- [x] Original native scene projection/COW/no-op/UndoRedo/island edits and actual UV callback work; Add Torus checked/unchecked each one original checkpoint.
+- [x] Expanded939 actual project/NOM/GLB retain Torus corner variants; immediate production1024 Paint/UndoRedo/SaveOpen/native PNG exact.
+- [ ] DEVICE .940: Add Torus with Generate UVs checked; Paint works immediately, UV Editor shows one rectangular island.
+- [ ] DEVICE .940: Add Torus unchecked, then Object→UV→Torus UVs (Y); Undo/Redo projection and Add behave correctly.
+- [ ] DEVICE .940: Save/Open retains painted Torus and UV placement; optional Nomad export sanity.
+
+Angular Torus mapping has inner/outer density variation. No tilted/deformed/general
+unwrap or UV propagation through topology/modifiers; native linked guards retained.
+
+.940 final local Node24 full regression: **2,709 PASS / 0 FAIL / 0 skipped**.
+New Torus6 and expanded939 creation6 =12 focusedPASS; reviewed release5PASS.
+No original behaviour assertions relaxed; superseded Torus-unavailable checks now
+require mapped/optional plain Torus and exact project/NOM/GLB output. Protected
+main/cage/Multi1.0/frozen retained. Hosted/Pages/live proof follows; device940 pending.

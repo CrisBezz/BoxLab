@@ -7,14 +7,14 @@ import {History} from '../src/history.js';
 import {makePrimitive} from '../src/primitive-factory.js';
 import {fitAddObjectToUnitCube} from '../src/add-object-fit.js';
 import {meshTopologySignature} from '../src/mesh-topology-signature.js';
-import {createNativeUVCandidate,createBoxUV,createPlanarUV,createCylinderUV,createSphereUV} from '../src/imported-uv-edit.js';
+import {createNativeUVCandidate,createBoxUV,createPlanarUV,createCylinderUV,createSphereUV,createTorusUV} from '../src/imported-uv-edit.js';
 import {inspectImportedUV} from '../src/imported-uv-inspection.js';
 import {encodeBoxlabScene,decodeBoxlabScene} from '../src/boxlab-project-codec.js';
 import {buildNomadProject,readNomadProject} from '../src/nomad-export-core.js';
 import {addObjectRuntime} from './helpers/add-object-runtime.mjs';
 import {glbOwnerRuntime} from './helpers/glb-owner-runtime.mjs';
 import {viewportPaintRuntime,viewportPaintUIRuntime} from './helpers/viewport-paint-runtime.mjs';
-const mappings={cube:'box',plane:'xz',cylinder:'cylinder',cone:'cylinder',sphere:'sphere'};
+const mappings={cube:'box',plane:'xz',cylinder:'cylinder',cone:'cylinder',sphere:'sphere',torus:'torus'};
 const read=p=>fs.readFileSync(new URL('../src/'+p,import.meta.url),'utf8');
 const toggle=(r,value)=>{const n=r.find(n=>n.dataset.addSetting==='uv');assert(n);n.checked=value;n.dispatchEvent({type:'change'});};
 function startRuntime(){
@@ -34,18 +34,18 @@ test('939 startup and Reset use original unit cube with complete six-island UVs 
 test('939 candidate projections exactly reuse original owners at asymmetric and extreme Add densities without geometry mutation',()=>{
  for(const [type,projection]of Object.entries(mappings))for(const [x,y]of [[3,1],[7,3],[12,6],[32,32]]){
   const mesh=fitAddObjectToUnitCube(makePrimitive(type,{x,y})),before=JSON.stringify(mesh),payload=createNativeUVCandidate(mesh,projection),object={},history={capture:()=>({}),checkpointSnapshot:()=>true};
-  const fn={box:createBoxUV,cylinder:createCylinderUV,sphere:createSphereUV,xz:(...a)=>createPlanarUV(...a,'xz')}[projection];assert(fn(object,mesh,meshTopologySignature,history).ok,type);assert.deepEqual(payload,object.glbPassthrough);assert.equal(JSON.stringify(mesh),before);const report=inspectImportedUV(mesh,payload,meshTopologySignature);assert.equal(report.state,'ready');assert.equal(report.missingFaces,0);assert(payload.uvCorners.flat(2).every(Number.isFinite));
+  const fn={box:createBoxUV,cylinder:createCylinderUV,sphere:createSphereUV,torus:createTorusUV,xz:(...a)=>createPlanarUV(...a,'xz')}[projection];assert(fn(object,mesh,meshTopologySignature,history).ok,type);assert.deepEqual(payload,object.glbPassthrough);assert.equal(JSON.stringify(mesh),before);const report=inspectImportedUV(mesh,payload,meshTopologySignature);assert.equal(report.state,'ready');assert.equal(report.missingFaces,0);assert(payload.uvCorners.flat(2).every(Number.isFinite));
  }
- assert.throws(()=>createNativeUVCandidate(makePrimitive('torus'),'torus'),/no automatic/);const bad=makePrimitive('cube');bad.vertices[0].x=NaN;assert.throws(()=>createNativeUVCandidate(bad,'box'),/coordinates/);const o={};assert.equal(createBoxUV(o,makePrimitive('cube'),meshTopologySignature,null).ok,false);assert.equal(o.glbPassthrough,undefined,'scene UV projection still requires history');
+ assert.throws(()=>createNativeUVCandidate(makePrimitive('torus'),'unsupported'),/no automatic/);const bad=makePrimitive('cube');bad.vertices[0].x=NaN;assert.throws(()=>createNativeUVCandidate(bad,'box'),/coordinates/);const o={};assert.equal(createBoxUV(o,makePrimitive('cube'),meshTopologySignature,null).ok,false);assert.equal(o.glbPassthrough,undefined,'scene UV projection still requires history');
 });
 test('939 actual Add defaults UVs on, offers plain mesh, creates one object/checkpoint and retains exact payload through Undo/Redo',()=>{
  for(const type of Object.keys(mappings))for(const uv of [true,false]){
   const r=addObjectRuntime(),before=r.snapshot();r.open(type[0].toUpperCase()+type.slice(1));assert(r.find(n=>n.dataset.addSetting==='uv').checked);toggle(r,uv);r.input('x',7);r.input('y',3);assert.deepEqual(r.snapshot(),before,'staging has no scene/history effects');r.action('apply').click();const o=r.manager.objects.at(-1);assert.equal(r.manager.objects.length,6);assert.equal(!!o.glbPassthrough,uv,type);if(uv){assert.equal(inspectImportedUV(o.mesh,o.glbPassthrough,meshTopologySignature).state,'ready');assert.equal(o.settings.subd,false);assert.deepEqual({...o.settings.mirror},{x:false,y:false,z:false});}const after=r.snapshot();assert.equal(r.history.undoStack.length,1);r.undo();assert.deepEqual(r.snapshot(),before);r.redo();assert.deepEqual(r.snapshot(),after);
  }
 });
-test('939 Cancel keeps redo; unsupported Torus/Text remain plain; candidate failure never adds or checkpoints',async()=>{
+test('939 Cancel keeps redo; unsupported Text remains plain; candidate failure never adds or checkpoints',async()=>{
  const r=addObjectRuntime();r.open('Cube');r.action('apply').click();r.undo();const before=r.snapshot();r.open('Sphere');toggle(r,false);r.action('cancel').click();assert.deepEqual(r.snapshot(),before);r.redo();assert.equal(r.manager.objects.length,6);
- for(const name of ['Torus','Text']){const s=addObjectRuntime();s.open(name);if(name==='Text')await s.flush();assert.equal(s.find(n=>n.dataset.addSetting==='uv'),undefined);s.action('apply').click();assert.equal(s.manager.objects.at(-1).glbPassthrough,undefined);}
+ for(const name of ['Text']){const s=addObjectRuntime();s.open(name);if(name==='Text')await s.flush();assert.equal(s.find(n=>n.dataset.addSetting==='uv'),undefined);s.action('apply').click();assert.equal(s.manager.objects.at(-1).glbPassthrough,undefined);}
  const s=addObjectRuntime(),saved=s.snapshot();s.open('Cylinder');s.c.createNativeUVCandidate=()=>{throw Error('UV projection refused');};s.action('apply').click();assert.deepEqual(s.snapshot(),saved);assert.match(s.readout(),/projection refused/);assert(s.panel());
 });
 test('939 automatically generated UVs survive real project transport and actual NOM/GLB corner output',async()=>{

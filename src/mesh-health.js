@@ -4,7 +4,7 @@ import {autoCloseSimpleHoles,simpleBoundaryLoops} from './mesh-auto-close-core.j
 import {boundaryDiagnostics} from './mesh-boundary-diagnostics-core.js?v=0.36.18.443';
 import {unifyFaceWinding,flipAllFaces,triangulateMesh} from './mesh-normals-triangulate-core.js?v=0.36.18.443';
 import {inspectImportedUV} from './imported-uv-inspection.js?v=0.36.18.932';
-import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createBoxUV,createCylinderUV,createSphereUV} from './imported-uv-edit.js?v=0.36.18.939';
+import {rotateImportedUV,flipImportedUV,moveImportedUV,scaleImportedUV,rotateImportedUVByAngle,fitImportedUVToTile,packImportedUVIslands,equalizeImportedUVDensity,createPlanarUV,createBoxUV,createCylinderUV,createSphereUV,createTorusUV} from './imported-uv-edit.js?v=0.36.18.940';
 import {createUVWorkspace} from './uv-workspace.js?v=0.36.18.932';
 
 const VERSION='0.36.18.880';
@@ -34,7 +34,7 @@ panel.innerHTML=`
   <details id="meshHealthUVDetails">
     <summary class="boxlab-tool-session-section">UVs</summary>
     <div id="meshHealthUVSummary" class="boxlab-tool-session-subtitle" aria-live="polite"></div>
-    <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button><button id="meshHealthUVBox" type="button">Box UVs</button><button id="meshHealthUVCylinder" type="button">Cylinder UVs (Y)</button><button id="meshHealthUVSphere" type="button" title="Round spheres with Y-axis vertex poles; replaces native UVs">Sphere UVs (Y)</button></div><div class="boxlab-tool-session-subtitle">Planar / Box / Cylinder: upright cylinders, cones, Revolves / round Sphere · Base meshes · replaces native UVs</div>
+    <div class="outliner-actions" style="grid-template-columns:repeat(3,1fr)"><button id="meshHealthUVPlanarXY" type="button">Planar XY</button><button id="meshHealthUVPlanarXZ" type="button">Planar XZ</button><button id="meshHealthUVPlanarYZ" type="button">Planar YZ</button><button id="meshHealthUVBox" type="button">Box UVs</button><button id="meshHealthUVCylinder" type="button">Cylinder UVs (Y)</button><button id="meshHealthUVSphere" type="button" title="Round spheres with Y-axis vertex poles; replaces native UVs">Sphere UVs (Y)</button><button id="meshHealthUVTorus" type="button" title="Round upright Y-axis torus with regular quads; replaces native UVs">Torus UVs (Y)</button></div><div class="boxlab-tool-session-subtitle">Planar / Box / Cylinder: upright cylinders, cones, Revolves / round Sphere / Torus · Base meshes · replaces native UVs</div>
     <button id="meshHealthUVOpen" type="button" disabled>Open UV Editor</button>
     <div id="meshHealthUVStorage" hidden>
     <canvas id="meshHealthUVPreview" width="256" height="200" role="img" aria-label="UV islands in different colours, orange seams, grey square marks UV tile zero to one" style="width:256px;max-width:100%;height:auto;margin:6px 0" hidden></canvas>
@@ -98,12 +98,13 @@ const uvPlanar=['XY','XZ','YZ'].map(axis=>panel.querySelector('#meshHealthUVPlan
 const uvBox=panel.querySelector('#meshHealthUVBox');
 const uvCylinder=panel.querySelector('#meshHealthUVCylinder');
 const uvSphere=panel.querySelector('#meshHealthUVSphere');
+const uvTorus=panel.querySelector('#meshHealthUVTorus');
 let active=false,last=null,lastBoundary=null,objectId=null,uvWorkspace=null,uvMesh=null,uvPayload=null;
 
 function renderUVReport(object,mesh){
  uvMesh=mesh;uvPayload=object?.glbPassthrough;
  const nativeReady=object&&!object.locked&&object.kind!=='reference'&&!object.sourceId&&!object.booleanRecipe&&!object.arrayRecipe&&!object.curveProfile&&!object.materials&&!object.textures&&!object.settings?.subd&&!Object.values(object.settings?.mirror||{}).some(Boolean)&&(!object.glbPassthrough||object.glbPassthrough.source==='boxlab')&&!!globalThis.__boxlabObjectHistory?.capture&&!!globalThis.__boxlabObjectHistory?.checkpointSnapshot;
- for(const button of uvPlanar)button.disabled=!nativeReady;uvBox.disabled=uvCylinder.disabled=uvSphere.disabled=!nativeReady;
+ for(const button of uvPlanar)button.disabled=!nativeReady;uvBox.disabled=uvCylinder.disabled=uvSphere.disabled=!nativeReady;uvTorus.disabled=!nativeReady;
  const report=inspectImportedUV(mesh,object?.glbPassthrough,globalThis.__boxlabExportAs?.topologySignature);
  const messages={absent:'No UV channel on this mesh. Plain Base meshes can create planar UVs.',stale:'Stored UVs no longer match the current topology.',invalid:'Stored UV channel is incomplete or invalid.',unavailable:'UV inspection is not ready. Try Refresh.'};
  uvSummary.textContent=report.state==='ready'?`${report.mappedFaces} / ${report.faces} faces have UVs · ${report.islandCount} island${report.islandCount===1?'':'s'} · ${report.seamEdges} seam edge${report.seamEdges===1?'':'s'}${report.nonManifoldEdges?` · ${report.nonManifoldEdges} ambiguous edge${report.nonManifoldEdges===1?'':'s'}`:''}${report.missingFaces?` · ${report.missingFaces} missing`:''}${report.outsideCorners?` · ${report.outsideCorners} corners outside tile 0–1`:''}`:messages[report.state];
@@ -158,6 +159,14 @@ function sphereUVs(){
  return result.ok;
 }
 uvSphere.addEventListener('click',sphereUVs);
+function torusUVs(){
+ const object=activeObject(),mesh=liveMesh();
+ if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;
+ const result=createTorusUV(object,mesh,globalThis.__boxlabExportAs?.topologySignature,globalThis.__boxlabObjectHistory);
+ renderReport();setStatus(result.ok?result.changed?'Torus UVs created • Undo to restore':'Torus UVs • no change needed':`Torus UVs • ${result.reason}`);
+ return result.ok;
+}
+uvTorus.addEventListener('click',torusUVs);
 function rotateUVs(){
  const object=activeObject(),mesh=liveMesh();
  if(!active||currentMode()!=='object'||!object||object.id!==objectId||!mesh)return false;

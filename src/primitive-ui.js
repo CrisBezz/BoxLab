@@ -1,4 +1,4 @@
-import {createNativeUVCandidate} from './imported-uv-edit.js?v=0.36.18.939';
+import {createNativeUVCandidate} from './imported-uv-edit.js?v=0.36.18.940';
 import './curve-profile-ui.js?v=0.36.18.830';
 import { makePrimitive,primitiveDensity } from './primitive-factory.js?v=0.36.18.771';
 import { makeTextObject } from './text-object-core.js?v=0.36.18.771';
@@ -19,7 +19,7 @@ function showSettings(type){
  const text=type==='text',spec=text?{x:4,y:1,minX:1,minY:1,xLabel:'X · Curve detail',yLabel:'Y · Depth bands'}:primitiveDensity[type],p=panel('Add '+label(type));
  const body=node('div');body.style.display='grid';body.style.gap='8px';p.append(body);const inputs={};
  function field(name,title,kind,value,min,max){const row=node('label'),caption=node('span',title),input=node('input');input.type=kind;input.value=String(value);input.dataset.addSetting=name;input.setAttribute('aria-label',title);if(min!==undefined)input.min=String(min);if(max!==undefined)input.max=String(max);Object.assign(row.style,{display:'grid',gridTemplateColumns:'minmax(90px,1fr) minmax(120px,2fr) auto',gap:'8px',alignItems:'center'});row.append(caption,input);body.append(row);inputs[name]=input;if(kind==='range'){input.step='1';const out=node('output',String(value));row.append(out);input.addEventListener('input',()=>{out.textContent=input.value;update();});}else input.addEventListener('input',update);return input;}
- const uvProjection={cube:'box',plane:'xz',cylinder:'cylinder',cone:'cylinder',sphere:'sphere'}[type];
+ const uvProjection={cube:'box',plane:'xz',cylinder:'cylinder',cone:'cylinder',sphere:'sphere',torus:'torus'}[type];
  let withUV=null;
  if(uvProjection){const row=node('label'),input=node('input');input.type='checkbox';input.checked=true;input.dataset.addSetting='uv';input.setAttribute('aria-label','Generate UVs');row.append(input,node('span','Generate UVs · ready to paint'));body.append(row);withUV=input;input.addEventListener('change',update);}
  else body.append(node('small','Automatic UVs unavailable for this shape; add without UVs.'));

@@ -12884,3 +12884,39 @@ retained main/cage/Multi1.0/primitive factory/paint owners and frozenBeta7 marke
 byte-match tested source. Main/cage/Multi1.0/frozen beta bytes unchanged. No assertion
 relaxed. This proof changes docs only; same runtime bytes. User .938 PASS protected;
 .939 actual iPad startup/reset/Add/UV checkbox/paint/history/SaveOpen gate pending.
+
+## .940 — Torus native UVs / Add choice; .939 user PASS — 22 October 2026
+
+User PASS protects .939 UV-ready startup/reset cube, supported Add with/withoutUV,
+Paint/history/persistence. Audit current4169024b: original native UV projection owner
+exists, Torus projector absent; finish this bounded primitive gap before queued Smudge.
+Add createTorusUV in original imported-uv-edit.js, using original target guards and
+commit/history owner. Position-derived worldY regular torus angular grid3–64 axes;
+round major/minor radii, complete vertex grid and every original quad cell/edge order
+validated. No vertex numbering assumption or geometry rewrite. Two periodic corner
+splits make one rectangular2%-inset island; standard angular mapping has inner/outer
+stretch, no general unwrap/equal-density claim. Tilted/elliptical/deformed/horn/spindle,
+nonquad/missing/duplicate/invalid data refuse before metadata/history publication.
+
+Original Add Torus joins existing checked Generate UVs/private candidate staging,
+plain Base settings/one scene checkpoint; unticked remains plain. Object UV tools
+adds Torus UVs (Y), explicit for older plain tori, with original COW/no-op/UndoRedo.
+Text and procedural launchers unchanged; no automatic remapping existing projects.
+Existing native stale/evaluated/linked restrictions, resolution/budgets/File/native
+limits and protected main/cage/Multi1.0/frozen remain. Three functional owners only;
+Multi-object parent pin940 and shell/recovery complete reviewed changed graph.
+
+Six new checks cover36 segment grids and exact coverage/seams/islands/geometry,
+Y rotation/translation/extreme scale/renumbering, unsupported/invalid/checkpoint
+refusals, real scene COW/history/island edits, actual UV callback/Add checkbox, and
+immediate1024 production painting→Paint UndoRedo→SaveOpen→exact native PNG. Existing
+939 six tests expanded to Torus/NOM/GLB UVs; only superseded Torus-unavailable
+expectation changes, all other semantics retained. Focused12PASS/release5PASS;
+full/publication follows. Device .940 gate pending, .939 PASS protected.
+Read docs/native-torus-uv-940.md. Next feedback then queued Smudge/AO/edge seams.
+
+.940 final local Node24 full regression: **2,709 PASS / 0 FAIL / 0 skipped**.
+New Torus6 and expanded939 creation6 =12 focusedPASS; reviewed release5PASS.
+No original behaviour assertions relaxed; superseded Torus-unavailable checks now
+require mapped/optional plain Torus and exact project/NOM/GLB output. Protected
+main/cage/Multi1.0/frozen retained. Hosted/Pages/live proof follows; device940 pending.

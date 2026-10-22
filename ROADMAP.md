@@ -4773,3 +4773,20 @@ retained main/cage/Multi1.0/primitive factory/paint owners and frozenBeta7 marke
 byte-match tested source. Main/cage/Multi1.0/frozen beta bytes unchanged. No assertion
 relaxed. This proof changes docs only; same runtime bytes. User .938 PASS protected;
 .939 actual iPad startup/reset/Add/UV checkbox/paint/history/SaveOpen gate pending.
+
+## Current direction — .940, 22 October 2026
+
+User .939 PASS protects UV-ready startup/reset, Add checkbox/plain path, paint/history/
+persistence. .940 closes remaining supported primitive Torus gap through original
+native UV owner: regular round worldY angular grid, two seams/one rectangle, Add
+UV checkbox defaultON, explicit Torus UVs (Y) for older plain tori. Text/procedural
+objects and existing projects not auto-unwrapped. No geometry or parallel kernel.
+Device .940 Add/Paint/UV/UndoRedo/SaveOpen next; follow feedback then bounded Smudge/
+AO/edge-seam authoring audits. General/Text unwrap future, alpha929 and reflection
+gates independent. Existing resolution/budgets/native restrictions retained.
+
+.940 final local Node24 full regression: **2,709 PASS / 0 FAIL / 0 skipped**.
+New Torus6 and expanded939 creation6 =12 focusedPASS; reviewed release5PASS.
+No original behaviour assertions relaxed; superseded Torus-unavailable checks now
+require mapped/optional plain Torus and exact project/NOM/GLB output. Protected
+main/cage/Multi1.0/frozen retained. Hosted/Pages/live proof follows; device940 pending.
