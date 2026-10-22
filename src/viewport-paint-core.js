@@ -3,13 +3,13 @@ import * as THREE from 'three';
 import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.936';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';
 import {captureColourResource} from './paint-resource.js?v=898';
-import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer,rasterizeImagePaintLayer,enlargePaintLayerStack} from './paint-layer-stack.js?v=0.36.18.936';
+import {createPaintLayerStack,appendPaintLayer,replacePaintLayer,flattenPaintLayerStack,appendImagePaintLayer,replaceImagePaintLayer,rasterizeImagePaintLayer,enlargePaintLayerStack,mergePaintLayersToBase} from './paint-layer-stack.js?v=0.36.18.938';
 import {projectPaintImage} from './paint-image-project.js?v=0.36.18.936';
 import {surfaceImageFrameFromHit} from './paint-image-surface.js?v=0.36.18.933';
 import {capturePaintImagePlacement,paintImagePlacementFromCamera} from './paint-image-placement.js?v=0.36.18.907';
-import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.936';
-import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.936';
-import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.936';
+import {captureLayeredColourResource,capturePaintResource} from './paint-layer-resource.js?v=0.36.18.938';
+import {createProjectPaintPool} from './project-paint-resources.js?v=0.36.18.938';
+import {paintTargetKey,paintTargetDigest,paintTexture,createPaintSurface} from './paint-target.js?v=0.36.18.938';
 import {captureRoughnessResource,copyRoughnessResource} from './roughness-resource.js?v=0.36.18.921';
 import {createProjectRoughnessPool} from './project-roughness-resources.js?v=0.36.18.921';
 import {captureMetalnessResource,copyMetalnessResource} from './metalness-resource.js?v=0.36.18.921';
@@ -127,6 +127,11 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
    target().colourPaint=resource;s.resource=resource;s.stack=resource.version>=2?resource.layers:null;s.size=1024;s.preview=preview;s.layer.dispose();s.layer=layer;s.filterDomain=null;s.display.replaceChannelTexture(texture);s.dirty=true;return true;
   }catch(error){layer?.dispose();texture?.dispose();throw error;}
  }
+ function mergeLayers(all=false){colourOnly();if(session?.imagePreview)throw Error('Apply or cancel image placement before merging');if(!ready())return false;
+  const s=session;if(!s.stack?.layers.length||!all&&s.selected==='$base')return false;
+  const resource=captureLayeredColourResource(mergePaintLayersToBase(s.stack,all?null:s.selected));
+  if(commit(resource)){session.selected='$base';session.paintTarget='colour';loadLayer();updatePreview();return true;}return false;
+ }
  function imageForEdit(){if(!ready())return null;const image=session.stack?.layers.find(l=>l.id===session.selected)?.image;return image?{source:image.source,placement:{centre:[...image.placement.centre],size:[...image.placement.size],rotation:image.placement.rotation}}:null;}
  function editLayer(patch){colourOnly();if(!ready()||session.selected==='$base')return false;const layer=session.stack.layers.find(l=>l.id===session.selected);if(Object.keys(patch).every(k=>layer[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,patch)));}
  function removeLayer(){colourOnly();if(!ready()||session.selected==='$base')return false;const s=session,layers=s.stack.layers.filter(l=>l.id!==s.selected);if(commit(captureLayeredColourResource({...s.stack,layers}))){session.selected=layers.at(-1)?.id||'$base';loadLayer();return true;}return false;}
@@ -138,7 +143,7 @@ export function createViewportPainter({target,activeId=()=>target()?.id,body,own
  function editMask(patch){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)throw Error('Add a mask to the selected paint layer first');if(!patch||Object.keys(patch).some(k=>!['enabled','inverted'].includes(k)))throw Error('Unsupported mask edit');if(Object.keys(patch).every(k=>layer.mask[k]===patch[k]))return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:{...layer.mask,...patch}})));}
  function removeMask(){colourOnly();if(!ready())return false;const layer=session.stack?.layers.find(l=>l.id===session.selected);if(!layer?.mask)return false;return commit(captureLayeredColourResource(replacePaintLayer(session.stack,session.selected,{mask:null})));}
  function state(){const s=session;return s?{resolution:s.size,selected:s.selected,paintTarget:s.paintTarget,previewMode:s.previewMode,layered:!!s.stack,layers:[{id:'$base',name:'Base colour',visible:true,opacity:1,blendMode:'normal',mask:null},...(s.stack?.layers||[]).map(({id,name,visible,opacity,blendMode,mask,image})=>({id,name,visible,opacity,blendMode,image:!!image,mask:mask?{enabled:mask.enabled,inverted:mask.inverted}:null}))]}:null;}
- return {open,close,cancel,begin,move,finish,hit,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,previewImage,applyImagePreview,clearImagePreview,surfaceFrame,
+ return {open,close,cancel,begin,move,finish,hit,selectPreviewMode,selectLayer,addLayer,editLayer,removeLayer,moveLayer,selectPaintTarget,addMask,editMask,removeMask,projectImage,imageForEdit,rasterizeImage,increaseResolution,mergeToBase:()=>mergeLayers(false),flattenLayers:()=>mergeLayers(true),previewImage,applyImagePreview,clearImagePreview,surfaceFrame,
   tick(){if(session&&!current()){close();return;}if(session?.layer.consumeDirty())updatePreview();if(session?.dirty){updateMaterialPreview();const map=session.display.surface.material.map;if(session.previewMode==='channel'&&map)map.needsUpdate=true;session.dirty=false;}},
   get state(){return state();},get active(){return !!session;},get drawing(){return !!stroke;},get pixels(){return session?.preview;}};
 }

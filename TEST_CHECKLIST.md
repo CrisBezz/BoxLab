@@ -9203,3 +9203,13 @@ visible Increase. Higher-res project Save/Open96MiB (ordinary32MiB), scalar512 a
 source1024/tip256/base+three limits retained. No2K/4K or all-zoom pixel-free claim.
 Next confirmed1024 device feedback; inspect source/UV density if still coarse, then
 stage larger maps/sources/memory work. Merge/Flatten/Smudge/AO/seams remain queued.
+
+## .938 — colour merge regression / .937 protected PASS
+
+- [x] User Perfect PASS .937 protects fresh1024 default/readout and paint/image detail; saved512 optional Increase retained. Independent alpha/reflection gates remain open.
+- [x] Merge selected overlay plus all below through original compositor: exact pixels for all26 blends, masks and wrapped images; upper sources/order/settings survive.
+- [x] Flatten preserves visible pixels, removes all overlays including hidden ones, and frees slots. Input/peer/scalar resources remain unchanged.
+- [x] Original Paint Undo/Redo, Save/Open and actual native PNG preserve results; history restores original layers. Staged placement, stale sessions, checkpoint and quota refusal remain atomic.
+- [x] Local full2697PASS/0FAIL/0skip; focused merge6PASS, reviewed release5PASS.
+- [ ] Device .938: Layer settings Merge to Base preserves appearance and frees expected slots; Undo/Redo restores layers.
+- [ ] Device .938: Flatten leaves Base only, + Layer works, Save/Open retains appearance.

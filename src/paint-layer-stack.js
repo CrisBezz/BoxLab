@@ -98,3 +98,13 @@ export function enlargePaintLayerStack(stack){
  const enlarge=(pixels,channels)=>{const out=new Uint8Array(1024*1024*channels);for(let y=0;y<1024;y++)for(let x=0;x<1024;x++){const at=(y*1024+x)*channels,old=((y>>1)*512+(x>>1))*channels;for(let k=0;k<channels;k++)out[at+k]=pixels[old+k];}return out;};
  return capturePaintLayerStack({...s,base:{...s.base,width:1024,height:1024,pixels:enlarge(s.base.pixels,4)},layers:s.layers.map(l=>({...l,pixels:enlarge(l.pixels,4),...(l.mask?{mask:{...l.mask,pixels:enlarge(l.mask.pixels,1)}}:{})}))});
 }
+
+// Bake the selected prefix into opaque Base using the ORIGINAL compositor. Blend
+// modes depend on their backdrop; baking the prefix preserves exact rounded bytes.
+// null selects all overlays. Hidden prefix layers are discarded; upper layers survive.
+export function mergePaintLayersToBase(stack,id=null){
+ const snapshot=capturePaintLayerStack(stack),index=id===null?snapshot.layers.length-1:snapshot.layers.findIndex(l=>l.id===id);
+ if(index<0)throw Error('Select a colour layer above Base to merge');
+ const base=flattenPaintLayerStack({...snapshot,layers:snapshot.layers.slice(0,index+1)});
+ return capturePaintLayerStack({...snapshot,base,layers:snapshot.layers.slice(index+1)});
+}

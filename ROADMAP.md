@@ -4720,3 +4720,13 @@ visible Increase. Higher-res project Save/Open96MiB (ordinary32MiB), scalar512 a
 source1024/tip256/base+three limits retained. No2K/4K or all-zoom pixel-free claim.
 Next confirmed1024 device feedback; inspect source/UV density if still coarse, then
 stage larger maps/sources/memory work. Merge/Flatten/Smudge/AO/seams remain queued.
+
+## Current direction — .938, 22 October 2026
+
+.937 accepted Perfect PASS: protect fresh1024/default/readout/detail and saved512
+optional Increase. .938 implements queued Merge to Base/Flatten colour through
+original compositor/history owners, retaining resolution/budgets/three overlays.
+Merge includes selected and all below; hidden merged layers removed; Undo restores.
+Local2697PASS; device .938 merge/flatten/history/SaveOpen gate pending. Follow that
+feedback before next narrow audited Smudge/AO/seam authoring step. Alpha929 and
+reflection preview gates remain independent; no 2K/4K or larger source promise.

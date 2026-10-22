@@ -12809,3 +12809,19 @@ visible Increase. Higher-res project Save/Open96MiB (ordinary32MiB), scalar512 a
 source1024/tip256/base+three limits retained. No2K/4K or all-zoom pixel-free claim.
 Next confirmed1024 device feedback; inspect source/UV density if still coarse, then
 stage larger maps/sources/memory work. Merge/Flatten/Smudge/AO/seams remain queued.
+
+## .938 — merge colour layers to Base; .937 user PASS — 22 October 2026
+
+User “Perfect PASS” protects .937 fresh1024/readout/detail, existing512 optional
+Increase and accepted paint workflow. .936 pixelation gate closed through .937;
+alpha929/reflection remain independent. Audit found authoritative flatten compositor
+and original commit/history owners, but no existing merge action. Add Merge to Base
+(selected overlay plus all below) and Flatten colour (all overlays), within existing
+Layer settings. Original compositor preserves exact blend/mask/wrapped image pixels;
+hidden merged layers discarded with visible warning. Upper images stay editable;
+merged image sources recover through Undo. Existing preflight/checkpoint/COW/history,
+scalar isolation, staged-placement and stale/quota guards retained. Slots freed with
+no resolution/schema/layer budget expansion. Three functional paint owners only;
+reviewed complete reverse cache graph938, protected main/cage/Multi/frozen untouched.
+Local full2697PASS/0FAIL/0skip; focused6PASS, final release5PASS. Device gate pending.
+See docs/paint-layer-merge-938.md. Publish/source/live proof follows.

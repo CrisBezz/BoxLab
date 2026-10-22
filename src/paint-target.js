@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import {paintMaterialEnvironments} from './paint-material-environment.js?v=0.36.18.925';
-import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.936';
+import {encodeBoxlabScene} from './boxlab-project-codec.js?v=0.36.18.938';
 import {copyMetalnessResource} from './metalness-resource.js?v=0.36.18.921';
 import {copyRoughnessResource} from './roughness-resource.js?v=0.36.18.921';
 import {paintDigest} from './paint-resource.js?v=898';

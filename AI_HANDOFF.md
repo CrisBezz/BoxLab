@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .937 / Fresh Paint actually starts at 1024
+# BoxLab AI Handoff — .938 / Merge colour layers to Base
 
 ## Permanent rule — every build completion
 
@@ -12,34 +12,34 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 ## Current state — 22 October 2026 (Brisbane)
 
-Build0.36.18.937 published at1bbb4d6d from mainf1f13afc (.936). Hosted2,691PASS/0FAIL/0skip; Pages and live19 verified below.
-User .935 PASS remains protected. User reports image AND fresh cube paint still
-pixelated following refresh; .936 visual sharpness is NOT accepted. Audit proves
-.936 kept fresh production maps at512, with optional enlargement hidden in a details
-section. Refresh alone never enabled1024. This is a confirmed default/access issue;
-we have not reproduced the actual iPad screenshot or proved it explains all pixelation.
+User “Perfect PASS” accepts .937: fresh production Paint starts at1024, visible
+resolution readout and improved paint/image detail are protected. Existing saved512
+stays512 with optional Increase; .936 pixelation gate is closed by accepted .937.
+Alpha .929 gate and reflection preview remain independent; no acceptance inferred.
 
-Production Paint now supplies newColourSize1024 to the SAME painter owner. A new
-object with no colour resource gets a transient1024 base/stack, no metadata/history
-on open/close, first real colour/image edit commits existing layeredv2/v3 through
-original checkpoint/preflight. Existing saved512/1024 map size wins over the default;
-no migration/resampling on Open. Colour texture readout is visible near Channel/Tool,
-with existing Increase control exposed for512 and hidden for1024. History reopening
-keeps actual saved size; undoing first paint reopens an uncommitted1024 session.
-Core reusable API retains its existing512 default unless caller explicitly chooses
-newColourSize1024. Production UI always chooses1024; Lab remains512.
+Build0.36.18.938 adds Merge to Base and Flatten colour in existing Layer settings.
+Merge bakes selected overlay AND every layer below into Base; upper layers retain
+source editing/settings/order. Flatten bakes the entire visible stack and removes
+all overlays. Hidden merged layers are discarded, stated in panel/help text. Both
+use ORIGINAL flattenPaintLayerStack compositor, preserving exact rounded pixels
+across blend modes/masks/wrapped images. No second blending or modelling kernel.
+Merged images lose source editing in the new resource; Undo restores original layers.
+Undo history may retain old source bytes; current resource frees layer slots/bytes.
 
-Paint runtime changes are confined to viewport-paint.js and viewport-paint-core.js;
-object-management.js also adjusts existing File Save/Open limits for high-res scenes. No brush,
-projector, UV, sampling, compositor, resource budget/schema, native/GLB rendering or modelling
-change. Complete changed loader graph937; protected main/cage/Multi/frozen retained.
-Original .9361024 limits/memory budgets/scene-resource and native guards remain. Scalar512 and
-source1024/tip256/base+three limits retained. Actual iPad sharpness and latency are
-pending; a1024 atlas still shares texels between cube faces and can pixelate zoomed.
-Read docs/paint-default-resolution-937.md. Next device default/readout/detail feedback;
-if confirmed1024 is still inadequate, inspect actual source/UV texel density and stage
-higher-resolution work rather than infer a cache failure. Merge/Flatten remains queued.
-Smudge/AO/seam authoring queued; reflection preview unresolved, alpha929 gate independent.
+Original core commit/preflight/checkpoint/COW/history owns publication. Actions
+select Base/Colour, staged placement must Apply/Cancel first, scalar channel is
+disabled, Base merge/empty flatten no-op. Stale/checkpoint/quota refusals preserve
+scene/history; untouched peers and scalar maps retained. Same512/1024 dimensions,
+three overlays, resource versions/budgets, source1024/tip256, File96MiB high-res/
+32MiB ordinary and native24MiB guard unchanged. No higher resolution expansion.
+
+Three functional owners: paint-layer-stack.js, viewport-paint-core.js and
+viewport-paint.js. Other runtime changes are reviewed reverse loader pins938;
+main/cage/Multi1.0/frozen betas unchanged. Local full suite2697PASS/0FAIL/0skip;
+focused merge6PASS and release5PASS. Publication proof follows below.
+Read docs/paint-layer-merge-938.md. Device .938 gate is pending: Merge/Flatten
+appearance, free slots, UndoRedo and SaveOpen. Next follow device feedback, then
+queued bounded Smudge/AO/seam authoring work after auditing existing owners.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
