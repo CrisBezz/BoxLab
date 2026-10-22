@@ -43,7 +43,7 @@ Multiply layer, with cancellation/stale/pool/checkpoint guards and visible contr
 then iPad appearance/latency testing. Do not imply AO UI acceptance from pure tests.
 Alpha929/reflection-preview gates remain independently unresolved. No new AO hands-on
 test exists in943; existing Smudge/Paint UndoRedo/SaveOpen remains the nearby baseline.
-Validation/publication evidence follows; do not infer completion before verification.
+Published runtime3feb3609; local+hosted2725PASS/0FAIL/0skip, Pages and20 live-file matches verified. See publication proof below.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -2307,3 +2307,27 @@ validated bake pixels/work guards. No AO UI or rendered AO acceptance is inferre
 Five new AO/ownership checks, original Smudge941/942 eleven and release/cache five
 pass on final runtime. No original assertions relaxed; main/cage/Multi1.0/frozen
 unchanged. Hosted regression/Pages/live proof follows. No new AO device controls.
+
+## .943 publication verified — 22 October 2026 (Brisbane)
+
+Runtime `3feb36097fb677165b3162ac852c58c1e452f735`, tested tree
+`223e2d8e82855137f804faf9e95134614fcee51e`, is published on main. Connected Git
+Data uploaded13 exact local blobs and created the identical locally tested tree;
+fetched main matched, local branch aligned with no file changes. Local Node24 and
+hosted Node22 regression39765950426/job119781312111 both pass **2725 tests / 0
+failures / 0 skipped**; complete hosted log totals verified (hosted219.8s).
+Pages39765949659 build119781316369/deploy119781518834 succeeded. All20 checked
+postdeployment shell/version, every changed runtime owner, new AO module, recovery,
+retained main/cage/Multi1.0/triangle graph/UV/paint/project/export and frozenBeta7 marker
+files byte-match tested source. Reviewed pins943; protected/frozen bytes unchanged.
+No original assertion relaxed. This publication proof changes four continuity files
+only, with identical tested runtime bytes.
+
+Build943 complete: no new hands-on AO test needed because no AO controls are exposed.
+Pure bake/ownership/work/refusal coverage is automated. User942PASS remains protected;
+next narrow build integrates explicit AO Multiply-layer creation through original Paint
+history/pool/compositor with staged/cancel/stale/refusal guards and then visible controls.
+AO foundation is local-object16–128 samples only, not rendered SSAO, neighbour-object
+shadows, persistent AO resources or high-resolution albedo baking. Alpha929 and
+reflection-preview gates remain independent. Existing Smudge/Paint history/SaveOpen
+is optional nearby device sanity, not an invented AO acceptance gate.
