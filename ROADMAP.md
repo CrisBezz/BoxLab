@@ -4759,3 +4759,17 @@ New creation6PASS, original nearby Add/Box/Sphere19PASS, reviewed release5PASS.
 No assertions removed or relaxed. Complete reviewed main/Lab reverse loader graph939;
 protected main930/cage/Multi1.0/frozen untouched. Hosted/Pages/live proof follows;
 actual iPad UV-ready creation/paint/persistence acceptance remains pending.
+
+## .939 publication verified — 22 October 2026 (Brisbane)
+
+Runtime e076ba40c61f1c5ad202112b60e67fd75a6a7ccd, tree
+52aaf4c3504f6c6e8ba2c44d98fdd8f6bf497bdc, is published on main.
+Connected Git Data uploaded20 exact blobs and matched tested tree; fetched main
+matched local source. Local Node24 and hosted Node22 regression39722181487/
+job119637927281 both pass **2703 tests / 0 failures / 0 skipped**; complete job
+logs verify totals. Pages39722181024 build119637930190/deploy119638067800 succeeded.
+All20 postdeployment checked shell/version, every changed runtime/Lab owner, recovery,
+retained main/cage/Multi1.0/primitive factory/paint owners and frozenBeta7 marker
+byte-match tested source. Main/cage/Multi1.0/frozen beta bytes unchanged. No assertion
+relaxed. This proof changes docs only; same runtime bytes. User .938 PASS protected;
+.939 actual iPad startup/reset/Add/UV checkbox/paint/history/SaveOpen gate pending.
