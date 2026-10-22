@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .942 / connected-face Smudge colour carry
+# BoxLab AI Handoff — .943 / read-only object AO foundation
 
 ## Permanent rule — every build completion
 
@@ -10,36 +10,40 @@ the build number and readiness status. Never finish with only a progress update 
 leave the user to infer completion. This applies to EVERY build without a reminder.
 User reaffirmed this permanent instruction on 21 October 2026.
 
-## Current state — .942, 22 October 2026 (Brisbane)
+## .943 — read-only object AO bake foundation — 22 October 2026 (Brisbane)
 
-User PASS .941 protects same-face Smudge, Size/Opacity/tap/painted overlay,
-Paint UndoRedo/tool retention and SaveOpen. Earlier940 Torus/939 UV-ready startup/
-Add/plain choice/938 MergeFlatten/9371024 default and native export remain protected.
-Alpha929 and reflection-preview gates remain independent, not inferred accepted.
+User .942 PASS remains protected. Audit found no existing AO baker. New
+`src/paint-ao-bake.js` uses original preview triangle ownership/triangle graph,
+original paint-filter-domain texel raster and Three Ray.intersectTriangle. The
+filter domain optionally returns its existing transient triangle map; ordinary
+brush callers retain exact return shape and allocations. No second triangulator,
+UV rasterizer, adjacency, brush, history, scene resource or export owner.
 
-Build0.36.18.942 extends original Smudge to connected-face COLOUR carry. Original
-seam plan derives frozen direct face pairs from SAME authoritative manifold triangle
-edges. No atlas/vertex-only/nonmanifold connections. Original Blur samples unchanged.
-On a proven consecutive face transition, premultiplied mean from the prior round/
-alpha pressure-sized pickup seeds the new face (75% carried/25% local stroke-start).
-Subsequent same-face spatial pickup stays941. Original Opacity/pressure/hardness/alpha
-and per-contact cap write ONLY picked face. Mean carry is independent of UV rotation/
-mirror/placement: not detailed patch orientation transport or world-radius/seamless
-footprint wrapping. Misses/unproven edges still restart. Swatch ignored; masks/scalars
-retain raw values. Image colour still requires Convert to paint.
+Pure synchronous object-local bake returns owned linear R8 visibility and separate
+coverage, UV-v0-first. White=unoccluded; uncovered texels white/coverage0. Deterministic
+cosine-weighted hemisphere samples, double-sided same-object blockers, source winding
+normal, normalized object-diagonal radius/bias. Size16–128/default64, samples4–64/
+default16, radius .001–2/default.25 of diagonal. Conservative8M ray/triangle-test
+preflight plus original2M UV scan cap; excess complexity refuses with no scene writes.
+Normalized private graph points only; source mesh/UV/geometry remain unchanged.
+No scene-neighbour, ground-plane, world-transform, rendered SSAO or albedo bake yet.
+No main-app AO import/button/resource/persistence/export change or device-performance
+claim. This intentionally low-resolution foundation is NOT a new paint resolution.
 
-Same original scene checkpoint/COW/pools/history/SaveOpen/native writers. Optional
-transient pairs captured privately with strict/sparse/size guards; no schema or stored
-seam metadata.8M work guard counts cross-face means and pickup updates; ~321KiB max
-reservoir reused, plus bounded adjacency lookup. No iPad performance claim. Four
-functional owners: seam plan/raster/viewport core/UI; reviewed filter-domain/main/Lab
-reverse pins942. Main/cage/Multi1.0/frozen/triangle graph/UV/resource/project/export/
-lighting/resolution/budgets unchanged. Read docs/paint-smudge-seams-942.md.
+Five new regression tests cover opt-in exact ownership, white open plane/coverage/
+determinism/copy isolation, facing blockers/radius/double-sided rays, supported scale/
+translation/rotated UVs, stale/invalid/overlap/work refusals and source preservation.
+Tiny1e-8 source fixture was rejected by the ORIGINAL preview builder before baking;
+scale tests use accepted .01–1e8 geometry instead, no builder tolerance change.
+Read `docs/paint-ao-foundation-943.md`. Main painter reverse loader chain + shell/
+recovery pins943 reviewed; Lab/main/cage/Multi1.0/frozen algorithms unchanged.
 
-Published b49bb81d; local+hosted2720PASS/0FAIL/0skip, Pages and20 live files verified. Focused new5/nearby11/release5PASS.
-User PASS942 accepts connected-face Smudge/Opacity/overlay/history/persistence. DEVICE baseline: cube two faces visible→patch to edge→Smudge
-across edge; compare Opacity, overlay/UndoRedo, SaveOpen. Fine detail averages at seam.
-Next authorized943 build: bounded object-only AO bake foundation through original UV/geometry owners; visible controls follow validated pixels/work guards.
+Next: original Paint layer/history transaction for an explicit non-destructive AO
+Multiply layer, with cancellation/stale/pool/checkpoint guards and visible controls,
+then iPad appearance/latency testing. Do not imply AO UI acceptance from pure tests.
+Alpha929/reflection-preview gates remain independently unresolved. No new AO hands-on
+test exists in943; existing Smudge/Paint UndoRedo/SaveOpen remains the nearby baseline.
+Validation/publication evidence follows; do not infer completion before verification.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -528,11 +532,12 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-User942PASS protects connected-face Smudge/Opacity/overlay/Paint history/SaveOpen.
-Next authorized943 builds bounded object-only AO bake foundation through original
-UV raster ownership and triangle geometry. No second triangulation/raster/history
-owner. Visible bake controls follow validated pure output/work/refusal checks.
-Alpha929/reflection-preview gates remain independent; Edge seam authoring queued.
+Integrate the943 pure AO foundation through original Paint layer/compositor/history
+owners as an explicit AO Multiply layer. Add bounded cancellation/stale/quota guards
+and visible controls only with actual transaction regression coverage. Original paint
+resolution remains1024 colour/512 scalars. AO foundation16–128 is isolated, not a
+production-quality high-res bake claim. User942PASS protects connected-face Smudge.
+Alpha929/reflection-preview gates remain independent; Edge-seam authoring queued.
 
 ## Protected interaction and modelling baseline
 
@@ -2297,3 +2302,8 @@ Opacity/overlay/Paint UndoRedo/SaveOpen; earlier prepublication repetitions rema
 Protect942 alongside941. Next authorized943 narrow build begins bounded object-only
 AO bake foundation via original UV ownership/triangle geometry; visible controls follow
 validated bake pixels/work guards. No AO UI or rendered AO acceptance is inferred.
+
+.943 final local Node24.19.0 complete regression: **2,725 PASS / 0 FAIL / 0 skipped**.
+Five new AO/ownership checks, original Smudge941/942 eleven and release/cache five
+pass on final runtime. No original assertions relaxed; main/cage/Multi1.0/frozen
+unchanged. Hosted regression/Pages/live proof follows. No new AO device controls.

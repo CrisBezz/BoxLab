@@ -1,4 +1,4 @@
-import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.942';
+import {createPaintFilterDomain} from './paint-filter-domain.js?v=0.36.18.943';
 import * as THREE from 'three';
 import {createPaintLayer} from '../evaluations/uv-paint/paint-core.js?v=0.36.18.942';
 import {createStroke} from '../evaluations/uv-paint/stroke.js?v=896';

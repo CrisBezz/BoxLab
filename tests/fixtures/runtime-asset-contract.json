@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.942",
+      "url": "./src/release-bootstrap.js?v=0.36.18.943",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.942",
+      "url": "./src/release-version.js?v=0.36.18.943",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2481,14 +2481,14 @@
     {
       "owner": "index.html",
       "target": "src/viewport-paint.js",
-      "url": "./src/viewport-paint.js?v=0.36.18.942",
-      "sha256": "d2544b7d8cd6aa29aa9f50205c6e04c806e12af66f73090d69f60d6b50037226"
+      "url": "./src/viewport-paint.js?v=0.36.18.943",
+      "sha256": "6c8174bbd6d7e877c42327d442eff44376f7a28542f5dd631948c492b18f72c7"
     },
     {
       "owner": "src/viewport-paint.js",
       "target": "src/viewport-paint-core.js",
-      "url": "./viewport-paint-core.js?v=0.36.18.942",
-      "sha256": "a797bd36ea0d9e05bd8f301eba91779e10f98f8b15fe8cc683eb7000aed0146a"
+      "url": "./viewport-paint-core.js?v=0.36.18.943",
+      "sha256": "14e1a64ad076cb4e7d63d142da03bb3efba43c4c8940fc2c0252697558decde9"
     },
     {
       "owner": "src/viewport-paint.js",
@@ -2997,8 +2997,8 @@
     {
       "owner": "src/viewport-paint-core.js",
       "target": "src/paint-filter-domain.js",
-      "url": "./paint-filter-domain.js?v=0.36.18.942",
-      "sha256": "501b77169e30c48e940a07d9a01fb3ec74f7261835aceb8f477ef49f2d820110"
+      "url": "./paint-filter-domain.js?v=0.36.18.943",
+      "sha256": "3df3be52f4a4cc0495a13c0d94d5302007855b80b7b6d4ff232dfdc5ecdec32e"
     },
     {
       "owner": "src/paint-filter-domain.js",
@@ -3065,6 +3065,18 @@
       "target": "src/mesh-topology-signature.js",
       "url": "./mesh-topology-signature.js?v=0.36.18.939",
       "sha256": "eb5661253bc7c4874251267e81af20c544ae188dda69c402948858ab6c9e23c2"
+    },
+    {
+      "owner": "src/paint-ao-bake.js",
+      "url": "./paint-filter-domain.js?v=0.36.18.943",
+      "target": "src/paint-filter-domain.js",
+      "sha256": "3df3be52f4a4cc0495a13c0d94d5302007855b80b7b6d4ff232dfdc5ecdec32e"
+    },
+    {
+      "owner": "src/paint-ao-bake.js",
+      "url": "./paint-triangle-graph.js?v=0.36.18.933",
+      "target": "src/paint-triangle-graph.js",
+      "sha256": "6ecf46c0aff26f26240199cc580407160983fa252197b69c068aca6b93bb8860"
     }
   ]
 }

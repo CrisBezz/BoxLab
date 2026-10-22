@@ -1,10 +1,10 @@
 import {createPaintSeamNeighbours} from './paint-seam-neighbours.js?v=0.36.18.942';
 // Conservative texel ownership for read-neighbour brushes. Uses ONLY the original
 // preview triangulation and its opt-in source-face map; never authors UVs/topology.
-export function createPaintFilterDomain(geometry,size=512,source=null){
+export function createPaintFilterDomain(geometry,size=512,source=null,{captureTriangles=false}={}){
  const uv=geometry?.attributes?.uv,pos=geometry?.attributes?.position,index=geometry?.index,faces=geometry?.userData?.boxlabTriangleFaces,count=index?.count??pos?.count;
  if(!Number.isInteger(size)||size<16||size>1024||!uv||!pos||!Number.isInteger(count)||count%3||count>60000||!Array.isArray(faces)||faces.length!==count/3||faces.some(n=>!Number.isInteger(n)||n<0||n>=20000))throw Error('Blur needs original UV face ownership');
- const labels=new Int32Array(size*size).fill(-1),interior=new Uint8Array(size*size),triangleAt=source?new Int32Array(size*size).fill(-1):null;let work=0;
+ const labels=new Int32Array(size*size).fill(-1),interior=new Uint8Array(size*size),triangleAt=source||captureTriangles?new Int32Array(size*size).fill(-1):null;let work=0;
  for(let i=0;i<count;i+=3){
   const ids=[0,1,2].map(k=>index?index.getX(i+k):i+k);
   if(ids.some(n=>!Number.isInteger(n)||n<0||n>=uv.count))throw Error('Invalid Blur UV geometry');
@@ -23,5 +23,7 @@ export function createPaintFilterDomain(geometry,size=512,source=null){
   }
  }
  const linked=source?createPaintSeamNeighbours({geometry,size,labels,triangleAt,...source}):{};
- return Object.freeze({labels,...linked,faceAt:triangle=>Number.isInteger(triangle)&&triangle>=0&&triangle<faces.length?faces[triangle]:null});
+ // Opt-in transient ownership for read-only baking; ordinary brushes retain their
+ // exact return shape and allocations. Ambiguous borders never identify a triangle.
+ return Object.freeze({labels,...linked,...(captureTriangles?{triangleAt}:{}),faceAt:triangle=>Number.isInteger(triangle)&&triangle>=0&&triangle<faces.length?faces[triangle]:null});
 }
