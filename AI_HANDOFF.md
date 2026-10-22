@@ -35,8 +35,8 @@ three overlays, resource versions/budgets, source1024/tip256, File96MiB high-res
 
 Three functional owners: paint-layer-stack.js, viewport-paint-core.js and
 viewport-paint.js. Other runtime changes are reviewed reverse loader pins938;
-main/cage/Multi1.0/frozen betas unchanged. Local full suite2697PASS/0FAIL/0skip;
-focused merge6PASS and release5PASS. Publication proof follows below.
+main/cage/Multi1.0/frozen betas unchanged. Local and hosted full suite2697PASS/0FAIL/0skip;
+focused merge6PASS and release5PASS. Published f441e92b; Pages/live25 verified below.
 Read docs/paint-layer-merge-938.md. Device .938 gate is pending: Merge/Flatten
 appearance, free slots, UndoRedo and SaveOpen. Next follow device feedback, then
 queued bounded Smudge/AO/seam authoring work after auditing existing owners.
@@ -529,8 +529,8 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 ## Next narrow step
 
 Protect user928PASS: Paint history stays open with controls/continued strokes.
-Protect930/931/933/934/935PASS;936 sharpness report remains open. Test937 new cube visible1024 default, first paint/image, UndoRedo and saved512 opt-in.
-Next confirmed1024 device sharpness feedback before larger maps/sources; Merge/Flatten queued. Smudge and929 alpha gate remain pending.
+Protect930/931/933/934/935/937PASS; .937 closes prior pixelation gate. Fresh1024/readout/detail and saved512 opt-in remain protected.
+Device .938 Merge/Flatten appearance, free slots, UndoRedo and SaveOpen are next. Smudge/AO/seams and929 alpha gate remain pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
@@ -2178,3 +2178,14 @@ visible Increase. Higher-res project Save/Open96MiB (ordinary32MiB), scalar512 a
 source1024/tip256/base+three limits retained. No2K/4K or all-zoom pixel-free claim.
 Next confirmed1024 device feedback; inspect source/UV density if still coarse, then
 stage larger maps/sources/memory work. Merge/Flatten/Smudge/AO/seams remain queued.
+
+## .938 publication verified — 22 October 2026
+
+Runtime f441e92b0950f0e7b2ab1b46a8b67d9940a12396, tree
+239a55d76de49ddf840fa19abcdbfbb351b262d8, matches tested local tree.
+Hosted regression39699769504/job119565892975 succeeded; full job logs confirm
+2697PASS/0FAIL/0skip, matching complete local run. Pages39699769015 build119565895457/
+deploy119566078569 succeeded. All25 checked live shell/version, changed runtime/Lab,
+recovery and retained core/main/Multi files byte-match tested source. Reviewed pins938;
+protected main/cage/Multi/frozen unchanged. This proof updates documentation only.
+User .937 PASS protected; .938 device merge/flatten/UndoRedo/SaveOpen gate pending.

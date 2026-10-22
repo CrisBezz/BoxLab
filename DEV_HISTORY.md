@@ -12825,3 +12825,14 @@ no resolution/schema/layer budget expansion. Three functional paint owners only;
 reviewed complete reverse cache graph938, protected main/cage/Multi/frozen untouched.
 Local full2697PASS/0FAIL/0skip; focused6PASS, final release5PASS. Device gate pending.
 See docs/paint-layer-merge-938.md. Publish/source/live proof follows.
+
+## .938 publication verified — 22 October 2026
+
+Runtime f441e92b0950f0e7b2ab1b46a8b67d9940a12396, tree
+239a55d76de49ddf840fa19abcdbfbb351b262d8, matches tested local tree.
+Hosted regression39699769504/job119565892975 succeeded; full job logs confirm
+2697PASS/0FAIL/0skip, matching complete local run. Pages39699769015 build119565895457/
+deploy119566078569 succeeded. All25 checked live shell/version, changed runtime/Lab,
+recovery and retained core/main/Multi files byte-match tested source. Reviewed pins938;
+protected main/cage/Multi/frozen unchanged. This proof updates documentation only.
+User .937 PASS protected; .938 device merge/flatten/UndoRedo/SaveOpen gate pending.
