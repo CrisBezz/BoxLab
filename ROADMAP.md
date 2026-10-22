@@ -5016,3 +5016,29 @@ Six new AO integration checks + existing2725 pass on final source; original near
 943/938/942 sixteen and reviewed release five also pass. No existing assertions
 relaxed. Complete AO-helper/painter/shell reverse pins944 reviewed; main/cage/Multi1.0/
 frozen unchanged. Hosted/Pages/live publication proof follows; device944 pending.
+
+## .944 publication verified — 22 October 2026 (Brisbane)
+
+Runtime `e43997b122f7e29cb8dff29db8c6752deccc2d86`, tested tree
+`2331a0d86cd9e87771cf21f4ca9de67f581cfa04`, is published on main. Connected Git
+Data uploaded12 exact blobs and created identical tested tree; fetched main matched,
+local branch aligned cleanly. Local Node24 and hosted Node22 regression39772067820/
+job119801794196 both pass **2731 tests / 0 failures / 0 skipped**; complete hosted
+log totals verified (230.0s). Pages39772066609 build119801796950/deploy119801996752
+succeeded. All20 postdeployment checked shell/version, changed painter UI/core/new
+AO transfer helper, retained943 bake/domain, recovery/main/cage/Multi1.0/triangle
+geometry/UV/paint/project/export and frozenBeta7 marker byte-match tested source.
+Original assertions retained; protected/frozen algorithms unchanged. This proof
+updates four continuity files only; tested/published runtime bytes unchanged.
+
+Build944 is complete and ready for hands-on testing: simple recessed native UV mesh
+→ Paint → Ambient occlusion → Bake AO preview; orbit, Cancel retains prior paint.
+Bake→Apply creates selected editable AO Multiply layer; Layer opacity/visibility,
+Paint UndoRedo, SaveOpen and native shaded export sanity. Redo follows original
+selection rules and can keep Base selected; choose AO layer if needed. Convex cube
+may show little/no shadow; same-object/local64²/16-ray bake, not screen-space or
+neighbour-object AO. Work/refusal limits remain; small UV meshes first. Device944
+appearance/latency/persistence acceptance remains pending, not inferred from Node.
+User942 connected Smudge PASS protected; alpha929/reflection-preview independent.
+Next narrow runtime work follows actual944 device feedback rather than automatic
+AO quality/lighting changes. No new AO device PASS inferred from /nextbuild.
