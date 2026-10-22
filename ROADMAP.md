@@ -4864,3 +4864,32 @@ No original assertions relaxed. Reviewed changed main/Lab reverse graph942; prot
 main/cage/Multi1.0/triangle graph/frozen unchanged. Hosted/Pages/live proof follows.
 User repeated PASS /nextbuild while942 was still local/in regression:941 acceptance
 remains protected; no942 device PASS inferred before publication/manual test list.
+
+## .942 publication verified — 22 October 2026 (Brisbane)
+
+Runtime b49bb81d67836a1c2cc569d9755cdd54abb7b5f9, tested tree
+5fbb934dae7594d22bc4a64438b0d5bc003097fd, is published on main. Connected Git
+Data uploaded17 exact blobs; created tree and fetched main match locally tested tree.
+Local Node24 and hosted Node22 regression39762188060/job119768813511 both pass
+**2720 tests / 0 failures / 0 skipped**; complete hosted log totals verified.
+Pages39762187055 build119768816536/deploy119769033835 succeeded. All20 checked
+postdeployment shell/version, changed main/Lab/filter/seam runtime graph, recovery,
+retained main/Multi1.0/triangle graph/UV/project/export/primitive and frozenBeta7
+marker files byte-match tested source. Original assertions retained; protected/frozen
+bytes unchanged. This publication proof changes four continuity files only.
+
+Build942 complete and ready: cube two faces visible, paint patch up to shared edge,
+Smudge across it, compare Opacity and painted overlay, UndoRedo retains Paint, SaveOpen
+retains result. Seam transition carries averaged colour, not detailed patch orientation.
+User941PASS protected. Repeated PASS/nextbuild arrived before942 publication: it is
+not942 device acceptance. Actual942 iPad seam feel gate remains next. Then refine from
+feedback before AO/Edge seam authoring; alpha929/reflection gates stay independent.
+
+## .942 user PASS — 22 October 2026 (Brisbane)
+
+A further PASS/nextbuild arrived AFTER942 deployment,20 live-file matches and hosted
+2720PASS verification. Accept this latest PASS for LIVE942 connected-face mean carry,
+Opacity/overlay/Paint UndoRedo/SaveOpen; earlier prepublication repetitions remain941.
+Protect942 alongside941. Next authorized943 narrow build begins bounded object-only
+AO bake foundation via original UV ownership/triangle geometry; visible controls follow
+validated bake pixels/work guards. No AO UI or rendered AO acceptance is inferred.
