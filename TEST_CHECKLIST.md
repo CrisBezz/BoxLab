@@ -9455,3 +9455,23 @@ AO foundation is local-object16–128 samples only, not rendered SSAO, neighbour
 shadows, persistent AO resources or high-resolution albedo baking. Alpha929 and
 reflection-preview gates remain independent. Existing Smudge/Paint history/SaveOpen
 is optional nearby device sanity, not an invented AO acceptance gate.
+
+## .944 AO layer integration
+
+- [x] Same-face coverage transfer512/1024 excludes atlas neighbours; unoccluded surfaces white, gaps transparent, original sources unchanged.
+- [x] Actual preview/Cancel no resource/history; Apply one original checkpoint, selected editable Multiply layer, independent peer/base/scalars.
+- [x] Actual1024 UI Cancel/Apply; original Paint history, SaveOpen and exact native/GLB PNG retain appearance/layer data.
+- [x] Full slots/scalars/masks/complexity/stale source/checkpoint/pool refusal keeps committed paint/history; failed Apply candidate can cancel safely.
+- [x] Retained images remain source-editable; image/AO previews mutually exclusive; Done drops unapplied AO.
+- [ ] DEVICE944 recessed UV mesh preview/Reach/Strength, Cancel/Apply and layer opacity/visibility appearance/latency.
+- [ ] DEVICE944 Paint UndoRedo (select AO if Redo keeps Base), SaveOpen/native shaded export sanity.
+
+User942PASS remains protected; no new AO iPad/Pencil/latency acceptance inferred from
+Node geometry/material/DOM adapters. Original local-object64/16 bake/work limits;
+plain convex cubes can be unshaded. Alpha929/reflection-preview gates independent.
+
+.944 final local Node24.19.0 full regression: **2,731 PASS / 0 FAIL / 0 skipped**.
+Six new AO integration checks + existing2725 pass on final source; original nearby
+943/938/942 sixteen and reviewed release five also pass. No existing assertions
+relaxed. Complete AO-helper/painter/shell reverse pins944 reviewed; main/cage/Multi1.0/
+frozen unchanged. Hosted/Pages/live publication proof follows; device944 pending.
