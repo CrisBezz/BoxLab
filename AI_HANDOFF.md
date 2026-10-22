@@ -34,7 +34,7 @@ limits remain; no iPad performance/RAM claim. Three functional owners only; revi
 main+Lab reverse-cache closure941. Main/cage/Multi1.0/frozen/UV/geometry/resource/
 project/export owners, resolutions/budgets unchanged. Read docs/paint-smudge-941.md.
 
-Local full2715PASS/0FAIL/0skip; publication verification follows. Actual iPad941 Smudge appearance/feel remains
+Published a39c2db8; local+hosted2715PASS/0FAIL/0skip, Pages and20 live files verified. Actual iPad941 Smudge appearance/feel remains
 pending. DEVICE: cube hard colour patch→Smudge outward within SAME face; compare
 Opacity; tap no mark; overlay→UndoRedo stays in Paint; SaveOpen retains result.
 Next device feedback/refinement before cross-face Smudge/AO/Edge-seam authoring.
@@ -526,7 +526,7 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Finish .941 validation/publication then stop at its iPad Smudge feel gate. Protect
+Runtime .941 publication/CI/Pages/live proof is closed; stop at its iPad Smudge feel gate. Protect
 .940 Torus and prior UV-ready primitives,1024 default, Merge/Flatten, Paint history
 and native export acceptance. Refine Smudge from device feedback before cross-face
 carry, AO or Edge-seam authoring. Alpha929 and reflection-preview remain independent.
@@ -2238,3 +2238,23 @@ All six new Smudge integrations pass on final source, plus every existing assert
 Nearby Blur/seam15PASS and reviewed release5PASS also passed. No original assertions
 relaxed. Complete main/Lab reverse-loader closure941; protected main/cage/Multi1.0/
 frozen unchanged. Publication/hosted/live verification follows; device941 pending.
+
+## .941 publication verified — 22 October 2026 (Brisbane)
+
+Runtime a39c2db8a8aaa8e07fcd59025211b130a53e0e27, tested tree
+72e49c4433676a761c2ac5df662df18a1a7da87f, is published on main. Connected Git
+Data uploaded15 exact blobs; created tree and fetched main match local tested tree.
+Local Node24 and hosted Node22 regression39756577806/job119749968964 both pass
+**2715 tests / 0 failures / 0 skipped**; complete hosted log totals verified.
+Pages39756577517 build119749975949/deploy119750207283 succeeded. All20 checked
+postdeployment shell/version, every changed main/Lab runtime owner, recovery and
+retained main/Multi1.0/UV/filter/seam/graph/project/export/primitive/frozenBeta7 marker
+files byte-match tested source. No original assertions relaxed; protected/frozen
+bytes unchanged. This proof changes four continuity files only, same runtime bytes.
+
+Build941 is complete and ready for device testing: hard colour patch on cube →
+Tool Smudge within face, drag outward, compare Opacity, tap makes no mark; try an
+overlay, UndoRedo stays in Paint, SaveOpen retains result. Face edges/misses restart
+pickup. Actual iPad feel/latency remains pending. User940PASS protected; independent
+alpha929/reflection gates unchanged. Next device feedback before cross-face Smudge,
+AO or Edge-seam authoring; no automatic next runtime build before that gate.
