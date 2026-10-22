@@ -12,7 +12,7 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 ## Current state — 22 October 2026 (Brisbane)
 
-User PASS accepts .939: protect initial/reset UV-ready1×1×1 cube, Add UV checkbox
+User PASS accepts .940 Torus UVs/Add/Paint/history/persistence and .939: protect initial/reset UV-ready1×1×1 cube, Add UV checkbox
 for Cube/Plane/Cylinder/Cone/Sphere, unticked plain path, one-step UndoRedo and
 SaveOpen/paint. Earlier .938 Merge/Flatten and .9371024/readout/detail remain
 protected. Alpha .929 and reflection-preview gates remain independent.
@@ -42,7 +42,7 @@ Multi-object only parent import pin940; shell/recovery markers and complete chan
 loader graph940. Lab/export/signature/paint/main930/cage/Multi1.0/frozen retained.
 Production Paint1024/scalar512, saved512 optional Increase, sources/tips/layers and
 all resource/File/native guards unchanged. Focused new6+expanded939six =12PASS;
-release5PASS; full2709PASS/0FAIL/0skip. Publication evidence follows. Read docs/native-torus-uv-940.md.
+release5PASS; local/hosted full2709PASS/0FAIL/0skip. Published e3118c0f, Pages/live20 verified below. Read docs/native-torus-uv-940.md.
 DEVICE .940: Add Torus checked→Paint; UV Editor rectangular island; unticked Torus
 → UV tools Torus UVs (Y); UndoRedo, SaveOpen/export placement. Next device feedback,
 then bounded Smudge/AO/edge-seam authoring audits. General/Text unwrap remains future.
@@ -2221,3 +2221,23 @@ New Torus6 and expanded939 creation6 =12 focusedPASS; reviewed release5PASS.
 No original behaviour assertions relaxed; superseded Torus-unavailable checks now
 require mapped/optional plain Torus and exact project/NOM/GLB output. Protected
 main/cage/Multi1.0/frozen retained. Hosted/Pages/live proof follows; device940 pending.
+
+## .940 publication verified — 22 October 2026 (Brisbane)
+
+Runtime e3118c0fc6a27c61f4f199e35ce77eccd89c19c2, tree
+dbd5f70836152bafdf7a8b32cfc8e1504db2bdb7, published on main. Connected Git Data
+uploaded14 exact local blobs and matched tested tree; fetched main identical.
+Local Node24 and hosted Node22 regression39725820759/job119649340149 both pass
+**2709 tests / 0 failures / 0 skipped**; complete hosted logs verify totals.
+Pages39725820263 build119649342511/deploy119649486563 succeeded. All20 checked
+postdeployment shell/version, changed UV/Add/MeshHealth/Multi parent, recovery and
+retained main/cage/Multi1.0/factory/signature/import/export/paint/raster/frozenBeta7
+marker files byte-match tested source. Reviewed graph940; main/cage/Multi1.0/frozen
+bytes unchanged. No old behaviour assertions relaxed. This proof changes docs only;
+same runtime bytes. User .939 PASS protected; .940 Torus device gate pending.
+
+## .940 user PASS — 22 October 2026 (Brisbane)
+
+User PASS protects Torus automatic UVs/optional plain Add, Torus UVs (Y), Paint,
+UV Editor, UndoRedo and SaveOpen. .940 runtime/CI/Pages/live proof above is closed.
+Next authorized /nextbuild audits bounded Smudge through original paint owners.
