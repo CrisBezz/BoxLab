@@ -4810,3 +4810,19 @@ same runtime bytes. User .939 PASS protected; .940 Torus device gate pending.
 User PASS protects Torus automatic UVs/optional plain Add, Torus UVs (Y), Paint,
 UV Editor, UndoRedo and SaveOpen. .940 runtime/CI/Pages/live proof above is closed.
 Next authorized /nextbuild audits bounded Smudge through original paint owners.
+
+## Current direction — .941, 22 October 2026
+
+User940PASS protected. First bounded Smudge uses original paint owners, selected
+layer/channel only, tip-local premultiplied pickup, existing Size/Opacity/alpha and
+history/persistence. Face-confined reads/writes; face changes/misses restart pickup.
+No cross-face carry claim, original connected Blur unchanged.8M pickup-visit contact
+cap cancels atomically; original resource/File/native limits retained. Device941
+Smudge feel next, then refine from evidence before cross-face/AO/Edge seam work.
+Alpha929/reflection-preview gates remain independent. See docs/paint-smudge-941.md.
+
+.941 final local Node24.19.0 regression: **2,715 PASS / 0 FAIL / 0 skipped**.
+All six new Smudge integrations pass on final source, plus every existing assertion.
+Nearby Blur/seam15PASS and reviewed release5PASS also passed. No original assertions
+relaxed. Complete main/Lab reverse-loader closure941; protected main/cage/Multi1.0/
+frozen unchanged. Publication/hosted/live verification follows; device941 pending.

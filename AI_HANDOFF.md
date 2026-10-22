@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .940 / Torus UVs through native owner
+# BoxLab AI Handoff — .941 / bounded face-confined Smudge
 
 ## Permanent rule — every build completion
 
@@ -10,42 +10,34 @@ the build number and readiness status. Never finish with only a progress update 
 leave the user to infer completion. This applies to EVERY build without a reminder.
 User reaffirmed this permanent instruction on 21 October 2026.
 
-## Current state — 22 October 2026 (Brisbane)
+## Current state — .941, 22 October 2026 (Brisbane)
 
-User PASS accepts .940 Torus UVs/Add/Paint/history/persistence and .939: protect initial/reset UV-ready1×1×1 cube, Add UV checkbox
-for Cube/Plane/Cylinder/Cone/Sphere, unticked plain path, one-step UndoRedo and
-SaveOpen/paint. Earlier .938 Merge/Flatten and .9371024/readout/detail remain
-protected. Alpha .929 and reflection-preview gates remain independent.
+User PASS .940 protects Torus UV-ready Add/plain choice, Torus UVs (Y), Paint,
+UV Editor, UndoRedo and SaveOpen. Earlier .939 startup/reset/optional primitive UVs,
+.938 Merge/Flatten and .9371024/readout/detail remain protected. Alpha929 and
+reflection-preview gates remain independent; neither is inferred accepted.
 
-Build0.36.18.940 completes the supported primitive Add UV choice for Torus before
-resuming queued brush work. Audit found no Torus projector. Extend SAME
-imported-uv-edit native projection owner with createTorusUV; no duplicate unwrap,
-modelling, history, pointer or export kernel. Recover regular angular quad grid
-from actual positions around worldY, validate round tube/ring, every cell/edge order
-and original vertex coverage. Vertex/face numbering arbitrary. Both periodic seams
-split in face-corner UVs, one rectangular island inset2%, no geometry changes.
-Uniform angular layout stretches differently inside/outside ring; not equal density
-or a general/distortion-free unwrap. Upright round regular quads3–64 per axis only;
-factory Add remains3–32. Tilted/elliptical/deformed/horn/spindle/nonquad/incomplete
-or unsupported owners refuse with explanation before resource/history publication.
+Build0.36.18.941 adds Tool → Smudge · within face through the ORIGINAL shared raster,
+viewport surface adapter and compact LEFT Paint UI. First hit picks up a tip-local
+patch without ink; moving spaced dabs carry it, mixing25% local stroke-start pixels.
+Opacity bounds the mix with original pixels; Size/pressure/hardness/alpha control
+coverage. Premultiplied colour alpha; raw masks/scalars stay independent. Swatch
+ignored. SAME original face label for reads/writes: face changes/misses reset pickup.
+No cross-face carry/footprint wrapping; dense faceted meshes restart often. Original
+connected-face Blur remains unchanged. Image colour retains Convert to paint guard.
 
-Add Torus now uses existing checked Generate UVs control/private candidate staging,
-plain Base settings and one original Add checkpoint. Untick retains original plain
-path. Existing Object radial→UV tools adds Torus UVs (Y) through same native scene
-checkpoint/COW/no-op/history path, so old plain tori can explicitly acquire UVs.
-No auto-remapping existing projects or changing other primitive layouts. Text remains
-without automatic UVs; Curve/Balloon/Revolve/Sweep launchers unchanged. Existing
-stale/evaluated/linked guards remain; no UV propagation through topology/modifiers.
+Single existing checkpoint/COW/pool commit per changed stroke, original Paint UndoRedo,
+SaveOpen/native pixels. Pickup≤139² samples (~321KiB), reused per contact;8M pickup
+visits cap refuses/cancels entire long stroke, releases capture/navigation and keeps
+history/resources intact. Existing domain/snapshot/coverage memory and scan/walk/dab
+limits remain; no iPad performance/RAM claim. Three functional owners only; reviewed
+main+Lab reverse-cache closure941. Main/cage/Multi1.0/frozen/UV/geometry/resource/
+project/export owners, resolutions/budgets unchanged. Read docs/paint-smudge-941.md.
 
-Three functional owners: imported-uv-edit.js, primitive-ui.js, mesh-health.js.
-Multi-object only parent import pin940; shell/recovery markers and complete changed
-loader graph940. Lab/export/signature/paint/main930/cage/Multi1.0/frozen retained.
-Production Paint1024/scalar512, saved512 optional Increase, sources/tips/layers and
-all resource/File/native guards unchanged. Focused new6+expanded939six =12PASS;
-release5PASS; local/hosted full2709PASS/0FAIL/0skip. Published e3118c0f, Pages/live20 verified below. Read docs/native-torus-uv-940.md.
-DEVICE .940: Add Torus checked→Paint; UV Editor rectangular island; unticked Torus
-→ UV tools Torus UVs (Y); UndoRedo, SaveOpen/export placement. Next device feedback,
-then bounded Smudge/AO/edge-seam authoring audits. General/Text unwrap remains future.
+Local full2715PASS/0FAIL/0skip; publication verification follows. Actual iPad941 Smudge appearance/feel remains
+pending. DEVICE: cube hard colour patch→Smudge outward within SAME face; compare
+Opacity; tap no mark; overlay→UndoRedo stays in Paint; SaveOpen retains result.
+Next device feedback/refinement before cross-face Smudge/AO/Edge-seam authoring.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -534,11 +526,10 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Protect user928PASS: Paint history stays open with controls/continued strokes.
-Protect930/931/933/934/935/937PASS; .937 closes prior pixelation gate. Fresh1024/readout/detail and saved512 opt-in remain protected.
-User .938/.939 PASS protects Merge/Flatten and UV-ready startup/reset/Add/plain choice/history/persistence. Device .940 Torus UVs/Add/Paint/UndoRedo/SaveOpen are next. Smudge/AO/seams and929 alpha gate remain pending.
-Reflection preview remains unresolved; obtain device/version/renderer evidence before
-more lighting changes. Correct scalar values/native export and924 toolbar protected.
+Finish .941 validation/publication then stop at its iPad Smudge feel gate. Protect
+.940 Torus and prior UV-ready primitives,1024 default, Merge/Flatten, Paint history
+and native export acceptance. Refine Smudge from device feedback before cross-face
+carry, AO or Edge-seam authoring. Alpha929 and reflection-preview remain independent.
 
 ## Protected interaction and modelling baseline
 
@@ -2241,3 +2232,9 @@ same runtime bytes. User .939 PASS protected; .940 Torus device gate pending.
 User PASS protects Torus automatic UVs/optional plain Add, Torus UVs (Y), Paint,
 UV Editor, UndoRedo and SaveOpen. .940 runtime/CI/Pages/live proof above is closed.
 Next authorized /nextbuild audits bounded Smudge through original paint owners.
+
+.941 final local Node24.19.0 regression: **2,715 PASS / 0 FAIL / 0 skipped**.
+All six new Smudge integrations pass on final source, plus every existing assertion.
+Nearby Blur/seam15PASS and reviewed release5PASS also passed. No original assertions
+relaxed. Complete main/Lab reverse-loader closure941; protected main/cage/Multi1.0/
+frozen unchanged. Publication/hosted/live verification follows; device941 pending.

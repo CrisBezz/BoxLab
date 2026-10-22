@@ -9296,3 +9296,23 @@ same runtime bytes. User .939 PASS protected; .940 Torus device gate pending.
 User PASS protects Torus automatic UVs/optional plain Add, Torus UVs (Y), Paint,
 UV Editor, UndoRedo and SaveOpen. .940 runtime/CI/Pages/live proof above is closed.
 Next authorized /nextbuild audits bounded Smudge through original paint owners.
+
+## .941 — Smudge regression and device gate
+
+- [x] User .940 PASS remains protected; all UV-ready creation/paint/history/persistence.
+- [x] Analytical pickup/drag RGBA, independent Opacity, premultiplied alpha, no ink on tap/repeated position, owned cancellation.
+- [x] Same original face reads/writes only; adjacent atlas islands excluded, face/miss pickup resets; alpha/raw grayscale retained.
+- [x] Actual UI selected-layer isolation, Paint UndoRedo/tool retention, SaveOpen and exact native PNG.
+- [x] Scalar/mask independence, original checkpoint/COW/cancel/miss refusal; invalid UVs refuse before navigation/history changes.
+- [x] Bounded long stroke rolls back pixels/resources/history, releases capture/navigation and allows next Brush; event subdivision invariant.
+- [ ] Device .941: Smudge a hard colour patch outward on one cube face; compare low/high Opacity and no-motion tap.
+- [ ] Device .941: overlay Smudge, UndoRedo keeps Paint open, SaveOpen retains result. Face edges restart pickup.
+
+Automated source tests do not establish iPad feel/latency/RAM. Cross-face Smudge,
+AO and Edge-seam authoring remain queued; alpha929/reflection gates independent.
+
+.941 final local Node24.19.0 regression: **2,715 PASS / 0 FAIL / 0 skipped**.
+All six new Smudge integrations pass on final source, plus every existing assertion.
+Nearby Blur/seam15PASS and reviewed release5PASS also passed. No original assertions
+relaxed. Complete main/Lab reverse-loader closure941; protected main/cage/Multi1.0/
+frozen unchanged. Publication/hosted/live verification follows; device941 pending.
