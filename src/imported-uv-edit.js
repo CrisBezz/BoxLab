@@ -1,3 +1,4 @@
+import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
 import {inspectImportedUV,importedUVIslandCentre,importedUVIslandBounds,rotateImportedUVPoint} from './imported-uv-inspection.js?v=0.36.18.932';
 // UV transforms keep the existing stored face-corner channel
 // and native scene history. All untouched resource buffers remain read-only.
@@ -172,13 +173,25 @@ function nativeUVTargetError(object,mesh,topologySignature){
  if(typeof topologySignature!=='function'||!mesh?.faces?.length||!mesh?.vertices?.length)return 'UV projection is not ready';
  return null;
 }
+// Only createNativeUVCandidate can access this token. Scene projections still
+// require their original checkpoint; creation stages a private payload before Add.
+const nativeUVCandidate=Symbol('native UV candidate');
+export function createNativeUVCandidate(mesh,projection){
+ const project={box:createBoxUV,xz:(o,m,s,h)=>createPlanarUV(o,m,s,h,'xz'),cylinder:createCylinderUV,sphere:createSphereUV}[projection];
+ if(!project)throw new Error('This shape has no automatic UV projection yet');
+ const candidate={},result=project(candidate,mesh,meshTopologySignature,nativeUVCandidate);
+ if(!result.ok)throw new Error(result.reason);
+ return candidate.glbPassthrough;
+}
 function commitNativeUV(object,mesh,topologySignature,history,uvCorners){
  if(uvCorners.some(face=>face.some(p=>!p.every(Number.isFinite))))return {ok:false,reason:'UV projection exceeds the coordinate range'};
  const signature=topologySignature(mesh);if(typeof signature!=='string'||!signature)return {ok:false,reason:'Topology signature is not ready'};
  const previous=object.glbPassthrough;
  if(previous?.uvTopologySignature===signature&&JSON.stringify(previous.uvCorners)===JSON.stringify(uvCorners))return {ok:true,changed:false};
- if(!history?.capture||!history?.checkpointSnapshot)return {ok:false,reason:'Scene history is not ready'};
- const before=history.capture();if(!before||!history.checkpointSnapshot(before,mesh))return {ok:false,reason:'Could not record UV projection'};
+ if(history!==nativeUVCandidate){
+  if(!history?.capture||!history?.checkpointSnapshot)return {ok:false,reason:'Scene history is not ready'};
+  const before=history.capture();if(!before||!history.checkpointSnapshot(before,mesh))return {ok:false,reason:'Could not record UV projection'};
+ }
  object.glbPassthrough={version:1,source:'boxlab',uvTopologySignature:signature,uvCorners};
  return {ok:true,changed:true};
 }

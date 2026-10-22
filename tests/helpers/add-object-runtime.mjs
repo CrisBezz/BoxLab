@@ -1,3 +1,4 @@
+import {createNativeUVCandidate} from '../../src/imported-uv-edit.js';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import {makePrimitive,primitiveDensity} from '../../src/primitive-factory.js';
@@ -23,7 +24,7 @@ export function addObjectRuntime({deferred=false,fontOK=true}={}){
  const body=element(),wrap=element(),add=element('button'),status=element();body.append(wrap,add,status);
  const doc=element(),win=element();doc.body=body;doc.createElement=element;doc.querySelector=s=>({'#viewportWrap':wrap,'#outlinerAddBtn':add,'#selectionStatus':status}[s]||null);
  let resolve;const pending=new Promise(r=>resolve=r),response={ok:fontOK,json:async()=>font};
- Object.assign(c,{document:doc,window:win,makePrimitive,primitiveDensity,makeTextObject,fitAddObjectToUnitCube,
+ Object.assign(c,{document:doc,window:win,createNativeUVCandidate,makePrimitive,primitiveDensity,makeTextObject,fitAddObjectToUnitCube,
   placeToolSessionPanel:p=>{p.style.left='50%';p.style.top='12px';},
   fetch:()=>deferred?pending:Promise.resolve(response),Event:class{constructor(type){this.type=type;}},CustomEvent:class{constructor(type){this.type=type;}},
   __boxlabObjectSelection:{single(id){c.selectedIds=new Set([id]);}}

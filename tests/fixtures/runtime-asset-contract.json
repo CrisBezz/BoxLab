@@ -210,9 +210,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/export-as-panel.js?v=0.36.18.938",
+      "url": "./src/export-as-panel.js?v=0.36.18.939",
       "target": "src/export-as-panel.js",
-      "sha256": "c5f75cecf3724343bf1fa9cc4ef18a059aa4347bf90be9623cad56314bb12b59",
+      "sha256": "b845ecd8ed937a2c493fdfa6a67e0106522e6babb858e66788b0a51aa27a66b3",
       "sourceVersion": "0.36.18.892"
     },
     {
@@ -265,9 +265,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/import-mesh.js?v=0.36.18.882",
+      "url": "./src/import-mesh.js?v=0.36.18.939",
       "target": "src/import-mesh.js",
-      "sha256": "624fb8058e42d968c8df14ba96d1d67c89c6c0d3dd65866a0188e6ee311e197f",
+      "sha256": "5e0f190403ede28eba70bb4f5ae3d1dfcb510e6c69800dbdd1bfa1ac62f046d8",
       "sourceVersion": "0.36.18.882"
     },
     {
@@ -310,9 +310,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/mesh-health.js?v=0.36.18.932",
+      "url": "./src/mesh-health.js?v=0.36.18.939",
       "target": "src/mesh-health.js",
-      "sha256": "c58d76f49254dd74d4e5c0a14c2aed42648288b3cca81805a472f532726771af",
+      "sha256": "1eaf31a6a94ef80dad42884cf683573f3e704acb6cf4a535dc93a9412f283f27",
       "sourceVersion": "0.36.18.880"
     },
     {
@@ -329,9 +329,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/multi-object.js?v=0.36.18.921",
+      "url": "./src/multi-object.js?v=0.36.18.939",
       "target": "src/multi-object.js",
-      "sha256": "6881379b03b9ae4cce8bd0428d6d55edaaa263c9aac331d2fbebdbcd859e5581"
+      "sha256": "306239550a5d46feefca26d53a80c9e73c3592521f67bd16aef57f7eb575a8b7"
     },
     {
       "owner": "index.html",
@@ -360,9 +360,9 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/primitive-ui.js?v=0.36.18.830",
+      "url": "./src/primitive-ui.js?v=0.36.18.939",
       "target": "src/primitive-ui.js",
-      "sha256": "dde3d10d65bdf7ee2346e413715e4c0ad2fd042124c0ed7c0339a61337a4cbe2"
+      "sha256": "268460709150e7ecf5e97f1c719f2f07c24e82baa5f815f412f6fa0daa3116a2"
     },
     {
       "owner": "index.html",
@@ -378,13 +378,13 @@
     },
     {
       "owner": "index.html",
-      "url": "./src/release-bootstrap.js?v=0.36.18.938",
+      "url": "./src/release-bootstrap.js?v=0.36.18.939",
       "target": "src/release-bootstrap.js",
       "sha256": "2d6d3d3c25eca84bad26a0ba27d8ed0a19fff6331e885cada63dcd990ce8cb95"
     },
     {
       "owner": "index.html",
-      "url": "./src/release-version.js?v=0.36.18.938",
+      "url": "./src/release-version.js?v=0.36.18.939",
       "target": "src/release-version.js",
       "sha256": "6b09d087aa3e6be83681b359d847bbce7cc41742777894ad1a331f719088b398"
     },
@@ -2384,9 +2384,9 @@
     },
     {
       "owner": "src/mesh-health.js",
-      "url": "./imported-uv-edit.js?v=0.36.18.932",
+      "url": "./imported-uv-edit.js?v=0.36.18.939",
       "target": "src/imported-uv-edit.js",
-      "sha256": "8848e8d9eb47bb94b9efad6683b50cd2dd36e59a4819624d66b4789d3280061a"
+      "sha256": "5e7971cf120a50f070119584efa432ba33a13d8fc11bb9f60508a2f2efd03ced"
     },
     {
       "owner": "src/imported-uv-edit.js",
@@ -2768,9 +2768,9 @@
     },
     {
       "owner": "evaluations/uv-paint/lab.js",
-      "url": "../../src/export-as-panel.js?v=0.36.18.938",
+      "url": "../../src/export-as-panel.js?v=0.36.18.939",
       "target": "src/export-as-panel.js",
-      "sha256": "c5f75cecf3724343bf1fa9cc4ef18a059aa4347bf90be9623cad56314bb12b59"
+      "sha256": "b845ecd8ed937a2c493fdfa6a67e0106522e6babb858e66788b0a51aa27a66b3"
     },
     {
       "owner": "src/paint-layer-stack.js",
@@ -2804,9 +2804,9 @@
     },
     {
       "owner": "evaluations/uv-paint/index.html",
-      "url": "./lab.js?v=0.36.18.938",
+      "url": "./lab.js?v=0.36.18.939",
       "target": "evaluations/uv-paint/lab.js",
-      "sha256": "b7430ad653a8b4b8c13ca71edcbfffd695bc8f896ee1f9dd9aeaf4a6f261a3ef"
+      "sha256": "5b74ce31193e588163784c9cb7077b5672433a5b2dd723df69be24372c8baa6f"
     },
     {
       "owner": "index.html",
@@ -3035,6 +3035,36 @@
       "target": "src/paint-image-surface.js",
       "url": "./paint-image-surface.js?v=0.36.18.933",
       "sha256": "85872d7921f7d7b2061bea6ebca03c998db3d1dff9949e355e6146c0485e27bd"
+    },
+    {
+      "owner": "src/multi-object.js",
+      "target": "src/imported-uv-edit.js",
+      "url": "./imported-uv-edit.js?v=0.36.18.939",
+      "sha256": "5e7971cf120a50f070119584efa432ba33a13d8fc11bb9f60508a2f2efd03ced"
+    },
+    {
+      "owner": "src/primitive-ui.js",
+      "target": "src/imported-uv-edit.js",
+      "url": "./imported-uv-edit.js?v=0.36.18.939",
+      "sha256": "5e7971cf120a50f070119584efa432ba33a13d8fc11bb9f60508a2f2efd03ced"
+    },
+    {
+      "owner": "src/imported-uv-edit.js",
+      "target": "src/mesh-topology-signature.js",
+      "url": "./mesh-topology-signature.js?v=0.36.18.939",
+      "sha256": "eb5661253bc7c4874251267e81af20c544ae188dda69c402948858ab6c9e23c2"
+    },
+    {
+      "owner": "src/import-mesh.js",
+      "target": "src/mesh-topology-signature.js",
+      "url": "./mesh-topology-signature.js?v=0.36.18.939",
+      "sha256": "eb5661253bc7c4874251267e81af20c544ae188dda69c402948858ab6c9e23c2"
+    },
+    {
+      "owner": "src/export-as-panel.js",
+      "target": "src/mesh-topology-signature.js",
+      "url": "./mesh-topology-signature.js?v=0.36.18.939",
+      "sha256": "eb5661253bc7c4874251267e81af20c544ae188dda69c402948858ab6c9e23c2"
     }
   ]
 }

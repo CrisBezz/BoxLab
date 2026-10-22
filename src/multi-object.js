@@ -1,3 +1,4 @@
+import {createNativeUVCandidate} from './imported-uv-edit.js?v=0.36.18.939';
 import * as THREE from 'three';
 import { editableBooleanEligibility } from './editable-boolean-core.js?v=0.36.18.803';
 import { EditableMesh } from './mesh.js';
@@ -715,6 +716,7 @@ function resetAll() {
     settings:cloneSettings(settings),
     history:{ undo:[], redo:[] }
   };
+  initial.glbPassthrough=createNativeUVCandidate(initial.mesh,'box');
   objects = [initial];
   activeId = initial.id;
   restoreSettings(initial.settings);
@@ -1005,6 +1007,7 @@ function initialize() {
     settings:cloneSettings(),
     history:captureHistory()
   };
+  initial.glbPassthrough=createNativeUVCandidate(initial.mesh,'box');
   objects = [initial];
   activeId = initial.id;
   installRenderObserver();

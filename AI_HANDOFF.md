@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .938 / Merge colour layers to Base
+# BoxLab AI Handoff — .939 / UV-ready starting cube and Add choice
 
 ## Permanent rule — every build completion
 
@@ -12,34 +12,43 @@ User reaffirmed this permanent instruction on 21 October 2026.
 
 ## Current state — 22 October 2026 (Brisbane)
 
-User “Perfect PASS” accepts .937: fresh production Paint starts at1024, visible
-resolution readout and improved paint/image detail are protected. Existing saved512
-stays512 with optional Increase; .936 pixelation gate is closed by accepted .937.
-Alpha .929 gate and reflection preview remain independent; no acceptance inferred.
+User “Awesome - PASS” accepts .938: protect Merge to Base prefix semantics,
+Flatten colour appearance/free slots, hidden-layer warning, Paint UndoRedo and
+SaveOpen. Earlier .937 fresh1024/readout/detail and saved512 optional Increase remain
+protected. Alpha .929 and reflection-preview gates remain independent.
 
-Build0.36.18.938 adds Merge to Base and Flatten colour in existing Layer settings.
-Merge bakes selected overlay AND every layer below into Base; upper layers retain
-source editing/settings/order. Flatten bakes the entire visible stack and removes
-all overlays. Hidden merged layers are discarded, stated in panel/help text. Both
-use ORIGINAL flattenPaintLayerStack compositor, preserving exact rounded pixels
-across blend modes/masks/wrapped images. No second blending or modelling kernel.
-Merged images lose source editing in the new resource; Undo restores original layers.
-Undo history may retain old source bytes; current resource frees layer slots/bytes.
+Build0.36.18.939 implements user's requested UV-ready objects. The ORIGINAL
+multi-object initial/reset owner attaches existing Box UVs to its unchanged1×1×1
+cube; no extra scene checkpoint. Main startup geometry and modelling/cage untouched.
+Add settings now default Generate UVs ON for Cube(Box), Plane(XZ), Cylinder/Cone(Y
+Cylinder) and Sphere(Y Sphere). Untick for original plain mesh. UV-enabled Add uses
+plain Base settings (Mirror/SubD off) so it is immediately paintable; plain Add retains
+original settings inheritance. Density/presets/preview/cancel/selection/history owners
+unchanged. Torus/Text explicitly say automatic UVs unavailable and add without UVs;
+Curve/Balloon/Revolve/Sweep launchers unchanged. No general unwrap or Torus map claim.
 
-Original core commit/preflight/checkpoint/COW/history owns publication. Actions
-select Base/Colour, staged placement must Apply/Cancel first, scalar channel is
-disabled, Base merge/empty flatten no-op. Stale/checkpoint/quota refusals preserve
-scene/history; untouched peers and scalar maps retained. Same512/1024 dimensions,
-three overlays, resource versions/budgets, source1024/tip256, File96MiB high-res/
-32MiB ordinary and native24MiB guard unchanged. No higher resolution expansion.
+Existing imported-uv-edit projection owners generate PRIVATE candidate payloads
+before Add/history capture. Internal token bypasses scene checkpoints ONLY for the
+new isolated candidate; ordinary scene UV edits still require original history.
+No fake history, second projector, modelling kernel, new UV schema or mesh metadata.
+Extract original identical import/export topology identity into shared
+mesh-topology-signature.js; existing local wrappers delegate exact same bytes. This
+also makes startup independent of exporter script arrival; no asynchronous patchup.
+Original UV inspector/editors/paint/project/native writers consume same sourceboxlab
+version1 face-corner resource. No auto-remap of existing saved/imported/edited meshes.
+Current native restrictions still apply: stale/evaluated/linked resources guarded;
+choose without UVs for current linked-geometry workflows. No UV propagation promise
+through later topology edits/modifiers. Undo restores original UV binding normally.
 
-Three functional owners: paint-layer-stack.js, viewport-paint-core.js and
-viewport-paint.js. Other runtime changes are reviewed reverse loader pins938;
-main/cage/Multi1.0/frozen betas unchanged. Local and hosted full suite2697PASS/0FAIL/0skip;
-focused merge6PASS and release5PASS. Published f441e92b; Pages/live25 verified below.
-Read docs/paint-layer-merge-938.md. Device .938 gate is pending: Merge/Flatten
-appearance, free slots, UndoRedo and SaveOpen. Next follow device feedback, then
-queued bounded Smudge/AO/seam authoring work after auditing existing owners.
+Functional changes: multi-object.js, primitive-ui.js, imported-uv-edit.js, shared
+signature and import/export delegation. Other runtime edits are complete reviewed
+reverse loader pins939 (including Mesh Health and Lab). Protected main930/cage/
+Multi1.0/frozen betas and paint resolution/budgets unchanged. Local full2703PASS/0FAIL/0skip; new focused6PASS;
+nearby original Add/Box/Sphere19PASS; release5PASS. Publication proof follows.
+Read docs/primitive-auto-uv-939.md. DEVICE .939 gate: fresh/reset cube immediate
+Paint/UV Editor, Add Cube/Cylinder/Cone/Sphere with UVs, Add unticked, one-step
+UndoRedo and SaveOpen. Next respond to device feedback, then queued bounded
+Smudge/AO/edge-seam authoring audits; Torus/general unwrap stays future work.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -530,7 +539,7 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 Protect user928PASS: Paint history stays open with controls/continued strokes.
 Protect930/931/933/934/935/937PASS; .937 closes prior pixelation gate. Fresh1024/readout/detail and saved512 opt-in remain protected.
-Device .938 Merge/Flatten appearance, free slots, UndoRedo and SaveOpen are next. Smudge/AO/seams and929 alpha gate remain pending.
+User .938 PASS protects Merge/Flatten/free slots/UndoRedo/SaveOpen. Device .939 UV-ready startup/reset/Add and optional plain meshes are next. Smudge/AO/seams and929 alpha gate remain pending.
 Reflection preview remains unresolved; obtain device/version/renderer evidence before
 more lighting changes. Correct scalar values/native export and924 toolbar protected.
 
@@ -569,7 +578,7 @@ more lighting changes. Correct scalar values/native export and924 toolbar protec
   shared encoded GLB image pool24MiB. Scene Undo history is not persisted across sessions.
 - Native UV payload uses source:'boxlab', version1, only topology signature/corner UVs;
   project resource envelopev3 is STRICTLY UV-ONLY. Adding arbitrary paint fields must fail.
-  Original exporter topologySignature is authoritative; no duplicate signature algorithm.
+  Shared mesh-topology-signature.js now owns original import/export identity; wrappers retain exact semantics. No duplicate signature algorithm.
 - UV inspector862/863; native file UV pool865; Flip866; large workspace867; selection868;
   island scoped edits869/870; Pencil Move871/Scale872/Rotate873; fit874; native Planar875,
   Box876, Cylinder877;2D checker878; temporary surface checker879; image chooser880;
@@ -2189,3 +2198,9 @@ deploy119566078569 succeeded. All25 checked live shell/version, changed runtime/
 recovery and retained core/main/Multi files byte-match tested source. Reviewed pins938;
 protected main/cage/Multi/frozen unchanged. This proof updates documentation only.
 User .937 PASS protected; .938 device merge/flatten/UndoRedo/SaveOpen gate pending.
+
+.939 final local Node24 full regression: **2,703 PASS / 0 FAIL / 0 skipped**.
+New creation6PASS, original nearby Add/Box/Sphere19PASS, reviewed release5PASS.
+No assertions removed or relaxed. Complete reviewed main/Lab reverse loader graph939;
+protected main930/cage/Multi1.0/frozen untouched. Hosted/Pages/live proof follows;
+actual iPad UV-ready creation/paint/persistence acceptance remains pending.

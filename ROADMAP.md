@@ -4741,3 +4741,21 @@ deploy119566078569 succeeded. All25 checked live shell/version, changed runtime/
 recovery and retained core/main/Multi files byte-match tested source. Reviewed pins938;
 protected main/cage/Multi/frozen unchanged. This proof updates documentation only.
 User .937 PASS protected; .938 device merge/flatten/UndoRedo/SaveOpen gate pending.
+
+## Current direction — .939, 22 October 2026
+
+User .938 Awesome PASS protects Merge/Flatten/free slots/history/SaveOpen. Explicit
+new priority delivered: UV-ready initial/reset cube and optionalUV Add for existing
+supported Cube/Plane/Cylinder/Cone/Sphere projection owners. Checkbox defaults ON;
+plain creation remains available. Torus/Text no automatic unwrap; special procedural
+launchers and saved objects unchanged. No geometry/projector duplication or larger
+paint budgets. Device .939 startup/reset/Add/UndoRedo/SaveOpen gate next. Follow
+feedback before queued Smudge/AO/edge-seam authoring. Torus/general unwrap candidate
+future bounded work; native topology/modifier/linked restrictions remain. Reflection
+and929 alpha gates independent. Publication/automated results follow.
+
+.939 final local Node24 full regression: **2,703 PASS / 0 FAIL / 0 skipped**.
+New creation6PASS, original nearby Add/Box/Sphere19PASS, reviewed release5PASS.
+No assertions removed or relaxed. Complete reviewed main/Lab reverse loader graph939;
+protected main930/cage/Multi1.0/frozen untouched. Hosted/Pages/live proof follows;
+actual iPad UV-ready creation/paint/persistence acceptance remains pending.

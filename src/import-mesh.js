@@ -1,3 +1,4 @@
+import {meshTopologySignature} from './mesh-topology-signature.js?v=0.36.18.939';
 import * as THREE from 'three';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
@@ -408,10 +409,7 @@ function reconstructImportedQuads(mesh,cornerUVs=null,cornerTangents=null,corner
   return{mesh:new EditableMesh(mesh.vertices,faces,mesh.creases,faceGroups),merged:chosen.length,cornerUVs:nextCornerUVs,cornerTangents:nextCornerTangents,cornerColors:nextCornerColors,morphTargets:nextMorphTargets,faceMaterialIndices:nextFaceMaterialIndices};
 }
 
-function topologySignature(mesh){
-  if(!mesh?.faces)return'';
-  return mesh.faces.map((face,index)=>`${face.join(',')}@${mesh.faceGroups?.[index]??''}`).join('|');
-}
+function topologySignature(mesh){return meshTopologySignature(mesh);}
 function geometrySignature(mesh){
   if(!mesh?.vertices)return'';
   return topologySignature(mesh)+'#'+mesh.vertices.map(vertex=>[vertex.x,vertex.y,vertex.z].map(value=>Number(value).toPrecision(12)).join(',')).join('|');

@@ -12836,3 +12836,37 @@ deploy119566078569 succeeded. All25 checked live shell/version, changed runtime/
 recovery and retained core/main/Multi files byte-match tested source. Reviewed pins938;
 protected main/cage/Multi/frozen unchanged. This proof updates documentation only.
 User .937 PASS protected; .938 device merge/flatten/UndoRedo/SaveOpen gate pending.
+
+## .939 — UV-ready startup/reset and Add choice; .938 user PASS — 22 October 2026
+
+User “Awesome - PASS” protects .938 Merge/Flatten appearance, free slots, UndoRedo
+and SaveOpen. New priority: ready UVs on initial cube and optional UVs for Add.
+Audit original startup/reset manager, primitive factory/UI, Planar/Box/Cylinder/Sphere
+projection, UV payload/history/export. No current creation path attaches UVs; no Torus
+projection exists. Reuse existing projection functions on private candidates with an
+internal staging token (scene edits keep checkpoint requirement). Original shared
+signature extracted from identical importer/exporter implementations; both delegate.
+No new modelling/projection algorithm, fake history or delayed exporter-ready repair.
+
+Starting/reset1×1×1 cube gets Box UVs without extra checkpoint. Cube/Plane/Cylinder/
+Cone/Sphere Add settings offer Generate UVs defaultON; untick keeps plain path.
+Project after fitting/density build and BEFORE Add/capture; failure keeps scene/redo.
+UV Add supplies plain Base settings to avoid inherited Mirror/SubD blocking Paint;
+withoutUV retains original settings inheritance. One original Add history entry
+carries UVs. Torus/Text explain unavailable automatic UVs; special launchers unchanged.
+Existing saved/imported/edited objects not remapped. Native stale/evaluated/linked
+restrictions remain; plain Add supports original linked workflows. No Torus/general
+unwrap, topology UV propagation, source/resolution/budget/schema increase promised.
+Six focused owner integrations pass: exact startup/reset/unit geometry, dense layouts
+identical to original projections, Add toggle/no side effects/one-step UndoRedo,
+Cancel/redo/refusal/unsupported shapes, actual project+NOM/GLB UVs and immediate1024
+production painting. Nearby original Add/Box/Sphere19PASS, release5PASS; full follows.
+Initial reset fixture lacked host Map in VM and mis-cloned creases; fixed test realm
+adapter, no runtime workaround or removed assertion. See docs/primitive-auto-uv-939.md.
+Complete reviewed reverse graph939, main/cage/Multi1.0/frozen untouched. Device pending.
+
+.939 final local Node24 full regression: **2,703 PASS / 0 FAIL / 0 skipped**.
+New creation6PASS, original nearby Add/Box/Sphere19PASS, reviewed release5PASS.
+No assertions removed or relaxed. Complete reviewed main/Lab reverse loader graph939;
+protected main930/cage/Multi1.0/frozen untouched. Hosted/Pages/live proof follows;
+actual iPad UV-ready creation/paint/persistence acceptance remains pending.

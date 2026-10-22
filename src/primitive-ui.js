@@ -1,3 +1,4 @@
+import {createNativeUVCandidate} from './imported-uv-edit.js?v=0.36.18.939';
 import './curve-profile-ui.js?v=0.36.18.830';
 import { makePrimitive,primitiveDensity } from './primitive-factory.js?v=0.36.18.771';
 import { makeTextObject } from './text-object-core.js?v=0.36.18.771';
@@ -18,6 +19,10 @@ function showSettings(type){
  const text=type==='text',spec=text?{x:4,y:1,minX:1,minY:1,xLabel:'X · Curve detail',yLabel:'Y · Depth bands'}:primitiveDensity[type],p=panel('Add '+label(type));
  const body=node('div');body.style.display='grid';body.style.gap='8px';p.append(body);const inputs={};
  function field(name,title,kind,value,min,max){const row=node('label'),caption=node('span',title),input=node('input');input.type=kind;input.value=String(value);input.dataset.addSetting=name;input.setAttribute('aria-label',title);if(min!==undefined)input.min=String(min);if(max!==undefined)input.max=String(max);Object.assign(row.style,{display:'grid',gridTemplateColumns:'minmax(90px,1fr) minmax(120px,2fr) auto',gap:'8px',alignItems:'center'});row.append(caption,input);body.append(row);inputs[name]=input;if(kind==='range'){input.step='1';const out=node('output',String(value));row.append(out);input.addEventListener('input',()=>{out.textContent=input.value;update();});}else input.addEventListener('input',update);return input;}
+ const uvProjection={cube:'box',plane:'xz',cylinder:'cylinder',cone:'cylinder',sphere:'sphere'}[type];
+ let withUV=null;
+ if(uvProjection){const row=node('label'),input=node('input');input.type='checkbox';input.checked=true;input.dataset.addSetting='uv';input.setAttribute('aria-label','Generate UVs');row.append(input,node('span','Generate UVs · ready to paint'));body.append(row);withUV=input;input.addEventListener('change',update);}
+ else body.append(node('small','Automatic UVs unavailable for this shape; add without UVs.'));
  let word,thickness,data=null;
  if(text){word=field('text','Text','text','Text');word.maxLength=64;word.autocomplete='off';word.spellcheck=false;thickness=field('thickness','Relative thickness','number',.2,.01,100);thickness.step='.01';}
  field('x',spec.xLabel,'range',spec.x,spec.minX,text?16:32);field('y',spec.yLabel,'range',spec.y,spec.minY,32);
@@ -26,11 +31,11 @@ function showSettings(type){
  p.append(node('small','Fits within 1 × 1 × 1 · proportions preserved'));
  const count=node('small');count.setAttribute('role','status');p.append(count);
  const apply=button(p,'Apply',()=>{
-   let mesh;try{mesh=build();}catch(e){count.textContent=e.message;return;}
+   let mesh,uv;try{mesh=build();uv=withUV?.checked?createNativeUVCandidate(mesh,uvProjection):null;}catch(e){count.textContent=e.message;return;}
    const m=manager(),h=globalThis.__boxlabObjectHistory,before=h?.capture?.();if(!m?.addMesh||!before){count.textContent='Object creation is not ready; try again';return;}
-   const created=m.addMesh(mesh,text?word.value.trim():label(type),{enterObjectMode:true});if(!created){count.textContent='Object could not be created';return;}
+   const created=m.addMesh(mesh,text?word.value.trim():label(type),{enterObjectMode:true,...(uv?{glbPassthrough:uv,settings:{mirror:{x:false,y:false,z:false},subd:false,subdLevel:1,cage:true}}:{})});if(!created){count.textContent='Object could not be created';return;}
    globalThis.__boxlabObjectSelection?.single?.(created.id);h.checkpointSnapshot(before);
-   if(status)status.textContent=`${text?'Text':label(type)} added • ${mesh.faces.length} faces`;closeMenu();
+   if(status)status.textContent=`${text?'Text':label(type)} added • ${mesh.faces.length} faces${uv?' • UVs ready':''}`;closeMenu();
  });apply.dataset.addAction='apply';
  button(p,'Cancel',closeMenu).dataset.addAction='cancel';
  function build(){if(text){if(!data)throw new Error('Loading text font…');return fitAddObjectToUnitCube(makeTextObject(data,word.value,{thickness:thickness.value,x:inputs.x.value,y:inputs.y.value}));}return fitAddObjectToUnitCube(makePrimitive(type,{x:inputs.x.value,y:inputs.y.value}));}

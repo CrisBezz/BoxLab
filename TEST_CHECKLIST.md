@@ -9211,8 +9211,8 @@ stage larger maps/sources/memory work. Merge/Flatten/Smudge/AO/seams remain queu
 - [x] Flatten preserves visible pixels, removes all overlays including hidden ones, and frees slots. Input/peer/scalar resources remain unchanged.
 - [x] Original Paint Undo/Redo, Save/Open and actual native PNG preserve results; history restores original layers. Staged placement, stale sessions, checkpoint and quota refusal remain atomic.
 - [x] Local full2697PASS/0FAIL/0skip; focused merge6PASS, reviewed release5PASS.
-- [ ] Device .938: Layer settings Merge to Base preserves appearance and frees expected slots; Undo/Redo restores layers.
-- [ ] Device .938: Flatten leaves Base only, + Layer works, Save/Open retains appearance.
+- [x] User PASS .938: Layer settings Merge to Base preserves appearance and frees expected slots; Undo/Redo restores layers.
+- [x] User PASS .938: Flatten leaves Base only, + Layer works, Save/Open retains appearance.
 
 ## .938 publication verified — 22 October 2026
 
@@ -9224,3 +9224,21 @@ deploy119566078569 succeeded. All25 checked live shell/version, changed runtime/
 recovery and retained core/main/Multi files byte-match tested source. Reviewed pins938;
 protected main/cage/Multi/frozen unchanged. This proof updates documentation only.
 User .937 PASS protected; .938 device merge/flatten/UndoRedo/SaveOpen gate pending.
+
+## .939 — UV-ready object creation; .938 PASS protected
+
+- [x] User .938 PASS protects Merge/Flatten/free slots/UndoRedo/SaveOpen. Earlier .9371024/readout/detail remains protected.
+- [x] Startup/reset original unit cube gets six complete Box islands without extra history/geometry change.
+- [x] Cube/Plane/Cylinder/Cone/Sphere use exact original Box/XZ/Cylinder/Sphere layouts at asymmetric/dense settings; ordinary scene projections still require checkpoints.
+- [x] Actual Add defaults Generate UVs ON; OFF retains plain path/settings inheritance. UV ON uses plain Base settings. Staging/Cancel/refusal preserves scene/redo; one Undo/Redo carries exact resource.
+- [x] Actual project transport and NOM/GLB output retain face-corner UV variants; startup cube opens production Paint immediately at1024 and Save/Open retains painted binding.
+- [x] Torus/Text remain plain with visible explanation; special object launchers unchanged. Original stale/evaluated/linked guards retained; no auto-remapping old projects.
+- [ ] DEVICE .939: refresh or Reset → Paint on cube without first projecting UVs; UV Editor shows six islands.
+- [ ] DEVICE .939: Add Cylinder/Cone/Sphere with Generate UVs checked; inspect UVs/paint. Untick on another object to create without UVs.
+- [ ] DEVICE .939: Undo once removes new UV object, Redo restores; Save/Open retains UVs/paint.
+
+.939 final local Node24 full regression: **2,703 PASS / 0 FAIL / 0 skipped**.
+New creation6PASS, original nearby Add/Box/Sphere19PASS, reviewed release5PASS.
+No assertions removed or relaxed. Complete reviewed main/Lab reverse loader graph939;
+protected main930/cage/Multi1.0/frozen untouched. Hosted/Pages/live proof follows;
+actual iPad UV-ready creation/paint/persistence acceptance remains pending.
