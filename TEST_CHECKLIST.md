@@ -9305,8 +9305,8 @@ Next authorized /nextbuild audits bounded Smudge through original paint owners.
 - [x] Actual UI selected-layer isolation, Paint UndoRedo/tool retention, SaveOpen and exact native PNG.
 - [x] Scalar/mask independence, original checkpoint/COW/cancel/miss refusal; invalid UVs refuse before navigation/history changes.
 - [x] Bounded long stroke rolls back pixels/resources/history, releases capture/navigation and allows next Brush; event subdivision invariant.
-- [ ] Device .941: Smudge a hard colour patch outward on one cube face; compare low/high Opacity and no-motion tap.
-- [ ] Device .941: overlay Smudge, UndoRedo keeps Paint open, SaveOpen retains result. Face edges restart pickup.
+- [x] User PASS .941: Smudge a hard colour patch outward on one cube face; compare low/high Opacity and no-motion tap.
+- [x] User PASS .941: overlay Smudge, UndoRedo keeps Paint open, SaveOpen retains result. Face edges restart pickup.
 
 Automated source tests do not establish iPad feel/latency/RAM. Cross-face Smudge,
 AO and Edge-seam authoring remain queued; alpha929/reflection gates independent.
@@ -9336,3 +9336,23 @@ overlay, UndoRedo stays in Paint, SaveOpen retains result. Face edges/misses res
 pickup. Actual iPad feel/latency remains pending. User940PASS protected; independent
 alpha929/reflection gates unchanged. Next device feedback before cross-face Smudge,
 AO or Edge-seam authoring; no automatic next runtime build before that gate.
+
+## .942 — connected-face Smudge regression / .941 protected PASS
+
+- [x] User .941 PASS protects same-face Smudge/Opacity/tap/overlay/history/SaveOpen.
+- [x] Original manifold graph only: frozen direct pairs,12 folded/rotated/mirrored layouts; nonmanifold/vertex-only/atlas decoy excluded, sources unchanged.
+- [x] Exact premultiplied mean/Opacity/alpha across a pair, picked-face-only writes; no connected list retains original face-reset API.
+- [x] Captured adjacency, strict invalid/sparse/oversize guards, misses/disconnected jumps and cross-face work-limit cancellation.
+- [x] Actual continuous UI edge crossing, one Paint UndoRedo, SaveOpen and exact native PNG; raw scalar/mask isolation/checkpoint refusal.
+- [ ] Device .942: two cube faces visible, paint patch up to shared edge, Smudge across onto next face. Compare low/high Opacity.
+- [ ] Device .942: painted overlay, UndoRedo retains Paint/Smudge; SaveOpen retains cross-edge colour. Fine detail averages at transition.
+
+Mean colour carry does not transport detailed patch orientation or wrap footprint
+onto unpicked faces. Alpha929/reflection gates remain independent; AO/seam authoring queued.
+
+.942 final local Node24.19.0 full regression: **2,720 PASS / 0 FAIL / 0 skipped**.
+Five new connected-Smudge checks, original941+seam11 and reviewed release5 pass.
+No original assertions relaxed. Reviewed changed main/Lab reverse graph942; protected
+main/cage/Multi1.0/triangle graph/frozen unchanged. Hosted/Pages/live proof follows.
+User repeated PASS /nextbuild while942 was still local/in regression:941 acceptance
+remains protected; no942 device PASS inferred before publication/manual test list.

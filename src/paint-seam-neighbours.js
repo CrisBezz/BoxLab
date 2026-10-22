@@ -5,6 +5,11 @@ import {createPaintTriangleGraph} from './paint-triangle-graph.js?v=0.36.18.933'
 // may be crossed. Unsupported edges/corners/long walks simply omit that neighbour.
 export function createPaintSeamNeighbours({geometry,size,labels,triangleAt,mesh,payload,topologySignature}){
  const triangles=createPaintTriangleGraph({geometry,mesh,payload,topologySignature});
+ // Reuse the original graph's manifold-edge proof for brush pickup transitions.
+ // Vertex contact, atlas proximity and a path through other faces are insufficient.
+ const pairs=new Map();
+ for(const t of triangles)for(const n of t.next)if(n>=0&&triangles[n].face!==t.face){const a=Math.min(t.face,triangles[n].face),b=Math.max(t.face,triangles[n].face);pairs.set(a+':'+b,Object.freeze([a,b]));}
+ const connectedFaces=Object.freeze([...pairs.values()]);
  const bary=(t,q)=>{const a=t.uv[0],b=t.uv[1],c=t.uv[2],d=(b[1]-c[1])*(a[0]-c[0])+(c[0]-b[0])*(a[1]-c[1]);const w=((b[1]-c[1])*(q[0]-c[0])+(c[0]-b[0])*(q[1]-c[1]))/d,v=((c[1]-a[1])*(q[0]-c[0])+(a[0]-c[0])*(q[1]-c[1]))/d;return [w,v,1-w-v];};
  const world=(t,w)=>new THREE.Vector3().copy(t.p[0]).multiplyScalar(w[0]).addScaledVector(t.p[1],w[1]).addScaledVector(t.p[2],w[2]);
  const uvAt=(t,p)=>{const b=new THREE.Vector3().subVectors(t.p[1],t.p[0]),c=new THREE.Vector3().subVectors(t.p[2],t.p[0]),d=new THREE.Vector3().subVectors(p,t.p[0]),bb=b.dot(b),cc=c.dot(c),bc=b.dot(c),den=bb*cc-bc*bc;if(!Number.isFinite(den)||den<=Math.max(bb*cc,1e-300)*1e-14)return null;const v=(cc*d.dot(b)-bc*d.dot(c))/den,w=(bb*d.dot(c)-bc*d.dot(b))/den;return [0,1].map(k=>t.uv[0][k]*(1-v-w)+t.uv[1][k]*v+t.uv[2][k]*w);};
@@ -40,5 +45,5 @@ export function createPaintSeamNeighbours({geometry,size,labels,triangleAt,mesh,
    if(result){neighbours[at*4+k]=result.at;if(result.face!==face)crossFaceSamples++;}
   }
  }
- return {neighbours,crossFaceSamples};
+ return {neighbours,crossFaceSamples,connectedFaces};
 }

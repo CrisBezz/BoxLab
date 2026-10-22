@@ -4846,3 +4846,21 @@ overlay, UndoRedo stays in Paint, SaveOpen retains result. Face edges/misses res
 pickup. Actual iPad feel/latency remains pending. User940PASS protected; independent
 alpha929/reflection gates unchanged. Next device feedback before cross-face Smudge,
 AO or Edge-seam authoring; no automatic next runtime build before that gate.
+
+## Current direction — .942, 22 October 2026
+
+User941PASS protected. Original manifold seam graph now permits Smudge mean colour
+pickup across connected picked faces without atlas contamination. Same-face spatial
+pickup941 unchanged; detailed texture patch orientation is not transported at seam.
+Existing Size/Opacity/alpha/raw channels/history/persistence retained. Misses/unknown/
+nonmanifold/vertex-only restart; strict captured pairs and existing work caps. Device
+942 seam/Opacity/overlay/history/SaveOpen feedback next, then narrow refinements or
+AO/Edge seam owner audits. Alpha929/reflection gates independent; no new budgets.
+See docs/paint-smudge-seams-942.md. Full/publication evidence follows.
+
+.942 final local Node24.19.0 full regression: **2,720 PASS / 0 FAIL / 0 skipped**.
+Five new connected-Smudge checks, original941+seam11 and reviewed release5 pass.
+No original assertions relaxed. Reviewed changed main/Lab reverse graph942; protected
+main/cage/Multi1.0/triangle graph/frozen unchanged. Hosted/Pages/live proof follows.
+User repeated PASS /nextbuild while942 was still local/in regression:941 acceptance
+remains protected; no942 device PASS inferred before publication/manual test list.

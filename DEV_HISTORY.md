@@ -12983,3 +12983,30 @@ overlay, UndoRedo stays in Paint, SaveOpen retains result. Face edges/misses res
 pickup. Actual iPad feel/latency remains pending. User940PASS protected; independent
 alpha929/reflection gates unchanged. Next device feedback before cross-face Smudge,
 AO or Edge-seam authoring; no automatic next runtime build before that gate.
+
+## .942 — connected-face Smudge colour carry; .941 user PASS — 22 October 2026
+
+User941PASS protects same-face Smudge/Opacity/tap/overlay/Paint history/SaveOpen.
+Audit76f9d70f: original seam/triangle graph already proves manifold edges; expose
+frozen direct face pairs through same filter domain, no duplicate adjacency kernel.
+Original raster carries premultiplied mean across consecutive connected picked faces:
+75% prior round/alpha pressure-sized pickup +25% local stroke-start. Original same-
+face patch semantics unchanged. Writes stay picked-face clipped; disconnected/miss/
+nonmanifold/vertex-only restart. Mean colour carry is orientation-independent, NOT
+fine patch-detail transport, world-radius or automatic far-face stamping. Same Size/
+Opacity/pressure/hardness/alpha/raw scalar-mask/history/COW/project/export owners.
+Strict captured pair schema/bounds/sparse guards;8M work includes cross-face mean.
+No resource/geometry/UV/triangle-graph/lighting changes; main/cage/Multi1.0/frozen
+retained. Four functional owners, reviewed reverse-cache graph942. New5 tests cover
+12 fold/rotation/mirror layouts, exclusions/exact RGBA/opacity/alpha/decoy isolation,
+invalid/captured pairs/cancel/work, actual UI edge stroke/history/SaveOpen/native PNG,
+scalar/mask isolation/checkpoint rollback. Original941+seam11PASS, new5PASS. Full/
+publication follows. Device942 seam feel pending; AO/Edge authoring remain queued.
+Read docs/paint-smudge-seams-942.md. Independent alpha929/reflection gates unchanged.
+
+.942 final local Node24.19.0 full regression: **2,720 PASS / 0 FAIL / 0 skipped**.
+Five new connected-Smudge checks, original941+seam11 and reviewed release5 pass.
+No original assertions relaxed. Reviewed changed main/Lab reverse graph942; protected
+main/cage/Multi1.0/triangle graph/frozen unchanged. Hosted/Pages/live proof follows.
+User repeated PASS /nextbuild while942 was still local/in regression:941 acceptance
+remains protected; no942 device PASS inferred before publication/manual test list.

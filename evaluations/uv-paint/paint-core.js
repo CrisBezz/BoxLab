@@ -30,28 +30,38 @@ function blurSnapshot(bytes,size,domains,links,amount){
 export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
  if(typeof transparent!=='boolean')throw Error('Invalid paint layer alpha mode');
  if(!Number.isInteger(size)||size<16||size>1024)throw Error('Comparison map budget exceeded');
- const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true,erasing=false,blur=null,blurTarget=null,smudging=false,pickup=null,smudgeWork=0;
+ const pixels=new Uint8Array(size*size*4).fill(transparent?0:255);let before=null,coverage=null,settings=null,changed=false,disposed=false,dirty=true,erasing=false,blur=null,blurTarget=null,smudging=false,pickup=null,smudgeWork=0,connections=null;
  // A small tip-local reservoir, never an atlas-to-atlas line. Pick up only the
- // current original polygon; a face change/miss starts a fresh pickup without ink.
+ // current original polygon; an unproven face change/miss starts fresh without ink.
  // Mix in 25% stroke-start paint per spaced dab. Premultiplied colour and alpha
  // travel together; raw grayscale masks/scalars use this same equal-RGB operation.
- function carry(cx,cy,face){
+ function carry(cx,cy,face,radius,cos,sin){
   const extent=Math.ceil(settings.radius*(settings.alphaTip?Math.SQRT2:1)+1),width=extent*2+1,x=Math.round(cx),y=Math.round(cy);
   if(pickup&&pickup.face===face&&pickup.x===x&&pickup.y===y)return false;
-  if(smudgeWork+width*width>8e6)throw Error('Smudge stroke is too long; lift and start a new stroke');
-  smudgeWork+=width*width;
   const first=!pickup||pickup.face!==face;
+  const connected=first&&Number.isInteger(pickup?.face)&&connections?.has(Math.min(face,pickup.face)+':'+Math.max(face,pickup.face));
+  const work=width*width+(connected?pickup.valid.length:0);
+  if(smudgeWork+work>8e6)throw Error('Smudge stroke is too long; lift and start a new stroke');
+  smudgeWork+=work;
+  // A rotationally invariant premultiplied mean crosses a proven manifold edge.
+  // No assumption that the two islands share UV orientation, scale or position.
+  let mean=null;
+  if(connected){const sum=[0,0,0,0];let weight=0;for(let i=0;i<pickup.valid.length;i++)if(pickup.valid[i]){
+   const dx=(i%width-pickup.extent)/pickup.radius,dy=(Math.floor(i/width)-pickup.extent)/pickup.radius;
+   const w=settings.alphaTip?alphaTipCoverage(settings.alphaTip,dx,dy,cos,sin):Math.hypot(dx,dy)<=1?1:0;
+   if(!w)continue;weight+=w;for(let c=0;c<4;c++)sum[c]+=pickup.values[i*4+c]*w;
+  }if(weight)mean=sum.map(v=>v/weight);}
   if(!pickup)pickup={face,x,y,extent,width,values:new Float32Array(width*width*4),valid:new Uint8Array(width*width)};
   else if(first){pickup.valid.fill(0);pickup.face=face;}
-  const s=pickup;s.x=x;s.y=y;
+  const s=pickup;s.x=x;s.y=y;s.radius=radius;
   for(let dy=-extent;dy<=extent;dy++)for(let dx=-extent;dx<=extent;dx++){
    const px=x+dx,py=y+dy,i=dx+extent+(dy+extent)*width,k=i*4,at=px+py*size;
    if(px<0||px>=size||py<0||py>=size||blur[at]!==face){s.valid[i]=0;continue;}
-   const a=before[at*4+3]/255,retain=s.valid[i] ? .75 : 0;
-   for(let c=0;c<3;c++)s.values[k+c]=s.values[k+c]*retain+before[at*4+c]*a*(1-retain);
-   s.values[k+3]=s.values[k+3]*retain+a*(1-retain);s.valid[i]=1;
+   const a=before[at*4+3]/255,retain=mean||s.valid[i] ? .75 : 0;
+   for(let c=0;c<3;c++)s.values[k+c]=(mean?mean[c]:s.values[k+c])*retain+before[at*4+c]*a*(1-retain);
+   s.values[k+3]=(mean?mean[3]:s.values[k+3])*retain+a*(1-retain);s.valid[i]=1;
   }
-  return !first;
+  return !first||!!mean;
  }
  function resetPickup(){if(pickup)pickup.face=null;}
  function applyCoverage(at,a,rgb,smudgeAt=-1){
@@ -78,19 +88,21 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
   begin(value,{erase=false,filter=null,smudge=false}={}){
    if(typeof erase!=='boolean'||erase&&!transparent)throw Error('Alpha erasing requires a transparent paint layer');if(disposed||before)throw Error('Paint layer unavailable');
    if(typeof smudge!=='boolean'||smudge&&(!filter||erase))throw Error('Smudge requires face ownership');
+   const edges=filter?.connectedFaces;
+   if(edges!=null&&(!Array.isArray(edges)||edges.length>60000||Array.from(edges).some(p=>!Array.isArray(p)||p.length!==2||[p[0],p[1]].some(n=>!Number.isInteger(n)||n<0||n>=20000)||p[0]>=p[1])))throw Error('Invalid Smudge face connections');
    if(filter&&(!(filter.domains instanceof Int32Array)||filter.domains.length!==size*size||erase))throw Error('Invalid Blur domain');
    if(filter?.neighbours!=null&&(!(filter.neighbours instanceof Int32Array)||filter.neighbours.length!==size*size*4||filter.neighbours.some(n=>n< -1||n>=size*size)))throw Error('Invalid Blur neighbours');
    const amount=filter?.amount===undefined?1:filter.amount;if(filter&&(!Number.isInteger(amount)||amount<1||amount>32))throw Error('Blur amount must be 1 to 32');
    let valid=brushSettings(value);if(valid.alphaTip)valid={...valid,alphaTip:captureAlphaTip(valid.alphaTip)};
    const domains=filter?filter.domains.slice():null,links=!smudge&&filter?.neighbours?.slice()||null,start=pixels.slice(),target=filter&&!smudge&&valid.opacity?blurSnapshot(start,size,domains,links,amount):null;
-   settings=valid;blur=domains;blurTarget=target;erasing=erase;before=start;coverage=new Float32Array(size*size);changed=false;smudging=smudge;pickup=null;smudgeWork=0;
+   settings=valid;blur=domains;blurTarget=target;erasing=erase;before=start;coverage=new Float32Array(size*size);changed=false;smudging=smudge;pickup=null;smudgeWork=0;connections=smudge?new Set((edges||[]).map(p=>p[0]+':'+p[1])):null;
   },
   stamp(u,v,pressure=1,face=null){
    if(blur&&(!Number.isInteger(face)||face<0)){resetPickup();return false;}
    if(disposed||!before||![u,v,pressure].every(Number.isFinite)||u<0||u>1||v<0||v>1)return false;
    const p=settings.pressure?Math.min(1,Math.max(0,pressure)):1;if(!p||!settings.opacity){resetPickup();return false;}
    const radius=Math.max(.35,settings.radius*p),cx=u*(size-1),cy=v*(size-1),rgb=[1,3,5].map(i=>parseInt(settings.colour.slice(i,i+2),16)),extent=settings.alphaTip?radius*Math.SQRT2:radius,angle=(settings.tipRotation??0)*Math.PI/180,cos=Math.cos(angle),sin=Math.sin(angle);let touched=false;
-   if(smudging&&!carry(cx,cy,face))return false;
+   if(smudging&&!carry(cx,cy,face,radius,cos,sin))return false;
    for(let y=Math.max(0,Math.floor(cy-extent-1));y<=Math.min(size-1,Math.ceil(cy+extent+1));y++)for(let x=Math.max(0,Math.floor(cx-extent-1));x<=Math.min(size-1,Math.ceil(cx+extent+1));x++){
     if(blur&&blur[x+y*size]!==face)continue;
     if(smudging&&(Math.abs(x-pickup.x)>pickup.extent||Math.abs(y-pickup.y)>pickup.extent))continue;
@@ -111,7 +123,7 @@ export function createPaintLayer(size=RESOLUTION,{transparent=false}={}){
    if(touched){dirty=true;changed=true;}return touched;
   },
   resetPickup,
-  finish(cancel=false){if(!before)return false;const did=changed;if(cancel&&changed){pixels.set(before);dirty=true;}before=coverage=settings=blur=blurTarget=pickup=null;smudging=false;smudgeWork=0;changed=false;return !cancel&&did;},
+  finish(cancel=false){if(!before)return false;const did=changed;if(cancel&&changed){pixels.set(before);dirty=true;}before=coverage=settings=blur=blurTarget=pickup=connections=null;smudging=false;smudgeWork=0;changed=false;return !cancel&&did;},
   restore(data){if(disposed||before||!(data instanceof Uint8Array)||data.length!==pixels.length)throw Error('Invalid paint snapshot');pixels.set(data);dirty=true;},
   consumeDirty(){const was=dirty;dirty=false;return was;},
   dispose(){if(disposed)return;this.finish(true);disposed=true;pixels.fill(transparent?0:255);},

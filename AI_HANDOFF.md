@@ -1,4 +1,4 @@
-# BoxLab AI Handoff — .941 / bounded face-confined Smudge
+# BoxLab AI Handoff — .942 / connected-face Smudge colour carry
 
 ## Permanent rule — every build completion
 
@@ -10,34 +10,36 @@ the build number and readiness status. Never finish with only a progress update 
 leave the user to infer completion. This applies to EVERY build without a reminder.
 User reaffirmed this permanent instruction on 21 October 2026.
 
-## Current state — .941, 22 October 2026 (Brisbane)
+## Current state — .942, 22 October 2026 (Brisbane)
 
-User PASS .940 protects Torus UV-ready Add/plain choice, Torus UVs (Y), Paint,
-UV Editor, UndoRedo and SaveOpen. Earlier .939 startup/reset/optional primitive UVs,
-.938 Merge/Flatten and .9371024/readout/detail remain protected. Alpha929 and
-reflection-preview gates remain independent; neither is inferred accepted.
+User PASS .941 protects same-face Smudge, Size/Opacity/tap/painted overlay,
+Paint UndoRedo/tool retention and SaveOpen. Earlier940 Torus/939 UV-ready startup/
+Add/plain choice/938 MergeFlatten/9371024 default and native export remain protected.
+Alpha929 and reflection-preview gates remain independent, not inferred accepted.
 
-Build0.36.18.941 adds Tool → Smudge · within face through the ORIGINAL shared raster,
-viewport surface adapter and compact LEFT Paint UI. First hit picks up a tip-local
-patch without ink; moving spaced dabs carry it, mixing25% local stroke-start pixels.
-Opacity bounds the mix with original pixels; Size/pressure/hardness/alpha control
-coverage. Premultiplied colour alpha; raw masks/scalars stay independent. Swatch
-ignored. SAME original face label for reads/writes: face changes/misses reset pickup.
-No cross-face carry/footprint wrapping; dense faceted meshes restart often. Original
-connected-face Blur remains unchanged. Image colour retains Convert to paint guard.
+Build0.36.18.942 extends original Smudge to connected-face COLOUR carry. Original
+seam plan derives frozen direct face pairs from SAME authoritative manifold triangle
+edges. No atlas/vertex-only/nonmanifold connections. Original Blur samples unchanged.
+On a proven consecutive face transition, premultiplied mean from the prior round/
+alpha pressure-sized pickup seeds the new face (75% carried/25% local stroke-start).
+Subsequent same-face spatial pickup stays941. Original Opacity/pressure/hardness/alpha
+and per-contact cap write ONLY picked face. Mean carry is independent of UV rotation/
+mirror/placement: not detailed patch orientation transport or world-radius/seamless
+footprint wrapping. Misses/unproven edges still restart. Swatch ignored; masks/scalars
+retain raw values. Image colour still requires Convert to paint.
 
-Single existing checkpoint/COW/pool commit per changed stroke, original Paint UndoRedo,
-SaveOpen/native pixels. Pickup≤139² samples (~321KiB), reused per contact;8M pickup
-visits cap refuses/cancels entire long stroke, releases capture/navigation and keeps
-history/resources intact. Existing domain/snapshot/coverage memory and scan/walk/dab
-limits remain; no iPad performance/RAM claim. Three functional owners only; reviewed
-main+Lab reverse-cache closure941. Main/cage/Multi1.0/frozen/UV/geometry/resource/
-project/export owners, resolutions/budgets unchanged. Read docs/paint-smudge-941.md.
+Same original scene checkpoint/COW/pools/history/SaveOpen/native writers. Optional
+transient pairs captured privately with strict/sparse/size guards; no schema or stored
+seam metadata.8M work guard counts cross-face means and pickup updates; ~321KiB max
+reservoir reused, plus bounded adjacency lookup. No iPad performance claim. Four
+functional owners: seam plan/raster/viewport core/UI; reviewed filter-domain/main/Lab
+reverse pins942. Main/cage/Multi1.0/frozen/triangle graph/UV/resource/project/export/
+lighting/resolution/budgets unchanged. Read docs/paint-smudge-seams-942.md.
 
-Published a39c2db8; local+hosted2715PASS/0FAIL/0skip, Pages and20 live files verified. Actual iPad941 Smudge appearance/feel remains
-pending. DEVICE: cube hard colour patch→Smudge outward within SAME face; compare
-Opacity; tap no mark; overlay→UndoRedo stays in Paint; SaveOpen retains result.
-Next device feedback/refinement before cross-face Smudge/AO/Edge-seam authoring.
+Local full2720PASS/0FAIL/0skip; focused new5, original941+seam11 and release5PASS. Publication proof follows.
+Actual iPad942 seam feel pending. DEVICE: cube two faces visible→patch to edge→Smudge
+across edge; compare Opacity, overlay/UndoRedo, SaveOpen. Fine detail averages at seam.
+Next device feedback before further carry refinements, AO or Edge seam authoring.
 
 ## .917 — roughness data / project foundation; .916 user PASS — 2026-10-19
 
@@ -526,10 +528,10 @@ splitting paths alone makes painting seamless or that CPU timings establish M2 p
 
 ## Next narrow step
 
-Runtime .941 publication/CI/Pages/live proof is closed; stop at its iPad Smudge feel gate. Protect
-.940 Torus and prior UV-ready primitives,1024 default, Merge/Flatten, Paint history
-and native export acceptance. Refine Smudge from device feedback before cross-face
-carry, AO or Edge-seam authoring. Alpha929 and reflection-preview remain independent.
+Finish .942 validation/publication; stop at its iPad connected-face Smudge gate.
+Protect941 same-face Smudge/history/persistence and earlier UV-ready primitives,
+1024 detail, MergeFlatten/native export. Respond to942 feedback before further
+carry refinement, AO or Edge seam authoring. Alpha929/reflection gates independent.
 
 ## Protected interaction and modelling baseline
 
@@ -2258,3 +2260,10 @@ overlay, UndoRedo stays in Paint, SaveOpen retains result. Face edges/misses res
 pickup. Actual iPad feel/latency remains pending. User940PASS protected; independent
 alpha929/reflection gates unchanged. Next device feedback before cross-face Smudge,
 AO or Edge-seam authoring; no automatic next runtime build before that gate.
+
+.942 final local Node24.19.0 full regression: **2,720 PASS / 0 FAIL / 0 skipped**.
+Five new connected-Smudge checks, original941+seam11 and reviewed release5 pass.
+No original assertions relaxed. Reviewed changed main/Lab reverse graph942; protected
+main/cage/Multi1.0/triangle graph/frozen unchanged. Hosted/Pages/live proof follows.
+User repeated PASS /nextbuild while942 was still local/in regression:941 acceptance
+remains protected; no942 device PASS inferred before publication/manual test list.
